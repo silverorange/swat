@@ -56,6 +56,7 @@ class SwatDate extends SwatControl {
 	private $yearfly;
 	private $monthfly;
 	private $dayfly;
+	private $timefly;
 	
 	private $created = false;
 	
@@ -104,6 +105,9 @@ class SwatDate extends SwatControl {
 		
 		if ($this->display & self::YEAR)
 			$this->yearfly->display();
+			
+		if ($this->display & self::TIME)
+			$this->timefly->display();
 	}
 	
 	public function process() {
@@ -129,11 +133,25 @@ class SwatDate extends SwatControl {
 		} else {
 			$day = 1;
 		}
+		
+		if ($this->display & self::TIME) {
+			$this->timefly->process();
+			$hour = $this->timefly->value->getHour();
+			$minute = $this->timefly->value->getMinute();
+			$second = $this->timefly->value->getSecond();
+		} else {
+			$hour=0;
+			$minute=0;
+			$second=0;
+		}
 
 		$this->value = new Date();
 		$this->value->setYear($year);
 		$this->value->setMonth($month);
 		$this->value->setDay($day);
+		$this->value->setHour($hour);
+		$this->value->setMinute($minute);
+		$this->value->setSecond($second);
 
 		echo $this->value->getDate();
 
@@ -161,6 +179,9 @@ class SwatDate extends SwatControl {
 
 		if ($this->display & self::DAY)
 			$this->createDayFlydown();
+			
+		if ($this->display & self::TIME)
+			$this->createTimeFlydown();
 	}
 
 	private function createYearFlydown() { 
@@ -223,17 +244,40 @@ class SwatDate extends SwatControl {
 		$start_month = $this->valid_range_start->getMonth();
 		$end_month   = $this->valid_range_end->getMonth();
 
+		$end_check = clone($this->valid_range_end);
+		$end_check->addSeconds(2678400); //add 31 days
+		
 		if ($start_year == $end_year && $start_month == $end_month) {
+			
 			$start_day = $this->valid_range_start->getDay();
 			$end_day   = $this->valid_range_end->getDay();
 
 			for ($i = $start_day; $i <= $end_day; $i++)
 				$this->dayfly->options[$i] = $i;
+		
+		} elseif (Date::compare($end_check,$this->valid_range_start,true) != -1) {
+			
+			$start_day = $this->valid_range_start->getDay();
+			$end_day   = $this->valid_range_end->getDay();
+			$days_in_month = $this->valid_range_start->getDaysInMonth();
+			
+			for ($i = $start_day; $i <= $days_in_month; $i++)
+				$this->dayfly->options[$i] = $i;
 
-		} else { 
+			for ($i = 1; $i <= $end_day; $i++)
+				$this->dayfly->options[$i] = $i;
+			
+		} else {
+			
 			for ($i = 1; $i <= 31; $i++)
 				$this->dayfly->options[$i] = $i;
+				
 		}
+	}
+	
+	private function createTimeFlydown() {
+		require_once('Swat/SwatTime.php');
+		$this->timefly = new SwatTime();
 	}
 	
 	private function displayJavascript() {

@@ -8,7 +8,11 @@
 			</SwatFormField>
 
 			<SwatFormField title="Date">
-				<SwatDate name="date" required="bool:true" />
+				<SwatDate name="date" />
+			</SwatFormField>
+
+			<SwatFormField title="Time">
+				<SwatTime name="time" />
 			</SwatFormField>
 
 			<SwatFormField class="swat-form-footer">
