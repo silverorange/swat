@@ -25,27 +25,29 @@ class SwatDate extends SwatControl {
 	const  TIME  = 8;
 	
 	/**
-	 * Date parts that are required.
+	 * Date parts that are required. Bitwise combination of SwatDate::YEAR,
+	 * SwatDate::MONTH, SwatDate::DAY, and SwatDate::TIME.
 	 * @var int
 	 */
 	public $required;
 	
 	/**
-	 * Date parts that are displayed.
+	 * Date parts that are displayed. Bitwise combination of SwatDate::YEAR,
+	 * SwatDate::MONTH, SwatDate::DAY, and SwatDate::TIME.
 	 * @var int
 	 */
 	public $display;
 	
 	/**
 	 * Start date of the valid range (inclusive).
-	 * Default date 20 Years in the past.
+	 * Default to 20 years in the past.
 	 * @var Date
 	 */
 	public $valid_range_start;
 	
 	/**
 	 * End date of the valid range (exclusive).
-	 * Default date 20 Years in the future.
+	 * Default to 20 years in the future.
 	 * @var Date
 	 */
 	public $valid_range_end;
@@ -140,7 +142,7 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::MONTH) {
 			$this->monthfly = new SwatFlydown($this->name.'_month');
 			$this->monthfly->options = array(0 => '');
-			$this->monthfly->onchange = sprintf("dateSet('%s',this);", $this->name);
+			$this->monthfly->onchange = sprintf("dateSet('%s', this);", $this->name);
 			
 			for ($i = 1; $i <= 12; $i++)
 				$this->monthfly->options[$i] = Date_Calc::getMonthFullName($i);
@@ -149,7 +151,7 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::DAY) {
 			$this->dayfly = new SwatFlydown($this->name.'_day');
 			$this->dayfly->options = array(0 => '');
-			$this->dayfly->onchange = sprintf("dateSet('%s',this);", $this->name);
+			$this->dayfly->onchange = sprintf("dateSet('%s', this);", $this->name);
 			
 			for ($i = 1; $i <= 31; $i++)
 				$this->dayfly->options[$i] = $i;
@@ -158,7 +160,7 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::YEAR) {
 			$this->yearfly = new SwatFlydown($this->name.'_year');
 			$this->yearfly->options = array(0 => '');
-			$this->yearfly->onchange = sprintf("dateSet('%s',this);", $this->name);
+			$this->yearfly->onchange = sprintf("dateSet('%s', this);", $this->name);
 			
 			$startyear = $this->valid_range_start->getYear();
 			$endyear   = $this->valid_range_end->getYear();
