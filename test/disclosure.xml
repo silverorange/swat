@@ -1,0 +1,43 @@
+<?xml version='1.0' standalone='yes'?>
+<SwatLayout>
+	<SwatFrame name="frame1" title="New Weblog Post">
+		<SwatForm name="form1" action="#">
+
+			<SwatFormField title="Title">
+				<SwatEntry name="title" required="bool:true" />
+			</SwatFormField>
+
+			<SwatFormField title="Shortname">
+				<SwatEntry name="shortname" required="bool:true" maxlength="int:10" />
+			</SwatFormField>
+
+
+			<SwatFormField title="Body Text">
+				<SwatTextarea name="bodytext" required="bool:true">Initial value</SwatTextarea>
+			</SwatFormField>
+
+			<SwatDisclosure title="Optional Fields" open="bool:false">
+				<SwatFormField title="More Text">
+					<SwatTextarea name="moretext"></SwatTextarea>
+				</SwatFormField>
+
+				<SwatFormField title="Reply Status">
+					<SwatFlydown name="replystatus" />
+				</SwatFormField>
+
+				<SwatFormField title="Hidden?">
+					<SwatCheckbox name="hidden" />
+				</SwatFormField>
+			</SwatDisclosure>
+			
+			<SwatFormField title="Ping Weblogs.com?">
+				<SwatCheckbox name="ping" value="bool:true" />
+			</SwatFormField>
+
+			<SwatFormField class="swat-form-footer">
+				<SwatButton name="btn_create" title="Create" />
+			</SwatFormField>
+
+		</SwatForm>
+	</SwatFrame>
+</SwatLayout>

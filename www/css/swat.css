@@ -66,3 +66,16 @@ textarea {
 	padding: 0.2em 0.8em;
 	font-weight: bold;
 }
+.swat-disclosure-control {
+	background: #eee;
+}
+
+.swat-disclosure-container-opened {
+	border: 2px solid #eee;
+	padding: 0.5em;
+	display: block;	
+}
+
+.swat-disclosure-container-closed {
+	display: none;
+}

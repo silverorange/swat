@@ -35,8 +35,7 @@ class SwatFrame extends SwatContainer {
 
 		$inner_div->open();
 
-		foreach ($this->children as &$child)
-			$child->display();
+		parent::display();
 
 		$inner_div->close();
 		$outer_div->close();
