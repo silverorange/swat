@@ -12,16 +12,57 @@ require_once('Swat/SwatObject.php');
 abstract class SwatApplication extends SwatObject {
 
 	/**
+	 * The name of the application
+	 * @var string
+	 */
+	public $name;
+
+	/**
+	 * The URI of the current request.
+	 * @var string
+	 */
+	public $uri;
+
+	/**
+	 * The URI part of the basehref.
+	 * @var string
+	 */
+	public $baseuri;
+
+	/**
+	 * The basehref.
+	 * @var string
+	 */
+	public $basehref;
+
+	function __construct($name) {
+		$this->name = $name;
+	}
+
+	protected function initUriVars($prefix_length = 0) {
+		$this->uri = $_SERVER['REQUEST_URI'];
+
+		$uri_array = explode('/', $this->uri);
+		$this->baseuri = implode('/', array_slice($uri_array, 0, $prefix_length + 1)).'/';
+
+		// TODO: Once we have a SITE_LIVE equivalent, we should use HTTP_HOST
+		//       on stage and SERVER_NAME on live.
+		$this->basehref = 'http://'.$_SERVER['HTTP_HOST'].$this->baseuri;
+	}
+
+	/**
+	 * Initialize the application.
+	 * Subclasses should implement all application level initialization here.
+	 */
+	abstract public function init();
+
+	/**
 	 * Get the page object.
 	 * Subclasses should implement logic here to decide which page subclass to
 	 * instantiate, then return a SwatPage descenedant.
 	 * @return SwatPage A subclass of SwatPage is returned.
 	 */
 	abstract public function getPage();
-
-	function __construct() {
-
-	}
 
 	const VAR_POST    = 1;
 	const VAR_GET     = 2;
