@@ -1,4 +1,5 @@
 <?php
+// vim: set fdm=marker:
 
 require_once("MDB2.php");
 require_once("SwatDB/SwatDBField.php");
@@ -14,6 +15,8 @@ require_once("Swat/SwatTreeNode.php");
  * @copyright silverorange 2004
  */
 class SwatDB {
+	
+    // {{{ updateColumn()
 	
 	/**
 	 * Update a column
@@ -68,7 +71,8 @@ class SwatDB {
 
 		$db->query($sql);
 	}
-
+	// }}}
+    // {{{ queryColumn()
 
 	/**
 	 * Query a column
@@ -115,6 +119,9 @@ class SwatDB {
 		return $values;
 	}
 
+	// }}}
+    // {{{ queryOne()
+
 	/**
 	 * Query a single value
 	 *
@@ -157,6 +164,9 @@ class SwatDB {
 
 		return $value;
 	}
+
+	// }}}
+    // {{{ updateBinding()
 
 	/**
 	 * Update a binding table
@@ -244,14 +254,16 @@ class SwatDB {
 
 	}
 
+	// }}}
+    // {{{ getOptionArray()
 
-	/**
+    /**
 	 * Query for an option array
 	 *
  	 * Convenience method to query for a set of options, each consisting of
 	 * an id and a title. The returned option array in the form of
 	 * $id => $title can be passed directly to other classes, such as 
-	 * SwatFlydown for example.
+	 * {@link SwatFlydown} for example.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 *
@@ -308,6 +320,91 @@ class SwatDB {
 
 		return $options;
 	}
+
+	// }}}
+    // {{{ getOptionArrayCascade()
+
+    /**
+	 * Query for an option array cascaded by a field
+	 *
+ 	 * Convenience method to query for a set of options, each consisting of
+	 * an id, title, and a group-by field. The returned option array in the form of
+	 * $cascade => array($id => $title, $id => $title) can be passed directly to
+	 * other classes, such as {@link SwatCascade} for example.
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 *
+	 * @param string $table The database table to query.
+	 *
+	 * @param string $title_field The name of the database field to query for 
+	 *        the title. Can be given in the form type:name where type is a
+	 *        standard MDB2 datatype. If type is ommitted, then text is 
+	 *        assummed for this field.
+	 *
+	 * @param string $id_field The name of the database field to query for 
+	 *        the id. Can be given in the form type:name where type is a
+	 *        standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        assummed for this field.
+	 *
+	 * @param string $cascade_field The name of the database field to cascade 
+	 *        the options by. Can be given in the form type:name where type is a
+	 *        standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        assummed for this field.
+	 *
+	 * @param string $order_by_clause Optional comma deliminated list of 
+	 *        database field names to use in the <i>order by</i> clause.
+	 *        Do not include "order by" in the string; only include the list
+	 *        of field names. Pass null to skip over this paramater.
+	 *
+	 * @param string $where_clause Optional <i>where</i> clause to limit the 
+	 *        returned results.  Do not include "where" in the string; only 
+	 *        include the conditionals.
+	 *
+	 * @return array An array in the form of $id => $title.
+	 */
+	public static function getOptionArrayCascade($db, $table, $title_field, $id_field, 
+		$cascade_field, $order_by_clause = null, $where_clause = null) {
+
+		$title_field = new SwatDBField($title_field, 'text');
+		$id_field = new SwatDBField($id_field, 'integer');
+		$cascade_field = new SwatDBField($cascade_field, 'integer');
+
+		$sql = 'select %s, %s, %s from %s';
+		$sql = sprintf($sql, $id_field->name, $title_field->name,
+			$cascade_field->name, $table);
+
+		if ($where_clause !== null)
+			$sql .= ' where '.$where_clause;
+
+		$sql .= ' order by '.$cascade_field->name;
+		if ($order_by_clause !== null)
+			$sql.', '.$order_by_clause;
+
+		$rs = $db->query($sql, array($id_field->type, $title_field->type,
+			$cascade_field->type));
+
+		if (MDB2::isError($rs))
+			throw new Exception($rs->getMessage());
+
+		$options = array();
+		$current = null;
+		$title_field_name = $title_field->name;
+		$id_field_name = $id_field->name;
+		$cascade_field_name = $cascade_field->name;
+		while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
+			if ($row->$cascade_field_name != $current) {
+				$current = $row->$cascade_field_name;
+				$options[$current] = array();
+			}
+			
+			$options[$current][$row->$id_field_name] = $row->$title_field_name;
+		}
+
+		return $options;
+	}
+
+	// }}}
+    // {{{ getOptionArrayTree()
 
 	/**
 	 * Query for an option tree array
@@ -422,6 +519,10 @@ class SwatDB {
 			$field = new SwatDBField($field, 'text');
 	}
 
+
+	// }}}
+	// {{{ queryRow()
+
 	/**
 	 * Query a single row
 	 *
@@ -464,6 +565,9 @@ class SwatDB {
 		return $row;
 	}
 
+	// }}}
+	// {{{ insertRow()
+	
 	/**
 	 * Insert a row
 	 *
@@ -528,6 +632,9 @@ class SwatDB {
 		return $ret;
 	}
 
+	// }}}
+	// {{{ updateRow()
+	
 	/**
 	 * Update a row
 	 *
@@ -579,7 +686,9 @@ class SwatDB {
 			throw new Exception($rs->getMessage());
 	}
 
-
+	// }}}
+	// {{{ getFieldMax()
+	
 	/**
 	 * Get max field value
 	 *
@@ -607,4 +716,5 @@ class SwatDB {
 		$field_name = $field->name;
 		return $row->$field_name;
 	}
+	// }}}
 }
