@@ -97,6 +97,8 @@ class SwatContainer extends SwatWidget {
 	}
 
 	public function display() {
+		parent::display();
+		
 		foreach ($this->children as &$child)
 			$child->display();
 	}
@@ -110,13 +112,15 @@ class SwatContainer extends SwatWidget {
 	 * Gather error messages.
 	 * Gather all error messages from children of this widget and this widget
 	 * itself.
+	 * @param bool $all If true return all error messages from child widgets.
 	 * @return array Array of SwatErrorMessage objects.
 	 */
-	public function gatherErrorMessages() {
-		$msgs = array();
+	public function gatherErrorMessages($all = true) {
+		$msgs = $this->error_messages;
 
-		foreach ($this->children as &$child)
-			$msgs = array_merge($msgs, $child->gatherErrorMessages());
+		if ($all)
+			foreach ($this->children as &$child)
+				$msgs = array_merge($msgs, $child->gatherErrorMessages());
 
 		return $msgs;
 	}
