@@ -76,8 +76,8 @@ class SwatLayout extends SwatObject {
 
 				else {
 					if ($attrvalue == 'false' || $attrvalue == 'true' )
-						trigger_error(__CLASS__.": Possible missing 'bool:' on ".
-						              "attribute $attrname", E_USER_NOTICE);
+						trigger_error(__CLASS__.": Possible missing 'bool:' ".
+						              "on attribute $attrname", E_USER_NOTICE);
 
 					if (is_numeric($attrvalue))
 						trigger_error(__CLASS__.": Possible missing 'int:' or ".
