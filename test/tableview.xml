@@ -1,0 +1,22 @@
+<?xml version='1.0' standalone='yes'?>
+<SwatLayout>
+	<SwatFrame name="frame1" title="Table View Example">
+		<SwatTableView name="view1" />
+		<!--
+			<SwatTableViewColumn name="col1" title="First Column"> renderer="SwatCellRendererText">
+				<linkfield  field="field1" property="text" />
+			</SwatTableViewColumn>
+
+			<SwatTableViewColumn name="col2" renderer="SwatCellRendererText">
+				<linkfield  field="field2" property="text" />
+			</SwatTableViewColumn>
+
+			<SwatTableViewColumn name="col3" renderer="SwatCellRendererImage">
+				<linkfield  field="field1" property="image" />
+			</SwatTableViewColumn>
+
+		</SwatTableView>
+		-->
+		<SwatPagination name="pager" />
+	</SwatFrame>
+</SwatLayout>
