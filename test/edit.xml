@@ -11,11 +11,11 @@
 				<SwatCheckbox name="hidden" />
 			</SwatFormField>
 
-			<SwatFieldset title="Nick's Fieldset">
-				<SwatFormField title="Body Text">
-					<SwatTextarea name="bodytext" required="bool:true"></SwatTextarea>
-				</SwatFormField>
+			<SwatFormField title="Body Text">
+				<SwatTextarea name="bodytext" required="bool:true"></SwatTextarea>
+			</SwatFormField>
 
+			<SwatFieldset title="Nick's Fieldset">
 				<SwatFormField title="More Text">
 					<SwatTextarea name="moretext"></SwatTextarea>
 				</SwatFormField>
