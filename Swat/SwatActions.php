@@ -41,9 +41,6 @@ class SwatActions extends SwatControl {
 		$this->createWidgets();
 		$this->displayJavascript();
 		
-		if ($this->auto_reset)
-			$this->actionfly->value = null;
-
 		echo '<div class="swat-actions">';
 		echo _S('Action: ');
 		$this->actionfly->display();
@@ -52,9 +49,13 @@ class SwatActions extends SwatControl {
 		
 		foreach ($this->action_items as $item) {
 			if ($item->widget != null) {
-				echo '<div id="'.$this->name.'_'.$item->name.'" class="swat-hidden">';
+				$div = new SwatHtmlTag('div');
+				$div->class = ($item == $this->selected)? 'swat-visible': 'swat-hidden';
+				$div->id = $this->name.'_'.$item->name;
+
+				$div->open();
 				$item->widget->display();
-				echo '</div>';
+				$div->close();
 			}
 		}
 
@@ -65,6 +66,9 @@ class SwatActions extends SwatControl {
 	
 	public function process() {
 		$this->createWidgets();
+
+		if ($this->auto_reset)
+			$initial_value = $this->actionfly->value;
 
 		$this->actionfly->process();
 		$selected_name = $this->actionfly->value;
@@ -78,6 +82,9 @@ class SwatActions extends SwatControl {
 		} else {
 			$this->selected = null;
 		}
+
+		if ($this->auto_reset)
+			$this->actionfly->value = $initial_value;
 	}
 
 	public function addActionItem(SwatActionItem $item) {
@@ -89,9 +96,16 @@ class SwatActions extends SwatControl {
 		
 		$this->created = true;
 
+		// Allows initial action to be set in XML UI file by name (string).
+		if (is_string($this->selected) && isset($this->action_items[$this->selected]))
+			$this->selected = $this->action_items[$this->selected];
+
 		$this->actionfly = new SwatFlydown($this->name.'_actionfly');
 		$this->actionfly->onchange = "swatActionsDisplay('{$this->name}', this.value);";
 		$this->actionfly->options = array('');
+
+		if ($this->selected != null)
+			$this->actionfly->value = $this->selected->name;
 
 		foreach ($this->action_items as $item)
 			$this->actionfly->options[$item->name] = $item->title;
