@@ -8,7 +8,7 @@ require_once('Swat/SwatFlydown.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2005
  */
-class SwatFlydownYesNo extends SwatFlydown {
+class SwatYesNoFlydown extends SwatFlydown {
 
 	const BLANK = 0;
 	const NO = 1;
