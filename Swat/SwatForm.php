@@ -36,12 +36,15 @@ class SwatForm extends SwatContainer {
 	public $button = null;
 
 	/**
-	 * Whether the form has been processed (read only)
-	 * @var boolean
+	 * Whether the form has been processed
+	 * @return boolean True if the form has been processed.
 	 */
-	public $processed = false;
+	public function hasBeenProcessed() {
+		return $this->processed;
+	}
 
 	private $hidden_fields;
+	private $processed = false;
 
 	public function init() {
 		$this->hidden_fields = array();
