@@ -3,32 +3,30 @@ require_once('Swat/SwatObject.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatUIParent.php');
 
-//TODO: finish documentation for public functions
-
 /**
- * A visible column in a SwatTableView
+ * A visible field in a SwatDetailView
  *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatTableViewColumn extends SwatObject implements SwatUIParent {
+class SwatDetailViewField extends SwatObject implements SwatUIParent {
 
 	/**
-	 * Name of the column
+	 * Name of the field
 	 * @var string
 	 */
 	public $name = null;
 
 	/**
-	 * Title of the column
+	 * Title of the field
 	 * @var string
 	 */
 	public $title = '';
 
 	/**
-	 * The {@link SwatTableView} associated with this column
-	 * @var SwatTableView
+	 * The {@link SwatDetailView} associated with this field
+	 * @var SwatDetailView
 	 */
 	public $view = null;
 
@@ -52,27 +50,35 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent {
 			$renderer->_property_map = array();
 	}
 
-	public function init() {
 
+	public function display($data) {
+		$tr_tag = new SwatHtmlTag('tr');
+		$tr_tag->open();
+		$this->displayHeader();
+		$this->displayValue($data);
+		$tr_tag->close();
 	}
 
 	public function displayHeader() {
-		echo $this->title;
+		$th_tag = new SwatHtmlTag('th');
+		$th_tag->open();
+		printf(_S("%s:"), $this->title);
+		$th_tag->close();
 	}
 
-	public function display($row) {
+	public function displayValue($data) {
 		if (count($this->renderers) == 0)
 			throw new SwatException(__CLASS__.': no renderer has been provided.');
 
 		// set the properties of the renderers
 		foreach ($this->renderers as $renderer)
 			foreach ($renderer->_property_map as $property => $field)
-				$renderer->$property = $row->$field;
+				$renderer->$property = $data->$field;
 
-		$this->displayRenderers($row);
+		$this->displayRenderers($data);
 	}
 
-	protected function displayRenderers($row) {
+	protected function displayRenderers($data) {
 		reset($this->renderers);
 		$first_renderer = current($this->renderers);
 		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttribs());
@@ -93,8 +99,8 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent {
 	 * 
 	 * This method fulfills the {@link SwatUIParent} interface.  It is used 
 	 * by {@link SwatUI} when building a widget tree and should not need to be
-	 * called elsewhere.  To add a cell renderer to a table view column, use 
-	 * {@link SwatTableViewColumn::addRenderer()}.
+	 * called elsewhere.  To add a cell renderer to a field, use 
+	 * {@link SwatDetailViewField::addRenderer()}.
 	 *
 	 * @param $child A reference to a child object to add.
 	 */
@@ -103,8 +109,8 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent {
 		if ($child instanceof SwatCellRenderer)
 			$this->addRenderer($child);
 		else
-			throw new SwatException('SwatTableViewColumn: Only '.
-				'SwatCellRenders can be nested within SwatTableViewColumns');
+			throw new SwatException('SwatDetailViewField: Only '.
+				'SwatCellRenders can be nested within SwatDetailViewFields');
 	}
 }
 
