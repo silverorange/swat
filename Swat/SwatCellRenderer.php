@@ -13,6 +13,12 @@ require_once('Swat/SwatObject.php');
 abstract class SwatCellRenderer extends SwatObject {
 
 	/**
+	 * The widget which contains this cell renderer
+	 * @var SwatWidget
+	 */
+	public $parent = null;
+
+	/**
 	 * Render the cell
 	 *
 	 * Render the cell using the values currently stored in class variables.

@@ -45,6 +45,7 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 
 	public function addRenderer(SwatCellRenderer $renderer) {
 		$this->renderers[] = $renderer;
+		$renderer->parent = $this;
 
 		if (!isset($renderer->_property_map) || !is_array($renderer->_property_map))
 			$renderer->_property_map = array();
@@ -61,6 +62,7 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 
 	public function displayHeader() {
 		$th_tag = new SwatHtmlTag('th');
+		$th_tag->align = 'right';
 		$th_tag->open();
 		printf(_S("%s:"), $this->title);
 		$th_tag->close();
