@@ -8,6 +8,7 @@
 <body>
 <?
 
+
 #ini_set('include_path', '/so/include');
 ini_set('include_path', '..');
 require_once('Swat/SwatLayout.php');
