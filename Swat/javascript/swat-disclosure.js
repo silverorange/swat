@@ -8,7 +8,7 @@ function toggleDisclosureWidget(id) {
 		img.alt = 'open';
 	} else {
 		div.className = 'swat-disclosure-container-opened';
-		img.src = 'swat/images/disclosure-opened.png';
+		img.src = 'swat/images/disclosure-open.png';
 		img.alt = 'close';
 	}
 }
