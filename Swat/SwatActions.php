@@ -14,11 +14,24 @@ require_once('Swat/SwatActionItem.php');
  */
 class SwatActions extends SwatControl {
 	
+	/**
+	 * The currently selected action item, or null.
+	 * @var SwatActionItem
+	 */
+	public $selected = null;
+
+	/**
+	 * Whether to auto reset the action flydown to the initial blank option
+	 * after processing.
+	 * @var boolean
+	 */
+	public $auto_reset = true;
+
 	private $actionfly;
 	private $btn_apply;
 
 	private $action_items;
-	public $selected = null;
+	private $created = false;
 
 	public function init() {
 		$this->action_items = array();
@@ -28,6 +41,9 @@ class SwatActions extends SwatControl {
 		$this->createWidgets();
 		$this->displayJavascript();
 		
+		if ($this->auto_reset)
+			$this->actionfly->value = null;
+
 		echo '<div class="swat-actions">';
 		echo _S('Action: ');
 		$this->actionfly->display();
@@ -69,6 +85,10 @@ class SwatActions extends SwatControl {
 	}
 
 	private function createWidgets() {	
+		if ($this->created) return;
+		
+		$this->created = true;
+
 		$this->actionfly = new SwatFlydown($this->name.'_actionfly');
 		$this->actionfly->onchange = "swatActionsDisplay('{$this->name}', this.value);";
 		$this->actionfly->options = array('');
