@@ -14,16 +14,25 @@ require_once('Swat/SwatTableViewColumnUIHandler.php');
  */
 class SwatLayout extends SwatObject {
 
+	public $classmap = null;
+
 	private $widgets;
 	private $handlers;
 	private $toplevel = null;
-	private $classmap;
+
+	function __construct() {
+		$this->widgets = array();
+
+		$this->handlers = array();
+		$this->registerHandler(new SwatTableViewUIHandler());
+		$this->registerHandler(new SwatTableViewColumnUIHandler());
+	}
 
 	/**
+	 * Load a UI from and XML file.
 	 * @param string $filename Filename of the layout XML file to load.
 	 */
-	function __construct($filename, $classmap = null) {
-		$this->classmap = $classmap;
+	public function loadFromXML($filename) {
 		$xmlfile = null;
 
 		if (file_exists($filename)) {
@@ -44,13 +53,7 @@ class SwatLayout extends SwatObject {
 
 		$xml = simplexml_load_file($xmlfile);
 
-		$this->widgets = array();
-
-		$this->handlers = array();
-		$this->registerHandler(new SwatTableViewUIHandler());
-		$this->registerHandler(new SwatTableViewColumnUIHandler());
-
-		$widget_tree = $this->parseLayout($xml, $this->toplevel);
+		$this->parseLayout($xml, $this->toplevel);
 	}
 
 	/**
