@@ -59,7 +59,7 @@ class SwatFormField extends SwatContainer {
 
 		$container_div->open();
 
-		if ($this->title != null) {
+		if ($this->title !== null) {
 			$label_tag = new SwatHtmlTag('label');
 			$label_tag->for = $first_child->name;
 			$label_tag->open();

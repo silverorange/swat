@@ -55,7 +55,7 @@ class SwatButton extends SwatControl {
 			$this->clicked = true;
 			$ancestor = $this->parent;
 
-			while ($ancestor != null) {
+			while ($ancestor !== null) {
 				if ($ancestor instanceof SwatForm)
 					$ancestor->button = $this;
 

@@ -41,7 +41,7 @@ class SwatHtmlTag extends SwatObject {
 	function __construct($tagname, $attributes = null) {
 		$this->tagname = $tagname;
 
-		if ($attributes != null)
+		if ($attributes !== null)
 			$this->attributes = $attributes;
 		else
 			$this->attributes = array();
@@ -95,7 +95,7 @@ class SwatHtmlTag extends SwatObject {
 	 * output within the tag.
 	 */
 	public function display() {
-		if ($this->content == null) {
+		if ($this->content === null) {
 			$this->openInternal(true);
 		} else {
 			$this->openInternal(false);
@@ -128,9 +128,9 @@ class SwatHtmlTag extends SwatObject {
 	private function openInternal($implicit_close) {
 		echo '<', $this->tagname;
 
-		if ($this->attributes != null) {
+		if ($this->attributes !== null) {
 			foreach ($this->attributes as $attr => $value) {
-				if ($value == null)
+				if ($value === null)
 					echo ' ', $attr;
 				else
 					echo ' ', $attr, '="', $value, '"';

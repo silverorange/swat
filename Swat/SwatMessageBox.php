@@ -25,7 +25,7 @@ class SwatMessageBox extends SwatControl {
 
 	public function display() {
 
-		if ($this->title == null && $this->content == null)
+		if ($this->title === null && $this->content === null)
 			return;
 
 		$outer_div = new SwatHtmlTag('div');
@@ -36,7 +36,7 @@ class SwatMessageBox extends SwatControl {
 
 		$outer_div->open();
 
-		if ($this->title != null) {
+		if ($this->title !== null) {
 			echo "<h2>{$this->title}</h2>";
 		}
 

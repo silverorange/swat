@@ -40,14 +40,14 @@ class SwatFlydown extends SwatControl {
 		$select_tag->name = $this->name;
 		$select_tag->id = $this->name;
 
-		if ($this->onchange != null)
+		if ($this->onchange !== null)
 			$select_tag->onchange = $this->onchange;
 
 		$option_tag = new SwatHtmlTag('option');
 
 		$select_tag->open();
 
-		if ($this->options != null) {
+		if ($this->options !== null) {
 			foreach ($this->options as $value => $title) {
 				$option_tag->value = (string)$value;
 				$option_tag->removeAttr('selected');

@@ -40,13 +40,13 @@ class SwatCheckboxList extends SwatControl {
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
 		$input_tag->name = $this->name.'[]';
-		if ($this->onchange != null)
+		if ($this->onchange !== null)
 			$input_tag->onchange = $this->onchange;
 			
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
 		
-		if ($this->options != null) {
+		if ($this->options !== null) {
 			foreach ($this->options as $value => $title) {
 				
 				$input_tag->value = (string)$value;

@@ -26,7 +26,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel {
 	}
 
 	public function addRow($data, $id = null) {
-		if ($id == null)
+		if ($id === null)
 			$this->rows[] = $data;
 		else
 			$this->rows[$id] = $data;

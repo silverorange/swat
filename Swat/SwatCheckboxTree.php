@@ -28,7 +28,7 @@ class SwatCheckboxTree extends SwatControl {
 	public $path;
 	
 	public function display() {
-		if ($this->tree != null)
+		if ($this->tree !== null)
 			$this->options = $this->tree->toArray();
 
 		$div_tag = new SwatHtmlTag('div');

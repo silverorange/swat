@@ -99,7 +99,7 @@ class SwatTableView extends SwatControl {
 		if (!$this->visible)
 			return;
 
-		if ($this->model == null)
+		if ($this->model === null)
 			return;
 
 		$table_tag = new SwatHtmlTag('table');
@@ -127,7 +127,7 @@ class SwatTableView extends SwatControl {
 		foreach ($this->model->getRows() as $id => $row) {
 
 			// display the group, if there is one
-			if ($this->group != null)
+			if ($this->group !== null)
 				$this->group->display($row);
 
 			// display a row of data
