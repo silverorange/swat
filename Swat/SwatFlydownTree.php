@@ -1,4 +1,5 @@
 <?php
+require_once('Swat/SwatFlydown.php');
 
 /**
  * A flydown (aka combo-box) selection widget formatted into a tree
