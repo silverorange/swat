@@ -322,7 +322,7 @@ class SwatDB {
 	}
 
 	// }}}
-    // {{{ getOptionArrayCascade()
+    // {{{ getCascadeOptionArray()
 
     /**
 	 * Query for an option array cascaded by a field
@@ -362,7 +362,7 @@ class SwatDB {
 	 *
 	 * @return array An array in the form of $id => $title.
 	 */
-	public static function getOptionArrayCascade($db, $table, $title_field, $id_field, 
+	public static function getCascadeOptionArray($db, $table, $title_field, $id_field, 
 		$cascade_field, $order_by_clause = null, $where_clause = null) {
 
 		$title_field = new SwatDBField($title_field, 'text');
@@ -404,7 +404,7 @@ class SwatDB {
 	}
 
 	// }}}
-    // {{{ getOptionArrayTree()
+    // {{{ getTreeOptionArray()
 
 	/**
 	 * Query for an option tree array
@@ -436,7 +436,7 @@ class SwatDB {
 	 *
 	 * @return SwatTreeNode A tree hierarchy of {@link SwatTreeNode}s
 	 */
-	public static function getOptionArrayTree($db, $sp, $title_field, $id_field,
+	public static function getTreeOptionArray($db, $sp, $title_field, $id_field,
 		$level_field) {
 
 		$id_field = new SwatDBField($id_field, 'integer');
@@ -449,11 +449,11 @@ class SwatDB {
 		if (MDB2::isError($rs))
 			throw new Exception($rs->getMessage());
 
-		$tree = SwatDB::buildOptionArrayTree($rs, $title_field->name, $id_field->name, $level_field->name);
+		$tree = SwatDB::buildTreeOptionArray($rs, $title_field->name, $id_field->name, $level_field->name);
 		return $tree;
 	}
 
-	private static function buildOptionArrayTree($rs, $title_field_name, $id_field_name,
+	private static function buildTreeOptionArray($rs, $title_field_name, $id_field_name,
 		$level_field_name) {
 
 		$stack = array();
@@ -481,6 +481,9 @@ class SwatDB {
 		return $base_parent;
 	}
 
+	// }}}
+	// {{{ getFieldNameArray()
+	
 	private static function getFieldNameArray($fields) {
 
 		if (count($fields) == 0)
@@ -494,6 +497,9 @@ class SwatDB {
 		return $names;
 	}
 
+	// }}}
+	// {{{ getFieldTypeArray()
+	
 	private static function getFieldTypeArray($fields) {
 
 		if (count($fields) == 0)
@@ -507,6 +513,9 @@ class SwatDB {
 		return $types;
 	}
 
+	// }}}
+	// {{{ initFields()
+	
 	private function initFields(&$fields) {
 		/* Transforms and array of text field identifiers ('text:title') into
 		 * an array of SwatDBField objects.
