@@ -4,7 +4,7 @@ require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatUIParent.php');
 
 /**
- * A visible field in a SwatDetailView
+ * A visible field in a SwatDetailsView
  *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -25,8 +25,8 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 	public $title = '';
 
 	/**
-	 * The {@link SwatDetailView} associated with this field
-	 * @var SwatDetailView
+	 * The {@link SwatDetailsView} associated with this field
+	 * @var SwatDetailsView
 	 */
 	public $view = null;
 
@@ -100,7 +100,7 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 	 * This method fulfills the {@link SwatUIParent} interface.  It is used 
 	 * by {@link SwatUI} when building a widget tree and should not need to be
 	 * called elsewhere.  To add a cell renderer to a field, use 
-	 * {@link SwatDetailViewField::addRenderer()}.
+	 * {@link SwatDetailsViewField::addRenderer()}.
 	 *
 	 * @param $child A reference to a child object to add.
 	 */
