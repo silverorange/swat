@@ -1,6 +1,4 @@
 <?php
-require_once('Swat/SwatWidget.php');
-
 /**
  * Interface for widgets that are parents for other widgets.
  *
