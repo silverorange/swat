@@ -9,7 +9,54 @@
  * @copyright silverorange 2004
  */
 class SwatException extends Exception {
-	
+
+	public function displayAsHTML() {
+		echo '<hr />';
+
+		echo get_class($this), ': ';
+
+		echo $this->getMessage(), '<br />';
+
+		printf("%s(%s)",
+			$this->getFile(),
+			$this->getLine());
+
+		echo '<br />';
+		echo '<br />';
+
+		echo 'Backtrace:<br /><ol start="0">';
+
+		foreach ($this->getTrace() as $entry) {
+			echo '<li>';
+
+			printf("%s(%s): %s%s%s(%s)",
+				$entry['file'],
+				$entry['line'],
+				$entry['class'],
+				$entry['type'],
+				$entry['function'],
+				array_key_exists('args', $entry) ? $entry['args'] : '');
+
+			echo '</li>';
+		}
+		echo '</ol>';
+	}
 }
+
+
+function swat_exception_handler($e) {
+
+	if (ini_get('display_errors'))
+		$e->displayAsHTML();
+
+	/* TODO:
+	if (ini_get('log_errors'))
+		$e->log();
+	*/
+
+
+}
+
+set_exception_handler('swat_exception_handler');
 
 ?>
