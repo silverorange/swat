@@ -9,7 +9,7 @@ require_once('Swat/SwatTableViewGroup.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatTableViewUIHandler implements SwatUIHandler {
+class SwatTableViewUIHandler extends SwatObject implements SwatUIHandler {
 
 	/**
 	 * Gets the name of the class this handler handles.

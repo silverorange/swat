@@ -8,7 +8,7 @@ require_once('Swat/SwatCellRenderer.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatTableViewColumnUIHandler implements SwatUIHandler {
+class SwatTableViewColumnUIHandler extends SwatObject implements SwatUIHandler {
 
 	/**
 	 * Get the name of the class this handler handles

@@ -9,7 +9,7 @@ require_once('Swat/SwatUIHandler.php');
 /**
  * UI handler for SwatActions.
  */
-class SwatActionItemUIHandler implements SwatUIHandler {
+class SwatActionItemUIHandler extends SwatObject implements SwatUIHandler {
 
 	/**
 	 * Get the name

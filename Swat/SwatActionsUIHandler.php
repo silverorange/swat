@@ -10,7 +10,7 @@ require_once('Swat/SwatActionItem.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatActionsUIHandler implements SwatUIHandler {
+class SwatActionsUIHandler extends SwatObject implements SwatUIHandler {
 
 	/**
 	 * Gets the name of the class this handler handles.
