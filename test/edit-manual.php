@@ -1,6 +1,7 @@
 <?
 require('header.php');
 
+// TODO: Write an autoloader for this.
 require_once('Swat/SwatForm.php');
 require_once('Swat/SwatFrame.php');
 require_once('Swat/SwatEntry.php');
@@ -55,9 +56,12 @@ $ping = new SwatCheckbox('ping');
 $form->addWithField($ping, 'Ping Weblogs.com?');
 
 // create a button widget and add it
+$field = new SwatFormField();
+$field->class = 'swat-form-footer';
 $btn = new SwatButton('btn_create');
 $btn->title = 'Create';
-$form->add($btn);
+$field->add($btn);
+$form->add($field);
 
 if ($form->process()) {
 	echo '<pre>';
@@ -69,4 +73,3 @@ $frame->displayTidy();
 
 require('footer.php');
 ?>
-
