@@ -15,9 +15,9 @@ class SwatYesNoFlydown extends SwatFlydown {
 	const YES = 2;
 	
 	public function display() {
-		$this->options = array(SwatYesNoFlyown::BLANK => '',
-		                       SwatYesNoFlyown::NO => _S("No"),
-		                       SwatYesNoFlyown::YES => _S("Yes"));
+		$this->options = array(SwatYesNoFlydown::BLANK => '',
+		                       SwatYesNoFlydown::NO => _S("No"),
+		                       SwatYesNoFlydown::YES => _S("Yes"));
 
 		parent::display();
 	}
