@@ -90,7 +90,7 @@ class SwatLayout extends SwatObject {
 				$parent_widget instanceof SwatTableViewColumn) {
 
 				if ($widget instanceof SwatCellRenderer)
-					$parent_widget->renderer = $widget;
+					$parent_widget->addRenderer($widget);
 				else
 					throw new SwatException('SwatLayout: Only '.
 						'SwatCellRenders can be nested within '.
