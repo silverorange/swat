@@ -22,10 +22,10 @@ class SwatEmailEntry extends SwatEntry {
 				.'[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.'
 				.'[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$'
 				, trim($this->value))
-		)
-
-		$msg = _S("The email address you have entered is not properly formatted.");
-		$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+		) {
+			$msg = _S("The email address you have entered is not properly formatted.");
+			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+		}
 	}
 }
 ?>
