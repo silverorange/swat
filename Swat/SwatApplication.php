@@ -64,6 +64,21 @@ abstract class SwatApplication extends SwatObject {
 	 */
 	abstract public function getPage();
 
+	/**
+	 * Relocate.
+	 * Relocate to another URL. This function does not return.
+	 * @param string $url The URL to relocate to.
+	 */
+	function relocate($url) {
+
+		if (strncmp($url, '/', 1) == 0)
+			$url = $this->basehref.$url;
+
+		header('Location: '.$url);
+		exit();
+	}
+
+
 	const VAR_POST    = 1;
 	const VAR_GET     = 2;
 	const VAR_REQUEST = 4;
