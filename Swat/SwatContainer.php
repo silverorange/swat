@@ -72,12 +72,15 @@ class SwatContainer extends SwatWidget {
 			$child->display();
 	}
 
+	public function addErrorMessage($msg) {
+		$err = new SwatErrorMessage($msg);
+		$this->error_messages[] = $err;
+	}
+
 	/**
 	 * Gather error messages.
-	 *
 	 * Gather all error messages from children of this widget and this widget
 	 * itself.
-	 *
 	 * @return array Array of SwatErrorMessage objects.
 	 */
 	public function gatherErrorMessages() {
@@ -88,6 +91,24 @@ class SwatContainer extends SwatWidget {
 
 		return $msgs;
 	}
+
+	/**
+	 * Check for error messages.
+	 * @return boolean True if there is an error message in the subtree.
+	 */
+	public function hasErrorMessage() {
+		$has_error = false;
+
+		foreach ($this->children as &$child) {
+			if ($child->hasErrorMessage()) {
+				$has_error = true;
+				break;
+			}
+		}
+		
+		return $has_error;		
+	}
+
 }
 
 ?>

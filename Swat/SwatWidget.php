@@ -91,15 +91,28 @@ abstract class SwatWidget extends SwatObject {
 
 	}
 
+	protected $error_messages = array();
+
+	/**
+	 * Add an error message.
+	 * Adds a new error message to this widget.  The error will be shown by the
+	 * display() method as well as cause hasErrorMessage() to return true.
+	 */
+	abstract public function addErrorMessage($msg);
+
 	/**
 	 * Gather error messages.
 	 * Gather all error messages from children of this widget and this widget 
 	 * itself.
-	 *
 	 * @return array Array of SwatErrorMessage objects.
 	 */
-	abstract function gatherErrorMessages();
+	abstract public function gatherErrorMessages();
 
+	/**
+	 * Check for error messages.
+	 * @return boolean True if there is an error message in the subtree.
+	 */
+	abstract public function hasErrorMessage();
 }
 
 ?>

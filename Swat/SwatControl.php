@@ -12,25 +12,31 @@ require_once('Swat/SwatErrorMessage.php');
  */
 abstract class SwatControl extends SwatWidget {
 
-	private $error_messages = array();
-
-	protected function addErrorMessage($msg) {
+	public function addErrorMessage($msg) {
 		if ($this->parent instanceof SwatFormField)
-			$title = '<strong>'.$this->parent->title.'</strong>';
+			$field_title = '<strong>'.$this->parent->title.'</strong>';
 		else
-			$title = '';
+			$field_title = '';
  
-		$err = new SwatErrorMessage(sprintf($msg, $title));
+		$err = new SwatErrorMessage(sprintf($msg, $field_title));
 		$this->error_messages[] = $err;
 	}
 
 	/**
 	 * Gather error messages.
-	 *
 	 * @return array Array of SwatErrorMessage objects.
 	 */
 	public function gatherErrorMessages() {
 		return $this->error_messages;
 	}
+
+	/**
+	 * Check for error messages.
+	 * @return boolean True if any error messages exist.
+	 */
+	public function hasErrorMessage() {
+		return (count($this->error_messages) > 0);
+	}
+
 }
 ?>
