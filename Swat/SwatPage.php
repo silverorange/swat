@@ -25,4 +25,12 @@ abstract class SwatPage extends SwatObject {
 
 	}
 
+	/**
+	 * Get the layout.
+	 * @return string Name of the layout to use.
+	 */
+	public function getLayout() {
+		return 'default';
+	}
+
 }
