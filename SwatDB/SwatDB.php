@@ -517,6 +517,9 @@ class SwatDB {
 
 		$rs = $db->query($sql);
 
+		if (MDB2::isError($rs))
+			throw new Exception($rs->getMessage());
+
 		if ($id_field != null) {
 			$ret = SwatDB::getFieldMax($db, $table, $id_field);						
 			$db->commit();
@@ -571,6 +574,9 @@ class SwatDB {
 			$db->quote($id, $id_field->type));
 
 		$rs = $db->query($sql);
+
+		if (MDB2::isError($rs))
+			throw new Exception($rs->getMessage());
 	}
 
 
