@@ -13,9 +13,9 @@ require_once('Swat/SwatHtmlTag.php');
 class SwatEntry extends SwatControl {
 
 	/*
-	 * @var string Text content of the widget.
+	 * @var string Text content of the widget, or null.
 	 */
-	public $value = '';
+	public $value = null;
 
 	/*
 	 * @var bool Must have a non-empty value when processed.
@@ -39,8 +39,10 @@ class SwatEntry extends SwatControl {
 		$inputtag->type = 'text';
 		$inputtag->name = $this->name;
 		$inputtag->id = $this->name;
-		$inputtag->value = $this->value;
 		$inputtag->onfocus = "this.select();";
+                
+		if ($this->value != null)
+			$inputtag->value = $this->value;
 
 		if ($this->size != null)
 			$inputtag->size = $this->size;
