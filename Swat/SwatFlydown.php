@@ -13,47 +13,50 @@ require_once('Swat/SwatHtmlTag.php');
 class SwatFlydown extends SwatControl {
 	
 	/**
-	 * @var array An array of options for the flydown in the form value => title.
+	 * An array of options for the flydown in the form value => title.
+	 * @var array
 	 */
 	public $options = null;
 
 	/**
-	 * @var string The value of the selected option, or null.
+	 * The value of the selected option, or null.
+	 * @var string
 	 */
 	public $value = null;
 
 	/**
-	 * @var string The onchange attribute of the HTML select tag, or null.
+	 * The onchange attribute of the HTML select tag, or null.
+	 * @var string
 	 */
 	public $onchange = null;
 
 	function display() {
-		$selecttag = new SwatHtmlTag('select');
-		$selecttag->name = $this->name;
-		$selecttag->id = $this->name;
+		$select_tag = new SwatHtmlTag('select');
+		$select_tag->name = $this->name;
+		$select_tag->id = $this->name;
 
 		if ($this->onchange != null)
-			$selecttag->onchange = $this->onchange;
+			$select_tag->onchange = $this->onchange;
 
-		$optiontag = new SwatHtmlTag('option');
+		$option_tag = new SwatHtmlTag('option');
 
-		$selecttag->open();
+		$select_tag->open();
 
 		if ($this->options != null) {
 			foreach ($this->options as $value => $title) {
-				$optiontag->value = (string)$value;
-				$optiontag->removeAttr('selected');
+				$option_tag->value = (string)$value;
+				$option_tag->removeAttr('selected');
 
 				if ($this->value == $value)
-					$optiontag->selected = "selected";
+					$option_tag->selected = "selected";
 
-				$optiontag->open();
+				$option_tag->open();
 				echo $title;
-				$optiontag->close();
+				$option_tag->close();
 			}
 		}
 
-		$selecttag->close();
+		$select_tag->close();
 	}	
 
 	function process() {

@@ -12,8 +12,9 @@ require_once('Swat/SwatWidget.php');
 class SwatContainer extends SwatWidget {
 
 	/**
-	 * @var array An array containing the widgets that belong to this box,
+	 * An array containing the widgets that belong to this box,
 	 * or null.
+	 * @var array
 	 */
 	protected $children = array();
 
@@ -32,7 +33,8 @@ class SwatContainer extends SwatWidget {
 
 	public function packStart(SwatWidget $widget) {
 		if ($widget->parent != null)
-			throw new SwatException('Attempting to add a widget that already has a parent.');
+			throw new SwatException("Attempting to add a widget that already "
+			                        "has a parent.");
 
 		array_unshift($this->children, $widget);
 		$widget->parent = $this;
@@ -40,7 +42,8 @@ class SwatContainer extends SwatWidget {
 
 	public function packEnd(SwatWidget $widget) {
 		if ($widget->parent != null)
-			throw new SwatException('Attempting to add a widget that already has a parent.');
+			throw new SwatException("Attempting to add a widget that already "
+			                        "has a parent.");
 
 		$this->children[] = $widget;
 		$widget->parent = $this;
@@ -72,7 +75,8 @@ class SwatContainer extends SwatWidget {
 	/**
 	 * Gather error messages.
 	 *
-	 * Gather all error messages from children of this widget and this widget itself.
+	 * Gather all error messages from children of this widget and this widget
+	 * itself.
 	 *
 	 * @return array Array of SwatErrorMessage objects.
 	 */

@@ -13,15 +13,15 @@ require_once('Swat/SwatHtmlTag.php');
 class SwatForm extends SwatContainer {
 
 	/**
-	 * @var string The action attribute of the HTML form tag.
+	 * The action attribute of the HTML form tag.
+	 * @var string
 	 */
 	public $action = '';
 
 	/**
 	 * Add a widget within a new SwatFormField.
-	 *
-	 * Convenience function to create a new SwatFormField, add the widget as a child of
-	 * the form field, and then add the formfield to this form.
+	 * Convenience function to create a new SwatFormField, add the widget as a
+	 * child of the form field, and then add the formfield to this form.
 	 *
 	 * @param $widget SwatWidget A reference to a widget to add.
 	 * @param $title string The visible name of the form field.
@@ -35,7 +35,6 @@ class SwatForm extends SwatContainer {
 
 	/**
 	 * Add a widget within a new SwatDiv.
-	 *
 	 * Convenience function to create a new SwatDiv, add the widget as a child of
 	 * the div, and then add the div to this form.
 	 *
@@ -50,25 +49,25 @@ class SwatForm extends SwatContainer {
 	}
 
 	public function display() {
-		$formtag = new SwatHtmlTag('form');
-		$formtag->id = $this->name;
-		$formtag->method = 'post';
-		$formtag->action = $this->action;
+		$form_tag = new SwatHtmlTag('form');
+		$form_tag->id = $this->name;
+		$form_tag->method = 'post';
+		$form_tag->action = $this->action;
 
-		$formtag->open();
+		$form_tag->open();
 
 		foreach ($this->children as &$child)
 			$child->display();
 
-		$inputtag = new SwatHtmlTag('input');
-		$inputtag->type = 'hidden';
-		$inputtag->name = 'process';
-		$inputtag->value = $this->name;
+		$input_tag = new SwatHtmlTag('input');
+		$input_tag->type = 'hidden';
+		$input_tag->name = 'process';
+		$input_tag->value = $this->name;
 		echo '<div class="swat-input-hidden">';
-		$inputtag->display();
+		$input_tag->display();
 		echo '</div>';
 
-		$formtag->close();
+		$form_tag->close();
 	}
 
 	public function process() {

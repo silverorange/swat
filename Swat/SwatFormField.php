@@ -14,27 +14,32 @@ require_once('Swat/SwatHtmlTag.php');
 class SwatFormField extends SwatContainer {
 
 	/**
-	 * @var string The visible name for this field, or null.
+	 * The visible name for this field, or null.
+	 * @var string
 	 */
 	public $title = null;
 
 	/*
-	 * @var bool Display a visible indication that this field is required.
+	 * Display a visible indication that this field is required.
+	 * @var bool
 	 */
 	public $required = false;
 	
 	/**
-	 * @var string CSS class to use on the HTML div tag.
+	 * CSS class to use on the HTML div tag.
+	 * @var string
 	 */
 	public $class = 'swat-form-field';
 
 	/**
-	 * @var string CSS class to use on outer HTML div when an error message is displayed.
+	 * CSS class to use on outer HTML div when an error message is displayed.
+	 * @var string
 	 */
 	public $error_class = 'swat-form-field-error';
 
 	/**
-	 * @var string CSS class to use on the HTML div where the error message is displayed.
+	 * @var string
+	 * CSS class to use on the HTML div where the error message is displayed.
 	 */
 	public $errormsg_class = 'swat-form-field-errormsg';
 
@@ -46,39 +51,39 @@ class SwatFormField extends SwatContainer {
 
 		$error_messages = $this->gatherErrorMessages();
 		
-		$divtag = new SwatHtmlTag('div');
-		$divtag->class = (count($error_messages) > 0) ? $this->error_class : $this->class;
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->class = (count($error_messages) > 0) ? $this->error_class : $this->class;
 
-		$divtag->open();
+		$div_tag->open();
 
 		if ($this->title != null) {
-			$labeltag = new SwatHtmlTag('label');
-			$labeltag->for = $first_child->name;
-			$labeltag->open();
+			$label_tag = new SwatHtmlTag('label');
+			$label_tag->for = $first_child->name;
+			$label_tag->open();
 			echo $this->title, ':';
 
 			if ($this->required)
 				echo '<span class="required">*</span>';
 
-			$labeltag->close();
+			$label_tag->close();
 		}
 
 		foreach ($this->children as &$child)
 			$child->display();
 
 		if (count($error_messages) > 0) {
-			$errordivtag = new SwatHtmlTag('div');
-			$errordivtag->class = $this->errormsg_class;
+			$errordiv_tag = new SwatHtmlTag('div');
+			$errordiv_tag->class = $this->errormsg_class;
 			
-			$errordivtag->open();
+			$errordiv_tag->open();
 
 			foreach ($error_messages as &$err)
 				echo $err->message, '<br />';
 
-			$errordivtag->close();
+			$errordiv_tag->close();
 		}
 
-		$divtag->close();
+		$div_tag->close();
 	}
 }
 

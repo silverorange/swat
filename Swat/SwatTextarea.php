@@ -13,36 +13,40 @@ require_once('Swat/SwatHtmlTag.php');
 class SwatTextarea extends SwatControl {
 
 	/*
-	 * @var string Text content of the widget.
+	 * Text content of the widget.
+	 * @var string
 	 */
 	public $value = '';
 
 	/*
-	 * @var bool Must have a non-empty value when processed.
+	 * Must have a non-empty value when processed.
+	 * @var bool
 	 */
 	public $required = false;
 	
 	/**
-	 * @var int Number of rows for the HTML textarea tag.
+	 * Number of rows for the HTML textarea tag.
+	 * @var int
 	 */
 	public $rows = 10;
 
 	/**
-	 * @var int Number of columns for the HTML textarea tag.
+	 * Number of columns for the HTML textarea tag.
+	 * @var int
 	 */
 	public $cols = 50;
 	
 	function display() {
-		$textareatag = new SwatHtmlTag('textarea');
-		$textareatag->name = $this->name;
-		$textareatag->id = $this->name;
+		$textarea_tag = new SwatHtmlTag('textarea');
+		$textarea_tag->name = $this->name;
+		$textarea_tag->id = $this->name;
 		// Attributes rows and cols are required in a textarea for XHTML strict.
-		$textareatag->rows = $this->rows;
-		$textareatag->cols = $this->cols;
+		$textarea_tag->rows = $this->rows;
+		$textarea_tag->cols = $this->cols;
 
-		$textareatag->open();
+		$textarea_tag->open();
 		echo $this->value;
-		$textareatag->close();
+		$textarea_tag->close();
 	}	
 
 	function process() {

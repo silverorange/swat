@@ -12,17 +12,20 @@ require_once('Swat/SwatObject.php');
 abstract class SwatWidget extends SwatObject {
 
 	/**
-	 * @var SwatContainer The widget which contains this widget.
+	 * The widget which contains this widget.
+	 * @var SwatContainer
 	 */
 	public $parent = null;
 
 	/**
-	 * @var string A non-visible textual name for this widget, or null.
+	 * A non-visible textual name for this widget, or null.
+	 * @var string
 	 */
 	public $name;
 
 	/**
-	 * @param string A non-visible textual name for this widget.
+	 * A non-visible textual name for this widget.
+	 * @param string
 	 */
 	function __construct($name = null) {
 		$this->name = $name;
@@ -32,14 +35,13 @@ abstract class SwatWidget extends SwatObject {
 
 	/**
 	 * Display the widget.
-	 *
-	 * The widget displays itself as well as recursively displays any child widgets.
+	 * The widget displays itself as well as recursively displays any child 
+	 * widgets.
 	 */
 	abstract public function display();
 
 	/**
 	 * Display the widget with tidy HTML.
-	 *
 	 * this::display() is called and the output is cleaned by libtidy.
 	 */
 	public function displayTidy() {
@@ -61,7 +63,6 @@ abstract class SwatWidget extends SwatObject {
 
 	/**
 	 * Process the widget.
-	 *
 	 * After a form submit, the widget processes itself as well as recursively
 	 * processes any child widgets.
 	 */
@@ -71,7 +72,6 @@ abstract class SwatWidget extends SwatObject {
 
 	/**
 	 * Initialize the widget.
-	 *
 	 * Run by the widget constructor.
 	 */
 	public function init() {
@@ -80,8 +80,8 @@ abstract class SwatWidget extends SwatObject {
 
 	/**
 	 * Gather error messages.
-	 *
-	 * Gather all error messages from children of this widget and this widget itself.
+	 * Gather all error messages from children of this widget and this widget 
+	 * itself.
 	 *
 	 * @return array Array of SwatErrorMessage objects.
 	 */

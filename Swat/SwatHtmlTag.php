@@ -12,13 +12,15 @@ require_once('Swat/SwatObject.php');
 class SwatHtmlTag extends SwatObject {
 
 	/**
-	 * @var string The name of the HTML tag.
+	 * @var string
+	 * The name of the HTML tag.
 	 */
 	public $tagname;
 
 	/**
-	 * @var array Array containing attributes of the HTML tag in
-	 * the form of attr_name => value.
+	 * @var array
+	 * Array containing attributes of the HTML tag in the form of
+	 * (attr name) => (value).
 	 */
 	private $attributes;
 
@@ -43,7 +45,6 @@ class SwatHtmlTag extends SwatObject {
 
 	/**
 	 * Remove an attribute.
-	 *
 	 * Remove a previously assigned attribute. Useful when one tag object is
 	 * displayed multiple times with different attributes.
 	 *
@@ -55,7 +56,6 @@ class SwatHtmlTag extends SwatObject {
 
 	/**
 	 * Open the tag.
-	 *
 	 * Output the opening tag including all its attributes.
 	 *
 	 * @param bool $implicit_close If true the tag will be closed implicitly.
@@ -82,7 +82,6 @@ class SwatHtmlTag extends SwatObject {
 
 	/**
 	 * Close the tag.
-	 *
 	 * Output the closing tag.
 	 */
 	public function close() {
@@ -91,9 +90,8 @@ class SwatHtmlTag extends SwatObject {
 
 	/**
 	 * Display the tag.
-	 *
-	 * Output the opening tag including all its attributes and implicitly close the 
-	 * tag.
+	 * Output the opening tag including all its attributes and implicitly close
+	 * the tag.
 	 */
 	public function display() {
 		$this->open(true);

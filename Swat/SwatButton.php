@@ -13,17 +13,18 @@ require_once('Swat/SwatHtmlTag.php');
 class SwatButton extends SwatControl {
 
 	/**
-	 * @var string The visible text on the button.
+	 * The visible text on the button.
+	 * @var string
 	 */
 	public $title = 'Submit';
 	
 	function display() {
-		$inputtag = new SwatHtmlTag('input');
-		$inputtag->type = 'submit';
-		$inputtag->name = $this->name;
-		$inputtag->value = $this->title;
+		$input_tag = new SwatHtmlTag('input');
+		$input_tag->type = 'submit';
+		$input_tag->name = $this->name;
+		$input_tag->value = $this->title;
 
-		$inputtag->display();
+		$input_tag->display();
 	}	
 
 }

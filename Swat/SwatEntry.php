@@ -13,44 +13,47 @@ require_once('Swat/SwatHtmlTag.php');
 class SwatEntry extends SwatControl {
 
 	/*
-	 * @var string Text content of the widget, or null.
+	 * Text content of the widget, or null.
+	 * @var string
 	 */
 	public $value = null;
 
 	/*
-	 * @var bool Must have a non-empty value when processed.
+	 * Must have a non-empty value when processed.
+	 * @var bool
 	 */
 	public $required = false;
 	
 	/**
-	 * @var int Size in characters of the HTML text form input, or null.
+	 * Size in characters of the HTML text form input, or null.
+	 * @var int
 	 */
 	public $size = 50;
 	
 	/**
-	 * @var int Maximum number of allowable characters in HTML text form input,
-	 * or null.
+	 * @var int
+	 * Maximum number of allowable characters in HTML text form input, or null.
 	 */
 	public $maxlength = null;
 
 
 	function display() {
-		$inputtag = new SwatHtmlTag('input');
-		$inputtag->type = 'text';
-		$inputtag->name = $this->name;
-		$inputtag->id = $this->name;
-		$inputtag->onfocus = "this.select();";
+		$input_tag = new SwatHtmlTag('input');
+		$input_tag->type = 'text';
+		$input_tag->name = $this->name;
+		$input_tag->id = $this->name;
+		$input_tag->onfocus = "this.select();";
                 
 		if ($this->value != null)
 			$inputtag->value = $this->value;
 
 		if ($this->size != null)
-			$inputtag->size = $this->size;
+			$input_tag->size = $this->size;
 
 		if ($this->maxlength != null)
-			$inputtag->maxlength = $this->maxlength;
+			$input_tag->maxlength = $this->maxlength;
 
-		$inputtag->display();
+		$input_tag->display();
 	}	
 
 	function process() {
