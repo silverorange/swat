@@ -3,6 +3,7 @@
 
 require_once("MDB2.php");
 require_once("SwatDB/SwatDBField.php");
+require_once("SwatDB/SwatDBException.php");
 require_once("Swat/SwatTreeNode.php");
 
 /**
@@ -114,7 +115,7 @@ class SwatDB {
 		$values = $db->queryCol($sql, $field->type);
 
 		if (MDB2::isError($values))
-			throw new Exception($values->getMessage());
+			throw new SwatDBException($values->getMessage());
 
 		return $values;
 	}
@@ -160,7 +161,7 @@ class SwatDB {
 		$value = $db->queryOne($sql, $field->type);
 
 		if (MDB2::isError($value))
-			throw new Exception($value->getMessage());
+			throw new SwatDBException($value->getMessage());
 
 		return $value;
 	}
@@ -308,7 +309,7 @@ class SwatDB {
 		$rs = $db->query($sql, array($id_field->type, $title_field->type));
 
 		if (MDB2::isError($rs))
-			throw new Exception($rs->getMessage());
+			throw new SwatDBException($rs->getMessage());
 
 		$options = array();
 
@@ -384,7 +385,7 @@ class SwatDB {
 			$cascade_field->type));
 
 		if (MDB2::isError($rs))
-			throw new Exception($rs->getMessage());
+			throw new SwatDBException($rs->getMessage());
 
 		$options = array();
 		$current = null;
@@ -447,7 +448,7 @@ class SwatDB {
 		
 		$rs = $db->executeStoredProc($sp, array(0), $types, true);
 		if (MDB2::isError($rs))
-			throw new Exception($rs->getMessage());
+			throw new SwatDBException($rs->getMessage());
 
 		$tree = SwatDB::buildTreeOptionArray($rs, $title_field->name, $id_field->name, $level_field->name);
 		return $tree;
@@ -631,7 +632,7 @@ class SwatDB {
 		$rs = $db->query($sql);
 
 		if (MDB2::isError($rs))
-			throw new Exception($rs->getMessage());
+			throw new SwatDBException($rs->getMessage());
 
 		if ($id_field != null) {
 			$ret = SwatDB::getFieldMax($db, $table, $id_field);						
@@ -692,7 +693,7 @@ class SwatDB {
 		$rs = $db->query($sql);
 
 		if (MDB2::isError($rs))
-			throw new Exception($rs->getMessage());
+			throw new SwatDBException($rs->getMessage());
 	}
 
 	// }}}
