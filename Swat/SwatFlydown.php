@@ -47,7 +47,13 @@ class SwatFlydown extends SwatControl {
 				$option_tag->value = (string)$value;
 				$option_tag->removeAttr('selected');
 				
-				// check != null because 0 and null are the same in comparisons
+				/* Type juggling evalutes the expression (null == 0) as true.
+				 * This can occur in the second part of the expression below
+				 * ($this->value == $value), so we first explicitly check for
+				 * null.  The indentical operator (===) is not used in the 
+				 * second part since type juggling is desired by some users of
+				 * this class that treat the $value property as an integer.
+				 */
 				if ($this->value !== null && $this->value == $value)
 					$option_tag->selected = "selected";
 
