@@ -142,7 +142,8 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::MONTH) {
 			$this->monthfly = new SwatFlydown($this->name.'_month');
 			$this->monthfly->options = array(0 => '');
-			$this->monthfly->onchange = sprintf("dateSet('%s', this);", $this->name);
+			$this->monthfly->onchange = sprintf("dateSet('%s', this);",
+				$this->name);
 			
 			for ($i = 1; $i <= 12; $i++)
 				$this->monthfly->options[$i] = Date_Calc::getMonthFullName($i);
@@ -151,7 +152,8 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::DAY) {
 			$this->dayfly = new SwatFlydown($this->name.'_day');
 			$this->dayfly->options = array(0 => '');
-			$this->dayfly->onchange = sprintf("dateSet('%s', this);", $this->name);
+			$this->dayfly->onchange = sprintf("dateSet('%s', this);",
+				$this->name);
 			
 			for ($i = 1; $i <= 31; $i++)
 				$this->dayfly->options[$i] = $i;
@@ -160,7 +162,8 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::YEAR) {
 			$this->yearfly = new SwatFlydown($this->name.'_year');
 			$this->yearfly->options = array(0 => '');
-			$this->yearfly->onchange = sprintf("dateSet('%s', this);", $this->name);
+			$this->yearfly->onchange = sprintf("dateSet('%s', this);",
+				$this->name);
 			
 			$startyear = $this->valid_range_start->getYear();
 			$endyear   = $this->valid_range_end->getYear();
