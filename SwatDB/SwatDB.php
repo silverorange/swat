@@ -125,7 +125,7 @@ class SwatDB {
 	 * @param mixed $id The value to look for in the $id_field. The type should 
 	 *        correspond to the type of $id_field.
 	 *
-	 * @return MDB2_result_common Recordset containing a single column. 
+	 * @return array An associative array of $id_field => $field 
 	 */
 	public static function queryColumn($db, $table, $field, $id_field = null, $id = 0) {
 		$field = new SwatDBField($field, 'integer');
