@@ -34,7 +34,7 @@ class SwatContainer extends SwatWidget {
 	public function packStart(SwatWidget $widget) {
 		if ($widget->parent != null)
 			throw new SwatException("Attempting to add a widget that already ".
-			                        "has a parent.");
+				"has a parent.");
 
 		array_unshift($this->children, $widget);
 		$widget->parent = $this;
@@ -43,7 +43,7 @@ class SwatContainer extends SwatWidget {
 	public function packEnd(SwatWidget $widget) {
 		if ($widget->parent != null)
 			throw new SwatException("Attempting to add a widget that already ".
-			                        "has a parent.");
+				"has a parent.");
 
 		$this->children[] = $widget;
 		$widget->parent = $this;
