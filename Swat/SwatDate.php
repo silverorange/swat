@@ -326,6 +326,7 @@ class SwatDate extends SwatControl {
 			$created = true;
 			
 			echo '<script type="text/javascript">';
+			include_once('Swat/javascript/swat-find-index.js');
 			include('Swat/javascript/swat-date.js');
 			echo '</script>';
 		}
