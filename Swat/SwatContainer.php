@@ -6,7 +6,6 @@
  */
 require_once('Swat/SwatWidget.php');
 require_once('Swat/SwatException.php');
-require_once('util/array_unshift_ref.php');
 
 /**
  * Base class for widgets which contain other widgets.
@@ -36,7 +35,7 @@ class SwatContainer extends SwatWidget {
 		if ($widget->parent != null)
 			throw new SwatException('Attempting to add a widget that already has a parent.');
 
-		array_unshift_ref($this->children, $widget);
+		array_unshift($this->children, $widget);
 		$widget->parent = $this;
 	}
 
