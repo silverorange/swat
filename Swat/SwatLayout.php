@@ -21,11 +21,11 @@ class SwatLayout extends SwatObject {
 		$xml = simplexml_load_file($filename);
 			
 		$this->widgets = array();
-		$widget_tree =& $this->build($xml, $toplevel);
+		$widget_tree =& $this->build($xml, $this->toplevel);
 		//print_r(array_keys($this->widgets));
 	}
 
-	function &getWidget($name) {
+	public function &getWidget($name) {
 		if (array_key_exists($name, $this->widgets))
 			return $this->widgets[$name];
 		else
@@ -50,81 +50,42 @@ class SwatLayout extends SwatObject {
 
 	private function buildWidget($name, $node) {
 
-		$attrs = array();
-		foreach ($node->attributes() as $attrname => $value) {
-			$attrs[$attrname] = (string)$value;
-		}
+		require_once("Swat/$name.php");
+		$w = eval(sprintf("return new %s();", $name));
+		$classvars = get_class_vars($name);
+		//print_r($classvars);
 
-		switch ($name) {
-			case 'SwatFrame':
-				require_once('Swat/SwatFrame.php');
-				$w = new SwatFrame();
-				$this->getAttr($w, $attrs, 'title', 'string');
-				break;
-			case 'SwatForm':
-				require_once('Swat/SwatForm.php');
-				$w = new SwatForm();
-				break;
-			case 'SwatFormField':
-				require_once('Swat/SwatFormField.php');
-				$w = new SwatFormField();
-				$this->getAttr($w, $attrs, 'title', 'string');
-				break;
-			case 'SwatDiv':
-				require_once('Swat/SwatDiv.php');
-				$w = new SwatDiv();
-				$this->getAttr($w, $attrs, 'class', 'string');
-				break;
-			case 'SwatEntry':
-				require_once('Swat/SwatEntry.php');
-				$w = new SwatEntry();
-				$this->getAttr($w, $attrs, 'required', 'bool');
-				break;
-			case 'SwatTextarea':
-				require_once('Swat/SwatTextarea.php');
-				$w = new SwatTextarea();
-				$this->getAttr($w, $attrs, 'required', 'bool');
-				break;
-			case 'SwatCheckbox':
-				require_once('Swat/SwatCheckbox.php');
-				$w = new SwatCheckbox();
-				$this->getAttr($w, $attrs, 'required', 'bool');
-				break;
-			case 'SwatFlydown':
-				require_once('Swat/SwatFlydown.php');
-				$w = new SwatFlydown();
-				break;
-			case 'SwatButton':
-				require_once('Swat/SwatButton.php');
-				$w = new SwatButton();
-				$this->getAttr($w, $attrs, 'title', 'string');
-				break;
-			default:
-				$w = null;
-		}
+		foreach ($node->attributes() as $attrname => $attrvalue) {
+			$attrname = (string)$attrname;
+			$attrvalue = (string)$attrvalue;
 
-		$this->getAttr($w, $attrs, 'name', 'string');
+			if (array_key_exists($attrname, $classvars)) {
 
-		return $w;
-	}
+				if (strncmp($attrvalue, 'bool:', 5) == 0)
+					$w->$attrname = (substr($attrvalue, 5) == 'true') ? true : false;
+				elseif (strncmp($attrvalue, 'int:', 4) == 0)
+					$w->$attrname = intval(substr($attrvalue, 4));
 
-	private function getAttr(&$w, &$attrs, $name, $type) {
+				elseif (strncmp($attrvalue, 'float:', 6) == 0)
+					$w->$attrname = floatval(substr($attrvalue, 6));
 
-		if (array_key_exists($name, $attrs)) {
-			switch ($type) {
-				case 'int':
-					$w->$name = intval($attrs[$name]);
-					break;
-				case 'float':
-					$w->$name = floatval($attrs[$name]);
-					break;
-				case 'bool':
-					$w->$name = ($attrs[$name] == 'true') ? true : false;
-					break;
-				default:
-					$w->$name = $attrs[$name];
-					break;
+				elseif (strncmp($attrvalue, 'string:', 7) == 0)
+					$w->$attrname = substr($attrvalue, 7);
+
+				else {
+					if ($attrvalue == 'false' || $attrvalue == 'true' )
+						trigger_error(__CLASS__.": Possible missing 'bool:' on attribute $attrname", E_USER_NOTICE);
+					if (is_numeric($attrvalue))
+						trigger_error(__CLASS__.": Possible missing 'int:' or 'float:' on attribute $attrname", E_USER_NOTICE);
+
+					$w->$attrname = $attrvalue;
+				}
+
+			} else {
+				throw new SwatException(__CLASS__.": no attribute named '$attrname' in class $name");
 			}
 		}
+					
+		return $w;
 	}
 }
