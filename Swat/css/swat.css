@@ -5,18 +5,18 @@ body {
 
 /* SwatFrame */
 
-.SwatFrame {
+.swat-frame {
 	border: 1px solid #ccc;
 	margin: 1em;
 }
 
-.SwatFrame > h2 {
+.swat-frame > h2 {
 	margin: 0;
 	padding: 0.2em;
 	background: #eee;
 }
 
-.SwatFrameContents {
+.swat-frame-contents {
 	margin: 0;
 	padding: 1em;
 }
@@ -32,7 +32,7 @@ label {
 	display: block;
 }
 
-.SwatFormField {
+.swat-form-field {
 	margin: 0 0 0.5em 0;
 }
 
@@ -46,11 +46,11 @@ textarea {
 	width: 30em;
 }
 
-.SwatFormFooter {
+.swat-form-footer {
 	text-align: right;
 }
 
-.SwatFormFooter > input.primary {
+.swat-form-footer > input.primary {
 	padding: 0.2em 0.8em;
 	font-weight: bold;
 }

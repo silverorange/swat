@@ -21,7 +21,7 @@ class SwatFormField extends SwatContainer {
 	/**
 	 * @var string Class to use on the HTML div tag.
 	 */
-	public $class = 'SwatFormField';
+	public $class = 'swat-form-field';
 
 	public function display() {
 		$child =& $this->getChild();
@@ -43,13 +43,8 @@ class SwatFormField extends SwatContainer {
 			if (($child instanceof SwatControl) && $child->required)
 				echo '<span class="required">*</span>';
 
-			if ($child instanceof SwatCheckbox) {
-				$child->display();
-				$labeltag->close();
-			} else {
-				$labeltag->close();
-				$child->display();
-			}
+			$labeltag->close();
+			$child->display();
 
 		} else {
 			$child->display();
