@@ -50,7 +50,7 @@ class SwatHtmlTag extends SwatObject {
 	 * setting properties of a tag object.
 	 */
 	public function __set($attr, $val) {
-		$this->attributes[$attr] = $val;
+		$this->attributes[$attr] = (string)$val;
 	}
 
 	/**

@@ -1,4 +1,4 @@
-<?xml version='1.0' standalone='yes'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <SwatLayout>
 	<SwatFrame name="frame1" title="New Weblog Post Example Form">
 		<SwatForm name="form1" action="#">
