@@ -15,19 +15,19 @@ class SwatYesNoFlydown extends SwatFlydown {
 	const YES = 2;
 	
 	public function display() {
-		$this->options = array(SwatFlydownYesNo::BLANK => '',
-		                       SwatFlydownYesNo::NO => _S("No"),
-		                       SwatFlydownYesNo::YES => _S("Yes"));
+		$this->options = array(SwatYesNoFlyown::BLANK => '',
+		                       SwatYesNoFlyown::NO => _S("No"),
+		                       SwatYesNoFlyown::YES => _S("Yes"));
 
 		parent::display();
 	}
 
 	public function getValueAsBoolean() {
 		switch ($this->value) {
-			case SwatFlydownYesNo::NO:
+			case SwatYesNoFlydown::NO:
 				return false;
 
-			case SwatFlydownYesNo::YES:
+			case SwatYesNoFlydown::YES:
 				return true;
 
 			default:
