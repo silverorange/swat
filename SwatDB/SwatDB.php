@@ -16,10 +16,11 @@ require_once("Swat/SwatTreeNode.php");
 class SwatDB {
 	
 	/**
-	 * Update a field
+	 * Update a column
 	 *
  	 * Convenience method to update a single database field for one or more 
-	 * rows. One convenient use of this method is for processing SwatActions
+	 * rows. One convenient use of this method is for processing {@link
+	 * SwatAction}s
 	 * that change a single database field.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
@@ -43,7 +44,7 @@ class SwatDB {
 	 *        rows to be updated. The type of the individual identifiers should 
 	 *        correspond to the type of $id_field.
 	 */
-	public static function updateField($db, $table, $field, $value, $id_field, $ids) {
+	public static function updateColumn($db, $table, $field, $value, $id_field, $ids) {
 
 		if (count($ids) == 0)
 			return;
@@ -70,7 +71,7 @@ class SwatDB {
 
 
 	/**
-	 * Query a field
+	 * Query a column
 	 *
  	 * Convenience method to query for values in a single database column.
 	 * One convenient use of this method is for loading values from a binding 
@@ -94,7 +95,7 @@ class SwatDB {
 	 * @param mixed $id The value to look for in the $id_field. The type should 
 	 *        correspond to the type of $id_field.
 	 */
-	public static function queryField($db, $table, $field, $id_field = null, $id = 0) {
+	public static function queryColumn($db, $table, $field, $id_field = null, $id = 0) {
 		$field = new SwatDBField($field, 'integer');
 
 		if ($id_field == null) {
@@ -114,6 +115,48 @@ class SwatDB {
 		return $values;
 	}
 
+	/**
+	 * Query a single value
+	 *
+ 	 * Convenience method to query a single value in a single database column.
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 *
+	 * @param string $table The database table to query.
+	 *
+	 * @param string $field The name of the database field to query. Can be 
+	 *        given in the form type:name where type is a standard MDB2 
+	 *        datatype. If type is ommitted, then integer is assummed for this 
+	 *        field.
+	 *
+	 * @param string $id_field The name of the database field that contains the
+	 *        the id.  If not null this will be used to construct a where clause
+	 *        to limit results. Can be given in the form type:name where type is
+	 *        a standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        assummed for this field.
+	 *
+	 * @param mixed $id The value to look for in the $id_field. The type should 
+	 *        correspond to the type of $id_field.
+	 */
+	public static function queryOne($db, $table, $field, $id_field = null, $id = 0) {
+		$field = new SwatDBField($field, 'integer');
+
+		if ($id_field == null) {
+			$sql = 'select %s from %s';
+			$sql = sprintf($sql, $field->name, $table);
+		} else {
+			$id_field = new SwatDBField($id_field, 'integer');
+			$sql = 'select %s from %s where %s = %s';
+			$sql = sprintf($sql, $field->name, $table, $id_field->name, $id);
+		}
+
+		$value = $db->queryOne($sql, $field->type);
+
+		if (MDB2::isError($value))
+			throw new Exception($value->getMessage());
+
+		return $value;
+	}
 
 	/**
 	 * Update a binding table
