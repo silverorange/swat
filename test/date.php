@@ -1,5 +1,5 @@
 <?php
-
+//setlocale(LC_TIME, "fr_FR");
 require('header.php');
 
 require_once('Swat/SwatLayout.php');
@@ -10,14 +10,15 @@ $layout = new SwatLayout('date.xml');
 $form1 = $layout->getWidget('form1');
 $frame1 = $layout->getWidget('frame1');
 
-$date = $layout->getWidget('date');
-$date->display = (SwatDate::YEAR | SwatDate::MONTH | SwatDate::DAY | SwatDate::TIME);
+$date = $layout->getWidget('date2');
+//$date->display = (SwatDate::YEAR | SwatDate::MONTH | SwatDate::CALENDAR);
 
+/*
 $date->valid_range_start = new Date();
 $date->valid_range_start->subtractSeconds(86400*1456);
 $date->valid_range_end = clone $date->valid_range_start;
 $date->valid_range_end->addSeconds(86400*200);
-
+*/
 /*
 $date->valid_range_end->setYear(2005);
 $date->valid_range_end->setMonth(3);

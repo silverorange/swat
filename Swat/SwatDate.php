@@ -19,10 +19,11 @@ class SwatDate extends SwatControl {
 	 */
 	public $value = null;
 	
-	const  YEAR  = 1;
-	const  MONTH = 2;
-	const  DAY   = 4;
-	const  TIME  = 8;
+	const  YEAR     = 1;
+	const  MONTH    = 2;
+	const  DAY      = 4;
+	const  TIME     = 8;
+	const  CALENDAR = 16;
 		
 	/**
 	 * Date parts that are required. Bitwise combination of SwatDate::YEAR,
@@ -33,7 +34,7 @@ class SwatDate extends SwatControl {
 	
 	/**
 	 * Date parts that are displayed. Bitwise combination of SwatDate::YEAR,
-	 * SwatDate::MONTH, SwatDate::DAY, and SwatDate::TIME.
+	 * SwatDate::MONTH, SwatDate::DAY, SwatDate::TIME, and SwatDate::CALENDAR.
 	 * @var int
 	 */
 	public $display;
@@ -62,7 +63,7 @@ class SwatDate extends SwatControl {
 	
 	public function init() {
 		$this->required = self::YEAR | self::MONTH | self::DAY;
-		$this->display  = self::YEAR | self::MONTH | self::DAY;
+		$this->display  = self::YEAR | self::MONTH | self::DAY | self::CALENDAR;
 
 		$this->setValidRange(-20, +20);
 	}
@@ -96,25 +97,35 @@ class SwatDate extends SwatControl {
 		$this->createFlydowns();
 		$this->displayJavascript();
 		
-		// TODO: order these based on locale		
-		if ($this->display & self::MONTH)
-			$this->monthfly->display();
+		// using php date functions here because the Date class doesn't seem
+		// to support locale-ordering of date parts 
+		$order = split('[/.-]', strftime('%x', mktime(0, 0, 0, 1, 2, 2003)));
 		
-		if ($this->display & self::DAY)
-			$this->dayfly->display();
-		
-		if ($this->display & self::YEAR)
-			$this->yearfly->display();
+		foreach ($order as $datepart) {
+			$m = ($datepart == 1);
+			$d = ($datepart == 2);
+			$y = ($datepart == 2003 || $datepart == 3);
+				 // returns either 2003 or 03 depending on the locale
 			
+			if ($m && $datepart == 1 && $this->display & self::MONTH)
+				$this->monthfly->display();
+			elseif ($d && $datepart == 2 && $this->display & self::DAY)
+				$this->dayfly->display();
+			elseif ($y && $this->display & self::YEAR)
+				$this->yearfly->display();
+		}
+		
 		if ($this->display & self::TIME)
 			$this->timefly->display();
-			
-		include_once('Swat/SwatCalendar.php');
-		$cal = new SwatCalendar();
-		$cal->name = $this->name;
-		$cal->valid_range_start = $this->valid_range_start;
-		$cal->valid_range_end   = $this->valid_range_end;
-		$cal->display();
+		
+		if ($this->display & self::CALENDAR) {
+			include_once('Swat/SwatCalendar.php');
+			$cal = new SwatCalendar();
+			$cal->name = $this->name;
+			$cal->valid_range_start = $this->valid_range_start;
+			$cal->valid_range_end   = $this->valid_range_end;
+			$cal->display();
+		}
 	}
 	
 	public function process() {

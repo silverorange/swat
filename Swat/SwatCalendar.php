@@ -12,8 +12,18 @@ require_once('Date.php');
  */
 class SwatCalendar extends SwatControl {
 
-	var $valid_range_start;
-	var $valid_range_end;
+	/**
+	 * Start date of the valid range (inclusive).
+	 * @var Date
+	 */
+	public $valid_range_start;
+	
+	/**
+	 * End date of the valid range (exclusive).
+	 * @var Date
+	 */
+	public $valid_range_end;
+	
 	
 	public function display() {
 		echo '<script type="text/javascript">';
@@ -26,6 +36,7 @@ class SwatCalendar extends SwatControl {
 		$date->setMonth(1);
 		$date->setYear(1995);
 		
+		//set the names of weeks (locale-specific)
 		$weeks = array();
 		for ($i = 1; $i < 8; $i++) {
 			$weeks[] = $date->format('%a');
@@ -33,6 +44,7 @@ class SwatCalendar extends SwatControl {
 		}
 		$weeks = "['".implode("','", $weeks)."']";
 		
+		//set the names of months (locale-specific)
 		$months = array();
 		for ($i = 1; $i < 13; $i++) {
 			$months[] = $date->format('%b');
@@ -66,7 +78,9 @@ class SwatCalendar extends SwatControl {
 		echo '	onmousedown="';
 		echo " clickWidgetIcon('$this->name','$start_date','$end_date');";
 		echo '" />';
-		echo '<br /><div id="'.$this->name.'Div" class="swat-calendar-div-hide"></div>';
+		echo '<br />';
+		echo '<div id="'.$this->name.'Div" class="swat-calendar-div-hide">';
+		echo '</div>';
 
 	}
 }
