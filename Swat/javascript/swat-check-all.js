@@ -14,6 +14,10 @@ function swatCheckAll(form, name, series) {
 	}
 }
 
+function swatCheckbox(chk) {
+	window.alert(chk.value);
+}
+
 //TODO: add javascript to set check_all = true/false if all
 // checkboxes are checked. We need to figure out how to best
 // add this to the onclick event of the checkboxes on the page
