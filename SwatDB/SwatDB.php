@@ -106,17 +106,10 @@ class SwatDB {
 			$sql = sprintf($sql, $field->name, $table, $id_field->name, $id);
 		}
 
-		$rs = $db->query($sql, array($field->type));
+		$values = $db->queryCol($sql, $field->type);
 
-		if (MDB2::isError($rs))
-			throw new Exception($rs->getMessage());
-
-		$values = array();
-
-		while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
-			$field_name = $field->name;
-			$values[] = $row->$field_name;
-		}
+		if (MDB2::isError($values))
+			throw new Exception($values->getMessage());
 
 		return $values;
 	}
@@ -283,8 +276,8 @@ class SwatDB {
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 *
-	 * @param string $sp Stored procedure/function to execute. Must return the
-	 *        values: id, title, level - in the order of output.
+	 * @param string $sp Stored procedure/function to execute. Must return a 
+	 *        recordset containing three columns in order: id, title, level.
 	 *
 	 * @param string $title_field The name of the database field to query for 
 	 *        the title. Can be given in the form type:name where type is a
