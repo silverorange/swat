@@ -31,7 +31,7 @@ class SwatLayout extends SwatObject {
 			throw new SwatException(__CLASS__.": no widget named '$name'");
 	}
 
-	private function build($node, &$parent_widget) {
+	private function build($node, $parent_widget) {
 		foreach ($node->children() as $childname => $childnode) {
 
 			$widget = $this->buildWidget($childname, $childnode);

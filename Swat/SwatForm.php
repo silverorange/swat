@@ -29,7 +29,7 @@ class SwatForm extends SwatContainer {
 	 * @param $widget SwatWidget A reference to a widget to add.
 	 * @param $title string The visible name of the form field.
 	 */
-	public function addWithField(SwatWidget &$widget, $title) {
+	public function addWithField(SwatWidget $widget, $title) {
 		$field = new SwatFormField();
 		$field->add($widget);
 		$field->title = $title;
@@ -45,7 +45,7 @@ class SwatForm extends SwatContainer {
 	 * @param $widget SwatWidget A reference to a widget to add.
 	 * @param $title string The class of the HTML div tag.
 	 */
-	public function addWithDiv(SwatWidget &$widget, $class) {
+	public function addWithDiv(SwatWidget $widget, $class) {
 		$field = new SwatDiv();
 		$field->add($widget);
 		$field->class = $class;

@@ -28,11 +28,11 @@ class SwatContainer extends SwatWidget {
 	 *
 	 * @param $widget SwatWidget A reference to a widget to add.
 	 */
-	public function add(SwatWidget &$widget) {
+	public function add(SwatWidget $widget) {
 		$this->packEnd($widget);
 	}
 
-	public function packStart(SwatWidget &$widget) {
+	public function packStart(SwatWidget $widget) {
 		if ($widget->parent != null)
 			throw new SwatException('Attempting to add a widget that already has a parent.');
 
@@ -40,7 +40,7 @@ class SwatContainer extends SwatWidget {
 		$widget->parent = $this;
 	}
 
-	public function packEnd(SwatWidget &$widget) {
+	public function packEnd(SwatWidget $widget) {
 		if ($widget->parent != null)
 			throw new SwatException('Attempting to add a widget that already has a parent.');
 
