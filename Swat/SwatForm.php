@@ -43,20 +43,36 @@ class SwatForm extends SwatContainer {
 		foreach ($this->children as $child)
 			$child->display();
 
+		$this->displayHiddenFields();
+		$form_tag->close();
+	}
+
+	private function displayHiddenFields() {
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
 
 		echo '<div class="swat-input-hidden">';
 
 		foreach ($this->hidden_fields as $name => $value) {
-			$input_tag->name = $name;
-			$input_tag->value = $value;
+			if (is_array($value)) {
+				foreach ($value as $v) {
+					$input_tag->name = $name.'[]';
+					$input_tag->value = $v;
+					$input_tag->display();
+				}
+			} else {
+				$input_tag->name = $name;
+				$input_tag->value = $value;
+				$input_tag->display();
+			}
+
+			// array of field names
+			$input_tag->name = $this->name.'_hidden_fields[]';
+			$input_tag->value = $name;
 			$input_tag->display();
 		}
 
 		echo '</div>';
-
-		$form_tag->close();
 	}
 
 	public function process() {
@@ -66,17 +82,56 @@ class SwatForm extends SwatContainer {
 		foreach ($this->children as &$child)
 			$child->process();
 
+		$this->processHiddenFields();
+
 		return true;
+	}
+
+	private function processHiddenFields() {
+		if (isset($_POST[$this->name.'_hidden_fields']))
+			$fields = $_POST[$this->name.'_hidden_fields'];
+		else
+			return;
+
+		if (!is_array($fields))
+			return;
+
+		foreach ($fields as $name) {
+			if (isset($_POST[$name])) {
+				$value = $_POST[$name];
+				$this->addHiddenField($name, $value);
+			}
+		}
 	}
 
 	/**
 	 * Add a hidden form field.
 	 * Add an HTML input type=hidden field to this form.
 	 * @param string $name The name of the field.
-	 * @param string $value The value of the field.
+	 * @param mixed $value The value of the field, either a string or an array.
 	 */
 	public function addHiddenField($name, $value) {
 		$this->hidden_fields[$name] = $value;
+	}
+
+	/**
+	 * Get the value of a hidden form field.
+	 * @param string $name The name of the field.
+	 * @return mixed $value The value of the field, either a string or an 
+	 * array, or null if the field does not exist.
+	 */
+	public function getHiddenField($name) {
+		if (isset($this->hidden_fields[$name]))
+			return $this->hidden_fields[$name];
+
+		return null;
+	}
+
+	/**
+	 * Clear the hidden fields.
+	 */
+	public function clearHiddenFields() {
+		$this->hidden_fields = array();
 	}
 
 	/**
