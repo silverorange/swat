@@ -3,16 +3,16 @@ require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 
 /**
- * A radio list selection widget
+ * A checkbox list widget
  *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatRadioList extends SwatControl {
+class SwatCheckboxList extends SwatControl {
 	
 	/**
-	 * Radio list options
+	 * Checkbox list options
 	 *
 	 * An array of options for the radio list in the form value => title.
 	 * @var array
@@ -20,25 +20,25 @@ class SwatRadioList extends SwatControl {
 	public $options = null;
 
 	/**
-	 * List value 
+	 * List values 
 	 *
-	 * The value of the selected item, or null.
-	 * @var string
+	 * The values of the selected items.
+	 * @var array
 	 */
-	public $value = null;
+	public $values = array();
 
 	/**
 	 * On change
 	 *
-	 * The onchange attribute of the HTML input type=radio tags, or null.
+	 * The onchange attribute of the HTML input type=checkbox tags, or null.
 	 * @var string
 	 */
 	public $onchange = null;
 
 	public function display() {
 		$input_tag = new SwatHtmlTag('input');
-		$input_tag->type = 'radio';
-		$input_tag->name = $this->name;
+		$input_tag->type = 'checkbox';
+		$input_tag->name = $this->name.'[]';
 		if ($this->onchange != null)
 			$input_tag->onchange = $this->onchange;
 			
@@ -51,7 +51,7 @@ class SwatRadioList extends SwatControl {
 				$input_tag->value = (string)$value;
 				$input_tag->removeAttr('checked');
 				
-				if ((string)$this->value === (string)$value)
+				if (in_array($value, $this->values))
 					$input_tag->checked = "checked";
 				
 				$input_tag->id = $this->name.'_'.$input_tag->value;
@@ -69,20 +69,20 @@ class SwatRadioList extends SwatControl {
 
 	public function process() {
 		if (isset($_POST[$this->name]))
-			$this->value = $_POST[$this->name];
+			$this->values = $_POST[$this->name];
 		else
-			return $this->value = null;
+			$this->values = array();
 	}
 
 	/**
-	 * Reset the radio list.
+	 * Reset the checkbox list.
 	 *
 	 * Reset the list to its default state.  This is useful to call from a 
 	 * display() method when persistence is not desired.
 	 */
 	public function reset() {
 		reset($this->options);
-		$this->value = key($this->options);
+		$this->values = key($this->options);
 	}
 }
 
