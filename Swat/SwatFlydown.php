@@ -119,7 +119,7 @@ class SwatFlydown extends SwatControl {
 	 */
 	public function reset() {
 		reset($this->options);
-		$this->value = key($this->options);
+		$this->value = null;	
 	}
 	
 	public function getState() {
