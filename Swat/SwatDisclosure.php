@@ -46,7 +46,7 @@ class SwatDisclosure extends SwatContainer {
 		$img = new SwatHtmlTag('img');
 	
 		if ($this->open) {
-			$img->src = 'swat/images/disclosure-opened.png';
+			$img->src = 'swat/images/disclosure-open.png';
 			$img->alt = 'close';
 		} else {
 			$img->src = 'swat/images/disclosure-closed.png';
