@@ -13,7 +13,7 @@ class SwatCellRendererText extends SwatCellRenderer {
 	/**
 	 * Cell content
 	 *
-	 * The content to place within the HTML anchor tag. In a SwatUI XML file 
+	 * The content to place within the cell. In a SwatUI XML file 
 	 * this comes from the content of the SwatCellRendererLink tag.
 	 * @var string
 	 */
