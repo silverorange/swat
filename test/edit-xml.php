@@ -12,7 +12,7 @@
 ini_set('include_path', '..');
 require_once('Swat/SwatLayout.php');
 
-$layout = new SwatLayout('edit2.xml');
+$layout = new SwatLayout('edit.xml');
 
 // TODO: not sure about this notation:
 $replystatus = $layout->getWidget('replystatus');
