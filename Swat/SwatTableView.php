@@ -19,8 +19,7 @@ class SwatTableView extends SwatControl {
 	 */
 	public $model = null;
 
-	private $columns;
-	private $rows;
+	protected $columns;
 
 	public function init() {
 		$this->columns = array();
@@ -28,10 +27,6 @@ class SwatTableView extends SwatControl {
 
 	public function appendColumn(SwatTableViewColumn $column) {
 		$this->columns[] = $column;
-	}
-
-	public function appendRow(SwatTableViewRow $row) {
-		$this->rows[] = $row;
 	}
 
 	public function display() {
@@ -55,7 +50,7 @@ class SwatTableView extends SwatControl {
 		echo '</tr>';
 	}
 
-	private function displayContent() {
+	protected function displayContent() {
 		$count = 0;
 
 		foreach ($this->model->getRows() as $id => $row) {
@@ -69,10 +64,6 @@ class SwatTableView extends SwatControl {
 			echo '</tr>';
 
 		}
-
-		foreach ($this->rows as $row)
-			$row->display($this->columns);
-
 	}
 
 }
