@@ -9,7 +9,7 @@
 <?
 
 #ini_set('include_path', '/so/include');
-ini_set('include_path', '..');
+ini_set('include_path', '..:/usr/lib/php');
 require_once('Swat/SwatForm.php');
 require_once('Swat/SwatFrame.php');
 require_once('Swat/SwatEntry.php');
