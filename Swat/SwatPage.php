@@ -16,6 +16,11 @@ abstract class SwatPage extends SwatObject {
 	 */
 	public $title = '';
 
+	/**
+	 * @var app A reference to the SwatApplication object that created this page.
+	 */
+	public $app = null;
+
 	function __construct() {
 
 	}
