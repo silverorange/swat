@@ -29,8 +29,8 @@ class SwatCellRendererCheckbox extends SwatCellRenderer {
 		$input_tag->name = $prefix.$this->name.'[]';
 		$input_tag->value = $this->value;
 
-		if (isset($_POST[$this->name]))
-			if (in_array($this->value, $_POST[$this->name]))
+		if (isset($_POST[$prefix.$this->name]))
+			if (in_array($this->value, $_POST[$prefix.$this->name]))
 				$input_tag->checked = 'checked';
 
 		$input_tag->display();
