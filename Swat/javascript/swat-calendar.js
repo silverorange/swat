@@ -52,7 +52,7 @@ function closeCal(idtag) {
 function closeCalNoDate(idtag) {
 	//swat-removed: y = document.getElementById(idtag);
 	//swat-removed: y.value = "";
-	setDateValues(idtag,-1,-1,-1);
+	setDateValues(idtag,'','','');
 	
 	t = document.getElementById(idtag + "Div");
 	t.style.display = "none";
@@ -242,13 +242,12 @@ function drawCalendar() {
 		var m = document.getElementById(idtag + '_month');
 		var y = document.getElementById(idtag + '_year');
 		
-		day   = (d ? parseInt(d.value) : today.getDate());
-		month = (m ? parseInt(m.value) : today.getMonth()+1);
-		year  = (y ? parseInt(y.value) : today.getYear());
-				
-		if (day != -1 && month != -1 && year != -1) {
-			//var wholeValue = x.value;
-			//var dateparts = wholeValue.split("/");
+		var day   = (d.value == '' ? today.getDate()     : parseInt(d.value));
+		var month = (m.value == '' ? today.getMonth()+1  : parseInt(m.value));
+		var year   = (y.value == '' ? today.getYear()    : parseInt(y.value));
+			
+		//TODO: figure out if the last two conditions are ever run
+		if (day != 0 && month != 0 && year != 0) {
 			var mm = month;
 			var dd = day;
 			var yyyy = year;
