@@ -18,6 +18,8 @@ class SwatCellRendererCheck extends SwatCellRenderer {
 			$image_tag = new SwatHtmlTag('img');
 			$image_tag->src = 'swat/images/check.png';
 			$image_tag->alt = _S('Yes');
+			$image_tag->height = '14';
+			$image_tag->width = '14';
 			$image_tag->display();
 		} else {
 			echo '&nbsp;';
