@@ -49,6 +49,9 @@ class SwatActions extends SwatControl {
 	}
 		
 	public function display() {
+		if (!$this->visible)
+			return;
+
 		$this->createWidgets();
 		$this->displayJavascript();
 		
