@@ -35,8 +35,8 @@ class SwatForm extends SwatContainer {
 
 	/**
 	 * Add a widget within a new SwatDiv.
-	 * Convenience function to create a new SwatDiv, add the widget as a child of
-	 * the div, and then add the div to this form.
+	 * Convenience function to create a new SwatDiv, add the widget as a child
+	 * of the div, and then add the div to this form.
 	 *
 	 * @param $widget SwatWidget A reference to a widget to add.
 	 * @param $title string The class of the HTML div tag.

@@ -67,8 +67,8 @@ class SwatHtmlTag extends SwatObject {
 	/**
 	 * Display the tag.
 	 * Output the opening tag including all its attributes and implicitly close
-	 * the tag.  If explicit closing is desired, use {@link SwatHtmlTag::display()}
-	 * instead.
+	 * the tag.  If explicit closing is desired, use
+	 * {@link SwatHtmlTag::display()} instead.
 	 */
 	public function display() {
 		$this->openInternal(true);
