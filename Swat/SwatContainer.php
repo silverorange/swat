@@ -5,7 +5,6 @@
  * @copyright silverorange 2004
  */
 require_once('Swat/SwatWidget.php');
-require_once('Swat/SwatException.php');
 
 /**
  * Base class for widgets which contain other widgets.

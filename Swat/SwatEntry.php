@@ -6,7 +6,6 @@
  */
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatException.php');
 
 /**
  * A single line text entry widget.

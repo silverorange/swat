@@ -6,7 +6,6 @@
  */
 require_once('Swat/SwatContainer.php');
 require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatException.php');
 
 /**
  * Toplevel which can contain other widgets.
