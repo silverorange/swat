@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -21,10 +21,10 @@ class SwatLayout extends SwatObject {
 		$xml = simplexml_load_file($filename);
 			
 		$this->widgets = array();
-		$widget_tree =& $this->build($xml, $this->toplevel);
+		$widget_tree = $this->build($xml, $this->toplevel);
 	}
 
-	public function &getWidget($name) {
+	public function getWidget($name) {
 		if (array_key_exists($name, $this->widgets))
 			return $this->widgets[$name];
 		else
@@ -34,12 +34,12 @@ class SwatLayout extends SwatObject {
 	private function build($node, &$parent_widget) {
 		foreach ($node->children() as $childname => $childnode) {
 
-			$widget =& $this->buildWidget($childname, $childnode);
+			$widget = $this->buildWidget($childname, $childnode);
 
-			$this->widgets[$widget->name] =& $widget;
+			$this->widgets[$widget->name] = $widget;
 
 			if ($parent_widget == null)
-				$parent_widget =& $widget;
+				$parent_widget = $widget;
 			else
 				$parent_widget->add($widget);
 
