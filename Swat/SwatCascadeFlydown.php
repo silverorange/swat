@@ -9,7 +9,7 @@ require_once('Swat/SwatHtmlTag.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatFlydownCascade extends SwatFlydown {
+class SwatCascadeFlydown extends SwatFlydown {
 	
 	/**
 	 * Flydown options
