@@ -17,6 +17,29 @@ require_once("Swat/SwatTreeNode.php");
  */
 class SwatDB {
 	
+    // {{{ query()
+
+	/**
+	 * Query a recordset
+	 *
+ 	 * Convenience method to query.
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 * @param string $sql The SQL to execute.
+	 * @param array $types Optional array MDB2 datatypes for the recordset.
+	 *
+	 * @return MDB2_result_common A recordset containing the query result.
+	 */
+	public static function query($db, $sql, $types = null) {
+		$rs = $db->query($sql, $types);
+
+		if (MDB2::isError($rs))
+			throw new SwatDBException($rs->getMessage());
+
+		return $rs;
+	}
+
+	// }}}
     // {{{ updateColumn()
 	
 	/**
@@ -99,6 +122,8 @@ class SwatDB {
 	 *
 	 * @param mixed $id The value to look for in the $id_field. The type should 
 	 *        correspond to the type of $id_field.
+	 *
+	 * @return MDB2_result_common Recordset containing a single column. 
 	 */
 	public static function queryColumn($db, $table, $field, $id_field = null, $id = 0) {
 		$field = new SwatDBField($field, 'integer');
@@ -145,6 +170,8 @@ class SwatDB {
 	 *
 	 * @param mixed $id The value to look for in the $id_field. The type should 
 	 *        correspond to the type of $id_field.
+	 *
+	 * @return mixed The value queried for a single result.
 	 */
 	public static function queryOne($db, $table, $field, $id_field = null, $id = 0) {
 		$field = new SwatDBField($field, 'integer');
@@ -247,10 +274,16 @@ class SwatDB {
 
 		$db->beginTransaction();
 
-		if (count($values))
-			$db->query($insert_sql);
+		if (count($values)) {
+			$ret = $db->query($insert_sql);
+			if (MDB2::isError($ret))
+				throw new SwatDBException($ret->getMessage());
+		}
 
-		$db->query($delete_sql);
+		$ret = $db->query($delete_sql);
+		if (MDB2::isError($ret))
+			throw new SwatDBException($ret->getMessage());
+		
 		$db->commit();
 
 	}
