@@ -17,6 +17,10 @@ class SwatTableStore extends SwatObject implements SwatTableModel {
 		$this->rows	= array();
 	}
 
+	public function getRowCount() {
+		return count($this->rows);
+	}
+
 	public function &getRows() {
 		return $this->rows;
 	}
