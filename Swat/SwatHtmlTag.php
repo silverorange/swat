@@ -70,7 +70,7 @@ class SwatHtmlTag extends SwatObject {
 	 * @param mixed $val The value of attribute.
 	 */
 	public function __set($attr, $val) {
-		$this->attributes[$attr] = (string)$val;
+		$this->attributes[$attr] = ($val === null) ? null : (string)$val;
 	}
 
 	/**
@@ -130,9 +130,7 @@ class SwatHtmlTag extends SwatObject {
 
 		if ($this->attributes !== null) {
 			foreach ($this->attributes as $attr => $value) {
-				if ($value === null)
-					echo ' ', $attr;
-				else
+				if ($value !== null)
 					echo ' ', $attr, '="', $value, '"';
 			}
 		}
