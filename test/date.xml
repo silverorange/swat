@@ -7,12 +7,12 @@
 				<SwatEntry name="title" required="bool:true" />
 			</SwatFormField>
 
-			<SwatFormField title="Date">
-				<SwatDate name="date" />
-			</SwatFormField>
-			
 			<SwatFormField title="Date 2">
 				<SwatDate name="date2" />
+			</SwatFormField>
+			
+			<SwatFormField title="Date">
+				<SwatDate name="date" />
 			</SwatFormField>
 
 			<SwatFormField title="Time">
