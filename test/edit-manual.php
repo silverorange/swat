@@ -9,7 +9,6 @@ require_once('Swat/SwatCheckbox.php');
 require_once('Swat/SwatButton.php');
 require_once('Swat/SwatFlydown.php');
 require_once('Swat/SwatFormField.php');
-//require_once('Swat/SwatFormFooter.php');
 
 // create the top-level widget
 $frame = new SwatFrame('frame1');
