@@ -9,8 +9,7 @@ require_once('Swat/SwatCheckbox.php');
 require_once('Swat/SwatButton.php');
 require_once('Swat/SwatFlydown.php');
 require_once('Swat/SwatFormField.php');
-require_once('Swat/SwatFormFooter.php');
-
+//require_once('Swat/SwatFormFooter.php');
 
 // create the top-level widget
 $frame = new SwatFrame('frame1');
@@ -26,14 +25,12 @@ $title->required = true;
 $form->addWithField($title, 'Title');
 
 // create an entry widget and add it
-/*
 $field = new SwatFormField();
 $entry = new SwatEntry('entry1');
 $entry->required = true;
 $field->add($entry);
 $field->title = "First Name";
 $form->add($field);
-*/
 
 // create a checkbox widget and add it
 $hidden = new SwatCheckbox('hidden');
@@ -61,7 +58,7 @@ $form->addWithField($ping, 'Ping Weblogs.com?');
 // create a button widget and add it
 $btn = new SwatButton('btn_create');
 $btn->title = 'Create';
-$form->addWithDiv($btn, 'SwatFormFooter');
+$form->add($btn);
 
 if ($form->process()) {
 	echo '<pre>';
@@ -69,7 +66,7 @@ if ($form->process()) {
 	echo '</pre>';
 }
 
-$frame->displayTest();
+$frame->displayTidy();
 
 require('footer.php');
 ?>
