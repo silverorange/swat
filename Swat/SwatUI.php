@@ -28,7 +28,6 @@ class SwatUI extends SwatObject {
 		$this->registerHandler(new SwatTableViewUIHandler());
 		$this->registerHandler(new SwatTableViewColumnUIHandler());
 		$this->registerHandler(new SwatActionsUIHandler());
-		$this->registerHandler(new SwatActionItemUIHandler());
 
 		$this->root = new SwatContainer();
 	}

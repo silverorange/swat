@@ -75,7 +75,7 @@ class SwatActions extends SwatControl {
 				$div->id = $this->name.'_'.$item->name;
 
 				$div->open();
-				$item->widget->display();
+				$item->display();
 				$div->close();
 			}
 		}
