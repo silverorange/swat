@@ -25,4 +25,8 @@ class SwatCellRendererCheck extends SwatCellRenderer {
 			echo '&nbsp;';
 		}
 	}
+
+	public function getTdAttribs() {
+		return array('align' => 'middle');
+	}
 }
