@@ -4,11 +4,11 @@
 		<SwatForm name="form1">
 
 			<SwatFormField title="Title">
-				<SwatEntry name="title" required="bool:true"></SwatEntry>
+				<SwatEntry name="title" required="bool:true" />
 			</SwatFormField>
 
 			<SwatFormField title="Shortname">
-				<SwatEntry name="shortname" required="bool:true"></SwatEntry>
+				<SwatEntry name="shortname" required="bool:true" />
 			</SwatFormField>
 
 			<SwatFormField title="Hidden?">
@@ -16,7 +16,7 @@
 			</SwatFormField>
 
 			<SwatFormField title="Body Text">
-				<SwatTextarea name="bodytext" required="bool:true"></SwatTextarea>
+				<SwatTextarea name="bodytext" required="bool:true">Initial value</SwatTextarea>
 			</SwatFormField>
 
 			<SwatFieldset title="Nick's Fieldset">

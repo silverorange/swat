@@ -22,7 +22,6 @@ class SwatLayout extends SwatObject {
 			
 		$this->widgets = array();
 		$widget_tree =& $this->build($xml, $this->toplevel);
-		//print_r(array_keys($this->widgets));
 	}
 
 	public function &getWidget($name) {
@@ -54,6 +53,9 @@ class SwatLayout extends SwatObject {
 		$w = eval(sprintf("return new %s();", $name));
 		$classvars = get_class_vars($name);
 		//print_r($classvars);
+
+		if (array_key_exists('text', $classvars))
+			$w->text = (string)$node; // stuff between opening and closing tags
 
 		foreach ($node->attributes() as $attrname => $attrvalue) {
 			$attrname = (string)$attrname;
