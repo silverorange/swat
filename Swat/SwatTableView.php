@@ -148,8 +148,8 @@ class SwatTableView extends SwatControl implements SwatUIParent {
 	 * This method fulfills the {@link SwatUIParent} interface.  It is used 
 	 * by {@link SwatUI} when building a widget tree and should not need to be
 	 * called elsewhere.  To add a column, group, or row to a table view, use 
-	 * {@link SwatContainer::appendColumn()}, {@link SwatContainer::setGroup()},
-	 * or {@link SwatContainer::appendRow()}.
+	 * {@link SwatTableView::appendColumn()}, {@link SwatTableView::setGroup()},
+	 * or {@link SwatTableView::appendRow()}.
 	 *
 	 * @param $child A reference to a child object to add.
 	 */
