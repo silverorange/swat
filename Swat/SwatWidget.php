@@ -26,6 +26,8 @@ abstract class SwatWidget extends SwatObject {
 	 */
 	function __construct($name = null) {
 		$this->name = $name;
+
+		$this->init();
 	}
 
 	/**
@@ -64,6 +66,15 @@ abstract class SwatWidget extends SwatObject {
 	 * processes any child widgets.
 	 */
 	public function process() {
+
+	}
+
+	/**
+	 * Initialize the widget.
+	 *
+	 * Run by the widget constructor.
+	 */
+	public function init() {
 
 	}
 
