@@ -95,6 +95,7 @@ class SwatDate extends SwatControl {
 		$this->createFlydowns();
 		$this->displayJavascript();
 		
+		// TODO: order these based on locale		
 		if ($this->display & self::MONTH)
 			$this->monthfly->display();
 		
@@ -138,38 +139,87 @@ class SwatDate extends SwatControl {
 		if ($this->created) return;
 		
 		$this->created = true;
+
+		if ($this->display & self::YEAR)
+			$this->createYearFlydown();
+
+		if ($this->display & self::MONTH)
+			$this->createMonthFlydown();
+
+		if ($this->display & self::DAY)
+			$this->createDayFlydown();
+	}
+
+	private function createYearFlydown() { 
+		$this->yearfly = new SwatFlydown($this->name.'_year');
+		$this->yearfly->options = array(0 => '');
+		$this->yearfly->onchange = sprintf("dateSet('%s', this);",
+			$this->name);
+
+		$start_year = $this->valid_range_start->getYear();
+		$end_year   = $this->valid_range_end->getYear();
+
+		for ($i = $start_year; $i <= $end_year; $i++)
+			$this->yearfly->options[$i] = $i;
+	}
 		
-		if ($this->display & self::MONTH) {
-			$this->monthfly = new SwatFlydown($this->name.'_month');
-			$this->monthfly->options = array(0 => '');
-			$this->monthfly->onchange = sprintf("dateSet('%s', this);",
-				$this->name);
-			
+	private function createMonthFlydown() { 
+		$this->monthfly = new SwatFlydown($this->name.'_month');
+		$this->monthfly->options = array(0 => '');
+		$this->monthfly->onchange = sprintf("dateSet('%s', this);",
+			$this->name);
+
+		$start_year = $this->valid_range_start->getYear();
+		$end_year   = $this->valid_range_end->getYear();
+
+		if ($end_year == $start_year) {
+
+			$start_month = $this->valid_range_start->getMonth();
+			$end_month = $this->valid_range_end->getMonth();
+
+			for ($i = $start_month; $i <= $end_month; $i++)
+				$this->monthfly->options[$i] = Date_Calc::getMonthFullName($i);
+
+		} elseif (($end_year - $start_year) == 1) {
+
+			$start_month = $this->valid_range_start->getMonth();
+			$end_month = $this->valid_range_end->getMonth();
+
+			for ($i = $start_month; $i <= 12; $i++)
+				$this->monthfly->options[$i] = Date_Calc::getMonthFullName($i);
+
+			for ($i = 1; $i <= $end_month; $i++)
+				$this->monthfly->options[$i] = Date_Calc::getMonthFullName($i);
+
+		} else {
+
 			for ($i = 1; $i <= 12; $i++)
 				$this->monthfly->options[$i] = Date_Calc::getMonthFullName($i);
+
 		}
+	}
 		
-		if ($this->display & self::DAY) {
-			$this->dayfly = new SwatFlydown($this->name.'_day');
-			$this->dayfly->options = array(0 => '');
-			$this->dayfly->onchange = sprintf("dateSet('%s', this);",
-				$this->name);
-			
+	private function createDayFlydown() {
+		$this->dayfly = new SwatFlydown($this->name.'_day');
+		$this->dayfly->options = array(0 => '');
+		$this->dayfly->onchange = sprintf("dateSet('%s', this);",
+			$this->name);
+
+		$start_year  = $this->valid_range_start->getYear();
+		$end_year    = $this->valid_range_end->getYear();
+		$start_month = $this->valid_range_start->getMonth();
+		$end_month   = $this->valid_range_end->getMonth();
+
+		if ($start_year == $end_year && $start_month == $end_month) {
+			$start_day = $this->valid_range_start->getDay();
+			$end_day   = $this->valid_range_end->getDay();
+
+			for ($i = $start_day; $i <= $end_day; $i++)
+				$this->dayfly->options[$i] = $i;
+
+		} else { 
 			for ($i = 1; $i <= 31; $i++)
 				$this->dayfly->options[$i] = $i;
-		}
-		
-		if ($this->display & self::YEAR) {
-			$this->yearfly = new SwatFlydown($this->name.'_year');
-			$this->yearfly->options = array(0 => '');
-			$this->yearfly->onchange = sprintf("dateSet('%s', this);",
-				$this->name);
-			
-			$startyear = $this->valid_range_start->getYear();
-			$endyear   = $this->valid_range_end->getYear();
-			
-			for ($i = $startyear; $i <= $endyear; $i++)
-				$this->yearfly->options[$i] = $i;
 		}
 	}
 	
