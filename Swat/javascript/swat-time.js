@@ -4,7 +4,7 @@ function timeSet(id, activeFlydown) {
 	//hour is required for this, so stop if it doesn't exist
 	if (!hour) return;
 	
-	if (activeFlydown.value == -1) {
+	if (activeFlydown.value == '') {
 		//timeReset(id, true);
 	} else {
 		var vDate = new Date();	

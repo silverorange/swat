@@ -118,10 +118,10 @@ class SwatTimeEntry extends SwatControl {
 			$hour   = intval($this->hourfly->value);
 			$ampm   = $this->ampmfly->value;
 			
-			if ($this->required & self::HOUR && $hour == -1)
+			if ($this->required & self::HOUR && $hour === null)
 				$this->addErrorMessage(_S("Hour is Required."));
 				
-			if ($this->required & self::HOUR && $ampm == -1)
+			if ($this->required & self::HOUR && $ampm === null)
 				$this->addErrorMessage(_S("AM/PM is Required."));
 			
 			if ($ampm == 'pm') {
@@ -137,7 +137,7 @@ class SwatTimeEntry extends SwatControl {
 			$this->minutefly->process();
 			$minute = intval($this->minutefly->value);
 			
-			if ($this->required & self::MINUTE && $minute == -1)
+			if ($this->required & self::MINUTE && $minute === null)
 				$this->addErrorMessage(_S("Minute is Required."));
 		} else {
 			$minute = 0;
@@ -147,7 +147,7 @@ class SwatTimeEntry extends SwatControl {
 			$this->secondfly->process();
 			$second = intval($this->secondfly->value);
 			
-			if ($this->required & self::SECOND && $second == -1)
+			if ($this->required & self::SECOND && $second === null)
 				$this->addErrorMessage(_S("Second is Required."));
 		} else {
 			$second = 0;
@@ -185,7 +185,6 @@ class SwatTimeEntry extends SwatControl {
 	
 	private function createHourFlydown() {
 		$this->hourfly = new SwatFlydown($this->name.'_hour');
-		$this->hourfly->options = array(-1 => '');
 		$this->hourfly->onchange = sprintf("timeSet('%s', this);",
 			$this->name);
 				
@@ -195,7 +194,6 @@ class SwatTimeEntry extends SwatControl {
 	
 	private function createMinuteFlydown() {
 		$this->minutefly = new SwatFlydown($this->name.'_minute');
-		$this->minutefly->options = array(-1 => '');
 		$this->minutefly->onchange = sprintf("timeSet('%s', this);",
 			$this->name);
 		
@@ -205,7 +203,6 @@ class SwatTimeEntry extends SwatControl {
 	
 	private function createSecondFlydown() {	
 		$this->secondfly = new SwatFlydown($this->name.'_second');
-		$this->secondfly->options = array(-1 => '');
 		$this->secondfly->onchange = sprintf("timeSet('%s', this);",
 			$this->name);
 		
@@ -215,7 +212,7 @@ class SwatTimeEntry extends SwatControl {
 	
 	private function createAmPmFlydown() {
 		$this->ampmfly = new SwatFlydown($this->name.'_ampm');
-		$this->ampmfly->options = array(-1 => '', 'am' => 'AM', 'pm' => 'PM');
+		$this->ampmfly->options = array('am' => 'AM', 'pm' => 'PM');
 		$this->ampmfly->onchange = sprintf("timeSet('%s', this);",
 			$this->name);
 	}
