@@ -140,7 +140,7 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::MONTH) {
 			$this->monthfly = new SwatFlydown($this->name.'_month');
 			$this->monthfly->options = array(0 => '');
-			$this->monthfly->onchange = "dateSet('$this->name',this.form);";
+			$this->monthfly->onchange = 'dateSet(\''.$this->name.'\');';
 			
 			for ($i = 1; $i <= 12; $i++)
 				$this->monthfly->options[$i] = Date_Calc::getMonthFullName($i);
@@ -149,7 +149,7 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::DAY) {
 			$this->dayfly = new SwatFlydown($this->name.'_day');
 			$this->dayfly->options = array(0 => '');
-			$this->dayfly->onchange = "dateSet('$this->name',this.form);";
+			$this->dayfly->onchange = 'dateSet(\''.$this->name.'\');';
 			
 			for ($i = 1; $i <= 31; $i++)
 				$this->dayfly->options[$i] = $i;
@@ -158,7 +158,7 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::YEAR) {
 			$this->yearfly = new SwatFlydown($this->name.'_year');
 			$this->yearfly->options = array(0 => '');
-			$this->yearfly->onchange = "dateSet('$this->name',this.form);";
+			$this->yearfly->onchange = 'dateSet(\''.$this->name.'\');';
 			
 			$startyear = $this->valid_range_start->getYear();
 			$endyear   = $this->valid_range_end->getYear();
@@ -172,16 +172,17 @@ class SwatDate extends SwatControl {
 
 	private function displayJavascript() {
 		// TODO: needs work - broken
+		// 		 setting the day and/or year before hte month does not work
 		//		 also, change it so it doesn't need to be outputed twice
 		//		 for two different date classes.
 		?>
 		<script type="text/javascript">
-			function dateSet(name,theForm) {
+			function dateSet(id) {
 				var vDate = new Date();
 				
-				var year  = (eval("theForm." + name + "_year"));
-				var month = (eval("theForm." + name + "_month"));
-				var day   = (eval("theForm." + name + "_day"));
+				var year  = document.getElementById(id + '_year');
+				var month = document.getElementById(id + '_month');
+				var day   = document.getElementById(id + '_day');
 				
 				// stop if all 3 date parts aren't present
 				if (!year || !month || !day) return false;
@@ -191,7 +192,7 @@ class SwatDate extends SwatControl {
 					day.selectedIndex = 0;
 					year.selectedIndex = 0;
 				} else {
-					var this_month = vDate.getMonth()+1;
+					var this_month = vDate.getMonth() + 1;
 					if (month.selectedIndex == this_month)
 						today = true;
 					else
