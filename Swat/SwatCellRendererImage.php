@@ -41,7 +41,7 @@ class SwatCellRendererImage extends SwatCellRenderer {
 	 */
 	public $alt = '';
 
-	public function render() {
+	public function render($prefix) {
 		$image_tag = new SwatHtmlTag('img');
 		$image_tag->src = $this->src;
 

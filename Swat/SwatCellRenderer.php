@@ -15,7 +15,7 @@ abstract class SwatCellRenderer extends SwatObject {
 	/**
 	 * Render the cell using the values currently stored in class variables.
 	 */
-	abstract public function render();
+	abstract public function render($prefix);
 
 	/**
 	 * Array of attributes to assign to the HTML td tag.

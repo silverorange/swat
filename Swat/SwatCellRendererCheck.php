@@ -17,7 +17,7 @@ class SwatCellRendererCheck extends SwatCellRenderer {
 	 */
 	public $value;
 
-	public function render() {
+	public function render($prefix) {
 		if ((boolean)$this->value) {
 			$image_tag = new SwatHtmlTag('img');
 			$image_tag->src = 'swat/images/check.png';

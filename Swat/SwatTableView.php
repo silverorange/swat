@@ -26,7 +26,7 @@ class SwatTableView extends SwatControl {
 	 * table view must contain a column named "checkbox".
 	 * @var boolean
 	 */
-	public $show_checkall = true;
+	public $show_check_all = true;
 
 	/**
 	 * The values of the checked checkboxes.  For this to be set, the table
@@ -41,12 +41,13 @@ class SwatTableView extends SwatControl {
 	public function init() {
 		$this->columns = array();
 
-		if ($this->show_checkall)
+		if ($this->show_check_all)
 			$this->appendRow(new SwatTableViewRowCheckAll());
 	}
 
 	public function appendColumn(SwatTableViewColumn $column) {
 		$this->columns[] = $column;
+		$column->view = $this;
 	}
 
 	private function appendRow(SwatTableViewRow $row) {
