@@ -1,7 +1,7 @@
 <?php
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatDetailViewField.php');
+require_once('Swat/SwatDetailsViewField.php');
 require_once('Swat/SwatUIParent.php');
 
 //TODO: finish documentation for public methods
@@ -13,7 +13,7 @@ require_once('Swat/SwatUIParent.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatDetailView extends SwatControl implements SwatUIParent {
+class SwatDetailsView extends SwatControl implements SwatUIParent {
 	
 	/**
 	 * Object containing values to display
@@ -27,7 +27,7 @@ class SwatDetailView extends SwatControl implements SwatUIParent {
 	 * Append Field
 	 * @param SwatDetailViewField $field
 	 */
-	public function appendField(SwatDetailViewField $field) {
+	public function appendField(SwatDetailsViewField $field) {
 		$this->fields[] = $field;
 
 		$field->view = $this;
@@ -90,11 +90,11 @@ class SwatDetailView extends SwatControl implements SwatUIParent {
 	 */
 	public function addChild($child) {
 
-		if ($child instanceof SwatDetailViewField)
+		if ($child instanceof SwatDetailsViewField)
 			$this->appendField($child);
 		else
-			throw new SwatException('SwatDetailView: Only '.
-				'SwatDetailViewFields can be nested within SwatDetailViews');
+			throw new SwatException('SwatDetailsView: Only '.
+				'SwatDetailsViewFields can be nested within SwatDetailsViews');
 	}
 
 }

@@ -10,7 +10,7 @@ require_once('Swat/SwatUIParent.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatDetailViewField extends SwatObject implements SwatUIParent {
+class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 
 	/**
 	 * Name of the field
@@ -109,8 +109,8 @@ class SwatDetailViewField extends SwatObject implements SwatUIParent {
 		if ($child instanceof SwatCellRenderer)
 			$this->addRenderer($child);
 		else
-			throw new SwatException('SwatDetailViewField: Only '.
-				'SwatCellRenders can be nested within SwatDetailViewFields');
+			throw new SwatException('SwatDetailsViewField: Only '.
+				'SwatCellRenders can be nested within SwatDetailsViewFields');
 	}
 }
 
