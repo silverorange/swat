@@ -99,7 +99,7 @@ abstract class SwatApplication extends SwatObject {
 	 * the global arrays.
 	 * @return mixed The value of the variable.
 	 */
-	function initVar($name, $types = 0, $default = 0) {
+	function initVar($name, $default = 0, $types = 0) {
 		if ($types == 0)
 			$types = SwatApplication::VAR_POST | SwatApplication::VAR_GET;
 	
