@@ -75,7 +75,7 @@ class SwatTimeEntry extends SwatControl {
 		$this->display  = self::HOUR | self::MINUTE;
 		$this->required = $this->display;
 
-		$date = new Date();
+		$date = new SwatDate();
 		$date->setYear(0);
 		$date->setMonth(1);
 		$date->setDay(1);
@@ -153,7 +153,7 @@ class SwatTimeEntry extends SwatControl {
 			$second = 0;
 		}
 
-		$this->value = new Date();
+		$this->value = new SwatDate();
 		$this->value->setYear(0);
 		$this->value->setMonth(1);
 		$this->value->setDay(1);

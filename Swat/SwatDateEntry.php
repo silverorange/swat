@@ -1,7 +1,7 @@
 <?php
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatFlydown.php');
-require_once('Date.php');
+require_once('Swat/SwatDate.php');
 
 /**
  * A date entry widget
@@ -90,7 +90,7 @@ class SwatDateEntry extends SwatControl {
 	 */
 	public function setValidRange($start_offset, $end_offset) {
 		//beginning of this year
-		$date = new Date();
+		$date = new SwatDate();
 		$date->setMonth(1);
 		$date->setDay(1);
 		$date->setHour(0);
@@ -205,7 +205,7 @@ class SwatDateEntry extends SwatControl {
 		if ($all_empty) {
 			$this->value = null;
 		} else {
-			$this->value = new Date();
+			$this->value = new SwatDate();
 			$this->value->setYear($year);
 			$this->value->setMonth($month);
 			$this->value->setDay($day);
@@ -394,7 +394,7 @@ class SwatDateEntry extends SwatControl {
 	}
 
 	public function setState($state) {
-		$this->value = new Date($state);
+		$this->value = new SwatDate($state);
 	}
 
 }
