@@ -5,7 +5,6 @@
  * @copyright silverorange 2004
  */
 require_once('Swat/SwatControl.php');
-require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatFlydown.php');
 require_once('Date.php');
 
@@ -39,12 +38,14 @@ class SwatDate extends SwatControl {
 	
 	/**
 	 * Start date of the valid range (inclusive).
+	 * Default date 20 Years in the past.
 	 * @var Date
 	 */
 	public $valid_range_start;
 	
 	/**
 	 * End date of the valid range (exclusive).
+	 * Default date 20 Years in the future.
 	 * @var Date
 	 */
 	public $valid_range_end;
@@ -59,7 +60,19 @@ class SwatDate extends SwatControl {
 	public function init() {
 		$this->required = self::YEAR | self::MONTH | self::DAY;
 		$this->display  = self::YEAR | self::MONTH | self::DAY;
+
+		$this->setValidRange(-20, +20);
+	}
 		
+	/**
+	 * Set the valid date range.
+	 * Convenience method to set the valid date range by year offsets.
+	 * @param int $start_offset Offset from the current year used to set the
+	 *                          starting year of the valid range.
+	 * @param int $end_offset Offset from the current year used to set the
+	 *                          ending year of the valid range.
+	 */
+	public function setValidRange($start_offset, $end_offset) {
 		//beginning of this year
 		$date = new Date();
 		$date->setMonth(1);
@@ -67,13 +80,13 @@ class SwatDate extends SwatControl {
 		$date->setHour(0);
 		$date->setMinute(0);
 		$date->setSecond(0);
-		$year = $date->getYear();
 		
 		$this->valid_range_start = clone $date;
-		$this->valid_range_start->setYear($year - 20);
-		
 		$this->valid_range_end = clone $date;
-		$this->valid_range_end->setYear($year + 20);
+
+		$year = $date->getYear();
+		$this->valid_range_start->setYear($year + $start_offset);
+		$this->valid_range_end->setYear($year + $end_offset);
 	}
 	
 	public function display() {
@@ -124,7 +137,7 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::MONTH) {
 			$this->monthfly = new SwatFlydown($this->name.'_month');
 			$this->monthfly->options = array(0 => '');
-			$this->monthfly->onchange = 'dateSet'.$this->name.'(this.form);';
+			$this->monthfly->onchange = "dateSet('$this->name',this.form);";
 			
 			for ($i = 1; $i <= 12; $i++)
 				$this->monthfly->options[$i] = Date_Calc::getMonthFullName($i);
@@ -133,7 +146,7 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::DAY) {
 			$this->dayfly = new SwatFlydown($this->name.'_day');
 			$this->dayfly->options = array(0 => '');
-			$this->dayfly->onchange = 'dateSet'.$this->name.'(this.form);';
+			$this->dayfly->onchange = "dateSet('$this->name',this.form);";
 			
 			for ($i = 1; $i <= 31; $i++)
 				$this->dayfly->options[$i] = $i;
@@ -142,10 +155,10 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::YEAR) {
 			$this->yearfly = new SwatFlydown($this->name.'_year');
 			$this->yearfly->options = array(0 => '');
-			$this->yearfly->onchange = 'dateSet'.$this->name.'(this.form);';
+			$this->yearfly->onchange = "dateSet('$this->name',this.form);";
 			
-			$startyear = intval(date('Y'));
-			$endyear = $startyear+10;
+			$startyear = $this->valid_range_start->getYear();
+			$endyear   = $this->valid_range_end->getYear();
 			
 			for ($i = $startyear; $i <= $endyear; $i++)
 				$this->yearfly->options[$i] = $i;
@@ -156,26 +169,40 @@ class SwatDate extends SwatControl {
 
 	private function displayJavascript() {
 		// TODO: needs work - broken
-		//		 also, change it so it doesn't need to be outputed twice for two different date classes.
+		//		 also, change it so it doesn't need to be outputed twice
+		//		 for two different date classes.
 		?>
 		<script type="text/javascript">
-			function dateSet<?=$this->name?>(theForm) {
+			function dateSet(name,theForm) {
 				var vDate = new Date();
-				if (theForm.<?=$this->name?>_month.selectedIndex==0) {
+				
+				var year  = (eval("theForm." + name + "_year"));
+				var month = (eval("theForm." + name + "_month"));
+				var day   = (eval("theForm." + name + "_day"));
+				
+				// stop if all 3 date parts aren't present
+				if (!year || !month || !day) return false;
+				
+				if (month.selectedIndex == 0) {
 					//reset
-					theForm.<?=$this->name?>_day.selectedIndex=0;
-					theForm.<?=$this->name?>_year.selectedIndex=0;
+					day.selectedIndex = 0;
+					year.selectedIndex = 0;
 				} else {
-					if (theForm.<?=$this->name?>_month.selectedIndex==vDate.getMonth()+1) today=true;
-					else today=false;
+					var this_month = vDate.getMonth()+1;
+					if (month.selectedIndex == this_month)
+						today = true;
+					else
+						today = false;
 					
-					if (theForm.<?=$this->name?>_day.selectedIndex==0) {
-						if (today) theForm.<?=$this->name?>_day.selectedIndex=vDate.getDate();
-						else theForm.<?=$this->name?>_day.selectedIndex=1;
+					if (day.selectedIndex == 0) {
+						if (today) day.selectedIndex = vDate.getDate();
+						else day.selectedIndex = 1;
 					}
 					
-					if (theForm.<?=$this->name?>_year.selectedIndex==0) {
-						theForm.<?=$this->name?>_year.selectedIndex=(vDate.getFullYear()-<?=$this->year_start?>+1);
+					if (year.selectedIndex==0) {
+						var first_year = year.options[1].value;
+						var this_year  = vDate.getFullYear();
+						year.selectedIndex = (this_year - first_year + 1);
 					}
 				}
 			}
