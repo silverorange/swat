@@ -1,6 +1,7 @@
 <?php
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatFlydown.php');
+require_once('Swat/SwatState.php');
 require_once('Date.php');
 
 // TODO: figure out why the valid-ranges are getting having the time inproperly
@@ -13,7 +14,7 @@ require_once('Date.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatTimeEntry extends SwatControl {
+class SwatTimeEntry extends SwatControl implements SwatState {
 	
 	/**
 	 * Time of the widget
@@ -252,6 +253,17 @@ class SwatTimeEntry extends SwatControl {
 		include_once('Swat/javascript/swat-find-index.js');
 		include_once('Swat/javascript/swat-time.js');
 		echo '</script>';
+	}
+	
+	public function getState() {
+		if ($this->value == null)
+			return null;
+		else
+			return $this->value->getDate();	
+	}
+
+	public function setState($state) {
+		$this->value = new SwatDate($state);
 	}
 }
 ?>

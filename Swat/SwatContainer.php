@@ -158,7 +158,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent {
 	public function getDescendantStates() {
 		$states = array();
 
-		foreach ($this->getDescendants('SwatControl') as $name => $widget)
+		foreach ($this->getDescendants('SwatState') as $name => $widget)
 			$states[$name] = $widget->getState();
 
 		return $states;
@@ -174,7 +174,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent {
 	 */
 	public function setDescendantStates($states) {
 
-		foreach ($this->getDescendants('SwatControl') as $name => $widget)
+		foreach ($this->getDescendants('SwatState') as $name => $widget)
 			if (isset($states[$name]))
 				$widget->setState($states[$name]);
 	}

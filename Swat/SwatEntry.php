@@ -1,6 +1,7 @@
 <?php
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
+require_once('Swat/SwatState.php');
 
 /**
  * A single line text entry widget
@@ -9,7 +10,7 @@ require_once('Swat/SwatHtmlTag.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatEntry extends SwatControl {
+class SwatEntry extends SwatControl implements SwatState {
 
 	/**
 	 * Entry value

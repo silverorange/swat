@@ -1,6 +1,7 @@
 <?php
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
+require_once('Swat/SwatState.php');
 
 /**
  * A flydown (aka combo-box) selection widget
@@ -9,7 +10,7 @@ require_once('Swat/SwatHtmlTag.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatFlydown extends SwatControl {
+class SwatFlydown extends SwatControl implements SwatState {
 	
 	/**
 	 * Flydown options
