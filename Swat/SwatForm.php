@@ -23,6 +23,12 @@ class SwatForm extends SwatContainer {
 	 */
 	public $button = null;
 
+	/**
+	 * Whether the form has been processed (read only)
+	 * @var boolean
+	 */
+	public $processed = false;
+
 	private $hidden_fields;
 
 	public function init() {
@@ -80,6 +86,8 @@ class SwatForm extends SwatContainer {
 	public function process() {
 		if (!isset($_POST['process']) || $_POST['process'] != $this->name)
 			return false;
+
+		$this->processed = true;
 
 		foreach ($this->children as &$child)
 			$child->process();
