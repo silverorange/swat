@@ -145,11 +145,11 @@ class SwatUI extends SwatObject {
 
 	private function parseAttribute($name, $value, $widget, $parent_widget) {
 
-		if (strncmp($value, 'boolean:', 5) == 0)
-			$ret = (substr($value, 5) == 'true') ? true : false;
+		if (strncmp($value, 'boolean:', 8) == 0)
+			$ret = (substr($value, 8) == 'true') ? true : false;
 
-		elseif (strncmp($value, 'integer:', 4) == 0)
-			$ret = intval(substr($value, 4));
+		elseif (strncmp($value, 'integer:', 8) == 0)
+			$ret = intval(substr($value, 8));
 
 		elseif (strncmp($value, 'float:', 6) == 0)
 			$ret = floatval(substr($value, 6));
