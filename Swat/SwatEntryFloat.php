@@ -24,4 +24,5 @@ class SwatEntryFloat extends SwatEntry {
 			$this->addErrorMessage(_S("The %s field must be a number."));
 	}
 }
+
 ?>
