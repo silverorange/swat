@@ -18,6 +18,18 @@ class SwatForm extends SwatContainer {
 	public $action = '#';
 
 	/**
+	 * The method attribute of the HTML form tag
+	 * @var string
+	 */
+	public $method = 'post';
+
+	/**
+	 * Encoding type of the form
+	 * @var string
+	 */
+	public $enctype = null;
+
+	/**
 	 * The button that was clicked to submit the form, or null (read only)
 	 * @var SwatButton
 	 */
@@ -43,7 +55,8 @@ class SwatForm extends SwatContainer {
 
 		$form_tag = new SwatHtmlTag('form');
 		$form_tag->id = $this->name;
-		$form_tag->method = 'post';
+		$form_tag->method = $this->method;
+		$form_tag->enctype = $this->enctype;
 		$form_tag->action = $this->action;
 
 		$form_tag->open();
