@@ -19,10 +19,10 @@ class SwatFrame extends SwatContainer {
 
 	public function display() {
 		$outer_divtag = new SwatHtmlTag('div');
-		$outer_divtag->class = 'SwatFrame';
+		$outer_divtag->class = 'swat-frame';
 
 		$inner_divtag = new SwatHtmlTag('div');
-		$inner_divtag->class = 'SwatFrameContents';
+		$inner_divtag->class = 'swat-frame-contents';
 
 		$outer_divtag->open();
 

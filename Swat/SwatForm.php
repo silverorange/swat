@@ -57,7 +57,7 @@ class SwatForm extends SwatContainer {
 		$this->displayProcessingMessages();
 
 		$formtag = new SwatHtmlTag('form');
-		$formtag->name = $this->name;
+		$formtag->id = $this->name;
 		$formtag->method = 'post';
 		$formtag->action = $this->action;
 

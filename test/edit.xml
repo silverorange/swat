@@ -15,7 +15,7 @@
 				<SwatTextarea name="bodytext" required="bool:true"></SwatTextarea>
 			</SwatFormField>
 
-			<SwatFrame title="Nick's Inner Frame">
+			<SwatFieldset title="Nick's Inner Frame">
 				<SwatFormField title="More Text:">
 					<SwatTextarea name="moretext"></SwatTextarea>
 				</SwatFormField>
@@ -23,15 +23,15 @@
 				<SwatFormField title="Reply Status:">
 					<SwatFlydown name="replystatus" />
 				</SwatFormField>
-			</SwatFrame>
+			</SwatFieldset>
 			
 			<SwatFormField title="Ping Weblogs.com?:">
 				<SwatCheckbox name="ping" value="bool:true" />
 			</SwatFormField>
 
-			<SwatFormFooter>
+			<SwatFormField class="swat-form-footer">
 				<SwatButton name="btn_create" title="Create" />
-			</SwatFormFooter>
+			</SwatFormField>
 
 		</SwatForm>
 	</SwatFrame>
