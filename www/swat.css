@@ -4,6 +4,8 @@ body {
 
 img { border: 0; }
 
+.swat-hidden { display: none; }
+
 /* SwatFrame */
 
 .swat-frame {
