@@ -18,7 +18,25 @@ class SwatLayout extends SwatObject {
 	 * @param string $filename Filename of the layout XML file to load.
 	 */
 	function __construct($filename) {
-		$xml = simplexml_load_file($filename);
+		$xmlfile = null;
+
+		if (file_exists($filename)) {
+			$xmlfile = $filename;
+		} else {
+			$paths = explode(':', ini_get('include_path'));
+
+			foreach ($paths as $path) {
+				if (file_exists($path.'/'.$filename)) {
+					$xmlfile = $path.'/'.$filename;
+					break;
+				}
+			}
+		}
+
+		if ($xmlfile == null)
+			throw new SwatException('SwatLayout: XML file not found: '.$filename);
+
+		$xml = simplexml_load_file($xmlfile);
 
 		$this->widgets = array();
 		$widget_tree = $this->build($xml, $this->toplevel);
