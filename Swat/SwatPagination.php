@@ -162,10 +162,10 @@ class SwatPagination extends SwatControl {
 		for ($i = 0; $i < $this->total_pages; $i++) {
 			$display=false;
 
-			if ($this->current_page <= 6 && $i <= 4)
-				$display=true; //current page is in the first 6, show the first 5 pages
-			elseif ($this->current_page >= $this->total_pages - 7 && $i >= $this->total_pages - 6)
-				$display=true; //current page is in the last 6, show the last 5 pages
+			if ($this->current_page <= 6 && $i <= 9)
+				$display=true; //current page is in the first 6, show the first 10 pages
+			elseif ($this->current_page >= $this->total_pages - 7 && $i >= $this->total_pages - 10)
+				$display=true; //current page is in the last 6, show the last 10 pages
 			elseif ($i <= 1 || $i >=$this->total_pages -2 || abs($this->current_page - $i) <= 3)
 				$display=true; //always show the first 2, last 2, and middle 6 pages
 
@@ -182,6 +182,7 @@ class SwatPagination extends SwatControl {
 					$current->close();
 				} else {
 					$anchor->href = sprintf($href, $i);
+					$anchor->title = sprintf(_S("Go to page %s"), ($i + 1));
 					$anchor->content = ($i + 1);
 					$anchor->display();
 				}
