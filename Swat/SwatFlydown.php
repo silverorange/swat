@@ -30,7 +30,7 @@ class SwatFlydown extends SwatControl {
 	 */
 	public $onchange = null;
 
-	function display() {
+	public function display() {
 		$select_tag = new SwatHtmlTag('select');
 		$select_tag->name = $this->name;
 		$select_tag->id = $this->name;
@@ -59,8 +59,18 @@ class SwatFlydown extends SwatControl {
 		$select_tag->close();
 	}	
 
-	function process() {
+	public function process() {
 		$this->value = $_POST[$this->name];
+	}
+
+	/**
+	 * Reset the flydown.
+	 * Reset the flydown to its default state.  This is useful to call from a 
+	 * display() method when persistence is not desired.
+	 */
+	public function reset() {
+		reset($this->options);
+		$this->value = key($this->options);
 	}
 }
 

@@ -21,7 +21,13 @@ class SwatActions extends SwatControl {
 	public $selected = null;
 
 	/**
-	 * Whether to auto reset the action flydown to the initial blank option
+	 * Whether to show an inital blank option in the flydown.
+	 * @var boolean
+	 */
+	public $show_blank_option = true;
+
+	/**
+	 * Whether to auto reset the action flydown to the default action
 	 * after processing.
 	 * @var boolean
 	 */
@@ -41,6 +47,16 @@ class SwatActions extends SwatControl {
 		$this->createWidgets();
 		$this->displayJavascript();
 		
+		// set the flydown back to its initial state (no persistence)
+		if ($this->auto_reset)
+			$this->actionfly->reset();
+
+		// select the current action item based upon the flydown value
+		if (isset($this->action_items[$this->actionfly->value])) 
+			$this->selected = $this->action_items[$this->actionfly->value];
+		else
+			$this->selected = null;
+
 		echo '<div class="swat-actions">';
 		echo _S('Action: ');
 		$this->actionfly->display();
@@ -67,9 +83,6 @@ class SwatActions extends SwatControl {
 	public function process() {
 		$this->createWidgets();
 
-		if ($this->auto_reset)
-			$initial_value = $this->actionfly->value;
-
 		$this->actionfly->process();
 		$selected_name = $this->actionfly->value;
 
@@ -82,11 +95,13 @@ class SwatActions extends SwatControl {
 		} else {
 			$this->selected = null;
 		}
-
-		if ($this->auto_reset)
-			$this->actionfly->value = $initial_value;
 	}
 
+	/**
+	 * Add an action item.
+	 * Adds a SwatActionItem to this SwatActions widget.
+	 * @param SwatActionItem $item A reference to the item to add.
+	 */
 	public function addActionItem(SwatActionItem $item) {
 		$this->action_items[$item->name] = $item;
 	}
@@ -96,16 +111,11 @@ class SwatActions extends SwatControl {
 		
 		$this->created = true;
 
-		// Allows initial action to be set in XML UI file by name (string).
-		if (is_string($this->selected) && isset($this->action_items[$this->selected]))
-			$this->selected = $this->action_items[$this->selected];
-
 		$this->actionfly = new SwatFlydown($this->name.'_actionfly');
 		$this->actionfly->onchange = "swatActionsDisplay('{$this->name}', this.value);";
-		$this->actionfly->options = array('');
 
-		if ($this->selected != null)
-			$this->actionfly->value = $this->selected->name;
+		if ($this->show_blank_option)
+			$this->actionfly->options = array('');
 
 		foreach ($this->action_items as $item)
 			$this->actionfly->options[$item->name] = $item->title;
