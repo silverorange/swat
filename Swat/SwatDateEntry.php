@@ -188,27 +188,34 @@ class SwatDateEntry extends SwatControl implements SwatState {
 		}
 
 
-		if ($this->required && $all_empty)
-			$this->addErrorMessage(_S("Date is Required."));
-
+		if ($this->required && $all_empty) {
+			$msg = _S("Date is Required.");
+			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+		}
 
 		if ($this->display_parts & self::YEAR) {
-			if (!$all_empty && $year === null && $this->required_parts & self::YEAR)
-				$this->addErrorMessage(_S("Year is Required."));
+			if (!$all_empty && $year === null && $this->required_parts & self::YEAR) {
+				$msg = _S("Year is Required.");
+				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			}
 		} else {
 			$year = 0;
 		}
 
 		if ($this->display_parts & self::MONTH) {
-			if (!$all_empty && $month === null && $this->required_parts & self::MONTH)
-				$this->addErrorMessage(_S("Month is Required."));
+			if (!$all_empty && $month === null && $this->required_parts & self::MONTH) {
+				$msg = _S("Month is Required.");
+				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			}
 		} else {
 			$month = 1;
 		}
 
 		if ($this->display_parts & self::DAY) {
-			if (!$all_empty && $day === null && $this->required_parts & self::DAY)
-				$this->addErrorMessage(_S("Day is Required."));
+			if (!$all_empty && $day === null && $this->required_parts & self::DAY) {
+				$msg = _S("Day is Required.");
+				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			}
 		} else {
 			$day = 1;
 		}
@@ -357,14 +364,14 @@ class SwatDateEntry extends SwatControl implements SwatState {
 			$msg = sprintf(_S("The date you have entered is invalid. ".
 				"It must be after %s."),
 				$this->displayDate($this->valid_range_start));
-			$this->addErrorMessage($msg);
+			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			
 		} elseif (Date::compare($this->value,$this->valid_range_end,true) == 1) {
 			
 			$msg = sprintf(_S("The date you have entered is invalid. ".
 				"It must be before %s."),
 				$this->displayDate($this->valid_range_end));
-			$this->addErrorMessage($msg);
+			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			
 		}
 	}

@@ -1,5 +1,6 @@
 <?php
 require_once('Swat/SwatObject.php');
+require_once('Swat/SwatMessage.php');
 
 /**
  * Base class for all widgets
@@ -97,30 +98,32 @@ abstract class SwatWidget extends SwatObject {
 
 	}
 
-	protected $error_messages = array();
+	protected $messages = array();
 
 	/**
-	 * Add an error message
+	 * Add a message
+	 *
+	 * @param SwatMessage {@link SwatMessage} object to add
 	 *
 	 * Adds a new error message to this widget.  The error will be shown by the
-	 * display() method as well as cause hasErrorMessage() to return true.
+	 * display() method as well as cause hasMessage() to return true.
 	 */
-	abstract public function addErrorMessage($msg);
+	abstract public function addMessage($msg);
 
 	/**
 	 * Gather error messages
 	 *
-	 * Gather all error messages from children of this widget and this widget 
+	 * Gather all messages from children of this widget and this widget 
 	 * itself.
-	 * @return array Array of {@link SwatErrorMessage} objects.
+	 * @return array Array of {@link SwatMessage} objects.
 	 */
-	abstract public function gatherErrorMessages();
+	abstract public function gatherMessages();
 
 	/**
-	 * Check for error messages
-	 * @return boolean True if there is an error message in the subtree.
+	 * Check for messages
+	 * @return boolean True if there is an message in the subtree.
 	 */
-	abstract public function hasErrorMessage();
+	abstract public function hasMessage();
 }
 
 ?>

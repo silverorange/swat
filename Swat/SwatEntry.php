@@ -71,8 +71,10 @@ class SwatEntry extends SwatControl implements SwatState {
 		else
 			$this->value = $_POST[$this->name];
 
-		if ($this->required && !strlen($this->value))
-			$this->addErrorMessage(_S("The %s field is required."));
+		if ($this->required && !strlen($this->value)) {
+			$msg = _S("The %s field is required.");
+			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+		}
 	}
 	
 	public function getState() {

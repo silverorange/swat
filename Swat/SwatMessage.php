@@ -10,7 +10,8 @@ class SwatMessage {
 
 	const INFO = 1;
 	const WARNING = 2;
-	const ERROR = 3;
+	const USER_ERROR = 3;
+	const ERROR = 4;
 
 	/**
 	 * Type of message
