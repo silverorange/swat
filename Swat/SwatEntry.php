@@ -11,7 +11,7 @@ require_once('Swat/SwatHtmlTag.php');
  */
 class SwatEntry extends SwatControl {
 
-	/*
+	/**
 	 * Entry value
 	 *
 	 * Text content of the widget, or null.
@@ -19,7 +19,7 @@ class SwatEntry extends SwatControl {
 	 */
 	public $value = null;
 
-	/*
+	/**
 	 * Required
 	 *
 	 * Must have a non-empty value when processed.
@@ -65,7 +65,10 @@ class SwatEntry extends SwatControl {
 	}	
 
 	public function process() {
-		$this->value = $_POST[$this->name];
+		if (strlen($_POST[$this->name]) == 0)
+			$this->value = null;
+		else
+			$this->value = $_POST[$this->name];
 
 		if ($this->required && !strlen($this->value))
 			$this->addErrorMessage(_S("The %s field is required."));
