@@ -23,7 +23,7 @@ class SwatDate extends SwatControl {
 	const  MONTH = 2;
 	const  DAY   = 4;
 	const  TIME  = 8;
-	
+		
 	/**
 	 * Date parts that are required. Bitwise combination of SwatDate::YEAR,
 	 * SwatDate::MONTH, SwatDate::DAY, and SwatDate::TIME.
@@ -116,6 +116,9 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::YEAR) {
 			$this->yearfly->process();
 			$year = intval($this->yearfly->value);
+			
+			if ($year == -1)
+				$this->addErrorMessage(_S("Year is Required."));
 		} else {
 			$year = 0;
 		}
@@ -123,6 +126,9 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::MONTH) {
 			$this->monthfly->process();
 			$month = intval($this->monthfly->value);
+			
+			if ($month == -1)
+				$this->addErrorMessage(_S("Month is Required."));
 		} else {
 			$month = 1;
 		}
@@ -130,6 +136,9 @@ class SwatDate extends SwatControl {
 		if ($this->display & self::DAY) {
 			$this->dayfly->process();
 			$day = intval($this->dayfly->value);
+			
+			if ($day == -1)
+				$this->addErrorMessage(_S("Day is Required."));
 		} else {
 			$day = 1;
 		}
@@ -153,17 +162,7 @@ class SwatDate extends SwatControl {
 		$this->value->setMinute($minute);
 		$this->value->setSecond($second);
 
-		echo $this->value->getDate();
-
-		/*
-		TODO: validate based on ranges here
-		if ($this->validate == self::validate_future) {
-			if ($this->datechk && !($this->datechk())) {
-				$this->addErrorMessage(_S("The email address you have entered ".
-					"is not properly formatted."));
-			}
-		}
-		*/
+		$this->validateRanges();
 	}
 	
 	private function createFlydowns() { 
@@ -186,7 +185,7 @@ class SwatDate extends SwatControl {
 
 	private function createYearFlydown() { 
 		$this->yearfly = new SwatFlydown($this->name.'_year');
-		$this->yearfly->options = array(0 => '');
+		$this->yearfly->options = array(-1 => '');
 		$this->yearfly->onchange = sprintf("dateSet('%s', this);",
 			$this->name);
 
@@ -199,7 +198,7 @@ class SwatDate extends SwatControl {
 		
 	private function createMonthFlydown() { 
 		$this->monthfly = new SwatFlydown($this->name.'_month');
-		$this->monthfly->options = array(0 => '');
+		$this->monthfly->options = array(-1 => '');
 		$this->monthfly->onchange = sprintf("dateSet('%s', this);",
 			$this->name);
 
@@ -235,7 +234,7 @@ class SwatDate extends SwatControl {
 		
 	private function createDayFlydown() {
 		$this->dayfly = new SwatFlydown($this->name.'_day');
-		$this->dayfly->options = array(0 => '');
+		$this->dayfly->options = array(-1 => '');
 		$this->dayfly->onchange = sprintf("dateSet('%s', this);",
 			$this->name);
 
@@ -244,7 +243,7 @@ class SwatDate extends SwatControl {
 		$start_month = $this->valid_range_start->getMonth();
 		$end_month   = $this->valid_range_end->getMonth();
 
-		$end_check = clone($this->valid_range_end);
+		$end_check = clone($this->valid_range_start);
 		$end_check->addSeconds(2678400); //add 31 days
 		
 		if ($start_year == $end_year && $start_month == $end_month) {
@@ -255,8 +254,7 @@ class SwatDate extends SwatControl {
 			for ($i = $start_day; $i <= $end_day; $i++)
 				$this->dayfly->options[$i] = $i;
 		
-		} elseif (Date::compare($end_check,$this->valid_range_start,true) != -1) {
-			
+		} elseif (Date::compare($end_check,$this->valid_range_end,true) != -1) {
 			$start_day = $this->valid_range_start->getDay();
 			$end_day   = $this->valid_range_end->getDay();
 			$days_in_month = $this->valid_range_start->getDaysInMonth();
@@ -282,10 +280,55 @@ class SwatDate extends SwatControl {
 		$this->timefly->name = $this->name;
 	}
 	
+	private function validateRanges() {
+		if (Date::compare($this->value,$this->valid_range_start,true) == -1) {
+			
+			$msg=sprintf(_S("The date you have entered is invalid. 
+				It must be after %s."),
+				$this->displayDate($this->valid_range_start));
+			$this->addErrorMessage($msg);
+			
+		} elseif (Date::compare($this->value,$this->valid_range_end,true) == 1) {
+			
+			$msg=sprintf(_S("The date you have entered is invalid. 
+				It must be before %s."),
+				$this->displayDate($this->valid_range_end));
+			$this->addErrorMessage($msg);
+			
+		}
+	}
+	
+	private function displayDate($date) {
+		$time = '';
+		$day = '';
+		$month = '';
+		$year = '';
+	
+		if ($this->display & self::TIME)
+			$time = ' %I:%M %p';	
+			
+		if ($this->display & self::DAY)
+			$day = ' %d';
+		
+		if ($this->display & self::MONTH)
+			$month = ' %b';
+		
+		if ($this->display & self::YEAR)
+			$year = ' %Y';
+			
+		return trim($date->format($month.$day.$year.$time));
+	}
+	
 	private function displayJavascript() {
-		echo '<script type="text/javascript">';
-		include('Swat/javascript/swat-date.js');
-		echo '</script>';
+		static $created = false;
+		
+		if (!$created) {
+			$created = true;
+			
+			echo '<script type="text/javascript">';
+			include('Swat/javascript/swat-date.js');
+			echo '</script>';
+		}
 	}
 }
 ?>
