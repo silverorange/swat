@@ -14,7 +14,7 @@ require_once('Swat/SwatTableViewColumnUIHandler.php');
  */
 class SwatUI extends SwatObject {
 
-	public $classmap = null;
+	protected $classmap = null;
 
 	private $widgets;
 	private $handlers;
@@ -84,7 +84,7 @@ class SwatUI extends SwatObject {
 	 * @param string $name Name class to handle.
 	 * @param SwatUiHandler $handler The handler object.
 	 */
-	public function registerHandler(SwatUIHandler $handler) {
+	protected function registerHandler(SwatUIHandler $handler) {
 		$this->handlers[] = $handler;
 	}
 
