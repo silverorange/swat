@@ -42,11 +42,26 @@ class SwatLayout extends SwatObject {
 		$widget_tree = $this->build($xml, $this->toplevel);
 	}
 
+	/**
+	 * Retrieve a widget.
+	 * Lookup a widget in the widget tree by name.
+	 * @return SwatWidget A reference to the widget.
+	 * @param string $name Name of the widget to retrieve.
+	 */
 	public function getWidget($name) {
 		if (array_key_exists($name, $this->widgets))
 			return $this->widgets[$name];
 		else
 			throw new SwatException(__CLASS__.": no widget named '$name'");
+	}
+
+	/**
+	 * Retrieve the top widget.
+	 * Lookup the widget at the root of the widget tree.
+	 * @return SwatWidget A reference to the widget.
+	 */
+	public function getRoot() {
+		return $this->toplevel;
 	}
 
 	private function build($node, $parent_widget) {
@@ -58,6 +73,7 @@ class SwatLayout extends SwatObject {
 				$this->widgets[$widget->name] = $widget;
 
 			if ($parent_widget == null) {
+				$this->toplevel = $widget;
 				$parent_widget = $widget;
 
 			} elseif ($parent_widget instanceof SwatTableView) {
