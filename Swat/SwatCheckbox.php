@@ -12,19 +12,23 @@ require_once('Swat/SwatHtmlTag.php');
  */
 class SwatCheckbox extends SwatControl {
 
+	/*
+	 * The state of the widget.
+	 * @var bool
+	 */
 	public $value = false;
 	
 	function display() {
-		$inputtag = new SwatHtmlTag('input');
-		$inputtag->type = 'checkbox';
-		$inputtag->name = $this->name;
-		$inputtag->id = $this->name;
-		$inputtag->value = '1';
+		$input_tag = new SwatHtmlTag('input');
+		$input_tag->type = 'checkbox';
+		$input_tag->name = $this->name;
+		$input_tag->id = $this->name;
+		$input_tag->value = '1';
 
 		if ($this->value)
-			$inputtag->checked = "checked";
+			$input_tag->checked = "checked";
 
-		$inputtag->display();
+		$input_tag->display();
 	}	
 
 	function process() {

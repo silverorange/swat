@@ -19,7 +19,7 @@ class SwatLayout extends SwatObject {
 	 */
 	function __construct($filename) {
 		$xml = simplexml_load_file($filename);
-			
+
 		$this->widgets = array();
 		$widget_tree = $this->build($xml, $this->toplevel);
 	}
@@ -76,15 +76,20 @@ class SwatLayout extends SwatObject {
 
 				else {
 					if ($attrvalue == 'false' || $attrvalue == 'true' )
-						trigger_error(__CLASS__.": Possible missing 'bool:' on attribute $attrname", E_USER_NOTICE);
+						trigger_error(__CLASS__.": Possible missing 'bool:' on ".
+						              "attribute $attrname", E_USER_NOTICE);
+
 					if (is_numeric($attrvalue))
-						trigger_error(__CLASS__.": Possible missing 'int:' or 'float:' on attribute $attrname", E_USER_NOTICE);
+						trigger_error(__CLASS__.": Possible missing 'int:' or ".
+						              "'float:' on attribute $attrname", 
+						              E_USER_NOTICE);
 
 					$w->$attrname = $attrvalue;
 				}
 
 			} else {
-				throw new SwatException(__CLASS__.": no attribute named '$attrname' in class $name");
+				throw new SwatException(__CLASS__.": no attribute named ".
+				                        "'$attrname' in class $name");
 			}
 		}
 					

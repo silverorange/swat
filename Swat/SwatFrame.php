@@ -13,18 +13,19 @@ require_once('Swat/SwatHtmlTag.php');
 class SwatFrame extends SwatContainer {
 
 	/**
-	 * @var string A visible name for this frame, or null.
+	 * A visible name for this frame, or null.
+	 * @var string
 	 */
 	public $title = null;
 
 	public function display() {
-		$outer_divtag = new SwatHtmlTag('div');
-		$outer_divtag->class = 'swat-frame';
+		$outerdiv_tag = new SwatHtmlTag('div');
+		$outerdiv_tag->class = 'swat-frame';
 
-		$inner_divtag = new SwatHtmlTag('div');
-		$inner_divtag->class = 'swat-frame-contents';
+		$innerdiv_tag = new SwatHtmlTag('div');
+		$innerdiv_tag->class = 'swat-frame-contents';
 
-		$outer_divtag->open();
+		$outerdiv_tag->open();
 
 		if ($this->title != null) {
 			// TODO: Can the header level be autocalculated based on the 
@@ -32,13 +33,13 @@ class SwatFrame extends SwatContainer {
 			echo '<h2>', $this->title, '</h2>';
 		}
 
-		$inner_divtag->open();
+		$innerdiv_tag->open();
 
 		foreach ($this->children as &$child)
 			$child->display();
 
-		$inner_divtag->close();
-		$outer_divtag->close();
+		$innerdiv_tag->close();
+		$outerdiv_tag->close();
 	}
 }
 

@@ -13,27 +13,28 @@ require_once('Swat/SwatHtmlTag.php');
 class SwatFieldset extends SwatContainer {
 
 	/**
-	 * @var string A visible name for this fieldset, or null.
+	 * A visible name for this fieldset, or null.
+	 * @var string
 	 */
 	public $title = null;
 
 	public function display() {
-		$fieldsettag = new SwatHtmlTag('fieldset');
-		$fieldsettag->class = 'swat-fieldset';
+		$fieldset_tag = new SwatHtmlTag('fieldset');
+		$fieldset_tag->class = 'swat-fieldset';
 
-		$fieldsettag->open();
+		$fieldset_tag->open();
 
 		if ($this->title != null) {
-			$legendtag = new SwatHtmlTag('legend');
-			$legendtag->open();
+			$legend_tag = new SwatHtmlTag('legend');
+			$legend_tag->open();
 			echo $this->title;
-			$legendtag->close();
+			$legend_tag->close();
 		}
 
 		foreach ($this->children as &$child)
 			$child->display();
 
-		$fieldsettag->close();
+		$fieldset_tag->close();
 	}
 }
 
