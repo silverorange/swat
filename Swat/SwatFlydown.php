@@ -71,6 +71,7 @@ class SwatFlydown extends SwatControl {
 
 		if ($options !== null) {
 			if ($this->show_blank) {
+				// empty string HTML option value is considered to be null
 				$option_tag->value = '';
 				$option_tag->open();
 				echo $this->blank_title;
@@ -95,7 +96,8 @@ class SwatFlydown extends SwatControl {
 
 	public function process() {
 		$value = $_POST[$this->name];
-		
+
+		// empty string HTML option value is considered to be null
 		if ($value == '')
 			$this->value = null;
 		else

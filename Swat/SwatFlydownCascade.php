@@ -28,14 +28,19 @@ class SwatFlydownCascade extends SwatFlydown {
 	public $cascade_from;
 
 	public function display() {
+		$this->show_blank = false;
 		parent::display();
 		$this->displayJavascript();
 	}
 
 	protected function &getOptions() {
 		$parent_value = $this->cascade_from->value;
-		if ($parent_value == null)
-			return array('' => _S("n/a"));
+		if ($parent_value == null) {
+			if ($this->cascade_from->show_blank)
+				return array('' => _S("n/a"));
+			else
+				return $this->options[key($this->cascade_from->options)];
+		}
 		return $this->options[$parent_value];
 	}
 
