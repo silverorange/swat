@@ -142,10 +142,6 @@ table.swat-table-view { border-collapse: collapse; }
 .swat-table-view tr.odd {
         background: #F9F6F0;
 }
-.swat-table-view-highlight {
-        background: #FF9900;
-}
-
 
 
 /**
