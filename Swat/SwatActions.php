@@ -40,7 +40,7 @@ class SwatActions extends SwatControl implements SwatUIParent {
 	public $auto_reset = true;
 
 	private $actionfly;
-	private $btn_apply;
+	private $apply_button;
 
 	private $action_items;
 	private $created = false;
@@ -70,7 +70,7 @@ class SwatActions extends SwatControl implements SwatUIParent {
 		echo _S('Action: ');
 		$this->actionfly->display();
 		echo ' ';
-		$this->btn_apply->display();
+		$this->apply_button->display();
 		
 		foreach ($this->action_items as $item) {
 			if ($item->widget !== null) {
@@ -127,8 +127,8 @@ class SwatActions extends SwatControl implements SwatUIParent {
 		foreach ($this->action_items as $item)
 			$this->actionfly->options[$item->name] = $item->title;
 
-		$this->btn_apply = new SwatButton($this->name.'_btn_apply');
-		$this->btn_apply->setTitleFromStock('apply');
+		$this->apply_button = new SwatButton($this->name.'_apply_button');
+		$this->apply_button->setTitleFromStock('apply');
 	}
 
 	private function displayJavascript() {
