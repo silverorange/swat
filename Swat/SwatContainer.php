@@ -11,7 +11,7 @@ require_once('util/array_unshift_ref.php');
 /**
  * Base class for widgets which contain other widgets.
  */
-abstract class SwatContainer extends SwatWidget {
+class SwatContainer extends SwatWidget {
 
 	/**
 	 * @var array An array containing the widgets that belong to this box,
@@ -34,7 +34,7 @@ abstract class SwatContainer extends SwatWidget {
 
 	public function packStart(SwatWidget &$widget) {
 		if ($widget->parent != null)
-			throw SwatException('Attempting to add a widget that already has a parent.');
+			throw new SwatException('Attempting to add a widget that already has a parent.');
 
 		array_unshift_ref($this->children, $widget);
 		$widget->parent =& $this;
@@ -42,7 +42,7 @@ abstract class SwatContainer extends SwatWidget {
 
 	public function packEnd(SwatWidget &$widget) {
 		if ($widget->parent != null)
-			throw SwatException('Attempting to add a widget that already has a parent.');
+			throw new SwatException('Attempting to add a widget that already has a parent.');
 
 		$this->children[] =& $widget;
 		$widget->parent =& $this;
