@@ -86,7 +86,11 @@ class SwatTableView extends SwatControl {
 	}
 
 	public function display() {
-		if ($this->model == null) return;
+		if (!$this->visible)
+			return;
+
+		if ($this->model == null)
+			return;
 
 		$table_tag = new SwatHtmlTag('table');
 		$table_tag->class = 'swat-table-view';

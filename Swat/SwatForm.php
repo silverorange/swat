@@ -30,6 +30,9 @@ class SwatForm extends SwatContainer {
 	}
 
 	public function display() {
+		if (!$this->visible)
+			return;
+
 		$this->addHiddenField('process', $this->name);
 
 		$form_tag = new SwatHtmlTag('form');
