@@ -200,6 +200,13 @@ table.swat-table-view { border-collapse: collapse; }
 	color: #666;
 }
 
+.swat-pagination div.position {
+	font-size: 85%;
+	font-weight: bold;
+	text-align: center;
+	margin: 0.2em;
+}
+
 /**
 * Calendar Widget Version 1.0
 * Copyright (c) 2004, Tribador Mediaworks,
