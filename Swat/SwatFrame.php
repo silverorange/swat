@@ -17,6 +17,12 @@ class SwatFrame extends SwatContainer {
 	 */
 	public $title = null;
 
+	/**
+	 * CSS class to use on the HTML div where the error message is displayed.
+	 * @var string
+	 */
+	public $errormsg_class = 'swat-frame-errormsg';
+
 	public function display() {
 		$outer_div = new SwatHtmlTag('div');
 		$outer_div->class = 'swat-frame';
@@ -47,10 +53,27 @@ class SwatFrame extends SwatContainer {
 
 		$inner_div->open();
 
+		$this->displayErrorMessages();
 		parent::display();
 
 		$inner_div->close();
 		$outer_div->close();
+	}
+
+	private function displayErrorMessages() {
+		$error_messages = $this->gatherErrorMessages(false);
+
+		if (count($error_messages) > 0) {
+			$error_div = new SwatHtmlTag('div');
+			$error_div->class = $this->errormsg_class;
+			
+			$error_div->open();
+
+			foreach ($error_messages as &$err)
+				echo $err->message, '<br />';
+
+			$error_div->close();
+		}
 	}
 }
 
