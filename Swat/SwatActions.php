@@ -72,7 +72,7 @@ class SwatActions extends SwatControl {
 		$this->btn_apply->display();
 		
 		foreach ($this->action_items as $item) {
-			if ($item->widget != null) {
+			if ($item->widget !== null) {
 				$div = new SwatHtmlTag('div');
 				$div->class = ($item == $this->selected)? 'swat-visible': 'swat-hidden';
 				$div->id = $this->name.'_'.$item->name;

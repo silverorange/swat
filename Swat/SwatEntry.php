@@ -52,13 +52,13 @@ class SwatEntry extends SwatControl {
 		$input_tag->id = $this->name;
 		$input_tag->onfocus = "this.select();";
 
-		if ($this->value != null)
+		if ($this->value !== null)
 			$input_tag->value = $this->value;
 
-		if ($this->size != null)
+		if ($this->size !== null)
 			$input_tag->size = $this->size;
 
-		if ($this->maxlength != null)
+		if ($this->maxlength !== null)
 			$input_tag->maxlength = $this->maxlength;
 
 		$input_tag->display();

@@ -50,7 +50,7 @@ abstract class SwatWidget extends SwatObject {
 
 		static $counter = 0;
 
-		if ($this->name != null) return;
+		if ($this->name !== null) return;
 		$this->name = get_class($this).$counter;
 
 		$counter++;

@@ -30,7 +30,7 @@ class SwatCheckAll extends SwatControl {
 	}
 
 	public function display() {
-		if ($this->series_name == null)
+		if ($this->series_name === null)
 			throw new SwatException('SwatCheckall: A series '.
 				'name referencing the series of checkboxes '.
 				'to apply to must be defined.');

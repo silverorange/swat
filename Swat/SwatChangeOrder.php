@@ -49,7 +49,7 @@ class SwatChangeOrder extends SwatControl {
 	
 	public function display() {
 		
-		if ($this->values != null) {
+		if ($this->values !== null) {
 			$array = array();
 			foreach ($this->values as $id)
 				$array[$id] = $this->options[$id];
@@ -86,7 +86,7 @@ class SwatChangeOrder extends SwatControl {
 		$up_btn->type = 'button';
 		$up_btn->value = _S("Move Up");
 		$up_btn->onclick = $obj.".updown('up');";
-		if ($this->onclick != null)
+		if ($this->onclick !== null)
 			$up_btn->onclick.= $this->onclick;
 		$up_btn->display();
 
@@ -96,7 +96,7 @@ class SwatChangeOrder extends SwatControl {
 		$down_btn->type = 'button';
 		$down_btn->value = _S("Move Down");
 		$down_btn->onclick = $obj.".updown('down');";
-		if ($this->onclick != null)
+		if ($this->onclick !== null)
 			$down_btn->onclick.= $this->onclick;
 		$down_btn->display();
 

@@ -25,7 +25,7 @@ class SwatContainer extends SwatWidget {
 	 * Add a widget
 	 * 
 	 * Adds a widget as a child of this container. The widget must not have
-	 * a parent already (parent == null).  The parent of the widget is set to
+	 * a parent already (parent === null).  The parent of the widget is set to
 	 * reference the container.
 	 *
 	 * @param SwatWidget $widget A reference to a widget to add.
@@ -57,7 +57,7 @@ class SwatContainer extends SwatWidget {
 	 * @param SwatWidget $widget A reference to a widget to add.
 	 */
 	public function packStart(SwatWidget $widget) {
-		if ($widget->parent != null)
+		if ($widget->parent !== null)
 			throw new SwatException("Attempting to add a widget that already ".
 				"has a parent.");
 
@@ -72,7 +72,7 @@ class SwatContainer extends SwatWidget {
 	 * @param SwatWidget $widget A reference to a widget to add.
 	 */
 	public function packEnd(SwatWidget $widget) {
-		if ($widget->parent != null)
+		if ($widget->parent !== null)
 			throw new SwatException("Attempting to add a widget that already ".
 				"has a parent.");
 
@@ -180,7 +180,7 @@ class SwatContainer extends SwatWidget {
 
 	public function process() {
 		foreach ($this->children as &$child) {
-			if ($child != null)
+			if ($child !== null)
 				$child->process();
 		}		
 	}

@@ -27,7 +27,7 @@ class SwatFieldset extends SwatContainer {
 
 		$fieldset_tag->open();
 
-		if ($this->title != null) {
+		if ($this->title !== null) {
 			$legend_tag = new SwatHtmlTag('legend');
 			$legend_tag->open();
 			echo $this->title;

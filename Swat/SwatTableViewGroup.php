@@ -21,7 +21,7 @@ class SwatTableViewGroup extends SwatTableViewColumn {
 
 	protected function displayRenderers($row) {
 
-		if ($this->group_by == null)
+		if ($this->group_by === null)
 			throw new SwatException(__CLASS__.': group_by attribute not set');
 
 		$group_by = $this->group_by;

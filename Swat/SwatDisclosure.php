@@ -61,7 +61,7 @@ class SwatDisclosure extends SwatContainer {
 
 		$img->display();
 
-		if ($this->title != null)
+		if ($this->title !== null)
 			echo $this->title;
 
 		$anchor->close();

@@ -51,7 +51,7 @@ class SwatUI extends SwatObject {
 			}
 		}
 
-		if ($xmlfile == null)
+		if ($xmlfile === null)
 			throw new SwatException('SwatUI: XML file not found: '.$filename);
 
 		$xml = simplexml_load_file($xmlfile);
@@ -134,7 +134,7 @@ class SwatUI extends SwatObject {
 
 		$classfile = "Swat/{$name}.php";
 
-		if ($this->classmap != null) {
+		if ($this->classmap !== null) {
 			foreach ($this->classmap as $prefix => $path) {
 				if (strncmp($name, $prefix, strlen($prefix)) == 0)
 					$classfile = "{$path}/{$name}.php";

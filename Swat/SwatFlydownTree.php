@@ -27,7 +27,7 @@ class SwatFlydownTree extends SwatFlydown {
 	public $path;
 	
 	public function display() {
-		if ($this->tree != null)
+		if ($this->tree !== null)
 			$this->options = $this->tree->toArray();
 
 		foreach ($this->options as $key => $data) {

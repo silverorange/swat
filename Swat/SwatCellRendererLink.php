@@ -41,7 +41,7 @@ class SwatCellRendererLink extends SwatCellRenderer {
 		$anchor = new SwatHtmlTag('a');
 		$anchor->content = $this->content;
 
-		if ($this->value == null)
+		if ($this->value === null)
 			$anchor->href = $this->href;
 		else
 			$anchor->href = sprintf($this->href, $this->value);

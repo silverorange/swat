@@ -35,7 +35,7 @@ class SwatFrame extends SwatContainer {
 
 		$outer_div->open();
 
-		if ($this->title != null) {
+		if ($this->title !== null) {
 			/*
 			 * Experimental: Header level is autocalculated based on the 
 			 * level of the frame in the widget tree.  Top level frame
@@ -44,7 +44,7 @@ class SwatFrame extends SwatContainer {
 			$level = 2;
 			$ancestor = $this->parent;
 
-			while ($ancestor != null) {
+			while ($ancestor !== null) {
 				if ($ancestor instanceof SwatFrame)
 					$level++;
 
