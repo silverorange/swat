@@ -19,13 +19,8 @@ class SwatTableView extends SwatControl {
 	 */
 	public $model = null;
 
-	/**
-	 * Whether to show a check all box at the bottom.
-	 * @var boolean
-	 */
-	public $show_check_all = false;
-
 	private $columns;
+	private $rows;
 
 	public function init() {
 		$this->columns = array();
@@ -33,6 +28,10 @@ class SwatTableView extends SwatControl {
 
 	public function appendColumn(SwatTableViewColumn $column) {
 		$this->columns[] = $column;
+	}
+
+	public function appendRow(SwatTableViewRow $row) {
+		$this->rows[] = $row;
 	}
 
 	public function display() {
@@ -44,10 +43,6 @@ class SwatTableView extends SwatControl {
 		$table_tag->open();
 		$this->displayHeader();
 		$this->displayContent();
-
-		if ($this->show_check_all)
-			$this->displayCheckAll();
-
 		$table_tag->close();
 	}
 
@@ -72,39 +67,12 @@ class SwatTableView extends SwatControl {
 				$column->display($row);
 
 			echo '</tr>';
-		}
-	}
 
-	private function displayCheckAll() {
-		echo '<tr>';
-
-		foreach ($this->columns as $column) {
-			$count = 0;
-
-			if ($column->name == 'checkbox') {
-				$td_tag = new SwatHtmlTag('td');
-				$td_tag->colspan = count($this->columns) - $count;
-
-				$input_tag = new SwatHtmlTag('input');
-				$input_tag->type = 'checkbox';
-				$input_tag->name = 'check_all';
-
-				$label_tag = new SwatHtmlTag('label');
-				$label_tag->for = 'check_all';
-
-				$td_tag->open();
-				$label_tag->open();
-				$input_tag->display();
-				echo _S('Check All');
-				$label_tag->close();
-				$td_tag->close();
-			} else {
-				$count++;
-				echo '<td>&nbsp;</td>';
-			}
 		}
 
-		echo '</tr>';
+		foreach ($this->rows as $row)
+			$row->display($this->columns);
+
 	}
 
 }
