@@ -14,10 +14,10 @@
 		</maintainer>
 	</maintainers>
 	<release>
-		<version>0.1pre1</version>
+		<version>0.1</version>
 		<date>2005-01-24</date>
 		<license>LGPL</license>
-		<state>beta</state>
+		<state>devel</state>
 		<notes>Test release
 		</notes>
 		<deps>
@@ -32,6 +32,20 @@
 					<file role="doc" name="STATUS"/>
 					<file role="doc" name="TODO"/>
 				</dir -->
+				<dir name="www">
+					<file role="data" name="swat.css"/>
+					<file role="data" name="swatml.dtd"/>
+					<dir name="images">
+						<file role="data" name="b_arrowl.gif"/>
+						<file role="data" name="b_arrowl_off.gif"/>
+						<file role="data" name="b_arrowr.gif"/>
+						<file role="data" name="b_arrowr_off.gif"/>
+						<file role="data" name="b_calendar.gif"/>
+						<file role="data" name="check.png"/>
+						<file role="data" name="disclosure-closed.png"/>
+						<file role="data" name="disclosure-open.png"/>
+					</dir>
+				</dir>
 				<dir name="Swat">
 					<dir name="javascript">
 						<file role="php" name="swat-calendar.js"/>
