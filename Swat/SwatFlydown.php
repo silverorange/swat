@@ -48,7 +48,7 @@ class SwatFlydown extends SwatControl {
 				$option_tag->removeAttr('selected');
 				
 				// check != null because 0 and null are the same in comparisons
-				if ($this->value != null && $this->value == $value)
+				if ($this->value !== null && $this->value == $value)
 					$option_tag->selected = "selected";
 
 				$option_tag->open();
