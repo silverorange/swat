@@ -1,6 +1,6 @@
 <?php
 
-require_once("SwatDB/SwatDBException.php");
+require_once("SwatDB/SwatException.php");
 
 /**
  * A SwatDB Exception.
