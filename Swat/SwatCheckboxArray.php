@@ -1,17 +1,18 @@
 <?php
+require_once('Swat/SwatCheckbox.php');
+
 /**
+ * An array of checkboxes
+ *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-require_once('Swat/SwatCheckbox.php');
-
-/**
- * An array of checkboxes.
- */
 class SwatCheckboxArray extends SwatCheckbox {
 
-	/*
+	/**
+	 * Checkbox Values
+	 *
 	 * The state of the widget.
 	 * @var Array
 	 */

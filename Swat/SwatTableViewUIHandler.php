@@ -1,16 +1,15 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatTableViewColumn.php');
 require_once('Swat/SwatTableViewGroup.php');
 
 /**
- * UI handler for SwatTableView.
+ * UI handler for {@link SwatTableView}
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
-class SwatTableViewUiHandler implements SwatUIHandler {
+class SwatTableViewUIHandler implements SwatUIHandler {
 
 	/**
 	 * Gets the name of the class this handler handles.
@@ -20,7 +19,10 @@ class SwatTableViewUiHandler implements SwatUIHandler {
 	}
 
 	/**
-	 * Attaches $widget to $parent.
+	 * Attaches $widget to $parent
+	 *
+	 * @param SwatWidget $widget
+	 * @param ??? TODO: find out what this is
 	 */
 	public function attachToParent($widget, $parent) {
 

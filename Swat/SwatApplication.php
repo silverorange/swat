@@ -1,40 +1,48 @@
 <?php
+require_once('Swat/SwatObject.php');
+
 /**
+ * Base class for a web application
+ *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-require_once('Swat/SwatObject.php');
-
-/**
- * Base class for a web application.
- */
 abstract class SwatApplication extends SwatObject {
 
 	/**
-	 * The name of the application
+	 * Application name
 	 * @var string
 	 */
 	public $name;
 
 	/**
-	 * The URI of the current request.  Set by SwatApplication::initUriVars().
+	 * URI (read-only)
+	 *
+	 * The URI of the current request.  Set by {@link SwatApplication::initUriVars}.
 	 * @var string
 	 */
 	public $uri;
 
 	/**
-	 * The URI part of the basehref.  Set by SwatApplication::initUriVars().
+	 * Base URI (read-only)
+	 *
+	 * The URI part of the basehref.  Set by {@link SwatApplication::initUriVars}.
 	 * @var string
 	 */
 	public $baseuri;
 
 	/**
-	 * The basehref.  Set by SwatApplication::initUriVars().
+	 * Base-Href (read-only)
+	 *
+	 * Set by SwatApplication::initUriVars().
 	 * @var string
 	 */
 	public $basehref;
 
+	/**
+	 * @param String $name Name of the application.
+	 */
 	function __construct($name) {
 		$this->name = $name;
 	}
@@ -51,21 +59,25 @@ abstract class SwatApplication extends SwatObject {
 	}
 
 	/**
-	 * Initialize the application.
+	 * Initialize the application
+	 *
 	 * Subclasses should implement all application level initialization here.
 	 */
 	abstract public function init();
 
 	/**
-	 * Get the page object.
-	 * Subclasses should implement logic here to decide which page subclass to
-	 * instantiate, then return a SwatPage descenedant.
-	 * @return SwatPage A subclass of SwatPage is returned.
+	 * Get the page object
+	 *
+	 * Subclasses should implement logic here to decide which page sub-class to
+	 * instantiate, then return a {@link SwatPage} descenedant.
+	 *
+	 * @return SwatPage A sub-class of {@link SwatPage} is returned.
 	 */
 	abstract public function getPage();
 
 	/**
-	 * Relocate.
+	 * Relocate
+	 *
 	 * Relocate to another URL. This function does not return.
 	 * @param string $url The URL to relocate to.
 	 */
@@ -89,14 +101,19 @@ abstract class SwatApplication extends SwatObject {
 	const VAR_ENV     = 128;
 
 	/**
-	 * Initialize a variable.
+	 * Initialize a variable
+	 *
 	 * Initilizes a local variable with a value from one of the PHP
 	 * global arrays.
+	 *
 	 * @param $name string The name of the variable to lookup.
+	 *
 	 * @param $types int Bitwise combination of SwatApplication::VAR_*
-	 * constansts.
+	 *        constansts.
+	 *
 	 * @param $default mixed Value to return if variable is not found in
-	 * the global arrays.
+	 *        the global arrays.
+	 *
 	 * @return mixed The value of the variable.
 	 */
 	function initVar($name, $default = 0, $types = 0) {

@@ -1,14 +1,13 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 
 require_once('Date.php');
 
 /**
- * A pop-up calendar widget.
+ * Pop-up calendar widget.
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatCalendar extends SwatControl {
 

@@ -1,19 +1,19 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatTableViewColumn.php');
 require_once('Swat/SwatHtmlTag.php');
 
 /**
- * A visible grouping of rows in a SwatTableView.
+ * A visible grouping of rows in a SwatTableView
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatTableViewGroup extends SwatTableViewColumn {
 
 	/**
-	 * @var string The field of the table store to group rows by.
+	 * The field of the table store to group rows by
+	 * @var string
 	 */
 	public $group_by = null;
 

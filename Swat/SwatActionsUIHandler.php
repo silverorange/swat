@@ -1,15 +1,14 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatUIHandler.php');
 require_once('Swat/SwatActions.php');
 require_once('Swat/SwatActionItem.php');
 
 /**
  * UI handler for SwatActions.
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatActionsUIHandler implements SwatUIHandler {
 
@@ -22,6 +21,8 @@ class SwatActionsUIHandler implements SwatUIHandler {
 
 	/**
 	 * Attaches $widget to $parent.
+	 * @param SwatWidget $widget SwatWidget to attach
+	 * @param SwatActionItem $parent Parent action
 	 */
 	public function attachToParent($widget, $parent) {
 

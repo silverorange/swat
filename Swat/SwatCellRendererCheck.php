@@ -1,17 +1,18 @@
 <?php
+require_once('Swat/SwatCellRenderer.php');
+
 /**
+ * A renderer for a boolean value
+ *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-require_once('Swat/SwatCellRenderer.php');
-
-/**
- * A renderer for a boolean value.
- */
 class SwatCellRendererCheck extends SwatCellRenderer {
 
 	/**
+	 * Value of cell
+	 *
 	 * The boolean value to display in this cell.
 	 * @var boolean
 	 */

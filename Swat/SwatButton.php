@@ -1,27 +1,34 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 
 /**
- * A form submit button.
+ * A button widget
+ *
+ * This widget displays an HTML form submit button, so it must be used within
+ * {@link SwatForm}.
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatButton extends SwatControl {
 
 	/**
+	 * Title
+	 *
 	 * The visible text on the button.
 	 * @var string
 	 */
 	public $title;
 
 	/**
-	 * Set true after processing if this button was clicked (read only).
+	 * Clicked (read-only)
+	 *
+	 * This is set to true after processing if this button was clicked.
 	 * The form will also contain a refernce to the clicked button in the
-	 * SwatForm::$button class variable.
+	 * {@link SwatForm::$button} class variable.
+	 *
 	 * @var boolean
 	 */
 	public $clicked = false;
@@ -54,12 +61,13 @@ class SwatButton extends SwatControl {
 	}
 
 	/**
-	 * Set a stock title.
+	 * Set a stock title
+	 *
 	 * Lookup a stock title for the button and set it as the current title.
-	 * @param id string The shortname of the stock title.
+	 * @param string $name The shortname of the stock title.
 	 */
-	public function setTitleFromStock($id) {
-		switch ($id) {
+	public function setTitleFromStock($name) {
+		switch ($name) {
 			case 'submit':
 				$this->title = _S('Submit');
 				break;

@@ -1,18 +1,21 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatContainer.php');
 require_once('Swat/SwatHtmlTag.php');
 
 /**
+ * Fieldset tag container
+ *
  * An HTML fieldset tag with an optional HTML legend title.
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatFieldset extends SwatContainer {
 
 	/**
+	 * Fieldset name
+	 *
 	 * A visible name for this fieldset, or null.
 	 * @var string
 	 */

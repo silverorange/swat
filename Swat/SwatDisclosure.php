@@ -1,25 +1,26 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatContainer.php');
 require_once('Swat/SwatHtmlTag.php');
 
 /**
+ * A container to show and hide child widgets
+ *
  * A container with a disclosure widget that may be shown or hidden by the user.
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatDisclosure extends SwatContainer {
 
 	/**
-	 * A visible name for the label.
+	 * A visible name for the label
 	 * @var string
 	 */
 	public $title = null;
 
 	/**
-	 * A flag to set the initial state of the disclosure.
+	 * A flag to set the initial state of the disclosure
 	 * @var bool
 	 */
 	public $open = true;

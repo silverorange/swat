@@ -1,24 +1,23 @@
 <?php
+require_once('Swat/SwatHtmlTag.php');
+
 /**
+ * A block of content in the widget tree
+ *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-require_once('Swat/SwatHtmlTag.php');
-
-/**
- * A block of content in the widget tree.
- */
 class SwatToolLink extends SwatControl {
 
 	/**
-	 * The title of the link.
+	 * The title of the link
 	 * @var string
 	 */
 	public $title = '';
 
 	/**
-	 * The href of the link.
+	 * The href of the link
 	 * @var string
 	 */
 	public $href = '';

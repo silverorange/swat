@@ -12,7 +12,9 @@ require_once('Swat/SwatUIHandler.php');
 class SwatActionItemUIHandler implements SwatUIHandler {
 
 	/**
-	 * Gets the name of the class this handler handles.
+	 * Get the name
+	 *
+	 * Gets the name of the class this handler handles. 
 	 */
 	public function getName() {
 		return 'SwatActionItem';
@@ -20,6 +22,8 @@ class SwatActionItemUIHandler implements SwatUIHandler {
 
 	/**
 	 * Attaches $widget to $parent.
+	 * @param SwatWidget $widget SwatWidget to attach
+	 * @param SwatActionItem $parent Parent action
 	 */
 	public function attachToParent($widget, $parent) {
 

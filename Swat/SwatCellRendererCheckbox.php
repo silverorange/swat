@@ -1,23 +1,26 @@
 <?php
+require_once('Swat/SwatCellRenderer.php');
+
 /**
+ * A renderer for a column of checkboxes
+ *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-require_once('Swat/SwatCellRenderer.php');
-
-/**
- * A renderer for a column of checkboxes.
- */
 class SwatCellRendererCheckbox extends SwatCellRenderer {
 
 	/**
+	 * Name of checkbox
+	 *
 	 * The name attribute in the HTML input tag.
 	 * @var string
 	 */
 	public $name;
 
 	/**
+	 * Value of checkbox
+	 *
 	 * The value attribute in the HTML input tag.
 	 * @var string
 	 */

@@ -1,19 +1,33 @@
 <?php
+require_once('Swat/SwatObject.php');
+require_once('Swat/SwatHtmlTag.php');
+
+//TODO: finish documentation for public functions
+
 /**
+ * A visible column in a SwatTableView
+ *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-require_once('Swat/SwatObject.php');
-require_once('Swat/SwatHtmlTag.php');
-
-/**
- * A visible column in a SwatTableView.
- */
 class SwatTableViewColumn extends SwatObject {
-
+	/**
+	 * Name of the column
+	 * @var string
+	 */
 	public $name = null;
+
+	/**
+	 * Title of the column
+	 * @var string
+	 */
 	public $title = '';
+
+	/**
+	 * The {@link SwatTableView} associated with this column
+	 * @var SwatTableView
+	 */
 	public $view = null;
 
 	protected $renderers = array();

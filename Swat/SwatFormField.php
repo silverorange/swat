@@ -1,45 +1,45 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatContainer.php');
 require_once('Swat/SwatHtmlTag.php');
 
 /**
- * A container to use around control widgets in a form.
+ * A container to use around control widgets in a form
+ *
  * Adds a label and space to output messages.
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatFormField extends SwatContainer {
 
 	/**
-	 * The visible name for this field, or null.
+	 * The visible name for this field, or null
 	 * @var string
 	 */
 	public $title = null;
 
 	/*
-	 * Display a visible indication that this field is required.
+	 * Display a visible indication that this field is required
 	 * @var bool
 	 */
 	public $required = false;
 	
 	/**
-	 * CSS class to use on the HTML div tag.
+	 * CSS class to use on the HTML div tag
 	 * @var string
 	 */
 	public $class = 'swat-form-field';
 
 	/**
-	 * CSS class to use on outer HTML div when an error message is displayed.
+	 * CSS class to use on outer HTML div when an error message is displayed
 	 * @var string
 	 */
 	public $error_class = 'swat-form-field-error';
 
 	/**
-	 * @var string
 	 * CSS class to use on the HTML div where the error message is displayed.
+	 * @var string
 	 */
 	public $errormsg_class = 'swat-form-field-errormsg';
 

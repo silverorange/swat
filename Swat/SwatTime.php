@@ -1,9 +1,4 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatFlydown.php');
 require_once('Date.php');
@@ -12,12 +7,18 @@ require_once('Date.php');
 // 		 offset.
 
 /**
- * A time entry widget.
+ * A time entry widget
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatTime extends SwatControl {
 	
 	/**
-	 * Time of the widget. The year, month, and day fields of the Date are
+	 * Time of the widget
+	 *
+	 * The year, month, and day fields of the Date are
 	 * unused and should be considered undefined.
 	 * @var Date
 	 */
@@ -28,31 +29,37 @@ class SwatTime extends SwatControl {
 	const  SECOND = 4;
 	
 	/**
-	 * Time parts that are required. Bitwise combination of SwatTime::HOUR,
+	 * Time parts that are required
+	 *
+	 * Bitwise combination of SwatTime::HOUR,
 	 * SwatTime::MINUTE, and SwatTime::SECOND.
 	 * @var int
 	 */
 	public $required;
 	
 	/**
-	 * Time parts that are displayed. Bitwise combination of SwatTime::HOUR,
+	 * Time parts that are displayed
+	 *
+	 * Bitwise combination of SwatTime::HOUR,
 	 * SwatTime::MINUTE, and SwatTime::SECOND.
 	 * @var int
 	 */
 	public $display;
 	
 	/**
-	 * Start time of the valid range (inclusive). Default 00:00:00.
-	 * The year, month, and day fields of the Date are ignored and should
-	 * be considered undefined.
+	 * Start time of the valid range (inclusive)
+	 *
+	 * Default 00:00:00 The year, month, and day fields of the Date are
+	 * ignored and should be considered undefined.
 	 * @var Date
 	 */
 	public $valid_range_start;
 	
 	/**
-	 * End time of the valid range (inclusive). Default 23:59:59.
-	 * The year, month, and day fields of the Date are ignored and should
-	 * be considered undefined.
+	 * End time of the valid range (inclusive)
+	 *
+	 * Default 23:59:59 The year, month, and day fields of the Date
+	 * are ignored and should be considered undefined.
 	 * @var Date
 	 */
 	public $valid_range_end;

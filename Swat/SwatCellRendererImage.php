@@ -1,41 +1,50 @@
 <?php
+require_once('Swat/SwatCellRenderer.php');
+
 /**
+ * An image renderer
+ *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-require_once('Swat/SwatCellRenderer.php');
-
-/**
- * An image renderer.
- */
 class SwatCellRendererImage extends SwatCellRenderer {
 
 	/**
+	 * Image src
+	 *
 	 * The src attribute in the HTML img tag.
 	 * @var string
 	 */
 	public $src;
 
 	/**
+	 * Image height
+	 *
 	 * The height attribute in the HTML img tag.
 	 * @var int
 	 */
 	public $height = 0;
 
 	/**
+	 * Image width
+	 *
 	 * The width attribute in the HTML img tag.
 	 * @var int
 	 */
 	public $width = 0;
 
 	/**
+	 * Image title
+	 *
 	 * The title attribute in the HTML img tag.
 	 * @var string
 	 */
 	public $title = '';
 
 	/**
+	 * Image alt text
+	 *
 	 * The alt attribute in the HTML img tag.
 	 * @var string
 	 */

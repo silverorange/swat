@@ -1,19 +1,18 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatContainer.php');
 require_once('Swat/SwatHtmlTag.php');
 
 /**
- * A container with a decorative frame and optional title.
+ * A container with a decorative frame and optional title
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatFrame extends SwatContainer {
 
 	/**
-	 * A visible name for this frame, or null.
+	 * A visible name for this frame, or null
 	 * @var string
 	 */
 	public $title = null;

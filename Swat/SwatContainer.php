@@ -1,17 +1,20 @@
 <?php
+require_once('Swat/SwatWidget.php');
+
 /**
+ * Swat container widget
+ *
+ * Used as a base class for widgets which contain other widgets.
+ *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-require_once('Swat/SwatWidget.php');
-
-/**
- * Base class for widgets which contain other widgets.
- */
 class SwatContainer extends SwatWidget {
 
 	/**
+	 * Children widgets
+	 *
 	 * An array containing the widgets that belong to this box,
 	 * or null.
 	 * @var array
@@ -19,7 +22,7 @@ class SwatContainer extends SwatWidget {
 	protected $children = array();
 
 	/**
-	 * Add a widget.
+	 * Add a widget
 	 * 
 	 * Adds a widget as a child of this container. The widget must not have
 	 * a parent already (parent == null).  The parent of the widget is set to
@@ -31,6 +34,12 @@ class SwatContainer extends SwatWidget {
 		$this->packEnd($widget);
 	}
 
+	/**
+	 * Add a widget to start
+	 *
+	 * Adds a widget to the start of the list of widgets in this container.
+	 * @param SwatWidget $widget A reference to a widget to add.
+	 */
 	public function packStart(SwatWidget $widget) {
 		if ($widget->parent != null)
 			throw new SwatException("Attempting to add a widget that already ".
@@ -40,6 +49,12 @@ class SwatContainer extends SwatWidget {
 		$widget->parent = $this;
 	}
 
+	/**
+	 * Add a widget to end
+	 *
+	 * Adds a widget to the end of the list of widgets in this container.
+	 * @param SwatWidget $widget A reference to a widget to add.
+	 */
 	public function packEnd(SwatWidget $widget) {
 		if ($widget->parent != null)
 			throw new SwatException("Attempting to add a widget that already ".
@@ -49,6 +64,15 @@ class SwatContainer extends SwatWidget {
 		$widget->parent = $this;
 	}
 
+	/**
+	 * Get Child Widget
+	 *
+	 * Used to retrieve a widget from the list of widgets in the container
+	 *
+	 * @param int $id The id of the widget to look for.
+	 * @return SwatWidget Returns the corresponding widget to id or null
+	 *         if none found
+	 */
 	public function getChild($id = 0) {
 		if (array_key_exists($id, $this->children))
 			return $this->children[$id];
@@ -56,6 +80,11 @@ class SwatContainer extends SwatWidget {
 			return null;
 	}
 
+	/**
+	 * Get children widgets
+	 *
+	 * @return array An array of all of the child widgets of this container.
+	 */
 	public function getChildren() {
 		return $this->children;
 	}

@@ -1,9 +1,4 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatObject.php');
 require_once('Swat/SwatUIHandler.php');
 require_once('Swat/SwatTableViewUIHandler.php');
@@ -12,7 +7,11 @@ require_once('Swat/SwatActionsUIHandler.php');
 require_once('Swat/SwatActionItemUIHandler.php');
 
 /**
- * Generates a Swat widget tree from an XML UI file.
+ * Generates a Swat widget tree from an XML UI file
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatUI extends SwatObject {
 
@@ -33,7 +32,7 @@ class SwatUI extends SwatObject {
 	}
 
 	/**
-	 * Load a UI from and XML file.
+	 * Load a UI from and XML file
 	 * @param string $filename Filename of the XML UI file to load.
 	 */
 	public function loadFromXML($filename) {
@@ -61,11 +60,13 @@ class SwatUI extends SwatObject {
 	}
 
 	/**
-	 * Retrieve a widget.
+	 * Retrieve a widget
+	 *
 	 * Lookup a widget in the widget tree by name.
+	 *
 	 * @param string $name Name of the widget to retrieve.
 	 * @param boolean $silent If true, return null instead of throwing an 
-	 * exception if the widget is not found.
+	 *        exception if the widget is not found.
 	 * @return SwatWidget A reference to the widget.
 	 */
 	public function getWidget($name, $silent = false) {
@@ -79,7 +80,8 @@ class SwatUI extends SwatObject {
 	}
 
 	/**
-	 * Retrieve the top widget.
+	 * Retrieve the top widget
+	 *
 	 * Lookup the widget at the root of the widget tree.
 	 * @return SwatWidget A reference to the widget.
 	 */
@@ -88,8 +90,9 @@ class SwatUI extends SwatObject {
 	}
 
 	/**
-	 * Register a handler.
-	 * Register a handler object that implements SwatUiHandler.
+	 * Register a handler
+	 *
+	 * Register a handler object that implements {@link SwatUIHandler}.
 	 * @param string $name Name class to handle.
 	 * @param SwatUiHandler $handler The handler object.
 	 */

@@ -1,30 +1,35 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 
 /**
- * A flydown (aka combo-box) selection widget.
+ * A flydown (aka combo-box) selection widget
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatFlydown extends SwatControl {
 	
 	/**
+	 * Flydown options
+	 *
 	 * An array of options for the flydown in the form value => title.
 	 * @var array
 	 */
 	public $options = null;
 
 	/**
+	 * Flydown value 
+	 *
 	 * The value of the selected option, or null.
 	 * @var string
 	 */
 	public $value = null;
 
 	/**
+	 * On change
+	 *
 	 * The onchange attribute of the HTML select tag, or null.
 	 * @var string
 	 */
@@ -65,6 +70,7 @@ class SwatFlydown extends SwatControl {
 
 	/**
 	 * Reset the flydown.
+	 *
 	 * Reset the flydown to its default state.  This is useful to call from a 
 	 * display() method when persistence is not desired.
 	 */

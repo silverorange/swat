@@ -1,25 +1,28 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatWidget.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatTableViewColumn.php');
 
 /**
  * A widget to allow navigation between paginated data.
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatPagination extends SwatWidget {
 
 	/**
+	 * Current page
+	 *
 	 * The number of the current page. The value is zero based.
 	 * @var int
 	 */
 	public $current_page = 0;
 
 	/**
+	 * Current start
+	 *
 	 * The first record that should be displayed on this page. The value is
 	 * zero based.
 	 * @var int
@@ -27,12 +30,16 @@ class SwatPagination extends SwatWidget {
 	public $current_start = 0;
 
 	/**
+	 * Page size
+	 *
 	 * The number of records that are displayed per page.
 	 * @var int
 	 */
 	public $page_size = 20;
 
 	/**
+	 * Total records
+	 *
 	 * The total number of records that are available for display.
 	 * @var int
 	 */
@@ -63,6 +70,9 @@ class SwatPagination extends SwatWidget {
 		$div->close();
 	}
 
+	/**
+	 * Display previous page link
+	 */
 	protected function displayPrev() {
 		if ($this->prev_page != -1) {
 			$href = $this->getHref();
@@ -82,10 +92,18 @@ class SwatPagination extends SwatWidget {
 		}
 	}
 
+	/**
+	 * Display current position of page
+	 *
+	 * i.e. "1 of 3"
+	 */
 	protected function displayPosition() {
 		echo ($this->current_page + 1), ' of ', $this->total_pages;
 	}
 
+	/**
+	 * Display next page link
+	 */
 	protected function displayNext() {
 		if ($this->next_page != -1) {
 			$href = $this->getHref();

@@ -1,23 +1,24 @@
 <?php
+require_once('Swat/SwatObject.php');
+
 /**
+ * Stores and outputs an HTML tag
+ *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-require_once('Swat/SwatObject.php');
-
-/**
- * Stores and outputs an HTML tag.
- */
 class SwatHtmlTag extends SwatObject {
 
 	/**
-	 * The name of the HTML tag.
+	 * The name of the HTML tag
 	 * @var string
 	 */
 	public $tagname;
 
 	/**
+	 * Atribute array
+	 *
 	 * Array containing attributes of the HTML tag in the form of
 	 * (attr name) => (value).
 	 * @var array
@@ -25,6 +26,8 @@ class SwatHtmlTag extends SwatObject {
 	private $attributes;
 
 	/**
+	 * Content (optional)
+	 *
 	 * Optional content for the body of the HTML tag. When this is set
 	 * {@link SwatHtmlTag::display()} will output this content followed by an
 	 * explicit closing tag.
@@ -45,9 +48,11 @@ class SwatHtmlTag extends SwatObject {
 	}
 
 	/**
-	 * Magic __get method.
+	 * Magic __get method
+	 *
 	 * This should not be called directly, but is invoked indirectly when
 	 * accessing properties of a tag object.
+	 * @param string $attr The name of attribute.
 	 */
 	public function __get($attr) {
 		if (isset($this->attributes[$attr]))
@@ -57,16 +62,20 @@ class SwatHtmlTag extends SwatObject {
 	}
 
 	/**
-	 * Magic __set method.
+	 * Magic __set method
+	 *
 	 * This should not be called directly, but is invoked indirectly when
 	 * setting properties of a tag object.
+	 * @param string $attr The name of attribute.
+	 * @param mixed $val The value of attribute.
 	 */
 	public function __set($attr, $val) {
 		$this->attributes[$attr] = (string)$val;
 	}
 
 	/**
-	 * Remove an attribute.
+	 * Remove an attribute
+	 *
 	 * Remove a previously assigned attribute. Useful when one tag object is
 	 * displayed multiple times with different attributes.
 	 *
@@ -77,12 +86,13 @@ class SwatHtmlTag extends SwatObject {
 	}
 
 	/**
-	 * Display the tag.
+	 * Display the tag
+	 *
 	 * Output the opening tag including all its attributes and implicitly close
 	 * the tag.  If explicit closing is desired, use
 	 * {@link SwatHtmlTag::display()} instead. If {@link SwatHtmlTag::content}
 	 * is set then explicit closing is used and {@link SwatHtmlTag::content} is
-	 *  output within the tag.
+	 * output within the tag.
 	 */
 	public function display() {
 		if ($this->content == null) {
@@ -95,7 +105,8 @@ class SwatHtmlTag extends SwatObject {
 	}
 
 	/**
-	 * Open the tag.
+	 * Open the tag
+	 *
 	 * Output the opening tag including all its attributes. Should be paired
 	 * with a call to {@link SwatHtmlTag::close()}.  If implicit closing
 	 * is desired, use {@link SwatHtmlTag::display()} instead.
@@ -105,7 +116,8 @@ class SwatHtmlTag extends SwatObject {
 	}
 
 	/**
-	 * Close the tag.
+	 * Close the tag
+	 *
 	 * Output the closing tag. Should be paired with a call to 
 	 * {@link SwatHtmlTag::close()}.
 	 */
