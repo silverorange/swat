@@ -12,17 +12,25 @@ require_once('Swat/SwatObject.php');
 class SwatHtmlTag extends SwatObject {
 
 	/**
-	 * @var string
 	 * The name of the HTML tag.
+	 * @var string
 	 */
 	public $tagname;
 
 	/**
-	 * @var array
 	 * Array containing attributes of the HTML tag in the form of
 	 * (attr name) => (value).
+	 * @var array
 	 */
 	private $attributes;
+
+	/**
+	 * Optional content for the body of the HTML tag. When this is set
+	 * {@link SwatHtmlTag::display()} will output this content followed by an
+	 * explicit closing tag.
+	 * @var string
+	 */
+	public $content = null;
 
 	/**
 	 * @param string $tagname The name of the HTML tag.
@@ -68,10 +76,18 @@ class SwatHtmlTag extends SwatObject {
 	 * Display the tag.
 	 * Output the opening tag including all its attributes and implicitly close
 	 * the tag.  If explicit closing is desired, use
-	 * {@link SwatHtmlTag::display()} instead.
+	 * {@link SwatHtmlTag::display()} instead. If {@link SwatHtmlTag::content}
+	 * is set then explicit closing is used and {@link SwatHtmlTag::content} is
+	 *  output within the tag.
 	 */
 	public function display() {
-		$this->openInternal(true);
+		if ($this->content == null) {
+			$this->openInternal(true);
+		} else {
+			$this->openInternal(false);
+			echo $this->content;
+			$this->close();
+		}
 	}
 
 	/**
