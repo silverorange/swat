@@ -23,7 +23,7 @@ class SwatCheckbox extends SwatControl {
 		$inputtag->value = '1';
 
 		if ($this->value)
-			$inputtag->checked = null;
+			$inputtag->checked = "checked";
 
 		$inputtag->display();
 	}	
