@@ -17,6 +17,7 @@ class SwatCellRendererCheck extends SwatCellRenderer {
 		if ((boolean)$this->value) {
 			$image_tag = new SwatHtmlTag('img');
 			$image_tag->src = 'swat/images/check.png';
+			$image_tag->alt = _S('Yes');
 			$image_tag->display();
 		} else {
 			echo '&nbsp;';
