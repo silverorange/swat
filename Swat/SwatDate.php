@@ -13,7 +13,7 @@ require_once('Date.php');
 class SwatDate extends SwatControl {
 	
 	/**
-	 * Date of the widget
+	 * Date of the widget, or null.
 	 * @var Date
 	 */
 	public $value = null;
@@ -23,7 +23,15 @@ class SwatDate extends SwatControl {
 	const  DAY      = 4;
 	const  TIME     = 8;
 	const  CALENDAR = 16;
-		
+	
+	/**
+	 * Required
+	 *
+	 * Must have a non-empty value when processed.
+	 * @var bool
+	 */
+	public $required = false;
+
 	/**
 	 * Required date parts
 	 *
@@ -31,7 +39,7 @@ class SwatDate extends SwatControl {
 	 * SwatDate::MONTH, SwatDate::DAY, and SwatDate::TIME.
 	 * @var int
 	 */
-	public $required;
+	public $required_parts;
 	
 	/**
 	 * Displayed date parts
@@ -40,7 +48,7 @@ class SwatDate extends SwatControl {
 	 * SwatDate::MONTH, SwatDate::DAY, SwatDate::TIME, and SwatDate::CALENDAR.
 	 * @var int
 	 */
-	public $display;
+	public $display_parts;
 	
 	/**
 	 * Start date of the valid range (inclusive)
@@ -65,8 +73,8 @@ class SwatDate extends SwatControl {
 	private $created = false;
 	
 	public function init() {
-		$this->required = self::YEAR | self::MONTH | self::DAY;
-		$this->display  = self::YEAR | self::MONTH | self::DAY | self::CALENDAR;
+		$this->required_parts = self::YEAR | self::MONTH | self::DAY;
+		$this->display_parts  = self::YEAR | self::MONTH | self::DAY | self::CALENDAR;
 
 		$this->setValidRange(-20, +20);
 	}
@@ -113,18 +121,18 @@ class SwatDate extends SwatControl {
 			$y = ($datepart == 2003 || $datepart == 3);
 				 // returns either 2003 or 03 depending on the locale
 			
-			if ($m && $datepart == 1 && $this->display & self::MONTH)
+			if ($m && $datepart == 1 && $this->display_parts & self::MONTH)
 				$this->monthfly->display();
-			elseif ($d && $datepart == 2 && $this->display & self::DAY)
+			elseif ($d && $datepart == 2 && $this->display_parts & self::DAY)
 				$this->dayfly->display();
-			elseif ($y && $this->display & self::YEAR)
+			elseif ($y && $this->display_parts & self::YEAR)
 				$this->yearfly->display();
 		}
 		
-		if ($this->display & self::TIME)
+		if ($this->display_parts & self::TIME)
 			$this->timefly->display();
 		
-		if ($this->display & self::CALENDAR) {
+		if ($this->display_parts & self::CALENDAR) {
 			include_once('Swat/SwatCalendar.php');
 			$cal = new SwatCalendar();
 			$cal->name = $this->name;
@@ -136,38 +144,28 @@ class SwatDate extends SwatControl {
 	
 	public function process() {
 		$this->createFlydowns();
-
-		if ($this->display & self::YEAR) {
+	
+		$all_empty = true;
+	
+		if ($this->display_parts & self::YEAR) {
 			$this->yearfly->process();
 			$year = intval($this->yearfly->value);
-			
-			if ($year == -1)
-				$this->addErrorMessage(_S("Year is Required."));
-		} else {
-			$year = 0;
+			$all_empty = $all_empty && ($year == -1);
 		}
 
-		if ($this->display & self::MONTH) {
+		if ($this->display_parts & self::MONTH) {
 			$this->monthfly->process();
 			$month = intval($this->monthfly->value);
-			
-			if ($month == -1)
-				$this->addErrorMessage(_S("Month is Required."));
-		} else {
-			$month = 1;
+			$all_empty = $all_empty && ($month == -1);
 		}
 
-		if ($this->display & self::DAY) {
+		if ($this->display_parts & self::DAY) {
 			$this->dayfly->process();
 			$day = intval($this->dayfly->value);
-			
-			if ($day == -1)
-				$this->addErrorMessage(_S("Day is Required."));
-		} else {
-			$day = 1;
+			$all_empty = $all_empty && ($day == -1);
 		}
 		
-		if ($this->display & self::TIME) {
+		if ($this->display_parts & self::TIME) {
 			$this->timefly->process();
 			$hour = $this->timefly->value->getHour();
 			$minute = $this->timefly->value->getMinute();
@@ -178,16 +176,46 @@ class SwatDate extends SwatControl {
 			$second=0;
 		}
 
-		$this->value = new Date();
-		$this->value->setYear($year);
-		$this->value->setMonth($month);
-		$this->value->setDay($day);
-		$this->value->setHour($hour);
-		$this->value->setMinute($minute);
-		$this->value->setSecond($second);
-		$this->value->setTZ('UTC');
 
-		$this->validateRanges();
+		if ($this->required && $all_empty)
+			$this->addErrorMessage(_S("Date is Required."));
+
+
+		if ($this->display_parts & self::YEAR) {
+			if (!$all_empty && $year == -1 && $this->required_parts & self::YEAR)
+				$this->addErrorMessage(_S("Year is Required."));
+		} else {
+			$year = 0;
+		}
+
+		if ($this->display_parts & self::MONTH) {
+			if (!$all_empty && $month == -1 && $this->required_parts & self::MONTH)
+				$this->addErrorMessage(_S("Month is Required."));
+		} else {
+			$month = 1;
+		}
+
+		if ($this->display_parts & self::DAY) {
+			if (!$all_empty && $day == -1 && $this->required_parts & self::DAY)
+				$this->addErrorMessage(_S("Day is Required."));
+		} else {
+			$day = 1;
+		}
+
+		if ($all_empty) {
+			$this->value = null;
+		} else {
+			$this->value = new Date();
+			$this->value->setYear($year);
+			$this->value->setMonth($month);
+			$this->value->setDay($day);
+			$this->value->setHour($hour);
+			$this->value->setMinute($minute);
+			$this->value->setSecond($second);
+			$this->value->setTZ('UTC');
+
+			$this->validateRanges();
+		}
 	}
 	
 	private function createFlydowns() { 
@@ -195,16 +223,16 @@ class SwatDate extends SwatControl {
 		
 		$this->created = true;
 
-		if ($this->display & self::YEAR)
+		if ($this->display_parts & self::YEAR)
 			$this->createYearFlydown();
 
-		if ($this->display & self::MONTH)
+		if ($this->display_parts & self::MONTH)
 			$this->createMonthFlydown();
 
-		if ($this->display & self::DAY)
+		if ($this->display_parts & self::DAY)
 			$this->createDayFlydown();
 			
-		if ($this->display & self::TIME)
+		if ($this->display_parts & self::TIME)
 			$this->createTimeFlydown();
 	}
 
@@ -339,16 +367,16 @@ class SwatDate extends SwatControl {
 		$month = '';
 		$year  = '';
 	
-		if ($this->display & self::TIME)
+		if ($this->display_parts & self::TIME)
 			$time = ' %I:%M %p';	
 			
-		if ($this->display & self::DAY)
+		if ($this->display_parts & self::DAY)
 			$day = ' %d';
 		
-		if ($this->display & self::MONTH)
+		if ($this->display_parts & self::MONTH)
 			$month = ' %b';
 		
-		if ($this->display & self::YEAR)
+		if ($this->display_parts & self::YEAR)
 			$year = ' %Y';
 			
 		return trim($date->format($month.$day.$year.$time));
@@ -360,5 +388,17 @@ class SwatDate extends SwatControl {
 		include_once('Swat/javascript/swat-date.js');
 		echo '</script>';
 	}
+	
+	public function getState() {
+		if ($this->value == null)
+			return null;
+		else
+			return $this->value->getDate();	
+	}
+
+	public function setState($state) {
+		$this->value = new Date($state);
+	}
+
 }
 ?>
