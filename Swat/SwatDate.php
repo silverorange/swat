@@ -84,6 +84,7 @@ class SwatDate extends SwatControl {
 		$date->setHour(0);
 		$date->setMinute(0);
 		$date->setSecond(0);
+		$date->setTZ('UTC');
 		
 		$this->valid_range_start = clone $date;
 		$this->valid_range_end = clone $date;
@@ -98,7 +99,8 @@ class SwatDate extends SwatControl {
 		$this->displayJavascript();
 		
 		// using php date functions here because the Date class doesn't seem
-		// to support locale-ordering of date parts 
+		// to support locale-ordering of date parts
+		// this returns something like: mm/dd/yy or dd.mm.yyyy
 		$order = split('[/.-]', strftime('%x', mktime(0, 0, 0, 1, 2, 2003)));
 		
 		foreach ($order as $datepart) {
@@ -179,6 +181,7 @@ class SwatDate extends SwatControl {
 		$this->value->setHour($hour);
 		$this->value->setMinute($minute);
 		$this->value->setSecond($second);
+		$this->value->setTZ('UTC');
 
 		$this->validateRanges();
 	}
@@ -208,7 +211,10 @@ class SwatDate extends SwatControl {
 			$this->name);
 
 		$start_year = $this->valid_range_start->getYear();
-		$end_year   = $this->valid_range_end->getYear();
+		
+		$tmp = clone $this->valid_range_end;
+        $tmp->subtractSeconds(1);
+        $end_year = $tmp->getYear();
 
 		for ($i = $start_year; $i <= $end_year; $i++)
 			$this->yearfly->options[$i] = $i;
@@ -221,7 +227,9 @@ class SwatDate extends SwatControl {
 			$this->name);
 
 		$start_year = $this->valid_range_start->getYear();
-		$end_year   = $this->valid_range_end->getYear();
+		$tmp = clone $this->valid_range_end;
+        $tmp->subtractSeconds(1);
+        $end_year = $tmp->getYear();
 
 		if ($end_year == $start_year) {
 
@@ -257,7 +265,11 @@ class SwatDate extends SwatControl {
 			$this->name);
 
 		$start_year  = $this->valid_range_start->getYear();
-		$end_year    = $this->valid_range_end->getYear();
+		
+		$tmp = clone $this->valid_range_end;
+        $tmp->subtractSeconds(1);
+        $end_year = $tmp->getYear();
+		
 		$start_month = $this->valid_range_start->getMonth();
 		$end_month   = $this->valid_range_end->getMonth();
 

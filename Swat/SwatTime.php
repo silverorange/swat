@@ -8,6 +8,9 @@ require_once('Swat/SwatControl.php');
 require_once('Swat/SwatFlydown.php');
 require_once('Date.php');
 
+// TODO: figure out why the valid-ranges are getting having the time inproperly
+// 		 offset.
+
 /**
  * A time entry widget.
  */
@@ -62,8 +65,8 @@ class SwatTime extends SwatControl {
 	private $created = false;
 	
 	public function init() {
-		$this->required = self::HOUR | self::MINUTE;
 		$this->display  = self::HOUR | self::MINUTE;
+		$this->required = $this->display;
 
 		$date = new Date();
 		$date->setYear(0);
@@ -72,6 +75,8 @@ class SwatTime extends SwatControl {
 		$date->setHour(0);
 		$date->setMinute(0);
 		$date->setSecond(0);
+		$date->setTZ('UTC');
+		
 		$this->valid_range_start = clone $date;
 
 		$date->setHour(23);
@@ -106,10 +111,10 @@ class SwatTime extends SwatControl {
 			$hour   = intval($this->hourfly->value);
 			$ampm   = $this->ampmfly->value;
 			
-			if ($hour == -1)
+			if ($this->required & self::HOUR && $hour == -1)
 				$this->addErrorMessage(_S("Hour is Required."));
 				
-			if ($ampm == -1)
+			if ($this->required & self::HOUR && $ampm == -1)
 				$this->addErrorMessage(_S("AM/PM is Required."));
 			
 			if ($ampm == 'pm') {
@@ -125,7 +130,7 @@ class SwatTime extends SwatControl {
 			$this->minutefly->process();
 			$minute = intval($this->minutefly->value);
 			
-			if ($minute == -1)
+			if ($this->required & self::MINUTE && $minute == -1)
 				$this->addErrorMessage(_S("Minute is Required."));
 		} else {
 			$minute = 0;
@@ -135,7 +140,7 @@ class SwatTime extends SwatControl {
 			$this->secondfly->process();
 			$second = intval($this->secondfly->value);
 			
-			if ($second == -1)
+			if ($this->required & self::SECOND && $second == -1)
 				$this->addErrorMessage(_S("Second is Required."));
 		} else {
 			$second = 0;
@@ -148,6 +153,9 @@ class SwatTime extends SwatControl {
 		$this->value->setHour($hour);
 		$this->value->setMinute($minute);
 		$this->value->setSecond($second);
+		$this->value->setTZ('UTC');
+		
+		$this->validateRanges();
 	}
 	
 	private function createFlydowns() { 
@@ -203,6 +211,36 @@ class SwatTime extends SwatControl {
 		$this->ampmfly->options = array(-1 => '', 'am' => 'AM', 'pm' => 'PM');
 		$this->ampmfly->onchange = sprintf("timeSet('%s', this);",
 			$this->name);
+	}
+	
+	private function validateRanges() {
+		$this->valid_range_start->setYear(0);
+		$this->valid_range_start->setMonth(1);
+		$this->valid_range_start->setDay(1);
+		
+		$this->valid_range_end->setYear(0);
+		$this->valid_range_end->setMonth(1);
+		$this->valid_range_end->setDay(1);
+		
+		if (Date::compare($this->value,$this->valid_range_start,true) == -1) {
+			
+			$msg=sprintf(_S("The time you have entered is invalid. 
+				It must be after %s."),
+				$this->displayTime($this->valid_range_start));
+			$this->addErrorMessage($msg);
+			
+		} elseif (Date::compare($this->value,$this->valid_range_end,true) == 1) {
+			
+			$msg=sprintf(_S("The time you have entered is invalid. 
+				It must be before %s."),
+				$this->displayTime($this->valid_range_end));
+			$this->addErrorMessage($msg);
+			
+		}
+	}
+	
+	private function displayTime($time) {
+		return $time->format('%r'); //%X
 	}
 
 	private function displayJavascript() {
