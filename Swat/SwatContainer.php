@@ -25,7 +25,7 @@ class SwatContainer extends SwatWidget {
 	 * a parent already (parent == null).  The parent of the widget is set to
 	 * reference the container.
 	 *
-	 * @param $widget SwatWidget A reference to a widget to add.
+	 * @param SwatWidget $widget A reference to a widget to add.
 	 */
 	public function add(SwatWidget $widget) {
 		$this->packEnd($widget);

@@ -15,7 +15,7 @@ class SwatLayout extends SwatObject {
 	private $toplevel = null;
 
 	/**
-	 * @param string Filename of the layout XML file to load.
+	 * @param string $filename Filename of the layout XML file to load.
 	 */
 	function __construct($filename) {
 		$xml = simplexml_load_file($filename);
