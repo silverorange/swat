@@ -105,8 +105,15 @@ class SwatUI extends SwatObject {
 
 			$widget = $this->parseWidget($childname, $childnode, $parent_widget);
 
-			if (class_exists('SwatWidget') && $widget instanceof SwatWidget)
+			if (class_exists('SwatWidget') && $widget instanceof SwatWidget
+				 && $widget->name != null) {
+
+				if (isset($this->widgets[$widget->name]))
+					throw new SwatException(__CLASS__.
+						": widget named '{$widget->name}' already exists.");
+
 				$this->widgets[$widget->name] = $widget;
+			}
 
 			$this->attachToParent($widget, $parent_widget);
 			$this->parseUI($childnode, $widget);
