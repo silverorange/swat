@@ -3,6 +3,7 @@ require_once('Swat/SwatControl.php');
 require_once('Swat/SwatButton.php');
 require_once('Swat/SwatFlydown.php');
 require_once('Swat/SwatActionItem.php');
+require_once('Swat/SwatParent.php');
 
 /**
  * Actions widget
@@ -11,7 +12,7 @@ require_once('Swat/SwatActionItem.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatActions extends SwatControl {
+class SwatActions extends SwatControl implements SwatParent {
 	
 	/**
 	 * Selected action
@@ -135,5 +136,25 @@ class SwatActions extends SwatControl {
 		include_once('Swat/javascript/swat-actions.js');
 		echo '</script>';
 	}
+
+	/**
+	 * Add a child object
+	 * 
+	 * This method fulfills the {@link SwatParent} interface.  It is used 
+	 * by {@link SwatUI} when building a widget tree and should not need to be
+	 * called elsewhere.  To add an action item to an actions object use 
+	 * {@link SwatActions::addActionItem()}.
+	 *
+	 * @param $child A reference to a child object to add.
+	 */
+	public function addChild($child) {
+
+		if ($child instanceof SwatActionItem)
+			$this->addActionItem($child);
+		else
+			throw new SwatException('SwatActions: Only '.
+				'SwatActionItems can be nested within SwatActions');
+	}
+
 }
 ?>

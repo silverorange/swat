@@ -1,5 +1,6 @@
 <?php
 require_once('Swat/SwatWidget.php');
+require_once('Swat/SwatParent.php');
 
 /**
  * Swat container widget
@@ -10,7 +11,7 @@ require_once('Swat/SwatWidget.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatContainer extends SwatWidget {
+class SwatContainer extends SwatWidget implements SwatParent {
 
 	/**
 	 * Children widgets
@@ -227,6 +228,25 @@ class SwatContainer extends SwatWidget {
 		}
 		
 		return $has_error;		
+	}
+
+	/**
+	 * Add a child object
+	 * 
+	 * This method fulfills the {@link SwatParent} interface.  It is used 
+	 * by {@link SwatUI} when building a widget tree and should not need to be
+	 * called elsewhere.  To add a widget to a container use 
+	 * {@link SwatContainer::add()}.
+	 *
+	 * @param $child A reference to a child object to add.
+	 */
+	public function addChild($child) {
+
+		if ($child instanceof SwatWidget)
+			$this->add($child);
+		else
+			throw new SwatException('SwatContainer: Only '.
+				'SwatWidgets can be nested within SwatContainer');
 	}
 
 }
