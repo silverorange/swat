@@ -55,14 +55,35 @@ class SwatHtmlTag extends SwatObject {
 	}
 
 	/**
-	 * Open the tag.
-	 * Output the opening tag including all its attributes.
-	 *
-	 * @param bool $implicit_close If true the tag will be closed implicitly.
-	 * Default false. It is preferrable to call display() rather than calling
-	 * open() with this parameter.
+	 * Display the tag.
+	 * Output the opening tag including all its attributes and implicitly close
+	 * the tag.  If explicit closing is desired, use {@link SwatHtmlTag::display()}
+	 * instead.
 	 */
-	public function open($implicit_close = false) {
+	public function display() {
+		$this->open_internal(true);
+	}
+
+	/**
+	 * Open the tag.
+	 * Output the opening tag including all its attributes. Should be paired
+	 * with a call to {@link SwatHtmlTag::close()}.  If implicit closing
+	 * is desired, use {@link SwatHtmlTag::display()} instead.
+	 */
+	public function open() {
+		$this->open_internal(false);
+	}
+
+	/**
+	 * Close the tag.
+	 * Output the closing tag. Should be paired with a call to 
+	 * {@link SwatHtmlTag::close()}.
+	 */
+	public function close() {
+		echo '</', $this->tagname, '>';
+	}
+
+	private function open_internal($implicit_close) {
 		echo '<', $this->tagname;
 
 		if ($this->attributes != null) {
@@ -80,22 +101,6 @@ class SwatHtmlTag extends SwatObject {
 			echo '>';
 	}
 
-	/**
-	 * Close the tag.
-	 * Output the closing tag.
-	 */
-	public function close() {
-		echo '</', $this->tagname, '>';
-	}
-
-	/**
-	 * Display the tag.
-	 * Output the opening tag including all its attributes and implicitly close
-	 * the tag.
-	 */
-	public function display() {
-		$this->open(true);
-	}
 }
 
 ?>
