@@ -18,9 +18,19 @@ class SwatButton extends SwatControl {
 	 * Title
 	 *
 	 * The visible text on the button.
+	 *
 	 * @var string
 	 */
 	public $title;
+
+	/**
+	 * Visible
+	 *
+	 * Whether the button is displayed.
+	 *
+	 * @var boolean
+	 */
+	public $visible = true;
 
 	/**
 	 * Clicked (read-only)
@@ -38,6 +48,9 @@ class SwatButton extends SwatControl {
 	}
 	
 	public function display() {
+		if (!$this->visible)
+			return;
+
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'submit';
 		$input_tag->name = $this->name;
