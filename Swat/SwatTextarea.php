@@ -14,11 +14,24 @@ require_once('Swat/SwatException.php');
 class SwatTextarea extends SwatControl {
 
 	public $text = '';
+
+	/**
+	 * @var int Number of rows for the HTML textarea tag.
+	 */
+	public $rows = 10;
+
+	/**
+	 * @var int Number of columns for the HTML textarea tag.
+	 */
+	public $cols = 50;
 	
 	function display() {
 		$textareatag = new SwatHtmlTag('textarea');
 		$textareatag->name = $this->name;
 		$textareatag->id = $this->name;
+		// Attributes rows and cols are required in a textarea for XHTML strict.
+		$textareatag->rows = $this->rows;
+		$textareatag->cols = $this->cols;
 
 		$textareatag->open();
 		echo $this->text;
