@@ -6,7 +6,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatTreeNode {
+class SwatTreeNode extends SwatObject {
 	/**
 	 * Array of data used for display
 	 * @var array

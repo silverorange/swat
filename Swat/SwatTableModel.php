@@ -8,7 +8,7 @@ require_once('Swat/SwatObject.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-interface SwatTableModel {
+interface SwatTableModel extends SwatObject {
 
 	public function &getRows();
 
