@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -64,7 +64,7 @@ class SwatForm extends SwatContainer {
 		$formtag->open();
 
 		/*
-		$child =& $this->getChild();
+		$child = $this->getChild();
 
 		if ($child != null)
 			$child->display();

@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -27,6 +27,8 @@ class SwatFrame extends SwatContainer {
 		$outer_divtag->open();
 
 		if ($this->title != null) {
+			// Can the header level be autocalculated based on the 
+			// level of the frame?
 			echo '<h2>', $this->title, '</h2>';
 		}
 

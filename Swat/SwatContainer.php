@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -37,25 +37,25 @@ class SwatContainer extends SwatWidget {
 			throw new SwatException('Attempting to add a widget that already has a parent.');
 
 		array_unshift_ref($this->children, $widget);
-		$widget->parent =& $this;
+		$widget->parent = $this;
 	}
 
 	public function packEnd(SwatWidget &$widget) {
 		if ($widget->parent != null)
 			throw new SwatException('Attempting to add a widget that already has a parent.');
 
-		$this->children[] =& $widget;
-		$widget->parent =& $this;
+		$this->children[] = $widget;
+		$widget->parent = $this;
 	}
 
-	public function &getChild($id = 0) {
+	public function getChild($id = 0) {
 		if (array_key_exists($id, $this->children))
 			return $this->children[$id];
 		else
 			return null;
 	}
 
-	public function &getChildren() {
+	public function getChildren() {
 		return $this->children;
 	}
 
