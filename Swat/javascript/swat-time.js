@@ -5,7 +5,7 @@ function timeSet(id, activeFlydown) {
 	if (!hour) return;
 	
 	if (activeFlydown.value == -1) {
-		timeReset(id, true);
+		//timeReset(id, true);
 	} else {
 		var vDate = new Date();	
 		var this_hour = vDate.getHours();

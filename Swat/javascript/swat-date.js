@@ -5,7 +5,7 @@ function dateSet(id, activeFlydown) {
 	if (!e.month) return;
 	
 	if (activeFlydown.value == -1) {
-		dateReset(id, true);
+		//dateReset(id, true);
 	} else {
 		var vDate = new Date();	
 		var this_month = vDate.getMonth();
