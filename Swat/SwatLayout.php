@@ -6,8 +6,8 @@
  */
 require_once('Swat/SwatObject.php');
 require_once('Swat/SwatUIHandler.php');
-require_once('Swat/SwatUIHandlerTableView.php');
-require_once('Swat/SwatUIHandlerTableViewColumn.php');
+require_once('Swat/SwatTableViewUIHandler.php');
+require_once('Swat/SwatTableViewColumnUIHandler.php');
 
 /**
  * Generates a Swat widget tree from an XML layout file.
@@ -47,8 +47,8 @@ class SwatLayout extends SwatObject {
 		$this->widgets = array();
 
 		$this->handlers = array();
-		$this->registerHandler(new SwatUIHandlerTableView());
-		$this->registerHandler(new SwatUIHandlerTableViewColumn());
+		$this->registerHandler(new SwatTableViewUIHandler());
+		$this->registerHandler(new SwatTableViewColumnUIHandler());
 
 		$widget_tree = $this->parseLayout($xml, $this->toplevel);
 	}

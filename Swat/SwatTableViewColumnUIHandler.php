@@ -4,18 +4,18 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-require_once('Swat/SwatTableViewColumn.php');
+require_once('Swat/SwatCellRenderer.php');
 
 /**
- * UI handler for SwatTableView.
+ * UI handler for SwatTableViewColumn.
  */
-class SwatUIHandlerTableView implements SwatUIHandler {
+class SwatTableViewColumnUIHandler implements SwatUIHandler {
 
 	/**
 	 * Gets the name of the class this handler handles.
 	 */
 	public function getName() {
-		return 'SwatTableView';
+		return 'SwatTableViewColumn';
 	}
 
 	/**
@@ -23,12 +23,13 @@ class SwatUIHandlerTableView implements SwatUIHandler {
 	 */
 	public function attachToParent($widget, $parent) {
 
-		if ($widget instanceof SwatTableViewColumn)
-			$parent->appendColumn($widget);
+		if ($widget instanceof SwatCellRenderer)
+			$parent->addRenderer($widget);
 		else
 			throw new SwatException('SwatLayout: Only '.
-				'SwatTableViewColumns can be nested within '.
-				'SwatTableViews ('.$xmlfile.')');
+				'SwatCellRenders can be nested within '.
+				'SwatTableViewsColumns ('.$xmlfile.')');
+
 	}
 }
 
