@@ -1,4 +1,6 @@
 <?php
+require_once('Swat/SwatObject.php');
+
 /**
  * A simple class for building a tree structure
  *
