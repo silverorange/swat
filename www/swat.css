@@ -6,6 +6,8 @@ img { border: 0; }
 
 .swat-hidden { display: none; }
 
+.swat-tool-link { display: block; }
+
 /* SwatFrame */
 
 .swat-frame {
