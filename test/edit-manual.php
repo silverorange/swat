@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<title>Swat Example Form</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<style type="text/css" media="all">@import "../Swat/css/swat.css";</style>
 </head>
 <body>
@@ -18,7 +18,7 @@ require_once('Swat/SwatCheckbox.php');
 require_once('Swat/SwatButton.php');
 require_once('Swat/SwatFlydown.php');
 require_once('Swat/SwatFormField.php');
-require_once('Swat/SwatDiv.php');
+require_once('Swat/SwatFormFooter.php');
 
 
 // create the top-level widget

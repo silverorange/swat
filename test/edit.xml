@@ -4,7 +4,7 @@
 		<SwatForm name="form1">
 
 			<SwatFormField title="Title:">
-				<SwatEntry name="title" required="true"></SwatEntry>
+				<SwatEntry name="title" required="bool:true"></SwatEntry>
 			</SwatFormField>
 
 			<SwatFormField title="Hidden?:">
@@ -12,24 +12,26 @@
 			</SwatFormField>
 
 			<SwatFormField title="Body Text:">
-				<SwatTextarea name="bodytext" required="true"></SwatTextarea>
+				<SwatTextarea name="bodytext" required="bool:true"></SwatTextarea>
 			</SwatFormField>
 
-			<SwatFormField title="More Text:">
-				<SwatTextarea name="moretext"></SwatTextarea>
-			</SwatFormField>
+			<SwatFrame title="Nick's Inner Frame">
+				<SwatFormField title="More Text:">
+					<SwatTextarea name="moretext"></SwatTextarea>
+				</SwatFormField>
 
-			<SwatFormField title="Reply Status:">
-				<SwatFlydown name="replystatus" />
-			</SwatFormField>
-
+				<SwatFormField title="Reply Status:">
+					<SwatFlydown name="replystatus" />
+				</SwatFormField>
+			</SwatFrame>
+			
 			<SwatFormField title="Ping Weblogs.com?:">
-				<SwatCheckbox name="ping" />
+				<SwatCheckbox name="ping" value="bool:true" />
 			</SwatFormField>
 
-			<SwatDiv class="SwatFormFooter">
+			<SwatFormFooter>
 				<SwatButton name="btn_create" title="Create" />
-			</SwatDiv>
+			</SwatFormFooter>
 
 		</SwatForm>
 	</SwatFrame>
