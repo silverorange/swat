@@ -27,7 +27,7 @@ class SwatActions extends SwatControl {
 	 * Whether to show an inital blank option in the flydown.
 	 * @var boolean
 	 */
-	public $show_blank_option = true;
+	public $show_blank = true;
 
 	/**
 	 * Auto-reset
@@ -121,9 +121,7 @@ class SwatActions extends SwatControl {
 
 		$this->actionfly = new SwatFlydown($this->name.'_actionfly');
 		$this->actionfly->onchange = "swatActionsDisplay(this, '{$this->name}');";
-
-		if ($this->show_blank_option)
-			$this->actionfly->options = array('');
+		$this->actionfly->show_blank = $this->show_blank;
 
 		foreach ($this->action_items as $item)
 			$this->actionfly->options[$item->name] = $item->title;
