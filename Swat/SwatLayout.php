@@ -13,11 +13,13 @@ class SwatLayout extends SwatObject {
 
 	private $widgets;
 	private $toplevel = null;
+	private $classmap;
 
 	/**
 	 * @param string $filename Filename of the layout XML file to load.
 	 */
-	function __construct($filename) {
+	function __construct($filename, $classmap = null) {
+		$this->classmap = $classmap;
 		$xmlfile = null;
 
 		if (file_exists($filename)) {
@@ -106,53 +108,69 @@ class SwatLayout extends SwatObject {
 
 	private function buildWidget($name, $node, $parent_widget) {
 
-		require_once("Swat/$name.php");
+		$classfile = "Swat/{$name}.php";
+
+		if ($this->classmap != null) {
+			foreach ($this->classmap as $prefix => $path) {
+				if (strncmp($name, $prefix, strlen($prefix)) == 0)
+					$classfile = "{$path}/{$name}.php";
+			}
+		}
+
+		require_once($classfile);
 		$w = eval(sprintf("return new %s();", $name));
 		$classvars = get_class_vars($name);
-		//print_r($classvars);
 
-		if (array_key_exists('text', $classvars))
-			$w->text = (string)$node; // stuff between opening and closing tags
+		if (array_key_exists('content', $classvars)) {
+			$content = trim((string)$node); // stuff between opening and closing tags
+			$w->content = $this->parseAttribute('content', $content, $parent_widget);
+		}
 
 		foreach ($node->attributes() as $attrname => $attrvalue) {
 			$attrname = (string)$attrname;
 			$attrvalue = (string)$attrvalue;
 
-			if (array_key_exists($attrname, $classvars)) {
-
-				if (strncmp($attrvalue, 'bool:', 5) == 0)
-					$w->$attrname = (substr($attrvalue, 5) == 'true') ? true : false;
-				elseif (strncmp($attrvalue, 'int:', 4) == 0)
-					$w->$attrname = intval(substr($attrvalue, 4));
-
-				elseif (strncmp($attrvalue, 'float:', 6) == 0)
-					$w->$attrname = floatval(substr($attrvalue, 6));
-
-				elseif (strncmp($attrvalue, 'string:', 7) == 0)
-					$w->$attrname = substr($attrvalue, 7);
-
-				elseif (strncmp($attrvalue, 'data:', 5) == 0) {
-					$field = substr($attrvalue, 5);
-					$parent_widget->linkField($field, $attrname);
-
-				} else {
-					if ($attrvalue == 'false' || $attrvalue == 'true' )
-						trigger_error(__CLASS__.": Possible missing 'bool:' ".
-							"on attribute $attrname", E_USER_NOTICE);
-
-					if (is_numeric($attrvalue))
-						trigger_error(__CLASS__.": Possible missing 'int:' or ".
-							"'float:' on attribute $attrname", E_USER_NOTICE);
-
-					$w->$attrname = $attrvalue;
-				}
-
-			} else {
+			if (array_key_exists($attrname, $classvars))
+				$w->$attrname = $this->parseAttribute($attrname, $attrvalue, $parent_widget);
+			else
 				throw new SwatException(__CLASS__.": no attribute named ".
 					"'$attrname' in class $name");
-			}
 		}
 					
 		return $w;
+	}
+
+	private function parseAttribute($name, $value, $parent_widget) {
+
+		if (strncmp($value, 'bool:', 5) == 0)
+			$ret = (substr($value, 5) == 'true') ? true : false;
+
+		elseif (strncmp($value, 'int:', 4) == 0)
+			$ret = intval(substr($value, 4));
+
+		elseif (strncmp($value, 'float:', 6) == 0)
+			$ret = floatval(substr($value, 6));
+
+		elseif (strncmp($value, 'string:', 7) == 0)
+			$ret = substr($value, 7);
+
+		elseif (strncmp($value, 'data:', 5) == 0) {
+			$field = substr($value, 5);
+			$parent_widget->linkField($field, $name);
+			$ret = null;
+
+		} else {
+			if ($value == 'false' || $value == 'true' )
+				trigger_error(__CLASS__.": Possible missing 'bool:' ".
+					"on attribute $name", E_USER_NOTICE);
+
+			if (is_numeric($value))
+				trigger_error(__CLASS__.": Possible missing 'int:' or ".
+					"'float:' on attribute $name", E_USER_NOTICE);
+
+			$ret = $value;
+		}
+
+		return $ret;
 	}
 }
