@@ -11,17 +11,19 @@
 				<SwatDate name="date2" />
 			</SwatFormField>
 			
-			<SwatFormField title="Date">
-				<SwatDate name="date" />
-			</SwatFormField>
-
-			<SwatFormField title="Time">
-				<SwatTime name="time" />
-			</SwatFormField>
-			
-			<SwatFormField title="Email">
-				<SwatEntryEmail name="email" />
-			</SwatFormField>
+			<SwatDisclosure title="Optional Fields" open="bool:false">
+				<SwatFormField title="Date">
+					<SwatDate name="date" />
+				</SwatFormField>
+	
+				<SwatFormField title="Time">
+					<SwatTime name="time" />
+				</SwatFormField>
+				
+				<SwatFormField title="Email">
+					<SwatEntryEmail name="email" />
+				</SwatFormField>
+			</SwatDisclosure>
 
 			<SwatFormField class="swat-form-footer">
 				<SwatButton name="btn_create" title="Create" />
