@@ -1,7 +1,7 @@
 <?php
 
 require_once("MDB2.php");
-require_once("Swat/SwatDBField.php");
+require_once("SwatDB/SwatDBField.php");
 require_once("Swat/SwatTreeNode.php");
 
 /**
