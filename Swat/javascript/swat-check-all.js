@@ -1,23 +1,43 @@
-function swatCheckAll(form, name, series) {
-	check_all = document.getElementById(name);
+function SwatCheckbox() {
+	this.highlightClass = 'swat-table-view-highlight';
 
-	for (i = 0; i < form.elements[series + '[]'].length; i++) {
-		var chkbox = form.elements[series + '[]'][i];
+	this.highlightRow = function(chk) {
+		var tr = chk.parentNode.parentNode;
+		if (tr.nodeName == 'TR') {
+			if (chk.checked)
+				var class_name = this.highlightClass;	
+			else
+				var class_name = '';
 	
-		if (check_all && chkbox.type=='checkbox') {
-			chkbox.checked = check_all.checked;
-
-			//TODO: make the highlighting work once we sort it out
-			//if (theForm.chkall.checked) HLClass(chkbox,"highlight");
-			//else HLClass(chkbox,"");
+			for (j = 0; j < tr.childNodes.length; j++)
+				tr.childNodes[j].className = class_name;
 		}
 	}
 }
 
-function swatCheckbox(chk) {
-	window.alert(chk.value);
+
+SwatCheckbox.prototype.checkAll = function (chk_all, series) {
+	var elements = chk_all.form.elements[series + '[]'];
+	for (i = 0; i < elements.length; i++) {
+		elements[i].checked = chk_all.checked;
+		this.highlightRow(elements[i]);
+	}
 }
 
-//TODO: add javascript to set check_all = true/false if all
-// checkboxes are checked. We need to figure out how to best
-// add this to the onclick event of the checkboxes on the page
+SwatCheckbox.prototype.check = function (chk) {
+	this.highlightRow(chk);
+
+	//TODO: figure out how to name the check-all element dynamically
+	check_all = document.getElementById('SwatCheckAll0');
+	if (!check_all) return;
+
+	var checked = 0;
+	var elements = chk.form.elements[chk.name];
+	for (i = 0; i < elements.length; i++)
+		if (elements[i].checked == true)
+			checked = checked + 1;
+	
+	check_all.checked = (elements.length == checked);
+}
+
+var SwatCheckbox = new SwatCheckbox();
