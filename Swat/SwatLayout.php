@@ -69,14 +69,16 @@ class SwatLayout extends SwatObject {
 
 			$widget = $this->buildWidget($childname, $childnode, $parent_widget);
 
-			if ($widget instanceof SwatWidget)
+			if (class_exists('SwatWidget') && $widget instanceof SwatWidget)
 				$this->widgets[$widget->name] = $widget;
 
 			if ($parent_widget == null) {
 				$this->toplevel = $widget;
 				$parent_widget = $widget;
 
-			} elseif ($parent_widget instanceof SwatTableView) {
+			} elseif (class_exists('SwatTableView') && 
+				$parent_widget instanceof SwatTableView) {
+
 				if ($widget instanceof SwatTableViewColumn)
 					$parent_widget->appendColumn($widget);
 				else
@@ -84,7 +86,9 @@ class SwatLayout extends SwatObject {
 						'SwatTableViewColumns can be nested within '.
 						'SwatTableViews ('.$xmlfile.')');
 
-			} elseif ($parent_widget instanceof SwatTableViewColumn) {
+			} elseif (class_exists('SwatTableViewColumn') &&
+				$parent_widget instanceof SwatTableViewColumn) {
+
 				if ($widget instanceof SwatCellRenderer)
 					$parent_widget->renderer = $widget;
 				else
