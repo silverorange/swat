@@ -15,7 +15,8 @@ require_once('Date.php');
 class SwatDate extends SwatControl {
 	
 	/**
-	 * @var Date Date of the widget.
+	 * Date of the widget.
+	 * @var Date
 	 */
 	public $value = null;
 	
@@ -25,22 +26,26 @@ class SwatDate extends SwatControl {
 	const  TIME  = 8;
 	
 	/**
-	 * @var int Date parts that are required.
+	 * Date parts that are required.
+	 * @var int
 	 */
 	public $required;
 	
 	/**
-	 * @var int Date parts that are displayed.
+	 * Date parts that are displayed.
+	 * @var int
 	 */
 	public $display;
 	
 	/**
-	 * @var Date Start date of the valid range (inclusive).
+	 * Start date of the valid range (inclusive).
+	 * @var Date
 	 */
 	public $valid_range_start;
 	
 	/**
-	 * @var Date End date of the valid range (exclusive).
+	 * End date of the valid range (exclusive).
+	 * @var Date
 	 */
 	public $valid_range_end;
 	
