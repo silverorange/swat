@@ -25,11 +25,23 @@ class SwatFormField extends SwatContainer {
 	 */
 	public $required = false;
 	
+	/*
+	 * Optional note of text to display with the field
+	 * @var bool
+	 */
+	public $note = null;
+
 	/**
 	 * CSS class to use on the HTML div tag
 	 * @var string
 	 */
 	public $class = 'swat-form-field';
+
+	/**
+	 * CSS class to use on the HTML div where the note is displayed
+	 * @var string
+	 */
+	public $note_class = 'swat-form-field-note';
 
 	/**
 	 * CSS class to use on outer HTML div when an error message is displayed
@@ -87,6 +99,15 @@ class SwatFormField extends SwatContainer {
 
 			$msg_div->close();
 		}
+		
+		if ($this->note !== null) {
+			$note_div = new SwatHtmlTag('div');	
+			$note_div->class = $this->note_class;
+			$note_div->open();
+			echo $this->note;
+			$note_div->close();
+		}
+
 
 		$container_div->close();
 	}
