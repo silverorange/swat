@@ -22,10 +22,18 @@ class SwatFlydown extends SwatControl {
 	 */
 	public $value = null;
 
+	/**
+	 * @var string The onchange attribute of the HTML select tag, or null.
+	 */
+	public $onchange = null;
+
 	function display() {
 		$selecttag = new SwatHtmlTag('select');
 		$selecttag->name = $this->name;
 		$selecttag->id = $this->name;
+
+		if ($this->onchange != null)
+			$selecttag->onchange = $this->onchange;
 
 		$optiontag = new SwatHtmlTag('option');
 
