@@ -18,6 +18,11 @@ class SwatFormField extends SwatContainer {
 	 */
 	public $title = null;
 
+	/*
+	 * @var bool Display a visible indication that this field is required.
+	 */
+	public $required = false;
+	
 	/**
 	 * @var string CSS class to use on the HTML div tag.
 	 */
@@ -52,7 +57,7 @@ class SwatFormField extends SwatContainer {
 			$labeltag->open();
 			echo $this->title, ':';
 
-			if (($first_child instanceof SwatControl) && $first_child->required)
+			if ($this->required)
 				echo '<span class="required">*</span>';
 
 			$labeltag->close();

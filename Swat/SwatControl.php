@@ -12,8 +12,6 @@ require_once('Swat/SwatErrorMessage.php');
  */
 abstract class SwatControl extends SwatWidget {
 
-	public $required = false;
-	
 	private $error_messages = array();
 
 	protected function addErrorMessage($msg) {

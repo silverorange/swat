@@ -17,6 +17,11 @@ class SwatEntry extends SwatControl {
 	 */
 	public $value = '';
 
+	/*
+	 * @var bool Must have a non-empty value when processed.
+	 */
+	public $required = false;
+	
 	/**
 	 * @var int Size in characters of the HTML text form input, or null.
 	 */

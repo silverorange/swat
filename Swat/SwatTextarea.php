@@ -17,6 +17,11 @@ class SwatTextarea extends SwatControl {
 	 */
 	public $value = '';
 
+	/*
+	 * @var bool Must have a non-empty value when processed.
+	 */
+	public $required = false;
+	
 	/**
 	 * @var int Number of rows for the HTML textarea tag.
 	 */
