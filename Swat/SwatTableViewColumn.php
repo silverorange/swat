@@ -31,18 +31,23 @@ class SwatTableViewColumn extends SwatObject {
 	public $view = null;
 
 	protected $renderers = array();
-	protected $properties = array();
 
 	function __construct($name = null) {
 		$this->name = $name;
 	}
 
-	public function linkField($model_field, $renderer_property) {
-		$this->properties[$model_field] = $renderer_property;
+	public function linkField($renderer, $model_field, $renderer_property) {
+		if (!isset($renderer->_property_map) || !is_array($renderer->_property_map))
+			$renderer->_property_map = array();
+
+		$renderer->_property_map[$renderer_property] = $model_field;
 	}
 
 	public function addRenderer(SwatCellRenderer $renderer) {
 		$this->renderers[] = $renderer;
+
+		if (!isset($renderer->_property_map) || !is_array($renderer->_property_map))
+			$renderer->_property_map = array();
 	}
 
 	public function display($row) {
@@ -50,8 +55,8 @@ class SwatTableViewColumn extends SwatObject {
 			throw new SwatException(__CLASS__.': no renderer has been provided.');
 
 		// set the properties of the renderers
-		foreach ($this->properties as $field => $property)
-			foreach ($this->renderers as $renderer)
+		foreach ($this->renderers as $renderer)
+			foreach ($renderer->_property_map as $property => $field)
 				$renderer->$property = $row->$field;
 
 		$this->displayRenderers($row);
