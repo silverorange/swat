@@ -11,10 +11,10 @@ require_once('Swat/SwatTableModel.php');
  */
 class SwatTableStore extends SwatObject implements SwatTableModel {
 
-	private $rows;
+	private $rows = array();
 
-	function __construct() {
-		$this->rows	= array();
+	public function __construct() {
+
 	}
 
 	public function getRowCount() {
