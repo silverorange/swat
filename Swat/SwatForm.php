@@ -64,7 +64,9 @@ class SwatForm extends SwatContainer {
 		$inputtag->type = 'hidden';
 		$inputtag->name = 'process';
 		$inputtag->value = $this->name;
+		echo '<div class="swat-input-hidden">';
 		$inputtag->display();
+		echo '</div>';
 
 		$formtag->close();
 	}
