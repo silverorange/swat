@@ -10,6 +10,19 @@
  */
 class SwatException extends Exception {
 
+	public function process() {
+
+		if (ini_get('display_errors')) {
+			//$this->displayAsHTML();
+			//exit();
+		}
+
+		/* TODO:
+		if (ini_get('log_errors'))
+			$this->log();
+		*/
+	}
+
 	public function displayAsHTML() {
 		echo '<hr />';
 
@@ -45,16 +58,7 @@ class SwatException extends Exception {
 
 
 function swat_exception_handler($e) {
-
-	if (ini_get('display_errors'))
-		$e->displayAsHTML();
-
-	/* TODO:
-	if (ini_get('log_errors'))
-		$e->log();
-	*/
-
-
+	$e->process();
 }
 
 set_exception_handler('swat_exception_handler');
