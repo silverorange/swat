@@ -40,13 +40,13 @@ class SwatTableView extends SwatControl {
 	 */
 	public $checked_items = array();
 
-	private $columns;
+	public $orderby_column = null;
+
+	private $columns = array();
 	private $group = null;
 	private $extra_rows = array();
 
 	public function init() {
-		$this->columns = array();
-
 		if ($this->show_check_all)
 			$this->appendRow(new SwatTableViewRowCheckAll());
 	}
@@ -57,7 +57,9 @@ class SwatTableView extends SwatControl {
 	 */
 	public function appendColumn(SwatTableViewColumn $column) {
 		$this->columns[] = $column;
+
 		$column->view = $this;
+		$column->init();
 	}
 
 	/**
@@ -79,10 +81,18 @@ class SwatTableView extends SwatControl {
 
 	/**
 	 * Count columns
-	 * @return int Number of columns of the table
+	 * @return int Number of columns of the table.
 	 */
 	public function getColumnCount() {
 		return count($this->columns);
+	}
+
+	/**
+	 * Get columns
+	 * @return array Array of columns in the table.
+	 */
+	public function &getColumns() {
+		return $this->columns;
 	}
 
 	public function display() {
@@ -105,7 +115,7 @@ class SwatTableView extends SwatControl {
 		echo '<tr>';
 
 		foreach ($this->columns as $column)
-			echo '<th>', $column->title, '</th>';
+			echo '<th>', $column->displayHeader(), '</th>';
 
 		echo '</tr>';
 	}

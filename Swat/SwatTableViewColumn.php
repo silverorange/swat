@@ -50,6 +50,14 @@ class SwatTableViewColumn extends SwatObject {
 			$renderer->_property_map = array();
 	}
 
+	public function init() {
+
+	}
+
+	public function displayHeader() {
+		echo $this->title;
+	}
+
 	public function display($row) {
 		if (count($this->renderers) == 0)
 			throw new SwatException(__CLASS__.': no renderer has been provided.');
