@@ -1,14 +1,14 @@
 <?xml version='1.0' standalone='yes'?>
 <SwatLayout>
 	<SwatFrame name="frame1" title="New Weblog Post Example Form">
-		<SwatForm name="form1">
+		<SwatForm name="form1" action="#">
 
 			<SwatFormField title="Title">
 				<SwatEntry name="title" required="bool:true" />
 			</SwatFormField>
 
 			<SwatFormField title="Shortname">
-				<SwatEntry name="shortname" required="bool:true" />
+				<SwatEntry name="shortname" required="bool:true" maxlength="int:10" />
 			</SwatFormField>
 
 			<SwatFormField title="Hidden?">
