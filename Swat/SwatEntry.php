@@ -19,7 +19,7 @@ class SwatEntry extends SwatControl {
 	public $value = '';
 
 	/**
-	 * @var int Size in characters of the HTML text form input.
+	 * @var int Size in characters of the HTML text form input, or null.
 	 */
 	public $size = 50;
 	
@@ -36,7 +36,9 @@ class SwatEntry extends SwatControl {
 		$inputtag->id = $this->name;
 		$inputtag->value = $this->value;
 		$inputtag->onfocus = "this.select();";
-		$inputtag->size = $this->size;
+
+		if ($this->size != null)
+			inputtag->size = $this->size;
 
 		if ($this->maxlength != null)
 			$inputtag->maxlength = $this->maxlength;
