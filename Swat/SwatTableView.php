@@ -35,8 +35,9 @@ class SwatTableView extends SwatControl {
 	 */
 	public $checked_items = array();
 
-	private $extra_rows = array();
 	private $columns;
+	private $group = null;
+	private $extra_rows = array();
 
 	public function init() {
 		$this->columns = array();
@@ -50,8 +51,17 @@ class SwatTableView extends SwatControl {
 		$column->view = $this;
 	}
 
+	public function setGroup(SwatTableViewGroup $group) {
+		$this->group = $group;
+		$group->view = $this;
+	}
+
 	private function appendRow(SwatTableViewRow $row) {
 		$this->extra_rows[] = $row;
+	}
+
+	public function getColumnCount() {
+		return count($this->columns);
 	}
 
 	public function display() {
@@ -77,17 +87,23 @@ class SwatTableView extends SwatControl {
 
 	private function displayContent() {
 		$count = 0;
+		$tr_tag = new SwatHtmlTag('tr');
 
 		foreach ($this->model->getRows() as $id => $row) {
 
+			// display the group, if there is one
+			if ($this->group != null)
+				$this->group->display($row);
+
+			// display a row of data
 			$count++;
-			echo ($count % 2 == 1) ? '<tr class="odd">' : '<tr>';
+			$tr_tag->class = ($count % 2 == 1)? 'odd': null;
+			$tr_tag->open();
 
 			foreach ($this->columns as $column)
 				$column->display($row);
 
-			echo '</tr>';
-
+			$tr_tag->close();
 		}
 
 		foreach ($this->extra_rows as $row)
