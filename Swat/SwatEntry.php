@@ -73,6 +73,14 @@ class SwatEntry extends SwatControl {
 		if ($this->required && !strlen($this->value))
 			$this->addErrorMessage(_S("The %s field is required."));
 	}
+	
+	public function getState() {
+		return $this->value;
+	}
+
+	public function setState($state) {
+		$this->value = $state;
+	}
 }
 
 ?>
