@@ -101,8 +101,6 @@ class SwatChangeOrder extends SwatControl {
 	public function process() {
 		$this->value = $_POST[$this->name];
 		$this->value = explode(',',$this->value);
-		print_r($this->value);
-		exit();
 	}
 
 	private function displayJavascript() {
