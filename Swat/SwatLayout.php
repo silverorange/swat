@@ -5,6 +5,9 @@
  * @copyright silverorange 2004
  */
 require_once('Swat/SwatObject.php');
+require_once('Swat/SwatUIHandler.php');
+require_once('Swat/SwatUIHandlerTableView.php');
+require_once('Swat/SwatUIHandlerTableViewColumn.php');
 
 /**
  * Generates a Swat widget tree from an XML layout file.
@@ -12,6 +15,7 @@ require_once('Swat/SwatObject.php');
 class SwatLayout extends SwatObject {
 
 	private $widgets;
+	private $handlers;
 	private $toplevel = null;
 	private $classmap;
 
@@ -41,7 +45,12 @@ class SwatLayout extends SwatObject {
 		$xml = simplexml_load_file($xmlfile);
 
 		$this->widgets = array();
-		$widget_tree = $this->build($xml, $this->toplevel);
+
+		$this->handlers = array();
+		$this->registerHandler(new SwatUIHandlerTableView());
+		$this->registerHandler(new SwatUIHandlerTableViewColumn());
+
+		$widget_tree = $this->parseLayout($xml, $this->toplevel);
 	}
 
 	/**
@@ -66,10 +75,20 @@ class SwatLayout extends SwatObject {
 		return $this->toplevel;
 	}
 
-	private function build($node, $parent_widget) {
+	/**
+	 * Register a handler.
+	 * Register a handler object that implements SwatUiHandler.
+	 * @param string $name Name class to handle.
+	 * @param SwatUiHandler $handler The handler object.
+	 */
+	public function registerHandler(SwatUIHandler $handler) {
+		$this->handlers[] = $handler;
+	}
+
+	private function parseLayout($node, $parent_widget) {
 		foreach ($node->children() as $childname => $childnode) {
 
-			$widget = $this->buildWidget($childname, $childnode, $parent_widget);
+			$widget = $this->parseWidget($childname, $childnode, $parent_widget);
 
 			if (class_exists('SwatWidget') && $widget instanceof SwatWidget)
 				$this->widgets[$widget->name] = $widget;
@@ -78,35 +97,25 @@ class SwatLayout extends SwatObject {
 				$this->toplevel = $widget;
 				$parent_widget = $widget;
 
-			} elseif (class_exists('SwatTableView') && 
-				$parent_widget instanceof SwatTableView) {
-
-				if ($widget instanceof SwatTableViewColumn)
-					$parent_widget->appendColumn($widget);
-				else
-					throw new SwatException('SwatLayout: Only '.
-						'SwatTableViewColumns can be nested within '.
-						'SwatTableViews ('.$xmlfile.')');
-
-			} elseif (class_exists('SwatTableViewColumn') &&
-				$parent_widget instanceof SwatTableViewColumn) {
-
-				if ($widget instanceof SwatCellRenderer)
-					$parent_widget->addRenderer($widget);
-				else
-					throw new SwatException('SwatLayout: Only '.
-						'SwatCellRenders can be nested within '.
-						'SwatTableViewsColumns ('.$xmlfile.')');
-
 			} else {
-				$parent_widget->add($widget);
+				$this->attachToParent($widget, $parent_widget);
 			}
-
-			$this->build($childnode, $widget);
+			
+			$this->parseLayout($childnode, $widget);
 		}
 	}
 
-	private function buildWidget($name, $node, $parent_widget) {
+	private function attachToParent($widget, $parent) {
+		foreach ($this->handlers as $handler) {
+			if (is_a($parent, $handler->getName())) {
+				$handler->attachToParent($widget, $parent);
+				return;
+			}
+		}
+		$parent->add($widget);
+	}
+
+	private function parseWidget($name, $node, $parent_widget) {
 
 		$classfile = "Swat/{$name}.php";
 
