@@ -24,8 +24,7 @@ abstract class SwatWidget extends SwatObject {
 	public $name;
 
 	/**
-	 * A non-visible textual name for this widget.
-	 * @param string
+	 * @param string $name A non-visible textual name for this widget.
 	 */
 	function __construct($name = null) {
 		$this->name = $name;

@@ -23,8 +23,8 @@ class SwatForm extends SwatContainer {
 	 * Convenience function to create a new SwatFormField, add the widget as a
 	 * child of the form field, and then add the formfield to this form.
 	 *
-	 * @param $widget SwatWidget A reference to a widget to add.
-	 * @param $title string The visible name of the form field.
+	 * @param SwatWidget $widget A reference to a widget to add.
+	 * @param string $title The visible name of the form field.
 	 */
 	public function addWithField(SwatWidget $widget, $title) {
 		$field = new SwatFormField();
@@ -38,8 +38,8 @@ class SwatForm extends SwatContainer {
 	 * Convenience function to create a new SwatDiv, add the widget as a child
 	 * of the div, and then add the div to this form.
 	 *
-	 * @param $widget SwatWidget A reference to a widget to add.
-	 * @param $title string The class of the HTML div tag.
+	 * @param SwatWidget $widget A reference to a widget to add.
+	 * @param string $title The class of the HTML div tag.
 	 */
 	public function addWithDiv(SwatWidget $widget, $class) {
 		$field = new SwatDiv();
