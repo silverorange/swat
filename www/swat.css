@@ -43,6 +43,11 @@ label {
 	display: block;
 }
 
+label.swat-radio-control {
+	font-weight: normal;
+	display: inline;
+}
+
 .swat-form-field {
 	margin: 0 0 0.5em 0;
 }
