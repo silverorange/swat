@@ -1,6 +1,7 @@
 <?php
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
+require_once('Swat/SwatCheckAll.php');
 
 /**
  * A checkbox list widget
@@ -63,6 +64,12 @@ class SwatCheckboxList extends SwatControl {
 				$label_tag->close();
 				
 				echo '<br />';
+			}
+
+			if (count($this->options) > 1) {
+				$chk_all = new SwatCheckAll();
+				$chk_all->series_name = $this->name;
+				$chk_all->display();
 			}
 		}
 	}	
