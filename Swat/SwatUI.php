@@ -63,14 +63,19 @@ class SwatUI extends SwatObject {
 	/**
 	 * Retrieve a widget.
 	 * Lookup a widget in the widget tree by name.
-	 * @return SwatWidget A reference to the widget.
 	 * @param string $name Name of the widget to retrieve.
+	 * @param boolean $silent If true, return null instead of throwing an 
+	 * exception if the widget is not found.
+	 * @return SwatWidget A reference to the widget.
 	 */
-	public function getWidget($name) {
+	public function getWidget($name, $silent = false) {
 		if (array_key_exists($name, $this->widgets))
 			return $this->widgets[$name];
 		else
-			throw new SwatException(__CLASS__.": no widget named '$name'");
+			if ($silent)
+				return null;
+			else
+				throw new SwatException(__CLASS__.": no widget named '$name'");
 	}
 
 	/**

@@ -11,7 +11,7 @@ require_once('Swat/SwatControl.php');
  */
 class SwatContentBlock extends SwatControl {
 
-	/*
+	/**
 	 * Text content of the widget.
 	 * @var string
 	 */
