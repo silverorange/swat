@@ -18,19 +18,19 @@ abstract class SwatApplication extends SwatObject {
 	public $name;
 
 	/**
-	 * The URI of the current request.
+	 * The URI of the current request.  Set by SwatApplication::initUriVars().
 	 * @var string
 	 */
 	public $uri;
 
 	/**
-	 * The URI part of the basehref.
+	 * The URI part of the basehref.  Set by SwatApplication::initUriVars().
 	 * @var string
 	 */
 	public $baseuri;
 
 	/**
-	 * The basehref.
+	 * The basehref.  Set by SwatApplication::initUriVars().
 	 * @var string
 	 */
 	public $basehref;
