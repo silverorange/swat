@@ -40,7 +40,8 @@ class SwatDisclosure extends SwatContainer {
 
 		$anchor = new SwatHtmlTag('a');
 		$anchor->href = sprintf("javascript:toggleDisclosureWidget('%s');",
-		                        $this->name);
+			$this->name);
+
 		$anchor->open();
 
 		$img = new SwatHtmlTag('img');

@@ -77,19 +77,18 @@ class SwatLayout extends SwatObject {
 				else {
 					if ($attrvalue == 'false' || $attrvalue == 'true' )
 						trigger_error(__CLASS__.": Possible missing 'bool:' ".
-						              "on attribute $attrname", E_USER_NOTICE);
+							"on attribute $attrname", E_USER_NOTICE);
 
 					if (is_numeric($attrvalue))
 						trigger_error(__CLASS__.": Possible missing 'int:' or ".
-						              "'float:' on attribute $attrname", 
-						              E_USER_NOTICE);
+							"'float:' on attribute $attrname", E_USER_NOTICE);
 
 					$w->$attrname = $attrvalue;
 				}
 
 			} else {
 				throw new SwatException(__CLASS__.": no attribute named ".
-				                        "'$attrname' in class $name");
+					"'$attrname' in class $name");
 			}
 		}
 					

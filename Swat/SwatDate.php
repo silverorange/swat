@@ -128,7 +128,7 @@ class SwatDate extends SwatControl {
 		if ($this->validate == self::validate_future) {
 			if ($this->datechk && !($this->datechk())) {
 				$this->addErrorMessage(_S("The email address you have entered ".
-				                          "is not properly formatted."));
+					"is not properly formatted."));
 			}
 		}
 		*/
