@@ -5,6 +5,7 @@
  * @copyright silverorange 2004
  */
 require_once('Swat/SwatWidget.php');
+require_once('Swat/SwatFormField.php');
 require_once('Swat/SwatErrorMessage.php');
 
 /**
