@@ -7,6 +7,10 @@
 				<SwatEntry name="title" required="bool:true"></SwatEntry>
 			</SwatFormField>
 
+			<SwatFormField title="Shortname">
+				<SwatEntry name="shortname" required="bool:true"></SwatEntry>
+			</SwatFormField>
+
 			<SwatFormField title="Hidden?">
 				<SwatCheckbox name="hidden" />
 			</SwatFormField>
