@@ -13,8 +13,8 @@ class SwatException extends Exception {
 	public function process() {
 
 		if (ini_get('display_errors')) {
-			//$this->displayAsHTML();
-			//exit();
+			$this->displayAsHTML();
+			exit();
 		}
 
 		/* TODO:
@@ -45,8 +45,8 @@ class SwatException extends Exception {
 			printf("%s(%s): %s%s%s(%s)",
 				$entry['file'],
 				$entry['line'],
-				$entry['class'],
-				$entry['type'],
+				array_key_exists('class', $entry)? $entry['class']: '',
+				array_key_exists('type', $entry)? $entry['type']: '',
 				$entry['function'],
 				array_key_exists('args', $entry) ? $entry['args'] : '');
 
