@@ -70,7 +70,7 @@ textarea {
 	background: #eee;
 }
 
-.swat-disclosure-container-opened {
+.swat-disclosure-container-open {
 	border: 2px solid #eee;
 	padding: 0.5em;
 	display: block;	
