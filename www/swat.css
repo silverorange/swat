@@ -72,6 +72,11 @@ label.swat-control {
 	color: #C00;
 }
 
+.swat-form-field-note {
+	font-size: 0.85em;
+	color: #666;
+}
+
 .swat-form-field-error {
 	border: 1px solid #C00;
 }
