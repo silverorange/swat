@@ -13,11 +13,10 @@ require_once('Swat/SwatException.php');
  */
 class SwatTextarea extends SwatControl {
 
-	/**
+	/*
 	 * @var string Text content of the widget.
-	 * @todo Possibly rename this to $value.
 	 */
-	public $text = '';
+	public $value = '';
 
 	/**
 	 * @var int Number of rows for the HTML textarea tag.
@@ -38,14 +37,14 @@ class SwatTextarea extends SwatControl {
 		$textareatag->cols = $this->cols;
 
 		$textareatag->open();
-		echo $this->text;
+		echo $this->value;
 		$textareatag->close();
 	}	
 
 	function process() {
-		$this->text = $_POST[$this->name];
+		$this->value = $_POST[$this->name];
 
-		if ($this->required && !strlen($this->text))
+		if ($this->required && !strlen($this->value))
 			$this->addErrorMessage(_S("The %s field is required."));
 	}
 }
