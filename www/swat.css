@@ -108,7 +108,7 @@ textarea {
 }
 
 div.swat-order-control:hover {
-	 border:1px dashed Highlight;
+	border:1px solid Highlight;
 }
 
 .swat-order-control-active {
