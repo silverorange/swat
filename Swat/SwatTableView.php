@@ -7,6 +7,8 @@
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatTableViewColumn.php');
+require_once('Swat/SwatTableViewRow.php');
+require_once('Swat/SwatTableViewRowCheckAll.php');
 
 /**
  * A widget to display data in a tabular form.
@@ -19,14 +21,36 @@ class SwatTableView extends SwatControl {
 	 */
 	public $model = null;
 
-	protected $columns;
+	/**
+	 * Whether to show a "check all" widget.  For this option to work, the
+	 * table view must contain a column named "checkbox".
+	 * @var boolean
+	 */
+	public $show_checkall = true;
+
+	/**
+	 * The values of the checked checkboxes.  For this to be set, the table
+	 * view must contain a SwatCellRendererCheckbox named "items".
+	 * @var Array
+	 */
+	public $checked_items = array();
+
+	private $extra_rows = array();
+	private $columns;
 
 	public function init() {
 		$this->columns = array();
+
+		if ($this->show_checkall)
+			$this->appendRow(new SwatTableViewRowCheckAll());
 	}
 
 	public function appendColumn(SwatTableViewColumn $column) {
 		$this->columns[] = $column;
+	}
+
+	private function appendRow(SwatTableViewRow $row) {
+		$this->extra_rows[] = $row;
 	}
 
 	public function display() {
@@ -50,7 +74,7 @@ class SwatTableView extends SwatControl {
 		echo '</tr>';
 	}
 
-	protected function displayContent() {
+	private function displayContent() {
 		$count = 0;
 
 		foreach ($this->model->getRows() as $id => $row) {
@@ -64,7 +88,14 @@ class SwatTableView extends SwatControl {
 			echo '</tr>';
 
 		}
+
+		foreach ($this->extra_rows as $row)
+			$row->display($this->columns);
 	}
 
+	public function process() {
+		if (isset($_POST['items']) && is_array($_POST['items']))
+			$this->checked_items = $_POST['items'];
+	}
 }
 ?>
