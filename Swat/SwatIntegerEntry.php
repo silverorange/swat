@@ -19,8 +19,10 @@ class SwatIntegerEntry extends SwatEntry {
 
 		if (is_numeric($this->value))
 			$this->value = intval($this->value);
-		else
-			$this->addErrorMessage(_S("The %s field must be an integer."));
+		else {
+			$msg = _S("The %s field must be an integer.");
+			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+		}
 	}
 }
 

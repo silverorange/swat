@@ -148,10 +148,6 @@ class SwatPagination extends SwatControl {
 		$this->current_record = $this->current_page * $this->page_size;
 	}
 
-	public function gatherErrorMessages() {
-		return array();
-	}
-
 	private function getHref() {
 		//$vars = array_diff_key($_GET, array_flip($this->unset_get_vars));
 		$vars = $_GET;

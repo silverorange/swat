@@ -49,10 +49,11 @@ class SwatFormField extends SwatContainer {
 		if ($first_child == NULL)
 			return;
 
-		$error_messages = $this->gatherErrorMessages();
+		$messages = $this->gatherMessages();
 		$container_div = new SwatHtmlTag('div');
 
-		if (count($error_messages) > 0)
+		if (count($messages) > 0)
+			// TODO: more classes based on message type?
 			$container_div->class = $this->error_class;
 		else
 			$container_div->class = $this->class;
@@ -74,16 +75,17 @@ class SwatFormField extends SwatContainer {
 		foreach ($this->children as &$child)
 			$child->display();
 
-		if (count($error_messages) > 0) {
-			$error_div = new SwatHtmlTag('div');
-			$error_div->class = $this->errormsg_class;
+		if (count($messages) > 0) {
+			// TODO: more classes based on message type?
+			$msg_div = new SwatHtmlTag('div');
+			$msg_div->class = $this->errormsg_class;
 			
-			$error_div->open();
+			$msg_div->open();
 
-			foreach ($error_messages as &$err)
-				echo $err->message, '<br />';
+			foreach ($messages as &$msg)
+				echo $msg->content, '<br />';
 
-			$error_div->close();
+			$msg_div->close();
 		}
 
 		$container_div->close();

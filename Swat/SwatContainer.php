@@ -191,43 +191,42 @@ class SwatContainer extends SwatWidget implements SwatUIParent {
 			$child->display();
 	}
 
-	public function addErrorMessage($msg) {
-		$err = new SwatErrorMessage($msg);
-		$this->error_messages[] = $err;
+	public function addMessage($msg) {
+		$this->messages[] = $msg;
 	}
 
 	/**
-	 * Gather error messages.
-	 * Gather all error messages from children of this widget and this widget
+	 * Gather messages.
+	 * Gather all messages from children of this widget and this widget
 	 * itself.
-	 * @param bool $all If true return all error messages from child widgets.
+	 * @param bool $all If true return all messages from child widgets.
 	 * @return array Array of SwatErrorMessage objects.
 	 */
-	public function gatherErrorMessages($all = true) {
-		$msgs = $this->error_messages;
+	public function gatherMessages($all = true) {
+		$msgs = $this->messages;
 
 		if ($all)
 			foreach ($this->children as &$child)
-				$msgs = array_merge($msgs, $child->gatherErrorMessages());
+				$msgs = array_merge($msgs, $child->gatherMessages());
 
 		return $msgs;
 	}
 
 	/**
-	 * Check for error messages.
-	 * @return boolean True if there is an error message in the subtree.
+	 * Check for messages.
+	 * @return boolean True if there is an message in the subtree.
 	 */
-	public function hasErrorMessage() {
-		$has_error = false;
+	public function hasMessage() {
+		$has_msg = false;
 
 		foreach ($this->children as &$child) {
-			if ($child->hasErrorMessage()) {
-				$has_error = true;
+			if ($child->hasMessage()) {
+				$has_msg = true;
 				break;
 			}
 		}
 		
-		return $has_error;		
+		return $has_msg;		
 	}
 
 	/**
