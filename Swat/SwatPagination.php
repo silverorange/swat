@@ -74,18 +74,19 @@ class SwatPagination extends SwatControl {
 	public function display() {
 		$this->calcPages();
 
-		$div = new SwatHtmlTag('div');
-		$div->class = 'swat-pagination';
+		if ($this->total_pages > 1) {
 
-		$div->open();
-		echo '<table width="100%"><tr><td>';
-		$this->displayPrev();
-		echo '</td><td>';
-		$this->displayPosition();
-		echo '</td><td>';
-		$this->displayNext();
-		echo '</td></tr></table>';
-		$div->close();
+			$div = new SwatHtmlTag('div');
+			$div->class = 'swat-pagination';
+			$div->open();
+			
+			$this->displayPrev();
+			$this->displayPages();
+			$this->displayNext();
+
+			$div->close();
+			
+		}
 	}
 
 	/**
@@ -94,19 +95,18 @@ class SwatPagination extends SwatControl {
 	protected function displayPrev() {
 		if ($this->prev_page != -1) {
 			$href = $this->getHref();
+			
 			$anchor = new SwatHtmlTag('a');
-
-			$anchor->href = sprintf($href, 0);
-			$anchor->content = 'Start';
-			$anchor->display();
-
 			$anchor->href = sprintf($href, $this->prev_page);
-			$anchor->content = 'Previous';
+			$anchor->content = _S("&#171; Previous");
+			$anchor->class = 'nextprev';
 			$anchor->display();
-
 		} else {
-			echo 'Start';
-			echo 'Previous';
+			$span = new SwatHtmlTag('span');
+			$span->class = 'nextprev';
+			$span->open();
+			echo _S("&#171; Previous");
+			$span->close();
 		}
 	}
 
@@ -125,19 +125,63 @@ class SwatPagination extends SwatControl {
 	protected function displayNext() {
 		if ($this->next_page != -1) {
 			$href = $this->getHref();
+			
 			$anchor = new SwatHtmlTag('a');
-
 			$anchor->href = sprintf($href, $this->next_page);
-			$anchor->content = 'Next';
+			$anchor->content = _S("Next &#187");
+			$anchor->class = 'nextprev';
 			$anchor->display();
-
-			$anchor->href = sprintf($href, $this->total_pages - 1);
-			$anchor->content = 'Last';
-			$anchor->display();
-
 		} else {
-			echo 'Next';
-			echo 'Last';
+			$span = new SwatHtmlTag('span');
+			$span->class = 'nextprev';
+			$span->open();
+			echo _S("Next &#187;");
+			$span->close();
+		}
+	}
+
+	/**
+	 * Display a smart list of pages
+	 */
+	protected function displayPages() {
+		$j = -1;
+
+		$href = $this->getHref();
+
+		$anchor = new SwatHtmlTag('a');
+		$span = new SwatHtmlTag('span');
+		$current = new SwatHtmlTag('span');
+		$current->class = 'current';
+
+		for ($i = 0; $i < $this->total_pages; $i++) {
+			$display=false;
+
+			if ($this->current_page <= 5 && $i <= 8)
+				$display=true; //current page is in the first 6, show the first 8 pages
+			elseif ($this->current_page >= $this->total_pages - 5 && $i > $this->total_pages - 9)
+				$display=true; //current page is in the last 6, show the last 8 pages
+			elseif ($i <= 1 || $i >=$this->total_pages -2 || abs($this->current_page - $i) <= 3)
+				$display=true; //always show the first 2, last 2, and middle 6 pages
+
+			if ($display) {
+				if ($j + 1 != $i) {
+					$span->open();
+					echo '...';
+					$span->close();
+				}
+
+				if ($i == $this->current_page) {
+					$current->open();
+					echo ($i+1);
+					$current->close();
+				} else {
+					$anchor->href = sprintf($href, $i);
+					$anchor->content = ($i + 1);
+					$anchor->display();
+				}
+
+				$j=$i;
+			}
 		}
 	}
 
@@ -157,7 +201,7 @@ class SwatPagination extends SwatControl {
 				unset($vars[$name]);
 
 		$vars[$this->name] = '%s';
-		
+
 		if ($this->href === null)
 			$href = '?';
 		else
