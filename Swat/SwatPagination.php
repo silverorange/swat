@@ -80,6 +80,7 @@ class SwatPagination extends SwatControl {
 			$div->class = 'swat-pagination';
 			$div->open();
 			
+			$this->displayPosition();
 			$this->displayPrev();
 			$this->displayPages();
 			$this->displayNext();
@@ -116,7 +117,12 @@ class SwatPagination extends SwatControl {
 	 * i.e. "1 of 3"
 	 */
 	protected function displayPosition() {
+		$div = new SwatHtmlTag('div');
+		$div->class = 'position';
+		$div->open();
+		echo _S("Page ");
 		echo ($this->current_page + 1), ' of ', $this->total_pages;
+		$div->close();
 	}
 
 	/**
@@ -156,10 +162,10 @@ class SwatPagination extends SwatControl {
 		for ($i = 0; $i < $this->total_pages; $i++) {
 			$display=false;
 
-			if ($this->current_page <= 5 && $i <= 8)
-				$display=true; //current page is in the first 6, show the first 8 pages
-			elseif ($this->current_page >= $this->total_pages - 5 && $i > $this->total_pages - 9)
-				$display=true; //current page is in the last 6, show the last 8 pages
+			if ($this->current_page <= 6 && $i <= 4)
+				$display=true; //current page is in the first 6, show the first 5 pages
+			elseif ($this->current_page >= $this->total_pages - 7 && $i >= $this->total_pages - 6)
+				$display=true; //current page is in the last 6, show the last 5 pages
 			elseif ($i <= 1 || $i >=$this->total_pages -2 || abs($this->current_page - $i) <= 3)
 				$display=true; //always show the first 2, last 2, and middle 6 pages
 
