@@ -8,8 +8,7 @@ require_once('Swat/SwatContainer.php');
 require_once('Swat/SwatHtmlTag.php');
 
 /**
- * A container with a disclosure widget that may be made hidden or visible by
- * by the user.
+ * A container with a disclosure widget that may be shown or hidden by the user.
  */
 class SwatDisclosure extends SwatContainer {
 
@@ -20,7 +19,7 @@ class SwatDisclosure extends SwatContainer {
 	public $title = null;
 
 	/**
-	 * An flag telling whether the disclosure is open.
+	 * A flag to set the initial state of the disclosure.
 	 * @var bool
 	 */
 	public $open = true;
@@ -40,7 +39,8 @@ class SwatDisclosure extends SwatContainer {
 		$control_div->open();
 
 		$anchor = new SwatHtmlTag('a');
-		$anchor->href = 'javascript:toggleDisclosureWidget(\''.$this->name.'\');';
+		$anchor->href = sprintf("javascript:toggleDisclosureWidget('%s');",
+		                        $this->name);
 		$anchor->open();
 
 		$img = new SwatHtmlTag('img');
@@ -53,8 +53,8 @@ class SwatDisclosure extends SwatContainer {
 			$img->alt = 'open';
 		}
 
-		$img->width = '16';
-		$img->height = '16';
+		$img->width = 16;
+		$img->height = 16;
 		$img->id = $this->name.'_img';
 
 		$img->display();
@@ -66,18 +66,15 @@ class SwatDisclosure extends SwatContainer {
 		$control_div->close();
 
 		$container_div = new SwatHtmlTag('div');
+		$container_div->id = $this->name;
 
 		if ($this->open)
-			$container_div->class = 'swat-disclosure-container-opened';
+			$container_div->class = 'swat-disclosure-container-open';
 		else
 			$container_div->class = 'swat-disclosure-container-closed';
 
-		$container_div->id = $this->name;
-
 		$container_div->open();
-
 		parent::display();
-
 		$container_div->close();
 	}
 
