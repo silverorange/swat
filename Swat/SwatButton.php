@@ -19,7 +19,7 @@ class SwatButton extends SwatControl {
 	public $title;
 
 	public function init() {
-		$this->title = $this->getStockTitle('submit');
+		$this->setTitleFromStock('submit');
 	}
 	
 	public function display() {
@@ -31,16 +31,24 @@ class SwatButton extends SwatControl {
 		$input_tag->display();
 	}
 
-	public function getStockTitle($id) {
+	/**
+	 * Set a stock title.
+	 * Lookup a stock title for the button and set it as the current title.
+	 * @param id string The shortname of the stock title.
+	 */
+	public function setTitleFromStock($id) {
 		switch ($id) {
 			case 'submit':
-				return _S('Submit');
+				$this->title = _S('Submit');
+				break;
 
 			case 'create':
-				return _S('Create');
+				$this->title = _S('Create');
+				break;
 
 			case 'apply':
-				return _S('Apply');
+				$this->title = _S('Apply');
+				break;
 		}
 	}
 }
