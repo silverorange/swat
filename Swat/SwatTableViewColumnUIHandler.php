@@ -27,8 +27,7 @@ class SwatTableViewColumnUIHandler implements SwatUIHandler {
 			$parent->addRenderer($widget);
 		else
 			throw new SwatException('SwatLayout: Only '.
-				'SwatCellRenders can be nested within '.
-				'SwatTableViewsColumns ('.$xmlfile.')');
+				'SwatCellRenders can be nested within SwatTableViewsColumns');
 
 	}
 }
