@@ -18,6 +18,10 @@
 			<SwatFormField title="Time">
 				<SwatTime name="time" />
 			</SwatFormField>
+			
+			<SwatFormField title="Email">
+				<SwatEntryEmail name="email" />
+			</SwatFormField>
 
 			<SwatFormField class="swat-form-footer">
 				<SwatButton name="btn_create" title="Create" />

@@ -61,9 +61,12 @@ class SwatCalendar extends SwatControl {
 		else 
 			$start_date = '';
 			
-		if (isset($this->valid_range_end))
-			$end_date = $this->valid_range_end->format("%m/%d/%Y");
-		else 
+		if (isset($this->valid_range_end)) {
+			//javascript calendar is inclusive, subtract one second from range
+			$tmp = clone $this->valid_range_end;
+	        $tmp->subtractSeconds(1);
+			$end_date = $tmp->format("%m/%d/%Y");
+		} else 
 			$end_date = '';
 
 		 
