@@ -1,22 +1,23 @@
 <?php
 /**
- * @package Admin
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
 require_once('Swat/SwatUIHandler.php');
-require_once('Admin/AdminActions.php');
-require_once('Admin/AdminActionItem.php');
+require_once('Swat/SwatActions.php');
+require_once('Swat/SwatActionItem.php');
 
 /**
- * UI handler for AdminActions.
+ * UI handler for SwatActions.
  */
-class AdminActionsUIHandler implements SwatUIHandler {
+class SwatActionsUIHandler implements SwatUIHandler {
 
 	/**
 	 * Gets the name of the class this handler handles.
 	 */
 	public function getName() {
-		return 'AdminActions';
+		return 'SwatActions';
 	}
 
 	/**
@@ -24,11 +25,11 @@ class AdminActionsUIHandler implements SwatUIHandler {
 	 */
 	public function attachToParent($widget, $parent) {
 
-		if ($widget instanceof AdminActionItem)
+		if ($widget instanceof SwatActionItem)
 			$parent->addActionItem($widget);
 		else
 			throw new SwatException('SwatUI: Only '.
-				'AdminActionItems can be nested within AdminActions');
+				'SwatActionItems can be nested within SwatActions');
 	}
 }
 
