@@ -11,11 +11,51 @@ require_once('Swat/SwatCellRenderer.php');
  */
 class SwatCellRendererImage extends SwatCellRenderer {
 
+	/**
+	 * The src attribute in the HTML img tag.
+	 * @var string
+	 */
 	public $src;
+
+	/**
+	 * The height attribute in the HTML img tag.
+	 * @var int
+	 */
+	public $height = 0;
+
+	/**
+	 * The width attribute in the HTML img tag.
+	 * @var int
+	 */
+	public $width = 0;
+
+	/**
+	 * The title attribute in the HTML img tag.
+	 * @var string
+	 */
+	public $title = '';
+
+	/**
+	 * The alt attribute in the HTML img tag.
+	 * @var string
+	 */
+	public $alt = '';
 
 	public function render() {
 		$image_tag = new SwatHtmlTag('img');
 		$image_tag->src = $this->src;
+
+		if ($this->height > 0)
+			$image_tag->height = $this->height;
+
+		if ($this->width > 0)
+			$image_tag->width = $this->width;
+
+		if (strlen($this->title) > 0)
+			$image_tag->title = _S($this->title);
+
+		if (strlen($this->alt) > 0)
+			$image_tag->alt = _S($this->alt);
 
 		$image_tag->display();
 	}

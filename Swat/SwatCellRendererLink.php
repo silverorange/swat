@@ -12,18 +12,33 @@ require_once('Swat/SwatHtmlTag.php');
  */
 class SwatCellRendererLink extends SwatCellRenderer {
 
-	public $text;
+	/**
+	 * The href attribute in the HTML anchor tag.
+	 * @var string
+	 */
 	public $href;
-	public $href_value = null;
+
+	/**
+	 * The content to place within the HTML anchor tag. In a SwatUI XML file 
+	 * this comes from the content of the SwatCellRendererLink tag.
+	 * @var string
+	 */
+	public $content;
+
+	/**
+	 * A value to substitute into the href.
+	 * @var string
+	 */
+	public $value = null;
 
 	public function render() {
 		$anchor = new SwatHtmlTag('a');
-		$anchor->content = $this->text;
+		$anchor->content = $this->content;
 
-		if ($this->href_value == null)
+		if ($this->value == null)
 			$anchor->href = $this->href;
 		else
-			$anchor->href = sprintf($this->href, $this->href_value);
+			$anchor->href = sprintf($this->href, $this->value);
 
 		$anchor->display();
 	}

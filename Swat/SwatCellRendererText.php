@@ -11,9 +11,14 @@ require_once('Swat/SwatCellRenderer.php');
  */
 class SwatCellRendererText extends SwatCellRenderer {
 
-	public $text = '';
+	/**
+	 * The content to place within the HTML anchor tag. In a SwatUI XML file 
+	 * this comes from the content of the SwatCellRendererLink tag.
+	 * @var string
+	 */
+	public $content = '';
 
 	public function render() {
-		echo $this->text;
+		echo $this->content;
 	}
 }
