@@ -19,7 +19,7 @@ class SwatUI extends SwatObject {
 
 	private $widgets;
 	private $handlers;
-	private $toplevel = null;
+	private $root;
 
 	function __construct() {
 		$this->widgets = array();
@@ -29,6 +29,8 @@ class SwatUI extends SwatObject {
 		$this->registerHandler(new SwatTableViewColumnUIHandler());
 		$this->registerHandler(new SwatActionsUIHandler());
 		$this->registerHandler(new SwatActionItemUIHandler());
+
+		$this->root = new SwatContainer();
 	}
 
 	/**
@@ -56,7 +58,7 @@ class SwatUI extends SwatObject {
 
 		$xml = simplexml_load_file($xmlfile);
 
-		$this->parseUI($xml, $this->toplevel);
+		$this->parseUI($xml, $this->root);
 	}
 
 	/**
@@ -86,7 +88,7 @@ class SwatUI extends SwatObject {
 	 * @return SwatWidget A reference to the widget.
 	 */
 	public function getRoot() {
-		return $this->toplevel;
+		return $this->root;
 	}
 
 	/**
@@ -108,14 +110,7 @@ class SwatUI extends SwatObject {
 			if (class_exists('SwatWidget') && $widget instanceof SwatWidget)
 				$this->widgets[$widget->name] = $widget;
 
-			if ($parent_widget == null) {
-				$this->toplevel = $widget;
-				$parent_widget = $widget;
-
-			} else {
-				$this->attachToParent($widget, $parent_widget);
-			}
-			
+			$this->attachToParent($widget, $parent_widget);
 			$this->parseUI($childnode, $widget);
 		}
 	}
