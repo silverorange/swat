@@ -79,7 +79,7 @@ class SwatUI extends SwatObject {
 		return $this->root;
 	}
 
-	private function parseUI($node, $parent_widget, $property_parent_widget = null) {
+	private function parseUI($node, $parent_widget) {
 		$widgets = array();
 	
 		foreach ($node->children() as $childname => $childnode) {
@@ -98,10 +98,10 @@ class SwatUI extends SwatObject {
 				}
 				
 				$this->attachToParent($widget, $parent_widget);
-				$this->parseUI($childnode, $widget, $parent_widget);
+				$this->parseUI($childnode, $widget);
 				
 			} elseif ($childname == 'property') {
-				$this->parseProperty($parent_widget, $childnode, $property_parent_widget);
+				$this->parseProperty($parent_widget, $childnode);
 			}
 		}
 	}
@@ -118,7 +118,7 @@ class SwatUI extends SwatObject {
 
 	private function parseWidget($node) {
 		if (isset($node['class']))
-			$class = $node['class'];
+			$class = (string)$node['class'];
 		else
 			throw new SwatException("Widget is missing 'class' property.");
 	
@@ -132,8 +132,7 @@ class SwatUI extends SwatObject {
 		}
 
 		require_once($classfile);
-		//$w = new $name();
-		$w = eval(sprintf("return new %s();", $class));
+		$w = new $class();
 		
 		if (isset($node['name']))
 			$w->name = (string)$node['name'];
@@ -141,7 +140,7 @@ class SwatUI extends SwatObject {
 		return $w;
 	}
 
-	private function parseProperty($widget, $property, $parent_widget) {
+	private function parseProperty($widget, $property) {
 		$classvars = get_class_vars(get_class($widget));
 		
 		if (!isset($property['name']))
@@ -157,17 +156,19 @@ class SwatUI extends SwatObject {
 				(string)$property['name'], get_class($widget)));
 				
 		else {
-			$attrname = (string)$property['name'];
-			$attrvalue = (string)$property['value'];
+			$name = (string)$property['name'];
+			$value = (string)$property['value'];
+			$translatable = (isset($property['translatable'])
+				&& strtolower((string)$property['translatable']) == 'yes');
+
+			$type = (isset($property['type'])) ? (string)$property['type'] : null;
 			
-			$attrtype = (isset($property['type'])) ? (string)$property['type'] : null;
-			
-			$widget->$attrname = $this->parseAttribute($attrname, $attrvalue, $attrtype,
-				$widget, $parent_widget);
+			$widget->$name = $this->parseValue($name, $value, $type,
+				$translatable, $widget);
 		}
 	}
 
-	private function parseAttribute($name, $value, $type, $widget, $parent_widget) {
+	private function parseValue($name, $value, $type, $translatable, $widget) {
 
 		switch ($type) {
 			case 'boolean':
@@ -177,9 +178,9 @@ class SwatUI extends SwatObject {
 			case 'float':
 				return floatval(substr($value, 6));
 			case 'string':
-				return $value;
+				return $this->translateValue($value, $translatable);
 			case 'data':
-				$parent_widget->linkField($widget, $value, $name);
+				$widget->parent->linkField($widget, $value, $name);
 				return null;
 			default:
 				if ($value == 'false' || $value == 'true' )
@@ -190,8 +191,15 @@ class SwatUI extends SwatObject {
 					trigger_error(__CLASS__.": Possible missing 'integer:' or ".
 						"'float:' on attribute $name", E_USER_NOTICE);
 				
-				return $value;
+				return $this->translateValue($value, $translatable);
 		}
 
+	}
+
+	private function translateValue($value, $translatable) {
+		if ($translatable)
+			return _S($value);
+		else
+			return $value;
 	}
 }

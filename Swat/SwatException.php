@@ -58,7 +58,12 @@ class SwatException extends Exception {
 
 
 function swat_exception_handler($e) {
-	$e->process();
+
+	if ($e instanceof SwatException)
+		$e->process();
+	else
+		echo $e;
+
 }
 
 set_exception_handler('swat_exception_handler');

@@ -47,6 +47,7 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent {
 
 	public function addRenderer(SwatCellRenderer $renderer) {
 		$this->renderers[] = $renderer;
+		$renderer->parent = $this;
 
 		if (!isset($renderer->_property_map) || !is_array($renderer->_property_map))
 			$renderer->_property_map = array();
