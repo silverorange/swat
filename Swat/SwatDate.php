@@ -109,13 +109,26 @@ class SwatDate extends SwatControl {
 	public function process() {
 		$this->createFlydowns();
 
-		$this->yearfly->process();
-		$this->monthfly->process();
-		$this->dayfly->process();
+		if ($this->display & self::YEAR) {
+			$this->yearfly->process();
+			$year = intval($this->yearfly->value);
+		} else {
+			$year = 0;
+		}
 
-		$year  = intval($this->yearfly->value);
-		$month = intval($this->monthfly->value);
-		$day   = intval($this->dayfly->value);
+		if ($this->display & self::MONTH) {
+			$this->monthfly->process();
+			$month = intval($this->monthfly->value);
+		} else {
+			$month = 1;
+		}
+
+		if ($this->display & self::DAY) {
+			$this->dayfly->process();
+			$day = intval($this->dayfly->value);
+		} else {
+			$day = 1;
+		}
 
 		$this->value = new Date();
 		$this->value->setYear($year);
