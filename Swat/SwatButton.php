@@ -18,6 +18,14 @@ class SwatButton extends SwatControl {
 	 */
 	public $title;
 
+	/**
+	 * Set true after processing if this button was clicked (read only).
+	 * The form will also contain a refernce to the clicked button in the
+	 * SwatForm::$button class variable.
+	 * @var boolean
+	 */
+	public $clicked = false;
+
 	public function init() {
 		$this->setTitleFromStock('submit');
 	}
@@ -29,6 +37,20 @@ class SwatButton extends SwatControl {
 		$input_tag->value = $this->title;
 
 		$input_tag->display();
+	}
+
+	public function process() {
+		if (isset($_POST[$this->name])) {
+			$this->clicked = true;
+			$ancestor = $this->parent;
+
+			while ($ancestor != null) {
+				if ($ancestor instanceof SwatForm)
+					$ancestor->button = $this;
+
+				$ancestor = $ancestor->parent;
+			}
+		}
 	}
 
 	/**
