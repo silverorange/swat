@@ -32,7 +32,7 @@ class SwatEntry extends SwatControl {
 		$this->text = $_POST[$this->name];
 
 		if ($this->required && !strlen($this->text))
-			$this->appendMessage(S_("%s is required"));
+			$this->appendMessage(_S("%s is required"));
 	}
 }
 
@@ -46,7 +46,7 @@ class SwatEntryInteger extends SwatEntry {
 		if (is_numeric($this->text))
 			$this->text = intval($this->text);
 		else
-			$this->appendMessage(S_("%s must be an integer"));
+			$this->appendMessage(_S("%s must be an integer"));
 	}
 }
 
@@ -60,7 +60,7 @@ class SwatEntryFloat extends SwatEntry {
 		if (is_numeric($this->text))
 			$this->text = floatval($this->text);
 		else
-			$this->appendMessage(S_("%s must be an number"));
+			$this->appendMessage(_S("%s must be an number"));
 	}
 }
 ?>

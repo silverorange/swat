@@ -29,7 +29,7 @@ class SwatTextarea extends SwatControl {
 		$this->text = $_POST[$this->name];
 
 		if ($this->required && !strlen($this->text))
-			$this->appendMessage(S_("%s is required"));
+			$this->appendMessage(_S("%s is required"));
 	}
 }
 

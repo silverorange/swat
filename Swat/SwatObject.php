@@ -14,7 +14,7 @@ class SwatObject {
 
 }
 
-function S_($msgid) {
+function _S($msgid) {
 	// TODO: use this for gettext translation
 	return $msgid;
 }
