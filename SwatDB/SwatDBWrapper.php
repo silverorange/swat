@@ -7,7 +7,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2005
  */
-class SwatDBWrapper {
+abstract class SwatDBWrapper {
 
 	private $_found = false;
 
