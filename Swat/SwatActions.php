@@ -112,7 +112,7 @@ class SwatActions extends SwatControl {
 		$this->created = true;
 
 		$this->actionfly = new SwatFlydown($this->name.'_actionfly');
-		$this->actionfly->onchange = "swatActionsDisplay('{$this->name}', this.value);";
+		$this->actionfly->onchange = "swatActionsDisplay(this, '{$this->name}');";
 
 		if ($this->show_blank_option)
 			$this->actionfly->options = array('');
