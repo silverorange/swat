@@ -39,7 +39,7 @@ class SwatToolLink extends SwatControl {
 
 		$anchor = new SwatHtmlTag('a');
 
-		if ($this->value == null)
+		if ($this->value === null)
 			$anchor->href = $this->href;
 		else
 			$anchor->href = sprintf($this->href, $this->value);
