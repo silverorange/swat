@@ -15,7 +15,7 @@ class SwatEntryInteger extends SwatEntry {
 		$this->size = 5;
 	}
 
-	function process() {
+	public function process() {
 		parent::process();
 
 		if (is_numeric($this->value))

@@ -37,7 +37,7 @@ class SwatEntry extends SwatControl {
 	public $maxlength = null;
 
 
-	function display() {
+	public function display() {
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'text';
 		$input_tag->name = $this->name;
@@ -56,7 +56,7 @@ class SwatEntry extends SwatControl {
 		$input_tag->display();
 	}	
 
-	function process() {
+	public function process() {
 		$this->value = $_POST[$this->name];
 
 		if ($this->required && !strlen($this->value))

@@ -15,7 +15,7 @@ class SwatEntryFloat extends SwatEntry {
 		$this->size = 10;
 	}
 
-	function process() {
+	public function process() {
 		parent::process();
 
 		if (is_numeric($this->value))
