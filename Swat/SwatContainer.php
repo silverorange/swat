@@ -99,6 +99,8 @@ class SwatContainer extends SwatWidget {
 	/**
 	 * Get children widgets
 	 *
+	 * Retrieve an array of all widgets directly contained by this container.
+	 *
 	 * @param string $class_name Optional class name. If not null, only widgets that 
 	 *        are instances of $class_name are returned.
 	 * @return array An array of the child widgets in this container.
@@ -114,6 +116,66 @@ class SwatContainer extends SwatWidget {
 				$out[] = $child_widget;
 
 		return $out;
+	}
+
+	/**
+	 * Get descendant widgets
+	 *
+	 * Retrieve an array of all widgets in the widget subtree below this container.
+	 *
+	 * @param string $class_name Optional class name. If not null, only widgets that 
+	 *        are instances of $class_name are returned.
+	 * @return array An array of descendant widgets in this container.
+	 */
+	public function getDescendants($class_name = null) {
+		$out = array();
+
+		foreach($this->children as $child_widget) {
+			if ($class_name === null || $child_widget instanceof $class_name) {
+
+				if ($child_widget->name === null)
+					$out[] = $child_widget;
+				else
+					$out[$child_widget->name] = $child_widget;
+			}
+
+			if ($child_widget instanceof SwatContainer)
+				$out = array_merge($out, $child_widget->getDescendants($class_name));
+		}
+
+		return $out;
+	}
+
+	/**
+	 * Get descendant states
+	 *
+	 * Retrieve an array of states of all SwatControl widgets in the widget 
+	 * subtree below this container.
+	 *
+	 * @return array $states Array of states keyed by widget name.
+	 */
+	public function getDescendantStates() {
+		$states = array();
+
+		foreach ($this->getDescendants('SwatControl') as $name => $widget)
+			$states[$name] = $widget->getState();
+
+		return $states;
+	}
+
+	/**
+	 * Set descendant states
+	 *
+	 * Set states on all SwatControl widgets in the widget subtree below this 
+	 * container.
+	 *
+	 * @param array $states Array of states keyed by widget name.
+	 */
+	public function setDescendantStates($states) {
+
+		foreach ($this->getDescendants('SwatControl') as $name => $widget)
+			if (isset($states[$name]))
+				$widget->setState($states[$name]);
 	}
 
 	public function process() {
