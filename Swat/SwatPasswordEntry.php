@@ -8,7 +8,7 @@ require_once('Swat/SwatControl.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatEntryPassword extends SwatEntry {
+class SwatPasswordEntry extends SwatEntry {
 	
 	public function display() {
 		$this->html_input_type = 'password';
