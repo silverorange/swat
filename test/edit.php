@@ -77,7 +77,6 @@ if ($form->process()) {
 	echo '<pre>';
 	print_r($_POST);
 	echo '</pre>';
-	//echo $entry->text, "\n";
 }
 
 $frame->displayTest();
