@@ -35,6 +35,22 @@ class SwatContainer extends SwatWidget {
 	}
 
 	/**
+	 * Remove a widget
+	 * 
+	 * Removes a child widget from container. The parent of the widget is set 
+	 * to null.
+	 *
+	 * @param SwatWidget $widget A reference to a widget to remove.
+	 */
+	public function remove(SwatWidget $widget) {
+		foreach ($this->children as $key => $child_widget) {
+			if ($child_widget === $widget)
+				unset($this->children[$key]);
+				$widget->parent = null;
+		}
+	}
+
+	/**
 	 * Add a widget to start
 	 *
 	 * Adds a widget to the start of the list of widgets in this container.
@@ -83,10 +99,21 @@ class SwatContainer extends SwatWidget {
 	/**
 	 * Get children widgets
 	 *
-	 * @return array An array of all of the child widgets of this container.
+	 * @param string $class_name Optional class name. If not null, only widgets that 
+	 *        are instances of $class_name are returned.
+	 * @return array An array of the child widgets in this container.
 	 */
-	public function getChildren() {
-		return $this->children;
+	public function getChildren($class_name = null) {
+		if ($class_name == null)
+			return $this->children;
+
+		$out = array();
+
+		foreach($this->children as $child_widget)
+			if ($child_widget instanceof $class_name)
+				$out[] = $child_widget;
+
+		return $out;
 	}
 
 	public function process() {
