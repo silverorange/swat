@@ -13,6 +13,12 @@ $frame1 = $layout->getWidget('frame1');
 $date = $layout->getWidget('date');
 $date->display = (SwatDate::YEAR | SwatDate::MONTH | SwatDate::DAY);
 
+$date->valid_range_start = new Date();
+$date->valid_range_end = clone $date->valid_range_start;
+$date->valid_range_end->setYear(2005);
+$date->valid_range_end->setMonth(3);
+//$date->valid_range_end->setDay(23);
+
 if ($form1->process()) {
 	echo '<pre>';
 	print_r($_POST);
