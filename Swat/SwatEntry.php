@@ -43,10 +43,11 @@ class SwatEntry extends SwatControl {
 	 */
 	public $maxlength = null;
 
+	protected $html_input_type = 'text';
 
 	public function display() {
 		$input_tag = new SwatHtmlTag('input');
-		$input_tag->type = 'text';
+		$input_tag->type = $this->html_input_type;
 		$input_tag->name = $this->name;
 		$input_tag->id = $this->name;
 		$input_tag->onfocus = "this.select();";
