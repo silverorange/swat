@@ -36,6 +36,8 @@ class SwatFlydown extends SwatControl {
 	public $onchange = null;
 
 	public function display() {
+		$options = $this->getOptions();
+
 		$select_tag = new SwatHtmlTag('select');
 		$select_tag->name = $this->name;
 		$select_tag->id = $this->name;
@@ -47,8 +49,8 @@ class SwatFlydown extends SwatControl {
 
 		$select_tag->open();
 
-		if ($this->options !== null) {
-			foreach ($this->options as $value => $title) {
+		if ($options !== null) {
+			foreach ($options as $value => $title) {
 				$option_tag->value = (string)$value;
 				$option_tag->removeAttr('selected');
 				
@@ -66,6 +68,10 @@ class SwatFlydown extends SwatControl {
 
 	public function process() {
 		$this->value = $_POST[$this->name];
+	}
+
+	protected function &getOptions() {
+		return $this->options;
 	}
 
 	/**
