@@ -142,7 +142,7 @@ class SwatUI extends SwatObject {
 
 		if (array_key_exists('content', $classvars)) {
 			$content = trim((string)$node); // stuff between opening and closing tags
-			$w->content = $this->parseAttribute('content', $content, $parent_widget);
+			$w->content = $this->parseAttribute('content', $content, $w, $parent_widget);
 		}
 
 		foreach ($node->attributes() as $attrname => $attrvalue) {
@@ -150,7 +150,7 @@ class SwatUI extends SwatObject {
 			$attrvalue = (string)$attrvalue;
 
 			if (array_key_exists($attrname, $classvars))
-				$w->$attrname = $this->parseAttribute($attrname, $attrvalue, $parent_widget);
+				$w->$attrname = $this->parseAttribute($attrname, $attrvalue, $w, $parent_widget);
 			else
 				throw new SwatException(__CLASS__.": no attribute named ".
 					"'$attrname' in class $name");
@@ -159,7 +159,7 @@ class SwatUI extends SwatObject {
 		return $w;
 	}
 
-	private function parseAttribute($name, $value, $parent_widget) {
+	private function parseAttribute($name, $value, $widget, $parent_widget) {
 
 		if (strncmp($value, 'bool:', 5) == 0)
 			$ret = (substr($value, 5) == 'true') ? true : false;
@@ -175,7 +175,7 @@ class SwatUI extends SwatObject {
 
 		elseif (strncmp($value, 'data:', 5) == 0) {
 			$field = substr($value, 5);
-			$parent_widget->linkField($field, $name);
+			$parent_widget->linkField($widget, $field, $name);
 			$ret = null;
 
 		} else {
