@@ -1,7 +1,6 @@
 <?php
 require_once('Swat/SwatWidget.php');
 require_once('Swat/SwatFormField.php');
-require_once('Swat/SwatErrorMessage.php');
 
 /**
  * Abstract base class for control widgets (non-container)
