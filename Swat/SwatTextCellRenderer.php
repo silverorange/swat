@@ -8,18 +8,17 @@ require_once('Swat/SwatCellRenderer.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatCellRendererText extends SwatCellRenderer {
+class SwatTextCellRenderer extends SwatCellRenderer {
 
 	/**
-	 * Cell content
+	 * Cell value
 	 *
-	 * The content to place within the cell. In a SwatUI XML file 
-	 * this comes from the content of the SwatCellRendererLink tag.
+	 * The content to place within the cell.
 	 * @var string
 	 */
-	public $content = '';
+	public $value = '';
 
 	public function render($prefix) {
-		echo $this->content;
+		echo $this->value;
 	}
 }

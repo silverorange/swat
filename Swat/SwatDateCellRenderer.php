@@ -9,7 +9,7 @@ require_once('Swat/SwatDate.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatCellRendererDate extends SwatCellRenderer {
+class SwatDateCellRenderer extends SwatCellRenderer {
 
 	/**
 	 * Date
