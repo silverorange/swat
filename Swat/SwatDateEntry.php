@@ -149,20 +149,20 @@ class SwatDateEntry extends SwatControl {
 	
 		if ($this->display_parts & self::YEAR) {
 			$this->yearfly->process();
-			$year = intval($this->yearfly->value);
-			$all_empty = $all_empty && ($year == -1);
+			$year = $this->yearfly->value;
+			$all_empty = $all_empty && ($year === null);
 		}
 
 		if ($this->display_parts & self::MONTH) {
 			$this->monthfly->process();
-			$month = intval($this->monthfly->value);
-			$all_empty = $all_empty && ($month == -1);
+			$month = $this->monthfly->value;
+			$all_empty = $all_empty && ($month === null);
 		}
 
 		if ($this->display_parts & self::DAY) {
 			$this->dayfly->process();
-			$day = intval($this->dayfly->value);
-			$all_empty = $all_empty && ($day == -1);
+			$day = $this->dayfly->value;
+			$all_empty = $all_empty && ($day === null);
 		}
 		
 		if ($this->display_parts & self::TIME) {
@@ -182,21 +182,21 @@ class SwatDateEntry extends SwatControl {
 
 
 		if ($this->display_parts & self::YEAR) {
-			if (!$all_empty && $year == -1 && $this->required_parts & self::YEAR)
+			if (!$all_empty && $year === null && $this->required_parts & self::YEAR)
 				$this->addErrorMessage(_S("Year is Required."));
 		} else {
 			$year = 0;
 		}
 
 		if ($this->display_parts & self::MONTH) {
-			if (!$all_empty && $month == -1 && $this->required_parts & self::MONTH)
+			if (!$all_empty && $month === null && $this->required_parts & self::MONTH)
 				$this->addErrorMessage(_S("Month is Required."));
 		} else {
 			$month = 1;
 		}
 
 		if ($this->display_parts & self::DAY) {
-			if (!$all_empty && $day == -1 && $this->required_parts & self::DAY)
+			if (!$all_empty && $day === null && $this->required_parts & self::DAY)
 				$this->addErrorMessage(_S("Day is Required."));
 		} else {
 			$day = 1;
@@ -238,7 +238,6 @@ class SwatDateEntry extends SwatControl {
 
 	private function createYearFlydown() { 
 		$this->yearfly = new SwatFlydown($this->name.'_year');
-		$this->yearfly->options = array(-1 => '');
 		$this->yearfly->onchange = sprintf("dateSet('%s', this);",
 			$this->name);
 
@@ -254,7 +253,6 @@ class SwatDateEntry extends SwatControl {
 		
 	private function createMonthFlydown() { 
 		$this->monthfly = new SwatFlydown($this->name.'_month');
-		$this->monthfly->options = array(-1 => '');
 		$this->monthfly->onchange = sprintf("dateSet('%s', this);",
 			$this->name);
 
@@ -292,7 +290,6 @@ class SwatDateEntry extends SwatControl {
 		
 	private function createDayFlydown() {
 		$this->dayfly = new SwatFlydown($this->name.'_day');
-		$this->dayfly->options = array(-1 => '');
 		$this->dayfly->onchange = sprintf("dateSet('%s', this);",
 			$this->name);
 

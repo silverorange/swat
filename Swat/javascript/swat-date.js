@@ -4,7 +4,7 @@ function dateSet(id, activeFlydown) {
 	//hour is required for this, so stop if it doesn't exist
 	if (!e.month) return;
 	
-	if (activeFlydown.value == -1) {
+	if (activeFlydown.value == '') {
 		//dateReset(id, true);
 	} else {
 		var vDate = new Date();	
