@@ -277,7 +277,9 @@ class SwatDate extends SwatControl {
 	
 	private function createTimeFlydown() {
 		require_once('Swat/SwatTime.php');
+		
 		$this->timefly = new SwatTime();
+		$this->timefly->name = $this->name;
 	}
 	
 	private function displayJavascript() {
