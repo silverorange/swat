@@ -15,13 +15,15 @@ class SwatPagination extends SwatControl {
 	/**
 	 * Href
 	 *
-	 * The URL of the current page, used to build links.
+	 * The initial HREF used when building links.  If null, link HREF's will
+	 * begin with '?'.
+	 *
 	 * @var int
 	 */
 	public $href = null;
 
 	/**
-	 * Get vars to clobber
+	 * HTTP GET vars to clobber
 	 *
 	 * An array of GET variable names to unset before rebuilding new link.
 	 * @var int
@@ -169,8 +171,7 @@ class SwatPagination extends SwatControl {
 			$href.= $name.'='.$value.'&';
 
 		// remove trailing ampersand
-		if (count($vars))
-			$href = substr($href, 0, -1);
+		$href = substr($href, 0, -1);
 
 		return $href;
 	}
