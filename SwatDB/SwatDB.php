@@ -17,7 +17,7 @@ require_once("Swat/SwatTreeNode.php");
  */
 class SwatDB {
 	
-    // {{{ query()
+    // {{{ public static function query()
 
 	/**
 	 * Query a recordset
@@ -31,6 +31,7 @@ class SwatDB {
 	 * @return MDB2_result_common A recordset containing the query result.
 	 */
 	public static function query($db, $sql, $types = null) {
+		SwatDB::debug($sql);
 		$rs = $db->query($sql, $types);
 
 		if (MDB2::isError($rs))
@@ -40,7 +41,7 @@ class SwatDB {
 	}
 
 	// }}}
-    // {{{ updateColumn()
+    // {{{ public static function updateColumn()
 	
 	/**
 	 * Update a column
@@ -93,10 +94,11 @@ class SwatDB {
 			$id_field->name,
 			$id_list);
 
+		SwatDB::debug($sql);
 		$db->query($sql);
 	}
 	// }}}
-    // {{{ queryColumn()
+    // {{{ public static function queryColumn()
 
 	/**
 	 * Query a column
@@ -137,6 +139,7 @@ class SwatDB {
 			$sql = sprintf($sql, $field->name, $table, $id_field->name, $id);
 		}
 
+		SwatDB::debug($sql);
 		$values = $db->queryCol($sql, $field->type);
 
 		if (MDB2::isError($values))
@@ -146,7 +149,7 @@ class SwatDB {
 	}
 
 	// }}}
-    // {{{ queryOne()
+    // {{{ public static function queryOne()
 
 	/**
 	 * Query a single value
@@ -185,6 +188,7 @@ class SwatDB {
 			$sql = sprintf($sql, $field->name, $table, $id_field->name, $id);
 		}
 
+		SwatDB::debug($sql);
 		$value = $db->queryOne($sql, $field->type);
 
 		if (MDB2::isError($value))
@@ -194,7 +198,7 @@ class SwatDB {
 	}
 
 	// }}}
-    // {{{ updateBinding()
+    // {{{ public static function updateBinding()
 
 	/**
 	 * Update a binding table
@@ -272,6 +276,9 @@ class SwatDB {
 				$value_list);
 		}
 
+		SwatDB::debug($insert_sql);
+		SwatDB::debug($delete_sql);
+
 		$db->beginTransaction();
 
 		if (count($values)) {
@@ -289,7 +296,7 @@ class SwatDB {
 	}
 
 	// }}}
-    // {{{ getOptionArray()
+    // {{{ public static function getOptionArray()
 
     /**
 	 * Query for an option array
@@ -339,6 +346,7 @@ class SwatDB {
 		if ($order_by_clause != null)
 			$sql .= ' order by '.$order_by_clause;
 
+		SwatDB::debug($sql);
 		$rs = $db->query($sql, array($id_field->type, $title_field->type));
 
 		if (MDB2::isError($rs))
@@ -356,7 +364,7 @@ class SwatDB {
 	}
 
 	// }}}
-    // {{{ getCascadeOptionArray()
+    // {{{ public static function getCascadeOptionArray()
 
     /**
 	 * Query for an option array cascaded by a field
@@ -414,6 +422,8 @@ class SwatDB {
 		if ($order_by_clause !== null)
 			$sql.', '.$order_by_clause;
 
+		SwatDB::debug($sql);
+
 		$rs = $db->query($sql, array($id_field->type, $title_field->type,
 			$cascade_field->type));
 
@@ -438,7 +448,7 @@ class SwatDB {
 	}
 
 	// }}}
-    // {{{ getTreeOptionArray()
+    // {{{ public static function getTreeOptionArray()
 
 	/**
 	 * Query for an option tree array
@@ -516,7 +526,7 @@ class SwatDB {
 	}
 
 	// }}}
-	// {{{ getFieldNameArray()
+	// {{{ private static function getFieldNameArray()
 	
 	private static function getFieldNameArray($fields) {
 
@@ -532,7 +542,7 @@ class SwatDB {
 	}
 
 	// }}}
-	// {{{ getFieldTypeArray()
+	// {{{ private static function getFieldTypeArray()
 	
 	private static function getFieldTypeArray($fields) {
 
@@ -548,7 +558,7 @@ class SwatDB {
 	}
 
 	// }}}
-	// {{{ initFields()
+	// {{{ private static function initFields()
 	
 	private function initFields(&$fields) {
 		/* Transforms and array of text field identifiers ('text:title') into
@@ -564,7 +574,7 @@ class SwatDB {
 
 
 	// }}}
-	// {{{ queryRow()
+	// {{{ public static function queryRow()
 
 	/**
 	 * Query a single row
@@ -602,6 +612,7 @@ class SwatDB {
 			$id_field->name,
 			$db->quote($id, $id_field->type));
 
+		SwatDB::debug($sql);
 		$rs = $db->query($sql, SwatDB::getFieldTypeArray($fields));
 		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
 
@@ -609,7 +620,7 @@ class SwatDB {
 	}
 
 	// }}}
-	// {{{ insertRow()
+	// {{{ public static function insertRow()
 	
 	/**
 	 * Insert a row
@@ -652,16 +663,19 @@ class SwatDB {
 		$sql = 'insert into %s (%s) values (%s)';
 		$field_list = implode(',', SwatDB::getFieldNameArray($fields));
 
-		foreach ($fields as &$field)
-			$values[$field->name] = $db->quote($values[$field->name], $field->type);
+		$values_in_order = array();
 
-		$value_list = implode(',', $values);
+		foreach ($fields as &$field)
+			$values_in_order[] = $db->quote($values[$field->name], $field->type);
+
+		$value_list = implode(',', $values_in_order);
 
 		$sql = sprintf($sql,
 			$table,
 			$field_list,
 			$value_list);
 
+		SwatDB::debug($sql);
 		$rs = $db->query($sql);
 
 		if (MDB2::isError($rs))
@@ -676,7 +690,7 @@ class SwatDB {
 	}
 
 	// }}}
-	// {{{ updateRow()
+	// {{{ public static function updateRow()
 	
 	/**
 	 * Update a row
@@ -723,6 +737,7 @@ class SwatDB {
 			$id_field->name,
 			$db->quote($id, $id_field->type));
 
+		SwatDB::debug($sql);
 		$rs = $db->query($sql);
 
 		if (MDB2::isError($rs))
@@ -730,7 +745,7 @@ class SwatDB {
 	}
 
 	// }}}
-	// {{{ getFieldMax()
+	// {{{ public static function getFieldMax()
 	
 	/**
 	 * Get max field value
@@ -753,11 +768,20 @@ class SwatDB {
 		$sql = sprintf('select max(%s) as %s from %s',
 			$field->name, $field->name, $table);
 
+		SwatDB::debug($sql);
 		$rs = $db->query($sql, array($field->type));
 		
 		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
 		$field_name = $field->name;
 		return $row->$field_name;
+	}
+	// }}}
+	// {{{ private static function debug()
+	
+	private static function debug($msg) {
+		if (defined('SWATDB_DEBUG')) {
+			echo $msg, '<hr />';
+		}
 	}
 	// }}}
 }
