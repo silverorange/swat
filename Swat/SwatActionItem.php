@@ -1,14 +1,16 @@
 <?php
 /**
- * @package Admin
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
+
 require_once('Swat/SwatObject.php');
 
 /**
- * A single entry in a AdminActions widget.
+ * A single entry in a SwatActions widget.
  */
-class AdminActionItem extends SwatObject {
+class SwatActionItem extends SwatObject {
 	public $name;
 	public $title = '';
 	public $widget = null;

@@ -1,17 +1,18 @@
 <?php
 /**
- * @package Admin
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatButton.php');
 require_once('Swat/SwatFlydown.php');
-require_once('Admin/AdminActionItem.php');
+require_once('Swat/SwatActionItem.php');
 
 /**
- * Actions widget for an index page.
+ * Actions widget.
  */
-class AdminActions extends SwatControl {
+class SwatActions extends SwatControl {
 	
 	private $actionfly;
 	private $btn_apply;
@@ -27,7 +28,7 @@ class AdminActions extends SwatControl {
 		$this->createWidgets();
 		$this->displayJavascript();
 		
-		echo '<div class="admin-actions">';
+		echo '<div class="swat-actions">';
 		echo _S('Action: ');
 		$this->actionfly->display();
 		echo ' ';
@@ -35,7 +36,7 @@ class AdminActions extends SwatControl {
 		
 		foreach ($this->action_items as $item) {
 			if ($item->widget != null) {
-				echo '<div class="admin-hidden">';
+				echo '<div class="swat-hidden">';
 				$item->widget->display();
 				echo '</div>';
 			}
@@ -63,7 +64,7 @@ class AdminActions extends SwatControl {
 		}
 	}
 
-	public function addActionItem(AdminActionItem $item) {
+	public function addActionItem(SwatActionItem $item) {
 		$this->action_items[$item->name] = $item;
 	}
 
