@@ -9,7 +9,7 @@ require_once('Swat/SwatHtmlTag.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatCellRendererLink extends SwatCellRenderer {
+class SwatLinkCellRenderer extends SwatCellRenderer {
 
 	/**
 	 * Link href
@@ -20,13 +20,12 @@ class SwatCellRendererLink extends SwatCellRenderer {
 	public $href;
 
 	/**
-	 * Link content
+	 * Link title
 	 *
-	 * The content to place within the HTML anchor tag. In a SwatUI XML file 
-	 * this comes from the content of the SwatCellRendererLink tag.
+	 * The visible content to place within the HTML anchor tag.
 	 * @var string
 	 */
-	public $content;
+	public $title;
 
 	/**
 	 * Link value
@@ -39,7 +38,7 @@ class SwatCellRendererLink extends SwatCellRenderer {
 
 	public function render($prefix) {
 		$anchor = new SwatHtmlTag('a');
-		$anchor->content = $this->content;
+		$anchor->content = $this->title;
 
 		if ($this->value === null)
 			$anchor->href = $this->href;

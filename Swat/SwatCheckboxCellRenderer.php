@@ -8,7 +8,7 @@ require_once('Swat/SwatCellRenderer.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatCellRendererCheckbox extends SwatCellRenderer {
+class SwatCheckboxCellRenderer extends SwatCellRenderer {
 
 	/**
 	 * Name of checkbox

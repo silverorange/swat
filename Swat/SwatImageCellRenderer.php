@@ -8,7 +8,7 @@ require_once('Swat/SwatCellRenderer.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatCellRendererImage extends SwatCellRenderer {
+class SwatImageCellRenderer extends SwatCellRenderer {
 
 	/**
 	 * Image src
