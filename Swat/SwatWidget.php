@@ -59,16 +59,14 @@ abstract class SwatWidget extends SwatObject {
 	}
 
 	/**
-	 * Append a message.
+	 * Gather error messages.
 	 *
-	 * Append a message generated during processing to this widget's top level parent.
+	 * Gather all error messages from children of this widget and this widget itself.
 	 *
-	 * @param string $msg The message.
+	 * @return array Array of SwatErrorMessage objects.
 	 */
-	protected function appendMessage($msg) {
-		if ($this->parent != null)
-			$this->parent->appendMessage($msg);
-	}
+	abstract function gatherErrorMessages();
+
 }
 
 ?>

@@ -3,29 +3,29 @@
 	<SwatFrame name="frame1" title="New Weblog Post Example Form">
 		<SwatForm name="form1">
 
-			<SwatFormField title="Title:">
+			<SwatFormField title="Title">
 				<SwatEntry name="title" required="bool:true"></SwatEntry>
 			</SwatFormField>
 
-			<SwatFormField title="Hidden?:">
+			<SwatFormField title="Hidden?">
 				<SwatCheckbox name="hidden" />
 			</SwatFormField>
 
-			<SwatFormField title="Body Text:">
-				<SwatTextarea name="bodytext" required="bool:true"></SwatTextarea>
-			</SwatFormField>
+			<SwatFieldset title="Nick's Fieldset">
+				<SwatFormField title="Body Text">
+					<SwatTextarea name="bodytext" required="bool:true"></SwatTextarea>
+				</SwatFormField>
 
-			<SwatFieldset title="Nick's Inner Frame">
-				<SwatFormField title="More Text:">
+				<SwatFormField title="More Text">
 					<SwatTextarea name="moretext"></SwatTextarea>
 				</SwatFormField>
 
-				<SwatFormField title="Reply Status:">
+				<SwatFormField title="Reply Status">
 					<SwatFlydown name="replystatus" />
 				</SwatFormField>
 			</SwatFieldset>
 			
-			<SwatFormField title="Ping Weblogs.com?:">
+			<SwatFormField title="Ping Weblogs.com?">
 				<SwatCheckbox name="ping" value="bool:true" />
 			</SwatFormField>
 

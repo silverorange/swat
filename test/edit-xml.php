@@ -28,7 +28,8 @@ if ($form1->process()) {
 	echo '</pre>';
 }
 
-$frame1->displayTest();
+//$frame1->displayTest();
+$frame1->display();
 
 ?>
 </body>

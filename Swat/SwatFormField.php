@@ -19,35 +19,58 @@ class SwatFormField extends SwatContainer {
 	public $title = null;
 
 	/**
-	 * @var string Class to use on the HTML div tag.
+	 * @var string CSS class to use on the HTML div tag.
 	 */
 	public $class = 'swat-form-field';
 
-	public function display() {
-		$child =& $this->getChild();
+	/**
+	 * @var string CSS class to use on outer HTML div when an error message is displayed.
+	 */
+	public $error_class = 'swat-form-field-error';
 
-		if ($child == null)
+	/**
+	 * @var string CSS class to use on the HTML div where the error message is displayed.
+	 */
+	public $errormsg_class = 'swat-form-field-errormsg';
+
+	public function display() {
+		$first_child = $this->getChild(0);
+
+		if ($first_child == NULL)
 			return;
 
+		$error_messages = $this->gatherErrorMessages();
+		
 		$divtag = new SwatHtmlTag('div');
-		$divtag->class = $this->class;
+		$divtag->class = (count($error_messages) > 0) ? $this->error_class : $this->class;
 
 		$divtag->open();
 
 		if ($this->title != null) {
 			$labeltag = new SwatHtmlTag('label');
-			$labeltag->for = $child->name;
+			$labeltag->for = $first_child->name;
 			$labeltag->open();
-			echo $this->title;
+			echo $this->title, ':';
 
-			if (($child instanceof SwatControl) && $child->required)
+			if (($first_child instanceof SwatControl) && $first_child->required)
 				echo '<span class="required">*</span>';
 
 			$labeltag->close();
+		}
+
+		foreach ($this->children as &$child)
 			$child->display();
 
-		} else {
-			$child->display();
+		if (count($error_messages) > 0) {
+			$errordivtag = new SwatHtmlTag('div');
+			$errordivtag->class = $this->errormsg_class;
+			
+			$errordivtag->open();
+
+			foreach ($error_messages as &$err)
+				echo $err->message, '<br />';
+
+			$errordivtag->close();
 		}
 
 		$divtag->close();

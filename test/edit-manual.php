@@ -32,7 +32,7 @@ $frame->add($form);
 // create an entry widget and add it
 $title = new SwatEntry('title');
 $title->required = true;
-$form->addWithField($title, 'Title:');
+$form->addWithField($title, 'Title');
 
 // create an entry widget and add it
 /*
@@ -40,32 +40,32 @@ $field = new SwatFormField();
 $entry = new SwatEntry('entry1');
 $entry->required = true;
 $field->add($entry);
-$field->title = "First Name:";
+$field->title = "First Name";
 $form->add($field);
 */
 
 // create a checkbox widget and add it
 $hidden = new SwatCheckbox('hidden');
-$form->addWithField($hidden, 'Hidden?:');
+$form->addWithField($hidden, 'Hidden?');
 
 // create a textarea widget and add it
 $bodytext = new SwatTextarea('bodytext');
 $bodytext->required = true;
-$form->addWithField($bodytext, 'Body Text:');
+$form->addWithField($bodytext, 'Body Text');
 
 // create a textarea widget and add it
 $moretext = new SwatTextarea('moretext');
-$form->addWithField($moretext, 'More Text:');
+$form->addWithField($moretext, 'More Text');
 
 // create a flydown widget and add it
 $fly = new SwatFlydown('replystatus');
 $fly->options = array(0 => 'Normal', 1 => 'Hidden');
 $fly->selected_value = 0;
-$form->addWithField($fly, 'Reply Status:');
+$form->addWithField($fly, 'Reply Status');
 
 // create a checkbox widget and add it
 $ping = new SwatCheckbox('ping');
-$form->addWithField($ping, 'Ping Weblogs.com?:');
+$form->addWithField($ping, 'Ping Weblogs.com?');
 
 // create a button widget and add it
 $btn = new SwatButton('btn_create');
