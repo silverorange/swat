@@ -26,6 +26,26 @@ class SwatFlydown extends SwatControl {
 	 * @var string
 	 */
 	public $value = null;
+	
+	/**
+	 * Required
+	 *
+	 * Must have a non-empty value when processed.
+	 * @var bool
+	 */
+	public $required = false;
+
+	/**
+	 * Show a blank option
+	 * @var boolean
+	 */
+	public $show_blank = true;
+
+	/**
+	 * Blank title
+	 * @var string
+	 */
+	public $blank_title = '';
 
 	/**
 	 * On change
@@ -50,6 +70,13 @@ class SwatFlydown extends SwatControl {
 		$select_tag->open();
 
 		if ($options !== null) {
+			if ($this->show_blank) {
+				$option_tag->value = '';
+				$option_tag->open();
+				echo $this->blank_title;
+				$option_tag->close();
+			}
+			
 			foreach ($options as $value => $title) {
 				$option_tag->value = (string)$value;
 				$option_tag->removeAttr('selected');
@@ -67,7 +94,15 @@ class SwatFlydown extends SwatControl {
 	}	
 
 	public function process() {
-		$this->value = $_POST[$this->name];
+		$value = $_POST[$this->name];
+		
+		if ($value == '')
+			$this->value = null;
+		else
+			$this->value = $value;
+		
+		if ($this->required && $this->value == null)
+			$this->addErrorMessage(_S("The %s field is required."));
 	}
 
 	protected function &getOptions() {
