@@ -18,19 +18,16 @@
 * Adapted with permission by silverorange. December 2004.
 */
 
-///////////////////////////////////////////////////////////////////////////////
-function setDateValues(idtag,year,month,day) {
+function setDateValues(idtag, year, month, day) {
 	y = document.getElementById(idtag + "_year");
-	y.selectedIndex = find_index(y,year);
+	if (y) y.selectedIndex = find_index(y,year);
 	
 	m = document.getElementById(idtag + "_month");
-	m.selectedIndex = find_index(m,month);
+	if (m) m.selectedIndex = find_index(m,month);
 	
 	d = document.getElementById(idtag + "_day");
-	d.selectedIndex = find_index(d,day);
+	if (d) d.selectedIndex = find_index(d,day);
 }
-///////////////////////////////////////////////////////////////////////////////
-
 
 function _isLeapYear(year) {
 	return (
@@ -38,7 +35,7 @@ function _isLeapYear(year) {
 	) ? 1 : 0;
 }
 
-function setCalendar(idtag,yyyy,mm,dd) {
+function setCalendar(idtag, yyyy, mm, dd) {
 	//swat-removed: y = document.getElementById(idtag);
 	//swat-removed: y.value = mm + "/" + dd + "/" + yyyy;
 	setDateValues(idtag,yyyy,mm,dd);
@@ -71,7 +68,7 @@ function closeCalSetToday(idtag) {
 		yyyy = yyyy + 1900;
 	}
 
-	setCalendar(idtag,yyyy,mm,dd);
+	setCalendar(idtag, yyyy, mm, dd);
 	
 	t = document.getElementById(idtag + "Div");
 	t.style.display = "none";
@@ -240,10 +237,15 @@ function drawCalendar() {
 	var today_ts = today.getTime();
 	
 	if (!yyyy && !mm) {
-		day = parseInt(document.getElementById(idtag+'_day').value);
-		month = parseInt(document.getElementById(idtag+'_month').value);
-		year = parseInt(document.getElementById(idtag+'_year').value);
+	
+		var d = document.getElementById(idtag + '_day');
+		var m = document.getElementById(idtag + '_month');
+		var y = document.getElementById(idtag + '_year');
 		
+		day   = (d ? parseInt(d.value) : today.getDate());
+		month = (m ? parseInt(m.value) : today.getMonth()+1);
+		year  = (y ? parseInt(y.value) : today.getYear());
+				
 		if (day != -1 && month != -1 && year != -1) {
 			//var wholeValue = x.value;
 			//var dateparts = wholeValue.split("/");
@@ -377,7 +379,7 @@ function drawCalendar() {
 	var startFlag = 1;
 	var endFlag = 0;
 	var elementClick = "";
-	var celldata = "";
+	var cellData = "";
 
 	((_isLeapYear(yyyy) && mm == 2) ? endDay = 29 : endDay = dom[mm-1]);
 
@@ -390,32 +392,32 @@ function drawCalendar() {
 		}
 	}
 		
-	for (i=1;i<=endDay;i++){
-		(dd == i ? celldata = "swat-calendar-current-cell" : celldata = "swat-calendar-cell");
+	for (i=1; i <= endDay; i++) {
+		(dd == i ? cellData = "swat-calendar-current-cell" : cellData = "swat-calendar-cell");
 		
 		var onclickaction = 'setCalendar(\'' + idtag + '\','+ yyyy +',' + mm + ',' + i +');';
 		if (calendar_start && i < start_date.getDate()) {
 			var onclickaction = 'return false;';
-			celldata = "swat-calendar-invalid-cell";
+			cellData = "swat-calendar-invalid-cell";
 		} else if (calendar_end && i > end_date.getDate()) {
 			var onclickaction = 'return false;';
-			celldata = "swat-calendar-invalid-cell";
+			cellData = "swat-calendar-invalid-cell";
 		}
 
 		if (rowElement == 0) {
-			curHTML = curHTML + '<tr>' + '<td class="' + celldata + '" onclick="' + onclickaction + '">' + i + '</td>';
+			curHTML = curHTML + '<tr>' + '<td class="' + cellData + '" onclick="' + onclickaction + '">' + i + '</td>';
 			rowElement++;
 			continue;
 		}
 
 		if (rowElement > 0 && rowElement < 6) {
-			curHTML = curHTML + '<td class="' + celldata + '" onclick="' + onclickaction + '">' + i + '</td>';
+			curHTML = curHTML + '<td class="' + cellData + '" onclick="' + onclickaction + '">' + i + '</td>';
 			rowElement++;
 			continue;
 		}
 
 		if (rowElement == 6) {
-			curHTML = curHTML + '<td class="' + celldata + '" onclick="' + onclickaction + '">' + i + '</td></tr>';
+			curHTML = curHTML + '<td class="' + cellData + '" onclick="' + onclickaction + '">' + i + '</td></tr>';
 			rowElement = 0;
 			continue;
 		}
@@ -481,4 +483,4 @@ if (document.images) {
 	image3.src = "swat/images/b_arrowl_off.gif";
 	image4 = new Image();	  
 	image4.src = "swat/images/b_arrowr_off.gif";
-} 
+}
