@@ -11,6 +11,10 @@ require_once('Swat/SwatCellRenderer.php');
  */
 class SwatCellRendererCheck extends SwatCellRenderer {
 
+	/**
+	 * The boolean value to display in this cell.
+	 * @var boolean
+	 */
 	public $value;
 
 	public function render() {

@@ -11,24 +11,70 @@ require_once('Swat/SwatCellRenderer.php');
  */
 class SwatCellRendererControl extends SwatCellRenderer {
 
+	/**
+	 * The href attribute in the HTML anchor tag.
+	 * @var string
+	 */
 	public $href;
+
+	/**
+	 * The src attribute in the HTML img tag.
+	 * @var string
+	 */
 	public $src;
-	public $height;
-	public $width;
-	public $title;
-	public $alt;
-	public $id;
+
+	/**
+	 * The height attribute in the HTML img tag.
+	 * @var int
+	 */
+	public $height = 0;
+
+	/**
+	 * The width attribute in the HTML img tag.
+	 * @var int
+	 */
+	public $width = 0;
+
+	/**
+	 * The title attribute in the HTML img tag.
+	 * @var string
+	 */
+	public $title = '';
+
+	/**
+	 * The alt attribute in the HTML img tag.
+	 * @var string
+	 */
+	public $alt = '';
+
+	/**
+	 * A value to substitute into the href.
+	 * @var string
+	 */
+	public $value = null;
 
 	public function render() {
 		$anchor = new SwatHtmlTag('a');
-		$anchor->href = sprintf($this->href, $this->id);
+
+		if ($this->value == null)
+			$anchor->href = $this->href;
+		else
+			$anchor->href = sprintf($this->href, $this->value);
 
 		$image_tag = new SwatHtmlTag('img');
 		$image_tag->src = $this->src;
-		$image_tag->height = $this->height;
-		$image_tag->width = $this->width;
-		$image_tag->title = _S($this->title);
-		$image_tag->alt = _S($this->alt);
+
+		if ($this->height > 0)
+			$image_tag->height = $this->height;
+
+		if ($this->width > 0)
+			$image_tag->width = $this->width;
+
+		if (strlen($this->title) > 0)
+			$image_tag->title = _S($this->title);
+
+		if (strlen($this->alt) > 0)
+			$image_tag->alt = _S($this->alt);
 
 		$anchor->open();
 		$image_tag->display();
