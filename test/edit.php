@@ -68,7 +68,6 @@ $ping = new SwatCheckbox('ping');
 $form->addWithField($ping, 'Ping Weblogs.com?:');
 
 // create a button widget and add it
-$div = new SwatDiv();
 $btn = new SwatButton('btn_create');
 $btn->title = 'Create';
 $form->addWithDiv($btn, 'SwatFormFooter');
