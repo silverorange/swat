@@ -13,6 +13,10 @@ require_once('Swat/SwatException.php');
  */
 class SwatTextarea extends SwatControl {
 
+	/**
+	 * @var string Text content of the widget.
+	 * @todo Possibly rename this to $value.
+	 */
 	public $text = '';
 
 	/**
