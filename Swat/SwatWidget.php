@@ -69,7 +69,7 @@ abstract class SwatWidget extends SwatObject {
 
 		$tidy = tidy_parse_string($buffer, $config, 'UTF8');
 		*/
-		$tidy = ereg_replace("</?div[^<>]*>", "\n\\0\n", $buffer);
+		$tidy = ereg_replace("</?(div|p|table|td|tr|ul|li|ol|dl)[^<>]*>", "\n\\0\n", $buffer);
 		$tidy = ereg_replace("\n\n", "\n", $tidy);
 		echo $tidy;
 	}
