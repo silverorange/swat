@@ -101,11 +101,11 @@ class SwatUI extends SwatObject {
 
 	private function attachToParent($widget, $parent) {
 
-		if ($parent instanceof SwatParent)
+		if ($parent instanceof SwatUIParent)
 			$parent->addChild($widget);
 		else
 			throw new SwatException(__CLASS__.
-				': '.get_class($parent).' does not implement SwatParent.');
+				': '.get_class($parent).' does not implement SwatUIParent.');
 
 	}
 

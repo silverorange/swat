@@ -3,7 +3,7 @@ require_once('Swat/SwatControl.php');
 require_once('Swat/SwatButton.php');
 require_once('Swat/SwatFlydown.php');
 require_once('Swat/SwatActionItem.php');
-require_once('Swat/SwatParent.php');
+require_once('Swat/SwatUIParent.php');
 
 /**
  * Actions widget
@@ -12,7 +12,7 @@ require_once('Swat/SwatParent.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatActions extends SwatControl implements SwatParent {
+class SwatActions extends SwatControl implements SwatUIParent {
 	
 	/**
 	 * Selected action
@@ -140,7 +140,7 @@ class SwatActions extends SwatControl implements SwatParent {
 	/**
 	 * Add a child object
 	 * 
-	 * This method fulfills the {@link SwatParent} interface.  It is used 
+	 * This method fulfills the {@link SwatUIParent} interface.  It is used 
 	 * by {@link SwatUI} when building a widget tree and should not need to be
 	 * called elsewhere.  To add an action item to an actions object use 
 	 * {@link SwatActions::addActionItem()}.

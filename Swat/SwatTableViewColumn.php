@@ -1,7 +1,7 @@
 <?php
 require_once('Swat/SwatObject.php');
 require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatParent.php');
+require_once('Swat/SwatUIParent.php');
 
 //TODO: finish documentation for public functions
 
@@ -12,7 +12,7 @@ require_once('Swat/SwatParent.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatTableViewColumn extends SwatObject implements SwatParent {
+class SwatTableViewColumn extends SwatObject implements SwatUIParent {
 
 	/**
 	 * Name of the column
@@ -91,7 +91,7 @@ class SwatTableViewColumn extends SwatObject implements SwatParent {
 	/**
 	 * Add a child object
 	 * 
-	 * This method fulfills the {@link SwatParent} interface.  It is used 
+	 * This method fulfills the {@link SwatUIParent} interface.  It is used 
 	 * by {@link SwatUI} when building a widget tree and should not need to be
 	 * called elsewhere.  To add a cell renderer to a table view column, use 
 	 * {@link SwatTableViewColumn::addRenderer()}.
