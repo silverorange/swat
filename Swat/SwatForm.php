@@ -91,13 +91,6 @@ class SwatForm extends SwatContainer {
 		return true;
 	}
 
-	protected function appendMessage($msg) {
-		if ($this->processing_messages == null)
-			$this->processing_messages = array();
-
-		$this->processing_messages[] = $msg;
-	}
-
 	protected function displayProcessingMessages() {
 		if ($this->processing_messages == null) return;
 

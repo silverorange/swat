@@ -67,9 +67,24 @@ class SwatContainer extends SwatWidget {
 	}
 
 	public function display() {
-		foreach ($this->children as &$child) {
+		foreach ($this->children as &$child)
 			$child->display();
-		}
+	}
+
+	/**
+	 * Gather error messages.
+	 *
+	 * Gather all error messages from children of this widget and this widget itself.
+	 *
+	 * @return array Array of SwatErrorMessage objects.
+	 */
+	public function gatherErrorMessages() {
+		$msgs = array();
+
+		foreach ($this->children as &$child)
+			$msgs = array_merge($msgs, $child->gatherErrorMessages());
+
+		return $msgs;
 	}
 }
 

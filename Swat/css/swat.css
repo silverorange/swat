@@ -41,6 +41,17 @@ label {
 	color: #C00;
 }
 
+.swat-form-field-error {
+	border: 1px solid #C00;
+}
+
+.swat-form-field-errormsg {
+	font-color: #C00;
+	background: #FCC;
+	font-size: 85%;
+	padding: 0.3em;
+}
+
 textarea {
 	height: 15em;
 	width: 30em;
