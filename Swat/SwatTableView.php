@@ -4,14 +4,14 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-require_once('Swat/SwatWidget.php');
+require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatTableViewColumn.php');
 
 /**
  * A widget to display data in a tabular form.
  */
-class SwatTableView extends SwatWidget {
+class SwatTableView extends SwatControl {
 	
 	/**
 	 * A SwatTableModel to display, or null.
@@ -67,8 +67,5 @@ class SwatTableView extends SwatWidget {
 		}
 	}
 
-	public function gatherErrorMessages() {
-		return array();
-	}
 }
 ?>
