@@ -18,6 +18,61 @@ class SwatForm extends SwatContainer {
 	 */
 	public $action = '#';
 
+	private $hidden_fields;
+
+	public function init() {
+		$this->hidden_fields = array();
+	}
+
+	public function display() {
+		$this->addHiddenField('process', $this->name);
+
+		$form_tag = new SwatHtmlTag('form');
+		$form_tag->id = $this->name;
+		$form_tag->method = 'post';
+		$form_tag->action = $this->action;
+
+		$form_tag->open();
+
+		foreach ($this->children as $child)
+			$child->display();
+
+		$input_tag = new SwatHtmlTag('input');
+		$input_tag->type = 'hidden';
+
+		echo '<div class="swat-input-hidden">';
+
+		foreach ($this->hidden_fields as $name => $value) {
+			$input_tag->name = $name;
+			$input_tag->value = $value;
+			$input_tag->display();
+		}
+
+		echo '</div>';
+
+		$form_tag->close();
+	}
+
+	public function process() {
+		if (!isset($_POST['process']) || $_POST['process'] != $this->name)
+			return false;
+
+		foreach ($this->children as &$child)
+			$child->process();
+
+		return true;
+	}
+
+	/**
+	 * Add a hidden form field.
+	 * Add an HTML input type=hidden field to this form.
+	 * @param string $name The name of the field.
+	 * @param string $value The value of the field.
+	 */
+	public function addHiddenField($name, $value) {
+		$this->hidden_fields[$name] = $value;
+	}
+
 	/**
 	 * Add a widget within a new SwatFormField.
 	 * Convenience function to create a new SwatFormField, add the widget as a
@@ -47,39 +102,6 @@ class SwatForm extends SwatContainer {
 		$field->class = $class;
 		$this->add($field);
 	}
-
-	public function display() {
-		$form_tag = new SwatHtmlTag('form');
-		$form_tag->id = $this->name;
-		$form_tag->method = 'post';
-		$form_tag->action = $this->action;
-
-		$form_tag->open();
-
-		foreach ($this->children as &$child)
-			$child->display();
-
-		$input_tag = new SwatHtmlTag('input');
-		$input_tag->type = 'hidden';
-		$input_tag->name = 'process';
-		$input_tag->value = $this->name;
-		echo '<div class="swat-input-hidden">';
-		$input_tag->display();
-		echo '</div>';
-
-		$form_tag->close();
-	}
-
-	public function process() {
-		if (!isset($_POST['process']) || $_POST['process'] != $this->name)
-			return false;
-
-		foreach ($this->children as &$child)
-			$child->process();
-
-		return true;
-	}
-
 }
 
 ?>
