@@ -1,0 +1,20 @@
+<?xml version='1.0' standalone='yes'?>
+<SwatLayout>
+	<SwatFrame name="frame1" title="New Weblog Post Example Form">
+		<SwatForm name="form1">
+
+			<SwatFormField title="Title">
+				<SwatEntry name="title" required="bool:true" />
+			</SwatFormField>
+
+			<SwatFormField title="Date">
+				<SwatDate name="date" required="bool:true" />
+			</SwatFormField>
+
+			<SwatFormField class="swat-form-footer">
+				<SwatButton name="btn_create" title="Create" />
+			</SwatFormField>
+
+		</SwatForm>
+	</SwatFrame>
+</SwatLayout>
