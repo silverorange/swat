@@ -46,8 +46,9 @@ class SwatFlydown extends SwatControl {
 			foreach ($this->options as $value => $title) {
 				$option_tag->value = (string)$value;
 				$option_tag->removeAttr('selected');
-
-				if ($this->value == $value)
+				
+				// check != null because 0 and null are the same in comparisons
+				if ($this->value != null && $this->value == $value)
 					$option_tag->selected = "selected";
 
 				$option_tag->open();
