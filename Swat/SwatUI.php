@@ -1,9 +1,6 @@
 <?php
 require_once('Swat/SwatObject.php');
-require_once('Swat/SwatUIHandler.php');
-require_once('Swat/SwatTableViewUIHandler.php');
-require_once('Swat/SwatTableViewColumnUIHandler.php');
-require_once('Swat/SwatActionsUIHandler.php');
+require_once('Swat/SwatContainer.php');
 
 /**
  * Generates a Swat widget tree from an XML UI file
@@ -17,17 +14,10 @@ class SwatUI extends SwatObject {
 	protected $classmap = null;
 
 	private $widgets;
-	private $handlers;
 	private $root;
 
 	function __construct() {
 		$this->widgets = array();
-
-		$this->handlers = array();
-		$this->registerHandler(new SwatTableViewUIHandler());
-		$this->registerHandler(new SwatTableViewColumnUIHandler());
-		$this->registerHandler(new SwatActionsUIHandler());
-
 		$this->root = new SwatContainer();
 	}
 
@@ -89,17 +79,6 @@ class SwatUI extends SwatObject {
 		return $this->root;
 	}
 
-	/**
-	 * Register a handler
-	 *
-	 * Register a handler object that implements {@link SwatUIHandler}.
-	 * @param string $name Name class to handle.
-	 * @param SwatUiHandler $handler The handler object.
-	 */
-	protected function registerHandler(SwatUIHandler $handler) {
-		$this->handlers[] = $handler;
-	}
-
 	private function parseUI($node, $parent_widget) {
 		foreach ($node->children() as $childname => $childnode) {
 
@@ -121,13 +100,13 @@ class SwatUI extends SwatObject {
 	}
 
 	private function attachToParent($widget, $parent) {
-		foreach ($this->handlers as $handler) {
-			if (is_a($parent, $handler->getName())) {
-				$handler->attachToParent($widget, $parent);
-				return;
-			}
-		}
-		$parent->add($widget);
+
+		if ($parent instanceof SwatParent)
+			$parent->addChild($widget);
+		else
+			throw new SwatException(__CLASS__.
+				': '.get_class($parent).' does not implement SwatParent.');
+
 	}
 
 	private function parseWidget($name, $node, $parent_widget) {

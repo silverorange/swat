@@ -2,7 +2,9 @@
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatTableViewColumn.php');
+require_once('Swat/SwatTableViewGroup.php');
 require_once('Swat/SwatTableViewRow.php');
+require_once('Swat/SwatParent.php');
 
 //TODO: finish documentation for public methods
 
@@ -13,7 +15,7 @@ require_once('Swat/SwatTableViewRow.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatTableView extends SwatControl {
+class SwatTableView extends SwatControl implements SwatParent {
 	
 	/**
 	 * A SwatTableModel to display, or null.
@@ -139,5 +141,32 @@ class SwatTableView extends SwatControl {
 		if (isset($_POST[$items_field]) && is_array($_POST[$items_field]))
 			$this->checked_items = $_POST[$items_field];
 	}
+
+	/**
+	 * Add a child object
+	 * 
+	 * This method fulfills the {@link SwatParent} interface.  It is used 
+	 * by {@link SwatUI} when building a widget tree and should not need to be
+	 * called elsewhere.  To add a column, group, or row to a table view, use 
+	 * {@link SwatContainer::appendColumn()}, {@link SwatContainer::setGroup()},
+	 * or {@link SwatContainer::appendRow()}.
+	 *
+	 * @param $child A reference to a child object to add.
+	 */
+	public function addChild($child) {
+
+		if ($child instanceof SwatTableViewGroup)
+			$this->setGroup($child);
+		elseif ($child instanceof SwatTableViewRow)
+			$this->appendRow($child);
+		elseif ($child instanceof SwatTableViewColumn)
+			$this->appendColumn($child);
+		else
+			throw new SwatException('SwatTableView: Only '.
+				'SwatTableViewColumns, SwatTableViewGroups, or SwatTableViewRows '.
+				'can be nested within SwatTableViews');
+	}
+
 }
+
 ?>
