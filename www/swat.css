@@ -8,6 +8,7 @@ img { border: 0; }
 
 .swat-frame {
 	border: 1px solid #ccc;
+	background: #fff;
 	margin: 1em;
 }
 
