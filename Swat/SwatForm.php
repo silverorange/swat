@@ -18,6 +18,12 @@ class SwatForm extends SwatContainer {
 	 */
 	public $action = '#';
 
+	/**
+	 * The button that was clicked to submit the form, or null (read only).
+	 * @var SwatButton
+	 */
+	public $button = null;
+
 	private $hidden_fields;
 
 	public function init() {
