@@ -10,13 +10,11 @@ require_once('Swat/SwatFlydown.php');
  */
 class SwatYesNoFlydown extends SwatFlydown {
 
-	const BLANK = 0;
 	const NO = 1;
 	const YES = 2;
 	
 	public function display() {
-		$this->options = array(self::BLANK => '',
-		                       self::NO => _S("No"),
+		$this->options = array(self::NO => _S("No"),
 		                       self::YES => _S("Yes"));
 
 		parent::display();
