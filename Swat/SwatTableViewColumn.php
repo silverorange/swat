@@ -14,6 +14,7 @@ class SwatTableViewColumn extends SwatObject {
 
 	public $name = null;
 	public $title = '';
+	public $view = null;
 
 	private $renderers;
 	private $properties;
@@ -45,8 +46,10 @@ class SwatTableViewColumn extends SwatObject {
 		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttribs());
 		$td_tag->open();
 
+		$prefix = ($this->view == null)? '': $this->view->name.'_';
+
 		foreach ($this->renderers as $renderer) {
-			$renderer->render();
+			$renderer->render($prefix);
 			echo ' ';
 		}
 

@@ -53,7 +53,7 @@ class SwatCellRendererControl extends SwatCellRenderer {
 	 */
 	public $value = null;
 
-	public function render() {
+	public function render($prefix) {
 		$anchor = new SwatHtmlTag('a');
 
 		if ($this->value == null)

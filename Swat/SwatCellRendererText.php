@@ -18,7 +18,7 @@ class SwatCellRendererText extends SwatCellRenderer {
 	 */
 	public $content = '';
 
-	public function render() {
+	public function render($prefix) {
 		echo $this->content;
 	}
 }
