@@ -206,16 +206,10 @@ class SwatTime extends SwatControl {
 	}
 
 	private function displayJavascript() {
-		static $created = false;
-		
-		if (!$created) {
-			$created = true;
-			
-			echo '<script type="text/javascript">';
-			include_once('Swat/javascript/swat-find-index.js');
-			include('Swat/javascript/swat-time.js');
-			echo '</script>';
-		}
+		echo '<script type="text/javascript">';
+		include_once('Swat/javascript/swat-find-index.js');
+		include_once('Swat/javascript/swat-time.js');
+		echo '</script>';
 	}
 }
 ?>

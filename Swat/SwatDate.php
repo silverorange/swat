@@ -108,6 +108,13 @@ class SwatDate extends SwatControl {
 			
 		if ($this->display & self::TIME)
 			$this->timefly->display();
+			
+		include_once('Swat/SwatCalendar.php');
+		$cal = new SwatCalendar();
+		$cal->name = $this->name;
+		$cal->valid_range_start = $this->valid_range_start;
+		$cal->valid_range_end   = $this->valid_range_end;
+		$cal->display();
 	}
 	
 	public function process() {
@@ -255,6 +262,7 @@ class SwatDate extends SwatControl {
 				$this->dayfly->options[$i] = $i;
 		
 		} elseif (Date::compare($end_check,$this->valid_range_end,true) != -1) {
+			
 			$start_day = $this->valid_range_start->getDay();
 			$end_day   = $this->valid_range_end->getDay();
 			$days_in_month = $this->valid_range_start->getDaysInMonth();
@@ -299,10 +307,10 @@ class SwatDate extends SwatControl {
 	}
 	
 	private function displayDate($date) {
-		$time = '';
-		$day = '';
+		$time  = '';
+		$day   = '';
 		$month = '';
-		$year = '';
+		$year  = '';
 	
 		if ($this->display & self::TIME)
 			$time = ' %I:%M %p';	
@@ -320,16 +328,10 @@ class SwatDate extends SwatControl {
 	}
 	
 	private function displayJavascript() {
-		static $created = false;
-		
-		if (!$created) {
-			$created = true;
-			
-			echo '<script type="text/javascript">';
-			include_once('Swat/javascript/swat-find-index.js');
-			include('Swat/javascript/swat-date.js');
-			echo '</script>';
-		}
+		echo '<script type="text/javascript">';
+		include_once('Swat/javascript/swat-find-index.js');
+		include_once('Swat/javascript/swat-date.js');
+		echo '</script>';
 	}
 }
 ?>
