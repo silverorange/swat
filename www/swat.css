@@ -25,6 +25,13 @@ img { border: 0; }
 	padding: 1em;
 }
 
+.swat-frame-errormsg {
+	font-color: #C00;
+	background: #FCC;
+	font-size: 85%;
+	padding: 0.3em;
+}
+
 /* SwatForm */
 
 form { margin: 0; }
