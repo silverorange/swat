@@ -84,7 +84,7 @@ class SwatForm extends SwatContainer {
 					$input_tag->value = $v;
 					$input_tag->display();
 				}
-			} else {
+			} elseif ($value !== null) {
 				$input_tag->name = $name;
 				$input_tag->value = $value;
 				$input_tag->display();
