@@ -1,12 +1,11 @@
 <?php
+
 /**
+ * Interface for UI handlers
+ *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
- */
-
-/**
- * Interface for UI handlers.
  */
 interface SwatUIHandler {
 

@@ -1,25 +1,24 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatContainer.php');
 require_once('Swat/SwatHtmlTag.php');
 
 /**
- * Toplevel which can contain other widgets.
+ * Toplevel which can contain other widgets
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatForm extends SwatContainer {
 
 	/**
-	 * The action attribute of the HTML form tag.
+	 * The action attribute of the HTML form tag
 	 * @var string
 	 */
 	public $action = '#';
 
 	/**
-	 * The button that was clicked to submit the form, or null (read only).
+	 * The button that was clicked to submit the form, or null (read only)
 	 * @var SwatButton
 	 */
 	public $button = null;
@@ -105,7 +104,8 @@ class SwatForm extends SwatContainer {
 	}
 
 	/**
-	 * Add a hidden form field.
+	 * Add a hidden form field
+	 *
 	 * Add an HTML input type=hidden field to this form.
 	 * @param string $name The name of the field.
 	 * @param mixed $value The value of the field, either a string or an array.
@@ -115,10 +115,11 @@ class SwatForm extends SwatContainer {
 	}
 
 	/**
-	 * Get the value of a hidden form field.
+	 * Get the value of a hidden form field
+	 *
 	 * @param string $name The name of the field.
 	 * @return mixed $value The value of the field, either a string or an 
-	 * array, or null if the field does not exist.
+	 *        array, or null if the field does not exist.
 	 */
 	public function getHiddenField($name) {
 		if (isset($this->hidden_fields[$name]))
@@ -135,7 +136,8 @@ class SwatForm extends SwatContainer {
 	}
 
 	/**
-	 * Add a widget within a new SwatFormField.
+	 * Add a widget within a new SwatFormField
+	 *
 	 * Convenience function to create a new SwatFormField, add the widget as a
 	 * child of the form field, and then add the formfield to this form.
 	 *
@@ -150,7 +152,8 @@ class SwatForm extends SwatContainer {
 	}
 
 	/**
-	 * Add a widget within a new SwatDiv.
+	 * Add a widget within a new SwatDiv
+	 *
 	 * Convenience function to create a new SwatDiv, add the widget as a child
 	 * of the div, and then add the div to this form.
 	 *

@@ -1,28 +1,32 @@
 <?php
+require_once('Swat/SwatObject.php');
+
 /**
+ * Base class for a page
+ *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-require_once('Swat/SwatObject.php');
-
-/**
- * Base class for a page.
- */
 abstract class SwatPage extends SwatObject {
 
 	/**
-	 * @var string Title of the page.
+	 * Title of the page
+	 * @var string
 	 */
 	public $title = '';
 
 	/**
-	 * @var string Layout to use to display this page.
+	 * Layout to use to display this page
+	 * @var string 
 	 */
 	public $layout = 'default';
 
 	/**
-	 * @var app A reference to the SwatApplication object that created this page.
+	 * Application object
+	 * 
+	 * A reference to the {@link SwatApplication} object that created this page
+	 * @var app
 	 */
 	public $app = null;
 

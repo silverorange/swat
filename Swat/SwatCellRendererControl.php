@@ -1,54 +1,68 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatCellRenderer.php');
 
 /**
  * A renderer for navigational control.
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatCellRendererControl extends SwatCellRenderer {
 
 	/**
+	 * Href anchor
+	 *
 	 * The href attribute in the HTML anchor tag.
 	 * @var string
 	 */
 	public $href;
 
 	/**
+	 * Image source
+	 *
 	 * The src attribute in the HTML img tag.
 	 * @var string
 	 */
 	public $src;
 
 	/**
+	 * Image height
+	 *
 	 * The height attribute in the HTML img tag.
 	 * @var int
 	 */
 	public $height = 0;
 
 	/**
+	 * Image width
+	 *
 	 * The width attribute in the HTML img tag.
 	 * @var int
 	 */
 	public $width = 0;
 
 	/**
+	 * Image title
+	 *
 	 * The title attribute in the HTML img tag.
 	 * @var string
 	 */
 	public $title = '';
 
 	/**
+	 * Alt text
+	 *
 	 * The alt attribute in the HTML img tag.
 	 * @var string
 	 */
 	public $alt = '';
 
 	/**
-	 * A value to substitute into the href.
+	 * HREF value
+	 *
+	 * A value to substitute into the href using sprintf()
+	 * example href: "MySection/MyPage?id=%s"
 	 * @var string
 	 */
 	public $value = null;

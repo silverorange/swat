@@ -1,20 +1,19 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatFlydown.php');
 require_once('Date.php');
 
 /**
- * A date entry widget.
+ * A date entry widget
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatDate extends SwatControl {
 	
 	/**
-	 * Date of the widget.
+	 * Date of the widget
 	 * @var Date
 	 */
 	public $value = null;
@@ -26,28 +25,32 @@ class SwatDate extends SwatControl {
 	const  CALENDAR = 16;
 		
 	/**
-	 * Date parts that are required. Bitwise combination of SwatDate::YEAR,
+	 * Required date parts
+	 *
+	 * Bitwise combination of SwatDate::YEAR,
 	 * SwatDate::MONTH, SwatDate::DAY, and SwatDate::TIME.
 	 * @var int
 	 */
 	public $required;
 	
 	/**
-	 * Date parts that are displayed. Bitwise combination of SwatDate::YEAR,
+	 * Displayed date parts
+	 *
+	 * Bitwise combination of SwatDate::YEAR,
 	 * SwatDate::MONTH, SwatDate::DAY, SwatDate::TIME, and SwatDate::CALENDAR.
 	 * @var int
 	 */
 	public $display;
 	
 	/**
-	 * Start date of the valid range (inclusive).
+	 * Start date of the valid range (inclusive)
 	 * Default to 20 years in the past.
 	 * @var Date
 	 */
 	public $valid_range_start;
 	
 	/**
-	 * End date of the valid range (exclusive).
+	 * End date of the valid range (exclusive)
 	 * Default to 20 years in the future.
 	 * @var Date
 	 */
@@ -69,12 +72,13 @@ class SwatDate extends SwatControl {
 	}
 		
 	/**
-	 * Set the valid date range.
+	 * Set the valid date range
+	 *
 	 * Convenience method to set the valid date range by year offsets.
 	 * @param int $start_offset Offset from the current year used to set the
-	 *                          starting year of the valid range.
+	 *        starting year of the valid range.
 	 * @param int $end_offset Offset from the current year used to set the
-	 *                          ending year of the valid range.
+	 *        ending year of the valid range.
 	 */
 	public function setValidRange($start_offset, $end_offset) {
 		//beginning of this year

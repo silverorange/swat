@@ -1,15 +1,14 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatWidget.php');
 require_once('Swat/SwatFormField.php');
 require_once('Swat/SwatErrorMessage.php');
 
 /**
- * Abstract base class for control widgets (non-container).
+ * Abstract base class for control widgets (non-container)
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 abstract class SwatControl extends SwatWidget {
 
@@ -24,7 +23,7 @@ abstract class SwatControl extends SwatWidget {
 	}
 
 	/**
-	 * Gather error messages.
+	 * Gather error messages
 	 * @return array Array of SwatErrorMessage objects.
 	 */
 	public function gatherErrorMessages() {
@@ -32,7 +31,7 @@ abstract class SwatControl extends SwatWidget {
 	}
 
 	/**
-	 * Check for error messages.
+	 * Check for error messages
 	 * @return boolean True if any error messages exist.
 	 */
 	public function hasErrorMessage() {

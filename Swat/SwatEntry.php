@@ -1,38 +1,45 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 
 /**
- * A single line text entry widget.
+ * A single line text entry widget
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatEntry extends SwatControl {
 
 	/*
+	 * Entry value
+	 *
 	 * Text content of the widget, or null.
 	 * @var string
 	 */
 	public $value = null;
 
 	/*
+	 * Required
+	 *
 	 * Must have a non-empty value when processed.
 	 * @var bool
 	 */
 	public $required = false;
 	
 	/**
+	 * Input size
+	 *
 	 * Size in characters of the HTML text form input, or null.
 	 * @var int
 	 */
 	public $size = 50;
 	
 	/**
-	 * @var int
+	 * Max length
+	 *
 	 * Maximum number of allowable characters in HTML text form input, or null.
+	 * @var int
 	 */
 	public $maxlength = null;
 

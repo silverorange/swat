@@ -1,15 +1,27 @@
 <?php
+
 /**
+ * A an extra row containing a "check all" tool
+ *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-
-/**
- * A an extra row containing a "check all" tool.
- */
 class SwatCheckAll extends SwatControl {
+	/**
+	 * Series Name
+	 *
+	 * The name of the series of checkboxes that the check all triggers.
+	 * @var string
+	 */
 	public $series_name = null;	
+	
+	/**
+	 * Title
+	 *
+	 * Optional text to display next to the checkbox, by default "Check All".
+	 * @var string
+	 */
 	public $title;
 
 	public function init() {

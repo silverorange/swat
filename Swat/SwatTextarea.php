@@ -1,37 +1,42 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 
 /**
- * A multi-line text entry widget.
+ * A multi-line text entry widget
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatTextarea extends SwatControl {
 
 	/*
-	 * Text content of the widget.
+	 * Text content of the widget
 	 * @var string
 	 */
 	public $value = '';
 
 	/*
-	 * Must have a non-empty value when processed.
+	 * Required
+	 *
+	 * Must have a non-empty value when processed
 	 * @var bool
 	 */
 	public $required = false;
 	
 	/**
-	 * Number of rows for the HTML textarea tag.
+	 * Rows
+	 *
+	 * Number of rows for the HTML textarea tag
 	 * @var int
 	 */
 	public $rows = 10;
 
 	/**
-	 * Number of columns for the HTML textarea tag.
+	 * Columns
+	 *
+	 * Number of columns for the HTML textarea tag
 	 * @var int
 	 */
 	public $cols = 50;

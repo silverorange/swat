@@ -1,32 +1,37 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatButton.php');
 require_once('Swat/SwatFlydown.php');
 require_once('Swat/SwatActionItem.php');
 
 /**
- * Actions widget.
+ * Actions widget
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatActions extends SwatControl {
 	
 	/**
+	 * Selected action
+	 * 
 	 * The currently selected action item, or null.
 	 * @var SwatActionItem
 	 */
 	public $selected = null;
 
 	/**
+	 * Show blank
+	 *
 	 * Whether to show an inital blank option in the flydown.
 	 * @var boolean
 	 */
 	public $show_blank_option = true;
 
 	/**
+	 * Auto-reset
+	 *
 	 * Whether to auto reset the action flydown to the default action
 	 * after processing.
 	 * @var boolean

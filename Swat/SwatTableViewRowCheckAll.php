@@ -1,14 +1,13 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatTableViewRow.php');
 require_once('Swat/SwatCheckAll.php');
 
 /**
- * A an extra row containing a "check all" tool.
+ * A an extra row containing a "check all" tool
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatTableViewRowCheckAll extends SwatTableViewRow {
 	

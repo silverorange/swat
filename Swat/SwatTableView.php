@@ -1,17 +1,18 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatTableViewColumn.php');
 require_once('Swat/SwatTableViewRow.php');
 require_once('Swat/SwatTableViewRowCheckAll.php');
 
+//TODO: finish documentation for public methods
+
 /**
- * A widget to display data in a tabular form.
+ * A widget to display data in a tabular form
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatTableView extends SwatControl {
 	
@@ -22,6 +23,8 @@ class SwatTableView extends SwatControl {
 	public $model = null;
 
 	/**
+	 * Show check all
+	 *
 	 * Whether to show a "check all" widget.  For this option to work, the
 	 * table view must contain a column named "checkbox".
 	 * @var boolean
@@ -29,8 +32,10 @@ class SwatTableView extends SwatControl {
 	public $show_check_all = true;
 
 	/**
-	 * The values of the checked checkboxes.  For this to be set, the table
-	 * view must contain a SwatCellRendererCheckbox named "items".
+	 * Values of the checked checkboxes
+	 *
+	 * For this to be set, the table view must contain a
+	 * {@link SwatCellRendererCheckbox} named "items".
 	 * @var Array
 	 */
 	public $checked_items = array();
@@ -46,20 +51,36 @@ class SwatTableView extends SwatControl {
 			$this->appendRow(new SwatTableViewRowCheckAll());
 	}
 
+	/**
+	 * Append Column
+	 * @param SwatTableViewColumn $column
+	 */
 	public function appendColumn(SwatTableViewColumn $column) {
 		$this->columns[] = $column;
 		$column->view = $this;
 	}
 
+	/**
+	 * Set Group
+	 * @param SwatTableViewGroup $group
+	 */
 	public function setGroup(SwatTableViewGroup $group) {
 		$this->group = $group;
 		$group->view = $this;
 	}
 
+	/**
+	 * Append Row
+	 * @param SwatTableViewRow $row
+	 */
 	private function appendRow(SwatTableViewRow $row) {
 		$this->extra_rows[] = $row;
 	}
 
+	/**
+	 * Count columns
+	 * @return int Number of columns of the table
+	 */
 	public function getColumnCount() {
 		return count($this->columns);
 	}

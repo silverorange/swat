@@ -1,17 +1,18 @@
 <?php
-/**
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
- */
 require_once('Swat/SwatCellRenderer.php');
 
 /**
  * A text renderer.
+ *
+ * @package Swat
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @copyright silverorange 2004
  */
 class SwatCellRendererText extends SwatCellRenderer {
 
 	/**
+	 * Cell content
+	 *
 	 * The content to place within the HTML anchor tag. In a SwatUI XML file 
 	 * this comes from the content of the SwatCellRendererLink tag.
 	 * @var string

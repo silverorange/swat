@@ -1,25 +1,27 @@
 <?php
+require_once('Swat/SwatCellRenderer.php');
+
 /**
+ * UI handler for {@link SwatTableViewColumn}
+ *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-require_once('Swat/SwatCellRenderer.php');
-
-/**
- * UI handler for SwatTableViewColumn.
- */
 class SwatTableViewColumnUIHandler implements SwatUIHandler {
 
 	/**
-	 * Gets the name of the class this handler handles.
+	 * Get the name of the class this handler handles
 	 */
 	public function getName() {
 		return 'SwatTableViewColumn';
 	}
 
 	/**
-	 * Attaches $widget to $parent.
+	 * Attaches $widget to $parent
+	 *
+	 * @param SwatWidget $widget
+	 * @param ??? TODO: find out what this is
 	 */
 	public function attachToParent($widget, $parent) {
 
