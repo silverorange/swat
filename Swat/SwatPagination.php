@@ -13,6 +13,22 @@ require_once('Swat/SwatTableViewColumn.php');
 class SwatPagination extends SwatControl {
 
 	/**
+	 * Href
+	 *
+	 * The URL of the current page, used to build links.
+	 * @var int
+	 */
+	public $href = null;
+
+	/**
+	 * Get vars to clobber
+	 *
+	 * An array of GET variable names to unset before rebuilding new link.
+	 * @var int
+	 */
+	public $unset_get_vars = array();
+
+	/**
 	 * Current page
 	 *
 	 * The number of the current page. The value is zero based.
@@ -135,14 +151,28 @@ class SwatPagination extends SwatControl {
 	}
 
 	private function getHref() {
-		$href = '?';
+		//$vars = array_diff_key($_GET, array_flip($this->unset_get_vars));
 		$vars = $_GET;
+
+		foreach($vars as $name => $value)
+ 			if (in_array($name, $this->unset_get_vars))
+				unset($vars[$name]);
+
 		$vars[$this->name] = '%s';
+		
+		if ($this->href === null)
+			$href = '?';
+		else
+			$href = $this->href.'?';
 
 		foreach($vars as $name => $value)
 			$href.= $name.'='.$value.'&';
 
-		return substr($href, 0, -1);
+		// remove trailing ampersand
+		if (count($vars))
+			$href = substr($href, 0, -1);
+
+		return $href;
 	}
 
 	private function calcPages() {
