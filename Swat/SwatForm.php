@@ -17,8 +17,6 @@ class SwatForm extends SwatContainer {
 	 */
 	public $action = '';
 
-	protected $processing_messages = null;
-
 	/**
 	 * Add a widget within a new SwatFormField.
 	 *
@@ -52,9 +50,6 @@ class SwatForm extends SwatContainer {
 	}
 
 	public function display() {
-
-		$this->displayProcessingMessages();
-
 		$formtag = new SwatHtmlTag('form');
 		$formtag->id = $this->name;
 		$formtag->method = 'post';
@@ -62,12 +57,6 @@ class SwatForm extends SwatContainer {
 
 		$formtag->open();
 
-		/*
-		$child = $this->getChild();
-
-		if ($child != null)
-			$child->display();
-		*/
 		foreach ($this->children as &$child)
 			$child->display();
 
@@ -90,13 +79,6 @@ class SwatForm extends SwatContainer {
 		return true;
 	}
 
-	protected function displayProcessingMessages() {
-		if ($this->processing_messages == null) return;
-
-		foreach ($this->processing_messages as &$msg) {
-			echo $msg, "\n";
-		}
-	}
 }
 
 ?>
