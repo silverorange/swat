@@ -3,7 +3,7 @@
 <head>
 	<title>Swat Example Form</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<style type="text/css" media="all">@import "swat.css";</style> 
+	<style type="text/css" media="all">@import "Swat/css/swat.css";</style> 
 </head>
 
 <body>
