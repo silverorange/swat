@@ -13,6 +13,9 @@ class SwatCellRendererControl extends SwatCellRenderer {
 
 	public $href;
 	public $src;
+	public $height;
+	public $width;
+	public $title;
 	public $alt;
 	public $id;
 
@@ -22,6 +25,9 @@ class SwatCellRendererControl extends SwatCellRenderer {
 
 		$image_tag = new SwatHtmlTag('img');
 		$image_tag->src = $this->src;
+		$image_tag->height = $this->height;
+		$image_tag->width = $this->width;
+		$image_tag->title = _S($this->title);
 		$image_tag->alt = _S($this->alt);
 
 		$anchor->open();
