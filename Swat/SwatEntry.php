@@ -38,7 +38,7 @@ class SwatEntry extends SwatControl {
 		$inputtag->onfocus = "this.select();";
 
 		if ($this->size != null)
-			inputtag->size = $this->size;
+			$inputtag->size = $this->size;
 
 		if ($this->maxlength != null)
 			$inputtag->maxlength = $this->maxlength;
