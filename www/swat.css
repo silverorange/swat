@@ -162,6 +162,44 @@ table.swat-table-view { border-collapse: collapse; }
 }
 
 
+/* SwatPagination */
+.swat-pagination {
+	overflow: auto;
+	padding: 1em;
+}
+
+.swat-pagination a, .swat-pagination span {
+	display: block;
+	float: left;
+	padding: 0.2em 0.5em;
+	font-size: 85%;
+	margin-right: 0.1em;
+	border: 1px solid #FFF;
+}
+
+.swat-pagination span.current {
+	border: 1px solid #DDD;
+	font-weight: bold;
+}
+
+.swat-pagination a {
+	border: 1px solid #DDD;
+	text-decoration: none;
+}
+
+.swat-pagination a:hover {
+	background-color: #DDD;
+	border-color: #BBB;
+}
+
+.swat-pagination a.nextprev {
+	font-weight: bold;
+}
+
+.swat-pagination span.nextprev {
+	color: #666;
+}
+
 /**
 * Calendar Widget Version 1.0
 * Copyright (c) 2004, Tribador Mediaworks,
