@@ -16,17 +16,33 @@ class SwatButton extends SwatControl {
 	 * The visible text on the button.
 	 * @var string
 	 */
-	public $title = 'Submit';
+	public $title;
+
+	public function init() {
+		$this->title = $this->getStockTitle('submit');
+	}
 	
-	function display() {
+	public function display() {
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'submit';
 		$input_tag->name = $this->name;
 		$input_tag->value = $this->title;
 
 		$input_tag->display();
-	}	
+	}
 
+	public function getStockTitle($id) {
+		switch ($id) {
+			case 'submit':
+				return _S('Submit');
+
+			case 'create':
+				return _S('Create');
+
+			case 'apply':
+				return _S('Apply');
+		}
+	}
 }
 
 ?>
