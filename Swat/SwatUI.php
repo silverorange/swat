@@ -79,23 +79,30 @@ class SwatUI extends SwatObject {
 		return $this->root;
 	}
 
-	private function parseUI($node, $parent_widget) {
+	private function parseUI($node, $parent_widget, $property_parent_widget = null) {
+		$widgets = array();
+	
 		foreach ($node->children() as $childname => $childnode) {
 
-			$widget = $this->parseWidget($childname, $childnode, $parent_widget);
+			if ($childname == 'widget') {
+				$widget = $this->parseWidget($childnode);
+			
+				if (class_exists('SwatWidget') && $widget instanceof SwatWidget
+					 && $widget->name != null) {
 
-			if (class_exists('SwatWidget') && $widget instanceof SwatWidget
-				 && $widget->name != null) {
+					if (isset($this->widgets[$widget->name]))
+						throw new SwatException(__CLASS__.
+							": widget named '{$widget->name}' already exists.");
 
-				if (isset($this->widgets[$widget->name]))
-					throw new SwatException(__CLASS__.
-						": widget named '{$widget->name}' already exists.");
-
-				$this->widgets[$widget->name] = $widget;
+					$this->widgets[$widget->name] = $widget;
+				}
+				
+				$this->attachToParent($widget, $parent_widget);
+				$this->parseUI($childnode, $widget, $parent_widget);
+				
+			} elseif ($childname == 'property') {
+				$this->parseProperty($parent_widget, $childnode, $property_parent_widget);
 			}
-
-			$this->attachToParent($widget, $parent_widget);
-			$this->parseUI($childnode, $widget);
 		}
 	}
 
@@ -109,71 +116,82 @@ class SwatUI extends SwatObject {
 
 	}
 
-	private function parseWidget($name, $node, $parent_widget) {
-
-		$classfile = "Swat/{$name}.php";
+	private function parseWidget($node) {
+		if (isset($node['class']))
+			$class = $node['class'];
+		else
+			throw new SwatException("Widget is missing 'class' property.");
+	
+		$classfile = "Swat/{$class}.php";
 
 		if ($this->classmap !== null) {
 			foreach ($this->classmap as $prefix => $path) {
-				if (strncmp($name, $prefix, strlen($prefix)) == 0)
-					$classfile = "{$path}/{$name}.php";
+				if (strncmp($class, $prefix, strlen($prefix)) == 0)
+					$classfile = "{$path}/{$class}.php";
 			}
 		}
 
 		require_once($classfile);
-		$w = eval(sprintf("return new %s();", $name));
-		$classvars = get_class_vars($name);
+		//$w = new $name();
+		$w = eval(sprintf("return new %s();", $class));
+		
+		if (isset($node['name']))
+			$w->name = (string)$node['name'];
 
-		if (array_key_exists('content', $classvars)) {
-			$content = trim((string)$node); // stuff between opening and closing tags
-			$w->content = $this->parseAttribute('content', $content, $w, $parent_widget);
-		}
-
-		foreach ($node->attributes() as $attrname => $attrvalue) {
-			$attrname = (string)$attrname;
-			$attrvalue = (string)$attrvalue;
-
-			if (array_key_exists($attrname, $classvars))
-				$w->$attrname = $this->parseAttribute($attrname, $attrvalue, $w, $parent_widget);
-			else
-				throw new SwatException(__CLASS__.": no attribute named ".
-					"'$attrname' in class $name");
-		}
-					
 		return $w;
 	}
 
-	private function parseAttribute($name, $value, $widget, $parent_widget) {
+	private function parseProperty($widget, $property, $parent_widget) {
+		$classvars = get_class_vars(get_class($widget));
+		
+		if (!isset($property['name']))
+			throw new SwatException(sprintf(__CLASS__.": property missing 'name' ".
+				"'%s' for class %s"), $attrvalue, get_class($widget));
+		
+		elseif (!isset($property['value']))
+			throw new SwatException(sprintf(__CLASS__.": property missing 'value' ".
+				"'%s' for class %s"), $attrvalue, get_class($widget));
+		
+		elseif (!array_key_exists((string)$property['name'], $classvars))
+			throw new SwatException(sprintf(__CLASS__.": no attribute named '%s' in class %s",
+				(string)$property['name'], get_class($widget)));
+				
+		else {
+			$attrname = (string)$property['name'];
+			$attrvalue = (string)$property['value'];
+			
+			$attrtype = (isset($property['type'])) ? (string)$property['type'] : null;
+			
+			$widget->$attrname = $this->parseAttribute($attrname, $attrvalue, $attrtype,
+				$widget, $parent_widget);
+		}
+	}
 
-		if (strncmp($value, 'boolean:', 8) == 0)
-			$ret = (substr($value, 8) == 'true') ? true : false;
+	private function parseAttribute($name, $value, $type, $widget, $parent_widget) {
 
-		elseif (strncmp($value, 'integer:', 8) == 0)
-			$ret = intval(substr($value, 8));
+		switch ($type) {
+			case 'boolean':
+				return ($value == 'true')  ? true : false;
+			case 'integer':
+				return intval(substr($value, 8));
+			case 'float':
+				return floatval(substr($value, 6));
+			case 'string':
+				return $value;
+			case 'data':
+				$parent_widget->linkField($widget, $value, $name);
+				return null;
+			default:
+				if ($value == 'false' || $value == 'true' )
+					trigger_error(__CLASS__.": Possible missing 'boolean:' ".
+						"on attribute $name", E_USER_NOTICE);
 
-		elseif (strncmp($value, 'float:', 6) == 0)
-			$ret = floatval(substr($value, 6));
-
-		elseif (strncmp($value, 'string:', 7) == 0)
-			$ret = substr($value, 7);
-
-		elseif (strncmp($value, 'data:', 5) == 0) {
-			$field = substr($value, 5);
-			$parent_widget->linkField($widget, $field, $name);
-			$ret = null;
-
-		} else {
-			if ($value == 'false' || $value == 'true' )
-				trigger_error(__CLASS__.": Possible missing 'boolean:' ".
-					"on attribute $name", E_USER_NOTICE);
-
-			if (is_numeric($value))
-				trigger_error(__CLASS__.": Possible missing 'integer:' or ".
-					"'float:' on attribute $name", E_USER_NOTICE);
-
-			$ret = $value;
+				if (is_numeric($value))
+					trigger_error(__CLASS__.": Possible missing 'integer:' or ".
+						"'float:' on attribute $name", E_USER_NOTICE);
+				
+				return $value;
 		}
 
-		return $ret;
 	}
 }
