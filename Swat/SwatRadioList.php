@@ -43,7 +43,7 @@ class SwatRadioList extends SwatControl {
 			$select_tag->onchange = $this->onchange;
 			
 		$label_tag = new SwatHtmlTag('label');
-		$label_tag->class = 'swat-radio-control';
+		$label_tag->class = 'swat-control';
 		
 		if ($this->options != null) {
 			foreach ($this->options as $value => $title) {

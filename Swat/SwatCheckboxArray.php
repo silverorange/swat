@@ -9,7 +9,8 @@ require_once('Swat/SwatCheckbox.php');
  * @copyright silverorange 2004
  */
 class SwatCheckboxArray extends SwatCheckbox {
-
+	//TODO: review how values work here
+	
 	/**
 	 * Checkbox Values
 	 *
@@ -17,15 +18,24 @@ class SwatCheckboxArray extends SwatCheckbox {
 	 * @var Array
 	 */
 	public $values = array();
-	
-	function display($value) {
+
+	/**
+	 * Checkbox Value
+	 *
+	 * The value of the checkbox.
+	 * @var Array
+	 */
+	public $value = array();
+
+	function display() {
+		$value = 1;
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
 		$input_tag->name = $this->name.'[]';
 		$input_tag->id = $this->name;
-		$input_tag->value = $value;
+		$input_tag->value = $this->value;
 
-		if ($this->value)
+		if (in_array($this->values, $this->value))
 			$input_tag->checked = "checked";
 
 		$input_tag->display();
