@@ -18,4 +18,9 @@ function _S($msgid) {
 	return $msgid;
 }
 
+function _nS($msgid1, $msgid2, $n) {
+	// TODO: use this for gettext translation
+	return ($n==1 ? $msgid1 : $msgid2);
+}
+
 ?>
