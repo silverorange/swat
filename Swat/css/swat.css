@@ -1,0 +1,56 @@
+body {
+	font-family: sans-serif;
+}
+
+
+/* SwatFrame */
+
+.SwatFrame {
+	border: 1px solid #ccc;
+	margin: 1em;
+}
+
+.SwatFrame > h2 {
+	margin: 0;
+	padding: 0.2em;
+	background: #eee;
+}
+
+.SwatFrameContents {
+	margin: 0;
+	padding: 1em;
+}
+
+/* SwatForm */
+
+form { margin: 0; }
+
+label {
+	font-weight: bold;
+	color: #333;
+	font-size: 0.85em;
+	display: block;
+}
+
+.SwatFormField {
+	margin: 0 0 0.5em 0;
+}
+
+.required {
+	font-weight: bold;
+	color: #C00;
+}
+
+textarea {
+	height: 15em;
+	width: 30em;
+}
+
+.SwatFormFooter {
+	text-align: right;
+}
+
+.SwatFormFooter > input.primary {
+	padding: 0.2em 0.8em;
+	font-weight: bold;
+}
