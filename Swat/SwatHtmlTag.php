@@ -32,14 +32,24 @@ class SwatHtmlTag extends SwatObject {
 		$this->attributes = array();
 	}
 
-	function __get($attr) {
+	/**
+	 * Magic __get method.
+	 * This should not be called directly, but is invoked indirectly when
+	 * accessing properties of a tag object.
+	 */
+	public function __get($attr) {
 		if (isset($this->attributes[$attr]))
 			return $this->attributes[$attr];
 		else
 			throw new SwatException(__CLASS__.": undefined attribute $attr");
 	}
 
-	function __set($attr, $val) {
+	/**
+	 * Magic __set method.
+	 * This should not be called directly, but is invoked indirectly when
+	 * setting properties of a tag object.
+	 */
+	public function __set($attr, $val) {
 		$this->attributes[$attr] = $val;
 	}
 
@@ -50,7 +60,7 @@ class SwatHtmlTag extends SwatObject {
 	 *
 	 * @param string $attr The name of attribute to remove.
 	 */
-	function removeAttr($attr) {
+	public function removeAttr($attr) {
 		unset($this->attributes[$attr]);
 	}
 
@@ -61,7 +71,7 @@ class SwatHtmlTag extends SwatObject {
 	 * instead.
 	 */
 	public function display() {
-		$this->open_internal(true);
+		$this->openInternal(true);
 	}
 
 	/**
@@ -71,7 +81,7 @@ class SwatHtmlTag extends SwatObject {
 	 * is desired, use {@link SwatHtmlTag::display()} instead.
 	 */
 	public function open() {
-		$this->open_internal(false);
+		$this->openInternal(false);
 	}
 
 	/**
@@ -83,7 +93,7 @@ class SwatHtmlTag extends SwatObject {
 		echo '</', $this->tagname, '>';
 	}
 
-	private function open_internal($implicit_close) {
+	private function openInternal($implicit_close) {
 		echo '<', $this->tagname;
 
 		if ($this->attributes != null) {
