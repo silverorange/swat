@@ -35,16 +35,25 @@ abstract class SwatWidget extends SwatObject {
 	 */
 	abstract public function display();
 
-	public function displayTest() {
+	/**
+	 * Display the widget with tidy HTML.
+	 *
+	 * this::display() is called and the output is cleaned by libtidy.
+	 */
+	public function displayTidy() {
 		ob_start();
 		$this->display();
 		$buffer = ob_get_clean();
+		/*
 		$config = array('indent' => true,
 		                'input-xml' => true,
 		                'output-xml' => true,
 		                'wrap' => 200);
 
 		$tidy = tidy_parse_string($buffer, $config, 'UTF8');
+		*/
+		$tidy = ereg_replace("</?div[^<>]*>", "\n\\0\n", $buffer);
+		$tidy = ereg_replace("\n\n", "\n", $tidy);
 		echo $tidy;
 	}
 
