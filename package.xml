@@ -1,97 +1,97 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
-  <name>Swat</name>
-  <summary>silverorange web application toolkit</summary>
-  <description>A web application toolkit.
-  </description>
-  <maintainers>
-    <maintainer>
-      <user>nrf</user>
-      <name>Nathan Fredrickson</name>
-      <email>nathan@silverorange.com</email>
-      <role>lead</role>
-    </maintainer>
-  </maintainers>
-  <release>
-    <version>0.1pre1</version>
-    <date>2005-01-24</date>
-    <license>LGPL</license>
-    <state>beta</state>
-    <notes>Test release
-    </notes>
-    <deps>
-      <dep type="php" rel="ge" version="5.0.0" optional="no"/>
-      <dep type="pkg" rel="ge" version="1.0b1" optional="no">PEAR</dep>
-    </deps>
-    <filelist>
-      <dir baseinstalldir="/" name="/">
-       <!-- dir name="docs">
-        <file role="doc" name="CONTRIBUTORS"/>
-        <file role="doc" name="README"/>
-        <file role="doc" name="STATUS"/>
-        <file role="doc" name="TODO"/>
-       </dir -->
-       <dir name="Swat">
-        <dir name="javascript">
-         <file role="php" name="swat-calendar.js"/>
-         <file role="php" name="swat-date.js"/>
-         <file role="php" name="swat-disclosure.js"/>
-         <file role="php" name="swat-find-index.js"/>
-         <file role="php" name="swat-time.js"/>
-        </dir>
-        <file role="php" name="SwatApplication.php"/>
-        <file role="php" name="SwatButton.php"/>
-        <file role="php" name="SwatCalendar.php"/>
-        <file role="php" name="SwatCellRendererCheckbox.php"/>
-        <file role="php" name="SwatCellRendererCheck.php"/>
-        <file role="php" name="SwatCellRendererControl.php"/>
-        <file role="php" name="SwatCellRendererImage.php"/>
-        <file role="php" name="SwatCellRendererLink.php"/>
-        <file role="php" name="SwatCellRenderer.php"/>
-        <file role="php" name="SwatCellRendererText.php"/>
-        <file role="php" name="SwatCheckboxArray.php"/>
-        <file role="php" name="SwatCheckbox.php"/>
-        <file role="php" name="SwatContainer.php"/>
-        <file role="php" name="SwatControl.php"/>
-        <file role="php" name="SwatDate.php"/>
-        <file role="php" name="SwatDisclosure.php"/>
-        <file role="php" name="SwatEntryFloat.php"/>
-        <file role="php" name="SwatEntryInteger.php"/>
-        <file role="php" name="SwatEntry.php"/>
-        <file role="php" name="SwatErrorMessage.php"/>
-        <file role="php" name="SwatException.php"/>
-        <file role="php" name="SwatFieldset.php"/>
-        <file role="php" name="SwatFlydown.php"/>
-        <file role="php" name="SwatFormField.php"/>
-        <file role="php" name="SwatForm.php"/>
-        <file role="php" name="SwatFrame.php"/>
-        <file role="php" name="SwatHtmlTag.php"/>
-        <file role="php" name="SwatLayout-dom.php"/>
-        <file role="php" name="SwatLayout.php"/>
-        <file role="php" name="SwatObject.php"/>
-        <file role="php" name="SwatPage.php"/>
-        <file role="php" name="SwatPagination.php"/>
-        <file role="php" name="SwatTableModel.php"/>
-        <file role="php" name="SwatTableStore.php"/>
-        <file role="php" name="SwatTableViewColumn.php"/>
-        <file role="php" name="SwatTableView.php"/>
-        <file role="php" name="SwatTableViewRow.php"/>
-        <file role="php" name="SwatTextarea.php"/>
-        <file role="php" name="SwatTime.php"/>
-        <file role="php" name="SwatWidget.php"/>
-       </dir>
-      </dir>
-    </filelist>
-  </release>
-  <!-- changelog>
-    <release>
-      <version></version>
-      <date></date>
-      <license></license>
-      <state></state>
-      <notes></notes>
-    </release>
-  </changelog -->
+	<name>Swat</name>
+	<summary>silverorange web application toolkit</summary>
+	<description>A web application toolkit.
+	</description>
+	<maintainers>
+		<maintainer>
+			<user>nrf</user>
+			<name>Nathan Fredrickson</name>
+			<email>nathan@silverorange.com</email>
+			<role>lead</role>
+		</maintainer>
+	</maintainers>
+	<release>
+		<version>0.1pre1</version>
+		<date>2005-01-24</date>
+		<license>LGPL</license>
+		<state>beta</state>
+		<notes>Test release
+		</notes>
+		<deps>
+			<dep type="php" rel="ge" version="5.0.0" optional="no"/>
+			<dep type="pkg" rel="ge" version="1.0b1" optional="no">PEAR</dep>
+		</deps>
+		<filelist>
+			<dir baseinstalldir="/" name="/">
+				<!-- dir name="docs">
+					<file role="doc" name="CONTRIBUTORS"/>
+					<file role="doc" name="README"/>
+					<file role="doc" name="STATUS"/>
+					<file role="doc" name="TODO"/>
+				</dir -->
+				<dir name="Swat">
+					<dir name="javascript">
+						<file role="php" name="swat-calendar.js"/>
+						<file role="php" name="swat-date.js"/>
+						<file role="php" name="swat-disclosure.js"/>
+						<file role="php" name="swat-find-index.js"/>
+						<file role="php" name="swat-time.js"/>
+					</dir>
+					<file role="php" name="SwatApplication.php"/>
+					<file role="php" name="SwatButton.php"/>
+					<file role="php" name="SwatCalendar.php"/>
+					<file role="php" name="SwatCellRendererCheckbox.php"/>
+					<file role="php" name="SwatCellRendererCheck.php"/>
+					<file role="php" name="SwatCellRendererControl.php"/>
+					<file role="php" name="SwatCellRendererImage.php"/>
+					<file role="php" name="SwatCellRendererLink.php"/>
+					<file role="php" name="SwatCellRenderer.php"/>
+					<file role="php" name="SwatCellRendererText.php"/>
+					<file role="php" name="SwatCheckboxArray.php"/>
+					<file role="php" name="SwatCheckbox.php"/>
+					<file role="php" name="SwatContainer.php"/>
+					<file role="php" name="SwatControl.php"/>
+					<file role="php" name="SwatDate.php"/>
+					<file role="php" name="SwatDisclosure.php"/>
+					<file role="php" name="SwatEntryFloat.php"/>
+					<file role="php" name="SwatEntryInteger.php"/>
+					<file role="php" name="SwatEntry.php"/>
+					<file role="php" name="SwatErrorMessage.php"/>
+					<file role="php" name="SwatException.php"/>
+					<file role="php" name="SwatFieldset.php"/>
+					<file role="php" name="SwatFlydown.php"/>
+					<file role="php" name="SwatFormField.php"/>
+					<file role="php" name="SwatForm.php"/>
+					<file role="php" name="SwatFrame.php"/>
+					<file role="php" name="SwatHtmlTag.php"/>
+					<file role="php" name="SwatLayout-dom.php"/>
+					<file role="php" name="SwatLayout.php"/>
+					<file role="php" name="SwatObject.php"/>
+					<file role="php" name="SwatPage.php"/>
+					<file role="php" name="SwatPagination.php"/>
+					<file role="php" name="SwatTableModel.php"/>
+					<file role="php" name="SwatTableStore.php"/>
+					<file role="php" name="SwatTableViewColumn.php"/>
+					<file role="php" name="SwatTableView.php"/>
+					<file role="php" name="SwatTableViewRow.php"/>
+					<file role="php" name="SwatTextarea.php"/>
+					<file role="php" name="SwatTime.php"/>
+					<file role="php" name="SwatWidget.php"/>
+				</dir>
+			</dir>
+		</filelist>
+	</release>
+	<!-- changelog>
+		<release>
+			<version></version>
+			<date></date>
+			<license></license>
+			<state></state>
+			<notes></notes>
+		</release>
+	</changelog -->
 </package>
 
