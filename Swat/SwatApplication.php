@@ -71,7 +71,7 @@ abstract class SwatApplication extends SwatObject {
 	 */
 	function relocate($url) {
 
-		if (strncmp($url, '/', 1) == 0)
+		if (substr($url, 0, 1) != '/' && strpos($url, '://') != 0)
 			$url = $this->basehref.$url;
 
 		header('Location: '.$url);
