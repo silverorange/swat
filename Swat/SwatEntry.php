@@ -24,7 +24,8 @@ class SwatEntry extends SwatControl {
 	public $size = 50;
 	
 	/**
-	 * @var int Maximum number of allowable characters in HTML text form input, or null.
+	 * @var int Maximum number of allowable characters in HTML text form input,
+	 * or null.
 	 */
 	public $maxlength = null;
 
@@ -54,3 +55,4 @@ class SwatEntry extends SwatControl {
 	}
 }
 
+?>

@@ -6,6 +6,9 @@
  */
 require_once('Swat/SwatEntry.php');
 
+/**
+ * An integer entry widget.
+ */
 class SwatEntryInteger extends SwatEntry {
 
 	public function init() {
@@ -22,3 +25,4 @@ class SwatEntryInteger extends SwatEntry {
 	}
 }
 
+?>
