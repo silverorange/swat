@@ -71,7 +71,7 @@ class SwatDisclosure extends SwatContainer {
 		$container_div->id = $this->name;
 
 		if ($this->open)
-			$container_div->class = 'swat-disclosure-container-open';
+			$container_div->class = 'swat-disclosure-container-opened';
 		else
 			$container_div->class = 'swat-disclosure-container-closed';
 
