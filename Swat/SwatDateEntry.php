@@ -2,6 +2,7 @@
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatFlydown.php');
 require_once('Swat/SwatDate.php');
+require_once('Swat/SwatState.php');
 
 /**
  * A date entry widget
@@ -10,7 +11,7 @@ require_once('Swat/SwatDate.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatDateEntry extends SwatControl {
+class SwatDateEntry extends SwatControl implements SwatState {
 	
 	/**
 	 * Date of the widget, or null.
@@ -121,14 +122,24 @@ class SwatDateEntry extends SwatControl {
 			$y = ($datepart == 2003 || $datepart == 3);
 				 // returns either 2003 or 03 depending on the locale
 			
-			if ($m && $datepart == 1 && $this->display_parts & self::MONTH)
+			if ($m && $datepart == 1 && $this->display_parts & self::MONTH) {
+				if ($this->value !== null)
+					$this->monthfly->value = $this->value->getMonth();	
+	
 				$this->monthfly->display();
-			elseif ($d && $datepart == 2 && $this->display_parts & self::DAY)
+			} elseif ($d && $datepart == 2 && $this->display_parts & self::DAY) {
+				if ($this->value !== null)
+					$this->dayfly->value = $this->value->getDay();
+					
 				$this->dayfly->display();
-			elseif ($y && $this->display_parts & self::YEAR)
+			} elseif ($y && $this->display_parts & self::YEAR) {
+				if ($this->value !== null)
+					$this->yearfly->value = $this->value->getYear();
+					
 				$this->yearfly->display();
+			}
 		}
-		
+
 		if ($this->display_parts & self::TIME)
 			$this->timefly->display();
 		
