@@ -10,9 +10,9 @@ require_once('Swat/SwatTableViewUIHandler.php');
 require_once('Swat/SwatTableViewColumnUIHandler.php');
 
 /**
- * Generates a Swat widget tree from an XML layout file.
+ * Generates a Swat widget tree from an XML UI file.
  */
-class SwatLayout extends SwatObject {
+class SwatUI extends SwatObject {
 
 	public $classmap = null;
 
@@ -30,7 +30,7 @@ class SwatLayout extends SwatObject {
 
 	/**
 	 * Load a UI from and XML file.
-	 * @param string $filename Filename of the layout XML file to load.
+	 * @param string $filename Filename of the XML UI file to load.
 	 */
 	public function loadFromXML($filename) {
 		$xmlfile = null;
@@ -49,11 +49,11 @@ class SwatLayout extends SwatObject {
 		}
 
 		if ($xmlfile == null)
-			throw new SwatException('SwatLayout: XML file not found: '.$filename);
+			throw new SwatException('SwatUI: XML file not found: '.$filename);
 
 		$xml = simplexml_load_file($xmlfile);
 
-		$this->parseLayout($xml, $this->toplevel);
+		$this->parseUI($xml, $this->toplevel);
 	}
 
 	/**
@@ -88,7 +88,7 @@ class SwatLayout extends SwatObject {
 		$this->handlers[] = $handler;
 	}
 
-	private function parseLayout($node, $parent_widget) {
+	private function parseUI($node, $parent_widget) {
 		foreach ($node->children() as $childname => $childnode) {
 
 			$widget = $this->parseWidget($childname, $childnode, $parent_widget);
@@ -104,7 +104,7 @@ class SwatLayout extends SwatObject {
 				$this->attachToParent($widget, $parent_widget);
 			}
 			
-			$this->parseLayout($childnode, $widget);
+			$this->parseUI($childnode, $widget);
 		}
 	}
 
