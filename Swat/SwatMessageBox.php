@@ -1,6 +1,7 @@
 <?php
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
+require_once('Swat/SwatMessage.php');
 
 /**
  * A control to display page status messages  
@@ -18,14 +19,14 @@ class SwatMessageBox extends SwatControl {
 	public $title = null;
 
 	/**
-	 * Content of the box
-	 * @var string
+	 * Array of {@link SwatMessage}s
+	 * @var array
 	 */
-	public $content = null;
+	public $messages = array();
 
 	public function display() {
 
-		if ($this->title === null && $this->content === null)
+		if ($this->title === null && count($this->messages) == 0)
 			return;
 
 		$outer_div = new SwatHtmlTag('div');
@@ -41,8 +42,24 @@ class SwatMessageBox extends SwatControl {
 		}
 
 		$inner_div->open();
-
-		echo $this->content;
+		
+		$message_div = new SwatHtmlTag('div');
+		foreach ($this->messages as $message) {
+			switch ($message->type) {
+				case SwatMessage::INFO :
+					$message_div->class = 'swat-message-info';
+					break;
+				case SwatMessage::WARNING :
+					$message_div->class = 'swat-message-warning';
+					break;
+				case SwatMessage::ERROR :
+					$message_div->class = 'swat-message-error';
+					break;
+			}
+			$message_div->open();
+			echo $message->content;
+			$message_div->close();
+		}
 
 		$inner_div->close();
 		$outer_div->close();
