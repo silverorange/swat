@@ -93,18 +93,20 @@ abstract class SwatApplication extends SwatObject {
 
 	const VAR_POST    = 1;
 	const VAR_GET     = 2;
+	/*
 	const VAR_REQUEST = 4;
 	const VAR_COOKIE  = 8;
 	const VAR_SERVER  = 16;
 	const VAR_SESSION = 32;
 	const VAR_FILES   = 64;
 	const VAR_ENV     = 128;
-
+	*/
+	
 	/**
 	 * Initialize a variable
 	 *
-	 * Initilizes a local variable with a value from one of the PHP
-	 * global arrays.
+	 * Static convenience method to initialize a local variable with a value 
+	 * from one of the PHP global arrays.
 	 *
 	 * @param $name string The name of the variable to lookup.
 	 *
@@ -116,7 +118,7 @@ abstract class SwatApplication extends SwatObject {
 	 *
 	 * @return mixed The value of the variable.
 	 */
-	function initVar($name, $default = 0, $types = 0) {
+	public static function initVar($name, $default = 0, $types = 0) {
 		if ($types == 0)
 			$types = SwatApplication::VAR_POST | SwatApplication::VAR_GET;
 	
