@@ -97,8 +97,6 @@ class SwatContainer extends SwatWidget {
 	}
 
 	public function display() {
-		parent::display();
-		
 		foreach ($this->children as &$child)
 			$child->display();
 	}
