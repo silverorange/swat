@@ -32,9 +32,10 @@ $time->valid_range_end = clone $date->valid_range_start;
 */
 
 if ($form1->process()) {
-	echo '<pre>';
-	print_r($_POST);
-	echo '</pre>';
+	//echo '<pre>';
+	//print_r($_POST);
+	//echo '</pre>';
+	echo '<h1>Processed!</h1>';
 }
 
 $frame1->displayTidy();

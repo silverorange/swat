@@ -90,6 +90,41 @@ textarea {
 	display: none;
 }
 
+.swat-order-control {
+	border:1px solid #CCC;
+	font-size: 65%;
+	background: #FFF;
+	margin: 2px;
+	padding: 0.2em;
+	cursor: pointer;
+	cursor: hand;
+}
+
+div.swat-order-control:hover {
+	 border:1px dashed Highlight;
+}
+
+.swat-order-control-active {
+	border:1px solid #FFF;
+	font-size: 65%;
+	color: HighlightText;
+	background: Highlight;
+	margin: 2px;
+	padding: 0.2em;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.swat-order-control-iframe-body {
+	margin: 0px;
+}
+
+.swat-order-control-iframe {
+	border: 1px ButtonShadow solid;
+	margin: 2px;
+}
+
+
 /* SwatTableView */
 
 table.swat-table-view { border-collapse: collapse; }
