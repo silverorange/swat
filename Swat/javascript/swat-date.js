@@ -1,4 +1,4 @@
-function dateSet(id,flydown) {
+function dateSet(id, activeFlydown) {
 	var vDate = new Date();
 
 	var year  = document.getElementById(id + '_year');
@@ -8,7 +8,7 @@ function dateSet(id,flydown) {
 	//month is required for this, so stop if it doesn't exist
 	if (!month) return true;
 
-	if (flydown.value == 0) {
+	if (activeFlydown.value == 0) {
 		//reset
 		if (day) day.selectedIndex = 0;
 		if (year) year.selectedIndex = 0;
@@ -30,7 +30,7 @@ function dateSet(id,flydown) {
 			}
 		}
 	
-		if (year && year.selectedIndex==0) {
+		if (year && year.selectedIndex == 0) {
 			var first_year = year.options[1].value;
 			var this_year  = vDate.getFullYear();
 			year.selectedIndex = (this_year - first_year + 1);
