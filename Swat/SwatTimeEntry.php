@@ -13,7 +13,7 @@ require_once('Date.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatTime extends SwatControl {
+class SwatTimeEntry extends SwatControl {
 	
 	/**
 	 * Time of the widget
