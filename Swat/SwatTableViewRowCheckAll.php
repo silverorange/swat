@@ -9,15 +9,25 @@ require_once('Swat/SwatCheckAll.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatTableViewRowCheckAll extends SwatTableViewRow {
+class SwatTableViewCheckAllRow extends SwatTableViewRow {
 	
+	private $column_name;
+
+	public function __construct($column_name) {
+		$this->column_name = $column_name;
+	}
+
 	public function display(&$columns) {
+
+		if ($this->view->model->getRowCount() < 2)
+			return;		
+
 		echo '<tr>';
 
 		foreach ($columns as $column) {
 			$count = 0;
 
-			if ($column->name == 'checkbox') {
+			if ($column->name == $this->column_name) {
 				$td_tag = new SwatHtmlTag('td');
 				$td_tag->colspan = count($columns) - $count;
 

@@ -32,7 +32,7 @@ class SwatTableViewColumn extends SwatObject {
 
 	protected $renderers = array();
 
-	function __construct($name = null) {
+	public function __construct($name = null) {
 		$this->name = $name;
 	}
 

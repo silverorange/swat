@@ -10,6 +10,15 @@ require_once('Swat/SwatObject.php');
  */
 abstract class SwatTableViewRow extends SwatObject {
 
+	/**
+	 * The {@link SwatTableView} associated with this row
+	 * @var SwatTableView
+	 */
+	public $view = null;
+
 	public abstract function display(&$columns);
 
+	public function init() {
+
+	}
 }
