@@ -81,8 +81,16 @@ textarea {
 	display: none;
 }
 
+/* SwatTableView */
 
+table.swat-table-view { border-collapse: collapse; }
 
+.swat-table-view th, .swat-table-view td {
+        padding: 0.2em;
+}
+.swat-table-view tr.odd {
+        background: #F9F6F0;
+}
 
 
 /**
