@@ -12,6 +12,8 @@ interface SwatTableModel {
 
 	public function &getRows();
 
+	public function getRowCount();
+
 	public function addRow($data, $id = null);
 
 }

@@ -3,7 +3,6 @@ require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatTableViewColumn.php');
 require_once('Swat/SwatTableViewRow.php');
-require_once('Swat/SwatTableViewRowCheckAll.php');
 
 //TODO: finish documentation for public methods
 
@@ -23,15 +22,6 @@ class SwatTableView extends SwatControl {
 	public $model = null;
 
 	/**
-	 * Show check all
-	 *
-	 * Whether to show a "check all" widget.  For this option to work, the
-	 * table view must contain a column named "checkbox".
-	 * @var boolean
-	 */
-	public $show_check_all = true;
-
-	/**
 	 * Values of the checked checkboxes
 	 *
 	 * For this to be set, the table view must contain a
@@ -45,11 +35,6 @@ class SwatTableView extends SwatControl {
 	private $columns = array();
 	private $group = null;
 	private $extra_rows = array();
-
-	public function init() {
-		if ($this->show_check_all)
-			$this->appendRow(new SwatTableViewRowCheckAll());
-	}
 
 	/**
 	 * Append Column
@@ -75,8 +60,11 @@ class SwatTableView extends SwatControl {
 	 * Append Row
 	 * @param SwatTableViewRow $row
 	 */
-	private function appendRow(SwatTableViewRow $row) {
+	public function appendRow(SwatTableViewRow $row) {
 		$this->extra_rows[] = $row;
+
+		$row->view = $this;
+		$row->init();
 	}
 
 	/**
