@@ -314,15 +314,15 @@ class SwatDate extends SwatControl {
 	private function validateRanges() {
 		if (Date::compare($this->value,$this->valid_range_start,true) == -1) {
 			
-			$msg=sprintf(_S("The date you have entered is invalid. 
-				It must be after %s."),
+			$msg = sprintf(_S("The date you have entered is invalid. ".
+				"It must be after %s."),
 				$this->displayDate($this->valid_range_start));
 			$this->addErrorMessage($msg);
 			
 		} elseif (Date::compare($this->value,$this->valid_range_end,true) == 1) {
 			
-			$msg=sprintf(_S("The date you have entered is invalid. 
-				It must be before %s."),
+			$msg = sprintf(_S("The date you have entered is invalid. ".
+				"It must be before %s."),
 				$this->displayDate($this->valid_range_end));
 			$this->addErrorMessage($msg);
 			
