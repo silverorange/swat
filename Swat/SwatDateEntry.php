@@ -10,7 +10,7 @@ require_once('Date.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatDate extends SwatControl {
+class SwatDateEntry extends SwatControl {
 	
 	/**
 	 * Date of the widget, or null.
@@ -337,9 +337,9 @@ class SwatDate extends SwatControl {
 	}
 	
 	private function createTimeFlydown() {
-		require_once('Swat/SwatTime.php');
+		require_once('Swat/SwatTimeEntry.php');
 		
-		$this->timefly = new SwatTime();
+		$this->timefly = new SwatTimeEntry();
 		$this->timefly->name = $this->name;
 	}
 	
