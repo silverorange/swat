@@ -44,6 +44,14 @@ class SwatEntry extends SwatControl implements SwatState {
 	 */
 	public $maxlength = null;
 
+	/**
+	 * Min length
+	 *
+	 * Minimum number of allowable characters in HTML text form input, or null.
+	 * @var int
+	 */
+	public $minlength = null;
+
 	protected $html_input_type = 'text';
 
 	public function display() {
@@ -71,9 +79,20 @@ class SwatEntry extends SwatControl implements SwatState {
 		else
 			$this->value = $_POST[$this->name];
 
-		if ($this->required && !strlen($this->value)) {
+		$len = ($this->value === null) ? 0 : strlen($this->value);
+
+		if ($this->required && $this->value === null) {
 			$msg = _S("The %s field is required.");
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			
+		} elseif ($this->maxlength !== null && $len > $this->maxlength) {
+			$msg = sprintf(_S("The %%s field must be less than %s characters."), $this->maxlength);
+			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			
+		} elseif ($this->minlength !== null && $len < $this->minlength) {
+			$msg = sprintf(_S("The %%s field must be more than %s characters."), $this->minlength);
+			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			
 		}
 	}
 	
