@@ -12,12 +12,16 @@ require_once('Swat/SwatObject.php');
  */
 abstract class SwatCellRenderer extends SwatObject {
 
-	function __construct() {
-	
-	}
-
-	/*
+	/**
 	 * Render the cell using the values currently stored in class variables.
 	 */
 	abstract public function render();
+
+	/**
+	 * Array of attributes to assign to the HTML td tag.
+	 */
+	public function getTdAttribs() {
+		return null;
+	}
+
 }

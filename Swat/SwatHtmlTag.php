@@ -35,9 +35,13 @@ class SwatHtmlTag extends SwatObject {
 	/**
 	 * @param string $tagname The name of the HTML tag.
 	 */
-	function __construct($tagname) {
+	function __construct($tagname, $attributes = null) {
 		$this->tagname = $tagname;
-		$this->attributes = array();
+
+		if ($attributes != null)
+			$this->attributes = $attributes;
+		else
+			$this->attributes = array();
 	}
 
 	/**

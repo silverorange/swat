@@ -5,6 +5,7 @@
  * @copyright silverorange 2004
  */
 require_once('Swat/SwatObject.php');
+require_once('Swat/SwatHtmlTag.php');
 
 /**
  * A visible column in a SwatTableView.
@@ -39,14 +40,17 @@ class SwatTableViewColumn extends SwatObject {
 			foreach ($this->renderers as $renderer)
 				$renderer->$property = $row->$field;
 
-		echo '<td>';
+		reset($this->renderers);
+		$first_renderer = current($this->renderers);
+		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttribs());
+		$td_tag->open();
 
 		foreach ($this->renderers as $renderer) {
 			$renderer->render();
 			echo ' ';
 		}
 
-		echo '</td>';	
+		$td_tag->close();
 	}
 	
 }
