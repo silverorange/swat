@@ -82,23 +82,9 @@ class SwatDisclosure extends SwatContainer {
 	}
 
 	public function displayJavascript() {
-		?>
-		<script type="text/javascript">
-			function toggleDisclosureWidget(id) {
-				var img = document.getElementById(id + '_img');
-				var div = document.getElementById(id);
-				if (div.className == 'swat-disclosure-container-opened') {
-					div.className = 'swat-disclosure-container-closed';
-					img.src = 'swat/images/disclosure-closed.png';
-					img.alt = 'open';
-				} else {
-					div.className = 'swat-disclosure-container-opened';
-					img.src = 'swat/images/disclosure-opened.png';
-					img.alt = 'close';
-				}
-			}
-		</script>
-		<?php
+		echo '<script type="text/javascript">';
+		include('Swat/javascript/swat-disclosure.js');
+		echo '</script>';
 	}
 }
 
