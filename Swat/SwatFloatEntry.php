@@ -2,25 +2,25 @@
 require_once('Swat/SwatEntry.php');
 
 /**
- * An integer entry widget
+ * A float entry widget
  *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatEntryInteger extends SwatEntry {
+class SwatFloatEntry extends SwatEntry {
 
 	public function init() {
-		$this->size = 5;
+		$this->size = 10;
 	}
 
 	public function process() {
 		parent::process();
 
 		if (is_numeric($this->value))
-			$this->value = intval($this->value);
+			$this->value = floatval($this->value);
 		else
-			$this->addErrorMessage(_S("The %s field must be an integer."));
+			$this->addErrorMessage(_S("The %s field must be a number."));
 	}
 }
 
