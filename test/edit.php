@@ -3,12 +3,13 @@
 <head>
 	<title>Swat Example Form</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<style type="text/css" media="all">@import "Swat/css/swat.css";</style>
+	<style type="text/css" media="all">@import "../Swat/css/swat.css";</style>
 </head>
 <body>
 <?
 
-ini_set('include_path', '/so/include');
+#ini_set('include_path', '/so/include');
+ini_set('include_path', '..:/so/include');
 require_once('Swat/SwatForm.php');
 require_once('Swat/SwatFrame.php');
 require_once('Swat/SwatEntry.php');
