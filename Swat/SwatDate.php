@@ -105,25 +105,28 @@ class SwatDate extends SwatControl {
 	
 	public function process() {
 		$this->createFlydowns();
-		
+
+		$this->yearfly->process();
 		$this->monthfly->process();
 		$this->dayfly->process();
-		$this->yearfly->process();
-		
-		$month = $this->monthfly->value;
-		$day = $this->dayfly->value;
-		$year = $this->yearfly->value;
-		
-		//set to date object from above
-		#$this->value = ;
-		
-		echo "month: $month day: $day year: $year";
-		
+
+		$year  = intval($this->yearfly->value);
+		$month = intval($this->monthfly->value);
+		$day   = intval($this->dayfly->value);
+
+		$this->value = new Date();
+		$this->value->setYear($year);
+		$this->value->setMonth($month);
+		$this->value->setDay($day);
+
+		echo $this->value->getDate();
+
 		/*
-		validate based on ranges here
+		TODO: validate based on ranges here
 		if ($this->validate == self::validate_future) {
 			if ($this->datechk && !($this->datechk())) {
-				$this->addErrorMessage(_S("The email address you have entered is not properly formatted."));
+				$this->addErrorMessage(_S("The email address you have entered ".
+				                          "is not properly formatted."));
 			}
 		}
 		*/
