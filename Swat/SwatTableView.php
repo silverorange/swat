@@ -85,6 +85,19 @@ class SwatTableView extends SwatControl implements SwatUIParent {
 		return $this->columns;
 	}
 
+	/**
+	 * Get a reference to a column
+	 * @ return SwatTableViewColumn Matching column
+	 */
+	public function getColumn($name) {
+		$columns = $this->getColumns();
+		foreach ($columns as $column)
+			if ($name == $column->name)
+				return $column;
+
+		throw new SwatException(__CLASS__.": no column named '$name'");
+	}
+
 	public function display() {
 		if (!$this->visible)
 			return;
@@ -136,10 +149,11 @@ class SwatTableView extends SwatControl implements SwatUIParent {
 	}
 
 	public function process() {
-		$items_field = $this->name.'_items';
-
-		if (isset($_POST[$items_field]) && is_array($_POST[$items_field]))
-			$this->checked_items = $_POST[$items_field];
+		foreach ($this->columns as $column)
+			$column->process();
+	
+		$items = $this->getColumn('checkbox');
+		$this->checked_items = $items->getItems();
 	}
 
 	/**

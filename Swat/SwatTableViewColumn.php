@@ -56,6 +56,10 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent {
 
 	}
 
+	public function process() {
+
+	}
+
 	public function displayHeader() {
 		echo $this->title;
 	}
