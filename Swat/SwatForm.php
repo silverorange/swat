@@ -16,7 +16,7 @@ class SwatForm extends SwatContainer {
 	 * The action attribute of the HTML form tag.
 	 * @var string
 	 */
-	public $action = '';
+	public $action = '#';
 
 	/**
 	 * Add a widget within a new SwatFormField.
