@@ -24,6 +24,9 @@ class SwatFrame extends SwatContainer {
 	public $errormsg_class = 'swat-frame-errormsg';
 
 	public function display() {
+		if (!$this->visible)
+			return;
+
 		$outer_div = new SwatHtmlTag('div');
 		$outer_div->class = 'swat-frame';
 

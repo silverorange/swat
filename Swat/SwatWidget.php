@@ -23,6 +23,15 @@ abstract class SwatWidget extends SwatObject {
 	public $name;
 
 	/**
+	 * Visible
+	 *
+	 * Whether the widget is displayed. Not all widgets respect this (yet).
+	 *
+	 * @var boolean
+	 */
+	public $visible = true;
+
+	/**
 	 * @param string $name A non-visible textual name for this widget.
 	 */
 	function __construct($name = null) {

@@ -24,15 +24,6 @@ class SwatButton extends SwatControl {
 	public $title;
 
 	/**
-	 * Visible
-	 *
-	 * Whether the button is displayed.
-	 *
-	 * @var boolean
-	 */
-	public $visible = true;
-
-	/**
 	 * Clicked (read-only)
 	 *
 	 * This is set to true after processing if this button was clicked.
