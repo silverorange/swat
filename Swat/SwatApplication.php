@@ -45,13 +45,6 @@ abstract class SwatApplication extends SwatObject {
 	 */
 	function __construct($name) {
 		$this->name = $name;
-		$this->setIncludePath();
-	}
-
-	protected function setIncludePath() {
-		$uri_array = explode('/', $_SERVER['REQUEST_URI']);
-		$work_dir = $uri_array[2];
-		ini_set('include_path', "../include:/so/packages/swat/{$work_dir}:/so/packages/pear/pear/MDB2:/usr/lib/php");
 	}
 
 	protected function initUriVars($prefix_length = 0) {
