@@ -26,7 +26,7 @@ class SwatCheckAll extends SwatControl {
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
 		$input_tag->id = $this->name;
-		$input_tag->onclick = "swatCheckAll(this.form, '{$this->name}', '{$this->series_name}')";
+		$input_tag->onclick = "SwatCheckbox.checkAll(this,'{$this->series_name}')";
 
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->for = $this->name;
