@@ -58,6 +58,11 @@ class SwatEntry extends SwatControl {
  * An integer entry widget.
  */
 class SwatEntryInteger extends SwatEntry {
+
+	public function init() {
+		$this->size = 5;
+	}
+
 	function process() {
 		parent::process();
 
@@ -72,6 +77,11 @@ class SwatEntryInteger extends SwatEntry {
  * A float entry widget.
  */
 class SwatEntryFloat extends SwatEntry {
+
+	public function init() {
+		$this->size = 10;
+	}
+
 	function process() {
 		parent::process();
 
