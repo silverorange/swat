@@ -8,6 +8,19 @@ img { border: 0; }
 
 .swat-tool-link { display: block; }
 
+/* SwatMessages  */
+.swat-message-info {
+	background: #fff;
+}
+
+.swat-message-warning {
+	background: #ff9;
+}
+
+.swat-message-error {
+	background: #f00;
+}
+
 /* SwatFrame */
 
 .swat-frame {
