@@ -24,7 +24,9 @@ class SwatMessageBox extends SwatControl {
 	public $content = null;
 
 	public function display() {
-		parent::display();
+
+		if ($this->title == null && $this->content == null)
+			return;
 
 		$outer_div = new SwatHtmlTag('div');
 		$outer_div->class = 'swat-frame';
