@@ -4,10 +4,11 @@
  * 
  * Data class to represent a database field, a (name, type) pair.
  *
- * @package Admin
+ * @package SwatDB
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class AdminDBField {
+class SwatDBField {
 
 	/**
 	 * The name of the database field

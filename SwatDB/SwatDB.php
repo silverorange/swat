@@ -1,7 +1,7 @@
 <?php
 
 require_once("MDB2.php");
-require_once("Admin/AdminDBField.php");
+require_once("Swat/SwatDBField.php");
 require_once("Swat/SwatTreeNode.php");
 
 /**
@@ -9,10 +9,11 @@ require_once("Swat/SwatTreeNode.php");
  *
  * Static convenience methods for working with a database.
  *
- * @package Admin
+ * @package SwatDB
+ * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class AdminDB {
+class SwatDB {
 	
 	/**
 	 * Update a field
@@ -47,8 +48,8 @@ class AdminDB {
 		if (count($ids) == 0)
 			return;
 
-		$field = new AdminDBField($field, 'integer');
-		$id_field = new AdminDBField($id_field, 'integer');
+		$field = new SwatDBField($field, 'integer');
+		$id_field = new SwatDBField($id_field, 'integer');
 
 		$sql = 'update %s set %s = %s where %s in (%s)';
 
@@ -94,13 +95,13 @@ class AdminDB {
 	 *        correspond to the type of $id_field.
 	 */
 	public static function queryField($db, $table, $field, $id_field = null, $id = 0) {
-		$field = new AdminDBField($field, 'integer');
+		$field = new SwatDBField($field, 'integer');
 
 		if ($id_field == null) {
 			$sql = 'select %s from %s';
 			$sql = sprintf($sql, $field->name, $table);
 		} else {
-			$id_field = new AdminDBField($id_field, 'integer');
+			$id_field = new SwatDBField($id_field, 'integer');
 			$sql = 'select %s from %s where %s = %s';
 			$sql = sprintf($sql, $field->name, $table, $id_field->name, $id);
 		}
@@ -156,9 +157,9 @@ class AdminDB {
 	public static function updateBinding($db, $table, $id_field, $id, $value_field, 
 		$values, $bound_table, $bound_field) {
 
-		$id_field = new AdminDBField($id_field, 'integer');
-		$value_field = new AdminDBField($value_field, 'integer');
-		$bound_field = new AdminDBField($bound_field, 'integer');
+		$id_field = new SwatDBField($id_field, 'integer');
+		$value_field = new SwatDBField($value_field, 'integer');
+		$bound_field = new SwatDBField($bound_field, 'integer');
 
 		$delete_sql = 'delete from %s where %s = %s';
 
@@ -244,8 +245,8 @@ class AdminDB {
 	public static function getOptionArray($db, $table, $title_field, $id_field, 
 		$order_by_clause = null, $where_clause = null) {
 
-		$title_field = new AdminDBField($title_field, 'text');
-		$id_field = new AdminDBField($id_field, 'integer');
+		$title_field = new SwatDBField($title_field, 'text');
+		$id_field = new SwatDBField($id_field, 'integer');
 
 		$sql = 'select %s, %s from %s';
 		$sql = sprintf($sql, $id_field->name, $title_field->name, $table);
@@ -305,9 +306,9 @@ class AdminDB {
 	public static function getOptionArrayTree($db, $sp, $title_field, $id_field,
 		$level_field) {
 
-		$id_field = new AdminDBField($id_field, 'integer');
-		$title_field = new AdminDBField($title_field, 'text');
-		$level_field = new AdminDBField($level_field, 'integer');
+		$id_field = new SwatDBField($id_field, 'integer');
+		$title_field = new SwatDBField($title_field, 'text');
+		$level_field = new SwatDBField($level_field, 'integer');
 		
 		$types = array($id_field->type, $title_field->type, $level_field->type);
 		
@@ -315,7 +316,7 @@ class AdminDB {
 		if (MDB2::isError($rs))
 			throw new Exception($rs->getMessage());
 
-		$tree = AdminDB::buildOptionArrayTree($rs, $title_field->name, $id_field->name, $level_field->name);
+		$tree = SwatDB::buildOptionArrayTree($rs, $title_field->name, $id_field->name, $level_field->name);
 		return $tree;
 	}
 
@@ -375,14 +376,14 @@ class AdminDB {
 
 	private function initFields(&$fields) {
 		/* Transforms and array of text field identifiers ('text:title') into
-		 * an array of AdminDBField objects.
+		 * an array of SwatDBField objects.
 		 */
 		if (count($fields) == 0)
 			// TODO: throw exception instead of returning
 			return;
 
 		foreach ($fields as &$field)
-			$field = new AdminDBField($field, 'text');
+			$field = new SwatDBField($field, 'text');
 	}
 
 	/**
@@ -409,11 +410,11 @@ class AdminDB {
 	 */
 	public static function queryRow($db, $table, $fields, $id_field, $id) {
 
-		AdminDB::initFields($fields);
-		$id_field = new AdminDBField($id_field, 'integer');
+		SwatDB::initFields($fields);
+		$id_field = new SwatDBField($id_field, 'integer');
 		$sql = 'select %s from %s where %s = %s';
 
-		$field_list = implode(',', AdminDB::getFieldNameArray($fields));
+		$field_list = implode(',', SwatDB::getFieldNameArray($fields));
 
 		$sql = sprintf($sql,
 			$field_list,
@@ -421,7 +422,7 @@ class AdminDB {
 			$id_field->name,
 			$db->quote($id, $id_field->type));
 
-		$rs = $db->query($sql, AdminDB::getFieldTypeArray($fields));
+		$rs = $db->query($sql, SwatDB::getFieldTypeArray($fields));
 		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
 
 		return $row;
@@ -458,7 +459,7 @@ class AdminDB {
 	 */
 	public static function insertRow($db, $table, $fields, $values, $id_field = null) {
 
-		AdminDB::initFields($fields);
+		SwatDB::initFields($fields);
 
 		$ret = null;
 
@@ -466,7 +467,7 @@ class AdminDB {
 			$db->beginTransaction();
 
 		$sql = 'insert into %s (%s) values (%s)';
-		$field_list = implode(',', AdminDB::getFieldNameArray($fields));
+		$field_list = implode(',', SwatDB::getFieldNameArray($fields));
 
 		foreach ($fields as &$field)
 			$values[$field->name] = $db->quote($values[$field->name], $field->type);
@@ -481,7 +482,7 @@ class AdminDB {
 		$rs = $db->query($sql);
 
 		if ($id_field != null) {
-			$ret = AdminDB::getFieldMax($db, $table, $id_field);						
+			$ret = SwatDB::getFieldMax($db, $table, $id_field);						
 			$db->commit();
 		}
 
@@ -517,8 +518,8 @@ class AdminDB {
 	 */
 	public static function updateRow($db, $table, $fields, $values, $id_field, $id) {
 
-		AdminDB::initFields($fields);
-		$id_field = new AdminDBField($id_field, 'integer');
+		SwatDB::initFields($fields);
+		$id_field = new SwatDBField($id_field, 'integer');
 		$sql = 'update %s set %s where %s = %s';
 		$updates = array();
 
@@ -553,7 +554,7 @@ class AdminDB {
 	 * @return mixed The max value of field specified.
 	 */
 	public static function getFieldMax($db, $table, $field) {
-		$field = new AdminDBField($field, 'integer');
+		$field = new SwatDBField($field, 'integer');
 			
 		$sql = sprintf('select max(%s) as %s from %s',
 			$field->name, $field->name, $table);
