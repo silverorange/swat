@@ -36,7 +36,7 @@ class SwatActions extends SwatControl {
 		
 		foreach ($this->action_items as $item) {
 			if ($item->widget != null) {
-				echo '<div class="swat-hidden">';
+				echo '<div id="'.$this->name.'_'.$item->name.'" class="swat-hidden">';
 				$item->widget->display();
 				echo '</div>';
 			}
@@ -70,26 +70,20 @@ class SwatActions extends SwatControl {
 
 	private function createWidgets() {	
 		$this->actionfly = new SwatFlydown($this->name.'_actionfly');
+		$this->actionfly->onchange = "swatActionsDisplay('{$this->name}', this.value);";
 		$this->actionfly->options = array('');
 
 		foreach ($this->action_items as $item)
 			$this->actionfly->options[$item->name] = $item->title;
-			/*
-			$this->actionfly->options = 
-				array_merge($this->actionfly->options, $item->getOptions());
-			*/
 
 		$this->btn_apply = new SwatButton($this->name.'_btn_apply');
 		$this->btn_apply->setTitleFromStock('apply');
 	}
 
 	private function displayJavascript() {
-		/*
 		echo '<script type="text/javascript">';
-		include_once('Swat/javascript/swat-find-index.js');
-		include_once('Swat/javascript/swat-date.js');
+		include_once('Swat/javascript/swat-actions.js');
 		echo '</script>';
-		*/
 	}
 }
 ?>

@@ -95,8 +95,10 @@ class SwatTableView extends SwatControl {
 	}
 
 	public function process() {
-		if (isset($_POST['items']) && is_array($_POST['items']))
-			$this->checked_items = $_POST['items'];
+		$items_field = $this->name.'_items';
+
+		if (isset($_POST[$items_field]) && is_array($_POST[$items_field]))
+			$this->checked_items = $_POST[$items_field];
 	}
 }
 ?>
