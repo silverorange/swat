@@ -28,9 +28,22 @@ class SwatFrame extends SwatContainer {
 		$outer_div->open();
 
 		if ($this->title != null) {
-			// TODO: Can the header level be autocalculated based on the 
-			// level of the frame?
-			echo '<h2>', $this->title, '</h2>';
+			/*
+			 * Experimental: Header level is autocalculated based on the 
+			 * level of the frame in the widget tree.  Top level frame
+			 * is currently an <h2>.
+			 */
+			$level = 2;
+			$ancestor = $this->parent;
+
+			while ($ancestor != null) {
+				if ($ancestor instanceof SwatFrame)
+					$level++;
+
+				$ancestor = $ancestor->parent;
+			}
+
+			echo "<h{$level}>{$this->title}</h{$level}>";
 		}
 
 		$inner_div->open();
