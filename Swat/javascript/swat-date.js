@@ -1,7 +1,3 @@
-<?php
-require_once('Swat/javascript/swat-find-index.js');
-?>
-
 function dateSet(id, activeFlydown) {
 	var e = dateInit(id);
 

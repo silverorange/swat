@@ -212,6 +212,7 @@ class SwatTime extends SwatControl {
 			$created = true;
 			
 			echo '<script type="text/javascript">';
+			include_once('Swat/javascript/swat-find-index.js');
 			include('Swat/javascript/swat-time.js');
 			echo '</script>';
 		}
