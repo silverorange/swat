@@ -5,6 +5,7 @@
  * @copyright silverorange 2004
  */
 require_once('Swat/SwatTableViewColumn.php');
+require_once('Swat/SwatTableViewGroup.php');
 
 /**
  * UI handler for SwatTableView.
@@ -23,7 +24,9 @@ class SwatTableViewUiHandler implements SwatUIHandler {
 	 */
 	public function attachToParent($widget, $parent) {
 
-		if ($widget instanceof SwatTableViewColumn)
+		if ($widget instanceof SwatTableViewGroup)
+			$parent->setGroup($widget);
+		elseif ($widget instanceof SwatTableViewColumn)
 			$parent->appendColumn($widget);
 		else
 			throw new SwatException('SwatUI: Only '.

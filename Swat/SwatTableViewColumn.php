@@ -16,13 +16,11 @@ class SwatTableViewColumn extends SwatObject {
 	public $title = '';
 	public $view = null;
 
-	private $renderers;
-	private $properties;
+	protected $renderers = array();
+	protected $properties = array();
 
 	function __construct($name = null) {
 		$this->name = $name;
-		$this->renderers = array();
-		$this->properties = array();
 	}
 
 	public function linkField($model_field, $renderer_property) {
@@ -37,16 +35,21 @@ class SwatTableViewColumn extends SwatObject {
 		if (count($this->renderers) == 0)
 			throw new SwatException(__CLASS__.': no renderer has been provided.');
 
+		// set the properties of the renderers
 		foreach ($this->properties as $field => $property)
 			foreach ($this->renderers as $renderer)
 				$renderer->$property = $row->$field;
 
+		$this->displayRenderers($row);
+	}
+
+	protected function displayRenderers($row) {
 		reset($this->renderers);
 		$first_renderer = current($this->renderers);
 		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttribs());
 		$td_tag->open();
 
-		$prefix = ($this->view == null)? '': $this->view->name.'_';
+		$prefix = ($this->view->name == null)? '': $this->view->name.'_';
 
 		foreach ($this->renderers as $renderer) {
 			$renderer->render($prefix);
@@ -55,5 +58,4 @@ class SwatTableViewColumn extends SwatObject {
 
 		$td_tag->close();
 	}
-	
 }
