@@ -10,6 +10,9 @@ $layout = new SwatLayout('date.xml');
 $form1 = $layout->getWidget('form1');
 $frame1 = $layout->getWidget('frame1');
 
+$date = $layout->getWidget('date');
+$date->display = (SwatDate::YEAR | SwatDate::MONTH | SwatDate::DAY);
+
 if ($form1->process()) {
 	echo '<pre>';
 	print_r($_POST);
