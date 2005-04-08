@@ -130,8 +130,9 @@ class SwatHtmlTag extends SwatObject {
 
 		if ($this->attributes !== null) {
 			foreach ($this->attributes as $attr => $value) {
-				if ($value !== null)
-					echo ' ', $attr, '="', $value, '"';
+				if ($value !== null) {
+					echo ' ', $attr, '="', htmlspecialchars($value), '"';
+				}
 			}
 		}
 
