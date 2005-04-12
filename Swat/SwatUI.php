@@ -174,9 +174,9 @@ class SwatUI extends SwatObject {
 			case 'boolean':
 				return ($value == 'true')  ? true : false;
 			case 'integer':
-				return intval(substr($value, 8));
+				return intval($value);
 			case 'float':
-				return floatval(substr($value, 6));
+				return floatval($value);
 			case 'string':
 				return $this->translateValue($value, $translatable);
 			case 'data':
