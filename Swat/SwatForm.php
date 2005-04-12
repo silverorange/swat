@@ -43,7 +43,7 @@ class SwatForm extends SwatContainer {
 		return $this->processed;
 	}
 
-	private $hidden_fields;
+	protected $hidden_fields;
 	private $processed = false;
 
 	public function init() {
@@ -113,7 +113,7 @@ class SwatForm extends SwatContainer {
 		return true;
 	}
 
-	private function processHiddenFields() {
+	protected function processHiddenFields() {
 		if (isset($_POST[$this->name.'_hidden_fields']))
 			$fields = $_POST[$this->name.'_hidden_fields'];
 		else

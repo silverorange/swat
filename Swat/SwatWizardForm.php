@@ -1,6 +1,6 @@
 <?php
 require_once('Swat/SwatForm.php');
-require_once('Swat/SwatStep.php');
+require_once('Swat/SwatWizardStep.php');
 
 /**
  * A wizard-like form with steps
@@ -9,27 +9,20 @@ require_once('Swat/SwatStep.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatFormSteps extends SwatForm {
+class SwatWizardForm extends SwatForm {
 
 	public $step;
-
-	public function init() {
-		parent::init();
-
-		$step = $this->getHiddenField('step');
-		$this->step = ($step === null) ? 0 : intval($step);
-	}
+	private $wizard_state = array();
 
 	public function display() {
 		foreach ($this->children as $child) {
-			if ($child instanceof SwatStep && $child->step == $this->step)
+			if ($child instanceof SwatWizardStep && $child->step == $this->step)
 				$child->visible = true;
-			elseif ($child instanceof SwatStep) {
+			elseif ($child instanceof SwatWizardStep)
 				$child->visible = false;
-				$this->addHiddenFields($child);
-			}
 		}
 		
+		$this->addHiddenField('wizard_state', serialize($this->wizard_state));
 		$this->addHiddenField('step', $this->step);
 		
 		parent::display();	
@@ -39,42 +32,32 @@ class SwatFormSteps extends SwatForm {
 		if (!isset($_POST['process']) || $_POST['process'] != $this->name)
 			return false;
 
+		if (isset($_POST['wizard_state']))
+			$this->wizard_state = unserialize($_POST['wizard_state']);
+
 		$this->processed = true;
-		
 		$this->processHiddenFields();
 
-		foreach ($this->children as &$child)
-			if ($child instanceof SwatStep && $child->step == $this->step)
-				$child->process();
-			elseif ($child instanceof SwatStep)
-				$this->initHiddenFields($child);
+		$step = $this->getHiddenField('step');
+		$this->step = ($step === null) ? 0 : intval($step);
 		
+		foreach ($this->children as &$child) {
+			if ($child instanceof SwatWizardStep && $child->step == $this->step) {
+				$child->process();
+				$this->wizard_state = array_merge($this->wizard_state, $child->getStepStates());
+			} elseif ($child instanceof SwatWizardStep)
+				$child->setStepStates($this->wizard_state);
+		}
 
 		if (!$this->hasMessage()) 
-			$this->step++;
+			if ($this->step == 1)
+				$this->step--;
+			else
+				$this->step++;
 			//TODO: make this work with back/forward functionality
 		
 		return true;
 	}
 
-	private function addHiddenFields($step) {
-		$step_state = $step->getDescendantStates();
-		
-		foreach ($step_state as $name => $value)
-			$this->addHiddenField($name, serialize($value));	
-	}
-
-	private function initHiddenFields($step) {
-		$step_state = $step->getDescendantStates();
-	
-		print_r($this->hidden_fields);
-	
-		$values = array();
-		foreach ($step_state as $name => $value)
-			echo $this->getHiddenField($name);
-			//$values['name'] = unserialize($this->getHiddenField($name));
-		
-		$step->setDescendantStates($values);
-	}
 }
 ?>
