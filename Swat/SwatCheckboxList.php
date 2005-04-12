@@ -2,6 +2,7 @@
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatCheckAll.php');
+require_once('Swat/SwatState.php');
 
 /**
  * A checkbox list widget
@@ -10,7 +11,7 @@ require_once('Swat/SwatCheckAll.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatCheckboxList extends SwatControl {
+class SwatCheckboxList extends SwatControl implements SwatState {
 	
 	/**
 	 * Checkbox list options
@@ -90,6 +91,14 @@ class SwatCheckboxList extends SwatControl {
 	public function reset() {
 		reset($this->options);
 		$this->values = key($this->options);
+	}
+
+	public setState($state) {
+		$this->values = $state;
+	}
+	
+	public getState() {
+		return $this->values;
 	}
 }
 
