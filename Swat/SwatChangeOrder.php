@@ -1,6 +1,7 @@
 <?php
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
+require_once('Swat/SwatState.php');
 
 /**
  * An element ordering widget
@@ -9,7 +10,7 @@ require_once('Swat/SwatHtmlTag.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatChangeOrder extends SwatControl {
+class SwatChangeOrder extends SwatControl implements SwatState {
 
 	/*
 	 * Order Options
@@ -128,6 +129,17 @@ class SwatChangeOrder extends SwatControl {
 		echo "\n {$this->name}_obj.draw(new Array('{$values}')); ";
 				
 		echo '</script>';
+	}
+
+	public function getState() {
+		if ($this->values === null)
+			return array_keys($this->options)
+		else
+			return $this->values;
+	}
+
+	public function setState($state) {
+		$this->values = $state;
 	}
 }
 

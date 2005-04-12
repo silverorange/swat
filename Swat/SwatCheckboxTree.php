@@ -1,5 +1,6 @@
 <?php
 require_once('Swat/SwatCheckboxArray.php');
+require_once('Swat/SwatState.php');
 
 /**
  * A checkbox array widget formatted into a tree
@@ -8,7 +9,7 @@ require_once('Swat/SwatCheckboxArray.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatCheckboxTree extends SwatControl {
+class SwatCheckboxTree extends SwatControl implements SwatState {
 
 	/**
 	 * Checkbox tree structure
@@ -66,6 +67,14 @@ class SwatCheckboxTree extends SwatControl {
 	public function process() {
 		$this->path = explode('/',$this->value);
 		$this->value = $this->path[count($this->path)-1];
+	}
+
+	public setState($state) {
+		$this->value = $state;
+	}
+	
+	public getState() {
+		return $this->value;
 	}
 }
 

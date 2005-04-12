@@ -1,6 +1,7 @@
 <?php
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
+require_once('Swat/SwatState.php');
 
 /**
  * A multi-line text entry widget
@@ -9,7 +10,7 @@ require_once('Swat/SwatHtmlTag.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatTextarea extends SwatControl {
+class SwatTextarea extends SwatControl implements SwatState {
 
 	/*
 	 * Text content of the widget
@@ -41,7 +42,7 @@ class SwatTextarea extends SwatControl {
 	 */
 	public $cols = 50;
 	
-	function display() {
+	public function display() {
 		$textarea_tag = new SwatHtmlTag('textarea');
 		$textarea_tag->name = $this->name;
 		$textarea_tag->id = $this->name;
@@ -54,13 +55,21 @@ class SwatTextarea extends SwatControl {
 		$textarea_tag->close();
 	}	
 
-	function process() {
+	public function process() {
 		$this->value = $_POST[$this->name];
 
 		if ($this->required && !strlen($this->value)) {
 			$msg = _S("The %s field is required.");
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 		}
+	}
+	
+	public function getState() {
+		return $this->value;
+	}
+
+	public function setState($state) {
+		$this->value = $state;
 	}
 }
 
