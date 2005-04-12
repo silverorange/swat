@@ -55,7 +55,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent {
 
 		$table_tag = new SwatHtmlTag('table');
 		$table_tag->class = 'swat-detail-view';
-		$table_tag->border = 1;
+		//$table_tag->border = 1;
 
 		$table_tag->open();
 		$this->displayContent();
