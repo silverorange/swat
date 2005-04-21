@@ -38,7 +38,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn {
 	public function process() {
 		$renderer = $this->getCheckboxRenderer();
 		
-		$prefix = ($this->view->name == null)? '': $this->view->name.'_';
+		$prefix = ($this->view->name === null)? '': $this->view->name.'_';
 		$item_name = $prefix.$renderer->name;
 		
 		if (isset($_POST[$item_name]) && is_array($_POST[$item_name]))
