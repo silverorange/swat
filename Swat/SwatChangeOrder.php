@@ -133,7 +133,7 @@ class SwatChangeOrder extends SwatControl implements SwatState {
 
 	public function getState() {
 		if ($this->values === null)
-			return array_keys($this->options)
+			return array_keys($this->options);
 		else
 			return $this->values;
 	}
