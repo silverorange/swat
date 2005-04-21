@@ -104,7 +104,7 @@ class SwatColorEntry extends SwatControl implements SwatState {
 	}
 	
 	public function getState() {
-		if ($this->value == null)
+		if ($this->value === null)
 			return null;
 		else
 			return $this->value->getDate();	

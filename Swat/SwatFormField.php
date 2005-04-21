@@ -58,7 +58,7 @@ class SwatFormField extends SwatContainer {
 	public function display() {
 		$first_child = $this->getChild(0);
 
-		if ($first_child == NULL)
+		if ($first_child === null)
 			return;
 
 		$messages = $this->gatherMessages();

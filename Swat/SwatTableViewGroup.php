@@ -41,7 +41,7 @@ class SwatTableViewGroup extends SwatTableViewColumn {
 		$td_tag->class = 'swat-table-view-group';
 		$td_tag->open();
 
-		$prefix = ($this->view == null)? '': $this->view->name.'_';
+		$prefix = ($this->view === null)? '': $this->view->name.'_';
 
 		foreach ($this->renderers as $renderer) {
 			$renderer->render($prefix);

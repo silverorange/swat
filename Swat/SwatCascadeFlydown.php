@@ -35,7 +35,7 @@ class SwatCascadeFlydown extends SwatFlydown {
 
 	protected function &getOptions() {
 		$parent_value = $this->cascade_from->value;
-		if ($parent_value == null) {
+		if ($parent_value === null) {
 			if ($this->cascade_from->show_blank)
 				return array('' => _S("n/a"));
 			else

@@ -86,7 +86,7 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttribs());
 		$td_tag->open();
 
-		$prefix = ($this->view->name == null)? '': $this->view->name.'_';
+		$prefix = ($this->view->name === null)? '': $this->view->name.'_';
 
 		foreach ($this->renderers as $renderer) {
 			$renderer->render($prefix);

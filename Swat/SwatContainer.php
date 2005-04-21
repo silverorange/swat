@@ -107,7 +107,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent {
 	 * @return array An array of the child widgets in this container.
 	 */
 	public function getChildren($class_name = null) {
-		if ($class_name == null)
+		if ($class_name === null)
 			return $this->children;
 
 		$out = array();
