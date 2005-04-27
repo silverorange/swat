@@ -67,7 +67,7 @@ class SwatActions extends SwatControl implements SwatUIParent {
 			$this->selected = null;
 
 		echo '<div class="swat-actions">';
-		echo _S('Action: ');
+		echo sprintf('%s: ', _S('Action'));
 		$this->actionfly->display();
 		echo ' ';
 		$this->apply_button->display();
