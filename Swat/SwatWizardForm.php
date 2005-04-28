@@ -1,6 +1,7 @@
 <?php
 require_once('Swat/SwatForm.php');
 require_once('Swat/SwatWizardStep.php');
+require_once('Swat/SwatWizardPostStateStore.php');
 
 /**
  * A wizard-like form with steps
@@ -11,53 +12,94 @@ require_once('Swat/SwatWizardStep.php');
  */
 class SwatWizardForm extends SwatForm {
 
+	/**
+	 * The current step of the wizard
+	 * @var integer
+	 */
 	public $step;
-	private $wizard_state = array();
 
-	public function display() {
+	private $state_store = null;
+	private $steps = array();
+	private $navigation = array();
+
+	public function init() {
 		foreach ($this->children as $child) {
-			if ($child instanceof SwatWizardStep && $child->step == $this->step)
-				$child->visible = true;
-			elseif ($child instanceof SwatWizardStep)
-				$child->visible = false;
+			if ($child instanceof SwatWizardStep)
+				$this->steps[] = $child;
+			elseif ($child instanceof SwatWizardNavigation)
+				$this->navigation[] = $child;
 		}
-		
-		$this->addHiddenField('wizard_state', serialize($this->wizard_state));
-		$this->addHiddenField('step', $this->step);
-		
-		parent::display();	
 	}
 
 	public function process() {
 		if (!isset($_POST['process']) || $_POST['process'] != $this->name)
 			return false;
 
-		if (isset($_POST['wizard_state']))
-			$this->wizard_state = unserialize($_POST['wizard_state']);
-
+		if ($this->state_store === null)
+			$this->state_store = new SwatWizardPostStateStore($this);
+		
+		$this->state_store->init();
+	
 		$this->processed = true;
 		$this->processHiddenFields();
 
 		$step = $this->getHiddenField('step');
 		$this->step = ($step === null) ? 0 : intval($step);
 		
-		foreach ($this->children as &$child) {
-			if ($child instanceof SwatWizardStep && $child->step == $this->step) {
-				$child->process();
-				$this->wizard_state = array_merge($this->wizard_state, $child->getStepStates());
-			} elseif ($child instanceof SwatWizardStep)
-				$child->setStepStates($this->wizard_state);
+		foreach ($this->steps as $step) {
+			if ($step->step == $this->step) {
+				$step->process();
+				$this->state_store->updateState($step->getWidgetStates());
+			} else
+				$step->setWidgetStates($this->state_store->getState());
 		}
-
-		if (!$this->hasMessage()) 
-			if ($this->step == 1)
-				$this->step--;
-			else
-				$this->step++;
-			//TODO: make this work with back/forward functionality
+	
+		$this->step = $this->getNextStep();
 		
 		return true;
 	}
 
+	public function display() {
+		foreach ($this->steps as $step)
+			$step->visible = ($step->step == $this->step) ? true : false;
+		
+		$this->addHiddenField('step', $this->step);
+		
+		parent::display();
+	}
+
+	private function getNextStep() {
+		$next_step = $this->step;
+
+		foreach ($this->navigation as $navigation) {
+			$next_step = $navigation->getNextStep();
+			if ($next_step !== null)
+				break;
+		}
+
+		if ($next_step === null || ($this->hasMessage() && $next_step > $this->step))
+			return $this->step;
+		else
+			return $next_step;
+	}
+
+	public function getStepCount() {
+		return count($this->steps);
+	}
+	
+	public function getStepTitle($step) {
+		if ($this->steps[$step]->title !== null)
+			return $this->steps[$step]->title;
+		else
+			return sprintf(_S("Step %d"), $step + 1);
+	}
+
+	public function setStateStore($state_store) {
+		if (!$state_store instanceof SwatWizardStateStore)
+			throw new SwatException('SwatWizardForm: A state store must be a type '.
+				'of SwatWizardStateStore');
+		
+		$this->state_store = $state_store;	
+	}
 }
 ?>
