@@ -12,18 +12,25 @@ require_once('Swat/SwatHtmlTag.php');
 class SwatWizardStep extends SwatContainer {
 
 	public $visible = false;
-	public $step;
+	public $step; //read only
+	public $title = null;
+
+	public function __construct() {
+		static $step = 0;
+		$this->step = $step;
+		$step++;
+	}
 
 	public function display() {
 		if ($this->visible)
 			parent::display();
 	}
 	
-	public function getStepStates() {
+	public function getWidgetStates() {
 		return $this->getDescendantStates();
 	}
 	
-	public function setStepStates($states) {
+	public function setWidgetStates($states) {
 		$this->setDescendantStates($states);
 	}
 }
