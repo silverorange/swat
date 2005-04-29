@@ -54,7 +54,7 @@ class SwatCheckboxList extends SwatControl implements SwatState {
 				$input_tag->removeAttr('checked');
 				
 				if (in_array($value, $this->values))
-					$input_tag->checked = "checked";
+					$input_tag->checked = 'checked';
 				
 				$input_tag->id = $this->name.'_'.$input_tag->value;
 				$input_tag->display();
@@ -93,11 +93,11 @@ class SwatCheckboxList extends SwatControl implements SwatState {
 		$this->values = key($this->options);
 	}
 
-	public setState($state) {
+	public function setState($state) {
 		$this->values = $state;
 	}
 	
-	public getState() {
+	public function getState() {
 		return $this->values;
 	}
 }
