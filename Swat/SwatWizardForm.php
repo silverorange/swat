@@ -82,11 +82,20 @@ class SwatWizardForm extends SwatForm {
 		else
 			return $next_step;
 	}
-
+	
+	/**
+	 * Get the total number of steps in the wizard
+	 * @return int Total steps
+	 */
 	public function getStepCount() {
 		return count($this->steps);
 	}
 	
+	/**
+	 * Get the step title (if not set, "Step X")
+	 * @param int $step Step number
+	 * @return int Step title
+	 */
 	public function getStepTitle($step) {
 		if ($this->steps[$step]->title !== null)
 			return $this->steps[$step]->title;
@@ -94,6 +103,11 @@ class SwatWizardForm extends SwatForm {
 			return sprintf(_S("Step %d"), $step + 1);
 	}
 
+	/**
+	 * Set state storage method
+	 * @param int $state_store A {@link SwatWizardStateStore} that specifies
+	 *        how the data is stored between steps.
+	 */
 	public function setStateStore($state_store) {
 		if (!$state_store instanceof SwatWizardStateStore)
 			throw new SwatException('SwatWizardForm: A state store must be a type '.
