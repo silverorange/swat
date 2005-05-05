@@ -16,9 +16,18 @@ abstract class SwatWizardStateStore extends SwatObject {
 
 	}
 
+	/**
+	 * Initiate the states of the wizard steps
+	 */
 	abstract function init();
 
+	/**
+	 * Return the current state of the wizard 
+	 */
 	abstract function getState();
 	
+	/**
+	 * Update the state of the wizard steps
+	 */
 	abstract function updateState($state);
 }

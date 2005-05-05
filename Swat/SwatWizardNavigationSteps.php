@@ -2,7 +2,8 @@
 require_once('Swat/SwatWizardNavigation.php');
 
 /**
- * A proto-type test wizard navigation class
+ * A proto-type test wizard navigation class that shows navigation buttons to
+ * switch steps.
  *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
