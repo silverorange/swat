@@ -32,7 +32,7 @@
 				
 				<widget class="SwatFormField">
 					<property name="title" value="Email" />
-					<widget class="SwatEntryEmail" id="email" />
+					<widget class="SwatEmailEntry" id="email" />
 				</widget>
 				
 			</widget>
