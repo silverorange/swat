@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <swat-interface>
-	<widget class="SwatFrame" name="frame1">
+	<widget class="SwatFrame" id="frame1">
 		<property name="title" value="New Weblog Post Example Form" />
-		<widget class="SwatForm" name="form1">
+		<widget class="SwatForm" id="form1">
 			<widget class="SwatFormField">
 				<property name="title" value="Title" />
-				<widget class="SwatEntry" name="title">
+				<widget class="SwatEntry" id="title">
 					<property name="required" type="boolean" value="true" />
 				</widget>
 			</widget>
 
 			<widget class="SwatFormField">
 				<property name="title" value="Short name" />
-				<widget class="SwatEntry" name="shortname">
+				<widget class="SwatEntry" id="shortname">
 					<property name="required" type="boolean" value="true" />
 					<property name="maxlength" type="integer" value="10" />
 				</widget>
@@ -20,12 +20,12 @@
 
 			<widget class="SwatFormField">
 				<property name="title" value="Hidden?" />
-				<widget class="SwatCheckbox" name="hidden" />
+				<widget class="SwatCheckbox" id="hidden" />
 			</widget>
 
 			<widget class="SwatFormField">
 				<property name="title" value="Body Text" />
-				<widget class="SwatTextarea" name="bodytext">
+				<widget class="SwatTextarea" id="bodytext">
 					<property name="required" type="boolean" value="true" />
 					<property name="value" type="string" value="Initial Value" />
 				</widget>
@@ -36,26 +36,26 @@
 				
 				<widget class="SwatFormField">
 					<property name="title" value="More Text" />
-					<widget class="SwatTextarea" name="moretext" />
+					<widget class="SwatTextarea" id="moretext" />
 				</widget>
 
 				<widget class="SwatFormField">
 					<property name="title" value="Reply Status" />
-					<widget class="SwatFlydown" name="replystatus" />
+					<widget class="SwatFlydown" id="replystatus" />
 				</widget>
 
 			</widget>
 			
 			<widget class="SwatFormField">
 				<property name="title" value="Ping Weblogs.com?" />
-				<widget class="SwatCheckbox" name="ping">
+				<widget class="SwatCheckbox" id="ping">
 					<property name="value" value="true" type="boolean" />
 				</widget>
 			</widget>
 
 			<widget class="SwatFormField">
 				<property name="class" value="swat-form-footer" />
-				<widget class="SwatButton" name="btn_create">
+				<widget class="SwatButton" id="btn_create">
 					<property name="title" value="Create" />
 				</widget>
 			</widget>
