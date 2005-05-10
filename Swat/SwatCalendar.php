@@ -81,7 +81,7 @@ class SwatCalendar extends SwatControl {
 		echo " clickWidgetIcon('{$this->id}','{$start_date}','{$end_date}');";
 		echo '" />';
 		echo '<br />';
-		echo '<div id="'.{$this->id}.'_div" class="swat-calendar-div-hide">';
+		echo '<div id="'.$this->id.'_div" class="swat-calendar-div-hide">';
 		echo '</div>';
 
 	}
