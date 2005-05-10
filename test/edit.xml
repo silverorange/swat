@@ -1,42 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SwatLayout>
-	<SwatFrame name="frame1" title="New Weblog Post Example Form">
-		<SwatForm name="form1" action="#">
+<swat-interface>
+	<widget class="SwatFrame" name="frame1">
+		<property name="title" value="New Weblog Post Example Form" />
+		<widget class="SwatForm" name="form1">
+			<widget class="SwatFormField">
+				<property name="title" value="Title" />
+				<widget class="SwatEntry" name="title">
+					<property name="required" type="boolean" value="true" />
+				</widget>
+			</widget>
 
-			<SwatFormField title="Title">
-				<SwatEntry name="title" required="bool:true" />
-			</SwatFormField>
+			<widget class="SwatFormField">
+				<property name="title" value="Short name" />
+				<widget class="SwatEntry" name="shortname">
+					<property name="required" type="boolean" value="true" />
+					<property name="maxlength" type="integer" value="10" />
+				</widget>
+			</widget>
 
-			<SwatFormField title="Shortname">
-				<SwatEntry name="shortname" required="bool:true" maxlength="int:10" />
-			</SwatFormField>
+			<widget class="SwatFormField">
+				<property name="title" value="Hidden?" />
+				<widget class="SwatCheckbox" name="hidden" />
+			</widget>
 
-			<SwatFormField title="Hidden?">
-				<SwatCheckbox name="hidden" />
-			</SwatFormField>
+			<widget class="SwatFormField">
+				<property name="title" value="Body Text" />
+				<widget class="SwatTextarea" name="bodytext">
+					<property name="required" type="boolean" value="true" />
+					<property name="value" type="string" value="Initial Value" />
+				</widget>
+			</widget>
 
-			<SwatFormField title="Body Text">
-				<SwatTextarea name="bodytext" required="bool:true">Initial value</SwatTextarea>
-			</SwatFormField>
+			<widget class="SwatFieldset">
+				<property name="title" value="Nick's Fieldset" />
+				
+				<widget class="SwatFormField">
+					<property name="title" value="More Text" />
+					<widget class="SwatTextarea" name="moretext" />
+				</widget>
 
-			<SwatFieldset title="Nick's Fieldset">
-				<SwatFormField title="More Text">
-					<SwatTextarea name="moretext"></SwatTextarea>
-				</SwatFormField>
+				<widget class="SwatFormField">
+					<property name="title" value="Reply Status" />
+					<widget class="SwatFlydown" name="replystatus" />
+				</widget>
 
-				<SwatFormField title="Reply Status">
-					<SwatFlydown name="replystatus" />
-				</SwatFormField>
-			</SwatFieldset>
+			</widget>
 			
-			<SwatFormField title="Ping Weblogs.com?">
-				<SwatCheckbox name="ping" value="bool:true" />
-			</SwatFormField>
+			<widget class="SwatFormField">
+				<property name="title" value="Ping Weblogs.com?" />
+				<widget class="SwatCheckbox" name="ping">
+					<property name="value" value="true" type="boolean" />
+				</widget>
+			</widget>
 
-			<SwatFormField class="swat-form-footer">
-				<SwatButton name="btn_create" title="Create" />
-			</SwatFormField>
+			<widget class="SwatFormField">
+				<property name="class" value="swat-form-footer" />
+				<widget class="SwatButton" name="btn_create">
+					<property name="title" value="Create" />
+				</widget>
+			</widget>
 
-		</SwatForm>
-	</SwatFrame>
-</SwatLayout>
+		</widget>
+	</widget>
+</swat-interface>
