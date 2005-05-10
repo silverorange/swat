@@ -13,7 +13,7 @@
 
 			<widget class="SwatFormField">
 				<property name="title" value="Date 2" />
-				<widget class="SwatDate" id="date2" />
+				<widget class="SwatDateEntry" id="date2" />
 			</widget>
 			
 			<widget class="SwatDisclosure">
@@ -22,7 +22,7 @@
 				
 				<widget class="SwatFormField">
 					<property name="title" value="Date" />
-					<widget class="SwatDate" id="date" />
+					<widget class="SwatDateEntry" id="date" />
 				</widget>
 	
 				<widget class="SwatFormField">
