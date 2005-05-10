@@ -40,12 +40,12 @@ function setCalendar(idtag, yyyy, mm, dd) {
 	//swat-removed: y.value = mm + "/" + dd + "/" + yyyy;
 	setDateValues(idtag,yyyy,mm,dd);
 	
-	y = document.getElementById(idtag + "Div");
+	y = document.getElementById(idtag + "_div");
 	y.style.display = "none";
 }
 
 function closeCal(idtag) {
-	t = document.getElementById(idtag + "Div");
+	t = document.getElementById(idtag + "_div");
 	t.style.display = "none";
 }
 
@@ -54,7 +54,7 @@ function closeCalNoDate(idtag) {
 	//swat-removed: y.value = "";
 	setDateValues(idtag,'','','');
 	
-	t = document.getElementById(idtag + "Div");
+	t = document.getElementById(idtag + "_div");
 	t.style.display = "none";
 }
 
@@ -70,7 +70,7 @@ function closeCalSetToday(idtag) {
 
 	setCalendar(idtag, yyyy, mm, dd);
 	
-	t = document.getElementById(idtag + "Div");
+	t = document.getElementById(idtag + "_div");
 	t.style.display = "none";
 }
 
@@ -193,7 +193,7 @@ function clickWidgetIcon() {
 	(arguments[1] ? start_date = arguments[1] : start_date = "");
 	(arguments[2] ? end_date = arguments[2] : end_date = "");
 
-	t = document.getElementById(idtag + "Div");
+	t = document.getElementById(idtag + "_div");
 	
 	if (t.style.display == "block") {
 		closeCal(idtag);
@@ -430,7 +430,7 @@ function drawCalendar() {
 	}
 
 	curHTML = curHTML + "</tr>";
-	t = document.getElementById(idtag + "Div");
+	t = document.getElementById(idtag + "_div");
 	dateField = document.getElementById(idtag + '_calendar');
 	t.innerHTML = beginTable + dateControls + calHeader + curHTML + closeControls;
 
