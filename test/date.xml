@@ -27,7 +27,7 @@
 	
 				<widget class="SwatFormField">
 					<property name="title" value="Time" />
-					<widget class="SwatTime" id="time" />
+					<widget class="SwatTimeEntry" id="time" />
 				</widget>
 				
 				<widget class="SwatFormField">
