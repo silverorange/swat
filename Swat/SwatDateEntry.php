@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatFlydown.php');
 require_once('Swat/SwatDate.php');
@@ -146,7 +147,8 @@ class SwatDateEntry extends SwatControl implements SwatState {
 		if ($this->display_parts & self::CALENDAR) {
 			include_once('Swat/SwatCalendar.php');
 			$cal = new SwatCalendar();
-			$cal->name = $this->name;
+			// TODO: This line doesn't make sense. Id is unique.
+			$cal->id = $this->id;
 			$cal->valid_range_start = $this->valid_range_start;
 			$cal->valid_range_end   = $this->valid_range_end;
 			$cal->display();
@@ -255,9 +257,9 @@ class SwatDateEntry extends SwatControl implements SwatState {
 	}
 
 	private function createYearFlydown() { 
-		$this->yearfly = new SwatFlydown($this->name.'_year');
+		$this->yearfly = new SwatFlydown($this->id.'_year');
 		$this->yearfly->onchange = sprintf("dateSet('%s', this);",
-			$this->name);
+			$this->id);
 
 		$start_year = $this->valid_range_start->getYear();
 		
@@ -270,9 +272,9 @@ class SwatDateEntry extends SwatControl implements SwatState {
 	}
 		
 	private function createMonthFlydown() { 
-		$this->monthfly = new SwatFlydown($this->name.'_month');
+		$this->monthfly = new SwatFlydown($this->id.'_month');
 		$this->monthfly->onchange = sprintf("dateSet('%s', this);",
-			$this->name);
+			$this->id);
 
 		$start_year = $this->valid_range_start->getYear();
 		$tmp = clone $this->valid_range_end;
@@ -307,9 +309,9 @@ class SwatDateEntry extends SwatControl implements SwatState {
 	}
 		
 	private function createDayFlydown() {
-		$this->dayfly = new SwatFlydown($this->name.'_day');
+		$this->dayfly = new SwatFlydown($this->id.'_day');
 		$this->dayfly->onchange = sprintf("dateSet('%s', this);",
-			$this->name);
+			$this->id);
 
 		$start_year  = $this->valid_range_start->getYear();
 		
@@ -321,7 +323,7 @@ class SwatDateEntry extends SwatControl implements SwatState {
 		$end_month   = $this->valid_range_end->getMonth();
 
 		$end_check = clone($this->valid_range_start);
-		$end_check->addSeconds(2678400); //add 31 days
+		$end_check->addSeconds(2678400); // add 31 days
 		
 		if ($start_year == $end_year && $start_month == $end_month) {
 			
@@ -355,7 +357,8 @@ class SwatDateEntry extends SwatControl implements SwatState {
 		require_once('Swat/SwatTimeEntry.php');
 		
 		$this->timefly = new SwatTimeEntry();
-		$this->timefly->name = $this->name;
+		// TODO: This doesn't make sense. Ids are unique.
+		$this->timefly->id = $this->id;
 	}
 	
 	private function validateRanges() {
@@ -416,4 +419,5 @@ class SwatDateEntry extends SwatControl implements SwatState {
 	}
 
 }
+
 ?>

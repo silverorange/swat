@@ -12,12 +12,12 @@ require_once('Swat/SwatUIParent.php');
  */
 class SwatActionItem extends SwatControl implements SwatUIParent {
 
-	public $name;
+	public $id;
 	public $title = '';
 	public $widget = null;
 
-	function __construct($name = '') {
-		$this->name = $name;
+	function __construct($id = '') {
+		$this->id = $id;
 	}
 
 	public function display() {
@@ -52,5 +52,6 @@ class SwatActionItem extends SwatControl implements SwatUIParent {
 	}
 
 }
+
 ?>
 

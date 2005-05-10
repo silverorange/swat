@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatCheckAll.php');
@@ -40,7 +41,7 @@ class SwatCheckboxList extends SwatControl implements SwatState {
 	public function display() {
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
-		$input_tag->name = $this->name.'[]';
+		$input_tag->name = $this->id.'[]';
 		if ($this->onchange !== null)
 			$input_tag->onchange = $this->onchange;
 			
@@ -56,10 +57,10 @@ class SwatCheckboxList extends SwatControl implements SwatState {
 				if (in_array($value, $this->values))
 					$input_tag->checked = 'checked';
 				
-				$input_tag->id = $this->name.'_'.$input_tag->value;
+				$input_tag->id = $this->id.'_'.$input_tag->value;
 				$input_tag->display();
 			
-				$label_tag->for = $this->name.'_'.$input_tag->value;
+				$label_tag->for = $this->id.'_'.$input_tag->value;
 				$label_tag->open();
 				echo $title;
 				$label_tag->close();
@@ -69,15 +70,15 @@ class SwatCheckboxList extends SwatControl implements SwatState {
 
 			if (count($this->options) > 1) {
 				$chk_all = new SwatCheckAll();
-				$chk_all->series_name = $this->name;
+				$chk_all->series_name = $this->id;
 				$chk_all->display();
 			}
 		}
 	}	
 
 	public function process() {
-		if (isset($_POST[$this->name]))
-			$this->values = $_POST[$this->name];
+		if (isset($_POST[$this->id]))
+			$this->values = $_POST[$this->id];
 		else
 			$this->values = array();
 	}

@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatDetailsViewField.php');
@@ -98,4 +99,5 @@ class SwatDetailsView extends SwatControl implements SwatUIParent {
 	}
 
 }
+
 ?>

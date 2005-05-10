@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatCellRenderer.php');
 require_once('Swat/SwatHtmlTag.php');
 
@@ -48,3 +49,5 @@ class SwatLinkCellRenderer extends SwatCellRenderer {
 		$anchor->display();
 	}
 }
+
+?>

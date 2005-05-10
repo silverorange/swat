@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatWizardForm.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatButton.php');
@@ -70,4 +71,5 @@ class SwatWizardNavigation extends SwatControl {
 			return null;
 	}
 }
+
 ?>

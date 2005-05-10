@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatState.php');
 
@@ -32,21 +33,31 @@ class SwatColorEntry extends SwatControl implements SwatState {
 	public function display() {
 		$this->displayJavascript();
 		
-		?>
-		<input type="text" id="<?=$this->name?>" name="<?=$this->name?>"
-			value="<?=$this->value?>" class="swat-color-entry-input"
-			disabled="true" />
-		<a href="javascript:<?=$this->name?>_obj.toggle();">
-			<img src="swat/images/b_palette.gif" id="<?=$this->name?>_toggle" class="swat-color-entry-toggle" />
-		</a>
-		
-		<?php
+		$input_tag = new SwatHtmlTag('input');
+		$input_tag->type = 'text';
+		$input_tag->id = $this->id;
+		$input_tag->name = $this->id;
+		$input_tag->value = $this->value;
+		$input_tag->class = 'swat-color-entry-input';
+		$input_tag->disabled = 'true';
+		$input_tag->display();
+
+		$link_tag = new SwatHtmlTag('a');
+		$link_tag->href = "javascript:{$this->id}_obj.toggle();";
+		$link_tag->open();
+
+		$img_tag = new SwatHtmlTag('img');
+		$img_tag->src = 'swat/images/b_palette.gif';
+		$img_tag->id = $this->id.'_toggle';
+		$img_tag->class = 'swat-color-entry-toggle';
+
+		$link_tag->close();
+
 		$this->displayPalette();
-		?>
-		<script type="text/javascript">
-			var <?=$this->name?>_obj = new SwatColorEntry('<?=$this->name?>');
-		</script>
-		<?php
+
+		echo '<script type="text/javascript">';
+		echo "var {$this->name}_obj = new SwatColorEntry('{$this->name}');";
+		echo '</script>';
 	}
 	
 	public function process() {
@@ -60,44 +71,45 @@ class SwatColorEntry extends SwatControl implements SwatState {
 	}
 
 	private function displayPalette() {
+		//TODO: clean this up
 		?>
-		<div id="<?=$this->name?>_wrapper" class="swat-color-entry-wrapper">
+		<div id="<?=$this->id?>_wrapper" class="swat-color-entry-wrapper">
 
-		<div class="palette" id="<?=$this->name?>_color_palette">&nbsp;</div>
-		<div class="scale" id="<?=$this->name?>_grayscale">&nbsp;</div>
-		<div class="scale" id="<?=$this->name?>_tintscale">&nbsp;</div>
+		<div class="palette" id="<?=$this->id?>_color_palette">&nbsp;</div>
+		<div class="scale" id="<?=$this->id?>_grayscale">&nbsp;</div>
+		<div class="scale" id="<?=$this->id?>_tintscale">&nbsp;</div>
 
 		<div class="swatches">
-			<div class="swatch" id="<?=$this->name?>_swatch">&nbsp;</div>
-			<div class="active" id="<?=$this->name?>_active_swatch">&nbsp;</div>
+			<div class="swatch" id="<?=$this->id?>_swatch">&nbsp;</div>
+			<div class="active" id="<?=$this->id?>_active_swatch">&nbsp;</div>
 		</div>
 
 		<div class="palette-footer">
 			<div class="rgb">
 			r: <input maxlength="3" type="text"
-				onkeyup="<?=$this->name?>_obj.setRGB()"
-				id="<?=$this->name?>_color_input_r"
+				onkeyup="<?=$this->id?>_obj.setRGB()"
+				id="<?=$this->id?>_color_input_r"
 				class="rgb-input" />
 			g: <input maxlength="3" type="text"
-				onkeyup="<?=$this->name?>_obj.setRGB()"
-				id="<?=$this->name?>_color_input_g"
+				onkeyup="<?=$this->id?>_obj.setRGB()"
+				id="<?=$this->id?>_color_input_g"
 				class="rgb-input" />
 			b: <input maxlength="3" type="text"
-				onkeyup="<?=$this->name?>_obj.setRGB()"
-				id="<?=$this->name?>_color_input_b"
+				onkeyup="<?=$this->id?>_obj.setRGB()"
+				id="<?=$this->id?>_color_input_b"
 				class="rgb-input" />
 			</div>
 	
 			<div class="hex">
 				hex: <input maxlength="6" type="text"
-					onkeyup="<?=$this->name?>_obj.setHex(this.value)" id="<?=$this->name?>_color_input_hex" class="hex-input" />
+					onkeyup="<?=$this->id?>_obj.setHex(this.value)" id="<?=$this->id?>_color_input_hex" class="hex-input" />
 			</div>
 		</div>
 	
 		<div class="palette-buttons">
-			<input type="button" class="button-set" onclick="<?=$this->name?>_obj.apply()" value="Set Color">
-			<input type="button" class="button-cancel" onclick="<?=$this->name?>_obj.none()" value="Set None">
-			<input type="button" class="button-cancel" onclick="<?=$this->name?>_obj.toggle()" value="Cancel">
+			<input type="button" class="button-set" onclick="<?=$this->id?>_obj.apply()" value="Set Color">
+			<input type="button" class="button-cancel" onclick="<?=$this->id?>_obj.none()" value="Set None">
+			<input type="button" class="button-cancel" onclick="<?=$this->id?>_obj.toggle()" value="Cancel">
 		</div>
 		</div>
 		<?php
@@ -115,4 +127,5 @@ class SwatColorEntry extends SwatControl implements SwatState {
 	}
 
 }
+
 ?>

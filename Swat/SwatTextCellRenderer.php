@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatCellRenderer.php');
 
 /**
@@ -22,3 +23,5 @@ class SwatTextCellRenderer extends SwatCellRenderer {
 		echo $this->value;
 	}
 }
+
+?>

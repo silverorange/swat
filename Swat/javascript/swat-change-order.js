@@ -1,6 +1,6 @@
-function SwatChangeOrder(name) {
+function SwatChangeOrder(id) {
 	this.active_div;
-	this.name = name;
+	this.id = id;
 	this.warning_msg = "You must select an element before re-ordering.";
 	this.style;
 }
@@ -10,14 +10,14 @@ SwatChangeOrder.prototype.draw = function(elements) {
 	
 	myvar = '<body class="swat-order-control-iframe-body">';
 	for (i = 0; i < elements.length; i++) {
-		myvar = myvar + '<div id="' + this.name + '_' + i + '"';
-		myvar = myvar + ' onclick="window.parent.' + this.name + '_obj.choose(this);"';
+		myvar = myvar + '<div id="' + this.id + '_' + i + '"';
+		myvar = myvar + ' onclick="window.parent.' + this.id + '_obj.choose(this);"';
 		myvar = myvar + ' class="swat-order-control">';
 		myvar = myvar + elements[i] + '</div>';
 	}
 	myvar = myvar + '</body>';
 	
-	var iframe = document.getElementById(this.name + '_iframe');
+	var iframe = document.getElementById(this.id + '_iframe');
 	var doc = iframe.contentWindow.document;
 	doc.open("text/html", "replace");
 	doc.write('<style type="text/css" media="all">');
@@ -55,10 +55,10 @@ SwatChangeOrder.prototype.updown = function(direction) {
 	//swap the content of the current element and the next one
 	var current_content = this.active_div.innerHTML;
 	
-	var iframe = document.getElementById(this.name + '_iframe');
+	var iframe = document.getElementById(this.id + '_iframe');
 	var iframedoc = iframe.contentWindow.document;
 	
-	var next_div = iframedoc.getElementById(this.name + '_' + nxt);
+	var next_div = iframedoc.getElementById(this.id + '_' + nxt);
 	var next_content = next_div.innerHTML;
 	
 	next_div.innerHTML = current_content;
@@ -68,7 +68,7 @@ SwatChangeOrder.prototype.updown = function(direction) {
 	this.choose(next_div);
 	
 	//update a hidden field with current order of keys
-	var hidden_vals = document.getElementById(this.name);
+	var hidden_vals = document.getElementById(this.id);
 	var val_array = hidden_vals.value.split(',');
 	var current_val = val_array[idx];
 	val_array[idx] = val_array[nxt];

@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatForm.php');
 require_once('Swat/SwatWizardStep.php');
 require_once('Swat/SwatWizardPostStateStore.php');
@@ -32,7 +33,7 @@ class SwatWizardForm extends SwatForm {
 	}
 
 	public function process() {
-		if (!isset($_POST['process']) || $_POST['process'] != $this->name)
+		if (!isset($_POST['process']) || $_POST['process'] != $this->id)
 			return false;
 
 		if ($this->state_store === null)
@@ -116,4 +117,5 @@ class SwatWizardForm extends SwatForm {
 		$this->state_store = $state_store;	
 	}
 }
+
 ?>

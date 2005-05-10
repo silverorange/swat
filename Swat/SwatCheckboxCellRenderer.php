@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatCellRenderer.php');
 
 /**
@@ -53,3 +54,5 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer {
 		echo '</script>';
 	}
 }
+
+?>

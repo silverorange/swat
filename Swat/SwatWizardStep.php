@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatContainer.php');
 require_once('Swat/SwatHtmlTag.php');
 

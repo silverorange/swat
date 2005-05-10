@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatState.php');
@@ -44,8 +45,8 @@ class SwatTextarea extends SwatControl implements SwatState {
 	
 	public function display() {
 		$textarea_tag = new SwatHtmlTag('textarea');
-		$textarea_tag->name = $this->name;
-		$textarea_tag->id = $this->name;
+		$textarea_tag->name = $this->id;
+		$textarea_tag->id = $this->id;
 		// Attributes rows and cols are required in a textarea for XHTML strict.
 		$textarea_tag->rows = $this->rows;
 		$textarea_tag->cols = $this->cols;
@@ -56,7 +57,7 @@ class SwatTextarea extends SwatControl implements SwatState {
 	}	
 
 	public function process() {
-		$this->value = $_POST[$this->name];
+		$this->value = $_POST[$this->id];
 
 		if ($this->required && !strlen($this->value)) {
 			$msg = _S("The %s field is required.");

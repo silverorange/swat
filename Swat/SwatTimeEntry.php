@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatFlydown.php');
 require_once('Swat/SwatState.php');
@@ -193,37 +194,37 @@ class SwatTimeEntry extends SwatControl implements SwatState {
 	}
 	
 	private function createHourFlydown() {
-		$this->hourfly = new SwatFlydown($this->name.'_hour');
+		$this->hourfly = new SwatFlydown($this->id.'_hour');
 		$this->hourfly->onchange = sprintf("timeSet('%s', this);",
-			$this->name);
+			$this->id);
 				
 		for ($i = 1; $i <= 12; $i++)
 			$this->hourfly->options[$i] = $i;
 	}
 	
 	private function createMinuteFlydown() {
-		$this->minutefly = new SwatFlydown($this->name.'_minute');
+		$this->minutefly = new SwatFlydown($this->id.'_minute');
 		$this->minutefly->onchange = sprintf("timeSet('%s', this);",
-			$this->name);
+			$this->id);
 		
 		for ($i = 0; $i <= 59; $i++)
 			$this->minutefly->options[$i] = str_pad($i,2,'0',STR_PAD_LEFT);
 	}
 	
 	private function createSecondFlydown() {	
-		$this->secondfly = new SwatFlydown($this->name.'_second');
+		$this->secondfly = new SwatFlydown($this->id.'_second');
 		$this->secondfly->onchange = sprintf("timeSet('%s', this);",
-			$this->name);
+			$this->id);
 		
 		for ($i = 0; $i <= 59; $i++)
 			$this->secondfly->options[$i] = str_pad($i,2,'0',STR_PAD_LEFT);
 	}
 	
 	private function createAmPmFlydown() {
-		$this->ampmfly = new SwatFlydown($this->name.'_ampm');
+		$this->ampmfly = new SwatFlydown($this->id.'_ampm');
 		$this->ampmfly->options = array('am' => 'AM', 'pm' => 'PM');
 		$this->ampmfly->onchange = sprintf("timeSet('%s', this);",
-			$this->name);
+			$this->id);
 	}
 	
 	private function validateRanges() {
@@ -253,7 +254,7 @@ class SwatTimeEntry extends SwatControl implements SwatState {
 	}
 	
 	private function displayTime($time) {
-		return $time->format('%r'); //%X
+		return $time->format('%r'); // TODO: %X
 	}
 
 	private function displayJavascript() {
@@ -274,4 +275,5 @@ class SwatTimeEntry extends SwatControl implements SwatState {
 		$this->value = new SwatDate($state);
 	}
 }
+
 ?>

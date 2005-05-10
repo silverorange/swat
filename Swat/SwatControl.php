@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatWidget.php');
 require_once('Swat/SwatFormField.php');
 
@@ -31,4 +32,5 @@ abstract class SwatControl extends SwatWidget {
 	}
 
 }
+
 ?>

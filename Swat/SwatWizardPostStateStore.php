@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatWizardStateStore.php');
 
 /**
@@ -31,3 +32,5 @@ class SwatWizardPostStateStore extends SwatWizardStateStore {
 		$this->form->addHiddenField('_wizard_state', serialize($this->state));
 	}
 }
+
+?>

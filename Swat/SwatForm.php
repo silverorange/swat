@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatContainer.php');
 require_once('Swat/SwatHtmlTag.php');
 
@@ -54,10 +55,10 @@ class SwatForm extends SwatContainer {
 		if (!$this->visible)
 			return;
 
-		$this->addHiddenField('process', $this->name);
+		$this->addHiddenField('process', $this->id);
 
 		$form_tag = new SwatHtmlTag('form');
-		$form_tag->id = $this->name;
+		$form_tag->id = $this->id;
 		$form_tag->method = $this->method;
 		$form_tag->enctype = $this->enctype;
 		$form_tag->action = $this->action;
@@ -91,7 +92,7 @@ class SwatForm extends SwatContainer {
 			}
 
 			// array of field names
-			$input_tag->name = $this->name.'_hidden_fields[]';
+			$input_tag->name = $this->id.'_hidden_fields[]';
 			$input_tag->value = $name;
 			$input_tag->display();
 		}
@@ -100,7 +101,7 @@ class SwatForm extends SwatContainer {
 	}
 
 	public function process() {
-		if (!isset($_POST['process']) || $_POST['process'] != $this->name)
+		if (!isset($_POST['process']) || $_POST['process'] != $this->id)
 			return false;
 
 		$this->processed = true;
@@ -114,8 +115,8 @@ class SwatForm extends SwatContainer {
 	}
 
 	protected function processHiddenFields() {
-		if (isset($_POST[$this->name.'_hidden_fields']))
-			$fields = $_POST[$this->name.'_hidden_fields'];
+		if (isset($_POST[$this->id.'_hidden_fields']))
+			$fields = $_POST[$this->id.'_hidden_fields'];
 		else
 			return;
 
@@ -169,7 +170,7 @@ class SwatForm extends SwatContainer {
 	 * child of the form field, and then add the formfield to this form.
 	 *
 	 * @param SwatWidget $widget A reference to a widget to add.
-	 * @param string $title The visible name of the form field.
+	 * @param string $title The visible title of the form field.
 	 */
 	public function addWithField(SwatWidget $widget, $title) {
 		$field = new SwatFormField();

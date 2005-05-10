@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Interface for widgets that are parents for other widgets.
  *
@@ -11,3 +12,5 @@ interface SwatUIParent {
 	public function addChild($child);
 
 }
+
+?>

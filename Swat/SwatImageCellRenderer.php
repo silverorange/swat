@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatCellRenderer.php');
 
 /**
@@ -69,3 +70,5 @@ class SwatImageCellRenderer extends SwatCellRenderer {
 		$image_tag->display();
 	}
 }
+
+?>

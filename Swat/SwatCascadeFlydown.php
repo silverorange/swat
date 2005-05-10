@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 
@@ -48,13 +49,13 @@ class SwatCascadeFlydown extends SwatFlydown {
 		echo '<script type="text/javascript">';
 		include_once('Swat/javascript/swat-cascade.js');
 		
-		printf("\n {$this->name}_cascade = new SwatCascade('%s', '%s'); ",
-				$this->cascade_from->name, $this->name);
+		printf("\n {$this->id}_cascade = new SwatCascade('%s', '%s'); ",
+				$this->cascade_from->id, $this->id);
 		
 		foreach($this->options as $parent => $options) {
 			foreach ($options as $k => $v) {
 				$selected = ($v == $this->value) ? 'true' : 'false';
-				printf("\n {$this->name}_cascade.addChild('%s', '%s', '%s', %s);",
+				printf("\n {$this->id}_cascade.addChild('%s', '%s', '%s', %s);",
 					$parent, $k, addslashes($v), $selected);
 			}
 		}

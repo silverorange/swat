@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 
 /**
@@ -15,4 +16,5 @@ class SwatPasswordEntry extends SwatEntry {
 		parent::display();
 	}
 }
+
 ?>

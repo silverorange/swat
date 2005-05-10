@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatContainer.php');
 require_once('Swat/SwatHtmlTag.php');
 
@@ -26,8 +27,8 @@ class SwatDisclosure extends SwatContainer {
 	public $open = true;
 
 	public function init() {
-		// A name id is required for this widget.
-		$this->generateAutoName();
+		// An id is required for this widget.
+		$this->generateAutoId();
 	}
 
 	public function display() {
@@ -41,7 +42,7 @@ class SwatDisclosure extends SwatContainer {
 
 		$anchor = new SwatHtmlTag('a');
 		$anchor->href = sprintf("javascript:toggleDisclosureWidget('%s');",
-			$this->name);
+			$this->id);
 
 		$anchor->open();
 
@@ -57,7 +58,7 @@ class SwatDisclosure extends SwatContainer {
 
 		$img->width = 16;
 		$img->height = 16;
-		$img->id = $this->name.'_img';
+		$img->id = $this->id.'_img';
 
 		$img->display();
 
@@ -68,7 +69,7 @@ class SwatDisclosure extends SwatContainer {
 		$control_div->close();
 
 		$container_div = new SwatHtmlTag('div');
-		$container_div->id = $this->name;
+		$container_div->id = $this->id;
 
 		if ($this->open)
 			$container_div->class = 'swat-disclosure-container-opened';

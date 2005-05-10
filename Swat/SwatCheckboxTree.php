@@ -38,7 +38,7 @@ class SwatCheckboxTree extends SwatControl implements SwatState {
 		
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
-		$input_tag->name = $this->name.'[]';
+		$input_tag->name = $this->id.'[]';
 		
 		foreach ($this->options as $key => $data) {
 			$key_array = explode('/',$key);
@@ -49,7 +49,7 @@ class SwatCheckboxTree extends SwatControl implements SwatState {
 			$input_tag->value = $key;
 			
 			if (in_array($this->values, $this->value))
-				$input_tag->checked = "checked";
+				$input_tag->checked = 'checked';
 
 			$label_tag->for = $key;
 			$label_tag->open();

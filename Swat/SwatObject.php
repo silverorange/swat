@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatException.php');
 
 /**
@@ -10,7 +11,6 @@ require_once('Swat/SwatException.php');
  */
 class SwatObject {
 	
-
 }
 
 function _S($msgid) {

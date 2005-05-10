@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatWidget.php');
 require_once('Swat/SwatUIParent.php');
 
@@ -134,10 +135,10 @@ class SwatContainer extends SwatWidget implements SwatUIParent {
 		foreach($this->children as $child_widget) {
 			if ($class_name === null || $child_widget instanceof $class_name) {
 
-				if ($child_widget->name === null)
+				if ($child_widget->id === null)
 					$out[] = $child_widget;
 				else
-					$out[$child_widget->name] = $child_widget;
+					$out[$child_widget->id] = $child_widget;
 			}
 
 			if ($child_widget instanceof SwatContainer)
@@ -153,13 +154,13 @@ class SwatContainer extends SwatWidget implements SwatUIParent {
 	 * Retrieve an array of states of all SwatControl widgets in the widget 
 	 * subtree below this container.
 	 *
-	 * @return array $states Array of states keyed by widget name.
+	 * @return array $states Array of states keyed by widget id.
 	 */
 	public function getDescendantStates() {
 		$states = array();
 
-		foreach ($this->getDescendants('SwatState') as $name => $widget)
-			$states[$name] = $widget->getState();
+		foreach ($this->getDescendants('SwatState') as $id => $widget)
+			$states[$id] = $widget->getState();
 
 		return $states;
 	}
@@ -170,13 +171,13 @@ class SwatContainer extends SwatWidget implements SwatUIParent {
 	 * Set states on all SwatControl widgets in the widget subtree below this 
 	 * container.
 	 *
-	 * @param array $states Array of states keyed by widget name.
+	 * @param array $states Array of states keyed by widget id.
 	 */
 	public function setDescendantStates($states) {
 
-		foreach ($this->getDescendants('SwatState') as $name => $widget)
-			if (isset($states[$name]))
-				$widget->setState($states[$name]);
+		foreach ($this->getDescendants('SwatState') as $id => $widget)
+			if (isset($states[$id]))
+				$widget->setState($states[$id]);
 	}
 
 	public function process() {

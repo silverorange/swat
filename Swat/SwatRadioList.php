@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatState.php');
@@ -39,7 +40,7 @@ class SwatRadioList extends SwatControl implements SwatState {
 	public function display() {
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'radio';
-		$input_tag->name = $this->name;
+		$input_tag->name = $this->id;
 		if ($this->onchange !== null)
 			$input_tag->onchange = $this->onchange;
 			
@@ -55,10 +56,10 @@ class SwatRadioList extends SwatControl implements SwatState {
 				if ((string)$this->value === (string)$value)
 					$input_tag->checked = "checked";
 				
-				$input_tag->id = $this->name.'_'.$input_tag->value;
+				$input_tag->id = $this->id.'_'.$input_tag->value;
 				$input_tag->display();
 			
-				$label_tag->for = $this->name.'_'.$input_tag->value;
+				$label_tag->for = $this->id.'_'.$input_tag->value;
 				$label_tag->open();
 				echo $title;
 				$label_tag->close();
@@ -69,8 +70,8 @@ class SwatRadioList extends SwatControl implements SwatState {
 	}	
 
 	public function process() {
-		if (isset($_POST[$this->name]))
-			$this->value = $_POST[$this->name];
+		if (isset($_POST[$this->id]))
+			$this->value = $_POST[$this->id];
 		else
 			$this->value = null;
 	}

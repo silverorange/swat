@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatContainer.php');
 require_once('Swat/SwatHtmlTag.php');
 
@@ -12,7 +13,7 @@ require_once('Swat/SwatHtmlTag.php');
 class SwatFrame extends SwatContainer {
 
 	/**
-	 * A visible name for this frame, or null
+	 * A visible title for this frame, or null
 	 * @var string
 	 */
 	public $title = null;

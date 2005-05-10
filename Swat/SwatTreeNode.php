@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatObject.php');
 
 /**
@@ -21,8 +22,8 @@ class SwatTreeNode extends SwatObject {
 	 */
 	var $children = array();
 
-	//TODO: add parent and a getPath() method would return the path of this
-	//node
+	// TODO: add parent and a getPath() method would return the path of this
+	//       node.
 
 	public function __construct($data = array()) {
 		$this->data = $data;
@@ -54,4 +55,5 @@ class SwatTreeNode extends SwatObject {
 		return $path;
 	}
 }
+
 ?>

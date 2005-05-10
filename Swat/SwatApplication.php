@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatObject.php');
 
 /**
@@ -11,10 +12,10 @@ require_once('Swat/SwatObject.php');
 abstract class SwatApplication extends SwatObject {
 
 	/**
-	 * Application name
+	 * Application id
 	 * @var string
 	 */
-	public $name;
+	public $id;
 
 	/**
 	 * URI (read-only)
@@ -41,10 +42,10 @@ abstract class SwatApplication extends SwatObject {
 	public $basehref;
 
 	/**
-	 * @param String $name Name of the application.
+	 * @param String $id Unique id of the application.
 	 */
-	function __construct($name) {
-		$this->name = $name;
+	function __construct($id) {
+		$this->id = $id;
 	}
 
 	protected function initUriVars($prefix_length = 0) {
@@ -142,3 +143,5 @@ abstract class SwatApplication extends SwatObject {
 	}
 
 }
+
+?>

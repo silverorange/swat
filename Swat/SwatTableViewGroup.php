@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatTableViewColumn.php');
 require_once('Swat/SwatHtmlTag.php');
 
@@ -41,7 +42,7 @@ class SwatTableViewGroup extends SwatTableViewColumn {
 		$td_tag->class = 'swat-table-view-group';
 		$td_tag->open();
 
-		$prefix = ($this->view === null)? '': $this->view->name.'_';
+		$prefix = ($this->view === null)? '': $this->view->id.'_';
 
 		foreach ($this->renderers as $renderer) {
 			$renderer->render($prefix);
@@ -52,3 +53,5 @@ class SwatTableViewGroup extends SwatTableViewColumn {
 		$tr_tag->close();
 	}
 }
+
+?>
