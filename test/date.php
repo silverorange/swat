@@ -39,8 +39,8 @@ if ($form1->process()) {
 	echo '<h1>Processed!</h1>';
 }
 
-$frame1->displayTidy();
-//$frame1->display();
+//$frame1->displayTidy();
+$frame1->display();
 
 require('footer.php');
 ?>
