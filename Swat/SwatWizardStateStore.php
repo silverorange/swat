@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatObject.php');
 
 /**
@@ -31,3 +32,5 @@ abstract class SwatWizardStateStore extends SwatObject {
 	 */
 	abstract function updateState($state);
 }
+
+?>

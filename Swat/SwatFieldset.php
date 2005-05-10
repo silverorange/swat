@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatContainer.php');
 require_once('Swat/SwatHtmlTag.php');
 
@@ -14,9 +15,9 @@ require_once('Swat/SwatHtmlTag.php');
 class SwatFieldset extends SwatContainer {
 
 	/**
-	 * Fieldset name
+	 * Fieldset title
 	 *
-	 * A visible name for this fieldset, or null.
+	 * A visible title for this fieldset, or null.
 	 * @var string
 	 */
 	public $title = null;

@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatObject.php');
 require_once('Swat/SwatTableModel.php');
 
@@ -32,3 +33,5 @@ class SwatTableStore extends SwatObject implements SwatTableModel {
 			$this->rows[$id] = $data;
 	}
 }
+
+?>

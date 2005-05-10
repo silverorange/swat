@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatPasswordEntry.php');
 
 /**
@@ -34,4 +35,5 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry {
 		}
 	}
 }
+
 ?>

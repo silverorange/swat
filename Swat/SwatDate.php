@@ -1,4 +1,5 @@
 <?php
+
 require_once('Date.php');
 
 /**
@@ -101,4 +102,5 @@ class SwatDate extends Date {
 
 
 }
+
 ?>

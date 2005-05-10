@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatCellRenderer.php');
 
 /**
@@ -95,3 +96,5 @@ class SwatControlCellRenderer extends SwatCellRenderer {
 		$anchor->close();
 	}
 }
+
+?>

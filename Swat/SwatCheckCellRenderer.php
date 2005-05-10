@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatCellRenderer.php');
 
 /**
@@ -35,3 +36,5 @@ class SwatCheckCellRenderer extends SwatCellRenderer {
 		return array('style' => 'text-align: center;');
 	}
 }
+
+?>

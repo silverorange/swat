@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 
@@ -22,18 +23,18 @@ class SwatCheckbox extends SwatControl implements SwatState {
 	public function display() {
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
-		$input_tag->name = $this->name;
-		$input_tag->id = $this->name;
+		$input_tag->name = $this->id;
+		$input_tag->id = $this->id;
 		$input_tag->value = '1';
 
 		if ($this->value)
-			$input_tag->checked = "checked";
+			$input_tag->checked = 'checked';
 
 		$input_tag->display();
 	}	
 
 	public function process() {
-		$this->value = array_key_exists($this->name, $_POST);
+		$this->value = array_key_exists($this->id, $_POST);
 	}
 
 	public function getState() {
@@ -45,3 +46,4 @@ class SwatCheckbox extends SwatControl implements SwatState {
 	}
 }
 
+?>

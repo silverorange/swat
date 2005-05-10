@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatTableViewColumn.php');
@@ -68,7 +69,7 @@ class SwatPagination extends SwatControl {
 	protected $total_pages;
 
 	public function init() {
-		$this->generateAutoName();
+		$this->generateAutoId();
 	}
 
 	public function display() {
@@ -193,8 +194,8 @@ class SwatPagination extends SwatControl {
 	}
 
 	public function process() {
-		if (array_key_exists($this->name, $_GET))
-			$this->current_page = $_GET[$this->name];
+		if (array_key_exists($this->id, $_GET))
+			$this->current_page = $_GET[$this->id];
 
 		$this->current_record = $this->current_page * $this->page_size;
 	}
@@ -207,7 +208,7 @@ class SwatPagination extends SwatControl {
  			if (in_array($name, $this->unset_get_vars))
 				unset($vars[$name]);
 
-		$vars[$this->name] = '%s';
+		$vars[$this->id] = '%s';
 
 		if ($this->href === null)
 			$href = '?';
@@ -237,4 +238,5 @@ class SwatPagination extends SwatControl {
 			$this->prev_page = -1;
 	}
 }
+
 ?>

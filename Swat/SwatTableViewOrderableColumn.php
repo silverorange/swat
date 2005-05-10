@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatTableViewColumn.php');
 require_once('Swat/SwatHtmlTag.php');
 
@@ -42,10 +43,10 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn {
 	const ORDER_BY_DIR_ASCENDING = 2;
 
 	public function init() {
-		$key_orderby = $this->view->name.'_orderby';
-		$key_orderbydir = $this->view->name.'_orderbydir';
+		$key_orderby = $this->view->id.'_orderby';
+		$key_orderbydir = $this->view->id.'_orderbydir';
 
-		if (isset($_GET[$key_orderby]) && $_GET[$key_orderby] == $this->name) {
+		if (isset($_GET[$key_orderby]) && $_GET[$key_orderby] == $this->id) {
 			$this->view->orderby_column = $this;
 
 			if (isset($_GET[$key_orderbydir])) {
@@ -89,8 +90,8 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn {
  			if (in_array($name, $this->unset_get_vars))
 				unset($vars[$name]);
 
-		$key_orderby = $this->view->name.'_orderby';
-		$key_orderbydir = $this->view->name.'_orderbydir';
+		$key_orderby = $this->view->id.'_orderby';
+		$key_orderbydir = $this->view->id.'_orderbydir';
 
 		unset($vars[$key_orderby]);
 		unset($vars[$key_orderbydir]);
@@ -98,7 +99,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn {
 		$next_dir = $this->getNextDirection();
 
 		if ($next_dir != SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE) {
-			$vars[$key_orderby] = $this->name;
+			$vars[$key_orderby] = $this->id;
 			$vars[$key_orderbydir] = $this->getDirectionString($next_dir);
 		}
 
@@ -164,10 +165,10 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn {
 	 *
 	 * Set the current ordering direction of this column.
 	 *
-	 * @param string $name Ordering direction as a string ('asc' or 'desc').
+	 * @param string $direction Ordering direction as a string ('asc' or 'desc').
 	 */
-	public function setDirectionByString($name) {
-		switch ($name) {
+	public function setDirectionByString($direction) {
+		switch ($direction) {
 			case 'asc':
 				$this->direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_ASCENDING;
 				break;
@@ -181,3 +182,5 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn {
 		}
 	}
 }
+
+?>

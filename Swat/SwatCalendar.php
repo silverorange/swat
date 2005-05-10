@@ -70,19 +70,21 @@ class SwatCalendar extends SwatControl {
 
 		 
 		echo '<script type="text/javascript">';
-			echo "createCalendarWidget('$this->name', $months, $weeks, '$close',
+			echo "createCalendarWidget('{$this->id}', {$months}, {$weeks}, '{$close}',
 					'$nodate', '$today');";
 		echo '</script>';
 		
 		echo '<img src="swat/images/b_calendar.gif"
 				class="swat-calendar-icon"
-				id="'.$this->name.'_calendar"';
+				id="'.$this->id.'_calendar"';
 		echo '	onmousedown="';
-		echo " clickWidgetIcon('$this->name','$start_date','$end_date');";
+		echo " clickWidgetIcon('{$this->id}','{$start_date}','{$end_date}');";
 		echo '" />';
 		echo '<br />';
-		echo '<div id="'.$this->name.'Div" class="swat-calendar-div-hide">';
+		echo '<div id="'.{$this->id}.'_div" class="swat-calendar-div-hide">';
 		echo '</div>';
 
 	}
 }
+
+?>

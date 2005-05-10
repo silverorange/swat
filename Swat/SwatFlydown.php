@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatState.php');
@@ -60,8 +61,8 @@ class SwatFlydown extends SwatControl implements SwatState {
 		$options = $this->getOptions();
 
 		$select_tag = new SwatHtmlTag('select');
-		$select_tag->name = $this->name;
-		$select_tag->id = $this->name;
+		$select_tag->name = $this->id;
+		$select_tag->id = $this->id;
 
 		if ($this->onchange !== null)
 			$select_tag->onchange = $this->onchange;
@@ -96,7 +97,7 @@ class SwatFlydown extends SwatControl implements SwatState {
 	}	
 
 	public function process() {
-		$value = $_POST[$this->name];
+		$value = $_POST[$this->id];
 
 		// empty string HTML option value is considered to be null
 		if ($value == '')

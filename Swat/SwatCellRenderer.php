@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatObject.php');
 
 /**
@@ -40,3 +41,5 @@ abstract class SwatCellRenderer extends SwatObject {
 	}
 
 }
+
+?>

@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatObject.php');
 
 /**
@@ -35,3 +36,5 @@ abstract class SwatPage extends SwatObject {
 	}
 
 }
+
+?>

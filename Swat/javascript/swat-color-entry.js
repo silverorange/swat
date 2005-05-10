@@ -1,25 +1,25 @@
-function SwatColorEntry(name) {	
-	this.name = name;
+function SwatColorEntry(id) {
+	this.id = id;
 	this.colors = new Array('0','51','102','153','204','255');
 	this.grayscale = new Array('0','25','50','75','100','125','150','175','200','225','255');
 	this.hex = Array('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F');
 	this.shades = new Array(1, 0.80, 0.60, 0.40, 0.20, 0);
-
-	var entry = document.getElementById(this.name);
+	this.entryElement = document.getElementById(this.id);
+	
 	if (entry.value.length == 6) {
 		this.setHex(entry.value);
 		this.setRGB();
-		document.getElementById(this.name).style.background = '#' + entry.value;
-		document.getElementById(this.name).style.color = '#' + entry.value;
+		this.entryElement.style.background = '#' + entry.value;
+		this.entryElement.style.color = '#' + entry.value;
 	}
 
-	document.getElementById(this.name + '_color_palette').innerHTML = this.drawPalette();
-	document.getElementById(this.name + '_grayscale').innerHTML = this.drawTintScale(127, 127, 127);
+	document.getElementById(this.id + '_color_palette').innerHTML = this.drawPalette();
+	document.getElementById(this.id + '_grayscale').innerHTML = this.drawTintScale(127, 127, 127);
 }
 
 SwatColorEntry.prototype.toggle = function() {
-	var t = document.getElementById(this.name + '_wrapper');
-	var o = document.getElementById(this.name + '_toggle');
+	var t = document.getElementById(this.id + '_wrapper');
+	var o = document.getElementById(this.id + '_toggle');
 
 	var kitName = "applewebkit/";
 	var tempStr = navigator.userAgent.toLowerCase();
@@ -40,21 +40,19 @@ SwatColorEntry.prototype.toggle = function() {
 }
 
 SwatColorEntry.prototype.apply = function() {
-	var hex_color = document.getElementById(this.name + '_color_input_hex').value;
-	document.getElementById(this.name).style.background = '#' + hex_color;
-	document.getElementById(this.name).style.color = '#' + hex_color;
-	document.getElementById(this.name).value = hex_color;
+	var hex_color = document.getElementById(this.id + '_color_input_hex').value;
+	this.entryElement.style.background = '#' + hex_color;
+	this.entryElement.style.color = '#' + hex_color;
+	this.entryElement.value = hex_color;
 	this.toggle();
 }
 
 SwatColorEntry.prototype.none = function() {
-	document.getElementById(this.name).style.background =
+	this.entryElement.style.background =
 		'url(swat/images/color-entry-null.gif)';
-	document.getElementById(this.name).value = '';
+	this.entryElement.value = '';
 	this.toggle();
 }
-
-
 
 /**
  * Methods to draw parts:
@@ -97,7 +95,7 @@ SwatColorEntry.prototype.drawTintScale = function(r, g, b) {
 		tint_scale = tint_scale + this.drawDiv(R, G, B);
 	}
 	
-	var tint_div = document.getElementById(this.name + '_tintscale');
+	var tint_div = document.getElementById(this.id + '_tintscale');
 
 	return tint_scale;
 }
@@ -106,8 +104,8 @@ SwatColorEntry.prototype.drawDiv = function(r, g, b) {
 	var color = r + ',' + g + ',' + b;
 	var title = "rgb: (" + color + ") hex: #" + this.rgb_to_hex(r, g, b);
 	return '<div class="option" title="' + title +
-				'" onmouseover="' + this.name + '_obj.updateActiveSwatch(' + color +
-				');" onclick="' + this.name + '_obj.setPalette(' + color +
+				'" onmouseover="' + this.id + '_obj.updateActiveSwatch(' + color +
+				');" onclick="' + this.id + '_obj.setPalette(' + color +
 				');" style="background: rgb(' + color +
 				');">&nbsp;</div>';
 }
@@ -119,9 +117,9 @@ SwatColorEntry.prototype.drawDiv = function(r, g, b) {
  * setPalette()
  */
 SwatColorEntry.prototype.setRGB = function() {
-	var r = parseInt(document.getElementById(this.name + '_color_input_r').value);
-	var g = parseInt(document.getElementById(this.name + '_color_input_g').value);
-	var b = parseInt(document.getElementById(this.name + '_color_input_b').value);
+	var r = parseInt(document.getElementById(this.id + '_color_input_r').value);
+	var g = parseInt(document.getElementById(this.id + '_color_input_g').value);
+	var b = parseInt(document.getElementById(this.id + '_color_input_b').value);
 
 	if (!r)
 		r = 0;
@@ -159,28 +157,28 @@ SwatColorEntry.prototype.setPalette = function(r, g, b) {
 
 SwatColorEntry.prototype.updateSwatch = function(r, g, b) {
 	color = r + ',' + g + ',' + b;
-	var swatch_obj = document.getElementById(this.name + '_swatch');
+	var swatch_obj = document.getElementById(this.id + '_swatch');
 	swatch_obj.style.background = 'rgb(' + color + ')';
 	swatch_obj.title = "rgb: (" + color + ") hex: #" + this.rgb_to_hex(r, g, b);
 	
-	document.getElementById(this.name + '_tintscale').innerHTML = this.drawTintScale(r, g, b);
+	document.getElementById(this.id + '_tintscale').innerHTML = this.drawTintScale(r, g, b);
 }
 	
 SwatColorEntry.prototype.updateActiveSwatch = function(r, g, b) {
 	color = r + ',' + g + ',' + b;
-	swatch_obj = document.getElementById(this.name + '_active_swatch');
+	swatch_obj = document.getElementById(this.id + '_active_swatch');
 	swatch_obj.style.background = 'rgb(' + color + ')';
 	swatch_obj.title = "rgb: (" + color + ") hex: #" + this.rgb_to_hex(r, g, b);
 }
 
 SwatColorEntry.prototype.updateRGB = function(r, g, b) {
-	document.getElementById(this.name + '_color_input_r').value = r;
-	document.getElementById(this.name + '_color_input_g').value = g;
-	document.getElementById(this.name + '_color_input_b').value = b;
+	document.getElementById(this.id + '_color_input_r').value = r;
+	document.getElementById(this.id + '_color_input_g').value = g;
+	document.getElementById(this.id + '_color_input_b').value = b;
 }
 	
 SwatColorEntry.prototype.updateHex = function(r, g, b) {
-	var hex_input = document.getElementById(this.name + '_color_input_hex');
+	var hex_input = document.getElementById(this.id + '_color_input_hex');
 	hex_input.value = this.rgb_to_hex(r, g, b);
 }
 

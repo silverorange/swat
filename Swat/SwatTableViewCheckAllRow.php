@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatTableViewRow.php');
 require_once('Swat/SwatCheckAll.php');
 
@@ -11,10 +12,10 @@ require_once('Swat/SwatCheckAll.php');
  */
 class SwatTableViewCheckAllRow extends SwatTableViewRow {
 	
-	private $column_name;
+	private $column_id;
 
-	public function __construct($column_name) {
-		$this->column_name = $column_name;
+	public function __construct($column_id) {
+		$this->column_id = $column_id;
 	}
 
 	public function display(&$columns) {
@@ -27,10 +28,10 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow {
 		// find column
 		$count = 0;
 		foreach ($columns as $column) {
-			if ($column->name == $this->column_name) {
+			if ($column->id == $this->column_id) {
 
 				$check_all = new SwatCheckAll();
-				$check_all->series_name = $column->view->name.'_items';
+				$check_all->series_name = $column->view->id.'_items';
 
 				break;
 
@@ -63,4 +64,5 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow {
 	}
 
 }
+
 ?>

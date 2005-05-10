@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Interface for controls that can store and restore their state.
  *
@@ -32,3 +33,5 @@ interface SwatState {
 	 */
 	public function getState();
 }
+
+?>

@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatCheckboxCellRenderer.php');
 require_once('Swat/SwatTableViewColumn.php');
 require_once('Swat/SwatTableViewCheckAllRow.php');
@@ -17,7 +18,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn {
 	 * Show check all
 	 *
 	 * Whether to show a "check all" widget.  For this option to work, the
-	 * table view must contain a column named "checkbox".
+	 * table view must contain a column with an id of "checkbox".
 	 * @var boolean
 	 */
 	public $show_check_all = true;
@@ -27,19 +28,20 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn {
 	private $checkbox_renderer = null;
 
 	public function init() {
-		if ($this->name === null)
-			$this->name == 'checkbox';
+		// TODO: autogenerate an id here
+		if ($this->id === null)
+			$this->id == 'checkbox';
 
 		if ($this->show_check_all)
-			$this->view->appendRow(new SwatTableViewCheckAllRow($this->name));
+			$this->view->appendRow(new SwatTableViewCheckAllRow($this->id));
 
 			}
 
 	public function process() {
 		$renderer = $this->getCheckboxRenderer();
 		
-		$prefix = ($this->view->name === null)? '': $this->view->name.'_';
-		$item_name = $prefix.$renderer->name;
+		$prefix = ($this->view->id === null)? '': $this->view->id.'_';
+		$item_name = $prefix.$renderer->id;
 		
 		if (isset($_POST[$item_name]) && is_array($_POST[$item_name]))
 			$this->items = $_POST[$item_name];
@@ -54,6 +56,9 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn {
 			if ($renderer instanceof SwatCheckboxCellRenderer)
 				return $renderer;
 		
-		throw new SwatException(__CLASS__.": The column '$this->name' must have a checkbox renderer");
+		throw new SwatException(__CLASS__
+			.": The column '{$this->id}' must have a checkbox renderer");
 	}
 }
+
+?>

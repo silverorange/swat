@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatObject.php');
 
 /**
@@ -17,3 +18,5 @@ interface SwatTableModel {
 	public function addRow($data, $id = null);
 
 }
+
+?>

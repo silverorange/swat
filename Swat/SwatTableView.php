@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatTableViewColumn.php');
@@ -27,7 +28,7 @@ class SwatTableView extends SwatControl implements SwatUIParent {
 	 * Values of the checked checkboxes
 	 *
 	 * For this to be set, the table view must contain a
-	 * {@link SwatCellRendererCheckbox} named "items".
+	 * {@link SwatCellRendererCheckbox} with an id of "items".
 	 * @var Array
 	 */
 	public $checked_items = array();
@@ -89,13 +90,13 @@ class SwatTableView extends SwatControl implements SwatUIParent {
 	 * Get a reference to a column
 	 * @ return SwatTableViewColumn Matching column
 	 */
-	public function getColumn($name) {
+	public function getColumn($id) {
 		$columns = $this->getColumns();
 		foreach ($columns as $column)
-			if ($name == $column->name)
+			if ($id == $column->id)
 				return $column;
 
-		throw new SwatException(__CLASS__.": no column named '$name'");
+		throw new SwatException(__CLASS__.": no column with an id of '{$id}'");
 	}
 
 	public function display() {

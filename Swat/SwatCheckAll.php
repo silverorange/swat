@@ -26,7 +26,7 @@ class SwatCheckAll extends SwatControl {
 
 	public function init() {
 		$this->title = _S('Check All');
-		$this->generateAutoName();
+		$this->generateAutoId();
 	}
 
 	public function display() {
@@ -37,11 +37,11 @@ class SwatCheckAll extends SwatControl {
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
-		$input_tag->id = $this->name;
+		$input_tag->id = $this->id;
 		$input_tag->onclick = "SwatCheckbox.checkAll(this,'{$this->series_name}')";
 
 		$label_tag = new SwatHtmlTag('label');
-		$label_tag->for = $this->name;
+		$label_tag->for = $this->id;
 
 		$label_tag->open();
 		$input_tag->display();
@@ -61,4 +61,5 @@ class SwatCheckAll extends SwatControl {
 	}
 
 }
+
 ?>

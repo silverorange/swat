@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatWizardNavigation.php');
 
 /**
@@ -48,4 +49,5 @@ class SwatWizardNavigationSteps extends SwatWizardNavigation {
 	}
 
 }
+
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatState.php');
@@ -66,7 +67,7 @@ class SwatChangeOrder extends SwatControl implements SwatState {
 		$iframe_tag = new SwatHtmlTag('iframe');
 		$iframe_tag->width = $this->width;
 		$iframe_tag->height = $this->height;
-		$iframe_tag->id = $this->name.'_iframe';
+		$iframe_tag->id = $this->id.'_iframe';
 		$iframe_tag->align = 'left';
 		$iframe_tag->class = 'swat-order-control-iframe';
 		$iframe_tag->open();
@@ -74,12 +75,12 @@ class SwatChangeOrder extends SwatControl implements SwatState {
 		
 		$this->displayJavascript();
 
-		$obj = $this->name.'_obj';
+		$obj = $this->id.'_obj';
 
 		$hidden_tag = new SwatHtmlTag('input');
 		$hidden_tag->type = "hidden";
-		$hidden_tag->id = $this->name;
-		$hidden_tag->name = $this->name;
+		$hidden_tag->id = $this->id;
+		$hidden_tag->name = $this->id;
 		$hidden_tag->value = implode(',',array_keys($this->options));
 		$hidden_tag->display();
 		
@@ -101,14 +102,14 @@ class SwatChangeOrder extends SwatControl implements SwatState {
 			$down_btn->onclick.= $this->onclick;
 		$down_btn->display();
 
-		//TODO: maybe clean up the way the buttons are positioned
+		// TODO: maybe clean up the way the buttons are positioned
 		echo '<div style="clear:left;"></div>';
 	
 		$div_tag->close();
 	}	
 
 	public function process() {
-		$this->values = explode(',', $_POST[$this->name]);
+		$this->values = explode(',', $_POST[$this->id]);
 	}
 
 	private function displayJavascript() {
@@ -116,17 +117,17 @@ class SwatChangeOrder extends SwatControl implements SwatState {
 		include_once('Swat/javascript/swat-change-order.js');
 		
 		$warning = _S("You must first select the item to reorder.");
-		$style = '../swat/swat.css'; //TODO: figure out how to work the stylesheets better
+		$style = '../swat/swat.css'; // TODO: figure out how to work the stylesheets better
 		
 		$values = array();
 		foreach ($this->options as $id => $title)
 			$values[$id] = addslashes($title);
 		$values = implode("','", $values);
 		
-		printf("\n {$this->name}_obj = new SwatChangeOrder('%s'); ",
-				$this->name, $warning);
-		echo "\n {$this->name}_obj.stylesheet = '{$style}';";
-		echo "\n {$this->name}_obj.draw(new Array('{$values}')); ";
+		printf("\n {$this->id}_obj = new SwatChangeOrder('%s'); ",
+				$this->id, $warning);
+		echo "\n {$this->id}_obj.stylesheet = '{$style}';";
+		echo "\n {$this->id}_obj.draw(new Array('{$values}')); ";
 				
 		echo '</script>';
 	}

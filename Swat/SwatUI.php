@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatObject.php');
 require_once('Swat/SwatContainer.php');
 
@@ -52,21 +53,21 @@ class SwatUI extends SwatObject {
 	/**
 	 * Retrieve a widget
 	 *
-	 * Lookup a widget in the widget tree by name.
+	 * Lookup a widget in the widget tree by id.
 	 *
-	 * @param string $name Name of the widget to retrieve.
+	 * @param string $id Id of the widget to retrieve.
 	 * @param boolean $silent If true, return null instead of throwing an 
 	 *        exception if the widget is not found.
 	 * @return SwatWidget A reference to the widget.
 	 */
-	public function getWidget($name, $silent = false) {
-		if (array_key_exists($name, $this->widgets))
-			return $this->widgets[$name];
+	public function getWidget($id, $silent = false) {
+		if (array_key_exists($id, $this->widgets))
+			return $this->widgets[$id];
 		else
 			if ($silent)
 				return null;
 			else
-				throw new SwatException(__CLASS__.": no widget named '$name'");
+				throw new SwatException(__CLASS__.": no widget with an id of '{$id}'");
 	}
 
 	/**
@@ -88,13 +89,13 @@ class SwatUI extends SwatObject {
 				$widget = $this->parseWidget($childnode);
 			
 				if (class_exists('SwatWidget') && $widget instanceof SwatWidget
-					 && $widget->name != null) {
+					 && $widget->id != null) {
 
-					if (isset($this->widgets[$widget->name]))
+					if (isset($this->widgets[$widget->id]))
 						throw new SwatException(__CLASS__.
-							": widget named '{$widget->name}' already exists.");
+							": widget with an id of '{$widget->id}' already exists.");
 
-					$this->widgets[$widget->name] = $widget;
+					$this->widgets[$widget->id] = $widget;
 				}
 				
 				$this->attachToParent($widget, $parent_widget);
@@ -132,12 +133,12 @@ class SwatUI extends SwatObject {
 		}
 
 		require_once($classfile);
-		$w = new $class();
+		$widget = new $class();
 		
-		if (isset($node['name']))
-			$w->name = (string)$node['name'];
+		if (isset($node['id']))
+			$widget->id = (string)$node['id'];
 
-		return $w;
+		return $widget;
 	}
 
 	private function parseProperty($widget, $property) {
@@ -185,11 +186,11 @@ class SwatUI extends SwatObject {
 			default:
 				if ($value == 'false' || $value == 'true' )
 					trigger_error(__CLASS__.": Possible missing 'boolean:' ".
-						"on attribute $name", E_USER_NOTICE);
+						"on attribute {$name}", E_USER_NOTICE);
 
 				if (is_numeric($value))
 					trigger_error(__CLASS__.": Possible missing 'integer:' or ".
-						"'float:' on attribute $name", E_USER_NOTICE);
+						"'float:' on attribute {$name}", E_USER_NOTICE);
 				
 				return $this->translateValue($value, $translatable);
 		}
@@ -203,3 +204,5 @@ class SwatUI extends SwatObject {
 			return $value;
 	}
 }
+
+?>

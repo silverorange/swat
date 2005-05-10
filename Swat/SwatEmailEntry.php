@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatEntry.php');
 
 /**
@@ -28,4 +29,5 @@ class SwatEmailEntry extends SwatEntry {
 		}
 	}
 }
+
 ?>

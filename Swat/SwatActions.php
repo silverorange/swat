@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatButton.php');
 require_once('Swat/SwatFlydown.php');
@@ -69,7 +70,7 @@ class SwatActions extends SwatControl implements SwatUIParent {
 		echo '<div class="swat-actions">';
 		
 		$label = new SwatHtmlTag('label');
-		$label->for = $this->name.'_actionfly';
+		$label->for = $this->id.'_actionfly';
 		$label->open();
 		echo sprintf('%s: ', _S('Action'));
 		$label->close();
@@ -82,7 +83,7 @@ class SwatActions extends SwatControl implements SwatUIParent {
 			if ($item->widget !== null) {
 				$div = new SwatHtmlTag('div');
 				$div->class = ($item == $this->selected)? 'swat-visible': 'swat-hidden';
-				$div->id = $this->name.'_'.$item->name;
+				$div->id = $this->id.'_'.$item->id;
 
 				$div->open();
 				$item->display();
@@ -99,10 +100,10 @@ class SwatActions extends SwatControl implements SwatUIParent {
 		$this->createWidgets();
 
 		$this->actionfly->process();
-		$selected_name = $this->actionfly->value;
+		$selected_id = $this->actionfly->value;
 
-		if (isset($this->action_items[$selected_name])) {
-			$this->selected = $this->action_items[$selected_name];
+		if (isset($this->action_items[$selected_id])) {
+			$this->selected = $this->action_items[$selected_id];
 
 			if ($this->selected->widget != null)
 				$this->selected->widget->process();
@@ -118,7 +119,7 @@ class SwatActions extends SwatControl implements SwatUIParent {
 	 * @param SwatActionItem $item A reference to the item to add.
 	 */
 	public function addActionItem(SwatActionItem $item) {
-		$this->action_items[$item->name] = $item;
+		$this->action_items[$item->id] = $item;
 	}
 
 	private function createWidgets() {	
@@ -126,14 +127,14 @@ class SwatActions extends SwatControl implements SwatUIParent {
 		
 		$this->created = true;
 
-		$this->actionfly = new SwatFlydown($this->name.'_actionfly');
-		$this->actionfly->onchange = "swatActionsDisplay(this, '{$this->name}');";
+		$this->actionfly = new SwatFlydown($this->id.'_actionfly');
+		$this->actionfly->onchange = "swatActionsDisplay(this, '{$this->id}');";
 		$this->actionfly->show_blank = $this->show_blank;
 
 		foreach ($this->action_items as $item)
-			$this->actionfly->options[$item->name] = $item->title;
+			$this->actionfly->options[$item->id] = $item->title;
 
-		$this->apply_button = new SwatButton($this->name.'_apply_button');
+		$this->apply_button = new SwatButton($this->id.'_apply_button');
 		$this->apply_button->setTitleFromStock('apply');
 	}
 
@@ -163,4 +164,5 @@ class SwatActions extends SwatControl implements SwatUIParent {
 	}
 
 }
+
 ?>

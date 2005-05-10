@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatContainer.php');
 require_once('Swat/SwatHtmlTag.php');
 
@@ -74,7 +75,7 @@ class SwatFormField extends SwatContainer {
 
 		if ($this->title !== null) {
 			$label_tag = new SwatHtmlTag('label');
-			$label_tag->for = $first_child->name;
+			$label_tag->for = $first_child->id;
 			$label_tag->open();
 			echo $this->title, ':';
 

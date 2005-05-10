@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatCellRenderer.php');
 require_once('Swat/SwatDate.php');
 
@@ -36,3 +37,5 @@ class SwatDateCellRenderer extends SwatCellRenderer {
 		}
 	}
 }
+
+?>

@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatObject.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatUIParent.php');
@@ -13,10 +14,10 @@ require_once('Swat/SwatUIParent.php');
 class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 
 	/**
-	 * Name of the field
+	 * Id of the field
 	 * @var string
 	 */
-	public $name = null;
+	public $id = null;
 
 	/**
 	 * Title of the field
@@ -32,8 +33,8 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 
 	protected $renderers = array();
 
-	public function __construct($name = null) {
-		$this->name = $name;
+	public function __construct($id = null) {
+		$this->id = $id;
 	}
 
 	public function linkField($renderer, $model_field, $renderer_property) {
@@ -86,7 +87,7 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttribs());
 		$td_tag->open();
 
-		$prefix = ($this->view->name === null)? '': $this->view->name.'_';
+		$prefix = ($this->view->id === null)? '': $this->view->id.'_';
 
 		foreach ($this->renderers as $renderer) {
 			$renderer->render($prefix);
@@ -117,4 +118,3 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 }
 
 ?>
-

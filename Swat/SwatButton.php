@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 
@@ -44,14 +45,14 @@ class SwatButton extends SwatControl {
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'submit';
-		$input_tag->name = $this->name;
+		$input_tag->name = $this->id;
 		$input_tag->value = $this->title;
 
 		$input_tag->display();
 	}
 
 	public function process() {
-		if (isset($_POST[$this->name])) {
+		if (isset($_POST[$this->id])) {
 			$this->clicked = true;
 			$ancestor = $this->parent;
 

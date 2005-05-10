@@ -1,4 +1,5 @@
 <?php
+
 /**
  * A data class to store a message  
  *

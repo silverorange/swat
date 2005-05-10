@@ -1,4 +1,5 @@
-<?
+<?php
+
 require_once('Swat/SwatControl.php');
 
 /**
@@ -8,7 +9,6 @@ require_once('Swat/SwatControl.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-
 class SwatNavBar extends SwatControl {
 	private $titles = array();
 	private $links = array();

@@ -1,4 +1,5 @@
 <?php
+
 require_once('Swat/SwatControl.php');
 require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatState.php');
@@ -57,8 +58,8 @@ class SwatEntry extends SwatControl implements SwatState {
 	public function display() {
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = $this->html_input_type;
-		$input_tag->name = $this->name;
-		$input_tag->id = $this->name;
+		$input_tag->name = $this->id;
+		$input_tag->id = $this->id;
 		$input_tag->onfocus = "this.select();";
 
 		if ($this->value !== null)
@@ -74,10 +75,10 @@ class SwatEntry extends SwatControl implements SwatState {
 	}	
 
 	public function process() {
-		if (strlen($_POST[$this->name]) == 0)
+		if (strlen($_POST[$this->id]) == 0)
 			$this->value = null;
 		else
-			$this->value = $_POST[$this->name];
+			$this->value = $_POST[$this->id];
 
 		$len = ($this->value === null) ? 0 : strlen($this->value);
 
