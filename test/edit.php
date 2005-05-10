@@ -2,7 +2,7 @@
 
 require('header.php');
 
-require_once('Swat/SwatLayout.php');
+require_once('Swat/SwatUI.php');
 
 $layout = new SwatLayout('edit.xml');
 
