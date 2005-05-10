@@ -241,12 +241,13 @@ class SwatContainer extends SwatWidget implements SwatUIParent {
 	 * @param $child A reference to a child object to add.
 	 */
 	public function addChild($child) {
-
-		if ($child instanceof SwatWidget)
+		if ($child instanceof SwatWidget) {
 			$this->add($child);
-		else
-			throw new SwatException('SwatContainer: Only '.
-				'SwatWidgets can be nested within SwatContainer');
+		} else {
+			$class_name = get_class($child);
+			throw new SwatException(__CLASS__.': Only SwatWidgets can be nested '
+				."within SwatContainer. Trying to add {$class_name}");
+		}
 	}
 
 }
