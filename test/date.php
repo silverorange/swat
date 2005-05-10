@@ -2,15 +2,16 @@
 //setlocale(LC_TIME, "fr_FR");
 require('header.php');
 
-require_once('Swat/SwatLayout.php');
+require_once('Swat/SwatUI.php');
 
-$layout = new SwatLayout('date.xml');
+$interface = new SwatUI();
+$interface->loadFromXML('date.xml');
 
 // TODO: not sure about this notation:
-$form1 = $layout->getWidget('form1');
-$frame1 = $layout->getWidget('frame1');
+$form1 = $interface->getWidget('form1');
+$frame1 = $interface->getWidget('frame1');
 
-$date = $layout->getWidget('date2');
+$date = $interface->getWidget('date2');
 //$date->display = (SwatDate::YEAR | SwatDate::MONTH | SwatDate::CALENDAR);
 
 /*
@@ -26,7 +27,7 @@ $date->valid_range_end->setDay(23);
 */
 
 /*
-$time = $layout->getWidget('time');
+$time = $interface->getWidget('time');
 $time->valid_range_start = new Date();
 $time->valid_range_end = clone $date->valid_range_start;
 */
@@ -43,4 +44,3 @@ $frame1->displayTidy();
 
 require('footer.php');
 ?>
-

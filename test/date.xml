@@ -1,34 +1,49 @@
 <?xml version='1.0' standalone='yes'?>
-<SwatLayout>
-	<SwatFrame name="frame1" title="New Weblog Post Example Form">
-		<SwatForm name="form1">
+<swat-interface>
+	<widget class="SwatFrame" id="frame1">
+		<property name="title" value="New Weblog Post Example Form" />
+		<widget class="SwatForm" id="form1">
 
-			<SwatFormField title="Title">
-				<SwatEntry name="title" required="bool:true" />
-			</SwatFormField>
+			<widget class="SwatFormField">
+				<property name="title" value="Title" />
+				<widget class="SwatEntry" id="title">
+					<property name="required" type="boolean" value="true" />
+				</widget>
+			</widget>
 
-			<SwatFormField title="Date 2">
-				<SwatDate name="date2" />
-			</SwatFormField>
+			<widget class="SwatFormField">
+				<property name="title" value="Date 2" />
+				<widget class="SwatDate" id="date2" />
+			</widget>
 			
-			<SwatDisclosure title="Optional Fields" open="bool:false">
-				<SwatFormField title="Date">
-					<SwatDate name="date" />
-				</SwatFormField>
-	
-				<SwatFormField title="Time">
-					<SwatTime name="time" />
-				</SwatFormField>
+			<widget class="SwatDisclosure">
+				<property name="title" value="Optional Fields" />
+				<property name="open" type="boolean" value="false" />
 				
-				<SwatFormField title="Email">
-					<SwatEntryEmail name="email" />
-				</SwatFormField>
-			</SwatDisclosure>
+				<widget class="SwatFormField">
+					<property name="title" value="Date" />
+					<widget class="SwatDate" id="date" />
+				</widget>
+	
+				<widget class="SwatFormField">
+					<property name="title" value="Time" />
+					<widget class="SwatTime" id="time" />
+				</widget>
+				
+				<widget class="SwatFormField">
+					<property name="title" value="Email" />
+					<widget class="SwatEntryEmail" id="email" />
+				</widget>
+				
+			</widget>
 
-			<SwatFormField class="swat-form-footer">
-				<SwatButton name="btn_create" title="Create" />
-			</SwatFormField>
+			<widget class="SwatFormField">
+				<property name="class" value="swat-form-footer" />
+				<widget class="SwatButton" id="btn_create">
+					<property name="title" value="Create" />
+				</widget>
+			</widget>
 
-		</SwatForm>
-	</SwatFrame>
-</SwatLayout>
+		</widget>
+	</widget>
+</swat-interface>

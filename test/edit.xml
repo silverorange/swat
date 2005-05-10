@@ -3,6 +3,7 @@
 	<widget class="SwatFrame" id="frame1">
 		<property name="title" value="New Weblog Post Example Form" />
 		<widget class="SwatForm" id="form1">
+
 			<widget class="SwatFormField">
 				<property name="title" value="Title" />
 				<widget class="SwatEntry" id="title">
