@@ -12,12 +12,12 @@ require_once('Swat/SwatCellRenderer.php');
 class SwatCheckboxCellRenderer extends SwatCellRenderer {
 
 	/**
-	 * Name of checkbox
+	 * Id of checkbox
 	 *
 	 * The name attribute in the HTML input tag.
 	 * @var string
 	 */
-	public $name;
+	public $id;
 
 	/**
 	 * Value of checkbox
@@ -30,14 +30,14 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer {
 	public function render($prefix) {
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
-		$input_tag->name = $prefix.$this->name.'[]';
+		$input_tag->name = $prefix.$this->id.'[]';
 		$input_tag->value = $this->value;
 		$input_tag->onclick = "SwatCheckbox.check(this);";
 
 		$this->displayJavascript();
 
-		if (isset($_POST[$prefix.$this->name]))
-			if (in_array($this->value, $_POST[$prefix.$this->name]))
+		if (isset($_POST[$prefix.$this->id]))
+			if (in_array($this->value, $_POST[$prefix.$this->id]))
 				$input_tag->checked = 'checked';
 
 		$input_tag->display();
