@@ -186,7 +186,8 @@ function enableDesignMode(rte, html) {
 	//}
 	frameHtml += "</head>\n";
 	frameHtml += "<body>\n";
-	frameHtml += html + "\n";
+	//frameHtml += html + "\n";
+	frameHtml += "\n"; // content gets loaded onload
 	frameHtml += "</body>\n";
 	frameHtml += "</html>";
 	
@@ -750,16 +751,18 @@ function toggleFormatting(rte) {
 				element.childNodes[i].disabled = document.getElementById("_rteModeSource" + rte).checked;
 }
 
-/** This is setup to allow back/forward buttons - but it throws a weird error
- * that I can't figure out.
-*/
-/*
 window.onload = function(ev) {
 	var vRTEs = allRTEs.split(";");
 	for (var i = 0; i < vRTEs.length; i++) {
+		currentRTE = vRTEs[i];
+		
 		var hidden_val = document.getElementById('hdn' + vRTEs[i]);
-		enableDesignMode(vRTEs[i], hidden_val.value.toString());
-		window.alert('test');
+		insertHTML(hidden_val.value.toString());
 	}
 };
-*/
+
+window.onunload = function(ev) {
+	var vRTEs = allRTEs.split(";");
+	for (var i = 0; i < vRTEs.length; i++)
+		setHiddenVal(vRTEs[i])
+};

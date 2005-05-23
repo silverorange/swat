@@ -37,7 +37,7 @@ class SwatTextareaEditor extends SwatTextarea {
 		include_once('Swat/javascript/swat-textarea-editor.js');
 
 		echo 'initRTE("swat/images/textarea-editor/", "swat/", "", false);';
-		echo "writeRichText('{$this->name}', '{$value}', '{$this->width}', '{$this->height}');";
+		echo "writeRichText('{$this->id}', '{$value}', '{$this->width}', '{$this->height}');";
 		
 		echo '</script>';
 	}
@@ -64,7 +64,7 @@ class SwatTextareaEditor extends SwatTextarea {
 	}
 
 	public function process() {
-		echo $_POST[$this->name];
+		echo $_POST[$this->id];
 		exit();
 	}
 }
