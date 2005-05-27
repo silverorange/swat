@@ -145,7 +145,7 @@ function writeRichText(rte, html, width, height, menu_type) {
 		document.write('</div>');
 			
 		document.write('</div>');
-		
+	
 		document.writeln('<iframe id="' + rte + '" name="' + rte + '" width="' + width + 'px" height="' + height + 'px" src="' + includesPath + 'swat-textarea-editor-blank.html" style="padding: 5px;"></iframe>');
 		
 
