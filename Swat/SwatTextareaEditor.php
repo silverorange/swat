@@ -62,11 +62,6 @@ class SwatTextareaEditor extends SwatTextarea {
 	
 		return $tmpString;
 	}
-
-	public function process() {
-		echo $_POST[$this->id];
-		exit();
-	}
 }
 
 ?>

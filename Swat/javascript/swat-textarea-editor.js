@@ -1,3 +1,6 @@
+//TODO: fix rteModeSource and how it's being checked with the new Source/Normal
+//mode buttons plus add css for said buttons	
+
 // Cross-Browser Rich Text Editor
 // http://www.kevinroth.com/rte/demo.htm
 // Written by Kevin Roth (kevin@NOSPAMkevinroth.com - remove NOSPAM)
@@ -37,13 +40,6 @@ function initRTE(imgPath, incPath, css, genXHTML) {
 	//Safari/Konqueror think they are designMode capable even though they are not
 	if (document.getElementById && document.designMode && !isSafari && !isKonqueror) {
 		isRichText = true;
-	}
-	
-	if (isIE) {
-		document.onmouseover = raiseButton;
-		document.onmouseout  = normalButton;
-		document.onmousedown = lowerButton;
-		document.onmouseup   = raiseButton;
 	}
 	
 	//set paths vars
@@ -107,53 +103,101 @@ function writeRichText(rte, html, width, height, menu_type) {
 		}
 		
 		document.write('<div id="MenuButtons_' + rte + '" class="rteMenuButtons">');
-		document.write('<img src="' + imagesPath + 'bold.gif" width="25" height="24" alt="Bold" title="Bold" onClick="rteCommand(\'' + rte + '\', \'bold\', \'\')" />');
-		document.write('<img src="' + imagesPath + 'italic.gif" width="25" height="24" alt="Italic" title="Italic" onClick="rteCommand(\'' + rte + '\', \'italic\', \'\')">');
-		document.write('<img src="' + imagesPath + 'underline.gif" width="25" height="24" alt="Underline" title="Underline" onClick="rteCommand(\'' + rte + '\', \'underline\', \'\')">');
-		document.write('<img class="rteVertSep" src="' + imagesPath + 'divider.gif" width="7" height="24" border="0" alt="">');
-		document.write('<img src="' + imagesPath + 'left_just.gif" width="25" height="24" alt="Align Left" title="Align Left" onClick="rteCommand(\'' + rte + '\', \'justifyleft\', \'\')">');
-		document.write('<img src="' + imagesPath + 'centre.gif" width="25" height="24" alt="Center" title="Center" onClick="rteCommand(\'' + rte + '\', \'justifycenter\', \'\')">');
-		document.write('<img src="' + imagesPath + 'right_just.gif" width="25" height="24" alt="Align Right" title="Align Right" onClick="rteCommand(\'' + rte + '\', \'justifyright\', \'\')">');
-		document.write('<img src="' + imagesPath + 'justifyfull.gif" width="25" height="24" alt="Justify Full" title="Justify Full" onclick="rteCommand(\'' + rte + '\', \'justifyfull\', \'\')">');
-		document.write('<img class="rteVertSep" src="' + imagesPath + 'divider.gif" width="7" height="24" border="0" alt="">');
-		document.write('<img src="' + imagesPath + 'hr.gif" width="25" height="24" alt="Horizontal Rule" title="Horizontal Rule" onClick="rteCommand(\'' + rte + '\', \'inserthorizontalrule\', \'\')">');
-		document.write('<img class="rteVertSep" src="' + imagesPath + 'divider.gif" width="7" height="24" border="0" alt="">');
-		document.write('<img src="' + imagesPath + 'numbered_list.gif" width="25" height="24" alt="Ordered List" title="Ordered List" onClick="rteCommand(\'' + rte + '\', \'insertorderedlist\', \'\')">');
-		document.write('<img src="' + imagesPath + 'list.gif" width="25" height="24" alt="Unordered List" title="Unordered List" onClick="rteCommand(\'' + rte + '\', \'insertunorderedlist\', \'\')">');
-		document.write('<img class="rteVertSep" src="' + imagesPath + 'divider.gif" width="7" height="24" border="0" alt="">');
-		document.write('<img src="' + imagesPath + 'outdent.gif" width="25" height="24" alt="Outdent" title="Outdent" onClick="rteCommand(\'' + rte + '\', \'outdent\', \'\')">');
-		document.write('<img src="' + imagesPath + 'indent.gif" width="25" height="24" alt="Indent" title="Indent" onClick="rteCommand(\'' + rte + '\', \'indent\', \'\')">');
-		//document.write('<div id="forecolor_' + rte + '"><img src="' + imagesPath + 'textcolor.gif" width="25" height="24" alt="Text Color" title="Text Color" onClick="dlgColorPalette(\'' + rte + '\', \'forecolor\', \'\')"></div>');
 		
-		document.write('<img class="rteVertSep" src="' + imagesPath + 'divider.gif" width="7" height="24" border="0" alt="">');
-		//document.write('<div id="hilitecolor_' + rte + '"><img src="' + imagesPath + 'bgcolor.gif" width="25" height="24" alt="Background Color" title="Background Color" onClick="dlgColorPalette(\'' + rte + '\', \'hilitecolor\', \'\')"></div>');
-		document.write('<img src="' + imagesPath + 'hilight.gif" width="25" height="24" alt="Highlight Text" title="Highlight Text" onClick="hiliteText(\'' + rte + '\')">');
-		document.write('<img src="' + imagesPath + 'quote.gif" width="25" height="24" alt="Quote Text" title="Quote Text" onClick="insertQuote(\'' + rte + '\')">');
+		document.write('<div>');
 		
-		//document.write('<img class="rteVertSep" src="' + imagesPath + 'divider.gif" width="7" height="24" border="0" alt="">');
-		document.write('<img src="' + imagesPath + 'hyperlink.gif" width="25" height="24" alt="Insert Link" title="Insert Link" onClick="dlgInsertLink(\'' + rte + '\', \'link\')">');
-		//document.write('<img src="' + imagesPath + 'image.gif" width="25" height="24" alt="Add Image" title="Add Image" onClick="addImage(\'' + rte + '\')">');
-		//document.write('<div id="table_' + rte + '"><img src="' + imagesPath + 'insert_table.gif" width="25" height="24" alt="Insert Table" title="Insert Table" onClick="dlgInsertTable(\'' + rte + '\', \'table\', \'\')"></div>');
-		document.write('<img src="' + imagesPath + 'clear.gif" width="25" height="24" alt="Clear Formatting" title="Clear Formatting" onClick="clearFormat(\'' + rte + '\')">');
-		//document.writeln('		<td><img class="rteVertSep" src="' + imagesPath + 'blackdot.gif" width="1" height="20" border="0" alt=""></td>');
-		//document.writeln('		<td><img src="' + imagesPath + 'cut.gif" width="25" height="24" alt="Cut" title="Cut" onClick="rteCommand(\'' + rte + '\', \'cut\')"></td>');
-		//document.writeln('		<td><img src="' + imagesPath + 'copy.gif" width="25" height="24" alt="Copy" title="Copy" onClick="rteCommand(\'' + rte + '\', \'copy\')"></td>');
-		//document.writeln('		<td><img src="' + imagesPath + 'paste.gif" width="25" height="24" alt="Paste" title="Paste" onClick="rteCommand(\'' + rte + '\', \'paste\')"></td>');
-		//document.writeln('		<td><img class="rteVertSep" src="' + imagesPath + 'blackdot.gif" width="1" height="20" border="0" alt=""></td>');
-		//document.writeln('		<td><img src="' + imagesPath + 'undo.gif" width="25" height="24" alt="Undo" title="Undo" onClick="rteCommand(\'' + rte + '\', \'undo\')"></td>');
-		//document.writeln('		<td><img src="' + imagesPath + 'redo.gif" width="25" height="24" alt="Redo" title="Redo" onClick="rteCommand(\'' + rte + '\', \'redo\')"></td>');
+		document.write('<a href="javascript: return false;" class="rteMenu-bold"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'bold\', \'\')"');
+			document.write('title="bold">bold</a>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-italic"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'italic\', \'\')"');
+			document.write('title="italic">italic</a>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-underline"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'underline\', \'\')"');
+			document.write('title="underline">underline</a>');
+		
 		document.write('</div>');
-			
+		document.write('<div>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-align-left"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'justifyleft\', \'\')"');
+			document.write('title="underline">align left</a>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-align-center"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'justifycenter\', \'\')"');
+			document.write('title="underline">align center</a>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-align-right"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'justifyright\', \'\')"');
+			document.write('title="underline">align right</a>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-align-justify"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'jusitfyfull\', \'\')"');
+			document.write('title="underline">justify full</a>');
+		
+		document.write('</div>');
+		document.write('<div>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-ul"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'insertunorderedlist\', \'\')"');
+			document.write('title="underline">insert unordered list</a>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-ol"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'insertorderedlist\', \'\')"');
+			document.write('title="underline">insert ordered list</a>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-indent"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'indent\', \'\')"');
+			document.write('title="underline">indent</a>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-outdent"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'outdent\', \'\')"');
+			document.write('title="underline">outdent</a>');
+		
+		document.write('</div>');
+		document.write('<div>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-link"');
+			document.write('onClick="dlgInsertLink(\'' + rte + '\', \'link\')"');
+			document.write('title="underline">insert link</a>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-hr"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'inserthorizontalrule\', \'\')"');
+			document.write('title="underline">horizonatal rule</a>');
+		
+		document.write('</div>');
+		document.write('<div>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-hilite"');
+			document.write('onClick="hiliteText(\'' + rte + '\')"');
+			document.write('title="underline">highlight</a>');
+		
+		document.write('<a href="javascript: return false;" class="rteMenu-quote"');
+			document.write('onClick="insertQuote(\'' + rte + '\')"');
+			document.write('title="underline">quote</a>');
+		
 		document.write('</div>');
 	
-		document.writeln('<iframe id="' + rte + '" name="' + rte + '" width="' + width + 'px" height="' + height + 'px" src="' + includesPath + 'swat-textarea-editor-blank.html" style="padding: 5px;"></iframe>');
-		
+		document.write('</div>');
+		document.write('</div>');
 
-		document.writeln('<br /><input type="radio" checked="checked" name="_rteMode' + rte + '" id="_rteModeNormal' + rte + '" onclick="toggleHTMLSrc(\'' + rte + '\');" />&nbsp;<label for="_rteModeNormal' + rte + '">Normal</label>');
-		document.writeln('&nbsp;<input type="radio" name="_rteMode' + rte + '" id="_rteModeSource' + rte + '" onclick="toggleHTMLSrc(\'' + rte + '\');" />&nbsp;<label for="_rteModeSource' + rte + '">Source</label>');
-		//document.writeln('<br /><input type="checkbox" id="chkSrc' + rte + '" onclick="toggleHTMLSrc(\'' + rte + '\');" />&nbsp;<label for="chkSrc' + rte + '">View Source</label>');
+		document.writeln('<iframe class="rteIframe" id="' + rte + '" name="' + rte + '" width="' + width + 'px" height="' + height + 'px" src="' + includesPath + 'swat-textarea-editor-blank.html"></iframe>');
+
+		document.writeln('<div class="rteToggleMode">');	
+			//document.writeln('<div id="_rteToggleNormal' + rte + '" />');
+				document.writeln('<a class="rteToggleModeDisabled" id="_rteToggleNormal' + rte + '" href="javascript: return false;" onclick="toggleHTMLSrc(\'' + rte + '\', 0);"><span>Normal</span></a>');
+			//document.writeln('</div>');
 		
-		document.writeln('<iframe width="154" height="104" id="cp' + rte + '" src="' + includesPath + 'swat-textarea-editor-palette.html" marginwidth="0" marginheight="0" scrolling="no" style="visibility:hidden; position: absolute;"></iframe>');
+			//document.writeln('<div id="_rteToggleSource' + rte + '" />');
+				document.writeln('<a href="javascript: return false;"n id="_rteToggleSource' + rte + '" onclick="toggleHTMLSrc(\'' + rte + '\', 1);"><span>Source</span></a>');
+			//document.writeln('</div>');	
+		document.writeln('</div>');	
+		document.writeln('<input type="hidden" id="_rteModeSource' + rte + '" value="0" />');	
+
+		//iframe for the palette - unremark this if you want a palette control
+		//document.writeln('<iframe width="154" height="104" id="cp' + rte + '" src="' + includesPath + 'swat-textarea-editor-palette.html" marginwidth="0" marginheight="0" scrolling="no" style="visibility:hidden; position: absolute;"></iframe>');
 		
 		html = convertTags(html);
 		document.writeln('<input type="hidden" id="hdn' + rte + '" name="' + rte + '" value="' + html + '">');
@@ -177,8 +221,8 @@ function enableDesignMode(rte, html) {
 		frameHtml += "<style>\n";
 		frameHtml += "body {\n";
 		frameHtml += "	background: #FFFFFF;\n";
-		frameHtml += "	margin: 0px;\n";
-		frameHtml += "	padding: 0px;\n";
+		frameHtml += "	margin: 2px;\n";
+		frameHtml += "	padding: 2px;\n";
 		frameHtml += "}\n";
 		frameHtml += ".highlight { background: #FF0; }";
 		frameHtml += ".quote { border: 5px solid #CCC;}";
@@ -217,6 +261,9 @@ function enableDesignMode(rte, html) {
 					appendFormOnSubmit(rte);
 				}
 			} catch (e) {
+				//TODO: figure out why this started being thrown when I removed
+				//image buttons
+				window.alert(e);
 				alert("Error preloading content.");
 			}
 		} catch (e) {
@@ -282,7 +329,7 @@ function setHiddenVal(rte) {
 }
 
 function rteCommand(rte, command, option) {	
-	if (document.getElementById("_rteModeSource" + rte).checked)
+	if (document.getElementById("_rteModeSource" + rte).value == 1)
 		return;
 	
 	//function to perform command
@@ -303,14 +350,24 @@ function rteCommand(rte, command, option) {
 	}
 }
 
-function toggleHTMLSrc(rte) {
+function toggleHTMLSrc(rte, edit_src) {
+
+	if (document.getElementById("_rteModeSource" + rte).value == edit_src)
+		return false;
+
 	//contributed by Bob Hutzel (thanks Bob!)
 	var oHdnField = document.getElementById('hdn' + rte);
 	
-	if (document.getElementById('_rteModeSource' + rte).checked) {
+	document.getElementById("_rteModeSource" + rte).value = edit_src;
+
+	if (edit_src) {
 		//we are checking the box
 		var element = document.getElementById("MenuButtons_" + rte);
 		element.className = 'rteMenuButtons rteMenuButtonsDisabled';
+
+		document.getElementById('_rteToggleSource' + rte).className = 'rteToggleModeDisabled';
+		document.getElementById('_rteToggleNormal' + rte).className = null;
+
 		toggleFormatting(rte);
 		setHiddenVal(rte);
 		
@@ -326,6 +383,10 @@ function toggleHTMLSrc(rte) {
 		//we are unchecking the box
 		var element = document.getElementById("MenuButtons_" + rte);
 		element.className = 'rteMenuButtons';
+		
+		document.getElementById('_rteToggleNormal' + rte).className = 'rteToggleModeDisabled';
+		document.getElementById('_rteToggleSource' + rte).className = null;
+		
 		toggleFormatting(rte);
 		
 		if (document.all) {
@@ -341,10 +402,12 @@ function toggleHTMLSrc(rte) {
 			oRTE.body.innerHTML = htmlSrc.toString();
 		}
 	}
+
+	return false;
 }
 
 function dlgColorPalette(rte, command) {
-	if (document.getElementById("_rteModeSource" + rte).checked)
+	if (document.getElementById("_rteModeSource" + rte).value == 1)
 		return;
 
 	//function to display or hide color palettes
@@ -383,7 +446,7 @@ function dlgInsertTable(rte, command) {
 	//function to open/close insert table dialog
 	//save current values
 	
-	if (document.getElementById("_rteModeSource" + rte).checked)
+	if (document.getElementById("_rteModeSource" + rte).value == 1)
 		return;
 	
 	parent.command = command;
@@ -395,7 +458,7 @@ function dlgInsertLink(rte, command) {
 	//function to open/close insert table dialog
 	//save current values
 	
-	if (document.getElementById("_rteModeSource" + rte).checked)
+	if (document.getElementById("_rteModeSource" + rte).value == 1)
 		return;
 	
 	parent.command = command;
@@ -470,7 +533,7 @@ function setBackgroundColor(rte, color) {
 function addImage(rte) {
 	//function to add image
 	
-	if (document.getElementById("_rteModeSource" + rte).checked)
+	if (document.getElementById("_rteModeSource" + rte).value == 1)
 		return;
 	
 	imagePath = prompt('Enter Image URL:', 'http://');				
@@ -748,7 +811,7 @@ function toggleFormatting(rte) {
 	if (element)
 		for (var i = 0; i < element.childNodes.length; i++)
 			if (element.childNodes[i].nodeName == 'SELECT')
-				element.childNodes[i].disabled = document.getElementById("_rteModeSource" + rte).checked;
+				element.childNodes[i].disabled = (document.getElementById("_rteModeSource" + rte).value == 1);
 }
 
 window.onload = function(ev) {
@@ -757,7 +820,9 @@ window.onload = function(ev) {
 		currentRTE = vRTEs[i];
 		
 		var hidden_val = document.getElementById('hdn' + vRTEs[i]);
-		insertHTML(hidden_val.value.toString());
+
+		if (hidden_val.value.toString())
+			insertHTML(hidden_val.value.toString());
 	}
 };
 

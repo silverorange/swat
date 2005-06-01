@@ -1,41 +1,122 @@
-div.rteMenu img {
-	margin: 1px;
-	cursor: pointer;
-	cursor: hand;
+iframe.rteIframe {
+	border-width: 1px;
 }
 
-.rteImageRaised, div.rteMenu img:hover {
-	margin: 0px;
-	border: 1px outset;
-	cursor: pointer;
-	cursor: hand;
+div.rteToggleMode {
+	height: 30px;
 }
 
-.rteImageLowered, div.rteMenu img:active {
-	margin: 0px;
-	border: 1px inset;
-	cursor: pointer;
-	cursor: hand;
+div.rteToggleMode a {
+	padding-right: 3px;
+	margin-right: 2px;
+	font-size: 85%;
+	background: url('images/rte/toggle-mode.png') 100% -107px;
+	float: left;
+	display: block;
+}
+
+div.rteToggleMode span {
+	height: 17px;
+	background: url('images/rte/toggle-mode.png') 0 -107px;
+	display: block;
+	float: left;
+	padding: 3px 2em;	
+}
+
+div.rteToggleMode a:hover {
+	background: url('images/rte/toggle-mode.png') 100% -207px;
+}
+
+div.rteToggleMode a:hover span {
+	background: url('images/rte/toggle-mode.png') 0 -207px;
+}
+
+div.rteToggleMode a.rteToggleModeDisabled, div.rteToggleMode a.rteToggleModeDisabled:hover {
+	cursor: default;
+	color: #666;
+	text-decoration: none;
+	background: url('images/rte/toggle-mode.png') 100% -7px;
+}
+
+div.rteToggleMode a.rteToggleModeDisabled span, div.rteToggleMode a.rteToggleModeDisabled:hover span {
+	background: url('images/rte/toggle-mode.png') 0 -7px;
+}
+
+div.rteMenuButtons {
+	height: 23px;
 }
 
 div.rteMenuButtons div {
-	display: inline;
+	float: left;
+	margin-right: 5px;
 }
 
-div.rteMenuButtons .rteVertSep, div.rteMenuButtons .rteVertSep:hover, div.rteMenuButtons .rteVertSep:active {
-	border: 0px;
-	margin: 1px;
-	cursor: auto;
-}
-
-div.rteMenuButtonsDisabled img, div.rteMenuButtonsDisabled img:hover, div.rteMenuButtonsDisabled img:active {
-	margin: 1px;
-	border: 0px;
-	cursor: auto;
-}
-
-div.rteMenuButtonsDisabled img {
+div.rteMenuButtonsDisabled a {
 	filter: alpha(opacity = 25);
 	-moz-opacity: 0.25;
+	cursor: default;
 }
 
+div.rteMenuButtons a {
+	display: block;
+	width: 21px;
+	height: 19px;
+	text-indent: -1000em;
+	text-decoration: none;
+	float: left;
+	margin-right: 2px;
+}
+
+div.rteMenuButtons a:hover, div.rteMenuButtons a:focus {
+	background-position: 0 -100px;
+}
+
+div.rteMenuButtons a:active {
+	background-position: 0 -200px;
+}
+
+a.rteMenu-bold {
+	background-image: url('images/rte/bold.png');
+}
+a.rteMenu-italic {
+	background-image: url('images/rte/italic.png');
+}
+a.rteMenu-underline {
+	background-image: url('images/rte/underline.png');
+}
+a.rteMenu-align-left {
+	background-image: url('images/rte/align-left.png');
+}
+a.rteMenu-align-right {
+	background-image: url('images/rte/align-right.png');
+}
+a.rteMenu-align-center {
+	background-image: url('images/rte/align-center.png');
+}
+a.rteMenu-align-justify {
+	background-image: url('images/rte/align-justify.png');
+}
+a.rteMenu-indent {
+	background-image: url('images/rte/indent.png');
+}
+a.rteMenu-outdent {
+	background-image: url('images/rte/outdent.png');
+}
+a.rteMenu-ul {
+	background-image: url('images/rte/ul.png');
+}
+a.rteMenu-ol {
+	background-image: url('images/rte/ol.png');
+}
+a.rteMenu-link {
+	background-image: url('images/rte/link.png');
+}
+a.rteMenu-hr {
+	background-image: url('images/rte/hr.png');
+}
+a.rteMenu-hilite {
+	background-image: url('images/rte/hilite.png');
+}
+a.rteMenu-quote {
+	background-image: url('images/rte/quote.png');
+}
