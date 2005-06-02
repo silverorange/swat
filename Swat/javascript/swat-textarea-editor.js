@@ -27,6 +27,18 @@ var lang = "en";
 var encoding = "utf-8";
 
 function initRTE(imgPath, incPath, css, genXHTML) {
+	initCheckRichText();
+	generateXHTML = genXHTML;
+
+	//set paths vars
+	imagesPath = imgPath;
+	includesPath = incPath;
+	cssFile = css;
+	
+	if (isRichText) document.writeln('<style type="text/css">@import "swat/swat-textarea-editor.css";</style>');
+}
+
+function initCheckRichText() {
 	//set browser vars
 	var ua = navigator.userAgent.toLowerCase();
 	isIE = ((ua.indexOf("msie") != -1) && (ua.indexOf("opera") == -1) && (ua.indexOf("webtv") == -1)); 
@@ -34,20 +46,11 @@ function initRTE(imgPath, incPath, css, genXHTML) {
 	isSafari = (ua.indexOf("safari") != -1);
 	isKonqueror = (ua.indexOf("konqueror") != -1);
 	
-	generateXHTML = genXHTML;
-	
 	//check to see if designMode mode is available
 	//Safari/Konqueror think they are designMode capable even though they are not
 	if (document.getElementById && document.designMode && !isSafari && !isKonqueror) {
 		isRichText = true;
 	}
-	
-	//set paths vars
-	imagesPath = imgPath;
-	includesPath = incPath;
-	cssFile = css;
-	
-	if (isRichText) document.writeln('<style type="text/css">@import "swat/swat-textarea-editor.css";</style>');
 }
 
 function writeRichText(rte, html, width, height, menu_type) {
@@ -106,93 +109,96 @@ function writeRichText(rte, html, width, height, menu_type) {
 		
 		document.write('<div>');
 		
-		document.write('<a href="javascript: return false;" class="rteMenu-bold"');
-			document.write('onClick="rteCommand(\'' + rte + '\', \'bold\', \'\')"');
+		document.write('<a href="#" class="rteMenu-bold"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'bold\', \'\'); return false;"');
 			document.write('title="bold">bold</a>');
 		
-		document.write('<a href="javascript: return false;" class="rteMenu-italic"');
-			document.write('onClick="rteCommand(\'' + rte + '\', \'italic\', \'\')"');
+		document.write('<a href="#" class="rteMenu-italic"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'italic\', \'\'); return false;"');
 			document.write('title="italic">italic</a>');
 		
-		document.write('<a href="javascript: return false;" class="rteMenu-underline"');
-			document.write('onClick="rteCommand(\'' + rte + '\', \'underline\', \'\')"');
+		document.write('<a href="#" class="rteMenu-underline"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'underline\', \'\'); return false;"');
 			document.write('title="underline">underline</a>');
 		
 		document.write('</div>');
 		document.write('<div>');
 		
-		document.write('<a href="javascript: return false;" class="rteMenu-align-left"');
-			document.write('onClick="rteCommand(\'' + rte + '\', \'justifyleft\', \'\')"');
-			document.write('title="underline">align left</a>');
+		document.write('<a href="#" class="rteMenu-align-left"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'justifyleft\', \'\'); return false;"');
+			document.write('title="align left">align left</a>');
 		
-		document.write('<a href="javascript: return false;" class="rteMenu-align-center"');
-			document.write('onClick="rteCommand(\'' + rte + '\', \'justifycenter\', \'\')"');
-			document.write('title="underline">align center</a>');
+		document.write('<a href="#" class="rteMenu-align-center"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'justifycenter\', \'\'); return false;"');
+			document.write('title="align center">align center</a>');
 		
-		document.write('<a href="javascript: return false;" class="rteMenu-align-right"');
-			document.write('onClick="rteCommand(\'' + rte + '\', \'justifyright\', \'\')"');
-			document.write('title="underline">align right</a>');
+		document.write('<a href="#" class="rteMenu-align-right"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'justifyright\', \'\'); return false;"');
+			document.write('title="align right">align right</a>');
 		
-		document.write('<a href="javascript: return false;" class="rteMenu-align-justify"');
-			document.write('onClick="rteCommand(\'' + rte + '\', \'jusitfyfull\', \'\')"');
-			document.write('title="underline">justify full</a>');
-		
-		document.write('</div>');
-		document.write('<div>');
-		
-		document.write('<a href="javascript: return false;" class="rteMenu-ul"');
-			document.write('onClick="rteCommand(\'' + rte + '\', \'insertunorderedlist\', \'\')"');
-			document.write('title="underline">insert unordered list</a>');
-		
-		document.write('<a href="javascript: return false;" class="rteMenu-ol"');
-			document.write('onClick="rteCommand(\'' + rte + '\', \'insertorderedlist\', \'\')"');
-			document.write('title="underline">insert ordered list</a>');
-		
-		document.write('<a href="javascript: return false;" class="rteMenu-indent"');
-			document.write('onClick="rteCommand(\'' + rte + '\', \'indent\', \'\')"');
-			document.write('title="underline">indent</a>');
-		
-		document.write('<a href="javascript: return false;" class="rteMenu-outdent"');
-			document.write('onClick="rteCommand(\'' + rte + '\', \'outdent\', \'\')"');
-			document.write('title="underline">outdent</a>');
+		document.write('<a href="#" class="rteMenu-align-justify"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'jusitfyfull\', \'\'); return false;"');
+			document.write('title="justify full">justify full</a>');
 		
 		document.write('</div>');
 		document.write('<div>');
 		
-		document.write('<a href="javascript: return false;" class="rteMenu-link"');
-			document.write('onClick="dlgInsertLink(\'' + rte + '\', \'link\')"');
-			document.write('title="underline">insert link</a>');
+		document.write('<a href="#" class="rteMenu-ul"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'insertunorderedlist\', \'\'); return false;"');
+			document.write('title="unordered list">unordered list</a>');
 		
-		document.write('<a href="javascript: return false;" class="rteMenu-hr"');
-			document.write('onClick="rteCommand(\'' + rte + '\', \'inserthorizontalrule\', \'\')"');
-			document.write('title="underline">horizonatal rule</a>');
+		document.write('<a href="#" class="rteMenu-ol"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'insertorderedlist\', \'\'); return false;"');
+			document.write('title="ordered list">ordered list</a>');
+		
+		document.write('<a href="#" class="rteMenu-indent"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'indent\', \'\'); return false;"');
+			document.write('title="indent">indent</a>');
+		
+		document.write('<a href="#" class="rteMenu-outdent"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'outdent\', \'\'); return false;"');
+			document.write('title="outdent">outdent</a>');
 		
 		document.write('</div>');
 		document.write('<div>');
 		
-		document.write('<a href="javascript: return false;" class="rteMenu-hilite"');
-			document.write('onClick="hiliteText(\'' + rte + '\')"');
-			document.write('title="underline">highlight</a>');
+		document.write('<a href="#" class="rteMenu-link"');
+			document.write('onClick="dlgInsertLink(\'' + rte + '\', \'link\'); return false;"');
+			document.write('title="insert link">insert link</a>');
 		
-		document.write('<a href="javascript: return false;" class="rteMenu-quote"');
-			document.write('onClick="insertQuote(\'' + rte + '\')"');
-			document.write('title="underline">quote</a>');
+		document.write('<a href="#" class="rteMenu-hr"');
+			document.write('onClick="rteCommand(\'' + rte + '\', \'inserthorizontalrule\', \'\'); return false;"');
+			document.write('title="horizontal rule">horizonatal rule</a>');
 		
 		document.write('</div>');
+		document.write('<div>');
+		
+		document.write('<a href="#" class="rteMenu-hilite"');
+			document.write('onClick="hiliteText(\'' + rte + '\'); return false;"');
+			document.write('title="highlight">highlight</a>');
+		
+		document.write('<a href="#" class="rteMenu-quote"');
+			document.write('onClick="insertQuote(\'' + rte + '\'); return false;"');
+			document.write('title="quote">quote</a>');
+		
+		document.write('</div>'); //end menu group
 	
-		document.write('</div>');
-		document.write('</div>');
+		document.write('</div>'); //end menu buttons
+		document.write('</div>'); //end whole menu
 
-		document.writeln('<iframe class="rteIframe" id="' + rte + '" name="' + rte + '" width="' + width + 'px" height="' + height + 'px" src="' + includesPath + 'swat-textarea-editor-blank.html"></iframe>');
+		document.writeln('<iframe class="rteIframe" id="' + rte + '" name="' + rte + '"');
+			document.writeln('height="' + height + 'px"');
+			document.writeln('src="' + includesPath + 'swat-textarea-editor-blank.html"></iframe>');
 
 		document.writeln('<div class="rteToggleMode">');	
-			//document.writeln('<div id="_rteToggleNormal' + rte + '" />');
-				document.writeln('<a class="rteToggleModeDisabled" id="_rteToggleNormal' + rte + '" href="javascript: return false;" onclick="toggleHTMLSrc(\'' + rte + '\', 0);"><span>Normal</span></a>');
-			//document.writeln('</div>');
+				document.writeln('<a class="rteToggleModeDisabled"');
+					document.writeln('id="_rteToggleNormal' + rte + '" href="#"');
+					document.writeln('onclick="toggleHTMLSrc(\'' + rte + '\', 0); return false;">');
+					document.writeln('<span>Normal</span></a>');
 		
-			//document.writeln('<div id="_rteToggleSource' + rte + '" />');
-				document.writeln('<a href="javascript: return false;"n id="_rteToggleSource' + rte + '" onclick="toggleHTMLSrc(\'' + rte + '\', 1);"><span>Source</span></a>');
-			//document.writeln('</div>');	
+				document.writeln('<a href="#" id="_rteToggleSource' + rte + '"');
+					document.writeln('onclick="toggleHTMLSrc(\'' + rte + '\', 1); return false;">');
+					document.writeln('<span>Source</span></a>');
 		document.writeln('</div>');	
 		document.writeln('<input type="hidden" id="_rteModeSource' + rte + '" value="0" />');	
 
@@ -202,7 +208,7 @@ function writeRichText(rte, html, width, height, menu_type) {
 		html = convertTags(html);
 		document.writeln('<input type="hidden" id="hdn' + rte + '" name="' + rte + '" value="' + html + '">');
 
-		document.writeln('</div>');
+		document.writeln('</div>'); //end editor
 		
 		enableDesignMode(rte, html);
 	
@@ -238,18 +244,18 @@ function enableDesignMode(rte, html) {
 	
 	if (document.all) {
 		var oRTE = frames[rte].document;
-		oRTE.open();
+		oRTE.open('text/html', 'replace');
 		oRTE.write(frameHtml);
 		oRTE.close();
 		oRTE.designMode = "On";
-		frames[rte].document.attachEvent("onkeypress", function evt_ie_keypress(event) {ieKeyPress(event, rte);});
+		//frames[rte].document.attachEvent('onkeypress', function evt_ie_keypress(event) {ieKeyPress(event, rte);});
 		appendFormOnSubmit(rte);
 	} else {
 		try {
 			document.getElementById(rte).contentDocument.designMode = "on";
 			try {
 				var oRTE = document.getElementById(rte).contentWindow.document;
-				oRTE.open();
+				oRTE.open('text/html', 'replace');
 				oRTE.write(frameHtml);
 				oRTE.close();
 				if (isGecko) {
@@ -261,9 +267,6 @@ function enableDesignMode(rte, html) {
 					appendFormOnSubmit(rte);
 				}
 			} catch (e) {
-				//TODO: figure out why this started being thrown when I removed
-				//image buttons
-				window.alert(e);
 				alert("Error preloading content.");
 			}
 		} catch (e) {
@@ -625,6 +628,7 @@ function insertHTML(html) {
 function showHideElement(element, showHide) {
 	//function to show or hide elements
 	//element variable can be string or object
+	
 	if (document.getElementById(element)) {
 		element = document.getElementById(element);
 	}
@@ -815,6 +819,11 @@ function toggleFormatting(rte) {
 }
 
 window.onload = function(ev) {
+	initCheckRichText();
+	
+	if (!isRichText)
+		return;
+
 	var vRTEs = allRTEs.split(";");
 	for (var i = 0; i < vRTEs.length; i++) {
 		currentRTE = vRTEs[i];
@@ -827,6 +836,11 @@ window.onload = function(ev) {
 };
 
 window.onunload = function(ev) {
+	initCheckRichText();
+	
+	if (!isRichText)
+		return;
+
 	var vRTEs = allRTEs.split(";");
 	for (var i = 0; i < vRTEs.length; i++)
 		setHiddenVal(vRTEs[i])
