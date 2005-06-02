@@ -102,8 +102,8 @@ function writeRichText(rte, html, width, height, menu_type) {
 		
 		document.write('<div>');
 			document.writeln('	<select id="formatblock_' + rte + '" onchange="selectFont(\'' + rte + '\', this.id);">');
-			document.writeln('		<option value="clearformat">Clear Formatting</option>');
 			document.writeln('		<option value="">[Style]</option>');
+			document.writeln('		<option value="clearformat">Clear Formatting</option>');
 			document.writeln('		<option value="<p>">Paragraph &lt;p&gt;</option>');
 			document.writeln('		<option value="<h1>">Heading 1 &lt;h1&gt;</option>');
 			document.writeln('		<option value="<h2>">Heading 2 &lt;h2&gt;</option>');
@@ -381,6 +381,7 @@ function toggleHTMLSrc(rte, edit_src) {
 
 		document.getElementById('_rteToggleSource' + rte).className = 'rteToggleModeDisabled';
 		document.getElementById('_rteToggleNormal' + rte).className = null;
+		document.getElementById('formatblock_' + rte).disabled = true;
 
 		toggleFormatting(rte);
 		setHiddenVal(rte);
@@ -400,6 +401,7 @@ function toggleHTMLSrc(rte, edit_src) {
 		
 		document.getElementById('_rteToggleNormal' + rte).className = 'rteToggleModeDisabled';
 		document.getElementById('_rteToggleSource' + rte).className = null;
+		document.getElementById('formatblock_' + rte).disabled = false;
 		
 		toggleFormatting(rte);
 		
@@ -617,6 +619,7 @@ function selectFont(rte, selectname) {
 			document.getElementById(selectname).selectedIndex = 0;
 		}
 	}
+	document.getElementById(selectname).selectedIndex = 0;
 }
 
 function insertHTML(html) {
