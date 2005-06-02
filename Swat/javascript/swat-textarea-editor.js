@@ -187,7 +187,7 @@ function writeRichText(rte, html, width, height, menu_type) {
 		document.write('</div>'); //end whole menu
 
 		document.writeln('<iframe class="rteIframe" id="' + rte + '" name="' + rte + '"');
-			document.writeln('height="' + height + 'px"');
+			document.writeln('width="' + width + 'px" height="' + height + 'px"');
 			document.writeln('src="' + includesPath + 'swat-textarea-editor-blank.html"></iframe>');
 
 		document.writeln('<div class="rteToggleMode">');	
@@ -248,7 +248,7 @@ function enableDesignMode(rte, html) {
 		oRTE.write(frameHtml);
 		oRTE.close();
 		oRTE.designMode = "On";
-		//frames[rte].document.attachEvent('onkeypress', function evt_ie_keypress(event) {ieKeyPress(event, rte);});
+//frames[rte].document.attachEvent('onkeypress', function evt_ie_keypress(event) {ieKeyPress(event, rte);});
 		appendFormOnSubmit(rte);
 	} else {
 		try {
@@ -794,8 +794,8 @@ function isMenuButton(el) {
 
 
 function convertTags(value) {
-	value = convertTag('em', 'b', value);
-	value = convertTag('strong', 'i', value);
+	value = convertTag('em', 'i', value);
+	value = convertTag('strong', 'b', value);
 	return value;
 }
 
