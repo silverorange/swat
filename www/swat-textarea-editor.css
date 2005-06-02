@@ -6,13 +6,15 @@ div.rteToggleMode {
 	height: 30px;
 }
 
-div.rteToggleMode a {
+div.rteToggleMode a, div.rteToggleMode a:visited {
 	padding-right: 3px;
 	margin-right: 2px;
 	font-size: 85%;
 	background: url('images/rte/toggle-mode.png') 100% -107px;
 	float: left;
 	display: block;
+	text-decoration: none;
+	color: #333;
 }
 
 div.rteToggleMode span {
@@ -35,11 +37,14 @@ div.rteToggleMode a.rteToggleModeDisabled, div.rteToggleMode a.rteToggleModeDisa
 	cursor: default;
 	color: #666;
 	text-decoration: none;
-	background: url('images/rte/toggle-mode.png') 100% -7px;
+	background: url('images/rte/toggle-mode.png') 100% -5px;
+	position: relative;
+	top: -2px;
 }
 
 div.rteToggleMode a.rteToggleModeDisabled span, div.rteToggleMode a.rteToggleModeDisabled:hover span {
-	background: url('images/rte/toggle-mode.png') 0 -7px;
+	background: url('images/rte/toggle-mode.png') 0 -5px;
+	padding-top: 5px;
 }
 
 div.rteMenuButtons {
