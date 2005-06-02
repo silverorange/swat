@@ -4,7 +4,7 @@ div.rteDiv {
 }
 
 div.rteIframeDiv {
-	border: 2px solid;
+	border: 1px solid;
 	border-top-color: #CCC;
 	border-left-color: #CCC;
 	border-right-color: #EEE;
@@ -19,6 +19,7 @@ iframe.rteIframe {
 div.rteToggleMode {
 	height: 30px;
 	border-top: 1px solid #CCC;
+	padding-left: 3px;
 }
 
 div.rteToggleMode a, div.rteToggleMode a:visited {
