@@ -61,6 +61,7 @@ function writeRichText(rte, html, width, height, menu_type) {
 		document.writeln('<div class="rteDiv" style="width:' + width + ';">');
 		
 		document.writeln('<div id="Menu_' + rte + '" class="rteMenu">');
+		/*
 		if (menu_type == 'formatting') {
 			document.writeln('<div id="MenuFormatting_' + rte + '" class="rteMenuFormatting">');
 			document.writeln('	<select id="formatblock_' + rte + '" onchange="selectFont(\'' + rte + '\', this.id);">');
@@ -94,9 +95,26 @@ function writeRichText(rte, html, width, height, menu_type) {
 			document.writeln('	</select>');
 			document.writeln('</div>');
 		}
-		
+		*/
+
 		document.write('<div id="MenuButtons_' + rte + '" class="rteMenuButtons">');
 		
+		
+		document.write('<div>');
+			document.writeln('	<select id="formatblock_' + rte + '" onchange="selectFont(\'' + rte + '\', this.id);">');
+			document.writeln('		<option value="clearformat">Clear Formatting</option>');
+			document.writeln('		<option value="">[Style]</option>');
+			document.writeln('		<option value="<p>">Paragraph &lt;p&gt;</option>');
+			document.writeln('		<option value="<h1>">Heading 1 &lt;h1&gt;</option>');
+			document.writeln('		<option value="<h2>">Heading 2 &lt;h2&gt;</option>');
+			document.writeln('		<option value="<h3>">Heading 3 &lt;h3&gt;</option>');
+			document.writeln('		<option value="<h4>">Heading 4 &lt;h4&gt;</option>');
+			document.writeln('		<option value="<h5>">Heading 5 &lt;h5&gt;</option>');
+			document.writeln('		<option value="<h6>">Heading 6 &lt;h6&gt;</option>');
+			document.writeln('		<option value="<address>">Address &lt;ADDR&gt;</option>');
+			document.writeln('		<option value="<pre>">Formatted &lt;pre&gt;</option>');
+			document.writeln('	</select>');
+		document.write('</div>');
 		document.write('<div>');
 		
 		document.write('<a href="#" class="rteMenu-bold"');
@@ -176,9 +194,11 @@ function writeRichText(rte, html, width, height, menu_type) {
 		document.write('</div>'); //end menu buttons
 		document.write('</div>'); //end whole menu
 
+		document.writeln('<div class="rteIframeDiv">');	
 		document.writeln('<iframe class="rteIframe" id="' + rte + '" name="' + rte + '"');
 			document.writeln('style="width:100%; height: ' + height + ';"');
 			document.writeln('src="' + includesPath + 'swat-textarea-editor-blank.html"></iframe>');
+		document.writeln('</div>');	
 
 		document.writeln('<div class="rteToggleMode">');	
 				document.writeln('<a class="rteToggleModeDisabled"');
@@ -588,9 +608,14 @@ function selectFont(rte, selectname) {
 	// First one is always a label
 	if (idx != 0) {
 		var selected = document.getElementById(selectname).options[idx].value;
-		var cmd = selectname.replace('_' + rte, '');
-		rteCommand(rte, cmd, selected);
-		document.getElementById(selectname).selectedIndex = 0;
+		
+		if (selected == 'clearformat') {
+			clearFormat(rte);
+		} else {
+			var cmd = selectname.replace('_' + rte, '');
+			rteCommand(rte, cmd, selected);
+			document.getElementById(selectname).selectedIndex = 0;
+		}
 	}
 }
 
