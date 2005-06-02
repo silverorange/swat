@@ -58,7 +58,7 @@ function writeRichText(rte, html, width, height, menu_type) {
 		if (allRTEs.length > 0) allRTEs += ";";
 		allRTEs += rte;
 		
-		document.writeln('<div class="rteDiv" style="width:' + width + '; height:' + height + '">');
+		document.writeln('<div class="rteDiv" style="width:' + width + ';">');
 		
 		document.writeln('<div id="Menu_' + rte + '" class="rteMenu">');
 		if (menu_type == 'formatting') {
@@ -177,7 +177,7 @@ function writeRichText(rte, html, width, height, menu_type) {
 		document.write('</div>'); //end whole menu
 
 		document.writeln('<iframe class="rteIframe" id="' + rte + '" name="' + rte + '"');
-			document.writeln('width="100%" height="100%"');
+			document.writeln('style="width:100%; height: ' + height + ';"');
 			document.writeln('src="' + includesPath + 'swat-textarea-editor-blank.html"></iframe>');
 
 		document.writeln('<div class="rteToggleMode">');	
