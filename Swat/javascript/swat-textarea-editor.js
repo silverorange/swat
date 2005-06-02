@@ -219,6 +219,7 @@ function enableDesignMode(rte, html) {
 		frameHtml += "	background: #FFFFFF;\n";
 		frameHtml += "	margin: 2px;\n";
 		frameHtml += "	padding: 2px;\n";
+		frameHtml += "	font-family: monospace;\n";
 		frameHtml += "}\n";
 		frameHtml += ".highlight { background: #FF0; }";
 		frameHtml += ".quote { border: 5px solid #CCC;}";
