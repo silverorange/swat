@@ -58,17 +58,7 @@ function writeRichText(rte, html, width, height, menu_type) {
 		if (allRTEs.length > 0) allRTEs += ";";
 		allRTEs += rte;
 		
-		
-		//adjust minimum table widths
-		if (isIE) {
-			if (width < 540) width = 540;
-			var tablewidth = width;
-		} else {
-			if (width < 540) width = 540;
-			var tablewidth = width + 14;
-		}
-		
-		document.writeln('<div class="rteDiv">');
+		document.writeln('<div class="rteDiv" style="width:' + width + '; height:' + height + '">');
 		
 		document.writeln('<div id="Menu_' + rte + '" class="rteMenu">');
 		if (menu_type == 'formatting') {
@@ -187,7 +177,7 @@ function writeRichText(rte, html, width, height, menu_type) {
 		document.write('</div>'); //end whole menu
 
 		document.writeln('<iframe class="rteIframe" id="' + rte + '" name="' + rte + '"');
-			document.writeln('width="' + width + 'px" height="' + height + 'px"');
+			document.writeln('width="100%" height="100%"');
 			document.writeln('src="' + includesPath + 'swat-textarea-editor-blank.html"></iframe>');
 
 		document.writeln('<div class="rteToggleMode">');	
@@ -213,7 +203,7 @@ function writeRichText(rte, html, width, height, menu_type) {
 		enableDesignMode(rte, html);
 	
 	} else {
-		document.writeln('<textarea name="' + rte + '" id="' + rte + '" style="width: ' + width + 'px; height: ' + height + 'px;">' + html + '</textarea>');
+		document.writeln('<textarea name="' + rte + '" id="' + rte + '" style="width: ' + width + '; height: ' + height + ';">' + html + '</textarea>');
 	}
 }
 

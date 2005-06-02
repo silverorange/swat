@@ -16,7 +16,7 @@ class SwatTextareaEditor extends SwatTextarea {
 	 * Width of the editor. In percent or pixels.
 	 * @var mixed
 	 */
-	public $width = '90%';
+	public $width = '100%';
 
 	/**
 	 * Height
@@ -24,7 +24,7 @@ class SwatTextareaEditor extends SwatTextarea {
 	 * Height of the editor. In percent or pixels.
 	 * @var mixed
 	 */
-	public $height = 200;
+	public $height = '15em';
 	
 	public function display() {
 		$this->displayJavascript();
