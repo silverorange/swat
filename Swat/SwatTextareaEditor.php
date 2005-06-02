@@ -13,16 +13,16 @@ class SwatTextareaEditor extends SwatTextarea {
 	/**
 	 * Width
 	 *
-	 * Width of the editor. In percent or pixels.
-	 * @var mixed
+	 * Width of the editor. In percent, pixels, or ems.
+	 * @var string
 	 */
 	public $width = '100%';
 
 	/**
 	 * Height
 	 *
-	 * Height of the editor. In percent or pixels.
-	 * @var mixed
+	 * Height of the editor. In percent, pixels, or ems.
+	 * @var string
 	 */
 	public $height = '15em';
 	
