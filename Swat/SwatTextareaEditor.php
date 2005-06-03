@@ -26,6 +26,15 @@ class SwatTextareaEditor extends SwatTextarea {
 	 */
 	public $height = '15em';
 	
+	/**
+	 * Base-Href
+	 *
+	 * Optional base-href, used to reference images and other urls in the editor.
+	 * @var string
+	 */
+	public $basehref = 'null'; //leave as text null for inserting into javascript
+	
+	
 	public function display() {
 		$this->displayJavascript();
 	}	
@@ -37,7 +46,7 @@ class SwatTextareaEditor extends SwatTextarea {
 		include_once('Swat/javascript/swat-textarea-editor.js');
 
 		echo 'initRTE("swat/images/textarea-editor/", "swat/", "", false);';
-		echo "writeRichText('{$this->id}', '{$value}', '{$this->width}', '{$this->height}');";
+		echo "writeRichText('{$this->id}', '{$value}', '{$this->width}', '{$this->height}', '{$this->basehref}');";
 		
 		echo '</script>';
 	}
