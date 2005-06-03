@@ -14,12 +14,14 @@ abstract class SwatWidget extends SwatObject {
 
 	/**
 	 * The widget which contains this widget
+	 *
 	 * @var SwatContainer
 	 */
 	public $parent = null;
 
 	/**
 	 * A non-visible unique id for this widget, or null
+	 *
 	 * @var string
 	 */
 	public $id;
@@ -32,6 +34,8 @@ abstract class SwatWidget extends SwatObject {
 	 * @var boolean
 	 */
 	public $visible = true;
+
+	protected $messages = array();
 
 	/**
 	 * @param string $id A non-visible unique id for this widget.
@@ -87,7 +91,6 @@ abstract class SwatWidget extends SwatObject {
 	 * processes any child widgets.
 	 */
 	public function process() {
-
 	}
 
 	/**
@@ -96,18 +99,15 @@ abstract class SwatWidget extends SwatObject {
 	 * Run by the widget constructor.
 	 */
 	public function init() {
-
 	}
-
-	protected $messages = array();
 
 	/**
 	 * Add a message
 	 *
-	 * @param SwatMessage {@link SwatMessage} object to add
-	 *
-	 * Adds a new error message to this widget.  The error will be shown by the
+	 * Adds a new error message to this widget. The error will be shown by the
 	 * display() method as well as cause hasMessage() to return true.
+	 *
+	 * @param SwatMessage {@link SwatMessage} object to add
 	 */
 	abstract public function addMessage($msg);
 
@@ -116,12 +116,14 @@ abstract class SwatWidget extends SwatObject {
 	 *
 	 * Gather all messages from children of this widget and this widget 
 	 * itself.
+	 *
 	 * @return array Array of {@link SwatMessage} objects.
 	 */
 	abstract public function gatherMessages();
 
 	/**
 	 * Check for messages
+	 *
 	 * @return boolean True if there is an message in the subtree.
 	 */
 	abstract public function hasMessage();
