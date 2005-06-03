@@ -17,14 +17,17 @@ class SwatCascadeFlydown extends SwatFlydown {
 	 *
 	 * An array of parents and options for the flydown in the form:
 	 * parent = array(value1 => title2, value2 => title2).
+	 *
 	 * @var array
 	 */
 	public $options = null;
 
 	/**
-	 * Cascade From
+	 * Cascade from
 	 *
 	 * A reference to the {@link SwatWidget} that this item cascades from.
+	 *
+	 * @var SwatWidget
 	 */
 	public $cascade_from;
 
@@ -50,7 +53,7 @@ class SwatCascadeFlydown extends SwatFlydown {
 		include_once('Swat/javascript/swat-cascade.js');
 		
 		printf("\n {$this->id}_cascade = new SwatCascade('%s', '%s'); ",
-				$this->cascade_from->id, $this->id);
+			$this->cascade_from->id, $this->id);
 		
 		foreach($this->options as $parent => $options) {
 			foreach ($options as $k => $v) {
