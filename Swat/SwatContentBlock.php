@@ -13,6 +13,7 @@ class SwatContentBlock extends SwatControl {
 
 	/**
 	 * Text content of the widget.
+	 *
 	 * @var string
 	 */
 	public $content = '';
