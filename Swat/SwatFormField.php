@@ -16,42 +16,49 @@ class SwatFormField extends SwatContainer {
 
 	/**
 	 * The visible name for this field, or null
+	 *
 	 * @var string
 	 */
 	public $title = null;
 
 	/*
 	 * Display a visible indication that this field is required
+	 *
 	 * @var bool
 	 */
 	public $required = false;
 	
-	/*
+	/**
 	 * Optional note of text to display with the field
+	 *
 	 * @var bool
 	 */
 	public $note = null;
 
 	/**
 	 * CSS class to use on the HTML div tag
+	 *
 	 * @var string
 	 */
 	public $class = 'swat-form-field';
 
 	/**
 	 * CSS class to use on the HTML div where the note is displayed
+	 *
 	 * @var string
 	 */
 	public $note_class = 'swat-form-field-note';
 
 	/**
 	 * CSS class to use on outer HTML div when an error message is displayed
+	 *
 	 * @var string
 	 */
 	public $error_class = 'swat-form-field-error';
 
 	/**
 	 * CSS class to use on the HTML div where the error message is displayed.
+	 *
 	 * @var string
 	 */
 	public $errormsg_class = 'swat-form-field-errormsg';
