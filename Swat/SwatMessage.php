@@ -16,12 +16,14 @@ class SwatMessage {
 
 	/**
 	 * Type of message
+	 *
 	 * @var int
 	 */
 	public $type;
 
 	/**
 	 * Message text
+	 *
 	 * @var string
 	 */
 	public $content = null;
