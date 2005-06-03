@@ -74,11 +74,25 @@ class SwatDateEntry extends SwatControl implements SwatState {
 	 */
 	public $valid_range_end;
 	
-	
-	private $yearfly;
-	private $monthfly;
-	private $dayfly;
-	private $timefly;
+	/**
+	 * @var SwatFlydown
+	 */
+	private $year_flydown;
+
+	/**
+	 * @var SwatFlydown
+	 */
+	private $month_flydown;
+
+	/**
+	 * @var SwatFlydown
+	 */
+	private $day_flydown;
+
+	/**
+	 * @var SwatTimeEntry
+	 */
+	private $time_flydown;
 	
 	private $created = false;
 	
@@ -136,24 +150,24 @@ class SwatDateEntry extends SwatControl implements SwatState {
 			
 			if ($m && $datepart == 1 && $this->display_parts & self::MONTH) {
 				if ($this->value !== null)
-					$this->monthfly->value = $this->value->getMonth();	
+					$this->month_flydown->value = $this->value->getMonth();	
 	
-				$this->monthfly->display();
+				$this->month_flydown->display();
 			} elseif ($d && $datepart == 2 && $this->display_parts & self::DAY) {
 				if ($this->value !== null)
-					$this->dayfly->value = $this->value->getDay();
+					$this->day_flydown->value = $this->value->getDay();
 					
-				$this->dayfly->display();
+				$this->day_flydown->display();
 			} elseif ($y && $this->display_parts & self::YEAR) {
 				if ($this->value !== null)
-					$this->yearfly->value = $this->value->getYear();
+					$this->year_flydown->value = $this->value->getYear();
 					
-				$this->yearfly->display();
+				$this->year_flydown->display();
 			}
 		}
 
 		if ($this->display_parts & self::TIME)
-			$this->timefly->display();
+			$this->time_flydown->display();
 		
 		if ($this->display_parts & self::CALENDAR) {
 			include_once('Swat/SwatCalendar.php');
@@ -172,28 +186,28 @@ class SwatDateEntry extends SwatControl implements SwatState {
 		$all_empty = true;
 	
 		if ($this->display_parts & self::YEAR) {
-			$this->yearfly->process();
-			$year = $this->yearfly->value;
+			$this->year_flydown->process();
+			$year = $this->year_flydown->value;
 			$all_empty = $all_empty && ($year === null);
 		}
 
 		if ($this->display_parts & self::MONTH) {
-			$this->monthfly->process();
-			$month = $this->monthfly->value;
+			$this->month_flydown->process();
+			$month = $this->month_flydown->value;
 			$all_empty = $all_empty && ($month === null);
 		}
 
 		if ($this->display_parts & self::DAY) {
-			$this->dayfly->process();
-			$day = $this->dayfly->value;
+			$this->day_flydown->process();
+			$day = $this->day_flydown->value;
 			$all_empty = $all_empty && ($day === null);
 		}
 		
 		if ($this->display_parts & self::TIME) {
-			$this->timefly->process();
-			$hour = $this->timefly->value->getHour();
-			$minute = $this->timefly->value->getMinute();
-			$second = $this->timefly->value->getSecond();
+			$this->time_flydown->process();
+			$hour = $this->time_flydown->value->getHour();
+			$minute = $this->time_flydown->value->getMinute();
+			$second = $this->time_flydown->value->getSecond();
 		} else {
 			$hour=0;
 			$minute=0;
@@ -271,8 +285,8 @@ class SwatDateEntry extends SwatControl implements SwatState {
 	}
 
 	private function createYearFlydown() { 
-		$this->yearfly = new SwatFlydown($this->id.'_year');
-		$this->yearfly->onchange = sprintf("dateSet('%s', this);",
+		$this->year_flydown = new SwatFlydown($this->id.'_year');
+		$this->year_flydown->onchange = sprintf("dateSet('%s', this);",
 			$this->id);
 
 		$start_year = $this->valid_range_start->getYear();
@@ -282,12 +296,12 @@ class SwatDateEntry extends SwatControl implements SwatState {
         $end_year = $tmp->getYear();
 
 		for ($i = $start_year; $i <= $end_year; $i++)
-			$this->yearfly->options[$i] = $i;
+			$this->year_flydown->options[$i] = $i;
 	}
 		
 	private function createMonthFlydown() { 
-		$this->monthfly = new SwatFlydown($this->id.'_month');
-		$this->monthfly->onchange = sprintf("dateSet('%s', this);",
+		$this->month_flydown = new SwatFlydown($this->id.'_month');
+		$this->month_flydown->onchange = sprintf("dateSet('%s', this);",
 			$this->id);
 
 		$start_year = $this->valid_range_start->getYear();
@@ -301,7 +315,8 @@ class SwatDateEntry extends SwatControl implements SwatState {
 			$end_month = $this->valid_range_end->getMonth();
 
 			for ($i = $start_month; $i <= $end_month; $i++)
-				$this->monthfly->options[$i] = Date_Calc::getMonthFullName($i);
+				$this->month_flydown->options[$i] =
+					Date_Calc::getMonthFullName($i);
 
 		} elseif (($end_year - $start_year) == 1) {
 
@@ -309,22 +324,25 @@ class SwatDateEntry extends SwatControl implements SwatState {
 			$end_month = $this->valid_range_end->getMonth();
 
 			for ($i = $start_month; $i <= 12; $i++)
-				$this->monthfly->options[$i] = Date_Calc::getMonthFullName($i);
+				$this->month_flydown->options[$i] =
+					Date_Calc::getMonthFullName($i);
 
 			for ($i = 1; $i <= $end_month; $i++)
-				$this->monthfly->options[$i] = Date_Calc::getMonthFullName($i);
+				$this->month_flydown->options[$i] =
+					Date_Calc::getMonthFullName($i);
 
 		} else {
 
 			for ($i = 1; $i <= 12; $i++)
-				$this->monthfly->options[$i] = Date_Calc::getMonthFullName($i);
+				$this->month_flydown->options[$i] =
+					Date_Calc::getMonthFullName($i);
 
 		}
 	}
 		
 	private function createDayFlydown() {
-		$this->dayfly = new SwatFlydown($this->id.'_day');
-		$this->dayfly->onchange = sprintf("dateSet('%s', this);",
+		$this->day_flydown = new SwatFlydown($this->id.'_day');
+		$this->day_flydown->onchange = sprintf("dateSet('%s', this);",
 			$this->id);
 
 		$start_year  = $this->valid_range_start->getYear();
@@ -345,7 +363,7 @@ class SwatDateEntry extends SwatControl implements SwatState {
 			$end_day   = $this->valid_range_end->getDay();
 
 			for ($i = $start_day; $i <= $end_day; $i++)
-				$this->dayfly->options[$i] = $i;
+				$this->day_flydown->options[$i] = $i;
 		
 		} elseif (Date::compare($end_check,$this->valid_range_end,true) != -1) {
 			
@@ -354,15 +372,15 @@ class SwatDateEntry extends SwatControl implements SwatState {
 			$days_in_month = $this->valid_range_start->getDaysInMonth();
 			
 			for ($i = $start_day; $i <= $days_in_month; $i++)
-				$this->dayfly->options[$i] = $i;
+				$this->day_flydown->options[$i] = $i;
 
 			for ($i = 1; $i <= $end_day; $i++)
-				$this->dayfly->options[$i] = $i;
+				$this->day_flydown->options[$i] = $i;
 			
 		} else {
 			
 			for ($i = 1; $i <= 31; $i++)
-				$this->dayfly->options[$i] = $i;
+				$this->day_flydown->options[$i] = $i;
 				
 		}
 	}
@@ -370,9 +388,9 @@ class SwatDateEntry extends SwatControl implements SwatState {
 	private function createTimeFlydown() {
 		require_once('Swat/SwatTimeEntry.php');
 		
-		$this->timefly = new SwatTimeEntry();
+		$this->time_flydown = new SwatTimeEntry();
 		// TODO: This doesn't make sense. Ids are unique.
-		$this->timefly->id = $this->id;
+		$this->time_flydown->id = $this->id;
 	}
 	
 	private function validateRanges() {
