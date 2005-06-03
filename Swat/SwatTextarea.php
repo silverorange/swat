@@ -13,16 +13,18 @@ require_once('Swat/SwatState.php');
  */
 class SwatTextarea extends SwatControl implements SwatState {
 
-	/*
+	/**
 	 * Text content of the widget
+	 *
 	 * @var string
 	 */
 	public $value = '';
 
-	/*
+	/**
 	 * Required
 	 *
 	 * Must have a non-empty value when processed
+	 *
 	 * @var bool
 	 */
 	public $required = false;
@@ -31,6 +33,7 @@ class SwatTextarea extends SwatControl implements SwatState {
 	 * Rows
 	 *
 	 * Number of rows for the HTML textarea tag
+	 *
 	 * @var int
 	 */
 	public $rows = 10;

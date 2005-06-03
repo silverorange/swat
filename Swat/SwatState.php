@@ -13,9 +13,9 @@ interface SwatState {
 	 * Set the state of the control
 	 *
 	 * Used to set the current state of the control back to a stored state.
-	 * This implementation of this method should correspond to the implementation
-	 * of getState(). Sub-classes should override and implement this method to 
-	 * store their state.
+	 * This implementation of this method should correspond to the
+	 * implementation of getState(). Sub-classes should override and implement
+	 * this method to store their state.
 	 *
 	 * @param mixed $state The state to load into the control.
 	 */
@@ -25,7 +25,7 @@ interface SwatState {
 	 * Get the state of the control
 	 *
 	 * Used to remember the current state of the control. For example,
-	 * {@link SwatEntry} implements this method to return its ::$value property,
+	 * {@link SwatEntry} implements this method to return its $value property,
 	 * but can return any variable type, including array, that represents the
 	 * control's current state. Sub-classes should override and implement this
 	 * method to store their state.
