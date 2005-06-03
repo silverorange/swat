@@ -34,14 +34,14 @@ class SwatChangeOrder extends SwatControl implements SwatState {
 	public $values = null;
 	
 	/**
-	 * Width of the order box (either px, em or %)
+	 * Width of the order box (either pixels or %)
 	 *
 	 * @var string
 	 */
 	public $width = '400';
 
 	/**
-	 * Height of the order box (either px, em or %)
+	 * Height of the order box (either pixels or %)
 	 *
 	 * @var string
 	 */
