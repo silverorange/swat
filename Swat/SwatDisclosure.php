@@ -16,12 +16,14 @@ class SwatDisclosure extends SwatContainer {
 
 	/**
 	 * A visible name for the label
+	 *
 	 * @var string
 	 */
 	public $title = null;
 
 	/**
 	 * A flag to set the initial state of the disclosure
+	 *
 	 * @var bool
 	 */
 	public $open = true;
@@ -41,8 +43,8 @@ class SwatDisclosure extends SwatContainer {
 		$control_div->open();
 
 		$anchor = new SwatHtmlTag('a');
-		$anchor->href = sprintf("javascript:toggleDisclosureWidget('%s');",
-			$this->id);
+		$anchor->href =
+			sprintf("javascript:toggleDisclosureWidget('%s');", $this->id);
 
 		$anchor->open();
 
