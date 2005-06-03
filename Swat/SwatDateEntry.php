@@ -16,20 +16,22 @@ class SwatDateEntry extends SwatControl implements SwatState {
 	
 	/**
 	 * Date of the widget, or null.
+	 *
 	 * @var Date
 	 */
 	public $value = null;
 	
-	const  YEAR     = 1;
-	const  MONTH    = 2;
-	const  DAY      = 4;
-	const  TIME     = 8;
-	const  CALENDAR = 16;
+	const YEAR     = 1;
+	const MONTH    = 2;
+	const DAY      = 4;
+	const TIME     = 8;
+	const CALENDAR = 16;
 	
 	/**
 	 * Required
 	 *
 	 * Must have a non-empty value when processed.
+	 *
 	 * @var bool
 	 */
 	public $required = false;
@@ -37,8 +39,9 @@ class SwatDateEntry extends SwatControl implements SwatState {
 	/**
 	 * Required date parts
 	 *
-	 * Bitwise combination of SwatDate::YEAR,
-	 * SwatDate::MONTH, SwatDate::DAY, and SwatDate::TIME.
+	 * Bitwise combination of SwatDate::YEAR, SwatDate::MONTH, SwatDate::DAY
+	 * and SwatDate::TIME.
+	 *
 	 * @var int
 	 */
 	public $required_parts;
@@ -46,22 +49,27 @@ class SwatDateEntry extends SwatControl implements SwatState {
 	/**
 	 * Displayed date parts
 	 *
-	 * Bitwise combination of SwatDate::YEAR,
-	 * SwatDate::MONTH, SwatDate::DAY, SwatDate::TIME, and SwatDate::CALENDAR.
+	 * Bitwise combination of SwatDate::YEAR, SwatDate::MONTH, SwatDate::DAY
+	 * SwatDate::TIME, and SwatDate::CALENDAR.
+	 *
 	 * @var int
 	 */
 	public $display_parts;
 	
 	/**
 	 * Start date of the valid range (inclusive)
+	 *
 	 * Default to 20 years in the past.
+	 *
 	 * @var Date
 	 */
 	public $valid_range_start;
 	
 	/**
 	 * End date of the valid range (exclusive)
+	 *
 	 * Default to 20 years in the future.
+	 *
 	 * @var Date
 	 */
 	public $valid_range_end;
@@ -76,22 +84,24 @@ class SwatDateEntry extends SwatControl implements SwatState {
 	
 	public function init() {
 		$this->required_parts = self::YEAR | self::MONTH | self::DAY;
-		$this->display_parts  = self::YEAR | self::MONTH | self::DAY | self::CALENDAR;
+		$this->display_parts  = self::YEAR | self::MONTH |
+								self::DAY | self::CALENDAR;
 
-		$this->setValidRange(-20, +20);
+		$this->setValidRange(-20, 20);
 	}
 		
 	/**
 	 * Set the valid date range
 	 *
 	 * Convenience method to set the valid date range by year offsets.
+	 *
 	 * @param int $start_offset Offset from the current year used to set the
 	 *        starting year of the valid range.
 	 * @param int $end_offset Offset from the current year used to set the
 	 *        ending year of the valid range.
 	 */
 	public function setValidRange($start_offset, $end_offset) {
-		//beginning of this year
+		// Beginning of this year
 		$date = new SwatDate();
 		$date->setMonth(1);
 		$date->setDay(1);
@@ -112,16 +122,17 @@ class SwatDateEntry extends SwatControl implements SwatState {
 		$this->createFlydowns();
 		$this->displayJavascript();
 		
-		// using php date functions here because the Date class doesn't seem
-		// to support locale-ordering of date parts
-		// this returns something like: mm/dd/yy or dd.mm.yyyy
+		// NOTE: Using php date functions here because the Date class does not
+		//       seem to support locale-ordering of date parts.
+		// This returns something like: mm/dd/yy or dd.mm.yyyy
 		$order = split('[/.-]', strftime('%x', mktime(0, 0, 0, 1, 2, 2003)));
 		
 		foreach ($order as $datepart) {
 			$m = ($datepart == 1);
 			$d = ($datepart == 2);
+			// strftime outputs the year as either 2003 or 03 depending
+			// on the locale
 			$y = ($datepart == 2003 || $datepart == 3);
-				 // returns either 2003 or 03 depending on the locale
 			
 			if ($m && $datepart == 1 && $this->display_parts & self::MONTH) {
 				if ($this->value !== null)
@@ -196,7 +207,8 @@ class SwatDateEntry extends SwatControl implements SwatState {
 		}
 
 		if ($this->display_parts & self::YEAR) {
-			if (!$all_empty && $year === null && $this->required_parts & self::YEAR) {
+			if (!$all_empty && $year === null && 
+				($this->required_parts & self::YEAR)) {
 				$msg = _S("Year is Required.");
 				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			}
@@ -205,7 +217,8 @@ class SwatDateEntry extends SwatControl implements SwatState {
 		}
 
 		if ($this->display_parts & self::MONTH) {
-			if (!$all_empty && $month === null && $this->required_parts & self::MONTH) {
+			if (!$all_empty && $month === null &&
+				($this->required_parts & self::MONTH)) {
 				$msg = _S("Month is Required.");
 				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			}
@@ -214,7 +227,8 @@ class SwatDateEntry extends SwatControl implements SwatState {
 		}
 
 		if ($this->display_parts & self::DAY) {
-			if (!$all_empty && $day === null && $this->required_parts & self::DAY) {
+			if (!$all_empty && $day === null &&
+				($this->required_parts & self::DAY)) {
 				$msg = _S("Day is Required.");
 				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			}
@@ -369,7 +383,7 @@ class SwatDateEntry extends SwatControl implements SwatState {
 				$this->displayDate($this->valid_range_start));
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			
-		} elseif (Date::compare($this->value,$this->valid_range_end,true) == 1) {
+		} elseif (Date::compare($this->value, $this->valid_range_end, true) == 1) {
 			
 			$msg = sprintf(_S("The date you have entered is invalid. ".
 				"It must be before %s."),
