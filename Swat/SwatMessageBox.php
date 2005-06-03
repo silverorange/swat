@@ -15,12 +15,14 @@ class SwatMessageBox extends SwatControl {
 
 	/**
 	 * A visible title for this frame, or null
+	 *
 	 * @var string
 	 */
 	public $title = null;
 
 	/**
 	 * Array of {@link SwatMessage}s
+	 *
 	 * @var array
 	 */
 	public $messages = array();
