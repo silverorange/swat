@@ -13,6 +13,7 @@ class SwatHtmlTag extends SwatObject {
 
 	/**
 	 * The name of the HTML tag
+	 *
 	 * @var string
 	 */
 	public $tagname;
@@ -22,6 +23,7 @@ class SwatHtmlTag extends SwatObject {
 	 *
 	 * Array containing attributes of the HTML tag in the form of
 	 * (attr name) => (value).
+	 *
 	 * @var array
 	 */
 	private $attributes;
@@ -32,6 +34,7 @@ class SwatHtmlTag extends SwatObject {
 	 * Optional content for the body of the HTML tag. When this is set
 	 * {@link SwatHtmlTag::display()} will output this content followed by an
 	 * explicit closing tag.
+	 *
 	 * @var string
 	 */
 	public $content = null;
@@ -53,13 +56,15 @@ class SwatHtmlTag extends SwatObject {
 	 *
 	 * This should not be called directly, but is invoked indirectly when
 	 * accessing properties of a tag object.
+	 *
 	 * @param string $attr The name of attribute.
+	 * @return mixed the value of the attribute.
 	 */
 	public function __get($attr) {
 		if (isset($this->attributes[$attr]))
 			return $this->attributes[$attr];
 		else
-			throw new SwatException(__CLASS__.": undefined attribute $attr");
+			throw new SwatException(__CLASS__.": undefined attribute {$attr}");
 	}
 
 	/**
@@ -67,6 +72,7 @@ class SwatHtmlTag extends SwatObject {
 	 *
 	 * This should not be called directly, but is invoked indirectly when
 	 * setting properties of a tag object.
+	 *
 	 * @param string $attr The name of attribute.
 	 * @param mixed $val The value of attribute.
 	 */
@@ -111,6 +117,8 @@ class SwatHtmlTag extends SwatObject {
 	 * Output the opening tag including all its attributes. Should be paired
 	 * with a call to {@link SwatHtmlTag::close()}.  If implicit closing
 	 * is desired, use {@link SwatHtmlTag::display()} instead.
+	 *
+	 * @see SwatHtmlTag::close()
 	 */
 	public function open() {
 		$this->openInternal(false);
@@ -120,7 +128,9 @@ class SwatHtmlTag extends SwatObject {
 	 * Close the tag
 	 *
 	 * Output the closing tag. Should be paired with a call to 
-	 * {@link SwatHtmlTag::close()}.
+	 * {@link SwatHtmlTag::open()}.
+	 *
+	 * @see SwatHtmlTag::open()
 	 */
 	public function close() {
 		echo '</', $this->tagname, '>';
