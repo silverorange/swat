@@ -27,6 +27,7 @@ class SwatPagination extends SwatControl {
 	 * HTTP GET vars to clobber
 	 *
 	 * An array of GET variable names to unset before rebuilding new link.
+	 *
 	 * @var int
 	 */
 	public $unset_get_vars = array();
@@ -35,6 +36,7 @@ class SwatPagination extends SwatControl {
 	 * Current page
 	 *
 	 * The number of the current page. The value is zero based.
+	 *
 	 * @var int
 	 */
 	public $current_page = 0;
@@ -44,6 +46,7 @@ class SwatPagination extends SwatControl {
 	 *
 	 * The first record that should be displayed on this page. The value is
 	 * zero based.
+	 *
 	 * @var int
 	 */
 	public $current_start = 0;
@@ -52,6 +55,7 @@ class SwatPagination extends SwatControl {
 	 * Page size
 	 *
 	 * The number of records that are displayed per page.
+	 *
 	 * @var int
 	 */
 	public $page_size = 20;
@@ -60,6 +64,7 @@ class SwatPagination extends SwatControl {
 	 * Total records
 	 *
 	 * The total number of records that are available for display.
+	 *
 	 * @var int
 	 */
 	public $total_records = 0;
@@ -161,14 +166,20 @@ class SwatPagination extends SwatControl {
 		$current->class = 'current';
 
 		for ($i = 0; $i < $this->total_pages; $i++) {
-			$display=false;
+			$display = false;
 
-			if ($this->current_page <= 6 && $i <= 9)
-				$display=true; //current page is in the first 6, show the first 10 pages
-			elseif ($this->current_page >= $this->total_pages - 7 && $i >= $this->total_pages - 10)
-				$display=true; //current page is in the last 6, show the last 10 pages
-			elseif ($i <= 1 || $i >=$this->total_pages -2 || abs($this->current_page - $i) <= 3)
-				$display=true; //always show the first 2, last 2, and middle 6 pages
+			if ($this->current_page <= 6 && $i <= 9) {
+				// Current page is in the first 6, show the first 10 pages
+				$display = true;
+			} elseif ($this->current_page >= $this->total_pages - 7 &&
+				$i >= $this->total_pages - 10) {
+				// Current page is in the last 6, show the last 10 pages
+				$display = true;
+			} elseif ($i <= 1 || $i >=$this->total_pages -2 ||
+				abs($this->current_page - $i) <= 3) {
+				// Always show the first 2, last 2, and middle 6 pages
+				$display = true;
+			}
 
 			if ($display) {
 				if ($j + 1 != $i) {
@@ -179,7 +190,7 @@ class SwatPagination extends SwatControl {
 
 				if ($i == $this->current_page) {
 					$current->open();
-					echo ($i+1);
+					echo ($i + 1);
 					$current->close();
 				} else {
 					$anchor->href = sprintf($href, $i);
@@ -188,7 +199,7 @@ class SwatPagination extends SwatControl {
 					$anchor->display();
 				}
 
-				$j=$i;
+				$j = $i;
 			}
 		}
 	}
@@ -218,7 +229,7 @@ class SwatPagination extends SwatControl {
 		foreach($vars as $name => $value)
 			$href.= $name.'='.$value.'&';
 
-		// remove trailing ampersand
+		// Remove trailing ampersand
 		$href = substr($href, 0, -1);
 
 		return $href;
@@ -227,7 +238,8 @@ class SwatPagination extends SwatControl {
 	private function calcPages() {
 		$this->total_pages = ceil($this->total_records / $this->page_size);
 
-		if (($this->total_pages <= 1) || ($this->total_pages - 1 == $this->current_page))
+		if (($this->total_pages <= 1) ||
+			($this->total_pages - 1 == $this->current_page))
 			$this->next_page = -1;
 		else
 			$this->next_page = $this->current_page + 1;
