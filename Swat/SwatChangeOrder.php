@@ -13,38 +13,43 @@ require_once('Swat/SwatState.php');
  */
 class SwatChangeOrder extends SwatControl implements SwatState {
 
-	/*
-	 * Order Options
+	/**
+	 * Order options
 	 *
 	 * An array containing the options to display. The array should be
-	 * of the form $id => $title
+	 * of the form $id => $title.
+	 *
 	 * @var array
 	 */
 	public $options = array();
 
-	/*
+	/**
 	 * Value ordered array
 	 *
 	 * The current ordering of options in the widget. If null, options are
 	 * displayed in the order of the options array.
+	 *
 	 * @var array
 	 */
 	public $values = null;
 	
-	/*
-	 * Width of the order box (either px or %)
+	/**
+	 * Width of the order box (either px, em or %)
+	 *
 	 * @var string
 	 */
-	public $width = 400;
+	public $width = '400';
 
-	/*
-	 * Height of the order box (either px or %)
+	/**
+	 * Height of the order box (either px, em or %)
+	 *
 	 * @var string
 	 */
-	public $height = 150;
+	public $height = '150';
 	
-	/*
-	 * onClick javascript attribute of the buttons
+	/**
+	 * onclick html attribute of the buttons
+	 *
 	 * @var string
 	 */
 	public $onclick = null;
@@ -78,10 +83,10 @@ class SwatChangeOrder extends SwatControl implements SwatState {
 		$obj = $this->id.'_obj';
 
 		$hidden_tag = new SwatHtmlTag('input');
-		$hidden_tag->type = "hidden";
+		$hidden_tag->type = 'hidden';
 		$hidden_tag->id = $this->id;
 		$hidden_tag->name = $this->id;
-		$hidden_tag->value = implode(',',array_keys($this->options));
+		$hidden_tag->value = implode(',', array_keys($this->options));
 		$hidden_tag->display();
 		
 		$up_btn = new SwatHtmlTag('input');
@@ -90,6 +95,7 @@ class SwatChangeOrder extends SwatControl implements SwatState {
 		$up_btn->onclick = $obj.".updown('up');";
 		if ($this->onclick !== null)
 			$up_btn->onclick.= $this->onclick;
+
 		$up_btn->display();
 
 		echo '<br />';
@@ -100,6 +106,7 @@ class SwatChangeOrder extends SwatControl implements SwatState {
 		$down_btn->onclick = $obj.".updown('down');";
 		if ($this->onclick !== null)
 			$down_btn->onclick.= $this->onclick;
+
 		$down_btn->display();
 
 		// TODO: maybe clean up the way the buttons are positioned
@@ -117,15 +124,17 @@ class SwatChangeOrder extends SwatControl implements SwatState {
 		include_once('Swat/javascript/swat-change-order.js');
 		
 		$warning = _S("You must first select the item to reorder.");
-		$style = '../swat/swat.css'; // TODO: figure out how to work the stylesheets better
-		
+		// TODO: figure out how to make the stylesheets work better.
+		$style = '../swat/swat.css';
 		$values = array();
 		foreach ($this->options as $id => $title)
 			$values[$id] = addslashes($title);
+
 		$values = implode("','", $values);
 		
 		printf("\n {$this->id}_obj = new SwatChangeOrder('%s'); ",
 				$this->id, $warning);
+
 		echo "\n {$this->id}_obj.stylesheet = '{$style}';";
 		echo "\n {$this->id}_obj.draw(new Array('{$values}')); ";
 				
