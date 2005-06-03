@@ -17,6 +17,7 @@ class SwatFlydown extends SwatControl implements SwatState {
 	 * Flydown options
 	 *
 	 * An array of options for the flydown in the form value => title.
+	 *
 	 * @var array
 	 */
 	public $options = null;
@@ -25,6 +26,7 @@ class SwatFlydown extends SwatControl implements SwatState {
 	 * Flydown value 
 	 *
 	 * The value of the selected option, or null.
+	 *
 	 * @var string
 	 */
 	public $value = null;
@@ -33,18 +35,21 @@ class SwatFlydown extends SwatControl implements SwatState {
 	 * Required
 	 *
 	 * Must have a non-empty value when processed.
+	 *
 	 * @var bool
 	 */
 	public $required = false;
 
 	/**
 	 * Show a blank option
+	 *
 	 * @var boolean
 	 */
 	public $show_blank = true;
 
 	/**
 	 * Blank title
+	 *
 	 * @var string
 	 */
 	public $blank_title = '';
@@ -53,6 +58,7 @@ class SwatFlydown extends SwatControl implements SwatState {
 	 * On change
 	 *
 	 * The onchange attribute of the HTML select tag, or null.
+	 *
 	 * @var string
 	 */
 	public $onchange = null;
@@ -73,7 +79,7 @@ class SwatFlydown extends SwatControl implements SwatState {
 
 		if ($options !== null) {
 			if ($this->show_blank) {
-				// empty string HTML option value is considered to be null
+				// Empty string HTML option value is considered to be null
 				$option_tag->value = '';
 				$option_tag->open();
 				echo $this->blank_title;
@@ -85,7 +91,7 @@ class SwatFlydown extends SwatControl implements SwatState {
 				$option_tag->removeAttr('selected');
 				
 				if ((string)$this->value === (string)$value)
-					$option_tag->selected = "selected";
+					$option_tag->selected = 'selected';
 
 				$option_tag->open();
 				echo $title;
@@ -99,8 +105,8 @@ class SwatFlydown extends SwatControl implements SwatState {
 	public function process() {
 		$value = $_POST[$this->id];
 
-		// empty string HTML option value is considered to be null
-		if ($value == '')
+		// Empty string HTML option value is considered to be null
+		if (strlen($value) == 0)
 			$this->value = null;
 		else
 			$this->value = $value;
