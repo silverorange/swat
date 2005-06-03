@@ -13,6 +13,7 @@ abstract class SwatApplication extends SwatObject {
 
 	/**
 	 * Application id
+	 *
 	 * @var string
 	 */
 	public $id;
@@ -20,7 +21,9 @@ abstract class SwatApplication extends SwatObject {
 	/**
 	 * URI (read-only)
 	 *
-	 * The URI of the current request.  Set by {@link SwatApplication::initUriVars}.
+	 * The URI of the current request.
+	 * Set by {@link SwatApplication::initUriVars}.
+	 *
 	 * @var string
 	 */
 	public $uri;
@@ -28,7 +31,9 @@ abstract class SwatApplication extends SwatObject {
 	/**
 	 * Base URI (read-only)
 	 *
-	 * The URI part of the basehref.  Set by {@link SwatApplication::initUriVars}.
+	 * The URI part of the basehref. 
+	 * Set by {@link SwatApplication::initUriVars}.
+	 *
 	 * @var string
 	 */
 	public $baseuri;
@@ -37,6 +42,7 @@ abstract class SwatApplication extends SwatObject {
 	 * Base-Href (read-only)
 	 *
 	 * Set by SwatApplication::initUriVars().
+	 *
 	 * @var string
 	 */
 	public $basehref;
@@ -52,7 +58,8 @@ abstract class SwatApplication extends SwatObject {
 		$this->uri = $_SERVER['REQUEST_URI'];
 
 		$uri_array = explode('/', $this->uri);
-		$this->baseuri = implode('/', array_slice($uri_array, 0, $prefix_length + 1)).'/';
+		$this->baseuri = implode('/',
+			array_slice($uri_array, 0, $prefix_length + 1)).'/';
 
 		// TODO: Once we have a SITE_LIVE equivalent, we should use HTTP_HOST
 		//       on stage and SERVER_NAME on live.
@@ -83,7 +90,6 @@ abstract class SwatApplication extends SwatObject {
 	 * @param string $url The URL to relocate to.
 	 */
 	function relocate($url) {
-
 		if (substr($url, 0, 1) != '/' && strpos($url, '://') === FALSE)
 			$url = $this->basehref.$url;
 
@@ -120,26 +126,47 @@ abstract class SwatApplication extends SwatObject {
 	 * @return mixed The value of the variable.
 	 */
 	public static function initVar($name, $default = null, $types = 0) {
+		
+		$var = $default;
+		
 		if ($types == 0)
 			$types = SwatApplication::VAR_POST | SwatApplication::VAR_GET;
 	
 		if (($types & SwatApplication::VAR_POST != 0)
 			&& isset($_POST[$name]))
-				return $_POST[$name];
+				$var = $_POST[$name];
 
 		elseif (($types & SwatApplication::VAR_GET != 0) 
 			&& isset($_GET[$name]))
-				return $_GET[$name];
+				$var = $_GET[$name];
 
 		/*
-		elseif ((intval($types)&GA_REQUEST) && isset($_REQUEST[$var])) return $_REQUEST[$var];
-		elseif ((intval($types)&GA_COOKIE) && isset($_COOKIE[$var])) return $_COOKIE[$var];
-		elseif ((intval($types)&GA_SERVER) && isset($_SERVER[$var])) return $_SERVER[$var];
-		elseif ((intval($types)&GA_SESSION) && isset($_SESSION[$var])) return $_SESSION[$var];
-		elseif ((intval($types)&GA_FILES) && isset($_FILES[$var])) return $_FILES[$var];
-		elseif ((intval($types)&GA_ENV) && isset($_ENV[$var])) return $_ENV[$var];
+		elseif (($types & SwatApplication::VAR_REQUEST)
+			&& isset($_REQUEST[$var]))
+				$var = $_REQUEST[$var];
+				
+		elseif (($types & SwatApplication::VAR_COOKIE)
+			&& isset($_COOKIE[$var]))
+				$var = $_COOKIE[$var];
+				
+		elseif (($types & SwatApplication::VAR_SERVER)
+			&& isset($_SERVER[$var]))
+				$var = $_SERVER[$var];
+				
+		elseif (($types & SwatApplication::VAR_SESSION)
+			&& isset($_SESSION[$var]))
+				$var = $_SESSION[$var];
+				
+		elseif (($types & SwatApplication::VAR_FILES)
+			&& isset($_FILES[$var]))
+				$var = $_FILES[$var];
+				
+		elseif (($types & SwatApplication::VAR_ENV)
+			&& isset($_ENV[$var]))
+				$var = $_ENV[$var];
 		*/
-		else return $default;
+		
+		return $var;
 	}
 
 }
