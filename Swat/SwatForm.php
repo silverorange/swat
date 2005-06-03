@@ -14,30 +14,35 @@ class SwatForm extends SwatContainer {
 
 	/**
 	 * The action attribute of the HTML form tag
+	 *
 	 * @var string
 	 */
 	public $action = '#';
 
 	/**
 	 * The method attribute of the HTML form tag
+	 *
 	 * @var string
 	 */
 	public $method = 'post';
 
 	/**
 	 * Encoding type of the form
+	 *
 	 * @var string
 	 */
 	public $enctype = null;
 
 	/**
 	 * The button that was clicked to submit the form, or null (read only)
+	 *
 	 * @var SwatButton
 	 */
 	public $button = null;
 
 	/**
 	 * Whether the form has been processed
+	 *
 	 * @return boolean True if the form has been processed.
 	 */
 	public function hasBeenProcessed() {
@@ -135,6 +140,7 @@ class SwatForm extends SwatContainer {
 	 * Add a hidden form field
 	 *
 	 * Add an HTML input type=hidden field to this form.
+	 *
 	 * @param string $name The name of the field.
 	 * @param mixed $value The value of the field, either a string or an array.
 	 */
@@ -146,6 +152,7 @@ class SwatForm extends SwatContainer {
 	 * Get the value of a hidden form field
 	 *
 	 * @param string $name The name of the field.
+	 *
 	 * @return mixed $value The value of the field, either a string or an 
 	 *        array, or null if the field does not exist.
 	 */
