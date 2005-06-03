@@ -16,6 +16,8 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry {
 
 	/**
 	 * Matching password widget
+	 *
+	 * @var SwatPasswordEntry
 	 */
 	public $password_widget = null;
 	
@@ -23,13 +25,15 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry {
 		parent::process();
 		
 		if ($this->password_widget === null)
-			throw new SwatException('SwatConfirmPasswordEntry: You must declare the matching password widget');
+			throw new SwatException('SwatConfirmPasswordEntry: '.
+				'You must declare the matching password widget');
 
 		if ($this->password_widget->value !== null) {
 		
 			if (strcmp($this->password_widget->value, $this->value) != 0) {
 				$msg = _S("Password and Confirmation Password do not match.");
-				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+				$this->addMessage(
+					new SwatMessage($msg, SwatMessage::USER_ERROR));
 			}
 
 		}
