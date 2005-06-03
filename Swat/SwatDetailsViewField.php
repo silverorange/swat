@@ -15,18 +15,21 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 
 	/**
 	 * Id of the field
+	 *
 	 * @var string
 	 */
 	public $id = null;
 
 	/**
 	 * Title of the field
+	 *
 	 * @var string
 	 */
 	public $title = '';
 
 	/**
 	 * The {@link SwatDetailsView} associated with this field
+	 *
 	 * @var SwatDetailsView
 	 */
 	public $view = null;
@@ -38,8 +41,9 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 	}
 
 	public function linkField($renderer, $model_field, $renderer_property) {
-		if (!isset($renderer->_property_map) || !is_array($renderer->_property_map))
-			$renderer->_property_map = array();
+		if (!isset($renderer->_property_map) ||
+			!is_array($renderer->_property_map))
+				$renderer->_property_map = array();
 
 		$renderer->_property_map[$renderer_property] = $model_field;
 	}
@@ -48,10 +52,10 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 		$this->renderers[] = $renderer;
 		$renderer->parent = $this;
 
-		if (!isset($renderer->_property_map) || !is_array($renderer->_property_map))
-			$renderer->_property_map = array();
+		if (!isset($renderer->_property_map) ||
+			!is_array($renderer->_property_map))
+				$renderer->_property_map = array();
 	}
-
 
 	public function display($data) {
 		$tr_tag = new SwatHtmlTag('tr');
@@ -71,7 +75,8 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 
 	public function displayValue($data) {
 		if (count($this->renderers) == 0)
-			throw new SwatException(__CLASS__.': no renderer has been provided.');
+			throw new SwatException(__CLASS__.
+				': no renderer has been provided.');
 
 		// set the properties of the renderers
 		foreach ($this->renderers as $renderer)
@@ -87,7 +92,7 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttribs());
 		$td_tag->open();
 
-		$prefix = ($this->view->id === null)? '': $this->view->id.'_';
+		$prefix = ($this->view->id === null) ? '' : $this->view->id.'_';
 
 		foreach ($this->renderers as $renderer) {
 			$renderer->render($prefix);
@@ -108,7 +113,6 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 	 * @param $child A reference to a child object to add.
 	 */
 	public function addChild($child) {
-
 		if ($child instanceof SwatCellRenderer)
 			$this->addRenderer($child);
 		else
