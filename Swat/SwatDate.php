@@ -71,9 +71,7 @@ class SwatDate extends Date {
 	 */
 	const DF_MY	                    = 12;
 
-
 	public function format($format) {
-
 		if (is_int($format))
 			$format = self::getFormatById($format);			
 
@@ -82,24 +80,34 @@ class SwatDate extends Date {
 	
 	static function getFormatById($id) {
 		switch ($id) {
-			case self::DF_MDY:                    return _S("%D");
-			case self::DF_MDY_SHORT:              return _S("%m%d%y");
-			case self::DF_DATE:                   return _S("%B %e, %Y");
-			case self::DF_DATE_LONG:              return _S("%A, %B %e, %Y");
-			case self::DF_DATE_TIME:              return _S("%B %e, %Y %i:%M %p");
-			case self::DF_DATE_TIME_LONG:         return _S("%A, %B %e, %Y %i:%M %p");
-			case self::DF_TIME:                   return _S("%i:%M %p");
-			case self::DF_DATE_SHORT:             return _S("%b %e, %Y");
-			case self::DF_DATE_SHORT_NOYEAR:      return _S("%b %e");
-			case self::DF_DATE_TIME_SHORT:        return _S("%b %e, %Y %i:%M %p");
-			case self::DF_DATE_TIME_SHORT_NOYEAR: return _S("%b %e, %i:%M %p");
-			case self::DF_MY:                     return _S("%B %Y");
-
+			case self::DF_MDY:
+				return _S("%D");
+			case self::DF_MDY_SHORT:
+				return _S("%m%d%y");
+			case self::DF_DATE:
+				return _S("%B %e, %Y");
+			case self::DF_DATE_LONG:
+				return _S("%A, %B %e, %Y");
+			case self::DF_DATE_TIME:
+				return _S("%B %e, %Y %i:%M %p");
+			case self::DF_DATE_TIME_LONG:
+				return _S("%A, %B %e, %Y %i:%M %p");
+			case self::DF_TIME:
+				return _S("%i:%M %p");
+			case self::DF_DATE_SHORT:
+				return _S("%b %e, %Y");
+			case self::DF_DATE_SHORT_NOYEAR:
+				return _S("%b %e");
+			case self::DF_DATE_TIME_SHORT:
+				return _S("%b %e, %Y %i:%M %p");
+			case self::DF_DATE_TIME_SHORT_NOYEAR:
+				return _S("%b %e, %i:%M %p");
+			case self::DF_MY:
+				return _S("%B %Y");
 			default:
 				throw new Exception('SwatDate: unknown dateformat id');
 		}
 	}
-
 
 }
 
