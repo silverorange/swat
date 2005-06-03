@@ -13,12 +13,14 @@ abstract class SwatPage extends SwatObject {
 
 	/**
 	 * Title of the page
+	 *
 	 * @var string
 	 */
 	public $title = '';
 
 	/**
 	 * Layout to use to display this page
+	 *
 	 * @var string 
 	 */
 	public $layout = 'default';
@@ -27,6 +29,7 @@ abstract class SwatPage extends SwatObject {
 	 * Application object
 	 * 
 	 * A reference to the {@link SwatApplication} object that created this page
+	 *
 	 * @var app
 	 */
 	public $app = null;
