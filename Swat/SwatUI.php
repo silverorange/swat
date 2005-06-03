@@ -24,6 +24,7 @@ class SwatUI extends SwatObject {
 
 	/**
 	 * Load a UI from and XML file
+	 *
 	 * @param string $filename Filename of the XML UI file to load.
 	 */
 	public function loadFromXML($filename) {
@@ -58,6 +59,7 @@ class SwatUI extends SwatObject {
 	 * @param string $id Id of the widget to retrieve.
 	 * @param boolean $silent If true, return null instead of throwing an 
 	 *        exception if the widget is not found.
+	 *
 	 * @return SwatWidget A reference to the widget.
 	 */
 	public function getWidget($id, $silent = false) {
@@ -67,13 +69,15 @@ class SwatUI extends SwatObject {
 			if ($silent)
 				return null;
 			else
-				throw new SwatException(__CLASS__.": no widget with an id of '{$id}'");
+				throw new SwatException(__CLASS__.
+					": no widget with an id of '{$id}'");
 	}
 
 	/**
 	 * Retrieve the top widget
 	 *
 	 * Lookup the widget at the root of the widget tree.
+	 *
 	 * @return SwatWidget A reference to the widget.
 	 */
 	public function getRoot() {
@@ -93,7 +97,8 @@ class SwatUI extends SwatObject {
 
 					if (isset($this->widgets[$widget->id]))
 						throw new SwatException(__CLASS__.
-							": widget with an id of '{$widget->id}' already exists.");
+							": widget with an id of '{$widget->id}' ".
+							"already exists.");
 
 					$this->widgets[$widget->id] = $widget;
 				}
@@ -108,7 +113,6 @@ class SwatUI extends SwatObject {
 	}
 
 	private function attachToParent($widget, $parent) {
-
 		if ($parent instanceof SwatUIParent)
 			$parent->addChild($widget);
 		else
@@ -144,25 +148,29 @@ class SwatUI extends SwatObject {
 	private function parseProperty($widget, $property) {
 		$classvars = get_class_vars(get_class($widget));
 		
-		if (!isset($property['name']))
-			throw new SwatException(sprintf(__CLASS__.": property missing 'name' ".
+		if (!isset($property['name'])) {
+			throw new SwatException(sprintf(__CLASS__.
+				": property missing 'name' ".
 				"'%s' for class %s"), $attrvalue, get_class($widget));
 		
-		elseif (!isset($property['value']))
-			throw new SwatException(sprintf(__CLASS__.": property missing 'value' ".
+		} elseif (!isset($property['value'])) {
+			throw new SwatException(sprintf(__CLASS__.
+				": property missing 'value' ".
 				"'%s' for class %s"), $attrvalue, get_class($widget));
 		
-		elseif (!array_key_exists((string)$property['name'], $classvars))
-			throw new SwatException(sprintf(__CLASS__.": no attribute named '%s' in class %s",
+		} elseif (!array_key_exists((string)$property['name'], $classvars)) {
+			throw new SwatException(sprintf(__CLASS__.
+				": no attribute named '%s' in class %s",
 				(string)$property['name'], get_class($widget)));
 				
-		else {
+		} else {
 			$name = (string)$property['name'];
 			$value = (string)$property['value'];
 			$translatable = (isset($property['translatable'])
 				&& strtolower((string)$property['translatable']) == 'yes');
 
-			$type = (isset($property['type'])) ? (string)$property['type'] : null;
+			$type = (isset($property['type'])) ?
+				(string)$property['type'] : null;
 			
 			$widget->$name = $this->parseValue($name, $value, $type,
 				$translatable, $widget);
@@ -170,7 +178,6 @@ class SwatUI extends SwatObject {
 	}
 
 	private function parseValue($name, $value, $type, $translatable, $widget) {
-
 		switch ($type) {
 			case 'boolean':
 				return ($value == 'true')  ? true : false;
