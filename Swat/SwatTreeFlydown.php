@@ -15,6 +15,7 @@ class SwatTreeFlydown extends SwatFlydown {
 	 * Flydown options
 	 *
 	 * An tree collection of {@link SwatTreeNode}s for the flydown.
+	 *
 	 * @var SwatTreeNode
 	 */
 	public $tree = null;
@@ -23,6 +24,7 @@ class SwatTreeFlydown extends SwatFlydown {
 	 * Tree Path
 	 *
 	 * An array containing the branch of the selected node.
+	 *
 	 * @var array
 	 */
 	public $path;
@@ -32,7 +34,7 @@ class SwatTreeFlydown extends SwatFlydown {
 			$this->options = $this->tree->toArray();
 
 		foreach ($this->options as $key => $data) {
-			$key_array = explode('/',$key);
+			$key_array = explode('/', $key);
 			$pad = str_repeat('&nbsp;&nbsp;', (count($key_array) - 1));
 			$this->options[$key] = $pad.$data['title'];		
 		}
@@ -42,7 +44,7 @@ class SwatTreeFlydown extends SwatFlydown {
 
 	public function process() {
 		parent::process();
-		$this->path = explode('/',$this->value);
+		$this->path = explode('/', $this->value);
 		$this->value = $this->path[count($this->path)-1];
 	}
 }
