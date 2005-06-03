@@ -20,20 +20,13 @@ var isKonqueror;
 
 var imagesPath;
 var includesPath;
-var cssFile;
-var generateXHTML;
 
-var lang = "en";
-var encoding = "utf-8";
-
-function initRTE(imgPath, incPath, css, genXHTML) {
+function initRTE(imgPath, incPath, css) {
 	initCheckRichText();
-	generateXHTML = genXHTML;
 
 	//set paths vars
 	imagesPath = imgPath;
 	includesPath = incPath;
-	cssFile = css;
 	
 	if (isRichText) document.writeln('<style type="text/css">@import "swat/swat-textarea-editor.css";</style>');
 }
@@ -53,8 +46,9 @@ function initCheckRichText() {
 	}
 }
 
-function writeRichText(rte, html, width, height, menu_type) {
+function writeRichText(rte, html, width, height, basehref) {
 	if (isRichText) {
+
 		if (allRTEs.length > 0) allRTEs += ";";
 		allRTEs += rte;
 		
@@ -62,7 +56,6 @@ function writeRichText(rte, html, width, height, menu_type) {
 		
 		document.writeln('<div id="Menu_' + rte + '" class="rteMenu">');
 		/*
-		if (menu_type == 'formatting') {
 			document.writeln('<div id="MenuFormatting_' + rte + '" class="rteMenuFormatting">');
 			document.writeln('	<select id="formatblock_' + rte + '" onchange="selectFont(\'' + rte + '\', this.id);">');
 			document.writeln('		<option value="">[Style]</option>');
@@ -94,7 +87,6 @@ function writeRichText(rte, html, width, height, menu_type) {
 			document.writeln('		<option value="7">7</option>');
 			document.writeln('	</select>');
 			document.writeln('</div>');
-		}
 		*/
 
 		document.write('<div id="MenuButtons_' + rte + '" class="rteMenuButtons">');
@@ -143,11 +135,11 @@ function writeRichText(rte, html, width, height, menu_type) {
 		document.write('<a href="#" class="rteMenu-align-right"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'justifyright\', \'\'); return false;"');
 			document.write('title="align right">align right</a>');
-		
+		/*	
 		document.write('<a href="#" class="rteMenu-align-justify"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'jusitfyfull\', \'\'); return false;"');
 			document.write('title="justify full">justify full</a>');
-		
+		*/
 		document.write('</div>');
 		document.write('<div>');
 		
@@ -220,20 +212,27 @@ function writeRichText(rte, html, width, height, menu_type) {
 
 		document.writeln('</div>'); //end editor
 		
-		enableDesignMode(rte, html);
+		enableDesignMode(rte, html, basehref);
 	
 	} else {
 		document.writeln('<textarea name="' + rte + '" id="' + rte + '" style="width: ' + width + '; height: ' + height + ';">' + html + '</textarea>');
 	}
 }
 
-function enableDesignMode(rte, html) {
-	var frameHtml = "<html id=\"" + rte + "\">\n";
+function enableDesignMode(rte, html, basehref) {
+	var frameHtml = "<html id=\"" + rte + "\" xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\n";
 	frameHtml += "<head>\n";
+
+	frameHtml += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />";
+
+	if (basehref)
+		frameHtml += "<base href=\""+ basehref +"\">\n";
+
 	//to reference your stylesheet, set href property below to your stylesheet path and uncomment
 	//if (cssFile.length > 0) {
 		//frameHtml += "<link media=\"all\" type=\"text/css\" href=\"" + cssFile + "\" rel=\"Stylesheet\">\n";
 	//} else {
+
 		frameHtml += "<style>\n";
 		frameHtml += "body {\n";
 		frameHtml += "	background: #FFFFFF;\n";
@@ -244,6 +243,7 @@ function enableDesignMode(rte, html) {
 		frameHtml += ".highlight { background: #FF0; }";
 		frameHtml += ".quote { border: 5px solid #CCC;}";
 		frameHtml += "</style>\n";
+		
 	//}
 	frameHtml += "</head>\n";
 	frameHtml += "<body>\n";
@@ -284,7 +284,7 @@ function enableDesignMode(rte, html) {
 			//gecko may take some time to enable design mode.
 			//Keep looping until able to set.
 			if (isGecko) {
-				setTimeout("enableDesignMode('" + rte + "', '" + html + "');", 10);
+				setTimeout("enableDesignMode('" + rte + "', '" + html + "', '" + basehref + "');", 10);
 			} else {
 				return false;
 			}
@@ -320,19 +320,11 @@ function setHiddenVal(rte) {
 	
 	//convert html output to xhtml (thanks Timothy Bell and Vyacheslav Smolin!)
 	if (oHdnField.value == null) oHdnField.value = "";
-	if (document.all) {
-		if (generateXHTML) {
-			oHdnField.value = get_xhtml(frames[rte].document.body, lang, encoding);
-		} else {
-			oHdnField.value = frames[rte].document.body.innerHTML;
-		}
-	} else {
-		if (generateXHTML) {
-			oHdnField.value = get_xhtml(document.getElementById(rte).contentWindow.document.body, lang, encoding);
-		} else {
-			oHdnField.value = document.getElementById(rte).contentWindow.document.body.innerHTML;
-		}
-	}
+
+	if (document.all)
+		oHdnField.value = frames[rte].document.body.innerHTML;
+	else
+		oHdnField.value = document.getElementById(rte).contentWindow.document.body.innerHTML;
 	
 	oHdnField.value = convertTags(oHdnField.value);
 
@@ -479,7 +471,7 @@ function dlgInsertLink(rte, command) {
 	
 	parent.command = command;
 	currentRTE = rte;
-	InsertLink = popUpWin(includesPath + 'swat-textarea-editor-insert-link.html', 'InsertLink', 360, 180, '');
+	InsertLink = popUpWin(includesPath + 'swat-textarea-editor-insert-link.php', 'InsertLink', 360, 180, '');
 	
 	//get currently highlighted text and set link text value
 	setRange(rte);
