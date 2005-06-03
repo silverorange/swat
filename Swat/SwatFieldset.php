@@ -18,6 +18,7 @@ class SwatFieldset extends SwatContainer {
 	 * Fieldset title
 	 *
 	 * A visible title for this fieldset, or null.
+	 *
 	 * @var string
 	 */
 	public $title = null;
