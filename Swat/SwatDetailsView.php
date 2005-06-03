@@ -5,7 +5,7 @@ require_once('Swat/SwatHtmlTag.php');
 require_once('Swat/SwatDetailsViewField.php');
 require_once('Swat/SwatUIParent.php');
 
-//TODO: finish documentation for public methods
+// TODO: finish documentation for public methods
 
 /**
  * A widget to display field-value pairs
@@ -18,6 +18,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent {
 	
 	/**
 	 * Object containing values to display
+	 *
 	 * @var array
 	 */
 	public $data = null;
@@ -25,7 +26,8 @@ class SwatDetailsView extends SwatControl implements SwatUIParent {
 	private $fields = array();
 
 	/**
-	 * Append Field
+	 * Append field
+	 *
 	 * @param SwatDetailViewField $field
 	 */
 	public function appendField(SwatDetailsViewField $field) {
@@ -36,6 +38,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent {
 
 	/**
 	 * Count fields
+	 *
 	 * @return int Number of fields in the view.
 	 */
 	public function getFieldCount() {
@@ -44,6 +47,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent {
 
 	/**
 	 * Get fields
+	 *
 	 * @return array Array of fields in the view.
 	 */
 	public function &getFields() {
@@ -82,15 +86,14 @@ class SwatDetailsView extends SwatControl implements SwatUIParent {
 	/**
 	 * Add a child object
 	 * 
-	 * This method fulfills the {@link SwatUIParent} interface.  It is used 
+	 * This method fulfills the {@link SwatUIParent} interface. It is used 
 	 * by {@link SwatUI} when building a widget tree and should not need to be
-	 * called elsewhere.  To add a field to a field view, use 
+	 * called elsewhere. To add a field to a field view, use 
 	 * {@link SwatFieldView::appendField()}.
 	 *
 	 * @param $child A reference to a child object to add.
 	 */
 	public function addChild($child) {
-
 		if ($child instanceof SwatDetailsViewField)
 			$this->appendField($child);
 		else
