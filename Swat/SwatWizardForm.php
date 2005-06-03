@@ -15,6 +15,7 @@ class SwatWizardForm extends SwatForm {
 
 	/**
 	 * The current step of the wizard
+	 *
 	 * @var integer
 	 */
 	public $step;
@@ -86,6 +87,7 @@ class SwatWizardForm extends SwatForm {
 	
 	/**
 	 * Get the total number of steps in the wizard
+	 *
 	 * @return int Total steps
 	 */
 	public function getStepCount() {
@@ -94,7 +96,9 @@ class SwatWizardForm extends SwatForm {
 	
 	/**
 	 * Get the step title (if not set, "Step X")
+	 *
 	 * @param int $step Step number
+	 *
 	 * @return int Step title
 	 */
 	public function getStepTitle($step) {
@@ -106,6 +110,7 @@ class SwatWizardForm extends SwatForm {
 
 	/**
 	 * Set state storage method
+	 *
 	 * @param int $state_store A {@link SwatWizardStateStore} that specifies
 	 *        how the data is stored between steps.
 	 */

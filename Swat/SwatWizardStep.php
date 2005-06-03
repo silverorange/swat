@@ -14,18 +14,21 @@ class SwatWizardStep extends SwatContainer {
 
 	/**
 	 * Visibility of the step
+	 *
 	 * @var boolean
-	 **/
+	 */
 	public $visible = false;
 
 	/**
 	 * Step number (read only)
+	 *
 	 * @var integer
 	 */
 	public $step; //read only
 
 	/**
 	 * Title of the step (optional)
+	 *
 	 * @var string
 	 */
 	public $title = null;

@@ -18,7 +18,7 @@ class SwatWizardNavigation extends SwatControl {
 
 	/**
 	 * Initiate the elements for navigation
-	 **/
+	 */
 	public function init() {
 		$this->next_button = new SwatButton('nav_next');
 		$this->prev_button = new SwatButton('nav_prev');
@@ -26,12 +26,11 @@ class SwatWizardNavigation extends SwatControl {
 
 	/**
 	 * Display the navigation
-	 **/
+	 */
 	public function display() {
 		if (!$this->parent instanceof SwatWizardForm)
 			throw new SwatException('SwatWizardNavigation: Must be a child '.
 				'of a SwatWizardForm');
-	
 
 		$div = new SwatHtmlTag('div');
 		$div->class = 'swat-wizard-navigation';
@@ -54,9 +53,11 @@ class SwatWizardNavigation extends SwatControl {
 
 	/**
 	 * Get next step
+	 *
 	 * Processes the navigation buttons and chooses which step to go to next
+	 *
 	 * @return int Next step
-	 **/
+	 */
 	public function getNextStep() {
 		$this->next_button->process();
 		$this->prev_button->process();
