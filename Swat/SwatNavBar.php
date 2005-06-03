@@ -15,6 +15,7 @@ class SwatNavBar extends SwatControl {
 
 	/**
 	 * Add a item to the end of the navbar
+	 *
 	 * @param string $title Element title
 	 * @param string $link Optional link
 	 */
@@ -26,6 +27,7 @@ class SwatNavBar extends SwatControl {
 
 	/**
 	 * Replace an element
+	 *
 	 * @param integer $pos Element position to replace at
 	 * @param string $title Element title
 	 * @param string $link Optional link
@@ -39,8 +41,9 @@ class SwatNavBar extends SwatControl {
 	 * Fetch an element of the navbar
 	 *
 	 * @param integer $level Level of navbar to return
+	 *
 	 * @return array An array containing the title and link in the format:
-	 * array('title' = title, 'link' = link)
+	 *               array('title' = title, 'link' = link)
 	 */
 	public function fetch($level) {
 		$out=array();
@@ -51,6 +54,7 @@ class SwatNavBar extends SwatControl {
 
 	/**
 	 * Get number of elements
+	 *
 	 * @return integer Number of elements
 	 */
 	public function size() {
@@ -59,6 +63,7 @@ class SwatNavBar extends SwatControl {
 
 	/**
 	 * Pop the last 'num' elements off the end of the navbar
+	 *
 	 * @param $num integer Number of elements to pop
 	 */
 	public function pop($num = 1) {
