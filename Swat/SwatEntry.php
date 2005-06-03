@@ -17,6 +17,7 @@ class SwatEntry extends SwatControl implements SwatState {
 	 * Entry value
 	 *
 	 * Text content of the widget, or null.
+	 *
 	 * @var string
 	 */
 	public $value = null;
@@ -25,6 +26,7 @@ class SwatEntry extends SwatControl implements SwatState {
 	 * Required
 	 *
 	 * Must have a non-empty value when processed.
+	 *
 	 * @var bool
 	 */
 	public $required = false;
@@ -33,6 +35,7 @@ class SwatEntry extends SwatControl implements SwatState {
 	 * Input size
 	 *
 	 * Size in characters of the HTML text form input, or null.
+	 *
 	 * @var int
 	 */
 	public $size = 50;
@@ -41,6 +44,7 @@ class SwatEntry extends SwatControl implements SwatState {
 	 * Max length
 	 *
 	 * Maximum number of allowable characters in HTML text form input, or null.
+	 *
 	 * @var int
 	 */
 	public $maxlength = null;
@@ -49,6 +53,7 @@ class SwatEntry extends SwatControl implements SwatState {
 	 * Min length
 	 *
 	 * Minimum number of allowable characters in HTML text form input, or null.
+	 *
 	 * @var int
 	 */
 	public $minlength = null;
@@ -60,7 +65,7 @@ class SwatEntry extends SwatControl implements SwatState {
 		$input_tag->type = $this->html_input_type;
 		$input_tag->name = $this->id;
 		$input_tag->id = $this->id;
-		$input_tag->onfocus = "this.select();";
+		$input_tag->onfocus = 'this.select();';
 
 		if ($this->value !== null)
 			$input_tag->value = $this->value;
@@ -82,19 +87,21 @@ class SwatEntry extends SwatControl implements SwatState {
 
 		$len = ($this->value === null) ? 0 : strlen($this->value);
 
-		if (!$this->required && $this->value === null)
+		if (!$this->required && $this->value === null) {
 			return;
-			
-		elseif ($this->value === null) {
+
+		} elseif ($this->value === null) {
 			$msg = _S("The %s field is required.");
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			
 		} elseif ($this->maxlength !== null && $len > $this->maxlength) {
-			$msg = sprintf(_S("The %%s field must be less than %s characters."), $this->maxlength);
+			$msg = sprintf(_S("The %%s field must be less than %s characters."),
+				$this->maxlength);
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			
 		} elseif ($this->minlength !== null && $len < $this->minlength) {
-			$msg = sprintf(_S("The %%s field must be more than %s characters."), $this->minlength);
+			$msg = sprintf(_S("The %%s field must be more than %s characters."),
+				$this->minlength);
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			
 		}
