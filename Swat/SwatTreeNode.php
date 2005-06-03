@@ -10,14 +10,17 @@ require_once('Swat/SwatObject.php');
  * @copyright silverorange 2004
  */
 class SwatTreeNode extends SwatObject {
+
 	/**
 	 * Array of data used for display
+	 *
 	 * @var array
 	 */
 	var $data;
 	
 	/**
 	 * An array of children nodes
+	 *
 	 * @var string
 	 */
 	var $children = array();
@@ -34,6 +37,8 @@ class SwatTreeNode extends SwatObject {
 	 *
 	 * A utility method to return all child elements in a flat array with 
 	 * keys in the form of: id1/id2/id3
+	 *
+	 * @return array all child elements of this branch.
 	 */
 	public function toArray() {
 		$options = array();
@@ -44,10 +49,11 @@ class SwatTreeNode extends SwatObject {
 	}
 
 	private function expandNode(&$options, $node, $path = array()) {
-		if (count($path)) $options[implode('/',$path)] = $node->data;
+		if (count($path)) $options[implode('/', $path)] = $node->data;
 
 		foreach ($node->children as $id => $child_node)
-			$this->expandNode($options, $child_node, $this->appendPath($path, $id));
+			$this->expandNode($options, $child_node,
+				$this->appendPath($path, $id));
 	}
 	
 	private function appendPath($path, $id) {

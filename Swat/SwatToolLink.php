@@ -14,12 +14,14 @@ class SwatToolLink extends SwatControl {
 
 	/**
 	 * The title of the link
+	 *
 	 * @var string
 	 */
 	public $title = '';
 
 	/**
 	 * The href of the link
+	 *
 	 * @var string
 	 */
 	public $href = '';
@@ -29,6 +31,7 @@ class SwatToolLink extends SwatControl {
 	 *
 	 * A value to substitute into the href using sprintf()
 	 * example href: "MySection/MyPage?id=%s"
+	 *
 	 * @var string
 	 */
 	public $value = null;
