@@ -17,6 +17,7 @@ class SwatRadioList extends SwatControl implements SwatState {
 	 * Radio list options
 	 *
 	 * An array of options for the radio list in the form value => title.
+	 *
 	 * @var array
 	 */
 	public $options = null;
@@ -25,6 +26,7 @@ class SwatRadioList extends SwatControl implements SwatState {
 	 * List value 
 	 *
 	 * The value of the selected item, or null.
+	 *
 	 * @var string
 	 */
 	public $value = null;
@@ -33,6 +35,7 @@ class SwatRadioList extends SwatControl implements SwatState {
 	 * On change
 	 *
 	 * The onchange attribute of the HTML input type=radio tags, or null.
+	 *
 	 * @var string
 	 */
 	public $onchange = null;
@@ -86,9 +89,7 @@ class SwatRadioList extends SwatControl implements SwatState {
 		reset($this->options);
 		$this->value = key($this->options);
 	}
-	
-	
-	
+
 	public function getState() {
 		return $this->value;
 	}
