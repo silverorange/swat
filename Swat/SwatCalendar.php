@@ -77,7 +77,7 @@ class SwatCalendar extends SwatControl {
 		$img_tag = new SwatHtmlTag('img');
 		$img_tag->src = 'swat/images/b_calendar.gif';
 		$img_tag->class = 'swat-calendar-icon';
-		$img_tag->id = $this_id.'_calendar';
+		$img_tag->id = $this->id.'_calendar';
 		$img_tag->onmousedown = "clickWidgetIcon('{$this->id}', ".
 			"'{$start_date}', '{$end_date}');";
 
