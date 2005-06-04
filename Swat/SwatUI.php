@@ -88,26 +88,26 @@ class SwatUI extends SwatObject {
 		$widgets = array();
 	
 		foreach ($node->children() as $childname => $childnode) {
-
-			if ($childname == 'widget') {
-				$widget = $this->parseWidget($childnode);
-			
-				if (class_exists('SwatWidget') && $widget instanceof SwatWidget
-					 && $widget->id != null) {
-
-					if (isset($this->widgets[$widget->id]))
-						throw new SwatException(__CLASS__.
-							": widget with an id of '{$widget->id}' ".
-							"already exists.");
-
-					$this->widgets[$widget->id] = $widget;
-				}
-				
-				$this->attachToParent($widget, $parent_widget);
-				$this->parseUI($childnode, $widget);
-				
-			} elseif ($childname == 'property') {
+			if ($childname == 'property')
 				$this->parseProperty($parent_widget, $childnode);
+			else {
+				$parsed_node = $this->parseNode($childnode);
+
+				if ($childname == 'widget') {
+					if (class_exists('SwatWidget') && $parsed_node instanceof SwatWidget
+						 && $parsed_node->id != null) {
+
+						if (isset($this->widgets[$parsed_node->id]))
+							throw new SwatException(__CLASS__.
+								": widget with an id of '{$parsed_node->id}' ".
+								"already exists.");
+
+						$this->widgets[$parsed_node->id] = $parsed_node;
+					}
+				}
+	
+				$this->attachToParent($parsed_node, $parent_widget);
+				$this->parseUI($childnode, $parsed_node);
 			}
 		}
 	}
@@ -121,11 +121,11 @@ class SwatUI extends SwatObject {
 
 	}
 
-	private function parseWidget($node) {
+	private function parseNode($node) {
 		if (isset($node['class']))
 			$class = (string)$node['class'];
 		else
-			throw new SwatException("Widget is missing 'class' property.");
+			throw new SwatException("Widget/Object is missing 'class' property.");
 	
 		$classfile = "Swat/{$class}.php";
 
@@ -137,12 +137,12 @@ class SwatUI extends SwatObject {
 		}
 
 		require_once($classfile);
-		$widget = new $class();
-		
+		$node_class = new $class();
+	
 		if (isset($node['id']))
-			$widget->id = (string)$node['id'];
+			$node_class->id = (string)$node['id'];
 
-		return $widget;
+		return $node_class;
 	}
 
 	private function parseProperty($widget, $property) {
