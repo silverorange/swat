@@ -103,6 +103,17 @@ class SwatUI extends SwatObject {
 								"already exists.");
 
 						$this->widgets[$parsed_node->id] = $parsed_node;
+
+					} elseif (!(class_exists('SwatWidget') && $parsed_node instanceof SwatWidget)) {
+						throw new SwatException(__CLASS__.
+							': '.get_class($parsed_node).' is declared as a widget '.
+							'but is not an instance of SwatWidget.');
+					}
+				} elseif ($childname == 'object') {
+					if (class_exists('SwatWidget') && $parsed_node instanceof SwatWidget) {
+						throw new SwatException(__CLASS__.
+							': '.get_class($parsed_node).' is declared as an object '.
+							'but is an instance of SwatWidget and should be declared as a widget.');
 					}
 				}
 	
