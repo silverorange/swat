@@ -54,6 +54,26 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent {
 			$renderer->_property_map = array();
 	}
 
+	/**
+	 * Get Renderers
+	 * 
+	 * Returns an the array of {@link SwatCellRenderer}s linked to this column.
+	 *
+	 * @return array Array of {@link SwatCellRenderer}s
+	 */
+	public function getRenderers() {
+		return $this->renderers;
+	}
+
+	/**
+	 * Get Renderer
+	 * 
+	 * Returns a reference to a {@link SwatCellRenderer} at $ord position.
+	 *
+	 * @param $ord Position in the array of the {@link SwatCellRenderer},
+	 *        default 0.
+	 * @return SwatCellRenderer The renderer at $ord position.
+	 */
 	public function getRenderer($ord = 0) {
 		if (isset($this->renderers[$ord]))
 			return $this->renderers[$ord];
