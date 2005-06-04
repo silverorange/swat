@@ -54,6 +54,13 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent {
 			$renderer->_property_map = array();
 	}
 
+	public function getRenderer($ord = 0) {
+		if (isset($this->renderers[$ord]))
+			return $this->renderers[$ord];
+		else
+			throw new SwatException(__CLASS__.': invalid renderer offset ('.$ord.').');
+	}
+
 	public function init() {
 
 	}
