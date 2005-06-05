@@ -57,18 +57,6 @@ function writeRichText(rte, html, width, height, basehref) {
 		document.writeln('<div id="Menu_' + rte + '" class="rteMenu">');
 		/*
 			document.writeln('<div id="MenuFormatting_' + rte + '" class="rteMenuFormatting">');
-			document.writeln('	<select id="formatblock_' + rte + '" onchange="selectFont(\'' + rte + '\', this.id);">');
-			document.writeln('		<option value="">[Style]</option>');
-			document.writeln('		<option value="<p>">Paragraph &lt;p&gt;</option>');
-			document.writeln('		<option value="<h1>">Heading 1 &lt;h1&gt;</option>');
-			document.writeln('		<option value="<h2>">Heading 2 &lt;h2&gt;</option>');
-			document.writeln('		<option value="<h3>">Heading 3 &lt;h3&gt;</option>');
-			document.writeln('		<option value="<h4>">Heading 4 &lt;h4&gt;</option>');
-			document.writeln('		<option value="<h5>">Heading 5 &lt;h5&gt;</option>');
-			document.writeln('		<option value="<h6>">Heading 6 &lt;h6&gt;</option>');
-			document.writeln('		<option value="<address>">Address &lt;ADDR&gt;</option>');
-			document.writeln('		<option value="<pre>">Formatted &lt;pre&gt;</option>');
-			document.writeln('	</select>');
 			document.writeln('	<select id="fontname_' + rte + '" onchange="selectFont(\'' + rte + '\', this.id)">');
 			document.writeln('		<option value="Font" selected>[Font]</option>');
 			document.writeln('		<option value="Arial, Helvetica, sans-serif">Arial</option>');
@@ -91,50 +79,49 @@ function writeRichText(rte, html, width, height, basehref) {
 
 		document.write('<div id="MenuButtons_' + rte + '" class="rteMenuButtons">');
 		
-		
 		document.write('<div>');
 			document.writeln('	<select id="formatblock_' + rte + '" onchange="selectFont(\'' + rte + '\', this.id);">');
-			document.writeln('		<option value="">[Style]</option>');
-			document.writeln('		<option value="clearformat">Clear Formatting</option>');
-			document.writeln('		<option value="<p>">Paragraph &lt;p&gt;</option>');
-			document.writeln('		<option value="<h1>">Heading 1 &lt;h1&gt;</option>');
-			document.writeln('		<option value="<h2>">Heading 2 &lt;h2&gt;</option>');
-			document.writeln('		<option value="<h3>">Heading 3 &lt;h3&gt;</option>');
-			document.writeln('		<option value="<h4>">Heading 4 &lt;h4&gt;</option>');
-			document.writeln('		<option value="<h5>">Heading 5 &lt;h5&gt;</option>');
-			document.writeln('		<option value="<h6>">Heading 6 &lt;h6&gt;</option>');
-			document.writeln('		<option value="<address>">Address &lt;ADDR&gt;</option>');
-			document.writeln('		<option value="<pre>">Formatted &lt;pre&gt;</option>');
+			document.writeln('		<option value="">[' + rteT['style'] + ']</option>');
+			document.writeln('		<option value="clearformat">' + rteT['clear_formatting'] + '</option>');
+			document.writeln('		<option value="<p>">' + rteT['paragraph'] + ' &lt;p&gt;</option>');
+			document.writeln('		<option value="<h1>">' + rteT['heading'] + ' 1 &lt;h1&gt;</option>');
+			document.writeln('		<option value="<h2>">' + rteT['heading'] + ' 2 &lt;h2&gt;</option>');
+			document.writeln('		<option value="<h3>">' + rteT['heading'] + ' 3 &lt;h3&gt;</option>');
+			document.writeln('		<option value="<h4>">' + rteT['heading'] + ' 4 &lt;h4&gt;</option>');
+			document.writeln('		<option value="<h5>">' + rteT['heading'] + ' 5 &lt;h5&gt;</option>');
+			document.writeln('		<option value="<h6>">' + rteT['heading'] + ' 6 &lt;h6&gt;</option>');
+			document.writeln('		<option value="<address>">' + rteT['address'] + ' &lt;ADDR&gt;</option>');
+			document.writeln('		<option value="<pre>">' + rteT['formatted'] + ' &lt;pre&gt;</option>');
 			document.writeln('	</select>');
 		document.write('</div>');
 		document.write('<div>');
 		
 		document.write('<a href="#" class="rteMenu-bold"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'bold\', \'\'); return false;"');
-			document.write('title="bold">bold</a>');
+			document.write('title="' + rteT['bold'] + '">' + rteT['bold'] + '</a>');
 		
 		document.write('<a href="#" class="rteMenu-italic"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'italic\', \'\'); return false;"');
-			document.write('title="italic">italic</a>');
+			document.write('title="' + rteT['italic'] + '">' + rteT['italic'] + '</a>');
 		
 		document.write('<a href="#" class="rteMenu-underline"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'underline\', \'\'); return false;"');
-			document.write('title="underline">underline</a>');
+			document.write('title="' + rteT['underline'] + '">' + rteT['underline'] + '</a>');
 		
 		document.write('</div>');
 		document.write('<div>');
 		
 		document.write('<a href="#" class="rteMenu-align-left"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'justifyleft\', \'\'); return false;"');
-			document.write('title="align left">align left</a>');
+			document.write('title="' + rteT['align_left'] + '">' + rteT['align_left'] + '</a>');
 		
 		document.write('<a href="#" class="rteMenu-align-center"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'justifycenter\', \'\'); return false;"');
-			document.write('title="align center">align center</a>');
+			document.write('title="' + rteT['align_center'] + '">' + rteT['align_center'] + '</a>');
 		
 		document.write('<a href="#" class="rteMenu-align-right"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'justifyright\', \'\'); return false;"');
-			document.write('title="align right">align right</a>');
+			document.write('title="' + rteT['align_right'] + '">' + rteT['align_right'] + '</a>');
 		/*	
 		document.write('<a href="#" class="rteMenu-align-justify"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'jusitfyfull\', \'\'); return false;"');
@@ -145,41 +132,41 @@ function writeRichText(rte, html, width, height, basehref) {
 		
 		document.write('<a href="#" class="rteMenu-ul"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'insertunorderedlist\', \'\'); return false;"');
-			document.write('title="unordered list">unordered list</a>');
+			document.write('title="' + rteT['unordered_list'] + '">' + rteT['unordered_list'] + '</a>');
 		
 		document.write('<a href="#" class="rteMenu-ol"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'insertorderedlist\', \'\'); return false;"');
-			document.write('title="ordered list">ordered list</a>');
+			document.write('title="' + rteT['ordered_list'] + '">' + rteT['ordered_list'] + '</a>');
 		
 		document.write('<a href="#" class="rteMenu-indent"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'indent\', \'\'); return false;"');
-			document.write('title="indent">indent</a>');
+			document.write('title="' + rteT['indent'] + '">' + rteT['indent'] + '</a>');
 		
 		document.write('<a href="#" class="rteMenu-outdent"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'outdent\', \'\'); return false;"');
-			document.write('title="outdent">outdent</a>');
+			document.write('title="' + rteT['outdent'] + '">' + rteT['outdent'] + '</a>');
 		
 		document.write('</div>');
 		document.write('<div>');
 		
 		document.write('<a href="#" class="rteMenu-link"');
 			document.write('onClick="dlgInsertLink(\'' + rte + '\', \'link\'); return false;"');
-			document.write('title="insert link">insert link</a>');
+			document.write('title="' + rteT['insert_link'] + '">' + rteT['insert_link'] + '</a>');
 		
 		document.write('<a href="#" class="rteMenu-hr"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'inserthorizontalrule\', \'\'); return false;"');
-			document.write('title="horizontal rule">horizonatal rule</a>');
+			document.write('title="' + rteT['horizontal_rule'] + '">' + rteT['horizontal_rule'] + '</a>');
 		
 		document.write('</div>');
 		document.write('<div>');
 		
 		document.write('<a href="#" class="rteMenu-hilite"');
 			document.write('onClick="hiliteText(\'' + rte + '\'); return false;"');
-			document.write('title="highlight">highlight</a>');
+			document.write('title="' + rteT['highlight'] + '">' + rteT['highlight'] + '</a>');
 		
 		document.write('<a href="#" class="rteMenu-quote"');
 			document.write('onClick="insertQuote(\'' + rte + '\'); return false;"');
-			document.write('title="quote">quote</a>');
+			document.write('title="' + rteT['quote'] + '">' + rteT['quote'] + '</a>');
 		
 		document.write('</div>'); //end menu group
 	
@@ -471,7 +458,7 @@ function dlgInsertLink(rte, command) {
 	
 	parent.command = command;
 	currentRTE = rte;
-	InsertLink = popUpWin(includesPath + 'swat-textarea-editor-insert-link.php', 'InsertLink', 360, 180, '');
+	InsertLink = popUpWin(includesPath + 'swat-textarea-editor-insert-link.html', 'InsertLink', 360, 180, '');
 	
 	//get currently highlighted text and set link text value
 	setRange(rte);

@@ -45,10 +45,51 @@ class SwatTextareaEditor extends SwatTextarea {
 		echo '<script type="text/javascript">';
 		include_once('Swat/javascript/swat-textarea-editor.js');
 
+		$this->displayJavascriptTranslations();
 		echo 'initRTE("swat/images/textarea-editor/", "swat/", "", false);';
 		echo "writeRichText('{$this->id}', '{$value}', '{$this->width}', '{$this->height}', '{$this->basehref}');";
 		
 		echo '</script>';
+	}
+
+	private function displayJavascriptTranslations() {
+		echo " var rteT = new Array();";
+		
+		foreach($this->translations() as $k => $word)
+			echo "\n rteT['{$k}'] = '".str_replace("'", "\'", $word)."';";
+	}
+
+	private function translations() {
+		return array(
+			'bold' => _S("Bold"),
+			'italic' => _S("Italic"),
+			'underline' => _S("Underline"),
+			'align_left' => _S("Align Left"),
+			'align_right' => _S("Align Right"),
+			'align_center' => _S("Align Center"),
+			'ordered_list' => _S("Ordered List"),
+			'unordered_list' => _S("Unordered List"),
+			'indent' => _S("Indent"),
+			'outdent' => _S("Outdent"),
+			'insert_link' => _S("Insert Link"),
+			'horizontal_rule' => _S("Horizontal Rule"),
+			'highlight' => _S("Highlight"),
+			'quote' => _S("Quote"),
+			'style' => _S("Style"),
+			'clear_formatting' => _S("Clear Formatting"),
+			'paragraph' => _S("Paragraph"),
+			'heading' => _S("Heading"),
+			'address' => _S("Address"),
+			'formatted' => _S("Formatted"),
+			
+			//pop-up link
+			'enter_url' => _S("A URL is required"),
+			'url' => _S("URL"),
+			'link_text' => _S("Link Text"),
+			'target' => _S("Target"),
+			'insert_link' => _S("Insert Link"),
+			'cancel' => _S("Cancel")
+		);
 	}
 	
 	private function rteSafe($strText) {
