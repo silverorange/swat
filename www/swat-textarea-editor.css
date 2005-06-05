@@ -3,6 +3,16 @@ div.rteDiv {
 	background: #F8F5F2;
 }
 
+body.rtePopup {
+	margin: 10px;
+	background: #F8F5F2;
+}
+
+body.rtePopup form {
+	background: #FFF;
+	padding: 5px;
+}
+
 div.rteIframeDiv {
 	border: 1px solid;
 	border-top-color: #CCC;

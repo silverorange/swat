@@ -1,65 +1,71 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<title>Insert Link</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
 <script language="JavaScript" type="text/javascript">
 <!--
+var rteT = window.opener.rteT;
+
 function AddLink() {
 	var oForm = document.linkForm;
 	
 	//validate form
 	if (oForm.url.value == '') {
-		alert('Please enter a url.');
+		alert(rteT['enter_url']);
 		return false;
 	}
-	if (oForm.linkText.value == '') {
-		alert('Please enter link text.');
-		return false;
-	}
+	if (oForm.linkText.value == '')
+		var link_text = oForm.url.value;
+	else
+		var link_text = oForm.linkText.value;
 	
-	var html = '<a href="' + document.linkForm.url.value + '" target="' + document.linkForm.linkTarget.options[document.linkForm.linkTarget.selectedIndex].value + '">' + document.linkForm.linkText.value + '</a>';
+	var html = '<a href="' + document.linkForm.url.value + '" target="' + document.linkForm.linkTarget.options[document.linkForm.linkTarget.selectedIndex].value + '">' + link_text + '</a>';
 	
 	window.opener.insertHTML(html);
 	window.close();
 	return true;
 }
+
+document.writeln('<title>' + rteT['insert_link'] + '</title>');
 //-->
 </script>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<style type="text/css" media="all">@import "../admin/admin.css";</style>
+	<style type="text/css" media="all">@import "../swat/swat.css";</style>
+	<style type="text/css" media="all">@import "swat-textarea-editor.css";</style>
 </head>
 
-<body style="margin: 10px; background: #D3D3D3;">
+<body>
+
+</head>
+
+<body class="rtePopup">
 
 <form name="linkForm" onSubmit="return AddLink();">
-<table cellpadding="4" cellspacing="0" border="0">
-	<tr><td colspan="2"><span style="font-style: italic; font-size: x-small;"><b>Tip:</b> To insert an email link, start your URL with "mailto:"</span></td></tr>
-	<tr>
-		<td align="right">URL:</td>
-		<td><input name="url" type="text" id="url" size="40"></td>
-	</tr>
-	<tr>
-		<td align="right">Text:</td>
-		<td><input name="linkText" type="text" id="linkText" size="40"></td>
-	</tr>
-	<tr>
-		<td align="right">Target:</td>
-		<td align="left">
-			<select name="linkTarget" id="linkTarget">
-				<option value="_blank">_blank</option>
-				<option value="_parent">_parent</option>
-				<option value="_self" selected>_self</option>
-				<option value="_top">_top</option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="3" align="center">
-			<input type="submit" value="Insert Link" />
-			<input type="button" value="Cancel" onClick="window.close();" />
-		</td>
-	</tr>
-</table>
+
+	<script language="JavaScript" type="text/javascript">
+	
+	document.writeln('<div class="swat-form-field"><label for="title">' + rteT['url'] + ':</label>');
+	document.writeln('<input name="url" type="text" id="url" size="40" onfocus="this.select();"></div>');
+
+	document.writeln('<div class="swat-form-field"><label for="text">' + rteT['link_text'] + ':</label>');
+	document.writeln('<input name="linkText" type="text" id="text" size="40" onfocus="this.select();"></div>');
+
+	document.writeln('<div class="swat-form-field"><label for="linkTarget">' + rteT['target'] + ':</label>');
+	document.writeln('<select name="linkTarget" id="linkTarget">');
+		document.writeln('<option value="_self" selected>_self</option>');
+		document.writeln('<option value="_blank">_blank</option>');
+		document.writeln('<option value="_parent">_parent</option>');
+		document.writeln('<option value="_top">_top</option>');
+	document.writeln('</select>');
+	document.writeln('</div>');
+
+	document.writeln('<div class="swat-form-footer">');
+		document.writeln('<input type="submit" value="' + rteT['insert_link'] + '" />');
+		document.writeln('<input type="submit" value="' + rteT['cancel'] + '" onClick="window.close();" />');
+	document.writeln('</div>');
+	</script>
 
 </form>
 
