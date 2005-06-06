@@ -92,6 +92,7 @@ div.rteMenuButtons div {
 	float: left;
 	padding: 0 0 2px 0;
 	margin-right: 5px;
+	white-space: nowrap;
 }
 
 div.rteMenuButtonsDisabled a {
