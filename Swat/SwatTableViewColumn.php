@@ -68,17 +68,17 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent {
 	/**
 	 * Get Renderer
 	 * 
-	 * Returns a reference to a {@link SwatCellRenderer} at $ord position.
+	 * Returns a reference to a {@link SwatCellRenderer} at ordinal position $position.
 	 *
-	 * @param $ord Position in the array of the {@link SwatCellRenderer},
-	 *        default 0.
-	 * @return SwatCellRenderer The renderer at $ord position.
+	 * @param $position Ordinal position in the array of the {@link SwatCellRenderer},
+	 *        zero-based, default 0.
+	 * @return SwatCellRenderer The renderer at ordinal position $position.
 	 */
-	public function getRenderer($ord = 0) {
-		if (isset($this->renderers[$ord]))
-			return $this->renderers[$ord];
+	public function getRenderer($position = 0) {
+		if (isset($this->renderers[$position]))
+			return $this->renderers[$postition];
 		else
-			throw new SwatException(__CLASS__.': invalid renderer offset ('.$ord.').');
+			throw new SwatException(__CLASS__.': invalid ordinal position '.$position.'.');
 	}
 
 	public function init() {
