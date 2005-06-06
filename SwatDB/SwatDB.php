@@ -776,6 +776,32 @@ class SwatDB {
 		return $row->$field_name;
 	}
 	// }}}
+	// {{{ public static function equalityOperator()
+	
+	/**
+	 * Get proper conditional operator
+	 *
+ 	 * Convenience method to return proper operators for database values that
+ 	 * may be null.
+	 *
+	 * @param mixed $value The value to check for null on
+	 *
+	 * @param boolean $neg Whether to return the operator for a negative
+	 *        comparison 
+	 *
+	 * @return string SQL operator
+	 */
+	public static function equalityOperator($value, $neg = false) {
+		if ($value === null && $neg)
+			return 'is not';
+		elseif ($value === null)
+			return 'is';
+		elseif ($neg)
+			return '!=';
+		else
+			return '=';
+	}
+	// }}}
 	// {{{ private static function debug()
 	
 	private static function debug($msg) {
