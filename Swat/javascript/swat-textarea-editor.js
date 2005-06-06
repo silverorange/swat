@@ -221,11 +221,18 @@ function enableDesignMode(rte, html, basehref) {
 	//} else {
 
 		frameHtml += "<style>\n";
-		frameHtml += "body {\n";
-		frameHtml += "	background: #FFFFFF;\n";
+		frameHtml += "body.editor {\n";
+		frameHtml += "	background: #FFF;\n";
 		frameHtml += "	margin: 2px;\n";
 		frameHtml += "	padding: 2px;\n";
 		frameHtml += "	font-family: monospace;\n";
+		frameHtml += "}\n";
+		frameHtml += "body.normal {\n";
+		frameHtml += "	background: #FFF;\n";
+		frameHtml += "	margin: 2px;\n";
+		frameHtml += "	padding: 2px;\n";
+		frameHtml += "	font: 13px sans-serif;\n";
+		frameHtml += "	line-height: 120%;\n";
 		frameHtml += "}\n";
 		frameHtml += ".highlight { background: #FF0; }";
 		frameHtml += ".quote { border: 5px solid #CCC;}";
@@ -233,7 +240,7 @@ function enableDesignMode(rte, html, basehref) {
 		
 	//}
 	frameHtml += "</head>\n";
-	frameHtml += "<body>\n";
+	frameHtml += "<body class=\"normal\">\n";
 	//frameHtml += html + "\n";
 	frameHtml += "\n"; // content gets loaded onload
 	frameHtml += "</body>\n";
@@ -367,11 +374,13 @@ function toggleHTMLSrc(rte, edit_src) {
 		
 		if (document.all) {
 			frames[rte].document.body.innerText = oHdnField.value;
+			frames[rte].document.body.className = 'editor';
 		} else {
 			var oRTE = document.getElementById(rte).contentWindow.document;
 			var htmlSrc = oRTE.createTextNode(oHdnField.value);
 			oRTE.body.innerHTML = "";
 			oRTE.body.appendChild(htmlSrc);
+			oRTE.body.className = 'editor';
 		}
 	} else {
 		//we are unchecking the box
@@ -390,11 +399,13 @@ function toggleHTMLSrc(rte, edit_src) {
 			output = output.replace("%3CP%3E%0D%0A%3CHR%3E", "%3CHR%3E");
 			output = output.replace("%3CHR%3E%0D%0A%3C/P%3E", "%3CHR%3E");
 			frames[rte].document.body.innerHTML = unescape(output);
+			frames[rte].document.body.className = 'normal';
 		} else {
 			var oRTE = document.getElementById(rte).contentWindow.document;
 			var htmlSrc = oRTE.body.ownerDocument.createRange();
 			htmlSrc.selectNodeContents(oRTE.body);
 			oRTE.body.innerHTML = htmlSrc.toString();
+			oRTE.body.className = 'normal';
 		}
 	}
 
