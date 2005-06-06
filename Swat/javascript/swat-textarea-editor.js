@@ -559,7 +559,7 @@ function insertQuote(rte) {
 	currentRTE = rte;
 	
 	var content = getHTMLOfSelection(rte);
-	insertHTML('<div class="quote">' + content + '</div><br />');
+	insertHTML('<blockquote class="quote">' + content + '</blockquote><br />');
 }
 
 // Ernst de Moor: Fix the amount of digging parents up, in case the RTE editor itself is displayed in a div.
