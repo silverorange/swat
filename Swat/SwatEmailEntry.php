@@ -17,12 +17,12 @@ class SwatEmailEntry extends SwatEntry {
 	public function process() {
 		parent::process();
 		
-		$valid_email_word = '[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+';
-		$valid_email_ereg = '^'.$valid_email_word.'@'.
-			$valid_email_word.'\.'.$valid_email_word.'$';
+		$valid_address_word = '[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+';
+		$valid_address_ereg = '^'.$valid_address_word.'@'.
+			$valid_address_word.'\.'.$valid_address_word.'$';
 			
 		if (($this->required || strlen($this->value)) &&
-			!ereg($valid_email_ereg, trim($this->value))) {
+			!ereg($valid_address_ereg, trim($this->value))) {
 			$msg = _S("The email address you have entered ".
 				"is not properly formatted.");
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
