@@ -1,6 +1,6 @@
 <?php
 
-require_once('Swat/SwatObject.php');
+require_once 'Swat/SwatObject.php';
 
 /**
  * Base class for a web application
@@ -9,94 +9,127 @@ require_once('Swat/SwatObject.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-abstract class SwatApplication extends SwatObject {
-
+abstract class SwatApplication extends SwatObject
+{
 	/**
-	 * Application id
+	 * A unique identifier for this application
 	 *
 	 * @var string
 	 */
 	public $id;
 
 	/**
-	 * URI (read-only)
+	 * The number of elements of the raw URI that comprise the base
 	 *
-	 * The URI of the current request.
-	 * Set by {@link SwatApplication::initUriVars}.
+	 * This value changes between live and stage sites.
 	 *
-	 * @var string
+	 * @var int
 	 */
-	public $uri;
-
+	protected $base_uri_length = 0;
+	
 	/**
-	 * Base URI (read-only)
+	 * Creates a new Swat application
 	 *
-	 * The URI part of the basehref. 
-	 * Set by {@link SwatApplication::initUriVars}.
-	 *
-	 * @var string
+	 * @param String $id a unique identifier for this application.
 	 */
-	public $baseuri;
-
-	/**
-	 * Base-Href (read-only)
-	 *
-	 * Set by SwatApplication::initUriVars().
-	 *
-	 * @var string
-	 */
-	public $basehref;
-
-	/**
-	 * @param String $id Unique id of the application.
-	 */
-	function __construct($id) {
+	public function __construct($id)
+	{
 		$this->id = $id;
 	}
 
-	protected function initUriVars($prefix_length = 0) {
-		$this->uri = $_SERVER['REQUEST_URI'];
+	/**
+	 * Gets the raw URI of this page request
+	 *
+	 * @return string the raw URI of this page request.
+	 */
+	public function getUri()
+	{
+		static $uri = null;
 
-		$uri_array = explode('/', $this->uri);
-		$this->baseuri = implode('/',
-			array_slice($uri_array, 0, $prefix_length + 1)).'/';
+		if ($uri === null)
+			$uri = $_SERVER['REQUEST_URI'];
 
-		// TODO: Once we have a SITE_LIVE equivalent, we should use HTTP_HOST
-		//       on stage and SERVER_NAME on live.
-		$this->basehref = 'http://'.$_SERVER['HTTP_HOST'].$this->baseuri;
+		return $uri;
 	}
 
 	/**
-	 * Initialize the application
+	 * Gets the base part of the request URI
+	 *
+	 * The base or the request URI is returned with a trailing '/' character.
+	 *
+	 * @return string the base part of the request URI.
+	 *
+	 * @see SwatApplication::getBaseHref()
+	 */
+	public function getBaseUri()
+	{
+		static $base_uri = false;
+
+		if ($base_uri === false) {
+			$uri_array = explode('/', $this->getUri());
+			$base_uri = implode('/',
+				array_slice($uri_array, 0, $this->base_uri_length + 1)).'/';
+		}
+
+		return $base_uri;
+	}
+
+	/**
+	 * Gets the base value for all application anchor hrefs
+	 *
+	 * @return string the base value for all application anchor hrefs.
+	 */
+	public function getBaseHref()
+	{
+		static $base_href = null;
+
+		/*
+		 * TODO: Once we have a SITE_LIVE equivalent, we should use HTTP_HOST
+		 *       on stage and SERVER_NAME on live.
+		 * TODO: This also needs to be updated to support https.
+		 */
+		if ($base_href === null)
+			$base_href = 'http://'.$_SERVER['HTTP_HOST'].$this->getBaseUri();
+
+		return $base_href;
+	}
+
+	/**
+	 * Relocates to another URL
+	 *
+	 * Calls the PHP header() function to relocate this application to another
+	 * URL. This function does not return and in fact calls the PHP exit()
+	 * function just to be sure execution does not continue.
+	 *
+	 * @param string $url the URL to relocate to.
+	 */
+	public function relocate($url)
+	{
+		if (substr($url, 0, 1) != '/' && strpos($url, '://') === false)
+			$url = $this->getBaseHref().$url;
+
+		header('Location: '.$url);
+		exit();
+	}
+
+	/**
+	 * Initializes this application
 	 *
 	 * Subclasses should implement all application level initialization here.
 	 */
 	abstract public function init();
 
 	/**
-	 * Get the page object
+	 * Gets the page object
 	 *
 	 * Subclasses should implement logic here to decide which page sub-class to
 	 * instantiate, then return a {@link SwatPage} descenedant.
 	 *
 	 * @return SwatPage A sub-class of {@link SwatPage} is returned.
+	 *
+	 * @see SwatPage
 	 */
 	abstract public function getPage();
-
-	/**
-	 * Relocate
-	 *
-	 * Relocate to another URL. This function does not return.
-	 * @param string $url The URL to relocate to.
-	 */
-	function relocate($url) {
-		if (substr($url, 0, 1) != '/' && strpos($url, '://') === FALSE)
-			$url = $this->basehref.$url;
-
-		header('Location: '.$url);
-		exit();
-	}
-
 
 	const VAR_POST    = 1;
 	const VAR_GET     = 2;
@@ -110,23 +143,23 @@ abstract class SwatApplication extends SwatObject {
 	*/
 	
 	/**
-	 * Initialize a variable
+	 * Initializes a variable
 	 *
 	 * Static convenience method to initialize a local variable with a value 
 	 * from one of the PHP global arrays.
 	 *
-	 * @param $name string The name of the variable to lookup.
+	 * @param $name string the name of the variable to lookup.
 	 *
-	 * @param $types int Bitwise combination of SwatApplication::VAR_*
-	 *        constansts.
+	 * @param $types int a bitwise combination of SwatApplication::VAR_*
+	 *                    constants.
 	 *
-	 * @param $default mixed Value to return if variable is not found in
-	 *        the global arrays.
+	 * @param $default mixed the value to return if variable is not found in
+	 *                        the super-global arrays.
 	 *
-	 * @return mixed The value of the variable.
+	 * @return mixed the value of the variable.
 	 */
-	public static function initVar($name, $default = null, $types = 0) {
-		
+	public static function initVar($name, $default = null, $types = 0)
+	{
 		$var = $default;
 		
 		if ($types == 0)
@@ -168,7 +201,6 @@ abstract class SwatApplication extends SwatObject {
 		
 		return $var;
 	}
-
 }
 
 ?>
