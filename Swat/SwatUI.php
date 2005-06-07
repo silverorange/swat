@@ -193,7 +193,7 @@ class SwatUI extends SwatObject
 					': '.get_class($parsed_object).' is declared as a widget '.
 					'but is not an instance of SwatWidget.');
 			}
-		} elseif ($child_name == 'object') {
+		} elseif ($element_name == 'object') {
 			if (class_exists('SwatWidget') &&
 				$parsed_object instanceof SwatWidget) {
 				
