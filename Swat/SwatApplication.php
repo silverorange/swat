@@ -26,6 +26,29 @@ abstract class SwatApplication extends SwatObject
 	 * @var int
 	 */
 	protected $base_uri_length = 0;
+
+	/**
+	 * The raw URI of this page request
+	 *
+	 * @var string
+	 */
+	protected $uri = '';
+	
+	/**
+	 * The base part of the raw URI of this page request
+	 *
+	 * Ends with a trailing '/' character.
+	 *
+	 * @var string
+	 */
+	protected $base_uri = '';
+	
+	/**
+	 * The base value for all application anchor hrefs
+	 *
+	 * @var string
+	 */
+	protected $base_href = '';
 	
 	/**
 	 * Creates a new Swat application
@@ -44,12 +67,10 @@ abstract class SwatApplication extends SwatObject
 	 */
 	public function getUri()
 	{
-		static $uri = null;
+		if (strlen($this->uri) == 0)
+			$this->uri = $_SERVER['REQUEST_URI'];
 
-		if ($uri === null)
-			$uri = $_SERVER['REQUEST_URI'];
-
-		return $uri;
+		return $this->uri;
 	}
 
 	/**
@@ -63,15 +84,13 @@ abstract class SwatApplication extends SwatObject
 	 */
 	public function getBaseUri()
 	{
-		static $base_uri = false;
-
-		if ($base_uri === false) {
+		if (strlen($this->base_uri) == 0) {
 			$uri_array = explode('/', $this->getUri());
-			$base_uri = implode('/',
+			$this->base_uri = implode('/',
 				array_slice($uri_array, 0, $this->base_uri_length + 1)).'/';
 		}
 
-		return $base_uri;
+		return $this->base_uri;
 	}
 
 	/**
@@ -81,17 +100,16 @@ abstract class SwatApplication extends SwatObject
 	 */
 	public function getBaseHref()
 	{
-		static $base_href = null;
-
 		/*
 		 * TODO: Once we have a SITE_LIVE equivalent, we should use HTTP_HOST
 		 *       on stage and SERVER_NAME on live.
 		 * TODO: This also needs to be updated to support https.
 		 */
-		if ($base_href === null)
-			$base_href = 'http://'.$_SERVER['HTTP_HOST'].$this->getBaseUri();
+		if (strlen($this->base_href) == 0)
+			$this->base_href =
+				'http://'.$_SERVER['HTTP_HOST'].$this->getBaseUri();
 
-		return $base_href;
+		return $this->base_href;
 	}
 
 	/**
