@@ -76,7 +76,7 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent {
 	 */
 	public function getRenderer($position = 0) {
 		if (isset($this->renderers[$position]))
-			return $this->renderers[$postition];
+			return $this->renderers[$position];
 		else
 			throw new SwatException(__CLASS__.': invalid ordinal position '.$position.'.');
 	}
