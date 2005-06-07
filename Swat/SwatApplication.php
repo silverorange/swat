@@ -32,7 +32,7 @@ abstract class SwatApplication extends SwatObject
 	 *
 	 * @var string
 	 */
-	protected $uri = '';
+	protected $uri = null;
 	
 	/**
 	 * The base part of the raw URI of this page request
@@ -41,14 +41,14 @@ abstract class SwatApplication extends SwatObject
 	 *
 	 * @var string
 	 */
-	protected $base_uri = '';
+	protected $base_uri = null;
 	
 	/**
 	 * The base value for all application anchor hrefs
 	 *
 	 * @var string
 	 */
-	protected $base_href = '';
+	protected $base_href = null;
 	
 	/**
 	 * Creates a new Swat application
@@ -67,7 +67,7 @@ abstract class SwatApplication extends SwatObject
 	 */
 	public function getUri()
 	{
-		if (strlen($this->uri) == 0)
+		if ($this->uri === null)
 			$this->uri = $_SERVER['REQUEST_URI'];
 
 		return $this->uri;
@@ -84,7 +84,7 @@ abstract class SwatApplication extends SwatObject
 	 */
 	public function getBaseUri()
 	{
-		if (strlen($this->base_uri) == 0) {
+		if ($this->base_uri === null) {
 			$uri_array = explode('/', $this->getUri());
 			$this->base_uri = implode('/',
 				array_slice($uri_array, 0, $this->base_uri_length + 1)).'/';
@@ -105,7 +105,7 @@ abstract class SwatApplication extends SwatObject
 		 *       on stage and SERVER_NAME on live.
 		 * TODO: This also needs to be updated to support https.
 		 */
-		if (strlen($this->base_href) == 0)
+		if ($this->base_href === null)
 			$this->base_href =
 				'http://'.$_SERVER['HTTP_HOST'].$this->getBaseUri();
 
