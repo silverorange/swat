@@ -18,7 +18,7 @@
 		<date>2005-01-24</date>
 		<license>LGPL</license>
 		<state>devel</state>
-		<notes>Test release
+		<notes>Test Release
 		</notes>
 		<deps>
 			<dep type="php" rel="ge" version="5.0.0" optional="no"/>
