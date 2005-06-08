@@ -1,12 +1,10 @@
 <?php
 
-require_once('Swat/SwatContainer.php');
-require_once('Swat/SwatHtmlTag.php');
+require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A container to show and hide child widgets
- *
- * A container with a disclosure widget that may be shown or hidden by the user.
  *
  * @package Swat
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -15,26 +13,38 @@ require_once('Swat/SwatHtmlTag.php');
 class SwatDisclosure extends SwatContainer {
 
 	/**
-	 * A visible name for the label
+	 * A visible title for the label shown by the disclosure triangle
 	 *
 	 * @var string
 	 */
 	public $title = null;
 
 	/**
-	 * A flag to set the initial state of the disclosure
+	 * The initial state of the disclosure
 	 *
 	 * @var bool
 	 */
 	public $open = true;
 
-	public function init() {
-		// An id is required for this widget.
+	/**
+	 * Initialized this disclosure container
+	 *
+	 * Disclosure containers need to have id's set.
+	 */
+	public function init()
+	{
+		// an id is required for this widget.
 		$this->generateAutoId();
 	}
 
-	public function display() {
-
+	/**
+	 * Displays this disclosure container
+	 *
+	 * Creates appropriate divs and outputs closed or opened based on the
+	 * initial state.
+	 */
+	public function display()
+	{
 		$this->displayJavascript();
 
 		$control_div = new SwatHtmlTag('div');
@@ -83,7 +93,11 @@ class SwatDisclosure extends SwatContainer {
 		$container_div->close();
 	}
 
-	public function displayJavascript() {
+	/**
+	 * Outputs disclosure specific javascript
+	 */
+	private function displayJavascript()
+	{
 		echo '<script type="text/javascript">';
 		include('Swat/javascript/swat-disclosure.js');
 		echo '</script>';
