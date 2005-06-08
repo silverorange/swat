@@ -248,12 +248,12 @@ class SwatUI extends SwatObject
 		}
 
 		require_once $classfile;
-		$node_class = new $class();
+		$node_object = new $class();
 	
 		if (isset($node['id']))
-			$node_class->id = (string)$node['id'];
+			$node_object->id = (string)$node['id'];
 
-		return $node_class;
+		return $node_object;
 	}
 
 	/**
