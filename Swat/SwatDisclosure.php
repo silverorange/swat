@@ -13,7 +13,7 @@ require_once 'Swat/SwatHtmlTag.php';
 class SwatDisclosure extends SwatContainer {
 
 	/**
-	 * A visible title for the label shown by the disclosure triangle
+	 * A visible title for the label shown beside the disclosure triangle
 	 *
 	 * @var string
 	 */
@@ -27,7 +27,7 @@ class SwatDisclosure extends SwatContainer {
 	public $open = true;
 
 	/**
-	 * Initialized this disclosure container
+	 * Initializes this disclosure container
 	 *
 	 * Disclosure containers need to have id's set.
 	 */
