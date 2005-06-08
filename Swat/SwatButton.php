@@ -1,7 +1,7 @@
 <?php
 
-require_once('Swat/SwatControl.php');
-require_once('Swat/SwatHtmlTag.php');
+require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A button widget
@@ -13,19 +13,19 @@ require_once('Swat/SwatHtmlTag.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatButton extends SwatControl {
-
+class SwatButton extends SwatControl
+{
 	/**
 	 * Title
 	 *
-	 * The visible text on the button.
+	 * The visible text on this button.
 	 *
 	 * @var string
 	 */
 	public $title;
 
 	/**
-	 * Clicked (read-only)
+	 * Clicked
 	 *
 	 * This is set to true after processing if this button was clicked.
 	 * The form will also contain a refernce to the clicked button in the
@@ -33,13 +33,25 @@ class SwatButton extends SwatControl {
 	 *
 	 * @var boolean
 	 */
-	public $clicked = false;
+	private $clicked = false;
 
-	public function init() {
+	/**
+	 * Initializes this button
+	 *
+	 * Sets a default stock title.
+	 */
+	public function init()
+	{
 		$this->setTitleFromStock('submit');
 	}
 	
-	public function display() {
+	/**
+	 * Displays this button
+	 *
+	 * Outputs an XHTML input tag.
+	 */
+	public function display()
+	{
 		if (!$this->visible)
 			return;
 
@@ -51,7 +63,15 @@ class SwatButton extends SwatControl {
 		$input_tag->display();
 	}
 
-	public function process() {
+	/**
+	 * Does button processing
+	 *
+	 * Sets whether this button has been clicked and also updates the form
+	 * this button belongs to with a reference to this button if this button
+	 * submitted the form.
+	 */
+	public function process()
+	{
 		if (isset($_POST[$this->id])) {
 			$this->clicked = true;
 			$ancestor = $this->parent;
@@ -64,26 +84,38 @@ class SwatButton extends SwatControl {
 			}
 		}
 	}
-
+	
 	/**
-	 * Set a stock title
+	 * Returns whether this button has been clicked
 	 *
-	 * Lookup a stock title for the button and set it as the current title.
-	 * @param string $name The shortname of the stock title.
+	 * @return boolean whether this button has been clicked.
 	 */
-	public function setTitleFromStock($name) {
+	public function hasBeenClicked()
+	{
+		return $this->clicked;
+	}
+	
+	/**
+	 * Sets a stock title
+	 *
+	 * Looks up a stock title for this button and set it as the current title.
+	 *
+	 * @param string $name the shortname of the stock title.
+	 */
+	public function setTitleFromStock($name)
+	{
 		switch ($name) {
-			case 'submit':
-				$this->title = _S('Submit');
-				break;
+		case 'submit':
+			$this->title = _S('Submit');
+			break;
 
-			case 'create':
-				$this->title = _S('Create');
-				break;
+		case 'create':
+			$this->title = _S('Create');
+			break;
 
-			case 'apply':
-				$this->title = _S('Apply');
-				break;
+		case 'apply':
+			$this->title = _S('Apply');
+			break;
 		}
 	}
 }
