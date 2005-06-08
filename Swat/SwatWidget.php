@@ -118,10 +118,10 @@ abstract class SwatWidget extends SwatObject
 	 *
 	 * @see SwatMessage
 	 */
-	abstract public function addMessage($msg);
+	abstract public function addMessage($message);
 
 	/**
-	 * Gathers error messages
+	 * Gathers messages
 	 *
 	 * Gathers all messages from children of this widget and this widget 
 	 * itself.
