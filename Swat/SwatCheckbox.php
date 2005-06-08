@@ -51,9 +51,11 @@ class SwatCheckbox extends SwatControl implements SwatState
 	}
 
 	/**
-	 * Returns whether this checkbox is checked or not
+	 * Gets the current state of this checkbox
 	 *
-	 * @return boolean whether this checkbox is checked or not.
+	 * @return boolean the current state of this checkbox.
+	 *
+	 * @see SwatState::getState()
 	 */
 	public function getState()
 	{
@@ -61,9 +63,11 @@ class SwatCheckbox extends SwatControl implements SwatState
 	}
 	
 	/**
-	 * Sets the value of this checkbox
+	 * Sets the current state of this checkbox
 	 *
-	 * @param boolean $state the new value for this checkbox.
+	 * @param boolean $state the new state of this checkbox.
+	 *
+	 * @see SwatState::setState()
 	 */
 	public function setState($state)
 	{

@@ -1,8 +1,8 @@
 <?php
 
-require_once('Swat/SwatControl.php');
-require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatState.php');
+require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatState.php';
 
 /**
  * A single line text entry widget
@@ -11,8 +11,8 @@ require_once('Swat/SwatState.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatEntry extends SwatControl implements SwatState {
-
+class SwatEntry extends SwatControl implements SwatState
+{
 	/**
 	 * Entry value
 	 *
@@ -23,7 +23,7 @@ class SwatEntry extends SwatControl implements SwatState {
 	public $value = null;
 
 	/**
-	 * Required
+	 * Whether this entry widget is required or not
 	 *
 	 * Must have a non-empty value when processed.
 	 *
@@ -41,7 +41,7 @@ class SwatEntry extends SwatControl implements SwatState {
 	public $size = 50;
 	
 	/**
-	 * Max length
+	 * Maximum length
 	 *
 	 * Maximum number of allowable characters in HTML text form input, or null.
 	 *
@@ -50,7 +50,7 @@ class SwatEntry extends SwatControl implements SwatState {
 	public $maxlength = null;
 
 	/**
-	 * Min length
+	 * Minimum length
 	 *
 	 * Minimum number of allowable characters in HTML text form input, or null.
 	 *
@@ -58,9 +58,20 @@ class SwatEntry extends SwatControl implements SwatState {
 	 */
 	public $minlength = null;
 
+	/**
+	 * The type of input tag
+	 *
+	 * @var string
+	 */
 	protected $html_input_type = 'text';
 
-	public function display() {
+	/**
+	 * Displays this entry widget
+	 *
+	 * Outputs an appropriate XHTML tag.
+	 */
+	public function display()
+	{
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = $this->html_input_type;
 		$input_tag->name = $this->id;
@@ -79,7 +90,14 @@ class SwatEntry extends SwatControl implements SwatState {
 		$input_tag->display();
 	}	
 
-	public function process() {
+	/**
+	 * Processes this entry widget
+	 *
+	 * If any validation type errors occur, an error message is attached to
+	 * this entry widget.
+	 */
+	public function process()
+	{
 		if (strlen($_POST[$this->id]) == 0)
 			$this->value = null;
 		else
@@ -107,11 +125,27 @@ class SwatEntry extends SwatControl implements SwatState {
 		}
 	}
 	
-	public function getState() {
+	/**
+	 * Gets the current state of this entry widget
+	 *
+	 * @return string the current state of this entry widget.
+	 *
+	 * @see SwatState::getState()
+	 */
+	public function getState()
+	{
 		return $this->value;
 	}
 
-	public function setState($state) {
+	/**
+	 * Sets the current state of this entry widget
+	 *
+	 * @param string $state the new state of this entry widget.
+	 *
+	 * @see SwatState::setState()
+	 */
+	public function setState($state)
+	{
 		$this->value = $state;
 	}
 }
