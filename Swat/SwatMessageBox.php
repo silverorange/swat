@@ -1,8 +1,8 @@
 <?php
 
-require_once('Swat/SwatControl.php');
-require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatMessage.php');
+require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatMessage.php';
 
 /**
  * A control to display page status messages  
@@ -11,8 +11,8 @@ require_once('Swat/SwatMessage.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatMessageBox extends SwatControl {
-
+class SwatMessageBox extends SwatControl
+{
 	/**
 	 * A visible title for this frame, or null
 	 *
@@ -21,14 +21,25 @@ class SwatMessageBox extends SwatControl {
 	public $title = null;
 
 	/**
-	 * Array of {@link SwatMessage}s
+	 * The messages to display in this box
+	 *
+	 * The messages are stored as an array of references to SwatMessage
+	 * objects.
 	 *
 	 * @var array
+	 *
+	 * @see SwatMessage
 	 */
 	public $messages = array();
 
-	public function display() {
-
+	/**
+	 * Displays this message box
+	 *
+	 * The CSS class of the box is determined by the type of message being
+	 * displayed.
+	 */
+	public function display()
+	{
 		if ($this->title === null && count($this->messages) == 0)
 			return;
 

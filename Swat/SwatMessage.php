@@ -7,8 +7,8 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatMessage {
-
+class SwatMessage
+{
 	const INFO = 1;
 	const WARNING = 2;
 	const USER_ERROR = 3;
@@ -29,15 +29,18 @@ class SwatMessage {
 	public $content = null;
 
 	/**
-	 * @param string $content Message text 
-	 * @param integer $type Type of message. Set from class constants.
+	 * Creates a new SwatMessage
+	 *
+	 * @param string $content the text of the message.
+	 * @param integer $type the type of message. Must be a valid class
+	 *                       constant.
 	 */
-	public function __construct($content, $type = self::INFO) {
+	public function __construct($content, $type = self::INFO)
+	{
 		$this->content = $content;
 		if ($type !== null)
 			$this->type = $type;
 	}
-
 }
 
 ?>
