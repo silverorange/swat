@@ -5,9 +5,9 @@
  *
  * Used to wrap an MDB2 result for a single row
  *
- * @package SwatDB
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2005
+ * @package   SwatDB
+ * @copyright 2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatDBRowWrapper {
 
