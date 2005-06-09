@@ -14,11 +14,11 @@ class SwatYesNoFlydown extends SwatFlydown {
 	const NO = 1;
 	const YES = 2;
 	
-	public function display() {
+	public function init() {
 		$this->options = array(self::NO => _S("No"),
 		                       self::YES => _S("Yes"));
 
-		parent::display();
+		parent::init();
 	}
 
 	public function getValueAsBoolean() {
