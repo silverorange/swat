@@ -54,7 +54,7 @@ class SwatFlydown extends SwatControl implements SwatState
 	/**
 	 * Blank title
 	 *
-	 * The user visible title to display in th eblank field.
+	 * The user visible title to display in the blank field.
 	 *
 	 * @var string
 	 */
@@ -91,7 +91,7 @@ class SwatFlydown extends SwatControl implements SwatState
 
 		if ($options !== null) {
 			if ($this->show_blank) {
-				// Empty string HTML option value is considered to be null
+				// Empty string HTML option value is considered to be null.
 				$option_tag->value = '';
 				$option_tag->open();
 				echo $this->blank_title;
@@ -119,13 +119,13 @@ class SwatFlydown extends SwatControl implements SwatState
 	 *
 	 * Processes this widget and figures out what select element from this
 	 * flydown was selected. Any validation errors cause an error message to
-	 * be attached to this widget in thie method.
+	 * be attached to this widget in this method.
 	 */
 	public function process()
 	{
 		$value = $_POST[$this->id];
 
-		// Empty string HTML option value is considered to be null
+		// Empty string HTML option value is considered to be null.
 		if (strlen($value) == 0)
 			$this->value = null;
 		else
@@ -140,7 +140,7 @@ class SwatFlydown extends SwatControl implements SwatState
 	/**
 	 * Resets this flydown
 	 *
-	 * Resets this flydown to its default state. This methods is useful to
+	 * Resets this flydown to its default state. This method is useful to
 	 * call from a display() method when form persistence is not desired.
 	 */
 	public function reset()
