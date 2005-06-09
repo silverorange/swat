@@ -1,6 +1,6 @@
 <?php
 
-require_once('Swat/SwatEntry.php');
+require_once 'Swat/SwatEntry.php';
 
 /**
  * An email entry widget
@@ -12,9 +12,16 @@ require_once('Swat/SwatEntry.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatEmailEntry extends SwatEntry {
-	
-	public function process() {
+class SwatEmailEntry extends SwatEntry
+{
+	/**
+	 * Processes this email entry
+	 *
+	 * Ensures this email address is formatted correctly. If the email address
+	 * is not formatted correctly, adds an error message to this entry widget.
+	 */
+	public function process()
+	{
 		parent::process();
 		
 		$valid_address_word = '[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+';
