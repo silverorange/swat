@@ -223,7 +223,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	/**
 	 * Adds a message
 	 *
-	 * @param SwatMessage {@link SwatMessage} the message object to add.
+	 * @param SwatMessage the message object to add.
 	 *
 	 * @see SwatWidget::AddMessage()
 	 */
@@ -237,7 +237,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 *
 	 * @param bool $all if true, return all messages from child widgets.
 	 *
-	 * @return array the gathered SwatErrorMessage objects.
+	 * @return array the gathered SwatMessage objects.
 	 *
 	 * @see SwatWidget::gatherMessages()
 	 */
