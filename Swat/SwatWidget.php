@@ -6,9 +6,9 @@ require_once 'Swat/SwatMessage.php';
 /**
  * Base class for all widgets
  *
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
+ * @package   Swat
+ * @copyright 2004-2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatWidget extends SwatObject
 {

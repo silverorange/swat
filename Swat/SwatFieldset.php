@@ -8,9 +8,9 @@ require_once('Swat/SwatHtmlTag.php');
  *
  * An HTML fieldset tag with an optional HTML legend title.
  *
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
+ * @package   Swat
+ * @copyright 2004-2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFieldset extends SwatContainer {
 
