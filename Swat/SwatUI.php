@@ -247,7 +247,9 @@ class SwatUI extends SwatObject
 			}
 		}
 
-		require_once $classfile;
+		if (!class_exists($class))
+			require_once $classfile;
+		
 		$node_object = new $class();
 	
 		if (isset($node['id']))
