@@ -7,9 +7,9 @@ require_once('Swat/SwatTableViewColumn.php');
 /**
  * A widget to allow navigation between paginated data.
  *
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
+ * @package   Swat
+ * @copyright 2004-2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatPagination extends SwatControl {
 

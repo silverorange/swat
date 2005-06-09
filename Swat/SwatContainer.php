@@ -8,9 +8,9 @@ require_once 'Swat/SwatUIParent.php';
  *
  * Used as a base class for widgets which contain other widgets.
  *
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
+ * @package   Swat
+ * @copyright 2004-2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatContainer extends SwatWidget implements SwatUIParent
 {

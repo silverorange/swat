@@ -3,9 +3,9 @@
 /**
  * A Swat Exception.
  *
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
+ * @package   Swat
+ * @copyright 2004-2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatException extends Exception {
 

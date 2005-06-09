@@ -8,9 +8,9 @@ require_once 'Swat/SwatEntry.php';
  * Automatically verifies that the value of the widget is a valid
  * email address.
  *
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
+ * @package   Swat
+ * @copyright 2004-2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatEmailEntry extends SwatEntry
 {
