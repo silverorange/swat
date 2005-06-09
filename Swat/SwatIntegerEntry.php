@@ -1,5 +1,6 @@
 <?php
-require_once('Swat/SwatEntry.php');
+
+require_once 'Swat/SwatEntry.php';
 
 /**
  * An integer entry widget
@@ -8,16 +9,29 @@ require_once('Swat/SwatEntry.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatIntegerEntry extends SwatEntry {
-
-	public function init() {
+class SwatIntegerEntry extends SwatEntry
+{
+	/**
+	 * Initializes this widget
+	 *
+	 * Sets the input size to 5 by default.
+	 */
+	public function init()
+	{
 		$this->size = 5;
 	}
 
-	public function process() {
+	/**
+	 * Checks to make sure value is an integer
+	 *
+	 * If the value of this widget is not an integer then an error message is
+	 * attached to this widget.
+	 */
+	public function process()
+	{
 		parent::process();
 
-		if (is_numeric($this->value))
+		if (is_numeric($this->value) && $this->value == intval($this->value))
 			$this->value = intval($this->value);
 		else {
 			$msg = _S("The %s field must be an integer.");
