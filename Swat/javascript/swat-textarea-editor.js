@@ -172,6 +172,8 @@ function writeRichText(rte, html, width, height, basehref) {
 	
 		document.write('</div>'); //end menu buttons
 		document.write('</div>'); //end whole menu
+		
+		document.write('<br style="clear:both;">'); //end whole menu
 
 		document.writeln('<div class="rteIframeDiv">');	
 		document.writeln('<iframe class="rteIframe" id="' + rte + '" name="' + rte + '"');
