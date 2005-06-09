@@ -1,6 +1,6 @@
 <?php
 
-require_once('Date.php');
+require_once 'Date.php';
 
 /**
  * Pop-up calendar widget.
@@ -9,7 +9,8 @@ require_once('Date.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCalendar extends SwatControl {
+class SwatCalendar extends SwatControl
+{
 
 	/**
 	 * Start date of the valid range (inclusive).
@@ -25,7 +26,8 @@ class SwatCalendar extends SwatControl {
 	 */
 	public $valid_range_end;
 	
-	public function display() {
+	public function display()
+	{
 		$this->displayJavascript();
 		
 		$date = new Date();
@@ -91,10 +93,10 @@ class SwatCalendar extends SwatControl {
 		// TODO: try display() here
 		$div_tag->open();
 		$div_tag->close();
-
 	}
 
-	private function displayJavascript() {
+	private function displayJavascript()
+	{
 		echo '<script type="text/javascript">';
 		include_once('Swat/javascript/swat-find-index.js');
 		include_once('Swat/javascript/swat-calendar.js');
