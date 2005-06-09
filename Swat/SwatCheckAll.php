@@ -1,13 +1,16 @@
 <?php
+require_once 'Swat/SwatControl.php';
 
 /**
- * A an extra row containing a "check all" tool
+ * A "check all" javascript checkbox
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCheckAll extends SwatControl {
+class SwatCheckAll extends SwatControl
+{
+
 	/**
 	 * Series Name
 	 *
@@ -24,12 +27,14 @@ class SwatCheckAll extends SwatControl {
 	 */
 	public $title;
 
-	public function init() {
+	public function init()
+	{
 		$this->title = _S('Check All');
 		$this->generateAutoId();
 	}
 
-	public function display() {
+	public function display()
+	{
 		if ($this->series_name === null)
 			throw new SwatException('SwatCheckall: A series '.
 				'name referencing the series of checkboxes '.
@@ -49,17 +54,16 @@ class SwatCheckAll extends SwatControl {
 		$label_tag->close();
 		
 		$this->displayJavascript();
-
 	}
 
-	private function displayJavascript() {
+	private function displayJavascript()
+	{
 		?>
 		<script type="text/javascript" language="JavaScript">	
-		<?php require_once('javascript/swat-check-all.js'); ?>	
+		<?php require_once 'javascript/swat-check-all.js'; ?>	
 		</script>
 		<?php
 	}
-
 }
 
 ?>

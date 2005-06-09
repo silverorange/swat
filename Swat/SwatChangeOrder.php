@@ -1,8 +1,8 @@
 <?php
 
-require_once('Swat/SwatControl.php');
-require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatState.php');
+require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatState.php';
 
 /**
  * An element ordering widget
@@ -11,7 +11,8 @@ require_once('Swat/SwatState.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatChangeOrder extends SwatControl implements SwatState {
+class SwatChangeOrder extends SwatControl implements SwatState
+{
 
 	/**
 	 * Order options
@@ -54,7 +55,8 @@ class SwatChangeOrder extends SwatControl implements SwatState {
 	 */
 	public $onclick = null;
 	
-	public function display() {
+	public function display()
+	{
 		
 		if ($this->values !== null) {
 			$array = array();
@@ -115,11 +117,13 @@ class SwatChangeOrder extends SwatControl implements SwatState {
 		$div_tag->close();
 	}	
 
-	public function process() {
+	public function process()
+	{
 		$this->values = explode(',', $_POST[$this->id]);
 	}
 
-	private function displayJavascript() {
+	private function displayJavascript()
+	{
 		echo '<script type="text/javascript">';
 		include_once('Swat/javascript/swat-change-order.js');
 		
@@ -141,14 +145,16 @@ class SwatChangeOrder extends SwatControl implements SwatState {
 		echo '</script>';
 	}
 
-	public function getState() {
+	public function getState()
+	{
 		if ($this->values === null)
 			return array_keys($this->options);
 		else
 			return $this->values;
 	}
 
-	public function setState($state) {
+	public function setState($state)
+	{
 		$this->values = $state;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-require_once('Swat/SwatObject.php');
+require_once 'Swat/SwatObject.php';
 
 /**
  * The data model for a SwatTableView

@@ -1,7 +1,7 @@
 <?php
 
-require_once('Swat/SwatControl.php');
-require_once('Swat/SwatHtmlTag.php');
+require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A cascading flydown (aka combo-box) selection widget
@@ -10,7 +10,8 @@ require_once('Swat/SwatHtmlTag.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCascadeFlydown extends SwatFlydown {
+class SwatCascadeFlydown extends SwatFlydown
+{
 	
 	/**
 	 * Flydown options
@@ -31,13 +32,15 @@ class SwatCascadeFlydown extends SwatFlydown {
 	 */
 	public $cascade_from;
 
-	public function display() {
+	public function display()
+	{
 		$this->show_blank = false;
 		parent::display();
 		$this->displayJavascript();
 	}
 
-	protected function &getOptions() {
+	protected function &getOptions()
+	{
 		$parent_value = $this->cascade_from->value;
 		if ($parent_value === null) {
 			if ($this->cascade_from->show_blank)
@@ -48,7 +51,8 @@ class SwatCascadeFlydown extends SwatFlydown {
 		return $this->options[$parent_value];
 	}
 
-	private function displayJavascript() {
+	private function displayJavascript()
+	{
 		echo '<script type="text/javascript">';
 		include_once('Swat/javascript/swat-cascade.js');
 		
