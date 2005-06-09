@@ -2,7 +2,7 @@
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
 <package version="1.0">
 	<name>Swat</name>
-	<summary>silverorange web application toolkit</summary>
+	<summary>swat web application toolkit</summary>
 	<description>A web application toolkit.
 	</description>
 	<maintainers>
@@ -25,7 +25,7 @@
 			<dep type="pkg" rel="ge" version="1.0b1" optional="no">PEAR</dep>
 		</deps>
 		<filelist>
-			<dir baseinstalldir="/" name="/">
+			<dir baseinstalldir="/swat-0.1" name="/">
 				<!-- dir name="docs">
 					<file role="doc" name="CONTRIBUTORS"/>
 					<file role="doc" name="README"/>
@@ -64,7 +64,6 @@
 					<file role="php" name="SwatCellRendererLink.php"/>
 					<file role="php" name="SwatCellRenderer.php"/>
 					<file role="php" name="SwatCellRendererText.php"/>
-					<file role="php" name="SwatCheckboxArray.php"/>
 					<file role="php" name="SwatCheckbox.php"/>
 					<file role="php" name="SwatContainer.php"/>
 					<file role="php" name="SwatControl.php"/>
@@ -81,8 +80,6 @@
 					<file role="php" name="SwatForm.php"/>
 					<file role="php" name="SwatFrame.php"/>
 					<file role="php" name="SwatHtmlTag.php"/>
-					<file role="php" name="SwatLayout-dom.php"/>
-					<file role="php" name="SwatLayout.php"/>
 					<file role="php" name="SwatObject.php"/>
 					<file role="php" name="SwatPage.php"/>
 					<file role="php" name="SwatPagination.php"/>
