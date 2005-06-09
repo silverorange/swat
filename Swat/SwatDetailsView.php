@@ -1,11 +1,9 @@
 <?php
 
-require_once('Swat/SwatControl.php');
-require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatDetailsViewField.php');
-require_once('Swat/SwatUIParent.php');
-
-// TODO: finish documentation for public methods
+require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatDetailsViewField.php';
+require_once 'Swat/SwatUIParent.php';
 
 /**
  * A widget to display field-value pairs
@@ -14,67 +12,106 @@ require_once('Swat/SwatUIParent.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatDetailsView extends SwatControl implements SwatUIParent {
-	
+class SwatDetailsView extends SwatControl implements SwatUIParent
+{
 	/**
-	 * Object containing values to display
+	 * An object containing values to display
+	 *
+	 * TODO: document this better
 	 *
 	 * @var array
 	 */
 	public $data = null;
 
+	/**
+	 * An array of fields to be displayed by this details view
+	 *
+	 * @var array
+	 */
 	private $fields = array();
 
 	/**
-	 * Append field
+	 * Appends a field to this details view
 	 *
-	 * @param SwatDetailViewField $field
+	 * @param SwatDetailViewField $field the field to append
 	 */
-	public function appendField(SwatDetailsViewField $field) {
+	public function appendField(SwatDetailsViewField $field)
+	{
 		$this->fields[] = $field;
 
 		$field->view = $this;
 	}
 
 	/**
-	 * Count fields
+	 * Gets the number of fields of this details view
 	 *
-	 * @return int Number of fields in the view.
+	 * @return int the number of fields of this details view.
 	 */
-	public function getFieldCount() {
+	public function getFieldCount()
+	{
 		return count($this->fields);
 	}
 
 	/**
-	 * Get fields
+	 * Get the fields from this details view
 	 *
-	 * @return array Array of fields in the view.
+	 * @return array a reference to an array of fields from this view.
 	 */
-	public function &getFields() {
+	public function &getFields()
+	{
 		return $this->fields;
 	}
 
-	public function display() {
+	/**
+	 * Displays this details view
+	 *
+	 * Displays details view as tabular XHTML.
+	 */
+	public function display()
+	{
 		if (!$this->visible)
 			return;
 
 		$table_tag = new SwatHtmlTag('table');
 		$table_tag->class = 'swat-detail-view';
-		//$table_tag->border = 1;
 
 		$table_tag->open();
 		$this->displayContent();
 		$table_tag->close();
 	}
 
-	private function displayContent() {
+	/**
+	 * Adds a child object to this object
+	 *
+	 * @param $child the child object to add to this object.
+	 *
+	 * @throws SwatException
+	 *
+	 * @see SwatUIParent::addChild()
+	 */
+	public function addChild($child)
+	{
+		if ($child instanceof SwatDetailsViewField)
+			$this->appendField($child);
+		else
+			throw new SwatException(__CLASS__.': Only SwatDetailsViewField '.
+				'objects can be nested within SwatDetailsView objects.');
+	}
+
+	/**
+	 * Displays each field of this view
+	 *
+	 * Displays each field of this view as an XHTML table row.
+	 */
+	private function displayContent()
+	{
 		$count = 0;
 		$tr_tag = new SwatHtmlTag('tr');
 
 		foreach ($this->fields as $field) {
 
 			$count++;
-			$tr_tag->class = ($count % 2 == 1)? 'odd': null;
+			$tr_tag->class = ($count % 2 == 1) ? 'odd' : null;
 			$tr_tag->open();
 
 			$field->display($this->data);
@@ -82,25 +119,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent {
 			$tr_tag->close();
 		}
 	}
-
-	/**
-	 * Add a child object
-	 * 
-	 * This method fulfills the {@link SwatUIParent} interface. It is used 
-	 * by {@link SwatUI} when building a widget tree and should not need to be
-	 * called elsewhere. To add a field to a field view, use 
-	 * {@link SwatFieldView::appendField()}.
-	 *
-	 * @param $child A reference to a child object to add.
-	 */
-	public function addChild($child) {
-		if ($child instanceof SwatDetailsViewField)
-			$this->appendField($child);
-		else
-			throw new SwatException('SwatDetailsView: Only '.
-				'SwatDetailsViewFields can be nested within SwatDetailsViews');
-	}
-
 }
 
 ?>

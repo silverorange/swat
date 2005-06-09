@@ -1,8 +1,10 @@
 <?php
 
-require_once('Swat/SwatObject.php');
-require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatUIParent.php');
+require_once 'Swat/SwatObject.php';
+require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatUIParent.php';
+
+// TODO: Document this class
 
 /**
  * A visible field in a SwatDetailsView
@@ -11,17 +13,17 @@ require_once('Swat/SwatUIParent.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatDetailsViewField extends SwatObject implements SwatUIParent {
-
+class SwatDetailsViewField extends SwatObject implements SwatUIParent
+{
 	/**
-	 * Id of the field
+	 * The unique identifier of this field
 	 *
 	 * @var string
 	 */
 	public $id = null;
 
 	/**
-	 * Title of the field
+	 * The title of this field
 	 *
 	 * @var string
 	 */
@@ -36,11 +38,13 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 
 	protected $renderers = array();
 
-	public function __construct($id = null) {
+	public function __construct($id = null)
+	{
 		$this->id = $id;
 	}
 
-	public function linkField($renderer, $model_field, $renderer_property) {
+	public function linkField($renderer, $model_field, $renderer_property)
+	{
 		if (!isset($renderer->_property_map) ||
 			!is_array($renderer->_property_map))
 				$renderer->_property_map = array();
@@ -48,7 +52,8 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 		$renderer->_property_map[$renderer_property] = $model_field;
 	}
 
-	public function addRenderer(SwatCellRenderer $renderer) {
+	public function addRenderer(SwatCellRenderer $renderer)
+	{
 		$this->renderers[] = $renderer;
 		$renderer->parent = $this;
 
@@ -57,7 +62,8 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 				$renderer->_property_map = array();
 	}
 
-	public function display($data) {
+	public function display($data)
+	{
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->open();
 		$this->displayHeader();
@@ -65,7 +71,8 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 		$tr_tag->close();
 	}
 
-	public function displayHeader() {
+	public function displayHeader()
+	{
 		$th_tag = new SwatHtmlTag('th');
 		$th_tag->align = 'right';
 		$th_tag->open();
@@ -73,7 +80,8 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 		$th_tag->close();
 	}
 
-	public function displayValue($data) {
+	public function displayValue($data)
+	{
 		if (count($this->renderers) == 0)
 			throw new SwatException(__CLASS__.
 				': no renderer has been provided.');
@@ -86,7 +94,8 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 		$this->displayRenderers($data);
 	}
 
-	protected function displayRenderers($data) {
+	protected function displayRenderers($data)
+	{
 		reset($this->renderers);
 		$first_renderer = current($this->renderers);
 		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttribs());
@@ -103,21 +112,21 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent {
 	}
 
 	/**
-	 * Add a child object
+	 * Adds a child object to this object
 	 * 
-	 * This method fulfills the {@link SwatUIParent} interface.  It is used 
-	 * by {@link SwatUI} when building a widget tree and should not need to be
-	 * called elsewhere.  To add a cell renderer to a field, use 
-	 * {@link SwatDetailsViewField::addRenderer()}.
-	 *
 	 * @param $child A reference to a child object to add.
+	 *
+	 * @throws SwatException
+	 *
+	 * @see SwatUIParent::addChild()
 	 */
-	public function addChild($child) {
+	public function addChild($child)
+	{
 		if ($child instanceof SwatCellRenderer)
 			$this->addRenderer($child);
 		else
-			throw new SwatException('SwatDetailsViewField: Only '.
-				'SwatCellRenders can be nested within SwatDetailsViewFields');
+			throw new SwatException(__CLASS__.': Only SwatCellRender objects '.
+				'can be nested within SwatDetailsViewField objects.');
 	}
 }
 
