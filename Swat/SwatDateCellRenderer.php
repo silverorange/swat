@@ -1,7 +1,7 @@
 <?php
 
-require_once('Swat/SwatCellRenderer.php');
-require_once('Swat/SwatDate.php');
+require_once 'Swat/SwatCellRenderer.php';
+require_once 'Swat/SwatDate.php';
 
 /**
  * A text renderer.
@@ -10,8 +10,8 @@ require_once('Swat/SwatDate.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDateCellRenderer extends SwatCellRenderer {
-
+class SwatDateCellRenderer extends SwatCellRenderer
+{
 	/**
 	 * Date
 	 *
@@ -29,8 +29,8 @@ class SwatDateCellRenderer extends SwatCellRenderer {
 	 */
 	public $format = SwatDate::DF_DATE_TIME;
 
-
-	public function render($prefix) {
+	public function render($prefix)
+	{
 		if ($this->date !== null) {
 			$date = new SwatDate($this->date);
 			echo $date->format($this->format);
