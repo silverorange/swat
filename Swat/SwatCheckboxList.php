@@ -1,9 +1,9 @@
 <?php
 
-require_once('Swat/SwatControl.php');
-require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatCheckAll.php');
-require_once('Swat/SwatState.php');
+require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatCheckAll.php';
+require_once 'Swat/SwatState.php';
 
 /**
  * A checkbox list widget
@@ -12,7 +12,8 @@ require_once('Swat/SwatState.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCheckboxList extends SwatControl implements SwatState {
+class SwatCheckboxList extends SwatControl implements SwatState
+{
 	
 	/**
 	 * Checkbox list options
@@ -38,7 +39,8 @@ class SwatCheckboxList extends SwatControl implements SwatState {
 	 */
 	public $onchange = null;
 
-	public function display() {
+	public function display()
+	{
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
 		$input_tag->name = $this->id.'[]';
@@ -76,7 +78,13 @@ class SwatCheckboxList extends SwatControl implements SwatState {
 		}
 	}	
 
-	public function process() {
+	/**
+	 * Processes this checkbox list widget
+	 *
+	 * @return array Array of checked values
+	 */
+	public function process()
+	{
 		if (isset($_POST[$this->id]))
 			$this->values = $_POST[$this->id];
 		else
@@ -89,16 +97,19 @@ class SwatCheckboxList extends SwatControl implements SwatState {
 	 * Reset the list to its default state.  This is useful to call from a 
 	 * display() method when persistence is not desired.
 	 */
-	public function reset() {
+	public function reset()
+	{
 		reset($this->options);
 		$this->values = key($this->options);
 	}
 
-	public function setState($state) {
+	public function setState($state)
+	{
 		$this->values = $state;
 	}
 	
-	public function getState() {
+	public function getState()
+	{
 		return $this->values;
 	}
 }
