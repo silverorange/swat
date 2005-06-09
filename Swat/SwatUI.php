@@ -238,20 +238,21 @@ class SwatUI extends SwatObject
 			throw new SwatException(__CLASS__.
 				": widget or object element is missing 'class' attribute.");
 	
-		$classfile = "Swat/{$class}.php";
+		if (!class_exists($class)) {
+			$classfile = "Swat/{$class}.php";
 
-		if (count($this->classmap)) {
-			foreach ($this->classmap as $prefix => $path) {
-				if (strncmp($class, $prefix, strlen($prefix)) == 0)
-					$classfile = "{$path}/{$class}.php";
+			if (count($this->classmap)) {
+				foreach ($this->classmap as $prefix => $path) {
+					if (strncmp($class, $prefix, strlen($prefix)) == 0)
+						$classfile = "{$path}/{$class}.php";
+				}
 			}
+
+			require_once $classfile;
 		}
 
-		if (!class_exists($class))
-			require_once $classfile;
-		
 		$node_object = new $class();
-	
+
 		if (isset($node['id']))
 			$node_object->id = (string)$node['id'];
 
