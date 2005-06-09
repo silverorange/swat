@@ -1,8 +1,8 @@
 <?php
 
-require_once('Swat/SwatControl.php');
-require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatState.php');
+require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatState.php';
 
 /**
  * A flydown (aka combo-box) selection widget
@@ -11,21 +11,23 @@ require_once('Swat/SwatState.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatFlydown extends SwatControl implements SwatState {
-	
+class SwatFlydown extends SwatControl implements SwatState
+{
 	/**
 	 * Flydown options
 	 *
-	 * An array of options for the flydown in the form value => title.
+	 * An array of options for the flydown in the form:
+	 *    value => title
 	 *
 	 * @var array
 	 */
 	public $options = null;
 
 	/**
-	 * Flydown value 
+	 * Flydown value
 	 *
-	 * The value of the selected option, or null.
+	 * The index value of the selected option, or null if no option is
+	 * selected.
 	 *
 	 * @var string
 	 */
@@ -34,7 +36,7 @@ class SwatFlydown extends SwatControl implements SwatState {
 	/**
 	 * Required
 	 *
-	 * Must have a non-empty value when processed.
+	 * Whether or not a value is required to be selected.
 	 *
 	 * @var bool
 	 */
@@ -43,12 +45,16 @@ class SwatFlydown extends SwatControl implements SwatState {
 	/**
 	 * Show a blank option
 	 *
+	 * Whether or not to show a blank value at the top of the flydown.
+	 *
 	 * @var boolean
 	 */
 	public $show_blank = true;
 
 	/**
 	 * Blank title
+	 *
+	 * The user visible title to display in th eblank field.
 	 *
 	 * @var string
 	 */
@@ -57,13 +63,19 @@ class SwatFlydown extends SwatControl implements SwatState {
 	/**
 	 * On change
 	 *
-	 * The onchange attribute of the HTML select tag, or null.
+	 * The onchange attribute of the XHTML select tag, or null.
 	 *
 	 * @var string
 	 */
 	public $onchange = null;
 
-	public function display() {
+	/**
+	 * Displays this flydown
+	 *
+	 * Displays this flydown as a XHTML select.
+	 */
+	public function display()
+	{
 		$options = $this->getOptions();
 
 		$select_tag = new SwatHtmlTag('select');
@@ -102,7 +114,15 @@ class SwatFlydown extends SwatControl implements SwatState {
 		$select_tag->close();
 	}	
 
-	public function process() {
+	/**
+	 * Figures out what option was selected
+	 *
+	 * Processes this widget and figures out what select element from this
+	 * flydown was selected. Any validation errors cause an error message to
+	 * be attached to this widget in thie method.
+	 */
+	public function process()
+	{
 		$value = $_POST[$this->id];
 
 		// Empty string HTML option value is considered to be null
@@ -117,27 +137,53 @@ class SwatFlydown extends SwatControl implements SwatState {
 		}
 	}
 
-	protected function &getOptions() {
-		return $this->options;
-	}
-
 	/**
-	 * Reset the flydown.
+	 * Resets this flydown
 	 *
-	 * Reset the flydown to its default state.  This is useful to call from a 
-	 * display() method when persistence is not desired.
+	 * Resets this flydown to its default state. This methods is useful to
+	 * call from a display() method when form persistence is not desired.
 	 */
-	public function reset() {
+	public function reset()
+	{
 		reset($this->options);
 		$this->value = null;	
 	}
 	
-	public function getState() {
+	/**
+	 * Gets the current state of this flydown
+	 *
+	 * @return boolean the current state of this flydown.
+	 *
+	 * @see SwatState::getState()
+	 */
+	public function getState()
+	{
 		return $this->value;
 	}
-
-	public function setState($state) {
+	
+	/**
+	 * Sets the current state of this flydown
+	 *
+	 * @param boolean $state the new state of this flydown.
+	 *
+	 * @see SwatState::setState()
+	 */
+	public function setState($state)
+	{
 		$this->value = $state;
+	}
+
+	/**
+	 * Gets a reference to the array of options to show in this flydown
+	 *
+	 * Subclasses may want to override this method.
+	 *
+	 * @return array a reference to the array of options to show in this
+	 *                flydown.
+	 */
+	protected function &getOptions()
+	{
+		return $this->options;
 	}
 }
 
