@@ -1,6 +1,6 @@
 <?php
 
-require_once('Swat/SwatPasswordEntry.php');
+require_once 'Swat/SwatPasswordEntry.php';
 
 /**
  * A password confirmation entry widget
@@ -12,26 +12,36 @@ require_once('Swat/SwatPasswordEntry.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatConfirmPasswordEntry extends SwatPasswordEntry {
-
+class SwatConfirmPasswordEntry extends SwatPasswordEntry
+{
 	/**
-	 * Matching password widget
+	 * A reference to the matching password widget
 	 *
 	 * @var SwatPasswordEntry
 	 */
 	public $password_widget = null;
 	
-	public function process() {
+	/**
+	 * Checks to make sure passwords match
+	 *
+	 * Checks to make sure the values of the two password fields are the same.
+	 * If an associated password widget is not set, an exception is thrown. If
+	 * the passwords do not match, an error is added to this widget.
+	 *
+	 * @throws SwatException
+	 */
+	public function process()
+	{
 		parent::process();
 		
 		if ($this->password_widget === null)
-			throw new SwatException('SwatConfirmPasswordEntry: '.
+			throw new SwatException(__CLASS__.
 				'$this->password_widget is null. Expected a reference to a '.
 				'SwatPasswordEntry.');
 
 		if ($this->password_widget->value !== null) {
 			if (strcmp($this->password_widget->value, $this->value) != 0) {
-				$msg = _S("Password and Confirmation Password do not match.");
+				$msg = _S("Password and confirmation password do not match.");
 				$this->addMessage(
 					new SwatMessage($msg, SwatMessage::USER_ERROR));
 			}
