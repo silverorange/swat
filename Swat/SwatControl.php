@@ -1,7 +1,7 @@
 <?php
 
-require_once('Swat/SwatWidget.php');
-require_once('Swat/SwatFormField.php');
+require_once 'Swat/SwatWidget.php';
+require_once 'Swat/SwatFormField.php';
 
 /**
  * Abstract base class for control widgets (non-container)
@@ -10,27 +10,53 @@ require_once('Swat/SwatFormField.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-abstract class SwatControl extends SwatWidget {
-
-	public function addMessage($msg) {
+abstract class SwatControl extends SwatWidget
+{
+	/**
+	 * Adds a message
+	 *
+	 * Before the message is added, the content is updated with the name of
+	 * this controls's parent field if the field exists.
+	 *
+	 * @param SwatMessage $message the message object to add.
+	 *
+	 * @see SwatWidget::addMessage()
+	 */
+	public function addMessage($message)
+	{
 		if ($this->parent instanceof SwatFormField)
 			$field_title = '<strong>'.$this->parent->title.'</strong>';
 		else
 			$field_title = '';
  
- 		$msg->content = sprintf($msg->content, $field_title);
+ 		$message->content = sprintf($message->content, $field_title);
 		
-		$this->messages[] = $msg;
+		$this->messages[] = $message;
 	}
 
-	public function gatherMessages() {
+	/**
+	 * Gathers messages
+	 *
+	 * @return array the gathered SwatMessage objects.
+	 *
+	 * @see SwatWidget::gatherMessages()
+	 */
+	public function gatherMessages()
+	{
 		return $this->messages;
 	}
 
-	public function hasMessage() {
+	/**
+	 * Checks for the presence of messages
+	 *
+	 * @return boolean true if there is a message in this control.
+	 *
+	 * @see SwatWidget::hasMessages()
+	 */
+	public function hasMessage()
+	{
 		return (count($this->messages) > 0);
 	}
-
 }
 
 ?>
