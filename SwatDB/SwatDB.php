@@ -448,6 +448,117 @@ class SwatDB {
 	}
 
 	// }}}
+    // {{{ public static function getGroupOptionArray()
+
+    /**
+	 * Query for a grouped option array
+	 *
+ 	 * Convenience method to query a grouped list of {@link SwatTreeNode}s use
+ 	 * for things like {@link SwatCheckboxList} where checkboxes are grouped
+ 	 * together under a title.
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 *
+	 * @param string $table The database table to query.
+	 *
+	 * @param string $title_field The name of the database field to query for 
+	 *        the title. Can be given in the form type:name where type is a
+	 *        standard MDB2 datatype. If type is ommitted, then text is 
+	 *        assummed for this field.
+	 *
+	 * @param string $id_field The name of the database field to query for 
+	 *        the id. Can be given in the form type:name where type is a
+	 *        standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        assummed for this field.
+	 *
+	 * @param string $group_table The database table that the group titles come
+	 *        from.
+	 *
+	 * @param string $group_idfield The name of the database field to query for
+     *        the id of the $group_table. Can be given in the form type:name where
+	 *        type is a standard MDB2 datatype. If type is ommitted, then integer is
+     *        assummed for this field.
+	 *
+	 * @param string $group_title_field The name of the database field to query for 
+	 *        the group title. Can be given in the form type:name where type is a
+	 *        standard MDB2 datatype. If type is ommitted, then text is 
+	 *        assummed for this field.
+	 *
+	 * @param string $group_field The name of the database field in $table that
+	 *        links with the $group_idfield. Can be given in the form type:name where
+	 *        type is a standard MDB2 datatype. If type is ommitted, then integer is
+     *        assummed for this field.
+	 *
+	 * @param string $order_by_clause Optional comma deliminated list of 
+	 *        database field names to use in the <i>order by</i> clause.
+	 *        Do not include "order by" in the string; only include the list
+	 *        of field names. Pass null to skip over this paramater.
+	 *
+	 * @param string $where_clause Optional <i>where</i> clause to limit the 
+	 *        returned results.  Do not include "where" in the string; only 
+	 *        include the conditionals.
+	 *
+	 * @return SwatTreeNode A tree hierarchy of {@link SwatTreeNode}s
+	 */
+	public static function getGroupedOptionArray($db, $table, $title_field, $id_field, 
+		$group_table, $group_title_field, $group_id_field, $group_field,
+		$order_by_clause = null, $where_clause = null) {
+
+		$title_field = new SwatDBField($title_field, 'text');
+		$id_field = new SwatDBField($id_field, 'integer');
+		$group_title_field = new SwatDBField($group_title_field, 'text');
+		$group_id_field = new SwatDBField($group_id_field, 'integer');
+		$group_field = new SwatDBField($group_field, 'text');
+
+		$sql = 'select %s as id, %s as title, %s as group_title, %s as group_id from %s';
+		$sql = sprintf($sql,
+			"{$table}.{$id_field->name}",
+			"{$table}.{$title_field->name}",
+			"{$group_table}.{$group_title_field->name}",
+			"{$group_table}.{$group_id_field->name}",
+			$table);
+
+		$sql.= ' inner join %s on %s = %s';
+		$sql= sprintf($sql,
+			$group_table,
+			"{$group_table}.{$group_id_field->name}",
+			"{$table}.{$group_field->name}");
+
+		if ($where_clause != null)
+			$sql .= ' where '.$where_clause;
+
+		if ($order_by_clause != null)
+			$sql .= ' order by '.$order_by_clause;
+		
+		SwatDB::debug($sql);
+		$rs = $db->query($sql);
+
+		if (MDB2::isError($rs))
+			throw new SwatDBException($rs->getMessage());
+
+		$options = array();
+
+		$base_parent =  new SwatTreeNode();
+		$current_group = null;
+
+		while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
+			if ($current_group !== $row->group_id) {
+				$current_parent = new SwatTreeNode(
+					array('title' => $row->group_title));
+
+				$base_parent->children[] = $current_parent;
+				
+				$current_group = $row->group_id;
+			}
+
+			$current_parent->children[] =
+				new SwatTreeNode(array('title' => $row->title, 'value' => $row->id));
+		}
+
+		return $base_parent;
+	}
+
+	// }}}
     // {{{ public static function getTreeOptionArray()
 
 	/**
@@ -501,7 +612,7 @@ class SwatDB {
 		$level_field_name) {
 
 		$stack = array();
-		$current_parent =  new SwatTreeNode(0, 'root');
+		$current_parent =  new SwatTreeNode();
 		$base_parent = $current_parent;
 		array_push($stack, $current_parent);
 		$last_node = $current_parent;	
@@ -518,8 +629,8 @@ class SwatDB {
 				$current_parent = array_pop($stack);
 			}
 		
-			$last_node = new SwatTreeNode(array('title'=>$title));
-			$current_parent->children[$id] = $last_node;
+			$last_node = new SwatTreeNode(array('title' => $title, 'value' => $id));
+			$current_parent->children[] = $last_node;
 		}
 
 		return $base_parent;
