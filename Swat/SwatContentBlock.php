@@ -1,6 +1,6 @@
 <?php
 
-require_once('Swat/SwatControl.php');
+require_once 'Swat/SwatControl.php';
 
 /**
  * A block of content in the widget tree
@@ -9,19 +9,24 @@ require_once('Swat/SwatControl.php');
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @copyright silverorange 2004
  */
-class SwatContentBlock extends SwatControl {
-
+class SwatContentBlock extends SwatControl
+{
 	/**
-	 * Text content of the widget.
+	 * User visable textual content of this widget
 	 *
 	 * @var string
 	 */
 	public $content = '';
 
-	public function display() {
+	/**
+	 * Displays this content
+	 *
+	 * Merely performs an echo of the content.
+	 */
+	public function display()
+	{
 		echo $this->content;
 	}	
-
 }
 
 ?>
