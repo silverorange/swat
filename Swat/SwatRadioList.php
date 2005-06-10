@@ -1,8 +1,8 @@
 <?php
 
-require_once('Swat/SwatControl.php');
-require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatState.php');
+require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatState.php';
 
 /**
  * A radio list selection widget
@@ -11,7 +11,8 @@ require_once('Swat/SwatState.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatRadioList extends SwatControl implements SwatState {
+class SwatRadioList extends SwatControl implements SwatState
+{
 	
 	/**
 	 * Radio list options
@@ -40,7 +41,8 @@ class SwatRadioList extends SwatControl implements SwatState {
 	 */
 	public $onchange = null;
 
-	public function display() {
+	public function display()
+	{
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'radio';
 		$input_tag->name = $this->id;
@@ -72,7 +74,8 @@ class SwatRadioList extends SwatControl implements SwatState {
 		}
 	}	
 
-	public function process() {
+	public function process()
+	{
 		if (isset($_POST[$this->id]))
 			$this->value = $_POST[$this->id];
 		else
@@ -85,16 +88,19 @@ class SwatRadioList extends SwatControl implements SwatState {
 	 * Reset the list to its default state.  This is useful to call from a 
 	 * display() method when persistence is not desired.
 	 */
-	public function reset() {
+	public function reset()
+	{
 		reset($this->options);
 		$this->value = key($this->options);
 	}
 
-	public function getState() {
+	public function getState()
+	{
 		return $this->value;
 	}
 
-	public function setState($state) {
+	public function setState($state)
+	{
 		$this->value = $state;
 	}
 }

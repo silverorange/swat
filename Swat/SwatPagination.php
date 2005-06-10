@@ -1,17 +1,17 @@
 <?php
 
-require_once('Swat/SwatControl.php');
-require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatTableViewColumn.php');
+require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
- * A widget to allow navigation between paginated data.
+ * A widget to allow navigation between paginated data
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatPagination extends SwatControl {
+class SwatPagination extends SwatControl
+{
 
 	/**
 	 * Href
@@ -73,11 +73,13 @@ class SwatPagination extends SwatControl {
 	protected $prev_page;
 	protected $total_pages;
 
-	public function init() {
+	public function init()
+	{
 		$this->generateAutoId();
 	}
 
-	public function display() {
+	public function display()
+	{
 		$this->calcPages();
 
 		if ($this->total_pages > 1) {
@@ -99,7 +101,8 @@ class SwatPagination extends SwatControl {
 	/**
 	 * Display previous page link
 	 */
-	protected function displayPrev() {
+	protected function displayPrev()
+	{
 		if ($this->prev_page != -1) {
 			$href = $this->getHref();
 			
@@ -122,7 +125,8 @@ class SwatPagination extends SwatControl {
 	 *
 	 * i.e. "1 of 3"
 	 */
-	protected function displayPosition() {
+	protected function displayPosition()
+	{
 		$div = new SwatHtmlTag('div');
 		$div->class = 'position';
 		$div->open();
@@ -134,7 +138,8 @@ class SwatPagination extends SwatControl {
 	/**
 	 * Display next page link
 	 */
-	protected function displayNext() {
+	protected function displayNext()
+	{
 		if ($this->next_page != -1) {
 			$href = $this->getHref();
 			
@@ -155,7 +160,8 @@ class SwatPagination extends SwatControl {
 	/**
 	 * Display a smart list of pages
 	 */
-	protected function displayPages() {
+	protected function displayPages()
+	{
 		$j = -1;
 
 		$href = $this->getHref();
@@ -204,14 +210,16 @@ class SwatPagination extends SwatControl {
 		}
 	}
 
-	public function process() {
+	public function process()
+	{
 		if (array_key_exists($this->id, $_GET))
 			$this->current_page = $_GET[$this->id];
 
 		$this->current_record = $this->current_page * $this->page_size;
 	}
 
-	private function getHref() {
+	private function getHref()
+	{
 		//$vars = array_diff_key($_GET, array_flip($this->unset_get_vars));
 		$vars = $_GET;
 
@@ -235,7 +243,8 @@ class SwatPagination extends SwatControl {
 		return $href;
 	}
 
-	private function calcPages() {
+	private function calcPages()
+	{
 		$this->total_pages = ceil($this->total_records / $this->page_size);
 
 		if (($this->total_pages <= 1) ||

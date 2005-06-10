@@ -1,6 +1,6 @@
 <?php
 
-require_once('Swat/SwatControl.php');
+require_once 'Swat/SwatControl.php';
 
 /**
  * Visible navbar navigation tool
@@ -9,7 +9,8 @@ require_once('Swat/SwatControl.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatNavBar extends SwatControl {
+class SwatNavBar extends SwatControl
+{
 	private $titles = array();
 	private $links = array();
 
@@ -19,7 +20,8 @@ class SwatNavBar extends SwatControl {
 	 * @param string $title Element title
 	 * @param string $link Optional link
 	 */
-	public function add($title, $link = null) {
+	public function add($title, $link = null)
+	{
 		$insertpos = $this->size();
 		$this->titles[$insertpos] = $title;
 		$this->links[$insertpos]  = $link;
@@ -32,7 +34,8 @@ class SwatNavBar extends SwatControl {
 	 * @param string $title Element title
 	 * @param string $link Optional link
 	 */
-	public function replace($pos, $title, $link = null) {
+	public function replace($pos, $title, $link = null)
+	{
 		$this->titles[$pos] = $title;
 		$this->links[$pos]  = $link;
 	}
@@ -45,7 +48,8 @@ class SwatNavBar extends SwatControl {
 	 * @return array An array containing the title and link in the format:
 	 *               array('title' = title, 'link' = link)
 	 */
-	public function fetch($level) {
+	public function fetch($level)
+	{
 		$out=array();
 		$out['title'] = $this->titles[$level];
 		$out['link']  = $this->links[$level];
@@ -57,7 +61,8 @@ class SwatNavBar extends SwatControl {
 	 *
 	 * @return integer Number of elements
 	 */
-	public function size() {
+	public function size()
+	{
 		return count($this->titles);
 	}
 
@@ -66,7 +71,8 @@ class SwatNavBar extends SwatControl {
 	 *
 	 * @param $num integer Number of elements to pop
 	 */
-	public function pop($num = 1) {
+	public function pop($num = 1)
+	{
 		for ($i = 0; $i < $num; $i++) {
 			$last = $this->size() - 1;
 			unset($this->titles[$last]);
@@ -74,7 +80,8 @@ class SwatNavBar extends SwatControl {
 		}
 	}
 
-	public function display() {
+	public function display()
+	{
 		for ($i = 0; $i < $this->size(); $i++) {
 			$entry = $this->fetch($i);
 			
