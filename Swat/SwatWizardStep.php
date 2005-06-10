@@ -1,7 +1,7 @@
 <?php
 
-require_once('Swat/SwatContainer.php');
-require_once('Swat/SwatHtmlTag.php');
+require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A step container used for wizards
@@ -24,7 +24,7 @@ class SwatWizardStep extends SwatContainer {
 	 *
 	 * @var integer
 	 */
-	public $step; //read only
+	public $step;
 
 	/**
 	 * Title of the step (optional)
@@ -33,22 +33,27 @@ class SwatWizardStep extends SwatContainer {
 	 */
 	public $title = null;
 	
-	public function __construct() {
+
+	public function __construct()
+	{
 		static $step = 0;
 		$this->step = $step;
 		$step++;
 	}
 
-	public function display() {
+	public function display()
+	{
 		if ($this->visible)
 			parent::display();
 	}
 	
-	public function getWidgetStates() {
+	public function getWidgetStates()
+	{
 		return $this->getDescendantStates();
 	}
-	
-	public function setWidgetStates($states) {
+
+	public function setWidgetStates($states)
+	{
 		$this->setDescendantStates($states);
 	}
 }
