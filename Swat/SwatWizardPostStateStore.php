@@ -29,7 +29,7 @@ class SwatWizardPostStateStore extends SwatWizardStateStore
 	{
 		return $this->state;
 	}
-	
+
 	public function updateState($state)
 	{
 		$this->state = array_merge($this->state, $state);

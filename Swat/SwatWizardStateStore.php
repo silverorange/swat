@@ -1,6 +1,6 @@
 <?php
 
-require_once('Swat/SwatObject.php');
+require_once 'Swat/SwatObject.php';
 
 /**
  * A class to store the state of a wizard form
