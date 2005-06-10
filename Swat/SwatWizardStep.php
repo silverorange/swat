@@ -46,7 +46,7 @@ class SwatWizardStep extends SwatContainer {
 		if ($this->visible)
 			parent::display();
 	}
-	
+
 	public function getWidgetStates()
 	{
 		return $this->getDescendantStates();

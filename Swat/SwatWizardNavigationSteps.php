@@ -13,7 +13,7 @@ require_once 'Swat/SwatWizardNavigation.php';
 class SwatWizardNavigationSteps extends SwatWizardNavigation {
 
 	private $step_buttons;
-	
+
 	public function getNextStep()
 	{
 		$return = null;
@@ -34,11 +34,11 @@ class SwatWizardNavigationSteps extends SwatWizardNavigation {
 		if (!$this->parent instanceof SwatWizardForm)
 			throw new SwatException('SwatWizardNavigation: Must be a child '.
 				'of a SwatWizardForm');
-	
+
 		$div = new SwatHtmlTag('div');
 		$div->style = 'float:right;';
 		$div->open();
-		
+
 		for ($i = 0; $i < $this->parent->getStepCount(); $i++)
 			if ($i == $this->parent->step)
 				echo $this->step_buttons[$i]->title.'<br />';
@@ -46,7 +46,7 @@ class SwatWizardNavigationSteps extends SwatWizardNavigation {
 				$this->step_buttons[$i]->display();
 				echo '<br />';
 			}
-	
+
 		$div->close();
 	}
 }

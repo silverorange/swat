@@ -61,9 +61,9 @@ class SwatWizardForm extends SwatForm {
 			} else
 				$step->setWidgetStates($this->state_store->getState());
 		}
-	
+
 		$this->step = $this->getNextStep();
-		
+
 		return true;
 	}
 
@@ -71,9 +71,9 @@ class SwatWizardForm extends SwatForm {
 	{
 		foreach ($this->steps as $step)
 			$step->visible = ($step->step == $this->step) ? true : false;
-		
+
 		$this->addHiddenField('step', $this->step);
-		
+
 		parent::display();
 	}
 
@@ -92,7 +92,7 @@ class SwatWizardForm extends SwatForm {
 		else
 			return $next_step;
 	}
-	
+
 	/**
 	 * Get the total number of steps in the wizard
 	 *
@@ -102,7 +102,7 @@ class SwatWizardForm extends SwatForm {
 	{
 		return count($this->steps);
 	}
-	
+
 	/**
 	 * Get the step title (if not set, "Step X")
 	 *
@@ -130,7 +130,7 @@ class SwatWizardForm extends SwatForm {
 			throw new SwatException('SwatWizardForm: A state store must be a type '.
 				'of SwatWizardStateStore');
 		
-		$this->state_store = $state_store;	
+		$this->state_store = $state_store;
 	}
 }
 

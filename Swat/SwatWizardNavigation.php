@@ -35,19 +35,19 @@ class SwatWizardNavigation extends SwatControl {
 		$div = new SwatHtmlTag('div');
 		$div->class = 'swat-wizard-navigation';
 		$div->open();
-	
+
 		if ($this->parent->step > 0) {
 			$this->prev_button->title = _S("Previous");
 			$this->prev_button->display();
 		}
-		
+
 		if ($this->parent->step + 1 == $this->parent->getStepCount())
 			$this->next_button->title = _S("Submit");
 		else
 			$this->next_button->title = _S("Next");
-		
+
 		$this->next_button->display();
-		
+
 		$div->close();
 	}
 
@@ -61,9 +61,9 @@ class SwatWizardNavigation extends SwatControl {
 	public function getNextStep() {
 		$this->next_button->process();
 		$this->prev_button->process();
-	
+
 		$step = $this->parent->step;
-		
+
 		if ($this->next_button->clicked)
 			return $step + 1;
 		elseif ($this->prev_button->clicked)
