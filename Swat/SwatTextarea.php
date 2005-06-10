@@ -1,8 +1,8 @@
 <?php
 
-require_once('Swat/SwatControl.php');
-require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatState.php');
+require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatState.php';
 
 /**
  * A multi-line text entry widget
@@ -11,8 +11,8 @@ require_once('Swat/SwatState.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTextarea extends SwatControl implements SwatState {
-
+class SwatTextarea extends SwatControl implements SwatState
+{
 	/**
 	 * Text content of the widget
 	 *
@@ -23,7 +23,7 @@ class SwatTextarea extends SwatControl implements SwatState {
 	/**
 	 * Required
 	 *
-	 * Must have a non-empty value when processed
+	 * Whether a value is required for this widget.
 	 *
 	 * @var bool
 	 */
@@ -32,7 +32,7 @@ class SwatTextarea extends SwatControl implements SwatState {
 	/**
 	 * Rows
 	 *
-	 * Number of rows for the HTML textarea tag
+	 * The number of rows for the XHTML textarea tag.
 	 *
 	 * @var int
 	 */
@@ -41,16 +41,24 @@ class SwatTextarea extends SwatControl implements SwatState {
 	/**
 	 * Columns
 	 *
-	 * Number of columns for the HTML textarea tag
+	 * The number of columns for the XHTML textarea tag.
+	 *
 	 * @var int
 	 */
 	public $cols = 50;
-	
-	public function display() {
+
+	/**
+	 * Displays this textarea
+	 *
+	 * Outputs an appropriate XHTML tag.
+	 */
+	public function display()
+	{
 		$textarea_tag = new SwatHtmlTag('textarea');
 		$textarea_tag->name = $this->id;
 		$textarea_tag->id = $this->id;
-		// Attributes rows and cols are required in a textarea for XHTML strict.
+		// NOTE: The attributes rows and cols are required in
+		//       a textarea for XHTML strict.
 		$textarea_tag->rows = $this->rows;
 		$textarea_tag->cols = $this->cols;
 
@@ -59,7 +67,14 @@ class SwatTextarea extends SwatControl implements SwatState {
 		$textarea_tag->close();
 	}	
 
-	public function process() {
+	/**
+	 * Processes this textarea
+	 *
+	 * If a validation error occurs, an error message is attached to this
+	 * widget.
+	 */
+	public function process()
+	{
 		$this->value = $_POST[$this->id];
 
 		if ($this->required && !strlen($this->value)) {
@@ -68,11 +83,27 @@ class SwatTextarea extends SwatControl implements SwatState {
 		}
 	}
 	
-	public function getState() {
+	/**
+	 * Gets the current state of this textarea
+	 *
+	 * @return boolean the current state of this textarea.
+	 *
+	 * @see SwatState::getState()
+	 */
+	public function getState()
+	{
 		return $this->value;
 	}
 
-	public function setState($state) {
+	/**
+	 * Sets the current state of this textarea
+	 *
+	 * @param boolean $state the new state of this textarea.
+	 *
+	 * @see SwatState::setState()
+	 */
+	public function setState($state)
+	{
 		$this->value = $state;
 	}
 }
