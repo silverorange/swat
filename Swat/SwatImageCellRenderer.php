@@ -1,6 +1,6 @@
 <?php
 
-require_once('Swat/SwatCellRenderer.php');
+require_once 'Swat/SwatCellRenderer.php';
 
 /**
  * An image renderer
@@ -9,7 +9,8 @@ require_once('Swat/SwatCellRenderer.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatImageCellRenderer extends SwatCellRenderer {
+class SwatImageCellRenderer extends SwatCellRenderer
+{
 
 	/**
 	 * Image src
@@ -51,7 +52,8 @@ class SwatImageCellRenderer extends SwatCellRenderer {
 	 */
 	public $alt = '';
 
-	public function render($prefix) {
+	public function render($prefix)
+	{
 		$image_tag = new SwatHtmlTag('img');
 		$image_tag->src = $this->src;
 
