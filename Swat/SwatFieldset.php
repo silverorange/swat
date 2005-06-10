@@ -1,7 +1,7 @@
 <?php
 
-require_once('Swat/SwatContainer.php');
-require_once('Swat/SwatHtmlTag.php');
+require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * Fieldset tag container
@@ -12,7 +12,8 @@ require_once('Swat/SwatHtmlTag.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFieldset extends SwatContainer {
+class SwatFieldset extends SwatContainer
+{
 
 	/**
 	 * Fieldset title
@@ -23,7 +24,8 @@ class SwatFieldset extends SwatContainer {
 	 */
 	public $title = null;
 
-	public function display() {
+	public function display()
+	{
 		$fieldset_tag = new SwatHtmlTag('fieldset');
 		$fieldset_tag->class = 'swat-fieldset';
 

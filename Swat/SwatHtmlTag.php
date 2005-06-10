@@ -1,6 +1,6 @@
 <?php
 
-require_once('Swat/SwatObject.php');
+require_once 'Swat/SwatObject.php';
 
 /**
  * Stores and outputs an HTML tag
@@ -9,7 +9,8 @@ require_once('Swat/SwatObject.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatHtmlTag extends SwatObject {
+class SwatHtmlTag extends SwatObject
+{
 
 	/**
 	 * The name of the HTML tag
@@ -41,8 +42,11 @@ class SwatHtmlTag extends SwatObject {
 
 	/**
 	 * @param string $tagname The name of the HTML tag.
+	 * @param array $attributes An optional array of attributes in the form of
+	 *        $attribute => $value
 	 */
-	function __construct($tagname, $attributes = null) {
+	function __construct($tagname, $attributes = null)
+	{
 		$this->tagname = $tagname;
 
 		if ($attributes !== null)
@@ -60,7 +64,8 @@ class SwatHtmlTag extends SwatObject {
 	 * @param string $attr The name of attribute.
 	 * @return mixed the value of the attribute.
 	 */
-	public function __get($attr) {
+	public function __get($attr)
+	{
 		if (isset($this->attributes[$attr]))
 			return $this->attributes[$attr];
 		else
@@ -76,7 +81,8 @@ class SwatHtmlTag extends SwatObject {
 	 * @param string $attr The name of attribute.
 	 * @param mixed $val The value of attribute.
 	 */
-	public function __set($attr, $val) {
+	public function __set($attr, $val)
+	{
 		$this->attributes[$attr] = ($val === null) ? null : (string)$val;
 	}
 
@@ -88,7 +94,8 @@ class SwatHtmlTag extends SwatObject {
 	 *
 	 * @param string $attr The name of attribute to remove.
 	 */
-	public function removeAttr($attr) {
+	public function removeAttr($attr)
+	{
 		unset($this->attributes[$attr]);
 	}
 
@@ -101,7 +108,8 @@ class SwatHtmlTag extends SwatObject {
 	 * is set then explicit closing is used and {@link SwatHtmlTag::content} is
 	 * output within the tag.
 	 */
-	public function display() {
+	public function display()
+	{
 		if ($this->content === null) {
 			$this->openInternal(true);
 		} else {
@@ -120,7 +128,8 @@ class SwatHtmlTag extends SwatObject {
 	 *
 	 * @see SwatHtmlTag::close()
 	 */
-	public function open() {
+	public function open()
+	{
 		$this->openInternal(false);
 	}
 
@@ -132,11 +141,13 @@ class SwatHtmlTag extends SwatObject {
 	 *
 	 * @see SwatHtmlTag::open()
 	 */
-	public function close() {
+	public function close()
+	{
 		echo '</', $this->tagname, '>';
 	}
 
-	private function openInternal($implicit_close) {
+	private function openInternal($implicit_close)
+	{
 		echo '<', $this->tagname;
 
 		if ($this->attributes !== null) {
@@ -152,7 +163,6 @@ class SwatHtmlTag extends SwatObject {
 		else
 			echo '>';
 	}
-
 }
 
 ?>

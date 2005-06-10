@@ -1,6 +1,6 @@
 <?php
 
-require_once('Swat/SwatCellRenderer.php');
+require_once 'Swat/SwatCellRenderer.php';
 
 /**
  * A renderer for a boolean value
@@ -9,7 +9,8 @@ require_once('Swat/SwatCellRenderer.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCheckCellRenderer extends SwatCellRenderer {
+class SwatCheckCellRenderer extends SwatCellRenderer
+{
 
 	/**
 	 * Value of cell
@@ -19,7 +20,8 @@ class SwatCheckCellRenderer extends SwatCellRenderer {
 	 */
 	public $value;
 
-	public function render($prefix) {
+	public function render($prefix)
+	{
 		if ((boolean)$this->value) {
 			$image_tag = new SwatHtmlTag('img');
 			$image_tag->src = 'swat/images/check.png';
@@ -32,7 +34,8 @@ class SwatCheckCellRenderer extends SwatCellRenderer {
 		}
 	}
 
-	public function getTdAttribs() {
+	public function getTdAttribs()
+	{
 		return array('style' => 'text-align: center;');
 	}
 }

@@ -1,20 +1,22 @@
 <?php
 
-require_once('Swat/SwatCellRenderer.php');
+require_once 'Swat/SwatCellRenderer.php';
 
 /**
- * A renderer for navigational control.
+ * A renderer for navigational control
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatControlCellRenderer extends SwatCellRenderer {
+class SwatControlCellRenderer extends SwatCellRenderer
+{
 
 	/**
 	 * Href anchor
 	 *
 	 * The href attribute in the HTML anchor tag.
+	 *
 	 * @var string
 	 */
 	public $href;
@@ -23,6 +25,7 @@ class SwatControlCellRenderer extends SwatCellRenderer {
 	 * Image source
 	 *
 	 * The src attribute in the HTML img tag.
+	 *
 	 * @var string
 	 */
 	public $src;
@@ -31,6 +34,7 @@ class SwatControlCellRenderer extends SwatCellRenderer {
 	 * Image height
 	 *
 	 * The height attribute in the HTML img tag.
+	 *
 	 * @var int
 	 */
 	public $height = 0;
@@ -39,6 +43,7 @@ class SwatControlCellRenderer extends SwatCellRenderer {
 	 * Image width
 	 *
 	 * The width attribute in the HTML img tag.
+	 *
 	 * @var int
 	 */
 	public $width = 0;
@@ -47,6 +52,7 @@ class SwatControlCellRenderer extends SwatCellRenderer {
 	 * Image title
 	 *
 	 * The title attribute in the HTML img tag.
+	 *
 	 * @var string
 	 */
 	public $title = '';
@@ -55,6 +61,7 @@ class SwatControlCellRenderer extends SwatCellRenderer {
 	 * Alt text
 	 *
 	 * The alt attribute in the HTML img tag.
+	 *
 	 * @var string
 	 */
 	public $alt = '';
@@ -64,11 +71,13 @@ class SwatControlCellRenderer extends SwatCellRenderer {
 	 *
 	 * A value to substitute into the href using sprintf()
 	 * example href: "MySection/MyPage?id=%s"
+	 *
 	 * @var string
 	 */
 	public $value = null;
 
-	public function render($prefix) {
+	public function render($prefix)
+	{
 		$anchor = new SwatHtmlTag('a');
 
 		if ($this->value === null)

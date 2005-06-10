@@ -1,7 +1,7 @@
 <?php
 
-require_once('Swat/SwatContainer.php');
-require_once('Swat/SwatHtmlTag.php');
+require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A container with a decorative frame and optional title
@@ -10,7 +10,8 @@ require_once('Swat/SwatHtmlTag.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFrame extends SwatContainer {
+class SwatFrame extends SwatContainer
+{
 
 	/**
 	 * A visible title for this frame, or null
@@ -24,7 +25,8 @@ class SwatFrame extends SwatContainer {
 	 */
 	public $errormsg_class = 'swat-frame-errormsg';
 
-	public function display() {
+	public function display()
+	{
 		if (!$this->visible)
 			return;
 
@@ -64,7 +66,8 @@ class SwatFrame extends SwatContainer {
 		$outer_div->close();
 	}
 
-	private function displayErrorMessages() {
+	private function displayErrorMessages()
+	{
 		$messages = $this->gatherMessages(false);
 
 		if (count($messages) > 0) {
