@@ -1,6 +1,6 @@
 <?php
 
-require_once('Swat/SwatFlydown.php');
+require_once 'Swat/SwatFlydown.php';
 
 /**
  * A flydown (aka combo-box) selection widget formatted into a tree
@@ -9,8 +9,8 @@ require_once('Swat/SwatFlydown.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTreeFlydown extends SwatFlydown {
-
+class SwatTreeFlydown extends SwatFlydown
+{
 	/**
 	 * Flydown options
 	 *
@@ -27,9 +27,16 @@ class SwatTreeFlydown extends SwatFlydown {
 	 *
 	 * @var array
 	 */
-	public $path;
+	public $path = array();
 	
-	public function display() {
+	/**
+	 * Displays this tree flydown
+	 *
+	 * The tree is represented by playing spaces in front of nodes on different
+	 * levels.
+	 */
+	public function display()
+	{
 		if ($this->tree !== null)
 			$this->options = $this->tree->toArray();
 
@@ -42,10 +49,18 @@ class SwatTreeFlydown extends SwatFlydown {
 		parent::display();
 	}
 
-	public function process() {
+	/**
+	 * Processes this tree flydown
+	 *
+	 * Populates the path property of this flydown with the path to the node
+	 * selected by the user. The widget value is set to the last id in the
+	 * path array.
+	 */
+	public function process()
+	{
 		parent::process();
 		$this->path = explode('/', $this->value);
-		$this->value = $this->path[count($this->path)-1];
+		$this->value = $this->path[count($this->path) - 1];
 	}
 }
 
