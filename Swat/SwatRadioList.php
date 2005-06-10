@@ -13,11 +13,11 @@ require_once 'Swat/SwatState.php';
  */
 class SwatRadioList extends SwatControl implements SwatState
 {
-	
 	/**
 	 * Radio list options
 	 *
-	 * An array of options for the radio list in the form value => title.
+	 * An array of options for the radio list in the form:
+	 *    value => title.
 	 *
 	 * @var array
 	 */
@@ -35,12 +35,15 @@ class SwatRadioList extends SwatControl implements SwatState
 	/**
 	 * On change
 	 *
-	 * The onchange attribute of the HTML input type=radio tags, or null.
+	 * The onchange attribute of the XHTML input type=radio tags, or null.
 	 *
 	 * @var string
 	 */
 	public $onchange = null;
 
+	/**
+	 * Displays this radio list
+	 */
 	public function display()
 	{
 		$input_tag = new SwatHtmlTag('input');
@@ -74,6 +77,9 @@ class SwatRadioList extends SwatControl implements SwatState
 		}
 	}	
 
+	/**
+	 * Processes this radio list
+	 */
 	public function process()
 	{
 		if (isset($_POST[$this->id]))
@@ -83,10 +89,10 @@ class SwatRadioList extends SwatControl implements SwatState
 	}
 
 	/**
-	 * Reset the radio list.
+	 * Resets this radio list
 	 *
-	 * Reset the list to its default state.  This is useful to call from a 
-	 * display() method when persistence is not desired.
+	 * Resets this list to its default state. This methods is useful to call
+	 * from a display() method when form persistence is not desired.
 	 */
 	public function reset()
 	{
@@ -94,11 +100,25 @@ class SwatRadioList extends SwatControl implements SwatState
 		$this->value = key($this->options);
 	}
 
+	/**
+	 * Gets the current state of this radio list
+	 *
+	 * @return boolean the current state of this radio list.
+	 *
+	 * @see SwatState::getState()
+	 */
 	public function getState()
 	{
 		return $this->value;
 	}
 
+	/**
+	 * Sets the current state of this radio list
+	 *
+	 * @param boolean $state the new state of this radio list.
+	 *
+	 * @see SwatState::setState()
+	 */
 	public function setState($state)
 	{
 		$this->value = $state;
