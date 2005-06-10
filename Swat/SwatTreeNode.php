@@ -86,12 +86,14 @@ class SwatTreeNode extends SwatObject
 	/**
 	 * Adds an id to an array of ids forming a path in this tree
 	 *
-	 * @param array $path a reference to the current path.
+	 * The current path is passed by value on purpose.
+	 *
+	 * @param array $path the current path.
 	 * @param string $id the id to add to the path.
 	 *
 	 * @return array a reference to the path array with the new id added.
 	 */
-	private function &appendPath(&$path, $id)
+	private function &appendPath($path, $id)
 	{
 		if (!is_array($path))
 			$path = array($id);
