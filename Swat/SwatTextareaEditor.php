@@ -1,19 +1,22 @@
 <?php
-require_once('Swat/SwatTextarea.php');
+
+require_once 'Swat/SwatTextarea.php';
 
 /**
- * A multi-line text entry widget
+ * A wysiwyg text entry widget
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTextareaEditor extends SwatTextarea {
+class SwatTextareaEditor extends SwatTextarea
+{
 
 	/**
 	 * Width
 	 *
 	 * Width of the editor. In percent, pixels, or ems.
+	 *
 	 * @var string
 	 */
 	public $width = '100%';
@@ -22,6 +25,7 @@ class SwatTextareaEditor extends SwatTextarea {
 	 * Height
 	 *
 	 * Height of the editor. In percent, pixels, or ems.
+	 *
 	 * @var string
 	 */
 	public $height = '15em';
@@ -30,36 +34,43 @@ class SwatTextareaEditor extends SwatTextarea {
 	 * Base-Href
 	 *
 	 * Optional base-href, used to reference images and other urls in the editor.
+	 *
 	 * @var string
 	 */
-	public $basehref = 'null'; //leave as text null for inserting into javascript
+	public $basehref = null; 
 	
 	
-	public function display() {
+	public function display()
+	{
 		$this->displayJavascript();
 	}	
 	
-	private function displayJavascript() {
+	private function displayJavascript()
+	{
 		$value = $this->rteSafe($this->value);
+
+		$basehref = ($this->basehref === null) ? 'null' : $this->basehref;
 		
 		echo '<script type="text/javascript">';
 		include_once('Swat/javascript/swat-textarea-editor.js');
 
 		$this->displayJavascriptTranslations();
 		echo 'initRTE("swat/images/textarea-editor/", "swat/", "", false);';
-		echo "writeRichText('{$this->id}', '{$value}', '{$this->width}', '{$this->height}', '{$this->basehref}');";
+		echo "writeRichText('{$this->id}', '{$value}', '{$this->width}', '{$this->height}', '{$basehref}');";
 		
 		echo '</script>';
 	}
 
-	private function displayJavascriptTranslations() {
+	private function displayJavascriptTranslations()
+	{
 		echo " var rteT = new Array();";
 		
 		foreach($this->translations() as $k => $word)
 			echo "\n rteT['{$k}'] = '".str_replace("'", "\'", $word)."';";
 	}
 
-	private function translations() {
+	private function translations()
+	{
 		return array(
 			'bold' => _S("Bold"),
 			'italic' => _S("Italic"),
@@ -92,25 +103,25 @@ class SwatTextareaEditor extends SwatTextarea {
 		);
 	}
 	
-	private function rteSafe($strText) {
+	private function rteSafe($value)
+	{
 		//returns safe code for preloading in the RTE
-		$tmpString = $strText;
 	
 		//convert all types of single quotes
-		$tmpString = str_replace(chr(145), chr(39), $tmpString);
-		$tmpString = str_replace(chr(146), chr(39), $tmpString);
-		$tmpString = str_replace("'", "&#39;", $tmpString);
+		$value = str_replace(chr(145), chr(39), $value);
+		$value = str_replace(chr(146), chr(39), $value);
+		$value = str_replace("'", "&#39;", $value);
 	
 		//convert all types of double quotes
-		$tmpString = str_replace(chr(147), chr(34), $tmpString);
-		$tmpString = str_replace(chr(148), chr(34), $tmpString);
-		//	$tmpString = str_replace("\"", "\"", $tmpString);
+		$value = str_replace(chr(147), chr(34), $value);
+		$value = str_replace(chr(148), chr(34), $value);
+		//	$value = str_replace("\"", "\"", $value);
 	
 		//replace carriage returns & line feeds
-		$tmpString = str_replace(chr(10), " ", $tmpString);
-		$tmpString = str_replace(chr(13), " ", $tmpString);
+		$value = str_replace(chr(10), " ", $value);
+		$value = str_replace(chr(13), " ", $value);
 	
-		return $tmpString;
+		return $value;
 	}
 }
 

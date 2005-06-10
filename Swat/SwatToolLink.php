@@ -1,7 +1,7 @@
 <?php
 
-require_once('Swat/SwatControl.php');
-require_once('Swat/SwatHtmlTag.php');
+require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A block of content in the widget tree
@@ -10,7 +10,8 @@ require_once('Swat/SwatHtmlTag.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatToolLink extends SwatControl {
+class SwatToolLink extends SwatControl
+{
 
 	/**
 	 * The title of the link
@@ -38,7 +39,8 @@ class SwatToolLink extends SwatControl {
 
 	// TODO: add an optional image, and possibly stock images
 
-	public function display() {
+	public function display()
+	{
 		if (!$this->visible)
 			return;
 
@@ -54,7 +56,6 @@ class SwatToolLink extends SwatControl {
 
 		$anchor->display();
 	}	
-
 }
 
 ?>
