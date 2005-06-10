@@ -1,8 +1,8 @@
 <?php
 
-require_once('Swat/SwatForm.php');
-require_once('Swat/SwatWizardStep.php');
-require_once('Swat/SwatWizardPostStateStore.php');
+require_once 'Swat/SwatForm.php';
+require_once 'Swat/SwatWizardStep.php';
+require_once 'Swat/SwatWizardPostStateStore.php';
 
 /**
  * A wizard-like form with steps
@@ -20,11 +20,16 @@ class SwatWizardForm extends SwatForm {
 	 */
 	public $step;
 
+
 	private $state_store = null;
+
 	private $steps = array();
+
 	private $navigation = array();
 
-	public function init() {
+
+	public function init()
+	{
 		foreach ($this->children as $child) {
 			if ($child instanceof SwatWizardStep)
 				$this->steps[] = $child;
@@ -33,7 +38,8 @@ class SwatWizardForm extends SwatForm {
 		}
 	}
 
-	public function process() {
+	public function process()
+	{
 		if (!isset($_POST['process']) || $_POST['process'] != $this->id)
 			return false;
 
@@ -61,7 +67,8 @@ class SwatWizardForm extends SwatForm {
 		return true;
 	}
 
-	public function display() {
+	public function display()
+	{
 		foreach ($this->steps as $step)
 			$step->visible = ($step->step == $this->step) ? true : false;
 		
@@ -70,7 +77,8 @@ class SwatWizardForm extends SwatForm {
 		parent::display();
 	}
 
-	private function getNextStep() {
+	private function getNextStep()
+	{
 		$next_step = $this->step;
 
 		foreach ($this->navigation as $navigation) {
@@ -88,20 +96,22 @@ class SwatWizardForm extends SwatForm {
 	/**
 	 * Get the total number of steps in the wizard
 	 *
-	 * @return int Total steps
+	 * @return integer Total steps
 	 */
-	public function getStepCount() {
+	public function getStepCount()
+	{
 		return count($this->steps);
 	}
 	
 	/**
 	 * Get the step title (if not set, "Step X")
 	 *
-	 * @param int $step Step number
+	 * @param integer $step Step number
 	 *
-	 * @return int Step title
+	 * @return string Step title
 	 */
-	public function getStepTitle($step) {
+	public function getStepTitle($step)
+	{
 		if ($this->steps[$step]->title !== null)
 			return $this->steps[$step]->title;
 		else
@@ -111,10 +121,11 @@ class SwatWizardForm extends SwatForm {
 	/**
 	 * Set state storage method
 	 *
-	 * @param int $state_store A {@link SwatWizardStateStore} that specifies
+	 * @param SwatWizardStateStore $state_store A {@link SwatWizardStateStore} that specifies
 	 *        how the data is stored between steps.
 	 */
-	public function setStateStore($state_store) {
+	public function setStateStore($state_store)
+	{
 		if (!$state_store instanceof SwatWizardStateStore)
 			throw new SwatException('SwatWizardForm: A state store must be a type '.
 				'of SwatWizardStateStore');

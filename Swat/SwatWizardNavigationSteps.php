@@ -1,6 +1,6 @@
 <?php
 
-require_once('Swat/SwatWizardNavigation.php');
+require_once 'Swat/SwatWizardNavigation.php';
 
 /**
  * A proto-type test wizard navigation class that shows navigation buttons to
@@ -14,7 +14,8 @@ class SwatWizardNavigationSteps extends SwatWizardNavigation {
 
 	private $step_buttons;
 	
-	public function getNextStep() {
+	public function getNextStep()
+	{
 		$return = null;
 
 		for ($i = 0; $i < $this->parent->getStepCount(); $i++) {
@@ -28,7 +29,8 @@ class SwatWizardNavigationSteps extends SwatWizardNavigation {
 		return $return;
 	}
 
-	public function display() {
+	public function display()
+	{
 		if (!$this->parent instanceof SwatWizardForm)
 			throw new SwatException('SwatWizardNavigation: Must be a child '.
 				'of a SwatWizardForm');
@@ -47,7 +49,6 @@ class SwatWizardNavigationSteps extends SwatWizardNavigation {
 	
 		$div->close();
 	}
-
 }
 
 ?>

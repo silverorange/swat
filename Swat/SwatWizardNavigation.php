@@ -1,8 +1,8 @@
 <?php
 
-require_once('Swat/SwatWizardForm.php');
-require_once('Swat/SwatHtmlTag.php');
-require_once('Swat/SwatButton.php');
+require_once 'Swat/SwatWizardForm.php';
+require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatButton.php';
 
 /**
  * A wizard navigation class
@@ -56,7 +56,7 @@ class SwatWizardNavigation extends SwatControl {
 	 *
 	 * Processes the navigation buttons and chooses which step to go to next
 	 *
-	 * @return int Next step
+	 * @return integer Next step
 	 */
 	public function getNextStep() {
 		$this->next_button->process();
