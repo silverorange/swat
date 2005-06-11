@@ -1,7 +1,7 @@
 <?php
 
-require_once('Swat/SwatContainer.php');
-require_once('Swat/SwatHtmlTag.php');
+require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A container to use around control widgets in a form
@@ -12,8 +12,8 @@ require_once('Swat/SwatHtmlTag.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFormField extends SwatContainer {
-
+class SwatFormField extends SwatContainer
+{
 	/**
 	 * The visible name for this field, or null
 	 *
@@ -63,13 +63,19 @@ class SwatFormField extends SwatContainer {
 	 */
 	public $errormsg_class = 'swat-form-field-errormsg';
 
-	public function display() {
+	/**
+	 * Displays this form field
+	 *
+	 * Associates a label with the first widget of this container.
+	 */
+	public function display()
+	{
 		$first_child = $this->getChild(0);
 
 		if ($first_child === null)
 			return;
 
-		$messages = $this->gatherMessages();
+		$messages = &$this->getAllMessages();
 		$container_div = new SwatHtmlTag('div');
 
 		if (count($messages) > 0)
@@ -107,7 +113,7 @@ class SwatFormField extends SwatContainer {
 
 			$msg_div->close();
 		}
-		
+
 		if ($this->note !== null) {
 			$note_div = new SwatHtmlTag('div');	
 			$note_div->class = $this->note_class;
@@ -115,7 +121,6 @@ class SwatFormField extends SwatContainer {
 			echo $this->note;
 			$note_div->close();
 		}
-
 
 		$container_div->close();
 	}

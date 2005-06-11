@@ -35,13 +35,13 @@ abstract class SwatControl extends SwatWidget
 	}
 
 	/**
-	 * Gathers messages
+	 * Gets all messages
 	 *
 	 * @return array the gathered SwatMessage objects.
 	 *
-	 * @see SwatWidget::gatherMessages()
+	 * @see SwatWidget::getAllMessages()
 	 */
-	public function gatherMessages()
+	public function getAllMessages()
 	{
 		return $this->messages;
 	}

@@ -233,21 +233,18 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	}
 
 	/**
-	 * Gathers messages
-	 *
-	 * @param bool $all if true, return all messages from child widgets.
+	 * Gets all messages
 	 *
 	 * @return array the gathered SwatMessage objects.
 	 *
-	 * @see SwatWidget::gatherMessages()
+	 * @see SwatWidget::getAllMessages()
 	 */
-	public function gatherMessages($all = true)
+	public function getAllMessages()
 	{
 		$msgs = $this->messages;
 
-		if ($all)
-			foreach ($this->children as &$child)
-				$msgs = array_merge($msgs, $child->gatherMessages());
+		foreach ($this->children as &$child)
+			$msgs = array_merge($msgs, $child->getAllMessages());
 
 		return $msgs;
 	}
