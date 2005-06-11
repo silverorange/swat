@@ -26,7 +26,7 @@ class SwatHtmlTag extends SwatObject
 	 *
 	 * @var array
 	 */
-	private $attributes;
+	private $attributes = array();
 
 	/**
 	 * Content (optional)
@@ -52,8 +52,6 @@ class SwatHtmlTag extends SwatObject
 
 		if (is_array($attributes))
 			$this->attributes = $attributes;
-		else
-			$this->attributes = array();
 	}
 
 	/**
@@ -88,7 +86,7 @@ class SwatHtmlTag extends SwatObject
 	public function __set($attribute, $value)
 	{
 		$this->attributes[$attribute] =
-			($value === null) ? null : (string)$val;
+			($value === null) ? null : (string)$value;
 	}
 
 	/**
@@ -167,13 +165,9 @@ class SwatHtmlTag extends SwatObject
 	{
 		echo '<', $this->tagname;
 
-		if ($this->attributes !== null) {
-			foreach ($this->attributes as $attr => $value) {
-				if ($value !== null) {
-					echo ' ', $attr, '="', htmlspecialchars($value), '"';
-				}
-			}
-		}
+		foreach ($this->attributes as $attribute => $value)
+			if ($value !== null)
+				echo ' ', $attribute, '="', htmlspecialchars($value), '"';
 
 		if ($self_closing)
 			echo ' />';
