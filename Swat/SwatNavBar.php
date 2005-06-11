@@ -11,91 +11,131 @@ require_once 'Swat/SwatControl.php';
  */
 class SwatNavBar extends SwatControl
 {
-	private $titles = array();
-	private $links = array();
+	/**
+	 * Array of elements displayed in this navbar
+	 *
+	 * @var array
+	 */
+	private $elements = array();
 
 	/**
-	 * Add a item to the end of the navbar
+	 * Adds an element to the end of this navigation bar
 	 *
-	 * @param string $title Element title
-	 * @param string $link Optional link
+	 * @param string $title the element title.
+	 * @param string $uri an optional element URI.
 	 */
-	public function add($title, $link = null)
+	public function addElement($title, $uri = null)
 	{
-		$insertpos = $this->size();
-		$this->titles[$insertpos] = $title;
-		$this->links[$insertpos]  = $link;
+		$new_element = array('title' = $title, 'uri' => $uri);
+		$this->elements[] = &$new_element;
 	}
 
 	/**
-	 * Replace an element
+	 * Replaces an element in this navigation bar
 	 *
-	 * @param integer $pos Element position to replace at
-	 * @param string $title Element title
-	 * @param string $link Optional link
+	 * If the element is not in this navigation bar, an exception is thrown.
+	 *
+	 * @param integer $position position of the element to replace.
+	 * @param string $title the replacement element title.
+	 * @param string $uri an optional replacement element URI.
+	 *
+	 * @thows SwatException
 	 */
-	public function replace($pos, $title, $link = null)
+	public function replaceElement($position, $title, $uri= null)
 	{
-		$this->titles[$pos] = $title;
-		$this->links[$pos]  = $link;
-	}
-
-	/**
-	 * Fetch an element of the navbar
-	 *
-	 * @param integer $level Level of navbar to return
-	 *
-	 * @return array An array containing the title and link in the format:
-	 *               array('title' = title, 'link' = link)
-	 */
-	public function fetch($level)
-	{
-		$out=array();
-		$out['title'] = $this->titles[$level];
-		$out['link']  = $this->links[$level];
-		return $out;
-	}
-
-	/**
-	 * Get number of elements
-	 *
-	 * @return integer Number of elements
-	 */
-	public function size()
-	{
-		return count($this->titles);
-	}
-
-	/**
-	 * Pop the last 'num' elements off the end of the navbar
-	 *
-	 * @param $num integer Number of elements to pop
-	 */
-	public function pop($num = 1)
-	{
-		for ($i = 0; $i < $num; $i++) {
-			$last = $this->size() - 1;
-			unset($this->titles[$last]);
-			unset($this->links[$last]);
+		if (isset($this->elements[$position])) {
+			$new_element = array('title' = $title, 'uri' = $uri);
+			$this->elements[$position] = &$new_element;
+		} else {
+			throw new SwatException(sprintf(__CLASS__.': Cannot replace '.
+				"element at position '%s' because element does not exist.",
+				$position));
 		}
 	}
 
+	/**
+	 * Gets an element from this navigation bar
+	 *
+	 * If the element is not in this navigation bar, an exception is thrown.
+	 *
+	 * @param integer $position position of the element to fetch.
+	 *
+	 * @return array an array containing the title and link in the format:
+	 *                array('title' = title, 'link' = link)
+	 *
+	 * @throws SwatException
+	 */
+	public function getElementAtPosition($position)
+	{
+		if (isset($this->elements[$position]))
+			return $this->elements[$position];
+		else
+			throw new SwatException(sprintf(__CLASS__.': Cannot fetch '.
+				"element at position '%s' because element does not exist.",
+				$position));
+	}
+
+	/**
+	 * Gets the number of elements in this navigational bar
+	 *
+	 * @return integer number of elements in this navigational bar.
+	 */
+	public function getSize()
+	{
+		return count($this->elements);
+	}
+
+	/**
+	 * Pops a number of elements off the end of this navigational bar
+	 *
+	 * If more elements are to be popped than currently exist, an exception is
+	 * thrown.
+	 *
+	 * @param $number integer number of elements to pop off this navigational
+	 *                         bar.
+	 *
+	 * @throws SwatException
+	 */
+	public function popElements($number = 1)
+	{
+		if ($num <= $this->getSize()) {
+			$last = $this->getSize() - 1;
+			for ($i = 0; $i < $number; $i++) {
+				unset($this->elements[$last - $i]);
+			}
+		} else {
+			throw new SwatException(sprintf(__CLASS__.' Cannot pop %s '
+				'elements because only %s elements exist.',
+				$number,
+				$this->getSize()));
+		}
+	}
+
+	/**
+	 * Displays this navigational bar
+	 *
+	 * Displays each element separated by a special character and outputs
+	 * elements with URI's as anchor tags.
+	 */
 	public function display()
 	{
-		for ($i = 0; $i < $this->size(); $i++) {
-			$entry = $this->fetch($i);
+		$count = 0;
+		foreach ($this->entries as $entry) {
 			
-			if ($i != 0)
+			if ($count != 0)
 				echo ' &#187; ';
 			
-			if ($entry['link'] !== null) {
-				$link = new SwatHtmlTag('a');
-				$link->href = $entry['link'];
-				$link->open();
+			if ($entry['uri'] !== null) {
+				$link_tag = new SwatHtmlTag('a');
+				$link_tag->href = $entry['uri'];
+				$link_tag->open();
 				echo $entry['title'];
-				$link->close();
-			} else
+				$link_tag->close();
+			} else {
 				echo $entry['title'];
+			}
+
+			$count++;
 		}
 	}
 }
