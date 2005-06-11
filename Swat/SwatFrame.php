@@ -12,7 +12,6 @@ require_once 'Swat/SwatHtmlTag.php';
  */
 class SwatFrame extends SwatContainer
 {
-
 	/**
 	 * A visible title for this frame, or null
 	 * @var string
@@ -25,6 +24,9 @@ class SwatFrame extends SwatContainer
 	 */
 	public $errormsg_class = 'swat-frame-errormsg';
 
+	/**
+	 * Displays this frame
+	 */
 	public function display()
 	{
 		if (!$this->visible)
@@ -59,16 +61,19 @@ class SwatFrame extends SwatContainer
 
 		$inner_div->open();
 
-		$this->displayErrorMessages();
+		$this->displayMessages();
 		parent::display();
 
 		$inner_div->close();
 		$outer_div->close();
 	}
 
-	private function displayErrorMessages()
+	/**
+	 * Display messages associated with this frame
+	 */
+	private function displayMessages()
 	{
-		$messages = $this->gatherMessages(false);
+		$messages = &$this->getMessages();
 
 		if (count($messages) > 0) {
 			// TODO: more classes based on message type?
