@@ -11,7 +11,6 @@ require_once 'Swat/SwatObject.php';
  */
 class SwatHtmlTag extends SwatObject
 {
-
 	/**
 	 * The name of the HTML tag
 	 *
@@ -22,8 +21,8 @@ class SwatHtmlTag extends SwatObject
 	/**
 	 * Atribute array
 	 *
-	 * Array containing attributes of the HTML tag in the form of
-	 * (attr name) => (value).
+	 * Array containing attributes of the HTML tag in the form:
+	 *    attribute_name => value
 	 *
 	 * @var array
 	 */
@@ -41,15 +40,17 @@ class SwatHtmlTag extends SwatObject
 	public $content = null;
 
 	/**
-	 * @param string $tagname The name of the HTML tag.
-	 * @param array $attributes An optional array of attributes in the form of
-	 *        $attribute => $value
+	 * Creates a new HTML tag
+	 *
+	 * @param string $tagname the name of the HTML tag.
+	 * @param array $attributes an optional array of attributes in the form:
+	 *                           attribute => value
 	 */
 	function __construct($tagname, $attributes = null)
 	{
 		$this->tagname = $tagname;
 
-		if ($attributes !== null)
+		if (is_array($attributes))
 			$this->attributes = $attributes;
 		else
 			$this->attributes = array();
@@ -58,55 +59,62 @@ class SwatHtmlTag extends SwatObject
 	/**
 	 * Magic __get method
 	 *
-	 * This should not be called directly, but is invoked indirectly when
+	 * This should never be called directly, but is invoked indirectly when
 	 * accessing properties of a tag object.
 	 *
-	 * @param string $attr The name of attribute.
+	 * @param string $attr the name of attribute to get.
+	 *
 	 * @return mixed the value of the attribute.
 	 */
-	public function __get($attr)
+	public function __get($attribute)
 	{
-		if (isset($this->attributes[$attr]))
-			return $this->attributes[$attr];
+		if (isset($this->attributes[$attribute]))
+			return $this->attributes[$attribute];
 		else
-			throw new SwatException(__CLASS__.": undefined attribute {$attr}");
+			throw new SwatException(sprintf(__CLASS__.': undefined '.
+				'attribute %s.',
+				$attribute));
 	}
 
 	/**
 	 * Magic __set method
 	 *
-	 * This should not be called directly, but is invoked indirectly when
+	 * This should never be called directly, but is invoked indirectly when
 	 * setting properties of a tag object.
 	 *
-	 * @param string $attr The name of attribute.
-	 * @param mixed $val The value of attribute.
+	 * @param string $attribute the name of attribute.
+	 * @param mixed $value the value of attribute.
 	 */
-	public function __set($attr, $val)
+	public function __set($attribute, $value)
 	{
-		$this->attributes[$attr] = ($val === null) ? null : (string)$val;
+		$this->attributes[$attribute] =
+			($value === null) ? null : (string)$val;
 	}
 
 	/**
-	 * Remove an attribute
+	 * Removes an attribute
 	 *
-	 * Remove a previously assigned attribute. Useful when one tag object is
+	 * Removes a previously assigned attribute. Useful when one tag object is
 	 * displayed multiple times with different attributes.
 	 *
-	 * @param string $attr The name of attribute to remove.
+	 * @param string $attribute The name of attribute to remove.
 	 */
-	public function removeAttr($attr)
+	public function removeAttribute($attribute)
 	{
-		unset($this->attributes[$attr]);
+		unset($this->attributes[$attribute]);
 	}
 
 	/**
-	 * Display the tag
+	 * Displays this tag
 	 *
-	 * Output the opening tag including all its attributes and implicitly close
-	 * the tag.  If explicit closing is desired, use
-	 * {@link SwatHtmlTag::display()} instead. If {@link SwatHtmlTag::content}
-	 * is set then explicit closing is used and {@link SwatHtmlTag::content} is
-	 * output within the tag.
+	 * Output the opening tag including all its attributes and implicitly
+	 * close the tag. If explicit closing is desired, use
+	 * {@link SwatHtmlTag::open()} and {@link SwatHtmlTag::close()} instead.
+	 * If {@link SwatHtmlTag::content} is set then the content is displayed
+	 * between an opening and closing tag, otherwise a self-closing tag is
+	 * displayed.
+	 *
+	 * @see SwatHtmlTag::open()
 	 */
 	public function display()
 	{
@@ -120,10 +128,10 @@ class SwatHtmlTag extends SwatObject
 	}
 
 	/**
-	 * Open the tag
+	 * Opens this tag
 	 *
-	 * Output the opening tag including all its attributes. Should be paired
-	 * with a call to {@link SwatHtmlTag::close()}.  If implicit closing
+	 * Outputs the opening tag including all its attributes. Should be paired
+	 * with a call to {@link SwatHtmlTag::close()}. If implicit closing
 	 * is desired, use {@link SwatHtmlTag::display()} instead.
 	 *
 	 * @see SwatHtmlTag::close()
@@ -134,9 +142,9 @@ class SwatHtmlTag extends SwatObject
 	}
 
 	/**
-	 * Close the tag
+	 * Closes this tag
 	 *
-	 * Output the closing tag. Should be paired with a call to 
+	 * Outputs the closing tag. Should be paired with a call to 
 	 * {@link SwatHtmlTag::open()}.
 	 *
 	 * @see SwatHtmlTag::open()
@@ -146,7 +154,16 @@ class SwatHtmlTag extends SwatObject
 		echo '</', $this->tagname, '>';
 	}
 
-	private function openInternal($implicit_close)
+	/**
+	 * Outputs opening tag and all attributes
+	 *
+	 * This is a helper method that does the attribute displaying when opening
+	 * this tag. This method can also display self-closing XHTML tags.
+	 *
+	 * @param boolean $self_closing whether this tag should be displayed as a
+	 *                               self-closing tag.
+	 */
+	private function openInternal($self_closing = false)
 	{
 		echo '<', $this->tagname;
 
@@ -158,7 +175,7 @@ class SwatHtmlTag extends SwatObject
 			}
 		}
 
-		if ($implicit_close)
+		if ($self_closing)
 			echo ' />';
 		else
 			echo '>';
