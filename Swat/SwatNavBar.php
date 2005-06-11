@@ -128,9 +128,8 @@ class SwatNavBar extends SwatControl
 			if ($entry['uri'] !== null) {
 				$link_tag = new SwatHtmlTag('a');
 				$link_tag->href = $entry['uri'];
-				$link_tag->open();
-				echo $entry['title'];
-				$link_tag->close();
+				$link_tag->content = $entry['title'];
+				$link_tag->display();
 			} else {
 				echo $entry['title'];
 			}
