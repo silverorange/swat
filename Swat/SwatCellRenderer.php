@@ -11,35 +11,39 @@ require_once 'Swat/SwatObject.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatCellRenderer extends SwatObject {
-
+abstract class SwatCellRenderer extends SwatObject
+{
 	/**
-	 * The widget which contains this cell renderer
-	 * @var SwatWidget
+	 * The table view that contains this cell renderer
+	 *
+	 * @var SwatTableView
 	 */
 	public $parent = null;
 
 	/**
-	 * Render the cell
+	 * Renders this cell
 	 *
-	 * Render the cell using the values currently stored in class variables.
+	 * Renders this cell using the values currently stored in class variables.
+	 *
 	 * Cell renderer subclasses should implement this method to do all
 	 * output neccessary to display the cell.
 	 *
-	 * @param string $prefix Optional prefix to name HTML controls with.
+	 * @param string $prefix an optional prefix to name XHTML controls with.
 	 */
 	abstract public function render($prefix);
 
 	/**
-	 * Get TD-tag Attributes
+	 * Gets TD-tag attributes
 	 *
-	 * Array of attributes to assign to the HTML TD tag.
 	 * Sub-classes can redefine this to set attributes on the TD tag.
+	 *
+	 * @return array an array of attributes to apply to the TD tag of this cell
+	 *                renderer.
 	 */
-	public function getTdAttribs() {
-		return null;
+	public function &getTdAttributes()
+	{
+		return array();
 	}
-
 }
 
 ?>

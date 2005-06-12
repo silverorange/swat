@@ -11,11 +11,10 @@ require_once 'Swat/SwatCellRenderer.php';
  */
 class SwatControlCellRenderer extends SwatCellRenderer
 {
-
 	/**
 	 * Href anchor
 	 *
-	 * The href attribute in the HTML anchor tag.
+	 * The href attribute in the XHTML anchor tag.
 	 *
 	 * @var string
 	 */
@@ -24,7 +23,7 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	/**
 	 * Image source
 	 *
-	 * The src attribute in the HTML img tag.
+	 * The src attribute in the XHTML img tag.
 	 *
 	 * @var string
 	 */
@@ -33,7 +32,7 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	/**
 	 * Image height
 	 *
-	 * The height attribute in the HTML img tag.
+	 * The height attribute in the XHTML img tag.
 	 *
 	 * @var int
 	 */
@@ -42,7 +41,7 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	/**
 	 * Image width
 	 *
-	 * The width attribute in the HTML img tag.
+	 * The width attribute in the XHTML img tag.
 	 *
 	 * @var int
 	 */
@@ -51,7 +50,7 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	/**
 	 * Image title
 	 *
-	 * The title attribute in the HTML img tag.
+	 * The title attribute in the XHTML img tag.
 	 *
 	 * @var string
 	 */
@@ -60,14 +59,14 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	/**
 	 * Alt text
 	 *
-	 * The alt attribute in the HTML img tag.
+	 * The alt attribute in the XHTML img tag.
 	 *
 	 * @var string
 	 */
 	public $alt = '';
 
 	/**
-	 * HREF value
+	 * Href value
 	 *
 	 * A value to substitute into the href using sprintf()
 	 * example href: "MySection/MyPage?id=%s"
@@ -76,6 +75,13 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	 */
 	public $value = null;
 
+	/**
+	 * Renders the contents of this cell
+	 *
+	 * @param string $prefix an optional prefix to name XHTML controls with.
+	 *
+	 * @see SwatCellRenderer::render()
+	 */
 	public function render($prefix)
 	{
 		$anchor = new SwatHtmlTag('a');

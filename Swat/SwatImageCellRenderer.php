@@ -11,11 +11,11 @@ require_once 'Swat/SwatCellRenderer.php';
  */
 class SwatImageCellRenderer extends SwatCellRenderer
 {
-
 	/**
 	 * Image src
 	 *
-	 * The src attribute in the HTML img tag.
+	 * The src attribute in the XHTML img tag.
+	 *
 	 * @var string
 	 */
 	public $src;
@@ -23,7 +23,8 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	/**
 	 * Image height
 	 *
-	 * The height attribute in the HTML img tag.
+	 * The height attribute in the XHTML img tag.
+	 *
 	 * @var int
 	 */
 	public $height = 0;
@@ -31,7 +32,8 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	/**
 	 * Image width
 	 *
-	 * The width attribute in the HTML img tag.
+	 * The width attribute in the XHTML img tag.
+	 *
 	 * @var int
 	 */
 	public $width = 0;
@@ -39,7 +41,8 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	/**
 	 * Image title
 	 *
-	 * The title attribute in the HTML img tag.
+	 * The title attribute in the XHTML img tag.
+	 *
 	 * @var string
 	 */
 	public $title = '';
@@ -47,11 +50,19 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	/**
 	 * Image alt text
 	 *
-	 * The alt attribute in the HTML img tag.
+	 * The alt attribute in the XHTML img tag.
+	 *
 	 * @var string
 	 */
 	public $alt = '';
 
+	/**
+	 * Renders the contents of this cell
+	 *
+	 * @param string $prefix an optional prefix to name XHTML controls with.
+	 *
+	 * @see SwatCellRenderer::render()
+	 */
 	public function render($prefix)
 	{
 		$image_tag = new SwatHtmlTag('img');

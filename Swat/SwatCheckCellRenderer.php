@@ -3,7 +3,7 @@
 require_once 'Swat/SwatCellRenderer.php';
 
 /**
- * A renderer for a boolean value
+ * A cell renderer for a boolean value
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange
@@ -13,13 +13,21 @@ class SwatCheckCellRenderer extends SwatCellRenderer
 {
 
 	/**
-	 * Value of cell
+	 * Value of this cell
 	 *
 	 * The boolean value to display in this cell.
+	 *
 	 * @var boolean
 	 */
 	public $value;
 
+	/**
+	 * Renders the contents of this cell
+	 *
+	 * @param string $prefix an optional prefix to name XHTML controls with.
+	 *
+	 * @see SwatCellRenderer::render()
+	 */
 	public function render($prefix)
 	{
 		if ((boolean)$this->value) {
@@ -34,7 +42,15 @@ class SwatCheckCellRenderer extends SwatCellRenderer
 		}
 	}
 
-	public function getTdAttribs()
+	/**
+	 * Gets TD-tag attributes
+	 *
+	 * @return array an array of attributes to apply to the TD tag of this cell
+	 *                renderer.
+	 *
+	 * @see SwatCellRenderer::getTdAttributes()
+	 */
+	public function &getTdAttributes()
 	{
 		return array('style' => 'text-align: center;');
 	}
