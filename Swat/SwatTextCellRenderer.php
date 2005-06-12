@@ -1,25 +1,34 @@
 <?php
 
-require_once('Swat/SwatCellRenderer.php');
+require_once 'Swat/SwatCellRenderer.php';
 
 /**
- * A text renderer.
+ * A text cell renderer
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTextCellRenderer extends SwatCellRenderer {
-
+class SwatTextCellRenderer extends SwatCellRenderer
+{
 	/**
 	 * Cell value
 	 *
-	 * The content to place within the cell.
+	 * The textual content to place within this cell.
+	 *
 	 * @var string
 	 */
 	public $value = '';
 
-	public function render($prefix) {
+	/**
+	 * Renders the contents of this cell
+	 *
+	 * @param string $prefix an optional prefix to name XHTML controls with.
+	 *
+	 * @see swatcellrenderer::render()
+	 */
+	public function render($prefix)
+	{
 		echo $this->value;
 	}
 }

@@ -16,6 +16,7 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	 * Date
 	 *
 	 * Can be either a Date object, or an ISO-formatted date.
+	 *
 	 * @var mixed
 	 */
 	public $date = null;
@@ -25,10 +26,18 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	 *
 	 * Either a {@link SwatDate} format mask, or class constant. Class
 	 * constants are preferable for sites that require translation.
+	 *
 	 * @var mixed
 	 */
 	public $format = SwatDate::DF_DATE_TIME;
 
+	/**
+	 * Renders the contents of this cell
+	 *
+	 * @param string $prefix an optional prefix to name XHTML controls with.
+	 *
+	 * @see SwatCellRenderer::render()
+	 */
 	public function render($prefix)
 	{
 		if ($this->date !== null) {
