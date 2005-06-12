@@ -4,7 +4,7 @@ require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
- * A block of content in the widget tree
+ * A a tool link in the widget tree
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange
@@ -12,16 +12,15 @@ require_once 'Swat/SwatHtmlTag.php';
  */
 class SwatToolLink extends SwatControl
 {
-
 	/**
-	 * The title of the link
+	 * The title of this link
 	 *
 	 * @var string
 	 */
 	public $title = '';
 
 	/**
-	 * The href of the link
+	 * The href of this link
 	 *
 	 * @var string
 	 */
@@ -39,6 +38,9 @@ class SwatToolLink extends SwatControl
 
 	// TODO: add an optional image, and possibly stock images
 
+	/**
+	 * Displays this tool link
+	 */
 	public function display()
 	{
 		if (!$this->visible)
