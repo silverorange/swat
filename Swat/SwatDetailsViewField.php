@@ -43,6 +43,16 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 		$this->id = $id;
 	}
 
+	/**
+	 * Links a data field to a cell renderer property
+	 *
+	 * @param SwatCellRenderer $renderer a reference to the cell renderer
+	 *                                    that the data field is mapped to.
+	 * @param string $model_field the field of the data model to map to the
+	 *                             renderer property.
+	 * @param string $render_property the property of the cell renderer that
+	 *                                 data field is mapped to.
+	 */
 	public function linkField($renderer, $model_field, $renderer_property)
 	{
 		if (!isset($renderer->_property_map) ||
@@ -86,7 +96,7 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 			throw new SwatException(__CLASS__.
 				': no renderer has been provided.');
 
-		// set the properties of the renderers
+		// Set the properties of the renderers to the value of the data field.
 		foreach ($this->renderers as $renderer)
 			foreach ($renderer->_property_map as $property => $field)
 				$renderer->$property = $data->$field;
