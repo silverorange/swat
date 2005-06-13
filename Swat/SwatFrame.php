@@ -14,12 +14,14 @@ class SwatFrame extends SwatContainer
 {
 	/**
 	 * A visible title for this frame, or null
+	 *
 	 * @var string
 	 */
 	public $title = null;
 
 	/**
 	 * CSS class to use on the HTML div where the error message is displayed.
+	 *
 	 * @var string
 	 */
 	public $errormsg_class = 'swat-frame-errormsg';
