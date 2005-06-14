@@ -85,9 +85,8 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	{
 		$th_tag = new SwatHtmlTag('th');
 		$th_tag->align = 'right';
-		$th_tag->open();
-		printf(_S("%s:"), $this->title);
-		$th_tag->close();
+		$th_tag->content = $this->title;
+		$th_tag->display();
 	}
 
 	public function displayValue($data)

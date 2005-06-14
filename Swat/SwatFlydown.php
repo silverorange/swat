@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
@@ -132,7 +133,7 @@ class SwatFlydown extends SwatControl implements SwatState
 			$this->value = $value;
 		
 		if ($this->required && $this->value === null) {
-			$msg = _S("The %s field is required.");
+			$msg = Swat::_('The %s field is required.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 		}
 	}

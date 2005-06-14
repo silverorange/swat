@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatFlydown.php';
 
 /**
@@ -20,8 +21,8 @@ class SwatYesNoFlydown extends SwatFlydown
 	 * Sets the options of this flydown to be yes and no.
 	 */
 	public function init() {
-		$this->options = array(self::NO => _S("No"),
-		                       self::YES => _S("Yes"));
+		$this->options = array(self::NO => Swat::_('No'),
+		                       self::YES => Swat::_('Yes'));
 
 		parent::init();
 	}

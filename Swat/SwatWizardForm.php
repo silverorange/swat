@@ -115,7 +115,7 @@ class SwatWizardForm extends SwatForm {
 		if ($this->steps[$step]->title !== null)
 			return $this->steps[$step]->title;
 		else
-			return sprintf(_S("Step %d"), $step + 1);
+			return sprintf(Swat::_('Step %d'), $step + 1);
 	}
 
 	/**

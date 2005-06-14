@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 
@@ -106,15 +107,15 @@ class SwatButton extends SwatControl
 	{
 		switch ($name) {
 		case 'submit':
-			$this->title = _S('Submit');
+			$this->title = Swat::_('Submit');
 			break;
 
 		case 'create':
-			$this->title = _S('Create');
+			$this->title = Swat::_('Create');
 			break;
 
 		case 'apply':
-			$this->title = _S('Apply');
+			$this->title = Swat::_('Apply');
 			break;
 		}
 	}

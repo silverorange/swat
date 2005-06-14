@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
@@ -78,7 +79,7 @@ class SwatTextarea extends SwatControl implements SwatState
 		$this->value = $_POST[$this->id];
 
 		if ($this->required && !strlen($this->value)) {
-			$msg = _S("The %s field is required.");
+			$msg = Swat::_('The %s field is required.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 		}
 	}

@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Date.php';
 
 /**
@@ -99,29 +100,29 @@ class SwatDate extends Date
 	{
 		switch ($id) {
 		case self::DF_MDY:
-			return _S("%D");
+			return Swat::_('%D');
 		case self::DF_MDY_SHORT:
-			return _S("%m%d%y");
+			return Swat::_('%m%d%y');
 		case self::DF_DATE:
-			return _S("%B %e, %Y");
+			return Swat::_('%B %e, %Y');
 		case self::DF_DATE_LONG:
-			return _S("%A, %B %e, %Y");
+			return Swat::_('%A, %B %e, %Y');
 		case self::DF_DATE_TIME:
-			return _S("%B %e, %Y %i:%M %p");
+			return Swat::_('%B %e, %Y %i:%M %p');
 		case self::DF_DATE_TIME_LONG:
-			return _S("%A, %B %e, %Y %i:%M %p");
+			return Swat::_('%A, %B %e, %Y %i:%M %p');
 		case self::DF_TIME:
-			return _S("%i:%M %p");
+			return Swat::_('%i:%M %p');
 		case self::DF_DATE_SHORT:
-			return _S("%b %e, %Y");
+			return Swat::_('%b %e, %Y');
 		case self::DF_DATE_SHORT_NOYEAR:
-			return _S("%b %e");
+			return Swat::_('%b %e');
 		case self::DF_DATE_TIME_SHORT:
-			return _S("%b %e, %Y %i:%M %p");
+			return Swat::_('%b %e, %Y %i:%M %p');
 		case self::DF_DATE_TIME_SHORT_NOYEAR:
-			return _S("%b %e, %i:%M %p");
+			return Swat::_('%b %e, %i:%M %p');
 		case self::DF_MY:
-			return _S("%B %Y");
+			return Swat::_('%B %Y');
 		default:
 			throw new Exception(__CLASS__.': unknown date format id');
 		}

@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
@@ -93,7 +94,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		
 		$up_btn = new SwatHtmlTag('input');
 		$up_btn->type = 'button';
-		$up_btn->value = _S("Move Up");
+		$up_btn->value = Swat::_('Move Up');
 		$up_btn->onclick = $obj.".updown('up');";
 		if ($this->onclick !== null)
 			$up_btn->onclick.= $this->onclick;
@@ -104,7 +105,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 	
 		$down_btn = new SwatHtmlTag('input');
 		$down_btn->type = 'button';
-		$down_btn->value = _S("Move Down");
+		$down_btn->value = Swat::_('Move Down');
 		$down_btn->onclick = $obj.".updown('down');";
 		if ($this->onclick !== null)
 			$down_btn->onclick.= $this->onclick;
@@ -127,7 +128,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		echo '<script type="text/javascript">';
 		include_once('Swat/javascript/swat-change-order.js');
 		
-		$warning = _S("You must first select the item to reorder.");
+		$warning = Swat::_('You must first select the item to reorder.');
 		// TODO: figure out how to make the stylesheets work better.
 		$style = '../swat/swat.css';
 		$values = array();

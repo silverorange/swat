@@ -1,4 +1,6 @@
 <?php
+
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatControl.php';
 
 /**
@@ -29,7 +31,7 @@ class SwatCheckAll extends SwatControl
 
 	public function init()
 	{
-		$this->title = _S('Check All');
+		$this->title = Swat::_('Check All');
 		$this->generateAutoId();
 	}
 

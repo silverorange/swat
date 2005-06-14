@@ -101,10 +101,10 @@ class SwatControlCellRenderer extends SwatCellRenderer
 			$image_tag->width = $this->width;
 
 		if (strlen($this->title) > 0)
-			$image_tag->title = _S($this->title);
+			$image_tag->title = $this->title;
 
 		if (strlen($this->alt) > 0)
-			$image_tag->alt = _S($this->alt);
+			$image_tag->alt = $this->alt;
 
 		$anchor->open();
 		$image_tag->display();

@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatTextarea.php';
 
 /**
@@ -72,34 +73,34 @@ class SwatTextareaEditor extends SwatTextarea
 	private function translations()
 	{
 		return array(
-			'bold' => _S("Bold"),
-			'italic' => _S("Italic"),
-			'underline' => _S("Underline"),
-			'align_left' => _S("Align Left"),
-			'align_right' => _S("Align Right"),
-			'align_center' => _S("Align Center"),
-			'ordered_list' => _S("Ordered List"),
-			'unordered_list' => _S("Unordered List"),
-			'indent' => _S("Indent"),
-			'outdent' => _S("Outdent"),
-			'insert_link' => _S("Insert Link"),
-			'horizontal_rule' => _S("Horizontal Rule"),
-			'highlight' => _S("Highlight"),
-			'quote' => _S("Quote"),
-			'style' => _S("Style"),
-			'clear_formatting' => _S("Clear Formatting"),
-			'paragraph' => _S("Paragraph"),
-			'heading' => _S("Heading"),
-			'address' => _S("Address"),
-			'formatted' => _S("Formatted"),
+			'bold' => Swat::_('Bold'),
+			'italic' => Swat::_('Italic'),
+			'underline' => Swat::_('Underline'),
+			'align_left' => Swat::_('Align Left'),
+			'align_right' => Swat::_('Align Right'),
+			'align_center' => Swat::_('Align Center'),
+			'ordered_list' => Swat::_('Ordered List'),
+			'unordered_list' => Swat::_('Unordered List'),
+			'indent' => Swat::_('Indent'),
+			'outdent' => Swat::_('Outdent'),
+			'insert_link' => Swat::_('Insert Link'),
+			'horizontal_rule' => Swat::_('Horizontal Rule'),
+			'highlight' => Swat::_('Highlight'),
+			'quote' => Swat::_('Quote'),
+			'style' => Swat::_('Style'),
+			'clear_formatting' => Swat::_('Clear Formatting'),
+			'paragraph' => Swat::_('Paragraph'),
+			'heading' => Swat::_('Heading'),
+			'address' => Swat::_('Address'),
+			'formatted' => Swat::_('Formatted'),
 			
 			//pop-up link
-			'enter_url' => _S("A URL is required"),
-			'url' => _S("URL"),
-			'link_text' => _S("Link Text"),
-			'target' => _S("Target"),
-			'insert_link' => _S("Insert Link"),
-			'cancel' => _S("Cancel")
+			'enter_url' => Swat::_('A URL is required'),
+			'url' => Swat::_('URL'),
+			'link_text' => Swat::_('Link Text'),
+			'target' => Swat::_('Target'),
+			'insert_link' => Swat::_('Insert Link'),
+			'cancel' => Swat::_('Cancel')
 		);
 	}
 	

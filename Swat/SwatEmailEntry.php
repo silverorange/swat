@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatEntry.php';
 
 /**
@@ -30,8 +31,7 @@ class SwatEmailEntry extends SwatEntry
 			
 		if (($this->required || strlen($this->value)) &&
 			!ereg($valid_address_ereg, trim($this->value))) {
-			$msg = _S("The email address you have entered ".
-				"is not properly formatted.");
+			$msg = Swat::_('The email address you have entered is not properly formatted.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 		}
 	}

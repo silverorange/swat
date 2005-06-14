@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatEntry.php';
 
 /**
@@ -34,7 +35,7 @@ class SwatFloatEntry extends SwatEntry
 		if (is_numeric($this->value))
 			$this->value = floatval($this->value);
 		else {
-			$msg = _S("The %s field must be a number.");
+			$msg = Swat::_('The %s field must be a number.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 		}
 	}

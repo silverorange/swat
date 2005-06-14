@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 
@@ -108,15 +109,14 @@ class SwatPagination extends SwatControl
 			
 			$anchor = new SwatHtmlTag('a');
 			$anchor->href = sprintf($href, $this->prev_page);
-			$anchor->content = _S("&#171; Previous");
+			$anchor->content = sprintf(Swat::_('%s Previous'), '&#171;');
 			$anchor->class = 'nextprev';
 			$anchor->display();
 		} else {
 			$span = new SwatHtmlTag('span');
 			$span->class = 'nextprev';
-			$span->open();
-			echo _S("&#171; Previous");
-			$span->close();
+			$span->content = sprintf(Swat::_('%s Previous'), '&#171;');
+			$span->display();
 		}
 	}
 
@@ -129,10 +129,11 @@ class SwatPagination extends SwatControl
 	{
 		$div = new SwatHtmlTag('div');
 		$div->class = 'position';
-		$div->open();
-		echo _S("Page ");
-		echo ($this->current_page + 1), ' of ', $this->total_pages;
-		$div->close();
+
+		$div->content = sprintf(Swat::_('Page %d of %d'),
+			$this->current_page + 1, $this->total_pages);
+
+		$div->display();
 	}
 
 	/**
@@ -145,15 +146,14 @@ class SwatPagination extends SwatControl
 			
 			$anchor = new SwatHtmlTag('a');
 			$anchor->href = sprintf($href, $this->next_page);
-			$anchor->content = _S("Next &#187");
+			$anchor->content = sprintf(Swat::_('Next %s'), '&#187');
 			$anchor->class = 'nextprev';
 			$anchor->display();
 		} else {
 			$span = new SwatHtmlTag('span');
 			$span->class = 'nextprev';
-			$span->open();
-			echo _S("Next &#187;");
-			$span->close();
+			$span->content = sprintf(Swat::_('Next %s'), '&#187');
+			$span->display();
 		}
 	}
 
@@ -200,7 +200,7 @@ class SwatPagination extends SwatControl
 					$current->close();
 				} else {
 					$anchor->href = sprintf($href, $i);
-					$anchor->title = sprintf(_S("Go to page %s"), ($i + 1));
+					$anchor->title = sprintf(Swat::_('Go to page %d'), ($i + 1));
 					$anchor->content = ($i + 1);
 					$anchor->display();
 				}
