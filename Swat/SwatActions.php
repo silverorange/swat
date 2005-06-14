@@ -104,7 +104,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$label = new SwatHtmlTag('label');
 		$label->for = $this->id.'_action_flydown';
 		$label->open();
-		echo sprintf('%s: ', _S('Action'));
+		echo sprintf('%s: ', _('Action'));
 		$label->close();
 		
 		$this->action_flydown->display();
@@ -126,7 +126,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 			}
 		}
 
-		echo '<br />', _S('Actions apply to checked items.');
+		echo '<br />', _('Actions apply to checked items.');
 		echo '</div>';
 		
 	}

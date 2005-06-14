@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatContainer.php';
 
@@ -357,7 +358,7 @@ class SwatUI extends SwatObject
 	private function translateValue($value, $translatable)
 	{
 		if ($translatable)
-			return _S($value);
+			return Swat::gettext($value);
 		else
 			return $value;
 	}

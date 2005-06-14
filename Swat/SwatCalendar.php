@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Date.php';
 
 /**
@@ -51,9 +52,9 @@ class SwatCalendar extends SwatControl
 		}
 		$months = "['".implode("','", $months)."']";
 		
-		$close  = _S("Close");
-		$nodate = _S("No Date");
-		$today  = _S("Today");
+		$close  = Swat::_('Close');
+		$nodate = Swat::_('No Date');
+		$today  = Swat::_('Today');
 		
 		if (isset($this->valid_range_start))
 			$start_date = $this->valid_range_start->format("%m/%d/%Y");

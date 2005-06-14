@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatState.php';
@@ -129,12 +130,12 @@ class SwatTimeEntry extends SwatControl implements SwatState {
 			$ampm = $this->am_pm_flydown->value;
 
 			if ($this->required & self::HOUR && $hour === null) {
-				$msg = _S("Hour is Required.");
+				$msg = Swat::_('Hour is Required.');
 				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			}
 
 			if ($this->required & self::HOUR && $ampm === null) {
-				$msg = _S("AM/PM is Required.");
+				$msg = Swat::_('AM/PM is Required.');
 				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			}
 
@@ -152,7 +153,7 @@ class SwatTimeEntry extends SwatControl implements SwatState {
 			$minute = intval($this->minute_flydown->value);
 
 			if ($this->required & self::MINUTE && $minute === null) {
-				$msg = _S("Minute is Required.");
+				$msg = Swat::_('Minute is Required.');
 				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			}
 		} else {
@@ -164,7 +165,7 @@ class SwatTimeEntry extends SwatControl implements SwatState {
 			$second = intval($this->second_flydown->value);
 
 			if ($this->required & self::SECOND && $second === null) {
-				$msg = _S("Second is Required.");
+				$msg = Swat::_('Second is Required.');
 				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			}
 		} else {
@@ -254,16 +255,16 @@ class SwatTimeEntry extends SwatControl implements SwatState {
 
 		if (Date::compare($this->value, $this->valid_range_start, true) == -1) {
 
-			$msg = sprintf(_S("The time you have entered is invalid. ".
-				"It must be after %s."),
+			$msg = sprintf(Swat::_('The time you have entered is invalid. '.
+				'It must be after %s.'),
 				$this->displayTime($this->valid_range_start));
 
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 
 		} elseif (Date::compare($this->value, $this->valid_range_end, true) == 1) {
 
-			$msg = sprintf(_S("The time you have entered is invalid. ".
-				"It must be before %s."),
+			$msg = sprintf(Swat::_('The time you have entered is invalid. '.
+				'It must be before %s.'),
 				$this->displayTime($this->valid_range_end));
 
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));

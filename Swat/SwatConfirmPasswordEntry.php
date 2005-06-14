@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatPasswordEntry.php';
 
 /**
@@ -41,7 +42,8 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry
 
 		if ($this->password_widget->value !== null) {
 			if (strcmp($this->password_widget->value, $this->value) != 0) {
-				$msg = _S("Password and confirmation password do not match.");
+				$msg = Swat::_('Password and confirmation password do not match.');
+
 				$this->addMessage(
 					new SwatMessage($msg, SwatMessage::USER_ERROR));
 			}

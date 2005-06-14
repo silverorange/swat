@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 
@@ -44,7 +45,7 @@ class SwatCascadeFlydown extends SwatFlydown
 		$parent_value = $this->cascade_from->value;
 		if ($parent_value === null) {
 			if ($this->cascade_from->show_blank)
-				return array('' => _S("n/a"));
+				return array('' => Swat::_('n/a'));
 			else
 				return $this->options[key($this->cascade_from->options)];
 		}

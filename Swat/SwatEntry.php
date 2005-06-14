@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/Swat.php';
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
@@ -109,16 +110,16 @@ class SwatEntry extends SwatControl implements SwatState
 			return;
 
 		} elseif ($this->value === null) {
-			$msg = _S("The %s field is required.");
+			$msg = Swat::_('The %s field is required.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			
 		} elseif ($this->maxlength !== null && $len > $this->maxlength) {
-			$msg = sprintf(_S("The %%s field must be less than %s characters."),
+			$msg = sprintf(Swat::_('The %%s field must be less than %s characters.'),
 				$this->maxlength);
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			
 		} elseif ($this->minlength !== null && $len < $this->minlength) {
-			$msg = sprintf(_S("The %%s field must be more than %s characters."),
+			$msg = sprintf(Swat::_('The %%s field must be more than %s characters.'),
 				$this->minlength);
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			
