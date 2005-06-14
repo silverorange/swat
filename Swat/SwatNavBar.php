@@ -26,7 +26,7 @@ class SwatNavBar extends SwatControl
 	 */
 	public function addElement($title, $uri = null)
 	{
-		$new_element = array('title' = $title, 'uri' => $uri);
+		$new_element = array('title' => $title, 'uri' => $uri);
 		$this->elements[] = &$new_element;
 	}
 
@@ -104,7 +104,7 @@ class SwatNavBar extends SwatControl
 				unset($this->elements[$last - $i]);
 			}
 		} else {
-			throw new SwatException(sprintf(__CLASS__.' Cannot pop %s '
+			throw new SwatException(sprintf(__CLASS__.' Cannot pop %s '.
 				'elements because only %s elements exist.',
 				$number,
 				$this->getSize()));
