@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Swat/Swat.php';
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatState.php';

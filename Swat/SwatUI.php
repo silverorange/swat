@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Swat/Swat.php';
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatContainer.php';
 
