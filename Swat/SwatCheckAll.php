@@ -11,11 +11,11 @@ require_once 'Swat/SwatControl.php';
  */
 class SwatCheckAll extends SwatControl
 {
-
 	/**
 	 * Series Name
 	 *
 	 * The name of the series of checkboxes that the check all triggers.
+	 *
 	 * @var string
 	 */
 	public $series_name = null;	
@@ -24,27 +24,38 @@ class SwatCheckAll extends SwatControl
 	 * Title
 	 *
 	 * Optional text to display next to the checkbox, by default "Check All".
+	 * The default title gets set in init().
+	 *
 	 * @var string
 	 */
-	public $title;
+	public $title = null;
 
+	/**
+	 * Initialize this check-all widget
+	 *
+	 * Sets the widget label and enforces a unique identifier.
+	 */
 	public function init()
 	{
 		$this->title = Swat::_('Check All');
-		$this->generateAutoId();
+		if ($this->id === null)
+			$this->id = $this->getUniqueId();
 	}
 
+	/**
+	 * Displays this check-all widget
+	 */
 	public function display()
 	{
 		if ($this->series_name === null)
-			throw new SwatException('SwatCheckall: A series '.
-				'name referencing the series of checkboxes '.
-				'to apply to must be defined.');
+			throw new SwatException(__CLASS__.': A series name referencing '.
+				'the series of checkboxes to apply to must be defined.');
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
 		$input_tag->id = $this->id;
-		$input_tag->onclick = "SwatCheckbox.checkAll(this,'{$this->series_name}')";
+		$input_tag->onclick =
+			"SwatCheckbox.checkAll(this,'{$this->series_name}')";
 
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->for = $this->id;
@@ -57,13 +68,14 @@ class SwatCheckAll extends SwatControl
 		$this->displayJavascript();
 	}
 
+	/**
+	 * Displays the javascript for this check-all widget
+	 */
 	private function displayJavascript()
 	{
-		?>
-		<script type="text/javascript" language="JavaScript">	
-		<?php require_once 'javascript/swat-check-all.js'; ?>	
-		</script>
-		<?php
+		echo '<script type="text/javascript">';
+		include_once 'javascript/swat-check-all.js';
+		echo '</script>';
 	}
 }
 
