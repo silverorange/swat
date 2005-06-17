@@ -15,16 +15,19 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	/**
 	 * Link href
 	 *
-	 * The href attribute in the HTML anchor tag.
+	 * The href attribute in the XHTML anchor tag.
+	 *
+	 * The link may include a sprintf substitution tag. For example:
+	 *    "MySection/MyPage?id=%s"
 	 *
 	 * @var string
 	 */
-	public $href;
+	public $link;
 
 	/**
 	 * Link title
 	 *
-	 * The visible content to place within the HTML anchor tag.
+	 * The visible content to place within the XHTML anchor tag.
 	 *
 	 * @var string
 	 */
@@ -33,8 +36,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	/**
 	 * Link value
 	 *
-	 * A value to substitute into the href.
-	 * For example href: "MySection/MyPage?id=%s"
+	 * A value to substitute into the link.
 	 *
 	 * @var string
 	 */
@@ -53,9 +55,9 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 		$anchor->content = $this->title;
 
 		if ($this->value === null)
-			$anchor->href = $this->href;
+			$anchor->href = $this->link;
 		else
-			$anchor->href = sprintf($this->href, $this->value);
+			$anchor->href = sprintf($this->link, $this->value);
 
 		$anchor->display();
 	}
