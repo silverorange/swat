@@ -75,7 +75,8 @@ class SwatPagination extends SwatControl
 
 	public function init()
 	{
-		$this->generateAutoId();
+		if ($this->id === null)
+			$this->id = $this->getUniqueId;
 	}
 
 	public function display()

@@ -72,19 +72,20 @@ abstract class SwatWidget extends SwatObject
 	}
 
 	/**
-	 * Generates automatic unique id
+	 * Generates a unique id
 	 *
-	 * Sets the id property of this widget to an auto-generated identifier
-	 * if the id has not already been explicitly set.
+	 * Gets the an id that may be used for the id property of this widget.
+	 * Ids are auto-generated.
+	 *
+	 * @return string a unique identifier.
 	 */
-	protected function generateAutoId()
+	protected function getUniqueId()
 	{
 		static $counter = 0;
 
-		if ($this->id !== null) return;
-		$this->id = get_class($this).$counter;
-
 		$counter++;
+
+		return get_class($this).$counter;
 	}
 
 	/**

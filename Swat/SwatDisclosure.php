@@ -34,7 +34,8 @@ class SwatDisclosure extends SwatContainer {
 	public function init()
 	{
 		// an id is required for this widget.
-		$this->generateAutoId();
+		if ($this->id === null)
+			$this->id = $this->getUniqueId();
 	}
 
 	/**
