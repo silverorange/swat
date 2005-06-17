@@ -11,7 +11,6 @@ require_once 'Date.php';
  */
 class SwatCalendar extends SwatControl
 {
-
 	/**
 	 * Start date of the valid range (inclusive).
 	 *
@@ -25,17 +24,25 @@ class SwatCalendar extends SwatControl
 	 * @var Date
 	 */
 	public $valid_range_end;
-	
+
+	/**
+	 * Displays this calendar widget
+	 */
 	public function display()
 	{
 		$this->displayJavascript();
 		
+		/*
+		 * This date is arbitrary and is just used for getting week and month
+		 * names. We may want to add a method to Date() to get week and month
+		 * names.
+		 */
 		$date = new Date();
 		$date->setDay(1);
 		$date->setMonth(1);
 		$date->setYear(1995);
 		
-		// Set the names of weeks (locale-specific)
+		// Get the names of weeks (locale-specific)
 		$weeks = array();
 		for ($i = 1; $i < 8; $i++) {
 			$weeks[] = $date->format('%a');
@@ -43,7 +50,7 @@ class SwatCalendar extends SwatControl
 		}
 		$weeks = "['".implode("','", $weeks)."']";
 		
-		// Set the names of months (locale-specific)
+		// Get the names of months (locale-specific)
 		$months = array();
 		for ($i = 1; $i < 13; $i++) {
 			$months[] = $date->format('%b');
@@ -95,6 +102,11 @@ class SwatCalendar extends SwatControl
 		$div_tag->close();
 	}
 
+	/**
+	 * Displays calendar javascript
+	 *
+	 * The javascript is the majority of hte calendar code
+	 */
 	private function displayJavascript()
 	{
 		echo '<script type="text/javascript">';
