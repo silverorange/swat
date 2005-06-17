@@ -14,7 +14,9 @@ class SwatTreeFlydown extends SwatFlydown
 	/**
 	 * Flydown options
 	 *
-	 * An tree collection of {@link SwatTreeNode}s for the flydown.
+	 * An tree collection of {@link SwatTreeNode} objects for the flydown.
+	 * This property overwrites the public $options property in the display
+	 * method.
 	 *
 	 * @var SwatTreeNode
 	 */
