@@ -12,13 +12,17 @@ require_once 'Swat/SwatCellRenderer.php';
 class SwatControlCellRenderer extends SwatCellRenderer
 {
 	/**
-	 * Href anchor
+	 * Link
 	 *
-	 * The href attribute in the XHTML anchor tag.
+	 * The hypertext link this control follows. The href attribute in the
+	 * XHTML anchor tag.
+	 *
+	 * The link may include a sprintf substitution tag. For example:
+	 *    "MySection/MyPage?id=%s"
 	 *
 	 * @var string
 	 */
-	public $href;
+	public $link;
 
 	/**
 	 * Image source
@@ -27,7 +31,7 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	 *
 	 * @var string
 	 */
-	public $src;
+	public $image;
 
 	/**
 	 * Image height
@@ -66,10 +70,9 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	public $alt = '';
 
 	/**
-	 * Href value
+	 * Control value
 	 *
-	 * A value to substitute into the href using sprintf()
-	 * example href: "MySection/MyPage?id=%s"
+	 * A value to substitute into the link.
 	 *
 	 * @var string
 	 */
@@ -87,12 +90,12 @@ class SwatControlCellRenderer extends SwatCellRenderer
 		$anchor = new SwatHtmlTag('a');
 
 		if ($this->value === null)
-			$anchor->href = $this->href;
+			$anchor->href = $this->link;
 		else
-			$anchor->href = sprintf($this->href, $this->value);
+			$anchor->href = sprintf($this->link, $this->value);
 
 		$image_tag = new SwatHtmlTag('img');
-		$image_tag->src = $this->src;
+		$image_tag->src = $this->image;
 
 		if ($this->height > 0)
 			$image_tag->height = $this->height;

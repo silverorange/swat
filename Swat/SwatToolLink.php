@@ -13,24 +13,27 @@ require_once 'Swat/SwatHtmlTag.php';
 class SwatToolLink extends SwatControl
 {
 	/**
+	 * Link href
+	 *
+	 * The link may include a sprintf substitution tag. For example:
+	 *    "MySection/MyPage?id=%s"
+	 *
+	 * @var string
+	 */
+	public $link = '';
+
+	/**
 	 * The title of this link
 	 *
 	 * @var string
 	 */
 	public $title = '';
 
-	/**
-	 * The href of this link
-	 *
-	 * @var string
-	 */
-	public $href = '';
 
 	/**
-	 * HREF value
+	 * Link value
 	 *
-	 * A value to substitute into the href using sprintf()
-	 * example href: "MySection/MyPage?id=%s"
+	 * A value to substitute into the link.
 	 *
 	 * @var string
 	 */
@@ -49,9 +52,9 @@ class SwatToolLink extends SwatControl
 		$anchor = new SwatHtmlTag('a');
 
 		if ($this->value === null)
-			$anchor->href = $this->href;
+			$anchor->href = $this->link;
 		else
-			$anchor->href = sprintf($this->href, $this->value);
+			$anchor->href = sprintf($this->link, $this->value);
 
 		$anchor->content = $this->title;
 		$anchor->class = 'swat-tool-link';
