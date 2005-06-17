@@ -19,6 +19,10 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 	 */
 	private $rows = array();
 
+	public function __construct()
+	{
+	}
+
 	/**
 	 * Gets the number of rows in this data structure
 	 *
