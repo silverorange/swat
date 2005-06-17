@@ -68,9 +68,9 @@ class SwatRadioList extends SwatControl implements SwatState
 				$input_tag->display();
 			
 				$label_tag->for = $this->id.'_'.$input_tag->value;
-				$label_tag->open();
-				echo $title;
-				$label_tag->close();
+				$label_tag->content = $title;
+
+				$label_tag->display();
 				
 				echo '<br />';
 			}
