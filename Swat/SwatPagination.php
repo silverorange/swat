@@ -12,21 +12,20 @@ require_once 'Swat/SwatHtmlTag.php';
  */
 class SwatPagination extends SwatControl
 {
-
 	/**
-	 * Href
+	 * Link
 	 *
-	 * The initial HREF used when building links.  If null, link HREF's will
+	 * The initial link used when building links. If null, links will
 	 * begin with '?'.
 	 *
-	 * @var int
+	 * @var string
 	 */
-	public $href = null;
+	public $link = null;
 
 	/**
 	 * HTTP GET vars to clobber
 	 *
-	 * An array of GET variable names to unset before rebuilding new link.
+	 * An array of GET variable names to unset before rebuilding a new link.
 	 *
 	 * @var int
 	 */
@@ -69,19 +68,59 @@ class SwatPagination extends SwatControl
 	 */
 	public $total_records = 0;
 
-	protected $next_page;
-	protected $prev_page;
-	protected $total_pages;
+	/**
+	 * Current record
+	 *
+	 * The record that is currently being displayed first on the page.
+	 *
+	 * TODO: I'm not sure what the scope of this should be.
+	 *
+	 * @var int
+	 */
+	public $current_record = 0;
+	
+	/**
+	 * The next page to display
+	 *
+	 * The value is zero based.
+	 *
+	 * @var int
+	 */
+	protected $next_page = 0;
 
+	/**
+	 * The previous page to display
+	 *
+	 * The value is zero based.
+	 *
+	 * @var int
+	 */
+	protected $prev_page = 0;
+	
+	/**
+	 * The total number of pages in the database
+	 *
+	 * @var int
+	 */
+	protected $total_pages = 0;
+
+	/**
+	 * Initializes this pagination widget
+	 *
+	 * Enforces that a unique id is set.
+	 */
 	public function init()
 	{
 		if ($this->id === null)
-			$this->id = $this->getUniqueId;
+			$this->id = $this->getUniqueId();
 	}
 
+	/**
+	 * Displays this pagination widget
+	 */
 	public function display()
 	{
-		$this->calcPages();
+		$this->calculatePages();
 
 		if ($this->total_pages > 1) {
 
@@ -100,15 +139,28 @@ class SwatPagination extends SwatControl
 	}
 
 	/**
-	 * Display previous page link
+	 * Processes this pagination widget
+	 *
+	 * Sets the current_page and current_record properties.
+	 */
+	public function process()
+	{
+		if (array_key_exists($this->id, $_GET))
+			$this->current_page = $_GET[$this->id];
+
+		$this->current_record = $this->current_page * $this->page_size;
+	}
+
+	/**
+	 * Displays the previous page link
 	 */
 	protected function displayPrev()
 	{
 		if ($this->prev_page != -1) {
-			$href = $this->getHref();
+			$link = $this->getLink();
 			
 			$anchor = new SwatHtmlTag('a');
-			$anchor->href = sprintf($href, $this->prev_page);
+			$anchor->href = sprintf($link, (string) $this->prev_page);
 			$anchor->content = sprintf(Swat::_('%s Previous'), '&#171;');
 			$anchor->class = 'nextprev';
 			$anchor->display();
@@ -121,7 +173,7 @@ class SwatPagination extends SwatControl
 	}
 
 	/**
-	 * Display current position of page
+	 * Displays the current page position
 	 *
 	 * i.e. "1 of 3"
 	 */
@@ -137,34 +189,34 @@ class SwatPagination extends SwatControl
 	}
 
 	/**
-	 * Display next page link
+	 * Displays the next page link
 	 */
 	protected function displayNext()
 	{
 		if ($this->next_page != -1) {
-			$href = $this->getHref();
+			$link = $this->getLink();
 			
 			$anchor = new SwatHtmlTag('a');
-			$anchor->href = sprintf($href, $this->next_page);
-			$anchor->content = sprintf(Swat::_('Next %s'), '&#187');
+			$anchor->href = sprintf($link, (string) $this->next_page);
+			$anchor->content = sprintf(Swat::_('Next %s'), '&#187;');
 			$anchor->class = 'nextprev';
 			$anchor->display();
 		} else {
 			$span = new SwatHtmlTag('span');
 			$span->class = 'nextprev';
-			$span->content = sprintf(Swat::_('Next %s'), '&#187');
+			$span->content = sprintf(Swat::_('Next %s'), '&#187;');
 			$span->display();
 		}
 	}
 
 	/**
-	 * Display a smart list of pages
+	 * Displays a smart list of pages
 	 */
 	protected function displayPages()
 	{
 		$j = -1;
 
-		$href = $this->getHref();
+		$link = $this->getLink();
 
 		$anchor = new SwatHtmlTag('a');
 		$span = new SwatHtmlTag('span');
@@ -177,30 +229,35 @@ class SwatPagination extends SwatControl
 			if ($this->current_page <= 6 && $i <= 9) {
 				// Current page is in the first 6, show the first 10 pages
 				$display = true;
+				
 			} elseif ($this->current_page >= $this->total_pages - 7 &&
 				$i >= $this->total_pages - 10) {
+
 				// Current page is in the last 6, show the last 10 pages
 				$display = true;
-			} elseif ($i <= 1 || $i >=$this->total_pages -2 ||
+
+			} elseif ($i <= 1 || $i >= $this->total_pages -2 ||
 				abs($this->current_page - $i) <= 3) {
+				
 				// Always show the first 2, last 2, and middle 6 pages
 				$display = true;
 			}
 
 			if ($display) {
 				if ($j + 1 != $i) {
-					$span->open();
-					echo '...';
-					$span->close();
+					// ellipses
+					$span->content = '&#8230;';
+					$span->display();
 				}
 
 				if ($i == $this->current_page) {
-					$current->open();
-					echo ($i + 1);
-					$current->close();
+					$cuttent->content = ($i + 1);
+					$current->display();
 				} else {
-					$anchor->href = sprintf($href, $i);
-					$anchor->title = sprintf(Swat::_('Go to page %d'), ($i + 1));
+					$anchor->href = sprintf($link, (string) $i);
+					$anchor->title =
+						sprintf(Swat::_('Go to page %d'), ($i + 1));
+
 					$anchor->content = ($i + 1);
 					$anchor->display();
 				}
@@ -210,15 +267,15 @@ class SwatPagination extends SwatControl
 		}
 	}
 
-	public function process()
-	{
-		if (array_key_exists($this->id, $_GET))
-			$this->current_page = $_GET[$this->id];
-
-		$this->current_record = $this->current_page * $this->page_size;
-	}
-
-	private function getHref()
+	/**
+	 * Gets the base link for all page links
+	 *
+	 * This removes all unwanted elements from the get variables and adds
+	 * all the wanted ones back into an acceptable url string.
+	 *
+	 * @return string the base link for all pages with cleaned get variables.
+	 */
+	private function getLink()
 	{
 		//$vars = array_diff_key($_GET, array_flip($this->unset_get_vars));
 		$vars = $_GET;
@@ -229,21 +286,26 @@ class SwatPagination extends SwatControl
 
 		$vars[$this->id] = '%s';
 
-		if ($this->href === null)
-			$href = '?';
+		if ($this->link === null)
+			$link = '?';
 		else
-			$href = $this->href.'?';
+			$link = $this->link.'?';
 
 		foreach($vars as $name => $value)
-			$href.= $name.'='.$value.'&';
+			$link .= $name.'='.urlencode($value).'&amp;';
 
 		// Remove trailing ampersand
-		$href = substr($href, 0, -1);
+		$link = substr($link, 0, -1);
 
-		return $href;
+		return $link;
 	}
 
-	private function calcPages()
+	/**
+	 * Calculates page totals
+	 *
+	 * Sets the internal total_pages, next_page and prev_page properties.
+	 */
+	private function calculatePages()
 	{
 		$this->total_pages = ceil($this->total_records / $this->page_size);
 
