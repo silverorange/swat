@@ -41,7 +41,7 @@ class SwatTreeNode extends SwatObject
 	}
 
 	/**
-	 * Returns this branch as an array
+	 * Returns this branch as a flat array
 	 *
 	 * A utility method that gets all child elements as a flat array of the
 	 * form:
