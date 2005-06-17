@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatObject.php';
+require_once 'Swat/SwatStyle.php';
 require_once 'Swat/SwatMessage.php';
 
 /**
@@ -35,8 +36,27 @@ abstract class SwatWidget extends SwatObject
 	 */
 	public $visible = true;
 
+	/**
+	 * Messages affixed to this widget
+	 *
+	 * @var array
+	 */
 	protected $messages = array();
 
+	/**
+	 * The style of this widget
+	 *
+	 * @var SwatStyle
+	 */
+	private $style = null;
+
+	/**
+	 * The default style of all widgets
+	 *
+	 * @var SwatStyle
+	 */
+	static private $default_style = null;
+	
 	/**
 	 * Creates a new SwatWidget
 	 *
@@ -46,6 +66,8 @@ abstract class SwatWidget extends SwatObject
 	{
 		$this->id = $id;
 
+		$this->style = $this->getDefaultStyle();
+		
 		$this->init();
 	}
 
@@ -65,6 +87,29 @@ abstract class SwatWidget extends SwatObject
 		$counter++;
 	}
 
+	/**
+	 * Sets the style of this widget
+	 *
+	 * @param SwatStyle $style the styoe of this widget.
+	 */
+	public function setStyle(SwatStyle $style)
+	{
+		$this->style = $style;
+	}
+
+	/**
+	 * Gets the default style of all widgets
+	 *
+	 * The default style is a static property of SwatWidget
+	 */
+	public function getDefaultStyle()
+	{
+		if (self::$default_style === null) {
+			self::$default_style = new SwatStyle();
+		}
+		return self::$default_style;
+	}
+	
 	/**
 	 * Displays this widget
 	 *
