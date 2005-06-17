@@ -10,30 +10,38 @@ require_once 'Swat/SwatState.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCheckboxTree extends SwatCheckboxList implements SwatState {
-
+class SwatCheckboxTree extends SwatCheckboxList implements SwatState
+{
 	/**
 	 * Checkbox tree structure
 	 *
-	 * An tree collection of {@link SwatTreeNode}s.
+	 * An tree structure of {@link SwatTreeNode} objects.
+	 * This structure overwrites the public options property.
+	 *
 	 * @var SwatTreeNode
 	 */
 	public $tree = null;
 	
 	/**
-	 * Tree Path (read-only)
+	 * Tree Path
 	 *
 	 * An array containing the branch of the selected node.
-	 * Set at process.
+	 * This is initialized at process time.
+	 *
+	 * TODO: This doesn't make any sense as any number of checkboxes
+	 *       may be selected each with unique paths.
+	 *
 	 * @var array
 	 */
-	public $path;
+	private $path = array();
 	
-	public function display() {
+	public function display()
+	{
 		if ($this->tree !== null)
 			$this->options = $this->tree->toArray();
 
 		$div_tag = new SwatHtmlTag('div');
+
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
 		
@@ -42,9 +50,9 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState {
 		$input_tag->name = $this->id.'[]';
 	
 		foreach ($this->options as $key => $data) {
-			$key_array = explode('/',$key);
+			$key_array = explode('/', $key);
 		
-			$div_tag->style='margin-left: '.((count($key_array) - 1)).'em;';
+			$div_tag->style = 'margin-left: '.((count($key_array) - 1)).'em;';
 			$div_tag->open();
 			
 			if (isset($data['value'])) {
@@ -55,12 +63,10 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState {
 					$input_tag->checked = 'checked';
 
 				$label_tag->for = $key;
+				$label_tag->content = $data['title'];
 
 				$input_tag->display();
-			
-				$label_tag->open();
-					echo $data['title'];
-				$label_tag->close();
+				$label_tag->display();
 			} else {
 				echo $data['title'];
 			}
@@ -69,19 +75,56 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState {
 		}
 	}
 
-	public function process() {
+	/**
+	 * Processes this checkbox tree
+	 *
+	 * Gets the selected checkbox path.
+	 *
+	 * TODO: Finish writing this.
+	 */
+	public function process()
+	{
 		parent::process();
 
-		//$this->path = explode('/',$this->value);
+		//$this->path = explode('/', $this->value);
 		//$this->value = $this->path[count($this->path)-1];
 	}
 
-	public function setState($state) {
-		$this->value = $state;
+	/**
+	 * Gets the path of the user selected elemtent
+	 *
+	 * This method only returns meaningful results after
+	 * process() has been called.
+	 *
+	 * @return array the path of the current user selected element.
+	 */
+	public function getPath()
+	{
+		return $this->path;
 	}
-	
-	public function getState() {
+
+	/**
+	 * Gets the current state of this checkbox tree
+	 *
+	 * @return array the current state of this checkbox tree.
+	 *
+	 * @see SwatState::getState()
+	 */
+	public function getState()
+	{
 		return $this->value;
+	}
+
+	/**
+	 * Sets the current state of this checkbox tree
+	 *
+	 * @param array $state the new state of this checkbox tree.
+	 *
+	 * @see SwatState::setState()
+	 */
+	public function setState($state)
+	{
+		$this->value = $state;
 	}
 }
 
