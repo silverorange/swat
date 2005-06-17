@@ -100,7 +100,7 @@ class SwatFlydown extends SwatControl implements SwatState
 			
 			foreach ($options as $value => $title) {
 				$option_tag->value = (string)$value;
-				$option_tag->removeAttr('selected');
+				$option_tag->removeAttribute('selected');
 				
 				if ((string)$this->value === (string)$value)
 					$option_tag->selected = 'selected';

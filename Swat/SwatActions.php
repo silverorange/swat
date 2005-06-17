@@ -103,14 +103,13 @@ class SwatActions extends SwatControl implements SwatUIParent
 		
 		$label = new SwatHtmlTag('label');
 		$label->for = $this->id.'_action_flydown';
-		$label->open();
-		echo sprintf('%s: ', Swat::_('Action'));
-		$label->close();
+		$label->content = sprintf('%s: ', Swat::_('Action'));
+		$label->display();
 		
 		$this->action_flydown->display();
 		echo ' ';
 		$this->apply_button->display();
-		
+
 		foreach ($this->action_items as $item) {
 			if ($item->widget !== null) {
 				$div = new SwatHtmlTag('div');

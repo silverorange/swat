@@ -59,7 +59,7 @@ class SwatRadioList extends SwatControl implements SwatState
 			foreach ($this->options as $value => $title) {
 				
 				$input_tag->value = (string)$value;
-				$input_tag->removeAttr('checked');
+				$input_tag->removeAttribute('checked');
 				
 				if ((string)$this->value === (string)$value)
 					$input_tag->checked = "checked";
