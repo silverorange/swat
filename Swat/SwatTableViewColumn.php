@@ -93,7 +93,7 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent {
 		echo $this->title;
 	}
 
-	public function display($row, $row_number) {
+	public function display($row) {
 		if (count($this->renderers) == 0)
 			throw new SwatException(__CLASS__.': no renderer has been provided.');
 
@@ -102,10 +102,10 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent {
 			foreach ($renderer->_property_map as $property => $field)
 				$renderer->$property = $row->$field;
 
-		$this->displayRenderers($row, $row_number);
+		$this->displayRenderers($row);
 	}
 
-	protected function displayRenderers($row, $row_number) {
+	protected function displayRenderers($row) {
 		reset($this->renderers);
 		$first_renderer = current($this->renderers);
 		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
