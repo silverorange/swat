@@ -120,7 +120,7 @@ class SwatNavBar extends SwatControl
 	public function display()
 	{
 		$count = 0;
-		foreach ($this->entries as $entry) {
+		foreach ($this->elements as $entry) {
 			
 			if ($count != 0)
 				echo ' &#187; ';
