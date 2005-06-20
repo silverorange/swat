@@ -65,15 +65,15 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	 *
 	 * @throws SwatException
 	 */
-	public function linkField($renderer_id, $field, $property)
+	public function linkField($renderer, $field, $property)
 	{
-		if (isset($this->renderers[$renderer_id]))
-			$this->renderers[$renderer_id]['property_map'][$property] =
+		if (isset($this->renderers[$renderer->id]))
+			$this->renderers[$renderer->id]['property_map'][$property] =
 				$field;
 		else
 			throw new SwatException(sprintf(__CLASS__.': renderer with an id '.
 				"of '%s' does not exist in this details view field.",
-				$renderer_id));
+				$renderer->id));
 	}
 
 	/**
@@ -85,7 +85,7 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	 */
 	public function addRenderer(SwatCellRenderer $renderer)
 	{
-		if ($render->id !== null)
+		if ($renderer->id !== null)
 			$this->renderers[$renderer->id] = array('renderer' => $renderer,
 				'property_map' => array());
 		else
@@ -150,7 +150,7 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 		reset($this->renderers);
 		$first_field_renderer = current($this->renderers);
 		$first->renderer = $first_field_renderer['renderer'];
-		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
+		$td_tag = new SwatHtmlTag('td', $first->renderer->getTdAttributes());
 		$td_tag->open();
 
 		$prefix = ($this->view->id === null) ? '' : $this->view->id.'_';
