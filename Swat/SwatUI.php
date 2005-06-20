@@ -16,9 +16,10 @@ class SwatUI extends SwatObject
 	 * An array that maps other package classes to filenames
 	 *
 	 * The array is of the form:
-	 *    prefix => path
-	 * Where prefix is the classname prefix and path is the relative path where
-	 * the source file may be included from.
+	 *    package_prefix => path
+	 * Where package prefix is the classname prefix used in this package and 
+	 * path is the relative path where the source files for this package may 
+	 * be included from.
 	 *
 	 * @var array
 	 */
@@ -242,8 +243,8 @@ class SwatUI extends SwatObject
 			$classfile = "Swat/{$class}.php";
 
 			if (count($this->classmap)) {
-				foreach ($this->classmap as $prefix => $path) {
-					if (strncmp($class, $prefix, strlen($prefix)) == 0)
+				foreach ($this->classmap as $package_prefix => $path) {
+					if (strncmp($class, $package_prefix, strlen($package_prefix)) == 0)
 						$classfile = "{$path}/{$class}.php";
 				}
 			}
@@ -326,7 +327,7 @@ class SwatUI extends SwatObject
 		case 'float':
 			return floatval($value);
 		case 'string':
-			return $this->translateValue($value, $translatable);
+			return $this->translateValue($value, $translatable, $object);
 		case 'data':
 			$object->parent->linkField($object, $value, $name);
 			return null;
@@ -341,7 +342,7 @@ class SwatUI extends SwatObject
 					E_USER_NOTICE);
 
 			// default to returnsing a string
-			return $this->translateValue($value, $translatable);
+			return $this->translateValue($value, $translatable, $object);
 		}
 	}
 
@@ -351,15 +352,25 @@ class SwatUI extends SwatObject
 	 * @param string $value the value to be translated.
 	 * @param boolean $translatable whether or not it is possible to translate
 	 *                               the value.
+	 * @param SwatObject $object the object the property value applies to.
 	 *
 	 * @return string the translated value if possible, otherwise $value.
 	 */
-	private function translateValue($value, $translatable)
+	private function translateValue($value, $translatable, $object)
 	{
-		if ($translatable)
-			return Swat::gettext($value);
-		else
+		if (!$translatable)
 			return $value;
+
+		if (count($this->classmap)) {
+			$class = get_class($object);
+
+			foreach ($this->classmap as $package_prefix => $path) {
+				if (strncmp($class, $package_prefix, strlen($package_prefix)) == 0)
+					return call_user_func(array($package_prefix, 'gettext'), $value);
+			}
+		}
+
+		return $value;
 	}
 }
 
