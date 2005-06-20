@@ -40,6 +40,12 @@ class SwatTextareaEditor extends SwatTextarea
 	public $basehref = null; 
 	
 	
+	public function process()
+	{
+		parent::process();
+		$this->value = str_replace("\n", "", $this->value);
+	}
+
 	public function display()
 	{
 		$this->displayJavascript();
@@ -115,7 +121,7 @@ class SwatTextareaEditor extends SwatTextarea
 		//convert all types of double quotes
 		$value = str_replace(chr(147), chr(34), $value);
 		$value = str_replace(chr(148), chr(34), $value);
-		//	$value = str_replace("\"", "\"", $value);
+		$value = str_replace('"', '&quot;', $value);
 	
 		//replace carriage returns & line feeds
 		$value = str_replace(chr(10), " ", $value);
