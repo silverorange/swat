@@ -197,12 +197,12 @@ function writeRichText(rte, html, width, height, basehref) {
 		//document.writeln('<iframe width="154" height="104" id="cp' + rte + '" src="' + includesPath + 'swat-textarea-editor-palette.html" marginwidth="0" marginheight="0" scrolling="no" style="visibility:hidden; position: absolute;"></iframe>');
 		
 		html = convertTags(html);
-		document.writeln('<input type="hidden" id="hdn' + rte + '" name="' + rte + '" value="' + html + '">');
+		document.writeln('<input type="hidden" id="hdn' + rte + '" name="' + rte + '" value="' + html + '" />');
 
 		document.writeln('</div>'); //end editor
 		
 		enableDesignMode(rte, html, basehref);
-	
+
 	} else {
 		document.writeln('<textarea name="' + rte + '" id="' + rte + '" style="width: ' + width + '; height: ' + height + ';">' + html + '</textarea>');
 	}
@@ -257,6 +257,7 @@ function enableDesignMode(rte, html, basehref) {
 		oRTE.designMode = "On";
 //frames[rte].document.attachEvent('onkeypress', function evt_ie_keypress(event) {ieKeyPress(event, rte);});
 		appendFormOnSubmit(rte);
+		appendDocumentOnLoad(rte);
 	} else {
 		try {
 			document.getElementById(rte).contentDocument.designMode = "on";
@@ -272,6 +273,7 @@ function enableDesignMode(rte, html, basehref) {
 					//switch to non-CSS mode (inserts <tag></tag> instead of <span style=""><span>)
 					oRTE.execCommand("useCSS", false, true);
 					appendFormOnSubmit(rte);
+					appendDocumentOnLoad(rte);
 				}
 			} catch (e) {
 				alert("Error preloading content.");
@@ -300,6 +302,9 @@ function appendFormOnSubmit(rte) {
 	}
 
 	myform.onsubmit = function() {
+		if (document.getElementById("_rteModeSource" + rte).value == 1)
+			toggleHTMLSrc(rte, false);
+	
 		setHiddenVal(rte);
 		
 		var prev_elements = this.__msh_prevOnSubmit;
@@ -323,7 +328,7 @@ function setHiddenVal(rte) {
 		oHdnField.value = document.getElementById(rte).contentWindow.document.body.innerHTML;
 	
 	oHdnField.value = convertTags(oHdnField.value);
-
+	
 	//if there is no content (other than formatting) set value to nothing
 	if (stripHTML(oHdnField.value.replace("&nbsp;", " ")) == "" &&
 		oHdnField.value.toLowerCase().search("<hr") == -1 &&
@@ -829,22 +834,39 @@ function toggleFormatting(rte) {
 				element.childNodes[i].disabled = (document.getElementById("_rteModeSource" + rte).value == 1);
 }
 
-window.onload = function(ev) {
-	initCheckRichText();
-	
+
+function appendDocumentOnLoad(rte) {
+	var hdn_field = document.getElementById('hdn' + rte);
+
+	if (typeof window.onload == "function") {
+		var window_onload = window.onload;
+		if (typeof window.__msh_prevOnLoad == "undefined")
+			window.__msh_prevOnLoad = [];
+			window.__msh_prevOnLoad.push(window_onload);
+	}
+
+	window.onload = function() {
+		onloadRTE(rte);		
+
+		var prev_elements = this.__msh_prevOnLoad;
+		if (typeof prev_elements != "undefined")
+			for (var elem in prev_elements)
+				prev_elements[elem]();
+	};
+}
+
+function onloadRTE(rte) {
+	initCheckRichText();	
+
 	if (!isRichText)
 		return;
 
-	var vRTEs = allRTEs.split(";");
-	for (var i = 0; i < vRTEs.length; i++) {
-		currentRTE = vRTEs[i];
-		
-		var hidden_val = document.getElementById('hdn' + vRTEs[i]);
+	currentRTE = rte;
+	var hidden_val = document.getElementById('hdn' + rte);
 
-		if (hidden_val.value.toString())
-			insertHTML(hidden_val.value.toString());
-	}
-};
+	if (hidden_val.value.toString())
+		insertHTML(hidden_val.value.toString());
+}
 
 window.onunload = function(ev) {
 	initCheckRichText();
