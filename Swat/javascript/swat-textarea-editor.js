@@ -48,10 +48,11 @@ function initCheckRichText() {
 
 function writeRichText(rte, html, width, height, basehref) {
 	if (isRichText) {
-
 		if (allRTEs.length > 0) allRTEs += ";";
 		allRTEs += rte;
 		
+		appendDocumentOnLoad(rte);
+
 		document.writeln('<div class="rteDiv" style="width:' + width + ';">');
 		
 		document.writeln('<div id="Menu_' + rte + '" class="rteMenu">');
@@ -257,7 +258,6 @@ function enableDesignMode(rte, html, basehref) {
 		oRTE.designMode = "On";
 //frames[rte].document.attachEvent('onkeypress', function evt_ie_keypress(event) {ieKeyPress(event, rte);});
 		appendFormOnSubmit(rte);
-		appendDocumentOnLoad(rte);
 	} else {
 		try {
 			document.getElementById(rte).contentDocument.designMode = "on";
@@ -273,7 +273,6 @@ function enableDesignMode(rte, html, basehref) {
 					//switch to non-CSS mode (inserts <tag></tag> instead of <span style=""><span>)
 					oRTE.execCommand("useCSS", false, true);
 					appendFormOnSubmit(rte);
-					appendDocumentOnLoad(rte);
 				}
 			} catch (e) {
 				alert("Error preloading content.");
@@ -836,8 +835,6 @@ function toggleFormatting(rte) {
 
 
 function appendDocumentOnLoad(rte) {
-	var hdn_field = document.getElementById('hdn' + rte);
-
 	if (typeof window.onload == "function") {
 		var window_onload = window.onload;
 		if (typeof window.__msh_prevOnLoad == "undefined")
