@@ -27,7 +27,7 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	 *
 	 * @see swatcellrenderer::render()
 	 */
-	public function render($prefix)
+	public function render($prefix = null)
 	{
 		echo $this->value;
 	}

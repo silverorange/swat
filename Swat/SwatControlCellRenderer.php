@@ -85,7 +85,7 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render($prefix)
+	public function render($prefix = null)
 	{
 		$anchor = new SwatHtmlTag('a');
 
