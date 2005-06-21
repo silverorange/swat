@@ -40,8 +40,8 @@ interface SwatCellRendererContainer
 	 * @param array $fields the data-field property mappings to add to the cell
 	 *                       renderer.
 	 */
-	public function addRendererWithFields(SwatCellRenderer $renderer,
-		$fields = null);
+	public function addRendererWithMappings(SwatCellRenderer $renderer,
+		$mappings = null);
 
 	/**
 	 * Adds data-field property mappings to a cell renderer in this container
@@ -54,7 +54,7 @@ interface SwatCellRendererContainer
 	 * @param array $fields the data-field property mappings to add to the cell
 	 *                       renderer.
 	 */
-	public function addRendererFields($renderer_id, $fields = null);
+	public function addRendererMappings($renderer_id, $mappings = null);
 
 	/**
 	 * Sets the data-field property mappings for a cell renderer in this
@@ -68,7 +68,7 @@ interface SwatCellRendererContainer
 	 * @param array $fields the data-field property mappings to add to the cell
 	 *                       renderer.
 	 */
-	public function setRendererFields($renderer_id, $fields = null);
+	public function setRendererMappings($renderer_id, $mappings = null);
 }
 
 ?>
