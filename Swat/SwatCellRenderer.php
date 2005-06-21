@@ -30,7 +30,7 @@ abstract class SwatCellRenderer extends SwatObject
 	 *
 	 * @param string $prefix an optional prefix to name XHTML controls with.
 	 */
-	abstract public function render($prefix);
+	abstract public function render($prefix = null);
 
 	/**
 	 * Gets TD-tag attributes

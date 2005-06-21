@@ -63,7 +63,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render($prefix)
+	public function render($prefix = null)
 	{
 		$image_tag = new SwatHtmlTag('img');
 		$image_tag->src = $this->src;

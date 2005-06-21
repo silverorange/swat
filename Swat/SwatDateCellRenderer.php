@@ -38,7 +38,7 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render($prefix)
+	public function render($prefix = null)
 	{
 		if ($this->date !== null) {
 			$date = new SwatDate($this->date);
