@@ -95,7 +95,10 @@ class SwatDB {
 			$id_list);
 
 		SwatDB::debug($sql);
-		$db->query($sql);
+		$rs = $db->query($sql);
+
+		if (MDB2::isError($rs))
+			throw new SwatDBException($rs->getMessage());
 	}
 	// }}}
     // {{{ public static function queryColumn()
