@@ -290,12 +290,187 @@ class SwatDB {
 				throw new SwatDBException($ret->getMessage());
 		}
 
-		$ret = $db->query($delete_sql);
-		if (MDB2::isError($ret))
-			throw new SwatDBException($ret->getMessage());
+		$rs = $db->query($delete_sql);
+		if (MDB2::isError($rs))
+			throw new SwatDBException($rs->getMessage());
 		
 		$db->commit();
 
+	}
+
+	// }}}
+	// {{{ public static function queryRow()
+
+	/**
+	 * Query a single row
+	 *
+ 	 * Convenience method to query for a single row from a database table.
+	 * One convenient use of this method is for loading data on an edit page.
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 *
+	 * @param string $table The database table to query.
+	 *
+	 * @param array $fields An array of fields to be queried. Can be 
+	 *        given in the form type:name where type is a standard MDB2 
+	 *        datatype. If type is ommitted, then text is assummed.
+	 *
+	 * @param string $id_field The name of the database field that contains the
+	 *        the id. Can be given in the form type:name where type is a
+	 *        standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        assummed for this field.
+	 *
+	 * @param mixed $id The value to look for in the id field column. The 
+	 *        type should correspond to the type of $field.
+	 */
+	public static function queryRow($db, $table, $fields, $id_field, $id) {
+
+		SwatDB::initFields($fields);
+		$id_field = new SwatDBField($id_field, 'integer');
+		$sql = 'select %s from %s where %s = %s';
+
+		$field_list = implode(',', SwatDB::getFieldNameArray($fields));
+
+		$sql = sprintf($sql,
+			$field_list,
+			$table,
+			$id_field->name,
+			$db->quote($id, $id_field->type));
+
+		SwatDB::debug($sql);
+		$rs = $db->query($sql, SwatDB::getFieldTypeArray($fields));
+		
+		if (MDB2::isError($rs))
+			throw new SwatDBException($rs->getMessage());
+		
+		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
+
+		return $row;
+	}
+
+	// }}}
+	// {{{ public static function insertRow()
+	
+	/**
+	 * Insert a row
+	 *
+ 	 * Convenience method to insert a single database row. One convenient use
+	 * of this method is for saving data on an edit page.
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 *
+	 * @param string $table The database table to update.
+	 *
+	 * @param array $fields An array of fields to be updated. Can be 
+	 *        given in the form type:name where type is a standard MDB2 
+	 *        datatype. If type is ommitted, then text is assummed.
+	 *
+	 * @param array $values An associative array of values to store in the
+	 *        database.  The array keys should correspond to field names.
+	 *        The type of the individual values should correspond to the 
+	 *        field type.
+	 *
+	 * @param string $id_field The name of the database field that contains an
+	 *        identifier of row to be updated. Can be given in the form 
+	 *        type:name where type is a standard MDB2 datatype. If type is 
+	 *        ommitted, then integer is assummed for this field.
+	 *		  If $id_field is set, the value in the $id_field column of
+	 *        the inserted row is returned.
+	 *
+	 * @return mixed If $id_field is set, the value in the $id_field column of
+	 *        the inserted row is returned.
+	 */
+	public static function insertRow($db, $table, $fields, $values, $id_field = null) {
+
+		SwatDB::initFields($fields);
+
+		$ret = null;
+
+		if ($id_field != null)
+			$db->beginTransaction();
+
+		$sql = 'insert into %s (%s) values (%s)';
+		$field_list = implode(',', SwatDB::getFieldNameArray($fields));
+
+		$values_in_order = array();
+
+		foreach ($fields as &$field)
+			$values_in_order[] = $db->quote($values[$field->name], $field->type);
+
+		$value_list = implode(',', $values_in_order);
+
+		$sql = sprintf($sql,
+			$table,
+			$field_list,
+			$value_list);
+
+		SwatDB::debug($sql);
+		$rs = $db->query($sql);
+
+		if (MDB2::isError($rs))
+			throw new SwatDBException($rs->getMessage());
+
+		if ($id_field != null) {
+			$ret = SwatDB::getFieldMax($db, $table, $id_field);						
+			$db->commit();
+		}
+
+		return $ret;
+	}
+
+	// }}}
+	// {{{ public static function updateRow()
+	
+	/**
+	 * Update a row
+	 *
+ 	 * Convenience method to update multiple fields of a single database row. 
+	 * One convenient use of this method is for save data on an edit page.
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 *
+	 * @param string $table The database table to update.
+	 *
+	 * @param array $fields An array of fields to be updated. Can be 
+	 *        given in the form type:name where type is a standard MDB2 
+	 *        datatype. If type is ommitted, then text is assummed.
+	 *
+	 * @param array $values An associative array of values to store in the
+	 *        database.  The array keys should correspond to field names.
+	 *        The type of the individual values should correspond to the 
+	 *        field type.
+	 *
+	 * @param string $id_field The name of the database field that contains an
+	 *        identifier of row to be updated. Can be given in the form 
+	 *        type:name where type is a standard MDB2 datatype. If type is 
+	 *        ommitted, then integer is assummed for this field.
+	 *
+	 * @param mixed $id The value to look for in the $id_field column. The 
+	 *        type should correspond to the type of $field.
+	 */
+	public static function updateRow($db, $table, $fields, $values, $id_field, $id) {
+
+		SwatDB::initFields($fields);
+		$id_field = new SwatDBField($id_field, 'integer');
+		$sql = 'update %s set %s where %s = %s';
+		$updates = array();
+
+		foreach ($fields as &$field)
+			$updates[] = $field->name.' = '.$db->quote($values[$field->name], $field->type);
+
+		$update_list = implode(',', $updates);
+
+		$sql = sprintf($sql,
+			$table,
+			$update_list,
+			$id_field->name,
+			$db->quote($id, $id_field->type));
+
+		SwatDB::debug($sql);
+		$rs = $db->query($sql);
+
+		if (MDB2::isError($rs))
+			throw new SwatDBException($rs->getMessage());
 	}
 
 	// }}}
@@ -672,193 +847,6 @@ class SwatDB {
 	}
 
 	// }}}
-	// {{{ private static function initFields()
-	
-	private function initFields(&$fields) {
-		/* Transforms and array of text field identifiers ('text:title') into
-		 * an array of SwatDBField objects.
-		 */
-		if (count($fields) == 0)
-			// TODO: throw exception instead of returning
-			return;
-
-		foreach ($fields as &$field)
-			$field = new SwatDBField($field, 'text');
-	}
-
-
-	// }}}
-	// {{{ public static function queryRow()
-
-	/**
-	 * Query a single row
-	 *
- 	 * Convenience method to query for a single row from a database table.
-	 * One convenient use of this method is for loading data on an edit page.
-	 *
-	 * @param MDB2_Driver_Common $db The database connection.
-	 *
-	 * @param string $table The database table to query.
-	 *
-	 * @param array $fields An array of fields to be queried. Can be 
-	 *        given in the form type:name where type is a standard MDB2 
-	 *        datatype. If type is ommitted, then text is assummed.
-	 *
-	 * @param string $id_field The name of the database field that contains the
-	 *        the id. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then integer is 
-	 *        assummed for this field.
-	 *
-	 * @param mixed $id The value to look for in the id field column. The 
-	 *        type should correspond to the type of $field.
-	 */
-	public static function queryRow($db, $table, $fields, $id_field, $id) {
-
-		SwatDB::initFields($fields);
-		$id_field = new SwatDBField($id_field, 'integer');
-		$sql = 'select %s from %s where %s = %s';
-
-		$field_list = implode(',', SwatDB::getFieldNameArray($fields));
-
-		$sql = sprintf($sql,
-			$field_list,
-			$table,
-			$id_field->name,
-			$db->quote($id, $id_field->type));
-
-		SwatDB::debug($sql);
-		$rs = $db->query($sql, SwatDB::getFieldTypeArray($fields));
-		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
-
-		return $row;
-	}
-
-	// }}}
-	// {{{ public static function insertRow()
-	
-	/**
-	 * Insert a row
-	 *
- 	 * Convenience method to insert a single database row. One convenient use
-	 * of this method is for saving data on an edit page.
-	 *
-	 * @param MDB2_Driver_Common $db The database connection.
-	 *
-	 * @param string $table The database table to update.
-	 *
-	 * @param array $fields An array of fields to be updated. Can be 
-	 *        given in the form type:name where type is a standard MDB2 
-	 *        datatype. If type is ommitted, then text is assummed.
-	 *
-	 * @param array $values An associative array of values to store in the
-	 *        database.  The array keys should correspond to field names.
-	 *        The type of the individual values should correspond to the 
-	 *        field type.
-	 *
-	 * @param string $id_field The name of the database field that contains an
-	 *        identifier of row to be updated. Can be given in the form 
-	 *        type:name where type is a standard MDB2 datatype. If type is 
-	 *        ommitted, then integer is assummed for this field.
-	 *		  If $id_field is set, the value in the $id_field column of
-	 *        the inserted row is returned.
-	 *
-	 * @return mixed If $id_field is set, the value in the $id_field column of
-	 *        the inserted row is returned.
-	 */
-	public static function insertRow($db, $table, $fields, $values, $id_field = null) {
-
-		SwatDB::initFields($fields);
-
-		$ret = null;
-
-		if ($id_field != null)
-			$db->beginTransaction();
-
-		$sql = 'insert into %s (%s) values (%s)';
-		$field_list = implode(',', SwatDB::getFieldNameArray($fields));
-
-		$values_in_order = array();
-
-		foreach ($fields as &$field)
-			$values_in_order[] = $db->quote($values[$field->name], $field->type);
-
-		$value_list = implode(',', $values_in_order);
-
-		$sql = sprintf($sql,
-			$table,
-			$field_list,
-			$value_list);
-
-		SwatDB::debug($sql);
-		$rs = $db->query($sql);
-
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
-
-		if ($id_field != null) {
-			$ret = SwatDB::getFieldMax($db, $table, $id_field);						
-			$db->commit();
-		}
-
-		return $ret;
-	}
-
-	// }}}
-	// {{{ public static function updateRow()
-	
-	/**
-	 * Update a row
-	 *
- 	 * Convenience method to update multiple fields of a single database row. 
-	 * One convenient use of this method is for save data on an edit page.
-	 *
-	 * @param MDB2_Driver_Common $db The database connection.
-	 *
-	 * @param string $table The database table to update.
-	 *
-	 * @param array $fields An array of fields to be updated. Can be 
-	 *        given in the form type:name where type is a standard MDB2 
-	 *        datatype. If type is ommitted, then text is assummed.
-	 *
-	 * @param array $values An associative array of values to store in the
-	 *        database.  The array keys should correspond to field names.
-	 *        The type of the individual values should correspond to the 
-	 *        field type.
-	 *
-	 * @param string $id_field The name of the database field that contains an
-	 *        identifier of row to be updated. Can be given in the form 
-	 *        type:name where type is a standard MDB2 datatype. If type is 
-	 *        ommitted, then integer is assummed for this field.
-	 *
-	 * @param mixed $id The value to look for in the $id_field column. The 
-	 *        type should correspond to the type of $field.
-	 */
-	public static function updateRow($db, $table, $fields, $values, $id_field, $id) {
-
-		SwatDB::initFields($fields);
-		$id_field = new SwatDBField($id_field, 'integer');
-		$sql = 'update %s set %s where %s = %s';
-		$updates = array();
-
-		foreach ($fields as &$field)
-			$updates[] = $field->name.' = '.$db->quote($values[$field->name], $field->type);
-
-		$update_list = implode(',', $updates);
-
-		$sql = sprintf($sql,
-			$table,
-			$update_list,
-			$id_field->name,
-			$db->quote($id, $id_field->type));
-
-		SwatDB::debug($sql);
-		$rs = $db->query($sql);
-
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
-	}
-
-	// }}}
 	// {{{ public static function getFieldMax()
 	
 	/**
@@ -885,10 +873,29 @@ class SwatDB {
 		SwatDB::debug($sql);
 		$rs = $db->query($sql, array($field->type));
 		
+		if (MDB2::isError($rs))
+			throw new SwatDBException($rs->getMessage());
+		
 		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
 		$field_name = $field->name;
 		return $row->$field_name;
 	}
+	// }}}
+	// {{{ private static function initFields()
+	
+	private function initFields(&$fields) {
+		/* Transforms and array of text field identifiers ('text:title') into
+		 * an array of SwatDBField objects.
+		 */
+		if (count($fields) == 0)
+			// TODO: throw exception instead of returning
+			return;
+
+		foreach ($fields as &$field)
+			$field = new SwatDBField($field, 'text');
+	}
+
+
 	// }}}
 	// {{{ public static function equalityOperator()
 	
