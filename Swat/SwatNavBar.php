@@ -98,7 +98,7 @@ class SwatNavBar extends SwatControl
 	 */
 	public function popElements($number = 1)
 	{
-		if ($num <= $this->getSize()) {
+		if ($number <= $this->getSize()) {
 			$last = $this->getSize() - 1;
 			for ($i = 0; $i < $number; $i++) {
 				unset($this->elements[$last - $i]);
