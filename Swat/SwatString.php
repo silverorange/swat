@@ -42,7 +42,7 @@ class SwatString
 	{
 		if ($type == self::FILTER_BODY) {
 			$text = ereg_replace(chr(13).chr(10).chr(13).chr(10).'([^<])', '<p>\1', $text);
-			$text = ereg_replace('([^>])'.chr(13).chr(10).'([^<])', '\1<br>\2', $text;
+			$text = ereg_replace('([^>])'.chr(13).chr(10).'([^<])', '\1<br>\2', $text);
 			return $text;
 
 		} elseif ($type == self::FILTER_B2) {
