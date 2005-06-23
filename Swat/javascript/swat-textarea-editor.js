@@ -860,9 +860,12 @@ function onloadRTE(rte) {
 
 	currentRTE = rte;
 	var hidden_val = document.getElementById('hdn' + rte);
+	var iframe = document.getElementById(rte);
 
-	if (hidden_val.value.toString())
+	if (hidden_val.value.toString()) {
 		insertHTML(hidden_val.value.toString());
+		iframe.contentWindow.scrollTo(0, 0);
+	}
 }
 
 window.onunload = function(ev) {
