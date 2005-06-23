@@ -94,6 +94,21 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 		
 		$renderer->parent = $this;
 	}
+	
+	/**
+	 * Get Renderer
+	 * 
+	 * Returns a reference to a {@link SwatCellRenderer}.
+	 *
+	 * @param $id The id of the {@link SwatCellRenderer}
+	 * @return SwatCellRenderer The renderer with id = $id.
+	 */
+	public function getRenderer($id) {
+		if (isset($this->renderers[$id])) {
+			return $this->renderers[$id];
+		} else
+			throw new SwatException(__CLASS__.': no renderer with id '.$id.'.');
+	}
 
 	/**
 	 * Displays this details view field

@@ -63,6 +63,19 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	}
 
 	/**
+	 * Get a reference to a field
+	 * @ return SwatDetailsViewField Matching field
+	 */
+	public function getField($id) {
+		$fields = $this->getFields();
+		foreach ($fields as $field)
+			if ($id == $field->id)
+				return $field;
+
+		throw new SwatException(__CLASS__.": no field with an id of '{$id}'");
+	}
+
+	/**
 	 * Displays this details view
 	 *
 	 * Displays details view as tabular XHTML.
