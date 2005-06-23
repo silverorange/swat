@@ -116,12 +116,12 @@ class SwatString
 			$trim_text = trim($trim_text);
 
 			if (substr($text, $max_len, 1) == ' ')
-				$last_space=$max_len;					// the string was chopped at a space.
+				$last_space = $max_len;					// the string was chopped at a space.
 			else
-				$last_space = strrpos($trim_text,' ');	// in PHP5, we can use 'offset' here -Mike
+				$last_space = strrpos($trim_text, ' ');	// in PHP5, we can use 'offset' here -Mike
 
 			if (!($last_space === false))
-				$trim_text=substr($trim_text, 0, $last_space);
+				$trim_text = substr($trim_text, 0, $last_space);
 			
 			return SwatString::removeTrailingPunctuation($trim_text).$trim_chars;
 		}
