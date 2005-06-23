@@ -108,7 +108,7 @@ class SwatString
 					$first_half = substr($text, 0, $first_space);
 
 			}
-			
+
 			return $first_half.$trim_chars.$last_half;
 
 		} else {
@@ -122,7 +122,7 @@ class SwatString
 
 			if (!($last_space === false))
 				$trim_text = substr($trim_text, 0, $last_space);
-			
+	
 			return SwatString::removeTrailingPunctuation($trim_text).$trim_chars;
 		}
 	}
