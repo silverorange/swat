@@ -1,8 +1,6 @@
 div.rteDiv {
-	/*
 	border: 1px solid #CCC;
 	background: #F8F5F2;
-	*/
 }
 
 div.rteDiv select {
@@ -20,14 +18,12 @@ body.rtePopup form {
 }
 
 div.rteIframeDiv {
-	border: 1px solid #CCC;
 	clear: both;
-	/*
+	border: 1px solid #CCC;
 	border-top-color: #CCC;
 	border-left-color: #CCC;
 	border-right-color: #EEE;
 	border-bottom-color: #EEE;
-	*/
 }
 
 iframe.rteIframe {
@@ -37,7 +33,7 @@ iframe.rteIframe {
 
 div.rteToggleMode {
 	height: 30px;
-	/*border-top: 1px solid #CCC; */
+	border-top: 1px solid #CCC; 
 	padding-left: 3px;
 }
 
