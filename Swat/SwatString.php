@@ -251,11 +251,12 @@ class SwatString
     // {{{ public static function moneyFormat()
 
 	/**
-	 * Format a number as a currency formatted string
+	 * Formats a number as a currency formatted string
 	 *
-	 * @param float $value Value to format
-	 * @param string $locale Optional locale to format currency. If no locale
-	 *        is set, the default php locale is used.
+	 * @param float $value the value to format.
+	 * @param string $locale an optional locale to use to format the value. If
+	 *                        no locale is specified, the default PHP locale is
+	 *                        used.
 	 *
 	 * @return string the money formatted string.
 	 */
@@ -266,6 +267,7 @@ class SwatString
 		setlocale(LC_ALL, $old_locale);
 		return $format;
 	}
+
 	// }}}
 }
 
