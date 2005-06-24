@@ -10,6 +10,8 @@
  */
 class SwatString
 {
+	// {{{ filter constants
+	
 	/**
 	 * replaces hard-returns with br and doubles with p
 	 */
@@ -25,36 +27,44 @@ class SwatString
 	 */
 	const FILTER_BLURB = 0;
 
+	/// }}}
     // {{{ public static function filter()
 
 	/**
-	 * Filter text block
+	 * Filters a block of text
 	 *
 	 * Formatting function to control the display of a block of text
 	 *
-	 * @param integer $type Type of formatting to apply. One of the FILTER
-	 *        {@link SwatString} constants.
-	 * @param string $text Text to format
+	 * @param integer $type the type of formatting to apply. One of the FILTER
+	 *                       {@link SwatString} constants.
+	 * @param string $text the text to format.
 	 *
-	 * @return string the formatted string.
+	 * @return string the formatted block of text.
 	 */
 	public static function filter($type, $text)
 	{
 		if ($type == self::FILTER_BODY) {
-			$text = ereg_replace(chr(13).chr(10).chr(13).chr(10).'([^<])', '<p>\1', $text);
-			$text = ereg_replace('([^>])'.chr(13).chr(10).'([^<])', '\1<br>\2', $text);
+			// replace double crlf's with paragraph tags
+			$text = preg_replace('/\r\n\r\n([^<])/s', '<p>\1', $text);
+			// replace single crlf's with linebreak tags
+			$text = preg_replace('/([^>])\r\n([^<])/s', '\1<br />\2', $text);
 			return $text;
 
 		} elseif ($type == self::FILTER_B2) {
-			$text = ereg_replace(chr(13).chr(10).chr(13).chr(10), '<p>', $text);
-			$text = ereg_replace(chr(13).chr(10), '<br />', $text);
+			// replace double crlf's with paragraph tags
+			$text = str_replace("\r\n\r\n", '<p>', $text);
+			// replace single crlf's with linebreak tags
+			$text = str_replace("\r\n", '<br />', $text);
 			return $text;
 
 		} elseif ($type == self::FILTER_BLURB) {
-			$text = ereg_replace('('.chr(13).chr(10).')+', ' &nbsp;&#8226;&nbsp; ', $text);
+			// replace any number of consecutive crlfs with
+			// non-breaking space padded bullet characters
+			$text = preg_replace('/(\r\n)+/s', ' &nbsp;&#8226;&nbsp; ', $text);
 			return $text;
 		}
 	}
+
 	// }}}
 	// {{{ public static function ellipsizeRight()
 
