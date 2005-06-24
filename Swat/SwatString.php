@@ -64,8 +64,8 @@ class SwatString
 	 * example:
 	 *
 	 *    $string = 'The quick brown fox jumped over the lazy dogs.';
-	 *    // displays 'The quick brown ...'
 	 *    echo SwatString::ellipsizeRight($string, 18, ' ...');
+	 *    // displays 'The quick brown ...'
 	 *
 	 * @param string $string the string to ellipsize.
 	 * @param integer $max_length the maximum length of the returned string.
@@ -84,12 +84,14 @@ class SwatString
 	public static function ellipsizeRight($string, $max_length,
 		$ellipses = '&nbsp;&#8230;')
 	{
+		$string = trim($string);
+
 		// don't ellipsize if the string is short enough
 		if (strlen($string) <= $max_length)
 			return $string;
 
 		$search_offset = -max(strlen($string) - $max_length, 0);
-		
+
 		// find the last space up to the max_length in the string
 		$chop_pos = strrpos($string, ' ', $offset);
 		if ($chop_pos === false) $chop_pos = $max_length
@@ -100,63 +102,92 @@ class SwatString
 
 		return $string;
 	}
-	
+
 	// }}}
-    // {{{ public static function smartTrim()
+    // {{{ public static function ellipsizeMiddle()
 
 	/**
-	 * Smart Trim
+	 * Ellipsizes a string in the middle
 	 *
-	 * @param string $text Text to trim
-	 * @param integer $max_len Length to trim string at
-	 * @param string $trim_cars Text to append to the end of the trimmed string
+	 * example:
 	 *
-	 * @return string the formatted string.
+	 *    $string = 'The quick brown fox jumped over the lazy dogs.';
+	 *    // displays 'The quick brown ...'
+	 *    echo SwatString::ellipsizeRight($string, 18, ' ...');
+	 *
+	 * @param string $string the string to ellipsize.
+	 * @param integer $max_length the maximum length of the returned string.
+	 *                             This length does not account for any ellipse
+	 *                             characters that may be appended.
+	 * @param string $ellipses the ellipses characters to insert if the string
+	 *                          is shortened.
+	 *
+	 * @return string the ellipsized string. The ellipsized string may include
+	 *                 ellipses characters in roughly the middle if it was
+	 *                 longer than max_length.
 	 */
-	public static function smartTrim($text, $max_len, $trim_chars='...')
+	public static function ellipsizeMiddle($string, $max_length,
+		$ellipses = '&nbsp;&#8230;&nbsp;')
 	{
-		$text = trim($text);
+		$string = trim($string);
 
-		if (strlen($text) < $max_len) {
-			return $text;
+		if (strlen($string) <= $max_lenget)
+			return $string;
+
+		// check if the string is all one giant word
+		$has_space = strpos($string, ' ');
+
+		// the entire string is one word
+		if ($has_space === false) {
+
+			// just take a piece of the string from both ends
+			$first_piece = substr($string, 0, $max_length / 2);
+			$last_piece = substr($string,
+					-($max_length - strlen($first_piece)));
 
 		} else {
-			$has_space = strpos($text,' ');
-			
-			if (!$has_space) {
-				// the entire string is one word
-				$first_half = substr($text, 0, $max_len/2);
-				$last_half = substr($text, -($max_len - strlen($first_half)));
 
-			} else {
-				// Get last half first as it makes it more likely for the first
-				// half to be of greater length. This is done because usually the
-				// first half of a string is more recognizable. The last half can
-				// be at most half of the maximum length and is potentially
-				// shorter (the last word).
+			/*
+			 * Implementation Note:
+			 *
+			 * Get last piece first as it makes it more likely for the first
+			 * piece to be of greater length. This is done because usually the
+			 * first piece of a string is more recognizable.
+			 *
+			 * The length of the last piece can be at most half of the maximum
+			 * length and is potentially shorter. The last half can be as short
+			 * as the last word.
+			 */
 
-				$last_half = substr($text,-($max_len/2));
-				$last_half = trim($last_half);
-				$last_space = strrpos($last_half,' ');	// check if we chopped at a space
-				if (!($last_space === false)) {
-					$last_half = substr($last_half, $last_space + 1);
-				}
-				$first_half = substr($text, 0, $max_len-strlen($last_half));
-				$first_half = trim($first_half);
+			/*
+			 * Get the last piece as half the max_length starting from
+			 * the right.
+			 */
+			$last_piece = substr($string, -($max_length / 2));
+			$last_piece = trim($last_piece);
 
-				if (substr($text, $max_len - strlen($last_half), 1) == ' ')
-					$first_space = $max_len-strlen($last_half);
-				else
-					$first_space=strrpos($first_half,' ');
+			/*
+			 * Find the last word in the last piece.
+			 * TODO: We may want to change this to select more of the end of
+			 *       the string than the last word.
+			 */
+			$last_space = strrpos($last_piece, ' ');
+			if ($last_space !=== false)
+				$last_piece = substr($last_piece, $last_space + 1);
 
-				if (!($first_space === false))
-					$first_half = substr($text, 0, $first_space);
+			/*
+			 * Get the first piece by ellipsizing with a max_length of
+			 * the max_length less the length of the last piece.
+			 */
+			$max_first_length = $max_length - strlen($last_piece);
 
-			}
-
-			return $first_half.$trim_chars.$last_half;
-
+			$first_piece =
+				self::ellipsizeRight($string, $max_first_length, '');
 		}
+
+		$string = $first_piece.$ellipses.$last_piece;
+
+		return $string;
 	}
 
 	// }}}
