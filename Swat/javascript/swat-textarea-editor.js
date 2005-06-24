@@ -328,6 +328,9 @@ function setHiddenVal(rte) {
 	
 	oHdnField.value = convertTags(oHdnField.value);
 	
+	var myRegExp = new RegExp("\n", 'g');
+	oHdnField.value = oHdnField.value.replace(myRegExp, "");
+	
 	//if there is no content (other than formatting) set value to nothing
 	if (stripHTML(oHdnField.value.replace("&nbsp;", " ")) == "" &&
 		oHdnField.value.toLowerCase().search("<hr") == -1 &&
