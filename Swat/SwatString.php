@@ -262,7 +262,7 @@ class SwatString
 	 */
 	public static function moneyFormat($value, $locale = null)
 	{
-		$old_locale = setlocale(LC_ALL, 0);
+		$old_locale = setlocale(LC_ALL, $locale);
 		$format = htmlentities(money_format('%.2n', $number), null, 'UTF-8');	
 		setlocale(LC_ALL, $old_locale);
 		return $format;
