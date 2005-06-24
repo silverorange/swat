@@ -56,6 +56,52 @@ class SwatString
 		}
 	}
 	// }}}
+	// {{{ public static function ellipsizeRight()
+
+	/**
+	 * Ellipsizes a string to the right
+	 *
+	 * example:
+	 *
+	 *    $string = 'The quick brown fox jumped over the lazy dogs.';
+	 *    // displays 'The quick brown ...'
+	 *    echo SwatString::ellipsizeRight($string, 18, ' ...');
+	 *
+	 * @param string $string the string to ellipsize.
+	 * @param integer $max_length the maximum length of the returned string.
+	 *                             This length does not account for any ellipse
+	 *                             characters that may be appended. If the
+	 *                             returned value must be below a certain
+	 *                             number of characters, pass a blank string in
+	 *                             the ellipses parameter.
+	 * @param string $ellipses the ellipses characters to append if the string
+	 *                          is shortened.
+	 *
+	 * @return string the ellipsized string. The ellipsized string may be
+	 *                 appended with ellipses characters if it was longer than
+	 *                 max_length.
+	 */
+	public static function ellipsizeRight($string, $max_length,
+		$ellipses = '&nbsp;&#8230;')
+	{
+		// don't ellipsize if the string is short enough
+		if (strlen($string) <= $max_length)
+			return $string;
+
+		$search_offset = -max(strlen($string) - $max_length, 0);
+		
+		// find the last space up to the max_length in the string
+		$chop_pos = strrpos($string, ' ', $offset);
+		if ($chop_pos === false) $chop_pos = $max_length
+
+		$string = substr($string, 0, $chop_pos);
+		$string = SwatString::removeTrailingPunctuation($string);
+		$string .= $ellipses;
+
+		return $string;
+	}
+	
+	// }}}
     // {{{ public static function smartTrim()
 
 	/**
@@ -63,19 +109,18 @@ class SwatString
 	 *
 	 * @param string $text Text to trim
 	 * @param integer $max_len Length to trim string at
-	 * @param boolean $trim_middle Whether to trim the middle out of the string 
 	 * @param string $trim_cars Text to append to the end of the trimmed string
 	 *
 	 * @return string the formatted string.
 	 */
-	public static function smartTrim($text, $max_len, $trim_middle=false, $trim_chars='...')
+	public static function smartTrim($text, $max_len, $trim_chars='...')
 	{
 		$text = trim($text);
 
 		if (strlen($text) < $max_len) {
 			return $text;
 
-		} elseif($trim_middle) {
+		} else {
 			$has_space = strpos($text,' ');
 			
 			if (!$has_space) {
@@ -111,19 +156,6 @@ class SwatString
 
 			return $first_half.$trim_chars.$last_half;
 
-		} else {
-			$trim_text = substr($text,0,$max_len);
-			$trim_text = trim($trim_text);
-
-			if (substr($text, $max_len, 1) == ' ')
-				$last_space = $max_len;					// the string was chopped at a space.
-			else
-				$last_space = strrpos($trim_text, ' ');	// in PHP5, we can use 'offset' here -Mike
-
-			if (!($last_space === false))
-				$trim_text = substr($trim_text, 0, $last_space);
-	
-			return SwatString::removeTrailingPunctuation($trim_text).$trim_chars;
 		}
 	}
 
