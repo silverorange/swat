@@ -5,7 +5,7 @@
  * String Tools
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatString
@@ -126,52 +126,54 @@ class SwatString
 			return SwatString::removeTrailingPunctuation($trim_text).$trim_chars;
 		}
 	}
+
 	// }}}
     // {{{ public static function removeTrailingPunctuation()
 
 	/**
-	 * Remove Trailing Punctuation
+	 * Removes trailing punctuation from a string
 	 *
-	 * @param string $text Text to format
+	 * @param string $string the string to format remove punctuation from.
 	 *
-	 * @return string the formatted string.
+	 * @return string the string with trailing punctuation removed.
 	 */
-	public static function removeTrailingPunctuation($text)
+	public static function removeTrailingPunctuation($string)
 	{
-		return preg_replace("'[^a-zA-Z_0-9]+$'s",'',$text);
+		return preg_replace('/\W+$/s', '', $string);
 	}
 
 	// }}}
     // {{{ public static function removeLeadingPunctuation()
 
 	/**
-	 * Remove Leading Punctuation
+	 * Removes leading punctuation from a string
 	 *
-	 * @param string $text Text to format
+	 * @param string $string the string to format remove punctuation from.
 	 *
-	 * @return string the formatted string.
+	 * @return string the string with leading punctuation removed.
 	 */
-	public static function removeLeadingPunctuation($text)
+	public static function removeLeadingPunctuation($string)
 	{
-		return preg_replace("'^[^a-zA-Z_0-9]+'s",'',$text);
+		return preg_replace('/^\W+/s', '', $string);
 	}
 
 	// }}}
     // {{{ public static function removePunctuation()
 
 	/**
-	 * Remove Punctuation (both leading and trailing)
+	 * Removes both leading and trailing punctuation from a string
 	 *
-	 * @param string $text Text to format
+	 * @param string $string the string to format remove punctuation from.
 	 *
-	 * @return string the formatted string.
+	 * @return string the string with leading and trailing punctuation removed.
 	 */
-	public static function removePunctuation($text)
+	public static function removePunctuation($string)
 	{
-		$text = SwatString::removeTrailingPunctuation($text);
-		$text = SwatString::removeLeadingPunctuation($text);
-		return $text;
+		$string = SwatString::removeTrailingPunctuation($string);
+		$string = SwatString::removeLeadingPunctuation($string);
+		return $string;
 	}
+	
 	// }}}
 }
 
