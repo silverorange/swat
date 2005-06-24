@@ -103,8 +103,8 @@ class SwatString
 		$search_offset = -max(strlen($string) - $max_length, 0);
 
 		// find the last space up to the max_length in the string
-		$chop_pos = strrpos($string, ' ', $offset);
-		if ($chop_pos === false) $chop_pos = $max_length
+		$chop_pos = strrpos($string, ' ', $search_offset);
+		if ($chop_pos === false) $chop_pos = $max_length;
 
 		$string = substr($string, 0, $chop_pos);
 		$string = SwatString::removeTrailingPunctuation($string);
@@ -141,7 +141,7 @@ class SwatString
 	{
 		$string = trim($string);
 
-		if (strlen($string) <= $max_lenget)
+		if (strlen($string) <= $max_length)
 			return $string;
 
 		// check if the string is all one giant word
@@ -182,7 +182,7 @@ class SwatString
 			 *       the string than the last word.
 			 */
 			$last_space = strrpos($last_piece, ' ');
-			if ($last_space !=== false)
+			if ($last_space !== false)
 				$last_piece = substr($last_piece, $last_space + 1);
 
 			/*
