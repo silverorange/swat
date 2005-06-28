@@ -54,8 +54,6 @@ class SwatCheckAll extends SwatControl
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
 		$input_tag->id = $this->id;
-		$input_tag->onclick =
-			"SwatCheckbox.checkAll(this,'{$this->series_name}')";
 
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->for = $this->id;
@@ -75,6 +73,7 @@ class SwatCheckAll extends SwatControl
 	{
 		echo '<script type="text/javascript">';
 		include_once 'javascript/swat-check-all.js';
+		echo "new SwatCheckAll('{$this->id}', '{$this->series_name}[]');";
 		echo '</script>';
 	}
 }
