@@ -1,21 +1,21 @@
 function SwatCheckAll(id, series) {
 	var check_all = document.getElementById(id);
 	var check_list = document.getElementsByName(series);
-	var my_form = check_all.form;
-	var is_ie = (my_form.addEventListener) ? false : true;
+	var form = check_all.form;
+	var is_ie = (form.addEventListener) ? false : true;
 
 	if (is_ie) {
-		my_form.attachEvent("onclick", eventHandler);
+		form.attachEvent("onclick", eventHandler);
 		check_all.attachEvent("onclick", checkAll, false);
 	} else {
-		my_form.addEventListener("change", eventHandler, false);
+		form.addEventListener("change", eventHandler, false);
 		check_all.addEventListener("change", checkAll, false);
 	}
 
 	function eventHandler(event) {
-		var my_name = (is_ie) ? event.srcElement.name : event.target.name;	
+		var name = (is_ie) ? event.srcElement.name : event.target.name;	
 
-		if (my_name != series)
+		if (name != series)
 			return;
 
 		var count = 0;
