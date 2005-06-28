@@ -328,7 +328,12 @@ function setHiddenVal(rte) {
 	
 	oHdnField.value = convertTags(oHdnField.value);
 	
+	// strip out line breaks
 	var myRegExp = new RegExp("\n", 'g');
+	oHdnField.value = oHdnField.value.replace(myRegExp, " ");
+	
+	//and unnecessary double spaces
+	var myRegExp = new RegExp("  ", 'g');
 	oHdnField.value = oHdnField.value.replace(myRegExp, "");
 	
 	//if there is no content (other than formatting) set value to nothing
