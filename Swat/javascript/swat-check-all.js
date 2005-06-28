@@ -1,9 +1,6 @@
 function SwatCheckAll(id, series) {
-	var this_id = id;
-	var this_series = series;
-	
-	var check_all = document.getElementById(this_id);
-	var check_list = document.getElementsByName(this_series);
+	var check_all = document.getElementById(id);
+	var check_list = document.getElementsByName(series);
 	var my_form = check_all.form;
 	var is_ie = (my_form.addEventListener) ? false : true;
 
@@ -18,7 +15,7 @@ function SwatCheckAll(id, series) {
 	function eventHandler(event) {
 		var my_name = (is_ie) ? event.srcElement.name : event.target.name;	
 
-		if (my_name != this_series)
+		if (my_name != series)
 			return;
 
 		var count = 0;
