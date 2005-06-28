@@ -1,43 +1,38 @@
-function SwatCheckbox() {
-	this.highlightClass = 'swat-table-view-highlight';
-
-	this.highlightRow = function(chk) {
-		var tr = chk.parentNode.parentNode;
-		if (tr.nodeName == 'TR') {
-			if (chk.checked)
-				var class_name = this.highlightClass;	
-			else
-				var class_name = '';
+function SwatCheckAll(id, series) {
+	var this_id = id;
+	var this_series = series;
 	
-			for (j = 0; j < tr.childNodes.length; j++)
-				tr.childNodes[j].className = class_name;
-		}
+	var check_all = document.getElementById(this_id);
+	var check_list = document.getElementsByName(this_series);
+	var my_form = check_all.form;
+	var is_ie = (my_form.addEventListener) ? false : true;
+
+	if (is_ie) {
+		my_form.attachEvent("onclick", eventHandler);
+		check_all.attachEvent("onclick", checkAll, false);
+	} else {
+		my_form.addEventListener("change", eventHandler, false);
+		check_all.addEventListener("change", checkAll, false);
+	}
+
+	function eventHandler(event) {
+		var my_name = (is_ie) ? event.srcElement.name : event.target.name;	
+
+		if (my_name != this_series)
+			return;
+
+		var count = 0;
+		for (i = 0; i < check_list.length; i++)
+			if (check_list[i].checked)
+				count++;
+			else if (count > 0)
+				break; //can't possibly be all checked or none checked
+
+		check_all.checked = (count == check_list.length);
+	}
+
+	function checkAll(event) {
+		for (i = 0; i < check_list.length; i++)
+			check_list[i].checked = check_all.checked;
 	}
 }
-
-
-SwatCheckbox.prototype.checkAll = function (chk_all, series) {
-	var elements = chk_all.form.elements[series + '[]'];
-	for (i = 0; i < elements.length; i++) {
-		elements[i].checked = chk_all.checked;
-		this.highlightRow(elements[i]);
-	}
-}
-
-SwatCheckbox.prototype.check = function (chk) {
-	this.highlightRow(chk);
-
-	//TODO: figure out how to name the check-all element dynamically
-	check_all = document.getElementById('SwatCheckAll0');
-	if (!check_all) return;
-
-	var checked = 0;
-	var elements = chk.form.elements[chk.name];
-	for (i = 0; i < elements.length; i++)
-		if (elements[i].checked == true)
-			checked = checked + 1;
-	
-	check_all.checked = (elements.length == checked);
-}
-
-var SwatCheckbox = new SwatCheckbox();
