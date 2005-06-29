@@ -72,10 +72,13 @@ class SwatString
 	 * Ellipsizes a string to the right
 	 *
 	 * example:
-	 *
-	 *    $string = 'The quick brown fox jumped over the lazy dogs.';
-	 *    echo SwatString::ellipsizeRight($string, 18, ' ...');
-	 *    // displays 'The quick brown ...'
+	 * <code>
+	 * <?php
+	 * $string = 'The quick brown fox jumped over the lazy dogs.';
+	 * echo SwatString::ellipsizeRight($string, 18, ' ...');
+	 * // displays 'The quick brown ...'
+	 * ?>
+	 * </code>
 	 *
 	 * @param string $string the string to ellipsize.
 	 * @param integer $max_length the maximum length of the returned string.
