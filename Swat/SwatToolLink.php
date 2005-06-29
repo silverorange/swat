@@ -16,7 +16,9 @@ class SwatToolLink extends SwatControl
 	 * Link href
 	 *
 	 * The link may include a sprintf substitution tag. For example:
-	 *    "MySection/MyPage?id=%s"
+	 * <code>
+	 * $my_link->link = 'MySection/MyPage?id=%s';
+	 * </code>
 	 *
 	 * @var string
 	 */

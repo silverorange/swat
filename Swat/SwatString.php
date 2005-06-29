@@ -121,10 +121,11 @@ class SwatString
 	 * Ellipsizes a string in the middle
 	 *
 	 * example:
-	 *
-	 *    $string = 'The quick brown fox jumped over the lazy dogs.';
-	 *    // displays 'The quick ... dogs.'
-	 *    echo SwatString::ellipsizeMiddle($string, 18, ' ... ');
+	 * <code>
+	 * $string = 'The quick brown fox jumped over the lazy dogs.';
+	 * // displays 'The quick ... dogs.'
+	 * echo SwatString::ellipsizeMiddle($string, 18, ' ... ');
+	 * </code>
 	 *
 	 * @param string $string the string to ellipsize.
 	 * @param integer $max_length the maximum length of the returned string.

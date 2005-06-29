@@ -18,7 +18,9 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	 * XHTML anchor tag.
 	 *
 	 * The link may include a sprintf substitution tag. For example:
-	 *    "MySection/MyPage?id=%s"
+	 * <code>
+	 * $renderer->link = 'MySection/MyPage?id=%s';
+	 * </code>
 	 *
 	 * @var string
 	 */
