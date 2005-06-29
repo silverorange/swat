@@ -204,8 +204,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 		if ($this->display_parts & self::CALENDAR) {
 			require_once 'Swat/SwatCalendar.php';
 			$cal = new SwatCalendar();
-			// TODO: This line doesn't make sense. Id is unique.
-			$cal->id = $this->id;
+			$cal->entry_id = $this->id;
 			$cal->valid_range_start = $this->valid_range_start;
 			$cal->valid_range_end   = $this->valid_range_end;
 			$cal->display();
