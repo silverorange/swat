@@ -74,8 +74,8 @@ class SwatString
 	 * example:
 	 * <code>
 	 * $string = 'The quick brown fox jumped over the lazy dogs.';
-	 * echo SwatString::ellipsizeRight($string, 18, ' ...');
 	 * // displays 'The quick brown ...'
+	 * echo SwatString::ellipsizeRight($string, 18, ' ...');
 	 * </code>
 	 *
 	 * @param string $string the string to ellipsize.
