@@ -126,7 +126,9 @@ class SwatFlydown extends SwatControl implements SwatState
 			$hidden_tag->type = 'hidden';
 			$hidden_tag->name = $this->id;
 			$hidden_tag->value = (string)$value;
-			
+
+			$hidden_tag->display();
+
 			echo $title;
 		}
 	}	
