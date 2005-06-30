@@ -21,7 +21,7 @@ class SwatFlydown extends SwatControl implements SwatState
 	 *
 	 * @var array
 	 */
-	public $options = null;
+	public $options = array();
 
 	/**
 	 * Flydown value
@@ -78,25 +78,24 @@ class SwatFlydown extends SwatControl implements SwatState
 	{
 		$options = $this->getOptions();
 
-		$select_tag = new SwatHtmlTag('select');
-		$select_tag->name = $this->id;
-		$select_tag->id = $this->id;
+		// Empty string XHTML option value is assumed to be null
+		// when processing.
+		if ($this->show_blank)
+			$options[''] = $this->blank_title;
+		
+		// only show a select if there is more than one option
+		if (count($options) > 1) {
+			
+			$select_tag = new SwatHtmlTag('select');
+			$select_tag->name = $this->id;
+			$select_tag->id = $this->id;
 
-		if ($this->onchange !== null)
-			$select_tag->onchange = $this->onchange;
+			if ($this->onchange !== null)
+				$select_tag->onchange = $this->onchange;
 
-		$option_tag = new SwatHtmlTag('option');
+			$option_tag = new SwatHtmlTag('option');
 
-		$select_tag->open();
-
-		if ($options !== null) {
-			if ($this->show_blank) {
-				// Empty string HTML option value is considered to be null.
-				$option_tag->value = '';
-				$option_tag->open();
-				echo $this->blank_title;
-				$option_tag->close();
-			}
+			$select_tag->open();
 			
 			foreach ($options as $value => $title) {
 				$option_tag->value = (string)$value;
@@ -105,13 +104,26 @@ class SwatFlydown extends SwatControl implements SwatState
 				if ((string)$this->value === (string)$value)
 					$option_tag->selected = 'selected';
 
-				$option_tag->open();
-				echo $title;
-				$option_tag->close();
-			}
-		}
+				$option_tag->content = $title;
 
-		$select_tag->close();
+				$option_tag->display();
+			}
+
+			$select_tag->close();
+
+		} elseif (count($options) == 1) {
+			
+			// get first and only element
+			$title = reset($options);
+			$value = key($options);
+
+			$hidden_tag = new SwatHtmlTag('input');
+			$hidden_tag->type = 'hidden';
+			$hidden_tag->name = $this->id;
+			$hidden_tag->value = (string)$value;
+			
+			echo $title;
+		}
 	}	
 
 	/**
