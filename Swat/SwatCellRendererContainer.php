@@ -22,7 +22,7 @@ interface SwatCellRendererContainer
 	 *
 	 * @return array all the cell renderers in this container.
 	 */
-	public function getRenderers();
+	public function &getRenderers();
 
 	/**
 	 * Gets a cell renderer by it's unique identifier
@@ -30,7 +30,8 @@ interface SwatCellRendererContainer
 	 * @param string $renderer_id the unique identifier of the cell renderer to
 	 *                             get from this container.
 	 *
-	 * @return SwatCellRenderer a reference to the cell renderer.
+	 * @return SwatCellRenderer a reference to the cell renderer or null if the
+	 *                           renderer is not found.
 	 */
 	public function getRenderer($renderer_id);
 }
