@@ -13,6 +13,8 @@ require_once 'Swat/SwatState.php';
  */
 class SwatFlydown extends SwatControl implements SwatState
 {
+	// {{{ public properties
+	
 	/**
 	 * Flydown options
 	 *
@@ -69,6 +71,9 @@ class SwatFlydown extends SwatControl implements SwatState
 	 */
 	public $onchange = null;
 
+	// }}}
+	// {{{ public function display()
+	
 	/**
 	 * Displays this flydown
 	 *
@@ -126,6 +131,9 @@ class SwatFlydown extends SwatControl implements SwatState
 		}
 	}	
 
+	// }}}
+	// {{{ public function process()
+
 	/**
 	 * Figures out what option was selected
 	 *
@@ -149,6 +157,9 @@ class SwatFlydown extends SwatControl implements SwatState
 		}
 	}
 
+	// }}}
+	// {{{ public function reset()
+
 	/**
 	 * Resets this flydown
 	 *
@@ -160,6 +171,9 @@ class SwatFlydown extends SwatControl implements SwatState
 		reset($this->options);
 		$this->value = null;	
 	}
+
+	// }}}
+	// {{{ public function getState()
 	
 	/**
 	 * Gets the current state of this flydown
@@ -172,6 +186,9 @@ class SwatFlydown extends SwatControl implements SwatState
 	{
 		return $this->value;
 	}
+
+	// }}}
+	// {{{ public function setState()
 	
 	/**
 	 * Sets the current state of this flydown
@@ -185,6 +202,9 @@ class SwatFlydown extends SwatControl implements SwatState
 		$this->value = $state;
 	}
 
+	// }}}
+	// {{{ protected function getOptions()
+
 	/**
 	 * Gets a reference to the array of options to show in this flydown
 	 *
@@ -197,6 +217,8 @@ class SwatFlydown extends SwatControl implements SwatState
 	{
 		return $this->options;
 	}
+
+	// }}}
 }
 
 ?>
