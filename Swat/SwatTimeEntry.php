@@ -279,8 +279,8 @@ class SwatTimeEntry extends SwatControl implements SwatState {
 	private function displayJavascript()
 	{
 		echo '<script type="text/javascript">';
-		include_once('Swat/javascript/swat-find-index.js');
-		include_once('Swat/javascript/swat-time.js');
+		include_once 'Swat/javascript/swat-find-index.js';
+		include_once 'Swat/javascript/swat-time.js';
 		echo '</script>';
 	}
 	
