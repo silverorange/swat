@@ -1,16 +1,19 @@
 <?php
-require_once('Swat/SwatCellRenderer.php');
-require_once('Swat/SwatCurrency.php');
+
+require_once 'Swat/SwatCellRenderer.php';
+require_once 'Swat/SwatCurrency.php';
 
 /**
- * A currency renderer
+ * A currency cell renderer
  *
- * @package Swat
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @copyright silverorange 2004
+ * @package   Swat
+ * @copyright 2004-2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCellRendererMoney extends SwatCellRenderer {
-
+class SwatCellRendererMoney extends SwatCellRenderer
+{
+	// {{{ public properties
+	
 	/**
 	 * Optional locale for currency format
 	 *
@@ -25,7 +28,22 @@ class SwatCellRendererMoney extends SwatCellRenderer {
 	 */
 	public $value;
 
-	public function render($prefix) {
+	// }}}
+	// {{{ public function render()
+	
+	/**
+	 * Renders the contents of this cell
+	 *
+	 * @param string $prefix and optional prefix to name XHTML controls with.
+	 *
+	 * @see SwatCellRenderer::render()
+	 */
+	public function render($prefix = null)
+	{
 		echo SwatString::moneyFormat($this->value, $this->locale);	
 	}
+
+	// }}}
 }
+
+?>
