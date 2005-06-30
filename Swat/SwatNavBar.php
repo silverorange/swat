@@ -41,7 +41,7 @@ class SwatNavBar extends SwatControl
 	 *
 	 * @thows SwatException
 	 */
-	public function replaceElement($position, $title, $uri= null)
+	public function replaceElement($position, $title, $uri = null)
 	{
 		if (isset($this->elements[$position])) {
 			$new_element = array('title' => $title, 'uri' => $uri);
