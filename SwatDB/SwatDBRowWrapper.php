@@ -9,16 +9,16 @@
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatDBRowWrapper {
-
+abstract class SwatDBRowWrapper
+{
 	private $_found = false;
 
 	/**
 	 * Constructor
 	 * @param mixed Either a MDB2 recordset or MDB2 row
 	 */
-	function __construct($data) {
-
+	function __construct($data)
+	{
 		if (get_class($data) == 'stdClass') {
 			//row
 			$this->_found = true;
@@ -38,7 +38,8 @@ abstract class SwatDBRowWrapper {
 		}		
 	}
 
-	private function setVars($row) {
+	private function setVars($row)
+	{
 		foreach (get_object_vars($this) as $var => $val)
 			if (isset($row->$var))
 				$this->$var = $row->$var;
@@ -48,10 +49,10 @@ abstract class SwatDBRowWrapper {
 	 * Result found
 	 * @return boolean Whether or not a result exists
 	 */
-	public function isFound() {
+	public function isFound()
+	{
 		return $this->_found;
 	}
 }
 
 ?>
-

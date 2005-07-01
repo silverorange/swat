@@ -1,6 +1,6 @@
 <?php
 
-require_once("Swat/SwatException.php");
+require_once 'Swat/SwatException.php';
 
 /**
  * A SwatDB Exception.
@@ -9,8 +9,8 @@ require_once("Swat/SwatException.php");
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDBException extends SwatException {
-	
+class SwatDBException extends SwatException
+{
 }
 
 ?>

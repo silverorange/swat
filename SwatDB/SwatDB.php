@@ -1,10 +1,10 @@
 <?php
 // vim: set fdm=marker:
 
-require_once("MDB2.php");
-require_once("SwatDB/SwatDBField.php");
-require_once("SwatDB/SwatDBException.php");
-require_once("Swat/SwatTreeNode.php");
+require_once 'MDB2.php';
+require_once 'SwatDB/SwatDBField.php';
+require_once 'SwatDB/SwatDBException.php';
+require_once 'Swat/SwatTreeNode.php';
 
 /**
  * Database helper class
@@ -15,8 +15,8 @@ require_once("Swat/SwatTreeNode.php");
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDB {
-	
+class SwatDB
+{
     // {{{ public static function query()
 
 	/**
@@ -30,7 +30,8 @@ class SwatDB {
 	 *
 	 * @return MDB2_result_common A recordset containing the query result.
 	 */
-	public static function query($db, $sql, $types = null) {
+	public static function query($db, $sql, $types = null)
+	{
 		SwatDB::debug($sql);
 		$rs = $db->query($sql, $types);
 
@@ -42,7 +43,7 @@ class SwatDB {
 
 	// }}}
     // {{{ public static function updateColumn()
-	
+
 	/**
 	 * Update a column
 	 *
@@ -72,8 +73,9 @@ class SwatDB {
 	 *        rows to be updated. The type of the individual identifiers should 
 	 *        correspond to the type of $id_field.
 	 */
-	public static function updateColumn($db, $table, $field, $value, $id_field, $ids) {
-
+	public static function updateColumn($db, $table, $field, $value, $id_field,
+		$ids)
+	{
 		if (count($ids) == 0)
 			return;
 
@@ -100,6 +102,7 @@ class SwatDB {
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs->getMessage());
 	}
+
 	// }}}
     // {{{ public static function queryColumn()
 
@@ -130,7 +133,9 @@ class SwatDB {
 	 *
 	 * @return array An associative array of $id_field => $field 
 	 */
-	public static function queryColumn($db, $table, $field, $id_field = null, $id = 0) {
+	public static function queryColumn($db, $table, $field, $id_field = null,
+		$id = 0)
+	{
 		$field = new SwatDBField($field, 'integer');
 
 		if ($id_field == null) {
@@ -179,7 +184,9 @@ class SwatDB {
 	 *
 	 * @return mixed The value queried for a single result.
 	 */
-	public static function queryOne($db, $table, $field, $id_field = null, $id = 0) {
+	public static function queryOne($db, $table, $field, $id_field = null,
+		$id = 0)
+	{
 		$field = new SwatDBField($field, 'integer');
 
 		if ($id_field == null) {
@@ -235,9 +242,9 @@ class SwatDB {
 	 * @param string $id_field The database field in the bound table that the 
 	 *        binding table references.
 	 */
-	public static function updateBinding($db, $table, $id_field, $id, $value_field, 
-		$values, $bound_table, $bound_field) {
-
+	public static function updateBinding($db, $table, $id_field, $id,
+		$value_field, $values, $bound_table, $bound_field)
+	{
 		$id_field = new SwatDBField($id_field, 'integer');
 		$value_field = new SwatDBField($value_field, 'integer');
 		$bound_field = new SwatDBField($bound_field, 'integer');
@@ -323,8 +330,8 @@ class SwatDB {
 	 * @param mixed $id The value to look for in the id field column. The 
 	 *        type should correspond to the type of $field.
 	 */
-	public static function queryRow($db, $table, $fields, $id_field, $id) {
-
+	public static function queryRow($db, $table, $fields, $id_field, $id)
+	{
 		SwatDB::initFields($fields);
 		$id_field = new SwatDBField($id_field, 'integer');
 		$sql = 'select %s from %s where %s = %s';
@@ -350,7 +357,7 @@ class SwatDB {
 
 	// }}}
 	// {{{ public static function insertRow()
-	
+
 	/**
 	 * Insert a row
 	 *
@@ -380,8 +387,9 @@ class SwatDB {
 	 * @return mixed If $id_field is set, the value in the $id_field column of
 	 *        the inserted row is returned.
 	 */
-	public static function insertRow($db, $table, $fields, $values, $id_field = null) {
-
+	public static function insertRow($db, $table, $fields, $values,
+		$id_field = null)
+	{
 		SwatDB::initFields($fields);
 
 		$ret = null;
@@ -448,7 +456,9 @@ class SwatDB {
 	 * @param mixed $id The value to look for in the $id_field column. The 
 	 *        type should correspond to the type of $field.
 	 */
-	public static function updateRow($db, $table, $fields, $values, $id_field, $id) {
+	public static function updateRow($db, $table, $fields, $values, $id_field,
+		$id)
+	{
 
 		SwatDB::initFields($fields);
 		$id_field = new SwatDBField($id_field, 'integer');
@@ -509,9 +519,9 @@ class SwatDB {
 	 *
 	 * @return array An array in the form of $id => $title.
 	 */
-	public static function getOptionArray($db, $table, $title_field, $id_field, 
-		$order_by_clause = null, $where_clause = null) {
-
+	public static function getOptionArray($db, $table, $title_field, $id_field,
+		$order_by_clause = null, $where_clause = null)
+	{
 		$title_field = new SwatDBField($title_field, 'text');
 		$id_field = new SwatDBField($id_field, 'integer');
 
@@ -582,9 +592,10 @@ class SwatDB {
 	 *
 	 * @return array An array in the form of $id => $title.
 	 */
-	public static function getCascadeOptionArray($db, $table, $title_field, $id_field, 
-		$cascade_field, $order_by_clause = null, $where_clause = null) {
-
+	public static function getCascadeOptionArray($db, $table, $title_field,
+		$id_field, $cascade_field, $order_by_clause = null,
+		$where_clause = null)
+	{
 		$title_field = new SwatDBField($title_field, 'text');
 		$id_field = new SwatDBField($id_field, 'integer');
 		$cascade_field = new SwatDBField($cascade_field, 'integer');
@@ -678,10 +689,10 @@ class SwatDB {
 	 *
 	 * @return SwatTreeNode A tree hierarchy of {@link SwatTreeNode}s
 	 */
-	public static function getGroupedOptionArray($db, $table, $title_field, $id_field, 
-		$group_table, $group_title_field, $group_id_field, $group_field,
-		$order_by_clause = null, $where_clause = null) {
-
+	public static function getGroupedOptionArray($db, $table, $title_field,
+		$id_field, $group_table, $group_title_field, $group_id_field,
+		$group_field, $order_by_clause = null, $where_clause = null)
+	{
 		$title_field = new SwatDBField($title_field, 'text');
 		$id_field = new SwatDBField($id_field, 'integer');
 		$group_title_field = new SwatDBField($group_title_field, 'text');
@@ -769,9 +780,9 @@ class SwatDB {
 	 *
 	 * @return SwatTreeNode A tree hierarchy of {@link SwatTreeNode}s
 	 */
-	public static function getTreeOptionArray($db, $sp, $title_field, $id_field,
-		$level_field) {
-
+	public static function getTreeOptionArray($db, $sp, $title_field,
+		$id_field, $level_field)
+	{
 		$id_field = new SwatDBField($id_field, 'integer');
 		$title_field = new SwatDBField($title_field, 'text');
 		$level_field = new SwatDBField($level_field, 'integer');
@@ -786,9 +797,12 @@ class SwatDB {
 		return $tree;
 	}
 
-	private static function buildTreeOptionArray($rs, $title_field_name, $id_field_name,
-		$level_field_name) {
+	// }}}
+	// {{{ private static function buildTreeOptionArray)
 
+	private static function buildTreeOptionArray($rs, $title_field_name,
+		$id_field_name, $level_field_name)
+	{
 		$stack = array();
 		$current_parent =  new SwatTreeNode();
 		$base_parent = $current_parent;
@@ -816,9 +830,9 @@ class SwatDB {
 
 	// }}}
 	// {{{ private static function getFieldNameArray()
-	
-	private static function getFieldNameArray($fields) {
 
+	private static function getFieldNameArray($fields)
+	{
 		if (count($fields) == 0)
 			return;
 
@@ -832,9 +846,9 @@ class SwatDB {
 
 	// }}}
 	// {{{ private static function getFieldTypeArray()
-	
-	private static function getFieldTypeArray($fields) {
 
+	private static function getFieldTypeArray($fields)
+	{
 		if (count($fields) == 0)
 			return;
 
@@ -848,7 +862,7 @@ class SwatDB {
 
 	// }}}
 	// {{{ public static function getFieldMax()
-	
+
 	/**
 	 * Get max field value
 	 *
@@ -864,7 +878,8 @@ class SwatDB {
 	 *
 	 * @return mixed The max value of field specified.
 	 */
-	public static function getFieldMax($db, $table, $field) {
+	public static function getFieldMax($db, $table, $field)
+	{
 		$field = new SwatDBField($field, 'integer');
 			
 		$sql = sprintf('select max(%s) as %s from %s',
@@ -880,10 +895,12 @@ class SwatDB {
 		$field_name = $field->name;
 		return $row->$field_name;
 	}
+
 	// }}}
 	// {{{ private static function initFields()
-	
-	private function initFields(&$fields) {
+
+	private function initFields(&$fields)
+	{
 		/* Transforms and array of text field identifiers ('text:title') into
 		 * an array of SwatDBField objects.
 		 */
@@ -895,10 +912,9 @@ class SwatDB {
 			$field = new SwatDBField($field, 'text');
 	}
 
-
 	// }}}
 	// {{{ public static function equalityOperator()
-	
+
 	/**
 	 * Get proper conditional operator
 	 *
@@ -912,7 +928,8 @@ class SwatDB {
 	 *
 	 * @return string SQL operator
 	 */
-	public static function equalityOperator($value, $neg = false) {
+	public static function equalityOperator($value, $neg = false)
+	{
 		if ($value === null && $neg)
 			return 'is not';
 		elseif ($value === null)
@@ -922,13 +939,18 @@ class SwatDB {
 		else
 			return '=';
 	}
+
 	// }}}
 	// {{{ private static function debug()
-	
-	private static function debug($msg) {
+
+	private static function debug($msg)
+	{
 		if (defined('SWATDB_DEBUG')) {
 			echo $msg, '<hr />';
 		}
 	}
+
 	// }}}
 }
+
+?>
