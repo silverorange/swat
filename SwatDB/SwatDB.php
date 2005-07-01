@@ -798,6 +798,70 @@ class SwatDB
 	}
 
 	// }}}
+	// {{{ public static function getFieldMax()
+
+	/**
+	 * Get max field value
+	 *
+ 	 * Convenience method to grab the max value from a single field.
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 *
+	 * @param string $table The database table to update.
+	 *
+	 * @param string $field The field to be return the max value of. Can be 
+	 *        given in the form type:name where type is a standard MDB2 
+	 *        datatype. If type is ommitted, then text is assummed.
+	 *
+	 * @return mixed The max value of field specified.
+	 */
+	public static function getFieldMax($db, $table, $field)
+	{
+		$field = new SwatDBField($field, 'integer');
+			
+		$sql = sprintf('select max(%s) as %s from %s',
+			$field->name, $field->name, $table);
+
+		SwatDB::debug($sql);
+		$rs = $db->query($sql, array($field->type));
+		
+		if (MDB2::isError($rs))
+			throw new SwatDBException($rs->getMessage());
+		
+		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
+		$field_name = $field->name;
+		return $row->$field_name;
+	}
+
+	// }}}
+	// {{{ public static function equalityOperator()
+
+	/**
+	 * Get proper conditional operator
+	 *
+ 	 * Convenience method to return proper operators for database values that
+ 	 * may be null.
+	 *
+	 * @param mixed $value The value to check for null on
+	 *
+	 * @param boolean $neg Whether to return the operator for a negative
+	 *        comparison 
+	 *
+	 * @return string SQL operator
+	 */
+	public static function equalityOperator($value, $neg = false)
+	{
+		if ($value === null && $neg)
+			return 'is not';
+		elseif ($value === null)
+			return 'is';
+		elseif ($neg)
+			return '!=';
+		else
+			return '=';
+	}
+
+	// }}}
 	// {{{ private static function buildTreeOptionArray)
 
 	private static function buildTreeOptionArray($rs, $title_field_name,
@@ -861,42 +925,6 @@ class SwatDB
 	}
 
 	// }}}
-	// {{{ public static function getFieldMax()
-
-	/**
-	 * Get max field value
-	 *
- 	 * Convenience method to grab the max value from a single field.
-	 *
-	 * @param MDB2_Driver_Common $db The database connection.
-	 *
-	 * @param string $table The database table to update.
-	 *
-	 * @param string $field The field to be return the max value of. Can be 
-	 *        given in the form type:name where type is a standard MDB2 
-	 *        datatype. If type is ommitted, then text is assummed.
-	 *
-	 * @return mixed The max value of field specified.
-	 */
-	public static function getFieldMax($db, $table, $field)
-	{
-		$field = new SwatDBField($field, 'integer');
-			
-		$sql = sprintf('select max(%s) as %s from %s',
-			$field->name, $field->name, $table);
-
-		SwatDB::debug($sql);
-		$rs = $db->query($sql, array($field->type));
-		
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
-		
-		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
-		$field_name = $field->name;
-		return $row->$field_name;
-	}
-
-	// }}}
 	// {{{ private static function initFields()
 
 	private function initFields(&$fields)
@@ -910,34 +938,6 @@ class SwatDB
 
 		foreach ($fields as &$field)
 			$field = new SwatDBField($field, 'text');
-	}
-
-	// }}}
-	// {{{ public static function equalityOperator()
-
-	/**
-	 * Get proper conditional operator
-	 *
- 	 * Convenience method to return proper operators for database values that
- 	 * may be null.
-	 *
-	 * @param mixed $value The value to check for null on
-	 *
-	 * @param boolean $neg Whether to return the operator for a negative
-	 *        comparison 
-	 *
-	 * @return string SQL operator
-	 */
-	public static function equalityOperator($value, $neg = false)
-	{
-		if ($value === null && $neg)
-			return 'is not';
-		elseif ($value === null)
-			return 'is';
-		elseif ($neg)
-			return '!=';
-		else
-			return '=';
 	}
 
 	// }}}
