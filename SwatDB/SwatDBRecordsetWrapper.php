@@ -11,17 +11,25 @@
  */
 abstract class SwatDBRecordsetWrapper
 {
+	// {{{ protected properties
+
 	/**
 	 * Name of the {@link SwatDBRowWrapper} class
 	 * @var SwatDBRowWrapper 
 	 */
 	protected $row_wrapper_class;
-	
+
+	// }}}
+	// {{{ public properties
+
 	/**
 	 * Array of SwatDBRowWrapper items
 	 * @var array
 	 */
 	public $items = array();
+
+	// }}}
+	// {{{ public function __construct
 
 	/**
 	 * Constructor
@@ -36,6 +44,8 @@ abstract class SwatDBRecordsetWrapper
 			while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT))
 				$this->items[] = new $this->row_wrapper_class($row);
 	}
+
+	// }}}
 }
 
 ?>
