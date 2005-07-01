@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Database field
  * 
@@ -8,8 +9,8 @@
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDBField {
-
+class SwatDBField
+{
 	/**
 	 * The name of the database field
 	 * @var string
@@ -34,7 +35,8 @@ class SwatDBField {
 	 *        specified in the $field string. Any standard MDB2 datatype
 	 *        is valid here.
 	 */
-	public function __construct($field, $default_type = 'text') {
+	public function __construct($field, $default_type = 'text')
+	{
 		$x = explode(':', $field);
 
 		if (isset($x[1])) {
@@ -53,8 +55,10 @@ class SwatDBField {
 	 *        form <type>:<name> where <name> is the name of the database 
 	 *        field and <type> is a standard MDB2 datatype.
 	 */
-	public function __toString() {
+	public function __toString()
+	{
 		return $this->type.':'.$this->name;
 	}
 }
 
+?>

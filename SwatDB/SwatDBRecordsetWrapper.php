@@ -1,4 +1,5 @@
 <?php
+
 /**
  * MDB2 Recordset Wrapper
  *
@@ -8,9 +9,8 @@
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-
-abstract class SwatDBRecordsetWrapper {
-
+abstract class SwatDBRecordsetWrapper
+{
 	/**
 	 * Name of the {@link SwatDBRowWrapper} class
 	 * @var SwatDBRowWrapper 
@@ -27,7 +27,8 @@ abstract class SwatDBRecordsetWrapper {
 	 * Constructor
 	 * @param MDB2 recordset
 	 */
-	function __construct($rs) {
+	function __construct($rs)
+	{
 		if (MDB2::isError($rs))
 			throw new Exception($rs->getMessage());
 
@@ -36,4 +37,5 @@ abstract class SwatDBRecordsetWrapper {
 				$this->items[] = new $this->row_wrapper_class($row);
 	}
 }
+
 ?>
