@@ -42,7 +42,7 @@ class SwatDB
 	}
 
 	// }}}
-    // {{{ public static function updateColumn()
+	// {{{ public static function updateColumn()
 
 	/**
 	 * Update a column
@@ -104,7 +104,7 @@ class SwatDB
 	}
 
 	// }}}
-    // {{{ public static function queryColumn()
+	// {{{ public static function queryColumn()
 
 	/**
 	 * Query a column
@@ -157,7 +157,7 @@ class SwatDB
 	}
 
 	// }}}
-    // {{{ public static function queryOne()
+	// {{{ public static function queryOne()
 
 	/**
 	 * Query a single value
@@ -208,7 +208,7 @@ class SwatDB
 	}
 
 	// }}}
-    // {{{ public static function updateBinding()
+	// {{{ public static function updateBinding()
 
 	/**
 	 * Update a binding table
@@ -484,7 +484,7 @@ class SwatDB
 	}
 
 	// }}}
-    // {{{ public static function getOptionArray()
+	// {{{ public static function getOptionArray()
 
     /**
 	 * Query for an option array
@@ -552,7 +552,7 @@ class SwatDB
 	}
 
 	// }}}
-    // {{{ public static function getCascadeOptionArray()
+	// {{{ public static function getCascadeOptionArray()
 
     /**
 	 * Query for an option array cascaded by a field
@@ -637,7 +637,7 @@ class SwatDB
 	}
 
 	// }}}
-    // {{{ public static function getGroupOptionArray()
+	// {{{ public static function getGroupOptionArray()
 
     /**
 	 * Query for a grouped option array
@@ -748,7 +748,7 @@ class SwatDB
 	}
 
 	// }}}
-    // {{{ public static function getTreeOptionArray()
+	// {{{ public static function getTreeOptionArray()
 
 	/**
 	 * Query for an option tree array
