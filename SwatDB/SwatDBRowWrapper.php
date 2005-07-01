@@ -11,7 +11,12 @@
  */
 abstract class SwatDBRowWrapper
 {
+	// {{{ private properties
+
 	private $_found = false;
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Constructor
@@ -38,12 +43,18 @@ abstract class SwatDBRowWrapper
 		}		
 	}
 
+	// }}}
+	// {{{ private function setVars()
+
 	private function setVars($row)
 	{
 		foreach (get_object_vars($this) as $var => $val)
 			if (isset($row->$var))
 				$this->$var = $row->$var;
 	}
+
+	// }}}
+	// {{{ public function isFound()
 
 	/**
 	 * Result found
@@ -53,6 +64,8 @@ abstract class SwatDBRowWrapper
 	{
 		return $this->_found;
 	}
+
+	// }}}
 }
 
 ?>
