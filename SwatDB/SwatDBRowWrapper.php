@@ -44,16 +44,6 @@ abstract class SwatDBRowWrapper
 	}
 
 	// }}}
-	// {{{ private function setVars()
-
-	private function setVars($row)
-	{
-		foreach (get_object_vars($this) as $var => $val)
-			if (isset($row->$var))
-				$this->$var = $row->$var;
-	}
-
-	// }}}
 	// {{{ public function isFound()
 
 	/**
@@ -63,6 +53,16 @@ abstract class SwatDBRowWrapper
 	public function isFound()
 	{
 		return $this->_found;
+	}
+
+	// }}}
+	// {{{ private function setVars()
+
+	private function setVars($row)
+	{
+		foreach (get_object_vars($this) as $var => $val)
+			if (isset($row->$var))
+				$this->$var = $row->$var;
 	}
 
 	// }}}
