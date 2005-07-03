@@ -22,11 +22,6 @@ class SwatString
 	 */
 	const FILTER_B2 = 0;
 
-	/**
-	 * replaces all hard returns with a bullet character
-	 */
-	const FILTER_BLURB = 0;
-
 	/// }}}
     // {{{ public static function filter()
 
@@ -57,12 +52,37 @@ class SwatString
 			$text = str_replace("\r\n", '<br />', $text);
 			return $text;
 
-		} elseif ($type == self::FILTER_BLURB) {
-			// replace any number of consecutive crlfs with
-			// non-breaking space padded bullet characters
-			$text = preg_replace('/(\r\n)+/s', ' &nbsp;&#8226;&nbsp; ', $text);
-			return $text;
 		}
+	}
+
+	// }}}
+	// {{{ public static function condense()
+
+	/**
+	 * Takes a block of text and condenses it into a small fragment of XHTML.
+	 *
+	 * Condensing text involves removing line breaks and replacing them with
+	 * special characters. Other things are done like removing and replacing
+	 * certain block level XHTML elements as well.
+	 *
+	 * TODO: Finish writing this function. See code in sites/intranet3.
+	 *
+	 * @param string $text the text to be condensed.
+	 * @param integer $max_length the maximum length of the condensed text. The
+	 *                             length is calculated as the number of
+	 *                             visible characters. This means XHTML tags
+	 *                             and entities do not affect the length.
+	 *
+	 * @return string the condensed text. The condensed text is an XHTML
+	 *                 formatted string.
+	 */
+	public static function condense($text, $length)
+	{
+		// replace any number of consecutive crlfs with
+		// non-breaking space padded bullet characters
+		$text = preg_replace('/(\r\n)+/s', ' &nbsp;&#8226;&nbsp; ', $text);
+
+		return $text;
 	}
 
 	// }}}
