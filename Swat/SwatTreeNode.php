@@ -11,22 +11,48 @@ require_once 'Swat/SwatObject.php';
  */
 class SwatTreeNode extends SwatObject
 {
+	// {{{ public properties
+
 	/**
 	 * An array of data used for display
 	 *
-	 * @var array
-	 */
-	public $data = null;
-	
-	/**
-	 * An array of children nodes
+	 * TODO: What is the data used to display?
 	 *
 	 * @var array
 	 */
-	public $children = array();
+	public $data = array();
 
-	// TODO: add parent and a getPath() method would return the path of this
-	//       node.
+	// }}}
+	// {{{ private properties
+
+	/**
+	 * The parent tree node of this tree node
+	 *
+	 * @var SwatTreeNode
+	 */
+	private $parent = null;
+	
+	/**
+	 * The index of this child node it its parent array.
+	 *
+	 * The index of this node is used like an identifier and is used when
+	 * building paths in the tree.
+	 *
+	 * @var integer
+	 */
+	private $index = 0;
+
+	/**
+	 * An array of children tree nodes
+	 *
+	 * This array is indexed numerically and starts at 0.
+	 *
+	 * @var array
+	 */
+	private $children = array();
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new tree node
@@ -40,25 +66,90 @@ class SwatTreeNode extends SwatObject
 		$this->data = $data;
 	}
 
+	// }}}
+	// {{{ public function addChild(0
+
+	/**
+	 * Adds a child node to this node
+	 *
+	 * The parent of the child node is set to this node.
+	 *
+	 * @paran SwatTreeNode $child the child node to add to this node.
+	 */
+	public function addChild($child)
+	{
+		$child->parent = $this;
+		$child->index = count($this->children);
+		$this->children[] = $child;
+	}
+
+	// }}}
+	// {{{ public function getPath()
+
+	/**
+	 * Gets the path to this node
+	 *
+	 * This method travels up the tree until it reaches a node with a parent
+	 * of 'null', building a path of ids along the way.
+	 *
+	 * return @array an array of ids that is the path to this node from the 
+	 *                root of the current tree.
+	 */
+	public function &getPath()
+	{
+		$path = array($this->id);
+		
+		$parent = $this->parent;
+		while ($parent !== null) {
+			$path[] = $parent->index;
+			$parent = $parent->parent;
+		}
+
+		// we built the path backwards
+		$path = array_reverse($path);
+
+		return $path;
+	}
+
+	// }}}
+	// {{{ public function getParent()
+	
+	/**
+	 * Gets the parent node of this node
+	 *
+	 * @return SwatTreeNode the parent node of this node.
+	 */
+	public function getParent()
+	{
+		return $this->parent;
+	}
+
+	// }}}
+	// {{{ public function toArray()
+
 	/**
 	 * Returns this branch as a flat array
 	 *
-	 * A utility method that gets all child elements as a flat array of the
-	 * form:
-	 *    id1/id2/id3 => value
-	 * Where 'id1/id2/id3' is the path to the 'value' node.
+	 * Thius utility method gets all child nodes of this node as a flat array
+	 * of the form:
+	 *    index1/index2/index3 => data
+	 * Where 'index1/index2/index3' is a flat representation of the path from
+	 * this node to the node containing 'data'.
 	 *
 	 * @return array a reference to an array containing all child elements of
 	 *                this node indexed by path.
 	 */
 	public function &toArray()
 	{
-		$options = array();
+		$flat_array = array();
 		
-		$this->expandNode($options, $this);
+		self::expandNode($flat_array, $this);
 
-		return $options;
+		return $flat_array;
 	}
+
+	// }}}
+	// {{{ private static function expandNode()
 
 	/**
 	 * Recursivly expands a tree node
@@ -73,15 +164,18 @@ class SwatTreeNode extends SwatObject
 	 * @param array $path an array of ids representing the current path in the
 	 *                     tree.
 	 */
-	private function expandNode(&$options, $node, $path = array())
+	private static function expandNode(&$options, $node, $path = array())
 	{
 		if (count($path))
 			$options[implode('/', $path)] = $node->data;
 
-		foreach ($node->children as $id => $child_node)
-			$this->expandNode($options, $child_node,
-				$this->appendPath($path, $id));
+		foreach ($node->children as $index => $child_node)
+			self::expandNode($options, $child_node,
+				self::appendPath($path, $index));
 	}
+
+	// }}}
+	// {{{ private static function appendPath()
 
 	/**
 	 * Adds an id to an array of ids forming a path in this tree
@@ -93,15 +187,17 @@ class SwatTreeNode extends SwatObject
 	 *
 	 * @return array a reference to the path array with the new id added.
 	 */
-	private function &appendPath($path, $id)
+	private static function &appendPath($path, $index)
 	{
 		if (!is_array($path))
-			$path = array($id);
+			$path = array($index);
 		else
-			$path[] = $id;
+			$path[] = $index;
 
 		return $path;
 	}
+
+	// }}}
 }
 
 ?>
