@@ -67,7 +67,7 @@ class SwatTreeNode extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function addChild(0
+	// {{{ public function addChild()
 
 	/**
 	 * Adds a child node to this node
@@ -92,7 +92,7 @@ class SwatTreeNode extends SwatObject
 	 * This method travels up the tree until it reaches a node with a parent
 	 * of 'null', building a path of ids along the way.
 	 *
-	 * return @array an array of ids that is the path to this node from the 
+	 * return @array an array of indexes that is the path to this node from the
 	 *                root of the current tree.
 	 */
 	public function &getPath()
