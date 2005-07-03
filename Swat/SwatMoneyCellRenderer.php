@@ -10,7 +10,7 @@ require_once 'Swat/SwatCurrency.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCellRendererMoney extends SwatCellRenderer
+class SwatMoneyCellRenderer extends SwatCellRenderer
 {
 	// {{{ public properties
 	
