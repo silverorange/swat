@@ -735,13 +735,14 @@ class SwatDB
 				$current_parent = new SwatTreeNode(
 					array('title' => $row->group_title));
 
-				$base_parent->children[] = $current_parent;
+				$base_parent->addChild($current_parent);
 				
 				$current_group = $row->group_id;
 			}
 
-			$current_parent->children[] =
-				new SwatTreeNode(array('title' => $row->title, 'value' => $row->id));
+			$current_parent->addChild(
+				new SwatTreeNode(array('title' => $row->title,
+					'value' => $row->id)));
 		}
 
 		return $base_parent;
@@ -886,7 +887,7 @@ class SwatDB
 			}
 		
 			$last_node = new SwatTreeNode(array('title' => $title, 'value' => $id));
-			$current_parent->children[] = $last_node;
+			$current_parent->addChild($last_node);
 		}
 
 		return $base_parent;
