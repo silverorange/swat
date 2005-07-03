@@ -86,7 +86,7 @@ class SwatFlydown extends SwatControl implements SwatState
 		// Empty string XHTML option value is assumed to be null
 		// when processing.
 		if ($this->show_blank)
-			$options[''] = $this->blank_title;
+			$options = array('' => $this->blank_title) + $options;
 		
 		// only show a select if there is more than one option
 		if (count($options) > 1) {
