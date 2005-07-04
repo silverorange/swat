@@ -160,6 +160,12 @@ table.swat-table-view { border-collapse: collapse; }
 .swat-table-view tr.odd {
         background: #F9F6F0;
 }
+.swat-table-view tr.highlight {
+        background: #E9E6F0;
+}
+.swat-table-view tr.highlight-odd {
+        background: #E0DEF0;
+}
 
 
 /* SwatPagination */
