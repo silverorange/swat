@@ -45,7 +45,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	/**
 	 * Gets the number of fields of this details view
 	 *
-	 * @return int the number of fields of this details view.
+	 * @return integer the number of fields of this details view.
 	 */
 	public function getFieldCount()
 	{
