@@ -12,6 +12,13 @@ require_once 'Date.php';
 class SwatCalendar extends SwatControl
 {
 	/**
+	 * Id of the {@link SwatDateEntry} the Calendar corresponds to
+	 *
+	 * @var string
+	 */
+	public $entry_id;
+
+	/**
 	 * Start date of the valid range (inclusive).
 	 *
 	 * @var Date
@@ -78,7 +85,7 @@ class SwatCalendar extends SwatControl
 		 
 		echo '<script type="text/javascript">';
 		
-		echo "createCalendarWidget('{$this->id}', {$months}, {$weeks}, ",
+		echo "createCalendarWidget('{$this->entry_id}', {$months}, {$weeks}, ",
 			"'{$close}', '$nodate', '$today');";
 			
 		echo '</script>';
@@ -86,8 +93,8 @@ class SwatCalendar extends SwatControl
 		$img_tag = new SwatHtmlTag('img');
 		$img_tag->src = 'swat/images/b_calendar.gif';
 		$img_tag->class = 'swat-calendar-icon';
-		$img_tag->id = $this->id.'_calendar';
-		$img_tag->onmousedown = "clickWidgetIcon('{$this->id}', ".
+		$img_tag->id = $this->entry_id.'_calendar';
+		$img_tag->onmousedown = "clickWidgetIcon('{$this->entry_id}', ".
 			"'{$start_date}', '{$end_date}');";
 
 		$img_tag->display();
@@ -95,7 +102,7 @@ class SwatCalendar extends SwatControl
 		echo '<br />';
 
 		$div_tag = new SwatHtmlTag('div');
-		$div_tag->id = $this->id.'_div';
+		$div_tag->id = $this->entry_id.'_div';
 		$div_tag->class = 'swat-calendar-div-hide';
 		// TODO: try display() here
 		$div_tag->open();
