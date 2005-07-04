@@ -34,6 +34,20 @@ abstract class SwatApplication extends SwatObject
 	 */
 	public $id;
 
+	/**
+	 * Whether this site is secure (behind SSL) or not
+	 *
+	 * @var boolean
+	 */
+	public $secure = false;
+
+	/**
+	 * Whether this site is a live or stage copy
+	 *
+	 * @var boolean
+	 */
+	public $live = false;
+
 	// }}}
 	// {{{ protected properties
 
@@ -132,14 +146,14 @@ abstract class SwatApplication extends SwatObject
 	 */
 	public function getBaseHref()
 	{
-		/*
-		 * TODO: Once we have a SITE_LIVE equivalent, we should use HTTP_HOST
-		 *       on stage and SERVER_NAME on live.
-		 * TODO: This also needs to be updated to support https.
-		 */
-		if ($this->base_href === null)
-			$this->base_href =
-				'http://'.$_SERVER['HTTP_HOST'].$this->getBaseUri();
+		if ($this->base_href === null) {
+			$uri_scheme = ($this->secure) ? 'https://' : 'http://';
+
+			$server_name = ($this->live) ?
+				$_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
+				
+			$this->base_href = $uri_scheme.$server_name.$this->getBaseUri();
+		}
 
 		return $this->base_href;
 	}
