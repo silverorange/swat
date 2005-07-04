@@ -110,7 +110,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 		$anchor->open();
 		
-		echo $this->title, '&nbsp;';
+		echo $this->title;
 
 		// display image
 		if ($this->view->orderby_column === $this &&
