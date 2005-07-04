@@ -205,6 +205,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		$table_tag = new SwatHtmlTag('table');
 		$table_tag->class = 'swat-table-view';
+		$table_tag->id = $this->id;
 
 		$table_tag->open();
 		$this->displayHeader();
@@ -318,8 +319,22 @@ class SwatTableView extends SwatControl implements SwatUIParent
 			$tr_tag->close();
 		}
 
+		$this->displayJavascript();
+
 		foreach ($this->extra_rows as $row)
 			$row->display($this->columns);
+	}
+
+	// }}}
+	// {{{ private function displayJavascript()
+	private function displayJavascript() {
+		echo '<script type="text/javascript">';
+		include_once 'javascript/swat-table-view.js';
+		echo "\n{$this->id} = new SwatTableView('{$this->id}');";
+		echo '</script>';
+
+		foreach ($this->columns as $column)
+			echo $column->displayJavascript();
 	}
 
 	// }}}

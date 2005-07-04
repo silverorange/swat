@@ -70,10 +70,18 @@ class SwatCheckboxList extends SwatControl implements SwatState
 				echo '<br />';
 			}
 
+			$this->displayJavascript();
+
 			if (count($this->options) > 1) {
+				$div_tag = new SwatHtmlTag('div');
+				$div_tag->id = $this->id.'__div';
+				$div_tag->open();
+
 				$chk_all = new SwatCheckAll();
-				$chk_all->series_name = $this->id;
+				$chk_all->controller = $this;
 				$chk_all->display();
+
+				$div_tag->close();
 			}
 		}
 	}	
@@ -111,6 +119,17 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	public function getState()
 	{
 		return $this->values;
+	}
+	
+	/**
+	 * Displays the javascript for this check-all widget
+	 */
+	private function displayJavascript()
+	{
+		echo '<script type="text/javascript">';
+		include_once 'javascript/swat-checkbox-list.js';
+		echo "{$this->id} = new SwatCheckboxList('{$this->id}');";
+		echo '</script>';
 	}
 }
 

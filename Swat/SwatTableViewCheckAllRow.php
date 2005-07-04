@@ -31,7 +31,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow {
 			if ($column->id == $this->column_id) {
 
 				$check_all = new SwatCheckAll();
-				$check_all->series_name = $column->view->id.'_items';
+				$check_all->controller = $column;
 
 				break;
 

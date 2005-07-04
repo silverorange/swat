@@ -12,13 +12,13 @@ require_once 'Swat/SwatControl.php';
 class SwatCheckAll extends SwatControl
 {
 	/**
-	 * Series Name
+	 * Controller
 	 *
-	 * The name of the series of checkboxes that the check all triggers.
+	 * A reference to the {@link SwatObject} linked to the SwatCheckList.
 	 *
-	 * @var string
+	 * @var SwatObject
 	 */
-	public $series_name = null;	
+	public $controller = null;
 	
 	/**
 	 * Title
@@ -47,9 +47,9 @@ class SwatCheckAll extends SwatControl
 	 */
 	public function display()
 	{
-		if ($this->series_name === null)
-			throw new SwatException(__CLASS__.': A series name referencing '.
-				'the series of checkboxes to apply to must be defined.');
+		if ($this->controller === null)
+			throw new SwatException(__CLASS__.': A controller referencing '.
+				'the SwatObject containing the checklist must be set.');
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
@@ -73,7 +73,7 @@ class SwatCheckAll extends SwatControl
 	{
 		echo '<script type="text/javascript">';
 		include_once 'javascript/swat-check-all.js';
-		echo "new SwatCheckAll('{$this->id}', '{$this->series_name}[]');";
+		echo "new SwatCheckAll('{$this->id}', {$this->controller->id});";
 		echo '</script>';
 	}
 }
