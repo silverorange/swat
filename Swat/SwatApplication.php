@@ -11,12 +11,31 @@ require_once 'Swat/SwatObject.php';
  */
 abstract class SwatApplication extends SwatObject
 {
+	// {{{ global variable type constants
+
+	const VAR_POST    = 1;
+	const VAR_GET     = 2;
+	/*
+	const VAR_REQUEST = 4;
+	const VAR_COOKIE  = 8;
+	const VAR_SERVER  = 16;
+	const VAR_SESSION = 32;
+	const VAR_FILES   = 64;
+	const VAR_ENV     = 128;
+	*/
+
+	// }}}
+	// {{{ public properties
+
 	/**
 	 * A unique identifier for this application
 	 *
 	 * @var string
 	 */
 	public $id;
+
+	// }}}
+	// {{{ protected properties
 
 	/**
 	 * The number of elements of the raw URI that comprise the base
@@ -28,14 +47,15 @@ abstract class SwatApplication extends SwatObject
 	protected $base_uri_length = 0;
 
 	/**
-	 * The raw URI of this page request
+	 * The raw URI of the current page request of this application
 	 *
 	 * @var string
 	 */
 	protected $uri = null;
 	
 	/**
-	 * The base part of the raw URI of this page request
+	 * The base part of the raw URI of the current page request of this
+	 * application
 	 *
 	 * Ends with a trailing '/' character.
 	 *
@@ -44,12 +64,15 @@ abstract class SwatApplication extends SwatObject
 	protected $base_uri = null;
 	
 	/**
-	 * The base value for all application anchor hrefs
+	 * The base value for all of this application's anchor hrefs
 	 *
 	 * @var string
 	 */
 	protected $base_href = null;
-	
+
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new Swat application
 	 *
@@ -60,8 +83,11 @@ abstract class SwatApplication extends SwatObject
 		$this->id = $id;
 	}
 
+	// }}}
+	// {{{ public function getUri()
+
 	/**
-	 * Gets the raw URI of this page request
+	 * Gets the raw URI of the current page request for this application
 	 *
 	 * @return string the raw URI of this page request.
 	 */
@@ -73,10 +99,13 @@ abstract class SwatApplication extends SwatObject
 		return $this->uri;
 	}
 
+	// }}}
+	// {{{ public function getBaseUri()
+
 	/**
 	 * Gets the base part of the request URI
 	 *
-	 * The base or the request URI is returned with a trailing '/' character.
+	 * The base of the request URI is returned with a trailing '/' character.
 	 *
 	 * @return string the base part of the request URI.
 	 *
@@ -92,6 +121,9 @@ abstract class SwatApplication extends SwatObject
 
 		return $this->base_uri;
 	}
+
+	// }}}
+	// {{{ public function getBaseHref()
 
 	/**
 	 * Gets the base value for all application anchor hrefs
@@ -112,6 +144,9 @@ abstract class SwatApplication extends SwatObject
 		return $this->base_href;
 	}
 
+	// }}}
+	// {{{ public function relocate()
+
 	/**
 	 * Relocates to another URL
 	 *
@@ -130,12 +165,18 @@ abstract class SwatApplication extends SwatObject
 		exit();
 	}
 
+	// }}}
+	// {{{ abstract public function init()
+
 	/**
 	 * Initializes this application
 	 *
 	 * Subclasses should implement all application level initialization here.
 	 */
 	abstract public function init();
+
+	// }}}
+	// {{{ abstract public function getPage()
 
 	/**
 	 * Gets the page object
@@ -149,17 +190,9 @@ abstract class SwatApplication extends SwatObject
 	 */
 	abstract public function getPage();
 
-	const VAR_POST    = 1;
-	const VAR_GET     = 2;
-	/*
-	const VAR_REQUEST = 4;
-	const VAR_COOKIE  = 8;
-	const VAR_SERVER  = 16;
-	const VAR_SESSION = 32;
-	const VAR_FILES   = 64;
-	const VAR_ENV     = 128;
-	*/
-	
+	// }}}
+	// {{{ public static function initVar()
+
 	/**
 	 * Initializes a variable
 	 *
@@ -219,6 +252,8 @@ abstract class SwatApplication extends SwatObject
 		
 		return $var;
 	}
+
+	// }}}
 }
 
 ?>
