@@ -35,6 +35,16 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 */
 	const ORDER_BY_DIR_ASCENDING = 2;
 
+	/**
+	 * Indicates tri-state ordering mode
+	 */
+	const ORDER_MODE_TRISTATE = 0;
+
+	/**
+	 * Indicates bi-state ordering mode
+	 */
+	const ORDER_MODE_BISTATE = 1;
+
 	// }}}
 	// {{{ public properties
 	
@@ -67,7 +77,17 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 *
 	 * @var integer
 	 */
-	public $direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
+	private $direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
+
+	/**
+	 * The mode of ordering
+	 *
+	 * The mode of switching between ordering states.
+	 * Valid values are ORDER_MODE_TRISTATE, and ORDER_MODE_BISTATE constants.
+	 *
+	 * @var int
+	 */
+	private $mode = SwatTableViewOrderableColumn::ORDER_MODE_TRISTATE;
 
 	// }}}
 	// {{{ public function init()
@@ -79,17 +99,56 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 */
 	public function init()
 	{
-		// TODO: is id a required field of table views?
-		$key_orderby = $this->view->id.'_orderby';
-		$key_orderbydir = $this->view->id.'_orderbydir';
+		$this->initFromGetVariables();
+	}
 
-		// TODO: is id a required field of this class?
-		if (isset($_GET[$key_orderby]) && $_GET[$key_orderby] == $this->id) {
+	// }}}
+	// {{{ public function setMode()
+
+	/**
+	 * Sets the mode of ordering
+	 * 
+	 * This method sets the mode of ordering between tri-state ordering (asc,
+	 * desc, nothing) and bi-state ordering (asc, desc)
+	 *
+	 * @param $mode integer Either class constant ORDER_MODE_TRISTATE,
+	 * 		  or ORDER_MODE_BISTATE
+	 **/
+	public function setMode($mode) {
+		if ($mode == self::ORDER_MODE_BISTATE
+			&& $this->direction == self::ORDER_BY_DIR_NONE)
+			$this->setDirection(self::ORDER_BY_DIR_DESCENDING, false);
+
+		$this->mode = $mode;
+		$this->initFromGetVariables();
+	}
+
+	// }}}
+	// {{{ public function setDirection()
+
+	/**
+	 * Sets the direction of ordering
+	 * 
+	 * This method sets the direction of ordering of the column, either asc,
+	 * desc, or none.
+	 *
+	 * @param $direction integer One of the ORDER_BY_DIR_* class contants
+	 * @param $set_as_orderby_column boolean Whether to set this column as the 
+	 *                                    column currently used for ordering 
+	 *                                    of the view
+	 **/
+	public function setDirection($direction, $set_as_orderby_column = true) {
+		if ($this->mode == self::ORDER_MODE_BISTATE
+			&& $direction == self::ORDER_BY_DIR_NONE)
+			throw new SwatException(__CLASS__.": A column can not have an".
+				"order by direction of none when in bi-state mode.");
+
+		$this->direction = $direction;
+
+		if ($set_as_orderby_column && $this->view->orderby_column === null)
 			$this->view->orderby_column = $this;
 
-			if (isset($_GET[$key_orderbydir]))
-				$this->setDirectionByString($_GET[$key_orderbydir]);
-		}
+		$this->initFromGetVariables();
 	}
 
 	// }}}
@@ -114,19 +173,16 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 		// display image
 		if ($this->view->orderby_column === $this &&
-			$this->direction !=
-				SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE) {
+			$this->direction != self::ORDER_BY_DIR_NONE) {
 			
 			$img = new SwatHtmlTag('img');
 	
-			if ($this->direction ==
-				SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING) {
+			if ($this->direction == self::ORDER_BY_DIR_DESCENDING) {
 				
 				$img->src = 'swat/images/table-view-column-desc.png';
 				$img->alt = Swat::_('Descending');
 				
-			} elseif ($this->direction ==
-				SwatTableViewOrderableColumn::ORDER_BY_DIR_ASCENDING) {
+			} elseif ($this->direction == self::ORDER_BY_DIR_ASCENDING) {
 				
 				$img->src = 'swat/images/table-view-column-asc.png';
 				$img->alt = Swat::_('Ascending');
@@ -164,13 +220,13 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			$direction_id = $this->direction;
 
 		switch ($direction_id) {
-		case SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE:
+		case self::ORDER_BY_DIR_NONE:
 			return '';
 
-		case SwatTableViewOrderableColumn::ORDER_BY_DIR_ASCENDING:
+		case self::ORDER_BY_DIR_ASCENDING:
 			return 'asc';
 
-		case SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING:
+		case self::ORDER_BY_DIR_DESCENDING:
 			return 'desc';
 
 		default:
@@ -198,21 +254,17 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 		switch ($direction) {
 		case 'ascending':
 		case 'asc':
-			$this->direction =
-				SwatTableViewOrderableColumn::ORDER_BY_DIR_ASCENDING;
-
+			$this->direction = self::ORDER_BY_DIR_ASCENDING;
 			break;
 
 		case 'descending':
 		case 'desc':
-			$this->direction =
-				SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING;
+			$this->direction = self::ORDER_BY_DIR_DESCENDING;
 				
 			break;
 
 		default:
-			$this->direction =
-				SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
+			$this->direction = self::ORDER_BY_DIR_NONE;
 		}
 	}
 
@@ -245,7 +297,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 		$next_dir = $this->getNextDirection();
 
-		if ($next_dir != SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE) {
+		if ($next_dir != self::ORDER_BY_DIR_NONE) {
 			$vars[$key_orderby] = $this->id;
 			$vars[$key_orderbydir] = $this->getDirectionAsString($next_dir);
 		}
@@ -269,24 +321,48 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 * Gets the next direction or ordering in the rotation
 	 *
 	 * As a user clicks on the comun headers the direction of ordering changes
-	 * from 'none' => 'asc' => 'desc' => 'none' in a loop.
+	 * from NONE => ASCSENDING => DESCENDING => NONE in a loop.
 	 *
 	 * @return integer the next direction of ordering for this column.
 	 */
 	private function getNextDirection()
 	{
 		switch ($this->direction) {
-		case SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE:
-			return SwatTableViewOrderableColumn::ORDER_BY_DIR_ASCENDING;
+		case self::ORDER_BY_DIR_NONE:
+			return self::ORDER_BY_DIR_ASCENDING;
 
-		case SwatTableViewOrderableColumn::ORDER_BY_DIR_ASCENDING:
-			return SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING;
+		case self::ORDER_BY_DIR_ASCENDING:
+			return self::ORDER_BY_DIR_DESCENDING;
 
+		case self::ORDER_BY_DIR_DESCENDING:
 		default:
-			return SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
+			if ($this->mode == self::ORDER_MODE_BISTATE)
+				return self::ORDER_BY_DIR_ASCENDING;
+			else
+				return self::ORDER_BY_DIR_NONE;
 		}
 	}
 
+	// }}}
+	// {{{ private function initFromGetVariables()
+	
+	/**
+	 * Process GET variables and set class variables
+	 */
+	private function initFromGetVariables()
+	{
+		// TODO: is id a required field of table views?
+		$key_orderby = $this->view->id.'_orderby';
+		$key_orderbydir = $this->view->id.'_orderbydir';
+
+		// TODO: is id a required field of this class?
+		if (isset($_GET[$key_orderby]) && $_GET[$key_orderby] == $this->id) {
+			$this->view->orderby_column = $this;
+
+			if (isset($_GET[$key_orderbydir]))
+				$this->setDirectionByString($_GET[$key_orderbydir]);
+		}
+	}
 	// }}}
 }
 
