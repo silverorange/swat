@@ -23,6 +23,16 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn {
 	 */
 	public $show_check_all = true;
 
+	/**
+	 * Highlight row
+	 *
+	 * Whether to add javascript to highlight the current row of a
+	 * {@link SwatTableView} when the checkbox is clicked.
+	 *
+	 * @var boolean
+	 */
+	public $highlight_row = true;
+
 	private $items = null;
 
 	private $checkbox_renderer = null;
@@ -34,15 +44,11 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn {
 
 		if ($this->show_check_all)
 			$this->view->appendRow(new SwatTableViewCheckAllRow($this->id));
-
-			}
+	}
 
 	public function process() {
-		$renderer = $this->getCheckboxRenderer();
-		
-		$prefix = ($this->view->id === null)? '': $this->view->id.'_';
-		$item_name = $prefix.$renderer->id;
-		
+		$item_name = $this->getRendererName();
+
 		if (isset($_POST[$item_name]) && is_array($_POST[$item_name]))
 			$this->items = $_POST[$item_name];
 	}
@@ -51,13 +57,36 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn {
 		return $this->items;
 	}
 
+	private function getRendererName() {
+		$renderer = $this->getCheckboxRenderer();
+
+		$prefix = ($this->view->id === null)? '': $this->view->id.'_';
+		return $prefix.$renderer->id;
+	}
+
 	private function getCheckboxRenderer() {
 		foreach ($this->renderers as $renderer) 
 			if ($renderer instanceof SwatCheckboxCellRenderer)
 				return $renderer;
-		
+
 		throw new SwatException(__CLASS__
 			.": The column '{$this->id}' must have a checkbox renderer");
+	}
+
+	/**
+	 * Displays the javascript for the highlight row
+	 */
+	public function displayJavascript()
+	{
+		if (!$this->highlight_row)
+			return;
+
+		$item_name = $this->getRendererName();
+
+		echo '<script type="text/javascript">';
+		include_once 'javascript/swat-table-view-checkbox-column.js';
+		echo "\n{$this->id} = new SwatTableViewCheckboxColumn('{$item_name}', {$this->view->id});";
+		echo '</script>';
 	}
 }
 

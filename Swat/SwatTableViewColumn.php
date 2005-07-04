@@ -138,6 +138,16 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 	}
 
 	/**
+	 * Display Javascript
+	 * 
+	 * Optionally output a javascript object representing the
+	 * {@link SwatTableViewColumn}. Outputs after the table has displayed.
+	 */
+	public function displayJavascript()
+	{
+	}
+
+	/**
 	 * Add a child object to this object
 	 * 
 	 * @param SwatObject $child the reference to the child object to add.

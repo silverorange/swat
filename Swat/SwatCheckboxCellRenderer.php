@@ -36,29 +36,12 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 		$input_tag->type = 'checkbox';
 		$input_tag->name = $prefix.$this->id.'[]';
 		$input_tag->value = $this->value;
-		$input_tag->onclick = "SwatCheckbox.check(this);";
-
-		$this->displayJavascript();
 
 		if (isset($_POST[$prefix.$this->id]))
 			if (in_array($this->value, $_POST[$prefix.$this->id]))
 				$input_tag->checked = 'checked';
 
 		$input_tag->display();
-	}
-
-	private function displayJavascript()
-	{
-		static $run_once = false;
-		
-		if ($run_once)
-			return;
-
-		$run_once = true;
-
-		echo '<script type="text/javascript">';
-		require_once 'Swat/javascript/swat-check-all.js';
-		echo '</script>';
 	}
 }
 

@@ -1,35 +1,27 @@
-function SwatCheckAll(id, series) {
-	var check_all = document.getElementById(id);
-	var check_list = document.getElementsByName(series);
-	var form = check_all.form;
-	var is_ie = (form.addEventListener) ? false : true;
+/**
+ * Javascript SwatCheckAll component
+ *
+ * @param id string Id of the matching {@link SwatCheckAll} object.
+ * @param controller SwatObject A reference to the javascript object that
+ * 		  represents the checkboxlist
+ **/
+function SwatCheckAll(id, controller) {
+	this.check_all = document.getElementById(id);
+	var self = this;
 
-	if (is_ie) {
-		form.attachEvent("onclick", eventHandler);
-		check_all.attachEvent("onclick", checkAll, false);
-	} else {
-		form.addEventListener("change", eventHandler, false);
-		check_all.addEventListener("change", checkAll, false);
-	}
+	var is_ie = (this.check_all.addEventListener) ? false : true;
+	controller.check_all = this;
+
+	if (is_ie)
+		this.check_all.attachEvent("onclick", eventHandler, false);
+	else
+		this.check_all.addEventListener("change", eventHandler, false);
 
 	function eventHandler(event) {
-		var name = (is_ie) ? event.srcElement.name : event.target.name;	
-
-		if (name != series)
-			return;
-
-		var count = 0;
-		for (i = 0; i < check_list.length; i++)
-			if (check_list[i].checked)
-				count++;
-			else if (count > 0)
-				break; //can't possibly be all checked or none checked
-
-		check_all.checked = (count == check_list.length);
+		controller.checkAll(self.check_all.checked);
 	}
+}
 
-	function checkAll(event) {
-		for (i = 0; i < check_list.length; i++)
-			check_list[i].checked = check_all.checked;
-	}
+SwatCheckAll.prototype.setState = function(checked) {
+	this.check_all.checked = checked;
 }
