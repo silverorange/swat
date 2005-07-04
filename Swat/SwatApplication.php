@@ -148,20 +148,20 @@ abstract class SwatApplication extends SwatObject
 	// {{{ public function relocate()
 
 	/**
-	 * Relocates to another URL
+	 * Relocates to another URI
 	 *
 	 * Calls the PHP header() function to relocate this application to another
-	 * URL. This function does not return and in fact calls the PHP exit()
+	 * URI. This function does not return and in fact calls the PHP exit()
 	 * function just to be sure execution does not continue.
 	 *
-	 * @param string $url the URL to relocate to.
+	 * @param string $uri the URI to relocate to.
 	 */
-	public function relocate($url)
+	public function relocate($uri)
 	{
-		if (substr($url, 0, 1) != '/' && strpos($url, '://') === false)
-			$url = $this->getBaseHref().$url;
+		if (substr($uri, 0, 1) != '/' && strpos($uri, '://') === false)
+			$uri = $this->getBaseHref().$uri;
 
-		header('Location: '.$url);
+		header('Location: '.$uri);
 		exit();
 	}
 
