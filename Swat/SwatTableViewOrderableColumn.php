@@ -152,9 +152,9 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 * direction constant as a string. The string is returned the lowercase
 	 * abbreviated form 'asc' or 'desc'.
 	 *
-	 * @param int $direction_id an optional direction constant to convert to
-	 *                           a string rather than using this column's
-	 *                           current direction.
+	 * @param integer $direction_id an optional direction constant to convert
+	 *                               to a string rather than using this
+	 *                               column's current direction.
 	 *
 	 * @return string the direction of ordering.
 	 */
