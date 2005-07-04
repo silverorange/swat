@@ -330,7 +330,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	private function displayJavascript() {
 		echo '<script type="text/javascript">';
 		include_once 'javascript/swat-table-view.js';
-		echo "\n{$this->id} = new SwatTableView('{$this->id}');";
+		echo "\n var {$this->id} = new SwatTableView('{$this->id}');";
 		echo '</script>';
 
 		foreach ($this->columns as $column)

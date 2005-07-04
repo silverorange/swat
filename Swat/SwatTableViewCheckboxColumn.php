@@ -85,7 +85,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn {
 
 		echo '<script type="text/javascript">';
 		include_once 'javascript/swat-table-view-checkbox-column.js';
-		echo "\n{$this->id} = new SwatTableViewCheckboxColumn('{$item_name}', {$this->view->id});";
+		echo "\n var {$this->id} = new SwatTableViewCheckboxColumn('{$item_name}', {$this->view->id});";
 		echo '</script>';
 	}
 }
