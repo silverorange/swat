@@ -215,7 +215,7 @@ abstract class SwatApplication extends SwatObject
 	 *
 	 * @param $name string the name of the variable to lookup.
 	 *
-	 * @param $types int a bitwise combination of SwatApplication::VAR_*
+	 * @param $types integer a bitwise combination of SwatApplication::VAR_*
 	 *                    constants.
 	 *
 	 * @param $default mixed the value to return if variable is not found in

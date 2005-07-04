@@ -32,7 +32,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 	 *
 	 * Must have a non-empty value when processed.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $required = false;
 
@@ -42,7 +42,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 	 * Bitwise combination of SwatDate::YEAR, SwatDate::MONTH, SwatDate::DAY
 	 * and SwatDate::TIME.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $required_parts;
 
@@ -52,7 +52,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 	 * Bitwise combination of SwatDate::YEAR, SwatDate::MONTH, SwatDate::DAY
 	 * SwatDate::TIME, and SwatDate::CALENDAR.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $display_parts;
 
@@ -129,9 +129,9 @@ class SwatDateEntry extends SwatControl implements SwatState
 	 *
 	 * Convenience method to set the valid date range by year offsets.
 	 *
-	 * @param int $start_offset Offset from the current year used to set the
-	 *        starting year of the valid range.
-	 * @param int $end_offset Offset from the current year used to set the
+	 * @param integer $start_offset Offset from the current year used to set
+	 *        the starting year of the valid range.
+	 * @param integer $end_offset Offset from the current year used to set the
 	 *        ending year of the valid range.
 	 */
 	public function setValidRange($start_offset, $end_offset)
