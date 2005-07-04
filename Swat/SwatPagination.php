@@ -27,7 +27,7 @@ class SwatPagination extends SwatControl
 	 *
 	 * An array of GET variable names to unset before rebuilding a new link.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $unset_get_vars = array();
 
@@ -36,7 +36,7 @@ class SwatPagination extends SwatControl
 	 *
 	 * The number of the current page. The value is zero based.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $current_page = 0;
 
@@ -46,7 +46,7 @@ class SwatPagination extends SwatControl
 	 * The first record that should be displayed on this page. The value is
 	 * zero based.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $current_start = 0;
 
@@ -55,7 +55,7 @@ class SwatPagination extends SwatControl
 	 *
 	 * The number of records that are displayed per page.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $page_size = 20;
 
@@ -64,7 +64,7 @@ class SwatPagination extends SwatControl
 	 *
 	 * The total number of records that are available for display.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $total_records = 0;
 
@@ -75,7 +75,7 @@ class SwatPagination extends SwatControl
 	 *
 	 * TODO: I'm not sure what the scope of this should be.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $current_record = 0;
 	
@@ -84,7 +84,7 @@ class SwatPagination extends SwatControl
 	 *
 	 * The value is zero based.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	protected $next_page = 0;
 
@@ -93,14 +93,14 @@ class SwatPagination extends SwatControl
 	 *
 	 * The value is zero based.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	protected $prev_page = 0;
 	
 	/**
 	 * The total number of pages in the database
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	protected $total_pages = 0;
 
