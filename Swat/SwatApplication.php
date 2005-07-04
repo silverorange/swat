@@ -56,7 +56,7 @@ abstract class SwatApplication extends SwatObject
 	 *
 	 * This value changes between live and stage sites.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	protected $base_uri_length = 0;
 

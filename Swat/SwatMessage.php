@@ -17,7 +17,7 @@ class SwatMessage
 	/**
 	 * Type of message
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $type;
 

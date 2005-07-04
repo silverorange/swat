@@ -40,7 +40,7 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	 *
 	 * The height attribute in the XHTML img tag.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $height = 0;
 
@@ -49,7 +49,7 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	 *
 	 * The width attribute in the XHTML img tag.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $width = 0;
 

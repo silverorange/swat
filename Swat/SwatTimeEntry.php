@@ -37,7 +37,7 @@ class SwatTimeEntry extends SwatControl implements SwatState {
 	 * Bitwise combination of SwatTime::HOUR,
 	 * SwatTime::MINUTE, and SwatTime::SECOND.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $required;
 
@@ -47,7 +47,7 @@ class SwatTimeEntry extends SwatControl implements SwatState {
 	 * Bitwise combination of SwatTime::HOUR,
 	 * SwatTime::MINUTE, and SwatTime::SECOND.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $display;
 
