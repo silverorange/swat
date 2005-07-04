@@ -133,8 +133,8 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 				
 			}
 
-			$img->width = 16;
-			$img->height = 16;
+			$img->width = 11;
+			$img->height = 11;
 			
 			$img->display();
 		}
