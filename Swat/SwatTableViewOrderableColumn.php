@@ -65,7 +65,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 * The current direction of ordering for this column. Valid values are
 	 * ORDER_BY_DIR_* constants.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
 

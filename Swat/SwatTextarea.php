@@ -34,7 +34,7 @@ class SwatTextarea extends SwatControl implements SwatState
 	 *
 	 * The number of rows for the XHTML textarea tag.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $rows = 10;
 
@@ -43,7 +43,7 @@ class SwatTextarea extends SwatControl implements SwatState
 	 *
 	 * The number of columns for the XHTML textarea tag.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $cols = 50;
 
