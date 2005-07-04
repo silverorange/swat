@@ -188,7 +188,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{ public function display()
+	// {{{ public function display()
 	
 	/**
 	 * Displays this table-view
