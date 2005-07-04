@@ -10,6 +10,19 @@
  */
 class SwatString
 {
+	// {{{ public static properties
+
+	/**
+	 * Block level XHTML elements used when filtering strings
+	 *
+	 * @var array
+	 */
+	public static $blocklevel_elements = array('p', 'pre', 'dl', 'div',
+		'center', 'noscript', 'noframes', 'blockquote', 'form', 'isindex',
+		'hr', 'table', 'fieldset', 'address', 'ul', 'ol', 'dir', 'menu',
+		'h1', 'h2', 'h3', 'h4', 'h5', 'h6');
+	
+	// }}}
 	// {{{ filter constants
 	
 	/**
@@ -65,22 +78,49 @@ class SwatString
 	 * special characters. Other things are done like removing and replacing
 	 * certain block level XHTML elements as well.
 	 *
-	 * TODO: Finish writing this function. See code in sites/intranet3.
-	 *
 	 * @param string $text the text to be condensed.
-	 * @param integer $max_length the maximum length of the condensed text. The
-	 *                             length is calculated as the number of
-	 *                             visible characters. This means XHTML tags
-	 *                             and entities do not affect the length.
+	 * @param integer $max_length the maximum length of the condensed text.
 	 *
 	 * @return string the condensed text. The condensed text is an XHTML
 	 *                 formatted string.
 	 */
-	public static function condense($text, $length)
+	public static function condense($text, $max_length = 300)
 	{
-		// replace any number of consecutive crlfs with
-		// non-breaking space padded bullet characters
-		$text = preg_replace('/(\r\n)+/s', ' &nbsp;&#8226;&nbsp; ', $text);
+		$blocklevel_elements = implode('|', self::$blocklevel_elements);
+		$search = array(
+			// replace blockquote tags with quotation marks
+			'/<blockquote[^<>]*?>/si',
+			'/<\/blockquote[^<>]*?>/si',
+			// remove style tags
+			'/<style[^<>]*?>.*?<\/style[^<>]*?>/si',
+			// replace blocklevel tags with line breaks.
+			'/<\/?('.$blocklevel_elements.')[^<>]*?>/si',
+			// remove inline tags
+			// (only tags remaining after blocklevel tags removed)
+			'/<[\/\!]*?[^<>]*?>/s',
+			// replace whitespaces with single spaces. \xa0 is &#160; is &nbsp;
+			'/[ \xa0\t]+/',
+			// replace continuous strings of whitespace containing either a
+			// cr or lf with a non-breaking space padded bullet
+			'/[\xa0\s]*[\n\r][\xa0\s]*/s'
+		);
+
+		$replace = array(
+			"\n&#8220;",
+			"&#8221;\n",
+			'',
+			"\n",
+			'',
+			' ',
+			' &nbsp;&#8226;&nbsp; '
+		);
+
+		$text = trim($text);
+
+		//$text = preg_replace('/(\r\n)+/s', ' &nbsp;&#8226;&nbsp; ', $text);
+		$text = preg_replace($search, $replace, $text);
+
+		$text = SwatString::ellipsizeRight($text, $max_length);
 
 		return $text;
 	}
@@ -91,10 +131,23 @@ class SwatString
 	/**
 	 * Ellipsizes a string to the right
 	 *
+	 * The length of a string is calculated as the number of visible characters
+	 * This method will properly account for any XHTML entities that may be
+	 * present in the given string.
+	 *
+	 * TODO: make this method account for entities properly
+	 *
 	 * example:
 	 * <code>
 	 * $string = 'The quick brown fox jumped over the lazy dogs.';
 	 * // displays 'The quick brown ...'
+	 * echo SwatString::ellipsizeRight($string, 18, ' ...');
+	 * </code>
+	 *
+	 * XHTML example:
+	 * <code>
+	 * $string = 'The &#8220;quick&#8221 brown fox jumped over the lazy dogs.';
+	 * // displays 'The &#8220;quick&#8221; brown ...'
 	 * echo SwatString::ellipsizeRight($string, 18, ' ...');
 	 * </code>
 	 *
@@ -140,10 +193,23 @@ class SwatString
 	/**
 	 * Ellipsizes a string in the middle
 	 *
+	 * The length of a string is calculated as the number of visible characters
+	 * This method will properly account for any XHTML entities that may be
+	 * present in the given string.
+	 *
+	 * TODO: make this method account for entities properly
+	 *
 	 * example:
 	 * <code>
 	 * $string = 'The quick brown fox jumped over the lazy dogs.';
 	 * // displays 'The quick ... dogs.'
+	 * echo SwatString::ellipsizeMiddle($string, 18, ' ... ');
+	 * </code>
+	 *
+	 * XHTML example:
+	 * <code>
+	 * $string = 'The &#8220;quick&#8221 brown fox jumped over the lazy dogs.';
+	 * // displays 'The &#8220;quick&#8221; ... dogs.'
 	 * echo SwatString::ellipsizeMiddle($string, 18, ' ... ');
 	 * </code>
 	 *
