@@ -27,7 +27,7 @@ class SwatEntry extends SwatControl implements SwatState
 	 *
 	 * Must have a non-empty value when processed.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $required = false;
 	
@@ -36,7 +36,7 @@ class SwatEntry extends SwatControl implements SwatState
 	 *
 	 * Size in characters of the HTML text form input, or null.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $size = 50;
 	
@@ -45,7 +45,7 @@ class SwatEntry extends SwatControl implements SwatState
 	 *
 	 * Maximum number of allowable characters in HTML text form input, or null.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $maxlength = null;
 
@@ -54,7 +54,7 @@ class SwatEntry extends SwatControl implements SwatState
 	 *
 	 * Minimum number of allowable characters in HTML text form input, or null.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	public $minlength = null;
 

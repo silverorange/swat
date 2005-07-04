@@ -89,7 +89,7 @@ class SwatDate extends Date
 	/**
 	 * Gets a date format string by id
 	 *
-	 * @param int $id the id of the format string to retrieve.
+	 * @param integer $id the id of the format string to retrieve.
 	 *
 	 * @return string the formatting string that was requested.
 	 *
