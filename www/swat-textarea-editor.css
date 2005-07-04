@@ -29,7 +29,6 @@ div.rteIframeDiv {
 iframe.rteIframe {
 	border: 0;
 	display: block;
-	clear: both;
 }
 
 div.rteToggleMode {
