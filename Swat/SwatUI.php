@@ -328,6 +328,8 @@ class SwatUI extends SwatObject
 			return floatval($value);
 		case 'string':
 			return $this->translateValue($value, $translatable, $object);
+		case 'constant':
+			return $this->lookupConstant($value, $object);
 		case 'data':
 			$object->parent->linkField($object, $value, $name);
 			return null;
@@ -371,6 +373,22 @@ class SwatUI extends SwatObject
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Lookup a class constant property value
+	 *
+	 * @param string $name the name of the class constant to lookup.
+	 * @param SwatObject $object the object that conatins the class constant.
+	 *
+	 * @return string the value of the class constant.
+	 */
+	private function lookupConstant($name, $object)
+	{
+		if (!strpos($name, '::'))
+			$name = get_class($object) . '::' . $name;
+
+		return eval("return $name;");
 	}
 }
 
