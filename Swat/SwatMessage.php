@@ -25,7 +25,8 @@ class SwatMessage
 
 	/**
 	 * User Error message type
-	 * An error message that requires the attention of the user.
+	 * An error message that requires the attention of the user and that is
+	 * expected/handled by the application.
 	 * eg. Missing required fields
 	 */
 	const USER_ERROR = 3;
