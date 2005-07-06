@@ -63,7 +63,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 
 		$group_by = $this->group_by;
 
-		// only display this column if the value of the row has changed
+		// only display the group header if the value of the group-by field has changed
 		if ($row->$group_by == $this->current)
 			return;
 
@@ -78,7 +78,9 @@ class SwatTableViewGroup extends SwatTableViewColumn
 		$td_tag->class = 'swat-table-view-group';
 		$td_tag->open();
 
-		$prefix = ($this->view === null) ? '' : $this->view->id.'_';
+		// TODO: remove $prefix if it is not used
+		//$prefix = ($this->view === null) ? '' : $this->view->id.'_';
+		$prefix = '';
 
 		foreach ($this->renderers as $renderer) {
 			$renderer->render($prefix);

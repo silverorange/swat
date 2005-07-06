@@ -38,6 +38,15 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 	 */
 	public $view = null;
 
+	/**
+	 * Visible
+	 *
+	 * Whether the column is displayed.
+	 *
+	 * @var boolean
+	 */
+	public $visible = true;
+
 	protected $renderers = array();
 
 	public function __construct($id = null)
@@ -108,6 +117,9 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 
 	public function display($row)
 	{
+		if (!$this->visible)
+			return;
+
 		if (count($this->renderers) == 0)
 			throw new SwatException(__CLASS__.
 				': no renderer has been provided.');
@@ -127,7 +139,8 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
 		$td_tag->open();
 
-		$prefix = ($this->view->id === null)? '': $this->view->id.'_';
+		//$prefix = ($this->view->id === null)? '': $this->view->id.'_';
+		$prefix = '';
 
 		foreach ($this->renderers as $renderer) {
 			$renderer->render($prefix);
