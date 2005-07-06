@@ -16,11 +16,21 @@ class SwatMessage
 	const INFO = 1;
 
 	/**
-	 * An warning message that requires the attention of the user, but is
+	 * A warning message that requires the attention of the user, but is
 	 * not critical and does not necessarily require any action by the user.
 	 */
 	const WARNING = 2;
+
+	/**
+	 * An error message that requires the attention of the user.
+	 * eg. Missing required fields
+	 */
 	const USER_ERROR = 3;
+
+	/**
+	 * A system error that requires the attention of the user.
+	 * eg. Database connection error
+	 */
 	const ERROR = 4;
 
 	/**
