@@ -121,6 +121,23 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		$group->view = $this;
 	}
 
+	/**
+	 * Gets the grouping object for this table-view
+	 *
+	 * The grouping object affects how the data in the table model is displayed
+	 * in this table-view. With a grouping, rows are split into groups with
+	 * special group headers above each group. 
+	 *
+	 * @returns SwatTableViewGroup the table-view grouping object used for this
+	 *                              table-view.
+	 *
+	 * @see SwatTableViewGroup
+	 */
+	public function getGroup()
+	{
+		return $this->group;
+	}
+
 	// }}}
 	// {{{ public function appendRow()
 	
