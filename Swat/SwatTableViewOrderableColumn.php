@@ -35,16 +35,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 */
 	const ORDER_BY_DIR_ASCENDING = 2;
 
-	/**
-	 * Indicates tri-state ordering mode
-	 */
-	const ORDER_MODE_TRISTATE = 0;
-
-	/**
-	 * Indicates bi-state ordering mode
-	 */
-	const ORDER_MODE_BISTATE = 1;
-
 	// }}}
 	// {{{ public properties
 	
@@ -80,6 +70,18 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	private $direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
 
 	/**
+	 * The default direction of ordering
+	 *
+	 * The default direction of ordering before the GET variables are processed.
+	 * When the GET variables are processed, they change $direction and 
+	 * $default_direction remains unchanged.  Valid values are
+	 * ORDER_BY_DIR_* constants.
+	 *
+	 * @var integer
+	 */
+	private $default_direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
+
+	/**
 	 * The mode of ordering
 	 *
 	 * The mode of switching between ordering states.
@@ -87,7 +89,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 *
 	 * @var int
 	 */
-	private $mode = SwatTableViewOrderableColumn::ORDER_MODE_TRISTATE;
+	//private $mode = SwatTableViewOrderableColumn::ORDER_MODE_TRISTATE;
 
 	// }}}
 	// {{{ public function init()
@@ -99,27 +101,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 */
 	public function init()
 	{
-		$this->initFromGetVariables();
-	}
-
-	// }}}
-	// {{{ public function setMode()
-
-	/**
-	 * Sets the mode of ordering
-	 * 
-	 * This method sets the mode of ordering between tri-state ordering (asc,
-	 * desc, nothing) and bi-state ordering (asc, desc)
-	 *
-	 * @param $mode integer Either class constant ORDER_MODE_TRISTATE,
-	 * 		  or ORDER_MODE_BISTATE
-	 **/
-	public function setMode($mode) {
-		if ($mode == self::ORDER_MODE_BISTATE
-			&& $this->direction == self::ORDER_BY_DIR_NONE)
-			$this->setDirection(self::ORDER_BY_DIR_DESCENDING, false);
-
-		$this->mode = $mode;
 		$this->initFromGetVariables();
 	}
 
@@ -137,16 +118,14 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 *                                    column currently used for ordering 
 	 *                                    of the view
 	 **/
-	public function setDirection($direction, $set_as_orderby_column = true) {
-		if ($this->mode == self::ORDER_MODE_BISTATE
-			&& $direction == self::ORDER_BY_DIR_NONE)
-			throw new SwatException(__CLASS__.": A column can not have an".
-				"order by direction of none when in bi-state mode.");
-
+	public function setDirection($direction) {
 		$this->direction = $direction;
+		$this->default_direction = $direction;
 
-		if ($set_as_orderby_column && $this->view->orderby_column === null)
+		if ($this->view->orderby_column === null)
 			$this->view->orderby_column = $this;
+
+		$this->view->default_orderby_column = $this;
 
 		$this->initFromGetVariables();
 	}
@@ -235,7 +214,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	}
 
 	// }}}
-	// {{{ public function setDirectionByString()
+	// {{{ private function setDirectionByString()
 	
 	/**
 	 * Sets direction of ordering by a string
@@ -247,7 +226,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 *                           'asc' or 'desc' or the long form 'ascending'
 	 *                           or 'descending'.
 	 */
-	public function setDirectionByString($direction)
+	private function setDirectionByString($direction)
 	{
 		$direction = strtolower($direction);
 		
@@ -297,7 +276,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 		$next_dir = $this->getNextDirection();
 
-		if ($next_dir != self::ORDER_BY_DIR_NONE) {
+		if ($next_dir != $this->default_direction) {
 			$vars[$key_orderby] = $this->id;
 			$vars[$key_orderbydir] = $this->getDirectionAsString($next_dir);
 		}
@@ -336,10 +315,12 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 		case self::ORDER_BY_DIR_DESCENDING:
 		default:
-			if ($this->mode == self::ORDER_MODE_BISTATE)
-				return self::ORDER_BY_DIR_ASCENDING;
-			else
+			if ($this->view->default_orderby_column === null)
+				// tri-state
 				return self::ORDER_BY_DIR_NONE;
+			else
+				// bi-state
+				return self::ORDER_BY_DIR_ASCENDING;
 		}
 	}
 

@@ -54,6 +54,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * @see SwatTableViewOrderableColumn
 	 */
 	public $orderby_column = null;
+	public $default_orderby_column = null;
 
 	// }}}
 	// {{{ private properties
