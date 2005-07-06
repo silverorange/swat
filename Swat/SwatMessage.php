@@ -11,23 +11,27 @@ class SwatMessage
 {
 
 	/**
+	 * Information message type
 	 * An informative message that doesn't require any action by the user.
 	 */
 	const INFO = 1;
 
 	/**
+	 * Warning message type
 	 * A warning message that requires the attention of the user, but is
 	 * not critical and does not necessarily require any action by the user.
 	 */
 	const WARNING = 2;
 
 	/**
+	 * User Error message type
 	 * An error message that requires the attention of the user.
 	 * eg. Missing required fields
 	 */
 	const USER_ERROR = 3;
 
 	/**
+	 * Error message type
 	 * A system error that requires the attention of the user.
 	 * eg. Database connection error
 	 */
