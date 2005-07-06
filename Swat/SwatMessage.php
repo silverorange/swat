@@ -9,7 +9,16 @@
  */
 class SwatMessage
 {
+
+	/**
+	 * An informative message that doesn't require any action by the user.
+	 */
 	const INFO = 1;
+
+	/**
+	 * An warning message that requires the attention of the user, but is
+	 * not critical and does not necessarily require any action by the user.
+	 */
 	const WARNING = 2;
 	const USER_ERROR = 3;
 	const ERROR = 4;
