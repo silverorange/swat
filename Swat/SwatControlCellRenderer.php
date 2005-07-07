@@ -83,11 +83,9 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	/**
 	 * Renders the contents of this cell
 	 *
-	 * @param string $prefix an optional prefix to name XHTML controls with.
-	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render($prefix = null)
+	public function render()
 	{
 		$anchor = new SwatHtmlTag('a');
 

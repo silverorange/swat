@@ -24,11 +24,9 @@ class SwatCheckCellRenderer extends SwatCellRenderer
 	/**
 	 * Renders the contents of this cell
 	 *
-	 * @param string $prefix an optional prefix to name XHTML controls with.
-	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render($prefix = null)
+	public function render()
 	{
 		if ((boolean)$this->value) {
 			$image_tag = new SwatHtmlTag('img');

@@ -27,10 +27,8 @@ abstract class SwatCellRenderer extends SwatObject
 	 *
 	 * Cell renderer subclasses should implement this method to do all
 	 * output neccessary to display the cell.
-	 *
-	 * @param string $prefix an optional prefix to name XHTML controls with.
 	 */
-	abstract public function render($prefix = null);
+	abstract public function render();
 
 	/**
 	 * Gets TD-tag attributes
