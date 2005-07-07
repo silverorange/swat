@@ -34,7 +34,6 @@ class SwatCascadeFlydown extends SwatFlydown
 
 	public function display()
 	{
-		$this->show_blank = false;
 		parent::display();
 		$this->displayJavascript();
 	}
@@ -44,7 +43,7 @@ class SwatCascadeFlydown extends SwatFlydown
 		$parent_value = $this->cascade_from->value;
 		if ($parent_value === null) {
 			if ($this->cascade_from->show_blank)
-				return array('' => Swat::_('n/a'));
+				return array('' => Swat::_('n/a'), 'null' => '');
 			else
 				return $this->options[key($this->cascade_from->options)];
 		}
@@ -58,8 +57,12 @@ class SwatCascadeFlydown extends SwatFlydown
 		
 		printf("\n {$this->id}_cascade = new SwatCascade('%s', '%s'); ",
 			$this->cascade_from->id, $this->id);
-		
+	
 		foreach($this->options as $parent => $options) {
+			if ($this->show_blank && count($options) > 1)
+				printf("\n {$this->id}_cascade.addChild('%s', '', '%s');",
+                    $parent, Swat::_('choose one ...'));
+
 			foreach ($options as $k => $v) {
 				$selected = ($v == $this->value) ? 'true' : 'false';
 				printf("\n {$this->id}_cascade.addChild('%s', '%s', '%s', %s);",
