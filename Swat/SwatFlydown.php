@@ -3,6 +3,7 @@
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
+require_once 'Swat/SwatFlydownOption.php';
 
 /**
  * A flydown (aka combo-box) selection widget
@@ -18,8 +19,7 @@ class SwatFlydown extends SwatControl implements SwatState
 	/**
 	 * Flydown options
 	 *
-	 * An array of options for the flydown in the form:
-	 *    value => title
+	 * An array of {@link SwatFlydownOptions}
 	 *
 	 * @var array
 	 */
@@ -96,7 +96,9 @@ class SwatFlydown extends SwatControl implements SwatState
 		// Empty string XHTML option value is assumed to be null
 		// when processing.
 		if ($this->show_blank)
-			$options = array('' => $this->blank_title) + $options;
+			$options = array_merge(
+				array(new SwatFlydownOption('', $this->blank_title)),
+				$options);
 		
 		// only show a select if there is more than one option
 		if (count($options) > 1) {
@@ -115,14 +117,14 @@ class SwatFlydown extends SwatControl implements SwatState
 
 			$select_tag->open();
 			
-			foreach ($options as $value => $title) {
-				$option_tag->value = (string)$value;
+			foreach ($options as $flydown_option) {
+				$option_tag->value = (string)$flydown_option->value;
 				$option_tag->removeAttribute('selected');
 				
-				if ((string)$this->value === (string)$value)
+				if ((string)$this->value === (string)$flydown_option->value)
 					$option_tag->selected = 'selected';
 
-				$option_tag->content = $title;
+				$option_tag->content = $flydown_option->title;
 
 				$option_tag->display();
 			}
@@ -132,13 +134,14 @@ class SwatFlydown extends SwatControl implements SwatState
 		} elseif (count($options) == 1) {
 			
 			// get first and only element
-			$title = reset($options);
-			$value = key($options);
+			$flydown_option = current($options);
+			$title = $flydown_option->title;
+			$value = $flydown_option->value;
 
 			$hidden_tag = new SwatHtmlTag('input');
 			$hidden_tag->type = 'hidden';
 			$hidden_tag->name = $this->id;
-			$hidden_tag->value = (string)$value;
+			$hidden_tag->value = (string)$flydown_option->value;
 
 			$hidden_tag->display();
 
@@ -170,6 +173,39 @@ class SwatFlydown extends SwatControl implements SwatState
 			$msg = Swat::_('The %s field is required.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 		}
+	}
+
+	// }}}
+	// {{{ public function addOption()
+
+	/**
+	 * Add an option element
+	 *
+	 * @param mixed $value Either a simply value for the option, or a
+	 * 		  {@link SwatFlydownOption) object. If a {@link SwatFlydownOption)
+	 * 		  object is used, the $title parameter of addOption will be ignored.
+	 * @param string $title The title of the option element
+	 */
+	public function addOption($value, $title = '')
+	{
+		if ($value instanceof SwatFlydownOption)
+			$this->options[] = $value;
+		else
+			$this->options[] = new SwatFlydownOption($value, $title);
+	}
+
+	// }}}
+	// {{{ public function addOptionsByArray()
+
+	/**
+	 * Add an option element
+	 *
+	 * @param array $options An associative array of options.
+	 */
+	public function addOptionsByArray($options)
+	{
+		foreach ($options as $value => $title)
+			$this->addOption($value, $title);
 	}
 
 	// }}}

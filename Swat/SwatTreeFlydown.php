@@ -40,12 +40,14 @@ class SwatTreeFlydown extends SwatFlydown
 	public function display()
 	{
 		if ($this->tree !== null)
-			$this->options = $this->tree->toArray();
+			$options = $this->tree->toArray();
+		else
+			$options = array();
 
-		foreach ($this->options as $key => $data) {
+		foreach ($options as $key => $data) {
 			$key_array = explode('/', $key);
 			$pad = str_repeat('&nbsp;&nbsp;', (count($key_array) - 1));
-			$this->options[$key] = $pad.$data['title'];		
+			$this->addOption($key, $pad.$data['title']);
 		}
 		
 		parent::display();
