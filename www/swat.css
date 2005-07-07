@@ -1,9 +1,3 @@
-body {
-	font-family: sans-serif;
-}
-
-img { border: 0; }
-
 .swat-hidden { display: none; }
 
 .swat-tool-link { display: block; }
@@ -49,9 +43,9 @@ img { border: 0; }
 
 /* SwatForm */
 
-form { margin: 0; }
+.swat-form { margin: 0; }
 
-label {
+.swat-form label {
 	font-weight: bold;
 	color: #333;
 	font-size: 0.85em;
