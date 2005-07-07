@@ -120,6 +120,7 @@ class SwatForm extends SwatContainer
 		$form_tag->method = $this->method;
 		$form_tag->enctype = $this->enctype;
 		$form_tag->action = $this->action;
+		$form_tag->class = 'swat-form';
 
 		$form_tag->open();
 
