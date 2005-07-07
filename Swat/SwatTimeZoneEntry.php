@@ -12,7 +12,7 @@ require_once 'Swat/SwatState.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTimeZone extends SwatControl implements SwatState
+class SwatTimeZoneEntry extends SwatControl implements SwatState
 {
 	/**
 	 * Time Zone Id
@@ -21,7 +21,7 @@ class SwatTimeZone extends SwatControl implements SwatState
 	 *
 	 * @var string
 	 */
-	public $time_zone = null;
+	public $value = null;
 
 	/**
 	 * Whether this entry widget is required or not
@@ -56,7 +56,7 @@ class SwatTimeZone extends SwatControl implements SwatState
 		$areas->show_blank = true;
 		$areas->name = $this->id.'_areas';
 		$areas->id = $this->id.'_areas';
-		$areas->value = $this->getArea($this->time_zone);
+		$areas->value = $this->getArea($this->value);
 		$areas->display();
 
 		$regions = new SwatCascadeFlydown();
@@ -66,10 +66,18 @@ class SwatTimeZone extends SwatControl implements SwatState
 		$regions->show_blank = true;
 		$regions->cascade_from = $areas;
 		$regions->width = '15em';
-		$regions->value = $this->getRegion($this->time_zone);
+		$regions->value = $this->getRegion($this->value);
 		$regions->display();
 	}
 
+	/**
+	 * Parse whitelist of valid areas
+	 *
+	 * Filters the full list of areas down to a select list and returns a
+	 * tree-structured array of areas, regions, and subregions.
+	 *
+	 * @param array area_whitelist an array of valid area names
+	 **/
 	private function parseAreaWhitelist($area_whitelist)
 	{
 		$regions = array();
@@ -93,7 +101,15 @@ class SwatTimeZone extends SwatControl implements SwatState
 		return $regions;
 	}
 
-	private function setAreas($time_zone_list, $area = true)
+	/**
+	 * Set Areas
+	 *
+	 * Builds the class variable array $areas.
+	 *
+	 * @param $time_zone_list array Tree structured array of areas, regions,
+	 * 		  and subregions
+	 **/
+	private function setAreas($time_zone_list)
 	{
 		ksort($time_zone_list);
 
@@ -105,6 +121,16 @@ class SwatTimeZone extends SwatControl implements SwatState
 		}
 	}
 
+	/**
+	 * Set Regions
+	 *
+	 * Builds the class variable array $regions.
+	 *
+	 * @param $time_zone_list array Tree structured array of areas, regions,
+	 * 		  and subregions
+	 * @param $area string The region's area
+	 * @param $prefix string A list of parent regions appended to sub-regions
+	 **/
 	private function setRegions($time_zone_list, $area, $prefix = '')
 	{
 		ksort($time_zone_list);
@@ -124,6 +150,13 @@ class SwatTimeZone extends SwatControl implements SwatState
 		}
 	}
 
+	/**
+	 * Get Area from Time Zone
+	 *
+	 * Returns the area part of a full time zone
+	 *
+	 * @return string An area name
+	 **/
 	private function getArea($time_zone)
 	{
 		if ($time_zone === null)
@@ -132,6 +165,13 @@ class SwatTimeZone extends SwatControl implements SwatState
 		return substr($time_zone, 0, strpos($time_zone, '/'));
 	}
 
+	/**
+	 * Get Region from Time Zone
+	 *
+	 * Returns the region part of a full time zone
+	 *
+	 * @return string A region name
+	 **/
 	private function getRegion($time_zone)
 	{
 		if ($time_zone === null)
@@ -149,18 +189,18 @@ class SwatTimeZone extends SwatControl implements SwatState
 	public function process()
 	{
 		if (strlen($_POST[$this->id.'_areas']) || strlen($_POST[$this->id.'_regions']))
-			$this->time_zone = $_POST[$this->id.'_areas'].'/'.$_POST[$this->id.'_regions'];
+			$this->value = $_POST[$this->id.'_areas'].'/'.$_POST[$this->id.'_regions'];
 		else
-			$this->time_zone = null;
+			$this->value = null;
 
-		if (!$this->required && $this->time_zone === null) {
+		if (!$this->required && $this->value === null) {
 			return;
 
-		} elseif ($this->time_zone === null) {
+		} elseif ($this->value === null) {
 			$msg = Swat::_('The %s field is required.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			
-		} elseif (!isset($GLOBALS['_DATE_TIMEZONE_DATA'][$this->time_zone])) {
+		} elseif (!isset($GLOBALS['_DATE_TIMEZONE_DATA'][$this->value])) {
 			$msg = Swat::_('The %s field is an invalid time zone.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			
@@ -176,7 +216,7 @@ class SwatTimeZone extends SwatControl implements SwatState
 	 */
 	public function getState()
 	{
-		return $this->time_zone;
+		return $this->value;
 	}
 
 	/**
@@ -188,7 +228,7 @@ class SwatTimeZone extends SwatControl implements SwatState
 	 */
 	public function setState($state)
 	{
-		$this->time_zone = $state;
+		$this->value = $state;
 	}
 }
 
