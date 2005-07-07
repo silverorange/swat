@@ -470,7 +470,7 @@ table.swat-table-view { border-collapse: collapse; }
 .swat-actions label {
 	display: inline;
 }
-.swat-action-note {
+.swat-actions-note {
 	color: #666;
 	font-size: 85%;
 	padding-top: 0.5em;
