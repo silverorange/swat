@@ -117,7 +117,7 @@ class SwatCalendar extends SwatControl
 	private function displayJavascript()
 	{
 		echo '<script type="text/javascript">';
-		include_once 'Swat/javascript/swat-find-index.js'
+		include_once 'Swat/javascript/swat-find-index.js';
 		include_once 'Swat/javascript/swat-calendar.js';
 		echo '</script>';
 	}

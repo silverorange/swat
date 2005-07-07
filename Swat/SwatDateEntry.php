@@ -404,7 +404,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 			$end_month = $this->valid_range_end->getMonth();
 
 			for ($i = $start_month; $i <= 12; $i++)
-				$this->month_flydown->addOption[$i],
+				$this->month_flydown->addOption($i,
 					Date_Calc::getMonthFullName($i));
 
 			for ($i = 1; $i <= $end_month; $i++)
