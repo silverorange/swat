@@ -71,6 +71,16 @@ class SwatFlydown extends SwatControl implements SwatState
 	 */
 	public $onchange = null;
 
+	/**
+	 * Width
+	 *
+	 * The visible width of the select tag. Can be defined in percentage, ems,
+	 * or pixels.
+	 *
+	 * @var string
+	 */
+	public $width = null;
+
 	// }}}
 	// {{{ public function display()
 	
@@ -94,6 +104,9 @@ class SwatFlydown extends SwatControl implements SwatState
 			$select_tag = new SwatHtmlTag('select');
 			$select_tag->name = $this->id;
 			$select_tag->id = $this->id;
+
+			if ($this->width !== null)
+				$select_tag->style = 'width: '.$this->width.';';
 
 			if ($this->onchange !== null)
 				$select_tag->onchange = $this->onchange;
