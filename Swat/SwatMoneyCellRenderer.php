@@ -34,11 +34,9 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 	/**
 	 * Renders the contents of this cell
 	 *
-	 * @param string $prefix and optional prefix to name XHTML controls with.
-	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render($prefix = null)
+	public function render()
 	{
 		echo SwatString::moneyFormat($this->value, $this->locale);	
 	}

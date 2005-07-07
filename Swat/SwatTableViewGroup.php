@@ -78,12 +78,8 @@ class SwatTableViewGroup extends SwatTableViewColumn
 		$td_tag->class = 'swat-table-view-group';
 		$td_tag->open();
 
-		// TODO: remove $prefix if it is not used
-		//$prefix = ($this->view === null) ? '' : $this->view->id.'_';
-		$prefix = '';
-
 		foreach ($this->renderers as $renderer) {
-			$renderer->render($prefix);
+			$renderer->render();
 			echo ' ';
 		}
 

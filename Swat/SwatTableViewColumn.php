@@ -139,8 +139,7 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
 		$td_tag->open();
 
-		//$prefix = ($this->view->id === null)? '': $this->view->id.'_';
-		$prefix = '';
+		$prefix = ($this->view->id === null)? '': $this->view->id.'_';
 
 		foreach ($this->renderers as $renderer) {
 			$renderer->render($prefix);

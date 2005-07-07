@@ -23,11 +23,9 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	/**
 	 * Renders the contents of this cell
 	 *
-	 * @param string $prefix an optional prefix to name XHTML controls with.
-	 *
 	 * @see swatcellrenderer::render()
 	 */
-	public function render($prefix = null)
+	public function render()
 	{
 		echo $this->value;
 	}

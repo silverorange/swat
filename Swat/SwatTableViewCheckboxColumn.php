@@ -60,8 +60,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn {
 	private function getRendererName() {
 		$renderer = $this->getCheckboxRenderer();
 
-		$prefix = ($this->view->id === null)? '': $this->view->id.'_';
-		return $prefix.$renderer->id;
+		return $renderer->id;
 	}
 
 	private function getCheckboxRenderer() {
