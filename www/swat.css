@@ -167,6 +167,13 @@ table.swat-table-view { border-collapse: collapse; }
 .swat-table-view tr.highlight-odd {
         background: #E0DEF0;
 }
+.swat-table-view th {
+	color: #666;
+	font-size: 85%;
+	font-weight: bold;
+}
+.swat-table-view th a:link, .swat-table-view th a:visited { color: #333; }
+.swat-table-view th a:hover, .swat-table-view th a:active { color: #000; }
 
 
 /* SwatPagination */
