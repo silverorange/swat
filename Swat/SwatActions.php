@@ -125,7 +125,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 			}
 		}
 
-		echo '<br />', Swat::_('Actions apply to checked items.');
+		echo '<div class="swat-action-note">';
+		echo Swat::_('Actions apply to checked items.');
+		echo '</div>';
 		echo '</div>';
 		
 	}
