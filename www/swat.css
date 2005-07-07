@@ -460,3 +460,18 @@ table.swat-table-view { border-collapse: collapse; }
 .swat-calendar-arrows-off {
 	cursor: none;
 }
+
+
+/* Swat Actions */
+
+.swat-actions {
+	text-align: right;
+}
+.swat-actions label {
+	display: inline;
+}
+.swat-action-note {
+	color: #666;
+	font-size: 85%;
+	padding-top: 0.5em;
+}
