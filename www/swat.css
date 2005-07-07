@@ -67,7 +67,7 @@ label.swat-control {
 }
 
 .swat-form-field-note {
-	font-size: 0.85em;
+	font-size: 85%;
 	color: #666;
 }
 
@@ -82,7 +82,7 @@ label.swat-control {
 	padding: 0.3em;
 }
 
-textarea {
+. swat-form textarea {
 	height: 15em;
 	width: 30em;
 }
