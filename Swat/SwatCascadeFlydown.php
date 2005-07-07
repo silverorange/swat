@@ -1,7 +1,6 @@
 <?php
 
-require_once 'Swat/SwatControl.php';
-require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatFlydown.php';
 
 /**
  * A cascading flydown (aka combo-box) selection widget
@@ -40,14 +39,27 @@ class SwatCascadeFlydown extends SwatFlydown
 
 	protected function &getOptions()
 	{
+		$options = array();
+
 		$parent_value = $this->cascade_from->value;
 		if ($parent_value === null) {
-			if ($this->cascade_from->show_blank)
-				return array('' => Swat::_('n/a'), 'null' => '');
-			else
-				return $this->options[key($this->cascade_from->options)];
-		}
-		return $this->options[$parent_value];
+			if ($this->cascade_from->show_blank) {
+				$options[] = new SwatFlydownOption('', '');
+				$options[] = new SwatFlydownOption('', '');
+				return $options;
+			} else {
+				$option_array = $this->options[current($this->cascade_from->options)->value];
+			}
+		} else
+			$option_array = $this->options[$parent_value];
+
+		if ($this->show_blank && count($option_array) > 1)
+			$options[] = new SwatFlydownOption('', Swat::_('choose one ...'));
+
+		foreach ($option_array as $value => $title)
+			$options[] = new SwatFlydownOption($value, $title);
+
+		return $options;
 	}
 
 	private function displayJavascript()

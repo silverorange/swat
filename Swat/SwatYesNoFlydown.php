@@ -20,8 +20,8 @@ class SwatYesNoFlydown extends SwatFlydown
 	 * Sets the options of this flydown to be yes and no.
 	 */
 	public function init() {
-		$this->options = array(self::NO => Swat::_('No'),
-		                       self::YES => Swat::_('Yes'));
+		$this->addOptionsByArray(array(self::NO => Swat::_('No'),
+			self::YES => Swat::_('Yes')));
 
 		parent::init();
 	}

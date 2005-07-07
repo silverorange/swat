@@ -372,7 +372,7 @@ class SwatDateEntry extends SwatControl implements SwatState
         $end_year = $tmp->getYear();
 
 		for ($i = $start_year; $i <= $end_year; $i++)
-			$this->year_flydown->options[$i] = $i;
+			$this->year_flydown->addOption($i, $i);
 	}
 
 	/**
@@ -395,8 +395,8 @@ class SwatDateEntry extends SwatControl implements SwatState
 			$end_month = $this->valid_range_end->getMonth();
 
 			for ($i = $start_month; $i <= $end_month; $i++)
-				$this->month_flydown->options[$i] =
-					Date_Calc::getMonthFullName($i);
+				$this->month_flydown->addOption($i,
+					Date_Calc::getMonthFullName($i));
 
 		} elseif (($end_year - $start_year) == 1) {
 
@@ -404,18 +404,18 @@ class SwatDateEntry extends SwatControl implements SwatState
 			$end_month = $this->valid_range_end->getMonth();
 
 			for ($i = $start_month; $i <= 12; $i++)
-				$this->month_flydown->options[$i] =
-					Date_Calc::getMonthFullName($i);
+				$this->month_flydown->addOption[$i],
+					Date_Calc::getMonthFullName($i));
 
 			for ($i = 1; $i <= $end_month; $i++)
-				$this->month_flydown->options[$i] =
-					Date_Calc::getMonthFullName($i);
+				$this->month_flydown->addOption($i,
+					Date_Calc::getMonthFullName($i));
 
 		} else {
 
 			for ($i = 1; $i <= 12; $i++)
-				$this->month_flydown->options[$i] =
-					Date_Calc::getMonthFullName($i);
+				$this->month_flydown->addOption($i,
+					Date_Calc::getMonthFullName($i));
 
 		}
 	}
@@ -447,7 +447,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 			$end_day   = $this->valid_range_end->getDay();
 
 			for ($i = $start_day; $i <= $end_day; $i++)
-				$this->day_flydown->options[$i] = $i;
+				$this->day_flydown->addOptions($i, $i);
 
 		} elseif (Date::compare($end_check,$this->valid_range_end,true) != -1) {
 
@@ -456,15 +456,15 @@ class SwatDateEntry extends SwatControl implements SwatState
 			$days_in_month = $this->valid_range_start->getDaysInMonth();
 
 			for ($i = $start_day; $i <= $days_in_month; $i++)
-				$this->day_flydown->options[$i] = $i;
+				$this->day_flydown->addOption($i, $i);
 
 			for ($i = 1; $i <= $end_day; $i++)
-				$this->day_flydown->options[$i] = $i;
+				$this->day_flydown->addOption($i, $i);
 
 		} else {
 
 			for ($i = 1; $i <= 31; $i++)
-				$this->day_flydown->options[$i] = $i;
+				$this->day_flydown->addOption($i, $i);
 
 		}
 	}
