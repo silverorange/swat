@@ -11,16 +11,17 @@ require_once 'Swat/SwatFlydown.php';
  */
 class SwatCascadeFlydown extends SwatFlydown
 {
-	
+	// {{{ public properties
+
 	/**
 	 * Flydown options
 	 *
 	 * An array of parents and options for the flydown in the form:
-	 * parent = array(value1 => title2, value2 => title2).
+	 *    array(value1 => title2, value2 => title2).
 	 *
 	 * @var array
 	 */
-	public $options = null;
+	public $options = array();
 
 	/**
 	 * Cascade from
@@ -29,14 +30,37 @@ class SwatCascadeFlydown extends SwatFlydown
 	 *
 	 * @var SwatWidget
 	 */
-	public $cascade_from;
+	public $cascade_from = null;
 
+	// }}}
+	// {{{ public function display()
+
+	/**
+	 * Displays this cascading flydown
+	 *
+	 * {@link SwatFlydown::$show_blank} is set to false here.
+	 */
 	public function display()
 	{
 		parent::display();
 		$this->displayJavascript();
 	}
 
+	// }}}
+	// {{{ protected function getOptions()
+
+	/**
+	 * Gets the options of this flydown as a flat array
+	 *
+	 * For the cascading flydown, the array returned 
+	 *
+	 * The array is of the form:
+	 *    value => title
+	 *
+	 * @return array the options of this flydown as a flat array.
+	 *
+	 * @see SwatFlydown::getOptions()
+	 */
 	protected function &getOptions()
 	{
 		$options = array();
@@ -62,11 +86,20 @@ class SwatCascadeFlydown extends SwatFlydown
 		return $options;
 	}
 
+	// }}}
+	// {{{ private function displayjavascript()
+
+	/**
+	 * Displays the javascript that makes this control work
+	 */
 	private function displayJavascript()
 	{
 		echo '<script type="text/javascript">';
+
+		// contains the SwatCascade javascript class.
 		include_once 'Swat/javascript/swat-cascade.js';
 		
+		// TODO: This means an id is mandatory for this widget
 		printf("\n {$this->id}_cascade = new SwatCascade('%s', '%s'); ",
 			$this->cascade_from->id, $this->id);
 	
@@ -83,6 +116,8 @@ class SwatCascadeFlydown extends SwatFlydown
 		}
 		echo '</script>';
 	}
+
+	// }}}
 }
 
 ?>
