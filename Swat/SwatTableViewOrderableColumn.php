@@ -146,16 +146,34 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 		$anchor = new SwatHtmlTag('a');
 		$anchor->href = $this->getLink();
 
+
 		$anchor->open();
 		
-		echo $this->title;
 
 		// display image
 		if ($this->view->orderby_column === $this &&
 			$this->direction != self::ORDER_BY_DIR_NONE) {
 			
+			$span_tag = new SwatHtmlTag('span');
+			$span_tag->class =
+				'swat-table-view-orderable-column-header-nobreak';
+
+			$title_exp = explode(' ', $this->title);
+			$last_word = array_pop($title_exp);
+
+			if (count($title_exp))
+				$title = implode(' ', $title_exp).' ';
+			else
+				$title = '';
+
+			echo $title;
+
+			$span_tag->open();
+
+			echo $last_word;
+			
 			$img = new SwatHtmlTag('img');
-	
+
 			if ($this->direction == self::ORDER_BY_DIR_DESCENDING) {
 				
 				$img->src = 'swat/images/table-view-column-desc.png';
@@ -170,8 +188,13 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 			$img->width = 11;
 			$img->height = 11;
-			
+
 			$img->display();
+
+			$span_tag->close();
+
+		} else {
+			echo $this->title;
 		}
 
 		$anchor->close();
