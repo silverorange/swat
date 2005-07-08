@@ -33,6 +33,21 @@ class SwatCascadeFlydown extends SwatFlydown
 	public $cascade_from = null;
 
 	// }}}
+	// {{{ public function init()
+
+	/**
+	 * Initializes this cascading flydown widget
+	 *
+	 * Cascading flydown widgets need to have id's set.
+	 */
+	public function init()
+	{
+		// an id is required for this widget.
+		if ($this->id === null)
+			$this->id = $this->getUniqueId();
+	}
+
+	// }}}
 	// {{{ public function display()
 
 	/**
@@ -99,7 +114,6 @@ class SwatCascadeFlydown extends SwatFlydown
 		// contains the SwatCascade javascript class.
 		include_once 'Swat/javascript/swat-cascade.js';
 		
-		// TODO: This means an id is mandatory for this widget
 		printf("\n {$this->id}_cascade = new SwatCascade('%s', '%s'); ",
 			$this->cascade_from->id, $this->id);
 	
