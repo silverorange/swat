@@ -40,7 +40,7 @@ class SwatFlydown extends SwatControl implements SwatState
 	 *
 	 * Whether or not a value is required to be selected.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $required = false;
 

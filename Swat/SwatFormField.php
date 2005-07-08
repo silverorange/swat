@@ -24,14 +24,14 @@ class SwatFormField extends SwatContainer
 	/*
 	 * Display a visible indication that this field is required
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $required = false;
 	
 	/**
 	 * Optional note of text to display with the field
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $note = null;
 
