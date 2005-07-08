@@ -17,7 +17,7 @@ class SwatCheckbox extends SwatControl implements SwatState
 	 *
 	 * The state of the widget.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $value = false;
 	

@@ -25,7 +25,7 @@ class SwatTextarea extends SwatControl implements SwatState
 	 *
 	 * Whether a value is required for this widget.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $required = false;
 	

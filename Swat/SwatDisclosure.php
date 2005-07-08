@@ -22,7 +22,7 @@ class SwatDisclosure extends SwatContainer {
 	/**
 	 * The initial state of the disclosure
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $open = true;
 

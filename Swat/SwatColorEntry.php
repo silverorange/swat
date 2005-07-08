@@ -25,7 +25,7 @@ class SwatColorEntry extends SwatControl implements SwatState
 	 *
 	 * Must have a non-empty value when processed.
 	 *
-	 * @var bool
+	 * @var boolean
 	 */
 	public $required = false;
 
