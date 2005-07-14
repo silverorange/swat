@@ -232,7 +232,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			return 'desc';
 
 		default:
-			throw new Exception(__CLASS__.': unknown ordering.');
+			throw new SwatException(__CLASS__.': unknown ordering.');
 		}
 	}
 
