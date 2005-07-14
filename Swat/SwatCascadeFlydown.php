@@ -112,6 +112,7 @@ class SwatCascadeFlydown extends SwatFlydown
 	private function displayJavascript()
 	{
 		echo '<script type="text/javascript">';
+		echo '//<![CDATA[';
 
 		// contains the SwatCascade javascript class.
 		include_once 'Swat/javascript/swat-cascade.js';
@@ -130,6 +131,8 @@ class SwatCascadeFlydown extends SwatFlydown
 					$parent, $k, addslashes($v), $selected);
 			}
 		}
+
+		echo '//]]>';
 		echo '</script>';
 	}
 

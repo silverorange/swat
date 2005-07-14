@@ -112,13 +112,15 @@ class SwatCalendar extends SwatControl
 	/**
 	 * Displays calendar javascript
 	 *
-	 * The javascript is the majority of hte calendar code
+	 * The javascript is the majority of the calendar code
 	 */
 	private function displayJavascript()
 	{
 		echo '<script type="text/javascript">';
+		echo '//<![CDATA[';
 		include_once 'Swat/javascript/swat-find-index.js';
 		include_once 'Swat/javascript/swat-calendar.js';
+		echo '//]]>';
 		echo '</script>';
 	}
 }
