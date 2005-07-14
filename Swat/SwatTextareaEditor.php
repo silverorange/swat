@@ -58,12 +58,17 @@ class SwatTextareaEditor extends SwatTextarea
 		$basehref = ($this->basehref === null) ? 'null' : $this->basehref;
 		
 		echo '<script type="text/javascript">';
+		echo '//<![CDATA[';
+
 		include_once 'Swat/javascript/swat-textarea-editor.js';
 
 		$this->displayJavascriptTranslations();
+
 		echo 'initRTE("swat/images/textarea-editor/", "swat/", "", false);';
-		echo "writeRichText('{$this->id}', '{$value}', '{$this->width}', '{$this->height}', '{$basehref}');";
-		
+		echo "writeRichText('{$this->id}', '{$value}', '{$this->width}', ".
+			"'{$this->height}', '{$basehref}');\n";
+
+		echo '//]]>';
 		echo '</script>';
 	}
 

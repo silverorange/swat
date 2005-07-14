@@ -72,8 +72,12 @@ class SwatCheckAll extends SwatControl
 	private function displayJavascript()
 	{
 		echo '<script type="text/javascript">';
+		echo '//<![CDATA[';
+
 		include_once 'javascript/swat-check-all.js';
-		echo "new SwatCheckAll('{$this->id}', {$this->controller->id});";
+		echo "new SwatCheckAll('{$this->id}', {$this->controller->id});\n";
+
+		echo '//]]>';
 		echo '</script>';
 	}
 }
