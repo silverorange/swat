@@ -15,8 +15,8 @@ require_once 'Date.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTimeEntry extends SwatControl implements SwatState {
-
+class SwatTimeEntry extends SwatControl implements SwatState
+{
 	/**
 	 * Time of the widget
 	 *

@@ -10,8 +10,8 @@ require_once 'Swat/SwatHtmlTag.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDisclosure extends SwatContainer {
-
+class SwatDisclosure extends SwatContainer
+{
 	/**
 	 * A visible title for the label shown beside the disclosure triangle
 	 *

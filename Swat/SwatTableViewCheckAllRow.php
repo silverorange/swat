@@ -10,16 +10,17 @@ require_once('Swat/SwatCheckAll.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTableViewCheckAllRow extends SwatTableViewRow {
-	
+class SwatTableViewCheckAllRow extends SwatTableViewRow
+{
 	private $column_id;
 
-	public function __construct($column_id) {
+	public function __construct($column_id)
+	{
 		$this->column_id = $column_id;
 	}
 
-	public function display(&$columns) {
-
+	public function display(&$columns)
+	{
 		if ($this->view->model->getRowCount() < 2)
 			return;		
 

@@ -12,8 +12,8 @@ require_once('Swat/SwatHtmlTag.php');
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTableViewCheckboxColumn extends SwatTableViewColumn {
-
+class SwatTableViewCheckboxColumn extends SwatTableViewColumn
+{
 	/**
 	 * Show check all
 	 *
@@ -37,7 +37,8 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn {
 
 	private $checkbox_renderer = null;
 
-	public function init() {
+	public function init()
+	{
 		// TODO: autogenerate an id here
 		if ($this->id === null)
 			$this->id == 'checkbox';
@@ -46,24 +47,28 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn {
 			$this->view->appendRow(new SwatTableViewCheckAllRow($this->id));
 	}
 
-	public function process() {
+	public function process()
+	{
 		$item_name = $this->getRendererName();
 
 		if (isset($_POST[$item_name]) && is_array($_POST[$item_name]))
 			$this->items = $_POST[$item_name];
 	}
 
-	public function getItems() {
+	public function getItems()
+	{
 		return $this->items;
 	}
 
-	private function getRendererName() {
+	private function getRendererName()
+	{
 		$renderer = $this->getCheckboxRenderer();
 
 		return $renderer->id;
 	}
 
-	private function getCheckboxRenderer() {
+	private function getCheckboxRenderer()
+	{
 		foreach ($this->renderers as $renderer) 
 			if ($renderer instanceof SwatCheckboxCellRenderer)
 				return $renderer;

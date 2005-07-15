@@ -10,8 +10,8 @@ require_once 'Swat/SwatWizardNavigation.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatWizardNavigationSteps extends SwatWizardNavigation {
-
+class SwatWizardNavigationSteps extends SwatWizardNavigation
+{
 	private $step_buttons;
 
 	public function getNextStep()
