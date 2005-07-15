@@ -11,15 +11,16 @@ require_once 'Swat/SwatButton.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatWizardNavigation extends SwatControl {
-
+class SwatWizardNavigation extends SwatControl
+{
 	private $next_button;
 	private $prev_button;
 
 	/**
 	 * Initiate the elements for navigation
 	 */
-	public function init() {
+	public function init()
+	{
 		$this->next_button = new SwatButton('nav_next');
 		$this->prev_button = new SwatButton('nav_prev');
 	}
@@ -27,7 +28,8 @@ class SwatWizardNavigation extends SwatControl {
 	/**
 	 * Display the navigation
 	 */
-	public function display() {
+	public function display()
+	{
 		if (!$this->parent instanceof SwatWizardForm)
 			throw new SwatException('SwatWizardNavigation: Must be a child '.
 				'of a SwatWizardForm');
@@ -58,7 +60,8 @@ class SwatWizardNavigation extends SwatControl {
 	 *
 	 * @return integer Next step
 	 */
-	public function getNextStep() {
+	public function getNextStep()
+	{
 		$this->next_button->process();
 		$this->prev_button->process();
 
