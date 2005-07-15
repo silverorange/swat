@@ -11,7 +11,6 @@ require_once 'Swat/SwatWizardStateStore.php';
  */
 class SwatWizardPostStateStore extends SwatWizardStateStore
 {
-
 	private $form;
 
 	public function __construct($form)

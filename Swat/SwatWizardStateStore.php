@@ -11,11 +11,10 @@ require_once 'Swat/SwatObject.php';
  */
 abstract class SwatWizardStateStore extends SwatObject
 {
-
 	protected $state = array();
 
-	public function __construct() {
-
+	public function __construct()
+	{
 	}
 
 	/**
