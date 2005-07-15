@@ -10,8 +10,8 @@ require_once 'Swat/SwatHtmlTag.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatWizardStep extends SwatContainer {
-
+class SwatWizardStep extends SwatContainer
+{
 	/**
 	 * Visibility of the step
 	 *
