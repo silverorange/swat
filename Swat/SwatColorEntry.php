@@ -30,9 +30,7 @@ class SwatColorEntry extends SwatControl implements SwatState
 	public $required = false;
 
 	public function display()
-	{
-		$this->displayJavascript();
-		
+	{	
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'text';
 		$input_tag->id = $this->id;
@@ -50,21 +48,21 @@ class SwatColorEntry extends SwatControl implements SwatState
 		$img_tag->src = 'swat/images/b_palette.gif';
 		$img_tag->id = $this->id.'_toggle';
 		$img_tag->class = 'swat-color-entry-toggle';
+		$img_tag->display();
 
 		$link_tag->close();
 
 		$this->displayPalette();
-
-		echo '<script type="text/javascript">';
-		echo "var {$this->name}_obj = new SwatColorEntry('{$this->name}');";
-		echo '</script>';
+		$this->displayJavascript();
 	}
 	
 	private function displayJavascript()
 	{
+		echo '<script type="text/javascript" src="swat/javascript/swat-color-entry.js"></script>';
+
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
-		include_once 'Swat/javascript/swat-color-entry.js';
+		echo "var {$this->id}_obj = new SwatColorEntry('{$this->id}');";
 		echo "\n//]]>";
 		echo '</script>';
 	}

@@ -126,11 +126,11 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	 */
 	private function displayJavascript()
 	{
+		echo '<script type="text/javascript" src="swat/javascript/swat-checkbox-list.js"></script>';
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 
-		include_once 'javascript/swat-checkbox-list.js';
-		echo "{$this->id} = new SwatCheckboxList('{$this->id}');\n";
+		echo "var {$this->id} = new SwatCheckboxList('{$this->id}');\n";
 
 		echo "\n//]]>";
 		echo '</script>';

@@ -56,11 +56,10 @@ class SwatTextareaEditor extends SwatTextarea
 		$value = $this->rteSafe($this->value);
 
 		$basehref = ($this->basehref === null) ? 'null' : $this->basehref;
-		
+	
+		echo '<script type="text/javascript" src="swat/javascript/swat-textarea-editor.js"></script>';
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
-
-		include_once 'Swat/javascript/swat-textarea-editor.js';
 
 		$this->displayJavascriptTranslations();
 

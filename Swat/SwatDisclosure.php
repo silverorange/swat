@@ -99,11 +99,7 @@ class SwatDisclosure extends SwatContainer
 	 */
 	private function displayJavascript()
 	{
-		echo '<script type="text/javascript">';
-		echo "//<![CDATA[\n";
-		include_once 'Swat/javascript/swat-disclosure.js';
-		echo "\n//]]>";
-		echo '</script>';
+		echo '<script type="text/javascript" src="swat/javascript/swat-disclosure.js"></script>';
 	}
 }
 

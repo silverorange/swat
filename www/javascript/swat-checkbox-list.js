@@ -17,6 +17,7 @@ function SwatCheckboxList(id) {
 			this.check_list[i].addEventListener("change", eventHandler, false);
 	}
 
+
 	function eventHandler(event) {
 		if (self.check_all == null)
 			return;
