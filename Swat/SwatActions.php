@@ -226,11 +226,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	private function displayJavascript()
 	{
-		echo '<script type="text/javascript">';
-		echo "//<![CDATA[\n";
-		include_once 'Swat/javascript/swat-actions.js';
-		echo "\n//]]>";
-		echo '</script>';
+		echo '<script type="text/javascript" src="swat/javascript/swat-actions.js"></script>';
 	}
 }
 

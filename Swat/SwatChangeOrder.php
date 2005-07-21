@@ -124,10 +124,10 @@ class SwatChangeOrder extends SwatControl implements SwatState
 
 	private function displayJavascript()
 	{
+		echo '<script type="text/javascript" src="swat/javascript/swat-change-order.js"></script>';
+
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
-
-		include_once 'Swat/javascript/swat-change-order.js';
 		
 		$warning = Swat::_('You must first select the item to reorder.');
 		// TODO: figure out how to make the stylesheets work better.

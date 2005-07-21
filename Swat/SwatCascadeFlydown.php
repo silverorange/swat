@@ -111,12 +111,11 @@ class SwatCascadeFlydown extends SwatFlydown
 	 */
 	private function displayJavascript()
 	{
+		echo '<script type="text/javascript" src="swat/javascript/swat-cascade.js"></script>';
+
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 
-		// contains the SwatCascade javascript class.
-		include_once 'Swat/javascript/swat-cascade.js';
-		
 		printf("\n {$this->id}_cascade = new SwatCascade('%s', '%s'); ",
 			$this->cascade_from->id, $this->id);
 	
