@@ -104,7 +104,7 @@ class SwatDisclosure extends SwatContainer
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 		echo "var {$this->id} = new SwatDisclosure('{$this->id}');\n";
-		echo "\n//]]>";
+		echo "//]]>";
 		echo '</script>';
 	}
 }
