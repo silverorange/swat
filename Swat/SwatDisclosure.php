@@ -46,8 +46,6 @@ class SwatDisclosure extends SwatContainer
 	 */
 	public function display()
 	{
-		$this->displayJavascript();
-
 		$control_div = new SwatHtmlTag('div');
 		$control_div->class = 'swat-disclosure-control';
 
@@ -55,8 +53,8 @@ class SwatDisclosure extends SwatContainer
 
 		$anchor = new SwatHtmlTag('a');
 		$anchor->href =
-			sprintf("javascript:toggleDisclosureWidget('%s');", $this->id);
-
+			sprintf("javascript:%s.toggle();", $this->id);
+		
 		$anchor->open();
 
 		$img = new SwatHtmlTag('img');
@@ -92,6 +90,8 @@ class SwatDisclosure extends SwatContainer
 		$container_div->open();
 		parent::display();
 		$container_div->close();
+
+		$this->displayJavascript();
 	}
 
 	/**
@@ -100,6 +100,12 @@ class SwatDisclosure extends SwatContainer
 	private function displayJavascript()
 	{
 		echo '<script type="text/javascript" src="swat/javascript/swat-disclosure.js"></script>';
+
+		echo '<script type="text/javascript">';
+		echo "//<![CDATA[\n";
+		echo "var {$this->id} = new SwatDisclosure('{$this->id}');\n";
+		echo "\n//]]>";
+		echo '</script>';
 	}
 }
 
