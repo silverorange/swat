@@ -99,7 +99,7 @@ class SwatDBDataObject
 	 * The md5 hashes represent all the public properties of this object and
 	 * are used to tell if a property has been modified.
 	 */
-	private function generatePropertyHashes();
+	protected function generatePropertyHashes();
 	{
 		$property_array = get_object_vars($this);
 
