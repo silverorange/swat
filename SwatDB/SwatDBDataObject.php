@@ -26,6 +26,8 @@ class SwatDBDataObject
 
 			$this->initWrapper();
 		}
+
+		$this->generatePropertyHashes();
 	}
 
 	/**
@@ -88,8 +90,6 @@ class SwatDBDataObject
 				if (isset($row[$name]))
 					$this->$name = $row->name;
 			}
-
-			$this->generatePropertyHashes();
 		}
 	}
 
