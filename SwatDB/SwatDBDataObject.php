@@ -48,6 +48,26 @@ class SwatDBDataObject
 	}
 
 	/**
+	 * Gets a list of all the modified properties of this object
+	 *
+	 * @return array an array of modified properties and their values in the
+	 *                form of: name => value
+	 */
+	public function getModifiedProperties()
+	{
+		$property_array = get_object_vars($this);
+		$modified_properties = array();
+
+		foreach ($property_array as $name => $value) {
+			$hashed_value = md5(serialize($value));
+			if (strcmp($hashed_value, $this->property_hashes[$name]) != 0)
+				$modified_properties[$name] = $value;
+		}
+
+		return $modified_properties;
+	}
+	
+	/**
 	 * Takes a record set and sets the properties of this object according to
 	 * the values of the record set
 	 *
