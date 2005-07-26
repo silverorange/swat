@@ -284,8 +284,6 @@ class SwatPagination extends SwatControl
  			if (in_array($name, $this->unset_get_vars))
 				unset($vars[$name]);
 
-		$vars[$this->id] = '%s';
-
 		if ($this->link === null)
 			$link = '?';
 		else
@@ -294,8 +292,7 @@ class SwatPagination extends SwatControl
 		foreach($vars as $name => $value)
 			$link .= $name.'='.urlencode($value).'&amp;';
 
-		// Remove trailing ampersand
-		$link = substr($link, 0, -1);
+		$link.= urlencode($this->id).'=%s';
 
 		return $link;
 	}
