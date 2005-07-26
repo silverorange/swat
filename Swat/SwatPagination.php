@@ -124,6 +124,8 @@ class SwatPagination extends SwatControl
 
 		if ($this->total_pages > 1) {
 
+			$this->unset_get_vars[] = $this->id;
+
 			$div = new SwatHtmlTag('div');
 			$div->class = 'swat-pagination';
 			$div->open();
@@ -226,7 +228,7 @@ class SwatPagination extends SwatControl
 		for ($i = 0; $i < $this->total_pages; $i++) {
 			$display = false;
 
-			if ($this->current_page <= 6 && $i <= 9) {
+			if ($this->current_page < 7 && $i < 10) {
 				// Current page is in the first 6, show the first 10 pages
 				$display = true;
 				
@@ -251,7 +253,7 @@ class SwatPagination extends SwatControl
 				}
 
 				if ($i == $this->current_page) {
-					$cuttent->content = ($i + 1);
+					$current->content = (string) ($i + 1);
 					$current->display();
 				} else {
 					$anchor->href = sprintf($link, (string) $i);
@@ -290,7 +292,7 @@ class SwatPagination extends SwatControl
 			$link = $this->link.'?';
 
 		foreach($vars as $name => $value)
-			$link .= $name.'='.urlencode($value).'&amp;';
+			$link .= $name.'='.urlencode($value).'&';
 
 		$link.= urlencode($this->id).'=%s';
 
