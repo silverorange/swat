@@ -14,14 +14,10 @@ function AddLink() {
 		alert(rteT['enter_url']);
 		return false;
 	}
-	if (oForm.linkText.value == '')
-		var link_text = oForm.url.value;
-	else
-		var link_text = oForm.linkText.value;
-	
-	var html = '<a href="' + document.linkForm.url.value + '" target="' + document.linkForm.linkTarget.options[document.linkForm.linkTarget.selectedIndex].value + '">' + link_text + '</a>';
-	
-	window.opener.insertHTML(html);
+
+	var link = document.linkForm.url.value;
+	var target = document.linkForm.linkTarget.options[document.linkForm.linkTarget.selectedIndex].value;
+	window.opener.insertLink(link, target);
 	window.close();
 	return true;
 }
@@ -49,8 +45,8 @@ document.writeln('<title>' + rteT['insert_link'] + '</title>');
 	document.writeln('<div class="swat-form-field"><label for="title">' + rteT['url'] + ':</label>');
 	document.writeln('<input name="url" type="text" id="url" size="40" onfocus="this.select();"></div>');
 
-	document.writeln('<div class="swat-form-field"><label for="text">' + rteT['link_text'] + ':</label>');
-	document.writeln('<input name="linkText" type="text" id="text" size="40" onfocus="this.select();"></div>');
+	//document.writeln('<div class="swat-form-field"><label for="text">' + rteT['link_text'] + ':</label>');
+	//document.writeln('<input name="linkText" type="text" id="text" size="40" onfocus="this.select();"></div>');
 
 	document.writeln('<div class="swat-form-field"><label for="linkTarget">' + rteT['target'] + ':</label>');
 	document.writeln('<select name="linkTarget" id="linkTarget">');
