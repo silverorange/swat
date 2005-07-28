@@ -500,7 +500,11 @@ function popUpWin(url, win, width, height, options) {
 	var leftPos = (screen.availWidth - width) / 2;
 	var topPos = (screen.availHeight - height) / 2;
 	options += 'width=' + width + ',height=' + height + ',left=' + leftPos + ',top=' + topPos;
-	return window.open(RTEBaseHref + url, win, options);
+
+	if (document.all)
+		url = '../' + url;
+
+	return window.open(url, win, options);
 }
 
 function setColor(color) {
