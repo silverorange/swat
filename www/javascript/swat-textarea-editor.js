@@ -1,6 +1,3 @@
-//TODO: fix rteModeSource and how it's being checked with the new Source/Normal
-//mode buttons plus add css for said buttons	
-
 // Cross-Browser Rich Text Editor
 // http://www.kevinroth.com/rte/demo.htm
 // Written by Kevin Roth (kevin@NOSPAMkevinroth.com - remove NOSPAM)
@@ -12,6 +9,7 @@ var isRichText = false;
 var rng;
 var currentRTE;
 var allRTEs = "";
+var RTEBaseHref = '';
 
 var isIE;
 var isGecko;
@@ -48,11 +46,11 @@ function initCheckRichText() {
 
 function writeRichText(rte, html, width, height, basehref) {
 	if (isRichText) {
+		RTEBaseHref = basehref;
+
 		if (allRTEs.length > 0) allRTEs += ";";
 		allRTEs += rte;
 		
-		appendDocumentOnLoad(rte);
-
 		document.writeln('<div class="rteDiv" style="width:' + width + ';">');
 		
 		document.writeln('<div id="Menu_' + rte + '" class="rteMenu">');
@@ -198,7 +196,10 @@ function writeRichText(rte, html, width, height, basehref) {
 		//document.writeln('<iframe width="154" height="104" id="cp' + rte + '" src="' + includesPath + 'swat-textarea-editor-palette.html" marginwidth="0" marginheight="0" scrolling="no" style="visibility:hidden; position: absolute;"></iframe>');
 		
 		html = convertTags(html);
+		html = html.replace("\n", '<br />', 'g');
+
 		document.writeln('<input type="hidden" id="hdn' + rte + '" name="' + rte + '" value="' + html + '" />');
+		document.writeln('<input type="hidden" name="' + rte + '_wysiwyg" value="true" />');
 
 		document.writeln('</div>'); //end editor
 		
@@ -258,6 +259,7 @@ function enableDesignMode(rte, html, basehref) {
 		oRTE.designMode = "On";
 //frames[rte].document.attachEvent('onkeypress', function evt_ie_keypress(event) {ieKeyPress(event, rte);});
 		appendFormOnSubmit(rte);
+		appendDocumentOnLoad(rte);
 	} else {
 		try {
 			document.getElementById(rte).contentDocument.designMode = "on";
@@ -273,6 +275,7 @@ function enableDesignMode(rte, html, basehref) {
 					//switch to non-CSS mode (inserts <tag></tag> instead of <span style=""><span>)
 					oRTE.execCommand("useCSS", false, true);
 					appendFormOnSubmit(rte);
+					appendDocumentOnLoad(rte);
 				}
 			} catch (e) {
 				alert("Error preloading content.");
@@ -318,7 +321,6 @@ function setHiddenVal(rte) {
 	//set hidden form field value for current rte
 	var oHdnField = document.getElementById('hdn' + rte);
 	
-	//convert html output to xhtml (thanks Timothy Bell and Vyacheslav Smolin!)
 	if (oHdnField.value == null) oHdnField.value = "";
 
 	if (document.all)
@@ -327,14 +329,6 @@ function setHiddenVal(rte) {
 		oHdnField.value = document.getElementById(rte).contentWindow.document.body.innerHTML;
 	
 	oHdnField.value = convertTags(oHdnField.value);
-	
-	// strip out line breaks
-	var myRegExp = new RegExp("\n", 'g');
-	oHdnField.value = oHdnField.value.replace(myRegExp, " ");
-	
-	//and unnecessary double spaces
-	var myRegExp = new RegExp("  ", 'g');
-	oHdnField.value = oHdnField.value.replace(myRegExp, "");
 	
 	//if there is no content (other than formatting) set value to nothing
 	if (stripHTML(oHdnField.value.replace("&nbsp;", " ")) == "" &&
@@ -483,35 +477,30 @@ function dlgInsertLink(rte, command) {
 	
 	parent.command = command;
 	currentRTE = rte;
-	InsertLink = popUpWin(includesPath + 'swat-textarea-editor-insert-link.html', 'InsertLink', 360, 180, '');
-	
-	//get currently highlighted text and set link text value
-	setRange(rte);
-	var linkText = '';
-	if (isIE) {
-		linkText = stripHTML(rng.htmlText);
-	} else {
-		linkText = stripHTML(rng.toString());
-	}
-	setLinkText(linkText);
+	popUpWin(includesPath + 'swat-textarea-editor-insert-link.html', 'InsertLink', 360, 180, '');
 }
 
-function setLinkText(linkText) {
-	//set link text value in insert link dialog
-	try {
-		window.InsertLink.document.linkForm.linkText.value = linkText;
-	} catch (e) {
-		//may take some time to create dialog window.
-		//Keep looping until able to set.
-		setTimeout("setLinkText('" + linkText + "');", 10);
-	}
+function insertLink(link, target) {
+
+	var content = getHTMLOfSelection(currentRTE);
+	var link_text = (content == '') ? link : content;
+
+	if (RTEBaseHref && link.slice(0, RTEBaseHref.length) == RTEBaseHref)
+		link = link.slice(RTEBaseHref.length);
+
+	if (link.slice(0, 3) == 'www')
+		link = 'http://' + link;
+
+	var html = '<a href="' + link + '" target="' + target + '">' + link_text + '</a>';
+
+	insertHTML(html);
 }
 
 function popUpWin(url, win, width, height, options) {
 	var leftPos = (screen.availWidth - width) / 2;
 	var topPos = (screen.availHeight - height) / 2;
 	options += 'width=' + width + ',height=' + height + ',left=' + leftPos + ',top=' + topPos;
-	return window.open(url, win, options);
+	return window.open(RTEBaseHref + url, win, options);
 }
 
 function setColor(color) {
@@ -843,6 +832,8 @@ function toggleFormatting(rte) {
 
 
 function appendDocumentOnLoad(rte) {
+	var hdn_field = document.getElementById('hdn' + rte);
+
 	if (typeof window.onload == "function") {
 		var window_onload = window.onload;
 		if (typeof window.__msh_prevOnLoad == "undefined")
