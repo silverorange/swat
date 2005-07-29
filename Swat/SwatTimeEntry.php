@@ -173,7 +173,7 @@ class SwatTimeEntry extends SwatControl implements SwatState
 				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			}
 
-		if ($ampm == 'pm') {
+			if ($ampm == 'pm') {
 				$hour += 12;
 				if ($hour == 24)
 					$hour = 0;
