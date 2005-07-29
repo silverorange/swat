@@ -21,7 +21,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 	const CALENDAR = 16;
 
 	/**
-	 * Date of the widget, or null.
+	 * Date of this date entry widget
 	 *
 	 * @var Date
 	 */
@@ -59,7 +59,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 	/**
 	 * Start date of the valid range (inclusive)
 	 *
-	 * Default to 20 years in the past.
+	 * Defaults to 20 years in the past.
 	 *
 	 * @var Date
 	 */
@@ -68,7 +68,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 	/**
 	 * End date of the valid range (exclusive)
 	 *
-	 * Default to 20 years in the future.
+	 * Defaults to 20 years in the future.
 	 *
 	 * @var Date
 	 */
@@ -103,7 +103,8 @@ class SwatDateEntry extends SwatControl implements SwatState
 	private $time_entry = null;
 
 	/**
-	 * An internal flag telling whether internal widgets have been created or not
+	 * An internal flag telling whether internal widgets have been
+	 * created or not
 	 *
 	 * @var boolean
 	 */
