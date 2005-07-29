@@ -118,21 +118,8 @@ class SwatTimeEntry extends SwatControl implements SwatState
 		$this->display  = self::HOUR | self::MINUTE;
 		$this->required = $this->display;
 
-		$date = new SwatDate();
-		$date->setYear(0);
-		$date->setMonth(1);
-		$date->setDay(1);
-		$date->setHour(0);
-		$date->setMinute(0);
-		$date->setSecond(0);
-		$date->setTZ('UTC');
-
-		$this->valid_range_start = clone $date;
-
-		$date->setHour(23);
-		$date->setMinute(59);
-		$date->setSecond(59);
-		$this->valid_range_end = clone $date;
+		$this->valid_range_start = new SwatDate('2000-01-01T00:00:00.0000Z');
+		$this->valid_range_end   = new SwatDate('2000-01-01T23:59:59.0000Z');
 	}
 
 	/**
