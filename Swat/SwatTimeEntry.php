@@ -17,9 +17,9 @@ require_once 'Date.php';
  */
 class SwatTimeEntry extends SwatControl implements SwatState
 {
-	const  HOUR   = 1;
-	const  MINUTE = 2;
-	const  SECOND = 4;
+	const HOUR   = 1;
+	const MINUTE = 2;
+	const SECOND = 4;
 
 	/**
 	 * Time of this time entry widget
