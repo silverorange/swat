@@ -27,7 +27,7 @@ class SwatYesNoFlydown extends SwatFlydown
 	}
 
 	/**
-	 * Gets the value of this yes/no flywodn as a boolean
+	 * Gets the value of this yes/no flydown as a boolean
 	 *
 	 * If the value is not set, this methods returns null.
 	 *
