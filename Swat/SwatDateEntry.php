@@ -130,10 +130,11 @@ class SwatDateEntry extends SwatControl implements SwatState
 	 *
 	 * Convenience method to set the valid date range by year offsets.
 	 *
-	 * @param integer $start_offset Offset from the current year used to set
-	 *        the starting year of the valid range.
-	 * @param integer $end_offset Offset from the current year used to set the
-	 *        ending year of the valid range.
+	 * @param integer $start_offset offset from the current year in years used
+	 *                               to set the starting year of the valid
+	 *                               range.
+	 * @param integer $end_offset offset from the current year in years used
+	 *                             to set the ending year of the valid range.
 	 */
 	public function setValidRange($start_offset, $end_offset)
 	{
