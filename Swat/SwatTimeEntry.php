@@ -17,35 +17,35 @@ require_once 'Date.php';
  */
 class SwatTimeEntry extends SwatControl implements SwatState
 {
-	/**
-	 * Time of the widget
-	 *
-	 * The year, month, and day fields of the Date are
-	 * unused and should be considered undefined.
-	 *
-	 * @var Date
-	 */
-	public $value = null;
-
 	const  HOUR   = 1;
 	const  MINUTE = 2;
 	const  SECOND = 4;
 
 	/**
-	 * Time parts that are required
+	 * Time of this time entry widget
 	 *
-	 * Bitwise combination of SwatTime::HOUR,
-	 * SwatTime::MINUTE, and SwatTime::SECOND.
+	 * The year, month and day fields of the Date object are unused and
+	 * undefined.
+	 *
+	 * @var Date
+	 */
+	public $value = null;
+
+	/**
+	 * Required time parts
+	 *
+	 * Bitwise combination of SwatTime::HOUR, SwatTime::MINUTE
+	 * and SwatTime::SECOND.
 	 *
 	 * @var integer
 	 */
 	public $required;
 
 	/**
-	 * Time parts that are displayed
+	 * Displayed time parts
 	 *
-	 * Bitwise combination of SwatTime::HOUR,
-	 * SwatTime::MINUTE, and SwatTime::SECOND.
+	 * Bitwise combination of SwatTime::HOUR, SwatTime::MINUTE
+	 * and SwatTime::SECOND.
 	 *
 	 * @var integer
 	 */
@@ -54,8 +54,8 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	/**
 	 * Start time of the valid range (inclusive)
 	 *
-	 * Default 00:00:00 The year, month, and day fields of the Date are
-	 * ignored and should be considered undefined.
+	 * Defaults to 00:00:00. The year, month and day fields of the Date object
+	 * are ignored and undefined.
 	 *
 	 * @var Date
 	 */
@@ -64,20 +64,55 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	/**
 	 * End time of the valid range (inclusive)
 	 *
-	 * Default 23:59:59 The year, month, and day fields of the Date
-	 * are ignored and should be considered undefined.
+	 * Defaults to 23:59:59. The year, month and day fields of the Date object
+	 * are ignored and undefined.
 	 *
 	 * @var Date
 	 */
 	public $valid_range_end;
 
+	/**
+	 * A reference to the internal hour flydown
+	 *
+	 * @var SwatFlydown
+	 */
 	private $hour_flydown;
+
+	/**
+	 * A reference to the internal minute flydown
+	 *
+	 * @var SwatFlydown
+	 */
 	private $minute_flydown;
+
+	/**
+	 * A reference to the internal second flydown
+	 *
+	 * @var SwatFlydown
+	 */
 	private $second_flydown;
+
+	/**
+	 * A reference to the internal am/pm flydown
+	 *
+	 * @var SwatFlydown
+	 */
 	private $am_pm_flydown;
 
+	/**
+	 * An internal flag telling whether internal widgets have been
+	 * created or not
+	 *
+	 * @var boolean
+	 */
 	private $created = false;
 
+	/**
+	 * Initializes this widget
+	 *
+	 * Sets default required and display parts and sets default valid range
+	 * for this time entry.
+	 */
 	public function init()
 	{
 		$this->display  = self::HOUR | self::MINUTE;
@@ -100,6 +135,12 @@ class SwatTimeEntry extends SwatControl implements SwatState
 		$this->valid_range_end = clone $date;
 	}
 
+	/**
+	 * Displays this time entry
+	 *
+	 * Creates internal widgets if they do not exits then displays required
+	 * javascript, then displays internal widgets.
+	 */
 	public function display()
 	{
 		$this->createFlydowns();
@@ -118,6 +159,13 @@ class SwatTimeEntry extends SwatControl implements SwatState
 			$this->am_pm_flydown->display();
 	}
 
+	/**
+	 * Processes this time entry
+	 *
+	 * Creates internal widgets if they do not exist and then assigns their
+	 * values based on the time entered by the user. If the time is not valid,
+	 * an error message is attached to this time entry.
+	 */
 	public function process()
 	{
 		$this->createFlydowns();
@@ -183,6 +231,36 @@ class SwatTimeEntry extends SwatControl implements SwatState
 		$this->validateRanges();
 	}
 
+	/**
+	 * Gets the current state of this time entry widget
+	 *
+	 * @return boolean the current state of this time entry widget.
+	 *
+	 * @see SwatState::getState()
+	 */
+	public function getState()
+	{
+		if ($this->value === null)
+			return null;
+		else
+			return $this->value->getDate();	
+	}
+
+	/**
+	 * Sets the current state of this time entry widget
+	 *
+	 * @param boolean $state the new state of this time entry widget.
+	 *
+	 * @see SwatState::setState()
+	 */
+	public function setState($state)
+	{
+		$this->value = new SwatDate($state)
+	}
+
+	/**
+	 * Creates all internal widgets required for this date entry
+	 */
 	private function createFlydowns()
 	{
 		if ($this->created) return;
@@ -202,6 +280,9 @@ class SwatTimeEntry extends SwatControl implements SwatState
 			$this->createAmPmFlydown();
 	}
 
+	/**
+	 * Creates the hour flydown for this time entry
+	 */
 	private function createHourFlydown()
 	{
 		$this->hour_flydown = new SwatFlydown($this->id.'_hour');
@@ -212,6 +293,9 @@ class SwatTimeEntry extends SwatControl implements SwatState
 			$this->hour_flydown->addOption($i, $i);
 	}
 
+	/**
+	 * Creates the minute flydown for this time entry
+	 */
 	private function createMinuteFlydown()
 	{
 		$this->minute_flydown = new SwatFlydown($this->id.'_minute');
@@ -223,6 +307,9 @@ class SwatTimeEntry extends SwatControl implements SwatState
 				str_pad($i, 2, '0', STR_PAD_LEFT));
 	}
 
+	/**
+	 * Creates the second flydown for this time entry
+	 */
 	private function createSecondFlydown()
 	{
 		$this->second_flydown = new SwatFlydown($this->id.'_second');
@@ -234,6 +321,9 @@ class SwatTimeEntry extends SwatControl implements SwatState
 				str_pad($i, 2 ,'0', STR_PAD_LEFT));
 	}
 
+	/**
+	 * Creates the am/pm flydown for this time entry
+	 */
 	private function createAmPmFlydown()
 	{
 		$this->am_pm_flydown = new SwatFlydown($this->id.'_ampm');
@@ -242,6 +332,12 @@ class SwatTimeEntry extends SwatControl implements SwatState
 			sprintf("timeSet('%s', this);", $this->id);
 	}
 
+	/**
+	 * Makes sure the date the user entered is within the valid range
+	 *
+	 * If the time is not within the valid range, this method attaches an
+	 * error message to this time entry.
+	 */
 	private function validateRanges()
 	{
 		$this->valid_range_start->setYear(0);
@@ -271,28 +367,27 @@ class SwatTimeEntry extends SwatControl implements SwatState
 		}
 	}
 
+	/**
+	 * Converts a time to a human readable string
+	 *
+	 * This is a convenience method.
+	 *
+	 * @param Date $time the time to convert to a string.
+	 *
+	 * @return string the time converted to a string.
+	 */
 	private function displayTime($time)
 	{
 		return $time->format('%r'); // TODO: %X
 	}
 
+	/**
+	 * Outputs the javascript required for this control
+	 */
 	private function displayJavascript()
 	{
 		echo '<script type="text/javascript" src="swat/javascript/swat-find-index.js"></script>';
 		echo '<script type="text/javascript" src="swat/javascript/swat-time.js"></script>';
-	}
-	
-	public function getState()
-	{
-		if ($this->value === null)
-			return null;
-		else
-			return $this->value->getDate();	
-	}
-
-	public function setState($state)
-	{
-		$this->value = new SwatDate($state)
 	}
 }
 
