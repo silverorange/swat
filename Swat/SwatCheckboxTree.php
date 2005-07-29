@@ -73,6 +73,20 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 			
 			$div_tag->close();
 		}
+
+		$this->displayJavascript();
+
+		if (count($this->options) > 1) {
+			$div_tag = new SwatHtmlTag('div');
+			$div_tag->id = $this->id.'__div';
+			$div_tag->open();
+
+			$chk_all = new SwatCheckAll();
+			$chk_all->controller = $this;
+			$chk_all->display();
+
+			$div_tag->close();
+		}
 	}
 
 	/**

@@ -124,7 +124,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	/**
 	 * Displays the javascript for this check-all widget
 	 */
-	private function displayJavascript()
+	protected function displayJavascript()
 	{
 		echo '<script type="text/javascript" src="swat/javascript/swat-checkbox-list.js"></script>';
 		echo '<script type="text/javascript">';
