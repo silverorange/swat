@@ -3,39 +3,49 @@
 /**
  * MDB2 Recordset Wrapper
  *
- * Used to wrap an MDB2 recordset with an array of SwatDBRowWrapper objects.
+ * Used to wrap an MDB2 recordset into a traversable collection of objects.
  *
  * @package   SwatDB
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatDBRecordsetWrapper
+abstract class SwatDBRecordsetWrapper implements Iterator
 {
 	// {{{ protected properties
 
 	/**
-	 * Name of the {@link SwatDBRowWrapper} class
-	 * @var SwatDBRowWrapper 
+	 * The name of the row wrapper class to use for this recordset wrapper
+	 *
+	 * @var string
 	 */
 	protected $row_wrapper_class;
 
 	// }}}
-	// {{{ public properties
+	// {{{ private properties
 
 	/**
-	 * Array of SwatDBRowWrapper items
+	 * An array of the objects created by this wrapper
+	 *
 	 * @var array
 	 */
-	public $items = array();
+	private $objects = array();
 
+	/**
+	 * The current index of the iterator interface
+	 *
+	 * @var integer
+	 */
+	private $current_index = 0;
+	
 	// }}}
 	// {{{ public function __construct
 
 	/**
-	 * Constructor
-	 * @param MDB2 recordset
+	 * Creates a new wrapper object
+	 *
+	 * @param resource a MDB2 recordset.
 	 */
-	function __construct($rs)
+	public function __construct($rs)
 	{
 		if (MDB2::isError($rs))
 			throw new Exception($rs->getMessage());
@@ -43,6 +53,68 @@ abstract class SwatDBRecordsetWrapper
 		if ($rs->numrows())
 			while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT))
 				$this->items[] = new $this->row_wrapper_class($row);
+	}
+
+	// }}}
+	// {{{ public function current()
+
+	/**
+	 * Returns the current element
+	 *
+	 * @return mixed the current element.
+	 */
+	public function current()
+	{
+		return $this->objects[$this->current_index];
+	}
+
+	// }}}
+	// {{{ public function key()
+
+	/**
+	 * Returns the key of the current element
+	 *
+	 * @return integer the key of the current element
+	 */
+	public function key()
+	{
+		return $this->current_index;
+	}
+
+	// }}}
+	// {{{ public function next()
+
+	/**
+	 * Moves forward to the next element
+	 */
+	public function next()
+	{
+		$this->current_index++;
+	}
+
+	// }}}
+	// {{{ public function rewind()
+
+	/**
+	 * Rewinds this iterator to the first element
+	 */
+	public function rewind()
+	{
+		$this->current_index = 0;
+	}
+
+	// }}}
+	// {{{ public function valid()
+
+	/**
+	 * Checks is there is a current element after calls to rewind() and next()
+	 *
+	 * @return boolean true if there is a current element and false if there
+	 *                  is not.
+	 */
+	public function valid()
+	{
+		return isset($this->objects[$this->current_index]);
 	}
 
 	// }}}
