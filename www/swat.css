@@ -99,7 +99,7 @@ label.swat-control {
 	background: #eee;
 }
 
-.swat-disclosure-container-open {
+.swat-disclosure-container-opened {
 	border: 2px solid #eee;
 	padding: 0.5em;
 	display: block;	
