@@ -221,6 +221,14 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		if ($this->model === null)
 			return;
 
+		if ($this->model->getRowCount() == 0) {
+			$div = new SwatHtmlTag('div');
+			$div->class = 'swat-table-view-no-rows';
+			$div->content = 'No Records';
+			$div->display();
+			return;
+		}	
+
 		$table_tag = new SwatHtmlTag('table');
 		$table_tag->class = 'swat-table-view';
 		$table_tag->id = $this->id;
