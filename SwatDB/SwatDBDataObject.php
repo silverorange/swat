@@ -111,15 +111,18 @@ abstract class SwatDBDataObject
 	 * Subclasses can override this method to provide additional
 	 * functionality.
 	 *
-	 * @param array $row the row in array form to use
+	 * @param mixed $row the row to use as either an array or object.
 	 */
 	protected function initFromRow($row);
 	{
 		$property_array = get_object_vars($this);
 
+		if (is_object($row))
+			$row = get_object_vars($row);
+
 		foreach ($property_array as $name => $value) {
 			if (isset($row[$name]))
-				$this->$name = $row->name;
+				$this->$name = $row[$name];
 		}
 	}
 
