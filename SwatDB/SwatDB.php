@@ -329,6 +329,8 @@ class SwatDB
 	 *
 	 * @param mixed $id The value to look for in the id field column. The 
 	 *        type should correspond to the type of $field.
+	 *
+	 * @return Object A row object.
 	 */
 	public static function queryRow($db, $table, $fields, $id_field, $id)
 	{
