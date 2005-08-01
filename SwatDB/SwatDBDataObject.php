@@ -7,15 +7,15 @@
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDBDataObject
+abstract class SwatDBDataObject
 {
 	/**
-	 *
+	 * @var array
 	 */
 	private $property_hashes = array();
-
+	
 	/**
-	 *
+	 * @param mixed $data
 	 */
 	public function __construct($data = null);
 	{
@@ -72,7 +72,22 @@ class SwatDBDataObject
 
 		return $modified_properties;
 	}
-	
+
+	/**
+	 * Loads this object's properties from the database given an id
+	 *
+	 * @param mixed id the id of the database row to set this object's
+	 *               properties with.
+	 */
+	abstract public function loadFromDB($id);
+
+	/**
+	 * Saves this object to the database
+	 *
+	 * Only modified properties are updated.
+	 */
+	abstract public function saveToDB();
+
 	/**
 	 * Takes a record set and sets the properties of this object according to
 	 * the values of the record set
