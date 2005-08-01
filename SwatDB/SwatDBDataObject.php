@@ -17,14 +17,18 @@ class SwatDBDataObject
 	/**
 	 *
 	 */
-	public function __construct($rs = null);
+	public function __construct($data = null);
 	{
-		if ($rs !== null) {
-			if (MDB2::isError($rs))
-				throw new Exception($rs->getMessage());
-				// TODO: change to StoreException
+		if ($data !== null) {
+			if (is_array($data)) {
+				$this->initFromRow($data);
+			} else {
+				if (MDB2::isError($rs))
+					throw new Exception($rs->getMessage());
+					// TODO: change to StoreException
 
-			$this->initWrapper();
+				$this->initFromRecordset($data);
+			}
 		}
 
 		$this->generatePropertyHashes();
@@ -78,18 +82,30 @@ class SwatDBDataObject
 	 *
 	 * @param MDB2_RecordSet $rs the record set to use
 	 */
-	protected function initWrapper($rs);
+	protected function initFromRecordset($rs);
 	{
-
 		if ($rs->numrows() >= 1) {
 			$row = $rs->fetchRow(MDB2_FETCHMODE_ARRAY);
+			$this->initFromRow($row);
+		}
+	}
 
-			$property_array = get_object_vars($this);
+	/**
+	 * Takes a data row and sets the properties of this object according to
+	 * the values of the row
+	 *
+	 * Subclasses can override this method to provide additional
+	 * functionality.
+	 *
+	 * @param array $row the row in array form to use
+	 */
+	protected function initFromRow($row);
+	{
+		$property_array = get_object_vars($this);
 
-			foreach ($property_array as $name => $value) {
-				if (isset($row[$name]))
-					$this->$name = $row->name;
-			}
+		foreach ($property_array as $name => $value) {
+			if (isset($row[$name]))
+				$this->$name = $row->name;
 		}
 	}
 
