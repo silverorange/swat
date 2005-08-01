@@ -20,15 +20,10 @@ abstract class SwatDBDataObject
 	public function __construct($data = null);
 	{
 		if ($data !== null) {
-			if (is_array($data)) {
+			if (is_array($data))
 				$this->initFromRow($data);
-			} else {
-				if (MDB2::isError($rs))
-					throw new Exception($rs->getMessage());
-					// TODO: change to StoreException
-
+			else
 				$this->initFromRecordset($data);
-			}
 		}
 
 		$this->generatePropertyHashes();
@@ -99,6 +94,10 @@ abstract class SwatDBDataObject
 	 */
 	protected function initFromRecordset($rs);
 	{
+		if (MDB2::isError($rs))
+			throw new Exception($rs->getMessage());
+			// TODO: change to StoreException
+
 		if ($rs->numrows() >= 1) {
 			$row = $rs->fetchRow(MDB2_FETCHMODE_ARRAY);
 			$this->initFromRow($row);
