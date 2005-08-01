@@ -17,7 +17,7 @@ abstract class SwatDBDataObject
 	/**
 	 * @param mixed $data
 	 */
-	public function __construct($data = null);
+	public function __construct($data = null)
 	{
 		if ($data !== null) {
 			if (is_array($data))
