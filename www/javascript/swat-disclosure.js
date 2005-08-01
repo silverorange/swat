@@ -5,7 +5,6 @@ function SwatDisclosure(id)
 
 	// get initial state
 	if (this.div.className == 'swat-disclosure-container-opened') {
-		alert('test');
 		this.opened = true;
 	} else {
 		this.opened = false;
