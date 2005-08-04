@@ -4,7 +4,10 @@ require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatState.php';
 
 /**
- * A color entry widget with palette
+ * A color selector widget with palette
+ *
+ * The colors are stored internally and accessed externally as 3 or 6 digit
+ * hexidecimal values.
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange
@@ -13,7 +16,7 @@ require_once 'Swat/SwatState.php';
 class SwatColorEntry extends SwatControl implements SwatState
 {
 	/**
-	 * Color of the widget in Hex
+	 * Selected color of this widget in hexidecimal representation
 	 *
 	 * @var string
 	 */
@@ -28,6 +31,12 @@ class SwatColorEntry extends SwatControl implements SwatState
 	 */
 	public $required = false;
 
+	/**
+	 * Displays this color selection widget
+	 *
+	 * This draws the color palette and outputs appropriate controlling
+	 * javascript.
+	 */
 	public function display()
 	{	
 		$input_tag = new SwatHtmlTag('input');
@@ -54,7 +63,13 @@ class SwatColorEntry extends SwatControl implements SwatState
 		$this->displayPalette();
 		$this->displayJavascript();
 	}
-	
+
+	/**
+	 * Includes the javascript required for this control to function
+	 *
+	 * This creates an instance of the JavaScript object SwatColorEntry with
+	 * the name $this->id.'_obj'.
+	 */
 	private function displayJavascript()
 	{
 		echo '<script type="text/javascript" src="swat/javascript/swat-color-entry.js"></script>';
@@ -66,6 +81,9 @@ class SwatColorEntry extends SwatControl implements SwatState
 		echo '</script>';
 	}
 
+	/**
+	 * Displays the color palette XHTML
+	 */
 	private function displayPalette()
 	{
 		$wrapper_div = new SwatHtmlTag('div');
@@ -193,7 +211,14 @@ class SwatColorEntry extends SwatControl implements SwatState
 			
 		}
 	}
-	
+
+	/**
+	 * Gets the current state of this color selector
+	 *
+	 * @return string the current state of this color selector.
+	 *
+	 * @see SwatState::getState()
+	 */
 	public function getState()
 	{
 		if ($this->value === null)
@@ -202,6 +227,13 @@ class SwatColorEntry extends SwatControl implements SwatState
 			return $this->value;	
 	}
 
+	/**
+	 * Sets the current state of this color selector
+	 *
+	 * @param string $state the new state of this color selector.
+	 *
+	 * @see SwatState::setState()
+	 */
 	public function setState($state)
 	{
 		$this->value = new SwatDate($state);
