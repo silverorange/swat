@@ -479,8 +479,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 		require_once 'Swat/SwatTimeEntry.php';
 
 		$this->time_entry = new SwatTimeEntry();
-		// TODO: This doesn't make sense. Ids are unique.
-		$this->time_entry->id = $this->id;
+		$this->time_entry->id = $this->id.'_time_entry';
 	}
 
 	/**

@@ -32,7 +32,7 @@ function dateReset(id, chktime) {
 	if (e.month)  e.month.selectedIndex = 0;
 	if (e.day)    e.day.selectedIndex = 0;
 	if (e.time && chktime)
-		e.timeReset(id, false);
+		e.timeReset(id + '_time_entry', false);
 }
 
 function dateSetNow(id, chktime) {
@@ -55,7 +55,7 @@ function dateSetNow(id, chktime) {
 		else e.day.selectedIndex = 1;
 	}
 	if (e.time && chktime)
-		timeSetNow(id, false);
+		timeSetNow(id + '_time_entry', false);
 }
 
 function dateSetDefault(id, chktime) {
@@ -75,5 +75,5 @@ function dateSetDefault(id, chktime) {
 	if (e.day && e.day.selectedIndex == 0)
 		e.day.selectedIndex = 1;
 	if (e.time && chktime)
-		timeSetDefault(id, false);
+		timeSetDefault(id + '_time_entry', false);
 }
