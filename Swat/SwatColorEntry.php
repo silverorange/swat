@@ -12,7 +12,6 @@ require_once 'Swat/SwatState.php';
  */
 class SwatColorEntry extends SwatControl implements SwatState
 {
-	
 	/**
 	 * Color of the widget in Hex
 	 *
@@ -69,48 +68,90 @@ class SwatColorEntry extends SwatControl implements SwatState
 
 	private function displayPalette()
 	{
-		//TODO: clean this up
-		?>
-		<div id="<?=$this->id?>_wrapper" class="swat-color-entry-wrapper">
+		$wrapper_div = new SwatHtmlTag('div');
+		$wrapper_div->id = $this->id.'_wrapper';
+		$wrapper_div->class = 'swat-color-entry-wrapper';
 
-		<div class="palette" id="<?=$this->id?>_color_palette">&nbsp;</div>
-		<div class="scale" id="<?=$this->id?>_grayscale">&nbsp;</div>
-		<div class="scale" id="<?=$this->id?>_tintscale">&nbsp;</div>
+		$control_div = new SwatHtmlTag('div');
+		$control_div->content = '&nbsp;';
+		
+		$wrapper_div->open();
 
-		<div class="swatches">
-			<div class="swatch" id="<?=$this->id?>_swatch">&nbsp;</div>
-			<div class="active" id="<?=$this->id?>_active_swatch">&nbsp;</div>
-		</div>
+		$control_div->class = 'palette';
+		$control_div->id = $this->id.'_color_palette';
+		$control_div->display();
+		
+		$control_div->class = 'scale';
+		$control_div->id = $this->id.'_grayscale';
+		$control_div->display();
 
-		<div class="palette-footer">
-			<div class="rgb">
-			r: <input maxlength="3" type="text"
-				onkeyup="<?=$this->id?>_obj.setRGB()"
-				id="<?=$this->id?>_color_input_r"
-				class="rgb-input" />
-			g: <input maxlength="3" type="text"
-				onkeyup="<?=$this->id?>_obj.setRGB()"
-				id="<?=$this->id?>_color_input_g"
-				class="rgb-input" />
-			b: <input maxlength="3" type="text"
-				onkeyup="<?=$this->id?>_obj.setRGB()"
-				id="<?=$this->id?>_color_input_b"
-				class="rgb-input" />
-			</div>
-	
-			<div class="hex">
-				hex: <input maxlength="6" type="text"
-					onkeyup="<?=$this->id?>_obj.setHex(this.value)" id="<?=$this->id?>_color_input_hex" class="hex-input" />
-			</div>
-		</div>
-	
-		<div class="palette-buttons">
-			<input type="button" class="button-set" onclick="<?=$this->id?>_obj.apply()" value="<?=Swat::_('Set Color')?>">
-			<input type="button" class="button-cancel" onclick="<?=$this->id?>_obj.none()" value="<?=Swat::_('Set None')?>">
-			<input type="button" class="button-cancel" onclick="<?=$this->id?>_obj.toggle()" value="<?=Swat::_('Cancel')?>">
-		</div>
-		</div>
-		<?php
+		$control_div->id = $this->id.'_tintscale';
+		$control_div->display();
+
+		echo '<div class="swatches">';
+
+		$swatch_div = new SwatHtmlTag('div');
+		$swatch_div->content = '&nbsp;';
+		
+		$swatch_div->class = 'swatch';
+		$swatch_div->id = $this->id.'_swatch';
+		$swatch_div->display;
+		
+		$swatch_div->class = 'active';
+		$swatch_div->id = $this->id.'_active_swatch';
+		$swatch_div->display;
+
+		echo '</div>';
+		echo '<div class="palette-footer"><div class="rgb">';
+
+		$rgb_value_input = new SwatHtmlTag('input');
+		$rgb_value_input->type = 'text';
+		$rgb_value_input->onkeyup = $this->id.'_obj.setRGB();';
+		$rgb_value_input->class = 'rgb-input';
+
+		echo 'r: ';
+		$rgb_value_input->id = $this->id.'_color_input_r';
+		$rgb_value_input->display();
+		
+		echo 'g: ';
+		$rgb_value_input->id = $this->id.'_color_input_g';
+		$rgb_value_input->display();
+		
+		echo 'b: ';
+		$rgb_value_input->id = $this->id.'_color_input_b';
+		$rgb_value_input->display();
+
+		echo '</div><div class="hex">';
+
+		echo 'hex: ';
+		$rgb_value_input->maxlength = 6;
+		$rgb_value_input->onkeyup = $this->id.'_obj.setHex(this.value);';
+		$rgb_value_input->id = $this->id.'_color_input_hex';
+		$rgb_value_input->class = 'hex-input';
+		$rgb_value_input->display();
+		
+		echo '</div></div><div class="palette-buttons">';
+
+		$input_tag = new SwatHtmlTag('input');
+		$input_tag->type = 'button';
+		
+		$input_tag->class = 'button-set';
+		$input_tag->onclick = $this->id.'_obj.apply();';
+		$input_tag->value = Swat::_('Set Color');
+		$input_tag->display();
+		
+		$input_tag->class = 'button-cancel';
+		$input_tag->onclick = $this->id.'_obj.none();';
+		$input_tag->value = Swat::_('Set None');
+		$input_tag->display();
+
+		$input_tag->onclick = $this->id.'_obj.toggle();';
+		$input_tag->value = Swat::_('Cancel');
+		$input_tag->display();
+
+		echo '</div>';
+
+		$wrapper_div->close();
 	}
 
 
@@ -165,7 +206,6 @@ class SwatColorEntry extends SwatControl implements SwatState
 	{
 		$this->value = new SwatDate($state);
 	}
-
 }
 
 ?>
