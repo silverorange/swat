@@ -39,8 +39,15 @@ class SwatDateEntry extends SwatControl implements SwatState
 	/**
 	 * Required date parts
 	 *
-	 * Bitwise combination of SwatDate::YEAR, SwatDate::MONTH, SwatDate::DAY
-	 * and SwatDate::TIME.
+	 * Bitwise combination of SwatDateEntry::YEAR, SwatDateEntry::MONTH,
+	 * SwatDateEntry::DAY and SwatDateEntry::TIME.
+	 *
+	 * For example, to require the month and day to be entered in a date
+	 * selector widget use the following:
+	 *
+	 * <code>
+	 * $date->required__parts = SwatDate::MONTH | SwatDate::DAY;
+	 * </code>
 	 *
 	 * @var integer
 	 */
@@ -49,8 +56,15 @@ class SwatDateEntry extends SwatControl implements SwatState
 	/**
 	 * Displayed date parts
 	 *
-	 * Bitwise combination of SwatDate::YEAR, SwatDate::MONTH, SwatDate::DAY
-	 * SwatDate::TIME, and SwatDate::CALENDAR.
+	 * Bitwise combination of SwatDateEntry::YEAR, SwatDateEntry::MONTH,
+	 * SwatDateEntry::DAY, SwatDateEntry::TIME and SwatDateEntry::CALENDAR.
+	 *
+	 * For example, to show a date selector widget with just the month and year
+	 * use the following:
+	 *
+	 * <code>
+	 * $date->display_parts = SwatDate::YEAR | SwatDate::MONTH;
+	 * </code>
 	 *
 	 * @var integer
 	 */
