@@ -164,7 +164,6 @@ class SwatDateEntry extends SwatControl implements SwatState
 	public function display()
 	{
 		$this->createFlydowns();
-		$this->displayJavascript();
 
 		/*
 		 * NOTE: Using php date functions here because the Date class does not
@@ -211,6 +210,8 @@ class SwatDateEntry extends SwatControl implements SwatState
 			$cal->valid_range_end   = $this->valid_range_end;
 			$cal->display();
 		}
+
+		$this->displayJavascript();
 	}
 
 	/**
@@ -355,7 +356,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 			$this->createDayFlydown();
 
 		if ($this->display_parts & self::TIME)
-			$this->createTimeFlydown();
+			$this->createTimeEntry();
 	}
 
 	/**
@@ -364,8 +365,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 	private function createYearFlydown()
 	{
 		$this->year_flydown = new SwatFlydown($this->id.'_year');
-		$this->year_flydown->onchange = sprintf("dateSet('%s', this);",
-			$this->id);
+		$this->year_flydown->onchange = sprintf('%s.set(this);', $this->id);
 
 		$start_year = $this->valid_range_start->getYear();
 
@@ -383,8 +383,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 	private function createMonthFlydown()
 	{
 		$this->month_flydown = new SwatFlydown($this->id.'_month');
-		$this->month_flydown->onchange = sprintf("dateSet('%s', this);",
-			$this->id);
+		$this->month_flydown->onchange = sprintf('%s.set(this);', $this->id);
 
 		$start_year = $this->valid_range_start->getYear();
 		$tmp = clone $this->valid_range_end;
@@ -428,8 +427,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 	private function createDayFlydown()
 	{
 		$this->day_flydown = new SwatFlydown($this->id.'_day');
-		$this->day_flydown->onchange = sprintf("dateSet('%s', this);",
-			$this->id);
+		$this->day_flydown->onchange = sprintf('%s.set(this);', $this->id);
 
 		$start_year  = $this->valid_range_start->getYear();
 
@@ -547,8 +545,24 @@ class SwatDateEntry extends SwatControl implements SwatState
 	 */
 	private function displayJavascript()
 	{
-		echo '<script type="text/javascript" src="swat/javascript/swat-find-index.js"></script>';
-		echo '<script type="text/javascript" src="swat/javascript/swat-date.js"></script>';
+		static $shown = false;
+
+		if (!$shown) {
+			echo '<script type="text/javascript" src="swat/javascript/swat-find-index.js"></script>';
+			echo '<script type="text/javascript" src="swat/javascript/swat-date.js"></script>';
+			$shown = true;
+		}
+
+		echo '<script type="text/javascript">';
+
+		echo sprintf("%s = new SwatDate('%s');\n", $this->id, $this->id);
+		
+		if ($this->display_parts & self::TIME) {
+			echo sprintf("%s.setSwatTime(%s_time_entry);\n",
+				$this->id, $this->id);
+		}
+
+		echo '</script>';
 	}
 }
 

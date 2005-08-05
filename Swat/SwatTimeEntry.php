@@ -131,7 +131,6 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	public function display()
 	{
 		$this->createFlydowns();
-		$this->displayJavascript();
 
 		if ($this->display & self::HOUR)
 			$this->hour_flydown->display();
@@ -144,6 +143,8 @@ class SwatTimeEntry extends SwatControl implements SwatState
 
 		if ($this->display & self::HOUR)
 			$this->am_pm_flydown->display();
+
+		$this->displayJavascript();
 	}
 
 	/**
@@ -242,7 +243,7 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	 */
 	public function setState($state)
 	{
-		$this->value = new SwatDate($state)
+		$this->value = new SwatDate($state);
 	}
 
 	/**
@@ -273,8 +274,7 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	private function createHourFlydown()
 	{
 		$this->hour_flydown = new SwatFlydown($this->id.'_hour');
-		$this->hour_flydown->onchange = sprintf("timeSet('%s', this);",
-			$this->id);
+		$this->hour_flydown->onchange = sprintf('%s.set(this);', $this->id);
 
 		for ($i = 1; $i <= 12; $i++)
 			$this->hour_flydown->addOption($i, $i);
@@ -286,8 +286,7 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	private function createMinuteFlydown()
 	{
 		$this->minute_flydown = new SwatFlydown($this->id.'_minute');
-		$this->minute_flydown->onchange =
-			sprintf("timeSet('%s', this);", $this->id);
+		$this->minute_flydown->onchange = sprintf('%s.set(this);', $this->id);
 
 		for ($i = 0; $i <= 59; $i++)
 			$this->minute_flydown->addOption($i,
@@ -300,8 +299,7 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	private function createSecondFlydown()
 	{
 		$this->second_flydown = new SwatFlydown($this->id.'_second');
-		$this->second_flydown->onchange =
-			sprintf("timeSet('%s', this);", $this->id);
+		$this->second_flydown->onchange = sprintf('%s.set(this);', $this->id);
 
 		for ($i = 0; $i <= 59; $i++)
 			$this->second_flydown->addOptions($i,
@@ -315,8 +313,7 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	{
 		$this->am_pm_flydown = new SwatFlydown($this->id.'_ampm');
 		$this->am_pm_flydown->addOptionsByArray(array('am' => 'AM', 'pm' => 'PM'));
-		$this->am_pm_flydown->onchange =
-			sprintf("timeSet('%s', this);", $this->id);
+		$this->am_pm_flydown->onchange = sprintf('%s.set(this);', $this->id);
 	}
 
 	/**
@@ -373,8 +370,19 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	 */
 	private function displayJavascript()
 	{
-		echo '<script type="text/javascript" src="swat/javascript/swat-find-index.js"></script>';
-		echo '<script type="text/javascript" src="swat/javascript/swat-time.js"></script>';
+		static $shown = false;
+
+		if (!$shown) {
+			echo '<script type="text/javascript" src="swat/javascript/swat-find-index.js"></script>';
+			echo '<script type="text/javascript" src="swat/javascript/swat-time.js"></script>';
+			$shown = true;
+		}
+
+		echo '<script type="text/javascript">';
+
+		echo sprintf("%s = new SwatTime('%s');\n", $this->id, $this->id);
+
+		echo '</script>';
 	}
 }
 
