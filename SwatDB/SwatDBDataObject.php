@@ -1,5 +1,7 @@
 <?php
 
+require_once 'MDB2.php';
+
 /**
  * All public properties correspond to database fields
  *
@@ -103,7 +105,7 @@ class SwatDBDataObject
 			// TODO: change to StoreException
 
 		if ($rs->numrows() >= 1) {
-			$row = $rs->fetchRow(MDB2_FETCHMODE_ARRAY);
+			$row = $rs->fetchRow(MDB2_FETCHMODE_ASSOC);
 			$this->initFromRow($row);
 		}
 	}
