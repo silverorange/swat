@@ -34,8 +34,15 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	/**
 	 * Required time parts
 	 *
-	 * Bitwise combination of SwatTime::HOUR, SwatTime::MINUTE
-	 * and SwatTime::SECOND.
+	 * Bitwise combination of {@link SwatTimeEntry::HOUR},
+	 * {@link SwatTimeEntry::MINUTE} and {@link SwatTimeEntry::SECOND}.
+	 *
+	 * For example, to require the minute and second to be entered in a time
+	 * selector widget use the following:
+	 *
+	 * <code>
+	 * $time->required_parts = SwatTimeEntry::MINUTE | SwatTimeEntry::SECOND;
+	 * </code>
 	 *
 	 * @var integer
 	 */
@@ -44,8 +51,15 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	/**
 	 * Displayed time parts
 	 *
-	 * Bitwise combination of SwatTime::HOUR, SwatTime::MINUTE
-	 * and SwatTime::SECOND.
+	 * Bitwise combination of {@link SwatTimeEntry::HOUR},
+	 * {@link SwatTimeEntry::MINUTE} and {@link SwatTimeEntry::SECOND}.
+	 *
+	 * For example, to show a time selector widget with just the hour and
+	 * minute use the following:
+	 *
+	 * <code>
+	 * $time->display_parts = SwatTimeEntry::HOUR | SwatDateEntry::MINUTE;
+	 * </code>
 	 *
 	 * @var integer
 	 */
