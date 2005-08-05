@@ -13,7 +13,7 @@ SwatDate.prototype.setSwatTime = function(swat_time)
 {
 	if (swat_time instanceof SwatTime) {
 		this.swat_time = swat_time;
-		swat_time.setSwatDate(this);
+		swat_time.swat_date = this;
 	}
 }
 
