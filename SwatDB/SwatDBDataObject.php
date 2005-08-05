@@ -92,7 +92,7 @@ abstract class SwatDBDataObject
 	 *
 	 * @param MDB2_RecordSet $rs the record set to use
 	 */
-	protected function initFromRecordset($rs);
+	protected function initFromRecordset($rs)
 	{
 		if (MDB2::isError($rs))
 			throw new Exception($rs->getMessage());
@@ -113,7 +113,7 @@ abstract class SwatDBDataObject
 	 *
 	 * @param mixed $row the row to use as either an array or object.
 	 */
-	protected function initFromRow($row);
+	protected function initFromRow($row)
 	{
 		$property_array = get_object_vars($this);
 
@@ -132,7 +132,7 @@ abstract class SwatDBDataObject
 	 * The md5 hashes represent all the public properties of this object and
 	 * are used to tell if a property has been modified.
 	 */
-	protected function generatePropertyHashes();
+	protected function generatePropertyHashes()
 	{
 		$property_array = get_object_vars($this);
 
