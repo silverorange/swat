@@ -1,7 +1,7 @@
 <refentry id="{@id}">
 	<refnamediv>
-		<refname>Swat: Swat Web Application Toolkit</refname>
-		<refpurpose>Swat enables the rapid development of power, flexible web applications.</refpurpose>
+		<refname>Swat Web Application Toolkit</refname>
+		<refpurpose>Swat enables the rapid development of powerful, flexible web applications.</refpurpose>
 	</refnamediv>
 	<refsect1 id="{@id resources}">
 		<title>Swat Resources</title>
