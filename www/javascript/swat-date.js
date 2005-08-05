@@ -1,79 +1,108 @@
-function dateSet(id, activeFlydown) {
-	var e = dateInit(id);
+function SwatDate(id)
+{
+	this.id = id;
 
-	//hour is required for this, so stop if it doesn't exist
-	if (!e.month) return;
+	this.year = document.getElementById(id + '_year');
+	this.month = document.getElementById(id + '_month');
+	this.day = document.getElementById(id + '_day');
+
+	this.swat_time = null;
+}
+
+SwatDate.prototype.setSwatTime = function(swat_time)
+{
+	if (swat_time instanceof SwatTime) {
+		this.swat_time = swat_time;
+		swat_time.setSwatDate(this);
+	}
+}
+
+SwatDate.prototype.reset = function(reset_time)
+{
+	if (this.year) this.year.selectedIndex = 0;
+	if (this.month) this.month.selectedIndex = 0;
+	if (this.day) this.day.selectedIndex = 0;
+
+	if (this.swat_time && reset_time)
+		this.swat_time.reset(false);
+}
+
+SwatDate.prototype.setNow = function(set_time)
+{
+	var now = new Date();
 	
-	if (activeFlydown.value == '') {
-		//dateReset(id, true);
-	} else {
-		var vDate = new Date();	
-		var this_month = vDate.getMonth();
+	if (this.year && this.year.selectedIndex == 0) {
+		var this_year = find_index(this.year, now.getFullYear());
 		
-		if (e.month.value == (this_month + 1))
-			dateSetNow(id, true);
+		if (this_year)
+			this.year.selectedIndex = this_year;
 		else
-			dateSetDefault(id, true);
+			this.year.selectedIndex = 1;
 	}
-}
-
-function dateInit(id) {
-	this.year   = document.getElementById(id + '_year');
-	this.month  = document.getElementById(id + '_month');
-	this.day    = document.getElementById(id + '_day');
-	this.time   = document.getElementById(id + '_hour');
-	return this;
-}
-
-function dateReset(id, chktime) {
-	var e = dateInit(id);
 	
-	if (e.year)   e.year.selectedIndex = 0;
-	if (e.month)  e.month.selectedIndex = 0;
-	if (e.day)    e.day.selectedIndex = 0;
-	if (e.time && chktime)
-		e.timeReset(id + '_time_entry', false);
+	if (this.month && this.month.selectedIndex == 0) {
+		var this_month = find_index(this.month, (now.getMonth() + 1));
+		
+		if (this_month)
+			this.month.selectedIndex = this_month;
+		else
+			this.month.selectedIndex = 1;
+	}
+	
+	if (this.day && this.day.selectedIndex == 0) {
+		var this_day = find_index(this.day, now.getDate());
+		if (this_day)
+			this.day.selectedIndex = this_day;
+		else
+			this.day.selectedIndex = 1;
+	}
+
+	if (this.swat_time && set_time)
+		this.swat_time.setNow(false);
 }
 
-function dateSetNow(id, chktime) {
-	var e = dateInit(id);
-	var vDate = new Date();
+SwatDate.prototype.setDefault = function(set_time)
+{
+	var now = new Date();
 	
-	if (e.year && e.year.selectedIndex == 0) {
-		this_year = find_index(e.year, vDate.getFullYear());
-		if (this_year) e.year.selectedIndex = this_year;
-		else e.year.selectedIndex = 1;
+	if (this.year && this.year.selectedIndex == 0) {
+		/*
+		 * Default to this year if it exists in the options. This behaviour
+		 * is somewhat different from the others, but just makes common sense.
+		 */
+		var this_year = find_index(this.year, now.getFullYear());
+		
+		if (this_year)
+			this.year.selectedIndex = this_year;
+		else
+			this.year.selectedIndex = 1;
 	}
-	if (e.month && e.month.selectedIndex == 0) {
-		this_month = find_index(e.month, (vDate.getMonth() + 1));
-		if (this_month) e.month.selectedIndex = this_month;
-		else e.month.selectedIndex = 1;
-	}
-	if (e.day && e.day.selectedIndex == 0) {
-		this_day = find_index(e.day, vDate.getDate());
-		if (this_day) e.day.selectedIndex = this_day;
-		else e.day.selectedIndex = 1;
-	}
-	if (e.time && chktime)
-		timeSetNow(id + '_time_entry', false);
+
+	if (this.month && this.month.selectedIndex == 0) 
+		this.month.selectedIndex = 1;
+
+	if (this.day && this.day.selectedIndex == 0)
+		this.day.selectedIndex = 1;
+
+	if (this.swat_time && set_time)
+		this.swat_time.setDefault(false);
 }
 
-function dateSetDefault(id, chktime) {
-	var e = dateInit(id);
-	var vDate = new Date();
+SwatDate.prototype.set = function(active_flydown)
+{
+	// month is required for this, so stop if it doesn't exist
+	if (!this.month)
+		return;
 	
-	if (e.year && e.year.selectedIndex == 0) {
-		// default to this year if it exists in the options
-			// this behaviour is somewhat different from the others, but just
-			// makes common sense
-		this_year = find_index(e.year, vDate.getFullYear());
-		if (this_year) e.year.selectedIndex = this_year;
-		else e.year.selectedIndex = 1;
+	if (active_flydown.value == '') {
+		//this.reset(true);
+	} else {
+		var now = new Date();	
+		var this_month = now.getMonth() + 1;
+		
+		if (this.month.value == this_month)
+			this.setNow(true);
+		else
+			this.setDefault(true);
 	}
-	if (e.month && e.month.selectedIndex == 0) 
-		e.month.selectedIndex = 1;
-	if (e.day && e.day.selectedIndex == 0)
-		e.day.selectedIndex = 1;
-	if (e.time && chktime)
-		timeSetDefault(id + '_time_entry', false);
 }
