@@ -7,7 +7,7 @@
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatDBDataObject
+class SwatDBDataObject
 {
 	/**
 	 * @var array
@@ -74,14 +74,18 @@ abstract class SwatDBDataObject
 	 * @param mixed id the id of the database row to set this object's
 	 *               properties with.
 	 */
-	abstract public function loadFromDB($id);
+	public function loadFromDB($id) {
+
+	}
 
 	/**
 	 * Saves this object to the database
 	 *
 	 * Only modified properties are updated.
 	 */
-	abstract public function saveToDB();
+	public function saveToDB() {
+
+	}
 
 	/**
 	 * Takes a record set and sets the properties of this object according to
