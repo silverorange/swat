@@ -21,12 +21,8 @@ class SwatDBDataObject
 	 */
 	public function __construct($data = null)
 	{
-		if ($data !== null) {
-			if (is_array($data))
-				$this->initFromRow($data);
-			else
-				$this->initFromRecordset($data);
-		}
+		if ($data !== null)
+			$this->initFromRow($data);
 
 		$this->generatePropertyHashes();
 	}
@@ -87,27 +83,6 @@ class SwatDBDataObject
 	 */
 	public function saveToDB() {
 
-	}
-
-	/**
-	 * Takes a record set and sets the properties of this object according to
-	 * the values of the record set
-	 *
-	 * Subclasses can override this method to provide additional
-	 * functionality.
-	 *
-	 * @param MDB2_RecordSet $rs the record set to use
-	 */
-	protected function initFromRecordset($rs)
-	{
-		if (MDB2::isError($rs))
-			throw new Exception($rs->getMessage());
-			// TODO: change to StoreException
-
-		if ($rs->numRows() >= 1) {
-			$row = $rs->fetchRow(MDB2_FETCHMODE_ASSOC);
-			$this->initFromRow($row);
-		}
 	}
 
 	/**
