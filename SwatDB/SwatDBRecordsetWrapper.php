@@ -50,7 +50,7 @@ abstract class SwatDBRecordsetWrapper implements Iterator
 		if (MDB2::isError($rs))
 			throw new Exception($rs->getMessage());
 
-		if ($rs->numrows())
+		if ($rs->numRows())
 			while ($row = $rs->fetchRow(MDB2_FETCHMODE_ASSOC))
 				$this->objects[] = new $this->row_wrapper_class($row);
 	}
