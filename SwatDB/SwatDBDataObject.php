@@ -104,7 +104,7 @@ class SwatDBDataObject
 			throw new Exception($rs->getMessage());
 			// TODO: change to StoreException
 
-		if ($rs->numrows() >= 1) {
+		if ($rs->numRows() >= 1) {
 			$row = $rs->fetchRow(MDB2_FETCHMODE_ASSOC);
 			$this->initFromRow($row);
 		}

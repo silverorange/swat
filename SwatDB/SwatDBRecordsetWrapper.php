@@ -51,8 +51,8 @@ abstract class SwatDBRecordsetWrapper implements Iterator
 			throw new Exception($rs->getMessage());
 
 		if ($rs->numrows())
-			while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT))
-				$this->items[] = new $this->row_wrapper_class($row);
+			while ($row = $rs->fetchRow(MDB2_FETCHMODE_ASSOC))
+				$this->objects[] = new $this->row_wrapper_class($row);
 	}
 
 	// }}}
@@ -115,6 +115,24 @@ abstract class SwatDBRecordsetWrapper implements Iterator
 	public function valid()
 	{
 		return isset($this->objects[$this->current_index]);
+	}
+
+	// }}}
+	// {{{ public function getFirst()
+
+	/**
+	 * Retrieves the first object
+	 *
+	 * @return mixed the first object or null if there are none.
+	 */
+	public function getFirst()
+	{
+		$first = null;
+
+		if (count($this->objects) > 0)
+			$first = $this->objects[0];
+
+		return $first;
 	}
 
 	// }}}
