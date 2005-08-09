@@ -208,6 +208,38 @@ class SwatDB
 	}
 
 	// }}}
+	// {{{ public static function executeStoredProcOne()
+
+	/**
+	 * Execute a stored procedure that returns a single value
+	 *
+ 	 * Convenience method to execute a stored procedure that returns a single 
+	 * value.
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 *
+	 * @param string $proc The name of the stored procedure to execute.
+	 *
+	 * @param mixed $params The parameters to pass to the stored procedure.
+	 *        Use an array for more than one parameter.
+	 *
+	 * @return mixed The value returned by the stored procedure.
+	 */
+	public static function executeStoredProcOne($db, $proc, $params)
+	{
+		if (!is_array($params))
+			$params = array($params);
+
+        $rs = $db->executeStoredProc($proc, $params);
+
+		if (MDB2::isError($rs))
+			throw new SwatDBException($rs->getMessage());
+
+        $row = $rs->fetchRow();
+        return $row[0];
+	}
+
+	// }}}
 	// {{{ public static function updateBinding()
 
 	/**
