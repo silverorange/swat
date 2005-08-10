@@ -136,6 +136,19 @@ abstract class SwatDBRecordsetWrapper implements Iterator
 	}
 
 	// }}}
+	// {{{ public function getCount()
+
+	/**
+	 * Gets the number of objects
+	 *
+	 * @return mixed the number of objects in the recordset.
+	 */
+	public function getCount()
+	{
+		return count($this->objects);
+	}
+
+	// }}}
 }
 
 ?>
