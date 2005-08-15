@@ -113,11 +113,11 @@ class SwatColorEntry extends SwatControl implements SwatState
 		
 		$swatch_div->class = 'swatch';
 		$swatch_div->id = $this->id.'_swatch';
-		$swatch_div->display;
+		$swatch_div->display();
 		
 		$swatch_div->class = 'active';
 		$swatch_div->id = $this->id.'_active_swatch';
-		$swatch_div->display;
+		$swatch_div->display();
 
 		echo '</div>';
 		echo '<div class="palette-footer"><div class="rgb">';
