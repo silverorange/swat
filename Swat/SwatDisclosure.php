@@ -52,6 +52,7 @@ class SwatDisclosure extends SwatContainer
 		$control_div->open();
 
 		$anchor = new SwatHtmlTag('a');
+		$anchor->class = 'swat-disclosure-anchor';
 		$anchor->href =
 			sprintf("javascript:%s.toggle();", $this->id);
 		
@@ -70,6 +71,7 @@ class SwatDisclosure extends SwatContainer
 		$img->width = 16;
 		$img->height = 16;
 		$img->id = $this->id.'_img';
+		$img->class = 'swat-disclosure-image';
 
 		$img->display();
 

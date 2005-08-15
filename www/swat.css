@@ -109,6 +109,14 @@ label.swat-control {
 	display: none;
 }
 
+.swat-disclosure-image {
+	border: none;
+}
+
+.swat-disclosure-anchor {
+	text-decoration: none;
+}
+
 .swat-order-control {
 	border:1px solid #CCC;
 	font-size: 65%;
