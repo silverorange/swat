@@ -238,6 +238,7 @@ table.swat-table-view { border-collapse: collapse; }
 .swat-color-entry-toggle {
 	display: inline;
 	vertical-align: middle;
+	border: none;
 }
 
 .swat-color-entry-wrapper {
