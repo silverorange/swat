@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/SwatControl.php';
 require_once 'Date.php';
 
 /**
