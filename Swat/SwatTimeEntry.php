@@ -144,19 +144,29 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	 */
 	public function display()
 	{
+		echo '<span class="swat-time-span">';
+
 		$this->createFlydowns();
 
-		if ($this->display & self::HOUR)
+		if ($this->display & self::HOUR) {
 			$this->hour_flydown->display();
+			if ($this->display & (self::MINUTE | self::SECOND))
+				echo ':';
+		}
 
-		if ($this->display & self::MINUTE)
+		if ($this->display & self::MINUTE) {
 			$this->minute_flydown->display();
+			if ($this->display & self::SECOND)
+				echo ':';
+		}
 
 		if ($this->display & self::SECOND)
 			$this->second_flydown->display();
 
 		if ($this->display & self::HOUR)
 			$this->am_pm_flydown->display();
+
+		echo '</span>';
 
 		$this->displayJavascript();
 	}

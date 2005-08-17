@@ -185,6 +185,8 @@ class SwatDateEntry extends SwatControl implements SwatState
 	{
 		$this->createFlydowns();
 
+		echo '<span class="swat-date-span">';
+
 		/*
 		 * NOTE: Using php date functions here because the Date class does not
 		 *       seem to support locale-ordering of date parts.
@@ -219,8 +221,12 @@ class SwatDateEntry extends SwatControl implements SwatState
 			}
 		}
 
-		if ($this->display_parts & self::TIME)
+		echo '</span>';
+
+		if ($this->display_parts & self::TIME) {
+			echo ' ';
 			$this->time_entry->display();
+		}
 
 		// calendar javascript is displayed last as it looks for a js object
 		// created here.
