@@ -436,8 +436,9 @@ class SwatDB
 
 		$values_in_order = array();
 
-		foreach ($fields as &$field)
+		foreach ($fields as &$field) {
 			$values_in_order[] = $db->quote($values[$field->name], $field->type);
+		}
 
 		$value_list = implode(',', $values_in_order);
 
@@ -964,7 +965,7 @@ class SwatDB
 
 	private function initFields(&$fields)
 	{
-		/* Transforms and array of text field identifiers ('text:title') into
+		/* Transforms an array of text field identifiers ('text:title') into
 		 * an array of SwatDBField objects.
 		 */
 		if (count($fields) == 0)
