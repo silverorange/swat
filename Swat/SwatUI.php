@@ -271,40 +271,58 @@ class SwatUI extends SwatObject
 	private function parseProperty($property_node, $object)
 	{
 		$class_properties = get_class_vars(get_class($object));
-		
-		if (!isset($property_node['name'])) {
+
+		if (!isset($property_node['name']))
 			throw new SwatException(sprintf(__CLASS__.
 				": property element missing 'name' attribute for class %s",
 				get_class($object)));
-		
-		} elseif (!isset($property_node['value'])) {
+
+		if (!isset($property_node['value']))
 			throw new SwatException(sprintf(__CLASS__.
 				": property element missing 'value' attribute for class %s",
 				get_class($object)));
-		
-		} elseif (!array_key_exists((string)$property_node['name'],
-			$class_properties)) {
-			
+
+		$name = trim((string)$property_node['name']);
+		$value = (string)$property_node['value'];
+		$array_property = false;
+
+		if (ereg('^(.*)\[(.*)\]$', $name, $regs)) {
+			$array_property = true;
+			$name = $regs[1];
+			$array_key = strlen($regs[2]) == 0 ? null : $regs[2];
+		}
+
+		if (!array_key_exists($name, $class_properties))
 			throw new SwatException(sprintf(__CLASS__.
 				": no property named '%s' in class %s",
 				(string)$property_node['name'], get_class($object)));
 				
-		} else {
-			$name = (string)$property_node['name'];
-			$value = (string)$property_node['value'];
-			$translatable = (isset($property_node['translatable']) &&
-				strtolower((string)$property_node['translatable']) == 'yes');
+		$translatable = (isset($property_node['translatable']) &&
+			strtolower((string)$property_node['translatable']) == 'yes');
 
-			$type = (isset($property_node['type'])) ?
-				(string)$property_node['type'] : null;
+		$type = (isset($property_node['type'])) ?
+			(string)$property_node['type'] : null;
 			
-			$object->$name =
-				$this->parseValue($name, $value, $type, $translatable, $object);
+		$parsed_value = $this->parseValue($name, $value, $type, $translatable, $object);
+
+		if ($array_property) {
+			if (!is_array($object->$name))
+				$object->$name = array();
+
+			$array_ref = &$object->$name;
+
+			if ($array_key == null)
+				$array_ref[] = $parsed_value;
+			else
+				$array_ref[$array_key] = $parsed_value;
+
+		} else {
+			$object->$name = $parsed_value;
 		}
 	}
 
 	/**
-	 * Further parses a property
+	 * Parses the value of a property
 	 *
 	 * Also does error notification in the event of a missing or unknown type
 	 * attribute.
