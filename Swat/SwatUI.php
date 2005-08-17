@@ -130,6 +130,36 @@ class SwatUI extends SwatObject
 	}
 
 	/**
+	 * Initializes this interface
+	 *
+	 * Initializes this interface starting at the root element.
+	 */
+	public function init()
+	{
+		$this->root->init();
+	}
+
+	/**
+	 * Processes this interface
+	 *
+	 * Processes this interface starting at the root element.
+	 */
+	public function process()
+	{
+		$this->root->process();
+	}
+
+	/**
+	 * Displays this interface
+	 *
+	 * Displays this interface starting at the root element.
+	 */
+	public function display()
+	{
+		$this->root->display();
+	}
+
+	/**
 	 * Recursivly parses an XML node into a widget tree
 	 *
 	 * Calls self on all node children.
@@ -361,7 +391,7 @@ class SwatUI extends SwatObject
 					' or type="float" attribute on property element',
 					E_USER_NOTICE);
 
-			// default to returnsing a string
+			// default: handle as a string
 			return $this->translateValue($value, $translatable, $object);
 		}
 	}
