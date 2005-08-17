@@ -1,234 +1,317 @@
 /**
-* Calendar Widget Version 1.0
-* Copyright (c) 2004, Tribador Mediaworks,
-*
-* Brian Munroe <bmunroe@tribador.net
-*
-* calendar.js - Calendar Widget JavaScript Library
-*
-* Permission to use, copy, modify, distribute, and sell this software and its
-* documentation for any purpose is hereby granted without fee, provided that
-* the above copyright notice appear in all copies and that both that
-* copyright notice and this permission notice appear in supporting
-* documentation.  No representations are made about the suitability of this
-* software for any purpose.  It is provided "as is" without express or
-* implied warranty.
-*
-* 
-* Adapted with permission by silverorange. December 2004.
-*/
+ * Calendar Widget Version 1.0
+ *
+ * calendar.js - Calendar Widget JavaScript Library
+ *
+ * Permission to use, copy, modify, distribute, and sell this software and its
+ * documentation for any purpose is hereby granted without fee, provided that
+ * the above copyright notice appear in all copies and that both that
+ * copyright notice and this permission notice appear in supporting
+ * documentation. No representations are made about the suitability of this
+ * software for any purpose. It is provided "as is" without express or
+ * implied warranty.
+ * 
+ * Adapted with permission by silverorange. December 2004.
+ *
+ * @copyright 2004 Tribador Mediaworks, 2005 silverorange Inc.
+ * @author Brian Munroe <bmunroe@tribador.net>
+ * @author Michael Gauthier <mike@silverorange.com>
+ */
 
-function setDateValues(idtag, year, month, day) {
-	y = document.getElementById(idtag + "_year");
-	if (y) y.selectedIndex = find_index(y,year);
+/**
+ * Creates a SwatCalendar javascript object
+ *
+ * @param string id
+ * @param string start_date
+ * @param string end_date
+ * @param SwatDateEntry swat_date_entry
+ */
+function SwatCalendar(id, start_date, end_date, swat_date_entry)
+{
+	this.id = id;
 	
-	m = document.getElementById(idtag + "_month");
-	if (m) m.selectedIndex = find_index(m,month);
+	var date = new Date();
+	if (start_date.length == 10) {
+		this.start_date = SwatCalendar.stringToDate(start_date);
+	} else {
+		var year = (date.getFullYear() - 5);
+		this.start_date = new Date(year, 0, 1);
+	}
 	
-	d = document.getElementById(idtag + "_day");
-	if (d) d.selectedIndex = find_index(d,day);
+	if (end_date.length == 10) {
+		this.end_date = SwatCalendar.stringToDate(end_date);
+	} else {
+		var year = (date.getFullYear() + 5);
+		this.end_date = new Date(year, 0, 1);
+	}
+	
+	if (typeof(SwatDate) != 'undefined' &&
+		swat_date_entry instanceof SwatDate) {
+		this.date = swat_date_entry;
+	} else {
+		this.date = null;
+	}
+
+	this.open = false;
 }
 
-function _isLeapYear(year) {
+/**
+ * Decides if a given year is a leap year
+ *
+ * @param number year
+ *
+ * @return number
+ */
+SwatCalendar.isLeapYear = function(year)
+{
 	return (
 		((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)
 	) ? 1 : 0;
 }
 
-function setCalendar(idtag, yyyy, mm, dd) {
-	//swat-removed: y = document.getElementById(idtag);
-	//swat-removed: y.value = mm + "/" + dd + "/" + yyyy;
-	setDateValues(idtag,yyyy,mm,dd);
+/**
+ * Parses a date string into a Date object
+ *
+ * @param string date_string
+ *
+ * @return Date
+ */
+SwatCalendar.stringToDate = function(date_string)
+{
+	var date_parts = date_string.split('/');
 	
-	y = document.getElementById(idtag + "_div");
-	y.style.display = "none";
+	var mm = date_parts[0] * 1;
+	var dd = date_parts[1] * 1;
+	var yyyy = date_parts[2] * 1;
+
+	return new Date(yyyy, mm - 1, dd);
 }
 
-function closeCal(idtag) {
-	t = document.getElementById(idtag + "_div");
-	t.style.display = "none";
-}
+/**
+ * String data
+ */
+SwatCalendar.week_names = [
+	'Sun', 'Mon', 'Tue',
+	'Wed', 'Thu', 'Fri',
+	'Sat'];
 
-function closeCalNoDate(idtag) {
-	//swat-removed: y = document.getElementById(idtag);
-	//swat-removed: y.value = "";
-	setDateValues(idtag,'','','');
-	
-	t = document.getElementById(idtag + "_div");
-	t.style.display = "none";
-}
+SwatCalendar.month_names = [
+	'Jan', 'Feb', 'Mar',
+	'Apr', 'May', 'Jun',
+	'Jul', 'Aug', 'Sep',
+	'Oct', 'Nov', 'Dec'];
 
-function closeCalSetToday(idtag) {
-	var doDate = new Date();
-	var mm = doDate.getMonth()+1;
-	var dd = doDate.getDate();
-	var yyyy = doDate.getYear();
+SwatCalendar.prev_alt_text = 'Previous Month';
+SwatCalendar.next_alt_text = 'Next Month';
+SwatCalendar.close_text = 'Close';
+SwatCalendar.nodate_text = 'No Date';
+SwatCalendar.today_text = 'Today';
 
-	if (yyyy < 1000) {
-		yyyy = yyyy + 1900;
+/**
+ * Sets the values of an associated SwatDateEntry widget to the values
+ * of this SwatCalendar
+ *
+ * @param number year
+ * @param number month
+ * @param number day
+ */
+SwatCalendar.prototype.setDateValues = function(year, month, day)
+{
+	if (this.date !== null) {
+		this.date.setYear(year);
+		this.date.setMonth(month);
+		this.date.setDay(day);
 	}
-
-	setCalendar(idtag, yyyy, mm, dd);
-	
-	t = document.getElementById(idtag + "_div");
-	t.style.display = "none";
 }
 
-function redrawCalendar(idtag, start_date, end_date) {
+/**
+ * Closes this calendar
+ */
+SwatCalendar.prototype.close = function()
+{
+	calendar_div = document.getElementById(this.id + '_div');
+	calendar_div.style.display = 'none';
+	this.open = false;
+}
 
-	var x = document.getElementById(idtag + "SelectMonth");
-	for (i = 0; i < x.options.length;i++){
-		if (x.options[i].selected) {
-			var mm = x.options[i].value;
+/**
+ * Closes this calendar and sets the associated date widget to the
+ * specified date
+ */
+SwatCalendar.prototype.closeAndSetDate = function(yyyy, mm, dd)
+{
+	this.setDateValues(yyyy, mm, dd);
+	this.close();
+}
+
+/**
+ * Closes this calendar and sets the associated date widget as blank
+ */
+SwatCalendar.prototype.closeAndSetBlank = function()
+{
+	this.setDateValues('', '', '');
+	this.close();
+}
+
+/**
+ * Closes this calendar and sets the associated date widget to today's
+ * date
+ */
+SwatCalendar.prototype.closeAndSetToday = function()
+{
+	if (this.date) {
+		var today = new Date();
+		var mm = today.getMonth() + 1;
+		var dd = today.getDate();
+		var yyyy = today.getYear();
+
+		if (yyyy < 1000) {
+			yyyy = yyyy + 1900;
+		}
+
+		this.setDateValues(yyyy, mm, dd);
+	}
+	this.close();	
+}
+
+/**
+ * Redraws this calendar without hiding it first
+ */
+SwatCalendar.prototype.redraw = function()
+{
+	var start_date = this.start_date;
+	var end_date = this.end_date;
+
+	var month_flydown = document.getElementById(this.id + '_month_flydown');
+	for (i = 0; i < month_flydown.options.length;i++){
+		if (month_flydown.options[i].selected) {
+			var mm = month_flydown.options[i].value;
+			break;
 		}
 	}
 
-	var y = document.getElementById(idtag + "SelectYear");
-	for (i = 0; i < y.options.length; i++) {
-		if (y.options[i].selected) {
-			var yyyy = y.options[i].value;
+	var year_flydown = document.getElementById(this.id + '_year_flydown');
+	for (i = 0; i < year_flydown.options.length; i++) {
+		if (year_flydown.options[i].selected) {
+			var yyyy = year_flydown.options[i].value;
+			break;
 		}
 	}
 
-	// Who f-ing knows why you need this?
-	// If you don't cast it to an int,
-	// the browser goes into some kind of
-	// infinite loop, atleast in IE6.0/Win32
-	//
-	mm = mm*1;
-	yyyy = yyyy*1;
+	/*
+	 * Who knows why you need this? If you don't cast it to a number,
+	 * the browser goes into some kind of infinite loop -- at least in
+	 * IE6.0/Win32
+	 */
+	mm = mm * 1;
+	yyyy = yyyy * 1;
 
 	if (yyyy == end_date.getFullYear() && mm > end_date.getMonth())
 		yyyy = (end_date.getFullYear() - 1);
+
 	if (yyyy == start_date.getFullYear() && mm < start_date.getMonth())
 		yyyy = (start_date.getFullYear() + 1);
 	
-	drawCalendar(idtag, start_date, end_date, yyyy, mm);
+	this.draw(yyyy, mm);
 }
 
-function _buildCalendarControls() {
+SwatCalendar.prototype.buildControls = function()
+{
+	var today = new Date();
 
-	var nw = new Date();
+	var start_date = this.start_date;
+	var end_date = this.end_date;
 
-	(arguments[0] ? idtag = arguments[0] : idtag = "");
-	(arguments[1] ? yyyy = arguments[1] : yyyy = nw.getYear());
-	(arguments[2] ? mm = arguments[2] : mm = nw.getMonth());
-	(arguments[3] ? dd = arguments[3] : dd = nw.getDay());
+	var yyyy = (arguments[0]) ? arguments[0] : today.getYear();
+	var mm = (arguments[1]) ? arguments[1] : today.getMonth();
+	var dd = (arguments[2]) ? arguments[2] : today.getDay();
 
-	// Mozilla hack,  I am sure there is a more elegent way, but I did it
-	// on a Friday to get a release out the door...
-	//
+	/*
+	 * Mozilla hack,  I am sure there is a more elegent way, but I did it
+	 * on a Friday to get a release out the door...
+	 */
 	if (yyyy < 1000) {
 		yyyy = yyyy + 1900;
 	}
 
 	
 	// First build the month selection box
-	
-	var monthArray = '<select class="swat-calendar-control" id="'
-					 + idtag + 'SelectMonth" onChange="redrawCalendar(\''
-					 + idtag + '\', start_date, end_date);">';
-	
+	var month_array = '<select class="swat-calendar-control" id="' +
+		this.id + '_month_flydown" onchange="' + this.id + '.redraw();">';
+
 	if (start_date.getYear() == end_date.getYear()) {
 		for (i = start_date.getMonth(); i <= end_date.getMonth(); i++) {
-			if (i == mm-1)
-				monthArray = monthArray + '<option value="' + eval(i + 1) + '" '
-							 + 'selected="selected">' + months[i] + '</option>';
+			if (i == mm - 1)
+				month_array = month_array + '<option value="' + eval(i + 1) + '" ' +
+					'selected="selected">' + SwatCalendar.month_names[i] + '</option>';
 			else
-				monthArray = monthArray + '<option value="' + eval(i + 1) + '">'
-							 + months[i] + '</option>';
+				month_array = month_array + '<option value="' + eval(i + 1) + '">' +
+					SwatCalender.month_names[i] + '</option>';
 		}
 	} else if ((end_date.getYear() - start_date.getYear()) == 1) {
 		for (i = start_date.getMonth(); i <= 11; i++) {
-			if (i == mm-1)
-				monthArray = monthArray + '<option value="' + eval(i + 1) + '" '
-							 + 'selected="selected">' + months[i] + '</option>';
+			if (i == mm - 1)
+				month_array = month_array + '<option value="' + eval(i + 1) + '" ' +
+					'selected="selected">' + SwatCalendar.month_names[i] + '</option>';
 			else
-				monthArray = monthArray + '<option value="' + eval(i + 1) + '">'
-							 + months[i] + '</option>';
+				month_array = month_array + '<option value="' + eval(i + 1) + '">' +
+					SwatCalender.month_names[i] + '</option>';
 		}
 		
 		for (i = 0; i <= end_date.getMonth(); i++) {
-			if (i == mm-1)
-				monthArray = monthArray + '<option value="' + eval(i + 1) + '" '
-							 + 'selected="selected">' + months[i] + '</option>';
+			if (i == mm - 1)
+				month_array = month_array + '<option value="' + eval(i + 1) + '" ' +
+					'selected="selected">' + SwatCalendar.month_names[i] + '</option>';
 			else
-				monthArray = monthArray + '<option value="' + eval(i + 1) + '">'
-							 + months[i] + '</option>';
+				month_array = month_array + '<option value="' + eval(i + 1) + '">' +
+					SwtCalendar.month_names[i] + '</option>';
 		}
 	} else {
 		for (i = 0; i < 12; i++) {
-			if (i == mm-1)
-				monthArray = monthArray + '<option value="' + eval(i + 1) + '" '
-							 + 'selected="selected">' + months[i] + '</option>';
+			if (i == mm - 1)
+				month_array = month_array + '<option value="' + eval(i + 1) + '" ' +
+					'selected="selected">' + SwatCalendar.month_names[i] + '</option>';
 			else
-				monthArray = monthArray + '<option value="' + eval(i + 1) + '">'
-							 + months[i] + '</option>';
+				month_array = month_array + '<option value="' + eval(i + 1) + '">' +
+					SwatCalendar.month_names[i] + '</option>';
 		}
 	}
 	
-	monthArray = monthArray + "</select>";
+	month_array = month_array + '</select>';
 	
+	var year_array = '<select class="swat-calendar-control" id="' +
+		this.id + '_year_flydown" onchange="' + this.id + '.redraw();">';
 	
-	var yearArray = '<select class ="swat-calendar-control" id="'
-					+ idtag + 'SelectYear" onChange="redrawCalendar(\''
-					+ idtag + '\', start_date, end_date);">';
-	
-	for (i = start_date.getFullYear(); i<= end_date.getFullYear(); i++) {
+	for (i = start_date.getFullYear(); i <= end_date.getFullYear(); i++) {
 		if (i == yyyy)
-			yearArray = yearArray + '<option value="' + i + '" '
-						+ 'selected="selected">' + i + '</option>';
+			year_array = year_array + '<option value="' + i + '" ' +
+				'selected="selected">' + i + '</option>';
 		else
-			yearArray = yearArray + '<option value="' + i + '">'
-						+ i + '</option>';
+			year_array = year_array + '<option value="' + i + '">' +
+				i + '</option>';
 	}
 	
-	yearArray = yearArray + "</select>";
+	year_array = year_array + '</select>';
 	
-	return(monthArray + " " + yearArray);
+	return (month_array + ' ' + year_array);
 }
 
-function clickWidgetIcon() {
-	(arguments[0] ? idtag = arguments[0] : idtag = "");
-	(arguments[1] ? start_date = arguments[1] : start_date = "");
-	(arguments[2] ? end_date = arguments[2] : end_date = "");
-
-	t = document.getElementById(idtag + "_div");
-	
-	if (t.style.display == "block") {
-		closeCal(idtag);
-	} else {
-		//note: logic switched, because with styles moved to a class instead
-		//of inline, t.style.display returns either '' or 'none' when hidden
-		
-		var date = new Date();
-		if (start_date.length == 10)
-			start_date = makeDate(start_date);
-		else {
-			var year = (date.getFullYear() - 5);
-			start_date = new Date(year, 0, 1);
-		}
-		
-		if (end_date.length == 10)
-			end_date = makeDate(end_date);
-		else {
-			var year = (date.getFullYear() + 5);
-			end_date = new Date(year, 0, 1);
-		}
-	
-		drawCalendar(idtag, start_date, end_date);
-	}
+SwatCalendar.prototype.toggle = function()
+{
+	if (this.open)
+		this.close();
+	else
+		this.draw();
 }
 
-function drawCalendar() {
+SwatCalendar.prototype.draw = function()
+{
+	var start_date = this.start_date;
+	var end_date   = this.end_date;
 
-	(arguments[0] ? idtag = arguments[0] : idtag = "");
-	(arguments[1] ? start_date = arguments[1] : start_date = "");
-	(arguments[2] ? end_date = arguments[2] : end_date = "");
-	
-	(arguments[3] ? yyyy = arguments[3] : yyyy = void(0));
-	(arguments[4] ? mm = arguments[4] : mm = void(0));
-	(arguments[5] ? dd = arguments[5] : dd = void(0));
+	var yyyy = (arguments[0]) ? arguments[0] : void(0);
+	var mm   = (arguments[1]) ? arguments[1] : void(0);
+	var dd   = (arguments[2]) ? arguments[2] : void(0);
 
 	var today = new Date();
 		
@@ -237,44 +320,51 @@ function drawCalendar() {
 	var today_ts = today.getTime();
 	
 	if (!yyyy && !mm) {
-	
-		var d = document.getElementById(idtag + '_day');
-		var m = document.getElementById(idtag + '_month');
-		var y = document.getElementById(idtag + '_year');
-		
-		var day   = (d.value == '' ? today.getDate()     : parseInt(d.value));
-		var month = (m.value == '' ? today.getMonth()+1  : parseInt(m.value));
-		var year   = (y.value == '' ? today.getYear()    : parseInt(y.value));
+		if (this.date) {
+			var d = this.date.getDay();
+			var m = this.date.getMonth();
+			var y = this.date.getYear();
 			
-		//TODO: figure out if the last two conditions are ever run
-		if (day != 0 && month != 0 && year != 0) {
-			var mm = month;
-			var dd = day;
-			var yyyy = year;
-		} else if (today_ts >= start_ts && today_ts <= end_ts) {
-			var mm = today.getMonth()+1;
-			var dd = today.getDate();
-			var yyyy = today.getYear();
+			var day   = (d == '') ? today.getDate()      : parseInt(d);
+			var month = (m == '') ? today.getMonth() + 1 : parseInt(m);
+			var year  = (y == '') ? today.getYear()      : parseInt(y);
+				
+			//TODO: figure out if the last two conditions are ever run
+			if (day != 0 && month != 0 && year != 0) {
+				var mm = month;
+				var dd = day;
+				var yyyy = year;
+			} else if (today_ts >= start_ts && today_ts <= end_ts) {
+				var mm = today.getMonth() + 1;
+				var dd = today.getDate();
+				var yyyy = today.getYear();
+			} else {
+				var mm = start_date.getMonth() + 1;
+				var dd = start_date.getDate();
+				var yyyy = start_date.getYear();
+			}
 		} else {
-			var mm = start_date.getMonth()+1;
+			var mm = start_date.getMonth() + 1;
 			var dd = start_date.getDate();
 			var yyyy = start_date.getYear();
 		}
 	}
 
-	// Mozilla hack,  I am sure there is a more elegent way, but I did it
-	// on a Friday to get a release out the door...
-	//
+	/*
+	 * Mozilla hack,  I am sure there is a more elegent way, but I did it
+	 * on a Friday to get a release out the door...
+	 */
 	if (yyyy < 1000) {
 		yyyy = yyyy + 1900;
 	}
 
-	var newDate = new Date(yyyy,mm-1,1);
-	var startDay = newDate.getDay();
-	var dom = [31,28,31,30,31,30,31,31,30,31,30,31];
+	var new_date = new Date(yyyy, mm - 1, 1);
+	var start_day = new_date.getDay();
 	
-	var this_month = (newDate.getMonth() + 1);
-	var this_year = newDate.getFullYear();
+	var dom = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+	
+	var this_month = new_date.getMonth() + 1;
+	var this_year = new_date.getFullYear();
 	
 	var next_month = this_month + 1;
 	var prev_month = this_month - 1;
@@ -282,10 +372,10 @@ function drawCalendar() {
 	var next_year  = this_year;
 	if (this_month == 12) {
 		next_month = 1;
-		next_year  = (next_year + 1);
+		next_year  = next_year + 1;
 	} else if (this_month == 1) {
 		prev_month = 12;
-		prev_year  = (prev_year - 1);
+		prev_year  = prev_year - 1;
 	}
 	
 	var calendar_end = false;
@@ -293,7 +383,7 @@ function drawCalendar() {
 	
 	var end_year	 = end_date.getFullYear();
 	var start_year   = start_date.getFullYear();
-	var end_month	= end_date.getMonth();
+	var end_month	 = end_date.getMonth();
 	var start_month  = start_date.getMonth();
 	
 	if (this_year == start_year && this_month == (start_month + 1))
@@ -301,176 +391,163 @@ function drawCalendar() {
 	else if (this_year == end_year && this_month == (end_month + 1))
 		calendar_end = true;
 	
-	
 	if (calendar_start) {
-		var prev_link = "return false;";
+		var prev_link = 'return false;';
 		var prev_img  = 'b_arrowl_off.gif';
 		var prev_class = 'swat-calendar-arrows-off';
 	} else {
-		var prev_link = "drawCalendar('" + idtag + "', start_date, end_date,"
-						+ prev_year + "," + prev_month + ",1);";
+		var prev_link = this.id + '.draw(' +
+			prev_year + ',' + prev_month + ', 1);';
+
 		var prev_img  = 'b_arrowl.gif';
 		var prev_class = 'swat-calendar-arrows';
 	}
 	
 	if (calendar_end) {
-		var next_link = "return false;";
+		var next_link = 'return false;';
 		var next_img  = 'b_arrowr_off.gif';
 		var next_class = 'swat-calendar-arrows-off';
 	} else {
-		var next_link = "drawCalendar('" + idtag + "', start_date, end_date,"
-						+ next_year + "," + next_month + ",1);";
+		var next_link = this.id + '.draw(' +
+			next_year + ',' + next_month + ', 1);';
+
 		var next_img  = 'b_arrowr.gif';
 		var next_class = 'swat-calendar-arrows';
 	}
+
+	var prev_alt = SwatCalendar.prev_alt_text;
+	var next_alt = SwatCalendar.next_alt_text;
 	
-	var dateControls =
-		'<tr>'
-		+ '<td class="swat-calendar-control-frame" colspan="7">'
-		+ '<table cellpadding="0" cellspacing="0" border="0"><tr><td>'
-		+ '<img class="' + prev_class + '" onclick="' + prev_link + '" '
-		+ 'src="swat/images/' + prev_img + '" width="23" height="22" />'
-		+ '</td><td nowrap width="100%">'
-		+ _buildCalendarControls(idtag,yyyy,mm,dd)
-		+ '</td><td>'
-		+ '<img class="' + next_class + '" onclick="' + next_link + '" '
-		+ 'src="swat/images/' + next_img + '" width="23" height="22" />'
-		+ '</td></tr></table>'
-		+ '</td></tr>';
+	var date_controls =
+		'<tr>' +
+		'<td class="swat-calendar-control-frame" colspan="7">' +
+		'<table cellpadding="0" cellspacing="0" border="0"><tr><td>' +
+		'<img class="' + prev_class + '" onclick="' + prev_link + '" ' +
+		'src="swat/images/' + prev_img + '" width="23" height="22" ' +
+		'alt="' + prev_alt + '" />' +
+		'</td><td nowrap width="100%">' +
+		this.buildControls(yyyy, mm, dd) +
+		'</td><td>' +
+		'<img class="' + next_class + '" onclick="' + next_link + '" ' +
+		'src="swat/images/' + next_img + '" width="23" height="22" ' +
+		'alt="' + next_alt + '" />' +
+		'</td></tr></table>' +
+		'</td></tr>';
 	
-	var beginTable = '<table class="swat-calendar-frame">';
-	var calHeader = '<tr>';
-	for (i = 0; i < weeks.length; i++)
-		calHeader = calHeader + '<td class="swat-calendar-header">'
-							  + weeks[i] + "</td>";  
+	var begin_table = '<table class="swat-calendar-frame">';
 	
-	calHeader = calHeader + "</tr>";
+	var week_header = '<tr>';
+	for (i = 0; i < SwatCalendar.week_names.length; i++)
+		week_header = week_header + '<th class="swat-calendar-header">' +
+		SwatCalendar.week_names[i] + '</th>';
 	
-	var closeControls = '<tr>'
-		+ '<td id="swat-calendar-close-controls" colspan="7">';
+	week_header = week_header + '</tr>';
 	
-	closeControls = closeControls
-		+ '<' + 'span' + '>'
-		+ '<a class="swat-calendar-cancel" onclick="'
-		+ 'closeCalNoDate(\'' + idtag + '\');">' + txt_nodate + '</a>'
-		+ '<' + '/span' + '>';
+	var close_controls = '<tr>' +
+		'<td id="swat-calendar-close-controls" colspan="7">' +
+		'<span>' +
+		'<a class="swat-calendar-cancel" onclick="' +
+		this.id + '.closeAndSetBlank();">' + SwatCalendar.nodate_text + '</a>' +
+		'</span>';
 	
 	if (today_ts >= start_ts && today_ts <= end_ts)
-		closeControls = closeControls
-		+ '<' + 'span' + '>'
-		+ '<a class="swat-calendar-today" onclick="'
-		+ 'closeCalSetToday(\'' + idtag + '\');">' + txt_today +'</a>'
-		+ '<' + '/span' + '>';
+		close_controls = close_controls +
+		'<span>' +
+		'<a class="swat-calendar-today" onclick="' +
+		this.id + '.closeAndSetToday();">' + SwatCalendar.today_text + '</a>' +
+		'</span>';
 		
-	closeControls = closeControls
-		+ ''
-		+ '<' + 'span' + '>'
-		+ '<a class="swat-calendar-close" onclick="'
-		+ 'closeCal(\'' + idtag + '\');">' + txt_close + '</a> '
-		+ '<' + '/span' + '>';
-	
-	closeControls = closeControls + '</td></tr></table>';
+	close_controls = close_controls +
+		'<span>' +
+		'<a class="swat-calendar-close" onclick="' +
+		this.id + '.close();">' + SwatCalendar.close_text + '</a> ' +
+		'</span>' +
+		'</td></tr></table>';
 			
-	var curHTML = "";
-	var curDay = 1;
-	var endDay = 0;
-	var rowElement = 0;
-	var startFlag = 1;
-	var endFlag = 0;
-	var elementClick = "";
-	var cellData = "";
-
-	((_isLeapYear(yyyy) && mm == 2) ? endDay = 29 : endDay = dom[mm-1]);
+	var cur_html = '';
+	var end_day = (SwatCalendar.isLeapYear(yyyy) && mm == 2) ? 29 : dom[mm - 1];
+	var row_element = 0;
+	var cell_data = '';
+	var onclick_action = '';
 
 	// calculate the lead gap
-	if (startDay != 0) {
-		curHTML = "<tr>";
-		for (i = 0; i < startDay; i++) {
-			curHTML = curHTML + '<td class="swat-calendar-empty-cell">&nbsp;</td>';
-			rowElement++;
+	if (start_day != 0) {
+		cur_html = '<tr>';
+		for (i = 0; i < start_day; i++) {
+			cur_html = cur_html + '<td class="swat-calendar-empty-cell">&nbsp;</td>';
+			row_element++;
 		}
 	}
 		
-	for (i=1; i <= endDay; i++) {
-		(dd == i ? cellData = "swat-calendar-current-cell" : cellData = "swat-calendar-cell");
-		
-		var onclickaction = 'setCalendar(\'' + idtag + '\','+ yyyy +',' + mm + ',' + i +');';
+	for (i = 1; i <= end_day; i++) {
+
+		cell_data = (dd == i) ? 'swat-calendar-current-cell' : 'swat-calendar-cell';
+		onclick_action = this.id + '.closeAndSetDate('+ yyyy + ',' + mm + ',' + i + ');';
 		if (calendar_start && i < start_date.getDate()) {
-			var onclickaction = 'return false;';
-			cellData = "swat-calendar-invalid-cell";
+			cell_data = 'swat-calendar-invalid-cell';
+			onclick_action = 'return false;';
 		} else if (calendar_end && i > end_date.getDate()) {
-			var onclickaction = 'return false;';
-			cellData = "swat-calendar-invalid-cell";
+			cell_data = 'swat-calendar-invalid-cell';
+			onclick_action = 'return false;';
 		}
 
-		if (rowElement == 0) {
-			curHTML = curHTML + '<tr>' + '<td class="' + cellData + '" onclick="' + onclickaction + '">' + i + '</td>';
-			rowElement++;
+		if (row_element == 0) {
+			cur_html = cur_html + '<tr><td class="' + cell_data + '" onclick="' + onclick_action + '">' + i + '</td>';
+			row_element++;
 			continue;
 		}
 
-		if (rowElement > 0 && rowElement < 6) {
-			curHTML = curHTML + '<td class="' + cellData + '" onclick="' + onclickaction + '">' + i + '</td>';
-			rowElement++;
+		if (row_element > 0 && row_element < 6) {
+			cur_html = cur_html + '<td class="' + cell_data + '" onclick="' + onclick_action + '">' + i + '</td>';
+			row_element++;
 			continue;
 		}
 
-		if (rowElement == 6) {
-			curHTML = curHTML + '<td class="' + cellData + '" onclick="' + onclickaction + '">' + i + '</td></tr>';
-			rowElement = 0;
+		if (row_element == 6) {
+			cur_html = cur_html + '<td class="' + cell_data + '" onclick="' + onclick_action + '">' + i + '</td></tr>';
+			row_element = 0;
 			continue;
 		}
 	}
 
 	// calculate the end gap
-	if (rowElement != 0) {
-		for (i = rowElement; i <= 6; i++){
-			curHTML = curHTML + '<td class="swat-calendar-empty-cell">&nbsp;</td>';
+	if (row_element != 0) {
+		for (i = row_element; i <= 6; i++){
+			cur_html = cur_html + '<td class="swat-calendar-empty-cell">&nbsp;</td>';
 		}
 	}
 
-	curHTML = curHTML + "</tr>";
-	t = document.getElementById(idtag + "_div");
-	dateField = document.getElementById(idtag + '_calendar');
-	t.innerHTML = beginTable + dateControls + calHeader + curHTML + closeControls;
+	cur_html = cur_html + '</tr>';
+	
+	calendar_div = document.getElementById(this.id + '_div');
+	calendar_toggle = document.getElementById(this.id + '_toggle');
+	calendar_div.innerHTML = begin_table + date_controls + week_header + cur_html + close_controls;
 
-	// need to write some better browser detection/positioning code here
-	// Also, there is a perceived stability issue where the calendar goes offscreen
-	// when the widget is right justified..Need some edge detection
-	//
+	/*
+	 * Need to write some better browser detection/positioning code here
+	 * Also, there is a perceived stability issue where the calendar goes offscreen
+	 * when the widget is right justified. Need some edge detection.
+	 */
 	
-	
-	var kitName = "applewebkit/";
+	var kitName = 'applewebkit/';
 	var tempStr = navigator.userAgent.toLowerCase();
 	var pos = tempStr.indexOf(kitName);
 	var isAppleWebkit = (pos != -1);
 	
 	if (isAppleWebkit || document.all) {
-		ieOffset = 10;
+		var ie_offset = 10;
 	} else {
-		ieOffset = 0;
+		var ie_offset = 0;
 	}
 
-	t.style.left = ieOffset + dateField.offsetLeft + "px";
-	t.style.display = "block";
+	var toggle_button = document.getElementById(this.id + '_toggle');
+
+	calendar_div.style.left = ie_offset + toggle_button.offsetLeft + 'px';
+	calendar_div.style.display = 'block';
+
+	this.open = true;
 }
 
-function createCalendarWidget() {
-	(arguments[0] ? idtag = arguments[0] : idtag = "");
-	(arguments[1] ? months = arguments[1] : months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]);
-	(arguments[2] ? weeks = arguments[2] : weeks = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]);
-	(arguments[3] ? txt_close = arguments[3] : txt_close = "Close");
-	(arguments[4] ? txt_nodate = arguments[4] : txt_nodate = "No Date");
-	(arguments[5] ? txt_today = arguments[5] : txt_today = "Today");
-}
-
-function makeDate(datestring) {
-	var dateparts = datestring.split("/");
-	var mm = dateparts[0]*1;
-	var dd = dateparts[1]*1;
-	var yyyy = dateparts[2]*1;
-	return new Date(yyyy,mm-1,dd);
-}
 
 //preload images
 if (document.images) {
