@@ -393,6 +393,7 @@ class SwatUI extends SwatObject
 			$offset += strlen($term);
 			$op = ($offset < strlen($expression)) ? substr($expression, $offset, 1) : '';
 			$offset += 1;
+			$term  = trim($term);
 			
 			if (!strpos($term, '::'))
 				$term = get_class($object) . '::' . $term;
