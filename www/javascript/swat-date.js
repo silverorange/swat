@@ -106,3 +106,66 @@ SwatDate.prototype.set = function(active_flydown)
 			this.setDefault(true);
 	}
 }
+
+SwatDate.prototype.getDay = function()
+{
+	if (this.day) {
+		return this.day.options[this.day.selectedIndex].value;
+	} else {
+		return '';
+	}
+}
+
+SwatDate.prototype.getMonth = function()
+{
+	if (this.month) {
+		return this.month.options[this.month.selectedIndex].value;
+	} else {
+		return '';
+	}
+}
+
+SwatDate.prototype.getYear = function()
+{
+	if (this.year) {
+		return this.year.options[this.year.selectedIndex].value;
+	} else {
+		return '';
+	}
+}
+
+SwatDate.prototype.setDay = function(day)
+{
+	if (this.day) {
+		var this_day = find_index(this.day, day);
+
+		if (this_day)
+			this.day.selectedIndex = this_day;
+		else
+			this.day.selectedIndex = 0;
+	}
+}
+
+SwatDate.prototype.setMonth = function(month)
+{
+	if (this.month) {
+		var this_month = find_index(this.month, month);
+
+		if (this_month)
+			this.month.selectedIndex = this_month;
+		else
+			this.month.selectedIndex = 0;
+	}
+}
+
+SwatDate.prototype.setYear = function(year)
+{
+	if (this.year) {
+		var this_year = find_index(this.year, year);
+
+		if (this_year)
+			this.year.selectedIndex = this_year;
+		else
+			this.year.selectedIndex = 0;
+	}
+}
