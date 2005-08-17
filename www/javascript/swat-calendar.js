@@ -29,7 +29,7 @@
 function SwatCalendar(id, start_date, end_date, swat_date_entry)
 {
 	this.id = id;
-	
+
 	var date = new Date();
 	if (start_date.length == 10) {
 		this.start_date = SwatCalendar.stringToDate(start_date);
@@ -37,14 +37,14 @@ function SwatCalendar(id, start_date, end_date, swat_date_entry)
 		var year = (date.getFullYear() - 5);
 		this.start_date = new Date(year, 0, 1);
 	}
-	
+
 	if (end_date.length == 10) {
 		this.end_date = SwatCalendar.stringToDate(end_date);
 	} else {
 		var year = (date.getFullYear() + 5);
 		this.end_date = new Date(year, 0, 1);
 	}
-	
+
 	if (typeof(SwatDate) != 'undefined' &&
 		swat_date_entry instanceof SwatDate) {
 		this.date = swat_date_entry;
@@ -79,7 +79,7 @@ SwatCalendar.isLeapYear = function(year)
 SwatCalendar.stringToDate = function(date_string)
 {
 	var date_parts = date_string.split('/');
-	
+
 	var mm = date_parts[0] * 1;
 	var dd = date_parts[1] * 1;
 	var yyyy = date_parts[2] * 1;
@@ -211,7 +211,7 @@ SwatCalendar.prototype.redraw = function()
 
 	if (yyyy == start_date.getFullYear() && mm < start_date.getMonth())
 		yyyy = (start_date.getFullYear() + 1);
-	
+
 	this.draw(yyyy, mm);
 }
 
@@ -234,7 +234,6 @@ SwatCalendar.prototype.buildControls = function()
 		yyyy = yyyy + 1900;
 	}
 
-	
 	// First build the month selection box
 	var month_array = '<select class="swat-calendar-control" id="' +
 		this.id + '_month_flydown" onchange="' + this.id + '.redraw();">';
@@ -257,7 +256,7 @@ SwatCalendar.prototype.buildControls = function()
 				month_array = month_array + '<option value="' + eval(i + 1) + '">' +
 					SwatCalender.month_names[i] + '</option>';
 		}
-		
+
 		for (i = 0; i <= end_date.getMonth(); i++) {
 			if (i == mm - 1)
 				month_array = month_array + '<option value="' + eval(i + 1) + '" ' +
@@ -276,12 +275,12 @@ SwatCalendar.prototype.buildControls = function()
 					SwatCalendar.month_names[i] + '</option>';
 		}
 	}
-	
+
 	month_array = month_array + '</select>';
-	
+
 	var year_array = '<select class="swat-calendar-control" id="' +
 		this.id + '_year_flydown" onchange="' + this.id + '.redraw();">';
-	
+
 	for (i = start_date.getFullYear(); i <= end_date.getFullYear(); i++) {
 		if (i == yyyy)
 			year_array = year_array + '<option value="' + i + '" ' +
@@ -290,9 +289,9 @@ SwatCalendar.prototype.buildControls = function()
 			year_array = year_array + '<option value="' + i + '">' +
 				i + '</option>';
 	}
-	
+
 	year_array = year_array + '</select>';
-	
+
 	return (month_array + ' ' + year_array);
 }
 
@@ -318,17 +317,17 @@ SwatCalendar.prototype.draw = function()
 	var start_ts = start_date.getTime();
 	var end_ts   = end_date.getTime();
 	var today_ts = today.getTime();
-	
+
 	if (!yyyy && !mm) {
 		if (this.date) {
 			var d = this.date.getDay();
 			var m = this.date.getMonth();
 			var y = this.date.getYear();
-			
+
 			var day   = (d == '') ? today.getDate()      : parseInt(d);
 			var month = (m == '') ? today.getMonth() + 1 : parseInt(m);
 			var year  = (y == '') ? today.getYear()      : parseInt(y);
-				
+
 			//TODO: figure out if the last two conditions are ever run
 			if (day != 0 && month != 0 && year != 0) {
 				var mm = month;
@@ -360,12 +359,12 @@ SwatCalendar.prototype.draw = function()
 
 	var new_date = new Date(yyyy, mm - 1, 1);
 	var start_day = new_date.getDay();
-	
+
 	var dom = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-	
+
 	var this_month = new_date.getMonth() + 1;
 	var this_year = new_date.getFullYear();
-	
+
 	var next_month = this_month + 1;
 	var prev_month = this_month - 1;
 	var prev_year  = this_year;
@@ -377,20 +376,20 @@ SwatCalendar.prototype.draw = function()
 		prev_month = 12;
 		prev_year  = prev_year - 1;
 	}
-	
+
 	var calendar_end = false;
 	var calendar_start = false;
-	
-	var end_year	 = end_date.getFullYear();
+
+	var end_year     = end_date.getFullYear();
 	var start_year   = start_date.getFullYear();
-	var end_month	 = end_date.getMonth();
+	var end_month    = end_date.getMonth();
 	var start_month  = start_date.getMonth();
-	
+
 	if (this_year == start_year && this_month == (start_month + 1))
 		calendar_start = true;
 	else if (this_year == end_year && this_month == (end_month + 1))
 		calendar_end = true;
-	
+
 	if (calendar_start) {
 		var prev_link = 'return false;';
 		var prev_img  = 'b_arrowl_off.gif';
@@ -402,7 +401,7 @@ SwatCalendar.prototype.draw = function()
 		var prev_img  = 'b_arrowl.gif';
 		var prev_class = 'swat-calendar-arrows';
 	}
-	
+
 	if (calendar_end) {
 		var next_link = 'return false;';
 		var next_img  = 'b_arrowr_off.gif';
@@ -417,7 +416,7 @@ SwatCalendar.prototype.draw = function()
 
 	var prev_alt = SwatCalendar.prev_alt_text;
 	var next_alt = SwatCalendar.next_alt_text;
-	
+
 	var date_controls =
 		'<tr>' +
 		'<td class="swat-calendar-control-frame" colspan="7">' +
@@ -433,37 +432,37 @@ SwatCalendar.prototype.draw = function()
 		'alt="' + next_alt + '" />' +
 		'</td></tr></table>' +
 		'</td></tr>';
-	
+
 	var begin_table = '<table class="swat-calendar-frame">';
-	
+
 	var week_header = '<tr>';
 	for (i = 0; i < SwatCalendar.week_names.length; i++)
 		week_header = week_header + '<th class="swat-calendar-header">' +
 		SwatCalendar.week_names[i] + '</th>';
-	
+
 	week_header = week_header + '</tr>';
-	
+
 	var close_controls = '<tr>' +
 		'<td id="swat-calendar-close-controls" colspan="7">' +
 		'<span>' +
 		'<a class="swat-calendar-cancel" onclick="' +
 		this.id + '.closeAndSetBlank();">' + SwatCalendar.nodate_text + '</a>' +
 		'</span>';
-	
+
 	if (today_ts >= start_ts && today_ts <= end_ts)
 		close_controls = close_controls +
 		'<span>' +
 		'<a class="swat-calendar-today" onclick="' +
 		this.id + '.closeAndSetToday();">' + SwatCalendar.today_text + '</a>' +
 		'</span>';
-		
+
 	close_controls = close_controls +
 		'<span>' +
 		'<a class="swat-calendar-close" onclick="' +
 		this.id + '.close();">' + SwatCalendar.close_text + '</a> ' +
 		'</span>' +
 		'</td></tr></table>';
-			
+
 	var cur_html = '';
 	var end_day = (SwatCalendar.isLeapYear(yyyy) && mm == 2) ? 29 : dom[mm - 1];
 	var row_element = 0;
@@ -518,7 +517,7 @@ SwatCalendar.prototype.draw = function()
 	}
 
 	cur_html = cur_html + '</tr>';
-	
+
 	calendar_div = document.getElementById(this.id + '_div');
 	calendar_toggle = document.getElementById(this.id + '_toggle');
 	calendar_div.innerHTML = begin_table + date_controls + week_header + cur_html + close_controls;
@@ -528,12 +527,12 @@ SwatCalendar.prototype.draw = function()
 	 * Also, there is a perceived stability issue where the calendar goes offscreen
 	 * when the widget is right justified. Need some edge detection.
 	 */
-	
+
 	var kitName = 'applewebkit/';
 	var tempStr = navigator.userAgent.toLowerCase();
 	var pos = tempStr.indexOf(kitName);
 	var isAppleWebkit = (pos != -1);
-	
+
 	if (isAppleWebkit || document.all) {
 		var ie_offset = 10;
 	} else {
@@ -548,15 +547,14 @@ SwatCalendar.prototype.draw = function()
 	this.open = true;
 }
 
-
 //preload images
 if (document.images) {
 	image1 = new Image();
 	image1.src = "swat/images/b_arrowl.gif";
-	image2 = new Image();	  
+	image2 = new Image();
 	image2.src = "swat/images/b_arrowr.gif";
-	image3 = new Image();	  
+	image3 = new Image();
 	image3.src = "swat/images/b_arrowl_off.gif";
-	image4 = new Image();	  
+	image4 = new Image();
 	image4.src = "swat/images/b_arrowr_off.gif";
 }
