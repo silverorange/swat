@@ -464,6 +464,17 @@ table.swat-table-view { border-collapse: collapse; }
 	cursor: none;
 }
 
+/* Swat Date Entry */
+
+span.swat-date-span {
+	white-space: nowrap;
+}
+
+/* Swat Time Entry */
+
+span.swat-time-span {
+	white-space: nowrap;
+}
 
 /* Swat Actions */
 
