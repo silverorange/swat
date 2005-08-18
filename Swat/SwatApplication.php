@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatObject.php';
+require_once 'Swat/SwatLayout.php';
 
 /**
  * Base class for a web application
@@ -9,20 +10,18 @@ require_once 'Swat/SwatObject.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatApplication extends SwatObject
+class SwatApplication extends SwatObject
 {
 	// {{{ global variable type constants
 
 	const VAR_POST    = 1;
 	const VAR_GET     = 2;
-	/*
 	const VAR_REQUEST = 4;
 	const VAR_COOKIE  = 8;
 	const VAR_SERVER  = 16;
 	const VAR_SESSION = 32;
 	const VAR_FILES   = 64;
 	const VAR_ENV     = 128;
-	*/
 
 	// }}}
 	// {{{ public properties
@@ -35,54 +34,38 @@ abstract class SwatApplication extends SwatObject
 	public $id;
 
 	/**
-	 * Whether this site is secure (behind SSL) or not
+	 * The current page of this application
 	 *
-	 * @var boolean
+	 * @var SwatPage
 	 */
-	public $secure = false;
-
-	/**
-	 * Whether this site is a live or stage copy
-	 *
-	 * @var boolean
-	 */
-	public $live = false;
-
+	protected $page = null;
+	
 	// }}}
 	// {{{ protected properties
 
-	/**
-	 * The number of elements of the raw URI that comprise the base
-	 *
-	 * This value changes between live and stage sites.
-	 *
-	 * @var integer
-	 */
-	protected $base_uri_length = 0;
-
-	/**
-	 * The raw URI of the current page request of this application
-	 *
-	 * @var string
-	 */
-	protected $uri = null;
-	
-	/**
-	 * The base part of the raw URI of the current page request of this
-	 * application
-	 *
-	 * Ends with a trailing '/' character.
-	 *
-	 * @var string
-	 */
-	protected $base_uri = null;
-	
 	/**
 	 * The base value for all of this application's anchor hrefs
 	 *
 	 * @var string
 	 */
 	protected $base_href = null;
+
+	/**
+	 * The uri of the current page request
+	 *
+	 * @var string
+	 */
+	protected $uri = null;
+
+	// }}}
+	// {{{ private properties
+
+	/**
+	 * Whether init() has been run on this->page
+	 *
+	 * @var boolean
+	 */
+	private $page_initialized = false;
 
 	// }}}
 	// {{{ public function __construct()
@@ -98,44 +81,113 @@ abstract class SwatApplication extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function getUri()
+	// {{{ public function init()
 
 	/**
-	 * Gets the raw URI of the current page request for this application
+	 * Initializes this application
 	 *
-	 * @return string the raw URI of this page request.
+	 * Subclasses should implement all application level initialization here
+	 * and call whichever SwatApplication::init* methods are necessary.
 	 */
-	public function getUri()
+	public function init()
 	{
-		if ($this->uri === null)
-			$this->uri = $_SERVER['REQUEST_URI'];
-
-		return $this->uri;
+		$this->initBaseHref();
+		$this->initPage();
 	}
 
 	// }}}
-	// {{{ public function getBaseUri()
+	// {{{ protected function initBaseHref()
 
 	/**
-	 * Gets the base part of the request URI
-	 *
-	 * The base of the request URI is returned with a trailing '/' character.
-	 *
-	 * @return string the base part of the request URI.
-	 *
-	 * @see SwatApplication::getBaseHref()
+	 * Initializes the base href
 	 */
-	public function getBaseUri()
+	protected function initBaseHref($prefix_length = 0, $secure = false)
 	{
-		if ($this->base_uri === null) {
-			$uri_array = explode('/', $this->getUri());
-			$this->base_uri = implode('/',
-				array_slice($uri_array, 0, $this->base_uri_length + 1)).'/';
-		}
+		$this->uri = $_SERVER['REQUEST_URI'];
 
-		return $this->base_uri;
+		$uri_array = explode('/', $this->uri);
+
+		$base_uri = implode('/',
+			array_slice($uri_array, 0, $prefix_length + 1)).'/';
+
+		$protocol = ($secure) ? 'https://' : 'http://';
+
+		$this->base_href = $protocol.$this->getServerName().$base_uri;
 	}
 
+	// }}}
+	// {{{ protected function initPage()
+
+	/**
+	 * Initializes the page
+	 */
+	protected function initPage()
+	{
+		if ($this->page === null)
+			$this->page = $this->resolvePage();
+
+		$this->page->init();
+
+		$this->page_initialized = true;
+	}
+
+	// }}}
+	// {{{ public function getPage()
+
+	/**
+	 * Gets the current page
+	 */
+	public function getPage()
+	{
+		return $this->page;
+	}
+
+	// }}}
+	// {{{ public function setPage()
+
+	/**
+	 * Sets the current page
+	 *
+	 * If a page object is provided, the current page is set to the provided
+	 * page replacing any previous page. This can be useful to process one page
+	 * then load another page to process and display.
+	 *
+	 * If no page object is provided a default page is chosen based on
+	 * application specific code. Subclasses should implement logic here to
+	 * decide which page sub-class to instantiate.
+	 *
+	 * @param SwatPage the page to load as a replacement of the current page.
+	 *
+	 * @throws SwatException
+	 *
+	 * @see SwatPage
+	 */
+	public function setPage($page)
+	{
+		if ($page instanceof SwatPage)
+			$this->page = $page;
+		else
+			throw new SwatException(__CLASS__.': provided page must be '.
+				'an instance of SwatPage');
+
+		if ($this->page_initialized)
+			$this->page->init();
+	}
+
+	// }}}
+	// {{{ protected function resolvePage()
+
+	/**
+	 * Resolves a page for this application
+	 *
+	 * This method is called if no {@link SwatPage} is provided to the
+	 * {@link SwatApplication::setPage()} method.
+	 */
+	protected function resolvePage()
+	{
+		return new SwatPage($this);
+	}
+	
 	// }}}
 	// {{{ public function getBaseHref()
 
@@ -146,16 +198,33 @@ abstract class SwatApplication extends SwatObject
 	 */
 	public function getBaseHref()
 	{
-		if ($this->base_href === null) {
-			$uri_scheme = ($this->secure) ? 'https://' : 'http://';
-
-			$server_name = ($this->live) ?
-				$_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST'];
-				
-			$this->base_href = $uri_scheme.$server_name.$this->getBaseUri();
-		}
-
 		return $this->base_href;
+	}
+
+	// }}}
+	// {{{ public function getUri()
+
+	/**
+	 * Gets the URI of the current page request
+	 *
+	 * @return string the URI of the current page request.
+	 */
+	public function getUri()
+	{
+		return $this->uri;
+	}
+
+	// }}}
+	// {{{ protected function getServerName()
+
+	/**
+	 * Gets the servername
+	 *
+	 * @return string the servername
+	 */
+	protected function getServerName()
+	{
+		return $_SERVER['HTTP_HOST'];
 	}
 
 	// }}}
@@ -180,31 +249,6 @@ abstract class SwatApplication extends SwatObject
 	}
 
 	// }}}
-	// {{{ abstract public function init()
-
-	/**
-	 * Initializes this application
-	 *
-	 * Subclasses should implement all application level initialization here.
-	 */
-	abstract public function init();
-
-	// }}}
-	// {{{ abstract public function getPage()
-
-	/**
-	 * Gets the page object
-	 *
-	 * Subclasses should implement logic here to decide which page sub-class to
-	 * instantiate, then return a {@link SwatPage} descenedant.
-	 *
-	 * @return SwatPage A sub-class of {@link SwatPage} is returned.
-	 *
-	 * @see SwatPage
-	 */
-	abstract public function getPage();
-
-	// }}}
 	// {{{ public static function initVar()
 
 	/**
@@ -215,7 +259,7 @@ abstract class SwatApplication extends SwatObject
 	 *
 	 * @param $name string the name of the variable to lookup.
 	 *
-	 * @param $types integer a bitwise combination of SwatApplication::VAR_*
+	 * @param $types integer a bitwise combination of self::VAR_*
 	 *                    constants.
 	 *
 	 * @param $default mixed the value to return if variable is not found in
@@ -228,42 +272,40 @@ abstract class SwatApplication extends SwatObject
 		$var = $default;
 		
 		if ($types == 0)
-			$types = SwatApplication::VAR_POST | SwatApplication::VAR_GET;
-	
-		if (($types & SwatApplication::VAR_POST != 0)
+			$types = self::VAR_POST | self::VAR_GET;
+
+		if (($types & self::VAR_POST) != 0
 			&& isset($_POST[$name]))
 				$var = $_POST[$name];
 
-		elseif (($types & SwatApplication::VAR_GET != 0) 
+		elseif (($types & self::VAR_GET) != 0
 			&& isset($_GET[$name]))
 				$var = $_GET[$name];
 
-		/*
-		elseif (($types & SwatApplication::VAR_REQUEST)
+		elseif (($types & self::VAR_REQUEST) != 0
 			&& isset($_REQUEST[$var]))
 				$var = $_REQUEST[$var];
 				
-		elseif (($types & SwatApplication::VAR_COOKIE)
+		elseif (($types & self::VAR_COOKIE) != 0
 			&& isset($_COOKIE[$var]))
 				$var = $_COOKIE[$var];
 				
-		elseif (($types & SwatApplication::VAR_SERVER)
+		elseif (($types & self::VAR_SERVER) != 0
 			&& isset($_SERVER[$var]))
 				$var = $_SERVER[$var];
 				
-		elseif (($types & SwatApplication::VAR_SESSION)
+		elseif (($types & self::VAR_SESSION) != 0
 			&& isset($_SESSION[$var]))
 				$var = $_SESSION[$var];
 				
-		elseif (($types & SwatApplication::VAR_FILES)
+		elseif (($types & self::VAR_FILES) != 0
 			&& isset($_FILES[$var]))
 				$var = $_FILES[$var];
 				
-		elseif (($types & SwatApplication::VAR_ENV)
+		elseif (($types & self::VAR_ENV != 0)
 			&& isset($_ENV[$var]))
 				$var = $_ENV[$var];
-		*/
-		
+
 		return $var;
 	}
 
