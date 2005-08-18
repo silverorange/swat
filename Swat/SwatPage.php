@@ -11,6 +11,8 @@ require_once 'Swat/SwatObject.php';
  */
 abstract class SwatPage extends SwatObject
 {
+	// {{{ public properties
+
 	/**
 	 * Title of the page
 	 *
@@ -19,11 +21,11 @@ abstract class SwatPage extends SwatObject
 	public $title = '';
 
 	/**
-	 * Layout to use to display this page
+	 * Layout object to use to display this page
 	 *
-	 * @var string 
+	 * @var SwatLayout
 	 */
-	public $layout = 'default';
+	public $layout = null;
 
 	/**
 	 * Application object
@@ -35,9 +37,28 @@ abstract class SwatPage extends SwatObject
 	 */
 	public $app = null;
 
-	public function __construct()
-	{
-	}
-}
+	// }}}
+	// {{{ public function __construct()
 
+	public function __construct(SwatApplication $app)
+	{
+		$this->app = $app;
+		$this->layout = $this->createLayout();
+	}
+
+	// }}}
+	// {{{ abstract public function init()
+
+	abstract public function init();
+
+	// }}}
+	// {{{ protected function createLayout()
+
+	protected function createLayout()
+	{
+		return new SwatLayout('../layouts/default.php');
+	}
+
+	// }}}
+}
 ?>
