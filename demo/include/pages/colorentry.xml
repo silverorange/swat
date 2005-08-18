@@ -1,0 +1,14 @@
+<?xml version='1.0' standalone='yes'?>
+<swat-interface>
+	<widget class="SwatFrame" id="my_frame">
+		<property name="title" value="SwatColorEntry Example" />
+		<widget class="SwatForm" id="my_form">
+
+			<widget class="SwatFormField">
+				<property name="title" value="Choose a Color" />
+				<widget class="SwatColorEntry" id="color_entry" />
+			</widget>
+
+		</widget>
+	</widget>
+</swat-interface>

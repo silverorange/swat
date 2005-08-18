@@ -1,0 +1,59 @@
+body {
+	font-family: Trebuchet MS, sans-serif;
+	margin: 0;
+	padding: 0;
+	font-size: 13px;
+}
+
+#menu {
+	width: 15em;
+	padding: 15px;
+	position: absolute;
+	top: 30px;
+	left: 0;
+}
+
+#menu ul {
+	list-style: disc;
+	margin: 0;
+	padding : 1em;
+}
+
+#content {
+	margin-left: 16em;
+	margin-right: 1em;
+}
+
+#header {
+	background: #6589b4;
+	padding: 0.5em 1em;
+	color: #fff;
+	border-bottom: 3px #d2dae4 solid;
+}
+
+#header h1 {
+	color: #fff;
+	margin: 0;
+	font-size: 140%;
+}
+
+a:link		{ color: #3f5ace;  }
+a:visited	{ color: #3f5ace; }
+a:hover		{ color: #333; }
+a:active	{ color: #000; }
+
+pre {
+	font-size: 85%;
+}
+
+#source_code {
+	border: 1px dashed #ccc;
+	background: #eee;
+	padding: 1em;
+	margin: 0;
+}
+
+#source_code pre {
+	margin: 0;
+	padding: 0;
+}

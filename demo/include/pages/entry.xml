@@ -1,0 +1,39 @@
+<?xml version='1.0' standalone='yes'?>
+<swat-interface>
+	<widget class="SwatFrame" id="my_frame">
+		<property name="title" value="SwatEntry Examples" />
+		<widget class="SwatForm" id="my_form">
+			<property name="action" value="index.php?demo=Entry" />
+
+			<widget class="SwatFormField">
+				<property name="title" value="Entry" type="string" />
+				<widget class="SwatEntry" id="entry">
+					<property name="required" value="true" type="boolean" />
+				</widget>
+			</widget>
+
+			<widget class="SwatFormField">
+				<property name="title" value="Email Entry" type="string" />
+				<widget class="SwatEmailEntry" id="email">
+					<property name="value" value="test@example.com" type="string" />
+				</widget>
+			</widget>
+
+			<widget class="SwatFormField">
+				<property name="title" value="Integer Entry" type="string" />
+				<widget class="SwatIntegerEntry" id="integer">
+				</widget>
+			</widget>
+
+			<widget class="SwatFormField">
+				<property name="title" value="Float Entry" type="string" />
+				<widget class="SwatFloatEntry" id="float">
+				</widget>
+			</widget>
+
+			<widget class="SwatButton">
+				<property name="title" value="Validate" type="string" />
+			</widget>
+		</widget>
+	</widget>
+</swat-interface>
