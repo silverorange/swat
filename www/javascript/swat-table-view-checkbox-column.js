@@ -15,6 +15,8 @@ function SwatTableViewCheckboxColumn(id, table) {
 	var is_ie = (document.addEventListener) ? false : true;
 
 	for (i = 0; i < this.check_list.length; i++) {
+		this.highlightRow(this.check_list[i]);
+
 		if (is_ie)
 			this.check_list[i].attachEvent("onclick", eventHandler);
 		else 
