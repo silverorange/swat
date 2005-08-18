@@ -9,7 +9,7 @@ require_once 'Swat/SwatObject.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatPage extends SwatObject
+class SwatPage extends SwatObject
 {
 	// {{{ public properties
 
@@ -47,9 +47,12 @@ abstract class SwatPage extends SwatObject
 	}
 
 	// }}}
-	// {{{ abstract public function init()
+	// {{{ public function init()
 
-	abstract public function init();
+	public function init()
+	{
+
+	}
 
 	// }}}
 	// {{{ protected function createLayout()
