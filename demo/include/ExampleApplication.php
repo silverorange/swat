@@ -7,7 +7,7 @@ class ExampleApplication extends SwatApplication
 {
 	protected function resolvePage()
 	{
-		$demo = SwatApplication::initVar('demo', 'Main',
+		$demo = SwatApplication::initVar('demo', 'FrontPage',
 			SwatApplication::VAR_GET);
 
 		// simple security
