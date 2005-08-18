@@ -407,7 +407,9 @@ class SwatString
 			$position = $matches[0][$i][1];
 
 			if ($position < $length) {
-				$string = substr($string, 0, $position).$entity.substr($string, $position + 1);
+				$string = substr($string, 0, $position).
+					$entity.
+					substr($string, $position + 1);
 			}
 		}
 	}
