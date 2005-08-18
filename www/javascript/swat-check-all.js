@@ -12,6 +12,8 @@ function SwatCheckAll(id, controller) {
 	var is_ie = (this.check_all.addEventListener) ? false : true;
 	controller.check_all = this;
 
+	controller.checkAllInit();
+
 	if (is_ie)
 		this.check_all.attachEvent("onclick", eventHandler, false);
 	else
