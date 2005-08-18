@@ -10,13 +10,10 @@
 
 <body>
 <div id="header">
-	<h1><a href="<?=$this->base_href?>"><?=$this->app_title?>: <?=$this->title?></a></h1>
+	<h1><?=$this->title?></h1>
 </div>
 <div id="content">
-	<?=$this->ui?>
-	<div id="source_code">
-		<pre><?=$this->source_code?></pre>
-	</div>
+	<?=$this->content?>
 </div>
 <div id="menu">
 	<?=$this->menu?>

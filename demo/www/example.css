@@ -37,6 +37,10 @@ body {
 	font-size: 140%;
 }
 
+#header h1 a {
+	color: #fff;
+}
+
 a:link		{ color: #3f5ace;  }
 a:visited	{ color: #3f5ace; }
 a:hover		{ color: #333; }

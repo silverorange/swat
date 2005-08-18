@@ -56,6 +56,8 @@ class ExamplePage extends SwatPage
 		$this->menu = new ExampleMenu();
 		$this->menu->display();
 		$this->layout->menu = ob_get_clean();
+
+		$this->layout->base_href = 'index.php';
 	}
 }
 
