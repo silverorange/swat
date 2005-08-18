@@ -27,18 +27,22 @@ function SwatTableViewCheckboxColumn(id, table) {
 		var node = (is_ie) ? event.srcElement : event.target;
 		self.highlightRow(node);
 
-		if (self.check_all == null)
-			return;
-
-		var count = 0;
-		for (i = 0; i < self.check_list.length; i++)
-			if (self.check_list[i].checked)
-				count++;
-			else if (count > 0)
-				break; //can't possibly be all checked or none checked
-
-		self.check_all.setState(count == self.check_list.length);
+		self.checkAllInit();
 	}
+}
+
+SwatTableViewCheckboxColumn.prototype.checkAllInit = function() {
+	if (this.check_all == null)
+		return;
+
+	var count = 0;
+	for (i = 0; i < this.check_list.length; i++)
+		if (this.check_list[i].checked)
+			count++;
+		else if (count > 0)
+			break; //can't possibly be all checked or none checked
+
+	this.check_all.setState(count == this.check_list.length);
 }
 
 SwatTableViewCheckboxColumn.prototype.checkAll = function(checked) {
