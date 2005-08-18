@@ -17,10 +17,13 @@ class SwatString
 	 *
 	 * @var array
 	 */
-	public static $blocklevel_elements = array('p', 'pre', 'dl', 'div',
-		'center', 'noscript', 'noframes', 'blockquote', 'form', 'isindex',
-		'hr', 'table', 'fieldset', 'address', 'ul', 'ol', 'dir', 'menu',
-		'h1', 'h2', 'h3', 'h4', 'h5', 'h6');
+	public static $blocklevel_elements = array(
+		'p',        'pre',      'dl',       'div',
+		'center',   'noscript', 'noframes', 'blockquote',
+		'form',     'isindex',  'hr',       'table',
+		'fieldset', 'address',  'ul',       'ol',
+		'dir',      'menu',     'h1',       'h2',
+		'h3',       'h4',       'h5',       'h6');
 	
 	// }}}
 	// {{{ filter constants
@@ -168,6 +171,9 @@ class SwatString
 	public static function ellipsizeRight($string, $max_length,
 		$ellipses = '&nbsp;&#8230;')
 	{
+		$matches = array();
+		self::stripEntities($string, $matches);
+		
 		$string = trim($string);
 
 		// don't ellipsize if the string is short enough
@@ -183,6 +189,8 @@ class SwatString
 		$string = substr($string, 0, $chop_pos);
 		$string = SwatString::removeTrailingPunctuation($string);
 		$string .= $ellipses;
+
+		self::insertEntities($string, $matches);
 
 		return $string;
 	}
@@ -354,6 +362,54 @@ class SwatString
 		$format = htmlentities(money_format('%.2n', $number), null, 'UTF-8');	
 		setlocale(LC_ALL, $old_locale);
 		return $format;
+	}
+
+	// }}}
+	// {{{ private static function stripEntities()
+
+	/**
+	 * Strips entities from a string remembering their positions
+	 *
+	 * Stripped entities are replaces with a single special character. All
+	 * parameters are passed by reference and nothing is returned by this
+	 * function.
+	 *
+	 * @param string $string the string to strip entites from.
+	 * @param array $matches the array to store matches in.
+	 */
+	private static function stripEntities(&$string, &$matches)
+	{
+		$reg_exp = '/&#?[a-z0-9]*?;/s';
+
+		preg_match_all($reg_exp, $string, $matches, PREG_OFFSET_CAPTURE);
+
+		$string = preg_replace($reg_exp, '*', $string);
+	}
+
+	// }}}
+	// {{{ private static function insertEntities()
+
+	/**
+	 * Re-inserts stripped entities into a string in the correct positions
+	 *
+	 * All parameters are passed by reference and nothing is returned by this
+	 * function.
+	 *
+	 * @param string $string the string to re-insert entites into.
+	 * @param array $matches the array of stored matches.
+	 */
+	private static function insertEntities(&$string, &$matches)
+	{
+		for ($i = 0; $i < count($matches[0]); $i++) {
+			$length = strlen($string);
+			
+			$entity = $matches[0][$i][0];
+			$position = $matches[0][$i][1];
+
+			if ($position < $length) {
+				$string = substr($string, 0, $position).$entity.substr($string, $position + 1);
+			}
+		}
 	}
 
 	// }}}
