@@ -1,0 +1,24 @@
+<?xml version='1.0' standalone='yes'?>
+<swat-interface>
+	<widget class="SwatFrame" id="my_frame">
+		<property name="title" value="SwatChangeOrder Example" />
+		<widget class="SwatForm" id="my_form">
+
+			<widget class="SwatFormField">
+				<property name="title" value="Change Order" type="string" />
+				<widget class="SwatChangeOrder" id="change_order">
+					<property name="options[0]" value="Apple" />
+					<property name="options[1]" value="Orange" />
+					<property name="options[2]" value="Banana" />
+					<property name="options[3]" value="Pear" />
+					<property name="options[4]" value="Pineapple" />
+					<property name="options[5]" value="Kiwi" />
+					<property name="options[6]" value="Tangerine" />
+					<property name="options[7]" value="Grapefruit" />
+					<property name="options[8]" value="Strawberry" />
+				</widget>
+			</widget>
+
+		</widget>
+	</widget>
+</swat-interface>

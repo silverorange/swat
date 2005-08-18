@@ -1,0 +1,6 @@
+<?xml version='1.0' standalone='yes'?>
+<swat-interface>
+	<widget class="SwatMessageBox" id="message_box">
+		<property name="title" value="SwatMessageBox Example" />
+	</widget>
+</swat-interface>

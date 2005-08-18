@@ -1,0 +1,25 @@
+<?xml version='1.0' standalone='yes'?>
+<swat-interface>
+	<widget class="SwatFrame" id="my_frame">
+		<property name="title" value="SwatRadioList Example" />
+		<widget class="SwatForm" id="my_form">
+
+			<widget class="SwatFormField">
+				<property name="title" value="Select an Option" type="string" />
+				<widget class="SwatRadioList" id="radio_list">
+					<property name="options[0]" value="Apple" />
+					<property name="options[1]" value="Orange" />
+					<property name="options[2]" value="Banana" />
+					<property name="options[3]" value="Pear" />
+					<property name="options[4]" value="Pineapple" />
+					<property name="options[5]" value="Kiwi" />
+					<property name="options[6]" value="Tangerine" />
+					<property name="options[7]" value="Grapefruit" />
+					<property name="options[8]" value="Strawberry" />
+					<property name="value" value="7" type="integer" />
+				</widget>
+			</widget>
+
+		</widget>
+	</widget>
+</swat-interface>

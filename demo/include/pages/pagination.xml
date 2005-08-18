@@ -1,0 +1,37 @@
+<?xml version='1.0' standalone='yes'?>
+<swat-interface>
+	<widget class="SwatFrame" id="my_frame">
+		<property name="title" value="SwatPagination Examples" />
+		<widget class="SwatForm" id="my_form">
+
+			<widget class="SwatPagination">
+				<property name="current_page" value="4" type="integer" />
+				<property name="page_size" value="10" type="integer" />
+				<property name="total_records" value="100" type="integer" />
+				<property name="link" value="#" />
+			</widget>
+
+			<widget class="SwatPagination">
+				<property name="current_page" value="4" type="integer" />
+				<property name="page_size" value="10" type="integer" />
+				<property name="total_records" value="1000" type="integer" />
+				<property name="link" value="#" />
+			</widget>
+
+			<widget class="SwatPagination">
+				<property name="current_page" value="49" type="integer" />
+				<property name="page_size" value="10" type="integer" />
+				<property name="total_records" value="1000" type="integer" />
+				<property name="link" value="#" />
+			</widget>
+
+			<widget class="SwatPagination">
+				<property name="current_page" value="94" type="integer" />
+				<property name="page_size" value="10" type="integer" />
+				<property name="total_records" value="1000" type="integer" />
+				<property name="link" value="#" />
+			</widget>
+			
+		</widget>
+	</widget>
+</swat-interface>
