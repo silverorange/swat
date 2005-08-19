@@ -16,13 +16,11 @@ class SwatCascadeFlydown extends SwatFlydown
 	/**
 	 * Flydown options
 	 *
-	 * An array of parents and options for the flydown. Each parent value
+	 * An array of parents and {@link SwatFlydownOption}s for the flydown. Each parent value
 	 * is associated to an array of possible child values, in the form:
 	 *    array(
-	 *	parent_value1 =>
-	 *		array(child_value1 => child_title1, child_value2 => child_title2),
-	 *	parent_value2 =>
-	 *		array(child_value1 => child_title1, child_value2 => child_title2)
+	 *	parent_value1 => array(SwatFlydownOption1, SwatFlydownOption2),
+	 *	parent_value2 => array(SwatFlydownOption3, SwatFlydownOption4),
 	 *    )
 	 *
 	 * @var array
@@ -103,10 +101,7 @@ class SwatCascadeFlydown extends SwatFlydown
 			$ret[] = new SwatFlydownOption('', Swat::_('choose one ...'));
 		}
 
-		foreach ($option_array as $value => $title)
-			$ret[] = new SwatFlydownOption($value, $title);
-
-		return $ret;
+		return array_merge($ret, $option_array);
 	}
 
 	// }}}
@@ -130,10 +125,10 @@ class SwatCascadeFlydown extends SwatFlydown
 				printf("\n {$this->id}_cascade.addChild('%s', '', '%s');",
                     			$parent, Swat::_('choose one ...'));
 
-			foreach ($options as $k => $v) {
-				$selected = ($v == $this->value) ? 'true' : 'false';
+			foreach ($options as $option) {
+				$selected = ($option->value == $this->value) ? 'true' : 'false';
 				printf("\n {$this->id}_cascade.addChild('%s', '%s', '%s', %s);",
-					$parent, $k, addslashes($v), $selected);
+					$parent, $option->value, addslashes($option->title), $selected);
 			}
 		}
 
