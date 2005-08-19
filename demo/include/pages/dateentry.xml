@@ -24,6 +24,7 @@
 					<property name="title" value="Creditcard Style" type="string" />
 					<widget class="SwatDateEntry" id="cc_date">
 						<property name="display_parts" value="YEAR|MONTH" type="constant" />
+						<property name="show_month_number" value="true" type="boolean" />
 					</widget>
 				</widget>
 				
