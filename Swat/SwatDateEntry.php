@@ -91,6 +91,15 @@ class SwatDateEntry extends SwatControl implements SwatState
 	public $valid_range_end;
 
 	/**
+	 * Whether the numeric month code is displayed in the month flydown
+	 *
+	 * This is useful for credit card date entry
+	 *
+	 * @var boolean
+	 */
+	public $show_month_number = false;
+
+	/**
 	 * A reference to the internal year flydown
 	 *
 	 * @var SwatFlydown
@@ -425,7 +434,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 
 			for ($i = $start_month; $i <= $end_month; $i++)
 				$this->month_flydown->addOption($i,
-					Date_Calc::getMonthFullName($i));
+					$this->getMonthOptionText($i));
 
 		} elseif (($end_year - $start_year) == 1) {
 
@@ -434,19 +443,38 @@ class SwatDateEntry extends SwatControl implements SwatState
 
 			for ($i = $start_month; $i <= 12; $i++)
 				$this->month_flydown->addOption($i,
-					Date_Calc::getMonthFullName($i));
+					$this->getMonthOptionText($i));
 
 			for ($i = 1; $i <= $end_month; $i++)
 				$this->month_flydown->addOption($i,
-					Date_Calc::getMonthFullName($i));
+					$this->getMonthOptionText($i));
 
 		} else {
 
 			for ($i = 1; $i <= 12; $i++)
 				$this->month_flydown->addOption($i,
-					Date_Calc::getMonthFullName($i));
+					$this->getMonthOptionText($i));
 
 		}
+	}
+
+	/**
+	 * Gets the title of a month flydown option
+	 *
+	 * @param integer $month the numeric identifier of the month.
+	 *
+	 * @return string the option text of the month.
+	 */
+	private function getMonthOptionText($month)
+	{
+		$option = '';
+
+		if ($this->show_month_number)
+			$option .= '('.str_pad($month, 2, '0', STR_PAD_LEFT).') ';
+			
+		$option .= Date_Calc::getMonthFullName($month);
+
+		return $option;
 	}
 		
 	/**
