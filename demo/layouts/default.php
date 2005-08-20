@@ -10,7 +10,7 @@
 
 <body>
 <div id="header">
-	<h1><a href="<?=$this->base_href?>"><?=$this->app_title?>: <?=$this->title?></a></h1>
+	<h1><a href="<?=$this->base_href?>"><?=$this->app_title?></a>: <?=$this->title?></h1>
 </div>
 <div id="content">
 	<?=$this->ui?>
