@@ -89,7 +89,8 @@ SwatSimpleColorEntry.prototype.draw = function()
 				}
 				
 				output = output +
-					'<a href="javascript:' + this.id +'.setColor(' + i + ');">' +
+					'<a href="javascript:' + this.id +
+					'_obj.setColor(' + i + ');">' +
 					'&nbsp;' +
 					'</a>' +
 					'</td>';
