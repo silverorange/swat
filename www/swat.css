@@ -66,7 +66,7 @@ label.swat-control {
 	color: #C00;
 }
 
-.swat-form-field-note {
+.swat-widget-note, .swat-form-field-note {
 	font-size: 85%;
 	color: #666;
 }
