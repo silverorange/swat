@@ -325,7 +325,7 @@ class SwatUI extends SwatObject
 		if (!array_key_exists($name, $class_properties))
 			throw new SwatException(sprintf(__CLASS__.
 				": no property named '%s' in class %s",
-				(string)$property_node['name'], get_class($object)));
+				$name, get_class($object)));
 				
 		$translatable = (isset($property_node['translatable']) &&
 			strtolower((string)$property_node['translatable']) == 'yes');
