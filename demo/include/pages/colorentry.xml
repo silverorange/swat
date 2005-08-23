@@ -12,7 +12,7 @@
 			<widget class="SwatFormField">
 				<property name="title" value="Simple Color Entry" />
 				<widget class="SwatSimpleColorEntry" id="simple_color_entry">
-					<property name="value" value="ff0000" />
+					<property name="value" value="eed680" />
 				</widget>
 			</widget>
 
