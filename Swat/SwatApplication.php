@@ -283,28 +283,28 @@ class SwatApplication extends SwatObject
 				$var = $_GET[$name];
 
 		elseif (($types & self::VAR_REQUEST) != 0
-			&& isset($_REQUEST[$var]))
-				$var = $_REQUEST[$var];
+			&& isset($_REQUEST[$name]))
+				$var = $_REQUEST[$name];
 				
 		elseif (($types & self::VAR_COOKIE) != 0
-			&& isset($_COOKIE[$var]))
-				$var = $_COOKIE[$var];
+			&& isset($_COOKIE[$name]))
+				$var = $_COOKIE[$name];
 				
 		elseif (($types & self::VAR_SERVER) != 0
-			&& isset($_SERVER[$var]))
-				$var = $_SERVER[$var];
+			&& isset($_SERVER[$name]))
+				$var = $_SERVER[$name];
 				
 		elseif (($types & self::VAR_SESSION) != 0
-			&& isset($_SESSION[$var]))
-				$var = $_SESSION[$var];
+			&& isset($_SESSION[$name]))
+				$var = $_SESSION[$name];
 				
 		elseif (($types & self::VAR_FILES) != 0
-			&& isset($_FILES[$var]))
-				$var = $_FILES[$var];
+			&& isset($_FILES[$name]))
+				$var = $_FILES[$name];
 				
 		elseif (($types & self::VAR_ENV != 0)
-			&& isset($_ENV[$var]))
-				$var = $_ENV[$var];
+			&& isset($_ENV[$name]))
+				$var = $_ENV[$name];
 
 		return $var;
 	}
