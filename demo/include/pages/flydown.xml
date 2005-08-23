@@ -4,20 +4,42 @@
 		<property name="title" value="SwatFlydown and SwatTreeFlydown Examples" />
 		<widget class="SwatForm" id="my_form">
 
-			<widget class="SwatFormField">
-				<property name="title" value="Flat Flydown" type="string" />
-				<widget class="SwatFlydown" id="flydown">
-					<property name="blank_title" value="&lt; select a fruit >" />
-				</widget>
-			</widget>
+			<widget class="SwatFieldset">
+				<property name="title" value="Static Flydowns" />
 
-			<widget class="SwatFormField">
-				<property name="title" value="Tree Flyown" type="string" />
-				<widget class="SwatTreeFlydown" id="tree_flydown">
-					<property name="show_blank" value="false" type="boolean" />
+				<widget class="SwatFormField">
+					<property name="title" value="Flat Flydown" type="string" />
+					<widget class="SwatFlydown" id="flydown">
+						<property name="blank_title" value="&lt; select a fruit >" />
+					</widget>
 				</widget>
-			</widget>
 
+				<widget class="SwatFormField">
+					<property name="title" value="Tree Fldyown" type="string" />
+					<widget class="SwatTreeFlydown" id="tree_flydown">
+						<property name="show_blank" value="false" type="boolean" />
+					</widget>
+				</widget>
+				
+			</widget>
+			<widget class="SwatFieldset">
+				<property name="title" value="Cascading Flydowns" />
+				
+				<widget class="SwatFormField">
+					<property name="title" value="Cascade From" type="string" />
+					<widget class="SwatFlydown" id="cascade_from">
+						<property name="blank_title" value="&lt; select a fruit >" />
+					</widget>
+				</widget>
+
+				<widget class="SwatFormField">
+					<property name="title" value="Cascade To" tpye="string" />
+					<widget class="SwatCascadeFlydown" id="cascade_to">
+						<property name="show_blank" value="false" type="boolean" />
+					</widget>
+				</widget>
+
+			</widget>
 		</widget>
 	</widget>
 </swat-interface>
