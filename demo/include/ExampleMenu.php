@@ -13,6 +13,7 @@ class ExampleMenu
 			'Disclosure' =>    'SwatDisclosure',
 			'Entry' =>         'SwatEntry',
 			'Fieldset' =>      'SwatFieldset',
+			'FileEntry' =>     'SwatFileEntry',
 			'Flydown' =>       'SwatFlydown',
 			'Frame' =>         'SwatFrame',
 			'MessageBox' =>    'SwatMessageBox',
