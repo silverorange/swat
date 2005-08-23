@@ -42,6 +42,48 @@ class Flydown extends ExamplePage
 
 		$tree_flydown = $this->ui->getWidget('tree_flydown');
 		$tree_flydown->tree = $tree;
+
+		$cascade_from = $this->ui->getWidget('cascade_from');
+		$cascade_from->options = array(
+			new SwatFlydownOption(0, 'Apple'),
+			new SwatFlydownOption(1, 'Orange')
+		);
+
+		$cascade_to = $this->ui->getWidget('cascade_to');
+		$cascade_to->cascade_from = $cascade_from;
+
+		$cascade_to->options = array(
+			/*
+			0 => array(
+				0 => 'Mackintosh',
+				1 => 'Courtland',
+				2 => 'Golden Delicious',
+				3 => 'Fuji',
+				4 => 'Granny Smith'
+			),
+			1 => array(
+				0 => 'Navel',
+				1 => 'Blood',
+				2 => 'Florida',
+				3 => 'California',
+				4 => 'Mandarin'
+			)
+			*/
+			0 => array(
+				new SwatFlydownOption(0, 'Mackintosh'),
+				new SwatFlydownOption(1, 'Courtland'),
+				new SwatFlydownOption(2, 'Golden Delicious'),
+				new SwatFlydownOption(3, 'Fuji'),
+				new SwatFlydownOption(4, 'Granny Smith')
+			),
+			1 => array(
+				new SwatFlydownOption(0, 'Navel'),
+				new SwatFlydownOption(1, 'Blood'),
+				new SwatFlydownOption(2, 'Florida'),
+				new SwatFlydownOption(3, 'California'),
+				new SwatFlydownOption(4, 'Mandarin')
+			)
+		);
 	}
 }
 
