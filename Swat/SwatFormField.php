@@ -120,9 +120,8 @@ class SwatFormField extends SwatContainer
 		if ($this->note !== null) {
 			$note_div = new SwatHtmlTag('div');	
 			$note_div->class = $this->note_class;
-			$note_div->open();
-			echo $this->note;
-			$note_div->close();
+			$note_div->content = $this->note;
+			$note_div->display();
 		}
 
 		$container_div->close();
