@@ -21,13 +21,29 @@
 
 			<widget class="SwatFormField">
 				<property name="title" value="Integer Entry" type="string" />
-				<widget class="SwatIntegerEntry" id="integer">
-				</widget>
+				<widget class="SwatIntegerEntry" id="integer" />
 			</widget>
 
 			<widget class="SwatFormField">
 				<property name="title" value="Float Entry" type="string" />
-				<widget class="SwatFloatEntry" id="float">
+				<widget class="SwatFloatEntry" id="float" />
+			</widget>
+
+			<widget class="SwatFormField">
+				<property name="title" value="Money Entry (CAD)" type="string" />
+				<widget class="SwatMoneyEntry" id="money_CA">
+					<property name="value" value="1234567.89" type="float" />
+					<property name="locale" value="en_CA" />
+					<property name="display_currency" value="true" type="boolean" />	
+				</widget>
+			</widget>
+
+			<widget class="SwatFormField">
+				<property name="title" value="Money Entry (French EUR)" type="string" />
+				<widget class="SwatMoneyEntry" id="money_FR">
+					<property name="value" value="1234567.89" type="float" />
+					<property name="locale" value="fr_FR.utf8" />
+					<property name="display_currency" value="true" type="boolean" />	
 				</widget>
 			</widget>
 
