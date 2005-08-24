@@ -53,7 +53,7 @@ class SwatColorEntry extends SwatControl implements SwatState
 		$link_tag->open();
 
 		$img_tag = new SwatHtmlTag('img');
-		$img_tag->src = 'swat/images/b_palette.gif';
+		$img_tag->src = 'swat/images/color-palette.png';
 		$img_tag->id = $this->id.'_toggle';
 		$img_tag->class = 'swat-color-entry-toggle';
 		$img_tag->display();

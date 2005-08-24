@@ -392,25 +392,25 @@ SwatCalendar.prototype.draw = function()
 
 	if (calendar_start) {
 		var prev_link = 'return false;';
-		var prev_img  = 'b_arrowl_off.gif';
+		var prev_img  = 'arrow-left-off.png';
 		var prev_class = 'swat-calendar-arrows-off';
 	} else {
 		var prev_link = this.id + '.draw(' +
 			prev_year + ',' + prev_month + ', 1);';
 
-		var prev_img  = 'b_arrowl.gif';
+		var prev_img  = 'arrow-left.png';
 		var prev_class = 'swat-calendar-arrows';
 	}
 
 	if (calendar_end) {
 		var next_link = 'return false;';
-		var next_img  = 'b_arrowr_off.gif';
+		var next_img  = 'arrow-right-off.png';
 		var next_class = 'swat-calendar-arrows-off';
 	} else {
 		var next_link = this.id + '.draw(' +
 			next_year + ',' + next_month + ', 1);';
 
-		var next_img  = 'b_arrowr.gif';
+		var next_img  = 'arrow-right.png';
 		var next_class = 'swat-calendar-arrows';
 	}
 
@@ -550,11 +550,11 @@ SwatCalendar.prototype.draw = function()
 //preload images
 if (document.images) {
 	image1 = new Image();
-	image1.src = "swat/images/b_arrowl.gif";
+	image1.src = "swat/images/arrow-left.png";
 	image2 = new Image();
-	image2.src = "swat/images/b_arrowr.gif";
+	image2.src = "swat/images/arrow-right.png";
 	image3 = new Image();
-	image3.src = "swat/images/b_arrowl_off.gif";
+	image3.src = "swat/images/arrow-left-off.png";
 	image4 = new Image();
-	image4.src = "swat/images/b_arrowr_off.gif";
+	image4.src = "swat/images/arrow-right-off.png";
 }

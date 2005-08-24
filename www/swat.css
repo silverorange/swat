@@ -268,13 +268,13 @@ table.swat-table-view { border-collapse: collapse; }
 	width: 7em;
 	height: 18px;
 	border: 1px #ccc solid;
-	background: url(images/color-entry-null.gif);
+	background: url(images/color-entry-null.png);
 	margin: 2px;
 	float: left;
 }
 
 td.swat-simple-color-palette-blank {
-	background: url(images/color-entry-null.gif);
+	background: url(images/color-entry-null.png);
 }
 
 .swat-simple-color-entry-toggle {
@@ -289,7 +289,7 @@ td.swat-simple-color-palette-blank {
 	width: 7em;
 	height: 18px;
 	border: 1px #CCC solid;
-	background: url(images/color-entry-null.gif);
+	background: url(images/color-entry-null.png);
 	margin: 2px;
 }
 

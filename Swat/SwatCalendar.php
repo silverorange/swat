@@ -49,7 +49,7 @@ class SwatCalendar extends SwatControl
 	public function display()
 	{
 		$img_tag = new SwatHtmlTag('img');
-		$img_tag->src = 'swat/images/b_calendar.gif';
+		$img_tag->src = 'swat/images/calendar.png';
 		$img_tag->class = 'swat-calendar-icon';
 		$img_tag->id = $this->id.'_toggle';
 		$img_tag->onmousedown = $this->id.'.toggle();';
