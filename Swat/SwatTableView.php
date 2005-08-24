@@ -306,12 +306,14 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 */
 	private function displayHeader()
 	{
+		echo '<thead>';
 		echo '<tr>';
 
 		foreach ($this->columns as $column)
 			echo '<th>', $column->displayHeader(), '</th>';
 
 		echo '</tr>';
+		echo '</thead>';
 	}
 
 	// }}}
@@ -326,6 +328,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	private function displayContent()
 	{
 		$count = 0;
+		echo '<tbody>';
 		$tr_tag = new SwatHtmlTag('tr');
 
 		foreach ($this->model->getRows() as $id => $row) {
@@ -344,6 +347,8 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 			$tr_tag->close();
 		}
+		
+		echo '</tbody>';
 
 		$this->displayJavascript();
 
