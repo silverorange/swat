@@ -97,11 +97,18 @@ class SwatMoneyEntry extends SwatEntry
 		$value = str_replace(array_keys($remove_parts),
 			array_values($remove_parts), $this->value);
 
-		if (is_numeric($value))
-			$this->value = (float) $value; 
-		else {
-			$msg = Swat::_('The %s field must be a monetary value (i.e. %s).');
-			$msg = sprintf($msg, '%s', money_format('%n', 1234567.89));
+		if (is_numeric($value)) {
+			if (intval($value * pow(10, $lc['int_frac_digits'])) != ($value * (pow(10, $lc['int_frac_digits'])))) {	
+				$msg = Swat::_('The %s field has too many decimal values. The currency (%s) only allows %s.');
+				$msg = sprintf($msg, '%s', $lc['int_curr_symbol'], $lc['int_frac_digits']);
+
+				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			} else
+				$this->value = (float) $value; 
+
+		} else {
+			$msg = Swat::_('The %s field must be a monetary value formatted for %s (i.e. %s).');
+			$msg = sprintf($msg, '%s', $lc['int_curr_symbol'], money_format('%n', 1234567.89));
 
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 		}
