@@ -30,11 +30,11 @@ class SwatMoneyEntry extends SwatEntry
 	/**
 	 * Initializes this widget
 	 *
-	 * Sets the input size to 10 by default.
+	 * Sets the input size to 15 by default.
 	 */
 	public function init()
 	{
-		$this->size = 10;
+		$this->size = 15;
 	}
 
 
