@@ -21,6 +21,16 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	public $src;
 
 	/**
+	 * Optional array of values to for $src
+	 *
+	 * Uses vsprintf() syntax, for example: $src = mydir/%s.%s; $values =
+	 * array('myfilename', 'ext');
+	 *
+	 * @var array
+	 */
+	public $values = null;
+
+	/**
 	 * Image height
 	 *
 	 * The height attribute in the XHTML img tag.
@@ -65,6 +75,9 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	{
 		$image_tag = new SwatHtmlTag('img');
 		$image_tag->src = $this->src;
+
+		if ($this->values !== null)
+			$image_tag->src = vsprintf($image_tag->src, $this->values);
 
 		if ($this->height > 0)
 			$image_tag->height = $this->height;
