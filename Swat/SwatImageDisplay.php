@@ -13,42 +13,75 @@ require_once 'Swat/SwatControl.php';
 class SwatImageDisplay extends SwatControl {
 
 	/**
-	 * Image source
+	 * Image src
+	 *
+	 * The src attribute in the XHTML img tag.
 	 *
 	 * @var string
 	 */
 	public $src;
 
 	/**
-	 * Image width
+	 * Optional array of values to for $src
 	 *
-	 * @var integer
+	 * Uses vsprintf() syntax, for example: $src = mydir/%s.%s; $values =
+	 * array('myfilename', 'ext');
+	 *
+	 * @var array
 	 */
-	public $width = null;
+	public $values = null;
 
 	/**
 	 * Image height
 	 *
+	 * The height attribute in the XHTML img tag.
+	 *
 	 * @var integer
 	 */
-	public $height = null;
+	public $height = 0;
+
+	/**
+	 * Image width
+	 *
+	 * The width attribute in the XHTML img tag.
+	 *
+	 * @var integer
+	 */
+	public $width = 0;
 
 	/**
 	 * Image title
 	 *
+	 * The title attribute in the XHTML img tag.
+	 *
 	 * @var string
 	 */
-	public $title = null;
+	public $title = '';
+
+	/**
+	 * Image alt text
+	 *
+	 * The alt attribute in the XHTML img tag.
+	 */
+	public $alt = '';
 	
 	public function display() {
-		$img = new SwatHtmlTag('img');
-		$img->src = $this->src;
+		$image_tag = new SwatHtmlTag('img');
+		$image_tag->src = $this->src;
 
-		$img->width = $this->width;
-		$img->height = $this->height;
-		$img->title = $this->title;
+		if ($this->height > 0)
+			$image_tag->height = $this->height;
 
-		$img->display();
+		if ($this->width > 0)
+			$image_tag->width = $this->width;
+
+		if (strlen($this->title) > 0)
+			$image_tag->title = $this->title;
+
+		if (strlen($this->alt) > 0)
+			$image_tag->alt = $this->alt;
+
+		$image_tag->display();
 	}
 }
 
