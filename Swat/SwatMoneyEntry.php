@@ -90,7 +90,7 @@ class SwatMoneyEntry extends SwatEntry
 		$lc_symbol = $lc['int_curr_symbol'];
 		$lc_frac = $lc['int_frac_digits'];
 
-		//changge all locale formatting to numeric formatting
+		//change all locale formatting to numeric formatting
 		$remove_parts = array($lc['int_curr_symbol'] => '',
 			$lc['currency_symbol'] => '',
 			$lc['mon_thousands_sep'] => '',
