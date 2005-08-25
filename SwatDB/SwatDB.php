@@ -208,6 +208,40 @@ class SwatDB
 	}
 
 	// }}}
+	// {{{ public static function executeStoredProc()
+
+	/**
+	 * Execute a stored procedure
+	 *
+ 	 * Convenience method to execute a stored procedure.
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 *
+	 * @param string $proc The name of the stored procedure to execute.
+	 *
+	 * @param mixed $params The parameters to pass to the stored procedure.
+	 *        Use an array for more than one parameter.
+	 *
+	 * @param mixed $wrapper Optional MDB2 wrapper class.
+	 *
+	 * @return mixed An MDB2 recordset or an instance of the wrapper class.
+	 */
+	public static function executeStoredProc($db, $proc, $params, $wrapper = null)
+	{
+		if (!is_array($params))
+			$params = array($params);
+
+		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
+
+        $rs = $db->executeStoredProc($proc, $params, null, true, $mdb2_wrapper);
+
+		if (MDB2::isError($rs))
+			throw new SwatDBException($rs->getMessage());
+
+        return $rs;
+	}
+
+	// }}}
 	// {{{ public static function executeStoredProcOne()
 
 	/**
