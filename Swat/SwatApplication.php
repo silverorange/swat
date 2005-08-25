@@ -13,7 +13,7 @@ require_once 'Swat/SwatApplicationModule.php';
  */
 class SwatApplication extends SwatObject
 {
-	// {{{ global variable type constants
+	// {{{ class constants
 
 	const VAR_POST    = 1;
 	const VAR_GET     = 2;
