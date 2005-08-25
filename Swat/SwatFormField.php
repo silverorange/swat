@@ -112,7 +112,7 @@ class SwatFormField extends SwatContainer
 			$msg_div->open();
 
 			foreach ($messages as &$msg)
-				echo $msg->content, '<br />';
+				echo $msg->primary_content, '<br />';
 
 			$msg_div->close();
 		}
