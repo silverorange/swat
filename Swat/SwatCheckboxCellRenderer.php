@@ -54,7 +54,7 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 	*/
 	public function &getTdAttributes()
 	{
-		return array('class' => 'checkbox');
+		return array('class' => 'swat-checkbox-cell-renderer');
 	}
 
 }
