@@ -14,13 +14,6 @@ require_once 'Swat/SwatMessage.php';
 class SwatMessageBox extends SwatControl
 {
 	/**
-	 * A visible title for this frame, or null
-	 *
-	 * @var string
-	 */
-	public $title = null;
-
-	/**
 	 * The messages to display in this box
 	 *
 	 * The messages are stored as an array of references to SwatMessage
@@ -40,43 +33,39 @@ class SwatMessageBox extends SwatControl
 	 */
 	public function display()
 	{
-		if ($this->title === null && count($this->messages) == 0)
+		if (count($this->messages) == 0)
 			return;
 
-		$outer_div = new SwatHtmlTag('div');
-		$outer_div->class = 'swat-frame';
+		$div = new SwatHtmlTag('div');
+		$div->class = 'swat-message-box';
 
-		$inner_div = new SwatHtmlTag('div');
-		$inner_div->class = 'swat-frame-contents';
-
-		$outer_div->open();
-
-		if ($this->title !== null) {
-			echo "<h2>{$this->title}</h2>";
-		}
-
-		$inner_div->open();
+		$div->open();
 		
 		$message_div = new SwatHtmlTag('div');
+
 		foreach ($this->messages as $message) {
 			switch ($message->type) {
 				case SwatMessage::INFO :
-					$message_div->class = 'swat-message-info';
+					$message_div->class = 'swat-message-box-info';
 					break;
 				case SwatMessage::WARNING :
-					$message_div->class = 'swat-message-warning';
+					$message_div->class = 'swat-message-box-warning';
 					break;
 				case SwatMessage::ERROR :
-					$message_div->class = 'swat-message-error';
+					$message_div->class = 'swat-message-box-user-error';
+					break;
+				case SwatMessage::ERROR :
+					$message_div->class = 'swat-message-box-error';
 					break;
 			}
-			$message_div->open();
-			echo $message->content;
-			$message_div->close();
+
+			$message_div->content = $message->primary_content;
+			// TODO: do something better with the secondary content
+			$message_div->content .= $message->secondary_content;
+			$message_div->display();
 		}
 
-		$inner_div->close();
-		$outer_div->close();
+		$div->close();
 	}
 }
 
