@@ -18,31 +18,37 @@ require_once 'XML/RPC2/Server.php';
  */
 abstract class SwatXMLRPCServer extends SwatPage
 {
-	/**
-	 * Creates a new XML-RPC server
-	 *
-	 * @xmlrpc.hidden
-	 */
-	public function __construct()
-	{
-		$this->layout = 'xmlrpcserver';
-	}
+    protected function createLayout()
+    {
+        return new SwatLayout('../../layouts/admin/xmlrpcserver.php');
+    }
 
 	/**
-	 * Displays this page
+	 * Process the request
 	 *
-	 * This method is called by the application's layout and creates an
-	 * XML-RPC server and handles a request. The XML-RPC response from the
+	 * This method is called by site code to process the page request. It creates 
+	 * an XML-RPC server and handles a request. The XML-RPC response from the
 	 * server is output here as well.
 	 *
 	 * @xmlrpc.hidden
 	 */
-	public function display()
+	public function process()
 	{
 		$server = XML_RPC2_Server::create($this);
+
+		ob_start();
 		$server->handleCall();
+		// TODO: remove workaround when php-5.0.5 is commonplace
+		$x = ob_get_clean();
+		$this->layout->response = $x;
 	}
 
+	/*
+	 * @xmlrpc.hidden
+	 */
+	public function build()
+	{
+	}
 }
 
 ?>
