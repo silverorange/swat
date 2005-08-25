@@ -87,6 +87,8 @@ class SwatMoneyEntry extends SwatEntry
 
 		$locale = $this->setLocale($this->locale);
 		$lc = localeconv();
+		$lc_symbol = $lc['int_curr_symbol'];
+		$lc_frac = $lc['int_frac_digits'];
 
 		//changge all locale formatting to numeric formatting
 		$remove_parts = array($lc['int_curr_symbol'] => '',
@@ -98,9 +100,11 @@ class SwatMoneyEntry extends SwatEntry
 			array_values($remove_parts), $this->value);
 
 		if (is_numeric($value)) {
-			if (intval($value * pow(10, $lc['int_frac_digits'])) != ($value * (pow(10, $lc['int_frac_digits'])))) {	
+			$frac_pos = strpos($value, '.');
+
+			if ($frac_pos !== false && substr($value, 0, $frac_pos + $lc_frac + 1) != $value) {
 				$msg = Swat::_('The %s field has too many decimal values. The currency (%s) only allows %s.');
-				$msg = sprintf($msg, '%s', $lc['int_curr_symbol'], $lc['int_frac_digits']);
+				$msg = sprintf($msg, '%s', $lc_symbol, $lc_frac);
 
 				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 			} else
@@ -108,7 +112,7 @@ class SwatMoneyEntry extends SwatEntry
 
 		} else {
 			$msg = Swat::_('The %s field must be a monetary value formatted for %s (i.e. %s).');
-			$msg = sprintf($msg, '%s', $lc['int_curr_symbol'], money_format('%n', 1234567.89));
+			$msg = sprintf($msg, '%s', $lc_symbol, money_format('%n', 1234567.89));
 
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 		}
