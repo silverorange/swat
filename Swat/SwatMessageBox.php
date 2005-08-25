@@ -45,17 +45,17 @@ class SwatMessageBox extends SwatControl
 
 		foreach ($this->messages as $message) {
 			switch ($message->type) {
-				case SwatMessage::INFO :
-					$message_div->class = 'swat-message-box-info';
+				case SwatMessage::NOTIFICATION :
+					$message_div->class = 'swat-message-box-notification';
 					break;
 				case SwatMessage::WARNING :
 					$message_div->class = 'swat-message-box-warning';
 					break;
 				case SwatMessage::ERROR :
-					$message_div->class = 'swat-message-box-user-error';
-					break;
-				case SwatMessage::ERROR :
 					$message_div->class = 'swat-message-box-error';
+					break;
+				case SwatMessage::SYSTEM_ERROR :
+					$message_div->class = 'swat-message-system-error';
 					break;
 			}
 
