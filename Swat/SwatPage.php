@@ -14,13 +14,6 @@ class SwatPage extends SwatObject
 	// {{{ public properties
 
 	/**
-	 * Title of the page
-	 *
-	 * @var string
-	 */
-	public $title = '';
-
-	/**
 	 * Layout object to use to display this page
 	 *
 	 * @var SwatLayout
