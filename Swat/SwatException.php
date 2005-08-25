@@ -121,6 +121,10 @@ class SwatException extends Exception
 			
 			if (array_key_exists('args', $entry)) {
 				if (is_array($entry['args'])) {
+					foreach ($entry['args'] as &$arg)
+						if (is_object($arg))
+							$arg = get_class($arg);
+
 					$arguments = implode(', ', $entry['args']);
 				} else {
 					$arguments = $entry['args'];
