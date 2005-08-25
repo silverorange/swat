@@ -12,11 +12,11 @@ require_once 'Swat/SwatObject.php';
 class SwatMessage extends SwatObject
 {
 	/**
-	 * Information message type
+	 * Notification message type
 	 * 
 	 * An informative message that doesn't require any action by the user.
 	 */
-	const INFO = 1;
+	const NOTIFICATION = 1;
 
 	/**
 	 * Warning message type
@@ -27,21 +27,21 @@ class SwatMessage extends SwatObject
 	const WARNING = 2;
 
 	/**
-	 * User Error message type
+	 * Error message type
 	 * 
 	 * An error message that requires the attention of the user and that is
 	 * expected/handled by the application.
 	 * eg. Missing required fields
 	 */
-	const USER_ERROR = 3;
+	const ERROR = 3;
 
 	/**
-	 * Error message type
+	 * System Error message type
 	 *
 	 * A system error that requires the attention of the user.
 	 * eg. Database connection error
 	 */
-	const ERROR = 4;
+	const SYSTEM_ERROR = 4;
 
 	/**
 	 * Type of message
@@ -82,10 +82,10 @@ class SwatMessage extends SwatObject
 		$this->primary_content = $primary_content;
 
 		$valid_types = array(
-			self::INFO,
+			self::NOTIFICATION,
 			self::WARNING,
-			self::USER_ERROR,
-			self::ERROR);
+			self::ERROR,
+			self::SYSTEM_ERROR);
 		
 		if ($type !== null) {
 			if (in_array($type, $valid_types))
