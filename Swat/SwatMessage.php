@@ -11,7 +11,6 @@ require_once 'Swat/SwatObject.php';
  */
 class SwatMessage extends SwatObject
 {
-
 	/**
 	 * Information message type
 	 * 
@@ -52,7 +51,10 @@ class SwatMessage extends SwatObject
 	public $type;
 
 	/**
-	 * Primary message text
+	 * Primary message content
+	 *
+	 * The primary message content is a brief description. It should be about
+	 * one sentence long.
 	 *
 	 * @var string
 	 */
@@ -60,6 +62,9 @@ class SwatMessage extends SwatObject
 
 	/**
 	 * Secondary message text
+	 *
+	 * The secondary message content is an optional longer description. Its
+	 * length should be at most the length of a small paragraph.
 	 *
 	 * @var string
 	 */
@@ -71,16 +76,13 @@ class SwatMessage extends SwatObject
 	 * @param string $primary_content the primary text of the message.
 	 * @param integer $type the type of message. Must be a valid class
 	 *                       constant.
-	 * @param string $secondary_content the secondary text of the message.
 	 */
-	public function __construct($primary_content, $type = self::INFO, $secondary_content = null)
+	public function __construct($primary_content, $type = self::INFO)
 	{
 		$this->primary_content = $primary_content;
 
 		if ($type !== null)
 			$this->type = $type;
-
-		$this->secondary_content = $secondary_content;
 	}
 }
 
