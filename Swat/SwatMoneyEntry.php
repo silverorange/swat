@@ -112,7 +112,7 @@ class SwatMoneyEntry extends SwatEntry
 
 		} else {
 			$msg = Swat::_('The %s field must be a monetary value formatted for %s (i.e. %s).');
-			$msg = sprintf($msg, '%s', $lc_symbol, money_format('%n', 1234567.89));
+			$msg = sprintf($msg, '%s', $lc_symbol, money_format('%n', 1000.95));
 
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 		}
