@@ -77,7 +77,7 @@ class SwatMessage extends SwatObject
 	 * @param integer $type the type of message. Must be a valid class
 	 *                       constant.
 	 */
-	public function __construct($primary_content, $type = self::INFO)
+	public function __construct($primary_content, $type = self::NOTIFICATION)
 	{
 		$this->primary_content = $primary_content;
 
