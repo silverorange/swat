@@ -114,7 +114,6 @@ class SwatControlCellRenderer extends SwatCellRenderer
 		$anchor->close();
 	}
 
-
 	/**
 	 * Gets TD-tag attributes
 	 *
