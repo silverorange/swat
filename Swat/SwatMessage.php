@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Swat/SwatObject.php';
+
 /**
  * A data class to store a message  
  *
@@ -7,7 +9,7 @@
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatMessage
+class SwatMessage extends SwatObject
 {
 
 	/**
@@ -50,24 +52,35 @@ class SwatMessage
 	public $type;
 
 	/**
-	 * Message text
+	 * Primary message text
 	 *
 	 * @var string
 	 */
-	public $content = null;
+	public $primary_content = null;
+
+	/**
+	 * Secondary message text
+	 *
+	 * @var string
+	 */
+	public $secondary_content = null;
 
 	/**
 	 * Creates a new SwatMessage
 	 *
-	 * @param string $content the text of the message.
+	 * @param string $primary_content the primary text of the message.
 	 * @param integer $type the type of message. Must be a valid class
 	 *                       constant.
+	 * @param string $secondary_content the secondary text of the message.
 	 */
-	public function __construct($content, $type = self::INFO)
+	public function __construct($primary_content, $type = self::INFO, $secondary_content)
 	{
-		$this->content = $content;
+		$this->primary_content = $primary_content;
+
 		if ($type !== null)
 			$this->type = $type;
+
+		$this->secondary_content = $second_content;
 	}
 }
 
