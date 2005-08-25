@@ -102,7 +102,7 @@ class SwatMoneyEntry extends SwatEntry
 		if (is_numeric($value)) {
 			$frac_pos = strpos($value, '.');
 
-			if ($frac_pos !== false && substr($value, 0, $frac_pos + $lc_frac + 1) != $value) {
+			if ($frac_pos !== false && strlen(substr($value, $frac_pos + 1)) > $lc_frac) {
 				$msg = Swat::_('The %s field has too many decimal values. The currency (%s) only allows %s.');
 				$msg = sprintf($msg, '%s', $lc_symbol, $lc_frac);
 
