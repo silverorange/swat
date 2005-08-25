@@ -44,7 +44,7 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry
 				$msg = Swat::_('Password and confirmation password do not match.');
 
 				$this->addMessage(
-					new SwatMessage($msg, SwatMessage::USER_ERROR));
+					new SwatMessage($msg, SwatMessage::ERROR));
 			}
 		}
 	}

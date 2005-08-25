@@ -171,7 +171,7 @@ class SwatFlydown extends SwatControl implements SwatState
 		
 		if ($this->required && $this->value === null) {
 			$msg = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 		}
 	}
 

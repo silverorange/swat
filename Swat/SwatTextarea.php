@@ -79,7 +79,7 @@ class SwatTextarea extends SwatControl implements SwatState
 
 		if ($this->required && !strlen($this->value)) {
 			$msg = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 		}
 	}
 	

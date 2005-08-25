@@ -119,7 +119,7 @@ class SwatMoneyEntry extends SwatEntry
 					$lc['int_frac_digits']);
 
 				$this->addMessage(
-					new SwatMessage($msg, SwatMessage::USER_ERROR));
+					new SwatMessage($msg, SwatMessage::ERROR));
 			} else {
 				$this->value = (float) $value; 
 			}
@@ -135,7 +135,7 @@ class SwatMoneyEntry extends SwatEntry
 				$lc['int_curr_symbol'],
 				money_format('%n', 1000.95));
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 		}
 
 		// reset locale for this request

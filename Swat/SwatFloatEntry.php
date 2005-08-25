@@ -35,7 +35,7 @@ class SwatFloatEntry extends SwatEntry
 			$this->value = floatval($this->value);
 		else {
 			$msg = Swat::_('The %s field must be a number.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 		}
 	}
 }

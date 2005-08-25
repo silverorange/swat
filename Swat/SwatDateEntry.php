@@ -295,7 +295,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 
 		if ($this->required && $all_empty) {
 			$msg = Swat::_('Date is Required.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 		}
 
 		if ($this->display_parts & self::YEAR) {
@@ -303,7 +303,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 				($this->required_parts & self::YEAR)) {
 				$msg = Swat::_('Year is Required.');
 				$this->addMessage(
-					new SwatMessage($msg, SwatMessage::USER_ERROR));
+					new SwatMessage($msg, SwatMessage::ERROR));
 			}
 		} else {
 			$year = 0;
@@ -314,7 +314,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 				($this->required_parts & self::MONTH)) {
 				$msg = Swat::_('Month is Required.');
 				$this->addMessage(
-					new SwatMessage($msg, SwatMessage::USER_ERROR));
+					new SwatMessage($msg, SwatMessage::ERROR));
 			}
 		} else {
 			$month = 1;
@@ -325,7 +325,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 				($this->required_parts & self::DAY)) {
 				$msg = Swat::_('Day is Required.');
 				$this->addMessage(
-					new SwatMessage($msg, SwatMessage::USER_ERROR));
+					new SwatMessage($msg, SwatMessage::ERROR));
 			}
 		} else {
 			$day = 1;
@@ -549,7 +549,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 			$msg = sprintf(Swat::_('The date you have entered is invalid. It must be after %s.'),
 				$this->getFormattedDate($this->valid_range_start));
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 
 		} elseif
 			(Date::compare($this->value, $this->valid_range_end, true) == 1) {
@@ -557,7 +557,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 			$msg = sprintf(Swat::_('The date you have entered is invalid. It must be before %s.'),
 				$this->getFormattedDate($this->valid_range_end));
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 
 		}
 	}
