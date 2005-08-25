@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatLayout.php';
+require_once 'Swat/SwatApplicationModule.php';
 
 /**
  * Base class for a web application
@@ -33,6 +34,9 @@ class SwatApplication extends SwatObject
 	 */
 	public $id;
 
+	// }}}
+	// {{{ protected properties
+
 	/**
 	 * The current page of this application
 	 *
@@ -40,9 +44,6 @@ class SwatApplication extends SwatObject
 	 */
 	protected $page = null;
 	
-	// }}}
-	// {{{ protected properties
-
 	/**
 	 * The base value for all of this application's anchor hrefs
 	 *
@@ -56,6 +57,13 @@ class SwatApplication extends SwatObject
 	 * @var string
 	 */
 	protected $uri = null;
+
+	/**
+	 * Application modules
+	 *
+	 * @var array
+	 */
+	protected $modules = array();
 
 	// }}}
 	// {{{ private properties
@@ -73,7 +81,7 @@ class SwatApplication extends SwatObject
 	/**
 	 * Creates a new Swat application
 	 *
-	 * @param String $id a unique identifier for this application.
+	 * @param string $id a unique identifier for this application.
 	 */
 	public function __construct($id)
 	{
@@ -92,7 +100,22 @@ class SwatApplication extends SwatObject
 	public function init()
 	{
 		$this->initBaseHref();
+		$this->initModules();
+
+		// call this last
 		$this->initPage();
+	}
+
+	// }}}
+	// {{{ protected function initModules()
+
+	/**
+	 * Initializes the modules
+	 */
+	protected function initModules()
+	{
+		foreach ($this->modules as $module)
+			$module->init();
 	}
 
 	// }}}
@@ -225,6 +248,17 @@ class SwatApplication extends SwatObject
 	protected function getServerName()
 	{
 		return $_SERVER['HTTP_HOST'];
+	}
+
+	// }}}
+	// {{{ public function addModule()
+
+	/**
+	 * Add a module to the application
+	 */
+	public function addModule(SwatApplicationModule $module)
+	{
+		$this->modules[get_class($module)] = $module;
 	}
 
 	// }}}
