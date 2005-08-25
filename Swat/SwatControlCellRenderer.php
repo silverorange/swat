@@ -125,7 +125,7 @@ class SwatControlCellRenderer extends SwatCellRenderer
 	*/
 	public function &getTdAttributes()
 	{
-		return array('class' => 'control');
+		return array('class' => 'swat-control-cell-renderer');
 	}
 }
 
