@@ -3,6 +3,7 @@
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
+require_once 'Swat/SwatFormField.php';
 
 /**
  * A file upload widget
@@ -73,16 +74,14 @@ class SwatFileEntry extends SwatControl
 
 		$input_tag->display();
 
-		if ($this->accept_mime_types !== null && $this->display_mime_types) {
-			$div = new SwatHtmlTag('div');
-			$div->class = 'swat-widget-note';
+		if ($this->accept_mime_types !== null && $this->display_mime_types
+			&& $this->parent instanceof SwatFormField) {
 
 			$note = Swat::ngettext("File type must be '%s'",
 				"Valid file types are: %s",
 				count($this->accept_mime_types));
 
-			$div->content = sprintf($note, implode(', ', $this->accept_mime_types));
-			$div->display();
+			$this->parent->note = sprintf($note, implode(', ', $this->accept_mime_types));
 		}
 	}
 
