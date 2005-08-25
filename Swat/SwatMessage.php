@@ -80,7 +80,7 @@ class SwatMessage extends SwatObject
 		if ($type !== null)
 			$this->type = $type;
 
-		$this->secondary_content = $second_content;
+		$this->secondary_content = $secondary_content;
 	}
 }
 
