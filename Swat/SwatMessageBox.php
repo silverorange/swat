@@ -55,7 +55,7 @@ class SwatMessageBox extends SwatControl
 					$message_div->class = 'swat-message-box-error';
 					break;
 				case SwatMessage::SYSTEM_ERROR :
-					$message_div->class = 'swat-message-system-error';
+					$message_div->class = 'swat-message-box-system-error';
 					break;
 			}
 
