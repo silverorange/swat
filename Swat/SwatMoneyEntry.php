@@ -14,14 +14,16 @@ class SwatMoneyEntry extends SwatEntry
 	/**
 	 * Optional locale for currency format
 	 *
+	 * If no locale is specified, the default server locale is used.
+	 *
 	 * @var string
 	 */
 	public $locale = null;
 
 	/**
-	 * Display currency
+	 * Whether to display currency unit
 	 *
-	 * If true, displays the international currency symbol
+	 * If true, displays the international currency unit
 	 *
 	 * @var boolean
 	 */
@@ -39,9 +41,9 @@ class SwatMoneyEntry extends SwatEntry
 
 
 	/**
-	 * Displays this entry widget
+	 * Displays this money entry widget
 	 *
-	 * Outputs an appropriate XHTML tag.
+	 * The widget is displayed as an input box and an optional monetary unit.
 	 */
 	public function display()
 	{
@@ -76,10 +78,10 @@ class SwatMoneyEntry extends SwatEntry
 	}	
 
 	/**
-	 * Checks to make sure value is an integer
+	 * Checks to make sure value is a monetary value
 	 *
-	 * If the value of this widget is not an integer then an error message is
-	 * attached to this widget.
+	 * If the value of this widget is not a monetary value then an error
+	 * message is attached to this widget.
 	 */
 	public function process()
 	{
@@ -87,10 +89,9 @@ class SwatMoneyEntry extends SwatEntry
 
 		$locale = $this->setLocale($this->locale);
 		$lc = localeconv();
-		$lc_symbol = $lc['int_curr_symbol'];
 		$lc_frac = $lc['int_frac_digits'];
 
-		//change all locale formatting to numeric formatting
+		// change all locale formatting to numeric formatting
 		$remove_parts = array($lc['int_curr_symbol'] => '',
 			$lc['currency_symbol'] => '',
 			$lc['mon_thousands_sep'] => '',
@@ -102,24 +103,55 @@ class SwatMoneyEntry extends SwatEntry
 		if (is_numeric($value)) {
 			$frac_pos = strpos($value, '.');
 
-			if ($frac_pos !== false && strlen(substr($value, $frac_pos + 1)) > $lc_frac) {
-				$msg = Swat::_('The %s field has too many decimal values. The currency (%s) only allows %s.');
-				$msg = sprintf($msg, '%s', $lc_symbol, $lc_frac);
+			// check if length of the given fractional part is more than the
+			// allowed length
+			if ($frac_pos !== false &&
+				strlen(substr($value, $frac_pos + 1)) > $lc_frac) {
 
-				$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
-			} else
+				$msg = Swat::_('The %s field has too many decimal values. '.
+					'The currency (%s) only allows %s.');
+
+				// substitute in '%s' because a second substitution is done
+				// with the form field title
+				$msg = sprintf($msg,
+					'%s',
+					rtrim($lc['int_curr_symbol']),
+					$lc['int_frac_digits']);
+
+				$this->addMessage(
+					new SwatMessage($msg, SwatMessage::USER_ERROR));
+			} else {
 				$this->value = (float) $value; 
+			}
 
 		} else {
-			$msg = Swat::_('The %s field must be a monetary value formatted for %s (i.e. %s).');
-			$msg = sprintf($msg, '%s', $lc_symbol, money_format('%n', 1000.95));
+			$msg = Swat::_('The %s field must be a monetary value '.
+				'formatted for %s (i.e. %s).');
+
+			// substitute in '%s' because a second substitution is done
+			// with the form field title
+			$msg = sprintf($msg,
+				'%s',
+				$lc['int_curr_symbol'],
+				money_format('%n', 1000.95));
 
 			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
 		}
 
+		// reset locale for this request
 		$this->setLocale($locale);
 	}
 
+	/**
+	 * Sets the locale
+	 *
+	 * This is used to get locale specific monetary information. After setting
+	 * the locale, remember to set the locale back to the default.
+	 *
+	 * @param string $locale the locale to set.
+	 *
+	 * @return string the old locale.
+	 */
 	private function setLocale($locale)
 	{
 		if ($locale !== null)
