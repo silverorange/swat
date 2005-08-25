@@ -73,7 +73,7 @@ class SwatMessage extends SwatObject
 	 *                       constant.
 	 * @param string $secondary_content the secondary text of the message.
 	 */
-	public function __construct($primary_content, $type = self::INFO, $secondary_content)
+	public function __construct($primary_content, $type = self::INFO, $secondary_content = null)
 	{
 		$this->primary_content = $primary_content;
 
