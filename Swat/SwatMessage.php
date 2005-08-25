@@ -81,8 +81,21 @@ class SwatMessage extends SwatObject
 	{
 		$this->primary_content = $primary_content;
 
-		if ($type !== null)
-			$this->type = $type;
+		$valid_types = array(
+			self::INFO,
+			self::WARNING,
+			self::USER_ERROR,
+			self::ERROR);
+		
+		if ($type !== null) {
+			if (in_array($type, $valid_types))
+				$this->type = $type;
+			else
+				throw new SwatException(sprintf("%s: '%s' is not a valid ".
+					'SwatMessage message type.',
+					__CLASS__,
+					$type));
+		}
 	}
 }
 
