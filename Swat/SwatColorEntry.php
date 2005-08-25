@@ -193,21 +193,21 @@ class SwatColorEntry extends SwatControl implements SwatState
 
 		} elseif ($this->value === null) {
 			$msg = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 			
 		} elseif ($this->maxlength !== null && $len > $this->maxlength) {
 
 			$msg = sprintf(Swat::_('The %%s field must be less than %s characters.'),
 				$this->maxlength);
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 			
 		} elseif ($this->minlength !== null && $len < $this->minlength) {
 
 			$msg = sprintf(Swat::_('The %%s field must be more than %s characters.'),
 				$this->minlength);
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::USER_ERROR));
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 			
 		}
 	}

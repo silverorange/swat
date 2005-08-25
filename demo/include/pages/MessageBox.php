@@ -10,12 +10,12 @@ class MessageBox extends ExamplePage
 
 		$message_box->messages = array(
 			new SwatMessage('This is an informational message.',
-				SwatMessage::INFO),
+				SwatMessage::NOTIFICATION),
 			new SwatMessage('This is a warning message.',
 				SwatMessage::WARNING),
 			new SwatMessage('This is a user error message.',
-				SwatMessage::USER_ERROR),
-			new SwatMessage('This is an error message.', SwatMessage::ERROR)
+				SwatMessage::ERROR),
+			new SwatMessage('This is an error message.', SwatMessage::SYSTEM_ERROR)
 		);
 	}
 }
