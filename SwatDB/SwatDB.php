@@ -101,10 +101,7 @@ class SwatDB
 			$id_list);
 
 		SwatDB::debug($sql);
-		$rs = $db->query($sql);
-
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
+		SwatDB::query($db, $sql);
 	}
 
 	// }}}
@@ -426,11 +423,8 @@ class SwatDB
 			$db->quote($id, $id_field->type));
 
 		SwatDB::debug($sql);
-		$rs = $db->query($sql, SwatDB::getFieldTypeArray($fields));
-		
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
-		
+		$rs = SwatDB::query($db, $sql, SwatDB::getFieldTypeArray($fields));
+
 		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
 
 		return $row;
@@ -563,10 +557,7 @@ class SwatDB
 			$db->quote($id, $id_field->type));
 
 		SwatDB::debug($sql);
-		$rs = $db->query($sql);
-
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
+		$rs = SwatDB::query($db, $sql);
 	}
 
 	// }}}
@@ -623,11 +614,8 @@ class SwatDB
 			$sql .= ' order by '.$order_by_clause;
 
 		SwatDB::debug($sql);
-		$rs = $db->query($sql, array($id_field->type, $title_field->type));
-
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
-
+		$rs = SwatDB::query($db, $sql, array($id_field->type, $title_field->type));
+		
 		$options = array();
 
 		while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
@@ -703,11 +691,8 @@ class SwatDB
 
 		SwatDB::debug($sql);
 
-		$rs = $db->query($sql, array($id_field->type, $title_field->type,
+		$rs = SwatDB::query($db, $sql, array($id_field->type, $title_field->type,
 			$cascade_field->type));
-
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
 
 		$options = array();
 		$current = null;
@@ -812,10 +797,7 @@ class SwatDB
 			$sql .= ' order by '.$order_by_clause;
 		
 		SwatDB::debug($sql);
-		$rs = $db->query($sql);
-
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
+		$rs = SwatDB::query($db, $sql);
 
 		$options = array();
 
@@ -887,8 +869,9 @@ class SwatDB
 		$rs = $db->executeStoredProc($sp, array(0), $types, true);
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs->getMessage());
-
-		$tree = SwatDB::buildTreeOptionArray($rs, $title_field->name, $id_field->name, $level_field->name);
+		
+		$tree = SwatDB::buildTreeOptionArray($rs, $title_field->name, 
+			$id_field->name, $level_field->name);
 		return $tree;
 	}
 
@@ -920,10 +903,7 @@ class SwatDB
 			$field->name, $field->name, $table);
 
 		SwatDB::debug($sql);
-		$rs = $db->query($sql, array($field->type));
-		
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
+		$rs = SwatDB::query($db, $sql, array($field->type));
 		
 		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
 		$field_name = $field->name;
