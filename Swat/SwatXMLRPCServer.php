@@ -20,7 +20,7 @@ abstract class SwatXMLRPCServer extends SwatPage
 {
     protected function createLayout()
     {
-        return new SwatLayout('../../layouts/admin/xmlrpcserver.php');
+        return new SwatLayout('Swat/layouts/xmlrpcserver.php');
     }
 
 	/**
