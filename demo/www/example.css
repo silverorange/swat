@@ -41,6 +41,12 @@ body {
 	color: #fff;
 }
 
+#footer {
+	font-size: 85%;
+	color: #999;
+	margin: 1em;
+}
+
 a:link		{ color: #3f5ace;  }
 a:visited	{ color: #3f5ace; }
 a:hover		{ color: #333; }
