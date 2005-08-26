@@ -11,10 +11,10 @@ require_once 'Swat/SwatMessage.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatMessageBox extends SwatControl
+class SwatMessageDisplay extends SwatControl
 {
 	/**
-	 * The messages to display in this box
+	 * The messages to display
 	 *
 	 * The messages are stored as an array of references to SwatMessage
 	 * objects.
@@ -26,9 +26,9 @@ class SwatMessageBox extends SwatControl
 	public $messages = array();
 
 	/**
-	 * Displays this message box
+	 * Displays the messages
 	 *
-	 * The CSS class of the box is determined by the type of message being
+	 * The CSS class of each message is determined by the type of message being
 	 * displayed.
 	 */
 	public function display()
@@ -41,29 +41,29 @@ class SwatMessageBox extends SwatControl
 		foreach ($this->messages as $message) {
 			switch ($message->type) {
 				case SwatMessage::NOTIFICATION :
-					$div->class = 'swat-message-box-notification';
+					$div->class = 'swat-message-display-notification';
 					break;
 				case SwatMessage::WARNING :
-					$div->class = 'swat-message-box-warning';
+					$div->class = 'swat-message-display-warning';
 					break;
 				case SwatMessage::ERROR :
-					$div->class = 'swat-message-box-error';
+					$div->class = 'swat-message-display-error';
 					break;
 				case SwatMessage::SYSTEM_ERROR :
-					$div->class = 'swat-message-box-system-error';
+					$div->class = 'swat-message-display-system-error';
 					break;
 			}
 
 			$div->open();
 			
 			$primary_content = new SwatHtmlTag('h3');
-			$primary_content->class = 'swat-message-box-primary-content';
+			$primary_content->class = 'swat-message-display-primary-content';
 			$primary_content->content = $message->primary_content;
 			$primary_content->display();
 
 			if ($message->secondary_content !== null) {
 				$secondary_div = new SwatHtmlTag('div');
-				$secondary_div->class = 'swat-message-box-secondary-content';
+				$secondary_div->class = 'swat-message-display-secondary-content';
 				$secondary_div->content = $message->secondary_content;
 				$secondary_div->display();
 			}

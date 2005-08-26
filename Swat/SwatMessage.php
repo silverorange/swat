@@ -6,7 +6,7 @@ require_once 'Swat/SwatObject.php';
  * A data class to store a message  
  *
  * SwatMessages are used thoughout Swat. The most noticable place they are used
- * is for validating entry widgets. See also {@link SwatMessageBox}.
+ * is for validating entry widgets. See also {@link SwatMessageDisplay}.
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange

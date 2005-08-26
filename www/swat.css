@@ -3,35 +3,35 @@
 .swat-tool-link { display: block; }
 
 /* SwatMessages  */
-.swat-message-box-notification {
+.swat-message-display-notification {
 	border: 1px solid #666;
 	margin: 1em 0;
 	padding: 1em;
 	background: #fff;
 }
 
-.swat-message-box-warning {
+.swat-message-display-warning {
 	border: 1px solid #666;
 	margin: 1em 0;
 	padding: 1em;
 	background: #ff9;
 }
 
-.swat-message-box-error {
+.swat-message-display-error {
 	border: 1px solid #666;
 	margin: 1em 0;
 	padding: 1em;
 	background: #f66;
 }
 
-.swat-message-box-system-error {
+.swat-message-display-system-error {
 	border: 1px solid #666;
 	margin: 1em 0;
 	padding: 1em;
 	background: #f33;
 }
 
-.swat-message-box-primary-content {
+.swat-message-display-primary-content {
 	margin: 0;
 	font-weight: bold;
 }
