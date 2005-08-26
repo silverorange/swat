@@ -3,21 +3,21 @@
 require_once 'DemoPage.php';
 
 /**
- * A demo using amessagebox
+ * A demo using a message display
  *
- * This page sets up a a number of messages and addes them to the message box.
+ * This page sets up a a number of messages and addes them to the message display.
  *
  * @package   SwatDemo
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class MessageBox extends DemoPage
+class MessageDisplay extends DemoPage
 {
 	public function initUI()
 	{
-		$message_box = $this->ui->getWidget('message_box');
+		$message_display = $this->ui->getWidget('message_display');
 
-		$message_box->messages = array(
+		$message_display->messages = array(
 			new SwatMessage('This is a notification message.',
 				SwatMessage::NOTIFICATION),
 			new SwatMessage('This is a warning message.',
@@ -31,25 +31,25 @@ class MessageBox extends DemoPage
 			SwatMessage::NOTIFICATION);
 
 		$msg->secondary_content = 'This message has secondary content.';
-		$message_box->messages[] = $msg;
+		$message_display->messages[] = $msg;
 
 		$msg = new SwatMessage('This is a warning message.', 
 			SwatMessage::WARNING);
 
 		$msg->secondary_content = 'This message has secondary content.';
-		$message_box->messages[] = $msg;
+		$message_display->messages[] = $msg;
 
 		$msg = new SwatMessage('This is an error message.', 
 			SwatMessage::ERROR);
 
 		$msg->secondary_content = 'This message has secondary content.';
-		$message_box->messages[] = $msg;
+		$message_display->messages[] = $msg;
 
 		$msg = new SwatMessage('This is a system error message.', 
 			SwatMessage::SYSTEM_ERROR);
 
 		$msg->secondary_content = 'This message has secondary content.';
-		$message_box->messages[] = $msg;
+		$message_display->messages[] = $msg;
 	}
 }
 
