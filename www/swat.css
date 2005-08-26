@@ -3,16 +3,32 @@
 .swat-tool-link { display: block; }
 
 /* SwatMessages  */
-.swat-message-info {
+.swat-message-box-notification {
+	border: 1px solid #666;
+	margin: 1em 0;
+	padding: 1em;
 	background: #fff;
 }
 
-.swat-message-warning {
+.swat-message-box-warning {
+	border: 1px solid #666;
+	margin: 1em 0;
+	padding: 1em;
 	background: #ff9;
 }
 
-.swat-message-error {
-	background: #f00;
+.swat-message-box-error {
+	border: 1px solid #666;
+	margin: 1em 0;
+	padding: 1em;
+	background: #f66;
+}
+
+.swat-message-box-system-error {
+	border: 1px solid #666;
+	margin: 1em 0;
+	padding: 1em;
+	background: #f33;
 }
 
 /* SwatFrame */
@@ -23,7 +39,7 @@
 	margin: 1em 0;
 }
 
-.swat-frame > h2 {
+.swat-frame h2 {
 	margin: 0;
 	padding: 0.2em;
 	background: #eee;
@@ -151,6 +167,20 @@ div.swat-order-control:hover {
 	margin: 2px;
 }
 
+
+/* SwatFieldset */
+
+.swat-fieldset {
+	border: 1px solid #ccc;
+	margin-bottom: 1em;
+	padding: 1em;
+}
+
+.swat-fieldset legend {
+	font-weight: bold;
+	color: #666;
+	margin: 0 0.3em;
+}
 
 /* SwatTableView */
 
