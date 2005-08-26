@@ -37,35 +37,39 @@ class SwatMessageBox extends SwatControl
 			return;
 
 		$div = new SwatHtmlTag('div');
-		$div->class = 'swat-message-box';
-
-		$div->open();
-		
-		$message_div = new SwatHtmlTag('div');
 
 		foreach ($this->messages as $message) {
 			switch ($message->type) {
 				case SwatMessage::NOTIFICATION :
-					$message_div->class = 'swat-message-box-notification';
+					$div->class = 'swat-message-box-notification';
 					break;
 				case SwatMessage::WARNING :
-					$message_div->class = 'swat-message-box-warning';
+					$div->class = 'swat-message-box-warning';
 					break;
 				case SwatMessage::ERROR :
-					$message_div->class = 'swat-message-box-error';
+					$div->class = 'swat-message-box-error';
 					break;
 				case SwatMessage::SYSTEM_ERROR :
-					$message_div->class = 'swat-message-box-system-error';
+					$div->class = 'swat-message-box-system-error';
 					break;
 			}
 
-			$message_div->content = $message->primary_content;
-			// TODO: do something better with the secondary content
-			$message_div->content .= $message->secondary_content;
-			$message_div->display();
-		}
+			$div->open();
+			
+			$primary_div = new SwatHtmlTag('div');
+			$primary_div->class = 'swat-message-box-primary-content';
+			$primary_div->content = $message->primary_content;
+			$primary_div->display();
 
-		$div->close();
+			if ($message->secondary_content !== null) {
+				$secondary_div = new SwatHtmlTag('div');
+				$secondary_div->class = 'swat-message-box-secondary-content';
+				$secondary_div->content = $message->secondary_content;
+				$secondary_div->display();
+			}
+
+			$div->close();
+		}
 	}
 }
 
