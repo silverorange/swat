@@ -112,7 +112,7 @@ label.swat-control {
 	text-align: right;
 }
 
-.swat-form-footer > input.primary {
+.swat-form-footer input.primary {
 	padding: 0.2em 0.8em;
 	font-weight: bold;
 }
@@ -170,6 +170,42 @@ div.swat-order-control:hover {
 .swat-order-control-iframe {
 	border: 1px ButtonShadow solid;
 	margin: 2px;
+}
+
+.swat-form-field-checkbox label {
+	display: inline;
+}
+
+.swat-form-field-checkbox input {
+	vertical-align: middle;
+}
+
+.swat-checkbox-list ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.swat-checkbox-list input, .swat-checkbox-tree input {
+	vertical-align: middle;
+}
+
+.swat-checkbox-tree ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.swat-checkbox-tree ul li {
+	margin-left: 1em;
+}
+
+.swat-check-all input {
+	vertical-align: middle;
+}
+
+.swat-check-all label {
+	display: inline;
 }
 
 
