@@ -5,6 +5,11 @@ require_once 'Swat/SwatFlydown.php';
 /**
  * A cascading flydown (aka combo-box) selection widget
  *
+ * The term cascading refers to the fact that this flydown's contents are
+ * updated dynamically based on the selected value of another flydown.
+ *
+ * The value of the other SwatFlydown cascades to this SwatCascadeFlydown.
+ *
  * @package   Swat
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
