@@ -83,7 +83,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 
 			if (count($this->options) > 1) {
 				$div_tag = new SwatHtmlTag('div');
-				$div_tag->id = $this->id.'__div';
+				$div_tag->id = $this->id.'_div';
 				$div_tag->open();
 
 				$chk_all = new SwatCheckAll();
