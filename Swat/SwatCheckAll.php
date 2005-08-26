@@ -21,6 +21,13 @@ class SwatCheckAll extends SwatControl
 	public $controller = null;
 	
 	/**
+	 * CSS class name
+	 *
+	 * @param string
+	 */
+	public $class = 'swat-check-all';
+
+	/**
 	 * Title
 	 *
 	 * Optional text to display next to the checkbox, by default "Check All".
@@ -51,6 +58,10 @@ class SwatCheckAll extends SwatControl
 			throw new SwatException(__CLASS__.': A controller referencing '.
 				'the SwatObject containing the checklist must be set.');
 
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->class = $this->class;
+		$div_tag->open();
+		
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
 		$input_tag->id = $this->id;
@@ -62,6 +73,8 @@ class SwatCheckAll extends SwatControl
 		$input_tag->display();
 		echo $this->title;
 		$label_tag->close();
+
+		$div_tag->close();
 		
 		$this->displayJavascript();
 	}
