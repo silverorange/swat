@@ -16,7 +16,8 @@ class SwatTreeNode extends SwatObject
 	/**
 	 * An array of data used for display
 	 *
-	 * TODO: What is the data used to display?
+	 * Data is the actual content of this node. Many Swat widgets use the
+	 * data array to store a value and a title for example.
 	 *
 	 * @var array
 	 */
