@@ -29,6 +29,8 @@ class SwatDB
 	 * @param array $types Optional array MDB2 datatypes for the recordset.
 	 *
 	 * @return MDB2_result_common A recordset containing the query result.
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function query($db, $sql, $types = null)
 	{
@@ -72,6 +74,8 @@ class SwatDB
 	 * @param array $ids An array of identifiers corresponding to the database
 	 *        rows to be updated. The type of the individual identifiers should 
 	 *        correspond to the type of $id_field.
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function updateColumn($db, $table, $field, $value, $id_field,
 		$ids)
@@ -132,6 +136,8 @@ class SwatDB
 	 *        correspond to the type of $id_field.
 	 *
 	 * @return array An associative array of $id_field => $field 
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function queryColumn($db, $table, $field, $id_field = null,
 		$id = 0)
@@ -183,6 +189,8 @@ class SwatDB
 	 *        correspond to the type of $id_field.
 	 *
 	 * @return mixed The value queried for a single result.
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function queryOne($db, $table, $field, $id_field = null,
 		$id = 0)
@@ -225,6 +233,8 @@ class SwatDB
 	 * @param mixed $wrapper Optional MDB2 wrapper class.
 	 *
 	 * @return mixed An MDB2 recordset or an instance of the wrapper class.
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function executeStoredProc($db, $proc, $params, $wrapper = null)
 	{
@@ -258,16 +268,15 @@ class SwatDB
 	 *        Use an array for more than one parameter.
 	 *
 	 * @return mixed The value returned by the stored procedure.
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function executeStoredProcOne($db, $proc, $params)
 	{
 		if (!is_array($params))
 			$params = array($params);
 
-        $rs = $db->executeStoredProc($proc, $params);
-
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
+        $rs = SwatDB::executeStoredProc($db, $proc, $params);
 
         $row = $rs->fetchRow();
         return $row[0];
@@ -307,6 +316,8 @@ class SwatDB
 	 *
 	 * @param string $id_field The database field in the bound table that the 
 	 *        binding table references.
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function updateBinding($db, $table, $id_field, $id,
 		$value_field, $values, $bound_table, $bound_field)
@@ -397,6 +408,8 @@ class SwatDB
 	 *        type should correspond to the type of $field.
 	 *
 	 * @return Object A row object.
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function queryRow($db, $table, $fields, $id_field, $id)
 	{
@@ -454,6 +467,8 @@ class SwatDB
 	 *
 	 * @return mixed If $id_field is set, the value in the $id_field column of
 	 *        the inserted row is returned.
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function insertRow($db, $table, $fields, $values,
 		$id_field = null)
@@ -524,6 +539,8 @@ class SwatDB
 	 *
 	 * @param mixed $id The value to look for in the $id_field column. The 
 	 *        type should correspond to the type of $field.
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function updateRow($db, $table, $fields, $values, $id_field,
 		$id)
@@ -587,6 +604,8 @@ class SwatDB
 	 *        include the conditionals.
 	 *
 	 * @return array An array in the form of $id => $title.
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function getOptionArray($db, $table, $title_field, $id_field,
 		$order_by_clause = null, $where_clause = null)
@@ -660,6 +679,8 @@ class SwatDB
 	 *        include the conditionals.
 	 *
 	 * @return array An array in the form of $id => $title.
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function getCascadeOptionArray($db, $table, $title_field,
 		$id_field, $cascade_field, $order_by_clause = null,
@@ -757,6 +778,8 @@ class SwatDB
 	 *        include the conditionals.
 	 *
 	 * @return SwatTreeNode A tree hierarchy of {@link SwatTreeNode}s
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function getGroupedOptionArray($db, $table, $title_field,
 		$id_field, $group_table, $group_title_field, $group_id_field,
@@ -849,6 +872,8 @@ class SwatDB
 	 *        assummed for this field.
 	 *
 	 * @return SwatTreeNode A tree hierarchy of {@link SwatTreeNode}s
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function getTreeOptionArray($db, $sp, $title_field,
 		$id_field, $level_field)
@@ -884,6 +909,8 @@ class SwatDB
 	 *        datatype. If type is ommitted, then text is assummed.
 	 *
 	 * @return mixed The max value of field specified.
+	 *
+	 * @throws SwatDBException
 	 */
 	public static function getFieldMax($db, $table, $field)
 	{
