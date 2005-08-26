@@ -17,11 +17,14 @@ require_once '../include/DemoMenu.php';
 class DemoPage extends SwatPage
 {
 	protected $ui = null;
-
+	protected $start_time = 0;
+	
 	private $demo;
 	
 	public function init()
 	{
+		$this->start_time = microtime(true);
+
 		$this->demo = SwatApplication::initVar('demo', 'Main',
 			SwatApplication::VAR_GET);
 
@@ -68,6 +71,7 @@ class DemoPage extends SwatPage
 		$this->layout->menu = ob_get_clean();
 
 		$this->layout->base_href = 'index.php';
+		$this->layout->execution_time = round(microtime(true) - $this->start_time, 4);
 	}
 }
 
