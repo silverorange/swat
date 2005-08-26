@@ -321,6 +321,35 @@ class SwatForm extends SwatContainer
 
 		return $data;
 	}
+
+	/**
+	 * Notifies this widget that a widget was added
+	 *
+	 * If any of the widgets in the added subtree are file entry widgets then
+	 * set this form's encoding accordingly.
+	 *
+	 * @param SwatWidget $widget the widget that has been added.
+	 *
+	 * @see SwatContainer::notifyOfAdd()
+	 */
+	protected function notifyOfAdd($widget)
+	{
+		if (class_exists('SwatFileEntry')) {
+				
+			if ($widget instanceof SwatFileEntry) {
+				$this->enctype = 'multipart/form-data';
+			} elseif ($widget instanceof SwatContainer) {
+				$descendants = $widget->getDescendants();
+				foreach ($descendants as $sub_widget) {
+					if ($sub_widget instanceof SwatFileEntry) {
+						$this->enctype = 'multipart/form-data';
+						break;
+					}
+				}
+			}
+			
+		}
+	}
 }
 
 ?>
