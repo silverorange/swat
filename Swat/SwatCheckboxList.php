@@ -50,6 +50,11 @@ class SwatCheckboxList extends SwatControl implements SwatState
 
 	public function display()
 	{
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->id = $this->id.'_div';
+		$div_tag->class = 'swat-checkbox-list';
+		$div_tag->open();
+
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
 		$input_tag->name = $this->id.'[]';
@@ -60,7 +65,11 @@ class SwatCheckboxList extends SwatControl implements SwatState
 		$label_tag->class = 'swat-control';
 		
 		if ($this->options !== null) {
+			echo '<ul>';
+			
 			foreach ($this->options as $value => $title) {
+				
+				echo '<li>';
 				
 				$input_tag->value = (string)$value;
 				$input_tag->removeAttribute('checked');
@@ -72,27 +81,26 @@ class SwatCheckboxList extends SwatControl implements SwatState
 				$input_tag->display();
 			
 				$label_tag->for = $this->id.'_'.$input_tag->value;
-				$label_tag->open();
-				echo $title;
-				$label_tag->close();
+				$label_tag->content = $title;
+				$label_tag->display();
 				
-				echo '<br />';
+				echo '</li>';
 			}
+
+			echo '</ul>';
 
 			$this->displayJavascript();
 
 			if (count($this->options) > 1) {
-				$div_tag = new SwatHtmlTag('div');
-				$div_tag->id = $this->id.'_div';
-				$div_tag->open();
 
 				$chk_all = new SwatCheckAll();
 				$chk_all->controller = $this;
 				$chk_all->display();
 
-				$div_tag->close();
 			}
 		}
+
+		$div_tag->close();
 	}	
 
 	/**
