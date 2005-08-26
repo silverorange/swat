@@ -6,8 +6,8 @@ require_once 'Swat/SwatHtmlTag.php';
 /**
  * A button widget
  *
- * This widget displays an HTML form submit button, so it must be used within
- * {@link SwatForm}.
+ * This widget displays as an XHTML form submit button, so it should be used
+ * within {@link SwatForm}.
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange

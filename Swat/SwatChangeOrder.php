@@ -7,6 +7,9 @@ require_once 'Swat/SwatState.php';
 /**
  * An element ordering widget
  *
+ * This widget uses javascript to present an orderable list of elements. The
+ * ordering of elements is what this widget returns.
+ *
  * @package   Swat
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1

@@ -4,7 +4,10 @@ require_once 'Swat/SwatControl.php';
 require_once 'Date.php';
 
 /**
- * Pop-up calendar widget.
+ * Pop-up calendar widget
+ *
+ * This widget uses javascript to display a popup date selector. It is used
+ * inside the {@link SwatDateEntry} widget but can be used by itself as well.
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange
@@ -34,7 +37,7 @@ class SwatCalendar extends SwatControl
 	public $valid_range_end;
 
 	/**
-	 * Initializes this calendar widget 
+	 * Initializes this calendar widget
 	 */
 	public function init()
 	{
