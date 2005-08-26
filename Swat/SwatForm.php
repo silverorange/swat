@@ -29,7 +29,7 @@ class SwatForm extends SwatContainer
 	 *
 	 * @var string
 	 */
-	public $enctype = null;
+	public $encoding_type = null;
 
 	/**
 	 * Hidden form fields
@@ -118,7 +118,7 @@ class SwatForm extends SwatContainer
 		$form_tag = new SwatHtmlTag('form');
 		$form_tag->id = $this->id;
 		$form_tag->method = $this->method;
-		$form_tag->enctype = $this->enctype;
+		$form_tag->enctype = $this->encoding_type;
 		$form_tag->action = $this->action;
 		$form_tag->class = 'swat-form';
 
@@ -337,12 +337,12 @@ class SwatForm extends SwatContainer
 		if (class_exists('SwatFileEntry')) {
 				
 			if ($widget instanceof SwatFileEntry) {
-				$this->enctype = 'multipart/form-data';
+				$this->encoding_type = 'multipart/form-data';
 			} elseif ($widget instanceof SwatContainer) {
 				$descendants = $widget->getDescendants();
 				foreach ($descendants as $sub_widget) {
 					if ($sub_widget instanceof SwatFileEntry) {
-						$this->enctype = 'multipart/form-data';
+						$this->encoding_type = 'multipart/form-data';
 						break;
 					}
 				}
