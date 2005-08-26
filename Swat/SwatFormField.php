@@ -126,6 +126,22 @@ class SwatFormField extends SwatContainer
 
 		$container_div->close();
 	}
+
+	/**
+	 * Notifies this widget that a widget was added
+	 *
+	 * This sets a special class on this form field if a checkbox is added.
+	 *
+	 * @param SwatWidget $widget the widget that has been added.
+	 *
+	 * @see SwatContainer::notifyOfAdd()
+	 */
+	protected function notifyOfAdd($widget)
+	{
+		if (class_exists('SwatCheckbox') && $widget instanceof SwatCheckbox) {
+			$this->class = 'swat-form-field-checkbox';
+		}
+	}
 }
 
 ?>

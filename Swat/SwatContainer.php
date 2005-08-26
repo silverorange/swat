@@ -75,6 +75,8 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
 		array_unshift($this->children, $widget);
 		$widget->parent = $this;
+
+		$this->sendAddNotifySignal($widget);
 	}
 
 	/**
@@ -92,6 +94,8 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
 		$this->children[] = $widget;
 		$widget->parent = $this;
+
+		$this->sendAddNotifySignal($widget);
 	}
 
 	/**
@@ -295,6 +299,34 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 			throw new SwatException(__CLASS__.': Only SwatWidgets can be '
 				."nested within SwatContainer. Trying to add {$class_name}");
 		}
+	}
+
+	/**
+	 * Notifies this widget that a widget was added
+	 *
+	 * This widget may want to asjust itself based on the widget added or
+	 * any of the widgets children.
+	 *
+	 * @param SwatWidget $widget the widget that has been added.
+	 */
+	protected function notifyOfAdd($widget)
+	{
+	}
+	
+	/**
+	 * Sends the notification signal up the widget tree
+	 *
+	 * This container is notified of the added widget and then this
+	 * method is called on the container parent.
+	 *
+	 * @param SwatWidget $widget the widget that has been added.
+	 */
+	protected function sendAddNotifySignal($widget)
+	{
+		$this->notifyOfAdd($widget);
+		
+		if ($this->parent != null)
+			$this->parent->sendAddNotifySignal($widget);
 	}
 }
 
