@@ -92,11 +92,9 @@ class SwatCheckboxList extends SwatControl implements SwatState
 			$this->displayJavascript();
 
 			if (count($this->options) > 1) {
-
 				$chk_all = new SwatCheckAll();
 				$chk_all->controller = $this;
 				$chk_all->display();
-
 			}
 		}
 
