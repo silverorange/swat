@@ -56,10 +56,10 @@ class SwatMessageBox extends SwatControl
 
 			$div->open();
 			
-			$primary_div = new SwatHtmlTag('div');
-			$primary_div->class = 'swat-message-box-primary-content';
-			$primary_div->content = $message->primary_content;
-			$primary_div->display();
+			$primary_content = new SwatHtmlTag('h3');
+			$primary_content->class = 'swat-message-box-primary-content';
+			$primary_content->content = $message->primary_content;
+			$primary_content->display();
 
 			if ($message->secondary_content !== null) {
 				$secondary_div = new SwatHtmlTag('div');
