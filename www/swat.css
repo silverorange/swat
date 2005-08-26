@@ -31,6 +31,11 @@
 	background: #f33;
 }
 
+.swat-message-box-primary-content {
+	margin: 0;
+	font-weight: bold;
+}
+
 /* SwatFrame */
 
 .swat-frame {
