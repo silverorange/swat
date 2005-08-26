@@ -2,9 +2,19 @@
 
 require_once 'Swat/SwatPage.php';
 require_once 'Swat/SwatUI.php';
-require_once '../include/ExampleMenu.php';
+require_once '../include/DemoMenu.php';
 
-class ExamplePage extends SwatPage
+/**
+ * A page in the Swat Demo Application
+ *
+ * Demo application pages can set widget properties that are not expressable
+ * in SwatML.
+ *
+ * @package   SwatDemo
+ * @copyright 2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ */
+class DemoPage extends SwatPage
 {
 	protected $ui = null;
 
@@ -53,7 +63,7 @@ class ExamplePage extends SwatPage
 		$this->layout->ui = ob_get_clean();
 
 		ob_start();
-		$this->menu = new ExampleMenu();
+		$this->menu = new DemoMenu();
 		$this->menu->display();
 		$this->layout->menu = ob_get_clean();
 
