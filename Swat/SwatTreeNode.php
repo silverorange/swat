@@ -149,6 +149,32 @@ class SwatTreeNode extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function getChildren()
+
+	/**
+	 * Gets this node's children
+	 *
+	 * @return this node's children.
+	 */
+	public function getChildren()
+	{
+		return $this->children;
+	}
+	
+	// }}}
+	// {{{ public function getIndex()
+
+	/**
+	 * Gets this node's index
+	 *
+	 * @return integer this node's index.
+	 */
+	public function getIndex()
+	{
+		return $this->index;
+	}
+
+	// }}}
 	// {{{ private static function expandNode()
 
 	/**
