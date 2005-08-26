@@ -138,8 +138,6 @@ class SwatString
 	 * This method will properly account for any XHTML entities that may be
 	 * present in the given string.
 	 *
-	 * TODO: make this method account for entities properly
-	 *
 	 * example:
 	 * <code>
 	 * $string = 'The quick brown fox jumped over the lazy dogs.';
@@ -190,7 +188,7 @@ class SwatString
 		$string = SwatString::removeTrailingPunctuation($string);
 		$string .= $ellipses;
 
-		self::insertEntities($string, $matches);
+		self::insertEntities($string, $matches, $chop_pos);
 
 		return $string;
 	}
@@ -204,8 +202,6 @@ class SwatString
 	 * The length of a string is calculated as the number of visible characters
 	 * This method will properly account for any XHTML entities that may be
 	 * present in the given string.
-	 *
-	 * TODO: make this method account for entities properly
 	 *
 	 * example:
 	 * <code>
@@ -239,6 +235,9 @@ class SwatString
 
 		if (strlen($string) <= $max_length)
 			return $string;
+
+		$matches = array();
+		self::stripEntities($string, $matches);
 
 		// check if the string is all one giant word
 		$has_space = strpos($string, ' ');
@@ -291,7 +290,14 @@ class SwatString
 				self::ellipsizeRight($string, $max_first_length, '');
 		}
 
+		$hole_start = strlen($first_piece);
+		$hole_end = strlen($string) - strlen($last_piece);
+		$hole_length = strlen($ellipses);
+		
 		$string = $first_piece.$ellipses.$last_piece;
+
+		self::insertEntities($string, $matches,
+			$hole_start, $hole_end, $hole_length);
 
 		return $string;
 	}
@@ -383,7 +389,7 @@ class SwatString
 
 		preg_match_all($reg_exp, $string, $matches, PREG_OFFSET_CAPTURE);
 
-		$string = preg_replace($reg_exp, '*', $string);
+		$string = preg_replace($reg_exp, 's', $string);
 	}
 
 	// }}}
@@ -392,24 +398,47 @@ class SwatString
 	/**
 	 * Re-inserts stripped entities into a string in the correct positions
 	 *
-	 * All parameters are passed by reference and nothing is returned by this
-	 * function.
+	 * The first two parameters are passed by reference and nothing is returned
+	 * by this function.
 	 *
 	 * @param string $string the string to re-insert entites into.
 	 * @param array $matches the array of stored matches.
+	 * @param integer $hole_start ignore inserting entities between here
+	 *                             and hole_end.
+	 * @param integer $hole_end ignore inserting entities between here
+	 *                             and hole_start.
+	 * @param integer $hole_length the length of the new contents of the hole.
 	 */
-	private static function insertEntities(&$string, &$matches)
+	private static function insertEntities(&$string, &$matches,
+		$hole_start = -1, $hole_end = -1, $hole_length = 0)
 	{
 		for ($i = 0; $i < count($matches[0]); $i++) {
-			$length = strlen($string);
-			
 			$entity = $matches[0][$i][0];
 			$position = $matches[0][$i][1];
 
-			if ($position < $length) {
+			if ($position < $hole_start) {
+				// this entity falls before the hole
 				$string = substr($string, 0, $position).
 					$entity.
 					substr($string, $position + 1);
+
+				$hole_start += strlen($entity);
+				$hole_end += strlen($entity);
+			} elseif ($hole_end <= $hole_start) {
+				// break here because all remaining entities fall in the hole
+				// extending infinitely to the right
+				break;
+			} elseif ($position >= $hole_end) {
+				// this entity falls after the hole
+				$offset = -$hole_end + $hole_length + $hole_start + 1; 
+				$string = substr($string, 0, $position + $offset).
+					$entity.
+					substr($string, $position + $offset + 1);
+
+			} else {
+				// this entity falls in the hole but we must account
+				// for its unused size
+				$hole_end += strlen($entity);
 			}
 		}
 	}
