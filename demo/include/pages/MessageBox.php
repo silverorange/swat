@@ -26,6 +26,30 @@ class MessageBox extends DemoPage
 				SwatMessage::ERROR),
 			new SwatMessage('This is a system error message.', SwatMessage::SYSTEM_ERROR)
 		);
+
+		$msg = new SwatMessage('This is a notification message.', 
+			SwatMessage::NOTIFICATION);
+
+		$msg->secondary_content = 'This message has secondary content.';
+		$message_box->messages[] = $msg;
+
+		$msg = new SwatMessage('This is a warning message.', 
+			SwatMessage::WARNING);
+
+		$msg->secondary_content = 'This message has secondary content.';
+		$message_box->messages[] = $msg;
+
+		$msg = new SwatMessage('This is an error message.', 
+			SwatMessage::ERROR);
+
+		$msg->secondary_content = 'This message has secondary content.';
+		$message_box->messages[] = $msg;
+
+		$msg = new SwatMessage('This is a system error message.', 
+			SwatMessage::SYSTEM_ERROR);
+
+		$msg->secondary_content = 'This message has secondary content.';
+		$message_box->messages[] = $msg;
 	}
 }
 
