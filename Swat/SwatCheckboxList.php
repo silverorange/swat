@@ -14,7 +14,6 @@ require_once 'Swat/SwatState.php';
  */
 class SwatCheckboxList extends SwatControl implements SwatState
 {
-	
 	/**
 	 * Checkbox list options
 	 *
@@ -38,6 +37,16 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	 * @var string
 	 */
 	public $onchange = null;
+
+	/**
+	 * Initializes this widget
+	 */
+	public function init()
+	{
+		// an id is required for this widget.
+		if ($this->id === null)
+			$this->id = $this->getUniqueId();
+	}
 
 	public function display()
 	{
