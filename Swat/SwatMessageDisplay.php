@@ -23,7 +23,20 @@ class SwatMessageDisplay extends SwatControl
 	 *
 	 * @see SwatMessage
 	 */
-	public $messages = array();
+	private $_messages = array();
+	 
+	/**
+	 * Adds a message
+	 *
+	 * Adds a new message. The message will be shown by the display() method
+	 *
+	 * @param SwatMessage {@link SwatMessage} the message object to add.
+	 *
+	 * @see SwatMessage
+	 */
+	public function addMessage($msg) {
+		$this->_messages[] = $msg;
+	}
 
 	/**
 	 * Displays the messages
@@ -33,12 +46,12 @@ class SwatMessageDisplay extends SwatControl
 	 */
 	public function display()
 	{
-		if (count($this->messages) == 0)
+		if (count($this->_messages) == 0)
 			return;
 
 		$div = new SwatHtmlTag('div');
 
-		foreach ($this->messages as $message) {
+		foreach ($this->_messages as $message) {
 			switch ($message->type) {
 				case SwatMessage::NOTIFICATION :
 					$div->class = 'swat-message-display-notification';
