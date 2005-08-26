@@ -1,6 +1,16 @@
 <?php
 
-class ExampleMenu
+/**
+ * The menu for the Swat Demo Application
+ *
+ * This is a simple menu that takes a flat array of titles and links and
+ * displays them in an unordered list.
+ *
+ * @package   SwatDemo
+ * @copyright 2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ */
+class DemoMenu
 {
 	public function display()
 	{

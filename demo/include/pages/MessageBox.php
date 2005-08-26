@@ -1,8 +1,17 @@
 <?php
 
-require_once 'ExamplePage.php';
+require_once 'DemoPage.php';
 
-class MessageBox extends ExamplePage
+/**
+ * A demo using amessagebox
+ *
+ * This page sets up a a number of messages and addes them to the message box.
+ *
+ * @package   SwatDemo
+ * @copyright 2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ */
+class MessageBox extends DemoPage
 {
 	public function initUI()
 	{

@@ -1,9 +1,18 @@
 <?php
 
 require_once 'Swat/SwatApplication.php';
-require_once 'pages/ExamplePage.php';
+require_once 'pages/DemoPage.php';
 
-class ExampleApplication extends SwatApplication
+/**
+ * An demo application
+ *
+ * This is an application to demonstrate various Swat widgets.
+ *
+ * @package   SwatDemo
+ * @copyright 2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ */
+class DemoApplication extends SwatApplication
 {
 	protected function resolvePage()
 	{
@@ -17,7 +26,7 @@ class ExampleApplication extends SwatApplication
 			require_once '../include/pages/'.$demo.'.php';
 			return new $demo($this);
 		} else {
-			return new ExamplePage($this);
+			return new DemoPage($this);
 		}
 	}
 }

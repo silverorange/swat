@@ -1,8 +1,17 @@
 <?php
 
-require_once 'ExamplePage.php';
+require_once 'DemoPage.php';
 
-class PasswordEntry extends ExamplePage
+/**
+ * A demo using password entry widgets
+ *
+ * This page associates the confirm password box with the password entry box.
+ *
+ * @package   SwatDemo
+ * @copyright 2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ */
+class PasswordEntry extends DemoPage
 {
 	public function initUI()
 	{

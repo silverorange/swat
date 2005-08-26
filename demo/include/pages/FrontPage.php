@@ -1,8 +1,17 @@
 <?php
 
-require_once 'ExamplePage.php';
+require_once 'DemoPage.php';
 
-class FrontPage extends ExamplePage
+/**
+ * The front page of the demo application
+ *
+ * This page displays a quick introduction to the Swat Demo Application
+ *
+ * @package   SwatDemo
+ * @copyright 2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ */
+class FrontPage extends DemoPage
 {
 	protected $ui = null;
 
@@ -23,7 +32,7 @@ class FrontPage extends ExamplePage
 		$this->layout->title = 'Swat Widget Gallery';
 
 		ob_start();
-		$this->menu = new ExampleMenu();
+		$this->menu = new DemoMenu();
 		$this->menu->display();
 		$this->layout->menu = ob_get_clean();
 

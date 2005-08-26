@@ -1,10 +1,21 @@
 <?php
 
-require_once 'ExamplePage.php';
+require_once 'DemoPage.php';
 require_once 'Swat/SwatTreeNode.php';
 require_once 'Swat/SwatFlydownOption.php';
 
-class Flydown extends ExamplePage
+/**
+ * A demo using flydowns
+ *
+ * This page sets up the various flydown widgets. All flydown widgets currently
+ * must be set up manually as they contain SwatFlyDown options rather than
+ * an array.
+ *
+ * @package   SwatDemo
+ * @copyright 2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ */
+class Flydown extends DemoPage
 {
 	public function initUI()
 	{

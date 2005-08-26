@@ -1,9 +1,18 @@
 <?php
 
-require_once 'ExamplePage.php';
+require_once 'DemoPage.php';
 require_once 'Swat/SwatTreeNode.php';
 
-class Checkbox extends ExamplePage
+/**
+ * A demo using checkboxes
+ *
+ * This page sets up a tree for use in the SwatCheckboxTree demo.
+ *
+ * @package   SwatDemo
+ * @copyright 2005 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ */
+class Checkbox extends DemoPage
 {
 	public function initUI()
 	{
