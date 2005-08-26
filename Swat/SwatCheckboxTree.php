@@ -35,58 +35,53 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	 */
 	private $path = array();
 	
+	/**
+	 * A label tag used for displaying tree nodes
+	 *
+	 * @var SwatHtmltag
+	 *
+	 * @see SwatCheckboxTree::displayNode()
+	 */
+	private $label_tag = null;
+
+	/**
+	 * An input tag used for displaying tree nodes
+	 *
+	 * @var SwatHtmltag
+	 *
+	 * @see SwatCheckboxTree::displayNode()
+	 */
+	private $input_tag = null;
+	
 	public function display()
 	{
-		if ($this->tree !== null)
-			$this->options = $this->tree->toArray();
-
 		$div_tag = new SwatHtmlTag('div');
+		$div_tag->id = $this->id.'_div';
+		$div_tag->class = 'swat-checkbox-tree';
 
-		$label_tag = new SwatHtmlTag('label');
-		$label_tag->class = 'swat-control';
-		
-		$input_tag = new SwatHtmlTag('input');
-		$input_tag->type = 'checkbox';
-		$input_tag->name = $this->id.'[]';
-	
-		foreach ($this->options as $key => $data) {
-			$key_array = explode('/', $key);
-		
-			$div_tag->style = 'margin-left: '.((count($key_array) - 1)).'em;';
-			$div_tag->open();
-			
-			if (isset($data['value'])) {
-				$input_tag->id = $key;
-				$input_tag->value = $data['value'];
-			
-				if (in_array($data['value'], $this->values))
-					$input_tag->checked = 'checked';
+		$this->label_tag = new SwatHtmlTag('label');
+		$this->label_tag->class = 'swat-control';
 
-				$label_tag->for = $key;
-				$label_tag->content = $data['title'];
+		$this->input_tag = new SwatHtmlTag('input');
+		$this->input_tag->type = 'checkbox';
+		$this->input_tag->name = $this->id.'[]';
 
-				$input_tag->display();
-				$label_tag->display();
-			} else {
-				echo $data['title'];
-			}
-			
-			$div_tag->close();
-		}
+		$div_tag->open();	
+
+		if ($this->tree !== null)
+			$num_nodes = $this->displayNode($this->tree);
+		else
+			$num_nodes = 0;
 
 		$this->displayJavascript();
 
-		if (count($this->options) > 1) {
-			$div_tag = new SwatHtmlTag('div');
-			$div_tag->id = $this->id.'__div';
-			$div_tag->open();
-
+		if ($num_nodes > 1) {
 			$chk_all = new SwatCheckAll();
 			$chk_all->controller = $this;
 			$chk_all->display();
-
-			$div_tag->close();
 		}
+
+		$div_tag->close();
 	}
 
 	/**
@@ -139,6 +134,66 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	public function setState($state)
 	{
 		$this->value = $state;
+	}
+
+	/**
+	 * Displays a node in a tree as a checkbox input
+	 *
+	 * @param SwatTreeNode $node the node to display.
+	 * @param integer $nodes the current number of nodes.
+	 * @param string $parent_index the path of the parent node.
+	 *
+	 * @return integer the number of checkable nodes in the tree.
+	 */
+	private function displayNode($node, $nodes = 0, $parent_index = '')
+	{
+		// build a unique id of the indexes of the tree
+		if (strlen($parent_index) == 0) {
+			// index of the first node is just the node index
+			$index = $node->getIndex();
+		} else {
+			// index of other nodes is a combination of parent indexes
+			$index = $parent_index.'/'.$node->getIndex();
+
+			echo '<li>';
+
+			// TODO: this is not always set. Make another more specific Swat
+			//       data class.
+			if (isset($node->data['value'])) {
+				$this->input_tag->id = $index;
+				$this->input_tag->value = $node->data['value'];
+
+				if (in_array($node->data['value'], $this->values))
+					$this->input_tag->checked = 'checked';
+
+				$this->label_tag->for = $index;
+				$this->label_tag->content = $node->data['title'];
+
+				$this->input_tag->display();
+				$this->label_tag->display();
+			} else {
+				echo $node->data['title'];
+			}
+		}
+
+		// display children
+		$child_nodes = $node->getChildren();
+		if (count($child_nodes) > 0) {
+			echo '<ul>';
+			foreach ($child_nodes as $child_node) {
+				$nodes = $this->displayNode($child_node, $nodes, $index);
+			}
+			echo '</ul>';
+		}
+
+		if (strlen($parent_index) != 0)
+			echo '</li>';
+
+		// count checkable nodes
+		if (isset($node->data['value']))
+			$nodes++;
+		
+		return $nodes;
 	}
 }
 
