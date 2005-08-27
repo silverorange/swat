@@ -27,10 +27,16 @@ class Checkbox extends DemoPage
 		
 		$oranges = new SwatTreeNode(array('title' => 'Orange'));
 		$oranges->addChild(new SwatTreeNode(array('title' => 'Navel', 'value' => 5)));
-		$oranges->addChild(new SwatTreeNode(array('title' => 'Blood', 'value' => 6)));
-		$oranges->addChild(new SwatTreeNode(array('title' => 'Florida', 'value' => 7)));
-		$oranges->addChild(new SwatTreeNode(array('title' => 'California', 'value' => 8)));
-		$oranges->addChild(new SwatTreeNode(array('title' => 'Mandarin', 'value' => 9)));
+
+		$blood_oranges = new SwatTreeNode(array('title' => 'Blood'));
+		$blood_oranges->addChild(new SwatTreeNode(array('title' => 'Doble Fina', 'value' => 6)));
+		$blood_oranges->addChild(new SwatTreeNode(array('title' => 'Entrefina', 'value' => 7)));
+		$blood_oranges->addChild(new SwatTreeNode(array('title' => 'Sanguinelli', 'value' => 8)));
+		$oranges->addChild($blood_oranges);
+
+		$oranges->addChild(new SwatTreeNode(array('title' => 'Florida', 'value' => 9)));
+		$oranges->addChild(new SwatTreeNode(array('title' => 'California', 'value' => 10)));
+		$oranges->addChild(new SwatTreeNode(array('title' => 'Mandarin', 'value' => 11)));
 		
 		$tree->addChild($apples);
 		$tree->addChild($oranges);
