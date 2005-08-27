@@ -98,13 +98,21 @@ class SwatButton extends SwatControl
 	/**
 	 * Sets a stock title
 	 *
-	 * Looks up a stock title for this button and set it as the current title.
+	 * Looks up a stock title for this button and sets it as the current title.
 	 *
-	 * @param string $name the shortname of the stock title.
+	 * Valid stock title ids are:
+	 *
+	 * - submit
+	 * - create
+	 * - apply
+	 *
+	 * @param string $stock_id the identifier of the stock title to use.
+	 *
+	 * @throws SwatException
 	 */
-	public function setTitleFromStock($name)
+	public function setTitleFromStock($stock_id)
 	{
-		switch ($name) {
+		switch ($stock_id) {
 		case 'submit':
 			$this->title = Swat::_('Submit');
 			break;
@@ -116,6 +124,12 @@ class SwatButton extends SwatControl
 		case 'apply':
 			$this->title = Swat::_('Apply');
 			break;
+
+		default:
+			throw new SwatException(sprintf("%s: no stock title with the id ".
+				"of '%s' exists.",
+				__CLASS__,
+				$stock_id));
 		}
 	}
 }
