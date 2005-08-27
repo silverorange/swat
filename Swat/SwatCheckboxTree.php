@@ -23,19 +23,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	public $tree = null;
 	
 	/**
-	 * Tree Path
-	 *
-	 * An array containing the branch of the selected node.
-	 * This is initialized at process time.
-	 *
-	 * TODO: This doesn't make any sense as any number of checkboxes
-	 *       may be selected each with unique paths.
-	 *
-	 * @var array
-	 */
-	private $path = array();
-	
-	/**
 	 * A label tag used for displaying tree nodes
 	 *
 	 * @var SwatHtmltag
@@ -82,34 +69,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		}
 
 		$div_tag->close();
-	}
-
-	/**
-	 * Processes this checkbox tree
-	 *
-	 * Gets the selected checkbox path.
-	 *
-	 * TODO: Finish writing this.
-	 */
-	public function process()
-	{
-		parent::process();
-
-		//$this->path = explode('/', $this->value);
-		//$this->value = $this->path[count($this->path)-1];
-	}
-
-	/**
-	 * Gets the path of the user selected elemtent
-	 *
-	 * This method only returns meaningful results after
-	 * process() has been called.
-	 *
-	 * @return array the path of the current user selected element.
-	 */
-	public function getPath()
-	{
-		return $this->path;
 	}
 
 	/**
