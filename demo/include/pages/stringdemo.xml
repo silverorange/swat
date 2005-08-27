@@ -1,0 +1,8 @@
+<?xml version='1.0' standalone='yes'?>
+<swat-interface>
+	<widget class="SwatFrame" id="my_frame">
+		<property name="title" value="SwatString Demos" />
+		<widget class="SwatContentBlock" id="string_demos">
+		</widget>
+	</widget>
+</swat-interface>

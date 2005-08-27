@@ -30,6 +30,7 @@ class DemoMenu
 			'Pagination' =>    'SwatPagination',
 			'PasswordEntry' => 'SwatPasswordEntry',
 			'RadioList' =>     'SwatRadioList',
+			'StringDemo' =>    'SwatString',
 			'Textarea' =>      'SwatTextarea',
 			'TimeZoneEntry' => 'SwatTimeZoneEntry',
 			'ToolLink' =>      'SwatToolLink',

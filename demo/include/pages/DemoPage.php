@@ -19,7 +19,7 @@ class DemoPage extends SwatPage
 	protected $ui = null;
 	protected $start_time = 0;
 	
-	private $demo;
+	protected $demo;
 	
 	public function init()
 	{
