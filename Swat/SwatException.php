@@ -20,15 +20,13 @@ class SwatException extends Exception
 	 */
 	public function process()
 	{
-		if (ini_get('display_errors')) {
+		if (ini_get('display_errors'))
 			echo $this->toXHTML();
-			exit;
-		}
 
-		/* TODO: make error logging work
 		if (ini_get('log_errors'))
 			$this->log();
-		*/
+
+		exit;
 	}
 
 	/**
@@ -38,10 +36,11 @@ class SwatException extends Exception
 	 */
 	public function log()
 	{
+		error_log($this->getSummary(), 0);
 	}
 
 	/**
-	 * Gets a one-line short text summar of this exception
+	 * Gets a one-line short text summary of this exception
 	 *
 	 * This summary is useful for log entries and error email titles.
 	 *
@@ -49,6 +48,14 @@ class SwatException extends Exception
 	 */
 	public function getSummary()
 	{
+		ob_start();
+		
+		printf("%s in file '%s' line %s",
+			get_class($this),
+			$this->getFile(),
+			$this->getLine());
+
+		return ob_get_clean();
 	}
 
 	/**
@@ -62,9 +69,8 @@ class SwatException extends Exception
 	{
 		ob_start();
 		
-		echo "Uncaught Exception\n\n";
-
-		printf("%s: %s\n\nThrown in file '%s' (on line %s)\n\n",
+		printf("Uncaught Exception: %s\n\nMessage:\n\t%s\n\n".
+			"Thrown in file '%s' on line %s.\n\n",
 			get_class($this),
 			$this->getMessage(),
 			$this->getFile(),
@@ -75,14 +81,21 @@ class SwatException extends Exception
 		$count = count($trace);
 
 		foreach ($trace as $entry) {
-			printf("\t%d. In file '%s' (on line %s) in method: %s%s%s(%s)\n",
-				--$count,
+
+			if (array_key_exists('args', $entry))
+				$arguments = $this->getArguments($entry['args']);
+			else
+				$arguments = '';
+
+			printf("%s. In file '%s' on line %s.\n%sMethod: %s%s%s(%s)\n",
+				str_pad(--$count, 6, ' ', STR_PAD_LEFT),
 				$entry['file'],
 				$entry['line'],
-				array_key_exists('class', $entry)? $entry['class']: '',
-				array_key_exists('type', $entry)? $entry['type']: '',
+				str_repeat(' ', 8),
+				array_key_exists('class', $entry) ? $entry['class'] : '',
+				array_key_exists('type', $entry) ? $entry['type'] : '',
 				$entry['function'],
-				array_key_exists('args', $entry) ? $entry['args'] : '');
+				$arguments);
 		}
 		
 		echo "\n";
@@ -105,8 +118,10 @@ class SwatException extends Exception
 
 		echo '<div class="swat-exception">';
 	
-		printf('<h3>Uncaught Exception: %s</h3><div class="swat-exception-body">'.
-				'Message:<div class="swat-exception-message">%s</div>Thrown in file <strong>%s</strong> '.
+		printf('<h3>Uncaught Exception: %s</h3>'.
+				'<div class="swat-exception-body">'.
+				'Message:<div class="swat-exception-message">%s</div>'.
+				'Thrown in file <strong>%s</strong> '.
 				'on line <strong>%s</strong>.<br /><br />',
 				get_class($this),
 				$this->getMessage(),
@@ -119,28 +134,19 @@ class SwatException extends Exception
 
 		foreach ($trace as $entry) {
 			
-			if (array_key_exists('args', $entry)) {
-				if (is_array($entry['args'])) {
-					foreach ($entry['args'] as &$arg)
-						if (is_object($arg))
-							$arg = get_class($arg);
-
-					$arguments = implode(', ', $entry['args']);
-				} else {
-					$arguments = $entry['args'];
-				}
-			} else {
+			if (array_key_exists('args', $entry))
+				$arguments = $this->getArguments($entry['args']);
+			else
 				$arguments = '';
-			}
 			
-			printf("<dt>%s.</dt><dd>In file <strong>%s</strong> ".
-				"line&nbsp;<strong>%s</strong>.<br />Method: ".
-				"<strong>%s%s%s(%s)</strong></dd>",
+			printf('<dt>%s.</dt><dd>In file <strong>%s</strong> '.
+				'line&nbsp;<strong>%s</strong>.<br />Method: '.
+				'<strong>%s%s%s(%s)</strong></dd>',
 				--$count,
 				$entry['file'],
 				$entry['line'],
-				array_key_exists('class', $entry)? $entry['class']: '',
-				array_key_exists('type', $entry)? $entry['type']: '',
+				array_key_exists('class', $entry) ? $entry['class'] : '',
+				array_key_exists('type', $entry) ? $entry['type'] : '',
 				$entry['function'],
 				$arguments);
 		}
@@ -148,6 +154,45 @@ class SwatException extends Exception
 		echo '</dl></div></div>';
 
 		return ob_get_clean();
+	}
+	
+	/**
+	 * Handles an exception
+	 *
+	 * Runs the process() method on SwatException exceptions and displays all
+	 * other exceptions.
+	 *
+	 * @param Exception $e the exception to handle.
+	 */
+	public static function handle($e)
+	{
+		if ($e instanceof SwatException)
+			$e->process();
+		else
+			echo $e;
+	}
+
+	/**
+	 * Formats a method call's arguments
+	 *
+	 * @param mixed an array of arguments or a single argument.
+	 *
+	 * @return string the arguments formatted into a comma delimited string.
+	 */
+	private function getArguments($args)
+	{
+		if (is_array($args)) {
+			foreach ($args as &$arg) {
+				if (is_object($arg)) {
+					$arg = get_class($arg);
+				} elseif (gettype($arg) == 'string') {
+					$arg = "'".$arg."'";
+				}
+			}
+			return implode(', ', $args);
+		} else {
+			return $args;
+		}
 	}
 
 	/**
@@ -169,22 +214,8 @@ class SwatException extends Exception
 }
 
 /**
- * Handles PHP5 exceptions
- *
- * Runs the process() method on SwatException exceptions and displays all
- * other exceptions.
- */
-function swat_exception_handler($e)
-{
-	if ($e instanceof SwatException)
-		$e->process();
-	else
-		echo $e;
-}
-
-/**
  * Set the PHP5 exception handler to out cutom function
  */
-set_exception_handler('swat_exception_handler');
+set_exception_handler(array('SwatException', 'handle'));
 
 ?>
