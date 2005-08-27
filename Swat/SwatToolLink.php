@@ -108,7 +108,7 @@ class SwatToolLink extends SwatControl
 	 *
 	 * @throws SwatException
 	 */
-	public function setImagefromStock($stock_id)
+	public function setImageFromStock($stock_id)
 	{
 		switch ($stock_id) {
 		case 'edit':
