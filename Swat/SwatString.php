@@ -102,10 +102,7 @@ class SwatString
 			// (only tags remaining after blocklevel tags removed)
 			'/<[\/\!]*?[^<>]*?>/s',
 			// replace whitespaces with single spaces. \xa0 is &#160; is &nbsp;
-			'/[ \xa0\t]+/',
-			// replace continuous strings of whitespace containing either a
-			// cr or lf with a non-breaking space padded bullet
-			'/[\xa0\s]*[\n\r][\xa0\s]*/s'
+			'/[ \xa0\t]+/'
 		);
 
 		$replace = array(
@@ -114,13 +111,21 @@ class SwatString
 			'',
 			"\n",
 			'',
-			' ',
-			' &nbsp;&#8226;&nbsp; '
+			' '
 		);
+
+		$text = preg_replace($search, $replace, $text);
 
 		$text = trim($text);
 
-		//$text = preg_replace('/(\r\n)+/s', ' &nbsp;&#8226;&nbsp; ', $text);
+		$search =
+			// replace continuous strings of whitespace containing either a
+			// cr or lf with a non-breaking space padded bullet
+			'/[\xa0\s]*[\n\r][\xa0\s]*/s';
+
+		$replace = 
+			' &nbsp;&#8226;&nbsp; ';
+
 		$text = preg_replace($search, $replace, $text);
 
 		$text = SwatString::ellipsizeRight($text, $max_length);
