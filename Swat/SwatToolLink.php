@@ -31,17 +31,33 @@ class SwatToolLink extends SwatControl
 	 */
 	public $title = '';
 
+	/**
+	 * An optional image for this tool link
+	 *
+	 * @var string
+	 */
+	public $image = null;
 
 	/**
-	 * Link value
+	 * The width of the optional image
 	 *
-	 * A value to substitute into the link.
+	 * @var integer
+	 */
+	public $image_width = null;
+
+	/**
+	 * The height of the optional image
+	 *
+	 * @var integer
+	 */
+	public $image_height = null;
+
+	/**
+	 * A value to substitute into the link
 	 *
 	 * @var string
 	 */
 	public $value = null;
-
-	// TODO: add an optional image, and possibly stock images
 
 	/**
 	 * Displays this tool link
@@ -51,18 +67,60 @@ class SwatToolLink extends SwatControl
 		if (!$this->visible)
 			return;
 
-		$anchor = new SwatHtmlTag('a');
+		$anchor_tag = new SwatHtmlTag('a');
 
 		if ($this->value === null)
-			$anchor->href = $this->link;
+			$anchor_tag->href = $this->link;
 		else
-			$anchor->href = sprintf($this->link, $this->value);
+			$anchor_tag->href = sprintf($this->link, $this->value);
 
-		$anchor->content = $this->title;
-		$anchor->class = 'swat-tool-link';
+		$anchor_tag->class = 'swat-tool-link';
 
-		$anchor->display();
-	}	
+		if ($this->image === null) {
+			$anchor_tag->content = $this->title;
+			$anchor_tag->display();
+		} else {
+			$image_tag = new SwatHtmlTag('img');
+			$image_tag->src = $this->image;
+			if ($this->image_width !== null)
+				$image_tag->width = $this->image_width;
+
+			if ($this->image_height !== null)
+				$image_tag->height = $this->image_height;
+
+			$image_tag->alt = $this->title;
+			
+			$anchor_tag->open();
+			echo $this->title;
+			$image_tag->display();
+			$anchor_tag->close();
+		}
+	}
+
+	/**
+	 * Sets the image of this tool link to a stock image
+	 *
+	 * Valid stock image ids are:
+	 *
+	 * - edit
+	 *
+	 * @param string $stock_id the identifier of the stock image to use.
+	 */
+	public function setImagefromStock($stock_id)
+	{
+		switch ($stock_id) {
+		case 'edit':
+			$this->image = 'edit.png';
+			$this->image_width = '16';
+			$this->image_height = '16';
+			break;
+		default:
+			throw new SwatException(sprintf("%s: no stock image with the id ".
+				"of '%s' exists.",
+				__CLASS__,
+				$stock_id));
+		}
+	}
 }
 
 ?>
