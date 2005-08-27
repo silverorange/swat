@@ -105,6 +105,8 @@ class SwatToolLink extends SwatControl
 	 * - edit
 	 *
 	 * @param string $stock_id the identifier of the stock image to use.
+	 *
+	 * @throws SwatException
 	 */
 	public function setImagefromStock($stock_id)
 	{
