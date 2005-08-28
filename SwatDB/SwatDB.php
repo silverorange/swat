@@ -230,19 +230,20 @@ class SwatDB
 	 *        Use an array for more than one parameter.
 	 *
 	 * @param mixed $wrapper Optional MDB2 wrapper class.
+	 * @param array $types Optional array MDB2 datatypes for the recordset.
 	 *
 	 * @return mixed An MDB2 recordset or an instance of the wrapper class.
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function executeStoredProc($db, $proc, $params, $wrapper = null)
+	public static function executeStoredProc($db, $proc, $params, $wrapper = null, $types = null)
 	{
 		if (!is_array($params))
 			$params = array($params);
 
 		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
 
-        $rs = $db->executeStoredProc($proc, $params, null, true, $mdb2_wrapper);
+        $rs = $db->executeStoredProc($proc, $params, $types, true, $mdb2_wrapper);
 
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs);
@@ -873,12 +874,12 @@ class SwatDB
 		$title_field = new SwatDBField($title_field, 'text');
 		$level_field = new SwatDBField($level_field, 'integer');
 		
-		$types = array($id_field->type, $title_field->type, $level_field->type);
-		
-		$rs = $db->executeStoredProc($sp, array(0), $types, true);
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs);
-		
+		// XXX: since we're using a patched MDB2 that discovers types automatically
+		//      from the recordset, I don't think we need this:
+		//$types = array($id_field->type, $title_field->type, $level_field->type);
+		//$rs = SwatDB::executeStoredProc($db, $sp, array(0), null, $types);
+		$rs = SwatDB::executeStoredProc($db, $sp, array(0));
+
 		$tree = SwatDB::buildTreeOptionArray($rs, $title_field->name, 
 			$id_field->name, $level_field->name);
 		return $tree;
