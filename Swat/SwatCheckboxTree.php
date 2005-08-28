@@ -43,7 +43,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	public function display()
 	{
 		if (!$this->visible)
-			return
+			return;
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id.'_div';

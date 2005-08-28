@@ -55,7 +55,7 @@ class SwatTextarea extends SwatControl implements SwatState
 	public function display()
 	{
 		if (!$this->visible)
-			return
+			return;
 
 		$textarea_tag = new SwatHtmlTag('textarea');
 		$textarea_tag->name = $this->id;

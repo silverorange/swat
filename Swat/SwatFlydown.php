@@ -92,7 +92,7 @@ class SwatFlydown extends SwatControl implements SwatState
 	public function display()
 	{
 		if (!$this->visible)
-			return
+			return;
 
 		$options = $this->getOptions();
 

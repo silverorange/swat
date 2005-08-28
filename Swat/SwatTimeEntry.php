@@ -145,7 +145,7 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	public function display()
 	{
 		if (!$this->visible)
-			return
+			return;
 
 		echo '<span class="swat-time-span">';
 

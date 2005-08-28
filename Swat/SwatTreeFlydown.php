@@ -40,7 +40,7 @@ class SwatTreeFlydown extends SwatFlydown
 	public function display()
 	{
 		if (!$this->visible)
-			return
+			return;
 
 		if ($this->tree !== null)
 			$options = $this->tree->toArray();
