@@ -60,7 +60,7 @@ class SwatFileEntry extends SwatControl
 	public function display()
 	{
 		if (!$this->visible)
-			return
+			return;
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'file';

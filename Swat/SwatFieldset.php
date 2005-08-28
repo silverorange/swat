@@ -27,7 +27,7 @@ class SwatFieldset extends SwatContainer
 	public function display()
 	{
 		if (!$this->visible)
-			return
+			return;
 
 		$fieldset_tag = new SwatHtmlTag('fieldset');
 		$fieldset_tag->class = 'swat-fieldset';
