@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatException.php';
+require_once 'PEAR.php';
 
 /**
  * A SwatDB Exception.
@@ -11,6 +12,17 @@ require_once 'Swat/SwatException.php';
  */
 class SwatDBException extends SwatException
 {
+	public function __construct($message = null, $code = 0)
+	{
+		if (is_object($message) && ($message instanceof PEAR_Error)) {
+			$error = $message;
+			$message = $error->getMessage();
+			$message .= "\n".$error->getUserInfo();
+			$code = $error->getCode();
+		}
+
+		parent::__construct($message, $code);
+	}
 }
 
 ?>
