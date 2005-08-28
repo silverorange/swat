@@ -6,7 +6,7 @@ require_once 'Swat/SwatControl.php';
 /**
  * Image display control
  *
- * This control simple displays a static image.
+ * This control simply displays a static image.
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange
