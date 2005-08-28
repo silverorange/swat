@@ -16,7 +16,6 @@ require_once 'Swat/SwatState.php';
  */
 class SwatChangeOrder extends SwatControl implements SwatState
 {
-
 	/**
 	 * Order options
 	 *
