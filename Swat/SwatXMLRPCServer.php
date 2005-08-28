@@ -18,11 +18,6 @@ require_once 'XML/RPC2/Server.php';
  */
 abstract class SwatXMLRPCServer extends SwatPage
 {
-    protected function createLayout()
-    {
-        return new SwatLayout('Swat/layouts/xmlrpcserver.php');
-    }
-
 	/**
 	 * Process the request
 	 *
@@ -48,6 +43,11 @@ abstract class SwatXMLRPCServer extends SwatPage
 	 */
 	public function build()
 	{
+	}
+
+	protected function createLayout()
+	{
+		return new SwatLayout('Swat/layouts/xmlrpcserver.php');
 	}
 }
 
