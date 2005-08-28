@@ -26,16 +26,18 @@ class SwatDB
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 * @param string $sql The SQL to execute.
+	 * @param array $wrapper Optional name of class to wrap the recordset with.
 	 * @param array $types Optional array MDB2 datatypes for the recordset.
 	 *
 	 * @return MDB2_result_common A recordset containing the query result.
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function query($db, $sql, $types = null)
+	public static function query($db, $sql, $wrapper = null, $types = null)
 	{
+		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
 		SwatDB::debug($sql);
-		$rs = $db->query($sql, $types);
+		$rs = $db->query($sql, $types, true, $mdb2_wrapper);
 
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs);
@@ -413,7 +415,6 @@ class SwatDB
 		SwatDB::initFields($fields);
 		$id_field = new SwatDBField($id_field, 'integer');
 		$sql = 'select %s from %s where %s = %s';
-
 		$field_list = implode(',', SwatDB::getFieldNameArray($fields));
 
 		$sql = sprintf($sql,
@@ -423,10 +424,12 @@ class SwatDB
 			$db->quote($id, $id_field->type));
 
 		SwatDB::debug($sql);
-		$rs = SwatDB::query($db, $sql, SwatDB::getFieldTypeArray($fields));
+		// XXX: since we're using a patched MDB2 that discovers types automatically
+		//      from the recordset, I don't think we need this:
+		//$rs = SwatDB::query($db, $sql, null, SwatDB::getFieldTypeArray($fields));
+		$rs = SwatDB::query($db, $sql);
 
 		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
-
 		return $row;
 	}
 
@@ -614,7 +617,10 @@ class SwatDB
 			$sql .= ' order by '.$order_by_clause;
 
 		SwatDB::debug($sql);
-		$rs = SwatDB::query($db, $sql, array($id_field->type, $title_field->type));
+		// XXX: since we're using a patched MDB2 that discovers types automatically
+		//      from the recordset, I don't think we need this:
+		//$rs = SwatDB::query($db, $sql, array($id_field->type, $title_field->type));
+		$rs = SwatDB::query($db, $sql);
 		
 		$options = array();
 
@@ -691,8 +697,11 @@ class SwatDB
 
 		SwatDB::debug($sql);
 
-		$rs = SwatDB::query($db, $sql, array($id_field->type, $title_field->type,
-			$cascade_field->type));
+		// XXX: since we're using a patched MDB2 that discovers types automatically
+		//      from the recordset, I don't think we need this:
+		//$rs = SwatDB::query($db, $sql, array($id_field->type, $title_field->type,
+		//	$cascade_field->type));
+		$rs = SwatDB::query($db, $sql);
 
 		$options = array();
 		$current = null;
@@ -903,7 +912,10 @@ class SwatDB
 			$field->name, $field->name, $table);
 
 		SwatDB::debug($sql);
-		$rs = SwatDB::query($db, $sql, array($field->type));
+		// XXX: since we're using a patched MDB2 that discovers types automatically
+		//      from the recordset, I don't think we need this:
+		//$rs = SwatDB::query($db, $sql, array($field->type));
+		$rs = SwatDB::query($db, $sql);
 		
 		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
 		$field_name = $field->name;
