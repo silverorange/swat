@@ -29,7 +29,7 @@ class SwatContentBlock extends SwatControl
 			return
 
 		echo $this->content;
-	}	
+	}
 }
 
 ?>

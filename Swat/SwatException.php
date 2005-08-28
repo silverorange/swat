@@ -49,7 +49,7 @@ class SwatException extends Exception
 	public function getSummary()
 	{
 		ob_start();
-		
+
 		printf("%s in file '%s' line %s",
 			get_class($this),
 			$this->getFile(),
@@ -68,7 +68,7 @@ class SwatException extends Exception
 	public function toString()
 	{
 		ob_start();
-		
+
 		printf("Uncaught Exception: %s\n\nMessage:\n\t%s\n\n".
 			"Thrown in file '%s' on line %s.\n\n",
 			get_class($this),
@@ -97,7 +97,7 @@ class SwatException extends Exception
 				$entry['function'],
 				$arguments);
 		}
-		
+
 		echo "\n";
 
 		return ob_get_clean();
@@ -117,7 +117,7 @@ class SwatException extends Exception
 		$this->displayStyleSheet();
 
 		echo '<div class="swat-exception">';
-	
+
 		printf('<h3>Uncaught Exception: %s</h3>'.
 				'<div class="swat-exception-body">'.
 				'Message:<div class="swat-exception-message">%s</div>'.
@@ -133,12 +133,12 @@ class SwatException extends Exception
 		$count = count($trace);
 
 		foreach ($trace as $entry) {
-			
+
 			if (array_key_exists('args', $entry))
 				$arguments = htmlentities($this->getArguments($entry['args']));
 			else
 				$arguments = '';
-			
+
 			printf('<dt>%s.</dt><dd>In file <strong>%s</strong> '.
 				'line&nbsp;<strong>%s</strong>.<br />Method: '.
 				'<strong>%s%s%s(</strong>%s<strong>)</strong></dd>',
@@ -150,7 +150,7 @@ class SwatException extends Exception
 				$entry['function'],
 				$arguments);
 		}
-		
+
 		echo '</dl></div></div>';
 
 		return ob_get_clean();

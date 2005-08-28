@@ -29,8 +29,8 @@ abstract class SwatControl extends SwatWidget
 		else
 			$field_title = '';
  
- 		$message->primary_content = sprintf($message->primary_content, $field_title);
-		
+		$message->primary_content = sprintf($message->primary_content, $field_title);
+
 		$this->messages[] = $message;
 	}
 

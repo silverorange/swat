@@ -99,8 +99,9 @@ class SwatFileEntry extends SwatControl
 		$this->file = SwatApplication::initVar($this->id, null, SwatApplication::VAR_FILES);
 
 		if ($this->file['name'] == null)
-			$this->file = null; 	//note: an array is returned even if
-						//no file is uploaded, so check the filename
+			$this->file = null;
+			// note: an array is returned even if
+			//       no file is uploaded, so check the filename
 
 		if (!$this->required && $this->file === null) {
 			return;

@@ -21,7 +21,7 @@ class SwatCheckbox extends SwatControl implements SwatState
 	 * @var boolean
 	 */
 	public $value = false;
-	
+
 	/**
 	 * Displays this checkbox
 	 *
@@ -39,7 +39,7 @@ class SwatCheckbox extends SwatControl implements SwatState
 			$input_tag->checked = 'checked';
 
 		$input_tag->display();
-	}	
+	}
 
 	/**
 	 * Processes this checkbox
@@ -62,7 +62,7 @@ class SwatCheckbox extends SwatControl implements SwatState
 	{
 		return $this->value;
 	}
-	
+
 	/**
 	 * Sets the current state of this checkbox
 	 *

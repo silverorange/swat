@@ -11,7 +11,6 @@ require_once 'Swat/SwatCellRenderer.php';
  */
 class SwatCheckboxCellRenderer extends SwatCellRenderer
 {
-
 	/**
 	 * Id of checkbox
 	 *

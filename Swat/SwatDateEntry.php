@@ -215,12 +215,12 @@ class SwatDateEntry extends SwatControl implements SwatState
 
 			if ($m && $datepart == 1 && $this->display_parts & self::MONTH) {
 				if ($this->value !== null)
-					$this->month_flydown->value = $this->value->getMonth();	
+					$this->month_flydown->value = $this->value->getMonth();
 
 				$this->month_flydown->display();
 			} elseif ($d && $datepart == 2 &&
 				$this->display_parts & self::DAY) {
-				
+
 				if ($this->value !== null)
 					$this->day_flydown->value = $this->value->getDay();
 
@@ -362,7 +362,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 		if ($this->value === null)
 			return null;
 		else
-			return $this->value->getDate();	
+			return $this->value->getDate();
 	}
 
 	/**
@@ -410,8 +410,8 @@ class SwatDateEntry extends SwatControl implements SwatState
 		$start_year = $this->valid_range_start->getYear();
 
 		$tmp = clone $this->valid_range_end;
-        $tmp->subtractSeconds(1);
-        $end_year = $tmp->getYear();
+		$tmp->subtractSeconds(1);
+		$end_year = $tmp->getYear();
 
 		for ($i = $start_year; $i <= $end_year; $i++)
 			$this->year_flydown->addOption($i, $i);
@@ -427,8 +427,8 @@ class SwatDateEntry extends SwatControl implements SwatState
 
 		$start_year = $this->valid_range_start->getYear();
 		$tmp = clone $this->valid_range_end;
-        $tmp->subtractSeconds(1);
-        $end_year = $tmp->getYear();
+		$tmp->subtractSeconds(1);
+		$end_year = $tmp->getYear();
 
 		if ($end_year == $start_year) {
 
@@ -474,12 +474,12 @@ class SwatDateEntry extends SwatControl implements SwatState
 
 		if ($this->show_month_number)
 			$option .= '('.str_pad($month, 2, '0', STR_PAD_LEFT).') ';
-			
+
 		$option .= Date_Calc::getMonthFullName($month);
 
 		return $option;
 	}
-		
+
 	/**
 	 * Creates the day flydown for this date entry
 	 */
@@ -491,8 +491,8 @@ class SwatDateEntry extends SwatControl implements SwatState
 		$start_year  = $this->valid_range_start->getYear();
 
 		$tmp = clone $this->valid_range_end;
-        $tmp->subtractSeconds(1);
-        $end_year = $tmp->getYear();
+		$tmp->subtractSeconds(1);
+		$end_year = $tmp->getYear();
 
 		$start_month = $this->valid_range_start->getMonth();
 		$end_month   = $this->valid_range_end->getMonth();
@@ -585,7 +585,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 		$year  = '';
 
 		if ($this->display_parts & self::TIME)
-			$time = ' %I:%M %p';	
+			$time = ' %I:%M %p';
 
 		if ($this->display_parts & self::DAY)
 			$day = ' %d';
@@ -615,7 +615,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 		echo '<script type="text/javascript">';
 
 		echo sprintf("%s = new SwatDate('%s');\n", $this->id, $this->id);
-		
+
 		if ($this->display_parts & self::TIME) {
 			echo sprintf("%s.setSwatTime(%s_time_entry);\n",
 				$this->id, $this->id);

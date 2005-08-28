@@ -35,7 +35,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 	 * @var array
 	 */
 	public $values = null;
-	
+
 	/**
 	 * Width of the order box (either pixels or %)
 	 *
@@ -49,19 +49,19 @@ class SwatChangeOrder extends SwatControl implements SwatState
 	 * @var string
 	 */
 	public $height = '150';
-	
+
 	/**
 	 * onclick html attribute of the buttons
 	 *
 	 * @var string
 	 */
 	public $onclick = null;
-	
+
 	public function display()
 	{
 		if (!$this->visible)
 			return;
-			
+
 		if ($this->values !== null) {
 			$array = array();
 			foreach ($this->values as $id)
@@ -69,7 +69,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 
 			$this->options = $array;
 		}
-	
+
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->class = 'swat-order-control-div';
 		$div_tag->open();
@@ -94,7 +94,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$hidden_tag->name = $this->id;
 		$hidden_tag->value = implode(',', array_keys($this->options));
 		$hidden_tag->display();
-		
+
 		$up_btn = new SwatHtmlTag('input');
 		$up_btn->type = 'button';
 		$up_btn->value = Swat::_('Move Up');
@@ -105,7 +105,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$up_btn->display();
 
 		echo '<br />';
-	
+
 		$down_btn = new SwatHtmlTag('input');
 		$down_btn->type = 'button';
 		$down_btn->value = Swat::_('Move Down');
@@ -117,9 +117,9 @@ class SwatChangeOrder extends SwatControl implements SwatState
 
 		// TODO: maybe clean up the way the buttons are positioned
 		echo '<div style="clear:left;"></div>';
-	
+
 		$div_tag->close();
-	}	
+	}
 
 	public function process()
 	{
@@ -132,7 +132,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
-		
+
 		$warning = Swat::_('You must first select the item to reorder.');
 		// TODO: figure out how to make the stylesheets work better.
 		$style = '../swat/swat.css';
@@ -141,9 +141,9 @@ class SwatChangeOrder extends SwatControl implements SwatState
 			$values[$id] = addslashes($title);
 
 		$values = implode("','", $values);
-		
+
 		printf("\n {$this->id}_obj = new SwatChangeOrder('%s'); ",
-				$this->id, $warning);
+			$this->id, $warning);
 
 		echo "\n {$this->id}_obj.stylesheet = '{$style}';";
 		echo "\n {$this->id}_obj.draw(new Array('{$values}')); ";

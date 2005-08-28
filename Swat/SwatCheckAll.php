@@ -19,7 +19,7 @@ class SwatCheckAll extends SwatControl
 	 * @var SwatObject
 	 */
 	public $controller = null;
-	
+
 	/**
 	 * CSS class name
 	 *
@@ -64,7 +64,7 @@ class SwatCheckAll extends SwatControl
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->class = $this->class;
 		$div_tag->open();
-		
+
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
 		$input_tag->id = $this->id;
@@ -78,7 +78,7 @@ class SwatCheckAll extends SwatControl
 		$label_tag->close();
 
 		$div_tag->close();
-		
+
 		$this->displayJavascript();
 	}
 

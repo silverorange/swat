@@ -43,7 +43,7 @@ class SwatApplication extends SwatObject
 	 * @var SwatPage
 	 */
 	protected $page = null;
-	
+
 	/**
 	 * The base value for all of this application's anchor hrefs
 	 *
@@ -304,7 +304,7 @@ class SwatApplication extends SwatObject
 	public static function initVar($name, $default = null, $types = 0)
 	{
 		$var = $default;
-		
+
 		if ($types == 0)
 			$types = self::VAR_POST | self::VAR_GET;
 
@@ -319,23 +319,23 @@ class SwatApplication extends SwatObject
 		elseif (($types & self::VAR_REQUEST) != 0
 			&& isset($_REQUEST[$name]))
 				$var = $_REQUEST[$name];
-				
+
 		elseif (($types & self::VAR_COOKIE) != 0
 			&& isset($_COOKIE[$name]))
 				$var = $_COOKIE[$name];
-				
+
 		elseif (($types & self::VAR_SERVER) != 0
 			&& isset($_SERVER[$name]))
 				$var = $_SERVER[$name];
-				
+
 		elseif (($types & self::VAR_SESSION) != 0
 			&& isset($_SESSION[$name]))
 				$var = $_SESSION[$name];
-				
+
 		elseif (($types & self::VAR_FILES) != 0
 			&& isset($_FILES[$name]))
 				$var = $_FILES[$name];
-				
+
 		elseif (($types & self::VAR_ENV != 0)
 			&& isset($_ENV[$name]))
 				$var = $_ENV[$name];

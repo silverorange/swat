@@ -73,7 +73,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 * @var boolean
 	 */
 	private $widgets_created = false;
-	
+
 	/**
 	 * Displays this list of actions
 	 *
@@ -88,7 +88,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 
 		$this->createWidgets();
 		$this->displayJavascript();
-		
+
 		// set the flydown back to its initial state (no persistence)
 		if ($this->auto_reset)
 			$this->action_flydown->reset();
@@ -100,12 +100,12 @@ class SwatActions extends SwatControl implements SwatUIParent
 			$this->selected = null;
 
 		echo '<div class="swat-actions">';
-		
+
 		$label = new SwatHtmlTag('label');
 		$label->for = $this->id.'_action_flydown';
 		$label->content = sprintf('%s: ', Swat::_('Action'));
 		$label->display();
-		
+
 		$this->action_flydown->display();
 		echo ' ';
 		$this->apply_button->display();
@@ -113,10 +113,10 @@ class SwatActions extends SwatControl implements SwatUIParent
 		foreach ($this->action_items as $item) {
 			if ($item->widget !== null) {
 				$div = new SwatHtmlTag('div');
-				
+
 				$div->class = ($item == $this->selected) ?
 					'swat-visible' : 'swat-hidden';
-					
+
 				$div->id = $this->id.'_'.$item->id;
 
 				$div->open();
@@ -129,9 +129,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 		echo Swat::_('Actions apply to checked items.');
 		echo '</div>';
 		echo '</div>';
-		
+
 	}
-	
+
 	/**
 	 * Figures out what action item is selected
 	 *
@@ -202,13 +202,13 @@ class SwatActions extends SwatControl implements SwatUIParent
 	{
 		if ($this->widgets_created)
 			return;
-		
+
 		$this->widgets_created = true;
 
 		$this->action_flydown = new SwatFlydown($this->id.'_action_flydown');
 		$this->action_flydown->onchange =
 			"swatActionsDisplay(this, '{$this->id}');";
-			
+
 		$this->action_flydown->show_blank = $this->show_blank;
 
 		foreach ($this->action_items as $item)

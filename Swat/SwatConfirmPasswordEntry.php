@@ -20,7 +20,7 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry
 	 * @var SwatPasswordEntry
 	 */
 	public $password_widget = null;
-	
+
 	/**
 	 * Checks to make sure passwords match
 	 *
@@ -33,7 +33,7 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry
 	public function process()
 	{
 		parent::process();
-		
+
 		if ($this->password_widget === null)
 			throw new SwatException(__CLASS__.
 				'$this->password_widget is null. Expected a reference to a '.

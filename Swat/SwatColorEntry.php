@@ -21,7 +21,7 @@ class SwatColorEntry extends SwatControl implements SwatState
 	 * @var string
 	 */
 	public $value = null;
-	
+
 	/**
 	 * Whether this entry widget is required or not
 	 *
@@ -38,7 +38,7 @@ class SwatColorEntry extends SwatControl implements SwatState
 	 * javascript.
 	 */
 	public function display()
-	{	
+	{
 		if (!$this->visible)
 			return
 
@@ -95,13 +95,13 @@ class SwatColorEntry extends SwatControl implements SwatState
 
 		$control_div = new SwatHtmlTag('div');
 		$control_div->content = '&nbsp;';
-		
+
 		$wrapper_div->open();
 
 		$control_div->class = 'palette';
 		$control_div->id = $this->id.'_color_palette';
 		$control_div->display();
-		
+
 		$control_div->class = 'scale';
 		$control_div->id = $this->id.'_grayscale';
 		$control_div->display();
@@ -113,11 +113,11 @@ class SwatColorEntry extends SwatControl implements SwatState
 
 		$swatch_div = new SwatHtmlTag('div');
 		$swatch_div->content = '&nbsp;';
-		
+
 		$swatch_div->class = 'swatch';
 		$swatch_div->id = $this->id.'_swatch';
 		$swatch_div->display();
-		
+
 		$swatch_div->class = 'active';
 		$swatch_div->id = $this->id.'_active_swatch';
 		$swatch_div->display();
@@ -133,11 +133,11 @@ class SwatColorEntry extends SwatControl implements SwatState
 		echo 'r: ';
 		$rgb_value_input->id = $this->id.'_color_input_r';
 		$rgb_value_input->display();
-		
+
 		echo 'g: ';
 		$rgb_value_input->id = $this->id.'_color_input_g';
 		$rgb_value_input->display();
-		
+
 		echo 'b: ';
 		$rgb_value_input->id = $this->id.'_color_input_b';
 		$rgb_value_input->display();
@@ -150,17 +150,17 @@ class SwatColorEntry extends SwatControl implements SwatState
 		$rgb_value_input->id = $this->id.'_color_input_hex';
 		$rgb_value_input->class = 'hex-input';
 		$rgb_value_input->display();
-		
+
 		echo '</div></div><div class="palette-buttons">';
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'button';
-		
+
 		$input_tag->class = 'button-set';
 		$input_tag->onclick = $this->id.'_obj.apply();';
 		$input_tag->value = Swat::_('Set Color');
 		$input_tag->display();
-		
+
 		$input_tag->class = 'button-cancel';
 		$input_tag->onclick = $this->id.'_obj.none();';
 		$input_tag->value = Swat::_('Set None');
@@ -204,14 +204,14 @@ class SwatColorEntry extends SwatControl implements SwatState
 				$this->maxlength);
 
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-			
+
 		} elseif ($this->minlength !== null && $len < $this->minlength) {
 
 			$msg = sprintf(Swat::_('The %%s field must be more than %s characters.'),
 				$this->minlength);
 
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-			
+
 		}
 	}
 
@@ -227,7 +227,7 @@ class SwatColorEntry extends SwatControl implements SwatState
 		if ($this->value === null)
 			return null;
 		else
-			return $this->value;	
+			return $this->value;
 	}
 
 	/**

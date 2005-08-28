@@ -54,7 +54,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	{
 		$this->widget->display();
 	}
-	
+
 	/**
 	 * Sets the widget to use for this item
 	 *
