@@ -19,6 +19,9 @@ class SwatPasswordEntry extends SwatEntry
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return
+
 		$this->html_input_type = 'password';
 		parent::display();
 	}

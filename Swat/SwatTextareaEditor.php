@@ -48,6 +48,9 @@ class SwatTextareaEditor extends SwatTextarea
 
 	public function display()
 	{
+		if (!$this->visible)
+			return
+
 		$this->displayJavascript();
 	}	
 	

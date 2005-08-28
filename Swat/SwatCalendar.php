@@ -51,6 +51,9 @@ class SwatCalendar extends SwatControl
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return;
+
 		$img_tag = new SwatHtmlTag('img');
 		$img_tag->src = 'swat/images/calendar.png';
 		$img_tag->class = 'swat-calendar-icon';

@@ -46,6 +46,9 @@ class SwatMessageDisplay extends SwatControl
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return
+
 		if (count($this->_messages) == 0)
 			return;
 

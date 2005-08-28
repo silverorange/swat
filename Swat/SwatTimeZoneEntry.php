@@ -51,6 +51,9 @@ class SwatTimeZoneEntry extends SwatControl implements SwatState
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return
+
 		$areas = new SwatFlydown();
 		$areas->addOptionsByArray($this->areas);
 		$areas->show_blank = false;

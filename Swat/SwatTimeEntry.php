@@ -144,6 +144,9 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return
+
 		echo '<span class="swat-time-span">';
 
 		$this->createFlydowns();

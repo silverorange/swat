@@ -66,6 +66,9 @@ class SwatCascadeFlydown extends SwatFlydown
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return;
+
 		parent::display();
 		$this->displayJavascript();
 	}

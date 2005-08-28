@@ -25,6 +25,9 @@ class SwatContentBlock extends SwatControl
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return
+
 		echo $this->content;
 	}	
 }
