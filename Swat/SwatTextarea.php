@@ -28,7 +28,7 @@ class SwatTextarea extends SwatControl implements SwatState
 	 * @var boolean
 	 */
 	public $required = false;
-	
+
 	/**
 	 * Rows
 	 *
@@ -68,7 +68,7 @@ class SwatTextarea extends SwatControl implements SwatState
 		$textarea_tag->open();
 		echo $this->value;
 		$textarea_tag->close();
-	}	
+	}
 
 	/**
 	 * Processes this textarea
@@ -85,7 +85,7 @@ class SwatTextarea extends SwatControl implements SwatState
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 		}
 	}
-	
+
 	/**
 	 * Gets the current state of this textarea
 	 *

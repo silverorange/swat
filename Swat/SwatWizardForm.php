@@ -18,7 +18,7 @@ require_once 'Swat/SwatWizardPostStateStore.php';
 class SwatWizardForm extends SwatForm
 {
 	// {{{ public properties
-	
+
 	/**
 	 * The current step of this wizard form
 	 *
@@ -67,7 +67,7 @@ class SwatWizardForm extends SwatForm
 
 	// }}}
 	// {{{ public function init()
-	
+
 	/**
 	 * Initializes this wizard form
 	 *
@@ -87,7 +87,7 @@ class SwatWizardForm extends SwatForm
 
 	// }}}
 	// {{{ public function process()
-	
+
 	/**
 	 * Processes this wizard form
 	 *
@@ -103,9 +103,9 @@ class SwatWizardForm extends SwatForm
 		// use a POST var type persistance framework by default
 		if ($this->state_store === null)
 			$this->state_store = new SwatWizardPostStateStore($this);
-		
+
 		$this->state_store->init();
-	
+
 		$this->processed = true;
 		$this->processHiddenFields();
 
@@ -151,7 +151,7 @@ class SwatWizardForm extends SwatForm
 
 	// }}}
 	// {{{ public function getStepCount()
-	
+
 	/**
 	 * Gets the number of steps in this wizard form
 	 *
@@ -200,13 +200,13 @@ class SwatWizardForm extends SwatForm
 		if (!$state_store instanceof SwatWizardStateStore)
 			throw new SwatException(__CLASS__.': The given state storage '.
 				'object is not a SwatWizardStateStore.');
-		
+
 		$this->state_store = $state_store;
 	}
 
 	// }}}
 	// {{{ private function getNextStep()
-	
+
 	/**
 	 * Returns the number of the next step of this wizard form
 	 *

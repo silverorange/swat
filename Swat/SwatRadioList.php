@@ -54,31 +54,31 @@ class SwatRadioList extends SwatControl implements SwatState
 		$input_tag->name = $this->id;
 		if ($this->onchange !== null)
 			$input_tag->onchange = $this->onchange;
-			
+
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
-		
+
 		if ($this->options !== null) {
 			foreach ($this->options as $value => $title) {
-				
+
 				$input_tag->value = (string)$value;
 				$input_tag->removeAttribute('checked');
-				
+
 				if ((string)$this->value === (string)$value)
 					$input_tag->checked = "checked";
-				
+
 				$input_tag->id = $this->id.'_'.$input_tag->value;
 				$input_tag->display();
-			
+
 				$label_tag->for = $this->id.'_'.$input_tag->value;
 				$label_tag->content = $title;
 
 				$label_tag->display();
-				
+
 				echo '<br />';
 			}
 		}
-	}	
+	}
 
 	/**
 	 * Processes this radio list

@@ -6,7 +6,7 @@ require_once 'Swat/SwatState.php';
 require_once 'Date.php';
 
 // TODO: figure out why the valid-ranges are getting having the time inproperly
-// 		 offset.
+//       offset.
 
 /**
  * A time entry widget
@@ -258,7 +258,7 @@ class SwatTimeEntry extends SwatControl implements SwatState
 		if ($this->value === null)
 			return null;
 		else
-			return $this->value->getDate();	
+			return $this->value->getDate();
 	}
 
 	/**

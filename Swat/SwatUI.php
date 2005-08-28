@@ -185,7 +185,7 @@ class SwatUI extends SwatObject
 				if ($child_name == 'widget' && $parsed_object->id !== null) {
 					$this->widgets[$parsed_object->id] = $parsed_object;
 				}
-				
+
 				$this->attachToParent($parsed_object, $parent_widget);
 				$this->parseUI($child_node, $parsed_object);
 			}
@@ -219,7 +219,7 @@ class SwatUI extends SwatObject
 
 			} elseif (!class_exists('SwatWidget') ||
 				!$parsed_object instanceof SwatWidget) {
-				
+
 				throw new SwatException(__CLASS__.
 					': '.get_class($parsed_object).' is declared as a widget '.
 					'but is not an instance of SwatWidget.');
@@ -227,7 +227,7 @@ class SwatUI extends SwatObject
 		} elseif ($element_name == 'object') {
 			if (class_exists('SwatWidget') &&
 				$parsed_object instanceof SwatWidget) {
-				
+
 				throw new SwatException(__CLASS__.
 					': '.get_class($parsed_object).' is declared as an object '.
 					'but is an instance of SwatWidget and should be '.
@@ -268,7 +268,7 @@ class SwatUI extends SwatObject
 		else
 			throw new SwatException(__CLASS__.
 				": widget or object element is missing 'class' attribute.");
-	
+
 		if (!class_exists($class)) {
 			$classfile = "Swat/{$class}.php";
 
@@ -326,13 +326,13 @@ class SwatUI extends SwatObject
 			throw new SwatException(sprintf(__CLASS__.
 				": no property named '%s' in class %s",
 				$name, get_class($object)));
-				
+
 		$translatable = (isset($property_node['translatable']) &&
 			strtolower((string)$property_node['translatable']) == 'yes');
 
 		$type = (isset($property_node['type'])) ?
 			(string)$property_node['type'] : null;
-			
+
 		$parsed_value = $this->parseValue($name, $value, $type, $translatable, $object);
 
 		if ($array_property) {
@@ -442,7 +442,7 @@ class SwatUI extends SwatObject
 			$op = ($offset < strlen($expression)) ? substr($expression, $offset, 1) : '';
 			$offset += 1;
 			$term  = trim($term);
-			
+
 			if (!strpos($term, '::'))
 				$term = get_class($object) . '::' . $term;
 

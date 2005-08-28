@@ -24,7 +24,7 @@ class SwatMessageDisplay extends SwatControl
 	 * @see SwatMessage
 	 */
 	private $_messages = array();
-	 
+ 
 	/**
 	 * Adds a message
 	 *
@@ -71,7 +71,7 @@ class SwatMessageDisplay extends SwatControl
 			}
 
 			$div->open();
-			
+
 			$primary_content = new SwatHtmlTag('h3');
 			$primary_content->class = 'swat-message-display-primary-content';
 			$primary_content->content = $message->primary_content;

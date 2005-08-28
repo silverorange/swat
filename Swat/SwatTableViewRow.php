@@ -22,7 +22,7 @@ abstract class SwatTableViewRow extends SwatObject
 
 	// }}}
 	// {{{ public function display()
-	
+
 	/**
 	 * Displays this row
 	 *
@@ -32,7 +32,7 @@ abstract class SwatTableViewRow extends SwatObject
 
 	// }}}
 	// {{{ public function init()
-	
+
 	/**
 	 * Initializes this row
 	 *
@@ -43,7 +43,7 @@ abstract class SwatTableViewRow extends SwatObject
 	{
 	}
 
-	// }}}	
+	// }}}
 }
 
 ?>

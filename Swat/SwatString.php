@@ -24,10 +24,10 @@ class SwatString
 		'fieldset', 'address',  'ul',       'ol',
 		'dir',      'menu',     'h1',       'h2',
 		'h3',       'h4',       'h5',       'h6');
-	
+
 	// }}}
 	// {{{ filter constants
-	
+
 	/**
 	 * replaces hard-returns with br and doubles with p
 	 */
@@ -39,7 +39,7 @@ class SwatString
 	const FILTER_B2 = 0;
 
 	/// }}}
-    // {{{ public static function filter()
+	// {{{ public static function filter()
 
 	/**
 	 * Filters a block of text
@@ -176,7 +176,7 @@ class SwatString
 	{
 		$matches = array();
 		self::stripEntities($string, $matches);
-		
+
 		$string = trim($string);
 
 		// don't ellipsize if the string is short enough
@@ -200,7 +200,7 @@ class SwatString
 	}
 
 	// }}}
-    // {{{ public static function ellipsizeMiddle()
+	// {{{ public static function ellipsizeMiddle()
 
 	/**
 	 * Ellipsizes a string in the middle
@@ -299,7 +299,7 @@ class SwatString
 		$hole_start = strlen($first_piece);
 		$hole_end = strlen($string) - strlen($last_piece);
 		$hole_length = strlen($ellipses);
-		
+
 		$string = $first_piece.$ellipses.$last_piece;
 
 		self::insertEntities($string, $matches,
@@ -309,7 +309,7 @@ class SwatString
 	}
 
 	// }}}
-    // {{{ public static function removeTrailingPunctuation()
+	// {{{ public static function removeTrailingPunctuation()
 
 	/**
 	 * Removes trailing punctuation from a string
@@ -324,7 +324,7 @@ class SwatString
 	}
 
 	// }}}
-    // {{{ public static function removeLeadingPunctuation()
+	// {{{ public static function removeLeadingPunctuation()
 
 	/**
 	 * Removes leading punctuation from a string
@@ -339,7 +339,7 @@ class SwatString
 	}
 
 	// }}}
-    // {{{ public static function removePunctuation()
+	// {{{ public static function removePunctuation()
 
 	/**
 	 * Removes both leading and trailing punctuation from a string
@@ -356,7 +356,7 @@ class SwatString
 	}
 	
 	// }}}
-    // {{{ public static function moneyFormat()
+	// {{{ public static function moneyFormat()
 
 	/**
 	 * Formats a number as a currency formatted string
@@ -371,7 +371,7 @@ class SwatString
 	public static function moneyFormat($value, $locale = null)
 	{
 		$old_locale = setlocale(LC_ALL, $locale);
-		$format = htmlentities(money_format('%.2n', $number), null, 'UTF-8');	
+		$format = htmlentities(money_format('%.2n', $number), null, 'UTF-8');
 		setlocale(LC_ALL, $old_locale);
 		return $format;
 	}

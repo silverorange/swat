@@ -89,7 +89,7 @@ class SwatMessage extends SwatObject
 			self::WARNING,
 			self::ERROR,
 			self::SYSTEM_ERROR);
-		
+
 		if ($type !== null) {
 			if (in_array($type, $valid_types))
 				$this->type = $type;

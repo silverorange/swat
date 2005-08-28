@@ -26,7 +26,7 @@ abstract class SwatWizardStateStore extends SwatObject
 	 * Return the current state of the wizard 
 	 */
 	abstract function getState();
-	
+
 	/**
 	 * Update the state of the wizard steps
 	 *

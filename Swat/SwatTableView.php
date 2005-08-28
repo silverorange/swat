@@ -17,7 +17,7 @@ require_once 'Swat/SwatUIParent.php';
 class SwatTableView extends SwatControl implements SwatUIParent
 {
 	// {{{ public properties
-	
+
 	/**
 	 * A data structure that holds the data to display in this view
 	 *
@@ -54,6 +54,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * @see SwatTableViewOrderableColumn
 	 */
 	public $orderby_column = null;
+
 	public $default_orderby_column = null;
 
 	// }}}
@@ -87,7 +88,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 	// }}}
 	// {{{ public function appendColumn()
-	
+
 	/**
 	 * Appends a column to this table-view
 	 *
@@ -103,7 +104,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 	// }}}
 	// {{{ public function setGroup()
-	
+
 	/**
 	 * Sets the grouping object for this table-view
 	 *
@@ -141,7 +142,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 	// }}}
 	// {{{ public function appendRow()
-	
+
 	/**
 	 * Appends a single row to this table-view
 	 *
@@ -160,7 +161,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 	// }}}
 	// {{{ public function getColumnCount()
-	
+
 	/**
 	 * Gets the number of columns in this table-view
 	 *
@@ -173,7 +174,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 	// }}}
 	// {{{ public function getColumns()
-	
+
 	/**
 	 * Gets all columns of this table-view as an array
 	 *
@@ -186,7 +187,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 	// }}}
 	// {{{ public function getColumn()
-	
+
 	/**
 	 * Gets a reference to a column in this table-view by its unique identifier
 	 *
@@ -207,7 +208,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 	// }}}
 	// {{{ public function display()
-	
+
 	/**
 	 * Displays this table-view
 	 *
@@ -227,7 +228,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 			$div->content = 'No Records';
 			$div->display();
 			return;
-		}	
+		}
 
 		$table_tag = new SwatHtmlTag('table');
 		$table_tag->class = 'swat-table-view';
@@ -241,7 +242,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 	// }}}
 	// {{{ public function process()
-	
+
 	/**
 	 * Processes this table-view
 	 *
@@ -262,7 +263,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 	// }}}
 	// {{{ public function addChild()
-	
+
 	/**
 	 * Adds a child object
 	 * 
@@ -347,7 +348,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 			$tr_tag->close();
 		}
-		
+
 		echo '</tbody>';
 
 		$this->displayJavascript();

@@ -84,7 +84,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 		}
 
 		$td_tag->close();
-		
+
 		$tr_tag->close();
 	}
 

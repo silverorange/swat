@@ -21,7 +21,7 @@ class SwatTreeFlydown extends SwatFlydown
 	 * @var SwatTreeNode
 	 */
 	public $tree = null;
-	
+
 	/**
 	 * Tree Path
 	 *
@@ -30,7 +30,7 @@ class SwatTreeFlydown extends SwatFlydown
 	 * @var array
 	 */
 	public $path = array();
-	
+
 	/**
 	 * Displays this tree flydown
 	 *
@@ -52,7 +52,7 @@ class SwatTreeFlydown extends SwatFlydown
 			$pad = str_repeat('&nbsp;&nbsp;', (count($key_array) - 1));
 			$this->addOption($key, $pad.$data['title']);
 		}
-		
+
 		parent::display();
 	}
 
