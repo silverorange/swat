@@ -27,7 +27,7 @@ class SwatFormField extends SwatContainer
 	 * @var boolean
 	 */
 	public $required = false;
-	
+
 	/**
 	 * Optional note of text to display with the field
 	 *
@@ -108,7 +108,7 @@ class SwatFormField extends SwatContainer
 			// TODO: more classes based on message type?
 			$msg_div = new SwatHtmlTag('div');
 			$msg_div->class = $this->errormsg_class;
-			
+
 			$msg_div->open();
 
 			foreach ($messages as &$msg)
@@ -118,7 +118,7 @@ class SwatFormField extends SwatContainer
 		}
 
 		if ($this->note !== null) {
-			$note_div = new SwatHtmlTag('div');	
+			$note_div = new SwatHtmlTag('div');
 			$note_div->class = $this->note_class;
 			$note_div->content = $this->note;
 			$note_div->display();

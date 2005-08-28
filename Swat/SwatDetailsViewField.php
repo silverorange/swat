@@ -91,10 +91,10 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 		else
 			throw new SwatException(__CLASS__.': Cannot add a cell renderer '.
 				'without an id.');
-		
+
 		$renderer->parent = $this;
 	}
-	
+
 	/**
 	 * Get Renderer
 	 * 

@@ -20,7 +20,7 @@ class SwatFloatEntry extends SwatEntry
 	{
 		$this->size = 10;
 	}
-	
+
 	/**
 	 * Checks to make sure value is a number
 	 *

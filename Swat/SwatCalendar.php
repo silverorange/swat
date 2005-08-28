@@ -28,7 +28,7 @@ class SwatCalendar extends SwatControl
 	 * @var Date
 	 */
 	public $valid_range_start;
-	
+
 	/**
 	 * End date of the valid range (exclusive).
 	 *
@@ -45,7 +45,7 @@ class SwatCalendar extends SwatControl
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
 	}
-	
+
 	/**
 	 * Displays this calendar widget
 	 */
@@ -61,7 +61,7 @@ class SwatCalendar extends SwatControl
 		$img_tag->onmousedown = $this->id.'.toggle();';
 
 		$img_tag->display();
-		
+
 		echo '<br />';
 
 		$div_tag = new SwatHtmlTag('div');
@@ -97,18 +97,18 @@ class SwatCalendar extends SwatControl
 			$start_date = $this->valid_range_start->format("%m/%d/%Y");
 		else 
 			$start_date = '';
-			
+
 		if (isset($this->valid_range_end)) {
 			// Javascript calendar is inclusive, subtract one second from range
 			$tmp = clone $this->valid_range_end;
-	        $tmp->subtractSeconds(1);
+			$tmp->subtractSeconds(1);
 			$end_date = $tmp->format("%m/%d/%Y");
 		} else { 
 			$end_date = '';
 		}
 
 		echo '<script type="text/javascript">'."\n";
-		
+
 		echo "{$this->id} = new SwatCalendar(".
 			"'{$this->id}', ".
 			"'{$start_date}', '{$end_date}', {$swat_date_entry});";
@@ -131,7 +131,7 @@ class SwatCalendar extends SwatControl
 		$date->setDay(1);
 		$date->setMonth(1);
 		$date->setYear(1995);
-		
+
 		// Get the names of weeks (locale-specific)
 		$week_names = array();
 		for ($i = 1; $i < 8; $i++) {
@@ -139,7 +139,7 @@ class SwatCalendar extends SwatControl
 			$date->setDay($i + 1);
 		}
 		$week_names = "['".implode("', '", $week_names)."']";
-		
+
 		// Get the names of months (locale-specific)
 		$month_names = array();
 		for ($i = 1; $i < 13; $i++) {
@@ -147,13 +147,13 @@ class SwatCalendar extends SwatControl
 			$date->setMonth($i + 1);
 		}
 		$month_names = "['".implode("', '", $month_names)."']";
-		
+
 		$prev_alt_text = Swat::_('Previous Month');
 		$next_alt_text = Swat::_('Next Month');
 		$close_text    = Swat::_('Close');
 		$nodate_text   = Swat::_('No Date');
 		$today_text    = Swat::_('Today');
-		
+
 		echo '<script type="text/javascript">',
 			"SwatCalendar.week_names = {$week_names};\n",
 			"SwatCalendar.month_names = {$month_names};\n",

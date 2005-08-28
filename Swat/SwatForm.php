@@ -14,7 +14,7 @@ class SwatForm extends SwatContainer
 {
 	const METHOD_POST = 'post';
 	const METHOD_GET  = 'get';
-	
+
 	/**
 	 * The action attribute of the HTML form tag
 	 *
@@ -41,7 +41,7 @@ class SwatForm extends SwatContainer
 	 * @var array
 	 */
 	protected $hidden_fields = array();
-	
+
 	/**
 	 * The method to use for this form
 	 *
@@ -97,7 +97,7 @@ class SwatForm extends SwatContainer
 
 		$this->method = $method;
 	}
-	
+
 	/**
 	 * Displays this form
 	 *
@@ -142,7 +142,7 @@ class SwatForm extends SwatContainer
 	public function process()
 	{
 		$raw_data = $this->getRawFormData();
-		
+
 		if (!isset($raw_data['process']) || $raw_data['process'] != $this->id)
 			return false;
 
@@ -241,7 +241,7 @@ class SwatForm extends SwatContainer
 	protected function processHiddenFields()
 	{
 		$raw_data = $this->getRawFormData();
-		
+
 		if (isset($raw_data[$this->id.'_hidden_fields']))
 			$fields = $raw_data[$this->id.'_hidden_fields'];
 		else
@@ -335,7 +335,7 @@ class SwatForm extends SwatContainer
 	protected function notifyOfAdd($widget)
 	{
 		if (class_exists('SwatFileEntry')) {
-				
+
 			if ($widget instanceof SwatFileEntry) {
 				$this->encoding_type = 'multipart/form-data';
 			} elseif ($widget instanceof SwatContainer) {

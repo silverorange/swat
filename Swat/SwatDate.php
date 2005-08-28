@@ -17,7 +17,7 @@ class SwatDate extends Date
 	const DF_MDY                    = 1;
 
 	/**
-     * 070202
+	 * 070202
 	 */
 	const DF_MDY_SHORT              = 2;
 
@@ -69,7 +69,7 @@ class SwatDate extends Date
 	/**
 	 * August 2002
 	 */
-	const DF_MY	                    = 12;
+	const DF_MY                     = 12;
 
 	/**
 	 * Formats this date given either a format string of a format id
@@ -81,11 +81,11 @@ class SwatDate extends Date
 	public function format($format)
 	{
 		if (is_int($format))
-			$format = self::getFormatById($format);			
+			$format = self::getFormatById($format);
 
 		return parent::format($format);
 	}
-	
+
 	/**
 	 * Gets a date format string by id
 	 *

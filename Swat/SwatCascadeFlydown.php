@@ -24,8 +24,8 @@ class SwatCascadeFlydown extends SwatFlydown
 	 * An array of parents and {@link SwatFlydownOption}s for the flydown. Each parent value
 	 * is associated to an array of possible child values, in the form:
 	 *    array(
-	 *	parent_value1 => array(SwatFlydownOption1, SwatFlydownOption2),
-	 *	parent_value2 => array(SwatFlydownOption3, SwatFlydownOption4),
+	 *        parent_value1 => array(SwatFlydownOption1, SwatFlydownOption2),
+	 *        parent_value2 => array(SwatFlydownOption3, SwatFlydownOption4),
 	 *    )
 	 *
 	 * @var array
@@ -127,11 +127,11 @@ class SwatCascadeFlydown extends SwatFlydown
 
 		printf("\n {$this->id}_cascade = new SwatCascade('%s', '%s'); ",
 			$this->cascade_from->id, $this->id);
-	
+
 		foreach($this->options as $parent => $options) {
 			if ($this->show_blank && count($options) > 1)
 				printf("\n {$this->id}_cascade.addChild('%s', '', '%s');",
-                    			$parent, Swat::_('choose one ...'));
+					$parent, Swat::_('choose one ...'));
 
 			foreach ($options as $option) {
 				$selected = ($option->value == $this->value) ? 'true' : 'false';

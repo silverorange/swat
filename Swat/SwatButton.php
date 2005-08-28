@@ -44,7 +44,7 @@ class SwatButton extends SwatControl
 	{
 		$this->setTitleFromStock('submit');
 	}
-	
+
 	/**
 	 * Displays this button
 	 *
@@ -84,7 +84,7 @@ class SwatButton extends SwatControl
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns whether this button has been clicked
 	 *
@@ -94,7 +94,7 @@ class SwatButton extends SwatControl
 	{
 		return $this->clicked;
 	}
-	
+
 	/**
 	 * Sets a stock title
 	 *

@@ -63,30 +63,30 @@ class SwatCheckboxList extends SwatControl implements SwatState
 		$input_tag->name = $this->id.'[]';
 		if ($this->onchange !== null)
 			$input_tag->onchange = $this->onchange;
-			
+
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
-		
+
 		if ($this->options !== null) {
 			echo '<ul>';
-			
+
 			foreach ($this->options as $value => $title) {
-				
+
 				echo '<li>';
-				
+
 				$input_tag->value = (string)$value;
 				$input_tag->removeAttribute('checked');
-				
+
 				if (in_array($value, $this->values))
 					$input_tag->checked = 'checked';
-				
+
 				$input_tag->id = $this->id.'_'.$input_tag->value;
 				$input_tag->display();
-			
+
 				$label_tag->for = $this->id.'_'.$input_tag->value;
 				$label_tag->content = $title;
 				$label_tag->display();
-				
+
 				echo '</li>';
 			}
 
@@ -102,7 +102,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 		}
 
 		$div_tag->close();
-	}	
+	}
 
 	/**
 	 * Processes this checkbox list widget
@@ -133,12 +133,12 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	{
 		$this->values = $state;
 	}
-	
+
 	public function getState()
 	{
 		return $this->values;
 	}
-	
+
 	/**
 	 * Displays the javascript for this check-all widget
 	 */

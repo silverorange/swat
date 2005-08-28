@@ -215,7 +215,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		foreach ($this->children as &$child) {
 			if ($child !== null)
 				$child->process();
-		}		
+		}
 	}
 
 	/**
@@ -276,8 +276,8 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 				break;
 			}
 		}
-		
-		return $has_msg;		
+
+		return $has_msg;
 	}
 
 	/**
@@ -312,7 +312,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	protected function notifyOfAdd($widget)
 	{
 	}
-	
+
 	/**
 	 * Sends the notification signal up the widget tree
 	 *

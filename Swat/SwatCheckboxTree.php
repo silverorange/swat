@@ -21,7 +21,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	 * @var SwatTreeNode
 	 */
 	public $tree = null;
-	
+
 	/**
 	 * A label tag used for displaying tree nodes
 	 *
@@ -39,7 +39,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	 * @see SwatCheckboxTree::displayNode()
 	 */
 	private $input_tag = null;
-	
+
 	public function display()
 	{
 		if (!$this->visible)
@@ -56,7 +56,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		$this->input_tag->type = 'checkbox';
 		$this->input_tag->name = $this->id.'[]';
 
-		$div_tag->open();	
+		$div_tag->open();
 
 		if ($this->tree !== null)
 			$num_nodes = $this->displayNode($this->tree);
@@ -154,7 +154,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		// count checkable nodes
 		if (isset($node->data['value']))
 			$nodes++;
-		
+
 		return $nodes;
 	}
 }

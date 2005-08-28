@@ -15,7 +15,7 @@ require_once 'Swat/SwatFlydownOption.php';
 class SwatFlydown extends SwatControl implements SwatState
 {
 	// {{{ public properties
-	
+
 	/**
 	 * Flydown options
 	 *
@@ -34,7 +34,7 @@ class SwatFlydown extends SwatControl implements SwatState
 	 * @var string
 	 */
 	public $value = null;
-	
+
 	/**
 	 * Required
 	 *
@@ -102,7 +102,7 @@ class SwatFlydown extends SwatControl implements SwatState
 			$options = array_merge(
 				array(new SwatFlydownOption('', $this->blank_title)),
 				$options);
-		
+
 		// only show a select if there is more than one option
 		if (count($options) > 1) {
 			
@@ -119,11 +119,11 @@ class SwatFlydown extends SwatControl implements SwatState
 			$option_tag = new SwatHtmlTag('option');
 
 			$select_tag->open();
-			
+
 			foreach ($options as $flydown_option) {
 				$option_tag->value = (string)$flydown_option->value;
 				$option_tag->removeAttribute('selected');
-				
+
 				if ((string)$this->value === (string)$flydown_option->value)
 					$option_tag->selected = 'selected';
 
@@ -135,7 +135,7 @@ class SwatFlydown extends SwatControl implements SwatState
 			$select_tag->close();
 
 		} elseif (count($options) == 1) {
-			
+
 			// get first and only element
 			$flydown_option = current($options);
 			$title = $flydown_option->title;
@@ -150,7 +150,7 @@ class SwatFlydown extends SwatControl implements SwatState
 
 			echo $title;
 		}
-	}	
+	}
 
 	// }}}
 	// {{{ public function process()
@@ -171,7 +171,7 @@ class SwatFlydown extends SwatControl implements SwatState
 			$this->value = null;
 		else
 			$this->value = $value;
-		
+
 		if ($this->required && $this->value === null) {
 			$msg = Swat::_('The %s field is required.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
@@ -185,9 +185,10 @@ class SwatFlydown extends SwatControl implements SwatState
 	 * Add an option element
 	 *
 	 * @param mixed $value Either a simply value for the option, or a
-	 * 		  {@link SwatFlydownOption) object. If a {@link SwatFlydownOption)
-	 * 		  object is used, the $title parameter of addOption will be ignored.
-	 * @param string $title The title of the option element
+	 *                      {@link SwatFlydownOption} object. If a
+	 *                      {@link SwatFlydownOption} object is used, the
+	 *                      $title parameter of addOption will be ignored.
+	 * @param string $title The title of the option element.
 	 */
 	public function addOption($value, $title = '')
 	{
@@ -223,12 +224,12 @@ class SwatFlydown extends SwatControl implements SwatState
 	public function reset()
 	{
 		reset($this->options);
-		$this->value = null;	
+		$this->value = null;
 	}
 
 	// }}}
 	// {{{ public function getState()
-	
+
 	/**
 	 * Gets the current state of this flydown
 	 *
@@ -243,7 +244,7 @@ class SwatFlydown extends SwatControl implements SwatState
 
 	// }}}
 	// {{{ public function setState()
-	
+
 	/**
 	 * Sets the current state of this flydown
 	 *

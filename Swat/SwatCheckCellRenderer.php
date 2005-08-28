@@ -11,7 +11,6 @@ require_once 'Swat/SwatCellRenderer.php';
  */
 class SwatCheckCellRenderer extends SwatCellRenderer
 {
-
 	/**
 	 * Value of this cell
 	 *

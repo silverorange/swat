@@ -58,11 +58,11 @@ class SwatDisclosure extends SwatContainer
 		$anchor->class = 'swat-disclosure-anchor';
 		$anchor->href =
 			sprintf("javascript:%s.toggle();", $this->id);
-		
+
 		$anchor->open();
 
 		$img = new SwatHtmlTag('img');
-	
+
 		if ($this->open) {
 			$img->src = 'swat/images/disclosure-open.png';
 			$img->alt = 'close';
