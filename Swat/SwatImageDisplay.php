@@ -4,32 +4,38 @@ require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatControl.php';
 
 /**
- * Image Display Control
+ * Image display control
+ *
+ * This control simple displays a static image.
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatImageDisplay extends SwatControl {
-
+class SwatImageDisplay extends SwatControl
+{
 	/**
-	 * Image src
+	 * Image
 	 *
 	 * The src attribute in the XHTML img tag.
 	 *
 	 * @var string
 	 */
-	public $src;
+	public $image;
 
 	/**
-	 * Optional array of values to for $src
+	 * Optional array of values to substitute into the image property
 	 *
-	 * Uses vsprintf() syntax, for example: $src = mydir/%s.%s; $values =
-	 * array('myfilename', 'ext');
+	 * Uses vsprintf() syntax, for example:
+	 *
+	 * <code>
+	 * $my_image->image = 'mydir/%s.%s';
+	 * $my_image->values = array('myfilename', 'ext');
+	 * </code>
 	 *
 	 * @var array
 	 */
-	public $values = null;
+	public $values = array();
 
 	/**
 	 * Image height
@@ -38,7 +44,7 @@ class SwatImageDisplay extends SwatControl {
 	 *
 	 * @var integer
 	 */
-	public $height = 0;
+	public $height = null;
 
 	/**
 	 * Image width
@@ -47,7 +53,7 @@ class SwatImageDisplay extends SwatControl {
 	 *
 	 * @var integer
 	 */
-	public $width = 0;
+	public $width = null;
 
 	/**
 	 * Image title
@@ -56,32 +62,42 @@ class SwatImageDisplay extends SwatControl {
 	 *
 	 * @var string
 	 */
-	public $title = '';
+	public $title = null;
 
 	/**
 	 * Image alt text
 	 *
 	 * The alt attribute in the XHTML img tag.
+	 *
+	 * @var string
 	 */
-	public $alt = '';
+	public $alt = null;
 	
-	public function display() {
+	/**
+	 * Displays this image
+	 */
+	public function display()
+	{
 		if (!$this->visible)
-			return
+			return;
 
 		$image_tag = new SwatHtmlTag('img');
-		$image_tag->src = $this->src;
 
-		if ($this->height > 0)
+		if (count($this->values))
+			$image_tag->src = vsprintf($this->image, $this->values);
+		else
+			$image_tag->src = $this->image;
+
+		if ($this->height > !== null)
 			$image_tag->height = $this->height;
 
-		if ($this->width > 0)
+		if ($this->width !== null)
 			$image_tag->width = $this->width;
 
-		if (strlen($this->title) > 0)
+		if ($this->title !== null)
 			$image_tag->title = $this->title;
 
-		if (strlen($this->alt) > 0)
+		if ($this->alt !== null)
 			$image_tag->alt = $this->alt;
 
 		$image_tag->display();
