@@ -75,7 +75,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$div_tag->class = 'swat-order-control-div';
 		$div_tag->open();
 
-		//this has to go above the javascript
+		// this has to go above the javascript
 		$iframe_tag = new SwatHtmlTag('iframe');
 		$iframe_tag->width = $this->width;
 		$iframe_tag->height = $this->height;
