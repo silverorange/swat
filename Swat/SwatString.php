@@ -191,9 +191,10 @@ class SwatString
 
 		$string = substr($string, 0, $chop_pos);
 		$string = SwatString::removeTrailingPunctuation($string);
-		$string .= $ellipses;
 
-		self::insertEntities($string, $matches, $chop_pos);
+		self::insertEntities($string, $matches, strlen($string));
+
+		$string .= $ellipses;
 
 		return $string;
 	}
