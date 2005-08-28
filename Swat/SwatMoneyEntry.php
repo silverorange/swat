@@ -97,6 +97,8 @@ class SwatMoneyEntry extends SwatEntry
 		// change all locale formatting to numeric formatting
 		$remove_parts = array($lc['int_curr_symbol'] => '',
 			$lc['currency_symbol'] => '',
+			$lc['positive_sign'] => '',
+			$lc['negative_sign'] => '-',
 			$lc['mon_thousands_sep'] => '',
 			$lc['mon_decimal_point'] => '.');
 
