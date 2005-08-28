@@ -78,7 +78,7 @@ class SwatPagination extends SwatControl
 	 * @var integer
 	 */
 	public $current_record = 0;
-	
+
 	/**
 	 * The next page to display
 	 *
@@ -96,7 +96,7 @@ class SwatPagination extends SwatControl
 	 * @var integer
 	 */
 	protected $prev_page = 0;
-	
+
 	/**
 	 * The total number of pages in the database
 	 *
@@ -129,14 +129,14 @@ class SwatPagination extends SwatControl
 			$div = new SwatHtmlTag('div');
 			$div->class = 'swat-pagination';
 			$div->open();
-			
+
 			$this->displayPosition();
 			$this->displayPrev();
 			$this->displayPages();
 			$this->displayNext();
 
 			$div->close();
-			
+
 		}
 	}
 
@@ -160,7 +160,7 @@ class SwatPagination extends SwatControl
 	{
 		if ($this->prev_page != -1) {
 			$link = $this->getLink();
-			
+
 			$anchor = new SwatHtmlTag('a');
 			$anchor->href = sprintf($link, (string) $this->prev_page);
 			$anchor->content = sprintf(Swat::_('%s Previous'), '&#171;');
@@ -197,7 +197,7 @@ class SwatPagination extends SwatControl
 	{
 		if ($this->next_page != -1) {
 			$link = $this->getLink();
-			
+
 			$anchor = new SwatHtmlTag('a');
 			$anchor->href = sprintf($link, (string) $this->next_page);
 			$anchor->content = sprintf(Swat::_('Next %s'), '&#187;');
@@ -231,7 +231,7 @@ class SwatPagination extends SwatControl
 			if ($this->current_page < 7 && $i < 10) {
 				// Current page is in the first 6, show the first 10 pages
 				$display = true;
-				
+
 			} elseif ($this->current_page >= $this->total_pages - 7 &&
 				$i >= $this->total_pages - 10) {
 
@@ -240,7 +240,7 @@ class SwatPagination extends SwatControl
 
 			} elseif ($i <= 1 || $i >= $this->total_pages -2 ||
 				abs($this->current_page - $i) <= 3) {
-				
+
 				// Always show the first 2, last 2, and middle 6 pages
 				$display = true;
 			}
@@ -283,7 +283,7 @@ class SwatPagination extends SwatControl
 		$vars = $_GET;
 
 		foreach($vars as $name => $value)
- 			if (in_array($name, $this->unset_get_vars))
+			if (in_array($name, $this->unset_get_vars))
 				unset($vars[$name]);
 
 		if ($this->link === null)

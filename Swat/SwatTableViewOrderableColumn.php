@@ -19,12 +19,12 @@ require_once 'Swat/SwatHtmlTag.php';
 class SwatTableViewOrderableColumn extends SwatTableViewColumn
 {
 	// {{{ class constants
-	
+
 	/**
 	 * Indicates no ordering is done
 	 */
 	const ORDER_BY_DIR_NONE = 0;
-	
+
 	/**
 	 * Indicates descending ordering is done
 	 */
@@ -37,7 +37,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 	// }}}
 	// {{{ public properties
-	
+
 	/**
 	 * The base of the link used when building column header links
 	 *
@@ -132,7 +132,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 	// }}}
 	// {{{ public function displayHeader()
-	
+
 	/**
 	 * Displays the column header for this table view column
 	 *
@@ -146,14 +146,12 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 		$anchor = new SwatHtmlTag('a');
 		$anchor->href = $this->getLink();
 
-
 		$anchor->open();
-		
 
 		// display image
 		if ($this->view->orderby_column === $this &&
 			$this->direction != self::ORDER_BY_DIR_NONE) {
-			
+
 			$span_tag = new SwatHtmlTag('span');
 			$span_tag->class =
 				'swat-table-view-orderable-column-header-nobreak';
@@ -171,19 +169,19 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			$span_tag->open();
 
 			echo $last_word;
-			
+
 			$img = new SwatHtmlTag('img');
 
 			if ($this->direction == self::ORDER_BY_DIR_DESCENDING) {
-				
+
 				$img->src = 'swat/images/table-view-column-desc.png';
 				$img->alt = Swat::_('Descending');
-				
+
 			} elseif ($this->direction == self::ORDER_BY_DIR_ASCENDING) {
-				
+
 				$img->src = 'swat/images/table-view-column-asc.png';
 				$img->alt = Swat::_('Ascending');
-				
+
 			}
 
 			$img->width = 11;
@@ -202,7 +200,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 	// }}}
 	// {{{ public function getDirectionAsString()
-	
+
 	/**
 	 * Gets the direction of ordering as a string
 	 *
@@ -238,7 +236,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 	// }}}
 	// {{{ private function setDirectionByString()
-	
+
 	/**
 	 * Sets direction of ordering by a string
 	 *
@@ -252,7 +250,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	private function setDirectionByString($direction)
 	{
 		$direction = strtolower($direction);
-		
+
 		switch ($direction) {
 		case 'ascending':
 		case 'asc':
@@ -272,7 +270,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 	// }}}
 	// {{{ private function getLink()
-	
+
 	/**
 	 * Gets the link for this column's header
 	 *
@@ -287,7 +285,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 		$vars = $_GET;
 
 		foreach($vars as $name => $value)
- 			if (in_array($name, $this->unset_get_vars))
+			if (in_array($name, $this->unset_get_vars))
 				unset($vars[$name]);
 
 		// TODO:: is id a required field for table views?
@@ -318,7 +316,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 	// }}}
 	// {{{ private function getNextDirection()
-	
+
 	/**
 	 * Gets the next direction or ordering in the rotation
 	 *
@@ -349,7 +347,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 	// }}}
 	// {{{ private function initFromGetVariables()
-	
+
 	/**
 	 * Process GET variables and set class variables
 	 */
@@ -367,6 +365,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 				$this->setDirectionByString($_GET[$key_orderbydir]);
 		}
 	}
+
 	// }}}
 }
 

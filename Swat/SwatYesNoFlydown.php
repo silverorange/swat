@@ -13,7 +13,7 @@ class SwatYesNoFlydown extends SwatFlydown
 {
 	const NO = 1;
 	const YES = 2;
-	
+
 	/**
 	 * Initializes this yes/no flydown
 	 *

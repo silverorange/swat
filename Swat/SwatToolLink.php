@@ -89,7 +89,7 @@ class SwatToolLink extends SwatControl
 				$image_tag->height = $this->image_height;
 
 			$image_tag->alt = $this->title;
-			
+
 			$anchor_tag->open();
 			echo $this->title;
 			$image_tag->display();

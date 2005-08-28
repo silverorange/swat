@@ -22,7 +22,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	public function display(&$columns)
 	{
 		if ($this->view->model->getRowCount() < 2)
-			return;		
+			return;
 
 		echo '<tr>';
 
@@ -42,17 +42,17 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		}
 
 		if ($count) {
-			
+
 			$td_before_tag = new SwatHtmlTag('td');
 			if ($count > 1)
 				$td_before_tag->colspan = $count;
-			
+
 			$td_before_tag->open();
 			echo '&nbsp;';
 			$td_before_tag->close();
 
 		}
-		
+
 		$td_tag = new SwatHtmlTag('td');
 		if (count($columns) - $count > 1)
 			$td_tag->colspan = count($columns) - $count;

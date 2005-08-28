@@ -36,7 +36,7 @@ class SwatSimpleColorEntry extends SwatControl implements SwatState
 	 */
 	public $colors = array(
 		'eae8e3', 'bab5ab', '807d74', '565248', 'ffffff', '000000',
-		'c5d2c8', '83a67f',	'5d7555', '445632', '46a046', '267726',
+		'c5d2c8', '83a67f', '5d7555', '445632', '46a046', '267726',
 		'e0b6af', 'c1665a', '884631', '663822', 'df421e', '990000',
 		'efe0cd', 'e0c39e', 'b39169', '826647', 'eed680', 'd1940c',
 		'ada7c8', '887fa3', '635b81', '494066',
@@ -52,7 +52,7 @@ class SwatSimpleColorEntry extends SwatControl implements SwatState
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
 	}
-	
+
 	/**
 	 * Displays this simple color selector widget
 	 */
@@ -81,7 +81,7 @@ class SwatSimpleColorEntry extends SwatControl implements SwatState
 		$img_tag->onmousedown = $this->id.'_obj.toggle();';
 
 		$img_tag->display();
-		
+
 		echo '<br />';
 
 		$div_tag = new SwatHtmlTag('div');
@@ -133,9 +133,9 @@ class SwatSimpleColorEntry extends SwatControl implements SwatState
 		}
 
 		$colors = "'".implode("', '", $this->colors)."'";
-		
+
 		echo '<script type="text/javascript">'."\n";
-		
+
 		echo "{$this->id}_obj = new SwatSimpleColorEntry(".
 			"'{$this->id}', [{$colors}]);";
 

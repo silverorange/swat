@@ -78,7 +78,7 @@ class SwatMoneyEntry extends SwatEntry
 			echo ' '.$lc['int_curr_symbol'];
 
 		$this->setLocale($locale);
-	}	
+	}
 
 	/**
 	 * Checks to make sure value is a monetary value

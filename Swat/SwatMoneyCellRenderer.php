@@ -13,7 +13,7 @@ require_once 'Swat/SwatCurrency.php';
 class SwatMoneyCellRenderer extends SwatCellRenderer
 {
 	// {{{ public properties
-	
+
 	/**
 	 * Optional locale for currency format
 	 *
@@ -30,7 +30,7 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 
 	// }}}
 	// {{{ public function render()
-	
+
 	/**
 	 * Renders the contents of this cell
 	 *
@@ -38,7 +38,7 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		echo SwatString::moneyFormat($this->value, $this->locale);	
+		echo SwatString::moneyFormat($this->value, $this->locale);
 	}
 
 	// }}}

@@ -32,7 +32,7 @@ class SwatTreeNode extends SwatObject
 	 * @var SwatTreeNode
 	 */
 	private $parent = null;
-	
+
 	/**
 	 * The index of this child node it its parent array.
 	 *
@@ -99,7 +99,7 @@ class SwatTreeNode extends SwatObject
 	public function &getPath()
 	{
 		$path = array($this->id);
-		
+
 		$parent = $this->parent;
 		while ($parent !== null) {
 			$path[] = $parent->index;
@@ -114,7 +114,7 @@ class SwatTreeNode extends SwatObject
 
 	// }}}
 	// {{{ public function getParent()
-	
+
 	/**
 	 * Gets the parent node of this node
 	 *
@@ -143,7 +143,7 @@ class SwatTreeNode extends SwatObject
 	public function &toArray()
 	{
 		$flat_array = array();
-		
+
 		self::expandNode($flat_array, $this);
 
 		return $flat_array;

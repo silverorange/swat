@@ -124,10 +124,10 @@ class SwatNavBar extends SwatControl
 
 		$count = 0;
 		foreach ($this->elements as $entry) {
-			
+
 			if ($count != 0)
 				echo ' &#187; ';
-			
+
 			if ($entry['uri'] !== null) {
 				$link_tag = new SwatHtmlTag('a');
 				$link_tag->href = $entry['uri'];

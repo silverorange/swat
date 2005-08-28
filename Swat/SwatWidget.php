@@ -56,7 +56,7 @@ abstract class SwatWidget extends SwatObject
 	 * @var SwatStyle
 	 */
 	static private $default_style = null;
-	
+
 	/**
 	 * Creates a new SwatWidget
 	 *
@@ -67,7 +67,7 @@ abstract class SwatWidget extends SwatObject
 		$this->id = $id;
 
 		$this->style = $this->getDefaultStyle();
-		
+
 		$this->init();
 	}
 
@@ -189,7 +189,7 @@ abstract class SwatWidget extends SwatObject
 	{
 		return $this->messages;
 	}
-	
+
 	/**
 	 * Checks for the presence of messages
 	 *

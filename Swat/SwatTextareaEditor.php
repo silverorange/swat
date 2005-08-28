@@ -29,7 +29,7 @@ class SwatTextareaEditor extends SwatTextarea
 	 * @var string
 	 */
 	public $height = '15em';
-	
+
 	/**
 	 * Base-Href
 	 *
@@ -38,8 +38,7 @@ class SwatTextareaEditor extends SwatTextarea
 	 * @var string
 	 */
 	public $basehref = null; 
-	
-	
+
 	public function process()
 	{
 		parent::process();
@@ -52,14 +51,14 @@ class SwatTextareaEditor extends SwatTextarea
 			return
 
 		$this->displayJavascript();
-	}	
-	
+	}
+
 	private function displayJavascript()
 	{
 		$value = $this->rteSafe($this->value);
 
 		$basehref = ($this->basehref === null) ? 'null' : $this->basehref;
-	
+
 		echo '<script type="text/javascript" src="swat/javascript/swat-textarea-editor.js"></script>';
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
@@ -77,7 +76,7 @@ class SwatTextareaEditor extends SwatTextarea
 	private function displayJavascriptTranslations()
 	{
 		echo " var rteT = new Array();";
-		
+
 		foreach($this->translations() as $k => $word)
 			echo "\n rteT['{$k}'] = '".str_replace("'", "\'", $word)."';";
 	}
@@ -105,7 +104,7 @@ class SwatTextareaEditor extends SwatTextarea
 			'heading' => Swat::_('Heading'),
 			'address' => Swat::_('Address'),
 			'formatted' => Swat::_('Formatted'),
-			
+
 			//pop-up link
 			'enter_url' => Swat::_('A URL is required'),
 			'url' => Swat::_('URL'),
@@ -115,25 +114,25 @@ class SwatTextareaEditor extends SwatTextarea
 			'cancel' => Swat::_('Cancel')
 		);
 	}
-	
+
 	private function rteSafe($value)
 	{
 		//returns safe code for preloading in the RTE
-	
+
 		//convert all types of single quotes
 		$value = str_replace(chr(145), chr(39), $value);
 		$value = str_replace(chr(146), chr(39), $value);
 		$value = str_replace("'", "&#39;", $value);
-	
+
 		//convert all types of double quotes
 		$value = str_replace(chr(147), chr(34), $value);
 		$value = str_replace(chr(148), chr(34), $value);
 		$value = str_replace('"', '&quot;', $value);
-	
+
 		//replace carriage returns & line feeds
 		$value = str_replace(chr(10), " ", $value);
 		$value = str_replace(chr(13), " ", $value);
-	
+
 		return $value;
 	}
 }
