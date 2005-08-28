@@ -185,7 +185,7 @@ class SwatException extends Exception
 			foreach ($args as &$arg) {
 				if (is_object($arg)) {
 					$arg = '<'.get_class($arg).' object>';
-				} elseif ($arg == null) {
+				} elseif ($arg === null) {
 					$arg = '<null>';
 				} elseif (gettype($arg) == 'string') {
 					$arg = "'".$arg."'";
