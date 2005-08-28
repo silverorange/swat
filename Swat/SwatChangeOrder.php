@@ -60,7 +60,9 @@ class SwatChangeOrder extends SwatControl implements SwatState
 	
 	public function display()
 	{
-		
+		if (!$this->visible)
+			return;
+			
 		if ($this->values !== null) {
 			$array = array();
 			foreach ($this->values as $id)

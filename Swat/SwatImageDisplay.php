@@ -66,6 +66,9 @@ class SwatImageDisplay extends SwatControl {
 	public $alt = '';
 	
 	public function display() {
+		if (!$this->visible)
+			return
+
 		$image_tag = new SwatHtmlTag('img');
 		$image_tag->src = $this->src;
 

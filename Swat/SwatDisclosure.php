@@ -46,6 +46,9 @@ class SwatDisclosure extends SwatContainer
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return
+
 		$control_div = new SwatHtmlTag('div');
 		$control_div->class = 'swat-disclosure-control';
 

@@ -39,6 +39,9 @@ class SwatColorEntry extends SwatControl implements SwatState
 	 */
 	public function display()
 	{	
+		if (!$this->visible)
+			return
+
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'text';
 		$input_tag->id = $this->id;

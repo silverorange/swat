@@ -47,6 +47,9 @@ class SwatMoneyEntry extends SwatEntry
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return
+
 		$locale = $this->setLocale($this->locale);
 		$lc = localeconv();
 

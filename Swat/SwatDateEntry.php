@@ -192,6 +192,9 @@ class SwatDateEntry extends SwatControl implements SwatState
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return
+
 		$this->createFlydowns();
 
 		echo '<span class="swat-date-span">';

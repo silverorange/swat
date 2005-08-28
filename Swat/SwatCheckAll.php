@@ -54,6 +54,9 @@ class SwatCheckAll extends SwatControl
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return;
+
 		if ($this->controller === null)
 			throw new SwatException(__CLASS__.': A controller referencing '.
 				'the SwatObject containing the checklist must be set.');
