@@ -31,8 +31,21 @@ class SwatFloatEntry extends SwatEntry
 	{
 		parent::process();
 
-		if (is_numeric($this->value))
-			$this->value = floatval($this->value);
+		// change all locale formatting to numeric formatting
+		$lc = localeconv();
+
+		$remove_parts = array(
+			$lc['thousands_sep'] => '',
+			$lc['positive_sign'] => '',
+			$lc['negative_sign'] => '-',
+			$lc['decimal_point'] => '.'
+			);
+
+		$value = str_replace(array_keys($remove_parts),
+			array_values($remove_parts), $this->value);
+
+		if (is_numeric($value))
+			$this->value = floatval($value);
 		else {
 			$msg = Swat::_('The %s field must be a number.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
