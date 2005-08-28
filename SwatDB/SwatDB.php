@@ -38,7 +38,7 @@ class SwatDB
 		$rs = $db->query($sql, $types);
 
 		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
+			throw new SwatDBException($rs);
 
 		return $rs;
 	}
@@ -154,7 +154,7 @@ class SwatDB
 		$values = $db->queryCol($sql, $field->type);
 
 		if (MDB2::isError($values))
-			throw new SwatDBException($values->getMessage());
+			throw new SwatDBException($values);
 
 		return $values;
 	}
@@ -207,7 +207,7 @@ class SwatDB
 		$value = $db->queryOne($sql, $field->type);
 
 		if (MDB2::isError($value))
-			throw new SwatDBException($value->getMessage());
+			throw new SwatDBException($value);
 
 		return $value;
 	}
@@ -243,7 +243,7 @@ class SwatDB
         $rs = $db->executeStoredProc($proc, $params, null, true, $mdb2_wrapper);
 
 		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
+			throw new SwatDBException($rs);
 
         return $rs;
 	}
@@ -368,12 +368,12 @@ class SwatDB
 		if (count($values)) {
 			$ret = $db->query($insert_sql);
 			if (MDB2::isError($ret))
-				throw new SwatDBException($ret->getMessage());
+				throw new SwatDBException($ret);
 		}
 
 		$rs = $db->query($delete_sql);
 		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
+			throw new SwatDBException($rs);
 		
 		$db->commit();
 
@@ -494,7 +494,7 @@ class SwatDB
 		$rs = $db->query($sql);
 
 		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
+			throw new SwatDBException($rs);
 
 		if ($id_field != null) {
 			$ret = SwatDB::getFieldMax($db, $table, $id_field);						
@@ -868,7 +868,7 @@ class SwatDB
 		
 		$rs = $db->executeStoredProc($sp, array(0), $types, true);
 		if (MDB2::isError($rs))
-			throw new SwatDBException($rs->getMessage());
+			throw new SwatDBException($rs);
 		
 		$tree = SwatDB::buildTreeOptionArray($rs, $title_field->name, 
 			$id_field->name, $level_field->name);
