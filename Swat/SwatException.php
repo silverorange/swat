@@ -124,7 +124,7 @@ class SwatException extends Exception
 				'Thrown in file <strong>%s</strong> '.
 				'on line <strong>%s</strong>.<br /><br />',
 				get_class($this),
-				$this->getMessage(),
+				nl2br($this->getMessage()),
 				$this->getFile(),
 				$this->getLine());
 
@@ -135,13 +135,13 @@ class SwatException extends Exception
 		foreach ($trace as $entry) {
 			
 			if (array_key_exists('args', $entry))
-				$arguments = $this->getArguments($entry['args']);
+				$arguments = htmlentities($this->getArguments($entry['args']));
 			else
 				$arguments = '';
 			
 			printf('<dt>%s.</dt><dd>In file <strong>%s</strong> '.
 				'line&nbsp;<strong>%s</strong>.<br />Method: '.
-				'<strong>%s%s%s(%s)</strong></dd>',
+				'<strong>%s%s%s(</strong>%s<strong>)</strong></dd>',
 				--$count,
 				$entry['file'],
 				$entry['line'],
@@ -184,7 +184,9 @@ class SwatException extends Exception
 		if (is_array($args)) {
 			foreach ($args as &$arg) {
 				if (is_object($arg)) {
-					$arg = get_class($arg);
+					$arg = '<'.get_class($arg).' object>';
+				} elseif ($arg == null) {
+					$arg = '<null>';
 				} elseif (gettype($arg) == 'string') {
 					$arg = "'".$arg."'";
 				}
