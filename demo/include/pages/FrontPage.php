@@ -13,10 +13,6 @@ require_once 'DemoPage.php';
  */
 class FrontPage extends DemoPage
 {
-	protected $ui = null;
-
-	private $demo;
-	
 	public function init()
 	{
 	}
