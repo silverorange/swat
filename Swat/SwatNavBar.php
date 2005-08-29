@@ -120,7 +120,7 @@ class SwatNavBar extends SwatControl
 	public function display()
 	{
 		if (!$this->visible)
-			return
+			return;
 
 		$count = 0;
 		foreach ($this->elements as $entry) {
