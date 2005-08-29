@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatEntry.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * A float entry widget
@@ -31,25 +32,28 @@ class SwatFloatEntry extends SwatEntry
 	{
 		parent::process();
 
-		// change all locale formatting to numeric formatting
-		$lc = localeconv();
+		$value = SwatString::toFloat($this->value);
 
-		$remove_parts = array(
-			$lc['thousands_sep'] => '',
-			$lc['positive_sign'] => '',
-			$lc['negative_sign'] => '-',
-			$lc['decimal_point'] => '.'
-			);
-
-		$value = str_replace(array_keys($remove_parts),
-			array_values($remove_parts), $this->value);
-
-		if (is_numeric($value))
-			$this->value = floatval($value);
-		else {
+		if ($value === null) {
 			$msg = Swat::_('The %s field must be a number.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-		}
+		} else
+			$this->value = $value;	
+	}
+
+	protected function getDisplayValue()
+	{
+		$lc = localeconv();
+
+		$decimal_pos = strpos($this->value, '.');
+		$decimals = ($decimal_pos !== false) ?
+			strlen($this->value) - $decimal_pos - 1 : 0;
+
+		if (is_numeric($this->value))
+			return number_format($this->value, $decimals,
+				$lc['decimal_point'], $lc['thousands_sep']);
+		else
+			return $this->value;
 	}
 }
 

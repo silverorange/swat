@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatEntry.php';
 
 /**
@@ -47,37 +48,30 @@ class SwatMoneyEntry extends SwatEntry
 	 */
 	public function display()
 	{
-		if (!$this->visible)
-			return;
-
 		$locale = $this->setLocale($this->locale);
 		$lc = localeconv();
 
-		$input_tag = new SwatHtmlTag('input');
-		$input_tag->type = 'text';
-		$input_tag->name = $this->id;
-		$input_tag->id = $this->id;
-		$input_tag->onfocus = 'this.select();';
-
-		if ($this->value !== null) {
-			if (is_float($this->value))
-				$input_tag->value = money_format('%n', $this->value);
-			else
-				$input_tag->value = $this->value;
-		}
-
-		if ($this->size !== null)
-			$input_tag->size = $this->size;
-
-		if ($this->maxlength !== null)
-			$input_tag->maxlength = $this->maxlength;
-
-		$input_tag->display();
+		parent::display();
 
 		if ($this->display_currency)
 			echo ' '.$lc['int_curr_symbol'];
 
 		$this->setLocale($locale);
+	}
+
+	protected function getDisplayValue()
+	{
+		$locale = $this->setLocale($this->locale);
+		$lc = localeconv();
+
+		if (is_numeric($this->value))
+			$value = money_format('%n', $this->value);
+		else
+			$value =  $this->value;
+
+		$this->setLocale($locale);
+
+		return $value;
 	}
 
 	/**
@@ -94,18 +88,30 @@ class SwatMoneyEntry extends SwatEntry
 		$lc = localeconv();
 		$lc_frac = $lc['int_frac_digits'];
 
-		// change all locale formatting to numeric formatting
-		$remove_parts = array($lc['int_curr_symbol'] => '',
-			$lc['currency_symbol'] => '',
-			$lc['positive_sign'] => '',
-			$lc['negative_sign'] => '-',
-			$lc['mon_thousands_sep'] => '',
-			$lc['mon_decimal_point'] => '.');
+		$replace = array($lc['int_curr_symbol'] => '',
+				$lc['currency_symbol'] => '',
+				$lc['mon_decimal_point'] => '.',
+				$lc['mon_thousands_sep'] => '');
 
-		$value = str_replace(array_keys($remove_parts),
-			array_values($remove_parts), $this->value);
+		$value = str_replace(array_keys($replace), array_values($replace), $this->value);
 
-		if (is_numeric($value)) {
+		$value = SwatString::toFloat($value);
+
+		if ($value === null) {
+			$msg = Swat::_('The %s field must be a monetary value '.
+				'formatted for %s (i.e. %s).');
+
+			// substitute in '%s' because a second substitution is done
+			// with the form field title
+			$msg = sprintf($msg,
+				'%s',
+				$lc['int_curr_symbol'],
+				money_format('%n', 1000.95));
+
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+
+		} else {
+
 			$frac_pos = strpos($value, '.');
 
 			// check if length of the given fractional part is more than the
@@ -128,19 +134,6 @@ class SwatMoneyEntry extends SwatEntry
 			} else {
 				$this->value = (float) $value; 
 			}
-
-		} else {
-			$msg = Swat::_('The %s field must be a monetary value '.
-				'formatted for %s (i.e. %s).');
-
-			// substitute in '%s' because a second substitution is done
-			// with the form field title
-			$msg = sprintf($msg,
-				'%s',
-				$lc['int_curr_symbol'],
-				money_format('%n', 1000.95));
-
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 		}
 
 		// reset locale for this request
