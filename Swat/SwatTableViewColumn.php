@@ -110,6 +110,16 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 	{
 	}
 
+	public function displayHeaderCell()
+	{
+		reset($this->renderers);
+		$first_renderer = current($this->renderers);
+		$th_tag = new SwatHtmlTag('th', $first_renderer->getThAttributes());
+		$th_tag->open();
+		$this->displayHeader();
+		$th_tag->close();
+	}
+
 	public function displayHeader()
 	{
 		echo $this->title;

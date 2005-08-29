@@ -31,6 +31,19 @@ abstract class SwatCellRenderer extends SwatObject
 	abstract public function render();
 
 	/**
+	 * Gets TH-tag attributes
+	 *
+	 * Sub-classes can redefine this to set attributes on the TH tag.
+	 *
+	 * @return array an array of attributes to apply to the TH tag of the
+	 *                column that contains this cell renderer.
+	 */
+	public function &getThAttributes()
+	{
+		return array();
+	}
+
+	/**
 	 * Gets TD-tag attributes
 	 *
 	 * Sub-classes can redefine this to set attributes on the TD tag.

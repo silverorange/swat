@@ -311,7 +311,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		echo '<tr>';
 
 		foreach ($this->columns as $column)
-			echo '<th>', $column->displayHeader(), '</th>';
+			$column->displayHeaderCell();
 
 		echo '</tr>';
 		echo '</thead>';
