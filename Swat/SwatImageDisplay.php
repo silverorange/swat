@@ -88,7 +88,7 @@ class SwatImageDisplay extends SwatControl
 		else
 			$image_tag->src = $this->image;
 
-		if ($this->height > !== null)
+		if ($this->height !== null)
 			$image_tag->height = $this->height;
 
 		if ($this->width !== null)
