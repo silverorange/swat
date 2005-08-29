@@ -18,7 +18,7 @@ class SwatIntegerEntry extends SwatEntry
 	 */
 	public function init()
 	{
-		$this->size = 5;
+		$this->size = 7;
 	}
 
 	/**
@@ -37,6 +37,16 @@ class SwatIntegerEntry extends SwatEntry
 			$msg = Swat::_('The %s field must be an integer.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 		}
+	}
+
+	protected function getDisplayValue()
+	{
+		$lc = localeconv();
+
+		if (is_int($this->value))
+			return number_format($this->value, 0, null, $lc['thousands_sep']);
+		else
+			return $this->value;
 	}
 }
 

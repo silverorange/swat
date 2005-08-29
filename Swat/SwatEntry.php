@@ -82,7 +82,7 @@ class SwatEntry extends SwatControl implements SwatState
 		$input_tag->onfocus = 'this.select();';
 
 		if ($this->value !== null)
-			$input_tag->value = $this->value;
+			$input_tag->value = $this->getDisplayValue();
 
 		if ($this->size !== null)
 			$input_tag->size = $this->size;
@@ -150,6 +150,18 @@ class SwatEntry extends SwatControl implements SwatState
 	public function setState($state)
 	{
 		$this->value = $state;
+	}
+
+	/**
+	 * Get value to display
+	 *
+	 * Can be used by sub-classes to change what is displayed
+	 *
+	 * @return string Value to display
+	 */
+	protected function getDisplayValue()
+	{
+		return $this->value;
 	}
 }
 
