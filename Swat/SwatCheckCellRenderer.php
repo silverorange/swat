@@ -51,6 +51,19 @@ class SwatCheckCellRenderer extends SwatCellRenderer
 	{
 		return array('style' => 'text-align: center;');
 	}
+
+	/**
+	 * Gets TH-tag attributes
+	 *
+	 * @return array an array of attributes to apply to the TH tag in the
+	 *                table header for this cell renderer.
+	 *
+	 * @see SwatCellRenderer::getThAttributes()
+	 */
+	public function &getThAttributes()
+	{
+		return array('style' => 'text-align: center;');
+	}
 }
 
 ?>
