@@ -179,7 +179,7 @@ class SwatException extends Exception
 	 *
 	 * @return string the arguments formatted into a comma delimited string.
 	 */
-	private function getArguments($args, $first = true)
+	private function getArguments($args)
 	{
 		if (is_array($args)) {
 			foreach ($args as &$arg) {
@@ -190,15 +190,11 @@ class SwatException extends Exception
 				} elseif (is_string($arg)) {
 					$arg = "'".$arg."'";
 				} elseif (is_array($arg)) {
-					$arg = $this->getArguments($arg, false);
+					$arg = 'array('.$this->getArguments($arg).')';
 				}
 			}
 
-			if ($first)
-				return implode(', ', $args);
-			else
-				return 'array('.implode(', ', $args).')';
-
+			return implode(', ', $args);
 		} else {
 			return $args;
 		}
