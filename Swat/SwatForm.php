@@ -82,7 +82,7 @@ class SwatForm extends SwatContainer
 	/**
 	 * Initializes this form
 	 *
-	 * Forms containers need to have id's set.
+	 * Form containers need to have id's set.
 	 */
 	public function init()
 	{
