@@ -10,6 +10,6 @@ SwatForm.prototype.setDefaultFocus = function(element_id)
 
 	var element = document.getElementById(element_id);
 	
-	if (element)
+	if (element && typeof element.focus == 'function')
 		element.focus();
 }
