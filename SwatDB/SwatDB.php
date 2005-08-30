@@ -170,6 +170,33 @@ class SwatDB
  	 * Convenience method to query a single value in a single database column.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
+	 * @param string $sql The SQL to execute.
+	 * @param string $type Optional MDB2 datatype for the result.
+	 *
+	 * @return mixed The value queried for a single result.
+	 *
+	 * @throws SwatDBException
+	 */
+	public static function queryOne($db, $sql, $type = null)
+	{
+		SwatDB::debug($sql);
+		$value = $db->queryOne($sql, $type);
+
+		if (MDB2::isError($value))
+			throw new SwatDBException($value);
+
+		return $value;
+	}
+
+	// }}}
+	// {{{ public static function queryOneFromTable()
+
+	/**
+	 * Query a single value from a specified table and column
+	 *
+ 	 * Convenience method to query a single value in a single database column.
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
 	 *
 	 * @param string $table The database table to query.
 	 *
@@ -191,7 +218,7 @@ class SwatDB
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function queryOne($db, $table, $field, $id_field = null,
+	public static function queryOneFromTable($db, $table, $field, $id_field = null,
 		$id = 0)
 	{
 		$field = new SwatDBField($field, 'integer');
