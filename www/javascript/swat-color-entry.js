@@ -34,10 +34,13 @@ SwatColorEntry.prototype.toggle = function() {
 
 	t.style.left = ieOffset + o.offsetLeft + "px";
 	
-	if (!t.style.display || t.style.display == 'none')
+	if (!t.style.display || t.style.display == 'none') {
 		t.style.display = 'block';
-	else
+		SwatZIndexManager.raiseElement(t);
+	} else {
 		t.style.display = 'none';
+		SwatZIndexManager.lowerElement(t);
+	}
 }
 
 SwatColorEntry.prototype.apply = function() {

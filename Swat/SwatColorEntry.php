@@ -75,7 +75,14 @@ class SwatColorEntry extends SwatControl implements SwatState
 	 */
 	private function displayJavascript()
 	{
-		echo '<script type="text/javascript" src="swat/javascript/swat-color-entry.js"></script>';
+		static $shown = false;
+
+		if (!$shown) {
+			echo '<script type="text/javascript" src="swat/javascript/swat-color-entry.js"></script>';
+			echo '<script type="text/javascript" src="swat/javascript/swat-color-entry.js"></script>';
+
+			$shown = true;
+		}
 
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
