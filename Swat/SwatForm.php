@@ -32,6 +32,16 @@ class SwatForm extends SwatContainer
 	public $encoding_type = null;
 
 	/**
+	 * A reference to the default control to select when the form loads
+	 *
+	 * If this is not set then it defaults to the first SwatControl
+	 * in the form.
+	 *
+	 * @var SwatControl
+	 */
+	public $default_selected_control = null;
+
+	/**
 	 * Hidden form fields
 	 *
 	 * An array of the form:
@@ -68,6 +78,18 @@ class SwatForm extends SwatContainer
 	 * @var boolean
 	 */
 	private $processed = false;
+
+	/**
+	 * Initializes this form
+	 *
+	 * Forms containers need to have id's set.
+	 */
+	public function init()
+	{
+		// an id is required for this widget.
+		if ($this->id === null)
+			$this->id = $this->getUniqueId();
+	}
 
 	/**
 	 * Returns true if this form has been processed
@@ -129,6 +151,8 @@ class SwatForm extends SwatContainer
 
 		$this->displayHiddenFields();
 		$form_tag->close();
+
+		$this->displayJavascript();
 	}
 
 	/**
@@ -297,6 +321,34 @@ class SwatForm extends SwatContainer
 		echo '</div>';
 	}
 
+	/**
+	 * Displays javascript required for this form
+	 *
+	 * Right now, this javascript focuses the first SwatControl in the form.
+	 */
+	private function displayJavascript()
+	{
+		static $shown = false;
+
+		if (!$shown) {
+			echo '<script type="text/javascript" src="swat/javascript/swat-form.js"></script>';
+
+			$shown = true;
+		}
+		
+		if ($this->default_selected_control === null)
+			$focus_id = $this->getFirstDescendent('SwatControl')->id;
+		else
+			$focus_id = $this->default_selected_control->id;
+		
+		echo '<script type="text/javascript">'."\n";
+
+		echo "var {$this->id}_obj = new SwatForm('{$this->id}');\n";
+		echo "{$this->id}_obj.setDefaultFocus('{$focus_id}');\n";
+
+		echo '</script>';
+	}
+	
 	/**
 	 * Returns the super-global array with this form's data
 	 *
