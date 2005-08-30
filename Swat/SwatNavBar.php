@@ -117,18 +117,19 @@ class SwatNavBar extends SwatControl
 	 * Displays each element separated by a special character and outputs
 	 * elements with URI's as anchor tags.
 	 */
-	public function display()
+	public function display($link_last = true)
 	{
 		if (!$this->visible)
 			return;
 
-		$count = 0;
-		foreach ($this->elements as $entry) {
+		$count = count($this->elements);
+		$i = 0;
 
-			if ($count != 0)
+		foreach ($this->elements as $entry) {
+			if ($i++ != 0)
 				echo ' &#187; ';
 
-			if ($entry['uri'] !== null) {
+			if ($entry['uri'] !== null && ($link_last || $i !== $count)) {
 				$link_tag = new SwatHtmlTag('a');
 				$link_tag->href = $entry['uri'];
 				$link_tag->content = $entry['title'];
@@ -136,8 +137,6 @@ class SwatNavBar extends SwatControl
 			} else {
 				echo $entry['title'];
 			}
-
-			$count++;
 		}
 	}
 }
