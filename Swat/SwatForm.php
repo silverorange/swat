@@ -42,6 +42,17 @@ class SwatForm extends SwatContainer
 	public $default_selected_control = null;
 
 	/**
+	 * A reference to the button that was clicked to submit the form,
+	 * or null if the button is not set.
+	 *
+	 * You usually do not want to explicitly set this in your code because
+	 * other parts of Swat set this proprety automatically.
+	 *
+	 * @var SwatButton
+	 */
+	public $button = null;
+
+	/**
 	 * Hidden form fields
 	 *
 	 * An array of the form:
@@ -60,17 +71,6 @@ class SwatForm extends SwatContainer
 	 * @var string
 	 */
 	private $method = SwatForm::METHOD_POST;
-
-	/**
-	 * A reference to the button that was clicked to submit the form,
-	 * or null if the button is not set.
-	 *
-	 * You usually do not want to explicitly set this in your code because
-	 * other parts of Swat set this proprety automatically.
-	 *
-	 * @var SwatButton
-	 */
-	public $button = null;
 
 	/**
 	 * Whether this form has been processed
@@ -255,6 +255,31 @@ class SwatForm extends SwatContainer
 		$field->class = $class;
 		$this->add($field);
 	}
+	
+	/**
+	 * Returns the super-global array with this form's data
+	 *
+	 * Returns a reference to the super-global array containing this
+	 * form's data. The array is chosen based on this form's method.
+	 *
+	 * @return array a reference to the super-global array containing this
+	 *                form's data.
+	 */
+	public function getRawFormData()
+	{
+		$data = null;
+
+		switch ($this->method) {
+		case SwatForm::METHOD_POST:
+			$data = &$_POST;
+			break;
+		case SwatForm::METHOD_GET:
+			$data = &$_GET;
+			break;
+		}
+
+		return $data;
+	}
 
 	/**
 	 * Checks submitted form data for hidden fields
@@ -279,6 +304,35 @@ class SwatForm extends SwatContainer
 				$value = $raw_data[$name];
 				$this->addHiddenField($name, $value);
 			}
+		}
+	}
+
+	/**
+	 * Notifies this widget that a widget was added
+	 *
+	 * If any of the widgets in the added subtree are file entry widgets then
+	 * set this form's encoding accordingly.
+	 *
+	 * @param SwatWidget $widget the widget that has been added.
+	 *
+	 * @see SwatContainer::notifyOfAdd()
+	 */
+	protected function notifyOfAdd($widget)
+	{
+		if (class_exists('SwatFileEntry')) {
+
+			if ($widget instanceof SwatFileEntry) {
+				$this->encoding_type = 'multipart/form-data';
+			} elseif ($widget instanceof SwatContainer) {
+				$descendants = $widget->getDescendants();
+				foreach ($descendants as $sub_widget) {
+					if ($sub_widget instanceof SwatFileEntry) {
+						$this->encoding_type = 'multipart/form-data';
+						break;
+					}
+				}
+			}
+			
 		}
 	}
 
@@ -347,60 +401,6 @@ class SwatForm extends SwatContainer
 		echo "{$this->id}_obj.setDefaultFocus('{$focus_id}');\n";
 
 		echo '</script>';
-	}
-	
-	/**
-	 * Returns the super-global array with this form's data
-	 *
-	 * Returns a reference to the super-global array containing this
-	 * form's data. The array is chosen based on this form's method.
-	 *
-	 * @return array a reference to the super-global array containing this
-	 *                form's data.
-	 */
-	public function getRawFormData()
-	{
-		$data = null;
-
-		switch ($this->method) {
-		case SwatForm::METHOD_POST:
-			$data = &$_POST;
-			break;
-		case SwatForm::METHOD_GET:
-			$data = &$_GET;
-			break;
-		}
-
-		return $data;
-	}
-
-	/**
-	 * Notifies this widget that a widget was added
-	 *
-	 * If any of the widgets in the added subtree are file entry widgets then
-	 * set this form's encoding accordingly.
-	 *
-	 * @param SwatWidget $widget the widget that has been added.
-	 *
-	 * @see SwatContainer::notifyOfAdd()
-	 */
-	protected function notifyOfAdd($widget)
-	{
-		if (class_exists('SwatFileEntry')) {
-
-			if ($widget instanceof SwatFileEntry) {
-				$this->encoding_type = 'multipart/form-data';
-			} elseif ($widget instanceof SwatContainer) {
-				$descendants = $widget->getDescendants();
-				foreach ($descendants as $sub_widget) {
-					if ($sub_widget instanceof SwatFileEntry) {
-						$this->encoding_type = 'multipart/form-data';
-						break;
-					}
-				}
-			}
-			
-		}
 	}
 }
 
