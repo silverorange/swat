@@ -40,6 +40,7 @@ function SwatSimpleColorEntry(id, colors)
 SwatSimpleColorEntry.prototype.close = function()
 {
 	this.palette_div.style.display = 'none';
+	SwatZIndexManager.lowerElement(this.palette_div);
 
 	this.is_open = false;
 }
@@ -52,6 +53,7 @@ SwatSimpleColorEntry.prototype.open = function()
 	this.draw();
 
 	this.palette_div.style.display = 'block';
+	SwatZIndexManager.raiseElement(this.palette_div);
 
 	this.is_open = true;
 }

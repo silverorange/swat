@@ -297,10 +297,15 @@ SwatCalendar.prototype.buildControls = function()
 
 SwatCalendar.prototype.toggle = function()
 {
-	if (this.open)
+	if (this.open) {
 		this.close();
-	else
+		calendar_div = document.getElementById(this.id + '_div');
+		SwatZIndexManager.lowerElement(calendar_div);
+	} else {
 		this.draw();
+		calendar_div = document.getElementById(this.id + '_div');
+		SwatZIndexManager.raiseElement(calendar_div);
+	}
 }
 
 SwatCalendar.prototype.draw = function()

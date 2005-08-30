@@ -128,6 +128,7 @@ class SwatSimpleColorEntry extends SwatControl implements SwatState
 
 		if (!$shown) {
 			echo '<script type="text/javascript" src="swat/javascript/swat-simple-color-entry.js"></script>';
+			echo '<script type="text/javascript" src="swat/javascript/swat-z-index-manager.js"></script>';
 
 			$shown = true;
 		}

@@ -84,6 +84,7 @@ class SwatCalendar extends SwatControl
 
 		if (!$shown) {
 			echo '<script type="text/javascript" src="swat/javascript/swat-calendar.js"></script>';
+			echo '<script type="text/javascript" src="swat/javascript/swat-z-index-manager.js"></script>';
 
 			$this->displayJavascriptTranslations();
 
