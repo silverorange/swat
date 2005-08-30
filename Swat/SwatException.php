@@ -187,7 +187,7 @@ class SwatException extends Exception
 					$arg = '<'.get_class($arg).' object>';
 				} elseif ($arg === null) {
 					$arg = '<null>';
-				} elseif (gettype($arg) == 'string') {
+				} elseif (is_string($arg)) {
 					$arg = "'".$arg."'";
 				} elseif (is_array($arg)) {
 					$arg = $this->getArguments($arg, false);
