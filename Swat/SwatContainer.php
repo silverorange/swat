@@ -144,7 +144,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 * Gets descendant widgets
 	 *
 	 * Retrieves an array of all widgets in the widget subtree below this
-	 * container.
+	 * container. This uses a breadth-first traversal.
 	 *
 	 * @param string $class_name optional class name. If set, only widgets that
 	 *                            are instances of $class_name are returned.
@@ -155,7 +155,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	{
 		$out = array();
 
-		foreach($this->children as $child_widget) {
+		foreach ($this->children as $child_widget) {
 			if ($class_name === null || $child_widget instanceof $class_name) {
 				if ($child_widget->id === null)
 					$out[] = $child_widget;
@@ -166,6 +166,42 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 			if ($child_widget instanceof SwatContainer)
 				$out = array_merge($out,
 					$child_widget->getDescendants($class_name));
+		}
+
+		return $out;
+	}
+
+	/**
+	 * Gets the first descendent widget
+	 *
+	 * Retrieves the first descendent widget in the subtree. This uses a
+	 * depth-first tree traversal.
+	 *
+	 * @param string $class_name an optional class name to filter by.
+	 *
+	 * @return mixed the first descendent widget of null if no matching
+	 *                descendent is found.
+	 */
+	public function getFirstDescendent($class_name = null)
+	{
+		$out = null;
+
+		foreach ($this->children as $child_widget) {
+			if ($child_widget instanceof SwatContainer) {
+				$out = $child_widget->getFirstDescendent($class_name);
+				if ($out !== null)
+					break;
+			}
+		}
+
+		if ($out === null) {
+			foreach ($this->children as $child_widget) {
+				if ($class_name === null ||
+					$child_widget instanceof $class_name) {
+					$out = $child_widget;
+					break;
+				}
+			}
 		}
 
 		return $out;
