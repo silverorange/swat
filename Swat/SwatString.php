@@ -123,8 +123,10 @@ class SwatString
 			if ($blocklevel_ended)
 				$in_blocklevel = false;
 		}
-		
+
 		$text = implode('', $paragraphs);
+
+		$text = preg_replace('/([^\n])\n([^\n])/s', '\1<br />\2', $text);
 
 		$text = rtrim($text);
 
