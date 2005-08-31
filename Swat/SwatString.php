@@ -92,6 +92,10 @@ class SwatString
 		$starting_blocklevel = '/^<('.$blocklevel_elements.')[^<>]*?>/si';
 		$ending_blocklevel = '/<\/('.$blocklevel_elements.')[^<>]*?>$/si';
 
+		// convert input from windows and mac
+		$text = str_replace("\n\r", "\n", $text);
+		$text = str_replace("\r", "\n", $text);
+
 		// replace continuous strings of whitespace containing a
 		// double lf with two line breaks
 		$text = preg_replace('/[\xa0\s]*\n\n[\xa0\s]*/s', "\n\n", $text);
