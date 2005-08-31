@@ -248,6 +248,11 @@ table.swat-table-view { border-collapse: collapse; }
 .swat-table-view th a:link, .swat-table-view th a:visited { color: #333; }
 .swat-table-view th a:hover, .swat-table-view th a:active { color: #000; }
 
+td.swat-table-view-group {
+	font-weight: bold;
+	padding-top: 1em;
+}
+
 
 /* SwatPagination */
 .swat-pagination {
