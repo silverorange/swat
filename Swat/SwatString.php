@@ -18,12 +18,9 @@ class SwatString
 	 * @var array
 	 */
 	public static $blocklevel_elements = array(
-		'p',        'pre',      'dl',       'div',
-		'center',   'noscript', 'noframes', 'blockquote',
-		'form',     'isindex',  'hr',       'table',
-		'fieldset', 'address',  'ul',       'ol',
-		'dir',      'menu',     'h1',       'h2',
-		'h3',       'h4',       'h5',       'h6');
+		'p',          'pre',     'dl',     'div',
+		'blockquote', 'form',    'h[1-6]', 'table',
+		'fieldset',   'address', 'ul',     'ol');
 
 	// }}}
 	// {{{ filter constants
