@@ -27,6 +27,8 @@ class StringDemo extends DemoPage
 	
 	private $text_blocks = array();
 
+	private $unformatted_text_blocks = array();
+
 	public function initUI()
 	{
 		$this->text_blocks[] = "<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>".
@@ -41,6 +43,12 @@ class StringDemo extends DemoPage
 			"<p>D'Pied grousse ons wa, oft g&euml;tt schl&eacute;it bl&eacute;nken si, d'Blumme gewalteg mat ze. An drun Milliounen sin, d&eacute; hier w&auml;it esou r&euml;m. Op vun koum derfir klinzecht, en dir wuel spilt schaddreg. Dem fu genuch Schuebersonndeg bleiwe, d'Mier Fletschen wa all. Mamm meescht Dohannen d&eacute;n de, de denkt Kl&eacute;der d&eacute;n, wat aremt ugedon löschteg da. Vu get m&eacute;ngem d'Loft.</p>".
 			"<p>Hie zielen d'Pied d'Kam&auml;iner de. D&eacute; Duerf duerch w&auml;r, main d'Kanner dan fu. Um z&euml;nne ruffen m&eacute;i. Sinn Noper mat ke, g&eacute;t en Ierd ruffen. W&auml;r brommt d'w&auml;iss Faarwen op.</p>".
 			"<p>D'Vioule Minutt Schuebersonndeg r&euml;m um, op Gaas zw&euml;schen mat. Eise Engel j&eacute;ngt sin am, k&eacute; fond gesiess heemlech m&eacute;i. D'Gaassen Nuechtegall schn&eacute;iw&auml;iss fu ass, Noper r&euml;schten wee k&eacute;, ze d'B&euml;scher Schuebersonndeg gemaacht n&euml;t. Fest fr&euml;sch och hu. Iech Wand wielen et all, d&eacute; vun geet hannendrun.</p>";
+
+		$this->unformatted_text_blocks[] = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\n".
+			"<blockquote>Etiam aliquet tincidunt augue. Cras dui. Quisque tincidunt pede vitae lorem.</blockquote>\n\n".
+			"Aenean semper wisi sed mi. Integer fermentum magna non magna laoreet faucibus. Aenean molestie auctor ante. Donec vitae neque ut tellus tincidunt bibendum. Donec sit amet sem. In elementum tellus consectetuer turpis. Nam velit erat, pharetra vel, sollicitudin at, gravida eget, est. Etiam risus tortor, scelerisque in, consectetuer et, mollis a, leo. Donec auctor.\n\n\n".
+			"<strong>Mauris tellus.</strong>Quisque sit amet nulla. Fusce vitae eros eu nunc volutpat aliquet. Donec nibh. Donec ac libero. Etiam dictum. Cras fringilla nunc at justo. Vestibulum quis magna eu nisl congue volutpat. Ut <em>facilisis lobortis</em> lacus. Nullam non urna at elit malesuada dictum. Integer quis ligula. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\n".
+			"Vivamus metus ligula, varius sodales, dictum in, posuere sagittis, nisl.\nSuspendisse potenti. Nulla non mauris id tortor eleifend auctor.<br />Nullam mattis odio ac diam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam ultrices mattis nisl. Nullam diam metus, vestibulum sit amet, lacinia at, condimentum at, dolor.";
 
 		$content_block = $this->ui->getWidget('string_demos');
 
@@ -59,6 +67,7 @@ class StringDemo extends DemoPage
 		$this->testEllipsizeRight(20);
 		$this->testEllipsizeMiddle(25);
 		$this->testCondense();
+		$this->testToXHTML();
 	}
 
 	private function testEllipsizeRight($length = 20)
@@ -101,6 +110,23 @@ class StringDemo extends DemoPage
 
 			echo '<h5>Condensed Text:</h5>';
 			echo '<div class="text-block">'.$condensed_text_block.'</div>';
+		}
+	}
+
+	private function testToXHTML()
+	{
+		echo '<h4>Convert Plain Text to XHTML</h4>';
+
+		foreach ($this->unformatted_text_blocks as $text_block) {
+			echo '<h5>Plain Text:</h5>';
+			echo '<div class="string-unformatted-text">'.
+				nl2br(htmlspecialchars($text_block)).'</div>';
+
+			$xhtml_text_block = SwatString::toXHTML($text_block);
+
+			echo '<h5>XHTML Text:</h5>';
+			echo '<div class="string-unformatted-text">'.
+				nl2br(htmlspecialchars($xhtml_text_block)).'</div>';
 		}
 	}
 }

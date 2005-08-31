@@ -81,3 +81,11 @@ ol.string-demo li {
 ol.string-demo li div {
 	padding-bottom: 1em;
 }
+
+div.string-unformatted-text {
+	font-family: monospace;
+	border: 1px dashed #ccc;
+	background: #eee;
+	padding: 1em;
+	margin-bottom: 1em;
+}
