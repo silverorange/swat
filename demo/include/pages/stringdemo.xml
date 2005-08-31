@@ -2,7 +2,29 @@
 <swat-interface>
 	<widget class="SwatFrame" id="my_frame">
 		<property name="title" value="SwatString Demos" />
-		<widget class="SwatContentBlock" id="string_demos">
+		<widget class="SwatDisclosure">
+			<property name="title" value="Right Ellipsize" />
+			<property name="open" value="false" type="boolean" />
+			<widget class="SwatContentBlock" id="right_ellipsize">
+			</widget>
+		</widget>
+		<widget class="SwatDisclosure">
+			<property name="title" value="Middle Ellipsize" />
+			<property name="open" value="false" type="boolean" />
+			<widget class="SwatContentBlock" id="middle_ellipsize">
+			</widget>
+		</widget>
+		<widget class="SwatDisclosure">
+			<property name="title" value="Condense" />
+			<property name="open" value="false" type="boolean" />
+			<widget class="SwatContentBlock" id="condense">
+			</widget>
+		</widget>
+		<widget class="SwatDisclosure">
+			<property name="title" value="Convert Plain Text to XHTML" />
+			<property name="open" value="false" type="boolean" />
+			<widget class="SwatContentBlock" id="to_xhtml">
+			</widget>
 		</widget>
 	</widget>
 </swat-interface>
