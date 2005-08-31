@@ -50,11 +50,25 @@ class StringDemo extends DemoPage
 			"<strong>Mauris tellus.</strong>Quisque sit amet nulla. Fusce vitae eros eu nunc volutpat aliquet. Donec nibh. Donec ac libero. Etiam dictum. Cras fringilla nunc at justo. Vestibulum quis magna eu nisl congue volutpat. Ut <em>facilisis lobortis</em> lacus. Nullam non urna at elit malesuada dictum. Integer quis ligula. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\n".
 			"Vivamus metus ligula, varius sodales, dictum in, posuere sagittis, nisl.\nSuspendisse potenti. Nulla non mauris id tortor eleifend auctor.<br />Nullam mattis odio ac diam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam ultrices mattis nisl. Nullam diam metus, vestibulum sit amet, lacinia at, condimentum at, dolor.";
 
-		$content_block = $this->ui->getWidget('string_demos');
-
+		$right_ellipsize = $this->ui->getWidget('right_ellipsize');
 		ob_start();
-		$this->testAll();
-		$content_block->content = ob_get_clean();
+		$this->testEllipsizeRight(20);
+		$right_ellipsize->content = ob_get_clean();
+
+		$middle_ellipsize = $this->ui->getWidget('middle_ellipsize');
+		ob_start();
+		$this->testEllipsizeMiddle(25);
+		$middle_ellipsize->content = ob_get_clean();
+
+		$condense = $this->ui->getWidget('condense');
+		ob_start();
+		$this->testCondense();
+		$condense->content = ob_get_clean();
+
+		$to_xhtml = $this->ui->getWidget('to_xhtml');
+		ob_start();
+		$this->testToXHTML();
+		$to_xhtml->content = ob_get_clean();
 	}
 	
 	protected function createLayout()
@@ -62,18 +76,8 @@ class StringDemo extends DemoPage
 		return new SwatLayout('../layouts/no_source.php');
 	}
 
-	private function testAll()
-	{
-		$this->testEllipsizeRight(20);
-		$this->testEllipsizeMiddle(25);
-		$this->testCondense();
-		$this->testToXHTML();
-	}
-
 	private function testEllipsizeRight($length = 20)
 	{
-		echo '<h4>Right Ellipsize at '.$length.' Characters</h4>';
-
 		echo '<ol class="string-demo">';
 		foreach($this->strings as $string) {
 			echo '<li>';
@@ -86,8 +90,6 @@ class StringDemo extends DemoPage
 
 	private function testEllipsizeMiddle($length = 20)
 	{
-		echo '<h4>Middle Ellipsize at '.$length.' Characters</h4>';
-
 		echo '<ol class="string-demo">';
 		foreach($this->strings as $string) {
 			echo '<li>';
@@ -100,8 +102,6 @@ class StringDemo extends DemoPage
 
 	private function testCondense()
 	{
-		echo '<h4>Condense Text at 200 Characters</h4>';
-
 		foreach ($this->text_blocks as $text_block) {
 			echo '<h5>Uncondensed Text:</h5>';
 			echo '<div class="text-block">'.$text_block.'</div>';
@@ -115,8 +115,6 @@ class StringDemo extends DemoPage
 
 	private function testToXHTML()
 	{
-		echo '<h4>Convert Plain Text to XHTML</h4>';
-
 		foreach ($this->unformatted_text_blocks as $text_block) {
 			echo '<h5>Plain Text:</h5>';
 			echo '<div class="string-unformatted-text">'.
