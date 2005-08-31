@@ -72,6 +72,66 @@ class SwatString
 	}
 
 	// }}}
+	// {{{ public function toXHTML()
+
+	/**
+	 * Intelligently converts a text block to XHTML
+	 *
+	 * The text is converted as follows:
+	 *
+	 * - text blocks delimited by double line breaks is wrapped in a paragraph
+	 *   tag
+	 * - unless it is already inside a blocklevel tag
+	 *
+	 * @param string $text the text block to convert to XHTML.
+	 *
+	 * @return string the text block converted to XHTML.
+	 */
+	public function toXHTML($text)
+	{
+		$blocklevel_elements = implode('|', self::$blocklevel_elements);
+
+		// regular expressions to match blocklevel tags
+		$starting_blocklevel = '/^<('.$blocklevel_elements.')[^<>]*?>/si';
+		$ending_blocklevel = '/<\/('.$blocklevel_elements.')[^<>]*?>$/si';
+
+		// replace continuous strings of whitespace containing a
+		// double lf with two line breaks
+		$text = preg_replace('/[\xa0\s]*\n\n[\xa0\s]*/s', "\n\n", $text);
+
+		$paragraphs = explode("\n\n", $text);
+
+		$in_blocklevel = false;
+		foreach($paragraphs as &$paragraph) {
+			$blocklevel_started =
+				(preg_match($starting_blocklevel, $paragraph) == 1);
+				
+			$blocklevel_ended =
+				(preg_match($ending_blocklevel, $paragraph) == 1);
+				
+			if ($blocklevel_started)
+				$in_blocklevel = true;
+
+			// don't wrap this paragraph in <p> tags if we are in a blocklevel
+			// tag already
+			if ($in_blocklevel) {
+				$paragraph = $paragraph."\n\n";
+			} else {
+				$paragraph = '<p>'.$paragraph."</p>\n\n";
+			}
+
+			if ($blocklevel_ended)
+				$in_blocklevel = false;
+		}
+		
+		$text = implode('', $paragraphs);
+
+		$text = rtrim($text);
+
+		return $text;
+	}
+
+	// }}}
 	// {{{ public static function condense()
 
 	/**
