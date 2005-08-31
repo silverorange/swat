@@ -1,6 +1,7 @@
 <?php
 
 require_once 'MDB2.php';
+require_once 'SwatDB/SwatDBException.php';
 
 /**
  * All public properties correspond to database fields
@@ -69,19 +70,23 @@ class SwatDBDataObject
 	/**
 	 * Loads this object's properties from the database given an id
 	 *
+	 * @param SwatApplication app reference to the application object
+	 *
 	 * @param mixed id the id of the database row to set this object's
 	 *               properties with.
 	 */
-	public function loadFromDB($id) {
+	public function loadFromDB($app, $id) {
 
 	}
 
 	/**
 	 * Saves this object to the database
 	 *
+	 * @param SwatApplication app reference to the application object
+	 *
 	 * Only modified properties are updated.
 	 */
-	public function saveToDB() {
+	public function saveToDB($app) {
 
 	}
 
@@ -96,6 +101,9 @@ class SwatDBDataObject
 	 */
 	protected function initFromRow($row)
 	{
+		if ($row === null)
+			throw new SwatDBException('Attempting to initialize dataobject with a null row.');
+
 		$property_array = get_object_vars($this);
 
 		if (is_object($row))
