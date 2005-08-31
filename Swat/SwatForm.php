@@ -32,14 +32,25 @@ class SwatForm extends SwatContainer
 	public $encoding_type = null;
 
 	/**
-	 * A reference to the default control to select when the form loads
+	 * Whether or not to automatically focus the a default SwatControl when
+	 * this form loads
+	 *
+	 * Autofocusing is good for applications that are keyboard driven as it
+	 * immediatly places the focus on the form.
+	 *
+	 * @var boolean
+	 */
+	public $autofocus = true;
+
+	/**
+	 * A reference to the default control to focus when the form loads
 	 *
 	 * If this is not set then it defaults to the first SwatControl
 	 * in the form.
 	 *
 	 * @var SwatControl
 	 */
-	public $default_selected_control = null;
+	public $default_focused_control = null;
 
 	/**
 	 * A reference to the button that was clicked to submit the form,
@@ -390,15 +401,18 @@ class SwatForm extends SwatContainer
 			$shown = true;
 		}
 		
-		if ($this->default_selected_control === null)
-			$focus_id = $this->getFirstDescendent('SwatControl')->id;
-		else
-			$focus_id = $this->default_selected_control->id;
-		
 		echo '<script type="text/javascript">'."\n";
 
 		echo "var {$this->id}_obj = new SwatForm('{$this->id}');\n";
-		echo "{$this->id}_obj.setDefaultFocus('{$focus_id}');\n";
+
+		if ($this->autofocus) {
+			if ($this->default_focused_control === null)
+				$focus_id = $this->getFirstDescendent('SwatControl')->id;
+			else
+				$focus_id = $this->default_focused_control->id;
+
+			echo "{$this->id}_obj.setDefaultFocus('{$focus_id}');\n";
+		}
 
 		echo '</script>';
 	}
