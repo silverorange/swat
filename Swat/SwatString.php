@@ -93,7 +93,7 @@ class SwatString
 		$ending_blocklevel = '/<\/('.$blocklevel_elements.')[^<>]*?>$/si';
 
 		// convert input from windows and mac
-		$text = str_replace("\n\r", "\n", $text);
+		$text = str_replace("\r\n", "\n", $text);
 		$text = str_replace("\r", "\n", $text);
 
 		// replace continuous strings of whitespace containing a
