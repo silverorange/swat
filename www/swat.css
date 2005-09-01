@@ -164,8 +164,6 @@ div.swat-order-control:hover {
 .swat-order-control-list {
 	border: 1px ButtonShadow solid;
 	margin: 2px;
-/*	width: 300px;
-	height: 100px;*/
 	overflow: auto;
 	list-style: none;
 	padding: 0;
