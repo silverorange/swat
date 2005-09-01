@@ -135,19 +135,7 @@ abstract class SwatWidget extends SwatObject
 	 *
 	 * @see SwatMessage
 	 */
-	abstract public function getAllMessages();
-
-	/**
-	 * Gets messages for this widget
-	 *
-	 * Does not get messages from child widgets.
-	 *
-	 * @return array an array of {@link SwatMessage} objects.
-	 */
-	public function getMessages()
-	{
-		return $this->messages;
-	}
+	abstract public function getMessages();
 
 	/**
 	 * Checks for the presence of messages
