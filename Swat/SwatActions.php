@@ -215,7 +215,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 			$this->action_flydown->addOption($item->id, $item->title);
 
 		$this->apply_button = new SwatButton($this->id.'_apply_button');
-		$this->apply_button->setTitleFromStock('apply');
+		$this->apply_button->setFromStock('apply');
 	}
 
 	/**
