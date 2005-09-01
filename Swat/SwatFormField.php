@@ -36,13 +36,6 @@ class SwatFormField extends SwatContainer
 	public $note = null;
 
 	/**
-	 * CSS class to use on the HTML div tag
-	 *
-	 * @var string
-	 */
-	public $class = 'swat-form-field';
-
-	/**
 	 * CSS class to use on the HTML div where the note is displayed
 	 *
 	 * @var string
@@ -62,6 +55,15 @@ class SwatFormField extends SwatContainer
 	 * @var string
 	 */
 	public $errormsg_class = 'swat-form-field-errormsg';
+
+	/**
+	 * CSS class to use on the HTML div tag
+	 *
+	 * Subclasses can change this to change their appearance.
+	 *
+	 * @var string
+	 */
+	protected $class = 'swat-form-field';
 
 	/**
 	 * Displays this form field
