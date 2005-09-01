@@ -144,9 +144,13 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		echo "//<![CDATA[\n";
 
 		$num_elements = count($this->options);
+		
+		// TODO: make sure there is at least one option
+		$keys = array_keys($this->options);
+		$first_key = $keys[0];
 
 		echo "{$this->id}_obj = new SwatChangeOrder('{$this->id}', ".
-			"{$num_elements});\n";
+			"{$num_elements}, {$first_key});\n";
 
 		echo "\n//]]>";
 		echo '</script>';
