@@ -37,26 +37,29 @@ class SwatChangeOrder extends SwatControl implements SwatState
 	public $values = null;
 
 	/**
-	 * Width of the order box (either pixels or %)
+	 * Width of the order box (in stylesheet units)
 	 *
 	 * @var string
 	 */
-	public $width = '400';
+	public $width = '400px';
 
 	/**
-	 * Height of the order box (either pixels or %)
+	 * Height of the order box (in stylesheet units)
 	 *
 	 * @var string
 	 */
-	public $height = '150';
+	public $height = '150px';
 
 	/**
-	 * onclick html attribute of the buttons
+	 * Onclick html attribute of the buttons
 	 *
 	 * @var string
 	 */
 	public $onclick = null;
 
+	/**
+	 * Displays this changeorder control
+	 */
 	public function display()
 	{
 		if (!$this->visible)
@@ -74,19 +77,43 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$div_tag->class = 'swat-order-control-div';
 		$div_tag->open();
 
-		// this has to go above the javascript
-		$iframe_tag = new SwatHtmlTag('iframe');
-		$iframe_tag->width = $this->width;
-		$iframe_tag->height = $this->height;
-		$iframe_tag->id = $this->id.'_iframe';
-		$iframe_tag->align = 'left';
-		$iframe_tag->class = 'swat-order-control-iframe';
-		$iframe_tag->open();
-		$iframe_tag->close();
+		$up_btn = new SwatHtmlTag('input');
+		$up_btn->type = 'button';
+		$up_btn->value = Swat::_('Move Up');
+		$up_btn->onclick = "{$this->id}_obj.updown('up');";
+		if ($this->onclick !== null)
+			$up_btn->onclick.= $this->onclick;
+
+		$up_btn->display();
+
+		$list_div = new SwatHtmlTag('div');
+		$list_div->style = "width: {$this->width}; height: {$this->height};";
+		$list_div->id = "{$this->id}_list";
+		$list_div->class = 'swat-order-control-list';
+		$list_div->open();
+
+		$option_tag = new SwatHtmltag('div');
+		$option_tag->onclick = "{$this->id}_obj.choose(this);";
+		$option_tag->class = 'swat-order-control-active';
+		foreach ($this->options as $key => $option) {
+			$option_tag->id = "{$this->id}_option_{$key}";
+			$option_tag->content = $option;
+			$option_tag->display();
+			$option_tag->class = 'swat-order-control';
+		}
+
+		$list_div->close();
+
+		$down_btn = new SwatHtmlTag('input');
+		$down_btn->type = 'button';
+		$down_btn->value = Swat::_('Move Down');
+		$down_btn->onclick = "{$this->id}_obj.updown('down');";
+		if ($this->onclick !== null)
+			$down_btn->onclick.= $this->onclick;
+
+		$down_btn->display();
 		
 		$this->displayJavascript();
-
-		$obj = $this->id.'_obj';
 
 		$hidden_tag = new SwatHtmlTag('input');
 		$hidden_tag->type = 'hidden';
@@ -94,29 +121,6 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$hidden_tag->name = $this->id;
 		$hidden_tag->value = implode(',', array_keys($this->options));
 		$hidden_tag->display();
-
-		$up_btn = new SwatHtmlTag('input');
-		$up_btn->type = 'button';
-		$up_btn->value = Swat::_('Move Up');
-		$up_btn->onclick = $obj.".updown('up');";
-		if ($this->onclick !== null)
-			$up_btn->onclick.= $this->onclick;
-
-		$up_btn->display();
-
-		echo '<br />';
-
-		$down_btn = new SwatHtmlTag('input');
-		$down_btn->type = 'button';
-		$down_btn->value = Swat::_('Move Down');
-		$down_btn->onclick = $obj.".updown('down');";
-		if ($this->onclick !== null)
-			$down_btn->onclick.= $this->onclick;
-
-		$down_btn->display();
-
-		// TODO: maybe clean up the way the buttons are positioned
-		echo '<div style="clear:left;"></div>';
 
 		$div_tag->close();
 	}
@@ -128,25 +132,21 @@ class SwatChangeOrder extends SwatControl implements SwatState
 
 	private function displayJavascript()
 	{
-		echo '<script type="text/javascript" src="swat/javascript/swat-change-order.js"></script>';
+		static $shown = false;
+
+		if (!$shown) {
+			echo '<script type="text/javascript" src="swat/javascript/swat-change-order.js"></script>';
+
+			$shown = true;
+		}
 
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 
-		$warning = Swat::_('You must first select the item to reorder.');
-		// TODO: figure out how to make the stylesheets work better.
-		$style = '../swat/swat.css';
-		$values = array();
-		foreach ($this->options as $id => $title)
-			$values[$id] = addslashes($title);
+		$num_elements = count($this->options);
 
-		$values = implode("','", $values);
-
-		printf("\n {$this->id}_obj = new SwatChangeOrder('%s'); ",
-			$this->id, $warning);
-
-		echo "\n {$this->id}_obj.stylesheet = '{$style}';";
-		echo "\n {$this->id}_obj.draw(new Array('{$values}')); ";
+		echo "{$this->id}_obj = new SwatChangeOrder('{$this->id}', ".
+			"{$num_elements});\n";
 
 		echo "\n//]]>";
 		echo '</script>';

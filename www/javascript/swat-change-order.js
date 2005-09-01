@@ -1,82 +1,84 @@
-function SwatChangeOrder(id) {
-	this.active_div;
+function SwatChangeOrder(id, num_elements)
+{
 	this.id = id;
-	this.warning_msg = "You must select an element before re-ordering.";
-	this.style;
+	this.num_elements = num_elements;
+
+	this.list_div = document.getElementById(this.id + '_list');
+	this.active_div = document.getElementById(this.id + '_option_0');
+	this.first_div = document.getElementById(this.id + '_option_0');
 }
 
-SwatChangeOrder.prototype.draw = function(elements) {
-	this.num_elements = elements.length;
-	
-	myvar = '<body class="swat-order-control-iframe-body">';
-	for (i = 0; i < elements.length; i++) {
-		myvar = myvar + '<div id="' + this.id + '_' + i + '"';
-		myvar = myvar + ' onclick="window.parent.' + this.id + '_obj.choose(this);"';
-		myvar = myvar + ' class="swat-order-control">';
-		myvar = myvar + elements[i] + '</div>';
-	}
-	myvar = myvar + '</body>';
-	
-	var iframe = document.getElementById(this.id + '_iframe');
-	var doc = iframe.contentWindow.document;
-	doc.open("text/html", "replace");
-	doc.write('<style type="text/css" media="all">');
-	doc.write('@import "' + this.stylesheet + '";');
-	doc.write('</style>');
-	doc.write(myvar);
-	doc.close();
-}
-
-SwatChangeOrder.prototype.choose = function(div) {
-	if (this.active_div)
-		this.active_div.className = 'swat-order-control';
-		
+SwatChangeOrder.prototype.choose = function(div)
+{
+	this.active_div.className = 'swat-order-control';
 	div.className = 'swat-order-control-active';
 	this.active_div = div;
-	
 }
 
-SwatChangeOrder.prototype.updown = function(direction) {
-	if (!this.active_div) {
-		//no element selected, alert user
-		alert(this.warning_msg);
-		return;
-	}
+SwatChangeOrder.prototype.updown = function(direction)
+{
+	var index = parseInt(this.active_div.id.match(/[0-9]+$/));
 	
-	rexp = new RegExp("[0-9]+$");
-	var idx = parseInt(this.active_div.id.match(rexp));
+	var next = index + (direction == 'up' ? -1 : 1);
 	
-	var nxt = idx + (direction=='up'? -1 : 1);
-	
-	//at the top or bottom - simply return
-	if (nxt >= this.num_elements || nxt < 0)
+	// at the top or bottom - simply return
+	if (next >= this.num_elements || next < 0)
 		return;
 	
-	//swap the content of the current element and the next one
+	// swap the content of the current element and the next one
 	var current_content = this.active_div.innerHTML;
 	
-	var iframe = document.getElementById(this.id + '_iframe');
-	var iframedoc = iframe.contentWindow.document;
-	
-	var next_div = iframedoc.getElementById(this.id + '_' + nxt);
+	var next_div = document.getElementById(this.id + '_option_' + next);
+
 	var next_content = next_div.innerHTML;
 	
 	next_div.innerHTML = current_content;
 	this.active_div.innerHTML = next_content;
 	
-	//change the current element to be the next one
+	// change the current element to be the next one
 	this.choose(next_div);
 	
-	//update a hidden field with current order of keys
+	// update a hidden field with current order of keys
 	var hidden_vals = document.getElementById(this.id);
 	var val_array = hidden_vals.value.split(',');
-	var current_val = val_array[idx];
-	val_array[idx] = val_array[nxt];
-	val_array[nxt] = current_val;
+	var current_val = val_array[index];
+	val_array[index] = val_array[next];
+	val_array[next] = current_val;
 	hidden_vals.value = val_array.toString();
 
-	//change the offset of the iframe to follow
-	var middle = (next_div.offsetHeight / 2);
-	var offset = next_div.offsetTop - parseInt(iframe.height/2) + middle;
-	iframe.contentWindow.scrollTo(0, offset);
+	// change the offset of the div to follow
+	// this conditional is to fix behaviour in IE
+	if (this.first_div.offsetTop > this.list_div.offsetTop)
+		var y_position = (next_div.offsetTop - this.list_div.offsetTop) +
+			(next_div.offsetHeight / 2);
+	else
+		var y_position = next_div.offsetTop + (next_div.offsetHeight / 2);
+
+	this.scrollList(y_position);
+}
+
+SwatChangeOrder.prototype.scrollList = function(y_coord)
+{
+	// clientHeight is the height of the visible scroll area
+	var half_list_height = parseInt(this.list_div.clientHeight / 2);
+
+	if (y_coord < half_list_height) {
+		this.list_div.scrollTop = 0;
+		return;
+	}
+
+	// scrollHeight is the height of the contents inside the scroll area
+	if (this.list_div.scrollHeight - y_coord < half_list_height) {
+		this.list_div.scrollTop = this.list_div.scrollHeight -
+			this.list_div.clientHeight;
+
+		return;
+	}
+
+	// offsetHeight is clientHeight + padding
+	factor = (y_coord - half_list_height) /
+		(this.list_div.scrollHeight - this.list_div.offsetHeight);
+		
+	this.list_div.scrollTop = Math.floor(
+		(this.list_div.scrollHeight - this.list_div.clientHeight) * factor);
 }

@@ -140,36 +140,35 @@ label.swat-control {
 
 .swat-order-control {
 	border:1px solid #CCC;
-	font-size: 65%;
 	background: #FFF;
-	margin: 2px;
-	padding: 0.2em;
+	margin: 1px;
+	padding: 2px;
 	cursor: pointer;
 	cursor: hand;
 }
 
 div.swat-order-control:hover {
-	border:1px solid Highlight;
+	border: 1px solid #8af;
 }
 
 .swat-order-control-active {
-	border:1px solid #FFF;
-	font-size: 65%;
-	color: HighlightText;
-	background: Highlight;
-	margin: 2px;
-	padding: 0.2em;
+	border: 1px solid #8af;
+	color: #fff;
+	background: #79c;
+	margin: 1px;
+	padding: 2px;
 	cursor: pointer;
 	cursor: hand;
 }
 
-.swat-order-control-iframe-body {
-	margin: 0px;
-}
-
-.swat-order-control-iframe {
+.swat-order-control-list {
 	border: 1px ButtonShadow solid;
 	margin: 2px;
+/*	width: 300px;
+	height: 100px;*/
+	overflow: auto;
+	list-style: none;
+	padding: 0;
 }
 
 .swat-form-field-checkbox label {
