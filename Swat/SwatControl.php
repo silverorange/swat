@@ -37,11 +37,15 @@ abstract class SwatControl extends SwatWidget
 	/**
 	 * Gets all messages
 	 *
-	 * @return array the gathered SwatMessage objects.
+	 * Gathers all messages from children of this widget and this widget 
+	 * itself.
 	 *
-	 * @see SwatWidget::getAllMessages()
+	 * @return array an array of {@link SwatMessage} objects.
+	 *
+	 * @see SwatWidget::getMessages()
+	 * @see SwatMessage
 	 */
-	public function getAllMessages()
+	public function getMessages()
 	{
 		return $this->messages;
 	}
@@ -49,9 +53,9 @@ abstract class SwatControl extends SwatWidget
 	/**
 	 * Checks for the presence of messages
 	 *
-	 * @return boolean true if there is a message in this control.
+	 * @return boolean true if there is an message in the subtree.
 	 *
-	 * @see SwatWidget::hasMessages()
+	 * @see SwatWidget::hasMessage()
 	 */
 	public function hasMessage()
 	{

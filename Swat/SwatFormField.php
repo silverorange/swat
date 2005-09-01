@@ -78,7 +78,7 @@ class SwatFormField extends SwatContainer
 		if ($first_child === null)
 			return;
 
-		$messages = &$this->getAllMessages();
+		$messages = &$this->getMessages();
 		$container_div = new SwatHtmlTag('div');
 
 		if (count($messages) > 0)
