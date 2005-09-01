@@ -25,6 +25,18 @@ class SwatButton extends SwatControl
 	public $title;
 
 	/**
+	 * The custom CSS class of this tool link
+	 *
+	 * This optional class is added on top of the default 'swat-button'
+	 * class.
+	 *
+	 * @var string
+	 *
+	 * @see SwatButton::setFromStock()
+	 */
+	public $class = null;
+
+	/**
 	 * Clicked
 	 *
 	 * This is set to true after processing if this button was clicked.
@@ -59,6 +71,11 @@ class SwatButton extends SwatControl
 		$input_tag->type = 'submit';
 		$input_tag->name = $this->id;
 		$input_tag->value = $this->title;
+
+		if ($this->class === null)
+			$input_tag->class = 'swat-button';
+		else
+			$input_tag->class = 'swat-button '.$this->class;
 
 		$input_tag->display();
 	}
@@ -96,37 +113,38 @@ class SwatButton extends SwatControl
 	}
 
 	/**
-	 * Sets a stock title
+	 * Sets the values of this button to a stock type
 	 *
-	 * Looks up a stock title for this button and sets it as the current title.
-	 *
-	 * Valid stock title ids are:
+	 * Valid stock type ids are:
 	 *
 	 * - submit
 	 * - create
 	 * - apply
 	 *
-	 * @param string $stock_id the identifier of the stock title to use.
+	 * @param string $stock_id the identifier of the stock type to use.
 	 *
 	 * @throws SwatException
 	 */
-	public function setTitleFromStock($stock_id)
+	public function setFromStock($stock_id)
 	{
 		switch ($stock_id) {
 		case 'submit':
+			$this->class = 'swat-button-submit';
 			$this->title = Swat::_('Submit');
 			break;
 
 		case 'create':
+			$this->class = 'swat-button-create';
 			$this->title = Swat::_('Create');
 			break;
 
 		case 'apply':
+			$this->class = 'swat-button-apply';
 			$this->title = Swat::_('Apply');
 			break;
 
 		default:
-			throw new SwatException(sprintf("%s: no stock title with the id ".
+			throw new SwatException(sprintf("%s: no stock option available with the id ".
 				"of '%s' exists.",
 				__CLASS__,
 				$stock_id));
