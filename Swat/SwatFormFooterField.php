@@ -20,7 +20,7 @@ class SwatFormFooterField extends SwatFormField
 	 *
 	 * @param string $id the id of this form footer field.
 	 */
-	public function __construct($id)
+	public function __construct($id = null)
 	{
 		parent::__construct();
 
