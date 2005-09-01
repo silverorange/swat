@@ -33,6 +33,7 @@ class SwatString
 	 * - text blocks delimited by double line breaks is wrapped in a paragraph
 	 *   tag
 	 * - unless it is already inside a blocklevel tag
+	 * - single line breaks are converted to break tags
 	 *
 	 * @param string $text the text block to convert to XHTML.
 	 *
