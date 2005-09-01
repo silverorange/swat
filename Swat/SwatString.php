@@ -23,7 +23,7 @@ class SwatString
 		'fieldset',   'address', 'ul',     'ol');
 
 	// }}}
-	// {{{ public function toXHTML()
+	// {{{ public static function toXHTML()
 
 	/**
 	 * Intelligently converts a text block to XHTML
@@ -38,7 +38,7 @@ class SwatString
 	 *
 	 * @return string the text block converted to XHTML.
 	 */
-	public function toXHTML($text)
+	public static function toXHTML($text)
 	{
 		$blocklevel_elements = implode('|', self::$blocklevel_elements);
 
