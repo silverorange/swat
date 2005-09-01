@@ -1,11 +1,11 @@
-function SwatChangeOrder(id, num_elements, first_key)
+function SwatChangeOrder(id, num_elements)
 {
 	this.id = id;
 	this.num_elements = num_elements;
 
 	this.list_div = document.getElementById(this.id + '_list');
-	this.active_div = document.getElementById(this.id + '_option_' + first_key);
-	this.first_div = document.getElementById(this.id + '_option_' + first_key);
+	this.active_div = document.getElementById(this.id + '_option_0');
+	this.first_div = document.getElementById(this.id + '_option_0');
 }
 
 SwatChangeOrder.prototype.choose = function(div)
