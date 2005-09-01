@@ -1044,11 +1044,18 @@ class SwatDB
 	// }}}
 	// {{{ private static function initFields()
 
+	/**
+	 * Transforms an array of text field identifiers ('type:name') into
+	 * an array of SwatDBField objects.
+	 *
+	 * The array is passed by reference and modified in-place. Nothing is
+	 * returned by this method.
+	 *
+	 * @param array $fields a reference to the array of field identifiers to
+	 *                       transform.
+	 */
 	private function initFields(&$fields)
 	{
-		/* Transforms an array of text field identifiers ('text:title') into
-		 * an array of SwatDBField objects.
-		 */
 		if (count($fields) == 0)
 			// TODO: throw exception instead of returning
 			return;
