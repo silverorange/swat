@@ -32,25 +32,13 @@ class SwatToolLink extends SwatControl
 	public $title = '';
 
 	/**
-	 * An optional image for this tool link
+	 * The CSS class of this tool link
 	 *
 	 * @var string
-	 */
-	public $image = null;
-
-	/**
-	 * The width of the optional image
 	 *
-	 * @var integer
+	 * @see SwatToolLink::setFromStock()
 	 */
-	public $image_width = null;
-
-	/**
-	 * The height of the optional image
-	 *
-	 * @var integer
-	 */
-	public $image_height = null;
+	public $class = 'swat-tool-link';
 
 	/**
 	 * A value to substitute into the link
@@ -74,7 +62,7 @@ class SwatToolLink extends SwatControl
 		else
 			$anchor_tag->href = sprintf($this->link, $this->value);
 
-		$anchor_tag->class = 'swat-tool-link';
+		$anchor_tag->class = $this->class;
 
 		if ($this->image === null) {
 			$anchor_tag->content = $this->title;
@@ -98,26 +86,24 @@ class SwatToolLink extends SwatControl
 	}
 
 	/**
-	 * Sets the image of this tool link to a stock image
+	 * Sets the values of this tool link to a stock type
 	 *
-	 * Valid stock image ids are:
+	 * Valid stock type ids are:
 	 *
 	 * - edit
 	 *
-	 * @param string $stock_id the identifier of the stock image to use.
+	 * @param string $stock_id the identifier of the stock type to use.
 	 *
 	 * @throws SwatException
 	 */
-	public function setImageFromStock($stock_id)
+	public function setFromStock($stock_id)
 	{
 		switch ($stock_id) {
 		case 'edit':
-			$this->image = 'edit.png';
-			$this->image_width = '16';
-			$this->image_height = '16';
+			$this->class = 'swat-tool-link swat-tool-link-edit';
 			break;
 		default:
-			throw new SwatException(sprintf("%s: no stock image with the id ".
+			throw new SwatException(sprintf("%s: no stock type with the id ".
 				"of '%s' exists.",
 				__CLASS__,
 				$stock_id));
