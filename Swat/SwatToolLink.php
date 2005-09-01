@@ -32,13 +32,16 @@ class SwatToolLink extends SwatControl
 	public $title = '';
 
 	/**
-	 * The CSS class of this tool link
+	 * The custom CSS class of this tool link
+	 *
+	 * This optional class is added on top of the default 'swat-tool-link'
+	 * class.
 	 *
 	 * @var string
 	 *
 	 * @see SwatToolLink::setFromStock()
 	 */
-	public $class = 'swat-tool-link';
+	public $class = null;
 
 	/**
 	 * A value to substitute into the link
@@ -62,7 +65,10 @@ class SwatToolLink extends SwatControl
 		else
 			$anchor_tag->href = sprintf($this->link, $this->value);
 
-		$anchor_tag->class = $this->class;
+		if ($this->class !== null)
+			$anchor_tag->class = 'swat-tool-link';
+		else 
+			$anchor_tag->class = 'swat-tool-link '.$this->class;
 
 		if ($this->image === null) {
 			$anchor_tag->content = $this->title;
@@ -100,7 +106,7 @@ class SwatToolLink extends SwatControl
 	{
 		switch ($stock_id) {
 		case 'edit':
-			$this->class = 'swat-tool-link swat-tool-link-edit';
+			$this->class = 'swat-tool-link-edit';
 			break;
 		default:
 			throw new SwatException(sprintf("%s: no stock type with the id ".
