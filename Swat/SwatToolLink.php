@@ -70,25 +70,8 @@ class SwatToolLink extends SwatControl
 		else 
 			$anchor_tag->class = 'swat-tool-link '.$this->class;
 
-		if ($this->image === null) {
-			$anchor_tag->content = $this->title;
-			$anchor_tag->display();
-		} else {
-			$image_tag = new SwatHtmlTag('img');
-			$image_tag->src = $this->image;
-			if ($this->image_width !== null)
-				$image_tag->width = $this->image_width;
-
-			if ($this->image_height !== null)
-				$image_tag->height = $this->image_height;
-
-			$image_tag->alt = $this->title;
-
-			$anchor_tag->open();
-			echo $this->title;
-			$image_tag->display();
-			$anchor_tag->close();
-		}
+		$anchor_tag->content = $this->title;
+		$anchor_tag->display();
 	}
 
 	/**
