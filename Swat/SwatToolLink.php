@@ -89,6 +89,7 @@ class SwatToolLink extends SwatControl
 	{
 		switch ($stock_id) {
 		case 'edit':
+			$this->title = Swat::_('Edit');
 			$this->class = 'swat-tool-link-edit';
 			break;
 		default:
