@@ -23,52 +23,6 @@ class SwatString
 		'fieldset',   'address', 'ul',     'ol');
 
 	// }}}
-	// {{{ filter constants
-
-	/**
-	 * replaces hard-returns with br and doubles with p
-	 */
-	const FILTER_BODY = 0;
-
-	/**
-	 * same as body, but doesn't ignore lines with tags on them
-	 */
-	const FILTER_B2 = 0;
-
-	/// }}}
-	// {{{ public static function filter()
-
-	/**
-	 * Filters a block of text
-	 *
-	 * Formatting function to control the display of a block of text
-	 *
-	 * @param integer $type the type of formatting to apply. One of the FILTER
-	 *                       {@link SwatString} constants.
-	 * @param string $text the text to format.
-	 *
-	 * @return string the formatted block of text.
-	 */
-	public static function filter($type, $text)
-	{
-		if ($type == self::FILTER_BODY) {
-			// replace double crlf's with paragraph tags
-			$text = preg_replace('/\r\n\r\n([^<])/s', '<p>\1', $text);
-			// replace single crlf's with linebreak tags
-			$text = preg_replace('/([^>])\r\n([^<])/s', '\1<br />\2', $text);
-			return $text;
-
-		} elseif ($type == self::FILTER_B2) {
-			// replace double crlf's with paragraph tags
-			$text = str_replace("\r\n\r\n", '<p>', $text);
-			// replace single crlf's with linebreak tags
-			$text = str_replace("\r\n", '<br />', $text);
-			return $text;
-
-		}
-	}
-
-	// }}}
 	// {{{ public function toXHTML()
 
 	/**
