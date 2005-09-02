@@ -12,6 +12,8 @@ require_once 'Swat/SwatContainer.php';
  */
 class SwatUI extends SwatObject
 {
+	// {{{ protected properties
+
 	/**
 	 * An array that maps other package classes to filenames
 	 *
@@ -24,6 +26,9 @@ class SwatUI extends SwatObject
 	 * @var array
 	 */
 	protected $classmap = array();
+
+	// }}}
+	// {{{ private properties
 
 	/**
 	 * An array of widgets populated when a UI file is parsed
@@ -43,6 +48,9 @@ class SwatUI extends SwatObject
 	 */
 	private $root = null;
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new UI
 	 *
@@ -57,6 +65,9 @@ class SwatUI extends SwatObject
 		else
 			$this->root = new SwatContainer();
 	}
+
+	// }}}
+	// {{{ public function loadFromXML()
 
 	/**
 	 * Loads a UI from an XML file
@@ -91,6 +102,9 @@ class SwatUI extends SwatObject
 		$this->parseUI($xml, $this->root);
 	}
 
+	// }}}
+	// {{{ public function getWidget()
+
 	/**
 	 * Retrieves a widget from the internal widget list
 	 *
@@ -116,6 +130,9 @@ class SwatUI extends SwatObject
 					": no widget with an id of '{$id}'");
 	}
 
+	// }}}
+	// {{{ public function getRoot()
+
 	/**
 	 * Retrieves the topmost widget
 	 *
@@ -129,6 +146,9 @@ class SwatUI extends SwatObject
 		return $this->root;
 	}
 
+	// }}}
+	// {{{ public function init()
+
 	/**
 	 * Initializes this interface
 	 *
@@ -138,6 +158,9 @@ class SwatUI extends SwatObject
 	{
 		$this->root->init();
 	}
+
+	// }}}
+	// {{{ public function process()
 
 	/**
 	 * Processes this interface
@@ -149,6 +172,9 @@ class SwatUI extends SwatObject
 		$this->root->process();
 	}
 
+	// }}}
+	// {{{ public function display()
+
 	/**
 	 * Displays this interface
 	 *
@@ -158,6 +184,28 @@ class SwatUI extends SwatObject
 	{
 		$this->root->display();
 	}
+
+	// }}}
+	// {{{ public function displayTidy()
+
+	/**
+	 * Displays this interface with tidy XHTML
+	 *
+	 * The display() method is called and the output is cleaned up.
+	 */
+	public function displayTidy()
+	{
+		$breaking_tags = '</?(div|p|table|td|tr|ul|li|ol|dl)[^<>]*>';
+		ob_start();
+		$this->display();
+		$buffer = ob_get_clean();
+		$tidy = ereg_replace($breaking_tags, "\n\\0\n", $buffer);
+		$tidy = ereg_replace("\n\n", "\n", $tidy);
+		echo $tidy;
+	}
+
+	// }}}
+	// {{{ private function parseUI()
 
 	/**
 	 * Recursivly parses an XML node into a widget tree
@@ -191,6 +239,9 @@ class SwatUI extends SwatObject
 			}
 		}
 	}
+
+	// }}}
+	// {{{ private function checkParsedObject()
 
 	/**
 	 * Does some error checking on a parsed object
@@ -236,6 +287,9 @@ class SwatUI extends SwatObject
 		}
 	}
 
+	// }}}
+	// {{{ private function attachToParent()
+
 	/**
 	 * Attaches a widget to a parent widget in the widget tree
 	 *
@@ -253,6 +307,9 @@ class SwatUI extends SwatObject
 				': '.get_class($parent).' does not implement SwatUIParent.');
 
 	}
+
+	// }}}
+	// {{{ private function parseNode()
 
 	/**
 	 * Parses a single XML node into a PHP object
@@ -289,6 +346,9 @@ class SwatUI extends SwatObject
 
 		return $node_object;
 	}
+
+	// }}}
+	// {{{ private function parseProperty()
 
 	/**
 	 * Parses a single XML property node and applies it to an object
@@ -351,6 +411,9 @@ class SwatUI extends SwatObject
 		}
 	}
 
+	// }}}
+	// {{{ private function parseValue()
+
 	/**
 	 * Parses the value of a property
 	 *
@@ -396,6 +459,9 @@ class SwatUI extends SwatObject
 		}
 	}
 
+	// }}}
+	// {{{ private function ()
+
 	/**
 	 * Translates a property value if possible
 	 *
@@ -422,6 +488,9 @@ class SwatUI extends SwatObject
 
 		return $value;
 	}
+
+	// }}}
+	// {{{ private function evaluateConstant()
 
 	/**
 	 * Evaluate a constant property value
@@ -451,6 +520,8 @@ class SwatUI extends SwatObject
 
 		return eval("return $parsed_exp;");
 	}
+
+	// }}}
 }
 
 ?>
