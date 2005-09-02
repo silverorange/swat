@@ -138,7 +138,7 @@ abstract class SwatWidget extends SwatObject
 	 */
 	public function addStyleSheet($stylesheet)
 	{
-		$this->html_head_entries[] =
+		$this->html_head_entries[$stylesheet] =
 			new SwatHtmlHeadEntry($stylesheet, SwatHtmlHeadEntry::TYPE_STYLE);
 	}
 
@@ -153,7 +153,8 @@ abstract class SwatWidget extends SwatObject
 	 */
 	public function addJavaScript($javascript)
 	{
-		$this->html_head_entries[] = new SwatHtmlHeadEntry($javascript,
+		$this->html_head_entries[$javascript] =
+			new SwatHtmlHeadEntry($javascript,
 			SwatHtmlHeadEntry::TYPE_JAVASCRIPT);
 	}
 
@@ -166,6 +167,7 @@ abstract class SwatWidget extends SwatObject
 
 		foreach ($html_head_entries as $head_entry) {
 			$head_entry->display();
+			echo "\n";
 		}
 	}
 
