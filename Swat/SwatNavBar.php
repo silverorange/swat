@@ -11,12 +11,17 @@ require_once 'Swat/SwatControl.php';
  */
 class SwatNavBar extends SwatControl
 {
+	// {{{ private properties
+
 	/**
 	 * Array of elements displayed in this navbar
 	 *
 	 * @var array
 	 */
 	private $elements = array();
+
+	// }}}
+	// {{{ public function addElement()
 
 	/**
 	 * Adds an element to the end of this navigation bar
@@ -29,6 +34,9 @@ class SwatNavBar extends SwatControl
 		$new_element = array('title' => $title, 'uri' => $uri);
 		$this->elements[] = &$new_element;
 	}
+
+	// }}}
+	// {{{ public function replaceElement()
 
 	/**
 	 * Replaces an element in this navigation bar
@@ -53,6 +61,9 @@ class SwatNavBar extends SwatControl
 		}
 	}
 
+	// }}}
+	// {{{ public function getElementAtPosition()
+
 	/**
 	 * Gets an element from this navigation bar
 	 *
@@ -75,6 +86,9 @@ class SwatNavBar extends SwatControl
 				$position));
 	}
 
+	// }}}
+	// {{{ public function getSize()
+
 	/**
 	 * Gets the number of elements in this navigational bar
 	 *
@@ -84,6 +98,9 @@ class SwatNavBar extends SwatControl
 	{
 		return count($this->elements);
 	}
+
+	// }}}
+	// {{{ public function popElements()
 
 	/**
 	 * Pops a number of elements off the end of this navigational bar
@@ -110,6 +127,9 @@ class SwatNavBar extends SwatControl
 				$this->getSize()));
 		}
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this navigational bar
@@ -139,6 +159,8 @@ class SwatNavBar extends SwatControl
 			}
 		}
 	}
+
+	// }}}
 }
 
 ?>
