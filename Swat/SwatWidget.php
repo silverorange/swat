@@ -48,18 +48,14 @@ abstract class SwatWidget extends SwatObject
 	protected $messages = array();
 
 	/**
-	 * Style sheets needed by this widget
+	 * An array of HTML head entries needed by this widget
+	 *
+	 * Entries are stored in a data object called SwatHtmlHeadEntry. This
+	 * property contains an array of such objects.
 	 *
 	 * @var array
 	 */
-	protected $stylesheets = array();
-
-	/**
-	 * JavaScript includes needed by this widget
-	 *
-	 * @var array
-	 */
-	protected $javascripts = array();
+	protected $html_head_entries = array();
 
 	// }}}
 	// {{{ public function __construct()
@@ -141,7 +137,8 @@ abstract class SwatWidget extends SwatObject
 	 */
 	public function addStyleSheet($stylesheet)
 	{
-		$this->stylesheets[] = $stylesheet;
+		$this->html_head_entries[] =
+			new SwatHtmlHeadEntry($stylesheet, SwatHtmlHeadEntry::TYPE_STYLE);
 	}
 
 	// }}}
@@ -155,7 +152,20 @@ abstract class SwatWidget extends SwatObject
 	 */
 	public function addJavaScript($javascript)
 	{
-		$this->javascripts[] = $javascript;
+		$this->html_head_entries[] = new SwatHtmlHeadEntry($javascript,
+			SwatHtmlHeadEntry::TYPE_JAVASCRIPT);
+	}
+
+	// }}}
+	// {{{ public function getHtmlHeadEntries()
+
+	public function displayHtmlHeadEntries()
+	{
+		$html_head_entries = $this->getHtmlHeadEntries();
+
+		foreach ($html_head_entries as $head_entry) {
+			$head_entry->display();
+		}
 	}
 
 	// }}}
@@ -197,6 +207,19 @@ abstract class SwatWidget extends SwatObject
 	 * @return boolean true if there is an message in the subtree.
 	 */
 	abstract public function hasMessage();
+
+	// }}}
+	// {{{ abstract public function getHtmlHeadEntries()
+
+	/**
+	 * Gathers the SwatHtmlHeadEntry objects needed by this widget
+	 *
+	 * Head entries are things like stylesheets and javascript includes that
+	 * should go in the head section of html.
+	 *
+	 * @return array the SwatHtmlHeadEntry objects needed by this widget.
+	 */
+	abstract protected function getHtmlHeadEntries();
 
 	// }}}
 }

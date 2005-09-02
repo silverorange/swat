@@ -365,6 +365,23 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		if ($this->parent != null)
 			$this->parent->sendAddNotifySignal($widget);
 	}
+
+	/**
+	 * Gathers the SwatHtmlHeadEntry objects needed by this widget
+	 *
+	 * @return array the SwatHtmlHeadEntry objects needed by this widget.
+	 *
+	 * @see SwatWidget::gatherSwatHtmlHeadEntries()
+	 */
+	protected function getHtmlHeadEntries()
+	{
+		$out = $this->html_head_entries;
+
+		foreach ($this->children as $child_widget)
+			$out = array_merge($out, $child_widget->gatherHtmlHeadEntries());
+
+		return $out;
+	}
 }
 
 ?>
