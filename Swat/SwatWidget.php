@@ -209,7 +209,7 @@ abstract class SwatWidget extends SwatObject
 	abstract public function hasMessage();
 
 	// }}}
-	// {{{ abstract public function getHtmlHeadEntries()
+	// {{{ abstract protected function getHtmlHeadEntries()
 
 	/**
 	 * Gathers the SwatHtmlHeadEntry objects needed by this widget
