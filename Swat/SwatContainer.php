@@ -378,7 +378,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		$out = $this->html_head_entries;
 
 		foreach ($this->children as $child_widget)
-			$out = array_merge($out, $child_widget->gatherHtmlHeadEntries());
+			$out = array_merge($out, $child_widget->getHtmlHeadEntries());
 
 		return $out;
 	}
