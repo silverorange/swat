@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatObject.php';
+require_once 'Swat/SwatHtmlHeadEntry.php';
 require_once 'Swat/SwatMessage.php';
 
 /**
