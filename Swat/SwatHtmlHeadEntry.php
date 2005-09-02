@@ -31,14 +31,14 @@ class SwatHtmlHeadEntry extends SwatObject
 	 *
 	 * @var integer
 	 */
-	public $type = self::TYPE_STYLE;
+	public $type = SwatHtmlHeadEntry::TYPE_STYLE;
 
 	/**
 	 * The uri of this head entry
 	 *
 	 * @var string
 	 */
-	public $uri = ''
+	public $uri = '';
 
 	/**
 	 * Displays this html head entry
@@ -58,7 +58,7 @@ class SwatHtmlHeadEntry extends SwatObject
 				$this->uri);
 				
 			break;
-		case default:
+		default:
 		}
 	}
 }
