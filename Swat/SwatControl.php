@@ -61,6 +61,18 @@ abstract class SwatControl extends SwatWidget
 	{
 		return (count($this->messages) > 0);
 	}
+
+	/**
+	 * Gathers the SwatHtmlHeadEntry objects needed by this widget
+	 *
+	 * @return array the SwatHtmlHeadEntry objects needed by this widget.
+	 *
+	 * @see SwatWidget::gatherSwatHtmlHeadEntries()
+	 */
+	protected function getHtmlHeadEntries()
+	{
+		return $this->html_head_entries;
+	}
 }
 
 ?>
