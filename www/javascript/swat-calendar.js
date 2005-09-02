@@ -527,26 +527,17 @@ SwatCalendar.prototype.draw = function()
 	calendar_toggle = document.getElementById(this.id + '_toggle');
 	calendar_div.innerHTML = begin_table + date_controls + week_header + cur_html + close_controls;
 
-	/*
-	 * Need to write some better browser detection/positioning code here
-	 * Also, there is a perceived stability issue where the calendar goes offscreen
-	 * when the widget is right justified. Need some edge detection.
-	 */
-
-	var kitName = 'applewebkit/';
-	var tempStr = navigator.userAgent.toLowerCase();
-	var pos = tempStr.indexOf(kitName);
-	var isAppleWebkit = (pos != -1);
-
-	if (isAppleWebkit || document.all) {
-		var ie_offset = 10;
-	} else {
-		var ie_offset = 0;
-	}
-
 	var toggle_button = document.getElementById(this.id + '_toggle');
 
-	calendar_div.style.left = ie_offset + toggle_button.offsetLeft + 'px';
+	// this block is required for correct offset calculation in IE
+	var x_offset = 0;
+	var node = toggle_button;
+	while (node) {
+		x_offset += node.offsetLeft;
+		node = node.offsetParent;
+	}
+
+	calendar_div.style.left = x_offset + 'px';
 	calendar_div.style.display = 'block';
 
 	this.open = true;
