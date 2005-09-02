@@ -159,7 +159,7 @@ abstract class SwatWidget extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function getHtmlHeadEntries()
+	// {{{ public function displayHtmlHeadEntries()
 
 	public function displayHtmlHeadEntries()
 	{
