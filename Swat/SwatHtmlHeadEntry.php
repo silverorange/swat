@@ -41,6 +41,18 @@ class SwatHtmlHeadEntry extends SwatObject
 	public $uri = '';
 
 	/**
+	 * Creates a new HTML head entry
+	 *
+	 * @param string $uri the uri of the entry.
+	 * @param integer $type the type of the entry.
+	 */
+	public function __construct($uri, $type = SwatHtmlHeadEntry::TYPE_STYLE)
+	{
+		$this->uri = $uri;
+		$this->type = $type;
+	}
+
+	/**
 	 * Displays this html head entry
 	 *
 	 * Entries are displayed differently based on type.
