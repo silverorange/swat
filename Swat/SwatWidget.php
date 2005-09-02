@@ -12,6 +12,8 @@ require_once 'Swat/SwatMessage.php';
  */
 abstract class SwatWidget extends SwatObject
 {
+	// {{{ public properties
+
 	/**
 	 * The widget which contains this widget
 	 *
@@ -35,12 +37,18 @@ abstract class SwatWidget extends SwatObject
 	 */
 	public $visible = true;
 
+	// }}}
+	// {{{ protected properties
+
 	/**
 	 * Messages affixed to this widget
 	 *
 	 * @var array
 	 */
 	protected $messages = array();
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new SwatWidget
@@ -52,6 +60,9 @@ abstract class SwatWidget extends SwatObject
 		$this->id = $id;
 		$this->init();
 	}
+
+	// }}}
+	// {{{ public function getUniqueId()
 
 	/**
 	 * Generates a unique id
@@ -70,6 +81,9 @@ abstract class SwatWidget extends SwatObject
 		return get_class($this).$counter;
 	}
 
+	// }}}
+	// {{{ abstract public function display()
+
 	/**
 	 * Displays this widget
 	 *
@@ -78,21 +92,8 @@ abstract class SwatWidget extends SwatObject
 	 */
 	abstract public function display();
 
-	/**
-	 * Displays this widget with tidy HTML
-	 *
-	 * The display() method is called and the output is cleaned up.
-	 */
-	public function displayTidy()
-	{
-		$breaking_tags = '</?(div|p|table|td|tr|ul|li|ol|dl)[^<>]*>';
-		ob_start();
-		$this->display();
-		$buffer = ob_get_clean();
-		$tidy = ereg_replace($breaking_tags, "\n\\0\n", $buffer);
-		$tidy = ereg_replace("\n\n", "\n", $tidy);
-		echo $tidy;
-	}
+	// }}}
+	// {{{ public function process()
 
 	/**
 	 * Processes this widget
@@ -104,6 +105,9 @@ abstract class SwatWidget extends SwatObject
 	{
 	}
 
+	// }}}
+	// {{{ public function init()
+
 	/**
 	 * Initializes this widget
 	 *
@@ -112,6 +116,9 @@ abstract class SwatWidget extends SwatObject
 	public function init()
 	{
 	}
+
+	// }}}
+	// {{{ abstract public function addMessage()
 
 	/**
 	 * Adds a message
@@ -125,6 +132,9 @@ abstract class SwatWidget extends SwatObject
 	 */
 	abstract public function addMessage($message);
 
+	// }}}
+	// {{{ abstract public function getMessages()
+
 	/**
 	 * Gets all messages
 	 *
@@ -137,12 +147,17 @@ abstract class SwatWidget extends SwatObject
 	 */
 	abstract public function getMessages();
 
+	// }}}
+	// {{{ abstract public function hasMessage()
+
 	/**
 	 * Checks for the presence of messages
 	 *
 	 * @return boolean true if there is an message in the subtree.
 	 */
 	abstract public function hasMessage();
+
+	// }}}
 }
 
 ?>
