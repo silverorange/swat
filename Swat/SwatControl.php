@@ -69,7 +69,7 @@ abstract class SwatControl extends SwatWidget
 	 *
 	 * @see SwatWidget::gatherSwatHtmlHeadEntries()
 	 */
-	protected function getHtmlHeadEntries()
+	public function getHtmlHeadEntries()
 	{
 		return $this->html_head_entries;
 	}

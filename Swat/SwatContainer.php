@@ -373,7 +373,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 *
 	 * @see SwatWidget::gatherSwatHtmlHeadEntries()
 	 */
-	protected function getHtmlHeadEntries()
+	public function getHtmlHeadEntries()
 	{
 		$out = $this->html_head_entries;
 
