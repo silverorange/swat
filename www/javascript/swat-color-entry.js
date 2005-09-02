@@ -24,17 +24,15 @@ SwatColorEntry.prototype.toggle = function()
 	var t = document.getElementById(this.id + '_wrapper');
 	var o = document.getElementById(this.id + '_toggle');
 
-	var kitName = "applewebkit/";
-	var tempStr = navigator.userAgent.toLowerCase();
-	var pos = tempStr.indexOf(kitName);
-	var isAppleWebkit = (pos != -1);
+	// this block is required for correct offset calculation in IE
+	var x_offset = 0;
+	var node = o;
+	while (node) {
+		x_offset += node.offsetLeft;
+		node = node.offsetParent;
+	}
 
-	if (isAppleWebkit || document.all)
-		ieOffset = 10;
-	else
-		ieOffset = 0;
-
-	t.style.left = ieOffset + o.offsetLeft + "px";
+	t.style.left = x_offset + 'px';
 	
 	if (!t.style.display || t.style.display == 'none') {
 		t.style.display = 'block';
