@@ -47,6 +47,20 @@ abstract class SwatWidget extends SwatObject
 	 */
 	protected $messages = array();
 
+	/**
+	 * Style sheets needed by this widget
+	 *
+	 * @var array
+	 */
+	protected $stylesheets = array();
+
+	/**
+	 * JavaScript includes needed by this widget
+	 *
+	 * @var array
+	 */
+	protected $javascripts = array();
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -115,6 +129,33 @@ abstract class SwatWidget extends SwatObject
 	 */
 	public function init()
 	{
+	}
+
+	// }}}
+	// {{{ public function addStyleSheet()
+
+	/**
+	 * Adds a stylesheet to the list of stylesheets needed by this widget
+	 *
+	 * @param string $stylesheet the uri of the stylesheet.
+	 */
+	public function addStyleSheet($stylesheet)
+	{
+		$this->stylesheets[] = $stylesheet;
+	}
+
+	// }}}
+	// {{{ public function addJavaScript()
+
+	/**
+	 * Adds a JavaScript include to the list of JavaScript includes needed
+	 * by this widget
+	 *
+	 * @param string $javascript the uri of the JavaScript include.
+	 */
+	public function addJavaScript($javascript)
+	{
+		$this->javascripts[] = $javascript;
 	}
 
 	// }}}
