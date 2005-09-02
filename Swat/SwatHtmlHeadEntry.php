@@ -49,14 +49,13 @@ class SwatHtmlHeadEntry extends SwatObject
 	{
 		switch ($this->type) {
 		case self::TYPE_STYLE:
-			echo '<style type="text/css" media="all">',
-				'@import "', $this->uri, '";',
-				"</style>\n";
+			printf('<style type="text/css" media="all">@import "%s"</style>',
+				$this->uri);
 
 			break;
 		case self::TYPE_JAVASCRIPT:
-			echo '<script type="text/javascript" src="', $this->uri, '">',
-				"</script>\n";
+			printf('<script type="text/javascript" src="%s"</script>',
+				$this->uri);
 				
 			break;
 		case default:
