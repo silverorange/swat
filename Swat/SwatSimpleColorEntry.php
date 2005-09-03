@@ -51,6 +51,9 @@ class SwatSimpleColorEntry extends SwatControl implements SwatState
 		// an id is required for this widget.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
+
+		$this->addJavaScript('swat/javascript/swat-simple-color-entry.js');
+		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
 	}
 
 	/**
@@ -124,15 +127,6 @@ class SwatSimpleColorEntry extends SwatControl implements SwatState
 	 */
 	private function displayJavascript()
 	{
-		static $shown = false;
-
-		if (!$shown) {
-			echo '<script type="text/javascript" src="swat/javascript/swat-simple-color-entry.js"></script>';
-			echo '<script type="text/javascript" src="swat/javascript/swat-z-index-manager.js"></script>';
-
-			$shown = true;
-		}
-
 		$colors = "'".implode("', '", $this->colors)."'";
 
 		echo '<script type="text/javascript">'."\n";

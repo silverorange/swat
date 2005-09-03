@@ -36,6 +36,8 @@ class SwatDisclosure extends SwatContainer
 		// an id is required for this widget.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
+
+		$this->addJavaScript('swat/javascript/swat-disclosure.js');
 	}
 
 	/**
@@ -104,13 +106,6 @@ class SwatDisclosure extends SwatContainer
 	 */
 	private function displayJavascript()
 	{
-		static $shown = false;
-
-		if (!$shown) {
-			echo '<script type="text/javascript" src="swat/javascript/swat-disclosure.js"></script>';
-			$shown = true;
-		}
-
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 		echo "var {$this->id} = new SwatDisclosure('{$this->id}');\n";

@@ -1,4 +1,4 @@
-function SwatTime(id)
+function SwatTimeEntry(id)
 {
 	this.id = id;
 
@@ -10,15 +10,16 @@ function SwatTime(id)
 	this.swat_date = null;
 }
 
-SwatTime.prototype.setSwatDate = function(swat_date)
+SwatTimeEntry.prototype.setSwatDate = function(swat_date)
 {
-	if (swat_date instanceof SwatDate) {
+	if (typeof SwatDateEntry != 'undefined' &&
+		swat_date instanceof SwatDateEntry) {
 		this.swat_date = swat_date;
 		swat_date.swat_time = this;
 	}
 }
 
-SwatTime.prototype.reset = function(reset_date)
+SwatTimeEntry.prototype.reset = function(reset_date)
 {
 	if (this.hour) this.hour.selectedIndex = 0;
 	if (this.minute) this.minute.selectedIndex = 0;
@@ -29,7 +30,7 @@ SwatTime.prototype.reset = function(reset_date)
 		this.swat_date.reset(false);
 }
 
-SwatTime.prototype.setNow = function(set_date)
+SwatTimeEntry.prototype.setNow = function(set_date)
 {
 	var now = new Date();	
 	
@@ -59,7 +60,7 @@ SwatTime.prototype.setNow = function(set_date)
 		this.swat_date.setNow(false);
 }
 
-SwatTime.prototype.setDefault = function(set_date)
+SwatTimeEntry.prototype.setDefault = function(set_date)
 {
 	if (this.hour && this.hour.selectedIndex == 0)
 		this.hour.selectedIndex = 1;
@@ -77,7 +78,7 @@ SwatTime.prototype.setDefault = function(set_date)
 		this.swat_date.setDefault(false);
 }
 
-SwatTime.prototype.set = function(active_flydown)
+SwatTimeEntry.prototype.set = function(active_flydown)
 {
 	// hour is required for this, so stop if it doesn't exist
 	if (!this.hour) return;

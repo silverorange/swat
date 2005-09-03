@@ -100,6 +100,8 @@ class SwatForm extends SwatContainer
 		// an id is required for this widget.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
+
+		$this->addJavaScript('swat/javascript/swat-form.js');
 	}
 
 	/**
@@ -393,14 +395,6 @@ class SwatForm extends SwatContainer
 	 */
 	private function displayJavascript()
 	{
-		static $shown = false;
-
-		if (!$shown) {
-			echo '<script type="text/javascript" src="swat/javascript/swat-form.js"></script>';
-
-			$shown = true;
-		}
-		
 		echo '<script type="text/javascript">'."\n";
 
 		echo "var {$this->id}_obj = new SwatForm('{$this->id}');\n";

@@ -134,6 +134,9 @@ class SwatTimeEntry extends SwatControl implements SwatState
 
 		$this->valid_range_start = new SwatDate('0000-01-01T00:00:00.0000Z');
 		$this->valid_range_end   = new SwatDate('0000-01-01T23:59:59.0000Z');
+
+		$this->addJavaScript('swat/javascript/swat-find-index.js');
+		$this->addJavaScript('swat/javascript/swat-time-entry.js');
 	}
 
 	/**
@@ -397,17 +400,9 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	 */
 	private function displayJavascript()
 	{
-		static $shown = false;
-
-		if (!$shown) {
-			echo '<script type="text/javascript" src="swat/javascript/swat-find-index.js"></script>';
-			echo '<script type="text/javascript" src="swat/javascript/swat-time.js"></script>';
-			$shown = true;
-		}
-
 		echo '<script type="text/javascript">';
 
-		echo sprintf("%s = new SwatTime('%s');\n", $this->id, $this->id);
+		echo sprintf("%s = new SwatTimeEntry('%s');\n", $this->id, $this->id);
 
 		echo '</script>';
 	}

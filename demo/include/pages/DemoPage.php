@@ -53,6 +53,10 @@ class DemoPage extends SwatPage
 
 	public function build()
 	{
+		ob_start();
+		$this->ui->getRoot()->displayHtmlHeadEntries();
+		$this->layout->html_head_entries = ob_get_clean();
+
 		$this->layout->app_title = $this->app->title;
 
 		$this->layout->title = $this->demo;

@@ -1,4 +1,4 @@
-function SwatDate(id)
+function SwatDateEntry(id)
 {
 	this.id = id;
 
@@ -9,15 +9,16 @@ function SwatDate(id)
 	this.swat_time = null;
 }
 
-SwatDate.prototype.setSwatTime = function(swat_time)
+SwatDateEntry.prototype.setSwatTime = function(swat_time)
 {
-	if (swat_time instanceof SwatTime) {
+	if (typeof SwatTimeEntry != 'undefined' &&
+		swat_time instanceof SwatTimeEntry) {
 		this.swat_time = swat_time;
 		swat_time.swat_date = this;
 	}
 }
 
-SwatDate.prototype.reset = function(reset_time)
+SwatDateEntry.prototype.reset = function(reset_time)
 {
 	if (this.year) this.year.selectedIndex = 0;
 	if (this.month) this.month.selectedIndex = 0;
@@ -27,7 +28,7 @@ SwatDate.prototype.reset = function(reset_time)
 		this.swat_time.reset(false);
 }
 
-SwatDate.prototype.setNow = function(set_time)
+SwatDateEntry.prototype.setNow = function(set_time)
 {
 	var now = new Date();
 	
@@ -61,7 +62,7 @@ SwatDate.prototype.setNow = function(set_time)
 		this.swat_time.setNow(false);
 }
 
-SwatDate.prototype.setDefault = function(set_time)
+SwatDateEntry.prototype.setDefault = function(set_time)
 {
 	var now = new Date();
 	
@@ -88,7 +89,7 @@ SwatDate.prototype.setDefault = function(set_time)
 		this.swat_time.setDefault(false);
 }
 
-SwatDate.prototype.set = function(active_flydown)
+SwatDateEntry.prototype.set = function(active_flydown)
 {
 	// month is required for this, so stop if it doesn't exist
 	if (!this.month)
@@ -107,7 +108,7 @@ SwatDate.prototype.set = function(active_flydown)
 	}
 }
 
-SwatDate.prototype.getDay = function()
+SwatDateEntry.prototype.getDay = function()
 {
 	if (this.day) {
 		return this.day.options[this.day.selectedIndex].value;
@@ -116,7 +117,7 @@ SwatDate.prototype.getDay = function()
 	}
 }
 
-SwatDate.prototype.getMonth = function()
+SwatDateEntry.prototype.getMonth = function()
 {
 	if (this.month) {
 		return this.month.options[this.month.selectedIndex].value;
@@ -125,7 +126,7 @@ SwatDate.prototype.getMonth = function()
 	}
 }
 
-SwatDate.prototype.getYear = function()
+SwatDateEntry.prototype.getYear = function()
 {
 	if (this.year) {
 		return this.year.options[this.year.selectedIndex].value;
@@ -134,7 +135,7 @@ SwatDate.prototype.getYear = function()
 	}
 }
 
-SwatDate.prototype.setDay = function(day)
+SwatDateEntry.prototype.setDay = function(day)
 {
 	if (this.day) {
 		var this_day = find_index(this.day, day);
@@ -146,7 +147,7 @@ SwatDate.prototype.setDay = function(day)
 	}
 }
 
-SwatDate.prototype.setMonth = function(month)
+SwatDateEntry.prototype.setMonth = function(month)
 {
 	if (this.month) {
 		var this_month = find_index(this.month, month);
@@ -158,7 +159,7 @@ SwatDate.prototype.setMonth = function(month)
 	}
 }
 
-SwatDate.prototype.setYear = function(year)
+SwatDateEntry.prototype.setYear = function(year)
 {
 	if (this.year) {
 		var this_year = find_index(this.year, year);

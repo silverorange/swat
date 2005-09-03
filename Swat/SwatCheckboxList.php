@@ -46,6 +46,8 @@ class SwatCheckboxList extends SwatControl implements SwatState
 		// an id is required for this widget.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
+
+		$this->addJavaScript('swat/javascript/swat-checkbox-list.js');
 	}
 
 	public function display()
@@ -144,7 +146,6 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	 */
 	protected function displayJavascript()
 	{
-		echo '<script type="text/javascript" src="swat/javascript/swat-checkbox-list.js"></script>';
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 
