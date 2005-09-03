@@ -66,7 +66,7 @@ class SwatHtmlHeadEntry extends SwatObject
 
 			break;
 		case self::TYPE_JAVASCRIPT:
-			printf('<script type="text/javascript" src="%s"</script>',
+			printf('<script type="text/javascript" src="%s"></script>',
 				$this->uri);
 				
 			break;
