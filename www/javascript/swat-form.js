@@ -9,7 +9,8 @@ SwatForm.prototype.setDefaultFocus = function(element_id)
 	// TODO: check if another element in this form is already focused
 
 	var element = document.getElementById(element_id);
-	
-	if (element && typeof element.focus == 'function')
-		element.focus();
+
+	if (element && (typeof element.focus == 'function' ||
+		typeof element.focus == 'object'))
+			element.focus();
 }
