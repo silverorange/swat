@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<?=$this->html_head_entries?>
 	<style type="text/css" media="all">@import "swat/swat.css";</style>
 	<style type="text/css" media="all">@import "example.css";</style>
 	<title><?=$this->title?> | <?=$this->app_title?></title>
