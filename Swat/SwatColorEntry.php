@@ -32,6 +32,19 @@ class SwatColorEntry extends SwatControl implements SwatState
 	public $required = false;
 
 	/**
+	 * Initializes this color selector widget 
+	 */
+	public function init()
+	{
+		// an id is required for this widget.
+		if ($this->id === null)
+			$this->id = $this->getUniqueId();
+
+		$this->addJavaScript('swat/javascript/swat-color-entry.js');
+		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
+	}
+
+	/**
 	 * Displays this color selection widget
 	 *
 	 * This draws the color palette and outputs appropriate controlling
@@ -75,15 +88,6 @@ class SwatColorEntry extends SwatControl implements SwatState
 	 */
 	private function displayJavascript()
 	{
-		static $shown = false;
-
-		if (!$shown) {
-			echo '<script type="text/javascript" src="swat/javascript/swat-color-entry.js"></script>';
-			echo '<script type="text/javascript" src="swat/javascript/swat-color-entry.js"></script>';
-
-			$shown = true;
-		}
-
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 		echo "var {$this->id}_obj = new SwatColorEntry('{$this->id}');";

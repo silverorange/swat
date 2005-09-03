@@ -152,6 +152,12 @@ class SwatDateEntry extends SwatControl implements SwatState
 		// an id is required for this widget.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
+
+		$this->addJavaScript('swat/javascript/swat-calendar.js');
+		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
+		$this->addJavaScript('swat/javascript/swat-find-index.js');
+		$this->addJavaScript('swat/javascript/swat-date-entry.js');
+		$this->addJavaScript('swat/javascript/swat-time-entry.js');
 	}
 
 	/**
@@ -604,17 +610,9 @@ class SwatDateEntry extends SwatControl implements SwatState
 	 */
 	private function displayJavascript()
 	{
-		static $shown = false;
-
-		if (!$shown) {
-			echo '<script type="text/javascript" src="swat/javascript/swat-find-index.js"></script>';
-			echo '<script type="text/javascript" src="swat/javascript/swat-date.js"></script>';
-			$shown = true;
-		}
-
 		echo '<script type="text/javascript">';
 
-		echo sprintf("%s = new SwatDate('%s');\n", $this->id, $this->id);
+		echo sprintf("%s = new SwatDateEntry('%s');\n", $this->id, $this->id);
 
 		if ($this->display_parts & self::TIME) {
 			echo sprintf("%s.setSwatTime(%s_time_entry);\n",

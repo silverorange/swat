@@ -44,6 +44,9 @@ class SwatCalendar extends SwatControl
 		// an id is required for this widget.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
+
+		$this->addJavaScript('swat/javascript/swat-calendar.js');
+		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
 	}
 
 	/**
@@ -83,9 +86,6 @@ class SwatCalendar extends SwatControl
 		static $shown = false;
 
 		if (!$shown) {
-			echo '<script type="text/javascript" src="swat/javascript/swat-calendar.js"></script>';
-			echo '<script type="text/javascript" src="swat/javascript/swat-z-index-manager.js"></script>';
-
 			$this->displayJavascriptTranslations();
 
 			$shown = true;

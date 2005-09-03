@@ -40,6 +40,8 @@ class SwatCheckAll extends SwatControl
 		$this->title = Swat::_('Check All');
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
+
+		$this->addJavaScript('swat/javascript/swat-check-all.js');
 	}
 
 	/**
@@ -80,8 +82,6 @@ class SwatCheckAll extends SwatControl
 	 */
 	private function displayJavascript()
 	{
-		echo '<script type="text/javascript" src="swat/javascript/swat-check-all.js"></script>';
-
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 

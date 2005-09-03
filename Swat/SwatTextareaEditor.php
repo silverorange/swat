@@ -39,6 +39,11 @@ class SwatTextareaEditor extends SwatTextarea
 	 */
 	public $basehref = null; 
 
+	public function init()
+	{
+		$this->addJavaScript('swat/javascript/swat-textarea-editor.js');
+	}
+
 	public function process()
 	{
 		parent::process();
@@ -59,7 +64,6 @@ class SwatTextareaEditor extends SwatTextarea
 
 		$basehref = ($this->basehref === null) ? 'null' : $this->basehref;
 
-		echo '<script type="text/javascript" src="swat/javascript/swat-textarea-editor.js"></script>';
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 

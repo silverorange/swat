@@ -51,11 +51,23 @@ class SwatChangeOrder extends SwatControl implements SwatState
 	public $height = '150px';
 
 	/**
-	 * Onclick html attribute of the buttons
+	 * Onclick HTML attribute of the buttons
 	 *
 	 * @var string
 	 */
 	public $onclick = null;
+
+	/**
+	 * Initializes this change-order widget 
+	 */
+	public function init()
+	{
+		// an id is required for this widget.
+		if ($this->id === null)
+			$this->id = $this->getUniqueId();
+
+		$this->addJavaScript('swat/javascript/swat-change-order.js');
+	}
 
 	/**
 	 * Displays this changeorder control
@@ -134,14 +146,6 @@ class SwatChangeOrder extends SwatControl implements SwatState
 
 	private function displayJavascript()
 	{
-		static $shown = false;
-
-		if (!$shown) {
-			echo '<script type="text/javascript" src="swat/javascript/swat-change-order.js"></script>';
-
-			$shown = true;
-		}
-
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 

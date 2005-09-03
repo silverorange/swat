@@ -54,6 +54,8 @@ class SwatCascadeFlydown extends SwatFlydown
 		// an id is required for this widget.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
+
+		$this->addJavaScript('swat/javascript/swat-cascade.js');
 	}
 
 	// }}}
@@ -120,8 +122,6 @@ class SwatCascadeFlydown extends SwatFlydown
 	 */
 	private function displayJavascript()
 	{
-		echo '<script type="text/javascript" src="swat/javascript/swat-cascade.js"></script>';
-
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 
