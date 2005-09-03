@@ -87,6 +87,17 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	private $extra_rows = array();
 
 	// }}}
+	// {{{ public function init()
+
+	/**
+	 * Initializes this table view
+	 */
+	public function init()
+	{
+		$this->addJavaScript('swat/javascript/swat-table-view.js');
+	}
+
+	// }}}
 	// {{{ public function appendColumn()
 
 	/**
@@ -362,8 +373,6 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 	private function displayJavascript()
 	{
-		echo '<script type="text/javascript" src="swat/javascript/swat-table-view.js"></script>';
-
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 
