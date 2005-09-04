@@ -78,13 +78,18 @@ class SwatSimpleColorEntry extends SwatControl implements SwatState
 		$swatch_div->content = '&nbsp;';
 		$swatch_div->display();
 
+		$anchor_tag = new SwatHtmlTag('a');
+		$anchor_tag->href = "javascript:{$this->id}_obj.toggle();";
+		$anchor_tag->open();
+
 		$img_tag = new SwatHtmlTag('img');
 		$img_tag->src = 'swat/images/color-palette.png';
 		$img_tag->class = 'swat-simple-color-entry-toggle';
 		$img_tag->id = $this->id.'_toggle';
-		$img_tag->onmousedown = $this->id.'_obj.toggle();';
 
 		$img_tag->display();
+
+		$anchor_tag->close();
 
 		echo '<br />';
 
