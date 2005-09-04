@@ -18,6 +18,7 @@ class SwatNavBar extends SwatControl
 	 * Array of SwatNavBarEntry objects displayed in this navbar
 	 *
 	 * @var array
+	 *
 	 * @see SwatNavBarEntry
 	 */
 	private $entries = array();

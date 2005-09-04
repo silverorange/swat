@@ -11,7 +11,6 @@ require_once 'Swat/SwatTextarea.php';
  */
 class SwatTextareaEditor extends SwatTextarea
 {
-
 	/**
 	 * Width
 	 *
