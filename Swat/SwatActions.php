@@ -75,6 +75,14 @@ class SwatActions extends SwatControl implements SwatUIParent
 	private $widgets_created = false;
 
 	/**
+	 * Initializes this actions list
+	 */
+	public function init()
+	{
+		$this->addJavaScript('swat/javascript/swat-actions.js');
+	}
+
+	/**
 	 * Displays this list of actions
 	 *
 	 * Internal widgets are automatically created if they do not exist.
@@ -87,7 +95,6 @@ class SwatActions extends SwatControl implements SwatUIParent
 			return;
 
 		$this->createWidgets();
-		$this->displayJavascript();
 
 		// set the flydown back to its initial state (no persistence)
 		if ($this->auto_reset)
@@ -216,17 +223,6 @@ class SwatActions extends SwatControl implements SwatUIParent
 
 		$this->apply_button = new SwatButton($this->id.'_apply_button');
 		$this->apply_button->setFromStock('apply');
-	}
-
-	/**
-	 * Loads the Javascript required for this control
-	 *
-	 * Javascript is only loaded once to make downloads faster and so that
-	 * variable names do not collide in the javascript.
-	 */
-	private function displayJavascript()
-	{
-		echo '<script type="text/javascript" src="swat/javascript/swat-actions.js"></script>';
 	}
 }
 
