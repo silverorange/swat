@@ -38,7 +38,7 @@ abstract class SwatXMLRPCServer extends SwatPage
 		$this->layout->response = $x;
 	}
 
-	/*
+	/**
 	 * @xmlrpc.hidden
 	 */
 	public function build()
