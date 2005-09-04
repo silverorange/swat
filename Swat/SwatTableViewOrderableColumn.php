@@ -117,8 +117,9 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 * @param $set_as_orderby_column boolean Whether to set this column as the 
 	 *                                    column currently used for ordering 
 	 *                                    of the view
-	 **/
-	public function setDirection($direction) {
+	 */
+	public function setDirection($direction)
+	{
 		$this->direction = $direction;
 		$this->default_direction = $direction;
 
