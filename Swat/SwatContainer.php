@@ -339,6 +339,23 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	}
 
 	/**
+	 * Gathers the SwatHtmlHeadEntry objects needed by this widget
+	 *
+	 * @return array the SwatHtmlHeadEntry objects needed by this widget.
+	 *
+	 * @see SwatWidget::gatherSwatHtmlHeadEntries()
+	 */
+	public function getHtmlHeadEntries()
+	{
+		$out = $this->html_head_entries;
+
+		foreach ($this->children as $child_widget)
+			$out = array_merge($out, $child_widget->getHtmlHeadEntries());
+
+		return $out;
+	}
+
+	/**
 	 * Notifies this widget that a widget was added
 	 *
 	 * This widget may want to asjust itself based on the widget added or
@@ -364,23 +381,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		
 		if ($this->parent != null)
 			$this->parent->sendAddNotifySignal($widget);
-	}
-
-	/**
-	 * Gathers the SwatHtmlHeadEntry objects needed by this widget
-	 *
-	 * @return array the SwatHtmlHeadEntry objects needed by this widget.
-	 *
-	 * @see SwatWidget::gatherSwatHtmlHeadEntries()
-	 */
-	public function getHtmlHeadEntries()
-	{
-		$out = $this->html_head_entries;
-
-		foreach ($this->children as $child_widget)
-			$out = array_merge($out, $child_widget->getHtmlHeadEntries());
-
-		return $out;
 	}
 }
 

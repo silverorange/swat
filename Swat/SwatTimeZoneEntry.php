@@ -76,6 +76,57 @@ class SwatTimeZoneEntry extends SwatControl implements SwatState
 	}
 
 	/**
+	 * Processes this entry widget
+	 *
+	 * If any validation type errors occur, an error message is attached to
+	 * this entry widget.
+	 */
+	public function process()
+	{
+		if (strlen($_POST[$this->id.'_areas']) || strlen($_POST[$this->id.'_regions']))
+			$this->value = $_POST[$this->id.'_areas'].'/'.$_POST[$this->id.'_regions'];
+		else
+			$this->value = null;
+
+		if (!$this->required && $this->value === null) {
+			return;
+
+		} elseif ($this->value === null) {
+			$msg = Swat::_('The %s field is required.');
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			
+		} elseif (!isset($GLOBALS['_DATE_TIMEZONE_DATA'][$this->value])) {
+			$msg = Swat::_('The %s field is an invalid time zone.');
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			
+		}
+	}
+	
+	/**
+	 * Gets the current state of this entry widget
+	 *
+	 * @return string the current state of this entry widget.
+	 *
+	 * @see SwatState::getState()
+	 */
+	public function getState()
+	{
+		return $this->value;
+	}
+
+	/**
+	 * Sets the current state of this entry widget
+	 *
+	 * @param string $state the new state of this entry widget.
+	 *
+	 * @see SwatState::setState()
+	 */
+	public function setState($state)
+	{
+		$this->value = $state;
+	}
+
+	/**
 	 * Parse whitelist of valid areas
 	 *
 	 * Filters the full list of areas down to a select list and returns a
@@ -183,57 +234,6 @@ class SwatTimeZoneEntry extends SwatControl implements SwatState
 			return null;
 
 		return substr($time_zone, strpos($time_zone, '/') + 1);
-	}
-
-	/**
-	 * Processes this entry widget
-	 *
-	 * If any validation type errors occur, an error message is attached to
-	 * this entry widget.
-	 */
-	public function process()
-	{
-		if (strlen($_POST[$this->id.'_areas']) || strlen($_POST[$this->id.'_regions']))
-			$this->value = $_POST[$this->id.'_areas'].'/'.$_POST[$this->id.'_regions'];
-		else
-			$this->value = null;
-
-		if (!$this->required && $this->value === null) {
-			return;
-
-		} elseif ($this->value === null) {
-			$msg = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-			
-		} elseif (!isset($GLOBALS['_DATE_TIMEZONE_DATA'][$this->value])) {
-			$msg = Swat::_('The %s field is an invalid time zone.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-			
-		}
-	}
-	
-	/**
-	 * Gets the current state of this entry widget
-	 *
-	 * @return string the current state of this entry widget.
-	 *
-	 * @see SwatState::getState()
-	 */
-	public function getState()
-	{
-		return $this->value;
-	}
-
-	/**
-	 * Sets the current state of this entry widget
-	 *
-	 * @param string $state the new state of this entry widget.
-	 *
-	 * @see SwatState::setState()
-	 */
-	public function setState($state)
-	{
-		$this->value = $state;
 	}
 }
 
