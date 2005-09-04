@@ -34,7 +34,8 @@ class SwatMessageDisplay extends SwatControl
 	 *
 	 * @see SwatMessage
 	 */
-	public function add($msg) {
+	public function add($msg)
+	{
 		$this->_messages[] = $msg;
 	}
 
