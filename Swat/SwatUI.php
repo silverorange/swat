@@ -460,7 +460,7 @@ class SwatUI extends SwatObject
 	}
 
 	// }}}
-	// {{{ private function ()
+	// {{{ private function translateValue()
 
 	/**
 	 * Translates a property value if possible
