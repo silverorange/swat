@@ -14,7 +14,6 @@ require_once 'Swat/SwatHtmlTag.php';
  */
 class SwatFieldset extends SwatContainer
 {
-
 	/**
 	 * Fieldset title
 	 *
