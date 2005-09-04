@@ -395,6 +395,74 @@ class SwatString
 	}
 
 	// }}}
+	// {{{ public static function toInteger()
+
+	/**
+	 * Convert a locale-formatted number and return it as an integer.
+	 *
+	 * If the string is not an integer, the method returns null.
+	 *
+	 * @param string $string the string to convert.
+	 *
+	 * @return integer The converted value.
+	 */
+	public static function toInteger($string)
+	{
+		$lc = localeconv();
+
+		$string = self::parseNegativeNotation($string);
+
+		// change all locale formatting to numeric formatting
+		$remove_parts = array(
+			$lc['positive_sign'] => '',
+			$lc['thousands_sep'] => '');
+
+		$value = str_replace(array_keys($remove_parts),
+			array_values($remove_parts), $string);
+
+		// note: This might be done better with a regexp, though
+		// checking too closely how well a number matches its locale
+		// formatting could become annoying too. i.e. if 1000 was
+		// rejected because it wasn't formatted 1,000
+
+		return (is_int($value)) ? intval($value) : null;
+	}
+
+	// }}}
+	// {{{ public static function toFloat()
+
+	/**
+	 * Convert a locale-formatted number and return it as an float.
+	 *
+	 * If the string is not an float, the method returns null.
+	 *
+	 * @param string $string the string to convert.
+	 *
+	 * @return float The converted value.
+	 */
+	public static function toFloat($string)
+	{
+		$lc = localeconv();
+
+		$string = self::parseNegativeNotation($string);
+
+		// change all locale formatting to numeric formatting
+		$remove_parts = array(
+			$lc['decimal_point'] => '.',
+			$lc['positive_sign'] => '',
+			$lc['thousands_sep'] => '');
+
+		$value = str_replace(array_keys($remove_parts),
+			array_values($remove_parts), $string);
+
+		// note: This might be done better with a regexp, though
+		// checking too closely how well a number matches its locale
+		// formatting could become annoying too. i.e. if 1000 was
+		// rejected because it wasn't formatted 1,000
+
+		return (is_numeric($value)) ? floatval($value) : null;
+	}
+	// }}}
 	// {{{ private static function stripEntities()
 
 	/**
@@ -467,73 +535,6 @@ class SwatString
 		}
 	}
 
-	// }}}
-	// {{{ public static function toInteger()
-
-	/**
-	 * Convert a locale-formatted number and return it as an integer.
-	 *
-	 * If the string is not an integer, the method returns null.
-	 *
-	 * @param string $string the string to convert.
-	 *
-	 * @return integer The converted value.
-	 */
-	public static function toInteger($string)
-	{
-		$lc = localeconv();
-
-		$string = self::parseNegativeNotation($string);
-
-		// change all locale formatting to numeric formatting
-		$remove_parts = array(
-			$lc['positive_sign'] => '',
-			$lc['thousands_sep'] => '');
-
-		$value = str_replace(array_keys($remove_parts),
-			array_values($remove_parts), $string);
-
-		// note: This might be done better with a regexp, though
-		// checking too closely how well a number matches its locale
-		// formatting could become annoying too. i.e. if 1000 was
-		// rejected because it wasn't formatted 1,000
-
-		return (is_int($value)) ? intval($value) : null;
-	}
-	// }}}
-	// {{{ public static function toFloat()
-
-	/**
-	 * Convert a locale-formatted number and return it as an float.
-	 *
-	 * If the string is not an float, the method returns null.
-	 *
-	 * @param string $string the string to convert.
-	 *
-	 * @return float The converted value.
-	 */
-	public static function toFloat($string)
-	{
-		$lc = localeconv();
-
-		$string = self::parseNegativeNotation($string);
-
-		// change all locale formatting to numeric formatting
-		$remove_parts = array(
-			$lc['decimal_point'] => '.',
-			$lc['positive_sign'] => '',
-			$lc['thousands_sep'] => '');
-
-		$value = str_replace(array_keys($remove_parts),
-			array_values($remove_parts), $string);
-
-		// note: This might be done better with a regexp, though
-		// checking too closely how well a number matches its locale
-		// formatting could become annoying too. i.e. if 1000 was
-		// rejected because it wasn't formatted 1,000
-
-		return (is_numeric($value)) ? floatval($value) : null;
-	}
 	// }}}
 	//{{{ private static function parseNegativeNotation
 	private static function parseNegativeNotation($string)

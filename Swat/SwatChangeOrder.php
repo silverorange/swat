@@ -144,6 +144,19 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$this->values = explode(',', $_POST[$this->id]);
 	}
 
+	public function getState()
+	{
+		if ($this->values === null)
+			return array_keys($this->options);
+		else
+			return $this->values;
+	}
+
+	public function setState($state)
+	{
+		$this->values = $state;
+	}
+
 	private function displayJavascript()
 	{
 		echo '<script type="text/javascript">';
@@ -156,19 +169,6 @@ class SwatChangeOrder extends SwatControl implements SwatState
 
 		echo "\n//]]>";
 		echo '</script>';
-	}
-
-	public function getState()
-	{
-		if ($this->values === null)
-			return array_keys($this->options);
-		else
-			return $this->values;
-	}
-
-	public function setState($state)
-	{
-		$this->values = $state;
 	}
 }
 

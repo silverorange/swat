@@ -81,6 +81,72 @@ class SwatColorEntry extends SwatControl implements SwatState
 	}
 
 	/**
+	 * Processes this entry widget
+	 *
+	 * If any validation type errors occur, an error message is attached to
+	 * this entry widget.
+	 */
+	public function process()
+	{
+		if (strlen($_POST[$this->id]) == 0)
+			$this->value = null;
+		else
+			$this->value = $_POST[$this->id];
+
+		$len = ($this->value === null) ? 0 : strlen($this->value);
+
+		if (!$this->required && $this->value === null) {
+			return;
+
+		} elseif ($this->value === null) {
+			$msg = Swat::_('The %s field is required.');
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			
+		} elseif ($this->maxlength !== null && $len > $this->maxlength) {
+
+			$msg = sprintf(Swat::_('The %%s field must be less than %s characters.'),
+				$this->maxlength);
+
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+
+		} elseif ($this->minlength !== null && $len < $this->minlength) {
+
+			$msg = sprintf(Swat::_('The %%s field must be more than %s characters.'),
+				$this->minlength);
+
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+
+		}
+	}
+
+	/**
+	 * Gets the current state of this color selector
+	 *
+	 * @return string the current state of this color selector.
+	 *
+	 * @see SwatState::getState()
+	 */
+	public function getState()
+	{
+		if ($this->value === null)
+			return null;
+		else
+			return $this->value;
+	}
+
+	/**
+	 * Sets the current state of this color selector
+	 *
+	 * @param string $state the new state of this color selector.
+	 *
+	 * @see SwatState::setState()
+	 */
+	public function setState($state)
+	{
+		$this->value = new SwatDate($state);
+	}
+
+	/**
 	 * Includes the javascript required for this control to function
 	 *
 	 * This creates an instance of the JavaScript object SwatColorEntry with
@@ -184,73 +250,6 @@ class SwatColorEntry extends SwatControl implements SwatState
 		echo '</div>';
 
 		$wrapper_div->close();
-	}
-
-
-	/**
-	 * Processes this entry widget
-	 *
-	 * If any validation type errors occur, an error message is attached to
-	 * this entry widget.
-	 */
-	public function process()
-	{
-		if (strlen($_POST[$this->id]) == 0)
-			$this->value = null;
-		else
-			$this->value = $_POST[$this->id];
-
-		$len = ($this->value === null) ? 0 : strlen($this->value);
-
-		if (!$this->required && $this->value === null) {
-			return;
-
-		} elseif ($this->value === null) {
-			$msg = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-			
-		} elseif ($this->maxlength !== null && $len > $this->maxlength) {
-
-			$msg = sprintf(Swat::_('The %%s field must be less than %s characters.'),
-				$this->maxlength);
-
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-
-		} elseif ($this->minlength !== null && $len < $this->minlength) {
-
-			$msg = sprintf(Swat::_('The %%s field must be more than %s characters.'),
-				$this->minlength);
-
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-
-		}
-	}
-
-	/**
-	 * Gets the current state of this color selector
-	 *
-	 * @return string the current state of this color selector.
-	 *
-	 * @see SwatState::getState()
-	 */
-	public function getState()
-	{
-		if ($this->value === null)
-			return null;
-		else
-			return $this->value;
-	}
-
-	/**
-	 * Sets the current state of this color selector
-	 *
-	 * @param string $state the new state of this color selector.
-	 *
-	 * @see SwatState::setState()
-	 */
-	public function setState($state)
-	{
-		$this->value = new SwatDate($state);
 	}
 }
 

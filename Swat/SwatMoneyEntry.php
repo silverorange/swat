@@ -40,7 +40,6 @@ class SwatMoneyEntry extends SwatEntry
 		$this->size = 15;
 	}
 
-
 	/**
 	 * Displays this money entry widget
 	 *
@@ -57,21 +56,6 @@ class SwatMoneyEntry extends SwatEntry
 			echo ' '.$lc['int_curr_symbol'];
 
 		$this->setLocale($locale);
-	}
-
-	protected function getDisplayValue()
-	{
-		$locale = $this->setLocale($this->locale);
-		$lc = localeconv();
-
-		if (is_numeric($this->value))
-			$value = money_format('%n', $this->value);
-		else
-			$value =  $this->value;
-
-		$this->setLocale($locale);
-
-		return $value;
 	}
 
 	/**
@@ -138,6 +122,21 @@ class SwatMoneyEntry extends SwatEntry
 
 		// reset locale for this request
 		$this->setLocale($locale);
+	}
+
+	protected function getDisplayValue()
+	{
+		$locale = $this->setLocale($this->locale);
+		$lc = localeconv();
+
+		if (is_numeric($this->value))
+			$value = money_format('%n', $this->value);
+		else
+			$value =  $this->value;
+
+		$this->setLocale($locale);
+
+		return $value;
 	}
 
 	/**
