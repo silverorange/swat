@@ -13,26 +13,22 @@ abstract class SwatWizardStateStore extends SwatObject
 {
 	protected $state = array();
 
-	public function __construct()
-	{
-	}
-
 	/**
 	 * Initiate the states of the wizard steps
 	 */
-	abstract function init();
+	abstract public function init();
 
 	/**
 	 * Return the current state of the wizard 
 	 */
-	abstract function getState();
+	abstract public function getState();
 
 	/**
 	 * Update the state of the wizard steps
 	 *
 	 * @param array The current state of the wizard widgets
 	 */
-	abstract function updateState($state);
+	abstract public function updateState($state);
 }
 
 ?>
