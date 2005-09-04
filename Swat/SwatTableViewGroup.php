@@ -57,13 +57,13 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	 */
 	protected function displayRenderers($row)
 	{
-
 		if ($this->group_by === null)
 			throw new SwatException(__CLASS__.': group_by attribute not set');
 
 		$group_by = $this->group_by;
 
-		// only display the group header if the value of the group-by field has changed
+		// only display the group header if the value of the group-by field has
+		// changed
 		if ($row->$group_by == $this->current)
 			return;
 
