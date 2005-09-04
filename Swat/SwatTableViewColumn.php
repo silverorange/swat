@@ -142,23 +142,6 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 		$this->displayRenderers($row);
 	}
 
-	protected function displayRenderers($row)
-	{
-		reset($this->renderers);
-		$first_renderer = current($this->renderers);
-		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
-		$td_tag->open();
-
-		$prefix = ($this->view->id === null)? '': $this->view->id.'_';
-
-		foreach ($this->renderers as $renderer) {
-			$renderer->render($prefix);
-			echo ' ';
-		}
-
-		$td_tag->close();
-	}
-
 	/**
 	 * Display Javascript
 	 * 
@@ -185,6 +168,23 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 		else
 			throw new SwatException(__CLASS__.': Only SwatCellRender objects '.
 				'can be nested within SwatTableViewColumn objects.');
+	}
+
+	protected function displayRenderers($row)
+	{
+		reset($this->renderers);
+		$first_renderer = current($this->renderers);
+		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
+		$td_tag->open();
+
+		$prefix = ($this->view->id === null)? '': $this->view->id.'_';
+
+		foreach ($this->renderers as $renderer) {
+			$renderer->render($prefix);
+			echo ' ';
+		}
+
+		$td_tag->close();
 	}
 }
 
