@@ -206,6 +206,10 @@ div.swat-order-control:hover {
 	padding: 0;
 }
 
+.swat-form-field-checkbox {
+	margin: 0 0 0.5em 0;
+}
+
 .swat-form-field-checkbox label {
 	display: inline;
 }
@@ -376,4 +380,10 @@ span.swat-time-span {
 	color: #666;
 	font-size: 85%;
 	padding-top: 10px;
+}
+
+/* Swat Buttons */
+
+.swat-button-submit, .swat-button-create, .swat-button-apply {
+	font-weight: bold;
 }
