@@ -44,7 +44,7 @@ class SwatColorEntry extends SwatControl implements SwatState
 
 		$this->addJavaScript('swat/javascript/swat-color-entry.js');
 		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
-		$this->addStyleSheet('swat/swat-color-entry.css');
+		$this->addStyleSheet('swat/styles/swat-color-entry.css');
 	}
 
 	/**

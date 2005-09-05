@@ -49,7 +49,7 @@ class SwatCalendar extends SwatControl
 
 		$this->addJavaScript('swat/javascript/swat-calendar.js');
 		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
-		$this->addStyleSheet('swat/swat-calendar.css');
+		$this->addStyleSheet('swat/styles/swat-calendar.css');
 	}
 
 	/**

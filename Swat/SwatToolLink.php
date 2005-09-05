@@ -90,7 +90,9 @@ class SwatToolLink extends SwatControl
 	 *
 	 * Valid stock type ids are:
 	 *
+	 * - create
 	 * - edit
+	 * - delete
 	 *
 	 * @param string $stock_id the identifier of the stock type to use.
 	 *
@@ -99,9 +101,17 @@ class SwatToolLink extends SwatControl
 	public function setFromStock($stock_id)
 	{
 		switch ($stock_id) {
+		case 'create':
+			$this->title = Swat::_('Create');
+			$this->class = 'swat-tool-link-create';
+			break;
 		case 'edit':
 			$this->title = Swat::_('Edit');
 			$this->class = 'swat-tool-link-edit';
+			break;
+		case 'edit':
+			$this->title = Swat::_('Delete');
+			$this->class = 'swat-tool-link-Delete';
 			break;
 		default:
 			throw new SwatException(sprintf("%s: no stock type with the id ".
