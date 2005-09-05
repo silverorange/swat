@@ -77,6 +77,8 @@ class SwatWizardForm extends SwatForm
 	 */
 	public function init()
 	{
+		parent::init();
+
 		foreach ($this->children as $child) {
 			if ($child instanceof SwatWizardStep)
 				$this->steps[] = $child;

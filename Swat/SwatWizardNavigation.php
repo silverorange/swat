@@ -17,10 +17,16 @@ class SwatWizardNavigation extends SwatControl
 	private $prev_button;
 
 	/**
-	 * Initiate the elements for navigation
+	 * Creates a new wizard navigation
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
 	 */
-	public function init()
+	public function __construct($id = null)
 	{
+		parent::__construct($id);
+
 		$this->next_button = new SwatButton('nav_next');
 		$this->prev_button = new SwatButton('nav_prev');
 	}

@@ -54,6 +54,8 @@ class SwatButton extends SwatControl
 	 */
 	public function init()
 	{
+		parent::init();
+
 		$this->setFromStock('submit');
 	}
 
