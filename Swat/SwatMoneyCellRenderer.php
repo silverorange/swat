@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Swat/SwatCellRenderer.php';
-require_once 'Swat/SwatCurrency.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * A currency cell renderer
