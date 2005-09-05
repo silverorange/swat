@@ -111,6 +111,8 @@ class SwatPagination extends SwatControl
 	 */
 	public function init()
 	{
+		parent::init();
+
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
 	}

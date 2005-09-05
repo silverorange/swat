@@ -57,6 +57,8 @@ class SwatCalendar extends SwatControl
 	 */
 	public function init()
 	{
+		parent::init();
+
 		// an id is required for this widget.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();

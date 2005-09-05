@@ -41,6 +41,7 @@ class SwatCheckAll extends SwatControl
 	{
 		parent::__construct($id);
 
+		$this->title = Swat::_('Check All');
 		$this->addJavaScript('swat/javascript/swat-check-all.js');
 	}
 
@@ -51,7 +52,8 @@ class SwatCheckAll extends SwatControl
 	 */
 	public function init()
 	{
-		$this->title = Swat::_('Check All');
+		parent::init();
+
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
 	}
