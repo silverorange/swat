@@ -17,9 +17,14 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	/**
 	 * An object containing values to display
 	 *
-	 * TODO: document this better
+	 * A data object contains properties and values. The SwatDetailsViewField
+	 * objects inside this SwatDetailsView contain mappings between their
+	 * properties and the properties of this data object. This allows the
+	 * to display specific values from this data object.
 	 *
-	 * @var array
+	 * @var object
+	 *
+	 * @see SwatDetailsViewField
 	 */
 	public $data = null;
 
@@ -64,9 +69,11 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 
 	/**
 	 * Get a reference to a field
+	 *
 	 * @ return SwatDetailsViewField Matching field
 	 */
-	public function getField($id) {
+	public function getField($id)
+	{
 		$fields = $this->getFields();
 		foreach ($fields as $field)
 			if ($id == $field->id)
@@ -122,7 +129,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 		$tr_tag = new SwatHtmlTag('tr');
 
 		foreach ($this->fields as $field) {
-
 			$count++;
 			$tr_tag->class = ($count % 2 == 1) ? 'odd' : null;
 			$tr_tag->open();

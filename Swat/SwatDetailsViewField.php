@@ -103,7 +103,8 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	 * @param $id The id of the {@link SwatCellRenderer}
 	 * @return SwatCellRenderer The renderer with id = $id.
 	 */
-	public function getRenderer($id) {
+	public function getRenderer($id)
+	{
 		if (isset($this->renderers[$id])) {
 			return $this->renderers[$id];
 		} else
