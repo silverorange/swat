@@ -101,21 +101,9 @@ class SwatForm extends SwatContainer
 	{
 		parent::__construct($id);
 
+		$this->requires_id = true;
+
 		$this->addJavaScript('swat/javascript/swat-form.js');
-	}
-
-	/**
-	 * Initializes this form
-	 *
-	 * Forms need to have an id set.
-	 */
-	public function init()
-	{
-		parent::init();
-
-		// an id is required for this widget.
-		if ($this->id === null)
-			$this->id = $this->getUniqueId();
 	}
 
 	/**

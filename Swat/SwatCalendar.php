@@ -47,21 +47,11 @@ class SwatCalendar extends SwatControl
 	{
 		parent::__construct($id);
 
+		$this->requires_id = true;
+
 		$this->addJavaScript('swat/javascript/swat-calendar.js');
 		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
 		$this->addStyleSheet('swat/styles/swat-calendar.css');
-	}
-
-	/**
-	 * Initializes this calendar widget
-	 */
-	public function init()
-	{
-		parent::init();
-
-		// an id is required for this widget.
-		if ($this->id === null)
-			$this->id = $this->getUniqueId();
 	}
 
 	/**
