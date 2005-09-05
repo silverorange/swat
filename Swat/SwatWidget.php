@@ -69,7 +69,7 @@ abstract class SwatWidget extends SwatObject
 	public function __construct($id = null)
 	{
 		$this->id = $id;
-		$this->addStylesheet('swat/swat.css');
+		$this->addStylesheet('swat/styles/swat.css');
 	}
 
 	// }}}

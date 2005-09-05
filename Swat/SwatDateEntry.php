@@ -157,7 +157,7 @@ class SwatDateEntry extends SwatControl implements SwatState
 		$this->addJavaScript('swat/javascript/swat-find-index.js');
 		$this->addJavaScript('swat/javascript/swat-date-entry.js');
 		$this->addJavaScript('swat/javascript/swat-time-entry.js');
-		$this->addStylesheet('swat/swat-calendar.css');
+		$this->addStylesheet('swat/styles/swat-calendar.css');
 	}
 
 	/**
