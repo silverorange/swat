@@ -87,13 +87,19 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	private $extra_rows = array();
 
 	// }}}
-	// {{{ public function init()
+	// {{{ public function __construct()
 
 	/**
-	 * Initializes this table view
+	 * Creates a new table view
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
 	 */
-	public function init()
+	public function __construct($id = null)
 	{
+		parent::__construct($id);
+
 		$this->addJavaScript('swat/javascript/swat-table-view.js');
 	}
 

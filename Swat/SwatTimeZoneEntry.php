@@ -35,10 +35,20 @@ class SwatTimeZoneEntry extends SwatControl implements SwatState
 	private $areas = array();
 	private $regions = array();
 
-	public function init()
+	/**
+	 * Creates a new time-zone selector widget
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
 	{
+		parent::__construct($id);
+
 		$area_whitelist = array('Africa', 'America', 'Antarctica',
-			'Arctic', 'Asia', 'Atlantic', 'Australia', 'Europe', 'Indian', 'Pacific');
+			'Arctic', 'Asia', 'Atlantic', 'Australia', 'Europe',
+			'Indian', 'Pacific');
 
 		$time_zone_list = $this->parseAreaWhitelist($area_whitelist);
 		$this->setAreas($time_zone_list);

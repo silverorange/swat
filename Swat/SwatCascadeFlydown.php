@@ -42,6 +42,23 @@ class SwatCascadeFlydown extends SwatFlydown
 	public $cascade_from = null;
 
 	// }}}
+	// {{{ public function __construct()
+
+	/**
+	 * Creates a new calendar
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->addJavaScript('swat/javascript/swat-cascade.js');
+	}
+
+	// }}}
 	// {{{ public function init()
 
 	/**
@@ -54,8 +71,6 @@ class SwatCascadeFlydown extends SwatFlydown
 		// an id is required for this widget.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
-
-		$this->addJavaScript('swat/javascript/swat-cascade.js');
 	}
 
 	// }}}

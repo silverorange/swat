@@ -27,6 +27,20 @@ class SwatDisclosure extends SwatContainer
 	public $open = true;
 
 	/**
+	 * Creates a new disclosure container
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->addJavaScript('swat/javascript/swat-disclosure.js');
+	}
+
+	/**
 	 * Initializes this disclosure container
 	 *
 	 * Disclosure containers need to have id's set.
@@ -36,8 +50,6 @@ class SwatDisclosure extends SwatContainer
 		// an id is required for this widget.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
-
-		$this->addJavaScript('swat/javascript/swat-disclosure.js');
 	}
 
 	/**

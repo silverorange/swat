@@ -122,13 +122,19 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	private $created = false;
 
 	/**
-	 * Initializes this widget
+	 * Creates a new time entry widget
 	 *
 	 * Sets default required and display parts and sets default valid range
 	 * for this time entry.
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
 	 */
-	public function init()
+	public function __construct($id = null)
 	{
+		parent::__construct($id);
+
 		$this->display  = self::HOUR | self::MINUTE;
 		$this->required = $this->display;
 

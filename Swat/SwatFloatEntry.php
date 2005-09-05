@@ -13,12 +13,18 @@ require_once 'Swat/SwatString.php';
 class SwatFloatEntry extends SwatEntry
 {
 	/**
-	 * Initializes this widget
+	 * Creates a new float entry widget
 	 *
 	 * Sets the input size to 10 by default.
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
 	 */
-	public function init()
+	public function __construct($id = null)
 	{
+		parent::__construct($id);
+
 		$this->size = 10;
 	}
 

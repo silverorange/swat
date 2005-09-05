@@ -91,6 +91,20 @@ class SwatForm extends SwatContainer
 	private $processed = false;
 
 	/**
+	 * Creates a new form
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->addJavaScript('swat/javascript/swat-form.js');
+	}
+
+	/**
 	 * Initializes this form
 	 *
 	 * Forms need to have an id set.
@@ -100,8 +114,6 @@ class SwatForm extends SwatContainer
 		// an id is required for this widget.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
-
-		$this->addJavaScript('swat/javascript/swat-form.js');
 	}
 
 	/**

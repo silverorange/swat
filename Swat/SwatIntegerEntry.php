@@ -12,13 +12,19 @@ require_once 'Swat/SwatEntry.php';
 class SwatIntegerEntry extends SwatEntry
 {
 	/**
-	 * Initializes this widget
+	 * Creates a new integer entry widget
 	 *
-	 * Sets the input size to 5 by default.
+	 * Sets the input size to 7 by default.
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
 	 */
-	public function init()
+	public function __construct($id = null)
 	{
-		$this->size = 7;
+		parent::__construct($id);
+
+		$this->size = 10;
 	}
 
 	/**
