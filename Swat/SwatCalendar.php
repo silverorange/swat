@@ -58,13 +58,17 @@ class SwatCalendar extends SwatControl
 		if (!$this->visible)
 			return;
 
+		$anchor_tag = new SwatHtmlTag('a');
+		$anchor_tag->href = "javascript:{$this->id}.toggle();";
+		$anchor_tag->open();
+
 		$img_tag = new SwatHtmlTag('img');
 		$img_tag->src = 'swat/images/calendar.png';
 		$img_tag->class = 'swat-calendar-icon';
 		$img_tag->id = $this->id.'_toggle';
-		$img_tag->onmousedown = $this->id.'.toggle();';
-
 		$img_tag->display();
+
+		$anchor_tag->close();
 
 		echo '<br />';
 
