@@ -27,7 +27,7 @@ class SwatPagination extends SwatControl
 	 *
 	 * An array of GET variable names to unset before rebuilding a new link.
 	 *
-	 * @var integer
+	 * @var array
 	 */
 	public $unset_get_vars = array();
 
