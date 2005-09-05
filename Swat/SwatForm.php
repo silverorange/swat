@@ -129,8 +129,7 @@ class SwatForm extends SwatContainer
 		$valid_methods = array(SwatForm::METHOD_POST, SwatForm::METHOD_GET);
 
 		if (!in_array($method, $valid_methods))
-			throw new SwatException(sprintf(__CLASS__."'%s' is not a valid ".
-				'form method.', $method));
+			throw new SwatException("'$method' is not a valid form method.");
 
 		$this->method = $method;
 	}

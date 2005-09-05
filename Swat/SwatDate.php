@@ -123,7 +123,7 @@ class SwatDate extends Date
 		case self::DF_MY:
 			return Swat::_('%B %Y');
 		default:
-			throw new Exception(__CLASS__.': unknown date format id');
+			throw new Exception("Unknown date format id '$id'.");
 		}
 	}
 }

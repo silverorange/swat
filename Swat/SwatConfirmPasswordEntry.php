@@ -35,9 +35,8 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry
 		parent::process();
 
 		if ($this->password_widget === null)
-			throw new SwatException(__CLASS__.
-				'$this->password_widget is null. Expected a reference to a '.
-				'SwatPasswordEntry.');
+			throw new SwatException("Property 'password_widget' is null. ".
+				'Expected a reference to a SwatPasswordEntry.');
 
 		if ($this->password_widget->value !== null) {
 			if (strcmp($this->password_widget->value, $this->value) != 0) {

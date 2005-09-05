@@ -219,8 +219,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 			if ($id == $column->id)
 				return $column;
 
-		throw new SwatException(__CLASS__.": no column with an id of '{$id}' ".
-			'exists.');
+		throw new SwatException("Column with an id of '$id' not found.");
 	}
 
 	// }}}
@@ -309,7 +308,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		elseif ($child instanceof SwatTableViewColumn)
 			$this->appendColumn($child);
 		else
-			throw new SwatException(__CLASS__.': Only SwatTableViewColumn, '.
+			throw new SwatException('Only SwatTableViewColumn, '.
 				'SwatTableViewGroup, or SwatTableViewRow objects can be '.
 				'nested within SwatTableView objects.');
 	}

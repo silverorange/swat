@@ -190,8 +190,7 @@ class SwatApplication extends SwatObject
 		if ($page instanceof SwatPage)
 			$this->page = $page;
 		else
-			throw new SwatException(__CLASS__.': provided page must be '.
-				'an instance of SwatPage');
+			throw new SwatException('Page is not an instance of SwatPage');
 
 		if ($this->page_initialized)
 			$this->page->init();

@@ -71,9 +71,8 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 			$this->renderers[$renderer->id]['property_map'][$property] =
 				$field;
 		else
-			throw new SwatException(sprintf(__CLASS__.': renderer with an id '.
-				"of '%s' does not exist in this details view field.",
-				$renderer->id));
+			throw new SwatException("No renderer with an id of '{$renderer->id}'".
+				" exists in this details view field.");
 	}
 
 	/**
@@ -89,8 +88,7 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 			$this->renderers[$renderer->id] = array('renderer' => $renderer,
 				'property_map' => array());
 		else
-			throw new SwatException(__CLASS__.': Cannot add a cell renderer '.
-				'without an id.');
+			throw new SwatException('Cannot add a cell renderer without an id.');
 
 		$renderer->parent = $this;
 	}
@@ -108,7 +106,7 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 		if (isset($this->renderers[$id])) {
 			return $this->renderers[$id];
 		} else
-			throw new SwatException(__CLASS__.': no renderer with id '.$id.'.');
+			throw new SwatException("No renderer with an id of '$id' found.");
 	}
 
 	/**
@@ -144,8 +142,7 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	public function displayValue($data)
 	{
 		if (count($this->renderers) == 0)
-			throw new SwatException(__CLASS__.
-				': no renderer has been provided.');
+			throw new SwatException('No renderer has been provided for this field.');
 
 		// Set the properties of the renderers to the value of the data field.
 		foreach ($this->renderers as $renderer_id => $field_renderer)
@@ -192,7 +189,7 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 		if ($child instanceof SwatCellRenderer)
 			$this->addRenderer($child);
 		else
-			throw new SwatException(__CLASS__.': Only SwatCellRender objects '.
+			throw new SwatException('Only SwatCellRender objects '.
 				'can be nested within SwatDetailsViewField objects.');
 	}
 }

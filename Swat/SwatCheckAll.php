@@ -58,7 +58,7 @@ class SwatCheckAll extends SwatControl
 			return;
 
 		if ($this->controller === null)
-			throw new SwatException(__CLASS__.': A controller referencing '.
+			throw new SwatException('A controller referencing '.
 				'the SwatObject containing the checklist must be set.');
 
 		$div_tag = new SwatHtmlTag('div');

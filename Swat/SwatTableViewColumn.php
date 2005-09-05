@@ -97,9 +97,7 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 		if (isset($this->renderers[$position]))
 			return $this->renderers[$position];
 		else
-			throw new SwatException(sprintf('%s: invalid ordinal position %s.',
-				__CLASS__,
-				$position));
+			throw new SwatException("Invalid ordinal position $position.");
 	}
 
 	public function init()
@@ -131,8 +129,7 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 			return;
 
 		if (count($this->renderers) == 0)
-			throw new SwatException(__CLASS__.
-				': no renderer has been provided.');
+			throw new SwatException('No renderer has been provided.');
 
 		// set the properties of the renderers
 		foreach ($this->renderers as $renderer)
@@ -166,7 +163,7 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 		if ($child instanceof SwatCellRenderer)
 			$this->addRenderer($child);
 		else
-			throw new SwatException(__CLASS__.': Only SwatCellRender objects '.
+			throw new SwatException('Only SwatCellRender objects '.
 				'can be nested within SwatTableViewColumn objects.');
 	}
 
