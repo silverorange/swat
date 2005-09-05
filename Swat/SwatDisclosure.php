@@ -67,10 +67,10 @@ class SwatDisclosure extends SwatContainer
 
 		if ($this->open) {
 			$img->src = 'swat/images/disclosure-open.png';
-			$img->alt = 'close';
+			$img->alt = Swat::_('close');
 		} else {
 			$img->src = 'swat/images/disclosure-closed.png';
-			$img->alt = 'open';
+			$img->alt = Swat::_('open');
 		}
 
 		$img->width = 16;
