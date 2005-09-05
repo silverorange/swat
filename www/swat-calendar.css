@@ -114,10 +114,9 @@
 }
 
 .swat-calendar-icon {
-	vertical-align:middle; 
-	cursor: pointer;
-	cursor: hand;
+	vertical-align: bottom;
 	margin-left: 2px;
+	border: 0;
 }
 
 .swat-calendar-arrows {
