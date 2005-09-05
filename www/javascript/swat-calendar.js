@@ -45,8 +45,8 @@ function SwatCalendar(id, start_date, end_date, swat_date_entry)
 		this.end_date = new Date(year, 0, 1);
 	}
 
-	if (typeof(SwatDate) != 'undefined' &&
-		swat_date_entry instanceof SwatDate) {
+	if (typeof(SwatDateEntry) != 'undefined' &&
+		swat_date_entry instanceof SwatDateEntry) {
 		this.date = swat_date_entry;
 	} else {
 		this.date = null;
@@ -117,6 +117,7 @@ SwatCalendar.today_text = 'Today';
  */
 SwatCalendar.prototype.setDateValues = function(year, month, day)
 {
+	alert(this.date);
 	if (this.date !== null) {
 		this.date.setYear(year);
 		this.date.setMonth(month);
@@ -236,7 +237,7 @@ SwatCalendar.prototype.buildControls = function()
 
 	// First build the month selection box
 	var month_array = '<select class="swat-calendar-control" id="' +
-		this.id + '_month_flydown" onchange="' + this.id + '.redraw();">';
+		this.id + '_month_flydown" onchange="' + this.id + '_obj.redraw();">';
 
 	if (start_date.getYear() == end_date.getYear()) {
 		for (i = start_date.getMonth(); i <= end_date.getMonth(); i++) {
@@ -279,7 +280,7 @@ SwatCalendar.prototype.buildControls = function()
 	month_array = month_array + '</select>';
 
 	var year_array = '<select class="swat-calendar-control" id="' +
-		this.id + '_year_flydown" onchange="' + this.id + '.redraw();">';
+		this.id + '_year_flydown" onchange="' + this.id + '_obj.redraw();">';
 
 	for (i = start_date.getFullYear(); i <= end_date.getFullYear(); i++) {
 		if (i == yyyy)
@@ -400,7 +401,7 @@ SwatCalendar.prototype.draw = function()
 		var prev_img  = 'arrow-left-off.png';
 		var prev_class = 'swat-calendar-arrows-off';
 	} else {
-		var prev_link = this.id + '.draw(' +
+		var prev_link = this.id + '_obj.draw(' +
 			prev_year + ',' + prev_month + ', 1);';
 
 		var prev_img  = 'arrow-left.png';
@@ -412,7 +413,7 @@ SwatCalendar.prototype.draw = function()
 		var next_img  = 'arrow-right-off.png';
 		var next_class = 'swat-calendar-arrows-off';
 	} else {
-		var next_link = this.id + '.draw(' +
+		var next_link = this.id + '_obj.draw(' +
 			next_year + ',' + next_month + ', 1);';
 
 		var next_img  = 'arrow-right.png';
@@ -451,20 +452,20 @@ SwatCalendar.prototype.draw = function()
 		'<td id="swat-calendar-close-controls" colspan="7">' +
 		'<span>' +
 		'<a class="swat-calendar-cancel" onclick="' +
-		this.id + '.closeAndSetBlank();">' + SwatCalendar.nodate_text + '</a>' +
+		this.id + '_obj.closeAndSetBlank();">' + SwatCalendar.nodate_text + '</a>' +
 		'</span>';
 
 	if (today_ts >= start_ts && today_ts <= end_ts)
 		close_controls = close_controls +
 		'<span>' +
 		'<a class="swat-calendar-today" onclick="' +
-		this.id + '.closeAndSetToday();">' + SwatCalendar.today_text + '</a>' +
+		this.id + '_obj.closeAndSetToday();">' + SwatCalendar.today_text + '</a>' +
 		'</span>';
 
 	close_controls = close_controls +
 		'<span>' +
 		'<a class="swat-calendar-close" onclick="' +
-		this.id + '.close();">' + SwatCalendar.close_text + '</a> ' +
+		this.id + '_obj.close();">' + SwatCalendar.close_text + '</a> ' +
 		'</span>' +
 		'</td></tr></table>';
 
@@ -486,7 +487,7 @@ SwatCalendar.prototype.draw = function()
 	for (i = 1; i <= end_day; i++) {
 
 		cell_data = (dd == i) ? 'swat-calendar-current-cell' : 'swat-calendar-cell';
-		onclick_action = this.id + '.closeAndSetDate('+ yyyy + ',' + mm + ',' + i + ');';
+		onclick_action = this.id + '_obj.closeAndSetDate('+ yyyy + ',' + mm + ',' + i + ');';
 		if (calendar_start && i < start_date.getDate()) {
 			cell_data = 'swat-calendar-invalid-cell';
 			onclick_action = 'return false;';
