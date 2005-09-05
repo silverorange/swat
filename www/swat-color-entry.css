@@ -54,7 +54,7 @@ td.swat-simple-color-palette-blank {
 
 .swat-simple-color-entry-toggle {
 	display: inline;
-	vertical-align: middle;
+	vertical-align: bottom;
 	border: none;
 }
 
@@ -70,7 +70,7 @@ td.swat-simple-color-palette-blank {
 
 .swat-color-entry-toggle {
 	display: inline;
-	vertical-align: middle;
+	vertical-align: bottom;
 	border: none;
 }
 
