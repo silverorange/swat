@@ -99,7 +99,7 @@ class SwatNavBar extends SwatControl
 			return $this->entries[$position];
 		else
 			throw new SwatException('Navbar does not contain an entry at '.
-				"position '$position'");
+				"position '{$position}'");
 	}
 
 	// }}}
@@ -119,25 +119,52 @@ class SwatNavBar extends SwatControl
 	// {{{ public function popEntry()
 
 	/**
+	 * Pops the last entry off the end of this navigational bar
+	 *
+	 * If no entries currently exist, an exception is thrown.
+	 *
+	 * @return SwatNavBarEntry the entry that was popped.
+	 *
+	 * @throws SwatException
+	 */
+	public function popEntry()
+	{
+		if ($this->getCount() < 1) {
+			throw new SwatException(sprintf('%s: Cannot pop entry. NavBar '.
+				'does not contain any elements.',
+				__CLASS__));
+		} else {
+			return array_pop($this->entries);
+		}
+	}
+
+	// }}}
+	// {{{ public function popEntries()
+
+	/**
 	 * Pops one or more entries off the end of this navigational bar
 	 *
-	 * If more entires are to be popped than currently exist, an exception is
+	 * If more entries are to be popped than currently exist, an exception is
 	 * thrown.
 	 *
 	 * @param $number integer number of entries to pop off this navigational
 	 *                         bar.
 	 *
+	 * @return array an array of SwatNavBarEntry objects that were popped off
+	 *                the navagational bar.
+	 *
 	 * @throws SwatException
 	 */
-	public function popEntry($number = 1)
+	public function popEntries($number)
 	{
-		if ($number <= $this->getCount()) {
-			for ($i = 0; $i < $number; $i++)
-				$ret = array_pop($this->entries);
-
-			return $ret;
+		if ($this->getCount() < $number) {
+			throw new SwatException(sprintf('%s: Cannot pop %s entries. '.
+				"NavBar only contains %s entries.",
+				__CLASS__,
+				$number,
+				$this->getCount()));
 		} else {
-			throw new SwatException("NavBar does contain $number entries.");
+			return array_splice($this->entries, -$number);
 		}
 	}
 
