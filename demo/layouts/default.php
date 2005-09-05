@@ -3,7 +3,6 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	<?=$this->html_head_entries?>
-	<style type="text/css" media="all">@import "swat/swat.css";</style>
 	<style type="text/css" media="all">@import "example.css";</style>
 	<title><?=$this->title?> | <?=$this->app_title?></title>
 	<link rel="icon" href="favicon.ico" type="image/x-icon" />
