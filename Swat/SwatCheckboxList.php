@@ -39,6 +39,20 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	public $onchange = null;
 
 	/**
+	 * Creates a new checkbox list
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->addJavaScript('swat/javascript/swat-checkbox-list.js');
+	}
+
+	/**
 	 * Initializes this widget
 	 */
 	public function init()
@@ -46,8 +60,6 @@ class SwatCheckboxList extends SwatControl implements SwatState
 		// an id is required for this widget.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
-
-		$this->addJavaScript('swat/javascript/swat-checkbox-list.js');
 	}
 
 	public function display()

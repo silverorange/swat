@@ -136,22 +136,21 @@ class SwatDateEntry extends SwatControl implements SwatState
 	private $created = false;
 
 	/**
-	 * Initializes this widget
+	 * Creates a new date entry widget
 	 *
-	 * Sets default required and display parts and sets default valid range
-	 * for this date entry.
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
 	 */
-	public function init()
+	public function __construct($id = null)
 	{
+		parent::__construct($id);
+
 		$this->required_parts = self::YEAR | self::MONTH | self::DAY;
 		$this->display_parts  = self::YEAR | self::MONTH |
-								self::DAY | self::CALENDAR;
+		                        self::DAY | self::CALENDAR;
 
 		$this->setValidRange(-20, 20);
-
-		// an id is required for this widget.
-		if ($this->id === null)
-			$this->id = $this->getUniqueId();
 
 		$this->addJavaScript('swat/javascript/swat-calendar.js');
 		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
@@ -159,6 +158,19 @@ class SwatDateEntry extends SwatControl implements SwatState
 		$this->addJavaScript('swat/javascript/swat-date-entry.js');
 		$this->addJavaScript('swat/javascript/swat-time-entry.js');
 		$this->addStylesheet('swat/swat-calendar.css');
+	}
+
+	/**
+	 * Initializes this widget
+	 *
+	 * Sets default required and display parts and sets default valid range
+	 * for this date entry.
+	 */
+	public function init()
+	{
+		// an id is required for this widget.
+		if ($this->id === null)
+			$this->id = $this->getUniqueId();
 	}
 
 	/**

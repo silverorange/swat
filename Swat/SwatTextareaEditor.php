@@ -38,8 +38,17 @@ class SwatTextareaEditor extends SwatTextarea
 	 */
 	public $basehref = null; 
 
-	public function init()
+	/**
+	 * Creates a new wysiwyg textarea editor
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
 	{
+		parent::__construct($id);
+
 		$this->addJavaScript('swat/javascript/swat-textarea-editor.js');
 	}
 

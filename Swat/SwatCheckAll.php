@@ -31,6 +31,20 @@ class SwatCheckAll extends SwatControl
 	public $title = null;
 
 	/**
+	 * Creates a new check-all widget
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->addJavaScript('swat/javascript/swat-check-all.js');
+	}
+
+	/**
 	 * Initialize this check-all widget
 	 *
 	 * Sets the widget label and enforces a unique identifier.
@@ -40,8 +54,6 @@ class SwatCheckAll extends SwatControl
 		$this->title = Swat::_('Check All');
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
-
-		$this->addJavaScript('swat/javascript/swat-check-all.js');
 	}
 
 	/**

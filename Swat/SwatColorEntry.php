@@ -32,6 +32,22 @@ class SwatColorEntry extends SwatControl implements SwatState
 	public $required = false;
 
 	/**
+	 * Creates a new color entry widget
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->addJavaScript('swat/javascript/swat-color-entry.js');
+		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
+		$this->addStyleSheet('swat/swat-color-entry.css');
+	}
+
+	/**
 	 * Initializes this color selector widget 
 	 */
 	public function init()
@@ -39,10 +55,6 @@ class SwatColorEntry extends SwatControl implements SwatState
 		// an id is required for this widget.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
-
-		$this->addJavaScript('swat/javascript/swat-color-entry.js');
-		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
-		$this->addStyleSheet('swat/swat-color-entry.css');
 	}
 
 	/**

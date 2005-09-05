@@ -75,10 +75,16 @@ class SwatActions extends SwatControl implements SwatUIParent
 	private $widgets_created = false;
 
 	/**
-	 * Initializes this actions list
+	 * Creates a new actions list
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
 	 */
-	public function init()
+	public function __construct($id = null)
 	{
+		parent::__construct($id);
+
 		$this->addJavaScript('swat/javascript/swat-actions.js');
 	}
 

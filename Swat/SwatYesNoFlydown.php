@@ -15,16 +15,20 @@ class SwatYesNoFlydown extends SwatFlydown
 	const YES = 2;
 
 	/**
-	 * Initializes this yes/no flydown
+	 * Creates a new yes/no flydown
 	 *
 	 * Sets the options of this flydown to be yes and no.
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
 	 */
-	public function init()
+	public function __construct($id = null)
 	{
+		parent::__construct($id);
+
 		$this->addOptionsByArray(array(self::NO => Swat::_('No'),
 			self::YES => Swat::_('Yes')));
-
-		parent::init();
 	}
 
 	/**

@@ -31,13 +31,19 @@ class SwatMoneyEntry extends SwatEntry
 	public $display_currency = false;
 
 	/**
-	 * Initializes this widget
+	 * Creates a new money entry widget
 	 *
 	 * Sets the input size to 15 by default.
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
 	 */
-	public function init()
+	public function __construct($id = null)
 	{
-		$this->size = 15;
+		parent::__construct($id);
+
+		$this->size = 10;
 	}
 
 	/**

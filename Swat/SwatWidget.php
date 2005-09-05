@@ -122,8 +122,11 @@ abstract class SwatWidget extends SwatObject
 	/**
 	 * Initializes this widget
 	 *
-	 * Every widget is initialized after being added to a parent and having 
-	 * properties set.
+	 * Initialization is done post-construction. It is called by SwatUI and
+	 * may be called manually.
+	 *
+	 * Init allows properties to be manually set on widgets between the
+	 * constructor and other initialization routines.
 	 */
 	public function init()
 	{
