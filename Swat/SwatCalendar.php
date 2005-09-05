@@ -59,7 +59,7 @@ class SwatCalendar extends SwatControl
 			return;
 
 		$anchor_tag = new SwatHtmlTag('a');
-		$anchor_tag->href = "javascript:{$this->id}.toggle();";
+		$anchor_tag->href = "javascript:{$this->id}_obj.toggle();";
 		$anchor_tag->open();
 
 		$img_tag = new SwatHtmlTag('img');
@@ -115,7 +115,7 @@ class SwatCalendar extends SwatControl
 
 		echo '<script type="text/javascript">'."\n";
 
-		echo "{$this->id} = new SwatCalendar(".
+		echo "{$this->id}_obj = new SwatCalendar(".
 			"'{$this->id}', ".
 			"'{$start_date}', '{$end_date}', {$swat_date_entry});";
 
