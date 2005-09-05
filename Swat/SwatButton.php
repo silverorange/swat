@@ -37,6 +37,17 @@ class SwatButton extends SwatControl
 	public $class = null;
 
 	/**
+	 * The stock id of this button
+	 *
+	 * Specifying a stock id initializes this button with a set of stock values.
+	 *
+	 * @var string
+	 *
+	 * @see SwatToolLink::setFromStock()
+	 */
+	public $stock_id = null;
+
+	/**
 	 * Clicked
 	 *
 	 * This is set to true after processing if this button was clicked.
@@ -48,15 +59,21 @@ class SwatButton extends SwatControl
 	private $clicked = false;
 
 	/**
-	 * Initializes this button
+	 * Initializes this widget
 	 *
-	 * Sets a default stock title.
+	 * Loads properties from stock if $stock_id is set, otherwise sets a 
+	 * default stock title.
+	 *
+	 * @see SwatWidget::init()
 	 */
 	public function init()
 	{
 		parent::init();
 
-		$this->setFromStock('submit');
+		if ($this->stock_id === null) 
+			$this->setFromStock('submit');
+		else
+			$this->setFromStock($this->stock_id);
 	}
 
 	/**
@@ -146,10 +163,8 @@ class SwatButton extends SwatControl
 			break;
 
 		default:
-			throw new SwatException(sprintf("%s: no stock option available with the id ".
-				"of '%s' exists.",
-				__CLASS__,
-				$stock_id));
+			throw new SwatException(
+				"No stock option available with id '$stock_id'.");
 		}
 	}
 }

@@ -53,13 +53,26 @@ class SwatToolLink extends SwatControl
 	/**
 	 * The stock id of this tool link
 	 *
-	 * Speifying a stock id sets this tool link based on a set of stock values.
+	 * Specifying a stock id initialized this tool link with a set of stock values.
 	 *
 	 * @var string
 	 *
 	 * @see SwatToolLink::setFromStock()
 	 */
 	public $stock_id = null;
+
+	/**
+	 * Initializes this widget
+	 *
+	 * Loads properties from stock if $stock_id is set.
+	 *
+	 * @see SwatWidget::init()
+	 */
+	public function init()
+	{
+		if ($this->stock_id !== null) 
+			$this->setFromStock($this->stock_id);
+	}
 
 	/**
 	 * Displays this tool link
