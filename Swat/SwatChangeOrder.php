@@ -68,19 +68,9 @@ class SwatChangeOrder extends SwatControl implements SwatState
 	{
 		parent::__construct($id);
 
+		$this->requires_id = true;
+
 		$this->addJavaScript('swat/javascript/swat-change-order.js');
-	}
-
-	/**
-	 * Initializes this change-order widget 
-	 */
-	public function init()
-	{
-		parent::init();
-
-		// an id is required for this widget.
-		if ($this->id === null)
-			$this->id = $this->getUniqueId();
 	}
 
 	/**

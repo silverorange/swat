@@ -105,16 +105,19 @@ class SwatPagination extends SwatControl
 	protected $total_pages = 0;
 
 	/**
-	 * Initializes this pagination widget
+	 * Creates a new pagination widget
 	 *
 	 * Enforces that a unique id is set.
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
 	 */
-	public function init()
+	public function __construct($id = null)
 	{
-		parent::init();
+		parent::__construct($id);
 
-		if ($this->id === null)
-			$this->id = $this->getUniqueId();
+		$this->requires_id = true;
 	}
 
 	/**

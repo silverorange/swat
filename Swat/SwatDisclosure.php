@@ -37,21 +37,9 @@ class SwatDisclosure extends SwatContainer
 	{
 		parent::__construct($id);
 
+		$this->requires_id = true;
+
 		$this->addJavaScript('swat/javascript/swat-disclosure.js');
-	}
-
-	/**
-	 * Initializes this disclosure container
-	 *
-	 * Disclosure containers need to have id's set.
-	 */
-	public function init()
-	{
-		parent::init();
-
-		// an id is required for this widget.
-		if ($this->id === null)
-			$this->id = $this->getUniqueId();
 	}
 
 	/**

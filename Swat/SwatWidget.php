@@ -58,6 +58,18 @@ abstract class SwatWidget extends SwatObject
 	 */
 	protected $html_head_entries = array();
 
+	/**
+	 * Specifies that this widget requires an id
+	 *
+	 * If an id is required then the init() method sets a unique id if an id
+	 * is not already set manually.
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatWidget::init()
+	 */
+	protected $requires_id = false;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -130,6 +142,8 @@ abstract class SwatWidget extends SwatObject
 	 */
 	public function init()
 	{
+		if ($this->requires_id && $this->id === null)
+			$this->id = $this->getUniqueId();
 	}
 
 	// }}}
