@@ -77,8 +77,8 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 			if ($renderer instanceof SwatCheckboxCellRenderer)
 				return $renderer;
 
-		throw new SwatException(__CLASS__
-			.": The column '{$this->id}' must have a checkbox renderer");
+		throw new SwatException("The column '{$this->id}' must contain a ".
+			'checkbox cell renderer.');
 	}
 
 	/**

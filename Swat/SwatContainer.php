@@ -26,8 +26,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	/**
 	 * Initializes this widget
 	 *
-	 * Every widget is initialized after being added to a parent and having 
-	 * properties set.
+	 * Recursively initializes children widgets.
+	 *
+	 * @see SwatWidget::init()
 	 */
 	public function init()
 	{

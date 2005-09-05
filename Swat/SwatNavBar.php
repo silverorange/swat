@@ -71,9 +71,8 @@ class SwatNavBar extends SwatControl
 			$new_element = array('title' => $title, 'uri' => $uri);
 			$this->elements[$position] = &$new_element;
 		} else {
-			throw new SwatException(sprintf(__CLASS__.': Cannot replace '.
-				"element at position '%s' because element does not exist.",
-				$position));
+			throw new SwatException('Cannot replace element at position '.
+				"'$position' because element does not exist.",
 		}
 	}
 	*/
@@ -130,9 +129,7 @@ class SwatNavBar extends SwatControl
 	public function popEntry()
 	{
 		if ($this->getCount() < 1) {
-			throw new SwatException(sprintf('%s: Cannot pop entry. NavBar '.
-				'does not contain any elements.',
-				__CLASS__));
+			throw new SwatException('Cannot pop entry. NavBar does not contain any elements.');
 		} else {
 			return array_pop($this->entries);
 		}
@@ -158,11 +155,11 @@ class SwatNavBar extends SwatControl
 	public function popEntries($number)
 	{
 		if ($this->getCount() < $number) {
-			throw new SwatException(sprintf('%s: Cannot pop %s entries. '.
-				"NavBar only contains %s entries.",
-				__CLASS__,
-				$number,
-				$this->getCount()));
+			$count = $this->getCount();
+
+			throw new SwatException("NavBar only contains $class entries, ".
+				"unable to pop $number entries.");
+
 		} else {
 			return array_splice($this->entries, -$number);
 		}

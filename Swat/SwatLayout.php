@@ -30,7 +30,7 @@ class SwatLayout extends SwatObject
 	public function __get($name)
 	{
 		if (!isset($this->_properties[$name]))
-			throw new SwatException(__CLASS__.": There is no content available for '$name'.");
+			throw new SwatException("There is no content available for '$name'.");
 
 		return $this->_properties[$name];
 	}

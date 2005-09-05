@@ -69,9 +69,7 @@ class SwatHtmlTag extends SwatObject
 		if (isset($this->attributes[$attribute]))
 			return $this->attributes[$attribute];
 		else
-			throw new SwatException(sprintf(__CLASS__.': undefined '.
-				'attribute %s.',
-				$attribute));
+			throw new SwatException("Attribute '$attribute' is not set.");
 	}
 
 	/**

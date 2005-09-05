@@ -127,10 +127,7 @@ class SwatToolLink extends SwatControl
 			$this->class = 'swat-tool-link-Delete';
 			break;
 		default:
-			throw new SwatException(sprintf("%s: no stock type with the id ".
-				"of '%s' exists.",
-				__CLASS__,
-				$stock_id));
+			throw new SwatException("Stock type with id of '$stock_id' not found.");
 		}
 	}
 }

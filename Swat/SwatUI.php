@@ -94,8 +94,7 @@ class SwatUI extends SwatObject
 		}
 
 		if ($xmlfile === null)
-			throw new SwatException(sprintf(__CLASS__.
-				': XML file not found: %s', $filename));
+			throw new SwatException("SwatML file not found: '$filename'.");
 
 		$xml = simplexml_load_file($xmlfile);
 
@@ -126,8 +125,7 @@ class SwatUI extends SwatObject
 			if ($silent)
 				return null;
 			else
-				throw new SwatException(__CLASS__.
-					": no widget with an id of '{$id}'");
+				throw new SwatException("Widget with an id of '$id' not found.");
 	}
 
 	// }}}
@@ -264,24 +262,25 @@ class SwatUI extends SwatObject
 
 				// make sure id is unique
 				if (isset($this->widgets[$parsed_object->id]))
-					throw new SwatException(__CLASS__.
-						": widget with an id of '{$parsed_object->id}' ".
-						"already exists.");
+					throw new SwatException('A widget with an id of '.
+						"'{$parsed_object->id}' already exists.");
 
 			} elseif (!class_exists('SwatWidget') ||
 				!$parsed_object instanceof SwatWidget) {
 
-				throw new SwatException(__CLASS__.
-					': '.get_class($parsed_object).' is declared as a widget '.
-					'but is not an instance of SwatWidget.');
+				$class_name = get_class($parsed_object);
+
+				throw new SwatException("'$class_name' is declared as a widget ".
+					'but it is not an instance of SwatWidget.');
 			}
 		} elseif ($element_name == 'object') {
 			if (class_exists('SwatWidget') &&
 				$parsed_object instanceof SwatWidget) {
 
-				throw new SwatException(__CLASS__.
-					': '.get_class($parsed_object).' is declared as an object '.
-					'but is an instance of SwatWidget and should be '.
+				$class_name = get_class($parsed_object);
+
+				throw new SwatException("'$class_name' is declared as an object ".
+					'but it is an instance of SwatWidget and should be '.
 					'declared as a widget.');
 			}
 		}
@@ -300,12 +299,12 @@ class SwatUI extends SwatObject
 	 */
 	private function attachToParent($widget, $parent)
 	{
-		if ($parent instanceof SwatUIParent)
+		if ($parent instanceof SwatUIParent) {
 			$parent->addChild($widget);
-		else
-			throw new SwatException(__CLASS__.
-				': '.get_class($parent).' does not implement SwatUIParent.');
-
+		} else {
+			$class_name = get_class($parent);
+			throw new SwatException("'$class_name' does not implement SwatUIParent.");
+		}
 	}
 
 	// }}}
@@ -323,8 +322,7 @@ class SwatUI extends SwatObject
 		if (isset($node['class']))
 			$class = (string)$node['class'];
 		else
-			throw new SwatException(__CLASS__.
-				": widget or object element is missing 'class' attribute.");
+			throw new SwatException("Widget or object element is missing 'class' attribute.");
 
 		if (!class_exists($class)) {
 			$classfile = "Swat/{$class}.php";
@@ -362,15 +360,19 @@ class SwatUI extends SwatObject
 	{
 		$class_properties = get_class_vars(get_class($object));
 
-		if (!isset($property_node['name']))
-			throw new SwatException(sprintf(__CLASS__.
-				": property element missing 'name' attribute for class %s",
-				get_class($object)));
+		if (!isset($property_node['name'])) {
+			$class_name = get_class($object);
 
-		if (!isset($property_node['value']))
-			throw new SwatException(sprintf(__CLASS__.
-				": property element missing 'value' attribute for class %s",
-				get_class($object)));
+			throw new SwatException("Element 'property' missing attribute 'name' ".
+				"for widget/object '$class_name'.");
+		}
+
+		if (!isset($property_node['value'])) {
+			$class_name = get_class($object);
+
+			throw new SwatException("Element 'property' missing attribute 'value' ".
+				"for widget/object '$class_name'.");
+		}
 
 		$name = trim((string)$property_node['name']);
 		$value = (string)$property_node['value'];
@@ -382,10 +384,10 @@ class SwatUI extends SwatObject
 			$array_key = strlen($regs[2]) == 0 ? null : $regs[2];
 		}
 
-		if (!array_key_exists($name, $class_properties))
-			throw new SwatException(sprintf(__CLASS__.
-				": no property named '%s' in class %s",
-				$name, get_class($object)));
+		if (!array_key_exists($name, $class_properties)) {
+			$class_name = get_class($object);
+			throw new SwatException("Property '$name' does not exist in class '$class_name'.");
+		}
 
 		$translatable = (isset($property_node['translatable']) &&
 			strtolower((string)$property_node['translatable']) == 'yes');

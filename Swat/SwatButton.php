@@ -163,8 +163,7 @@ class SwatButton extends SwatControl
 			break;
 
 		default:
-			throw new SwatException(
-				"No stock option available with id '$stock_id'.");
+			throw new SwatException("Stock type with id of '$stock_id' not found.");
 		}
 	}
 }

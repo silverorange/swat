@@ -231,7 +231,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			return 'desc';
 
 		default:
-			throw new SwatException(__CLASS__.': unknown ordering.');
+			throw new SwatException("Ordering direction '$direction_id' not found.");
 		}
 	}
 

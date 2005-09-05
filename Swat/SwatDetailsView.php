@@ -79,7 +79,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 			if ($id == $field->id)
 				return $field;
 
-		throw new SwatException(__CLASS__.": no field with an id of '{$id}'");
+		throw new SwatException("Field with an id of '$id' not found.");
 	}
 
 	/**
@@ -111,11 +111,15 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 */
 	public function addChild($child)
 	{
-		if ($child instanceof SwatDetailsViewField)
+		if ($child instanceof SwatDetailsViewField) {
 			$this->appendField($child);
-		else
-			throw new SwatException(__CLASS__.': Only SwatDetailsViewField '.
-				'objects can be nested within SwatDetailsView objects.');
+		} else {
+			$class_name = get_class($child);
+
+			throw new SwatException("Unable to add '$class_name' object to ".
+				'SwatDetailsView. Only SwatDetailsViewField objects '.
+				'can be nested within SwatDetailsView objects.');
+		}
 	}
 
 	/**

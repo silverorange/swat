@@ -200,7 +200,7 @@ class SwatWizardForm extends SwatForm
 	public function setStateStore($state_store)
 	{
 		if (!$state_store instanceof SwatWizardStateStore)
-			throw new SwatException(__CLASS__.': The given state storage '.
+			throw new SwatException('The given state storage '.
 				'object is not a SwatWizardStateStore.');
 
 		$this->state_store = $state_store;
