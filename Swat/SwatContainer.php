@@ -24,6 +24,20 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	protected $children = array();
 
 	/**
+	 * Initializes this widget
+	 *
+	 * Every widget is initialized after being added to a parent and having 
+	 * properties set.
+	 */
+	public function init()
+	{
+		parent::init();
+
+		foreach($this->children as $child_widget)
+			$child_widget->init();
+	}
+
+	/**
 	 * Adds a widget
 	 * 
 	 * Adds a widget as a child of this container. The widget must not have
@@ -333,8 +347,8 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 			$this->add($child);
 		} else {
 			$class_name = get_class($child);
-			throw new SwatException(__CLASS__.': Only SwatWidgets can be '
-				."nested within SwatContainer. Trying to add {$class_name}");
+			throw new SwatException('Only SwatWidget objects can be '.
+				"nested within SwatContainer. Attempting to add '{$class_name}'.");
 		}
 	}
 

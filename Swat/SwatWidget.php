@@ -70,7 +70,6 @@ abstract class SwatWidget extends SwatObject
 	{
 		$this->id = $id;
 		$this->addStylesheet('swat/swat.css');
-		$this->init();
 	}
 
 	// }}}
@@ -123,7 +122,8 @@ abstract class SwatWidget extends SwatObject
 	/**
 	 * Initializes this widget
 	 *
-	 * Every widget is initialized in the widget constructor.
+	 * Every widget is initialized after being added to a parent and having 
+	 * properties set.
 	 */
 	public function init()
 	{
