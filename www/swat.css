@@ -1,34 +1,61 @@
 .swat-hidden { display: none; }
 
-.swat-tool-link { display: block; }
+.swat-tool-link {
+	padding: 0.5em;
+	background: #eee;
+	border: 1px solid #ccc;
+	font-weight: bold;
+	margin-right: 0.5em;
+
+}
 
 /* SwatMessages  */
 .swat-message-display-notification {
-	border: 1px solid #666;
+	border: 1px solid #f0dca1;
 	margin: 1em 0;
-	padding: 1em;
-	background: #fff;
+	padding: 1em 1em 1em 48px;
+	background: #fffbc9 url(images/generic-icon.png) top left no-repeat;
+	color: #7b4b09;
+}
+
+.swat-message-display-notification .swat-message-display-secondary-content {
+	color: #947140;
 }
 
 .swat-message-display-warning {
-	border: 1px solid #666;
+	border: 1px solid #facd00;
 	margin: 1em 0;
-	padding: 1em;
-	background: #ff9;
+	padding: 1em 1em 1em 48px;
+	background: #ff9 url(images/generic-icon.png) top left no-repeat;
+	color: #533a15;
+}
+
+.swat-message-display-warning .swat-message-display-secondary-content {
+	color: #947140;
 }
 
 .swat-message-display-error {
-	border: 1px solid #666;
+	border: 1px solid #dc6e66;
 	margin: 1em 0;
-	padding: 1em;
-	background: #f66;
+	padding: 1em 1em 1em 48px;
+	background: #ffb9a5 url(images/generic-icon.png) top left no-repeat;
+	color: #e31b0c;
+}
+
+.swat-message-display-error .swat-message-display-secondary-content {
+	color: #d44034;
 }
 
 .swat-message-display-system-error {
-	border: 1px solid #666;
+	border: 1px solid #dc6e66;
 	margin: 1em 0;
-	padding: 1em;
-	background: #f33;
+	padding: 1em 1em 1em 48px;
+	background: #f33 url(images/generic-icon.png) top left no-repeat;
+	color: #FFF;
+}
+
+.swat-message-display-system-error .swat-message-display-secondary-content {
+	color: #EEE;
 }
 
 .swat-message-display-primary-content {
@@ -36,23 +63,28 @@
 	font-weight: bold;
 }
 
+
 /* SwatFrame */
 
 .swat-frame {
-	border: 1px solid #ccc;
-	background: #fff;
 	margin: 1em 0;
+	border: 1px solid #ddd;
+	background: #fff url(images/swat-frame-background.png) top right no-repeat;
 }
 
-.swat-frame h2 {
-	margin: 0;
-	padding: 0.2em;
-	background: #eee;
+.swat-frame h2, .swat-frame h3 {
+	position: relative;
+	top: -0.7em;
+	display: inline;
+	margin: 0 10px;
+	padding: 0 6px;
+	color: #666;
+	background: #FFF;
 }
 
 .swat-frame-contents {
 	margin: 0;
-	padding: 1em;
+	padding: 0 16px 16px 16px;
 }
 
 .swat-frame-errormsg {
@@ -103,27 +135,32 @@ label.swat-control {
 	padding: 0.3em;
 }
 
-.swat-form textarea {
-	height: 15em;
-	width: 30em;
-}
-
-.swat-form-footer {
+.swat-form-footer-field {
 	text-align: right;
 }
 
-.swat-form-footer input.primary {
+.swat-form-footer-field input.primary {
 	padding: 0.2em 0.8em;
 	font-weight: bold;
 }
+
 .swat-disclosure-control {
-	background: #eee;
+}
+
+.swat-disclosure-anchor {
+	position: relative;
+	top: 0.7em;
+	display: inline;
+	margin: 0 10px;
+	padding: 0 6px;
+	color: #666;
+	background: #FFF;
 }
 
 .swat-disclosure-container-opened {
-	border: 2px solid #eee;
-	padding: 0.5em;
 	display: block;	
+	border: 1px solid #ddd;
+	padding: 16px;
 }
 
 .swat-disclosure-container-closed {
@@ -222,21 +259,25 @@ div.swat-order-control:hover {
 
 /* SwatTableView */
 
-table.swat-table-view { border-collapse: collapse; }
+table.swat-table-view {
+	border-collapse: collapse;
+	width: 100%;
+	margin-top: 1em;
+}
 
 .swat-table-view th, .swat-table-view td {
         padding: 0.2em;
 	text-align: left;
 }
-.swat-table-view tr.odd {
-        background: #F9F6F0;
+
+.swat-table-view tbody tr {
+	border-top: 1px solid #eee;
 }
-.swat-table-view tr.highlight {
-        background: #E9E6F0;
+
+.swat-table-view tbody tr.highlight, .swat-table-view tbody tr.highlight-odd {
+        background: #f7f5f3;
 }
-.swat-table-view tr.highlight-odd {
-        background: #E0DEF0;
-}
+
 .swat-table-view th {
 	color: #666;
 	font-size: 85%;
@@ -244,6 +285,14 @@ table.swat-table-view { border-collapse: collapse; }
 }
 .swat-table-view th a:link, .swat-table-view th a:visited { color: #333; }
 .swat-table-view th a:hover, .swat-table-view th a:active { color: #000; }
+
+.swat-table-view td.swat-control-cell-renderer {
+	width: 32px;
+}
+td.swat-table-view-group {
+	font-weight: bold;
+	padding-top: 1em;
+}
 
 td.swat-table-view-group {
 	font-weight: bold;
@@ -313,11 +362,18 @@ span.swat-time-span {
 .swat-actions {
 	text-align: right;
 }
+
+.swat-actions, .swat-form-footer-field {
+	background: #eee;
+	margin: 15px -15px -15px -15px;
+	padding: 1em;
+}
+
 .swat-actions label {
 	display: inline;
 }
 .swat-actions-note {
 	color: #666;
 	font-size: 85%;
-	padding-top: 0.5em;
+	padding-top: 10px;
 }
