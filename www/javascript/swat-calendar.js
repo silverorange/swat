@@ -117,7 +117,6 @@ SwatCalendar.today_text = 'Today';
  */
 SwatCalendar.prototype.setDateValues = function(year, month, day)
 {
-	alert(this.date);
 	if (this.date !== null) {
 		this.date.setYear(year);
 		this.date.setMonth(month);
