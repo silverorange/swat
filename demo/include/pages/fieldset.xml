@@ -1,7 +1,7 @@
 <?xml version='1.0' standalone='yes'?>
 <swat-interface>
 	<widget class="SwatFrame" id="my_frame">
-		<property name="title" value="Fieldset Example" />
+		<property name="title" value="Fieldset Demos" />
 		<widget class="SwatForm" id="my_form">
 
 			<widget class="SwatFieldset">
