@@ -143,41 +143,48 @@ class SwatButton extends SwatControl
 	 * - cancel
 	 *
 	 * @param string $stock_id the identifier of the stock type to use.
+	 * @param boolean $overwrite_properties whether to overwrite properties if
+	 *                                       they are already set.
 	 *
 	 * @throws SwatException
 	 */
-	public function setFromStock($stock_id)
+	public function setFromStock($stock_id, $overwrite_properties = true)
 	{
 		switch ($stock_id) {
 		case 'submit':
-			$this->class = 'swat-button-submit';
-			$this->title = Swat::_('Submit');
+			$title = Swat::_('Submit');
+			$class = 'swat-button-submit';
 			break;
 
 		case 'create':
-			$this->class = 'swat-button-create';
-			$this->title = Swat::_('Create');
+			$title = Swat::_('Create');
+			$class = 'swat-button-create';
 			break;
 
 		case 'apply':
-			$this->class = 'swat-button-apply';
-			$this->title = Swat::_('Apply');
+			$title = Swat::_('Apply');
+			$class = 'swat-button-apply';
 			break;
 
 		case 'delete':
-			$this->class = 'swat-button-delete';
-			$this->title = Swat::_('Delete');
+			$title = Swat::_('Delete');
+			$class = 'swat-button-delete';
 			break;
 
 		case 'cancel':
-			$this->class = 'swat-button-cancel';
-			$this->title = Swat::_('Cancel');
+			$title = Swat::_('Cancel');
+			$class = 'swat-button-cancel';
 			break;
 
 		default:
 			throw new SwatException("Stock type with id of '{$stock_id}' not ".
 				'found.');
 		}
+
+		if ($overwrite_properties || ($this->title === null))
+			$this->title = $title;
+
+		$this->class = $class;
 	}
 }
 

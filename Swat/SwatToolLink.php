@@ -72,7 +72,7 @@ class SwatToolLink extends SwatControl
 	public function init()
 	{
 		if ($this->stock_id !== null) 
-			$this->setFromStock($this->stock_id);
+			$this->setFromStock($this->stock_id, false);
 	}
 
 	/**
@@ -110,36 +110,43 @@ class SwatToolLink extends SwatControl
 	 * - preview
 	 *
 	 * @param string $stock_id the identifier of the stock type to use.
+	 * @param boolean $overwrite_properties whether to overwrite properties if
+	 *                                       they are already set.
 	 *
 	 * @throws SwatException
 	 */
-	public function setFromStock($stock_id)
+	public function setFromStock($stock_id, $overwrite_properties = true)
 	{
 		switch ($stock_id) {
 		case 'create':
-			$this->title = Swat::_('Create');
-			$this->class = 'swat-tool-link-create';
+			$title = Swat::_('Create');
+			$class = 'swat-tool-link-create';
 			break;
 
 		case 'edit':
-			$this->title = Swat::_('Edit');
-			$this->class = 'swat-tool-link-edit';
+			$title = Swat::_('Edit');
+			$class = 'swat-tool-link-edit';
 			break;
 
 		case 'delete':
-			$this->title = Swat::_('Delete');
-			$this->class = 'swat-tool-link-delete';
+			$title = Swat::_('Delete');
+			$class = 'swat-tool-link-delete';
 			break;
 
 		case 'preview':
-			$this->title = Swat::_('Preview');
-			$this->class = 'swat-tool-link-preview';
+			$title = Swat::_('Preview');
+			$class = 'swat-tool-link-preview';
 			break;
 
 		default:
 			throw new SwatException("Stock type with id of '{$stock_id}' not ".
 				'found.');
 		}
+		
+		if ($overwrite_properties || ($this->title === null))
+			$this->title = $title;
+
+		$this->class = $class;
 	}
 }
 
