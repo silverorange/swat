@@ -74,9 +74,9 @@
 }
 
 .swat-calendar-empty-cell {
-	background: #eee;
 	padding: 2px;
-	border: 1px solid #c0c0c0;
+	border: 1px #ccc solid;
+	background: url(../images/color-entry-null.png);
 }
 
 #swat-calendar-close-controls {
