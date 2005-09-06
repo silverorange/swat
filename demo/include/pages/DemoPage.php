@@ -77,7 +77,7 @@ class DemoPage extends SwatPage
 				file('../include/pages/'.strtolower($this->demo).'.xml'))));
 
 		ob_start();
-		$this->ui->display();
+		$this->ui->displayTidy();
 		$this->layout->ui = ob_get_clean();
 
 		ob_start();
