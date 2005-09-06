@@ -15,6 +15,26 @@ class FrontPage extends DemoPage
 {
 	public function init()
 	{
+		$this->start_time = microtime(true);
+
+		$this->demo = 'FrontPage';
+		
+		$this->ui = new SwatUI();
+		$this->ui->loadFromXML('../include/pages/'.strtolower($this->demo).'.xml');
+
+		$this->initUI();
+
+		$this->ui->init();
+
+		$this->navbar->createEntry($this->app->title);
+	}
+
+	public function initUI()
+	{
+		$content = $this->ui->getWidget('content');
+		$content->content = "Welcome to the Swat Widget Gallery. ".
+			"Here you will find a number of examples of the different widgets ".
+			"Swat provides.";
 	}
 
 	public function process()
@@ -23,23 +43,14 @@ class FrontPage extends DemoPage
 
 	public function build()
 	{
-		$this->layout->app_title = $this->app->title;
-
-		$this->layout->title = 'Swat Widget Gallery';
-
-		ob_start();
-		$this->menu = new DemoMenu();
-		$this->menu->display();
-		$this->layout->menu = ob_get_clean();
-
-		$this->layout->content = "Welcome to the Swat Widget Gallery. ".
-			"Here you will find a number of examples of the different widgets ".
-			"Swat provides.";
+		parent::build();
+		
+		$this->layout->title = $this->app->title;
 	}
 
 	protected function createLayout()
 	{
-		return new SwatLayout('../layouts/front.php');
+		return new SwatLayout('../layouts/no_source.php');
 	}
 }
 
