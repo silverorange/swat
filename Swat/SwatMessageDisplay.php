@@ -33,7 +33,7 @@ class SwatMessageDisplay extends SwatControl
 	 * @param mixed $msg either a {@link SwatMessage} object or a string to
 	 *                    add to this display.
 	 *
-	 * @see SwatMessage
+	 * @throws SwatException
 	 */
 	public function add($msg)
 	{
