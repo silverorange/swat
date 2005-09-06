@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatPage.php';
+require_once 'Swat/SwatNavBar.php';
 require_once 'Swat/SwatUI.php';
 require_once '../include/DemoMenu.php';
 
@@ -17,10 +18,19 @@ require_once '../include/DemoMenu.php';
 class DemoPage extends SwatPage
 {
 	protected $ui = null;
+	protected $navbar = null;
+
 	protected $start_time = 0;
 	
 	protected $demo;
 	
+	public function __construct($app)
+	{
+		parent::__construct($app);
+
+		$this->navbar = new SwatNavBar();
+	}
+
 	public function init()
 	{
 		$this->start_time = microtime(true);
@@ -37,6 +47,9 @@ class DemoPage extends SwatPage
 		$this->initUI();
 
 		$this->ui->init();
+
+		$this->navbar->createEntry($this->app->title, 'index.php');
+		$this->navbar->createEntry($this->demo);
 	}
 
 	/**
@@ -53,13 +66,11 @@ class DemoPage extends SwatPage
 
 	public function build()
 	{
+		$this->layout->title = $this->demo.' | '.$this->app->title;
+
 		ob_start();
 		$this->ui->getRoot()->displayHtmlHeadEntries();
 		$this->layout->html_head_entries = ob_get_clean();
-
-		$this->layout->app_title = $this->app->title;
-
-		$this->layout->title = $this->demo;
 		
 		$this->layout->source_code =
 			str_replace("\t", '    ', htmlspecialchars(implode('',
@@ -74,8 +85,11 @@ class DemoPage extends SwatPage
 		$this->menu->display();
 		$this->layout->menu = ob_get_clean();
 
-		$this->layout->base_href = 'index.php';
 		$this->layout->execution_time = round(microtime(true) - $this->start_time, 4);
+
+		ob_start();
+		$this->navbar->display();
+		$this->layout->navbar = ob_get_clean();
 	}
 }
 

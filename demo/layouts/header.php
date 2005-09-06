@@ -2,20 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<?=$this->html_head_entries?>
 	<style type="text/css" media="all">@import "example.css";</style>
-	<title><?=$this->title?> | <?=$this->app_title?></title>
+	<title><?=$this->title?></title>
 	<link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
 
 <body>
 <div id="header">
-	<h1><?=$this->title?></h1>
+	<h1><?=$this->navbar?></h1>
 </div>
 <div id="content">
-	<?=$this->content?>
-</div>
-<div id="menu">
-	<?=$this->menu?>
-</div>
-</body>
-</html>
