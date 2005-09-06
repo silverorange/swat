@@ -107,6 +107,7 @@ class SwatToolLink extends SwatControl
 	 * - create
 	 * - edit
 	 * - delete
+	 * - preview
 	 *
 	 * @param string $stock_id the identifier of the stock type to use.
 	 *
@@ -127,7 +128,12 @@ class SwatToolLink extends SwatControl
 
 		case 'delete':
 			$this->title = Swat::_('Delete');
-			$this->class = 'swat-tool-link-Delete';
+			$this->class = 'swat-tool-link-delete';
+			break;
+
+		case 'preview':
+			$this->title = Swat::_('Preview');
+			$this->class = 'swat-tool-link-preview';
 			break;
 
 		default:
