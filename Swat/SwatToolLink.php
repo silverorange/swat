@@ -53,7 +53,8 @@ class SwatToolLink extends SwatControl
 	/**
 	 * The stock id of this tool link
 	 *
-	 * Specifying a stock id initialized this tool link with a set of stock values.
+	 * Specifying a stock id initialized this tool link with a set of
+	 * stock values.
 	 *
 	 * @var string
 	 *
@@ -118,16 +119,20 @@ class SwatToolLink extends SwatControl
 			$this->title = Swat::_('Create');
 			$this->class = 'swat-tool-link-create';
 			break;
+
 		case 'edit':
 			$this->title = Swat::_('Edit');
 			$this->class = 'swat-tool-link-edit';
 			break;
-		case 'edit':
+
+		case 'delete':
 			$this->title = Swat::_('Delete');
 			$this->class = 'swat-tool-link-Delete';
 			break;
+
 		default:
-			throw new SwatException("Stock type with id of '$stock_id' not found.");
+			throw new SwatException("Stock type with id of '{$stock_id}' not ".
+				'found.');
 		}
 	}
 }
