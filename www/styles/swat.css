@@ -2,8 +2,8 @@
 
 .swat-tool-link {
 	padding: 0.5em;
-	background: #eee;
-	border: 1px solid #ccc;
+	background: #f9f6f0;
+	border: 1px solid #e7ddc8;
 	font-weight: bold;
 	margin-right: 0.5em;
 
@@ -68,7 +68,7 @@
 
 .swat-frame {
 	margin: 1em 0;
-	border: 1px solid #ddd;
+	border: 1px solid #e7ddc8;
 	background: #fff url(../images/swat-frame-background.png) top right no-repeat;
 }
 
@@ -78,7 +78,7 @@
 	display: inline;
 	margin: 0 10px;
 	padding: 0 6px;
-	color: #666;
+	color: #6b5d40;
 	background: #FFF;
 }
 
@@ -87,12 +87,6 @@
 	padding: 0 16px 16px 16px;
 }
 
-.swat-frame-errormsg {
-	font-color: #C00;
-	background: #FCC;
-	font-size: 85%;
-	padding: 0.3em;
-}
 
 /* SwatForm */
 
@@ -280,6 +274,8 @@ table.swat-table-view {
 
 .swat-table-view tbody tr.highlight, .swat-table-view tbody tr.highlight-odd {
         background: #f7f5f3;
+	border-top: 1px solid #e7ddc8;
+	border-bottom: 1px solid #e7ddc8;
 }
 
 .swat-table-view th {
@@ -368,7 +364,7 @@ span.swat-time-span {
 }
 
 .swat-actions, .swat-form-footer-field {
-	background: #eee;
+        background: #f7f5f3;
 	margin: 15px -15px -15px -15px;
 	padding: 1em;
 }
