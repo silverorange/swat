@@ -139,6 +139,8 @@ class SwatButton extends SwatControl
 	 * - submit
 	 * - create
 	 * - apply
+	 * - delete
+	 * - cancel
 	 *
 	 * @param string $stock_id the identifier of the stock type to use.
 	 *
@@ -162,8 +164,19 @@ class SwatButton extends SwatControl
 			$this->title = Swat::_('Apply');
 			break;
 
+		case 'delete':
+			$this->class = 'swat-button-delete';
+			$this->title = Swat::_('Delete');
+			break;
+
+		case 'cancel':
+			$this->class = 'swat-button-cancel';
+			$this->title = Swat::_('Cancel');
+			break;
+
 		default:
-			throw new SwatException("Stock type with id of '$stock_id' not found.");
+			throw new SwatException("Stock type with id of '{$stock_id}' not ".
+				'found.');
 		}
 	}
 }
