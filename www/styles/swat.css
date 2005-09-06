@@ -14,7 +14,7 @@
 	border: 1px solid #f0dca1;
 	margin: 1em 0;
 	padding: 1em 1em 1em 48px;
-	background: #fffbc9 url(images/generic-icon.png) top left no-repeat;
+	background: #fffbc9 url(../images/generic-icon.png) top left no-repeat;
 	color: #7b4b09;
 }
 
@@ -26,7 +26,7 @@
 	border: 1px solid #facd00;
 	margin: 1em 0;
 	padding: 1em 1em 1em 48px;
-	background: #ff9 url(images/generic-icon.png) top left no-repeat;
+	background: #ff9 url(../images/generic-icon.png) top left no-repeat;
 	color: #533a15;
 }
 
@@ -38,7 +38,7 @@
 	border: 1px solid #dc6e66;
 	margin: 1em 0;
 	padding: 1em 1em 1em 48px;
-	background: #ffb9a5 url(images/generic-icon.png) top left no-repeat;
+	background: #ffb9a5 url(../images/generic-icon.png) top left no-repeat;
 	color: #e31b0c;
 }
 
@@ -50,7 +50,7 @@
 	border: 1px solid #dc6e66;
 	margin: 1em 0;
 	padding: 1em 1em 1em 48px;
-	background: #f33 url(images/generic-icon.png) top left no-repeat;
+	background: #f33 url(../images/generic-icon.png) top left no-repeat;
 	color: #FFF;
 }
 
@@ -69,7 +69,7 @@
 .swat-frame {
 	margin: 1em 0;
 	border: 1px solid #ddd;
-	background: #fff url(images/swat-frame-background.png) top right no-repeat;
+	background: #fff url(../images/swat-frame-background.png) top right no-repeat;
 }
 
 .swat-frame h2, .swat-frame h3 {
