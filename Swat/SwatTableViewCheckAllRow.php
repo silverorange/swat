@@ -42,6 +42,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 
 				$check_all = new SwatCheckAll();
 				$check_all->controller = $column;
+				$check_all->init();
 
 				break;
 
