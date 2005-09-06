@@ -1,7 +1,7 @@
 <?xml version='1.0' standalone='yes'?>
 <swat-interface>
 	<widget class="SwatFrame" id="my_frame">
-		<property name="title" value="SwatFlydown and SwatTreeFlydown Examples" />
+		<property name="title" value="SwatFlydown Demos" />
 		<widget class="SwatForm" id="my_form">
 
 			<widget class="SwatFieldset">

@@ -1,7 +1,7 @@
 <?xml version='1.0' standalone='yes'?>
 <swat-interface>
 	<widget class="SwatFrame" id="my_frame">
-		<property name="title" value="SwatChangeOrder Example" />
+		<property name="title" value="SwatChangeOrder Demo" />
 		<widget class="SwatForm" id="my_form">
 
 			<widget class="SwatFormField">
