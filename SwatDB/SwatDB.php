@@ -297,7 +297,7 @@ class SwatDB
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function queryRow($db, $table, $fields, $id_field, $id)
+	public static function queryRowFromTable($db, $table, $fields, $id_field, $id)
 	{
 		SwatDB::initFields($fields);
 		$id_field = new SwatDBField($id_field, 'integer');
