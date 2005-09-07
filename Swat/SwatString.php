@@ -152,6 +152,61 @@ class SwatString
 	}
 
 	// }}}
+	// {{{ public static function condenseToName()
+	
+	/**
+	 * Condenses a string to a name
+	 *
+	 * The generated name can be used for things like databsae identifiers and
+	 * site URL fragments.
+	 *
+	 * example:
+	 * <code>
+	 * $string = 'The quick brown fox jumped over the lazy dogs.';
+	 * // displays 'thequickbrown'
+	 * echo SwatString::condenseToName($string);
+	 * </code>
+	 *
+	 * @param string $string the string to condense to a name.
+	 * @param integer $max_length the maximum length of the condensed name.
+	 *
+	 * @return string the string condensed into a name.
+	 */
+	public static function condenseToName($string, $max_length = 15)
+	{
+		if (strlen($string) == 0)
+			return $string;
+
+		// remove tags and make lowercase
+		$string = strip_tags(strtolower($string));
+
+		// remove html entities, convert non-alpha-numeric characters to spaces
+		// and condense whitespace
+		$search = array('/&#?\w+;/', '/[^a-z0-9 ]/', '/\s+/');
+		$replace = array('', ' ', ' ');
+
+		$string = preg_replace($search, $replace, $string);
+
+		$string_exp = explode(' ', $string);
+
+		// first word too long, so forced to chop it
+		if (strlen($string_exp[0]) >= $max_length)
+			return substr($string_exp[0], 0 , $max_length);
+
+		$string_out = '';
+
+		foreach ($string_exp as $word) {
+			// this word would push us over the limit
+			if (strlen($string_out) + strlen($word) > $max_length)
+				return $string_out;
+
+			$string_out .= $word;
+		}
+
+		return $string_out;
+	}
+
+	// }}}
 	// {{{ public static function ellipsizeRight()
 
 	/**
