@@ -51,6 +51,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 
 		$this->requires_id = true;
 
+		$this->addJavaScript('swat/javascript/swat-check-all.js');
 		$this->addJavaScript('swat/javascript/swat-checkbox-list.js');
 	}
 
@@ -101,9 +102,10 @@ class SwatCheckboxList extends SwatControl implements SwatState
 			$this->displayJavascript();
 
 			if (count($this->options) > 1) {
-				$chk_all = new SwatCheckAll();
-				$chk_all->controller = $this;
-				$chk_all->display();
+				$check_all = new SwatCheckAll();
+				$check_all->controller = $this;
+				$check_all->init();
+				$check_all->display();
 			}
 		}
 
