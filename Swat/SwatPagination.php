@@ -41,16 +41,6 @@ class SwatPagination extends SwatControl
 	public $current_page = 0;
 
 	/**
-	 * Current start
-	 *
-	 * The first record that should be displayed on this page. The value is
-	 * zero based.
-	 *
-	 * @var integer
-	 */
-	public $current_start = 0;
-
-	/**
 	 * Page size
 	 *
 	 * The number of records that are displayed per page.
@@ -72,8 +62,6 @@ class SwatPagination extends SwatControl
 	 * Current record
 	 *
 	 * The record that is currently being displayed first on the page.
-	 *
-	 * TODO: I'm not sure what the scope of this should be.
 	 *
 	 * @var integer
 	 */
