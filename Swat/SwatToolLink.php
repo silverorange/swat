@@ -53,7 +53,7 @@ class SwatToolLink extends SwatControl
 	/**
 	 * The stock id of this tool link
 	 *
-	 * Specifying a stock id initialized this tool link with a set of
+	 * Specifying a stock id initializes this tool link with a set of
 	 * stock values.
 	 *
 	 * @var string
@@ -90,7 +90,7 @@ class SwatToolLink extends SwatControl
 		else
 			$anchor_tag->href = sprintf($this->link, $this->value);
 
-		if ($this->class !== null)
+		if ($this->class === null)
 			$anchor_tag->class = 'swat-tool-link';
 		else 
 			$anchor_tag->class = 'swat-tool-link '.$this->class;
@@ -108,6 +108,7 @@ class SwatToolLink extends SwatControl
 	 * - edit
 	 * - delete
 	 * - preview
+	 * - change-order
 	 *
 	 * @param string $stock_id the identifier of the stock type to use.
 	 * @param boolean $overwrite_properties whether to overwrite properties if
@@ -136,6 +137,11 @@ class SwatToolLink extends SwatControl
 		case 'preview':
 			$title = Swat::_('Preview');
 			$class = 'swat-tool-link-preview';
+			break;
+
+		case 'change-order':
+			$title = Swat::_('Change Order');
+			$class = 'swat-tool-link-order';
 			break;
 
 		default:
