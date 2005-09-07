@@ -4,6 +4,7 @@
 require_once 'MDB2.php';
 require_once 'SwatDB/SwatDBField.php';
 require_once 'SwatDB/SwatDBException.php';
+require_once 'SwatDB/SwatDBDefaultRecordsetWrapper.php';
 require_once 'Swat/SwatTreeNode.php';
 
 /**
@@ -33,7 +34,8 @@ class SwatDB
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function query($db, $sql, $wrapper = null, $types = null)
+	public static function query($db, $sql, 
+		$wrapper = 'SwatDBDefaultRecordsetWrapper', $types = null)
 	{
 		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
 		SwatDB::debug($sql);
@@ -314,7 +316,7 @@ class SwatDB
 		// XXX: since we're using a patched MDB2 that discovers types automatically
 		//      from the recordset, I don't think we need this:
 		//$rs = SwatDB::query($db, $sql, null, SwatDB::getFieldTypeArray($fields));
-		$rs = SwatDB::query($db, $sql);
+		$rs = SwatDB::query($db, $sql, null);
 
 		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
 		return $row;
@@ -675,7 +677,7 @@ class SwatDB
 		// XXX: since we're using a patched MDB2 that discovers types automatically
 		//      from the recordset, I don't think we need this:
 		//$rs = SwatDB::query($db, $sql, array($id_field->type, $title_field->type));
-		$rs = SwatDB::query($db, $sql);
+		$rs = SwatDB::query($db, $sql, null);
 		
 		$options = array();
 
@@ -756,7 +758,7 @@ class SwatDB
 		//      from the recordset, I don't think we need this:
 		//$rs = SwatDB::query($db, $sql, array($id_field->type, $title_field->type,
 		//	$cascade_field->type));
-		$rs = SwatDB::query($db, $sql);
+		$rs = SwatDB::query($db, $sql, null);
 
 		$options = array();
 		$current = null;
@@ -861,7 +863,7 @@ class SwatDB
 			$sql .= ' order by '.$order_by_clause;
 		
 		SwatDB::debug($sql);
-		$rs = SwatDB::query($db, $sql);
+		$rs = SwatDB::query($db, $sql, null);
 
 		$options = array();
 
@@ -970,7 +972,7 @@ class SwatDB
 		// XXX: since we're using a patched MDB2 that discovers types automatically
 		//      from the recordset, I don't think we need this:
 		//$rs = SwatDB::query($db, $sql, array($field->type));
-		$rs = SwatDB::query($db, $sql);
+		$rs = SwatDB::query($db, $sql, null);
 		
 		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
 		$field_name = $field->name;
