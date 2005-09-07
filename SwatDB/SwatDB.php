@@ -189,6 +189,33 @@ class SwatDB
 	}
 
 	// }}}
+	// {{{ public static function queryRow()
+
+	/**
+	 * Query a single row
+	 *
+ 	 * Convenience method to query for a single row from a database table.
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 * @param string $sql The SQL to execute.
+	 * @param array $types Optional array of MDB2 datatypes for the result.
+	 *
+	 * @return Object A row object.
+	 *
+	 * @throws SwatDBException
+	 */
+	public static function queryRow($db, $sql, $types = null)
+	{
+		SwatDB::debug($sql);
+		$row = $db->queryRow($sql, $types, MDB2_FETCHMODE_OBJECT);
+
+		if (MDB2::isError($row))
+			throw new SwatDBException($row);
+
+		return $row;
+	}
+
+	// }}}
 	// {{{ public static function queryOneFromTable()
 
 	/**
@@ -239,6 +266,58 @@ class SwatDB
 			throw new SwatDBException($value);
 
 		return $value;
+	}
+
+	// }}}
+	// {{{ public static function queryRowFromTable()
+
+	/**
+	 * Query a single row from a specified table and column
+	 *
+ 	 * Convenience method to query for a single row from a database table.
+	 * One convenient use of this method is for loading data on an edit page.
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 *
+	 * @param string $table The database table to query.
+	 *
+	 * @param array $fields An array of fields to be queried. Can be 
+	 *        given in the form type:name where type is a standard MDB2 
+	 *        datatype. If type is ommitted, then text is assummed.
+	 *
+	 * @param string $id_field The name of the database field that contains the
+	 *        the id. Can be given in the form type:name where type is a
+	 *        standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        assummed for this field.
+	 *
+	 * @param mixed $id The value to look for in the id field column. The 
+	 *        type should correspond to the type of $field.
+	 *
+	 * @return Object A row object.
+	 *
+	 * @throws SwatDBException
+	 */
+	public static function queryRow($db, $table, $fields, $id_field, $id)
+	{
+		SwatDB::initFields($fields);
+		$id_field = new SwatDBField($id_field, 'integer');
+		$sql = 'select %s from %s where %s = %s';
+		$field_list = implode(',', SwatDB::getFieldNameArray($fields));
+
+		$sql = sprintf($sql,
+			$field_list,
+			$table,
+			$id_field->name,
+			$db->quote($id, $id_field->type));
+
+		SwatDB::debug($sql);
+		// XXX: since we're using a patched MDB2 that discovers types automatically
+		//      from the recordset, I don't think we need this:
+		//$rs = SwatDB::query($db, $sql, null, SwatDB::getFieldTypeArray($fields));
+		$rs = SwatDB::query($db, $sql);
+
+		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
+		return $row;
 	}
 
 	// }}}
@@ -407,58 +486,6 @@ class SwatDB
 		
 		$db->commit();
 
-	}
-
-	// }}}
-	// {{{ public static function queryRow()
-
-	/**
-	 * Query a single row
-	 *
- 	 * Convenience method to query for a single row from a database table.
-	 * One convenient use of this method is for loading data on an edit page.
-	 *
-	 * @param MDB2_Driver_Common $db The database connection.
-	 *
-	 * @param string $table The database table to query.
-	 *
-	 * @param array $fields An array of fields to be queried. Can be 
-	 *        given in the form type:name where type is a standard MDB2 
-	 *        datatype. If type is ommitted, then text is assummed.
-	 *
-	 * @param string $id_field The name of the database field that contains the
-	 *        the id. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then integer is 
-	 *        assummed for this field.
-	 *
-	 * @param mixed $id The value to look for in the id field column. The 
-	 *        type should correspond to the type of $field.
-	 *
-	 * @return Object A row object.
-	 *
-	 * @throws SwatDBException
-	 */
-	public static function queryRow($db, $table, $fields, $id_field, $id)
-	{
-		SwatDB::initFields($fields);
-		$id_field = new SwatDBField($id_field, 'integer');
-		$sql = 'select %s from %s where %s = %s';
-		$field_list = implode(',', SwatDB::getFieldNameArray($fields));
-
-		$sql = sprintf($sql,
-			$field_list,
-			$table,
-			$id_field->name,
-			$db->quote($id, $id_field->type));
-
-		SwatDB::debug($sql);
-		// XXX: since we're using a patched MDB2 that discovers types automatically
-		//      from the recordset, I don't think we need this:
-		//$rs = SwatDB::query($db, $sql, null, SwatDB::getFieldTypeArray($fields));
-		$rs = SwatDB::query($db, $sql);
-
-		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
-		return $row;
 	}
 
 	// }}}
