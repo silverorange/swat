@@ -78,6 +78,7 @@ class SwatEntry extends SwatControl implements SwatState
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = $this->html_input_type;
 		$input_tag->name = $this->id;
+		$input_tag->class = 'swat-entry';
 		$input_tag->id = $this->id;
 		$input_tag->onfocus = 'this.select();';
 
