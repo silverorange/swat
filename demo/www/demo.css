@@ -3,6 +3,7 @@ body {
 	margin: 0;
 	padding: 0;
 	font-size: 13px;
+	color: #333;
 }
 
 #menu {
@@ -14,9 +15,14 @@ body {
 }
 
 #menu ul {
-	list-style: disc;
+	list-style: circle;
 	margin: 0;
 	padding : 1em;
+	color: #999;
+}
+
+#menu ul li {
+	margin-bottom: 0.3em;
 }
 
 #content {
@@ -26,10 +32,10 @@ body {
 }
 
 #header {
-	background: #6589b4;
+	background: #426c9e;
 	padding: 0.5em 1em;
 	color: #fff;
-	border-bottom: 3px #d2dae4 solid;
+	border-bottom: 3px #81aed5 solid;
 }
 
 #header h1 {
