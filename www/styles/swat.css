@@ -9,6 +9,20 @@
 
 }
 
+/* SwatEntry */
+
+.swat-entry {
+	padding: 3px;
+}
+
+
+/* SwatTextarea */
+
+.swat-textarea {
+	padding: 4px;
+}
+
+
 /* SwatMessages  */
 .swat-message-display-notification {
 	border: 1px solid #f0dca1;
@@ -170,7 +184,7 @@ label.swat-control {
 }
 
 .swat-order-control {
-	border:1px solid #CCC;
+	border: 1px solid #CCC;
 	background: #FFF;
 	margin: 1px;
 	padding: 2px;
