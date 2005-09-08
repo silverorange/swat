@@ -60,6 +60,7 @@ class SwatTextarea extends SwatControl implements SwatState
 		$textarea_tag = new SwatHtmlTag('textarea');
 		$textarea_tag->name = $this->id;
 		$textarea_tag->id = $this->id;
+		$textarea_tag->class = 'swat-textarea';
 		// NOTE: The attributes rows and cols are required in
 		//       a textarea for XHTML strict.
 		$textarea_tag->rows = $this->rows;
