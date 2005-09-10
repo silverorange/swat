@@ -3,8 +3,7 @@
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatUIParent.php';
-
-//TODO: finish documentation for public functions
+require_once 'Swat/SwatCellRendererSet.php';
 
 /**
  * A visible column in a SwatTableView
@@ -47,57 +46,81 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 	 */
 	public $visible = true;
 
-	protected $renderers = array();
+	/**
+	 * A set of SwatCellRenderer objects
+	 *
+	 * This object contains all the cell renderers for this column.
+	 *
+	 * @var SwatCellRendererSet
+	 */
+	protected $renderers = null;
 
+	/**
+	 * Creates a new table-view column
+	 *
+	 * @param string $id an optional unique id identitying this column in the
+	 *                    table view.
+	 */
 	public function __construct($id = null)
 	{
 		$this->id = $id;
-	}
-
-	public function linkField($renderer, $model_field, $renderer_property)
-	{
-		if (!isset($renderer->_property_map) || !is_array($renderer->_property_map))
-			$renderer->_property_map = array();
-
-		$renderer->_property_map[$renderer_property] = $model_field;
-	}
-
-	public function addRenderer(SwatCellRenderer $renderer)
-	{
-		$this->renderers[] = $renderer;
-		$renderer->parent = $this;
-
-		if (!isset($renderer->_property_map) || !is_array($renderer->_property_map))
-			$renderer->_property_map = array();
+		$this->renderers = new SwatCellRendererSet();
 	}
 
 	/**
-	 * Get Renderers
-	 * 
-	 * Returns an the array of {@link SwatCellRenderer}s linked to this column.
+	 * Links a datafield to a renderer property
 	 *
-	 * @return array Array of {@link SwatCellRenderer}s
+	 * @param SwatCellRenderer $renderer the cell renderer to link the
+	 *                                    property of.
+	 * @param string $datafield the field of the data model to link.
+	 * @param string $property the property of the cell renderer to link the
+	 *                          datafield to.
+	 */
+	public function linkField($renderer, $datafield, $property)
+	{
+		$this->renderers->addMappingToRenderer($renderer,
+			$datafield, $property);
+	}
+
+	/**
+	 * Adds a cell renderer to this column's set of renderers
+	 *
+	 * @param SwatCellRenderer $renderer the renderer to add.
+	 */
+	public function addRenderer(SwatCellRenderer $renderer)
+	{
+		$renderer->parent = $this;
+		$this->renderers->addRenderer($renderer);
+	}
+
+	/**
+	 * Gets the cell renderers of this column
+	 * 
+	 * Returns an the array of {@link SwatCellRenderer} objects contained
+	 * by this column.
+	 *
+	 * @return array the cell renderers contained by this column.
 	 */
 	public function getRenderers()
 	{
-		return $this->renderers;
+		$out = array();
+		foreach ($this->renderers as $renderer)
+			$out[] = $renderer;
+
+		return $out;
 	}
 
 	/**
-	 * Get Renderer
-	 * 
-	 * Returns a reference to a {@link SwatCellRenderer} at ordinal position $position.
+	 * Gets a cell renderer in this column based on its ordinal position
 	 *
-	 * @param $position Ordinal position in the array of the {@link SwatCellRenderer},
-	 *        zero-based, default 0.
-	 * @return SwatCellRenderer The renderer at ordinal position $position.
+	 * @param $position the ordinal position of the cell renderer to get. The
+	 *                   position is zero-based.
+	 *
+	 * @return SwatCellRenderer the renderer at the specified ordinal position.
 	 */
-	public function getRenderer($position = 0)
+	public function getRendererByPosition($position = 0)
 	{
-		if (isset($this->renderers[$position]))
-			return $this->renderers[$position];
-		else
-			throw new SwatException("Invalid ordinal position $position.");
+		return $this->renderers->getRendererByPosition($position);
 	}
 
 	public function init()
@@ -108,42 +131,54 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 	{
 	}
 
+	/**
+	 * Displays the table-view header cell for this column
+	 */
 	public function displayHeaderCell()
 	{
-		reset($this->renderers);
-		$first_renderer = current($this->renderers);
+		$first_renderer = $this->renderers->getFirst();
 		$th_tag = new SwatHtmlTag('th', $first_renderer->getThAttributes());
 		$th_tag->open();
 		$this->displayHeader();
 		$th_tag->close();
 	}
 
+	/**
+	 * Displays the contents of the header cell for this column
+	 */
 	public function displayHeader()
 	{
 		echo $this->title;
 	}
 
+	/**
+	 * Displays this column using a data object
+	 *
+	 * @param mixed $row a data object used to display the cell renderers in
+	 *                    this column.
+	 */
 	public function display($row)
 	{
 		if (!$this->visible)
 			return;
 
-		if (count($this->renderers) == 0)
-			throw new SwatException('No renderer has been provided.');
+		if ($this->renderers->getCount() == 0)
+			throw new SwatException('No renderer has been provided for this '.
+				'column.');
 
-		// set the properties of the renderers
+		// Set the properties of the renderers to the value of the data field.
 		foreach ($this->renderers as $renderer)
-			foreach ($renderer->_property_map as $property => $field)
-				$renderer->$property = $row->$field;
+			$this->renderers->applyMappingsToRenderer($renderer, $row);
 
 		$this->displayRenderers($row);
 	}
 
 	/**
-	 * Display Javascript
+	 * Displays JavaScript required by this column
 	 * 
-	 * Optionally output a javascript object representing the
-	 * {@link SwatTableViewColumn}. Outputs after the table has displayed.
+	 * Optionally output a JavaScript object representing the
+	 * {@link SwatTableViewColumn}. JavaScript is displayed after the table
+	 * has been displayed.
 	 */
 	public function displayJavascript()
 	{
@@ -167,10 +202,18 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 				'can be nested within SwatTableViewColumn objects.');
 	}
 
+	/**
+	 * Renders each cell renderer in this table-view column
+	 *
+	 * The properties of the cell renderers are set the the fields of the
+	 * data object through the datafield property mappings.
+	 *
+	 * @param mixed $row the data object to render with the cell renderers
+	 *                    of this field.
+	 */
 	protected function displayRenderers($row)
 	{
-		reset($this->renderers);
-		$first_renderer = current($this->renderers);
+		$first_renderer = $this->renderers->getFirst();
 		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
 		$td_tag->open();
 
