@@ -21,6 +21,13 @@ abstract class SwatCellRenderer extends SwatObject
 	public $parent = null;
 
 	/**
+	 * A non-visible unique id for this cell renderer, or null
+	 *
+	 * @var string
+	 */
+	public $id = null;
+
+	/**
 	 * Renders this cell
 	 *
 	 * Renders this cell using the values currently stored in class variables.

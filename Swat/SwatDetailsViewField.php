@@ -3,6 +3,7 @@
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatUIParent.php';
+require_once 'Swat/SwatCellRendererSet.php';
 
 /**
  * A visible field in a SwatDetailsView
@@ -35,12 +36,22 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	public $view = null;
 
 	/**
-	 * An array of renderers for this field of the form:
-	 *    [$id] => array('renderer' => $renderer, 'property_map' => array())
+	 * Visible
 	 *
-	 * @var array
+	 * Whether the field is displayed.
+	 *
+	 * @var boolean
 	 */
-	protected $renderers = array();
+	public $visible = true;
+
+	/**
+	 * A set of SwatCellRenderer objects
+	 *
+	 * This object contains all the cell renderers for this column.
+	 *
+	 * @var SwatCellRendererSet
+	 */
+	protected $renderers = null;
 
 	/**
 	 * Creates a new details view field
@@ -51,6 +62,8 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	public function __construct($id = null)
 	{
 		$this->id = $id;
+
+		$this->renderers = new SwatCellRendererSet();
 	}
 
 	/**
@@ -65,57 +78,77 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	 *
 	 * @throws SwatException
 	 */
-	public function linkField($renderer, $field, $property)
+	public function linkField($renderer, $model_field, $renderer_property)
 	{
-		if (isset($this->renderers[$renderer->id]))
-			$this->renderers[$renderer->id]['property_map'][$property] =
-				$field;
-		else
-			throw new SwatException("No renderer with an id of '{$renderer->id}'".
-				" exists in this details view field.");
+		$this->renderers->addMappingToRenderer($renderer,
+			$model_field, $renderer_property);
 	}
 
 	/**
-	 * Adds a cell renderer to this field
+	 * Adds a cell renderer to this field's set of renderers
 	 *
-	 * @param SwatCellRenderer $renderer a reference to the renderer to add.
-	 *
-	 * @throws SwatException
+	 * @param SwatCellRenderer $renderer the renderer to add.
 	 */
 	public function addRenderer(SwatCellRenderer $renderer)
 	{
-		if ($renderer->id !== null)
-			$this->renderers[$renderer->id] = array('renderer' => $renderer,
-				'property_map' => array());
-		else
-			throw new SwatException('Cannot add a cell renderer without an id.');
-
 		$renderer->parent = $this;
+		$this->renderers->addRenderer($renderer);
 	}
 
 	/**
-	 * Get Renderer
+	 * Gets a cell renderers of this field by its unique identifier
+	 *
+	 * @param string the unique identifier of the cell renderer to get.
 	 * 
-	 * Returns a reference to a {@link SwatCellRenderer}.
-	 *
-	 * @param $id The id of the {@link SwatCellRenderer}
-	 * @return SwatCellRenderer The renderer with id = $id.
+	 * @return SwatCellRenderer the cell renderer of this field with the
+	 *                           provided unique identifier.
 	 */
-	public function getRenderer($id)
+	public function getRenderer($renderer_id)
 	{
-		if (isset($this->renderers[$id])) {
-			return $this->renderers[$id];
-		} else
-			throw new SwatException("No renderer with an id of '$id' found.");
+		return $this->renderers->getRenderer($renderer_id);
 	}
 
 	/**
-	 * Displays this details view field
+	 * Gets the cell renderers of this field
+	 * 
+	 * Returns an the array of {@link SwatCellRenderer} objects contained
+	 * by this field.
 	 *
-	 * @param Object $data the data object to display in this field.
+	 * @return array the cell renderers contained by this field.
+	 */
+	public function getRenderers()
+	{
+		$out = array();
+		foreach ($this->renderers as $renderer)
+			$out[] = $renderer;
+
+		return $out;
+	}
+
+	/**
+	 * Gets a cell renderer in this field based on its ordinal position
+	 *
+	 * @param $position the ordinal position of the cell renderer to get. The
+	 *                   position is zero-based.
+	 *
+	 * @return SwatCellRenderer the renderer at the specified ordinal position.
+	 */
+	public function getRendererByPosition($position = 0)
+	{
+		return $this->renderers->getRendererByPosition($position);
+	}
+
+	/**
+	 * Displays this details view field using a data object
+	 *
+	 * @param mixedt $data a data object used to display the cell renderers in
+	 *                      this field.
 	 */
 	public function display($data)
 	{
+		if (!$this->visible)
+			return;
+
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->open();
 		$this->displayHeader();
@@ -135,44 +168,21 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	}
 
 	/**
-	 * Displays the value for this details view field
+	 * Displays the value of this details view field
 	 *
-	 * @param Object $data the data object to display in this field.
+	 * @param mixed $data the data object to display in this field.
 	 */
 	public function displayValue($data)
 	{
-		if (count($this->renderers) == 0)
-			throw new SwatException('No renderer has been provided for this field.');
+		if ($this->renderers->getCount() == 0)
+			throw new SwatException('No renderer has been provided for this '.
+				'field.');
 
 		// Set the properties of the renderers to the value of the data field.
-		foreach ($this->renderers as $renderer_id => $field_renderer)
-			foreach ($field_renderer['property_map'] as $property => $field)
-				$field_renderer['renderer']->$property = $data->$field;
+		foreach ($this->renderers as $renderer)
+			$this->renderers->applyMappingsToRenderer($renderer, $data);
 
 		$this->displayRenderers($data);
-	}
-
-	/**
-	 * Renders each cell renderer in this details view field
-	 *
-	 * @param Object $data the data object to render with the cell renderers
-	 *                      in this field.
-	 */
-	protected function displayRenderers($data)
-	{
-		reset($this->renderers);
-		$first_field_renderer = current($this->renderers);
-		$first->renderer = $first_field_renderer['renderer'];
-		$td_tag = new SwatHtmlTag('td', $first->renderer->getTdAttributes());
-		$td_tag->open();
-
-		foreach ($this->renderers as $id => $field_renderer) {
-			$renderer = $field_renderer['renderer'];
-			$renderer->render();
-			echo ' ';
-		}
-
-		$td_tag->close();
 	}
 
 	/**
@@ -191,6 +201,29 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 		else
 			throw new SwatException('Only SwatCellRender objects '.
 				'can be nested within SwatDetailsViewField objects.');
+	}
+
+	/**
+	 * Renders each cell renderer in this details-view field
+	 *
+	 * The properties of the cell renderers are set the the fields of the
+	 * data object through the datafield property mappings.
+	 *
+	 * @param mixed $data the data object to render with the cell renderers
+	 *                     of this field.
+	 */
+	protected function displayRenderers($data)
+	{
+		$first_renderer = $this->renderers->getFirst();
+		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
+		$td_tag->open();
+
+		foreach ($this->renderers as $renderer) {
+			$renderer->render();
+			echo ' ';
+		}
+
+		$td_tag->close();
 	}
 }
 

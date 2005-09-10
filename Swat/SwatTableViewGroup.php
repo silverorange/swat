@@ -50,8 +50,8 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	 * group_by field changes and the renderers are displayed on their own
 	 * separate table row.
 	 *
-	 * @param Object $row a data object containing the data for a single row
-	 *                     in the table store for this group.
+	 * @param mixed $row a data object containing the data for a single row
+	 *                    in the table store for this group.
 	 *
 	 * @throws SwatException
 	 */
@@ -72,7 +72,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->open();
 
-		$first_renderer = reset($this->renderers);
+		$first_renderer = $this->renderers->getFirst();
 		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
 		$td_tag->colspan = $this->view->getColumnCount();
 		$td_tag->class = 'swat-table-view-group';
