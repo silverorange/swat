@@ -367,15 +367,8 @@ class SwatUI extends SwatObject
 				"for widget/object '$class_name'.");
 		}
 
-		if (!isset($property_node['value'])) {
-			$class_name = get_class($object);
-
-			throw new SwatException("Element 'property' missing attribute 'value' ".
-				"for widget/object '$class_name'.");
-		}
-
 		$name = trim((string)$property_node['name']);
-		$value = (string)$property_node['value'];
+		$value = (string)$property_node;
 		$array_property = false;
 
 		if (ereg('^(.*)\[(.*)\]$', $name, $regs)) {
