@@ -1,22 +1,22 @@
 <?xml version='1.0' standalone='yes'?>
 <swat-interface>
 	<widget class="SwatFrame" id="my_frame">
-		<property name="title" value="SwatToolLink Demos" />
+		<property name="title">SwatToolLink Demos</property>
 		<widget class="SwatForm" id="my_form">
 
 			<widget class="SwatToolLink">
-				<property name="title" value="Add" />
-				<property name="link" value="#" />
+				<property name="title">Add</property>
+				<property name="link">#</property>
 			</widget>
 
 			<widget class="SwatToolLink">
-				<property name="title" value="Remove" />
-				<property name="link" value="#" />
+				<property name="title">Remove</property>
+				<property name="link">#</property>
 			</widget>
 
 			<widget class="SwatToolLink">
-				<property name="title" value="Edit" />
-				<property name="link" value="#" />
+				<property name="title">Edit</property>
+				<property name="link">#</property>
 			</widget>
 
 		</widget>
