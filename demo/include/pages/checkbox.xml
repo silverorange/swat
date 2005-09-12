@@ -1,19 +1,19 @@
 <?xml version='1.0' standalone='yes'?>
 <swat-interface>
 	<widget class="SwatFrame" id="my_frame">
-		<property name="title" value="SwatCheckbox Demos" />
+		<property name="title">SwatCheckbox Demos</property>
 		<widget class="SwatForm" id="my_form">
 
 			<widget class="SwatFieldset">
-				<property name="title" value="Individual Checkboxes" />
+				<property name="title">Individual Checkboxes</property>
 
 				<widget class="SwatFormField">
-					<property name="title" value="Check 1" />
+					<property name="title">Check 1</property>
 					<widget class="SwatCheckbox" id="check1">
 					</widget>
 				</widget>
 				<widget class="SwatFormField">
-					<property name="title" value="Check 2" />
+					<property name="title">Check 2</property>
 					<widget class="SwatCheckbox" id="check2">
 					</widget>
 				</widget>
@@ -21,20 +21,20 @@
 			</widget>
 			
 			<widget class="SwatFieldset">
-				<property name="title" value="Checkbox List" />
+				<property name="title">Checkbox List</property>
 
 				<widget class="SwatCheckboxList" id="checkbox_list">
-					<property name="options[0]" value="Apple" />
-					<property name="options[1]" value="Orange" />
-					<property name="options[2]" value="Banana" />
-					<property name="options[3]" value="Pear" />
-					<property name="options[4]" value="Pineapple" />
-					<property name="options[5]" value="Kiwi" />
+					<property name="options[0]">Apple</property>
+					<property name="options[1]">Orange</property>
+					<property name="options[2]">Banana</property>
+					<property name="options[3]">Pear</property>
+					<property name="options[4]">Pineapple</property>
+					<property name="options[5]">Kiwi</property>
 				</widget>
 				
 			</widget>
 			<widget class="SwatFieldset">
-				<property name="title" value="Checkbox Tree" />
+				<property name="title">Checkbox Tree</property>
 
 				<widget class="SwatCheckboxTree" id="checkbox_tree">
 				</widget>

@@ -1,55 +1,55 @@
 <?xml version='1.0' standalone='yes'?>
 <swat-interface>
 	<widget class="SwatFrame" id="my_frame">
-		<property name="title" value="SwatEntry Demos" />
+		<property name="title">SwatEntry Demos</property>
 		<widget class="SwatForm" id="my_form">
-			<property name="action" value="index.php?demo=Entry" />
+			<property name="action">index.php?demo=Entry</property>
 
 			<widget class="SwatFormField">
-				<property name="title" value="Entry" type="string" />
+				<property name="title" type="string">Entry</property>
 				<widget class="SwatEntry" id="entry">
-					<property name="required" value="true" type="boolean" />
+					<property name="required" type="boolean">true</property>
 				</widget>
 			</widget>
 
 			<widget class="SwatFormField">
-				<property name="title" value="Email Entry" type="string" />
+				<property name="title" type="string">Email Entry</property>
 				<widget class="SwatEmailEntry" id="email">
-					<property name="value" value="test@example.com" type="string" />
+					<property name="value" type="string">test@example.com</property>
 				</widget>
 			</widget>
 
 			<widget class="SwatFormField">
-				<property name="title" value="Integer Entry" type="string" />
+				<property name="title" type="string">Integer Entry</property>
 				<widget class="SwatIntegerEntry" id="integer" />
 			</widget>
 
 			<widget class="SwatFormField">
-				<property name="title" value="Float Entry" type="string" />
+				<property name="title" type="string">Float Entry</property>
 				<widget class="SwatFloatEntry" id="float" />
 			</widget>
 
 			<widget class="SwatFormField">
-				<property name="title" value="Money Entry (CAD)" type="string" />
+				<property name="title" type="string">Money Entry (CAD)</property>
 				<widget class="SwatMoneyEntry" id="money_CA">
-					<property name="value" value="1234567.89" type="float" />
-					<property name="locale" value="en_CA" />
+					<property name="value" type="float">1234567.89</property>
+					<property name="locale">en_CA</property>
 					<property name="display_currency" value="true" type="boolean" />	
 				</widget>
 			</widget>
 
 			<widget class="SwatFormField">
-				<property name="title" value="Money Entry (French EUR)" type="string" />
+				<property name="title" type="string">Money Entry (French EUR)</property>
 				<widget class="SwatMoneyEntry" id="money_FR">
-					<property name="value" value="1234567.89" type="float" />
-					<property name="locale" value="fr_FR.utf8" />
+					<property name="value" type="float">1234567.89</property>
+					<property name="locale">fr_FR.utf8</property>
 					<property name="display_currency" value="true" type="boolean" />	
 				</widget>
 			</widget>
 
 			<widget class="SwatFormFooterField">
 				<widget class="SwatButton">
-					<property name="title" value="Validate" type="string" />
+					<property name="title" type="string">Validate</property>
 				</widget>
 			</widget>
 		</widget>

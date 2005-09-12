@@ -1,26 +1,26 @@
 <?xml version='1.0' standalone='yes'?>
 <swat-interface>
 	<widget class="SwatFrame" id="my_frame">
-		<property name="title" value="SwatYesNoFlydown Demos" />
+		<property name="title">SwatYesNoFlydown Demos</property>
 		<widget class="SwatForm" id="my_form">
 
 			<widget class="SwatFormField">
-				<property name="title" value="Default" />
+				<property name="title">Default</property>
 				<widget class="SwatYesNoFlydown" id="yes_no_default" />
 			</widget>
 
 			<widget class="SwatFormField">
-				<property name="title" value="No blank, defaults to 'Yes'" />
+				<property name="title">No blank, defaults to 'Yes'</property>
 				<widget class="SwatYesNoFlydown" id="yes_no_noblank">
-					<property name="show_blank" value="false" type="boolean" />
-					<property name="value" value="YES" type="constant" />
+					<property name="show_blank" type="boolean">false</property>
+					<property name="value" type="constant">YES</property>
 				</widget>
 			</widget>
 
 			<widget class="SwatFormField">
-				<property name="title" value="Defaults to 'No'" />
+				<property name="title">Defaults to 'No'</property>
 				<widget class="SwatYesNoFlydown" id="yes_no_no">
-					<property name="value" value="NO" type="constant" />
+					<property name="value" type="constant">NO</property>
 				</widget>
 			</widget>
 

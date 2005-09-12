@@ -1,39 +1,39 @@
 <?xml version='1.0' standalone='yes'?>
 <swat-interface>
 	<widget class="SwatFrame" id="my_frame">
-		<property name="title" value="SwatDateEntry and SwatTimeEntry Demos" />
+		<property name="title">SwatDateEntry and SwatTimeEntry Demos</property>
 		<widget class="SwatForm" id="my_form">
 
 			<widget class="SwatFieldset">
-				<property name="title" value="Date Examples" />
+				<property name="title">Date Examples</property>
 
 				<widget class="SwatFormField">
-					<property name="title" value="Date with a Calendar (default)" type="string" />
+					<property name="title" type="string">Date with a Calendar (default)</property>
 					<widget class="SwatDateEntry" id="default_date">
 					</widget>
 				</widget>
 
 				<widget class="SwatFormField">
-					<property name="title" value="Date and Time with a Calendar" type="string" />
+					<property name="title" type="string">Date and Time with a Calendar</property>
 					<widget class="SwatDateEntry" id="time_date">
-						<property name="display_parts" value="YEAR|MONTH|DAY|TIME|CALENDAR" type="constant" />
+						<property name="display_parts" type="constant">YEAR|MONTH|DAY|TIME|CALENDAR</property>
 					</widget>
 				</widget>
 
 				<widget class="SwatFormField">
-					<property name="title" value="Creditcard Style" type="string" />
+					<property name="title" type="string">Creditcard Style</property>
 					<widget class="SwatDateEntry" id="cc_date">
-						<property name="display_parts" value="YEAR|MONTH" type="constant" />
-						<property name="show_month_number" value="true" type="boolean" />
+						<property name="display_parts" type="constant">YEAR|MONTH</property>
+						<property name="show_month_number" type="boolean">true</property>
 					</widget>
 				</widget>
 				
 			</widget>
 			<widget class="SwatFieldset">
-				<property name="title" value="Time Examples" />
+				<property name="title">Time Examples</property>
 
 				<widget class="SwatFormField">
-					<property name="title" value="Time (default)" type="string" />
+					<property name="title" type="string">Time (default)</property>
 					<widget class="SwatTimeEntry" id="default_time">
 					</widget>
 				</widget>

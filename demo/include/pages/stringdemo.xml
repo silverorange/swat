@@ -1,28 +1,28 @@
 <?xml version='1.0' standalone='yes'?>
 <swat-interface>
 	<widget class="SwatFrame" id="my_frame">
-		<property name="title" value="SwatString Demos" />
+		<property name="title">SwatString Demos</property>
 		<widget class="SwatDisclosure">
-			<property name="title" value="Right Ellipsize" />
-			<property name="open" value="false" type="boolean" />
+			<property name="title">Right Ellipsize</property>
+			<property name="open" type="boolean">false</property>
 			<widget class="SwatContentBlock" id="right_ellipsize">
 			</widget>
 		</widget>
 		<widget class="SwatDisclosure">
-			<property name="title" value="Middle Ellipsize" />
-			<property name="open" value="false" type="boolean" />
+			<property name="title">Middle Ellipsize</property>
+			<property name="open" type="boolean">false</property>
 			<widget class="SwatContentBlock" id="middle_ellipsize">
 			</widget>
 		</widget>
 		<widget class="SwatDisclosure">
-			<property name="title" value="Condense" />
-			<property name="open" value="false" type="boolean" />
+			<property name="title">Condense</property>
+			<property name="open" type="boolean">false</property>
 			<widget class="SwatContentBlock" id="condense">
 			</widget>
 		</widget>
 		<widget class="SwatDisclosure">
-			<property name="title" value="Convert Plain Text to XHTML" />
-			<property name="open" value="false" type="boolean" />
+			<property name="title">Convert Plain Text to XHTML</property>
+			<property name="open" type="boolean">false</property>
 			<widget class="SwatContentBlock" id="to_xhtml">
 			</widget>
 		</widget>
