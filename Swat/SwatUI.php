@@ -444,7 +444,7 @@ class SwatUI extends SwatObject
 		case 'constant':
 			return $this->evaluateConstant($value, $object);
 		case 'data':
-			$object->parent->linkField($object, $value, $name);
+			$object->parent->addMappingToRenderer($object, $value, $name);
 			return null;
 		default:
 			if ($value == 'false' || $value == 'true' )
