@@ -65,6 +65,11 @@ class StringDemo extends DemoPage
 		$this->testCondense();
 		$condense->content = ob_get_clean();
 
+		$condense_to_name = $this->ui->getWidget('condense_to_name');
+		ob_start();
+		$this->testCondenseToName();
+		$condense_to_name->content = ob_get_clean();
+
 		$to_xhtml = $this->ui->getWidget('to_xhtml');
 		ob_start();
 		$this->testToXHTML();
@@ -111,6 +116,20 @@ class StringDemo extends DemoPage
 			echo '<h5>Condensed Text:</h5>';
 			echo '<div class="text-block">'.$condensed_text_block.'</div>';
 		}
+	}
+
+	private function testCondenseToName()
+	{
+		echo '<p>Condense to name can be used to condense a title into a name identifier.</p>';
+
+		echo '<ol class="string-demo">';
+		foreach($this->strings as $string) {
+			echo '<li>';
+			echo '<div>'.$string.'</div>';
+			echo '<div>'.SwatString::condenseToName($string).'</div>';
+			echo '</li>';
+		}
+		echo '</ol>';
 	}
 
 	private function testToXHTML()
