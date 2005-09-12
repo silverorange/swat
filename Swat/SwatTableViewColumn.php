@@ -70,13 +70,14 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 	/**
 	 * Links a datafield to a renderer property
 	 *
-	 * @param SwatCellRenderer $renderer the cell renderer to link the
-	 *                                    property of.
-	 * @param string $datafield the field of the data model to link.
-	 * @param string $property the property of the cell renderer to link the
-	 *                          datafield to.
+	 * @param SwatCellRenderer $renderer the cell renderer in this column that
+	 *                                    the datafield is mapped onto.
+	 * @param string $datafield the field of the data model to map to the
+	 *                           renderer property.
+	 * @param string $property the property of the cell renderer that the
+	 *                          datafield is mapped to.
 	 */
-	public function linkField($renderer, $datafield, $property)
+	public function addMappingToRenderer($renderer, $datafield, $property)
 	{
 		$this->renderers->addMappingToRenderer($renderer,
 			$datafield, $property);

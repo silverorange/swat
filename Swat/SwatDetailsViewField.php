@@ -69,19 +69,17 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	/**
 	 * Links a data field to a cell renderer property
 	 *
-	 * @param string $renderer_id the unique id of the cell renderer
-	 *                             that the data field is mapped to.
-	 * @param string $field the field of the data model to map to the
-	 *                       renderer property.
-	 * @param string $property the property of the cell renderer that
-	 *                          data field is mapped to.
-	 *
-	 * @throws SwatException
+	 * @param SwatCellRenderer $renderer the cell renderer in this field that
+	 *                                    the datafield is mapped onto.
+	 * @param string $datafield the field of the data model to map to the
+	 *                           renderer property.
+	 * @param string $property the property of the cell renderer that the
+	 *                          datafield is mapped to.
 	 */
-	public function linkField($renderer, $model_field, $renderer_property)
+	public function addMappingToRenderer($renderer, $datafield, $property)
 	{
 		$this->renderers->addMappingToRenderer($renderer,
-			$model_field, $renderer_property);
+			$datafield, $property);
 	}
 
 	/**
