@@ -136,7 +136,7 @@ class SwatNavBar extends SwatControl
 	public function popEntry()
 	{
 		if ($this->getCount() < 1)
-			throw new SwatException('Cannot pop entry. NavBar does not '
+			throw new SwatException('Cannot pop entry. NavBar does not '.
 				'contain any entries.');
 		else
 			return array_pop($this->entries);
