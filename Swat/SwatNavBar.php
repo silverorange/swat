@@ -173,8 +173,12 @@ class SwatNavBar extends SwatControl
 	 *
 	 * Displays each entry separated by a special character and outputs
 	 * entries with URI's as anchor tags.
+	 *
+	 * @param boolean $link_last_entry if true will ahow the last entry as
+	 *                                  a hyperlink. If false, will show the
+	 *                                  last entry as just text.
 	 */
-	public function display($link_last = true)
+	public function display($link_last_entry = true)
 	{
 		if (!$this->visible)
 			return;
@@ -186,7 +190,7 @@ class SwatNavBar extends SwatControl
 			if ($i++ != 0)
 				echo ' &#187; ';
 
-			if ($entry->uri !== null && ($link_last || $i !== $count)) {
+			if ($entry->uri !== null && ($link_last_entry || $i < $count)) {
 				$link_tag = new SwatHtmlTag('a');
 				$link_tag->href = $entry->uri;
 				$link_tag->content = $entry->title;
