@@ -6,7 +6,7 @@ require_once 'XML/RPC2/Server.php';
 /**
  * Base class for an XML-RPC Server
  *
- * The XML-RPC server acts as a regular page in an application . This means
+ * The XML-RPC server acts as a regular page in an application. This means
  * all the regular page security features work for XML-RPC servers.
  *
  * Swat XML-RPC server pages use the PEAR::XML_RPC2 package to service
