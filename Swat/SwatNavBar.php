@@ -183,7 +183,7 @@ class SwatNavBar extends SwatControl
 		if (!$this->visible)
 			return;
 
-		$count = count($this->entries);
+		$count = $this->getCount();
 		$i = 0;
 
 		foreach ($this->entries as $entry) {
