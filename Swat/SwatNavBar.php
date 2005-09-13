@@ -51,31 +51,36 @@ class SwatNavBar extends SwatControl
 	}
 
 	// }}}
-	// {{{ public function replaceElement()
+	// {{{ public function replaceEntryByPosition()
 
 	/**
-	 * Replaces an element in this navigation bar
+	 * Replaces an entry in this navigation bar
 	 *
-	 * If the element is not in this navigation bar, an exception is thrown.
+	 * If the entry is not in this navigation bar, an exception is thrown.
 	 *
-	 * @param integer $position position of the element to replace.
-	 * @param string $title the replacement element title.
-	 * @param string $uri an optional replacement element URI.
+	 * @param integer $position zero-based ordinal position of the entry
+	 *                           to replace.
+	 * @param SwatNavBarEntry $entry the navbar entry to replace the element
+	 *                                at the given position with.
 	 *
+	 * @return SwatNavBarEntry the replaced entry.
+	 * 
 	 * @thows SwatException
 	 */
-	/*
-	public function replaceElement($position, $title, $uri = null)
+
+	public function replaceElement($position, SwatNavBar $new_entry)
 	{
-		if (isset($this->elements[$position])) {
-			$new_element = array('title' => $title, 'uri' => $uri);
-			$this->elements[$position] = &$new_element;
-		} else {
-			throw new SwatException('Cannot replace element at position '.
-				"'$position' because element does not exist.",
+		if (isset($this->entries[$position])) {
+			$old_entry = $this->entries[$position];
+			$this->elements[$position] = $new_entry;
+
+			return $old_entry;
 		}
+
+		throw new SwatException('Cannot replace element at position '.
+			"'{$position}' because NavBar does not contain an entry ".
+			"at '{$position}'");
 	}
-	*/
 
 	// }}}
 	// {{{ public function getEntryByPosition()
