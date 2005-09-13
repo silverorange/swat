@@ -4,7 +4,7 @@ require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatNavBarEntry.php';
 
 /**
- * Visible navbar navigation tool
+ * Visible navigation tool
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange
@@ -77,9 +77,10 @@ class SwatNavBar extends SwatControl
 			return $old_entry;
 		}
 
-		throw new SwatException('Cannot replace element at position '.
-			"'{$position}' because NavBar does not contain an entry ".
-			"at '{$position}'");
+		throw new SwatException(sprintf('Cannot replace element at position '.
+			'%s because NavBar does not contain an entry at position %s.',
+			$position,
+			$opsition));
 	}
 
 	// }}}
@@ -102,8 +103,9 @@ class SwatNavBar extends SwatControl
 		if (isset($this->entries[$position]))
 			return $this->entries[$position];
 		else
-			throw new SwatException('Navbar does not contain an entry at '.
-				"position '{$position}'");
+			throw new SwatException(sprintf('Navbar does not contain an '.
+				'entry at position %s.',
+				$position));
 	}
 
 	// }}}
@@ -133,11 +135,11 @@ class SwatNavBar extends SwatControl
 	 */
 	public function popEntry()
 	{
-		if ($this->getCount() < 1) {
-			throw new SwatException('Cannot pop entry. NavBar does not contain any elements.');
-		} else {
+		if ($this->getCount() < 1)
+			throw new SwatException('Cannot pop entry. NavBar does not '
+				'contain any entries.');
+		else
 			return array_pop($this->entries);
-		}
 	}
 
 	// }}}
@@ -162,8 +164,10 @@ class SwatNavBar extends SwatControl
 		if ($this->getCount() < $number) {
 			$count = $this->getCount();
 
-			throw new SwatException("NavBar only contains $class entries, ".
-				"unable to pop $number entries.");
+			throw new SwatException(printf('Unable to pop %s entries. NavBar '.
+				'only contains %s entries.',
+				$number,
+				$count));
 
 		} else {
 			return array_splice($this->entries, -$number);
@@ -179,7 +183,7 @@ class SwatNavBar extends SwatControl
 	 * Displays each entry separated by a special character and outputs
 	 * entries with URI's as anchor tags.
 	 *
-	 * @param boolean $link_last_entry if true will ahow the last entry as
+	 * @param boolean $link_last_entry if true will show the last entry as
 	 *                                  a hyperlink. If false, will show the
 	 *                                  last entry as just text.
 	 */
