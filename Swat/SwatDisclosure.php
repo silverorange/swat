@@ -61,7 +61,7 @@ class SwatDisclosure extends SwatContainer
 		$anchor = new SwatHtmlTag('a');
 		$anchor->class = 'swat-disclosure-anchor';
 		$anchor->href =
-			sprintf("javascript:%s_obj.toggle();", $this->id);
+			sprintf("javascript:%s.toggle();", $this->id);
 
 		$anchor->open();
 
@@ -106,11 +106,11 @@ class SwatDisclosure extends SwatContainer
 	/**
 	 * Outputs disclosure specific javascript
 	 */
-	protected function displayJavascript()
+	private function displayJavascript()
 	{
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
-		echo "var {$this->id}_obj = new SwatDisclosure('{$this->id}');\n";
+		echo "var {$this->id} = new SwatDisclosure('{$this->id}');\n";
 		echo "//]]>";
 		echo '</script>';
 	}
