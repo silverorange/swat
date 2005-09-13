@@ -187,7 +187,7 @@ class SwatNavBar extends SwatControl
 		$i = 0;
 
 		foreach ($this->entries as $entry) {
-			if ($i++ != 0)
+			if ($i > 0)
 				echo ' &#187; ';
 
 			if ($entry->uri !== null && ($link_last_entry || $i < $count)) {
@@ -198,6 +198,8 @@ class SwatNavBar extends SwatControl
 			} else {
 				echo $entry->title;
 			}
+
+			$i++;
 		}
 	}
 
