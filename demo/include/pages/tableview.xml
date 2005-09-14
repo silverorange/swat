@@ -1,0 +1,76 @@
+<?xml version='1.0' standalone='yes'?>
+<swat-interface>
+	<widget class="SwatFrame" id="my_frame">
+		<property name="title">SwatTableView Demo</property>
+		<widget class="SwatForm" id="my_form">
+
+			<widget class="SwatTableView" id="table_view">
+				<object class="SwatTableViewCheckboxColumn" id="checkbox">
+					<object class="SwatCheckboxCellRenderer" id="items">
+						<property name="value" type="data">title</property>
+					</object>
+				</object>
+				<object class="SwatTableViewColumn">
+					<property name="title">Fruit Name</property>
+					<object class="SwatTextCellRenderer">
+						<property name="value" type="data">title</property>
+					</object>
+				</object>
+				<object class="SwatTableViewColumn">
+					<property name="title">Makes Jam</property>
+					<object class="SwatCheckCellRenderer">
+						<property name="value" type="data">makes_jam</property>
+					</object>
+				</object>
+				<object class="SwatTableViewColumn">
+					<property name="title">Makes Pie</property>
+					<object class="SwatCheckCellRenderer">
+						<property name="value" type="data">makes_pie</property>
+					</object>
+				</object>
+				<object class="SwatTableViewColumn">
+					<property name="title">Harvest Date</property>
+					<object class="SwatDateCellRenderer">
+						<property name="date" type="data">harvest_date</property>
+						<property name="format" type="string">%B %e</property>
+					</object>
+				</object>
+				<object class="SwatTableViewColumn">
+					<property name="title">Cost per kg</property>
+					<object class="SwatMoneyCellRenderer">
+						<property name="value" type="data">cost</property>
+						<property name="locale" type="string">en_CA</property>
+					</object>
+				</object>
+			</widget>
+			<widget class="SwatContentBlock">
+				<property name="content"><![CDATA[
+				<div class="note">
+				Note: These actions are for demonstration purposes only.
+				The actions do not do anything as this page is not connected
+				to a database.
+				</div>
+				]]>
+				</property>
+			</widget>
+			<widget class="SwatActions" id="index_actions">
+				<widget class="SwatActionItem" id="makes_jam">
+					<property name="title">makes jam</property>
+				</widget>
+				<widget class="SwatActionItem" id="not_makes_jam">
+					<property name="title">doesn't make jam</property>
+				</widget>
+				<widget class="SwatActionItem" id="makes_pie">
+					<property name="title">makes pie</property>
+				</widget>
+				<widget class="SwatActionItem" id="not_makes_pie">
+					<property name="title">doesn't make pie</property>
+				</widget>
+				<widget class="SwatActionItem" id="delete">
+					<property name="title">delete...</property>
+				</widget>
+			</widget>
+
+		</widget>
+	</widget>
+</swat-interface>
