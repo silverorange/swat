@@ -29,6 +29,8 @@ class DemoPage extends SwatPage
 		parent::__construct($app);
 
 		$this->navbar = new SwatNavBar();
+		$this->ui = new SwatUI();
+		$this->ui->addClassPathMap('Demo', '../include/');
 	}
 
 	public function init()
@@ -41,7 +43,6 @@ class DemoPage extends SwatPage
 		// simple security
 		$this->demo = basename($this->demo);
 		
-		$this->ui = new SwatUI();
 		$this->ui->loadFromXML('../include/pages/'.strtolower($this->demo).'.xml');
 
 		$this->initUI();
