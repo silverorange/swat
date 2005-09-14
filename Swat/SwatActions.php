@@ -89,6 +89,19 @@ class SwatActions extends SwatControl implements SwatUIParent
 	}
 
 	/**
+	 * Initializes this action item
+	 *
+	 * This initializes the action items contained in this actions list.
+	 */
+	public function init()
+	{
+		parent::init();
+
+		foreach ($this->action_items as $action_item)
+			$action_item->init();
+	}
+
+	/**
 	 * Displays this list of actions
 	 *
 	 * Internal widgets are automatically created if they do not exist.
@@ -203,6 +216,23 @@ class SwatActions extends SwatControl implements SwatUIParent
 		else
 			throw new SwatException('SwatActions: Only '.
 				'SwatActionItems can be nested within SwatActions');
+	}
+
+	/**
+	 * Gathers the SwatHtmlHeadEntry objects needed by this actions list
+	 *
+	 * @return array the SwatHtmlHeadEntry objects needed by this actions list.
+	 *
+	 * @see SwatWidget::gatherSwatHtmlHeadEntries()
+	 */
+	public function getHtmlHeadEntries()
+	{
+		$out = $this->html_head_entries;
+
+		foreach ($this->action_items as $child_widget)
+			$out = array_merge($out, $child_widget->getHtmlHeadEntries());
+
+		return $out;
 	}
 
 	/**

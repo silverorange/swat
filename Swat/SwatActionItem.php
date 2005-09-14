@@ -46,6 +46,20 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	}
 
 	/**
+	 * Initializes this action item
+	 *
+	 * This initializes the widget contained in this action item if there is
+	 * one.
+	 */
+	public function init()
+	{
+		parent::init();
+
+		if ($this->widget !== null)
+			$this->widget->init();
+	}
+
+	/**
 	 * Displays this item
 	 *
 	 * Calls this item's widget display method.
@@ -95,6 +109,23 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 		else
 			throw new SwatException('SwatActionItem: Only '.
 				'SwatWidgets can be nested within SwatActionItem');
+	}
+
+	/**
+	 * Gathers the SwatHtmlHeadEntry objects needed by this action item
+	 *
+	 * @return array the SwatHtmlHeadEntry objects needed by this action item.
+	 *
+	 * @see SwatWidget::gatherSwatHtmlHeadEntries()
+	 */
+	public function getHtmlHeadEntries()
+	{
+		$out = $this->html_head_entries;
+
+		if ($this->widget !== null)
+			$out = array_merge($out, $this->widget->getHtmlHeadEntries());
+
+		return $out;
 	}
 }
 
