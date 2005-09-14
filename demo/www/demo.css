@@ -93,8 +93,15 @@ ol.string-demo li div {
 
 div.string-unformatted-text {
 	font-family: monospace;
-	border: 1px dashed #ccc;
-	background: #eee;
+	background: #f7f5f3;
+	border: 1px solid #e7ddc8;
 	padding: 1em;
 	margin-bottom: 1em;
+}
+
+div.note {
+	margin-top: 2em;
+	padding: 0.5em;
+	border: 1px solid #ccc;
+	background: #fe9;
 }
