@@ -105,3 +105,7 @@ div.note {
 	border: 1px solid #ccc;
 	background: #fe9;
 }
+
+a.demo-documentation {
+	float: right;
+}
