@@ -31,6 +31,7 @@ class DemoMenu
 			'PasswordEntry' => 'SwatPasswordEntry',
 			'RadioList' =>     'SwatRadioList',
 			'StringDemo' =>    'SwatString',
+			'TableView' =>     'SwatTableView',
 			'Textarea' =>      'SwatTextarea',
 			'TimeZoneEntry' => 'SwatTimeZoneEntry',
 			'ToolLink' =>      'SwatToolLink',
