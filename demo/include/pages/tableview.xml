@@ -32,7 +32,7 @@
 					<property name="title">Harvest Date</property>
 					<object class="SwatDateCellRenderer">
 						<property name="date" type="data">harvest_date</property>
-						<property name="format" type="string">%B %e</property>
+						<property name="format" type="string">%B</property>
 					</object>
 				</object>
 				<object class="SwatTableViewColumn">
@@ -54,20 +54,22 @@
 				</property>
 			</widget>
 			<widget class="SwatActions" id="index_actions">
+				<widget class="SwatActionItem" id="havest_date">
+					<property name="title">set harvest date</property>
+					<widget class="SwatFormField">
+						<property name="title">to month</property>
+						<widget class="SwatDateEntry">
+							<property name="display_parts" type="constant">MONTH</property>
+						</widget>
+					</widget>
+				</widget>
 				<widget class="SwatActionItem" id="makes_jam">
-					<property name="title">makes jam</property>
-				</widget>
-				<widget class="SwatActionItem" id="not_makes_jam">
-					<property name="title">doesn't make jam</property>
-				</widget>
-				<widget class="SwatActionItem" id="makes_pie">
-					<property name="title">makes pie</property>
-				</widget>
-				<widget class="SwatActionItem" id="not_makes_pie">
-					<property name="title">doesn't make pie</property>
-				</widget>
-				<widget class="SwatActionItem" id="delete">
-					<property name="title">delete...</property>
+					<property name="title">set jammable</property>
+					<widget class="SwatFormField">
+						<property name="title">to</property>
+						<widget class="SwatYesNoFlydown">
+						</widget>
+					</widget>
 				</widget>
 			</widget>
 
