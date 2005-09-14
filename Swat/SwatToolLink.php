@@ -144,6 +144,11 @@ class SwatToolLink extends SwatControl
 			$class = 'swat-tool-link-order';
 			break;
 
+		case 'help':
+			$title = Swat::_('Help');
+			$class = 'swat-tool-link-help';
+			break;
+
 		default:
 			throw new SwatException("Stock type with id of '{$stock_id}' not ".
 				'found.');
