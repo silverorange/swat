@@ -4,9 +4,19 @@
 		<property name="title">SwatColorEntry Demos</property>
 		<widget class="SwatForm" id="my_form">
 
+			<widget class="DemoDocumentationLink">
+				<property name="title">SwatColorEntry Documentation</property>
+				<property name="link">http://docs.silverorange.com/Swat/SwatColorEntry.html</property>
+			</widget>
+
 			<widget class="SwatFormField">
 				<property name="title">Complex Color Entry</property>
 				<widget class="SwatColorEntry" id="color_entry" />
+			</widget>
+
+			<widget class="DemoDocumentationLink">
+				<property name="title">SwatSimpleColorEntry Documentation</property>
+				<property name="link">http://docs.silverorange.com/Swat/SwatSimpleColorEntry.html</property>
 			</widget>
 
 			<widget class="SwatFormField">

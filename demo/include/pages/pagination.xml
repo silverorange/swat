@@ -4,6 +4,11 @@
 		<property name="title">SwatPagination Demos</property>
 		<widget class="SwatForm" id="my_form">
 
+			<widget class="DemoDocumentationLink">
+				<property name="title">SwatPagination Documentation</property>
+				<property name="link">http://docs.silverorange.com/Swat/SwatPagination.html</property>
+			</widget>
+
 			<widget class="SwatPagination">
 				<property name="current_page" type="integer">4</property>
 				<property name="page_size" type="integer">10</property>

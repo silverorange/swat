@@ -1,5 +1,10 @@
 <?xml version='1.0' standalone='yes'?>
 <swat-interface>
+	<widget class="DemoDocumentationLink">
+		<property name="title">SwatFrame Documentation</property>
+		<property name="link">http://docs.silverorange.com/Swat/SwatFrame.html</property>
+	</widget>
+
 	<widget class="SwatFrame" id="my_frame">
 		<property name="title">SwatFrame Demo</property>
 	</widget>

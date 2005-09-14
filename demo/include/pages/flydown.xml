@@ -7,11 +7,21 @@
 			<widget class="SwatFieldset">
 				<property name="title">Static Flydowns</property>
 
+				<widget class="DemoDocumentationLink">
+					<property name="title">SwatFlydown Documentation</property>
+					<property name="link">http://docs.silverorange.com/Swat/SwatFlydown.html</property>
+				</widget>
+
 				<widget class="SwatFormField">
 					<property name="title" type="string">Flat Flydown</property>
 					<widget class="SwatFlydown" id="flydown">
 						<property name="blank_title">&lt; select a fruit ></property>
 					</widget>
+				</widget>
+
+				<widget class="DemoDocumentationLink">
+					<property name="title">SwatFlydownTree Documentation</property>
+					<property name="link">http://docs.silverorange.com/Swat/SwatFlydownTree.html</property>
 				</widget>
 
 				<widget class="SwatFormField">
@@ -24,6 +34,11 @@
 			</widget>
 			<widget class="SwatFieldset">
 				<property name="title">Cascading Flydowns</property>
+
+				<widget class="DemoDocumentationLink">
+					<property name="title">SwatCascadeFlydown Documentation</property>
+					<property name="link">http://docs.silverorange.com/Swat/SwatCascadeFlydown.html</property>
+				</widget>
 				
 				<widget class="SwatFormField">
 					<property name="title" type="string">Cascade From</property>
