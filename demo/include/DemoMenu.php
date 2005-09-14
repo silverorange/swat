@@ -38,7 +38,7 @@ class DemoMenu
 			'YesNoFlydown' =>  'SwatYesNoFlydown'
 		);
 		
-		echo '<ul>';
+		echo '<span class="menutitle">Swat Widgets</span>:<ul>';
 
 		foreach ($demos as $demo => $title) {
 			echo '<li><a href="index.php?demo='.$demo.'">'.$title.'</a></li>';
