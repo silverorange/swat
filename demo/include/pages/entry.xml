@@ -5,11 +5,21 @@
 		<widget class="SwatForm" id="my_form">
 			<property name="action">index.php?demo=Entry</property>
 
+			<widget class="DemoDocumentationLink">
+				<property name="title">SwatEntry Documentation</property>
+				<property name="link">http://docs.silverorange.com/Swat/SwatEntry.html</property>
+			</widget>
+
 			<widget class="SwatFormField">
 				<property name="title" type="string">Entry</property>
 				<widget class="SwatEntry" id="entry">
 					<property name="required" type="boolean">true</property>
 				</widget>
+			</widget>
+
+			<widget class="DemoDocumentationLink">
+				<property name="title">SwatEmailEntry Documentation</property>
+				<property name="link">http://docs.silverorange.com/Swat/SwatEmailEntry.html</property>
 			</widget>
 
 			<widget class="SwatFormField">
@@ -19,14 +29,29 @@
 				</widget>
 			</widget>
 
+			<widget class="DemoDocumentationLink">
+				<property name="title">SwatIntegerEntry Documentation</property>
+				<property name="link">http://docs.silverorange.com/Swat/SwatIntegerEntry.html</property>
+			</widget>
+
 			<widget class="SwatFormField">
 				<property name="title" type="string">Integer Entry</property>
 				<widget class="SwatIntegerEntry" id="integer" />
 			</widget>
 
+			<widget class="DemoDocumentationLink">
+				<property name="title">SwatFloatEntry Documentation</property>
+				<property name="link">http://docs.silverorange.com/Swat/SwatFloatEntry.html</property>
+			</widget>
+
 			<widget class="SwatFormField">
 				<property name="title" type="string">Float Entry</property>
 				<widget class="SwatFloatEntry" id="float" />
+			</widget>
+
+			<widget class="DemoDocumentationLink">
+				<property name="title">SwatMoneyEntry Documentation</property>
+				<property name="link">http://docs.silverorange.com/Swat/SwatMoneyEntry.html</property>
 			</widget>
 
 			<widget class="SwatFormField">

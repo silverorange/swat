@@ -4,18 +4,26 @@
 		<property name="title">SwatToolLink Demos</property>
 		<widget class="SwatForm" id="my_form">
 
+			<widget class="DemoDocumentationLink">
+				<property name="title">SwatToolLink Documentation</property>
+				<property name="link">http://docs.silverorange.com/Swat/SwatToolLink.html</property>
+			</widget>
+
 			<widget class="SwatToolLink">
 				<property name="title">Add</property>
+				<property name="stock_id">create</property>
 				<property name="link">#</property>
 			</widget>
 
 			<widget class="SwatToolLink">
-				<property name="title">Remove</property>
+				<property name="title">Delete</property>
+				<property name="stock_id">delete</property>
 				<property name="link">#</property>
 			</widget>
 
 			<widget class="SwatToolLink">
 				<property name="title">Edit</property>
+				<property name="stock_id">edit</property>
 				<property name="link">#</property>
 			</widget>
 
