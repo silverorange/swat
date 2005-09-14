@@ -345,9 +345,7 @@ class SwatUI extends SwatObject
 		if (!class_exists($class)) {
 
 			foreach ($this->class_map as $package_prefix => $path) {
-				//echo $package_prefix.' '.$class;
 				if (strncmp($class, $package_prefix, strlen($package_prefix)) == 0) {
-					echo 'test';
 					$classfile = "{$path}/{$class}.php";
 					break;
 				}
