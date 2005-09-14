@@ -25,7 +25,7 @@ class SwatUI extends SwatObject
 	 *
 	 * @var array
 	 */
-	protected $classmap = array();
+	protected $class_map = array('Swat' => 'Swat');
 
 	// }}}
 	// {{{ private properties
@@ -64,6 +64,24 @@ class SwatUI extends SwatObject
 			$this->root = $container;
 		else
 			$this->root = new SwatContainer();
+	}
+
+	// }}}
+	// {{{ public function addClassPathMap()
+
+	/**
+	 * Adds a class path lookup entry to thus UI
+	 *
+	 * The class path map is used to find required files for widget classes
+	 * specified in the XML.
+	 *
+	 * @param string $class_prefix the prefix of the class to map to the given
+	 *                              path.
+	 * @param string $path the path to map th egiven class prefix to.
+	 */
+	public function addClassPathMap($class_prefix, $path)
+	{
+		$this->class_map[$class_prefix] = $path;
 	}
 
 	// }}}
@@ -325,12 +343,13 @@ class SwatUI extends SwatObject
 			throw new SwatException("Widget or object element is missing 'class' attribute.");
 
 		if (!class_exists($class)) {
-			$classfile = "Swat/{$class}.php";
 
-			if (count($this->classmap)) {
-				foreach ($this->classmap as $package_prefix => $path) {
-					if (strncmp($class, $package_prefix, strlen($package_prefix)) == 0)
-						$classfile = "{$path}/{$class}.php";
+			foreach ($this->class_map as $package_prefix => $path) {
+				//echo $package_prefix.' '.$class;
+				if (strncmp($class, $package_prefix, strlen($package_prefix)) == 0) {
+					echo 'test';
+					$classfile = "{$path}/{$class}.php";
+					break;
 				}
 			}
 
@@ -472,10 +491,10 @@ class SwatUI extends SwatObject
 		if (!$translatable)
 			return $value;
 
-		if (count($this->classmap)) {
+		if (count($this->class_map)) {
 			$class = get_class($object);
 
-			foreach ($this->classmap as $package_prefix => $path) {
+			foreach ($this->class_map as $package_prefix => $path) {
 				if (strncmp($class, $package_prefix, strlen($package_prefix)) == 0)
 					return call_user_func(array($package_prefix, 'gettext'), $value);
 			}
