@@ -106,7 +106,7 @@ class SwatDisclosure extends SwatContainer
 	/**
 	 * Outputs disclosure specific javascript
 	 */
-	private function displayJavascript()
+	protected function displayJavascript()
 	{
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
