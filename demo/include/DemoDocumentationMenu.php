@@ -21,13 +21,15 @@ class DemoDocumentationMenu extends DemoMenu
 
 	public function display()
 	{
-		echo '<div id="documentation-menu"><span class="menutitle">Documentation Links</span>:<ul>';
+		if (count($this-entries) > 0) {
+			echo '<div id="documentation-menu"><span class="menutitle">Documentation Links</span>:<ul>';
 
-		foreach ($this->entries as $class) {
-			echo '<li><a href="http://docs.silverorange.com/Swat/'.$class.'.html">'.$class.'</a></li>';
+			foreach ($this->entries as $class) {
+				echo '<li><a href="http://docs.silverorange.com/Swat/'.$class.'.html">'.$class.'</a></li>';
+			}
+
+			echo '</ul></div>';
 		}
-
-		echo '</ul></div>';
 	}
 }
 
