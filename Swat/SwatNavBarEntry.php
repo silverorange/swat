@@ -21,25 +21,25 @@ class SwatNavBarEntry extends SwatObject
 	public $title;
 
 	/**
-	 * The URI that this entry points to
+	 * The the web address that this navbar entry points to
 	 *
 	 * This property is optional. If it is not present this entry will not
 	 * display as a hyperlink.
 	 *
 	 * @var string
 	 */
-	public $uri;
+	public $link;
 
 	/**
 	 * Creates a new navbar entry
 	 *
 	 * @param string $title the title of this entry.
-	 * @param string $uri the URI this entry points to.
+	 * @param string $link the web address this entry points to.
 	 */
-	public function __construct($title, $uri = null)
+	public function __construct($title, $link = null)
 	{
 		$this->title = $title;
-		$this->uri = $uri;
+		$this->link = $link;
 	}
 }
 
