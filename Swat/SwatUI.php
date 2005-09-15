@@ -48,6 +48,8 @@ class SwatUI extends SwatObject
 	 */
 	private $root = null;
 
+	private $translation_callback = null;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -108,6 +110,17 @@ class SwatUI extends SwatObject
 					$xmlfile = $path.'/'.$filename;
 					break;
 				}
+			}
+		}
+
+		// try to guess the translation callback based on the
+		// filename of the xml
+		$class_map_reversed = array_reverse($this->class_map, true);
+		foreach ($class_map_reversed as $prefix => $path) {
+			if (strpos($xmlfile, strtolower($prefix)) !== false &&
+				is_callable(array($prefix, 'gettext'))) {
+
+				$this->translation_callback = array($prefix, 'gettext');
 			}
 		}
 
@@ -218,6 +231,33 @@ class SwatUI extends SwatObject
 		$tidy = ereg_replace($breaking_tags, "\n\\0\n", $buffer);
 		$tidy = ereg_replace("\n\n", "\n", $tidy);
 		echo $tidy;
+	}
+
+	// }}}
+	// {{{ public function setTranslationCallback()
+
+	/**
+	 * Sets the translation callback function for this UI
+	 *
+	 * UI properties marked as translatable are translated using this
+	 * callback.
+	 *
+	 * The translation callback is usually set automatically but you may want
+	 * to set it manually if automatic detection is not working.
+	 *
+	 * A callback in PHP is either a two element array or a string.
+	 *
+	 * @param callback $callback the callback function to use.
+	 *
+	 * @throws SwatException
+	 */
+	public function setTranslationCallback($callback)
+	{
+		if (is_callable($callback))
+			$this->translation_callback = $callback;
+		else
+			throw new SwatException('Cannot set translation callback to an '.
+				'uncallable callback.');
 	}
 
 	// }}}
@@ -489,15 +529,9 @@ class SwatUI extends SwatObject
 		if (!$translatable)
 			return $value;
 
-		if (count($this->class_map)) {
-			$class = get_class($object);
-
-			foreach ($this->class_map as $package_prefix => $path) {
-				if (strncmp($class, $package_prefix, strlen($package_prefix)) == 0)
-					return call_user_func(array($package_prefix, 'gettext'), $value);
-			}
-		}
-
+		if ($this->translation_callback !== null)
+			return call_user_func($this->translation_callback, $value);
+			
 		return $value;
 	}
 
