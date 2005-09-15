@@ -4,11 +4,6 @@
 		<property name="title">SwatToolLink Demos</property>
 		<widget class="SwatForm" id="my_form">
 
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatToolLink Documentation</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatToolLink.html</property>
-			</widget>
-
 			<widget class="SwatToolLink">
 				<property name="title">Add</property>
 				<property name="stock_id">create</property>
