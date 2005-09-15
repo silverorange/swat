@@ -6,6 +6,8 @@ function SwatChangeOrder(id, num_elements)
 	this.list_div = document.getElementById(this.id + '_list');
 	this.active_div = document.getElementById(this.id + '_option_0');
 	this.first_div = document.getElementById(this.id + '_option_0');
+
+	this.animation_delay = 0;
 }
 
 SwatChangeOrder.prototype.choose = function(div)
@@ -13,6 +15,32 @@ SwatChangeOrder.prototype.choose = function(div)
 	this.active_div.className = 'swat-order-control';
 	div.className = 'swat-order-control-active';
 	this.active_div = div;
+}
+
+SwatChangeOrder.prototype.moveToTop = function()
+{
+	var index = parseInt(this.active_div.id.match(/[0-9]+$/));
+
+	for (i = 0; i < index; i++)
+		this.moveUp();
+}
+
+SwatChangeOrder.prototype.moveToBottom = function()
+{
+	var index = parseInt(this.active_div.id.match(/[0-9]+$/));
+
+	for (i = 0; i < (this.num_elements - index); i++)
+		this.moveDown();
+}
+
+SwatChangeOrder.prototype.moveUp = function()
+{
+	this.updown('up');
+}
+
+SwatChangeOrder.prototype.moveDown = function()
+{
+	this.updown('down');
 }
 
 SwatChangeOrder.prototype.updown = function(direction)
