@@ -30,11 +30,11 @@ class SwatNavBar extends SwatControl
 	 * Creates a SwatNavBarEntry and adds it to the end of this navigation bar
 	 *
 	 * @param string $title the entry title.
-	 * @param string $uri an optional entry URI.
+	 * @param string $link an optional entry URI.
 	 */
-	public function createEntry($title, $uri = null)
+	public function createEntry($title, $link = null)
 	{
-		$this->addEntry(new SwatNavBarEntry($title, $uri));
+		$this->addEntry(new SwatNavBarEntry($title, $link));
 	}
 
 	// }}}
@@ -199,7 +199,7 @@ class SwatNavBar extends SwatControl
 			if ($i > 0)
 				echo ' &#187; ';
 
-			if ($entry->uri !== null && ($link_last_entry || $i < $count)) {
+			if ($entry->link !== null && ($link_last_entry || $i < $count)) {
 				$link_tag = new SwatHtmlTag('a');
 				$link_tag->href = $entry->link;
 				$link_tag->content = $entry->title;
