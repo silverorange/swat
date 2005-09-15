@@ -67,19 +67,19 @@ class SwatUI extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function addClassPathMap()
+	// {{{ public function mapClassPrefixToPath()
 
 	/**
-	 * Adds a class path lookup entry to thus UI
+	 * Maps a class prefix to a path for filename lookup in this UI
 	 *
 	 * The class path map is used to find required files for widget classes
-	 * specified in the XML.
+	 * specified in XML.
 	 *
 	 * @param string $class_prefix the prefix of the class to map to the given
 	 *                              path.
-	 * @param string $path the path to map th egiven class prefix to.
+	 * @param string $path the path to map the given class prefix to.
 	 */
-	public function addClassPathMap($class_prefix, $path)
+	public function mapClassPrefixToPath($class_prefix, $path)
 	{
 		$this->class_map[$class_prefix] = $path;
 	}
