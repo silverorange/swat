@@ -93,15 +93,6 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$div_tag->class = 'swat-order-control-div';
 		$div_tag->open();
 
-		$up_btn = new SwatHtmlTag('input');
-		$up_btn->type = 'button';
-		$up_btn->value = Swat::_('Move Up');
-		$up_btn->onclick = "{$this->id}_obj.updown('up');";
-		if ($this->onclick !== null)
-			$up_btn->onclick.= $this->onclick;
-
-		$up_btn->display();
-
 		$list_div = new SwatHtmlTag('div');
 		$list_div->style = "width: {$this->width}; height: {$this->height};";
 		$list_div->id = "{$this->id}_list";
@@ -122,15 +113,44 @@ class SwatChangeOrder extends SwatControl implements SwatState
 
 		$list_div->close();
 
+		$controls_div = new SwatHtmlTag('div');
+		$controls_div->class = 'swat-order-controls';
+		$controls_div->open();
+
+		$top_btn = new SwatHtmlTag('input');
+		$top_btn->type = 'button';
+		$top_btn->value = Swat::_('Move To Top');
+		$top_btn->onclick = "{$this->id}_obj.moveToTop();";
+		$top_btn->display();
+		
+		echo '<br />';
+
+		$up_btn = new SwatHtmlTag('input');
+		$up_btn->type = 'button';
+		$up_btn->value = Swat::_('Move Up');
+		$up_btn->onclick = "{$this->id}_obj.moveUp();";
+		$up_btn->display();
+		
+		echo '<br />';
+
 		$down_btn = new SwatHtmlTag('input');
 		$down_btn->type = 'button';
 		$down_btn->value = Swat::_('Move Down');
-		$down_btn->onclick = "{$this->id}_obj.updown('down');";
-		if ($this->onclick !== null)
-			$down_btn->onclick.= $this->onclick;
-
+		$down_btn->onclick = "{$this->id}_obj.moveDown();";
 		$down_btn->display();
 		
+		echo '<br />';
+		
+		$bottom_btn = new SwatHtmlTag('input');
+		$bottom_btn->type = 'button';
+		$bottom_btn->value = Swat::_('Move To Button');
+		$bottom_btn->onclick = "{$this->id}_obj.moveToBottom();";
+		$bottom_btn->display();
+
+		$controls_div->close();
+
+		echo '<div style="clear: both;"></div>';
+
 		$this->displayJavascript();
 
 		$hidden_tag = new SwatHtmlTag('input');
