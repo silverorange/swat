@@ -219,6 +219,10 @@ class DemoPage extends SwatPage
 			$entries = array('SwatTimeZoneEntry');
 			break;
 
+		case 'ToolLink':
+			$entries = array('SwatToolLink');
+			break;
+
 		case 'YesNoFlydown':
 			$entries = array('SwatYesNoFlydown');
 			break;
