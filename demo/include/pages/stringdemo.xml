@@ -3,11 +3,6 @@
 	<widget class="SwatFrame" id="my_frame">
 		<property name="title">SwatString Demos</property>
 
-		<widget class="DemoDocumentationLink">
-			<property name="title">SwatString Documentation</property>
-			<property name="link">http://docs.silverorange.com/Swat/SwatString.html</property>
-		</widget>
-
 		<widget class="SwatDisclosure">
 			<property name="title">Right Ellipsize</property>
 			<property name="open" type="boolean">false</property>

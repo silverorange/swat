@@ -7,11 +7,6 @@
 			<widget class="SwatFieldset">
 				<property name="title">Individual Checkboxes</property>
 
-				<widget class="DemoDocumentationLink">
-					<property name="title">SwatCheckbox Documentation</property>
-					<property name="link">http://docs.silverorange.com/Swat/SwatCheckbox.html</property>
-				</widget>
-
 				<widget class="SwatFormField">
 					<property name="title">Check 1</property>
 					<widget class="SwatCheckbox" id="check1">
@@ -28,11 +23,6 @@
 			<widget class="SwatFieldset">
 				<property name="title">Checkbox List</property>
 
-				<widget class="DemoDocumentationLink">
-					<property name="title">SwatCheckboxList Documentation</property>
-					<property name="link">http://docs.silverorange.com/Swat/SwatCheckboxList.html</property>
-				</widget>
-
 				<widget class="SwatCheckboxList" id="checkbox_list">
 					<property name="options[0]">Apple</property>
 					<property name="options[1]">Orange</property>
@@ -45,11 +35,6 @@
 			</widget>
 			<widget class="SwatFieldset">
 				<property name="title">Checkbox Tree</property>
-
-				<widget class="DemoDocumentationLink">
-					<property name="title">SwatCheckboxTree Documentation</property>
-					<property name="link">http://docs.silverorange.com/Swat/SwatCheckboxTree.html</property>
-				</widget>
 
 				<widget class="SwatCheckboxTree" id="checkbox_tree">
 				</widget>

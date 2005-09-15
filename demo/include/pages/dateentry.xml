@@ -7,11 +7,6 @@
 			<widget class="SwatFieldset">
 				<property name="title">Date Examples</property>
 
-				<widget class="DemoDocumentationLink">
-					<property name="title">SwatDateEntry Documentation</property>
-					<property name="link">http://docs.silverorange.com/Swat/SwatDateEntry.html</property>
-				</widget>
-
 				<widget class="SwatFormField">
 					<property name="title" type="string">Date with a Calendar (default)</property>
 					<widget class="SwatDateEntry" id="default_date">
@@ -36,11 +31,6 @@
 			</widget>
 			<widget class="SwatFieldset">
 				<property name="title">Time Examples</property>
-
-				<widget class="DemoDocumentationLink">
-					<property name="title">SwatTimeEntry Documentation</property>
-					<property name="link">http://docs.silverorange.com/Swat/SwatTimeEntry.html</property>
-				</widget>
 
 				<widget class="SwatFormField">
 					<property name="title" type="string">Time (default)</property>

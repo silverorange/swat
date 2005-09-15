@@ -4,11 +4,6 @@
 		<property name="title">Fieldset Demos</property>
 		<widget class="SwatForm" id="my_form">
 
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatFieldset Documentation</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatFieldset.html</property>
-			</widget>
-
 			<widget class="SwatFieldset">
 				<property name="title">Checkboxes</property>
 

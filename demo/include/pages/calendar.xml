@@ -4,11 +4,6 @@
 		<property name="title">SwatCalendar Demo</property>
 		<widget class="SwatForm" id="my_form">
 
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatCalendar Documentation</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatCalendar.html</property>
-			</widget>
-
 			<widget class="SwatFormField">
 				<property name="title" type="string">Select a Date</property>
 				<widget class="SwatCalendar" id="calendar" />

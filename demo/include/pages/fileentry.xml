@@ -5,11 +5,6 @@
 		<widget class="SwatForm" id="my_form">
 			<property name="action">index.php?demo=FileEntry</property>
 
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatFileEntry Documentation</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatFileEntry.html</property>
-			</widget>
-
 			<widget class="SwatFormField">
 				<property name="title" type="string">Entry</property>
 				<widget class="SwatFileEntry" id="file_entry">

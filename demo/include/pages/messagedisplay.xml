@@ -1,9 +1,4 @@
 <?xml version='1.0' standalone='yes'?>
 <swat-interface>
-	<widget class="DemoDocumentationLink">
-		<property name="title">SwatMessageDisplay Documentation</property>
-		<property name="link">http://docs.silverorange.com/Swat/SwatMessageDisplay.html</property>
-	</widget>
-
 	<widget class="SwatMessageDisplay" id="message_display" />
 </swat-interface>

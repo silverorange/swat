@@ -4,11 +4,6 @@
 		<property name="title">SwatDisclosure Demos</property>
 		<widget class="SwatForm" id="my_form">
 
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatDisclosure Documentation</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatDisclosure.html</property>
-			</widget>
-
 			<widget class="SwatDisclosure">
 				<property name="title">Checkboxes</property>
 
