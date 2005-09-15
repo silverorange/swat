@@ -73,61 +73,6 @@
 				</widget>
 			</widget>
 
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatTableView Documentation</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatTableView.html</property>
-			</widget>
-
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatTableStore Documentation</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatTableStore.html</property>
-			</widget>
-
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatTableViewColumn Documentation</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatTableViewColumn.html</property>
-			</widget>
-
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatTableViewCheckboxColumn Documentation</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatTableViewCheckboxColumn.html</property>
-			</widget>
-
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatTextCellRenderer</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatTextCellRenderer.html</property>
-			</widget>
-
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatCheckCellRenderer</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatCheckCellRenderer.html</property>
-			</widget>
-
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatCheckboxCellRenderer</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatCheckboxCellRenderer.html</property>
-			</widget>
-
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatDateCellRenderer</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatDateCellRenderer.html</property>
-			</widget>
-
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatMoneyCellRenderer</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatMoneyCellRenderer.html</property>
-			</widget>
-
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatActions</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatActions.html</property>
-			</widget>
-
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatActionItem</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatActionItem.html</property>
-			</widget>
-
 		</widget>
 	</widget>
 </swat-interface>

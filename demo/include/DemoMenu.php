@@ -12,35 +12,35 @@
  */
 class DemoMenu
 {
+	protected $entries = array(
+		'Calendar' =>      'SwatCalendar',
+		'ChangeOrder' =>   'SwatChangeOrder',
+		'Checkbox' =>      'SwatCheckbox',
+		'ColorEntry' =>    'SwatColorEntry',
+		'DateEntry' =>     'SwatDateEntry',
+		'Disclosure' =>    'SwatDisclosure',
+		'Entry' =>         'SwatEntry',
+		'Fieldset' =>      'SwatFieldset',
+		'FileEntry' =>     'SwatFileEntry',
+		'Flydown' =>       'SwatFlydown',
+		'Frame' =>         'SwatFrame',
+		'MessageDisplay' =>'SwatMessageDisplay',
+		'Pagination' =>    'SwatPagination',
+		'PasswordEntry' => 'SwatPasswordEntry',
+		'RadioList' =>     'SwatRadioList',
+		'StringDemo' =>    'SwatString',
+		'TableView' =>     'SwatTableView',
+		'Textarea' =>      'SwatTextarea',
+		'TimeZoneEntry' => 'SwatTimeZoneEntry',
+		'ToolLink' =>      'SwatToolLink',
+		'YesNoFlydown' =>  'SwatYesNoFlydown'
+	);
+
 	public function display()
 	{
-		$demos = array(
-			'Calendar' =>      'SwatCalendar',
-			'ChangeOrder' =>   'SwatChangeOrder',
-			'Checkbox' =>      'SwatCheckbox',
-			'ColorEntry' =>    'SwatColorEntry',
-			'DateEntry' =>     'SwatDateEntry',
-			'Disclosure' =>    'SwatDisclosure',
-			'Entry' =>         'SwatEntry',
-			'Fieldset' =>      'SwatFieldset',
-			'FileEntry' =>     'SwatFileEntry',
-			'Flydown' =>       'SwatFlydown',
-			'Frame' =>         'SwatFrame',
-			'MessageDisplay' =>'SwatMessageDisplay',
-			'Pagination' =>    'SwatPagination',
-			'PasswordEntry' => 'SwatPasswordEntry',
-			'RadioList' =>     'SwatRadioList',
-			'StringDemo' =>    'SwatString',
-			'TableView' =>     'SwatTableView',
-			'Textarea' =>      'SwatTextarea',
-			'TimeZoneEntry' => 'SwatTimeZoneEntry',
-			'ToolLink' =>      'SwatToolLink',
-			'YesNoFlydown' =>  'SwatYesNoFlydown'
-		);
-		
 		echo '<span class="menutitle">Swat Widgets</span>:<ul>';
 
-		foreach ($demos as $demo => $title) {
+		foreach ($this->entries as $demo => $title) {
 			echo '<li><a href="index.php?demo='.$demo.'">'.$title.'</a></li>';
 		}
 

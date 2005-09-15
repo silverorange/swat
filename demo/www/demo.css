@@ -106,6 +106,6 @@ div.note {
 	background: #fe9;
 }
 
-a.demo-documentation {
-	float: right;
+#documentation-menu {
+	background: #f00;
 }

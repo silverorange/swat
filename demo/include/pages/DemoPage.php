@@ -4,6 +4,7 @@ require_once 'Swat/SwatPage.php';
 require_once 'Swat/SwatNavBar.php';
 require_once 'Swat/SwatUI.php';
 require_once '../include/DemoMenu.php';
+require_once '../include/DemoDocumentationMenu.php';
 
 /**
  * A page in the Swat Demo Application
@@ -19,6 +20,7 @@ class DemoPage extends SwatPage
 {
 	protected $ui = null;
 	protected $navbar = null;
+	protected $documentation_menu = null;
 
 	protected $start_time = 0;
 	
@@ -30,7 +32,7 @@ class DemoPage extends SwatPage
 
 		$this->navbar = new SwatNavBar();
 		$this->ui = new SwatUI();
-		$this->ui->addClassPathMap('Demo', '../include/');
+		$this->ui->mapClassPrefixToPath('Demo', '../include/');
 	}
 
 	public function init()
@@ -51,6 +53,8 @@ class DemoPage extends SwatPage
 
 		$this->navbar->createEntry($this->app->title, 'index.php');
 		$this->navbar->createEntry($this->demo);
+
+		$this->documentation_menu = $this->getDocumentationMenu();
 	}
 
 	/**
@@ -86,11 +90,145 @@ class DemoPage extends SwatPage
 		$this->menu->display();
 		$this->layout->menu = ob_get_clean();
 
+		ob_start();
+		$this->documentation_menu->display();
+		$this->layout->documentation_menu = ob_get_clean();
+
 		$this->layout->execution_time = round(microtime(true) - $this->start_time, 4);
 
 		ob_start();
 		$this->navbar->display();
 		$this->layout->navbar = ob_get_clean();
+	}
+
+	protected function getDocumentationMenu()
+	{
+		switch ($this->demo) {
+		case 'Calendar':
+			$entries = array('SwatCalendar');
+			break;
+
+		case 'ChangeOrder':
+			$entries = array('SwatChangeOrder');
+			break;
+
+		case 'Checkbox':
+			$entries = array(
+				'SwatCheckbox',
+				'SwatCheckboxList',
+				'SwatCheckboxTree'
+				);
+			break;
+
+		case 'ColorEntry':
+			$entries = array(
+				'SwatColorEntry',
+				'SwatSimpleColorEntry'
+				);
+			break;
+
+		case 'DateEntry':
+			$entries = array(
+				'SwatDateEntry',
+				'SwatTimeEntry'
+				);
+			break;
+
+		case 'Disclosure':
+			$entries = array('SwatDisclosure');
+			break;
+
+		case 'Entry':
+			$entries = array(
+				'SwatEntry',
+				'SwatEmailEntry',
+				'SwatIntegerEntry',
+				'SwatFloatEntry',
+				'SwatMoneyEntry'
+				);
+			break;
+
+		case 'Fieldset':
+			$entries = array('SwatFieldset');
+			break;
+
+		case 'FileEntry':
+			$entries = array('SwatFileEntry');
+			break;
+
+		case 'Flydown':
+			$entries = array(
+				'SwatFlydown',
+				'SwatFlydownTree',
+				'SwatCascadeFlydown',
+				'SwatFlydownOption'
+				);
+			break;
+
+		case 'Frame':
+			$entries = array('SwatFrame');
+			break;
+
+		case 'MessageDisplay':
+			$entries = array('SwatMessageDisplay');
+			break;
+
+		case 'Pagination':
+			$entries = array('SwatPagination');
+			break;
+
+		case 'PasswordEntry':
+			$entries = array(
+				'SwatPasswordEntry',
+				'SwatConfirmPasswordEntry'
+				);
+			break;
+
+		case 'RadioList':
+			$entries = array('SwatRadioList');
+			break;
+
+		case 'StringDemo':
+			$entries = array('SwatString');
+			break;
+
+		case 'TableView':
+			$entries = array(
+				'SwatTableView',
+				'SwatTableStore',
+				'SwatTableViewColumn',
+				'SwatTableViewCheckboxColumn',
+				'SwatCheckboxCellRenderer',
+				'SwatCheckCellRenderer',
+				'SwatDateCellRenderer',
+				'SwatMoneyCellRenderer',
+				'SwatTextCellRenderer',
+				'SwatActions',
+				'SwatActionItem'
+				);
+			break;
+
+		case 'Textarea':
+			$entries = array(
+				'SwatTextarea',
+				'SwatTextareaEditor'
+				);
+			break;
+
+		case 'TimeZoneEntry':
+			$entries = array('SwatTimeZoneEntry');
+			break;
+
+		case 'YesNoFlydown':
+			$entries = array('SwatYesNoFlydown');
+			break;
+
+		default:
+			$entries = array();
+			break;
+		}
+
+		return new DemoDocumentationMenu($entries);
 	}
 }
 

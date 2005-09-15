@@ -4,19 +4,9 @@
 		<property name="title">SwatTextarea Demos</property>
 		<widget class="SwatForm" id="my_form">
 
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatTextarea Documentation</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatTextarea.html</property>
-			</widget>
-
 			<widget class="SwatFormField">
 				<property name="title">Plain Text Area</property>
 				<widget class="SwatTextarea" id="textarea" />
-			</widget>
-
-			<widget class="DemoDocumentationLink">
-				<property name="title">SwatTextareaEditor Documentation</property>
-				<property name="link">http://docs.silverorange.com/Swat/SwatTextareaEditor.html</property>
 			</widget>
 
 			<widget class="SwatFormField">
