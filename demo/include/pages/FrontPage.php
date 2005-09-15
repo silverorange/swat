@@ -27,6 +27,8 @@ class FrontPage extends DemoPage
 		$this->ui->init();
 
 		$this->navbar->createEntry($this->app->title);
+
+		$this->documentation_menu = $this->getDocumentationMenu();
 	}
 
 	public function initUI()
