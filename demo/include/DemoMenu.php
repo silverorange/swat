@@ -38,7 +38,7 @@ class DemoMenu
 
 	public function display()
 	{
-		echo '<span class="menutitle">Swat Widgets</span>:<ul>';
+		echo '<ul>';
 
 		foreach ($this->entries as $demo => $title) {
 			echo '<li><a href="index.php?demo='.$demo.'">'.$title.'</a></li>';
