@@ -33,9 +33,7 @@ abstract class SwatXMLRPCServer extends SwatPage
 
 		ob_start();
 		$server->handleCall();
-		// TODO: remove workaround when php-5.0.5 is commonplace
-		$x = ob_get_clean();
-		$this->layout->response = $x;
+		$this->layout->response = ob_get_clean();
 	}
 
 	/**
