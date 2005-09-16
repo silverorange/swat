@@ -74,13 +74,13 @@ div.note {
 }
 
 #demo-content .swat-frame {
-	background: #d58935 url(images/swat-frame-title-background.png) top left repeat-x;
+	background: #d58935 url(../images/swat-frame-title-background.png) top left repeat-x;
 	border: none;
 	padding-top: 0;
 }
 
 #demo-content .swat-frame h2 {
-	background: url(images/swat-frame-background-topright.png) top right no-repeat;
+	background: url(../images/swat-frame-background-topright.png) top right no-repeat;
 	border: none;
 	color: #fff;
 	padding: 6px 16px 2px 16px;
@@ -91,7 +91,7 @@ div.note {
 }
 
 #demo-content .swat-frame-contents {
-	background: #fff url(images/swat-frame-contents-background.png) top left repeat-x;
+	background: #fff url(../images/swat-frame-contents-background.png) top left repeat-x;
 	border-left: 1px solid #d58935;
 	border-right: 1px solid #d58935;
 	border-bottom: 1px solid #d58935;
