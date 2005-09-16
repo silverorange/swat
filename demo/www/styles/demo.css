@@ -69,10 +69,6 @@ div.note {
 	background: #fe9;
 }
 
-#documentation-menu {
-	background: #f00;
-}
-
 #demo-content .swat-frame {
 	background: #d58935 url(../images/swat-frame-title-background.png) top left repeat-x;
 	border: none;
@@ -106,7 +102,7 @@ form { margin: none; }
 	position: relative;
 }
 
-#footer {
+.debug {
 	font-size: xx-small;
-	color: #ccc;
+	color: #fff;
 }
