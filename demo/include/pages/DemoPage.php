@@ -201,6 +201,7 @@ class DemoPage extends SwatPage
 				'SwatCheckboxCellRenderer',
 				'SwatCheckCellRenderer',
 				'SwatDateCellRenderer',
+				'SwatImageCellRenderer',
 				'SwatMoneyCellRenderer',
 				'SwatTextCellRenderer',
 				'SwatActions',
