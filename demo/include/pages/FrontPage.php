@@ -34,9 +34,10 @@ class FrontPage extends DemoPage
 	public function initUI()
 	{
 		$content = $this->ui->getWidget('content');
-		$content->content = "Welcome to the Swat Widget Gallery. ".
-			"Here you will find a number of examples of the different widgets ".
-			"Swat provides.";
+		$content->content =
+			"This Swat demo site includes examples of Swat widgets and classes. ".
+			"Each demo includes the SwatML source and links to the related ".
+			"documentation for the classes used.";
 	}
 
 	public function process()
