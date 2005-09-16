@@ -67,6 +67,19 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	public $alt = '';
 
 	/**
+	 * How text should align with the images rendered by this renderer
+	 *
+	 * Valid values are:
+	 *
+	 * - middle
+	 * - left
+	 * - right
+	 *
+	 * @var string
+	 */
+	public $align = null;
+
+	/**
 	 * Renders the contents of this cell
 	 *
 	 * @see SwatCellRenderer::render()
@@ -75,6 +88,9 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	{
 		$image_tag = new SwatHtmlTag('img');
 		$image_tag->src = $this->src;
+
+		if ($this->align !== null)
+			$image_tag->align = $this->align;
 
 		if ($this->values !== null)
 			$image_tag->src = vsprintf($image_tag->src, $this->values);
