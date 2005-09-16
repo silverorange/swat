@@ -16,9 +16,12 @@ class TableView extends DemoPage
 	public function initUI()
 	{
 		$data = array(
-			array('Apple', 'red', false, true, new SwatDate('2005-09-01'), 0.5),
-			array('Orange', 'orange', false, false, new SwatDate('2005-04-20'), 0.75),
-			array('Strawberry', 'red', true, false, new SwatDate('2005-07-05'), 0.6)
+			array('images/apple.png', 32, 38, 'Apple', 'red', false, true,
+				new SwatDate('2005-09-01'), 0.5),
+			array('images/orange.png', 32, 32, 'Orange', 'orange', false, false,
+				new SwatDate('2005-04-20'), 0.75),
+			array('images/strawberry.png', 32, 27, 'Strawberry', 'red', true, false,
+				new SwatDate('2005-07-05'), 0.6)
 		);
 		
 		$table_view = $this->ui->getWidget('table_view');
@@ -26,12 +29,15 @@ class TableView extends DemoPage
 		
 		foreach ($data as $datum) {
 			$fruit = new FruitObject();
-			$fruit->title = $datum[0];
-			$fruit->color = $datum[1];
-			$fruit->makes_jam = $datum[2];
-			$fruit->makes_pie = $datum[3];
-			$fruit->harvest_date = $datum[4];
-			$fruit->cost = $datum[5];
+			$fruit->image = $datum[0];
+			$fruit->image_width = $datum[1];
+			$fruit->image_height = $datum[2];
+			$fruit->title = $datum[3];
+			$fruit->color = $datum[4];
+			$fruit->makes_jam = $datum[5];
+			$fruit->makes_pie = $datum[6];
+			$fruit->harvest_date = $datum[7];
+			$fruit->cost = $datum[8];
 
 			$table_store->addRow($fruit);
 		}
@@ -50,6 +56,9 @@ class TableView extends DemoPage
  */
 class FruitObject
 {
+	public $image = '';
+	public $image_width = 0;
+	public $image_height = 0;
 	public $title = '';
 	public $color = '';
 	public $makes_jam = false;
