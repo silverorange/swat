@@ -41,14 +41,14 @@ class SwatChangeOrder extends SwatControl implements SwatState
 	 *
 	 * @var string
 	 */
-	public $width = '400px';
+	public $width = '300px';
 
 	/**
 	 * Height of the order box (in stylesheet units)
 	 *
 	 * @var string
 	 */
-	public $height = '150px';
+	public $height = '180px';
 
 	/**
 	 * Onclick HTML attribute of the buttons
