@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Date.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatCascadeFlydown.php';
 require_once 'Swat/SwatState.php';
@@ -158,7 +157,10 @@ class SwatTimeZoneEntry extends SwatControl implements SwatState
 	 * tree-structured array of areas, regions, and subregions.
 	 *
 	 * @param array area_whitelist an array of valid area names.
-	 **/
+	 *
+	 * @return array a tree-structured array of areas regions and subregions
+	 *                inside the specified whitelist of areas.
+	 */
 	private function parseAreaWhitelist($area_whitelist)
 	{
 		$regions = array();
@@ -187,9 +189,9 @@ class SwatTimeZoneEntry extends SwatControl implements SwatState
 	 *
 	 * Builds the class variable array $areas.
 	 *
-	 * @param $time_zone_list array a tree structured array of areas, regions,
-	 * 		  and subregions
-	 **/
+	 * @param array $time_zone_list a tree structured array of areas, regions,
+	 *                               and subregions.
+	 */
 	private function setAreas($time_zone_list)
 	{
 		ksort($time_zone_list);
@@ -207,11 +209,11 @@ class SwatTimeZoneEntry extends SwatControl implements SwatState
 	 *
 	 * Builds the class variable array $regions.
 	 *
-	 * @param $time_zone_list array a tree structured array of areas, regions,
-	 * 		  and subregions.
-	 * @param $area string the region's area.
-	 * @param $prefix string a list of parent regions appended to sub-regions.
-	 **/
+	 * @param array $time_zone_list a tree structured array of areas, regions,
+	 *                               and subregions.
+	 * @param string $area the region's area.
+	 * @param string $prefix a list of parent regions appended to sub-regions.
+	 */
 	private function setRegions($time_zone_list, $area, $prefix = '')
 	{
 		ksort($time_zone_list);
@@ -237,8 +239,10 @@ class SwatTimeZoneEntry extends SwatControl implements SwatState
 	 *
 	 * Returns the area part of a full time-zone.
 	 *
+	 * @param string $time_zone the time-zone identifier to get the area from.
+	 *
 	 * @return string an area name.
-	 **/
+	 */
 	private function getArea($time_zone)
 	{
 		if ($time_zone === null)
@@ -252,8 +256,11 @@ class SwatTimeZoneEntry extends SwatControl implements SwatState
 	 *
 	 * Returns the region part of a full time-zone.
 	 *
+	 * @param string $time_zone the time-zone identifier to get the
+	 *                           region from.
+	 *
 	 * @return string a region name.
-	 **/
+	 */
 	private function getRegion($time_zone)
 	{
 		if ($time_zone === null)
