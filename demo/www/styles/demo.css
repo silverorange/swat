@@ -102,6 +102,10 @@ form { margin: none; }
 	position: relative;
 }
 
+.demo-menu-title {
+	margin: 0;
+}
+
 .debug {
 	font-size: xx-small;
 	color: #fff;

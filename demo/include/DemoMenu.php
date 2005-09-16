@@ -38,7 +38,7 @@ class DemoMenu
 
 	public function display()
 	{
-		echo '<ul>';
+		echo '<h3 class="demo-menu-title">Demos:</h3><ul>';
 
 		foreach ($this->entries as $demo => $title) {
 			echo '<li><a href="index.php?demo='.$demo.'">'.$title.'</a></li>';
