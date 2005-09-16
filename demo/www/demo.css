@@ -1,80 +1,43 @@
-body {
-	font-family: sans-serif;
-	margin: 0;
-	padding: 0;
-	font-size: 13px;
-	color: #333;
-}
+@import url("http://swat.silverorange.com/skins/swat/main.css");
 
-#menu {
-	width: 15em;
-	padding: 15px;
+#demo-menu {
+	width: 182px;
 	position: absolute;
-	top: 30px;
-	left: 0;
+	top: 16px;
+	left: 10%;
+	font-size: 13px;
 }
 
-#menu ul {
+#demo-menu ul {
 	list-style: circle;
 	margin: 0;
-	padding : 1em;
+	padding: 0.5em 0 0.5em 2em;
 	color: #999;
 }
 
-#menu ul li {
+#demo-menu ul li {
 	margin-bottom: 0.3em;
+	font-weight: bold;
 }
 
-#content {
-	margin-left: 16em;
-	margin-right: 1em;
-	padding-top: 16px;
-}
-
-#header {
-	background: #426c9e;
-	padding: 0.5em 1em;
-	color: #fff;
-	border-bottom: 3px #81aed5 solid;
-}
-
-#header h1 {
-	color: #fff;
-	margin: 0;
-	font-size: 140%;
-}
-
-#header h1 a {
-	color: #fff;
-}
-
-#footer {
-	clear: both;
-	font-size: 85%;
-	color: #999;
-	margin: 1em;
-}
-
-a:link		{ color: #3f5ace;  }
-a:visited	{ color: #3f5ace; }
-a:hover		{ color: #333; }
-a:active	{ color: #000; }
-
-pre {
-	font-size: 85%;
-}
-
-#source_code {
-	padding: 1em;
-	margin: 0 0 1em 0;
-	background: #f7f5f3;
-	border: 1px solid #e7ddc8;
-	color: #333;
+#demo-content {
+	margin-left: 10%;
+	margin-right: 10%;
+	padding: 16px 0 0 15em;
+	font-size: 13px;
 }
 
 #source_code pre {
 	margin: 0;
-	padding: 0;
+	padding: 1em;
+	background: #f7f5f3;
+	border: 1px solid #e7ddc8;
+	color: #333;
+	font-size: small;
+}
+
+#source_code h3 {
+	margin: 1em 0.5em 0.5em 0;
 }
 
 .text-block {
@@ -108,4 +71,41 @@ div.note {
 
 #documentation-menu {
 	background: #f00;
+}
+
+#demo-content .swat-frame {
+	background: #d58935 url(images/swat-frame-title-background.png) top left repeat-x;
+	border: none;
+	padding-top: 0;
+}
+
+#demo-content .swat-frame h2 {
+	background: url(images/swat-frame-background-topright.png) top right no-repeat;
+	border: none;
+	color: #fff;
+	padding: 6px 16px 2px 16px;
+	margin: 0;
+	position: static;
+	display: block;
+	font-size: 130%;
+}
+
+#demo-content .swat-frame-contents {
+	background: #fff url(images/swat-frame-contents-background.png) top left repeat-x;
+	border-left: 1px solid #d58935;
+	border-right: 1px solid #d58935;
+	border-bottom: 1px solid #d58935;
+}
+
+img { border: none; }
+form { margin: none; }
+
+#container {
+	clear: both;
+	position: relative;
+}
+
+#footer {
+	font-size: xx-small;
+	color: #ccc;
 }
