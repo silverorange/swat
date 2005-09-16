@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 	<?=$this->html_head_entries?>
-	<style type="text/css" media="all">@import "demo.css";</style>
+	<style type="text/css" media="all">@import "styles/demo.css";</style>
 	<title><?=$this->title?></title>
 	<link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
