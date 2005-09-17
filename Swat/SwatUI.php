@@ -98,16 +98,16 @@ class SwatUI extends SwatObject
 	 */
 	public function loadFromXML($filename)
 	{
-		$xmlfile = null;
+		$xml_file = null;
 
 		if (file_exists($filename)) {
-			$xmlfile = $filename;
+			$xml_file = $filename;
 		} else {
 			$paths = explode(':', ini_get('include_path'));
 
 			foreach ($paths as $path) {
 				if (file_exists($path.'/'.$filename)) {
-					$xmlfile = $path.'/'.$filename;
+					$xml_file = $path.'/'.$filename;
 					break;
 				}
 			}
@@ -117,17 +117,17 @@ class SwatUI extends SwatObject
 		// filename of the xml
 		$class_map_reversed = array_reverse($this->class_map, true);
 		foreach ($class_map_reversed as $prefix => $path) {
-			if (strpos($xmlfile, strtolower($prefix)) !== false &&
+			if (strpos($xml_file, strtolower($prefix)) !== false &&
 				is_callable(array($prefix, 'gettext'))) {
 
 				$this->translation_callback = array($prefix, 'gettext');
 			}
 		}
 
-		if ($xmlfile === null)
+		if ($xml_file === null)
 			throw new SwatException("SwatML file not found: '$filename'.");
 
-		$xml = simplexml_load_file($xmlfile);
+		$xml = simplexml_load_file($xml_file);
 
 		$this->parseUI($xml, $this->root);
 	}
