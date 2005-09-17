@@ -34,7 +34,7 @@
 				<widget class="SwatMoneyEntry" id="money_CA">
 					<property name="value" type="float">1234567.89</property>
 					<property name="locale">en_CA</property>
-					<property name="display_currency" value="true" type="boolean" />	
+					<property name="display_currency" type="boolean">true</property>
 				</widget>
 			</widget>
 
@@ -43,7 +43,7 @@
 				<widget class="SwatMoneyEntry" id="money_FR">
 					<property name="value" type="float">1234567.89</property>
 					<property name="locale">fr_FR.utf8</property>
-					<property name="display_currency" value="true" type="boolean" />	
+					<property name="display_currency" type="boolean">true</property>
 				</widget>
 			</widget>
 
