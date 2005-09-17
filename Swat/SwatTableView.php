@@ -104,6 +104,32 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function init()
+
+	/**
+	 * Initializes this table-view
+	 *
+	 * This initializes all columns and extra rows in this table-view as well
+	 * as the group if the group is set.
+	 *
+	 * @see SwatWidget::init()
+	 */
+	public function init()
+	{
+		parent::init();
+
+		$columns = $this->getColumns();
+		foreach ($columns as $column)
+			$column->init();
+
+		foreach ($this->extra_rows as $row)
+			$row->init();
+
+		if ($this->group !== null)
+			$this->group->init();
+	}
+
+	// }}}
 	// {{{ public function appendColumn()
 
 	/**
@@ -116,7 +142,6 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		$this->columns[] = $column;
 
 		$column->view = $this;
-		$column->init();
 	}
 
 	// }}}
@@ -173,7 +198,6 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		$this->extra_rows[] = $row;
 
 		$row->view = $this;
-		$row->init();
 	}
 
 	// }}}
