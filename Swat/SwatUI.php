@@ -127,7 +127,19 @@ class SwatUI extends SwatObject
 		if ($xml_file === null)
 			throw new SwatException("SwatML file not found: '{$filename}'.");
 
-		$xml = simplexml_load_file($xml_file);
+		$document = new DOMDocument();
+		$document->load($xml_file);
+
+		// make sure we are using the correct document type
+		if (!isset($document->doctype) ||
+			strcmp($document->doctype->name, 'swat-interface') != 0) {
+			throw new SwatException('SwatUI can only parse SwatML documents.');
+		}
+
+		if (!$document->validate())
+			throw new SwatException('Invalid SwatML');
+
+		$xml = simplexml_import_dom($document);
 
 		$this->parseUI($xml, $this->root);
 	}
