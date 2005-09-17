@@ -22,7 +22,9 @@ class DemoDocumentationMenu extends DemoMenu
 	public function display()
 	{
 		if (count($this->entries) > 0) {
-			echo '<p id="documentation-menu"><span class="menutitle">Documentation Links</span>: ';
+			echo '<p id="documentation-menu"><span class="menutitle">';
+			echo (count($this->entries) > 1) ? 'Documentation Links' : 'Documentation Link';
+			echo '</span>: ';
 
 			$first = true;
 			foreach ($this->entries as $class) {
