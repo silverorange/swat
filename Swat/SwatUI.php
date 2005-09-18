@@ -514,18 +514,6 @@ class SwatUI extends SwatObject
 		case 'data':
 			$object->parent->addMappingToRenderer($object, $value, $name);
 			return null;
-		default:
-			if ($value == 'false' || $value == 'true' )
-				trigger_error(__CLASS__.': Possible missing type="boolean" '.
-					'attribute on property element', E_USER_NOTICE);
-
-			if (is_numeric($value))
-				trigger_error(__CLASS__.': Possible missing type="integer" '.
-					' or type="float" attribute on property element',
-					E_USER_NOTICE);
-
-			// default: handle as a string
-			return $this->translateValue($value, $translatable, $object);
 		}
 	}
 
