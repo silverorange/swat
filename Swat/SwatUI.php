@@ -139,9 +139,7 @@ class SwatUI extends SwatObject
 		if (!$document->validate())
 			throw new SwatException('Invalid SwatML');
 
-		$xml = simplexml_import_dom($document);
-
-		$this->parseUI($xml, $this->root);
+		$this->parseUI($document->documentElement, $this->root);
 	}
 
 	// }}}
@@ -287,25 +285,34 @@ class SwatUI extends SwatObject
 	 */
 	private function parseUI($node, $parent_widget)
 	{
-		foreach ($node->children() as $child_name => $child_node) {
-			if ($child_name == 'property') {
-				$this->parseProperty($child_node, $parent_widget);
-			} else {
-				$parsed_object = $this->parseNode($child_node);
+		foreach ($node->childNodes as $child_node) {
+			
+			// only parse element nodes. ignore text nodes
+			if ($child_node->nodeType == XML_ELEMENT_NODE) {
 
-				$this->checkParsedObject($parsed_object, $child_name);
+				if (strcmp($child_node->nodeName, 'property') == 0) {
+					$this->parseProperty($child_node, $parent_widget);
+				} else {
+					$parsed_object = $this->parseNode($child_node);
 
-				/*
-				 * No exceptions were thrown and the widget has an id
-				 * so add to widget list to make it look-up-able.
-				 */
-				if ($child_name == 'widget' && $parsed_object->id !== null) {
-					$this->widgets[$parsed_object->id] = $parsed_object;
+					$this->checkParsedObject($parsed_object,
+						$child_node->nodeName);
+
+					/*
+					 * No exceptions were thrown and the widget has an id
+					 * so add to widget list to make it look-up-able.
+					 */
+					if (strcmp($child_node->nodeName, 'widget') == 0 &&
+						$parsed_object->id !== null) {
+						$this->widgets[$parsed_object->id] = $parsed_object;
+					}
+
+					$this->attachToParent($parsed_object, $parent_widget);
+					$this->parseUI($child_node, $parsed_object);
 				}
 
-				$this->attachToParent($parsed_object, $parent_widget);
-				$this->parseUI($child_node, $parsed_object);
 			}
+
 		}
 	}
 
@@ -391,11 +398,8 @@ class SwatUI extends SwatObject
 	 */
 	private function parseNode($node)
 	{
-		if (isset($node['class']))
-			$class = (string)$node['class'];
-		else
-			throw new SwatException('Widget or object element is missing '.
-				"required 'class' attribute.");
+		// class is required in the DTD
+		$class = $node->getAttribute('class');
 
 		if (!class_exists($class)) {
 
@@ -411,8 +415,9 @@ class SwatUI extends SwatObject
 
 		$node_object = new $class();
 
-		if (isset($node['id']))
-			$node_object->id = (string)$node['id'];
+		// id is optional in the DTD
+		if ($node->hasAttribute('id'))
+			$node_object->id = $node->getAttribute('id');
 
 		return $node_object;
 	}
@@ -432,15 +437,10 @@ class SwatUI extends SwatObject
 	{
 		$class_properties = get_class_vars(get_class($object));
 
-		if (!isset($property_node['name'])) {
-			$class_name = get_class($object);
-
-			throw new SwatException("Property is missing required ".
-				"'name' attribute for the widget or object '{$class_name}'.");
-		}
-
-		$name = trim((string)$property_node['name']);
-		$value = (string)$property_node;
+		// name is required in the DTD
+		$name = trim($property_node->getAttribute('name'));
+		$value = $property_node->nodeValue;
+		
 		$array_property = false;
 
 		if (ereg('^(.*)\[(.*)\]$', $name, $regs)) {
@@ -455,13 +455,15 @@ class SwatUI extends SwatObject
 				"class '{$class_name}' but is used in SwatML.");
 		}
 
-		$translatable = (isset($property_node['translatable']) &&
-			strtolower((string)$property_node['translatable']) == 'yes');
+		// translatable is always set in the DTD
+		$translatable = (strcmp($property_node->getAttribute('translatable'),
+			'yes') == 0);
 
-		$type = (isset($property_node['type'])) ?
-			(string)$property_node['type'] : null;
+		// type is always set in the DTD
+		$type = $property_node->getAttribute('type');
 
-		$parsed_value = $this->parseValue($name, $value, $type, $translatable, $object);
+		$parsed_value =
+			$this->parseValue($name, $value, $type, $translatable, $object);
 
 		if ($array_property) {
 			if (!is_array($object->$name))
