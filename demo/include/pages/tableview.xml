@@ -14,7 +14,7 @@
 				<object class="SwatTableViewColumn">
 					<property name="title">Fruit</property>
 					<object class="SwatImageCellRenderer">
-						<property name="src" type="data">image</property>
+						<property name="image" type="data">image</property>
 						<property name="width" type="data">image_width</property>
 						<property name="height" type="data">image_height</property>
 						<property name="align" type="string">middle</property>
