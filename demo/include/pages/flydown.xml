@@ -16,7 +16,7 @@
 				</widget>
 
 				<widget class="SwatFormField">
-					<property name="title" type="string">Tree Fldyown</property>
+					<property name="title" type="string">Tree Flydown</property>
 					<widget class="SwatTreeFlydown" id="tree_flydown">
 						<property name="show_blank" type="boolean">false</property>
 					</widget>
