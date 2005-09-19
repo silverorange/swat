@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Date.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatCascadeFlydown.php';
 require_once 'Swat/SwatState.php';
