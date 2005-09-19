@@ -34,7 +34,7 @@
 				</widget>
 
 				<widget class="SwatFormField">
-					<property name="title" tpye="string">Cascade To</property>
+					<property name="title" type="string">Cascade To</property>
 					<widget class="SwatCascadeFlydown" id="cascade_to">
 						<property name="show_blank" type="boolean">false</property>
 					</widget>
