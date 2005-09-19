@@ -3,7 +3,7 @@
 
 <!ENTITY % WidgetObject "widget | object" >
 
-<!ELEMENT swat-interface (%WidgetObject;)*>
+<!ELEMENT swatml (%WidgetObject;)*>
 
 <!-- base widgets -->
 <!ELEMENT widget (property*, (%WidgetObject;)*)>

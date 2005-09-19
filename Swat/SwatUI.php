@@ -132,7 +132,7 @@ class SwatUI extends SwatObject
 
 		// make sure we are using the correct document type
 		if ($document->doctype === null ||
-			strcmp($document->doctype->name, 'swat-interface') != 0) {
+			strcmp($document->doctype->name, 'swatml') != 0) {
 			throw new SwatException('SwatUI can only parse SwatML documents.');
 		}
 
