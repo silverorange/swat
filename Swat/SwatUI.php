@@ -501,19 +501,31 @@ class SwatUI extends SwatObject
 	private function parseValue($name, $value, $type, $translatable, $object)
 	{
 		switch ($type) {
+		case 'string':
+			return $this->translateValue($value, $translatable, $object);
 		case 'boolean':
 			return ($value == 'true') ? true : false;
 		case 'integer':
 			return intval($value);
 		case 'float':
 			return floatval($value);
-		case 'string':
-			return $this->translateValue($value, $translatable, $object);
 		case 'constant':
 			return $this->evaluateConstant($value, $object);
 		case 'data':
 			$object->parent->addMappingToRenderer($object, $value, $name);
 			return null;
+
+		case 'implicit-string':
+			if ($value == 'false' || $value == 'true' )
+				trigger_error(__CLASS__.': Possible missing type="boolean" '.
+					'attribute on property element', E_USER_NOTICE);
+
+			if (is_numeric($value))
+				trigger_error(__CLASS__.': Possible missing type="integer" '.
+					' or type="float" attribute on property element',
+					E_USER_NOTICE);
+
+			return $this->translateValue($value, $translatable, $object);
 		}
 	}
 
