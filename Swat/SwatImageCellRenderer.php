@@ -12,26 +12,30 @@ require_once 'Swat/SwatCellRenderer.php';
 class SwatImageCellRenderer extends SwatCellRenderer
 {
 	/**
-	 * Image src
+	 * The relative uri of the image file for this image renderer
 	 *
-	 * The src attribute in the XHTML img tag.
+	 * This is the src attribute in the XHTML img tag.
 	 *
 	 * @var string
 	 */
-	public $src;
+	public $image;
 
 	/**
-	 * Optional array of values to for $src
+	 * An optional array of values to substitute into $image
 	 *
-	 * Uses vsprintf() syntax, for example: $src = mydir/%s.%s; $values =
-	 * array('myfilename', 'ext');
+	 * Uses vsprintf() syntax, for example:
+	 *
+	 * <code>
+	 * $image = 'mydir/%s.%s';
+	 * $values = array('myfilename', 'ext');
+	 * </code>
 	 *
 	 * @var array
 	 */
 	public $values = null;
 
 	/**
-	 * Image height
+	 * The height of the image for this image renderer
 	 *
 	 * The height attribute in the XHTML img tag.
 	 *
@@ -40,7 +44,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	public $height = 0;
 
 	/**
-	 * Image width
+	 * The width of the image for this image renderer
 	 *
 	 * The width attribute in the XHTML img tag.
 	 *
@@ -49,7 +53,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	public $width = 0;
 
 	/**
-	 * Image title
+	 * The title of the image for this image renderer
 	 *
 	 * The title attribute in the XHTML img tag.
 	 *
@@ -58,7 +62,9 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	public $title = '';
 
 	/**
-	 * Image alt text
+	 * The alternate text for this image renderer
+	 *
+	 * This text is used by screen-readers and is required.
 	 *
 	 * The alt attribute in the XHTML img tag.
 	 *
@@ -87,13 +93,13 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	public function render()
 	{
 		$image_tag = new SwatHtmlTag('img');
-		$image_tag->src = $this->src;
+		$image_tag->src = $this->image;
 
 		if ($this->align !== null)
 			$image_tag->align = $this->align;
 
 		if ($this->values !== null)
-			$image_tag->src = vsprintf($image_tag->src, $this->values);
+			$image_tag->image = vsprintf($image_tag->image, $this->values);
 
 		if ($this->height > 0)
 			$image_tag->height = $this->height;
