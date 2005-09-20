@@ -20,8 +20,12 @@ class SwatException extends Exception
 	 */
 	public function process()
 	{
-		if (ini_get('display_errors'))
-			echo $this->toXHTML();
+		if (ini_get('display_errors')) {
+			if (isset($_SERVER['REQUEST_URI']))
+				echo $this->toXHTML();
+			else
+				echo $this->getSummary();
+		}
 
 		if (ini_get('log_errors'))
 			$this->log();
