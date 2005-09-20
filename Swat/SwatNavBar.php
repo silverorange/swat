@@ -196,19 +196,39 @@ class SwatNavBar extends SwatControl
 		$i = 0;
 
 		foreach ($this->entries as $entry) {
+			
+			// display separator
 			if ($i > 0)
 				echo ' &#187; ';
 
-			if ($entry->link !== null && ($link_last_entry || $i < $count)) {
-				$link_tag = new SwatHtmlTag('a');
-				$link_tag->href = $entry->link;
-				$link_tag->content = $entry->title;
-				$link_tag->display();
-			} else {
-				echo $entry->title;
-			}
+			// link all entries or link all but the last entry
+			$link = ($link_last_entry || $i < $count);
+			
+			$this->displayEntry($entry, $link);
 
 			$i++;
+		}
+	}
+
+	// }}}
+	// {{{ protected function displayEntry()
+
+	/**
+	 * Displays an entry in this navigational bar
+	 *
+	 * @param SwatNavBarEntry $entry the entry to display.
+	 * @param boolean $link whether or not to hyperlink the given entry if the
+	 *                       entry has a link set.
+	 */
+	protected function displayEntry(SwatNavBarEntry $entry, $link = true)
+	{
+		if ($entry->link !== null && $link) {
+			$link_tag = new SwatHtmlTag('a');
+			$link_tag->href = $entry->link;
+			$link_tag->content = $entry->title;
+			$link_tag->display();
+		} else {
+			echo $entry->title;
 		}
 	}
 
