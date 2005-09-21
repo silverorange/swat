@@ -114,13 +114,14 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$list_div->close();
 
 		$controls_div = new SwatHtmlTag('div');
-		$controls_div->class = 'swat-order-controls';
+		$controls_div->class = 'swat-order-control-buttons';
 		$controls_div->open();
 
 		$top_btn = new SwatHtmlTag('input');
 		$top_btn->type = 'button';
-		$top_btn->value = Swat::_('Move To Top');
+		$top_btn->value = Swat::_('Move to Top');
 		$top_btn->onclick = "{$this->id}_obj.moveToTop();";
+		$top_btn->id = "swat-order-control-top";
 		$top_btn->display();
 		
 		echo '<br />';
@@ -129,6 +130,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$up_btn->type = 'button';
 		$up_btn->value = Swat::_('Move Up');
 		$up_btn->onclick = "{$this->id}_obj.moveUp();";
+		$up_btn->id = "swat-order-control-up";
 		$up_btn->display();
 		
 		echo '<br />';
@@ -137,14 +139,16 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$down_btn->type = 'button';
 		$down_btn->value = Swat::_('Move Down');
 		$down_btn->onclick = "{$this->id}_obj.moveDown();";
+		$down_btn->id = "swat-order-control-down";
 		$down_btn->display();
 		
 		echo '<br />';
 		
 		$bottom_btn = new SwatHtmlTag('input');
 		$bottom_btn->type = 'button';
-		$bottom_btn->value = Swat::_('Move To Button');
+		$bottom_btn->value = Swat::_('Move to Bottom');
 		$bottom_btn->onclick = "{$this->id}_obj.moveToBottom();";
+		$bottom_btn->id = "swat-order-control-bottom";
 		$bottom_btn->display();
 
 		$controls_div->close();
