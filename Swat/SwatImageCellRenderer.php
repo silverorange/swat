@@ -93,13 +93,14 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	public function render()
 	{
 		$image_tag = new SwatHtmlTag('img');
-		$image_tag->src = $this->image;
 
 		if ($this->align !== null)
 			$image_tag->align = $this->align;
 
 		if ($this->values !== null)
-			$image_tag->image = vsprintf($image_tag->image, $this->values);
+			$image_tag->src = vsprintf($this->image, $this->values);
+		else
+			$image_tag->src = $this->image;
 
 		if ($this->height > 0)
 			$image_tag->height = $this->height;
