@@ -17,7 +17,7 @@
 <!ELEMENT object (property*, object*)>
 <!ATTLIST object
 	class CDATA #REQUIRED
-	id ID #IMPLIED
+	id CDATA #IMPLIED
 	>
 
 <!-- interface element properties -->
