@@ -212,6 +212,23 @@ div.swat-order-control:hover {
 	overflow: auto;
 	list-style: none;
 	padding: 0;
+	float: left;
+}
+
+.swat-order-control-buttons {
+	float: left;
+	text-align: center;
+}
+
+.swat-order-control-buttons input {
+	margin: 0.5em;
+	width: 7em;
+}
+
+.swat-order-control-buttons input#swat-order-control-top,
+.swat-order-control-buttons input#swat-order-control-bottom {
+	font-size: 85%;
+	width: 10em;
 }
 
 .swat-form-field-checkbox {
