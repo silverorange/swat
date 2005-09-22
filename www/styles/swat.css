@@ -2,15 +2,19 @@
 
 .swat-tool-link {
 	padding: 0.5em;
-	background: #f9f6f0;
+	background: #f9f6f0 url(../images/swat-tool-link.png) top left repeat-x;
 	border: 1px solid #e7ddc8;
 	font-weight: bold;
 	margin-right: 0.5em;
 }
 
 .swat-tool-link-create {
-	background: #f9f6f0 url(../images/swat-tool-link-background.png) top left repeat-x;
+	background: #f9f6f0 url(../images/swat-tool-link-create.png) top left repeat-x;
 	padding-left: 34px;
+}
+
+.swat-tool-link-change-order {
+	font-weight: normal;
 }
 
 /* SwatEntry */
