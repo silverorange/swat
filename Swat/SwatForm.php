@@ -111,7 +111,7 @@ class SwatForm extends SwatContainer
 	 *
 	 * @return boolean true if the form has been processed.
 	 */
-	public function hasBeenProcessed()
+	public function isProcessed()
 	{
 		return $this->processed;
 	}
