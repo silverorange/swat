@@ -1,22 +1,29 @@
-function SwatExpandableCheckboxTree(id)
+function SwatExpandableCheckboxTree(id, dependent_boxes)
 {
 	var self = this;
 	this.id = id;
 
-	// get all checkboxes in this tree
-	this.check_list = document.getElementsByName(id + '[]');
+	// This flag sets the behaviour of checkboxes. If it is true then checking
+	// a parent will check its children and checking all children of a parent
+	// will check the parent.
+	if (dependent_boxes) {
 
-	this.has_add_event = (document.addEventListener) ? true : false;
-	
-	
-	if (this.has_add_event) {
-		for (var i = 0; i < this.check_list.length; i++) {
-			this.check_list[i].addEventListener('change', handleClick, false);
+		// get all checkboxes in this tree
+		this.check_list = document.getElementsByName(id + '[]');
+
+		this.has_add_event = (document.addEventListener) ? true : false;
+		
+		
+		if (this.has_add_event) {
+			for (var i = 0; i < this.check_list.length; i++) {
+				this.check_list[i].addEventListener('change', handleClick, false);
+			}
+		} else {
+			for (var i = 0; i < this.check_list.length; i++) {
+				this.check_list[i].attachEvent('onclick', handleClick);
+			}
 		}
-	} else {
-		for (var i = 0; i < this.check_list.length; i++) {
-			this.check_list[i].attachEvent('onclick', handleClick);
-		}
+
 	}
 
 	function handleClick(event)
