@@ -400,7 +400,7 @@ class SwatForm extends SwatContainer
 
 		if ($this->autofocus) {
 			if ($this->default_focused_control === null)
-				$focus_id = $this->getFirstDescendent('SwatControl')->id;
+				$focus_id = $this->getFirstDescendant('SwatControl')->id;
 			else
 				$focus_id = $this->default_focused_control->id;
 
