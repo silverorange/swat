@@ -201,6 +201,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	public function getFirstDescendant($class_name)
 	{
+		if (!class_exists($class_name))
+			return null;
+
 		$out = null;
 
 		foreach ($this->children as $child_widget) {
