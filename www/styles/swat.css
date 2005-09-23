@@ -271,6 +271,38 @@ div.swat-order-control:hover {
 	margin-left: 1em;
 }
 
+.swat-expandable-checkbox-tree input {
+	vertical-align: middle;
+}
+
+.swat-expandable-checkbox-tree ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.swat-expandable-checkbox-tree ul li ul li {
+	margin-left: 36px;
+	/*border: 1px solid red;*/
+}
+
+.swat-expandable-checkbox-tree ul li ul li.swat-expandable-checkbox-tree-expander {
+	margin-left: 20px;
+/*	border: 1px solid;*/
+}
+
+.swat-expandable-checkbox-tree-opened {
+	display: block;
+}
+
+.swat-expandable-checkbox-tree-closed {
+	display: none;
+}
+
+.swat-expandable-checkbox-tree-image {
+	vertical-align: text-top;
+}
+
 .swat-check-all input {
 	vertical-align: middle;
 }
