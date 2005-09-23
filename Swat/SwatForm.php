@@ -181,8 +181,8 @@ class SwatForm extends SwatContainer
 	{
 		$raw_data = $this->getRawFormData();
 
-		$this->processed = (!isset($raw_data['process']) ||
-			$raw_data['process'] != $this->id);
+		$this->processed = (isset($raw_data['process']) &&
+			$raw_data['process'] == $this->id);
 		
 		if ($this->processed) {
 			foreach ($this->children as &$child)
