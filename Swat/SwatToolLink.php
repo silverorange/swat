@@ -141,7 +141,7 @@ class SwatToolLink extends SwatControl
 
 		case 'change-order':
 			$title = Swat::_('Change Order');
-			$class = 'swat-tool-link-order';
+			$class = 'swat-tool-link-change-order';
 			break;
 
 		case 'help':

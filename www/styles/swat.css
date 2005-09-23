@@ -1,7 +1,7 @@
 .swat-hidden { display: none; }
 
 .swat-tool-link {
-	padding: 0.5em;
+	padding: 0.5em 0.6em;
 	background: #f9f6f0 url(../images/swat-tool-link.png) top left repeat-x;
 	border: 1px solid #e7ddc8;
 	font-weight: bold;
@@ -435,7 +435,7 @@ span.swat-time-span {
 }
 
 .swat-actions, .swat-form-footer-field {
-        background: #f7f5f3;
+        background: #f7f5f3 url(../images/swat-form-footer.png) top left repeat-x;
 	margin: 15px -15px -15px -15px;
 	padding: 1em;
 }
