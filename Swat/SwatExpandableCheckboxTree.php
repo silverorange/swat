@@ -13,12 +13,30 @@ require_once 'Swat/SwatCheckboxTree.php';
 class SwatExpandableCheckboxTree extends SwatCheckboxTree
 {
 	/**
-	 * The initial state of the disclosure
+	 * The initial state of the tree
+	 *
+	 * All branches are either open or closed.
 	 *
 	 * @var boolean
 	 */
 	public $open = true;
 
+	/**
+	 * Whether or not the state of child boxes depends on the state of
+	 * its parent boxes and the state of parent boxes depends on the state of
+	 * all its children
+	 *
+	 * @var boolean
+	 */
+	public $dependent_boxes = true;
+
+	/**
+	 * Creates a new expandable checkbox tree
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
@@ -26,6 +44,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		$this->addJavaScript('swat/javascript/swat-expandable-checkbox-tree.js');
 	}
 
+	/**
+	 * Displays this expandable checkbox tree
+	 */
 	public function display()
 	{
 		if (!$this->visible)
@@ -173,8 +194,13 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 
-		echo "var {$this->id}_obj = new SwatExpandableCheckboxTree('{$this->id}');\n";
-
+		$dependent_boxes = ($this->dependent_boxes) : 'true' ? 'false';
+		
+		printf("var %s_obj = new SwatExpandableCheckboxTree('%s', %s);\n",
+			$this->id,
+			$this->id,
+			$dependent_boxes);
+		
 		echo "\n//]]>";
 		echo '</script>';
 	}
