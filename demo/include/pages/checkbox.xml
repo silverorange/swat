@@ -41,6 +41,14 @@
 				</widget>
 				
 			</widget>
+			<widget class="SwatFieldset">
+				<property name="title">Expandable Checkbox Tree</property>
+
+				<widget class="SwatExpandableCheckboxTree" id="expandable_checkbox_tree">
+					<property name="open" type="boolean">true</property>
+				</widget>
+				
+			</widget>
 
 		</widget>
 	</widget>
