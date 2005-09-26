@@ -100,6 +100,8 @@ form { margin: none; }
 #container {
 	clear: both;
 	position: relative;
+	border-top: 1px solid transparent; /* Good browser see this */
+	_border-top: 1px solid #fffbd6; /* IE sees this (and needs it for position) */
 }
 
 .demo-menu-title {
