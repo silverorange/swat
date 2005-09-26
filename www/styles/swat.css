@@ -95,18 +95,14 @@
 }
 
 .swat-frame h2, .swat-frame h3 {
-	position: relative;
-	top: -0.7em;
-	display: inline;
-	margin: 0 10px;
-	padding: 0 6px;
+	margin: 1px;
+	padding: 2px 6px;
 	color: #6b5d40;
-	background: #FFF;
+	background: #fff url(../images/swat-frame-header.png) bottom left repeat-x;
 }
 
 .swat-frame-contents {
-	margin: 0;
-	padding: 0 16px 16px 16px;
+	padding: 16px;
 }
 
 
