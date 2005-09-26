@@ -142,13 +142,16 @@ label.swat-control {
 
 .swat-form-field-error {
 	border: 1px solid #C00;
+	background: #fce8e7;
+	padding: 0.5em;
+	margin: 0.5em 0;
 }
 
 .swat-form-field-errormsg {
-	font-color: #C00;
-	background: #FCC;
+	color: #C00;
 	font-size: 85%;
 	padding: 0.3em;
+	margin: 1em -0.5em -0.5em -0.5em;
 }
 
 .swat-form-footer-field {
