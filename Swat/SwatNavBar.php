@@ -73,7 +73,7 @@ class SwatNavBar extends SwatControl
 	{
 		if (isset($this->entries[$position])) {
 			$old_entry = $this->entries[$position];
-			$this->elements[$position] = $new_entry;
+			$this->entries[$position] = $new_entry;
 
 			return $old_entry;
 		}
