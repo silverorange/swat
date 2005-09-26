@@ -68,7 +68,8 @@ class SwatNavBar extends SwatControl
 	 * @thows SwatException
 	 */
 
-	public function replaceEntryByPosition($position, SwatNavBar $new_entry)
+	public function replaceEntryByPosition($position,
+		SwatNavBarEntry $new_entry)
 	{
 		if (isset($this->entries[$position])) {
 			$old_entry = $this->entries[$position];
