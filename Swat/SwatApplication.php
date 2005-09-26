@@ -290,12 +290,12 @@ class SwatApplication extends SwatObject
 	 * Static convenience method to initialize a local variable with a value 
 	 * from one of the PHP global arrays.
 	 *
-	 * @param $name string the name of the variable to lookup.
+	 * @param string $name the name of the variable to lookup.
 	 *
-	 * @param $types integer a bitwise combination of self::VAR_*
+	 * @param integer $types a bitwise combination of self::VAR_*
 	 *                    constants.
 	 *
-	 * @param $default mixed the value to return if variable is not found in
+	 * @param mixed $default the value to return if variable is not found in
 	 *                        the super-global arrays.
 	 *
 	 * @return mixed the value of the variable.
