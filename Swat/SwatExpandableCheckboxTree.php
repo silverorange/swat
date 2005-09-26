@@ -194,7 +194,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 
-		$dependent_boxes = ($this->dependent_boxes) : 'true' ? 'false';
+		$dependent_boxes = ($this->dependent_boxes) ? 'true' : 'false';
 		
 		printf("var %s_obj = new SwatExpandableCheckboxTree('%s', %s);\n",
 			$this->id,
