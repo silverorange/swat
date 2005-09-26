@@ -13,6 +13,19 @@ require_once 'Swat/SwatEntry.php';
 class SwatPasswordEntry extends SwatEntry
 {
 	/**
+	 * Creates a new password entry and defaults the size to 20
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+		$this->size = 20;
+	}
+
+	/**
 	 * Displays this password entry widget
 	 *
 	 * @see SwatEntry::display()
