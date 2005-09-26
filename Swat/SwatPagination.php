@@ -12,6 +12,8 @@ require_once 'Swat/SwatHtmlTag.php';
  */
 class SwatPagination extends SwatControl
 {
+	// {{{ public properties
+
 	/**
 	 * Link
 	 *
@@ -67,6 +69,9 @@ class SwatPagination extends SwatControl
 	 */
 	public $current_record = 0;
 
+	// }}}
+	// {{{ protected properties
+
 	/**
 	 * The next page to display
 	 *
@@ -92,6 +97,9 @@ class SwatPagination extends SwatControl
 	 */
 	protected $total_pages = 0;
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new pagination widget
 	 *
@@ -107,6 +115,47 @@ class SwatPagination extends SwatControl
 
 		$this->requires_id = true;
 	}
+
+	// }}}
+	// {{{ public function getResultsMessage()
+
+	/**
+	 * Get Results Message
+	 *
+	 * Takes the current state of a {@link SwatPagination} widget and
+	 * outputs a human readable summary of what is currently shown.
+	 *
+	 * @param $unit string Type of unit being returned (default 'record')
+	 * @param $unit string Plural type of unit being returned (default
+	 *        'records')
+	 *
+	 * @return string Results message
+	 */
+	public function getResultsMessage($unit = null, $unit_plural = null)
+	{
+		if ($unit === null)
+			$unit = Swat::_('record');
+
+		if ($unit_plural === null)
+			$unit_plural = Swat::_('records');
+
+
+		if ($this->total_records == 0)
+			return sprintf(Swat::_('No %s.'), $unit_plural);
+
+		elseif ($this->total_records == 1)
+			return sprintf(Swat::_('1 %s.'), $unit);
+
+		else
+			return sprintf(Swat::_('%d %s, displaying %d to %d'),
+				$this->total_records,
+				$unit_plural,
+				$this->current_record + 1,
+				min($this->current_record + $this->page_size, $this->total_records));
+	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this pagination widget
@@ -133,6 +182,9 @@ class SwatPagination extends SwatControl
 		}
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	/**
 	 * Processes this pagination widget
 	 *
@@ -145,6 +197,9 @@ class SwatPagination extends SwatControl
 
 		$this->current_record = $this->current_page * $this->page_size;
 	}
+
+	// }}}
+	// {{{ protected function displayPrev()
 
 	/**
 	 * Displays the previous page link
@@ -167,6 +222,9 @@ class SwatPagination extends SwatControl
 		}
 	}
 
+	// }}}
+	// {{{ protected function displayPosition()
+
 	/**
 	 * Displays the current page position
 	 *
@@ -182,6 +240,9 @@ class SwatPagination extends SwatControl
 
 		$div->display();
 	}
+
+	// }}}
+	// {{{ protected function displayNext()
 
 	/**
 	 * Displays the next page link
@@ -203,6 +264,9 @@ class SwatPagination extends SwatControl
 			$span->display();
 		}
 	}
+
+	// }}}
+	// {{{ protected function displayPages()
 
 	/**
 	 * Displays a smart list of pages
@@ -262,6 +326,9 @@ class SwatPagination extends SwatControl
 		}
 	}
 
+	// }}}
+	// {{{ private function getLink()
+
 	/**
 	 * Gets the base link for all page links
 	 *
@@ -292,6 +359,9 @@ class SwatPagination extends SwatControl
 		return $link;
 	}
 
+	// }}}
+	// {{{ private function calculatePages()
+
 	/**
 	 * Calculates page totals
 	 *
@@ -312,6 +382,8 @@ class SwatPagination extends SwatControl
 		else
 			$this->prev_page = -1;
 	}
+
+	// }}}
 }
 
 ?>
