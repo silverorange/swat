@@ -194,12 +194,12 @@ class SwatNavBar extends SwatControl
 			return;
 
 		$count = $this->getCount();
-		$i = 0;
+		$i = 1;
 
 		foreach ($this->entries as $entry) {
 			
 			// display separator
-			if ($i > 0)
+			if ($i > 1)
 				echo ' &#187; ';
 
 			// link all entries or link all but the last entry
