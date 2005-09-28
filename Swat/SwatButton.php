@@ -22,7 +22,7 @@ class SwatButton extends SwatControl
 	 *
 	 * @var string
 	 */
-	public $title;
+	public $title = null;
 
 	/**
 	 * The custom CSS class of this tool link
@@ -71,9 +71,9 @@ class SwatButton extends SwatControl
 		parent::init();
 
 		if ($this->stock_id === null) 
-			$this->setFromStock('submit');
+			$this->setFromStock('submit', false);
 		else
-			$this->setFromStock($this->stock_id);
+			$this->setFromStock($this->stock_id, false);
 	}
 
 	/**
