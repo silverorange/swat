@@ -16,11 +16,11 @@ class TableView extends DemoPage
 	public function initUI()
 	{
 		$data = array(
-			array('images/apple.png', 32, 38, 'Apple', 'red', false, true,
+			array('images/apple.png', 28, 28, 'Apple', 'red', false, true,
 				new SwatDate('2005-09-01'), 0.5),
-			array('images/orange.png', 32, 32, 'Orange', 'orange', false, false,
+			array('images/orange.png', 28, 28, 'Orange', 'orange', false, false,
 				new SwatDate('2005-04-20'), 0.75),
-			array('images/strawberry.png', 32, 27, 'Strawberry', 'red', true, false,
+			array('images/strawberry.png', 28, 28, 'Strawberry', 'red', true, false,
 				new SwatDate('2005-07-05'), 0.6)
 		);
 		
