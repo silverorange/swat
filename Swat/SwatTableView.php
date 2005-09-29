@@ -68,6 +68,19 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	private $columns = array();
 
 	/**
+	 * The columns of this table-view indexed by their unique identifier
+	 *
+	 * A unique identifier is not required so this array does not necessarily
+	 * contain all columns in the view. It serves as an efficient data
+	 * structure to lookup columns by their id.
+	 *
+	 * The array is structures as id => column reference.
+	 *
+	 * @var array
+	 */
+	private $columns_by_id = array();
+
+	/**
 	 * The grouping object to use for this table
 	 *
 	 * @var SwatTableViewGroup
@@ -140,6 +153,14 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	public function appendColumn(SwatTableViewColumn $column)
 	{
 		$this->columns[] = $column;
+
+		if ($column->id !== null) {
+			if (array_key_exists($column->id, $this->columns_by_id))
+				throw new SwatException(sprintf("A column with the id '%s' ".
+					'already exists in this table view.', $column->id));
+
+			$this->columns_by_id[$column->id] = $column;
+		}
 
 		$column->view = $this;
 	}
@@ -238,12 +259,11 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 */
 	public function getColumn($id)
 	{
-		$columns = $this->getColumns();
-		foreach ($columns as $column)
-			if ($id == $column->id)
-				return $column;
+		if (!array_key_exists($id, $this->columns_by_id))
+			throw new SwatException("Column with an id of '{$id}' not found.");
 
-		throw new SwatException("Column with an id of '$id' not found.");
+		return $this->columns_by_id[$id];
+
 	}
 
 	// }}}
@@ -261,12 +281,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 */
 	public function hasColumn($id)
 	{
-		$columns = $this->getColumns();
-		foreach ($columns as $column)
-			if ($id == $column->id)
-				return true;
-
-		return false;
+		return array_key_exists($id, $this->columns_by_id);
 	}
 
 	// }}}
