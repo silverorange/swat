@@ -184,6 +184,7 @@ label.swat-control {
 
 .swat-disclosure-image {
 	border: none;
+	vertical-align: text-top;
 }
 
 .swat-disclosure-anchor {
