@@ -4,6 +4,7 @@ require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
 require_once 'Swat/SwatFlydownOption.php';
+require_once 'Swat/SwatFlydownDivider.php';
 
 /**
  * A flydown (aka combo-box) selection widget
@@ -121,15 +122,23 @@ class SwatFlydown extends SwatControl implements SwatState
 			$select_tag->open();
 
 			foreach ($options as $flydown_option) {
-				$option_tag->value = (string)$flydown_option->value;
-				$option_tag->removeAttribute('selected');
+				if ($flydown_option instanceof SwatFlydownDivider) {
+					$optgroup_tag = new SwatHtmlTag('optgroup');
+					$optgroup_tag->label = $flydown_option->title;
+					$optgroup_tag->class = 'swat-flydown-divider';
+					$optgroup_tag->content = '';
+					$optgroup_tag->display();
+				} else {
+					$option_tag->value = (string)$flydown_option->value;
+					$option_tag->removeAttribute('selected');
 
-				if ((string)$this->value === (string)$flydown_option->value)
-					$option_tag->selected = 'selected';
+					if ((string)$this->value === (string)$flydown_option->value)
+						$option_tag->selected = 'selected';
 
-				$option_tag->content = $flydown_option->title;
+					$option_tag->content = $flydown_option->title;
 
-				$option_tag->display();
+					$option_tag->display();
+				}
 			}
 
 			$select_tag->close();
@@ -196,6 +205,22 @@ class SwatFlydown extends SwatControl implements SwatState
 			$this->options[] = $value;
 		else
 			$this->options[] = new SwatFlydownOption($value, $title);
+	}
+
+	// }}}
+	// {{{ public function addDivider()
+
+	/**
+	 * Adds a divider to this flydown
+	 *
+	 * A divider is an unselectable flydown option.
+	 *
+	 * @param string $title the title of the divider. Defaults to two em
+	 *                       dashes.
+	 */
+	public function addDivider($title = '&#8212;&#8212;')
+	{
+		$this->options[] = new SwatFlydownDivider('', $title);
 	}
 
 	// }}}
