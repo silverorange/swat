@@ -247,6 +247,29 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function hasColumn()
+
+	/**
+	 * Returns true if a column with the given id exists within this
+	 * table view
+	 *
+	 * @param string $id the unique identifier of the column within this
+	 *                    table view to check the existance of.
+	 *
+	 * @return boolean true if the column exists in this table view and
+	 *                  false if it does not.
+	 */
+	public function hasColumn($id)
+	{
+		$columns = $this->getColumns();
+		foreach ($columns as $column)
+			if ($id == $column->id)
+				return true;
+
+		return false;
+	}
+
+	// }}}
 	// {{{ public function display()
 
 	/**
@@ -296,9 +319,10 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		foreach ($this->columns as $column)
 			$column->process();
 
-		// TODO: Make this fail gracefully
-		$items = $this->getColumn('checkbox');
-		$this->checked_items = $items->getItems();
+		if ($this->hasColumn('checkbox')) {
+			$items = $this->getColumn('checkbox');
+			$this->checked_items = $items->getItems();
+		}
 	}
 
 	// }}}
