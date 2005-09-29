@@ -1,13 +1,14 @@
 function SwatDisclosure(id)
 {
 	this.image = document.getElementById(id + '_img');
+	this.input = document.getElementById(id + '_input');
 	this.div = document.getElementById(id);
 
 	// get initial state
-	if (this.div.className == 'swat-disclosure-container-opened') {
-		this.opened = true;
+	if (this.input.value == 'opened') {
+		this.open();
 	} else {
-		this.opened = false;
+		this.close();
 	}
 }
 
@@ -17,13 +18,26 @@ SwatDisclosure.close_text = 'close';
 SwatDisclosure.prototype.toggle = function()
 {
 	if (this.opened) {
-		this.div.className = 'swat-disclosure-container-closed';
-		this.image.src = 'swat/images/disclosure-closed.png';
-		this.image.alt = SwatDisclosure.open_text;
+		this.close();
 	} else {
-		this.div.className = 'swat-disclosure-container-opened';
-		this.image.src = 'swat/images/disclosure-open.png';
-		this.image.alt = SwatDisclosure.close_text;
+		this.open();
 	}
-	this.opened = !this.opened;
+}
+
+SwatDisclosure.prototype.close = function()
+{
+	this.div.className = 'swat-disclosure-container-closed';
+	this.image.src = 'swat/images/disclosure-closed.png';
+	this.image.alt = SwatDisclosure.open_text;
+	this.input.value = 'closed';
+	this.opened = false;
+}
+
+SwatDisclosure.prototype.open = function()
+{
+	this.div.className = 'swat-disclosure-container-opened';
+	this.image.src = 'swat/images/disclosure-open.png';
+	this.image.alt = SwatDisclosure.close_text;
+	this.input.value = 'opened';
+	this.opened = true;
 }

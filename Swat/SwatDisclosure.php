@@ -65,6 +65,12 @@ class SwatDisclosure extends SwatContainer
 
 		$anchor->open();
 
+		$input = new SwatHtmlTag('input');
+		$input->type = 'hidden';
+		$input->value = ($this->open) ? 'opened' : 'closed';
+		$input->id = $this->id.'_input';
+		$input->display();
+
 		$img = new SwatHtmlTag('img');
 
 		if ($this->open) {
