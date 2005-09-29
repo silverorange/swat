@@ -126,6 +126,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 			$this->selected = null;
 
 		echo '<div class="swat-actions">';
+		echo '<div class="swat-actions-controls">';
 
 		$label = new SwatHtmlTag('label');
 		$label->for = $this->id.'_action_flydown';
@@ -135,6 +136,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$this->action_flydown->display();
 		echo ' ';
 		$this->apply_button->display();
+
+		echo '</div>';
 
 		foreach ($this->action_items as $item) {
 			if ($item->widget !== null) {
