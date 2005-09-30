@@ -112,6 +112,19 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 	}
 
 	/**
+	 * Gets a cell renderers of this column by its unique identifier
+	 *
+	 * @param string the unique identifier of the cell renderer to get.
+	 * 
+	 * @return SwatCellRenderer the cell renderer of this column with the
+	 *                           provided unique identifier.
+	 */
+	public function getRenderer($renderer_id)
+	{
+		return $this->renderers->getRenderer($renderer_id);
+	}
+
+	/**
 	 * Gets a cell renderer in this column based on its ordinal position
 	 *
 	 * @param $position the ordinal position of the cell renderer to get. The
