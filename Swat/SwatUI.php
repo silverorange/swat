@@ -582,7 +582,7 @@ class SwatUI extends SwatObject
 			$parsed_exp .= $term.$op;
 		}
 
-		return eval("return $parsed_exp;");
+		return constant($parsed_exp);
 	}
 
 	// }}}
