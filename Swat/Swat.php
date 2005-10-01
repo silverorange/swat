@@ -72,6 +72,46 @@ class Swat
 		return dngettext(Swat::GETTEXT_DOMAIN,
 			$singular_message, $plural_message, $number);
 	}
+
+	/**
+	 * Displays the methods of an object
+	 *
+	 * This is useful for debugging.
+	 *
+	 * @param mixed $object the object whose methods are to be displayed.
+	 */
+	public static function displayMethods($object)
+	{
+		echo sprintf(Swat::_('Methods for class %s:'), get_class($object));
+		echo '<ul>';
+
+		foreach (get_class_methods(get_class($object)) as $method_name)
+			echo '<li>', $method_name, '</li>';
+
+		echo '</ul>';
+	}
+
+	/**
+	 * Displays the properties of an object
+	 *
+	 * This is useful for debugging.
+	 *
+	 * @param mixed $object the object whose properties are to be displayed.
+	 */
+	public static function displayProperties($object)
+	{
+		$class = get_class($object);
+
+		echo sprintf(Swat::_('Properties for class %s:'), $class);
+		echo '<ul>';
+
+		foreach (get_class_vars($class) as $property_name => $value) {
+			$instance_value = $object->$property_name;
+			echo '<li>', $property_name, ' = ', $instance_value, '</li>';
+		}
+
+		echo '</ul>';
+	}
 }
 
 ?>
