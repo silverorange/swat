@@ -42,6 +42,8 @@ abstract class SwatCellRenderer extends SwatObject
 	 *
 	 * Sub-classes can redefine this to set attributes on the TH tag.
 	 *
+	 * The returned array is of the form 'attribute' => value.
+	 *
 	 * @return array an array of attributes to apply to the TH tag of the
 	 *                column that contains this cell renderer.
 	 */
@@ -54,6 +56,8 @@ abstract class SwatCellRenderer extends SwatObject
 	 * Gets TD-tag attributes
 	 *
 	 * Sub-classes can redefine this to set attributes on the TD tag.
+	 *
+	 * The returned array is of the form 'attribute' => value.
 	 *
 	 * @return array an array of attributes to apply to the TD tag of this cell
 	 *                renderer.
