@@ -45,6 +45,15 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	public $value = null;
 
 	/**
+	 * The CSS class to use for this link cell renderer
+	 *
+	 * This allows subclasses to set a custom style.
+	 *
+	 * @var string
+	 */
+	protected $class = null;
+
+	/**
 	 * Renders the contents of this cell
 	 *
 	 * @see SwatCellRenderer::render()
@@ -53,6 +62,9 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	{
 		$anchor = new SwatHtmlTag('a');
 		$anchor->content = $this->title;
+
+		if ($this->class !== null)
+			$anchor->class = $this->class;
 
 		if ($this->value === null)
 			$anchor->href = $this->link;
