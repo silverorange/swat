@@ -30,6 +30,12 @@
 	padding: 4px;
 }
 
+optgroup.swat-flydown-divider {
+/*	font-style: normal;*/
+	/*font-weight: bold;*/
+	font-size: 90%;
+	padding-left: 0.25em; /* for mozilla */
+}
 
 /* SwatMessages  */
 .swat-message-display-notification {
@@ -357,7 +363,7 @@ table.swat-table-view {
 .swat-table-view th a:link, .swat-table-view th a:visited { color: #333; }
 .swat-table-view th a:hover, .swat-table-view th a:active { color: #000; }
 
-.swat-table-view td.swat-control-cell-renderer {
+.swat-table-view td.swat-image-link-cell-renderer {
 	width: 32px;
 }
 td.swat-table-view-group {
@@ -432,6 +438,10 @@ span.swat-time-span {
 
 .swat-actions {
 	text-align: right;
+}
+
+.swat-actions-controls {
+	margin-bottom: 0.5em;
 }
 
 .swat-actions, .swat-form-footer-field {
