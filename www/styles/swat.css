@@ -1,15 +1,22 @@
 .swat-hidden { display: none; }
 
 .swat-tool-link {
-	padding: 0.5em 0.6em;
+	padding: 0.4em 0.6em;
 	background: #f9f6f0 url(../images/swat-tool-link.png) top left repeat-x;
 	border: 1px solid #e7ddc8;
 	font-weight: bold;
+	text-decoration: none;
 	margin-right: 0.5em;
 }
 
-.swat-tool-link-create {
+.swat-tool-link:hover {
+	text-decoration: underline;
+	border: 1px solid #ccb898;
+}
+
+.swat-tool-link-create:link, .swat-tool-link-create:visited {
 	background: #f9f6f0 url(../images/swat-tool-link-create.png) top left repeat-x;
+	color: #008e36;
 	padding-left: 34px;
 }
 
