@@ -79,7 +79,8 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 *
 	 * @var integer
 	 */
-	private $default_direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
+	private $default_direction =
+		SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
 
 	/**
 	 * The mode of ordering
@@ -101,6 +102,12 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 */
 	public function init()
 	{
+		// if there is no id the get variables do not work properly so we
+		// enforce an id
+		if ($this->id === null)
+			throw new SwatException('SwatTableViewOrderableColumn objects '.
+				'require an id to be set.');
+
 		$this->initFromGetVariables();
 	}
 
@@ -358,7 +365,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 		$key_orderby = $this->view->id.'_orderby';
 		$key_orderbydir = $this->view->id.'_orderbydir';
 
-		// TODO: is id a required field of this class?
 		if (isset($_GET[$key_orderby]) && $_GET[$key_orderby] == $this->id) {
 			$this->view->orderby_column = $this;
 
