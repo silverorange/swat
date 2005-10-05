@@ -575,11 +575,6 @@ class SwatUI extends SwatObject
 			$pos += strlen($token);
 			$constant = trim($token);
 
-			// there are two operators side by side
-			if (strlen($constant) == 0)
-				throw new SwatException('Invalid constant expression syntax '.
-					'in SwatML.');
-
 			// get a default scope for the constant
 			if (strpos($constant, '::') === false)
 				$constant = get_class($object) . '::' . $constant;
