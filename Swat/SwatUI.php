@@ -510,7 +510,7 @@ class SwatUI extends SwatObject
 		case 'float':
 			return floatval($value);
 		case 'constant':
-			return $this->evaluateConstant($value, $object);
+			return $this->parseConstantExpression($value, $object);
 		case 'data':
 			$object->parent->addMappingToRenderer($object, $value, $name);
 			return null;
@@ -554,7 +554,7 @@ class SwatUI extends SwatObject
 	}
 
 	// }}}
-	// {{{ private function evaluateConstant()
+	// {{{ private function parseConstantExpression()
 
 	/**
 	 * Evaluate a constant property value
@@ -564,25 +564,55 @@ class SwatUI extends SwatObject
 	 *
 	 * @return string the value of the class constant.
 	 */
-	private function evaluateConstant($expression, $object)
+	private function parseConstantExpression($expression, $object)
 	{
-		$terms = split("[+|&]", $expression);
-		$offset = 0;
-		$parsed_exp = '';
+		$token = strtok($expression, '|&');
+		$pos = 0;
+		$value = null;
+		$operator = null;
 
-		foreach ($terms as $term) {
-			$offset += strlen($term);
-			$op = ($offset < strlen($expression)) ? substr($expression, $offset, 1) : '';
-			$offset += 1;
-			$term  = trim($term);
+		while ($token !== false) {
+			$pos += strlen($token);
+			$constant = trim($token);
 
-			if (!strpos($term, '::'))
-				$term = get_class($object) . '::' . $term;
+			// there are two operators side by side
+			if (strlen($constant) == 0)
+				throw new SwatException('Invalid constant expression syntax '.
+					'in SwatML.');
 
-			$parsed_exp .= $term.$op;
+			// get a default scope for the constant
+			if (strpos($constant, '::') === false)
+				$constant = get_class($object) . '::' . $constant;
+
+			// evaluate constant
+			$constant = constant($constant);
+
+			// TODO: use operator precedence here & before |
+			if ($operator === null) {
+				$value = $constant;
+			} else {
+				switch ($operator) {
+				case '|':
+					$value |= $constant;
+					break;
+				case '&':
+					$value &= $constant;
+					break;
+				}
+			}
+
+			// get next token
+			$token = strtok('|&');
+
+			// get an operator if it exists
+			if ($token !== false) {
+				$operator = substr($expression, $pos, 1);
+
+				$pos++;
+			}
 		}
 
-		return constant($parsed_exp);
+		return $value;
 	}
 
 	// }}}
