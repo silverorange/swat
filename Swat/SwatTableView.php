@@ -60,6 +60,9 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * The column of this table-view that the data in the model is sorted by
 	 * by default if no sorting is happening
 	 *
+	 * Setting this directly usually won't do what you want. Use the
+	 * {@link SwatTableView::setDefaultOrderbyColumn()} method instead.
+	 *
 	 * If this is null then the default order of data in the model is some
 	 * implicit order that the user cannot see. This results in tri-state
 	 * column headers.
@@ -69,7 +72,8 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 *
 	 * @var SwatTableViewOrderableColumn
 	 *
-	 * @see SwatTableViewOrderableColumn
+	 * @see SwatTableViewOrderableColumn,
+	 *      SwatTableView::setDefaultOrderbyColumn
 	 */
 	public $default_orderby_column = null;
 
