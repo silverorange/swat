@@ -3,6 +3,7 @@
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatTableViewColumn.php';
+require_once 'Swat/SwatTableViewOrderableColumn.php';
 require_once 'Swat/SwatTableViewGroup.php';
 require_once 'Swat/SwatTableViewRow.php';
 require_once 'Swat/SwatUIParent.php';
@@ -55,6 +56,21 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 */
 	public $orderby_column = null;
 
+	/**
+	 * The column of this table-view that the data in the model is sorted by
+	 * by default if no sorting is happening
+	 *
+	 * If this is null then the default order of data in the model is some
+	 * implicit order that the user cannot see. This results in tri-state
+	 * column headers.
+	 *
+	 * If this is set then the data ordering is always explicit and visible to
+	 * the user. This results in bi-state column headers.
+	 *
+	 * @var SwatTableViewOrderableColumn
+	 *
+	 * @see SwatTableViewOrderableColumn
+	 */
 	public $default_orderby_column = null;
 
 	// }}}
@@ -163,6 +179,32 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		}
 
 		$column->view = $this;
+	}
+
+	// }}}
+	// {{{ public function setDefaultOrderbyColumn()
+
+	/**
+	 * Sets a default column to use for ordering the data of this table-view
+	 *
+	 * @param SwatTableViewOrderableColumn the column in this view to use
+	 *                                      for default ordering
+	 * @param integer $direction the default direction of the ordered column.
+	 *
+	 * @throws SwatException
+	 *
+	 * @see SwatTableView::$default_orderby_column
+	 */
+	public function setDefaultOrderbyColumn(
+		SwatTableViewOrderableColumn $column,
+		$direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING)
+	{
+		if ($column->view !== $this)
+			throw new SwatException('Can only set the default orderby on '.
+				'orderable columns in this view.');
+
+		// this method sets properties on the table-view
+		$column->setDirection($direction);
 	}
 
 	// }}}
