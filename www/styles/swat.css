@@ -370,19 +370,22 @@ table.swat-table-view {
 .swat-table-view th a:link, .swat-table-view th a:visited { color: #333; }
 .swat-table-view th a:hover, .swat-table-view th a:active { color: #000; }
 
-.swat-table-view td.swat-image-link-cell-renderer {
-	width: 32px;
-}
-td.swat-table-view-group {
-	font-weight: bold;
-	padding-top: 1em;
-}
+.swat-table-view td.swat-image-link-cell-renderer { width: 32px; }
+.swat-table-view td.swat-checkbox-cell-renderer { width: 24px; }
 
 td.swat-table-view-group {
 	font-weight: bold;
 	padding-top: 1em;
 }
 
+td.swat-table-view-group {
+	font-weight: bold;
+	padding-top: 1em;
+}
+
+td.swat-table-view-orderable-column-selected {
+	background: #ffc;
+}
 
 /* SwatPagination */
 .swat-pagination {
