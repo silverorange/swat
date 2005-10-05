@@ -62,14 +62,15 @@ class SwatHtmlTag extends SwatObject
 	 *
 	 * @param string $attr the name of attribute to get.
 	 *
-	 * @return mixed the value of the attribute.
+	 * @return mixed the value of the attribute. If the attribute is not set,
+	 *                null is returned.
 	 */
 	public function __get($attribute)
 	{
 		if (isset($this->attributes[$attribute]))
 			return $this->attributes[$attribute];
 		else
-			throw new SwatException("Attribute '$attribute' is not set.");
+			return null;
 	}
 
 	/**
@@ -165,7 +166,7 @@ class SwatHtmlTag extends SwatObject
 
 		foreach ($this->attributes as $attribute => $value)
 			if ($value !== null)
-				echo ' ', $attribute, '="', htmlspecialchars($value), '"';
+				echo ' ', $attribute, '="', $value, '"';
 
 		if ($self_closing)
 			echo ' />';
