@@ -8,9 +8,20 @@
 function SwatTableViewCheckboxColumn(id, table) {
 	var self = this;
 
-	this.check_list = document.getElementsByName(id + '[]');
+	this.id = id;
 	this.table = table;
 	this.check_all = null; //a reference to a checkall widget (if it exists - set by the SwatCheckAll widget)
+	this.check_list = new Array();
+
+	//get all checkboxes with name = id + [] and that are contained in the
+	//correct table view. Note: getElementsByName doesn't work from a node
+	//element.
+	var table_node = document.getElementById(this.table.id);
+	var items = table_node.getElementsByTagName('input');
+	for (i = 0; i < items.length; i++)
+		if (items[i].name == id + '[]')
+			this.check_list[i] = items[i]; 
+
 
 	var is_ie = (document.addEventListener) ? false : true;
 

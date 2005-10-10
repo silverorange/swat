@@ -4,6 +4,7 @@
  * @param id string Id of the matching {@link SwatTableView}.
  **/
 function SwatTableView(id) {
+	this.id = id;
 	var self = this;
 }
 
