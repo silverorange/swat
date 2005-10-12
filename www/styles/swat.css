@@ -383,10 +383,6 @@ td.swat-table-view-group {
 	padding-top: 1em;
 }
 
-td.swat-table-view-orderable-column-selected {
-	background: #ffc;
-}
-
 /* SwatPagination */
 .swat-pagination {
 	overflow: auto;
