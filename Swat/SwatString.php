@@ -492,6 +492,55 @@ class SwatString
 	}
 
 	// }}}
+	// {{{ public static function pad()
+
+	/**
+	 * Pads a string in a UTF-8 safe way.
+	 *
+	 * @param string $input the string to pad.
+	 * @param int $pad_length length in characters to pad to.
+	 * @param string $pad_string string to use for padding.
+	 * @param int $pad_type type of padding to use: STR_PAD_LEFT, 
+	 *                       STR_PAD_RIGHT, or STR_PAD_BOTH.
+	 *
+	 * @return string the padded string.
+	 */
+	public static function pad($input, $pad_length, $pad_string = ' ', 
+		$pad_type = STR_PAD_RIGHT)
+	{
+		$output = '';
+		$length = $pad_length - strlen($input);
+
+		if ($pad_string === null || strlen($pad_string) == 0)
+			$pad_string = ' ';
+
+		if ($length > 0) {
+			switch ($pad_type) {
+			case STR_PAD_LEFT:
+				$padding = str_repeat($pad_string, ceil($length / strlen($pad_string)));
+				$output = substr($padding, 0, $length) . $input;
+				break;
+
+			case STR_PAD_BOTH:
+				$left_length = floor($length / 2 ));
+				$right_length = ceil($length / 2 ));
+				$padding = str_repeat($pad_string, ceil($right_length / strlen($pad_string)));
+				$output = substr($padding, 0, $left_length) . $input . 
+					substr($padding, 0, $right_length);
+				break;
+
+			case STR_PAD_RIGHT:
+			default:
+				$padding = str_repeat($pad_string, ceil($length / strlen($pad_string)));
+				$output = $input . substr($padding, 0, $length);
+			}
+		} else {
+           $output = $input;
+		}
+		return $output;
+	}
+
+	// }}}
 	// {{{ public static function toInteger()
 
 	/**
