@@ -137,13 +137,13 @@ class StringDemo extends DemoPage
 		foreach ($this->unformatted_text_blocks as $text_block) {
 			echo '<h5>Plain Text:</h5>';
 			echo '<div class="string-unformatted-text">'.
-				nl2br(htmlspecialchars($text_block)).'</div>';
+				nl2br(htmlspecialchars($text_block, ENT_COMPAT, 'UTF-8')).'</div>';
 
 			$xhtml_text_block = SwatString::toXHTML($text_block);
 
 			echo '<h5>XHTML Text:</h5>';
 			echo '<div class="string-unformatted-text">'.
-				nl2br(htmlspecialchars($xhtml_text_block)).'</div>';
+				nl2br(htmlspecialchars($xhtml_text_block, ENT_COMPAT, 'UTF-8')).'</div>';
 		}
 	}
 }
