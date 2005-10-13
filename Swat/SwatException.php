@@ -139,7 +139,7 @@ class SwatException extends Exception
 		foreach ($trace as $entry) {
 
 			if (array_key_exists('args', $entry))
-				$arguments = htmlentities($this->getArguments($entry['args']));
+				$arguments = htmlentities($this->getArguments($entry['args']), null, 'UTF-8');
 			else
 				$arguments = '';
 
