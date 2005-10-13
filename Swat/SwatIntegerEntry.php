@@ -47,10 +47,8 @@ class SwatIntegerEntry extends SwatEntry
 
 	protected function getDisplayValue()
 	{
-		$lc = localeconv();
-
 		if (is_int($this->value))
-			return number_format($this->value, 0, null, $lc['thousands_sep']);
+			return SwatString::numberFormat($this->value);
 		else
 			return $this->value;
 	}

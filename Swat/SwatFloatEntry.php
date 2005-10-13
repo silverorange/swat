@@ -50,14 +50,12 @@ class SwatFloatEntry extends SwatEntry
 	protected function getDisplayValue()
 	{
 		$lc = localeconv();
-
-		$decimal_pos = strpos($this->value, '.');
+		$decimal_pos = strpos($this->value, $lc['decimal_point']);
 		$decimals = ($decimal_pos !== false) ?
-			strlen($this->value) - $decimal_pos - 1 : 0;
+			strlen($this->value) - $decimal_pos - strlen($lc['decimal_point']) : 0;
 
 		if (is_numeric($this->value))
-			return number_format($this->value, $decimals,
-				$lc['decimal_point'], $lc['thousands_sep']);
+			return SwatString::numberFormat($this->value, $decimals);
 		else
 			return $this->value;
 	}
