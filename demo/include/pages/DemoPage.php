@@ -79,7 +79,7 @@ class DemoPage extends SwatPage
 		
 		$this->layout->source_code =
 			str_replace("\t", '    ', htmlspecialchars(implode('',
-				file('../include/pages/'.strtolower($this->demo).'.xml'))));
+				file('../include/pages/'.strtolower($this->demo).'.xml')), ENT_COMPAT, 'UTF-8'));
 
 		ob_start();
 		$this->ui->displayTidy();
