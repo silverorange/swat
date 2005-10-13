@@ -455,6 +455,43 @@ class SwatString
 	}
 
 	// }}}
+	// {{{ public static function numberFormat()
+
+	/**
+	 * Formats a number using locale seperators and in a UTF-8 safe way.
+	 *
+	 * @param float $value the value to format.
+	 * @param int $decimals number of decimal places to display (default 0).
+	 * @param string $locale an optional locale to use to format the value. If
+	 *                        no locale is specified, the default PHP locale is
+	 *                        used.
+	 * @param boolean $show_thousands_seperator whether to display the 
+	 *                        thousands seperator (default true).
+	 *
+	 * @return string the money formatted string.
+	 */
+	public static function numberFormat($value, $decimals = 0, $locale = null, 
+		$show_thousands_seperator = true)
+	{
+		// number_format can't handle UTF-8 seperators, so insert placeholders
+		$output = number_format($value, $decimals, '.', $show_thousands_seperator ? ',' : null);
+		$output = htmlentities($output, null, 'UTF-8');
+
+		if ($locale !== null)
+			$old_locale = setlocale(LC_ALL, $locale);
+
+		// replace placeholder seperators with locale ones which might contain non-ASCII
+		$lc = localeconv();
+		$output = str_replace('.', $lc['decimal_point'], $output);
+		$output = str_replace(',', $lc['thousands_sep'], $output);
+
+		if ($locale !== null)
+			setlocale(LC_ALL, $old_locale);
+
+		return $output;
+	}
+
+	// }}}
 	// {{{ public static function toInteger()
 
 	/**
@@ -597,6 +634,7 @@ class SwatString
 
 	// }}}
 	//{{{ private static function parseNegativeNotation
+
 	private static function parseNegativeNotation($string)
 	{
 		$lc = localeconv();
@@ -626,6 +664,8 @@ class SwatString
 
 		return $string;
 	}
+
+	// }}}
 }
 
 ?>
