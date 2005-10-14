@@ -14,9 +14,9 @@ require_once 'Swat/SwatObject.php';
 abstract class SwatCellRenderer extends SwatObject
 {
 	/**
-	 * The table view that contains this cell renderer
+	 * The object that contains this cell renderer
 	 *
-	 * @var SwatTableView
+	 * @var SwatObject
 	 */
 	public $parent = null;
 
