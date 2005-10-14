@@ -77,15 +77,20 @@ class SwatTableViewGroup extends SwatTableViewColumn
 		$td_tag->colspan = $this->view->getColumnCount();
 		$td_tag->class = 'swat-table-view-group';
 		$td_tag->open();
+		$this->displayRenderersInternal($row);
+		$td_tag->close();
+		$tr_tag->close();
+	}
 
+	// }}}
+	// {{{ protected function displayRenderersInternal()
+
+	protected function displayRenderersInternal($row)
+	{
 		foreach ($this->renderers as $renderer) {
 			$renderer->render();
 			echo ' ';
-		}
-
-		$td_tag->close();
-
-		$tr_tag->close();
+		}	
 	}
 
 	// }}}
