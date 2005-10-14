@@ -14,6 +14,15 @@ require_once 'Swat/SwatState.php';
 class SwatRadioList extends SwatFlydown implements SwatState
 {
 	/**
+	 * Show a blank option
+	 *
+	 * Whether or not to show a blank value at the top of the radiolist.
+	 *
+	 * @var boolean
+	 */
+	public $show_blank = false;
+	
+	/**
 	 * Displays this radio list
 	 */
 	public function display()
