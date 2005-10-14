@@ -1,6 +1,6 @@
 .swat-hidden { display: none; }
 
-.swat-tool-link {
+a.swat-tool-link {
 	padding: 0.4em 0.6em;
 	background: #f9f6f0 url(../images/swat-tool-link.png) top left repeat-x;
 	border: 1px solid #e7ddc8;
@@ -9,18 +9,18 @@
 	margin-right: 0.5em;
 }
 
-.swat-tool-link:hover {
+a.swat-tool-link:hover {
 	text-decoration: underline;
 	border: 1px solid #ccb898;
 }
 
-.swat-tool-link-create:link, .swat-tool-link-create:visited {
+a.swat-tool-link-create:link, .swat-tool-link-create:visited {
 	background: #f9f6f0 url(../images/swat-tool-link-create.png) top left repeat-x;
 	color: #008e36;
 	padding-left: 34px;
 }
 
-.swat-tool-link-change-order {
+a.swat-tool-link-change-order {
 	font-weight: normal;
 }
 
