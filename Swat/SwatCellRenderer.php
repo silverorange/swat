@@ -14,6 +14,13 @@ require_once 'Swat/SwatObject.php';
 abstract class SwatCellRenderer extends SwatObject
 {
 	/**
+	 * The object that contains this cell renderer
+	 *
+	 * @var SwatObject
+	 */
+	public $parent = null;
+
+	/**
 	 * A non-visible unique id for this cell renderer, or null
 	 *
 	 * @var string
