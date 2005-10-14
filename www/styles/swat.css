@@ -1,12 +1,18 @@
 .swat-hidden { display: none; }
 
-a.swat-tool-link {
+.swat-tool-link,
+.swat-tool-link-insensitive
+{
 	padding: 0.4em 0.6em;
 	background: #f9f6f0 url(../images/swat-tool-link.png) top left repeat-x;
 	border: 1px solid #e7ddc8;
 	font-weight: bold;
 	text-decoration: none;
 	margin-right: 0.5em;
+}
+
+.swat-tool-link-insensitive {
+	color: #999;
 }
 
 a.swat-tool-link:hover {
