@@ -20,13 +20,13 @@ a.swat-tool-link:hover {
 	border: 1px solid #ccb898;
 }
 
-a.swat-tool-link-create:link, .swat-tool-link-create:visited {
+.swat-tool-link-create:link, .swat-tool-link-create:visited {
 	background: #f9f6f0 url(../images/swat-tool-link-create.png) top left repeat-x;
 	color: #008e36;
 	padding-left: 34px;
 }
 
-a.swat-tool-link-change-order {
+.swat-tool-link-change-order {
 	font-weight: normal;
 }
 
