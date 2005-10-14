@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatEntry.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * An integer entry widget
