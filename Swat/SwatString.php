@@ -522,8 +522,8 @@ class SwatString
 				break;
 
 			case STR_PAD_BOTH:
-				$left_length = floor($length / 2 ));
-				$right_length = ceil($length / 2 ));
+				$left_length = floor($length / 2);
+				$right_length = ceil($length / 2);
 				$padding = str_repeat($pad_string, ceil($right_length / strlen($pad_string)));
 				$output = substr($padding, 0, $left_length) . $input . 
 					substr($padding, 0, $right_length);
