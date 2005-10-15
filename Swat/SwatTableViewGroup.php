@@ -64,7 +64,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 
 		// only display the group header if the value of the group-by field has
 		// changed
-		if ($row->$group_by == $this->current)
+		if ($row->$group_by === $this->current)
 			return;
 
 		$this->current = $row->$group_by;

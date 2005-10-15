@@ -75,7 +75,7 @@ class SwatFormField extends SwatContainer
 		if (!$this->visible)
 			return;
 
-		$first_child = $this->getChild(0);
+		$first_child = $this->getFirst();
 
 		if ($first_child === null)
 			return;

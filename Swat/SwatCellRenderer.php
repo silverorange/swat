@@ -28,6 +28,18 @@ abstract class SwatCellRenderer extends SwatObject
 	public $id = null;
 
 	/**
+	 * Sensitive
+	 *
+	 * Whether this renderer is sensitive. If a renderer is sensitive it reacts
+	 * to user input. Unsensitive renderers should display "grayed-out" to
+	 * inform the user they are not sensitive. All renderers that react to
+	 * user input should respect this property in their display() method.
+	 *
+	 * @var boolean
+	 */
+	public $sensitive = true;
+
+	/**
 	 * Renders this cell
 	 *
 	 * Renders this cell using the values currently stored in class variables.

@@ -71,6 +71,8 @@ class SwatToolLink extends SwatControl
 	 */
 	public function init()
 	{
+		parent::init();
+
 		if ($this->stock_id !== null) 
 			$this->setFromStock($this->stock_id, false);
 	}
@@ -83,20 +85,33 @@ class SwatToolLink extends SwatControl
 		if (!$this->visible)
 			return;
 
-		$anchor_tag = new SwatHtmlTag('a');
+		if ($this->isSensitive()) {
+			$anchor_tag = new SwatHtmlTag('a');
 
-		if ($this->value === null)
-			$anchor_tag->href = $this->link;
-		else
-			$anchor_tag->href = sprintf($this->link, $this->value);
+			if ($this->value === null)
+				$anchor_tag->href = $this->link;
+			else
+				$anchor_tag->href = sprintf($this->link, $this->value);
 
-		if ($this->class === null)
-			$anchor_tag->class = 'swat-tool-link';
-		else 
-			$anchor_tag->class = 'swat-tool-link '.$this->class;
+			if ($this->class === null)
+				$anchor_tag->class = 'swat-tool-link';
+			else 
+				$anchor_tag->class = 'swat-tool-link '.$this->class;
 
-		$anchor_tag->content = $this->title;
-		$anchor_tag->display();
+			$anchor_tag->content = $this->title;
+			$anchor_tag->display();
+
+		} else {
+			$span_tag = new SwatHtmlTag('span');
+			
+			if ($this->class === null)
+				$span_tag->class = 'swat-tool-link swat-tool-link-insensitive';
+			else 
+				$span_tag->class = 'swat-tool-link swat-tool-link-insensitive '.$this->class;
+
+			$span_tag->content = $this->title;
+			$span_tag->display();
+		}
 	}
 
 	/**
