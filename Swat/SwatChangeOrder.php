@@ -55,6 +55,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 	 *
 	 * @var string
 	 */
+	//TODO: get rid of this (currently AdminOrder is dependant on it, as well as line 105-106 below
 	public $onclick = null;
 
 	/**
@@ -101,6 +102,9 @@ class SwatChangeOrder extends SwatControl implements SwatState
 
 		$option_tag = new SwatHtmltag('div');
 		$option_tag->onclick = "{$this->id}_obj.choose(this);";
+		if ($this->onclick !==Ênull) 
+			$option_tag->onclick.=' '.$this->onclick;
+			
 		$option_tag->class = 'swat-order-control-active';
 		$count = 0;
 		foreach ($this->options as $key => $option) {
