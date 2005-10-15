@@ -1,6 +1,5 @@
 <?php
 
-require_once 'SwatDB/SwatDBDefaultDataObject.php';
 require_once 'SwatDB/SwatDBRecordsetWrapper.php';
 
 /**
