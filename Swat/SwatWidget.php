@@ -38,6 +38,18 @@ abstract class SwatWidget extends SwatObject
 	 */
 	public $visible = true;
 
+	/**
+	 * Sensitive
+	 *
+	 * Whether the widget is sensitive. If a widget is sensitive it reacts to
+	 * user input. Unsensitive widgets should display "grayed-out" to inform
+	 * the user they are not sensitive. All widgets that the user can interact
+	 * with should respect this.
+	 *
+	 * @var boolean
+	 */
+	public $sensitive = true;
+
 	// }}}
 	// {{{ protected properties
 
@@ -241,6 +253,27 @@ abstract class SwatWidget extends SwatObject
 	 * @return array the SwatHtmlHeadEntry objects needed by this widget.
 	 */
 	abstract public function getHtmlHeadEntries();
+
+	// }}}
+	// {{{ public function isSensitive()
+
+	/**
+	 * Determines the sensitivity of this widget.
+	 *
+	 * Looks at the sensitive property of the ancestors of this widget to 
+	 * determine if this widget is sensitive.
+	 *
+	 * @return boolean whether this widget is sensitive.
+	 *
+	 * @see SwatWidget::$sensitve
+	 */
+	public function isSensitive()
+	{
+		if ($this->parent === null)
+			return $this->sensitive;
+		else
+			return ($this->parent->isSensitive() && $this->sensitive);
+	}
 
 	// }}}
 }

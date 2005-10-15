@@ -60,18 +60,32 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		$anchor = new SwatHtmlTag('a');
-		$anchor->content = $this->title;
+		if ($this->sensitive) {
+			$anchor = new SwatHtmlTag('a');
+			$anchor->content = $this->title;
 
-		if ($this->class !== null)
-			$anchor->class = $this->class;
+			if ($this->class !== null)
+				$anchor->class = $this->class;
 
-		if ($this->value === null)
-			$anchor->href = $this->link;
-		else
-			$anchor->href = sprintf($this->link, $this->value);
+			if ($this->value === null)
+				$anchor->href = $this->link;
+			else
+				$anchor->href = sprintf($this->link, $this->value);
 
-		$anchor->display();
+			$anchor->display();
+		} else {
+			$span_tag = new SwatHtmlTag('span');
+
+			if ($this->class !== null)
+				$span_tag->class =
+					$this->class.' swat-link-cell-renderer-insensitive';
+			else
+				$span_tag->class = 'swat-link-cell-renderer-insensitive';
+
+			$span_tag->content = $this->title;
+
+			$span_tag->display();
+		}
 	}
 }
 

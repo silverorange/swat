@@ -41,16 +41,22 @@ class SwatImageLinkCellRenderer extends SwatImageCellRenderer
 	 */
 	public function render()
 	{
-		$anchor = new SwatHtmlTag('a');
+		if ($this->sensitive) {
+			$anchor = new SwatHtmlTag('a');
 
-		if ($this->value === null)
-			$anchor->href = $this->link;
-		else
-			$anchor->href = sprintf($this->link, $this->value);
+			if ($this->value === null)
+				$anchor->href = $this->link;
+			else
+				$anchor->href = sprintf($this->link, $this->value);
 
-		$anchor->open();
+			$anchor->open();
+		}
+
 		parent::render();
-		$anchor->close();
+
+		if ($this->sensitive) {
+			$anchor->close();
+		}
 	}
 
 	/**

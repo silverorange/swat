@@ -176,9 +176,13 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 			throw new SwatException('No renderer has been provided for this '.
 				'field.');
 
+		$sensitive = $this->view->isSensitive();
+
 		// Set the properties of the renderers to the value of the data field.
-		foreach ($this->renderers as $renderer)
+		foreach ($this->renderers as $renderer) {
 			$this->renderers->applyMappingsToRenderer($renderer, $data);
+			$renderer->sensitive = $sensitive;
+		}
 
 		$this->displayRenderers($data);
 	}

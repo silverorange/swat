@@ -53,6 +53,30 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	}
 
 	/**
+	 * Replace a widget
+	 * 
+	 * Replaces a child widget in this container. The parent of the removed 
+	 * widget is set to null.
+	 *
+	 * @param SwatWidget $widget a reference to the widget to be replaced.
+	 * @param SwatWidget $widget a reference to the new widget.
+	 *
+	 * @return SwatWidget a reference to the removed widget, or null if the
+	 *                     widget is not found.
+	 */
+	public function replace(SwatWidget $widget, SwatWidget $new_widget)
+	{
+		foreach ($this->children as $key => $child_widget) {
+			if ($child_widget === $widget) {
+				$this->children[$key] = $new_widget;
+				$widget->parent = null;
+				return $widget;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Removes a widget
 	 * 
 	 * Removes a child widget from this container. The parent of the widget is
@@ -116,6 +140,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	/**
 	 * Gets a child widget
 	 *
+	 * TODO: this method is broken, id is unpredictable and unknown
 	 * Retrieves a widget from the list of widgets in the container based on
 	 * the unique identifier of the widget.
 	 *
@@ -129,6 +154,24 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 			return $this->children[$id];
 		else
 			return null;
+	}
+
+	/**
+	 * Gets the first child widget
+	 *
+	 * Retrieves the first child widget from the list of widgets in the 
+	 * container.
+	 *
+	 * @return SwatWidget the first widget or null.
+	 */
+	public function getFirst()
+	{
+		if (count($this->children)) {
+			reset($this->children);
+			return current($this->children);
+		} else {
+			return null;
+		}
 	}
 
 	/**

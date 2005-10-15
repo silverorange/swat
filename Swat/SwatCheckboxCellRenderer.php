@@ -36,6 +36,11 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 		$input_tag->name = $this->id.'[]';
 		$input_tag->value = $this->value;
 
+		if (!$this->sensitive) {
+			$input_tag->disabled = 'disabled';
+			// TODO: add a style class for internet explorer if insensitive
+		}
+
 		if (isset($_POST[$this->id]))
 			if (in_array($this->value, $_POST[$this->id]))
 				$input_tag->checked = 'checked';
