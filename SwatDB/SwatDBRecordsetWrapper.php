@@ -20,6 +20,15 @@ abstract class SwatDBRecordsetWrapper implements Iterator
 	 */
 	protected $row_wrapper_class;
 
+	/**
+	 * The name of a field to use as an index 
+	 *
+	 * This field is used to lookup objects using getIndex().
+	 *
+	 * @var string
+	 */
+	protected $index_field = null;
+
 	// }}}
 	// {{{ private properties
 
@@ -50,9 +59,21 @@ abstract class SwatDBRecordsetWrapper implements Iterator
 		if (MDB2::isError($rs))
 			throw new Exception($rs->getMessage());
 
-		if ($rs->numRows())
-			while ($row = $rs->fetchRow(MDB2_FETCHMODE_ASSOC))
-				$this->objects[] = new $this->row_wrapper_class($row);
+		if ($rs->numRows()) {
+			while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
+				if ($this->row_wrapper_class === null)
+					$object = $row;
+				else
+					$object = new $this->row_wrapper_class($row);
+
+				if ($this->index_field === null) {
+					$this->objects[] = $object;
+				} else {
+					$index = $row[$this->index_field];
+					$this->objects[$index] = $object;
+				}
+			}
+		}
 	}
 
 	// }}}
@@ -133,6 +154,25 @@ abstract class SwatDBRecordsetWrapper implements Iterator
 			$first = $this->objects[0];
 
 		return $first;
+	}
+
+	// }}}
+	// {{{ public function getByIndex()
+
+	/**
+	 * Retrieves an object by index
+	 *
+	 * By default indexes are ordinal numbers unless the class property
+	 * $index_field is set.
+	 *
+	 * @return mixed the object or null if not found.
+	 */
+	public function getByIndex($index)
+	{
+		if (isset($this->objects[$index]))
+			return $this->objects[$index];
+
+		return null;
 	}
 
 	// }}}
