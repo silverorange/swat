@@ -280,10 +280,10 @@ class SwatUI extends SwatObject
 	 * Calls self on all node children.
 	 *
 	 * @param Object $node the XML node to begin with.
-	 * @param SwatContainer $parent_widget the parent widget to add parsed
-	 *                                      objects to.
+	 * @param SwatObject $parent the parent object (usually a SwatContainer)
+	 *                              to add parsed objects to.
 	 */
-	private function parseUI($node, $parent_widget)
+	private function parseUI($node, $parent, $grandparent = null)
 	{
 		foreach ($node->childNodes as $child_node) {
 			
@@ -291,7 +291,7 @@ class SwatUI extends SwatObject
 			if ($child_node->nodeType == XML_ELEMENT_NODE) {
 
 				if (strcmp($child_node->nodeName, 'property') == 0) {
-					$this->parseProperty($child_node, $parent_widget);
+					$this->parseProperty($child_node, $parent, $grandparent);
 				} else {
 					$parsed_object = $this->parseNode($child_node);
 
@@ -307,12 +307,10 @@ class SwatUI extends SwatObject
 						$this->widgets[$parsed_object->id] = $parsed_object;
 					}
 
-					$this->attachToParent($parsed_object, $parent_widget);
-					$this->parseUI($child_node, $parsed_object);
+					$this->attachToParent($parsed_object, $parent);
+					$this->parseUI($child_node, $parsed_object, $parent);
 				}
-
 			}
-
 		}
 	}
 
@@ -370,18 +368,18 @@ class SwatUI extends SwatObject
 	/**
 	 * Attaches a widget to a parent widget in the widget tree
 	 *
-	 * @param SwatWidget $wiget the widget to attach.
+	 * @param SwatObject $object the object to attach.
 	 * @param SwatUIParent $parent the parent to attach the widget to.
 	 *
 	 * @throws SwatException
 	 */
-	private function attachToParent($widget, $parent)
+	private function attachToParent(SwatObject $object, SwatUIParent $parent)
 	{
 		if ($parent instanceof SwatUIParent) {
-			$parent->addChild($widget);
+			$parent->addChild($object);
 		} else {
 			$class_name = get_class($parent);
-			throw new SwatException('Can not add widget to parent. '.
+			throw new SwatException('Can not add object to parent. '.
 				"'{$class_name}' does not implement SwatUIParent.");
 		}
 	}
@@ -430,10 +428,11 @@ class SwatUI extends SwatObject
 	 *
 	 * @param array $property_node the XML property node data to parse.
 	 * @param SwatObject $object the object to apply the property to.
+	 * @param SwatUIParent $parent the parent of the object.
 	 *
 	 * @throws SwatException
 	 */
-	private function parseProperty($property_node, $object)
+	private function parseProperty($property_node, $object, $parent)
 	{
 		$class_properties = get_class_vars(get_class($object));
 
@@ -463,7 +462,7 @@ class SwatUI extends SwatObject
 		$type = $property_node->getAttribute('type');
 
 		$parsed_value =
-			$this->parseValue($name, $value, $type, $translatable, $object);
+			$this->parseValue($name, $value, $type, $translatable, $object, $parent);
 
 		if ($array_property) {
 			if (!is_array($object->$name))
@@ -495,10 +494,11 @@ class SwatUI extends SwatObject
 	 * @param string $type the type of the value.
 	 * @param boolean translatable whether the property is translatable.
 	 * @param SwatObject $object the object the property applies to.
+	 * @param SwatUIParent $parent the parent of the object.
 	 *
 	 * @return mixed the value of the property as an appropriate PHP datatype.
 	 */
-	private function parseValue($name, $value, $type, $translatable, $object)
+	private function parseValue($name, $value, $type, $translatable, $object, $parent)
 	{
 		switch ($type) {
 		case 'string':
@@ -512,7 +512,7 @@ class SwatUI extends SwatObject
 		case 'constant':
 			return $this->parseConstantExpression($value, $object);
 		case 'data':
-			$object->parent->addMappingToRenderer($object, $value, $name);
+			$parent->addMappingToRenderer($object, $value, $name);
 			return null;
 
 		case 'implicit-string':
