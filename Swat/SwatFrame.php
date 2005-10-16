@@ -51,7 +51,7 @@ class SwatFrame extends SwatContainer
 				$ancestor = $ancestor->parent;
 			}
 
-			echo "<h{$level}>{$this->title}</h{$level}>";
+			echo "<h{$level} class=\"swat-frame-title\">{$this->title}</h{$level}>";
 		}
 
 		$inner_div->open();
