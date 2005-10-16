@@ -10,13 +10,13 @@
 interface SwatUIParent
 {
 	/**
-	 * Adds a child object to this object
+	 * Adds a child object to this parent object
 	 *
 	 * This method is used by {@link SwatUI} when building a widget tree and
 	 * does not need to be called elsewhere. To add a field to a field view,
 	 * use {@link SwatFieldView::appendField()}.
 	 *
-	 * @param SwatObject $child the child object to add to this object.
+	 * @param SwatObject $child the child object to add to this parent object.
 	 */
 	public function addChild($child);
 }

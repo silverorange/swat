@@ -89,7 +89,6 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	 */
 	public function addRenderer(SwatCellRenderer $renderer)
 	{
-		$renderer->parent = $this;
 		$this->renderers->addRenderer($renderer);
 	}
 
