@@ -79,7 +79,7 @@ optgroup.swat-flydown-divider {
 	border: 1px solid #dc6e66;
 	margin: 1em 0;
 	padding: 1em 1em 1em 48px;
-	background: #ffb9a5 url(../images/generic-icon.png) top left no-repeat;
+	background: #ffe3e0 url(../images/generic-icon.png) top left no-repeat;
 	color: #e31b0c;
 }
 
@@ -158,7 +158,7 @@ label.swat-control {
 
 .swat-form-field-error {
 	border: 1px solid #C00;
-	background: #fce8e7;
+	background: #ffe3e0;
 	padding: 0.5em;
 	margin: 0.5em 0;
 }
