@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
 
@@ -11,7 +11,7 @@ require_once 'Swat/SwatState.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTextarea extends SwatControl implements SwatState
+class SwatTextarea extends SwatInputControl implements SwatState
 {
 	/**
 	 * Text content of the widget
@@ -19,15 +19,6 @@ class SwatTextarea extends SwatControl implements SwatState
 	 * @var string
 	 */
 	public $value = '';
-
-	/**
-	 * Required
-	 *
-	 * Whether a value is required for this widget.
-	 *
-	 * @var boolean
-	 */
-	public $required = false;
 
 	/**
 	 * Rows

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatState.php';
 require_once 'Date.php';
@@ -15,7 +15,7 @@ require_once 'Date.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTimeEntry extends SwatControl implements SwatState
+class SwatTimeEntry extends SwatInputControl implements SwatState
 {
 	const HOUR   = 1;
 	const MINUTE = 2;
@@ -46,7 +46,7 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	 *
 	 * @var integer
 	 */
-	public $required;
+	public $required_parts;
 
 	/**
 	 * Displayed time parts
@@ -63,7 +63,7 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	 *
 	 * @var integer
 	 */
-	public $display;
+	public $display_parts;
 
 	/**
 	 * Start time of the valid range (inclusive)
@@ -135,8 +135,8 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	{
 		parent::__construct($id);
 
-		$this->display  = self::HOUR | self::MINUTE;
-		$this->required = $this->display;
+		$this->display_parts  = self::HOUR | self::MINUTE;
+		$this->required_parts = $this->display_parts;
 
 		$this->valid_range_start = new SwatDate('0000-01-01T00:00:00.0000Z');
 		$this->valid_range_end   = new SwatDate('0000-01-01T23:59:59.0000Z');
@@ -160,22 +160,22 @@ class SwatTimeEntry extends SwatControl implements SwatState
 
 		$this->createFlydowns();
 
-		if ($this->display & self::HOUR) {
+		if ($this->display_parts & self::HOUR) {
 			$this->hour_flydown->display();
-			if ($this->display & (self::MINUTE | self::SECOND))
+			if ($this->display_parts & (self::MINUTE | self::SECOND))
 				echo ':';
 		}
 
-		if ($this->display & self::MINUTE) {
+		if ($this->display_parts & self::MINUTE) {
 			$this->minute_flydown->display();
-			if ($this->display & self::SECOND)
+			if ($this->display_parts & self::SECOND)
 				echo ':';
 		}
 
-		if ($this->display & self::SECOND)
+		if ($this->display_parts & self::SECOND)
 			$this->second_flydown->display();
 
-		if ($this->display & self::HOUR)
+		if ($this->display_parts & self::HOUR)
 			$this->am_pm_flydown->display();
 
 		echo '</span>';
@@ -194,21 +194,27 @@ class SwatTimeEntry extends SwatControl implements SwatState
 	{
 		$this->createFlydowns();
 
-		if ($this->display & self::HOUR) {
+		$all_empty = true;
+
+		if ($this->display_parts & self::HOUR) {
 			$this->hour_flydown->process();
 			$this->am_pm_flydown->process();
-			$hour = intval($this->hour_flydown->value);
+			$hour = $this->hour_flydown->value;
 			$ampm = $this->am_pm_flydown->value;
+			$all_empty = $all_empty && ($hour === null);
+			$all_empty = $all_empty && ($ampm === null);
 
-			if ($this->required & self::HOUR && $hour === null) {
+			if ($this->required_parts & self::HOUR && $hour === null) {
 				$msg = Swat::_('Hour is Required.');
 				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 			}
 
-			if ($this->required & self::HOUR && $ampm === null) {
+			if ($this->required_parts & self::HOUR && $ampm === null) {
 				$msg = Swat::_('AM/PM is Required.');
 				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 			}
+
+			$hour = intval($hour);
 
 			if ($ampm == 'pm') {
 				$hour += 12;
@@ -219,28 +225,39 @@ class SwatTimeEntry extends SwatControl implements SwatState
 			$hour = 0;
 		}
 
-		if ($this->display & self::MINUTE) {
+		if ($this->display_parts & self::MINUTE) {
 			$this->minute_flydown->process();
-			$minute = intval($this->minute_flydown->value);
+			$minute = $this->minute_flydown->value;
+			$all_empty = $all_empty && ($minute === null);
 
-			if ($this->required & self::MINUTE && $minute === null) {
+			if ($this->required_parts & self::MINUTE && $minute === null) {
 				$msg = Swat::_('Minute is Required.');
 				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 			}
+
+			$minute = intval($minute);
 		} else {
 			$minute = 0;
 		}
 
-		if ($this->display & self::SECOND) {
+		if ($this->display_parts & self::SECOND) {
 			$this->second_flydown->process();
-			$second = intval($this->second_flydown->value);
+			$second = $this->second_flydown->value;
+			$all_empty = $all_empty && ($second === null);
 
-			if ($this->required & self::SECOND && $second === null) {
+			if ($this->required_parts & self::SECOND && $second === null) {
 				$msg = Swat::_('Second is Required.');
 				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 			}
+
+			$second = intval($second);
 		} else {
 			$second = 0;
+		}
+
+		if ($this->required && $all_empty) {
+			$msg = Swat::_('Time is Required.');
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 		}
 
 		$this->value = new SwatDate();
@@ -291,16 +308,16 @@ class SwatTimeEntry extends SwatControl implements SwatState
 
 		$this->created = true;
 
-		if ($this->display & self::HOUR)
+		if ($this->display_parts & self::HOUR)
 			$this->createHourFlydown();
 
-		if ($this->display & self::MINUTE)
+		if ($this->display_parts & self::MINUTE)
 			$this->createMinuteFlydown();
 
-		if ($this->display & self::SECOND)
+		if ($this->display_parts & self::SECOND)
 			$this->createSecondFlydown();
 
-		if ($this->display & self::HOUR)
+		if ($this->display_parts & self::HOUR)
 			$this->createAmPmFlydown();
 	}
 

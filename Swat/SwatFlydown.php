@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
 require_once 'Swat/SwatFlydownOption.php';
@@ -13,7 +13,7 @@ require_once 'Swat/SwatFlydownDivider.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFlydown extends SwatControl implements SwatState
+class SwatFlydown extends SwatInputControl implements SwatState
 {
 	// {{{ public properties
 
@@ -35,15 +35,6 @@ class SwatFlydown extends SwatControl implements SwatState
 	 * @var string
 	 */
 	public $value = null;
-
-	/**
-	 * Required
-	 *
-	 * Whether or not a value is required to be selected.
-	 *
-	 * @var boolean
-	 */
-	public $required = false;
 
 	/**
 	 * Show a blank option
