@@ -1,6 +1,8 @@
 <?php
 
 require_once 'Swat/SwatFormField.php';
+require_once 'Swat/SwatReplicatorContainer.php';
+require_once 'Swat/SwatFieldset.php';
 
 /**
  * A magic form field container that replicates its children. It can 
@@ -21,8 +23,6 @@ class SwatReplicatorFormField extends SwatFormField
 	 */
 	public $replicators = null; 
 
-	private $widgets = array();
-
 	/**
 	 * Initilizes the form field
 	 *
@@ -42,40 +42,28 @@ class SwatReplicatorFormField extends SwatFormField
 		foreach ($this->children as $child_widget)
 			$local_children[] = $this->remove($child_widget);
 
+		$container = new SwatReplicatorContainer();
+		$container->id = $this->id;
+		$fieldset = new SwatFieldset();
+		$fieldset->title = $this->title;
+		$container->add($fieldset);
+
 		//then we clone, change the id and add back to the widget tree
 		foreach ($this->replicators as $id => $title) {
-			$field_set = new SwatFieldset();
-			$field_set->title = $title;
-			$this->add($field_set);
+			$form_field = new SwatFormField();
+			$form_field->title = $title;
+			$fieldset->add($form_field);
 			
-			$this->widgets[$id] = array();
+			$container->widgets[$id] = array();
 			
 			foreach ($local_children as $child) {
 				$new_child = clone $child;
 				$new_child->id.= $id;
-				$field_set->add($new_child);
-				$this->widgets[$id][$new_child->id] = $new_child;
+				$form_field->add($new_child);
+				$container->widgets[$id][$new_child->id] = $new_child;
 			}
 		}
-	}
-	 
-	/**
-	 * Retrive a reference to a replicated widget
-	 *
-	 * @param string $widget_id the unique id of the original widget
-	 * @param string $replicator_id the replicator id of the replicated widget
-	 *
-	 * @returns SwatWidget a reference to the replicated widget, or null if the
-	 *                      widget is not found.
-	 */
-	public function getWidget($widget_id, $replicator_id)
-	{
-		if (isset($this->widgets[$replicator_id][$widget_id.$replicatorid])) {
-			return $this->widgets[$replicator_id][$widget_id.$replicatorid];
-		} else {
-			return null;
-		}
+		$this->parent->replace($this, $container);
 	}
 }
-
 ?>
