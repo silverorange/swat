@@ -34,19 +34,19 @@ class Flydown extends DemoPage
 
 		$tree = new SwatTreeNode(array('title' => 'test'));
 
-		$apples = new SwatTreeNode(array('title' => 'Apple'));
-		$apples->addChild(new SwatTreeNode(array('title' => 'Mackintosh')));
-		$apples->addChild(new SwatTreeNode(array('title' => 'Courtland')));
-		$apples->addChild(new SwatTreeNode(array('title' => 'Golden Delicious')));
-		$apples->addChild(new SwatTreeNode(array('title' => 'Fuji')));
-		$apples->addChild(new SwatTreeNode(array('title' => 'Granny Smith')));
+		$apples = new SwatTreeNode(array('id' => 'apple', 'title' => 'Apple'));
+		$apples->addChild(new SwatTreeNode(array('id' => 'mackintish', 'title' => 'Mackintosh')));
+		$apples->addChild(new SwatTreeNode(array('id' => 'courtland', 'title' => 'Courtland')));
+		$apples->addChild(new SwatTreeNode(array('id' => 'golden', 'title' => 'Golden Delicious')));
+		$apples->addChild(new SwatTreeNode(array('id' => 'fuji', 'title' => 'Fuji')));
+		$apples->addChild(new SwatTreeNode(array('id' => 'granny', 'title' => 'Granny Smith')));
 		
-		$oranges = new SwatTreeNode(array('title' => 'Orange'));
-		$oranges->addChild(new SwatTreeNode(array('title' => 'Navel')));
-		$oranges->addChild(new SwatTreeNode(array('title' => 'Blood')));
-		$oranges->addChild(new SwatTreeNode(array('title' => 'Florida')));
-		$oranges->addChild(new SwatTreeNode(array('title' => 'California')));
-		$oranges->addChild(new SwatTreeNode(array('title' => 'Mandarin')));
+		$oranges = new SwatTreeNode(array('id' => 'orange', 'title' => 'Orange'));
+		$oranges->addChild(new SwatTreeNode(array('id' => 'navel', 'title' => 'Navel')));
+		$oranges->addChild(new SwatTreeNode(array('id' => 'blood', 'title' => 'Blood')));
+		$oranges->addChild(new SwatTreeNode(array('id' => 'florida', 'title' => 'Florida')));
+		$oranges->addChild(new SwatTreeNode(array('id' => 'california', 'title' => 'California')));
+		$oranges->addChild(new SwatTreeNode(array('id' => 'mandarin', 'title' => 'Mandarin')));
 		
 		$tree->addChild($apples);
 		$tree->addChild($oranges);
