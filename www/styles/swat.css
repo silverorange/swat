@@ -458,7 +458,7 @@ span.swat-time-span {
 }
 
 .swat-actions, .swat-form-footer-field {
-        background: #f7f5f3 url(../images/swat-form-footer.png) top left repeat-x;
+	background: #f7f5f3 url(../images/swat-form-footer.png) top left repeat-x;
 	margin: 15px -15px -15px -15px;
 	padding: 1em;
 }
