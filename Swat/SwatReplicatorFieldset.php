@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatFieldset.php';
+require_once 'Swat/SwatReplicatorContainer.php';
 
 /**
  * A magic fieldset container that replicates itself and its children.
@@ -21,8 +22,6 @@ class SwatReplicatorFieldset extends SwatFieldset
 	 */
 	public $replicators = null;
 	
-	private $widgets = array();
-
 	/**
 	 * Initilizes the fieldset
 	 *
@@ -42,45 +41,26 @@ class SwatReplicatorFieldset extends SwatFieldset
 		foreach ($this->children as $child_widget)
 			$local_children[] = $this->remove($child_widget);
 		
-		$container = new SwatContainer;
+		$container = new SwatReplicatorContainer();
+		$container->id = $this->id;
 		
 		//then we clone, change the id and add back to the widget tree
 		foreach ($this->replicators as $id => $title) {
 			$field_set = new SwatFieldset();
 			$field_set->title = $title;
 			$container->add($field_set);
-			
-			$this->widgets[$id] = array();
+			$container->widgets[$id] = array();
 			
 			foreach ($local_children as $child) {
 				$new_child = clone $child;
 				$new_child->id.= $id;
 				$field_set->add($new_child);
-				$this->widgets[$id][$new_child->id] = $new_child;
+				$container->widgets[$id][$new_child->id] = $new_child;
 			}
 			$container->init();
 		}
 
 		$this->parent->replace($this, $container);
 	}
-	 
-	/**
-	 * Retrive a reference to a replicated widget
-	 *
-	 * @param string $widget_id the unique id of the original widget
-	 * @param string $replicator_id the replicator id of the replicated widget
-	 *
-	 * @returns SwatWidget a reference to the replicated widget, or null if the
-	 *                      widget is not found.
-	 */
-	public function getWidget($widget_id, $replicator_id)
-	{
-		if (isset($this->widgets[$replicator_id][$widget_id.$replicatorid])) {
-			return $this->widgets[$replicator_id][$widget_id.$replicatorid];
-		} else {
-			return null;
-		}
-	}
 }
-
 ?>
