@@ -1008,7 +1008,7 @@ class SwatDB
 				$current_parent = array_pop($stack);
 			}
 		
-			$last_node = new SwatTreeNode(array('title' => $title, 'value' => $id));
+			$last_node = new SwatTreeNode(array('title' => $title, 'id' => $id));
 			$current_parent->addChild($last_node);
 		}
 
