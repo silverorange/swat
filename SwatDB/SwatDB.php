@@ -356,7 +356,8 @@ class SwatDB
 
 		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
 
-        $rs = $db->executeStoredProc($proc, $params, $types, true, $mdb2_wrapper);
+		$db->loadModule('Function');
+        $rs = $db->function->executeStoredProc($proc, $params, $types, true, $mdb2_wrapper);
 
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs);
