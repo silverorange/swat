@@ -12,13 +12,25 @@ require_once 'Swat/SwatCellRenderer.php';
 class SwatTextCellRenderer extends SwatCellRenderer
 {
 	/**
-	 * Cell value
+	 * Cell content
 	 *
 	 * The textual content to place within this cell.
 	 *
 	 * @var string
 	 */
-	public $value = '';
+	public $text = '';
+
+	/**
+	 * A value to substitute into the text of this cell
+	 *
+	 * The value is substituted using a call to printf. For example, if the
+	 * {@link SwatCellRendererText::$text} property is set to 'My %s example'
+	 * and the value property is set to 'awesome' the cell renderer will render
+	 * as 'My aswesome example'.
+	 *
+	 * @var string
+	 */
+	public $value = null;
 
 	/**
 	 * Renders the contents of this cell
@@ -27,7 +39,10 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		echo $this->value;
+		if ($this->value === null)
+			echo $this->text;
+		else
+			printf($this->text, $this->value);
 	}
 }
 
