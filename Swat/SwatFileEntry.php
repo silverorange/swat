@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
 require_once 'Swat/SwatFormField.php';
@@ -14,17 +14,8 @@ require_once 'Swat/SwatFormField.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFileEntry extends SwatControl
+class SwatFileEntry extends SwatInputControl
 {
-	/**
-	 * Whether this entry widget is required or not
-	 *
-	 * Must have a non-empty value when processed.
-	 *
-	 * @var boolean
-	 */
-	public $required = false;
-
 	/**
 	 * input size
 	 *

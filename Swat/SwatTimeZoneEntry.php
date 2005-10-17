@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Date.php';
+require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatCascadeFlydown.php';
 require_once 'Swat/SwatState.php';
@@ -12,7 +13,7 @@ require_once 'Swat/SwatState.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTimeZoneEntry extends SwatControl implements SwatState
+class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 {
 	/**
 	 * Time-zone identifier
@@ -22,15 +23,6 @@ class SwatTimeZoneEntry extends SwatControl implements SwatState
 	 * @var string
 	 */
 	public $value = null;
-
-	/**
-	 * Whether this entry widget is required or not
-	 *
-	 * Must have a non-empty value when processed.
-	 *
-	 * @var boolean
-	 */
-	public $required = false;
 
 	/**
 	 * Time-zone areas available for this time-zone entry widget

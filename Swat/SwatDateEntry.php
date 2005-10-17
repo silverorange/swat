@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatDate.php';
 require_once 'Swat/SwatState.php';
@@ -12,7 +12,7 @@ require_once 'Swat/SwatState.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDateEntry extends SwatControl implements SwatState
+class SwatDateEntry extends SwatInputControl implements SwatState
 {
 	const YEAR     = 1;
 	const MONTH    = 2;
@@ -26,15 +26,6 @@ class SwatDateEntry extends SwatControl implements SwatState
 	 * @var Date
 	 */
 	public $value = null;
-
-	/**
-	 * Required
-	 *
-	 * Must have a non-empty value when processed.
-	 *
-	 * @var boolean
-	 */
-	public $required = false;
 
 	/**
 	 * Required date parts

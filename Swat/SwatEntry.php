@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
 
@@ -11,7 +11,7 @@ require_once 'Swat/SwatState.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatEntry extends SwatControl implements SwatState
+class SwatEntry extends SwatInputControl implements SwatState
 {
 	/**
 	 * Entry value
@@ -21,15 +21,6 @@ class SwatEntry extends SwatControl implements SwatState
 	 * @var string
 	 */
 	public $value = null;
-
-	/**
-	 * Whether this entry widget is required or not
-	 *
-	 * Must have a non-empty value when processed.
-	 *
-	 * @var boolean
-	 */
-	public $required = false;
 
 	/**
 	 * Input size
