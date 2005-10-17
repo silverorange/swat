@@ -894,59 +894,6 @@ class SwatDB
 	}
 
 	// }}}
-	// {{{ public static function getTreeOptionArray()
-
-	/**
-	 * Query for an option tree array
-	 *
- 	 * Convenience method to query for a set of options, each consisting of
-	 * an id, levelnum, and a title. The returned option array in the form of
-	 * a collection of {@link SwatTreeNode}s to other classes, such as 
-	 * SwatFlydown for example.
-	 *
-	 * @param MDB2_Driver_Common $db The database connection.
-	 *
-	 * @param string $sp Stored procedure/function to execute. Must return a 
-	 *        recordset containing three columns in order: id, title, level.
-	 *
-	 * @param string $title_field The name of the database field to query for 
-	 *        the title. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then text is 
-	 *        assummed for this field.
-	 *
-	 * @param string $id_field The name of the database field to query for 
-	 *        the id. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then integer is 
-	 *        assummed for this field.
-	 *
-	 * @param string $parent_field The name of the database field to query for 
-	 *        the parent. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then integer is 
-	 *        assummed for this field.
-	 *
-	 * @return SwatTreeNode A tree hierarchy of {@link SwatTreeNode}s
-	 *
-	 * @throws SwatDBException
-	 */
-	public static function getTreeOptionArray($db, $sp, $title_field,
-		$id_field, $level_field)
-	{
-		$id_field = new SwatDBField($id_field, 'integer');
-		$title_field = new SwatDBField($title_field, 'text');
-		$level_field = new SwatDBField($level_field, 'integer');
-		
-		// XXX: since we're using a patched MDB2 that discovers types automatically
-		//      from the recordset, I don't think we need this:
-		//$types = array($id_field->type, $title_field->type, $level_field->type);
-		//$rs = SwatDB::executeStoredProc($db, $sp, array(0), null, $types);
-		$rs = SwatDB::executeStoredProc($db, $sp, array(0));
-
-		$tree = SwatDB::buildTreeOptionArray($rs, $title_field->name, 
-			$id_field->name, $level_field->name);
-		return $tree;
-	}
-
-	// }}}
 	// {{{ public static function getFieldMax()
 
 	/**
@@ -1013,9 +960,34 @@ class SwatDB
 	}
 
 	// }}}
-	// {{{ private static function buildTreeOptionArray)
+	// {{{ public static function buildTreeOptionArray)
 
-	private static function buildTreeOptionArray($rs, $title_field_name,
+	/**
+	 * Build a Tree Structured Option Array
+	 *
+ 	 * Convenience method to take a structured query with each row consisting of
+	 * an id, levelnum, and a title, and turning it into a tree of {@link
+	 * SwatTreeNode}s. The returned option array in the form of
+	 * a collection of {@link SwatTreeNode}s can be used by other classes, such as 
+	 * {@link SwatTreeFlydown} for example.
+	 *
+	 * @param MDB2_Driver_Common $rs The MDB2 result set, usually the
+	 * 	result of a stored procedure.
+	 *
+	 * @param string $title_field_name The name of the database field
+	 * 	representing the title
+	 *
+	 * @param string $idfield_field_name The name of the database field
+	 * 	representing the id
+	 *
+	 * @param string $level_field_name The name of the database field
+	 * 	representing the level
+	 *
+	 * @return SwatTreeNode A tree hierarchy of {@link SwatTreeNode}s
+	 *
+	 * @throws SwatDBException
+	 */
+	public static function buildTreeOptionArray($rs, $title_field_name,
 		$id_field_name, $level_field_name)
 	{
 		$stack = array();
@@ -1028,11 +1000,11 @@ class SwatDB
 			$title = $row->$title_field_name;
 			$id = $row->$id_field_name;
 			$level = $row->$level_field_name;
-			
+
 			if ($level > count($stack)) {
 				array_push($stack, $current_parent);
 				$current_parent = $last_node;
-			} else if ($level < count($stack)) {
+			} elseif ($level < count($stack)) {
 				$current_parent = array_pop($stack);
 			}
 		
