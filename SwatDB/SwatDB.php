@@ -79,10 +79,12 @@ class SwatDB
 	 *        rows to be updated. The type of the individual identifiers should 
 	 *        correspond to the type of $id_field.
 	 *
+	 * @param string $where An optional additional where clause.
+	 *
 	 * @throws SwatDBException
 	 */
 	public static function updateColumn($db, $table, $field, $value, $id_field,
-		$ids)
+		$ids, $where = null)
 	{
 		if (count($ids) == 0)
 			return;
@@ -90,19 +92,22 @@ class SwatDB
 		$field = new SwatDBField($field, 'integer');
 		$id_field = new SwatDBField($id_field, 'integer');
 
-		$sql = 'update %s set %s = %s where %s in (%s)';
+		$sql = 'update %s set %s = %s where %s in (%s) %s';
 
 		foreach ($ids as &$id)
 			$id = $db->quote($id, $id_field->type);
 
 		$id_list = implode(',', $ids);
 
+		$where = ($where === null) ? '' : 'and '.$where;
+
 		$sql = sprintf($sql, 
 			$table,
 			$field->name,
 			$db->quote($value, $field->type),
 			$id_field->name,
-			$id_list);
+			$id_list,
+			$where);
 
 		SwatDB::debug($sql);
 		SwatDB::query($db, $sql);
@@ -420,9 +425,9 @@ class SwatDB
 	 *        $value_field. The type of the individual values should 
 	 *        correspond to the type of $value_field.
 	 *
-	 * @param string $table The table bound through the binding table.
+	 * @param string $bound_table The table bound through the binding table.
 	 *
-	 * @param string $id_field The database field in the bound table that the 
+	 * @param string $bound_field The database field in the bound table that the 
 	 *        binding table references.
 	 *
 	 * @throws SwatDBException
