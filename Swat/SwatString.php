@@ -256,13 +256,18 @@ class SwatString
 		if (strlen($string) <= $max_length)
 			return $string;
 
-		$search_offset = -max(strlen($string) - $max_length, 0);
+		// note: if strrpos worked the same using mb_string overloading the
+		// following code would be a lot simpler.
 
+		// chop at max length
+		$string = substr($string, 0, $max_length);
+		
 		// find the last space up to the max_length in the string
-		$chop_pos = strrpos($string, ' ', $search_offset);
-		if ($chop_pos === false) $chop_pos = $max_length;
+		$chop_pos = strrpos($string, ' ');
 
-		$string = substr($string, 0, $chop_pos);
+		if ($chop_pos !== false)
+			$string = substr($string, 0, $chop_pos);
+
 		$string = SwatString::removeTrailingPunctuation($string);
 
 		self::insertEntities($string, $matches, strlen($string));
