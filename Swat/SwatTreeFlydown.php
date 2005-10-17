@@ -53,6 +53,9 @@ class SwatTreeFlydown extends SwatFlydown
 			$this->addOption($key, $pad.$data['title']);
 		}
 
+		//reformat the value of the flydown to the path
+		$this->value = implode('/', $this->path);
+
 		parent::display();
 	}
 
