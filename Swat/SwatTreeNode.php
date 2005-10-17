@@ -198,7 +198,7 @@ class SwatTreeNode extends SwatObject
 
 		foreach ($node->children as $index => $child_node)
 			self::expandNode($options, $child_node,
-				self::appendPath($path, $index));
+				self::appendPath($path, $child_node->data['id']));
 	}
 
 	// }}}
