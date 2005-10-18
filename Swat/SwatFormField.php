@@ -98,8 +98,11 @@ class SwatFormField extends SwatContainer
 			echo $this->title, ':';
 
 			// TODO: widgets that are marked as required don't tell their field parent
-			if ($this->required)
-				echo '<span class="required">*</span>';
+			if ($this->required) {
+				echo '<span class="required">';
+				echo ' (', Swat::_('required'), ')';
+				echo '</span>';
+			}
 
 			$label_tag->close();
 		}
