@@ -139,9 +139,9 @@ label.swat-control {
 	margin: 0 0 0.5em 0;
 }
 
-.required {
-	font-weight: bold;
-	color: #C00;
+.swat-form-field .required {
+	font-weight: normal;
+	color: #888;
 }
 
 .swat-widget-note, .swat-form-field-note {
