@@ -124,8 +124,8 @@ class SwatString
 		);
 
 		$replace = array(
-			"\n&#8220;",
-			"&#8221;\n",
+			"\n“",
+			"”\n",
 			'',
 			"\n",
 			'',
@@ -142,7 +142,8 @@ class SwatString
 			'/[\xa0\s]*[\n\r][\xa0\s]*/s';
 
 		$replace = 
-			' &nbsp;&#8226;&nbsp; ';
+			// the spaces around the bullet are non-breaking spaces
+			'  •  ';
 
 		$text = preg_replace($search, $replace, $text);
 
@@ -245,7 +246,8 @@ class SwatString
 	 *                 max_length.
 	 */
 	public static function ellipsizeRight($string, $max_length,
-		$ellipses = '&nbsp;&#8230;')
+		// the space is a non-breaking space
+		$ellipses = ' …')
 	{
 		$matches = array();
 		self::stripEntities($string, $matches);
@@ -313,7 +315,8 @@ class SwatString
 	 *                 longer than max_length.
 	 */
 	public static function ellipsizeMiddle($string, $max_length,
-		$ellipses = '&nbsp;&#8230;&nbsp;')
+		// the spaces are non-breaking spaces
+		$ellipses = ' … ')
 	{
 		$string = trim($string);
 
