@@ -4,10 +4,10 @@ require_once 'Swat/SwatContainer.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
- * A container for a group of related SwatToolLinks
+ * A toolbar container for a group of related {@link SwatToolLink} objects
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatToolbar extends SwatContainer
@@ -28,7 +28,16 @@ class SwatToolbar extends SwatContainer
 		$toolbar_div->close();
 	}
 
-	public function setToolLinkValues($value) {
+	/**
+	 * Sets the value of all {@link SwatToolLink} objects within this toolbar
+	 *
+	 * This is usually more convenient than setting all the values by hand
+	 * if the values are dynamic.
+	 *
+	 * @param string $value
+	 */
+	public function setToolLinkValues($value)
+	{
 		foreach ($this->getDescendants('SwatToolLink') as $tool)
 			$tool->value = $value;
 	}
