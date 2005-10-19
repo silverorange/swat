@@ -9,7 +9,7 @@ ul.swat-toolbar {
 	margin: 0 -16px;
 	margin-bottom: -16px;
 	list-style-type: none;
-	padding: 6px;
+	padding: 5px;
 	position: relative;
 	top: -16px;
 }
@@ -21,7 +21,7 @@ ul.swat-toolbar {
 .swat-toolbar .swat-tool-link,
 .swat-toolbar .swat-tool-link-insensitive
 {
-	padding: 6px;
+	padding: 5px;
 	border-left: 1px solid #fff;
 	border-right: 1px solid #f0eade;
 	font-weight: bold;
