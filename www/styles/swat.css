@@ -21,10 +21,9 @@ ul.swat-toolbar {
 .swat-toolbar .swat-tool-link,
 .swat-toolbar .swat-tool-link-insensitive
 {
-	padding: 5px;
+	padding: 5px 8px;
 	border-left: 1px solid #fff;
 	border-right: 1px solid #f0eade;
-	font-weight: bold;
 	text-decoration: none;
 }
 
@@ -48,8 +47,18 @@ ul.swat-toolbar {
 	background: #f3efe5 url(../images/swat-tool-link-create.png) 6px 6px no-repeat;
 }
 
+.swat-toolbar .swat-tool-link-delete:link,
+.swat-tool-link-delete:visited {
+	background: url(../images/swat-tool-link-delete.png) 6px 6px no-repeat;
+	color: #e31b0c;
+	padding-left: 28px;
+}
+
+.swat-toolbar a.swat-tool-link-delete:hover {
+	background: #f3efe5 url(../images/swat-tool-link-delete.png) 6px 6px no-repeat;
+}
+
 .swat-toolbar .swat-tool-link-change-order {
-	font-weight: normal;
 }
 
 
