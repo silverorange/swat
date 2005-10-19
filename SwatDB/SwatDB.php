@@ -207,7 +207,7 @@ class SwatDB
 	 * @param string $sql The SQL to execute.
 	 * @param array $types Optional array of MDB2 datatypes for the result.
 	 *
-	 * @return Object A row object.
+	 * @return Object A row object, or null.
 	 *
 	 * @throws SwatDBException
 	 */
