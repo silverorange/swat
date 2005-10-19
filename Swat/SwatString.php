@@ -44,8 +44,8 @@ class SwatString
 		$blocklevel_elements = implode('|', self::$blocklevel_elements);
 
 		// regular expressions to match blocklevel tags
-		$starting_blocklevel = '/^<('.$blocklevel_elements.')[^<>]*?>/si';
-		$ending_blocklevel = '/<\/('.$blocklevel_elements.')[^<>]*?>$/si';
+		$starting_blocklevel = '/^<('.$blocklevel_elements.')[^<>]*?>/siu';
+		$ending_blocklevel = '/<\/('.$blocklevel_elements.')[^<>]*?>$/siu';
 
 		// convert input from windows and mac
 		$text = str_replace("\r\n", "\n", $text);
@@ -53,7 +53,7 @@ class SwatString
 
 		// replace continuous strings of whitespace containing a
 		// double lf with two line breaks
-		$text = preg_replace('/[\xa0\s]*\n\n[\xa0\s]*/s', "\n\n", $text);
+		$text = preg_replace('/[\xa0\s]*\n\n[\xa0\s]*/su', "\n\n", $text);
 
 		$paragraphs = explode("\n\n", $text);
 
@@ -82,7 +82,7 @@ class SwatString
 
 		$text = implode('', $paragraphs);
 
-		$text = preg_replace('/([^\n])\n([^\n])/s', '\1<br />\2', $text);
+		$text = preg_replace('/([^\n])\n([^\n])/su', '\1<br />\2', $text);
 
 		$text = rtrim($text);
 
@@ -110,17 +110,17 @@ class SwatString
 		$blocklevel_elements = implode('|', self::$blocklevel_elements);
 		$search = array(
 			// replace blockquote tags with quotation marks
-			'/<blockquote[^<>]*?>/si',
-			'/<\/blockquote[^<>]*?>/si',
+			'/<blockquote[^<>]*?>/siu',
+			'/<\/blockquote[^<>]*?>/siu',
 			// remove style tags
-			'/<style[^<>]*?>.*?<\/style[^<>]*?>/si',
+			'/<style[^<>]*?>.*?<\/style[^<>]*?>/siu',
 			// replace blocklevel tags with line breaks.
-			'/<\/?('.$blocklevel_elements.')[^<>]*?>/si',
+			'/<\/?('.$blocklevel_elements.')[^<>]*?>/siu',
 			// remove inline tags
 			// (only tags remaining after blocklevel tags removed)
-			'/<[\/\!]*?[^<>]*?>/s',
+			'/<[\/\!]*?[^<>]*?>/su',
 			// replace whitespaces with single spaces. \xa0 is &#160; is &nbsp;
-			'/[ \xa0\t]+/'
+			'/[ \xa0\t]+/u'
 		);
 
 		$replace = array(
@@ -139,7 +139,7 @@ class SwatString
 		$search =
 			// replace continuous strings of whitespace containing either a
 			// cr or lf with a non-breaking space padded bullet
-			'/[\xa0\s]*[\n\r][\xa0\s]*/s';
+			'/[\xa0\s]*[\n\r][\xa0\s]*/su';
 
 		$replace = 
 			// the spaces around the bullet are non-breaking spaces
@@ -183,7 +183,7 @@ class SwatString
 
 		// remove html entities, convert non-alpha-numeric characters to spaces
 		// and condense whitespace
-		$search = array('/&#?\w+;/', '/[^a-z0-9 ]/', '/\s+/');
+		$search = array('/&#?\w+;/u', '/[^a-z0-9 ]/u', '/\s+/u');
 		$replace = array('', ' ', ' ');
 
 		$string = preg_replace($search, $replace, $string);
@@ -401,7 +401,7 @@ class SwatString
 	 */
 	public static function removeTrailingPunctuation($string)
 	{
-		return preg_replace('/\W+$/s', '', $string);
+		return preg_replace('/\W+$/su', '', $string);
 	}
 
 	// }}}
@@ -416,7 +416,7 @@ class SwatString
 	 */
 	public static function removeLeadingPunctuation($string)
 	{
-		return preg_replace('/^\W+/s', '', $string);
+		return preg_replace('/^\W+/su', '', $string);
 	}
 
 	// }}}
@@ -631,7 +631,7 @@ class SwatString
 	 */
 	private static function stripEntities(&$string, &$matches)
 	{
-		$reg_exp = '/&#?[a-z0-9]*?;/s';
+		$reg_exp = '/&#?[a-z0-9]*?;/su';
 
 		preg_match_all($reg_exp, $string, $matches, PREG_OFFSET_CAPTURE);
 
