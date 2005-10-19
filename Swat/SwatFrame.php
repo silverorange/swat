@@ -51,7 +51,10 @@ class SwatFrame extends SwatContainer
 				$ancestor = $ancestor->parent;
 			}
 
-			echo "<h{$level} class=\"swat-frame-title\">{$this->title}</h{$level}>";
+			$header_tag = new SwatHtmlTag('h'.$level);			
+			$header_tag->class = "swat-frame-title";
+			$header_tag->content = $this->title;
+			$header_tag->display();
 		}
 
 		$inner_div->open();
