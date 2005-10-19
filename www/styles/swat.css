@@ -37,10 +37,17 @@ ul.swat-toolbar {
 	background: #f3efe5;
 }
 
-.swat-toolbar .swat-tool-link-create:link, .swat-tool-link-create:visited {
-	background: #f9f6f0 url(../images/swat-tool-link-create.png) top left repeat-x;
+.swat-toolbar .swat-tool-link-create:link,
+.swat-tool-link-create:visited {
+	background: url(../images/swat-tool-link-create.png) 6px 6px no-repeat;
 	color: #008e36;
-	padding-left: 34px;
+	padding-left: 28px;
+}
+
+.swat-toolbar a.swat-tool-link-create:hover {
+	background: #f3efe5 url(../images/swat-tool-link-create.png) 6px 6px no-repeat;
+	color: #008e36;
+	padding-left: 28px;
 }
 
 .swat-toolbar .swat-tool-link-change-order {
