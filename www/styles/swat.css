@@ -380,7 +380,7 @@ table.swat-table-view {
 }
 
 .swat-table-view th, .swat-table-view td {
-        padding: 0.2em;
+	padding: 0.2em;
 	text-align: left;
 }
 
@@ -389,7 +389,7 @@ table.swat-table-view {
 }
 
 .swat-table-view tbody tr.highlight, .swat-table-view tbody tr.highlight-odd {
-        background: #f7f5f3;
+	background: #f7f5f3;
 	border-top: 1px solid #e7ddc8;
 	border-bottom: 1px solid #e7ddc8;
 }
