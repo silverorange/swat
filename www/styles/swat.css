@@ -415,6 +415,30 @@ td.swat-table-view-group {
 	padding-top: 1em;
 }
 
+
+/* SwatDetailsView */
+
+
+.swat-details-view .none {
+	color: #999;
+}
+
+.swat-details-view-field th {
+	vertical-align: top;
+	text-align: right;
+	font-weight: bold;
+	color: #666;
+}
+
+.swat-details-view-vertical-field th,
+.swat-details-view-vertical-field .swat-details-view-field-header {
+	vertical-align: top;
+	text-align: left;
+	font-weight: bold;
+	color: #666;
+}
+
+
 /* SwatPagination */
 .swat-pagination {
 	overflow: auto;

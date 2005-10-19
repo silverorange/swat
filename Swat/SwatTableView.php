@@ -356,6 +356,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		$table_tag = new SwatHtmlTag('table');
 		$table_tag->class = 'swat-table-view';
+		$table_tag->cellspacing = '0';
 		$table_tag->id = $this->id;
 
 		$table_tag->open();

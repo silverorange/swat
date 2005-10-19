@@ -138,15 +138,22 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	/**
 	 * Displays this details view field using a data object
 	 *
-	 * @param mixedt $data a data object used to display the cell renderers in
+	 * @param mixed $data a data object used to display the cell renderers in
 	 *                      this field.
+	 * @param boolean $odd whether this is an odd or even field so alternating 
+	 *                      style can be applied.
 	 */
-	public function display($data)
+	public function display($data, $odd)
 	{
 		if (!$this->visible)
 			return;
 
 		$tr_tag = new SwatHtmlTag('tr');
+		$tr_tag->class = 'swat-details-view-field';
+
+		if ($odd)
+			$tr_tag->class.= ' odd';
+
 		$tr_tag->open();
 		$this->displayHeader();
 		$this->displayValue($data);
@@ -159,7 +166,6 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	public function displayHeader()
 	{
 		$th_tag = new SwatHtmlTag('th');
-		$th_tag->align = 'right';
 		$th_tag->content = $this->title.':';
 		$th_tag->display();
 	}
