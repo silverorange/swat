@@ -46,8 +46,6 @@ ul.swat-toolbar {
 
 .swat-toolbar a.swat-tool-link-create:hover {
 	background: #f3efe5 url(../images/swat-tool-link-create.png) 6px 6px no-repeat;
-	color: #008e36;
-	padding-left: 28px;
 }
 
 .swat-toolbar .swat-tool-link-change-order {
