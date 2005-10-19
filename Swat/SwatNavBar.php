@@ -200,7 +200,7 @@ class SwatNavBar extends SwatControl
 			
 			// display separator
 			if ($i > 1)
-				echo ' &#187; ';
+				echo '&nbsp;&#187; ';
 
 			// link all entries or link all but the last entry
 			$link = ($link_last_entry || $i < $count);
