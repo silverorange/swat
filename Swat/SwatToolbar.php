@@ -13,19 +13,26 @@ require_once 'Swat/SwatHtmlTag.php';
 class SwatToolbar extends SwatContainer
 {
 	/**
-	 * Displays this toolbar
+	 * Displays this toolbar as an unordered list with each sub-item
+	 * as a list item
 	 */
 	public function display()
 	{
 		if (!$this->visible)
 			return;
 
-		$toolbar_div = new SwatHtmlTag('div');
-		$toolbar_div->class = 'swat-toolbar';
+		$toolbar_ul = new SwatHtmlTag('ul');
+		$toolbar_ul->class = 'swat-toolbar';
 
-		$toolbar_div->open();
-		parent::display();
-		$toolbar_div->close();
+		$toolbar_ul->open();
+
+		foreach ($this->children as &$child) {
+			echo '<li>';
+			$child->display();
+			echo '</li>';
+		}
+
+		$toolbar_ul->close();
 	}
 
 	/**

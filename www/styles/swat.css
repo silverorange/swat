@@ -1,34 +1,53 @@
 .swat-hidden { display: none; }
 
-.swat-tool-link,
-.swat-tool-link-insensitive
-{
-	padding: 0.4em 0.6em;
-	background: #f9f6f0 url(../images/swat-tool-link.png) top left repeat-x;
-	border: 1px solid #e7ddc8;
-	font-weight: bold;
-	text-decoration: none;
-	margin-right: 0.5em;
+
+/* SwatToolbar  */
+
+ul.swat-toolbar {
+	background: #f9f6f0 url(../images/swat-toolbar-background.png) top left repeat-x;
+	border-bottom: 1px solid #e7ddc8;
+	margin: 0 -16px;
+	margin-bottom: -15px;
+	list-style-type: none;
+	padding: 6px;
+	position: relative;
+	top: -15px;
 }
 
-.swat-tool-link-insensitive {
+.swat-toolbar li {
+	display: inline;
+}
+
+.swat-toolbar .swat-tool-link,
+.swat-toolbar .swat-tool-link-insensitive
+{
+	padding: 6px;
+	border-left: 1px solid #fff;
+	border-right: 1px solid #f0eade;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.swat-toolbar .swat-tool-link-insensitive {
 	color: #999;
 }
 
-a.swat-tool-link:hover {
+.swat-toolbar a.swat-tool-link:hover {
 	text-decoration: underline;
-	border: 1px solid #ccb898;
+	background: #e5dcca url(../images/swat-tool-link-hover.png) top left repeat-x;
+	border-right: 1px solid #dcd0b8;
 }
 
-.swat-tool-link-create:link, .swat-tool-link-create:visited {
+.swat-toolbar .swat-tool-link-create:link, .swat-tool-link-create:visited {
 	background: #f9f6f0 url(../images/swat-tool-link-create.png) top left repeat-x;
 	color: #008e36;
 	padding-left: 34px;
 }
 
-.swat-tool-link-change-order {
+.swat-toolbar .swat-tool-link-change-order {
 	font-weight: normal;
 }
+
 
 /* SwatTextarea */
 
@@ -108,7 +127,7 @@ optgroup.swat-flydown-divider {
 
 .swat-frame h2.swat-frame-title,
 .swat-frame h3.swat-frame-title {
-	margin: 1px;
+	margin: 1px 1px 0 1px;
 	padding: 2px 6px;
 	color: #6b5d40;
 	background: #fff url(../images/swat-frame-header.png) bottom left repeat-x;
