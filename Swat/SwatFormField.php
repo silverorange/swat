@@ -82,11 +82,11 @@ class SwatFormField extends SwatContainer
 
 		$messages = &$this->getMessages();
 		$container_div = new SwatHtmlTag('div');
-
 		$container_div->class = $this->class;
+
+		// TODO: more classes based on message type?
 		if (count($messages) > 0)
-			// TODO: more classes based on message type?
-			$container_div->class .= ' '.$this->error_class;
+			$container_div->class.= ' '.$this->error_class;
 
 		$container_div->open();
 
