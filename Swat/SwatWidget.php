@@ -50,6 +50,19 @@ abstract class SwatWidget extends SwatObject
 	 */
 	public $sensitive = true;
 
+	/**
+	 * Stylesheet
+	 *
+	 * The URI to a stylesheet specific to this widget. If this property is set
+	 * before init() then addStyleSheet() will be called to add this 
+	 * stylesheet to the header entries. Primarily this should be used by
+	 * SwatUI when setting an stylesheet in SwatML.  To set a stylesheet in
+	 * PHP code, calle addStyleSheet directly.
+	 *
+	 * @var string
+	 */
+	public $stylesheet = null;
+
 	// }}}
 	// {{{ protected properties
 
@@ -156,6 +169,9 @@ abstract class SwatWidget extends SwatObject
 	{
 		if ($this->requires_id && $this->id === null)
 			$this->id = $this->getUniqueId();
+
+		if ($this->stylesheet !== null)
+			$this->addStyleSheet($this->stylesheet);
 	}
 
 	// }}}
