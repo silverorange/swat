@@ -4,14 +4,14 @@
 /* SwatToolbar  */
 
 ul.swat-toolbar {
-	background: #f9f6f0 url(../images/swat-toolbar-background.png) top left repeat-x;
-	border-bottom: 1px solid #e7ddc8;
+	background: #f6f2ea url(../images/swat-toolbar-background.png) top left repeat-x;
+	border-bottom: 1px solid #efe8da;
 	margin: 0 -16px;
-	margin-bottom: -15px;
+	margin-bottom: -16px;
 	list-style-type: none;
 	padding: 6px;
 	position: relative;
-	top: -15px;
+	top: -16px;
 }
 
 .swat-toolbar li {
@@ -34,8 +34,7 @@ ul.swat-toolbar {
 
 .swat-toolbar a.swat-tool-link:hover {
 	text-decoration: underline;
-	background: #e5dcca url(../images/swat-tool-link-hover.png) top left repeat-x;
-	border-right: 1px solid #dcd0b8;
+	background: #f3efe5;
 }
 
 .swat-toolbar .swat-tool-link-create:link, .swat-tool-link-create:visited {
