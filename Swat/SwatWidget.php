@@ -53,10 +53,10 @@ abstract class SwatWidget extends SwatObject
 	/**
 	 * Stylesheet
 	 *
-	 * The URI to a stylesheet specific to this widget. If this property is set
-	 * before init() then addStyleSheet() will be called to add this 
+	 * The URI of a stylesheet for use with this widget. If this property is 
+	 * set before init() then addStyleSheet() will be called to add this 
 	 * stylesheet to the header entries. Primarily this should be used by
-	 * SwatUI when setting an stylesheet in SwatML.  To set a stylesheet in
+	 * SwatUI when setting a stylesheet in SwatML.  To set a stylesheet in
 	 * PHP code, calle addStyleSheet directly.
 	 *
 	 * @var string
