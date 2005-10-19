@@ -93,7 +93,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 			return;
 
 		$table_tag = new SwatHtmlTag('table');
-		$table_tag->class = 'swat-detail-view';
+		$table_tag->class = 'swat-details-view';
 
 		$table_tag->open();
 		$this->displayContent();
@@ -130,16 +130,11 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	private function displayContent()
 	{
 		$count = 0;
-		$tr_tag = new SwatHtmlTag('tr');
 
 		foreach ($this->fields as $field) {
 			$count++;
-			$tr_tag->class = ($count % 2 == 1) ? 'odd' : null;
-			$tr_tag->open();
-
-			$field->display($this->data);
-
-			$tr_tag->close();
+			$odd = ($count % 2 == 1);
+			$field->display($this->data, $odd);
 		}
 	}
 }
