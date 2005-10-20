@@ -348,14 +348,18 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			$vars[$key_orderbydir] = $this->getDirectionAsString($next_dir);
 		}
 
-		// start building the new link
+		// build the new link
 		$link = $this->link.'?';
+		$first = true;
 
-		foreach($vars as $name => $value)
-			$link .= $name.'='.$value.'&amp;';
+		foreach($vars as $name => $value) { 
+			if ($first)
+				$first = false;
+			else
+				$link .= '&amp;';
 
-		// remove trailing ampersand
-		$link = substr($link, 0, -5);
+			$link .= $name.'='.$value;
+		}
 
 		return $link;
 	}
