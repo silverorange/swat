@@ -352,10 +352,10 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 		$link = $this->link.'?';
 
 		foreach($vars as $name => $value)
-			$link .= $name.'='.$value.'&';
+			$link .= $name.'='.$value.'&amp;';
 
 		// remove trailing ampersand
-		$link = substr($link, 0, -1);
+		$link = substr($link, 0, -5);
 
 		return $link;
 	}
