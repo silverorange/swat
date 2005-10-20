@@ -38,24 +38,24 @@ ul.swat-toolbar {
 
 .swat-toolbar .swat-tool-link-create:link,
 .swat-tool-link-create:visited {
-	background: url(../images/swat-tool-link-create.png) 6px 6px no-repeat;
+	background: url(../images/swat-tool-link-create.png) 6px center no-repeat;
 	color: #008e36;
 	padding-left: 28px;
 }
 
 .swat-toolbar a.swat-tool-link-create:hover {
-	background: #f3efe5 url(../images/swat-tool-link-create.png) 6px 6px no-repeat;
+	background: #f3efe5 url(../images/swat-tool-link-create.png) 6px center no-repeat;
 }
 
 .swat-toolbar .swat-tool-link-delete:link,
 .swat-tool-link-delete:visited {
-	background: url(../images/swat-tool-link-delete.png) 6px 6px no-repeat;
+	background: url(../images/swat-tool-link-delete.png) 6px center no-repeat;
 	color: #e31b0c;
 	padding-left: 28px;
 }
 
 .swat-toolbar a.swat-tool-link-delete:hover {
-	background: #f3efe5 url(../images/swat-tool-link-delete.png) 6px 6px no-repeat;
+	background: #f3efe5 url(../images/swat-tool-link-delete.png) 6px center no-repeat;
 }
 
 .swat-toolbar .swat-tool-link-change-order {
