@@ -14,7 +14,7 @@
 	<ul id="navigation">
 		<li id="n-mainpage"><a href="http://swat.silverorange.com"><span>Swat</span></a></li>
 		<li id="n-getinvolved"><a href="http://swat.silverorange.com/Get_Involved"><span>Get Involved</span></a></li>
-		<li id="n-demo"><a href="http://swat.silverorange.com/Demo"><span>Demo</span></a></li>
+		<li id="n-demo"><a href="http://swat.silverorange.com/demo"><span>Demo</span></a></li>
 		<li id="n-documentation"><a href="http://swat.silverorange.com/Documentation"><span>Documentation</span></a></li>
 		<li id="n-relatedprojects"><a href="http://swat.silverorange.com/Related_Projects"><span>Related Projects</span></a></li>
 	</ul>
