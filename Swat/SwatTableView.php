@@ -466,7 +466,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 			// display a row of data
 			$count++;
-			$tr_tag->class = ($count % 2 == 1) ? 'odd': null;
+			$tr_tag->class = $this->getRowClass();
 			$tr_tag->open();
 
 			foreach ($this->columns as $column)
@@ -481,6 +481,24 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		foreach ($this->extra_rows as $row)
 			$row->display($this->columns);
+	}
+
+	// }}}
+	// {{{ protected function getRowClass()
+
+	/**
+	 * Gets CSS class(es) for the XHTML tr tag.  Can be overridden by subclasses.
+	 *
+	 * @param mixed $row a data object containing the data to be displayed in 
+	 *                    this row.
+	 * @param integer $count the ordinal position of this row in the table.
+	 *
+	 * @return string CSS class name(s).
+	 */
+	protected function getRowClass($row, $count)
+	{
+		$class = ($count % 2 == 1) ? 'odd': null;
+		return $class;
 	}
 
 	// }}}
