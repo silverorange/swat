@@ -33,6 +33,7 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	{
 		if (!$this->visible)
 			return;
+
 		$options = $this->getOptions();
 		
 		// Empty string XHTML option value is assumed to be null

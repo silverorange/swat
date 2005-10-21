@@ -1,8 +1,6 @@
 <?php
 
 require_once 'DemoPage.php';
-require_once 'Swat/SwatTreeNode.php';
-require_once 'Swat/SwatFlydownOption.php';
 
 /**
  * A demo using a radiolist
