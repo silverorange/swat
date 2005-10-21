@@ -466,7 +466,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 			// display a row of data
 			$count++;
-			$tr_tag->class = $this->getRowClass();
+			$tr_tag->class = $this->getRowClass($row, $count);
 			$tr_tag->open();
 
 			foreach ($this->columns as $column)
