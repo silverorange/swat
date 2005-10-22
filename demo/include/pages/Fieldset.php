@@ -3,7 +3,7 @@
 require_once 'DemoPage.php';
 
 /**
- * A demo using a radiolist
+ * A demo using fieldsets
  *
  * This page sets up the radiolist.
  *
@@ -11,11 +11,11 @@ require_once 'DemoPage.php';
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class RadioList extends DemoPage
+class Fieldset extends DemoPage
 {
 	public function initUI()
 	{
-		$radiolist = $this->ui->getWidget('radiolist');
+		$radiolist = $this->ui->getWidget('radio_list');
 		$radiolist->addOptionsByArray(array(
 			0 => 'Apple',
 			1 => 'Orange',

@@ -25,15 +25,6 @@
 				<property name="title">Radio Buttons</property>
 
 				<widget class="SwatRadioList" id="radio_list">
-					<property name="options[0]">Apple</property>
-					<property name="options[1]">Orange</property>
-					<property name="options[2]">Banana</property>
-					<property name="options[3]">Pear</property>
-					<property name="options[4]">Pineapple</property>
-					<property name="options[5]">Kiwi</property>
-					<property name="options[6]">Tangerine</property>
-					<property name="options[7]">Grapefruit</property>
-					<property name="options[8]">Strawberry</property>
 					<property name="value" type="integer">5</property>
 				</widget>
 				
