@@ -159,8 +159,6 @@ class SwatChangeOrder extends SwatControl implements SwatState
 
 		echo '<div style="clear: both;"></div>';
 
-		$this->displayJavascript();
-
 		$hidden_tag = new SwatHtmlTag('input');
 		$hidden_tag->type = 'hidden';
 		$hidden_tag->id = $this->id;
@@ -169,6 +167,8 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$hidden_tag->display();
 
 		$div_tag->close();
+
+		$this->displayJavascript();
 	}
 
 	public function process()
@@ -196,8 +196,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 
 		$num_elements = count($this->options);
 		
-		echo "{$this->id}_obj = new SwatChangeOrder('{$this->id}', ".
-			"{$num_elements});\n";
+		echo "{$this->id}_obj = new SwatChangeOrder('{$this->id}');\n";
 
 		echo "\n//]]>";
 		echo '</script>';
