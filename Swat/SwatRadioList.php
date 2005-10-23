@@ -40,7 +40,7 @@ class SwatRadioList extends SwatFlydown implements SwatState
 		// when processing.
 		if ($this->show_blank)
 			$options = array_merge(
-				array(new SwatFlydownOption(0, $this->blank_title)),
+				array(new SwatFlydownOption('', $this->blank_title)),
 				$options);
 		
 		$input_tag = new SwatHtmlTag('input');
@@ -53,27 +53,24 @@ class SwatRadioList extends SwatFlydown implements SwatState
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
 
-		if (count($options)) {
-			foreach ($options as $flydown_option) {	
-				if ($flydown_option instanceof SwatFlydownDivider) {
-					//ignore these for now TODO: make dividers work with radiolists
-				} else {
-					$input_tag->value = (string)$flydown_option->value;
-					$input_tag->removeAttribute('checked');
-	
-					if ((string)$this->value === (string)$flydown_option->value)
-						$input_tag->checked = "checked";
-	
-					$input_tag->id = $this->id.'_'.$input_tag->value;
-					$input_tag->display();
-	
-					$label_tag->for = $this->id.'_'.$input_tag->value;
-					$label_tag->content = $flydown_option->title;
-	
-					$label_tag->display();
-				
-					echo '<br />';
-				}
+		foreach ($options as $option) {	
+			if ($option instanceof SwatFlydownDivider) {
+				//ignore these for now TODO: make dividers work with radiolists
+			} else {
+				$value = (string)$option->value;
+				$input_tag->value = $value;
+				$input_tag->removeAttribute('checked');
+				$input_tag->id = $this->id.'_'.$value;
+
+				if ($value === (string)$this->value)
+					$input_tag->checked = "checked";
+
+				$label_tag->for = $this->id.'_'.$value;
+				$label_tag->content = $option->title;
+
+				$input_tag->display();
+				$label_tag->display();
+				echo '<br />';
 			}
 		}
 	}
