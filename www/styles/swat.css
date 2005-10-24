@@ -58,6 +58,16 @@ ul.swat-toolbar {
 	background: #f3efe5 url(../images/swat-tool-link-delete.png) 6px center no-repeat;
 }
 
+.swat-toolbar .swat-tool-link-edit:link,
+.swat-tool-link-edit:visited {
+	background: url(../images/swat-tool-link-edit.png) 6px center no-repeat;
+	padding-left: 28px;
+}
+
+.swat-toolbar a.swat-tool-link-edit:hover {
+	background: #f3efe5 url(../images/swat-tool-link-edit.png) 6px center no-repeat;
+}
+
 .swat-toolbar .swat-tool-link-change-order {
 }
 
