@@ -349,7 +349,8 @@ class SwatDB
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function executeStoredProc($db, $proc, $params, $wrapper = null, $types = null)
+	public static function executeStoredProc($db, $proc, $params, 
+		$wrapper = 'SwatDBDefaultRecordsetWrapper', $types = null)
 	{
 		if (!is_array($params))
 			$params = array($params);
