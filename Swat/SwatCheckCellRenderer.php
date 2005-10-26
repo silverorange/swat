@@ -49,7 +49,7 @@ class SwatCheckCellRenderer extends SwatCellRenderer
 	 */
 	public function &getTdAttributes()
 	{
-		return array('style' => 'text-align: center;');
+		return array('class' => 'swat-check-cell');
 	}
 
 	/**
@@ -62,7 +62,7 @@ class SwatCheckCellRenderer extends SwatCellRenderer
 	 */
 	public function &getThAttributes()
 	{
-		return array('style' => 'text-align: center;');
+		return array('class' => 'swat-check-cell');
 	}
 }
 

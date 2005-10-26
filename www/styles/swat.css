@@ -425,6 +425,11 @@ td.swat-table-view-group {
 	padding-top: 1em;
 }
 
+table.swat-table-view td.swat-check-cell,
+table.swat-table-view th.swat-check-cell {
+	text-align: center;
+}
+
 
 /* SwatDetailsView */
 
