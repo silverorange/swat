@@ -12,7 +12,7 @@ SwatZIndexManager.elements = new Array();
  *
  * @var number
  */
-SwatZIndexManager.start = 0;
+SwatZIndexManager.start = 10;
 
 /**
  * Raises an element to the top
