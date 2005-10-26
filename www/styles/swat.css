@@ -450,6 +450,12 @@ table.swat-table-view th.swat-check-cell {
 	text-align: right;
 }
 
+.swat-details-view-field ul {
+	margin: 0;
+	padding: 0 0 0 1.5em;
+	list-style-type: circle;
+}
+
 /* SwatPagination */
 .swat-pagination {
 	overflow: auto;
