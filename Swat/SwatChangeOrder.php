@@ -108,7 +108,6 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$option_tag->class = 'swat-order-control-active';
 		$count = 0;
 		foreach ($this->options as $key => $option) {
-			$option_tag->id = "{$this->id}_option_{$count}";
 			$option_tag->content = $option;
 			$option_tag->display();
 			$option_tag->class = 'swat-order-control';
@@ -121,6 +120,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$controls_div->class = 'swat-order-control-buttons';
 		$controls_div->open();
 
+		// TODO: these buttons should use class names not ids
 		$top_btn = new SwatHtmlTag('input');
 		$top_btn->type = 'button';
 		$top_btn->value = Swat::_('Move to Top');
