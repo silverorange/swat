@@ -276,9 +276,11 @@ div.swat-order-control:hover {
 	list-style: none;
 	padding: 0;
 	float: left;
+	position: relative;
 }
 
 .swat-order-control-buttons {
+	position: relative;
 	float: left;
 	text-align: center;
 }
