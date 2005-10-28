@@ -4,7 +4,7 @@
  * Part of Swat
  *
  * @param string id the unique identifier of this object.
- * @param boolean sensitive ths initial sensitive of this object.
+ * @param boolean sensitive the initial sensitive of this object.
  *
  * @copyright 2004-2005 silverorange Inc.
  */
