@@ -246,56 +246,6 @@ label.swat-control {
 	text-decoration: none;
 }
 
-.swat-order-control {
-	border: 1px solid #CCC;
-	background: #FFF;
-	margin: 1px;
-	padding: 2px;
-	cursor: pointer;
-	cursor: hand;
-}
-
-div.swat-order-control:hover {
-	border: 1px solid #8af;
-}
-
-.swat-order-control-active {
-	border: 1px solid #8af;
-	color: #fff;
-	background: #79c;
-	margin: 1px;
-	padding: 2px;
-	cursor: pointer;
-	cursor: hand;
-}
-
-.swat-order-control-list {
-	border: 1px ButtonShadow solid;
-	margin: 2px;
-	overflow: auto;
-	list-style: none;
-	padding: 0;
-	float: left;
-	position: relative;
-}
-
-.swat-order-control-buttons {
-	position: relative;
-	float: left;
-	text-align: center;
-}
-
-.swat-order-control-buttons input {
-	margin: 0.5em;
-	width: 7em;
-}
-
-.swat-order-control-buttons input#swat-order-control-top,
-.swat-order-control-buttons input#swat-order-control-bottom {
-	font-size: 85%;
-	width: 10em;
-}
-
 .swat-form-field-checkbox {
 	margin: 0 0 0.5em 0;
 }
