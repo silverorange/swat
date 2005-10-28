@@ -4,14 +4,16 @@
  * Part of Swat
  *
  * @param string id the unique identifier of this object.
+ * @param boolean sensitive ths initial sensitive of this object.
  *
  * @copyright 2004-2005 silverorange Inc.
  */
-function SwatChangeOrder(id)
+function SwatChangeOrder(id, sensitive)
 {
 	this.id = id;
 
 	this.list_div = document.getElementById(this.id + '_list');
+	this.buttons = document.getElementsByName(this.id + '_buttons');
 
 	// the following two lines must be split on two lines to
 	// handle a Firefox bug.
@@ -33,13 +35,19 @@ function SwatChangeOrder(id)
 		}
 	}
 
-	this.active_div = this.list_div.firstChild;
-
-	this.scrollList(this.getScrollPosition());
-
 	// while not a real semaphore, this does prevent the user from breaking
 	// things by clicking buttons or items while an animation is occuring.
 	this.semaphore = true;
+
+	this.active_div = null;
+
+	// this is hard coded to true so we can chose the first element
+	this.sensitive = true;
+
+	this.choose(this.list_div.firstChild);
+	this.scrollList(this.getScrollPosition());
+
+	this.sensitive = sensitive;
 }
 
 /**
@@ -48,6 +56,13 @@ function SwatChangeOrder(id)
  * @var number
  */
 SwatChangeOrder.animation_delay = 10;
+
+/**
+ * The number of frames of animation to use
+ *
+ * @var number
+ */
+SwatChangeOrder.animation_frames = 5;
 
 /**
  * A static callback function for the move-to-top window timeout.
@@ -82,9 +97,11 @@ function SwatChangeOrder_staticMoveToBottom(change_order, steps)
  */
 SwatChangeOrder.prototype.choose = function(div)
 {
-	if (this.semaphore) {
-		this.active_div.className = 'swat-order-control';
-		div.className = 'swat-order-control-active';
+	if (this.semaphore && this.sensitive) {
+		if (this.active_div !== null)
+			this.active_div.className = 'swat-change-order-item';
+
+		div.className = 'swat-change-order-item swat-change-order-item-active';
 		this.active_div = div;
 
 		// update the index value of this element
@@ -104,10 +121,12 @@ SwatChangeOrder.prototype.choose = function(div)
  */
 SwatChangeOrder.prototype.moveToTop = function()
 {
-	if (this.semaphore) {
+	if (this.semaphore && this.sensitive) {
 		this.semaphore = false;
+		this.setButtonsSensitive(false);
 
-		var steps = Math.ceil(this.active_div.order_index / 5);
+		var steps = Math.ceil(this.active_div.order_index /
+			SwatChangeOrder.animation_frames);
 
 		this.moveToTopHelper(steps);
 	}
@@ -130,6 +149,7 @@ SwatChangeOrder.prototype.moveToTopHelper = function(steps)
 			SwatChangeOrder.animation_delay);
 	} else {
 		this.semaphore = true;
+		this.setButtonsSensitive(true);
 	}
 }
 
@@ -140,10 +160,12 @@ SwatChangeOrder.prototype.moveToTopHelper = function(steps)
  */
 SwatChangeOrder.prototype.moveToBottom = function()
 {
-	if (this.semaphore) {
+	if (this.semaphore && this.sensitive) {
 		this.semaphore = false;
+		this.setButtonsSensitive(false);
 
-		var steps = Math.ceil((this.list_div.childNodes.length - this.active_div.order_index - 1) / 5);
+		var steps = Math.ceil((this.list_div.childNodes.length - this.active_div.order_index - 1) /
+			SwatChangeOrder.animation_frames);
 
 		this.moveToBottomHelper(steps);
 	}
@@ -166,6 +188,7 @@ SwatChangeOrder.prototype.moveToBottomHelper = function(steps)
 			SwatChangeOrder.animation_delay);
 	} else {
 		this.semaphore = true;
+		this.setButtonsSensitive(true);
 	}
 }
 
@@ -176,7 +199,7 @@ SwatChangeOrder.prototype.moveToBottomHelper = function(steps)
  */
 SwatChangeOrder.prototype.moveUp = function()
 {
-	if (this.semaphore)
+	if (this.semaphore && this.sensitive)
 		this.moveUpHelper(1);
 }
 
@@ -187,7 +210,7 @@ SwatChangeOrder.prototype.moveUp = function()
  */
 SwatChangeOrder.prototype.moveDown = function()
 {
-	if (this.semaphore)
+	if (this.semaphore && this.sensitive)
 		this.moveDownHelper(1);
 }
 
@@ -266,6 +289,36 @@ SwatChangeOrder.prototype.moveDownHelper = function(steps)
 	this.scrollList(this.getScrollPosition());
 
 	return return_val;
+}
+
+/**
+ * Sets the sensitivity on buttons for this control
+ *
+ * @param boolean sensitive whether the buttons are sensitive.
+ */
+SwatChangeOrder.prototype.setButtonsSensitive = function(sensitive)
+{
+	for (var i = 0; i < this.buttons.length; i++)
+		this.buttons[i].disabled = !sensitive;
+}
+
+/**
+ * Sets whether this control is sensitive
+ *
+ * @param boolean sensitive whether this control is sensitive.
+ */
+SwatChangeOrder.prototype.setSensitive = function(sensitive)
+{
+	this.setButtonsSensitive(sensitive);
+	this.sensitive = sensitive;
+
+	if (sensitive) {
+		document.getElementById(this.id + '_control').className =
+			'swat-change-order';
+	} else {
+		document.getElementById(this.id + '_control').className =
+			'swat-change-order swat-change-order-insensitive';
+	}
 }
 
 /**
