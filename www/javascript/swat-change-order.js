@@ -21,6 +21,20 @@ function SwatChangeOrder(id, sensitive)
 	var value_array = hidden_value.value.split(',');
 	var count = 0;
 	var node = null;
+	var is_ie = (this.list_div.addEventListener) ? false : true;
+	var self = this;
+	
+	/**
+	 * Handles an click event for an item in the list
+	 *
+	 * @param DOMEvent event the event to handle
+	 */
+	function chooseEventHandler(event)
+	{
+		var target = (is_ie) ? event.srcElement : event.target;
+
+		self.choose(target);
+	}
 	
 	// remove text nodes and set value on nodes
 	for (var i = 0; i < this.list_div.childNodes.length; i++) {
@@ -31,6 +45,13 @@ function SwatChangeOrder(id, sensitive)
 		} else if (node.nodeType == 1) {
 			node.order_value = value_array[count];
 			node.order_index = count;
+
+			// add click handlers to the list items
+			if (is_ie)
+				node.attachEvent('onclick', chooseEventHandler);
+			else
+				node.addEventListener('click', chooseEventHandler, false);
+
 			count++;
 		}
 	}
