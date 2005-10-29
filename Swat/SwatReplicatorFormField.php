@@ -25,6 +25,20 @@ class SwatReplicatorFormField extends SwatFormField
 	private $widgets = array();
 
 	/**
+	 * Creates a new replicator formfield
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->requires_id = true;
+	}
+
+	/**
 	 * Initilizes the form field
 	 *
 	 * Goes through the child widgets, clones them, and adds them to the
@@ -52,13 +66,27 @@ class SwatReplicatorFormField extends SwatFormField
 			$form_field = new SwatFormField();
 			$form_field->title = $title;
 			$container->add($form_field);
+			$suffix = '_'.$this->id.$id;
 			
 			$this->widgets[$id] = array();
 			
 			foreach ($local_children as $child) {
 				$new_child = clone $child;
-				$this->widgets[$id][$new_child->id] = $new_child;
-				$new_child->id.= $id;
+
+				if ($child->id !== null) {
+					$this->widgets[$id][$new_child->id] = $new_child;
+					$new_child->id.= $suffix;
+				}
+
+				if ($new_child instanceof SwatContainer) {
+					foreach ($new_child->getDescendants() as $descendent) {
+						if ($descendent->id !== null) {
+							$this->widgets[$id][$descendent->id] = $descendent;
+							$descendent->id.= $suffix;
+						}
+					}
+				}
+
 				$form_field->add($new_child);
 			}
 		}
