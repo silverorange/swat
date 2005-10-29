@@ -108,10 +108,9 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$list_div->open();
 
 		$option_tag = new SwatHtmltag('div');
-		$option_tag->onclick = "{$this->id}_obj.choose(this);";
 		$option_tag->class = 'swat-change-order-item';
 		if ($this->onclick !== null) 
-			$option_tag->onclick.=' '.$this->onclick;
+			$option_tag->onclick = $this->onclick;
 			
 		$count = 0;
 		foreach ($this->options as $key => $option) {
