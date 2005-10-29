@@ -25,6 +25,20 @@ class SwatReplicatorFieldset extends SwatFieldset
 	private $widgets = array();
 
 	/**
+	 * Creates a new replicator fieldset
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->requires_id = true;
+	}
+
+	/**
 	 * Initilizes the fieldset
 	 *
 	 * Goes through the internal widgets, clones them, and adds them to the
@@ -51,12 +65,26 @@ class SwatReplicatorFieldset extends SwatFieldset
 			$field_set = new SwatFieldset();
 			$field_set->title = $title;
 			$container->add($field_set);
+			$suffix = '_'.$this->id.$id;
 			$this->widgets[$id] = array();
 			
 			foreach ($local_children as $child) {
 				$new_child = clone $child;
-				$this->widgets[$id][$new_child->id] = $new_child;
-				$new_child->id.= $id;
+
+				if ($child->id !== null) {
+					$this->widgets[$id][$child->id] = $new_child;
+					$new_child->id.= $suffix;
+				}
+
+				if ($new_child instanceof SwatContainer) {
+					foreach ($new_child->getDescendants() as $descendent) {
+						if ($descendent->id !== null) {
+							$this->widgets[$id][$descendent->id] = $descendent;
+							$descendent->id.= $suffix;
+						}
+					}
+				}
+
 				$field_set->add($new_child);
 			}
 		}
