@@ -143,6 +143,8 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 
 				if (in_array($node->data['value'], $this->values))
 					$this->input_tag->checked = 'checked';
+				else
+					$this->input_tag->checked = null;
 
 				$this->label_tag->for = $this->id.'_'.$index;
 				$this->label_tag->content = $node->data['title'];
