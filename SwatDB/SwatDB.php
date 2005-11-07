@@ -974,7 +974,8 @@ class SwatDB
 	 * {@link SwatTreeFlydown} for example.
 	 *
 	 * @param MDB2_Driver_Common $rs The MDB2 result set, usually the
-	 * 	result of a stored procedure.
+	 * 	result of a stored procedure. Must be wrapped in {@link
+	 * 	SwatDBRecordsetWrapper}.
 	 *
 	 * @param string $title_field_name The name of the database field
 	 * 	representing the title
@@ -998,7 +999,7 @@ class SwatDB
 		array_push($stack, $current_parent);
 		$last_node = $current_parent;	
 
-		while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
+		foreach ($rs as $row) {
 			$title = $row->$title_field_name;
 			$id = $row->$id_field_name;
 			$level = $row->$level_field_name;
