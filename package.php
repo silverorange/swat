@@ -2,7 +2,7 @@
 
 require_once 'PEAR/PackageFileManager2.php';
 
-$version = '0.0.3';
+$version = '0.0.5';
 $notes = <<<EOT
 - initial test package
 EOT;
@@ -48,6 +48,7 @@ $package->addIgnore('demo/www/swat/');
 
 $package->addMaintainer('lead', 'nrf', 'Nathan Fredrickson', 'nathan@silverorange.com');
 $package->addMaintainer('lead', 'gauthierm', 'Mike Gauthier', 'mike@silverorange.com');
+$package->addMaintainer('developer', 'dave', 'Dave Peck', 'dave@silverorange.com');
 
 $package->setPhpDep('5.0.5');
 $package->setPearinstallerDep('1.4.0');
