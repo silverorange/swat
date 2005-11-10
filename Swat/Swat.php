@@ -114,4 +114,27 @@ class Swat
 	}
 }
 
+/*
+ * Define a dummy dngettext() for when gettext is not available.
+ */
+if (!function_exists("dngettext")) {
+	function dngettext($domain, $messageid1, $messageid2, $n)
+	{
+		if ($n == 1)
+			return $messageid1;
+
+		return $messageid2;
+    }
+}
+
+/*
+ * Define a dummy dgettext() for when gettext is not available.
+ */
+if (!function_exists("dgettext")) {  
+	function dgettext($domain, $messageid)
+	{
+		return $messageid;
+	}
+}
+
 ?>
