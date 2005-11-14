@@ -221,15 +221,17 @@ class SwatNavBar extends SwatControl
 	 * @param boolean $link whether or not to hyperlink the given entry if the
 	 *                       entry has a link set.
 	 */
-	protected function displayEntry(SwatNavBarEntry $entry, $link = true)
+	protected function displayEntry(SwatNavBarEntry $entry, $show_link = true)
 	{
-		if ($entry->link !== null && $link) {
+		$title = ($entry->title === null) ? '' : $entry->title;
+
+		if ($entry->link !== null && $show_link) {
 			$link_tag = new SwatHtmlTag('a');
 			$link_tag->href = $entry->link;
-			$link_tag->content = $entry->title;
+			$link_tag->content = $title;
 			$link_tag->display();
 		} else {
-			echo $entry->title;
+			echo $title;
 		}
 	}
 
