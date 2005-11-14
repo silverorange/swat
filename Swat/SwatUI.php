@@ -566,48 +566,152 @@ class SwatUI extends SwatObject
 	 */
 	private function parseConstantExpression($expression, $object)
 	{
-		$token = strtok($expression, '|&');
-		$pos = 0;
-		$value = null;
-		$operator = null;
+		/*
+		 * This method converts a constant expression into reverse polish
+		 * notation and then evaluates it.
+		 *
+		 * Parsing the constant expression in this way makes it impossible
+		 * for an expression to execute arbitrary code.
+		 *
+		 * The algorithm used is from Wikipedia:
+		 * http://en.wikipedia.org/wiki/Reverse_Polish_Notation
+		 */
 
-		while ($token !== false) {
-			$pos += strlen($token);
-			$constant = trim($token);
+		// operator => precedence
+		$operators = array(
+			'|' => 0,
+			'&' => 1,
+			'-' => 2,
+			'+' => 2,
+			'/' => 3,
+			'*' => 3);
 
-			// get a default scope for the constant
-			if (strpos($constant, '::') === false)
-				$constant = get_class($object) . '::' . $constant;
+		// this includes parentheses
+		$reg_exp  = '/([\|&\+\/\*\(\)-])/u';
+		$tokens = preg_split($reg_exp, $expression, -1,
+			PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
-			// evaluate constant
-			$constant = constant($constant);
+		$stack = array();
+		$queue = array();
+		$eval_stack = array();
+		$prev_token = null;
 
-			// TODO: use operator precedence here & before |
-			if ($operator === null) {
-				$value = $constant;
-			} else {
-				switch ($operator) {
-				case '|':
-					$value |= $constant;
-					break;
-				case '&':
-					$value &= $constant;
-					break;
+		foreach ($tokens as $token) {
+			
+			if (strcmp($token, '(') == 0) {
+				array_push($stack, $token);
+
+			} elseif (strcmp($token, ')') == 0) {
+				if (array_key_exists($prev_token, $operators))
+					throw new SwatException(sprintf('Invalid syntax in '.
+						"constant expression '%s' in SwatML.",
+						$expression));
+
+				while (array_key_exists(end($stack), $operators)) {
+					array_push($queue, array_pop($stack));
+					if (count($stack) == 0)
+						throw new SwatException(sprintf('Mismatched '.
+							"parentheses in constant expression '%s' ".
+							'in SwatML.',
+							$expression));
 				}
+
+				if (strcmp(array_pop($stack), '(') != 0)
+					throw new SwatException(sprintf('Mismatched parentheses '.
+						"in constant expression '%s' in SwatML.",
+						$expression));
+
+			} elseif (array_key_exists($token, $operators)) {
+				if ($prev_token === null || strcmp($prev_token, '(') == 0 ||
+					array_key_exists($prev_token, $operators))
+					throw new SwatException(sprintf('Invalid syntax in '.
+						"constant expression '%s' in SwatML.",
+						$expression));
+
+				while (count($stack) > 0 &&
+					array_key_exists(end($stack), $operators) &&
+					$operators[$token] <= $operators[end($stack)])
+					array_push($queue, array_pop($stack));
+
+				array_push($stack, $token);
+
+			} else {
+				$constant = trim($token);
+
+				// get a default scope for the constant
+				if (strpos($constant, '::') === false)
+					$constant = get_class($object) . '::' . $constant;
+
+				// evaluate constant
+				if (defined($constant))
+					$constant = constant($constant);
+				else
+					throw new SwatException(sprintf('Undefined constant '.
+						"'%s' in constant expression '%s' inSwatML.",
+						$constant,
+						$expression));
+
+				array_push($queue, $constant);
 			}
 
-			// get next token
-			$token = strtok('|&');
+/*
+echo 'token: '.$token.'<br />';
+echo 'queue: '.implode(' ',$queue).'<br />';
+echo 'stack: '.implode(' ',$stack).'<br /><br />';
+*/
+			$prev_token = $token;
+		}
 
-			// get an operator if it exists
-			if ($token !== false) {
-				$operator = substr($expression, $pos, 1);
+		// collect left over operators
+		while (count($stack) > 0) {
+			$operator = array_pop($stack);
+			if (strcmp($operator, '(') == 0)
+				throw new SwatException(sprintf('Mismatched parentheses '.
+					"in constant expression '%s' in SwatML.",
+					$expression));
 
-				$pos++;
+			array_push($queue, $operator);
+		}
+
+//echo implode(' ',$queue).'<br />';
+
+		$eval_stack = array();
+		foreach ($queue as $value) {
+			if (array_key_exists($value, $operators)) {
+				$b = array_pop($eval_stack);
+				$a = array_pop($eval_stack);
+
+				if ($a === null || $b === null)
+					throw new SwatException(sprintf('Invalid syntax in '.
+						"constant expression '%s' in SwatML.",
+						$expression));
+
+				switch ($value){
+				case '|':
+					array_push($eval_stack, $a | $b);
+					break;
+				case '&':
+					array_push($eval_stack, $a & $b);
+					break;
+				case '-':
+					array_push($eval_stack, $a - $b);
+					break;
+				case '+':
+					array_push($eval_stack, $a + $b);
+					break;
+				case '/':
+					array_push($eval_stack, $a / $b);
+					break;
+				case '*':
+					array_push($eval_stack, $a * $b);
+					break;
+				}
+			} else {
+				array_push($eval_stack, $value);
 			}
 		}
 
-		return $value;
+		return array_pop($eval_stack);
 	}
 
 	// }}}
