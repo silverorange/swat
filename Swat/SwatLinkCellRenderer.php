@@ -27,13 +27,13 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	public $link;
 
 	/**
-	 * Link title
+	 * Link text
 	 *
 	 * The visible content to place within the XHTML anchor tag.
 	 *
 	 * @var string
 	 */
-	public $title;
+	public $text;
 
 	/**
 	 * Link value
@@ -62,7 +62,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	{
 		if ($this->sensitive) {
 			$anchor = new SwatHtmlTag('a');
-			$anchor->content = $this->title;
+			$anchor->content = $this->text;
 
 			if ($this->class !== null)
 				$anchor->class = $this->class;
@@ -82,7 +82,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 			else
 				$span_tag->class = 'swat-link-cell-renderer-insensitive';
 
-			$span_tag->content = $this->title;
+			$span_tag->content = $this->text;
 
 			$span_tag->display();
 		}
