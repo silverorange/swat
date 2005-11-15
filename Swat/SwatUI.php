@@ -393,6 +393,9 @@ class SwatUI extends SwatObject
 	 * @param array $node the XML node data to parse.
 	 *
 	 * @return a reference to the object created.
+	 *
+	 * @throws SwatException if the object class if not found and no suitable
+	 *                        file exists to load the class from.
 	 */
 	private function parseNode($node)
 	{
@@ -401,14 +404,20 @@ class SwatUI extends SwatObject
 
 		if (!class_exists($class)) {
 
+			$class_file = null;
 			foreach ($this->class_map as $package_prefix => $path) {
 				if (strncmp($class, $package_prefix, strlen($package_prefix)) == 0) {
-					$classfile = "{$path}/{$class}.php";
+					$class_file = "{$path}/{$class}.php";
 					break;
 				}
 			}
 
-			require_once $classfile;
+			if ($class_file === null)
+				throw new SwatException("Class '{$class}' is not defined ".
+					'and no suitable filename for the class could be found. '.
+					'You may have forgotten to map the class prefix to a path.');
+
+			require_once $class_file;
 		}
 
 		$node_object = new $class();
