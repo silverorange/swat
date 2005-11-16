@@ -8,8 +8,6 @@ require_once 'Swat/SwatFormField.php';
 /**
  * A file upload widget
  *
- * Note: you must set the form's enctype to "multipart/form-data"
- *
  * @package   Swat
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
@@ -17,25 +15,22 @@ require_once 'Swat/SwatFormField.php';
 class SwatFileEntry extends SwatInputControl
 {
 	/**
-	 * input size
-	 *
-	 * size in characters of the html text form input, or null.
+	 * The size in characters of the XHTML form input, or null if no width is
+	 * specified
 	 *
 	 * @var integer
 	 */
 	public $size = 40;
 
 	/**
-	 * Accept Mime-Types
-	 *
-	 * Array of mime-types to accept
+	 * Array of mime-types to accept as uploads
 	 *
 	 * @var array
 	 */
 	public $accept_mime_types = null;
 
 	/**
-	 * Display acceptable mime-types
+	 * Display acceptable mime-types as a note in this entry's parent
 	 *
 	 * @var boolean
 	 */
@@ -80,7 +75,7 @@ class SwatFileEntry extends SwatInputControl
 	}
 
 	/**
-	 * Processes this entry widget
+	 * Processes this file entry widget
 	 *
 	 * If any validation type errors occur, an error message is attached to
 	 * this entry widget.
@@ -114,7 +109,7 @@ class SwatFileEntry extends SwatInputControl
 	/**
 	 * Is file uploaded
 	 *
-	 * @return boolean Whether or not a file was uploaded
+	 * @return boolean whether or not a file was uploaded with this file entry.
 	 */
 	public function isUploaded()
 	{
@@ -122,11 +117,10 @@ class SwatFileEntry extends SwatInputControl
 	}
 
 	/**
-	 * Get file name
+	 * Gets the original file name of the uploaded file
 	 *
-	 * Get the original filename of the uploaded file
-	 *
-	 * @return string Original filename
+	 * @return mixed the original filename of the uploaded file or null if no
+	 *                file was uploaded.
 	 */
 	public function getFileName()
 	{
@@ -134,9 +128,10 @@ class SwatFileEntry extends SwatInputControl
 	}
 
 	/**
-	 * Get file mime type
+	 * Gets the mime type of the uploaded file
 	 *
-	 * @return string Mime type of the uploaded file
+	 * @return mixed the mime type of the uploaded file or null if no file was
+	 *                uploaded.
 	 */
 	public function getMimeType()
 	{
@@ -144,15 +139,18 @@ class SwatFileEntry extends SwatInputControl
 	}
 
 	/**
-	 * Save file
+	 * Saves the uploaded file to the server
 	 *
-	 * Save the uploaed file to the server
+	 * @param string $dst_dir the directory on the server to save the uploaded
+	 *                        file in.
+	 * @param string $dst_filename an optional filename to save the file under.
+	 *                             If no filename is specified, the file is
+	 *                             saved with the original filename.
 	 *
-	 * param string $dst_dir path to save file in
-	 * param string $dst_filename optional filename to save as. If not
-	 * 	 given, file is saved with the original filename.
+	 * @return boolean true if the file was saved correctly and false if there
+	 *                  was an error or no file was uploaded.
 	 *
-	 * @return boolean Whether or not the file was saved correctly
+	 * @throws SwatEexception if the destination directory does not exist.
 	 */
 	public function saveFile($dst_dir, $dst_filename = null)
 	{
@@ -162,7 +160,12 @@ class SwatFileEntry extends SwatInputControl
 		if ($dst_filename === null)
 			$dst_filename = $this->getFileName();
 
-		return move_uploaded_file($this->file['tmp_name'], $dst_dir.'/'.$dst_filename);
+		if (is_dir($dst_dir))
+			return move_uploaded_file($this->file['tmp_name'],
+				$dst_dir.'/'.$dst_filename);
+		else
+			throw new SwatException("Destination of '{$dst_dir}' is not a ".
+				'directory or does not exist.');
 	}
 }
 
