@@ -36,6 +36,12 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public $display_mime_types = true;
 
+	/**
+	 * Stores the relevant part of the $_FILES array for this widget after
+	 * the widget's parent is processed
+	 *
+	 * @var array
+	 */
 	private $file = null;
 
 	/**
@@ -121,10 +127,36 @@ class SwatFileEntry extends SwatInputControl
 	 *
 	 * @return mixed the original filename of the uploaded file or null if no
 	 *                file was uploaded.
+	 *
+	 * @see SwatFileEntry::getTempFileName()
 	 */
 	public function getFileName()
 	{
 		return ($this->isUploaded()) ? $this->file['name'] : null;
+	}
+
+	/**
+	 * Gets the temporary name of the uploaded file
+	 *
+	 * @return mixed the temporary name of the uploaded file or null if no
+	 *                file was uploaded.
+	 *
+	 * @see SwatFileEntry::getFileName()
+	 */
+	public function getTempFileName()
+	{
+		return ($this->isUploaded()) ? $this->file['tmp_name'] : null;
+	}
+
+	/**
+	 * Gets the size of the uploaded file in bytes
+	 *
+	 * @return mixed the size of the uploaded file in bytes or null if no file
+	 *                was uploaded.
+	 */
+	public function getSize()
+	{
+		return ($this->isUploaded()) ? $this->file['size'] : null;
 	}
 
 	/**
