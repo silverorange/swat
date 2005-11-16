@@ -182,7 +182,7 @@ class SwatFileEntry extends SwatInputControl
 	 * @return boolean true if the file was saved correctly and false if there
 	 *                  was an error or no file was uploaded.
 	 *
-	 * @throws SwatEexception if the destination directory does not exist.
+	 * @throws SwatException if the destination directory does not exist.
 	 */
 	public function saveFile($dst_dir, $dst_filename = null)
 	{
