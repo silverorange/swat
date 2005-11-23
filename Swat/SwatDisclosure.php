@@ -54,7 +54,12 @@ class SwatDisclosure extends SwatContainer
 			return;
 
 		$control_div = new SwatHtmlTag('div');
+		$control_div->id = $this->id;
 		$control_div->class = 'swat-disclosure-control';
+		if ($this->open)
+			$control_div->class.= ' swat-disclosure-control-opened';
+		else
+			$control_div->class.= ' swat-disclosure-control-closed';
 
 		$control_div->open();
 
@@ -92,21 +97,16 @@ class SwatDisclosure extends SwatContainer
 			echo $this->title;
 
 		$anchor->close();
-		$control_div->close();
 
 		$container_div = new SwatHtmlTag('div');
-		$container_div->id = $this->id;
-
-		if ($this->open)
-			$container_div->class = 'swat-disclosure-container-opened';
-		else
-			$container_div->class = 'swat-disclosure-container-closed';
+		$container_div->class = 'swat-disclosure-container';
 
 		$container_div->open();
 		parent::display();
 		$container_div->close();
 
 		$this->displayJavascript();
+		$control_div->close();
 	}
 
 	/**

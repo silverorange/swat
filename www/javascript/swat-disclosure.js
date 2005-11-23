@@ -26,7 +26,7 @@ SwatDisclosure.prototype.toggle = function()
 
 SwatDisclosure.prototype.close = function()
 {
-	this.div.className = 'swat-disclosure-container-closed';
+	this.div.className = 'swat-disclosure-control-closed';
 	this.image.src = 'swat/images/disclosure-closed.png';
 	this.image.alt = SwatDisclosure.open_text;
 	this.input.value = 'closed';
@@ -35,7 +35,7 @@ SwatDisclosure.prototype.close = function()
 
 SwatDisclosure.prototype.open = function()
 {
-	this.div.className = 'swat-disclosure-container-opened';
+	this.div.className = 'swat-disclosure-control-opened';
 	this.image.src = 'swat/images/disclosure-open.png';
 	this.image.alt = SwatDisclosure.close_text;
 	this.input.value = 'opened';

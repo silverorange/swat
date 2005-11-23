@@ -227,13 +227,18 @@ label.swat-control {
 	background: #FFF;
 }
 
-.swat-disclosure-container-opened {
+.swat-disclosure-control-closed {
+	margin-bottom: 1em;
+}
+
+
+.swat-disclosure-control-opened .swat-disclosure-container {
 	display: block;	
 	border: 1px solid #ddd;
 	padding: 16px;
 }
 
-.swat-disclosure-container-closed {
+.swat-disclosure-control-closed .swat-disclosure-container {
 	display: none;
 }
 
