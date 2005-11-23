@@ -36,9 +36,7 @@ class SwatDisclosure extends SwatContainer
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
-
 		$this->addJavaScript('swat/javascript/swat-disclosure.js');
 	}
 
@@ -56,25 +54,20 @@ class SwatDisclosure extends SwatContainer
 		$control_div = new SwatHtmlTag('div');
 		$control_div->id = $this->id;
 		$control_div->class = 'swat-disclosure-control';
+
 		if ($this->open)
 			$control_div->class.= ' swat-disclosure-control-opened';
 		else
 			$control_div->class.= ' swat-disclosure-control-closed';
 
-		$control_div->open();
-
 		$anchor = new SwatHtmlTag('a');
 		$anchor->class = 'swat-disclosure-anchor';
-		$anchor->href =
-			sprintf("javascript:%s_obj.toggle();", $this->id);
-
-		$anchor->open();
+		$anchor->href = sprintf("javascript:%s_obj.toggle();", $this->id);
 
 		$input = new SwatHtmlTag('input');
 		$input->type = 'hidden';
 		$input->value = ($this->open) ? 'opened' : 'closed';
 		$input->id = $this->id.'_input';
-		$input->display();
 
 		$img = new SwatHtmlTag('img');
 
@@ -91,15 +84,18 @@ class SwatDisclosure extends SwatContainer
 		$img->id = $this->id.'_img';
 		$img->class = 'swat-disclosure-image';
 
+		$container_div = new SwatHtmlTag('div');
+		$container_div->class = 'swat-disclosure-container';
+
+		$control_div->open();
+		$anchor->open();
+		$input->display();
 		$img->display();
 
 		if ($this->title !== null)
 			echo $this->title;
 
 		$anchor->close();
-
-		$container_div = new SwatHtmlTag('div');
-		$container_div->class = 'swat-disclosure-container';
 
 		$container_div->open();
 		parent::display();
