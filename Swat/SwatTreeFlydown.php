@@ -53,10 +53,11 @@ class SwatTreeFlydown extends SwatFlydown
 			$this->addOption($key, $pad.$data['title']);
 		}
 
-		//reformat the value of the flydown to the path
+		// temporarily encode the path into the value for parent::display()
+		$actual_value = $this->value;
 		$this->value = implode('/', $this->path);
-
 		parent::display();
+		$this->value = $actual_value;
 	}
 
 	/**
@@ -69,8 +70,13 @@ class SwatTreeFlydown extends SwatFlydown
 	public function process()
 	{
 		parent::process();
-		$this->path = explode('/', $this->value);
-		$this->value = $this->path[count($this->path) - 1];
+
+		if ($this->value === null) {
+			$this->path = array();
+		} else {
+			$this->path = explode('/', $this->value);
+			$this->value = $this->path[count($this->path) - 1];
+		}
 	}
 }
 
