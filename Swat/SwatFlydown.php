@@ -144,7 +144,7 @@ class SwatFlydown extends SwatInputControl implements SwatState
 			$hidden_tag = new SwatHtmlTag('input');
 			$hidden_tag->type = 'hidden';
 			$hidden_tag->name = $this->id;
-			$hidden_tag->value = (string)$flydown_option->value;
+			$hidden_tag->value = (string)$value;
 
 			$hidden_tag->display();
 
