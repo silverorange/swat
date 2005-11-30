@@ -277,7 +277,7 @@ class SwatForm extends SwatContainer
 	 * @return array a reference to the super-global array containing this
 	 *                form's data.
 	 */
-	public function getRawFormData()
+	public function &getRawFormData()
 	{
 		$data = null;
 
