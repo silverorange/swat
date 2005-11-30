@@ -94,6 +94,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 	public function process()
 	{
 		if (!isset($_POST[$this->id]))
+			$this->value = null;
 			return;
 		elseif (strlen($_POST[$this->id]) == 0)
 			$this->value = null;

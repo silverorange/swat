@@ -38,13 +38,16 @@ class SwatFloatEntry extends SwatEntry
 	{
 		parent::process();
 
-		$value = SwatString::toFloat($this->value);
+		if ($this->value !== null) {
+			$float_value = SwatString::toFloat($this->value);
 
-		if ($value === null) {
-			$msg = Swat::_('The %s field must be a number.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-		} else
-			$this->value = $value;	
+			if ($float_value === null) {
+				$msg = Swat::_('The %s field must be a number.');
+				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			} else {
+				$this->value = $float_value;
+			}
+		}
 	}
 
 	protected function getDisplayValue()
