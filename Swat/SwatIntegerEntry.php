@@ -38,11 +38,13 @@ class SwatIntegerEntry extends SwatEntry
 	{
 		parent::process();
 
-		if (is_numeric($this->value) && $this->value == intval($this->value))
-			$this->value = intval($this->value);
-		else {
-			$msg = Swat::_('The %s field must be an integer.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+		if ($this->value !== null) {
+			if (is_numeric($this->value) && $this->value == intval($this->value))
+				$this->value = intval($this->value);
+			else {
+				$msg = Swat::_('The %s field must be an integer.');
+				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			}
 		}
 	}
 

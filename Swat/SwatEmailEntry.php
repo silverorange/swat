@@ -24,6 +24,9 @@ class SwatEmailEntry extends SwatEntry
 	{
 		parent::process();
 
+		if ($this->value === null)
+			return;
+
 		$valid_address_word = '[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+';
 		$valid_address_ereg = '^'.$valid_address_word.'@'.
 			$valid_address_word.'\.'.$valid_address_word.'$';

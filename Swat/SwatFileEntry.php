@@ -88,7 +88,10 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public function process()
 	{
-		$this->file = SwatApplication::initVar($this->id, null, SwatApplication::VAR_FILES);
+		if (!isset($_FILES[$this->id]))
+			return;
+		else
+			$this->file = $_FILES[$this->id];
 
 		if ($this->file['name'] == null)
 			$this->file = null;

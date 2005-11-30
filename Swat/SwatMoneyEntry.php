@@ -74,6 +74,9 @@ class SwatMoneyEntry extends SwatEntry
 	{
 		parent::process();
 
+		if ($this->value === null)
+			return;
+
 		$locale = $this->setLocale($this->locale);
 		$lc = localeconv();
 		$lc_frac = $lc['int_frac_digits'];

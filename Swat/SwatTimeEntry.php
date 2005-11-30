@@ -192,6 +192,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 */
 	public function process()
 	{
+		if (!$this->isVisible())
+			return;
+
 		$this->createFlydowns();
 
 		$all_empty = true;

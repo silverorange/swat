@@ -70,6 +70,9 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 */
 	public function process()
 	{
+		if (!isset($_POST[$this->id]))
+			return;
+
 		$this->value = $_POST[$this->id];
 
 		if ($this->required && !strlen($this->value)) {
