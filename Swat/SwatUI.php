@@ -3,6 +3,18 @@
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatContainer.php';
 
+require_once 'Swat/exceptions/SwatFileNotFoundException.php';
+require_once 'Swat/exceptions/SwatInvalidSwatMLException.php';
+require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
+require_once 'Swat/exceptions/SwatInvalidCallbackException.php';
+require_once 'Swat/exceptions/SwatDuplicateIdException.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
+require_once 'Swat/exceptions/SwatDoesNotImplementException.php';
+require_once 'Swat/exceptions/SwatClassNotFoundException.php';
+require_once 'Swat/exceptions/SwatInvalidPropertyException.php';
+require_once 'Swat/exceptions/SwatUndefinedConstantException.php';
+require_once 'Swat/exceptions/SwatInvalidConstantExpressionException.php';
+
 /**
  * Generates a Swat widget tree from an XML UI file
  *
@@ -94,7 +106,7 @@ class SwatUI extends SwatObject
 	 *
 	 * @param string $filename the filename of the XML UI file to load.
 	 *
-	 * @throws SwatException
+	 * @throws SwatFileNotFoundException, SwatInvalidSwatMLException
 	 */
 	public function loadFromXML($filename)
 	{
@@ -125,7 +137,9 @@ class SwatUI extends SwatObject
 		}
 
 		if ($xml_file === null)
-			throw new SwatException("SwatML file not found: '{$filename}'.");
+			throw new SwatFileNotFoundException(
+				"SwatML file not found: '{$filename}'.",
+				0, $xml_file);
 
 		$document = new DOMDocument();
 		$document->load($xml_file);
@@ -133,11 +147,15 @@ class SwatUI extends SwatObject
 		// make sure we are using the correct document type
 		if ($document->doctype === null ||
 			strcmp($document->doctype->name, 'swatml') != 0) {
-			throw new SwatException('SwatUI can only parse SwatML documents.');
+			throw new SwatInvalidSwatMLException(
+				'SwatUI can only parse SwatML documents.',
+				0, $xml_file);
 		}
 
 		if (!$document->validate())
-			throw new SwatException('Invalid SwatML');
+			throw new SwatInvalidSwatMLException(
+				'Invalid SwatML',
+				0, $xml_file);
 
 		$this->parseUI($document->documentElement, $this->root);
 	}
@@ -156,7 +174,7 @@ class SwatUI extends SwatObject
 	 *
 	 * @return SwatWidget a reference to the widget.
 	 *
-	 * @throws SwatException
+	 * @throws SwatWidgetNotFoundException
 	 */
 	public function getWidget($id, $silent = false)
 	{
@@ -166,8 +184,9 @@ class SwatUI extends SwatObject
 			if ($silent)
 				return null;
 			else
-				throw new SwatException("Widget with an id of '{$id}' not ".
-					'found.');
+				throw new SwatWidgetNotFoundException(
+					"Widget with an id of '{$id}' not found.",
+					0, $id);
 	}
 
 	// }}}
@@ -260,15 +279,16 @@ class SwatUI extends SwatObject
 	 *
 	 * @param callback $callback the callback function to use.
 	 *
-	 * @throws SwatException
+	 * @throws SwatInvalidCallbackException
 	 */
 	public function setTranslationCallback($callback)
 	{
 		if (is_callable($callback))
 			$this->translation_callback = $callback;
 		else
-			throw new SwatException('Cannot set translation callback to an '.
-				'uncallable callback.');
+			throw new SwatInvalidCallbackException(
+				'Cannot set translation callback to an uncallable callback.',
+				0, $callback);
 	}
 
 	// }}}
@@ -327,7 +347,7 @@ class SwatUI extends SwatObject
 	 * @param string $element_name the name of the XML element node the object
 	 *                              was parsed from.
 	 *
-	 * @throws SwatException
+	 * @throws SwatDuplicateIdException, SwatInvalidClassException
 	 */
 	private function checkParsedObject($parsed_object, $element_name)
 	{
@@ -338,16 +358,20 @@ class SwatUI extends SwatObject
 
 				// make sure id is unique
 				if (isset($this->widgets[$parsed_object->id]))
-					throw new SwatException('A widget with an id of '.
-						"'{$parsed_object->id}' already exists.");
+					throw new SwatDuplicateIdException(
+						"A widget with an id of '{$parsed_object->id}' ".
+						'already exists.',
+						0, $parsed_object->id);
 
 			} elseif (!class_exists('SwatWidget') ||
 				!$parsed_object instanceof SwatWidget) {
 
 				$class_name = get_class($parsed_object);
 
-				throw new SwatException("'{$class_name}' is declared as a ".
-					'widget but it is not an instance of SwatWidget.');
+				throw new SwatInvalidClassException(
+					"'{$class_name}' is defined in a widget element but is ".
+					'not an instance of SwatWidget.',
+					0, $parsed_object);
 			}
 		} elseif ($element_name == 'object') {
 			if (class_exists('SwatWidget') &&
@@ -355,9 +379,11 @@ class SwatUI extends SwatObject
 
 				$class_name = get_class($parsed_object);
 
-				throw new SwatException("'{$class_name}' is declared as an ".
-					'object but it is an instance of SwatWidget and should '.
-					'be declared as a widget.');
+				throw new SwatInvalidClassException(
+					"'{$class_name}' is defined in an object element but is ".
+					'and instance of SwatWidget and should be defined in a '.
+					'widget element.',
+					0, $parsed_object);
 			}
 		}
 	}
@@ -371,7 +397,7 @@ class SwatUI extends SwatObject
 	 * @param SwatObject $object the object to attach.
 	 * @param SwatUIParent $parent the parent to attach the widget to.
 	 *
-	 * @throws SwatException
+	 * @throws SwatDoesNotImplementException
 	 */
 	private function attachToParent(SwatObject $object, SwatUIParent $parent)
 	{
@@ -379,8 +405,10 @@ class SwatUI extends SwatObject
 			$parent->addChild($object);
 		} else {
 			$class_name = get_class($parent);
-			throw new SwatException('Can not add object to parent. '.
-				"'{$class_name}' does not implement SwatUIParent.");
+			throw new SwatDoesNotImplementException(
+				"Can not add object to parent. '{$class_name}' does not ".
+				'implement SwatUIParent.',
+				0, $parent);
 		}
 	}
 
@@ -394,8 +422,7 @@ class SwatUI extends SwatObject
 	 *
 	 * @return a reference to the object created.
 	 *
-	 * @throws SwatException if the object class if not found and no suitable
-	 *                        file exists to load the class from.
+	 * @throws SwatClassNotFoundException
 	 */
 	private function parseNode($node)
 	{
@@ -413,9 +440,11 @@ class SwatUI extends SwatObject
 			}
 
 			if ($class_file === null)
-				throw new SwatException("Class '{$class}' is not defined ".
-					'and no suitable filename for the class could be found. '.
-					'You may have forgotten to map the class prefix to a path.');
+				throw new SwatClassNotFoundException(
+					"Class '{$class}' is not defined and no suitable filename ".
+					'for the class could be found. You may have forgotten to '.
+					'map the class prefix to a path.',
+					0, $class);
 
 			require_once $class_file;
 		}
@@ -439,7 +468,7 @@ class SwatUI extends SwatObject
 	 * @param SwatObject $object the object to apply the property to.
 	 * @param SwatUIParent $parent the parent of the object.
 	 *
-	 * @throws SwatException
+	 * @throws SwatInvalidPropertyException
 	 */
 	private function parseProperty($property_node, $object, $parent)
 	{
@@ -459,8 +488,10 @@ class SwatUI extends SwatObject
 
 		if (!array_key_exists($name, $class_properties)) {
 			$class_name = get_class($object);
-			throw new SwatException("Property '{$name}' does not exist in ".
-				"class '{$class_name}' but is used in SwatML.");
+			throw new SwatInvalidPropertyException(
+				"Property '{$name}' does not exist in class '{$class_name}' ".
+				'but is used in SwatML.',
+				0, $name, $class_name);
 		}
 
 		// translatable is always set in the DTD
@@ -572,6 +603,9 @@ class SwatUI extends SwatObject
 	 * @param SwatObject $object the object that conatins the class constant.
 	 *
 	 * @return string the value of the class constant.
+	 *
+	 * @throws SwatInvalidConstantExpressionException,
+	 *         SwatUndefinedConstantException
 	 */
 	private function parseConstantExpression($expression, $object)
 	{
@@ -612,30 +646,33 @@ class SwatUI extends SwatObject
 
 			} elseif (strcmp($token, ')') == 0) {
 				if (array_key_exists($prev_token, $operators))
-					throw new SwatException(sprintf('Invalid syntax in '.
-						"constant expression '%s' in SwatML.",
-						$expression));
+					throw new SwatInvalidConstantExpressionException(
+						'Invalid syntax in constant expression '.
+						"'".$expression."' in SwatML.",
+						0, $expression);
 
 				while (array_key_exists(end($stack), $operators)) {
 					array_push($queue, array_pop($stack));
 					if (count($stack) == 0)
-						throw new SwatException(sprintf('Mismatched '.
-							"parentheses in constant expression '%s' ".
-							'in SwatML.',
-							$expression));
+						throw new SwatInvalidConstantExpressionException(
+							'Mismatched parentheses in constant expression '.
+							"'".$expression."' in SwatML.",
+							0, $expression);
 				}
 
 				if (strcmp(array_pop($stack), '(') != 0)
-					throw new SwatException(sprintf('Mismatched parentheses '.
-						"in constant expression '%s' in SwatML.",
-						$expression));
+					throw new SwatInvalidConstantExpressionException(
+						'Mismatched parentheses in constant expression '.
+						"'".$expression."' in SwatML.",
+						0, $expression);
 
 			} elseif (array_key_exists($token, $operators)) {
 				if ($prev_token === null || strcmp($prev_token, '(') == 0 ||
 					array_key_exists($prev_token, $operators))
-					throw new SwatException(sprintf('Invalid syntax in '.
-						"constant expression '%s' in SwatML.",
-						$expression));
+					throw new SwatInvalidConstantExpressionException(
+						'Invalid syntax in constant expression '.
+						"'".$expression."' in SwatML.",
+						0, $expression);
 
 				while (count($stack) > 0 &&
 					array_key_exists(end($stack), $operators) &&
@@ -655,19 +692,14 @@ class SwatUI extends SwatObject
 				if (defined($constant))
 					$constant = constant($constant);
 				else
-					throw new SwatException(sprintf('Undefined constant '.
-						"'%s' in constant expression '%s' inSwatML.",
-						$constant,
-						$expression));
+					throw new SwatUndefinedConstantException(
+						"Undefined constant '".$constant."' in constant ".
+						"expression '".$expression."' inSwatML.",
+						0, $constant);
 
 				array_push($queue, $constant);
 			}
 
-/*
-echo 'token: '.$token.'<br />';
-echo 'queue: '.implode(' ',$queue).'<br />';
-echo 'stack: '.implode(' ',$stack).'<br /><br />';
-*/
 			$prev_token = $token;
 		}
 
@@ -675,14 +707,13 @@ echo 'stack: '.implode(' ',$stack).'<br /><br />';
 		while (count($stack) > 0) {
 			$operator = array_pop($stack);
 			if (strcmp($operator, '(') == 0)
-				throw new SwatException(sprintf('Mismatched parentheses '.
-					"in constant expression '%s' in SwatML.",
-					$expression));
+				throw new SwatInvalidConstantExpressionException(
+					'Mismatched parentheses in constant expression '.
+					"'".$expression."' in SwatML.",
+					0, $expression);
 
 			array_push($queue, $operator);
 		}
-
-//echo implode(' ',$queue).'<br />';
 
 		$eval_stack = array();
 		foreach ($queue as $value) {
@@ -691,9 +722,10 @@ echo 'stack: '.implode(' ',$stack).'<br /><br />';
 				$a = array_pop($eval_stack);
 
 				if ($a === null || $b === null)
-					throw new SwatException(sprintf('Invalid syntax in '.
-						"constant expression '%s' in SwatML.",
-						$expression));
+					throw new SwatInvalidConstantExpressionException(
+						'Invalid syntax in constant expression '.
+						"'".$expression."' in SwatML.",
+						0, $expression);
 
 				switch ($value){
 				case '|':
