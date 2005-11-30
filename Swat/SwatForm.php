@@ -179,7 +179,7 @@ class SwatForm extends SwatContainer
 	 */
 	public function process()
 	{
-		$raw_data = $this->getRawFormData();
+		$raw_data = $this->getFormData();
 
 		$this->processed = (isset($raw_data['process']) &&
 			$raw_data['process'] == $this->id);
@@ -301,7 +301,7 @@ class SwatForm extends SwatContainer
 	 */
 	protected function processHiddenFields()
 	{
-		$raw_data = $this->getRawFormData();
+		$raw_data = $this->getFormData();
 
 		if (isset($raw_data[$this->id.'_hidden_fields']))
 			$fields = $raw_data[$this->id.'_hidden_fields'];
