@@ -491,7 +491,7 @@ class SwatUI extends SwatObject
 			throw new SwatInvalidPropertyException(
 				"Property '{$name}' does not exist in class '{$class_name}' ".
 				'but is used in SwatML.',
-				0, $name, $class_name);
+				0, $object, $name);
 		}
 
 		// translatable is always set in the DTD
@@ -639,6 +639,15 @@ class SwatUI extends SwatObject
 		$eval_stack = array();
 		$prev_token = null;
 
+		$parenthesis_exception = new SwatInvalidConstantExpressionException(
+			"Mismatched parentheses in constant expression '".$expression."' ".
+			'in SwatML.',
+			0, $expression);
+
+		$syntax_exception = new SwatInvalidConstantExpressionException(
+			"Invalid syntax in constant expression '".$expression."' in SwatML.",
+			0, $expression);
+
 		foreach ($tokens as $token) {
 			
 			if (strcmp($token, '(') == 0) {
@@ -646,33 +655,21 @@ class SwatUI extends SwatObject
 
 			} elseif (strcmp($token, ')') == 0) {
 				if (array_key_exists($prev_token, $operators))
-					throw new SwatInvalidConstantExpressionException(
-						'Invalid syntax in constant expression '.
-						"'".$expression."' in SwatML.",
-						0, $expression);
+					throw $syntax_exception;
 
 				while (array_key_exists(end($stack), $operators)) {
 					array_push($queue, array_pop($stack));
 					if (count($stack) == 0)
-						throw new SwatInvalidConstantExpressionException(
-							'Mismatched parentheses in constant expression '.
-							"'".$expression."' in SwatML.",
-							0, $expression);
+						throw $parenthesis_exception;
 				}
 
 				if (strcmp(array_pop($stack), '(') != 0)
-					throw new SwatInvalidConstantExpressionException(
-						'Mismatched parentheses in constant expression '.
-						"'".$expression."' in SwatML.",
-						0, $expression);
+					throw $parenthesis_exception;
 
 			} elseif (array_key_exists($token, $operators)) {
 				if ($prev_token === null || strcmp($prev_token, '(') == 0 ||
 					array_key_exists($prev_token, $operators))
-					throw new SwatInvalidConstantExpressionException(
-						'Invalid syntax in constant expression '.
-						"'".$expression."' in SwatML.",
-						0, $expression);
+					throw $syntax_exception;
 
 				while (count($stack) > 0 &&
 					array_key_exists(end($stack), $operators) &&
@@ -707,10 +704,7 @@ class SwatUI extends SwatObject
 		while (count($stack) > 0) {
 			$operator = array_pop($stack);
 			if (strcmp($operator, '(') == 0)
-				throw new SwatInvalidConstantExpressionException(
-					'Mismatched parentheses in constant expression '.
-					"'".$expression."' in SwatML.",
-					0, $expression);
+				throw $parenthesis_exception;
 
 			array_push($queue, $operator);
 		}
@@ -722,10 +716,7 @@ class SwatUI extends SwatObject
 				$a = array_pop($eval_stack);
 
 				if ($a === null || $b === null)
-					throw new SwatInvalidConstantExpressionException(
-						'Invalid syntax in constant expression '.
-						"'".$expression."' in SwatML.",
-						0, $expression);
+					throw $syntax_exception;
 
 				switch ($value){
 				case '|':
