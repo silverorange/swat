@@ -10,7 +10,7 @@ EOT;
 $description =<<<EOT
 Swat is a web application toolkit.
 
-* An OO-style API
+* An object oriented API
 * A set of user-interface widgets
 EOT;
 
