@@ -164,6 +164,9 @@ class SwatFlydown extends SwatInputControl implements SwatState
 	 */
 	public function process()
 	{
+		if (!isset($_POST[$this->id]))
+			return;
+
 		$value = $_POST[$this->id];
 
 		// Empty string HTML option value is considered to be null.

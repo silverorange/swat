@@ -77,14 +77,16 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 	}
 
 	/**
-	 * Processes this entry widget
+	 * Processes this color entry widget
 	 *
 	 * If any validation type errors occur, an error message is attached to
 	 * this entry widget.
 	 */
 	public function process()
 	{
-		if (strlen($_POST[$this->id]) == 0)
+		if (!isset($_POST[$this->id]))
+			return;
+		elseif (strlen($_POST[$this->id]) == 0)
 			$this->value = null;
 		else
 			$this->value = $_POST[$this->id];
@@ -97,21 +99,6 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		} elseif ($this->value === null) {
 			$msg = Swat::_('The %s field is required.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-			
-		} elseif ($this->maxlength !== null && $len > $this->maxlength) {
-
-			$msg = sprintf(Swat::_('The %%s field must be less than %s characters.'),
-				$this->maxlength);
-
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-
-		} elseif ($this->minlength !== null && $len < $this->minlength) {
-
-			$msg = sprintf(Swat::_('The %%s field must be more than %s characters.'),
-				$this->minlength);
-
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-
 		}
 	}
 

@@ -292,6 +292,27 @@ abstract class SwatWidget extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function isVisible()
+
+	/**
+	 * Determines the visiblity of this widget.
+	 *
+	 * Looks at the visible property of the ancestors of this widget to 
+	 * determine if this widget is visible.
+	 *
+	 * @return boolean whether this widget is visible.
+	 *
+	 * @see SwatWidget::$visible
+	 */
+	public function isVisible()
+	{
+		if ($this->parent === null)
+			return $this->visible;
+		else
+			return ($this->parent->isVisible() && $this->visible);
+	}
+
+	// }}}
 }
 
 ?>
