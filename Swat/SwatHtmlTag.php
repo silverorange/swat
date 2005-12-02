@@ -30,11 +30,15 @@ class SwatHtmlTag extends SwatObject
 	private $attributes = array();
 
 	/**
-	 * Content (optional)
+	 * Optional content for the body of the XHTML tag
 	 *
-	 * Optional content for the body of the HTML tag. When this is set
-	 * {@link SwatHtmlTag::display()} will output this content followed by an
-	 * explicit closing tag.
+	 * This property is a UTF-8 encoded XHTML fragment. It is not escaped
+	 * before display so the user of SwatHtmlTag is responsible for any
+	 * escaping that must occur.
+	 *
+	 * When this value is set {@link SwatHtmlTag::display()} displays this
+	 * content after displaying the opening tag. Then it displays an explicit
+	 * closing tag.
 	 *
 	 * @var string
 	 */
@@ -120,7 +124,7 @@ class SwatHtmlTag extends SwatObject
 			$this->openInternal(true);
 		} else {
 			$this->openInternal(false);
-			echo SwatString::minimizeEntities($this->content);
+			echo $this->content;
 			$this->close();
 		}
 	}
