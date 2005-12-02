@@ -90,6 +90,38 @@ class SwatString
 	}
 
 	// }}}
+	// {{{ public static function minimizeEntities()
+
+	/**
+	 * Converts a UTF-8 text string to have the minimal number of entities
+	 * necessary to output it as valid UTF-8 XHTML without ever double-escaping.
+	 *
+	 * The text is converted as follows:
+	 *
+	 * - any exisiting entities are decoded to their UTF-8 characaters
+	 * - the minimal number of characters necessary are then escaped as entities:
+	 *         ampersands (&) => &amp;
+	 *          less than (<) => &lt;
+	 *       greater than (>) => &gt; 
+	 *	     double quote (") => &quot;
+	 *
+	 * @param string $text the UTF-8 text string to convert.
+	 *
+	 * @return string the UTF-8 text string with minimal entities.
+	 */
+	public static function minimizeEntities($text)
+	{
+		// decode any entities that might already exist
+		$text= html_entity_decode($text, ENT_COMPAT, 'UTF-8');
+
+		// encode all ampersands (&), less than (<), greater than (>), 
+		// and double quote (") characters as their XML entities 
+		$text = htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
+
+		return $text;
+	}
+
+	// }}}
 	// {{{ public static function condense()
 
 	/**

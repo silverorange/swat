@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatObject.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * Stores and outputs an HTML tag
@@ -119,7 +120,7 @@ class SwatHtmlTag extends SwatObject
 			$this->openInternal(true);
 		} else {
 			$this->openInternal(false);
-			echo htmlspecialchars($this->content);
+			echo SwatString::minimizeEntities($this->content);
 			$this->close();
 		}
 	}
@@ -164,9 +165,11 @@ class SwatHtmlTag extends SwatObject
 	{
 		echo '<', $this->tagname;
 
-		foreach ($this->attributes as $attribute => $value)
-			if ($value !== null)
-				echo ' ', $attribute, '="', htmlspecialchars($value), '"';
+		foreach ($this->attributes as $attribute => $value) {
+			if ($value !== null) {
+				echo ' ', $attribute, '="', SwatString::minimizeEntities($value), '"';
+			}
+		}
 
 		if ($self_closing)
 			echo ' />';
