@@ -74,7 +74,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 		$input_tag->onfocus = 'this.select();';
 
 		if ($this->value !== null)
-			$input_tag->value = htmlspecialchars($this->getDisplayValue());
+			$input_tag->value = $this->getDisplayValue();
 
 		if ($this->size !== null)
 			$input_tag->size = $this->size;

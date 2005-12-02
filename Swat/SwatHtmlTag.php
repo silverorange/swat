@@ -119,7 +119,7 @@ class SwatHtmlTag extends SwatObject
 			$this->openInternal(true);
 		} else {
 			$this->openInternal(false);
-			echo $this->content;
+			echo htmlspecialchars($this->content);
 			$this->close();
 		}
 	}
@@ -166,7 +166,7 @@ class SwatHtmlTag extends SwatObject
 
 		foreach ($this->attributes as $attribute => $value)
 			if ($value !== null)
-				echo ' ', $attribute, '="', $value, '"';
+				echo ' ', $attribute, '="', htmlspecialchars($value), '"';
 
 		if ($self_closing)
 			echo ' />';
