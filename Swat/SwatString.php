@@ -122,6 +122,41 @@ class SwatString
 	}
 
 	// }}}
+	// {{{ public static function minimizeEntitiesWithTags()
+
+	/**
+	 * Same as SwatString::minimizeEntities() but also accepts a list of tags
+	 * to preserve.
+	 *
+	 * @param string $text the UTF-8 text string to convert.
+	 * @param array $tags names of tags that should be preserved.
+	 *
+	 * @return string the UTF-8 text string with minimal entities.
+	 */
+	public static function minimizeEntitiesWithTags($text, $tags)
+	{
+		$pattern = sprintf('/(<\/?(%s) ?.*>)/uU', implode('|', $tags));
+
+		$parts = preg_split($pattern, $text, -1, PREG_SPLIT_DELIM_CAPTURE);
+		$output = '';
+
+		foreach ($parts as $index => $part) {
+		    switch ($index % 3) {
+	        case 0:
+    	        // the stuff in between
+	            $output.= self::minimizeEntities($part);
+    	        break;
+	        case 1:
+    	        // a valid tag
+	            $output.= $part;
+	            break;
+		    }
+		}
+
+		return $output;
+	}
+
+	// }}}
 	// {{{ public static function condense()
 
 	/**
