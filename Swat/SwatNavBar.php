@@ -51,6 +51,19 @@ class SwatNavBar extends SwatControl
 	}
 
 	// }}}
+	// {{{ public function addEntryToStart()
+
+	/**
+	 * Adds a SwatNavBarEntry to the beginning of this navigation bar
+	 *
+	 * @param SwatNavBarEntry $entry the entry to add.
+	 */
+	public function addEntryToStart($entry)
+	{
+		array_unshift($this->entries, $entry);
+	}
+
+	// }}}
 	// {{{ public function replaceEntryByPosition()
 
 	/**
@@ -173,17 +186,6 @@ class SwatNavBar extends SwatControl
 		} else {
 			return array_splice($this->entries, -$number);
 		}
-	}
-
-	// }}}
-	// {{{ public function reverseEntries()
-
-	/**
-	 * Reverses all of the elements of the navbar 
-	 */
-	public function reverseEntries()
-	{
-		$this->entries = array_reverse($this->entries);
 	}
 
 	// }}}
