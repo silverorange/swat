@@ -176,6 +176,17 @@ class SwatNavBar extends SwatControl
 	}
 
 	// }}}
+	// {{{ public function reverseEntries()
+
+	/**
+	 * Reverses all of the elements of the navbar 
+	 */
+	public function reverseEntries()
+	{
+		$this->entries = array_reverse($this->entries);
+	}
+
+	// }}}
 	// {{{ public function display()
 
 	/**
