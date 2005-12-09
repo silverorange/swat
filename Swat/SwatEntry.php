@@ -112,13 +112,17 @@ class SwatEntry extends SwatInputControl implements SwatState
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 
 		} elseif ($this->maxlength !== null && $len > $this->maxlength) {
-			$msg = sprintf(Swat::_('The %%s field must be less than %s characters.'),
+			$msg = sprintf(
+				Swat::_('The %%s field can be at most %s characters long.'),
 				$this->maxlength);
+
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 
 		} elseif ($this->minlength !== null && $len < $this->minlength) {
-			$msg = sprintf(Swat::_('The %%s field must be more than %s characters.'),
+			$msg = sprintf(
+				Swat::_('The %%s field must be more than %s characters long.'),
 				$this->minlength);
+
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 
 		}
