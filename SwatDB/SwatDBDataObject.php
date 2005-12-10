@@ -1,7 +1,7 @@
 <?php
 
 require_once 'MDB2.php';
-require_once 'SwatDB/SwatDBException.php';
+require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
  * All public properties correspond to database fields
