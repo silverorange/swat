@@ -3,6 +3,7 @@
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatMessage.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A control to display page status messages  
@@ -33,7 +34,7 @@ class SwatMessageDisplay extends SwatControl
 	 * @param mixed $msg either a {@link SwatMessage} object or a string to
 	 *                    add to this display.
 	 *
-	 * @throws SwatException
+	 * @throws SwatInvalidClassException
 	 */
 	public function add($msg)
 	{
@@ -42,8 +43,9 @@ class SwatMessageDisplay extends SwatControl
 		} elseif ($msg instanceof SwatMessage) {
 			$this->_messages[] = $msg;
 		} else {
-			throw new SwatException('Cannot add message. Message must be '.
-				'either a string or a SwatMessage.');
+			throw new SwatInvalidClassException(
+				'Cannot add message. Message must be either a string or a '.
+				'SwatMessage.', 0, $msg);
 		}
 	}
 

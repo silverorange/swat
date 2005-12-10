@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatUIParent.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A single entry in a SwatActions widget
@@ -96,19 +97,20 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	 * called elsewhere. To set the a widget in an action item, use 
 	 * {@link SwatActionItem::setWidget()}.
 	 *
-	 * @param $child a reference to a child object to add.
+	 * @param SwatWidget $child a reference to a child object to add.
 	 *
-	 * @throws SwatException
+	 * @throws SwatInvalidClassException
 	 *
 	 * @see SwatUIParent, SwatUI, SwatActionItem::setWidget()
 	 */
-	public function addChild($child)
+	public function addChild(SwatObject $child)
 	{
 		if ($child instanceof SwatWidget)
 			$this->setWidget($child);
 		else
-			throw new SwatException('SwatActionItem: Only '.
-				'SwatWidgets can be nested within SwatActionItem');
+			throw new SwatInvalidClassException(
+				'Only SwatWidget objects may be nested within a '.
+				'SwatActionItem object.', 0, $child);
 	}
 
 	/**

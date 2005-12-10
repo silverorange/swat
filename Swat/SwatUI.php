@@ -407,8 +407,7 @@ class SwatUI extends SwatObject
 			$class_name = get_class($parent);
 			throw new SwatDoesNotImplementException(
 				"Can not add object to parent. '{$class_name}' does not ".
-				'implement SwatUIParent.',
-				0, $parent);
+				'implement SwatUIParent.', 0, $parent);
 		}
 	}
 

@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatObject.php';
+require_once 'Swat/exceptions/SwatInvalidPropertyException.php';
 
 /**
  * Base class for a layout
@@ -27,10 +28,15 @@ class SwatLayout extends SwatObject
 	// }}}
 	// {{{ public function __get()
 
+	/**
+	 * @throws SwatInvalidPropertyException
+	 */
 	public function __get($name)
 	{
 		if (!isset($this->_properties[$name]))
-			throw new SwatException("There is no content available for '$name'.");
+			throw new SwatInvalidPropertyException(
+				"There is no content available for '{$name}'.",
+				0, $this, $name);
 
 		return $this->_properties[$name];
 	}

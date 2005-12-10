@@ -3,6 +3,7 @@
 require_once 'Swat/SwatWizardForm.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatButton.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A wizard navigation class
@@ -33,12 +34,15 @@ class SwatWizardNavigation extends SwatControl
 
 	/**
 	 * Display the navigation
+	 *
+	 * @throws SwatInvalidClassException
 	 */
 	public function display()
 	{
 		if (!$this->parent instanceof SwatWizardForm)
-			throw new SwatException('SwatWizardNavigation: Must be a child '.
-				'of a SwatWizardForm');
+			throw new SwatInvalidClassException(
+				'Must be a child of a SwatWizardForm',
+				0, $this);
 
 		$div = new SwatHtmlTag('div');
 		$div->class = 'swat-wizard-navigation';

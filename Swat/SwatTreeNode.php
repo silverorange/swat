@@ -75,7 +75,7 @@ class SwatTreeNode extends SwatObject
 	 *
 	 * The parent of the child node is set to this node.
 	 *
-	 * @paran SwatTreeNode $child the child node to add to this node.
+	 * @param SwatTreeNode $child the child node to add to this node.
 	 */
 	public function addChild($child)
 	{

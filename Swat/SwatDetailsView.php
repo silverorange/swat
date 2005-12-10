@@ -4,6 +4,7 @@ require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatDetailsViewField.php';
 require_once 'Swat/SwatUIParent.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A widget to display field-value pairs
@@ -103,22 +104,24 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	/**
 	 * Adds a child object to this object
 	 *
-	 * @param $child the child object to add to this object.
+	 * @param SwatDetailsViewField $child the child object to add to this
+	 *                                     object.
 	 *
-	 * @throws SwatException
+	 * @throws SwatInvalidClassException
 	 *
 	 * @see SwatUIParent::addChild()
 	 */
-	public function addChild($child)
+	public function addChild(SwatObject $child)
 	{
 		if ($child instanceof SwatDetailsViewField) {
 			$this->appendField($child);
 		} else {
 			$class_name = get_class($child);
 
-			throw new SwatException("Unable to add '$class_name' object to ".
-				'SwatDetailsView. Only SwatDetailsViewField objects '.
-				'can be nested within SwatDetailsView objects.');
+			throw new SwatInvalidClassException(
+				"Unable to add '{$class_name}' object to SwatDetailsView. ".
+				'Only SwatDetailsViewField objects may be nested within '.
+				'SwatDetailsView objects.', 0, $child);
 		}
 	}
 

@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatWidget.php';
 require_once 'Swat/SwatUIParent.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * Swat container widget
@@ -394,16 +395,19 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 * called elsewhere. To add a widget to a container use 
 	 * {@link SwatContainer::add()}.
 	 *
-	 * @param $child a reference to the child object to add.
+	 * @param SwatWidget $child a reference to the child object to add.
+	 *
+	 * @throws SwatInvalidClassException
 	 */
-	public function addChild($child)
+	public function addChild(SwatObject $child)
 	{
 		if ($child instanceof SwatWidget) {
 			$this->add($child);
 		} else {
 			$class_name = get_class($child);
-			throw new SwatException('Only SwatWidget objects can be '.
-				"nested within SwatContainer. Attempting to add '{$class_name}'.");
+			throw new SwatInvalidClassException(
+				'Only SwatWidget objects may be nested within SwatContainer. '.
+				"Attempting to add '{$class_name}'.", 0, $child);
 		}
 	}
 
