@@ -249,12 +249,14 @@ class SwatUI extends SwatObject
 	 */
 	public function displayTidy()
 	{
-		$breaking_tags = '</?(div|p|table|td|tr|ul|li|ol|dl)[^<>]*>';
+		$breaking_tags =
+			'@</?(div|p|table|tr|td|ul|li|ol|dl|option)[^<>]*>@ui';
+
 		ob_start();
 		$this->display();
 		$buffer = ob_get_clean();
-		$tidy = ereg_replace($breaking_tags, "\n\\0\n", $buffer);
-		$tidy = ereg_replace("\n\n", "\n", $tidy);
+		$tidy = preg_replace($breaking_tags, "\n\\0\n", $buffer);
+		$tidy = str_replace("\n\n", "\n", $tidy);
 		echo $tidy;
 	}
 
