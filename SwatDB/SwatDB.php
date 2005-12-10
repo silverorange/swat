@@ -3,9 +3,9 @@
 
 require_once 'MDB2.php';
 require_once 'SwatDB/SwatDBField.php';
-require_once 'SwatDB/SwatDBException.php';
 require_once 'SwatDB/SwatDBDefaultRecordsetWrapper.php';
 require_once 'Swat/SwatTreeNode.php';
+require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
  * Database helper class
