@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatException.php';
+require_once 'Swat/exceptions/SwatException.php';
 
 /**
  * Thrown when an invalid property of an object is accessed
