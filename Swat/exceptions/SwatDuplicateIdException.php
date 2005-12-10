@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatException.php';
+require_once 'Swat/exceptions/SwatException.php';
 
 /**
  * Thrown when the ids of two objects collide

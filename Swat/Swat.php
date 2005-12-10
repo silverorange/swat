@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatException.php';
+require_once 'Swat/exceptions/SwatException.php';
 
 /**
  * Container for package wide static methods
