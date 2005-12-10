@@ -4,6 +4,7 @@ require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatCellRendererSet.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A visible column in a SwatTableView
@@ -204,19 +205,20 @@ class SwatTableViewColumn extends SwatObject implements SwatUIParent
 	/**
 	 * Add a child object to this object
 	 * 
-	 * @param SwatObject $child the reference to the child object to add.
+	 * @param SwatCellRenderer $child the reference to the child object to add.
 	 *
-	 * @throws SwatException
+	 * @throws SwatInvalidClassException
 	 *
 	 * @see SwatUIParent::addChild()
 	 */
-	public function addChild($child)
+	public function addChild(SwatObject $child)
 	{
 		if ($child instanceof SwatCellRenderer)
 			$this->addRenderer($child);
 		else
-			throw new SwatException('Only SwatCellRender objects '.
-				'can be nested within SwatTableViewColumn objects.');
+			throw new SwatInvalidClassException(
+				'Only SwatCellRender objects may be nested within '.
+				'SwatTableViewColumn objects.', 0, $child);
 	}
 
 	/**

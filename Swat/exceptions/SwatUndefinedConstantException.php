@@ -19,7 +19,7 @@ class SwatUndefinedConstantException extends SwatException
 	protected $constant_name = null;
 
 	/**
-	 * Creates a new class not found exception
+	 * Creates a new undefined constant exception
 	 *
 	 * @param string $message the message of the exception.
 	 * @param integer $code the code of the exception.

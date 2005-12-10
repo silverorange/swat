@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
 
 /**
  * A a tool link in the widget tree
@@ -129,7 +130,7 @@ class SwatToolLink extends SwatControl
 	 * @param boolean $overwrite_properties whether to overwrite properties if
 	 *                                       they are already set.
 	 *
-	 * @throws SwatException
+	 * @throws SwatUndefinedStockTypeException
 	 */
 	public function setFromStock($stock_id, $overwrite_properties = true)
 	{
@@ -165,8 +166,9 @@ class SwatToolLink extends SwatControl
 			break;
 
 		default:
-			throw new SwatException("Stock type with id of '{$stock_id}' not ".
-				'found.');
+			throw new SwatUndefinedStockTypeException(
+				"Stock type with id of '{$stock_id}' not found.",
+				0, $stock_id);
 		}
 		
 		if ($overwrite_properties || ($this->title === null))

@@ -32,7 +32,7 @@ class SwatWidgetNotFoundException extends SwatException
 	}
 
 	/**
-	 * Gets the filename of that caused this exception to be thrown
+	 * Gets the widget id that was searched for
 	 *
 	 * @return string the widget id that was searched for.
 	 */

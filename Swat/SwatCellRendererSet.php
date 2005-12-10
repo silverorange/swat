@@ -2,6 +2,7 @@
 
 require_once 'SwatObject.php';
 require_once 'SwatCellRenderer.php';
+require_once 'Swat/exceptions/SwatObjectNotFoundException.php';
 
 /**
  * A collection of cell renderers with associated datafield-property mappings
@@ -174,7 +175,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 * @return SwatCellRenderer the cell renderer from this set with the given
 	 *                           id.
 	 *
-	 * @throws SwatException
+	 * @throws SwatObjectNotFoundException
 	 */
 	public function getRenderer($renderer_id)
 	{
@@ -182,9 +183,9 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 			if ($content['renderer']->id == $renderer_id)
 				return $content['renderer'];
 
-		throw new SwatException(sprintf("Cell renderer with an id of '%s' ".
-			"not found.",
-			$renderer_id));
+		throw new SwatObjectNotFoundException(
+			"Cell renderer with an id of '{$renderer_id}' not found.",
+			0, $renderer_id);
 	}
 
 	// }}}
@@ -303,14 +304,14 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	// {{{ private function findRendererIndex()
 
 	/**
-	 * Finds the array position of a cell rendere already in this set
+	 * Finds the array position of a cell renderer already in this set
 	 *
 	 * @param SwatCellRenderer $renderer the cell renderer to find.
 	 *
 	 * @return integer the position in the internal array the cell renderer is
 	 *                  located at.
 	 *
-	 * @throws SwatException
+	 * @throws SwatObjectNotFoundException
 	 */
 	private function findRendererIndex(SwatCellRenderer $renderer)
 	{
@@ -318,7 +319,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 			if ($content['renderer'] === $renderer)
 				return $position;
 		
-		throw new SwatException('Cell renderer not found.');
+		throw new SwatObjectNotFoundException('Cell renderer not found.');
 	}
 
 	// }}}

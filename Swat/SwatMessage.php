@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatObject.php';
+require_once 'Swat/exceptions/SwatUndefinedMessageTypeException.php';
 
 /**
  * A data class to store a message  
@@ -79,6 +80,8 @@ class SwatMessage extends SwatObject
 	 * @param string $primary_content the primary text of the message.
 	 * @param integer $type the type of message. Must be a valid class
 	 *                       constant.
+	 *
+	 * @throws SwatUndefinedMessageTypeException
 	 */
 	public function __construct($primary_content, $type = self::NOTIFICATION)
 	{
@@ -94,7 +97,9 @@ class SwatMessage extends SwatObject
 			if (in_array($type, $valid_types))
 				$this->type = $type;
 			else
-				throw new SwatException("'$type' is not a valid SwatMessage message type.");
+				throw new SwatUndefinedMessageTypeException(
+					"'{$type}' is not a valid SwatMessage message type.",
+					0, $type);
 		}
 	}
 }

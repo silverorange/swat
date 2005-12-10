@@ -3,6 +3,7 @@
 require_once 'Swat/SwatForm.php';
 require_once 'Swat/SwatWizardStep.php';
 require_once 'Swat/SwatWizardPostStateStore.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A wizard-like form with steps
@@ -195,13 +196,14 @@ class SwatWizardForm extends SwatForm
 	 *                                           for persistance in this wizard
 	 *                                           form.
 	 *
-	 * @throws SwatException
+	 * @throws SwatInvalidClassException
 	 */
 	public function setStateStore($state_store)
 	{
 		if (!$state_store instanceof SwatWizardStateStore)
-			throw new SwatException('The given state storage '.
-				'object is not a SwatWizardStateStore.');
+			throw new SwatInvalidClassException(
+				'The given state storage object is not a SwatWizardStateStore.',
+				0, $state_store);
 
 		$this->state_store = $state_store;
 	}

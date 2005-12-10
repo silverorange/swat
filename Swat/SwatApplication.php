@@ -181,16 +181,11 @@ class SwatApplication extends SwatObject
 	 *
 	 * @param SwatPage the page to load as a replacement of the current page.
 	 *
-	 * @throws SwatException
-	 *
 	 * @see SwatPage
 	 */
-	public function setPage($page)
+	public function setPage(SwatPage $page)
 	{
-		if ($page instanceof SwatPage)
-			$this->page = $page;
-		else
-			throw new SwatException('Page is not an instance of SwatPage');
+		$this->page = $page;
 
 		if ($this->page_initialized)
 			$this->page->init();

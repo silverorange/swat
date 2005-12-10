@@ -7,6 +7,8 @@ require_once 'Swat/SwatTableViewOrderableColumn.php';
 require_once 'Swat/SwatTableViewGroup.php';
 require_once 'Swat/SwatTableViewRow.php';
 require_once 'Swat/SwatUIParent.php';
+require_once 'Swat/exceptions/SwatDuplicateIdException.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A widget to display data in a tabular form
@@ -169,6 +171,8 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * Appends a column to this table-view
 	 *
 	 * @param SwatTableViewColumn $column the column to append.
+	 *
+	 * @throws SwatDuplicateIdException
 	 */
 	public function appendColumn(SwatTableViewColumn $column)
 	{
@@ -176,8 +180,10 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		if ($column->id !== null) {
 			if (array_key_exists($column->id, $this->columns_by_id))
-				throw new SwatException(sprintf("A column with the id '%s' ".
-					'already exists in this table view.', $column->id));
+				throw new SwatDuplicateIdException(
+					"A column with the id '{$column->id}' already exists ".
+					'in this table view.',
+					0, $column->id);
 
 			$this->columns_by_id[$column->id] = $column;
 		}
@@ -402,14 +408,14 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * {@link SwatTableView::appendRow()},
 	 * or {@link SwatTableView::appendRow()}.
 	 *
-	 * @param $child a reference to a child object to add.
+	 * @param mixed $child a reference to a child object to add.
 	 *
-	 * @throws SwatException
+	 * @throws SwatInvalidClassException
 	 *
 	 * @see SwatUIParent, SwatUI, SwatTableView::appendColumn(),
 	 *       SwatTableView::setGroup(), SwatTableView::appendRow()
 	 */
-	public function addChild($child)
+	public function addChild(SwatObject $child)
 	{
 		if ($child instanceof SwatTableViewGroup)
 			$this->setGroup($child);
@@ -418,9 +424,10 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		elseif ($child instanceof SwatTableViewColumn)
 			$this->appendColumn($child);
 		else
-			throw new SwatException('Only SwatTableViewColumn, '.
-				'SwatTableViewGroup, or SwatTableViewRow objects can be '.
-				'nested within SwatTableView objects.');
+			throw new SwatInvalidClassException(
+				'Only SwatTableViewColumn, SwatTableViewGroup, or '.
+				'SwatTableViewRow objects may be nested within SwatTableView '.
+				'objects.', 0, $child);
 	}
 
 	// }}}

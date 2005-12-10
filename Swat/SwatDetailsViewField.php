@@ -4,6 +4,7 @@ require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatCellRendererSet.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A visible field in a SwatDetailsView
@@ -195,19 +196,20 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 	/**
 	 * Adds a child object to this object
 	 * 
-	 * @param SwatObject $child the reference to the child object to add.
+	 * @param SwatCellRenderer $child the reference to the child object to add.
 	 *
-	 * @throws SwatException
+	 * @throws SwatInvalidClassException
 	 *
 	 * @see SwatUIParent::addChild()
 	 */
-	public function addChild($child)
+	public function addChild(SwatObject $child)
 	{
 		if ($child instanceof SwatCellRenderer)
 			$this->addRenderer($child);
 		else
-			throw new SwatException('Only SwatCellRender objects '.
-				'can be nested within SwatDetailsViewField objects.');
+			throw new SwatInvalidClassException(
+				'Only SwatCellRender objects may be nested within a '.
+				'SwatDetailsViewField object.', 0, $child);
 	}
 
 	/**

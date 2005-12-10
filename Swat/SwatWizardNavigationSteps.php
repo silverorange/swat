@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatWizardNavigation.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A proto-type test wizard navigation class that shows navigation buttons to
@@ -29,11 +30,15 @@ class SwatWizardNavigationSteps extends SwatWizardNavigation
 		return $return;
 	}
 
+	/**
+	 * @throws SwatInvalidClassException
+	 */
 	public function display()
 	{
 		if (!$this->parent instanceof SwatWizardForm)
-			throw new SwatException('SwatWizardNavigation: Must be a child '.
-				'of a SwatWizardForm');
+			throw new SwatInvalidClassException(
+				'Must be a child of a SwatWizardForm',
+				0, $this);
 
 		$div = new SwatHtmlTag('div');
 		$div->style = 'float:right;';
