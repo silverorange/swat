@@ -169,24 +169,19 @@ class SwatUI extends SwatObject
 	 * Looks up a widget in the widget list by the widget's unique identifier.
 	 *
 	 * @param string $id the id of the widget to retrieve.
-	 * @param boolean $silent if true, return null instead of throwing an 
-	 *                         exception if the widget is not found.
 	 *
 	 * @return SwatWidget a reference to the widget.
 	 *
 	 * @throws SwatWidgetNotFoundException
 	 */
-	public function getWidget($id, $silent = false)
+	public function getWidget($id)
 	{
 		if (array_key_exists($id, $this->widgets))
 			return $this->widgets[$id];
 		else
-			if ($silent)
-				return null;
-			else
-				throw new SwatWidgetNotFoundException(
-					"Widget with an id of '{$id}' not found.",
-					0, $id);
+			throw new SwatWidgetNotFoundException(
+				"Widget with an id of '{$id}' not found.",
+				0, $id);
 	}
 
 	// }}}
