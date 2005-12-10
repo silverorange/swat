@@ -634,12 +634,12 @@ class SwatUI extends SwatObject
 		$prev_token = null;
 
 		$parenthesis_exception = new SwatInvalidConstantExpressionException(
-			"Mismatched parentheses in constant expression '".$expression."' ".
+			"Mismatched parentheses in constant expression '{$expression}' ".
 			'in SwatML.',
 			0, $expression);
 
 		$syntax_exception = new SwatInvalidConstantExpressionException(
-			"Invalid syntax in constant expression '".$expression."' in SwatML.",
+			"Invalid syntax in constant expression '{$expression}' in SwatML.",
 			0, $expression);
 
 		foreach ($tokens as $token) {
@@ -684,8 +684,8 @@ class SwatUI extends SwatObject
 					$constant = constant($constant);
 				else
 					throw new SwatUndefinedConstantException(
-						"Undefined constant '".$constant."' in constant ".
-						"expression '".$expression."' inSwatML.",
+						"Undefined constant '{$constant}' in constant ".
+						"expression '{$expression}' in SwatML.",
 						0, $constant);
 
 				array_push($queue, $constant);
