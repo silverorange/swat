@@ -10,7 +10,7 @@ require_once 'Swat/SwatDetailsViewField.php';
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDetailsViewverticalField extends SwatDetailsViewField
+class SwatDetailsViewVerticalField extends SwatDetailsViewField
 {
 	/**
 	 * Displays this details view field using a data object
