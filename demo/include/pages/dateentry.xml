@@ -17,7 +17,7 @@
 				<widget class="SwatFormField">
 					<property name="title" type="string">Date and Time with a Calendar</property>
 					<widget class="SwatDateEntry" id="time_date">
-						<property name="display_parts" type="constant">YEAR|MONTH|DAY|TIME|&amp;CALENDAR</property>
+						<property name="display_parts" type="constant">YEAR|MONTH|DAY|TIME|CALENDAR</property>
 					</widget>
 				</widget>
 
