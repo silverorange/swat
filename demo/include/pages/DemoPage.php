@@ -134,6 +134,19 @@ class DemoPage extends SwatPage
 				);
 			break;
 
+		case 'DetailsView':
+			$entries = array(
+				'SwatDetailsView',
+				'SwatDetailsViewField',
+				'SwatDetailsViewVerticalField',
+				'SwatCheckCellRenderer',
+				'SwatDateCellRenderer',
+				'SwatImageCellRenderer',
+				'SwatMoneyCellRenderer',
+				'SwatTextCellRenderer'
+				);
+			break;
+
 		case 'Disclosure':
 			$entries = array('SwatDisclosure');
 			break;
