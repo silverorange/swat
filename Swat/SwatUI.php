@@ -551,7 +551,6 @@ class SwatUI extends SwatObject
 			$parent->addMappingToRenderer($object, $value, $name);
 			return null;
 		case 'implicit-string':
-		default:
 			if ($value == 'false' || $value == 'true' )
 				trigger_error(__CLASS__.': Possible missing type="boolean" '.
 					'attribute on property element', E_USER_NOTICE);
