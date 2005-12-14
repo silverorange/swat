@@ -72,6 +72,8 @@ class SwatEntry extends SwatInputControl implements SwatState
 		$input_tag->class = 'swat-entry';
 		$input_tag->id = $this->id;
 		$input_tag->onfocus = 'this.select();';
+		if (!$this->isSensitive())
+			$input_tag->disabled = 'disabled';
 
 		if ($this->value !== null)
 			$input_tag->value = $this->getDisplayValue();
