@@ -10,6 +10,12 @@
 	color: #fff;
 }
 
+.swat-change-order-item-shadow {
+	opacity: 0.5;
+	-moz-opacity: 0.5;
+	filter: alpha(opacity=50);
+}
+
 div.swat-change-order-item:hover {
 }
 

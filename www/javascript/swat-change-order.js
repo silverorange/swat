@@ -245,10 +245,7 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	// TODO: use zindex manager
 	shadow_item.original_z_index = shadow_item.style.zIndex;
 	shadow_item.style.zIndex = 1000;
-
-	// TODO: make this work in IE using active filters
-	shadow_item.original_opacity = shadow_item.style.opacity;
-	shadow_item.style.opacity = '0.5';
+	shadow_item.className += ' swat-change-order-item-shadow';
 
 	var drop_marker = document.createElement('div');
 	drop_marker.style.borderBottomStyle = 'solid';
