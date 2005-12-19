@@ -74,8 +74,6 @@ function SwatChangeOrder_mousemoveEventHandler(event)
 /**
  * Handles keydown events for dragged items
  *
- * TODO: Make this work in IE.
- *
  * @param DOMEvent event
  *
  * @return boolean false;
@@ -86,6 +84,12 @@ function SwatChangeOrder_keydownEventHandler(event)
 	if (event.keyCode == 27) {
 		document.onmousemove = null;
 		document.onmouseup = null;
+		if (SwatChangeOrder.ie_event_model)
+			document.detachEvent('onkeydown',
+				SwatChangeOrder_keydownEventHandler);
+		else
+			document.removeEventListener('keydown',
+				SwatChangeOrder_keydownEventHandler, false);
 
 		var shadow_item = SwatChangeOrder.dragging_item;
 		var drop_marker = SwatChangeOrder.dragging_drop_marker;
@@ -174,6 +178,11 @@ function SwatChangeOrder_mouseupEventHandler(event)
 {
 	document.onmousemove = null;
 	document.onmouseup = null;
+	if (SwatChangeOrder.ie_event_model)
+		document.detachEvent('onkeydown', SwatChangeOrder_keydownEventHandler);
+	else
+		document.removeEventListener('keydown',
+			SwatChangeOrder_keydownEventHandler, false);
 
 	var shadow_item = SwatChangeOrder.dragging_item;
 	var drop_marker = SwatChangeOrder.dragging_drop_marker;
@@ -254,7 +263,13 @@ function SwatChangeOrder_mousedownEventHandler(event)
 
 	document.onmousemove = SwatChangeOrder_mousemoveEventHandler;
 	document.onmouseup = SwatChangeOrder_mouseupEventHandler;
-	document.onkeydown = SwatChangeOrder_keydownEventHandler;
+
+	if (SwatChangeOrder.ie_event_model)
+		document.attachEvent('onkeydown', SwatChangeOrder_keydownEventHandler);
+	else
+		document.addEventListener('keydown',
+			SwatChangeOrder_keydownEventHandler, false);
+
 	shadow_item.timer =
 		window.setInterval("SwatChangeOrder_timerHandler()", 100);
 
@@ -358,6 +373,7 @@ SwatChangeOrder.animation_frames = 5;
 SwatChangeOrder.shadow_item_padding = 0;
 SwatChangeOrder.dragging_item = null;
 SwatChangeOrder.is_dragging = false;
+SwatChangeOrder.ie_event_model = (document.addEventListener) ? false : true;
 
 // }}}
 // {{{ function SwatChangeOrder_staticMoveToTop()
