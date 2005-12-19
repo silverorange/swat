@@ -1,38 +1,30 @@
 .swat-change-order-item {
-	border: 1px solid #CCC;
 	background: #FFF;
-	margin: 1px;
-	padding: 2px;
-	cursor: pointer;
-	cursor: hand;
+	margin: 0;
+	padding: 3px;
+	cursor: default;
 }
 
 .swat-change-order-item-active {
-	border: 1px solid #8af;
-	background: #79c;
+	background: url('../images/swat-change-order-item-selected.png') #79c;
 	color: #fff;
 }
 
 div.swat-change-order-item:hover {
-	border: 1px solid #8af;
 }
 
 .swat-change-order-insensitive .swat-change-order-item {
 	background: #eee;
-	cursor: default;
 }
 
 .swat-change-order-insensitive .swat-change-order-item-active {
-	border: 1px solid #666;
 	background: #888;
 }
 
 .swat-change-order-insensitive div.swat-change-order-item:hover {
-	border: 1px solid #CCC;
 }
 
 .swat-change-order-insensitive div.swat-change-order-item-active:hover {
-	border: 1px solid #666;
 }
 
 .swat-change-order-list {
