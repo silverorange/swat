@@ -223,11 +223,11 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	shadow_item.original_item = this;
 	shadow_item.original_item.parentNode.parentNode.appendChild(shadow_item, this);
 
+	// TODO: use zindex manager
+	shadow_item.style.zIndex = 1000;
 	shadow_item.style.display = 'none';
-	shadow_item.style.position = 'absolute';
-
-	// TODO: set width correctly, especially in IE
-	shadow_item.style.width = (this.clientWidth) + 'px';
+	shadow_item.className += ' swat-change-order-item-shadow';
+	shadow_item.style.width = (this.offsetWidth - 4) + 'px';
 
 	if (typeof window.event == 'undefined') {
 		shadow_item.mouseNWOffsetX = event.clientX - this.offsetLeft -
@@ -241,11 +241,6 @@ function SwatChangeOrder_mousedownEventHandler(event)
 		shadow_item.mouseNWOffsetY = window.event.clientY -
 			this.parentNode.offsetTop;
 	}
-
-	// TODO: use zindex manager
-	shadow_item.original_z_index = shadow_item.style.zIndex;
-	shadow_item.style.zIndex = 1000;
-	shadow_item.className += ' swat-change-order-item-shadow';
 
 	var drop_marker = document.createElement('div');
 	drop_marker.style.borderBottomStyle = 'solid';
