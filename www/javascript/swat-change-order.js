@@ -298,7 +298,6 @@ function SwatChangeOrder(id, sensitive)
 	var value_array = hidden_value.value.split(',');
 	var count = 0;
 	var node = null;
-	var is_ie = (this.list_div.addEventListener) ? false : true;
 	
 	// remove text nodes and set value on nodes
 	for (var i = 0; i < this.list_div.childNodes.length; i++) {
