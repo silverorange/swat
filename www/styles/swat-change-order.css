@@ -11,9 +11,10 @@
 }
 
 .swat-change-order-item-shadow {
-	opacity: 0.5;
-	-moz-opacity: 0.5;
-	filter: alpha(opacity=50);
+	opacity: 0.6;
+	-moz-opacity: 0.6;
+	filter: alpha(opacity=60);
+	position: absolute;
 }
 
 div.swat-change-order-item:hover {
