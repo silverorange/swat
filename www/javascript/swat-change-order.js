@@ -212,6 +212,9 @@ function SwatChangeOrder_mouseupEventHandler(event)
  */
 function SwatChangeOrder_mousedownEventHandler(event)
 {
+	if (!this.controller.sensitive)
+		return false;
+
 	// select the node
 	this.controller.choose(this);
 
