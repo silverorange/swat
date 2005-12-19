@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatFieldset.php';
 require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatReplicator.php';
 
 /**
  * A magic fieldset container that replicates itself and its children.
@@ -11,7 +12,7 @@ require_once 'Swat/SwatContainer.php';
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatReplicatorFieldset extends SwatFieldset
+class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicator
 {
 	/**
 	 * An array of unique id => title pairs, one for each replication.
