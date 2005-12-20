@@ -51,14 +51,6 @@ class SwatChangeOrder extends SwatControl implements SwatState
 	public $height = '180px';
 
 	/**
-	 * Onclick HTML attribute of the buttons
-	 *
-	 * @var string
-	 */
-	//TODO: get rid of this (currently AdminOrder is dependant on it, as well as line 105-106 below
-	public $onclick = null;
-
-	/**
 	 * Creates a new change-order widget
 	 *
 	 * @param string $id a non-visible unique id for this widget.
@@ -109,9 +101,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 
 		$option_tag = new SwatHtmltag('div');
 		$option_tag->class = 'swat-change-order-item';
-		if ($this->onclick !== null) 
-			$option_tag->onclick = $this->onclick;
-			
+
 		$count = 0;
 		foreach ($this->options as $key => $option) {
 			$option_tag->content = $option;
