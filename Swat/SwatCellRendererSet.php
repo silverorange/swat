@@ -26,8 +26,8 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 *     0 => array(
 	 *         'renderer' => new SwatCellRenderer(),
 	 *         'map' => array(
-	 *             'field_name_1' => 'property_name_2'
-	 *             'field_name_2' => 'property_name_2'
+	 *             'property_name_1' => 'field_name_1',
+	 *             'property_name_2' => 'field_name_2'
 	 *         )
 	 *     )
 	 * );
@@ -69,7 +69,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 * datafield-property mappings
 	 *
 	 * @param SwatCellRenderer $renderer the renderer to add.
-	 * @param array $mappings an associative array of datafield-property
+	 * @param array $mappings an associative array of property-datafield
 	 *                         mappings for the added renderer.
 	 */
 	public function addRendererWithMappings(SwatCellRenderer $renderer,
@@ -88,7 +88,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 *
 	 * @param SwatCellRenderer $renderer the cell renderer to add the mappings
 	 *                                    to.
-	 * @param array $mappings an associative array of datafield-property
+	 * @param array $mappings an associative array of property-datafield
 	 *                         mappings to add to the specified cell renderer.
 	 */
 	public function addMappingsToRenderer(SwatCellRenderer $renderer,
@@ -103,7 +103,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	// {{{ public function addMappingToRenderer()
 
 	/**
-	 * Adds a single datafield-property mapping to a cell renderer already in
+	 * Adds a single property-datafield mapping to a cell renderer already in
 	 * this set
 	 *
 	 * @param SwatCellRenderer $renderer the cell renderer to add the mapping
@@ -118,14 +118,14 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	{
 		$position = $this->findRendererIndex($renderer);
 		
-		$this->renderers[$position]['mappings'][$datafield] = $property;
+		$this->renderers[$position]['mappings'][$property] = $datafield;
 	}
 
 	// }}}
 	// {{{ public function applyMappingsToRenderer()
 
 	/**
-	 * Applys the datafield-property mappings to a cell renderer already in
+	 * Applies the property-datafield mappings to a cell renderer already in
 	 * this set using a specified data object
 	 *
 	 * @param SwatCellRenderer $renderer the cell renderer to apply the
@@ -138,7 +138,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 		$position = $this->findRendererIndex($renderer);
 		
 		foreach ($this->renderers[$position]['mappings'] as
-			$datafield => $property) {
+			$property => $datafield) {
 			
 			$renderer->$property = $data_object->$datafield;
 		}
@@ -197,7 +197,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 * @param SwatCellRenderer $renderer the cell renderer to get the mappings
 	 *                                    for.
 	 *
-	 * @return array an associative array containing the datafield-property
+	 * @return array an associative array containing the property-datafield
 	 *                mappings of the specified cell renderer.
 	 */
 	public function getMappingsByRenderer(SwatCellRenderer $renderer)
