@@ -149,7 +149,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 * Displays this time entry
 	 *
 	 * Creates internal widgets if they do not exits then displays required
-	 * javascript, then displays internal widgets.
+	 * JavaScript, then displays internal widgets.
 	 */
 	public function display()
 	{
@@ -180,7 +180,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		echo '</span>';
 
-		$this->displayJavascript();
+		$this->displayJavaScript();
 	}
 
 	/**
@@ -422,9 +422,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	}
 
 	/**
-	 * Outputs the javascript required for this control
+	 * Outputs the JavaScript required for this control
 	 */
-	private function displayJavascript()
+	private function displayJavaScript()
 	{
 		echo '<script type="text/javascript">';
 

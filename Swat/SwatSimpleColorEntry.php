@@ -7,7 +7,7 @@ require_once 'Swat/SwatState.php';
  * Simple color selector widget.
  *
  * This color selector displays a simple palette to the user with a set of
- * predefined color choices. It requires javascript to work correctly.
+ * predefined color choices. It requires JavaScript to work correctly.
  *
  * @package   Swat
  * @copyright 2005 silverorange
@@ -103,7 +103,7 @@ class SwatSimpleColorEntry extends SwatControl implements SwatState
 		$div_tag->content = '&nbsp;';
 		$div_tag->display();
 
-		$this->displayJavascript();
+		$this->displayJavaScript();
 	}
 
 	/**
@@ -131,11 +131,11 @@ class SwatSimpleColorEntry extends SwatControl implements SwatState
 	}
 
 	/**
-	 * Displays simple color selector javascript
+	 * Displays simple color selector JavaScript
 	 *
-	 * The javascript is the majority of the simple color selector code
+	 * The JavaScript is the majority of the simple color selector code
 	 */
-	private function displayJavascript()
+	private function displayJavaScript()
 	{
 		$colors = "'".implode("', '", $this->colors)."'";
 

@@ -3,7 +3,7 @@
 require_once 'Swat/SwatControl.php';
 
 /**
- * A "check all" javascript checkbox
+ * A "check all" JavaScript checkbox
  *
  * @package   Swat
  * @copyright 2004-2005 silverorange
@@ -79,13 +79,13 @@ class SwatCheckAll extends SwatControl
 
 		$div_tag->close();
 
-		$this->displayJavascript();
+		$this->displayJavaScript();
 	}
 
 	/**
-	 * Displays the javascript for this check-all widget
+	 * Displays the JavaScript for this check-all widget
 	 */
-	private function displayJavascript()
+	private function displayJavaScript()
 	{
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";

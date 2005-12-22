@@ -190,7 +190,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 * Displays this date entry
 	 *
 	 * Creates internal widgets if they do not exits then displays required
-	 * javascript, then displays internal widgets.
+	 * JavaScript, then displays internal widgets.
 	 */
 	public function display()
 	{
@@ -242,9 +242,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			$this->time_entry->display();
 		}
 
-		// calendar javascript is displayed last as it looks for a js object
+		// calendar JavaScript is displayed last as it looks for a js object
 		// created here.
-		$this->displayJavascript();
+		$this->displayJavaScript();
 
 		if ($this->display_parts & self::CALENDAR) {
 			require_once 'Swat/SwatCalendar.php';
@@ -602,9 +602,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	}
 
 	/**
-	 * Outputs the javascript required for this control
+	 * Outputs the JavaScript required for this control
 	 */
-	private function displayJavascript()
+	private function displayJavaScript()
 	{
 		echo '<script type="text/javascript">';
 

@@ -101,14 +101,14 @@ class SwatDisclosure extends SwatContainer
 		parent::display();
 		$container_div->close();
 
-		$this->displayJavascript();
+		$this->displayJavaScript();
 		$control_div->close();
 	}
 
 	/**
-	 * Outputs disclosure specific javascript
+	 * Outputs disclosure specific JavaScript
 	 */
-	protected function displayJavascript()
+	protected function displayJavaScript()
 	{
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";

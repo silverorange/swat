@@ -166,7 +166,7 @@ class SwatForm extends SwatContainer
 		$this->displayHiddenFields();
 		$form_tag->close();
 
-		$this->displayJavascript();
+		$this->displayJavaScript();
 	}
 
 	/**
@@ -388,11 +388,11 @@ class SwatForm extends SwatContainer
 	}
 
 	/**
-	 * Displays javascript required for this form
+	 * Displays JavaScript required for this form
 	 *
-	 * Right now, this javascript focuses the first SwatControl in the form.
+	 * Right now, this JavaScript focuses the first SwatControl in the form.
 	 */
-	private function displayJavascript()
+	private function displayJavaScript()
 	{
 		echo '<script type="text/javascript">'."\n";
 

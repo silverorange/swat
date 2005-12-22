@@ -74,7 +74,7 @@ class SwatCascadeFlydown extends SwatFlydown
 			return;
 
 		parent::display();
-		$this->displayJavascript();
+		$this->displayJavaScript();
 	}
 
 	// }}}
@@ -120,9 +120,9 @@ class SwatCascadeFlydown extends SwatFlydown
 	// {{{ private function displayjavascript()
 
 	/**
-	 * Displays the javascript that makes this control work
+	 * Displays the JavaScript that makes this control work
 	 */
-	private function displayJavascript()
+	private function displayJavaScript()
 	{
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";

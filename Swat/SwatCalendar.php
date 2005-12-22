@@ -6,7 +6,7 @@ require_once 'Date.php';
 /**
  * Pop-up calendar widget
  *
- * This widget uses javascript to display a popup date selector. It is used
+ * This widget uses JavaScript to display a popup date selector. It is used
  * inside the {@link SwatDateEntry} widget but can be used by itself as well.
  *
  * @package   Swat
@@ -82,20 +82,20 @@ class SwatCalendar extends SwatControl
 		$div_tag->content = '&nbsp;';
 		$div_tag->display();
 
-		$this->displayJavascript();
+		$this->displayJavaScript();
 	}
 
 	/**
-	 * Displays calendar javascript
+	 * Displays calendar JavaScript
 	 *
-	 * The javascript is the majority of the calendar code
+	 * The JavaScript is the majority of the calendar code
 	 */
-	private function displayJavascript()
+	private function displayJavaScript()
 	{
 		static $shown = false;
 
 		if (!$shown) {
-			$this->displayJavascriptTranslations();
+			$this->displayJavaScriptTranslations();
 
 			$shown = true;
 		}
@@ -127,10 +127,10 @@ class SwatCalendar extends SwatControl
 	}
 
 	/**
-	 * Displays translatable string resources for the javascript object for
+	 * Displays translatable string resources for the JavaScript object for
 	 * this widget
 	 */
-	private function displayJavascriptTranslations()
+	private function displayJavaScriptTranslations()
 	{
 		/*
 		 * This date is arbitrary and is just used for getting week and
