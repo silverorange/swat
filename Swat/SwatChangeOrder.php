@@ -7,7 +7,7 @@ require_once 'Swat/SwatState.php';
 /**
  * An element ordering widget
  *
- * This widget uses javascript to present an orderable list of elements. The
+ * This widget uses JavaScript to present an orderable list of elements. The
  * ordering of elements is what this widget returns.
  *
  * @package   Swat
@@ -124,7 +124,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 
 		$div_tag->close();
 
-		$this->displayJavascript();
+		$this->displayJavaScript();
 	}
 
 	public function process()
@@ -145,7 +145,7 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$this->values = $state;
 	}
 
-	private function displayJavascript()
+	private function displayJavaScript()
 	{
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";

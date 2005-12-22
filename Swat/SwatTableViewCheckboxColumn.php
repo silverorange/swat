@@ -26,7 +26,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 	/**
 	 * Highlight row
 	 *
-	 * Whether to add javascript to highlight the current row of a
+	 * Whether to add JavaScript to highlight the current row of a
 	 * {@link SwatTableView} when the checkbox is clicked.
 	 *
 	 * @var boolean
@@ -82,9 +82,9 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 	}
 
 	/**
-	 * Displays the javascript for the highlight row
+	 * Displays the JavaScript for the highlight row
 	 */
-	public function displayJavascript()
+	public function displayJavaScript()
 	{
 		if (!$this->highlight_row)
 			return;

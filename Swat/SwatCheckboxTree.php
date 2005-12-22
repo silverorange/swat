@@ -63,7 +63,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		else
 			$num_nodes = 0;
 
-		$this->displayJavascript();
+		$this->displayJavaScript();
 
 		if ($num_nodes > 1) {
 			$check_all = new SwatCheckAll();

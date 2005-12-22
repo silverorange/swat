@@ -44,7 +44,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 	 * Displays this color selection widget
 	 *
 	 * This draws the color palette and outputs appropriate controlling
-	 * javascript.
+	 * JavaScript.
 	 */
 	public function display()
 	{
@@ -73,7 +73,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		$link_tag->close();
 
 		$this->displayPalette();
-		$this->displayJavascript();
+		$this->displayJavaScript();
 	}
 
 	/**
@@ -130,12 +130,12 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 	}
 
 	/**
-	 * Includes the javascript required for this control to function
+	 * Includes the JavaScript required for this control to function
 	 *
 	 * This creates an instance of the JavaScript object SwatColorEntry with
 	 * the name $this->id.'_obj'.
 	 */
-	private function displayJavascript()
+	private function displayJavaScript()
 	{
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";

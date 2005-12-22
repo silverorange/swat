@@ -99,7 +99,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 
 			echo '</ul>';
 
-			$this->displayJavascript();
+			$this->displayJavaScript();
 
 			if (count($this->options) > 1) {
 				$check_all = new SwatCheckAll();
@@ -148,9 +148,9 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	}
 
 	/**
-	 * Displays the javascript for this check-all widget
+	 * Displays the JavaScript for this check-all widget
 	 */
-	protected function displayJavascript()
+	protected function displayJavaScript()
 	{
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";

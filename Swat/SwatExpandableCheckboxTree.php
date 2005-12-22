@@ -70,7 +70,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		else
 			$num_nodes = 0;
 
-		$this->displayJavascript();
+		$this->displayJavaScript();
 
 		$div_tag->close();
 	}
@@ -189,9 +189,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	}
 
 	/**
-	 * Displays the javascript for this check-all widget
+	 * Displays the JavaScript for this check-all widget
 	 */
-	protected function displayJavascript()
+	protected function displayJavaScript()
 	{
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";

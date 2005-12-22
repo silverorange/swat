@@ -63,10 +63,10 @@ class SwatTextareaEditor extends SwatTextarea
 		if (!$this->visible)
 			return;
 
-		$this->displayJavascript();
+		$this->displayJavaScript();
 	}
 
-	private function displayJavascript()
+	private function displayJavaScript()
 	{
 		$value = $this->rteSafe($this->value);
 
@@ -75,7 +75,7 @@ class SwatTextareaEditor extends SwatTextarea
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 
-		$this->displayJavascriptTranslations();
+		$this->displayJavaScriptTranslations();
 
 		echo 'initRTE("swat/images/textarea-editor/", "swat/", "", false);';
 		echo "writeRichText('{$this->id}', '{$value}', '{$this->width}', ".
@@ -85,7 +85,7 @@ class SwatTextareaEditor extends SwatTextarea
 		echo '</script>';
 	}
 
-	private function displayJavascriptTranslations()
+	private function displayJavaScriptTranslations()
 	{
 		echo " var rteT = new Array();";
 

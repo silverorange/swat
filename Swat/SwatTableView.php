@@ -484,7 +484,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		echo '</tbody>';
 
-		$this->displayJavascript();
+		$this->displayJavaScript();
 
 		foreach ($this->extra_rows as $row)
 			$row->display($this->columns);
@@ -509,9 +509,9 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ private function displayJavascript()
+	// {{{ private function displayJavaScript()
 
-	private function displayJavascript()
+	private function displayJavaScript()
 	{
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
@@ -522,7 +522,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		echo '</script>';
 
 		foreach ($this->columns as $column)
-			echo $column->displayJavascript();
+			echo $column->displayJavaScript();
 	}
 
 	// }}}
