@@ -1,6 +1,9 @@
 /**
  * An orderable list control widget
  *
+ * Some of the drag and drop code is adapted from Nat Friedman's drag.js
+ * script.
+ *
  * @package   Swat
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
@@ -11,7 +14,7 @@
 /**
  * Handles moving a dragged item
  *
- * Updates the position of hte shadow item as well as updating the position
+ * Updates the position of the shadow item as well as updating the position
  * of the drop target.
  *
  * TODO: Fix when user uses mouse scrollwheel when dragging.
@@ -29,41 +32,32 @@ function SwatChangeOrder_mousemoveEventHandler(event)
 	if (shadow_item.style.display == 'none') {
 		SwatChangeOrder.is_dragging = true;
 		shadow_item.style.display = 'block';
+		shadow_item.scroll_timer =
+			window.setInterval("SwatChangeOrder_scrollTimerHandler()", 100);
+
+		shadow_item.update_timer =
+			window.setInterval("SwatChangeOrder_updateTimerHandler()", 300);
 	}
 
 	if (typeof window.event == 'undefined') {
-		var left = event.clientX - shadow_item.mouseNWOffsetX; 
-		var top = event.clientY - shadow_item.mouseNWOffsetY +
+		var left = event.clientX - shadow_item.mouse_offset_x; 
+		var top = event.clientY - shadow_item.mouse_offset_y +
 			(shadow_item.original_item.offsetTop - list_div.scrollTop);
 	} else {
-		var left = window.event.clientX - shadow_item.mouseNWOffsetX; 
-		var top = window.event.clientY - shadow_item.mouseNWOffsetY +
+		var left = window.event.clientX - shadow_item.mouse_offset_x; 
+		var top = window.event.clientY - shadow_item.mouse_offset_y +
 			(shadow_item.original_item.offsetTop - list_div.scrollTop);
 	}
 
 	var middle = top + Math.floor(shadow_item.offsetHeight / 2) -
 		list_div.offsetTop + list_div.scrollTop;
 
+	shadow_item.top = top;
+	shadow_item.left = left;
 	shadow_item.style.top = top + 'px';
 	shadow_item.style.left = left + 'px';
 
-	var list_div = shadow_item.original_item.parentNode;
-	for (var i = 0; i < list_div.childNodes.length; i++) {
-		var node = list_div.childNodes[i];
-		if (node !== drop_marker &&
-			middle < node.offsetTop + Math.floor(node.offsetHeight / 2)) {
-			// hide the drop marker if no move is taking place
-			if (node === shadow_item.original_item ||
-				node === shadow_item.original_item.nextSibling) {
-				drop_marker.style.display = 'none';
-			} else {
-				node.parentNode.insertBefore(drop_marker, node);
-				drop_marker.style.display = 'block';
-			}
-
-			break;
-		}
-	}
+	SwatChangeOrder_updateDropPosition();
 
 	return false;
 }
@@ -110,19 +104,19 @@ function SwatChangeOrder_keydownEventHandler(event)
 }
 
 // }}}
-// {{{ function SwatChangeOrder_timerHandler()
+// {{{ function SwatChangeOrder_scrollTimerHandler()
 
 /**
- * Handles timeout events on a dragged item
+ * Handles auto-scrolling timeout events on a dragged item
  *
  * This does the auto scrolling of the main list
  */
-function SwatChangeOrder_timerHandler()
+function SwatChangeOrder_scrollTimerHandler()
 {
 	var shadow_item = SwatChangeOrder.dragging_item;
 	var list_div = shadow_item.original_item.parentNode;
 
-	var top = parseInt(shadow_item.style.top);
+	var top = shadow_item.top;
 	var middle = top + Math.floor(shadow_item.offsetHeight / 2);
 	var old_scroll_top;
 
@@ -139,7 +133,7 @@ function SwatChangeOrder_timerHandler()
 		old_scroll_top = list_div.scrollTop;
 		list_div.scrollTop -= delta;
 		// update correctly if we scroll to the very top
-		shadow_item.mouseNWOffsetY += (old_scroll_top - list_div.scrollTop);
+		shadow_item.mouse_offset_y += (old_scroll_top - list_div.scrollTop);
 	}
 
 	var list_bottom = list_div.offsetHeight + list_div.offsetTop;
@@ -157,7 +151,52 @@ function SwatChangeOrder_timerHandler()
 		old_scroll_top = list_div.scrollTop;
 		list_div.scrollTop += delta;
 		// update correctly if we scroll to the very bottom
-		shadow_item.mouseNWOffsetY += (old_scroll_top - list_div.scrollTop);
+		shadow_item.mouse_offset_y += (old_scroll_top - list_div.scrollTop);
+	}
+}
+
+// }}}
+// {{{ function SwatChangeOrder_updateTimerHandler()
+
+/**
+ * Handles position update timer events on a dragged item
+ */
+function SwatChangeOrder_updateTimerHandler()
+{
+	SwatChangeOrder_updateDropPosition();
+}
+
+// }}}
+// {{{ function SwatChangeOrder_updateDropPosition()
+
+/**
+ * Updates the drop position of the current dragging item
+ */
+function SwatChangeOrder_updateDropPosition()
+{
+	var shadow_item = SwatChangeOrder.dragging_item;
+	var drop_marker = SwatChangeOrder.dragging_drop_marker;
+	var list_div = shadow_item.original_item.parentNode;
+	var top = shadow_item.top;
+
+	var middle = top + Math.floor(shadow_item.offsetHeight / 2) -
+		list_div.offsetTop + list_div.scrollTop;
+
+	for (var i = 0; i < list_div.childNodes.length; i++) {
+		var node = list_div.childNodes[i];
+		if (node !== drop_marker &&
+			middle < node.offsetTop + Math.floor(node.offsetHeight / 2)) {
+			// hide the drop marker if no move is taking place
+			if (node === shadow_item.original_item ||
+				node === shadow_item.original_item.nextSibling) {
+				drop_marker.style.display = 'none';
+			} else {
+				node.parentNode.insertBefore(drop_marker, node);
+				drop_marker.style.display = 'block';
+			}
+
+			break;
+		}
 	}
 }
 
@@ -188,7 +227,8 @@ function SwatChangeOrder_mouseupEventHandler(event)
 	var drop_marker = SwatChangeOrder.dragging_drop_marker;
 	var list_div = shadow_item.original_item.parentNode;
 
-	window.clearInterval(shadow_item.timer);
+	window.clearInterval(shadow_item.scroll_timer);
+	window.clearInterval(shadow_item.update_timer);
 
 	// reposition the item
 	// TODO: don't update this if the position is the same as originally
@@ -221,6 +261,11 @@ function SwatChangeOrder_mouseupEventHandler(event)
  */
 function SwatChangeOrder_mousedownEventHandler(event)
 {
+	// only allow left click to do things
+	if ((SwatChangeOrder.ie_event_model && (window.event.button & 1) != 1) ||
+		(!SwatChangeOrder.ie_event_model && event.button != 0))
+		return false;
+
 	if (!this.controller.sensitive)
 		return false;
 
@@ -231,6 +276,7 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	var shadow_item = this.cloneNode(true);
 	shadow_item.original_item = this;
 	shadow_item.original_item.parentNode.parentNode.appendChild(shadow_item, this);
+	shadow_item.top = 0;
 
 	// TODO: use zindex manager
 	shadow_item.style.zIndex = 1000;
@@ -239,15 +285,15 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	shadow_item.style.width = (this.offsetWidth - 4) + 'px';
 
 	if (typeof window.event == 'undefined') {
-		shadow_item.mouseNWOffsetX = event.clientX - this.offsetLeft -
+		shadow_item.mouse_offset_x = event.clientX - this.offsetLeft -
 			this.parentNode.offsetLeft;
 
-		shadow_item.mouseNWOffsetY = event.clientY - this.parentNode.offsetTop;
+		shadow_item.mouse_offset_y = event.clientY - this.parentNode.offsetTop;
 	} else {
-		shadow_item.mouseNWOffsetX = window.event.clientX - this.offsetLeft -
+		shadow_item.mouse_offset_x = window.event.clientX - this.offsetLeft -
 			this.parentNode.offsetLeft;
 
-		shadow_item.mouseNWOffsetY = window.event.clientY -
+		shadow_item.mouse_offset_y = window.event.clientY -
 			this.parentNode.offsetTop;
 	}
 
@@ -263,15 +309,13 @@ function SwatChangeOrder_mousedownEventHandler(event)
 
 	document.onmousemove = SwatChangeOrder_mousemoveEventHandler;
 	document.onmouseup = SwatChangeOrder_mouseupEventHandler;
+	document.onmousedown = null;
 
 	if (SwatChangeOrder.ie_event_model)
 		document.attachEvent('onkeydown', SwatChangeOrder_keydownEventHandler);
 	else
 		document.addEventListener('keydown',
 			SwatChangeOrder_keydownEventHandler, false);
-
-	shadow_item.timer =
-		window.setInterval("SwatChangeOrder_timerHandler()", 100);
 
 	return false;
 }
