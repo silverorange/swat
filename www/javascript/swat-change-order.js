@@ -215,6 +215,11 @@ function SwatChangeOrder_updateDropPosition()
  */
 function SwatChangeOrder_mouseupEventHandler(event)
 {
+	// only allow left click to do things
+	if ((SwatChangeOrder.ie_event_model && (window.event.button & 1) != 1) ||
+		(!SwatChangeOrder.ie_event_model && event.button != 0))
+		return false;
+
 	document.onmousemove = null;
 	document.onmouseup = null;
 	if (SwatChangeOrder.ie_event_model)
