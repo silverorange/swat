@@ -210,7 +210,7 @@ label.swat-control {
 }
 
 .swat-form-footer-field input.primary {
-	padding: 0.2em 0.8em;
+	padding: 0.2em 0.6em;
 	font-weight: bold;
 }
 
@@ -499,4 +499,5 @@ span.swat-time-span {
 
 .swat-button-submit, .swat-button-create, .swat-button-apply {
 	font-weight: bold;
+	margin: 0 0.2em;
 }
