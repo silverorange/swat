@@ -879,7 +879,7 @@ class SwatDB
 
 		$options = array();
 
-		$base_parent =  new SwatDataTreeNode();
+		$base_parent =  new SwatDataTreeNode(Swat::_('Root'));
 		$current_group = null;
 
 		while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
@@ -996,7 +996,7 @@ class SwatDB
 		$id_field_name, $level_field_name)
 	{
 		$stack = array();
-		$current_parent = new SwatDataTreeNode();
+		$current_parent = new SwatDataTreeNode(Swat::_('Root'));
 		$base_parent = $current_parent;
 		array_push($stack, $current_parent);
 		$last_node = $current_parent;	
