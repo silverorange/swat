@@ -1,7 +1,7 @@
 <?php
 
 require_once 'DemoPage.php';
-require_once 'Swat/SwatTreeNode.php';
+require_once 'Swat/SwatDataTreeNode.php';
 require_once 'Swat/SwatFlydownOption.php';
 
 /**
@@ -32,27 +32,27 @@ class Flydown extends DemoPage
 			new SwatFlydownOption(8, 'Strawberry')
 		);
 
-		$tree = new SwatTreeNode(array('title' => 'test'));
+		$tree = new SwatDataTreeNode('test');
 
-		$apples = new SwatTreeNode(array('id' => 'apple', 'title' => 'Apple'));
-		$apples->addChild(new SwatTreeNode(array('id' => 'mackintish', 'title' => 'Mackintosh')));
-		$apples->addChild(new SwatTreeNode(array('id' => 'courtland', 'title' => 'Courtland')));
-		$apples->addChild(new SwatTreeNode(array('id' => 'golden', 'title' => 'Golden Delicious')));
-		$apples->addChild(new SwatTreeNode(array('id' => 'fuji', 'title' => 'Fuji')));
-		$apples->addChild(new SwatTreeNode(array('id' => 'granny', 'title' => 'Granny Smith')));
-		
-		$oranges = new SwatTreeNode(array('id' => 'orange', 'title' => 'Orange'));
-		$oranges->addChild(new SwatTreeNode(array('id' => 'navel', 'title' => 'Navel')));
-		$oranges->addChild(new SwatTreeNode(array('id' => 'blood', 'title' => 'Blood')));
-		$oranges->addChild(new SwatTreeNode(array('id' => 'florida', 'title' => 'Florida')));
-		$oranges->addChild(new SwatTreeNode(array('id' => 'california', 'title' => 'California')));
-		$oranges->addChild(new SwatTreeNode(array('id' => 'mandarin', 'title' => 'Mandarin')));
-		
+		$apples = new SwatDataTreeNode('Apple', 'apple');
+		$apples->addChild(new SwatDataTreeNode('Mackintish', 'mackintosh'));
+		$apples->addChild(new SwatDataTreeNode('Courtland', 'courtland'));
+		$apples->addChild(new SwatDataTreeNode('Golden Delicious', 'golden'));
+		$apples->addChild(new SwatDataTreeNode('Fuji', 'fuji'));
+		$apples->addChild(new SwatDataTreeNode('Granny Smith', 'granny'));
+
+		$oranges = new SwatDataTreeNode('Orange', 'orange');
+		$oranges->addChild(new SwatDataTreeNode('Navel', 'navel'));
+		$oranges->addChild(new SwatDataTreeNode('Blood', 'blood'));
+		$oranges->addChild(new SwatDataTreeNode('Florida', 'florida'));
+		$oranges->addChild(new SwatDataTreeNode('California', 'california'));
+		$oranges->addChild(new SwatDataTreeNode('Mandarin', 'mandarin'));
+
 		$tree->addChild($apples);
 		$tree->addChild($oranges);
 
 		$tree_flydown = $this->ui->getWidget('tree_flydown');
-		$tree_flydown->tree = $tree;
+		$tree_flydown->setTree($tree);
 
 		$cascade_from = $this->ui->getWidget('cascade_from');
 		$cascade_from->options = array(

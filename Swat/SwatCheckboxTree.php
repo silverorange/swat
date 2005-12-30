@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/SwatTreeNode.php';
 require_once 'Swat/SwatCheckboxList.php';
 require_once 'Swat/SwatState.php';
 
@@ -18,9 +19,9 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	 * An tree structure of {@link SwatTreeNode} objects.
 	 * This structure overwrites the public options property.
 	 *
-	 * @var SwatTreeNode
+	 * @var SwatDataTreeNode
 	 */
-	public $tree = null;
+	protected $tree = null;
 
 	/**
 	 * A label tag used for displaying tree nodes
@@ -75,6 +76,16 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		$div_tag->close();
 	}
 
+	/** 
+	 * Sets the tree to use for display
+	 *
+	 * @param SwatDataTreeNode $tree the tree to use for display.
+	 */
+	public function setTree(SwatDataTreeNode $tree)
+	{
+		$this->tree = $tree;
+	}
+
 	/**
 	 * Gets the current state of this checkbox tree
 	 *
@@ -102,13 +113,14 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	/**
 	 * Displays a node in a tree as a checkbox input
 	 *
-	 * @param SwatTreeNode $node the node to display.
+	 * @param SwatDataTreeNode $node the node to display.
 	 * @param integer $nodes the current number of nodes.
 	 * @param string $parent_index the path of the parent node.
 	 *
 	 * @return integer the number of checkable nodes in the tree.
 	 */
-	private function displayNode($node, $nodes = 0, $parent_index = '')
+	private function displayNode(SwatDataTreeNode $node, $nodes = 0,
+		$parent_index = '')
 	{
 		// build a unique id of the indexes of the tree
 		if (strlen($parent_index) == 0) {
@@ -120,24 +132,22 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 
 			echo '<li>';
 
-			// TODO: this is not always set. Make another more specific Swat
-			//       data class.
-			if (isset($node->data['value'])) {
-				$this->input_tag->id = $index;
-				$this->input_tag->value = $node->data['value'];
+			if (isset($node->value)) {
+				$this->input_tag->id = $this->id.'_'.$index;
+				$this->input_tag->value = $node->value;
 
-				if (in_array($node->data['value'], $this->values))
+				if (in_array($node->value, $this->values))
 					$this->input_tag->checked = 'checked';
 				else
 					$this->input_tag->checked = null;
 
 				$this->label_tag->for = $index;
-				$this->label_tag->content = $node->data['title'];
+				$this->label_tag->content = $node->title;
 
 				$this->input_tag->display();
 				$this->label_tag->display();
 			} else {
-				echo $node->data['title'];
+				echo $node->title;
 			}
 		}
 
@@ -155,7 +165,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 			echo '</li>';
 
 		// count checkable nodes
-		if (isset($node->data['value']))
+		if ($node->value !== null)
 			$nodes++;
 
 		return $nodes;
