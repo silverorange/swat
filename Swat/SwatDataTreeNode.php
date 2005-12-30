@@ -40,7 +40,7 @@ class SwatDataTreeNode extends SwatTreeNode
 	 * @param string $title
 	 * @param mixed $value
 	 */
-	public function __construct($title = null, $value = null)
+	public function __construct($title, $value = null)
 	{
 		$this->title = $title;
 		$this->value = $value;
