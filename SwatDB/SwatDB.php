@@ -4,7 +4,7 @@
 require_once 'MDB2.php';
 require_once 'SwatDB/SwatDBField.php';
 require_once 'SwatDB/SwatDBDefaultRecordsetWrapper.php';
-require_once 'Swat/SwatTreeNode.php';
+require_once 'Swat/SwatDataTreeNode.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
@@ -789,14 +789,14 @@ class SwatDB
 	}
 
 	// }}}
-	// {{{ public static function getGroupOptionArray()
+	// {{{ public static function getGroupedOptionArray()
 
-    /**
-	 * Query for a grouped option array
+	/**
+	 * Queries for a grouped option array
 	 *
- 	 * Convenience method to query a grouped list of {@link SwatTreeNode}s use
- 	 * for things like {@link SwatCheckboxList} where checkboxes are grouped
- 	 * together under a title.
+ 	 * Convenience method to query a grouped list of {@link SwatDataTreeNode}
+	 * objects used for things like {@link SwatCheckboxList} where checkboxes
+	 * are grouped together under a title.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 *
@@ -816,9 +816,9 @@ class SwatDB
 	 *        from.
 	 *
 	 * @param string $group_idfield The name of the database field to query for
-     *        the id of the $group_table. Can be given in the form type:name where
+	 *        the id of the $group_table. Can be given in the form type:name where
 	 *        type is a standard MDB2 datatype. If type is ommitted, then integer is
-     *        assummed for this field.
+	 *        assummed for this field.
 	 *
 	 * @param string $group_title_field The name of the database field to query for 
 	 *        the group title. Can be given in the form type:name where type is a
@@ -828,7 +828,7 @@ class SwatDB
 	 * @param string $group_field The name of the database field in $table that
 	 *        links with the $group_idfield. Can be given in the form type:name where
 	 *        type is a standard MDB2 datatype. If type is ommitted, then integer is
-     *        assummed for this field.
+	 *        assummed for this field.
 	 *
 	 * @param string $order_by_clause Optional comma deliminated list of 
 	 *        database field names to use in the <i>order by</i> clause.
@@ -839,7 +839,8 @@ class SwatDB
 	 *        returned results.  Do not include "where" in the string; only 
 	 *        include the conditionals.
 	 *
-	 * @return SwatTreeNode A tree hierarchy of {@link SwatTreeNode}s
+	 * @return SwatDataTreeNode a tree composed of {@link SwatDataTreeNode}
+	 *                           objects.
 	 *
 	 * @throws SwatDBException
 	 */
@@ -878,22 +879,18 @@ class SwatDB
 
 		$options = array();
 
-		$base_parent =  new SwatTreeNode();
+		$base_parent =  new SwatDataTreeNode();
 		$current_group = null;
 
 		while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
 			if ($current_group !== $row->group_id) {
-				$current_parent = new SwatTreeNode(
-					array('title' => $row->group_title));
-
+				$current_parent = new SwatDataTreeNode($row->group_title);
 				$base_parent->addChild($current_parent);
-				
 				$current_group = $row->group_id;
 			}
 
 			$current_parent->addChild(
-				new SwatTreeNode(array('title' => $row->title,
-					'value' => $row->id)));
+				new SwatDataTreeNode($row->title, $row->id));
 		}
 
 		return $base_parent;
@@ -969,13 +966,13 @@ class SwatDB
 	// {{{ public static function buildTreeOptionArray)
 
 	/**
-	 * Build a Tree Structured Option Array
+	 * Builds a tree structured option array
 	 *
  	 * Convenience method to take a structured query with each row consisting of
-	 * an id, levelnum, and a title, and turning it into a tree of {@link
-	 * SwatTreeNode}s. The returned option array in the form of
-	 * a collection of {@link SwatTreeNode}s can be used by other classes, such as 
-	 * {@link SwatTreeFlydown} for example.
+	 * an id, levelnum, and a title, and turning it into a tree of
+	 * {@link SwatDataTreeNode} objects. The returned option array in the form
+	 * of a collection of {@link SwatDataTreeNode} objects can be used by other
+	 * classes, such as {@link SwatTreeFlydown}.
 	 *
 	 * @param MDB2_Driver_Common $rs The MDB2 result set, usually the
 	 * 	result of a stored procedure. Must be wrapped in {@link
@@ -990,7 +987,8 @@ class SwatDB
 	 * @param string $level_field_name The name of the database field
 	 * 	representing the level
 	 *
-	 * @return SwatTreeNode A tree hierarchy of {@link SwatTreeNode}s
+	 * @return SwatDataTreeNode a tree composed of {@link SwaDatatTreeNode}
+	 *                           objects.
 	 *
 	 * @throws SwatDBException
 	 */
@@ -998,7 +996,7 @@ class SwatDB
 		$id_field_name, $level_field_name)
 	{
 		$stack = array();
-		$current_parent =  new SwatTreeNode();
+		$current_parent = new SwatDataTreeNode();
 		$base_parent = $current_parent;
 		array_push($stack, $current_parent);
 		$last_node = $current_parent;	
@@ -1014,8 +1012,8 @@ class SwatDB
 			} elseif ($level < count($stack)) {
 				$current_parent = array_pop($stack);
 			}
-		
-			$last_node = new SwatTreeNode(array('title' => $title, 'id' => $id));
+
+			$last_node = new SwatDataTreeNode($title, $id);
 			$current_parent->addChild($last_node);
 		}
 

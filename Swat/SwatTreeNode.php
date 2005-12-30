@@ -5,23 +5,24 @@ require_once 'Swat/SwatObject.php';
 /**
  * A simple class for building a tree structure
  *
+ * To create a tree data structure, sub-class this class.
+ *
  * @package   Swat
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTreeNode extends SwatObject
+abstract class SwatTreeNode extends SwatObject
 {
-	// {{{ public properties
+	// {{{ protected properties
 
 	/**
-	 * An array of data used for display
+	 * An array of children tree nodes
 	 *
-	 * Data is the actual content of this node. Many Swat widgets use the
-	 * data array to store a value and a title for example.
+	 * This array is indexed numerically and starts at 0.
 	 *
 	 * @var array
 	 */
-	public $data = array();
+	protected $children = array();
 
 	// }}}
 	// {{{ private properties
@@ -42,30 +43,6 @@ class SwatTreeNode extends SwatObject
 	 * @var integer
 	 */
 	private $index = 0;
-
-	/**
-	 * An array of children tree nodes
-	 *
-	 * This array is indexed numerically and starts at 0.
-	 *
-	 * @var array
-	 */
-	private $children = array();
-
-	// }}}
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new tree node
-	 *
-	 * The data property is set to a blank array if unspecified.
-	 *
-	 * @param array $data an array of data used for display.
-	 */
-	public function __construct($data = array())
-	{
-		$this->data = $data;
-	}
 
 	// }}}
 	// {{{ public function addChild()
@@ -126,30 +103,6 @@ class SwatTreeNode extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function toArray()
-
-	/**
-	 * Returns this branch as a flat array
-	 *
-	 * Thius utility method gets all child nodes of this node as a flat array
-	 * of the form:
-	 *    index1/index2/index3 => data
-	 * Where 'index1/index2/index3' is a flat representation of the path from
-	 * this node to the node containing 'data'.
-	 *
-	 * @return array a reference to an array containing all child elements of
-	 *                this node indexed by path.
-	 */
-	public function &toArray()
-	{
-		$flat_array = array();
-
-		self::expandNode($flat_array, $this);
-
-		return $flat_array;
-	}
-
-	// }}}
 	// {{{ public function getChildren()
 
 	/**
@@ -163,6 +116,20 @@ class SwatTreeNode extends SwatObject
 	}
 	
 	// }}}
+	// {{{ public function hasChildren()
+
+	/**
+	 * Whether or not this tree node has children
+	 *
+	 * @return boolean true if this node has children or false if this node
+	 *                  does not have children.
+	 */
+	public function hasChildren()
+	{
+		return (count($this->children) > 0);
+	}
+
+	// }}}
 	// {{{ public function getIndex()
 
 	/**
@@ -173,55 +140,6 @@ class SwatTreeNode extends SwatObject
 	public function getIndex()
 	{
 		return $this->index;
-	}
-
-	// }}}
-	// {{{ private static function expandNode()
-
-	/**
-	 * Recursivly expands a tree node
-	 *
-	 * Adds the tree node to an array with the current path as a key and the
-	 * node's data as a value. Then calls itself on each child node of the
-	 * node with the node's index added to the path.
-	 *
-	 * @param array $options a reference to an array where the flat tree is
-	 *                        stored.
-	 * @param SwatTreeNode $node the node to begin recursion with.
-	 * @param array $path an array of indexes representing the current path in
-	 *                     the tree.
-	 */
-	private static function expandNode(&$options, $node, $path = array())
-	{
-		if (count($path))
-			$options[implode('/', $path)] = $node->data;
-
-		foreach ($node->children as $index => $child_node)
-			self::expandNode($options, $child_node,
-				self::appendPath($path, $child_node->index));
-	}
-
-	// }}}
-	// {{{ private static function appendPath()
-
-	/**
-	 * Adds an index to an array of indexes forming a path in this tree
-	 *
-	 * The current path is passed by value on purpose.
-	 *
-	 * @param array $path the current path.
-	 * @param string $index the index value to add to the path.
-	 *
-	 * @return array a reference to the path array with the new id added.
-	 */
-	private static function &appendPath($path, $index)
-	{
-		if (!is_array($path))
-			$path = array($index);
-		else
-			$path[] = $index;
-
-		return $path;
 	}
 
 	// }}}

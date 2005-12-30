@@ -78,13 +78,14 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	/**
 	 * Displays a node in a tree as a checkbox input
 	 *
-	 * @param SwatTreeNode $node the node to display.
+	 * @param SwatDataTreeNode $node the node to display.
 	 * @param integer $nodes the current number of nodes.
 	 * @param string $parent_index the path of the parent node.
 	 *
 	 * @return integer the number of checkable nodes in the tree.
 	 */
-	private function displayNode($node, $nodes = 0, $parent_index = '')
+	private function displayNode(SwatDataTreeNode $node, $nodes = 0,
+		$parent_index = '')
 	{
 		$child_nodes = $node->getChildren();
 
@@ -135,24 +136,22 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 				$li_tag->open();
 			}
 
-			// TODO: this is not always set. Make another more specific Swat
-			//       data class.
-			if (isset($node->data['value'])) {
+			if ($node->value === null) {
+				echo $node->title;
+			} else {
 				$this->input_tag->id = $this->id.'_'.$index;
-				$this->input_tag->value = $node->data['value'];
+				$this->input_tag->value = $node->value;
 
-				if (in_array($node->data['value'], $this->values))
+				if (in_array($node->value, $this->values))
 					$this->input_tag->checked = 'checked';
 				else
 					$this->input_tag->checked = null;
 
 				$this->label_tag->for = $this->id.'_'.$index;
-				$this->label_tag->content = $node->data['title'];
+				$this->label_tag->content = $node->title;
 
 				$this->input_tag->display();
 				$this->label_tag->display();
-			} else {
-				echo $node->data['title'];
 			}
 		}
 
@@ -182,7 +181,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			echo '</li>';
 
 		// count checkable nodes
-		if (isset($node->data['value']))
+		if ($node->value !== null)
 			$nodes++;
 
 		return $nodes;

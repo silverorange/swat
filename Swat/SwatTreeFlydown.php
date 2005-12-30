@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/SwatDataTreeNode.php';
 require_once 'Swat/SwatFlydown.php';
 
 /**
@@ -12,17 +13,6 @@ require_once 'Swat/SwatFlydown.php';
 class SwatTreeFlydown extends SwatFlydown
 {
 	/**
-	 * Flydown options
-	 *
-	 * An tree collection of {@link SwatTreeNode} objects for the flydown.
-	 * This property overwrites the public $options property in the display
-	 * method.
-	 *
-	 * @var SwatTreeNode
-	 */
-	public $tree = null;
-
-	/**
 	 * Tree Path
 	 *
 	 * An array containing the branch of the selected node.
@@ -32,9 +22,20 @@ class SwatTreeFlydown extends SwatFlydown
 	public $path = array();
 
 	/**
+	 * Flydown options
+	 *
+	 * An tree collection of {@link SwatDataTreeNode} objects for the flydown.
+	 * When the display method is called, this property overwrites the public
+	 * {@link SwatFlydown::$options} property.
+	 *
+	 * @var SwatDataTreeNode
+	 */
+	protected $tree = null;
+
+	/**
 	 * Displays this tree flydown
 	 *
-	 * The tree is represented by playing spaces in front of nodes on different
+	 * The tree is represented by placing spaces in front of nodes on different
 	 * levels.
 	 */
 	public function display()
@@ -47,10 +48,10 @@ class SwatTreeFlydown extends SwatFlydown
 		else
 			$options = array();
 
-		foreach ($options as $key => $data) {
-			$key_array = explode('/', $key);
+		foreach ($options as $path => $title) {
+			$key_array = explode('/', $path);
 			$pad = str_repeat('&nbsp;&nbsp;', (count($key_array) - 1));
-			$this->addOption($key, $pad.$data['title']);
+			$this->addOption($path, $pad.$title);
 		}
 
 		// temporarily encode the path into the value for parent::display()
@@ -58,6 +59,16 @@ class SwatTreeFlydown extends SwatFlydown
 		$this->value = implode('/', $this->path);
 		parent::display();
 		$this->value = $actual_value;
+	}
+
+	/**
+	 * Sets the tree to use for display
+	 *
+	 * @param SwatDataTreeNode $tree the tree to use for display.
+	 */
+	public function setTree(SwatDataTreeNode $tree)
+	{
+		$this->tree = $tree;
 	}
 
 	/**
@@ -75,7 +86,7 @@ class SwatTreeFlydown extends SwatFlydown
 			$this->path = array();
 		} else {
 			$this->path = explode('/', $this->value);
-			$this->value = $this->path[count($this->path) - 1];
+			$this->value = end($this->path);
 		}
 	}
 }
