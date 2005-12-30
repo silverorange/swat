@@ -113,23 +113,20 @@ class SwatFlydown extends SwatInputControl implements SwatState
 			$select_tag->open();
 
 			foreach ($options as $flydown_option) {
-				if ($flydown_option instanceof SwatFlydownDivider) {
-					$optgroup_tag = new SwatHtmlTag('optgroup');
-					$optgroup_tag->label = $flydown_option->title;
-					$optgroup_tag->class = 'swat-flydown-divider';
-					$optgroup_tag->content = '';
-					$optgroup_tag->display();
-				} else {
-					$option_tag->value = (string)$flydown_option->value;
-					$option_tag->removeAttribute('selected');
+				$option_tag->value = (string)$flydown_option->value;
+				$option_tag->removeAttribute('selected');
 
-					if ((string)$this->value === (string)$flydown_option->value)
-						$option_tag->selected = 'selected';
+				if ($flydown_option instanceof SwatFlydownDivider)
+					$option_tag->disabled = 'disabled';
+				else
+					$option_tag->removeAttribute('disabled');
 
-					$option_tag->content = $flydown_option->title;
+				if ((string)$this->value === (string)$flydown_option->value)
+					$option_tag->selected = 'selected';
 
-					$option_tag->display();
-				}
+				$option_tag->content = $flydown_option->title;
+
+				$option_tag->display();
 			}
 
 			$select_tag->close();
