@@ -98,7 +98,7 @@ class SwatTreeNode extends SwatObject
 	 */
 	public function &getPath()
 	{
-		$path = array($this->id);
+		$path = array($this->index);
 
 		$parent = $this->parent;
 		while ($parent !== null) {
