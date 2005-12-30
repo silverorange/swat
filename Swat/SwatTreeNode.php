@@ -183,13 +183,13 @@ class SwatTreeNode extends SwatObject
 	 *
 	 * Adds the tree node to an array with the current path as a key and the
 	 * node's data as a value. Then calls itself on each child node of the
-	 * node with the node's id added to the path.
+	 * node with the node's index added to the path.
 	 *
 	 * @param array $options a reference to an array where the flat tree is
 	 *                        stored.
-	 * @param SwatTreeNode the node to begin recursion with.
-	 * @param array $path an array of ids representing the current path in the
-	 *                     tree.
+	 * @param SwatTreeNode $node the node to begin recursion with.
+	 * @param array $path an array of indexes representing the current path in
+	 *                     the tree.
 	 */
 	private static function expandNode(&$options, $node, $path = array())
 	{
@@ -198,19 +198,19 @@ class SwatTreeNode extends SwatObject
 
 		foreach ($node->children as $index => $child_node)
 			self::expandNode($options, $child_node,
-				self::appendPath($path, $child_node->data['id']));
+				self::appendPath($path, $child_node->index));
 	}
 
 	// }}}
 	// {{{ private static function appendPath()
 
 	/**
-	 * Adds an id to an array of ids forming a path in this tree
+	 * Adds an index to an array of indexes forming a path in this tree
 	 *
 	 * The current path is passed by value on purpose.
 	 *
 	 * @param array $path the current path.
-	 * @param string $id the id to add to the path.
+	 * @param string $index the index value to add to the path.
 	 *
 	 * @return array a reference to the path array with the new id added.
 	 */
