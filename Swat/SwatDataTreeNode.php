@@ -54,8 +54,8 @@ class SwatDataTreeNode extends SwatTreeNode
 	 *
 	 * Thius utility method gets all child nodes of this node as a flat array
 	 * of the form:
-	 *    value1/value2/value3 => title
-	 * Where 'value1/value2/value3' is a flat representation of the path from
+	 *    index1/index2/index3 => title
+	 * Where 'index1/index2/index3' is a flat representation of the path from
 	 * this node to the node with the title 'title'.
 	 *
 	 * @return array a reference to an array containing all child elements of
@@ -64,8 +64,8 @@ class SwatDataTreeNode extends SwatTreeNode
 	public function &toArray()
 	{
 		$flat_array = array();
-
-		self::expandNode($flat_array, $this);
+		foreach ($this->children as $child_node)
+			self::expandNode($flat_array, $child_node);
 
 		return $flat_array;
 	}
@@ -78,47 +78,26 @@ class SwatDataTreeNode extends SwatTreeNode
 	 *
 	 * Adds the tree node to an array with the a string representation of the
 	 * current path as the array key and the node's title as a value. Then
-	 * calls itself on each child node of the node with the node's value added
+	 * calls itself on each child node of the node with the node's index added
 	 * to the path.
 	 *
 	 * @param array $options a reference to an array where the flat tree is
 	 *                        stored.
 	 * @param SwatDataTreeNode $node the node to begin recursion with.
-	 * @param array $path an array of node values representing the current path
-	 *                     in the tree.
+	 * @param string $path the current path in the tree formed from node
+	 *                      indexes.
 	 */
 	private static function expandNode(&$options, SwatDataTreeNode $node,
-		$path = array())
+		$path = '')
 	{
-		if (count($path) > 0)
-			$options[implode('/', $path)] = $node->title;
-
-		foreach ($node->getChildren() as $index => $child_node)
-			self::expandNode($options, $child_node,
-				self::appendPath($path, $child_node->value));
-	}
-
-	// }}}
-	// {{{ private static function appendPath()
-
-	/**
-	 * Adds a node value to an array of node values forming a path in this tree
-	 *
-	 * The current path is passed by value on purpose.
-	 *
-	 * @param array $path the current path.
-	 * @param mixed $value the node value to add to the path.
-	 *
-	 * @return array a reference to the path array with the new id added.
-	 */
-	private static function &appendPath($path, $value)
-	{
-		if (!is_array($path))
-			$path = array($value);
+		if (strlen($path) > 0)
+			$path.= '/'.$node->getIndex();
 		else
-			$path[] = $value;
+			$path = $node->getIndex();
 
-		return $path;
+		$options[$path] = $node->title;
+		foreach ($node->getChildren() as $child_node)
+			self::expandNode($options, $child_node, $path);
 	}
 
 	// }}}
