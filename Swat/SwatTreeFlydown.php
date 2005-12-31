@@ -44,14 +44,11 @@ class SwatTreeFlydown extends SwatFlydown
 
 		$this->options = array();
 
-		if ($this->tree !== null)
-			$options = $this->tree->toArray();
-		else
-			$options = array();
-
-		foreach ($options as $path => $title) {
-			$pad = str_repeat('&nbsp;&nbsp;', substr_count($path, '/'));
-			$this->addOption($path, $pad.$title);
+		if ($this->tree !== null) {
+			foreach ($this->tree->toArray() as $path => $title) {
+				$pad = str_repeat('&nbsp;&nbsp;', substr_count($path, '/'));
+				$this->addOption($path, $pad.$title);
+			}
 		}
 
 		// temporarily encode the path into the value for parent::display()
