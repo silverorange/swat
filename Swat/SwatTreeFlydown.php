@@ -22,11 +22,10 @@ class SwatTreeFlydown extends SwatFlydown
 	public $path = array();
 
 	/**
-	 * Flydown options
+	 * A tree collection of {@link SwatDataTreeNode} objects for this flydown
 	 *
-	 * An tree collection of {@link SwatDataTreeNode} objects for the flydown.
-	 * When the display method is called, this property overwrites the public
-	 * {@link SwatFlydown::$options} property.
+	 * When the {@link SwatFlydown::display()} method is called, this property
+	 * overwrites the {@link SwatFlydown::$options} property.
 	 *
 	 * @var SwatDataTreeNode
 	 */
@@ -43,14 +42,15 @@ class SwatTreeFlydown extends SwatFlydown
 		if (!$this->visible)
 			return;
 
+		$this->options = array();
+
 		if ($this->tree !== null)
 			$options = $this->tree->toArray();
 		else
 			$options = array();
 
 		foreach ($options as $path => $title) {
-			$key_array = explode('/', $path);
-			$pad = str_repeat('&nbsp;&nbsp;', (count($key_array) - 1));
+			$pad = str_repeat('&nbsp;&nbsp;', substr_count($path, '/'));
 			$this->addOption($path, $pad.$title);
 		}
 
