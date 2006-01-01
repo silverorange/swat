@@ -838,6 +838,9 @@ class SwatDB
 	 * @param string $where_clause Optional <i>where</i> clause to limit the 
 	 *        returned results.  Do not include "where" in the string; only 
 	 *        include the conditionals.
+	 * @param SwatDataTreeNode $tree a tree to add nodes to. If no tree is
+	 *                                specified, nodes are added to a new
+	 *                                empty tree.
 	 *
 	 * @return SwatDataTreeNode a tree composed of {@link SwatDataTreeNode}
 	 *                           objects.
@@ -846,7 +849,8 @@ class SwatDB
 	 */
 	public static function getGroupedOptionArray($db, $table, $title_field,
 		$id_field, $group_table, $group_title_field, $group_id_field,
-		$group_field, $order_by_clause = null, $where_clause = null)
+		$group_field, $order_by_clause = null, $where_clause = null,
+		$tree = null)
 	{
 		$title_field = new SwatDBField($title_field, 'text');
 		$id_field = new SwatDBField($id_field, 'integer');
@@ -854,7 +858,9 @@ class SwatDB
 		$group_id_field = new SwatDBField($group_id_field, 'integer');
 		$group_field = new SwatDBField($group_field, 'text');
 
-		$sql = 'select %s as id, %s as title, %s as group_title, %s as group_id from %s';
+		$sql = 'select %s as id, %s as title, %s as group_title, %s as group_id
+			from %s';
+
 		$sql = sprintf($sql,
 			"{$table}.{$id_field->name}",
 			"{$table}.{$title_field->name}",
@@ -863,23 +869,27 @@ class SwatDB
 			$table);
 
 		$sql.= ' inner join %s on %s = %s';
-		$sql= sprintf($sql,
+		$sql = sprintf($sql,
 			$group_table,
 			"{$group_table}.{$group_id_field->name}",
 			"{$table}.{$group_field->name}");
 
 		if ($where_clause != null)
-			$sql .= ' where '.$where_clause;
+			$sql.= ' where '.$where_clause;
 
 		if ($order_by_clause != null)
-			$sql .= ' order by '.$order_by_clause;
+			$sql.= ' order by '.$order_by_clause;
 		
 		SwatDB::debug($sql);
 		$rs = SwatDB::query($db, $sql, null);
 
 		$options = array();
 
-		$base_parent =  new SwatDataTreeNode(Swat::_('Root'));
+		if ($tree !== null && $tree instanceof SwatDataTreeNode)
+			$base_parent = $tree;
+		else
+			$base_parent = new SwatDataTreeNode(Swat::_('Root'));
+
 		$current_group = null;
 
 		while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
@@ -984,8 +994,11 @@ class SwatDB
 	 * @param string $idfield_field_name The name of the database field
 	 * 	representing the id
 	 *
-	 * @param string $level_field_name The name of the database field
-	 * 	representing the level
+	 * @param string $level_field_name the name of the database field
+	 *                                  representing the tree level.
+	 * @param SwatDataTreeNode $tree an optional tree to add nodes to. If no
+	 *                                tree is specified, nodes are added to a
+	 *                                new empty tree.
 	 *
 	 * @return SwatDataTreeNode a tree composed of {@link SwaDatatTreeNode}
 	 *                           objects.
@@ -993,10 +1006,14 @@ class SwatDB
 	 * @throws SwatDBException
 	 */
 	public static function buildTreeOptionArray($rs, $title_field_name,
-		$id_field_name, $level_field_name)
+		$id_field_name, $level_field_name, $tree = null)
 	{
 		$stack = array();
-		$current_parent = new SwatDataTreeNode(Swat::_('Root'));
+		if ($tree !== null && $tree instanceof SwatDataTreeNode)
+			$current_parent = $tree;
+		else
+			$current_parent = new SwatDataTreeNode(Swat::_('Root'));
+
 		$base_parent = $current_parent;
 		array_push($stack, $current_parent);
 		$last_node = $current_parent;	
