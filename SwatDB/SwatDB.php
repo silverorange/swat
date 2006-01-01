@@ -1000,7 +1000,7 @@ class SwatDB
 	 *                                tree is specified, nodes are added to a
 	 *                                new empty tree.
 	 *
-	 * @return SwatDataTreeNode a tree composed of {@link SwaDatatTreeNode}
+	 * @return SwatDataTreeNode a tree composed of {@link SwaDataTreeNode}
 	 *                           objects.
 	 *
 	 * @throws SwatDBException
