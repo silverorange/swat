@@ -132,20 +132,8 @@ class SwatFlydown extends SwatInputControl implements SwatState
 			$select_tag->close();
 
 		} elseif (count($options) == 1) {
-
 			// get first and only element
-			$flydown_option = current($options);
-			$title = $flydown_option->title;
-			$value = $flydown_option->value;
-
-			$hidden_tag = new SwatHtmlTag('input');
-			$hidden_tag->type = 'hidden';
-			$hidden_tag->name = $this->id;
-			$hidden_tag->value = (string)$value;
-
-			$hidden_tag->display();
-
-			echo $title;
+			$this->displaySingle(current($options));
 		}
 	}
 
@@ -271,6 +259,27 @@ class SwatFlydown extends SwatInputControl implements SwatState
 	public function setState($state)
 	{
 		$this->value = $state;
+	}
+
+	// }}}
+	// {{{ protected function displaySingle()
+
+	/**
+	 * Displays this flydown if there is only a single option
+	 */
+	protected function displaySingle($flydown_option)
+	{
+		$title = $flydown_option->title;
+		$value = $flydown_option->value;
+
+		$hidden_tag = new SwatHtmlTag('input');
+		$hidden_tag->type = 'hidden';
+		$hidden_tag->name = $this->id;
+		$hidden_tag->value = (string)$value;
+
+		$hidden_tag->display();
+
+		echo $title;
 	}
 
 	// }}}
