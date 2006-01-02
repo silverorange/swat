@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatObject.php';
+require_once 'Swat/SwatFlydownOption.php';
 
 /**
  * A class representing a divider in a flydown
