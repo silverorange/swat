@@ -112,6 +112,16 @@ class Swat
 
 		echo '</ul>';
 	}
+
+	/**
+	 * Displays an object's properties and values recursively
+	 *
+	 * @param mixed $object the object to display.
+	 */
+	public static function printObject($object)
+	{
+		echo '<pre>'.print_r($object, true).'</pre>';
+	}
 }
 
 /*
