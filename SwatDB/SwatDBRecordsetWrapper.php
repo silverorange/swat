@@ -69,7 +69,8 @@ abstract class SwatDBRecordsetWrapper implements Iterator
 				if ($this->index_field === null) {
 					$this->objects[] = $object;
 				} else {
-					$index = $row[$this->index_field];
+					$index_field = $this->index_field;
+					$index = $row->$index_field;
 					$this->objects[$index] = $object;
 				}
 			}
