@@ -14,7 +14,9 @@ class SwatObject
 {
 	public function __toString()
 	{
+		ob_start();
 		Swat::printObject($this);
+		return ob_get_clean();
 	}
 }
 
