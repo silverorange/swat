@@ -116,15 +116,19 @@ class SwatFlydown extends SwatInputControl implements SwatState
 
 			foreach ($options as $flydown_option) {
 				$option_tag->value = (string)$flydown_option->value;
-				$option_tag->removeAttribute('selected');
 
-				if ($flydown_option instanceof SwatFlydownDivider)
+				if ($flydown_option instanceof SwatFlydownDivider) {
 					$option_tag->disabled = 'disabled';
-				else
+					$option_tag->class = 'swat-flydown-option-divider';
+				} else {
 					$option_tag->removeAttribute('disabled');
+					$option_tag->removeAttribute('class');
+				}
 
 				if ((string)$this->value === (string)$flydown_option->value)
 					$option_tag->selected = 'selected';
+				else
+					$option_tag->removeAttribute('selected');
 
 				$option_tag->content = $flydown_option->title;
 
