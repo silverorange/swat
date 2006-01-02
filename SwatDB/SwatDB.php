@@ -397,9 +397,8 @@ class SwatDB
 			$params = array($params);
 
         $rs = SwatDB::executeStoredProc($db, $proc, $params);
-
-        $row = $rs->fetchRow();
-        return $row[0];
+        $row = $rs->getFirst();
+        return current($row);
 	}
 
 	// }}}
