@@ -59,6 +59,8 @@ class SwatFlydown extends SwatInputControl implements SwatState
 	 *
 	 * The onchange attribute of the XHTML select tag, or null.
 	 *
+	 * TODO: get rid of this using event handlers in JavaScript
+	 *
 	 * @var string
 	 */
 	public $onchange = null;
