@@ -12,6 +12,10 @@ require_once 'Swat/exceptions/SwatException.php';
  */
 class SwatObject
 {
+	public function __toString()
+	{
+		Swat::printObject($this);
+	}
 }
 
 ?>
