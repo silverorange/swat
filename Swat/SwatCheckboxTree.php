@@ -141,7 +141,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 				else
 					$this->input_tag->checked = null;
 
-				$this->label_tag->for = $index;
+				$this->label_tag->for = $this->id.'_'.$index;
 				$this->label_tag->content = $node->title;
 
 				$this->input_tag->display();
