@@ -16,27 +16,28 @@ class Checkbox extends DemoPage
 {
 	public function initUI()
 	{
-		$tree = new SwatDataTreeNode('test');
+		// regular checkbox tree
+		$tree = new SwatDataTreeNode(null, 'Root');
 
-		$apples = new SwatDataTreeNode('Apple');
-		$apples->addChild(new SwatDataTreeNode('Mackintosh', 0));
-		$apples->addChild(new SwatDataTreeNode('Courtland', 1));
-		$apples->addChild(new SwatDataTreeNode('Golden Delicious', 2));
-		$apples->addChild(new SwatDataTreeNode('Fuji', 3));
-		$apples->addChild(new SwatDataTreeNode('Granny Smith', 4));
+		$apples = new SwatDataTreeNode(null, 'Apple');
+		$apples->addChild(new SwatDataTreeNode(0, 'Mackintosh'));
+		$apples->addChild(new SwatDataTreeNode(1, 'Courtland'));
+		$apples->addChild(new SwatDataTreeNode(2, 'Golden Delicious'));
+		$apples->addChild(new SwatDataTreeNode(3, 'Fuji'));
+		$apples->addChild(new SwatDataTreeNode(4, 'Granny Smith'));
 		
-		$oranges = new SwatDataTreeNode('Orange');
-		$oranges->addChild(new SwatDataTreeNode('Navel', 5));
+		$oranges = new SwatDataTreeNode(null, 'Orange');
+		$oranges->addChild(new SwatDataTreeNode(5, 'Navel'));
 
-		$blood_oranges = new SwatDataTreeNode('Blood');
-		$blood_oranges->addChild(new SwatDataTreeNode('Doble Fina', 6));
-		$blood_oranges->addChild(new SwatDataTreeNode('Entrefina', 7));
-		$blood_oranges->addChild(new SwatDataTreeNode('Sanguinelli', 8));
+		$blood_oranges = new SwatDataTreeNode(null, 'Blood');
+		$blood_oranges->addChild(new SwatDataTreeNode(6, 'Doble Fina'));
+		$blood_oranges->addChild(new SwatDataTreeNode(7, 'Entrefina'));
+		$blood_oranges->addChild(new SwatDataTreeNode(8, 'Sanguinelli'));
 		$oranges->addChild($blood_oranges);
 
-		$oranges->addChild(new SwatDataTreeNode('Florida', 9));
-		$oranges->addChild(new SwatDataTreeNode('California', 10));
-		$oranges->addChild(new SwatDataTreeNode('Mandarin', 11));
+		$oranges->addChild(new SwatDataTreeNode(9,  'Florida'));
+		$oranges->addChild(new SwatDataTreeNode(10, 'California'));
+		$oranges->addChild(new SwatDataTreeNode(11, 'Mandarin'));
 		
 		$tree->addChild($apples);
 		$tree->addChild($oranges);
@@ -44,27 +45,28 @@ class Checkbox extends DemoPage
 		$checkbox_tree = $this->ui->getWidget('checkbox_tree');
 		$checkbox_tree->setTree($tree);
 
-		$tree = new SwatDataTreeNode('test');
+		// expandable checkbox tree
+		$tree = new SwatDataTreeNode(null, 'Root');
 
-		$apples = new SwatDataTreeNode('Apple', 12);
-		$apples->addChild(new SwatDataTreeNode('Mackintosh', 0));
-		$apples->addChild(new SwatDataTreeNode('Courtland', 1));
-		$apples->addChild(new SwatDataTreeNode('Golden Delicious', 2));
-		$apples->addChild(new SwatDataTreeNode('Fuji', 3));
-		$apples->addChild(new SwatDataTreeNode('Granny Smith', 4));
+		$apples = new SwatDataTreeNode(12, 'Apple');
+		$apples->addChild(new SwatDataTreeNode(0, 'Mackintosh'));
+		$apples->addChild(new SwatDataTreeNode(1, 'Courtland'));
+		$apples->addChild(new SwatDataTreeNode(2, 'Golden Delicious'));
+		$apples->addChild(new SwatDataTreeNode(3, 'Fuji'));
+		$apples->addChild(new SwatDataTreeNode(4, 'Granny Smith'));
 		
-		$oranges = new SwatDataTreeNode('Orange', 13);
-		$oranges->addChild(new SwatDataTreeNode('Navel', 5));
+		$oranges = new SwatDataTreeNode(13, 'Orange');
+		$oranges->addChild(new SwatDataTreeNode(5, 'Navel'));
 
-		$blood_oranges = new SwatDataTreeNode('Blood', 14);
-		$blood_oranges->addChild(new SwatDataTreeNode('Doble Fina', 6));
-		$blood_oranges->addChild(new SwatDataTreeNode('Entrefina', 7));
-		$blood_oranges->addChild(new SwatDataTreeNode('Sanguinelli', 8));
+		$blood_oranges = new SwatDataTreeNode(14, 'Blood');
+		$blood_oranges->addChild(new SwatDataTreeNode(6, 'Doble Fina'));
+		$blood_oranges->addChild(new SwatDataTreeNode(7, 'Entrefina'));
+		$blood_oranges->addChild(new SwatDataTreeNode(8, 'Sanguinelli'));
 		$oranges->addChild($blood_oranges);
 
-		$oranges->addChild(new SwatDataTreeNode('Florida', 9));
-		$oranges->addChild(new SwatDataTreeNode('California', 10));
-		$oranges->addChild(new SwatDataTreeNode('Mandarin', 11));
+		$oranges->addChild(new SwatDataTreeNode(9,  'Florida'));
+		$oranges->addChild(new SwatDataTreeNode(10, 'California'));
+		$oranges->addChild(new SwatDataTreeNode(11, 'Mandarin'));
 		
 		$tree->addChild($apples);
 		$tree->addChild($oranges);

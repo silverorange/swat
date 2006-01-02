@@ -5,6 +5,7 @@ require_once 'MDB2.php';
 require_once 'SwatDB/SwatDBField.php';
 require_once 'SwatDB/SwatDBDefaultRecordsetWrapper.php';
 require_once 'Swat/SwatDataTreeNode.php';
+require_once 'Swat/SwatTreeFlydownNode.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
@@ -888,19 +889,19 @@ class SwatDB
 		if ($tree !== null && $tree instanceof SwatDataTreeNode)
 			$base_parent = $tree;
 		else
-			$base_parent = new SwatDataTreeNode(Swat::_('Root'));
+			$base_parent = new SwatDataTreeNode(null, Swat::_('Root'));
 
 		$current_group = null;
 
 		while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
 			if ($current_group !== $row->group_id) {
-				$current_parent = new SwatDataTreeNode($row->group_title);
+				$current_parent = new SwatDataTreeNode(null, $row->group_title);
 				$base_parent->addChild($current_parent);
 				$current_group = $row->group_id;
 			}
 
 			$current_parent->addChild(
-				new SwatDataTreeNode($row->title, $row->id));
+				new SwatDataTreeNode($row->id, $row->title));
 		}
 
 		return $base_parent;
@@ -996,12 +997,12 @@ class SwatDB
 	 *
 	 * @param string $level_field_name the name of the database field
 	 *                                  representing the tree level.
-	 * @param SwatDataTreeNode $tree an optional tree to add nodes to. If no
-	 *                                tree is specified, nodes are added to a
-	 *                                new empty tree.
+	 * @param SwatTreeFlydownNode $tree an optional tree to add nodes to. If no
+	 *                                   tree is specified, nodes are added to
+	 *                                   a new empty tree.
 	 *
-	 * @return SwatDataTreeNode a tree composed of {@link SwaDataTreeNode}
-	 *                           objects.
+	 * @return SwatTreeFlydownNode a tree composed of
+	 *                              {@link SwatTreeFlydownNode} objects.
 	 *
 	 * @throws SwatDBException
 	 */
@@ -1009,10 +1010,10 @@ class SwatDB
 		$id_field_name, $level_field_name, $tree = null)
 	{
 		$stack = array();
-		if ($tree !== null && $tree instanceof SwatDataTreeNode)
+		if ($tree !== null && $tree instanceof SwatTreeFlydownNode)
 			$current_parent = $tree;
 		else
-			$current_parent = new SwatDataTreeNode(Swat::_('Root'));
+			$current_parent = new SwatTreeFlydownNode('', Swat::_('Root'));
 
 		$base_parent = $current_parent;
 		array_push($stack, $current_parent);
@@ -1030,7 +1031,7 @@ class SwatDB
 				$current_parent = array_pop($stack);
 			}
 
-			$last_node = new SwatDataTreeNode($title, $id);
+			$last_node = new SwatTreeFlydownNode($id, $title);
 			$current_parent->addChild($last_node);
 		}
 
