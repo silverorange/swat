@@ -37,8 +37,9 @@ class SwatDataTreeNode extends SwatTreeNode
 	/**
 	 * Creates a new data node
 	 *
-	 * @param string $title
-	 * @param mixed $value
+	 * @param string $title the title of the node.
+	 * @param mixed $value the value of the node. It is either a string or an
+	 *                      integer.
 	 */
 	public function __construct($title, $value = null)
 	{
