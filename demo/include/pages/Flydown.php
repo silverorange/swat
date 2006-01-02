@@ -1,7 +1,7 @@
 <?php
 
 require_once 'DemoPage.php';
-require_once 'Swat/SwatDataTreeNode.php';
+require_once 'Swat/SwatTreeFlydownNode.php';
 require_once 'Swat/SwatFlydownOption.php';
 
 /**
@@ -32,21 +32,22 @@ class Flydown extends DemoPage
 			new SwatFlydownOption(8, 'Strawberry')
 		);
 
-		$tree = new SwatDataTreeNode('test');
+		// tree flydown
+		$tree = new SwatTreeFlydownNode(null, 'Root');
 
-		$apples = new SwatDataTreeNode('Apple', 'apple');
-		$apples->addChild(new SwatDataTreeNode('Mackintish', 'mackintosh'));
-		$apples->addChild(new SwatDataTreeNode('Courtland', 'courtland'));
-		$apples->addChild(new SwatDataTreeNode('Golden Delicious', 'golden'));
-		$apples->addChild(new SwatDataTreeNode('Fuji', 'fuji'));
-		$apples->addChild(new SwatDataTreeNode('Granny Smith', 'granny'));
+		$apples = new SwatTreeFlydownNode('apple', 'Apple');
+		$apples->addChild(new SwatTreeFlydownNode('mackintosh', 'Mackintish'));
+		$apples->addChild(new SwatTreeFlydownNode('courtland', 'Courtland'));
+		$apples->addChild(new SwatTreeFlydownNode('golden', 'Golden Delicious'));
+		$apples->addChild(new SwatTreeFlydownNode('fuji', 'Fuji'));
+		$apples->addChild(new SwatTreeFlydownNode('smith', 'Granny Smith'));
 
-		$oranges = new SwatDataTreeNode('Orange', 'orange');
-		$oranges->addChild(new SwatDataTreeNode('Navel', 'navel'));
-		$oranges->addChild(new SwatDataTreeNode('Blood', 'blood'));
-		$oranges->addChild(new SwatDataTreeNode('Florida', 'florida'));
-		$oranges->addChild(new SwatDataTreeNode('California', 'california'));
-		$oranges->addChild(new SwatDataTreeNode('Mandarin', 'mandarin'));
+		$oranges = new SwatTreeFlydownNode('orange', 'Orange');
+		$oranges->addChild(new SwatTreeFlydownNode('navel', 'Navel'));
+		$oranges->addChild(new SwatTreeFlydownNode('blood', 'Blood'));
+		$oranges->addChild(new SwatTreeFlydownNode('florida', 'Florida'));
+		$oranges->addChild(new SwatTreeFlydownNode('california', 'California'));
+		$oranges->addChild(new SwatTreeFlydownNode('mandarin', 'Mandarin'));
 
 		$tree->addChild($apples);
 		$tree->addChild($oranges);
@@ -64,22 +65,6 @@ class Flydown extends DemoPage
 		$cascade_to->cascade_from = $cascade_from;
 
 		$cascade_to->options = array(
-			/*
-			0 => array(
-				0 => 'Mackintosh',
-				1 => 'Courtland',
-				2 => 'Golden Delicious',
-				3 => 'Fuji',
-				4 => 'Granny Smith'
-			),
-			1 => array(
-				0 => 'Navel',
-				1 => 'Blood',
-				2 => 'Florida',
-				3 => 'California',
-				4 => 'Mandarin'
-			)
-			*/
 			0 => array(
 				new SwatFlydownOption(0, 'Mackintosh'),
 				new SwatFlydownOption(1, 'Courtland'),
