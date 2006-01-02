@@ -268,7 +268,8 @@ class SwatDB
 		} else {
 			$id_field = new SwatDBField($id_field, 'integer');
 			$sql = 'select %s from %s where %s = %s';
-			$sql = sprintf($sql, $field->name, $table, $id_field->name, $id);
+			$sql = sprintf($sql, $field->name, $table, $id_field->name,
+				$db->quote($id, $id_field->type));
 		}
 
 		SwatDB::debug($sql);
