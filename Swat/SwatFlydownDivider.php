@@ -21,8 +21,11 @@ class SwatFlydownDivider extends SwatFlydownOption
 	 * @param string $title displayed title of the divider. This defaults to
 	 *                       two em dashes.
 	 */
-	public function __construct($value, $title = '&#8212;&#8212;')
+	public function __construct($value, $title = null)
 	{
+		if ($title === null)
+			$title = str_repeat('&#8212;', 6);
+
 		$this->value = $value;
 		$this->title = $title;
 	}
