@@ -81,6 +81,9 @@ class SwatMessageDisplay extends SwatControl
 					break;
 			}
 
+			if ($message->secondary_content !== null) 
+				$div->class .= ' swat-message-display-with-secondary';
+
 			$div->open();
 
 			$primary_content = new SwatHtmlTag('h3');

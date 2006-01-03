@@ -83,11 +83,37 @@ option.swat-flydown-option-divider {
 }
 
 /* SwatMessages  */
-.swat-message-display-notification {
-	border: 1px solid #f0dca1;
+
+.swat-message-display-notification,
+.swat-message-display-warning,
+.swat-message-display-error,
+.swat-message-display-system-error {
+	border: 1px solid;
 	margin: 1em 0;
-	padding: 1em 1em 1em 48px;
-	background: #fffbc9 url(../images/generic-icon.png) top left no-repeat;
+	min-height: 38px;
+	padding: 12px 12px 12px 64px;
+	background-position: 8px 8px;
+	background-repeat: no-repeat;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+
+.swat-message-display-with-secondary {
+	padding-top: 12px;
+}
+
+/* Hack for min-height in IE  */
+* html .swat-message-display-notification,
+* html .swat-message-display-warning,
+* html .swat-message-display-error,
+* html .swat-message-display-system-error {
+	height: 38px;
+}
+
+.swat-message-display-notification {
+	border-color: #f0dca1;
+	background-color: #fffbc9;
+	background-image: url(../images/tango/48/dialog-information.png);
 	color: #7b4b09;
 }
 
@@ -96,10 +122,9 @@ option.swat-flydown-option-divider {
 }
 
 .swat-message-display-warning {
-	border: 1px solid #facd00;
-	margin: 1em 0;
-	padding: 1em 1em 1em 48px;
-	background: #ff9 url(../images/generic-icon.png) top left no-repeat;
+	border-color: #facd00;
+	background-color: #ff9;
+	background-image: url(../images/tango/48/dialog-warning.png);
 	color: #533a15;
 }
 
@@ -108,10 +133,9 @@ option.swat-flydown-option-divider {
 }
 
 .swat-message-display-error {
-	border: 1px solid #dc6e66;
-	margin: 1em 0;
-	padding: 1em 1em 1em 48px;
-	background: #ffe3e0 url(../images/generic-icon.png) top left no-repeat;
+	border-color: #dc6e66;
+	background-color: #ffe3e0;
+	background-image: url(../images/tango/48/dialog-error.png);
 	color: #e31b0c;
 }
 
@@ -120,10 +144,9 @@ option.swat-flydown-option-divider {
 }
 
 .swat-message-display-system-error {
-	border: 1px solid #dc6e66;
-	margin: 1em 0;
-	padding: 1em 1em 1em 48px;
-	background: #f33 url(../images/generic-icon.png) top left no-repeat;
+	border-color: #dc6e66;
+	background-color: #f33;
+	background-image: url(../images/tango/48/dialog-error.png);
 	color: #FFF;
 }
 
@@ -134,6 +157,14 @@ option.swat-flydown-option-divider {
 .swat-message-display-primary-content {
 	margin: 0;
 	font-weight: bold;
+}
+
+.swat-message-display-primary-content {
+	margin-top: 8px;
+}
+
+.swat-message-display-with-secondary .swat-message-display-primary-content {
+	margin-top: 0;
 }
 
 
@@ -198,8 +229,9 @@ label.swat-control {
 .swat-form-field-errormsg {
 	color: #C00;
 	font-size: 85%;
-	padding: 0.3em;
+	padding: 4px 4px 4px 24px;
 	margin: 1em -0.5em -0.5em -0.5em;
+	background: transparent url(../images/tango/16/dialog-warning.png) 4px 4px no-repeat;
 }
 
 .swat-form-footer-field {
