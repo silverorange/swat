@@ -15,39 +15,49 @@ class MessageDisplay extends DemoPage
 {
 	public function initUI()
 	{
-		$message_display = $this->ui->getWidget('message_display');
+		$short_message_display = $this->ui->getWidget('short_message_display');
 
-		$message_display->add(new SwatMessage('This is a notification message.',
+		$short_message_display->add(new SwatMessage('This is a notification message.',
 				SwatMessage::NOTIFICATION));
 		
-		$message_display->add(new SwatMessage('This is a warning message.',
+		$short_message_display->add(new SwatMessage('This is a warning message.',
 				SwatMessage::WARNING));
 		
-		$message_display->add(new SwatMessage('This is an error message.',
+		$short_message_display->add(new SwatMessage('This is an error message.',
 				SwatMessage::ERROR));
 		
-		$message_display->add(new SwatMessage('This is a system error message.', 
+		$short_message_display->add(new SwatMessage('This is a system error message.', 
 			SwatMessage::SYSTEM_ERROR));
+
 		
+		$dismiss_message_display = $this->ui->getWidget('dismiss_message_display');
+
+		$msg = new SwatMessage('This is a notification message.', 
+			SwatMessage::NOTIFICATION);
+		$msg->secondary_content = 'This message has the optional Dismiss link.';
+		$dismiss_message_display->add($msg);
+
+		$long_message_display = $this->ui->getWidget('long_message_display');
+
 		$msg = new SwatMessage('This is a notification message.', 
 			SwatMessage::NOTIFICATION);
 		$msg->secondary_content = 'This message has secondary content.';
-		$message_display->add($msg);
+		$long_message_display->add($msg);
 
 		$msg = new SwatMessage('This is a warning message.', 
 			SwatMessage::WARNING);
 		$msg->secondary_content = 'This message has secondary content.';
-		$message_display->add($msg);
+		$long_message_display->add($msg);
 		
 		$msg = new SwatMessage('This is an error message.', 
 			SwatMessage::ERROR);
 		$msg->secondary_content = 'This message has secondary content.';
-		$message_display->add($msg);
+		$long_message_display->add($msg);
 		
 		$msg = new SwatMessage('This is a system error message.', 
 			SwatMessage::SYSTEM_ERROR);
 		$msg->secondary_content = 'This message has secondary content.';
-		$message_display->add($msg);
+		$long_message_display->add($msg);
 	}
 }
 
