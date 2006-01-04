@@ -105,7 +105,9 @@ class SwatFileEntry extends SwatInputControl
 			$msg = Swat::_('The %s field is required.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 
-		} elseif (!in_array($this->getMimeType(), $this->accept_mime_types)) {
+		} elseif ($this->accept_mime_types !== null &&
+			!in_array($this->getMimeType(), $this->accept_mime_types)) {
+
 			$msg = sprintf(Swat::_('The %s field must be of the following type(s): %s.'),
 				'%s',
 				implode(', ', $this->accept_mime_types));
