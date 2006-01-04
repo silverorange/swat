@@ -26,14 +26,24 @@ class SwatTreeFlydownNode extends SwatTreeNode
 	 * Creates a new tree flydown node
 	 *
 	 * This method is overloaded to accept either a value-title pair or a new
-	 * SwatFlydown object.
+	 * SwatFlydown object. Example usage:
 	 *
-	 * @param mixed $param1 either a {@link SwatFlydown} object or an integer
-	 *                       or string representing the value of a new flydown
-	 *                       option.
-	 * @param mixed $param2 if a SwatFlydown object is passed in for parameter
-	 *                       one, this parameter must be ommitted. Otherwise,
-	 *                       this is a string title for a new flydown option.
+	 * <code>
+	 * // using an already existing flydown option
+	 * $option = new SwatFlydownOption(1, 'Apples');
+	 * $node1 = new SwatTreeFlydownNode($option);
+	 *
+	 * // creating a new flydown option
+	 * $node2 = new SwatTreeFlydown(2, 'Oranges');
+	 * </code>
+	 *
+	 * @param mixed $param1 either a {@link SwatFlydownOption} object or an
+	 *                       integer or string representing the value of a new
+	 *                       flydown option.
+	 * @param mixed $param2 if a SwatFlydownOption object is passed in for
+	 *                       parameter one, this parameter must be ommitted.
+	 *                       Otherwise, this is a string title for a new
+	 *                       flydown option.
 	 *
 	 * @throws SwatException
 	 */
