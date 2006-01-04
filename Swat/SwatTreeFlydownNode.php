@@ -26,7 +26,7 @@ class SwatTreeFlydownNode extends SwatTreeNode
 	 * Creates a new tree flydown node
 	 *
 	 * This method is overloaded to accept either a value-title pair or a new
-	 * SwatFlydown object. Example usage:
+	 * {@link SwatFlydownOption} object. Example usage:
 	 *
 	 * <code>
 	 * // using an already existing flydown option
