@@ -27,6 +27,33 @@ class SwatMessageDisplay extends SwatControl
 	private $_messages = array();
  
 	/**
+	 * Show Dismiss link
+	 * 
+	 * Toggles a Dismiss link in the SwatMessageDisplay box
+	 * that hides the box. Off by default.
+	 *
+	 * @var boolean
+	 */
+	public $show_dismiss_link = false;
+
+	/**
+	 * Creates a new message display
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->requires_id = true;
+
+		$this->addJavaScript('swat/javascript/swat-message-display.js');
+		$this->addStyleSheet('swat/styles/swat-message-display.css');
+	}
+
+	/**
 	 * Adds a message
 	 *
 	 * Adds a new message. The message will be shown by the display() method
@@ -57,6 +84,8 @@ class SwatMessageDisplay extends SwatControl
 	 */
 	public function display()
 	{
+		$has_dismiss_link = false;
+
 		if (!$this->visible)
 			return;
 
@@ -65,7 +94,9 @@ class SwatMessageDisplay extends SwatControl
 
 		$div = new SwatHtmlTag('div');
 
-		foreach ($this->_messages as $message) {
+		foreach ($this->_messages as $key => $message) {
+			$div->id = $this->id.'_'.$key;
+
 			switch ($message->type) {
 				case SwatMessage::NOTIFICATION :
 					$div->class = 'swat-message-display-notification';
@@ -86,6 +117,17 @@ class SwatMessageDisplay extends SwatControl
 
 			$div->open();
 
+			if ($this->show_dismiss_link) {
+				$dismiss_link = new SwatHtmlTag('a');
+				$dismiss_link->href =
+					"javascript:{$this->id}_obj.hideMessage({$key})";
+
+				$dismiss_link->class = 'swat-message-display-dismiss-link';
+				$dismiss_link->content = _('Dismiss');
+				$dismiss_link->display();
+				$has_dismiss_link = true;
+			}
+
 			$primary_content = new SwatHtmlTag('h3');
 			$primary_content->class = 'swat-message-display-primary-content';
 			$primary_content->content = $message->primary_content;
@@ -99,7 +141,23 @@ class SwatMessageDisplay extends SwatControl
 			}
 
 			$div->close();
+
 		}
+
+		if ($has_dismiss_link)
+			$this->displayJavaScript();
+	}
+
+	/**
+	 * Displays the JavaScript for hiding messages
+	 */
+	private function displayJavaScript()
+	{
+		echo '<script type="text/javascript">'."\n";
+		printf("%s_obj = new SwatMessageDisplay('%s', %s);\n",
+			$this->id, $this->id, count($this->_messages));
+
+		echo '</script>';
 	}
 }
 
