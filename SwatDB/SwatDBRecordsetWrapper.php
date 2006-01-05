@@ -61,10 +61,14 @@ abstract class SwatDBRecordsetWrapper implements Iterator
 
 		if ($rs->numRows()) {
 			while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
-				if ($this->row_wrapper_class === null)
+				if ($this->row_wrapper_class === null) {
 					$object = $row;
-				else
+				} else {
 					$object = new $this->row_wrapper_class($row);
+
+					if ($object instanceof SwatDBDataObject)
+						$object->setDatabase($rs->db);
+				}
 
 				if ($this->index_field === null) {
 					$this->objects[] = $object;
