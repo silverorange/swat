@@ -16,16 +16,55 @@ class SwatDBDataObject
 	 * @var array
 	 */
 	private $property_hashes = array();
+
+	/**
+	 * @var array
+	 */
+	private $sub_data_objects = array();
+	
+	/**
+	 * @var array
+	 */
+	private $internal_fields = array();
+	
+	/**
+	 * @var MDB2
+	 */
+	protected $db = null;
 	
 	/**
 	 * @param mixed $data
 	 */
 	public function __construct($data = null)
 	{
+		$this->init();
+
 		if ($data !== null)
 			$this->initFromRow($data);
 
 		$this->generatePropertyHashes();
+	}
+
+	protected function init()
+	{
+	}
+
+	protected function registerInternalField($name)
+	{
+		$this->internal_fields[$name] = null;
+	}
+
+	protected function getInternalValue($name)
+	{
+		return $this->internal_fields[$name];
+	}
+
+	/**
+	 * @param MDB2 $db
+	 */
+	public function setDatabase($db)
+	{
+		$this->db = $db;
 	}
 
 	/**
@@ -70,24 +109,54 @@ class SwatDBDataObject
 	/**
 	 * Loads this object's properties from the database given an id
 	 *
-	 * @param SwatApplication app reference to the application object
+	 * @param mixed id the id of the database row to set this object's
+	 *               properties with.
+	 */
+	public function loadFromDB($id) {
+		$this->checkDB();
+		$this->loadFromDBInternal($id);
+	}
+
+	/**
+	 * Loads this object's properties from the database given an id
 	 *
 	 * @param mixed id the id of the database row to set this object's
 	 *               properties with.
 	 */
-	public function loadFromDB($app, $id) {
+	protected function loadFromDBInternal($id) {
 
 	}
 
 	/**
 	 * Saves this object to the database
 	 *
-	 * @param SwatApplication app reference to the application object
+	 * Only modified properties are updated.
+	 */
+	public function saveToDB() {
+		$this->checkDB();
+		$this->saveToDBInternal();
+	}
+
+	/**
+	 * Saves this object to the database
 	 *
 	 * Only modified properties are updated.
 	 */
-	public function saveToDB($app) {
+	protected function saveToDBInternal() {
 
+	}
+
+	public function __get($key) {
+		if (isset($this->sub_data_objects[$key]))
+			return $this->sub_data_objects[$key];
+
+		$loader_method = 'load'.str_replace(' ', '', ucwords(strtr($key, '_', ' ')));
+
+		if (method_exists($this, $loader_method)) {
+			$this->checkDB();
+			$this->sub_data_objects[$key] = call_user_func(array($this, $loader_method));
+			return $this->sub_data_objects[$key];
+		}
 	}
 
 	/**
@@ -113,6 +182,11 @@ class SwatDBDataObject
 			if (isset($row[$name]))
 				$this->$name = $row[$name];
 		}
+
+		foreach ($this->internal_fields as $name => $value) {
+			if (isset($row[$name]))
+				$this->internal_fields[$name] = $row[$name];
+		}
 	}
 
 	/**
@@ -129,6 +203,12 @@ class SwatDBDataObject
 			$hashed_value = md5(serialize($value));
 			$this->property_hashes[$name] = $hashed_value;
 		}
+	}
+
+	private function checkDB()
+	{
+		if ($this->db === null)
+			throw new SwatDBException('No database available to this dataobject. Call the setDatabase method.');
 	}
 }
 
