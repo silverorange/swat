@@ -8,7 +8,7 @@
 			<widget class="SwatMessageDisplay" id="short_message_display" />
 		</widget>
 		<widget class="SwatFieldset" id="dismiss_message_fieldset">
-			<property name="title">With Optinal Dismiss Link</property>
+			<property name="title">With Optional Dismiss Link</property>
 			<widget class="SwatMessageDisplay" id="dismiss_message_display">
 				<property name="show_dismiss_link" type="boolean">true</property>
 			</widget>
