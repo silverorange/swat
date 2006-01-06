@@ -88,13 +88,13 @@
 	position: relative;
 	top: -4px;
 	right: -4px;
+	height: 14px;
+	width: 14px;
+	background: url(../images/dismiss.png) 0 0 no-repeat;
+	text-indent: -2000em;
+	text-decoration: none;
 }
 
-.swat-message-display-notification .swat-message-display-dismiss-link:link { color: #c8b179;}
-.swat-message-display-notification .swat-message-display-dismiss-link:hover { color: #916829; }
-.swat-message-display-warning .swat-message-display-dismiss-link:link { color: #c8b179;  }
-.swat-message-display-warning .swat-message-display-dismiss-link:hover { color: #916829;  }
-.swat-message-display-error .swat-message-display-dismiss-link:link { color: #f17f76; }
-.swat-message-display-error .swat-message-display-dismiss-link:hover { color: #e31b0c; }
-.swat-message-display-system-error .swat-message-display-dismiss-link:link { color: #ff9898; }
-.swat-message-display-system-error .swat-message-display-dismiss-link:hover { color: #ffffff; }
+.swat-message-display-dismiss-link:hover {
+	background-position: 0 -14px;
+}

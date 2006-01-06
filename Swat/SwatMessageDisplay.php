@@ -123,7 +123,8 @@ class SwatMessageDisplay extends SwatControl
 					"javascript:{$this->id}_obj.hideMessage({$key})";
 
 				$dismiss_link->class = 'swat-message-display-dismiss-link';
-				$dismiss_link->content = _('Dismiss');
+				$dismiss_link->title = _('Dismiss this Message');
+				$dismiss_link->content = _('Dismiss this Message');
 				$dismiss_link->display();
 				$has_dismiss_link = true;
 			}
