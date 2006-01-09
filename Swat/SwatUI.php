@@ -506,7 +506,7 @@ class SwatUI extends SwatObject
 
 			$array_ref = &$object->$name;
 
-			if ($array_key == null)
+			if ($array_key === null)
 				$array_ref[] = $parsed_value;
 			else
 				$array_ref[$array_key] = $parsed_value;
