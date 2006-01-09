@@ -300,7 +300,7 @@ class SwatUI extends SwatObject
 	 * @param SwatObject $parent the parent object (usually a SwatContainer)
 	 *                              to add parsed objects to.
 	 */
-	private function parseUI($node, $parent, $grandparent = null)
+	private function parseUI($node, SwatObject $parent, $grandparent = null)
 	{
 		foreach ($node->childNodes as $child_node) {
 			
@@ -310,7 +310,7 @@ class SwatUI extends SwatObject
 				if (strcmp($child_node->nodeName, 'property') == 0) {
 					$this->parseProperty($child_node, $parent, $grandparent);
 				} else {
-					$parsed_object = $this->parseNode($child_node);
+					$parsed_object = $this->parseObject($child_node);
 
 					$this->checkParsedObject($parsed_object,
 						$child_node->nodeName);
@@ -346,7 +346,7 @@ class SwatUI extends SwatObject
 	 *
 	 * @throws SwatDuplicateIdException, SwatInvalidClassException
 	 */
-	private function checkParsedObject($parsed_object, $element_name)
+	private function checkParsedObject(SwatObject $parsed_object, $element_name)
 	{
 		if ($element_name == 'widget') {
 			if (class_exists('SwatWidget') &&
@@ -409,18 +409,18 @@ class SwatUI extends SwatObject
 	}
 
 	// }}}
-	// {{{ private function parseNode()
+	// {{{ private function parseObject()
 
 	/**
-	 * Parses a single XML node into a PHP object
+	 * Parses an XML object or widget element node into a PHP object
 	 *
-	 * @param array $node the XML node data to parse.
+	 * @param array $node the XML element node to parse.
 	 *
-	 * @return a reference to the object created.
+	 * @return SwatObject a reference to the object created.
 	 *
 	 * @throws SwatClassNotFoundException
 	 */
-	private function parseNode($node)
+	private function parseObject($node)
 	{
 		// class is required in the DTD
 		$class = $node->getAttribute('class');
@@ -445,13 +445,13 @@ class SwatUI extends SwatObject
 			require_once $class_file;
 		}
 
-		$node_object = new $class();
+		$object = new $class();
 
 		// id is optional in the DTD
 		if ($node->hasAttribute('id'))
-			$node_object->id = $node->getAttribute('id');
+			$object->id = $node->getAttribute('id');
 
-		return $node_object;
+		return $object;
 	}
 
 	// }}}
@@ -460,7 +460,7 @@ class SwatUI extends SwatObject
 	/**
 	 * Parses a single XML property node and applies it to an object
 	 *
-	 * @param array $property_node the XML property node data to parse.
+	 * @param array $property_node the XML property node to parse.
 	 * @param SwatObject $object the object to apply the property to.
 	 * @param SwatUIParent $parent the parent of the object.
 	 *
