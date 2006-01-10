@@ -47,7 +47,7 @@ class SwatCheckCellRenderer extends SwatCellRenderer
 	 *
 	 * @see SwatCellRenderer::getTdAttributes()
 	 */
-	public function &getTdAttributes()
+	public function getTdAttributes()
 	{
 		return array('class' => 'swat-check-cell');
 	}
@@ -60,7 +60,7 @@ class SwatCheckCellRenderer extends SwatCellRenderer
 	 *
 	 * @see SwatCellRenderer::getThAttributes()
 	 */
-	public function &getThAttributes()
+	public function getThAttributes()
 	{
 		return array('class' => 'swat-check-cell');
 	}
