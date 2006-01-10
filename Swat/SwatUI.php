@@ -141,8 +141,7 @@ class SwatUI extends SwatObject
 				"SwatML file not found: '{$filename}'.",
 				0, $xml_file);
 
-		$document = new DOMDocument();
-		$document->load($xml_file);
+		$document = DOMDocument::load($xml_file);
 
 		// make sure we are using the correct document type
 		if ($document->doctype === null ||
