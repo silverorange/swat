@@ -67,7 +67,7 @@ class SwatImageLinkCellRenderer extends SwatImageCellRenderer
 	 *
 	 * @see SwatCellRenderer::getTdAttributes()
 	 */
-	public function &getTdAttributes()
+	public function getTdAttributes()
 	{
 		return array('class' => 'swat-image-link-cell-renderer');
 	}

@@ -52,7 +52,7 @@ abstract class SwatCellRenderer extends SwatObject
 	 * @return array an array of attributes to apply to the TH tag of the
 	 *                column that contains this cell renderer.
 	 */
-	public function &getThAttributes()
+	public function getThAttributes()
 	{
 		return array();
 	}
@@ -67,7 +67,7 @@ abstract class SwatCellRenderer extends SwatObject
 	 * @return array an array of attributes to apply to the TD tag of this cell
 	 *                renderer.
 	 */
-	public function &getTdAttributes()
+	public function getTdAttributes()
 	{
 		return array();
 	}
