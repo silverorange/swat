@@ -113,7 +113,8 @@ class SwatCascadeFlydown extends SwatFlydown
 			$ret[] = new SwatFlydownOption('', Swat::_('choose one ...'));
 		}
 
-		return array_merge($ret, $option_array);
+		$ret = array_merge($ret, $option_array);
+		return $ret;
 	}
 
 	// }}}
