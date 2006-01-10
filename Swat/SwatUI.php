@@ -298,16 +298,27 @@ class SwatUI extends SwatObject
 	 * @param Object $node the XML node to begin with.
 	 * @param SwatObject $parent the parent object (usually a SwatContainer)
 	 *                              to add parsed objects to.
+	 *
+	 * @return array an array of nodes that parsing is deferred for. This
+	 *                allows the parsing of data binding property nodes after
+	 *                the object is added to the parent and allows all other
+	 *                properties to be set before the new object is added to the
+	 *                parent.
 	 */
-	private function parseUI($node, SwatObject $parent, $grandparent = null)
+	private function &parseUI($node, SwatObject $parent, $grandparent = null)
 	{
+		$deferred_nodes = array();
+
 		foreach ($node->childNodes as $child_node) {
 			
 			// only parse element nodes. ignore text nodes
 			if ($child_node->nodeType == XML_ELEMENT_NODE) {
 
 				if (strcmp($child_node->nodeName, 'property') == 0) {
-					$this->parseProperty($child_node, $parent, $grandparent);
+					if (strcmp($child_node->getAttribute('type'), 'data') == 0)
+						$deferred_nodes[] = $child_node;
+					else
+						$this->parseProperty($child_node, $parent, $grandparent);
 				} else {
 					$parsed_object = $this->parseObject($child_node);
 
@@ -323,11 +334,17 @@ class SwatUI extends SwatObject
 						$this->widgets[$parsed_object->id] = $parsed_object;
 					}
 
+					$data_binding_nodes =
+						$this->parseUI($child_node, $parsed_object, $parent);
+
 					$this->attachToParent($parsed_object, $parent);
-					$this->parseUI($child_node, $parsed_object, $parent);
+					foreach ($data_binding_nodes as $data_node)
+						$this->parseProperty($data_node, $parsed_object, $parent);
 				}
 			}
 		}
+
+		return $deferred_nodes;
 	}
 
 	// }}}
