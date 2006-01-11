@@ -53,6 +53,20 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	 */
 	protected $class = null;
 
+
+	/**
+	 * Gets TD-tag attributes
+	 *
+	 * Overridden here to provide a custom CSS hook for link cells.
+	 *
+	 * @return array an array of attributes to apply to the TD tag of this cell
+	 *                renderer.
+	 */
+	public function getTdAttributes()
+	{
+		return array('class' => 'swat-link-cell-renderer');
+	}
+
 	/**
 	 * Renders the contents of this cell
 	 *
