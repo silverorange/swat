@@ -1,7 +1,6 @@
 <?php
 
-require_once 'Swat/SwatObject.php';
-require_once 'Swat/SwatHtmlHeadEntry.php';
+require_once 'Swat/SwatUIBase.php';
 require_once 'Swat/SwatMessage.php';
 
 /**
@@ -11,7 +10,7 @@ require_once 'Swat/SwatMessage.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatWidget extends SwatObject
+abstract class SwatWidget extends SwatUIBase
 {
 	// {{{ public properties
 
@@ -54,10 +53,11 @@ abstract class SwatWidget extends SwatObject
 	 * Stylesheet
 	 *
 	 * The URI of a stylesheet for use with this widget. If this property is 
-	 * set before init() then addStyleSheet() will be called to add this 
+	 * set before {@link SwatWidget::init()} then the
+	 * {@link SwatUIBase::addStyleSheet() method will be called to add this 
 	 * stylesheet to the header entries. Primarily this should be used by
-	 * SwatUI when setting a stylesheet in SwatML.  To set a stylesheet in
-	 * PHP code, calle addStyleSheet directly.
+	 * SwatUI to set a stylesheet in SwatML. To set a stylesheet in PHP code,
+	 * it is recommended to call addStyleSheet() directly.
 	 *
 	 * @var string
 	 */
@@ -72,16 +72,6 @@ abstract class SwatWidget extends SwatObject
 	 * @var array
 	 */
 	protected $messages = array();
-
-	/**
-	 * An array of HTML head entries needed by this widget
-	 *
-	 * Entries are stored in a data object called SwatHtmlHeadEntry. This
-	 * property contains an array of such objects.
-	 *
-	 * @var array
-	 */
-	protected $html_head_entries = array();
 
 	/**
 	 * Specifies that this widget requires an id
@@ -175,38 +165,14 @@ abstract class SwatWidget extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function addStyleSheet()
-
-	/**
-	 * Adds a stylesheet to the list of stylesheets needed by this widget
-	 *
-	 * @param string $stylesheet the uri of the stylesheet.
-	 */
-	public function addStyleSheet($stylesheet)
-	{
-		$this->html_head_entries[$stylesheet] =
-			new SwatHtmlHeadEntry($stylesheet, SwatHtmlHeadEntry::TYPE_STYLE);
-	}
-
-	// }}}
-	// {{{ public function addJavaScript()
-
-	/**
-	 * Adds a JavaScript include to the list of JavaScript includes needed
-	 * by this widget
-	 *
-	 * @param string $javascript the uri of the JavaScript include.
-	 */
-	public function addJavaScript($javascript)
-	{
-		$this->html_head_entries[$javascript] =
-			new SwatHtmlHeadEntry($javascript,
-			SwatHtmlHeadEntry::TYPE_JAVASCRIPT);
-	}
-
-	// }}}
 	// {{{ public function displayHtmlHeadEntries()
 
+	/**
+	 * Displays the HTML head entries for this widget
+	 *
+	 * Each entry is displayed on its own line. This method should
+	 * be called inside the <head /> element of the layout.
+	 */
 	public function displayHtmlHeadEntries()
 	{
 		$html_head_entries = $this->getHtmlHeadEntries();
@@ -256,19 +222,6 @@ abstract class SwatWidget extends SwatObject
 	 * @return boolean true if there is an message in the subtree.
 	 */
 	abstract public function hasMessage();
-
-	// }}}
-	// {{{ abstract public function getHtmlHeadEntries()
-
-	/**
-	 * Gathers the SwatHtmlHeadEntry objects needed by this widget
-	 *
-	 * Head entries are things like stylesheets and javascript includes that
-	 * should go in the head section of html.
-	 *
-	 * @return array the SwatHtmlHeadEntry objects needed by this widget.
-	 */
-	abstract public function getHtmlHeadEntries();
 
 	// }}}
 	// {{{ public function isSensitive()

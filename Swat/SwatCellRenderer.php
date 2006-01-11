@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatObject.php';
+require_once 'Swat/SwatUIBase.php';
 
 /**
  * Object for rendering a single cell
@@ -11,7 +11,7 @@ require_once 'Swat/SwatObject.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatCellRenderer extends SwatObject
+abstract class SwatCellRenderer extends SwatUIBase
 {
 	/**
 	 * A non-visible unique id for this cell renderer, or null
@@ -70,6 +70,18 @@ abstract class SwatCellRenderer extends SwatObject
 	public function getTdAttributes()
 	{
 		return array();
+	}
+
+	/**
+	 * Gathers the SwatHtmlHeadEntry objects needed by this cell renderer
+	 *
+	 * @return array the SwatHtmlHeadEntry objects needed by this cell renderer.
+	 *
+	 * @see SwatUIBase::getHtmlHeadEntries()
+	 */
+	public function getHtmlHeadEntries()
+	{
+		return $this->html_head_entries;
 	}
 }
 
