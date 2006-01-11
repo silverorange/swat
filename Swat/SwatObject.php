@@ -12,6 +12,18 @@ require_once 'Swat/exceptions/SwatException.php';
  */
 class SwatObject
 {
+	/**
+	 * Gets this object as a string
+	 *
+	 * This is a magic method that is called by PHP when this object is used
+	 * in string context. For example:
+	 *
+	 * <code>
+	 * echo (SwatObject)$my_object;
+	 * </code>
+	 *
+	 * @return string this object represented as a string.
+	 */
 	public function __toString()
 	{
 		ob_start();
