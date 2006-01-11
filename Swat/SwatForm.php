@@ -219,6 +219,13 @@ class SwatForm extends SwatContainer
 		if (isset($this->hidden_fields[$name]))
 			return $this->hidden_fields[$name];
 
+		if (!$this->processed) {
+			$raw_data = $this->getFormData();
+
+			if (isset($raw_data[$name]))
+				return $raw_data[$name];
+		}
+
 		return null;
 	}
 
