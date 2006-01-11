@@ -146,7 +146,7 @@ label.swat-control {
 	font-size: 85%;
 	padding: 4px 4px 4px 24px;
 	margin: 1em -0.5em -0.5em -0.5em;
-	background: transparent url(../images/tango/16/dialog-warning.png) 4px 4px no-repeat;
+	background: transparent url(../images/tango/16/dialog-error.png) 4px 4px no-repeat;
 }
 
 .swat-form-footer-field {
