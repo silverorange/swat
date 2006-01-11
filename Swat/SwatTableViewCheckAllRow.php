@@ -17,15 +17,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	public function __construct($column_id)
 	{
 		$this->column_id = $column_id;
-	}
-
-	/**
-	 * Initializes this check-all row
-	 */
-	public function init()
-	{
-		if ($this->view !== null)
-			$this->view->addJavaScript('swat/javascript/swat-check-all.js');
+		$this->addJavaScript('swat/javascript/swat-check-all.js');
 	}
 
 	public function display(&$columns)

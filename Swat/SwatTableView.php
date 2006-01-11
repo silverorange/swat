@@ -431,6 +431,32 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getHtmlHeadEntries()
+
+	/**
+	 * Gathers the SwatHtmlHeadEntry objects needed by this table
+	 *
+	 * @return array the SwatHtmlHeadEntry objects needed by this table.
+	 *
+	 * @see SwatUIBase::getHtmlHeadEntries()
+	 */
+	public function getHtmlHeadEntries()
+	{
+		$out = $this->html_head_entries;
+
+		foreach ($this->columns as $column)
+			$out = array_merge($out, $column->getHtmlHeadEntries());
+
+		foreach ($this->extra_rows as $row)
+			$out = array_merge($out, $row->getHtmlHeadEntries());
+
+		if ($this->group !== null)
+			$out = array_merge($out, $this->group->getHtmlHeadEntries());
+
+		return $out;
+	}
+
+	// }}}
 	// {{{ private function displayHeader()
 
 	/**

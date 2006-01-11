@@ -37,6 +37,13 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 
 	private $checkbox_renderer = null;
 
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+		$this->addJavaScript(
+			'swat/javascript/swat-table-view-checkbox-column.js');
+	}
+
 	public function init()
 	{
 		// TODO: autogenerate an id here
@@ -45,10 +52,6 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 
 		if ($this->show_check_all)
 			$this->view->appendRow(new SwatTableViewCheckAllRow($this->id));
-
-		if ($this->view !== null)
-			$this->view->addJavaScript(
-				'swat/javascript/swat-table-view-checkbox-column.js');
 	}
 
 	public function process()
