@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatObject.php';
+require_once 'Swat/SwatUIBase.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatCellRendererSet.php';
@@ -13,7 +13,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDetailsViewField extends SwatObject implements SwatUIParent
+class SwatDetailsViewField extends SwatUIBase implements SwatUIParent
 {
 	/**
 	 * The unique identifier of this field
@@ -210,6 +210,23 @@ class SwatDetailsViewField extends SwatObject implements SwatUIParent
 			throw new SwatInvalidClassException(
 				'Only SwatCellRender objects may be nested within a '.
 				'SwatDetailsViewField object.', 0, $child);
+	}
+
+	/**
+	 * Gathers the SwatHtmlHeadEntry objects needed by this field 
+	 *
+	 * @return array the SwatHtmlHeadEntry objects needed by this field
+	 *
+	 * @see SwatUIBase::getHtmlHeadEntries()
+	 */
+	public function getHtmlHeadEntries()
+	{
+		$out = $this->html_head_entries;
+		$renderers = $this->getRenderers();
+		foreach ($renderers as $renderer)
+			$out = array_merge($out, $renderer->getHtmlHeadEntries());
+
+		return $out;
 	}
 
 	/**
