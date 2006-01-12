@@ -126,6 +126,22 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	}
 
 	/**
+	 * Gathers the SwatHtmlHeadEntry objects needed by this details view
+	 *
+	 * @return array the SwatHtmlHeadEntry objects needed by this details view.
+	 *
+	 * @see SwatUIBase::getHtmlHeadEntries()
+	 */
+	public function getHtmlHeadEntries()
+	{
+		$out = $this->html_head_entries;
+		foreach ($this->fields as $field)
+			$out = array_merge($out, $field->getHtmlHeadEntries());
+
+		return $out;
+	}
+
+	/**
 	 * Displays each field of this view
 	 *
 	 * Displays each field of this view as an XHTML table row.
