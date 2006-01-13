@@ -12,6 +12,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
 require_once 'Swat/exceptions/SwatDoesNotImplementException.php';
 require_once 'Swat/exceptions/SwatClassNotFoundException.php';
 require_once 'Swat/exceptions/SwatInvalidPropertyException.php';
+require_once 'Swat/exceptions/SwatInvalidPropertyTypeException.php';
 require_once 'Swat/exceptions/SwatUndefinedConstantException.php';
 require_once 'Swat/exceptions/SwatInvalidConstantExpressionException.php';
 
@@ -59,6 +60,13 @@ class SwatUI extends SwatObject
 	 * @var SwatContainer
 	 */
 	private $root = null;
+
+	/**
+	 * A stack of references to ancestors of the object currently being parsed.
+	 *
+	 * @var array
+	 */
+	private $stack = array();
 
 	private $translation_callback = null;
 
@@ -298,16 +306,10 @@ class SwatUI extends SwatObject
 	 * @param Object $node the XML node to begin with.
 	 * @param SwatObject $parent the parent object (usually a SwatContainer)
 	 *                              to add parsed objects to.
-	 *
-	 * @return array an array of nodes that parsing is deferred for. This
-	 *                allows the parsing of data binding property nodes after
-	 *                the object is added to the parent and allows all other
-	 *                properties to be set before the new object is added to the
-	 *                parent.
 	 */
-	private function &parseUI($node, SwatObject $parent, $grandparent = null)
+	private function parseUI($node, SwatObject $parent)
 	{
-		$deferred_nodes = array();
+		array_push($this->stack, $parent);
 
 		foreach ($node->childNodes as $child_node) {
 			
@@ -315,10 +317,7 @@ class SwatUI extends SwatObject
 			if ($child_node->nodeType == XML_ELEMENT_NODE) {
 
 				if (strcmp($child_node->nodeName, 'property') == 0) {
-					if (strcmp($child_node->getAttribute('type'), 'data') == 0)
-						$deferred_nodes[] = $child_node;
-					else
-						$this->parseProperty($child_node, $parent, $grandparent);
+					$this->parseProperty($child_node, $parent);
 				} else {
 					$parsed_object = $this->parseObject($child_node);
 
@@ -334,17 +333,13 @@ class SwatUI extends SwatObject
 						$this->widgets[$parsed_object->id] = $parsed_object;
 					}
 
-					$data_binding_nodes =
-						$this->parseUI($child_node, $parsed_object, $parent);
-
 					$this->attachToParent($parsed_object, $parent);
-					foreach ($data_binding_nodes as $data_node)
-						$this->parseProperty($data_node, $parsed_object, $parent);
+					$this->parseUI($child_node, $parsed_object);
 				}
 			}
 		}
 
-		return $deferred_nodes;
+		array_pop($this->stack);
 	}
 
 	// }}}
@@ -478,11 +473,10 @@ class SwatUI extends SwatObject
 	 *
 	 * @param array $property_node the XML property node to parse.
 	 * @param SwatObject $object the object to apply the property to.
-	 * @param SwatUIParent $parent the parent of the object.
 	 *
 	 * @throws SwatInvalidPropertyException
 	 */
-	private function parseProperty($property_node, $object, $parent)
+	private function parseProperty($property_node, $object)
 	{
 		$class_properties = get_class_vars(get_class($object));
 
@@ -514,7 +508,7 @@ class SwatUI extends SwatObject
 		$type = $property_node->getAttribute('type');
 
 		$parsed_value =
-			$this->parseValue($name, $value, $type, $translatable, $object, $parent);
+			$this->parseValue($name, $value, $type, $translatable, $object);
 
 		if ($array_property) {
 			if (!is_array($object->$name))
@@ -546,11 +540,10 @@ class SwatUI extends SwatObject
 	 * @param string $type the type of the value.
 	 * @param boolean translatable whether the property is translatable.
 	 * @param SwatObject $object the object the property applies to.
-	 * @param SwatUIParent $parent the parent of the object.
 	 *
 	 * @return mixed the value of the property as an appropriate PHP datatype.
 	 */
-	private function parseValue($name, $value, $type, $translatable, $object, $parent)
+	private function parseValue($name, $value, $type, $translatable, $object)
 	{
 		switch ($type) {
 		case 'string':
@@ -564,7 +557,7 @@ class SwatUI extends SwatObject
 		case 'constant':
 			return $this->parseConstantExpression($value, $object);
 		case 'data':
-			$parent->addMappingToRenderer($object, $value, $name);
+			$this->handleDataPropertyValue($name, $value, $object);
 			return null;
 		case 'implicit-string':
 			if ($value == 'false' || $value == 'true' )
@@ -577,7 +570,45 @@ class SwatUI extends SwatObject
 					E_USER_NOTICE);
 
 			return $this->translateValue($value, $translatable, $object);
+		default:
+			throw new SwatInvalidPropertyTypeException(
+				"Property type '{$type}' is not a recognized type ".
+				'but is used in SwatML.',
+				0, $object, $type);
 		}
+	}
+
+	// }}}
+	// {{{ private function handleDataPropertyValue()
+
+	/**
+	 * Translates a property value if possible
+	 *
+	 * @param string $name the name of the property.
+	 * @param string $value the value of the property.
+	 * @param SwatObject $object the object the property applies to.
+	 */
+	private function handleDataPropertyValue($name, $value, $object)
+	{
+		$renderer = null;
+		$renderer_container = null;
+
+		foreach (array_reverse($this->stack) as $ancestor) {
+			if ($renderer === null && $ancestor instanceof SwatCellRenderer) {
+				$renderer = $ancestor;
+			} else if ($ancestor instanceof SwatCellRendererContainer) {
+				$renderer_container = $ancestor;
+				break;
+			}
+		}
+
+		if ($renderer === null || $renderer_container === null)
+			throw new SwatInvalidPropertyTypeException(
+				"Property type 'data' is only allowed on a SwatCellRenderer or ".
+				'on a widget with in a SwatWidgetCellRenderer.',
+				0, $object, 'data');
+
+		$renderer_container->addMappingToRenderer($renderer, $value, $name);
 	}
 
 	// }}}
