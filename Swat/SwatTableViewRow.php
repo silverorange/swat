@@ -21,16 +21,6 @@ abstract class SwatTableViewRow extends SwatUIBase
 	public $view = null;
 
 	// }}}
-	// {{{ public function display()
-
-	/**
-	 * Displays this row
-	 *
-	 * @param array $columns an array of columns to render in this row.
-	 */
-	public abstract function display(&$columns);
-
-	// }}}
 	// {{{ public function init()
 
 	/**
@@ -42,6 +32,29 @@ abstract class SwatTableViewRow extends SwatUIBase
 	public function init()
 	{
 	}
+
+	// }}}
+	// {{{ public function process()
+
+	/**
+	 * Processes this row
+	 *
+	 * This method does nothing and is implemented here so subclasses do not
+	 * need to implement it.
+	 */
+	public function process()
+	{
+	}
+
+	// }}}
+	// {{{ public function display()
+
+	/**
+	 * Displays this row
+	 *
+	 * @param array $columns an array of columns to render in this row.
+	 */
+	public abstract function display(&$columns);
 
 	// }}}
 	// {{{ public function getHtmlHeadEntries()
