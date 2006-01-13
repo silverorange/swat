@@ -582,7 +582,7 @@ class SwatUI extends SwatObject
 	// {{{ private function handleDataPropertyValue()
 
 	/**
-	 * Translates a property value if possible
+	 * Handle a 'data' type property value
 	 *
 	 * @param string $name the name of the property.
 	 * @param string $value the value of the property.
