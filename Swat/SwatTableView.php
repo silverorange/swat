@@ -103,6 +103,19 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	private $columns_by_id = array();
 
 	/**
+	 * The extra rows of this table-view indexed by their unique identifier
+	 *
+	 * A unique identifier is not required so this array does not necessarily
+	 * contain all extra rows in the view. It serves as an efficient data
+	 * structure to lookup extra rows by their id.
+	 *
+	 * The array is structures as id => row reference.
+	 *
+	 * @var array
+	 */
+	private $rows_by_id = array();
+
+	/**
 	 * The grouping object to use for this table
 	 *
 	 * @var SwatTableViewGroup
@@ -270,6 +283,16 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	{
 		$this->extra_rows[] = $row;
 
+		if ($row->id !== null) {
+			if (array_key_exists($row->id, $this->rows_by_id))
+				throw new SwatDuplicateIdException(
+					"A row with the id '{$row->id}' already exists ".
+					'in this table-view.',
+					0, $row->id);
+
+			$this->rows_by_id[$row->id] = $row;
+		}
+
 		$row->view = $this;
 	}
 
@@ -337,6 +360,41 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getRow()
+
+	/**
+	 * Gets a reference to a row in this table-view by its unique identifier
+	 *
+	 * @return SwatTableViewRow the requested row.
+	 *
+	 * @throws SwatException
+	 */
+	public function getRow($id)
+	{
+		if (!array_key_exists($id, $this->rows_by_id))
+			throw new SwatException("Row with an id of '{$id}' not found.");
+
+		return $this->rows_by_id[$id];
+	}
+
+	// }}}
+	// {{{ public function hasRow()
+
+	/**
+	 * Returns true if a row with the given id exists within this table-view
+	 *
+	 * @param string $id the unique identifier of the row within this
+	 *                    table-view to check the existance of.
+	 *
+	 * @return boolean true if the row exists in this table-view and false if
+	 *                  it does not.
+	 */
+	public function hasRow($id)
+	{
+		return array_key_exists($id, $this->rows_by_id);
+	}
+
+	// }}}
 	// {{{ public function display()
 
 	/**
@@ -386,6 +444,9 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	{
 		foreach ($this->columns as $column)
 			$column->process();
+
+//		foreach ($this->extra_rows as $row)
+//			$row->process();
 
 		if ($this->hasColumn('checkbox')) {
 			$items = $this->getColumn('checkbox');
