@@ -114,7 +114,12 @@ class SwatUI extends SwatObject
 	 *
 	 * @param string $filename the filename of the XML UI file to load.
 	 *
-	 * @throws SwatFileNotFoundException, SwatInvalidSwatMLException
+	 * @throws SwatFileNotFoundException, SwatInvalidSwatMLException,
+	 *         SwatDuplicateIdException, SwatInvalidClassException, 
+	 *         SwatInvalidPropertyException, SwatInvalidPropertyTypeException,
+	 *         SwatDoesNotImplementException, SwatClassNotFoundException,
+	 *         SwatInvalidConstantExpressionException,
+	 *         SwatUndefinedConstantException
 	 */
 	public function loadFromXML($filename)
 	{
@@ -306,6 +311,12 @@ class SwatUI extends SwatObject
 	 * @param Object $node the XML node to begin with.
 	 * @param SwatObject $parent the parent object (usually a SwatContainer)
 	 *                              to add parsed objects to.
+	 *
+	 * @throws SwatDuplicateIdException, SwatInvalidClassException, 
+	 *         SwatInvalidPropertyException, SwatInvalidPropertyTypeException,
+	 *         SwatDoesNotImplementException, SwatClassNotFoundException,
+	 *         SwatInvalidConstantExpressionException,
+	 *         SwatUndefinedConstantException
 	 */
 	private function parseUI($node, SwatObject $parent)
 	{
@@ -474,7 +485,9 @@ class SwatUI extends SwatObject
 	 * @param array $property_node the XML property node to parse.
 	 * @param SwatObject $object the object to apply the property to.
 	 *
-	 * @throws SwatInvalidPropertyException
+	 * @throws SwatInvalidPropertyException, SwatInvalidPropertyTypeException,
+	 *         SwatInvalidConstantExpressionException,
+	 *         SwatUndefinedConstantException
 	 */
 	private function parseProperty($property_node, $object)
 	{
@@ -542,6 +555,10 @@ class SwatUI extends SwatObject
 	 * @param SwatObject $object the object the property applies to.
 	 *
 	 * @return mixed the value of the property as an appropriate PHP datatype.
+	 *
+	 * @throws SwatInvalidPropertyTypeException,
+	 *         SwatInvalidConstantExpressionException,
+	 *         SwatUndefinedConstantException
 	 */
 	private function parseValue($name, $value, $type, $translatable, $object)
 	{
@@ -587,6 +604,8 @@ class SwatUI extends SwatObject
 	 * @param string $name the name of the property.
 	 * @param string $value the value of the property.
 	 * @param SwatObject $object the object the property applies to.
+	 *
+	 * @throws SwatInvalidPropertyTypeException
 	 */
 	private function handleDataPropertyValue($name, $value, $object)
 	{
