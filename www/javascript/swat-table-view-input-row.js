@@ -44,7 +44,7 @@ function SwatTableViewInputRow(id, row_string)
 	while (this.table.nodeName.toLowerCase() != 'table')
 		this.table = this.table.parentNode;
 
-	this.number = document.getElementById(this.id + '_number');
+	this.number = null;
 }
 
 /**
@@ -169,6 +169,9 @@ if (!document.importNode) {
  */
 SwatTableViewInputRow.prototype.addRow = function()
 {
+	if (this.number === null)
+		this.number = document.getElementsByName(this.id + '_number')[0];
+
 	var document_string = this.row_string.replace(/%s/g, this.number.value);
 	var dom = SwatTableViewInputRow.parser.loadXML(document_string);
 	var source_tr = dom.documentElement.getElementsByTagName('tr')[0];
