@@ -266,6 +266,38 @@ abstract class SwatWidget extends SwatUIBase
 	}
 
 	// }}}
+	// {{{ public function getFirstAncestor()
+
+	/**
+	 * Gets the first ancestor widget of a specific class
+	 *
+	 * Retrieves the first ancestor widget in the parent path that is a 
+	 * descendant of the specified class name.
+	 *
+	 * @param string $class_name class name to look for.
+	 *
+	 * @return mixed the first ancestor widget or null if no matching ancestor
+	 *                is found.
+	 *
+	 * @see SwatContainer::getFirstDescendant()
+	 */
+	public function getFirstAncestor($class_name)
+	{
+		if (!class_exists($class_name))
+			return null;
+
+		if ($this->parent === null) {
+			$out = null;
+		} elseif ($this->parent instanceof $class_name) {
+			$out = $this->parent;
+		} else {
+			$out = $this->parent->getFirstAncestor($class_name);
+		}
+
+		return $out;
+	}
+
+	// }}}
 }
 
 ?>
