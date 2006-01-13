@@ -20,6 +20,13 @@ abstract class SwatTableViewRow extends SwatUIBase
 	 */
 	public $view = null;
 
+	/**
+	 * Unique identifier of this row 
+	 *
+	 * @param string
+	 */
+	public $id = null;
+
 	// }}}
 	// {{{ public function init()
 
