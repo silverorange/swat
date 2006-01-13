@@ -36,6 +36,11 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 */
 	public $number = 1;
 
+	/**
+	 * 
+	 *
+	 * @var string
+	 */
 	public $id = '';
 
 	/**
@@ -44,15 +49,26 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	public function __construct()
 	{
 		$this->enter_text = Swat::_('enter another');
+		$this->addJavaScript('swat/javascript/swat-table-view-input-row.js');
 	}
 
-	/**
-	 * Adds required JavaScript includes to this row's parent
-	 */
 	public function init()
 	{
-		if ($this->view !== null)
-			$this->view->addJavaScript('swat/javascript/swat-table-view-input-row.js');
+		parent::init();
+/*		
+		$replicated_widgets = array();
+		$widget = $this->getWidget();
+*/
+	}
+
+	public function process()
+	{
+		parent::process();
+/*
+		$this->number = $_POST[$this->id.'_number'];
+		for ($i = 0; $i < $this->number; $i++) {
+		}
+*/
 	}
 
 	/**
@@ -114,6 +130,10 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 */
 	public function display(&$columns)
 	{
+		// add number of fields to the form as a hidden field
+		$this->view->getForm()->addHiddenField($this->id.'_number',
+			$this->number);
+
 		// display data input columns
 		$row_string = $this->getString($columns);
 		for ($i = 0; $i < $this->number; $i++)
@@ -157,13 +177,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$anchor_tag->href = "javascript:{$this->id}_obj.addRow();";
 		$anchor_tag->class = 'swat-table-view-input-row-enter';
 		$anchor_tag->display();
-
-		$input_tag = new SwatHtmlTag('input');
-		$input_tag->type = 'hidden';
-		$input_tag->name = $this->id.'_number';
-		$input_tag->id = $this->id.'_number';
-		$input_tag->value = $this->number;
-		$input_tag->display();
 
 		$td->close();
 
@@ -209,10 +222,11 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$td_tag = new SwatHtmlTag('td', $td_attributes);
 			$td_tag->open();
 
+			// TODO: fix ids for sub-widgets. see replicator
 			if ($column->hasInputCell($this->id)) {
 				$widget = $column->getInputCell($this->id)->getWidget();
 				if ($widget->id !== null)
-					$widget->id = $widget->id.'_%s';
+					$widget->id = $this->id.'_%s_'.$widget->id;
 
 				$widget->display();
 			} else {
