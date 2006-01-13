@@ -1,10 +1,8 @@
 <?php
 
-require_once 'Swat/SwatUIBase.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatUIParent.php';
-require_once 'Swat/SwatCellRendererSet.php';
-require_once 'Swat/exceptions/SwatInvalidClassException.php';
+require_once 'Swat/SwatCellRendererContainer.php';
 
 /**
  * A visible field in a SwatDetailsView
@@ -13,7 +11,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDetailsViewField extends SwatUIBase implements SwatUIParent
+class SwatDetailsViewField extends SwatCellRendererContainer implements SwatUIParent
 {
 	/**
 	 * The unique identifier of this field
@@ -46,15 +44,6 @@ class SwatDetailsViewField extends SwatUIBase implements SwatUIParent
 	public $visible = true;
 
 	/**
-	 * A set of SwatCellRenderer objects
-	 *
-	 * This object contains all the cell renderers for this column.
-	 *
-	 * @var SwatCellRendererSet
-	 */
-	protected $renderers = null;
-
-	/**
 	 * Creates a new details view field
 	 *
 	 * @param string $id an optional unique ideitifier for this details view
@@ -63,77 +52,7 @@ class SwatDetailsViewField extends SwatUIBase implements SwatUIParent
 	public function __construct($id = null)
 	{
 		$this->id = $id;
-
-		$this->renderers = new SwatCellRendererSet();
-	}
-
-	/**
-	 * Links a data field to a cell renderer property
-	 *
-	 * @param SwatCellRenderer $renderer the cell renderer in this field that
-	 *                                    the datafield is mapped onto.
-	 * @param string $datafield the field of the data model to map to the
-	 *                           renderer property.
-	 * @param string $property the property of the cell renderer that the
-	 *                          datafield is mapped to.
-	 */
-	public function addMappingToRenderer($renderer, $datafield, $property)
-	{
-		$this->renderers->addMappingToRenderer($renderer,
-			$datafield, $property);
-	}
-
-	/**
-	 * Adds a cell renderer to this field's set of renderers
-	 *
-	 * @param SwatCellRenderer $renderer the renderer to add.
-	 */
-	public function addRenderer(SwatCellRenderer $renderer)
-	{
-		$this->renderers->addRenderer($renderer);
-	}
-
-	/**
-	 * Gets a cell renderers of this field by its unique identifier
-	 *
-	 * @param string the unique identifier of the cell renderer to get.
-	 * 
-	 * @return SwatCellRenderer the cell renderer of this field with the
-	 *                           provided unique identifier.
-	 */
-	public function getRenderer($renderer_id)
-	{
-		return $this->renderers->getRenderer($renderer_id);
-	}
-
-	/**
-	 * Gets the cell renderers of this field
-	 * 
-	 * Returns an the array of {@link SwatCellRenderer} objects contained
-	 * by this field.
-	 *
-	 * @return array the cell renderers contained by this field.
-	 */
-	public function getRenderers()
-	{
-		$out = array();
-		foreach ($this->renderers as $renderer)
-			$out[] = $renderer;
-
-		return $out;
-	}
-
-	/**
-	 * Gets a cell renderer in this field based on its ordinal position
-	 *
-	 * @param $position the ordinal position of the cell renderer to get. The
-	 *                   position is zero-based.
-	 *
-	 * @return SwatCellRenderer the renderer at the specified ordinal position.
-	 */
-	public function getRendererByPosition($position = 0)
-	{
-		return $this->renderers->getRendererByPosition($position);
+		parent::__construct();
 	}
 
 	/**
@@ -194,25 +113,6 @@ class SwatDetailsViewField extends SwatUIBase implements SwatUIParent
 	}
 
 	/**
-	 * Adds a child object to this object
-	 * 
-	 * @param SwatCellRenderer $child the reference to the child object to add.
-	 *
-	 * @throws SwatInvalidClassException
-	 *
-	 * @see SwatUIParent::addChild()
-	 */
-	public function addChild(SwatObject $child)
-	{
-		if ($child instanceof SwatCellRenderer)
-			$this->addRenderer($child);
-		else
-			throw new SwatInvalidClassException(
-				'Only SwatCellRender objects may be nested within a '.
-				'SwatDetailsViewField object.', 0, $child);
-	}
-
-	/**
 	 * Gathers the SwatHtmlHeadEntry objects needed by this field 
 	 *
 	 * @return array the SwatHtmlHeadEntry objects needed by this field
@@ -227,29 +127,6 @@ class SwatDetailsViewField extends SwatUIBase implements SwatUIParent
 			$out = array_merge($out, $renderer->getHtmlHeadEntries());
 
 		return $out;
-	}
-
-	/**
-	 * Renders each cell renderer in this details-view field
-	 *
-	 * The properties of the cell renderers are set the the fields of the
-	 * data object through the datafield property mappings.
-	 *
-	 * @param mixed $data the data object to render with the cell renderers
-	 *                     of this field.
-	 */
-	protected function displayRenderers($data)
-	{
-		$first_renderer = $this->renderers->getFirst();
-		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
-		$td_tag->open();
-
-		foreach ($this->renderers as $renderer) {
-			$renderer->render();
-			echo ' ';
-		}
-
-		$td_tag->close();
 	}
 }
 
