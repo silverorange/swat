@@ -248,8 +248,10 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 *
 	 * @param string $class_name class name to look for.
 	 *
-	 * @return mixed the first descendant widget of null if no matching
+	 * @return mixed the first descendant widget or null if no matching
 	 *                descendant is found.
+	 *
+	 * @see SwatWidget::getFirstAncestor()
 	 */
 	public function getFirstDescendant($class_name)
 	{
@@ -428,7 +430,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	/**
 	 * Notifies this widget that a widget was added
 	 *
-	 * This widget may want to asjust itself based on the widget added or
+	 * This widget may want to adjust itself based on the widget added or
 	 * any of the widgets children.
 	 *
 	 * @param SwatWidget $widget the widget that has been added.

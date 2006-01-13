@@ -73,6 +73,22 @@ abstract class SwatControl extends SwatWidget
 	{
 		return $this->html_head_entries;
 	}
+
+	/**
+	 * Gets the form that this control is contained in or null if this control
+	 * is not in a form
+	 *
+	 * You can also get the parent form with the
+	 * {@link SwatWidget::getFirstAncestor() method but this method is more
+	 * convenient.
+	 *
+	 * @return SwatForm the form this control is in or null if this control is
+	 *                   not in a form.
+	 */
+	public function getForm()
+	{
+		return $this->getFirstAncestor('SwatForm');
+	}
 }
 
 ?>
