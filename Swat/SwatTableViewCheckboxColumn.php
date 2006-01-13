@@ -46,6 +46,8 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 
 	public function init()
 	{
+		parent::init();
+
 		// TODO: autogenerate an id here
 		if ($this->id === null)
 			$this->id == 'checkbox';
