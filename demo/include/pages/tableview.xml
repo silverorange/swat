@@ -19,7 +19,7 @@
 						<property name="height" type="data">image_height</property>
 					</object>
 					<object class="SwatTextCellRenderer">
-						<property name="value" type="data">title</property>
+						<property name="text" type="data">title</property>
 					</object>
 				</object>
 				<object class="SwatTableViewColumn">
