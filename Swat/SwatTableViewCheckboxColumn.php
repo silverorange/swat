@@ -87,23 +87,20 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 	}
 
 	/**
-	 * Displays the JavaScript for the highlight row
+	 * Gets the inline JavaScript for the highlight row
+	 *
+	 * @return string the inline JavaScript for the highlight row.
+	 *
+	 * @see SwatTableViewColumn::getInlineJavaScript()
 	 */
-	public function displayJavaScript()
+	public function getInlineJavaScript()
 	{
 		if (!$this->highlight_row)
-			return;
+			return '';
 
 		$item_name = $this->getRendererName();
-
-		echo '<script type="text/javascript">';
-		echo "//<![CDATA[\n";
-
-		echo "\n var {$this->id} = new SwatTableViewCheckboxColumn(".
-			"'{$item_name}', {$this->view->id});\n";
-
-		echo "\n//]]>";
-		echo '</script>';
+		return "var {$this->id} = new SwatTableViewCheckboxColumn(".
+			"'{$item_name}', {$this->view->id});";
 	}
 }
 

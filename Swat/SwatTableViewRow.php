@@ -79,6 +79,22 @@ abstract class SwatTableViewRow extends SwatUIBase
 	}
 
 	// }}}
+	// {{{ public function getInlineJavaScript()
+
+	/**
+	 * Gets the inline JavaScript required by this row 
+	 * 
+	 * All inline JavaScript is displayed after the table-view has been
+	 * displayed.
+	 *
+	 * @return string the inline JavaScript required by this row.
+	 */
+	public function getInlineJavaScript()
+	{
+		return '';
+	}
+
+	// }}}
 }
 
 ?>
