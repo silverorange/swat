@@ -591,9 +591,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		}
 
 		echo '</tbody>';
-
 		$this->displayJavaScript();
-
 	}
 
 	// }}}
