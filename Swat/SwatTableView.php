@@ -425,6 +425,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		$table_tag->open();
 		$this->displayHeader();
+		$this->displayFooter();
 		$this->displayContent();
 		$table_tag->close();
 	}
@@ -524,6 +525,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * Displays the column headers for this table-view
 	 *
 	 * Each column is asked to display its own header.
+	 * Rows in the header are outputted inside a <thead> HTML tag.
 	 */
 	private function displayHeader()
 	{
@@ -538,6 +540,24 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ private function displayFooter()
+
+	/**
+	 * Displays any footer content for this table-view
+	 *
+	 * Rows in the footer are outputted inside a <tfoot> HTML tag.
+	 * TODO: Mike, fix the Check-All js and row highlighting now that this has moved around
+	 */
+	private function displayFooter()
+	{
+		echo '<tfoot>';
+
+		foreach ($this->extra_rows as $row)
+			$row->display($this->columns);
+
+		echo '</tfoot>';
+	}
+	// }}}
 	// {{{ private function displayContent()
 
 	/**
@@ -545,6 +565,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 *
 	 * The contents reflect the data stored in the model of this table-view.
 	 * Things like row highlighting are done here.
+	 * Rows in this function are outputted inside a <tbody> HTML tag.
 	 */
 	private function displayContent()
 	{
@@ -573,8 +594,6 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		$this->displayJavaScript();
 
-		foreach ($this->extra_rows as $row)
-			$row->display($this->columns);
 	}
 
 	// }}}
