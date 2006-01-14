@@ -426,8 +426,10 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		$table_tag->open();
 		$this->displayHeader();
 		$this->displayFooter();
-		$this->displayContent();
+		$this->displayBody();
 		$table_tag->close();
+
+		$this->displayJavaScript();
 	}
 
 	// }}}
@@ -558,7 +560,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		echo '</tfoot>';
 	}
 	// }}}
-	// {{{ private function displayContent()
+	// {{{ private function displayBody()
 
 	/**
 	 * Displays the contents of this view
@@ -567,7 +569,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * Things like row highlighting are done here.
 	 * Rows in this function are outputted inside a <tbody> HTML tag.
 	 */
-	private function displayContent()
+	private function displayBody()
 	{
 		$count = 0;
 		echo '<tbody>';
@@ -591,7 +593,6 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		}
 
 		echo '</tbody>';
-		$this->displayJavaScript();
 	}
 
 	// }}}
@@ -615,6 +616,12 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	// }}}
 	// {{{ private function displayJavaScript()
 
+	/**
+	 * Displays JavaScript required by this table-view as well as any
+	 * JavaScript required by columns and/or rows.
+	 *
+	 * Column JavaSscript is displayed before extra row JavaScript.
+	 */
 	private function displayJavaScript()
 	{
 		echo '<script type="text/javascript">';
@@ -622,11 +629,20 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		echo "\n var {$this->id} = new SwatTableView('{$this->id}');";
 
+		foreach ($this->columns as $column) {
+			$javascript = $column->getInlineJavaScript();
+			if (strlen($javascript) > 0)
+				echo "\n".$javascript; 
+		}
+
+		foreach ($this->extra_rows as $row) {
+			$javascript = $row->getInlineJavaScript();
+			if (strlen($javascript) > 0)
+				echo "\n".$javascript; 
+		}
+
 		echo "\n//]]>";
 		echo '</script>';
-
-		foreach ($this->columns as $column)
-			echo $column->displayJavaScript();
 	}
 
 	// }}}

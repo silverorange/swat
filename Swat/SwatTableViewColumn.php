@@ -113,14 +113,16 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	}
 
 	/**
-	 * Displays JavaScript required by this column
+	 * Gets the inline JavaScript required by this column
 	 * 
-	 * Optionally output a JavaScript object representing the
-	 * {@link SwatTableViewColumn}. JavaScript is displayed after the table
-	 * has been displayed.
+	 * All inline JavaScript is displayed after the table-view has been
+	 * displayed.
+	 *
+	 * @return string the inline JavaScript required by this column.
 	 */
-	public function displayJavaScript()
+	public function getInlineJavaScript()
 	{
+		return '';
 	}
 
 	/**
