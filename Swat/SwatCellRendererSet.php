@@ -133,7 +133,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 * @param mixed $data_object an object containg datafields to be
 	 *                            mapped onto the cell renderer.
 	 */
-	public function applyMappingsToRenderer($renderer, $data_object)
+	public function applyMappingsToRenderer(SwatCellRenderer $renderer, $data_object)
 	{
 		$position = $this->findRendererIndex($renderer);
 		
