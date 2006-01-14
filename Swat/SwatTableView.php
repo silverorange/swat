@@ -627,7 +627,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 
-		echo "\n var {$this->id} = new SwatTableView('{$this->id}');";
+		echo "var {$this->id} = new SwatTableView('{$this->id}');";
 
 		foreach ($this->columns as $column) {
 			$javascript = $column->getInlineJavaScript();
