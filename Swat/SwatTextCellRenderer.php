@@ -26,7 +26,7 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	 * The value is substituted using a call to printf. For example, if the
 	 * {@link SwatCellRendererText::$text} property is set to 'My %s example'
 	 * and the value property is set to 'awesome' the cell renderer will render
-	 * as 'My aswesome example'.
+	 * as 'My awesome example'.
 	 *
 	 * @var string
 	 */
