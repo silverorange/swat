@@ -43,6 +43,15 @@ abstract class SwatCellRenderer extends SwatUIBase
 	abstract public function render();
 
 	/**
+	 * Called during processing phase
+	 *
+	 * Sub-classes can redefine this method to perform any necessary processing.
+	 */
+	public function process()
+	{
+	}
+
+	/**
 	 * Gets TH-tag attributes
 	 *
 	 * Sub-classes can redefine this to set attributes on the TH tag.
@@ -82,6 +91,29 @@ abstract class SwatCellRenderer extends SwatUIBase
 	public function getHtmlHeadEntries()
 	{
 		return $this->html_head_entries;
+	}
+
+	/**
+	 * Get a property name to use for mapping
+	 *
+	 * This method can be overridden by sub-classes that need to modify the
+	 * name of a property mapping.  This allows cell renderers which conatin
+	 * multiple SwatUIBase object to mangle property names if necessary to
+	 * avoid conflicts.
+	 *
+	 * @param SwatUIBase $object the object containing the property that is
+	 *                            being mapped. Usually this is the cell 
+	 *                            renderer itself, but not necessarily. It 
+	 *                            could be a UIObject within the cell renderer.
+	 * @param string $name the name of the property being mapped.
+	 *
+	 * @return string the name of the property to actually map. This property
+	 *                 should either exist as a public property of the cell
+	 *                 renderer or be handled by a magic __set() method.
+	 */
+	public function getPropertyNameToMap(SwatUIBase $object, $name)
+	{
+		return $name;
 	}
 }
 

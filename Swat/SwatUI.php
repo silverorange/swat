@@ -627,7 +627,7 @@ class SwatUI extends SwatObject
 				'on a widget with in a SwatWidgetCellRenderer.',
 				0, $object, 'data');
 
-		$renderer_container->addMappingToRenderer($renderer, $value, $name);
+		$renderer_container->addMappingToRenderer($renderer, $value, $name, $object);
 	}
 
 	// }}}

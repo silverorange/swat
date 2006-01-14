@@ -39,9 +39,15 @@ abstract class SwatCellRendererContainer extends SwatUIBase
 	 *                           renderer property.
 	 * @param string $property the property of the cell renderer that the
 	 *                          datafield is mapped to.
+	 * @param SwatUIBase $object optional object containing the property to
+	 *                            map when the property does not belong to the
+	 *                            cell renderer itself.
 	 */
-	public function addMappingToRenderer($renderer, $datafield, $property)
+	public function addMappingToRenderer($renderer, $datafield, $property, $object = null)
 	{
+		if ($object !== null)
+			$property = $renderer->getPropertyNameToMap($object, $property);
+		
 		$this->renderers->addMappingToRenderer($renderer,
 			$datafield, $property);
 	}
