@@ -80,10 +80,10 @@ class SwatReplicatorFormField extends SwatFormField implements SwatReplicator
 				}
 
 				if ($new_child instanceof SwatContainer) {
-					foreach ($new_child->getDescendants() as $descendent) {
-						if ($descendent->id !== null) {
-							$this->widgets[$id][$descendent->id] = $descendent;
-							$descendent->id.= $suffix;
+					foreach ($new_child->getDescendants() as $descendant) {
+						if ($descendant->id !== null) {
+							$this->widgets[$id][$descendant->id] = $descendant;
+							$descendant->id.= $suffix;
 						}
 					}
 				}
