@@ -150,8 +150,6 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 
-		$num_elements = count($this->options);
-		
 		printf("%s_obj = new SwatChangeOrder('%s', %s);\n",
 			$this->id,
 			$this->id,
