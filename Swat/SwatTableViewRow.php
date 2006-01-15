@@ -35,6 +35,9 @@ abstract class SwatTableViewRow extends SwatUIBase
 	 *
 	 * This method does nothing and is implemented here so subclasses do not
 	 * need to implement it.
+	 *
+	 * Row initialization happens during table-view initialization. Rows are
+	 * initialized after columns.
 	 */
 	public function init()
 	{
@@ -48,6 +51,9 @@ abstract class SwatTableViewRow extends SwatUIBase
 	 *
 	 * This method does nothing and is implemented here so subclasses do not
 	 * need to implement it.
+	 *
+	 * Row processing happens during table-view processing. Rows are processed
+	 * after columns.
 	 */
 	public function process()
 	{

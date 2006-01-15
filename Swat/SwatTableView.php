@@ -448,8 +448,8 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		foreach ($this->columns as $column)
 			$column->process();
 
-//		foreach ($this->extra_rows as $row)
-//			$row->process();
+		foreach ($this->extra_rows as $row)
+			$row->process();
 
 		if ($this->hasColumn('checkbox')) {
 			$items = $this->getColumn('checkbox');
