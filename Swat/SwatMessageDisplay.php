@@ -27,16 +27,6 @@ class SwatMessageDisplay extends SwatControl
 	private $_messages = array();
  
 	/**
-	 * Show Dismiss link
-	 * 
-	 * Toggles a Dismiss link in the SwatMessageDisplay box
-	 * that hides the box. Off by default.
-	 *
-	 * @var boolean
-	 */
-	public $show_dismiss_link = false;
-
-	/**
 	 * Creates a new message display
 	 *
 	 * @param string $id a non-visible unique id for this widget.
@@ -84,8 +74,6 @@ class SwatMessageDisplay extends SwatControl
 	 */
 	public function display()
 	{
-		$has_dismiss_link = false;
-
 		if (!$this->visible)
 			return;
 
@@ -117,7 +105,8 @@ class SwatMessageDisplay extends SwatControl
 
 			$div->open();
 
-			if ($this->show_dismiss_link) {
+			if ($message->type == SwatMessage::NOTIFICATION |
+				$message->type == SwatMessage::WARNING) {
 				$dismiss_link = new SwatHtmlTag('a');
 				$dismiss_link->href =
 					"javascript:{$this->id}_obj.hideMessage({$key})";
