@@ -18,6 +18,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	 * Checkbox list options
 	 *
 	 * An array of options for the radio list in the form value => title.
+	 *
 	 * @var array
 	 */
 	public $options = null;
@@ -26,6 +27,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	 * List values 
 	 *
 	 * The values of the selected items.
+	 *
 	 * @var array
 	 */
 	public $values = array();
@@ -34,9 +36,20 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	 * On change
 	 *
 	 * The onchange attribute of the HTML input type=checkbox tags, or null.
+	 *
 	 * @var string
 	 */
 	public $onchange = null;
+
+	/**
+	 * The check-all widget for this list
+	 *
+	 * The check-all is displayed if the list has more than one checkable
+	 * item and is an easy way for users to check/uncheck the entire list.
+	 *
+	 * @var SwatCheckAll
+	 */
+	protected $check_all = null;
 
 	/**
 	 * Creates a new checkbox list
@@ -48,13 +61,40 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
-
-		$this->addJavaScript('swat/javascript/swat-check-all.js');
+		$this->check_all = new SwatCheckAll();
 		$this->addJavaScript('swat/javascript/swat-checkbox-list.js');
 	}
 
+	/**
+	 * Initializes this checkbox list
+	 */
+	public function init()
+	{
+		parent::init();
+		$this->check_all->init();
+	}
+
+	/**
+	 * Gathers the SwatHtmlHeadEntry objects needed by this checkbox list 
+	 *
+	 * @return array the SwatHtmlHeadEntry objects needed by this checkbox list.
+	 *
+	 * @see SwatUIBase::getSwatHtmlHeadEntries()
+	 */
+	public function getHtmlHeadEntries()
+	{
+		$out = $this->html_head_entries;
+		$out = array_merge($out, $this->check_all->getHtmlHeadEntries());
+		return $out;
+	}
+
+	/**
+	 * Displays this checkbox list
+	 *
+	 * The check-all widget is only displayed if more than one checkable item
+	 * is displayed.
+	 */
 	public function display()
 	{
 		if (!$this->visible)
@@ -99,15 +139,13 @@ class SwatCheckboxList extends SwatControl implements SwatState
 
 			echo '</ul>';
 
-			$this->displayJavaScript();
-
-			if (count($this->options) > 1) {
-				$check_all = new SwatCheckAll();
-				$check_all->controller = $this;
-				$check_all->init();
-				$check_all->display();
-			}
+			// Only show the checkbox list if more than one checkable item is
+			// displayed.
+			$this->check_all->visible = (count($this->options) > 1);
+			$this->check_all->display();
 		}
+
+		$this->displayJavaScript();
 
 		$div_tag->close();
 	}
@@ -119,6 +157,8 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	 */
 	public function process()
 	{
+		$this->check_all->process();
+
 		if (isset($_POST[$this->id]))
 			$this->values = $_POST[$this->id];
 		else
@@ -126,9 +166,9 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	}
 
 	/**
-	 * Reset the checkbox list.
+	 * Reset this checkbox list.
 	 *
-	 * Reset the list to its default state.  This is useful to call from a 
+	 * Reset the list to its default state. This is useful to call from a 
 	 * display() method when persistence is not desired.
 	 */
 	public function reset()
@@ -148,14 +188,20 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	}
 
 	/**
-	 * Displays the JavaScript for this check-all widget
+	 * Displays the JavaScript for this checkbox list
 	 */
 	protected function displayJavaScript()
 	{
 		echo '<script type="text/javascript">';
 		echo "//<![CDATA[\n";
 
-		echo "var {$this->id} = new SwatCheckboxList('{$this->id}');\n";
+		printf("var %s_obj = new SwatCheckboxList('%s');\n",
+			$this->id, $this->id);
+
+		// set check-all controller if it is visible
+		if ($this->check_all->visible)
+			printf("%s_obj.setController(%s_obj);\n",
+				$this->check_all->id, $this->id);
 
 		echo "\n//]]>";
 		echo '</script>';

@@ -64,14 +64,12 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		else
 			$num_nodes = 0;
 
-		$this->displayJavaScript();
+		// Only display the check-all widget if more than one checkable item is
+		// displayed.
+		$this->check_all->visible = ($num_nodes > 1);
+		$this->check_all->display();
 
-		if ($num_nodes > 1) {
-			$check_all = new SwatCheckAll();
-			$check_all->controller = $this;
-			$check_all->init();
-			$check_all->display();
-		}
+		$this->displayJavaScript();
 
 		$div_tag->close();
 	}
