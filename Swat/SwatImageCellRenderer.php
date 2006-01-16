@@ -96,6 +96,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 			$image_tag->title = $this->title;
 
 		$image_tag->alt = $this->alt;
+		$image_tag->class = 'swat-image-cell-renderer';
 
 		$image_tag->display();
 	}

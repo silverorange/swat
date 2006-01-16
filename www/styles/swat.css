@@ -352,6 +352,8 @@ td.swat-link-cell-renderer a:active {
 	background: #f3efe5;
 }
 
+img.swat-image-cell-renderer { vertical-align: middle; }
+
 /* SwatDetailsView */
 
 .swat-details-view .none {
