@@ -511,8 +511,8 @@ class SwatString
 	 *
 	 * @param float $value the value to format.
 	 * @param string $locale an optional locale to use to format the value. If
-	 *                        no locale is specified, the default PHP locale is
-	 *                        used.
+	 *                        no locale is specified, the default server locale
+	 *                        is used.
 	 *
 	 * @return string the money formatted string.
 	 */
@@ -540,12 +540,12 @@ class SwatString
 	 * @param float $value the value to format.
 	 * @param int $decimals number of decimal places to display (default 0).
 	 * @param string $locale an optional locale to use to format the value. If
-	 *                        no locale is specified, the default PHP locale is
-	 *                        used.
+	 *                        no locale is specified, the default server locale
+	 *                        is used.
 	 * @param boolean $show_thousands_seperator whether to display the 
 	 *                        thousands seperator (default true).
 	 *
-	 * @return string the money formatted string.
+	 * @return string the number formatted string.
 	 */
 	public static function numberFormat($value, $decimals = 0, $locale = null, 
 		$show_thousands_seperator = true)
