@@ -15,13 +15,6 @@ abstract class SwatWidget extends SwatUIBase
 	// {{{ public properties
 
 	/**
-	 * The widget which contains this widget
-	 *
-	 * @var SwatContainer
-	 */
-	public $parent = null;
-
-	/**
 	 * A non-visible unique id for this widget, or null
 	 *
 	 * @var string
@@ -97,26 +90,6 @@ abstract class SwatWidget extends SwatUIBase
 	{
 		$this->id = $id;
 		$this->addStylesheet('swat/styles/swat.css');
-	}
-
-	// }}}
-	// {{{ public function getUniqueId()
-
-	/**
-	 * Generates a unique id
-	 *
-	 * Gets the an id that may be used for the id property of this widget.
-	 * Ids are auto-generated.
-	 *
-	 * @return string a unique identifier.
-	 */
-	protected function getUniqueId()
-	{
-		static $counter = 0;
-
-		$counter++;
-
-		return get_class($this).$counter;
 	}
 
 	// }}}
@@ -263,38 +236,6 @@ abstract class SwatWidget extends SwatUIBase
 			return $this->visible;
 		else
 			return ($this->parent->isVisible() && $this->visible);
-	}
-
-	// }}}
-	// {{{ public function getFirstAncestor()
-
-	/**
-	 * Gets the first ancestor widget of a specific class
-	 *
-	 * Retrieves the first ancestor widget in the parent path that is a 
-	 * descendant of the specified class name.
-	 *
-	 * @param string $class_name class name to look for.
-	 *
-	 * @return mixed the first ancestor widget or null if no matching ancestor
-	 *                is found.
-	 *
-	 * @see SwatContainer::getFirstDescendant()
-	 */
-	public function getFirstAncestor($class_name)
-	{
-		if (!class_exists($class_name))
-			return null;
-
-		if ($this->parent === null) {
-			$out = null;
-		} elseif ($this->parent instanceof $class_name) {
-			$out = $this->parent;
-		} else {
-			$out = $this->parent->getFirstAncestor($class_name);
-		}
-
-		return $out;
 	}
 
 	// }}}

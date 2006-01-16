@@ -46,6 +46,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 		$this->fields[] = $field;
 
 		$field->view = $this;
+		$field->parent = $this;
 	}
 
 	/**

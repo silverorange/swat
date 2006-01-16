@@ -201,6 +201,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		}
 
 		$column->view = $this;
+		$column->parent = $this;
 	}
 
 	// }}}

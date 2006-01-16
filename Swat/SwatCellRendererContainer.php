@@ -60,6 +60,7 @@ abstract class SwatCellRendererContainer extends SwatUIBase
 	public function addRenderer(SwatCellRenderer $renderer)
 	{
 		$this->renderers->addRenderer($renderer);
+		$renderer->parent = $this;
 	}
 
 	/**
