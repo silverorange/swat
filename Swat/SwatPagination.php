@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * A widget to allow navigation between paginated data
@@ -144,14 +145,15 @@ class SwatPagination extends SwatControl
 			return sprintf(Swat::_('No %s.'), $unit_plural);
 
 		elseif ($this->total_records == 1)
-			return sprintf(Swat::_('1 %s.'), $unit);
+			return sprintf(Swat::_('One %s.'), $unit);
 
 		else
-			return sprintf(Swat::_('%d %s, displaying %d to %d'),
-				$this->total_records,
+			return sprintf(Swat::_('%s %s, displaying %s to %s'),
+				SwatString::numberFormat($this->total_records),
 				$unit_plural,
-				$this->current_record + 1,
-				min($this->current_record + $this->page_size, $this->total_records));
+				SwatString::numberFormat($this->current_record + 1),
+				SwatString::numberFormat(min($this->current_record +
+					$this->page_size, $this->total_records)));
 	}
 
 	// }}}
