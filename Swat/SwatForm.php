@@ -185,10 +185,10 @@ class SwatForm extends SwatContainer
 			$raw_data['process'] == $this->id);
 		
 		if ($this->processed) {
+			$this->processHiddenFields();
+
 			foreach ($this->children as &$child)
 				$child->process();
-
-			$this->processHiddenFields();
 		}
 	}
 
