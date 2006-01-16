@@ -249,6 +249,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	{
 		$this->group = $group;
 		$group->view = $this;
+		$group->parent = $this;
 	}
 
 	/**
@@ -294,6 +295,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		}
 
 		$row->view = $this;
+		$row->parent = $this;
 	}
 
 	// }}}
