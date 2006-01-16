@@ -82,6 +82,8 @@ class SwatMessageDisplay extends SwatControl
 
 		$div = new SwatHtmlTag('div');
 
+		$has_dismiss_link = false;
+
 		foreach ($this->_messages as $key => $message) {
 			$div->id = $this->id.'_'.$key;
 
