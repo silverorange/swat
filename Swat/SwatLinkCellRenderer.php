@@ -31,14 +31,17 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	 *
 	 * The visible content to place within the XHTML anchor tag.
 	 *
+	 * The link may include a sprintf substitution tag. For example:
+	 * <code>
+	 * $renderer->text = 'Page %s';
+	 * </code>
+	 *
 	 * @var string
 	 */
 	public $text;
 
 	/**
-	 * Link value
-	 *
-	 * A value to substitute into the link.
+	 * A value to substitute into the link and or text of this cell
 	 *
 	 * @var string
 	 */
@@ -76,15 +79,17 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	{
 		if ($this->sensitive) {
 			$anchor = new SwatHtmlTag('a');
-			$anchor->content = $this->text;
 
 			if ($this->class !== null)
 				$anchor->class = $this->class;
 
-			if ($this->value === null)
+			if ($this->value === null) {
 				$anchor->href = $this->link;
-			else
+				$anchor->content = $this->text;
+			} else {
 				$anchor->href = sprintf($this->link, $this->value);
+				$anchor->content = sprintf($this->text, $this->value);
+			}
 
 			$anchor->display();
 		} else {
@@ -96,7 +101,10 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 			else
 				$span_tag->class = 'swat-link-cell-renderer-insensitive';
 
-			$span_tag->content = $this->text;
+			if ($this->value === null)
+				$span_tag->content = $this->text;
+			else
+				$span_tag->content = sprintf($this->text, $this->value);
 
 			$span_tag->display();
 		}
