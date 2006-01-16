@@ -518,8 +518,10 @@ class SwatString
 	 */
 	public static function moneyFormat($value, $locale = null)
 	{
-		if ($locale !== null)
-			$old_locale = setlocale(LC_ALL, $locale);
+		if ($locale !== null) {
+			$old_locale = setlocale(LC_ALL, 0);
+			setlocale(LC_ALL, $locale);
+		}
 
 		$format = htmlentities(money_format('%.2n', $value), null, 'UTF-8');
 
@@ -552,8 +554,10 @@ class SwatString
 		$output = number_format($value, $decimals, '.', $show_thousands_seperator ? ',' : null);
 		$output = htmlentities($output, null, 'UTF-8');
 
-		if ($locale !== null)
-			$old_locale = setlocale(LC_ALL, $locale);
+		if ($locale !== null) {
+			$old_locale = setlocale(LC_ALL, 0);
+			setlocale(LC_ALL, $locale);
+		}
 
 		// replace placeholder seperators with locale ones which might contain non-ASCII
 		$lc = localeconv();
