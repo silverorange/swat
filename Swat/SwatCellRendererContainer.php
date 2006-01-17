@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatUIBase.php';
+require_once 'Swat/SwatUIObject.php';
 require_once 'Swat/SwatCellRendererSet.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
@@ -11,7 +11,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * @copyright 2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatCellRendererContainer extends SwatUIBase
+abstract class SwatCellRendererContainer extends SwatUIObject
 {
 	/**
 	 * A set of SwatCellRenderer objects
@@ -39,9 +39,9 @@ abstract class SwatCellRendererContainer extends SwatUIBase
 	 *                           renderer property.
 	 * @param string $property the property of the cell renderer that the
 	 *                          datafield is mapped to.
-	 * @param SwatUIBase $object optional object containing the property to
-	 *                            map when the property does not belong to the
-	 *                            cell renderer itself.
+	 * @param SwatUIObject $object optional object containing the property to
+	 *                              map when the property does not belong to
+	 *                              the cell renderer itself.
 	 */
 	public function addMappingToRenderer($renderer, $datafield, $property, $object = null)
 	{

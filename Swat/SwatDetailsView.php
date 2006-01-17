@@ -131,7 +131,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 *
 	 * @return array the SwatHtmlHeadEntry objects needed by this details view.
 	 *
-	 * @see SwatUIBase::getHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{

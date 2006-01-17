@@ -81,7 +81,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	 *
 	 * @return array the SwatHtmlHeadEntry objects needed by this checkbox list.
 	 *
-	 * @see SwatUIBase::getSwatHtmlHeadEntries()
+	 * @see SwatUIObject::getSwatHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{

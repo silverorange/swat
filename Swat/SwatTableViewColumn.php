@@ -175,7 +175,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	 *
 	 * @return array the SwatHtmlHeadEntry objects needed by this column.
 	 *
-	 * @see SwatUIBase::getHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatUIBase.php';
+require_once 'Swat/SwatUIObject.php';
 
 /**
  * Object for rendering a single cell
@@ -11,7 +11,7 @@ require_once 'Swat/SwatUIBase.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatCellRenderer extends SwatUIBase
+abstract class SwatCellRenderer extends SwatUIObject
 {
 	/**
 	 * A non-visible unique id for this cell renderer, or null
@@ -86,7 +86,7 @@ abstract class SwatCellRenderer extends SwatUIBase
 	 *
 	 * @return array the SwatHtmlHeadEntry objects needed by this cell renderer.
 	 *
-	 * @see SwatUIBase::getHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{
@@ -98,10 +98,10 @@ abstract class SwatCellRenderer extends SwatUIBase
 	 *
 	 * This method can be overridden by sub-classes that need to modify the
 	 * name of a property mapping.  This allows cell renderers which conatin
-	 * multiple SwatUIBase object to mangle property names if necessary to
+	 * multiple SwatUIObject object to mangle property names if necessary to
 	 * avoid conflicts.
 	 *
-	 * @param SwatUIBase $object the object containing the property that is
+	 * @param SwatUIObject $object the object containing the property that is
 	 *                            being mapped. Usually this is the cell 
 	 *                            renderer itself, but not necessarily. It 
 	 *                            could be a UIObject within the cell renderer.
@@ -111,7 +111,7 @@ abstract class SwatCellRenderer extends SwatUIBase
 	 *                 should either exist as a public property of the cell
 	 *                 renderer or be handled by a magic __set() method.
 	 */
-	public function getPropertyNameToMap(SwatUIBase $object, $name)
+	public function getPropertyNameToMap(SwatUIObject $object, $name)
 	{
 		return $name;
 	}

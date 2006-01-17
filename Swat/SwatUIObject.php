@@ -10,14 +10,14 @@ require_once 'Swat/SwatHtmlHeadEntry.php';
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatUIBase extends SwatObject
+abstract class SwatUIObject extends SwatObject
 {
 	// {{{ public properties
 
 	/**
 	 * The object which contains this object
 	 *
-	 * @var SwatUIBase
+	 * @var SwatUIObject
 	 */
 	public $parent = null;
 
