@@ -61,14 +61,14 @@ class SwatFrame extends SwatContainer
 			}
 
 			$header_tag = new SwatHtmlTag('h'.$level);			
-			$header_tag->class = "swat-frame-title";
+			$header_tag->class = 'swat-frame-title';
 			$header_tag->setContent($this->title);
 
 			if ($this->subtitle === null) {
 				$header_tag->display();
 			} else {
 				$span_tag = new SwatHtmlTag('span');			
-				$span_tag->class = "swat-frame-subtitle";
+				$span_tag->class = 'swat-frame-subtitle';
 				$span_tag->setContent($this->subtitle);
 
 				$header_tag->open();
