@@ -53,7 +53,7 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
 	{
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->class = 'swat-details-view-field-header';
-		$div_tag->content = $this->title.':';
+		$div_tag->setContent($this->title.':');
 		$div_tag->display();
 	}
 

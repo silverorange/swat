@@ -173,7 +173,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$td->open();
 
 		$anchor_tag = new SwatHtmlTag('a');
-		$anchor_tag->content = $this->enter_text;
+		$anchor_tag->setContent($this->enter_text);
 		$anchor_tag->href = "javascript:{$this->id}_obj.addRow();";
 		$anchor_tag->class = 'swat-table-view-input-row-enter';
 		$anchor_tag->display();

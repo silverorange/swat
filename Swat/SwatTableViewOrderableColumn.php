@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatTableViewColumn.php';
 require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * An orderable table view column.
@@ -174,11 +175,11 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			else
 				$title = '';
 
-			echo $title;
+			echo SwatString::minimizeEntities($title);
 
 			$span_tag->open();
 
-			echo $last_word;
+			echo SwatString::minimizeEntities($last_word);
 
 			$img = new SwatHtmlTag('img');
 
@@ -202,7 +203,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			$span_tag->close();
 
 		} else {
-			echo $this->title;
+			echo SwatString::minimizeEntities($this->title);
 		}
 
 		$anchor->close();

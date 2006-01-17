@@ -20,6 +20,13 @@ class SwatFrame extends SwatContainer
 	public $title = null;
 
 	/**
+	 * An optional visible subtitle for this frame, or null
+	 *
+	 * @var string
+	 */
+	public $subtitle = null;
+
+	/**
 	 * Displays this frame
 	 */
 	public function display()
@@ -55,8 +62,20 @@ class SwatFrame extends SwatContainer
 
 			$header_tag = new SwatHtmlTag('h'.$level);			
 			$header_tag->class = "swat-frame-title";
-			$header_tag->content = $this->title;
-			$header_tag->display();
+			$header_tag->setContent($this->title);
+
+			if ($this->subtitle === null) {
+				$header_tag->display();
+			} else {
+				$span_tag = new SwatHtmlTag('span');			
+				$span_tag->class = "swat-frame-subtitle";
+				$span_tag->setContent($this->subtitle);
+
+				$header_tag->open();
+				$header_tag->displayContent();
+				$span_tag->display();
+				$header_tag->close();
+			}
 		}
 
 		$inner_div->open();

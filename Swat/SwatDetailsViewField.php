@@ -86,7 +86,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer implements SwatUIPa
 	public function displayHeader()
 	{
 		$th_tag = new SwatHtmlTag('th');
-		$th_tag->content = $this->title.':';
+		$th_tag->setContent($this->title.':');
 		$th_tag->display();
 	}
 

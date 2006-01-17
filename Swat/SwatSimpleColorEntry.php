@@ -79,7 +79,7 @@ class SwatSimpleColorEntry extends SwatControl implements SwatState
 		$swatch_div = new SwatHtmlTag('div');
 		$swatch_div->class = 'swat-simple-color-entry-swatch';
 		$swatch_div->id = $this->id.'_swatch';
-		$swatch_div->content = '&nbsp;';
+		$swatch_div->setContent('&nbsp;');
 		$swatch_div->display();
 
 		$anchor_tag = new SwatHtmlTag('a');
@@ -100,7 +100,7 @@ class SwatSimpleColorEntry extends SwatControl implements SwatState
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id.'_palette';
 		$div_tag->class = 'swat-simple-color-palette-hidden';
-		$div_tag->content = '&nbsp;';
+		$div_tag->setContent('&nbsp;');
 		$div_tag->display();
 
 		$this->displayJavaScript();

@@ -213,13 +213,13 @@ class SwatPagination extends SwatControl
 
 			$anchor = new SwatHtmlTag('a');
 			$anchor->href = sprintf($link, (string) $this->prev_page);
-			$anchor->content = sprintf(Swat::_('%s Previous'), '&#171;');
+			$anchor->setContent(sprintf(Swat::_('%s Previous'), '&#171;'));
 			$anchor->class = 'nextprev';
 			$anchor->display();
 		} else {
 			$span = new SwatHtmlTag('span');
 			$span->class = 'nextprev';
-			$span->content = sprintf(Swat::_('%s Previous'), '&#171;');
+			$span->setContent(sprintf(Swat::_('%s Previous'), '&#171;'));
 			$span->display();
 		}
 	}
@@ -237,8 +237,8 @@ class SwatPagination extends SwatControl
 		$div = new SwatHtmlTag('div');
 		$div->class = 'position';
 
-		$div->content = sprintf(Swat::_('Page %d of %d'),
-			$this->current_page + 1, $this->total_pages);
+		$div->setContent(sprintf(Swat::_('Page %d of %d'),
+			$this->current_page + 1, $this->total_pages));
 
 		$div->display();
 	}
@@ -256,13 +256,13 @@ class SwatPagination extends SwatControl
 
 			$anchor = new SwatHtmlTag('a');
 			$anchor->href = sprintf($link, (string) $this->next_page);
-			$anchor->content = sprintf(Swat::_('Next %s'), '&#187;');
+			$anchor->setContent(sprintf(Swat::_('Next %s'), '&#187;'));
 			$anchor->class = 'nextprev';
 			$anchor->display();
 		} else {
 			$span = new SwatHtmlTag('span');
 			$span->class = 'nextprev';
-			$span->content = sprintf(Swat::_('Next %s'), '&#187;');
+			$span->setContent(sprintf(Swat::_('Next %s'), '&#187;'));
 			$span->display();
 		}
 	}
@@ -307,19 +307,19 @@ class SwatPagination extends SwatControl
 			if ($display) {
 				if ($j + 1 != $i) {
 					// ellipses
-					$span->content = '&#8230;';
+					$span->setContent('&#8230;');
 					$span->display();
 				}
 
 				if ($i == $this->current_page) {
-					$current->content = (string) ($i + 1);
+					$current->setContent((string)($i + 1));
 					$current->display();
 				} else {
-					$anchor->href = sprintf($link, (string) $i);
+					$anchor->href = sprintf($link, (string)$i);
 					$anchor->title =
 						sprintf(Swat::_('Go to page %d'), ($i + 1));
 
-					$anchor->content = ($i + 1);
+					$anchor->setContent((string)($i + 1));
 					$anchor->display();
 				}
 

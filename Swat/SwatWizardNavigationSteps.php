@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatWizardNavigation.php';
+require_once 'Swat/SwatString.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
@@ -46,7 +47,7 @@ class SwatWizardNavigationSteps extends SwatWizardNavigation
 
 		for ($i = 0; $i < $this->parent->getStepCount(); $i++)
 			if ($i == $this->parent->step)
-				echo $this->step_buttons[$i]->title.'<br />';
+				echo SwatString::minimizeEntities($this->step_buttons[$i]->title), '<br />';
 			elseif ($i < $this->parent->step || $i == ($this->parent->step + 1)) {
 				$this->step_buttons[$i]->display();
 				echo '<br />';

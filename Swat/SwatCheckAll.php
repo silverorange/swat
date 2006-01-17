@@ -53,10 +53,11 @@ class SwatCheckAll extends SwatControl
 
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->for = $this->id;
+		$label_tag->setContent($this->title);
 
 		$label_tag->open();
 		$input_tag->display();
-		echo $this->title;
+		$label_tag->displayContent();
 		$label_tag->close();
 
 		$div_tag->close();

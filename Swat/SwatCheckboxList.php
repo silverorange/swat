@@ -4,6 +4,7 @@ require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatCheckAll.php';
 require_once 'Swat/SwatState.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * A checkbox list widget
@@ -131,7 +132,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 				$input_tag->display();
 
 				$label_tag->for = $this->id.'_'.$input_tag->value;
-				$label_tag->content = $title;
+				$label_tag->setContent($title);
 				$label_tag->display();
 
 				echo '</li>';

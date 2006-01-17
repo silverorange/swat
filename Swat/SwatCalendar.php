@@ -79,7 +79,7 @@ class SwatCalendar extends SwatControl
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id.'_div';
 		$div_tag->class = 'swat-calendar-div-hide';
-		$div_tag->content = '&nbsp;';
+		$div_tag->setContent('&nbsp;');
 		$div_tag->display();
 
 		$this->displayJavaScript();

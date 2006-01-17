@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * A block of content in the widget tree
@@ -19,6 +20,15 @@ class SwatContentBlock extends SwatControl
 	public $content = '';
 
 	/**
+	 * Optional content type
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $content_type = 'text/plain';
+
+	/**
 	 * Displays this content
 	 *
 	 * Merely performs an echo of the content.
@@ -28,7 +38,10 @@ class SwatContentBlock extends SwatControl
 		if (!$this->visible)
 			return;
 
-		echo $this->content;
+		if ($this->content_type === 'text/plain')
+			echo SwatString::minimizeEntities($this->content);
+		else
+			echo $this->content;
 	}
 }
 

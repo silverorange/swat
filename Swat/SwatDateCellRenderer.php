@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatCellRenderer.php';
 require_once 'Swat/SwatDate.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * A text renderer.
@@ -40,7 +41,7 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	{
 		if ($this->date !== null) {
 			$date = new SwatDate($this->date);
-			echo $date->format($this->format);
+			echo SwatString::minimizeEntities($date->format($this->format));
 		}
 	}
 }

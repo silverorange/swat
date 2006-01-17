@@ -130,7 +130,7 @@ class SwatFlydown extends SwatInputControl implements SwatState
 				else
 					$option_tag->removeAttribute('selected');
 
-				$option_tag->content = $flydown_option->title;
+				$option_tag->setContent($flydown_option->title);
 
 				$option_tag->display();
 			}

@@ -59,7 +59,7 @@ class SwatMoneyEntry extends SwatEntry
 		parent::display();
 
 		if ($this->display_currency)
-			echo ' '.$lc['int_curr_symbol'];
+			echo SwatString::minimizeEntities(' '.$lc['int_curr_symbol']);
 
 		$this->setLocale($locale);
 	}
