@@ -60,11 +60,8 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
 	/**
 	 * Renders each cell renderer in this details-view field
 	 *
-	 * The properties of the cell renderers are set the the fields of the
-	 * data object through the datafield property mappings.
-	 *
-	 * @param mixed $data the data object to render with the cell renderers
-	 *                     of this field.
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
 	 *
 	 * @see SwatDetailsViewField::displayRenderers()
 	 */
