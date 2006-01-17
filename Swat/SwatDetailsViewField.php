@@ -140,7 +140,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer implements SwatUIPa
 	 *
 	 * @return array the SwatHtmlHeadEntry objects needed by this field
 	 *
-	 * @see SwatUIBase::getHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{

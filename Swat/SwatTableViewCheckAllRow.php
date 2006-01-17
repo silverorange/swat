@@ -44,7 +44,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 *
 	 * @return array the SwatHtmlHeadEntry objects needed by this check-all row.
 	 *
-	 * @see SwatUIBase::getSwatHtmlHeadEntries()
+	 * @see SwatUIObject::getSwatHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatUIBase.php';
+require_once 'Swat/SwatUIObject.php';
 require_once 'Swat/SwatMessage.php';
 
 /**
@@ -10,7 +10,7 @@ require_once 'Swat/SwatMessage.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatWidget extends SwatUIBase
+abstract class SwatWidget extends SwatUIObject
 {
 	// {{{ public properties
 
@@ -47,7 +47,7 @@ abstract class SwatWidget extends SwatUIBase
 	 *
 	 * The URI of a stylesheet for use with this widget. If this property is 
 	 * set before {@link SwatWidget::init()} then the
-	 * {@link SwatUIBase::addStyleSheet() method will be called to add this 
+	 * {@link SwatUIObject::addStyleSheet() method will be called to add this 
 	 * stylesheet to the header entries. Primarily this should be used by
 	 * SwatUI to set a stylesheet in SwatML. To set a stylesheet in PHP code,
 	 * it is recommended to call addStyleSheet() directly.

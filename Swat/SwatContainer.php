@@ -415,7 +415,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 *
 	 * @return array the SwatHtmlHeadEntry objects needed by this container.
 	 *
-	 * @see SwatUIBase::getSwatHtmlHeadEntries()
+	 * @see SwatUIObject::getSwatHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{

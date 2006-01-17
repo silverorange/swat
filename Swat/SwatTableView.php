@@ -504,7 +504,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 *
 	 * @return array the SwatHtmlHeadEntry objects needed by this table.
 	 *
-	 * @see SwatUIBase::getHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{

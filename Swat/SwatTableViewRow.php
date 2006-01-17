@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatUIBase.php';
+require_once 'Swat/SwatUIObject.php';
 
 /**
  * Base class for a extra row displayed at the bottom of a table view
@@ -9,7 +9,7 @@ require_once 'Swat/SwatUIBase.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatTableViewRow extends SwatUIBase
+abstract class SwatTableViewRow extends SwatUIObject
 {
 	// {{{ public properties
 
@@ -77,7 +77,7 @@ abstract class SwatTableViewRow extends SwatUIBase
 	 *
 	 * @return array the SwatHtmlHeadEntry objects needed by this row.
 	 *
-	 * @see SwatUIBase::getHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{
