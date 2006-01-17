@@ -319,7 +319,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 *
 	 * @return array the columns of this view.
 	 */
-	public function &getColumns()
+	public function getColumns()
 	{
 		return $this->columns;
 	}
