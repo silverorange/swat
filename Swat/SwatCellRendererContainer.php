@@ -124,29 +124,6 @@ abstract class SwatCellRendererContainer extends SwatUIBase
 				'Only SwatCellRender objects may be nested within '.
 				get_class($this).' objects.', 0, $child);
 	}
-
-	/**
-	 * Renders each cell renderer in this details-view field
-	 *
-	 * The properties of the cell renderers are set the the fields of the
-	 * data object through the datafield property mappings.
-	 *
-	 * @param mixed $data the data object to render with the cell renderers
-	 *                     of this field.
-	 */
-	protected function displayRenderers($data)
-	{
-		$first_renderer = $this->renderers->getFirst();
-		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
-		$td_tag->open();
-
-		foreach ($this->renderers as $renderer) {
-			$renderer->render();
-			echo ' ';
-		}
-
-		$td_tag->close();
-	}
 }
 
 ?>

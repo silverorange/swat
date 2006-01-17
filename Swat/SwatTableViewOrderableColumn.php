@@ -251,11 +251,8 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	/**
 	 * Renders each cell renderer in this orderable table-view column
 	 *
-	 * If this column is the orderby column of its view then the table
-	 * cell is marked with a special style.
-	 *
-	 * @param mixed $row the data object to render with the cell renderers
-	 *                    of this field.
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
 	 *
 	 * @see SwatTableViewColumn::displayRenderers()
 	 */

@@ -93,6 +93,9 @@ class SwatDetailsViewField extends SwatCellRendererContainer implements SwatUIPa
 	/**
 	 * Displays the value of this details view field
 	 *
+	 * The properties of the cell renderers are set from the data object
+	 * through the datafield property mappings.
+	 *
 	 * @param mixed $data the data object to display in this field.
 	 */
 	public function displayValue($data)
@@ -110,6 +113,26 @@ class SwatDetailsViewField extends SwatCellRendererContainer implements SwatUIPa
 		}
 
 		$this->displayRenderers($data);
+	}
+
+	/**
+	 * Renders each cell renderer in this details-view field
+	 *
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
+	 */
+	protected function displayRenderers($data)
+	{
+		$first_renderer = $this->renderers->getFirst();
+		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
+		$td_tag->open();
+
+		foreach ($this->renderers as $renderer) {
+			$renderer->render();
+			echo ' ';
+		}
+
+		$td_tag->close();
 	}
 
 	/**

@@ -65,6 +65,8 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 
 	public function process()
 	{
+		foreach ($this->renderers as $renderer)
+			$renderer->process();
 	}
 
 	/**
@@ -90,6 +92,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	/**
 	 * Displays this column using a data object
 	 *
+	 * The properties of the cell renderers are set from the data object
+	 * through the datafield property mappings.
+	 *
 	 * @param mixed $row a data object used to display the cell renderers in
 	 *                    this column.
 	 */
@@ -111,6 +116,26 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 		}
 
 		$this->displayRenderers($row);
+	}
+
+	/**
+	 * Renders each cell renderer in this column
+	 *
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
+	 */
+	protected function displayRenderers($data)
+	{
+		$first_renderer = $this->renderers->getFirst();
+		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
+		$td_tag->open();
+
+		foreach ($this->renderers as $renderer) {
+			$renderer->render();
+			echo ' ';
+		}
+
+		$td_tag->close();
 	}
 
 	/**
