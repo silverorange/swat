@@ -17,7 +17,7 @@ class SwatHtmlTag extends SwatObject
 	 *
 	 * @var string
 	 */
-	public $tagname;
+	public $tag_name;
 
 	/**
 	 * Atribute array
@@ -32,6 +32,37 @@ class SwatHtmlTag extends SwatObject
 	/**
 	 * Optional content for the body of the XHTML tag
 	 *
+	 * @var string
+	 */
+	private $content = null;
+
+	/**
+	 * Optional content type for the body of the XHTML tag
+	 *     default text/plain
+	 *     use text/xml for XHTML fragments
+	 *
+	 * @var string
+	 */
+	private $content_type = 'text/plain';
+
+	/**
+	 * Creates a new HTML tag
+	 *
+	 * @param string $tag_name the name of the HTML tag.
+	 * @param array $attributes an optional array of attributes in the form:
+	 *                           attribute => value
+	 */
+	public function __construct($tag_name, $attributes = null)
+	{
+		$this->tag_name = $tag_name;
+
+		if (is_array($attributes))
+			$this->attributes = $attributes;
+	}
+
+	/**
+	 * Set content for the body of the XHTML tag
+	 *
 	 * This property is a UTF-8 encoded XHTML fragment. It is not escaped
 	 * before display so the user of SwatHtmlTag is responsible for any
 	 * escaping that must occur.
@@ -40,23 +71,14 @@ class SwatHtmlTag extends SwatObject
 	 * content after displaying the opening tag. Then it displays an explicit
 	 * closing tag.
 	 *
-	 * @var string
+	 * @param string $content content for the body of the XHTML tag
+	 * @param string $type mime type of the content.  Deafult is 'text/plain',
+	 *                      use 'text/xml' for XHTML fragments.
 	 */
-	public $content = null;
-
-	/**
-	 * Creates a new HTML tag
-	 *
-	 * @param string $tagname the name of the HTML tag.
-	 * @param array $attributes an optional array of attributes in the form:
-	 *                           attribute => value
-	 */
-	function __construct($tagname, $attributes = null)
+	public function setContent($content, $type = 'text/plain')
 	{
-		$this->tagname = $tagname;
-
-		if (is_array($attributes))
-			$this->attributes = $attributes;
+		$this->content = $content;
+		$this->content_type = $type;
 	}
 
 	/**
@@ -124,8 +146,25 @@ class SwatHtmlTag extends SwatObject
 			$this->openInternal(true);
 		} else {
 			$this->openInternal(false);
-			echo $this->content;
+			$this->displayContent();
 			$this->close();
+		}
+	}
+
+	/**
+	 * Displays the content of this tag
+	 *
+	 * If {@link SwatHtmlTag::content} is set then the content is displayed.
+	 *
+	 * @see SwatHtmlTag::display()
+	 */
+	public function displayContent()
+	{
+		if ($this->content !== null) {
+			if ($this->content_type === 'text/plain')
+				echo SwatString::minimizeEntities($this->content);
+			else
+				echo $this->content;
 		}
 	}
 
@@ -153,7 +192,7 @@ class SwatHtmlTag extends SwatObject
 	 */
 	public function close()
 	{
-		echo '</', $this->tagname, '>';
+		echo '</', $this->tag_name, '>';
 	}
 
 	/**
@@ -167,7 +206,7 @@ class SwatHtmlTag extends SwatObject
 	 */
 	private function openInternal($self_closing = false)
 	{
-		echo '<', $this->tagname;
+		echo '<', $this->tag_name;
 
 		foreach ($this->attributes as $attribute => $value) {
 			if ($value !== null) {
