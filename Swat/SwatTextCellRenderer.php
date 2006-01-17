@@ -21,6 +21,15 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	public $text = '';
 
 	/**
+	 * Optional content type
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $content_type = 'text/plain';
+
+	/**
 	 * A value to substitute into the text of this cell
 	 *
 	 * The value is substituted using a call to printf. For example, if the
@@ -44,7 +53,10 @@ class SwatTextCellRenderer extends SwatCellRenderer
 		else
 			$text = sprintf($this->text, $this->value);
 
-		echo SwatString::minimizeEntities($text);
+		if ($this->content_type === 'text/plain')
+			echo SwatString::minimizeEntities($text);
+		else
+			echo $text;
 	}
 }
 
