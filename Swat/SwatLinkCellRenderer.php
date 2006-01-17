@@ -77,7 +77,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		if ($this->sensitive) {
+		if ($this->sensitive && ($this->link !== null)) {
 			$anchor = new SwatHtmlTag('a');
 
 			if ($this->class !== null)
