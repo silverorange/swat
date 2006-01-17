@@ -99,7 +99,7 @@ class SwatToolLink extends SwatControl
 			else 
 				$anchor_tag->class = 'swat-tool-link '.$this->class;
 
-			$anchor_tag->content = $this->title;
+			$anchor_tag->setContent($this->title);
 			$anchor_tag->display();
 
 		} else {
@@ -110,7 +110,7 @@ class SwatToolLink extends SwatControl
 			else 
 				$span_tag->class = 'swat-tool-link swat-tool-link-insensitive '.$this->class;
 
-			$span_tag->content = $this->title;
+			$span_tag->setContent($this->title);
 			$span_tag->display();
 		}
 	}

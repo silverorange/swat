@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatTreeNode.php';
 require_once 'Swat/SwatCheckboxList.php';
+require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatState.php';
 
 /**
@@ -140,12 +141,12 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 					$this->input_tag->checked = null;
 
 				$this->label_tag->for = $this->id.'_'.$index;
-				$this->label_tag->content = $node->title;
+				$this->label_tag->setContent($node->title);
 
 				$this->input_tag->display();
 				$this->label_tag->display();
 			} else {
-				echo $node->title;
+				echo SwatString::minimizeEntities($node->title);
 			}
 		}
 

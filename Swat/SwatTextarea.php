@@ -3,6 +3,7 @@
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * A multi-line text entry widget
@@ -56,10 +57,9 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		//       a textarea for XHTML strict.
 		$textarea_tag->rows = $this->rows;
 		$textarea_tag->cols = $this->cols;
+		$textarea_tag->setContent($this->value);
 
-		$textarea_tag->open();
-		echo $this->value;
-		$textarea_tag->close();
+		$textarea_tag->display();
 	}
 
 	/**

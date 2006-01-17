@@ -154,7 +154,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		$wrapper_div->class = 'swat-color-entry-wrapper';
 
 		$control_div = new SwatHtmlTag('div');
-		$control_div->content = '&nbsp;';
+		$control_div->setContent('&nbsp;');
 
 		$wrapper_div->open();
 
@@ -172,7 +172,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		echo '<div class="swatches">';
 
 		$swatch_div = new SwatHtmlTag('div');
-		$swatch_div->content = '&nbsp;';
+		$swatch_div->setContent('&nbsp;');
 
 		$swatch_div->class = 'swatch';
 		$swatch_div->id = $this->id.'_swatch';

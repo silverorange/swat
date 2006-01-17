@@ -35,9 +35,8 @@ class SwatFieldset extends SwatContainer
 
 		if ($this->title !== null) {
 			$legend_tag = new SwatHtmlTag('legend');
-			$legend_tag->open();
-			echo $this->title;
-			$legend_tag->close();
+			$legend_tag->setContent($this->title);
+			$legend_tag->display();
 		}
 
 		foreach ($this->children as &$child)

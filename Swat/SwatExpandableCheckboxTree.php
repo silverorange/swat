@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatCheckboxTree.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * A checkbox array widget formatted into a tree where each branch can
@@ -137,7 +138,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			}
 
 			if ($node->value === null) {
-				echo $node->title;
+				echo SwatString::minimizeEntities($node->title);
 			} else {
 				$this->input_tag->id = $this->id.'_'.$index;
 				$this->input_tag->value = $node->value;
@@ -148,7 +149,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 					$this->input_tag->checked = null;
 
 				$this->label_tag->for = $this->id.'_'.$index;
-				$this->label_tag->content = $node->title;
+				$this->label_tag->setContent($node->title);
 
 				$this->input_tag->display();
 				$this->label_tag->display();

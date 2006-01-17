@@ -63,6 +63,7 @@ class SwatDisclosure extends SwatContainer
 		$anchor = new SwatHtmlTag('a');
 		$anchor->class = 'swat-disclosure-anchor';
 		$anchor->href = sprintf("javascript:%s_obj.toggle();", $this->id);
+		$anchor->setContent($this->title);
 
 		$input = new SwatHtmlTag('input');
 		$input->type = 'hidden';
@@ -91,10 +92,7 @@ class SwatDisclosure extends SwatContainer
 		$anchor->open();
 		$input->display();
 		$img->display();
-
-		if ($this->title !== null)
-			echo $this->title;
-
+		$anchor->displayContent();
 		$anchor->close();
 
 		$container_div->open();

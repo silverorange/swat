@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatNavBarEntry.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * Visible navigation tool
@@ -241,10 +242,10 @@ class SwatNavBar extends SwatControl
 		if ($entry->link !== null && $show_link) {
 			$link_tag = new SwatHtmlTag('a');
 			$link_tag->href = $entry->link;
-			$link_tag->content = $title;
+			$link_tag->setContent($title);
 			$link_tag->display();
 		} else {
-			echo $title;
+			echo SwatString::minimizeEntities($title);
 		}
 	}
 

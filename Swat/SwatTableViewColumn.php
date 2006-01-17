@@ -3,6 +3,7 @@
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatCellRendererContainer.php';
+require_once 'Swat/SwatString.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
@@ -83,7 +84,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	 */
 	public function displayHeader()
 	{
-		echo $this->title;
+		echo SwatString::minimizeEntities($this->title);
 	}
 
 	/**

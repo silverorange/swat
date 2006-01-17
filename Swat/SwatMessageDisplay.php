@@ -115,20 +115,20 @@ class SwatMessageDisplay extends SwatControl
 
 				$dismiss_link->class = 'swat-message-display-dismiss-link';
 				$dismiss_link->title = _('Dismiss this Message');
-				$dismiss_link->content = _('Dismiss this Message');
+				$dismiss_link->setContent(_('Dismiss this Message'));
 				$dismiss_link->display();
 				$has_dismiss_link = true;
 			}
 
 			$primary_content = new SwatHtmlTag('h3');
 			$primary_content->class = 'swat-message-display-primary-content';
-			$primary_content->content = $message->primary_content;
+			$primary_content->setContent($message->primary_content);
 			$primary_content->display();
 
 			if ($message->secondary_content !== null) {
 				$secondary_div = new SwatHtmlTag('div');
 				$secondary_div->class = 'swat-message-display-secondary-content';
-				$secondary_div->content = $message->secondary_content;
+				$secondary_div->setContent($message->secondary_content);
 				$secondary_div->display();
 			}
 

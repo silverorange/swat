@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatContainer.php';
 require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * A container to use around control widgets in a form
@@ -93,14 +94,17 @@ class SwatFormField extends SwatContainer
 		if ($this->title !== null) {
 			$label_tag = new SwatHtmlTag('label');
 			$label_tag->for = $first_child->id;
+			$label_tag->setContent(sprintf('%s:', $this->title));
+
 			$label_tag->open();
-			echo $this->title, ':';
+			$label_tag->displayContent();
 
 			// TODO: widgets that are marked as required don't tell their field parent
 			if ($this->required) {
-				echo '<span class="required">';
-				echo ' (', Swat::_('required'), ')';
-				echo '</span>';
+				$span_tag = new SwatHtmlTag('span');
+				$span_tag->class = 'required';
+				$span_tag->setContent(sprintf(' (%s)', Swat::_('required')));
+				$span_tag->display();
 			}
 
 			$label_tag->close();
@@ -116,8 +120,10 @@ class SwatFormField extends SwatContainer
 
 			$msg_div->open();
 
-			foreach ($messages as &$msg)
-				echo $msg->primary_content, '<br />';
+			foreach ($messages as &$msg) {
+				echo SwatString::minimizeEntities($msg->primary_content);
+				echo '<br />';
+			}
 
 			$msg_div->close();
 		}
@@ -125,7 +131,7 @@ class SwatFormField extends SwatContainer
 		if ($this->note !== null) {
 			$note_div = new SwatHtmlTag('div');
 			$note_div->class = $this->note_class;
-			$note_div->content = $this->note;
+			$note_div->setContent($this->note);
 			$note_div->display();
 		}
 

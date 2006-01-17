@@ -85,10 +85,10 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 
 			if ($this->value === null) {
 				$anchor->href = $this->link;
-				$anchor->content = $this->text;
+				$anchor->setContent($this->text);
 			} else {
 				$anchor->href = sprintf($this->link, $this->value);
-				$anchor->content = sprintf($this->text, $this->value);
+				$anchor->setContent(sprintf($this->text, $this->value));
 			}
 
 			$anchor->display();
@@ -102,9 +102,9 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 				$span_tag->class = 'swat-link-cell-renderer-insensitive';
 
 			if ($this->value === null)
-				$span_tag->content = $this->text;
+				$span_tag->setContent($this->text);
 			else
-				$span_tag->content = sprintf($this->text, $this->value);
+				$span_tag->setContent(sprintf($this->text, $this->value));
 
 			$span_tag->display();
 		}

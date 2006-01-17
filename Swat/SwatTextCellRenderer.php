@@ -40,9 +40,11 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	public function render()
 	{
 		if ($this->value === null)
-			echo $this->text;
+			$text = $this->text;
 		else
-			printf($this->text, $this->value);
+			$text = sprintf($this->text, $this->value);
+
+		echo SwatString::minimizeEntities($text);
 	}
 }
 
