@@ -59,8 +59,13 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 		parent::__construct();
 	}
 
+	/**
+	 * Gets a unique identifier for this column if one is not provided
+	 */
 	public function init()
 	{
+		if ($this->id === null)
+			$this->id = $this->getUniqueId();
 	}
 
 	public function process()
