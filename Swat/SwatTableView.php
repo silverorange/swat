@@ -190,6 +190,8 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	{
 		$this->columns[] = $column;
 
+		// note: This works because the id property is set before children are
+		// added to parents in SwatUI.
 		if ($column->id !== null) {
 			if (array_key_exists($column->id, $this->columns_by_id))
 				throw new SwatDuplicateIdException(
