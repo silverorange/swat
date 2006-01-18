@@ -13,7 +13,7 @@ require_once 'Swat/SwatString.php';
 class SwatContentBlock extends SwatControl
 {
 	/**
-	 * User visable textual content of this widget
+	 * User visible textual content of this widget
 	 *
 	 * @var string
 	 */
