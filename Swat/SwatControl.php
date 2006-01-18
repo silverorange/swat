@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatWidget.php';
 require_once 'Swat/SwatFormField.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * Abstract base class for control widgets (non-container)
@@ -24,12 +25,22 @@ abstract class SwatControl extends SwatWidget
 	 */
 	public function addMessage($message)
 	{
-		if ($this->parent instanceof SwatFormField)
-			$field_title = '<strong>'.$this->parent->title.'</strong>';
+		if ($this->parent instanceof SwatFormField && 
+			$this->parent->title !== null)
+			$field_title = 
+				'<strong>'.
+				SwatString::minimizeEntities($this->parent->title).
+				'</strong>';
 		else
 			$field_title = '';
  
-		$message->primary_content = sprintf($message->primary_content, $field_title);
+		if ($message->content_type === 'text/plain')
+			$content = SwatString::minimizeEntities($message->primary_content);
+		else
+			$content = $message->primary_content;
+
+		$message->primary_content = sprintf($content, $field_title);
+		$message->content_type = 'text/xml';
 
 		$this->messages[] = $message;
 	}
