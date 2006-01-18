@@ -75,6 +75,15 @@ class SwatMessage extends SwatObject
 	public $secondary_content = null;
 
 	/**
+	 * Optional content type for both primary and secondary content
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $content_type = 'text/plain';
+
+	/**
 	 * Creates a new SwatMessage
 	 *
 	 * @param string $primary_content the primary text of the message.

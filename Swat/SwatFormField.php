@@ -3,6 +3,7 @@
 require_once 'Swat/SwatContainer.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatString.php';
+require_once 'Swat/SwatMessage.php';
 
 /**
  * A container to use around control widgets in a form
@@ -121,7 +122,11 @@ class SwatFormField extends SwatContainer
 			$msg_div->open();
 
 			foreach ($messages as &$msg) {
-				echo SwatString::minimizeEntities($msg->primary_content);
+				if ($msg->content_type === 'text/plain')
+					echo SwatString::minimizeEntities($msg->primary_content);
+				else
+					echo $msg->primary_content;
+
 				echo '<br />';
 			}
 
