@@ -104,13 +104,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	public function init()
 	{
 		parent::init();
-
-		// if there is no id the get variables do not work properly so we
-		// enforce an id
-		if ($this->id === null)
-			throw new SwatException('SwatTableViewOrderableColumn objects '.
-				'require an id to be set.');
-
 		$this->initFromGetVariables();
 	}
 
