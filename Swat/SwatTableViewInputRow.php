@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatWidget.php';
+require_once 'Swat/SwatContainer.php';
 require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatTableViewRow.php';
 require_once 'Swat/exceptions/SwatException.php';
@@ -10,7 +11,6 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
 /**
  * A table-view row that allows the user to enter data
  *
- * TODO: getHtmlHeadEntries()
  * TODO: work out ids. id is required
  *
  * @package   Swat
@@ -44,6 +44,12 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	public $id = '';
 
 	/**
+	 *
+	 * @var string
+	 */
+	private $row_string;
+
+	/**
 	 * Creates a new input row
 	 */
 	public function __construct()
@@ -55,20 +61,25 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	public function init()
 	{
 		parent::init();
-/*		
+	
 		$replicated_widgets = array();
-		$widget = $this->getWidget();
-*/
+		
 	}
 
 	public function process()
 	{
 		parent::process();
-/*
-		$this->number = $_POST[$this->id.'_number'];
-		for ($i = 0; $i < $this->number; $i++) {
-		}
-*/
+
+		// retrieve the number of rows
+		$this->number =
+			$this->view->getForm()->getHiddenField($this->id.'_number');
+
+		// process columns
+		$columns = $this->view->getColumns();
+		foreach ($columns as $column)
+			if ($column->hasInputCell($this->id))
+				for ($i = 0; $i < $this->number; $i++)
+					$column->getInputCell($this->id)->process($i);
 	}
 
 	/**
@@ -96,28 +107,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$cell->setWidget($widget);
 		$column->addInputCell($cell);
 	}
-
-	/**
-	 * Gets a widget in this row given a column
-	 *
-	 * If the given column does not have a widget for this row an exception
-	 * is thrown.
-	 *
-	 * @param SwatTableViewColumn $column the column to get the widget from.
-	 *
-	 * @return SwatWidget the widget from the specified column.
-	 *
-	 * @throws SwatException
-	 */
-	public function getWidgetByColumn(SwatTableViewColumn $column)
-	{
-		// TODO: more specific exception type here
-		if (!$column->hasInputCell($this->id))
-			throw new SwatException('No widget is attached to the given '.
-				'column object.');
-
-		return $column->getInputCell($this->id)->getWidet();
-	}
 	
 	/**
 	 * Displays this row
@@ -134,11 +123,40 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$this->view->getForm()->addHiddenField($this->id.'_number',
 			$this->number);
 
-		// display data input columns
-		$row_string = $this->getString($columns);
-		for ($i = 0; $i < $this->number; $i++)
-			echo str_replace('%s', (string)$i, $row_string);
+		$this->displayInputRows($columns);
+		$this->displayEnterAnotherRow($columns);
 
+		$this->row_string = $this->getRowString($columns);
+	}
+
+	private function displayInputRows(&$columns)
+	{
+		// display data input columns
+		for ($i = 0; $i < $this->number; $i++) {
+
+			$tr_tag = new SwatHtmlTag('tr');
+			$tr_tag->open();
+
+			foreach ($columns as $column) {
+				$td_attributes =
+					$column->getRendererByPosition()->getTdAttributes();
+
+				$td_tag = new SwatHtmlTag('td', $td_attributes);
+				$td_tag->open();
+
+				if ($column->hasInputCell($this->id))
+					$column->getInputCell($this->id)->display($i);
+				else
+					echo '&nbsp;';
+
+				$td_tag->close();
+			}
+			$tr_tag->close();
+		}
+	}
+
+	private function displayEnterAnotherRow(&$columns)
+	{
 		/*
 		 * Get column position of enter-a-new-row text. The text is displayed
 		 * underneath the first input cell that is not blank.
@@ -189,8 +207,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		}
 
 		$tr_tag->close();
-
-		$this->displayJavaScript($row_string);
 	}
 
 	/**
@@ -207,27 +223,33 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 * @return string this input row as an XHTML table row with the row
 	 *                 identifier as a placeholder '%s'.
 	 */
-	private function getString(&$columns)
+	private function getRowString(&$columns)
 	{
 		ob_start();
 
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->open();
 
-		foreach ($columns as $column)
-		{
+		foreach ($columns as $column) {
 			$td_attributes =
 				$column->getRendererByPosition()->getTdAttributes();
 
 			$td_tag = new SwatHtmlTag('td', $td_attributes);
 			$td_tag->open();
 
-			// TODO: fix ids for sub-widgets. see replicator
+			$suffix = '_'.$this->id.'_%s';
+
 			if ($column->hasInputCell($this->id)) {
 				$widget = $column->getInputCell($this->id)->getWidget();
 				if ($widget->id !== null)
-					$widget->id = $this->id.'_%s_'.$widget->id;
+					$widget->id.= $suffix;
 
+				if ($widget instanceof SwatContainer) {
+					$descendants = $widget->getDescendants();
+					foreach ($descendants as $descendant)
+						if ($descendant->id !== null)
+							$descendant->id.= $suffix;
+				}
 				$widget->display();
 			} else {
 				echo '&nbsp;';
@@ -244,29 +266,27 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 * Creates a JavaScript object to control the client behaviour of this
 	 * input row
 	 *
-	 * @param string $row_string
+	 * @return string
 	 */
-	private function displayJavaScript($row_string)
+	public function getInlineJavaScript()
 	{
-		// encode row string
 		/*
+		 * Encode row string
+		 *
 		 * Mimize entities so that we do not have to specify a DTD when parsing
 		 * the final XML string. If we specify a DTD, Internet Explorer takes a
 		 * long time to strictly parse everything. If we do not specify a DTD
-		 * and try to parse the final XML string we get an undefined entity
-		 * error.
+		 * and try to parse the final XML string with XHTML entities in it we
+		 * get an undefined entity error.
 		 */
-		$row_string = SwatString::minimizeEntities($row_string);
+		$row_string = SwatString::minimizeEntities($this->row_string);
 		$row_string = str_replace("'", "&apos;", $row_string);
 
 		// encode newlines for JavaScript string
 		$row_string = str_replace("\n", '\n', $row_string);
 
-		echo '<script type="text/javascript">'."\n";
-		printf("%s_obj = new SwatTableViewInputRow('%s', '%s');\n",
+		return sprintf("var %s_obj = new SwatTableViewInputRow('%s', '%s');",
 			$this->id, $this->id, trim($row_string));
-
-		echo '</script>';
 	}
 }
 
