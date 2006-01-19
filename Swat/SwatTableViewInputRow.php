@@ -11,6 +11,14 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
 /**
  * A table-view row that allows the user to enter data
  *
+ * This row object allows the user to enter data in a manner similar to how the
+ * data is displayed. This makes data entry easier as the user can see examples
+ * of the type of data they are entering above the fields in which they enter
+ * data.
+ *
+ * Additionally, this row object makes data entry faster by allowing the user
+ * to enter an arbitrary number of rows of data at the same time.
+ *
  * TODO: work out ids. id is required
  *
  * @package   Swat
@@ -22,6 +30,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	/**
 	 * The text to display in the link to enter a new row
 	 *
+	 * Defaults to 'enter another'.
+	 *
 	 * @var string
 	 */
 	public $enter_text = '';
@@ -30,24 +40,31 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 * The number of rows to display
 	 *
 	 * This row can display an arbitrary number of copies of itself. This value
-	 * specifies how many copies to display by default.
+	 * specifies how many copies to display by default. This number is set to
+	 * the number of entered rows in {@link SwatTableViewInputRow::process()}.
 	 *
 	 * @var integer
 	 */
 	public $number = 1;
 
 	/**
-	 * 
+	 * A unique identifier for this row
 	 *
 	 * @var string
 	 */
 	public $id = '';
 
 	/**
+	 * An array of input cells for this row indexed by column id
 	 *
-	 * @var string
+	 * The array is of the form:
+	 * <code>
+	 * array('column_id' => $input_cell);
+	 * </code>
+	 *
+	 * @var array
 	 */
-	private $row_string;
+	private $input_cells = array();
 
 	/**
 	 * Creates a new input row
@@ -58,14 +75,28 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$this->addJavaScript('swat/javascript/swat-table-view-input-row.js');
 	}
 
+	/**
+	 * Initializes this input row
+	 *
+	 * This initializes each input cell in this row.
+	 *
+	 * @see SwatTableViewRow::init()
+	 */
 	public function init()
 	{
 		parent::init();
-	
-		$replicated_widgets = array();
-		
+
+		// init input cells
+		foreach ($this->input_cells as $cell)
+			$cell->init();
 	}
 
+	/**
+	 * Processes this input row
+	 *
+	 * This gets the number of rows the user entered as well as processing
+	 * all cloned widgets in input cells that the user submitted.
+	 */
 	public function process()
 	{
 		parent::process();
@@ -77,42 +108,43 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		// process columns
 		$columns = $this->view->getColumns();
 		foreach ($columns as $column)
-			if ($column->hasInputCell($this->id))
+			if (isset($this->input_cells[$column->id]))
 				for ($i = 0; $i < $this->number; $i++)
-					$column->getInputCell($this->id)->process($i);
+					$this->input_cells[$column->id]->process($i);
 	}
 
 	/**
-	 * Sets the control for a specific column in this row's table-view
+	 * Adds an input cell to this row from a column
 	 *
-	 * Throws an exception if the table-view of the column is not the same
-	 * as the table-view of this row.
+	 * This method is called in {@link SwatTableViewColumn::init()} to move
+	 * input cells from the column to this row object. Attaching input cells
+	 * directly to their row makes row initilization and processing easier.
 	 *
-	 * @param SwatTableViewColumn $column the column to set the widget for.
-	 * @param SwatWidget $widget the widget to add to the specified column in
-	 *                            this row's table-view.
+	 * This method may also be called manually to add an input cell directly
+	 * to an input row based on a table-view column.
+	 *
+	 * @param SwatInputCell $cell the input cell to add to this row.
+	 * @param string $column_id the unique identifier of the table column. If
+	 *                           an id is chosen that does not exist in this
+	 *                           row's table-view, and exception is thrown.
 	 *
 	 * @throws SwatException
 	 */
-	public function setWidgetForColumn(SwatTableViewColumn $column,
-		SwatWidget $widget)
+	public function addInputCell(SwatInputCell $cell, $column_id)
 	{
-		// TODO: throw more specific exception
-		if ($this->view !== $column->view)
-			throw new SwatException('Cannot set the widget of a column not '.
-				"in this row's table.");
+		if (!$this->parent->hasColumn($column_id))
+			throw new SwatException('Cannot add input cell given a '.
+				'non-existant column identifier. Make sure the column you are '.
+				'identifying has an identifier set.');
 
-		$cell = new SwatInputCell();
-		$cell->row = $this->id;
-		$cell->setWidget($widget);
-		$column->addInputCell($cell);
+		$this->input_cells[$column_id] = $cell;
 	}
-	
+
 	/**
 	 * Displays this row
 	 *
-	 * Displays however many copies of this row the user specified and
-	 * displays the JavaScript required to enter new rows.
+	 * Uses widget cloning inside {@link SwatInputCell} to display the number
+	 * or rows specified and also displays the 'enter-another-row' button.
 	 *
 	 * @param array a reference to the array of {@link SwatTableViewColumn}
 	 *               objects in this row's table-view.
@@ -129,23 +161,33 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$this->row_string = $this->getRowString($columns);
 	}
 
+	/**
+	 * Displays the actual XHTML input rows for this input row
+	 *
+	 * Displays the number of rows specified in the property
+	 * {@link SwatTableViewInputRow::$number}. Each row is displayed using
+	 * cloned widgets inside {@link SwatInputCell} objects.
+	 *
+	 * @param array a reference to the array of {@link SwatTableViewColumn}
+	 *               objects in this row's table-view.
+	 */
 	private function displayInputRows(&$columns)
 	{
-		// display data input columns
 		for ($i = 0; $i < $this->number; $i++) {
 
 			$tr_tag = new SwatHtmlTag('tr');
 			$tr_tag->open();
 
 			foreach ($columns as $column) {
+				// use the same style as table-view column
 				$td_attributes =
 					$column->getRendererByPosition()->getTdAttributes();
 
 				$td_tag = new SwatHtmlTag('td', $td_attributes);
 				$td_tag->open();
 
-				if ($column->hasInputCell($this->id))
-					$column->getInputCell($this->id)->display($i);
+				if (isset($this->input_cells[$column->id]))
+					$this->input_cells[$column->id]->display($i);
 				else
 					echo '&nbsp;';
 
@@ -155,6 +197,12 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		}
 	}
 
+	/**
+	 * Displays the enter-another-row row
+	 *
+	 * @param array a reference to the array of {@link SwatTableViewColumn}
+	 *               objects in this row's table-view.
+	 */
 	private function displayEnterAnotherRow(&$columns)
 	{
 		/*
@@ -163,14 +211,13 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		 */
 		$start_position = 0;
 		foreach ($columns as $column) {
-			if ($column->hasInputCell($this->id))
+			if (isset($this->input_cells[$column->id]))
 				break;
 
 			$start_position++;
 		}
 		$close_length = count($columns) - $start_position - 1;
 
-		// display the enter-a-new-row row
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->id = $this->id.'_enter_row';
 		$tr_tag->open();
@@ -239,8 +286,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 			$suffix = '_'.$this->id.'_%s';
 
-			if ($column->hasInputCell($this->id)) {
-				$widget = $column->getInputCell($this->id)->getWidget();
+			if (isset($this->input_cells[$column->id])) {
+				$widget = $this->input_cells[$column->id]->getWidget();
 				if ($widget->id !== null)
 					$widget->id.= $suffix;
 
@@ -279,7 +326,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		 * and try to parse the final XML string with XHTML entities in it we
 		 * get an undefined entity error.
 		 */
-		$row_string = SwatString::minimizeEntities($this->row_string);
+		$row_string = $this->getRowString();
+		$row_string = SwatString::minimizeEntities($row_string);
 		$row_string = str_replace("'", "&apos;", $row_string);
 
 		// encode newlines for JavaScript string
