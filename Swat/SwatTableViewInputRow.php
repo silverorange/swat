@@ -105,12 +105,10 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$this->number =
 			$this->view->getForm()->getHiddenField($this->id.'_number');
 
-		// process columns
-		$columns = $this->view->getColumns();
-		foreach ($columns as $column)
-			if (isset($this->input_cells[$column->id]))
-				for ($i = 0; $i < $this->number; $i++)
-					$this->input_cells[$column->id]->process($i);
+		// process input cells
+		for ($i = 0; $i < $this->number; $i++)
+			foreach ($this->input_cells as $cell)
+				$cell->process($i);
 	}
 
 	/**
