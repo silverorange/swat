@@ -180,6 +180,28 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	}
 
 	/**
+	 * Gets the prototype widget for a column attached to this row
+	 *
+	 * You can get the prototype widget before init() is called to set
+	 * properties on the prototype widget.
+	 *
+	 * @param string $column_id the unique identifier of the column to get the
+	 *                           prototype widget from.
+	 *
+	 * @return SwatWidget the prototype widget from the given column.
+	 *
+	 * @throws SwatException
+	 */
+	public function getPrototypeWidget($column_id)
+	{
+		if (isset($this->input_cells[$column_id]))
+			return $this->input_cells[$column_id]->getPrototypeWidget();
+
+		throw new SwatException('The specified column does not have an input '.
+			'cell bound to this row or the column does not exist.');
+	}
+
+	/**
 	 * Displays the actual XHTML input rows for this input row
 	 *
 	 * Displays the number of rows specified in the property
