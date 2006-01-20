@@ -122,19 +122,11 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 * to an input row based on a table-view column.
 	 *
 	 * @param SwatInputCell $cell the input cell to add to this row.
-	 * @param string $column_id the unique identifier of the table column. If
-	 *                           an id is chosen that does not exist in this
-	 *                           row's table-view, and exception is thrown.
+	 * @param string $column_id the unique identifier of the table column.
 	 *
-	 * @throws SwatException
 	 */
 	public function addInputCell(SwatInputCell $cell, $column_id)
 	{
-		if (!$this->parent->hasColumn($column_id))
-			throw new SwatException('Cannot add input cell given a '.
-				'non-existant column identifier. Make sure the column you are '.
-				'identifying has an identifier set.');
-
 		$this->input_cells[$column_id] = $cell;
 	}
 
@@ -324,7 +316,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		 * and try to parse the final XML string with XHTML entities in it we
 		 * get an undefined entity error.
 		 */
-		$row_string = $this->getRowString();
+		$row_string = $this->getRowString($this->parent->getColumns());
 		$row_string = SwatString::minimizeEntities($row_string);
 		$row_string = str_replace("'", "&apos;", $row_string);
 
