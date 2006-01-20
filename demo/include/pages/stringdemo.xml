@@ -8,30 +8,35 @@
 			<property name="title">Right Ellipsize</property>
 			<property name="open" type="boolean">false</property>
 			<widget class="SwatContentBlock" id="right_ellipsize">
+				<property name="content_type">text/xml</property>
 			</widget>
 		</widget>
 		<widget class="SwatDisclosure">
 			<property name="title">Middle Ellipsize</property>
 			<property name="open" type="boolean">false</property>
 			<widget class="SwatContentBlock" id="middle_ellipsize">
+				<property name="content_type">text/xml</property>
 			</widget>
 		</widget>
 		<widget class="SwatDisclosure">
 			<property name="title">Condense</property>
 			<property name="open" type="boolean">false</property>
 			<widget class="SwatContentBlock" id="condense">
+				<property name="content_type">text/xml</property>
 			</widget>
 		</widget>
 		<widget class="SwatDisclosure">
 			<property name="title">Condense To Name</property>
 			<property name="open" type="boolean">false</property>
 			<widget class="SwatContentBlock" id="condense_to_name">
+				<property name="content_type">text/xml</property>
 			</widget>
 		</widget>
 		<widget class="SwatDisclosure">
 			<property name="title">Convert Plain Text to XHTML</property>
 			<property name="open" type="boolean">false</property>
 			<widget class="SwatContentBlock" id="to_xhtml">
+				<property name="content_type">text/xml</property>
 			</widget>
 		</widget>
 	</widget>
