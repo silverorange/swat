@@ -147,8 +147,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 		$this->displayInputRows($columns);
 		$this->displayEnterAnotherRow($columns);
-
-		$this->row_string = $this->getRowString($columns);
 	}
 
 	/**
