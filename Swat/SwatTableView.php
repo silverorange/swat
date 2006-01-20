@@ -166,8 +166,12 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	{
 		parent::init();
 
-		foreach ($this->columns as $column)
+		foreach ($this->columns as $column) {
 			$column->init();
+			// index the column by id if it is not already indexed
+			if (!array_key_exists($column->id, $this->columns_by_id))
+				$this->columns_by_id[$column->id] = $column;
+		}
 
 		foreach ($this->extra_rows as $row)
 			$row->init();
