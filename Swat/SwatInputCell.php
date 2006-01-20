@@ -42,9 +42,35 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	private $widget = null;
 
 	/**
+	 * A lookup array for widgets contained in this cell
+	 *
+	 * The array is multidimentional and is of the form:
+	 * <code>
+	 * array(
+	 *     0 => array('widget_id' => $widget0_reference),
+	 *     1 => array('widget_id' => $widget1_reference)
+	 * );
+	 * </code>
+	 * The 0 and 1 represent numeric row identifiers. The 'widge_id' string
+	 * represents the original identifier of the widget in this cell. The
+	 * widget references are references to the cloned widgets.
+	 *
+	 * @var array
+	 */
+	private $widgets = array();
+	
+	/**
 	 * A cache of cloned widgets
 	 *
 	 * This cache is used so we only have to clone widgets once per page load.
+	 * The array is of the form:
+	 * <code>
+	 * array(
+	 *     0 => $widget0_reference,
+	 *     1 => $widget1_reference
+	 * );
+	 * </code>
+	 * where 0 and 1 are numeric row identifiers.
 	 *
 	 * @var array
 	 */
@@ -147,7 +173,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function getWidget()
+	// {{{ public function getPrototypeWidget()
 
 	/** 
 	 * Gets the widget of this input cell
@@ -158,11 +184,41 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	 *
 	 * @return SwatWidget the widget of this input cell.
 	 *
-	 * @see SwatTableViewInputRow::getWidget()
+	 * @see SwatTableViewInputRow::getWidget(), SwatInputCell::getWidget()
 	 */
-	public function getWidget()
+	public function getPrototypeWidget()
 	{
 		return $this->widget;
+	}
+
+	// }}}
+	// {{{ public function getWidget()
+
+	/**
+	 * Gets a particular widget in this input cell
+	 *
+	 * @param integer $row_number the numeric row identifier of the widget.
+	 * @param string $widget_id the unique identifier of the widget. If no id
+	 *                           is specified, the root widget of this cell is
+	 *                           returned for the given row.
+	 *
+	 * @return SwatWidget the requested widget object.
+	 *
+	 * @throws SwatException
+	 */
+	public function getWidget($row_number, $widget_id = null)
+	{
+		if ($widget_id === null && isset($this->clones[$row_number])) {
+			return $this->clones[$row_number];
+
+		} elseif ($widget_id !== null &&
+			isset($this->widgets[$row_number][$widget_id])) {
+
+			return $this->widgets[$row_number][$widget_id];
+		}
+
+		throw new SwatException('The specified widget was not found with the '.
+			'specified row number.');
 	}
 
 	// }}}
@@ -209,15 +265,21 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 		$suffix = '_'.$this->row.'_'.$replicator_id;
 		$new_widget = clone $this->widget;
 
-		if ($new_widget->id !== null)
+		if ($new_widget->id !== null) {
+			$this->widgets[$replicator_id][$new_widget->id] = $new_widget;
 			$new_widget->id.= $suffix;
+		}
 
 		// TODO: this doesn't work for embedded table views, etc
 		if ($new_widget instanceof SwatContainer) {
 			$descendants = $new_widget->getDescendants();
 			foreach ($descendants as $descendant)
-				if ($descendant->id !== null)
+				if ($descendant->id !== null) {
+					$this->widgets[$replicator_id][$descendant->id] =
+						$descendant;
+
 					$descendant->id.= $suffix;
+				}
 		}
 
 		$this->clones[$replicator_id] = $new_widget;
