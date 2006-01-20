@@ -309,7 +309,7 @@ class SwatUI extends SwatObject
 	 * Calls self on all node children.
 	 *
 	 * @param Object $node the XML node to begin with.
-	 * @param SwatObject $parent the parent object (usually a SwatContainer)
+	 * @param SwatUIObject $parent the parent object (usually a SwatContainer)
 	 *                              to add parsed objects to.
 	 *
 	 * @throws SwatDuplicateIdException, SwatInvalidClassException, 
@@ -318,7 +318,7 @@ class SwatUI extends SwatObject
 	 *         SwatInvalidConstantExpressionException,
 	 *         SwatUndefinedConstantException
 	 */
-	private function parseUI($node, SwatObject $parent)
+	private function parseUI($node, SwatUIObject $parent)
 	{
 		array_push($this->stack, $parent);
 
@@ -362,13 +362,15 @@ class SwatUI extends SwatObject
 	 * Checks to make sure widget objects are created from widget elements
 	 * and other objects are created from object elements.
 	 *
-	 * @param SwatObject $parsed_object an object that has been parsed from XML.
+	 * @param SwatUIObject $parsed_object an object that has been parsed from
+	 *                                     SwatML.
 	 * @param string $element_name the name of the XML element node the object
 	 *                              was parsed from.
 	 *
 	 * @throws SwatDuplicateIdException, SwatInvalidClassException
 	 */
-	private function checkParsedObject(SwatObject $parsed_object, $element_name)
+	private function checkParsedObject(SwatUIObject $parsed_object,
+		$element_name)
 	{
 		if ($element_name == 'widget') {
 			if (class_exists('SwatWidget') &&
@@ -413,12 +415,12 @@ class SwatUI extends SwatObject
 	/**
 	 * Attaches a widget to a parent widget in the widget tree
 	 *
-	 * @param SwatObject $object the object to attach.
+	 * @param SwatUIObject $object the object to attach.
 	 * @param SwatUIParent $parent the parent to attach the widget to.
 	 *
 	 * @throws SwatDoesNotImplementException
 	 */
-	private function attachToParent(SwatObject $object, SwatUIParent $parent)
+	private function attachToParent(SwatUIObject $object, SwatUIParent $parent)
 	{
 		if ($parent instanceof SwatUIParent) {
 			$parent->addChild($object);
@@ -438,7 +440,7 @@ class SwatUI extends SwatObject
 	 *
 	 * @param array $node the XML element node to parse.
 	 *
-	 * @return SwatObject a reference to the object created.
+	 * @return SwatUIObject a reference to the object created.
 	 *
 	 * @throws SwatClassNotFoundException
 	 */
@@ -483,13 +485,13 @@ class SwatUI extends SwatObject
 	 * Parses a single XML property node and applies it to an object
 	 *
 	 * @param array $property_node the XML property node to parse.
-	 * @param SwatObject $object the object to apply the property to.
+	 * @param SwatUIObject $object the object to apply the property to.
 	 *
 	 * @throws SwatInvalidPropertyException, SwatInvalidPropertyTypeException,
 	 *         SwatInvalidConstantExpressionException,
 	 *         SwatUndefinedConstantException
 	 */
-	private function parseProperty($property_node, $object)
+	private function parseProperty($property_node, SwatUIObject $object)
 	{
 		$class_properties = get_class_vars(get_class($object));
 
@@ -552,7 +554,7 @@ class SwatUI extends SwatObject
 	 * @param string $value the value of the property.
 	 * @param string $type the type of the value.
 	 * @param boolean translatable whether the property is translatable.
-	 * @param SwatObject $object the object the property applies to.
+	 * @param SwatUIObject $object the object the property applies to.
 	 *
 	 * @return mixed the value of the property as an appropriate PHP datatype.
 	 *
@@ -560,7 +562,8 @@ class SwatUI extends SwatObject
 	 *         SwatInvalidConstantExpressionException,
 	 *         SwatUndefinedConstantException
 	 */
-	private function parseValue($name, $value, $type, $translatable, $object)
+	private function parseValue($name, $value, $type, $translatable,
+		SwatUIObject $object)
 	{
 		switch ($type) {
 		case 'string':
@@ -603,11 +606,12 @@ class SwatUI extends SwatObject
 	 *
 	 * @param string $name the name of the property.
 	 * @param string $value the value of the property.
-	 * @param SwatObject $object the object the property applies to.
+	 * @param SwatUIObject $object the object the property applies to.
 	 *
 	 * @throws SwatInvalidPropertyTypeException
 	 */
-	private function handleDataPropertyValue($name, $value, $object)
+	private function handleDataPropertyValue($name, $value,
+		SwatUIObject $object)
 	{
 		$renderer = null;
 		$renderer_container = null;
@@ -639,11 +643,11 @@ class SwatUI extends SwatObject
 	 * @param string $value the value to be translated.
 	 * @param boolean $translatable whether or not it is possible to translate
 	 *                               the value.
-	 * @param SwatObject $object the object the property value applies to.
+	 * @param SwatUIObject $object the object the property value applies to.
 	 *
 	 * @return string the translated value if possible, otherwise $value.
 	 */
-	private function translateValue($value, $translatable, $object)
+	private function translateValue($value, $translatable, SwatUIObject $object)
 	{
 		if (!$translatable)
 			return $value;
@@ -661,14 +665,14 @@ class SwatUI extends SwatObject
 	 * Evaluate a constant property value
 	 *
 	 * @param string $expression constant expression to evaluate.
-	 * @param SwatObject $object the object that conatins the class constant.
+	 * @param SwatUIObject $object the object that conatins the class constant.
 	 *
 	 * @return string the value of the class constant.
 	 *
 	 * @throws SwatInvalidConstantExpressionException,
 	 *         SwatUndefinedConstantException
 	 */
-	private function parseConstantExpression($expression, $object)
+	private function parseConstantExpression($expression, SwatUIObject $object)
 	{
 		/*
 		 * This method converts a constant expression into reverse polish
