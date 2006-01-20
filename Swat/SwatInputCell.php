@@ -233,7 +233,9 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	 */
 	public function getHtmlHeadEntries()
 	{
-		return $this->html_head_entries;
+		$out = $this->html_head_entries;
+		$out = array_merge($out, $this->widget->getHtmlHeadEntries());
+		return $out;
 	}
 
 	// }}}
