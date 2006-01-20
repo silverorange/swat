@@ -152,6 +152,36 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	}
 
 	/**
+	 * Gets a particular widget in this row
+	 *
+	 * This method is used to get or set properties of specific cloned widgets
+	 * within this input row. The most common case is when you want to
+	 * iterate through the user submitted data in this input row.
+	 *
+	 * @param string $column_id the unique identifier of the table-view column
+	 *                           the widget resides in.
+	 * @param integer $row_number the numeric row identifier of the widget.
+	 * @param string $widget_id the unique identifier of the widget. If no id
+	 *                           is specified, the root widget of the column's
+	 *                           cell is returned for the given row.
+	 *
+	 * @return SwatWidget
+	 *
+	 * @see SwatInputCell::getWidget()
+	 *
+	 * @throws SwatException
+	 */
+	public function getWidget($column_id, $row_number, $widget_id = null)
+	{
+		if (isset($this->input_cells[$column_id]))
+			return $this->input_cells[$column_id]->getWidget($row_number,
+				$widget_id);
+
+		throw new SwatException('No input cell for this row exists for the '.
+			'given column identifier.');
+	}
+
+	/**
 	 * Displays the actual XHTML input rows for this input row
 	 *
 	 * Displays the number of rows specified in the property
@@ -277,7 +307,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$suffix = '_'.$this->id.'_%s';
 
 			if (isset($this->input_cells[$column->id])) {
-				$widget = $this->input_cells[$column->id]->getWidget();
+				$widget = $this->input_cells[$column->id]->getPrototypeWidget();
 				if ($widget->id !== null)
 					$widget->id.= $suffix;
 
@@ -303,7 +333,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 * Creates a JavaScript object to control the client behaviour of this
 	 * input row
 	 *
-	 * @return string
+	 * @return string the inline JavaScript required by this row.
 	 */
 	public function getInlineJavaScript()
 	{
