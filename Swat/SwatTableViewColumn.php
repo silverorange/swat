@@ -3,6 +3,8 @@
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatCellRendererContainer.php';
+require_once 'Swat/SwatCellRenderer.php';
+require_once 'Swat/SwatInputCell.php';
 require_once 'Swat/SwatString.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
@@ -48,6 +50,13 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	public $visible = true;
 
 	/**
+	 * An array of SwatInputCell objects
+	 *
+	 * @var array
+	 */
+	protected $input_cells = array();
+
+	/**
 	 * Creates a new table-view column
 	 *
 	 * @param string $id an optional unique id identitying this column in the
@@ -60,12 +69,25 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	}
 
 	/**
+	 * Initializes this column
+	 *
 	 * Gets a unique identifier for this column if one is not provided
+	 *
+	 * This calls init on all input cells in this column
 	 */
 	public function init()
 	{
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
+
+		// add input cells to their corresponding rows
+		foreach($this->input_cells as $cell) {
+			if ($cell->row === null || !$this->view->hasRow($cell->row))
+				throw new SwatException('Table-view does not have a row '.
+					"corresponding to '{$cell->row}'.");
+
+			$this->parent->getRow($cell->row)->addInputCell($cell, $this->id);
+		}
 	}
 
 	public function process()
@@ -157,6 +179,19 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	}
 
 	/**
+	 * Adds an input cell to this column
+	 *
+	 * @param SwatInputCell $cell the input cell to add.
+	 *
+	 * @see SwatTableViewColumn::init(), SwatTableViewInputRow
+	 */
+	public function addInputCell(SwatInputCell $cell)
+	{
+		$this->input_cells[] = $cell;
+		$cell->parent = $this;
+	}
+
+	/**
 	 * Add a child object to this object
 	 * 
 	 * @param SwatCellRenderer $child the reference to the child object to add.
@@ -167,12 +202,15 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	 */
 	public function addChild(SwatObject $child)
 	{
-		if ($child instanceof SwatCellRenderer)
+		if ($child instanceof SwatCellRenderer) {
 			$this->addRenderer($child);
-		else
+		} elseif ($child instanceof SwatInputCell) {
+			$this->addInputCell($child);
+		} else {
 			throw new SwatInvalidClassException(
-				'Only SwatCellRender objects may be nested within '.
-				'SwatTableViewColumn objects.', 0, $child);
+				'Only SwatCellRenderer and SwatInputCell objects may be '.
+				'nested within SwatTableViewColumn objects.', 0, $child);
+		}
 	}
 
 	/**
@@ -188,6 +226,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 		$renderers = $this->getRenderers();
 		foreach ($renderers as $renderer)
 			$out = array_merge($out, $renderer->getHtmlHeadEntries());
+
+		foreach ($this->input_cells as $input_cell)
+			$out = array_merge($out,
+				$input_cell->getHtmlHeadEntries());
 
 		return $out;
 	}
