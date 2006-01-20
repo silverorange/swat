@@ -113,7 +113,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	{
 		$widget = $this->getClonedWidget($row_number);
 		$widget->process();
-		Swat::printObject($widget->id.' :: '.$widget->getState());
 	}
 
 	// }}}
