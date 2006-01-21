@@ -119,6 +119,13 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	private $time_entry = null;
 
 	/**
+	 * A reference to the internal calendar widget
+	 *
+	 * @var SwatCalendar
+	 */
+	private $calendar = null;
+
+	/**
 	 * An internal flag telling whether internal widgets have been
 	 * created or not
 	 *
@@ -247,12 +254,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$this->displayJavaScript();
 
 		if ($this->display_parts & self::CALENDAR) {
-			require_once 'Swat/SwatCalendar.php';
-			$cal = new SwatCalendar($this->id.'_calendar');
-			$cal->entry_id = $this->id;
-			$cal->valid_range_start = $this->valid_range_start;
-			$cal->valid_range_end   = $this->valid_range_end;
-			$cal->display();
+			$this->calendar->display();
 		}
 	}
 
@@ -396,6 +398,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		if ($this->display_parts & self::TIME)
 			$this->createTimeEntry();
+
+		if ($this->display_parts & self::CALENDAR)
+			$this->createCalendar();
 	}
 
 	/**
@@ -530,9 +535,19 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	private function createTimeEntry()
 	{
 		require_once 'Swat/SwatTimeEntry.php';
+		$this->time_entry = new SwatTimeEntry($this->id.'_time_entry');
+	}
 
-		$this->time_entry = new SwatTimeEntry();
-		$this->time_entry->id = $this->id.'_time_entry';
+	/**
+	 * Creates the calendar widget for this date entry
+	 */
+	private function createCalendar()
+	{
+		require_once 'Swat/SwatCalendar.php';
+		$this->calendar = new SwatCalendar($this->id.'_calendar');
+		$this->calendar->entry_id = $this->id;
+		$this->calendar->valid_range_start = $this->valid_range_start;
+		$this->calendar->valid_range_end   = $this->valid_range_end;
 	}
 
 	/**
