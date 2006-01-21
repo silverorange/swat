@@ -293,9 +293,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			$minute = $this->time_entry->value->getMinute();
 			$second = $this->time_entry->value->getSecond();
 		} else {
-			$hour=0;
-			$minute=0;
-			$second=0;
+			$hour = 0;
+			$minute = 0;
+			$second = 0;
 		}
 
 		if ($this->required && $all_empty) {
@@ -307,8 +307,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			if (!$all_empty && $year === null && 
 				($this->required_parts & self::YEAR)) {
 				$msg = Swat::_('Year is Required.');
-				$this->addMessage(
-					new SwatMessage($msg, SwatMessage::ERROR));
+				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 			}
 		} else {
 			$year = 0;
@@ -318,8 +317,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			if (!$all_empty && $month === null &&
 				($this->required_parts & self::MONTH)) {
 				$msg = Swat::_('Month is Required.');
-				$this->addMessage(
-					new SwatMessage($msg, SwatMessage::ERROR));
+				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 			}
 		} else {
 			$month = 1;
@@ -329,8 +327,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			if (!$all_empty && $day === null &&
 				($this->required_parts & self::DAY)) {
 				$msg = Swat::_('Day is Required.');
-				$this->addMessage(
-					new SwatMessage($msg, SwatMessage::ERROR));
+				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 			}
 		} else {
 			$day = 1;
@@ -459,7 +456,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			for ($i = 1; $i <= 12; $i++)
 				$this->month_flydown->addOption($i,
 					$this->getMonthOptionText($i));
-
 		}
 	}
 
@@ -475,9 +471,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$option = '';
 
 		if ($this->show_month_number)
-			$option .= '('.str_pad($month, 2, '0', STR_PAD_LEFT).') ';
+			$option.= '('.str_pad($month, 2, '0', STR_PAD_LEFT).') ';
 
-		$option .= Date_Calc::getMonthFullName($month);
+		$option.= Date_Calc::getMonthFullName($month);
 
 		return $option;
 	}
@@ -523,10 +519,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 				$this->day_flydown->addOption($i, $i);
 
 		} else {
-
 			for ($i = 1; $i <= 31; $i++)
 				$this->day_flydown->addOption($i, $i);
-
 		}
 	}
 
@@ -549,9 +543,10 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	private function validateRanges()
 	{
-		if (Date::compare($this->value,$this->valid_range_start,true) == -1) {
+		if (Date::compare($this->value, $this->valid_range_start,true) == -1) {
 
-			$msg = sprintf(Swat::_('The date you have entered is invalid. It must be after %s.'),
+			$msg = sprintf(Swat::_('The date you have entered is invalid. '.
+				'It must be after %s.'),
 				$this->getFormattedDate($this->valid_range_start));
 
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
@@ -559,11 +554,11 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		} elseif
 			(Date::compare($this->value, $this->valid_range_end, true) == 1) {
 
-			$msg = sprintf(Swat::_('The date you have entered is invalid. It must be before %s.'),
+			$msg = sprintf(Swat::_('The date you have entered is invalid. '.
+				'It must be before %s.'),
 				$this->getFormattedDate($this->valid_range_end));
 
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-
 		}
 	}
 
