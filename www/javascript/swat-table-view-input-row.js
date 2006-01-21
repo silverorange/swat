@@ -21,7 +21,7 @@ function SwatTableViewInputRow(id, row_string)
 
 	// decode string
 	row_string = row_string.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-	row_string = row_string.replace(/&quot;/g, '"').replace(/&apos;/g, '"');
+	row_string = row_string.replace(/&quot;/g, '"').replace(/&apos;/g, "'");
 	row_string = row_string.replace(/&amp;/g, '&');
 
 	/*
