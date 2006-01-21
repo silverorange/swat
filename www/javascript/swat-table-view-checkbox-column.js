@@ -16,6 +16,8 @@ function SwatTableViewCheckboxColumn(id, table)
 	this.check_all = null;
 	this.check_list = new Array();
 
+	var is_ie = (document.addEventListener) ? false : true;
+
 	/*
 	 * Get all checkboxes with name = id + [] and that are contained in the
 	 * correct table-view. Note: getElementsByName() does not work from a node
@@ -34,8 +36,6 @@ function SwatTableViewCheckboxColumn(id, table)
 				items[i].addEventListener("change", eventHandler, false);
 		}
 	}
-
-	var is_ie = (document.addEventListener) ? false : true;
 
 	function eventHandler(event)
 	{
