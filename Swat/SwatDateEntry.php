@@ -157,12 +157,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		$this->requires_id = true;
 
-		$this->addJavaScript('swat/javascript/swat-calendar.js');
-		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
 		$this->addJavaScript('swat/javascript/swat-find-index.js');
 		$this->addJavaScript('swat/javascript/swat-date-entry.js');
-		$this->addJavaScript('swat/javascript/swat-time-entry.js');
-		$this->addStylesheet('swat/styles/swat-calendar.css');
 	}
 
 	/**
@@ -378,6 +374,28 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	public function setState($state)
 	{
 		$this->value = new SwatDate($state);
+	}
+
+	/**
+	 * Gathers the SwatHtmlHeadEntry objects needed by this date entry 
+	 *
+	 * @return array the SwatHtmlHeadEntry objects needed by this date entry.
+	 *
+	 * @see SwatUIObject::getSwatHtmlHeadEntries()
+	 */
+	public function getHtmlHeadEntries()
+	{
+		$out = $this->html_head_entries;
+
+		$this->createSubWidgets();
+
+		if ($this->display_parts & self::TIME)
+			$out = array_merge($out, $this->time_entry->getHtmlHeadEntries());
+
+		if ($this->display_parts & self::CALENDAR)
+			$out = array_merge($out, $this->calendar->getHtmlHeadEntries());
+
+		return $out;
 	}
 
 	/**
