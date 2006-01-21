@@ -130,6 +130,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 * created or not
 	 *
 	 * @var boolean
+	 *
+	 * @see SwatDateEntry::createSubWidgets()
 	 */
 	private $created = false;
 
@@ -204,7 +206,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
-		$this->createFlydowns();
+		$this->createSubWidgets();
 
 		echo '<span class="swat-date-span">';
 
@@ -267,7 +269,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	public function process()
 	{
-		$this->createFlydowns();
+		$this->createSubWidgets();
 
 		$all_empty = true;
 
@@ -381,7 +383,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	/**
 	 * Creates all internal widgets required for this date entry
 	 */
-	private function createFlydowns()
+	private function createSubWidgets()
 	{ 
 		if ($this->created) return;
 
