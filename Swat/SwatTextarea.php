@@ -49,6 +49,9 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
+		// textarea tags cannot be self-closing
+		$value = ($this->value === null) ? '' : $this->value;
+
 		$textarea_tag = new SwatHtmlTag('textarea');
 		$textarea_tag->name = $this->id;
 		$textarea_tag->id = $this->id;
@@ -57,7 +60,7 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		//       a textarea for XHTML strict.
 		$textarea_tag->rows = $this->rows;
 		$textarea_tag->cols = $this->cols;
-		$textarea_tag->setContent($this->value);
+		$textarea_tag->setContent($value, 'text/plain');
 
 		$textarea_tag->display();
 	}
