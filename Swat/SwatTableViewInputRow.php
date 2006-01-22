@@ -71,7 +71,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 */
 	public function __construct()
 	{
-		$this->enter_text = Swat::_('enter another');
+		$this->enter_text = Swat::_('enter&nbsp;another');
 		$this->addJavaScript('swat/javascript/swat-table-view-input-row.js');
 	}
 
@@ -216,6 +216,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		for ($i = 0; $i < $this->number; $i++) {
 
 			$tr_tag = new SwatHtmlTag('tr');
+			$tr_tag->class = 'swat-table-view-input-row';
 			$tr_tag->open();
 
 			foreach ($columns as $column) {
