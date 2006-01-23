@@ -180,7 +180,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 		if (isset($this->action_items[$selected_id])) {
 			$this->selected = $this->action_items[$selected_id];
 
-			if ($this->selected->widget != null)
+			if ($this->selected->widget !== null)
 				$this->selected->widget->process();
 
 		} else {
