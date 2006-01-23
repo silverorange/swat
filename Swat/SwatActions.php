@@ -4,6 +4,7 @@ require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatButton.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatActionItem.php';
+require_once 'Swat/SwatActionItemDivider.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
@@ -262,7 +263,10 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$this->action_flydown->show_blank = $this->show_blank;
 
 		foreach ($this->action_items as $item)
-			$this->action_flydown->addOption($item->id, $item->title);
+			if ($item instanceof SwatActionItemDivider)
+				$this->action_flydown->addDivider();
+			else
+				$this->action_flydown->addOption($item->id, $item->title);
 
 		$this->apply_button = new SwatButton($this->id.'_apply_button');
 		$this->apply_button->setFromStock('apply');
