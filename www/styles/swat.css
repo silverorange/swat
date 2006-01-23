@@ -335,11 +335,12 @@ table.swat-table-view th.swat-check-cell {
 
 img.swat-image-cell-renderer { vertical-align: middle; }
 
-/* SwatDetailsView */
-
-.swat-details-view .none {
+.swat-none {
 	color: #888;
 }
+
+
+/* SwatDetailsView */
 
 .swat-details-view-field th, 
 .swat-details-view-vertical-field th,
