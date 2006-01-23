@@ -120,9 +120,9 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 			if ($this->link_value === null)
 				$anchor->href = $this->link;
 			elseif (is_array($this->link_value))
-				$anchor->href = vsprintf($this->link, $this->value);
+				$anchor->href = vsprintf($this->link, $this->link_value);
 			else
-				$anchor->href = sprintf($this->link, $this->value);
+				$anchor->href = sprintf($this->link, $this->link_value);
 
 			$anchor->display();
 		} else {
