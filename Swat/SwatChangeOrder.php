@@ -119,7 +119,8 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
 	public function process()
 	{
-		$this->values = explode(',', $_POST[$this->id]);
+		$data = &$this->getForm()->getFormData();
+		$this->values = explode(',', $data[$this->id]);
 	}
 
 	public function getState()
