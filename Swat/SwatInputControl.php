@@ -50,8 +50,8 @@ abstract class SwatInputControl extends SwatControl
 	{
 		$form = $this->getFirstAncestor('SwatForm');
 		if ($form === null)
-			throw SwatException('Input controls must reside inside a SwatForm '.
-				'widget.');
+			throw new SwatException('Input controls must reside inside a '.
+				'SwatForm widget.');
 
 		return $form;
 	}
