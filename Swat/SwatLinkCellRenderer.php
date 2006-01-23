@@ -41,6 +41,15 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	public $text;
 
 	/**
+	 * Optional content type
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $content_type = 'text/plain';
+
+	/**
 	 * A value to substitute into the link and or text of this cell
 	 *
 	 * @var string
@@ -85,10 +94,10 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 
 			if ($this->value === null) {
 				$anchor->href = $this->link;
-				$anchor->setContent($this->text);
+				$anchor->setContent($this->text, $this->content_type);
 			} else {
 				$anchor->href = sprintf($this->link, $this->value);
-				$anchor->setContent(sprintf($this->text, $this->value));
+				$anchor->setContent(sprintf($this->text, $this->value), $this->content_type);
 			}
 
 			$anchor->display();
@@ -102,9 +111,9 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 				$span_tag->class = 'swat-link-cell-renderer-insensitive';
 
 			if ($this->value === null)
-				$span_tag->setContent($this->text);
+				$span_tag->setContent($this->text, $this->content_type);
 			else
-				$span_tag->setContent(sprintf($this->text, $this->value));
+				$span_tag->setContent(sprintf($this->text, $this->value), $this->content_type);
 
 			$span_tag->display();
 		}
