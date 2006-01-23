@@ -25,6 +25,15 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	public $options = null;
 
 	/**
+	 * Optional content type for option titles
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $content_type = 'text/plain';
+
+	/**
 	 * List values 
 	 *
 	 * The values of the selected items.
@@ -132,7 +141,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 				$input_tag->display();
 
 				$label_tag->for = $this->id.'_'.$input_tag->value;
-				$label_tag->setContent($title);
+				$label_tag->setContent($title, $this->content_type);
 				$label_tag->display();
 
 				echo '</li>';
