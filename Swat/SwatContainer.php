@@ -78,6 +78,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		foreach ($this->children as $key => $child_widget) {
 			if ($child_widget === $widget) {
 				$this->children[$key] = $new_widget;
+				$new_widget->parent = $this;
 				$widget->parent = null;
 				return $widget;
 			}
