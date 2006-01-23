@@ -386,9 +386,10 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	private function getForm()
 	{
 		$form = $this->getFirstAncestor('SwatForm');
+
 		if ($form === null)
-			throw new SwatException('Table-view must be inside a SwatForm for '.
-				'input row to work.');
+			throw new SwatException('SwatTableView must be inside a SwatForm for '.
+				'SwatTableViewInputRow to work.');
 
 		return $form;
 	}
