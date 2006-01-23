@@ -134,14 +134,14 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	private $calendar = null;
 
 	/**
-	 * An internal flag telling whether internal widgets have been
-	 * created or not
+	 * An internal flag that is set to true when embedded widgets have been
+	 * created
 	 *
 	 * @var boolean
 	 *
-	 * @see SwatDateEntry::createSubWidgets()
+	 * @see SwatDateEntry::createEmbeddedWidgets()
 	 */
-	private $created = false;
+	private $widgets_created = false;
 
 	// }}}
 	// {{{ public function __construct()
@@ -219,7 +219,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
-		$this->createSubWidgets();
+		$this->createEmbeddedWidgets();
 
 		echo '<span class="swat-date-span">';
 
@@ -285,7 +285,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	public function process()
 	{
-		$this->createSubWidgets();
+		$this->createEmbeddedWidgets();
 
 		$all_empty = true;
 
@@ -416,7 +416,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		$out = $this->html_head_entries;
 
-		$this->createSubWidgets();
+		$this->createEmbeddedWidgets();
 
 		if ($this->display_parts & self::TIME)
 			$out = array_merge($out, $this->time_entry->getHtmlHeadEntries());
@@ -428,16 +428,16 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private function createSubWidgets()
+	// {{{ private function createEmbeddedWidgets()
 
 	/**
 	 * Creates all internal widgets required for this date entry
 	 */
-	private function createSubWidgets()
+	private function createEmbeddedWidgets()
 	{ 
-		if ($this->created) return;
+		if ($this->widgets_created) return;
 
-		$this->created = true;
+		$this->widgets_created = true;
 
 		if ($this->display_parts & self::YEAR)
 			$this->createYearFlydown();
