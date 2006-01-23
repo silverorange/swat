@@ -1,9 +1,8 @@
 <?php
 
-require_once 'Swat/SwatInputControl.php';
+require_once 'Swat/SwatOptionControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
-require_once 'Swat/SwatFlydownOption.php';
 require_once 'Swat/SwatFlydownDivider.php';
 
 /**
@@ -13,18 +12,9 @@ require_once 'Swat/SwatFlydownDivider.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFlydown extends SwatInputControl implements SwatState
+class SwatFlydown extends SwatOptionControl implements SwatState
 {
 	// {{{ public properties
-
-	/**
-	 * Flydown options
-	 *
-	 * An array of {@link SwatFlydownOptions}
-	 *
-	 * @var array
-	 */
-	public $options = array();
 
 	/**
 	 * Flydown value
@@ -94,7 +84,7 @@ class SwatFlydown extends SwatInputControl implements SwatState
 		// when processing.
 		if ($this->show_blank)
 			$options = array_merge(
-				array(new SwatFlydownOption('', $this->blank_title)),
+				array(new SwatOption('', $this->blank_title)),
 				$options);
 
 		// only show a select if there is more than one option
@@ -173,26 +163,6 @@ class SwatFlydown extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ public function addOption()
-
-	/**
-	 * Add an option element
-	 *
-	 * @param mixed $value Either a simply value for the option, or a
-	 *                      {@link SwatFlydownOption} object. If a
-	 *                      {@link SwatFlydownOption} object is used, the
-	 *                      $title parameter of addOption will be ignored.
-	 * @param string $title The title of the option element.
-	 */
-	public function addOption($value, $title = '')
-	{
-		if ($value instanceof SwatFlydownOption)
-			$this->options[] = $value;
-		else
-			$this->options[] = new SwatFlydownOption($value, $title);
-	}
-
-	// }}}
 	// {{{ public function addDivider()
 
 	/**
@@ -206,20 +176,6 @@ class SwatFlydown extends SwatInputControl implements SwatState
 	public function addDivider($title = '&#8212;&#8212;')
 	{
 		$this->options[] = new SwatFlydownDivider('', $title);
-	}
-
-	// }}}
-	// {{{ public function addOptionsByArray()
-
-	/**
-	 * Add an option element
-	 *
-	 * @param array $options An associative array of options.
-	 */
-	public function addOptionsByArray($options)
-	{
-		foreach ($options as $value => $title)
-			$this->addOption($value, $title);
 	}
 
 	// }}}
@@ -286,22 +242,6 @@ class SwatFlydown extends SwatInputControl implements SwatState
 		$hidden_tag->display();
 
 		echo $title;
-	}
-
-	// }}}
-	// {{{ protected function getOptions()
-
-	/**
-	 * Gets a reference to the array of options to show in this flydown
-	 *
-	 * Subclasses may want to override this method.
-	 *
-	 * @return array a reference to the array of options to show in this
-	 *                flydown.
-	 */
-	protected function &getOptions()
-	{
-		return $this->options;
 	}
 
 	// }}}

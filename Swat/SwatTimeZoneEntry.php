@@ -222,7 +222,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 					$title.= ' ('.$GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$title]['shortname'].')';
 
 				$this->regions[$area][] =
-					new SwatFlydownOption($name, str_replace('_', ' ', $title));
+					new SwatOption($name, str_replace('_', ' ', $title));
 			}
 		}
 	}

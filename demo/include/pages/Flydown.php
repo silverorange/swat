@@ -2,7 +2,7 @@
 
 require_once 'DemoPage.php';
 require_once 'Swat/SwatTreeFlydownNode.php';
-require_once 'Swat/SwatFlydownOption.php';
+require_once 'Swat/SwatOption.php';
 
 /**
  * A demo using flydowns
@@ -21,15 +21,15 @@ class Flydown extends DemoPage
 	{
 		$flydown = $this->ui->getWidget('flydown');
 		$flydown->options = array(
-			new SwatFlydownOption(0, 'Apple'),
-			new SwatFlydownOption(1, 'Orange'),
-			new SwatFlydownOption(2, 'Banana'),
-			new SwatFlydownOption(3, 'Pear'),
-			new SwatFlydownOption(4, 'Pineapple'),
-			new SwatFlydownOption(5, 'Kiwi'),
-			new SwatFlydownOption(6, 'Tangerine'),
-			new SwatFlydownOption(7, 'Grapefruit'),
-			new SwatFlydownOption(8, 'Strawberry')
+			new SwatOption(0, 'Apple'),
+			new SwatOption(1, 'Orange'),
+			new SwatOption(2, 'Banana'),
+			new SwatOption(3, 'Pear'),
+			new SwatOption(4, 'Pineapple'),
+			new SwatOption(5, 'Kiwi'),
+			new SwatOption(6, 'Tangerine'),
+			new SwatOption(7, 'Grapefruit'),
+			new SwatOption(8, 'Strawberry')
 		);
 
 		// tree flydown
@@ -57,8 +57,8 @@ class Flydown extends DemoPage
 
 		$cascade_from = $this->ui->getWidget('cascade_from');
 		$cascade_from->options = array(
-			new SwatFlydownOption(0, 'Apple'),
-			new SwatFlydownOption(1, 'Orange')
+			new SwatOption(0, 'Apple'),
+			new SwatOption(1, 'Orange')
 		);
 
 		$cascade_to = $this->ui->getWidget('cascade_to');
@@ -66,18 +66,18 @@ class Flydown extends DemoPage
 
 		$cascade_to->options = array(
 			0 => array(
-				new SwatFlydownOption(0, 'Mackintosh'),
-				new SwatFlydownOption(1, 'Courtland'),
-				new SwatFlydownOption(2, 'Golden Delicious'),
-				new SwatFlydownOption(3, 'Fuji'),
-				new SwatFlydownOption(4, 'Granny Smith')
+				new SwatOption(0, 'Mackintosh'),
+				new SwatOption(1, 'Courtland'),
+				new SwatOption(2, 'Golden Delicious'),
+				new SwatOption(3, 'Fuji'),
+				new SwatOption(4, 'Granny Smith')
 			),
 			1 => array(
-				new SwatFlydownOption(0, 'Navel'),
-				new SwatFlydownOption(1, 'Blood'),
-				new SwatFlydownOption(2, 'Florida'),
-				new SwatFlydownOption(3, 'California'),
-				new SwatFlydownOption(4, 'Mandarin')
+				new SwatOption(0, 'Navel'),
+				new SwatOption(1, 'Blood'),
+				new SwatOption(2, 'Florida'),
+				new SwatOption(3, 'California'),
+				new SwatOption(4, 'Mandarin')
 			)
 		);
 	}

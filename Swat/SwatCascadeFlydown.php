@@ -21,11 +21,11 @@ class SwatCascadeFlydown extends SwatFlydown
 	/**
 	 * Flydown options
 	 *
-	 * An array of parents and {@link SwatFlydownOption}s for the flydown. Each parent value
+	 * An array of parents and {@link SwatOption}s for the flydown. Each parent value
 	 * is associated to an array of possible child values, in the form:
 	 *    array(
-	 *        parent_value1 => array(SwatFlydownOption1, SwatFlydownOption2),
-	 *        parent_value2 => array(SwatFlydownOption3, SwatFlydownOption4),
+	 *        parent_value1 => array(SwatOption1, SwatOption2),
+	 *        parent_value2 => array(SwatOption3, SwatOption4),
 	 *    )
 	 *
 	 * @var array
@@ -99,8 +99,8 @@ class SwatCascadeFlydown extends SwatFlydown
 		$parent_value = $this->cascade_from->value;
 		if ($parent_value === null) {
 			if ($this->cascade_from->show_blank) {
-				$ret[] = new SwatFlydownOption('', '');
-				$ret[] = new SwatFlydownOption('', '');
+				$ret[] = new SwatOption('', '');
+				$ret[] = new SwatOption('', '');
 				return $ret;
 			} else
 				$option_array = $this->options[current($this->cascade_from->options)->value];
@@ -110,7 +110,7 @@ class SwatCascadeFlydown extends SwatFlydown
 
 		if ($this->show_blank && count($option_array) > 1) {
 			unset($ret[key($ret)]);
-			$ret[] = new SwatFlydownOption('', Swat::_('choose one ...'));
+			$ret[] = new SwatOption('', Swat::_('choose one ...'));
 		}
 
 		$ret = array_merge($ret, $option_array);

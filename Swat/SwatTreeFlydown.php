@@ -54,7 +54,7 @@ class SwatTreeFlydown extends SwatFlydown
 	 * Gets this flydown's tree as a flat array used in the
 	 * {@link SwatFlydown::display()} method
 	 *
-	 * @return array a reference to an array of {@link SwatFlydownOption}
+	 * @return array a reference to an array of {@link SwatOption}
 	 *                options.
 	 */
 	protected function &getOptions()

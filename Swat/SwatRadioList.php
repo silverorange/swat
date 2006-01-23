@@ -40,7 +40,7 @@ class SwatRadioList extends SwatFlydown implements SwatState
 		// when processing.
 		if ($this->show_blank)
 			$options = array_merge(
-				array(new SwatFlydownOption('', $this->blank_title)),
+				array(new SwatOption('', $this->blank_title)),
 				$options);
 		
 		$input_tag = new SwatHtmlTag('input');
