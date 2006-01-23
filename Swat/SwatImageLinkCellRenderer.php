@@ -12,27 +12,32 @@ require_once 'Swat/SwatImageCellRenderer.php';
 class SwatImageLinkCellRenderer extends SwatImageCellRenderer
 {
 	/**
-	 * Link href
+	 * The href attribute in the XHTML anchor tag
 	 *
-	 * The href attribute in the XHTML anchor tag.
-	 *
-	 * The link may include a sprintf substitution tag. For example:
+	 * Optionally uses vsprintf() syntax, for example:
 	 * <code>
-	 * $renderer->link = 'MySection/MyPage?id=%s';
+	 * $renderer->link = 'MySection/MyPage/%s?id=%s';
 	 * </code>
 	 *
 	 * @var string
+	 *
+	 * @see SwatLinkCellRenderer::$link_value
 	 */
 	public $link;
 
 	/**
-	 * Link value
+	 * A value or array of values to substitute into the link of this cell
 	 *
-	 * A value to substitute into the link.
+	 * The value property may be specified either as an array of values or as
+	 * a single value. If an array is passed, a call to vsprintf() is done
+	 * on the {@link SwatImageLinkCellRenderer::$link} property. If the value
+	 * is a string a single sprintf() call is made.
 	 *
-	 * @var string
+	 * @var mixed
+	 *
+	 * @see SwatImageLinkCellRenderer::$link
 	 */
-	public $value = null;
+	public $link_value = null;
 
 	/**
 	 * Renders the contents of this cell
@@ -44,10 +49,12 @@ class SwatImageLinkCellRenderer extends SwatImageCellRenderer
 		if ($this->sensitive) {
 			$anchor = new SwatHtmlTag('a');
 
-			if ($this->value === null)
+			if ($this->link_value === null)
 				$anchor->href = $this->link;
+			elseif (is_array($this->link_value))
+				$anchor->href = vsprintf($this->link, $this->link_value);
 			else
-				$anchor->href = sprintf($this->link, $this->value);
+				$anchor->href = sprintf($this->link, $this->link_value);
 
 			$anchor->open();
 		}

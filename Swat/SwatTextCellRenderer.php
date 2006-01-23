@@ -12,11 +12,16 @@ require_once 'Swat/SwatCellRenderer.php';
 class SwatTextCellRenderer extends SwatCellRenderer
 {
 	/**
-	 * Cell content
+	 * The textual content to place within this cell
 	 *
-	 * The textual content to place within this cell.
+	 * Optionally uses vsprintf() syntax, for example:
+	 * <code>
+	 * $renderer->text = 'Page %s of %s';
+	 * </code>
 	 *
 	 * @var string
+	 *
+	 * @see SwatTextCellRenderer::$value
 	 */
 	public $text = '';
 
@@ -30,14 +35,16 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	public $content_type = 'text/plain';
 
 	/**
-	 * A value to substitute into the text of this cell
+	 * A value or array of values to substitute into the text of this cell
 	 *
-	 * The value is substituted using a call to printf. For example, if the
-	 * {@link SwatCellRendererText::$text} property is set to 'My %s example'
-	 * and the value property is set to 'awesome' the cell renderer will render
-	 * as 'My awesome example'.
+	 * The value property may be specified either as an array of values or as
+	 * a single value. If an array is passed, a call to vsprintf() is done
+	 * on the {@link SwatTextCellRenderer::$text} property. If the value
+	 * is a string a single sprintf() call is made.
 	 *
-	 * @var string
+	 * @var mixed
+	 *
+	 * @see SwatTextCellRenderer::$text
 	 */
 	public $value = null;
 
@@ -50,6 +57,8 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	{
 		if ($this->value === null)
 			$text = $this->text;
+		elseif (is_array($this->value))
+			$text = vsprintf($this->text, $this->value);
 		else
 			$text = sprintf($this->text, $this->value);
 
