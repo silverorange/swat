@@ -27,11 +27,33 @@ abstract class SwatInputControl extends SwatControl
 	 *
 	 * @see SwatWidget::init()
 	 */
-	public function init() {
+	public function init()
+	{
 		parent::init();
 
 		if ($this->required && $this->parent instanceof SwatFormField)
 			$this->parent->required = true;
+	}
+
+	/**
+	 * Gets the form that this control is contained in
+	 *
+	 * You can also get the parent form with the
+	 * {@link SwatWidget::getFirstAncestor() method but this method is more
+	 * convenient and throws an exception .
+	 *
+	 * @return SwatForm the form this control is in.
+	 *
+	 * @throws SwatException
+	 */
+	public function getForm()
+	{
+		$form = $this->getFirstAncestor('SwatForm');
+		if ($form === null)
+			throw SwatException('Input controls must reside inside a SwatForm '.
+				'widget.');
+
+		return $form;
 	}
 }
 
