@@ -331,25 +331,7 @@ table.swat-table-view th.swat-check-cell {
 	text-align: center;
 }
 
-.swat-table-view td.swat-link-cell-renderer {
-	padding: 0;
-}
 
-td.swat-link-cell-renderer a:link,
-td.swat-link-cell-renderer a:visited {
-	display: block;
-	border: 1px solid transparent;
-	padding: 0.4em 0.2em;
-}
-
-td.swat-link-cell-renderer a:hover {
-	background: #f6f2ea url(../images/swat-toolbar-background.png) top left repeat-x;
-	border: 1px solid #f0eade;
-}
-
-td.swat-link-cell-renderer a:active {
-	background: #f3efe5;
-}
 
 img.swat-image-cell-renderer { vertical-align: middle; }
 
