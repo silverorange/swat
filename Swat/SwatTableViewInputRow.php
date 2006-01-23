@@ -102,8 +102,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		parent::process();
 
 		// retrieve the number of rows
-		$this->number =
-			$this->view->getForm()->getHiddenField($this->id.'_number');
+		$this->number = $this->getForm()->getHiddenField($this->id.'_number');
 
 		// process input cells
 		for ($i = 0; $i < $this->number; $i++)
@@ -142,8 +141,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	public function display(&$columns)
 	{
 		// add number of fields to the form as a hidden field
-		$this->view->getForm()->addHiddenField($this->id.'_number',
-			$this->number);
+		$this->getForm()->addHiddenField($this->id.'_number', $this->number);
 
 		$this->displayInputRows($columns);
 		$this->displayEnterAnotherRow($columns);
@@ -376,6 +374,23 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 		return sprintf("var %s_obj = new SwatTableViewInputRow('%s', '%s');",
 			$this->id, $this->id, trim($row_string));
+	}
+
+	/**
+	 * Gets the form this row's view is contained in
+	 *
+	 * @return SwatForm the form this row's view is contained in.
+	 *
+	 * @throws SwatException
+	 */
+	private function getForm()
+	{
+		$form = $this->getFirstAncestor('SwatForm');
+		if ($form === null)
+			throw new SwatException('Table-view must be inside a SwatForm for '.
+				'input row to work.');
+
+		return $form;
 	}
 }
 
