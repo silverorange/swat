@@ -14,25 +14,33 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	/**
 	 * The relative uri of the image file for this image renderer
 	 *
-	 * This is the src attribute in the XHTML img tag.
+	 * This is the src attribute in the XHTML img tag. It optionally uses
+	 * vsprintf() syntax, for example:
+	 * <code>
+	 * $renderer->image = 'mydir/%s.%s';
+	 * $renderer->value = array('myfilename', 'ext');
+	 * </code>
 	 *
 	 * @var string
+	 *
+	 * @see SwatImageCellRenderer::$value
 	 */
 	public $image;
 
 	/**
-	 * An optional array of values to substitute into $image
+	 * A value or array of values to substitute into the
+	 * {@link SwatImageCellRenderer:;$image} property of this cell
 	 *
-	 * Uses vsprintf() syntax, for example:
+	 * The value property may be specified either as an array of values or as
+	 * a single value. If an array is passed, a call to vsprintf() is done
+	 * on the {@link SwatImageCellRenderer::$image} property. If the value
+	 * is a string a single sprintf() call is made.
 	 *
-	 * <code>
-	 * $image = 'mydir/%s.%s';
-	 * $values = array('myfilename', 'ext');
-	 * </code>
+	 * @var mixed
 	 *
-	 * @var array
+	 * @see SwatImageCellRenderer::$image
 	 */
-	public $values = null;
+	public $value = null;
 
 	/**
 	 * The height of the image for this image renderer
@@ -81,10 +89,12 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	{
 		$image_tag = new SwatHtmlTag('img');
 
-		if ($this->values !== null)
-			$image_tag->src = vsprintf($this->image, $this->values);
-		else
+		if ($this->value === null)
 			$image_tag->src = $this->image;
+		elseif (is_array($this->value))
+			$image_tag->src = vsprintf($this->image, $this->value);
+		else
+			$image_tag->src = sprintf($this->image, $this->value);
 
 		if ($this->height > 0)
 			$image_tag->height = $this->height;

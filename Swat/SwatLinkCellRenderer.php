@@ -13,32 +13,32 @@ require_once 'Swat/SwatHtmlTag.php';
 class SwatLinkCellRenderer extends SwatCellRenderer
 {
 	/**
-	 * Link href
+	 * The href attribute in the XHTML anchor tag
 	 *
-	 * The href attribute in the XHTML anchor tag.
-	 *
-	 * The link may include a sprintf substitution tag. For example:
+	 * Optionally uses vsprintf() syntax, for example:
 	 * <code>
-	 * $renderer->link = 'MySection/MyPage?id=%s';
+	 * $renderer->link = 'MySection/MyPage/%s?id=%s';
 	 * </code>
 	 *
 	 * @var string
+	 *
+	 * @see SwatLinkCellRenderer::$link_value
 	 */
 	public $link;
 
 	/**
-	 * Link text
+	 * The visible content to place within the XHTML anchor tag
 	 *
-	 * The visible content to place within the XHTML anchor tag.
-	 *
-	 * The link may include a sprintf substitution tag. For example:
+	 * Optionally uses vsprintf() syntax, for example:
 	 * <code>
-	 * $renderer->text = 'Page %s';
+	 * $renderer->text = 'Page %s of %s';
 	 * </code>
 	 *
 	 * @var string
+	 *
+	 * @see SwatLinkCellRenderer::$value
 	 */
-	public $text;
+	public $text = '';
 
 	/**
 	 * Optional content type
@@ -50,11 +50,27 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	public $content_type = 'text/plain';
 
 	/**
-	 * A value to substitute into the link and or text of this cell
+	 * A value or array of values to substitute into the text of this cell
 	 *
-	 * @var string
+	 * The value property may be specified either as an array of values or as
+	 * a single value. If an array is passed, a call to vsprintf() is done
+	 * on the {@link SwatLinkCellRenderer::$text} property. If the value
+	 * is a string a single sprintf() call is made.
+	 *
+	 * @var mixed
+	 *
+	 * @see SwatLinkCellRenderer::$text
 	 */
 	public $value = null;
+
+	/**
+	 * A value or array of values to substitute into the link of this cell
+	 *
+	 * @var mixed
+	 *
+	 * @see SwatLinkCellRenderer::$link, SwatLinkCellRenderer::$value
+	 */
+	public $link_value = null;
 
 	/**
 	 * The CSS class to use for this link cell renderer
@@ -92,13 +108,21 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 			if ($this->class !== null)
 				$anchor->class = $this->class;
 
-			if ($this->value === null) {
+			if ($this->value === null)
+				$text = $this->text;
+			elseif (is_array($this->value))
+				$text = vsprintf($this->text, $this->value);
+			else
+				$text = sprintf($this->text, $this->value);
+
+			$anchor->setContent($text, $this->content_type);
+
+			if ($this->link_value === null)
 				$anchor->href = $this->link;
-				$anchor->setContent($this->text, $this->content_type);
-			} else {
+			elseif (is_array($this->link_value))
+				$anchor->href = vsprintf($this->link, $this->value);
+			else
 				$anchor->href = sprintf($this->link, $this->value);
-				$anchor->setContent(sprintf($this->text, $this->value), $this->content_type);
-			}
 
 			$anchor->display();
 		} else {
@@ -111,10 +135,13 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 				$span_tag->class = 'swat-link-cell-renderer-insensitive';
 
 			if ($this->value === null)
-				$span_tag->setContent($this->text, $this->content_type);
+				$text = $this->text;
+			elseif (is_array($this->value))
+				$text = vsprintf($this->text, $this->value);
 			else
-				$span_tag->setContent(sprintf($this->text, $this->value), $this->content_type);
+				$text = sprintf($this->text, $this->value);
 
+			$span_tag->setContent($text, $this->content_type);
 			$span_tag->display();
 		}
 	}

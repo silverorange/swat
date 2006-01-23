@@ -14,14 +14,16 @@ require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
 class SwatToolLink extends SwatControl
 {
 	/**
-	 * Link href
+	 * The href attribute in the XHTML anchor tag
 	 *
-	 * The link may include a sprintf substitution tag. For example:
+	 * Optionally uses vsprintf() syntax, for example:
 	 * <code>
-	 * $my_link->link = 'MySection/MyPage?id=%s';
+	 * $tool_link->link = 'MySection/MyPage/%s?id=%s';
 	 * </code>
 	 *
 	 * @var string
+	 *
+	 * @see SwatToolLink::$value
 	 */
 	public $link = '';
 
@@ -45,9 +47,16 @@ class SwatToolLink extends SwatControl
 	public $class = null;
 
 	/**
-	 * A value to substitute into the link
+	 * A value or array of values to substitute into the link of this cell
 	 *
-	 * @var string
+	 * The value property may be specified either as an array of values or as
+	 * a single value. If an array is passed, a call to vsprintf() is done
+	 * on the {@link SwatiToolLink::$link} property. If the value is a string
+	 * a single sprintf() call is made.
+	 *
+	 * @var mixed
+	 *
+	 * @see SwatToolLink::$link
 	 */
 	public $value = null;
 
@@ -91,6 +100,8 @@ class SwatToolLink extends SwatControl
 
 			if ($this->value === null)
 				$anchor_tag->href = $this->link;
+			elseif (is_array($this->value))
+				$anchor_tag->href = vsprintf($this->link, $this->value);
 			else
 				$anchor_tag->href = sprintf($this->link, $this->value);
 
