@@ -69,10 +69,12 @@ class SwatActions extends SwatControl implements SwatUIParent
 	private $action_items = array();
 
 	/**
-	 * An internal flag that is set to true when internal widgets have been
-	 * created.
+	 * An internal flag that is set to true when embedded widgets have been
+	 * created
 	 *
 	 * @var boolean
+	 *
+	 * @see SwatActions::createEmbeddedWidgets()
 	 */
 	private $widgets_created = false;
 
@@ -115,7 +117,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 		if (!$this->visible)
 			return;
 
-		$this->createWidgets();
+		$this->createEmbeddedWidgets();
 
 		// set the flydown back to its initial state (no persistence)
 		if ($this->auto_reset)
@@ -172,7 +174,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	public function process()
 	{
-		$this->createWidgets();
+		$this->createEmbeddedWidgets();
 
 		$this->action_flydown->process();
 		$selected_id = $this->action_flydown->value;
@@ -249,7 +251,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 * Widgets references are assigned to private class properties. Widgets are
 	 * only created once even if this method is called multiple times.
 	 */
-	private function createWidgets()
+	private function createEmbeddedWidgets()
 	{
 		if ($this->widgets_created)
 			return;
