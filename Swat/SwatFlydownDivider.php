@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatFlydownOption.php';
+require_once 'Swat/SwatOption.php';
 
 /**
  * A class representing a divider in a flydown
@@ -12,7 +12,7 @@ require_once 'Swat/SwatFlydownOption.php';
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFlydownDivider extends SwatFlydownOption
+class SwatFlydownDivider extends SwatOption
 {
 	/**
 	 * Creates a flydown option

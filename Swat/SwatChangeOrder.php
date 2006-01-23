@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatOptionControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
 
@@ -14,18 +14,8 @@ require_once 'Swat/SwatState.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatChangeOrder extends SwatControl implements SwatState
+class SwatChangeOrder extends SwatOptionControl implements SwatState
 {
-	/**
-	 * Order options
-	 *
-	 * An array containing the options to display. The array should be
-	 * of the form $id => $title.
-	 *
-	 * @var array
-	 */
-	public $options = array();
-
 	/**
 	 * Value ordered array
 	 *
@@ -60,8 +50,8 @@ class SwatChangeOrder extends SwatControl implements SwatState
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
+		$this->unique_values = true;
 
 		$this->addJavaScript('swat/javascript/swat-change-order.js');
 		$this->addStyleSheet('swat/styles/swat-change-order.css');
@@ -76,11 +66,11 @@ class SwatChangeOrder extends SwatControl implements SwatState
 			return;
 
 		if ($this->values !== null) {
-			$array = array();
-			foreach ($this->values as $id)
-				$array[$id] = $this->options[$id];
+			$ordered_options = array();
+			foreach ($this->values as $value)
+				$ordered_options[$value] = $this->getOption($value);
 
-			$this->options = $array;
+			$this->options = $ordered_options;
 		}
 
 		$div_tag = new SwatHtmlTag('div');
@@ -99,13 +89,13 @@ class SwatChangeOrder extends SwatControl implements SwatState
 		$list_div->class = 'swat-change-order-list';
 		$list_div->open();
 
-		$option_tag = new SwatHtmltag('div');
-		$option_tag->class = 'swat-change-order-item';
+		$option_div = new SwatHtmltag('div');
+		$option_div->class = 'swat-change-order-item';
 
 		$count = 0;
-		foreach ($this->options as $key => $option) {
-			$option_tag->setContent($option);
-			$option_tag->display();
+		foreach ($this->options as $option) {
+			$option_div->setContent($option->title, $option->content_type);
+			$option_div->display();
 			$count++;
 		}
 

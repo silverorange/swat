@@ -174,7 +174,7 @@ class DemoPage extends SwatPage
 				'SwatFlydown',
 				'SwatFlydownTree',
 				'SwatCascadeFlydown',
-				'SwatFlydownOption'
+				'SwatOption'
 				);
 			break;
 
