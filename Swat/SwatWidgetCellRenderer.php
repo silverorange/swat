@@ -84,7 +84,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 	 */
 	public function process()
 	{
-		$form = $this->getFirstAncestor('SwatForm');
+		$form = $this->getForm();
 		$replicators = $form->getHiddenField($this->widget->id.'_replicators');
 
 		foreach ($replicators as $replicator) {
@@ -98,7 +98,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 	 */
 	public function render()
 	{
-		$form = $this->getFirstAncestor('SwatForm');
+		$form = $this->getForm();
 		$widget = $this->getClonedWidget($this->replicator_id);
 
 		// TODO: make sure there actually is an id
@@ -164,6 +164,24 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 	public function getClonedWidgets()
 	{
 		return $this->clones;
+	}
+
+	/**
+	 * Gets the form
+	 *
+	 * @return SwatForm the form this cell renderer's view is contained in.
+	 *
+	 * @throws SwatException
+	 */
+	private function getForm()
+	{
+		$form = $this->getFirstAncestor('SwatForm');
+
+		if ($form === null)
+			throw new SwatException('SwatTableView must be inside a SwatForm for '.
+				'SwatWidgetCellRenderer to work.');
+
+		return $form;
 	}
 }
 
