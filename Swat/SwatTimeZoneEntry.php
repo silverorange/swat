@@ -100,8 +100,10 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 */
 	public function process()
 	{
-		if (strlen($_POST[$this->id.'_areas']) || strlen($_POST[$this->id.'_regions']))
-			$this->value = $_POST[$this->id.'_areas'].'/'.$_POST[$this->id.'_regions'];
+		$data = &$this->getForm()->getFormData();
+
+		if (strlen($data[$this->id.'_areas']) || strlen($data[$this->id.'_regions']))
+			$this->value = $data[$this->id.'_areas'].'/'.$data[$this->id.'_regions'];
 		else
 			$this->value = null;
 

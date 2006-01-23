@@ -13,7 +13,7 @@ require_once 'Swat/SwatState.php';
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatSimpleColorEntry extends SwatControl implements SwatState
+class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 {
 	/**
 	 * Selected color

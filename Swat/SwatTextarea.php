@@ -73,10 +73,12 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 */
 	public function process()
 	{
-		if (!isset($_POST[$this->id]))
+		$data = &$this->getForm()->getFormData();
+
+		if (!isset($data[$this->id]))
 			return;
 
-		$this->value = $_POST[$this->id];
+		$this->value = $data[$this->id];
 
 		if ($this->required && !strlen($this->value)) {
 			$msg = Swat::_('The %s field is required.');
