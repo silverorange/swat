@@ -2,13 +2,14 @@
 
 require_once 'SwatObject.php';
 require_once 'SwatCellRenderer.php';
+require_once 'SwatCellRendererMapping.php';
 require_once 'Swat/exceptions/SwatObjectNotFoundException.php';
 
 /**
  * A collection of cell renderers with associated datafield-property mappings
  *
  * @package   Swat
- * @copyright 2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCellRendererSet extends SwatObject implements Iterator
@@ -16,26 +17,18 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	// {{{ private properties
 
 	/**
-	 * A two dimentional array containing a list of cell renderers and
-	 * associated datafield-property mappings
-	 *
-	 * The array is of the form:
-	 *
-	 * <code>
-	 * array(
-	 *     0 => array(
-	 *         'renderer' => new SwatCellRenderer(),
-	 *         'map' => array(
-	 *             'property_name_1' => 'field_name_1',
-	 *             'property_name_2' => 'field_name_2'
-	 *         )
-	 *     )
-	 * );
-	 * </code>
+	 * An array of cell renderers.
 	 *
 	 * @var array
 	 */
 	private $renderers = array();
+
+	/**
+	 * An array of mappings.
+	 *
+	 * @var array
+	 */
+	private $mappings = array();
 
 	/**
 	 * The current index of the iterator interface
@@ -57,8 +50,9 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 */
 	public function addRenderer(SwatCellRenderer $renderer)
 	{
-		$this->renderers[] =
-			array('renderer' => $renderer, 'mappings' => array());
+		$this->renderers[] = $renderer;
+		$index = $this->findRendererIndex($renderer);
+		$this->mappings[$index] = array();
 	}
 
 	// }}}
@@ -69,14 +63,14 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 * datafield-property mappings
 	 *
 	 * @param SwatCellRenderer $renderer the renderer to add.
-	 * @param array $mappings an associative array of property-datafield
-	 *                         mappings for the added renderer.
+	 * @param array $mappings an array of SwatCellRendererMapping objects.
 	 */
 	public function addRendererWithMappings(SwatCellRenderer $renderer,
 		$mappings = array())
 	{
-		$this->renderers[] =
-			array('renderer' => $renderer, 'mappings' => $mappings);
+		$this->renderers[] = $renderer;
+		$index = $this->findRendererIndex($renderer);
+		$this->mappings[$index] = $mappings;
 	}
 
 	// }}}
@@ -88,15 +82,13 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 *
 	 * @param SwatCellRenderer $renderer the cell renderer to add the mappings
 	 *                                    to.
-	 * @param array $mappings an associative array of property-datafield
-	 *                         mappings to add to the specified cell renderer.
+	 * @param array $mappings an array of SwatCellRendererMapping objects.
 	 */
 	public function addMappingsToRenderer(SwatCellRenderer $renderer,
 		$mappings = array())
 	{
-		$position = $this->findRendererIndex($renderer);
-		
-		array_merge($this->renderers[$position]['mappings'], $mappings);
+		$index = $this->findRendererIndex($renderer);
+		array_merge($this->mappings[$index], $mappings);
 	}
 
 	// }}}
@@ -108,17 +100,13 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 *
 	 * @param SwatCellRenderer $renderer the cell renderer to add the mapping
 	 *                                    to.
-	 * @param string $datafield the field in the data object that is to be
-	 *                           mapped.
-	 * @param string property the property of the cell renderer the datafield
-	 *                         is to be mapped to.
+	 * @param SwatCellRendererMapping $mapping the mapping to add.
 	 */
 	public function addMappingToRenderer(SwatCellRenderer $renderer,
-		$datafield, $property)
+		SwatCellRendererMapping $mapping)
 	{
-		$position = $this->findRendererIndex($renderer);
-		
-		$this->renderers[$position]['mappings'][$property] = $datafield;
+		$index = $this->findRendererIndex($renderer);
+		$this->mappings[$index][] = $mapping;
 	}
 
 	// }}}
@@ -135,12 +123,35 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 */
 	public function applyMappingsToRenderer(SwatCellRenderer $renderer, $data_object)
 	{
-		$position = $this->findRendererIndex($renderer);
+		$index = $this->findRendererIndex($renderer);
 		
-		foreach ($this->renderers[$position]['mappings'] as
-			$property => $datafield) {
-			
-			$renderer->$property = $data_object->$datafield;
+		foreach ($this->mappings[$index] as $mapping) {
+
+			// set local variables
+			$property = $mapping->property;
+			$field = $mapping->field;
+
+			if ($mapping->is_array) {
+				if (is_array($renderer->$property)) {
+					// already have an array
+					$array_ref = &$renderer->$property;
+
+					if ($mapping->array_key === null)
+						$array_ref[] = $data_object->$field;
+					else	
+						$array_ref[$mapping->array_key] = $data_object->$field;
+
+				} else {
+					// starting a new array
+					if ($mapping->array_key === null)
+						$renderer->$property = array($data_object->$field);
+					else
+						$renderer->$property = 
+							array($mapping->array_key => $data_object->$field);
+				}
+			} else {
+				$renderer->$property = $data_object->$field;
+			}
 		}
 	}
 
@@ -159,7 +170,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	public function getRendererByPosition($position = 0)
 	{
 		if ($position < count($this->renderers))
-			return $this->renderers[$position]['renderer'];
+			return $this->renderers[$position];
 
 		throw new SwatException('Set does not contain that many renderers.');
 	}
@@ -179,9 +190,9 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 */
 	public function getRenderer($renderer_id)
 	{
-		foreach ($this->renderers as $content)
-			if ($content['renderer']->id == $renderer_id)
-				return $content['renderer'];
+		foreach ($this->renderers as $renderer)
+			if ($renderer->id === $renderer_id)
+				return $renderer;
 
 		throw new SwatObjectNotFoundException(
 			"Cell renderer with an id of '{$renderer_id}' not found.",
@@ -197,14 +208,14 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 * @param SwatCellRenderer $renderer the cell renderer to get the mappings
 	 *                                    for.
 	 *
-	 * @return array an associative array containing the property-datafield
-	 *                mappings of the specified cell renderer.
+	 * @return array an array of SwatCellRendererMapping objects
+	 *                for the specified cell renderer.
 	 */
 	public function getMappingsByRenderer(SwatCellRenderer $renderer)
 	{
-		$position = $this->findRendererIndex($renderer);
+		$index = $this->findRendererIndex($renderer);
 		
-		return $this->renderers[$position]['mappings'];
+		return $this->mappings[$index];
 	}
 
 	// }}}
@@ -217,7 +228,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 */
 	public function current()
 	{
-		return $this->renderers[$this->current_index]['renderer'];
+		return $this->renderers[$this->current_index];
 	}
 
 	// }}}
@@ -282,7 +293,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 		$first = null;
 
 		if (count($this->renderers) > 0)
-			$first = $this->renderers[0]['renderer'];
+			$first = $this->renderers[0];
 
 		return $first;
 	}
@@ -313,11 +324,11 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 *
 	 * @throws SwatObjectNotFoundException
 	 */
-	private function findRendererIndex(SwatCellRenderer $renderer)
+	private function findRendererIndex(SwatCellRenderer $sought_renderer)
 	{
-		foreach ($this->renderers as $position => $content)
-			if ($content['renderer'] === $renderer)
-				return $position;
+		foreach ($this->renderers as $index => $renderer)
+			if ($renderer === $sought_renderer)
+				return $index;
 		
 		throw new SwatObjectNotFoundException('Cell renderer not found.');
 	}

@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatUIObject.php';
 require_once 'Swat/SwatCellRendererSet.php';
+require_once 'Swat/SwatCellRendererMapping.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
@@ -42,14 +43,19 @@ abstract class SwatCellRendererContainer extends SwatUIObject
 	 * @param SwatUIObject $object optional object containing the property to
 	 *                              map when the property does not belong to
 	 *                              the cell renderer itself.
+	 *
+	 * @return SwatCellRendererMapping a new mapping object that has been
+	 *                                  added to the renderer.
 	 */
 	public function addMappingToRenderer($renderer, $datafield, $property, $object = null)
 	{
 		if ($object !== null)
 			$property = $renderer->getPropertyNameToMap($object, $property);
 		
-		$this->renderers->addMappingToRenderer($renderer,
-			$datafield, $property);
+		$mapping = new SwatCellRendererMapping($property, $datafield);
+		$this->renderers->addMappingToRenderer($renderer, $mapping);
+
+		return $mapping;
 	}
 
 	/**
