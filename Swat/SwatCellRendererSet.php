@@ -124,6 +124,8 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	public function applyMappingsToRenderer(SwatCellRenderer $renderer, $data_object)
 	{
 		$index = $this->findRendererIndex($renderer);
+		// array to track array properties that we've already seen
+		$array_properties = array();
 		
 		foreach ($this->mappings[$index] as $mapping) {
 
@@ -132,7 +134,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 			$field = $mapping->field;
 
 			if ($mapping->is_array) {
-				if (is_array($renderer->$property)) {
+				if (in_array($renderer->$property, $array_properties)) {
 					// already have an array
 					$array_ref = &$renderer->$property;
 
@@ -143,6 +145,8 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 
 				} else {
 					// starting a new array
+					$array_properties[] = $mapping->property;
+
 					if ($mapping->array_key === null)
 						$renderer->$property = array($data_object->$field);
 					else
