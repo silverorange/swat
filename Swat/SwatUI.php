@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatCellRendererMapping.php';
 
 require_once 'Swat/exceptions/SwatFileNotFoundException.php';
 require_once 'Swat/exceptions/SwatInvalidSwatMLException.php';
@@ -526,16 +527,22 @@ class SwatUI extends SwatObject
 			$this->parseValue($name, $value, $type, $translatable, $object);
 
 		if ($array_property) {
-			if (!is_array($object->$name))
-				$object->$name = array();
+			if ($parsed_value instanceof SwatCellRendererMapping) {
+				// it was a type=data property, 
+				// so the parsed value is a mapping object
+				$parsed_value->is_array = true;
+				$parsed_value->array_key = $array_key;
+			} else {
+				if (!is_array($object->$name))
+					$object->$name = array();
 
-			$array_ref = &$object->$name;
+				$array_ref = &$object->$name;
 
-			if ($array_key === null)
-				$array_ref[] = $parsed_value;
-			else
-				$array_ref[$array_key] = $parsed_value;
-
+				if ($array_key === null)
+					$array_ref[] = $parsed_value;
+				else
+					$array_ref[$array_key] = $parsed_value;
+			}
 		} else {
 			$object->$name = $parsed_value;
 		}
@@ -577,8 +584,7 @@ class SwatUI extends SwatObject
 		case 'constant':
 			return $this->parseConstantExpression($value, $object);
 		case 'data':
-			$this->handleDataPropertyValue($name, $value, $object);
-			return null;
+			return $this->parseMapping($name, $value, $object);
 		case 'implicit-string':
 			if ($value == 'false' || $value == 'true' )
 				trigger_error(__CLASS__.': Possible missing type="boolean" '.
@@ -599,10 +605,10 @@ class SwatUI extends SwatObject
 	}
 
 	// }}}
-	// {{{ private function handleDataPropertyValue()
+	// {{{ private function parseMapping()
 
 	/**
-	 * Handle a 'data' type property value
+	 * Handle a 'data' type property value by parsing it into a mapping object
 	 *
 	 * @param string $name the name of the property.
 	 * @param string $value the value of the property.
@@ -610,8 +616,7 @@ class SwatUI extends SwatObject
 	 *
 	 * @throws SwatInvalidPropertyTypeException
 	 */
-	private function handleDataPropertyValue($name, $value,
-		SwatUIObject $object)
+	private function parseMapping($name, $value, SwatUIObject $object)
 	{
 		$renderer = null;
 		$renderer_container = null;
@@ -631,7 +636,10 @@ class SwatUI extends SwatObject
 				'on a widget with in a SwatWidgetCellRenderer.',
 				0, $object, 'data');
 
-		$renderer_container->addMappingToRenderer($renderer, $value, $name, $object);
+		$mapping = $renderer_container->addMappingToRenderer($renderer,
+			$value, $name, $object);
+
+		return $mapping;
 	}
 
 	// }}}
