@@ -464,6 +464,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	private function createYearFlydown()
 	{
 		$this->year_flydown = new SwatFlydown($this->id.'_year');
+		$this->year_flydown->parent = $this;
 		$this->year_flydown->onchange = sprintf('%s.set(this);', $this->id);
 
 		$start_year = $this->valid_range_start->getYear();
@@ -485,6 +486,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	private function createMonthFlydown()
 	{
 		$this->month_flydown = new SwatFlydown($this->id.'_month');
+		$this->month_flydown->parent = $this;
 		$this->month_flydown->onchange = sprintf('%s.set(this);', $this->id);
 
 		$start_year = $this->valid_range_start->getYear();
@@ -553,6 +555,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	private function createDayFlydown()
 	{
 		$this->day_flydown = new SwatFlydown($this->id.'_day');
+		$this->day_flydown->parent = $this;
 		$this->day_flydown->onchange = sprintf('%s.set(this);', $this->id);
 
 		$start_year  = $this->valid_range_start->getYear();
@@ -603,6 +606,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		require_once 'Swat/SwatTimeEntry.php';
 		$this->time_entry = new SwatTimeEntry($this->id.'_time_entry');
+		$this->time_entry->parent = $this;
 	}
 
 	// }}}
@@ -615,6 +619,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		require_once 'Swat/SwatCalendar.php';
 		$this->calendar = new SwatCalendar($this->id.'_calendar');
+		$this->calendar->parent = $this;
 		$this->calendar->entry_id = $this->id;
 		$this->calendar->valid_range_start = $this->valid_range_start;
 		$this->calendar->valid_range_end   = $this->valid_range_end;
