@@ -259,6 +259,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$this->widgets_created = true;
 
 		$this->action_flydown = new SwatFlydown($this->id.'_action_flydown');
+		$this->action_flydown->parent = $this;
 		$this->action_flydown->onchange =
 			"swatActionsDisplay(this, '{$this->id}');";
 
