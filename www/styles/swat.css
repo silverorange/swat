@@ -350,6 +350,7 @@ img.swat-image-cell-renderer { vertical-align: middle; }
 	text-align: left;
 	font-weight: bold;
 	color: #666;
+	width: 10em;
 }
 
 .swat-details-view-field th {
