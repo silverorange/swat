@@ -211,10 +211,10 @@ abstract class SwatWidget extends SwatUIObject
 	 */
 	public function isSensitive()
 	{
-		if ($this->parent === null)
-			return $this->sensitive;
-		else
+		if ($this->parent !== null && $this->parent instanceof SwatWidget)
 			return ($this->parent->isSensitive() && $this->sensitive);
+		else
+			return $this->sensitive;
 	}
 
 	// }}}
