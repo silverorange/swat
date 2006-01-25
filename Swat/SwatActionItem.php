@@ -87,6 +87,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 				'within an SwatActionItem');
 
 		$this->widget = $widget;
+		$widget->parent = $this;
 	}
 
 	/**
