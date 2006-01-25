@@ -24,7 +24,8 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	protected $children = array();
 
-	public function __clone() {
+	public function __clone()
+	{
 		$children = $this->children;
 		$this->children = array();
 
