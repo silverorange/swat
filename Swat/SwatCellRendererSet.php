@@ -134,7 +134,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 			$field = $mapping->field;
 
 			if ($mapping->is_array) {
-				if (in_array($renderer->$property, $array_properties)) {
+				if (in_array($property, $array_properties)) {
 					// already have an array
 					$array_ref = &$renderer->$property;
 
