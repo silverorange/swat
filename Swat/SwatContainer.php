@@ -453,7 +453,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	{
 		$this->notifyOfAdd($widget);
 		
-		if ($this->parent != null)
+		if ($this->parent !== null && $this->parent instanceof SwatContainer)
 			$this->parent->sendAddNotifySignal($widget);
 	}
 }
