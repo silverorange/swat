@@ -202,6 +202,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	public function addActionItem(SwatActionItem $item)
 	{
 		$this->action_items[$item->id] = $item;
+		$item->parent = $this;
 	}
 
 	/**
