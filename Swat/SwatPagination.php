@@ -115,6 +115,8 @@ class SwatPagination extends SwatControl
 		parent::__construct($id);
 
 		$this->requires_id = true;
+
+		$this->addStyleSheet('swat/styles/swat-calendar.css');
 	}
 
 	// }}}
