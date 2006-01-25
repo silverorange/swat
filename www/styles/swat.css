@@ -298,15 +298,16 @@ table.swat-table-view {
 	text-align: left;
 }
 
+.swat-table-view thead {
+	border-bottom: 1px solid #eee;;
+}
+
 .swat-table-view tbody tr {
-	border-top: 1px solid #eee;
 	background: url(../images/swat-table-view-cell-back.png) bottom repeat-x;
 }
 
 .swat-table-view tbody tr.highlight, .swat-table-view tbody tr.highlight-odd {
-	background: #f7f5f3;
-	border-top: 1px solid #e7ddc8;
-	border-bottom: 1px solid #e7ddc8;
+	background: #f7f5f3 url(../images/swat-table-view-cell-highlight-back.png) bottom repeat-x;
 }
 
 .swat-table-view th {
