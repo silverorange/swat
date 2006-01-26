@@ -325,6 +325,7 @@ td.swat-table-view-group {
 	font-weight: bold;
 	padding-top: 1em;
 	background: #FFF;
+	border-bottom: 1px solid #EEE;
 }
 
 table.swat-table-view td.swat-check-cell,
