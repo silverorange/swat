@@ -79,6 +79,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 			return;
 
 		$options = $this->getOptions();
+		$selected = false;
 
 		// Empty string XHTML option value is assumed to be null
 		// when processing.
@@ -115,10 +116,14 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 					$option_tag->removeAttribute('class');
 				}
 
-				if ((string)$this->value === (string)$flydown_option->value)
+				if ((string)$this->value === (string)$flydown_option->value &&
+					$selected === false) {
+
 					$option_tag->selected = 'selected';
-				else
+					$selected = true;
+				} else {
 					$option_tag->removeAttribute('selected');
+				}
 
 				$option_tag->setContent($flydown_option->title);
 
