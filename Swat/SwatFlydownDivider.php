@@ -17,11 +17,11 @@ class SwatFlydownDivider extends SwatOption
 	/**
 	 * Creates a flydown option
 	 *
-	 * @param mixed $value value of the option.
+	 * @param mixed $value value of the option. This defaults to null.
 	 * @param string $title displayed title of the divider. This defaults to
 	 *                       two em dashes.
 	 */
-	public function __construct($value, $title = null)
+	public function __construct($value = null, $title = null)
 	{
 		if ($title === null)
 			$title = str_repeat('&#8212;', 6);
