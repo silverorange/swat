@@ -127,7 +127,7 @@ label.swat-control {
 	margin: 0 0 0.5em 0;
 }
 
-.swat-form-field .required {
+.swat-form-field .swat-required {
 	font-weight: normal;
 	color: #888;
 }

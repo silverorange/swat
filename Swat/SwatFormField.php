@@ -106,7 +106,7 @@ class SwatFormField extends SwatContainer
 			// TODO: widgets that are marked as required don't tell their field parent
 			if ($this->required) {
 				$span_tag = new SwatHtmlTag('span');
-				$span_tag->class = 'required';
+				$span_tag->class = 'swat-required';
 				$span_tag->setContent(sprintf(' (%s)', Swat::_('required')));
 				$span_tag->display();
 			}
