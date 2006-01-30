@@ -6,6 +6,7 @@ require_once 'Swat/SwatTableViewColumn.php';
 require_once 'Swat/SwatTableViewOrderableColumn.php';
 require_once 'Swat/SwatTableViewGroup.php';
 require_once 'Swat/SwatTableViewRow.php';
+require_once 'Swat/SwatTableViewInputRow.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/exceptions/SwatDuplicateIdException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
@@ -139,7 +140,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 *
 	 * Only one input row is allowed for each table-view.
 	 *
-	 * @var booelan
+	 * @var boolean
 	 * @see SwatTableViewInputRow
 	 */
 	private $has_input_row = false;
