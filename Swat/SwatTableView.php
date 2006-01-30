@@ -134,6 +134,16 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 */
 	private $extra_rows = array();
 
+	/**
+	 * Whether or not this table view has an input row
+	 *
+	 * Only one input row is allowed for each table-view.
+	 *
+	 * @var booelan
+	 * @see SwatTableViewInputRow
+	 */
+	private $has_input_row = false;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -285,9 +295,17 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * table-view model is displayed.
 	 *
 	 * @param SwatTableViewRow $row the row to append.
+	 *
+	 * @throws SwatException
 	 */
 	public function appendRow(SwatTableViewRow $row)
 	{
+		if ($row instanceof SwatTableViewInputRow && $this->has_input_row)
+			throw new SwatException('Only one input row may be added to a '.
+				'table view.');
+		elseif ($row instanceof SwatTableViewInputRow)
+			$this->has_input_row = true;
+
 		$this->extra_rows[] = $row;
 
 		if ($row->id !== null) {
@@ -383,6 +401,48 @@ class SwatTableView extends SwatControl implements SwatUIParent
 			throw new SwatException("Row with an id of '{$id}' not found.");
 
 		return $this->rows_by_id[$id];
+	}
+
+	// }}}
+	// {{{ public function getRowsByClass()
+
+	/**
+	 * Gets all the extra rows of the specified class from this table-view
+	 *
+	 * @param string $class_name the class name to filter by.
+	 *
+	 * @return array all the extra rows of the specified class.
+	 */
+	public function getRowsByClass($class_name)
+	{
+		$rows = array();
+		foreach ($this->extra_rows as $row)
+			if ($row instanceof $class_name)
+				$rows[] = $row;
+
+		return $rows;
+	}
+
+	// }}}
+	// {{{ public function getFirstRowByClass()
+
+	/**
+	 * Gets the first extra row of the specified class from this table-view
+	 *
+	 * @param string $class_name the class name to filter by.
+	 *
+	 * @return SwatTableViewRow the first extra row of the specified class.
+	 */
+	public function getFirstRowByClass($class_name)
+	{
+		$my_row = null;
+		foreach ($this->extra_rows as $row) {
+			if ($row instanceof $class_name) {
+				$my_row = $row;
+				break;
+			}
+		}
+		return $my_row;
 	}
 
 	// }}}

@@ -180,14 +180,22 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	/**
 	 * Gets the prototype widget for a column attached to this row
 	 *
-	 * You can get the prototype widget before init() is called to set
-	 * properties on the prototype widget.
+	 * Note: The UI tree must be inited before this method works correctly.
+	 *       This is because the column identifiers are not finalized until
+	 *       init() has run and this method uses colum identifiers for lookup.
+	 *
+	 * This method is useful for setting properties on the prototype widget;
+	 * however, the {@link SwatTableViewColumn::getInputCell()} method is even
+	 * more useful because it may be safely used before init() is called on the
+	 * UI tree. You can then call {@link SwatInputCell::getPrototypeWidget()}
+	 * on the returned input cell.
 	 *
 	 * @param string $column_id the unique identifier of the column to get the
 	 *                           prototype widget from.
 	 *
 	 * @return SwatWidget the prototype widget from the given column.
 	 *
+	 * @see SwatTableViewColumn::getInputCell()
 	 * @throws SwatException
 	 */
 	public function getPrototypeWidget($column_id)

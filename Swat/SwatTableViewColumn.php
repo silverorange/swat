@@ -50,11 +50,16 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	public $visible = true;
 
 	/**
-	 * An array of SwatInputCell objects
+	 * An optional {@link SwatInputCell} object for this column
+	 * 
+	 * If this column's view has a {@link SwatTableViewInputRow} then this
+	 * column can contain one input cell for the input row.
 	 *
 	 * @var array
+	 * @see SwatTableViewColumn::setInputCell(),
+	 *      SwatTableViewColumn::getInputCell()
 	 */
-	protected $input_cells = array();
+	protected $input_cell = null;
 
 	/**
 	 * Creates a new table-view column
@@ -80,13 +85,14 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
 
-		// add input cells to their corresponding rows
-		foreach($this->input_cells as $cell) {
-			if ($cell->row === null || !$this->view->hasRow($cell->row))
-				throw new SwatException('Table-view does not have a row '.
-					"corresponding to '{$cell->row}'.");
+		// add the input cell to this column's view's input row
+		if ($this->input_cell !== null) {
+			if ($this->parent->getFirstRowByClass('SwatTableViewInputRow') === null)
+				throw new SwatException('Table-view does not have an input '.
+					'row.');
 
-			$this->parent->getRow($cell->row)->addInputCell($cell, $this->id);
+			$this->parent->getFirstRowByClass('SwatTableViewInputRow')->addInputCell(
+				$this->input_cell, $this->id);
 		}
 	}
 
@@ -179,16 +185,33 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	}
 
 	/**
-	 * Adds an input cell to this column
+	 * Sets the input cell of this column
 	 *
-	 * @param SwatInputCell $cell the input cell to add.
+	 * @param SwatInputCell $cell the input cell to set for this column.
 	 *
 	 * @see SwatTableViewColumn::init(), SwatTableViewInputRow
 	 */
-	public function addInputCell(SwatInputCell $cell)
+	public function setInputCell(SwatInputCell $cell)
 	{
-		$this->input_cells[] = $cell;
+		$this->input_cell = $cell;
 		$cell->parent = $this;
+	}
+
+	/**
+	 * Gets the input cell of this column
+	 *
+	 * This method is a useful way to get this column's input cell before
+	 * init() is called on the UI tree. You can then modify the cell's
+	 * prototype widget before init() is called.
+	 *
+	 * @return SwatInputCell the input cell of this column.
+	 *
+	 * @see SwatTableViewColumn::setInputCell(),
+	 *      SwatInputCell::getPrototypeWidget(), SwatTableViewInputRow
+	 */
+	public function getInputCell()
+	{
+		return $this->input_cell;
 	}
 
 	/**
@@ -196,7 +219,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	 * 
 	 * @param SwatCellRenderer $child the reference to the child object to add.
 	 *
-	 * @throws SwatInvalidClassException
+	 * @throws SwatException, SwatInvalidClassException
 	 *
 	 * @see SwatUIParent::addChild()
 	 */
@@ -205,7 +228,11 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 		if ($child instanceof SwatCellRenderer) {
 			$this->addRenderer($child);
 		} elseif ($child instanceof SwatInputCell) {
-			$this->addInputCell($child);
+			if ($this->input_cell === null)
+				$this->setInputCell($child);
+			else
+				throw new SwatException('Only one input cell may be added to '.
+					'a table-view column.');
 		} else {
 			throw new SwatInvalidClassException(
 				'Only SwatCellRenderer and SwatInputCell objects may be '.
@@ -227,9 +254,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 		foreach ($renderers as $renderer)
 			$out = array_merge($out, $renderer->getHtmlHeadEntries());
 
-		foreach ($this->input_cells as $input_cell)
+		if ($this->input_cell !== null)
 			$out = array_merge($out,
-				$input_cell->getHtmlHeadEntries());
+				$this->input_cell->getHtmlHeadEntries());
 
 		return $out;
 	}
