@@ -25,6 +25,6 @@
 <!ATTLIST property
 	name CDATA #REQUIRED
 	translatable (yes|no) "no"
-	type (integer|boolean|string|float|data|constant|implicit-string) "implicit-string"
+	type (integer|boolean|string|float|data|constant|date|implicit-string) "implicit-string"
 	comments CDATA #IMPLIED
 	>
