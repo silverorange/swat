@@ -3,6 +3,7 @@
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatContainer.php';
 require_once 'Swat/SwatCellRendererMapping.php';
+require_once 'Swat/SwatDate.php';
 
 require_once 'Swat/exceptions/SwatFileNotFoundException.php';
 require_once 'Swat/exceptions/SwatInvalidSwatMLException.php';
@@ -585,6 +586,8 @@ class SwatUI extends SwatObject
 			return $this->parseConstantExpression($value, $object);
 		case 'data':
 			return $this->parseMapping($name, $value, $object);
+		case 'date':
+			return new SwatDate($value);
 		case 'implicit-string':
 			if ($value == 'false' || $value == 'true' )
 				trigger_error(__CLASS__.': Possible missing type="boolean" '.
