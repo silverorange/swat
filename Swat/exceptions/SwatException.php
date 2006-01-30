@@ -24,7 +24,7 @@ class SwatException extends Exception
 			if (isset($_SERVER['REQUEST_URI']))
 				echo $this->toXHTML();
 			else
-				echo $this->getSummary();
+				echo $this->toString();
 		}
 
 		if (ini_get('log_errors'))
