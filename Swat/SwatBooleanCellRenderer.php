@@ -9,7 +9,7 @@ require_once 'Swat/SwatCellRenderer.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCheckCellRenderer extends SwatCellRenderer
+class SwatBooleanCellRenderer extends SwatCellRenderer
 {
 	/**
 	 * Value of this cell
