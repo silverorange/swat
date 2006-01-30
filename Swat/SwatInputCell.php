@@ -170,6 +170,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	public function setWidget(SwatWidget $widget)
 	{
 		$this->widget = $widget;
+		$widget->parent = $this;
 	}
 
 	// }}}
