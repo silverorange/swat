@@ -36,6 +36,7 @@ class SwatFrame extends SwatContainer
 
 		$outer_div = new SwatHtmlTag('div');
 		$outer_div->class = 'swat-frame';
+
 		if ($this->id !== null)
 			$outer_div->id = $this->id;
 
