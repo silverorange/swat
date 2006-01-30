@@ -88,10 +88,8 @@ class SwatButton extends SwatControl
 			return;
 
 		$form = $this->getFirstAncestor('SwatForm');
-		if ($form !== null)
-			$default = ($form->getFirstDescendant('SwatButton') === $this);
-		else
-			$default = false;
+		$default = ($form !== null &&
+			$form->getFirstDescendant('SwatButton') === $this);
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'submit';
