@@ -16,14 +16,13 @@ class SwatFooterFormField extends SwatFormField
 	/**
 	 * Constructor
 	 *
-	 * Sets the class to swat-form-field-footer
+	 * Sets the class to swat-footer-form-field
 	 *
-	 * @param string $id the id of this form footer field.
+	 * @param string $id the id of this form field.
 	 */
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->class = 'swat-footer-form-field';
 	}
 }
