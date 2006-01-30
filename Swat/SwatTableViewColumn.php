@@ -59,7 +59,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	/**
 	 * Creates a new table-view column
 	 *
-	 * @param string $id an optional unique id identitying this column in the
+	 * @param string $id an optional unique identifier for this column in the
 	 *                    table view.
 	 */
 	public function __construct($id = null)
