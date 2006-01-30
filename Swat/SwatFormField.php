@@ -38,34 +38,39 @@ class SwatFormField extends SwatContainer
 	public $note = null;
 
 	/**
-	 * CSS class to use on the HTML div where the note is displayed
-	 *
-	 * @var string
-	 */
-	public $note_class = 'swat-form-field-note';
-
-	/**
-	 * CSS class to use on outer HTML div when an error message is displayed
-	 *
-	 * @var string
-	 */
-	public $error_class = 'swat-form-field-error';
-
-	/**
-	 * CSS class to use on the HTML div where the error message is displayed.
-	 *
-	 * @var string
-	 */
-	public $errormsg_class = 'swat-form-field-errormsg';
-
-	/**
-	 * CSS class to use on the HTML div tag
+	 * CSS class to use on the container tag
 	 *
 	 * Subclasses can change this to change their appearance.
 	 *
 	 * @var string
 	 */
 	protected $class = 'swat-form-field';
+
+	/**
+	 * Container tag to use
+	 *
+	 * Subclasses can change this to change their appearance.
+	 *
+	 * @var string
+	 */
+	protected $container_tag = 'div';
+
+	/**
+	 * Get a SwatHtmlTag to display the title.
+	 *
+	 * Subclasses can change this to change their appearance.
+	 * 
+	 * @param $title string title of the form field.
+	 * @return SwatHtmlTag a tag object containing the title.
+	 */
+	protected function getTitleTag($title)
+	{
+		$first_child = $this->getFirst();
+		$label_tag = new SwatHtmlTag('label');
+		$label_tag->for = $first_child->id;
+		$label_tag->setContent(sprintf('%s: ', $title));
+		return $label_tag;
+	}
 
 	/**
 	 * Displays this form field
@@ -77,31 +82,25 @@ class SwatFormField extends SwatContainer
 		if (!$this->visible)
 			return;
 
-		$first_child = $this->getFirst();
-
-		if ($first_child === null)
+		if ($this->getFirst() === null)
 			return;
 
 		$messages = &$this->getMessages();
-		$container_div = new SwatHtmlTag('div');
-		$container_div->class = $this->class;
+		$container_tag = new SwatHtmlTag($this->container_tag);
+		$container_tag->class = $this->class;
 
 		if ($this->id !== null)
-			$container_div->id = $this->id;
+			$container_tag->id = $this->id;
 
-		// TODO: more classes based on message type?
 		if (count($messages) > 0)
-			$container_div->class.= ' '.$this->error_class;
+			$container_tag->class.= ' swat-error';
 
-		$container_div->open();
+		$container_tag->open();
 
 		if ($this->title !== null) {
-			$label_tag = new SwatHtmlTag('label');
-			$label_tag->for = $first_child->id;
-			$label_tag->setContent(sprintf('%s: ', $this->title));
-
-			$label_tag->open();
-			$label_tag->displayContent();
+			$title_tag = $this->getTitleTag($this->title);
+			$title_tag->open();
+			$title_tag->displayContent();
 
 			// TODO: widgets that are marked as required don't tell their field parent
 			if ($this->required) {
@@ -111,7 +110,7 @@ class SwatFormField extends SwatContainer
 				$span_tag->display();
 			}
 
-			$label_tag->close();
+			$title_tag->close();
 		}
 
 		foreach ($this->children as &$child)
@@ -120,7 +119,7 @@ class SwatFormField extends SwatContainer
 		if (count($messages) > 0) {
 			// TODO: more classes based on message type?
 			$msg_div = new SwatHtmlTag('div');
-			$msg_div->class = $this->errormsg_class;
+			$msg_div->class = 'swat-form-field-messages';
 
 			$msg_div->open();
 
@@ -138,12 +137,12 @@ class SwatFormField extends SwatContainer
 
 		if ($this->note !== null) {
 			$note_div = new SwatHtmlTag('div');
-			$note_div->class = $this->note_class;
+			$note_div->class = 'swat-note';
 			$note_div->setContent($this->note);
 			$note_div->display();
 		}
 
-		$container_div->close();
+		$container_tag->close();
 	}
 
 	/**
