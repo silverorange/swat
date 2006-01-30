@@ -152,11 +152,11 @@ label.swat-control {
 	background: transparent url(../images/tango/16/dialog-error.png) 4px 4px no-repeat;
 }
 
-.swat-form-footer-field {
+.swat-footer-form-field {
 	text-align: right;
 }
 
-.swat-form-footer-field input.primary {
+.swat-footer-form-field input.primary {
 	padding: 0.2em 0.6em;
 	font-weight: bold;
 }
@@ -386,7 +386,7 @@ span.swat-time-span {
 	margin-bottom: 0.5em;
 }
 
-.swat-actions, .swat-form-footer-field {
+.swat-actions, .swat-footer-form-field {
 	background: #f7f5f3 url(../images/swat-form-footer.png) top left repeat-x;
 	margin: 15px -15px -15px -15px;
 	padding: 1em;

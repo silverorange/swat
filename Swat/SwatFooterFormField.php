@@ -11,7 +11,7 @@ require_once 'Swat/SwatFormField.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFormFooterField extends SwatFormField
+class SwatFooterFormField extends SwatFormField
 {
 	/**
 	 * Constructor
@@ -24,7 +24,7 @@ class SwatFormFooterField extends SwatFormField
 	{
 		parent::__construct($id);
 
-		$this->class = 'swat-form-footer-field';
+		$this->class = 'swat-footer-form-field';
 	}
 }
 
