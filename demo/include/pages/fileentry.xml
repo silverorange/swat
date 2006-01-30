@@ -17,7 +17,7 @@
 				</widget>
 			</widget>
 
-			<widget class="SwatFormFooterField">
+			<widget class="SwatFooterFormField">
 				<widget class="SwatButton">
 					<property name="title" type="string">Upload</property>
 				</widget>
