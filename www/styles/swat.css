@@ -403,6 +403,13 @@ span.swat-time-span {
 
 /* Swat Buttons */
 
+input.swat-primary {
+	float: right;
+	color: #f00;
+	background: #00f;
+	text-decoration: blink;
+}
+
 .swat-button-submit, .swat-button-create, .swat-button-apply {
 	font-weight: bold;
 	margin: 0 0.2em;
