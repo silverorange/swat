@@ -88,7 +88,7 @@ class SwatButton extends SwatControl
 			return;
 
 		$form = $this->getFirstAncestor('SwatForm');
-		$default = ($form !== null &&
+		$primary = ($form !== null &&
 			$form->getFirstDescendant('SwatButton') === $this);
 
 		$input_tag = new SwatHtmlTag('input');
@@ -96,7 +96,7 @@ class SwatButton extends SwatControl
 		$input_tag->name = $this->id;
 		$input_tag->value = $this->title;
 
-		if ($default)
+		if ($primary)
 			$input_tag->class = 'swat-button swat-primary';
 		else
 			$input_tag->class = 'swat-button';
@@ -193,7 +193,8 @@ class SwatButton extends SwatControl
 		if ($overwrite_properties || ($this->title === null))
 			$this->title = $title;
 
-		$this->class = $class;
+		if ($overwrite_properties || ($this->class === null))
+			$this->class = $class;
 	}
 }
 
