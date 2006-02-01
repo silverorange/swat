@@ -24,13 +24,13 @@
 				</object>
 				<object class="SwatTableViewColumn">
 					<property name="title">Makes Jam</property>
-					<object class="SwatCheckCellRenderer">
+					<object class="SwatBooleanCellRenderer">
 						<property name="value" type="data">makes_jam</property>
 					</object>
 				</object>
 				<object class="SwatTableViewColumn">
 					<property name="title">Makes Pie</property>
-					<object class="SwatCheckCellRenderer">
+					<object class="SwatBooleanCellRenderer">
 						<property name="value" type="data">makes_pie</property>
 					</object>
 				</object>
