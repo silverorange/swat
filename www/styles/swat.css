@@ -153,13 +153,11 @@ label.swat-control {
 }
 
 .swat-footer-form-field {
-	text-align: right;
+	overflow: auto;
+	position: relative;
 }
-
-.swat-footer-form-field input.primary {
-	padding: 0.2em 0.6em;
-	font-weight: bold;
-}
+/* IE hack */
+* html .swat-footer-form-field { overflow: visible; height: 1px; }
 
 .swat-disclosure-control {
 }
@@ -405,14 +403,21 @@ span.swat-time-span {
 
 /* Swat Buttons */
 
-input.swat-primary {
+.swat-footer-form-field input.swat-primary {
+	font-weight: bold;
+	padding: 0.2em 0.6em;
+	color: #000;
+	top: 0;
+}
+
+.swat-footer-form-field .swat-button {
 	float: right;
-	color: #f00;
-	background: #00f;
-	text-decoration: blink;
+	position: relative;
+	top: 0.2em;
+	margin: 0 0.2em;
+	color: #666;
 }
 
 .swat-button-submit, .swat-button-create, .swat-button-apply {
-	font-weight: bold;
 	margin: 0 0.2em;
 }
