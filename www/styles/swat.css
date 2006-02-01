@@ -273,12 +273,14 @@ label.swat-control {
 
 /* SwatFieldset */
 
+.swat-grouping-form-field,
 .swat-fieldset {
 	border: 1px solid #ccc;
 	margin-bottom: 1em;
 	padding: 1em;
 }
 
+.swat-grouping-form-field legend,
 .swat-fieldset legend {
 	font-weight: bold;
 	color: #666;
