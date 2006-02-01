@@ -328,8 +328,8 @@ td.swat-table-view-group {
 	border-bottom: 1px solid #EEE;
 }
 
-table.swat-table-view td.swat-check-cell,
-table.swat-table-view th.swat-check-cell {
+table.swat-table-view td.swat-boolean-cell-renderer,
+table.swat-table-view th.swat-boolean-cell-renderer {
 	text-align: center;
 }
 
