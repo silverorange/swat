@@ -408,16 +408,12 @@ span.swat-time-span {
 
 .swat-footer-form-field input.swat-primary {
 	font-weight: bold;
-	padding: 0.2em 0.6em;
 	color: #000;
-	top: 0;
 }
 
 .swat-footer-form-field .swat-button {
 	float: right;
-	position: relative;
-	top: 0.2em;
-	margin: 0 0.2em;
+	margin-left: 0.5em;
 	color: #666;
 }
 
