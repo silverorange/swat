@@ -47,19 +47,6 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 
 		$input_tag->display();
 	}
-
-	/**
-	 * Gets TD-tag attributes
-	 *
-	 * @return array an array of attributes to apply to the TD tag of this cell
-	 *                renderer.
-	 *
-	 * @see SwatCellRenderer::getTdAttributes()
-	 */
-	public function getTdAttributes()
-	{
-		return array('class' => 'swat-checkbox-cell-renderer');
-	}
 }
 
 ?>
