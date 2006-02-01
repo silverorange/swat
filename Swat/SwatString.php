@@ -513,22 +513,29 @@ class SwatString
 	 * @param string $locale an optional locale to use to format the value. If
 	 *                        no locale is specified, the default server locale
 	 *                        is used.
+	 * @param boolean $display_currency whether to append the currency symbol
+	 *                                   to the output.
 	 *
 	 * @return string the money formatted string.
 	 */
-	public static function moneyFormat($value, $locale = null)
+	public static function moneyFormat($value, $locale = null, $display_currency = false)
 	{
 		if ($locale !== null) {
 			$old_locale = setlocale(LC_ALL, 0);
 			setlocale(LC_ALL, $locale);
 		}
 
-		$format = htmlentities(money_format('%.2n', $value), null, 'UTF-8');
+		$output = money_format('%.2n', $value);
+
+		if ($display_currency) {
+			$lc = localeconv();
+			$output.= ' '.$lc['int_curr_symbol'];
+		}
 
 		if ($locale !== null)
 			setlocale(LC_ALL, $old_locale);
 
-		return $format;
+		return $output;
 	}
 
 	// }}}
