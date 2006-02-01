@@ -49,7 +49,7 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	 */
 	public function getTdAttributes()
 	{
-		return array('class' => 'swat-check-cell');
+		return array('class' => 'swat-boolean-cell-renderer');
 	}
 
 	/**
@@ -62,7 +62,7 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	 */
 	public function getThAttributes()
 	{
-		return array('class' => 'swat-check-cell');
+		return array('class' => 'swat-boolean-cell-renderer');
 	}
 }
 
