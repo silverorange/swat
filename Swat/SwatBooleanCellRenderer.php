@@ -38,32 +38,6 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 			echo '&nbsp;';
 		}
 	}
-
-	/**
-	 * Gets TD-tag attributes
-	 *
-	 * @return array an array of attributes to apply to the TD tag of this cell
-	 *                renderer.
-	 *
-	 * @see SwatCellRenderer::getTdAttributes()
-	 */
-	public function getTdAttributes()
-	{
-		return array('class' => 'swat-boolean-cell-renderer');
-	}
-
-	/**
-	 * Gets TH-tag attributes
-	 *
-	 * @return array an array of attributes to apply to the TH tag in the
-	 *                table header for this cell renderer.
-	 *
-	 * @see SwatCellRenderer::getThAttributes()
-	 */
-	public function getThAttributes()
-	{
-		return array('class' => 'swat-boolean-cell-renderer');
-	}
 }
 
 ?>

@@ -63,7 +63,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	public function getThAttributes()
 	{
-		return array();
+		return array('class' => $this->getCSSClassName());
 	}
 
 	/**
@@ -78,7 +78,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	public function getTdAttributes()
 	{
-		return array();
+		return array('class' => $this->getCSSClassName());
 	}
 
 	/**
@@ -114,6 +114,22 @@ abstract class SwatCellRenderer extends SwatUIObject
 	public function getPropertyNameToMap(SwatUIObject $object, $name)
 	{
 		return $name;
+	}
+
+	private function getCSSClassName()
+	{
+		$php_class_name = get_class($this);
+
+		// get the first ancestor that is a swat class
+		while (strncmp($php_class_name, 'Swat', 4) !== 0)
+			 $php_class_name = get_parent_class($php_class_name);
+
+		$css_class_name = strtolower(ereg_replace('([A-Z])', '-\1', $php_class_name));
+
+		if (substr($css_class_name, 0, 1) === '-')
+			$css_class_name = substr($css_class_name, 1);
+
+		return $css_class_name;
 	}
 }
 
