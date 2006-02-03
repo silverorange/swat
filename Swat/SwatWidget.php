@@ -169,7 +169,7 @@ abstract class SwatWidget extends SwatUIObject
 	 *
 	 * @see SwatMessage
 	 */
-	abstract public function addMessage($message);
+	abstract public function addMessage(SwatMessage $message);
 
 	// }}}
 	// {{{ abstract public function getMessages()
