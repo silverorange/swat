@@ -345,7 +345,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 *
 	 * @see SwatWidget::AddMessage()
 	 */
-	public function addMessage($message)
+	public function addMessage(SwatMessage $message)
 	{
 		$this->messages[] = $message;
 	}
