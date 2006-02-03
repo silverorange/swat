@@ -578,6 +578,45 @@ class SwatString
 	}
 
 	// }}}
+	// {{{ public static function byteFormat()
+
+	/**
+	 * Format bytes in human readible IEC standard units.
+	 *
+	 * See the Wikipedia article on
+	 * {@link http://en.wikipedia.org/wiki/Mebibyte mebibytes} for more details.
+	 *
+	 * @param integer $value the value in bytes to format.
+	 *
+	 * @return string the byte value formated according to IEC units.
+	 */
+	public static function byteFormat($value)
+	{
+		$units = array(
+			0 => 'bytes',
+			10 => 'KiB',
+			20 => 'MiB',
+			30 => 'GiB',
+			40 => 'TiB',
+			50 => 'PiB',
+			60 => 'EiB'
+			);
+
+		$units = array_reverse($units, true);
+
+		// get log2()
+	    $log = (integer) (log10($value) / log10(2)); 
+
+    	foreach ($units as $power => $unit) {
+			if ($log >= $power) {
+		    	return round($value / pow(2, $power), 1) . ' ' . $unit;
+			}
+		}
+    
+		return '';
+	}
+
+	// }}}
 	// {{{ public static function pad()
 
 	/**
