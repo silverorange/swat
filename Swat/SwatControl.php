@@ -23,7 +23,7 @@ abstract class SwatControl extends SwatWidget
 	 *
 	 * @see SwatWidget::addMessage()
 	 */
-	public function addMessage($message)
+	public function addMessage(SwatMessage $message)
 	{
 		if ($this->parent instanceof SwatFormField && 
 			$this->parent->title !== null)
