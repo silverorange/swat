@@ -221,8 +221,22 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	{
 		for ($i = 0; $i < $this->number; $i++) {
 
+			$row_has_error = false;
+			foreach ($this->input_cells as $cell) {
+				if ($cell->getWidget($i)->hasMessage()) {
+					$row_has_error = true;
+					break;
+				}
+			}
+
 			$tr_tag = new SwatHtmlTag('tr');
 			$tr_tag->class = 'swat-table-view-input-row';
+
+			if ($row_has_error) {
+				$tr_tag->class.= 'swat-error';
+				$tr_tag->style = 'background: #f00;';
+			}
+
 			$tr_tag->open();
 
 			foreach ($columns as $column) {
@@ -231,6 +245,16 @@ class SwatTableViewInputRow extends SwatTableViewRow
 					$column->getRendererByPosition()->getTdAttributes();
 
 				$td_tag = new SwatHtmlTag('td', $td_attributes);
+
+				if (isset($this->input_cells[$column->id])) {
+					$widget = $this->input_cells[$column->id]->getWidget($i);
+
+					if (count($widget->getMessages())) {
+						$td_tag->class = 'swat-error';
+						$td_tag->style = 'background: #ff0;';
+					}
+				}
+
 				$td_tag->open();
 
 				if (isset($this->input_cells[$column->id]))
