@@ -40,6 +40,8 @@ class SwatMessageDisplay extends SwatControl
 		$this->requires_id = true;
 
 		$this->addJavaScript('swat/javascript/swat-message-display.js');
+
+		$this->addStyleSheet('swat/styles/swat-message.css');
 		$this->addStyleSheet('swat/styles/swat-message-display.css');
 	}
 
@@ -80,32 +82,23 @@ class SwatMessageDisplay extends SwatControl
 		if (count($this->_messages) == 0)
 			return;
 
-		$div = new SwatHtmlTag('div');
+		$ul_tag = new SwatHtmlTag('ul');
+		$li_tag = new SwatHtmlTag('li');
+
+		$ul_tag->class = 'swat-message-display';
+		$ul->id = $this->id;
+		$ul_tag->open();
 
 		$has_dismiss_link = false;
 
 		foreach ($this->_messages as $key => $message) {
-			$div->id = $this->id.'_'.$key;
-
-			switch ($message->type) {
-				case SwatMessage::NOTIFICATION :
-					$div->class = 'swat-message-display-notification';
-					break;
-				case SwatMessage::WARNING :
-					$div->class = 'swat-message-display-warning';
-					break;
-				case SwatMessage::ERROR :
-					$div->class = 'swat-message-display-error';
-					break;
-				case SwatMessage::SYSTEM_ERROR :
-					$div->class = 'swat-message-display-system-error';
-					break;
-			}
+			$li_tag->id = $this->id.'_'.$key;
+			$li_tag->class = $message->getCssClass();
 
 			if ($message->secondary_content !== null) 
-				$div->class .= ' swat-message-display-with-secondary';
+				$li_tag->class .= ' swat-message-with-secondary';
 
-			$div->open();
+			$li_tag->open();
 
 			if ($message->type == SwatMessage::NOTIFICATION |
 				$message->type == SwatMessage::WARNING) {
@@ -121,20 +114,21 @@ class SwatMessageDisplay extends SwatControl
 			}
 
 			$primary_content = new SwatHtmlTag('h3');
-			$primary_content->class = 'swat-message-display-primary-content';
+			$primary_content->class = 'swat-message-primary-content';
 			$primary_content->setContent($message->primary_content, $message->content_type);
 			$primary_content->display();
 
 			if ($message->secondary_content !== null) {
 				$secondary_div = new SwatHtmlTag('div');
-				$secondary_div->class = 'swat-message-display-secondary-content';
+				$secondary_div->class = 'swat-message-secondary-content';
 				$secondary_div->setContent($message->secondary_content, $message->content_type);
 				$secondary_div->display();
 			}
 
-			$div->close();
-
+			$li_tag->close();
 		}
+
+		$ul_tag->close();
 
 		if ($has_dismiss_link)
 			$this->displayJavaScript();

@@ -56,6 +56,21 @@ class SwatFormField extends SwatContainer
 	protected $container_tag = 'div';
 
 	/**
+	 * Creates a new form field
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->addStyleSheet('swat/styles/swat-message.css');
+		$this->addStyleSheet('swat/styles/swat-form-field.css');
+	}
+
+	/**
 	 * Get a SwatHtmlTag to display the title.
 	 *
 	 * Subclasses can change this to change their appearance.
@@ -93,7 +108,7 @@ class SwatFormField extends SwatContainer
 			$container_tag->id = $this->id;
 
 		if (count($messages) > 0)
-			$container_tag->class.= ' swat-error';
+			$container_tag->class.= ' swat-form-field-with-messages';
 
 		$container_tag->open();
 
@@ -117,22 +132,19 @@ class SwatFormField extends SwatContainer
 			$child->display();
 
 		if (count($messages) > 0) {
-			// TODO: more classes based on message type?
-			$msg_div = new SwatHtmlTag('div');
-			$msg_div->class = 'swat-form-field-messages';
+			$message_ul = new SwatHtmlTag('ul');
+			$message_ul->class = 'swat-form-field-messages';
 
-			$msg_div->open();
+			$message_ul->open();
 
 			foreach ($messages as &$msg) {
-				if ($msg->content_type === 'text/plain')
-					echo SwatString::minimizeEntities($msg->primary_content);
-				else
-					echo $msg->primary_content;
-
-				echo '<br />';
+				$message_li = new SwatHtmlTag('li');
+				$message_li->setContent($msg->primary_content, $msg->content_type);
+				$message_li->class = $msg->getCssClass();
+				$message_li->display();
 			}
 
-			$msg_div->close();
+			$message_ul->close();
 		}
 
 		if ($this->note !== null) {
