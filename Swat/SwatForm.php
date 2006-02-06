@@ -406,12 +406,22 @@ class SwatForm extends SwatContainer
 		echo "var {$this->id}_obj = new SwatForm('{$this->id}');\n";
 
 		if ($this->autofocus) {
-			if ($this->default_focused_control === null)
-				$focus_id = $this->getFirstDescendant('SwatControl')->id;
-			else
-				$focus_id = $this->default_focused_control->id;
+			$focusable = true;
+			if ($this->default_focused_control === null) {
+				$control = $this->getFirstDescendant('SwatControl');
+				if ($control === null || $control->id === null)
+					$focusable = false;
+				else
+					$focus_id = $control->id;
+			} else {
+				if ($this->default_focused_control->id === null)
+					$focusable = false;
+				else
+					$focus_id = $this->default_focused_control->id;
+			}
 
-			echo "{$this->id}_obj.setDefaultFocus('{$focus_id}');\n";
+			if ($focusable)
+				echo "{$this->id}_obj.setDefaultFocus('{$focus_id}');\n";
 		}
 
 		echo '</script>';
