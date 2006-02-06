@@ -123,11 +123,7 @@ label.swat-control {
 	display: inline;
 }
 
-.swat-form-field {
-	margin: 0 0 0.5em 0;
-}
-
-.swat-form-field .swat-required {
+.swat-required {
 	font-weight: normal;
 	color: #888;
 }
@@ -135,21 +131,6 @@ label.swat-control {
 .swat-note {
 	font-size: 85%;
 	color: #666;
-}
-
-.swat-form-field-error {
-	border: 1px solid #C00;
-	background: #ffe3e0;
-	padding: 0.5em;
-	margin: 0.5em 0;
-}
-
-.swat-form-field-errormsg {
-	color: #C00;
-	font-size: 85%;
-	padding: 4px 4px 4px 24px;
-	margin: 1em -0.5em -0.5em -0.5em;
-	background: transparent url(../images/tango/16/dialog-error.png) 4px 4px no-repeat;
 }
 
 .swat-footer-form-field {
