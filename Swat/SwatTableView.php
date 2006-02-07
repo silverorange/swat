@@ -621,12 +621,15 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 */
 	private function displayFooter()
 	{
-		echo '<tfoot>';
+		ob_start();
 
 		foreach ($this->extra_rows as $row)
 			$row->display($this->columns);
 
-		echo '</tfoot>';
+		$footer_content = ob_get_clean();
+
+		if (strlen($footer_content))
+			echo '<tfoot>', $footer_content, '</tfoot>';
 	}
 	// }}}
 	// {{{ private function displayBody()
