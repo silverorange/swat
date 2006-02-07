@@ -15,6 +15,9 @@ class SwatForm extends SwatContainer
 	const METHOD_POST = 'post';
 	const METHOD_GET  = 'get';
 
+	const PROCESS_FIELD = '_swat_form_process';
+	const HIDDEN_FIELD = '_swat_form_hidden_fields';
+
 	/**
 	 * The action attribute of the HTML form tag
 	 *
@@ -135,6 +138,16 @@ class SwatForm extends SwatContainer
 	}
 
 	/**
+	 * Gets the HTTP method this form uses to send data
+	 *
+	 * @return string a method constant.
+	 */
+	public function getMethod()
+	{
+		return $this->method;
+	}
+
+	/**
 	 * Displays this form
 	 *
 	 * Outputs the HTML form tag and calls the display() method on each child
@@ -149,7 +162,7 @@ class SwatForm extends SwatContainer
 		if (!$this->visible)
 			return;
 
-		$this->addHiddenField('process', $this->id);
+		$this->addHiddenField(self::PROCESS_FIELD, $this->id);
 
 		$form_tag = new SwatHtmlTag('form');
 		$form_tag->id = $this->id;
@@ -181,8 +194,8 @@ class SwatForm extends SwatContainer
 	{
 		$raw_data = $this->getFormData();
 
-		$this->processed = (isset($raw_data['process']) &&
-			$raw_data['process'] == $this->id);
+		$this->processed = (isset($raw_data[self::PROCESS_FIELD]) &&
+			$raw_data[self::PROCESS_FIELD] == $this->id);
 		
 		if ($this->processed) {
 			$this->processHiddenFields();
@@ -222,8 +235,10 @@ class SwatForm extends SwatContainer
 		if (!$this->processed) {
 			$raw_data = $this->getFormData();
 
-			if (isset($raw_data[$name]))
-				return $raw_data[$name];
+			if (isset($raw_data[self::PROCESS_FIELD]) &&
+				$raw_data[self::PROCESS_FIELD] == $this->id &&
+				isset($raw_data[$name]))
+					return $raw_data[$name];
 		}
 
 		return null;
@@ -310,8 +325,8 @@ class SwatForm extends SwatContainer
 	{
 		$raw_data = $this->getFormData();
 
-		if (isset($raw_data[$this->id.'_hidden_fields']))
-			$fields = $raw_data[$this->id.'_hidden_fields'];
+		if (isset($raw_data[self::HIDDEN_FIELD]))
+			$fields = $raw_data[self::HIDDEN_FIELD];
 		else
 			return;
 
@@ -386,7 +401,7 @@ class SwatForm extends SwatContainer
 			}
 
 			// array of field names
-			$input_tag->name = $this->id.'_hidden_fields[]';
+			$input_tag->name = self::HIDDEN_FIELD.'[]';
 			$input_tag->value = $name;
 			$input_tag->display();
 		}
