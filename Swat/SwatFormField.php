@@ -38,6 +38,15 @@ class SwatFormField extends SwatContainer
 	public $note = null;
 
 	/**
+	 * Optional content type for the note
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $note_content_type = 'text/plain';
+
+	/**
 	 * CSS class to use on the container tag
 	 *
 	 * Subclasses can change this to change their appearance.
@@ -150,7 +159,7 @@ class SwatFormField extends SwatContainer
 		if ($this->note !== null) {
 			$note_div = new SwatHtmlTag('div');
 			$note_div->class = 'swat-note';
-			$note_div->setContent($this->note);
+			$note_div->setContent($this->note, $this->note_content_type);
 			$note_div->display();
 		}
 
