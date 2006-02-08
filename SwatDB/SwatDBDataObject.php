@@ -34,9 +34,6 @@ class SwatDBDataObject
 	 */
 	private $internal_field_classes = array();
 
-	private $table = null;
-	private $id_field = null;
-	
 	// }}}
 	// {{{ protected properties
 
@@ -44,6 +41,9 @@ class SwatDBDataObject
 	 * @var MDB2
 	 */
 	protected $db = null;
+	
+	protected $table = null;
+	protected $id_field = null;
 	
 	// }}}
 	// {{{ public function __construct()
@@ -80,11 +80,19 @@ class SwatDBDataObject
 	 *
 	 * @param mixed $id the id of the database row to set this object's
 	 *               properties with.
+	 *
+	 * @return boolean whether data was sucessfully loaded.
 	 */
 	public function loadFromDB($id)
 	{
 		$this->checkDB();
-		$this->loadFromDBInternal($id);
+		$row = $this->loadFromDBInternal($id);
+
+		if ($row === null)
+			return false;
+
+		$this->initFromRow($row);
+		return true;
 	}
 
 	// }}}
@@ -188,22 +196,27 @@ class SwatDBDataObject
 	 *
 	 * @param mixed $id the id of the database row to set this object's
 	 *               properties with.
+	 *
+	 * @return object data row or null.
 	 */
     protected function loadFromDBInternal($id)
 	{
 		if ($this->table !== null && $this->id_field !== null) {
 
+			$id_field = new SwatDBField($this->id_field, 'integer');
 			$sql = 'select * from %s where %s = %s';
 
 			$sql = sprintf($sql,
 				$this->table,
-				$this->id_field->name,
-				$this->db->quote($id, $this->id_field->type));
+				$id_field->name,
+				$this->db->quote($id, $id_field->type));
 
 			$rs = SwatDB::query($this->db, $sql, null);
 			$row = $rs->fetchRow(MDB2_FETCHMODE_ASSOC);
-			$this->initFromRow($row);
+
+			return $row;
 		}
+		return null;
 	}
 
 	// }}}
@@ -275,22 +288,6 @@ class SwatDBDataObject
 
 	protected function init()
 	{
-	}
-
-	// }}}
-	// {{{ protected function setTable()
-
-	protected function setTable($table)
-	{
-		$this->table = $table;
-	}
-
-	// }}}
-	// {{{ protected function setIDField()
-
-	protected function setIDField($field)
-	{
-		$this->id_field = new SwatDBField($field, 'integer');
 	}
 
 	// }}}
