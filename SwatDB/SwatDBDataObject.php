@@ -12,6 +12,8 @@ require_once 'SwatDB/exceptions/SwatDBException.php';
  */
 class SwatDBDataObject
 {
+	// {{{ private properties
+
 	/**
 	 * @var array
 	 */
@@ -28,10 +30,24 @@ class SwatDBDataObject
 	private $internal_fields = array();
 	
 	/**
+	 * @var array
+	 */
+	private $internal_field_classes = array();
+
+	private $table = null;
+	private $id_field = null;
+	
+	// }}}
+	// {{{ protected properties
+
+	/**
 	 * @var MDB2
 	 */
 	protected $db = null;
 	
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * @param mixed $data
 	 */
@@ -45,19 +61,8 @@ class SwatDBDataObject
 		$this->generatePropertyHashes();
 	}
 
-	protected function init()
-	{
-	}
-
-	protected function registerInternalField($name)
-	{
-		$this->internal_fields[$name] = null;
-	}
-
-	protected function getInternalValue($name)
-	{
-		return $this->internal_fields[$name];
-	}
+	// }}}
+	// {{{ public function setDatabase()
 
 	/**
 	 * @param MDB2 $db
@@ -66,6 +71,37 @@ class SwatDBDataObject
 	{
 		$this->db = $db;
 	}
+
+	// }}}
+	// {{{ public function loadFromDB()
+
+	/**
+	 * Loads this object's properties from the database given an id
+	 *
+	 * @param mixed $id the id of the database row to set this object's
+	 *               properties with.
+	 */
+	public function loadFromDB($id)
+	{
+		$this->checkDB();
+		$this->loadFromDBInternal($id);
+	}
+
+	// }}}
+	// {{{ public function saveToDB()
+
+	/**
+	 * Saves this object to the database
+	 *
+	 * Only modified properties are updated.
+	 */
+	public function saveToDB() {
+		$this->checkDB();
+		$this->saveToDBInternal();
+	}
+
+	// }}}
+	// {{{ public function isModified()
 
 	/**
 	 * Returns true if this object has been modified since it was loaded
@@ -85,6 +121,9 @@ class SwatDBDataObject
 		
 		return true;
 	}
+
+	// }}}
+	// {{{ public function getModifiedProperties()
 
 	/**
 	 * Gets a list of all the modified properties of this object
@@ -106,45 +145,8 @@ class SwatDBDataObject
 		return $modified_properties;
 	}
 
-	/**
-	 * Loads this object's properties from the database given an id
-	 *
-	 * @param mixed id the id of the database row to set this object's
-	 *               properties with.
-	 */
-	public function loadFromDB($id) {
-		$this->checkDB();
-		$this->loadFromDBInternal($id);
-	}
-
-	/**
-	 * Loads this object's properties from the database given an id
-	 *
-	 * @param mixed id the id of the database row to set this object's
-	 *               properties with.
-	 */
-	protected function loadFromDBInternal($id) {
-
-	}
-
-	/**
-	 * Saves this object to the database
-	 *
-	 * Only modified properties are updated.
-	 */
-	public function saveToDB() {
-		$this->checkDB();
-		$this->saveToDBInternal();
-	}
-
-	/**
-	 * Saves this object to the database
-	 *
-	 * Only modified properties are updated.
-	 */
-	protected function saveToDBInternal() {
-
-	}
+	// }}}
+	// {{{ public function __get()
 
 	public function __get($key) {
 		if (isset($this->sub_data_objects[$key]))
@@ -156,8 +158,68 @@ class SwatDBDataObject
 			$this->checkDB();
 			$this->sub_data_objects[$key] = call_user_func(array($this, $loader_method));
 			return $this->sub_data_objects[$key];
+
+		} elseif ($this->hasInternalValue($key)) {
+			$id = $this->getInternalValue($key);
+
+			if ($id === null)
+				return null;
+
+			if (array_key_exists($key, $this->internal_field_classes)) {
+				$class = $this->internal_field_classes[$key];
+
+				if (class_exists($class)) {
+			        $object = new $key();
+					$object->setDatabase($this->db);
+					$object->loadFromDB($id);
+					return $object;
+				}
+			}
+		}
+
+		throw new SwatDBException("No loader method available for '$key'.  Either specify a class when registering the internal field named '$key' to use the default loader, or define a custom loader method named '$loader_method()'.");
+	}
+
+	// }}}
+	// {{{ protected function loadFromDBInternal()
+
+	/**
+	 * Loads this object's properties from the database given an id
+	 *
+	 * @param mixed $id the id of the database row to set this object's
+	 *               properties with.
+	 */
+    protected function loadFromDBInternal($id)
+	{
+		if ($this->table !== null && $this->id_field !== null) {
+
+			$sql = 'select * from %s where %s = %s';
+
+			$sql = sprintf($sql,
+				$this->table,
+				$this->id_field->name,
+				$this->db->quote($id, $this->id_field->type));
+
+			$rs = SwatDB::query($this->db, $sql, null);
+			$row = $rs->fetchRow(MDB2_FETCHMODE_ASSOC);
+			$this->initFromRow($row);
 		}
 	}
+
+	// }}}
+	// {{{ protected function saveToDBInternal()
+
+	/**
+	 * Saves this object to the database
+	 *
+	 * Only modified properties are updated.
+	 */
+	protected function saveToDBInternal() {
+
+	}
+
+	// }}}
+	// {{{ protected function initFromRow()
 
 	/**
 	 * Takes a data row and sets the properties of this object according to
@@ -189,6 +251,9 @@ class SwatDBDataObject
 		}
 	}
 
+	// }}}
+	// {{{ protected function getPropertyHashes()
+
 	/**
 	 * Generates the set of md5 hashes for this data object
 	 *
@@ -205,11 +270,69 @@ class SwatDBDataObject
 		}
 	}
 
+	// }}}
+	// {{{ protected function init()
+
+	protected function init()
+	{
+	}
+
+	// }}}
+	// {{{ protected function setTable()
+
+	protected function setTable($table)
+	{
+		$this->table = $table;
+	}
+
+	// }}}
+	// {{{ protected function setIDField()
+
+	protected function setIDField($field)
+	{
+		$this->id_field = new SwatDBField($field, 'integer');
+	}
+
+	// }}}
+	// {{{ protected function registerInternalField()
+
+	protected function registerInternalField($name, $class = null)
+	{
+		$this->internal_fields[$name] = null;
+
+		if ($class !== null)
+			$this->internal_field_classes[$name] = $class;
+	}
+
+	// }}}
+	// {{{ protected function getInternalValue()
+
+	protected function getInternalValue($name)
+	{
+		if (array_key_exists($name, $this->internal_fields))
+			return $this->internal_fields[$name];
+		else
+			return null;
+	}
+
+	// }}}
+	// {{{ protected function hasInternalValue()
+
+	protected function hasInternalValue($name)
+	{
+		return array_key_exists($name, $this->internal_fields);
+	}
+
+	// }}}
+	// {{{ private function checkDB()
+
 	private function checkDB()
 	{
 		if ($this->db === null)
 			throw new SwatDBException('No database available to this dataobject. Call the setDatabase method.');
 	}
+
+	// }}}
 }
 
 ?>
