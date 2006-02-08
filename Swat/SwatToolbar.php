@@ -13,6 +13,20 @@ require_once 'Swat/SwatHtmlTag.php';
 class SwatToolbar extends SwatContainer
 {
 	/**
+	 * Creates a new toolbar
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->addStyleSheet('swat/styles/swat-toolbar.css');
+	}
+
+	/**
 	 * Displays this toolbar as an unordered list with each sub-item
 	 * as a list item
 	 */

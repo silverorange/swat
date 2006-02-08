@@ -16,6 +16,20 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
 class SwatDetailsView extends SwatControl implements SwatUIParent
 {
 	/**
+	 * Creates a new details view
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->addStyleSheet('swat/styles/swat-details-view.css');
+	}
+
+	/**
 	 * An object containing values to display
 	 *
 	 * A data object contains properties and values. The SwatDetailsViewField
