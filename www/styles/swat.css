@@ -36,6 +36,8 @@ ul.swat-toolbar {
 	background: #f3efe5;
 }
 
+.swat-toolbar .swat-tool-link-add:link,
+.swat-tool-link-add:visited,
 .swat-toolbar .swat-tool-link-create:link,
 .swat-tool-link-create:visited {
 	background: url(../images/swat-tool-link-create.png) 6px center no-repeat;
@@ -43,6 +45,7 @@ ul.swat-toolbar {
 	padding-left: 28px;
 }
 
+.swat-toolbar a.swat-tool-link-add:hover,
 .swat-toolbar a.swat-tool-link-create:hover {
 	background: #f3efe5 url(../images/swat-tool-link-create.png) 6px center no-repeat;
 }
@@ -398,6 +401,9 @@ span.swat-time-span {
 	color: #666;
 }
 
-.swat-button-submit, .swat-button-create, .swat-button-apply {
+.swat-button-submit,
+.swat-button-create,
+.swat-button-add,
+.swat-button-apply {
 	margin: 0 0.2em;
 }
