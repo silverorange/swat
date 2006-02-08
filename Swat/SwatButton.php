@@ -146,6 +146,7 @@ class SwatButton extends SwatControl
 	 *
 	 * - submit
 	 * - create
+	 * - add
 	 * - apply
 	 * - delete
 	 * - cancel
@@ -167,6 +168,11 @@ class SwatButton extends SwatControl
 		case 'create':
 			$title = Swat::_('Create');
 			$class = 'swat-button-create';
+			break;
+
+		case 'add':
+			$title = Swat::_('Add');
+			$class = 'swat-button-add';
 			break;
 
 		case 'apply':

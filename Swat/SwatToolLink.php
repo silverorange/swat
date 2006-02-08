@@ -132,6 +132,7 @@ class SwatToolLink extends SwatControl
 	 * Valid stock type ids are:
 	 *
 	 * - create
+	 * - add
 	 * - edit
 	 * - delete
 	 * - preview
@@ -149,6 +150,11 @@ class SwatToolLink extends SwatControl
 		case 'create':
 			$title = Swat::_('Create');
 			$class = 'swat-tool-link-create';
+			break;
+
+		case 'add':
+			$title = Swat::_('Add');
+			$class = 'swat-tool-link-add';
 			break;
 
 		case 'edit':
