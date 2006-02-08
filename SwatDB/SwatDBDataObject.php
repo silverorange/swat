@@ -177,7 +177,7 @@ class SwatDBDataObject
 			}
 		}
 
-		throw new SwatDBException("No loader method available for '$key'.  Either specify a class when registering the internal field named '$key' to use the default loader, or define a custom loader method named '$loader_method()'.");
+		throw new SwatDBException("A property named '$key' does not exist on this dataobject.  If the property corresponds directly to a database field it should be added as a public property of this data object.  If the property should access a sub-dataobject, either specify a class when registering the internal field named '$key' or define a custom loader method named '$loader_method()'.");
 	}
 
 	// }}}
