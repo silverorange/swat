@@ -107,7 +107,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible || $this->options === null)
 			return;
 
 		$div_tag = new SwatHtmlTag('div');
@@ -124,36 +124,34 @@ class SwatCheckboxList extends SwatControl implements SwatState
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
 
-		if ($this->options !== null) {
-			echo '<ul>';
+		echo '<ul>';
 
-			foreach ($this->options as $value => $title) {
+		foreach ($this->options as $value => $title) {
 
-				echo '<li>';
+			echo '<li>';
 
-				$input_tag->value = (string)$value;
-				$input_tag->removeAttribute('checked');
+			$input_tag->value = (string)$value;
+			$input_tag->removeAttribute('checked');
 
-				if (in_array($value, $this->values))
-					$input_tag->checked = 'checked';
+			if (in_array($value, $this->values))
+				$input_tag->checked = 'checked';
 
-				$input_tag->id = $this->id.'_'.$input_tag->value;
-				$input_tag->display();
+			$input_tag->id = $this->id.'_'.$input_tag->value;
+			$input_tag->display();
 
-				$label_tag->for = $this->id.'_'.$input_tag->value;
-				$label_tag->setContent($title, $this->content_type);
-				$label_tag->display();
+			$label_tag->for = $this->id.'_'.$input_tag->value;
+			$label_tag->setContent($title, $this->content_type);
+			$label_tag->display();
 
-				echo '</li>';
-			}
-
-			echo '</ul>';
-
-			// Only show the checkbox list if more than one checkable item is
-			// displayed.
-			$this->check_all->visible = (count($this->options) > 1);
-			$this->check_all->display();
+			echo '</li>';
 		}
+
+		echo '</ul>';
+
+		// Only show the check all control if more than one checkable item is
+		// displayed.
+		$this->check_all->visible = (count($this->options) > 1);
+		$this->check_all->display();
 
 		$this->displayJavaScript();
 
