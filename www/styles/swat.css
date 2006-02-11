@@ -123,20 +123,18 @@ label.swat-control {
 	vertical-align: middle;
 }
 
-.swat-checkbox-list ul {
+.swat-checkbox-list ul,
+.swat-checkbox-tree ul,
+.swat-radio-list ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
 
-.swat-checkbox-list input, .swat-checkbox-tree input {
+.swat-checkbox-list input,
+.swat-checkbox-tree input,
+.swat-radio-list input {
 	vertical-align: middle;
-}
-
-.swat-checkbox-tree ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
 }
 
 .swat-checkbox-tree ul li ul li {
