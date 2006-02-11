@@ -23,7 +23,9 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	public function __construct($id = null)
 	{
 		parent::__construct();
-		$this->show_blank=false;
+		
+		$this->show_blank  = false;
+		$this->requires_id = true;
 	}
 	
 	/**
@@ -31,7 +33,7 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible || $this->getOptions() === null)
 			return;
 
 		$options = $this->getOptions();
@@ -42,6 +44,11 @@ class SwatRadioList extends SwatFlydown implements SwatState
 			$options = array_merge(
 				array(new SwatOption('', $this->blank_title)),
 				$options);
+				
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->id = $this->id.'_div';
+		$div_tag->class = 'swat-radio-list';
+		$div_tag->open();
 		
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'radio';
@@ -52,11 +59,16 @@ class SwatRadioList extends SwatFlydown implements SwatState
 
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
+		
+		echo '<ul>';
 
 		foreach ($options as $option) {	
+			
+			echo '<li>';
+			
 			if ($option instanceof SwatFlydownDivider) {
 				//ignore these for now TODO: make dividers work with radiolists
-			} else {
+			} else {					
 				$value = (string)$option->value;
 				$input_tag->value = $value;
 				$input_tag->removeAttribute('checked');
@@ -70,9 +82,15 @@ class SwatRadioList extends SwatFlydown implements SwatState
 
 				$input_tag->display();
 				$label_tag->display();
-				echo '<br />';
 			}
+			
+			echo '</li>';
+			
 		}
+		
+		echo '</ul>';
+		
+		$div_tag->close();
 	}
 }
 
