@@ -1,6 +1,7 @@
 <?php
 
 require_once 'MDB2.php';
+require_once 'Swat/SwatDate.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
@@ -34,6 +35,11 @@ class SwatDBDataObject
 	 */
 	private $internal_field_classes = array();
 
+	/**
+	 * @var array
+	 */
+	private $date_fields = array();
+	
 	// }}}
 	// {{{ protected properties
 
@@ -254,8 +260,12 @@ class SwatDBDataObject
 			$row = get_object_vars($row);
 
 		foreach ($property_array as $name => $value) {
-			if (isset($row[$name]))
-				$this->$name = $row[$name];
+			if (isset($row[$name])) {
+				if (in_array($name, $this->date_fields) && $row[$name] !== null)
+					$this->$name = SwatDate($row[$name]);
+				else
+					$this->$name = $row[$name];
+			}
 		}
 
 		foreach ($this->internal_fields as $name => $value) {
@@ -288,6 +298,14 @@ class SwatDBDataObject
 
 	protected function init()
 	{
+	}
+
+	// }}}
+	// {{{ protected function registerDateField()
+
+	protected function registerDateField($name)
+	{
+		$this->date_fields[] = $name;
 	}
 
 	// }}}
