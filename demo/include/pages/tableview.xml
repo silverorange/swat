@@ -50,6 +50,7 @@
 				</object>
 			</widget>
 			<widget class="SwatContentBlock">
+				<property name="content_type">text/xml</property>
 				<property name="content"><![CDATA[
 				<div class="note">
 				Note: These actions are for demonstration purposes only.
