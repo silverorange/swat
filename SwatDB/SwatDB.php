@@ -40,7 +40,9 @@ class SwatDB
 	{
 		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
 		SwatDB::debug($sql);
-		$rs = $db->query($sql, $types, true, $mdb2_wrapper);
+
+		$mdb2_types = $types === null ? true : $types;
+		$rs = $db->query($sql, $mdb2_types, true, $mdb2_wrapper);
 
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs);
