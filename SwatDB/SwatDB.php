@@ -19,7 +19,7 @@ require_once 'SwatDB/exceptions/SwatDBException.php';
  */
 class SwatDB
 {
-    // {{{ public static function query()
+	// {{{ public static function query()
 
 	/**
 	 * Query a recordset
@@ -48,6 +48,32 @@ class SwatDB
 			throw new SwatDBException($rs);
 
 		return $rs;
+	}
+
+	// }}}
+	// {{{ public static function exec()
+
+	/**
+	 * Execute a data manipulation SQL statement
+	 *
+ 	 * Convenience method for MDB2::exec().
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 * @param string $sql The SQL to execute.
+	 *
+	 * @return integer Number of affected rows.
+	 *
+	 * @throws SwatDBException
+	 */
+	public static function exec($db, $sql)
+	{
+		SwatDB::debug($sql);
+		$affected_rows = $db->exec($sql, $types, true, $mdb2_wrapper);
+
+		if (MDB2::isError($affected_rows))
+			throw new SwatDBException($affected_rows);
+
+		return $affected_rows;
 	}
 
 	// }}}
