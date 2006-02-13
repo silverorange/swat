@@ -71,6 +71,11 @@ class SwatDate extends Date
 	 */
 	const DF_MY                     = 12;
 
+	public function __construct($date)
+	{
+		parent::Date($date);
+	}
+
 	/**
 	 * Formats this date given either a format string of a format id
 	 *

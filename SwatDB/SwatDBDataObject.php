@@ -262,7 +262,7 @@ class SwatDBDataObject
 		foreach ($property_array as $name => $value) {
 			if (isset($row[$name])) {
 				if (in_array($name, $this->date_fields) && $row[$name] !== null)
-					$this->$name = SwatDate($row[$name]);
+					$this->$name = new SwatDate($row[$name]);
 				else
 					$this->$name = $row[$name];
 			}
