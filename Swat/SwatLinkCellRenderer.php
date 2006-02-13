@@ -92,18 +92,25 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 			$anchor = new SwatHtmlTag('a');
 			$anchor->setContent($this->getText(), $this->content_type);
 			$anchor->href = $this->getLink();
+			$anchor->title = $this->getTitle();
 			$anchor->class = $this->class;
 
 			$anchor->display();
 		} else {
 			$span_tag = new SwatHtmlTag('span');
 			$span_tag->setContent($this->getText(), $this->content_type);
+			$span_tag->title = $this->getTitle();
 			$span_tag->class = 'swat-link-cell-renderer-insensitive';
 			if ($this->class !== null)
 				$span_tag->class.= ' '.$this->class;
 
 			$span_tag->display();
 		}
+	}
+
+	protected function getTitle()
+	{
+		return null;
 	}
 
 	protected function getText()
