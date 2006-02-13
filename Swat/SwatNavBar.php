@@ -140,7 +140,6 @@ class SwatNavBar extends SwatControl
 		if (count($this->entries == 0))
 			throw new SwatException('Navbar is empty.');
 
-		reset($this->entries);
 		return end($this->entries);
 	}
 
