@@ -124,6 +124,27 @@ class SwatNavBar extends SwatControl
 	}
 
 	// }}}
+	// {{{ public function getLastEntry()
+
+	/**
+	 * Gets the last entry from this navigation bar
+	 *
+	 * If the navigation bar is empty, an exception is thrown.
+	 *
+	 * @return SwatNavBarEntry the entry.
+	 *
+	 * @throws SwatException
+	 */
+	public function getLastEntry()
+	{
+		if (count($this->entries == 0))
+			throw new SwatException('Navbar is empty.');
+
+		reset($this->entries);
+		return end($this->entries);
+	}
+
+	// }}}
 	// {{{ public function getCount()
 
 	/**
