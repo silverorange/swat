@@ -68,7 +68,7 @@ class SwatDB
 	public static function exec($db, $sql)
 	{
 		SwatDB::debug($sql);
-		$affected_rows = $db->exec($sql, $types, true, $mdb2_wrapper);
+		$affected_rows = $db->exec($sql);
 
 		if (MDB2::isError($affected_rows))
 			throw new SwatDBException($affected_rows);
