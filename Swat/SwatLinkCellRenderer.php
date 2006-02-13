@@ -73,9 +73,9 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	public $link_value = null;
 
 	/**
-	 * The CSS class to use for this link cell renderer
+	 * Additional CSS class to use for this link cell renderer
 	 *
-	 * This allows subclasses to set a custom style.
+	 * This class is used on the XHTML anchor tag.
 	 *
 	 * @var string
 	 */
@@ -90,46 +90,44 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	{
 		if ($this->sensitive && ($this->link !== null)) {
 			$anchor = new SwatHtmlTag('a');
-
-			if ($this->class !== null)
-				$anchor->class = $this->class;
-
-			if ($this->value === null)
-				$text = $this->text;
-			elseif (is_array($this->value))
-				$text = vsprintf($this->text, $this->value);
-			else
-				$text = sprintf($this->text, $this->value);
-
-			$anchor->setContent($text, $this->content_type);
-
-			if ($this->link_value === null)
-				$anchor->href = $this->link;
-			elseif (is_array($this->link_value))
-				$anchor->href = vsprintf($this->link, $this->link_value);
-			else
-				$anchor->href = sprintf($this->link, $this->link_value);
+			$anchor->setContent($this->getText(), $this->content_type);
+			$anchor->href = $this->getLink();
+			$anchor->class = $this->class;
 
 			$anchor->display();
 		} else {
 			$span_tag = new SwatHtmlTag('span');
-
+			$span_tag->setContent($this->getText(), $this->content_type);
+			$span_tag->class = 'swat-link-cell-renderer-insensitive';
 			if ($this->class !== null)
-				$span_tag->class =
-					$this->class.' swat-link-cell-renderer-insensitive';
-			else
-				$span_tag->class = 'swat-link-cell-renderer-insensitive';
+				$span_tag->class.= ' '.$this->class;
 
-			if ($this->value === null)
-				$text = $this->text;
-			elseif (is_array($this->value))
-				$text = vsprintf($this->text, $this->value);
-			else
-				$text = sprintf($this->text, $this->value);
-
-			$span_tag->setContent($text, $this->content_type);
 			$span_tag->display();
 		}
+	}
+
+	protected function getText()
+	{
+		if ($this->value === null)
+			$text = $this->text;
+		elseif (is_array($this->value))
+			$text = vsprintf($this->text, $this->value);
+		else
+			$text = sprintf($this->text, $this->value);
+
+		return $text;
+	}
+
+	protected function getLink()
+	{
+		if ($this->link_value === null)
+			$link = $this->link;
+		elseif (is_array($this->link_value))
+			$link = vsprintf($this->link, $this->link_value);
+		else
+			$link = sprintf($this->link, $this->link_value);
+
+		return $link;
 	}
 }
 
