@@ -183,7 +183,7 @@ class SwatDBDataObject
 				$class = $this->internal_field_classes[$key];
 
 				if (class_exists($class)) {
-			        $object = new $key();
+			        $object = new $class();
 					$object->setDatabase($this->db);
 					$object->loadFromDB($id);
 					return $object;
