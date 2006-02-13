@@ -229,10 +229,16 @@ span.swat-time-span {
 .swat-actions label {
 	display: inline;
 }
+
 .swat-actions-note {
 	color: #666;
 	font-size: 85%;
-	padding-top: 0.5em;
+	padding-top: 0.3em;
+}
+
+.swat-actions .swat-button-apply {
+	font-weight: bold;
+	color: #333;
 }
 
 /* Swat Buttons */
@@ -246,11 +252,4 @@ span.swat-time-span {
 	float: right;
 	margin-left: 0.5em;
 	color: #666;
-}
-
-.swat-button-submit,
-.swat-button-create,
-.swat-button-add,
-.swat-button-apply {
-	margin: 0 0.2em;
 }
