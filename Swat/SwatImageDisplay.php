@@ -9,7 +9,7 @@ require_once 'Swat/SwatControl.php';
  * This control simply displays a static image.
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageDisplay extends SwatControl

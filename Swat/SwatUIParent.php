@@ -4,7 +4,7 @@
  * Interface for widgets that are parents for other widgets.
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 interface SwatUIParent

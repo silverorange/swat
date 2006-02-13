@@ -6,7 +6,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * Thrown when a stock type is used that is not defined
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatUndefinedStockTypeException extends SwatException

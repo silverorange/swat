@@ -9,7 +9,7 @@ require_once 'Swat/SwatReplicator.php';
  * It can dynamically create widgets based on an array of replicators.
  *
  * @package   Swat
- * @copyright 2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicator

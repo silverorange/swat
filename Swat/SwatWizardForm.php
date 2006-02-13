@@ -13,7 +13,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * provided by the {@link SwatWizardStateStore} class.
  *
  * @package   Swat
- * @copyright 2005 silverorange
+ * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatWizardForm extends SwatForm

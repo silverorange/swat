@@ -8,7 +8,7 @@ require_once 'Swat/SwatState.php';
  * A radio list selection widget
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRadioList extends SwatFlydown implements SwatState

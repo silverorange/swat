@@ -13,7 +13,7 @@ require_once '../include/DemoDocumentationMenu.php';
  * in SwatML.
  *
  * @package   SwatDemo
- * @copyright 2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class DemoPage extends SwatPage

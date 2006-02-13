@@ -7,7 +7,7 @@ require_once 'Swat/SwatEntry.php';
  * A money entry widget
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMoneyEntry extends SwatEntry

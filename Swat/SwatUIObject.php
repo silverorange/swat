@@ -7,7 +7,7 @@ require_once 'Swat/SwatHtmlHeadEntry.php';
  * A base class for Swat user-interface elements
  *
  * @package   Swat
- * @copyright 2005 silverorange
+ * @copyright 2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatUIObject extends SwatObject

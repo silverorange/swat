@@ -10,7 +10,7 @@ require_once 'Swat/SwatState.php';
  * predefined color choices. It requires JavaScript to work correctly.
  *
  * @package   Swat
- * @copyright 2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatSimpleColorEntry extends SwatInputControl implements SwatState

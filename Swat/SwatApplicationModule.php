@@ -7,7 +7,7 @@ require_once 'Swat/SwatApplication.php';
  * Base class for an application module
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatApplicationModule extends SwatObject

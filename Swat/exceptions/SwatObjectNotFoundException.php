@@ -6,7 +6,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * Thrown when a object is not found
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatObjectNotFoundException extends SwatException

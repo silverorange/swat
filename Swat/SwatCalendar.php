@@ -10,7 +10,7 @@ require_once 'Date.php';
  * inside the {@link SwatDateEntry} widget but can be used by itself as well.
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCalendar extends SwatControl
