@@ -8,7 +8,7 @@ require_once 'Swat/SwatString.php';
  * A text renderer.
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDateCellRenderer extends SwatCellRenderer

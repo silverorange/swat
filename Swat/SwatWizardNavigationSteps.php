@@ -9,7 +9,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * switch steps.
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatWizardNavigationSteps extends SwatWizardNavigation

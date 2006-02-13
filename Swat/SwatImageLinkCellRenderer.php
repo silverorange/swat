@@ -6,7 +6,7 @@ require_once 'Swat/SwatImageCellRenderer.php';
  * A renderer that displays a hyperlinked image
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageLinkCellRenderer extends SwatImageCellRenderer

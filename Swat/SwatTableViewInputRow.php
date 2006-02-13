@@ -22,7 +22,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * TODO: work out ids. id is required
  *
  * @package   Swat
- * @copyright 2005 silverorange
+ * @copyright 2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewInputRow extends SwatTableViewRow

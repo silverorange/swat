@@ -6,7 +6,7 @@ require_once 'Swat/SwatObject.php';
  * A simple class for storing {@link SwatFlydown} options
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatOption extends SwatObject
