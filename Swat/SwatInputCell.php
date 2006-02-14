@@ -22,16 +22,6 @@ require_once 'Swat/exceptions/SwatException.php';
  */
 class SwatInputCell extends SwatUIObject implements SwatUIParent
 {
-	// {{{ public properties
-
-	/**
-	 * The unique identifier of the input row for this input cell
-	 *
-	 * @var string
-	 */
-	public $row = null;
-
-	// }}}
 	// {{{ private properties
 
 	/**
@@ -132,12 +122,12 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	 * This creates a cloned widget for the given numeric identifier and then
 	 * processes the widget.
 	 *
-	 * @param integer $row_number the numeric identifier of the input row the
-	 *                             user entered.
+	 * @param integer $row_identifier the numeric identifier of the input row
+	 *                                 the user entered.
 	 */
-	public function process($row_number)
+	public function process($row_identifier)
 	{
-		$widget = $this->getClonedWidget($row_number);
+		$widget = $this->getClonedWidget($row_identifier);
 		$widget->process();
 	}
 
@@ -150,12 +140,12 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	 * This creates a cloned widget for the given numeric identifier and then
 	 * displays the widget.
 	 *
-	 * @param integer $row_number the numeric identifier of the input row that
-	 *                             is being displayed.
+	 * @param integer $row_indentifier the numeric identifier of the input row
+	 *                                  that is being displayed.
 	 */
-	public function display($row_number)
+	public function display($row_identifier)
 	{
-		$widget = $this->getClonedWidget($row_number);
+		$widget = $this->getClonedWidget($row_identifier);
 		$widget->display();
 	}
 
@@ -198,7 +188,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	/**
 	 * Gets a particular widget in this input cell
 	 *
-	 * @param integer $row_number the numeric row identifier of the widget.
+	 * @param integer $row_identifier the numeric row identifier of the widget.
 	 * @param string $widget_id the unique identifier of the widget. If no id
 	 *                           is specified, the root widget of this cell is
 	 *                           returned for the given row.
@@ -207,19 +197,19 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	 *
 	 * @throws SwatException
 	 */
-	public function getWidget($row_number, $widget_id = null)
+	public function getWidget($row_identifier, $widget_id = null)
 	{
-		if ($widget_id === null && isset($this->clones[$row_number])) {
-			return $this->clones[$row_number];
+		if ($widget_id === null && isset($this->clones[$row_identifier])) {
+			return $this->clones[$row_identifier];
 
 		} elseif ($widget_id !== null &&
-			isset($this->widgets[$row_number][$widget_id])) {
+			isset($this->widgets[$row_identifier][$widget_id])) {
 
-			return $this->widgets[$row_number][$widget_id];
+			return $this->widgets[$row_identifier][$widget_id];
 		}
 
 		throw new SwatException('The specified widget was not found with the '.
-			'specified row number.');
+			'specified row identifier.');
 	}
 
 	// }}}
@@ -265,7 +255,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 		if ($this->widget === null)
 			return null;
 
-		$suffix = '_'.$this->row.'_'.$replicator_id;
+		$suffix = '_'.$this->parent->id.'_'.$replicator_id;
 		$new_widget = clone $this->widget;
 
 		if ($new_widget->id !== null) {
