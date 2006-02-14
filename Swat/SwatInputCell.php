@@ -213,6 +213,28 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function unsetWidget()
+
+	/**
+	 * Unsets a replicated widget within this cell
+	 *
+	 * This is useful if you are deleting a row from an input row.
+	 *
+	 * @param integer replicator_id the replicator id of the cloned widget to
+	 *                 unset.
+	 *
+	 * @see SwatTableViewInputRow::removeReplicatedRow()
+	 */
+	public function unsetWidget($replicator_id)
+	{
+		if (isset($this->widgets[$replicator_id]))
+			unset($this->widgets[$replicator_id]);
+
+		if (isset($this->clones[$replicator_id]))
+			unset($this->clones[$replicator_id]);
+	}
+
+	// }}}
 	// {{{ public function getHtmlHeadEntries()
 
 	/**

@@ -247,6 +247,22 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	}
 
 	/**
+	 * Removes a row from this input row by its replicator id
+	 *
+	 * This also unsets any cloned widgets from this row's input cells.
+	 *
+	 * @param integer $replicator_id the replicator id of the row to remove.
+	 */
+	public function removeReplicatedRow($replicator_id)
+	{
+		$this->replicators = array_diff($this->replicators,
+			array($replicator_id));
+
+		foreach ($this->input_cells as $cell)
+			$cell->unsetWidget($replicator_id);
+	}
+
+	/**
 	 * Displays the actual XHTML input rows for this input row
 	 *
 	 * Displays a row for each replicator id in this input row. Each row is
