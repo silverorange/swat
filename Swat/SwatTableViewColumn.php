@@ -93,6 +93,8 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 
 			$this->parent->getFirstRowByClass('SwatTableViewInputRow')->addInputCell(
 				$this->input_cell, $this->id);
+
+			$this->input_cell->parent = $this->parent->getFirstRowByClass('SwatTableViewInputRow');
 		}
 	}
 
