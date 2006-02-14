@@ -514,7 +514,10 @@ class SwatDB
 		SwatDB::debug($insert_sql);
 		SwatDB::debug($delete_sql);
 
-		$db->beginTransaction();
+		$do_transaction = (!$db->in_transaction);
+
+		if ($do_transaction)
+			$db->beginTransaction();
 
 		if (count($values)) {
 			$ret = $db->query($insert_sql);
@@ -526,7 +529,8 @@ class SwatDB
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs);
 		
-		$db->commit();
+		if ($do_transaction)
+			$db->commit();
 
 	}
 
@@ -571,7 +575,9 @@ class SwatDB
 
 		$ret = null;
 
-		if ($id_field != null)
+		$do_transaction = (!$db->in_transaction && $id_field !== null);
+
+		if ($do_transaction)
 			$db->beginTransaction();
 
 		$sql = 'insert into %s (%s) values (%s)';
@@ -596,10 +602,11 @@ class SwatDB
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs);
 
-		if ($id_field != null) {
-			$ret = SwatDB::getFieldMax($db, $table, $id_field);						
+		if ($id_field !== null)
+			$ret = SwatDB::getFieldMax($db, $table, $id_field);
+
+		if ($do_transaction)
 			$db->commit();
-		}
 
 		return $ret;
 	}
