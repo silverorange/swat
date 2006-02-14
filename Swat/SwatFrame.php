@@ -74,6 +74,7 @@ class SwatFrame extends SwatContainer
 
 				$header_tag->open();
 				$header_tag->displayContent();
+				echo ' ';
 				$span_tag->display();
 				$header_tag->close();
 			}
