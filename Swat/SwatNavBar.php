@@ -137,7 +137,7 @@ class SwatNavBar extends SwatControl
 	 */
 	public function getLastEntry()
 	{
-		if (count($this->entries == 0))
+		if (count($this->entries) == 0)
 			throw new SwatException('Navbar is empty.');
 
 		return end($this->entries);
