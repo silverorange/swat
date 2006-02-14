@@ -199,6 +199,8 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	 */
 	public function getWidget($row_identifier, $widget_id = null)
 	{
+		$this->getClonedWidget($row_identifier);
+
 		if ($widget_id === null && isset($this->clones[$row_identifier])) {
 			return $this->clones[$row_identifier];
 
