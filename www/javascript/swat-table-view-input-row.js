@@ -44,7 +44,8 @@ function SwatTableViewInputRow(id, row_string)
 	while (this.table.nodeName.toLowerCase() != 'table')
 		this.table = this.table.parentNode;
 
-	this.number = null;
+	this.replicators = null;
+	this.replicators_input = null;
 }
 
 /**
@@ -169,10 +170,24 @@ if (!document.importNode) {
  */
 SwatTableViewInputRow.prototype.addRow = function()
 {
-	if (this.number === null)
-		this.number = document.getElementsByName(this.id + '_number')[0];
+	if (this.replicators === null) {
+		this.replicators_input = document.getElementsByName(this.id +
+			'_replicators')[0];
 
-	var document_string = this.row_string.replace(/%s/g, this.number.value);
+		if (this.replicators_input.value == "")
+			this.replicators = [];
+		else
+			this.replicators = this.replicators_input.value.split(',');
+	}
+
+	var replicator_id = (this.replicators.length > 0) ?
+		this.replicators[this.replicators.length - 1] + 1 : 0;
+
+	this.replicators.push(replicator_id);
+
+	this.replicators_input.value = this.replicators.join(',');
+
+	var document_string = this.row_string.replace(/%s/g, replicator_id);
 	var dom = SwatTableViewInputRow.parser.loadXML(document_string);
 	var source_tr = dom.documentElement.getElementsByTagName('tr')[0];
 
@@ -195,6 +210,4 @@ SwatTableViewInputRow.prototype.addRow = function()
 		if (scripts[0].getAttribute('type') == 'text/javascript' &&
 			scripts[0].childNodes.length > 0)
 				eval(scripts[i].firstChild.nodeValue);
-
-	this.number.value++;
 }

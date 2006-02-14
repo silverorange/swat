@@ -67,6 +67,17 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	private $input_cells = array();
 
 	/**
+	 * An array of replicator ids for the individual rows displayed and entered
+	 * through this input row
+	 *
+	 * Replicator ids are integers by convention for input rows.
+	 *
+	 * @var array
+	 * @see SwatTableViewInputRow::getReplicators()
+	 */
+	private $replicators = array();
+
+	/**
 	 * Creates a new input row
 	 */
 	public function __construct()
@@ -89,25 +100,30 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		// init input cells
 		foreach ($this->input_cells as $cell)
 			$cell->init();
+
+		// set initial replicators based on number
+		for ($i = 0; $i < $this->number; $i++)
+			$this->replicators[] = $i;
 	}
 
 	/**
 	 * Processes this input row
 	 *
-	 * This gets the number of rows the user entered as well as processing
-	 * all cloned widgets in input cells that the user submitted.
+	 * This gets the replicator ids of rows the user entered as well as
+	 * processing all cloned widgets in input cells that the user submitted.
 	 */
 	public function process()
 	{
 		parent::process();
 
-		// retrieve the number of rows
-		$this->number = $this->getForm()->getHiddenField($this->id.'_number');
+		// retrieve row ids
+		$this->replicators = explode(',',
+			$this->getForm()->getHiddenField($this->id.'_replicators'));
 
 		// process input cells
-		for ($i = 0; $i < $this->number; $i++)
+		foreach ($this->replicators as $replicator_id)
 			foreach ($this->input_cells as $cell)
-				$cell->process($i);
+				$cell->process($replicator_id);
 	}
 
 	/**
@@ -132,19 +148,42 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	/**
 	 * Displays this row
 	 *
-	 * Uses widget cloning inside {@link SwatInputCell} to display the number
-	 * or rows specified and also displays the 'enter-another-row' button.
+	 * Uses widget cloning inside {@link SwatInputCell} to display rows and
+	 * also displays the 'enter-another-row' button. The number of rows
+	 * displayed is set either through {SwatTableViewInputRow::$number} or
+	 * by the number of rows the user submitted. When a user submits a
+	 * different number of rows than {SwatTableViewInputRow::$number} it
+	 * the user submitted number takes precedence.
 	 *
 	 * @param array a reference to the array of {@link SwatTableViewColumn}
 	 *               objects in this row's table-view.
 	 */
 	public function display(&$columns)
 	{
-		// add number of fields to the form as a hidden field
-		$this->getForm()->addHiddenField($this->id.'_number', $this->number);
+		// add replicator ids to the form as a hidden field
+		$this->getForm()->addHiddenField($this->id.'_replicators',
+			implode(',', $this->replicators));
 
 		$this->displayInputRows($columns);
 		$this->displayEnterAnotherRow($columns);
+	}
+
+	/**
+	 * Gets the replicator ids of this input row
+	 *
+	 * This is useful if you want to iterate through the results of user
+	 * submitted data. For example:
+	 *
+	 * <code>
+	 * foreach ($row->getReplicators() as $replicator_id)
+	 *     $my_widget = $row->getWidget($replicator_id);
+	 * </code>
+	 *
+	 * @return array the replicator ids of this input row.
+	 */
+	public function getReplicators()
+	{
+		return $this->replicators;
 	}
 
 	/**
@@ -156,7 +195,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 *
 	 * @param string $column_id the unique identifier of the table-view column
 	 *                           the widget resides in.
-	 * @param integer $row_number the numeric row identifier of the widget.
+	 * @param integer $row_identifier the numeric row identifier of the widget.
 	 * @param string $widget_id the unique identifier of the widget. If no id
 	 *                           is specified, the root widget of the column's
 	 *                           cell is returned for the given row.
@@ -167,10 +206,10 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 *
 	 * @throws SwatException
 	 */
-	public function getWidget($column_id, $row_number, $widget_id = null)
+	public function getWidget($column_id, $row_identifier, $widget_id = null)
 	{
 		if (isset($this->input_cells[$column_id]))
-			return $this->input_cells[$column_id]->getWidget($row_number,
+			return $this->input_cells[$column_id]->getWidget($row_identifier,
 				$widget_id);
 
 		throw new SwatException('No input cell for this row exists for the '.
@@ -210,29 +249,34 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	/**
 	 * Displays the actual XHTML input rows for this input row
 	 *
-	 * Displays the number of rows specified in the property
-	 * {@link SwatTableViewInputRow::$number}. Each row is displayed using
-	 * cloned widgets inside {@link SwatInputCell} objects.
+	 * Displays a row for each replicator id in this input row. Each row is
+	 * displayed using cloned widgets inside {@link SwatInputCell} objects.
 	 *
 	 * @param array a reference to the array of {@link SwatTableViewColumn}
 	 *               objects in this row's table-view.
+	 *
+	 * @see SwatTableViewInputRow::display()
 	 */
 	private function displayInputRows(&$columns)
 	{
-		for ($i = 0; $i < $this->number; $i++) {
+		foreach ($this->replicators as $replicator_id) {
 
-			$row_has_error = false;
-			foreach ($this->input_cells as $cell) {
-				if ($cell->getWidget($i)->hasMessage()) {
-					$row_has_error = true;
-					break;
+			$messages = array();
+
+			$row_has_messages = false;
+			if ($this->getFirstAncestor('SwatForm')->isProcessed()) {
+				foreach ($this->input_cells as $cell) {
+					if ($cell->getWidget($replicator_id)->hasMessage()) {
+						$row_has_messages = true;
+						break;
+					}
 				}
 			}
 
 			$tr_tag = new SwatHtmlTag('tr');
 			$tr_tag->class = 'swat-table-view-input-row';
 
-			if ($row_has_error) {
+			if ($row_has_messages) {
 				$tr_tag->class.= 'swat-error';
 				$tr_tag->style = 'background: #f00;';
 			}
@@ -246,10 +290,15 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 				$td_tag = new SwatHtmlTag('td', $td_attributes);
 
-				if (isset($this->input_cells[$column->id])) {
-					$widget = $this->input_cells[$column->id]->getWidget($i);
+				if ($this->getFirstAncestor('SwatForm')->isProcessed() &&
+					isset($this->input_cells[$column->id])) {
+					$widget = $this->input_cells[$column->id]->getWidget(
+						$replicator_id);
 
 					if (count($widget->getMessages())) {
+						$messages = array_merge($messages,
+							$widget->getMessages());
+
 						$td_tag->class = 'swat-error';
 						$td_tag->style = 'background: #ff0;';
 					}
@@ -258,13 +307,38 @@ class SwatTableViewInputRow extends SwatTableViewRow
 				$td_tag->open();
 
 				if (isset($this->input_cells[$column->id]))
-					$this->input_cells[$column->id]->display($i);
+					$this->input_cells[$column->id]->display($replicator_id);
 				else
 					echo '&nbsp;';
 
 				$td_tag->close();
 			}
 			$tr_tag->close();
+
+			if (count($messages) > 0) {
+				$tr_tag = new SwatHtmlTag('tr');
+				$tr_tag->class = 'swat-table-view-input-row-messages';
+				$tr_tag->open();
+
+				$td_tag = new SwatHtmlTag('td');
+				$td_tag->colspan = count($columns);
+				$td_tag->open();
+
+				echo '<ul>';
+
+				$li_tag = new SwatHtmlTag('li');
+				foreach ($messages as &$msg) {
+					$li_tag->setContent($msg->primary_content,
+						$msg->content_type);
+
+					$li_tag->display();
+				}
+
+				echo '</ul>';
+
+				$td_tag->close();
+				$tr_tag->close();
+			}
 		}
 	}
 
@@ -420,8 +494,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$form = $this->getFirstAncestor('SwatForm');
 
 		if ($form === null)
-			throw new SwatException('SwatTableView must be inside a SwatForm for '.
-				'SwatTableViewInputRow to work.');
+			throw new SwatException('SwatTableView must be inside a SwatForm '.
+				'for SwatTableViewInputRow to work.');
 
 		return $form;
 	}
