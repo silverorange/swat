@@ -87,14 +87,13 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 
 		// add the input cell to this column's view's input row
 		if ($this->input_cell !== null) {
-			if ($this->parent->getFirstRowByClass('SwatTableViewInputRow') === null)
+			$input_row = $this->parent->getFirstRowByClass('SwatTableViewInputRow');
+			if ($input_row === null)
 				throw new SwatException('Table-view does not have an input '.
 					'row.');
 
-			$this->parent->getFirstRowByClass('SwatTableViewInputRow')->addInputCell(
-				$this->input_cell, $this->id);
-
-			$this->input_cell->parent = $this->parent->getFirstRowByClass('SwatTableViewInputRow');
+			$input_row->addInputCell($this->input_cell, $this->id);
+			$this->input_cell->parent = $input_row;
 		}
 	}
 
