@@ -160,6 +160,15 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 */
 	public function display(&$columns)
 	{
+		if (count($this->replicators) < $this->number) {
+			$diff = $this->number - count($this->replicators);
+			$next_replicator = (count($this->replicators) == 0) ? 0 :
+				end($this->replicators) + 1;
+ 
+			for ($i = $next_replicator; $i < $diff + $next_replicator; $i++)
+				$this->replicators[] = $i;
+		}
+
 		// add replicator ids to the form as a hidden field
 		$this->getForm()->addHiddenField($this->id.'_replicators',
 			implode(',', $this->replicators));
@@ -280,12 +289,10 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$messages = array();
 
 			$row_has_messages = false;
-			if ($this->getFirstAncestor('SwatForm')->isProcessed()) {
-				foreach ($this->input_cells as $cell) {
-					if ($cell->getWidget($replicator_id)->hasMessage()) {
-						$row_has_messages = true;
-						break;
-					}
+			foreach ($this->input_cells as $cell) {
+				if ($cell->getWidget($replicator_id)->hasMessage()) {
+					$row_has_messages = true;
+					break;
 				}
 			}
 
@@ -306,8 +313,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 				$td_tag = new SwatHtmlTag('td', $td_attributes);
 
-				if ($this->getFirstAncestor('SwatForm')->isProcessed() &&
-					isset($this->input_cells[$column->id])) {
+				if (isset($this->input_cells[$column->id])) {
 					$widget = $this->input_cells[$column->id]->getWidget(
 						$replicator_id);
 
