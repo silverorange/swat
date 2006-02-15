@@ -71,7 +71,7 @@ class SwatDate extends Date
 	 */
 	const DF_MY                     = 12;
 
-	public function __construct($date)
+	public function __construct($date = null)
 	{
 		parent::Date($date);
 	}
