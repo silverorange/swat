@@ -72,6 +72,22 @@ class SwatToolbar extends SwatContainer
 	}
 
 	// }}}
+	// {{{ public function getToolLinks()
+
+	/**
+	 * Gets the tool links of this toolbar
+	 * 
+	 * Returns an the array of {@link SwatToolLink} objects contained
+	 * by this toolbar.
+	 *
+	 * @return array the tool links contained by this toolbar.
+	 */
+	public function getToolLinks()
+	{
+		return $this->getDescendants('SwatToolLink');
+	}
+
+	// }}}
 }
 
 ?>
