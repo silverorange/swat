@@ -12,6 +12,8 @@ require_once 'Swat/SwatHtmlTag.php';
  */
 class SwatToolbar extends SwatContainer
 {
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new toolbar
 	 *
@@ -25,6 +27,9 @@ class SwatToolbar extends SwatContainer
 
 		$this->addStyleSheet('swat/styles/swat-toolbar.css');
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this toolbar as an unordered list with each sub-item
@@ -49,6 +54,9 @@ class SwatToolbar extends SwatContainer
 		$toolbar_ul->close();
 	}
 
+	// }}}
+	// {{{ public function setToolLinkValues()
+
 	/**
 	 * Sets the value of all {@link SwatToolLink} objects within this toolbar
 	 *
@@ -62,6 +70,8 @@ class SwatToolbar extends SwatContainer
 		foreach ($this->getDescendants('SwatToolLink') as $tool)
 			$tool->value = $value;
 	}
+
+	// }}}
 }
 
 ?>
