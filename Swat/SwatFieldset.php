@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatTitleable.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
@@ -12,7 +13,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFieldset extends SwatContainer
+class SwatFieldset extends SwatContainer implements SwatTitleable
 {
 	/**
 	 * Fieldset title
@@ -22,6 +23,18 @@ class SwatFieldset extends SwatContainer
 	 * @var string
 	 */
 	public $title = null;
+
+	/**
+	 * Gets the title of this fieldset
+	 *
+	 * Implements the {SwatTitleable::getTitle()} interface.
+	 *
+	 * @return the title of this fieldset.
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
 
 	public function display()
 	{

@@ -93,7 +93,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 					'row.');
 
 			$input_row->addInputCell($this->input_cell, $this->id);
-			$this->input_cell->parent = $input_row;
 		}
 	}
 

@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Swat/SwatWidget.php';
-require_once 'Swat/SwatFormField.php';
+require_once 'Swat/SwatTitleable.php';
 require_once 'Swat/SwatString.php';
 
 /**
@@ -25,14 +25,18 @@ abstract class SwatControl extends SwatWidget
 	 */
 	public function addMessage(SwatMessage $message)
 	{
-		if ($this->parent instanceof SwatFormField && 
-			$this->parent->title !== null)
-			$field_title = 
-				'<strong>'.
-				SwatString::minimizeEntities($this->parent->title).
-				'</strong>';
-		else
+		if ($this->parent instanceof SwatTitleable) {
+			$title = $this->parent->getTitle();
+			if ($title === null)
+				$field_title = '';
+			else
+				$field_title =
+					'<strong>'.
+					SwatString::minimizeEntities($this->parent->getTitle()).
+					'</strong>';
+		} else {
 			$field_title = '';
+		}
  
 		if ($message->content_type === 'text/plain')
 			$content = SwatString::minimizeEntities($message->primary_content);

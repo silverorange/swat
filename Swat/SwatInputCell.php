@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatUIObject.php';
+require_once 'Swat/SwatTitleable.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatWidget.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
@@ -20,7 +21,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * @copyright 2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatInputCell extends SwatUIObject implements SwatUIParent
+class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 {
 	// {{{ private properties
 
@@ -150,6 +151,24 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getTitle()
+
+	/**
+	 * Gets the title of this input cell
+	 *
+	 * Implements the {SwatTitleable::getTitle()} interface.
+	 *
+	 * @return the title of this input cell.
+	 */
+	public function getTitle()
+	{
+		if ($this->parent === null)
+			return '';
+		else
+			return $this->parent->title;
+	}
+
+	// }}}
 	// {{{ public function setWidget()
 
 	/**
@@ -270,6 +289,8 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 	 *
 	 * @return SwatWidget the new cloned widget or the cloned widget retrieved
 	 *                     from the {@link SwatInputCell::$clones} array.
+	 *
+	 * @throws SwatException
 	 */
 	private function getClonedWidget($replicator_id)
 	{
@@ -279,7 +300,18 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent
 		if ($this->widget === null)
 			return null;
 
-		$suffix = '_'.$this->parent->id.'_'.$replicator_id;
+		$view = $this->getFirstAncestor('SwatTableView');
+		if ($view === null)
+			throw new SwatException('Cannot clone widgets until cell is '.
+				'added to a table-view and an input-row is added to the '.
+				'table-view');
+
+		$row = $view->getFirstRowByClass('SwatTableViewInputRow');
+		if ($row === null)
+			throw new SwatException('Cannot clone widgets until an input-row '.
+				'is added to the table-view');
+
+		$suffix = '_'.$row->id.'_'.$replicator_id;
 		$new_widget = clone $this->widget;
 
 		if ($new_widget->id !== null) {

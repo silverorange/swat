@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatTitleable.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
@@ -10,7 +11,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFrame extends SwatContainer
+class SwatFrame extends SwatContainer implements SwatTitleable
 {
 	/**
 	 * A visible title for this frame, or null
@@ -25,6 +26,18 @@ class SwatFrame extends SwatContainer
 	 * @var string
 	 */
 	public $subtitle = null;
+
+	/**
+	 * Gets the title of this frame
+	 *
+	 * Implements the {SwatTitleable::getTitle()} interface.
+	 *
+	 * @return the title of this frame.
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
 
 	/**
 	 * Displays this frame
