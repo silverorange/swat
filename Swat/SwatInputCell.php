@@ -26,13 +26,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	// {{{ private properties
 
 	/**
-	 * The widget displayed in this cell
-	 *
-	 * @var SwatWidget
-	 */
-	private $widget = null;
-
-	/**
 	 * A lookup array for widgets contained in this cell
 	 *
 	 * The array is multidimentional and is of the form:
@@ -66,6 +59,16 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 * @var array
 	 */
 	private $clones = array();
+
+	// }}}
+	// {{{ protected properties
+
+	/**
+	 * The widget displayed in this cell
+	 *
+	 * @var SwatWidget
+	 */
+	protected $widget = null;
 
 	// }}}
 	// {{{ public function addChild()
@@ -273,7 +276,29 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	}
 
 	// }}}
-	// {{{ private function getClonedWidget()
+	// {{{ protected function getInputRow()
+
+	/**
+	 * Gets the input row this cell belongs to
+	 *
+	 * If this input-cell is not added to a table-view yet or the table-view
+	 * this cell is added to does not have an input-row then null is returned.
+	 *
+	 * @return the input row this cell belongs to.
+	 */
+	protected function getInputRow()
+	{
+		$view = $this->getFirstAncestor('SwatTableView');
+		if ($view === null)
+			return null;
+
+		$row = $view->getFirstRowByClass('SwatTableViewInputRow');
+
+		return $row;
+	}
+
+	// }}}
+	// {{{ protected function getClonedWidget()
 
 	/**
 	 * Gets a cloned widget given a unique identifier
@@ -292,7 +317,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 *
 	 * @throws SwatException
 	 */
-	private function getClonedWidget($replicator_id)
+	protected function getClonedWidget($replicator_id)
 	{
 		if (isset($this->clones[$replicator_id]))
 			return $this->clones[$replicator_id];
@@ -300,16 +325,11 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		if ($this->widget === null)
 			return null;
 
-		$view = $this->getFirstAncestor('SwatTableView');
-		if ($view === null)
+		$row = $this->getInputRow();
+		if ($row === null)
 			throw new SwatException('Cannot clone widgets until cell is '.
 				'added to a table-view and an input-row is added to the '.
 				'table-view');
-
-		$row = $view->getFirstRowByClass('SwatTableViewInputRow');
-		if ($row === null)
-			throw new SwatException('Cannot clone widgets until an input-row '.
-				'is added to the table-view');
 
 		$suffix = '_'.$row->id.'_'.$replicator_id;
 		$new_widget = clone $this->widget;
@@ -322,13 +342,14 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		// TODO: this doesn't work for embedded table views, etc
 		if ($new_widget instanceof SwatContainer) {
 			$descendants = $new_widget->getDescendants();
-			foreach ($descendants as $descendant)
+			foreach ($descendants as $descendant) {
 				if ($descendant->id !== null) {
 					$this->widgets[$replicator_id][$descendant->id] =
 						$descendant;
 
 					$descendant->id.= $suffix;
 				}
+			}
 		}
 
 		$this->clones[$replicator_id] = $new_widget;
