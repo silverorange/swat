@@ -4,6 +4,7 @@ require_once 'Swat/SwatWidget.php';
 require_once 'Swat/SwatContainer.php';
 require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatTableViewRow.php';
+require_once 'Swat/SwatRemoveInputCell.php';
 require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
@@ -298,6 +299,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 			$tr_tag = new SwatHtmlTag('tr');
 			$tr_tag->class = 'swat-table-view-input-row';
+			$tr_tag->id = $this->id.'_row_'.$replicator_id;
 
 			if ($row_has_messages) {
 				$tr_tag->class.= 'swat-error';
@@ -378,7 +380,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		 */
 		$start_position = 0;
 		foreach ($columns as $column) {
-			if (isset($this->input_cells[$column->id]))
+			if (isset($this->input_cells[$column->id]) &&
+				!($this->input_cells[$column->id] instanceof SwatRemoveInputCell))
 				break;
 
 			$start_position++;
@@ -441,6 +444,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	{
 		ob_start();
 
+		// properties of the dynamic tr's are set in javascript
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->open();
 

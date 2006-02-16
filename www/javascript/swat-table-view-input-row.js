@@ -166,25 +166,44 @@ if (!document.importNode) {
 }
 
 /**
- * Adds a new data row to the table
+ * Initializes the replicator array
+ *
+ * @return boolean true if the replicators were successfully initialized and
+ *          false if they were not.
  */
-SwatTableViewInputRow.prototype.addRow = function()
+SwatTableViewInputRow.prototype.initReplicators = function()
 {
 	if (this.replicators === null) {
 		this.replicators_input = document.getElementsByName(this.id +
 			'_replicators')[0];
+
+		if (this.replicators_input === null)
+			return false;
 
 		if (this.replicators_input.value == "")
 			this.replicators = [];
 		else
 			this.replicators = this.replicators_input.value.split(',');
 	}
+	return true;
+}
 
-	var replicator_id = (this.replicators.length > 0) ?
-		this.replicators[this.replicators.length - 1] + 1 : 0;
+/**
+ * Adds a new data row to the table
+ */
+SwatTableViewInputRow.prototype.addRow = function()
+{
+	if (!this.initReplicators())
+		return;
+
+	var replicator_id;
+	if (this.replicators.length > 0)
+		replicator_id = (parseInt(
+			this.replicators[this.replicators.length - 1]) + 1).toString();
+	else
+		replicator_id = '0';
 
 	this.replicators.push(replicator_id);
-
 	this.replicators_input.value = this.replicators.join(',');
 
 	var document_string = this.row_string.replace(/%s/g, replicator_id);
@@ -201,6 +220,9 @@ SwatTableViewInputRow.prototype.addRow = function()
 		SwatTableViewInputRow_parseTableRow(source_tr, dest_tr);
 	}
 
+	dest_tr.className = 'swat-table-view-input-row';
+	dest_tr.id = this.id + '_row_' + replicator_id;
+
 	// run scripts
 	// a better way to do this might be to remvoe the script nodes from the
 	// document and then run the scripts. This way we can ensure the scripts
@@ -210,4 +232,27 @@ SwatTableViewInputRow.prototype.addRow = function()
 		if (scripts[0].getAttribute('type') == 'text/javascript' &&
 			scripts[0].childNodes.length > 0)
 				eval(scripts[i].firstChild.nodeValue);
+}
+
+/**
+ * Remvoes a data row from the table
+ */
+SwatTableViewInputRow.prototype.removeRow = function(replicator_id)
+{
+	if (!this.initReplicators())
+		return;
+		
+	// remove replicator_id from replicators array
+	var replicator_index = this.replicators.indexOf(replicator_id);
+	if (replicator_index != -1) {
+		this.replicators.splice(replicator_index, 1);
+		this.replicators_input.value = this.replicators.join(',');
+	}
+
+	// remove row from document
+	var row_id = this.id + '_row_' + replicator_id;
+	var row = document.getElementById(row_id);
+	if (row && row.parentNode !== null) {
+		row.parentNode.removeChild(row);
+	}
 }
