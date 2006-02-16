@@ -36,7 +36,13 @@ class SwatFrame extends SwatContainer implements SwatTitleable
 	 */
 	public function getTitle()
 	{
-		return $this->title;
+		if ($this->subtitle === null)
+			return $this->title;
+
+		if ($this->title === null)
+			return $this->subtitle;
+
+		return $this->title.': '.$this->subtitle;
 	}
 
 	/**
