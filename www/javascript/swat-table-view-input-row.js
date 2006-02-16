@@ -49,6 +49,16 @@ function SwatTableViewInputRow(id, row_string)
 }
 
 /**
+ * Check if the browser is Safari
+ *
+ * Safari's DOM importNode() method is broken so we use the IE table object
+ * model hack for it as well.
+ *
+ * @var boolean
+ */
+SwatTableViewInputRow.isSafari = (navigator.userAgent.indexOf('Safari') != -1);
+
+/**
  * Gets an XML parser with a loadXML() method
  */
 function SwatTableViewInputRow_getXMLParser()
@@ -112,7 +122,7 @@ SwatTableViewInputRow.parser = SwatTableViewInputRow_getXMLParser();
  * manually copy nodes from one document to the current document. These methods
  * parse a HTMLTableRowNode in one document into a table row in this document.
  */
-if (!document.importNode) {
+if (!document.importNode || SwatTableViewInputRow.isSafari) {
 
 	/**
 	 * Parses a table row from one document into another
@@ -210,12 +220,17 @@ SwatTableViewInputRow.prototype.addRow = function()
 	var dom = SwatTableViewInputRow.parser.loadXML(document_string);
 	var source_tr = dom.documentElement.getElementsByTagName('tr')[0];
 
-	if (document.importNode) {
+	if (document.importNode && !SwatTableViewInputRow.isSafari) {
 		var dest_tr = document.importNode(source_tr, true);
 		this.enter_row.parentNode.insertBefore(dest_tr, this.enter_row);
 	} else {
-		// Internet Explorer specific code
-		// Uses the table object model instead of the DOM
+		/*
+		 * Internet Explorer and Safari specific code
+		 *
+		 * Uses the table object model instead of the DOM. IE does not
+		 * implement importNode() and Safari's importNode() implementation is
+		 * broken.
+		 */
 		var dest_tr = this.table.insertRow(this.enter_row.rowIndex);
 		SwatTableViewInputRow_parseTableRow(source_tr, dest_tr);
 	}
