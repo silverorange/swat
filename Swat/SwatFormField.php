@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatTitleable.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatMessage.php';
@@ -14,7 +15,7 @@ require_once 'Swat/SwatMessage.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFormField extends SwatContainer
+class SwatFormField extends SwatContainer implements SwatTitleable
 {
 	/**
 	 * The visible name for this field, or null
@@ -80,20 +81,15 @@ class SwatFormField extends SwatContainer
 	}
 
 	/**
-	 * Get a SwatHtmlTag to display the title.
+	 * Gets the title of this form field
 	 *
-	 * Subclasses can change this to change their appearance.
-	 * 
-	 * @param $title string title of the form field.
-	 * @return SwatHtmlTag a tag object containing the title.
+	 * Implements the {SwatTitleable::getTitle()} interface.
+	 *
+	 * @return the title of this form field.
 	 */
-	protected function getTitleTag($title)
+	public function getTitle()
 	{
-		$first_child = $this->getFirst();
-		$label_tag = new SwatHtmlTag('label');
-		$label_tag->for = $first_child->id;
-		$label_tag->setContent(sprintf('%s: ', $title));
-		return $label_tag;
+		return $this->title;
 	}
 
 	/**
@@ -164,6 +160,23 @@ class SwatFormField extends SwatContainer
 		}
 
 		$container_tag->close();
+	}
+
+	/**
+	 * Get a SwatHtmlTag to display the title
+	 *
+	 * Subclasses can change this to change their appearance.
+	 * 
+	 * @param $title string title of the form field.
+	 * @return SwatHtmlTag a tag object containing the title.
+	 */
+	protected function getTitleTag($title)
+	{
+		$first_child = $this->getFirst();
+		$label_tag = new SwatHtmlTag('label');
+		$label_tag->for = $first_child->id;
+		$label_tag->setContent(sprintf('%s: ', $title));
+		return $label_tag;
 	}
 
 	/**
