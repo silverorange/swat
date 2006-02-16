@@ -243,7 +243,13 @@ SwatTableViewInputRow.prototype.removeRow = function(replicator_id)
 		return;
 		
 	// remove replicator_id from replicators array
-	var replicator_index = this.replicators.indexOf(replicator_id);
+	var replicator_index = -1;
+	for (var i = 0; i < this.replicators.length; i++) {
+		if (this.replicators[i] == replicator_id) {
+			replicator_index = i;
+			break;
+		}
+	}
 	if (replicator_index != -1) {
 		this.replicators.splice(replicator_index, 1);
 		this.replicators_input.value = this.replicators.join(',');
