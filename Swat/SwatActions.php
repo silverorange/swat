@@ -139,7 +139,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 
 		$this->action_flydown->display();
 		echo ' ';
-		$this->apply_button->display();
+		$this->displayButton();
 
 		echo '</div>';
 
@@ -162,7 +162,16 @@ class SwatActions extends SwatControl implements SwatUIParent
 		echo Swat::_('Actions apply to checked items.');
 		echo '</div>';
 		echo '</div>';
+	}
 
+	/**
+	 * Displays the button for this action list
+	 *
+	 * Sub-classes can obver-ride this method to display more buttons.
+	 */
+	protected function displayButton()
+	{
+		$this->apply_button->display();
 	}
 
 	/**
@@ -252,7 +261,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 * Widgets references are assigned to private class properties. Widgets are
 	 * only created once even if this method is called multiple times.
 	 */
-	private function createEmbeddedWidgets()
+	protected function createEmbeddedWidgets()
 	{
 		if ($this->widgets_created)
 			return;
