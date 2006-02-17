@@ -173,6 +173,35 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
+	// {{{ public function __clone()
+
+	/**
+	 * Clones the embedded widgets of this date widget
+	 */
+	public function __clone()
+	{
+		$this->valid_range_start = clone $this->valid_range_start;
+		$this->valid_range_end = clone $this->valid_range_end;
+
+		if ($this->widgets_created) {
+			if ($this->display_parts & self::YEAR)
+				$this->year_flydown = clone $this->year_flydown;
+
+			if ($this->display_parts & self::MONTH)
+				$this->month_flydown = clone $this->month_flydown;
+
+			if ($this->display_parts & self::DAY)
+				$this->day_flydown = clone $this->day_flydown;
+
+			if ($this->display_parts & self::TIME)
+				$this->time_entry = clone $this->time_entry;
+
+			if ($this->display_parts & self::CALENDAR)
+				$this->calendar = clone $this->calendar;
+		}
+	}
+
+	// }}}
 	// {{{ public function setValidRange()
 
 	/**
