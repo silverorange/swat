@@ -45,7 +45,7 @@ class SwatRemoveInputCell extends SwatInputCell
 		ob_start();
 
 		$anchor_tag = new SwatHtmlTag('a');
-		$anchor_tag->title = 'remove this row';
+		$anchor_tag->title = Swat::_('remove this row');
 		$anchor_tag->href =
 			sprintf("javascript:%s_obj.removeRow('%%s');", $row->id);
 
@@ -53,7 +53,7 @@ class SwatRemoveInputCell extends SwatInputCell
 
 		$image_tag = new SwatHtmlTag('img');
 		$image_tag->src = 'swat/images/list-remove.png';
-		$image_tag->alt = 'remove graphic';
+		$image_tag->alt = Swat::_('remove graphic');
 
 		$image_tag->display();
 
