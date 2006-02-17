@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/SwatUIObject.php';
 require_once 'Swat/exceptions/SwatException.php';
 
 /**
@@ -116,11 +117,26 @@ class Swat
 	/**
 	 * Displays an object's properties and values recursively
 	 *
+	 * Note:
+	 *
+	 * If the object being printed is a UI object then its parent property
+	 * is temporarily set to null to prevent recursing up the widget tree.
+	 *
 	 * @param mixed $object the object to display.
 	 */
 	public static function printObject($object)
 	{
+		// prevent recusrion up the widget tree for UI objects
+		if ($object instanceof SwatUIObject) {
+			$old_parent = $object->parent;
+			$object->parent = null;
+		}
+
 		echo '<pre>'.print_r($object, true).'</pre>';
+
+		// set parent back again
+		if ($object instanceof SwatUIObject)
+			$object->parent = $old_parent;
 	}
 }
 
