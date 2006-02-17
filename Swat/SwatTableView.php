@@ -480,7 +480,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		if ($this->model === null)
 			return;
 
-		if ($this->model->getRowCount() == 0) {
+		if ($this->model->getRowCount() == 0 && count($this->extra_rows) == 0) {
 			$div = new SwatHtmlTag('div');
 			$div->class = 'swat-none';
 			$div->setContent('<No Records>');
