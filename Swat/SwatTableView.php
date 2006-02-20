@@ -600,7 +600,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ private function displayHeader()
+	// {{{ protected function displayHeader()
 
 	/**
 	 * Displays the column headers for this table-view
@@ -608,7 +608,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * Each column is asked to display its own header.
 	 * Rows in the header are outputted inside a <thead> HTML tag.
 	 */
-	private function displayHeader()
+	protected function displayHeader()
 	{
 		echo '<thead>';
 		echo '<tr>';
