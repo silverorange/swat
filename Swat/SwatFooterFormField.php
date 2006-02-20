@@ -25,6 +25,16 @@ class SwatFooterFormField extends SwatFormField
 		parent::__construct($id);
 		$this->class = 'swat-footer-form-field';
 	}
+
+	public function display()
+	{
+		$wrapper_tag = new SwatHtmlTag('div');
+		$wrapper_tag->class = 'swat-footer-form-field-wrapper';
+
+		$wrapper_tag->open();
+		parent::display();
+		$wrapper_tag->close();
+	}
 }
 
 ?>

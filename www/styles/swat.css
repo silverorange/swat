@@ -73,43 +73,6 @@ label.swat-control {
 /* IE hack */
 * html .swat-footer-form-field { overflow: visible; height: 1px; }
 
-.swat-disclosure-control {
-}
-
-.swat-disclosure-anchor {
-	position: relative;
-	top: 0.7em;
-	display: inline;
-	margin: 0 10px;
-	padding: 0 6px;
-	color: #666;
-	background: #FFF;
-}
-
-.swat-disclosure-control-closed {
-	margin-bottom: 1em;
-}
-
-
-.swat-disclosure-control-opened .swat-disclosure-container {
-	display: block;	
-	border: 1px solid #ddd;
-	padding: 16px;
-}
-
-.swat-disclosure-control-closed .swat-disclosure-container {
-	display: none;
-}
-
-.swat-disclosure-image {
-	border: none;
-	vertical-align: text-top;
-}
-
-.swat-disclosure-anchor {
-	text-decoration: none;
-}
-
 .swat-form-field-checkbox {
 	margin: 0 0 0.5em 0;
 }
@@ -220,7 +183,8 @@ span.swat-time-span {
 	margin-bottom: 0.5em;
 }
 
-.swat-actions, .swat-footer-form-field {
+.swat-actions,
+.swat-footer-form-field-wrapper {
 	background: #f7f5f3 url(../images/swat-form-footer.png) top left repeat-x;
 	margin: 15px -15px -15px -15px;
 	padding: 1em;
