@@ -4,14 +4,14 @@
 	position: relative;
 	top: 0.7em;
 	display: inline;
-	margin: 0 10px;
-	padding: 0 6px;
+	margin: 0 10px 0 5px;
+	padding: 0 5px 0 2px;
 	color: #666;
 	background: #FFF;
 }
 
 .swat-disclosure-control-closed {
-	margin-bottom: 1em;
+	margin-bottom: 1.7em;
 }
 
 
