@@ -111,9 +111,17 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		foreach ($this->input_cells as $cell)
 			$cell->init();
 
-		// set initial replicators based on number
-		for ($i = 0; $i < $this->number; $i++)
-			$this->replicators[] = $i;
+		// initialize replicators
+		$replicator_field =
+			$this->getForm()->getHiddenField($this->id.'_replicators');
+
+		if ($replicator_field === null)
+			// use generated ids
+			for ($i = 0; $i < $this->number; $i++)
+				$this->replicators[] = $i;
+		else
+			// retrieve ids from form
+			$this->replicators = explode(',', $replicator_field);
 	}
 
 	/**
@@ -125,10 +133,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	public function process()
 	{
 		parent::process();
-
-		// retrieve row ids
-		$this->replicators = explode(',',
-			$this->getForm()->getHiddenField($this->id.'_replicators'));
 
 		// process input cells
 		foreach ($this->replicators as $replicator_id)
