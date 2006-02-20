@@ -38,6 +38,7 @@ class SwatDisclosure extends SwatContainer
 		parent::__construct($id);
 		$this->requires_id = true;
 		$this->addJavaScript('swat/javascript/swat-disclosure.js');
+		$this->addStyleSheet('swat/styles/swat-disclosure.css');
 	}
 
 	/**
