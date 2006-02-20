@@ -101,6 +101,28 @@ abstract class SwatTableViewRow extends SwatUIObject
 	}
 
 	// }}}
+	// {{{ public function getVisibleByCount()
+
+	/**
+	 * Gets whether or not to show this row based on a count of rows
+	 *
+	 * By default if there are no entries in the table model, this row is not
+	 * shown.
+	 *
+	 * @param integer $count the number of entries in this row's view's model.
+	 *
+	 * @return boolean true if this row should be shown and false if it should
+	 *                  not.
+	 */
+	public function getVisibleByCount($count)
+	{
+		if ($count == 0)
+			return false;
+
+		return true;
+	}
+
+	// }}}
 }
 
 ?>

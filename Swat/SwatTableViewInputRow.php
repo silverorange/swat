@@ -56,6 +56,15 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	public $id = '';
 
 	/**
+	 * Whether or not to show sub-widget messages in displayed rows
+	 *
+	 * Messages are shown by default.
+	 *
+	 * @var boolean
+	 */
+	public $show_row_messages = true;
+
+	/**
 	 * An array of input cells for this row indexed by column id
 	 *
 	 * The array is of the form:
@@ -273,6 +282,22 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	}
 
 	/**
+	 * Gets whether or not to show this row based on a count of rows
+	 *
+	 * Input rows are always shown even if there are no entries in the table-
+	 * view's model.
+	 *
+	 * @param integer $count the number of entries in this row's view's model.
+	 *
+	 * @return boolean true. Input rows are always shown even if there are no
+	 *                  entries in the table-view's model.
+	 */
+	public function getVisibleByCount($count)
+	{
+		return true;
+	}
+
+	/**
 	 * Displays the actual XHTML input rows for this input row
 	 *
 	 * Displays a row for each replicator id in this input row. Each row is
@@ -301,7 +326,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$tr_tag->class = 'swat-table-view-input-row';
 			$tr_tag->id = $this->id.'_row_'.$replicator_id;
 
-			if ($row_has_messages) {
+			if ($row_has_messages && $this->show_row_messages) {
 				$tr_tag->class.= 'swat-error';
 				$tr_tag->style = 'background: #f00;';
 			}
@@ -319,7 +344,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 					$widget = $this->input_cells[$column->id]->getWidget(
 						$replicator_id);
 
-					if (count($widget->getMessages())) {
+					if ($this->show_row_messages &&
+						count($widget->getMessages()) > 0) {
 						$messages = array_merge($messages,
 							$widget->getMessages());
 
@@ -339,7 +365,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			}
 			$tr_tag->close();
 
-			if (count($messages) > 0) {
+			if ($this->show_row_messages && count($messages) > 0) {
 				$tr_tag = new SwatHtmlTag('tr');
 				$tr_tag->class = 'swat-table-view-input-row-messages';
 				$tr_tag->open();
