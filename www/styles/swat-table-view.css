@@ -46,6 +46,8 @@ table.swat-table-view th.swat-boolean-cell-renderer {
 	text-align: center;
 }
 
+table.swat-table-view td.swat-numeric-cell-renderer,
+table.swat-table-view th.swat-numeric-cell-renderer,
 table.swat-table-view td.swat-money-cell-renderer,
 table.swat-table-view th.swat-money-cell-renderer {
 	text-align: right;

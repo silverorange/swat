@@ -40,20 +40,6 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		$div = new SwatHTMLTag('div');
-		//TODO: change this into a css class
-		$div->align = 'right';
-		$div->open();
-
-		echo $this->getDisplayValue();
-
-		$div->close();
-	}
-
-	// }}}
-	// {{{ public function getDisplayValue()
-	protected function getDisplayValue()
-	{
 		if ($this->precision === null) {
 			$lc = localeconv();
 			$decimal_pos = strpos($this->value, $lc['decimal_point']);
@@ -68,6 +54,7 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 		else
 			return $this->value;
 	}
+
 	// }}}
 }
 
