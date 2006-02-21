@@ -50,9 +50,9 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 		}
 
 		if (is_numeric($this->value))
-			return SwatString::numberFormat($this->value, $decimals);
+			echo SwatString::numberFormat($this->value, $decimals);
 		else
-			return $this->value;
+			echo $this->value;
 	}
 
 	// }}}
