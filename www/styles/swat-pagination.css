@@ -1,19 +1,18 @@
 /* SwatPagination */
 .swat-pagination {
-	overflow: auto;
 	padding: 1em;
+	text-align: center;
 }
 
-.swat-pagination a, .swat-pagination span {
-	display: block;
-	float: left;
+.swat-pagination a,
+.swat-pagination span {
 	padding: 0.2em 0.5em;
 	font-size: 85%;
 	margin-right: 0.1em;
 	border: 1px solid #FFF;
 }
 
-.swat-pagination span.current {
+.swat-pagination span.swat-pagination-current {
 	border: 1px solid #DDD;
 	font-weight: bold;
 }
@@ -28,15 +27,15 @@
 	border-color: #BBB;
 }
 
-.swat-pagination a.nextprev {
+.swat-pagination a.swat-pagination-nextprev {
 	font-weight: bold;
 }
 
-.swat-pagination span.nextprev {
+.swat-pagination span.swat-pagination-nextprev {
 	color: #666;
 }
 
-.swat-pagination div.position {
+.swat-pagination div.swat-pagination-position {
 	font-size: 85%;
 	font-weight: bold;
 	text-align: center;
