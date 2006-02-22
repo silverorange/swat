@@ -2,7 +2,7 @@
 
 table.swat-table-view {
 	border-collapse: collapse;
-	width: 100%;
+	width: 99%; /* this is not 100% because that makes IE choke on clears/floats */
 	margin-top: 1em;
 }
 
