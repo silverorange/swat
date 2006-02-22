@@ -545,7 +545,9 @@ class SwatString
 	 * Formats a number using locale seperators and in a UTF-8 safe way.
 	 *
 	 * @param float $value the value to format.
-	 * @param int $decimals number of decimal places to display (default 0).
+	 * @param int $decimals number of decimal places to display. By
+	 * 	default, the full number of decimal places of the value will be
+	 * 	displayed.
 	 * @param string $locale an optional locale to use to format the value. If
 	 *                        no locale is specified, the default server locale
 	 *                        is used.
