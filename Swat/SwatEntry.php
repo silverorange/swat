@@ -75,8 +75,9 @@ class SwatEntry extends SwatInputControl implements SwatState
 		if (!$this->isSensitive())
 			$input_tag->disabled = 'disabled';
 
-		if ($this->value !== null)
-			$input_tag->value = $this->getDisplayValue();
+		$value = $this->getDisplayValue();
+		if ($value !== null)
+			$input_tag->value = $value;
 
 		if ($this->size !== null)
 			$input_tag->size = $this->size;
