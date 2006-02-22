@@ -63,7 +63,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	public function getThAttributes()
 	{
-		return array('class' => $this->getCSSClassName());
+		return array('class' => implode(' ', $this->getCSSClassNames()));
 	}
 
 	/**
@@ -78,7 +78,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	public function getTdAttributes()
 	{
-		return array('class' => $this->getCSSClassName());
+		return array('class' => implode(' ', $this->getCSSClassNames()));
 	}
 
 	/**
@@ -116,20 +116,26 @@ abstract class SwatCellRenderer extends SwatUIObject
 		return $name;
 	}
 
-	private function getCSSClassName()
+	private function getCSSClassNames()
 	{
 		$php_class_name = get_class($this);
+		$css_class_names = array();
 
-		// get the first ancestor that is a swat class
-		while (strncmp($php_class_name, 'Swat', 4) !== 0)
-			 $php_class_name = get_parent_class($php_class_name);
+		// get the ancestors that are swat classes
+		while (strcmp($php_class_name, 'SwatUIObject') !== 0) {
+			if (strncmp($php_class_name, 'Swat', 4) === 0) {
+				$css_class_name = strtolower(ereg_replace('([A-Z])', '-\1', $php_class_name));
 
-		$css_class_name = strtolower(ereg_replace('([A-Z])', '-\1', $php_class_name));
+				if (substr($css_class_name, 0, 1) === '-')
+					$css_class_name = substr($css_class_name, 1);
 
-		if (substr($css_class_name, 0, 1) === '-')
-			$css_class_name = substr($css_class_name, 1);
+				$css_class_names[] = $css_class_name;
 
-		return $css_class_name;
+				$php_class_name = get_parent_class($php_class_name);
+			}
+		}
+
+		return array_reverse($css_class_names);
 	}
 }
 
