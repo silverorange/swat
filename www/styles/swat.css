@@ -217,3 +217,7 @@ span.swat-time-span {
 	margin-left: 0.5em;
 	color: #666;
 }
+
+.swat-nowrap {
+	white-space: nowrap;
+}
