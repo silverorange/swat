@@ -130,9 +130,8 @@ abstract class SwatCellRenderer extends SwatUIObject
 					$css_class_name = substr($css_class_name, 1);
 
 				$css_class_names[] = $css_class_name;
-
-				$php_class_name = get_parent_class($php_class_name);
 			}
+			$php_class_name = get_parent_class($php_class_name);
 		}
 
 		return array_reverse($css_class_names);
