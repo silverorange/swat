@@ -204,6 +204,21 @@ class SwatFileEntry extends SwatInputControl
 			throw new SwatException("Destination of '{$dst_dir}' is not a ".
 				'directory or does not exist.');
 	}
+
+	/**
+	 * Gets the id attribute of the XHTML element displayed by this widget
+	 * that should receive focus
+	 *
+	 * @return string the id attribute of the XHTML element displayed by this
+	 *                 widget that should receive focus or null if there is
+	 *                 no such element.
+	 *
+	 * @see SwatWidget::getFocusableHtmlId()
+	 */
+	public function getFocusableHtmlId()
+	{
+		return $this->id;
+	}
 }
 
 ?>

@@ -66,6 +66,21 @@ class SwatTextareaEditor extends SwatTextarea
 		$this->displayJavaScript();
 	}
 
+	/**
+	 * Gets the id attribute of the XHTML element displayed by this widget
+	 * that should receive focus
+	 *
+	 * @return string the id attribute of the XHTML element displayed by this
+	 *                 widget that should receive focus or null if there is
+	 *                 no such element.
+	 *
+	 * @see SwatWidget::getFocusableHtmlId()
+	 */
+	public function getFocusableHtmlId()
+	{
+		return null;
+	}
+
 	private function displayJavaScript()
 	{
 		$value = $this->rteSafe($this->value);

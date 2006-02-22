@@ -239,6 +239,27 @@ abstract class SwatWidget extends SwatUIObject
 	}
 
 	// }}}
+	// {{{ public function getFocusableHtmlId()
+
+	/**
+	 * Gets the id attribute of the XHTML element displayed by this widget
+	 * that should receive focus
+	 *
+	 * Elements receive focus either through JavaScript methods or by clicking
+	 * on label elements with their for attribute set. If there is no such
+	 * element (for example, there are several elements and none is more
+	 * important than the others) then null is returned.
+	 *
+	 * @return string the id attribute of the XHTML element displayed by this
+	 *                 widget that should receive focus or null if there is
+	 *                 no such element.
+	 */
+	public function getFocusableHtmlId()
+	{
+		return null;
+	}
+
+	// }}}
 }
 
 ?>

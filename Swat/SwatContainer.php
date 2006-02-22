@@ -430,6 +430,32 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	}
 
 	/**
+	 * Gets the id attribute of the XHTML element displayed by this widget
+	 * that should receive focus
+	 *
+	 * @return string the id attribute of the XHTML element displayed by this
+	 *                 widget that should receive focus or null if there is
+	 *                 no such element.
+	 *
+	 * @see SwatWidget::getFocusableHtmlId()
+	 */
+	public function getFocusableHtmlId()
+	{
+		$focus_id = null;
+
+		$children = $this->getChildren();
+		foreach ($children as $child) {
+			$child_focus_id = $child->getFocusableHtmlId();
+			if ($child_focus_id !== null) {
+				$focus_id = $child_focus_id;
+				break;
+			}
+		}
+
+		return $focus_id;
+	}
+
+	/**
 	 * Notifies this widget that a widget was added
 	 *
 	 * This widget may want to adjust itself based on the widget added or

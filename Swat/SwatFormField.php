@@ -167,15 +167,17 @@ class SwatFormField extends SwatContainer implements SwatTitleable
 	 *
 	 * Subclasses can change this to change their appearance.
 	 * 
-	 * @param $title string title of the form field.
+	 * @param string $title title of the form field.
 	 * @return SwatHtmlTag a tag object containing the title.
 	 */
 	protected function getTitleTag($title)
 	{
-		$first_child = $this->getFirst();
 		$label_tag = new SwatHtmlTag('label');
-		$label_tag->for = $first_child->id;
 		$label_tag->setContent(sprintf('%s: ', $title));
+		$focus_id = $this->getFocusableHtmlId();
+		if ($focus_id !== null)
+			$label_tag->for = $focus_id;
+
 		return $label_tag;
 	}
 
