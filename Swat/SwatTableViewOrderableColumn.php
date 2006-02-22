@@ -157,7 +157,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			$this->direction != self::ORDER_BY_DIR_NONE) {
 
 			$span_tag = new SwatHtmlTag('span');
-			$span_tag->class = 'swat-nobreak';
+			$span_tag->class = 'swat-nowrap';
 
 			$title_exp = explode(' ', $this->title);
 			$last_word = array_pop($title_exp);
