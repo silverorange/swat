@@ -250,6 +250,10 @@ abstract class SwatWidget extends SwatUIObject
 	 * element (for example, there are several elements and none is more
 	 * important than the others) then null is returned.
 	 *
+	 * By default, widgets return null and are un-focusable. Sub-classes that
+	 * are focusable should override this method to return the appripriate
+	 * XHTML id.
+	 *
 	 * @return string the id attribute of the XHTML element displayed by this
 	 *                 widget that should receive focus or null if there is
 	 *                 no such element.
