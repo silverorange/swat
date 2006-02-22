@@ -33,6 +33,15 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	public $format = SwatDate::DF_DATE_TIME;
 
 	/**
+	 * Time Zone
+	 *
+	 * The ISO time zone to adjust the date to.
+	 *
+	 * @var mixed
+	 */
+	public $time_zone = null;
+
+	/**
 	 * Renders the contents of this cell
 	 *
 	 * @see SwatCellRenderer::render()
@@ -41,6 +50,9 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	{
 		if ($this->date !== null) {
 			$date = new SwatDate($this->date);
+			if ($this->time_zone !== null)
+				$date->convertTZbyID($this->time_zone);
+
 			echo SwatString::minimizeEntities($date->format($this->format));
 		}
 	}
