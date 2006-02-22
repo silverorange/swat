@@ -40,6 +40,14 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
+		echo $this->getDisplayValue();
+	}
+
+	// }}}
+	// {{{ protected function getDisplayValue()
+
+	public function getDisplayValue()
+	{
 		if ($this->precision === null) {
 			$lc = localeconv();
 			$decimal_pos = strpos($this->value, $lc['decimal_point']);
@@ -50,9 +58,9 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 		}
 
 		if (is_numeric($this->value))
-			echo SwatString::numberFormat($this->value, $decimals);
+			return SwatString::numberFormat($this->value, $decimals);
 		else
-			echo $this->value;
+			return $this->value;
 	}
 
 	// }}}
