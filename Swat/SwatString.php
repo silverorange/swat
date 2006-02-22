@@ -554,9 +554,13 @@ class SwatString
 	 *
 	 * @return string the number formatted string.
 	 */
-	public static function numberFormat($value, $decimals = 0, $locale = null, 
+	public static function numberFormat($value, $decimals = null, $locale = null, 
 		$show_thousands_seperator = true)
 	{
+		// look up decimal precision if none is provided
+		if ($decimals === null)
+			$decimals = SwatString::getDecimalPrecision($value);
+
 		// number_format can't handle UTF-8 seperators, so insert placeholders
 		$output = number_format($value, $decimals, '.', $show_thousands_seperator ? ',' : null);
 		$output = htmlentities($output, null, 'UTF-8');
@@ -837,6 +841,19 @@ class SwatString
 		}
 
 		return $string;
+	}
+
+	// }}}
+	// {{{ private static function getDecimalPrecision()
+
+	private static function getDecimalPrecision($value)
+	{
+		$lc = localeconv();
+
+		$decimal_pos = strpos((string) $value, $lc['decimal_point']);
+
+		return ($decimal_pos !== false) ?
+				strlen($value) - $decimal_pos - strlen($lc['decimal_point']) : 0;
 	}
 
 	// }}}

@@ -48,17 +48,8 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 
 	public function getDisplayValue()
 	{
-		if ($this->precision === null) {
-			$lc = localeconv();
-			$decimal_pos = strpos($this->value, $lc['decimal_point']);
-			$decimals = ($decimal_pos !== false) ?
-				strlen($this->value) - $decimal_pos - strlen($lc['decimal_point']) : 0;
-		} else {
-			$decimals = $this->precision;
-		}
-
 		if (is_numeric($this->value))
-			return SwatString::numberFormat($this->value, $decimals);
+			return SwatString::numberFormat($this->value, $this->precision);
 		else
 			return $this->value;
 	}
