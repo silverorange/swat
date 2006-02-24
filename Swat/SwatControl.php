@@ -78,6 +78,18 @@ abstract class SwatControl extends SwatWidget
 	}
 
 	/**
+	 * Gets an informative note of how to use this control
+	 *
+	 * By default, controls return null, meaning no note.
+	 *
+	 * @return string an informative note of how to use this control.
+	 */
+	public function getNote()
+	{
+		return null;
+	}
+
+	/**
 	 * Gathers the SwatHtmlHeadEntry objects needed by this control
 	 *
 	 * @return array the SwatHtmlHeadEntry objects needed by this control.

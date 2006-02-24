@@ -122,7 +122,8 @@ class SwatFormField extends SwatContainer implements SwatTitleable
 			$title_tag->open();
 			$title_tag->displayContent();
 
-			// TODO: widgets that are marked as required don't tell their field parent
+			// TODO: widgets that are marked as required don't tell their field
+			// parent
 			if ($this->required) {
 				$span_tag = new SwatHtmlTag('span');
 				$span_tag->class = 'swat-required';
@@ -144,7 +145,9 @@ class SwatFormField extends SwatContainer implements SwatTitleable
 
 			foreach ($messages as &$msg) {
 				$message_li = new SwatHtmlTag('li');
-				$message_li->setContent($msg->primary_content, $msg->content_type);
+				$message_li->setContent($msg->primary_content,
+					$msg->content_type);
+
 				$message_li->class = $msg->getCssClass();
 				$message_li->display();
 			}
@@ -152,11 +155,35 @@ class SwatFormField extends SwatContainer implements SwatTitleable
 			$message_ul->close();
 		}
 
-		if ($this->note !== null) {
+		$notes = array();
+		if ($this->note !== null)
+			$notes[] = $this->note;
+
+		$control = $this->getFirstDescendant('SwatControl');
+		if ($control !== null) {
+			$note = $control->getNote();
+			if ($note !== null)
+				$notes[] = $note;
+		}
+
+		if (count($notes) == 1) {
 			$note_div = new SwatHtmlTag('div');
 			$note_div->class = 'swat-note';
-			$note_div->setContent($this->note, $this->note_content_type);
+			$note_div->setContent(reset($notes), $this->note_content_type);
 			$note_div->display();
+		} elseif (count($notes) > 1) {
+			$note_list = new SwatHtmlTag('ul');
+			$note_list->class = 'swat-note';
+			$note_list->open();
+
+			$li_tag = new SwatHtmlTag('li');
+			foreach ($notes as $note) {
+				// TODO: get content type of control note.
+				$li_tag->setContent($note, $this->note_content_type);
+				$li_tag->display();
+			}
+
+			$note_list->close();
 		}
 
 		$container_tag->close();
