@@ -248,15 +248,16 @@ class SwatListEntry extends SwatEntry
 	/**
 	 * Gets a note describing the rules on this list entry
 	 *
-	 * The note may optionally be added to the list entry's form-field by
-	 * developers. This note informs the user what numbers of entries are valid
-	 * for this list entry. This note does not mention anything about what type
-	 * of delimiter is used. Developers are responsible for ensuring that users
+	 * This note informs the user what numbers of entries are valid for this
+	 * list entry. This note does not mention anything about what type of
+	 * delimiter is used. Developers are responsible for ensuring that users
 	 * are notified what type of delimiters are used.
 	 *
-	 * @return string the informative note for this list entry.
+	 * @return string an informative note of how to use this list entry.
+	 *
+	 * @see SwatControl::getNote()
 	 */
-	public function getWidgetNote()
+	public function getNote()
 	{
 		$note = null;
 
