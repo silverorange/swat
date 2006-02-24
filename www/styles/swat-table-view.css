@@ -11,8 +11,8 @@ table.swat-table-view {
 	text-align: left;
 }
 
-.swat-table-view thead {
-	border-bottom: 1px solid #eee;;
+.swat-table-view thead th {
+	border-bottom: 1px solid #eee;
 }
 
 .swat-table-view tbody tr {
