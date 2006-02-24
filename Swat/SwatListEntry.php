@@ -125,7 +125,9 @@ class SwatListEntry extends SwatEntry
 		if (!$this->required && count($this->values) == 0) {
 			return;
 
-		} elseif (count($this->values) > $this->max_entries) {
+		} elseif ($this->max_entries > 0 &&
+			count($this->values) > $this->max_entries) {
+
 			$msg = sprintf(
 				Swat::_('The %%s field cannot have more than %s entries.'),
 				SwatString::numberFormat($this->max_entries));
@@ -134,6 +136,7 @@ class SwatListEntry extends SwatEntry
 
 		} elseif ($this->required &&
 			count($this->values) < $this->min_entries) {
+
 			$msg = sprintf(Swat::ngettext(
 				'The %%s field must have at least %s entry.',
 				'The %%s field must have at least %s entries.',
@@ -141,7 +144,6 @@ class SwatListEntry extends SwatEntry
 				SwatString::numberFormat($this->min_entries));
 
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-
 		}
 
 		// validate individual values
