@@ -69,14 +69,16 @@ class SwatFileEntry extends SwatInputControl
 
 		$input_tag->display();
 
-		if ($this->accept_mime_types !== null && $this->display_mime_types
-			&& $this->parent instanceof SwatFormField) {
+		if ($this->accept_mime_types !== null && $this->display_mime_types &&
+			$this->parent instanceof SwatFormField &&
+			$this->parent->note === null) {
 
 			$note = Swat::ngettext("File type must be '%s'",
 				"Valid file types are: %s",
 				count($this->accept_mime_types));
 
-			$this->parent->note = sprintf($note, implode(', ', $this->accept_mime_types));
+			$this->parent->note = sprintf($note, implode(', ',
+				$this->accept_mime_types));
 		}
 	}
 
@@ -108,8 +110,8 @@ class SwatFileEntry extends SwatInputControl
 		} elseif ($this->accept_mime_types !== null &&
 			!in_array($this->getMimeType(), $this->accept_mime_types)) {
 
-			$msg = sprintf(Swat::_('The %s field must be of the following type(s): %s.'),
-				'%s',
+			$msg = sprintf(
+				Swat::_('The %%s field must be of the following type(s): %s.'),
 				implode(', ', $this->accept_mime_types));
 
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
