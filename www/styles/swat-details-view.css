@@ -1,4 +1,7 @@
 /* SwatDetailsView */
+.swat-details-view td {
+	width: 70%;
+}
 
 .swat-details-view-field th, 
 .swat-details-view-vertical-field th,
@@ -7,7 +10,7 @@
 	text-align: left;
 	font-weight: bold;
 	color: #666;
-	width: 10em;
+	width: 30%;
 }
 
 .swat-details-view-field th {
