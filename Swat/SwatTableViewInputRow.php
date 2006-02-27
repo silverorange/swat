@@ -528,8 +528,12 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		 * get an undefined entity error.
 		 */
 		$row_string = $this->getRowString($this->parent->getColumns());
+		// these entities need to be double escaped
+		$row_string = str_replace('&amp;', '&amp;amp;', $row_string);
+		$row_string = str_replace('&quot;', '&amp;quot;', $row_string);
+		$row_string = str_replace('&lt;', '&amp;lt;', $row_string);
 		$row_string = SwatString::minimizeEntities($row_string);
-		$row_string = str_replace("'", "&apos;", $row_string);
+		$row_string = str_replace("'", "\'", $row_string);
 
 		// encode newlines for JavaScript string
 		$row_string = str_replace("\n", '\n', $row_string);
