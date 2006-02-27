@@ -16,7 +16,7 @@ table.swat-table-view {
 }
 
 .swat-table-view tbody tr {
-	background: url(../images/swat-table-view-cell-back.png) bottom repeat-x;
+	background: #fff url(../images/swat-table-view-cell-back.png) bottom repeat-x;
 }
 
 .swat-table-view tbody tr.highlight, .swat-table-view tbody tr.highlight-odd {
