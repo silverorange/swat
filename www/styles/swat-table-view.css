@@ -28,6 +28,7 @@ table.swat-table-view {
 	font-size: 85%;
 	font-weight: bold;
 }
+
 .swat-table-view th a:link, .swat-table-view th a:visited { color: #333; }
 .swat-table-view th a:hover, .swat-table-view th a:active { color: #000; }
 
