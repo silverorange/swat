@@ -71,6 +71,11 @@ class SwatDate extends Date
 	 */
 	const DF_MY                     = 12;
 
+	/**
+	* 08 / 2002
+	*/
+	const DF_CC_MY                  = 13;
+
 	public function __construct($date = null)
 	{
 		parent::Date($date);
@@ -97,7 +102,7 @@ class SwatDate extends Date
 	 * @param integer $id the id of the format string to retrieve.
 	 *
 	 * @return string the formatting string that was requested.
-	 *
+	 * 
 	 * @throws SwatException
 	 */
 	static function getFormatById($id)
@@ -127,6 +132,8 @@ class SwatDate extends Date
 			return Swat::_('%b %e, %i:%M %p');
 		case self::DF_MY:
 			return Swat::_('%B %Y');
+		case self::DF_CC_MY:
+			return Swat::_('%m / %Y');
 		default:
 			throw new Exception("Unknown date format id '$id'.");
 		}
