@@ -28,6 +28,13 @@ class SwatFrame extends SwatContainer implements SwatTitleable
 	public $subtitle = null;
 
 	/**
+	 * An optional string to separate subtitle from the title
+	 *
+	 * @var string
+	 */
+	public $title_separator = ': ';
+
+	/**
 	 * Gets the title of this frame
 	 *
 	 * Implements the {SwatTitleable::getTitle()} interface.
@@ -93,7 +100,7 @@ class SwatFrame extends SwatContainer implements SwatTitleable
 
 				$header_tag->open();
 				$header_tag->displayContent();
-				echo ' ';
+				echo $this->title_separator;
 				$span_tag->display();
 				$header_tag->close();
 			}
