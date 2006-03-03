@@ -16,11 +16,11 @@ table.swat-table-view {
 }
 
 .swat-table-view tbody tr {
-	background: #fff url(../images/swat-table-view-cell-back.png) bottom repeat-x;
+	background: #fff url(../images/swat-table-view-cell-background.png) bottom repeat-x;
 }
 
 .swat-table-view tbody tr.highlight, .swat-table-view tbody tr.highlight-odd {
-	background: #f7f5f3 url(../images/swat-table-view-cell-highlight-back.png) bottom repeat-x;
+	background: #f7f5f3 url(../images/swat-table-view-cell-highlight-background.png) bottom repeat-x;
 }
 
 .swat-table-view th {
