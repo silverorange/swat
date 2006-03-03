@@ -117,10 +117,10 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 				$img = new SwatHtmlTag('img');
 				
 				if ($this->open) {
-					$img->src = 'swat/images/disclosure-open.png';
+					$img->src = 'swat/images/swat-disclosure-open.png';
 					$img->alt = Swat::_('close');
 				} else {
-					$img->src = 'swat/images/disclosure-closed.png';
+					$img->src = 'swat/images/swat-disclosure-closed.png';
 					$img->alt = Swat::_('open');
 				}
 
