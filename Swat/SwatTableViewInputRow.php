@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatWidget.php';
+require_once 'Swat/SwatToolLink.php';
 require_once 'Swat/SwatContainer.php';
 require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatTableViewRow.php';
@@ -65,6 +66,20 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	public $show_row_messages = true;
 
 	/**
+	 * The tool-link to create another row
+	 *
+	 * @var SwatToolLink
+	 */
+	private $enter_another_link = null;
+	
+	/**
+	 * Whether or no the embedded widgets of this row have been created
+	 *
+	 * @var boolean
+	 */
+	private $widgets_created = false;
+
+	/**
 	 * An array of input cells for this row indexed by column id
 	 *
 	 * The array is of the form:
@@ -106,6 +121,13 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	public function init()
 	{
 		parent::init();
+
+		$this->createEmbeddedWidgets();
+		$this->enter_another_link->title = $this->enter_text;
+		$this->enter_another_link->link =
+			"javascript:{$this->id}_obj.addRow();";
+
+		$this->enter_another_link->init();
 
 		// init input cells
 		foreach ($this->input_cells as $cell)
@@ -302,6 +324,19 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	}
 
 	/**
+	 * Instantiates the tool-link for this input row
+	 */
+	private function createEmbeddedWidgets()
+	{
+		if (!$this->widgets_created) {
+			$this->enter_another_link = new SwatToolLink();
+			$this->enter_another_link->parent = $this;
+
+			$this->widgets_created = true;
+		}
+	}
+
+	/**
 	 * Displays the actual XHTML input rows for this input row
 	 *
 	 * Displays a row for each replicator id in this input row. Each row is
@@ -404,6 +439,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 */
 	private function displayEnterAnotherRow(&$columns)
 	{
+		$this->createEmbeddedWidgets();
+
 		/*
 		 * Get column position of enter-a-new-row text. The text is displayed
 		 * underneath the first input cell that is not blank.
@@ -436,13 +473,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$column->getRendererByPosition()->getTdAttributes());
 
 		$td->open();
-
-		$anchor_tag = new SwatHtmlTag('a');
-		$anchor_tag->setContent($this->enter_text);
-		$anchor_tag->href = "javascript:{$this->id}_obj.addRow();";
-		$anchor_tag->class = 'swat-table-view-input-row-enter';
-		$anchor_tag->display();
-
+		$this->enter_another_link->display();
 		$td->close();
 
 		if ($close_length > 0) {
