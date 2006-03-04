@@ -123,6 +123,9 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	public function getInlineJavaScript()
 	{
+		if ($this->view->model->getRowCount() < 2)
+			return '';
+
 		// set the controller of the check-all widget
 		return sprintf("%s_obj.setController(%s);",
 			$this->check_all->id, $this->column_id);
