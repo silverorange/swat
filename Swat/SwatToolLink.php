@@ -51,7 +51,7 @@ class SwatToolLink extends SwatControl
 	 *
 	 * The value property may be specified either as an array of values or as
 	 * a single value. If an array is passed, a call to vsprintf() is done
-	 * on the {@link SwatiToolLink::$link} property. If the value is a string
+	 * on the {@link SwatToolLink::$link} property. If the value is a string
 	 * a single sprintf() call is made.
 	 *
 	 * @var mixed
