@@ -49,7 +49,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	 *
 	 * @var integer
 	 */
-	public $height = 0;
+	public $height = null;
 
 	/**
 	 * The width of the image for this image renderer
@@ -58,7 +58,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	 *
 	 * @var integer
 	 */
-	public $width = 0;
+	public $width = null;
 
 	/**
 	 * The title of the image for this image renderer
@@ -67,7 +67,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	 *
 	 * @var string
 	 */
-	public $title = '';
+	public $title = null;
 
 	/**
 	 * The alternate text for this image renderer
@@ -78,7 +78,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	 *
 	 * @var string
 	 */
-	public $alt = '';
+	public $alt = null;
 
 	/**
 	 * Renders the contents of this cell
@@ -96,15 +96,9 @@ class SwatImageCellRenderer extends SwatCellRenderer
 		else
 			$image_tag->src = sprintf($this->image, $this->value);
 
-		if ($this->height > 0)
-			$image_tag->height = $this->height;
-
-		if ($this->width > 0)
-			$image_tag->width = $this->width;
-
-		if (strlen($this->title) > 0)
-			$image_tag->title = $this->title;
-
+		$image_tag->height = $this->height;
+		$image_tag->width = $this->width;
+		$image_tag->title = $this->title;
 		$image_tag->alt = $this->alt;
 		$image_tag->class = 'swat-image-cell-renderer';
 
