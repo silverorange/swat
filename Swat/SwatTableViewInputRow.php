@@ -331,6 +331,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		if (!$this->widgets_created) {
 			$this->enter_another_link = new SwatToolLink();
 			$this->enter_another_link->parent = $this;
+			$this->enter_another_link->stock_id = 'add';
 
 			$this->widgets_created = true;
 		}
