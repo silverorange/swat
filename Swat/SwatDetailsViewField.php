@@ -56,6 +56,17 @@ class SwatDetailsViewField extends SwatCellRendererContainer implements SwatUIPa
 	}
 
 	/**
+	 * Initializes this field
+	 *
+	 * This calls init on all renderers in this field.
+	 */
+	public function init()
+	{
+		foreach ($this->renderers as $renderer)
+			$renderer->init();
+	}
+
+	/**
 	 * Displays this details view field using a data object
 	 *
 	 * @param mixed $data a data object used to display the cell renderers in

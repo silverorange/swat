@@ -43,6 +43,15 @@ abstract class SwatCellRenderer extends SwatUIObject
 	abstract public function render();
 
 	/**
+	 * Called during the init phase
+	 *
+	 * Sub-classes can redefine this method to perform any necessary processing.
+	 */
+	public function init()
+	{
+	}
+
+	/**
 	 * Called during processing phase
 	 *
 	 * Sub-classes can redefine this method to perform any necessary processing.
