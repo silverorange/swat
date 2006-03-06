@@ -78,10 +78,13 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	 *
 	 * Gets a unique identifier for this column if one is not provided
 	 *
-	 * This calls init on all input cells in this column
+	 * This calls init on all cell renderers and input cells in this column
 	 */
 	public function init()
 	{
+		foreach ($this->renderers as $renderer)
+			$renderer->init();
+
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
 

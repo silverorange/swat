@@ -51,6 +51,23 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	private $fields = array();
 
 	/**
+	 * Initializes this details-view
+	 *
+	 * This initializes all fields.
+	 *
+	 * @see SwatWidget::init()
+	 */
+	public function init()
+	{
+		parent::init();
+
+		foreach ($this->fields as $field)
+			$field->init();
+	}
+
+	// }}}
+
+	/**
 	 * Appends a field to this details view
 	 *
 	 * @param SwatDetailViewField $field the field to append
