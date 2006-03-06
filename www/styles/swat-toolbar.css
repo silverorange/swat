@@ -14,54 +14,15 @@ ul.swat-toolbar {
 	display: inline;
 }
 
+/* SwatToolLink when inside a SwatToolbar */
+
+
 .swat-toolbar .swat-tool-link,
 .swat-toolbar .swat-tool-link-insensitive {
 	padding: 5px 8px;
-	border-left: 1px solid #fff;
-	border-right: 1px solid #f0eade;
+	border-top: none;
+	border-bottom: none;
+	border-left: none;
 	text-decoration: none;
-}
-
-.swat-toolbar .swat-tool-link-insensitive {
-	color: #b4a386;
-}
-
-.swat-toolbar a.swat-tool-link:hover {
-	text-decoration: underline;
-	background: #f3efe5;
-}
-
-.swat-toolbar .swat-tool-link-add:link,
-.swat-tool-link-add:visited,
-.swat-toolbar .swat-tool-link-create:link,
-.swat-tool-link-create:visited {
-	background: url(../images/swat-tool-link-create.png) 6px center no-repeat;
-	color: #438d04;
-	padding-left: 28px;
-}
-
-.swat-toolbar a.swat-tool-link-add:hover,
-.swat-toolbar a.swat-tool-link-create:hover {
-	background: #f3efe5 url(../images/swat-tool-link-create.png) 6px center no-repeat;
-}
-
-.swat-toolbar .swat-tool-link-delete:link,
-.swat-tool-link-delete:visited {
-	background: url(../images/swat-tool-link-delete.png) 6px center no-repeat;
-	color: #C00;
-	padding-left: 28px;
-}
-
-.swat-toolbar a.swat-tool-link-delete:hover {
-	background: #f3efe5 url(../images/swat-tool-link-delete.png) 6px center no-repeat;
-}
-
-.swat-toolbar .swat-tool-link-edit:link,
-.swat-tool-link-edit:visited {
-	background: url(../images/swat-tool-link-edit.png) 6px center no-repeat;
-	padding-left: 28px;
-}
-
-.swat-toolbar a.swat-tool-link-edit:hover {
-	background: #f3efe5 url(../images/swat-tool-link-edit.png) 6px center no-repeat;
+	background-color: transparent;
 }

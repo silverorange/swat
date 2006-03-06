@@ -72,6 +72,24 @@ class SwatToolLink extends SwatControl
 	 */
 	public $stock_id = null;
 
+	// {{{ public function __construct()
+
+	/**
+	 * Creates a new toollink
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->addStyleSheet('swat/styles/swat-tool-link.css');
+	}
+
+	// }}}
+
 	/**
 	 * Initializes this widget
 	 *
@@ -112,7 +130,6 @@ class SwatToolLink extends SwatControl
 
 			$anchor_tag->setContent($this->title);
 			$anchor_tag->display();
-
 		} else {
 			$span_tag = new SwatHtmlTag('span');
 			
