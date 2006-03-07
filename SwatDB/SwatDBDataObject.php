@@ -1,6 +1,7 @@
 <?php
 
 require_once 'MDB2.php';
+require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatDate.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 
@@ -11,7 +12,7 @@ require_once 'SwatDB/exceptions/SwatDBException.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDBDataObject
+class SwatDBDataObject extends SwatObject
 {
 	// {{{ private properties
 

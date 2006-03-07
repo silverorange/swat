@@ -2,6 +2,7 @@
 // vim: set fdm=marker:
 
 require_once 'MDB2.php';
+require_once 'Swat/SwatObject.php';
 require_once 'SwatDB/SwatDBField.php';
 require_once 'SwatDB/SwatDBDefaultRecordsetWrapper.php';
 require_once 'Swat/SwatDataTreeNode.php';
@@ -17,7 +18,7 @@ require_once 'SwatDB/exceptions/SwatDBException.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDB
+class SwatDB extends SwatObject
 {
 	// {{{ public static function query()
 

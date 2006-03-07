@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Swat/SwatObject.php';
+
 /**
  * MDB2 Recordset Wrapper
  *
@@ -9,7 +11,7 @@
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatDBRecordsetWrapper implements Iterator
+abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 {
 	// {{{ protected properties
 
