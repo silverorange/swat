@@ -105,11 +105,11 @@ SwatExpandableCheckboxTree.prototype.toggleBranch = function(branch_id)
 
 	if (opened) {
 		branch.className = 'swat-expandable-checkbox-tree-closed';
-		image.src = 'swat/images/disclosure-closed.png';
+		image.src = 'swat/images/swat-disclosure-closed.png';
 		image.alt = SwatExpandableCheckboxTree.open_text;
 	} else {
 		branch.className = 'swat-expandable-checkbox-tree-opened';
-		image.src = 'swat/images/disclosure-open.png';
+		image.src = 'swat/images/swat-disclosure-open.png';
 		image.alt = SwatExpandableCheckboxTree.closed_text;
 	}
 }
