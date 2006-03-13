@@ -196,6 +196,19 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	}
 
 	// }}}
+	// {{{ public function getArray()
+
+	/**
+	 * Gets this recordset as an array of objects
+	 *
+	 * @return array this record set as an array.
+	 */
+	public function &getArray()
+	{
+		return $this->objects;
+	}
+
+	// }}}
 }
 
 ?>
