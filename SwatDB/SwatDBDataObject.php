@@ -187,6 +187,7 @@ class SwatDBDataObject extends SwatObject
 			        $object = new $class();
 					$object->setDatabase($this->db);
 					$object->loadFromDB($id);
+					$this->sub_data_objects[$key] = $object;
 					return $object;
 				}
 			}
