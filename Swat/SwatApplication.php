@@ -75,6 +75,13 @@ class SwatApplication extends SwatObject
 	 */
 	private $page_initialized = false;
 
+	/**
+	 * The execution start time of this application
+	 *
+	 * @var double 
+	 */
+	private $start_time = null;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -86,6 +93,7 @@ class SwatApplication extends SwatObject
 	public function __construct($id)
 	{
 		$this->id = $id;
+		$this->start_time = microtime();
 	}
 
 	// }}}
@@ -229,6 +237,20 @@ class SwatApplication extends SwatObject
 	public function getUri()
 	{
 		return $this->uri;
+	}
+
+	// }}}
+	// {{{ public function getExecutionTime()
+
+	/**
+	 * Gets the current execution time of this application in milliseconds
+	 *
+	 * @return double the current execution time of this application in
+	 *                 milliseconds.
+	 */
+	public function getExecutionTime()
+	{
+		return microtime() - $this->start_time;
 	}
 
 	// }}}
