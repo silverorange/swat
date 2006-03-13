@@ -56,3 +56,23 @@ a.swat-tool-link-create:hover {
 	background: #f3efe5 url(../images/swat-tool-link-edit.png) 6px center no-repeat;
 }
 
+.swat-toolbar .swat-tool-link-print:link,
+.swat-tool-link-print:visited {
+	background: url(../images/swat-tool-link-print.png) 6px center no-repeat;
+	padding-left: 28px;
+}
+
+.swat-toolbar a.swat-tool-link-print:hover {
+	background: #f3efe5 url(../images/swat-tool-link-print.png) 6px center no-repeat;
+}
+
+.swat-toolbar .swat-tool-link-email:link,
+.swat-tool-link-email:visited {
+	background: url(../images/swat-tool-link-email.png) 6px center no-repeat;
+	padding-left: 28px;
+}
+
+.swat-toolbar a.swat-tool-link-email:hover {
+	background: #f3efe5 url(../images/swat-tool-link-email.png) 6px center no-repeat;
+}
+
