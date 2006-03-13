@@ -391,9 +391,10 @@ class SwatDB extends SwatObject
 			$params = array($params);
 
 		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
+		$mdb2_types = $types === null ? true : $types;
 
 		$db->loadModule('Function');
-        $rs = $db->function->executeStoredProc($proc, $params, $types, true, $mdb2_wrapper);
+        $rs = $db->function->executeStoredProc($proc, $params, $mdb2_types, true, $mdb2_wrapper);
 
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs);
