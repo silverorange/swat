@@ -97,6 +97,16 @@ class SwatDate extends Date
 	}
 
 	/**
+	 * Clears the time portion of the date object
+	 */
+	public function clearTime()
+	{
+		$this->setHour(0);
+		$this->setMinute(0);
+		$this->setSecond(0);
+	}
+
+	/**
 	 * Gets a date format string by id
 	 *
 	 * @param integer $id the id of the format string to retrieve.
