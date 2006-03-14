@@ -199,6 +199,16 @@ class SwatToolLink extends SwatControl
 			$class = 'swat-tool-link-help';
 			break;
 
+		case 'print':
+			$title = Swat::_('Print');
+			$class = 'swat-tool-link-print';
+			break;
+
+		case 'email':
+			$title = Swat::_('Email');
+			$class = 'swat-tool-link-email';
+			break;
+
 		default:
 			throw new SwatUndefinedStockTypeException(
 				"Stock type with id of '{$stock_id}' not found.",
