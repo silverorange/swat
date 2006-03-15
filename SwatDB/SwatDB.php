@@ -221,7 +221,8 @@ class SwatDB extends SwatObject
 	public static function queryOne($db, $sql, $type = null)
 	{
 		SwatDB::debug($sql);
-		$value = $db->queryOne($sql, $type);
+		$mdb2_type = $type === null ? true : $type;
+		$value = $db->queryOne($sql, $mdb2_type);
 
 		if (MDB2::isError($value))
 			throw new SwatDBException($value);
@@ -248,7 +249,8 @@ class SwatDB extends SwatObject
 	public static function queryRow($db, $sql, $types = null)
 	{
 		SwatDB::debug($sql);
-		$row = $db->queryRow($sql, $types, MDB2_FETCHMODE_OBJECT);
+		$mdb2_types = $types === null ? true : $types;
+		$row = $db->queryRow($sql, $mdb2_types, MDB2_FETCHMODE_OBJECT);
 
 		if (MDB2::isError($row))
 			throw new SwatDBException($row);
