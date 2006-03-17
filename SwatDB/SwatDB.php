@@ -478,6 +478,9 @@ class SwatDB extends SwatObject
 		$value_field = new SwatDBField($value_field, 'integer');
 		$bound_field = new SwatDBField($bound_field, 'integer');
 
+		// define here to prevent notice in debug statement
+		$insert_sql = '';
+
 		$delete_sql = 'delete from %s where %s = %s';
 
 		$delete_sql = sprintf($delete_sql, 
