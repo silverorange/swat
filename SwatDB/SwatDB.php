@@ -478,9 +478,6 @@ class SwatDB extends SwatObject
 		$value_field = new SwatDBField($value_field, 'integer');
 		$bound_field = new SwatDBField($bound_field, 'integer');
 
-		// define here to prevent notice in debug statement
-		$insert_sql = '';
-
 		$delete_sql = 'delete from %s where %s = %s';
 
 		$delete_sql = sprintf($delete_sql, 
@@ -518,20 +515,19 @@ class SwatDB extends SwatObject
 				$value_list);
 		}
 
-		SwatDB::debug($insert_sql);
-		SwatDB::debug($delete_sql);
-
 		$do_transaction = (!$db->in_transaction);
 
 		if ($do_transaction)
 			$db->beginTransaction();
 
 		if (count($values)) {
+			SwatDB::debug($insert_sql);
 			$ret = $db->query($insert_sql);
 			if (MDB2::isError($ret))
 				throw new SwatDBException($ret);
 		}
 
+		SwatDB::debug($delete_sql);
 		$rs = $db->query($delete_sql);
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs);
