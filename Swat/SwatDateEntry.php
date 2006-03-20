@@ -231,7 +231,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		$year = $date->getYear();
 		$this->valid_range_start->setYear($year + $start_offset);
-		$this->valid_range_end->setYear($year + $end_offset);
+		$this->valid_range_end->setYear($year + $end_offset + 1);
 	}
 
 	// }}}
