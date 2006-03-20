@@ -43,6 +43,8 @@ class SwatFieldset extends SwatContainer implements SwatTitleable
 
 		$fieldset_tag = new SwatHtmlTag('fieldset');
 		$fieldset_tag->class = 'swat-fieldset';
+		if ($this->id !== null)
+			$fieldset_tag->id = $this->id;
 
 		$fieldset_tag->open();
 
