@@ -93,7 +93,7 @@ class SwatApplication extends SwatObject
 	public function __construct($id)
 	{
 		$this->id = $id;
-		$this->start_time = microtime();
+		$this->start_time = microtime(true);
 	}
 
 	// }}}
@@ -250,7 +250,7 @@ class SwatApplication extends SwatObject
 	 */
 	public function getExecutionTime()
 	{
-		return microtime() - $this->start_time;
+		return microtime(true) - $this->start_time;
 	}
 
 	// }}}
