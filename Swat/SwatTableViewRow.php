@@ -27,6 +27,13 @@ abstract class SwatTableViewRow extends SwatUIObject
 	 */
 	public $id = null;
 
+	/**
+	 * Whether or not this row is visible
+	 *
+	 * @param boolean
+	 */
+	public $visible = true;
+
 	// }}}
 	// {{{ public function init()
 
