@@ -3,7 +3,6 @@
 table.swat-table-view {
 	border-collapse: collapse;
 	width: 99%; /* this is not 100% because that makes IE choke on clears/floats */
-	margin-top: 1em;
 }
 
 .swat-table-view th, .swat-table-view td {

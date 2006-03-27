@@ -46,7 +46,7 @@ option.swat-flydown-option-divider {
 
 /* SwatForm */
 
-.swat-form { margin: 0; }
+.swat-form { margin: 0; padding: 0; }
 
 .swat-form label {
 	font-weight: bold;
