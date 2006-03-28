@@ -121,6 +121,17 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	}
 
 	// }}}
+	// {{{ public function prev()
+
+	/**
+	 * Moves forward to the previous element
+	 */
+	public function prev()
+	{
+		$this->current_index--;
+	}
+
+	// }}}
 	// {{{ public function rewind()
 
 	/**
