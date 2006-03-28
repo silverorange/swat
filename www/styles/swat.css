@@ -179,7 +179,7 @@ span.swat-time-span {
 /* Swat Actions */
 
 .swat-actions {
-	text-align: right;
+	text-align: left;
 }
 
 .swat-actions-controls {
@@ -216,8 +216,8 @@ span.swat-time-span {
 }
 
 .swat-footer-form-field .swat-button {
-	float: right;
-	margin-left: 0.5em;
+	float: left;
+	margin-right: 0.5em;
 	color: #666;
 }
 
