@@ -4,7 +4,12 @@ require_once 'Swat/SwatContainer.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
- * Toplevel which can contain other widgets
+ * A form widget which can contain other widgets
+ *
+ * SwatForms are very useful for processing widgets. For most widgets, if they
+ * are not inside a SwatForm they will not be able to be processed properly.
+ *
+ * With Swat's default style, SwatForms are not visible to the user.
  *
  * @package   Swat
  * @copyright 2004-2006 silverorange
@@ -38,12 +43,13 @@ class SwatForm extends SwatContainer
 	 * Whether or not to automatically focus the a default SwatControl when
 	 * this form loads
 	 *
-	 * Autofocusing is good for applications that are keyboard driven as it
-	 * immediatly places the focus on the form.
+	 * Autofocusing is good for applications or pages that are keyboard driven
+	 * -- such as data entry forms -- as it immediatly places the focus on the
+	 * form.
 	 *
 	 * @var boolean
 	 */
-	public $autofocus = true;
+	public $autofocus = false;
 
 	/**
 	 * A reference to the default control to focus when the form loads
