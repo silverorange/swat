@@ -125,6 +125,26 @@ abstract class SwatCellRenderer extends SwatUIObject
 		return $name;
 	}
 
+	/** 
+	 * Gets the CSS class names of this cell renderer based on the Swat class
+	 * tree for this cell renderer
+	 *
+	 * For example, a class with the following ancestry:
+	 *
+	 * SwatCellRenderer -> SwatTextCellRenderer -> SwatNullTextCellRenderer
+	 *
+	 * would get the following array of class names:
+	 *
+	 * <code>
+	 * array(
+	 *    'swat-cell-renderer',
+	 *    'swat-text-cell-renderer',
+	 *    'swat-null-text-cell-renderer'
+	 * );
+	 * </code>
+	 *
+	 * @return array the array of CSS class names for this cell renderer.
+	 */
 	private function getCSSClassNames()
 	{
 		$php_class_name = get_class($this);
@@ -133,7 +153,8 @@ abstract class SwatCellRenderer extends SwatUIObject
 		// get the ancestors that are swat classes
 		while (strcmp($php_class_name, 'SwatUIObject') !== 0) {
 			if (strncmp($php_class_name, 'Swat', 4) === 0) {
-				$css_class_name = strtolower(ereg_replace('([A-Z])', '-\1', $php_class_name));
+				$css_class_name = strtolower(preg_replace('/([A-Z])/u',
+					'-\1', $php_class_name));
 
 				if (substr($css_class_name, 0, 1) === '-')
 					$css_class_name = substr($css_class_name, 1);
