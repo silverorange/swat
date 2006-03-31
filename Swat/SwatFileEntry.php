@@ -78,6 +78,8 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public function process()
 	{
+		parent::process();
+
 		if (!isset($_FILES[$this->id]))
 			return;
 		else

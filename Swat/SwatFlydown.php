@@ -151,6 +151,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	 */
 	public function process()
 	{
+		parent::process();
+
 		$data = &$this->getForm()->getFormData();
 
 		if (!isset($data[$this->id]))

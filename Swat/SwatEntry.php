@@ -96,6 +96,8 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 */
 	public function process()
 	{
+		parent::process();
+
 		$data = &$this->getForm()->getFormData();
 
 		if (!isset($data[$this->id])) {

@@ -314,6 +314,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	public function process()
 	{
+		parent::process();
+
 		$this->createEmbeddedWidgets();
 
 		$all_empty = true;

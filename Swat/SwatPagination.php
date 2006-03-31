@@ -196,6 +196,8 @@ class SwatPagination extends SwatControl
 	 */
 	public function process()
 	{
+		parent::process();
+
 		if (array_key_exists($this->id, $_GET))
 			$this->current_page = $_GET[$this->id];
 

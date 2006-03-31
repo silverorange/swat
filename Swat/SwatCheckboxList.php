@@ -166,6 +166,8 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	 */
 	public function process()
 	{
+		parent::process();
+
 		$this->check_all->process();
 
 		if (isset($_POST[$this->id]))
