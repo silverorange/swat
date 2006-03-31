@@ -192,6 +192,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 */
 	public function process()
 	{
+		parent::process();
+
 		if (!$this->isVisible())
 			return;
 

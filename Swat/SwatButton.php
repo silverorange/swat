@@ -116,6 +116,8 @@ class SwatButton extends SwatControl
 	 */
 	public function process()
 	{
+		parent::process();
+
 		if (isset($_POST[$this->id])) {
 			$this->clicked = true;
 			$ancestor = $this->parent;

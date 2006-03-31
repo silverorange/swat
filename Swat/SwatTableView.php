@@ -524,6 +524,8 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 */
 	public function process()
 	{
+		parent::process();
+
 		foreach ($this->columns as $column)
 			$column->process();
 

@@ -100,6 +100,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 */
 	public function process()
 	{
+		parent::process();
+
 		$data = &$this->getForm()->getFormData();
 
 		if (strlen($data[$this->id.'_areas']) || strlen($data[$this->id.'_regions']))

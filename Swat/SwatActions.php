@@ -183,6 +183,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	public function process()
 	{
+		parent::process();
+
 		$this->createEmbeddedWidgets();
 
 		$this->action_flydown->process();
