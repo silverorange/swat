@@ -1,5 +1,6 @@
 <?php
-// vim: set fdm=marker:
+
+require_once 'Swat/SwatObject.php';
 
 /**
  * String Tools
@@ -8,7 +9,7 @@
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatString
+class SwatString extends SwatObject
 {
 	// {{{ public static properties
 
