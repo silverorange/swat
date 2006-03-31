@@ -56,17 +56,21 @@ class SwatHtmlHeadEntry extends SwatObject
 	 * Displays this html head entry
 	 *
 	 * Entries are displayed differently based on type.
+	 *
+	 * @param string $path_prefix an optional string to prefix the URI with.
 	 */
-	public function display()
+	public function display($uri_prefix = '')
 	{
 		switch ($this->type) {
 		case self::TYPE_STYLE:
-			printf('<style type="text/css" media="all">@import "%s";</style>',
+			printf('<style type="text/css" media="all">@import "%s%s";</style>',
+				$uri_prefix,
 				$this->uri);
 
 			break;
 		case self::TYPE_JAVASCRIPT:
-			printf('<script type="text/javascript" src="%s"></script>',
+			printf('<script type="text/javascript" src="%s%s"></script>',
+				$uri_prefix,
 				$this->uri);
 				
 			break;
