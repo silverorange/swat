@@ -51,7 +51,6 @@ option.swat-flydown-option-divider {
 .swat-form label {
 	font-weight: bold;
 	color: #333;
-	display: block;
 }
 
 label.swat-control {
@@ -80,7 +79,7 @@ label.swat-control {
 	margin: 0 0 0.5em 0;
 }
 
-.swat-form-field-checkbox label {
+.swat-form-field-checkbox .swat-form-field-contents {
 	display: inline;
 }
 

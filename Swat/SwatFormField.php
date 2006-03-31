@@ -66,6 +66,15 @@ class SwatFormField extends SwatContainer implements SwatTitleable
 	protected $container_tag = 'div';
 
 	/**
+	 * Contents tag to use
+	 *
+	 * Subclasses can change this to change their appearance.
+	 *
+	 * @var string
+	 */
+	protected $contents_tag = 'div';
+
+	/**
 	 * Creates a new form field
 	 *
 	 * @param string $id a non-visible unique id for this widget.
@@ -134,8 +143,15 @@ class SwatFormField extends SwatContainer implements SwatTitleable
 			$title_tag->close();
 		}
 
+		$contents_tag = new SwatHtmlTag($this->contents_tag);
+		$contents_tag->class = 'swat-form-field-contents';
+
+		$contents_tag->open();
+
 		foreach ($this->children as &$child)
 			$child->display();
+
+		$contents_tag->close();
 
 		if (count($messages) > 0) {
 			$message_ul = new SwatHtmlTag('ul');
