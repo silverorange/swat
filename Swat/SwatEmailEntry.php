@@ -9,7 +9,7 @@ require_once 'Swat/SwatEntry.php';
  * email address.
  *
  * @package   Swat
- * @copyright 2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatEmailEntry extends SwatEntry
@@ -27,13 +27,15 @@ class SwatEmailEntry extends SwatEntry
 		if ($this->value === null)
 			return;
 
-		$valid_address_word = '[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+';
-		$valid_address_ereg = '^'.$valid_address_word.'@'.
-			$valid_address_word.'\.'.$valid_address_word.'$';
+		$valid_address_word = '[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+';
+		$valid_address_regexp = '/^'.$valid_address_word.'@'.
+			$valid_address_word.'\.'.$valid_address_word.'$/ui';
 
-		if (($this->required || strlen($this->value)) &&
-			!ereg($valid_address_ereg, trim($this->value))) {
-			$msg = Swat::_('The email address you have entered is not properly formatted.');
+		if (strlen($this->value) &&
+			preg_match($valid_address_regexp, $this->value) === 0) {
+			$msg = Swat::_('The email address you have entered is not '.
+				'properly formatted.');
+
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 		}
 	}
