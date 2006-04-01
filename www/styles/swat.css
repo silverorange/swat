@@ -1,5 +1,9 @@
 .swat-hidden { display: none; }
 
+tr.swat-table-view-input-row-messages {
+	background: #fec;
+}
+
 img.swat-image-cell-renderer { vertical-align: middle; }
 
 .swat-none {
@@ -51,6 +55,7 @@ option.swat-flydown-option-divider {
 .swat-form label {
 	font-weight: bold;
 	color: #333;
+	cursor: default; /* For Konqueror */
 }
 
 label.swat-control {
