@@ -78,6 +78,15 @@ abstract class SwatWidget extends SwatUIObject
 	 */
 	protected $requires_id = false;
 
+	/**
+	 * Whether or not this widget has been processed
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatWidget::process()
+	 */
+	protected $procesed = false;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -109,11 +118,12 @@ abstract class SwatWidget extends SwatUIObject
 	/**
 	 * Processes this widget
 	 *
-	 * After a form submit, this widget processes itself as well as recursively
-	 * processing any of its child widgets.
+	 * After a form submit, this widget processes itself and its dependencies
+	 * and then recursively processes  any of its child widgets.
 	 */
 	public function process()
 	{
+		$this->processed = true;
 	}
 
 	// }}}
@@ -236,6 +246,19 @@ abstract class SwatWidget extends SwatUIObject
 			return $this->visible;
 		else
 			return ($this->parent->isVisible() && $this->visible);
+	}
+
+	// }}}
+	// {{{ public function isProcessed()
+
+	/**
+	 * Whether or not this widget is processed
+	 *
+	 * @return boolean whether or not this widget is processed.
+	 */
+	public function isProcessed()
+	{
+		return $this->processed;
 	}
 
 	// }}}

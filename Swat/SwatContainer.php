@@ -321,7 +321,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	public function process()
 	{
 		foreach ($this->children as &$child) {
-			if ($child !== null)
+			if ($child !== null && !$child->isProcessed())
 				$child->process();
 		}
 	}

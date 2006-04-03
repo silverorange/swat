@@ -93,13 +93,6 @@ class SwatForm extends SwatContainer
 	private $method = SwatForm::METHOD_POST;
 
 	/**
-	 * Whether this form has been processed
-	 *
-	 * @var boolean
-	 */
-	private $processed = false;
-
-	/**
 	 * Creates a new form
 	 *
 	 * @param string $id a non-visible unique id for this widget.
@@ -113,16 +106,6 @@ class SwatForm extends SwatContainer
 		$this->requires_id = true;
 
 		$this->addJavaScript('swat/javascript/swat-form.js');
-	}
-
-	/**
-	 * Returns true if this form has been processed
-	 *
-	 * @return boolean true if the form has been processed.
-	 */
-	public function isProcessed()
-	{
-		return $this->processed;
 	}
 
 	/**
@@ -194,7 +177,11 @@ class SwatForm extends SwatContainer
 	 * If this form has been submitted then calls the process() method on
 	 * each child widget. Then processes hidden form fields.
 	 *
+	 * This form is only marked as processed if it was submitted by the user.
+	 *
 	 * @return true if this form was actually submitted, false otherwise.
+	 *
+	 * @see SwatContainer::process()
 	 */
 	public function process()
 	{
@@ -207,7 +194,8 @@ class SwatForm extends SwatContainer
 			$this->processHiddenFields();
 
 			foreach ($this->children as &$child)
-				$child->process();
+				if ($child !== null && !$child->isProcessed())
+					$child->process();
 		}
 	}
 
