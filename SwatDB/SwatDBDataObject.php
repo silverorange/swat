@@ -80,6 +80,17 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function setTable()
+
+	/**
+	 * @param database $table
+	 */
+	public function setTable($table)
+	{
+		$this->table = $table;
+	}
+
+	// }}}
 	// {{{ public function loadFromDB()
 
 	/**
@@ -126,7 +137,7 @@ class SwatDBDataObject extends SwatObject
 	 */
 	public function isModified()
 	{
-		$property_array = get_object_vars($this);
+		$property_array = $this->getPublicProperties();
 
 		foreach ($property_array as $name => $value) {
 			$hashed_value = md5(serialize($value));
@@ -148,7 +159,7 @@ class SwatDBDataObject extends SwatObject
 	 */
 	public function getModifiedProperties()
 	{
-		$property_array = get_object_vars($this);
+		$property_array = $this->getPublicProperties();
 		$modified_properties = array();
 
 		foreach ($property_array as $name => $value) {
@@ -197,6 +208,22 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function __set()
+
+	public function __set($key, $value) {
+		if ($this->hasInternalValue($key)) {
+			if (is_object($value)) {
+				$this->sub_data_objects[$key] = $value;
+				$this->setInternalValue($key, $value->getId());
+			} else {
+				$this->setInternalValue($key, $value);
+			}
+		} else {
+			throw new SwatDBException("A property named '$key' does not exist on this dataobject.  If the property corresponds directly to a database field it should be added as a public property of this data object.  If the property should access a sub-dataobject, specify a class when registering the internal field named '$key'.");
+		}
+	}
+
+	// }}}
 	// {{{ protected function loadFromDBInternal()
 
 	/**
@@ -236,7 +263,80 @@ class SwatDBDataObject extends SwatObject
 	 * Only modified properties are updated.
 	 */
 	protected function saveToDBInternal() {
+		if ($this->table === null || $this->id_field === null)
+			return;
 
+		$id_field = new SwatDBField($this->id_field, 'integer');
+
+		if (!property_exists($this, $id_field->name))
+			return;
+
+		$modified_properties = $this->getModifiedProperties();
+
+		if (count($modified_properties) == 0)
+			return;
+
+		$temp = $id_field->name;
+		$id = $this->$temp;
+
+		if ($id === null) {
+			$sql = 'insert into %s(%s) values(%s)';
+			$quoted_values = array();
+
+			foreach ($this->getModifiedProperties() as $name => $value)
+				$quoted_values[] = $this->quoteValue($name, $value);
+
+			$sql = sprintf($sql,
+				$this->table,
+				implode(',', array_keys($modified_properties)),
+				implode(',', $quoted_values));
+		} else {
+
+			$sql = 'update %s set %s where %s = %s';
+			$fields = array();
+
+			foreach ($this->getModifiedProperties() as $name => $value) {
+				$quoted_value = $this->quoteValue($name, $value);
+				$fields[] = sprintf('%s = %s', $name, $quoted_value);
+			}
+			
+			$sql = sprintf($sql,
+				$this->table,
+				implode(',', $update_clauses),
+				$id_field->name,
+				$this->db->quote($id, $id_field->type));
+		}
+
+		SwatDB::exec($this->db, $sql);
+	}
+
+	// }}}
+	// {{{ protected function quoteValue()
+
+	protected function quoteValue($name, $value)
+	{
+		if (in_array($name, $this->date_fields) && $value instanceof SwatDate)
+			$value = $value->getDate();
+
+		return $this->db->quote($value, $this->guessType($name, $value));
+	}
+
+	// }}}
+	// {{{ protected function guessType()
+
+	protected function guessType($name, $value)
+	{
+		switch (gettype($value)) {
+		case 'boolean':
+			return 'boolean';
+		case 'integer':
+			return 'integer';
+		case 'float':
+			return 'float';
+		case 'string':
+		default:
+			return 'text';
+		}
 	}
 
 	// }}}
@@ -256,7 +356,7 @@ class SwatDBDataObject extends SwatObject
 		if ($row === null)
 			throw new SwatDBException('Attempting to initialize dataobject with a null row.');
 
-		$property_array = get_object_vars($this);
+		$property_array = $this->getPublicProperties();
 
 		if (is_object($row))
 			$row = get_object_vars($row);
@@ -287,7 +387,7 @@ class SwatDBDataObject extends SwatObject
 	 */
 	protected function generatePropertyHashes()
 	{
-		$property_array = get_object_vars($this);
+		$property_array = $this->getPublicProperties();
 
 		foreach ($property_array as $name => $value) {
 			$hashed_value = md5(serialize($value));
@@ -333,11 +433,30 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ protected function setInternalValue()
+
+	protected function setInternalValue($name, $value)
+	{
+		if (array_key_exists($name, $this->internal_fields))
+			$this->internal_fields[$name] = $value;
+	}
+
+	// }}}
 	// {{{ protected function hasInternalValue()
 
 	protected function hasInternalValue($name)
 	{
 		return array_key_exists($name, $this->internal_fields);
+	}
+
+	// }}}
+	// {{{ protected function getId()
+
+	protected function getId()
+	{
+		$id_field = new SwatDBField($this->id_field, 'integer');
+		$temp = $id_field->name;
+		return $this->$temp;
 	}
 
 	// }}}
@@ -347,6 +466,40 @@ class SwatDBDataObject extends SwatObject
 	{
 		if ($this->db === null)
 			throw new SwatDBException('No database available to this dataobject. Call the setDatabase method.');
+	}
+
+	// }}}
+	// {{{ private function getPublicProperties()
+
+	private function getPublicProperties()
+	{
+		$property_array = get_object_vars($this);
+		unset($property_array['db']);
+		unset($property_array['table']);
+		unset($property_array['id_field']);
+		$property_array = array_merge($property_array, $this->internal_fields);
+		return $property_array;
+	}
+
+	// }}}
+	// {{{ public function __toString()
+
+	/**
+	 * Gets this object as a string
+	 *
+	 * @see SwatObject::__toString()
+	 * @return string this object represented as a string.
+	 */
+	public function __toString()
+	{
+		// prevent printing of MDB2 object for dataobjects
+		$db = $this->db;
+		$this->db = get_class($db);
+
+		return parent::__toString();
+
+		// set db back again
+		$this->db = $db;
 	}
 
 	// }}}
