@@ -85,7 +85,7 @@ abstract class SwatWidget extends SwatUIObject
 	 *
 	 * @see SwatWidget::process()
 	 */
-	protected $procesed = false;
+	protected $processed = false;
 
 	// }}}
 	// {{{ public function __construct()
