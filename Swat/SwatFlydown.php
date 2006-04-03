@@ -94,6 +94,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 			$select_tag = new SwatHtmlTag('select');
 			$select_tag->name = $this->id;
 			$select_tag->id = $this->id;
+			$select_tag->class = 'swat-flydown';
 
 			if ($this->width !== null)
 				$select_tag->style = 'width: '.$this->width.';';
