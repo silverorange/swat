@@ -193,7 +193,7 @@ class SwatForm extends SwatContainer
 		if ($this->processed) {
 			$this->processHiddenFields();
 
-			foreach ($this->children as &$child)
+			foreach ($this->children as $child)
 				if ($child !== null && !$child->isProcessed())
 					$child->process();
 		}
