@@ -40,6 +40,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	 * @var array
 	 */
 	private $objects = array();
+	private $objects_by_index = array();
 
 	/**
 	 * The current index of the iterator interface
@@ -47,7 +48,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	 * @var integer
 	 */
 	private $current_index = 0;
-	
+
 	// }}}
 	// {{{ public function __construct
 
@@ -72,12 +73,12 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 						$object->setDatabase($rs->db);
 				}
 
-				if ($this->index_field === null) {
-					$this->objects[] = $object;
-				} else {
+				$this->objects[] = $object;
+
+				if ($this->index_field !== null) {
 					$index_field = $this->index_field;
 					$index = $row->$index_field;
-					$this->objects[$index] = $object;
+					$this->objects_by_index[$index] = $object;
 				}
 			}
 		}
@@ -187,7 +188,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	 */
 	public function getByIndex($index)
 	{
-		if (isset($this->objects[$index]))
+		if (isset($this->objects_by_index[$index]))
+			return $this->objects_by_index[$index];
+		elseif (isset($this->objects[$index]))
 			return $this->objects[$index];
 
 		return null;
