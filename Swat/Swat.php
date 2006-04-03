@@ -126,17 +126,7 @@ class Swat
 	 */
 	public static function printObject($object)
 	{
-		// prevent recusrion up the widget tree for UI objects
-		if ($object instanceof SwatUIObject) {
-			$old_parent = $object->parent;
-			$object->parent = null;
-		}
-
 		echo '<pre>'.print_r($object, true).'</pre>';
-
-		// set parent back again
-		if ($object instanceof SwatUIObject)
-			$object->parent = $old_parent;
 	}
 }
 

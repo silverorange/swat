@@ -133,6 +133,27 @@ abstract class SwatUIObject extends SwatObject
 	abstract public function getHtmlHeadEntries();
 
 	// }}}
+	// {{{ public function __toString()
+
+	/**
+	 * Gets this object as a string
+	 *
+	 * @see SwatObject::__toString()
+	 * @return string this object represented as a string.
+	 */
+	public function __toString()
+	{
+		// prevent recusrion up the widget tree for UI objects
+		$parent = $this->parent;
+		$this->parent = get_class($parent);
+
+		return parent::__toString();
+
+		// set parent back again
+		$this->parent = $parent;
+	}
+
+	// }}}
 }
 
 ?>
