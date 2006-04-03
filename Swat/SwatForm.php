@@ -266,25 +266,6 @@ class SwatForm extends SwatContainer
 	}
 
 	/**
-	 * Adds a widget within a new SwatDiv
-	 *
-	 * This is a convenience method that does the following:
-	 * - creates a new SwatDiv,
-	 * - adds the widget as a child of the div,
-	 * - and then adds the SwatDiv to this form.
-	 *
-	 * @param SwatWidget $widget a reference to a widget to add.
-	 * @param string $title the CSS class of the HTML div tag.
-	 */
-	public function addWithDiv(SwatWidget $widget, $class)
-	{
-		$field = new SwatDiv();
-		$field->add($widget);
-		$field->class = $class;
-		$this->add($field);
-	}
-	
-	/**
 	 * Returns the super-global array with this form's data
 	 *
 	 * Returns a reference to the super-global array containing this
