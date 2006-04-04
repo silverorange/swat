@@ -112,6 +112,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer implements SwatUIPar
 	{
 		$first_renderer = $this->renderers->getFirst();
 		$th_tag = new SwatHtmlTag('th', $first_renderer->getThAttributes());
+		$th_tag->scope = 'col';
 		$th_tag->open();
 		$this->displayHeader();
 		$th_tag->close();
