@@ -24,7 +24,7 @@ class SwatDetailsStore extends SwatObject
 
 	public function __get($name)
 	{
-		if (strpos($name, '.'))
+		if (strpos($name, '.') !== false)
 			return $this->parsePath($name);
 
 		if (array_key_exists($name, $this->data))
