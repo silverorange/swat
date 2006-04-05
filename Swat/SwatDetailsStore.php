@@ -25,7 +25,7 @@ class SwatDetailsStore extends SwatObject
 	public function __get($name)
 	{
 		if (strpos($name, '.') !== false)
-			return $this->parsePath($name);
+			return $this->parsePath($this, $name);
 
 		if (array_key_exists($name, $this->data))
 			return $this->data[$name];
@@ -48,15 +48,18 @@ class SwatDetailsStore extends SwatObject
 		$this->data[$name] = $value;
 	}
 
-	private function parsePath($path) {
+	private function parsePath($object, $path) {
 		$pos = strpos($path, '.');
 		$name = substr($path, 0, $pos);
 		$rest = substr($path, $pos + 1);
+		$sub_object = $object->$name;
 
-		if ($this->$name === null)
+		if ($sub_object === null)
 			return null;
+		elseif (strpos($rest, '.') === false)
+			return $sub_object->$rest;
 		else
-			return $this->$name->$rest;
+			return $this->parsePath($sub_object, $rest);
 	}
 }
 
