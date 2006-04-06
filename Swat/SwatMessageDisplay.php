@@ -86,7 +86,7 @@ class SwatMessageDisplay extends SwatControl
 		$li_tag = new SwatHtmlTag('li');
 
 		$ul_tag->class = 'swat-message-display';
-		$ul->id = $this->id;
+		$ul_tag->id = $this->id;
 		$ul_tag->open();
 
 		$has_dismiss_link = false;
