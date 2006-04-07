@@ -296,16 +296,16 @@ class SwatDBDataObject extends SwatObject
 		} else {
 
 			$sql = 'update %s set %s where %s = %s';
-			$fields = array();
+			$update_clauses = array();
 
 			foreach ($this->getModifiedProperties() as $name => $value) {
 				$quoted_value = $this->quoteValue($name, $value);
-				$fields[] = sprintf('%s = %s', $name, $quoted_value);
+				$update_clauses[] = sprintf('%s = %s', $name, $quoted_value);
 			}
 			
 			$sql = sprintf($sql,
 				$this->table,
-				implode(',', $update_clauses),
+				implode(',', $update_clauses,
 				$id_field->name,
 				$this->db->quote($id, $id_field->type));
 		}
@@ -420,7 +420,9 @@ class SwatDBDataObject extends SwatObject
 	{
 		$this->internal_fields[$name] = null;
 
-		if ($class !== null)
+		if ($class === null)
+			unset($this->internal_field_classes[$name]);
+		else
 			$this->internal_field_classes[$name] = $class;
 	}
 
