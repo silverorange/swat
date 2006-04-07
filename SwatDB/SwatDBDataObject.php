@@ -200,6 +200,8 @@ class SwatDBDataObject extends SwatObject
 					$object->loadFromDB($id);
 					$this->sub_data_objects[$key] = $object;
 					return $object;
+				} else {
+					// TODO: throw bad class exception
 				}
 			}
 		}
@@ -237,7 +239,6 @@ class SwatDBDataObject extends SwatObject
     protected function loadFromDBInternal($id)
 	{
 		if ($this->table !== null && $this->id_field !== null) {
-
 			$id_field = new SwatDBField($this->id_field, 'integer');
 			$sql = 'select * from %s where %s = %s';
 
@@ -494,7 +495,7 @@ class SwatDBDataObject extends SwatObject
 	{
 		// prevent printing of MDB2 object for dataobjects
 		$db = $this->db;
-		$this->db = get_class($db);
+		$this->db = null;
 
 		return parent::__toString();
 
