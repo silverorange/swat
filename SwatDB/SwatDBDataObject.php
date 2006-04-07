@@ -174,7 +174,8 @@ class SwatDBDataObject extends SwatObject
 	// }}}
 	// {{{ public function __get()
 
-	public function __get($key) {
+	public function __get($key)
+	{
 		if (isset($this->sub_data_objects[$key]))
 			return $this->sub_data_objects[$key];
 
@@ -212,7 +213,8 @@ class SwatDBDataObject extends SwatObject
 	// }}}
 	// {{{ public function __set()
 
-	public function __set($key, $value) {
+	public function __set($key, $value)
+	{
 		if ($this->hasInternalValue($key)) {
 			if (is_object($value)) {
 				$this->sub_data_objects[$key] = $value;
