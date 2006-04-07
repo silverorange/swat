@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatObject.php';
+require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
  * MDB2 Recordset Wrapper
@@ -60,7 +61,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	public function __construct($rs)
 	{
 		if (MDB2::isError($rs))
-			throw new Exception($rs->getMessage());
+			throw new SwatDBException($rs->getMessage());
 
 		if ($rs->numRows()) {
 			while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
