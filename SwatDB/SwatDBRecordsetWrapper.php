@@ -60,6 +60,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	 */
 	public function __construct($rs)
 	{
+		$this->init();
+
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs->getMessage());
 
@@ -221,6 +223,20 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	public function &getArray()
 	{
 		return $this->objects;
+	}
+
+	// }}}
+	// {{{ protected function init()
+
+	/**
+	 * Initializes this recordset wrapper
+	 *
+	 * By default, the row wrapper class is set to null. Subclasses may change
+	 * this behaviour and optionally call additional initialization methods.
+	 */
+	protected function init()
+	{
+		$this->row_wrapper_class = null;
 	}
 
 	// }}}
