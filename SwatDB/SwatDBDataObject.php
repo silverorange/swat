@@ -306,7 +306,7 @@ class SwatDBDataObject extends SwatObject
 			$sql = sprintf($sql,
 				$this->table,
 				implode(',', $update_clauses,
-				$id_field->name,
+				$id_field->name),
 				$this->db->quote($id, $id_field->type));
 		}
 
