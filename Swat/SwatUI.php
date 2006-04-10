@@ -169,16 +169,16 @@ class SwatUI extends SwatObject
 		$document = DOMDocument::load($xml_file);
 
 		// make sure we are using the correct document type
-		if ($document->doctype === null ||
-			strcmp($document->doctype->name, 'swatml') != 0) {
+		if (count(self::$validation_errors) == 0 &&
+			($document->doctype === null ||
+			strcmp($document->doctype->name, 'swatml') != 0)) {
 			self::restoreErrorHandler($html_errors_value);
 			throw new SwatInvalidSwatMLException(
-				'SwatUI can only parse SwatML documents: '.
-				implode("\n", self::$validation_errors),
+				'SwatUI can only parse SwatML documents: ',
 				0, $xml_file);
 		}
 
-		if (!$document->validate()) {
+		if (count(self::$validation_errors) > 0 || !$document->validate()) {
 			self::restoreErrorHandler($html_errors_value);
 			throw new SwatInvalidSwatMLException(
 				'Invalid SwatML: '.
@@ -331,7 +331,7 @@ class SwatUI extends SwatObject
 	 */
 	public static function handleValidationErrors($errno, $errstr)
 	{
-		$error = 'DOMDocument::validate(): '.$errstr;
+		$error = $errstr;
 		self::$validation_errors[] = $error;
 	}
 
