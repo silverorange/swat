@@ -48,13 +48,13 @@ class SwatFormField extends SwatContainer implements SwatTitleable
 	public $note_content_type = 'text/plain';
 
 	/**
-	 * CSS class to use on the container tag
+	 * Array of CSS classes to use on the container tag
 	 *
 	 * Subclasses can change this to change their appearance.
 	 *
-	 * @var string
+	 * @var array
 	 */
-	protected $class = 'swat-form-field';
+	protected $classes = array('swat-form-field');
 
 	/**
 	 * Container tag to use
@@ -116,7 +116,7 @@ class SwatFormField extends SwatContainer implements SwatTitleable
 
 		$messages = &$this->getMessages();
 		$container_tag = new SwatHtmlTag($this->container_tag);
-		$container_tag->class = $this->class;
+		$container_tag->class = implode(' ', $this->classes);
 
 		if ($this->id !== null)
 			$container_tag->id = $this->id;
@@ -236,7 +236,7 @@ class SwatFormField extends SwatContainer implements SwatTitleable
 	protected function notifyOfAdd($widget)
 	{
 		if (class_exists('SwatCheckbox') && $widget instanceof SwatCheckbox) {
-			$this->class = 'swat-form-field-checkbox';
+			$this->classes[] = 'swat-form-field-checkbox';
 		}
 	}
 }

@@ -23,7 +23,7 @@ class SwatFooterFormField extends SwatFormField
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-		$this->class = 'swat-footer-form-field';
+		$this->classes = array('swat-footer-form-field');
 	}
 
 	public function display()

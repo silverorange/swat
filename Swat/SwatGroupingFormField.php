@@ -24,7 +24,7 @@ class SwatGroupingFormField extends SwatFormField
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-		$this->class = 'swat-grouping-form-field';
+		$this->classes = array('swat-grouping-form-field');
 		$this->container_tag = 'fieldset';
 	}
 
