@@ -181,7 +181,7 @@ class SwatUI extends SwatObject
 		if (count(self::$validation_errors) > 0 || !$document->validate()) {
 			self::restoreErrorHandler($html_errors_value);
 			throw new SwatInvalidSwatMLException(
-				'Invalid SwatML: '.
+				"Invalid SwatML:\n".
 				implode("\n", self::$validation_errors),
 				0, $xml_file);
 		}
