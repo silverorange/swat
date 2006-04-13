@@ -333,7 +333,7 @@ class SwatPagination extends SwatControl
 	}
 
 	// }}}
-	// {{{ private function getLink()
+	// {{{ protected function getLink()
 
 	/**
 	 * Gets the base link for all page links
@@ -343,7 +343,7 @@ class SwatPagination extends SwatControl
 	 *
 	 * @return string the base link for all pages with cleaned get variables.
 	 */
-	private function getLink()
+	protected function getLink()
 	{
 		//$vars = array_diff_key($_GET, array_flip($this->unset_get_vars));
 		$vars = $_GET;
