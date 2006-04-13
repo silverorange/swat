@@ -18,30 +18,12 @@ class SwatPagination extends SwatControl
 	/**
 	 * Link
 	 *
-	 * The initial link used when building links. If null, links will
-	 * begin with '?'.
+	 * The url to link to including a conversion string which is replaced
+	 * by the page number (i.e. "mydir/page%s").
 	 *
 	 * @var string
 	 */
 	public $link = null;
-
-	/**
-	 * HTTP GET vars to clobber
-	 *
-	 * An array of GET variable names to unset before rebuilding a new link.
-	 *
-	 * @var array
-	 */
-	public $unset_get_vars = array();
-
-	/**
-	 * Current page
-	 *
-	 * The number of the current page. The value is zero based.
-	 *
-	 * @var integer
-	 */
-	public $current_page = 0;
 
 	/**
 	 * Page size
@@ -90,6 +72,15 @@ class SwatPagination extends SwatControl
 	 * @var integer
 	 */
 	protected $prev_page = 0;
+
+	/**
+	 * Current page
+	 *
+	 * The number of the current page. The value is zero based.
+	 *
+	 * @var integer
+	 */
+	protected $current_page = 0;
 
 	/**
 	 * The total number of pages in the database
@@ -170,8 +161,6 @@ class SwatPagination extends SwatControl
 
 		if ($this->total_pages > 1) {
 
-			$this->unset_get_vars[] = $this->id;
-
 			$div = new SwatHtmlTag('div');
 			$div->class = 'swat-pagination';
 			$div->open();
@@ -187,21 +176,33 @@ class SwatPagination extends SwatControl
 	}
 
 	// }}}
-	// {{{ public function process()
+	// {{{ public function setCurrentPage()
 
 	/**
-	 * Processes this pagination widget
+	 * Set the current page that is displayed
 	 *
-	 * Sets the current_page and current_record properties.
+	 * Calculates the current_record properties.
+	 *
+	 * @param integer $page The current page being displayed.
 	 */
-	public function process()
+	public function setCurrentPage($page)
 	{
-		parent::process();
-
-		if (array_key_exists($this->id, $_GET))
-			$this->current_page = $_GET[$this->id];
+		$this->current_page = $page;
 
 		$this->current_record = $this->current_page * $this->page_size;
+	}
+
+	// }}}
+	// {{{ public function getCurrentPage()
+
+	/**
+	 * Get the current page that is displayed
+	 *
+	 * @return integer The current page being displayed.
+	 */
+	public function getCurrentPage()
+	{
+		return $this->current_page;
 	}
 
 	// }}}
@@ -338,31 +339,11 @@ class SwatPagination extends SwatControl
 	/**
 	 * Gets the base link for all page links
 	 *
-	 * This removes all unwanted elements from the get variables and adds
-	 * all the wanted ones back into an acceptable url string.
-	 *
-	 * @return string the base link for all pages with cleaned get variables.
+	 * @return string the base link for all pages.
 	 */
 	protected function getLink()
 	{
-		//$vars = array_diff_key($_GET, array_flip($this->unset_get_vars));
-		$vars = $_GET;
-
-		foreach($vars as $name => $value)
-			if (in_array($name, $this->unset_get_vars))
-				unset($vars[$name]);
-
-		if ($this->link === null)
-			$link = '?';
-		else
-			$link = $this->link.'?';
-
-		foreach($vars as $name => $value)
-			$link .= $name.'='.urlencode($value).'&';
-
-		$link.= urlencode($this->id).'=%s';
-
-		return $link;
+		return ($this->link === null) ? '%s' : $this->link;
 	}
 
 	// }}}
