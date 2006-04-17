@@ -162,8 +162,7 @@ class SwatForm extends SwatContainer
 
 		$form_tag->open();
 
-		foreach ($this->children as $child)
-			$child->display();
+		$this->displayChildren();
 
 		$this->displayHiddenFields();
 		$form_tag->close();
@@ -288,6 +287,18 @@ class SwatForm extends SwatContainer
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Displays the child widgets of this form
+	 *
+	 * Subclasses may override this method to display custom widgets or handle
+	 * child widgets differently.
+	 */
+	protected function displayChildren()
+	{
+		foreach ($this->children as $child)
+			$child->display();
 	}
 
 	/**
