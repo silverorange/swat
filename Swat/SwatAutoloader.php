@@ -84,6 +84,8 @@ SwatAutoloader::addRule('/^Swat(.*)/', 'Swat/Swat$1.php');
  * This implementation uses the {@link SwatAutoloader} to require an
  * appropriate file containing a class definition for the undefined class.
  *
+ * See the PHP documentation on {@link http://php.net/__autoload __autoload()}.
+ *
  * @param string $class_name the name of the undefined class.
  */
 function __autoload($class_name)
