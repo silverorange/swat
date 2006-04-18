@@ -973,14 +973,7 @@ class SwatDB extends SwatObject
 			$field->name, $field->name, $table);
 
 		SwatDB::debug($sql);
-		// XXX: since we're using a patched MDB2 that discovers types automatically
-		//      from the recordset, I don't think we need this:
-		//$rs = SwatDB::query($db, $sql, array($field->type));
-		$rs = SwatDB::query($db, $sql, null);
-		
-		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
-		$field_name = $field->name;
-		return $row->$field_name;
+		return SwatDB::queryOne($db, $sql);
 	}
 
 	// }}}
