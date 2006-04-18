@@ -972,7 +972,6 @@ class SwatDB extends SwatObject
 		$sql = sprintf('select max(%s) as %s from %s',
 			$field->name, $field->name, $table);
 
-		SwatDB::debug($sql);
 		return SwatDB::queryOne($db, $sql);
 	}
 
