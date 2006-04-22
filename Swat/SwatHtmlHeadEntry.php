@@ -38,7 +38,7 @@ class SwatHtmlHeadEntry extends SwatObject
 	 *
 	 * @var string
 	 */
-	public $uri = '';
+	private $uri = '';
 
 	/**
 	 * Creates a new HTML head entry
@@ -76,6 +76,16 @@ class SwatHtmlHeadEntry extends SwatObject
 			break;
 		default:
 		}
+	}
+
+	/**
+	 * Gets the URI of this HTML head entry
+	 *
+	 * @return string the URI of this HTML head entry.
+	 */
+	public function getUri()
+	{
+		return $this->uri;
 	}
 }
 
