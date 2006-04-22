@@ -22,7 +22,7 @@ class SwatHtmlHeadEntry extends SwatObject
 	/**
 	 * A JavaScript head entry
 	 */
-	const TYPE_JAVASCRIPT = 1;
+	const TYPE_JAVA_SCRIPT = 1;
 	
 	/**
 	 * The type of this head entry
@@ -68,7 +68,7 @@ class SwatHtmlHeadEntry extends SwatObject
 				$this->uri);
 
 			break;
-		case self::TYPE_JAVASCRIPT:
+		case self::TYPE_JAVA_SCRIPT:
 			printf('<script type="text/javascript" src="%s%s"></script>',
 				$uri_prefix,
 				$this->uri);
