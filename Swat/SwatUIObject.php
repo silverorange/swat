@@ -62,7 +62,7 @@ abstract class SwatUIObject extends SwatObject
 	{
 		$this->html_head_entries[$javascript] =
 			new SwatHtmlHeadEntry($javascript,
-			SwatHtmlHeadEntry::TYPE_JAVASCRIPT);
+			SwatHtmlHeadEntry::TYPE_JAVA_SCRIPT);
 	}
 
 	// }}}
