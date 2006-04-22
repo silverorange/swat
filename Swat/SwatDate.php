@@ -115,7 +115,7 @@ class SwatDate extends Date
 	 * 
 	 * @throws SwatException
 	 */
-	static function getFormatById($id)
+	public static function getFormatById($id)
 	{
 		switch ($id) {
 		case self::DF_MDY:
