@@ -215,7 +215,11 @@ class SwatDBDataObject extends SwatObject
 
 	public function __set($key, $value)
 	{
-		if ($this->hasInternalValue($key)) {
+		$loader_method = 'load'.str_replace(' ', '', ucwords(strtr($key, '_', ' ')));
+
+		if (method_exists($this, $loader_method)) {
+			$this->sub_data_objects[$key] = $value;
+		} elseif ($this->hasInternalValue($key)) {
 			if (is_object($value)) {
 				$this->sub_data_objects[$key] = $value;
 				$this->setInternalValue($key, $value->getId());
