@@ -1,8 +1,5 @@
 <?php
 
-require_once 'Swat/SwatUIObject.php';
-require_once 'Swat/exceptions/SwatException.php';
-
 /**
  * Container for package wide static methods
  *
