@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatObject.php';
+require_once 'Swat/SwatLayout.php';
 
 /**
  * Base class for a page
