@@ -3,6 +3,7 @@
 require_once 'MDB2.php';
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatDate.php';
+require_once 'SwatDB/SwatDB.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
@@ -283,49 +284,28 @@ class SwatDBDataObject extends SwatObject
 		if (count($modified_properties) == 0)
 			return;
 
-		$temp = $id_field->name;
-		$id = $this->$temp;
+		$id_ref = $id_field->name;
+		$id = $this->$id_ref;
 
-		if ($id === null) {
-			$sql = 'insert into %s(%s) values(%s)';
-			$quoted_values = array();
+		$fields = array();
+		$values = array();
 
-			foreach ($this->getModifiedProperties() as $name => $value)
-				$quoted_values[] = $this->quoteValue($name, $value);
+		foreach ($this->getModifiedProperties() as $name => $value) {
+			$type = $this->guessType($name, $value);
 
-			$sql = sprintf($sql,
-				$this->table,
-				implode(',', array_keys($modified_properties)),
-				implode(',', $quoted_values));
-		} else {
+			if ($type == 'date')
+				$value = $value->getDate();
 
-			$sql = 'update %s set %s where %s = %s';
-			$update_clauses = array();
-
-			foreach ($this->getModifiedProperties() as $name => $value) {
-				$quoted_value = $this->quoteValue($name, $value);
-				$update_clauses[] = sprintf('%s = %s', $name, $quoted_value);
-			}
-			
-			$sql = sprintf($sql,
-				$this->table,
-				implode(',', $update_clauses),
-				$id_field->name,
-				$this->db->quote($id, $id_field->type));
+			$fields[] = sprintf('%s:%s', $type, $name);
+			$values[$name] = $value;
 		}
 
-		SwatDB::exec($this->db, $sql);
-	}
-
-	// }}}
-	// {{{ protected function quoteValue()
-
-	protected function quoteValue($name, $value)
-	{
-		if (in_array($name, $this->date_fields) && $value instanceof SwatDate)
-			$value = $value->getDate();
-
-		return $this->db->quote($value, $this->guessType($name, $value));
+		if ($id === null) {
+			$this->$id_ref = 
+				SwatDB::insertRow($this->db, $this->table, $fields, $values, $id_field->__toString());
+		} else {
+			SwatDB::updateRow($this->db, $this->table, $fields, $values, $id_field->__toString(), $id);
+		}
 	}
 
 	// }}}
@@ -340,6 +320,9 @@ class SwatDBDataObject extends SwatObject
 			return 'integer';
 		case 'float':
 			return 'float';
+		case 'object':
+			if ($value instanceof SwatDate)
+				return 'date';
 		case 'string':
 		default:
 			return 'text';
