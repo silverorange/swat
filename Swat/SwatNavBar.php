@@ -107,7 +107,11 @@ class SwatNavBar extends SwatControl
 	 * If the entry is not in this navigation bar, an exception is thrown.
 	 *
 	 * @param integer $position zero-based ordinal position of the entry to 
-	 *                           fetch.
+	 *                           fetch.  If position is negative, the entry
+	 *                           position is counted from the end of the nav
+	 *                           bar (-1 will return one from the end).  Use
+	 *                           getLastEntry() to get the last entry of the
+	 *                           nav bar.
 	 *
 	 * @return SwatNavBarEntry the entry.
 	 *
@@ -115,6 +119,9 @@ class SwatNavBar extends SwatControl
 	 */
 	public function getEntryByPosition($position)
 	{
+		if ($position < 0)
+			$position = $this->getCount() + $position - 1;
+
 		if (isset($this->entries[$position]))
 			return $this->entries[$position];
 		else
