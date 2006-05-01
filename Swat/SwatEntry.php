@@ -41,6 +41,15 @@ class SwatEntry extends SwatInputControl implements SwatState
 	public $maxlength = null;
 
 	/**
+	 * Access key
+	 *
+	 * Access key for this form input, for keyboard nagivation.
+	 *
+	 * @var string
+	 */
+	public $access_key = null;
+
+	/**
 	 * Minimum length
 	 *
 	 * Minimum number of allowable characters in HTML text form input, or null.
@@ -84,6 +93,9 @@ class SwatEntry extends SwatInputControl implements SwatState
 
 		if ($this->maxlength !== null)
 			$input_tag->maxlength = $this->maxlength;
+
+		if (strlen($this->access_key) > 0)
+			$input_tag->accesskey = $this->access_key;
 
 		$input_tag->display();
 	}

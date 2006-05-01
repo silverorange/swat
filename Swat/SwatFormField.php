@@ -48,6 +48,15 @@ class SwatFormField extends SwatContainer implements SwatTitleable
 	public $note_content_type = 'text/plain';
 
 	/**
+	 * Access key
+	 *
+	 * Sets an access key for the label of this form field, if one exists.
+	 *
+	 * @var string
+	 */
+	public $access_key = null;
+
+	/**
 	 * Array of CSS classes to use on the container tag
 	 *
 	 * Subclasses can change this to change their appearance.
@@ -220,6 +229,9 @@ class SwatFormField extends SwatContainer implements SwatTitleable
 		$focus_id = $this->getFocusableHtmlId();
 		if ($focus_id !== null)
 			$label_tag->for = $focus_id;
+
+		if (strlen($this->access_key) > 0)
+			$label_tag->accesskey = $this->access_key;
 
 		return $label_tag;
 	}

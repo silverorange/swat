@@ -49,6 +49,15 @@ class SwatButton extends SwatControl
 	public $stock_id = null;
 
 	/**
+	 * Access key
+	 *
+	 * Access key for this button, for keyboard nagivation.
+	 *
+	 * @var string
+	 */
+	public $access_key = null;
+
+	/**
 	 * Clicked
 	 *
 	 * This is set to true after processing if this button was clicked.
@@ -104,6 +113,9 @@ class SwatButton extends SwatControl
 
 		if ($this->class !== null)
 			$input_tag->class.= ' '.$this->class;
+
+		if (strlen($this->access_key) > 0)
+			$input_tag->accesskey = $this->access_key;
 
 		$input_tag->display();
 	}

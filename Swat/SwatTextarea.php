@@ -40,6 +40,15 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	public $cols = 50;
 
 	/**
+	 * Access key
+	 *
+	 * Access key for this textarea, for keyboard nagivation.
+	 *
+	 * @var string
+	 */
+	public $access_key = null;
+
+	/**
 	 * Displays this textarea
 	 *
 	 * Outputs an appropriate XHTML tag.
@@ -61,6 +70,8 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		$textarea_tag->rows = $this->rows;
 		$textarea_tag->cols = $this->cols;
 		$textarea_tag->setContent($value, 'text/plain');
+		if (strlen($this->access_key) > 0)
+			$textarea_tag->accesskey = $this->access_key;
 
 		$textarea_tag->display();
 	}

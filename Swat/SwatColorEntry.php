@@ -23,6 +23,15 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 	public $value = null;
 
 	/**
+	 * Access key
+	 *
+	 * Access key for this color input control, for keyboard nagivation.
+	 *
+	 * @var string
+	 */
+	public $access_key = null;
+
+	/**
 	 * Creates a new color entry widget
 	 *
 	 * @param string $id a non-visible unique id for this widget.
@@ -58,6 +67,10 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		$input_tag->value = $this->value;
 		$input_tag->class = 'swat-color-entry-input';
 		$input_tag->disabled = 'true';
+
+		if (strlen($this->access_key) > 0)
+			$input_tag->accesskey = $this->access_key;
+
 		$input_tag->display();
 
 		$link_tag = new SwatHtmlTag('a');
