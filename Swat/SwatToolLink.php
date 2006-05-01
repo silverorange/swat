@@ -72,6 +72,15 @@ class SwatToolLink extends SwatControl
 	 */
 	public $stock_id = null;
 
+	/**
+	 * Access key for this link
+	 *
+	 * Specifying an access key makes this tool link keyboard-accessible.
+	 *
+	 * @var string
+	 */
+	public $access_key = null;
+
 	// {{{ public function __construct()
 
 	/**
@@ -127,6 +136,9 @@ class SwatToolLink extends SwatControl
 				$anchor_tag->class = 'swat-tool-link';
 			else 
 				$anchor_tag->class = 'swat-tool-link '.$this->class;
+
+			if (strlen($this->access_key) > 0)
+				$anchor_tag->accesskey = $this->access_key;
 
 			$anchor_tag->setContent($this->title);
 			$anchor_tag->display();
