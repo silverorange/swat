@@ -94,6 +94,7 @@ class SwatButton extends SwatControl
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'submit';
 		$input_tag->name = $this->id;
+		$input_tag->id = $this->id;
 		$input_tag->value = $this->title;
 
 		if ($primary)
