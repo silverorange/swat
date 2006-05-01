@@ -37,6 +37,15 @@ class SwatFileEntry extends SwatInputControl
 	public $display_mime_types = true;
 
 	/**
+	 * Access key
+	 *
+	 * Access key for this file entry control, for keyboard nagivation.
+	 *
+	 * @var string
+	 */
+	public $access_key = null;
+
+	/**
 	 * Stores the relevant part of the $_FILES array for this widget after
 	 * the widget's parent is processed
 	 *
@@ -61,6 +70,9 @@ class SwatFileEntry extends SwatInputControl
 
 		if ($this->size !== null)
 			$input_tag->size = $this->size;
+
+		if (strlen($this->access_key) > 0)
+			$input_tag->accesskey = $this->access_key;
 
 		if ($this->accept_mime_types !== null)
 			$input_tag->accept = implode(',', $this->accept_mime_types);

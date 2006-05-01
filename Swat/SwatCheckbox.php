@@ -23,6 +23,15 @@ class SwatCheckbox extends SwatControl implements SwatState
 	public $value = false;
 
 	/**
+	 * Access key
+	 *
+	 * Access key for this checkbox input, for keyboard nagivation.
+	 *
+	 * @var string
+	 */
+	public $access_key = null;
+
+	/**
 	 * Displays this checkbox
 	 *
 	 * Outputs an appropriate XHTML tag.
@@ -37,6 +46,9 @@ class SwatCheckbox extends SwatControl implements SwatState
 
 		if ($this->value)
 			$input_tag->checked = 'checked';
+
+		if (strlen($this->access_key) > 0)
+			$input_tag->accesskey = $this->access_key;
 
 		$input_tag->display();
 	}

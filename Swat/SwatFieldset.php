@@ -25,6 +25,15 @@ class SwatFieldset extends SwatContainer implements SwatTitleable
 	public $title = null;
 
 	/**
+	 * Access key
+	 *
+	 * Access key for this fieldset legend, for keyboard nagivation.
+	 *
+	 * @var string
+	 */
+	public $access_key = null;
+
+	/**
 	 * Gets the title of this fieldset
 	 *
 	 * Implements the {SwatTitleable::getTitle()} interface.
@@ -50,6 +59,10 @@ class SwatFieldset extends SwatContainer implements SwatTitleable
 
 		if ($this->title !== null) {
 			$legend_tag = new SwatHtmlTag('legend');
+
+		if (strlen($this->access_key) > 0)
+			$legend_tag->accesskey = $this->access_key;
+
 			$legend_tag->setContent($this->title);
 			$legend_tag->display();
 		}

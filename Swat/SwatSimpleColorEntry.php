@@ -25,6 +25,15 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	public $value = null;
 
 	/**
+	 * Access key
+	 *
+	 * Access key for this simple color control, for keyboard nagivation.
+	 *
+	 * @var string
+	 */
+	public $access_key = null;
+
+	/**
 	 * Array of colors to display in this color selector
 	 *
 	 * The array is flat and contains three or six digit hex color
@@ -74,6 +83,9 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		$input_tag->id = $this->id;
 		$input_tag->name = $this->id;
 		$input_tag->value = $this->value;
+		if (strlen($this->access_key) > 0)
+			$input_tag->accesskey = $this->access_key;
+
 		$input_tag->display();
 
 		$swatch_div = new SwatHtmlTag('div');
