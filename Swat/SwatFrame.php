@@ -35,6 +35,16 @@ class SwatFrame extends SwatContainer implements SwatTitleable
 	public $title_separator = ': ';
 
 	/**
+	 * The custom CSS class of this frame
+	 *
+	 * This optional class is added on top of the default 'swat-frame'
+	 * class.
+	 *
+	 * @var string
+	 */
+	public $class = null;
+
+	/**
 	 * Gets the title of this frame
 	 *
 	 * Implements the {SwatTitleable::getTitle()} interface.
@@ -62,6 +72,9 @@ class SwatFrame extends SwatContainer implements SwatTitleable
 
 		$outer_div = new SwatHtmlTag('div');
 		$outer_div->class = 'swat-frame';
+
+		if ($this->class !== null)
+			$outer_div->class.= ' '.$this->class;
 
 		if ($this->id !== null)
 			$outer_div->id = $this->id;
