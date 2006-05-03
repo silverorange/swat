@@ -13,7 +13,7 @@
 }
 
 .swat-pagination span.swat-pagination-current {
-	border: 1px solid #DDD;
+	border: 3px solid #DDD;
 	font-weight: bold;
 }
 
@@ -40,5 +40,6 @@
 	font-weight: bold;
 	text-align: center;
 	margin: 0.2em;
+	padding-bottom: 3px;
 }
 
