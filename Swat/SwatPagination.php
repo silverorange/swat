@@ -13,6 +13,14 @@ require_once 'Swat/SwatString.php';
  */
 class SwatPagination extends SwatControl
 {
+	// {{{ class constants
+
+	const NEXT     = 1;
+	const PREV     = 2;
+	const POSITION = 4;
+	const PAGES    = 8;
+
+	// }}}
 	// {{{ public properties
 
 	/**
@@ -51,6 +59,25 @@ class SwatPagination extends SwatControl
 	 * @var integer
 	 */
 	public $current_record = 0;
+
+	/**
+	 * Displayed date parts
+	 *
+	 * Bitwise combination of {@link SwatPagination::PREV},
+	 * {@link SwatPagination::NEXT}, {@link SwatPagination::PAGES},
+	 * and {@link SwatPagination::POSITION}
+	 *
+	 * For example, to show a pagination widget with just next and previous
+	 * links use the following:
+	 *
+	 * <code>
+	 * $pagination->display_parts = SwatPagination::PREV |
+	 * SwatPagination::NEXT;
+	 * </code>
+	 *
+	 * @var integer
+	 */
+	public $display_parts;
 
 	// }}}
 	// {{{ protected properties
@@ -106,6 +133,9 @@ class SwatPagination extends SwatControl
 		parent::__construct($id);
 
 		$this->requires_id = true;
+
+		$this->display_parts  = self::POSITION | self::NEXT |
+		                        self::PREV | self::PAGES;
 
 		$this->addStyleSheet('swat/styles/swat-pagination.css');
 	}
@@ -165,10 +195,17 @@ class SwatPagination extends SwatControl
 			$div->class = 'swat-pagination';
 			$div->open();
 
-			$this->displayPosition();
-			$this->displayPrev();
-			$this->displayPages();
-			$this->displayNext();
+			if ($this->display_parts & self::POSITION)
+				$this->displayPosition();
+
+			if ($this->display_parts & self::PREV)
+				$this->displayPrev();
+
+			if ($this->display_parts & self::PAGES)
+				$this->displayPages();
+
+			if ($this->display_parts & self::NEXT)
+				$this->displayNext();
 
 			$div->close();
 
