@@ -17,6 +17,23 @@
 				<property name="title" type="string">Email Entry</property>
 				<widget class="SwatEmailEntry" id="email">
 					<property name="value" type="string">test@example.com</property>
+					<property name="required" type="boolean">true</property>
+				</widget>
+			</widget>
+
+			<widget class="SwatFormField">
+				<property name="title">List Entry</property>
+				<property name="note">Entries are delimited by commas.</property>
+				<widget class="SwatListEntry" id="list">
+					<property name="values[]">orange</property>
+					<property name="values[]">apple</property>
+					<property name="values[]">banana</property>
+					<property name="values[]">grapefruit</property>
+					<property name="values[]">mango</property>
+					<property name="required" type="boolean">true</property>
+					<property name="max_entries" type="integer">5</property>
+					<property name="minlength" type="integer">5</property>
+					<property name="maxlength" type="integer">10</property>
 				</widget>
 			</widget>
 
