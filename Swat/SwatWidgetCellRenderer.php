@@ -162,13 +162,27 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 	}
 
 	/** 
-	 * Gets the widget of this widget cell renderer
+	 * Gets the prototype widget of this widget cell renderer
 	 *
-	 * @return SwatWidget the widget of this widget cell renderer.
+	 * @return SwatWidget the prototype widget of this widget cell renderer.
 	 */
-	public function getWidget()
+	public function getPrototypeWidget()
 	{
 		return $this->widget;
+	}
+
+	/** 
+	 * Gets a cloned widget from this widget cell renderer
+	 *
+	 * @param integer $replicator the replicator id of the cloned widget.
+	 * @return SwatWidget the cloned widget identified by $replicator.
+	 */
+	public function getWidget($replicator)
+	{
+		if (isset($this->clones[$replicator]))
+			return $this->clones[$replicator];
+
+		return null;
 	}
 
 	/** 
