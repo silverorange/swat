@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Swat/SwatApplication.php';
 require_once 'pages/DemoPage.php';
 
 /**
@@ -12,12 +11,12 @@ require_once 'pages/DemoPage.php';
  * @copyright 2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class DemoApplication extends SwatApplication
+class DemoApplication extends SiteApplication
 {
 	protected function resolvePage()
 	{
-		$demo = SwatApplication::initVar('demo', 'FrontPage',
-			SwatApplication::VAR_GET);
+		$demo = SiteApplication::initVar('demo', 'FrontPage',
+			SiteApplication::VAR_GET);
 
 		// simple security
 		$demo = basename($demo);

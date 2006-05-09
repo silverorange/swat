@@ -1,6 +1,5 @@
 <?php
 
-require_once 'Swat/SwatPage.php';
 require_once 'Swat/SwatNavBar.php';
 require_once 'Swat/SwatUI.php';
 require_once '../include/DemoMenu.php';
@@ -16,7 +15,7 @@ require_once '../include/DemoDocumentationMenu.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class DemoPage extends SwatPage
+class DemoPage extends SitePage
 {
 	protected $ui = null;
 	protected $navbar = null;
@@ -39,8 +38,8 @@ class DemoPage extends SwatPage
 	{
 		$this->start_time = microtime(true);
 
-		$this->demo = SwatApplication::initVar('demo', 'Main',
-			SwatApplication::VAR_GET);
+		$this->demo = SiteApplication::initVar('demo', 'Main',
+			SiteApplication::VAR_GET);
 
 		// simple security
 		$this->demo = basename($this->demo);
