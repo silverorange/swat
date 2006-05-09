@@ -53,7 +53,7 @@ class FrontPage extends DemoPage
 
 	protected function createLayout()
 	{
-		return new SwatLayout('../layouts/no_source.php');
+		return new SiteLayout('../layouts/no_source.php');
 	}
 }
 

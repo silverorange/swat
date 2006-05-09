@@ -1,7 +1,6 @@
 <?php
 
 require_once 'DemoPage.php';
-require_once 'Swat/SwatString.php';
 require_once '../include/DemoMenu.php';
 
 /**
@@ -78,7 +77,7 @@ class StringDemo extends DemoPage
 	
 	protected function createLayout()
 	{
-		return new SwatLayout('../layouts/no_source.php');
+		return new SiteLayout('../layouts/no_source.php');
 	}
 
 	private function testEllipsizeRight($length = 20)
