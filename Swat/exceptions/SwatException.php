@@ -183,7 +183,7 @@ class SwatException extends Exception
 	 *
 	 * @return string the arguments formatted into a comma delimited string.
 	 */
-	private function getArguments($args)
+	protected function getArguments($args)
 	{
 		if (is_array($args)) {
 			foreach ($args as &$arg) {
@@ -209,7 +209,7 @@ class SwatException extends Exception
 	 *
 	 * @todo separate this into a separate file
 	 */
-	private function displayStyleSheet()
+	protected function displayStyleSheet()
 	{
 		echo '<style>';
 		echo ".swat-exception { border: 1px solid #d43; margin: 1em; font-family: sans-serif; }\n";
