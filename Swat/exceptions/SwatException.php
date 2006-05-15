@@ -223,7 +223,7 @@ class SwatException extends Exception
 }
 
 /**
- * Set the PHP5 exception handler to out cutom function
+ * Set the PHP5 exception handler to our custom function
  */
 set_exception_handler(array('SwatException', 'handle'));
 
