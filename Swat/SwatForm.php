@@ -366,7 +366,7 @@ class SwatForm extends SwatContainer
 	 * This methods also generates an array of hidden field names and passes
 	 * them as hidden fields as well.
 	 */
-	private function displayHiddenFields()
+	protected function displayHiddenFields()
 	{
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
