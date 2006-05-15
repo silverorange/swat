@@ -12,6 +12,8 @@
  */
 class SwatException extends Exception
 {
+	// {{{ public function process()
+
 	/**
 	 * Processes this exception
 	 *
@@ -33,6 +35,9 @@ class SwatException extends Exception
 		exit;
 	}
 
+	// }}}
+	// {{{ public function log()
+
 	/**
 	 * Logs this exception
 	 *
@@ -42,6 +47,9 @@ class SwatException extends Exception
 	{
 		error_log($this->getSummary(), 0);
 	}
+
+	// }}}
+	// {{{ public function getSummary()
 
 	/**
 	 * Gets a one-line short text summary of this exception
@@ -61,6 +69,9 @@ class SwatException extends Exception
 
 		return ob_get_clean();
 	}
+
+	// }}}
+	// {{{ public function toString()
 
 	/**
 	 * Gets this exception as a nicely formatted text block
@@ -106,6 +117,9 @@ class SwatException extends Exception
 
 		return ob_get_clean();
 	}
+
+	// }}}
+	// {{{ public function toXHTML()
 
 	/**
 	 * Gets this exception as a nicely formatted XHTML fragment
@@ -159,6 +173,9 @@ class SwatException extends Exception
 
 		return ob_get_clean();
 	}
+
+	// }}}
+	// {{{ public static function handle()
 	
 	/**
 	 * Handles an exception
@@ -175,6 +192,9 @@ class SwatException extends Exception
 		else
 			echo $e;
 	}
+
+	// }}}
+	// {{{ protected function getArguments()
 
 	/**
 	 * Formats a method call's arguments
@@ -204,6 +224,9 @@ class SwatException extends Exception
 		}
 	}
 
+	// }}}
+	// {{{ protected function displayStyleSheet()
+
 	/**
 	 * Displays style sheet required for XHMTL exception formatting
 	 *
@@ -220,6 +243,8 @@ class SwatException extends Exception
 		echo ".swat-exception dd { margin-bottom: 1em; }\n";
 		echo '</style>';
 	}
+
+	// }}}
 }
 
 /**
