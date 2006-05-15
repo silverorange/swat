@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/Swat.php';
+require_once 'Swat/SwatError.php';
 require_once 'Swat/exceptions/SwatException.php';
 
 /**
