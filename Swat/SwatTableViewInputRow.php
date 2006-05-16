@@ -491,14 +491,13 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 * function to display multiple copies of this row just by substituting
 	 * a new identifier.
 	 *
-	 * @param array a reference to the array of {@link SwatTableViewColumn}
-	 *               objects in this row's table-view.
-	 *
 	 * @return string this input row as an XHTML table row with the row
 	 *                 identifier as a placeholder '%s'.
 	 */
-	private function getRowString(&$columns)
+	private function getRowString()
 	{
+		$columns = $this->view->getColumns();
+
 		ob_start();
 
 		// properties of the dynamic tr's are set in javascript
@@ -554,7 +553,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		 * and try to parse the final XML string with XHTML entities in it we
 		 * get an undefined entity error.
 		 */
-		$row_string = $this->getRowString($this->parent->getColumns());
+		$row_string = $this->getRowString();
 		// these entities need to be double escaped
 		$row_string = str_replace('&amp;', '&amp;amp;', $row_string);
 		$row_string = str_replace('&quot;', '&amp;quot;', $row_string);
