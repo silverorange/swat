@@ -32,7 +32,7 @@ class SwatException extends Exception
 		if (ini_get('log_errors'))
 			$this->log();
 
-		exit;
+		exit(1);
 	}
 
 	// }}}

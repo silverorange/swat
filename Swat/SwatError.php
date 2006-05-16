@@ -119,7 +119,7 @@ class SwatError
 			$this->log();
 
 		if ($this->severity == E_USER_ERROR)
-			exit;
+			exit(1);
 	}
 
 	// }}}
