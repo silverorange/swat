@@ -73,12 +73,11 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 
 	/**
 	 * Displays this check-all row
-	 *
-	 * @param array $columns a reference to the array of columns in this row's
-	 *                        table-view.
 	 */
-	public function display(&$columns)
+	public function display()
 	{
+		$columns = $this->view->getColumns();
+
 		$this->id = 'foo';
 		if ($this->view->model->getRowCount() < 2)
 			return;

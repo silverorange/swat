@@ -636,7 +636,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		ob_start();
 
 		foreach ($this->extra_rows as $row)
-			$row->display($this->columns);
+			$row->display();
 
 		$footer_content = ob_get_clean();
 
