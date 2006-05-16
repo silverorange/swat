@@ -641,6 +641,24 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ protected function getRowClass()
+
+	/**
+	 * Gets CSS class(es) for the XHTML tr tag.  Can be overridden by subclasses.
+	 *
+	 * @param mixed $row a data object containing the data to be displayed in 
+	 *                    this row.
+	 * @param integer $count the ordinal position of this row in the table.
+	 *
+	 * @return string CSS class name(s).
+	 */
+	protected function getRowClass($row, $count)
+	{
+		$class = ($count % 2 == 1) ? 'odd': null;
+		return $class;
+	}
+
+	// }}}
 	// {{{ private function displayFooter()
 
 	/**
@@ -695,24 +713,6 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		}
 
 		echo '</tbody>';
-	}
-
-	// }}}
-	// {{{ protected function getRowClass()
-
-	/**
-	 * Gets CSS class(es) for the XHTML tr tag.  Can be overridden by subclasses.
-	 *
-	 * @param mixed $row a data object containing the data to be displayed in 
-	 *                    this row.
-	 * @param integer $count the ordinal position of this row in the table.
-	 *
-	 * @return string CSS class name(s).
-	 */
-	protected function getRowClass($row, $count)
-	{
-		$class = ($count % 2 == 1) ? 'odd': null;
-		return $class;
 	}
 
 	// }}}
