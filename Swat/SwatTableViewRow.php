@@ -71,10 +71,8 @@ abstract class SwatTableViewRow extends SwatUIObject
 
 	/**
 	 * Displays this row
-	 *
-	 * @param array $columns an array of columns to render in this row.
 	 */
-	public abstract function display(&$columns);
+	public abstract function display();
 
 	// }}}
 	// {{{ public function getHtmlHeadEntries()

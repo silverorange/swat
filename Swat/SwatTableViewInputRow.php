@@ -190,11 +190,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 * by the number of rows the user submitted. When a user submits a
 	 * different number of rows than {SwatTableViewInputRow::$number} it
 	 * the user submitted number takes precedence.
-	 *
-	 * @param array a reference to the array of {@link SwatTableViewColumn}
-	 *               objects in this row's table-view.
 	 */
-	public function display(&$columns)
+	public function display()
 	{
 		if (count($this->replicators) < $this->number) {
 			$diff = $this->number - count($this->replicators);
@@ -209,8 +206,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$this->getForm()->addHiddenField($this->id.'_replicators',
 			implode(',', $this->replicators));
 
-		$this->displayInputRows($columns);
-		$this->displayEnterAnotherRow($columns);
+		$this->displayInputRows();
+		$this->displayEnterAnotherRow();
 	}
 
 	/**
@@ -343,13 +340,12 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 * Displays a row for each replicator id in this input row. Each row is
 	 * displayed using cloned widgets inside {@link SwatInputCell} objects.
 	 *
-	 * @param array a reference to the array of {@link SwatTableViewColumn}
-	 *               objects in this row's table-view.
-	 *
 	 * @see SwatTableViewInputRow::display()
 	 */
-	private function displayInputRows(&$columns)
+	private function displayInputRows()
 	{
+		$columns = $this->view->getColumns();
+
 		foreach ($this->replicators as $replicator_id) {
 
 			$messages = array();
@@ -434,12 +430,11 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 	/**
 	 * Displays the enter-another-row row
-	 *
-	 * @param array a reference to the array of {@link SwatTableViewColumn}
-	 *               objects in this row's table-view.
 	 */
-	private function displayEnterAnotherRow(&$columns)
+	private function displayEnterAnotherRow()
 	{
+		$columns = $this->view->getColumns();
+
 		$this->createEmbeddedWidgets();
 
 		/*
