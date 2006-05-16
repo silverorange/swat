@@ -42,9 +42,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	public $view = null;
 
 	/**
-	 * Visible
-	 *
-	 * Whether the column is displayed.
+	 * Whether or not this column is displayed
 	 *
 	 * @var boolean
 	 */
@@ -111,6 +109,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function displayHeaderCell()
 	{
+		if (!$this->visible)
+			return;
+
 		$first_renderer = $this->renderers->getFirst();
 		$th_tag = new SwatHtmlTag('th', $first_renderer->getThAttributes());
 		$th_tag->scope = 'col';
