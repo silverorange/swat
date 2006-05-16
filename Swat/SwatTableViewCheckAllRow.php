@@ -76,7 +76,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	public function display()
 	{
-		$columns = $this->view->getColumns();
+		$columns = $this->view->getVisibleColumns();
 
 		if ($this->view->model->getRowCount() < 2)
 			return;
