@@ -4,7 +4,11 @@
  * An exception in Swat
  *
  * Exceptions in Swat have handy methods for outputting nicely formed error
- * messages.
+ * messages. Call SwatException::setupHandler() to register SwatException as
+ * the PHP exception handler. The SwatException handler is able to handle all
+ * sub-classes of Exception by internally wrapping non-SwatExceptions in a new
+ * instance of a SwatException. This allows all exceptions to be nicely
+ * formatted and processed consistently.
  *
  * @package   Swat
  * @copyright 2004-2006 silverorange
@@ -12,6 +16,28 @@
  */
 class SwatException extends Exception
 {
+	protected $backtrace = null;
+	protected $class = null;
+
+	// {{{ public function __construct()
+
+	public function __construct($message = null, $code = 0)
+	{
+		if (is_object($message) && ($message instanceof Exception)) {
+			$e = $message;
+			$message = $e->getMessage();
+			$code = $e->getCode();
+			parent::__construct($message, $code);
+			$this->file = $e->getFile();
+			$this->line = $e->getLine();
+			$this->backtrace = $e->getTrace();
+			$this->class = get_class($e);
+		} else {
+			parent::__construct($message, $code);
+		}
+	}
+
+	// }}}
 	// {{{ public function process()
 
 	/**
@@ -22,6 +48,12 @@ class SwatException extends Exception
 	 */
 	public function process()
 	{
+		if ($this->backtrace === null)
+			$this->backtrace = $this->getTrace();
+	
+		if ($this->class === null)
+			$this->class = get_class($this);
+
 		if (ini_get('display_errors')) {
 			if (isset($_SERVER['REQUEST_URI']))
 				echo $this->toXHTML();
@@ -63,7 +95,7 @@ class SwatException extends Exception
 		ob_start();
 
 		printf("%s in file '%s' line %s",
-			get_class($this),
+			$this->class,
 			$this->getFile(),
 			$this->getLine());
 
@@ -86,16 +118,15 @@ class SwatException extends Exception
 
 		printf("Uncaught Exception: %s\n\nMessage:\n\t%s\n\n".
 			"Thrown in file '%s' on line %s.\n\n",
-			get_class($this),
+			$this->class,
 			$this->getMessage(),
 			$this->getFile(),
 			$this->getLine());
 
 		echo "Stack Trace:\n";
-		$trace = $this->getTrace();
-		$count = count($trace);
+		$count = count($this->backtrace);
 
-		foreach ($trace as $entry) {
+		foreach ($this->backtrace as $entry) {
 
 			if (array_key_exists('args', $entry))
 				$arguments = $this->getArguments($entry['args']);
@@ -141,16 +172,15 @@ class SwatException extends Exception
 				'Message:<div class="swat-exception-message">%s</div>'.
 				'Thrown in file <strong>%s</strong> '.
 				'on line <strong>%s</strong>.<br /><br />',
-				get_class($this),
+				$this->class,
 				nl2br($this->getMessage()),
 				$this->getFile(),
 				$this->getLine());
 
 		echo 'Stack Trace:<br /><dl>';
-		$trace = $this->getTrace();
-		$count = count($trace);
+		$count = count($this->backtrace);
 
-		foreach ($trace as $entry) {
+		foreach ($this->backtrace as $entry) {
 
 			if (array_key_exists('args', $entry))
 				$arguments = htmlentities($this->getArguments($entry['args']), null, 'UTF-8');
@@ -187,10 +217,13 @@ class SwatException extends Exception
 	 */
 	public static function handle($e)
 	{
-		if ($e instanceof SwatException)
+		if ($e instanceof SwatException) {
 			$e->process();
-		else
-			echo $e;
+		} else {
+			// wrap other exceptions in SwatExceptions
+			$e = new SwatException($e);
+			$e->process();
+		}
 	}
 
 	// }}}
@@ -245,11 +278,19 @@ class SwatException extends Exception
 	}
 
 	// }}}
-}
+	// {{{ public static function setupHandler()
 
-/**
- * Set the PHP5 exception handler to our custom function
- */
-set_exception_handler(array('SwatException', 'handle'));
+	/**
+	 * Set the PHP exception handler to use SwatException
+	 *
+	 * @param string $class the exception class containing a static handle() method.
+	 */
+	public static function setupHandler($class = 'SwatException')
+	{
+		set_exception_handler(array($class, 'handle'));
+	}
+
+	// }}}
+}
 
 ?>
