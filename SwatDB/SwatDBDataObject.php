@@ -452,9 +452,9 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ private function checkDB()
+	// {{{ protected function checkDB()
 
-	private function checkDB()
+	protected function checkDB()
 	{
 		if ($this->db === null)
 			throw new SwatDBException('No database available to this dataobject. Call the setDatabase method.');
