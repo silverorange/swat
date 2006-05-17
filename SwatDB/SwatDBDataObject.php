@@ -243,7 +243,7 @@ class SwatDBDataObject extends SwatObject
 	 *
 	 * @return object data row or null.
 	 */
-    protected function loadFromDBInternal($id)
+	protected function loadFromDBInternal($id)
 	{
 		if ($this->table !== null && $this->id_field !== null) {
 			$id_field = new SwatDBField($this->id_field, 'integer');
