@@ -641,46 +641,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ protected function getRowClass()
-
-	/**
-	 * Gets CSS class(es) for the XHTML tr tag.  Can be overridden by subclasses.
-	 *
-	 * @param mixed $row a data object containing the data to be displayed in 
-	 *                    this row.
-	 * @param integer $count the ordinal position of this row in the table.
-	 *
-	 * @return string CSS class name(s).
-	 */
-	protected function getRowClass($row, $count)
-	{
-		$class = ($count % 2 == 1) ? 'odd': null;
-		return $class;
-	}
-
-	// }}}
-	// {{{ private function displayFooter()
-
-	/**
-	 * Displays any footer content for this table-view
-	 *
-	 * Rows in the footer are outputted inside a <tfoot> HTML tag.
-	 * TODO: Mike, fix the Check-All js and row highlighting now that this has moved around
-	 */
-	private function displayFooter()
-	{
-		ob_start();
-
-		foreach ($this->extra_rows as $row)
-			$row->display();
-
-		$footer_content = ob_get_clean();
-
-		if (strlen($footer_content))
-			echo '<tfoot>', $footer_content, '</tfoot>';
-	}
-	// }}}
-	// {{{ private function displayBody()
+	// {{{ protected function displayBody()
 
 	/**
 	 * Displays the contents of this view
@@ -689,7 +650,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * Things like row highlighting are done here.
 	 * Rows in this function are outputted inside a <tbody> HTML tag.
 	 */
-	private function displayBody()
+	protected function displayBody()
 	{
 		$count = 0;
 		echo '<tbody>';
@@ -713,6 +674,45 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		}
 
 		echo '</tbody>';
+	}
+
+	// }}}
+	// {{{ protected function displayFooter()
+
+	/**
+	 * Displays any footer content for this table-view
+	 *
+	 * Rows in the footer are outputted inside a <tfoot> HTML tag.
+	 * TODO: Mike, fix the Check-All js and row highlighting now that this has moved around
+	 */
+	protected function displayFooter()
+	{
+		ob_start();
+
+		foreach ($this->extra_rows as $row)
+			$row->display();
+
+		$footer_content = ob_get_clean();
+
+		if (strlen($footer_content))
+			echo '<tfoot>', $footer_content, '</tfoot>';
+	}
+	// }}}
+	// {{{ protected function getRowClass()
+
+	/**
+	 * Gets CSS class(es) for the XHTML tr tag.  Can be overridden by subclasses.
+	 *
+	 * @param mixed $row a data object containing the data to be displayed in 
+	 *                    this row.
+	 * @param integer $count the ordinal position of this row in the table.
+	 *
+	 * @return string CSS class name(s).
+	 */
+	protected function getRowClass($row, $count)
+	{
+		$class = ($count % 2 == 1) ? 'odd': null;
+		return $class;
 	}
 
 	// }}}
