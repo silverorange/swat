@@ -338,6 +338,19 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getVisibleColumnCount()
+
+	/**
+	 * Gets the number of visible columns in this table-view
+	 *
+	 * @return integer the number of visible columns of this table-view.
+	 */
+	public function getVisibleColumnCount()
+	{
+		return count($this->getVisibleColumns());
+	}
+
+	// }}}
 	// {{{ public function getColumns()
 
 	/**
