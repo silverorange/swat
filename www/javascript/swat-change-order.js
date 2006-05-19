@@ -216,8 +216,9 @@ function SwatChangeOrder_updateDropPosition()
 function SwatChangeOrder_mouseupEventHandler(event)
 {
 	// only allow left click to do things
+	var is_safari = (navigator.userAgent.indexOf('WebKit') != -1);
 	if ((SwatChangeOrder.ie_event_model && (window.event.button & 1) != 1) ||
-		(!SwatChangeOrder.ie_event_model && event.button != 0))
+		(!SwatChangeOrder.ie_event_model && !is_safari && event.button != 0))
 		return false;
 
 	document.onmousemove = null;
@@ -267,8 +268,9 @@ function SwatChangeOrder_mouseupEventHandler(event)
 function SwatChangeOrder_mousedownEventHandler(event)
 {
 	// only allow left click to do things
+	var is_safari = (navigator.userAgent.indexOf('WebKit') != -1);
 	if ((SwatChangeOrder.ie_event_model && (window.event.button & 1) != 1) ||
-		(!SwatChangeOrder.ie_event_model && event.button != 0))
+		(!SwatChangeOrder.ie_event_model && !is_safari && event.button != 0))
 		return false;
 
 	if (!this.controller.sensitive)
