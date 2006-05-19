@@ -2,7 +2,7 @@
  * Javascript SwatCheckboxList component
  *
  * @param id string Id of the matching {@link SwatCheckboxList} object.
- **/
+ */
 function SwatCheckboxList(id) {
 	var self = this;
 	this.check_list = document.getElementsByName(id + '[]');
