@@ -3,47 +3,52 @@
 require_once 'Swat/SwatCheckboxList.php';
 
 /**
- * A checkbox list widget with entries per item.
+ * A checkbox list widget with entries per item
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckboxEntryList extends SwatCheckboxList
 {
 	/**
-	 * Entry values 
-	 *
-	 * The values of entries accompanying each list option.
+	 * The values of the entry widgets accompanying each list option
 	 *
 	 * @var array
 	 */
 	public $entry_values = array();
 
 	/**
-	 * Size of the entries
-	 *
-	 * The size of the embedded entry widgets.
+	 * The size of all the embedded entry widgets
 	 *
 	 * @var integer
 	 */
 	public $entry_size = 30;
 
+	/**
+	 * A list of entry widgets used by this checkbox entry list
+	 *
+	 * @var array
+	 */
 	private $entry_widgets = array();
 
 	/**
-	 * Initializes this checkbox list
+	 * Creates a new checkbox entry list
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatCheckboxList::__construct()
 	 */
-	public function init()
+	public function __construct($id = null)
 	{
-		parent::init();
+		parent::__construct($id);
+		$this->addJavaScript('swat/javascript/swat-checkbox-entry-list.js');
 	}
 
 	/**
 	 * Displays this checkbox list
 	 *
-	 * The check-all widget is only displayed if more than one checkable item
-	 * is displayed.
+	 * @see SwatCheckboxList::display()
 	 */
 	public function display()
 	{
@@ -64,7 +69,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
 
-		echo '<table>';
+		$table_tag = new SwatHtmlTag('table');
+		$table_tag->class = 'swat-checkbox-entry-list';
+		$table_tag->open();
 
 		foreach ($this->options as $value => $title) {
 
@@ -94,7 +101,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 			echo '</td></tr>';
 		}
 
-		echo '</table>';
+		$table_tag->close();
 
 		// Only show the check all control if more than one checkable item is
 		// displayed.
@@ -107,13 +114,17 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	}
 
 	/**
-	 * Processes this checkbox list widget
+	 * Processes this checkbox entry list
 	 *
-	 * @return array Array of checked values
+	 * Processes the checkboxes as well as each entry widget for each checked
+	 * checkbox. The entry widgets for unchecked checkboxes are not processed.
+	 *
+	 * @see SwatCheckboxList::process()
 	 */
 	public function process()
 	{
 		parent::process();
+
 		$this->entry_values = array();
 
 		foreach ($this->values as $value) {
@@ -124,9 +135,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	}
 
 	/**
-	 * Reset this checkbox list.
+	 * Resets this checkbox entry list
 	 *
-	 * Reset the list to its default state. This is useful to call from a 
+	 * Resets the list to its default state. This is useful to call from a
 	 * display() method when persistence is not desired.
 	 */
 	public function reset()
@@ -135,6 +146,17 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		$this->entry_values = key($this->options);
 	}
 
+	/**
+	 * Gets an entry widget of this checkbox entry list
+	 *
+	 * This is used internally to create {@link SwatEntry} widgets for display
+	 * and processing.
+	 *
+	 * @param string $id the id of the entry widget to get. If no entry widget
+	 *                    exists for the given id, one is created.
+	 *
+	 * @return SwatEntry the entry widget with the given id.
+	 */
 	private function getEntryWidget($id)
 	{ 
 		if (!isset($this->entry_widgets[$id])) {
