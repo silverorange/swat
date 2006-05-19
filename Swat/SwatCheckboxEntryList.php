@@ -69,10 +69,8 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
 
-		echo '<table>';
-
+		echo '<table><tbody>';
 		foreach ($this->options as $value => $title) {
-
 			echo '<tr><td>';
 
 			$input_tag->value = (string)$value;
@@ -98,6 +96,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
 			echo '</td></tr>';
 		}
+		echo '</tbody>';
 
 		// Only show the check all control if more than one checkable item is
 		// displayed.
