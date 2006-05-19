@@ -20,7 +20,19 @@
 				</widget>
 				
 			</widget>
-			
+			<widget class="SwatFieldset">
+				<property name="title">Checkbox Entry List</property>
+
+				<widget class="SwatCheckboxEntryList">
+					<property name="options[0]">Apple</property>
+					<property name="options[1]">Orange</property>
+					<property name="options[2]">Banana</property>
+					<property name="options[3]">Pear</property>
+					<property name="options[4]">Pineapple</property>
+					<property name="options[5]">Kiwi</property>
+				</widget>
+
+			</widget>
 			<widget class="SwatFieldset">
 				<property name="title">Checkbox List</property>
 
