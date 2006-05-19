@@ -48,20 +48,34 @@ SwatCheckboxEntryList.prototype = new SwatCheckboxList;
 
 SwatCheckboxEntryList.prototype.toggleEntry = function(index)
 {
-	if (this.entry_list[index].disabled) {
-		this.entry_list[index].disabled = false;
-		this.entry_list[index].className.replace(/swat-insensitive/, '');
-	} else {
-		this.entry_list[index].disabled = true;
-		this.entry_list[index].className += ' swat-insensitive';
+	if (this.entry_list[index])
+		this.setEntrySensitivity(index, this.entry_list[index].disabled);
+}
+
+SwatCheckboxEntryList.prototype.setEntrySensitivity =
+	function(index, sensitivity)
+{
+	if (this.entry_list[index]) {
+		if (sensitivity) {
+			this.entry_list[index].disabled = false;
+			this.entry_list[index].className.replace(/swat-insensitive/, '');
+		} else {
+			this.entry_list[index].disabled = true;
+			this.entry_list[index].className += ' swat-insensitive';
+		}
 	}
 }
 
 SwatCheckboxEntryList.prototype.init = function()
 {
+	for (i = 0; i < this.check_list.length; i++)
+		this.setEntrySensitivity(i, this.check_list[i].checked);
+}
+
+SwatCheckboxEntryList.prototype.checkAll = function(checked)
+{
 	for (i = 0; i < this.check_list.length; i++) {
-		if (!this.check_list[i].checked) {
-			this.entry_list[i].disabled = true;
-		}
+		this.check_list[i].checked = checked;
+		this.setEntrySensitivity(i, checked);
 	}
 }
