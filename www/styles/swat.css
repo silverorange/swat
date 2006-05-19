@@ -228,3 +228,10 @@ span.swat-time-span {
 .swat-nowrap {
 	white-space: nowrap;
 }
+
+
+/* Insensitive widgets */
+
+input.swat-insensitive {
+	background: #EEE;
+}
