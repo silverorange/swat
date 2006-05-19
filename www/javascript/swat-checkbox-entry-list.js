@@ -50,8 +50,10 @@ SwatCheckboxEntryList.prototype.toggleEntry = function(index)
 {
 	if (this.entry_list[index].disabled) {
 		this.entry_list[index].disabled = false;
+		this.entry_list[index].className.replace(/swat-insensitive/, '');
 	} else {
 		this.entry_list[index].disabled = true;
+		this.entry_list[index].className += ' swat-insensitive';
 	}
 }
 
