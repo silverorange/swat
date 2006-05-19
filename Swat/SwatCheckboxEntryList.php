@@ -150,6 +150,26 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	}
 
 	/**
+	 * Displays the JavaScript for this checkbox entry list
+	 */
+	protected function displayJavaScript()
+	{
+		echo '<script type="text/javascript">';
+		echo "//<![CDATA[\n";
+
+		printf("var %s_obj = new SwatCheckboxEntryList('%s');\n",
+			$this->id, $this->id);
+
+		// set check-all controller if it is visible
+		if (count($this->options) > 1)
+			printf("%s_obj.setController(%s_obj);\n",
+				$this->check_all->id, $this->id);
+
+		echo "\n//]]>";
+		echo '</script>';
+	}
+
+	/**
 	 * Gets an entry widget of this checkbox entry list
 	 *
 	 * This is used internally to create {@link SwatEntry} widgets for display
@@ -163,7 +183,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	private function getEntryWidget($id)
 	{ 
 		if (!isset($this->entry_widgets[$id])) {
-			$widget = new SwatEntry($this->id.'_'.$id);
+			$widget = new SwatEntry($this->id.'_entry_'.$id);
 			$widget->size = $this->entry_size;
 			$widget->parent = $this;
 			$widget->init();
