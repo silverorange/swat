@@ -101,12 +101,15 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 			echo '</td></tr>';
 		}
 
-		$table_tag->close();
-
 		// Only show the check all control if more than one checkable item is
 		// displayed.
-		$this->check_all->visible = (count($this->options) > 1);
-		$this->check_all->display();
+		if (count($this->options) > 1) {
+			echo '<tr><td colspan="2">';
+			$this->check_all->display();
+			echo '</td></tr>';
+		}
+
+		$table_tag->close();
 
 		$this->displayJavaScript();
 
