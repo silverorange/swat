@@ -52,6 +52,7 @@
 	background: url(../images/dismiss.png) 0 0 no-repeat;
 	text-indent: -2000em;
 	text-decoration: none;
+	outline: none;
 }
 
 .swat-message-display-dismiss-link:hover {
