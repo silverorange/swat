@@ -26,6 +26,13 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	public $entry_size = 30;
 
 	/**
+	 * An optional title to display above the column of entry widgets
+	 *
+	 * @var string
+	 */
+	public $entry_column_title = null;
+
+	/**
 	 * A list of entry widgets used by this checkbox entry list
 	 *
 	 * @var array
@@ -70,6 +77,12 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		$label_tag->class = 'swat-control';
 
 		echo '<table><tbody>';
+		if ($this->entry_column_title !== null) {
+			echo '<thead><tr><th></th><th>';
+			echo $this->entry_column_title;
+			echo '</th></tr></thead>';
+		}
+
 		foreach ($this->options as $value => $title) {
 			echo '<tr><td>';
 
