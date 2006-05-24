@@ -41,6 +41,32 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	private $current = null;
 
 	// }}}
+	// {{{ protected function displayGroup()
+
+	/**
+	 * Displays the group header for this grouping column
+	 *
+	 * The grouping header is only displayed when the group_by field changes.
+	 *
+	 * @param mixed $row a data object containing the data for a single row
+	 *                    in the table store for this group.
+	 */
+	protected function displayGroup($row)
+	{
+		$tr_tag = new SwatHtmlTag('tr');
+		$tr_tag->open();
+
+		$first_renderer = $this->renderers->getFirst();
+		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
+		$td_tag->colspan = $this->view->getVisibleColumnCount();
+		$td_tag->class = 'swat-table-view-group';
+		$td_tag->open();
+		$this->displayRenderersInternal($row);
+		$td_tag->close();
+		$tr_tag->close();
+	}
+
+	// }}}
 	// {{{ protected function displayRenderers()
 	
 	/**
@@ -69,17 +95,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 
 		$this->current = $row->$group_by;
 
-		$tr_tag = new SwatHtmlTag('tr');
-		$tr_tag->open();
-
-		$first_renderer = $this->renderers->getFirst();
-		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
-		$td_tag->colspan = $this->view->getVisibleColumnCount();
-		$td_tag->class = 'swat-table-view-group';
-		$td_tag->open();
-		$this->displayRenderersInternal($row);
-		$td_tag->close();
-		$tr_tag->close();
+		$this->displayGroup($row);
 	}
 
 	// }}}
