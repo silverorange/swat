@@ -117,13 +117,13 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	private $rows_by_id = array();
 
 	/**
-	 * The grouping object to use for this table
+	 * Grouping objects for this table view
 	 *
-	 * @var SwatTableViewGroup
+	 * @var array
 	 *
-	 * @see SwatTableView::setGroup()
+	 * @see SwatTableView::addGroup()
 	 */
-	private $group = null;
+	private $groups = array();
 
 	/**
 	 * Any extra rows that were appended to this view
@@ -188,8 +188,8 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		foreach ($this->extra_rows as $row)
 			$row->init();
 
-		if ($this->group !== null)
-			$this->group->init();
+		foreach ($this->groups as $group)
+			$group->init();
 	}
 
 	// }}}
@@ -249,12 +249,12 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function setGroup()
+	// {{{ public function appendGroup()
 
 	/**
-	 * Sets the grouping object for this table-view
+	 * Appends a grouping object to this table-view
 	 *
-	 * The grouping object affects how the data in the table model is displayed
+	 * A grouping object affects how the data in the table model is displayed
 	 * in this table-view. With a grouping, rows are split into groups with
 	 * special group headers above each group. 
 	 *
@@ -263,28 +263,24 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 *
 	 * @see SwatTableViewGroup
 	 */
-	public function setGroup(SwatTableViewGroup $group)
+	public function addGroup(SwatTableViewGroup $group)
 	{
-		$this->group = $group;
+		$this->groups[] = $group;
 		$group->view = $this;
 		$group->parent = $this;
 	}
 
+	// }}}
+	// {{{ public function getGroups()
+
 	/**
-	 * Gets the grouping object for this table-view
+	 * Gets all groups of this table-view as an array
 	 *
-	 * The grouping object affects how the data in the table model is displayed
-	 * in this table-view. With a grouping, rows are split into groups with
-	 * special group headers above each group. 
-	 *
-	 * @returns SwatTableViewGroup the table-view grouping object used for this
-	 *                              table-view.
-	 *
-	 * @see SwatTableViewGroup
+	 * @return array a reference to the the groups of this view.
 	 */
-	public function getGroup()
+	public function &getGroups()
 	{
-		return $this->group;
+		return $this->groups;
 	}
 
 	// }}}
@@ -594,7 +590,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	public function addChild(SwatObject $child)
 	{
 		if ($child instanceof SwatTableViewGroup)
-			$this->setGroup($child);
+			$this->appendGroup($child);
 		elseif ($child instanceof SwatTableViewRow)
 			$this->appendRow($child);
 		elseif ($child instanceof SwatTableViewColumn)
@@ -626,8 +622,8 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		foreach ($this->extra_rows as $row)
 			$out = array_merge($out, $row->getHtmlHeadEntries());
 
-		if ($this->group !== null)
-			$out = array_merge($out, $this->group->getHtmlHeadEntries());
+		foreach ($this->groups as $group)
+			$out = array_merge($out, $group->getHtmlHeadEntries());
 
 		return $out;
 	}
@@ -671,9 +667,9 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		foreach ($this->model->getRows() as $id => $row) {
 
-			// display the group, if there is one
-			if ($this->group !== null)
-				$this->group->display($row);
+			// display the groupings
+			foreach ($this->groups as $group)
+				$group->display($row);
 
 			// display a row of data
 			$count++;
