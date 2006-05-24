@@ -31,14 +31,28 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	// {{{ private properties
 
 	/**
-	 * The current value of the group_by field of the table store
+	 * The current value of the group_by field of the table model for the
+	 * grouping header
 	 *
-	 * This value is used so that this column is not displayed for every row
-	 * and is only displayed when the value of the table store changes.
+	 * This value is used so that this grouping header is not displayed for
+	 * every row. The grouping header is only displayed when the value of the
+	 * current table model row changes.
 	 *
 	 * @var mixed
 	 */
-	private $current = null;
+	private $header_current = null;
+
+	/**
+	 * The current value of the group_by field of the table model for the
+	 * grouping footer 
+	 *
+	 * This value is used so that this grouping footer is not displayed for
+	 * every row. The grouping footer is only displayed when the value of the
+	 * next table model row changes.
+	 *
+	 * @var mixed
+	 */
+	private $footer_current = null;
 
 	// }}}
 	// {{{ protected function displayGroupHeader()
@@ -107,12 +121,16 @@ class SwatTableViewGroup extends SwatTableViewColumn
 
 		// only display the group header if the value of the group-by field has
 		// changed
-		if ($row->$group_by === $this->current)
-			return;
+		if ($row->$group_by !== $this->header_current) {
+			$this->header_current = $row->$group_by;
+			$this->displayGroupHeader($row);
+		}
 
-		$this->current = $row->$group_by;
-
-		$this->displayGroupHeader($row);
+		$next_row = $row;
+		if ($next_row->$group_by !== $this->footer_current) {
+			$this->footer_current = $next_row->$group_by;
+			$this->displayGroupFooter($row);
+		}
 	}
 
 	// }}}
