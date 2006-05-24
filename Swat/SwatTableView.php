@@ -628,14 +628,14 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * To add columns, rows, or a grouping to a table-view, use
 	 * {@link SwatTableView::appendColumn()},
 	 * {@link SwatTableView::appendRow()},
-	 * or {@link SwatTableView::appendRow()}.
+	 * or {@link SwatTableView::appendGroup()}.
 	 *
 	 * @param mixed $child a reference to a child object to add.
 	 *
 	 * @throws SwatInvalidClassException
 	 *
 	 * @see SwatUIParent, SwatUI, SwatTableView::appendColumn(),
-	 *       SwatTableView::setGroup(), SwatTableView::appendRow()
+	 *       SwatTableView::appendGroup(), SwatTableView::appendRow()
 	 */
 	public function addChild(SwatObject $child)
 	{
