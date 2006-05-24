@@ -41,17 +41,17 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	private $current = null;
 
 	// }}}
-	// {{{ protected function displayGroup()
+	// {{{ protected function displayGroupHeader()
 
 	/**
 	 * Displays the group header for this grouping column
 	 *
-	 * The grouping header is only displayed when the group_by field changes.
+	 * The grouping header is displayed at the beginning of a group.
 	 *
-	 * @param mixed $row a data object containing the data for a single row
+	 * @param mixed $row a data object containing the data for the first row in
 	 *                    in the table store for this group.
 	 */
-	protected function displayGroup($row)
+	protected function displayGroupHeader($row)
 	{
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->open();
@@ -64,6 +64,23 @@ class SwatTableViewGroup extends SwatTableViewColumn
 		$this->displayRenderersInternal($row);
 		$td_tag->close();
 		$tr_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function displayGroupFooter()
+
+	/**
+	 * Displays the group footer for this grouping column
+	 *
+	 * The grouping footer is displayed at the end of a group. By default, no
+	 * footer is displayed. Subclasses may display a grouping footer by
+	 * overriding this method.
+	 *
+	 * @param mixed $row a data object containing the data for the last row in
+	 *                    in the table store for this group.
+	 */
+	protected function displayGroupFooter($row)
+	{
 	}
 
 	// }}}
@@ -95,7 +112,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 
 		$this->current = $row->$group_by;
 
-		$this->displayGroup($row);
+		$this->displayGroupHeader($row);
 	}
 
 	// }}}
