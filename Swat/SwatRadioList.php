@@ -78,7 +78,7 @@ class SwatRadioList extends SwatFlydown implements SwatState
 					$input_tag->checked = "checked";
 
 				$label_tag->for = $this->id.'_'.$value;
-				$label_tag->setContent($option->title);
+				$label_tag->setContent($option->title, $option->content_type);
 
 				$input_tag->display();
 				$label_tag->display();
