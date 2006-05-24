@@ -84,24 +84,30 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	// {{{ private properties
 
 	/**
-	 * The columns of this table-view
-	 *
-	 * @var array
-	 */
-	private $columns = array();
-
-	/**
 	 * The columns of this table-view indexed by their unique identifier
 	 *
 	 * A unique identifier is not required so this array does not necessarily
 	 * contain all columns in the view. It serves as an efficient data
 	 * structure to lookup columns by their id.
 	 *
-	 * The array is structures as id => column reference.
+	 * The array is structured as id => column reference.
 	 *
 	 * @var array
 	 */
 	private $columns_by_id = array();
+
+	/**
+	 * The groups of this table-view indexed by their unique identifier
+	 *
+	 * A unique identifier is not required so this array does not necessarily
+	 * contain all groups in the view. It serves as an efficient data structure
+	 * to lookup groups by their id.
+	 *
+	 * The array is structured as id => group reference.
+	 *
+	 * @var array
+	 */
+	private $groups_by_id = array();
 
 	/**
 	 * The extra rows of this table-view indexed by their unique identifier
@@ -110,11 +116,18 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * contain all extra rows in the view. It serves as an efficient data
 	 * structure to lookup extra rows by their id.
 	 *
-	 * The array is structures as id => row reference.
+	 * The array is structured as id => row reference.
 	 *
 	 * @var array
 	 */
 	private $rows_by_id = array();
+
+	/**
+	 * The columns of this table-view
+	 *
+	 * @var array
+	 */
+	private $columns = array();
 
 	/**
 	 * Grouping objects for this table view
@@ -169,8 +182,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	/**
 	 * Initializes this table-view
 	 *
-	 * This initializes all columns and extra rows in this table-view as well
-	 * as the group if the group is set.
+	 * This initializes all columns, extra rows and groupsin this table-view.
 	 *
 	 * @see SwatWidget::init()
 	 */
@@ -188,8 +200,12 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		foreach ($this->extra_rows as $row)
 			$row->init();
 
-		foreach ($this->groups as $group)
+		foreach ($this->groups as $group) {
 			$group->init();
+			// index the group by id if it is not already indexed
+			if (!array_key_exists($group->id, $this->groups_by_id))
+				$this->groups_by_id[$group->id] = $group;
+		}
 	}
 
 	// }}}
@@ -223,32 +239,6 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function setDefaultOrderbyColumn()
-
-	/**
-	 * Sets a default column to use for ordering the data of this table-view
-	 *
-	 * @param SwatTableViewOrderableColumn the column in this view to use
-	 *                                      for default ordering
-	 * @param integer $direction the default direction of the ordered column.
-	 *
-	 * @throws SwatException
-	 *
-	 * @see SwatTableView::$default_orderby_column
-	 */
-	public function setDefaultOrderbyColumn(
-		SwatTableViewOrderableColumn $column,
-		$direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING)
-	{
-		if ($column->view !== $this)
-			throw new SwatException('Can only set the default orderby on '.
-				'orderable columns in this view.');
-
-		// this method sets properties on the table-view
-		$column->setDirection($direction);
-	}
-
-	// }}}
 	// {{{ public function appendGroup()
 
 	/**
@@ -268,19 +258,6 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		$this->groups[] = $group;
 		$group->view = $this;
 		$group->parent = $this;
-	}
-
-	// }}}
-	// {{{ public function getGroups()
-
-	/**
-	 * Gets all groups of this table-view as an array
-	 *
-	 * @return array a reference to the the groups of this view.
-	 */
-	public function &getGroups()
-	{
-		return $this->groups;
 	}
 
 	// }}}
@@ -318,6 +295,80 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		$row->view = $this;
 		$row->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function setDefaultOrderbyColumn()
+
+	/**
+	 * Sets a default column to use for ordering the data of this table-view
+	 *
+	 * @param SwatTableViewOrderableColumn the column in this view to use
+	 *                                      for default ordering
+	 * @param integer $direction the default direction of the ordered column.
+	 *
+	 * @throws SwatException
+	 *
+	 * @see SwatTableView::$default_orderby_column
+	 */
+	public function setDefaultOrderbyColumn(
+		SwatTableViewOrderableColumn $column,
+		$direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING)
+	{
+		if ($column->view !== $this)
+			throw new SwatException('Can only set the default orderby on '.
+				'orderable columns in this view.');
+
+		// this method sets properties on the table-view
+		$column->setDirection($direction);
+	}
+
+	// }}}
+	// {{{ public function getGroups()
+
+	/**
+	 * Gets all groups of this table-view as an array
+	 *
+	 * @return array a reference to the the groups of this view.
+	 */
+	public function &getGroups()
+	{
+		return $this->groups;
+	}
+
+	// }}}
+	// {{{ public function getGroup()
+
+	/**
+	 * Gets a reference to a group in this table-view by its unique identifier
+	 *
+	 * @return SwatTableViewGroup the requested group.
+	 *
+	 * @throws SwatException
+	 */
+	public function getGroup($id)
+	{
+		if (!array_key_exists($id, $this->groups_by_id))
+			throw new SwatException("Group with an id of '{$id}' not found.");
+
+		return $this->groups_by_id[$id];
+	}
+
+	// }}}
+	// {{{ public function hasGroup()
+
+	/**
+	 * Returns true if a group with the given id exists within this table-view
+	 *
+	 * @param string $id the unique identifier of the group within this table-
+	 *                    view to check the existance of.
+	 *
+	 * @return boolean true if the group exists in this table-view and false if
+	 *                  it does not.
+	 */
+	public function hasGroup($id)
+	{
+		return array_key_exists($id, $this->groups_by_id);
 	}
 
 	// }}}
@@ -393,7 +444,6 @@ class SwatTableView extends SwatControl implements SwatUIParent
 			throw new SwatException("Column with an id of '{$id}' not found.");
 
 		return $this->columns_by_id[$id];
-
 	}
 
 	// }}}
@@ -706,6 +756,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		if (strlen($footer_content))
 			echo '<tfoot>', $footer_content, '</tfoot>';
 	}
+
 	// }}}
 	// {{{ protected function getRowClass()
 
