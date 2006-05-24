@@ -263,7 +263,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 *
 	 * @see SwatTableViewGroup
 	 */
-	public function addGroup(SwatTableViewGroup $group)
+	public function appendGroup(SwatTableViewGroup $group)
 	{
 		$this->groups[] = $group;
 		$group->view = $this;
