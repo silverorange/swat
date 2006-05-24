@@ -246,7 +246,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 *
 	 * A grouping object affects how the data in the table model is displayed
 	 * in this table-view. With a grouping, rows are split into groups with
-	 * special group headers above each group. 
+	 * special group headers above each group.
 	 *
 	 * @param SwatTableViewGroup $group the table-view grouping to use for this
 	 *                                   table-view.
@@ -620,12 +620,12 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 	/**
 	 * Adds a child object
-	 * 
-	 * This method fulfills the {@link SwatUIParent} interface. It is used 
+	 *
+	 * This method fulfills the {@link SwatUIParent} interface. It is used
 	 * by {@link SwatUI} when building a widget tree and should not need to be
 	 * called elsewhere.
 	 *
-	 * To add columns, rows, or a grouping to a table-view, use 
+	 * To add columns, rows, or a grouping to a table-view, use
 	 * {@link SwatTableView::appendColumn()},
 	 * {@link SwatTableView::appendRow()},
 	 * or {@link SwatTableView::appendRow()}.
@@ -763,7 +763,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	/**
 	 * Gets CSS class(es) for the XHTML tr tag.  Can be overridden by subclasses.
 	 *
-	 * @param mixed $row a data object containing the data to be displayed in 
+	 * @param mixed $row a data object containing the data to be displayed in
 	 *                    this row.
 	 * @param integer $count the ordinal position of this row in the table.
 	 *
@@ -794,13 +794,13 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		foreach ($this->columns as $column) {
 			$javascript = $column->getInlineJavaScript();
 			if (strlen($javascript) > 0)
-				echo "\n".$javascript; 
+				echo "\n".$javascript;
 		}
 
 		foreach ($this->extra_rows as $row) {
 			$javascript = $row->getInlineJavaScript();
 			if (strlen($javascript) > 0)
-				echo "\n".$javascript; 
+				echo "\n".$javascript;
 		}
 
 		echo "\n//]]>";
