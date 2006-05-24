@@ -123,6 +123,7 @@ class SwatUI extends SwatObject
 	 * Loads a UI from an XML file
 	 *
 	 * @param string $filename the filename of the XML UI file to load.
+	 * @param SwatContainer $root the container to load the XML UI into.
 	 *
 	 * @throws SwatFileNotFoundException, SwatInvalidSwatMLException,
 	 *         SwatDuplicateIdException, SwatInvalidClassException, 
@@ -131,8 +132,11 @@ class SwatUI extends SwatObject
 	 *         SwatInvalidConstantExpressionException,
 	 *         SwatUndefinedConstantException
 	 */
-	public function loadFromXML($filename)
+	public function loadFromXML($filename, $container = null)
 	{
+		if ($container === null)
+			$container = $this->root;
+
 		$xml_file = null;
 
 		if (file_exists($filename)) {
@@ -188,7 +192,7 @@ class SwatUI extends SwatObject
 
 		self::restoreErrorHandler($html_errors_value);
 
-		$this->parseUI($document->documentElement, $this->root);
+		$this->parseUI($document->documentElement, $container);
 	}
 
 	// }}}
