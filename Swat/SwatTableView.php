@@ -707,22 +707,35 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 *
 	 * The contents reflect the data stored in the model of this table-view.
 	 * Things like row highlighting are done here.
-	 * Rows in this function are outputted inside a <tbody> HTML tag.
+	 *
+	 * Table rows are displayed inside a <tbody> XHTML tag.
 	 */
 	protected function displayBody()
 	{
 		$count = 0;
+
 		echo '<tbody>';
+
 		$tr_tag = new SwatHtmlTag('tr');
 
-		foreach ($this->model->getRows() as $id => $row) {
+		$rows = $this->model->getRows();
+		if (is_array($rows))
+			$rows = new ArrayIterator($rows);
+
+		$rows->rewind();
+		$row = ($rows->valid()) ? $rows->current() : null;
+
+		$rows->next();
+		$next_row = ($rows->valid()) ? $rows->current() : null;
+
+		while ($row !== null) {
+			$count++;
 
 			// display the groupings
 			foreach ($this->groups as $group)
 				$group->display($row);
 
 			// display a row of data
-			$count++;
 			$tr_tag->class = $this->getRowClass($row, $count);
 			$tr_tag->open();
 
@@ -730,6 +743,10 @@ class SwatTableView extends SwatControl implements SwatUIParent
 				$column->display($row);
 
 			$tr_tag->close();
+
+			$row = $next_row;
+			$rows->next();
+			$next_row = ($rows->valid()) ? $rows->current() : null;
 		}
 
 		echo '</tbody>';
