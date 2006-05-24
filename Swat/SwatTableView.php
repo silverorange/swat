@@ -744,6 +744,9 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 			$tr_tag->close();
 
+			foreach ($this->groups as $group)
+				$group->displayFooter($row, $next_row);
+
 			$row = $next_row;
 			$rows->next();
 			$next_row = ($rows->valid()) ? $rows->current() : null;

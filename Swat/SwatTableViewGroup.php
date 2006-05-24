@@ -55,6 +55,31 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	private $footer_current = null;
 
 	// }}}
+	// {{{ public function displayFooter()
+
+	/**
+	 * Displays the grouping footer of this table-view group
+	 *
+	 * The grouping footer is displayed when the group_by field is different
+	 * between the given rows.
+	 *
+	 * @param mixed $row a data object containing the data for the first row in
+	 *                    in the table store for this group.
+	 * @param mixed $row a data object containing the data for the current row
+	 *                    being displayed in the table-view.
+	 * @param mixed $next_row a data object containing the data for the next
+	 *                         row being displayed in the table-view or null if
+	 *                         the current row is the last row.
+	 */
+	public function displayFooter($row, $next_row)
+	{
+		$group_by = $this->group_by;
+
+		if ($next_row === null || $next_row->$group_by !== $row->$group_by)
+			$this->displayGroupFooter($row);
+	}
+
+	// }}}
 	// {{{ protected function displayGroupHeader()
 
 	/**
@@ -124,12 +149,6 @@ class SwatTableViewGroup extends SwatTableViewColumn
 		if ($row->$group_by !== $this->header_current) {
 			$this->header_current = $row->$group_by;
 			$this->displayGroupHeader($row);
-		}
-
-		$next_row = $row;
-		if ($next_row->$group_by !== $this->footer_current) {
-			$this->footer_current = $next_row->$group_by;
-			$this->displayGroupFooter($row);
 		}
 	}
 
