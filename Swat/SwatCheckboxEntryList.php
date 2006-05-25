@@ -83,8 +83,8 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 			echo $this->entry_column_title;
 			echo '</th></tr></thead>';
 		}
-		echo '<tbody>';
 
+		echo '<tbody>';
 		foreach ($this->options as $value => $title) {
 			echo '<tr><td>';
 
@@ -111,6 +111,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
 			echo '</td></tr>';
 		}
+
 		echo '</tbody>';
 
 		// Only show the check all control if more than one checkable item is
