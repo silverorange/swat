@@ -46,7 +46,7 @@ class SwatException extends Exception
 	 * Processing involves displaying errors, logging errors and sending
 	 * error message emails
 	 */
-	public function process()
+	public function process($exit = true)
 	{
 		if ($this->backtrace === null)
 			$this->backtrace = $this->getTrace();
@@ -64,7 +64,8 @@ class SwatException extends Exception
 		if (ini_get('log_errors'))
 			$this->log();
 
-		exit(1);
+		if ($exit)
+			exit(1);
 	}
 
 	// }}}
