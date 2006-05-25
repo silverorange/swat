@@ -76,12 +76,13 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
 
-		echo '<table><tbody>';
+		echo '<table>';
 		if ($this->entry_column_title !== null) {
 			echo '<thead><tr><th></th><th>';
 			echo $this->entry_column_title;
 			echo '</th></tr></thead>';
 		}
+		echo '<tbody>';
 
 		foreach ($this->options as $value => $title) {
 			echo '<tr><td>';
