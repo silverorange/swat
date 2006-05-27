@@ -15,20 +15,8 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  */
 class SwatDetailsView extends SwatControl implements SwatUIParent
 {
-	/**
-	 * Creates a new details view
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$this->addStyleSheet('swat/styles/swat-details-view.css');
-	}
-
+	// {{{ public variables
+	
 	/**
 	 * An object containing values to display
 	 *
@@ -43,12 +31,35 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 */
 	public $data = null;
 
+	// }}}
+	// {{{ private variables
+
 	/**
 	 * An array of fields to be displayed by this details view
 	 *
 	 * @var array
 	 */
 	private $fields = array();
+
+	// }}}
+
+	// {{{ public function __construct()
+	/**
+	 * Creates a new details view
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->addStyleSheet('swat/styles/swat-details-view.css');
+	}
+
+	// }}}
+	// {{{ public function init()
 
 	/**
 	 * Initializes this details-view
@@ -66,6 +77,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function appendField()
 
 	/**
 	 * Appends a field to this details view
@@ -80,6 +92,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 		$field->parent = $this;
 	}
 
+	// }}}
+	// {{{ public function getFieldCount()
+
 	/**
 	 * Gets the number of fields of this details view
 	 *
@@ -90,6 +105,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 		return count($this->fields);
 	}
 
+	// }}}
+	// {{{ public function getFields()
+
 	/**
 	 * Get the fields from this details view
 	 *
@@ -99,6 +117,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	{
 		return $this->fields;
 	}
+
+	// }}}
+	// {{{ public function getField()
 
 	/**
 	 * Get a reference to a field
@@ -114,6 +135,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 
 		throw new SwatException("Field with an id of '$id' not found.");
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this details view
@@ -132,6 +156,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 		$this->displayContent();
 		$table_tag->close();
 	}
+
+	// }}}
+	// {{{ public function addChild()
 
 	/**
 	 * Adds a child object to this object
@@ -157,6 +184,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 		}
 	}
 
+	// }}}
+	// {{{ public function getHtmlHeadEntries()
+
 	/**
 	 * Gathers the SwatHtmlHeadEntry objects needed by this details view
 	 *
@@ -173,6 +203,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 		return $out;
 	}
 
+	// }}}
+	// {{{ private function displayContent()
+
 	/**
 	 * Displays each field of this view
 	 *
@@ -188,6 +221,8 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 			$field->display($this->data, $odd);
 		}
 	}
+
+	// }}}
 }
 
 ?>
