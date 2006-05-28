@@ -13,6 +13,16 @@ require_once 'Swat/SwatString.php';
 class SwatIntegerEntry extends SwatEntry
 {
 	/**
+	 * Show Thousands Seperator
+	 *
+	 * Whether or not to show a thousands seperator (shown depending on
+	 * locale) 
+	 *
+	 * @var boolean
+	 */
+	public $show_thousands_seperator = true;
+
+	/**
 	 * Creates a new integer entry widget
 	 *
 	 * Sets the input size to 7 by default.
@@ -51,7 +61,8 @@ class SwatIntegerEntry extends SwatEntry
 	protected function getDisplayValue()
 	{
 		if (is_int($this->value))
-			return SwatString::numberFormat($this->value);
+			return SwatString::numberFormat($this->value, 0, null,
+				$this->show_thousands_seperator);
 		else
 			return $this->value;
 	}
