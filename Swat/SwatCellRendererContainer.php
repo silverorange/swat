@@ -28,6 +28,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject
 	 */
 	public function __construct()
 	{
+		parent::__construct();
 		$this->renderers = new SwatCellRendererSet();
 	}
 

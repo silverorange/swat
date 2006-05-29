@@ -149,18 +149,20 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	}
 
 	/**
-	 * Gathers the SwatHtmlHeadEntry objects needed by this field 
+	 * Gets the SwatHtmlHeadEntry objects needed by this field 
 	 *
-	 * @return array the SwatHtmlHeadEntry objects needed by this field
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this details-view field.
 	 *
 	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{
-		$out = $this->html_head_entries;
+		$out = new SwatHtmlHeadEntrySet($this->html_head_entries);
+
 		$renderers = $this->getRenderers();
 		foreach ($renderers as $renderer)
-			$out = array_merge($out, $renderer->getHtmlHeadEntries());
+			$out->addEntrySet($renderer->getHtmlHeadEntries());
 
 		return $out;
 	}

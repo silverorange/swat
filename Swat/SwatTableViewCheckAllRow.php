@@ -40,16 +40,17 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	}
 
 	/**
-	 * Gathers the SwatHtmlHeadEntry objects needed by this check-all row
+	 * Gets the SwatHtmlHeadEntry objects needed by this check-all row
 	 *
-	 * @return array the SwatHtmlHeadEntry objects needed by this check-all row.
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this check-all row.
 	 *
-	 * @see SwatUIObject::getSwatHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{
-		$out = $this->html_head_entries;
-		$out = array_merge($out, $this->check_all->getHtmlHeadEntries());
+		$out = new SwatHtmlHeadEntrySet($this->html_head_entries);
+		$out->addEntrySet($this->check_all->getHtmlHeadEntries());
 		return $out;
 	}
 

@@ -97,8 +97,10 @@ abstract class SwatWidget extends SwatUIObject
 	 */
 	public function __construct($id = null)
 	{
+		parent::__construct();
+
 		$this->id = $id;
-		$this->addStylesheet('swat/styles/swat.css');
+		$this->addStylesheet('swat/styles/swat.css', -1);
 	}
 
 	// }}}
@@ -159,11 +161,7 @@ abstract class SwatWidget extends SwatUIObject
 	public function displayHtmlHeadEntries()
 	{
 		$html_head_entries = $this->getHtmlHeadEntries();
-
-		foreach ($html_head_entries as $head_entry) {
-			$head_entry->display();
-			echo "\n";
-		}
+		$html_head_entries->display();
 	}
 
 	// }}}

@@ -91,9 +91,10 @@ abstract class SwatCellRenderer extends SwatUIObject
 	}
 
 	/**
-	 * Gathers the SwatHtmlHeadEntry objects needed by this cell renderer
+	 * Gets the SwatHtmlHeadEntry objects needed by this cell renderer
 	 *
-	 * @return array the SwatHtmlHeadEntry objects needed by this cell renderer.
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this cell renderer.
 	 *
 	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */
