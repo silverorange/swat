@@ -78,9 +78,10 @@ abstract class SwatTableViewRow extends SwatUIObject
 	// {{{ public function getHtmlHeadEntries()
 
 	/**
-	 * Gathers the SwatHtmlHeadEntry objects needed by this row
+	 * Gets the SwatHtmlHeadEntry objects needed by this row
 	 *
-	 * @return array the SwatHtmlHeadEntry objects needed by this row.
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this row.
 	 *
 	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */

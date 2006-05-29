@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlHeadEntry.php';
+require_once 'Swat/SwatHtmlHeadEntrySet.php';
 require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
 require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
 
@@ -34,7 +35,15 @@ abstract class SwatUIObject extends SwatObject
 	 *
 	 * @var array
 	 */
-	protected $html_head_entries = array();
+	protected $html_head_entries;
+
+	// }}}
+	// {{{ public function __construct()
+
+	public function __construct()
+	{
+		$this->html_head_entries = new SwatHtmlHeadEntrySet();
+	}
 
 	// }}}
 	// {{{ public function addStyleSheet()
@@ -49,8 +58,8 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public function addStyleSheet($stylesheet, $display_order = 0)
 	{
-		$this->html_head_entries[$stylesheet] =
-			new SwatStyleSheetHtmlHeadEntry($stylesheet, $display_order);
+		$this->html_head_entries->addEntry(
+			new SwatStyleSheetHtmlHeadEntry($stylesheet, $display_order));
 	}
 
 	// }}}
@@ -66,8 +75,8 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public function addJavaScript($java_script, $display_order = 0)
 	{
-		$this->html_head_entries[$java_script] =
-			new SwatJavaScriptHtmlHeadEntry($java_script, $display_order);
+		$this->html_head_entries->addEntry(
+			new SwatJavaScriptHtmlHeadEntry($java_script, $display_order));
 	}
 
 	// }}}
@@ -126,14 +135,13 @@ abstract class SwatUIObject extends SwatObject
 	// {{{ abstract public function getHtmlHeadEntries()
 
 	/**
-	 * Gathers the SwatHtmlHeadEntry objects needed by this user-interface
-	 * element
+	 * Gets the SwatHtmlHeadEntry objects needed by this user-interface element
 	 *
 	 * Head entries are things like stylesheets and JavaScript includes that
 	 * should go in the head section of HTML.
 	 *
-	 * @return array the SwatHtmlHeadEntry objects needed by this
-	 *                user-interface element.
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this user-interface element.
 	 */
 	abstract public function getHtmlHeadEntries();
 

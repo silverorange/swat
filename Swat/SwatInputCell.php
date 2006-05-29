@@ -262,16 +262,17 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	// {{{ public function getHtmlHeadEntries()
 
 	/**
-	 * Gathers the SwatHtmlHeadEntry objects needed by this row
+	 * Gets the SwatHtmlHeadEntry objects needed by this row
 	 *
-	 * @return array the SwatHtmlHeadEntry objects needed by this input cell.
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this input cell.
 	 *
 	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{
-		$out = $this->html_head_entries;
-		$out = array_merge($out, $this->widget->getHtmlHeadEntries());
+		$out = new SwatHtmlHeadEntrySet($this->html_head_entries);
+		$out->addEntrySet($this->widget->getHtmlHeadEntries());
 		return $out;
 	}
 

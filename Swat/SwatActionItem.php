@@ -115,18 +115,21 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	}
 
 	/**
-	 * Gathers the SwatHtmlHeadEntry objects needed by this action item
+	 * Gets the SwatHtmlHeadEntry objects needed by this action item
 	 *
-	 * @return array the SwatHtmlHeadEntry objects needed by this action item.
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this action item.
 	 *
-	 * @see SwatWidget::gatherSwatHtmlHeadEntries()
+	 * @see SwatWidget::getHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{
-		$out = $this->html_head_entries;
-
-		if ($this->widget !== null)
-			$out = array_merge($out, $this->widget->getHtmlHeadEntries());
+		if ($this->widget === null) {
+			$out = $this->html_head_entries;
+		} else {
+			$out = new SwatHtmlHeadEntrySet($this->html_head_entries);
+			$out->addEntrySet($this->widget->getHtmlHeadEntries());
+		}
 
 		return $out;
 	}

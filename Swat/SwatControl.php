@@ -90,11 +90,12 @@ abstract class SwatControl extends SwatWidget
 	}
 
 	/**
-	 * Gathers the SwatHtmlHeadEntry objects needed by this control
+	 * Gets the SwatHtmlHeadEntry objects needed by this control
 	 *
-	 * @return array the SwatHtmlHeadEntry objects needed by this control.
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this control.
 	 *
-	 * @see SwatUIObject::getSwatHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{

@@ -437,23 +437,24 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	// {{{ public function getHtmlHeadEntries()
 
 	/**
-	 * Gathers the SwatHtmlHeadEntry objects needed by this date entry 
+	 * Gets the SwatHtmlHeadEntry objects needed by this date entry 
 	 *
-	 * @return array the SwatHtmlHeadEntry objects needed by this date entry.
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this date entry.
 	 *
-	 * @see SwatUIObject::getSwatHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{
-		$out = $this->html_head_entries;
+		$out = new SwatHtmlHeadEntrySet($this->html_head_entries);
 
 		$this->createEmbeddedWidgets();
 
 		if ($this->display_parts & self::TIME)
-			$out = array_merge($out, $this->time_entry->getHtmlHeadEntries());
+			$out->addEntrySet($this->time_entry->getHtmlHeadEntries());
 
 		if ($this->display_parts & self::CALENDAR)
-			$out = array_merge($out, $this->calendar->getHtmlHeadEntries());
+			$out->addEntrySet($this->calendar->getHtmlHeadEntries());
 
 		return $out;
 	}

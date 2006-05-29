@@ -413,18 +413,19 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	}
 
 	/**
-	 * Gathers the SwatHtmlHeadEntry objects needed by this container
+	 * Gets the SwatHtmlHeadEntry objects needed by this container
 	 *
-	 * @return array the SwatHtmlHeadEntry objects needed by this container.
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this container.
 	 *
-	 * @see SwatUIObject::getSwatHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntries()
 	 */
 	public function getHtmlHeadEntries()
 	{
-		$out = $this->html_head_entries;
+		$out = new SwatHtmlHeadEntrySet($this->html_head_entries);
 
 		foreach ($this->children as $child_widget)
-			$out = array_merge($out, $child_widget->getHtmlHeadEntries());
+			$out->addEntrySet($child_widget->getHtmlHeadEntries());
 
 		return $out;
 	}
