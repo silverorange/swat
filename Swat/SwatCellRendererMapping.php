@@ -55,6 +55,8 @@ class SwatCellRendererMapping extends SwatObject
 		$this->property = $property;
 		$this->field = $field;
 	}
+
+	// }}}
 }
 
 ?>
