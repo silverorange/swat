@@ -13,7 +13,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * displayed once for every row.
  *
  * @package   Swat
- * @copyright 2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewGroup extends SwatTableViewColumn
