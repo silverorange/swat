@@ -73,6 +73,27 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	{
 		return $this->display_order;
 	}
+
+	/**
+	 * Statically compares two HTML head entries by their display order
+	 *
+	 * This method is useful for sorting HTML head entries.
+	 *
+	 * @param SwatHtmlHeadEntry $entry1 the first entry to compare.
+	 * @param SwatHtmlHeadEntry $entry2 the second entry to compare.
+	 *
+	 * @return integer a tri-value with 0 meaning the two entries are equal,
+	 *                  1 meaning entry1 is greater than entry2 and -1 meaning
+	 *                  entry1 is less than entry 2.
+	 */
+	public static function compare($entry1, $entry2)
+	{
+		if ($entry1->getDisplayOrder() == $entry2->getDisplayOrder())
+			return 0;
+
+		return
+			($entry1->getDisplayOrder() > $entry2->getDisplayOrder()) ? 1 : -1;
+	}
 }
 
 ?>
