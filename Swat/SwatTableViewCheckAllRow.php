@@ -35,6 +35,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	public function __construct($column_id)
 	{
+		parent::__construct();
 		$this->column_id = $column_id;
 		$this->check_all = new SwatCheckAll();
 	}
