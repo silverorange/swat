@@ -8,7 +8,7 @@ require_once 'DemoPage.php';
  * This page displays a quick introduction to the Swat Demo Application
  *
  * @package   SwatDemo
- * @copyright 2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class FrontPage extends DemoPage
