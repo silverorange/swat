@@ -37,16 +37,6 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	public $widget = null;
 
 	/**
-	 * Creates a new item for a SwatActions widget
-	 *
-	 * @param string $id a unique identifier for this item
-	 */
-	public function __construct($id = '')
-	{
-		$this->id = $id;
-	}
-
-	/**
 	 * Initializes this action item
 	 *
 	 * This initializes the widget contained in this action item if there is
