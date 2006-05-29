@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlHeadEntry.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A collection of HTML head entries
