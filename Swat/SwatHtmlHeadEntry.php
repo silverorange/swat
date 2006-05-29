@@ -9,30 +9,11 @@ require_once 'Swat/SwatObject.php';
  * head section.
  *
  * @package   Swat
- * @copyright 2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatHtmlHeadEntry extends SwatObject
+abstract class SwatHtmlHeadEntry extends SwatObject
 {
-	/**
-	 * A stylesheet head entry
-	 */
-	const TYPE_STYLE = 0;
-
-	/**
-	 * A JavaScript head entry
-	 */
-	const TYPE_JAVA_SCRIPT = 1;
-	
-	/**
-	 * The type of this head entry
-	 *
-	 * This should be a valid SwatHtmlHeadEntry::TYPE_* constant.
-	 *
-	 * @var integer
-	 */
-	public $type = SwatHtmlHeadEntry::TYPE_STYLE;
-
 	/**
 	 * The uri of this head entry
 	 *
@@ -41,15 +22,27 @@ class SwatHtmlHeadEntry extends SwatObject
 	private $uri = '';
 
 	/**
+	 * The relative order in which to display this HTML head entry relative
+	 * to other HTML head entries in the same collection
+	 *
+	 * By default, entries are created with a display order of 0. Lower numbers
+	 * are displayed before higher numbers.
+	 *
+	 * @var integer
+	 */
+	private $display_order = 0;
+
+	/**
 	 * Creates a new HTML head entry
 	 *
-	 * @param string $uri the uri of the entry.
-	 * @param integer $type the type of the entry.
+	 * @param string  $uri the uri of the entry.
+	 * @param integer $display_order the relative order in which to display
+	 *                                this HTML head entry.
 	 */
-	public function __construct($uri, $type = SwatHtmlHeadEntry::TYPE_STYLE)
+	public function __construct($uri, $display_order = 0)
 	{
 		$this->uri = $uri;
-		$this->type = $type;
+		$this->display_order = $display_order;
 	}
 
 	/**
@@ -59,24 +52,7 @@ class SwatHtmlHeadEntry extends SwatObject
 	 *
 	 * @param string $path_prefix an optional string to prefix the URI with.
 	 */
-	public function display($uri_prefix = '')
-	{
-		switch ($this->type) {
-		case self::TYPE_STYLE:
-			printf('<style type="text/css" media="all">@import "%s%s";</style>',
-				$uri_prefix,
-				$this->uri);
-
-			break;
-		case self::TYPE_JAVA_SCRIPT:
-			printf('<script type="text/javascript" src="%s%s"></script>',
-				$uri_prefix,
-				$this->uri);
-				
-			break;
-		default:
-		}
-	}
+	public abstract function display($uri_prefix = '');
 
 	/**
 	 * Gets the URI of this HTML head entry
@@ -86,6 +62,16 @@ class SwatHtmlHeadEntry extends SwatObject
 	public function getUri()
 	{
 		return $this->uri;
+	}
+
+	/**
+	 * Gets the display order of this HTML head entry
+	 *
+	 * @return integer the display order of this HTML head entry.
+	 */
+	public function getDisplayOrder()
+	{
+		return $this->display_order;
 	}
 }
 

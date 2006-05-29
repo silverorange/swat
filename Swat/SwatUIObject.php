@@ -2,6 +2,8 @@
 
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlHeadEntry.php';
+require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
+require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
 
 /**
  * A base class for Swat user-interface elements
@@ -41,12 +43,14 @@ abstract class SwatUIObject extends SwatObject
 	 * Adds a stylesheet to the list of stylesheets needed by this
 	 * user-iterface element
 	 *
-	 * @param string $stylesheet the uri of the style sheet.
+	 * @param string  $stylesheet the uri of the style sheet.
+	 * @param integer $display_order the relative order in which to display
+	 *                                this stylesheet head entry.
 	 */
-	public function addStyleSheet($stylesheet)
+	public function addStyleSheet($stylesheet, $display_order = 0)
 	{
 		$this->html_head_entries[$stylesheet] =
-			new SwatHtmlHeadEntry($stylesheet, SwatHtmlHeadEntry::TYPE_STYLE);
+			new SwatStyleSheetHtmlHeadEntry($stylesheet, $display_order);
 	}
 
 	// }}}
@@ -56,13 +60,14 @@ abstract class SwatUIObject extends SwatObject
 	 * Adds a JavaScript include to the list of JavaScript includes needed
 	 * by this user-interface element
 	 *
-	 * @param string $javascript the uri of the JavaScript include.
+	 * @param string  $java_script the uri of the JavaScript include.
+	 * @param integer $display_order the relative order in which to display
+	 *                                this JavaScript head entry.
 	 */
-	public function addJavaScript($javascript)
+	public function addJavaScript($java_script, $display_order = 0)
 	{
-		$this->html_head_entries[$javascript] =
-			new SwatHtmlHeadEntry($javascript,
-			SwatHtmlHeadEntry::TYPE_JAVA_SCRIPT);
+		$this->html_head_entries[$java_script] =
+			new SwatJavaScriptHtmlHeadEntry($java_script, $display_order);
 	}
 
 	// }}}
@@ -124,8 +129,8 @@ abstract class SwatUIObject extends SwatObject
 	 * Gathers the SwatHtmlHeadEntry objects needed by this user-interface
 	 * element
 	 *
-	 * Head entries are things like stylesheets and javascript includes that
-	 * should go in the head section of html.
+	 * Head entries are things like stylesheets and JavaScript includes that
+	 * should go in the head section of HTML.
 	 *
 	 * @return array the SwatHtmlHeadEntry objects needed by this
 	 *                user-interface element.
