@@ -164,7 +164,7 @@ class SwatString extends SwatObject
 	 * Takes a block of text and condenses it into a small fragment of XHTML.
 	 *
 	 * Condensing text removes inline XHTML tags and replaces line breaks and
-	 * block-level elements special characters.
+	 * block-level elements with special characters.
 	 *
 	 * @param string $text the text to be condensed.
 	 * @param integer $max_length the maximum length of the condensed text.
