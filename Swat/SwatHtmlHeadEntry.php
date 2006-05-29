@@ -19,7 +19,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	 *
 	 * @var string
 	 */
-	private $uri = '';
+	protected $uri = '';
 
 	/**
 	 * The relative order in which to display this HTML head entry relative
@@ -30,7 +30,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	 *
 	 * @var integer
 	 */
-	private $display_order = 0;
+	protected $display_order = 0;
 
 	/**
 	 * Creates a new HTML head entry
