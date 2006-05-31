@@ -7,7 +7,7 @@ if (class_exists('PackageConfig')) {
 	PackageConfig::addPackage('swat');
 	PackageConfig::addPath('/so/packages/pear/pear/Date');
 }
- 
+
 require_once 'Swat/SwatAutoloader.php';
 SwatAutoloader::addRule('/^Site(.*)Page$/', 'Site/pages/Site$1Page.php');
 SwatAutoloader::addRule('/^Site(.*)/', 'Site/Site$1.php');
