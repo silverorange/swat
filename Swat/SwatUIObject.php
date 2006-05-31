@@ -58,6 +58,12 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public function addStyleSheet($stylesheet, $display_order = 0)
 	{
+		if ($this->html_head_entries === null)
+			throw new SwatException(sprintf("Child class '%s' did not ".
+				'instantiate a HTML head entry set. This should be done in  '.
+				'the constructor either by calling parent::__construct() or '.
+				'by creating a new HTML head entry set.', get_class($this)));
+
 		$this->html_head_entries->addEntry(
 			new SwatStyleSheetHtmlHeadEntry($stylesheet, $display_order));
 	}
@@ -75,6 +81,12 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public function addJavaScript($java_script, $display_order = 0)
 	{
+		if ($this->html_head_entries === null)
+			throw new SwatException(sprintf("Child class '%s' did not ".
+				'instantiate a HTML head entry set. This should be done in  '.
+				'the constructor either by calling parent::__construct() or '.
+				'by creating a new HTML head entry set.', get_class($this)));
+
 		$this->html_head_entries->addEntry(
 			new SwatJavaScriptHtmlHeadEntry($java_script, $display_order));
 	}
