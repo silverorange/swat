@@ -163,6 +163,7 @@ ul.swat-note {
 	border: 1px solid #ccc;
 	margin-bottom: 1em;
 	padding: 0 1em 1em 1em;
+	position: relative;
 }
 
 .swat-grouping-form-field legend,

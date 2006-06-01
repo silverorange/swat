@@ -25,6 +25,7 @@
 }
 
 .swat-form-field-with-messages {
+	position: relative;
 	border: 1px solid #C00;
 	background: #ffe3e0;
 	padding: 0.5em;
