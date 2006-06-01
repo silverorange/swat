@@ -52,6 +52,20 @@ class SwatNavBar extends SwatControl
 	}
 
 	// }}}
+	// {{{ public function addEntries()
+
+	/**
+	 * Adds an array of SwatNavBarEntry to the end of this navigation bar
+	 *
+	 * @param array $entries array of entries to add.
+	 */
+	public function addEntries($entries)
+	{
+		foreach ($entries as $entry)
+			$this->entries[] = $entry;
+	}
+
+	// }}}
 	// {{{ public function addEntryToStart()
 
 	/**
