@@ -162,7 +162,7 @@ ul.swat-note {
 .swat-fieldset {
 	border: 1px solid #ccc;
 	margin-bottom: 1em;
-	padding: 1em;
+	padding: 0 1em 1em 1em;
 }
 
 .swat-grouping-form-field legend,
@@ -170,6 +170,7 @@ ul.swat-note {
 	font-weight: bold;
 	color: #666;
 	padding: 0 0.3em;
+	line-height: 2;
 }
 
 
