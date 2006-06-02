@@ -1,6 +1,6 @@
 <?php
 
-require_once 'pages/DemoPage.php';
+require_once 'pages/FrontPage.php';
 
 /**
  * An demo application
@@ -13,21 +13,39 @@ require_once 'pages/DemoPage.php';
  */
 class DemoApplication extends SiteApplication
 {
-	protected function resolvePage()
+	// {{{ protected function loadPage()
+
+	/**
+	 * Loads the page
+	 */
+	protected function loadPage()
 	{
-		$demo = SiteApplication::initVar('demo', 'FrontPage',
-			SiteApplication::VAR_GET);
-
-		// simple security
-		$demo = basename($demo);
-
-		if (file_exists('../include/pages/'.$demo.'.php')) {
-			require_once '../include/pages/'.$demo.'.php';
-			return new $demo($this);
-		} else {
-			return new DemoPage($this);
+		if ($this->page === null) {
+			$source = self::initVar('demo');
+			$source = basename($source); // simple security
+			$this->page = $this->resolvePage($source);
 		}
 	}
+
+	// }}}
+	// {{{ protected function resolvePage()
+
+	/**
+	 * Resolves a page for a particular source
+	 *
+	 * @return SitePage An instance of a SitePage is returned.
+	 */
+	protected function resolvePage($source)
+	{
+		if (file_exists('../include/pages/'.$source.'.php')) {
+			require_once '../include/pages/'.$source.'.php';
+			return new $source($this);
+		} else {
+			return new FrontPage($this);
+		}
+	}
+
+	// }}}
 }
 
 ?>
