@@ -23,11 +23,11 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	public function __construct($id = null)
 	{
 		parent::__construct();
-		
+
 		$this->show_blank  = false;
 		$this->requires_id = true;
 	}
-	
+
 	/**
 	 * Displays this radio list
 	 */
@@ -37,60 +37,82 @@ class SwatRadioList extends SwatFlydown implements SwatState
 			return;
 
 		$options = $this->getOptions();
-		
+
 		// Empty string XHTML option value is assumed to be null
 		// when processing.
 		if ($this->show_blank)
 			$options = array_merge(
 				array(new SwatOption('', $this->blank_title)),
 				$options);
-				
+
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id.'_div';
 		$div_tag->class = 'swat-radio-list';
 		$div_tag->open();
-		
-		$input_tag = new SwatHtmlTag('input');
-		$input_tag->type = 'radio';
-		$input_tag->name = $this->id;
-		
-		if ($this->onchange !== null)
-			$input_tag->onchange = $this->onchange;
 
-		$label_tag = new SwatHtmlTag('label');
-		$label_tag->class = 'swat-control';
-		
 		echo '<ul>';
 
-		foreach ($options as $option) {	
-			
+		foreach ($options as $option) {
 			echo '<li>';
-			
+
 			if ($option instanceof SwatFlydownDivider) {
 				//ignore these for now TODO: make dividers work with radiolists
 			} else {					
-				$value = (string)$option->value;
-				$input_tag->value = $value;
-				$input_tag->removeAttribute('checked');
-				$input_tag->id = $this->id.'_'.$value;
-
-				if ($value === (string)$this->value)
-					$input_tag->checked = "checked";
-
-				$label_tag->for = $this->id.'_'.$value;
-				$label_tag->setContent($option->title, $option->content_type);
-
-				$input_tag->display();
-				$label_tag->display();
+				$this->displayOption($option);
+				$this->displayOptionLabel($option);
 			}
-			
+
 			echo '</li>';
-			
 		}
 		
 		echo '</ul>';
-		
 		$div_tag->close();
+	}
+
+	/**
+	 * Displays an option in the radio list
+	 */
+	public function displayOption($option)
+	{
+		static $input_tag = null;
+
+		if ($input_tag === null) {
+			$input_tag = new SwatHtmlTag('input');
+			$input_tag->type = 'radio';
+			$input_tag->name = $this->id;
+		
+			if ($this->onchange !== null)
+				$input_tag->onchange = $this->onchange;
+		}
+
+		$value = (string)$option->value;
+		$input_tag->value = $value;
+		$input_tag->removeAttribute('checked');
+		$input_tag->id = $this->id.'_'.$value;
+
+		if ($value === (string)$this->value)
+			$input_tag->checked = "checked";
+
+		$input_tag->display();
+	}
+
+	/**
+	 * Displays an option in the radio list
+	 */
+	public function displayOptionLabel($option)
+	{
+		static $label_tag = null;
+
+		if ($label_tag === null) {
+			$label_tag = new SwatHtmlTag('label');
+			$label_tag->class = 'swat-control';
+		}
+
+		$value = (string)$option->value;
+		$label_tag->for = $this->id.'_'.$value;
+		$label_tag->setContent($option->title, $option->content_type);
+
+		$label_tag->display();
 	}
 }
 
