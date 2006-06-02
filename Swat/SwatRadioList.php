@@ -86,9 +86,9 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	/**
 	 * Displays an option in the radio list
 	 *
-	 * @param SwatFlydownOption $option
+	 * @param SwatOption $option
 	 */
-	protected function displayOption(SwatFlydownOption $option)
+	protected function displayOption(SwatOption $option)
 	{
 		if ($this->input_tag === null) {
 			$this->input_tag = new SwatHtmlTag('input');
@@ -113,9 +113,9 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	/**
 	 * Displays an option in the radio list
 	 *
-	 * @param SwatFlydownOption $option
+	 * @param SwatOption $option
 	 */
-	protected function displayOptionLabel(SwatFlydownOption $option)
+	protected function displayOptionLabel(SwatOption $option)
 	{
 		if ($this->label_tag === null) {
 			$this->label_tag = new SwatHtmlTag('label');
