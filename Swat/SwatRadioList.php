@@ -72,7 +72,7 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	/**
 	 * Displays an option in the radio list
 	 */
-	public function displayOption($option)
+	protected function displayOption($option)
 	{
 		static $input_tag = null;
 
@@ -99,7 +99,7 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	/**
 	 * Displays an option in the radio list
 	 */
-	public function displayOptionLabel($option)
+	protected function displayOptionLabel($option)
 	{
 		static $label_tag = null;
 
