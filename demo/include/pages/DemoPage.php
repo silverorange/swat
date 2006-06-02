@@ -4,7 +4,8 @@ require_once 'Swat/SwatNavBar.php';
 require_once 'Swat/SwatUI.php';
 require_once '../include/DemoMenu.php';
 require_once '../include/DemoDocumentationMenu.php';
-
+require_once 'Site/pages/SitePage.php';
+require_once 'Site/SiteApplication.php';
 /**
  * A page in the Swat Demo Application
  *
@@ -17,6 +18,8 @@ require_once '../include/DemoDocumentationMenu.php';
  */
 class DemoPage extends SitePage
 {
+	// {{{ protected properties
+
 	protected $ui = null;
 	protected $navbar = null;
 	protected $documentation_menu = null;
@@ -24,6 +27,9 @@ class DemoPage extends SitePage
 	protected $start_time = 0;
 	
 	protected $demo;
+
+	// }}}
+	// {{{ public function __construct()
 	
 	public function __construct($app)
 	{
@@ -34,15 +40,14 @@ class DemoPage extends SitePage
 		$this->ui->mapClassPrefixToPath('Demo', '../include/');
 	}
 
+	// }}}
+	// {{{ public function init()
+
 	public function init()
 	{
 		$this->start_time = microtime(true);
 
-		$this->demo = SiteApplication::initVar('demo', 'Main',
-			SiteApplication::VAR_GET);
-
-		// simple security
-		$this->demo = basename($this->demo);
+		$this->demo = get_class($this);
 		
 		$this->ui->loadFromXML('../include/pages/'.strtolower($this->demo).'.xml');
 
@@ -56,6 +61,9 @@ class DemoPage extends SitePage
 		$this->documentation_menu = $this->getDocumentationMenu();
 	}
 
+	// }}}
+	// {{{ public function initUI()
+
 	/**
 	 * Allows subclasses to modify the SwatUI object before it is displayed
 	 */
@@ -63,42 +71,52 @@ class DemoPage extends SitePage
 	{
 	}
 
+	// }}}
+	// {{{ pulbic function process
+
 	public function process()
 	{
 		$this->ui->process();
 	}
 
+	// }}}
+	// {{{ public function build()
+
 	public function build()
 	{
-		$this->layout->title = $this->demo.' | '.$this->app->title;
+		parent::build();
 
-		ob_start();
-		$this->ui->getRoot()->displayHtmlHeadEntries();
-		$this->layout->html_head_entries = ob_get_clean();
-		
-		$this->layout->source_code =
+		$this->layout->data->title = $this->demo.' | '.$this->app->title;
+
+		$this->layout->addHtmlHeadEntrySet(
+			$this->ui->getRoot()->getHtmlHeadEntries());
+
+		$this->layout->data->source_code =
 			str_replace("\t", '    ', htmlspecialchars(implode('',
 				file('../include/pages/'.strtolower($this->demo).'.xml')), ENT_COMPAT, 'UTF-8'));
 
-		ob_start();
+		$this->layout->startCapture('ui');
 		$this->ui->displayTidy();
-		$this->layout->ui = ob_get_clean();
+		$this->layout->endCapture();
 
-		ob_start();
+		$this->layout->startCapture('menu');
 		$this->menu = new DemoMenu();
 		$this->menu->display();
-		$this->layout->menu = ob_get_clean();
+		$this->layout->endCapture();
 
-		ob_start();
+		$this->layout->startCapture('documentation_menu');
 		$this->documentation_menu->display();
-		$this->layout->documentation_menu = ob_get_clean();
+		$this->layout->endCapture();
 
-		$this->layout->execution_time = round(microtime(true) - $this->start_time, 4);
+		$this->layout->data->execution_time = round(microtime(true) - $this->start_time, 4);
 
-		ob_start();
+		$this->layout->startCapture('navbar');
 		$this->navbar->display();
-		$this->layout->navbar = ob_get_clean();
+		$this->layout->endCapture();
 	}
+
+	// }}}
+	// {{{ protected function getDocumentationMenu()
 
 	protected function getDocumentationMenu()
 	{
@@ -247,6 +265,16 @@ class DemoPage extends SitePage
 
 		return new DemoDocumentationMenu($entries);
 	}
+
+	// }}}
+	// {{{ protected function createLayout()
+
+	protected function createLayout()
+	{
+		return new SiteLayout($this->app, '../include/layouts/xhtml/default.php');
+	}
+
+	// }}}
 }
 
 ?>
