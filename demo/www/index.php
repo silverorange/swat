@@ -17,11 +17,7 @@ require_once '../include/DemoApplication.php';
 
 $app = new DemoApplication('demo');
 $app->title = 'Swat Demo Site';
-$app->init();
-
-$page = $app->getPage();
-$page->process();
-$page->build();
-$page->layout->display();
+$app->uri_prefix_length = 4;
+$app->run();
 
 ?>
