@@ -29,6 +29,7 @@ class SwatRadioTable extends SwatRadioList
 
 	// }}}
 	// {{{ public function display()
+
 	public function display()
 	{
 		$options = $this->getOptions();
@@ -67,6 +68,7 @@ class SwatRadioTable extends SwatRadioList
 
 		$table_tag->close();
 	}
+
 	// }}}
 }
 
