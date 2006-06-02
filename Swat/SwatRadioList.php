@@ -14,6 +14,20 @@ require_once 'Swat/SwatState.php';
 class SwatRadioList extends SwatFlydown implements SwatState
 {
 	/**
+	 * Used for displaying radio buttons
+	 *
+	 * @var SwatHtmlTag
+	 */
+	private $input_tag;
+
+	/**
+	 * Used for displaying radio button labels
+	 *
+	 * @var SwatHtmlTag
+	 */
+	private $label_tag;
+
+	/**
 	 * Creates a new radiolist
 	 *
 	 * @param string $id a non-visible unique id for this widget.
@@ -71,48 +85,47 @@ class SwatRadioList extends SwatFlydown implements SwatState
 
 	/**
 	 * Displays an option in the radio list
+	 *
+	 * @param SwatFlydownOption $option
 	 */
 	protected function displayOption($option)
 	{
-		static $input_tag = null;
-
-		if ($input_tag === null) {
-			$input_tag = new SwatHtmlTag('input');
-			$input_tag->type = 'radio';
-			$input_tag->name = $this->id;
+		if ($this->input_tag === null) {
+			$this->input_tag = new SwatHtmlTag('input');
+			$this->input_tag->type = 'radio';
+			$this->input_tag->name = $this->id;
 		
 			if ($this->onchange !== null)
-				$input_tag->onchange = $this->onchange;
+				$this->input_tag->onchange = $this->onchange;
 		}
 
 		$value = (string)$option->value;
-		$input_tag->value = $value;
-		$input_tag->removeAttribute('checked');
-		$input_tag->id = $this->id.'_'.$value;
+		$this->input_tag->value = $value;
+		$this->input_tag->removeAttribute('checked');
+		$this->input_tag->id = $this->id.'_'.$value;
 
 		if ($value === (string)$this->value)
-			$input_tag->checked = "checked";
+			$this->input_tag->checked = 'checked';
 
-		$input_tag->display();
+		$this->input_tag->display();
 	}
 
 	/**
 	 * Displays an option in the radio list
+	 *
+	 * @param SwatFlydownOption $option
 	 */
 	protected function displayOptionLabel($option)
 	{
-		static $label_tag = null;
-
-		if ($label_tag === null) {
-			$label_tag = new SwatHtmlTag('label');
-			$label_tag->class = 'swat-control';
+		if ($this->label_tag === null) {
+			$this->label_tag = new SwatHtmlTag('label');
+			$this->label_tag->class = 'swat-control';
 		}
 
 		$value = (string)$option->value;
-		$label_tag->for = $this->id.'_'.$value;
-		$label_tag->setContent($option->title, $option->content_type);
-
-		$label_tag->display();
+		$this->label_tag->for = $this->id.'_'.$value;
+		$this->label_tag->setContent($option->title, $option->content_type);
+		$this->label_tag->display();
 	}
 }
 
