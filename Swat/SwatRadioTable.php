@@ -14,7 +14,7 @@ class SwatRadioTable extends SwatRadioList
 	// {{{ public function __construct()
 
 	/**
-	 * Creates a new table view
+	 * Creates a new radio table
 	 *
 	 * @param string $id a non-visible unique id for this widget.
 	 *
