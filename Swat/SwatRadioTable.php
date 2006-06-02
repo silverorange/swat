@@ -11,6 +11,24 @@ require_once 'Swat/SwatRadioList.php';
  */
 class SwatRadioTable extends SwatRadioList
 {
+	// {{{ public function __construct()
+
+	/**
+	 * Creates a new table view
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->addStyleSheet('swat/styles/swat-radio-table.css');
+	}
+
+	// }}}
+	// {{{ public function display()
 	public function display()
 	{
 		$options = $this->getOptions();
@@ -49,6 +67,7 @@ class SwatRadioTable extends SwatRadioList
 
 		$table_tag->close();
 	}
+	// }}}
 }
 
 ?>
