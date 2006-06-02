@@ -13,24 +13,6 @@ require_once 'DemoPage.php';
  */
 class FrontPage extends DemoPage
 {
-	public function init()
-	{
-		$this->start_time = microtime(true);
-
-		$this->demo = 'FrontPage';
-		
-		$this->ui = new SwatUI();
-		$this->ui->loadFromXML('../include/pages/'.strtolower($this->demo).'.xml');
-
-		$this->initUI();
-
-		$this->ui->init();
-
-		$this->navbar->createEntry($this->app->title);
-
-		$this->documentation_menu = $this->getDocumentationMenu();
-	}
-
 	public function initUI()
 	{
 		$content = $this->ui->getWidget('content');
@@ -47,14 +29,17 @@ class FrontPage extends DemoPage
 	public function build()
 	{
 		parent::build();
-		
-		$this->layout->title = $this->app->title;
+		$this->layout->data->title = $this->app->title;
 	}
+
+	// {{{ protected function createLayout()
 
 	protected function createLayout()
 	{
-		return new SiteLayout('../layouts/no_source.php');
+		return new SiteLayout($this->app, '../include/layouts/xhtml/no_source.php');
 	}
+
+	// }}}
 }
 
 ?>
