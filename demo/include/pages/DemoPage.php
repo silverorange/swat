@@ -2,10 +2,12 @@
 
 require_once 'Swat/SwatNavBar.php';
 require_once 'Swat/SwatUI.php';
+require_once 'Site/pages/SitePage.php';
+require_once 'Site/layouts/SiteLayout.php';
+require_once '../include/DemoApplication.php';
 require_once '../include/DemoMenu.php';
 require_once '../include/DemoDocumentationMenu.php';
-require_once 'Site/pages/SitePage.php';
-require_once 'Site/SiteApplication.php';
+
 /**
  * A page in the Swat Demo Application
  *
@@ -31,7 +33,7 @@ class DemoPage extends SitePage
 	// }}}
 	// {{{ public function __construct()
 	
-	public function __construct($app)
+	public function __construct(DemoApplication $app)
 	{
 		parent::__construct($app);
 
