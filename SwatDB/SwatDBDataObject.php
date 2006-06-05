@@ -49,7 +49,7 @@ class SwatDBDataObject extends SwatObject
 	 * @var MDB2
 	 */
 	protected $db = null;
-	
+
 	protected $table = null;
 	protected $id_field = null;
 	
@@ -138,7 +138,7 @@ class SwatDBDataObject extends SwatObject
 	 */
 	public function isModified()
 	{
-		$property_array = $this->getPublicProperties();
+		$property_array = $this->getProperties();
 
 		foreach ($property_array as $name => $value) {
 			$hashed_value = md5(serialize($value));
@@ -160,7 +160,7 @@ class SwatDBDataObject extends SwatObject
 	 */
 	public function getModifiedProperties()
 	{
-		$property_array = $this->getPublicProperties();
+		$property_array = $this->getProperties();
 		$modified_properties = array();
 
 		foreach ($property_array as $name => $value) {
@@ -377,7 +377,7 @@ class SwatDBDataObject extends SwatObject
 	 */
 	protected function generatePropertyHashes()
 	{
-		$property_array = $this->getPublicProperties();
+		$property_array = $this->getProperties();
 
 		foreach ($property_array as $name => $value) {
 			$hashed_value = md5(serialize($value));
@@ -463,13 +463,44 @@ class SwatDBDataObject extends SwatObject
 	// }}}
 	// {{{ private function getPublicProperties()
 
-	private function getPublicProperties()
+	/**
+	 * Gets the public properties of this data-object
+	 *
+	 * Public properties should correspond directly to database fields.
+	 *
+	 * @return array a reference to an associative array of public properties
+	 *                of this data-object. The array is of the form
+	 *                'property name' => 'property value'.
+	 */
+	private function &getPublicProperties()
 	{
-		$property_array = get_object_vars($this);
-		unset($property_array['db']);
-		unset($property_array['table']);
-		unset($property_array['id_field']);
-		$property_array = array_merge($property_array, $this->internal_fields);
+		$public_properties = array();
+		$reflector = new ReflectionClass(get_class($this));
+		foreach ($reflector->getProperties() as $property)
+			if ($property->isPublic() && !$property->isStatic())
+				$public_properties[$property->getName()] =
+					$property->getValue($this);
+
+		return $public_properties;
+	}
+
+	// }}}
+	// {{{ private function getProperties()
+
+	/**
+	 * Gets all the modifyable properties of this data-object
+	 *
+	 * This includes the public properties that correspond to database fields
+	 * and the internal values that also correspond to database fields.
+	 *
+	 * @return array a reference to an associative array of properties of this
+	 *                data-object. The array is of the form
+	 *                'property name' => 'property value'.
+	 */
+	private function &getProperties()
+	{
+		$property_array = &$this->getPublicProperties();
+		$property_array = &array_merge($property_array, $this->internal_fields);
 		return $property_array;
 	}
 
