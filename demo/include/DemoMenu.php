@@ -13,6 +13,7 @@
 class DemoMenu
 {
 	protected $entries = array(
+		'Button' =>         'SwatButton',
 		'Calendar' =>       'SwatCalendar',
 		'ChangeOrder' =>    'SwatChangeOrder',
 		'Checkbox' =>       'SwatCheckbox',

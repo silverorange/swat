@@ -123,6 +123,10 @@ class DemoPage extends SitePage
 	protected function getDocumentationMenu()
 	{
 		switch ($this->demo) {
+		case 'Button':
+			$entries = array('SwatButton');
+			break;
+
 		case 'Calendar':
 			$entries = array('SwatCalendar');
 			break;
