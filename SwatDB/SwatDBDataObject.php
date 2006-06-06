@@ -434,9 +434,9 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ protected function hasInternalValue()
+	// {{{ public function hasInternalValue()
 
-	protected function hasInternalValue($name)
+	public function hasInternalValue($name)
 	{
 		return array_key_exists($name, $this->internal_fields);
 	}
