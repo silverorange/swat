@@ -526,6 +526,14 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function __sleep()
+
+	public function __sleep()
+	{
+		return array_keys($this->getProperties());
+	}
+
+	// }}}
 }
 
 ?>
