@@ -530,7 +530,9 @@ class SwatDBDataObject extends SwatObject
 
 	public function __sleep()
 	{
-		return array_keys($this->getProperties());
+		$properties = get_class_vars(get_class($this));
+		unset($properties['db']);
+		return array_keys($properties);
 	}
 
 	// }}}
