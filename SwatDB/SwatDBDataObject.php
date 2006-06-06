@@ -534,6 +534,14 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function __wakeup()
+
+	public function __wakeup()
+	{
+		// here for subclasses
+	}
+
+	// }}}
 }
 
 ?>
