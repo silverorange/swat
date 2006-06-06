@@ -226,6 +226,81 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	}
 
 	// }}}
+	// {{{ public function getInternalValues()
+
+	/**
+	 * Get values from an internal property for each dataobject in the set
+	 *
+	 * @param string $name name of the property to load.
+	 *
+	 * @return array an array of values.
+	 */
+	public function getInternalValues($name)
+	{
+		if ($this->getCount() == 0)
+			return;
+
+		if (!$this->getFirst()->hasInternalValue($name))
+			throw new SwatDBException(
+				"Dataobjects do not contain an internal field named '$name'.");
+
+		$values = array();
+
+		foreach ($this->objects as $object)
+			$values[] = $object->getInternalValue($name);
+
+		return $values;
+	}
+
+	// }}}
+	// {{{ public function loadAll()
+
+	/**
+	 * Load all sub-dataobjects for an internal property of the dataobjects in this recordset
+	 *
+	 * @param string $name name of the property to load.
+	 * @param MDB2 $db database object.
+	 * @param string $sql SQL to execute with placeholder for set of internal values.
+	 * @param string $wrapper name of a recordset wrapper to use for sub-dataobjects.
+	 *
+	 * @return SwatDBRecordsetWrapper an instance of the wrapper, or null.
+	 */
+	public function loadAll($name, $db, $sql, $wrapper, $type = 'integer')
+	{
+		$values = $this->getInternalValues($name);
+
+		if (empty($values))
+			return null;
+
+		$quoted_values = array();
+		foreach ($values as $value)
+			$quoted_values[] = $db->quote($value, $type);
+
+		$sql = sprintf($sql, implode(',', $quoted_values));
+		$sub_dataobjects = SwatDB::query($db, $sql, $wrapper);
+		$this->attachSubDataObjects($name, $sub_dataobjects);
+		return $sub_dataobjects;
+	}
+
+	// }}}
+	// {{{ public function attachSubDataObjects()
+
+	/**
+	 * Attach existing sub-dataobjects for an internal property of the dataobjects in this recordset
+	 *
+	 * @param string $name name of the property to attach to.
+	 * @param SwatDBRecordset $sub_dataobjects
+	 */
+	public function attachSubDataObjects($name, $sub_dataobjects)
+	{
+		foreach ($this->objects as $object) {
+			$value = $object->getInternalValue($name);
+			$sub_dataobject = $sub_dataobjects->getByIndex($value);
+			$object->$name = $sub_dataobject;
+		}
+	}
+
+	// }}}
 	// {{{ protected function init()
 
 	/**
