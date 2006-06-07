@@ -328,12 +328,20 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	// {{{ public function add()
 
 	/**
-	 * Add an object to this recordset
+	 * Adds an object to this recordset
 	 *
-	 * @param SwatDBDataObject $object
+	 * @param SwatDBDataObject $object the object to add. The object must be
+	 *                                  an instance of the {@link
+	 *                                  $row_wrapper_class}.
 	 */
 	public function add($object)
 	{
+		if ($this->row_wrapper_class !== null &&
+			!($object instanceof $this->row_wrapper_class))
+			throw new SwatDBException(sprintf('You can only add instances of '.
+				"'%s' to %s recordset wrappers.", $this->row_wrapper_class,
+				get_class($this)));
+
 		$this->objects[] = $object;
 	}
 
