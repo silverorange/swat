@@ -666,8 +666,42 @@ class SwatDB extends SwatObject
 			$id_field->name,
 			$db->quote($id, $id_field->type));
 
-		SwatDB::debug($sql);
-		$rs = SwatDB::query($db, $sql);
+		SwatDB::exec($db, $sql);
+	}
+
+	// }}}
+	// {{{ public static function deleteRow()
+	
+	/**
+	 * Delete a row
+	 *
+ 	 * Convenience method to delete a single database row. 
+	 *
+	 * @param MDB2_Driver_Common $db The database connection.
+	 *
+	 * @param string $table The database table to delete from.
+	 *
+	 * @param string $id_field The name of the database field that contains an
+	 *        identifier of row to be deleted. Can be given in the form 
+	 *        type:name where type is a standard MDB2 datatype. If type is 
+	 *        ommitted, then integer is assummed for this field.
+	 *
+	 * @param mixed $id The value to look for in the $id_field column. The 
+	 *        type should correspond to the type of $field.
+	 *
+	 * @throws SwatDBException
+	 */
+	public static function deleteRow($db, $table, $id_field, $id)
+	{
+		$id_field = new SwatDBField($id_field, 'integer');
+		$sql = 'delete from %s where %s = %s';
+
+		$sql = sprintf($sql,
+			$table,
+			$id_field->name,
+			$db->quote($id, $id_field->type));
+
+		SwatDB::exec($db, $sql);
 	}
 
 	// }}}
