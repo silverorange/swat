@@ -610,7 +610,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			for ($i = $start_day; $i <= $end_day; $i++)
 				$this->day_flydown->addOptions($i, $i);
 
-		} elseif (Date::compare($end_check,$this->valid_range_end,true) != -1) {
+		} elseif (Date::compare($end_check, $this->valid_range_end, true) != -1) {
 
 			$start_day = $this->valid_range_start->getDay();
 			$end_day   = $this->valid_range_end->getDay();
@@ -668,7 +668,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	private function validateRanges()
 	{
-		if (Date::compare($this->value, $this->valid_range_start,true) == -1) {
+		if (Date::compare($this->value, $this->valid_range_start, true) == -1) {
 
 			$msg = sprintf(Swat::_('The date you have entered is invalid. '.
 				'It must be after %s.'),
