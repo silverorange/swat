@@ -340,7 +340,7 @@ class SwatDBDataObject extends SwatObject
 
 	protected function getId()
 	{
-		if ($this->id_field)
+		if ($this->id_field === null)
 			throw new SwatDBException(
 				sprintf('Property $id_field is not set for class %s.',
 				get_class($this)));
