@@ -32,6 +32,11 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	 */
 	protected $index_field = null;
 
+	/**
+	 * @var MDB2
+	 */
+	protected $db = null;
+
 	// }}}
 	// {{{ private properties
 
@@ -42,6 +47,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	 */
 	private $objects = array();
 	private $objects_by_index = array();
+	private $remove_objects = array();
 
 	/**
 	 * The current index of the iterator interface
@@ -226,6 +232,22 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	}
 
 	// }}}
+	// {{{ protected function init()
+
+	/**
+	 * Initializes this recordset wrapper
+	 *
+	 * By default, the row wrapper class is set to null. Subclasses may change
+	 * this behaviour and optionally call additional initialization methods.
+	 */
+	protected function init()
+	{
+		$this->row_wrapper_class = null;
+	}
+
+	// }}}
+
+	// manipulating of sub data objects
 	// {{{ public function getInternalValues()
 
 	/**
@@ -253,7 +275,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	}
 
 	// }}}
-	// {{{ public function loadAll()
+	// {{{ public function loadAllSubDataObjects()
 
 	/**
 	 * Load all sub-dataobjects for an internal property of the dataobjects in this recordset
@@ -265,7 +287,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	 *
 	 * @return SwatDBRecordsetWrapper an instance of the wrapper, or null.
 	 */
-	public function loadAll($name, $db, $sql, $wrapper, $type = 'integer')
+	public function loadAllSubDataObjects($name, $db, $sql, $wrapper, $type = 'integer')
 	{
 		$values = $this->getInternalValues($name);
 
@@ -277,9 +299,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 			$quoted_values[] = $db->quote($value, $type);
 
 		$sql = sprintf($sql, implode(',', $quoted_values));
-		$sub_dataobjects = SwatDB::query($db, $sql, $wrapper);
-		$this->attachSubDataObjects($name, $sub_dataobjects);
-		return $sub_dataobjects;
+		$sub_data_objects = SwatDB::query($db, $sql, $wrapper);
+		$this->attachSubDataObjects($name, $sub_data_objects);
+		return $sub_data_objects;
 	}
 
 	// }}}
@@ -289,29 +311,106 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	 * Attach existing sub-dataobjects for an internal property of the dataobjects in this recordset
 	 *
 	 * @param string $name name of the property to attach to.
-	 * @param SwatDBRecordset $sub_dataobjects
+	 * @param SwatDBRecordset $sub_data_objects
 	 */
-	public function attachSubDataObjects($name, $sub_dataobjects)
+	public function attachSubDataObjects($name, $sub_data_objects)
 	{
 		foreach ($this->objects as $object) {
 			$value = $object->getInternalValue($name);
-			$sub_dataobject = $sub_dataobjects->getByIndex($value);
+			$sub_dataobject = $sub_data_objects->getByIndex($value);
 			$object->$name = $sub_dataobject;
 		}
 	}
 
 	// }}}
-	// {{{ protected function init()
+
+	// manipulating of objects
+	// {{{ public function add()
 
 	/**
-	 * Initializes this recordset wrapper
+	 * Add an object to this recordset
 	 *
-	 * By default, the row wrapper class is set to null. Subclasses may change
-	 * this behaviour and optionally call additional initialization methods.
+	 * @param SwatDBDataObject $object
 	 */
-	protected function init()
+	public function add($object)
 	{
-		$this->row_wrapper_class = null;
+		$this->objects[] = $object;
+	}
+
+	// }}}
+	// {{{ public function remove()
+
+	/**
+	 * Remove an object from this recordset
+	 *
+	 * @param SwatDBDataObject $object
+	 */
+	public function remove($remove_object)
+	{
+		foreach ($this->objects as $key => $object) {
+			if ($object === $remove_object) {
+				$this->remove_objects[] = $object;
+				unset($this->objects[$key]);
+				$this->objects = array_values($this->objects);
+
+				if ($this->index_field !== null) {
+					$index_field = $this->index_field;
+					$index = $object->$index_field;
+					unset($this->objects_by_index[$index]);
+				}
+			}
+		}
+	}
+
+	// }}}
+	// {{{ public function removeByIndex()
+
+	/**
+	 * Remove an object from this recordset using its index
+	 *
+	 * @param integer $index
+	 */
+	public function removeByIndex($index)
+	{
+		$object = $this->getByIndex($index);
+
+		if ($object !== null)
+			$this->remove($object);
+	}
+
+	// }}}
+
+	// database loading and saving
+	// {{{ public function setDatabase()
+
+	/**
+	 * @param MDB2 $db
+	 */
+	public function setDatabase($db)
+	{
+		$this->db = $db;
+	}
+
+	// }}}
+	// {{{ public function save()
+
+	/**
+	 * Saves the set to the database.
+	 *
+	 * Objects that were added are inserted into the database.
+	 * Objects that were modified are updated in the database.
+	 * Objects that were removed are deleted from the database.
+	 */
+	public function save() {
+		foreach ($this->objects as $object) {
+			$object->setDatabase($this->db);
+			$object->save();
+		}
+
+		foreach ($this->remove_objects as $object) {
+			$object->setDatabase($this->db);
+			$object->delete();
+		}
 	}
 
 	// }}}
