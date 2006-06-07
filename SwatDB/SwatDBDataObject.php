@@ -242,14 +242,6 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ protected function hasSubDataObject()
-
-	protected function hasSubDataObject($name)
-	{
-		return array_key_exists($name, $this->sub_data_objects);
-	}
-
-	// }}}
 	// {{{ protected function setInternalValue()
 
 	protected function setInternalValue($name, $value)
@@ -447,6 +439,13 @@ class SwatDBDataObject extends SwatObject
 	public function save() {
 		$this->checkDB();
 		$this->saveInternal();
+
+		foreach ($this->sub_data_objects as $name => $object) {
+			$saver_method = 'save'.$name;
+
+			if (method_exists($this, $saver_method))
+				call_user_func(array($this, $saver_method));
+		}
 	}
 
 	// }}}
