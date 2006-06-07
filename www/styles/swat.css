@@ -199,9 +199,14 @@ span.swat-time-span {
 
 .swat-actions,
 .swat-footer-form-field-wrapper {
+	padding: 1em 0;
+}
+
+.swat-frame .swat-actions,
+.swat-frame .swat-footer-form-field-wrapper {
 	background: #f7f5f3 url(../images/swat-form-footer.png) top left repeat-x;
-	margin: 15px -15px -15px -15px;
 	padding: 1em;
+	margin: 15px -15px -15px -15px;
 }
 
 .swat-actions label {
