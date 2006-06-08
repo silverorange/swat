@@ -12,7 +12,7 @@ require_once 'SwatDB/exceptions/SwatDBException.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
+abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator, Serializable
 {
 	// {{{ protected properties
 
@@ -247,6 +247,35 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 
 	// }}}
 
+	// serializing
+	// {{{ public function serialize()
+
+	public function serialize()
+	{
+		$data = array();
+
+		$private_properties = array('row_wrapper_class',
+			'index_field', 'objects', 'objects_by_index');
+
+		foreach ($private_properties as $property)
+			$data[$property] = &$this->$property;
+
+		return serialize($data);
+	}
+
+	// }}}
+	// {{{ public function unserialize()
+	
+	public function unserialize($data)
+	{
+		$data = unserialize($data);
+
+		foreach ($data as $property => $value)
+			$this->$property = $value;
+	}
+
+	// }}}
+
 	// manipulating of sub data objects
 	// {{{ public function getInternalValues()
 
@@ -343,6 +372,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 				get_class($this)));
 
 		$this->objects[] = $object;
+		$object->setDatabase($this->db);
 	}
 
 	// }}}
@@ -397,6 +427,11 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator
 	public function setDatabase($db)
 	{
 		$this->db = $db;
+
+		foreach ($this->objects as $object)
+			if ($object instanceof SwatDBDataObject ||
+				$object instanceof SwatDBRecordsetWrapper)
+					$object->setDatabase($db);
 	}
 
 	// }}}
