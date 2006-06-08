@@ -568,14 +568,14 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	private function getMonthOptionText($month)
 	{
-		$option = '';
+		$text = '';
 
 		if ($this->show_month_number)
-			$option.= '('.str_pad($month, 2, '0', STR_PAD_LEFT).') ';
+			$text.= '('.str_pad($month, 2, '0', STR_PAD_LEFT).') ';
 
-		$option.= Date_Calc::getMonthFullName($month);
+		$text.= Date_Calc::getMonthFullName($month);
 
-		return $option;
+		return $text;
 	}
 
 	// }}}
