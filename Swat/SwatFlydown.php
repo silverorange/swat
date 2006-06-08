@@ -107,7 +107,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 			$select_tag->open();
 
 			foreach ($options as $flydown_option) {
-				$option_tag->value = (string)$flydown_option->value;
+				$option_tag->value = serialize($flydown_option->value);
 
 				if ($flydown_option instanceof SwatFlydownDivider) {
 					$option_tag->disabled = 'disabled';
@@ -117,7 +117,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 					$option_tag->removeAttribute('class');
 				}
 
-				if ((string)$this->value === (string)$flydown_option->value &&
+				if ($this->value === $flydown_option->value &&
 					$selected === false &&
 					!($flydown_option instanceof SwatFlydownDivider)) {
 
@@ -159,13 +159,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 		if (!isset($data[$this->id]))
 			return;
 
-		$value = $data[$this->id];
-
-		// Empty string HTML option value is considered to be null.
-		if (strlen($value) == 0)
-			$this->value = null;
-		else
-			$this->value = $value;
+		$this->value = unserialize($data[$this->id]);
 
 		if ($this->required && $this->value === null) {
 			$msg = Swat::_('The %s field is required.');
@@ -266,7 +260,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 		$hidden_tag = new SwatHtmlTag('input');
 		$hidden_tag->type = 'hidden';
 		$hidden_tag->name = $this->id;
-		$hidden_tag->value = (string)$value;
+		$hidden_tag->value = serialize($value);
 
 		$hidden_tag->display();
 

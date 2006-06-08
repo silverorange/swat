@@ -37,11 +37,9 @@ class SwatRadioTable extends SwatRadioList
 		if (!$this->visible || $options === null)
 			return;
 		
-		// Empty string XHTML option value is assumed to be null
-		// when processing.
 		if ($this->show_blank)
 			$options = array_merge(
-				array(new SwatOption('', $this->blank_title)),
+				array(new SwatOption(null, $this->blank_title)),
 				$options);
 
 		$table_tag = new SwatHtmlTag('table');
