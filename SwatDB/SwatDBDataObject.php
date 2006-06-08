@@ -12,7 +12,7 @@ require_once 'SwatDB/exceptions/SwatDBException.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDBDataObject extends SwatObject
+class SwatDBDataObject extends SwatObject implements Serializable
 {
 	// {{{ private properties
 
@@ -95,10 +95,10 @@ class SwatDBDataObject extends SwatObject
 		foreach ($property_array as $name => $value) {
 			$hashed_value = md5(serialize($value));
 			if (strcmp($hashed_value, $this->property_hashes[$name]) != 0)
-				return false;
+				return true;
 		}
 		
-		return true;
+		return false;
 	}
 
 	// }}}
@@ -201,8 +201,11 @@ class SwatDBDataObject extends SwatObject
 
 		//$string = parent::__toString();
 		ob_start();
-		echo get_class($this);
-		Swat::printObject($this->getProperties());
+		printf('<h3>%s</h3>', get_class($this));
+		echo $this->isModified() ? '(modified)' : '(not modified)', '<br />';
+		foreach ($this->getProperties() as $name => $value) {
+			printf("%s = %s<br />\n", $name, $value);
+		}
 		/*
 		$reflector = new ReflectionClass(get_class($this));
 		foreach ($reflector->getMethods() as $method) {
@@ -317,7 +320,7 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ protected function getPropertyHashes()
+	// {{{ protected function generatePropertyHashes()
 
 	/**
 	 * Generates the set of md5 hashes for this data object
@@ -407,6 +410,11 @@ class SwatDBDataObject extends SwatObject
 	public function setDatabase($db)
 	{
 		$this->db = $db;
+
+		foreach ($this->sub_data_objects as $object)
+			if ($object instanceof SwatDBDataObject ||
+				$object instanceof SwatDBRecordsetWrapper)
+					$object->setDatabase($db);
 	}
 
 	// }}}
@@ -451,6 +459,8 @@ class SwatDBDataObject extends SwatObject
 			if (method_exists($this, $saver_method))
 				call_user_func(array($this, $saver_method));
 		}
+
+		$this->generatePropertyHashes();
 	}
 
 	// }}}
@@ -600,13 +610,54 @@ class SwatDBDataObject extends SwatObject
 	// }}}
 
 	// serializing
-	// {{{ public function __sleep()
+	// {{{ public function serialize()
 
-	public function __sleep()
+	public function serialize()
 	{
-		$properties = get_class_vars(get_class($this));
-		unset($properties['db']);
-		return array_keys($properties);
+		$data = array();
+
+		$serializable_sub_data_objects = $this->getSerializableSubDataObjects();
+		foreach ($this->sub_data_objects as $name => $object)
+			if (!in_array($name, $serializable_sub_data_objects))
+				unset($this->sub_data_objects[$name]);
+
+		$private_properties = array('table', 'id_field',
+			'sub_data_objects',	'property_hashes', 'internal_properties',
+			'internal_property_classes', 'date_properties');
+
+		foreach ($private_properties as $property)
+			$data[$property] = &$this->$property;
+
+		$reflector = new ReflectionObject($this);
+		foreach ($reflector->getProperties() as $property) {
+			if ($property->isPublic()) {
+				$name = $property->getName();
+				$data[$name] = &$this->$name;
+			}
+		}
+
+		return serialize($data);
+	}
+
+	// }}}
+	// {{{ public function unserialize()
+	
+	public function unserialize($data)
+	{
+		$data = unserialize($data);
+
+		foreach ($data as $property => $value)
+			$this->$property = $value;
+
+		$this->__wakeup();
+	}
+
+	// }}}
+	// {{{ protected function getSerializableSubDataObjects()
+
+	protected function getSerializableSubDataObjects()
+	{
+		return array();
 	}
 
 	// }}}
