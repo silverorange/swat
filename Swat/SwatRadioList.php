@@ -52,11 +52,9 @@ class SwatRadioList extends SwatFlydown implements SwatState
 
 		$options = $this->getOptions();
 
-		// Empty string XHTML option value is assumed to be null
-		// when processing.
 		if ($this->show_blank)
 			$options = array_merge(
-				array(new SwatOption('', $this->blank_title)),
+				array(new SwatOption(null, $this->blank_title)),
 				$options);
 
 		$div_tag = new SwatHtmlTag('div');
@@ -99,12 +97,11 @@ class SwatRadioList extends SwatFlydown implements SwatState
 				$this->input_tag->onchange = $this->onchange;
 		}
 
-		$value = (string)$option->value;
-		$this->input_tag->value = $value;
+		$this->input_tag->value = serialize($option->value);
 		$this->input_tag->removeAttribute('checked');
-		$this->input_tag->id = $this->id.'_'.$value;
+		$this->input_tag->id = $this->id.'_'.(string)$option->value;
 
-		if ($value === (string)$this->value)
+		if ($option->value === $this->value)
 			$this->input_tag->checked = 'checked';
 
 		$this->input_tag->display();
@@ -122,8 +119,7 @@ class SwatRadioList extends SwatFlydown implements SwatState
 			$this->label_tag->class = 'swat-control';
 		}
 
-		$value = (string)$option->value;
-		$this->label_tag->for = $this->id.'_'.$value;
+		$this->label_tag->for = $this->id.'_'.(string)$option->value;
 		$this->label_tag->setContent($option->title, $option->content_type);
 		$this->label_tag->display();
 	}
