@@ -410,11 +410,13 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	public function setDatabase($db)
 	{
 		$this->db = $db;
+		$serializable_sub_data_objects = $this->getSerializableSubDataObjects();
 
-		foreach ($this->sub_data_objects as $object)
+		foreach ($this->sub_data_objects as $name => $object)
 			if ($object instanceof SwatDBDataObject ||
 				$object instanceof SwatDBRecordsetWrapper)
-					$object->setDatabase($db);
+					if (in_array($name, $serializable_sub_data_objects))
+						$object->setDatabase($db);
 	}
 
 	// }}}
