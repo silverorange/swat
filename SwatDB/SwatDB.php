@@ -1163,7 +1163,7 @@ class SwatDB extends SwatObject
 	private static function debug($msg)
 	{
 		if (defined('SWATDB_DEBUG')) {
-			echo $msg, '<hr />';
+			echo $msg, "<hr />\n";
 		}
 	}
 
