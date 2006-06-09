@@ -106,15 +106,15 @@ class SwatCalendar extends SwatControl
 			$this->entry_id : 'null';
 
 		if (isset($this->valid_range_start))
-			$start_date = $this->valid_range_start->format("%m/%d/%Y");
+			$start_date = $this->valid_range_start->format('%m/%d/%Y');
 		else 
 			$start_date = '';
 
 		if (isset($this->valid_range_end)) {
-			// Javascript calendar is inclusive, subtract one second from range
+			// JavaScript calendar is inclusive, subtract one second from range
 			$tmp = clone $this->valid_range_end;
 			$tmp->subtractSeconds(1);
-			$end_date = $tmp->format("%m/%d/%Y");
+			$end_date = $tmp->format('%m/%d/%Y');
 		} else { 
 			$end_date = '';
 		}
@@ -136,8 +136,7 @@ class SwatCalendar extends SwatControl
 	{
 		/*
 		 * This date is arbitrary and is just used for getting week and
-		 * month names. We may want to add a method to Date() to get week
-		 * and month names.
+		 * month names.
 		 */
 		$date = new Date();
 		$date->setDay(1);
