@@ -168,7 +168,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		$this->requires_id = true;
 
-		$this->addJavaScript('swat/javascript/swat-find-index.js');
 		$this->addJavaScript('swat/javascript/swat-date-entry.js');
 	}
 
@@ -497,7 +496,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		$this->year_flydown = new SwatFlydown($this->id.'_year');
 		$this->year_flydown->parent = $this;
-		$this->year_flydown->onchange = sprintf('%s.set(this);', $this->id);
 
 		$start_year = $this->valid_range_start->getYear();
 
@@ -519,7 +517,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		$this->month_flydown = new SwatFlydown($this->id.'_month');
 		$this->month_flydown->parent = $this;
-		$this->month_flydown->onchange = sprintf('%s.set(this);', $this->id);
 
 		$start_year = $this->valid_range_start->getYear();
 		$tmp = clone $this->valid_range_end;
@@ -588,7 +585,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		$this->day_flydown = new SwatFlydown($this->id.'_day');
 		$this->day_flydown->parent = $this;
-		$this->day_flydown->onchange = sprintf('%s.set(this);', $this->id);
 
 		$start_year  = $this->valid_range_start->getYear();
 
