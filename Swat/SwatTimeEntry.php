@@ -141,7 +141,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->valid_range_start = new SwatDate('0000-01-01T00:00:00.0000Z');
 		$this->valid_range_end   = new SwatDate('0000-01-01T23:59:59.0000Z');
 
-		$this->addJavaScript('swat/javascript/swat-find-index.js');
 		$this->addJavaScript('swat/javascript/swat-time-entry.js');
 	}
 
@@ -332,7 +331,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	private function createHourFlydown()
 	{
 		$this->hour_flydown = new SwatFlydown($this->id.'_hour');
-		$this->hour_flydown->onchange = sprintf('%s.set(this);', $this->id);
+		$this->hour_flydown->parent = $this;
 
 		for ($i = 1; $i <= 12; $i++)
 			$this->hour_flydown->addOption($i, $i);
@@ -344,7 +343,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	private function createMinuteFlydown()
 	{
 		$this->minute_flydown = new SwatFlydown($this->id.'_minute');
-		$this->minute_flydown->onchange = sprintf('%s.set(this);', $this->id);
+		$this->minute_flydown->parent = $this;
 
 		for ($i = 0; $i <= 59; $i++)
 			$this->minute_flydown->addOption($i,
@@ -357,7 +356,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	private function createSecondFlydown()
 	{
 		$this->second_flydown = new SwatFlydown($this->id.'_second');
-		$this->second_flydown->onchange = sprintf('%s.set(this);', $this->id);
+		$this->second_flydown->parent = $this;
 
 		for ($i = 0; $i <= 59; $i++)
 			$this->second_flydown->addOptions($i,
@@ -371,7 +370,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	{
 		$this->am_pm_flydown = new SwatFlydown($this->id.'_ampm');
 		$this->am_pm_flydown->addOptionsByArray(array('am' => 'AM', 'pm' => 'PM'));
-		$this->am_pm_flydown->onchange = sprintf('%s.set(this);', $this->id);
+		$this->am_pm_flydown->parent = $this;
 	}
 
 	/**
