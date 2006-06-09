@@ -456,7 +456,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 		$this->saveInternal();
 
 		foreach ($this->sub_data_objects as $name => $object) {
-			$saver_method = 'save'.$name;
+			$saver_method = 'save'.str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
 
 			if (method_exists($this, $saver_method))
 				call_user_func(array($this, $saver_method));
