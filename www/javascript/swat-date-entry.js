@@ -48,7 +48,6 @@ function SwatDateEntry(id)
 		if (this.day)
 			this.day.addEventListener('change', handleChange, true);
 	}
-
 }
 
 SwatDateEntry.prototype.setSwatTime = function(swat_time)
@@ -86,7 +85,7 @@ SwatDateEntry.prototype.parseInt = function(serialized_integer)
 
 SwatDateEntry.prototype.getIntegerIndex = function(flydown, value)
 {
-	var value;
+	var flydown_value;
 	for (i = 0; i < flydown.options.length; i++) {
 		flydown_value = this.parseInt(flydown.options[i].value);
 		if (flydown_value == value)
