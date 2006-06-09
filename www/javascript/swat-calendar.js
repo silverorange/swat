@@ -329,9 +329,9 @@ SwatCalendar.prototype.draw = function()
 			var m = this.date.getMonth();
 			var y = this.date.getYear();
 
-			var day   = (d == '') ? today.getDate()      : parseInt(d);
-			var month = (m == '') ? today.getMonth() + 1 : parseInt(m);
-			var year  = (y == '') ? today.getYear()      : parseInt(y);
+			var day   = (d == null) ? today.getDate()      : parseInt(d);
+			var month = (m == null) ? today.getMonth() + 1 : parseInt(m);
+			var year  = (y == null) ? today.getYear()      : parseInt(y);
 
 			//TODO: figure out if the last two conditions are ever run
 			if (day != 0 && month != 0 && year != 0) {
