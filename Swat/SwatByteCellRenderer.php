@@ -4,7 +4,10 @@ require_once 'Swat/SwatCellRenderer.php';
 require_once 'Swat/SwatString.php';
 
 /**
- * A byte cell renderer
+ * A cell renderer for rendering base-2 units of information 
+ *
+ * This cell renderer should be used for displaying things such as file and
+ * memory sizes.
  *
  * @package   Swat
  * @copyright 2006 silverorange
