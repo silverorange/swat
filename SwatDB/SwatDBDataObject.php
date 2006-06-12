@@ -53,6 +53,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	protected $id_field = null;
 	
 	// }}}
+
 	// {{{ public function __construct()
 
 	/**
@@ -611,7 +612,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 
 	// }}}
 
-	// serializing
+	// serialization
 	// {{{ public function serialize()
 
 	public function serialize()
@@ -655,19 +656,19 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	}
 
 	// }}}
-	// {{{ protected function getSerializableSubDataObjects()
-
-	protected function getSerializableSubDataObjects()
-	{
-		return array();
-	}
-
-	// }}}
 	// {{{ public function __wakeup()
 
 	public function __wakeup()
 	{
 		// here for subclasses
+	}
+
+	// }}}
+	// {{{ protected function getSerializableSubDataObjects()
+
+	protected function getSerializableSubDataObjects()
+	{
+		return array();
 	}
 
 	// }}}
