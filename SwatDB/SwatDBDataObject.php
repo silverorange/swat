@@ -189,10 +189,11 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	// {{{ public function __toString()
 
 	/**
-	 * Gets this object as a string
+	 * Gets a string representation of this data-object
+	 *
+	 * @return string this data-object represented as a string.
 	 *
 	 * @see SwatObject::__toString()
-	 * @return string this object represented as a string.
 	 */
 	public function __toString()
 	{
