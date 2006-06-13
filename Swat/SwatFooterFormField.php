@@ -13,23 +13,11 @@ require_once 'Swat/SwatFormField.php';
  */
 class SwatFooterFormField extends SwatFormField
 {
-	/**
-	 * Constructor
-	 *
-	 * Sets the class to swat-footer-form-field
-	 *
-	 * @param string $id the id of this form field.
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-		$this->classes = array('swat-footer-form-field');
-	}
-
 	public function display()
 	{
 		$wrapper_tag = new SwatHtmlTag('div');
-		$wrapper_tag->class = 'swat-footer-form-field-wrapper';
+		$wrapper_tag->class =
+			$this->getCssClasses('swat-footer-form-field');
 
 		$wrapper_tag->open();
 		parent::display();

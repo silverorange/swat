@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatTitleable.php';
 require_once 'Swat/SwatHtmlTag.php';
 
@@ -11,7 +11,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFrame extends SwatContainer implements SwatTitleable
+class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 {
 	/**
 	 * A visible title for this frame, or null
@@ -33,16 +33,6 @@ class SwatFrame extends SwatContainer implements SwatTitleable
 	 * @var string
 	 */
 	public $title_separator = ': ';
-
-	/**
-	 * The custom CSS class of this frame
-	 *
-	 * This optional class is added on top of the default 'swat-frame'
-	 * class.
-	 *
-	 * @var string
-	 */
-	public $class = null;
 
 	/**
 	 * Gets the title of this frame
@@ -71,10 +61,7 @@ class SwatFrame extends SwatContainer implements SwatTitleable
 			return;
 
 		$outer_div = new SwatHtmlTag('div');
-		$outer_div->class = 'swat-frame';
-
-		if ($this->class !== null)
-			$outer_div->class.= ' '.$this->class;
+		$outer_div->class = $this->getCssClasses('swat-frame');
 
 		if ($this->id !== null)
 			$outer_div->id = $this->id;
