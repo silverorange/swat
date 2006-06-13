@@ -239,7 +239,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	protected function notifyOfAdd($widget)
 	{
 		if (class_exists('SwatCheckbox') && $widget instanceof SwatCheckbox) {
-			$this->classes[] = 'swat-form-field-checkbox';
+			$this->class = 'swat-form-field-checkbox';
 		}
 	}
 }
