@@ -13,6 +13,8 @@ require_once 'Swat/SwatState.php';
  */
 class SwatRadioList extends SwatFlydown implements SwatState
 {
+	// {{{ private properties
+
 	/**
 	 * Used for displaying radio buttons
 	 *
@@ -26,6 +28,9 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	 * @var SwatHtmlTag
 	 */
 	private $label_tag;
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new radiolist
@@ -41,6 +46,9 @@ class SwatRadioList extends SwatFlydown implements SwatState
 		$this->show_blank  = false;
 		$this->requires_id = true;
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this radio list
@@ -81,6 +89,9 @@ class SwatRadioList extends SwatFlydown implements SwatState
 		$div_tag->close();
 	}
 
+	// }}}
+	// {{{ protected function displayOption()
+
 	/**
 	 * Displays an option in the radio list
 	 *
@@ -107,6 +118,9 @@ class SwatRadioList extends SwatFlydown implements SwatState
 		$this->input_tag->display();
 	}
 
+	// }}}
+	// {{{ protected function displayOptionLabel()
+
 	/**
 	 * Displays an option in the radio list
 	 *
@@ -123,6 +137,8 @@ class SwatRadioList extends SwatFlydown implements SwatState
 		$this->label_tag->setContent($option->title, $option->content_type);
 		$this->label_tag->display();
 	}
+
+	// }}}
 }
 
 ?>
