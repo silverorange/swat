@@ -17,14 +17,13 @@ class SwatGroupingFormField extends SwatFormField
 	/**
 	 * Constructor
 	 *
-	 * Sets the class to swat-grouping-form-field
+	 * Sets the XHTML tag to use in this form field
 	 *
 	 * @param string $id the id of this form field.
 	 */
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-		$this->classes = array('swat-grouping-form-field');
 		$this->container_tag = 'fieldset';
 	}
 

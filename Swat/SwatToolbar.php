@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatToolbar extends SwatContainer
+class SwatToolbar extends SwatDisplayableContainer
 {
 	// {{{ public function __construct()
 
@@ -41,7 +41,7 @@ class SwatToolbar extends SwatContainer
 			return;
 
 		$toolbar_ul = new SwatHtmlTag('ul');
-		$toolbar_ul->class = 'swat-toolbar';
+		$toolbar_ul->class = $this->getCssClasses('swat-toolbar');
 
 		$toolbar_ul->open();
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDisclosure extends SwatContainer
+class SwatDisclosure extends SwatDisplayableContainer
 {
 	/**
 	 * A visible title for the label shown beside the disclosure triangle
@@ -54,7 +54,7 @@ class SwatDisclosure extends SwatContainer
 
 		$control_div = new SwatHtmlTag('div');
 		$control_div->id = $this->id;
-		$control_div->class = 'swat-disclosure-control';
+		$control_div->class = $this->getCssClasses('swat-disclosure-control');
 
 		if ($this->open)
 			$control_div->class.= ' swat-disclosure-control-opened';

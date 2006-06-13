@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
@@ -15,7 +15,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatForm extends SwatContainer
+class SwatForm extends SwatDisplayableContainer
 {
 	const METHOD_POST = 'post';
 	const METHOD_GET  = 'get';
@@ -158,7 +158,7 @@ class SwatForm extends SwatContainer
 		$form_tag->method = $this->method;
 		$form_tag->enctype = $this->encoding_type;
 		$form_tag->action = $this->action;
-		$form_tag->class = 'swat-form';
+		$form_tag->class = $this->getCssClasses('swat-form');
 
 		$form_tag->open();
 

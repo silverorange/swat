@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatTitleable.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatString.php';
@@ -15,7 +15,7 @@ require_once 'Swat/SwatMessage.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFormField extends SwatContainer implements SwatTitleable
+class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 {
 	/**
 	 * The visible name for this field, or null
@@ -55,15 +55,6 @@ class SwatFormField extends SwatContainer implements SwatTitleable
 	 * @var string
 	 */
 	public $access_key = null;
-
-	/**
-	 * Array of CSS classes to use on the container tag
-	 *
-	 * Subclasses can change this to change their appearance.
-	 *
-	 * @var array
-	 */
-	protected $classes = array('swat-form-field');
 
 	/**
 	 * Container tag to use
@@ -125,7 +116,7 @@ class SwatFormField extends SwatContainer implements SwatTitleable
 
 		$messages = &$this->getMessages();
 		$container_tag = new SwatHtmlTag($this->container_tag);
-		$container_tag->class = implode(' ', $this->classes);
+		$container_tag->class = $this->getCssClasses('swat-form-field');
 
 		if ($this->id !== null)
 			$container_tag->id = $this->id;
