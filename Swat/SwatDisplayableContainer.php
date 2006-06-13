@@ -34,7 +34,7 @@ abstract class SwatDisplayableContainer extends SwatContainer
 		if ($this->class !== null)
 			$class.= ' '.$this->class;
 
-		return $classes;
+		return $class;
 	}
 
 	// }}}
