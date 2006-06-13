@@ -158,16 +158,16 @@ ul.swat-note {
 
 /* SwatFieldset */
 
-.swat-grouping-form-field,
-.swat-fieldset {
+.swat-fieldset,
+fieldset.swat-form-field {
 	border: 1px solid #ccc;
 	margin-bottom: 1em;
 	padding: 0 1em 1em 1em;
 	position: relative;
 }
 
-.swat-grouping-form-field legend,
-.swat-fieldset legend {
+.swat-fieldset legend,
+fieldset.swat-form-field legend {
 	font-weight: bold;
 	color: #666;
 	padding: 0 0.3em;
