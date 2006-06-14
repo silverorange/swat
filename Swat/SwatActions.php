@@ -165,16 +165,6 @@ class SwatActions extends SwatControl implements SwatUIParent
 	}
 
 	/**
-	 * Displays the button for this action list
-	 *
-	 * Sub-classes can obver-ride this method to display more buttons.
-	 */
-	protected function displayButton()
-	{
-		$this->apply_button->display();
-	}
-
-	/**
 	 * Figures out what action item is selected
 	 *
 	 * This method creates internal widgets if they do not exist, and then
@@ -255,6 +245,16 @@ class SwatActions extends SwatControl implements SwatUIParent
 			$out->addEntrySet($child_widget->getHtmlHeadEntries());
 
 		return $out;
+	}
+
+	/**
+	 * Displays the button for this action list
+	 *
+	 * Subclasses may override this method to display more buttons.
+	 */
+	protected function displayButton()
+	{
+		$this->apply_button->display();
 	}
 
 	/**
