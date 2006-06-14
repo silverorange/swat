@@ -45,17 +45,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	public $blank_title = '';
 
 	/**
-	 * On change
-	 *
-	 * The onchange attribute of the XHTML select tag, or null.
-	 *
-	 * TODO: get rid of this using event handlers in JavaScript
-	 *
-	 * @var string
-	 */
-	public $onchange = null;
-
-	/**
 	 * Width
 	 *
 	 * The visible width of the select tag. Can be defined in percentage, ems,
@@ -96,9 +85,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
 			if ($this->width !== null)
 				$select_tag->style = 'width: '.$this->width.';';
-
-			if ($this->onchange !== null)
-				$select_tag->onchange = $this->onchange;
 
 			$option_tag = new SwatHtmlTag('option');
 
