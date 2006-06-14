@@ -162,6 +162,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 		echo Swat::_('Actions apply to checked items.');
 		echo '</div>';
 		echo '</div>';
+
+		$this->displayJavaScript();
 	}
 
 	/**
@@ -272,9 +274,6 @@ class SwatActions extends SwatControl implements SwatUIParent
 
 		$this->action_flydown = new SwatFlydown($this->id.'_action_flydown');
 		$this->action_flydown->parent = $this;
-		$this->action_flydown->onchange =
-			"swatActionsDisplay(this, '{$this->id}');";
-
 		$this->action_flydown->show_blank = $this->show_blank;
 
 		foreach ($this->action_items as $item)
@@ -286,6 +285,29 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$this->apply_button = new SwatButton($this->id.'_apply_button');
 		$this->apply_button->parent = $this;
 		$this->apply_button->setFromStock('apply');
+	}
+
+	/** 
+	 * Displays JavaScript required to show and hide selected action items
+	 */
+	protected function displayJavaScript()
+	{
+		$values = array();
+		if ($this->show_blank)
+			$values[] = "''";
+
+		foreach ($this->action_items as $item)
+			$values[] = "'".$item->id."'";
+
+		$selected_value = ($this->selected === null) ?
+			'null' : "'".$this->selected->id."'";
+
+		echo '<script type="text/javascript">';
+
+		printf("%s = new SwatActions('%s', [%s], %s);\n", $this->id,
+			$this->id, implode(', ', $values), $selected_value);
+
+		echo '</script>';
 	}
 }
 
