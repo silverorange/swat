@@ -13,14 +13,15 @@ function SwatActions(id, values, selected)
 	function handleChange(event)
 	{
 		if (self.selected_element) {
-			self.selected_element.className = 'swat-hidden';
+			self.selected_element.className += ' swat-hidden';
 		}
 
 		var id = self.id + '_' + self.values[self.flydown.selectedIndex];
 		self.selected_element = document.getElementById(id);
 
 		if (self.selected_element) {
-			self.selected_element.className = '';
+			self.selected_element.className =
+				self.selected_element.className.replace(/ *swat-hidden/, '');
 		}
 	}
 
