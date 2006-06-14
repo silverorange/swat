@@ -103,9 +103,6 @@ class SwatRadioList extends SwatFlydown implements SwatState
 			$this->input_tag = new SwatHtmlTag('input');
 			$this->input_tag->type = 'radio';
 			$this->input_tag->name = $this->id;
-		
-			if ($this->onchange !== null)
-				$this->input_tag->onchange = $this->onchange;
 		}
 
 		$this->input_tag->value = serialize($option->value);
