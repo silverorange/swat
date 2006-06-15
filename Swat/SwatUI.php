@@ -548,6 +548,11 @@ class SwatUI extends SwatObject
 			require_once $class_file;
 		}
 
+		if (!is_subclass_of($class, 'SwatUIObject'))
+			throw new SwatInvalidClassException(
+				"Class '{$class}' is not a a descendant of SwatUIObject and ".
+				'cannot be added to the widget tree.');
+
 		$object = new $class();
 
 		// id is optional in the DTD
