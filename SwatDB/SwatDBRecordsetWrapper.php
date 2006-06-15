@@ -352,6 +352,29 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator, Se
 	}
 
 	// }}}
+	// {{{ public function isModified()
+
+	/**
+	 * Returns true if this object has been modified since it was loaded
+	 *
+	 * @return boolean true if this object was modified and false if this
+	 *                  object was not modified.
+	 */
+	public function isModified()
+	{
+		if (count($this->remove_objects) > 0)
+			return true;
+
+		foreach ($this->objects as $name => $object) {
+			echo 'wrapper - '.$name.'<br />';
+			if ($object->isModified())
+				return true;		
+		}
+
+		return false;
+	}
+
+	// }}}
 
 	// manipulating of objects
 	// {{{ public function add()
@@ -454,6 +477,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator, Se
 			$object->setDatabase($this->db);
 			$object->delete();
 		}
+
+		$this->remove_objects = array();
 	}
 
 	// }}}
