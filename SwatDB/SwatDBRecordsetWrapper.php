@@ -365,11 +365,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator, Se
 		if (count($this->remove_objects) > 0)
 			return true;
 
-		foreach ($this->objects as $name => $object) {
-			echo 'wrapper - '.$name.'<br />';
+		foreach ($this->objects as $name => $object)
 			if ($object->isModified())
 				return true;		
-		}
 
 		return false;
 	}
