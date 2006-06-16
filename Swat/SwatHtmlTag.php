@@ -82,6 +82,22 @@ class SwatHtmlTag extends SwatObject
 	}
 
 	/**
+	 * Adds an array of attributes to this XHTML tag
+	 *
+	 * If entries in the attributes array coincide with existing attributes of
+	 * this XHTML tag, the attributes in the array overwrite the existing
+	 * attributes.
+	 *
+	 * @param array an array of attribute-value pairs of the form
+	 *               'attribute' => 'value'.
+	 */
+	public function addAttributes($attributes)
+	{
+		if (is_array($attributes))
+			$this->attributes = array_merge($this->attributes, $attributes);
+	}
+
+	/**
 	 * Magic __get method
 	 *
 	 * This should never be called directly, but is invoked indirectly when
