@@ -20,7 +20,12 @@ require_once 'Swat/SwatAutoloaderRule.php';
  */
 class SwatAutoloader extends SwatObject
 {
+	// {{{ private properties
+
 	private static $rules = array();
+
+	// }}}
+	// {{{ public static function addRule()
 
 	/**
 	 * Adds an autoloader rule to the autoloader
@@ -38,6 +43,9 @@ class SwatAutoloader extends SwatObject
 		SwatAutoloader::$rules[] =
 			new SwatAutoloaderRule($regexp, $filename, $last);
 	}
+
+	// }}}
+	// {{{ public static function getFileFromClass()
 
 	/**
 	 * Gets the filename of a class name
@@ -67,6 +75,8 @@ class SwatAutoloader extends SwatObject
 
 		return $filename;
 	}
+
+	// }}}
 }
 
 /*
@@ -76,6 +86,8 @@ SwatAutoloader::addRule('/^SwatDB(.*)?Exception$/', 'SwatDB/exceptions/SwatDB$1E
 SwatAutoloader::addRule('/^SwatDB(.*)/', 'SwatDB/$1');
 SwatAutoloader::addRule('/^Swat(.*)?Exception$/', 'Swat/exceptions/Swat$1Exception.php');
 SwatAutoloader::addRule('/^Swat(.*)/', 'Swat/Swat$1.php');
+
+// {{{ function __autoload()
 
 /**
  * Provides an opportunity to define a class before causing a fatal error when
@@ -97,5 +109,7 @@ function __autoload($class_name)
 	if ($filename !== null)
 		require $filename;
 }
+
+// }}}
 
 ?>

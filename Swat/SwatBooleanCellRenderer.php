@@ -11,6 +11,8 @@ require_once 'Swat/SwatCellRenderer.php';
  */
 class SwatBooleanCellRenderer extends SwatCellRenderer
 {
+	// {{{ public properties
+
 	/**
 	 * Value of this cell
 	 *
@@ -54,6 +56,9 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	 * @see SwatBooleanCellRenderer::setFromStock()
 	 */
 	public $stock_id = null;
+
+	// }}}
+	// {{{ public function setFromStock()
 
 	/**
 	 * Sets the values of this boolean cell renderer to a stock type
@@ -104,6 +109,9 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 			$this->content_type = $content_type;
 	}
 
+	// }}}
+	// {{{ public function render()
+
 	/**
 	 * Renders the contents of this cell
 	 *
@@ -125,6 +133,9 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 			$this->renderFalse();
 	}
 
+	// }}}
+	// {{{ protected function renderTrue()
+
 	protected function renderTrue()
 	{
 		if ($this->content_type === 'text/plain')
@@ -133,6 +144,9 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 			echo $this->true_content;
 	}
 
+	// }}}
+	// {{{ protected function renderFalse()
+
 	protected function renderFalse()
 	{
 		if ($this->content_type === 'text/plain')
@@ -140,6 +154,9 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 		else
 			echo $this->false_content;
 	}
+
+	// }}}
+	// {{{ protected function displayCheck()
 
 	protected function displayCheck()
 	{
@@ -150,6 +167,8 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 		$image_tag->width = '14';
 		$image_tag->display();
 	}
+
+	// }}}
 }
 
 ?>
