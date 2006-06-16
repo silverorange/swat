@@ -21,7 +21,10 @@ class SwatString extends SwatObject
 	public static $blocklevel_elements = array(
 		'p',          'pre',     'dl',     'div',
 		'blockquote', 'form',    'h[1-6]', 'table',
-		'fieldset',   'address', 'ul',     'ol');
+		'fieldset',   'address', 'ul',     'ol',
+		'dd',         'dt',      'li',     'tbody',
+		'td',         'tfoot',   'th',     'thead',
+		'tr');
 
 	// }}}
 	// {{{ public static function toXHTML()
