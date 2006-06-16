@@ -15,6 +15,8 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  */
 class SwatActionItem extends SwatControl implements SwatUIParent
 {
+	// {{{ public properties
+
 	/**
 	 * A unique identifier for this action item
 	 *
@@ -36,6 +38,9 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	 */
 	public $widget = null;
 
+	// }}}
+	// {{{ public function init()
+
 	/**
 	 * Initializes this action item
 	 *
@@ -50,6 +55,9 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 			$this->widget->init();
 	}
 
+	// }}}
+	// {{{ public function display()
+
 	/**
 	 * Displays this item
 	 *
@@ -59,6 +67,9 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	{
 		$this->widget->display();
 	}
+
+	// }}}
+	// {{{ public function setWidget()
 
 	/**
 	 * Sets the widget to use for this item
@@ -79,6 +90,9 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 		$this->widget = $widget;
 		$widget->parent = $this;
 	}
+
+	// }}}
+	// {{{ public function addChild()
 
 	/**
 	 * Adds a child object
@@ -104,6 +118,9 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 				'SwatActionItem object.', 0, $child);
 	}
 
+	// }}}
+	// {{{ public function getHtmlHeadEntries()
+
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this action item
 	 *
@@ -123,6 +140,8 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 
 		return $out;
 	}
+
+	// }}}
 }
 
 ?>
