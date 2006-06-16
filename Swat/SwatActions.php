@@ -17,6 +17,8 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  */
 class SwatActions extends SwatControl implements SwatUIParent
 {
+	// {{{ public properties
+
 	/**
 	 * Selected action
 	 * 
@@ -44,6 +46,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 * @var boolean
 	 */
 	public $auto_reset = true;
+
+	// }}}
+	// {{{ private properties
 
 	/**
 	 * A reference to an internal flydown widget that displays available
@@ -78,6 +83,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	private $widgets_created = false;
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new actions list
 	 *
@@ -92,6 +100,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$this->addJavaScript('swat/javascript/swat-actions.js');
 	}
 
+	// }}}
+	// {{{ public function init()
+
 	/**
 	 * Initializes this action item
 	 *
@@ -104,6 +115,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 		foreach ($this->action_items as $action_item)
 			$action_item->init();
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this list of actions
@@ -166,6 +180,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$this->displayJavaScript();
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	/**
 	 * Figures out what action item is selected
 	 *
@@ -193,6 +210,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 		}
 	}
 
+	// }}}
+	// {{{ public function addActionItem()
+
 	/**
 	 * Adds an action item
 	 *
@@ -207,6 +227,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$this->action_items[$item->id] = $item;
 		$item->parent = $this;
 	}
+
+	// }}}
+	// {{{ public function addChild()
 
 	/**
 	 * Adds a child object
@@ -232,6 +255,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 				'SwatAction object.', 0, $child);
 	}
 
+	// }}}
+	// {{{ public function getHtmlHeadEntries()
+
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this actions list
 	 *
@@ -249,6 +275,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 		return $out;
 	}
 
+	// }}}
+	// {{{ protected function displayButton()
+
 	/**
 	 * Displays the button for this action list
 	 *
@@ -258,6 +287,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 	{
 		$this->apply_button->display();
 	}
+
+	// }}}
+	// {{{ protected function createEmbeddedWidgets()
 
 	/**
 	 * Creates internal widgets
@@ -287,6 +319,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$this->apply_button->setFromStock('apply');
 	}
 
+	// protected function displayJavaScript()
+
 	/** 
 	 * Displays JavaScript required to show and hide selected action items
 	 */
@@ -309,6 +343,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 
 		echo '</script>';
 	}
+
+	// }}}
 }
 
 ?>
