@@ -35,9 +35,14 @@ require_once 'Swat/SwatObject.php';
  */
 class SwatAutoloaderRule extends SwatObject
 {
+	// {{{ private properties
+
 	private $expression;
 	private $replacement;
 	private $last;
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new class autoloader rule
@@ -54,6 +59,9 @@ class SwatAutoloaderRule extends SwatObject
 		$this->last = $last;
 	}
 
+	// }}}
+	// {{{ public function isLast()
+
 	/**
 	 * Whether or not this rule is a final rule
 	 *
@@ -63,6 +71,9 @@ class SwatAutoloaderRule extends SwatObject
 	{
 		return $this->last;
 	}
+
+	// }}}
+	// {{{ public function apply()
 
 	/**
 	 * Applies this autoloader rule to a class name
@@ -90,6 +101,8 @@ class SwatAutoloaderRule extends SwatObject
 
 		return $filename;
 	}
+
+	// }}}
 }
 
 ?>
