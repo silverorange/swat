@@ -721,7 +721,6 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		echo '<tbody>';
 
-		$tr_tag = new SwatHtmlTag('tr');
 
 		$rows = $this->model->getRows();
 		if (is_array($rows))
@@ -741,7 +740,11 @@ class SwatTableView extends SwatControl implements SwatUIParent
 				$group->display($row);
 
 			// display a row of data
+			$tr_tag = new SwatHtmlTag('tr');
 			$tr_tag->class = $this->getRowClass($row, $count);
+			foreach ($this->columns as $column)
+				$tr_tag->addAttributes($column->getTrAttributes($row));
+
 			$tr_tag->open();
 
 			foreach ($this->columns as $column)

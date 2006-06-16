@@ -204,6 +204,25 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	}
 
 	/**
+	 * Gets TR-tag attributes
+	 *
+	 * Subclasses may redefine this to set attributes on the tr tag that wraps
+	 * rows using this column.
+	 *
+	 * The returned array is of the form 'attribute' => 'value'.
+	 *
+	 * @param mixed $row a data object used to display the cell renderers in
+	 *                    this column.
+	 *
+	 * @return array an array of attributes to apply to the tr tag of the
+	 *                row that wraps this column display.
+	 */
+	public function getTrAttributes($row)
+	{
+		return array();
+	}
+
+	/**
 	 * Gets the input cell of this column
 	 *
 	 * This method is a useful way to get this column's input cell before
