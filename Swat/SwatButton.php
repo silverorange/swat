@@ -16,6 +16,8 @@ require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
  */
 class SwatButton extends SwatControl
 {
+	// {{{ public properties
+
 	/**
 	 * Title
 	 *
@@ -57,6 +59,9 @@ class SwatButton extends SwatControl
 	 */
 	public $access_key = null;
 
+	// }}}
+	// {{{ private properties
+
 	/**
 	 * Clicked
 	 *
@@ -67,6 +72,9 @@ class SwatButton extends SwatControl
 	 * @var boolean
 	 */
 	private $clicked = false;
+
+	// }}}
+	// {{{ public function init()
 
 	/**
 	 * Initializes this widget
@@ -85,6 +93,9 @@ class SwatButton extends SwatControl
 		else
 			$this->setFromStock($this->stock_id, false);
 	}
+
+	// }}}
+	// {{{ pblic function display()
 
 	/**
 	 * Displays this button
@@ -120,6 +131,9 @@ class SwatButton extends SwatControl
 		$input_tag->display();
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	/**
 	 * Does button processing
 	 *
@@ -144,6 +158,9 @@ class SwatButton extends SwatControl
 		}
 	}
 
+	// }}}
+	// {{{ public function hasBeenClicked()
+
 	/**
 	 * Returns whether this button has been clicked
 	 *
@@ -153,6 +170,9 @@ class SwatButton extends SwatControl
 	{
 		return $this->clicked;
 	}
+
+	// }}}
+	// {{{ public function setFromStock()
 
 	/**
 	 * Sets the values of this button to a stock type
@@ -217,6 +237,8 @@ class SwatButton extends SwatControl
 		if ($overwrite_properties || ($this->class === null))
 			$this->class = $class;
 	}
+
+	// }}}
 }
 
 ?>

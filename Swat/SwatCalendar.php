@@ -15,6 +15,8 @@ require_once 'Date.php';
  */
 class SwatCalendar extends SwatControl
 {
+	// {{{ public properties
+
 	/**
 	 * Id of the {@link SwatDateEntry} this calendar corresponds to
 	 *
@@ -36,6 +38,9 @@ class SwatCalendar extends SwatControl
 	 */
 	public $valid_range_end;
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new calendar
 	 *
@@ -53,6 +58,9 @@ class SwatCalendar extends SwatControl
 		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
 		$this->addStyleSheet('swat/styles/swat-calendar.css');
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this calendar widget
@@ -86,6 +94,9 @@ class SwatCalendar extends SwatControl
 
 		$this->displayJavaScript();
 	}
+
+	// }}}
+	// {{{ private function displayJavaScript()
 
 	/**
 	 * Displays calendar JavaScript
@@ -127,6 +138,9 @@ class SwatCalendar extends SwatControl
 
 		echo "\n</script>";
 	}
+
+	// }}}
+	// {{{ private function displayJavaScriptTranslations()
 
 	/**
 	 * Displays translatable string resources for the JavaScript object for
@@ -175,6 +189,8 @@ class SwatCalendar extends SwatControl
 			"SwatCalendar.today_text = '{$today_text}';\n",
 			'</script>';
 	}
+
+	// }}}
 }
 
 ?>
