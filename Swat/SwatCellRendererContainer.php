@@ -14,6 +14,8 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  */
 abstract class SwatCellRendererContainer extends SwatUIObject
 {
+	// {{{ protected properties
+
 	/**
 	 * A set of SwatCellRenderer objects
 	 *
@@ -23,6 +25,9 @@ abstract class SwatCellRendererContainer extends SwatUIObject
 	 */
 	protected $renderers = null;
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new cell renderer container
 	 */
@@ -31,6 +36,9 @@ abstract class SwatCellRendererContainer extends SwatUIObject
 		parent::__construct();
 		$this->renderers = new SwatCellRendererSet();
 	}
+
+	// }}}
+	// {{{ public function addMappingToRenderer()
 
 	/**
 	 * Links a datafield to a renderer property
@@ -60,6 +68,9 @@ abstract class SwatCellRendererContainer extends SwatUIObject
 		return $mapping;
 	}
 
+	// }}}
+	// {{{ public function addRenderer()
+
 	/**
 	 * Adds a cell renderer to this column's set of renderers
 	 *
@@ -70,6 +81,9 @@ abstract class SwatCellRendererContainer extends SwatUIObject
 		$this->renderers->addRenderer($renderer);
 		$renderer->parent = $this;
 	}
+
+	// }}}
+	// {{{ public function getRenderers()
 
 	/**
 	 * Gets the cell renderers of this column
@@ -88,6 +102,9 @@ abstract class SwatCellRendererContainer extends SwatUIObject
 		return $out;
 	}
 
+	// }}}
+	// {{{ public function getRenderer()
+
 	/**
 	 * Gets a cell renderers of this column by its unique identifier
 	 *
@@ -101,6 +118,9 @@ abstract class SwatCellRendererContainer extends SwatUIObject
 		return $this->renderers->getRenderer($renderer_id);
 	}
 
+	// }}}
+	// {{{ public function getRendererByPosition()
+
 	/**
 	 * Gets a cell renderer in this column based on its ordinal position
 	 *
@@ -113,6 +133,9 @@ abstract class SwatCellRendererContainer extends SwatUIObject
 	{
 		return $this->renderers->getRendererByPosition($position);
 	}
+
+	// }}}
+	// {{{ public function addChild()
 
 	/**
 	 * Add a child object to this object
@@ -132,6 +155,8 @@ abstract class SwatCellRendererContainer extends SwatUIObject
 				'Only SwatCellRender objects may be nested within '.
 				get_class($this).' objects.', 0, $child);
 	}
+
+	// }}}
 }
 
 ?>
