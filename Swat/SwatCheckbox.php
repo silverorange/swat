@@ -13,6 +13,8 @@ require_once 'Swat/SwatState.php';
  */
 class SwatCheckbox extends SwatControl implements SwatState
 {
+	// {{{ public properties
+
 	/**
 	 * Checkbox value
 	 *
@@ -30,6 +32,9 @@ class SwatCheckbox extends SwatControl implements SwatState
 	 * @var string
 	 */
 	public $access_key = null;
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this checkbox
@@ -53,6 +58,9 @@ class SwatCheckbox extends SwatControl implements SwatState
 		$input_tag->display();
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	/**
 	 * Processes this checkbox
 	 *
@@ -62,6 +70,9 @@ class SwatCheckbox extends SwatControl implements SwatState
 	{
 		$this->value = array_key_exists($this->id, $_POST);
 	}
+
+	// }}}
+	// {{{ public function getState()
 
 	/**
 	 * Gets the current state of this checkbox
@@ -75,6 +86,9 @@ class SwatCheckbox extends SwatControl implements SwatState
 		return $this->value;
 	}
 
+	// }}}
+	// {{{ public function setState()
+
 	/**
 	 * Sets the current state of this checkbox
 	 *
@@ -86,6 +100,9 @@ class SwatCheckbox extends SwatControl implements SwatState
 	{
 		$this->value = $state;
 	}
+
+	// }}}
+	// {{{ public function getFocusableHtmlId()
 
 	/**
 	 * Gets the id attribute of the XHTML element displayed by this widget
@@ -101,6 +118,8 @@ class SwatCheckbox extends SwatControl implements SwatState
 	{
 		return $this->id;
 	}
+
+	// }}}
 }
 
 ?>

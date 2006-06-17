@@ -15,6 +15,8 @@ require_once 'Swat/SwatState.php';
  */
 class SwatColorEntry extends SwatInputControl implements SwatState
 {
+	// {{{ public properties
+
 	/**
 	 * Selected color of this widget in hexidecimal representation
 	 *
@@ -30,6 +32,9 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 	 * @var string
 	 */
 	public $access_key = null;
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new color entry widget
@@ -48,6 +53,9 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
 		$this->addStyleSheet('swat/styles/swat-color-entry.css');
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this color selection widget
@@ -89,6 +97,9 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		$this->displayJavaScript();
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	/**
 	 * Processes this color entry widget
 	 *
@@ -119,6 +130,9 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		}
 	}
 
+	// }}}
+	// {{{ public function getState()
+
 	/**
 	 * Gets the current state of this color selector
 	 *
@@ -134,6 +148,9 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 			return $this->value;
 	}
 
+	// }}}
+	// {{{ public function setState()
+
 	/**
 	 * Sets the current state of this color selector
 	 *
@@ -145,6 +162,9 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 	{
 		$this->value = new SwatDate($state);
 	}
+
+	// }}}
+	// {{{ public function displayJavaScript()
 
 	/**
 	 * Includes the JavaScript required for this control to function
@@ -160,6 +180,9 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		echo "\n//]]>";
 		echo '</script>';
 	}
+
+	// }}}
+	// {{{ private function displayPalette()
 
 	/**
 	 * Displays the color palette XHTML
@@ -251,6 +274,8 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 
 		$wrapper_div->close();
 	}
+
+	// }}}
 }
 
 ?>
