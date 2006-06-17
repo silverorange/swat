@@ -11,12 +11,17 @@ require_once 'Swat/SwatControl.php';
  */
 class SwatCheckAll extends SwatControl
 {
+	// {{{ public properties
+
 	/**
 	 * Optional text to display next to the checkbox, by default "Check All".
 	 *
 	 * @var string
 	 */
 	public $title = null;
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new check-all widget
@@ -34,6 +39,9 @@ class SwatCheckAll extends SwatControl
 		$this->title = Swat::_('Check All');
 		$this->addJavaScript('swat/javascript/swat-check-all.js');
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this check-all widget
@@ -65,6 +73,9 @@ class SwatCheckAll extends SwatControl
 		$this->displayJavaScript();
 	}
 
+	// }}}
+	// {{{ private function displayJavaScript()
+
 	/**
 	 * Displays the JavaScript for this check-all widget
 	 */
@@ -79,6 +90,8 @@ class SwatCheckAll extends SwatControl
 		echo "\n//]]>";
 		echo '</script>';
 	}
+
+	// }}}
 }
 
 ?>

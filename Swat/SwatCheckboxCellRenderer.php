@@ -11,6 +11,8 @@ require_once 'Swat/SwatCellRenderer.php';
  */
 class SwatCheckboxCellRenderer extends SwatCellRenderer
 {
+	// {{{ public properties
+
 	/**
 	 * Id of checkbox
 	 *
@@ -28,6 +30,9 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 	 * @var string
 	 */
 	public $value;
+
+	// }}}
+	// {{{ public function render()
 
 	public function render()
 	{
@@ -47,6 +52,8 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 
 		$input_tag->display();
 	}
+
+	// }}}
 }
 
 ?>

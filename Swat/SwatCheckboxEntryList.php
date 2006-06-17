@@ -11,6 +11,8 @@ require_once 'Swat/SwatCheckboxList.php';
  */
 class SwatCheckboxEntryList extends SwatCheckboxList
 {
+	// {{{ public properties
+
 	/**
 	 * The values of the entry widgets accompanying each list option
 	 *
@@ -32,12 +34,18 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	 */
 	public $entry_column_title = null;
 
+	// }}}
+	// {{{ private properties
+
 	/**
 	 * A list of entry widgets used by this checkbox entry list
 	 *
 	 * @var array
 	 */
 	private $entry_widgets = array();
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new checkbox entry list
@@ -52,6 +60,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		$this->addJavaScript('swat/javascript/swat-checkbox-entry-list.js');
 		$this->addStyleSheet('swat/styles/swat-checkbox-entry-list.css');
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this checkbox list
@@ -129,6 +140,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		$div_tag->close();
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	/**
 	 * Processes this checkbox entry list
 	 *
@@ -150,6 +164,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		}
 	}
 
+	// }}}
+	// {{{ public function reset()
+
 	/**
 	 * Resets this checkbox entry list
 	 *
@@ -161,6 +178,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		parent::reset();
 		$this->entry_values = key($this->options);
 	}
+
+	// }}}
+	// {{{ protected function displayJavaScript()
 
 	/**
 	 * Displays the JavaScript for this checkbox entry list
@@ -181,6 +201,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		echo "\n//]]>";
 		echo '</script>';
 	}
+
+	// }}}
+	// {{{ public function getEntryWidget()
 
 	/**
 	 * Gets an entry widget of this checkbox entry list
@@ -205,6 +228,8 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
 		return $this->entry_widgets[$id];
 	}
+
+	// }}}
 }
 
 ?>
