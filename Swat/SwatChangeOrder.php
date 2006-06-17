@@ -16,6 +16,8 @@ require_once 'Swat/SwatState.php';
  */
 class SwatChangeOrder extends SwatOptionControl implements SwatState
 {
+	// {{{ public properties
+
 	/**
 	 * Value ordered array
 	 *
@@ -40,6 +42,9 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	 */
 	public $height = '180px';
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new change-order widget
 	 *
@@ -56,6 +61,9 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$this->addJavaScript('swat/javascript/swat-change-order.js');
 		$this->addStyleSheet('swat/styles/swat-change-order.css');
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this change-order control
@@ -117,6 +125,9 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$this->displayJavaScript();
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	public function process()
 	{
 		parent::process();
@@ -124,6 +135,9 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$data = &$this->getForm()->getFormData();
 		$this->values = explode(',', $data[$this->id]);
 	}
+
+	// }}}
+	// {{{ public function getState()
 
 	public function getState()
 	{
@@ -133,10 +147,16 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 			return $this->values;
 	}
 
+	// }}}
+	// {{{ public function setState()
+
 	public function setState($state)
 	{
 		$this->values = $state;
 	}
+
+	// }}}
+	// {{{ private function displayJavaScript()
 
 	private function displayJavaScript()
 	{
@@ -151,6 +171,9 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		echo "\n//]]>";
 		echo '</script>';
 	}
+
+	// }}}
+	// {{{ private function displayButtons()
 
 	private function displayButtons()
 	{
@@ -195,6 +218,8 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
 		$buttons_div->close();
 	}
+
+	// }}}
 }
 
 ?>

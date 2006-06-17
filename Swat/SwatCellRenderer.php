@@ -13,6 +13,8 @@ require_once 'Swat/SwatUIObject.php';
  */
 abstract class SwatCellRenderer extends SwatUIObject
 {
+	// {{{ public properties
+
 	/**
 	 * A non-visible unique id for this cell renderer, or null
 	 *
@@ -32,6 +34,9 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	public $sensitive = true;
 
+	// }}}
+	// {{{ abstract public function render()
+
 	/**
 	 * Renders this cell
 	 *
@@ -42,6 +47,9 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	abstract public function render();
 
+	// }}}
+	// {{{ public function init()
+
 	/**
 	 * Called during the init phase
 	 *
@@ -51,6 +59,9 @@ abstract class SwatCellRenderer extends SwatUIObject
 	{
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	/**
 	 * Called during processing phase
 	 *
@@ -59,6 +70,9 @@ abstract class SwatCellRenderer extends SwatUIObject
 	public function process()
 	{
 	}
+
+	// }}}
+	// {{{ public function getThAttributes()
 
 	/**
 	 * Gets TH-tag attributes
@@ -75,6 +89,9 @@ abstract class SwatCellRenderer extends SwatUIObject
 		return array('class' => implode(' ', $this->getCSSClassNames()));
 	}
 
+	// }}}
+	// {{{ public function getTdAttributes()
+
 	/**
 	 * Gets TD-tag attributes
 	 *
@@ -90,6 +107,9 @@ abstract class SwatCellRenderer extends SwatUIObject
 		return array('class' => implode(' ', $this->getCSSClassNames()));
 	}
 
+	// }}}
+	// {{{ getHtmlHeadEntries()
+
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this cell renderer
 	 *
@@ -102,6 +122,9 @@ abstract class SwatCellRenderer extends SwatUIObject
 	{
 		return $this->html_head_entries;
 	}
+
+	// }}}
+	// {{{ public function getPropertyNameToMap()
 
 	/**
 	 * Get a property name to use for mapping
@@ -125,6 +148,9 @@ abstract class SwatCellRenderer extends SwatUIObject
 	{
 		return $name;
 	}
+
+	// }}}
+	// {{{ public function getCSSClassNames()
 
 	/** 
 	 * Gets the CSS class names of this cell renderer based on the Swat class
@@ -167,6 +193,8 @@ abstract class SwatCellRenderer extends SwatUIObject
 
 		return array_reverse($css_class_names);
 	}
+
+	// }}}
 }
 
 ?>
