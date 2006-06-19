@@ -17,9 +17,14 @@ require_once 'Date.php';
  */
 class SwatTimeEntry extends SwatInputControl implements SwatState
 {
+	// {{{ constants
+
 	const HOUR   = 1;
 	const MINUTE = 2;
 	const SECOND = 4;
+
+	// }}}
+	// {{{ public properties
 
 	/**
 	 * Time of this time entry widget
@@ -85,6 +90,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 */
 	public $valid_range_end;
 
+	// }}}
+	// {{{ private properties
+
 	/**
 	 * A reference to the internal hour flydown
 	 *
@@ -121,6 +129,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 */
 	private $created = false;
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new time entry widget
 	 *
@@ -143,6 +154,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		$this->addJavaScript('swat/javascript/swat-time-entry.js');
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this time entry
@@ -181,6 +195,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		$this->displayJavaScript();
 	}
+
+	// }}}
+	// {{{ public function process()
 
 	/**
 	 * Processes this time entry
@@ -276,6 +293,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->validateRanges();
 	}
 
+	// }}}
+	// {{{ public function getState()
+
 	/**
 	 * Gets the current state of this time entry widget
 	 *
@@ -291,6 +311,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			return $this->value->getDate();
 	}
 
+	// }}}
+	// {{{ public function setState()
+
 	/**
 	 * Sets the current state of this time entry widget
 	 *
@@ -302,6 +325,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	{
 		$this->value = new SwatDate($state);
 	}
+
+	// }}}
+	// {{{ private function createFlydowns()
 
 	/**
 	 * Creates all internal widgets required for this date entry
@@ -325,6 +351,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			$this->createAmPmFlydown();
 	}
 
+	// }}}
+	// {{{ public function createHourFlydown()
+
 	/**
 	 * Creates the hour flydown for this time entry
 	 */
@@ -336,6 +365,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		for ($i = 1; $i <= 12; $i++)
 			$this->hour_flydown->addOption($i, $i);
 	}
+
+	// }}}
+	// {{{ public function createMinuteFlydown()
 
 	/**
 	 * Creates the minute flydown for this time entry
@@ -350,6 +382,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 				str_pad($i, 2, '0', STR_PAD_LEFT));
 	}
 
+	// }}}
+	// {{{ private function createSecondFlydown()
+
 	/**
 	 * Creates the second flydown for this time entry
 	 */
@@ -363,6 +398,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 				str_pad($i, 2 ,'0', STR_PAD_LEFT));
 	}
 
+	// }}}
+	// {{{ public function createAmPmFlydown()
+
 	/**
 	 * Creates the am/pm flydown for this time entry
 	 */
@@ -372,6 +410,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->am_pm_flydown->addOptionsByArray(array('am' => 'AM', 'pm' => 'PM'));
 		$this->am_pm_flydown->parent = $this;
 	}
+
+	// }}}
+	// {{{ public function validateRanges()
 
 	/**
 	 * Makes sure the date the user entered is within the valid range
@@ -408,6 +449,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		}
 	}
 
+	// }}}
+	// {{{ private function displayTime()
+
 	/**
 	 * Converts a time to a human readable string
 	 *
@@ -422,6 +466,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		return $time->format('%r'); // TODO: %X
 	}
 
+	// }}}
+	// {{{ private function displayJavaScript()
+
 	/**
 	 * Outputs the JavaScript required for this control
 	 */
@@ -433,6 +480,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		echo '</script>';
 	}
+
+	// }}}
 }
 
 ?>

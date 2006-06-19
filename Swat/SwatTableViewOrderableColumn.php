@@ -19,7 +19,7 @@ require_once 'Swat/SwatString.php';
  */
 class SwatTableViewOrderableColumn extends SwatTableViewColumn
 {
-	// {{{ class constants
+	// {{{ constants
 
 	/**
 	 * Indicates no ordering is done

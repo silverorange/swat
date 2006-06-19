@@ -15,6 +15,8 @@ require_once 'Swat/SwatState.php';
  */
 class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 {
+	// {{{ public properties
+
 	/**
 	 * Time-zone identifier
 	 *
@@ -23,6 +25,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 * @var string
 	 */
 	public $value = null;
+
+	// }}}
+	// {{{ private properties
 
 	/**
 	 * Time-zone areas available for this time-zone entry widget
@@ -41,6 +46,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 * @var array
 	 */
 	private $regions = array();
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new time-zone selector widget
@@ -62,6 +70,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
 		$this->addJavaScript('swat/javascript/swat-cascade.js');
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this time-zone entry widget
@@ -91,6 +102,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		$regions->value = $this->getRegion($this->value);
 		$regions->display();
 	}
+
+	// }}}
+	// {{{ public function process()
 
 	/**
 	 * Processes this time-zone entry widget
@@ -122,7 +136,10 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 			
 		}
 	}
-	
+
+	// }}}
+	// {{{ public function getState()
+
 	/**
 	 * Gets the current state of this time-zone entry widget
 	 *
@@ -135,6 +152,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		return $this->value;
 	}
 
+	// }}}
+	// {{{ public function setState()
+
 	/**
 	 * Sets the current state of this time-zone entry widget
 	 *
@@ -146,6 +166,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	{
 		$this->value = $state;
 	}
+
+	// }}}
+	// {{{ private function parseAreaWhitelist()
 
 	/**
 	 * Parses a whitelist of valid areas
@@ -181,6 +204,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		return $regions;
 	}
 
+	// }}}
+	// {{{ private function setAreas()
+
 	/**
 	 * Sets areas
 	 *
@@ -200,6 +226,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 			$this->setRegions($subregions, $name);
 		}
 	}
+
+	// }}}
+	// {{{ private function setRegions()
 
 	/**
 	 * Sets regions
@@ -231,6 +260,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		}
 	}
 
+	// }}}
+	// {{{ private function getArea()
+
 	/**
 	 * Gets an area from a time-zone identifier
 	 *
@@ -247,6 +279,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
 		return substr($time_zone, 0, strpos($time_zone, '/'));
 	}
+
+	// }}}
+	// {{{ private function getRegion()
 
 	/**
 	 * Gets a region from a time-zone identifier
@@ -265,6 +300,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
 		return substr($time_zone, strpos($time_zone, '/') + 1);
 	}
+
+	// }}}
 }
 
 ?>
