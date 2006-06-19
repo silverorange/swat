@@ -14,6 +14,8 @@ require_once 'Swat/SwatFormField.php';
  */
 class SwatGroupingFormField extends SwatFormField
 {
+	// {{{ public function __construct()
+
 	/**
 	 * Constructor
 	 *
@@ -26,6 +28,9 @@ class SwatGroupingFormField extends SwatFormField
 		parent::__construct($id);
 		$this->container_tag = 'fieldset';
 	}
+
+	// }}}
+	// {{{ protected function getTitleTag()
 
 	/**
 	 * Get a SwatHtmlTag to display the title.
@@ -41,6 +46,8 @@ class SwatGroupingFormField extends SwatFormField
 		$legend_tag->setContent($title);
 		return $legend_tag;
 	}
+
+	// }}}
 }
 
 ?>
