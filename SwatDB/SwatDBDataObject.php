@@ -136,11 +136,14 @@ class SwatDBDataObject extends SwatObject implements Serializable
 		if (isset($this->sub_data_objects[$key]))
 			return $this->sub_data_objects[$key];
 
-		$loader_method = 'load'.str_replace(' ', '', ucwords(strtr($key, '_', ' ')));
+		$loader_method = 'load'.str_replace(' ', '',
+			ucwords(str_replace('_', ' ', $key)));
 
 		if (method_exists($this, $loader_method)) {
 			$this->checkDB();
-			$this->sub_data_objects[$key] = call_user_func(array($this, $loader_method));
+			$this->sub_data_objects[$key] =
+				call_user_func(array($this, $loader_method));
+
 			return $this->sub_data_objects[$key];
 
 		} elseif ($this->hasInternalValue($key)) {
@@ -164,7 +167,14 @@ class SwatDBDataObject extends SwatObject implements Serializable
 			}
 		}
 
-		throw new SwatDBException("A property named '$key' does not exist on this dataobject.  If the property corresponds directly to a database field it should be added as a public property of this data object.  If the property should access a sub-dataobject, either specify a class when registering the internal property named '$key' or define a custom loader method named '$loader_method()'.");
+		throw new SwatDBException(sprintf("A property named '%s' does not ".
+			'exist on the %s data-object. If the property corresponds '.
+			'directly to a database field it should be added as a public '.
+			'property of this data object. If the property should access a '.
+			'sub-data-object, either specify a class when registering the '.
+			"internal property named '%s' or define a custom loader method ".
+			"named '%s()'.",
+			$key, get_class($this), $key, $loader_method));
 	}
 
 	// }}}
