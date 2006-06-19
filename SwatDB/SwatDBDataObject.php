@@ -53,7 +53,6 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	protected $id_field = null;
 	
 	// }}}
-
 	// {{{ public function __construct()
 
 	/**

@@ -13,11 +13,15 @@ require_once 'SwatDB/SwatDBRecordsetWrapper.php';
  */
 class SwatDBDefaultRecordsetWrapper extends SwatDBRecordsetWrapper
 {
+	// {{{ public function __construct()
+
     public function __construct($rs)
     {
         $this->row_wrapper_class = null;
         parent::__construct($rs);
     }
+
+	// }}}
 }
 
 ?>
