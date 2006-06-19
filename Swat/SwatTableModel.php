@@ -11,12 +11,17 @@ require_once 'Swat/SwatObject.php';
  */
 interface SwatTableModel
 {
+	// {{{ public function &getRows()
+
 	/**
 	 * Gets all rows of this tabel model as an array
 	 *
 	 * @return array the rows of this table model.
 	 */
 	public function &getRows();
+
+	// }}}
+	// {{{ public function getRowCount()
 
 	/**
 	 * Gets the number of rows in this table model
@@ -25,6 +30,9 @@ interface SwatTableModel
 	 */
 	public function getRowCount();
 
+	// }}}
+	// {{{ public function addRow()
+
 	/**
 	 * Adds a row to this table data model
 	 *
@@ -32,6 +40,8 @@ interface SwatTableModel
 	 * @param string $id a unique id for this row.
 	 */
 	public function addRow($data, $id = null);
+
+	// }}}
 }
 
 ?>
