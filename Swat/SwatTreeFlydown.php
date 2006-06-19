@@ -13,6 +13,8 @@ require_once 'Swat/SwatFlydown.php';
  */
 class SwatTreeFlydown extends SwatFlydown
 {
+	// {{{ public properties
+
 	/**
 	 * An array containing the branch of the selected node formed by node
 	 * values
@@ -22,6 +24,9 @@ class SwatTreeFlydown extends SwatFlydown
 	 * @var array
 	 */
 	public $path = array();
+
+	// }}}
+	// {{{ protected properties
 
 	/**
 	 * A tree collection of {@link SwatTreeFlydownNode} objects for this
@@ -34,6 +39,9 @@ class SwatTreeFlydown extends SwatFlydown
 	 * @see SwatTreeFlydown::getOptions()
 	 */
 	protected $tree = null;
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this tree flydown
@@ -49,6 +57,9 @@ class SwatTreeFlydown extends SwatFlydown
 		parent::display();
 		$this->value = $actual_value;
 	}
+
+	// }}}
+	// {{{ protected function &getOptions()
 
 	/**
 	 * Gets this flydown's tree as a flat array used in the
@@ -66,6 +77,9 @@ class SwatTreeFlydown extends SwatFlydown
 
 		return $options;
 	}
+
+	// }}}
+	// {{{ private function flattenTree()
 
 	/**
 	 * Flattens this flydown's tree into an array of flydown options
@@ -98,6 +112,9 @@ class SwatTreeFlydown extends SwatFlydown
 			$this->flattenTree($options, $child_node, $level + 1, $path);
 	}
 
+	// }}}
+	// {{{ public function setTree()
+
 	/**
 	 * Sets the tree to use for display
 	 *
@@ -107,6 +124,9 @@ class SwatTreeFlydown extends SwatFlydown
 	{
 		$this->tree = $tree;
 	}
+
+	// }}}
+	// {{{ public function process()
 
 	/**
 	 * Processes this tree flydown
@@ -126,6 +146,8 @@ class SwatTreeFlydown extends SwatFlydown
 			$this->value = end($this->path);
 		}
 	}
+
+	// }}}
 }
 
 ?>

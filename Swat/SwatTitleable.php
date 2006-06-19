@@ -10,12 +10,16 @@
  */
 interface SwatTitleable
 {
+	// {{{ public function getTitle()
+
 	/**
 	 * Gets the title of this object
 	 *
 	 * @return string the title of this object.
 	 */
 	public function getTitle();
+
+	// }}}
 }
 
 ?>

@@ -11,11 +11,16 @@ require_once 'Swat/exceptions/SwatException.php';
  */
 class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 {
+	// {{{ public properties
+
 	/**
 	 * Unique value used to uniquely identify the replicated widget.
 	 * If null, no replicating is done and the prototype widget is used.
 	 */
 	public $replicator_id = null;
+
+	// }}}
+	// {{{ private properties
 
 	/**
 	 * A reference to the widget for this cell
@@ -24,6 +29,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 
 	private $mappings = array();
 	private $clones = array();
+
+	// }}}
+	// {{{ public function addChild()
 
 	/**
 	 * fufills addChild
@@ -38,6 +46,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 			throw new SwatException('Can only add one widget to a widget cell '.
 				'renderer');
 	}
+
+	// }}}
+	// {{{ public function getPropertyNameToMap()
 
 	public function getPropertyNameToMap(SwatUIObject $object, $name)
 	{
@@ -54,6 +65,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 
 		return $mangled_name;
 	}
+
+	// }}}
+	// {{{ public function __set()
 
 	/**
 	 * Maps a data field to a property of a widget in the widget tree
@@ -72,6 +86,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 		}
 	}
 
+	// }}}
+	// {{{ public function init()
+
 	/**
 	 * Initializes this cell renderer
 	 *
@@ -82,6 +99,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 		if ($this->widget !== null)
 			$this->widget->init();
 	}
+
+	// }}}
+	// {{{ public function process()
 
 	/**
 	 *
@@ -102,6 +122,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 		}
 	}
 
+	// }}}
+	// {{{ public function __render()
+
 	/**
 	 *
 	 */
@@ -121,6 +144,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 				$widget->display();
 		}
 	}
+
+	// }}}
+	// {{{ private function getCloneWidget()
 
 	private function getClonedWidget($replicator)
 	{
@@ -151,6 +177,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 		return $new_widget;
 	}
 
+	// }}}
+	// {{{ public function setWidget()
+
 	/**
 	 *
 	 * @param SwatWidget $widget
@@ -161,6 +190,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 		$widget->parent = $this;
 	}
 
+	// }}}
+	// {{{ public function getPrototypeWidget()
+
 	/** 
 	 * Gets the prototype widget of this widget cell renderer
 	 *
@@ -170,6 +202,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 	{
 		return $this->widget;
 	}
+
+	// }}}
+	// {{{ public function getWidget()
 
 	/** 
 	 * Gets a cloned widget from this widget cell renderer
@@ -185,6 +220,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 		return null;
 	}
 
+	// }}}
+	// {{{ public function getCloneWidgets()
+
 	/** 
 	 * Gets an array of cloned widgets indexed by the replicator_id
 	 *
@@ -194,6 +232,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 	{
 		return $this->clones;
 	}
+
+	// }}}
+	// {{{ private function getForm()
 
 	/**
 	 * Gets the form
@@ -212,6 +253,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 
 		return $form;
 	}
+
+	// }}}
 }
 
 ?>
