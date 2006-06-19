@@ -13,6 +13,8 @@ require_once 'Swat/SwatHtmlTag.php';
  */
 class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 {
+	// {{{ public properties
+
 	/**
 	 * A visible title for this frame, or null
 	 *
@@ -34,6 +36,9 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public $title_separator = ': ';
 
+	// }}}
+	// {{{ public function getTitle()
+
 	/**
 	 * Gets the title of this frame
 	 *
@@ -51,6 +56,9 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 
 		return $this->title.': '.$this->subtitle;
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this frame
@@ -111,6 +119,8 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 		$inner_div->close();
 		$outer_div->close();
 	}
+
+	// }}}
 }
 
 ?>

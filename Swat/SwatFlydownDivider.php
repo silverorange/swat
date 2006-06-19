@@ -14,6 +14,8 @@ require_once 'Swat/SwatOption.php';
  */
 class SwatFlydownDivider extends SwatOption
 {
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a flydown option
 	 *
@@ -29,6 +31,8 @@ class SwatFlydownDivider extends SwatOption
 		$this->value = $value;
 		$this->title = $title;
 	}
+
+	// }}}
 }
 
 ?>

@@ -15,6 +15,8 @@ require_once 'Swat/SwatHtmlTag.php';
  */
 class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 {
+	// {{{ public properties
+
 	/**
 	 * Fieldset title
 	 *
@@ -33,6 +35,9 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public $access_key = null;
 
+	// }}}
+	// {{{ public function getTitle()
+
 	/**
 	 * Gets the title of this fieldset
 	 *
@@ -44,6 +49,9 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 	{
 		return $this->title;
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	public function display()
 	{
@@ -72,6 +80,8 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 
 		$fieldset_tag->close();
 	}
+
+	// }}}
 }
 
 ?>
