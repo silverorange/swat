@@ -12,6 +12,8 @@ require_once 'Swat/SwatString.php';
  */
 class SwatIntegerEntry extends SwatEntry
 {
+	// {{{ public properties
+
 	/**
 	 * Show Thousands Seperator
 	 *
@@ -21,6 +23,9 @@ class SwatIntegerEntry extends SwatEntry
 	 * @var boolean
 	 */
 	public $show_thousands_seperator = true;
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new integer entry widget
@@ -37,6 +42,9 @@ class SwatIntegerEntry extends SwatEntry
 
 		$this->size = 10;
 	}
+
+	// }}}
+	// {{{ public function process()
 
 	/**
 	 * Checks to make sure value is an integer
@@ -58,6 +66,9 @@ class SwatIntegerEntry extends SwatEntry
 		}
 	}
 
+	// }}}
+	// {{{ protected function getDisplayValue()
+
 	protected function getDisplayValue()
 	{
 		if (is_int($this->value))
@@ -66,6 +77,8 @@ class SwatIntegerEntry extends SwatEntry
 		else
 			return $this->value;
 	}
+
+	// }}}
 }
 
 ?>

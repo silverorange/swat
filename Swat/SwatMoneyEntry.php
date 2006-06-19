@@ -12,6 +12,8 @@ require_once 'Swat/SwatEntry.php';
  */
 class SwatMoneyEntry extends SwatEntry
 {
+	// {{{ public properties
+
 	/**
 	 * Optional locale for currency format
 	 *
@@ -30,6 +32,9 @@ class SwatMoneyEntry extends SwatEntry
 	 */
 	public $display_currency = false;
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new money entry widget
 	 *
@@ -45,6 +50,9 @@ class SwatMoneyEntry extends SwatEntry
 
 		$this->size = 10;
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this money entry widget
@@ -63,6 +71,9 @@ class SwatMoneyEntry extends SwatEntry
 
 		$this->setLocale($locale);
 	}
+
+	// }}}
+	// {{{ public function process()
 
 	/**
 	 * Checks to make sure value is a monetary value
@@ -133,6 +144,9 @@ class SwatMoneyEntry extends SwatEntry
 		$this->setLocale($locale);
 	}
 
+	// }}}
+	// {{{ public function getDisplayValue()
+
 	protected function getDisplayValue()
 	{
 		$locale = $this->setLocale($this->locale);
@@ -147,6 +161,9 @@ class SwatMoneyEntry extends SwatEntry
 
 		return $value;
 	}
+
+	// }}}
+	// {{{ public function setLocale()
 
 	/**
 	 * Sets the locale
@@ -165,6 +182,8 @@ class SwatMoneyEntry extends SwatEntry
 
 		return $locale;
 	}
+
+	// }}}
 }
 
 ?>
