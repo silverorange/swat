@@ -11,12 +11,17 @@ require_once 'Swat/exceptions/SwatException.php';
  */
 class SwatUndefinedMessageTypeException extends SwatException
 {
+	// {{{ protected properties
+
 	/**
 	 * The name of the message type that is undefined
 	 *
 	 * @var string
 	 */
 	protected $message_type = null;
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new undefined message type exception
@@ -33,6 +38,9 @@ class SwatUndefinedMessageTypeException extends SwatException
 		$this->message_type = $message_type;
 	}
 
+	// }}}
+	// {{{ public function getMessageType()
+
 	/**
 	 * Gets the name of the message type that is undefined
 	 *
@@ -42,6 +50,8 @@ class SwatUndefinedMessageTypeException extends SwatException
 	{
 		return $this->message_type;
 	}
+
+	// }}}
 }
 
 ?>
