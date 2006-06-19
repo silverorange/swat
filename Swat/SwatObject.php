@@ -13,6 +13,8 @@ require_once 'Swat/exceptions/SwatException.php';
  */
 class SwatObject
 {
+	// {{{ public function __toString()
+
 	/**
 	 * Gets this object as a string
 	 *
@@ -31,6 +33,8 @@ class SwatObject
 		Swat::printObject($this);
 		return ob_get_clean();
 	}
+
+	// }}}
 }
 
 ?>

@@ -9,12 +9,17 @@
  */
 class Swat
 {
+	// {{{ constants
+
 	/**
 	 * The gettext domain for Swat
 	 *
 	 * This is used to support multiple locales.
 	 */
 	const GETTEXT_DOMAIN = 'swat';
+
+	// }}}
+	// {{{ public static function _()
 
 	/**
 	 * Translates a phrase
@@ -30,6 +35,9 @@ class Swat
 		return Swat::gettext($message);
 	}
 
+	// }}}
+	// {{{ public static function gettext()
+
 	/**
 	 * Translates a phrase
 	 *
@@ -44,6 +52,9 @@ class Swat
 	{
 		return dgettext(Swat::GETTEXT_DOMAIN, $message);
 	}
+
+	// }}}
+	// {{{ public static function ngettext()
 
 	/**
 	 * Translates a plural phrase
@@ -71,6 +82,9 @@ class Swat
 			$singular_message, $plural_message, $number);
 	}
 
+	// }}}
+	// {{{ public static function displayMethods()
+
 	/**
 	 * Displays the methods of an object
 	 *
@@ -88,6 +102,9 @@ class Swat
 
 		echo '</ul>';
 	}
+
+	// }}}
+	// {{{ public static function displayProperties()
 
 	/**
 	 * Displays the properties of an object
@@ -111,6 +128,9 @@ class Swat
 		echo '</ul>';
 	}
 
+	// }}}
+	// {{{ public static function printObject()
+
 	/**
 	 * Displays an object's properties and values recursively
 	 *
@@ -125,7 +145,11 @@ class Swat
 	{
 		echo '<pre>'.print_r($object, true).'</pre>';
 	}
+
+	// }}}
 }
+
+// {{{ dummy dngettext()
 
 /*
  * Define a dummy dngettext() for when gettext is not available.
@@ -140,6 +164,9 @@ if (!function_exists("dngettext")) {
     }
 }
 
+// }}}
+// {{{ dummy dgettext()
+
 /*
  * Define a dummy dgettext() for when gettext is not available.
  */
@@ -150,4 +177,5 @@ if (!function_exists("dgettext")) {
 	}
 }
 
+// }}}
 ?>
