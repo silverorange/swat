@@ -14,6 +14,8 @@ require_once 'Swat/SwatReplicator.php';
  */
 class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicator
 {
+	// {{{ public properties
+
 	/**
 	 * An array of unique id => title pairs, one for each replication.
 	 * The id is used to suffix the original widget id to create a unique
@@ -22,8 +24,14 @@ class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicator
 	 * @var array
 	 */
 	public $replicators = null;
+
+	// }}}
+	// {{{ private properties
 	
 	private $widgets = array();
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new replicator fieldset
@@ -38,6 +46,9 @@ class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicator
 
 		$this->requires_id = true;
 	}
+
+	// }}}
+	// {{{ public function init()
 
 	/**
 	 * Initilizes the fieldset
@@ -93,6 +104,9 @@ class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicator
 		$this->parent->replace($this, $container);
 	}
 
+	// }}}
+	// {{{ public function getWidget()
+
 	/**
 	 * Retrive a reference to a replicated widget
 	 *
@@ -110,5 +124,7 @@ class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicator
 			return null;
 		}
 	}
+
+	// }}}
 }
 ?>

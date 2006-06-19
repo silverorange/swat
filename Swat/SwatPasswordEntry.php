@@ -12,6 +12,8 @@ require_once 'Swat/SwatEntry.php';
  */
 class SwatPasswordEntry extends SwatEntry
 {
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new password entry and defaults the size to 20
 	 *
@@ -24,6 +26,9 @@ class SwatPasswordEntry extends SwatEntry
 		parent::__construct($id);
 		$this->size = 20;
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this password entry widget
@@ -38,6 +43,8 @@ class SwatPasswordEntry extends SwatEntry
 		$this->html_input_type = 'password';
 		parent::display();
 	}
+
+	// }}}
 }
 
 ?>

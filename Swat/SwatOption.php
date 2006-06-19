@@ -11,6 +11,8 @@ require_once 'Swat/SwatObject.php';
  */
 class SwatOption extends SwatObject
 {
+	// {{{ public properties
+
 	/**
 	 * Option title
 	 *
@@ -34,6 +36,9 @@ class SwatOption extends SwatObject
 	 */
 	public $value = null;
 
+	// }}}
+	// {{{ public function __construct(
+
 	/**
 	 * Creates a flydown option
 	 *
@@ -47,6 +52,8 @@ class SwatOption extends SwatObject
 		$this->title = $title;
 		$this->content_type = $content_type;
 	}
+
+	// }}}
 }
 
 ?>
