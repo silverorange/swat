@@ -13,6 +13,8 @@ require_once 'DemoPage.php';
  */
 class Fieldset extends DemoPage
 {
+	// {{{ public function initUI()
+
 	public function initUI()
 	{
 		$radiolist = $this->ui->getWidget('radio_list');
@@ -27,6 +29,8 @@ class Fieldset extends DemoPage
 			7 => 'Grapefruit',
 			8 => 'Strawberry'));
 	}
+
+	// }}}
 }
 
 ?>

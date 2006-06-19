@@ -13,6 +13,8 @@ require_once 'DemoPage.php';
  */
 class PasswordEntry extends DemoPage
 {
+	// {{{ public function initUI()
+
 	public function initUI()
 	{
 		$password = $this->ui->getWidget('password');
@@ -20,6 +22,8 @@ class PasswordEntry extends DemoPage
 
 		$confirm_password->password_widget = $password;
 	}
+
+	// }}}
 }
 
 ?>

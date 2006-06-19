@@ -12,6 +12,8 @@ require_once 'Swat/SwatDate.php';
  */
 class DetailsView extends DemoPage
 {
+	// {{{ public function initUI()
+
 	public function initUI()
 	{
 		$details_view = $this->ui->getWidget('details_view');
@@ -30,6 +32,8 @@ class DetailsView extends DemoPage
 
 		$details_view->data = $fruit;
 	}
+
+	// }}}
 }
 
 /**
@@ -41,6 +45,8 @@ class DetailsView extends DemoPage
  */
 class FruitObject
 {
+	// {{{ public properties
+
 	public $align = '';
 	public $image = '';
 	public $image_width = 0;
@@ -51,6 +57,8 @@ class FruitObject
 	public $makes_pie = false;
 	public $harvest_date = null;
 	public $cost = 0;
+
+	// }}}
 }
 
 ?>

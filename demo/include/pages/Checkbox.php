@@ -14,6 +14,8 @@ require_once 'Swat/SwatDataTreeNode.php';
  */
 class Checkbox extends DemoPage
 {
+	// {{{ public function initUI()
+
 	public function initUI()
 	{
 		// regular checkbox tree
@@ -73,6 +75,8 @@ class Checkbox extends DemoPage
 		$expandable_checkbox_tree = $this->ui->getWidget('expandable_checkbox_tree');
 		$expandable_checkbox_tree->setTree($tree);
 	}
+
+	// }}}
 }
 
 ?>

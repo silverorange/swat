@@ -17,6 +17,8 @@ require_once 'Swat/SwatOption.php';
  */
 class Flydown extends DemoPage
 {
+	// {{{ public function initUI()
+
 	public function initUI()
 	{
 		$flydown = $this->ui->getWidget('flydown');
@@ -81,6 +83,8 @@ class Flydown extends DemoPage
 			)
 		);
 	}
+
+	// }}}
 }
 
 ?>

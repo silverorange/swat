@@ -13,6 +13,8 @@ require_once 'DemoPage.php';
  */
 class MessageDisplay extends DemoPage
 {
+	// {{{ public function initUI()
+
 	public function initUI()
 	{
 		$short_message_display = $this->ui->getWidget('short_message_display');
@@ -52,6 +54,8 @@ class MessageDisplay extends DemoPage
 		$msg->secondary_content = 'This message has secondary content.';
 		$long_message_display->add($msg);
 	}
+
+	// }}}
 }
 
 ?>
