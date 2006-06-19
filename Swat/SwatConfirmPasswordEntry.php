@@ -14,12 +14,17 @@ require_once 'Swat/SwatPasswordEntry.php';
  */
 class SwatConfirmPasswordEntry extends SwatPasswordEntry
 {
+	// {{{ public properties
+
 	/**
 	 * A reference to the matching password widget
 	 *
 	 * @var SwatPasswordEntry
 	 */
 	public $password_widget = null;
+
+	// }}}
+	// {{{ public function process()
 
 	/**
 	 * Checks to make sure passwords match
@@ -47,6 +52,8 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry
 			}
 		}
 	}
+
+	// }}}
 }
 
 ?>
