@@ -12,12 +12,17 @@ require_once 'Swat/exceptions/SwatException.php';
  */
 class SwatInvalidCallbackException extends SwatException
 {
+	// {{{ protected properties
+
 	/**
 	 * The value the user tried to set the callback to
 	 *
 	 * @var mixed
 	 */
 	protected $callback = null;
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new invalid callback exception
@@ -32,6 +37,9 @@ class SwatInvalidCallbackException extends SwatException
 		$this->callback = $callback;
 	}
 
+	// }}}
+	// {{{ public function getCallbeck()
+
 	/**
 	 * Gets the value the user tried to set the callback to
 	 *
@@ -41,6 +49,8 @@ class SwatInvalidCallbackException extends SwatException
 	{
 		return $this->callback;
 	}
+
+	// }}}
 }
 
 ?>

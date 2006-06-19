@@ -16,9 +16,12 @@
  */
 class SwatException extends Exception
 {
+	// {{{ protected properties
+
 	protected $backtrace = null;
 	protected $class = null;
 
+	// }}}
 	// {{{ public function __construct()
 
 	public function __construct($message = null, $code = 0)

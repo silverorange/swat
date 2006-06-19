@@ -11,12 +11,17 @@ require_once 'Swat/exceptions/SwatException.php';
  */
 class SwatClassNotFoundException extends SwatException
 {
+	// {{{ protected properties
+
 	/**
 	 * The name of the class that is not found
 	 *
 	 * @var string
 	 */
 	protected $class_name = null;
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new class not found exception
@@ -31,6 +36,9 @@ class SwatClassNotFoundException extends SwatException
 		$this->class_name = $class_name;
 	}
 
+	// }}}
+	// {{{ public function getClassName()
+
 	/**
 	 * Gets the name of the class that is not found
 	 *
@@ -40,6 +48,8 @@ class SwatClassNotFoundException extends SwatException
 	{
 		return $this->class_name;
 	}
+
+	// }}}
 }
 
 ?>
