@@ -17,8 +17,12 @@ function SwatConfirmationButton(id)
 	{
 		var confirmed = window.confirm(self.message);
 
-		if (!confirmed)
-			event.preventDefault();
+		if (!confirmed) {
+			if (event.preventDefault)
+				event.preventDefault();
+			else
+				event.returnValue = false; //IE
+		}
 	}
 }
 
