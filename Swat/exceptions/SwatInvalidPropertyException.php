@@ -11,6 +11,8 @@ require_once 'Swat/exceptions/SwatException.php';
  */
 class SwatInvalidPropertyException extends SwatException
 {
+	// {{{ protected properties
+
 	/**
 	 * The name of the property that is invalid
 	 *
@@ -24,6 +26,9 @@ class SwatInvalidPropertyException extends SwatException
 	 * @var mixed
 	 */
 	protected $object = null;
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new invalid class exception
@@ -41,6 +46,9 @@ class SwatInvalidPropertyException extends SwatException
 		$this->property = $property;
 	}
 
+	// }}}
+	// {{{ public function getObject()
+
 	/**
 	 * Gets the object the property is invalid for
 	 *
@@ -51,6 +59,9 @@ class SwatInvalidPropertyException extends SwatException
 		return $this->object;
 	}
 
+	// }}}
+	// {{{ public function getProperty()
+
 	/**
 	 * Gets the name of the property that is invalid
 	 *
@@ -60,6 +71,8 @@ class SwatInvalidPropertyException extends SwatException
 	{
 		return $this->property;
 	}
+
+	// }}}
 }
 
 ?>
