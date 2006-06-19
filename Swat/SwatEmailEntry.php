@@ -14,6 +14,8 @@ require_once 'Swat/SwatEntry.php';
  */
 class SwatEmailEntry extends SwatEntry
 {
+	// {{{ public function process()
+
 	/**
 	 * Processes this email entry
 	 *
@@ -39,6 +41,8 @@ class SwatEmailEntry extends SwatEntry
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 		}
 	}
+
+	// }}}
 }
 
 ?>

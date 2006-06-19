@@ -15,7 +15,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  */
 class SwatDetailsView extends SwatControl implements SwatUIParent
 {
-	// {{{ public variables
+	// {{{ public properties
 	
 	/**
 	 * An object containing values to display
@@ -32,7 +32,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	public $data = null;
 
 	// }}}
-	// {{{ private variables
+	// {{{ private properties
 
 	/**
 	 * An array of fields to be displayed by this details view

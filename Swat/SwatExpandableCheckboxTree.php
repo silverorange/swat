@@ -13,6 +13,8 @@ require_once 'Swat/SwatString.php';
  */
 class SwatExpandableCheckboxTree extends SwatCheckboxTree
 {
+	// {{{ public properties
+
 	/**
 	 * The initial state of the tree
 	 *
@@ -31,6 +33,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	 */
 	public $dependent_boxes = true;
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new expandable checkbox tree
 	 *
@@ -44,6 +49,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 
 		$this->addJavaScript('swat/javascript/swat-expandable-checkbox-tree.js');
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this expandable checkbox tree
@@ -75,6 +83,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 
 		$div_tag->close();
 	}
+
+	// }}}
+	// {{{ private function displayNode()
 
 	/**
 	 * Displays a node in a tree as a checkbox input
@@ -188,6 +199,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		return $nodes;
 	}
 
+	// }}}
+	// {{{ protected function displayJavaScript()
+
 	/**
 	 * Displays the JavaScript for this check-all widget
 	 */
@@ -206,6 +220,8 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		echo "\n//]]>";
 		echo '</script>';
 	}
+
+	// }}}
 }
 
 ?>
