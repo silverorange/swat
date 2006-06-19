@@ -14,6 +14,8 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  */
 class SwatMessageDisplay extends SwatControl
 {
+	// {{{ private properties
+
 	/**
 	 * The messages to display
 	 *
@@ -25,6 +27,9 @@ class SwatMessageDisplay extends SwatControl
 	 * @see SwatMessage
 	 */
 	private $_messages = array();
+
+	// }}}
+	// {{{ public function __construct()
  
 	/**
 	 * Creates a new message display
@@ -44,6 +49,9 @@ class SwatMessageDisplay extends SwatControl
 		$this->addStyleSheet('swat/styles/swat-message.css');
 		$this->addStyleSheet('swat/styles/swat-message-display.css');
 	}
+
+	// }}}
+	// {{{ public function add()
 
 	/**
 	 * Adds a message
@@ -67,6 +75,9 @@ class SwatMessageDisplay extends SwatControl
 				'SwatMessage.', 0, $msg);
 		}
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays the messages
@@ -134,6 +145,9 @@ class SwatMessageDisplay extends SwatControl
 			$this->displayJavaScript();
 	}
 
+	// }}}
+	// {{{ public function displayJavaScript()
+
 	/**
 	 * Displays the JavaScript for hiding messages
 	 */
@@ -145,6 +159,8 @@ class SwatMessageDisplay extends SwatControl
 
 		echo '</script>';
 	}
+
+	// }}}
 }
 
 ?>

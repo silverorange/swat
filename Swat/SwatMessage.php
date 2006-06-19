@@ -15,6 +15,8 @@ require_once 'Swat/exceptions/SwatUndefinedMessageTypeException.php';
  */
 class SwatMessage extends SwatObject
 {
+	// {{{ constants
+
 	/**
 	 * Notification message type
 	 * 
@@ -46,6 +48,9 @@ class SwatMessage extends SwatObject
 	 * eg. Database connection error
 	 */
 	const SYSTEM_ERROR = 4;
+
+	// }}}
+	// {{{ public properties
 
 	/**
 	 * Type of message
@@ -83,6 +88,9 @@ class SwatMessage extends SwatObject
 	 */
 	public $content_type = 'text/plain';
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new SwatMessage
 	 *
@@ -112,6 +120,9 @@ class SwatMessage extends SwatObject
 		}
 	}
 
+	// }}}
+	// {{{ public function __getCssClass()
+
 	public function getCssClass()
 	{
 		$class = 'swat-message';
@@ -133,6 +144,8 @@ class SwatMessage extends SwatObject
 
 		return $class;
 	}
+
+	// }}}
 }
 
 ?>

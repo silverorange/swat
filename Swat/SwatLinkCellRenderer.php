@@ -12,6 +12,8 @@ require_once 'Swat/SwatHtmlTag.php';
  */
 class SwatLinkCellRenderer extends SwatCellRenderer
 {
+	// {{{ public properties
+
 	/**
 	 * The href attribute in the XHTML anchor tag
 	 *
@@ -72,6 +74,9 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	 */
 	public $link_value = null;
 
+	// }}}
+	// {{{ protected properties
+
 	/**
 	 * Additional CSS class to use for this link cell renderer
 	 *
@@ -80,6 +85,9 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	 * @var string
 	 */
 	protected $class = null;
+
+	// }}}
+	// {{{ public function render()
 
 	/**
 	 * Renders the contents of this cell
@@ -108,10 +116,16 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 		}
 	}
 
+	// }}}
+	// {{{ protected function getTitle()
+
 	protected function getTitle()
 	{
 		return null;
 	}
+
+	// }}}
+	// {{{ function getText()
 
 	protected function getText()
 	{
@@ -125,6 +139,9 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 		return $text;
 	}
 
+	// }}}
+	// {{{ function getLink()
+
 	protected function getLink()
 	{
 		if ($this->link_value === null)
@@ -136,6 +153,8 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 
 		return $link;
 	}
+
+	// }}}
 }
 
 ?>

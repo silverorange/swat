@@ -13,6 +13,8 @@ require_once 'Swat/SwatObject.php';
  */
 class SwatNavBarEntry extends SwatObject
 {
+	// {{{ public properties
+
 	/**
 	 * The visible title of this entry
 	 *
@@ -30,6 +32,9 @@ class SwatNavBarEntry extends SwatObject
 	 */
 	public $link;
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new navbar entry
 	 *
@@ -41,6 +46,8 @@ class SwatNavBarEntry extends SwatObject
 		$this->title = $title;
 		$this->link = $link;
 	}
+
+	// }}}
 }
 
 ?>

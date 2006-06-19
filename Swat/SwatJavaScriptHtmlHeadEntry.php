@@ -11,12 +11,16 @@ require_once 'Swat/SwatHtmlHeadEntry.php';
  */
 class SwatJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 {
+	// {{{ public function display()
+
 	public function display($uri_prefix = '')
 	{
 		printf('<script type="text/javascript" src="%s%s"></script>',
 			$uri_prefix,
 			$this->uri);
 	}
+
+	// }}}
 }
 
 ?>

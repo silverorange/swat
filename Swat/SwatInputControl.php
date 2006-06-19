@@ -11,6 +11,8 @@ require_once 'Swat/SwatControl.php';
  */
 abstract class SwatInputControl extends SwatControl
 {
+	// {{{ public properties
+
 	/**
 	 * Whether this entry widget is required or not
 	 *
@@ -19,6 +21,9 @@ abstract class SwatInputControl extends SwatControl
 	 * @var boolean
 	 */
 	public $required = false;
+
+	// }}}
+	// {{{ public function init()
 
 	/**
 	 * Initializes this widget
@@ -34,6 +39,9 @@ abstract class SwatInputControl extends SwatControl
 		if ($this->required && $this->parent instanceof SwatFormField)
 			$this->parent->required = true;
 	}
+
+	// }}}
+	// {{{ public function getForm()
 
 	/**
 	 * Gets the form that this control is contained in
@@ -55,6 +63,8 @@ abstract class SwatInputControl extends SwatControl
 
 		return $form;
 	}
+
+	// }}}
 }
 
 ?>
