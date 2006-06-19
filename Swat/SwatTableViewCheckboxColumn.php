@@ -14,6 +14,8 @@ require_once('Swat/SwatHtmlTag.php');
  */
 class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 {
+	// {{{ public properties
+
 	/**
 	 * Show check all
 	 *
@@ -33,9 +35,15 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 	 */
 	public $highlight_row = true;
 
+	// }}}
+	// {{{ private properties
+
 	private $items = null;
 
 	private $checkbox_renderer = null;
+
+	// }}}
+	// {{{ public function __construct()
 
 	public function __construct($id = null)
 	{
@@ -44,12 +52,18 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 			'swat/javascript/swat-table-view-checkbox-column.js');
 	}
 
+	// }}}
+	// {{{ public function init()
+
 	public function init()
 	{
 		parent::init();
 		if ($this->show_check_all)
 			$this->view->appendRow(new SwatTableViewCheckAllRow($this->id));
 	}
+
+	// }}}
+	// {{{ public function process()
 
 	public function process()
 	{
@@ -59,10 +73,16 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 			$this->items = $_POST[$item_name];
 	}
 
+	// }}}
+	// {{{ public function getItems()
+
 	public function getItems()
 	{
 		return $this->items;
 	}
+
+	// }}}
+	// {{{ public function getRendererName()
 
 	private function getRendererName()
 	{
@@ -70,6 +90,9 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 
 		return $renderer->id;
 	}
+
+	// }}}
+	// {{{ public function getCheckboxRenderer()
 
 	private function getCheckboxRenderer()
 	{
@@ -80,6 +103,9 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 		throw new SwatException("The column '{$this->id}' must contain a ".
 			'checkbox cell renderer.');
 	}
+
+	// }}}
+	// {{{ public function getInlineJavaScript()
 
 	/**
 	 * Gets the inline JavaScript for the highlight row
@@ -97,6 +123,8 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 		return "var {$this->id} = new SwatTableViewCheckboxColumn(".
 			"'{$item_name}', {$this->view->id});";
 	}
+
+	// }}}
 }
 
 ?>

@@ -11,6 +11,8 @@ require_once 'Swat/SwatTextarea.php';
  */
 class SwatTextareaEditor extends SwatTextarea
 {
+	// {{{ public properties
+
 	/**
 	 * Width
 	 *
@@ -38,6 +40,9 @@ class SwatTextareaEditor extends SwatTextarea
 	 */
 	public $basehref = null; 
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new wysiwyg textarea editor
 	 *
@@ -52,12 +57,17 @@ class SwatTextareaEditor extends SwatTextarea
 		$this->addJavaScript('swat/javascript/swat-textarea-editor.js');
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	public function process()
 	{
 		parent::process();
 
 		$this->value = str_replace("\n", "", $this->value);
 	}
+
+	// {{{ public function display()
 
 	public function display()
 	{
@@ -66,6 +76,9 @@ class SwatTextareaEditor extends SwatTextarea
 
 		$this->displayJavaScript();
 	}
+
+	// }}}
+	// {{{ public function getFocusableHtmlId()
 
 	/**
 	 * Gets the id attribute of the XHTML element displayed by this widget
@@ -81,6 +94,9 @@ class SwatTextareaEditor extends SwatTextarea
 	{
 		return null;
 	}
+
+	// }}}
+	// {{{ public function displayJavaScript()
 
 	private function displayJavaScript()
 	{
@@ -101,6 +117,9 @@ class SwatTextareaEditor extends SwatTextarea
 		echo '</script>';
 	}
 
+	// }}}
+	// {{{ public function displayJavaScriptTranslations()
+
 	private function displayJavaScriptTranslations()
 	{
 		echo " var rteT = new Array();";
@@ -108,6 +127,9 @@ class SwatTextareaEditor extends SwatTextarea
 		foreach($this->translations() as $k => $word)
 			echo "\n rteT['{$k}'] = '".str_replace("'", "\'", $word)."';";
 	}
+
+	// }}}
+	// {{{ private function translations()
 
 	private function translations()
 	{
@@ -143,6 +165,9 @@ class SwatTextareaEditor extends SwatTextarea
 		);
 	}
 
+	// }}}
+	// {{{ private function rteSafe()
+
 	private function rteSafe($value)
 	{
 		//returns safe code for preloading in the RTE
@@ -163,6 +188,8 @@ class SwatTextareaEditor extends SwatTextarea
 
 		return $value;
 	}
+
+	// }}}
 }
 
 ?>

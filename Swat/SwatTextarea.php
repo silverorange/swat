@@ -14,6 +14,8 @@ require_once 'Swat/SwatString.php';
  */
 class SwatTextarea extends SwatInputControl implements SwatState
 {
+	// {{{ public properties
+
 	/**
 	 * Text content of the widget
 	 *
@@ -48,6 +50,9 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 */
 	public $access_key = null;
 
+	// }}}
+	// {{{ public function display()
+
 	/**
 	 * Displays this textarea
 	 *
@@ -76,6 +81,9 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		$textarea_tag->display();
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	/**
 	 * Processes this textarea
 	 *
@@ -99,6 +107,9 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		}
 	}
 
+	// }}}
+	// {{{ public function getState()
+
 	/**
 	 * Gets the current state of this textarea
 	 *
@@ -111,6 +122,9 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		return $this->value;
 	}
 
+	// }}}
+	// {{{ public function setState()
+
 	/**
 	 * Sets the current state of this textarea
 	 *
@@ -122,6 +136,9 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	{
 		$this->value = $state;
 	}
+
+	// }}}
+	// {{{ public function getFocusableHtmlId()
 
 	/**
 	 * Gets the id attribute of the XHTML element displayed by this widget
@@ -137,6 +154,8 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	{
 		return $this->id;
 	}
+
+	// }}}
 }
 
 ?>

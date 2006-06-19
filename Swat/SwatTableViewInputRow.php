@@ -29,6 +29,8 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  */
 class SwatTableViewInputRow extends SwatTableViewRow
 {
+	// {{{ public properties
+
 	/**
 	 * The text to display in the link to enter a new row
 	 *
@@ -64,6 +66,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 * @var boolean
 	 */
 	public $show_row_messages = true;
+
+	// }}}
+	// {{{ private properties
 
 	/**
 	 * The tool-link to create another row
@@ -102,6 +107,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 */
 	private $replicators = array();
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new input row
 	 */
@@ -111,6 +119,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$this->enter_text = Swat::_('enter&nbsp;another');
 		$this->addJavaScript('swat/javascript/swat-table-view-input-row.js');
 	}
+
+	// }}}
+	// {{{ public function init()
 
 	/**
 	 * Initializes this input row
@@ -147,6 +158,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$this->replicators = explode(',', $replicator_field);
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	/**
 	 * Processes this input row
 	 *
@@ -162,6 +176,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			foreach ($this->input_cells as $cell)
 				$cell->process($replicator_id);
 	}
+
+	// }}}
+	// {{{ public function addInputCell()
 
 	/**
 	 * Adds an input cell to this row from a column
@@ -181,6 +198,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	{
 		$this->input_cells[$column_id] = $cell;
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this row
@@ -211,6 +231,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$this->displayEnterAnotherRow();
 	}
 
+	// }}}
+	// {{{ public function getReplicators()
+
 	/**
 	 * Gets the replicator ids of this input row
 	 *
@@ -228,6 +251,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	{
 		return $this->replicators;
 	}
+
+	// }}}
+	// {{{ public function getWidget()
 
 	/**
 	 * Gets a particular widget in this row
@@ -259,6 +285,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			'given column identifier.');
 	}
 
+	// }}}
+	// {{{ public function getPrototypeWidget()
+
 	/**
 	 * Gets the prototype widget for a column attached to this row
 	 *
@@ -289,6 +318,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			'cell bound to this row or the column does not exist.');
 	}
 
+	// }}}
+	// {{{ public function remoteReplcatedRow()
+
 	/**
 	 * Removes a row from this input row by its replicator id
 	 *
@@ -304,6 +336,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		foreach ($this->input_cells as $cell)
 			$cell->unsetWidget($replicator_id);
 	}
+
+	// }}}
+	// {{{ public function getVisibleByCount()
 
 	/**
 	 * Gets whether or not to show this row based on a count of rows
@@ -321,6 +356,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		return true;
 	}
 
+	// }}}
+	// {{{ private function createEmbeddedWidgets()
+
 	/**
 	 * Instantiates the tool-link for this input row
 	 */
@@ -334,6 +372,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$this->widgets_created = true;
 		}
 	}
+
+	// }}}
+	// {{{ public function displayInputRows()
 
 	/**
 	 * Displays the actual XHTML input rows for this input row
@@ -429,6 +470,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		}
 	}
 
+	// }}}
+	// {{{ private function displayEnterAnotherRow()
+
 	/**
 	 * Displays the enter-another-row row
 	 */
@@ -484,6 +528,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$tr_tag->close();
 	}
 
+	// }}}
+	// {{{ public function getRowString()
+
 	/**
 	 * Gets this input row as an XHTML table row with the row identifier as a
 	 * placeholder '%s'
@@ -537,6 +584,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		return ob_get_clean();
 	}
 
+	// }}}
+	// {{{ public function getInlineJavaScript()
+
 	/**
 	 * Creates a JavaScript object to control the client behaviour of this
 	 * input row
@@ -569,6 +619,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$this->id, $this->id, trim($row_string));
 	}
 
+	// }}}
+	// {{{ private function getForm()
+
 	/**
 	 * Gets the form this row's view is contained in
 	 *
@@ -586,6 +639,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 		return $form;
 	}
+
+	// }}}
 }
 
 ?>
