@@ -13,6 +13,8 @@ require_once 'Swat/SwatString.php';
  */
 class SwatDateCellRenderer extends SwatCellRenderer
 {
+	// {{{ public properties
+
 	/**
 	 * Date
 	 *
@@ -41,6 +43,9 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	 */
 	public $time_zone = null;
 
+	// }}}
+	// {{{ public function render()
+
 	/**
 	 * Renders the contents of this cell
 	 *
@@ -56,6 +61,8 @@ class SwatDateCellRenderer extends SwatCellRenderer
 			echo SwatString::minimizeEntities($date->format($this->format));
 		}
 	}
+
+	// }}}
 }
 
 ?>

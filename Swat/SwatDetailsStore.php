@@ -14,13 +14,21 @@ require_once 'Swat/SwatObject.php';
  */
 class SwatDetailsStore extends SwatObject
 {
+	// {{{ private properties
+
 	private $base_object = null;
 	private $data = array();
+
+	// }}}
+	// {{{ public function __construct()
 
 	public function __construct($base_object = null)
 	{
 		$this->base_object = $base_object;
 	}
+
+	// }}}
+	// {{{ public function __get()
 
 	public function __get($name)
 	{
@@ -43,10 +51,16 @@ class SwatDetailsStore extends SwatObject
 			0, $this, $name);
 	}
 
+	// }}}
+	// {{{ public function __set()
+
 	public function __set($name, $value)
 	{
 		$this->data[$name] = $value;
 	}
+
+	// }}}
+	// {{{ private function parsePath()
 
 	private function parsePath($object, $path) {
 		$pos = strpos($path, '.');
@@ -61,6 +75,8 @@ class SwatDetailsStore extends SwatObject
 		else
 			return $this->parsePath($sub_object, $rest);
 	}
+
+	// }}}
 }
 
 ?>
