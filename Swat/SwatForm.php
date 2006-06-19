@@ -17,11 +17,16 @@ require_once 'Swat/SwatHtmlTag.php';
  */
 class SwatForm extends SwatDisplayableContainer
 {
+	// {{{ constants
+
 	const METHOD_POST = 'post';
 	const METHOD_GET  = 'get';
 
 	const PROCESS_FIELD = '_swat_form_process';
 	const HIDDEN_FIELD = '_swat_form_hidden_fields';
+
+	// }}}
+	// {{{ public properties
 
 	/**
 	 * The action attribute of the HTML form tag
@@ -72,6 +77,9 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public $button = null;
 
+	// }}}
+	// {{{ protected properties
+
 	/**
 	 * Hidden form fields
 	 *
@@ -83,6 +91,9 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	protected $hidden_fields = array();
 
+	// }}}
+	// {{{ private properties
+
 	/**
 	 * The method to use for this form
 	 *
@@ -91,6 +102,9 @@ class SwatForm extends SwatDisplayableContainer
 	 * @var string
 	 */
 	private $method = SwatForm::METHOD_POST;
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new form
@@ -107,6 +121,9 @@ class SwatForm extends SwatDisplayableContainer
 
 		$this->addJavaScript('swat/javascript/swat-form.js');
 	}
+
+	// }}}
+	// {{{ public function setMethod()
 
 	/**
 	 * Sets the HTTP method this form uses to send data
@@ -126,6 +143,9 @@ class SwatForm extends SwatDisplayableContainer
 		$this->method = $method;
 	}
 
+	// }}}
+	// {{{ public function getMethod()
+
 	/**
 	 * Gets the HTTP method this form uses to send data
 	 *
@@ -135,6 +155,9 @@ class SwatForm extends SwatDisplayableContainer
 	{
 		return $this->method;
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this form
@@ -170,6 +193,9 @@ class SwatForm extends SwatDisplayableContainer
 		$this->displayJavaScript();
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	/**
 	 * Processes this form
 	 *
@@ -198,6 +224,9 @@ class SwatForm extends SwatDisplayableContainer
 		}
 	}
 
+	// }}}
+	// {{{ public function addHiddenField()
+
 	/**
 	 * Adds a hidden form field
 	 *
@@ -211,6 +240,9 @@ class SwatForm extends SwatDisplayableContainer
 	{
 		$this->hidden_fields[$name] = $value;
 	}
+
+	// }}}
+	// {{{ public function getHiddenField()
 
 	/**
 	 * Gets the value of a hidden form field
@@ -237,6 +269,9 @@ class SwatForm extends SwatDisplayableContainer
 		return null;
 	}
 
+	// }}}
+	// {{{ public function clearHiddenFields()
+
 	/**
 	 * Clears all hidden fields
 	 */
@@ -244,6 +279,9 @@ class SwatForm extends SwatDisplayableContainer
 	{
 		$this->hidden_fields = array();
 	}
+
+	// }}}
+	// {{{ public function addWithField()
 
 	/**
 	 * Adds a widget within a new SwatFormField
@@ -263,6 +301,9 @@ class SwatForm extends SwatDisplayableContainer
 		$field->title = $title;
 		$this->add($field);
 	}
+
+	// }}}
+	// {{{ public function &getFormData()
 
 	/**
 	 * Returns the super-global array with this form's data
@@ -289,6 +330,9 @@ class SwatForm extends SwatDisplayableContainer
 		return $data;
 	}
 
+	// }}}
+	// {{{ protected function displayChildren()
+
 	/**
 	 * Displays the child widgets of this form
 	 *
@@ -300,6 +344,9 @@ class SwatForm extends SwatDisplayableContainer
 		foreach ($this->children as $child)
 			$child->display();
 	}
+
+	// }}}
+	// {{{ protected function processHiddenFields()
 
 	/**
 	 * Checks submitted form data for hidden fields
@@ -326,6 +373,9 @@ class SwatForm extends SwatDisplayableContainer
 			}
 		}
 	}
+
+	// }}}
+	// {{{ protected function notifyOfAdd()
 
 	/**
 	 * Notifies this widget that a widget was added
@@ -355,6 +405,9 @@ class SwatForm extends SwatDisplayableContainer
 			
 		}
 	}
+
+	// }}}
+	// {{{ protected function displayHiddenFields()
 
 	/**
 	 * Displays hidden form fields
@@ -395,6 +448,9 @@ class SwatForm extends SwatDisplayableContainer
 		echo '</div>';
 	}
 
+	// }}}
+	// {{{ private function displayJavaScript()
+
 	/**
 	 * Displays JavaScript required for this form
 	 *
@@ -427,6 +483,8 @@ class SwatForm extends SwatDisplayableContainer
 
 		echo '</script>';
 	}
+
+	// }}}
 }
 
 ?>

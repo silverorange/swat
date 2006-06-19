@@ -17,6 +17,8 @@ require_once 'Swat/SwatMessage.php';
  */
 class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 {
+	// {{{ public properties
+
 	/**
 	 * The visible name for this field, or null
 	 *
@@ -56,6 +58,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public $access_key = null;
 
+	// }}}
+	// {{{ protected properties
+
 	/**
 	 * Container tag to use
 	 *
@@ -74,6 +79,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	protected $contents_tag = 'div';
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new form field
 	 *
@@ -89,6 +97,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		$this->addStyleSheet('swat/styles/swat-form-field.css');
 	}
 
+	// }}}
+	// {{{ public function getTitle()
+
 	/**
 	 * Gets the title of this form field
 	 *
@@ -100,6 +111,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	{
 		return $this->title;
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this form field
@@ -205,6 +219,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		$container_tag->close();
 	}
 
+	// }}}
+	// {{{ protected function getTitleTag()
+
 	/**
 	 * Get a SwatHtmlTag to display the title
 	 *
@@ -227,6 +244,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		return $label_tag;
 	}
 
+	// }}}
+	// {{{ protected function notifyOfAdd()
+
 	/**
 	 * Notifies this widget that a widget was added
 	 *
@@ -242,6 +262,8 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 			$this->class = 'swat-form-field-checkbox';
 		}
 	}
+
+	// }}}
 }
 
 ?>

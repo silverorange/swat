@@ -12,6 +12,8 @@ require_once 'Swat/SwatString.php';
  */
 class SwatFloatEntry extends SwatEntry
 {
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new float entry widget
 	 *
@@ -27,6 +29,9 @@ class SwatFloatEntry extends SwatEntry
 
 		$this->size = 10;
 	}
+
+	// }}}
+	// {{{ public function process(0
 
 	/**
 	 * Checks to make sure value is a number
@@ -51,6 +56,9 @@ class SwatFloatEntry extends SwatEntry
 		}
 	}
 
+	// }}}
+	// {{{ protected function getDisplayValue()
+
 	protected function getDisplayValue()
 	{
 		$lc = localeconv();
@@ -63,6 +71,8 @@ class SwatFloatEntry extends SwatEntry
 		else
 			return $this->value;
 	}
+
+	// }}}
 }
 
 ?>

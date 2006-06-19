@@ -13,6 +13,8 @@ require_once 'Swat/SwatFormField.php';
  */
 class SwatFooterFormField extends SwatFormField
 {
+	// {{{ public function display()
+
 	public function display()
 	{
 		$wrapper_tag = new SwatHtmlTag('div');
@@ -23,6 +25,8 @@ class SwatFooterFormField extends SwatFormField
 		parent::display();
 		$wrapper_tag->close();
 	}
+
+	// }}}
 }
 
 ?>

@@ -14,6 +14,8 @@ require_once 'Swat/SwatFormField.php';
  */
 class SwatFileEntry extends SwatInputControl
 {
+	// {{{ public properties
+
 	/**
 	 * The size in characters of the XHTML form input, or null if no width is
 	 * specified
@@ -45,6 +47,9 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public $access_key = null;
 
+	// }}}
+	// {{{ private properties
+
 	/**
 	 * Stores the relevant part of the $_FILES array for this widget after
 	 * the widget's parent is processed
@@ -52,6 +57,9 @@ class SwatFileEntry extends SwatInputControl
 	 * @var array
 	 */
 	private $file = null;
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this entry widget
@@ -81,6 +89,9 @@ class SwatFileEntry extends SwatInputControl
 
 		$input_tag->display();
 	}
+
+	// }}}
+	// {{{ public function process()
 
 	/**
 	 * Processes this file entry widget
@@ -120,6 +131,9 @@ class SwatFileEntry extends SwatInputControl
 		}
 	}
 
+	// }}}
+	// {{{ public function getNote()
+
 	/**
 	 * Gets a note specifying the mime types this file entry accepts
 	 *
@@ -144,6 +158,9 @@ class SwatFileEntry extends SwatInputControl
 		return $note;
 	}
 
+	// }}}
+	// {{{ public function isUploaded()
+
 	/**
 	 * Is file uploaded
 	 *
@@ -153,6 +170,9 @@ class SwatFileEntry extends SwatInputControl
 	{
 		return ($this->file !== null);
 	}
+
+	// }}}
+	// {{{ public function getFileName()
 
 	/**
 	 * Gets the original file name of the uploaded file
@@ -167,6 +187,9 @@ class SwatFileEntry extends SwatInputControl
 		return ($this->isUploaded()) ? $this->file['name'] : null;
 	}
 
+	// }}}
+	// {{{ public function getTempFileName()
+
 	/**
 	 * Gets the temporary name of the uploaded file
 	 *
@@ -180,6 +203,9 @@ class SwatFileEntry extends SwatInputControl
 		return ($this->isUploaded()) ? $this->file['tmp_name'] : null;
 	}
 
+	// }}}
+	// {{{ public function getSize()
+
 	/**
 	 * Gets the size of the uploaded file in bytes
 	 *
@@ -191,6 +217,9 @@ class SwatFileEntry extends SwatInputControl
 		return ($this->isUploaded()) ? $this->file['size'] : null;
 	}
 
+	// }}}
+	// {{{ public function getMimeType()
+
 	/**
 	 * Gets the mime type of the uploaded file
 	 *
@@ -201,6 +230,9 @@ class SwatFileEntry extends SwatInputControl
 	{
 		return ($this->isUploaded()) ? $this->file['type'] : null;
 	}
+
+	// }}}
+	// {{{ public function saveFile()
 
 	/**
 	 * Saves the uploaded file to the server
@@ -232,6 +264,9 @@ class SwatFileEntry extends SwatInputControl
 				'directory or does not exist.');
 	}
 
+	// }}}
+	// {{{ public function getFocusableHtmlId()
+
 	/**
 	 * Gets the id attribute of the XHTML element displayed by this widget
 	 * that should receive focus
@@ -246,6 +281,8 @@ class SwatFileEntry extends SwatInputControl
 	{
 		return $this->id;
 	}
+
+	// }}}
 }
 
 ?>
