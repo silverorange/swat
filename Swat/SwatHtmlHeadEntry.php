@@ -14,6 +14,8 @@ require_once 'Swat/SwatObject.php';
  */
 abstract class SwatHtmlHeadEntry extends SwatObject
 {
+	// {{{ protected properties
+
 	/**
 	 * The uri of this head entry
 	 *
@@ -32,6 +34,9 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	 */
 	protected $display_order = 0;
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new HTML head entry
 	 *
@@ -45,6 +50,9 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 		$this->display_order = $display_order;
 	}
 
+	// }}}
+	// {{{ public abstract function display()
+
 	/**
 	 * Displays this html head entry
 	 *
@@ -53,6 +61,9 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	 * @param string $path_prefix an optional string to prefix the URI with.
 	 */
 	public abstract function display($uri_prefix = '');
+
+	// }}}
+	// {{{ public function getUri()
 
 	/**
 	 * Gets the URI of this HTML head entry
@@ -64,6 +75,9 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 		return $this->uri;
 	}
 
+	// }}}
+	// {{{ public function getDisplayOrder()
+
 	/**
 	 * Gets the display order of this HTML head entry
 	 *
@@ -73,6 +87,8 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	{
 		return $this->display_order;
 	}
+
+	// }}}
 }
 
 ?>
