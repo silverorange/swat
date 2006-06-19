@@ -13,6 +13,8 @@ require_once 'Swat/SwatString.php';
  */
 abstract class SwatControl extends SwatWidget
 {
+	// {{{ public function addMessage()
+
 	/**
 	 * Adds a message
 	 *
@@ -49,6 +51,9 @@ abstract class SwatControl extends SwatWidget
 		$this->messages[] = $message;
 	}
 
+	// }}}
+	// {{{ public function getMessages()
+
 	/**
 	 * Gets all messages
 	 *
@@ -65,6 +70,9 @@ abstract class SwatControl extends SwatWidget
 		return $this->messages;
 	}
 
+	// }}}
+	// {{{ public function hasMessage()
+
 	/**
 	 * Checks for the presence of messages
 	 *
@@ -76,6 +84,9 @@ abstract class SwatControl extends SwatWidget
 	{
 		return (count($this->messages) > 0);
 	}
+
+	// }}}
+	// {{{ public function getNote()
 
 	/**
 	 * Gets an informative note of how to use this control
@@ -89,6 +100,9 @@ abstract class SwatControl extends SwatWidget
 		return null;
 	}
 
+	// }}}
+	// {{{ public function getHtmlHeadEntries()
+
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this control
 	 *
@@ -101,6 +115,8 @@ abstract class SwatControl extends SwatWidget
 	{
 		return $this->html_head_entries;
 	}
+
+	// }}}
 }
 
 ?>

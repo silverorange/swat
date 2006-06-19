@@ -11,6 +11,8 @@ require_once 'Date.php';
  */
 class SwatDate extends Date
 {
+	// {{{ constants
+
 	/**
 	 * 07/02/02
 	 */
@@ -76,10 +78,16 @@ class SwatDate extends Date
 	*/
 	const DF_CC_MY                  = 13;
 
+	// }}}
+	// {{{ public function __construct()
+
 	public function __construct($date = null)
 	{
 		parent::Date($date);
 	}
+
+	// }}}
+	// {{{ public function format()
 
 	/**
 	 * Formats this date given either a format string of a format id
@@ -96,6 +104,9 @@ class SwatDate extends Date
 		return parent::format($format);
 	}
 
+	// }}}
+	// {{{ pulbic function clearTime()
+
 	/**
 	 * Clears the time portion of the date object
 	 */
@@ -105,6 +116,9 @@ class SwatDate extends Date
 		$this->setMinute(0);
 		$this->setSecond(0);
 	}
+
+	// }}}
+	// {{{ public static function getFormatById(
 
 	/**
 	 * Gets a date format string by id
@@ -148,6 +162,8 @@ class SwatDate extends Date
 			throw new Exception("Unknown date format id '$id'.");
 		}
 	}
+
+	// }}}
 }
 
 ?>
