@@ -11,8 +11,13 @@ require_once 'Swat/SwatFlydown.php';
  */
 class SwatYesNoFlydown extends SwatFlydown
 {
+	// {{{ constants
+
 	const NO = 1;
 	const YES = 2;
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new yes/no flydown
@@ -30,6 +35,9 @@ class SwatYesNoFlydown extends SwatFlydown
 		$this->addOptionsByArray(array(self::NO => Swat::_('No'),
 			self::YES => Swat::_('Yes')));
 	}
+
+	// }}
+	// {{{ public function getValuesAsBoolean()
 
 	/**
 	 * Gets the value of this yes/no flydown as a boolean
@@ -49,6 +57,8 @@ class SwatYesNoFlydown extends SwatFlydown
 			return null;
 		}
 	}
+
+	// }}}
 }
 
 ?>

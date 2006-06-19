@@ -9,6 +9,8 @@
  */
 interface SwatUIParent
 {
+	// {{{ public function addChild()
+
 	/**
 	 * Adds a child object to this parent object
 	 *
@@ -19,6 +21,8 @@ interface SwatUIParent
 	 * @param SwatObject $child the child object to add to this parent object.
 	 */
 	public function addChild(SwatObject $child);
+
+	// }}}
 }
 
 ?>

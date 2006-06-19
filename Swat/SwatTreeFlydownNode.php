@@ -15,12 +15,17 @@ require_once 'Swat/SwatOption.php';
  */
 class SwatTreeFlydownNode extends SwatTreeNode
 {
+	// {{{ protected properties
+
 	/**
 	 * The flydown option for this node
 	 *
 	 * @var SwatOption
 	 */
 	protected $flydown_option;
+
+	// }}}
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new tree flydown node
@@ -58,6 +63,9 @@ class SwatTreeFlydownNode extends SwatTreeNode
 			$this->flydown_option = new SwatOption($param1, $param2);
 	}
 
+	// }}}
+	// {{{ public function getFlydownOption()
+
 	/**
 	 * Gets the flydown option for this node
 	 *
@@ -67,6 +75,8 @@ class SwatTreeFlydownNode extends SwatTreeNode
 	{
 		return $this->flydown_option;
 	}
+
+	// }}}
 }
 
 ?>

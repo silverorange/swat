@@ -13,6 +13,8 @@ require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
  */
 class SwatToolLink extends SwatControl
 {
+	// {{{ public properties
+
 	/**
 	 * The href attribute in the XHTML anchor tag
 	 *
@@ -81,6 +83,7 @@ class SwatToolLink extends SwatControl
 	 */
 	public $access_key = null;
 
+	// }}}
 	// {{{ public function __construct()
 
 	/**
@@ -98,6 +101,7 @@ class SwatToolLink extends SwatControl
 	}
 
 	// }}}
+	// {{{ public function init()
 
 	/**
 	 * Initializes this widget
@@ -113,6 +117,9 @@ class SwatToolLink extends SwatControl
 		if ($this->stock_id !== null) 
 			$this->setFromStock($this->stock_id, false);
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this tool link
@@ -154,6 +161,9 @@ class SwatToolLink extends SwatControl
 			$span_tag->display();
 		}
 	}
+
+	// }}}
+	// {{{ public function setFromStock()
 
 	/**
 	 * Sets the values of this tool link to a stock type
@@ -232,6 +242,8 @@ class SwatToolLink extends SwatControl
 
 		$this->class = $class;
 	}
+
+	// }}}
 }
 
 ?>
