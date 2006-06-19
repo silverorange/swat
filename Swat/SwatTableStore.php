@@ -15,12 +15,17 @@ require_once 'Swat/SwatTableModel.php';
  */
 class SwatTableStore extends SwatObject implements SwatTableModel
 {
+	// {{{ private properties
+
 	/**
 	 * The indvidual rows for this data structure
 	 *
 	 * @var array
 	 */
 	private $rows = array();
+
+	// }}}
+	// {{{ public function getRowCount()
 
 	/**
 	 * Gets the number of rows in this data structure
@@ -31,6 +36,9 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 	{
 		return count($this->rows);
 	}
+
+	// }}}
+	// {{{ public function &getRows()
 
 	/**
 	 * Gets the rows of this data structure as an array
@@ -43,6 +51,9 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 	{
 		return $this->rows;
 	}
+
+	// }}}
+	// {{{ public function addRow()
 
 	/**
 	 * Adds a row to this data structure
@@ -59,6 +70,8 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 		else
 			$this->rows[$id] = $data;
 	}
+
+	// }}}
 }
 
 ?>

@@ -9,6 +9,8 @@
  */
 interface SwatState
 {
+	// {{{ public properties
+
 	/**
 	 * Set the state of the control
 	 *
@@ -33,6 +35,8 @@ interface SwatState
 	 * @return mixed The current state of the control.
 	 */
 	public function getState();
+
+	// }}}
 }
 
 ?>

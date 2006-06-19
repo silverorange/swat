@@ -12,6 +12,8 @@ require_once 'Swat/SwatCheckAll.php';
  */
 class SwatTableViewCheckAllRow extends SwatTableViewRow
 {
+	// {{{ private properties
+
 	/**
 	 * The unique identifier of the checkbox column that this check-all row
 	 * is bound to
@@ -27,6 +29,9 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	private $check_all;
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new check-all row
 	 *
@@ -39,6 +44,9 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		$this->column_id = $column_id;
 		$this->check_all = new SwatCheckAll();
 	}
+
+	// }}}
+	// {{{ public function getHtmlHeadEntries()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this check-all row
@@ -55,6 +63,9 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		return $out;
 	}
 
+	// }}}
+	// {{{ public function init()
+
 	/**
 	 * Initializes this check-all row
 	 */
@@ -64,6 +75,9 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		$this->check_all->init();
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	/**
 	 * Processes this check-all row
 	 */
@@ -72,6 +86,9 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		parent::process();
 		$this->check_all->process();
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this check-all row
@@ -114,6 +131,9 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		echo '</tr>';
 	}
 
+	// }}}
+	// {{{ public function getInlineJavaScript()
+
 	/**
 	 * Gets the inline JavaScript required for this row
 	 *
@@ -130,6 +150,8 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		return sprintf("%s_obj.setController(%s);",
 			$this->check_all->id, $this->column_id);
 	}
+
+	// }}}
 }
 
 ?>

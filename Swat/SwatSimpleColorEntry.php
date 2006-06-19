@@ -15,6 +15,8 @@ require_once 'Swat/SwatState.php';
  */
 class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 {
+	// {{{ public properties
+
 	/**
 	 * Selected color
 	 *
@@ -52,6 +54,9 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		'9db8d2', '7590ae', '4b6983', '314e6c',
 		);
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new simple color selection widget
 	 *
@@ -69,6 +74,9 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
 		$this->addStyleSheet('swat/styles/swat-color-entry.css');
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this simple color selector widget
@@ -118,6 +126,9 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		$this->displayJavaScript();
 	}
 
+	// }}}
+	// {{{ public function getState()
+
 	/**
 	 * Gets the current state of this simple color selector widget
 	 *
@@ -130,6 +141,9 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		return $this->value;
 	}
 
+	// }}}
+	// {{{ public function setState()
+
 	/**
 	 * Sets the current state of this simple color selector widget
 	 *
@@ -141,6 +155,9 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	{
 		$this->value = $state;
 	}
+
+	// }}}
+	// {{{ private functoin displayJavaScript()
 
 	/**
 	 * Displays simple color selector JavaScript
@@ -158,6 +175,8 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 
 		echo "\n</script>";
 	}
+
+	// }}}
 }
 
 ?>

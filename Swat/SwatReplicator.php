@@ -9,6 +9,8 @@
  */
 interface SwatReplicator
 {
+	// {{{ public function getWidget()
+
 	/**
 	 * Retrives a reference to a replicated widget
 	 *
@@ -20,6 +22,8 @@ interface SwatReplicator
 	 * @throws SwatWidgetNotFoundException
 	 */
 	public function getWidget($widget_id, $replicator_id);
+
+	// }}}
 }
 
 ?>
