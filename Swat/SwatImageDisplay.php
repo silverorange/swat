@@ -14,6 +14,8 @@ require_once 'Swat/SwatControl.php';
  */
 class SwatImageDisplay extends SwatControl
 {
+	// {{{ public properties
+
 	/**
 	 * Image
 	 *
@@ -72,7 +74,10 @@ class SwatImageDisplay extends SwatControl
 	 * @var string
 	 */
 	public $alt = null;
-	
+
+	// }}}
+	// {{{ public function display()
+
 	/**
 	 * Displays this image
 	 */
@@ -103,6 +108,8 @@ class SwatImageDisplay extends SwatControl
 
 		$image_tag->display();
 	}
+
+	// }}}
 }
 
 ?>

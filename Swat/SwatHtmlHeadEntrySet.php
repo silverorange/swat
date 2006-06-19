@@ -15,6 +15,8 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  */
 class SwatHtmlHeadEntrySet extends SwatObject
 {
+	// {{{ private properties
+
 	/**
 	 * HTML head entries managed by this collection
 	 *
@@ -40,6 +42,9 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 */
 	private $entry_counter = 0;
 
+	// }}}
+	// {{{ public function __construct()
+
 	/**
 	 * Creates a new HTML head entry collection
 	 *
@@ -56,6 +61,9 @@ class SwatHtmlHeadEntrySet extends SwatObject
 			$this->addEntrySet($set);
 		}
 	}
+
+	// }}}
+	// {{{ public function addEntry()
 
 	/**
 	 * Adds a HTML head entry to this set
@@ -74,6 +82,9 @@ class SwatHtmlHeadEntrySet extends SwatObject
 		$this->entries[$uri] = $entry;
 	}
 
+	// }}}
+	// {{{ public function addEntrySet()
+
 	/**
 	 * Adds a set of HTML head entries to this set
 	 *
@@ -84,6 +95,9 @@ class SwatHtmlHeadEntrySet extends SwatObject
 		foreach ($set->entries as $entry)
 			$this->addEntry($entry);
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this set of HTML head entries
@@ -102,6 +116,9 @@ class SwatHtmlHeadEntrySet extends SwatObject
 			echo "\n";
 		}
 	}
+
+	// }}}
+	// {{{ private function compare()
 
 	/**
 	 * Compares two HTML head entries within this set
@@ -126,6 +143,8 @@ class SwatHtmlHeadEntrySet extends SwatObject
 		return
 			($entry1->getDisplayOrder() > $entry2->getDisplayOrder()) ? 1 : -1;
 	}
+
+	// }}}
 }
 
 ?>

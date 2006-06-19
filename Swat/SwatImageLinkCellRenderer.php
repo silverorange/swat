@@ -11,6 +11,8 @@ require_once 'Swat/SwatImageCellRenderer.php';
  */
 class SwatImageLinkCellRenderer extends SwatImageCellRenderer
 {
+	// {{{ public properties
+
 	/**
 	 * The href attribute in the XHTML anchor tag
 	 *
@@ -39,6 +41,9 @@ class SwatImageLinkCellRenderer extends SwatImageCellRenderer
 	 */
 	public $link_value = null;
 
+	// }}}
+	// {{{ public function render()
+
 	/**
 	 * Renders the contents of this cell
 	 *
@@ -65,6 +70,8 @@ class SwatImageLinkCellRenderer extends SwatImageCellRenderer
 			$anchor->close();
 		}
 	}
+
+	// }}}
 }
 
 ?>
