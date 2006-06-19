@@ -12,12 +12,17 @@ require_once 'Swat/SwatString.php';
  */
 class SwatHtmlTag extends SwatObject
 {
+	// {{{ public properties
+
 	/**
 	 * The name of the HTML tag
 	 *
 	 * @var string
 	 */
 	public $tag_name;
+
+	// }}}
+	// {{{ private properties
 
 	/**
 	 * Atribute array
@@ -45,6 +50,9 @@ class SwatHtmlTag extends SwatObject
 	 */
 	private $content_type = 'text/plain';
 
+	// }}}
+	// {{{ private function __construct()
+
 	/**
 	 * Creates a new HTML tag
 	 *
@@ -59,6 +67,9 @@ class SwatHtmlTag extends SwatObject
 		if (is_array($attributes))
 			$this->attributes = $attributes;
 	}
+
+	// }}}
+	// {{{ private function setContent()
 
 	/**
 	 * Set content for the body of the XHTML tag
@@ -81,6 +92,9 @@ class SwatHtmlTag extends SwatObject
 		$this->content_type = $type;
 	}
 
+	// }}}
+	// {{{ private function addAtributes()
+
 	/**
 	 * Adds an array of attributes to this XHTML tag
 	 *
@@ -96,6 +110,9 @@ class SwatHtmlTag extends SwatObject
 		if (is_array($attributes))
 			$this->attributes = array_merge($this->attributes, $attributes);
 	}
+
+	// }}}
+	// {{{ private function __get()
 
 	/**
 	 * Magic __get method
@@ -116,6 +133,9 @@ class SwatHtmlTag extends SwatObject
 			return null;
 	}
 
+	// }}}
+	// {{{ private function __set()
+
 	/**
 	 * Magic __set method
 	 *
@@ -131,6 +151,9 @@ class SwatHtmlTag extends SwatObject
 			($value === null) ? null : (string)$value;
 	}
 
+	// }}}
+	// {{{ public function removeAttribute()
+
 	/**
 	 * Removes an attribute
 	 *
@@ -143,6 +166,9 @@ class SwatHtmlTag extends SwatObject
 	{
 		unset($this->attributes[$attribute]);
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this tag
@@ -167,6 +193,9 @@ class SwatHtmlTag extends SwatObject
 		}
 	}
 
+	// }}}
+	// {{{ public function displayContent()
+
 	/**
 	 * Displays the content of this tag
 	 *
@@ -184,6 +213,9 @@ class SwatHtmlTag extends SwatObject
 		}
 	}
 
+	// }}}
+	// {{{ public function open()
+
 	/**
 	 * Opens this tag
 	 *
@@ -198,6 +230,9 @@ class SwatHtmlTag extends SwatObject
 		$this->openInternal(false);
 	}
 
+	// }}}
+	// {{{ public function close()
+
 	/**
 	 * Closes this tag
 	 *
@@ -210,6 +245,9 @@ class SwatHtmlTag extends SwatObject
 	{
 		echo '</', $this->tag_name, '>';
 	}
+
+	// }}}
+	// {{{ private function openInternal()
 
 	/**
 	 * Outputs opening tag and all attributes
@@ -235,6 +273,8 @@ class SwatHtmlTag extends SwatObject
 		else
 			echo '>';
 	}
+
+	// }}}
 }
 
 ?>
