@@ -13,6 +13,8 @@ require_once 'Swat/SwatState.php';
  */
 class SwatEntry extends SwatInputControl implements SwatState
 {
+	// {{{ public properties
+
 	/**
 	 * Entry value
 	 *
@@ -58,12 +60,18 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 */
 	public $minlength = null;
 
+	// }}}
+	// {{{ protected properties
+
 	/**
 	 * The type of input tag
 	 *
 	 * @var string
 	 */
 	protected $html_input_type = 'text';
+
+	// }}}
+	// {{{ public function display()
 
 	/**
 	 * Displays this entry widget
@@ -99,6 +107,9 @@ class SwatEntry extends SwatInputControl implements SwatState
 
 		$input_tag->display();
 	}
+
+	// }}}
+	// {{{ public function process()
 
 	/**
 	 * Processes this entry widget
@@ -147,6 +158,9 @@ class SwatEntry extends SwatInputControl implements SwatState
 		}
 	}
 
+	// }}}
+	// {{{ public function getState()
+
 	/**
 	 * Gets the current state of this entry widget
 	 *
@@ -158,6 +172,9 @@ class SwatEntry extends SwatInputControl implements SwatState
 	{
 		return $this->value;
 	}
+
+	// }}}
+	// {{{ public function setState()
 
 	/**
 	 * Sets the current state of this entry widget
@@ -171,6 +188,9 @@ class SwatEntry extends SwatInputControl implements SwatState
 		$this->value = $state;
 	}
 
+	// }}}
+	// {{{ protected function getDisplayValue()
+
 	/**
 	 * Get value to display
 	 *
@@ -182,6 +202,9 @@ class SwatEntry extends SwatInputControl implements SwatState
 	{
 		return $this->value;
 	}
+
+	// }}}
+	// {{{ public function getFocusableHtmlId()
 
 	/**
 	 * Gets the id attribute of the XHTML element displayed by this widget
@@ -197,6 +220,8 @@ class SwatEntry extends SwatInputControl implements SwatState
 	{
 		return $this->id;
 	}
+
+	// }}}
 }
 
 ?>
