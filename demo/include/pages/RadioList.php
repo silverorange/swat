@@ -13,6 +13,8 @@ require_once 'DemoPage.php';
  */
 class RadioList extends DemoPage
 {
+	// {{{ public function initUI()
+
 	public function initUI()
 	{
 		$radiolist = $this->ui->getWidget('radiolist');
@@ -27,6 +29,8 @@ class RadioList extends DemoPage
 			7 => 'Grapefruit',
 			8 => 'Strawberry'));
 	}
+
+	// }}}
 }
 
 ?>

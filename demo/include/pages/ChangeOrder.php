@@ -13,6 +13,8 @@ require_once 'DemoPage.php';
  */
 class ChangeOrder extends DemoPage
 {
+	// {{{ public function initUI()
+
 	public function initUI()
 	{
 		$order_widget = $this->ui->getWidget('change_order');
@@ -27,6 +29,8 @@ class ChangeOrder extends DemoPage
 			7 => 'Grapefruit',
 			8 => 'Strawberry'));
 	}
+
+	// }}}
 }
 
 ?>

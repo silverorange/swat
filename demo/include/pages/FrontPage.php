@@ -13,6 +13,8 @@ require_once 'DemoPage.php';
  */
 class FrontPage extends DemoPage
 {
+	// {{{ public function initUI()
+
 	public function initUI()
 	{
 		$content = $this->ui->getWidget('content');
@@ -22,9 +24,15 @@ class FrontPage extends DemoPage
 			"documentation for the classes used.";
 	}
 
+	// }}}
+	// {{{ public function process()
+
 	public function process()
 	{
 	}
+
+	// }}}
+	// {{{ public function build()
 
 	public function build()
 	{
@@ -32,6 +40,7 @@ class FrontPage extends DemoPage
 		$this->layout->data->title = $this->app->title;
 	}
 
+	// }}}
 	// {{{ protected function createLayout()
 
 	protected function createLayout()

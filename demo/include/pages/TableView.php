@@ -13,6 +13,8 @@ require_once 'Swat/SwatDate.php';
  */
 class TableView extends DemoPage
 {
+	// private function initUI();
+
 	public function initUI()
 	{
 		$data = array(
@@ -45,6 +47,8 @@ class TableView extends DemoPage
 		$table_view->model = $table_store;
 
 	}
+
+	// }}}
 }
 
 /**
@@ -56,6 +60,8 @@ class TableView extends DemoPage
  */
 class FruitObject
 {
+	// {{{ public properties
+
 	public $image = '';
 	public $image_width = 0;
 	public $image_height = 0;
@@ -65,6 +71,8 @@ class FruitObject
 	public $makes_pie = false;
 	public $harvest_date = null;
 	public $cost = 0;
+
+	// }}}
 }
 
 ?>
