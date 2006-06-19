@@ -14,7 +14,6 @@ require_once 'Swat/SwatButton.php';
  */
 class SwatConfirmationButton extends SwatButton
 {
-
 	// {{{ public function __construct()
 
 	/**
