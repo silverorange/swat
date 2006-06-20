@@ -161,10 +161,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		$contents_tag->class = 'swat-form-field-contents';
 
 		$contents_tag->open();
-
-		foreach ($this->children as &$child)
-			$child->display();
-
+		$this->displayChildren();
 		$contents_tag->close();
 
 		if (count($messages) > 0) {
