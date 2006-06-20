@@ -3,32 +3,3 @@
 .swat-form-field {
 	margin: 0 0 0.5em 0;
 }
-
-
-/* SwatFormField Messages */
-
-.swat-form-field-messages {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-
-.swat-form-field-messages .swat-message {
-	color: #C00;
-	font-size: 85%;
-	padding: 4px 4px 4px 24px;
-	margin: 1em -0.5em -0.5em -0.5em;
-	background: transparent url(../images/tango/16/dialog-error.png) 4px 4px no-repeat;
-}
-* html .swat-form-field-messages .swat-message  { /* IE hack */
-	background: transparent url(../images/tango/16/dialog-error-256.png) 4px 4px no-repeat;
-}
-
-.swat-form-field-with-messages {
-	position: relative;
-	border: 1px solid #C00;
-	background: #ffe3e0;
-	padding: 0.5em;
-	margin: 0.5em 0;
-}
-
