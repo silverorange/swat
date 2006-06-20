@@ -46,7 +46,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	}
 
 	// }}}
-	// {{{ public function getHtmlHeadEntries()
+	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this check-all row
@@ -54,13 +54,13 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this check-all row.
 	 *
-	 * @see SwatUIObject::getHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
 	 */
-	public function getHtmlHeadEntries()
+	public function getHtmlHeadEntrySet()
 	{
-		$out = new SwatHtmlHeadEntrySet($this->html_head_entries);
-		$out->addEntrySet($this->check_all->getHtmlHeadEntries());
-		return $out;
+		$set = parent::getHtmlHeadEntrySet();
+		$set->addEntrySet($this->check_all->getHtmlHeadEntrySet());
+		return $set;
 	}
 
 	// }}}

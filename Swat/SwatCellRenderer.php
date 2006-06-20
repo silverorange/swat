@@ -108,22 +108,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	}
 
 	// }}}
-	// {{{ getHtmlHeadEntries()
-
-	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this cell renderer
-	 *
-	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 *                               this cell renderer.
-	 *
-	 * @see SwatUIObject::getHtmlHeadEntries()
-	 */
-	public function getHtmlHeadEntries()
-	{
-		return $this->html_head_entries;
-	}
-
-	// }}}
 	// {{{ public function getPropertyNameToMap()
 
 	/**

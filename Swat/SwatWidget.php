@@ -160,8 +160,8 @@ abstract class SwatWidget extends SwatUIObject
 	 */
 	public function displayHtmlHeadEntries()
 	{
-		$html_head_entries = $this->getHtmlHeadEntries();
-		$html_head_entries->display();
+		$set = $this->getHtmlHeadEntrySet();
+		$set->display();
 	}
 
 	// }}}

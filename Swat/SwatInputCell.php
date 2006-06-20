@@ -259,7 +259,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	}
 
 	// }}}
-	// {{{ public function getHtmlHeadEntries()
+	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this row
@@ -267,13 +267,13 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this input cell.
 	 *
-	 * @see SwatUIObject::getHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
 	 */
-	public function getHtmlHeadEntries()
+	public function getHtmlHeadEntrySet()
 	{
-		$out = new SwatHtmlHeadEntrySet($this->html_head_entries);
-		$out->addEntrySet($this->widget->getHtmlHeadEntries());
-		return $out;
+		$set = parent::getHtmlHeadEntrySet();
+		$set->addEntrySet($this->widget->getHtmlHeadEntrySet());
+		return $set;
 	}
 
 	// }}}

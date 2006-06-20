@@ -28,21 +28,21 @@ abstract class SwatUIObject extends SwatObject
 	// {{{ protected properties
 
 	/**
-	 * An array of HTML head entries needed by this user-interface element
+	 * A set of HTML head entries needed by this user-interface element
 	 *
 	 * Entries are stored in a data object called {@link SwatHtmlHeadEntry}.
-	 * This property contains an array of such objects.
+	 * This property contains a set of such objects.
 	 *
-	 * @var array
+	 * @var SwatHtmlHeadEntrySet
 	 */
-	protected $html_head_entries;
+	protected $html_head_entry_set;
 
 	// }}}
 	// {{{ public function __construct()
 
 	public function __construct()
 	{
-		$this->html_head_entries = new SwatHtmlHeadEntrySet();
+		$this->html_head_entry_set = new SwatHtmlHeadEntrySet();
 	}
 
 	// }}}
@@ -58,13 +58,13 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public function addStyleSheet($stylesheet, $display_order = 0)
 	{
-		if ($this->html_head_entries === null)
+		if ($this->html_head_entry_set === null)
 			throw new SwatException(sprintf("Child class '%s' did not ".
 				'instantiate a HTML head entry set. This should be done in  '.
 				'the constructor either by calling parent::__construct() or '.
 				'by creating a new HTML head entry set.', get_class($this)));
 
-		$this->html_head_entries->addEntry(
+		$this->html_head_entry_set->addEntry(
 			new SwatStyleSheetHtmlHeadEntry($stylesheet, $display_order));
 	}
 
@@ -81,13 +81,13 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public function addJavaScript($java_script, $display_order = 0)
 	{
-		if ($this->html_head_entries === null)
+		if ($this->html_head_entry_set === null)
 			throw new SwatException(sprintf("Child class '%s' did not ".
 				'instantiate a HTML head entry set. This should be done in  '.
 				'the constructor either by calling parent::__construct() or '.
 				'by creating a new HTML head entry set.', get_class($this)));
 
-		$this->html_head_entries->addEntry(
+		$this->html_head_entry_set->addEntry(
 			new SwatJavaScriptHtmlHeadEntry($java_script, $display_order));
 	}
 
@@ -144,18 +144,20 @@ abstract class SwatUIObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ abstract public function getHtmlHeadEntries()
+	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this user-interface element
-	 *
-	 * Head entries are things like stylesheets and JavaScript includes that
-	 * should go in the head section of HTML.
+	 * Gets the SwatHtmlHeadEntry objects needed by this control
 	 *
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 *                               this user-interface element.
+	 *                               this control.
+	 *
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
 	 */
-	abstract public function getHtmlHeadEntries();
+	public function getHtmlHeadEntrySet()
+	{
+		return new SwatHtmlHeadEntrySet($this->html_head_entry_set);
+	}
 
 	// }}}
 	// {{{ public function __toString()
