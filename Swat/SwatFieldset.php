@@ -75,9 +75,7 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 			$legend_tag->display();
 		}
 
-		foreach ($this->children as &$child)
-			$child->display();
-
+		$this->displayChildren();
 		$fieldset_tag->close();
 	}
 

@@ -26,6 +26,16 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	protected $children = array();
 
+	/**
+	 * Children widgets indexed by id
+	 *
+	 * An array containing widgets indexed by their id.  This array only
+	 * contains widgets that have a non-null id.
+	 *
+	 * @var array
+	 */
+	protected $children_by_id = array();
+
 	// }}}
 	// {{{ public function __clone()
 
@@ -33,9 +43,14 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	{
 		$children = $this->children;
 		$this->children = array();
+		$this->children_by_id = array();
 
-		foreach ($children as $key => $child)
-			$this->children[$key] = clone $child;
+		foreach ($children as $key => $child) {
+			$new_child = clone $child;
+			$this->children[$key] = $new_child;
+			if ($new_child->id !== null)
+				$this->children_by_id[$new_child->id] = $new_child;
+		}
 	}
 
 	// }}}
@@ -95,6 +110,13 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 				$this->children[$key] = $new_widget;
 				$new_widget->parent = $this;
 				$widget->parent = null;
+
+				if ($widget->id !== null)
+					unset($this->children_by_id[$widget->id]);
+
+				if ($new_widget->id !== null)
+					$this->children_by_id[$new_widget->id] = $new_widget;
+
 				return $widget;
 			}
 		}
@@ -121,6 +143,10 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 			if ($child_widget === $widget) {
 				unset($this->children[$key]);
 				$widget->parent = null;
+
+				if ($widget->id !== null)
+					unset($this->children_by_id[$widget->id]);
+
 				return $widget;
 			}
 		}
@@ -146,6 +172,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		array_unshift($this->children, $widget);
 		$widget->parent = $this;
 
+		if ($widget->id !== null)
+				$this->children_by_id[$widget->id] = $widget;
+
 		$this->sendAddNotifySignal($widget);
 	}
 
@@ -168,6 +197,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		$this->children[] = $widget;
 		$widget->parent = $this;
 
+		if ($widget->id !== null)
+				$this->children_by_id[$widget->id] = $widget;
+
 		$this->sendAddNotifySignal($widget);
 	}
 
@@ -177,7 +209,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	/**
 	 * Gets a child widget
 	 *
-	 * TODO: this method is broken, id is unpredictable and unknown
 	 * Retrieves a widget from the list of widgets in the container based on
 	 * the unique identifier of the widget.
 	 *
@@ -185,10 +216,10 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 *
 	 * @return SwatWidget the found widget or null not found.
 	 */
-	public function getChild($id = 0)
+	public function getChild($id)
 	{
-		if (array_key_exists($id, $this->children))
-			return $this->children[$id];
+		if (array_key_exists($id, $this->children_by_id))
+			return $this->children_by_id[$id];
 		else
 			return null;
 	}
@@ -384,6 +415,20 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		if (!$this->visible)
 			return;
 
+		$this->displayChildren();
+	}
+
+	// }}}
+	// {{{ protected function displayChildren()
+
+	/**
+	 * Displays the child widgets of this container
+	 *
+	 * Subclasses that override the display method will typically call this
+	 * method to display child widgets.
+	 */
+	protected function displayChildren()
+	{
 		foreach ($this->children as &$child)
 			$child->display();
 	}

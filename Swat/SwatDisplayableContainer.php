@@ -3,13 +3,13 @@
 require_once 'Swat/SwatContainer.php';
 
 /**
- * Abstract base container that displays an XHTML element
+ * Base class for containers that display an XHTML element
  *
  * @package   Swat
  * @copyright 2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatDisplayableContainer extends SwatContainer
+class SwatDisplayableContainer extends SwatContainer
 {
 	// {{{ public properties
 
@@ -35,6 +35,28 @@ abstract class SwatDisplayableContainer extends SwatContainer
 			$class.= ' '.$this->class;
 
 		return $class;
+	}
+
+	// }}}
+	// {{{ public function display()
+
+	/**
+	 * Displays this container
+	 */
+	public function display()
+	{
+		if (!$this->visible)
+			return;
+
+		$div = new SwatHtmlTag('div');
+		$div->class = $this->getCssClasses('swat-displayable-container');
+
+		if ($this->id !== null)
+			$div->id = $this->id;
+
+		$div->open();
+		$this->displayChildren();
+		$div->close();
 	}
 
 	// }}}

@@ -44,14 +44,23 @@ class SwatToolbar extends SwatDisplayableContainer
 		$toolbar_ul->class = $this->getCssClasses('swat-toolbar');
 
 		$toolbar_ul->open();
+		$this->displayChildren();
+		$toolbar_ul->close();
+	}
 
+	// }}}
+	// {{{ protected function displayChildren()
+
+	/**
+	 * Displays the child widgets of this container
+	 */
+	protected function displayChildren()
+	{
 		foreach ($this->children as &$child) {
 			echo '<li>';
 			$child->display();
 			echo '</li>';
 		}
-
-		$toolbar_ul->close();
 	}
 
 	// }}}

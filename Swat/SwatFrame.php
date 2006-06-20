@@ -115,7 +115,7 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 		}
 
 		$inner_div->open();
-		parent::display();
+		$this->displayChildren();
 		$inner_div->close();
 		$outer_div->close();
 	}

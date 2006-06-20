@@ -331,21 +331,6 @@ class SwatForm extends SwatDisplayableContainer
 	}
 
 	// }}}
-	// {{{ protected function displayChildren()
-
-	/**
-	 * Displays the child widgets of this form
-	 *
-	 * Subclasses may override this method to display custom widgets or handle
-	 * child widgets differently.
-	 */
-	protected function displayChildren()
-	{
-		foreach ($this->children as $child)
-			$child->display();
-	}
-
-	// }}}
 	// {{{ protected function processHiddenFields()
 
 	/**

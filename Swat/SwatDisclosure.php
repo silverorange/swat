@@ -105,7 +105,7 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$anchor->close();
 
 		$container_div->open();
-		parent::display();
+		$this->displayChildren();
 		$container_div->close();
 
 		$this->displayJavaScript();
