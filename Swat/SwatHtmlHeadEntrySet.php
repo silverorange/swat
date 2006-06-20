@@ -123,8 +123,10 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	/**
 	 * Compares two HTML head entries within this set
 	 *
-	 * Entries are compared within the context of this set. Entries with the
-	 * same display order are compared based on their insertion order.
+	 * Entries are compared within the context of this set. Entries are
+	 * compared first on their class name and then on their display order.
+	 * Entries with the same display order are compared based on their
+	 * insertion order.
 	 *
 	 * @param SwatHtmlHeadEntry $entry1 the first entry to compare.
 	 * @param SwatHtmlHeadEntry $entry2 the second entry to compare.
@@ -135,6 +137,10 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 */
 	private function compare($entry1, $entry2)
 	{
+		$value = strcmp(get_class($entry1), get_class($entry2));
+		if ($value !== 0)
+			return $value;
+
 		if ($entry1->getDisplayOrder() == $entry2->getDisplayOrder())
 			return
 				($this->insertion_order_map[$entry1->getUri()] >
