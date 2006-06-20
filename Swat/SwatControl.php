@@ -101,22 +101,6 @@ abstract class SwatControl extends SwatWidget
 	}
 
 	// }}}
-	// {{{ public function getHtmlHeadEntries()
-
-	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this control
-	 *
-	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 *                               this control.
-	 *
-	 * @see SwatUIObject::getHtmlHeadEntries()
-	 */
-	public function getHtmlHeadEntries()
-	{
-		return $this->html_head_entries;
-	}
-
-	// }}}
 }
 
 ?>

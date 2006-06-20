@@ -119,7 +119,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function getHtmlHeadEntries()
+	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this action item
@@ -127,18 +127,16 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this action item.
 	 *
-	 * @see SwatWidget::getHtmlHeadEntries()
+	 * @see SwatWidget::getHtmlHeadEntrySet()
 	 */
-	public function getHtmlHeadEntries()
+	public function getHtmlHeadEntrySet()
 	{
-		if ($this->widget === null) {
-			$out = $this->html_head_entries;
-		} else {
-			$out = new SwatHtmlHeadEntrySet($this->html_head_entries);
-			$out->addEntrySet($this->widget->getHtmlHeadEntries());
-		}
+		$set = parent::getHtmlHeadEntrySet();
 
-		return $out;
+		if ($this->widget !== null)
+			$set->addEntrySet($this->widget->getHtmlHeadEntrySet());
+
+		return $set;
 	}
 
 	// }}}

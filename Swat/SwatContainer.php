@@ -520,7 +520,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function getHtmlHeadEntries()
+	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this container
@@ -528,16 +528,16 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this container.
 	 *
-	 * @see SwatUIObject::getHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
 	 */
-	public function getHtmlHeadEntries()
+	public function getHtmlHeadEntrySet()
 	{
-		$out = new SwatHtmlHeadEntrySet($this->html_head_entries);
+		$set = parent::getHtmlHeadEntrySet();
 
 		foreach ($this->children as $child_widget)
-			$out->addEntrySet($child_widget->getHtmlHeadEntries());
+			$set->addEntrySet($child_widget->getHtmlHeadEntrySet());
 
-		return $out;
+		return $set;
 	}
 
 	// }}}

@@ -307,7 +307,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	}
 
 	// }}}
-	// {{{ public function getHtmlHeadEntries()
+	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this column 
@@ -315,19 +315,19 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this column.
 	 *
-	 * @see SwatUIObject::getHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
 	 */
-	public function getHtmlHeadEntries()
+	public function getHtmlHeadEntrySet()
 	{
-		$out = new SwatHtmlHeadEntrySet($this->html_head_entries);
+		$set = parent::getHtmlHeadEntrySet();
 		$renderers = $this->getRenderers();
 		foreach ($renderers as $renderer)
-			$out->addEntrySet($renderer->getHtmlHeadEntries());
+			$set->addEntrySet($renderer->getHtmlHeadEntrySet());
 
 		if ($this->input_cell !== null)
-			$out->addEntrySet($this->input_cell->getHtmlHeadEntries());
+			$set->addEntrySet($this->input_cell->getHtmlHeadEntrySet());
 
-		return $out;
+		return $set;
 	}
 
 	// }}}

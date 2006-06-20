@@ -98,7 +98,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	}
 
 	// }}}
-	// {{{ getHtmlHeadEntries()
+	// {{{ getHtmlHeadEntrySet()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this checkbox list 
@@ -106,13 +106,13 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this checkbox list.
 	 *
-	 * @see SwatUIObject::getHtmlHeadEntries()
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
 	 */
-	public function getHtmlHeadEntries()
+	public function getHtmlHeadEntrySet()
 	{
-		$out = new SwatHtmlHeadEntrySet($this->html_head_entries);
-		$out->addEntrySet($this->check_all->getHtmlHeadEntries());
-		return $out;
+		$set = parent::getHtmlHeadEntrySet();
+		$set->addEntrySet($this->check_all->getHtmlHeadEntrySet());
+		return $set;
 	}
 
 	// }}}

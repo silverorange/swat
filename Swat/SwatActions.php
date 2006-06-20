@@ -256,7 +256,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function getHtmlHeadEntries()
+	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this actions list
@@ -264,15 +264,16 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this actions list.
 	 *
-	 * @see SwatWidget::getHtmlHeadEntries()
+	 * @see SwatWidget::getHtmlHeadEntrySet()
 	 */
-	public function getHtmlHeadEntries()
+	public function getHtmlHeadEntrySet()
 	{
-		$out = new SwatHtmlHeadEntrySet($this->html_head_entries);
-		foreach ($this->action_items as $child_widget)
-			$out->addEntrySet($child_widget->getHtmlHeadEntries());
+		$set = parent::getHtmlHeadEntrySet();
 
-		return $out;
+		foreach ($this->action_items as $child_widget)
+			$set->addEntrySet($child_widget->getHtmlHeadEntrySet());
+
+		return $set;
 	}
 
 	// }}}
