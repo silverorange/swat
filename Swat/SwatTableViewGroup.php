@@ -85,24 +85,27 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	/**
 	 * Displays the group header for this grouping column
 	 *
-	 * The grouping header is displayed at the beginning of a group.
+	 * The grouping header is displayed at the beginning of a group. If there
+	 * are no cell renderers in this grouping object, no header is displayed.
 	 *
 	 * @param mixed $row a data object containing the data for the first row in
 	 *                    in the table store for this group.
 	 */
 	protected function displayGroupHeader($row)
 	{
-		$tr_tag = new SwatHtmlTag('tr');
-		$tr_tag->open();
+		if ($this->renderers->getCount() > 0) {
+			$tr_tag = new SwatHtmlTag('tr');
+			$tr_tag->open();
 
-		$first_renderer = $this->renderers->getFirst();
-		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
-		$td_tag->colspan = $this->view->getVisibleColumnCount();
-		$td_tag->class = 'swat-table-view-group';
-		$td_tag->open();
-		$this->displayRenderersInternal($row);
-		$td_tag->close();
-		$tr_tag->close();
+			$first_renderer = $this->renderers->getFirst();
+			$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
+			$td_tag->colspan = $this->view->getVisibleColumnCount();
+			$td_tag->class = 'swat-table-view-group';
+			$td_tag->open();
+			$this->displayRenderersInternal($row);
+			$td_tag->close();
+			$tr_tag->close();
+		}
 	}
 
 	// }}}
