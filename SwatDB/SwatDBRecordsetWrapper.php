@@ -64,9 +64,12 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator, Se
 	 *
 	 * @param resource a MDB2 recordset.
 	 */
-	public function __construct($rs)
+	public function __construct($rs = null)
 	{
 		$this->init();
+
+		if ($rs === null)
+			return;
 
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs->getMessage());
