@@ -34,7 +34,7 @@ table.swat-table-view {
 .swat-table-view td.swat-image-link-cell-renderer { width: 22px; }
 .swat-table-view td.swat-checkbox-cell-renderer { width: 24px; }
 
-td.swat-table-view-group {
+.swat-table-view .swat-table-view-group {
 	font-weight: bold;
 	padding-top: 1em;
 	background: #FFF;
