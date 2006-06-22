@@ -328,7 +328,11 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator, Se
 
 		$quoted_values = array();
 		foreach ($values as $value)
-			$quoted_values[] = $db->quote($value, $type);
+			if ($value !== null)
+				$quoted_values[] = $db->quote($value, $type);
+
+		if (empty($quoted_values))
+			return null;
 
 		$sql = sprintf($sql, implode(',', $quoted_values));
 		$sub_data_objects = SwatDB::query($db, $sql, $wrapper);
