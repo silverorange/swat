@@ -38,10 +38,10 @@ class SwatAutoloader extends SwatObject
 	 *
 	 * @see SwatAutoloaderRule
 	 */
-	public static function addRule($regexp, $filename, $last = true)
+	public static function addRule($expression, $replacement, $last = true)
 	{
 		SwatAutoloader::$rules[] =
-			new SwatAutoloaderRule($regexp, $filename, $last);
+			new SwatAutoloaderRule($expression, $replacement, $last);
 	}
 
 	// }}}
