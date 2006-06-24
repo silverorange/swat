@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatDate.php';
+require_once 'Swat/exceptions/SwatClassNotFoundException.php';
 require_once 'SwatDB/SwatDB.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 
@@ -378,7 +379,10 @@ class SwatDBDataObject extends SwatObject implements Serializable
 					$this->sub_data_objects[$key] = $object;
 					return $object;
 				} else {
-					// TODO: throw bad class exception
+					throw new SwatClassNotFoundException(sprintf("Class '%s' ".
+						"registered for internal property '%s' does not ".
+						'exist.',
+						$class, $key), 0, $class);
 				}
 			}
 		}
