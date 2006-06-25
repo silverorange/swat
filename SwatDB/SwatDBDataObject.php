@@ -420,16 +420,10 @@ class SwatDBDataObject extends SwatObject implements Serializable
 
 	private function __isset($key)
 	{
-		if (isset($this->sub_data_objects[$key]))
-			return true;
-
-		if (method_exists($this, $this->getLoaderMethod($key))
-			return true;
-			
-		if ($this->hasInternalValue($key))
-			return true;
-
-		return false;
+		return
+			isset($this->sub_data_objects[$key]) ||
+			method_exists($this, $this->getLoaderMethod($key)) ||
+			$this->hasInternalValue($key);
 	}
 
 	// }}}
