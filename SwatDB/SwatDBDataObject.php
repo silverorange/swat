@@ -353,8 +353,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 		if (isset($this->sub_data_objects[$key]))
 			return $this->sub_data_objects[$key];
 
-		$loader_method = 'load'.str_replace(' ', '',
-			ucwords(str_replace('_', ' ', $key)));
+		$loader_method = $this->getLoaderMethod($key);
 
 		if (method_exists($this, $loader_method)) {
 			$this->checkDB();
@@ -402,9 +401,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 
 	private function __set($key, $value)
 	{
-		$loader_method = 'load'.str_replace(' ', '', ucwords(strtr($key, '_', ' ')));
-
-		if (method_exists($this, $loader_method)) {
+		if (method_exists($this, $this->getLoaderMethod($key))) {
 			$this->sub_data_objects[$key] = $value;
 		} elseif ($this->hasInternalValue($key)) {
 			if (is_object($value)) {
@@ -423,16 +420,27 @@ class SwatDBDataObject extends SwatObject implements Serializable
 
 	private function __isset($key)
 	{
-		$isset = isset($this->$key);
-		$isset = $isset ? $isset : isset($this->sub_data_objects[$key]);
-		if (!$isset) {
-			$loader_method = 'load'.str_replace(' ', '',
-				ucwords(str_replace('_', ' ', $key)));
+		if (isset($this->sub_data_objects[$key]))
+			return true;
 
-			$isset = method_exists($this, $loader_method);
-		}
-		$isset = $isset ? $isset : $this->hasInternalValue($key);
-		return $isset;
+		if (method_exists($this, $this->getLoaderMethod($key))
+			return true;
+			
+		if ($this->hasInternalValue($key))
+			return true;
+
+		return false;
+	}
+
+	// }}}
+	// {{{ private function getLoaderMethod()
+
+	private function getLoaderMethod($key)
+	{
+		$loader_method = 'load'.str_replace(' ', '',
+			ucwords(str_replace('_', ' ', $key)));
+
+		return $loader_method;
 	}
 
 	// }}}
