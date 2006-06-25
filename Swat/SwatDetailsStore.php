@@ -83,7 +83,7 @@ class SwatDetailsStore extends SwatObject
 
 	private function __isset($name)
 	{
-		if (sset($this->data[$name]))
+		if (isset($this->data[$name]))
 			return true;
 
 		if (isset($this->base_object->$name))
