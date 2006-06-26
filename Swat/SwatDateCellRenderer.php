@@ -53,6 +53,9 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
+		if (!$this->visible)
+			return;
+
 		if ($this->date !== null) {
 			$date = new SwatDate($this->date);
 			if ($this->time_zone !== null)

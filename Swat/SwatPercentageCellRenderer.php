@@ -21,6 +21,9 @@ class SwatPercentageCellRenderer extends SwatNumericCellRenderer
 	 */
 	public function render()
 	{
+		if (!$this->visible)
+			return;
+
 		$old_value = $this->value;
 		$this->value = $this->value * 100;
 		printf('%s%%', $this->getDisplayValue());

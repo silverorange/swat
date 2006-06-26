@@ -96,6 +96,9 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
+		if (!$this->visible)
+			return;
+
 		if ($this->sensitive && ($this->link !== null)) {
 			$anchor = new SwatHtmlTag('a');
 			$anchor->setContent($this->getText(), $this->content_type);
@@ -125,7 +128,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	}
 
 	// }}}
-	// {{{ function getText()
+	// {{{ protected function getText()
 
 	protected function getText()
 	{
@@ -140,7 +143,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	}
 
 	// }}}
-	// {{{ function getLink()
+	// {{{ protected function getLink()
 
 	protected function getLink()
 	{

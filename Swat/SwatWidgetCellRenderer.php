@@ -123,13 +123,16 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function __render()
+	// {{{ public function render()
 
 	/**
 	 *
 	 */
 	public function render()
 	{
+		if (!$this->visible)
+			return;
+
 		if ($this->replicator_id === null) {
 			if ($this->widget !== null)
 				$this->widget->display();
@@ -143,38 +146,6 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 			if ($widget !== null)
 				$widget->display();
 		}
-	}
-
-	// }}}
-	// {{{ private function getCloneWidget()
-
-	private function getClonedWidget($replicator)
-	{
-		if (isset($this->clones[$replicator]))
-			return $this->clones[$replicator];
-
-		if ($this->widget === null)
-			return null;
-
-		$suffix = '_'.$replicator;
-		$new_widget = clone $this->widget;
-
-		if ($new_widget->id !== null) {
-			//$this->widgets[$id][$new_widget->id] = $new_widget;
-			$new_widget->id.= $suffix;
-		}
-
-		if ($new_widget instanceof SwatContainer) {
-			foreach ($new_widget->getDescendants() as $descendant) {
-				if ($descendant->id !== null) {
-					//$this->widgets[$id][$descendant->id] = $descendant;
-					$descendant->id.= $suffix;
-				}
-			}
-		}
-
-		$this->clones[$replicator] = $new_widget;
-		return $new_widget;
 	}
 
 	// }}}
@@ -252,6 +223,38 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 				'SwatWidgetCellRenderer to work.');
 
 		return $form;
+	}
+
+	// }}}
+	// {{{ private function getCloneWidget()
+
+	private function getClonedWidget($replicator)
+	{
+		if (isset($this->clones[$replicator]))
+			return $this->clones[$replicator];
+
+		if ($this->widget === null)
+			return null;
+
+		$suffix = '_'.$replicator;
+		$new_widget = clone $this->widget;
+
+		if ($new_widget->id !== null) {
+			//$this->widgets[$id][$new_widget->id] = $new_widget;
+			$new_widget->id.= $suffix;
+		}
+
+		if ($new_widget instanceof SwatContainer) {
+			foreach ($new_widget->getDescendants() as $descendant) {
+				if ($descendant->id !== null) {
+					//$this->widgets[$id][$descendant->id] = $descendant;
+					$descendant->id.= $suffix;
+				}
+			}
+		}
+
+		$this->clones[$replicator] = $new_widget;
+		return $new_widget;
 	}
 
 	// }}}
