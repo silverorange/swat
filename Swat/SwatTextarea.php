@@ -77,6 +77,8 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		$textarea_tag->setContent($value, 'text/plain');
 		if (strlen($this->access_key) > 0)
 			$textarea_tag->accesskey = $this->access_key;
+		if (!$this->isSensitive())
+			$textarea_tag->disabled = 'disabled';
 
 		$textarea_tag->display();
 	}
