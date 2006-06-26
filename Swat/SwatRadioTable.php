@@ -24,7 +24,7 @@ class SwatRadioTable extends SwatRadioList
 	{
 		parent::__construct($id);
 
-		$this->addStyleSheet('swat/styles/swat-radio-table.css');
+		$this->addStyleSheet('packages/swat/styles/swat-radio-table.css');
 	}
 
 	// }}}

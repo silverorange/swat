@@ -164,7 +164,7 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	protected function displayCheck()
 	{
 		$image_tag = new SwatHtmlTag('img');
-		$image_tag->src = 'swat/images/check.png';
+		$image_tag->src = 'packages/swat/images/check.png';
 		$image_tag->alt = Swat::_('Yes');
 		$image_tag->height = '14';
 		$image_tag->width = '14';

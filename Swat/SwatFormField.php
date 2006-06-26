@@ -93,8 +93,8 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	{
 		parent::__construct($id);
 
-		$this->addStyleSheet('swat/styles/swat-message.css');
-		$this->addStyleSheet('swat/styles/swat-form-field.css');
+		$this->addStyleSheet('packages/swat/styles/swat-message.css');
+		$this->addStyleSheet('packages/swat/styles/swat-form-field.css');
 	}
 
 	// }}}

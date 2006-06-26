@@ -42,8 +42,8 @@ class SwatDisclosure extends SwatDisplayableContainer
 	{
 		parent::__construct($id);
 		$this->requires_id = true;
-		$this->addJavaScript('swat/javascript/swat-disclosure.js');
-		$this->addStyleSheet('swat/styles/swat-disclosure.css');
+		$this->addJavaScript('packages/swat/javascript/swat-disclosure.js');
+		$this->addStyleSheet('packages/swat/styles/swat-disclosure.css');
 	}
 
 	// }}}
@@ -82,10 +82,10 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$img = new SwatHtmlTag('img');
 
 		if ($this->open) {
-			$img->src = 'swat/images/swat-disclosure-open.png';
+			$img->src = 'packages/swat/images/swat-disclosure-open.png';
 			$img->alt = Swat::_('close');
 		} else {
-			$img->src = 'swat/images/swat-disclosure-closed.png';
+			$img->src = 'packages/swat/images/swat-disclosure-closed.png';
 			$img->alt = Swat::_('open');
 		}
 

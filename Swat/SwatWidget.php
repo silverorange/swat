@@ -100,7 +100,7 @@ abstract class SwatWidget extends SwatUIObject
 		parent::__construct();
 
 		$this->id = $id;
-		$this->addStylesheet('swat/styles/swat.css', -1);
+		$this->addStylesheet('packages/swat/styles/swat.css', -1);
 	}
 
 	// }}}

@@ -70,9 +70,9 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 
 		$this->requires_id = true;
 
-		$this->addJavaScript('swat/javascript/swat-simple-color-entry.js');
-		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
-		$this->addStyleSheet('swat/styles/swat-color-entry.css');
+		$this->addJavaScript('packages/swat/javascript/swat-simple-color-entry.js');
+		$this->addJavaScript('packages/swat/javascript/swat-z-index-manager.js');
+		$this->addStyleSheet('packages/swat/styles/swat-color-entry.css');
 	}
 
 	// }}}
@@ -107,7 +107,7 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		$anchor_tag->open();
 
 		$img_tag = new SwatHtmlTag('img');
-		$img_tag->src = 'swat/images/color-palette.png';
+		$img_tag->src = 'packages/swat/images/color-palette.png';
 		$img_tag->class = 'swat-simple-color-entry-toggle';
 		$img_tag->id = $this->id.'_toggle';
 

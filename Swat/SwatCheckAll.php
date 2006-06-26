@@ -37,7 +37,7 @@ class SwatCheckAll extends SwatControl
 		parent::__construct($id);
 		$this->requires_id = true;
 		$this->title = Swat::_('Check All');
-		$this->addJavaScript('swat/javascript/swat-check-all.js');
+		$this->addJavaScript('packages/swat/javascript/swat-check-all.js');
 	}
 
 	// }}}
