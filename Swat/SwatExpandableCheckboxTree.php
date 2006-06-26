@@ -47,7 +47,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	{
 		parent::__construct($id);
 
-		$this->addJavaScript('swat/javascript/swat-expandable-checkbox-tree.js');
+		$this->addJavaScript('packages/swat/javascript/swat-expandable-checkbox-tree.js');
 	}
 
 	// }}}
@@ -128,10 +128,10 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 				$img = new SwatHtmlTag('img');
 				
 				if ($this->open) {
-					$img->src = 'swat/images/swat-disclosure-open.png';
+					$img->src = 'packages/swat/images/swat-disclosure-open.png';
 					$img->alt = Swat::_('close');
 				} else {
-					$img->src = 'swat/images/swat-disclosure-closed.png';
+					$img->src = 'packages/swat/images/swat-disclosure-closed.png';
 					$img->alt = Swat::_('open');
 				}
 

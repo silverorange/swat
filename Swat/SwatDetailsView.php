@@ -55,7 +55,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	{
 		parent::__construct($id);
 
-		$this->addStyleSheet('swat/styles/swat-details-view.css');
+		$this->addStyleSheet('packages/swat/styles/swat-details-view.css');
 	}
 
 	// }}}

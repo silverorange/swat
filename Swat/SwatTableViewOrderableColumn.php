@@ -177,12 +177,12 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 			if ($this->direction == self::ORDER_BY_DIR_DESCENDING) {
 
-				$img->src = 'swat/images/swat-table-view-column-desc.png';
+				$img->src = 'packages/swat/images/swat-table-view-column-desc.png';
 				$img->alt = Swat::_('Descending');
 
 			} elseif ($this->direction == self::ORDER_BY_DIR_ASCENDING) {
 
-				$img->src = 'swat/images/swat-table-view-column-asc.png';
+				$img->src = 'packages/swat/images/swat-table-view-column-asc.png';
 				$img->alt = Swat::_('Ascending');
 
 			}

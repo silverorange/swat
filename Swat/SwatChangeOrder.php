@@ -58,8 +58,8 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$this->requires_id = true;
 		$this->unique_values = true;
 
-		$this->addJavaScript('swat/javascript/swat-change-order.js');
-		$this->addStyleSheet('swat/styles/swat-change-order.css');
+		$this->addJavaScript('packages/swat/javascript/swat-change-order.js');
+		$this->addStyleSheet('packages/swat/styles/swat-change-order.css');
 	}
 
 	// }}}

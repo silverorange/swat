@@ -54,7 +54,7 @@ class SwatRemoveInputCell extends SwatInputCell
 		$anchor_tag->open();
 
 		$image_tag = new SwatHtmlTag('img');
-		$image_tag->src = 'swat/images/list-remove.png';
+		$image_tag->src = 'packages/swat/images/list-remove.png';
 		$image_tag->alt = Swat::_('remove graphic');
 
 		$image_tag->display();

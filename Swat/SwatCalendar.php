@@ -54,9 +54,9 @@ class SwatCalendar extends SwatControl
 
 		$this->requires_id = true;
 
-		$this->addJavaScript('swat/javascript/swat-calendar.js');
-		$this->addJavaScript('swat/javascript/swat-z-index-manager.js');
-		$this->addStyleSheet('swat/styles/swat-calendar.css');
+		$this->addJavaScript('packages/swat/javascript/swat-calendar.js');
+		$this->addJavaScript('packages/swat/javascript/swat-z-index-manager.js');
+		$this->addStyleSheet('packages/swat/styles/swat-calendar.css');
 	}
 
 	// }}}
@@ -76,7 +76,7 @@ class SwatCalendar extends SwatControl
 		$anchor_tag->open();
 
 		$img_tag = new SwatHtmlTag('img');
-		$img_tag->src = 'swat/images/calendar.png';
+		$img_tag->src = 'packages/swat/images/calendar.png';
 		$img_tag->alt = Swat::_('calendar toggle graphic');
 		$img_tag->class = 'swat-calendar-icon';
 		$img_tag->id = $this->id.'_toggle';

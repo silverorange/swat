@@ -168,7 +168,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		$this->requires_id = true;
 
-		$this->addJavaScript('swat/javascript/swat-date-entry.js');
+		$this->addJavaScript('packages/swat/javascript/swat-date-entry.js');
 	}
 
 	// }}}

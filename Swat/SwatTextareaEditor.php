@@ -54,7 +54,7 @@ class SwatTextareaEditor extends SwatTextarea
 	{
 		parent::__construct($id);
 
-		$this->addJavaScript('swat/javascript/swat-textarea-editor.js');
+		$this->addJavaScript('packages/swat/javascript/swat-textarea-editor.js');
 	}
 
 	// }}}

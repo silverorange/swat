@@ -57,7 +57,7 @@ class SwatCascadeFlydown extends SwatFlydown
 
 		$this->requires_id = true;
 
-		$this->addJavaScript('swat/javascript/swat-cascade.js');
+		$this->addJavaScript('packages/swat/javascript/swat-cascade.js');
 	}
 
 	// }}}

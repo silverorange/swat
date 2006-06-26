@@ -97,7 +97,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	{
 		parent::__construct($id);
 
-		$this->addJavaScript('swat/javascript/swat-actions.js');
+		$this->addJavaScript('packages/swat/javascript/swat-actions.js');
 	}
 
 	// }}}

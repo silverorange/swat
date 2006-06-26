@@ -97,7 +97,7 @@ class SwatToolLink extends SwatControl
 	{
 		parent::__construct($id);
 
-		$this->addStyleSheet('swat/styles/swat-tool-link.css');
+		$this->addStyleSheet('packages/swat/styles/swat-tool-link.css');
 	}
 
 	// }}}
