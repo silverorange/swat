@@ -236,7 +236,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	}
 
 	// }}}
-	// {{{ getTrAttributes()
+	// {{{ public function getTrAttributes()
 
 	/**
 	 * Gets TR-tag attributes
