@@ -34,6 +34,9 @@ class SwatByteCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
+		if (!$this->visible)
+			return;
+
 		echo SwatString::minimizeEntities(
 			SwatString::byteFormat($this->value));
 	}

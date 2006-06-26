@@ -119,6 +119,9 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
+		if (!$this->visible)
+			return;
+
 		if ($this->stock_id === null)
 			$this->setFromStock('check-only', false);
 		else

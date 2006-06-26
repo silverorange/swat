@@ -60,6 +60,9 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
+		if (!$this->visible)
+			return;
+
 		if ($this->value === null)
 			$text = $this->text;
 		elseif (is_array($this->value))
