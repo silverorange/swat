@@ -24,11 +24,11 @@ class MessageDisplay extends DemoPage
 			new SwatMessage('This is a notification message.',
 			SwatMessage::NOTIFICATION));
 		
-		$short_message_display->add(new SwatMessage('This is a warning message.',
-			SwatMessage::WARNING));
+		$short_message_display->add(new SwatMessage(
+			'This is a warning message.', SwatMessage::WARNING));
 		
-		$short_message_display->add(new SwatMessage('This is an error message.',
-			SwatMessage::ERROR));
+		$short_message_display->add(new SwatMessage(
+			'This is an error message.', SwatMessage::ERROR));
 		
 		$short_message_display->add(
 			new SwatMessage('This is a system error message.', 
