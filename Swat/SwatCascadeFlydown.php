@@ -104,8 +104,8 @@ class SwatCascadeFlydown extends SwatFlydown
 				$ret[] = new SwatOption('', '');
 				return $ret;
 			} else {
-				$current = current($this->cascade_from->options)->value;
-				$option_array = $this->options[$current];
+				$first_value = current($this->cascade_from->options)->value;
+				$option_array = $this->options[$first_value];
 			}
 		} else
 			$option_array = $this->options[$parent_value];
