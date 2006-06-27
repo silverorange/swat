@@ -12,6 +12,8 @@
  */
 class DemoMenu
 {
+	// {{{ protected properties
+
 	protected $entries = array(
 		'Button' =>         'SwatButton',
 		'Calendar' =>       'SwatCalendar',
@@ -38,6 +40,9 @@ class DemoMenu
 		'YesNoFlydown' =>   'SwatYesNoFlydown'
 	);
 
+	// }}}
+	// {{{ public function display()
+
 	public function display()
 	{
 		echo '<h3 class="demo-menu-title">Demos:</h3><ul>';
@@ -48,6 +53,8 @@ class DemoMenu
 
 		echo '</ul>';
 	}
+
+	// }}}
 }
 
 ?>

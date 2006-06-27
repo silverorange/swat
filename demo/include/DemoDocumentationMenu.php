@@ -14,10 +14,15 @@ require_once 'DemoMenu.php';
  */
 class DemoDocumentationMenu extends DemoMenu
 {
+	// {{{ public function __construct()
+
 	public function __construct($entries)
 	{
 		$this->entries = $entries;
 	}
+
+	// }}}
+	// {{{ public function display()
 
 	public function display()
 	{
@@ -36,6 +41,8 @@ class DemoDocumentationMenu extends DemoMenu
 			echo '</p>';
 		}
 	}
+
+	// }}}
 }
 
 ?>
