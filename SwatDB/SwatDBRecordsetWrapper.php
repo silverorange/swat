@@ -311,16 +311,20 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	// {{{ public function loadAllSubDataObjects()
 
 	/**
-	 * Load all sub-dataobjects for an internal property of the dataobjects in this recordset
+	 * Loads all sub-data-objects for an internal property of the data-objects
+	 * in this recordset
 	 *
 	 * @param string $name name of the property to load.
-	 * @param MDB2 $db database object.
-	 * @param string $sql SQL to execute with placeholder for set of internal values.
-	 * @param string $wrapper name of a recordset wrapper to use for sub-dataobjects.
+	 * @param MDB2_Driver_Common $db database object.
+	 * @param string $sql SQL to execute with placeholder for set of internal
+	 *                     values.
+	 * @param string $wrapper name of a recordset wrapper to use for
+	 *                         sub-data-objects.
 	 *
 	 * @return SwatDBRecordsetWrapper an instance of the wrapper, or null.
 	 */
-	public function loadAllSubDataObjects($name, $db, $sql, $wrapper, $type = 'integer')
+	public function loadAllSubDataObjects($name, MDB2_Driver_Commin $db, $sql,
+		$wrapper, $type = 'integer')
 	{
 		$values = $this->getInternalValues($name);
 
@@ -348,9 +352,10 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 * Attach existing sub-dataobjects for an internal property of the dataobjects in this recordset
 	 *
 	 * @param string $name name of the property to attach to.
-	 * @param SwatDBRecordset $sub_data_objects
+	 * @param SwatDBRecordsetWrapper $sub_data_objects
 	 */
-	public function attachSubDataObjects($name, $sub_data_objects)
+	public function attachSubDataObjects($name,
+		SwatDBRecordsetWrapper $sub_data_objects)
 	{
 		foreach ($this->objects as $object) {
 			$value = $object->getInternalValue($name);
@@ -392,7 +397,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 *                                  an instance of the {@link
 	 *                                  $row_wrapper_class}.
 	 */
-	public function add($object)
+	public function add(SwatDBDataObject $object)
 	{
 		if ($this->row_wrapper_class !== null &&
 			!($object instanceof $this->row_wrapper_class))
@@ -418,7 +423,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 *
 	 * @param SwatDBDataObject $object
 	 */
-	public function remove($remove_object)
+	public function remove(SwatDBDataObject $remove_object)
 	{
 		foreach ($this->objects as $key => $object) {
 			if ($object === $remove_object) {
@@ -457,9 +462,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	// {{{ public function setDatabase()
 
 	/**
-	 * @param MDB2 $db
+	 * @param MDB2_Driver_Common $db
 	 */
-	public function setDatabase($db)
+	public function setDatabase(MDB2_Driver_Common $db)
 	{
 		$this->db = $db;
 
