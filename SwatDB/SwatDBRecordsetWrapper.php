@@ -457,6 +457,28 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function reindex()
+
+	/**
+	 * Reindexes this recordset
+	 *
+	 * Reindexing is useful when you have added new data-objects to this
+	 * recordset. Reindexing is only done if
+	 * {@link SwatDBRecordsetWrapper::$index_field} is not null.
+	 */
+	public function reindex()
+	{
+		if ($this->index_field !== null) {
+			foreach ($this->objects as $object) {
+				if (isset($object->{$this->index_field})) {
+					$this->objects_by_index[$object->{$this->index_field}] =
+						$object;
+				}
+			}
+		}
+	}
+
+	// }}}
 
 	// database loading and saving
 	// {{{ public function setDatabase()
