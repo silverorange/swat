@@ -13,12 +13,16 @@ require_once 'Swat/SwatToolLink.php';
  */
 class DemoDocumentationLink extends SwatToolLink
 {
+	// {{{ public function __construct()
+
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
 
 		$this->class = 'demo-documentation';
 	}
+
+	// }}}
 }
 
 ?>
