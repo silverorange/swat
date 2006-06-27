@@ -401,6 +401,12 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator, Se
 
 		$this->objects[] = $object;
 		$object->setDatabase($this->db);
+
+		// if index field is set, index this object
+		if ($this->index_field !== null &&
+			isset($object->{$this->index_field})) {
+			$this->objects_by_index[$object->{$this->index_field}] = $object;
+		}
 	}
 
 	// }}}
