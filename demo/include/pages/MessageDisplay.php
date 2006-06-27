@@ -30,7 +30,8 @@ class MessageDisplay extends DemoPage
 		$short_message_display->add(new SwatMessage('This is an error message.',
 			SwatMessage::ERROR));
 		
-		$short_message_display->add(new SwatMessage('This is a system error message.', 
+		$short_message_display->add(
+			new SwatMessage('This is a system error message.', 
 			SwatMessage::SYSTEM_ERROR));
 
 		$long_message_display = $this->ui->getWidget('long_message_display');
