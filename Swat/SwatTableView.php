@@ -770,7 +770,8 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * Displays any footer content for this table-view
 	 *
 	 * Rows in the footer are outputted inside a <tfoot> HTML tag.
-	 * TODO: Mike, fix the Check-All js and row highlighting now that this has moved around
+	 * TODO: Mike, fix the Check-All js and row highlighting
+	 *		now that this has moved around
 	 */
 	protected function displayFooter()
 	{
