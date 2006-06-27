@@ -519,6 +519,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		}
 
 		$this->removed_objects = array();
+		$this->reindex();
 	}
 
 	// }}}
