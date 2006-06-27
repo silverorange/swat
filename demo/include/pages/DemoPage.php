@@ -93,10 +93,11 @@ class DemoPage extends SitePage
 		$this->layout->addHtmlHeadEntrySet(
 			$this->ui->getRoot()->getHtmlHeadEntries());
 
-		$this->layout->data->source_code =
-			str_replace("\t", '    ', htmlspecialchars(implode('',
-				file('../include/pages/'.strtolower($this->demo).'.xml')),
-				ENT_COMPAT, 'UTF-8'));
+		$filename = '../include/pages/'.strtolower($this->demo).'.xml';
+		$code = file_get_contents($filename);
+		$code = htmlspecialchars($code, ENT_COMPAT, 'UTF-8');
+		$code = str_replace("\t", '    ', $code);
+		$this->layout->data->source_code = $code;
 
 		$this->layout->startCapture('ui');
 		$this->ui->displayTidy();
