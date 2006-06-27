@@ -97,7 +97,8 @@ class SwatMoneyEntry extends SwatEntry
 				$lc['mon_decimal_point'] => '.',
 				$lc['mon_thousands_sep'] => '');
 
-		$value = str_replace(array_keys($replace), array_values($replace), $this->value);
+		$value = str_replace(
+			array_keys($replace), array_values($replace), $this->value);
 
 		$value = SwatString::toFloat($value);
 

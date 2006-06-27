@@ -126,13 +126,17 @@ class SwatMessageDisplay extends SwatControl
 
 			$primary_content = new SwatHtmlTag('h3');
 			$primary_content->class = 'swat-message-primary-content';
-			$primary_content->setContent($message->primary_content, $message->content_type);
+			$primary_content->setContent(
+				$message->primary_content, $message->content_type);
+
 			$primary_content->display();
 
 			if ($message->secondary_content !== null) {
 				$secondary_div = new SwatHtmlTag('div');
 				$secondary_div->class = 'swat-message-secondary-content';
-				$secondary_div->setContent($message->secondary_content, $message->content_type);
+				$secondary_div->setContent(
+					$message->secondary_content, $message->content_type);
+
 				$secondary_div->display();
 			}
 

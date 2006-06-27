@@ -528,7 +528,8 @@ class SwatString extends SwatObject
 	 *
 	 * @return string the money formatted string.
 	 */
-	public static function moneyFormat($value, $locale = null, $display_currency = false)
+	public static function moneyFormat(
+		$value, $locale = null, $display_currency = false)
 	{
 		if ($locale !== null) {
 			$old_locale = setlocale(LC_ALL, 0);
@@ -574,7 +575,9 @@ class SwatString extends SwatObject
 			$decimals = SwatString::getDecimalPrecision($value);
 
 		// number_format can't handle UTF-8 seperators, so insert placeholders
-		$output = number_format($value, $decimals, '.', $show_thousands_seperator ? ',' : '');
+		$output =  number_format($value,
+			 $decimals, '.', $show_thousands_seperator ? ',' : '');
+
 		$output = htmlentities($output, null, 'UTF-8');
 
 		if ($locale !== null) {
@@ -582,7 +585,8 @@ class SwatString extends SwatObject
 			setlocale(LC_ALL, $locale);
 		}
 
-		// replace placeholder seperators with locale ones which might contain non-ASCII
+		// replace placeholder seperators with locale ones which
+		//		might contain non-ASCII
 		$lc = localeconv();
 		$output = str_replace('.', $lc['decimal_point'], $output);
 		$output = str_replace(',', $lc['thousands_sep'], $output);
@@ -665,9 +669,12 @@ class SwatString extends SwatObject
 			case STR_PAD_BOTH:
 				$left_length = floor($length / 2);
 				$right_length = ceil($length / 2);
-				$padding = str_repeat($pad_string, ceil($right_length / strlen($pad_string)));
-				$output = substr($padding, 0, $left_length) . $input . 
+				$padding = str_repeat($pad_string,
+					ceil($right_length / strlen($pad_string)));
+
+				$output = substr($padding, 0, $left_length).$input.
 					substr($padding, 0, $right_length);
+
 				break;
 
 			case STR_PAD_RIGHT:

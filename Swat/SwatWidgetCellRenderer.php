@@ -141,7 +141,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 			$widget = $this->getClonedWidget($this->replicator_id);
 
 			// TODO: make sure there actually is an id
-			$form->addHiddenField($this->widget->id.'_replicators', array_keys($this->clones));
+			$form->addHiddenField(
+				$this->widget->id.'_replicators', array_keys($this->clones));
 
 			if ($widget !== null)
 				$widget->display();

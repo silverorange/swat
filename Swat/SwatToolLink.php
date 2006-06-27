@@ -155,7 +155,8 @@ class SwatToolLink extends SwatControl
 			if ($this->class === null)
 				$span_tag->class = 'swat-tool-link swat-tool-link-insensitive';
 			else 
-				$span_tag->class = 'swat-tool-link swat-tool-link-insensitive '.$this->class;
+				$span_tag->class =
+					'swat-tool-link swat-tool-link-insensitive '.$this->class;
 
 			$span_tag->setContent($this->title);
 			$span_tag->display();
