@@ -34,10 +34,10 @@ class SwatString extends SwatObject
 	 *
 	 * The text is converted as follows:
 	 *
-	 * - text blocks delimited by double line breaks is wrapped in a paragraph
-	 *   tag
-	 * - unless it is already inside a blocklevel tag
-	 * - single line breaks are converted to break tags
+	 * - text blocks delimited by double line breaks are wrapped in a paragraph
+	 *   tags
+	 * - unless they are already inside a blocklevel tag
+	 * - single line breaks are converted to line break tags
 	 *
 	 * @param string $text the text block to convert to XHTML.
 	 *
@@ -58,6 +58,13 @@ class SwatString extends SwatObject
 		// replace continuous strings of whitespace containing a
 		// double lf with two line breaks
 		$text = preg_replace('/[\xa0\s]*\n\n[\xa0\s]*/su', "\n\n", $text);
+
+		// replace single line break followed by a starting blocklevel tag
+		// with two line breaks
+		$break_then_blocklevel =
+			'/([^\n])\n(<('.$blocklevel_elements.')[^<>]*?>)/siu';
+
+		$text = preg_replace($break_then_blocklevel, "\\1\n\n\\2", $text);
 
 		$paragraphs = explode("\n\n", $text);
 
