@@ -47,7 +47,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator, Se
 	 */
 	private $objects = array();
 	private $objects_by_index = array();
-	private $remove_objects = array();
+	private $removed_objects = array();
 
 	/**
 	 * The current index of the iterator interface
@@ -369,7 +369,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator, Se
 	 */
 	public function isModified()
 	{
-		if (count($this->remove_objects) > 0)
+		if (count($this->removed_objects) > 0)
 			return true;
 
 		foreach ($this->objects as $name => $object)
@@ -421,7 +421,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator, Se
 	{
 		foreach ($this->objects as $key => $object) {
 			if ($object === $remove_object) {
-				$this->remove_objects[] = $object;
+				$this->removed_objects[] = $object;
 				unset($this->objects[$key]);
 				$this->objects = array_values($this->objects);
 
@@ -485,12 +485,12 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator, Se
 			$object->save();
 		}
 
-		foreach ($this->remove_objects as $object) {
+		foreach ($this->removed_objects as $object) {
 			$object->setDatabase($this->db);
 			$object->delete();
 		}
 
-		$this->remove_objects = array();
+		$this->removed_objects = array();
 	}
 
 	// }}}
