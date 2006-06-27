@@ -575,8 +575,8 @@ class SwatString extends SwatObject
 			$decimals = SwatString::getDecimalPrecision($value);
 
 		// number_format can't handle UTF-8 seperators, so insert placeholders
-		$output =  number_format($value,
-			 $decimals, '.', $show_thousands_seperator ? ',' : '');
+		$output =  number_format($value, $decimals, '.',
+			$show_thousands_seperator ? ',' : '');
 
 		$output = htmlentities($output, null, 'UTF-8');
 
@@ -586,7 +586,7 @@ class SwatString extends SwatObject
 		}
 
 		// replace placeholder seperators with locale ones which
-		//		might contain non-ASCII
+		// might contain non-ASCII
 		$lc = localeconv();
 		$output = str_replace('.', $lc['decimal_point'], $output);
 		$output = str_replace(',', $lc['thousands_sep'], $output);
