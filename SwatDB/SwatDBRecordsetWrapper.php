@@ -478,7 +478,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements Iterator, Se
 	 * Objects that were modified are updated in the database.
 	 * Objects that were removed are deleted from the database.
 	 */
-	public function save() {
+	public function save()
+	{
 		foreach ($this->objects as $object) {
 			$object->setDatabase($this->db);
 			$object->save();
