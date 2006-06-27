@@ -411,14 +411,13 @@ class SwatDBDataObject extends SwatObject implements Serializable
 				$this->setInternalValue($key, $value);
 			}
 		} else {
-			$output = "A property named '$key' does not exist on this ".
-				"dataobject.  If the property corresponds directly to ".
-				"a database field it should be added as a private ".
-				"property of this data object.  If the property should ".
-				"access a sub-dataobject, specify a class when ".
-				"registering the internal field named '$key'.";
-
-			throw new SwatDBException($output);
+			throw new SwatDBException(
+				"A property named '$key' does not exist on this ".
+				'dataobject.  If the property corresponds directly to '.
+				'a database field it should be added as a private property '.
+				'of this data object.  If the property should access a '.
+				'sub-dataobject, specify a class when registering the '.
+				"internal field named '$key'.");
 		}
 	}
 
