@@ -95,7 +95,8 @@ class DemoPage extends SitePage
 
 		$this->layout->data->source_code =
 			str_replace("\t", '    ', htmlspecialchars(implode('',
-				file('../include/pages/'.strtolower($this->demo).'.xml')), ENT_COMPAT, 'UTF-8'));
+				file('../include/pages/'.strtolower($this->demo).'.xml')),
+				ENT_COMPAT, 'UTF-8'));
 
 		$this->layout->startCapture('ui');
 		$this->ui->displayTidy();
@@ -110,7 +111,8 @@ class DemoPage extends SitePage
 		$this->documentation_menu->display();
 		$this->layout->endCapture();
 
-		$this->layout->data->execution_time = round(microtime(true) - $this->start_time, 4);
+		$this->layout->data->execution_time =
+			round(microtime(true) - $this->start_time, 4);
 
 		$this->layout->startCapture('navbar');
 		$this->navbar->display();
