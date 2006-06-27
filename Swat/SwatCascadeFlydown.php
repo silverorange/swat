@@ -21,8 +21,8 @@ class SwatCascadeFlydown extends SwatFlydown
 	/**
 	 * Flydown options
 	 *
-	 * An array of parents and {@link SwatOption}s for the flydown. Each
-	 * parent value is associated to an array of possible child
+	 * An array of parents and {@link SwatOption}s for the flydown. Each parent
+	 * value is associated to an array of possible child
 	 * values, in the form:
 	 *    array(
 	 *        parent_value1 => array(SwatOption1, SwatOption2),
