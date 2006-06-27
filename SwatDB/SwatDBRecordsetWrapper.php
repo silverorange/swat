@@ -323,7 +323,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 *
 	 * @return SwatDBRecordsetWrapper an instance of the wrapper, or null.
 	 */
-	public function loadAllSubDataObjects($name, MDB2_Driver_Commin $db, $sql,
+	public function loadAllSubDataObjects($name, MDB2_Driver_Common $db, $sql,
 		$wrapper, $type = 'integer')
 	{
 		$values = $this->getInternalValues($name);
