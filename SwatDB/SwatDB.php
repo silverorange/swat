@@ -396,7 +396,8 @@ class SwatDB extends SwatObject
 		$mdb2_types = $types === null ? true : $types;
 
 		$db->loadModule('Function');
-        $rs = $db->function->executeStoredProc($proc, $params, $mdb2_types, true, $mdb2_wrapper);
+        $rs = $db->function->executeStoredProc($proc, $params, $mdb2_types,
+			true, $mdb2_wrapper);
 
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs);
@@ -447,18 +448,18 @@ class SwatDB extends SwatObject
 	 *
 	 * @param string $table The binding table to update.
 	 *
-	 * @param string $id_field The name of the binding table field that contains 
+	 * @param string $id_field The name of the binding table field that contains
 	 *        the fixed value.  Can be given in the form type:name where type is 
-	 *        a standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        a standard MDB2 datatype. If type is ommitted, then integer is
 	 *        assummed for this field.
 	 *
 	 * @param mixed $id The value to store in the $id_field. The type should 
 	 *        correspond to the type of $id_field.
 	 *
-	 * @param string $value_field The name of the binding table field that contains 
-	 *        the values from the bound table.  Can be given in the form type:name 
-	 *        where type is a standard MDB2 datatype. If type is ommitted, then 
-	 *        integer is assummed for this field.
+	 * @param string $value_field The name of the binding table field that
+	 *        contains the values from the bound table.  Can be given in the
+	 *        form type:name where type is a standard MDB2 datatype. If type is
+	 *        ommitted, then integer is assummed for this field.
 	 *
 	 * @param array $values An array of values that should be stored in the 
 	 *        $value_field. The type of the individual values should 
@@ -656,7 +657,8 @@ class SwatDB extends SwatObject
 		$updates = array();
 
 		foreach ($fields as &$field)
-			$updates[] = $field->name.' = '.$db->quote($values[$field->name], $field->type);
+			$updates[] = $field->name.' = '.
+				$db->quote($values[$field->name], $field->type);
 
 		$update_list = implode(',', $updates);
 
@@ -889,27 +891,27 @@ class SwatDB extends SwatObject
 	 *        from.
 	 *
 	 * @param string $group_idfield The name of the database field to query for
-	 *        the id of the $group_table. Can be given in the form type:name where
-	 *        type is a standard MDB2 datatype. If type is ommitted, then integer is
-	 *        assummed for this field.
+	 *        the id of the $group_table. Can be given in the form type:name
+	 *        where type is a standard MDB2 datatype. If type is ommitted, then
+	 *        integer is assummed for this field.
 	 *
-	 * @param string $group_title_field The name of the database field to query for 
-	 *        the group title. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then text is 
-	 *        assummed for this field.
+	 * @param string $group_title_field The name of the database field to query
+	 *        for the group title. Can be given in the form type:name where
+	 *        type is a standard MDB2 datatype. If type is ommitted, then text
+	 *        is assummed for this field.
 	 *
 	 * @param string $group_field The name of the database field in $table that
-	 *        links with the $group_idfield. Can be given in the form type:name where
-	 *        type is a standard MDB2 datatype. If type is ommitted, then integer is
-	 *        assummed for this field.
+	 *        links with the $group_idfield. Can be given in the form type:name
+	 *        where type is a standard MDB2 datatype. If type is ommitted, then
+	 *        integer is assummed for this field.
 	 *
 	 * @param string $order_by_clause Optional comma deliminated list of 
 	 *        database field names to use in the <i>order by</i> clause.
 	 *        Do not include "order by" in the string; only include the list
 	 *        of field names. Pass null to skip over this paramater.
 	 *
-	 * @param string $where_clause Optional <i>where</i> clause to limit the 
-	 *        returned results.  Do not include "where" in the string; only 
+	 * @param string $where_clause Optional <i>where</i> clause to limit the
+	 *        returned results.  Do not include "where" in the string; only
 	 *        include the conditionals.
 	 * @param SwatDataTreeNode $tree a tree to add nodes to. If no tree is
 	 *                                specified, nodes are added to a new
