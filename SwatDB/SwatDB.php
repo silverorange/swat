@@ -39,10 +39,10 @@ class SwatDB extends SwatObject
 	public static function query($db, $sql, 
 		$wrapper = 'SwatDBDefaultRecordsetWrapper', $types = null)
 	{
-		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
-		SwatDB::debug($sql);
-
 		$mdb2_types = $types === null ? true : $types;
+		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
+
+		SwatDB::debug($sql);
 		$rs = $db->query($sql, $mdb2_types, true, $mdb2_wrapper);
 
 		if (MDB2::isError($rs))
@@ -139,7 +139,6 @@ class SwatDB extends SwatObject
 			$id_list,
 			$where);
 
-		SwatDB::debug($sql);
 		SwatDB::query($db, $sql);
 	}
 
@@ -220,8 +219,9 @@ class SwatDB extends SwatObject
 	 */
 	public static function queryOne($db, $sql, $type = null)
 	{
-		SwatDB::debug($sql);
 		$mdb2_type = $type === null ? true : $type;
+
+		SwatDB::debug($sql);
 		$value = $db->queryOne($sql, $mdb2_type);
 
 		if (MDB2::isError($value))
@@ -248,8 +248,9 @@ class SwatDB extends SwatObject
 	 */
 	public static function queryRow($db, $sql, $types = null)
 	{
-		SwatDB::debug($sql);
 		$mdb2_types = $types === null ? true : $types;
+
+		SwatDB::debug($sql);
 		$row = $db->queryRow($sql, $mdb2_types, MDB2_FETCHMODE_OBJECT);
 
 		if (MDB2::isError($row))
@@ -354,13 +355,12 @@ class SwatDB extends SwatObject
 			$id_field->name,
 			$db->quote($id, $id_field->type));
 
-		SwatDB::debug($sql);
-		// XXX: since we're using a patched MDB2 that discovers types automatically
-		//      from the recordset, I don't think we need this:
-		//$rs = SwatDB::query($db, $sql, null, SwatDB::getFieldTypeArray($fields));
 		$rs = SwatDB::query($db, $sql, null);
-
 		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
+
+		if (MDB2::isError($row))
+			throw new SwatDBException($row);
+
 		return $row;
 	}
 
@@ -389,15 +389,16 @@ class SwatDB extends SwatObject
 	public static function executeStoredProc($db, $proc, $params, 
 		$wrapper = 'SwatDBDefaultRecordsetWrapper', $types = null)
 	{
+		$db->loadModule('Function');
+
 		if (!is_array($params))
 			$params = array($params);
 
 		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
 		$mdb2_types = $types === null ? true : $types;
 
-		$db->loadModule('Function');
-        $rs = $db->function->executeStoredProc($proc, $params, $mdb2_types,
-			true, $mdb2_wrapper);
+        $rs = $db->function->executeStoredProc(
+			$proc, $params, $mdb2_types, true, $mdb2_wrapper);
 
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs);
@@ -760,14 +761,14 @@ class SwatDB extends SwatObject
 			$sql .= ' order by '.$order_by_clause;
 
 		SwatDB::debug($sql);
-		// XXX: since we're using a patched MDB2 that discovers types automatically
-		//      from the recordset, I don't think we need this:
-		//$rs = SwatDB::query($db, $sql, array($id_field->type, $title_field->type));
 		$rs = SwatDB::query($db, $sql, null);
 		
 		$options = array();
 
 		while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
+			if (MDB2::isError($row))
+				throw new SwatDBException($row);
+
 			$title_field_name = $title_field->name;
 			$id_field_name = $id_field->name;
 			$options[$row->$id_field_name] = $row->$title_field_name;
@@ -838,12 +839,6 @@ class SwatDB extends SwatObject
 		if ($order_by_clause !== null)
 			$sql.', '.$order_by_clause;
 
-		SwatDB::debug($sql);
-
-		// XXX: since we're using a patched MDB2 that discovers types automatically
-		//      from the recordset, I don't think we need this:
-		//$rs = SwatDB::query($db, $sql, array($id_field->type, $title_field->type,
-		//	$cascade_field->type));
 		$rs = SwatDB::query($db, $sql, null);
 
 		$options = array();
@@ -851,7 +846,11 @@ class SwatDB extends SwatObject
 		$title_field_name = $title_field->name;
 		$id_field_name = $id_field->name;
 		$cascade_field_name = $cascade_field->name;
+
 		while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
+			if (MDB2::isError($row))
+				throw new SwatDBException($row);
+
 			if ($row->$cascade_field_name != $current) {
 				$current = $row->$cascade_field_name;
 				$options[$current] = array();
@@ -955,7 +954,6 @@ class SwatDB extends SwatObject
 		if ($order_by_clause != null)
 			$sql.= ' order by '.$order_by_clause;
 		
-		SwatDB::debug($sql);
 		$rs = SwatDB::query($db, $sql, null);
 
 		$options = array();
