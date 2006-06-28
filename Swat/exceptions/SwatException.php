@@ -287,7 +287,8 @@ class SwatException extends Exception
 	/**
 	 * Set the PHP exception handler to use SwatException
 	 *
-	 * @param string $class the exception class containing a static handle() method.
+	 * @param string $class the exception class containing a static handle()
+	 *	method.
 	 */
 	public static function setupHandler($class = 'SwatException')
 	{
