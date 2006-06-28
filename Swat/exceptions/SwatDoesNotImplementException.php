@@ -29,7 +29,7 @@ class SwatDoesNotImplementException extends SwatException
 	 * @param string $message the message of the exception.
 	 * @param integer $code the code of the exception.
 	 * @param mixed $object the object that does not implement a required
-	 *		interface.
+	 *                       interface.
 	 */
 	public function __construct($message = null, $code = 0, $object = null)
 	{
