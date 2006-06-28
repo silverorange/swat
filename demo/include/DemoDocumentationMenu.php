@@ -28,14 +28,17 @@ class DemoDocumentationMenu extends DemoMenu
 	{
 		if (count($this->entries) > 0) {
 			echo '<p id="documentation-menu"><span class="menutitle">';
-			echo (count($this->entries) > 1) ? 'Documentation Links' : 'Documentation Link';
+			echo (count($this->entries) > 1) ?
+				'Documentation Links' : 'Documentation Link';
+
 			echo '</span>: ';
 
 			$first = true;
 			foreach ($this->entries as $class) {
 				if (!$first) echo ', ';
 				$first = false;
-				echo '<a href="http://docs.silverorange.com/Swat/'.$class.'.html">'.$class.'</a>';
+				echo '<a href="http://docs.silverorange.com/Swat/'.$class.
+					'.html">'.$class.'</a>';
 			}
 
 			echo '</p>';
