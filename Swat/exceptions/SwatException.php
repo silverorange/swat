@@ -187,7 +187,8 @@ class SwatException extends Exception
 		foreach ($this->backtrace as $entry) {
 
 			if (array_key_exists('args', $entry))
-				$arguments = htmlentities($this->getArguments($entry['args']), null, 'UTF-8');
+				$arguments = htmlentities($this->getArguments($entry['args']),
+					null, 'UTF-8');
 			else
 				$arguments = '';
 
@@ -272,8 +273,14 @@ class SwatException extends Exception
 	protected function displayStyleSheet()
 	{
 		echo '<style>';
-		echo ".swat-exception { border: 1px solid #d43; margin: 1em; font-family: sans-serif; background: #fff !important; z-index: 9999 !important; color: #000; text-align: left; min-width: 400px; }\n";
-		echo ".swat-exception h3 { background: #e65; margin: 0; padding: 5px; border-bottom: 2px solid #d43; color: #fff; }\n";
+		echo ".swat-exception { border: 1px solid #d43; margin: 1em; ".
+			"font-family: sans-serif; background: #fff !important; z-index: ".
+			"9999 !important; color: #000; text-align: left; min-width: ".
+			"400px; }\n";
+
+		echo ".swat-exception h3 { background: #e65; margin: 0; padding: ".
+			"5px; border-bottom: 2px solid #d43; color: #fff; }\n";
+
 		echo ".swat-exception-body { padding: 0.8em; }\n";
 		echo ".swat-exception-message { margin-left: 2em; padding: 1em; }\n";
 		echo ".swat-exception dt { float: left; margin-left: 1em; }\n";
