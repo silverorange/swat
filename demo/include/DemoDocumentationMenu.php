@@ -28,8 +28,9 @@ class DemoDocumentationMenu extends DemoMenu
 	{
 		if (count($this->entries) > 0) {
 			echo '<p id="documentation-menu"><span class="menutitle">';
-			echo (count($this->entries) > 1) ?
-				'Documentation Links' : 'Documentation Link';
+
+			echo Swat::ngettext('Documentation Link', 'Documentation Links',
+				count($this->entries));
 
 			echo '</span>: ';
 
