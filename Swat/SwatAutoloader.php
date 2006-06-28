@@ -82,9 +82,13 @@ class SwatAutoloader extends SwatObject
 /*
  * Adds default Swat autoloader rules
  */
-SwatAutoloader::addRule('/^SwatDB(.*)?Exception$/', 'SwatDB/exceptions/SwatDB$1Exception.php');
+SwatAutoloader::addRule('/^SwatDB(.*)?Exception$/',
+	'SwatDB/exceptions/SwatDB$1Exception.php');
+
 SwatAutoloader::addRule('/^SwatDB(.*)/', 'SwatDB/$1');
-SwatAutoloader::addRule('/^Swat(.*)?Exception$/', 'Swat/exceptions/Swat$1Exception.php');
+SwatAutoloader::addRule('/^Swat(.*)?Exception$/',
+	'Swat/exceptions/Swat$1Exception.php');
+
 SwatAutoloader::addRule('/^Swat(.*)/', 'Swat/Swat$1.php');
 
 // {{{ function __autoload()

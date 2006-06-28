@@ -2,7 +2,7 @@
 
 require_once 'PEAR/PackageFileManager2.php';
 
-$version = '0.3.4';
+$version = '0.3.8';
 $notes = <<<EOT
 - initial test package
 EOT;
@@ -45,6 +45,7 @@ $package->setNotes($notes);
 
 $package->addIgnore('package.php');
 $package->addIgnore('demo/www/swat/');
+$package->addIgnore('demo/www/www/');
 
 $package->addMaintainer('lead', 'nrf', 'Nathan Fredrickson', 'nathan@silverorange.com');
 $package->addMaintainer('lead', 'gauthierm', 'Mike Gauthier', 'mike@silverorange.com');

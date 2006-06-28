@@ -349,7 +349,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	// {{{ public function attachSubDataObjects()
 
 	/**
-	 * Attach existing sub-dataobjects for an internal property of the dataobjects in this recordset
+	 * Attach existing sub-dataobjects for an internal property of the
+	 * dataobjects in this recordset
 	 *
 	 * @param string $name name of the property to attach to.
 	 * @param SwatDBRecordsetWrapper $sub_data_objects
