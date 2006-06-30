@@ -57,10 +57,12 @@ class SwatDetailsStore extends SwatObject
 			return $this->data[$name];
 
 		if ($this->base_object !== null) {
-			// TODO: use reflector to ensure this is public
-			if (property_exists($this->base_object, $name))
-				return $this->base_object->$name;
-
+			$reflector = new ReflectionClass(get_class($this->base_object));
+			if ($reflector->hasProperty($name)) {
+				$property = $reflector->getProperty($name);
+				if ($property->isPublic())
+					return $property->getValue($this->base_object);
+			}
 			if (method_exists($this->base_object, '__get'))
 				return $this->base_object->$name;
 		}
@@ -83,13 +85,9 @@ class SwatDetailsStore extends SwatObject
 
 	private function __isset($name)
 	{
-		if (isset($this->data[$name]))
-			return true;
-
-		if (isset($this->base_object->$name))
-			return true;
-
-		return false;
+		return
+			isset($this->data[$name]) ||
+			isset($this->base_object->$name);
 	}
 
 	// }}}
