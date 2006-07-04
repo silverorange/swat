@@ -357,23 +357,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	}
 
 	// }}}
-	// {{{ private function createEmbeddedWidgets()
-
-	/**
-	 * Instantiates the tool-link for this input row
-	 */
-	private function createEmbeddedWidgets()
-	{
-		if (!$this->widgets_created) {
-			$this->enter_another_link = new SwatToolLink();
-			$this->enter_another_link->parent = $this;
-			$this->enter_another_link->stock_id = 'add';
-
-			$this->widgets_created = true;
-		}
-	}
-
-	// }}}
 	// {{{ public function displayInputRows()
 
 	/**
@@ -471,6 +454,58 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	}
 
 	// }}}
+	// {{{ public function getInlineJavaScript()
+
+	/**
+	 * Creates a JavaScript object to control the client behaviour of this
+	 * input row
+	 *
+	 * @return string the inline JavaScript required by this row.
+	 */
+	public function getInlineJavaScript()
+	{
+		/*
+		 * Encode row string
+		 *
+		 * Mimize entities so that we do not have to specify a DTD when parsing
+		 * the final XML string. If we specify a DTD, Internet Explorer takes a
+		 * long time to strictly parse everything. If we do not specify a DTD
+		 * and try to parse the final XML string with XHTML entities in it we
+		 * get an undefined entity error.
+		 */
+		$row_string = $this->getRowString();
+		// these entities need to be double escaped
+		$row_string = str_replace('&amp;', '&amp;amp;', $row_string);
+		$row_string = str_replace('&quot;', '&amp;quot;', $row_string);
+		$row_string = str_replace('&lt;', '&amp;lt;', $row_string);
+		$row_string = SwatString::minimizeEntities($row_string);
+		$row_string = str_replace("'", "\'", $row_string);
+
+		// encode newlines for JavaScript string
+		$row_string = str_replace("\n", '\n', $row_string);
+
+		return sprintf("var %s_obj = new SwatTableViewInputRow('%s', '%s');",
+			$this->id, $this->id, trim($row_string));
+	}
+
+	// }}}
+	// {{{ private function createEmbeddedWidgets()
+
+	/**
+	 * Instantiates the tool-link for this input row
+	 */
+	private function createEmbeddedWidgets()
+	{
+		if (!$this->widgets_created) {
+			$this->enter_another_link = new SwatToolLink();
+			$this->enter_another_link->parent = $this;
+			$this->enter_another_link->stock_id = 'add';
+
+			$this->widgets_created = true;
+		}
+	}
+
+	// }}}
 	// {{{ private function displayEnterAnotherRow()
 
 	/**
@@ -529,7 +564,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	}
 
 	// }}}
-	// {{{ public function getRowString()
+	// {{{ private function getRowString()
 
 	/**
 	 * Gets this input row as an XHTML table row with the row identifier as a
@@ -582,41 +617,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$tr_tag->close();
 
 		return ob_get_clean();
-	}
-
-	// }}}
-	// {{{ public function getInlineJavaScript()
-
-	/**
-	 * Creates a JavaScript object to control the client behaviour of this
-	 * input row
-	 *
-	 * @return string the inline JavaScript required by this row.
-	 */
-	public function getInlineJavaScript()
-	{
-		/*
-		 * Encode row string
-		 *
-		 * Mimize entities so that we do not have to specify a DTD when parsing
-		 * the final XML string. If we specify a DTD, Internet Explorer takes a
-		 * long time to strictly parse everything. If we do not specify a DTD
-		 * and try to parse the final XML string with XHTML entities in it we
-		 * get an undefined entity error.
-		 */
-		$row_string = $this->getRowString();
-		// these entities need to be double escaped
-		$row_string = str_replace('&amp;', '&amp;amp;', $row_string);
-		$row_string = str_replace('&quot;', '&amp;quot;', $row_string);
-		$row_string = str_replace('&lt;', '&amp;lt;', $row_string);
-		$row_string = SwatString::minimizeEntities($row_string);
-		$row_string = str_replace("'", "\'", $row_string);
-
-		// encode newlines for JavaScript string
-		$row_string = str_replace("\n", '\n', $row_string);
-
-		return sprintf("var %s_obj = new SwatTableViewInputRow('%s', '%s');",
-			$this->id, $this->id, trim($row_string));
 	}
 
 	// }}}
