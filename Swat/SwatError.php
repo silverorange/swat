@@ -192,8 +192,8 @@ class SwatError
 
 			printf("%s. In file '%s' on line %s.\n%sMethod: %s%s%s(%s)\n",
 				str_pad(--$count, 6, ' ', STR_PAD_LEFT),
-				$entry['file'],
-				$entry['line'],
+				array_key_exists('file', $entry) ? $entry['file'] : 'unknown',
+				array_key_exists('line', $entry) ? $entry['line'] : 'unknown',
 				str_repeat(' ', 8),
 				array_key_exists('class', $entry) ? $entry['class'] : '',
 				array_key_exists('type', $entry) ? $entry['type'] : '',
@@ -249,8 +249,8 @@ class SwatError
 				'line&nbsp;<strong>%s</strong>.<br />Method: '.
 				'<strong>%s%s%s(</strong>%s<strong>)</strong></dd>',
 				--$count,
-				$entry['file'],
-				$entry['line'],
+				array_key_exists('file', $entry) ? $entry['file'] : 'unknown',
+				array_key_exists('line', $entry) ? $entry['line'] : 'unknown',
 				array_key_exists('class', $entry) ? $entry['class'] : '',
 				array_key_exists('type', $entry) ? $entry['type'] : '',
 				$entry['function'],
