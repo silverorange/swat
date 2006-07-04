@@ -448,10 +448,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$tr_tag->class = 'swat-table-view-input-row';
 			$tr_tag->id = $this->id.'_row_'.$replicator_id;
 
-			if ($row_has_messages && $this->show_row_messages) {
+			if ($row_has_messages && $this->show_row_messages)
 				$tr_tag->class.= 'swat-error';
-				$tr_tag->style = 'background: #f00;';
-			}
 
 			$tr_tag->open();
 
@@ -472,7 +470,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
 							$widget->getMessages());
 
 						$td_tag->class = 'swat-error';
-						$td_tag->style = 'background: #ff0;';
 					}
 				}
 
