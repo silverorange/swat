@@ -196,8 +196,8 @@ class SwatException extends Exception
 				'line&nbsp;<strong>%s</strong>.<br />Method: '.
 				'<strong>%s%s%s(</strong>%s<strong>)</strong></dd>',
 				--$count,
-				$entry['file'],
-				$entry['line'],
+				array_key_exists('file', $entry) ? $entry['file'] : 'unknown',
+				array_key_exists('line', $entry) ? $entry['line'] : 'unknown',
 				array_key_exists('class', $entry) ? $entry['class'] : '',
 				array_key_exists('type', $entry) ? $entry['type'] : '',
 				$entry['function'],
