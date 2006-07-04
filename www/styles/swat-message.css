@@ -48,20 +48,23 @@
 
 /* SwatFormField Messages */
 
-.swat-form-field-messages {
+.swat-form-field-messages,
+.swat-table-view-input-row-messages {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
 
-.swat-form-field-messages .swat-message {
+.swat-form-field-messages .swat-message,
+.swat-table-view-input-row-messages .swat-message {
 	color: #C00;
 	font-size: 85%;
 	padding: 4px 4px 4px 24px;
 	margin: 0.5em 0 0 0;
 	background: transparent url(../images/tango/16/dialog-error.png) 4px 4px no-repeat;
 }
-* html .swat-form-field-messages .swat-message  { /* IE hack */
+* html .swat-form-field-messages .swat-message,
+* html .swat-table-view-input-row-messages .swat-message { /* IE hack */
 	background: transparent url(../images/tango/16/dialog-error-256.png) 4px 4px no-repeat;
 }
 

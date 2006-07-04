@@ -52,3 +52,23 @@ table.swat-table-view td.swat-money-cell-renderer,
 table.swat-table-view th.swat-money-cell-renderer {
 	text-align: right;
 }
+
+/* Error styling */
+
+.swat-table-view tr.swat-error {
+	background-color: #ffe3e0;
+	border: #dc6e66 1px solid;
+	border-bottom: 0;
+}
+
+.swat-table-view td.swat-error {
+	background-color: #dc6e66;
+}
+
+tr.swat-table-view-input-row-messages {
+	border: #dc6e66 1px solid;
+	border-top: 0;
+	background-color: #ffe3e0;
+	color: #e31b0c;
+}
+
