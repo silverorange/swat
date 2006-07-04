@@ -91,7 +91,7 @@ class DemoPage extends SitePage
 		$this->layout->data->title = $this->demo.' | '.$this->app->title;
 
 		$this->layout->addHtmlHeadEntrySet(
-			$this->ui->getRoot()->getHtmlHeadEntries());
+			$this->ui->getRoot()->getHtmlHeadEntrySet());
 
 		$filename = '../include/pages/'.strtolower($this->demo).'.xml';
 		$code = file_get_contents($filename);
