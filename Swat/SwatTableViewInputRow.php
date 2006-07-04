@@ -449,7 +449,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$tr_tag->id = $this->id.'_row_'.$replicator_id;
 
 			if ($row_has_messages && $this->show_row_messages)
-				$tr_tag->class.= 'swat-error';
+				$tr_tag->class.= ' swat-error';
 
 			$tr_tag->open();
 
