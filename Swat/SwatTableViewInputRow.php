@@ -494,7 +494,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 				$td_tag->open();
 
 				$ul_tag = new SwatHtmlTag('ul');
-				$ul_tag->class = 'swat-table-view-input-row-message';
+				$ul_tag->class = 'swat-table-view-input-row-messages';
 				$ul_tag->open();
 
 				$li_tag = new SwatHtmlTag('li');
