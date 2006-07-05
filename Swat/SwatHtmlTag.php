@@ -12,17 +12,14 @@ require_once 'Swat/SwatString.php';
  */
 class SwatHtmlTag extends SwatObject
 {
-	// {{{ public properties
+	// {{{ private properties
 
 	/**
 	 * The name of the HTML tag
 	 *
 	 * @var string
 	 */
-	public $tag_name;
-
-	// }}}
-	// {{{ private properties
+	private $tag_name;
 
 	/**
 	 * Atribute array
