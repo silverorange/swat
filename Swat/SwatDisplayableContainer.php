@@ -14,9 +14,9 @@ class SwatDisplayableContainer extends SwatContainer
 	// {{{ public properties
 
 	/**
-	 * The custom CSS class of this frame
+	 * The custom CSS class of this container
 	 *
-	 * This optional class is added on top of the default 'swat-frame'
+	 * This optional class is added on top of the default 'swat-displayable-container'
 	 * class.
 	 *
 	 * @var string
