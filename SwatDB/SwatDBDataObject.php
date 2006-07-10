@@ -690,12 +690,13 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	
 	public function unserialize($data)
 	{
+		$this->__wakeup();
+		$this->init();
+
 		$data = unserialize($data);
 
 		foreach ($data as $property => $value)
 			$this->$property = $value;
-
-		$this->__wakeup();
 	}
 
 	// }}}
@@ -703,7 +704,6 @@ class SwatDBDataObject extends SwatObject implements Serializable
 
 	public function __wakeup()
 	{
-		// here for subclasses
 	}
 
 	// }}}
