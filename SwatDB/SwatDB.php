@@ -591,7 +591,7 @@ class SwatDB extends SwatObject
 		$values_in_order = array();
 
 		foreach ($fields as &$field) {
-			$value = in_array($field->name, $values) ?
+			$value = isset($values[$field->name]) ?
 				$values[$field->name] : null;
 
 			$values_in_order[] = $db->quote($value, $field->type);
@@ -661,7 +661,7 @@ class SwatDB extends SwatObject
 		$updates = array();
 
 		foreach ($fields as &$field) {
-			$value = in_array($field->name, $values) ?
+			$value = isset($values[$field->name]) ?
 				$values[$field->name] : null;
 
 			$updates[] = sprintf('%s = %s',
