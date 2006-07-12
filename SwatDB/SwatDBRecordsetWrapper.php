@@ -80,7 +80,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 				if ($this->row_wrapper_class === null) {
 					$object = $row;
 				} else {
-					$object = new $this->row_wrapper_class($row);
+					$object = $this->instantiateRowWrapperObject($row);
 
 					if ($object instanceof SwatDBDataObject)
 						$object->setDatabase($rs->db);
@@ -95,6 +95,19 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 				}
 			}
 		}
+	}
+
+	// }}}
+	// {{{ protected function instantiateRowWrapperObject()
+
+	/**
+	 * Creates a new dataobject
+	 *
+	 * @param $row data row to use.
+	 */
+	protected function instantiateRowWrapperObject($row)
+	{
+		return new $this->row_wrapper_class($row);
 	}
 
 	// }}}
