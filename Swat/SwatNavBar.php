@@ -11,7 +11,7 @@ require_once 'Swat/SwatString.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatNavBar extends SwatControl
+class SwatNavBar extends SwatControl implements Countable
 {
 	// {{{ private properties
 
@@ -134,7 +134,7 @@ class SwatNavBar extends SwatControl
 	public function getEntryByPosition($position)
 	{
 		if ($position < 0)
-			$position = $this->getCount() + $position - 1;
+			$position = count($this) + $position - 1;
 
 		if (isset($this->entries[$position]))
 			return $this->entries[$position];
@@ -171,8 +171,26 @@ class SwatNavBar extends SwatControl
 	 * Gets the number of entries in this navigational bar
 	 *
 	 * @return integer number of entries in this navigational bar.
+	 *
+	 * @deprecated this class now implements Countable. Use count($object)
+	 *              instead of $object->getCount().
 	 */
 	public function getCount()
+	{
+		return count($this->entries);
+	}
+
+	// }}}
+	// {{{ public function count()
+
+	/**
+	 * Gets the number of entries in this navigational bar
+	 *
+	 * This satisfies the Countable interface.
+	 *
+	 * @return integer number of entries in this navigational bar.
+	 */
+	public function count()
 	{
 		return count($this->entries);
 	}
@@ -191,7 +209,7 @@ class SwatNavBar extends SwatControl
 	 */
 	public function popEntry()
 	{
-		if ($this->getCount() < 1)
+		if (count($this) < 1)
 			throw new SwatException('Cannot pop entry. NavBar does not '.
 				'contain any entries.');
 		else
@@ -217,8 +235,8 @@ class SwatNavBar extends SwatControl
 	 */
 	public function popEntries($number)
 	{
-		if ($this->getCount() < $number) {
-			$count = $this->getCount();
+		if (count($this) < $number) {
+			$count = count($this);
 
 			throw new SwatException(printf('Unable to pop %s entries. NavBar '.
 				'only contains %s entries.',
@@ -248,7 +266,7 @@ class SwatNavBar extends SwatControl
 		if (!$this->visible)
 			return;
 
-		$count = $this->getCount();
+		$count = count($this);
 		$i = 1;
 
 		foreach ($this->entries as $entry) {
