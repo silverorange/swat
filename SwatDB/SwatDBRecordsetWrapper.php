@@ -13,7 +13,7 @@ require_once 'SwatDB/exceptions/SwatDBException.php';
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatDBRecordsetWrapper extends SwatObject
-	implements Iterator, Serializable
+	implements Iterator, Serializable, Countable
 {
 	// {{{ protected properties
 
@@ -228,9 +228,27 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	/**
 	 * Gets the number of objects
 	 *
-	 * @return mixed the number of objects in the recordset.
+	 * @return mixed the number of objects in this record-set.
+	 *
+	 * @deprecated this class now implements Countable. Use count($object)
+	 *              instead of $object->getCount().
 	 */
 	public function getCount()
+	{
+		return count($this->objects);
+	}
+
+	// }}}
+	// {{{ public function count()
+
+	/**
+	 * Gets the number of objects
+	 *
+	 * This satisfies the Countable interface.
+	 *
+	 * @return mixed the number of objects in this record-set.
+	 */
+	public function count()
 	{
 		return count($this->objects);
 	}
@@ -305,7 +323,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 */
 	public function getInternalValues($name)
 	{
-		if ($this->getCount() == 0)
+		if (count($this) == 0)
 			return;
 
 		if (!$this->getFirst()->hasInternalValue($name))
