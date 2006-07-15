@@ -12,7 +12,7 @@ require_once 'Swat/exceptions/SwatObjectNotFoundException.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCellRendererSet extends SwatObject implements Iterator
+class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 {
 	// {{{ private properties
 
@@ -310,8 +310,26 @@ class SwatCellRendererSet extends SwatObject implements Iterator
 	 * Gets the number of renderers in this set
 	 *
 	 * @return integer the number of renderers in this set.
+	 *
+	 * @deprecated this class now implements Countable. Use count($object)
+	 *              instead of $object->getCount().
 	 */
 	public function getCount()
+	{
+		return count($this->renderers);
+	}
+
+	// }}}
+	// {{{ public function count()
+
+	/**
+	 * Gets the number of renderers in this set
+	 *
+	 * This satisfies the Countable interface.
+	 *
+	 * @return integer the number of renderers in this set.
+	 */
+	public function count()
 	{
 		return count($this->renderers);
 	}
