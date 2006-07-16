@@ -427,13 +427,13 @@ SwatCalendar.prototype.draw = function()
 		'<td class="swat-calendar-control-frame" colspan="7">' +
 		'<table cellpadding="0" cellspacing="0" border="0"><tr><td>' +
 		'<img class="' + prev_class + '" onclick="' + prev_link + '" ' +
-		'src="swat/images/' + prev_img + '" width="23" height="22" ' +
+		'src="packages/swat/images/' + prev_img + '" width="23" height="22" ' +
 		'alt="' + prev_alt + '" />' +
 		'</td><td nowrap width="100%">' +
 		this.buildControls(yyyy, mm, dd) +
 		'</td><td>' +
 		'<img class="' + next_class + '" onclick="' + next_link + '" ' +
-		'src="swat/images/' + next_img + '" width="23" height="22" ' +
+		'src="packages/swat/images/' + next_img + '" width="23" height="22" ' +
 		'alt="' + next_alt + '" />' +
 		'</td></tr></table>' +
 		'</td></tr>';
@@ -546,11 +546,11 @@ SwatCalendar.prototype.draw = function()
 //preload images
 if (document.images) {
 	image1 = new Image();
-	image1.src = "swat/images/arrow-left.png";
+	image1.src = "packages/swat/images/arrow-left.png";
 	image2 = new Image();
-	image2.src = "swat/images/arrow-right.png";
+	image2.src = "packages/swat/images/arrow-right.png";
 	image3 = new Image();
-	image3.src = "swat/images/arrow-left-off.png";
+	image3.src = "packages/swat/images/arrow-left-off.png";
 	image4 = new Image();
-	image4.src = "swat/images/arrow-right-off.png";
+	image4.src = "packages/swat/images/arrow-right-off.png";
 }
