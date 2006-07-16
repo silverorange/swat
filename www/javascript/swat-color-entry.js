@@ -55,7 +55,7 @@ SwatColorEntry.prototype.apply = function()
 SwatColorEntry.prototype.none = function()
 {
 	this.entryElement.style.background =
-		'url(swat/images/color-entry-null.png)';
+		'url(packages/swat/images/color-entry-null.png)';
 	this.entryElement.value = '';
 	this.toggle();
 }
