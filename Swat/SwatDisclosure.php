@@ -101,6 +101,7 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$anchor->open();
 		$input->display();
 		$img->display();
+		echo ' ';
 		$anchor->displayContent();
 		$anchor->close();
 
