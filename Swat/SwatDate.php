@@ -90,7 +90,7 @@ class SwatDate extends Date
 	// {{{ public function format()
 
 	/**
-	 * Formats this date given either a format string of a format id
+	 * Formats this date given either a format string or a format id
 	 *
 	 * @param mixed $format either a format string or an integer format id.
 	 *
