@@ -148,6 +148,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 		// changed
 		if ($row->$group_by !== $this->header_current) {
 			$this->header_current = $row->$group_by;
+			$this->resetSubGroups();
 			$this->displayGroupHeader($row);
 		}
 	}
@@ -161,6 +162,45 @@ class SwatTableViewGroup extends SwatTableViewColumn
 			$renderer->render();
 			echo ' ';
 		}	
+	}
+
+	// }}}
+	// {{{ protected function resetSubGroups()
+
+	/**
+	 * Resets grouping columns below this one
+	 *
+	 * This is used when outside headers change before inside headers. In this
+	 * case, the inside headers are reset so they display again in the new
+	 * outside header.
+	 */
+	protected function resetSubGroups()
+	{
+		$reset = false;
+		foreach ($this->parent->getGroups() as $group) {
+			if ($reset)
+				$group->reset();
+
+			if ($group === $this)
+				$reset = true;
+		}
+	}
+
+	// }}}
+	// {{{ protected function reset()
+
+	/**
+	 * Resets the current value of this grouping column
+	 *
+	 * This is used when outside headers change before inside headers. In this
+	 * case, the inside headers are reset so they display again in the new
+	 * outside header.
+	 *
+	 * @see SwatTableViewGroup::resetSubGroups()
+	 */
+	protected function reset()
+	{
+		$this->header_current = null;
 	}
 
 	// }}}
