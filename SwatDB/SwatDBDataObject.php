@@ -569,7 +569,8 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	 *
 	 * Only modified properties are updated.
 	 */
-	protected function saveInternal() {
+	protected function saveInternal()
+	{
 		if ($this->table === null || $this->id_field === null)
 			return;
 
