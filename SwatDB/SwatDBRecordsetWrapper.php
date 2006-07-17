@@ -88,9 +88,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 
 				$this->objects[] = $object;
 
-				if ($this->index_field !== null) {
-					$index_field = $this->index_field;
-					$index = $row->$index_field;
+				if ($this->index_field !== null &&
+					isset($row->{$this->index_field})) {
+					$index = $row->{$this->index_field};
 					$this->objects_by_index[$index] = $object;
 				}
 			}
