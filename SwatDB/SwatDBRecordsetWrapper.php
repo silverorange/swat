@@ -228,7 +228,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	/**
 	 * Gets the number of objects
 	 *
-	 * @return mixed the number of objects in this record-set.
+	 * @return integer the number of objects in this record-set.
 	 *
 	 * @deprecated this class now implements Countable. Use count($object)
 	 *              instead of $object->getCount().
@@ -246,7 +246,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 *
 	 * This satisfies the Countable interface.
 	 *
-	 * @return mixed the number of objects in this record-set.
+	 * @return integer the number of objects in this record-set.
 	 */
 	public function count()
 	{
