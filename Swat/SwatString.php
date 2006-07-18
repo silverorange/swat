@@ -694,11 +694,15 @@ class SwatString extends SwatObject
 	/**
 	 * Convert a locale-formatted number and return it as an integer.
 	 *
-	 * If the string is not an integer, the method returns null.
+	 * If the string can not be converted to an integer, the method returns
+	 * null. If the number has values after the decimal point, the value is
+	 * rounded according to the rounding rules for 
+	 * {@link http://php.net/manual/en/function.intval.php intval()}.
 	 *
 	 * @param string $string the string to convert.
 	 *
-	 * @return integer The converted value.
+	 * @return integer the converted value or null if it could not be
+	 *                  converted.
 	 */
 	public static function toInteger($string)
 	{
@@ -719,7 +723,7 @@ class SwatString extends SwatObject
 		// formatting could become annoying too. i.e. if 1000 was
 		// rejected because it wasn't formatted 1,000
 
-		return ((integer)$value == $value) ? intval($value) : null;
+		return (is_numeric($value)) ? intval($value) : null;
 	}
 
 	// }}}
