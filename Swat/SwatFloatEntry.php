@@ -49,7 +49,7 @@ class SwatFloatEntry extends SwatNumericEntry
 
 		if (is_numeric($this->value))
 			return SwatString::numberFormat($this->value, $decimals, null,
-				$this->show_thousands_seperator);
+				$this->show_thousands_separator);
 		else
 			return $this->value;
 	}

@@ -44,7 +44,7 @@ class SwatIntegerEntry extends SwatNumericEntry
 	{
 		if (is_int($this->value))
 			return SwatString::numberFormat($this->value, 0, null,
-				$this->show_thousands_seperator);
+				$this->show_thousands_separator);
 		else
 			return $this->value;
 	}
