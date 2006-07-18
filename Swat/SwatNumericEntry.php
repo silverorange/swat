@@ -17,12 +17,12 @@ abstract class SwatNumericEntry extends SwatEntry
 	/**
 	 * Show Thousands Seperator
 	 *
-	 * Whether or not to show a thousands seperator (shown depending on
+	 * Whether or not to show a thousands separator (shown depending on
 	 * locale). 
 	 *
 	 * @var boolean
 	 */
-	public $show_thousands_seperator = true;
+	public $show_thousands_separator = true;
 
 	/**
 	 * The smallest valid number in this entry
