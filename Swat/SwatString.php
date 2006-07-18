@@ -699,10 +699,16 @@ class SwatString extends SwatObject
 	 * rounded according to the rounding rules for 
 	 * {@link http://php.net/manual/en/function.intval.php intval()}.
 	 *
+	 * If the number is too large to fit in PHP's integer range (depends on
+	 * system architecture), an exception is thrown.
+	 *
 	 * @param string $string the string to convert.
 	 *
 	 * @return integer the converted value or null if it could not be
 	 *                  converted.
+	 *
+	 * @throws SwatException if the converted number is too large to fit in an
+	 *                        integer.
 	 */
 	public static function toInteger($string)
 	{
@@ -723,8 +729,23 @@ class SwatString extends SwatObject
 		// formatting could become annoying too. i.e. if 1000 was
 		// rejected because it wasn't formatted 1,000
 
-		return (is_numeric($value)) ? intval($value) : null;
+		if (is_numeric($value)) {
+			if ($value > (float)PHP_INT_MAX)
+				throw new SwatException(
+					'Floating point value is too big to be an integer');
+
+			if ($value < (float)(-PHP_INT_MAX - 1))
+				throw new SwatException(
+					'Floating point value is too small to be an integer');
+
+			$value = intval($value);
+		} else {
+			$value = null;
+		}
+
+		return $value;
 	}
+
 
 	// }}}
 	// {{{ public static function toFloat()
