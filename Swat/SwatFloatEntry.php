@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatEntry.php';
+require_once 'Swat/SwatNumericEntry.php';
 require_once 'Swat/SwatString.php';
 
 /**
@@ -10,27 +10,8 @@ require_once 'Swat/SwatString.php';
  * @copyright 2004-2005 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatFloatEntry extends SwatEntry
+class SwatFloatEntry extends SwatNumericEntry
 {
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new float entry widget
-	 *
-	 * Sets the input size to 10 by default.
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$this->size = 10;
-	}
-
-	// }}}
 	// {{{ public function process()
 
 	/**
@@ -46,7 +27,7 @@ class SwatFloatEntry extends SwatEntry
 		if ($this->value === null)
 			return;
 
-		$float_value = SwatString::toFloat($this->value);
+		$float_value = $this->getNumericValue();
 
 		if ($float_value === null) {
 			$msg = Swat::_('The %s field must be a number.');
@@ -67,9 +48,27 @@ class SwatFloatEntry extends SwatEntry
 			strlen($this->value) - $decimal_pos - strlen($lc['decimal_point']) : 0;
 
 		if (is_numeric($this->value))
-			return SwatString::numberFormat($this->value, $decimals);
+			return SwatString::numberFormat($this->value, $decimals, null,
+				$this->show_thousands_seperator);
 		else
 			return $this->value;
+	}
+
+	// }}}
+	// {{{ protected function getNumericValue()
+
+	/**
+	 * Gets the float value of this widget
+	 *
+	 * This allows each widget to parse raw values how they want to get numeric
+	 * values.
+	 *
+	 * @return mixed the numeric value of this entry widget of null if no
+	 *                numeric value is available.
+	 */
+	protected function getNumericValue()
+	{
+		return SwatString::toFloat($this->value);
 	}
 
 	// }}}

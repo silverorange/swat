@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatEntry.php';
+require_once 'Swat/SwatNumericEntry.php';
 require_once 'Swat/SwatString.php';
 
 /**
@@ -10,40 +10,8 @@ require_once 'Swat/SwatString.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatIntegerEntry extends SwatEntry
+class SwatIntegerEntry extends SwatNumericEntry
 {
-	// {{{ public properties
-
-	/**
-	 * Show Thousands Seperator
-	 *
-	 * Whether or not to show a thousands seperator (shown depending on
-	 * locale) 
-	 *
-	 * @var boolean
-	 */
-	public $show_thousands_seperator = true;
-
-	// }}}
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new integer entry widget
-	 *
-	 * Sets the input size to 7 by default.
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$this->size = 10;
-	}
-
-	// }}}
 	// {{{ public function process()
 
 	/**
@@ -56,13 +24,16 @@ class SwatIntegerEntry extends SwatEntry
 	{
 		parent::process();
 
-		if ($this->value !== null) {
-			if (is_numeric($this->value) && $this->value == intval($this->value))
-				$this->value = intval($this->value);
-			else {
-				$msg = Swat::_('The %s field must be an integer.');
-				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
-			}
+		if ($this->value === null)
+			return;
+
+		$int_value = $this->getNumericValue();
+
+		if ($int_value === null) {
+			$msg = Swat::_('The %s field must be an integer.');
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+		} else {
+			$this->value = $int_value;
 		}
 	}
 
@@ -77,6 +48,23 @@ class SwatIntegerEntry extends SwatEntry
 		else
 			return $this->value;
 	}
+
+	// }}}
+	// {{{  protected function getNumericValue()
+	
+	/**
+	 * Gets the numeric value of this widget
+	 *
+	 * This allows each widget to parse raw values how they want to get numeric
+	 * values.
+	 *
+	 * @return mixed the numeric value of this entry widget of null if no
+	 *                numeric value is available.
+	 */
+	 protected function getNumericValue()
+	 {
+		 return SwatString::toInteger($this->value);
+	 }
 
 	// }}}
 }
