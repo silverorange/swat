@@ -31,7 +31,7 @@ class SwatFloatEntry extends SwatEntry
 	}
 
 	// }}}
-	// {{{ public function process(0
+	// {{{ public function process()
 
 	/**
 	 * Checks to make sure value is a number
