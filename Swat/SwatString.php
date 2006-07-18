@@ -719,7 +719,7 @@ class SwatString extends SwatObject
 		// formatting could become annoying too. i.e. if 1000 was
 		// rejected because it wasn't formatted 1,000
 
-		return (is_int($value)) ? intval($value) : null;
+		return ((integer)$value == $value) ? intval($value) : null;
 	}
 
 	// }}}
