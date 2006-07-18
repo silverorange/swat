@@ -746,7 +746,6 @@ class SwatString extends SwatObject
 		return $value;
 	}
 
-
 	// }}}
 	// {{{ public static function toFloat()
 
