@@ -204,6 +204,58 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	}
 
 	// }}}
+	// {{{ public function getMessages()
+
+	/**
+	 * Gathers all messages from this column for the given data object
+	 *
+	 * @param mixed $data the data object to use to check this column for
+	 *                     messages.
+	 *
+	 * @return array an array of {@link SwatMessage} objects.
+	 */
+	public function getMessages($data)
+	{
+		foreach ($this->renderers as $renderer)
+			$this->renderers->applyMappingsToRenderer($renderer, $data);
+
+		$messages = array();
+		foreach ($this->renderers as $renderer)
+			$messages = array_merge($messages, $renderer->getMessages());
+
+		return $messages;
+	}
+
+	// }}}
+	// {{{ public function hasMessage()
+
+	/**
+	 * Gets whether or not this column has any messages for the given data
+	 * object
+	 *
+	 * @param mixed $data the data object to use to check this column for
+	 *                     messages.
+	 *
+	 * @return boolean true if this table-view column has one or more messages
+	 *                  for the given data object and false if it does not.
+	 */
+	public function hasMessage($data)
+	{
+		foreach ($this->renderers as $renderer)
+			$this->renderers->applyMappingsToRenderer($renderer, $data);
+
+		$has_message = false;
+		foreach ($this->renderers as $renderer) {
+			if ($renderer->hasMessage()) {
+				$has_message = true;
+				break;
+			}
+		}
+
+		return $has_message;
+	}
+
+	// }}}
 	// {{{ public function getInlineJavaScript()
 
 	/**

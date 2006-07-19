@@ -9,7 +9,8 @@ require_once 'Swat/exceptions/SwatException.php';
  *
  *
  */
-class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
+class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
+	SwatTitleable
 {
 	// {{{ public properties
 
@@ -203,6 +204,106 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent
 	public function getClonedWidgets()
 	{
 		return $this->clones;
+	}
+
+	// }}}
+	// {{{ public function getTdAttributes()
+
+	/**
+	 * Gets TD-tag attributes for htis widget cell renderer
+	 *
+	 * If the widget within this cell renderer has messages, a 'swat-error' CSS
+	 * class is prepended to the CSS classes of the TD-tag.
+	 *
+	 * @return array an array of attributes to apply to the TD tag of this
+	 *                widget cell renderer.
+	 */
+	public function getTdAttributes()
+	{
+		$classes = implode(' ', $this->getCSSClassNames());
+
+		if ($this->replicator_id !== null &&
+			$this->hasMessage($this->replicator_id))
+			$classes = 'swat-error '.$classes;
+
+		return array('class' => $classes);
+	}
+
+	// }}}
+	// {{{ public function getMessages()
+
+	/**
+	 * Gathers all messages from the widget of this cell renderer for the given
+	 * replicator id
+	 *
+	 * @param mixed $replicator_id an optional replicator id of the row to
+	 *                              gather messages from. If no replicator id
+	 *                              is specified, the current replicator_id is
+	 *                              used.
+	 *
+	 * @return array an array of {@link SwatMessage} objects.
+	 */
+	public function getMessages($replicator_id = null)
+	{
+		$messages = array();
+
+		if ($replicator_id !== null)
+			$messages = $this->getClonedWidget($replicator_id)->getMessages();
+		elseif ($this->replicator_id !== null)
+			$messages =
+				$this->getClonedWidget($this->replicator_id)->getMessages();
+
+		return $messages;
+	}
+
+	// }}}
+	// {{{ public function hasMessage()
+
+	/**
+	 * Gets whether or not this widget cell renderer has messages
+	 *
+	 * @param mixed $replicator_id an optional replicator id of the row to
+	 *                              check for messages. If no replicator id is
+	 *                              specified, the current replicator_id is
+	 *                              used.
+	 *
+	 * @return boolean true if this widget cell renderer has one or more
+	 *                  messages for the given replicator id and false if it
+	 *                  does not.
+	 */
+	public function hasMessage($replicator_id = null)
+	{
+		$has_message = false;
+
+		if ($replicator_id !== null)
+			$has_message =
+				$this->getClonedWidget($replicator_id)->hasMessage();
+		elseif ($this->replicator_id !== null)
+			$has_message =
+				$this->getClonedWidget($this->replicator_id)->hasMessage();
+
+		return $has_message;
+	}
+
+	// }}}
+	// {{{ public function getTitle()
+
+	/**
+	 * Gets the title of this widget cell renderer
+	 *
+	 * The title is taken from this cell renderer's parent.
+	 * Satisfies the {SwatTitleable::getTitle()} interface.
+	 *
+	 * @return string the title of this widget cell renderer.
+	 */
+	public function getTitle()
+	{
+		$title = null;
+
+		if (isset($this->parent->title))
+			$title = $this->parent->title;
+
+		return $title;
 	}
 
 	// }}}

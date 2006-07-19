@@ -82,6 +82,39 @@ abstract class SwatCellRenderer extends SwatUIObject
 	}
 
 	// }}}
+	// {{{ public function getMessages()
+
+	/**
+	 * Gathers all messages from this cell renderer
+	 *
+	 * By default, cell renderers do not have messages. Subclasses may override
+	 * this method to return messages.
+	 *
+	 * @return array an array of {@link SwatMessage} objects.
+	 */
+	public function getMessages()
+	{
+		return array();
+	}
+
+	// }}}
+	// {{{ public function hasMessage()
+
+	/**
+	 * Gets whether or not this cell renderer has messages
+	 *
+	 * By default, cell renderers do not have messages. Subclasses may override
+	 * this method if they have messages.
+	 *
+	 * @return boolean true if this cell renderer has one or more messages and
+	 *                  false if it does not.
+	 */
+	public function hasMessage()
+	{
+		return false;
+	}
+
+	// }}}
 	// {{{ public function getThAttributes()
 
 	/**
