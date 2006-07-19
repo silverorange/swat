@@ -519,11 +519,11 @@ class SwatTableViewInputRow extends SwatTableViewRow
 				$ul_tag->open();
 
 				$li_tag = new SwatHtmlTag('li');
-				foreach ($messages as &$msg) {
-					$li_tag->setContent($msg->primary_content,
-						$msg->content_type);
+				foreach ($messages as &$message) {
+					$li_tag->setContent($message->primary_content,
+						$message->content_type);
 
-					$li_tag->class = $msg->getCssClass();
+					$li_tag->class = $message->getCssClass();
 					$li_tag->display();
 				}
 
