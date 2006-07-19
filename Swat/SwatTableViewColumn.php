@@ -220,7 +220,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	}
 
 	// }}}
-	// {{{ public function setInputcell()
+	// {{{ public function setInputCell()
 
 	/**
 	 * Sets the input cell of this column
