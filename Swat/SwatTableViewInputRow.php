@@ -319,7 +319,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	}
 
 	// }}}
-	// {{{ public function remoteReplicatedRow()
+	// {{{ public function removeReplicatedRow()
 
 	/**
 	 * Removes a row from this input row by its replicator id
