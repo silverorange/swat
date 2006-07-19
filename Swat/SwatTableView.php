@@ -657,6 +657,54 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getMessages()
+
+	/**
+	 * Gathers all messages from this table-view
+	 *
+	 * @return array an array of {@link SwatMessage} objects.
+	 */
+	public function getMessages()
+	{
+		$messages = parent::hasMessages();
+
+		$rows = $this->model->getRows();
+		foreach ($rows as $row)
+			foreach ($this->columns as $column)
+				$messages = array_merge($messages, $column->getMessages($row));
+
+		return $messages;
+	}
+
+	// }}}
+	// {{{ public function hasMessage()
+
+	/**
+	 * Gets whether or not this table-view has any messages
+	 *
+	 * @return boolean true if this table-view has one or more messages and
+	 *                  false if it does not.
+	 */
+	public function hasMessage()
+	{
+		$has_message = parent::hasMessage();
+
+		if (!$has_message) {
+			$rows = $this->model->getRows();
+			foreach ($rows as $row) {
+				foreach ($this->columns as $column) {
+					if ($column->hasMessage($row)) {
+						$has_message = true;
+						break 2;
+					}
+				}
+			}
+		}
+
+		return $has_message;
+	}
+
+	// }}}
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
@@ -745,12 +793,26 @@ class SwatTableView extends SwatControl implements SwatUIParent
 			foreach ($this->columns as $column)
 				$tr_tag->addAttributes($column->getTrAttributes($row));
 
+			// check for messages
+			$has_message = false;
+			foreach ($this->columns as $column) {
+				if ($column->hasMessage($row)) {
+					$has_message = true;
+					break;
+				}
+			}
+
+			if ($has_message)
+				$tr_tag->class = $tr_tag->class.' swat-error';
+
 			$tr_tag->open();
 
 			foreach ($this->columns as $column)
 				$column->display($row);
 
 			$tr_tag->close();
+
+			$this->displayRowMessages($row);
 
 			foreach ($this->groups as $group)
 				$group->displayFooter($row, $next_row);
@@ -761,6 +823,49 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		}
 
 		echo '</tbody>';
+	}
+
+	// }}}
+	// {{{ protected function displayRowMessages()
+
+	/**
+	 * Displays a list of {@link SwatMessage} object for the given row
+	 *
+	 * @param mixed $row a data object to display row messages for.
+	 */
+	protected function displayRowMessages($row)
+	{
+		$messages = array();
+		foreach ($this->columns as $column)
+			$messages = array_merge($messages, $column->getMessages($row));
+
+		if (count($messages) > 0) {
+			$tr_tag = new SwatHtmlTag('tr');
+			$tr_tag->class = 'swat-table-view-input-row-messages';
+			$tr_tag->open();
+
+			$td_tag = new SwatHtmlTag('td');
+			$td_tag->colspan = $this->getVisibleColumnCount();
+			$td_tag->open();
+
+			$ul_tag = new SwatHtmlTag('ul');
+			$ul_tag->class = 'swat-table-view-input-row-messages';
+			$ul_tag->open();
+
+			$li_tag = new SwatHtmlTag('li');
+			foreach ($messages as &$message) {
+				$li_tag->setContent($message->primary_content,
+					$message->content_type);
+
+				$li_tag->class = $message->getCssClass();
+				$li_tag->display();
+			}
+
+			$ul_tag->close();
+
+			$td_tag->close();
+			$tr_tag->close();
+		}
 	}
 
 	// }}}
