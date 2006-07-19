@@ -103,9 +103,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	/**
 	 * Gets the title of this form field
 	 *
-	 * Implements the {SwatTitleable::getTitle()} interface.
+	 * Satisfies the {SwatTitleable::getTitle()} interface.
 	 *
-	 * @return the title of this form field.
+	 * @return string the title of this form field.
 	 */
 	public function getTitle()
 	{
