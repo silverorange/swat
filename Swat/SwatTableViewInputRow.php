@@ -418,6 +418,27 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	}
 
 	// }}}
+	// {{{ public function getHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects needed by this date entry 
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this date entry.
+	 *
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
+	 */
+	public function getHtmlHeadEntrySet()
+	{
+		$set = parent::getHtmlHeadEntrySet();
+
+		$this->createEmbeddedWidgets();
+		$set->addEntrySet($this->enter_another_link->getHtmlHeadEntrySet());
+
+		return $set;
+	}
+
+	// }}}
 	// {{{ private function displayInputRows()
 
 	/**
