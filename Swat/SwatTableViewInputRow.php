@@ -360,13 +360,13 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	// {{{ public function rowHasMessage()
 
 	/**
-	 * Gets whether or not a given replicated row has messages or not
+	 * Gets whether or not a given replicated row has messages
 	 *
 	 * @param integer $replicator_id the replicator id of the row to check for
 	 *                                messages.
 	 *
 	 * @return boolean true if the replicated row has one or more messages and
-	 *                  false if it is not.
+	 *                  false if it does not.
 	 */
 	public function rowHasMessage($replicator_id)
 	{
