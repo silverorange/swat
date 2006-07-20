@@ -668,10 +668,13 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	{
 		$messages = parent::hasMessages();
 
-		$rows = $this->model->getRows();
-		foreach ($rows as $row)
-			foreach ($this->columns as $column)
-				$messages = array_merge($messages, $column->getMessages($row));
+		if ($this->model !== null) {
+			$rows = $this->model->getRows();
+			foreach ($rows as $row)
+				foreach ($this->columns as $column)
+					$messages =
+						array_merge($messages, $column->getMessages($row));
+		}
 
 		return $messages;
 	}
@@ -689,7 +692,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	{
 		$has_message = parent::hasMessage();
 
-		if (!$has_message) {
+		if (!$has_message && $this->model !== null) {
 			$rows = $this->model->getRows();
 			foreach ($rows as $row) {
 				foreach ($this->columns as $column) {
