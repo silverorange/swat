@@ -56,7 +56,7 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	/**
 	 * Renders the contents of this cell
 	 *
-	 * @see swatcellrenderer::render()
+	 * @see SwatCellRenderer::render()
 	 */
 	public function render()
 	{
