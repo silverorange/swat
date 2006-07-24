@@ -37,7 +37,7 @@ class SwatOption extends SwatObject
 	public $value = null;
 
 	// }}}
-	// {{{ public function __construct(
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a flydown option
