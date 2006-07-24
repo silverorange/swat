@@ -64,14 +64,14 @@ class SwatTreeFlydownNode extends SwatTreeNode
 	}
 
 	// }}}
-	// {{{ public function getFlydownOption()
+	// {{{ public function getOption()
 
 	/**
-	 * Gets the flydown option for this node
+	 * Gets the option for this node
 	 *
-	 * @return SwatOption the flydown option for this node.
+	 * @return SwatOption the option for this node.
 	 */
-	public function getFlydownOption()
+	public function getOption()
 	{
 		return $this->flydown_option;
 	}
