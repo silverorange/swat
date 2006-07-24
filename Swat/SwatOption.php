@@ -3,7 +3,7 @@
 require_once 'Swat/SwatObject.php';
 
 /**
- * A simple class for storing {@link SwatFlydown} options
+ * A simple class for storing options used in various Swat controls
  *
  * @package   Swat
  * @copyright 2005-2006 silverorange
@@ -40,11 +40,13 @@ class SwatOption extends SwatObject
 	// {{{ public function __construct()
 
 	/**
-	 * Creates a flydown option
+	 * Creates an option
 	 *
-	 * @param mixed $value Value of the option.
-	 * @param string $title Displayed title of the option.
-	 * @param string $content_type Optional content type of the title.
+	 * @param mixed $value the value of this option.
+	 * @param string $title the user visible title of this option.
+	 * @param string $content_type an optional content type of for this
+	 *                              option's title. The content type defaults
+	 *                              to 'text/plain'.
 	 */
 	public function __construct($value, $title, $content_type = 'text/plain')
 	{
