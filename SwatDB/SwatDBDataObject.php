@@ -35,6 +35,11 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	/**
 	 * @var array
 	 */
+	private $internal_property_autosave = array();
+
+	/**
+	 * @var array
+	 */
 	private $internal_property_classes = array();
 
 	/**
@@ -217,9 +222,10 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	// }}}
 	// {{{ protected function registerInternalProperty()
 
-	protected function registerInternalProperty($name, $class = null)
+	protected function registerInternalProperty($name, $class = null, $autosave = false)
 	{
 		$this->internal_properties[$name] = null;
+		$this->internal_property_autosave[$name] = $autosave;
 
 		if ($class === null)
 			unset($this->internal_property_classes[$name]);
@@ -497,6 +503,15 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	 */
 	public function save() {
 		$this->checkDB();
+
+		foreach ($this->internal_property_autosave as $name => $autosave) {
+			if ($autosave && isset($this->sub_data_objects[$name])) {
+				$object = $this->sub_data_objects[$name];
+				$object->save();
+				$this->setInternalValue($name, $object->getId());
+			}
+		}
+
 		$this->saveInternal();
 
 		foreach ($this->sub_data_objects as $name => $object) {
