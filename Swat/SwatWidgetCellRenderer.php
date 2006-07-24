@@ -194,7 +194,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	}
 
 	// }}}
-	// {{{ public function getCloneWidgets()
+	// {{{ public function getClonedWidgets()
 
 	/** 
 	 * Gets an array of cloned widgets indexed by the replicator_id
@@ -328,7 +328,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	}
 
 	// }}}
-	// {{{ private function getCloneWidget()
+	// {{{ private function getClonedWidget()
 
 	private function getClonedWidget($replicator)
 	{
