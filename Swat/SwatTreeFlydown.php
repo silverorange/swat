@@ -51,10 +51,12 @@ class SwatTreeFlydown extends SwatFlydown
 		if (!$this->visible)
 			return;
 
-		// temporarily encode the path into the value for parent::display()
+		// temporarily set the value to the path for parent::display()
 		$actual_value = $this->value;
-		$this->value = implode('/', $this->path);
+		$this->value = $this->path;
+
 		parent::display();
+
 		$this->value = $actual_value;
 	}
 
@@ -84,27 +86,27 @@ class SwatTreeFlydown extends SwatFlydown
 	/**
 	 * Flattens this flydown's tree into an array of flydown options
 	 *
-	 * The tree is represented by placing spaces in front of nodes on different
-	 * levels.
+	 * The tree is represented by placing spaces in front of option titles for
+	 * different levels. The values of the options are set to an array
+	 * representing the tree nodes's paths in the tree.
 	 *
 	 * @param array $options a reference to an array to add the flattened tree
 	 *                        nodes to.
 	 * @param SwatTreeFlydownNode $node the tree node to flatten.
 	 * @param integer $level the current level of recursion.
-	 * @param string $path the current path represented as a string of tree
-	 *                      node option values separated by forward slashes.
+	 * @param array $path the current path represented as an array of tree
+	 *                     node option values.
 	 */
 	private function flattenTree(&$options, SwatTreeFlydownNode $node,
-		$level = 0, $path = '')
+		$level = 0, $path = array())
 	{
-		$tree_option = clone $node->getFlydownOption();
-		$pad = str_repeat('&nbsp;', $level * 3);
-		$tree_option->title = $pad.$tree_option->title;
+		$tree_option = clone $node->getOption();
 
-		if (strlen($path) > 0)
-			$path.= '/'.$tree_option->value;
-		else
-			$path = $tree_option->value;
+		$pad = str_repeat('&nbsp;', $level * 3);
+		$path[] = $tree_option->value;
+
+		$tree_option->title = $pad.$tree_option->title;
+		$tree_option->value = $path;
 
 		$options[] = $tree_option;
 
@@ -142,7 +144,7 @@ class SwatTreeFlydown extends SwatFlydown
 		if ($this->value === null) {
 			$this->path = array();
 		} else {
-			$this->path = explode('/', $this->value);
+			$this->path = $this->value;
 			$this->value = end($this->path);
 		}
 	}
