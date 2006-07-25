@@ -118,6 +118,30 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function getEntries()
+
+	/**
+	 * Get the set of HTML head entries as an array
+	 *
+	 * @param string $instance_of an optional class name to limit
+	 *               entries to classes that inheret from it.
+	 */
+	public function getEntries($instance_of = null)
+	{
+		// array copy
+		$entries = $this->entries;
+		usort($entries, array($this, 'compare'));
+
+		$return = array();
+
+		foreach ($entries as $entry)
+			if ($instance_of == null || $entry instanceof $instance_of)
+				$return[] = $entry;
+
+		return $return;
+	}
+
+	// }}}
 	// {{{ private function compare()
 
 	/**
