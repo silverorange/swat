@@ -118,7 +118,7 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function getEntries()
+	// {{{ public function toArray()
 
 	/**
 	 * Get the set of HTML head entries as an array
@@ -126,7 +126,7 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 * @param string $instance_of an optional class name to limit
 	 *               entries to classes that inheret from it.
 	 */
-	public function getEntries($instance_of = null)
+	public function toArray($instance_of = null)
 	{
 		// array copy
 		$entries = $this->entries;
