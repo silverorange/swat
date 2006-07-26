@@ -97,6 +97,19 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	private $columns_by_id = array();
 
 	/**
+	 * The row columns of this table-view indexed by their unique identifier
+	 *
+	 * A unique identifier is not required so this array does not necessarily
+	 * contain all row columns in the view. It serves as an efficient data structure
+	 * to lookup row columns by their id.
+	 *
+	 * The array is structured as id => column reference.
+	 *
+	 * @var array
+	 */
+	private $row_columns_by_id = array();
+
+	/**
 	 * The groups of this table-view indexed by their unique identifier
 	 *
 	 * A unique identifier is not required so this array does not necessarily
@@ -128,6 +141,15 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * @var array
 	 */
 	private $columns = array();
+
+	/**
+	 * Row column objects for this table view
+	 *
+	 * @var array
+	 *
+	 * @see SwatTableView::addRowColumn()
+	 */
+	private $row_columns = array();
 
 	/**
 	 * Grouping objects for this table view
@@ -210,6 +232,13 @@ class SwatTableView extends SwatControl implements SwatUIParent
 			if (!array_key_exists($group->id, $this->groups_by_id))
 				$this->groups_by_id[$group->id] = $group;
 		}
+
+		foreach ($this->row_columns as $column) {
+			$column->init();
+			// index the row column by id if it is not already indexed
+			if (!array_key_exists($column->id, $this->row_columns_by_id))
+				$this->row_columns_by_id[$column->id] = $column;
+		}
 	}
 
 	// }}}
@@ -262,6 +291,24 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		$this->groups[] = $group;
 		$group->view = $this;
 		$group->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function appendRowColumn()
+
+	/**
+	 * Appends a row column object to this table-view
+	 *
+	 * @param SwatTableViewRowColumn $column the table-view row column to use for this
+	 *                                   table-view.
+	 *
+	 * @see SwatTableViewRowColumn
+	 */
+	public function appendRowColumn(SwatTableViewRowColumn $column)
+	{
+		$this->row_columns[] = $column;
+		$column->view = $this;
+		$column->parent = $this;
 	}
 
 	// }}}
@@ -356,6 +403,37 @@ class SwatTableView extends SwatControl implements SwatUIParent
 			throw new SwatException("Group with an id of '{$id}' not found.");
 
 		return $this->groups_by_id[$id];
+	}
+
+	// }}}
+	// {{{ public function getRowColumns()
+
+	/**
+	 * Gets all row columns of this table-view as an array
+	 *
+	 * @return array a reference to the the row columns of this view.
+	 */
+	public function &getRowColumns()
+	{
+		return $this->row_columns;
+	}
+
+	// }}}
+	// {{{ public function getRowColumn()
+
+	/**
+	 * Gets a reference to a row column in this table-view by its unique identifier
+	 *
+	 * @return SwatTableViewRowColumn the requested row column.
+	 *
+	 * @throws SwatException
+	 */
+	public function getRowColumn($id)
+	{
+		if (!array_key_exists($id, $this->row_columns_by_id))
+			throw new SwatException("Row column with an id of '{$id}' not found.");
+
+		return $this->row_columns_by_id[$id];
 	}
 
 	// }}}
@@ -645,6 +723,8 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	{
 		if ($child instanceof SwatTableViewGroup)
 			$this->appendGroup($child);
+		elseif ($child instanceof SwatTableViewRowColumn)
+			$this->appendRowColumn($child);
 		elseif ($child instanceof SwatTableViewRow)
 			$this->appendRow($child);
 		elseif ($child instanceof SwatTableViewColumn)
@@ -814,6 +894,10 @@ class SwatTableView extends SwatControl implements SwatUIParent
 				$column->display($row);
 
 			$tr_tag->close();
+
+			// display the groupings
+			foreach ($this->row_columns as $column)
+				$column->display($row);
 
 			$this->displayRowMessages($row);
 
