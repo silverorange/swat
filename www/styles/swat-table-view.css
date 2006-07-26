@@ -65,6 +65,11 @@ table.swat-table-view th.swat-money-cell-renderer {
 	background-color: #dc6e66;
 }
 
+.swat-table-view-row-column {
+	color: #666;
+	font-size: 85%;
+}
+
 tr.swat-table-view-input-row-messages {
 	border: #dc6e66 1px solid;
 	border-top: 0;
