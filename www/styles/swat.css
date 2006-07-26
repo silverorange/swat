@@ -74,13 +74,6 @@ ul.swat-note {
 	padding: 0.3em 0 0 1.5em;
 }
 
-.swat-footer-form-field {
-	overflow: auto;
-	position: relative;
-}
-/* IE hack */
-* html .swat-footer-form-field { overflow: visible; height: 1px; }
-
 .swat-form-field-checkbox {
 	margin: 0 0 0.5em 0;
 }
@@ -229,13 +222,14 @@ span.swat-time-span {
 
 /* Swat Buttons */
 
+.swat-header-form-field input.swat-primary,
 .swat-footer-form-field input.swat-primary {
 	font-weight: bold;
 	color: #000;
 }
 
+.swat-header-form-field .swat-button,
 .swat-footer-form-field .swat-button {
-	float: left;
 	margin-right: 0.5em;
 	color: #666;
 }
