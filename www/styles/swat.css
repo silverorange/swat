@@ -194,15 +194,22 @@ span.swat-time-span {
 }
 
 .swat-actions,
+.swat-header-form-field,
 .swat-footer-form-field {
 	padding: 1em 0;
 }
 
 .swat-frame .swat-actions,
+.swat-frame .swat-header-form-field,
 .swat-frame .swat-footer-form-field {
-	background: #f7f5f3 url(../images/swat-form-footer.png) top left repeat-x;
+	background: #f7f5f3 url(../images/swat-form-header.png) top left repeat-x;
 	padding: 1em;
 	margin: 15px -15px -15px -15px;
+}
+
+.swat-frame .swat-header-form-field {
+	margin: -15px -15px 15px -15px;
+	background-position: bottom left;
 }
 
 .swat-actions label {
