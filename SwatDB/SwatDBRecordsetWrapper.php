@@ -438,7 +438,10 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 				get_class($this)));
 
 		$this->objects[] = $object;
-		$object->setDatabase($this->db);
+
+		// only set the db on added object if it is set for this recordset
+		if ($this->db !== null)
+			$object->setDatabase($this->db);
 
 		// if index field is set, index this object
 		if ($this->index_field !== null &&
