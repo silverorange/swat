@@ -895,7 +895,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 			$tr_tag->close();
 
-			// display the groupings
+			// display the row columns
 			foreach ($this->row_columns as $column)
 				$column->display($row);
 
