@@ -706,7 +706,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	
 	public function unserialize($data)
 	{
-		$this->__wakeup();
+		$this->wakeup();
 		$this->init();
 
 		$data = unserialize($data);
@@ -716,9 +716,9 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	}
 
 	// }}}
-	// {{{ public function __wakeup()
+	// {{{ public function wakeup()
 
-	public function __wakeup()
+	public function wakeup()
 	{
 	}
 
