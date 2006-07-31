@@ -58,13 +58,6 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	protected $table = null;
 	protected $id_field = null;
 	
-	/**
-	 * @var array
-	 */
-	protected $serializable_private_properties = array('table', 'id_field',
-			'sub_data_objects',	'property_hashes', 'internal_properties',
-			'internal_property_classes', 'date_properties');
-
 	// }}}
 	// {{{ public function __construct()
 
@@ -731,6 +724,16 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	protected function getSerializableSubDataObjects()
 	{
 		return array();
+	}
+
+	// }}}
+	// {{{ protected function getSerializablePrivateProperties()
+
+	protected function getSerializablePrivateProperties()
+	{
+		return array('table', 'id_field',
+			'sub_data_objects',	'property_hashes', 'internal_properties',
+			'internal_property_classes', 'date_properties');
 	}
 
 	// }}}
