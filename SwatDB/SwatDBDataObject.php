@@ -683,7 +683,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 			if (!in_array($name, $serializable_sub_data_objects))
 				unset($this->sub_data_objects[$name]);
 
-		foreach ($this->serializable_private_properties as $property)
+		foreach ($this->getSerializablePrivateProperties() as $property)
 			$data[$property] = &$this->$property;
 
 		$reflector = new ReflectionObject($this);
