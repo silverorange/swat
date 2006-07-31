@@ -58,6 +58,13 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	protected $table = null;
 	protected $id_field = null;
 	
+	/**
+	 * @var array
+	 */
+	protected $serializable_private_properties = array('table', 'id_field',
+			'sub_data_objects',	'property_hashes', 'internal_properties',
+			'internal_property_classes', 'date_properties');
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -683,11 +690,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 			if (!in_array($name, $serializable_sub_data_objects))
 				unset($this->sub_data_objects[$name]);
 
-		$private_properties = array('table', 'id_field',
-			'sub_data_objects',	'property_hashes', 'internal_properties',
-			'internal_property_classes', 'date_properties');
-
-		foreach ($private_properties as $property)
+		foreach ($this->serializable_private_properties as $property)
 			$data[$property] = &$this->$property;
 
 		$reflector = new ReflectionObject($this);
