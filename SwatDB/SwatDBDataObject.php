@@ -732,7 +732,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	protected function getSerializablePrivateProperties()
 	{
 		return array('table', 'id_field',
-			'sub_data_objects',	'property_hashes', 'internal_properties',
+			'sub_data_objects', 'property_hashes', 'internal_properties',
 			'internal_property_classes', 'date_properties');
 	}
 
