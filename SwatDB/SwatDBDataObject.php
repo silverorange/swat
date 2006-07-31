@@ -719,9 +719,9 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	}
 
 	// }}}
-	// {{{ public function wakeup()
+	// {{{ protected function wakeup()
 
-	public function wakeup()
+	protected function wakeup()
 	{
 	}
 
