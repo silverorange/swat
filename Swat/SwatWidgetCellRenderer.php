@@ -210,7 +210,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	// {{{ public function getTdAttributes()
 
 	/**
-	 * Gets TD-tag attributes for htis widget cell renderer
+	 * Gets TD-tag attributes for this widget cell renderer
 	 *
 	 * If the widget within this cell renderer has messages, a 'swat-error' CSS
 	 * class is prepended to the CSS classes of the TD-tag.
