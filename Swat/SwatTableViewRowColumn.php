@@ -44,11 +44,13 @@ class SwatTableViewRowColumn extends SwatTableViewColumn
 
 		foreach ($this->renderers as $renderer) {
 			$this->renderers->applyMappingsToRenderer($renderer, $row);
-			if ($renderer->visible == true)
+			if ($renderer->visible == true) {
 				$visible_renderers = true;
+				break;
+			}
 		}
 
-		$this->visible = $visible_renderers;
+		$this->visible = $this->visible && $visible_renderers;
 
 		parent::display($row);
 	}
