@@ -22,6 +22,38 @@ class SwatTableViewRowColumn extends SwatTableViewColumn
 	public $offset = 0;
 
 	// }}}
+	// {{{ public function display()
+
+	/**
+	 * Displays this column using a data object
+	 *
+	 * The properties of the cell renderers are set from the data object
+	 * through the datafield property mappings. A SwatTableViewRowColumn is
+	 * automatically hidden if no visible cell renderers are provided.
+	 *
+	 * @param mixed $row a data object used to display the cell renderers in
+	 *                    this column.
+	 */
+	public function display($row)
+	{
+		if ($this->renderers->getCount() == 0)
+			throw new SwatException('No renderer has been provided for this '.
+				'column.');
+
+		$visible_renderers = false;
+
+		foreach ($this->renderers as $renderer) {
+			$this->renderers->applyMappingsToRenderer($renderer, $row);
+			if ($renderer->visible == true)
+				$visible_renderers = true;
+		}
+
+		$this->visible = $visible_renderers;
+
+		parent::display($row);
+	}
+
+	// }}}
 	// {{{ protected function displayRenderers()
 	
 	/**
