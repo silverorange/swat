@@ -26,6 +26,15 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public $title = null;
 
+	/**
+	 * Optional content type for the title 
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $title_content_type = 'text/plain';
+
 	/*
 	 * Display a visible indication that this field is required
 	 *
@@ -230,7 +239,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	protected function getTitleTag($title)
 	{
 		$label_tag = new SwatHtmlTag('label');
-		$label_tag->setContent(sprintf('%s: ', $title));
+		$label_tag->setContent(sprintf('%s: ', $title),
+			$this->title_content_type);
+
 		$focus_id = $this->getFocusableHtmlId();
 		if ($focus_id !== null)
 			$label_tag->for = $focus_id;
