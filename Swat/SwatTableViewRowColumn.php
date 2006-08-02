@@ -41,7 +41,6 @@ class SwatTableViewRowColumn extends SwatTableViewColumn
 				'column.');
 
 		$visible_renderers = false;
-
 		foreach ($this->renderers as $renderer) {
 			$this->renderers->applyMappingsToRenderer($renderer, $row);
 			if ($renderer->visible == true) {
@@ -50,9 +49,12 @@ class SwatTableViewRowColumn extends SwatTableViewColumn
 			}
 		}
 
+		$old_visible = $this->visible;
 		$this->visible = $this->visible && $visible_renderers;
 
 		parent::display($row);
+
+		$this->visible = $old_visible;
 	}
 
 	// }}}
