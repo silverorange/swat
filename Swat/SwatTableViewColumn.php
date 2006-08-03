@@ -165,23 +165,12 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		if (!$this->visible)
 			return;
 
-		if ($this->renderers->getCount() == 0)
-			throw new SwatException('No renderer has been provided for this '.
-				'column.');
-
-		$sensitive = $this->view->isSensitive();
-
-		// Set the properties of the renderers to the value of the data field.
-		foreach ($this->renderers as $renderer) {
-			$this->renderers->applyMappingsToRenderer($renderer, $row);
-			$renderer->sensitive = $sensitive;
-		}
-
+		$this->setupRenderers($row);
 		$this->displayRenderers($row);
 	}
 
 	// }}}
-	// {{{ public function displayRenderers()
+	// {{{ protected function displayRenderers()
 
 	/**
 	 * Renders each cell renderer in this column
@@ -201,6 +190,30 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		}
 
 		$td_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function setupRenderers()
+
+	/**
+	 * Sets properties of renderers using data from current row
+	 *
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
+	 */
+	protected function setupRenderers($data)
+	{
+		if ($this->renderers->getCount() == 0)
+			throw new SwatException('No renderer has been provided for this '.
+				'column.');
+
+		$sensitive = $this->view->isSensitive();
+
+		// Set the properties of the renderers to the value of the data field.
+		foreach ($this->renderers as $renderer) {
+			$this->renderers->applyMappingsToRenderer($renderer, $data);
+			$renderer->sensitive = $sensitive;
+		}
 	}
 
 	// }}}
