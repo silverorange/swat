@@ -177,52 +177,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	}
 
 	// }}}
-	// {{{ protected function displayRenderers()
-
-	/**
-	 * Renders each cell renderer in this column
-	 *
-	 * @param mixed $data the data object being used to render the cell
-	 *                     renderers of this field.
-	 */
-	protected function displayRenderers($data)
-	{
-		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
-		$td_tag->open();
-		
-		foreach ($this->renderers as $renderer) {
-			$renderer->render();
-			echo ' ';
-		}
-
-		$td_tag->close();
-	}
-
-	// }}}
-	// {{{ protected function setupRenderers()
-
-	/**
-	 * Sets properties of renderers using data from current row
-	 *
-	 * @param mixed $data the data object being used to render the cell
-	 *                     renderers of this field.
-	 */
-	protected function setupRenderers($data)
-	{
-		if ($this->renderers->getCount() == 0)
-			throw new SwatException('No renderer has been provided for this '.
-				'column.');
-
-		$sensitive = $this->view->isSensitive();
-
-		// Set the properties of the renderers to the value of the data field.
-		foreach ($this->renderers as $renderer) {
-			$this->renderers->applyMappingsToRenderer($renderer, $data);
-			$renderer->sensitive = $sensitive;
-		}
-	}
-
-	// }}}
 	// {{{ public function getMessages()
 
 	/**
@@ -399,6 +353,52 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 			$set->addEntrySet($this->input_cell->getHtmlHeadEntrySet());
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ protected function displayRenderers()
+
+	/**
+	 * Renders each cell renderer in this column
+	 *
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
+	 */
+	protected function displayRenderers($data)
+	{
+		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
+		$td_tag->open();
+		
+		foreach ($this->renderers as $renderer) {
+			$renderer->render();
+			echo ' ';
+		}
+
+		$td_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function setupRenderers()
+
+	/**
+	 * Sets properties of renderers using data from current row
+	 *
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
+	 */
+	protected function setupRenderers($data)
+	{
+		if ($this->renderers->getCount() == 0)
+			throw new SwatException('No renderer has been provided for this '.
+				'column.');
+
+		$sensitive = $this->view->isSensitive();
+
+		// Set the properties of the renderers to the value of the data field.
+		foreach ($this->renderers as $renderer) {
+			$this->renderers->applyMappingsToRenderer($renderer, $data);
+			$renderer->sensitive = $sensitive;
+		}
 	}
 
 	// }}}
