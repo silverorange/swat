@@ -41,6 +41,7 @@ class SwatTableViewRowColumn extends SwatTableViewColumn
 		if ($this->offset > 0) {
 			$td_tag = new SwatHtmlTag('td');
 			$td_tag->colspan = $this->offset;
+			$td_tag->setContent('&nbsp', 'text/xml');
 			$td_tag->display();
 		}
 
