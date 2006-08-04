@@ -11,6 +11,13 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
 /**
  * A visible column in a SwatTableView
  *
+ * For styling purposes, if this table-view column has an identifier set, a CSS
+ * class of this column's identifier is appended to the list of classes on this
+ * column's displayed TD tag. The CSS class automatically replaces underscore
+ * characters with dashes. For example, if an identifier of 'price_column' is
+ * applied to this column, a CSS class of 'price-column' will be added to this
+ * column's displayed TD tag.
+ *
  * @package   Swat
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
@@ -180,10 +187,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	protected function displayRenderers($data)
 	{
-		$first_renderer = $this->renderers->getFirst();
-		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
+		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
 		$td_tag->open();
-
+		
 		foreach ($this->renderers as $renderer) {
 			$renderer->render();
 			echo ' ';
@@ -393,6 +399,32 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 			$set->addEntrySet($this->input_cell->getHtmlHeadEntrySet());
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ protected function getTdAttributes()
+
+	/**
+	 * Gets the TD tag attributes for this column
+	 *
+	 * The returned array is of the form 'attribute' => value.
+	 *
+	 * @return array an array of attributes to apply to this column's TD tag.
+	 */
+	protected function getTdAttributes()
+	{
+		$first_renderer = $this->renderers->getFirst();
+		$attributes = $first_renderer->getTdAttributes();
+
+		if ($this->id !== null) {
+			$column_class = str_replace('_', '-', $this->id);
+			if (isset($attributes['class']))
+				$attributes['class'].= ' '.$column_class;
+			else
+				$attributes['class'] = $column_class;
+		}
+
+		return $attributes;
 	}
 
 	// }}}
