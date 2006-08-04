@@ -22,9 +22,19 @@ class SwatString extends SwatObject
 		'p',          'pre',     'dl',     'div',
 		'blockquote', 'form',    'h[1-6]', 'table',
 		'fieldset',   'address', 'ul',     'ol',
-		'dd',         'dt',      'li',     'tbody',
-		'td',         'tfoot',   'th',     'thead',
-		'tr');
+		'dd',         'dt',      'td',     'th',
+		'tr',
+	);
+
+	/**
+	 * These XHTML elements are not block-level but people often write
+	 * markup treating these elements as block-level tags
+	 *
+	 * @var array
+	 */
+	public static $breaking_elements = array(
+		'li',         'tbody',   'tfoot',   'thead',
+	);
 
 	// }}}
 	// {{{ public static function toXHTML()
@@ -46,6 +56,7 @@ class SwatString extends SwatObject
 	public static function toXHTML($text)
 	{
 		$blocklevel_elements = implode('|', self::$blocklevel_elements);
+		$breaking_elements = implode('|', self::$breaking_elements);
 
 		// regular expressions to match blocklevel tags
 		$starting_blocklevel = '/^<('.$blocklevel_elements.')[^<>]*?>/siu';
@@ -59,12 +70,32 @@ class SwatString extends SwatObject
 		// double lf with two line breaks
 		$text = preg_replace('/[\xa0\s]*\n\n[\xa0\s]*/su', "\n\n", $text);
 
-		// replace single line break followed by a starting blocklevel tag
+		// replace single line break followed by a starting block-level tag
 		// with two line breaks
 		$break_then_blocklevel =
 			'/([^\n])\n(<('.$blocklevel_elements.')[^<>]*?>)/siu';
 
 		$text = preg_replace($break_then_blocklevel, "\\1\n\n\\2", $text);
+
+		// remove line break from starting block-level tag followed by a
+		// line break
+		$blocklevel_then_break =
+			'/(<('.$blocklevel_elements.')[^<>]*?>)\n/siu';
+
+		$text = preg_replace($blocklevel_then_break, "\\1", $text);
+
+		// remove line break from line break followed by an ending block-level
+		// tag
+		$break_then_ending_blocklevel =
+			'/\n(<\/('.$blocklevel_elements.')[^<>]*?>)/siu';
+
+		$text = preg_replace($break_then_ending_blocklevel, "\\1", $text);
+
+		// remove line break from ending breaking tag followed by a line break
+		$ending_breaking_then_break =
+			'/(<\/('.$breaking_elements.')[^<>]*?>)\n/siu';
+
+		$text = preg_replace($ending_breaking_then_break, "\\1", $text);
 
 		$paragraphs = explode("\n\n", $text);
 
