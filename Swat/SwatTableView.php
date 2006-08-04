@@ -985,7 +985,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	// {{{ protected function getRowClass()
 
 	/**
-	 * Gets CSS class(es) for the XHTML tr tag.  Can be overridden by subclasses.
+	 * Gets CSS class(es) for the XHTML tr tag
 	 *
 	 * @param mixed $row a data object containing the data to be displayed in
 	 *                    this row.
