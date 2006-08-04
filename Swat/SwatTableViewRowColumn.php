@@ -15,43 +15,11 @@ class SwatTableViewRowColumn extends SwatTableViewColumn
 	// {{{ public properties
 
 	/**
-	 * The number of columns to offset to the right 
+	 * The number of columns to offset to the right
 	 *
 	 * @var integer
 	 */
 	public $offset = 0;
-
-	// }}}
-	// {{{ public function display()
-
-	/**
-	 * Displays this column using a data object
-	 *
-	 * The properties of the cell renderers are set from the data object
-	 * through the datafield property mappings.
-	 *
-	 * @param mixed $row a data object used to display the cell renderers in
-	 *                    this column.
-	 */
-	public function display($row)
-	{
-		if (!$this->visible)
-			return;
-
-		$this->setupRenderers($row);
-
-		$visible_renderers = false;
-
-		foreach ($this->renderers as $renderer) {
-			if ($renderer->visible) {
-				$visible_renderers = true;
-				break;
-			}
-		}
-
-		if ($visible_renderers)
-			$this->displayRenderers($row);
-	}
 
 	// }}}
 	// {{{ protected function displayRenderers()
@@ -70,10 +38,6 @@ class SwatTableViewRowColumn extends SwatTableViewColumn
 	 */
 	protected function displayRenderers($row)
 	{
-		$tr_tag = new SwatHtmlTag('tr');
-		$tr_tag->class = 'swat-table-view-row-column';
-		$tr_tag->open();
-
 		if ($this->offset > 0) {
 			$td_tag = new SwatHtmlTag('td');
 			$td_tag->colspan = $this->offset;
@@ -82,11 +46,12 @@ class SwatTableViewRowColumn extends SwatTableViewColumn
 
 		$first_renderer = $this->renderers->getFirst();
 		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
-		$td_tag->colspan = ($this->view->getVisibleColumnCount() - $this->offset);
+		$td_tag->colspan =
+			$this->view->getVisibleColumnCount() - $this->offset;
+
 		$td_tag->open();
 		$this->displayRenderersInternal($row);
 		$td_tag->close();
-		$tr_tag->close();
 	}
 
 	// }}}
@@ -98,6 +63,36 @@ class SwatTableViewRowColumn extends SwatTableViewColumn
 			$renderer->render();
 			echo ' ';
 		}	
+	}
+
+	// }}}
+	// {{{ public function hasVisibleRenderer()
+
+	/**
+	 * Whether or not this row-column has one or more visible cell renderers
+	 *
+	 * @param mixed $row a data object containing the data for a single row
+	 *                    in the table store for this group. This object may
+	 *                    affect the visibility of renderers in this row-
+	 *                    column.
+	 *
+	 * @return boolean true if this row-column has one or more visible cell
+	 *                  renderers and false if it does not.
+	 */
+	public function hasVisibleRenderer($row)
+	{
+		$this->setupRenderers($row);
+
+		$visible_renderers = false;
+
+		foreach ($this->renderers as $renderer) {
+			if ($renderer->visible) {
+				$visible_renderers = true;
+				break;
+			}
+		}
+
+		return $visible_renderers;
 	}
 
 	// }}}
