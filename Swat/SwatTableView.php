@@ -899,8 +899,22 @@ class SwatTableView extends SwatControl implements SwatUIParent
 			$tr_tag->close();
 
 			// display the row columns
-			foreach ($this->row_columns as $column)
-				$column->display($row);
+			$tr_tag = new SwatHtmlTag('tr');
+			$tr_tag->class = $this->getRowClass($row, $count);
+
+			if ($has_message)
+				$tr_tag->class = $tr_tag->class.' swat-error';
+				
+			$tr_tag->class =
+				$tr_tag->class.' swat-table-view-row-column';
+
+			foreach ($this->row_columns as $column) {
+				if ($column->visible && $column->hasVisibleRenderer($row)) {
+					$tr_tag->open();
+					$column->display($row);
+					$tr_tag->close();
+				}
+			}
 
 			$this->displayRowMessages($row);
 
