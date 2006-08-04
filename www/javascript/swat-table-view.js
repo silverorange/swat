@@ -12,8 +12,6 @@ function SwatTableView(id)
 SwatTableView.prototype.highlightRow = function(node, highlight)
 {
 	if (node.nodeName == 'TR') {
-		var class_names = node.className.split(' ');
-
 		if (node.className.match(/odd/)) {
 			if (highlight) {
 				node.className = node.className.replace(/ *highlight-odd/, '');
