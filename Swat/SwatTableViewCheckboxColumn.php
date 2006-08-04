@@ -1,9 +1,9 @@
 <?php
 
-require_once('Swat/SwatCheckboxCellRenderer.php');
-require_once('Swat/SwatTableViewColumn.php');
-require_once('Swat/SwatTableViewCheckAllRow.php');
-require_once('Swat/SwatHtmlTag.php');
+require_once 'Swat/SwatCheckboxCellRenderer.php';
+require_once 'Swat/SwatTableViewColumn.php';
+require_once 'Swat/SwatTableViewCheckAllRow.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A checkbox column.
