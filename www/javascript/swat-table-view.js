@@ -16,17 +16,19 @@ SwatTableView.prototype.highlightRow = function(node, highlight)
 
 		if (node.className.match(/odd/)) {
 			if (highlight) {
-				node.className.replace(/ *odd/, '');
+				node.className = node.className.replace(/ *highlight-odd/, '');
+				node.className = node.className.replace(/ *odd/, '');
 				node.className += ' highlight-odd';
 			} else {
-				node.className.replace(/ *highlight-odd/, '');
+				node.className = node.className.replace(/ *highlight-odd/, '');
+				node.className = node.className.replace(/ *odd/, '');
 				node.className += ' odd';
 			}
 		} else {
 			if (highlight)
 				node.className += ' highlight';
 			else
-				node.className.replace(/ *highlight/, '');
+				node.className = node.className.replace(/ *highlight/, '');
 		}
 	} else if (node.parentNode) {
 		this.highlightRow(node.parentNode, highlight);
