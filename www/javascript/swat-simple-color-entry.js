@@ -19,7 +19,7 @@ function SwatSimpleColorEntry(id, colors)
 
 	this.palette_div = document.getElementById(this.id + '_palette');
 	this.swatch_span = document.getElementById(this.id + '_swatch');
-	this.input_tag = document.getElementById(this.id);
+	this.input_tag = document.getElementById(this.id + '_value');
 
 	// try to make a square palette
 	this.columns = Math.ceil(Math.sqrt(this.colors.length));
