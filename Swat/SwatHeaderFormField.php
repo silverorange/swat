@@ -13,20 +13,6 @@ require_once 'Swat/SwatFormField.php';
  */
 class SwatHeaderFormField extends SwatFormField
 {
-	// {{{ public function display()
-
-	public function display()
-	{
-		$div_tag = new SwatHtmlTag('div');
-		$div_tag->id = $this->id;
-		$div_tag->class = $this->getCSSClassString();
-
-		$div_tag->open();
-		parent::display();
-		$div_tag->close();
-	}
-
-	// }}}
 	// {{{ protected function getCSSClassNames()
 
 	/**
