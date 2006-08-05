@@ -3,27 +3,29 @@
  *
  * @param id string Id of the matching {@link SwatCheckboxList} object.
  */
-function SwatCheckboxList(id) {
+function SwatCheckboxList(id)
+{
 	var self = this;
 	this.check_list = document.getElementsByName(id + '[]');
-	this.check_all = null; //a reference to a checkall widget (if it exists - set by the SwatCheckAll widget)
+	this.check_all = null; //a reference to a checkall widget
 
 	var is_ie = (document.addEventListener) ? false : true;
 
 	for (i = 0; i < this.check_list.length; i++) {
 		if (is_ie)
-			this.check_list[i].attachEvent("onclick", eventHandler);
+			this.check_list[i].attachEvent('onclick', eventHandler);
 		else 
-			this.check_list[i].addEventListener("change", eventHandler, false);
+			this.check_list[i].addEventListener('change', eventHandler, false);
 	}
 
-
-	function eventHandler(event) {
+	function eventHandler(event)
+	{
 		self.checkAllInit();
 	}
 }
 
-SwatCheckboxList.prototype.checkAllInit = function () {
+SwatCheckboxList.prototype.checkAllInit = function ()
+{
 	if (this.check_all == null)
 		return;
 
@@ -37,7 +39,8 @@ SwatCheckboxList.prototype.checkAllInit = function () {
 	this.check_all.setState(count == this.check_list.length);
 }
 
-SwatCheckboxList.prototype.checkAll = function(checked) {
+SwatCheckboxList.prototype.checkAll = function(checked)
+{
 	for (i = 0; i < this.check_list.length; i++)
 		this.check_list[i].checked = checked;
 }
