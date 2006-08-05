@@ -207,7 +207,7 @@ class SwatPagination extends SwatControl
 			if ($this->display_parts & self::NEXT)
 				$this->displayNext();
 
-			$tag_div->close();
+			$div_tag->close();
 		}
 	}
 
