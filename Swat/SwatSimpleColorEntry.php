@@ -86,9 +86,14 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
+		$container_div_tag = new SwatHtmlTag('div');
+		$container_div_tag->id = $this->id;
+		$container_div_tag->class = $this->getCSSClassString();
+		$container_div_tag->open();
+
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
-		$input_tag->id = $this->id;
+		$input_tag->id = $this->id.'_value';
 		$input_tag->name = $this->id;
 		$input_tag->value = $this->value;
 		if (strlen($this->access_key) > 0)
@@ -122,6 +127,8 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		$div_tag->class = 'swat-simple-color-palette-hidden';
 		$div_tag->setContent('&nbsp;');
 		$div_tag->display();
+
+		$container_div_tag->close();
 
 		$this->displayJavaScript();
 	}
@@ -157,7 +164,24 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private functoin displayJavaScript()
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this simple color
+	 * entry widget 
+	 *
+	 * @return array the array of CSS classes that are applied to this simple
+	 *                color entry widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-simple-color-entry');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
+	}
+
+	// }}}
+	// {{{ private function displayJavaScript()
 
 	/**
 	 * Displays simple color selector JavaScript

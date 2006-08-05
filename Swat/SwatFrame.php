@@ -69,10 +69,8 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 			return;
 
 		$outer_div = new SwatHtmlTag('div');
-		$outer_div->class = $this->getCssClasses('swat-frame');
-
-		if ($this->id !== null)
-			$outer_div->id = $this->id;
+		$outer_div->id = $this->id;
+		$outer_div->class = $this->getCSSClassString();
 
 		$inner_div = new SwatHtmlTag('div');
 		$inner_div->class = 'swat-frame-contents';
@@ -118,6 +116,21 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 		$this->displayChildren();
 		$inner_div->close();
 		$outer_div->close();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this frame 
+	 *
+	 * @return array the array of CSS classes that are applied to this frame.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-frame');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

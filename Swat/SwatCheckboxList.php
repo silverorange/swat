@@ -98,7 +98,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	}
 
 	// }}}
-	// {{{ getHtmlHeadEntrySet()
+	// {{{ public getHtmlHeadEntrySet()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this checkbox list 
@@ -129,9 +129,11 @@ class SwatCheckboxList extends SwatControl implements SwatState
 		if (!$this->visible || $this->options === null)
 			return;
 
+		// outer div is required because the check-all widget is outside the
+		// unordered list
 		$div_tag = new SwatHtmlTag('div');
-		$div_tag->id = $this->id.'_div';
-		$div_tag->class = 'swat-checkbox-list';
+		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
 		$input_tag = new SwatHtmlTag('input');
@@ -172,9 +174,9 @@ class SwatCheckboxList extends SwatControl implements SwatState
 		$this->check_all->visible = (count($this->options) > 1);
 		$this->check_all->display();
 
-		$this->displayJavaScript();
-
 		$div_tag->close();
+
+		$this->displayJavaScript();
 	}
 
 	// }}}
@@ -249,6 +251,22 @@ class SwatCheckboxList extends SwatControl implements SwatState
 
 		echo "\n//]]>";
 		echo '</script>';
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this checkbox list
+	 *
+	 * @return array the array of CSS classes that are applied to this checkbox
+	 *                list.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-checkbox-list');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

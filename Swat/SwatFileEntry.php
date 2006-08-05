@@ -75,6 +75,7 @@ class SwatFileEntry extends SwatInputControl
 		$input_tag->type = 'file';
 		$input_tag->name = $this->id;
 		$input_tag->id = $this->id;
+		$input_tag->class = $this->getCSSClassString();
 
 		if ($this->size !== null)
 			$input_tag->size = $this->size;
@@ -280,6 +281,22 @@ class SwatFileEntry extends SwatInputControl
 	public function getFocusableHtmlId()
 	{
 		return $this->id;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this file entry widget
+	 *
+	 * @return array the array of CSS classes that are applied to this file
+	 *                entry widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-file-entry');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

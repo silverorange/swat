@@ -59,10 +59,8 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 			return;
 
 		$fieldset_tag = new SwatHtmlTag('fieldset');
-		$fieldset_tag->class = $this->getCssClasses('swat-fieldset');
-		if ($this->id !== null)
-			$fieldset_tag->id = $this->id;
-
+		$fieldset_tag->id = $this->id;
+		$fieldset_tag->class = $this->getCSSClassString();
 		$fieldset_tag->open();
 
 		if ($this->title !== null) {
@@ -76,7 +74,23 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 		}
 
 		$this->displayChildren();
+
 		$fieldset_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this fieldset 
+	 *
+	 * @return array the array of CSS classes that are applied to this fieldset.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-fieldset');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

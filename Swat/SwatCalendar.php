@@ -70,6 +70,11 @@ class SwatCalendar extends SwatControl
 		if (!$this->visible)
 			return;
 
+		$container_div_tag = new SwatHtmlTag('div');
+		$container_div_tag->id = $this->id;
+		$container_div_tag->class = $this->getCSSClassString();
+		$container_div_tag->open();
+
 		$anchor_tag = new SwatHtmlTag('a');
 		$anchor_tag->href = "javascript:{$this->id}_obj.toggle();";
 		$anchor_tag->title = Swat::_('toggle calendar');
@@ -92,7 +97,25 @@ class SwatCalendar extends SwatControl
 		$div_tag->setContent('&nbsp;');
 		$div_tag->display();
 
+		$container_div_tag->close();
+
 		$this->displayJavaScript();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this calendar widget 
+	 *
+	 * @return array the array of CSS classes that are applied to this calendar
+	 *                widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-calendar');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

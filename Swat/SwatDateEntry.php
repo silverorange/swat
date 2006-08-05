@@ -249,7 +249,12 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		$this->createEmbeddedWidgets();
 
-		echo '<span class="swat-date-span">';
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
+		$div_tag->open();
+
+		echo '<span class="swat-date-entry-span">';
 
 		/*
 		 * NOTE: Using php date functions here because the Date class does not
@@ -299,6 +304,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		if ($this->display_parts & self::CALENDAR) {
 			$this->calendar->display();
 		}
+
+		$div_tag->close();
 	}
 
 	// }}}
@@ -455,6 +462,22 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			$set->addEntrySet($this->calendar->getHtmlHeadEntrySet());
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this date entry widget 
+	 *
+	 * @return array the array of CSS classes that are applied to this date
+	 *                entry widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-date-entry');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

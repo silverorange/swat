@@ -52,15 +52,16 @@ class SwatCheckAll extends SwatControl
 			return;
 
 		$div_tag = new SwatHtmlTag('div');
-		$div_tag->class = 'swat-check-all';
+		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
-		$input_tag->id = $this->id;
+		$input_tag->id = $this->id.'_value';
 
 		$label_tag = new SwatHtmlTag('label');
-		$label_tag->for = $this->id;
+		$label_tag->for = $this->id.'_value';
 		$label_tag->setContent($this->title);
 
 		$label_tag->open();
@@ -71,6 +72,22 @@ class SwatCheckAll extends SwatControl
 		$div_tag->close();
 
 		$this->displayJavaScript();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this check-all widget 
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *               check-all widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-check-all');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

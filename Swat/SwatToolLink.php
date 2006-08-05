@@ -37,18 +37,6 @@ class SwatToolLink extends SwatControl
 	public $title = '';
 
 	/**
-	 * The custom CSS class of this tool link
-	 *
-	 * This optional class is added on top of the default 'swat-tool-link'
-	 * class.
-	 *
-	 * @var string
-	 *
-	 * @see SwatToolLink::setFromStock()
-	 */
-	public $class = null;
-
-	/**
 	 * A value or array of values to substitute into the link of this cell
 	 *
 	 * The value property may be specified either as an array of values or as
@@ -82,6 +70,16 @@ class SwatToolLink extends SwatControl
 	 * @var string
 	 */
 	public $access_key = null;
+
+	// }}}
+	// {{{ protected properties
+
+	/**
+	 * A CSS class set by the stock_id of this tool link 
+	 *
+	 * @var string
+	 */
+	protected $stock_class = null;
 
 	// }}}
 	// {{{ public function __construct()
@@ -131,6 +129,8 @@ class SwatToolLink extends SwatControl
 
 		if ($this->isSensitive()) {
 			$anchor_tag = new SwatHtmlTag('a');
+			$anchor_tag->id = $this->id;
+			$anchor_tag->class = $this->getCSSClassString();
 
 			if ($this->value === null)
 				$anchor_tag->href = $this->link;
@@ -139,11 +139,6 @@ class SwatToolLink extends SwatControl
 			else
 				$anchor_tag->href = sprintf($this->link, $this->value);
 
-			if ($this->class === null)
-				$anchor_tag->class = 'swat-tool-link';
-			else 
-				$anchor_tag->class = 'swat-tool-link '.$this->class;
-
 			if (strlen($this->access_key) > 0)
 				$anchor_tag->accesskey = $this->access_key;
 
@@ -151,13 +146,8 @@ class SwatToolLink extends SwatControl
 			$anchor_tag->display();
 		} else {
 			$span_tag = new SwatHtmlTag('span');
-			
-			if ($this->class === null)
-				$span_tag->class = 'swat-tool-link swat-tool-link-insensitive';
-			else 
-				$span_tag->class =
-					'swat-tool-link swat-tool-link-insensitive '.$this->class;
-
+			$span_tag->id = $this->id;
+			$span_tag->class = $this->getCSSClassString();
 			$span_tag->setContent($this->title);
 			$span_tag->display();
 		}
@@ -241,7 +231,31 @@ class SwatToolLink extends SwatControl
 		if ($overwrite_properties || ($this->title === null))
 			$this->title = $title;
 
-		$this->class = $class;
+		$this->stock_class = $class;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this tool link 
+	 *
+	 * @return array the array of CSS classes that are applied to this tool
+	 *                link.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-tool-link');
+
+		if (!$this->isSensitive())
+			$classes[] = 'swat-tool-link-insensitive';
+
+		if ($this->stock_class !== null)
+			$classes[] = $this->stock_class;
+
+		$classes = array_merge($classes, $this->classes);
+
+		return $classes;
 	}
 
 	// }}}

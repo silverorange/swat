@@ -75,8 +75,8 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 			return;
 
 		$div_tag = new SwatHtmlTag('div');
-		$div_tag->id = $this->id.'_div';
-		$div_tag->class = 'swat-checkbox-entry-list';
+		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
 		$input_tag = new SwatHtmlTag('input');
@@ -135,9 +135,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
 		echo '</table>';
 
-		$this->displayJavaScript();
-
 		$div_tag->close();
+
+		$this->displayJavaScript();
 	}
 
 	// }}}
@@ -200,6 +200,23 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
 		echo "\n//]]>";
 		echo '</script>';
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this checkbox entry
+	 * list
+	 *
+	 * @return array the array of CSS classes that are applied to this checkbox
+	 *                entry list.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-checkbox-entry-list');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

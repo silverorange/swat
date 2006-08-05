@@ -143,7 +143,11 @@ class SwatActions extends SwatControl implements SwatUIParent
 		else
 			$this->selected = null;
 
-		echo '<div class="swat-actions">';
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
+		$div_tag->open();
+
 		echo '<div class="swat-actions-controls">';
 
 		$label = new SwatHtmlTag('label');
@@ -175,7 +179,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 		echo '<div class="swat-actions-note">';
 		echo Swat::_('Actions apply to checked items.');
 		echo '</div>';
-		echo '</div>';
+
+		$div_tag->close();
 
 		$this->displayJavaScript();
 	}
@@ -343,6 +348,22 @@ class SwatActions extends SwatControl implements SwatUIParent
 			$this->id, implode(', ', $values), $selected_value);
 
 		echo '</script>';
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this actions list 
+	 *
+	 * @return array the array of CSS classes that are applied to this actions 
+	 *                list.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-actions');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

@@ -41,7 +41,8 @@ class SwatToolbar extends SwatDisplayableContainer
 			return;
 
 		$toolbar_ul = new SwatHtmlTag('ul');
-		$toolbar_ul->class = $this->getCssClasses('swat-toolbar');
+		$toolbar_ul->id = $this->id;
+		$toolbar_ul->class = $this->getCSSClassString();
 
 		$toolbar_ul->open();
 		$this->displayChildren();
@@ -94,6 +95,21 @@ class SwatToolbar extends SwatDisplayableContainer
 			$child->display();
 			echo '</li>';
 		}
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this tool bar 
+	 *
+	 * @return array the array of CSS classes that are applied to this tool bar.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-toolbar');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

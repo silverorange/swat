@@ -17,13 +17,29 @@ class SwatHeaderFormField extends SwatFormField
 
 	public function display()
 	{
-		$wrapper_tag = new SwatHtmlTag('div');
-		$wrapper_tag->class =
-			$this->getCssClasses('swat-header-form-field');
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
 
-		$wrapper_tag->open();
+		$div_tag->open();
 		parent::display();
-		$wrapper_tag->close();
+		$div_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this header form field
+	 *
+	 * @return array the array of CSS classes that are applied to this header
+	 *                form field.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-header-form-field');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

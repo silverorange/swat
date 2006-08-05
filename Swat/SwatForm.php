@@ -181,12 +181,10 @@ class SwatForm extends SwatDisplayableContainer
 		$form_tag->method = $this->method;
 		$form_tag->enctype = $this->encoding_type;
 		$form_tag->action = $this->action;
-		$form_tag->class = $this->getCssClasses('swat-form');
+		$form_tag->class = $this->getCSSClassString();
 
 		$form_tag->open();
-
 		$this->displayChildren();
-
 		$this->displayHiddenFields();
 		$form_tag->close();
 
@@ -431,6 +429,21 @@ class SwatForm extends SwatDisplayableContainer
 		}
 
 		echo '</div>';
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this form
+	 *
+	 * @return array the array of CSS classes that are applied to this form.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-form');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

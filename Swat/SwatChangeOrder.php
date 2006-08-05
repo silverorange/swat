@@ -82,13 +82,8 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		}
 
 		$div_tag = new SwatHtmlTag('div');
-		$div_tag->id = "{$this->id}_control";
-
-		if ($this->isSensitive())
-			$div_tag->class = 'swat-change-order';
-		else
-			$div_tag->class = 'swat-change-order swat-change-order-insensitive';
-
+		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
 		$list_div = new SwatHtmlTag('div');
@@ -115,7 +110,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
 		$hidden_tag = new SwatHtmlTag('input');
 		$hidden_tag->type = 'hidden';
-		$hidden_tag->id = $this->id;
+		$hidden_tag->id = $this->id.'_value';
 		$hidden_tag->name = $this->id;
 		$hidden_tag->value = implode(',', array_keys($this->options));
 		$hidden_tag->display();
@@ -153,6 +148,27 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	public function setState($state)
 	{
 		$this->values = $state;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this change-order
+	 * widget 
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                change-order widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-change-order');
+
+		if (!$this->isSensitive())
+			$classes[] = 'swat-change-order-insensitive';
+
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

@@ -96,8 +96,8 @@ class SwatMessageDisplay extends SwatControl
 		$ul_tag = new SwatHtmlTag('ul');
 		$li_tag = new SwatHtmlTag('li');
 
-		$ul_tag->class = 'swat-message-display';
 		$ul_tag->id = $this->id;
+		$ul_tag->class = $this->getCSSClassString();
 		$ul_tag->open();
 
 		$has_dismiss_link = false;
@@ -150,7 +150,23 @@ class SwatMessageDisplay extends SwatControl
 	}
 
 	// }}}
-	// {{{ public function displayJavaScript()
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this message display
+	 *
+	 * @return array the array of CSS classes that are applied to this message
+	 *                display.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-message-display');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
+	}
+
+	// }}}
+	// {{{ private function displayJavaScript()
 
 	/**
 	 * Displays the JavaScript for hiding messages

@@ -9,6 +9,9 @@ require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
 /**
  * A base class for Swat user-interface elements
  *
+ * TODO: describe our conventions on how CSS classes and XHTML ids are
+ * displayed.
+ *
  * @package   Swat
  * @copyright 2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
@@ -23,6 +26,17 @@ abstract class SwatUIObject extends SwatObject
 	 * @var SwatUIObject
 	 */
 	public $parent = null;
+
+	/**
+	 * A user-specified array of CSS classes that are applied to this
+	 * user-interface object
+	 *
+	 * See the class-level documentation for SwatUIObject for details on how
+	 * CSS classes and XHTML ids are displayed on user-interface objects.
+	 *
+	 * @var array
+	 */
+	public $classes = array();
 
 	// }}}
 	// {{{ protected properties
@@ -178,6 +192,43 @@ abstract class SwatUIObject extends SwatObject
 
 		// set parent back again
 		$this->parent = $parent;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this user-interface
+	 * object
+	 *
+	 * User-interface objects aggregate the list of user-specified classes and
+	 * may add static CSS classes of their own in this method.
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                user-interface object.
+	 *
+	 * @see SwatUIObject::getCSSClassString()
+	 */
+	protected function getCSSClassNames()
+	{
+		return $this->classes;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassString()
+
+	/**
+	 * Gets the string representation of this user-interface object's list of
+	 * CSS classes
+	 *
+	 * @return string the string representation of the CSS classes that are
+	 *                 applied to this user-interface object.
+	 *
+	 * @see SwatUIObject::getCSSClassNames()
+	 */
+	protected function getCSSClassString()
+	{
+		return implode(' ', $this->getCSSClassNames());
 	}
 
 	// }}}

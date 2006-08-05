@@ -44,16 +44,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	 */
 	public $blank_title = '';
 
-	/**
-	 * Width
-	 *
-	 * The visible width of the select tag. Can be defined in percentage, ems,
-	 * or pixels.
-	 *
-	 * @var string
-	 */
-	public $width = null;
-
 	// }}}
 	// {{{ public function display()
 	
@@ -81,10 +71,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 			$select_tag = new SwatHtmlTag('select');
 			$select_tag->name = $this->id;
 			$select_tag->id = $this->id;
-			$select_tag->class = 'swat-flydown';
-
-			if ($this->width !== null)
-				$select_tag->style = 'width: '.$this->width.';';
+			$select_tag->class = $this->getCSSClassString();
 
 			$option_tag = new SwatHtmlTag('option');
 
@@ -249,6 +236,21 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 		$hidden_tag->display();
 
 		echo $title;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this flydown
+	 *
+	 * @return array the array of CSS classes that are applied to this flydown.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-flydown');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

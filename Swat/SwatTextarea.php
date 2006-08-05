@@ -69,7 +69,7 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		$textarea_tag = new SwatHtmlTag('textarea');
 		$textarea_tag->name = $this->id;
 		$textarea_tag->id = $this->id;
-		$textarea_tag->class = 'swat-textarea';
+		$textarea_tag->class = $this->getCSSClassString();
 		// NOTE: The attributes rows and cols are required in
 		//       a textarea for XHTML strict.
 		$textarea_tag->rows = $this->rows;
@@ -157,6 +157,21 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	public function getFocusableHtmlId()
 	{
 		return $this->id;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this textarea 
+	 *
+	 * @return array the array of CSS classes that are applied to this textarea.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-textarea');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}
