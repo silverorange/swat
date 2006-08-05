@@ -36,7 +36,7 @@ class SwatYesNoFlydown extends SwatFlydown
 			self::YES => Swat::_('Yes')));
 	}
 
-	// }}
+	// }}}
 	// {{{ public function getValuesAsBoolean()
 
 	/**
