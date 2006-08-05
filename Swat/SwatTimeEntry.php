@@ -352,7 +352,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ public function createHourFlydown()
+	// {{{ private function createHourFlydown()
 
 	/**
 	 * Creates the hour flydown for this time entry
@@ -367,7 +367,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ public function createMinuteFlydown()
+	// {{{ private function createMinuteFlydown()
 
 	/**
 	 * Creates the minute flydown for this time entry
@@ -399,7 +399,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ public function createAmPmFlydown()
+	// {{{ private function createAmPmFlydown()
 
 	/**
 	 * Creates the am/pm flydown for this time entry
@@ -412,7 +412,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ public function validateRanges()
+	// {{{ private function validateRanges()
 
 	/**
 	 * Makes sure the date the user entered is within the valid range
