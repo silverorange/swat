@@ -54,7 +54,8 @@ class SwatTextareaEditor extends SwatTextarea
 	{
 		parent::__construct($id);
 
-		$this->addJavaScript('packages/swat/javascript/swat-textarea-editor.js');
+		$this->addJavaScript(
+			'packages/swat/javascript/swat-textarea-editor.js');
 	}
 
 	// }}}
@@ -67,6 +68,7 @@ class SwatTextareaEditor extends SwatTextarea
 		$this->value = str_replace("\n", "", $this->value);
 	}
 
+	// }}}
 	// {{{ public function display()
 
 	public function display()
