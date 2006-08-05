@@ -190,10 +190,10 @@ class SwatPagination extends SwatControl
 		$this->calculatePages();
 
 		if ($this->total_pages > 1) {
-
-			$div = new SwatHtmlTag('div');
-			$div->class = 'swat-pagination';
-			$div->open();
+			$div_tag = new SwatHtmlTag('div');
+			$div_tag->id = $this->id;
+			$div_tag->class = $this->getCSSClassString();
+			$div_tag->open();
 
 			if ($this->display_parts & self::POSITION)
 				$this->displayPosition();
@@ -207,8 +207,7 @@ class SwatPagination extends SwatControl
 			if ($this->display_parts & self::NEXT)
 				$this->displayNext();
 
-			$div->close();
-
+			$tag_div->close();
 		}
 	}
 
@@ -381,6 +380,23 @@ class SwatPagination extends SwatControl
 	protected function getLink()
 	{
 		return ($this->link === null) ? '%s' : $this->link;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this pagination
+	 * widget 
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                pagination widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-pagination');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

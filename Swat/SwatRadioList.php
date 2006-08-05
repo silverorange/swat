@@ -65,12 +65,10 @@ class SwatRadioList extends SwatFlydown implements SwatState
 				array(new SwatOption(null, $this->blank_title)),
 				$options);
 
-		$div_tag = new SwatHtmlTag('div');
-		$div_tag->id = $this->id.'_div';
-		$div_tag->class = 'swat-radio-list';
-		$div_tag->open();
-
-		echo '<ul>';
+		$ul_tag = new SwatHtmlTag('ul');
+		$ul_tag->id = $this->id;
+		$ul_tag->class = $this->getCSSClassString();
+		$ul_tag->open();
 
 		foreach ($options as $option) {
 			echo '<li>';
@@ -84,9 +82,8 @@ class SwatRadioList extends SwatFlydown implements SwatState
 
 			echo '</li>';
 		}
-		
-		echo '</ul>';
-		$div_tag->close();
+
+		$ul_tag->close();
 	}
 
 	// }}}
@@ -133,6 +130,22 @@ class SwatRadioList extends SwatFlydown implements SwatState
 		$this->label_tag->for = $this->id.'_'.(string)$option->value;
 		$this->label_tag->setContent($option->title, $option->content_type);
 		$this->label_tag->display();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this radio list
+	 *
+	 * @return array the array of CSS classes that are applied to this radio
+	 *                list.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-radio-list');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

@@ -657,9 +657,9 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		}
 
 		$table_tag = new SwatHtmlTag('table');
-		$table_tag->class = 'swat-table-view';
-		$table_tag->cellspacing = '0';
 		$table_tag->id = $this->id;
+		$table_tag->class = $this->getCSSClassString();
+		$table_tag->cellspacing = '0';
 
 		$table_tag->open();
 		$this->displayHeader();
@@ -993,6 +993,22 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		if (strlen($footer_content))
 			echo '<tfoot>', $footer_content, '</tfoot>';
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this table view
+	 *
+	 * @return array the array of CSS classes that are applied to this table
+	 *                view.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-table-view');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

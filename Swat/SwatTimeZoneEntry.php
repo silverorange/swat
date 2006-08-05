@@ -84,6 +84,11 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
+		$div_tag->open();
+
 		$areas = new SwatFlydown();
 		$areas->addOptionsByArray($this->areas);
 		$areas->show_blank = false;
@@ -101,6 +106,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		$regions->width = '15em';
 		$regions->value = $this->getRegion($this->value);
 		$regions->display();
+
+		$div_tag->close();
 	}
 
 	// }}}
@@ -165,6 +172,23 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	public function setState($state)
 	{
 		$this->value = $state;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this time zone entry
+	 * widget 
+	 *
+	 * @return array the array of CSS classes that are applied to this time
+	 *                zone entry widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-time-zone-entry');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

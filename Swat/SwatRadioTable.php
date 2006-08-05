@@ -43,9 +43,8 @@ class SwatRadioTable extends SwatRadioList
 				$options);
 
 		$table_tag = new SwatHtmlTag('table');
-		$table_tag->id = $this->id.'_table';
-		$table_tag->class = 'swat-radio-table';
-		
+		$table_tag->id = $this->id;
+		$table_tag->class = $this->getCSSClassString();
 		$table_tag->open();
 
 		foreach ($options as $option) {	
@@ -65,6 +64,22 @@ class SwatRadioTable extends SwatRadioList
 		}
 
 		$table_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this radio table
+	 *
+	 * @return array the array of CSS classes that are applied to this radio
+	 *                table.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-radio-table');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

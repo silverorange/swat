@@ -62,8 +62,8 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			return;
 
 		$div_tag = new SwatHtmlTag('div');
-		$div_tag->id = $this->id.'_div';
-		$div_tag->class = 'swat-expandable-checkbox-tree';
+		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
 
 		$this->label_tag = new SwatHtmlTag('label');
 		$this->label_tag->class = 'swat-control';
@@ -79,9 +79,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		else
 			$num_nodes = 0;
 
-		$this->displayJavaScript();
-
 		$div_tag->close();
+
+		$this->displayJavaScript();
 	}
 
 	// }}}
@@ -219,6 +219,23 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		
 		echo "\n//]]>";
 		echo '</script>';
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this expandable
+	 * checkbox tree 
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                expandable checkbox tree.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-expandable-checkbox-tree');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

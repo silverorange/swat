@@ -56,8 +56,9 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 			return;
 
 		$div_tag = new SwatHtmlTag('div');
-		$div_tag->id = $this->id.'_div';
-		$div_tag->class = 'swat-checkbox-tree';
+		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
+		$div_tag->open();
 
 		$this->label_tag = new SwatHtmlTag('label');
 		$this->label_tag->class = 'swat-control';
@@ -65,8 +66,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		$this->input_tag = new SwatHtmlTag('input');
 		$this->input_tag->type = 'checkbox';
 		$this->input_tag->name = $this->id.'[]';
-
-		$div_tag->open();
 
 		if ($this->tree !== null)
 			$num_nodes = $this->displayNode($this->tree);
@@ -78,9 +77,9 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		$this->check_all->visible = ($num_nodes > 1);
 		$this->check_all->display();
 
-		$this->displayJavaScript();
-
 		$div_tag->close();
+
+		$this->displayJavaScript();
 	}
 
 	// }}}
@@ -124,6 +123,22 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	public function setState($state)
 	{
 		$this->value = $state;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this checkbox tree 
+	 *
+	 * @return array the array of CSS classes that are applied to this checkbox
+	 *                tree.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-checkbox-tree');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

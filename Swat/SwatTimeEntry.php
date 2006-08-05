@@ -169,7 +169,10 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
-		echo '<span class="swat-time-span">';
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
+		$div_tag->open();
 
 		$this->createFlydowns();
 
@@ -191,7 +194,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		if ($this->display_parts & self::HOUR)
 			$this->am_pm_flydown->display();
 
-		echo '</span>';
+		$div_tag->close();
 
 		$this->displayJavaScript();
 	}
@@ -324,6 +327,22 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	public function setState($state)
 	{
 		$this->value = new SwatDate($state);
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this time entry widget 
+	 *
+	 * @return array the array of CSS classes that are applied to this time
+	 *                entry widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-time-entry');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

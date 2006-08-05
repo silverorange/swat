@@ -86,8 +86,8 @@ class SwatEntry extends SwatInputControl implements SwatState
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = $this->html_input_type;
 		$input_tag->name = $this->id;
-		$input_tag->class = 'swat-entry';
 		$input_tag->id = $this->id;
+		$input_tag->class = $this->getCSSClassString();
 		$input_tag->onfocus = 'this.select();';
 		if (!$this->isSensitive())
 			$input_tag->disabled = 'disabled';
@@ -219,6 +219,22 @@ class SwatEntry extends SwatInputControl implements SwatState
 	public function getFocusableHtmlId()
 	{
 		return $this->id;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this entry widget
+	 *
+	 * @return array the array of CSS classes that are applied to this entry
+	 *                widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-entry');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

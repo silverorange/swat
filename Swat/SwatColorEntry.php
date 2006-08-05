@@ -68,9 +68,14 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
+		$div_tag->open();
+
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'text';
-		$input_tag->id = $this->id;
+		$input_tag->id = $this->id.'_value';
 		$input_tag->name = $this->id;
 		$input_tag->value = $this->value;
 		$input_tag->class = 'swat-color-entry-input';
@@ -94,6 +99,9 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		$link_tag->close();
 
 		$this->displayPalette();
+
+		$div_tag->close();
+
 		$this->displayJavaScript();
 	}
 
@@ -112,12 +120,12 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 
 		$data = &$this->getForm->getFormData();
 
-		if (!isset($data[$this->id]))
+		if (!isset($data[$this->id.'_value']))
 			return;
-		elseif (strlen($data[$this->id]) == 0)
+		elseif (strlen($data[$this->id.'_value']) == 0)
 			$this->value = null;
 		else
-			$this->value = $data[$this->id];
+			$this->value = $data[$this->id.'_value'];
 
 		$len = ($this->value === null) ? 0 : strlen($this->value);
 
@@ -160,6 +168,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 	 */
 	public function setState($state)
 	{
+		// TODO: wtf
 		$this->value = new SwatDate($state);
 	}
 
@@ -179,6 +188,23 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		echo "var {$this->id}_obj = new SwatColorEntry('{$this->id}');";
 		echo "\n//]]>";
 		echo '</script>';
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this color entry
+	 * widget 
+	 *
+	 * @return array the array of CSS classes that are applied to this color
+	 *                entry widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-color-entry');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

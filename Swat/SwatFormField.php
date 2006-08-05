@@ -139,10 +139,8 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 		$messages = &$this->getMessages();
 		$container_tag = new SwatHtmlTag($this->container_tag);
-		$container_tag->class = $this->getCssClasses('swat-form-field');
-
-		if ($this->id !== null)
-			$container_tag->id = $this->id;
+		$container_tag->id = $this->id;
+		$container_tag->class = $this->getCSSClassString();
 
 		if (count($messages) > 0)
 			$container_tag->class.= ' swat-form-field-with-messages';
@@ -223,6 +221,22 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		}
 
 		$container_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this form field
+	 *
+	 * @return array the array of CSS classes that are applied to this form
+	 *                field.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-form-field');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

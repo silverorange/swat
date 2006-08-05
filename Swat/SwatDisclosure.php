@@ -62,16 +62,11 @@ class SwatDisclosure extends SwatDisplayableContainer
 
 		$control_div = new SwatHtmlTag('div');
 		$control_div->id = $this->id;
-		$control_div->class = $this->getCssClasses('swat-disclosure-control');
-
-		if ($this->open)
-			$control_div->class.= ' swat-disclosure-control-opened';
-		else
-			$control_div->class.= ' swat-disclosure-control-closed';
+		$control_div->class = $this->getCSSClassString();
 
 		$anchor = new SwatHtmlTag('a');
 		$anchor->class = 'swat-disclosure-anchor';
-		$anchor->href = sprintf("javascript:%s_obj.toggle();", $this->id);
+		$anchor->href = sprintf('javascript:%s_obj.toggle();', $this->id);
 		$anchor->setContent($this->title);
 
 		$input = new SwatHtmlTag('input');
@@ -110,6 +105,7 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$container_div->close();
 
 		$this->displayJavaScript();
+
 		$control_div->close();
 	}
 
@@ -126,6 +122,28 @@ class SwatDisclosure extends SwatDisplayableContainer
 		echo "var {$this->id}_obj = new SwatDisclosure('{$this->id}');\n";
 		echo "//]]>";
 		echo '</script>';
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this disclosure
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                disclosure.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-disclosure');
+
+		if ($this->open)
+			$classes[] = 'swat-disclosure-control-opened';
+		else
+			$classes[] = 'swat-disclosure-control-closed';
+
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

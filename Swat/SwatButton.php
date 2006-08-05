@@ -28,18 +28,6 @@ class SwatButton extends SwatControl
 	public $title = null;
 
 	/**
-	 * The custom CSS class of this tool link
-	 *
-	 * This optional class is added on top of the default 'swat-button'
-	 * class.
-	 *
-	 * @var string
-	 *
-	 * @see SwatButton::setFromStock()
-	 */
-	public $class = null;
-
-	/**
 	 * The stock id of this button
 	 *
 	 * Specifying a stock id initializes this button with a set of stock values.
@@ -58,6 +46,16 @@ class SwatButton extends SwatControl
 	 * @var string
 	 */
 	public $access_key = null;
+
+	// }}}
+	// {{{ protected properties
+
+	/**
+	 * A CSS class set by the stock_id of this button
+	 *
+	 * @var string
+	 */
+	protected $stock_class = null;
 
 	// }}}
 	// {{{ private properties
@@ -95,7 +93,7 @@ class SwatButton extends SwatControl
 	}
 
 	// }}}
-	// {{{ pblic function display()
+	// {{{ public function display()
 
 	/**
 	 * Displays this button
@@ -107,23 +105,12 @@ class SwatButton extends SwatControl
 		if (!$this->visible)
 			return;
 
-		$form = $this->getFirstAncestor('SwatForm');
-		$primary = ($form !== null &&
-			$form->getFirstDescendant('SwatButton') === $this);
-
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'submit';
 		$input_tag->name = $this->id;
 		$input_tag->id = $this->id;
 		$input_tag->value = $this->title;
-
-		if ($primary)
-			$input_tag->class = 'swat-button swat-primary';
-		else
-			$input_tag->class = 'swat-button';
-
-		if ($this->class !== null)
-			$input_tag->class.= ' '.$this->class;
+		$input_tag->class = $this->getCSSClassString();
 
 		if (strlen($this->access_key) > 0)
 			$input_tag->accesskey = $this->access_key;
@@ -234,8 +221,34 @@ class SwatButton extends SwatControl
 		if ($overwrite_properties || ($this->title === null))
 			$this->title = $title;
 
-		if ($overwrite_properties || ($this->class === null))
-			$this->class = $class;
+		$this->stock_class = $class;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this button
+	 *
+	 * @return array the array of CSS classes that are applied to this button.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-button');
+
+		$form = $this->getFirstAncestor('SwatForm');
+		$primary = ($form !== null &&
+			$form->getFirstDescendant('SwatButton') === $this);
+
+		if ($primary)
+			$classes[] = 'swat-primary';
+
+		if ($this->stock_class !== null)
+			$classes[] = $this->stock_class;
+
+		$classes = array_merge($classes, $this->classes);
+
+		return $classes;
 	}
 
 	// }}}

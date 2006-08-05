@@ -150,7 +150,8 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 			return;
 
 		$table_tag = new SwatHtmlTag('table');
-		$table_tag->class = 'swat-details-view';
+		$table_tag->id = $this->id;
+		$table_tag->class = $this->getCSSClassString();
 
 		$table_tag->open();
 		$this->displayContent();
@@ -203,6 +204,22 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 			$set->addEntrySet($field->getHtmlHeadEntrySet());
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this details view
+	 *
+	 * @return array the array of CSS classes that are applied to this details
+	 *                view.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-details-view');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

@@ -11,33 +11,6 @@ require_once 'Swat/SwatContainer.php';
  */
 class SwatDisplayableContainer extends SwatContainer
 {
-	// {{{ public properties
-
-	/**
-	 * The custom CSS class of this container
-	 *
-	 * This optional class is added on top of the default 'swat-displayable-container'
-	 * class.
-	 *
-	 * @var string
-	 */
-	public $class = null;
-
-	// }}}
-	// {{{ protected function getCssClasses()
-
-	/**
-	 * Get CSS classes for outer XHTML element
-	 */
-	protected function getCssClasses($class)
-	{
-		if ($this->class !== null)
-			$class.= ' '.$this->class;
-
-		return $class;
-	}
-
-	// }}}
 	// {{{ public function display()
 
 	/**
@@ -48,15 +21,30 @@ class SwatDisplayableContainer extends SwatContainer
 		if (!$this->visible)
 			return;
 
-		$div = new SwatHtmlTag('div');
-		$div->class = $this->getCssClasses('swat-displayable-container');
-
-		if ($this->id !== null)
-			$div->id = $this->id;
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
 
 		$div->open();
 		$this->displayChildren();
 		$div->close();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this displayable
+	 * container 
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                displayable container.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-displayable-container');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}

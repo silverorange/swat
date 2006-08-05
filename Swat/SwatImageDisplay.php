@@ -87,6 +87,8 @@ class SwatImageDisplay extends SwatControl
 			return;
 
 		$image_tag = new SwatHtmlTag('img');
+		$image_tag->id = $this->id;
+		$image_tag->class = $this->getCSSClassString();
 
 		if (count($this->values))
 			$image_tag->src = vsprintf($this->image, $this->values);
@@ -107,6 +109,22 @@ class SwatImageDisplay extends SwatControl
 		$image_tag->alt = ($this->alt === null) ? '' : $this->alt;
 
 		$image_tag->display();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this image display 
+	 *
+	 * @return array the array of CSS classes that are applied to this image
+	 *                display.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-image-display');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}
