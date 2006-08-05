@@ -345,7 +345,7 @@ function SwatChangeOrder(id, sensitive)
 
 	// the following two lines must be split on two lines to
 	// handle a Firefox bug.
-	var hidden_value = document.getElementById(this.id);
+	var hidden_value = document.getElementById(this.id + '_value');
 	var value_array = hidden_value.value.split(',');
 	var count = 0;
 	var node = null;
@@ -713,10 +713,10 @@ SwatChangeOrder.prototype.setSensitive = function(sensitive)
 	this.sensitive = sensitive;
 
 	if (sensitive) {
-		document.getElementById(this.id + '_control').className =
+		document.getElementById(this.id).className =
 			'swat-change-order';
 	} else {
-		document.getElementById(this.id + '_control').className =
+		document.getElementById(this.id).className =
 			'swat-change-order swat-change-order-insensitive';
 	}
 }
@@ -739,7 +739,7 @@ SwatChangeOrder.prototype.updateValue = function()
 	}
 
 	// update a hidden field with current order of keys
-	document.getElementById(this.id).value = temp;
+	document.getElementById(this.id + '_value').value = temp;
 }
 
 // }}}
