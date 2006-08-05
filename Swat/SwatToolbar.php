@@ -49,21 +49,6 @@ class SwatToolbar extends SwatDisplayableContainer
 	}
 
 	// }}}
-	// {{{ protected function displayChildren()
-
-	/**
-	 * Displays the child widgets of this container
-	 */
-	protected function displayChildren()
-	{
-		foreach ($this->children as &$child) {
-			echo '<li>';
-			$child->display();
-			echo '</li>';
-		}
-	}
-
-	// }}}
 	// {{{ public function setToolLinkValues()
 
 	/**
@@ -94,6 +79,21 @@ class SwatToolbar extends SwatDisplayableContainer
 	public function getToolLinks()
 	{
 		return $this->getDescendants('SwatToolLink');
+	}
+
+	// }}}
+	// {{{ protected function displayChildren()
+
+	/**
+	 * Displays the child widgets of this container
+	 */
+	protected function displayChildren()
+	{
+		foreach ($this->children as &$child) {
+			echo '<li>';
+			$child->display();
+			echo '</li>';
+		}
 	}
 
 	// }}}
