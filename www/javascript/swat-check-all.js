@@ -9,7 +9,7 @@
 function SwatCheckAll(id)
 {
 	this.id = id;
-	this.check_all = document.getElementById(id);
+	this.check_all = document.getElementById(id + '_value');
 	this.controller = null;
 }
 
@@ -51,9 +51,9 @@ SwatCheckAll.prototype.setController = function(controller)
 	controller.checkAllInit();
 
 	if (is_ie)
-		this.check_all.attachEvent("onclick", eventHandler, false);
+		this.check_all.attachEvent('onclick', eventHandler, false);
 	else
-		this.check_all.addEventListener("change", eventHandler, false);
+		this.check_all.addEventListener('change', eventHandler, false);
 
 	function eventHandler(event)
 	{
