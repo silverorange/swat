@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatReplicator.php';
+require_once 'Swat/SwatReplicable.php';
 require_once 'Swat/SwatFormField.php';
 require_once 'Swat/SwatFieldset.php';
 
@@ -12,7 +12,7 @@ require_once 'Swat/SwatFieldset.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatReplicatorFormField extends SwatFormField implements SwatReplicator
+class SwatReplicatorFormField extends SwatFormField implements SwatReplicable
 {
 	// {{{ public properties
 
