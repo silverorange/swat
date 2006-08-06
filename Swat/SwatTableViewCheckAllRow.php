@@ -29,6 +29,16 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	private $check_all;
 
+	/**
+	 * An internal flag that is set to true when embedded widgets have been
+	 * created
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatTableViewCheckAllRow::createEmbeddedWidgets()
+	 */
+	private $widgets_created = false;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -42,7 +52,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	{
 		parent::__construct();
 		$this->column_id = $column_id;
-		$this->check_all = new SwatCheckAll();
 	}
 
 	// }}}
@@ -58,6 +67,8 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	public function getHtmlHeadEntrySet()
 	{
+		$this->createEmbeddedWidgets();
+
 		$set = parent::getHtmlHeadEntrySet();
 		$set->addEntrySet($this->check_all->getHtmlHeadEntrySet());
 		return $set;
@@ -72,6 +83,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	public function init()
 	{
 		parent::init();
+		$this->createEmbeddedWidgets();
 		$this->check_all->init();
 	}
 
@@ -84,6 +96,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	public function process()
 	{
 		parent::process();
+		$this->createEmbeddedWidgets();
 		$this->check_all->process();
 	}
 
@@ -97,6 +110,8 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	{
 		if (!$this->visible || $this->view->model->getRowCount() < 2)
 			return;
+
+		$this->createEmbeddedWidgets();
 
 		$columns = $this->view->getVisibleColumns();
 
@@ -149,6 +164,22 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		// set the controller of the check-all widget
 		return sprintf("%s_obj.setController(%s);",
 			$this->check_all->id, $this->column_id);
+	}
+
+	// }}}
+	// {{{ private function createEmbeddedWidgets()
+
+	/**
+	 * Creates internal widgets required for this check-all row
+	 */
+	private function createEmbeddedWidgets()
+	{ 
+		if (!$this->widgets_created) {
+			$this->check_all = new SwatCheckAll();
+			$this->check_all->parent = $this;
+
+			$this->widgets_created = true;
+		}
 	}
 
 	// }}}
