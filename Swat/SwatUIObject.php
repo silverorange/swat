@@ -222,13 +222,21 @@ abstract class SwatUIObject extends SwatObject
 	 * CSS classes
 	 *
 	 * @return string the string representation of the CSS classes that are
-	 *                 applied to this user-interface object.
+	 *                 applied to this user-interface object. If this object
+	 *                 has no CSS classes, null is returned rather than a blank
+	 *                 string.
 	 *
 	 * @see SwatUIObject::getCSSClassNames()
 	 */
 	protected function getCSSClassString()
 	{
-		return implode(' ', $this->getCSSClassNames());
+		$class_string = null;
+
+		$class_names = $this->getCSSClassNames();
+		if (count($class_names) > 0)
+			$class_string = implode(' ', $class_names);
+
+		return $class_string;
 	}
 
 	// }}}
