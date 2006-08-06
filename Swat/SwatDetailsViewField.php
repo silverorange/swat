@@ -38,13 +38,21 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	public $view = null;
 
 	/**
-	 * Visible
-	 *
-	 * Whether the field is displayed.
+	 * Whether or not this field is displayed
 	 *
 	 * @var boolean
 	 */
 	public $visible = true;
+
+	// }}}
+	// {{{ protected properties
+
+	/**
+	 * Whether or not this field is odd or even in its parent details view
+	 *
+	 * @var boolean
+	 */
+	protected $odd = false;
 
 	// }}}
 	// {{{ public function __construct()
@@ -91,11 +99,11 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 		if (!$this->visible)
 			return;
 
-		$tr_tag = new SwatHtmlTag('tr');
-		$tr_tag->class = 'swat-details-view-field';
+		$this->odd = $odd;
 
-		if ($odd)
-			$tr_tag->class.= ' odd';
+		$tr_tag = new SwatHtmlTag('tr');
+		$tr_tag->id = $this->id;
+		$tr_tag->class = $this->getCSSClassString();
 
 		$tr_tag->open();
 		$this->displayHeader();
@@ -187,6 +195,26 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 			$set->addEntrySet($renderer->getHtmlHeadEntrySet());
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this entry widget
+	 *
+	 * @return array the array of CSS classes that are applied to this entry
+	 *                widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-details-view-field');
+
+		if ($this->odd)
+			$classes[] = 'odd';
+
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}
