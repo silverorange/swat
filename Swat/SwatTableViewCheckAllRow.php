@@ -115,7 +115,10 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 
 		$columns = $this->view->getVisibleColumns();
 
-		echo '<tr>';
+		$tr_tag = new SwatHtmlTag('tr');
+		$tr_tag->id = $this->id;
+		$tr_tag->class = $this->getCSSClassString();
+		$tr_tag->open();
 
 		// find checkbox column position
 		$position = 0;
@@ -127,12 +130,11 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 
 		if ($position > 0) {
 			$td_before_tag = new SwatHtmlTag('td');
+			$td_before_tag->setContent('&nbsp;', 'text/xml');
 			if ($position > 1)
 				$td_before_tag->colspan = $position;
 
-			$td_before_tag->open();
-			echo '&nbsp;';
-			$td_before_tag->close();
+			$td_before_tag->display();
 		}
 
 		$td_tag = new SwatHtmlTag('td');
@@ -143,7 +145,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		$this->check_all->display();
 		$td_tag->close();
 
-		echo '</tr>';
+		$tr_tag->close();
 	}
 
 	// }}}
