@@ -17,6 +17,10 @@
  * implied warranty.
  */
 
+.swat-calendar {
+	display: inline;
+}
+
 .swat-calendar-div-hide {
 	font-family: Arial, Helvetica;
 	font-size: x-small;
