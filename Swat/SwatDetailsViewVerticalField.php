@@ -29,11 +29,11 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
 		if (!$this->visible)
 			return;
 
-		$tr_tag = new SwatHtmlTag('tr');
-		$tr_tag->class = 'swat-details-view-vertical-field';
+		$this->odd = $odd;
 
-		if ($odd)
-			$tr_tag->class.= ' odd';
+		$tr_tag = new SwatHtmlTag('tr');
+		$tr_tag->id = $this->id;
+		$tr_tag->class = $this->getCSSClassString();
 
 		$td_tag = new SwatHtmlTag('td');
 		$td_tag->colspan = 2;
@@ -84,6 +84,26 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
 		}
 
 		$div_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this entry widget
+	 *
+	 * @return array the array of CSS classes that are applied to this entry
+	 *                widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-details-view-vertical-field');
+
+		if ($this->odd)
+			$classes[] = 'odd';
+
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}
