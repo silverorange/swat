@@ -88,7 +88,7 @@ ul.swat-note {
 
 .swat-checkbox-list ul,
 .swat-checkbox-tree ul,
-.swat-radio-list ul {
+ul.swat-radio-list {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
