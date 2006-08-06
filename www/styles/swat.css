@@ -164,17 +164,13 @@ fieldset.swat-form-field legend {
 }
 
 
-/* Swat Date Entry */
+/* Swat Date Entry and SwatTimeEntry*/
 
-span.swat-date-span {
+.swat-date-entry,
+.swat-time-entry {
 	white-space: nowrap;
 }
 
-/* Swat Time Entry */
-
-span.swat-time-span {
-	white-space: nowrap;
-}
 
 /* Swat Actions */
 
