@@ -117,8 +117,8 @@ class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicable
 	 * @param string $widget_id the unique id of the original widget
 	 * @param string $replicator_id the replicator id of the replicated widget
 	 *
-	 * @returns SwatWidget a reference to the replicated widget, or null if the
-	 *                      widget is not found.
+	 * @return SwatWidget a reference to the replicated widget, or null if the
+	 *                     widget is not found.
 	 */
 	public function getWidget($widget_id, $replicator_id)
 	{
