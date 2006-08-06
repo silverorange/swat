@@ -5,8 +5,10 @@ require_once 'Swat/SwatContainer.php';
 require_once 'Swat/SwatReplicable.php';
 
 /**
- * A magic fieldset container that replicates itself and its children.
- * It can dynamically create widgets based on an array of replicators.
+ * A fieldset container that replicates itself and its children
+ *
+ * This widget can dynamically create widgets based on an array of
+ * replicator identifiers.
  *
  * @package   Swat
  * @copyright 2005-2006 silverorange
