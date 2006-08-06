@@ -488,24 +488,24 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	private function createEmbeddedWidgets()
 	{ 
-		if ($this->widgets_created) return;
+		if (!$this->widgets_created) {
+			if ($this->display_parts & self::YEAR)
+				$this->createYearFlydown();
 
-		$this->widgets_created = true;
+			if ($this->display_parts & self::MONTH)
+				$this->createMonthFlydown();
 
-		if ($this->display_parts & self::YEAR)
-			$this->createYearFlydown();
+			if ($this->display_parts & self::DAY)
+				$this->createDayFlydown();
 
-		if ($this->display_parts & self::MONTH)
-			$this->createMonthFlydown();
+			if ($this->display_parts & self::TIME)
+				$this->createTimeEntry();
 
-		if ($this->display_parts & self::DAY)
-			$this->createDayFlydown();
+			if ($this->display_parts & self::CALENDAR)
+				$this->createCalendar();
 
-		if ($this->display_parts & self::TIME)
-			$this->createTimeEntry();
-
-		if ($this->display_parts & self::CALENDAR)
-			$this->createCalendar();
+			$this->widgets_created = true;
+		}
 	}
 
 	// }}}
