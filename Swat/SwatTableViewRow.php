@@ -67,7 +67,7 @@ abstract class SwatTableViewRow extends SwatUIObject
 	}
 
 	// }}}
-	// {{{ public function display()
+	// {{{ public abstract function display()
 
 	/**
 	 * Displays this row
