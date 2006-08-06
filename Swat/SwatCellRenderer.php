@@ -197,7 +197,12 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 * );
 	 * </code>
 	 *
+	 * The user-specified list of class names is appended to the end of the
+	 * automatically generated list of class names.
+	 *
 	 * @return array the array of CSS class names for this cell renderer.
+	 *
+	 * @see SwatUIObject::getCSSClassNames()
 	 */
 	protected function getCSSClassNames()
 	{
@@ -218,7 +223,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 			$php_class_name = get_parent_class($php_class_name);
 		}
 
-		return $css_class_names;
+		return array_merge($css_class_names, $this->classes);
 	}
 
 	// }}}
