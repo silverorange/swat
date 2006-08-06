@@ -5,8 +5,10 @@ require_once 'Swat/SwatFormField.php';
 require_once 'Swat/SwatFieldset.php';
 
 /**
- * A magic form field container that replicates its children. It can 
- * dynamically create widgets based on an array of replicators.
+ * A form field container that replicates its children
+ *
+ * The form field can dynamically create widgets based on an array of
+ * replicators identifiers.
  *
  * @package   Swat
  * @copyright 2005-2006 silverorange
@@ -17,9 +19,11 @@ class SwatReplicatorFormField extends SwatFormField implements SwatReplicable
 	// {{{ public properties
 
 	/**
-	 * An array of unique id => title pairs, one for each replication.
-	 * The id is used to suffix the original widget id to create a unique
-	 * id for the replicated widget.
+	 * An array of unique id => title pairs, one for each replication
+	 *
+	 * The ids are used to suffix the original widget ids to create unique
+	 * ids for the replicated widgets. The titles are displayed as the titles
+	 * of the fieldsets surrounding the replicated widgets.
 	 *
 	 * @var array
 	 */
@@ -43,7 +47,6 @@ class SwatReplicatorFormField extends SwatFormField implements SwatReplicable
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
 	}
 
@@ -59,13 +62,14 @@ class SwatReplicatorFormField extends SwatFormField implements SwatReplicable
 	public function init()
 	{
 		parent::init();
-		
+
 		$local_children = array();
 
 		if ($this->replicators === null)
 			return;
-		
-		//first we add each child to the local array, and remove from the widget tree
+
+		// first we add each child to the local array, and remove from the
+		// widget tree
 		foreach ($this->children as $child_widget)
 			$local_children[] = $this->remove($child_widget);
 
@@ -73,15 +77,15 @@ class SwatReplicatorFormField extends SwatFormField implements SwatReplicable
 		$container->id = $this->id;
 		$container->title = $this->title;
 
-		//then we clone, change the id and add back to the widget tree
+		// then we clone, change the id and add back to the widget tree
 		foreach ($this->replicators as $id => $title) {
 			$form_field = new SwatFormField();
 			$form_field->title = $title;
 			$container->add($form_field);
 			$suffix = '_'.$this->id.$id;
-			
+
 			$this->widgets[$id] = array();
-			
+
 			foreach ($local_children as $child) {
 				$new_child = clone $child;
 
@@ -115,16 +119,17 @@ class SwatReplicatorFormField extends SwatFormField implements SwatReplicable
 	 * @param string $widget_id the unique id of the original widget
 	 * @param string $replicator_id the replicator id of the replicated widget
 	 *
-	 * @returns SwatWidget a reference to the replicated widget, or null if the
-	 *                      widget is not found.
+	 * @return SwatWidget a reference to the replicated widget, or null if the
+	 *                     widget is not found.
 	 */
 	public function getWidget($widget_id, $replicator_id)
 	{
-		if (isset($this->widgets[$replicator_id][$widget_id])) {
-			return $this->widgets[$replicator_id][$widget_id];
-		} else {
-			return null;
-		}
+		$widget = null;
+
+		if (isset($this->widgets[$replicator_id][$widget_id]))
+			$widget = $this->widgets[$replicator_id][$widget_id];
+
+		return $widget;
 	}
 
 	// }}}
