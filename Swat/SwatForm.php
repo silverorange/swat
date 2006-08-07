@@ -329,6 +329,17 @@ class SwatForm extends SwatDisplayableContainer
 	}
 
 	// }}}
+	// {{{ public function isSubmitted()
+
+	public function isSubmitted()
+	{
+		$raw_data = $this->getFormData();
+
+		return (isset($raw_data[self::PROCESS_FIELD]) &&
+			$raw_data[self::PROCESS_FIELD] == $this->id);
+	}
+
+	// }}}
 	// {{{ protected function processHiddenFields()
 
 	/**
