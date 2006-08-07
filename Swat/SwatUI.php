@@ -717,8 +717,8 @@ class SwatUI extends SwatObject
 
 		if ($renderer === null || $renderer_container === null)
 			throw new SwatInvalidPropertyTypeException(
-				"Property type 'data' is only allowed on a SwatCellRenderer or ".
-				'on a widget with in a SwatWidgetCellRenderer.',
+				"Property type 'data' is only allowed on a SwatCellRenderer ".
+				'or on a widget within a SwatWidgetCellRenderer.',
 				0, $object, 'data');
 
 		$mapping = $renderer_container->addMappingToRenderer($renderer,
