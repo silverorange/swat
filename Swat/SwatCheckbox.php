@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
 
@@ -11,7 +11,7 @@ require_once 'Swat/SwatState.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCheckbox extends SwatControl implements SwatState
+class SwatCheckbox extends SwatInputControl implements SwatState
 {
 	// {{{ public properties
 
@@ -34,6 +34,23 @@ class SwatCheckbox extends SwatControl implements SwatState
 	public $access_key = null;
 
 	// }}}
+	// {{{ public function __construct()
+
+	/**
+	 * Creates a new checkbox 
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct();
+
+		$this->requires_id = true;
+	}
+
+	// }}}
 	// {{{ public function display()
 
 	/**
@@ -43,6 +60,8 @@ class SwatCheckbox extends SwatControl implements SwatState
 	 */
 	public function display()
 	{
+		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
+
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
 		$input_tag->name = $this->id;
@@ -68,6 +87,9 @@ class SwatCheckbox extends SwatControl implements SwatState
 	 */
 	public function process()
 	{
+		if ($this->getForm()->getHiddenField($this->id.'_submitted') === null)
+			return;
+
 		$data = &$this->getForm()->getFormData();
 		$this->value = array_key_exists($this->id, $data);
 	}
