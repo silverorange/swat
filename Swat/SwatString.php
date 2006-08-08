@@ -217,6 +217,8 @@ class SwatString extends SwatObject
 	{
 		$blocklevel_elements = implode('|', self::$blocklevel_elements);
 		$search = array(
+			// remove XML comments
+			'/<!--.*?-->/siu',
 			// replace blockquote tags with quotation marks
 			'/<blockquote[^<>]*?>/siu',
 			'/<\/blockquote[^<>]*?>/siu',
@@ -228,16 +230,17 @@ class SwatString extends SwatObject
 			// (only tags remaining after blocklevel tags removed)
 			'/<[\/\!]*?[^<>]*?>/su',
 			// replace whitespaces with single spaces. \xa0 is &#160; is &nbsp;
-			'/[ \xa0\t]+/u'
+			'/[ \xa0\t]+/u',
 		);
 
 		$replace = array(
+			'',
 			"\n“",
 			"”\n",
 			'',
 			"\n",
 			'',
-			' '
+			' ',
 		);
 
 		$text = preg_replace($search, $replace, $text);
