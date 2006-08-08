@@ -68,7 +68,8 @@ class SwatCheckbox extends SwatControl implements SwatState
 	 */
 	public function process()
 	{
-		$this->value = array_key_exists($this->id, $_POST);
+		$data = &$this->getForm()->getFormData();
+		$this->value = array_key_exists($this->id, $data);
 	}
 
 	// }}}
