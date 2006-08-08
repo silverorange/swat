@@ -72,6 +72,14 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	protected $input_cell = null;
 
+	/**
+	 * Whether or not this column was automatically assigned a unique
+	 * identifier
+	 *
+	 * @var boolean 
+	 */
+	protected $has_auto_id = false;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -102,8 +110,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		foreach ($this->renderers as $renderer)
 			$renderer->init();
 
-		if ($this->id === null)
+		if ($this->id === null) {
 			$this->id = $this->getUniqueId();
+			$this->has_auto_id = true;
+		}
 
 		// add the input cell to this column's view's input row
 		if ($this->input_cell !== null) {
@@ -136,8 +146,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		if (!$this->visible)
 			return;
 
-		$first_renderer = $this->renderers->getFirst();
-		$th_tag = new SwatHtmlTag('th', $first_renderer->getThAttributes());
+		$th_tag = new SwatHtmlTag('th', $this->getThAttributes());
 		$th_tag->scope = 'col';
 		$th_tag->open();
 		$this->displayHeader();
@@ -359,7 +368,8 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	// {{{ protected function displayRenderers()
 
 	/**
-	 * Renders each cell renderer in this column
+	 * Renders each cell renderer in this column inside a wrapping XHTML
+	 * element 
 	 *
 	 * @param mixed $data the data object being used to render the cell
 	 *                     renderers of this field.
@@ -368,13 +378,33 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	{
 		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
 		$td_tag->open();
-		
-		foreach ($this->renderers as $renderer) {
-			$renderer->render();
-			echo ' ';
-		}
-
+		$this->displayRenderersInternal($data);
 		$td_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function displayRenderersInternal()
+
+	/**
+	 * Renders each cell renderer in this column
+	 *
+	 * Cell renderers are rendered in order with a space character separating
+	 * each renderer.
+	 *
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
+	 */
+	protected function displayRenderersInternal($data)
+	{
+		$first = true;
+		foreach ($this->renderers as $renderer) {
+			if ($first)
+				$first = false;
+			else
+				echo ' ';
+
+			$renderer->render();
+		}	
 	}
 
 	// }}}
@@ -402,7 +432,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	}
 
 	// }}}
-	// {{{ protected function getTdAttributes()
+	// {{{ public function getTdAttributes()
 
 	/**
 	 * Gets the TD tag attributes for this column
@@ -411,20 +441,105 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 *
 	 * @return array an array of attributes to apply to this column's TD tag.
 	 */
-	protected function getTdAttributes()
+	public function getTdAttributes()
 	{
-		$first_renderer = $this->renderers->getFirst();
-		$attributes = $first_renderer->getTdAttributes();
+		return array(
+			'class' => $this->getCSSClassString(),
+		);
+	}
 
-		if ($this->id !== null) {
+	// }}}
+	// {{{ public function getThAttributes()
+
+	/**
+	 * Gets the TH tag attributes for this column
+	 *
+	 * The returned array is of the form 'attribute' => value.
+	 *
+	 * @return array an array of attributes to apply to this column's TH tag.
+	 */
+	public function getThAttributes()
+	{
+		return array(
+			'class' => $this->getCSSClassString(),
+		);
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this table-view column
+	 *
+	 * CSS classes are added to this column in the following order:
+	 *
+	 * 1. a CSS class representing cells in this column's instance if this
+	 *    column has an id set,
+	 * 2. hard-coded CSS classes from column subclasses,
+	 * 3. user-specified CSS classes on this column,
+	 * 4. the inheritance classes of the first cell renderer in this column,
+	 * 5. hard-coded CSS classes from the first cell renderer in this column,
+	 * 6. hard-coded data-specific CSS classes from the first cell renderer in
+	 *    this column if this column has data mappings applied,
+	 * 7. user-specified CSS classes on the first cell renderer in this column.
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                table-view column.
+	 *
+	 * @see SwatCellRenderer::getInheritanceCSSClassNames()
+	 * @see SwatCellRenderer::getBaseCSSClassNames()
+	 * @see SwatUIObject::getCSSClassNames()
+	 */
+	protected function getCSSClassNames()
+	{
+		// instance specific class
+		if ($this->id !== null && !$this->has_auto_id) {
 			$column_class = str_replace('_', '-', $this->id);
-			if (isset($attributes['class']))
-				$attributes['class'].= ' '.$column_class;
-			else
-				$attributes['class'] = $column_class;
+			$classes[] = $column_class;
 		}
 
-		return $attributes;
+		// base classes
+		$classes = $this->getBaseCSSClassNames();
+
+		// user-specified classes
+		$classes = array_merge($classes, $this->classes);
+
+		$first_renderer = $this->renderers->getFirst();
+		if ($first_renderer !== null) {
+			// renderer inheritance classes
+			$classes = array_merge($classes,
+				$first_renderer->getInheritanceCSSClassNames());
+
+			// renderer base classes
+			$classes = array_merge($classes,
+				$first_renderer->getBaseCSSClassNames());
+
+			// renderer data specific classes
+			if ($this->renderers->mappingsApplied())
+				$classes = array_merge($classes,
+					$first_renderer->getDataSpecificCSSClassNames());
+
+			// renderer user-specified classes
+			$classes = array_merge($classes, $first_renderer->classes);
+		}
+		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function getBaseCSSClassNames()
+
+	/** 
+	 * Gets the base CSS class names of this table-view column
+	 *
+	 * This is the recommended place for column subclasses to add extra hard-
+	 * coded CSS classes.
+	 *
+	 * @return array the array of base CSS class names for this table-view
+	 *                column.
+	 */
+	protected function getBaseCSSClassNames()
+	{
+		return array();
 	}
 
 	// }}}

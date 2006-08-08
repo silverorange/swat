@@ -36,6 +36,13 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 * @var integer
 	 */
 	private $current_index = 0;
+
+	/**
+	 * Whether or not mappings have been applied to this cell-renderer set
+	 *
+	 * @var boolean
+	 */
+	private $mappings_applied = false;
 	
 	// }}}
 	// {{{ public function addRenderer()
@@ -121,8 +128,8 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 * @param mixed $data_object an object containg datafields to be
 	 *                            mapped onto the cell renderer.
 	 */
-	public function applyMappingsToRenderer(
-		SwatCellRenderer $renderer, $data_object)
+	public function applyMappingsToRenderer(SwatCellRenderer $renderer,
+		$data_object)
 	{
 		$index = $this->findRendererIndex($renderer);
 		// array to track array properties that we've already seen
@@ -158,6 +165,8 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 				$renderer->$property = $data_object->$field;
 			}
 		}
+
+		$this->mappings_applied = true;
 	}
 
 	// }}}
@@ -221,6 +230,20 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 		$index = $this->findRendererIndex($renderer);
 		
 		return $this->mappings[$index];
+	}
+
+	// }}}
+	// {{{ public function mappingsApplied()
+
+	/**
+	 * Whether or not mappings have been applied to this cell-renderer set
+	 *
+	 * @return boolean whether or not mappings have been applied to this
+	 *                  cell-renderer set.
+	 */
+	public function mappingsApplied()
+	{
+		return $this->mappings_applied;
 	}
 
 	// }}}

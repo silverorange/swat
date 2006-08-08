@@ -95,13 +95,12 @@ class SwatTableViewGroup extends SwatTableViewColumn
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->open();
 
-		$first_renderer = $this->renderers->getFirst();
-		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
+		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
 		$td_tag->colspan = $this->view->getVisibleColumnCount();
-		$td_tag->class = 'swat-table-view-group';
 		$td_tag->open();
 		$this->displayRenderersInternal($row);
 		$td_tag->close();
+
 		$tr_tag->close();
 	}
 
@@ -154,17 +153,6 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	}
 
 	// }}}
-	// {{{ protected function displayRenderersInternal()
-
-	protected function displayRenderersInternal($row)
-	{
-		foreach ($this->renderers as $renderer) {
-			$renderer->render();
-			echo ' ';
-		}	
-	}
-
-	// }}}
 	// {{{ protected function resetSubGroups()
 
 	/**
@@ -201,6 +189,20 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	protected function reset()
 	{
 		$this->header_current = null;
+	}
+
+	// }}}
+	// {{{ protected function getBaseCSSClassNames()
+
+	/** 
+	 * Gets the base CSS class names of this table-view group 
+	 *
+	 * @return array the array of base CSS class names for this table-view
+	 *                group.
+	 */
+	protected function getBaseCSSClassNames()
+	{
+		return array('swat-table-view-group');
 	}
 
 	// }}}
