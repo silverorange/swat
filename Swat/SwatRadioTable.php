@@ -36,6 +36,10 @@ class SwatRadioTable extends SwatRadioList
 
 		if (!$this->visible || $options === null)
 			return;
+
+		// add a hidden field so we can check if this list was submitted on
+		// the process step
+		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 		
 		if ($this->show_blank)
 			$options = array_merge(
