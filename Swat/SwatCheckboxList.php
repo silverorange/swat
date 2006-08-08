@@ -82,6 +82,7 @@ class SwatCheckboxList extends SwatControl implements SwatState
 		parent::__construct($id);
 		$this->requires_id = true;
 		$this->check_all = new SwatCheckAll();
+		$this->check_all->parent = $this;
 		$this->addJavaScript('packages/swat/javascript/swat-checkbox-list.js');
 	}
 
