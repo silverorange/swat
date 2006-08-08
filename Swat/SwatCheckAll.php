@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatCheckbox.php';
 
 /**
  * A "check all" JavaScript powered checkbox
@@ -9,7 +9,7 @@ require_once 'Swat/SwatControl.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCheckAll extends SwatControl
+class SwatCheckAll extends SwatCheckbox
 {
 	// {{{ public properties
 
@@ -35,7 +35,6 @@ class SwatCheckAll extends SwatControl
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-		$this->requires_id = true;
 		$this->title = Swat::_('Check All');
 		$this->addJavaScript('packages/swat/javascript/swat-check-all.js');
 	}
@@ -56,16 +55,16 @@ class SwatCheckAll extends SwatControl
 		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
-		$input_tag = new SwatHtmlTag('input');
-		$input_tag->type = 'checkbox';
-		$input_tag->id = $this->id.'_value';
-
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->for = $this->id.'_value';
 		$label_tag->setContent($this->title);
-
 		$label_tag->open();
-		$input_tag->display();
+
+		$old_id = $this->id;
+		$this->id.= '_value';
+		parent::display();
+		$this->id = $old_id;
+
 		$label_tag->displayContent();
 		$label_tag->close();
 
@@ -78,7 +77,7 @@ class SwatCheckAll extends SwatControl
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this check-all widget 
+	 * Gets the array of CSS classes that are applied to this check-all widget
 	 *
 	 * @return array the array of CSS classes that are applied to this
 	 *               check-all widget.
