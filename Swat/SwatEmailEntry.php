@@ -29,9 +29,10 @@ class SwatEmailEntry extends SwatEntry
 		if ($this->value === null)
 			return;
 
-		$valid_address_word = '[-!#$%&\'*+\\.\/0-9=?A-Z^_`{|}~]+';
-		$valid_address_regexp = '/^'.$valid_address_word.'@'.
-			$valid_address_word.'\.'.$valid_address_word.'$/ui';
+		$valid_name_word = '[-!#$%&\'*+.\\/0-9=?A-Z^_`{|}~]+';
+		$valid_domain_word = '[-!#$%&\'*+\\/0-9=?A-Z^_`{|}~]+';
+		$valid_address_regexp = '/^'.$valid_name_word.'@'.
+			$valid_domain_word.'(\.'.$valid_domain_word.')+$/ui';
 
 		if (strlen($this->value) &&
 			preg_match($valid_address_regexp, $this->value) === 0) {
