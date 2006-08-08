@@ -61,6 +61,8 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		if (!$this->visible)
 			return;
 
+		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
+
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();

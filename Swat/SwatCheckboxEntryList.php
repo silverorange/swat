@@ -74,6 +74,8 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		if (!$this->visible || $this->options === null)
 			return;
 
+		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
+
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
@@ -153,6 +155,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	 */
 	public function process()
 	{
+		if ($this->getForm()->getHiddenField($this->id.'_submitted') === null)
+			return;
+
 		parent::process();
 
 		$this->entry_values = array();

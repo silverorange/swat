@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatCheckAll.php';
 require_once 'Swat/SwatState.php';
@@ -13,7 +13,7 @@ require_once 'Swat/SwatString.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCheckboxList extends SwatControl implements SwatState
+class SwatCheckboxList extends SwatInputControl implements SwatState
 {
 	// {{{ public properties
 
@@ -130,6 +130,8 @@ class SwatCheckboxList extends SwatControl implements SwatState
 		if (!$this->visible || $this->options === null)
 			return;
 
+		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
+
 		// outer div is required because the check-all widget is outside the
 		// unordered list
 		$div_tag = new SwatHtmlTag('div');
@@ -190,6 +192,9 @@ class SwatCheckboxList extends SwatControl implements SwatState
 	 */
 	public function process()
 	{
+		if ($this->getForm()->getHiddenField($this->id.'_submitted') === null)
+			return;
+
 		parent::process();
 
 		$this->check_all->process();
