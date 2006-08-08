@@ -125,12 +125,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	{
 		parent::process();
 
-		$data = &$this->getForm()->getFormData();
-
-		if (!isset($data[$this->id]))
-			return;
-
-		$this->value = unserialize($data[$this->id]);
+		$this->processValue();
 
 		if ($this->required && $this->value === null) {
 			$msg = Swat::_('The %s field is required.');
@@ -215,6 +210,22 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	public function getFocusableHtmlId()
 	{
 		return $this->id;
+	}
+
+	// }}}
+	// {{{ protected function processValue()
+
+	/**
+	 * Processes the value of this flydown from user-submitted form data
+	 */
+	protected function processValue()
+	{
+		$data = &$this->getForm()->getFormData();
+
+		if (!isset($data[$this->id]))
+			return;
+
+		$this->value = unserialize($data[$this->id]);
 	}
 
 	// }}}
