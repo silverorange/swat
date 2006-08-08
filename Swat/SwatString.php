@@ -208,7 +208,9 @@ class SwatString extends SwatObject
 	 * block-level elements with special characters.
 	 *
 	 * @param string $text the text to be condensed.
-	 * @param integer $max_length the maximum length of the condensed text.
+	 * @param integer $max_length the maximum length of the condensed text. If
+	 *                             null is specified, there is no maximum
+	 *                             length.
 	 *
 	 * @return string the condensed text. The condensed text is an XHTML
 	 *                 formatted string.
@@ -258,7 +260,8 @@ class SwatString extends SwatObject
 
 		$text = preg_replace($search, $replace, $text);
 
-		$text = SwatString::ellipsizeRight($text, $max_length);
+		if ($max_length !== null)
+			$text = SwatString::ellipsizeRight($text, $max_length);
 
 		return $text;
 	}
