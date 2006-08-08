@@ -115,42 +115,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	}
 
 	// }}}
-	// {{{ public function getThAttributes()
-
-	/**
-	 * Gets TH-tag attributes
-	 *
-	 * Sub-classes can redefine this to set attributes on the TH tag.
-	 *
-	 * The returned array is of the form 'attribute' => value.
-	 *
-	 * @return array an array of attributes to apply to the TH tag of the
-	 *                column that contains this cell renderer.
-	 */
-	public function getThAttributes()
-	{
-		return array('class' => implode(' ', $this->getCSSClassNames()));
-	}
-
-	// }}}
-	// {{{ public function getTdAttributes()
-
-	/**
-	 * Gets TD-tag attributes
-	 *
-	 * Sub-classes can redefine this to set attributes on the TD tag.
-	 *
-	 * The returned array is of the form 'attribute' => value.
-	 *
-	 * @return array an array of attributes to apply to the TD tag of this cell
-	 *                renderer.
-	 */
-	public function getTdAttributes()
-	{
-		return array('class' => implode(' ', $this->getCSSClassNames()));
-	}
-
-	// }}}
 	// {{{ public function getPropertyNameToMap()
 
 	/**
@@ -177,17 +141,17 @@ abstract class SwatCellRenderer extends SwatUIObject
 	}
 
 	// }}}
-	// {{{ protected function getCSSClassNames()
+	// {{{ public function getInheritanceCSSClassNames()
 
 	/** 
-	 * Gets the CSS class names of this cell renderer based on the Swat class
+	 * Gets the CSS class names of this cell renderer based on the inheritance
 	 * tree for this cell renderer
 	 *
 	 * For example, a class with the following ancestry:
 	 *
 	 * SwatCellRenderer -> SwatTextCellRenderer -> SwatNullTextCellRenderer
 	 *
-	 * would get the following array of class names:
+	 * will return the following array of class names:
 	 *
 	 * <code>
 	 * array(
@@ -197,20 +161,16 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 * );
 	 * </code>
 	 *
-	 * The user-specified list of class names is appended to the end of the
-	 * automatically generated list of class names.
-	 *
-	 * @return array the array of CSS class names for this cell renderer.
-	 *
-	 * @see SwatUIObject::getCSSClassNames()
+	 * @return array the array of CSS class names based on an inheritance tree
+	 *                for this cell renderer.
 	 */
-	protected function getCSSClassNames()
+	public function getInheritanceCSSClassNames()
 	{
 		$php_class_name = get_class($this);
 		$css_class_names = array();
 
 		// get the ancestors that are swat classes
-		while (strcmp($php_class_name, 'SwatUIObject') !== 0) {
+		while (strcmp($php_class_name, 'SwatCellRenderer') !== 0) {
 			if (strncmp($php_class_name, 'Swat', 4) === 0) {
 				$css_class_name = strtolower(preg_replace('/([A-Z])/u',
 					'-\1', $php_class_name));
@@ -223,7 +183,40 @@ abstract class SwatCellRenderer extends SwatUIObject
 			$php_class_name = get_parent_class($php_class_name);
 		}
 
-		return array_merge($css_class_names, $this->classes);
+		return $css_class_names;
+	}
+
+	// }}}
+	// {{{ public function getBaseCSSClassNames()
+
+	/** 
+	 * Gets the base CSS class names for this cell renderer
+	 *
+	 * This is the recommended place for cell-renderer subclasses to add extra
+	 * hard-coded CSS classes.
+	 *
+	 * @return array the array of base CSS class names for this cell renderer.
+	 */
+	public function getBaseCSSClassNames()
+	{
+		return array();
+	}
+
+	// }}}
+	// {{{ public function getDataSpecificCSSClassNames()
+
+	/** 
+	 * Gets the data specific CSS class names for this cell renderer
+	 *
+	 * This is the recommended place for cell-renderer subclasses to add extra
+	 * hard-coded CSS classes that depend on data-bound properties of this
+	 * cell-renderer.
+	 *
+	 * @return array the array of base CSS class names for this cell renderer.
+	 */
+	public function getDataSpecificCSSClassNames()
+	{
+		return array();
 	}
 
 	// }}}

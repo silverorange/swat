@@ -87,23 +87,17 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
 	}
 
 	// }}}
-	// {{{ protected function getCSSClassNames()
+	// {{{ protected function getBaseCSSClassNames()
 
-	/**
-	 * Gets the array of CSS classes that are applied to this entry widget
+	/** 
+	 * Gets the base CSS class names of this details-view field 
 	 *
-	 * @return array the array of CSS classes that are applied to this entry
-	 *                widget.
+	 * @return array the array of base CSS class names for this vertical
+	 *                details-view field.
 	 */
-	protected function getCSSClassNames()
+	protected function getBaseCSSClassNames()
 	{
-		$classes = array('swat-details-view-vertical-field');
-
-		if ($this->odd)
-			$classes[] = 'odd';
-
-		$classes = array_merge($classes, $this->classes);
-		return $classes;
+		return array('swat-details-view-vertical-field');
 	}
 
 	// }}}

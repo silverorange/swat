@@ -250,16 +250,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 */
 	protected function displayRenderers($row)
 	{
-		$first_renderer = $this->renderers->getFirst();
-		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
-
-		if ($this->view->orderby_column === $this) {
-			if ($td_tag->class === null)
-				$td_tag->class = 'swat-table-view-orderable-column-selected';
-			else
-				$td_tag->class.= ' swat-table-view-orderable-column-selected';
-		}
-
+		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
 		$td_tag->open();
 
 		$prefix = ($this->view->id === null)? '': $this->view->id.'_';
@@ -270,6 +261,25 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 		}
 
 		$td_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function getBaseCSSClassNames()
+
+	/** 
+	 * Gets the base CSS class names of this orderable table-view column
+	 *
+	 * @return array the array of base CSS class names for this orderable
+	 *                table-view column.
+	 */
+	protected function getBaseCSSClassNames()
+	{
+		$classes = array();
+
+		if ($this->view->orderby_column === $this)
+			$classes[] = 'swat-table-view-orderable-column-selected';
+
+		return $classes;
 	}
 
 	// }}}

@@ -207,26 +207,26 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	}
 
 	// }}}
-	// {{{ public function getTdAttributes()
+	// {{{ public function getDataSpecificCSSClassNames()
 
-	/**
-	 * Gets TD-tag attributes for this widget cell renderer
+	/** 
+	 * Gets the data specific CSS class names for this widget cell renderer
 	 *
-	 * If the widget within this cell renderer has messages, a 'swat-error' CSS
-	 * class is prepended to the CSS classes of the TD-tag.
+	 * If the widget within this cell renderer has messages, a CSS class of
+	 * 'swat-error' is added to the base CSS classes of this cell renderer.
 	 *
-	 * @return array an array of attributes to apply to the TD tag of this
-	 *                widget cell renderer.
+	 * @return array the array of data specific CSS class names for this widget
+	 *                cell-renderer.
 	 */
-	public function getTdAttributes()
+	public function getDataSpecificCSSClassNames()
 	{
-		$classes = implode(' ', $this->getCSSClassNames());
+		$classes = array();
 
 		if ($this->replicator_id !== null &&
 			$this->hasMessage($this->replicator_id))
-			$classes = 'swat-error '.$classes;
+			$classes[] = 'swat-error';
 
-		return array('class' => $classes);
+		return $classes;
 	}
 
 	// }}}

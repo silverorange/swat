@@ -476,9 +476,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 			foreach ($columns as $column) {
 				// use the same style as table-view column
-				$td_attributes =
-					$column->getRendererByPosition()->getTdAttributes();
-
+				$td_attributes = $column->getTdAttributes();
 				$td_tag = new SwatHtmlTag('td', $td_attributes);
 
 				if (isset($this->input_cells[$column->id])) {
@@ -490,7 +488,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 						$messages = array_merge($messages,
 							$widget->getMessages());
 
-						$td_tag->class = 'swat-error';
+						$td_tag->class = 'swat-error'; // TODO
 					}
 				}
 
@@ -592,9 +590,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		}
 
 		// use the same style as table-view column
-		$td = new SwatHtmlTag('td',
-			$column->getRendererByPosition()->getTdAttributes());
-
+		$td = new SwatHtmlTag('td', $column->getTdAttributes());
 		$td->open();
 		$this->enter_another_link->display();
 		$td->close();
@@ -635,8 +631,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$tr_tag->open();
 
 		foreach ($columns as $column) {
-			$td_attributes =
-				$column->getRendererByPosition()->getTdAttributes();
+			$td_attributes = $column->getTdAttributes();
 
 			$td_tag = new SwatHtmlTag('td', $td_attributes);
 			$td_tag->open();

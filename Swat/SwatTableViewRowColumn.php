@@ -25,14 +25,11 @@ class SwatTableViewRowColumn extends SwatTableViewColumn
 	// {{{ protected function displayRenderers()
 	
 	/**
-	 * Displays the renderers for this column
+	 * Renders each cell renderer in this column inside a wrapping XHTML
+	 * element
 	 *
-	 * The renderes are only displayed once for every time the value of the
-	 * group_by field changes and the renderers are displayed on their own
-	 * separate table row.
-	 *
-	 * @param mixed $row a data object containing the data for a single row
-	 *                    in the table store for this group.
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
 	 *
 	 * @throws SwatException
 	 */
@@ -45,25 +42,13 @@ class SwatTableViewRowColumn extends SwatTableViewColumn
 			$td_tag->display();
 		}
 
-		$first_renderer = $this->renderers->getFirst();
-		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
+		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
 		$td_tag->colspan =
 			$this->view->getVisibleColumnCount() - $this->offset;
 
 		$td_tag->open();
 		$this->displayRenderersInternal($row);
 		$td_tag->close();
-	}
-
-	// }}}
-	// {{{ protected function displayRenderersInternal()
-
-	protected function displayRenderersInternal($row)
-	{
-		foreach ($this->renderers as $renderer) {
-			$renderer->render();
-			echo ' ';
-		}	
 	}
 
 	// }}}

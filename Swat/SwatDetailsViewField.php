@@ -154,6 +154,23 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	}
 
 	// }}}
+	// {{{ public function getTdAttributes()
+
+	/**
+	 * Gets the TD tag attributes for this column
+	 *
+	 * The returned array is of the form 'attribute' => value.
+	 *
+	 * @return array an array of attributes to apply to this column's TD tag.
+	 */
+	public function getTdAttributes()
+	{
+		return array(
+			'class' => $this->getCSSClassString(),
+		);
+	}
+
+	// }}}
 	// {{{ protected function displayRenderers()
 
 	/**
@@ -164,13 +181,17 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	 */
 	protected function displayRenderers($data)
 	{
-		$first_renderer = $this->renderers->getFirst();
-		$td_tag = new SwatHtmlTag('td', $first_renderer->getTdAttributes());
+		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
 		$td_tag->open();
 
+		$first = true;
 		foreach ($this->renderers as $renderer) {
+			if ($first)
+				$first = false;
+			else
+				echo ' ';
+
 			$renderer->render();
-			echo ' ';
 		}
 
 		$td_tag->close();
@@ -201,20 +222,75 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this entry widget
+	 * Gets the array of CSS classes that are applied to this details-view
+	 * field
 	 *
-	 * @return array the array of CSS classes that are applied to this entry
-	 *                widget.
+	 * CSS classes are added to this field in the following order:
+	 *
+	 * 1. hard-coded CSS classes from field subclasses,
+	 * 2. 'odd' if this is an odd row in the parent view,
+	 * 3. user-specified CSS classes on this field,
+	 * 4. the inheritance classes of the first cell renderer in this field,
+	 * 5. hard-coded CSS classes from the first cell renderer in this field,
+	 * 6. hard-coded data-specific CSS classes from the first cell renderer in
+	 *    this field if this field has data mappings applied,
+	 * 7. user-specified CSS classes on the first cell renderer in this field.
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                details-view field.
+	 *
+	 * @see SwatCellRenderer::getInheritanceCSSClassNames()
+	 * @see SwatCellRenderer::getBaseCSSClassNames()
+	 * @see SwatUIObject::getCSSClassNames()
 	 */
 	protected function getCSSClassNames()
 	{
-		$classes = array('swat-details-view-field');
+		// base classes
+		$classes = $this->getBaseCSSClassNames();
 
+		// odd
 		if ($this->odd)
 			$classes[] = 'odd';
 
+		// user-specified classes
 		$classes = array_merge($classes, $this->classes);
+
+		$first_renderer = $this->renderers->getFirst();
+		if ($first_renderer !== null) {
+			// renderer inheritance classes
+			$classes = array_merge($classes,
+				$first_renderer->getInheritanceCSSClassNames());
+
+			// renderer base classes
+			$classes = array_merge($classes,
+				$first_renderer->getBaseCSSClassNames());
+
+			// renderer data specific classes
+			if ($this->renderers->mappingsApplied())
+				$classes = array_merge($classes,
+					$first_renderer->getDataSpecificCSSClassNames());
+
+			// renderer user-specified classes
+			$classes = array_merge($classes, $first_renderer->classes);
+		}
 		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function getBaseCSSClassNames()
+
+	/** 
+	 * Gets the base CSS class names of this details-view field 
+	 *
+	 * This is the recommended place for field subclasses to add extra hard-
+	 * coded CSS classes.
+	 *
+	 * @return array the array of base CSS class names for this details-view
+	 *                field.
+	 */
+	protected function getBaseCSSClassNames()
+	{
+		return array('swat-details-view-field');
 	}
 
 	// }}}
