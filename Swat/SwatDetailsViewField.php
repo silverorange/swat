@@ -171,6 +171,27 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	}
 
 	// }}}
+	// {{{ public function getHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects needed by this field 
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this details-view field.
+	 *
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
+	 */
+	public function getHtmlHeadEntrySet()
+	{
+		$set = parent::getHtmlHeadEntrySet();
+		$renderers = $this->getRenderers();
+		foreach ($renderers as $renderer)
+			$set->addEntrySet($renderer->getHtmlHeadEntrySet());
+
+		return $set;
+	}
+
+	// }}}
 	// {{{ protected function displayRenderers()
 
 	/**
@@ -195,27 +216,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 		}
 
 		$td_tag->close();
-	}
-
-	// }}}
-	// {{{ public function getHtmlHeadEntrySet()
-
-	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this field 
-	 *
-	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 *                               this details-view field.
-	 *
-	 * @see SwatUIObject::getHtmlHeadEntrySet()
-	 */
-	public function getHtmlHeadEntrySet()
-	{
-		$set = parent::getHtmlHeadEntrySet();
-		$renderers = $this->getRenderers();
-		foreach ($renderers as $renderer)
-			$set->addEntrySet($renderer->getHtmlHeadEntrySet());
-
-		return $set;
 	}
 
 	// }}}
