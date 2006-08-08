@@ -88,6 +88,15 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	protected $contents_tag = 'div';
 
+	/**
+	 * A CSS class name set by the subwidgets in this form field
+	 *
+	 * @var string
+	 *
+	 * @see SwatFormField::notifyOfAdd()
+	 */
+	protected $widget_class;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -235,6 +244,10 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-form-field');
+
+		if ($this->widget_class !== null)
+			$classes[] = $this->widget_class;
+
 		$classes = array_merge($classes, $this->classes);
 		return $classes;
 	}
@@ -281,7 +294,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	protected function notifyOfAdd($widget)
 	{
 		if (class_exists('SwatCheckbox') && $widget instanceof SwatCheckbox) {
-			$this->class = 'swat-form-field-checkbox';
+			$this->widget_class = 'swat-form-field-checkbox';
 		}
 	}
 
