@@ -127,10 +127,10 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
 		$data = &$this->getForm()->getFormData();
 
-		if (isset($data[$this->id]))
-			$this->value = unserialize($data[$this->id]);
-		else
-			$this->value = null;
+		if (!isset($data[$this->id]))
+			return;
+
+		$this->value = unserialize($data[$this->id]);
 
 		if ($this->required && $this->value === null) {
 			$msg = Swat::_('The %s field is required.');
