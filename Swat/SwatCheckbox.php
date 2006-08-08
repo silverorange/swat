@@ -46,7 +46,6 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 	public function __construct($id = null)
 	{
 		parent::__construct();
-
 		$this->requires_id = true;
 	}
 
@@ -60,6 +59,9 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return;
+
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
 		$input_tag = new SwatHtmlTag('input');
