@@ -220,7 +220,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	}
 
 	// }}}
-	// {{{ public function getEntryWidget()
+	// {{{ private function getEntryWidget()
 
 	/**
 	 * Gets an entry widget of this checkbox entry list
@@ -234,7 +234,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	 * @return SwatEntry the entry widget with the given id.
 	 */
 	private function getEntryWidget($id)
-	{ 
+	{
 		if (!isset($this->entry_widgets[$id])) {
 			$widget = new SwatEntry($this->id.'_entry_'.$id);
 			$widget->size = $this->entry_size;
