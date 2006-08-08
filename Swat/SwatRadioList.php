@@ -55,14 +55,14 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	 */
 	public function display()
 	{
-		if (!$this->visible || $this->getOptions() === null)
+		$options = $this->getOptions();
+
+		if (!$this->visible || $options === null)
 			return;
 
 		// add a hidden field so we can check if this list was submitted on
 		// the process step
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
-
-		$options = $this->getOptions();
 
 		if ($this->show_blank)
 			$options = array_merge(
