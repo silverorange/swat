@@ -83,28 +83,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
-		$input_tag = new SwatHtmlTag('input');
-		$input_tag->type = $this->html_input_type;
-		$input_tag->name = $this->id;
-		$input_tag->id = $this->id;
-		$input_tag->class = $this->getCSSClassString();
-		$input_tag->onfocus = 'this.select();';
-		if (!$this->isSensitive())
-			$input_tag->disabled = 'disabled';
-
-		$value = $this->getDisplayValue();
-		if ($value !== null)
-			$input_tag->value = $value;
-
-		if ($this->size !== null)
-			$input_tag->size = $this->size;
-
-		if ($this->maxlength !== null)
-			$input_tag->maxlength = $this->maxlength;
-
-		if (strlen($this->access_key) > 0)
-			$input_tag->accesskey = $this->access_key;
-
+		$input_tag = $this->getInputTag();
 		$input_tag->display();
 	}
 
@@ -186,6 +165,42 @@ class SwatEntry extends SwatInputControl implements SwatState
 	public function setState($state)
 	{
 		$this->value = $state;
+	}
+
+	// }}}
+	// {{{ protected function getInputTag()
+
+	/**
+	 * Get the input tag to display
+	 *
+	 * Can be used by sub-classes to change the setup of the input tag.
+	 *
+	 * @return SwatHtmlTag Input tag to display.
+	 */
+	protected function getInputTag()
+	{
+		$tag = new SwatHtmlTag('input');
+		$tag->type = $this->html_input_type;
+		$tag->name = $this->id;
+		$tag->id = $this->id;
+		$tag->class = $this->getCSSClassString();
+		$tag->onfocus = 'this.select();';
+
+		if (!$this->isSensitive())
+			$tag->disabled = 'disabled';
+
+		$tag->value = $this->getDisplayValue();
+
+		if ($this->size !== null)
+			$tag->size = $this->size;
+
+		if ($this->maxlength !== null)
+			$tag->maxlength = $this->maxlength;
+
+		if (strlen($this->access_key) > 0)
+			$tag->accesskey = $this->access_key;
+
+		return $tag;
 	}
 
 	// }}}
