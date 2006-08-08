@@ -365,6 +365,40 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	}
 
 	// }}}
+	// {{{ public function getTdAttributes()
+
+	/**
+	 * Gets the TD tag attributes for this column
+	 *
+	 * The returned array is of the form 'attribute' => value.
+	 *
+	 * @return array an array of attributes to apply to this column's TD tag.
+	 */
+	public function getTdAttributes()
+	{
+		return array(
+			'class' => $this->getCSSClassString(),
+		);
+	}
+
+	// }}}
+	// {{{ public function getThAttributes()
+
+	/**
+	 * Gets the TH tag attributes for this column
+	 *
+	 * The returned array is of the form 'attribute' => value.
+	 *
+	 * @return array an array of attributes to apply to this column's TH tag.
+	 */
+	public function getThAttributes()
+	{
+		return array(
+			'class' => $this->getCSSClassString(),
+		);
+	}
+
+	// }}}
 	// {{{ protected function displayRenderers()
 
 	/**
@@ -429,40 +463,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 			$this->renderers->applyMappingsToRenderer($renderer, $data);
 			$renderer->sensitive = $sensitive;
 		}
-	}
-
-	// }}}
-	// {{{ public function getTdAttributes()
-
-	/**
-	 * Gets the TD tag attributes for this column
-	 *
-	 * The returned array is of the form 'attribute' => value.
-	 *
-	 * @return array an array of attributes to apply to this column's TD tag.
-	 */
-	public function getTdAttributes()
-	{
-		return array(
-			'class' => $this->getCSSClassString(),
-		);
-	}
-
-	// }}}
-	// {{{ public function getThAttributes()
-
-	/**
-	 * Gets the TH tag attributes for this column
-	 *
-	 * The returned array is of the form 'attribute' => value.
-	 *
-	 * @return array an array of attributes to apply to this column's TH tag.
-	 */
-	public function getThAttributes()
-	{
-		return array(
-			'class' => $this->getCSSClassString(),
-		);
 	}
 
 	// }}}
