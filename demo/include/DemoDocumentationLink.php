@@ -8,7 +8,7 @@ require_once 'Swat/SwatToolLink.php';
  * This widget links to the Swat documentation from other widgets.
  *
  * @package   SwatDemo
- * @copyright 2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class DemoDocumentationLink extends SwatToolLink

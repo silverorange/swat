@@ -8,7 +8,7 @@ require_once 'DemoPage.php';
  * This page sets up the radiolist.
  *
  * @package   SwatDemo
- * @copyright 2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class Disclosure extends DemoPage

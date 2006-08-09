@@ -8,7 +8,7 @@ require_once 'Swat/SwatDate.php';
  * A demo using a table view
  *
  * @package   SwatDemo
- * @copyright 2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class TableView extends DemoPage
@@ -55,7 +55,7 @@ class TableView extends DemoPage
  * A demo using a table view
  *
  * @package   SwatDemo
- * @copyright 2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class FruitObject
