@@ -69,8 +69,6 @@ table.swat-table-view th.swat-money-cell-renderer {
 }
 
 tr.swat-table-view-input-row-messages {
-	border: #dc6e66 1px solid;
-	border-top: 0;
 	background-color: #ffe3e0;
 	color: #e31b0c;
 }
