@@ -64,11 +64,6 @@ class SwatRadioList extends SwatFlydown implements SwatState
 		// the process step
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
-		if ($this->show_blank)
-			$options = array_merge(
-				array(new SwatOption(null, $this->blank_title)),
-				$options);
-
 		$ul_tag = new SwatHtmlTag('ul');
 		$ul_tag->id = $this->id;
 		$ul_tag->class = $this->getCSSClassString();
