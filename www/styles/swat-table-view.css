@@ -54,7 +54,7 @@ table.swat-table-view th.swat-money-cell-renderer {
 
 /* Error styling */
 
-.swat-table-view tr.swat-error {
+.swat-table-view tbody tr.swat-error {
 	background-color: #ffe3e0;
 	background-image: url(../images/swat-table-view-cell-error-background.png);
 }
