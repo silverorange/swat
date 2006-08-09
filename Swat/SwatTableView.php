@@ -4,6 +4,7 @@ require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatTableViewColumn.php';
 require_once 'Swat/SwatTableViewOrderableColumn.php';
+require_once 'Swat/SwatTableViewSpanningColumn.php';
 require_once 'Swat/SwatTableViewGroup.php';
 require_once 'Swat/SwatTableViewRow.php';
 require_once 'Swat/SwatTableViewInputRow.php';
@@ -126,7 +127,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 *
 	 * @var array
 	 */
-	private $row_columns_by_id = array();
+	private $spanning_columns_by_id = array();
 
 	/**
 	 * The groups of this table-view indexed by their unique identifier
@@ -166,9 +167,9 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 *
 	 * @var array
 	 *
-	 * @see SwatTableView::addRowColumn()
+	 * @see SwatTableView::addSpanningColumn()
 	 */
-	private $row_columns = array();
+	private $spanning_columns = array();
 
 	/**
 	 * Grouping objects for this table view
@@ -252,11 +253,11 @@ class SwatTableView extends SwatControl implements SwatUIParent
 				$this->groups_by_id[$group->id] = $group;
 		}
 
-		foreach ($this->row_columns as $column) {
+		foreach ($this->spanning_columns as $column) {
 			$column->init();
 			// index the row column by id if it is not already indexed
-			if (!array_key_exists($column->id, $this->row_columns_by_id))
-				$this->row_columns_by_id[$column->id] = $column;
+			if (!array_key_exists($column->id, $this->spanning_columns_by_id))
+				$this->spanning_columns_by_id[$column->id] = $column;
 		}
 	}
 
@@ -313,19 +314,19 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function appendRowColumn()
+	// {{{ public function appendSpanningColumn()
 
 	/**
-	 * Appends a row column object to this table-view
+	 * Appends a spanning column object to this table-view
 	 *
-	 * @param SwatTableViewRowColumn $column the table-view row column to use for this
+	 * @param SwatTableViewSpanningColumn $column the table-view spanning column to use for this
 	 *                                   table-view.
 	 *
-	 * @see SwatTableViewRowColumn
+	 * @see SwatTableViewSpanningColumn
 	 */
-	public function appendRowColumn(SwatTableViewRowColumn $column)
+	public function appendSpanningColumn(SwatTableViewSpanningColumn $column)
 	{
-		$this->row_columns[] = $column;
+		$this->spanning_columns[] = $column;
 		$column->view = $this;
 		$column->parent = $this;
 	}
@@ -425,34 +426,34 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function getRowColumns()
+	// {{{ public function getSpanningColumns()
 
 	/**
-	 * Gets all row columns of this table-view as an array
+	 * Gets all spanning columns of this table-view as an array
 	 *
-	 * @return array a reference to the the row columns of this view.
+	 * @return array a reference to the spanning columns of this view.
 	 */
-	public function &getRowColumns()
+	public function &getSpanningColumns()
 	{
-		return $this->row_columns;
+		return $this->spanning_columns;
 	}
 
 	// }}}
-	// {{{ public function getRowColumn()
+	// {{{ public function getSpanningColumn()
 
 	/**
-	 * Gets a reference to a row column in this table-view by its unique identifier
+	 * Gets a reference to a spanning column in this table-view by its unique identifier
 	 *
-	 * @return SwatTableViewRowColumn the requested row column.
+	 * @return SwatTableViewSpanningColumn the requested spanning column.
 	 *
 	 * @throws SwatException
 	 */
-	public function getRowColumn($id)
+	public function getSpanningColumn($id)
 	{
-		if (!array_key_exists($id, $this->row_columns_by_id))
-			throw new SwatException("Row column with an id of '{$id}' not found.");
+		if (!array_key_exists($id, $this->spanning_columns_by_id))
+			throw new SwatException("Spanning column with an id of '{$id}' not found.");
 
-		return $this->row_columns_by_id[$id];
+		return $this->spanning_columns_by_id[$id];
 	}
 
 	// }}}
@@ -710,7 +711,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		foreach ($this->columns as $column)
 			$column->process();
 
-		foreach ($this->row_columns as $column)
+		foreach ($this->spanning_columns as $column)
 			$column->process();
 
 		foreach ($this->extra_rows as $row)
@@ -748,8 +749,8 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	{
 		if ($child instanceof SwatTableViewGroup)
 			$this->appendGroup($child);
-		elseif ($child instanceof SwatTableViewRowColumn)
-			$this->appendRowColumn($child);
+		elseif ($child instanceof SwatTableViewSpanningColumn)
+			$this->appendSpanningColumn($child);
 		elseif ($child instanceof SwatTableViewRow)
 			$this->appendRow($child);
 		elseif ($child instanceof SwatTableViewColumn)
@@ -830,7 +831,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		foreach ($this->columns as $column)
 			$set->addEntrySet($column->getHtmlHeadEntrySet());
 
-		foreach ($this->row_columns as $column)
+		foreach ($this->spanning_columns as $column)
 			$set->addEntrySet($column->getHtmlHeadEntrySet());
 
 		foreach ($this->extra_rows as $row)
@@ -933,7 +934,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 			$tr_tag->class =
 				$tr_tag->class.' swat-table-view-row-column';
 
-			foreach ($this->row_columns as $column) {
+			foreach ($this->spanning_columns as $column) {
 				if ($column->visible && $column->hasVisibleRenderer($row)) {
 					$tr_tag->open();
 					$column->display($row);
