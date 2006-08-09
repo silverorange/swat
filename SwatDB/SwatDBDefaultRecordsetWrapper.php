@@ -8,7 +8,7 @@ require_once 'SwatDB/SwatDBRecordsetWrapper.php';
  * Used to wrap an MDB2 recordset into a traversable collection of objects.
  *
  * @package   SwatDB
- * @copyright 2005 silverorange
+ * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBDefaultRecordsetWrapper extends SwatDBRecordsetWrapper
