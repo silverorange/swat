@@ -188,11 +188,23 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 			foreach ($messages as &$msg) {
 				$message_li = new SwatHtmlTag('li');
+				$message_li->class = $msg->getCssClass();
 				$message_li->setContent($msg->primary_content,
 					$msg->content_type);
 
-				$message_li->class = $msg->getCssClass();
-				$message_li->display();
+				if ($msg->secondary_content !== null) {
+					$secondary_span = new SwatHtmlTag('span');
+					$secondary_span->setContent($msg->secondary_content,
+						$msg->content_type);
+
+					$message_li->open();
+					$message_li->displayContent();
+					echo ' ';
+					$secondary_span->display();
+					$message_li->close();
+				} else {
+					$message_li->display();
+				}
 			}
 
 			$message_ul->close();
