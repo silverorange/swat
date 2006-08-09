@@ -830,6 +830,9 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		foreach ($this->columns as $column)
 			$set->addEntrySet($column->getHtmlHeadEntrySet());
 
+		foreach ($this->row_columns as $column)
+			$set->addEntrySet($column->getHtmlHeadEntrySet());
+
 		foreach ($this->extra_rows as $row)
 			$set->addEntrySet($row->getHtmlHeadEntrySet());
 
