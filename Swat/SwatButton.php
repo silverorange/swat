@@ -47,6 +47,15 @@ class SwatButton extends SwatControl
 	 */
 	public $access_key = null;
 
+	/**
+	 * Tab index
+	 *
+	 * The ordinal tab index position of the XHTML input tag, or null.
+	 *
+	 * @var integer
+	 */
+	public $tab_index = null;
+
 	// }}}
 	// {{{ protected properties
 
@@ -111,9 +120,8 @@ class SwatButton extends SwatControl
 		$input_tag->id = $this->id;
 		$input_tag->value = $this->title;
 		$input_tag->class = $this->getCSSClassString();
-
-		if (strlen($this->access_key) > 0)
-			$input_tag->accesskey = $this->access_key;
+		$input_tag->tabindex = $this->tab_index;
+		$input_tag->accesskey = $this->access_key;
 
 		$input_tag->display();
 	}

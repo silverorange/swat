@@ -139,9 +139,7 @@ class SwatToolLink extends SwatControl
 			else
 				$anchor_tag->href = sprintf($this->link, $this->value);
 
-			if (strlen($this->access_key) > 0)
-				$anchor_tag->accesskey = $this->access_key;
-
+			$anchor_tag->accesskey = $this->access_key;
 			$anchor_tag->setContent($this->title);
 			$anchor_tag->display();
 		} else {

@@ -80,9 +80,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		$input_tag->value = $this->value;
 		$input_tag->class = 'swat-color-entry-input';
 		$input_tag->disabled = 'true';
-
-		if (strlen($this->access_key) > 0)
-			$input_tag->accesskey = $this->access_key;
+		$input_tag->accesskey = $this->access_key;
 
 		$input_tag->display();
 
