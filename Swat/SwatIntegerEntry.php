@@ -51,7 +51,7 @@ class SwatIntegerEntry extends SwatNumericEntry
 
 	// }}}
 	// {{{  protected function getNumericValue()
-	
+
 	/**
 	 * Gets the numeric value of this widget
 	 *
@@ -61,11 +61,11 @@ class SwatIntegerEntry extends SwatNumericEntry
 	 * @return mixed the numeric value of this entry widget of null if no
 	 *                numeric value is available.
 	 */
-	 protected function getNumericValue()
-	 {
-		 $value = trim($this->value);
-		 return SwatString::toInteger($value);
-	 }
+	protected function getNumericValue()
+	{
+		$value = trim($this->value);
+		return SwatString::toInteger($value);
+	}
 
 	// }}}
 }
