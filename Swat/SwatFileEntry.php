@@ -76,12 +76,8 @@ class SwatFileEntry extends SwatInputControl
 		$input_tag->name = $this->id;
 		$input_tag->id = $this->id;
 		$input_tag->class = $this->getCSSClassString();
-
-		if ($this->size !== null)
-			$input_tag->size = $this->size;
-
-		if (strlen($this->access_key) > 0)
-			$input_tag->accesskey = $this->access_key;
+		$input_tag->accesskey = $this->access_key;
+		$input_tag->size = $this->size;
 
 		if ($this->accept_mime_types !== null)
 			$input_tag->accept = implode(',', $this->accept_mime_types);

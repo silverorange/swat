@@ -69,12 +69,10 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 		$input_tag->name = $this->id;
 		$input_tag->id = $this->id;
 		$input_tag->value = '1';
+		$input_tag->accesskey = $this->access_key;
 
 		if ($this->value)
 			$input_tag->checked = 'checked';
-
-		if (strlen($this->access_key) > 0)
-			$input_tag->accesskey = $this->access_key;
 
 		$input_tag->display();
 	}

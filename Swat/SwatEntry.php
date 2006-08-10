@@ -60,6 +60,15 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 */
 	public $minlength = null;
 
+	/**
+	 * Tab index
+	 *
+	 * The ordinal tab index position of the XHTML input tag, or null.
+	 *
+	 * @var integer
+	 */
+	public $tab_index = null;
+
 	// }}}
 	// {{{ protected properties
 
@@ -191,14 +200,10 @@ class SwatEntry extends SwatInputControl implements SwatState
 
 		$tag->value = $this->getDisplayValue();
 
-		if ($this->size !== null)
-			$tag->size = $this->size;
-
-		if ($this->maxlength !== null)
-			$tag->maxlength = $this->maxlength;
-
-		if (strlen($this->access_key) > 0)
-			$tag->accesskey = $this->access_key;
+		$tag->size = $this->size;
+		$tag->maxlength = $this->maxlength;
+		$tag->accesskey = $this->access_key;
+		$tag->tabindex = $this->tab_index;
 
 		return $tag;
 	}

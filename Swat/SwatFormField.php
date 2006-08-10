@@ -281,12 +281,8 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		$label_tag->setContent(sprintf('%s: ', $title),
 			$this->title_content_type);
 
-		$focus_id = $this->getFocusableHtmlId();
-		if ($focus_id !== null)
-			$label_tag->for = $focus_id;
-
-		if (strlen($this->access_key) > 0)
-			$label_tag->accesskey = $this->access_key;
+		$label_tag->for = $this->getFocusableHtmlId();
+		$label_tag->accesskey = $this->access_key;
 
 		return $label_tag;
 	}
