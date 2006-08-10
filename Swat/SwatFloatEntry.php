@@ -68,7 +68,8 @@ class SwatFloatEntry extends SwatNumericEntry
 	 */
 	protected function getNumericValue()
 	{
-		return SwatString::toFloat($this->value);
+		$value = trim($this->value);
+		return SwatString::toFloat($value);
 	}
 
 	// }}}

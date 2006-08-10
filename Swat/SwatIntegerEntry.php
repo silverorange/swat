@@ -63,7 +63,8 @@ class SwatIntegerEntry extends SwatNumericEntry
 	 */
 	 protected function getNumericValue()
 	 {
-		 return SwatString::toInteger($this->value);
+		 $value = trim($this->value);
+		 return SwatString::toInteger($value);
 	 }
 
 	// }}}
