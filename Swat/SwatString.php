@@ -756,7 +756,8 @@ class SwatString extends SwatObject
 		// change all locale formatting to numeric formatting
 		$remove_parts = array(
 			$lc['positive_sign'] => '',
-			$lc['thousands_sep'] => '');
+			$lc['thousands_sep'] => '',
+		);
 
 		$value = str_replace(array_keys($remove_parts),
 			array_values($remove_parts), $string);
@@ -805,7 +806,8 @@ class SwatString extends SwatObject
 		$remove_parts = array(
 			$lc['decimal_point'] => '.',
 			$lc['positive_sign'] => '',
-			$lc['thousands_sep'] => '');
+			$lc['thousands_sep'] => '',
+		);
 
 		$value = str_replace(array_keys($remove_parts),
 			array_values($remove_parts), $string);
