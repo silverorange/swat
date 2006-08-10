@@ -74,6 +74,16 @@ class SwatActions extends SwatControl implements SwatUIParent
 	private $action_items = array();
 
 	/**
+	 * The available actions for this actions selector indexed by id
+	 *
+	 * This array only contains actions that have a non-null id.
+	 *
+	 * @var array
+	 */
+	protected $action_items_by_id = array();
+
+
+	/**
 	 * An internal flag that is set to true when embedded widgets have been
 	 * created
 	 *
@@ -138,8 +148,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 			$this->action_flydown->reset();
 
 		// select the current action item based upon the flydown value
-		if (isset($this->action_items[$this->action_flydown->value])) 
-			$this->selected = $this->action_items[$this->action_flydown->value];
+		if (isset($this->action_items_by_id[$this->action_flydown->value])) 
+			$this->selected = $this->action_items_by_id[$this->action_flydown->value];
 		else
 			$this->selected = null;
 
@@ -204,8 +214,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$this->action_flydown->process();
 		$selected_id = $this->action_flydown->value;
 
-		if (isset($this->action_items[$selected_id])) {
-			$this->selected = $this->action_items[$selected_id];
+		if (isset($this->action_items_by_id[$selected_id])) {
+			$this->selected = $this->action_items_by_id[$selected_id];
 
 			if ($this->selected->widget !== null)
 				$this->selected->widget->process();
@@ -229,8 +239,11 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	public function addActionItem(SwatActionItem $item)
 	{
-		$this->action_items[$item->id] = $item;
+		$this->action_items[] = $item;
 		$item->parent = $this;
+
+		if ($item->id !== null)
+			$this->action_items_by_id[$item->id] = $item;
 	}
 
 	// }}}
