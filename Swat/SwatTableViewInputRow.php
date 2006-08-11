@@ -149,7 +149,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$replicator_field =
 			$this->getForm()->getHiddenField($this->id.'_replicators');
 
-		if ($replicator_field === null)
+		if ($replicator_field === null || strlen($replicator_field) == 0)
 			// use generated ids
 			for ($i = 0; $i < $this->number; $i++)
 				$this->replicators[] = $i;
