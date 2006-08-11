@@ -50,6 +50,14 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 */
 	public $access_key = null;
 
+	/**
+	 * Maximum number of allowable characters or null if any number of
+	 * characters may be entered
+	 *
+	 * @var integer
+	 */
+	public $maxlength = null;
+
 	// }}}
 	// {{{ public function display()
 
@@ -102,9 +110,17 @@ class SwatTextarea extends SwatInputControl implements SwatState
 			return;
 
 		$this->value = $data[$this->id];
+		$len = strlen($this->value);
 
-		if ($this->required && !strlen($this->value)) {
+		if ($this->required && $len == 0) {
 			$msg = Swat::_('The %s field is required.');
+			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+
+		} elseif ($this->maxlength !== null && $len > $this->maxlength) {
+			$msg = sprintf(
+				Swat::_('The %%s field can be at most %s characters long.'),
+				$this->maxlength);
+
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 		}
 	}
