@@ -504,8 +504,6 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	public function save() {
 		$this->checkDB();
 
-		$this->db->beginTransaction();
-
 		foreach ($this->internal_property_autosave as $name => $autosave) {
 			if ($autosave && isset($this->sub_data_objects[$name])) {
 				$object = $this->sub_data_objects[$name];
@@ -522,8 +520,6 @@ class SwatDBDataObject extends SwatObject implements Serializable
 			if (method_exists($this, $saver_method))
 				call_user_func(array($this, $saver_method));
 		}
-
-		$this->db->commit();
 
 		$this->generatePropertyHashes();
 	}
