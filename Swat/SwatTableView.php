@@ -901,7 +901,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 			// display a row of data
 			$tr_tag = new SwatHtmlTag('tr');
-			$tr_tag->class = $this->getRowClass($row, $count);
+			$tr_tag->class = $this->getRowClassString($row, $count);
 			foreach ($this->columns as $column)
 				$tr_tag->addAttributes($column->getTrAttributes($row));
 
@@ -926,7 +926,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 			// display the row columns
 			$tr_tag = new SwatHtmlTag('tr');
-			$tr_tag->class = $this->getRowClass($row, $count);
+			$tr_tag->class = $this->getRowClassString($row, $count);
 
 			if ($has_message)
 				$tr_tag->class = $tr_tag->class.' swat-error';
@@ -1038,21 +1038,49 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ protected function getRowClass()
+	// {{{ protected function getRowClasses()
 
 	/**
-	 * Gets CSS class(es) for the XHTML tr tag
+	 * Gets CSS classes for the XHTML tr tag
 	 *
 	 * @param mixed $row a data object containing the data to be displayed in
 	 *                    this row.
 	 * @param integer $count the ordinal position of this row in the table.
 	 *
-	 * @return string CSS class name(s).
+	 * @return array CSS class names.
 	 */
-	protected function getRowClass($row, $count)
+	protected function getRowClasses($row, $count)
 	{
-		$class = ($count % 2 == 1) ? 'odd': null;
-		return $class;
+		$classes = array();
+
+		if ($count % 2 == 1)
+			$classes[] = 'odd';
+
+		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function getRowClassString()
+
+	/**
+	 * Gets CSS class string for the XHTML tr tag
+	 *
+	 * @param mixed $row a data object containing the data to be displayed in
+	 *                    this row.
+	 * @param integer $count the ordinal position of this row in the table.
+	 *
+	 * @return string CSS class string.
+	 */
+	protected function getRowClassString($row, $count)
+	{
+		$class_string = null;
+
+		$classes = $this->getRowClasses($row, $count);
+
+		if (count($classes))
+			$class_string = implode(' ', $classes);
+
+		return $class_string;
 	}
 
 	// }}}
