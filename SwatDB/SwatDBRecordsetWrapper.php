@@ -543,6 +543,11 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 */
 	public function save()
 	{
+		$do_transaction = (!$this->db->in_transaction);
+
+		if ($do_transaction)
+			$this->db->beginTransaction();
+
 		foreach ($this->objects as $object) {
 			$object->setDatabase($this->db);
 			$object->save();
@@ -552,6 +557,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 			$object->setDatabase($this->db);
 			$object->delete();
 		}
+
+		if ($do_transaction)
+			$this->db->commit();
 
 		$this->removed_objects = array();
 		$this->reindex();
