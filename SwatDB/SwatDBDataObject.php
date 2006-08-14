@@ -503,7 +503,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	 */
 	public function save() {
 		$this->checkDB();
-		$do_transaction = (!$db->in_transaction);
+		$do_transaction = (!$this->db->in_transaction);
 
 		if ($do_transaction)
 			$this->db->beginTransaction();
