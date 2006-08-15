@@ -736,6 +736,9 @@ SwatChangeOrder.prototype.updateValue = function()
 			temp = temp + ',';
 
 		temp = temp + this.list_div.childNodes[i].order_value;
+
+		// update node indexes
+		this.list_div.childNodes[i].order_index = i;
 	}
 
 	// update a hidden field with current order of keys
