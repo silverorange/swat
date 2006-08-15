@@ -121,13 +121,10 @@ class SwatMoneyEntry extends SwatEntry
 			if ($frac_pos !== false &&
 				strlen(substr($value, $frac_pos + 1)) > $lc_frac) {
 
-				$msg = Swat::_('The %s field has too many decimal values. '.
+				$msg = Swat::_('The %%s field has too many decimal values. '.
 					'The currency (%s) only allows %s.');
 
-				// substitute in '%s' because a second substitution is done
-				// with the form field title
 				$msg = sprintf($msg,
-					'%s',
 					rtrim($lc['int_curr_symbol']),
 					$lc['int_frac_digits']);
 
