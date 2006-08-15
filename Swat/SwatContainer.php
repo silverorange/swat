@@ -47,6 +47,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
 		foreach ($children as $key => $child) {
 			$new_child = clone $child;
+			$new_child->parent = $this;
 			$this->children[$key] = $new_child;
 			if ($new_child->id !== null)
 				$this->children_by_id[$new_child->id] = $new_child;
