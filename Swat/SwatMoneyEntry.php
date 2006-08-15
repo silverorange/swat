@@ -103,13 +103,10 @@ class SwatMoneyEntry extends SwatEntry
 		$value = SwatString::toFloat($value);
 
 		if ($value === null) {
-			$msg = Swat::_('The %s field must be a monetary value '.
+			$msg = Swat::_('The %%s field must be a monetary value '.
 				'formatted for %s (i.e. %s).');
 
-			// substitute in '%s' because a second substitution is done
-			// with the form field title
 			$msg = sprintf($msg,
-				'%s',
 				$lc['int_curr_symbol'],
 				money_format('%n', 1000.95));
 
