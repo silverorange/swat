@@ -689,7 +689,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		if (Date::compare($this->value, $this->valid_range_start, true) == -1) {
 
 			$msg = sprintf(Swat::_('The date you have entered is invalid. '.
-				'It must be after %s.'),
+				'It must be on or after %s.'),
 				$this->getFormattedDate($this->valid_range_start));
 
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
@@ -734,7 +734,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			$day = ' %d';
 
 		if ($this->display_parts & self::MONTH)
-			$month = ' %b';
+			$month = ' %B';
 
 		if ($this->display_parts & self::YEAR)
 			$year = ' %Y';
