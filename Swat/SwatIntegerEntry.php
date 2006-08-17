@@ -30,7 +30,7 @@ class SwatIntegerEntry extends SwatNumericEntry
 		$int_value = $this->getNumericValue();
 
 		if ($int_value === null) {
-			$msg = Swat::_('The %s field must be an integer.');
+			$msg = Swat::_('The %s field must be an whole number.');
 			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
 		} else {
 			$this->value = $int_value;
