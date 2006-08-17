@@ -820,6 +820,31 @@ class SwatString extends SwatObject
 		return (is_numeric($value)) ? floatval($value) : null;
 	}
 	// }}}
+	// {{{ public static function hash()
+
+	/**
+	 * Gets a unique hash of a string
+	 *
+	 * The hashing is as unique as md5 but the hash string is shorter than md5.
+	 * This method is useful if hash strings will be visible to end-users and
+	 * shorter hash strings are desired.
+	 *
+	 * @param string $string the string to get the unique hash for.
+	 *
+	 * @return string the unique hash of the given string.
+	 */
+	public static function hash($string)
+	{
+		$hash = md5($string);
+
+		$string = '';
+		for ($i = 0; $i < strlen($hash) / 2; $i++)
+			$string .= chr(hexdec(substr($hash, $i * 2, 2)));
+
+		return str_replace('=', '', base64_encode($string));
+	}
+
+	// }}}
 	// {{{ private static function stripEntities()
 
 	/**
