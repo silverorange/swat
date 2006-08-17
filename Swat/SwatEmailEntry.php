@@ -26,6 +26,8 @@ class SwatEmailEntry extends SwatEntry
 	{
 		parent::process();
 
+		$this->value = trim($this->value);
+
 		if ($this->value === null)
 			return;
 
