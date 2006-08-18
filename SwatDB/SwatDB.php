@@ -4,6 +4,7 @@
 require_once 'MDB2.php';
 require_once 'Swat/SwatObject.php';
 require_once 'SwatDB/SwatDBField.php';
+require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/SwatDBDefaultRecordsetWrapper.php';
 require_once 'Swat/SwatDataTreeNode.php';
 require_once 'Swat/SwatTreeFlydownNode.php';
@@ -517,11 +518,7 @@ class SwatDB extends SwatObject
 				$value_list);
 		}
 
-		$do_transaction = (!$db->in_transaction);
-
-		if ($do_transaction)
-			$db->beginTransaction();
-
+		$transaction = new SwatDBTransaction($db);
 		try {
 			if (count($values)) {
 				SwatDB::debug($insert_sql);
@@ -536,15 +533,10 @@ class SwatDB extends SwatObject
 				throw new SwatDBException($rs);
 
 		} catch (Exception $e) {
-			if ($do_transaction)
-				$this->db->rollback();
-
+			$transaction->rollback();
 			throw $e;
 		}
-		
-		if ($do_transaction)
-			$db->commit();
-
+		$transaction->commit();
 	}
 
 	// }}}
@@ -588,11 +580,7 @@ class SwatDB extends SwatObject
 
 		$ret = null;
 
-		$do_transaction = (!$db->in_transaction && $id_field !== null);
-
-		if ($do_transaction)
-			$db->beginTransaction();
-
+		$transaction = new SwatDBTransaction($db);
 		try {
 			$sql = 'insert into %s (%s) values (%s)';
 			$field_list = implode(',', SwatDB::getFieldNameArray($fields));
@@ -623,14 +611,10 @@ class SwatDB extends SwatObject
 				$ret = SwatDB::getFieldMax($db, $table, $id_field);
 
 		} catch (Exception $e) {
-			if ($do_transaction)
-				$this->db->rollback();
-
+			$transaction->rollback();
 			throw $e;
 		}
-
-		if ($do_transaction)
-			$db->commit();
+		$transaction->commit();
 
 		return $ret;
 	}
