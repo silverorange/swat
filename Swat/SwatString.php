@@ -880,6 +880,27 @@ class SwatString extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function stripXHTMLTags()
+
+	/**
+	 * Removes all XHTML tags from a string
+	 *
+	 * This method is similar to the built-in
+	 * {@link http://php.net/manual/en/function.strip-tags.php strip_tags}
+	 * function in PHP but this method only strips XHTML tags. All other tags
+	 * are left intact.
+	 *
+	 * @param string $string the string to remove XHTML tags from.
+	 *
+	 * @return string the given string with all XHTML tags removed.
+	 */
+	public static function stripXHTMLTags($string)
+	{
+		$elements = implode('|', self::$xhtml_elements);
+		return preg_replace('/<\/?('.$elements.')[^<>]*?>/siu', '', $string);
+	}
+
+	// }}}
 	// {{{ private static function stripEntities()
 
 	/**
