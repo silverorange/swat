@@ -2,7 +2,7 @@
 
 require_once 'MDB2.php';
 require_once 'Swat/SwatObject.php';
-require_once 'SwatDB/SwatDBException.php';
+require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
  * A database transaction that is safe to use with database drivers that do
