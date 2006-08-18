@@ -548,14 +548,21 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		if ($do_transaction)
 			$this->db->beginTransaction();
 
-		foreach ($this->objects as $object) {
-			$object->setDatabase($this->db);
-			$object->save();
-		}
+		try {
+			foreach ($this->objects as $object) {
+				$object->setDatabase($this->db);
+				$object->save();
+			}
 
-		foreach ($this->removed_objects as $object) {
-			$object->setDatabase($this->db);
-			$object->delete();
+			foreach ($this->removed_objects as $object) {
+				$object->setDatabase($this->db);
+				$object->delete();
+			}
+		} catch (Exception $e) {
+			if ($do_transaction)
+				$this->db->rollback();
+
+			throw $e;
 		}
 
 		if ($do_transaction)

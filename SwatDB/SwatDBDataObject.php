@@ -508,21 +508,29 @@ class SwatDBDataObject extends SwatObject implements Serializable
 		if ($do_transaction)
 			$this->db->beginTransaction();
 
-		foreach ($this->internal_property_autosave as $name => $autosave) {
-			if ($autosave && isset($this->sub_data_objects[$name])) {
-				$object = $this->sub_data_objects[$name];
-				$object->save();
-				$this->setInternalValue($name, $object->getId());
+		try {
+			foreach ($this->internal_property_autosave as $name => $autosave) {
+				if ($autosave && isset($this->sub_data_objects[$name])) {
+					$object = $this->sub_data_objects[$name];
+					$object->save();
+					$this->setInternalValue($name, $object->getId());
+				}
 			}
-		}
 
-		$this->saveInternal();
+			$this->saveInternal();
 
-		foreach ($this->sub_data_objects as $name => $object) {
-			$saver_method = 'save'.str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
+			foreach ($this->sub_data_objects as $name => $object) {
+				$saver_method = 'save'.
+					str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
 
-			if (method_exists($this, $saver_method))
-				call_user_func(array($this, $saver_method));
+				if (method_exists($this, $saver_method))
+					call_user_func(array($this, $saver_method));
+			}
+		} catch (Exception $e) {
+			if ($do_transaction)
+				$this->db->rollback();
+
+			throw $e;
 		}
 
 		if ($do_transaction)
