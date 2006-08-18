@@ -6,12 +6,6 @@ img.swat-image-cell-renderer { vertical-align: middle; }
 	color: #888;
 }
 
-/* SwatTextarea */
-
-.swat-textarea {
-	padding: 4px;
-}
-
 option.swat-flydown-option-divider {
 	color: #888;
 }
