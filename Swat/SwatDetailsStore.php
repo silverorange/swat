@@ -17,6 +17,7 @@ class SwatDetailsStore extends SwatObject
 	// {{{ private properties
 
 	private $base_object = null;
+	private $base_reflector = null;
 	private $data = array();
 
 	// }}}
@@ -25,6 +26,9 @@ class SwatDetailsStore extends SwatObject
 	public function __construct($base_object = null)
 	{
 		$this->base_object = $base_object;
+		if ($this->base_object !== null)
+			$this->base_reflector =
+				new ReflectionClass(get_class($this->base_object));
 	}
 
 	// }}}
@@ -57,13 +61,13 @@ class SwatDetailsStore extends SwatObject
 			return $this->data[$name];
 
 		if ($this->base_object !== null) {
-			$reflector = new ReflectionClass(get_class($this->base_object));
-			if ($reflector->hasProperty($name)) {
-				$property = $reflector->getProperty($name);
+			if ($this->base_reflector->hasProperty($name)) {
+				$property = $this->base_reflector->getProperty($name);
 				if ($property->isPublic())
 					return $property->getValue($this->base_object);
 			}
-			if (method_exists($this->base_object, '__get'))
+
+			if ($this->base_reflector->hasMethod('__get'))
 				return $this->base_object->$name;
 		}
 
