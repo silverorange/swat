@@ -2,6 +2,7 @@
 
 require_once 'MDB2.php';
 require_once 'Swat/SwatObject.php';
+require_once 'SwatDB/SwatDBException.php';
 
 /**
  * A database transaction that is safe to use with database drivers that do
@@ -42,6 +43,16 @@ class SwatDBTransaction extends SwatObject
 	 */
 	private $in_another_transaction;
 
+	/**
+	 * Whether or not this transaction is finished
+	 *
+	 * A transaction is finished after either it is either successfully
+	 * committed or it is successfully rolled-back.
+	 *
+	 * @var boolean
+	 */
+	private $finished;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -74,8 +85,16 @@ class SwatDBTransaction extends SwatObject
 	 */
 	public function commit()
 	{
-		if (!$this->in_another_transaction)
-			$this->db->commit();
+		if ($this->finished) {
+			throw new SwatDBException('Transaction objects cannot be reused. '.
+				'Create a new SwatDBTransaction object to begin a new '.
+				'transaction.');
+		} else {
+			if (!$this->in_another_transaction)
+				$this->db->commit();
+
+			$this->finished = true;
+		}
 	}
 
 	// }}}
@@ -90,8 +109,16 @@ class SwatDBTransaction extends SwatObject
 	 */
 	public function rollback(MDB2_Driver_Common $db)
 	{
-		if (!$this->in_another_transaction)
-			$db->rollback();
+		if ($this->finished) {
+			throw new SwatDBException('Transaction objects cannot be reused. '.
+				'Create a new SwatDBTransaction object to begin a new '.
+				'transaction.');
+		} else {
+			if (!$this->in_another_transaction)
+				$db->rollback();
+
+			$this->finished = true;
+		}
 	}
 
 	// }}}
