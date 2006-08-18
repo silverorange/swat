@@ -107,7 +107,7 @@ class SwatDBTransaction extends SwatObject
 	 * prevents rolling-back a transaction if we are already inside another
 	 * transaction.
 	 */
-	public function rollback(MDB2_Driver_Common $db)
+	public function rollback()
 	{
 		if ($this->finished) {
 			throw new SwatDBException('Transaction objects cannot be reused. '.
