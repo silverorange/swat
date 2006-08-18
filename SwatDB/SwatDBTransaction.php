@@ -79,7 +79,7 @@ class SwatDBTransaction extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function beginTransaction()
+	// {{{ public function rollback()
 
 	/**
 	 * Rolls-back this database transaction
@@ -88,7 +88,7 @@ class SwatDBTransaction extends SwatObject
 	 * prevents rolling-back a transaction if we are already inside another
 	 * transaction.
 	 */
-	public function beginTransaction(MDB2_Driver_Common $db)
+	public function rollback(MDB2_Driver_Common $db)
 	{
 		if (!$this->in_another_transaction)
 			$db->rollback();
