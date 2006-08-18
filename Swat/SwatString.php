@@ -831,7 +831,8 @@ class SwatString extends SwatObject
 	 *
 	 * @param string $string the string to get the unique hash for.
 	 *
-	 * @return string the unique hash of the given string.
+	 * @return string the unique hash of the given string. The returned string
+	 *                 is safe to use inside a URI.
 	 */
 	public static function hash($string)
 	{
@@ -841,7 +842,16 @@ class SwatString extends SwatObject
 		for ($i = 0; $i < strlen($hash) / 2; $i++)
 			$string .= chr(hexdec(substr($hash, $i * 2, 2)));
 
-		return str_replace('=', '', base64_encode($string));
+		$hash = base64_encode($string);
+
+		// remove padding characters
+		$hash = str_replace('=', '', $hash);
+
+		// use modified Base64 for URL varient
+		$hash = str_replace('+', '*', $hash);
+		$hash = str_replace('/', '-', $hash);
+
+		return $hash;
 	}
 
 	// }}}
