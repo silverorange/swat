@@ -4,6 +4,7 @@ require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatDate.php';
 require_once 'Swat/exceptions/SwatClassNotFoundException.php';
 require_once 'SwatDB/SwatDB.php';
+require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
@@ -503,11 +504,8 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	 */
 	public function save() {
 		$this->checkDB();
-		$do_transaction = (!$this->db->in_transaction);
 
-		if ($do_transaction)
-			$this->db->beginTransaction();
-
+		$transaction = new SwatDBTransaction($this->db);
 		try {
 			foreach ($this->internal_property_autosave as $name => $autosave) {
 				if ($autosave && isset($this->sub_data_objects[$name])) {
@@ -527,14 +525,10 @@ class SwatDBDataObject extends SwatObject implements Serializable
 					call_user_func(array($this, $saver_method));
 			}
 		} catch (Exception $e) {
-			if ($do_transaction)
-				$this->db->rollback();
-
+			$transaction->rollback();
 			throw $e;
 		}
-
-		if ($do_transaction)
-			$this->db->commit();
+		$transaction->commit();
 
 		$this->generatePropertyHashes();
 	}
