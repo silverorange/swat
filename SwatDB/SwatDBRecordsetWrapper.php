@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatObject.php';
+require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
@@ -543,11 +544,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 */
 	public function save()
 	{
-		$do_transaction = (!$this->db->in_transaction);
-
-		if ($do_transaction)
-			$this->db->beginTransaction();
-
+		$transaction = new SwatDBTransaction($this->db);
 		try {
 			foreach ($this->objects as $object) {
 				$object->setDatabase($this->db);
@@ -559,14 +556,10 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 				$object->delete();
 			}
 		} catch (Exception $e) {
-			if ($do_transaction)
-				$this->db->rollback();
-
+			$transaction->rollback();
 			throw $e;
 		}
-
-		if ($do_transaction)
-			$this->db->commit();
+		$transaction->commit();
 
 		$this->removed_objects = array();
 		$this->reindex();
