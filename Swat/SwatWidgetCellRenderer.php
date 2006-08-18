@@ -307,6 +307,24 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	}
 
 	// }}}
+	// {{{ public function getHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects needed by this widget cell renderer
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this widget cell renderer.
+	 *
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
+	 */
+	public function getHtmlHeadEntrySet()
+	{
+		$set = parent::getHtmlHeadEntrySet();
+		$set->addEntrySet($this->getPrototypeWidget()->getHtmlHeadEntrySet());
+		return $set;
+	}
+
+	// }}}
 	// {{{ private function getForm()
 
 	/**
