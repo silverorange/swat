@@ -917,7 +917,7 @@ class SwatString extends SwatObject
 	 */
 	public static function linkify($string)
 	{
-		return preg_replace ('@(https?://[^\s"\']+\.[^\s"\'.]+)@iu',
+		return preg_replace ('@(https?://[^\s"\'\[\]]+\.[^\s"\'.\[\]]+)@iu',
 			'<a href="\1">\1</a>', $string);
 	}
 
