@@ -901,6 +901,27 @@ class SwatString extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function linkify()
+
+	/**
+	 * Replaces all URI's in a string with anchor markup tags
+	 *
+	 * This method does not know if a URI is already inside markup so it is
+	 * best to only use it on plain text.
+	 *
+	 * Only "http" and "https" URI's are currently supported.
+	 *
+	 * @param string $string the string to replace URI's in.
+	 *
+	 * @return string the given string with all URI's wrapped in anchor tags.
+	 */
+	public static function linkify($string)
+	{
+		return preg_replace ('@(https?://[^\s"\']+\.[^\s"\'.]+)@iu',
+			'<a href="\1">\1</a>', $string);
+	}
+
+	// }}}
 	// {{{ private static function stripEntities()
 
 	/**
