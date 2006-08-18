@@ -522,17 +522,25 @@ class SwatDB extends SwatObject
 		if ($do_transaction)
 			$db->beginTransaction();
 
-		if (count($values)) {
-			SwatDB::debug($insert_sql);
-			$ret = $db->query($insert_sql);
-			if (MDB2::isError($ret))
-				throw new SwatDBException($ret);
-		}
+		try {
+			if (count($values)) {
+				SwatDB::debug($insert_sql);
+				$ret = $db->query($insert_sql);
+				if (MDB2::isError($ret))
+					throw new SwatDBException($ret);
+			}
 
-		SwatDB::debug($delete_sql);
-		$rs = $db->query($delete_sql);
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs);
+			SwatDB::debug($delete_sql);
+			$rs = $db->query($delete_sql);
+			if (MDB2::isError($rs))
+				throw new SwatDBException($rs);
+
+		} catch (Exception $e) {
+			if ($do_transaction)
+				$this->db->rollback();
+
+			throw $e;
+		}
 		
 		if ($do_transaction)
 			$db->commit();
@@ -585,33 +593,41 @@ class SwatDB extends SwatObject
 		if ($do_transaction)
 			$db->beginTransaction();
 
-		$sql = 'insert into %s (%s) values (%s)';
-		$field_list = implode(',', SwatDB::getFieldNameArray($fields));
+		try {
+			$sql = 'insert into %s (%s) values (%s)';
+			$field_list = implode(',', SwatDB::getFieldNameArray($fields));
 
-		$values_in_order = array();
+			$values_in_order = array();
 
-		foreach ($fields as &$field) {
-			$value = isset($values[$field->name]) ?
-				$values[$field->name] : null;
+			foreach ($fields as &$field) {
+				$value = isset($values[$field->name]) ?
+					$values[$field->name] : null;
 
-			$values_in_order[] = $db->quote($value, $field->type);
+				$values_in_order[] = $db->quote($value, $field->type);
+			}
+
+			$value_list = implode(',', $values_in_order);
+
+			$sql = sprintf($sql,
+				$table,
+				$field_list,
+				$value_list);
+
+			SwatDB::debug($sql);
+			$rs = $db->query($sql);
+
+			if (MDB2::isError($rs))
+				throw new SwatDBException($rs);
+
+			if ($id_field !== null)
+				$ret = SwatDB::getFieldMax($db, $table, $id_field);
+
+		} catch (Exception $e) {
+			if ($do_transaction)
+				$this->db->rollback();
+
+			throw $e;
 		}
-
-		$value_list = implode(',', $values_in_order);
-
-		$sql = sprintf($sql,
-			$table,
-			$field_list,
-			$value_list);
-
-		SwatDB::debug($sql);
-		$rs = $db->query($sql);
-
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs);
-
-		if ($id_field !== null)
-			$ret = SwatDB::getFieldMax($db, $table, $id_field);
 
 		if ($do_transaction)
 			$db->commit();
