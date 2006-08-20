@@ -161,7 +161,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function displayHeader()
 	{
-		echo SwatString::minimizeEntities($this->title);
+		if ($this->title === null)
+			echo '&nbsp;';
+		else
+			echo SwatString::minimizeEntities($this->title);
 	}
 
 	// }}}
