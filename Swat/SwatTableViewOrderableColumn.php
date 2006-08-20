@@ -195,7 +195,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			$span_tag->close();
 
 		} else {
-			echo SwatString::minimizeEntities($this->title);
+			parent::displayHeader();
 		}
 
 		$anchor->close();
