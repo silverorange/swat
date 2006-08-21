@@ -115,7 +115,7 @@ class SwatDBTransaction extends SwatObject
 				'transaction.');
 		} else {
 			if (!$this->in_another_transaction)
-				$db->rollback();
+				$this->db->rollback();
 
 			$this->finished = true;
 		}
