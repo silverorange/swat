@@ -169,7 +169,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 */
 	public function setPrototypeWidget(SwatWidget $widget)
 	{
-		$this->protype_widget = $widget;
+		$this->prototype_widget = $widget;
 		$widget->parent = $this;
 	}
 
