@@ -97,8 +97,15 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 */
 	public function init()
 	{
-		if ($this->widget !== null)
-			$this->widget->init();
+		$form = $this->getForm();
+		if ($form->isSubmitted()) {
+			$replicators =
+				$form->getHiddenField($this->widget->id.'_replicators');
+
+			if ($replicators !== null)
+				foreach ($replicators as $replicator)
+					$this->createClonedWidget($replicator);
+		}
 	}
 
 	// }}}
@@ -350,31 +357,34 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 	private function getClonedWidget($replicator)
 	{
-		if (isset($this->clones[$replicator]))
-			return $this->clones[$replicator];
+		if (!isset($this->clones[$replicator]))
+			$this->createClonedWidget($replicator);
 
+		return $this->clones[$replicator];
+	}
+
+	// }}}
+	// {{{ private function createClonedWidget()
+
+	private function createClonedWidget($replicator)
+	{
 		if ($this->widget === null)
-			return null;
+			return;
 
 		$suffix = '_'.$replicator;
 		$new_widget = clone $this->widget;
 
-		if ($new_widget->id !== null) {
-			//$this->widgets[$id][$new_widget->id] = $new_widget;
+		if ($new_widget->id !== null)
 			$new_widget->id.= $suffix;
-		}
 
-		if ($new_widget instanceof SwatContainer) {
-			foreach ($new_widget->getDescendants() as $descendant) {
-				if ($descendant->id !== null) {
-					//$this->widgets[$id][$descendant->id] = $descendant;
+		if ($new_widget instanceof SwatContainer)
+			foreach ($new_widget->getDescendants() as $descendant)
+				if ($descendant->id !== null)
 					$descendant->id.= $suffix;
-				}
-			}
-		}
+
+		$new_widget->init();
 
 		$this->clones[$replicator] = $new_widget;
-		return $new_widget;
 	}
 
 	// }}}
