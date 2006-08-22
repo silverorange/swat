@@ -44,10 +44,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	public function addChild(SwatObject $child)
 	{
 		if ($this->prototype_widget === null)
-			$this->setWidget($child);
+			$this->setPrototypeWidget($child);
 		else
-			throw new SwatException('Can only add one widget to a widget cell '.
-				'renderer');
+			throw new SwatException('Can only add one widget to a widget '.
+				'cell renderer');
 	}
 
 	// }}}
@@ -161,13 +161,13 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	}
 
 	// }}}
-	// {{{ public function setWidget()
+	// {{{ public function setPrototypeWidget()
 
 	/**
 	 *
 	 * @param SwatWidget $widget
 	 */
-	public function setWidget(SwatWidget $widget)
+	public function setPrototypeWidget(SwatWidget $widget)
 	{
 		$this->protype_widget = $widget;
 		$widget->parent = $this;
