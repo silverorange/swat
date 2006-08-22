@@ -146,70 +146,102 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		if ($this->getFirst() === null)
 			return;
 
-		$messages = &$this->getMessages();
 		$container_tag = new SwatHtmlTag($this->container_tag);
 		$container_tag->id = $this->id;
 		$container_tag->class = $this->getCSSClassString();
 
-		if (count($messages) > 0)
-			$container_tag->class.= ' swat-form-field-with-messages';
-
 		$container_tag->open();
+		$this->displayTitle();
+		$this->displayContent();
+		$this->displayMessages();
+		$this->displayNotes();
+		$container_tag->close();
+	}
 
-		if ($this->title !== null) {
-			$title_tag = $this->getTitleTag($this->title);
-			$title_tag->open();
-			$title_tag->displayContent();
+	// }}}
+	// {{{ protected function displayTitle()
 
-			// TODO: widgets that are marked as required don't tell their field
-			// parent
-			if ($this->required) {
-				$span_tag = new SwatHtmlTag('span');
-				$span_tag->class = 'swat-required';
-				$span_tag->setContent(sprintf(' (%s)', Swat::_('required')));
-				$span_tag->display();
-			}
+	protected function displayTitle()
+	{
+		if ($this->title === null)
+			return;
 
-			$title_tag->close();
+		$title_tag = $this->getTitleTag($this->title);
+		$title_tag->open();
+		$title_tag->displayContent();
+		$this->displayRequired();
+		$title_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function displayRequired()
+
+	protected function displayRequired()
+	{
+		if ($this->required) {
+			$span_tag = new SwatHtmlTag('span');
+			$span_tag->class = 'swat-required';
+			$span_tag->setContent(sprintf(' (%s)', Swat::_('required')));
+			$span_tag->display();
 		}
+	}
 
+	// }}}
+	// {{{ protected function displayContent()
+
+	protected function displayContent()
+	{
 		$contents_tag = new SwatHtmlTag($this->contents_tag);
 		$contents_tag->class = 'swat-form-field-contents';
 
 		$contents_tag->open();
 		$this->displayChildren();
 		$contents_tag->close();
+	}
 
-		if (count($messages) > 0) {
-			$message_ul = new SwatHtmlTag('ul');
-			$message_ul->class = 'swat-form-field-messages';
+	// }}}
+	// {{{ protected function displayMessages()
 
-			$message_ul->open();
+	protected function displayMessages()
+	{
+		if (!$this->hasMessage())
+			return;
 
-			foreach ($messages as &$msg) {
-				$message_li = new SwatHtmlTag('li');
-				$message_li->class = $msg->getCssClass();
-				$message_li->setContent($msg->primary_content,
+		$messages = &$this->getMessages();
+
+		$message_ul = new SwatHtmlTag('ul');
+		$message_ul->class = 'swat-form-field-messages';
+		$message_li = new SwatHtmlTag('li');
+
+		$message_ul->open();
+
+		foreach ($messages as &$msg) {
+			$message_li->class = $msg->getCssClass();
+			$message_li->setContent($msg->primary_content, $msg->content_type);
+
+			if ($msg->secondary_content !== null) {
+				$secondary_span = new SwatHtmlTag('span');
+				$secondary_span->setContent($msg->secondary_content,
 					$msg->content_type);
 
-				if ($msg->secondary_content !== null) {
-					$secondary_span = new SwatHtmlTag('span');
-					$secondary_span->setContent($msg->secondary_content,
-						$msg->content_type);
-
-					$message_li->open();
-					$message_li->displayContent();
-					echo ' ';
-					$secondary_span->display();
-					$message_li->close();
-				} else {
-					$message_li->display();
-				}
+				$message_li->open();
+				$message_li->displayContent();
+				echo ' ';
+				$secondary_span->display();
+				$message_li->close();
+			} else {
+				$message_li->display();
 			}
-
-			$message_ul->close();
 		}
 
+		$message_ul->close();
+	}
+
+	// }}}
+	// {{{ protected function displayNotes()
+
+	protected function displayNotes()
+	{
 		$notes = array();
 		if ($this->note !== null)
 			$notes[] = $this->note;
@@ -240,8 +272,6 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 			$note_list->close();
 		}
-
-		$container_tag->close();
 	}
 
 	// }}}
@@ -259,6 +289,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 		if ($this->widget_class !== null)
 			$classes[] = $this->widget_class;
+
+		if ($this->hasMessage())
+			$classes[] = 'swat-form-field-with-messages';
 
 		$classes = array_merge($classes, $this->classes);
 		return $classes;
