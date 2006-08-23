@@ -495,7 +495,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	{
 		echo '<script type="text/javascript">';
 
-		echo sprintf("%s = new SwatTimeEntry('%s');\n", $this->id, $this->id);
+		printf("var %s = new SwatTimeEntry('%s');\n", $this->id, $this->id);
 
 		echo '</script>';
 	}
