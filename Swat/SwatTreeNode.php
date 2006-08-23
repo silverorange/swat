@@ -11,7 +11,8 @@ require_once 'Swat/SwatObject.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatTreeNode extends SwatObject implements RecursiveIterator
+abstract class SwatTreeNode extends SwatObject implements RecursiveIterator,
+	Countable
 {
 	// {{{ protected properties
 
@@ -228,6 +229,25 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator
 	public function valid()
 	{
 		return ($this->current() !== false);
+	}
+
+	// }}}
+	// {{{ public function count()
+
+	/**
+	 * Gets the number of nodes in this tree or subtree
+	 *
+	 * This method is needed to fulfill the Countable interface.
+	 *
+	 * @return integer the number of nodes in this tree or subtree.
+	 */
+	public function count()
+	{
+		$count = 1;
+		foreach ($this->children as $child)
+			$count += count($child);
+
+		return $count;
 	}
 
 	// }}}
