@@ -349,8 +349,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 		$form = $this->getFirstAncestor('SwatForm');
 
 		if ($form === null)
-			throw new SwatException('SwatTableView must be inside a SwatForm for '.
-				'SwatWidgetCellRenderer to work.');
+			throw new SwatException('Cell renderer container must be inside '.
+				'a SwatForm for SwatWidgetCellRenderer to work.');
 
 		return $form;
 	}
