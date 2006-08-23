@@ -174,7 +174,7 @@ class SwatMessageDisplay extends SwatControl
 	private function displayJavaScript()
 	{
 		echo '<script type="text/javascript">'."\n";
-		printf("%s_obj = new SwatMessageDisplay('%s', %s);\n",
+		printf("var %s_obj = new SwatMessageDisplay('%s', %s);\n",
 			$this->id, $this->id, count($this->_messages));
 
 		echo '</script>';
