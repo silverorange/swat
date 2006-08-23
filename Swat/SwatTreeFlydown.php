@@ -41,6 +41,22 @@ class SwatTreeFlydown extends SwatFlydown
 	protected $tree = null;
 
 	// }}}
+	// {{{ public function __construct()
+
+	/**
+	 * Creates a new tree flydown control
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+		$this->setTree(new SwatTreeFlydownNode(null, 'root'));
+	}
+
+	// }}}
 	// {{{ public function display()
 
 	/**
@@ -74,9 +90,8 @@ class SwatTreeFlydown extends SwatFlydown
 	{
 		$options = array();
 
-		if ($this->tree !== null)
-			foreach ($this->tree->getChildren() as $child_node)
-				$this->flattenTree($options, $child_node);
+		foreach ($this->tree->getChildren() as $child_node)
+			$this->flattenTree($options, $child_node);
 
 		return $options;
 	}
