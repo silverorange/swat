@@ -74,8 +74,9 @@ class SwatTreeFlydown extends SwatFlydown
 	{
 		$options = array();
 
-		foreach ($this->tree->getChildren() as $child_node)
-			$this->flattenTree($options, $child_node);
+		if ($this->tree !== null)
+			foreach ($this->tree->getChildren() as $child_node)
+				$this->flattenTree($options, $child_node);
 
 		return $options;
 	}
