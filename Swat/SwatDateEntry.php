@@ -752,7 +752,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		echo '<script type="text/javascript">';
 
-		printf("%s = new SwatDateEntry('%s');\n", $this->id, $this->id);
+		printf("var %s = new SwatDateEntry('%s');\n", $this->id, $this->id);
 
 		if ($this->display_parts & self::TIME)
 			printf("%s.setSwatTime(%s_time_entry);\n", $this->id, $this->id);
