@@ -25,22 +25,29 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	private $entries = array();
 
 	/**
-	 * A map of the order entries are inserted into this collection by
-	 *
-	 * This map is used for sorting entries on display.
+	 * HTML head entries orgainzed by type
 	 *
 	 * @var array
 	 */
-	private $insertion_order_map = array();
+	private $entries_by_type = array();
 
 	/**
-	 * A counter of the number of entries added
+	 * A lookup table of entry URIs that have already been added
 	 *
-	 * This is used for the {@link $insertion_order_map}.
+	 * This table is used to avoid duplicates.
 	 *
-	 * @var integer
+	 * @var array
 	 */
-	private $entry_counter = 0;
+	private $uris = array();
+
+	/**
+	 * A lookup table of packages that have already been displayed.
+	 *
+	 * This table is used by the recursive displayEntriesForPackage() method.
+	 *
+	 * @var array
+	 */
+	private $displayed_packages;
 
 	// }}}
 	// {{{ public function __construct()
@@ -74,12 +81,16 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	{
 		$uri = $entry->getUri();
 
-		if (!isset($this->entries[$uri])) {
-			$this->insertion_order_map[$uri] = $this->entry_counter;
-			$this->entry_counter++;
-		}
+		if (!in_array($uri, $this->uris)) {
+			$this->uris[] = $uri;
+			array_push($this->entries, $entry);
 
-		$this->entries[$uri] = $entry;
+			$type = $entry->getType();
+			if (!isset($this->entries_by_type[$type]))
+				$this->entries_by_type[$type] = array();
+
+			array_push($this->entries_by_type[$type], $entry);
+		}
 	}
 
 	// }}}
@@ -107,14 +118,9 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 */
 	public function display($uri_prefix = '')
 	{
-		// array copy
-		$entries = $this->entries;
-		usort($entries, array($this, 'compare'));
-
-		foreach ($entries as $entry) {
-			$entry->display($uri_prefix);
-			echo "\n";
-		}
+		$this->displayed_packages = array();
+		$this->displayEntriesForPackage(null, $uri_prefix);
+		echo "\n";
 	}
 
 	// }}}
@@ -128,13 +134,9 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 */
 	public function toArray($instance_of = null)
 	{
-		// array copy
-		$entries = $this->entries;
-		usort($entries, array($this, 'compare'));
-
 		$return = array();
 
-		foreach ($entries as $entry)
+		foreach ($this->entries as $entry)
 			if ($instance_of == null || $entry instanceof $instance_of)
 				$return[] = $entry;
 
@@ -142,36 +144,56 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	}
 
 	// }}}
-	// {{{ private function compare()
+	// {{{ protected function displayEntriesForPackage()
 
-	/**
-	 * Compares two HTML head entries within this set
-	 *
-	 * Entries are compared within the context of this set. Entries are
-	 * compared first on their class name and then on their display order.
-	 * Entries with the same display order are compared based on their
-	 * insertion order.
-	 *
-	 * @param SwatHtmlHeadEntry $entry1 the first entry to compare.
-	 * @param SwatHtmlHeadEntry $entry2 the second entry to compare.
-	 *
-	 * @return integer a tri-value with 0 meaning the two entries are equal,
-	 *                  1 meaning entry1 is greater than entry2 and -1 meaning
-	 *                  entry1 is less than entry 2.
-	 */
-	private function compare($entry1, $entry2)
+	protected function displayEntriesForPackage($package_id, $uri_prefix)
 	{
-		$value = strcmp(get_class($entry1), get_class($entry2));
-		if ($value !== 0)
-			return $value;
+		if ($package_id === null) {
+			/*
+			 * Displaying entries for the site code, so any non-null package ids
+			 * are dependencies of the site code and should be displayed first.
+			 */
+			foreach ($this->entries as $entry)
+				if ($entry->getPackageId() !== null)
+					$this->displayEntriesForPackage($entry->getPackageId(), $uri_prefix);
 
-		if ($entry1->getDisplayOrder() == $entry2->getDisplayOrder())
-			return
-				($this->insertion_order_map[$entry1->getUri()] >
-				$this->insertion_order_map[$entry2->getUri()]) ? 1 : -1;
+		} else {
+			/*
+			 * Displaying entries for a package, so find what packages are
+			 * dependiencies of this package and display their entries first.
+			 */
+			$dependency_method = array($package_id, 'getDependencies');
 
-		return
-			($entry1->getDisplayOrder() > $entry2->getDisplayOrder()) ? 1 : -1;
+			if (is_callable($dependency_method)) {
+				$dependent_packages =
+					call_user_func(array($package_id, 'getDependencies'));
+
+				foreach ($dependent_packages as $dep_package_id)
+					$this->displayEntriesForPackage($dep_package_id, $uri_prefix);
+			}
+		}
+
+		/*
+		 * Track which packages have already been displayed in order to display
+		 * each package exactly once.
+		 */
+		if (in_array($package_id, $this->displayed_packages))
+			return;
+		else
+			$this->displayed_packages[] = $package_id;
+
+		// Display the entries for this package.
+		echo "\n\t", '<!-- head entries for ',
+			($package_id === null) ? 'site code' : 'package '.$package_id, "-->\n\t";
+
+		foreach ($this->entries_by_type as $entries) {
+			foreach ($entries as $entry) {
+				if ($entry->getPackageId() === $package_id) {
+					$entry->display($uri_prefix);
+					echo "\n\t";
+				}
+			}
+		}
 	}
 
 	// }}}

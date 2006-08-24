@@ -70,7 +70,7 @@ abstract class SwatUIObject extends SwatObject
 	 * @param integer $display_order the relative order in which to display
 	 *                                this stylesheet head entry.
 	 */
-	public function addStyleSheet($stylesheet, $display_order = 0)
+	public function addStyleSheet($stylesheet, $package_id = Swat::PACKAGE_ID)
 	{
 		if ($this->html_head_entry_set === null)
 			throw new SwatException(sprintf("Child class '%s' did not ".
@@ -79,7 +79,7 @@ abstract class SwatUIObject extends SwatObject
 				'by creating a new HTML head entry set.', get_class($this)));
 
 		$this->html_head_entry_set->addEntry(
-			new SwatStyleSheetHtmlHeadEntry($stylesheet, $display_order));
+			new SwatStyleSheetHtmlHeadEntry($stylesheet, $package_id));
 	}
 
 	// }}}
@@ -93,7 +93,7 @@ abstract class SwatUIObject extends SwatObject
 	 * @param integer $display_order the relative order in which to display
 	 *                                this JavaScript head entry.
 	 */
-	public function addJavaScript($java_script, $display_order = 0)
+	public function addJavaScript($java_script, $package_id = Swat::PACKAGE_ID)
 	{
 		if ($this->html_head_entry_set === null)
 			throw new SwatException(sprintf("Child class '%s' did not ".
@@ -102,7 +102,7 @@ abstract class SwatUIObject extends SwatObject
 				'by creating a new HTML head entry set.', get_class($this)));
 
 		$this->html_head_entry_set->addEntry(
-			new SwatJavaScriptHtmlHeadEntry($java_script, $display_order));
+			new SwatJavaScriptHtmlHeadEntry($java_script, $package_id));
 	}
 
 	// }}}

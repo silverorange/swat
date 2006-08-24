@@ -24,15 +24,14 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	protected $uri = '';
 
 	/**
-	 * The relative order in which to display this HTML head entry relative
-	 * to other HTML head entries in the same collection
+	 * The package this HTML head entry belongs to.
 	 *
-	 * By default, entries are created with a display order of 0. Lower numbers
-	 * are displayed before higher numbers.
+	 * When HTML head entries are displayed, they are grouped by package and
+	 * groups are order by inter-package dependencies.
 	 *
-	 * @var integer
+	 * @var string
 	 */
-	protected $display_order = 0;
+	protected $package_id = null;
 
 	// }}}
 	// {{{ public function __construct()
@@ -41,13 +40,13 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	 * Creates a new HTML head entry
 	 *
 	 * @param string  $uri the uri of the entry.
-	 * @param integer $display_order the relative order in which to display
-	 *                                this HTML head entry.
+	 * @param integer $package_id the package id of the package this HTML head
+	 *                             entry belongs to.
 	 */
-	public function __construct($uri, $display_order = 0)
+	public function __construct($uri, $package_id = null)
 	{
 		$this->uri = $uri;
-		$this->display_order = $display_order;
+		$this->package_id = $package_id;
 	}
 
 	// }}}
@@ -76,16 +75,29 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function getDisplayOrder()
+	// {{{ public function getType()
 
 	/**
-	 * Gets the display order of this HTML head entry
+	 * Gets the type of this HTML head entry
 	 *
-	 * @return integer the display order of this HTML head entry.
+	 * @return string the type of this HTML head entry.
 	 */
-	public function getDisplayOrder()
+	public function getType()
 	{
-		return $this->display_order;
+		return get_class($this);
+	}
+
+	// }}}
+	// {{{ public function getPackageId()
+
+	/**
+	 * Gets the package id of this HTML head entry
+	 *
+	 * @return string the package id of this HTML head entry.
+	 */
+	public function getPackageId()
+	{
+		return $this->package_id;
 	}
 
 	// }}}
