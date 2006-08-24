@@ -12,6 +12,11 @@ class Swat
 	// {{{ constants
 
 	/**
+	 * The package identifier
+	 */
+	const PACKAGE_ID = 'Swat';
+
+	/**
 	 * The gettext domain for Swat
 	 *
 	 * This is used to support multiple locales.
@@ -144,6 +149,19 @@ class Swat
 	public static function printObject($object)
 	{
 		echo '<pre>'.print_r($object, true).'</pre>';
+	}
+
+	// }}}
+	// {{{ public static function getDependencies()
+
+	/**
+	 * Gets the packages this package depends on
+	 *
+	 * @return array an array of package IDs that this package depends on.
+	 */
+	public static function getDependencies()
+	{
+		return array();
 	}
 
 	// }}}
