@@ -150,12 +150,14 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	{
 		if ($package_id === null) {
 			/*
-			 * Displaying entries for the site code, so any non-null package ids
-			 * are dependencies of the site code and should be displayed first.
+			 * Displaying entries for the site code, so any non-null package
+			 * ids are dependencies of the site code and should be displayed
+			 * first.
 			 */
 			foreach ($this->entries as $entry)
 				if ($entry->getPackageId() !== null)
-					$this->displayEntriesForPackage($entry->getPackageId(), $uri_prefix);
+					$this->displayEntriesForPackage(
+						$entry->getPackageId(), $uri_prefix);
 
 		} else {
 			/*
@@ -169,13 +171,14 @@ class SwatHtmlHeadEntrySet extends SwatObject
 					call_user_func(array($package_id, 'getDependencies'));
 
 				foreach ($dependent_packages as $dep_package_id)
-					$this->displayEntriesForPackage($dep_package_id, $uri_prefix);
+					$this->displayEntriesForPackage(
+						$dep_package_id, $uri_prefix);
 			}
 		}
 
 		/*
-		 * Track which packages have already been displayed in order to display
-		 * each package exactly once.
+		 * Track which packages have already been displayed in order to
+		 * display each package exactly once.
 		 */
 		if (in_array($package_id, $this->displayed_packages))
 			return;
@@ -184,7 +187,8 @@ class SwatHtmlHeadEntrySet extends SwatObject
 
 		// Display the entries for this package.
 		echo "\n\t", '<!-- head entries for ',
-			($package_id === null) ? 'site code' : 'package '.$package_id, "-->\n\t";
+			($package_id === null) ?
+				'site code' : 'package '.$package_id, "-->\n\t";
 
 		foreach ($this->entries_by_type as $entries) {
 			foreach ($entries as $entry) {
