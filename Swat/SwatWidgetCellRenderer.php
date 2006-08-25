@@ -32,6 +32,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 	private $mappings = array();
 	private $clones = array();
+	private $property_values = array();
 
 	// }}}
 	// {{{ public function addChild()
@@ -80,9 +81,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	public function __set($name, $value)
 	{
 		if (array_key_exists($name, $this->mappings)) {
-			$object = $this->mappings[$name]['object'];
-			$property = $this->mappings[$name]['property'];
-			$object->$property = $value;
+			$this->property_values[$name] = $value;
 		} else {
 			// TODO: throw something meaningful
 			throw new SwatException();
@@ -150,11 +149,14 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			return;
 
 		if ($this->replicator_id === null) {
-			if ($this->prototype_widget !== null)
+			if ($this->prototype_widget !== null) {
+				$this->applyPropertyValuesToPrototypeWidget();
 				$this->prototype_widget->display();
+			}
 		} else {
 			$form = $this->getForm();
 			$widget = $this->getClonedWidget($this->replicator_id);
+			$this->applyPropertyValuesToClonedWidget($widget);
 
 			if ($form === null) {
 				throw new SwatException('Cell renderer container must be inside '.
@@ -370,6 +372,54 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			$this->createClonedWidget($replicator);
 
 		return $this->clones[$replicator];
+	}
+
+	// }}}
+	// {{{ private function applyPropertyValuesToPrototypeWidget()
+
+	private function applyPropertyValuesToPrototypeWidget()
+	{
+		foreach ($this->property_values as $name => $value) {
+			$object = $this->mappings[$name]['object'];
+			$property = $this->mappings[$name]['property'];
+			$object->$property = $value;
+		}
+	}
+
+	// }}}
+	// {{{ private function applyPropertyValuesToClonedWidget()
+
+	private function applyPropertyValuesToClonedWidget($cloned_widget)
+{
+		foreach ($this->property_values as $name => $value) {
+			$object = $this->mappings[$name]['object'];
+			$property = $this->mappings[$name]['property'];
+
+			$prototype_descendendents = array($this->prototype_widget);
+			$cloned_descendendents = array($cloned_widget);
+
+			if ($this->prototype_widget instanceof SwatContainer) {
+				$prototype_descendendents = array_merge($prototype_descendendents, 
+					$this->prototype_widget->getDescendants());
+
+				$cloned_descendendents = array_merge($cloned_descendendents,
+					$this->cloned_widget->getDescendants());
+			}
+
+			$cloned_object = null;
+			foreach ($prototype_descendendents as $index => $prototype_object) {
+				if ($object === $prototype_object) {
+					$cloned_object = $cloned_descendendents[$index];
+					break;
+				}
+			}
+			
+			if ($cloned_object === null)
+				throw new SwatException('Cloned widget tree does not match '.
+					'prototype widget tree.');
+			else
+				$cloned_object->$property = $value;
+		}
 	}
 
 	// }}}
