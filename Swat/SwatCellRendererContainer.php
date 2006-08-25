@@ -135,6 +135,19 @@ abstract class SwatCellRendererContainer extends SwatUIObject
 	}
 
 	// }}}
+	// {{{ public function getFirstRenderer()
+
+	/**
+	 * Gets the first cell renderer in this column
+	 *
+	 * @return SwatCellRenderer the first renderer.
+	 */
+	public function getFirstRenderer()
+	{
+		return $this->getRendererByPosition(0);
+	}
+
+	// }}}
 	// {{{ public function addChild()
 
 	/**
