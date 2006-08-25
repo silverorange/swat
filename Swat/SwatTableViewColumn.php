@@ -42,6 +42,16 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	public $title = '';
 
 	/**
+	 * Optional abbreviated title of this column
+	 *
+	 * If set, an HTML abbr tag is used to display the $title property along
+	 * with this abbreviation of the title.
+	 *
+	 * @var string
+	 */
+	public $abbreviated_title = null;
+
+	/**
 	 * The {@link SwatTableView} associated with this column
 	 *
 	 * The table view is the parent of this object.
@@ -162,9 +172,18 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	public function displayHeader()
 	{
 		if (strlen($this->title) == 0)
-			echo '&nbsp;';
+			$title = '&nbsp;';
 		else
-			echo SwatString::minimizeEntities($this->title);
+			$title = $this->title;
+
+		if ($this->abbreviated_title === null) {
+			echo SwatString::minimizeEntities($title);
+		} else {
+			$abbr_tag = new SwatHtmlTag('abbr');
+			$abbr_tag->title = $title;
+			$abbr_tag->setContent($this->abbreviated_title);
+			$abbr_tag->display();
+		}
 	}
 
 	// }}}
