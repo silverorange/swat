@@ -144,7 +144,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject
 	 */
 	public function getFirstRenderer()
 	{
-		return $this->getRendererByPosition(0);
+		return $this->renderers->getFirst();
 	}
 
 	// }}}
