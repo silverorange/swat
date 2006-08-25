@@ -36,6 +36,15 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	public $format = SwatDate::DF_DATE_TIME;
 
 	/**
+	 * Time Zone Format
+	 *
+	 * A time zone format class constant from SwatDate.
+	 *
+	 * @var integer
+	 */
+	public $time_zone_format = null;
+
+	/**
 	 * The time zone to render the date in
 	 *
 	 * The time zone may be specified either as a time zone identifier valid
@@ -70,7 +79,8 @@ class SwatDateCellRenderer extends SwatCellRenderer
 					$date->convertTZbyID($this->display_time_zone);
 			}
 
-			echo SwatString::minimizeEntities($date->format($this->format));
+			echo SwatString::minimizeEntities(
+				$date->format($this->format, $this->time_zone_format));
 		}
 	}
 
