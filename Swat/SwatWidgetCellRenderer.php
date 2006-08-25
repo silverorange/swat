@@ -100,7 +100,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	public function init()
 	{
 		$form = $this->getForm();
-		if ($form->isSubmitted()) {
+		if ($form !== null && $form->isSubmitted()) {
 			$replicators = $form->getHiddenField(
 					$this->prototype_widget->id.'_replicators');
 
@@ -119,8 +119,11 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	public function process()
 	{
 		$form = $this->getForm();
-		$replicators = $form->getHiddenField(
-			$this->prototype_widget->id.'_replicators');
+		if ($form === null)
+			$replicators = null;
+		else
+			$replicators = $form->getHiddenField(
+				$this->prototype_widget->id.'_replicators');
 
 		if ($replicators === null) {
 			if ($this->prototype_widget !== null)
@@ -138,6 +141,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 	/**
 	 *
+	 *
+	 * @throws SwatException
 	 */
 	public function render()
 	{
@@ -151,9 +156,17 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			$form = $this->getForm();
 			$widget = $this->getClonedWidget($this->replicator_id);
 
-			// TODO: make sure there actually is an id
-			$form->addHiddenField($this->prototype_widget->id.'_replicators',
-				array_keys($this->clones));
+			if ($form === null) {
+				throw new SwatException('Cell renderer container must be inside '.
+					'a SwatForm for SwatWidgetCellRenderer to work.');
+			} else {
+				if ($this->prototype_widget->id === null)
+					throw new SwatException(
+						'Prototype widget must have a non-null id.');
+				else
+					$form->addHiddenField($this->prototype_widget->id.'_replicators',
+						array_keys($this->clones));
+			}
 
 			if ($widget !== null)
 				$widget->display();
@@ -341,17 +354,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 * Gets the form
 	 *
 	 * @return SwatForm the form this cell renderer's view is contained in.
-	 *
-	 * @throws SwatException
 	 */
 	private function getForm()
 	{
 		$form = $this->getFirstAncestor('SwatForm');
-
-		if ($form === null)
-			throw new SwatException('Cell renderer container must be inside '.
-				'a SwatForm for SwatWidgetCellRenderer to work.');
-
 		return $form;
 	}
 
