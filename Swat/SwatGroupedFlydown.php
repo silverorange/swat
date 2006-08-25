@@ -117,7 +117,6 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 	{
 		$children = $node->getChildren();
 		$flydown_option = clone $node->getOption();
-		$option_tag->value = serialize($flydown_option->value);
 		$path[] = $flydown_option->value;
 
 		if ($level == 1 && count($children) > 0 &&
@@ -134,6 +133,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 		} else {
 			$flydown_option->value = $path;
 			$option_tag = new SwatHtmlTag('option');
+			$option_tag->value = serialize($flydown_option->value);
 
 			if ($flydown_option instanceof SwatFlydownDivider) {
 				$option_tag->disabled = 'disabled';
