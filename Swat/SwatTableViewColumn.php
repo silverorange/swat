@@ -514,6 +514,8 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	protected function getCSSClassNames()
 	{
+		$classes = array();
+
 		// instance specific class
 		if ($this->id !== null && !$this->has_auto_id) {
 			$column_class = str_replace('_', '-', $this->id);
@@ -521,7 +523,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		}
 
 		// base classes
-		$classes = $this->getBaseCSSClassNames();
+		$classes = array_merge($classes, $this->getBaseCSSClassNames());
 
 		// user-specified classes
 		$classes = array_merge($classes, $this->classes);
