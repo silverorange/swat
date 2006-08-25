@@ -11,7 +11,51 @@ require_once 'Date.php';
  */
 class SwatDate extends Date
 {
-	// {{{ constants
+	// {{{ time zone format constants
+
+	/**
+	 * America/Halifax
+	 */
+	const TZ_ID                     = 1;
+
+	/**
+	 * AST
+	 */
+	const TZ_SHORT                  = 2;
+
+	/**
+	 * Atlantic Standard Time
+	 */
+	const TZ_LONG                   = 3;
+
+	/**
+	 * ADT
+	 */
+	const TZ_DST_SHORT              = 4;
+
+	/**
+	 * Atlantic Daylight Time
+	 */
+	const TZ_DST_LONG               = 5;
+
+	/**
+	 * AST/ADT
+	 */
+	const TZ_COMBINED               = 6;
+
+	/**
+	 * AST or ADT, depending on inDaylightTime() for the date.
+	 */
+	const TZ_CURRENT_SHORT          = 7;
+
+	/**
+	 * Atlantic Standard Time or Atlantic Daylight Time,
+	 * depending on inDaylightTime() for the date.
+	 */
+	const TZ_CURRENT_LONG           = 8;
+
+	// }}}
+	// {{{ date format constants
 
 	/**
 	 * 07/02/02
@@ -93,15 +137,71 @@ class SwatDate extends Date
 	 * Formats this date given either a format string or a format id
 	 *
 	 * @param mixed $format either a format string or an integer format id.
+	 * @param integer $tz_format optional time zone format id.
 	 *
 	 * @return string the formatted date.
 	 */
-	public function format($format)
+	public function format($format, $tz_format = null)
 	{
 		if (is_int($format))
 			$format = self::getFormatById($format);
 
-		return parent::format($format);
+		$out = parent::format($format);
+
+		if ($tz_format !== null)
+			$out.= ' '.$this->formatTZ($tz_format);
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ public function formatTZ()
+
+	/**
+	 * Formats the time zone part of this date
+	 *
+	 * @param integer $format an integer time zone format id.
+	 *
+	 * @return string the formatted time zone.
+	 */
+	public function formatTZ($format)
+	{
+		$out = '';
+
+		switch ($format) {
+		case self::TZ_ID:
+			$out = $this->tz->getID();
+			break;
+		case self::TZ_SHORT:
+			$out = $this->tz->getShortName();
+			break;
+		case self::TZ_LONG:
+			$out = $this->tz->getLongName();
+			break;
+		case self::TZ_DST_SHORT:
+			$out = $this->tz->getDSTShortName();
+			break;
+		case self::TZ_DST_LONG:
+			$out = $this->tz->getDSTLongName();
+			break;
+		case self::TZ_CURRENT_SHORT:
+			$out = $this->tz->inDaylightTime($this) ? 
+				$this->tz->getDSTShortName() : $this->tz->getShortName();
+
+			break;
+		case self::TZ_CURRENT_LONG:
+			$out = $this->tz->inDaylightTime($this) ? 
+				$this->tz->getDSTLongName() : $this->tz->getLongName();
+
+			break;
+		case self::TZ_COMBINED:
+			$out = sprintf('%s/%s', 
+				$this->tz->getShortName(), $this->tz->getDSTShortName());
+
+			break;
+		}
+
+		return $out;
 	}
 
 	// }}}
@@ -118,7 +218,7 @@ class SwatDate extends Date
 	}
 
 	// }}}
-	// {{{ public static function getFormatById(
+	// {{{ public static function getFormatById()
 
 	/**
 	 * Gets a date format string by id
