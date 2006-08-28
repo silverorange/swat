@@ -73,7 +73,7 @@ class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicable
 		foreach ($this->children as $child_widget)
 			$local_children[] = $this->remove($child_widget);
 
-		$container = new SwatContainer();
+		$container = new SwatDisplayableContainer();
 		$container->id = $this->id;
 
 		// then we clone, change the id and add back to the widget tree
