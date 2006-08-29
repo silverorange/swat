@@ -47,8 +47,6 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 		if (!$this->visible)
 			return;
 
-		$selected = false;
-
 		// tree is copied for display so we can add a blank node if show_blank
 		// is true
 		$display_tree = $this->getDisplayTree();
@@ -111,9 +109,11 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 	 * @param integer $level the current level of the tree node.
 	 * @param array $path an array of values representing the tree path to
 	 *                     this node.
+	 * @param boolean $selected whether or not an element has been selected
+	 *                           yet.
 	 */
 	protected function displayNode(SwatTreeFlydownNode $node, $level = 0,
-		$path = array())
+		$path = array(), $selected = false)
 	{
 		$children = $node->getChildren();
 		$flydown_option = clone $node->getOption();
@@ -127,7 +127,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 			$optgroup_tag->label = $flydown_option->title;
 			$optgroup_tag->open();
 			foreach($node->getChildren() as $child_node)
-				$this->displayNode($child_node, $level + 1, $path);
+				$this->displayNode($child_node, $level + 1, $path, $selected);
 
 			$optgroup_tag->close();
 		} else {
@@ -143,7 +143,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 				$option_tag->removeAttribute('class');
 			}
 
-			if ($this->value === $flydown_option->value &&
+			if (serialize($this->path) == $option_tag->value &&
 				$selected === false &&
 				!($flydown_option instanceof SwatFlydownDivider)) {
 
@@ -157,7 +157,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 			$option_tag->display();
 
 			foreach($children as $child_node)
-				$this->displayNode($child_node, $level + 1, $path);
+				$this->displayNode($child_node, $level + 1, $path, $selected);
 		}
 	}
 
