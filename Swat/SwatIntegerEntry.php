@@ -27,13 +27,13 @@ class SwatIntegerEntry extends SwatNumericEntry
 		if ($this->value === null)
 			return;
 
-		$int_value = $this->getNumericValue();
+		$integer_value = $this->getNumericValue();
 
-		if ($int_value === null) {
-			$msg = Swat::_('The %s field must be a whole number.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+		if ($integer_value === null) {
+			$message = $this->getValidationMessage('integer');
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 		} else {
-			$this->value = $int_value;
+			$this->value = $integer_value;
 		}
 	}
 
@@ -65,6 +65,24 @@ class SwatIntegerEntry extends SwatNumericEntry
 	{
 		$value = trim($this->value);
 		return SwatString::toInteger($value);
+	}
+
+	// }}}
+	// {{{ protected function getValidationMessage()
+
+	/**
+	 * Get validation message
+	 *
+	 * @see SwatEntry::getValidationMessage()
+	 */
+	protected function getValidationMessage($id)
+	{
+		switch ($id) {
+		case 'integer':
+			return Swat::_('The %s field must be an integer.');
+		default:
+			return parent::getValidationMessage($id);
+		}
 	}
 
 	// }}}

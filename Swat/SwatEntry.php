@@ -126,22 +126,22 @@ class SwatEntry extends SwatInputControl implements SwatState
 			return;
 
 		} elseif ($this->value === null) {
-			$msg = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$message = $this->getValidationMessage('required');
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 
 		} elseif ($this->maxlength !== null && $len > $this->maxlength) {
-			$msg = sprintf(
-				Swat::_('The %%s field can be at most %s characters long.'),
+			$message = sprintf(
+				$this->getValidationMessage('too-long'),
 				$this->maxlength);
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 
 		} elseif ($this->minlength !== null && $len < $this->minlength) {
-			$msg = sprintf(
-				Swat::_('The %%s field must be at least %s characters long.'),
+			$message = sprintf(
+				$this->getValidationMessage('too-short'),
 				$this->minlength);
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 
 		}
 	}
@@ -174,6 +174,31 @@ class SwatEntry extends SwatInputControl implements SwatState
 	public function setState($state)
 	{
 		$this->value = $state;
+	}
+
+	// }}}
+	// {{{ protected function getValidationMessage()
+
+	/**
+	 * Get validation message
+	 *
+	 * Can be used by sub-classes to change the validation messages.
+	 *
+	 * @param string $id a string identifier for the message.
+	 * @return string The validation message.
+	 */
+	protected function getValidationMessage($id)
+	{
+		switch ($id) {
+		case 'required':
+			return Swat::_('The %s field is required.');
+		case 'too-long':
+			return Swat::_('The %s field is required.');
+		case 'too-short':
+			return Swat::_('The %%s field can be at most %s characters long.');
+		default:
+			return null;
+		}
 	}
 
 	// }}}
