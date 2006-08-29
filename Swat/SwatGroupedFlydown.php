@@ -62,7 +62,6 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 
 			$select_tag->open();
 
-
 			foreach ($display_tree->getChildren() as $child)
 				$this->displayNode($child, 1);
 
