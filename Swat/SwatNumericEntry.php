@@ -75,21 +75,43 @@ abstract class SwatNumericEntry extends SwatEntry
 		if ($value !== null) {
 			if ($this->minimum_value !== null &&
 				$value < $this->minimum_value) {
-				$msg = sprintf(Swat::_(
-					'The %%s field must not be less than %s.'),
+				$message = sprintf(
+					$this->getValidationMessage('below-minimum'),
 					SwatString::numberFormat($this->minimum_value));
 
-				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+				$this->addMessage(
+					new SwatMessage($message, SwatMessage::ERROR));
 			}
 
 			if ($this->maximum_value !== null &&
 				$value > $this->maximum_value) {
-				$msg = sprintf(Swat::_(
-					'The %%s field must not be more than %s.'),
+				$message = sprintf(
+					$this->getValidationMessage('above-maximum'),
 					SwatString::numberFormat($this->maximum_value));
 
-				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+				$this->addMessage(
+					new SwatMessage($message, SwatMessage::ERROR));
 			}
+		}
+	}
+
+	// }}}
+	// {{{ protected function getValidationMessage()
+
+	/**
+	 * Get validation message
+	 *
+	 * @see SwatEntry::getValidationMessage()
+	 */
+	protected function getValidationMessage($id)
+	{
+		switch ($id) {
+		case 'below-minimum':
+			return Swat::_('The %%s field must not be less than %s.');
+		case 'above-maximum':
+			return Swat::_('The %%s field must not be more than %s.');
+		default:
+			return parent::getValidationMessage($id);
 		}
 	}
 
