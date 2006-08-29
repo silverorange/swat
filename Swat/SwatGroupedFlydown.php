@@ -143,7 +143,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 				$option_tag->removeAttribute('class');
 			}
 
-			if (serialize($this->path) == $option_tag->value &&
+			if (serialize($this->path) === $option_tag->value &&
 				$selected === false &&
 				!($flydown_option instanceof SwatFlydownDivider)) {
 
