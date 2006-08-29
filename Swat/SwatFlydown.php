@@ -234,7 +234,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	/**
 	 * Displays this flydown if there is only a single option
 	 */
-	protected function displaySingle($flydown_option)
+	protected function displaySingle(SwatOption $flydown_option)
 	{
 		$title = $flydown_option->title;
 		$value = $flydown_option->value;
