@@ -112,25 +112,23 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 	 *                           yet.
 	 */
 	protected function displayNode(SwatTreeFlydownNode $node, $level = 0,
-		$path = array(), $selected = false)
+		$selected = false)
 	{
 		$children = $node->getChildren();
-		$flydown_option = clone $node->getOption();
-		$path[] = $flydown_option->value;
+		$flydown_option = $node->getOption();
 
 		if ($level == 1 && count($children) > 0 &&
-			$flydown_option->value === null &&
+			end($flydown_option->value) === null &&
 			!($flydown_option instanceof SwatFlydownDivider)) {
 
 			$optgroup_tag = new SwatHtmlTag('optgroup');
 			$optgroup_tag->label = $flydown_option->title;
 			$optgroup_tag->open();
 			foreach($node->getChildren() as $child_node)
-				$this->displayNode($child_node, $level + 1, $path, $selected);
+				$this->displayNode($child_node, $level + 1, $selected);
 
 			$optgroup_tag->close();
 		} else {
-			$flydown_option->value = $path;
 			$option_tag = new SwatHtmlTag('option');
 			$option_tag->value = serialize($flydown_option->value);
 
@@ -156,7 +154,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 			$option_tag->display();
 
 			foreach($children as $child_node)
-				$this->displayNode($child_node, $level + 1, $path, $selected);
+				$this->displayNode($child_node, $level + 1, $selected);
 		}
 	}
 
@@ -170,17 +168,18 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 	 * @param SwatTreeFlydownNode $tree the source tree node to build from.
 	 * @param SwatTreeFlydownNode $parent the destination parent node to add
 	 *                                     display tree nodes to.
+	 * @param array $path the current path of the display tree.
 	 */
 	protected function buildDisplayTree(SwatTreeFlydownNode $tree,
-		SwatTreeFlydownNode $parent)
+		SwatTreeFlydownNode $parent, $path = array())
 	{
 		$flydown_option = $tree->getOption();
-		$new_node = new SwatTreeFlydownNode($flydown_option->value,
-			$flydown_option->title);
+		$path[] = $flydown_option->value;
+		$new_node = new SwatTreeFlydownNode($path, $flydown_option->title);
 
 		$parent->addChild($new_node);
 		foreach ($tree->getChildren() as $child)
-			$this->buildDisplayTree($child, $new_node);
+			$this->buildDisplayTree($child, $new_node, $path);
 	}
 
 	// }}}
@@ -191,7 +190,10 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 	 *
 	 * The display tree is copied from this grouped flydown's tree. If
 	 * {@link SwatGroupedFlydown::$show_blank} is true, a blank node is
-	 * inserted at the beginning of the display tree.
+	 * inserted as the first child of the root node of the display tree.
+	 *
+	 * The value of a display tree node is set to an array representing the
+	 * path to the node in the display tree.
 	 *
 	 * @see setTree()
 	 */
