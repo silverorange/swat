@@ -49,7 +49,8 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 	{
 		parent::__construct($id);
 		$this->addJavaScript(
-			'packages/swat/javascript/swat-table-view-checkbox-column.js');
+			'packages/swat/javascript/swat-table-view-checkbox-column.js',
+			Swat::PACKAGE_ID);
 	}
 
 	// }}}

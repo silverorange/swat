@@ -68,7 +68,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		$time_zone_list = $this->parseAreaWhitelist($area_whitelist);
 		$this->setAreas($time_zone_list);
 
-		$this->addJavaScript('packages/swat/javascript/swat-cascade.js');
+		$this->addJavaScript('packages/swat/javascript/swat-cascade.js',
+			Swat::PACKAGE_ID);
 	}
 
 	// }}}

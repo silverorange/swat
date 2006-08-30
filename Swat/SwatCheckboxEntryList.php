@@ -57,8 +57,14 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-		$this->addJavaScript('packages/swat/javascript/swat-checkbox-entry-list.js');
-		$this->addStyleSheet('packages/swat/styles/swat-checkbox-entry-list.css');
+
+		$this->addJavaScript(
+			'packages/swat/javascript/swat-checkbox-entry-list.js',
+			Swat::PACKAGE_ID);
+
+		$this->addStyleSheet(
+			'packages/swat/styles/swat-checkbox-entry-list.css',
+			Swat::PACKAGE_ID);
 	}
 
 	// }}}

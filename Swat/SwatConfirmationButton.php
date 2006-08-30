@@ -26,7 +26,8 @@ class SwatConfirmationButton extends SwatButton
 		parent::__construct($id);
 
 		$this->addJavaScript(
-			'packages/swat/javascript/swat-confirmation-button.js');
+			'packages/swat/javascript/swat-confirmation-button.js',
+			Swat::PACKAGE_ID);
 
 		$this->confirmation_message =
 			Swat::_('Are you sure you wish to continue?');

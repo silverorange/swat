@@ -119,7 +119,8 @@ class SwatForm extends SwatDisplayableContainer
 
 		$this->requires_id = true;
 
-		$this->addJavaScript('packages/swat/javascript/swat-form.js');
+		$this->addJavaScript('packages/swat/javascript/swat-form.js',
+			Swat::PACKAGE_ID);
 	}
 
 	// }}}

@@ -46,8 +46,10 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 	public function __construct()
 	{
 		parent::__construct();
+
 		$this->addStyleSheet(
-			'packages/swat/styles/swat-money-cell-renderer.css');
+			'packages/swat/styles/swat-money-cell-renderer.css',
+			Swat::PACKAGE_ID);
 	}
 
 	// }}}
