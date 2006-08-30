@@ -137,7 +137,8 @@ class SwatPagination extends SwatControl
 		$this->display_parts  = self::POSITION | self::NEXT |
 		                        self::PREV | self::PAGES;
 
-		$this->addStyleSheet('packages/swat/styles/swat-pagination.css');
+		$this->addStyleSheet('packages/swat/styles/swat-pagination.css',
+			Swat::PACKAGE_ID);
 	}
 
 	// }}}

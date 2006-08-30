@@ -44,10 +44,14 @@ class SwatMessageDisplay extends SwatControl
 
 		$this->requires_id = true;
 
-		$this->addJavaScript('packages/swat/javascript/swat-message-display.js');
+		$this->addJavaScript('packages/swat/javascript/swat-message-display.js',
+			Swat::PACKAGE_ID);
 
-		$this->addStyleSheet('packages/swat/styles/swat-message.css');
-		$this->addStyleSheet('packages/swat/styles/swat-message-display.css');
+		$this->addStyleSheet('packages/swat/styles/swat-message.css',
+			Swat::PACKAGE_ID);
+
+		$this->addStyleSheet('packages/swat/styles/swat-message-display.css',
+			Swat::PACKAGE_ID);
 	}
 
 	// }}}

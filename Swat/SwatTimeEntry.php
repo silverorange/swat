@@ -152,7 +152,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->valid_range_start = new SwatDate('0000-01-01T00:00:00.0000Z');
 		$this->valid_range_end   = new SwatDate('0000-01-01T23:59:59.0000Z');
 
-		$this->addJavaScript('packages/swat/javascript/swat-time-entry.js');
+		$this->addJavaScript('packages/swat/javascript/swat-time-entry.js',
+			Swat::PACKAGE_ID);
 	}
 
 	// }}}

@@ -39,8 +39,10 @@ class SwatNullTextCellRenderer extends SwatTextCellRenderer
 	public function __construct()
 	{
 		parent::__construct();
+
 		$this->addStyleSheet(
-			'packages/swat/styles/swat-null-text-cell-renderer.css');
+			'packages/swat/styles/swat-null-text-cell-renderer.css',
+			Swat::PACKAGE_ID);
 	}
 
 	// }}}

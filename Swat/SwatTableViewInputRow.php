@@ -117,7 +117,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	{
 		parent::__construct();
 		$this->enter_text = Swat::_('enter&nbsp;another');
-		$this->addJavaScript('packages/swat/javascript/swat-table-view-input-row.js');
+		$this->addJavaScript(
+			'packages/swat/javascript/swat-table-view-input-row.js',
+			Swat::PACKAGE_ID);
 	}
 
 	// }}}

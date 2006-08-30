@@ -214,8 +214,11 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	{
 		parent::__construct($id);
 
-		$this->addJavaScript('packages/swat/javascript/swat-table-view.js');
-		$this->addStyleSheet('packages/swat/styles/swat-table-view.css');
+		$this->addJavaScript('packages/swat/javascript/swat-table-view.js',
+			Swat::PACKAGE_ID);
+
+		$this->addStyleSheet('packages/swat/styles/swat-table-view.css',
+			Swat::PACKAGE_ID);
 	}
 
 	// }}}

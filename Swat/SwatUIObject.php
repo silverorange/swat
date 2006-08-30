@@ -70,7 +70,7 @@ abstract class SwatUIObject extends SwatObject
 	 * @param integer $display_order the relative order in which to display
 	 *                                this stylesheet head entry.
 	 */
-	public function addStyleSheet($stylesheet, $package_id = Swat::PACKAGE_ID)
+	public function addStyleSheet($stylesheet, $package_id = null)
 	{
 		if ($this->html_head_entry_set === null)
 			throw new SwatException(sprintf("Child class '%s' did not ".
@@ -93,7 +93,7 @@ abstract class SwatUIObject extends SwatObject
 	 * @param integer $display_order the relative order in which to display
 	 *                                this JavaScript head entry.
 	 */
-	public function addJavaScript($java_script, $package_id = Swat::PACKAGE_ID)
+	public function addJavaScript($java_script, $package_id = null)
 	{
 		if ($this->html_head_entry_set === null)
 			throw new SwatException(sprintf("Child class '%s' did not ".

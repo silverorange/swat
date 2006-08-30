@@ -47,7 +47,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	{
 		parent::__construct($id);
 
-		$this->addJavaScript('packages/swat/javascript/swat-expandable-checkbox-tree.js');
+		$this->addJavaScript(
+			'packages/swat/javascript/swat-expandable-checkbox-tree.js',
+			Swat::PACKAGE_ID);
 	}
 
 	// }}}
