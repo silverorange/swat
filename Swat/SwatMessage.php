@@ -104,12 +104,7 @@ class SwatMessage extends SwatObject
 	public function __construct($primary_content, $type = self::NOTIFICATION)
 	{
 		$this->primary_content = $primary_content;
-
-		$valid_types = array(
-			self::NOTIFICATION,
-			self::WARNING,
-			self::ERROR,
-			self::SYSTEM_ERROR);
+		$valid_types = $this->getTypes();
 
 		if ($type !== null) {
 			if (in_array($type, $valid_types))
@@ -122,7 +117,7 @@ class SwatMessage extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function __getCssClass()
+	// {{{ public function getCssClass()
 
 	public function getCssClass()
 	{
@@ -144,6 +139,25 @@ class SwatMessage extends SwatObject
 		}
 
 		return $class;
+	}
+
+	// }}}
+	// {{{ protected function getTypes()
+
+	/**
+	 * Get valid message types
+	 *
+	 * @return array the valid types of a message.
+	 */
+	protected function getTypes()
+	{
+		$types = array(
+			self::NOTIFICATION,
+			self::WARNING,
+			self::ERROR,
+			self::SYSTEM_ERROR);
+
+		return $types;
 	}
 
 	// }}}
