@@ -57,9 +57,21 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	 *
 	 * Entries are displayed differently based on type.
 	 *
-	 * @param string $path_prefix an optional string to prefix the URI with.
+	 * @param string $uri_prefix an optional string to prefix the URI with.
 	 */
 	public abstract function display($uri_prefix = '');
+
+	// }}}
+	// {{{ public abstract function displayInline($path)
+
+	/**
+	 * Displays the resource referenced by this html head entry inline
+	 *
+	 * Entries are displayed differently based on type.
+	 *
+	 * @param string $path the path containing the resource files.
+	 */
+	public abstract function displayInline($path);
 
 	// }}}
 	// {{{ public function getUri()
