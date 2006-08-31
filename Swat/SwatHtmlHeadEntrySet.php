@@ -43,7 +43,7 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	/**
 	 * A lookup table of packages that have already been displayed.
 	 *
-	 * This table is used by the recursive displayEntriesForPackage() method.
+	 * This table is used by the recursive displayEntriesRecursive() method.
 	 *
 	 * @var array
 	 */
@@ -118,37 +118,39 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 */
 	public function display($uri_prefix = '')
 	{
-		$this->displayed_packages = array();
-		$this->displayEntriesForPackage(null, $uri_prefix);
+		$parameters = array($uri_prefix);
+
+		$this->displayEntriesRecursive(null,
+			'displayEntriesForPackage', $parameters);
+
 		echo "\n";
 	}
 
 	// }}}
-	// {{{ public function toArray()
+	// {{{ public function displayInline()
 
 	/**
-	 * Get the set of HTML head entries as an array
-	 *
-	 * @param string $instance_of an optional class name to limit
-	 *               entries to classes that inheret from it.
+	 * Displays the contents of the set of HTML head entries inline
 	 */
-	public function toArray($instance_of = null)
+	public function displayInline($path, $type = null)
 	{
-		$return = array();
+		$parameters = array($path, $type);
 
-		foreach ($this->entries as $entry)
-			if ($instance_of == null || $entry instanceof $instance_of)
-				$return[] = $entry;
+		$this->displayEntriesRecursive(null,
+			'displayInlineEntriesForPackage', $parameters);
 
-		return $return;
+		echo "\n";
 	}
 
 	// }}}
-	// {{{ protected function displayEntriesForPackage()
+	// {{{ protected function displayEntriesRecursive()
 
-	protected function displayEntriesForPackage($package_id, $uri_prefix)
+	protected function displayEntriesRecursive($package_id,
+		$display_method, $display_method_parameters = array())
 	{
 		if ($package_id === null) {
+			$this->displayed_packages = array();
+
 			/*
 			 * Displaying entries for the site code, so any non-null package
 			 * ids are dependencies of the site code and should be displayed
@@ -156,8 +158,8 @@ class SwatHtmlHeadEntrySet extends SwatObject
 			 */
 			foreach ($this->entries as $entry)
 				if ($entry->getPackageId() !== null)
-					$this->displayEntriesForPackage(
-						$entry->getPackageId(), $uri_prefix);
+					$this->displayEntriesRecursive($entry->getPackageId(),
+						$display_method, $display_method_parameters);
 
 		} else {
 			/*
@@ -171,8 +173,8 @@ class SwatHtmlHeadEntrySet extends SwatObject
 					call_user_func(array($package_id, 'getDependencies'));
 
 				foreach ($dependent_packages as $dep_package_id)
-					$this->displayEntriesForPackage(
-						$dep_package_id, $uri_prefix);
+					$this->displayEntriesRecursive($dep_package_id,
+						$display_method, $display_method_parameters);
 			}
 		}
 
@@ -185,7 +187,15 @@ class SwatHtmlHeadEntrySet extends SwatObject
 		else
 			$this->displayed_packages[] = $package_id;
 
-		// Display the entries for this package.
+		array_unshift($display_method_parameters, $package_id);
+		call_user_func_array(array($this, $display_method), $display_method_parameters);
+	}
+
+	// }}}
+	// {{{ protected function displayEntriesForPackage()
+
+	protected function displayEntriesForPackage($package_id, $uri_prefix)
+	{
 		echo "\n\t", '<!-- head entries for ',
 			($package_id === null) ?
 				'site code' : 'package '.$package_id, "-->\n\t";
@@ -194,6 +204,26 @@ class SwatHtmlHeadEntrySet extends SwatObject
 			foreach ($entries as $entry) {
 				if ($entry->getPackageId() === $package_id) {
 					$entry->display($uri_prefix);
+					echo "\n\t";
+				}
+			}
+		}
+	}
+
+	// }}}
+	// {{{ protected function displayInlineEntriesForPackage()
+
+	protected function displayInlineEntriesForPackage($package_id, $path,
+		$type)
+	{
+		echo "\n\t", '<!-- inline entries for ',
+			($package_id === null) ?
+				'site code' : 'package '.$package_id, "-->\n\t";
+
+		foreach ($this->entries as $entry) {
+			if ($type === null || $entry->getType() === $type) {
+				if ($entry->getPackageId() === $package_id) {
+					$entry->displayInline($path);
 					echo "\n\t";
 				}
 			}

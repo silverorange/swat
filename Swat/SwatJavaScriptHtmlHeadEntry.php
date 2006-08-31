@@ -21,6 +21,16 @@ class SwatJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 	}
 
 	// }}}
+	// {{{ public function displayInline()
+
+	public function displayInline($path)
+	{
+		echo '<script type="text/javascript">';
+		readfile($path.$this->getUri());
+		echo '</script>';
+	}
+
+	// }}}
 }
 
 ?>

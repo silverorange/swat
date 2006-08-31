@@ -21,6 +21,16 @@ class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
 	}
 
 	// }}}
+	// {{{ public function displayInline()
+
+	public function displayInline($path)
+	{
+		echo '<style type="text/css" media="all">';
+		readfile($path.$this->getUri());
+		echo '</style>';
+	}
+
+	// }}}
 }
 
 ?>
