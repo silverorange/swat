@@ -106,7 +106,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 		}
 
 		foreach ($this->sub_data_objects as $name => $object)
-			if ($object->isModified())
+			if (is_object($object) && $object->isModified())
 				return true;
 		
 		return false;
