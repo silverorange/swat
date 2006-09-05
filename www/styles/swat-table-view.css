@@ -68,3 +68,6 @@ tr.swat-table-view-input-row-messages {
 	color: #e31b0c;
 }
 
+tfoot.swat-table-view-invalid-tfoot-ordering {
+	display: table-row-group;
+}
