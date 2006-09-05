@@ -2,9 +2,9 @@
 
 require_once 'PEAR/PackageFileManager2.php';
 
-$version = '0.9.2';
+$version = '0.9.3';
 $notes = <<<EOT
-- RC2
+- RC3
 EOT;
 
 $description =<<<EOT
@@ -44,7 +44,7 @@ $package->setAPIStability('stable');
 $package->setNotes($notes);
 
 $package->addIgnore('package.php');
-$package->addIgnore('demo/www/packages/swat');
+$package->addIgnore('demo/www/packages/swat/');
 
 $package->addMaintainer('lead', 'nrf', 'Nathan Fredrickson', 'nathan@silverorange.com');
 $package->addMaintainer('lead', 'gauthierm', 'Mike Gauthier', 'mike@silverorange.com');
