@@ -44,14 +44,15 @@ $package->setAPIStability('stable');
 $package->setNotes($notes);
 
 $package->addIgnore('package.php');
-$package->addIgnore('demo/www/swat/');
-$package->addIgnore('demo/www/www/');
+$package->addIgnore('demo/www/packages/swat');
 
 $package->addMaintainer('lead', 'nrf', 'Nathan Fredrickson', 'nathan@silverorange.com');
 $package->addMaintainer('lead', 'gauthierm', 'Mike Gauthier', 'mike@silverorange.com');
 
 $package->setPhpDep('5.1.5');
 $package->setPearinstallerDep('1.4.0');
+$package->addPackageDepWithChannel('required', 'Date', 'pear.silverorange.com', '1.4.7so1');
+$package->addPackageDepWithChannel('required', 'MDB2', 'pear.php.net', '2.2.2');
 $package->generateContents();
 
 if (isset($_GET['make']) || (isset($_SERVER['argv']) && @$_SERVER['argv'][1] == 'make')) {
