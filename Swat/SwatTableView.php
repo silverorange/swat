@@ -100,6 +100,21 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 */
 	public $no_records_message_type = 'text/plain';
 
+	/**
+	 * Whether of not to display the tfoot element after the tbody element
+	 *
+	 * If this flag is set to true, the tfoot element will be displayed after
+	 * the tbody element. This is invalid XHTML but fixes a number of rendering
+	 * bugs in various browsers. This flag defaults to false.
+	 *
+	 * When browser support for tfoot is better, this property will be
+	 * deprecated. This property is not recommended for use unless you are
+	 * experiencing browser bugs in your table views.
+	 *
+	 * @var boolean
+	 */
+	public $use_invalid_tfoot_ordering = false;
+
 	// }}}
 	// {{{ private properties
 
@@ -688,9 +703,17 @@ class SwatTableView extends SwatControl implements SwatUIParent
 		$table_tag->cellspacing = '0';
 
 		$table_tag->open();
+
 		$this->displayHeader();
-		$this->displayFooter();
-		$this->displayBody();
+
+		if ($this->use_invalid_tfoot_ordering) {
+			$this->displayBody();
+			$this->displayFooter();
+		} else {
+			$this->displayFooter();
+			$this->displayBody();
+		}
+
 		$table_tag->close();
 
 		$this->displayJavaScript();
