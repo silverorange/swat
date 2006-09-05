@@ -2,9 +2,9 @@
 
 require_once 'PEAR/PackageFileManager2.php';
 
-$version = '0.9.1';
+$version = '0.9.2';
 $notes = <<<EOT
-- RC1
+- RC2
 EOT;
 
 $description =<<<EOT
@@ -31,7 +31,7 @@ $result = $package->setOptions(
 );
 
 $package->setPackage('Swat');
-$package->setSummary('swat web application toolkit');
+$package->setSummary('Swat web application toolkit');
 $package->setDescription($description);
 $package->setChannel('pear.silverorange.com');
 $package->setPackageType('php');
