@@ -1043,8 +1043,14 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		$footer_content = ob_get_clean();
 
-		if (strlen($footer_content))
-			echo '<tfoot>', $footer_content, '</tfoot>';
+		if (strlen($footer_content) > 0) {
+			$tfoot_tag = new SwatHtmlTag('tfoot');
+			if ($this->use_invalid_tfoot_ordering)
+				$tfoot_tag->class = 'swat-table-view-invalid-tfoot-ordering';
+
+			$tfoot_tag->setContent($footer_content, 'text/xml');
+			$tfoot_tag->display();
+		}
 	}
 
 	// }}}
