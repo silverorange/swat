@@ -90,8 +90,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 			throw new SwatException('SwatGroupedFlydown tree must not be '.
 				'more than 3 levels including the root node.');
 
-		$children = &$tree->getChildren();
-		foreach ($children as $child)
+		foreach ($tree->getChildren() as $child)
 			$this->checkTree($child, $level + 1);
 	}
 
