@@ -12,7 +12,6 @@
 
 .swat-change-order-item-shadow {
 	opacity: 0.6;
-	-moz-opacity: 0.6;
 	filter: alpha(opacity=60);
 	position: absolute;
 }
