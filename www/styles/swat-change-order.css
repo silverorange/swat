@@ -6,8 +6,8 @@
 }
 
 .swat-change-order-item-active {
-	background: url('../images/swat-change-order-item-selected.png') #79c;
-	color: #fff;
+	background: Highlight;
+	color: HighlightText;
 }
 
 .swat-change-order-item-shadow {
