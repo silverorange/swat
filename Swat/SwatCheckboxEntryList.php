@@ -34,6 +34,13 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	 */
 	public $entry_column_title = null;
 
+	/**
+	 * An optional maximum length to apply to entry widgets
+	 *
+	 * @var integer
+	 */
+	public $entry_maxlength = null;
+
 	// }}}
 	// {{{ private properties
 
@@ -249,6 +256,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		if (!isset($this->entry_widgets[$id])) {
 			$widget = new SwatEntry($this->id.'_entry_'.$id);
 			$widget->size = $this->entry_size;
+			$widget->maxlength = $this->entry_maxlength;
 			$widget->parent = $this;
 			$widget->init();
 			$this->entry_widgets[$id] = $widget;
