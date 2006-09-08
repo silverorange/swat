@@ -1,0 +1,28 @@
+/* SwatToolbar  */
+
+ul.swat-toolbar {
+	background: #f6f2ea url(../images/swat-toolbar-background.png) top left repeat-x;
+	border-bottom: 1px solid #efe8da;
+	margin: 0 -16px;
+	list-style-type: none;
+	padding: 5px 0;
+	position: relative;
+	top: -16px;
+}
+
+.swat-toolbar li {
+	display: inline;
+}
+
+/* SwatToolLink when inside a SwatToolbar */
+
+
+.swat-toolbar .swat-tool-link,
+.swat-toolbar .swat-tool-link-insensitive {
+	padding: 5px 8px;
+	border-top: none;
+	border-bottom: none;
+	border-left: none;
+	text-decoration: none;
+	background-color: transparent;
+}
