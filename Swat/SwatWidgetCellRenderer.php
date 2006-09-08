@@ -98,15 +98,20 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 */
 	public function init()
 	{
+		$replicators = null;
+
 		$form = $this->getForm();
 		if ($form !== null && $form->isSubmitted()) {
 			$replicators = $form->getHiddenField(
-					$this->prototype_widget->id.'_replicators');
+				$this->prototype_widget->id.'_replicators');
 
 			if ($replicators !== null)
 				foreach ($replicators as $replicator)
 					$this->createClonedWidget($replicator);
 		}
+
+		if ($replicators === null)
+			$this->prototype_widget->init();
 	}
 
 	// }}}
