@@ -338,10 +338,16 @@ function SwatChangeOrder_mousedownEventHandler(event)
  */
 function SwatChangeOrder(id, sensitive)
 {
+	this.is_safari = navigator.userAgent.match(/KHTML/);
+
 	this.id = id;
 
 	this.list_div = document.getElementById(this.id + '_list');
 	this.buttons = document.getElementsByName(this.id + '_buttons');
+
+	// Safari/KHTML workaround for CSS Level2 system colors
+	if (this.is_safari)
+		this.list_div.style.borderColor = '#DCCEB2';
 
 	// the following two lines must be split on two lines to
 	// handle a Firefox bug.
@@ -470,10 +476,20 @@ SwatChangeOrder.prototype.choose = function(div)
 	if (this.semaphore && this.sensitive && div !== this.active_div &&
 		!SwatChangeOrder.is_dragging) {
 
-		if (this.active_div !== null)
+		if (this.active_div !== null) {
 			this.active_div.className = 'swat-change-order-item';
 
+			// Safari/KHTML workaround for CSS Level2 system colors
+			if (this.is_safari)
+				this.active_div.style.backgroundColor = '#fff';
+		}
+
 		div.className = 'swat-change-order-item swat-change-order-item-active';
+
+		// Safari/KHTML workaround for CSS Level2 system colors
+		if (this.is_safari)
+			div.style.backgroundColor = '#406A9C';
+
 		this.active_div = div;
 
 		// update the index value of this element
