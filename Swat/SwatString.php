@@ -466,8 +466,10 @@ class SwatString extends SwatObject
 		self::stripEntities($string, $matches);
 
 		// don't ellipsize if the string is short enough
-		if (strlen($string) <= $max_length)
+		if (strlen($string) <= $max_length) {
+			self::insertEntities($string, $matches, strlen($string));
 			return $string;
+		}
 
 		// check if the string is all one giant word
 		$has_space = strpos($string, ' ');
