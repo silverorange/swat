@@ -394,8 +394,10 @@ class SwatString extends SwatObject
 		$string = trim($string);
 
 		// don't ellipsize if the string is short enough
-		if (strlen($string) <= $max_length)
+		if (strlen($string) <= $max_length) {
+			self::insertEntities($string, $matches, strlen($string));
 			return $string;
+		}
 
 		// note: if strrpos worked the same using mb_string overloading the
 		// following code would be a lot simpler.
