@@ -940,7 +940,7 @@ class SwatString extends SwatObject
 
 		preg_match_all($reg_exp, $string, $matches, PREG_OFFSET_CAPTURE);
 
-		$string = preg_replace($reg_exp, 's', $string);
+		$string = preg_replace($reg_exp, '*', $string);
 	}
 
 	// }}}
