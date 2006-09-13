@@ -1,5 +1,8 @@
 <?php
 
+require_once 'Swat/exceptions/SwatExceptionDisplayer.php';
+require_once 'Swat/exceptions/SwatExceptionLogger.php';
+
 /**
  * An exception in Swat
  *
@@ -9,6 +12,9 @@
  * sub-classes of Exception by internally wrapping non-SwatExceptions in a new
  * instance of a SwatException. This allows all exceptions to be nicely
  * formatted and processed consistently.
+ *
+ * Custom displaying and logging of SwatExceptions can be achieved through
+ * {@link SwatException::setLogger()} and {@link SwatException::setDisplayer()}.
  *
  * @package   Swat
  * @copyright 2004-2006 silverorange
@@ -20,6 +26,54 @@ class SwatException extends Exception
 
 	protected $backtrace = null;
 	protected $class = null;
+
+	/**
+	 * @var SwatExceptionDisplayer
+	 */
+	protected static $displayer = null;
+
+	/**
+	 * @var SwatExceptionLogger
+	 */
+	protected static $logger = null;
+
+	// }}}
+	// {{{ public static function setLogger()
+
+	/**
+	 * Sets the object that logs SwatException objects when they are processed
+	 *
+	 * For example:
+	 * <code>
+	 * SwatException::setLogger(new SilverorangeLogger());
+	 * </code>
+	 *
+	 * @param SwatExceptionLogger $logger the object to use to log exceptions.
+	 */
+	public static function setLogger(SwatExceptionLogger $logger)
+	{
+		self::$logger = $logger;
+	}
+
+	// }}}
+	// {{{ public static function setDisplayer()
+
+	/**
+	 * Sets the object that displays SwatException objects when they are
+	 * processed
+	 *
+	 * For example:
+	 * <code>
+	 * SwatException::setDisplayer(new SilverorangeDisplayer());
+	 * </code>
+	 *
+	 * @param SwatExceptionDisplayer $displayer the object to use to display
+	 *                                           exceptions.
+	 */
+	public static function setDisplayer(SwatExceptionDisplayer $displayer)
+	{
+		self::$displayer = $displayer;
+	}
 
 	// }}}
 	// {{{ public function __construct()
@@ -37,6 +91,8 @@ class SwatException extends Exception
 			$this->class = get_class($e);
 		} else {
 			parent::__construct($message, $code);
+			$this->backtrace = $this->getTrace();
+			$this->class = get_class($this);
 		}
 	}
 
@@ -51,21 +107,26 @@ class SwatException extends Exception
 	 */
 	public function process($exit = true)
 	{
-		if ($this->backtrace === null)
-			$this->backtrace = $this->getTrace();
-	
-		if ($this->class === null)
-			$this->class = get_class($this);
-
 		if (ini_get('display_errors')) {
-			if (isset($_SERVER['REQUEST_URI']))
-				echo $this->toXHTML();
-			else
-				echo $this->toString();
+			if (self::$displayer === null) {
+				if (isset($_SERVER['REQUEST_URI']))
+					echo $this->toXHTML();
+				else
+					echo $this->toString();
+			} else {
+				$displayer = self::$displayer;
+				$displayer->display($this);
+			}
 		}
 
-		if (ini_get('log_errors'))
-			$this->log();
+		if (ini_get('log_errors')) {
+			if (self::$logger === null) {
+				$this->log();
+			} else {
+				$logger = self::$logger;
+				$logger->log($this);
+			}
+		}
 
 		if ($exit)
 			exit(1);
@@ -207,6 +268,21 @@ class SwatException extends Exception
 		echo '</dl></div></div>';
 
 		return ob_get_clean();
+	}
+
+	// }}}
+	// {{{ public function getClass()
+
+	/**
+	 * Gets the name of the class this exception represents
+	 *
+	 * This is usually, but not always, equivalent to get_class($this).
+	 *
+	 * @return string the name of the class this exception represents.
+	 */
+	public function getClass()
+	{
+		return $this->class;
 	}
 
 	// }}}
