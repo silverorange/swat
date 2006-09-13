@@ -229,11 +229,28 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	/** 
 	 * Gets an array of cloned widgets indexed by the replicator_id
 	 *
-	 * @return array an array of  widgets indexed by replicator_id
+	 * If this cell renderer's form is submitted, only cloned widgets that were
+	 * displayed and processed are returned.
+	 *
+	 * @return array an array of widgets indexed by replicator_id
 	 */
 	public function getClonedWidgets()
 	{
-		return $this->clones;
+		$form = $this->getForm();
+		if ($form !== null && $form->isSubmitted()) {
+			$clones = array();
+			$replicators = $form->getHiddenField(
+				$this->prototype_widget->id.'_replicators');
+
+			foreach ($this->clones as $replicator_id => $clone) {
+				if (in_array($replicator_id, $replicators))
+					$clones[$replicator_id] = $clone;
+			}
+		} else {
+			$clones = $this->clones;
+		}
+
+		return $clones;
 	}
 
 	// }}}
