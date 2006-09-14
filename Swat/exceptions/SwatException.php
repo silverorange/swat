@@ -45,7 +45,7 @@ class SwatException extends Exception
 	 *
 	 * For example:
 	 * <code>
-	 * SwatException::setLogger(new SilverorangeLogger());
+	 * SwatException::setLogger(new CustomLogger());
 	 * </code>
 	 *
 	 * @param SwatExceptionLogger $logger the object to use to log exceptions.
@@ -107,26 +107,11 @@ class SwatException extends Exception
 	 */
 	public function process($exit = true)
 	{
-		if (ini_get('display_errors')) {
-			if (self::$displayer === null) {
-				if (isset($_SERVER['REQUEST_URI']))
-					echo $this->toXHTML();
-				else
-					echo $this->toString();
-			} else {
-				$displayer = self::$displayer;
-				$displayer->display($this);
-			}
-		}
+		if (ini_get('display_errors'))
+			$this->display();
 
-		if (ini_get('log_errors')) {
-			if (self::$logger === null) {
-				$this->log();
-			} else {
-				$logger = self::$logger;
-				$logger->log($this);
-			}
-		}
+		if (ini_get('log_errors'))
+			$this->log();
 
 		if ($exit)
 			exit(1);
@@ -142,7 +127,33 @@ class SwatException extends Exception
 	 */
 	public function log()
 	{
-		error_log($this->getSummary(), 0);
+		if (self::$logger === null) {
+			error_log($this->getSummary(), 0);
+		} else {
+			$logger = self::$logger;
+			$logger->log($this);
+		}
+	}
+
+	// }}}
+	// {{{ public function display()
+
+	/**
+	 * Display this exception
+	 *
+	 * The exception is display as either txt or XHMTL.
+	 */
+	public function display()
+	{
+		if (self::$displayer === null) {
+			if (isset($_SERVER['REQUEST_URI']))
+				echo $this->toXHTML();
+			else
+				echo $this->toString();
+		} else {
+			$displayer = self::$displayer;
+			$displayer->display($this);
+		}
 	}
 
 	// }}}
