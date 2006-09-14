@@ -1,3 +1,19 @@
+2006-09-14  gauthierm
+
+	* [r11015] swat/trunk/Swat/SwatFileEntry.php:
+	  added missing parenthesis
+	* [r11014] swat/trunk/Swat/SwatFileEntry.php:
+	  use system for mime type detection whenever possible
+
+2006-09-14  nrf
+
+	* [r10975] swat/trunk/ChangeLog:
+	  prepare for release
+	* [r10973] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release
+	* [r10969] swat/trunk/Swat/exceptions/SwatException.php:
+	  refactor without changing behavior
+
 2006-09-13  gauthierm
 
 	* [r10963] swat/trunk/Swat/exceptions/SwatException.php:
