@@ -1,0 +1,299 @@
+<?php
+
+require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatUIParent.php';
+require_once 'Swat/SwatCellRendererContainer.php';
+
+/**
+ * A visible field in a SwatDetailsView
+ *
+ * @package   Swat
+ * @copyright 2005-2006 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ */
+class SwatDetailsViewField extends SwatCellRendererContainer
+	implements SwatUIParent
+{
+	// {{{ public properties
+
+	/**
+	 * The unique identifier of this field
+	 *
+	 * @var string
+	 */
+	public $id = null;
+
+	/**
+	 * The title of this field
+	 *
+	 * @var string
+	 */
+	public $title = '';
+
+	/**
+	 * The {@link SwatDetailsView} associated with this field
+	 *
+	 * @var SwatDetailsView
+	 */
+	public $view = null;
+
+	/**
+	 * Whether or not this field is displayed
+	 *
+	 * @var boolean
+	 */
+	public $visible = true;
+
+	// }}}
+	// {{{ protected properties
+
+	/**
+	 * Whether or not this field is odd or even in its parent details view
+	 *
+	 * @var boolean
+	 */
+	protected $odd = false;
+
+	// }}}
+	// {{{ public function __construct()
+
+	/**
+	 * Creates a new details view field
+	 *
+	 * @param string $id an optional unique ideitifier for this details view
+	 *                    field.
+	 */
+	public function __construct($id = null)
+	{
+		$this->id = $id;
+		parent::__construct();
+	}
+
+	// }}}
+	// {{{ public function init()
+
+	/**
+	 * Initializes this field
+	 *
+	 * This calls init on all renderers in this field.
+	 */
+	public function init()
+	{
+		foreach ($this->renderers as $renderer)
+			$renderer->init();
+	}
+
+	// }}}
+	// {{{ public function display()
+
+	/**
+	 * Displays this details view field using a data object
+	 *
+	 * @param mixed $data a data object used to display the cell renderers in
+	 *                      this field.
+	 * @param boolean $odd whether this is an odd or even field so alternating 
+	 *                      style can be applied.
+	 */
+	public function display($data, $odd)
+	{
+		if (!$this->visible)
+			return;
+
+		$this->odd = $odd;
+
+		$tr_tag = new SwatHtmlTag('tr');
+		$tr_tag->id = $this->id;
+		$tr_tag->class = $this->getCSSClassString();
+
+		$tr_tag->open();
+		$this->displayHeader();
+		$this->displayValue($data);
+		$tr_tag->close();
+	}
+
+	// }}}
+	// {{{ public function displayHeader()
+
+	/**
+	 * Displays the header for this details view field
+	 */
+	public function displayHeader()
+	{
+		$th_tag = new SwatHtmlTag('th');
+		$th_tag->scope = 'row';
+		$th_tag->setContent($this->title.':');
+		$th_tag->display();
+	}
+
+	// }}}
+	// {{{ public function displayValue()
+
+	/**
+	 * Displays the value of this details view field
+	 *
+	 * The properties of the cell renderers are set from the data object
+	 * through the datafield property mappings.
+	 *
+	 * @param mixed $data the data object to display in this field.
+	 */
+	public function displayValue($data)
+	{
+		if ($this->renderers->getCount() == 0)
+			throw new SwatException('No renderer has been provided for this '.
+				'field.');
+
+		$sensitive = $this->view->isSensitive();
+
+		// Set the properties of the renderers to the value of the data field.
+		foreach ($this->renderers as $renderer) {
+			$this->renderers->applyMappingsToRenderer($renderer, $data);
+			$renderer->sensitive = $sensitive;
+		}
+
+		$this->displayRenderers($data);
+	}
+
+	// }}}
+	// {{{ public function getTdAttributes()
+
+	/**
+	 * Gets the TD tag attributes for this column
+	 *
+	 * The returned array is of the form 'attribute' => value.
+	 *
+	 * @return array an array of attributes to apply to this column's TD tag.
+	 */
+	public function getTdAttributes()
+	{
+		return array(
+			'class' => $this->getCSSClassString(),
+		);
+	}
+
+	// }}}
+	// {{{ public function getHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects needed by this field 
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this details-view field.
+	 *
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
+	 */
+	public function getHtmlHeadEntrySet()
+	{
+		$set = parent::getHtmlHeadEntrySet();
+		$renderers = $this->getRenderers();
+		foreach ($renderers as $renderer)
+			$set->addEntrySet($renderer->getHtmlHeadEntrySet());
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ protected function displayRenderers()
+
+	/**
+	 * Renders each cell renderer in this details-view field
+	 *
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
+	 */
+	protected function displayRenderers($data)
+	{
+		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
+		$td_tag->open();
+
+		$first = true;
+		foreach ($this->renderers as $renderer) {
+			if ($first)
+				$first = false;
+			else
+				echo ' ';
+
+			$renderer->render();
+		}
+
+		$td_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this details-view
+	 * field
+	 *
+	 * CSS classes are added to this field in the following order:
+	 *
+	 * 1. hard-coded CSS classes from field subclasses,
+	 * 2. 'odd' if this is an odd row in the parent view,
+	 * 3. user-specified CSS classes on this field,
+	 * 4. the inheritance classes of the first cell renderer in this field,
+	 * 5. hard-coded CSS classes from the first cell renderer in this field,
+	 * 6. hard-coded data-specific CSS classes from the first cell renderer in
+	 *    this field if this field has data mappings applied,
+	 * 7. user-specified CSS classes on the first cell renderer in this field.
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                details-view field.
+	 *
+	 * @see SwatCellRenderer::getInheritanceCSSClassNames()
+	 * @see SwatCellRenderer::getBaseCSSClassNames()
+	 * @see SwatUIObject::getCSSClassNames()
+	 */
+	protected function getCSSClassNames()
+	{
+		// base classes
+		$classes = $this->getBaseCSSClassNames();
+
+		// odd
+		if ($this->odd)
+			$classes[] = 'odd';
+
+		// user-specified classes
+		$classes = array_merge($classes, $this->classes);
+
+		$first_renderer = $this->renderers->getFirst();
+		if ($first_renderer !== null) {
+			// renderer inheritance classes
+			$classes = array_merge($classes,
+				$first_renderer->getInheritanceCSSClassNames());
+
+			// renderer base classes
+			$classes = array_merge($classes,
+				$first_renderer->getBaseCSSClassNames());
+
+			// renderer data specific classes
+			if ($this->renderers->mappingsApplied())
+				$classes = array_merge($classes,
+					$first_renderer->getDataSpecificCSSClassNames());
+
+			// renderer user-specified classes
+			$classes = array_merge($classes, $first_renderer->classes);
+		}
+		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function getBaseCSSClassNames()
+
+	/** 
+	 * Gets the base CSS class names of this details-view field 
+	 *
+	 * This is the recommended place for field subclasses to add extra hard-
+	 * coded CSS classes.
+	 *
+	 * @return array the array of base CSS class names for this details-view
+	 *                field.
+	 */
+	protected function getBaseCSSClassNames()
+	{
+		return array('swat-details-view-field');
+	}
+
+	// }}}
+}
+
+?>

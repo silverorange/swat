@@ -1,0 +1,61 @@
+.swat-change-order-item {
+	background: #FFF;
+	margin: 0;
+	padding: 3px;
+	cursor: default;
+}
+
+.swat-change-order-item-active {
+	background: Highlight;
+	color: HighlightText;
+}
+
+.swat-change-order-item-shadow {
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	position: absolute;
+}
+
+div.swat-change-order-item:hover {
+}
+
+.swat-change-order-insensitive .swat-change-order-item {
+	background: #eee;
+}
+
+.swat-change-order-insensitive .swat-change-order-item-active {
+	background: #888;
+}
+
+.swat-change-order-insensitive div.swat-change-order-item:hover {
+}
+
+.swat-change-order-insensitive div.swat-change-order-item-active:hover {
+}
+
+.swat-change-order-list {
+	border: 1px ButtonShadow solid;
+	margin: 2px;
+	overflow: auto;
+	list-style: none;
+	padding: 0;
+	float: left;
+	position: relative;
+}
+
+.swat-change-order-buttons {
+	position: relative;
+	float: left;
+	text-align: center;
+}
+
+.swat-change-order-buttons input {
+	margin: 0.5em;
+	width: 7em;
+}
+
+.swat-change-order-buttons input.swat-change-order-top,
+.swat-change-order-buttons input.swat-change-order-bottom {
+	font-size: 85%;
+	width: 10em;
+}

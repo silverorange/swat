@@ -1,0 +1,60 @@
+/* SwatMessageDisplay */
+
+.swat-message-display {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.swat-message-display .swat-message {
+	border-width: 1px;
+	border-style: solid;
+	margin: 1em 0;
+	min-height: 38px;
+	padding: 12px 12px 12px 64px;
+	background-position: 8px 8px;
+	background-repeat: no-repeat;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+
+.swat-message-display .swat-message-with-secondary {
+	padding-top: 12px;
+}
+
+/* Hack for min-height in IE  */
+* html .swat-message-display .swat-message {
+	height: 38px;
+}
+
+.swat-message-display .swat-message-primary-content {
+	margin: 0;
+	font-weight: bold;
+}
+
+.swat-message-display .swat-message-primary-content {
+	margin-top: 8px;
+}
+
+.swat-message-display .swat-message-with-secondary .swat-message-primary-content {
+	margin-top: 0;
+}
+
+.swat-message-display-dismiss-link:link {
+	float: right;
+	display: block;
+	font-size: 85%;
+	position: relative;
+	top: -4px;
+	right: -4px;
+	height: 14px;
+	width: 14px;
+	background: url(../images/dismiss.png) 0 0 no-repeat;
+	text-indent: -2000em;
+	text-decoration: none;
+	outline: none;
+}
+
+.swat-message-display-dismiss-link:hover {
+	background-position: 0 -14px;
+}

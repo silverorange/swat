@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatFrame" id="short_message_frame">
+		<property name="title">SwatMessageDisplay Demo</property>
+		<widget class="SwatFieldset" id="short_message_fieldset">
+			<property name="title">Primary Text Only</property>
+			<widget class="SwatMessageDisplay" id="short_message_display" />
+		</widget>
+		<widget class="SwatFieldset" id="long_message_fieldset">
+			<property name="title">SwatMessageDisplay Demo with Secondary Text</property>
+			<widget class="SwatMessageDisplay" id="long_message_display" />
+		</widget>
+	</widget>
+</swatml>

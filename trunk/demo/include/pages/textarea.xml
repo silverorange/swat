@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatFrame" id="my_frame">
+		<property name="title">SwatTextarea Demos</property>
+		<widget class="SwatForm" id="my_form">
+
+			<widget class="SwatFormField">
+				<property name="title">Plain Text Area</property>
+				<widget class="SwatTextarea" id="textarea" />
+			</widget>
+
+			<widget class="SwatFormField">
+				<property name="title">Visual Editor Text Area</property>
+				<widget class="SwatTextareaEditor" id="textarea_editor" />
+			</widget>
+
+		</widget>
+	</widget>
+</swatml>
