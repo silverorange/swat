@@ -238,7 +238,7 @@ class SwatFileEntry extends SwatInputControl
 	public function getMimeType()
 	{
 		if ($this->isUploaded() && $this->mime_type === null) {
-			if (file_exists($this->getTempFileName())
+			if (file_exists($this->getTempFileName()))
 				$this->mime_type = mime_content_type($this->getTempFileName());
 			else
 				$this->mime_type = $this->file['type'];
