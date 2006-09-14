@@ -58,6 +58,18 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	private $file = null;
 
+	/**
+	 * The mime type of the uploaded file
+	 *
+	 * If possible, this is the mime type detected by the server, not the mime
+	 * type specified by the web-browser. This is only the mime type specified
+	 * by the browser if the temporary uploaded file is deleted before the
+	 * mime type is queried.
+	 *
+	 * @var string
+	 */
+	private $mime_type;
+
 	// }}}
 	// {{{ public function display()
 
@@ -225,7 +237,14 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public function getMimeType()
 	{
-		return ($this->isUploaded()) ? $this->file['type'] : null;
+		if ($this->isUploaded() && $this->mime_type === null) {
+			if (file_exists($this->getTempFileName())
+				$this->mime_type = mime_content_type($this->getTempFileName());
+			else
+				$this->mime_type = $this->file['type'];
+		}
+
+		return $this->mime_type;
 	}
 
 	// }}}
