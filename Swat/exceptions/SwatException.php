@@ -146,10 +146,13 @@ class SwatException extends Exception
 	public function display()
 	{
 		if (self::$displayer === null) {
-			if (isset($_SERVER['REQUEST_URI']))
+			if (isset($_SERVER['REQUEST_URI'])) {
+				header('Content-Type: text/html; charset=UTF-8');
+				header('Content-Disposition: inline');
 				echo $this->toXHTML();
-			else
+			} else {
 				echo $this->toString();
+			}
 		} else {
 			$displayer = self::$displayer;
 			$displayer->display($this);
