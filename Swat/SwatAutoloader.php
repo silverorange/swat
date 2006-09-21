@@ -76,6 +76,7 @@ class SwatAutoloader extends SwatObject
 	{
 		$rule_lines = file($filename);
 		foreach ($rule_lines as $rule_line) {
+			$rule_line = trim($rule_line);
 			if (substr($rule_line, 0, 1) === '#')
 				continue;
 
@@ -86,12 +87,12 @@ class SwatAutoloader extends SwatObject
 				continue;
 
 			$expression = $tok;
-			$tok = strtok($rule_line);
+			$tok = strtok(" \t");
 			if ($tok === false)
 				continue;
 
 			$replacement = $tok;
-			$tok = strtok($rule_line);
+			$tok = strtok(" \t");
 			if ($tok !== false)
 				$last = ((integer)$tok === 1);
 
@@ -133,18 +134,6 @@ class SwatAutoloader extends SwatObject
 
 	// }}}
 }
-
-/*
- * Adds default Swat autoloader rules
- */
-SwatAutoloader::addRule('/^SwatDB(.*)/', 'SwatDB/$1');
-SwatAutoloader::addRule(
-	'/^SwatDB(.*)?Exception$/', 'SwatDB/exceptions/SwatDB$1Exception.php');
-
-SwatAutoloader::addRule('/^Swat(.*)/', 'Swat/Swat$1.php');
-SwatAutoloader::addRule(
-	'/^Swat(.*)?Exception$/', 'Swat/exceptions/Swat$1Exception.php');
-
 
 // {{{ function __autoload()
 
