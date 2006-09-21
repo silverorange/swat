@@ -45,6 +45,61 @@ class SwatAutoloader extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function loadRules()
+
+	/**
+	 * Loads a list of autoloader rules from a file
+	 *
+	 * This format of the file is as follows:
+	 *
+	 * Each line defines a rule. The line is tokenized into fields based on
+	 * whitespace characters (tab and space). The first field on the line is
+	 * the rule expression. The next field on the line is the rule replacement.
+	 * After the rule replacement field, there is an optional field
+	 * to specify whether of not the rule is final. If this field is present
+	 * and its value is 1, the rule is final. If the field is present and its
+	 * value is 0 or if the field is omitted, the rule is not final.
+	 * Lines beginning with a hash character (#) are ignored.
+	 *
+	 * An example file containing two rules is:
+	 * <code>
+	 * /^Swat(.*)/            Swat/Swat$1.php
+	 * /^Swat(.*)?Exception$/ Swat/exceptions/Swat$1Exception.php 1
+	 * </code>
+	 *
+	 * @param string $filename the name of the file from which to load the
+	 *                          autoloader rules.
+	 *
+	 * @see SwatAutoloader::addRule()
+	 */
+	public static function loadRules($filename)
+	{
+		$rule_lines = file($filename);
+		foreach ($rule_lines as $rule_line) {
+			if (substr($rule_line, 0, 1) === '#')
+				continue;
+
+			$last = false;
+
+			$tok = strtok($rule_line, " \t");
+			if ($tok === false)
+				continue;
+
+			$expression = $tok;
+			$tok = strtok($rule_line);
+			if ($tok === false)
+				continue;
+
+			$replacement = $tok;
+			$tok = strtok($rule_line);
+			if ($tok !== false)
+				$last = (integer)$tok === 1
+
+			self::addRule($expression, $replacement, $last);
+		}
+	}
+
+	// }}}
 	// {{{ public static function getFileFromClass()
 
 	/**
