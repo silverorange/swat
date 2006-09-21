@@ -93,7 +93,7 @@ class SwatAutoloader extends SwatObject
 			$replacement = $tok;
 			$tok = strtok($rule_line);
 			if ($tok !== false)
-				$last = (integer)$tok === 1
+				$last = ((integer)$tok === 1);
 
 			self::addRule($expression, $replacement, $last);
 		}
