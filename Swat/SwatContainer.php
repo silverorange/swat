@@ -573,7 +573,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	// }}}
 	// {{{ public function printWidgetTree()
 
-	public function printWidgetTree();
+	public function printWidgetTree()
 	{
 		echo get_class($this), ' ', $this->id;
 
