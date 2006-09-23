@@ -116,18 +116,9 @@ abstract class SwatWidget extends SwatUIObject
 	abstract public function display();
 
 	// }}}
-	// {{{ public function printWidgetTree()
+	// {{{ abstract public function printWidgetTree()
 
-	public function printWidgetTree()
-	{
-		echo '<ul><li>', get_class($this), ' ', $this->id;
-
-		if ($this instanceof SwatContainer)
-			foreach ($this->getChildren() as $child)
-				$child->printWidgetTree();
-
-		echo '</li></ul>';
-	}
+	abstract public function printWidgetTree();
 
 	// }}}
 	// {{{ public function process()
