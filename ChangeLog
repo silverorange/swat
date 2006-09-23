@@ -1,3 +1,29 @@
+2006-09-22  gauthierm
+
+	* [r11331] swat/trunk/Swat/SwatExceptionLogger.php,
+	  swat/trunk/Swat/exceptions/SwatExceptionLogger.php:
+	  Move exception logger into the correct location.
+
+2006-09-21  gauthierm
+
+	* [r11316] swat/trunk/Swat/SwatAutoloader.php:
+	  - don't load default rules
+	  - fix file parsing
+	* [r11309] swat/trunk/Swat/SwatAutoloader.php:
+	  fix syntax error
+	* [r11308] swat/trunk/Swat/SwatAutoloader.php:
+	  added a method to load a set of rules from a file
+
+2006-09-20  nrf
+
+	* [r11162] swat/trunk/Swat/exceptions/SwatException.php:
+	  Reset headers before displaying exception.
+
+2006-09-14  nrf
+
+	* [r11016] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release
+
 2006-09-14  gauthierm
 
 	* [r11015] swat/trunk/Swat/SwatFileEntry.php:
