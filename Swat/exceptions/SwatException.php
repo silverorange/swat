@@ -1,7 +1,7 @@
 <?php
 
-require_once 'Swat/exceptions/SwatExceptionDisplayer.php';
-require_once 'Swat/exceptions/SwatExceptionLogger.php';
+require_once 'Swat/SwatExceptionDisplayer.php';
+require_once 'Swat/SwatExceptionLogger.php';
 
 /**
  * An exception in Swat
