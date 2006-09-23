@@ -571,6 +571,25 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function printWidgetTree()
+
+	public function printWidgetTree();
+	{
+		echo get_class($this), ' ', $this->id;
+
+		$children = $this->getChildren();
+		if (count($children) > 0) {
+			echo '<ul>';
+			foreach ($children as $child) {
+				echo '<li>';
+				$child->printWidgetTree();
+				echo '</li>';
+			}
+			echo '</ul>';
+		}
+	}
+
+	// }}}
 	// {{{ protected function notifyOfAdd()
 
 	/**
