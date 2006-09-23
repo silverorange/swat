@@ -88,7 +88,7 @@ abstract class SwatControl extends SwatWidget
 	// }}}
 	// {{{ public function printWidgetTree()
 
-	public function printWidgetTree();
+	public function printWidgetTree()
 	{
 		echo get_class($this), ' ', $this->id;
 	}
