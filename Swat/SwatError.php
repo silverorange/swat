@@ -241,7 +241,7 @@ class SwatError
 	{
 		ob_start();
 
-		printf("%s Error:\n\nMessage:\n\t%s\n\n".
+		printf("%s:\n\nMessage:\n\t%s\n\n".
 			"Thrown in file '%s' on line %s.\n\n",
 			$this->getSeverityString(),
 			$this->message,
