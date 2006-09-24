@@ -1,5 +1,8 @@
 <?php
 
+require_once 'Swat/SwatErrorDisplayer.php';
+require_once 'Swat/SwatErrorLogger.php';
+
 /**
  * An error in Swat
  *
@@ -63,6 +66,54 @@ class SwatError
 	 * @var array
 	 */
 	protected $backtrace;
+
+	/**
+	 * @var SwatErrorDisplayer
+	 */
+	protected static $displayer = null;
+
+	/**
+	 * @var SwatErrorLogger
+	 */
+	protected static $logger = null;
+
+	// }}}
+	// {{{ public static function setLogger()
+
+	/**
+	 * Sets the object that logs SwatError objects when they are processed
+	 *
+	 * For example:
+	 * <code>
+	 * SwatError::setLogger(new CustomLogger());
+	 * </code>
+	 *
+	 * @param SwatErrorLogger $logger the object to use to log exceptions.
+	 */
+	public static function setLogger(SwatErrorLogger $logger)
+	{
+		self::$logger = $logger;
+	}
+
+	// }}}
+	// {{{ public static function setDisplayer()
+
+	/**
+	 * Sets the object that displays SwatError objects when they are
+	 * processed
+	 *
+	 * For example:
+	 * <code>
+	 * SwatError::setDisplayer(new SilverorangeDisplayer());
+	 * </code>
+	 *
+	 * @param SwatErrorDisplayer $displayer the object to use to display
+	 *                                           exceptions.
+	 */
+	public static function setDisplayer(SwatErrorDisplayer $displayer)
+	{
+		self::$displayer = $displayer;
+	}
 
 	// }}}
 	// {{{ public function __construct()
@@ -130,7 +181,12 @@ class SwatError
 	 */
 	public function log()
 	{
-		error_log($this->getSummary(), 0);
+		if (self::$logger === null) {
+			error_log($this->getSummary(), 0);
+		} else {
+			$logger = self::$logger;
+			$logger->log($this);
+		}
 	}
 
 	// }}}
@@ -138,10 +194,15 @@ class SwatError
 
 	public function display()
 	{
-		if (isset($_SERVER['REQUEST_URI']))
-			echo $this->toXHTML();
-		else
-			echo $this->toString();
+		if (self::$displayer === null) {
+			if (isset($_SERVER['REQUEST_URI']))
+				echo $this->toXHTML();
+			else
+				echo $this->toString();
+		} else {
+			$displayer = self::$displayer;
+			$displayer->display($this);
+		}
 	}
 
 	// }}}
