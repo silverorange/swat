@@ -110,12 +110,8 @@ class SwatError
 	 */
 	public function process()
 	{
-		if (ini_get('display_errors')) {
-			if (isset($_SERVER['REQUEST_URI']))
-				echo $this->toXHTML();
-			else
-				echo $this->toString();
-		}
+		if (ini_get('display_errors'))
+			$this->display();
 
 		if (ini_get('log_errors'))
 			$this->log();
@@ -135,6 +131,17 @@ class SwatError
 	public function log()
 	{
 		error_log($this->getSummary(), 0);
+	}
+
+	// }}}
+	// {{{ public function display()
+
+	public function display()
+	{
+		if (isset($_SERVER['REQUEST_URI']))
+			echo $this->toXHTML();
+		else
+			echo $this->toString();
 	}
 
 	// }}}
