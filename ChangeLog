@@ -1,3 +1,41 @@
+2006-09-24  gauthierm
+
+	* [r11397] swat/trunk/Swat/SwatError.php:
+	  for text output, use only the severity string for the title
+	  instead of always appending 'Error'.
+	* [r11393] swat/trunk/Swat/SwatError.php,
+	  swat/trunk/Swat/SwatErrorDisplayer.php,
+	  swat/trunk/Swat/SwatErrorLogger.php:
+	  added ability to set a custom error logger or displayer for
+	  SwatError objects.
+	* [r11392] swat/trunk/Swat/SwatError.php:
+	  move error displaying into its own method
+
+2006-09-23  gauthierm
+
+	* [r11389] swat/trunk/Swat/SwatContainer.php,
+	  swat/trunk/Swat/SwatControl.php:
+	  fix syntax errors
+	* [r11388] swat/trunk/Swat/SwatContainer.php,
+	  swat/trunk/Swat/SwatControl.php, swat/trunk/Swat/SwatWidget.php:
+	  make printWidgetTree() abstract in SwatWidget since SwatWidget
+	  doesn't require_once SwatContainer. Implement printWidgetTree()
+	  in SwatContainer and SwatControl.
+
+2006-09-23  nrf
+
+	* [r11387] swat/trunk/Swat/SwatWidget.php:
+	  Add SwatWidget::printWidgetTree() method for printing a widget
+	  tree as XHTML.
+	* [r11380] swat/trunk/package.php:
+	  prepare for release of 1.0.3
+	* [r11379] swat/trunk/Swat/SwatExceptionDisplayer.php,
+	  swat/trunk/Swat/exceptions/SwatException.php,
+	  swat/trunk/Swat/exceptions/SwatExceptionDisplayer.php:
+	  Move SiteExceptionDisplayer
+	* [r11377] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.0.2
+
 2006-09-22  gauthierm
 
 	* [r11331] swat/trunk/Swat/SwatExceptionLogger.php,
