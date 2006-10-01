@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Date.php';
+require_once 'Swat/Swat.php';
 
 /**
  * Date Tools
