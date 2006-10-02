@@ -15,7 +15,7 @@ class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
 
 	public function display($uri_prefix = '')
 	{
-		printf('<style type="text/css" media="all">@import "%s%s";</style>',
+		printf('<style type="text/css" media="all">@import \'%s%s\';</style>',
 			$uri_prefix,
 			$this->uri);
 	}
