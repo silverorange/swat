@@ -68,16 +68,18 @@ class SwatConfirmationButton extends SwatButton
 	 */
 	private function displayJavaScript()
 	{
-		echo '<script type="text/javascript">';
+		echo '<script type="text/javascript">', "\n//<![CDATA[\n";
 
-		printf("%s = new SwatConfirmationButton('%s');\n", $this->id, $this->id);
+		printf("%s = new SwatConfirmationButton('%s');\n",
+			$this->id, $this->id);
 
-		$message = str_replace("'", "''", $this->confirmation_message);
-		$message = str_replace("\n", '\n', $this->confirmation_message);
+		$message = str_replace("'", "\'", $this->confirmation_message);
+		$message = str_replace("\n", '\n', $message);
+		$message = str_ireplace('</script>', "</script' + '>", $message);
 
 		printf("%s.setMessage('%s');\n", $this->id, $message);
 
-		echo '</script>';
+		echo "//]]>\n", '</script>';
 	}
 
 	// }}}
