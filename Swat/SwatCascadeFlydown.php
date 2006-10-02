@@ -123,7 +123,7 @@ class SwatCascadeFlydown extends SwatFlydown
 	}
 
 	// }}}
-	// {{{ private function displayjavascript()
+	// {{{ private function displayJavaScript()
 
 	/**
 	 * Displays the JavaScript that makes this control work
