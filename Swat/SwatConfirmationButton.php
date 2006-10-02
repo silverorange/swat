@@ -14,6 +14,19 @@ require_once 'Swat/SwatButton.php';
  */
 class SwatConfirmationButton extends SwatButton
 {
+	// {{{ public properties
+
+	/**
+	 * Confirmation message to display when this button is clicked
+	 *
+	 * The default value is assigned in the constructor so that it is properly
+	 * translated.
+	 *
+	 * @var string
+	 */
+	public $confirmation_message = '';
+
+	// }}}
 	// {{{ public function __construct()
 
 	/**
@@ -44,7 +57,6 @@ class SwatConfirmationButton extends SwatButton
 	public function display()
 	{
 		parent::display();
-
 		$this->displayJavaScript();
 	}
 
