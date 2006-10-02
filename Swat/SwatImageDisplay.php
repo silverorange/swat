@@ -102,12 +102,11 @@ class SwatImageDisplay extends SwatControl
 			$image_tag->width = $this->width;
 
 		if ($this->title !== null)
-			$image_tag->title = SwatString::minimizeEntities($this->title);
+			$image_tag->title = $this->title;
 
 		// alt is a required XHTML attribute. We should always display it even
 		// if it is not specified.
-		$image_tag->alt = ($this->alt === null) ? '' :
-			SwatString::minimizeEntities($this->alt);
+		$image_tag->alt = ($this->alt === null) ? '' : $this->alt;
 
 		$image_tag->display();
 	}
