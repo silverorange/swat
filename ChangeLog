@@ -1,3 +1,44 @@
+2006-10-02  gauthierm
+
+	* [r11728] swat/trunk/Swat/SwatImageDisplay.php:
+	  revert minimizeEntities() on alt and title attributes.
+	  SwatHtmlTag already does this.
+	* [r11698] swat/trunk/Swat/SwatConfirmationButton.php:
+	  escape JavaScript strings properly
+	* [r11697] swat/trunk/Swat/SwatCascadeFlydown.php:
+	  fix folding
+
+2006-10-02  steven
+
+	* [r11693] swat/trunk/Swat/SwatStyleSheetHtmlHeadEntry.php:
+	  Switching SwatStyleSheetHtmlHeadEntry to use single quotes
+	  rather than double in the "import" includes of CSS files. This
+	  is allowed in the CSS spec, works in every browser, and excludes
+	  IE5/Mac, which chokes on most of our modern CSS.
+
+2006-10-02  gauthierm
+
+	* [r11692] swat/trunk/Swat/SwatConfirmationButton.php:
+	  define public property
+	* [r11687] swat/trunk/Swat/SwatImageDisplay.php:
+	  make it more difficult for people to inject HTML and JavaScript
+	  in image displays
+
+2006-10-01  gauthierm
+
+	* [r11682] swat/trunk/Swat/SwatDate.php:
+	  SwatDate requires Swat.
+
+2006-09-26  gauthierm
+
+	* [r11525] swat/trunk/Swat/SwatUI.php:
+	  added comment note
+
+2006-09-25  nrf
+
+	* [r11406] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.0.4
+
 2006-09-24  gauthierm
 
 	* [r11397] swat/trunk/Swat/SwatError.php:
