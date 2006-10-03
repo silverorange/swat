@@ -524,20 +524,39 @@ SwatCalendar.prototype.draw = function()
 	cur_html = cur_html + '</tr>';
 
 	calendar_div = document.getElementById(this.id + '_div');
+	var body = document.getElementsByTagName('body')[0];
+	body.appendChild(calendar_div);
+
 	calendar_toggle = document.getElementById(this.id + '_toggle');
 	calendar_div.innerHTML = begin_table + date_controls + week_header + cur_html + close_controls;
 
 	var toggle_button = document.getElementById(this.id + '_toggle');
 
-	// this block is required for correct offset calculation in IE
+	// this block is required for correct offset calculation in IE6
+	// multiple relative nodes results in incorrect offsetLeft calculation
 	var x_offset = 0;
+	var y_offset = 0;
 	var node = toggle_button;
+	var last_node_relative = false;
+	var position;
 	while (node) {
-		x_offset += node.offsetLeft;
+		position = (window.getComputedStyle) ?
+			window.getComputedStyle(node, '').position :
+			(node.currentStyle ?
+				node.currentStyle.position :
+				false);
+
+		if (!(position == 'relative' && last_node_relative))
+			x_offset += node.offsetLeft;
+
+		y_offset += node.offsetTop;
+		last_node_relative = (position == 'relative');
 		node = node.offsetParent;
 	}
+	y_offset += calendar_toggle.offsetHeight;
 
 	calendar_div.style.left = x_offset + 'px';
+	calendar_div.style.top = y_offset + 'px';
 	calendar_div.style.display = 'block';
 
 	this.open = true;
@@ -546,11 +565,11 @@ SwatCalendar.prototype.draw = function()
 //preload images
 if (document.images) {
 	image1 = new Image();
-	image1.src = "packages/swat/images/arrow-left.png";
+	image1.src = 'packages/swat/images/arrow-left.png';
 	image2 = new Image();
-	image2.src = "packages/swat/images/arrow-right.png";
+	image2.src = 'packages/swat/images/arrow-right.png';
 	image3 = new Image();
-	image3.src = "packages/swat/images/arrow-left-off.png";
+	image3.src = 'packages/swat/images/arrow-left-off.png';
 	image4 = new Image();
-	image4.src = "packages/swat/images/arrow-right-off.png";
+	image4.src = 'packages/swat/images/arrow-right-off.png';
 }
