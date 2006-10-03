@@ -559,6 +559,11 @@ SwatCalendar.prototype.draw = function()
 	calendar_div.style.top = y_offset + 'px';
 	calendar_div.style.display = 'block';
 
+	// check if the calendar is floating off the screen to the right
+	if (x_offset + calendar_div.offsetWidth > body.offsetWidth)
+		calendar_div.style.left =
+			(body.offsetWidth - calendar_div.offsetWidth) + 'px';
+
 	this.open = true;
 }
 
