@@ -225,6 +225,12 @@ fieldset.swat-form-field legend {
 	color: #666;
 }
 
+.swat-button-compact {
+	font-size: 80%;
+	padding: 0;
+	border-width: 1px;
+}
+
 .swat-nowrap {
 	white-space: nowrap;
 }
