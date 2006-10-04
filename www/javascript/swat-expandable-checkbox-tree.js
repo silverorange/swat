@@ -7,23 +7,13 @@ function SwatExpandableCheckboxTree(id, dependent_boxes)
 	// a parent will check its children and checking all children of a parent
 	// will check the parent.
 	if (dependent_boxes) {
-
 		// get all checkboxes in this tree
 		this.check_list = document.getElementsByName(id + '[]');
 
-		this.has_add_event = (document.addEventListener) ? true : false;
-		
-		
-		if (this.has_add_event) {
-			for (var i = 0; i < this.check_list.length; i++) {
-				this.check_list[i].addEventListener('change', handleClick, false);
-			}
-		} else {
-			for (var i = 0; i < this.check_list.length; i++) {
-				this.check_list[i].attachEvent('onclick', handleClick);
-			}
+		for (var i = 0; i < this.check_list.length; i++) {
+			YAHOO.util.Event.addListener(this.check_list[i], 'change',
+				handleClick);
 		}
-
 	}
 
 	function handleClick(event)
@@ -101,14 +91,21 @@ SwatExpandableCheckboxTree.prototype.toggleBranch = function(branch_id)
 	branch = document.getElementById(this.id + '_' + branch_id + '_branch');
 	image = document.getElementById(this.id + '_' + branch_id + '_img');
 
-	opened = (branch.className == 'swat-expandable-checkbox-tree-opened');
+	opened = YAHOO.util.Dom.hasClass(branch.className,
+		'swat-expandable-checkbox-tree-opened');
 
 	if (opened) {
-		branch.className = 'swat-expandable-checkbox-tree-closed';
+		YAHOO.util.Dom.addClass(branch, 'swat-expandable-checkbox-tree-closed');
+		YAHOO.util.Dom.removeClass(branch,
+			'swat-expandable-checkbox-tree-opened');
+
 		image.src = 'packages/swat/images/swat-disclosure-closed.png';
 		image.alt = SwatExpandableCheckboxTree.open_text;
 	} else {
-		branch.className = 'swat-expandable-checkbox-tree-opened';
+		YAHOO.util.Dom.addClass(branch, 'swat-expandable-checkbox-tree-opened');
+		YAHOO.util.Dom.removeClass(branch,
+			'swat-expandable-checkbox-tree-closed');
+
 		image.src = 'packages/swat/images/swat-disclosure-open.png';
 		image.alt = SwatExpandableCheckboxTree.closed_text;
 	}
