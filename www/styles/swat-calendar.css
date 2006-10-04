@@ -43,7 +43,6 @@ table.swat-calendar-frame {
 	border-bottom: 1px solid #ccc;
 	background: #f6f2ea url(../images/swat-calendar-header-background.png) top left repeat-x;
 	vertical-align: center;
-	white-space: nowrap;
 }
 
 .swat-calendar-control {
@@ -53,6 +52,11 @@ table.swat-calendar-frame {
 td.swat-calendar-control-arrow {
 	text-align: center;
 	width: 50%;
+}
+
+td.swat-calendar-control-flydowns {
+	width: 0;
+	white-space: nowrap;
 }
 
 .swat-calendar-header {

@@ -303,7 +303,7 @@ SwatCalendar.prototype.buildControls = function()
 
 	year_array = year_array + '</select>';
 
-	return (month_array + ' ' + year_array);
+	return (month_array + '&nbsp;' + year_array);
 }
 
 SwatCalendar.prototype.toggle = function()
@@ -458,7 +458,7 @@ SwatCalendar.prototype.draw = function()
 		'<img class="' + prev_class + '" onclick="' + prev_link + '" ' +
 		'src="packages/swat/images/' + prev_img + '" width="22" height="22" ' +
 		'alt="' + prev_alt + '" />' +
-		'</td><td width="0">' +
+		'</td><td class="swat-calendar-control-flydowns">' +
 		this.buildControls(yyyy, mm, dd) +
 		'</td><td class="swat-calendar-control-arrow">' +
 		'<img class="' + next_class + '" onclick="' + next_link + '" ' +
