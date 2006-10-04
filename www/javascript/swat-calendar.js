@@ -128,11 +128,14 @@ SwatCalendar.prototype.setDateValues = function(year, month, day)
  * Sets the associated date widget to the specified date and updates the
  * calendar display
  */
-SwatCalendar.prototype.setDate = function(yyyy, mm, dd)
+SwatCalendar.prototype.setDate = function(element, yyyy, mm, dd)
 {
 	this.setDateValues(yyyy, mm, dd);
-	// TODO: don't do a full redraw here
-	this.draw();
+	if (this.selected_element)
+		this.selected_element.className = 'swat-calendar-cell';
+
+	element.className = 'swat-calendar-current-cell';
+	this.selected_element = element;
 }
 
 /**
@@ -496,7 +499,8 @@ SwatCalendar.prototype.draw = function()
 	var cur_html = '';
 	var end_day = (SwatCalendar.isLeapYear(yyyy) && mm == 2) ? 29 : dom[mm - 1];
 	var row_element = 0;
-	var cell_data = '';
+	var cell_class = '';
+	var cell_current = '';
 	var onclick_action = '';
 
 	// calculate the lead gap
@@ -511,30 +515,31 @@ SwatCalendar.prototype.draw = function()
 		
 	for (i = 1; i <= end_day; i++) {
 
-		cell_data = (dd == i) ? 'swat-calendar-current-cell' : 'swat-calendar-cell';
-		onclick_action = this.id + '_obj.setDate('+ yyyy + ',' + mm + ',' + i + ');';
+		cell_class = (dd == i) ? 'swat-calendar-current-cell' : 'swat-calendar-cell';
+		cell_current = (dd == i) ? 'id="' + this.id + '_current_cell" ' : '';
+		onclick_action = this.id + '_obj.setDate(this, '+ yyyy + ',' + mm + ',' + i + ');';
 		if (calendar_start && i < start_date.getDate()) {
-			cell_data = 'swat-calendar-invalid-cell';
+			cell_class = 'swat-calendar-invalid-cell';
 			onclick_action = 'return false;';
 		} else if (calendar_end && i > end_date.getDate()) {
-			cell_data = 'swat-calendar-invalid-cell';
+			cell_class = 'swat-calendar-invalid-cell';
 			onclick_action = 'return false;';
 		}
 
 		if (row_element == 0) {
-			cur_html = cur_html + '<tr><td class="' + cell_data + '" onclick="' + onclick_action + '">' + i + '</td>';
+			cur_html = cur_html + '<tr><td ' + cell_current + 'class="' + cell_class + '" onclick="' + onclick_action + '">' + i + '</td>';
 			row_element++;
 			continue;
 		}
 
 		if (row_element > 0 && row_element < 6) {
-			cur_html = cur_html + '<td class="' + cell_data + '" onclick="' + onclick_action + '">' + i + '</td>';
+			cur_html = cur_html + '<td ' + cell_current + 'class="' + cell_class + '" onclick="' + onclick_action + '">' + i + '</td>';
 			row_element++;
 			continue;
 		}
 
 		if (row_element == 6) {
-			cur_html = cur_html + '<td class="' + cell_data + '" onclick="' + onclick_action + '">' + i + '</td></tr>';
+			cur_html = cur_html + '<td ' + cell_current + 'class="' + cell_class + '" onclick="' + onclick_action + '">' + i + '</td></tr>';
 			row_element = 0;
 			continue;
 		}
@@ -544,7 +549,7 @@ SwatCalendar.prototype.draw = function()
 	if (row_element != 0) {
 		cur_html = cur_html +
 			'<td class="swat-calendar-empty-cell" colspan="' +
-			(7 - row_element)+ '">&nbsp;</td>';
+			(7 - row_element) + '">&nbsp;</td>';
 	}
 
 	cur_html = cur_html + '</tr>';
@@ -557,6 +562,7 @@ SwatCalendar.prototype.draw = function()
 	calendar_div.innerHTML = begin_table + date_controls + week_header + cur_html + close_controls;
 
 	var toggle_button = document.getElementById(this.id + '_toggle');
+	this.selected_element = document.getElementById(this.id + '_current_cell');
 
 	// this block is required for correct offset calculation in IE6
 	// multiple relative nodes results in incorrect offsetLeft calculation
