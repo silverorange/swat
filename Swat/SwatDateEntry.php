@@ -169,7 +169,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		$this->requires_id = true;
 
-		$yui = new YUI(array('dom', 'event'));
+		$yui = new YUI('event');
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript('packages/swat/javascript/swat-date-entry.js',
 			Swat::PACKAGE_ID);
