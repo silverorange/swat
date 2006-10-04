@@ -5,6 +5,7 @@ require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatCheckAll.php';
 require_once 'Swat/SwatState.php';
 require_once 'Swat/SwatString.php';
+require_once 'YUI/YUI.php';
 
 /**
  * A checkbox list widget
@@ -83,6 +84,8 @@ class SwatCheckboxList extends SwatInputControl implements SwatState
 		$this->requires_id = true;
 		$this->check_all = new SwatCheckAll();
 		$this->check_all->parent = $this;
+		$yui = new YUI('event');
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript('packages/swat/javascript/swat-checkbox-list.js',
 			Swat::PACKAGE_ID);
 	}
@@ -100,7 +103,7 @@ class SwatCheckboxList extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ public getHtmlHeadEntrySet()
+	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this checkbox list 

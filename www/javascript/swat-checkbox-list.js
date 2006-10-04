@@ -9,13 +9,9 @@ function SwatCheckboxList(id)
 	this.check_list = document.getElementsByName(id + '[]');
 	this.check_all = null; //a reference to a checkall widget
 
-	var is_ie = (document.addEventListener) ? false : true;
-
 	for (i = 0; i < this.check_list.length; i++) {
-		if (is_ie)
-			this.check_list[i].attachEvent('onclick', eventHandler);
-		else 
-			this.check_list[i].addEventListener('change', eventHandler, false);
+		YAHOO.util.Event.addListener(this.check_list[i], 'change',
+			eventHandler);
 	}
 
 	function eventHandler(event)
