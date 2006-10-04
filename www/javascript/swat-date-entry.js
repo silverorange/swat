@@ -8,46 +8,24 @@ function SwatDateEntry(id)
 
 	this.swat_time = null;
 
-	var is_ie = (document.addEventListener) ? false : true;
 	var self = this;
 
-	function handleChange(event)
+	function handleChange(event, active_flydown)
 	{
-		var target;
-		if (!event)
-			var event = window.event;
-
-		if (event.target)
-			target = event.target;
-		else if (event.srcElement)
-			target = event.srcElement;
-
-		// fix Safari bug
-		if (target.nodeType == 3)
-			target = target.parentNode;
-
-		self.update(target);
+		self.update(active_flydown);
 	}
 
-	if (is_ie) {
-		if (this.year)
-			this.year.attachEvent('onchange', handleChange);
+	if (this.year)
+		YAHOO.util.Event.addListener(this.year, 'change', handleChange,
+			this.year);
 
-		if (this.month)
-			this.month.attachEvent('onchange', handleChange);
+	if (this.month)
+		YAHOO.util.Event.addListener(this.month, 'change', handleChange,
+			this.month);
 
-		if (this.day)
-			this.day.attachEvent('onchange', handleChange);
-	} else {
-		if (this.year)
-			this.year.addEventListener('change', handleChange, true);
-
-		if (this.month)
-			this.month.addEventListener('change', handleChange, true);
-
-		if (this.day)
-			this.day.addEventListener('change', handleChange, true);
-	}
+	if (this.day)
+		YAHOO.util.Event.addListener(this.day, 'change', handleChange,
+			this.day);
 }
 
 SwatDateEntry.prototype.setSwatTime = function(swat_time)
