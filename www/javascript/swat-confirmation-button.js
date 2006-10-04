@@ -6,22 +6,14 @@ function SwatConfirmationButton(id)
 
 	this.button = document.getElementById(this.id);
 
-	var is_ie = (this.button.addEventListener) ? false : true;
-
-	if (is_ie)
-		this.button.attachEvent("onclick", eventHandler, false);
-	else
-		this.button.addEventListener("click", eventHandler, false);
+	YAHOO.util.Event.addListener(this.button, 'click', eventHandler);
 
 	function eventHandler(event)
 	{
 		var confirmed = window.confirm(self.message);
 
 		if (!confirmed) {
-			if (event.preventDefault)
-				event.preventDefault();
-			else
-				event.returnValue = false; //IE
+			YAHOO.util.Event.preventDefault(event);
 		}
 	}
 }

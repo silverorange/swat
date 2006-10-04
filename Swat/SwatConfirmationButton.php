@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatButton.php';
+require_once 'YUI/YUI.php';
 
 /**
  * A button widget with a javascript confirmation dialog
@@ -38,6 +39,8 @@ class SwatConfirmationButton extends SwatButton
 	{
 		parent::__construct($id);
 
+		$yui = new YUI('event');
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript(
 			'packages/swat/javascript/swat-confirmation-button.js',
 			Swat::PACKAGE_ID);
