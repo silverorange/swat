@@ -37,8 +37,6 @@ SwatZIndexManager.raiseElement = function(element)
 	element.style.zIndex = index;
 
 	SwatZIndexManager.elements.push(element);
-
-//	element.innerHTML = index;
 }
 
 /**
@@ -95,7 +93,6 @@ SwatZIndexManager.removeElement = function(element)
 			old_index = parseInt(SwatZIndexManager.elements[i].style.zIndex);
 			new_index = SwatZIndexManager.start + old_index - lowest_index;
 			SwatZIndexManager.elements[i].style.zIndex = new_index;
-//			SwatZIndexManager.elements[i].innerHTML = new_index;
 		}
 	}
 
