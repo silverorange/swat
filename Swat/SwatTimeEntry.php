@@ -2,8 +2,8 @@
 
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatFlydown.php';
+require_once 'Swat/SwatDate.php';
 require_once 'Swat/SwatState.php';
-require_once 'Date.php';
 
 // TODO: figure out why the valid-ranges are getting having the time inproperly
 //       offset.
