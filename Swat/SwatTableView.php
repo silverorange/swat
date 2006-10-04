@@ -11,6 +11,7 @@ require_once 'Swat/SwatTableViewInputRow.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/exceptions/SwatDuplicateIdException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
+require_once 'YUI/YUI.php';
 
 /**
  * A widget to display data in a tabular form
@@ -228,6 +229,9 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
+
+		$yui = new YUI('dom');
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript('packages/swat/javascript/swat-table-view.js',
 			Swat::PACKAGE_ID);

@@ -12,21 +12,20 @@ function SwatTableView(id)
 SwatTableView.prototype.highlightRow = function(node, highlight)
 {
 	if (node.nodeName == 'TR') {
-		if (node.className.match(/odd/)) {
+		if (YAHOO.util.Dom.hasClass(node, 'odd') ||
+			YAHOO.util.Dom.hasClass(node, 'highlight-odd')) {
 			if (highlight) {
-				node.className = node.className.replace(/ *highlight-odd/, '');
-				node.className = node.className.replace(/ *odd/, '');
-				node.className += ' highlight-odd';
+				YAHOO.util.Dom.removeClass(node, 'odd');
+				YAHOO.util.Dom.addClass(node, 'highlight-odd');
 			} else {
-				node.className = node.className.replace(/ *highlight-odd/, '');
-				node.className = node.className.replace(/ *odd/, '');
-				node.className += ' odd';
+				YAHOO.util.Dom.removeClass(node, 'highlight-odd');
+				YAHOO.util.Dom.addClass(node, 'odd');
 			}
 		} else {
 			if (highlight)
-				node.className += ' highlight';
+				YAHOO.util.Dom.addClass(node, 'highlight');
 			else
-				node.className = node.className.replace(/ *highlight/, '');
+				YAHOO.util.Dom.removeClass(node, 'highlight');
 		}
 	} else if (node.parentNode) {
 		this.highlightRow(node.parentNode, highlight);
