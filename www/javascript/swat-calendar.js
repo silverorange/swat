@@ -125,6 +125,17 @@ SwatCalendar.prototype.setDateValues = function(year, month, day)
 }
 
 /**
+ * Sets the associated date widget to the specified date and updates the
+ * calendar display
+ */
+SwatCalendar.prototype.setDate = function(yyyy, mm, dd)
+{
+	this.setDateValues(yyyy, mm, dd);
+	// TODO: don't do a full redraw here
+	this.draw();
+}
+
+/**
  * Closes this calendar
  */
 SwatCalendar.prototype.close = function()
@@ -352,6 +363,24 @@ SwatCalendar.prototype.draw = function()
 			var dd = start_date.getDate();
 			var yyyy = start_date.getYear();
 		}
+	} else if (!dd) {
+		if (this.date) {
+			var d = this.date.getDay();
+			var m = this.date.getMonth();
+			var y = this.date.getYear();
+
+			var day   = (d == null) ? today.getDate()      : parseInt(d);
+			var month = (m == null) ? today.getMonth() + 1 : parseInt(m);
+			var year  = (y == null) ? today.getYear()      : parseInt(y);
+
+			if (mm == month && yyyy == year) {
+				var dd = day;
+			}
+		} else {
+			var mm = start_date.getMonth() + 1;
+			var dd = start_date.getDate();
+			var yyyy = start_date.getYear();
+		}
 	}
 
 	/*
@@ -401,9 +430,9 @@ SwatCalendar.prototype.draw = function()
 		var prev_class = 'swat-calendar-arrows-off';
 	} else {
 		var prev_link = this.id + '_obj.draw(' +
-			prev_year + ',' + prev_month + ', 1);';
+			prev_year + ',' + prev_month + ');';
 
-		var prev_img  = 'arrow-left.png';
+		var prev_img  = 'go-previous.png';
 		var prev_class = 'swat-calendar-arrows';
 	}
 
@@ -413,9 +442,9 @@ SwatCalendar.prototype.draw = function()
 		var next_class = 'swat-calendar-arrows-off';
 	} else {
 		var next_link = this.id + '_obj.draw(' +
-			next_year + ',' + next_month + ', 1);';
+			next_year + ',' + next_month + ');';
 
-		var next_img  = 'arrow-right.png';
+		var next_img  = 'go-next.png';
 		var next_class = 'swat-calendar-arrows';
 	}
 
@@ -425,20 +454,20 @@ SwatCalendar.prototype.draw = function()
 	var date_controls =
 		'<tr>' +
 		'<td class="swat-calendar-control-frame" colspan="7">' +
-		'<table cellpadding="0" cellspacing="0" border="0"><tr><td>' +
+		'<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td class="swat-calendar-control-arrow">' +
 		'<img class="' + prev_class + '" onclick="' + prev_link + '" ' +
-		'src="packages/swat/images/' + prev_img + '" width="23" height="22" ' +
+		'src="packages/swat/images/' + prev_img + '" width="22" height="22" ' +
 		'alt="' + prev_alt + '" />' +
-		'</td><td nowrap width="100%">' +
+		'</td><td width="0">' +
 		this.buildControls(yyyy, mm, dd) +
-		'</td><td>' +
+		'</td><td class="swat-calendar-control-arrow">' +
 		'<img class="' + next_class + '" onclick="' + next_link + '" ' +
-		'src="packages/swat/images/' + next_img + '" width="23" height="22" ' +
+		'src="packages/swat/images/' + next_img + '" width="22" height="22" ' +
 		'alt="' + next_alt + '" />' +
 		'</td></tr></table>' +
 		'</td></tr>';
 
-	var begin_table = '<table class="swat-calendar-frame">';
+	var begin_table = '<table class="swat-calendar-frame" cellspacing="0">';
 
 	var week_header = '<tr>';
 	for (i = 0; i < SwatCalendar.week_names.length; i++)
@@ -448,24 +477,20 @@ SwatCalendar.prototype.draw = function()
 	week_header = week_header + '</tr>';
 
 	var close_controls = '<tr>' +
-		'<td id="swat-calendar-close-controls" colspan="7">' +
-		'<span>' +
-		'<a class="swat-calendar-cancel" onclick="' +
-		this.id + '_obj.closeAndSetBlank();">' + SwatCalendar.nodate_text + '</a>' +
-		'</span>';
+		'<td class="swat-calendar-close-controls" colspan="7">' +
+		'<a class="swat-calendar-cancel" href="javascript:' +
+		this.id + '_obj.closeAndSetBlank();">' + SwatCalendar.nodate_text + '</a>';
 
 	if (today_ts >= start_ts && today_ts <= end_ts)
 		close_controls = close_controls +
-		'<span>' +
-		'<a class="swat-calendar-today" onclick="' +
-		this.id + '_obj.closeAndSetToday();">' + SwatCalendar.today_text + '</a>' +
-		'</span>';
+		'&nbsp;' +
+		'<a class="swat-calendar-today" href="javascript:' +
+		this.id + '_obj.closeAndSetToday();">' + SwatCalendar.today_text + '</a>';
 
 	close_controls = close_controls +
-		'<span>' +
-		'<a class="swat-calendar-close" onclick="' +
+		'&nbsp;' +
+		'<a class="swat-calendar-close" href="javascript:' +
 		this.id + '_obj.close();">' + SwatCalendar.close_text + '</a> ' +
-		'</span>' +
 		'</td></tr></table>';
 
 	var cur_html = '';
@@ -477,16 +502,17 @@ SwatCalendar.prototype.draw = function()
 	// calculate the lead gap
 	if (start_day != 0) {
 		cur_html = '<tr>';
-		for (i = 0; i < start_day; i++) {
-			cur_html = cur_html + '<td class="swat-calendar-empty-cell">&nbsp;</td>';
-			row_element++;
-		}
+		cur_html = cur_html +
+			'<td class="swat-calendar-empty-cell" colspan="' + start_day +
+			'">&nbsp;</td>';
+
+		row_element = start_day;
 	}
 		
 	for (i = 1; i <= end_day; i++) {
 
 		cell_data = (dd == i) ? 'swat-calendar-current-cell' : 'swat-calendar-cell';
-		onclick_action = this.id + '_obj.closeAndSetDate('+ yyyy + ',' + mm + ',' + i + ');';
+		onclick_action = this.id + '_obj.setDate('+ yyyy + ',' + mm + ',' + i + ');';
 		if (calendar_start && i < start_date.getDate()) {
 			cell_data = 'swat-calendar-invalid-cell';
 			onclick_action = 'return false;';
@@ -516,9 +542,9 @@ SwatCalendar.prototype.draw = function()
 
 	// calculate the end gap
 	if (row_element != 0) {
-		for (i = row_element; i <= 6; i++){
-			cur_html = cur_html + '<td class="swat-calendar-empty-cell">&nbsp;</td>';
-		}
+		cur_html = cur_html +
+			'<td class="swat-calendar-empty-cell" colspan="' +
+			(7 - row_element)+ '">&nbsp;</td>';
 	}
 
 	cur_html = cur_html + '</tr>';
@@ -569,12 +595,12 @@ SwatCalendar.prototype.draw = function()
 
 //preload images
 if (document.images) {
-	image1 = new Image();
-	image1.src = 'packages/swat/images/arrow-left.png';
-	image2 = new Image();
-	image2.src = 'packages/swat/images/arrow-right.png';
 	image3 = new Image();
 	image3.src = 'packages/swat/images/arrow-left-off.png';
 	image4 = new Image();
 	image4.src = 'packages/swat/images/arrow-right-off.png';
+	image5 = new Image();
+	image5.src = 'packages/swat/images/go-previous.png';
+	image6 = new Image();
+	image6.src = 'packages/swat/images/go-next.png';
 }
