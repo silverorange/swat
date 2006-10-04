@@ -9,52 +9,28 @@ function SwatTimeEntry(id)
 
 	this.swat_date = null;
 
-	var is_ie = (document.addEventListener) ? false : true;
 	var self = this;
 
-	function handleChange(event)
+	function handleChange(event, active_flydown)
 	{
-		var target;
-		if (!event)
-			var event = window.event;
-
-		if (event.target)
-			target = event.target;
-		else if (event.srcElement)
-			target = event.srcElement;
-
-		// fix Safari bug
-		if (target.nodeType == 3)
-			target = target.parentNode;
-
-		self.update(target);
+		self.update(active_flydown);
 	}
 
-	if (is_ie) {
-		if (this.hour)
-			this.hour.attachEvent('onchange', handleChange);
+	if (this.hour)
+		YAHOO.util.Event.addListener(this.hour, 'change', handleChange,
+			this.hour);
 
-		if (this.minute)
-			this.minute.attachEvent('onchange', handleChange);
+	if (this.minute)
+		YAHOO.util.Event.addListener(this.minute, 'change', handleChange,
+			this.minute);
 
-		if (this.second)
-			this.second.attachEvent('onchange', handleChange);
+	if (this.second)
+		YAHOO.util.Event.addListener(this.second, 'change', handleChange,
+			this.second);
 
-		if (this.ampm)
-			this.ampm.attachEvent('onchange', handleChange);
-	} else {
-		if (this.hour)
-			this.hour.addEventListener('change', handleChange, true);
-
-		if (this.minute)
-			this.minute.addEventListener('change', handleChange, true);
-
-		if (this.second)
-			this.second.addEventListener('change', handleChange, true);
-
-		if (this.ampm)
-			this.ampm.addEventListener('change', handleChange, true);
-	}
+	if (this.ampm)
+		YAHOO.util.Event.addListener(this.ampm, 'change', handleChange,
+			this.ampm);
 }
 
 SwatTimeEntry.prototype.setSwatDate = function(swat_date)
