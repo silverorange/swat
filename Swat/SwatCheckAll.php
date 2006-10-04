@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatCheckbox.php';
+require_once 'YUI/YUI.php';
 
 /**
  * A "check all" JavaScript powered checkbox
@@ -36,6 +37,8 @@ class SwatCheckAll extends SwatCheckbox
 	{
 		parent::__construct($id);
 		$this->title = Swat::_('Check All');
+		$yui = new YUI('event');
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript('packages/swat/javascript/swat-check-all.js',
 			Swat::PACKAGE_ID);
 	}
