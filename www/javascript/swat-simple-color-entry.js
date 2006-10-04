@@ -137,7 +137,8 @@ SwatSimpleColorEntry.prototype.setColor = function(color_index)
 				document.getElementById(this.id +
 					'_palette_' + this.current_color);
 
-			old_palette_entry.className = '';
+			YAHOO.util.Dom.removeClass(old_palette_entry,
+				'swat-simple-color-palette-selected');
 		}
 	}
 
@@ -149,7 +150,8 @@ SwatSimpleColorEntry.prototype.setColor = function(color_index)
 		var palette_entry =
 			document.getElementById(this.id + '_palette_' + color_index);
 
-		palette_entry.className = 'swat-simple-color-palette-selected';
+		YAHOO.util.Dom.addClass(palette_entry,
+			'swat-simple-color-palette-selected');
 	}
 
 	this.close();
