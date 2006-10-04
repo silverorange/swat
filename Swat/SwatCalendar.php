@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatControl.php';
+require_once 'YUI/YUI.php';
 require_once 'Date.php';
 
 /**
@@ -53,6 +54,9 @@ class SwatCalendar extends SwatControl
 		parent::__construct($id);
 
 		$this->requires_id = true;
+
+		$yui = new YUI('dom');
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript('packages/swat/javascript/swat-calendar.js',
 			Swat::PACKAGE_ID);
