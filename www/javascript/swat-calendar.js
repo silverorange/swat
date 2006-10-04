@@ -564,53 +564,17 @@ SwatCalendar.prototype.draw = function()
 	var toggle_button = document.getElementById(this.id + '_toggle');
 	this.selected_element = document.getElementById(this.id + '_current_cell');
 
-	var x_offset = 0;
-	var y_offset = 0;
-	var node = toggle_button;
+	var offsets = YAHOO.util.Dom.getXY(toggle_button);
 
-	/*
-	 * In IE6 for windows, if we have elements in the following order:
-	 *    relative <- (static|absolute)
-	 * and we try to get the offsetLeft of the static or absolute element, the
-	 * value will include the margins and padding of the relative element.
-	 */
-	var has_static_node = false;
-	var has_relative_node = false;
-	var is_ie = ((node.currentStyle ? true : false) &&
-		navigator.userAgent.indexOf('MSIE') != -1);
-
-	// get absolute offset position
-	while (node.offsetParent) {
-
-		if (is_ie) {
-			if (!has_static_node && (node.currentStyle.position == 'static' ||
-				node.currentStyle.position == 'absolute')) {
-				has_static_node = true;
-			}
-
-			if (!has_relative_node && has_static_node &&
-				node.currentStyle.position == 'relative') {
-				x_offset -= node.offsetLeft;
-				has_relative_node = true;
-			}
-		}
-
-		x_offset += node.offsetLeft;
-		y_offset += node.offsetTop;
-
-		node = node.offsetParent;
-	}
-
-	y_offset += calendar_toggle.offsetHeight;
-
-	calendar_div.style.left = x_offset + 'px';
-	calendar_div.style.top = y_offset + 'px';
+	calendar_div.style.left = offsets[0] + 'px';
+	calendar_div.style.top = (offsets[1] + calendar_toggle.offsetHeight) + 'px';
 	calendar_div.style.display = 'block';
 
 	// check if the calendar is floating off the screen to the right
-	if (x_offset + calendar_div.offsetWidth > body.offsetWidth)
+	viewport_width = YAHOO.util.Dom.getViewportWidth();
+	if (offsets[0] + calendar_div.offsetWidth > viewport_width)
 		calendar_div.style.left =
-			(body.offsetWidth - calendar_div.offsetWidth) + 'px';
+			(viewport_width - calendar_div.offsetWidth) + 'px';
 
 	this.open = true;
 }
