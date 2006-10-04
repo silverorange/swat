@@ -4,6 +4,7 @@ require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatDate.php';
 require_once 'Swat/SwatState.php';
+require_once 'YUI/YUI.php';
 
 // TODO: figure out why the valid-ranges are getting having the time inproperly
 //       offset.
@@ -152,6 +153,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->valid_range_start = new SwatDate('0000-01-01T00:00:00.0000Z');
 		$this->valid_range_end   = new SwatDate('0000-01-01T23:59:59.0000Z');
 
+		$yui = new YUI('event');
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript('packages/swat/javascript/swat-time-entry.js',
 			Swat::PACKAGE_ID);
 	}
