@@ -564,27 +564,43 @@ SwatCalendar.prototype.draw = function()
 	var toggle_button = document.getElementById(this.id + '_toggle');
 	this.selected_element = document.getElementById(this.id + '_current_cell');
 
-	// this block is required for correct offset calculation in IE6
-	// multiple relative nodes results in incorrect offsetLeft calculation
 	var x_offset = 0;
 	var y_offset = 0;
 	var node = toggle_button;
-	var last_node_relative = false;
-	var position;
-	while (node) {
-		position = (window.getComputedStyle) ?
-			window.getComputedStyle(node, '').position :
-			(node.currentStyle ?
-				node.currentStyle.position :
-				false);
 
-		if (!(position == 'relative' && last_node_relative))
-			x_offset += node.offsetLeft;
+	/*
+	 * In IE6 for windows, if we have elements in the following order:
+	 *    relative <- (static|absolute)
+	 * and we try to get the offsetLeft of the static or absolute element, the
+	 * value will include the margins and padding of the relative element.
+	 */
+	var has_static_node = false;
+	var has_relative_node = false;
+	var is_ie = ((node.currentStyle ? true : false) &&
+		navigator.userAgent.indexOf('MSIE') != -1);
 
+	// get absolute offset position
+	while (node.offsetParent) {
+
+		if (is_ie) {
+			if (!has_static_node && (node.currentStyle.position == 'static' ||
+				node.currentStyle.position == 'absolute')) {
+				has_static_node = true;
+			}
+
+			if (!has_relative_node && has_static_node &&
+				node.currentStyle.position == 'relative') {
+				x_offset -= node.offsetLeft;
+				has_relative_node = true;
+			}
+		}
+
+		x_offset += node.offsetLeft;
 		y_offset += node.offsetTop;
-		last_node_relative = (position == 'relative');
+
 		node = node.offsetParent;
 	}
+
 	y_offset += calendar_toggle.offsetHeight;
 
 	calendar_div.style.left = x_offset + 'px';
