@@ -2,6 +2,7 @@
 
 require_once 'Swat/SwatCheckboxTree.php';
 require_once 'Swat/SwatString.php';
+require_once 'YUI/YUI.php';
 
 /**
  * A checkbox array widget formatted into a tree where each branch can
@@ -47,6 +48,8 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	{
 		parent::__construct($id);
 
+		$yui = new YUI(array('dom', 'event'));
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript(
 			'packages/swat/javascript/swat-expandable-checkbox-tree.js',
 			Swat::PACKAGE_ID);
