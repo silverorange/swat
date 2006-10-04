@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatCheckboxList.php';
+require_once 'YUI/YUI.php';
 
 /**
  * A checkbox list widget with entries per item
@@ -64,6 +65,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
+
+		$yui = new YUI(array('dom', 'event'));
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript(
 			'packages/swat/javascript/swat-checkbox-entry-list.js',
