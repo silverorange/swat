@@ -1,5 +1,7 @@
 <?php
 
+require_once 'YUI/YUI.php';
+
 /**
  * Container for package wide static methods
  *
@@ -161,7 +163,7 @@ class Swat
 	 */
 	public static function getDependencies()
 	{
-		return array();
+		return array(YUI::PACKAGE_ID);
 	}
 
 	// }}}
