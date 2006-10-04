@@ -38,22 +38,16 @@ SwatCheckAll.prototype.setState = function(checked)
 SwatCheckAll.prototype.setController = function(controller)
 {
 	var self = this;
-	var is_ie = (this.check_all.addEventListener) ? false : true;
 
-	if (this.controller !== null) {
-		// TODO: remove old event handlers
-		// this means we have to remember the old event handler somehow.
+	// only add the event handler the first time
+	if (this.controller === null) {
+		YAHOO.util.Event.addListener(this.check_all, 'change', eventHandler);
 	}
 
 	this.controller = controller;
 
 	controller.check_all = this;
 	controller.checkAllInit();
-
-	if (is_ie)
-		this.check_all.attachEvent('onclick', eventHandler, false);
-	else
-		this.check_all.addEventListener('change', eventHandler, false);
 
 	function eventHandler(event)
 	{
