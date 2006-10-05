@@ -362,7 +362,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 
 		echo '<script type="text/javascript">';
 
-		printf("%s = new SwatActions('%s', [%s], %s);\n", $this->id,
+		printf("var %s = new SwatActions('%s', [%s], %s);\n", $this->id,
 			$this->id, implode(', ', $values), $selected_value);
 
 		echo '</script>';
