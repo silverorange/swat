@@ -342,7 +342,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$this->apply_button->setFromStock('apply');
 	}
 
-	// protected function displayJavaScript()
+	// {{{ protected function displayJavaScript()
 
 	/** 
 	 * Displays JavaScript required to show and hide selected action items
