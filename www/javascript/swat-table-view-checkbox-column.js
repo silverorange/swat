@@ -7,16 +7,13 @@
  */
 function SwatTableViewCheckboxColumn(id, table)
 {
-	var self = this;
-
 	this.id = id;
 	this.table = table;
 
-	// a reference to a checkall widget (if it exists - set by the SwatCheckAll widget)
+	// a reference to a checkall widget (if it exists - set by the SwatCheckAll
+	// widget)
 	this.check_all = null;
 	this.check_list = new Array();
-
-	var is_ie = (document.addEventListener) ? false : true;
 
 	/*
 	 * Get all checkboxes with name = id + [] and that are contained in the
@@ -29,21 +26,17 @@ function SwatTableViewCheckboxColumn(id, table)
 		if (items[i].name == id + '[]') {
 			this.check_list.push(items[i]);
 			this.highlightRow(items[i]);
-
-			if (is_ie)
-				items[i].attachEvent("onclick", eventHandler);
-			else 
-				items[i].addEventListener("change", eventHandler, false);
+			YAHOO.util.Event.addListener(items[i], 'click',
+				SwatTableViewCheckboxColumn.handleClick, this);
 		}
 	}
+}
 
-	function eventHandler(event)
-	{
-		var node = (is_ie) ? event.srcElement : event.target;
-		self.highlightRow(node);
-
-		self.checkAllInit();
-	}
+SwatTableViewCheckboxColumn.handleClick = function(event, object)
+{
+	var node = YAHOO.util.Event.getTarget(event);
+	object.highlightRow(node);
+	object.checkAllInit();
 }
 
 SwatTableViewCheckboxColumn.prototype.checkAllInit = function()
