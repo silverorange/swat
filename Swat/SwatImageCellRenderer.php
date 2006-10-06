@@ -107,7 +107,11 @@ class SwatImageCellRenderer extends SwatCellRenderer
 		$image_tag->height = $this->height;
 		$image_tag->width = $this->width;
 		$image_tag->title = $this->title;
-		$image_tag->alt = $this->alt;
+
+		// alt is a required XHTML attribute. We should always display it even
+		// if it is not specified.
+		$image_tag->alt = ($this->alt === null) ? '' : $this->alt;
+
 		$image_tag->class = 'swat-image-cell-renderer';
 
 		$image_tag->display();
