@@ -17,20 +17,26 @@ function SwatTimeEntry(id)
 	}
 
 	if (this.hour)
-		YAHOO.util.Event.addListener(this.hour, 'change', handleChange,
-			this.hour);
+		YAHOO.util.Event.addListener(this.hour, 'change',
+			SwatTimeEntry.handleChange, this);
 
 	if (this.minute)
-		YAHOO.util.Event.addListener(this.minute, 'change', handleChange,
-			this.minute);
+		YAHOO.util.Event.addListener(this.minute, 'change',
+			SwatTimeEntry.handleChange, this);
 
 	if (this.second)
-		YAHOO.util.Event.addListener(this.second, 'change', handleChange,
-			this.second);
+		YAHOO.util.Event.addListener(this.second, 'change',
+			SwatTimeEntry.handleChange, this);
 
 	if (this.ampm)
-		YAHOO.util.Event.addListener(this.ampm, 'change', handleChange,
-			this.ampm);
+		YAHOO.util.Event.addListener(this.ampm, 'change',
+			SwatTimeEntry.handleChange, this);
+}
+
+SwatTimeEntry.handleChange = function(event, object)
+{
+	var active_flydown = YAHOO.util.Event.getTarget(event);
+	object.update(active_flydown);
 }
 
 SwatTimeEntry.prototype.setSwatDate = function(swat_date)
