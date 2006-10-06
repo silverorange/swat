@@ -9,17 +9,22 @@ function SwatActions(id, values, selected)
 
 	this.values = values;
 
-	function handleChange(event)
-	{
-		if (self.selected_element)
-			YAHOO.util.Dom.addClass(self.selected_element, 'swat-hidden');
+	YAHOO.util.Event.addListener(this.flydown, 'change',
+		SwatActions.handleChange, this);
+}
 
-		var id = self.id + '_' + self.values[self.flydown.selectedIndex];
-		self.selected_element = document.getElementById(id);
+SwatActions.handleChange = function(event, actions_object)
+{
+	if (actions_object.selected_element)
+		YAHOO.util.Dom.addClass(actions_object.selected_element,
+			'swat-hidden');
 
-		if (self.selected_element)
-			YAHOO.util.Dom.removeClass(self.selected_element, 'swat-hidden');
-	}
+	var id = actions_object.id + '_' +
+		actions_object.values[actions_object.flydown.selectedIndex];
 
-	YAHOO.util.Event.addListener(this.flydown, 'change', handleChange);
+	actions_object.selected_element = document.getElementById(id);
+
+	if (actions_object.selected_element)
+		YAHOO.util.Dom.removeClass(actions_object.selected_element,
+			'swat-hidden');
 }
