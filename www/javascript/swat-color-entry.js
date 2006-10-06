@@ -112,7 +112,7 @@ SwatColorEntry.prototype.drawTintScale = function(r, g, b)
 SwatColorEntry.prototype.drawDiv = function(r, g, b)
 {
 	var color = r + ',' + g + ',' + b;
-	var title = "rgb: (" + color + ") hex: #" + this.rgb_to_hex(r, g, b);
+	var title = 'rgb: (' + color + ') hex: #' + this.rgb_to_hex(r, g, b);
 	return '<div class="option" title="' + title +
 		'" onmouseover="' + this.id + '_obj.updateActiveSwatch(' + color +
 		');" onclick="' + this.id + '_obj.setPalette(' + color +
@@ -168,7 +168,7 @@ SwatColorEntry.prototype.updateSwatch = function(r, g, b)
 	color = r + ',' + g + ',' + b;
 	var swatch_obj = document.getElementById(this.id + '_swatch');
 	swatch_obj.style.background = 'rgb(' + color + ')';
-	swatch_obj.title = "rgb: (" + color + ") hex: #" + this.rgb_to_hex(r, g, b);
+	swatch_obj.title = 'rgb: (' + color + ') hex: #' + this.rgb_to_hex(r, g, b);
 
 	document.getElementById(this.id + '_tintscale').innerHTML =
 		this.drawTintScale(r, g, b);
@@ -179,7 +179,7 @@ SwatColorEntry.prototype.updateActiveSwatch = function(r, g, b)
 	color = r + ',' + g + ',' + b;
 	swatch_obj = document.getElementById(this.id + '_active_swatch');
 	swatch_obj.style.background = 'rgb(' + color + ')';
-	swatch_obj.title = "rgb: (" + color + ") hex: #" + this.rgb_to_hex(r, g, b);
+	swatch_obj.title = 'rgb: (" + color + ") hex: #' + this.rgb_to_hex(r, g, b);
 }
 
 SwatColorEntry.prototype.updateRGB = function(r, g, b)
