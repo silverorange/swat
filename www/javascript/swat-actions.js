@@ -13,18 +13,16 @@ function SwatActions(id, values, selected)
 		SwatActions.handleChange, this);
 }
 
-SwatActions.handleChange = function(event, actions_object)
+SwatActions.handleChange = function(event, object)
 {
-	if (actions_object.selected_element)
-		YAHOO.util.Dom.addClass(actions_object.selected_element,
-			'swat-hidden');
+	if (object.selected_element)
+		YAHOO.util.Dom.addClass(object.selected_element, 'swat-hidden');
 
-	var id = actions_object.id + '_' +
-		actions_object.values[actions_object.flydown.selectedIndex];
+	var id = object.id + '_' +
+		object.values[object.flydown.selectedIndex];
 
-	actions_object.selected_element = document.getElementById(id);
+	object.selected_element = document.getElementById(id);
 
-	if (actions_object.selected_element)
-		YAHOO.util.Dom.removeClass(actions_object.selected_element,
-			'swat-hidden');
+	if (object.selected_element)
+		YAHOO.util.Dom.removeClass(object.selected_element, 'swat-hidden');
 }
