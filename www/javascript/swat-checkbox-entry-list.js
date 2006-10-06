@@ -1,6 +1,5 @@
 function SwatCheckboxEntryList(id)
 {
-	var self = this;
 	this.check_list = document.getElementsByName(id + '[]');
 	this.entry_list = [];
 
