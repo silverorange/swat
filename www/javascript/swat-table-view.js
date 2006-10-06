@@ -6,7 +6,6 @@
 function SwatTableView(id)
 {
 	this.id = id;
-	var self = this;
 }
 
 SwatTableView.prototype.highlightRow = function(node, highlight)
