@@ -9,13 +9,6 @@ function SwatTimeEntry(id)
 
 	this.swat_date = null;
 
-	var self = this;
-
-	function handleChange(event, active_flydown)
-	{
-		self.update(active_flydown);
-	}
-
 	if (this.hour)
 		YAHOO.util.Event.addListener(this.hour, 'change',
 			SwatTimeEntry.handleChange, this);
