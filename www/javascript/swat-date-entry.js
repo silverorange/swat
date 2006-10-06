@@ -8,24 +8,23 @@ function SwatDateEntry(id)
 
 	this.swat_time = null;
 
-	var self = this;
-
-	function handleChange(event, active_flydown)
-	{
-		self.update(active_flydown);
-	}
-
 	if (this.year)
-		YAHOO.util.Event.addListener(this.year, 'change', handleChange,
-			this.year);
+		YAHOO.util.Event.addListener(this.year, 'change',
+			SwatDateEntry.handleChange, this);
 
 	if (this.month)
-		YAHOO.util.Event.addListener(this.month, 'change', handleChange,
-			this.month);
+		YAHOO.util.Event.addListener(this.month, 'change',
+			SwatDateEntry.handleChange, this);
 
 	if (this.day)
-		YAHOO.util.Event.addListener(this.day, 'change', handleChange,
-			this.day);
+		YAHOO.util.Event.addListener(this.day, 'change',
+			SwatDateEntry.handleChange, this);
+}
+
+SwatDateEntry.handleChange = function(event, object)
+{
+	var active_flydown = YAHOO.util.Event.getTarget(event);
+	object.update(active_flydown);
 }
 
 SwatDateEntry.prototype.setSwatTime = function(swat_time)
