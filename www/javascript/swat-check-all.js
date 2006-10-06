@@ -32,8 +32,9 @@ SwatCheckAll.prototype.setState = function(checked)
  * This adds an event handler to the check-all to update the list when this
  * check-all is checked/unchecked. 
  *
- * @param SwatCheckboxList controller the javascript object that represents the
- *                          checkbox list.
+ * @param SwatCheckboxList controller the JavaScript object that represents the
+ *                                     checkbox list controlling this check-all
+ *                                     object.
  */
 SwatCheckAll.prototype.setController = function(controller)
 {
@@ -41,19 +42,30 @@ SwatCheckAll.prototype.setController = function(controller)
 
 	// only add the event handler the first time
 	if (this.controller === null) {
-		YAHOO.util.Event.addListener(this.check_all, 'click', eventHandler,
-			controller);
+		YAHOO.util.Event.addListener(this.check_all, 'click',
+			SwatCheckAll.clickHandler, controller);
 	}
 
 	this.controller = controller;
 
 	controller.check_all = this;
 	controller.checkAllInit();
+}
 
-	function eventHandler(event, controller)
-	{
-		var check_all = YAHOO.util.Event.getTarget(event);
-		// check all checkboxes in the controller object
-		controller.checkAll(check_all.checked);
-	}
+/**
+ * Handles click events on a check-all object
+ *
+ * This is a static method.
+ *
+ * @param Event event the click event to handle.
+ * @param SwatCheckboxList controller the JavaScript object that represents the
+ *                                     checkbox list controlling this check-all
+ *                                     object.
+ */
+SwatCheckAll.clickHandler = function(event, controller)
+{
+	var check_all = YAHOO.util.Event.getTarget(event);
+
+	// check all checkboxes in the controller object
+	controller.checkAll(check_all.checked);
 }
