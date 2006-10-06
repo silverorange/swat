@@ -38,8 +38,6 @@ SwatCheckAll.prototype.setState = function(checked)
  */
 SwatCheckAll.prototype.setController = function(controller)
 {
-	var self = this;
-
 	// only add the event handler the first time
 	if (this.controller === null) {
 		YAHOO.util.Event.addListener(this.check_all, 'click',
