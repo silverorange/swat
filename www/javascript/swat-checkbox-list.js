@@ -1,23 +1,22 @@
 /**
- * Javascript SwatCheckboxList component
+ * JavaScript SwatCheckboxList component
  *
  * @param id string Id of the matching {@link SwatCheckboxList} object.
  */
 function SwatCheckboxList(id)
 {
-	var self = this;
 	this.check_list = document.getElementsByName(id + '[]');
-	this.check_all = null; //a reference to a checkall widget
+	this.check_all = null; // a reference to a check-all js object 
 
 	for (i = 0; i < this.check_list.length; i++) {
 		YAHOO.util.Event.addListener(this.check_list[i], 'change',
-			eventHandler);
+			SwatCheckboxList.clickHandler, this);
 	}
+}
 
-	function eventHandler(event)
-	{
-		self.checkAllInit();
-	}
+SwatCheckboxList.clickHandler = function(event, object)
+{
+	object.checkAllInit();
 }
 
 SwatCheckboxList.prototype.checkAllInit = function ()
@@ -30,7 +29,7 @@ SwatCheckboxList.prototype.checkAllInit = function ()
 		if (this.check_list[i].checked)
 			count++;
 		else if (count > 0)
-			break; //can't possibly be all checked or none checked
+			break; // can't possibly be all checked or none checked
 
 	this.check_all.setState(count == this.check_list.length);
 }
