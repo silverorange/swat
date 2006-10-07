@@ -28,7 +28,9 @@ SwatDisclosure.prototype.toggle = function()
 SwatDisclosure.prototype.close = function()
 {
 	var attributes = { opacity: { from: 1, to: 0} }; 
-	var fade_animation = new YAHOO.util.Anim(this.content_div, attributes, 0.25); 
+	var fade_animation =
+		new YAHOO.util.Anim(this.content_div, attributes, 0.25); 
+
 	fade_animation.animate();
 	fade_animation.onComplete.subscribe(SwatDisclosure.handleClose, this.div);
 	this.image.src = 'packages/swat/images/swat-disclosure-closed.png';
@@ -40,7 +42,9 @@ SwatDisclosure.prototype.close = function()
 SwatDisclosure.prototype.open = function()
 {
 	var attributes = { opacity: { from: 0, to: 1} }; 
-	var fade_animation = new YAHOO.util.Anim(this.content_div, attributes, 0.5); 
+	var fade_animation =
+		new YAHOO.util.Anim(this.content_div, attributes, 0.5); 
+
 	fade_animation.animate();
 	this.div.className = 'swat-disclosure-control-opened';
 	this.image.src = 'packages/swat/images/swat-disclosure-open.png';
