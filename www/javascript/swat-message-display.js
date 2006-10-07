@@ -19,9 +19,11 @@ SwatMessageDisplay.prototype.hideMessage = function(message_index)
 			height: { to: 0 },
 			opacity: { to: 0 }
 		}; 
-		var myAnim = new YAHOO.util.Anim(houdini_div, attributes, 0.25); 
-		myAnim.animate();
-		myAnim.onComplete.subscribe(SwatMessageDisplay.removeMessage,
+		var shrink_animation =
+			new YAHOO.util.Anim(houdini_div, attributes, 0.25); 
+
+		shrink_animation.animate();
+		shrink_animation.onComplete.subscribe(SwatMessageDisplay.removeMessage,
 			houdini_div);
 	}
 }
