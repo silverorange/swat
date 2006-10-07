@@ -13,9 +13,7 @@ SwatMessageDisplay.prototype.hideMessage = function(message_index)
 		message.parentNode.insertBefore(houdini_div, message);
 		houdini_div.appendChild(message);
 		houdini_div.style.overflow = 'hidden';
-		var attributes = { 
-			height: { to: 0 }, 
-		}; 
+		var attributes = { height: { to: 0 } }; 
 		var myAnim = new YAHOO.util.Anim(houdini_div, attributes, 0.25); 
 		myAnim.animate();
 		myAnim.onComplete.subscribe(SwatMessageDisplay.removeMessage,
