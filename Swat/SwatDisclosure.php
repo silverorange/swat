@@ -100,6 +100,8 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$container_div = new SwatHtmlTag('div');
 		$container_div->class = 'swat-disclosure-container';
 
+		$animate_div = new SwatHtmlTag('div');
+
 		$control_div->open();
 		$anchor->open();
 		$input->display();
@@ -109,7 +111,9 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$anchor->close();
 
 		$container_div->open();
+		$animate_div->open();
 		$this->displayChildren();
+		$animate_div->close();
 		$container_div->close();
 
 		$this->displayJavaScript();
