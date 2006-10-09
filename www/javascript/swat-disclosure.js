@@ -3,7 +3,7 @@ function SwatDisclosure(id)
 	this.image = document.getElementById(id + '_img');
 	this.input = document.getElementById(id + '_input');
 	this.div = document.getElementById(id);
-	this.content_div = this.div.firstChild.nextSibling;
+	this.animate_div = this.div.firstChild.nextSibling.firstChild;
 
 	// get initial state
 	if (this.input.value == 'opened') {
@@ -27,9 +27,9 @@ SwatDisclosure.prototype.toggle = function()
 
 SwatDisclosure.prototype.close = function()
 {
-	var attributes = { opacity: { from: 1, to: 0} }; 
+	var attributes = { opacity: { to: 0 } }; 
 	var fade_animation =
-		new YAHOO.util.Anim(this.content_div, attributes, 0.25); 
+		new YAHOO.util.Anim(this.animate_div, attributes, 0.25); 
 
 	fade_animation.animate();
 	fade_animation.onComplete.subscribe(SwatDisclosure.handleClose, this.div);
@@ -41,9 +41,9 @@ SwatDisclosure.prototype.close = function()
 
 SwatDisclosure.prototype.open = function()
 {
-	var attributes = { opacity: { from: 0, to: 1} }; 
+	var attributes = { opacity: { to: 1 } }; 
 	var fade_animation =
-		new YAHOO.util.Anim(this.content_div, attributes, 0.5); 
+		new YAHOO.util.Anim(this.animate_div, attributes, 0.5); 
 
 	fade_animation.animate();
 	this.div.className = 'swat-disclosure-control-opened';
