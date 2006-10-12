@@ -69,15 +69,15 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 */
 	public $tab_index = null;
 
-	// }}}
-	// {{{ protected properties
-
 	/**
-	 * The type of input tag
+	 * Whether or not to use browser-based autocompletion on this entry
 	 *
-	 * @var string
+	 * Note: Setting this property to true results in non-standard XHTML
+	 * output.
+	 *
+	 * @var boolean
 	 */
-	protected $html_input_type = 'text';
+	public $autocomplete = true;
 
 	// }}}
 	// {{{ public function display()
@@ -214,11 +214,14 @@ class SwatEntry extends SwatInputControl implements SwatState
 	protected function getInputTag()
 	{
 		$tag = new SwatHtmlTag('input');
-		$tag->type = $this->html_input_type;
+		$tag->type = 'text';
 		$tag->name = $this->id;
 		$tag->id = $this->id;
 		$tag->class = $this->getCSSClassString();
 		$tag->onfocus = 'this.select();';
+
+		if (!$this->autocomplete)
+			$tag->autocomplete = 'off';
 
 		if (!$this->isSensitive())
 			$tag->disabled = 'disabled';
