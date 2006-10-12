@@ -196,7 +196,7 @@ class SwatException extends Exception
 		ob_start();
 
 		printf("Uncaught Exception: %s\n\nMessage:\n\t%s\n\n".
-			"Thrown in file '%s' on line %s.\n\n",
+			"Created in file '%s' on line %s.\n\n",
 			$this->class,
 			$this->getMessage(),
 			$this->getFile(),
@@ -249,7 +249,7 @@ class SwatException extends Exception
 		printf('<h3>Uncaught Exception: %s</h3>'.
 				'<div class="swat-exception-body">'.
 				'Message:<div class="swat-exception-message">%s</div>'.
-				'Thrown in file <strong>%s</strong> '.
+				'Created in file <strong>%s</strong> '.
 				'on line <strong>%s</strong>.<br /><br />',
 				$this->class,
 				nl2br($this->getMessage()),
