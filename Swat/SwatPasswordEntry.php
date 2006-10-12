@@ -28,20 +28,13 @@ class SwatPasswordEntry extends SwatEntry
 	}
 
 	// }}}
-	// {{{ public function display()
+	// {{{ protected function getInputTag()
 
-	/**
-	 * Displays this password entry widget
-	 *
-	 * @see SwatEntry::display()
-	 */
-	public function display()
+	protected function getInputTag()
 	{
-		if (!$this->visible)
-			return;
-
-		$this->html_input_type = 'password';
-		parent::display();
+		$tag = parent::getInputTag();
+		$tag->type = 'password';
+		return $tag;
 	}
 
 	// }}}
