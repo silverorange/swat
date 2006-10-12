@@ -72,12 +72,23 @@ class SwatEntry extends SwatInputControl implements SwatState
 	/**
 	 * Whether or not to use browser-based autocompletion on this entry
 	 *
-	 * Note: Setting this property to true results in non-standard XHTML
-	 * output.
+	 * Note: Be careful writing JavaScript when using this property as it
+	 * changes the id of the XHTML element.
 	 *
 	 * @var boolean
 	 */
 	public $autocomplete = true;
+
+	// }}}
+	// {{{ protected properties
+
+	/**
+	 * If autocomplete is turned off, this nonce is used to obfuscate the
+	 * name of the XHTML input tag.
+	 *
+	 * @var string
+	 */
+	protected $nonce = null;
 
 	// }}}
 	// {{{ public function display()
@@ -94,6 +105,14 @@ class SwatEntry extends SwatInputControl implements SwatState
 
 		$input_tag = $this->getInputTag();
 		$input_tag->display();
+
+		if (!$this->autocomplete) {
+			$nonce_tag = new SwatHtmlTag('input');
+			$nonce_tag->type = 'hidden';
+			$nonce_tag->name = $this->id.'_nonce';
+			$nonce_tag->value = $this->getNonce();
+			$nonce_tag->display();
+		}
 	}
 
 	// }}}
@@ -111,13 +130,24 @@ class SwatEntry extends SwatInputControl implements SwatState
 
 		$data = &$this->getForm()->getFormData();
 
-		if (!isset($data[$this->id])) {
+		if ($this->autocomplete) {
+			$id = $this->id;
+		} else {
+			if (isset($data[$this->id.'_nonce'])) {
+				$id = $data[$this->id.'_nonce'];
+			} else {
+				$this->value = null;
+				return;
+			}
+		}
+
+		if (!isset($data[$id])) {
 			$this->value = null;
 			return;
-		} elseif (strlen($data[$this->id]) == 0) {
+		} elseif (strlen($data[$id]) == 0) {
 			$this->value = null;
 		} else {
-			$this->value = $data[$this->id];
+			$this->value = $data[$id];
 		}
 
 		$len = ($this->value === null) ? 0 : strlen($this->value);
@@ -142,7 +172,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 				$this->minlength);
 
 			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
-
 		}
 	}
 
@@ -215,13 +244,10 @@ class SwatEntry extends SwatInputControl implements SwatState
 	{
 		$tag = new SwatHtmlTag('input');
 		$tag->type = 'text';
-		$tag->name = $this->id;
-		$tag->id = $this->id;
+		$tag->name = ($this->autocomplete) ? $this->id : $this->getNonce();
+		$tag->id = ($this->autocomplete) ? $this->id : $this->getNonce();
 		$tag->class = $this->getCSSClassString();
 		$tag->onfocus = 'this.select();';
-
-		if (!$this->autocomplete)
-			$tag->autocomplete = 'off';
 
 		if (!$this->isSensitive())
 			$tag->disabled = 'disabled';
@@ -266,7 +292,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 */
 	public function getFocusableHtmlId()
 	{
-		return $this->id;
+		return ($this->autocomplete) ? $this->id : $this->getNonce();
 	}
 
 	// }}}
@@ -283,6 +309,17 @@ class SwatEntry extends SwatInputControl implements SwatState
 		$classes = array('swat-entry');
 		$classes = array_merge($classes, $this->classes);
 		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function getNonce()
+
+	protected function getNonce()
+	{
+		if ($this->nonce === null)
+			$this->nonce = md5(rand());
+
+		return $this->nonce;
 	}
 
 	// }}}
