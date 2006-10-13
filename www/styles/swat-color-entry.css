@@ -41,11 +41,11 @@
 
 .swat-simple-color-entry-swatch {
 	width: 7em;
-	height: 18px;
 	border: 1px #ccc solid;
 	background: url(../images/color-entry-null.png);
 	margin: 2px;
 	float: left;
+	vertical-align: middle;
 }
 
 td.swat-simple-color-palette-blank {
@@ -54,7 +54,7 @@ td.swat-simple-color-palette-blank {
 
 .swat-simple-color-entry-toggle {
 	display: inline;
-	vertical-align: bottom;
+	vertical-align: middle;
 	border: none;
 }
 
@@ -63,14 +63,15 @@ td.swat-simple-color-palette-blank {
 .swat-color-entry-input {
 	width: 7em;
 	height: 18px;
-	border: 1px #CCC solid;
+	border: 1px #ccc solid;
 	background: url(../images/color-entry-null.png);
 	margin: 2px;
+	vertical-align: middle;
 }
 
 .swat-color-entry-toggle {
 	display: inline;
-	vertical-align: bottom;
+	vertical-align: middle;
 	border: none;
 }
 
