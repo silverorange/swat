@@ -118,7 +118,7 @@ td.swat-calendar-control-flydowns {
 }
 
 .swat-calendar-icon {
-	vertical-align: bottom;
+	vertical-align: middle;
 	margin-left: 2px;
 	border: 0;
 }
@@ -130,4 +130,8 @@ td.swat-calendar-control-flydowns {
 
 .swat-calendar-arrows-off {
 	cursor: none;
+}
+
+.swat-date-entry-span {
+	vertical-align: middle;
 }
