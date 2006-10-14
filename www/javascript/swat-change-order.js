@@ -33,27 +33,14 @@ function SwatChangeOrder_mousemoveEventHandler(event)
 		SwatChangeOrder.is_dragging = true;
 		shadow_item.style.display = 'block';
 		shadow_item.scroll_timer =
-			window.setInterval("SwatChangeOrder_scrollTimerHandler()", 100);
+			window.setInterval('SwatChangeOrder_scrollTimerHandler()', 100);
 
 		shadow_item.update_timer =
-			window.setInterval("SwatChangeOrder_updateTimerHandler()", 300);
+			window.setInterval('SwatChangeOrder_updateTimerHandler()', 300);
 	}
 
-	if (typeof window.event == 'undefined') {
-		var left = event.clientX - shadow_item.mouse_offset_x; 
-		var top = event.clientY - shadow_item.mouse_offset_y +
-			(shadow_item.original_item.offsetTop - list_div.scrollTop);
-	} else {
-		var left = window.event.clientX - shadow_item.mouse_offset_x; 
-		var top = window.event.clientY - shadow_item.mouse_offset_y +
-			(shadow_item.original_item.offsetTop - list_div.scrollTop);
-	}
-
-	var middle = top + Math.floor(shadow_item.offsetHeight / 2) -
-		list_div.offsetTop + list_div.scrollTop;
-
-	shadow_item.top = top;
-	shadow_item.left = left;
+	var left = YAHOO.util.Event.getPageX(event) - shadow_item.mouse_offset_x;
+	var top = YAHOO.util.Event.getPageY(event) - shadow_item.mouse_offset_y;
 	shadow_item.style.top = top + 'px';
 	shadow_item.style.left = left + 'px';
 
@@ -76,8 +63,11 @@ function SwatChangeOrder_keydownEventHandler(event)
 {
 	// user pressed escape
 	if (event.keyCode == 27) {
-		document.onmousemove = null;
-		document.onmouseup = null;
+		YAHOO.util.Event.removeListener(document, 'mousemove',
+			SwatChangeOrder_mousemoveEventHandler);
+
+		YAHOO.util.Event.removeListener(document, 'mouseup',
+			SwatChangeOrder_mouseupEventHandler);
 
 		YAHOO.util.Event.removeListener(document, 'keydown',
 			SwatChangeOrder_keydownEventHandler);
@@ -90,7 +80,7 @@ function SwatChangeOrder_keydownEventHandler(event)
 		window.clearInterval(shadow_item.scroll_timer);
 		window.clearInterval(shadow_item.update_timer);
 
-		list_div.parentNode.removeChild(shadow_item);
+		shadow_item.parentNode.removeChild(shadow_item);
 		if (drop_marker.parentNode !== null)
 			drop_marker.parentNode.removeChild(drop_marker);
 
@@ -115,27 +105,24 @@ function SwatChangeOrder_scrollTimerHandler()
 	var shadow_item = SwatChangeOrder.dragging_item;
 	var list_div = shadow_item.original_item.parentNode;
 
-	var top = shadow_item.top;
-	var middle = top + Math.floor(shadow_item.offsetHeight / 2);
-	var old_scroll_top;
+	var list_div_top = YAHOO.util.Dom.getY(list_div);
+	var middle = YAHOO.util.Dom.getY(shadow_item) +
+		Math.floor(shadow_item.offsetHeight / 2);
 
 	// top hot spot scrolls list up
-	if (middle > list_div.offsetTop &&
-		middle < list_div.offsetTop + SwatChangeOrder.hotspot_height &&
+	if (middle > list_div_top &&
+		middle < list_div_top + SwatChangeOrder.hotspot_height &&
 		list_div.scrollTop > 0) {
 
 		// hot spot is exponential
 		var delta = Math.floor(
 			Math.pow(SwatChangeOrder.hotspot_exponent,
-			SwatChangeOrder.hotspot_height - middle + list_div.offsetTop));
+			SwatChangeOrder.hotspot_height - middle + list_div_top));
 
-		old_scroll_top = list_div.scrollTop;
 		list_div.scrollTop -= delta;
-		// update correctly if we scroll to the very top
-		shadow_item.mouse_offset_y += (old_scroll_top - list_div.scrollTop);
 	}
 
-	var list_bottom = list_div.offsetHeight + list_div.offsetTop;
+	var list_bottom = list_div.offsetHeight + list_div_top;
 
 	// TODO: don't do this if the list is already at the bottom
 	// bottom hot spot scrolls list down
@@ -147,10 +134,7 @@ function SwatChangeOrder_scrollTimerHandler()
 			Math.pow(SwatChangeOrder.hotspot_exponent,
 			SwatChangeOrder.hotspot_height - list_bottom + middle));
 
-		old_scroll_top = list_div.scrollTop;
 		list_div.scrollTop += delta;
-		// update correctly if we scroll to the very bottom
-		shadow_item.mouse_offset_y += (old_scroll_top - list_div.scrollTop);
 	}
 }
 
@@ -176,10 +160,10 @@ function SwatChangeOrder_updateDropPosition()
 	var shadow_item = SwatChangeOrder.dragging_item;
 	var drop_marker = SwatChangeOrder.dragging_drop_marker;
 	var list_div = shadow_item.original_item.parentNode;
-	var top = shadow_item.top;
 
-	var middle = top + Math.floor(shadow_item.offsetHeight / 2) -
-		list_div.offsetTop + list_div.scrollTop;
+	var middle = YAHOO.util.Dom.getY(shadow_item) +
+		Math.floor(shadow_item.offsetHeight / 2) -
+		YAHOO.util.Dom.getY(list_div) + list_div.scrollTop;
 
 	for (var i = 0; i < list_div.childNodes.length; i++) {
 		var node = list_div.childNodes[i];
@@ -215,14 +199,17 @@ function SwatChangeOrder_updateDropPosition()
 function SwatChangeOrder_mouseupEventHandler(event)
 {
 	// only allow left click to do things
-	var is_safari = (navigator.userAgent.indexOf('WebKit') != -1);
+	var is_safari = (/Safari|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
 	if ((is_ie && (window.event.button & 1) != 1) ||
 		(!is_ie && !is_safari && event.button != 0))
 		return false;
 
-	document.onmousemove = null;
-	document.onmouseup = null;
+	YAHOO.util.Event.removeListener(document, 'mousemove',
+		SwatChangeOrder_mousemoveEventHandler);
+
+	YAHOO.util.Event.removeListener(document, 'mouseup',
+		SwatChangeOrder_mouseupEventHandler);
 
 	YAHOO.util.Event.removeListener(document, 'keydown',
 		SwatChangeOrder_keydownEventHandler);
@@ -241,7 +228,7 @@ function SwatChangeOrder_mouseupEventHandler(event)
 		shadow_item.original_item.controller.updateValue();
 	}
 
-	list_div.parentNode.removeChild(shadow_item);
+	shadow_item.parentNode.removeChild(shadow_item);
 
 	if (drop_marker.parentNode !== null)
 		drop_marker.parentNode.removeChild(drop_marker);
@@ -265,8 +252,11 @@ function SwatChangeOrder_mouseupEventHandler(event)
  */
 function SwatChangeOrder_mousedownEventHandler(event)
 {
+	// prevent text selection
+	YAHOO.util.Event.preventDefault(event);
+
 	// only allow left click to do things
-	var is_safari = (navigator.userAgent.indexOf('WebKit') != -1);
+	var is_safari = (/Safari|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
 	if ((is_ie && (window.event.button & 1) != 1) ||
 		(!is_ie && !is_safari && event.button != 0))
@@ -281,8 +271,7 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	// prime for dragging
 	var shadow_item = this.cloneNode(true);
 	shadow_item.original_item = this;
-	shadow_item.original_item.parentNode.parentNode.appendChild(shadow_item, this);
-	shadow_item.top = 0;
+	document.getElementsByTagName('body')[0].appendChild(shadow_item);
 
 	// TODO: use zindex manager
 	shadow_item.style.zIndex = 1000;
@@ -290,18 +279,11 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	shadow_item.className += ' swat-change-order-item-shadow';
 	shadow_item.style.width = (this.offsetWidth - 4) + 'px';
 
-	if (typeof window.event == 'undefined') {
-		shadow_item.mouse_offset_x = event.clientX - this.offsetLeft -
-			this.parentNode.offsetLeft;
+	shadow_item.mouse_offset_x = YAHOO.util.Event.getPageX(event) -
+		YAHOO.util.Dom.getX(this);
 
-		shadow_item.mouse_offset_y = event.clientY - this.parentNode.offsetTop;
-	} else {
-		shadow_item.mouse_offset_x = window.event.clientX - this.offsetLeft -
-			this.parentNode.offsetLeft;
-
-		shadow_item.mouse_offset_y = window.event.clientY -
-			this.parentNode.offsetTop;
-	}
+	shadow_item.mouse_offset_y = YAHOO.util.Event.getPageY(event) -
+		YAHOO.util.Dom.getY(this);
 
 	var drop_marker = document.createElement('div');
 	drop_marker.style.borderBottomStyle = 'solid';
@@ -313,9 +295,11 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	SwatChangeOrder.dragging_item = shadow_item;
 	SwatChangeOrder.dragging_drop_marker = drop_marker;
 
-	document.onmousemove = SwatChangeOrder_mousemoveEventHandler;
-	document.onmouseup = SwatChangeOrder_mouseupEventHandler;
-	document.onmousedown = null;
+	YAHOO.util.Event.addListener(document, 'mousemove',
+		SwatChangeOrder_mousemoveEventHandler);
+
+	YAHOO.util.Event.addListener(document, 'mouseup',
+		SwatChangeOrder_mouseupEventHandler);
 
 	YAHOO.util.Event.addListener(document, 'keydown',
 		SwatChangeOrder_keydownEventHandler);
@@ -334,7 +318,7 @@ function SwatChangeOrder_mousedownEventHandler(event)
  */
 function SwatChangeOrder(id, sensitive)
 {
-	this.is_safari = navigator.userAgent.match(/KHTML/);
+	this.is_safari = (/Safari|Konqueror|KHTML/gi).test(navigator.userAgent);
 
 	this.id = id;
 
@@ -364,7 +348,9 @@ function SwatChangeOrder(id, sensitive)
 			// assign a back reference for event handlers
 			node.controller = this;
 			// add click handlers to the list items
-			node.onmousedown = SwatChangeOrder_mousedownEventHandler;
+			YAHOO.util.Event.addListener(node, 'mousedown',
+				SwatChangeOrder_mousedownEventHandler);
+
 			count++;
 		}
 	}
