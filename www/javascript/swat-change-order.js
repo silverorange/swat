@@ -273,8 +273,8 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	shadow_item.original_item = this;
 	document.getElementsByTagName('body')[0].appendChild(shadow_item);
 
-	// TODO: use zindex manager
-	shadow_item.style.zIndex = 1000;
+	SwatZIndexManager.raiseElement(shadow_item);
+
 	shadow_item.style.display = 'none';
 	shadow_item.className += ' swat-change-order-item-shadow';
 	shadow_item.style.width = (this.offsetWidth - 4) + 'px';
