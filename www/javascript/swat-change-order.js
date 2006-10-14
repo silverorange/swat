@@ -78,18 +78,17 @@ function SwatChangeOrder_keydownEventHandler(event)
 	if (event.keyCode == 27) {
 		document.onmousemove = null;
 		document.onmouseup = null;
-		if (SwatChangeOrder.ie_event_model)
-			document.detachEvent('onkeydown',
-				SwatChangeOrder_keydownEventHandler);
-		else
-			document.removeEventListener('keydown',
-				SwatChangeOrder_keydownEventHandler, false);
+
+		YAHOO.util.Event.removeListener(document, 'keydown',
+			SwatChangeOrder_keydownEventHandler);
 
 		var shadow_item = SwatChangeOrder.dragging_item;
 		var drop_marker = SwatChangeOrder.dragging_drop_marker;
 		var list_div = shadow_item.original_item.parentNode;
 
 		window.clearInterval(shadow_item.timer);
+		window.clearInterval(shadow_item.scroll_timer);
+		window.clearInterval(shadow_item.update_timer);
 
 		list_div.parentNode.removeChild(shadow_item);
 		if (drop_marker.parentNode !== null)
@@ -217,17 +216,16 @@ function SwatChangeOrder_mouseupEventHandler(event)
 {
 	// only allow left click to do things
 	var is_safari = (navigator.userAgent.indexOf('WebKit') != -1);
-	if ((SwatChangeOrder.ie_event_model && (window.event.button & 1) != 1) ||
-		(!SwatChangeOrder.ie_event_model && !is_safari && event.button != 0))
+	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
+	if ((is_ie && (window.event.button & 1) != 1) ||
+		(!is_ie && !is_safari && event.button != 0))
 		return false;
 
 	document.onmousemove = null;
 	document.onmouseup = null;
-	if (SwatChangeOrder.ie_event_model)
-		document.detachEvent('onkeydown', SwatChangeOrder_keydownEventHandler);
-	else
-		document.removeEventListener('keydown',
-			SwatChangeOrder_keydownEventHandler, false);
+
+	YAHOO.util.Event.removeListener(document, 'keydown',
+		SwatChangeOrder_keydownEventHandler);
 
 	var shadow_item = SwatChangeOrder.dragging_item;
 	var drop_marker = SwatChangeOrder.dragging_drop_marker;
@@ -269,8 +267,9 @@ function SwatChangeOrder_mousedownEventHandler(event)
 {
 	// only allow left click to do things
 	var is_safari = (navigator.userAgent.indexOf('WebKit') != -1);
-	if ((SwatChangeOrder.ie_event_model && (window.event.button & 1) != 1) ||
-		(!SwatChangeOrder.ie_event_model && !is_safari && event.button != 0))
+	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
+	if ((is_ie && (window.event.button & 1) != 1) ||
+		(!is_ie && !is_safari && event.button != 0))
 		return false;
 
 	if (!this.controller.sensitive)
@@ -306,7 +305,7 @@ function SwatChangeOrder_mousedownEventHandler(event)
 
 	var drop_marker = document.createElement('div');
 	drop_marker.style.borderBottomStyle = 'solid';
-	drop_marker.style.borderBottomColor = '#000';
+	drop_marker.style.borderBottomColor = '#aaa';
 	drop_marker.style.borderBottomWidth = '1px';
 	drop_marker.style.display = 'none';
 	drop_marker.setAttribute('id', 'drop');
@@ -318,11 +317,8 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	document.onmouseup = SwatChangeOrder_mouseupEventHandler;
 	document.onmousedown = null;
 
-	if (SwatChangeOrder.ie_event_model)
-		document.attachEvent('onkeydown', SwatChangeOrder_keydownEventHandler);
-	else
-		document.addEventListener('keydown',
-			SwatChangeOrder_keydownEventHandler, false);
+	YAHOO.util.Event.addListener(document, 'keydown',
+		SwatChangeOrder_keydownEventHandler);
 
 	return false;
 }
@@ -429,7 +425,6 @@ SwatChangeOrder.animation_frames = 5;
 SwatChangeOrder.shadow_item_padding = 0;
 SwatChangeOrder.dragging_item = null;
 SwatChangeOrder.is_dragging = false;
-SwatChangeOrder.ie_event_model = (document.addEventListener) ? false : true;
 
 // }}}
 // {{{ function SwatChangeOrder_staticMoveToTop()
