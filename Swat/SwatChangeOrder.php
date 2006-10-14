@@ -65,6 +65,9 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$this->addJavaScript('packages/swat/javascript/swat-change-order.js',
 			Swat::PACKAGE_ID);
 
+		$this->addJavaScript('packages/swat/javascript/swat-z-index-manager.js',
+			Swat::PACKAGE_ID);
+
 		$this->addStyleSheet('packages/swat/styles/swat-change-order.css',
 			Swat::PACKAGE_ID);
 	}
