@@ -554,21 +554,23 @@ SwatCalendar.prototype.draw = function()
 
 	cur_html = cur_html + '</tr>';
 
+	// attach div to body so it can be positioned correctly
 	calendar_div = document.getElementById(this.id + '_div');
 	var body = document.getElementsByTagName('body')[0];
 	body.appendChild(calendar_div);
 
-	calendar_toggle = document.getElementById(this.id + '_toggle');
-	calendar_div.innerHTML = begin_table + date_controls + week_header + cur_html + close_controls;
+	// draw calendar
+	calendar_div.innerHTML = begin_table + date_controls + week_header +
+		cur_html + close_controls;
 
 	var toggle_button = document.getElementById(this.id + '_toggle');
 	this.selected_element = document.getElementById(this.id + '_current_cell');
 
 	var offsets = YAHOO.util.Dom.getXY(toggle_button);
+	offsets[1] += toggle_button.offsetHeight;
 
-	calendar_div.style.left = offsets[0] + 'px';
-	calendar_div.style.top = (offsets[1] + calendar_toggle.offsetHeight) + 'px';
 	calendar_div.style.display = 'block';
+	YAHOO.util.Dom.setXY(calendar_div, offsets);
 
 	// check if the calendar is floating off the screen to the right
 	viewport_width = YAHOO.util.Dom.getViewportWidth();
