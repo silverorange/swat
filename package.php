@@ -2,7 +2,7 @@
 
 require_once 'PEAR/PackageFileManager2.php';
 
-$version = '1.0.6';
+$version = '1.0.7';
 $notes = <<<EOT
 see ChangeLog
 EOT;
@@ -52,6 +52,7 @@ $package->addMaintainer('lead', 'gauthierm', 'Mike Gauthier', 'mike@silverorange
 $package->setPhpDep('5.1.5');
 $package->setPearinstallerDep('1.4.0');
 $package->addPackageDepWithChannel('required', 'Date', 'pear.silverorange.com', '1.4.7so1');
+$package->addPackageDepWithChannel('required', 'YUI', 'pear.silverorange.com', '1.0.0');
 $package->addPackageDepWithChannel('required', 'MDB2', 'pear.php.net', '2.2.2');
 $package->generateContents();
 
