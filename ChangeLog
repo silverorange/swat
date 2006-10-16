@@ -1,5 +1,29 @@
 2006-10-16  nrf
 
+	* [r12033] swat/trunk/package.php:
+	  prepare for release of 1.0.8
+
+2006-10-16  steven
+
+	* [r12027] swat/trunk/www/images/arrow-left-off.png,
+	  swat/trunk/www/images/arrow-left.png,
+	  swat/trunk/www/images/arrow-right-off.png,
+	  swat/trunk/www/images/arrow-right.png:
+	  remove old images
+
+2006-10-16  nrf
+
+	* [r12025] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.0.7
+
+2006-10-16  gauthierm
+
+	* [r12024] swat/trunk/www/javascript/swat-calendar.js,
+	  swat/trunk/www/styles/swat-calendar.css:
+	  updated tango arrow images that work in Internet Explorer
+
+2006-10-16  nrf
+
 	* [r12023] swat/trunk/Swat/SwatUI.php:
 	  It is unclear why this was being lowercased. Lowercasing makes
 	  it match overzealously.
