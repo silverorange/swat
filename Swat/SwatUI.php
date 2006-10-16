@@ -156,7 +156,7 @@ class SwatUI extends SwatObject
 		// filename of the xml
 		$class_map_reversed = array_reverse($this->class_map, true);
 		foreach ($class_map_reversed as $prefix => $path) {
-			if (strpos($xml_file, strtolower($prefix)) !== false &&
+			if (strpos($xml_file, $prefix) !== false &&
 				is_callable(array($prefix, 'gettext'))) {
 
 				$this->translation_callback = array($prefix, 'gettext');
