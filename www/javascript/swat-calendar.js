@@ -429,7 +429,7 @@ SwatCalendar.prototype.draw = function()
 
 	if (calendar_start) {
 		var prev_link = 'return false;';
-		var prev_img  = 'arrow-left-off.png';
+		var prev_img  = 'go-previous-insensitive.png';
 		var prev_class = 'swat-calendar-arrows-off';
 	} else {
 		var prev_link = this.id + '_obj.draw(' +
@@ -441,7 +441,7 @@ SwatCalendar.prototype.draw = function()
 
 	if (calendar_end) {
 		var next_link = 'return false;';
-		var next_img  = 'arrow-right-off.png';
+		var next_img  = 'go-next-insensitive.png';
 		var next_class = 'swat-calendar-arrows-off';
 	} else {
 		var next_link = this.id + '_obj.draw(' +
@@ -459,13 +459,13 @@ SwatCalendar.prototype.draw = function()
 		'<td class="swat-calendar-control-frame" colspan="7">' +
 		'<table cellpadding="0" cellspacing="0" border="0" width="100%"><tr><td class="swat-calendar-control-arrow">' +
 		'<img class="' + prev_class + '" onclick="' + prev_link + '" ' +
-		'src="packages/swat/images/' + prev_img + '" width="22" height="22" ' +
+		'src="packages/swat/images/' + prev_img + '" width="16" height="16" ' +
 		'alt="' + prev_alt + '" />' +
 		'</td><td class="swat-calendar-control-flydowns">' +
 		this.buildControls(yyyy, mm, dd) +
 		'</td><td class="swat-calendar-control-arrow">' +
 		'<img class="' + next_class + '" onclick="' + next_link + '" ' +
-		'src="packages/swat/images/' + next_img + '" width="22" height="22" ' +
+		'src="packages/swat/images/' + next_img + '" width="16" height="16" ' +
 		'alt="' + next_alt + '" />' +
 		'</td></tr></table>' +
 		'</td></tr>';
@@ -583,12 +583,12 @@ SwatCalendar.prototype.draw = function()
 
 //preload images
 if (document.images) {
+	image1 = new Image();
+	image1.src = 'packages/swat/images/go-previous-insensitive.png';
+	image2 = new Image();
+	image2.src = 'packages/swat/images/go-next-insensitive.png';
 	image3 = new Image();
-	image3.src = 'packages/swat/images/arrow-left-off.png';
+	image3.src = 'packages/swat/images/go-previous.png';
 	image4 = new Image();
-	image4.src = 'packages/swat/images/arrow-right-off.png';
-	image5 = new Image();
-	image5.src = 'packages/swat/images/go-previous.png';
-	image6 = new Image();
-	image6.src = 'packages/swat/images/go-next.png';
+	image4.src = 'packages/swat/images/go-next.png';
 }
