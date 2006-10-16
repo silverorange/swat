@@ -1,3 +1,23 @@
+2006-10-16  nrf
+
+	* [r12023] swat/trunk/Swat/SwatUI.php:
+	  It is unclear why this was being lowercased. Lowercasing makes
+	  it match overzealously.
+
+2006-10-16  steven
+
+	* [r12020] swat/trunk/www/images/go-next-insensitive.png,
+	  swat/trunk/www/images/go-next.png,
+	  swat/trunk/www/images/go-previous-insensitive.png,
+	  swat/trunk/www/images/go-previous.png:
+	  Updated Next/Prev buttons - 1px transparent for IE6-compat -
+	  tango style
+
+2006-10-16  nrf
+
+	* [r11972] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.0.6
+
 2006-10-15  gauthierm
 
 	* [r11961] swat/trunk/Swat/SwatTableViewColumn.php:
