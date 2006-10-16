@@ -1,3 +1,253 @@
+2006-10-15  gauthierm
+
+	* [r11961] swat/trunk/Swat/SwatTableViewColumn.php:
+	  allow sensitivity to be set dynamically on cell renderers
+
+2006-10-14  gauthierm
+
+	* [r11957] swat/trunk/Swat/SwatChangeOrder.php,
+	  swat/trunk/www/javascript/swat-change-order.js:
+	  use SwatZIndexManager to raise drag-and-drop shadow item
+	* [r11956] swat/trunk/www/javascript/swat-change-order.js:
+	  - use YUI for drag position calculations (this fixes an offset
+	  bug in Admins)
+	  - better Safari/Konqueror detection allows change-order to work
+	  in Konqueror
+	  - use YUI events everywhere instead of setting
+	  element.onmousemove, etc. This allows greater compatibility with
+	  MSIE
+	* [r11955] swat/trunk/Swat/SwatChangeOrder.php,
+	  swat/trunk/www/javascript/swat-change-order.js:
+	  - use YUI Library for cross-browser event-handling
+	  - clear some timers that should be cleared when esc cancels a
+	  drag
+	  - change drop marker colour to #aaa
+	* [r11954] swat/trunk/www/javascript/swat-calendar.js:
+	  use YUI to set position of calendar popup.
+
+2006-10-13  gauthierm
+
+	* [r11928] swat/trunk/www/styles/swat-calendar.css,
+	  swat/trunk/www/styles/swat-color-entry.css:
+	  Fix vertical alignment of toggle buttons for calendar and colour
+	  selectors.
+	  This resolved ticket #71 as fixed.
+
+2006-10-12  gauthierm
+
+	* [r11925] swat/trunk/Swat/SwatEntry.php:
+	  Make autocomplete work. The non-standard autocomplete tag is
+	  documented as impossible to use in XHTML.
+	* [r11921] swat/trunk/Swat/SwatEntry.php,
+	  swat/trunk/Swat/SwatPasswordEntry.php:
+	  - remove html_input_type property in favour of overriding
+	  getInputTag()
+	  - added autocomplete property
+	* [r11905] swat/trunk/Swat/exceptions/SwatException.php:
+	  PHP doesn't know where an exception was thrown, only where it
+	  was created.
+	* [r11904] swat/trunk/Swat/SwatError.php:
+	  remove 'thrown' from text summary
+
+2006-10-09  gauthierm
+
+	* [r11864] swat/trunk/Swat/SwatDisclosure.php,
+	  swat/trunk/www/javascript/swat-disclosure.js:
+	  animate inside the disclosure border only. This looks better in
+	  Safari.
+
+2006-10-07  gauthierm
+
+	* [r11860] swat/trunk/www/javascript/swat-disclosure.js,
+	  swat/trunk/www/javascript/swat-message-display.js:
+	  rename animation variables to fit so conventions
+	* [r11859] swat/trunk/Swat/SwatDisclosure.php:
+	  require correct YUI head entries
+	* [r11858] swat/trunk/www/javascript/swat-disclosure.js:
+	  web-twenny fade for opening and closing disclosures
+	* [r11854] swat/trunk/www/javascript/swat-message-display.js:
+	  fade out while shrinking
+	* [r11853] swat/trunk/www/javascript/swat-message-display.js:
+	  fix opera js parsing error
+	* [r11852] swat/trunk/www/javascript/swat-message-display.js:
+	  use web-twenny magic to hide notification messages
+
+2006-10-06  steven
+
+	* [r11851] swat/trunk/Swat/SwatImageCellRenderer.php:
+	  alt is a required XHTML attribute. We should always display it
+	  even if it is not specified.
+	  This was already done in SwatImageDisplay, so I just copied it
+	  here
+
+2006-10-06  gauthierm
+
+	* [r11850] swat/trunk/www/javascript/swat-color-entry.js:
+	  use single quotes instead of double quotes where single quotes
+	  will do
+	* [r11849] swat/trunk/www/javascript/swat-color-entry.js:
+	  - use yahoo ui library for calculation x offset for popup
+	  - use more compatible array syntax
+	  - wrap long lines and respect coding conventions
+	* [r11846] swat/trunk/www/javascript/swat-time-entry.js:
+	  remove unused code
+	* [r11845] swat/trunk/www/javascript/swat-time-entry.js:
+	  use a statically defined event handling function instead of a
+	  dynamically defined event handling function
+	* [r11844] swat/trunk/www/javascript/swat-table-view.js:
+	  remove unused var
+	* [r11843]
+	  swat/trunk/www/javascript/swat-table-view-checkbox-column.js:
+	  use yahoo ui library to simplify javascript
+	* [r11842] swat/trunk/www/javascript/swat-date-entry.js:
+	  use a statically defined event handling function instead of a
+	  dynamically defined event handling function
+	* [r11841] swat/trunk/www/javascript/swat-confirmation-button.js:
+	  use a statically defined event handling function instead of a
+	  dynamically defined event handling function
+	* [r11840] swat/trunk/www/javascript/swat-checkbox-list.js:
+	  use a statically defined event handling function instead of a
+	  dynamically defined event handling function
+	* [r11839] swat/trunk/www/javascript/swat-checkbox-entry-list.js:
+	  remove unused self variable
+	* [r11838] swat/trunk/www/javascript/swat-actions.js:
+	  consistency
+	* [r11837] swat/trunk/www/javascript/swat-checkbox-entry-list.js:
+	  use a statically defined event handling function instead of a
+	  dynamically defined event handling function
+	* [r11836] swat/trunk/www/javascript/swat-actions.js:
+	  use a statically defined event handling function instead of a
+	  dynamically defined event handling function
+	* [r11835] swat/trunk/www/javascript/swat-check-all.js:
+	  remove unneeded self variable
+	* [r11834] swat/trunk/www/javascript/swat-check-all.js:
+	  use static event handler function instead of dynamic event
+	  handler function
+
+2006-10-05  gauthierm
+
+	* [r11833] swat/trunk/Swat/SwatActions.php:
+	  Fix script errors in Internet Explorer
+	* [r11832] swat/trunk/Swat/SwatActions.php:
+	  fix folding
+	* [r11831] swat/trunk/Swat/SwatActions.php:
+	  fix folding
+	* [r11830] swat/trunk/www/javascript/swat-check-all.js:
+	  event type fix for Internet Explorer
+
+2006-10-04  gauthierm
+
+	* [r11829] swat/trunk/Swat/SwatSimpleColorEntry.php,
+	  swat/trunk/www/javascript/swat-simple-color-entry.js:
+	  use yahoo ui library to simplify css-class manipulation
+	  javascript
+	* [r11828] swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/www/javascript/swat-table-view.js:
+	  use yahoo ui library to simplify css-class manipulation
+	  javascript
+	* [r11827] swat/trunk/Swat/SwatExpandableCheckboxTree.php,
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js:
+	  use yahoo ui library to simplify event handling and css-class
+	  manipulation javascript
+	* [r11826] swat/trunk/Swat/SwatConfirmationButton.php,
+	  swat/trunk/www/javascript/swat-confirmation-button.js:
+	  use yahoo ui library to simplify event handling javascript
+	* [r11825] swat/trunk/Swat/SwatCheckboxEntryList.php,
+	  swat/trunk/www/javascript/swat-checkbox-entry-list.js:
+	  use yahoo ui library to simplify event handling and css-class
+	  manipulation javascript
+	* [r11824] swat/trunk/Swat/SwatCheckboxList.php,
+	  swat/trunk/www/javascript/swat-checkbox-list.js:
+	  use yahoo ui library to simplify event handling javascript
+	* [r11823] swat/trunk/Swat/SwatCheckAll.php,
+	  swat/trunk/www/javascript/swat-check-all.js:
+	  use yahoo ui library to simplify event handling javascript
+	* [r11822] swat/trunk/Swat/SwatTimeEntry.php,
+	  swat/trunk/www/javascript/swat-time-entry.js:
+	  use yahoo ui library to abstract away event handling for time
+	  entry widget
+	* [r11821] swat/trunk/Swat/SwatTimeEntry.php:
+	  require SwatDate instead of Date
+	* [r11820] swat/trunk/Swat/SwatDateEntry.php:
+	  swat date entry doesn't use the yui dom component
+	* [r11819] swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/www/javascript/swat-date-entry.js:
+	  use yahoo ui library to abstract away event handling for date
+	  entry widget
+	* [r11818] swat/trunk/www/javascript/swat-z-index-manager.js:
+	  remove debug code
+	* [r11817] swat/trunk/Swat/SwatActions.php:
+	  require correct yahoo ui components
+	* [r11816] swat/trunk/www/javascript/swat-actions.js:
+	  Use Yahoo UI Library to abstract away some clunky code for
+	  css-class manipulation and event handling.
+	* [r11815] swat/trunk/Swat/SwatCalendar.php:
+	  Include appropriate JavaScript components from the Yahoo UI
+	  Library
+	* [r11814] swat/trunk/www/javascript/swat-calendar.js:
+	  Use Yahoo UI Library to get absolute positions. It actually
+	  works in IE
+	* [r11813] swat/trunk/Swat/Swat.php:
+	  depend on YUI
+	* [r11798] swat/trunk/www/javascript/swat-calendar.js:
+	  Round three of trying to fix offset in Internet Explorer. This
+	  one is the best guess yet but is still not perfect. It might be
+	  impossible to correctly calculate absolute position in IE6.
+	* [r11795] swat/trunk/www/javascript/swat-calendar.js:
+	  don't do a full redraw of the calendar when selecting a day
+	* [r11794] swat/trunk/www/javascript/swat-calendar.js,
+	  swat/trunk/www/styles/swat-calendar.css:
+	  Fix wrapping of month/year flydowns in IE6.
+	* [r11793] swat/trunk/www/javascript/swat-calendar.js:
+	  Updates to the SwatCalendar widget:
+	  - added method to set the date without closing the calendar
+	  - made draw() remember the position of the selected day so it
+	  doesn't always highlight the first day of the month
+	  - use tango-style arrow graphics (not finished yet)
+	  - clean the table code of the month/year controls
+	  - remove span tags from close controls
+	  - display empty cells with colspans instead of as multiple cells
+	  - make close links use href="javascript:..." instead of
+	  onclick="..." so they get proper link styling
+	* [r11792] swat/trunk/www/images/go-next.png,
+	  swat/trunk/www/images/go-previous.png,
+	  swat/trunk/www/images/swat-calendar-header-background.png,
+	  swat/trunk/www/styles/swat-calendar.css:
+	  Style updates for the SwatCalender widget:
+	  - use #ccc instead of #c0c0c0
+	  - use Highlight and HighlightText for selected date
+	  - add a gradient background to the header controls
+	  - remove styling from close control links
+	  - remove styling from close control span tags and add it to a
+	  tags instead
+	  - increase font size
+	  - remove background image from empty cells
+	  - remove some redundant borders
+	  - remove hard-coded font families
+	  - improve spacing of prev/next month arrows
+
+2006-10-03  gauthierm
+
+	* [r11789] swat/trunk/www/javascript/swat-calendar.js:
+	  prevent calendar from popping up half-way on the page
+
+2006-10-03  steven
+
+	* [r11779] swat/trunk/www/styles/swat.css:
+	  add swat-button-compact class for buttons that are, you know,
+	  like, small...
+
+2006-10-03  gauthierm
+
+	* [r11778] swat/trunk/www/javascript/swat-calendar.js:
+	  Fix popup calendar offset calculation so it works with relative
+	  positions and in IE again
+
+2006-10-02  nrf
+
+	* [r11743] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.0.5
+
 2006-10-02  gauthierm
 
 	* [r11728] swat/trunk/Swat/SwatImageDisplay.php:
