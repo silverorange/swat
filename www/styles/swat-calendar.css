@@ -54,6 +54,10 @@ td.swat-calendar-control-arrow {
 	width: 50%;
 }
 
+td.swat-calendar-control-arrow img {
+	vertical-align: middle;
+}
+
 td.swat-calendar-control-flydowns {
 	width: 0;
 	white-space: nowrap;
