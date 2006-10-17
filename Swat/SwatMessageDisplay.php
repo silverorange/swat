@@ -52,6 +52,8 @@ class SwatMessageDisplay extends SwatControl
 
 		$this->addStyleSheet('packages/swat/styles/swat-message-display.css',
 			Swat::PACKAGE_ID);
+
+		$this->addTangoAttribution();
 	}
 
 	// }}}
