@@ -3,6 +3,7 @@
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlHeadEntry.php';
 require_once 'Swat/SwatHtmlHeadEntrySet.php';
+require_once 'Swat/SwatCommentHtmlHeadEntry.php';
 require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
 require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
 
@@ -103,6 +104,47 @@ abstract class SwatUIObject extends SwatObject
 
 		$this->html_head_entry_set->addEntry(
 			new SwatJavaScriptHtmlHeadEntry($java_script, $package_id));
+	}
+
+	// }}}
+	// {{{ public function addComment()
+
+	/**
+	 * Adds a comment to the list of HTML head entries needed by this user-
+	 * interface element
+	 *
+	 * @param string  $comment the contents of the comment to include.
+	 * @param integer $package_id the package this comment belongs with.
+	 */
+	public function addComment($comment, $package_id = null)
+	{
+		if ($this->html_head_entry_set === null)
+			throw new SwatException(sprintf("Child class '%s' did not ".
+				'instantiate a HTML head entry set. This should be done in  '.
+				'the constructor either by calling parent::__construct() or '.
+				'by creating a new HTML head entry set.', get_class($this)));
+
+		$this->html_head_entry_set->addEntry(
+			new SwatCommentHtmlHeadEntry($comment, $package_id));
+	}
+
+	// }}}
+	// {{{ public function addTangoAttribution()
+
+	/**
+	 * Convenience method to add Tango attribution comment
+	 *
+	 * This method should be used if a UI object uses Tango icons. This is
+	 * required to comply with the CC attribution licence under which the Tango
+	 * icons are licenced.
+	 *
+	 * @param integer $package_id the package the tango attribution belongs
+	 *                             with.
+	 */
+	public function addTangoAttribution($package_id = Swat::PACKAGE_ID)
+	{
+		$this->addComment('Some icons by the Tango project '.
+			'http://www.Tango-Project.org', $package_id);
 	}
 
 	// }}}

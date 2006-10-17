@@ -66,6 +66,8 @@ class SwatCalendar extends SwatControl
 
 		$this->addStyleSheet('packages/swat/styles/swat-calendar.css',
 			Swat::PACKAGE_ID);
+
+		$this->addTangoAttribution();
 	}
 
 	// }}}
