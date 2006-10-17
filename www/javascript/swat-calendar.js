@@ -29,6 +29,7 @@
 function SwatCalendar(id, start_date, end_date, swat_date_entry)
 {
 	this.id = id;
+	this.is_safari = (/Safari|Konqueror|KHTML/gi).test(navigator.userAgent);
 
 	var date = new Date();
 	if (start_date.length == 10) {
@@ -131,10 +132,20 @@ SwatCalendar.prototype.setDateValues = function(year, month, day)
 SwatCalendar.prototype.setDate = function(element, yyyy, mm, dd)
 {
 	this.setDateValues(yyyy, mm, dd);
-	if (this.selected_element)
+	if (this.selected_element) {
 		this.selected_element.className = 'swat-calendar-cell';
+		if (this.is_safari) {
+			this.selected_element.style.backgroundColor = '';
+			this.selected_element.style.color = '';
+		}
+	}
 
 	element.className = 'swat-calendar-current-cell';
+	if (this.is_safari) {
+		element.style.backgroundColor = '#406A9C';
+		element.style.color = '#fff';
+	}
+
 	this.selected_element = element;
 }
 
@@ -516,7 +527,11 @@ SwatCalendar.prototype.draw = function()
 	for (i = 1; i <= end_day; i++) {
 
 		cell_class = (dd == i) ? 'swat-calendar-current-cell' : 'swat-calendar-cell';
-		cell_current = (dd == i) ? 'id="' + this.id + '_current_cell" ' : '';
+		if (this.is_safari) {
+			cell_current = (dd == i) ? 'id="' + this.id + '_current_cell" style="background-color: #406A9C; color: #fff;" ' : '';
+		} else {
+			cell_current = (dd == i) ? 'id="' + this.id + '_current_cell" ' : '';
+		}
 		onclick_action = this.id + '_obj.setDate(this, '+ yyyy + ',' + mm + ',' + i + ');';
 		if (calendar_start && i < start_date.getDate()) {
 			cell_class = 'swat-calendar-invalid-cell';
