@@ -169,14 +169,19 @@ function SwatChangeOrder_updateDropPosition()
 		var node = list_div.childNodes[i];
 		if (node !== drop_marker &&
 			middle < node.offsetTop + Math.floor(node.offsetHeight / 2)) {
+
+			var next_sibling =
+				(drop_marker === shadow_item.original_item.nextSibling) ?
+				drop_marker.nextSibling : shadow_item.original_item.nextSibling;
+
 			// hide the drop marker if no move is taking place
-			if (node === shadow_item.original_item ||
-				node === shadow_item.original_item.nextSibling) {
+			if (node === shadow_item.original_item || node === next_sibling) {
 				drop_marker.style.display = 'none';
 			} else {
-				node.parentNode.insertBefore(drop_marker, node);
 				drop_marker.style.display = 'block';
 			}
+
+			node.parentNode.insertBefore(drop_marker, node);
 
 			break;
 		}
