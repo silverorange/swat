@@ -26,18 +26,22 @@ class SwatEmailEntry extends SwatEntry
 	{
 		parent::process();
 
-		$this->value = trim($this->value);
-
 		if ($this->value === null)
 			return;
+
+		$this->value = trim($this->value);
+
+		if (strlen($this->value) == 0) {
+			$this->value = null;
+			return;
+		}
 
 		$valid_name_word = '[-!#$%&\'*+.\\/0-9=?A-Z^_`{|}~]+';
 		$valid_domain_word = '[-!#$%&\'*+\\/0-9=?A-Z^_`{|}~]+';
 		$valid_address_regexp = '/^'.$valid_name_word.'@'.
 			$valid_domain_word.'(\.'.$valid_domain_word.')+$/ui';
 
-		if (strlen($this->value) &&
-			preg_match($valid_address_regexp, $this->value) === 0) {
+		if (preg_match($valid_address_regexp, $this->value) === 0) {
 			$msg = Swat::_('The email address you have entered is not '.
 				'properly formatted.');
 
