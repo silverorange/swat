@@ -1,5 +1,41 @@
+2006-10-18  gauthierm
+
+	* [r12104] swat/trunk/Swat/SwatEmailEntry.php:
+	  fix email entry so it returns null for value if no value is
+	  entered instead of returning a blank string
+	* [r12096] swat/trunk/Swat/SwatEntry.php:
+	  Since this nonce is used as an XML id, ensure it begins with a
+	  string. Fixes #125.
+
+2006-10-17  gauthierm
+
+	* [r12095] swat/trunk/Swat/SwatDisclosure.php:
+	  Disclosure js is now using YAHOO.util.Dom so make sure it is
+	  included.
+	* [r12094] swat/trunk/www/javascript/swat-disclosure.js:
+	  Hot new blind-style animations for the disclosure that are less
+	  video intensive and look better too. There is a known issue in
+	  Safari I'll fix later.
+	* [r12087] swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/Swat/SwatCommentHtmlHeadEntry.php,
+	  swat/trunk/Swat/SwatMessageDisplay.php,
+	  swat/trunk/Swat/SwatRemoveInputCell.php,
+	  swat/trunk/Swat/SwatTableViewInputRow.php,
+	  swat/trunk/Swat/SwatToolLink.php,
+	  swat/trunk/Swat/SwatUIObject.php:
+	  add automatic tango attribution for ui objects that use tango
+	  icons
+	* [r12068] swat/trunk/www/javascript/swat-calendar.js:
+	  Fix for CSS/Level2 system colours in Safari and Konqueror. Fixes
+	  #122.
+	* [r12067] swat/trunk/www/javascript/swat-change-order.js:
+	  Always set the drop marker to the drop position even when it is
+	  invisible. This fixes #121.
+
 2006-10-16  nrf
 
+	* [r12043] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.0.9
 	* [r12033] swat/trunk/package.php:
 	  prepare for release of 1.0.8
 
