@@ -84,15 +84,17 @@ SwatDisclosure.prototype.openWithAnimation = function()
 	YAHOO.util.Dom.addClass(this.div, 'swat-disclosure-control-opened');
 
 	// get display height
+	this.animate_div.parentNode.style.overflow = 'hidden';
+	this.animate_div.parentNode.style.height = '0';
 	this.animate_div.style.visibility = 'hidden';
 	this.animate_div.style.overflow = 'hidden';
 	this.animate_div.style.display = 'block';
-	this.animate_div.style.position = 'absolute';
 	this.animate_div.style.height = '';
 	var height = this.animate_div.offsetHeight;
 	this.animate_div.style.height = '0';
-	this.animate_div.style.position = 'static';
 	this.animate_div.style.visibility = 'visible';
+	this.animate_div.parentNode.style.height = '';
+	this.animate_div.parentNode.style.overflow = 'visible';
 	
 	var attributes = { height: { to: height, from: 0 } }; 
 	var animation = new YAHOO.util.Anim(this.animate_div, attributes, 0.5,
