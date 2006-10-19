@@ -22,7 +22,8 @@ class SwatObject
 	 * in string context. For example:
 	 *
 	 * <code>
-	 * echo (SwatObject)$my_object;
+	 * $my_object = new SwatMessage('Hello, World!');
+	 * echo $my_object;
 	 * </code>
 	 *
 	 * @return string this object represented as a string.
