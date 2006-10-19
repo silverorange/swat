@@ -90,6 +90,15 @@ class Swat
 	}
 
 	// }}}
+	// {{{ public static function setupGettext()
+
+	public static function setupGettext()
+	{
+		bindtextdomain(Swat::GETTEXT_DOMAIN, '@DATA-DIR@/Swat/locale');
+		bind_textdomain_codeset(Swat::GETTEXT_DOMAIN, 'UTF-8');
+	}
+
+	// }}}
 	// {{{ public static function displayMethods()
 
 	/**
@@ -198,4 +207,7 @@ if (!function_exists("dgettext")) {
 }
 
 // }}}
+
+Swat::setupGettext();
+
 ?>

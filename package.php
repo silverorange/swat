@@ -49,6 +49,8 @@ $package->addIgnore('demo/www/packages/swat/');
 $package->addMaintainer('lead', 'nrf', 'Nathan Fredrickson', 'nathan@silverorange.com');
 $package->addMaintainer('lead', 'gauthierm', 'Mike Gauthier', 'mike@silverorange.com');
 
+$package->addReplacement('Swat/Swat.php', 'pear-config', '@DATA-DIR@', 'data_dir');
+
 $package->setPhpDep('5.1.5');
 $package->setPearinstallerDep('1.4.0');
 $package->addPackageDepWithChannel('required', 'Date', 'pear.silverorange.com', '1.4.7so1');
