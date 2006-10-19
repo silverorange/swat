@@ -123,6 +123,10 @@ class SwatButton extends SwatControl
 		$input_tag->tabindex = $this->tab_index;
 		$input_tag->accesskey = $this->access_key;
 
+		if (!$this->isSensitive())
+			$input_tag->disabled = 'disabled';
+
+
 		$input_tag->display();
 	}
 
