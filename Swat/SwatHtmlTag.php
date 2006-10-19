@@ -204,6 +204,56 @@ class SwatHtmlTag extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function toString()
+	
+	/**
+	 * Gets this tag as a string
+	 *
+	 * The string is the same as the displayed content of
+	 * {@link SwatHtmlString::display()}. It is not possible to get paired tags
+	 * as strings as this object has no knowledge of what is displayed between
+	 * the opening and closing tags.
+	 *
+	 * @see SwatHtmlTag::display()
+	 *
+	 * @return string this tag as a string.
+	 */
+	public function toString()
+	{
+		ob_start();
+		$this->display();
+		return ob_get_clean();
+	}
+
+	// }}}
+	// {{{ public function __toString()
+	
+	/**
+	 * Gets this tag as a string
+	 *
+	 * This is a magic method that is called by PHP when this object is used
+	 * in string context. For example:
+	 *
+	 * <code>
+	 * $img = new SwatHtmlTag('img');
+	 * $img->alt = 'example image';
+	 * $img->src = 'http://example.com/example.png';
+	 * echo $img;
+	 * </code>
+	 *
+	 * Note: It is more efficient to simply call {@link SwatHtmlTag::display()}
+	 * instead of using <code>echo $tag;</code>.
+	 *
+	 * @return string this tag as a string.
+	 *
+	 * @see SwatHtmlTag::toString()
+	 */
+	public function __toString()
+	{
+		return $this->toString();
+	}
+
+	// }}}
 	// {{{ private function openInternal()
 
 	/**
