@@ -50,7 +50,8 @@ SwatDisclosure.prototype.closeWithAnimation = function()
 	this.animate_div.style.overflow = 'hidden';
 	this.animate_div.style.height = '';
 	var attributes = { height: { to: 0 } }; 
-	var animation = new YAHOO.util.Anim(this.animate_div, attributes, 0.25); 
+	var animation = new YAHOO.util.Anim(this.animate_div, attributes, 0.25,
+		YAHOO.util.Easing.easingIn); 
 
 	this.semaphore = true;
 	animation.onComplete.subscribe(SwatDisclosure.handleClose, this);
