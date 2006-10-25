@@ -4,6 +4,7 @@ require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatMessage.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
+require_once 'YUI/YUI.php';
 
 /**
  * A control to display page status messages  
@@ -43,6 +44,9 @@ class SwatMessageDisplay extends SwatControl
 		parent::__construct($id);
 
 		$this->requires_id = true;
+
+		$yui = new YUI('animation');
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript('packages/swat/javascript/swat-message-display.js',
 			Swat::PACKAGE_ID);
