@@ -1,0 +1,30 @@
+<!-- This is a document type definition for SwatML.
+     copyright 2005 silverorange Inc. -->
+
+<!ENTITY % WidgetObject "widget | object" >
+
+<!ELEMENT swatml (%WidgetObject;)*>
+
+<!-- base widgets -->
+<!ELEMENT widget (property*, (%WidgetObject;)*)>
+<!ATTLIST widget
+	class CDATA #REQUIRED
+	id ID #IMPLIED
+	>
+
+<!-- table view columns or cell renderers
+     these are interface elements that are not widgets -->
+<!ELEMENT object (property*, widget*, object*)>
+<!ATTLIST object
+	class CDATA #REQUIRED
+	id CDATA #IMPLIED
+	>
+
+<!-- interface element properties -->
+<!ELEMENT property (#PCDATA)>
+<!ATTLIST property
+	name CDATA #REQUIRED
+	translatable (yes|no) "no"
+	type (integer|boolean|string|float|data|constant|date|implicit-string) "implicit-string"
+	comments CDATA #IMPLIED
+	>
