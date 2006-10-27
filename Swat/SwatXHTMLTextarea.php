@@ -73,6 +73,13 @@ XHTML;
 	 */
 	protected function getValidationErrorMessage()
 	{
+		$ignored_errors = array(
+			'extra content at the end of the document',
+			'premature end of data in tag html',
+			'opening and ending tag mismatch between html and body',
+			'opening and ending tag mismatch between body and html',
+		);
+
 		$errors = array();
 		$load_xml_error = '/^DOMDocument::loadXML\(\): (.*)?$/u';
 		$validate_error = '/^DOMDocument::validate\(\): (.*)?$/u';
@@ -86,12 +93,18 @@ XHTML;
 				$error = $matches[1];
 			}
 
+			// further humanize
+			$error = str_replace('tag mismatch:', 'tag mismatch between',
+				$error);
+
 			// remove some stuff that only makes sense in document context
-			$error = preg_replace('/line:? [0-9]+/ui', '', $error);
+			$error = preg_replace('/\s?line:? [0-9]+\s?/ui', ' ', $error);
 			$error = preg_replace('/in entity[:,.]?/ui', '', $error);
 			$error = strtolower($error);
 			$error = trim($error);
-			$errors[] = $error;
+
+			if (!in_array($error, $ignored_errors))
+				$errors[] = $error;
 		}
 
 		$content = '%s must be valid XHTML markup: ';
