@@ -84,7 +84,8 @@ class StringDemo extends DemoPage
 
 	protected function createLayout()
 	{
-		return new SiteLayout('../layouts/no_source.php');
+		return new SiteLayout($this->app,
+			'../include/layouts/xhtml/no-source.php');
 	}
 
 	// }}}
