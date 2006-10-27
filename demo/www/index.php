@@ -9,12 +9,7 @@ if (class_exists('PackageConfig')) {
 }
 
 require_once 'Swat/SwatAutoloader.php';
-SwatAutoloader::addRule('/^Site(.*)Page$/', 'Site/pages/Site$1Page.php');
-SwatAutoloader::addRule('/^Site(.*)/', 'Site/Site$1.php');
-
-SwatAutoloader::addRule(
-	'/^Site(.*)Exception$/', 'Site/exceptions/Site$1Exception.php');
-
+SwatAutoloader::loadRules(dirname(__FILE__).'/../autoloader-rules.conf');
 require_once '../include/DemoApplication.php';
 
 $app = new DemoApplication('demo');

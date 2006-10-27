@@ -45,7 +45,8 @@ class FrontPage extends DemoPage
 
 	protected function createLayout()
 	{
-		return new SiteLayout($this->app, '../include/layouts/xhtml/no_source.php');
+		return new SiteLayout($this->app,
+			'../include/layouts/xhtml/no-source.php');
 	}
 
 	// }}}
