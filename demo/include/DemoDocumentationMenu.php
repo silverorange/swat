@@ -38,8 +38,8 @@ class DemoDocumentationMenu extends DemoMenu
 			foreach ($this->entries as $class) {
 				if (!$first) echo ', ';
 				$first = false;
-				echo '<a href="http://docs.silverorange.com/Swat/'.$class.
-					'.html">'.$class.'</a>';
+				echo '<a href="http://docs.silverorange.com/swat/'.
+					strtolower($class).'.html">'.$class.'</a>';
 			}
 
 			echo '</p>';
