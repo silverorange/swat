@@ -73,10 +73,32 @@ XHTML;
 	 */
 	protected function getValidationErrorMessage()
 	{
-		// TODO: parse validation errors into human forms.
-		$content = '%s must be valid markup. '.implode(self::$validation_errors);
+		$errors = array();
+		$load_xml_error = '/^DOMDocument::loadXML\(\): (.*)?$/u';
+		$validate_error = '/^DOMDocument::validate\(\): (.*)?$/u';
+		foreach (self::$validation_errors as $error) {
+			$matches = array();
+
+			// parse errors into human form
+			if (preg_match($validate_error, $error, $matches) === 1) {
+				$error = $matches[1];
+			} elseif (preg_match($load_xml_error, $error, $matches) === 1) {
+				$error = $matches[1];
+			}
+
+			// remove some stuff that only makes sense in document context
+			$error = preg_replace('/line:? [0-9]+/ui', '', $error);
+			$error = preg_replace('/in entity[:,.]?/ui', '', $error);
+			$error = strtolower($error);
+			$error = trim($error);
+			$errors[] = $error;
+		}
+
+		$content = '%s must be valid XHTML markup: ';
+		$content.= '<ul><li>'.implode(',</li><li>', $errors).'.</li></ul>';
 		$message = new SwatMessage($content, SwatMessage::ERROR);
 		$message->content_type = 'text/xml';
+
 		return $message;
 	}
 
