@@ -33,13 +33,15 @@ class DemoPage extends SitePage
 	// }}}
 	// {{{ public function __construct()
 	
-	public function __construct(DemoApplication $app)
+	public function __construct(DemoApplication $app, $layout = null,
+		$demo = null)
 	{
-		parent::__construct($app);
+		parent::__construct($app, $layout);
 
 		$this->navbar = new SwatNavBar();
 		$this->ui = new SwatUI();
 		$this->ui->mapClassPrefixToPath('Demo', '../include/');
+		$this->demo = $demo;
 	}
 
 	// }}}
@@ -49,7 +51,8 @@ class DemoPage extends SitePage
 	{
 		$this->start_time = microtime(true);
 
-		$this->demo = get_class($this);
+		if ($this->demo === null)
+			$this->demo = get_class($this);
 		
 		$this->ui->loadFromXML('../include/pages/'.strtolower($this->demo).'.xml');
 
