@@ -11,7 +11,7 @@ require_once 'pages/FrontPage.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class DemoApplication extends SiteApplication
+class DemoApplication extends SiteWebApplication
 {
 	// {{{ protected function loadPage()
 
