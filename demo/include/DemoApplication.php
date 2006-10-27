@@ -13,6 +13,15 @@ require_once 'pages/FrontPage.php';
  */
 class DemoApplication extends SiteWebApplication
 {
+	// {{{ public function __construct()
+
+	public function __construct($id)
+	{
+		parent::__construct($id);
+		$this->exception_page_source = null;
+	}
+
+	// }}}
 	// {{{ protected function loadPage()
 
 	/**
@@ -40,8 +49,10 @@ class DemoApplication extends SiteWebApplication
 		if (file_exists('../include/pages/'.$source.'.php')) {
 			require_once '../include/pages/'.$source.'.php';
 			return new $source($this);
-		} else {
+		} elseif ($source === null) {
 			return new FrontPage($this);
+		} else {
+			return new DemoPage($this, null, $source);
 		}
 	}
 
