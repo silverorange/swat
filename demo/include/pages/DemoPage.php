@@ -225,6 +225,13 @@ class DemoPage extends SitePage
 			$entries = array('SwatMessageDisplay');
 			break;
 
+		case 'NavBar':
+			$entries = array(
+				'SwatNavBar',
+				'SwatNavBarEntry',
+				);
+			break;
+
 		case 'Pagination':
 			$entries = array('SwatPagination');
 			break;
