@@ -3,7 +3,7 @@
 require_once 'pages/FrontPage.php';
 
 /**
- * An demo application
+ * A demo application
  *
  * This is an application to demonstrate various Swat widgets.
  *
@@ -22,6 +22,26 @@ class DemoApplication extends SiteWebApplication
 	}
 
 	// }}}
+	// {{{ public function run()
+
+	public function run()
+	{
+		$this->initModules();
+		$this->parseURI();
+
+		$this->loadPage();
+		$this->page->layout->init();
+		$this->page->init();
+		$this->page->layout->process();
+		$this->page->process();
+		$this->page->layout->build();
+		$this->page->build();
+		$this->page->layout->finalize();
+
+		$this->page->layout->display();
+	}
+
+	// }}}
 	// {{{ protected function loadPage()
 
 	/**
@@ -31,7 +51,8 @@ class DemoApplication extends SiteWebApplication
 	{
 		if ($this->page === null) {
 			$source = self::initVar('demo');
-			$source = basename($source); // simple security
+			// simple security
+			$source = ($source === null) ? $source : basename($source);
 			$this->page = $this->resolvePage($source);
 		}
 	}
