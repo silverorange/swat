@@ -270,6 +270,7 @@ class DemoPage extends SitePage
 		case 'Textarea':
 			$entries = array(
 				'SwatTextarea',
+				'SwatXHTMLTextarea',
 				'SwatTextareaEditor'
 				);
 			break;
