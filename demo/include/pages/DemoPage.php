@@ -104,7 +104,7 @@ class DemoPage extends SitePage
 		$this->layout->data->source_code = $code;
 
 		$this->layout->startCapture('ui');
-		$this->ui->displayTidy();
+		$this->ui->display();
 		$this->layout->endCapture();
 
 		$this->layout->startCapture('menu');
