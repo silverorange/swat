@@ -137,14 +137,24 @@ class SwatCascadeFlydown extends SwatFlydown
 			$this->cascade_from->id, $this->id);
 
 		foreach($this->options as $parent => $options) {
+			$parent = serialize($parent);
+
 			if ($this->show_blank && count($options) > 1)
 				printf("\n {$this->id}_cascade.addChild('%s', '', '%s');",
 					$parent, Swat::_('choose one ...'));
 
 			foreach ($options as $option) {
-				$selected = ($option->value == $this->value) ? 'true' : 'false';
+				$selected = ($option->value === $this->value) ?
+					'true' : 'false';
+
+				$title = $option->title;
+				$title = str_replace("\n", '\n', $title);
+				$title = str_replace("'", "\\'", $title);
+
+				$value = serialize($option->value);
+
 				printf("\n {$this->id}_cascade.addChild('%s', '%s', '%s', %s);",
-					$parent, $option->value, addslashes($option->title), $selected);
+					$parent, $value, $title, $selected);
 			}
 		}
 
