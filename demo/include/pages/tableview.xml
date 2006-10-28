@@ -62,7 +62,7 @@
 			</widget>
 			<widget class="SwatActions" id="index_actions">
 				<widget class="SwatActionItem" id="havest_date">
-					<property name="title">set harvest date</property>
+					<property name="title">set harvest date…</property>
 					<widget class="SwatFormField">
 						<property name="title">to month</property>
 						<widget class="SwatDateEntry">
@@ -71,7 +71,7 @@
 					</widget>
 				</widget>
 				<widget class="SwatActionItem" id="makes_jam">
-					<property name="title">set jammable</property>
+					<property name="title">set jammable…</property>
 					<widget class="SwatFormField">
 						<property name="title">to</property>
 						<widget class="SwatYesNoFlydown">
