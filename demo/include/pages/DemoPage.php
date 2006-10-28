@@ -54,7 +54,8 @@ class DemoPage extends SitePage
 		if ($this->demo === null)
 			$this->demo = get_class($this);
 		
-		$this->ui->loadFromXML('../include/pages/'.strtolower($this->demo).'.xml');
+		$this->ui->loadFromXML('../include/pages/'.strtolower($this->demo).
+			'.xml');
 
 		$this->initUI();
 
@@ -130,7 +131,10 @@ class DemoPage extends SitePage
 	{
 		switch ($this->demo) {
 		case 'Button':
-			$entries = array('SwatButton');
+			$entries = array(
+				'SwatButton',
+				'SwatConfirmationButton'
+				);
 			break;
 
 		case 'Calendar':
@@ -145,7 +149,9 @@ class DemoPage extends SitePage
 			$entries = array(
 				'SwatCheckbox',
 				'SwatCheckboxList',
-				'SwatCheckboxTree'
+				'SwatCheckboxEntryList',
+				'SwatCheckboxTree',
+				'SwatExpandableCheckboxTree',
 				);
 			break;
 
@@ -183,6 +189,7 @@ class DemoPage extends SitePage
 		case 'Entry':
 			$entries = array(
 				'SwatEntry',
+				'SwatListEntry',
 				'SwatEmailEntry',
 				'SwatIntegerEntry',
 				'SwatFloatEntry',
