@@ -21,6 +21,13 @@
 						<property name="show_blank" type="boolean">false</property>
 					</widget>
 				</widget>
+
+				<widget class="SwatFormField">
+					<property name="title" type="string">Grouped Flydown</property>
+					<widget class="SwatGroupedFlydown" id="grouped_flydown">
+						<property name="show_blank" type="boolean">false</property>
+					</widget>
+				</widget>
 				
 			</widget>
 			<widget class="SwatFieldset">

@@ -209,8 +209,11 @@ class DemoPage extends SitePage
 			$entries = array(
 				'SwatFlydown',
 				'SwatFlydownTree',
+				'SwatGroupedFlydown',
 				'SwatCascadeFlydown',
-				'SwatOption'
+				'SwatFlydownDivider',
+				'SwatTreeFlydownNode',
+				'SwatOption',
 				);
 			break;
 

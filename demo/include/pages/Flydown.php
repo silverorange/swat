@@ -57,6 +57,29 @@ class Flydown extends DemoPage
 		$tree_flydown = $this->ui->getWidget('tree_flydown');
 		$tree_flydown->setTree($tree);
 
+		// grouped flydown
+		$grouped_tree = new SwatTreeFlydownNode(null, 'Root');
+
+		$apples = new SwatTreeFlydownNode(null, 'Apple');
+		$apples->addChild(new SwatTreeFlydownNode('mackintosh', 'Mackintish'));
+		$apples->addChild(new SwatTreeFlydownNode('courtland', 'Courtland'));
+		$apples->addChild(new SwatTreeFlydownNode('golden', 'Golden Delicious'));
+		$apples->addChild(new SwatTreeFlydownNode('fuji', 'Fuji'));
+		$apples->addChild(new SwatTreeFlydownNode('smith', 'Granny Smith'));
+
+		$oranges = new SwatTreeFlydownNode(null, 'Orange');
+		$oranges->addChild(new SwatTreeFlydownNode('navel', 'Navel'));
+		$oranges->addChild(new SwatTreeFlydownNode('blood', 'Blood'));
+		$oranges->addChild(new SwatTreeFlydownNode('florida', 'Florida'));
+		$oranges->addChild(new SwatTreeFlydownNode('california', 'California'));
+		$oranges->addChild(new SwatTreeFlydownNode('mandarin', 'Mandarin'));
+		$grouped_flydown = $this->ui->getWidget('grouped_flydown');
+		$grouped_flydown->setTree($grouped_tree);
+
+		$grouped_tree->addChild($apples);
+		$grouped_tree->addChild($oranges);
+
+		// cascading flydown
 		$cascade_from = $this->ui->getWidget('cascade_from');
 		$cascade_from->options = array(
 			new SwatOption(0, 'Apple'),
