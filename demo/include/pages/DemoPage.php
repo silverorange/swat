@@ -258,6 +258,15 @@ class DemoPage extends SitePage
 				);
 			break;
 
+		case 'TableViewInputRow':
+			$entries = array(
+				'SwatTableView',
+				'SwatTableViewInputRow',
+				'SwatInputCell',
+				'SwatRemoveInputCell',
+				);
+			break;
+
 		case 'Textarea':
 			$entries = array(
 				'SwatTextarea',
