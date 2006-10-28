@@ -29,6 +29,7 @@ class DemoMenu
 		'Flydown'           => 'SwatFlydown',
 		'Frame'             => 'SwatFrame',
 		'MessageDisplay'    => 'SwatMessageDisplay',
+		'NavBar'            => 'SwatNavBar',
 		'Pagination'        => 'SwatPagination',
 		'PasswordEntry'     => 'SwatPasswordEntry',
 		'RadioList'         => 'SwatRadioList',
