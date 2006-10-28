@@ -44,6 +44,12 @@
 						<property name="locale" type="string">en_CA</property>
 					</object>
 				</object>
+				<object class="SwatDetailsViewVerticalField">
+					<property name="title">Text</property>
+					<object class="SwatTextCellRenderer">
+						<property name="text" type="data">text</property>
+					</object>
+				</object>
 			</widget>
 
 		</widget>
