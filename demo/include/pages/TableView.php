@@ -1,8 +1,6 @@
 <?php
 
 require_once 'DemoPage.php';
-require_once 'Swat/SwatTableStore.php';
-require_once 'Swat/SwatDate.php';
 
 /**
  * A demo using a table view
@@ -13,7 +11,7 @@ require_once 'Swat/SwatDate.php';
  */
 class TableView extends DemoPage
 {
-	// private function initUI();
+	// {{{ public function initUI();
 
 	public function initUI()
 	{
@@ -25,10 +23,10 @@ class TableView extends DemoPage
 			array('images/strawberry.png', 28, 28, 'Strawberry', 'red', true, false,
 				new SwatDate('2005-07-05'), 0.6)
 		);
-		
+
 		$table_view = $this->ui->getWidget('table_view');
 		$table_store = new SwatTableStore();
-		
+
 		foreach ($data as $datum) {
 			$fruit = new FruitObject();
 			$fruit->image = $datum[0];
@@ -45,7 +43,6 @@ class TableView extends DemoPage
 		}
 
 		$table_view->model = $table_store;
-
 	}
 
 	// }}}
