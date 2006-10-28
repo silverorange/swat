@@ -234,7 +234,10 @@ class DemoPage extends SitePage
 			break;
 
 		case 'RadioList':
-			$entries = array('SwatRadioList');
+			$entries = array(
+				'SwatRadioList',
+				'SwatRadioTable',
+				);
 			break;
 
 		case 'StringDemo':
