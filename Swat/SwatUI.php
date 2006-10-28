@@ -281,6 +281,10 @@ class SwatUI extends SwatObject
 	 * Displays this interface with tidy XHTML
 	 *
 	 * The display() method is called and the output is cleaned up.
+	 *
+	 * @deprecated This method breaks some elements of swat by adding
+	 *             whitespace between nodes. Use {@link SwatUI::display()}
+	 *             instead.
 	 */
 	public function displayTidy()
 	{
