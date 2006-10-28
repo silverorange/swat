@@ -11,8 +11,17 @@
 			</widget>
 
 			<widget class="SwatFormField">
+				<property name="title">XHTML Validting Text Area</property>
+				<widget class="SwatXHTMLTextarea" id="textarea_xhtml" />
+			</widget>
+
+			<widget class="SwatFormField">
 				<property name="title">Visual Editor Text Area</property>
 				<widget class="SwatTextareaEditor" id="textarea_editor" />
+			</widget>
+
+			<widget class="SwatFooterFormField">
+				<widget class="SwatButton" />
 			</widget>
 
 		</widget>
