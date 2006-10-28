@@ -29,6 +29,14 @@ class DetailsView extends DemoPage
 		$fruit->makes_pie    = true;
 		$fruit->harvest_date = '2005-10-31';
 		$fruit->cost         = .5;
+		$fruit->text         =
+			"Curabitur semper risus non turpis accumsan luctus. Nam libero ".
+			"erat, consequat sed, commodo quis, mollis eu, ligula. Curabitur ".
+			"imperdiet ultricies nisl. Suspendisse ac justo nec nisl ".
+			"sollicitudin vestibulum. Curabitur luctus pharetra mi. Mauris ".
+			"gravida luctus ante. Donec bibendum massa a risus. Sed et quam. ".
+			"Nam eu libero vel arcu semper placerat. Proin tristique quam at ".
+			"est. Donec vel sem.";
 
 		$details_view->data = $fruit;
 	}
@@ -57,6 +65,7 @@ class FruitObject
 	public $makes_pie = false;
 	public $harvest_date = null;
 	public $cost = 0;
+	public $text = '';
 
 	// }}}
 }
