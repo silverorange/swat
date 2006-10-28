@@ -7,14 +7,14 @@
 
 			<widget class="SwatFormField">
 				<property name="title" type="string">Submit Button</property>
-				<widget class="SwatButton" id="button">
+				<widget class="SwatButton" id="submit_button">
 					<property name="title" type="string">Submit Button</property>
 				</widget>
 			</widget>
 
 			<widget class="SwatFormField">
 				<property name="title" type="string">Confirm Button</property>
-				<widget class="SwatButton" id="button">
+				<widget class="SwatConfirmationButton" id="confirm_button">
 					<property name="title" type="string">Confirm Button</property>
 					<property name="confirmation_message" type="string">Are you sure you meant to press the button?</property>
 				</widget>
