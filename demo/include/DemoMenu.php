@@ -28,6 +28,7 @@ class DemoMenu
 		'FileEntry'         => 'SwatFileEntry',
 		'Flydown'           => 'SwatFlydown',
 		'Frame'             => 'SwatFrame',
+		'ImageDisplay'      => 'SwatImageDisplay',
 		'MessageDisplay'    => 'SwatMessageDisplay',
 		'NavBar'            => 'SwatNavBar',
 		'Pagination'        => 'SwatPagination',
