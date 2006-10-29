@@ -91,7 +91,7 @@ SwatExpandableCheckboxTree.prototype.toggleBranch = function(branch_id)
 	branch = document.getElementById(this.id + '_' + branch_id + '_branch');
 	image = document.getElementById(this.id + '_' + branch_id + '_img');
 
-	opened = YAHOO.util.Dom.hasClass(branch.className,
+	opened = YAHOO.util.Dom.hasClass(branch,
 		'swat-expandable-checkbox-tree-opened');
 
 	if (opened) {
