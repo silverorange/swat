@@ -33,6 +33,7 @@ class DemoMenu
 		'Pagination'        => 'SwatPagination',
 		'PasswordEntry'     => 'SwatPasswordEntry',
 		'RadioList'         => 'SwatRadioList',
+		'Replicable'        => 'SwatReplicable',
 		'StringDemo'        => 'SwatString',
 		'TableView'         => 'SwatTableView',
 		'TableViewInputRow' => 'SwatTableViewInputRow',

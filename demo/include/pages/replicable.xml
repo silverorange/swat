@@ -1,0 +1,43 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatFrame" id="my_frame">
+		<property name="title">SwatReplicable Demos</property>
+		<widget class="SwatForm" id="my_form">
+
+			<widget class="SwatReplicatorFieldset">
+				<property name="replicators[0]">Apple</property>
+				<property name="replicators[1]">Orange</property>
+				<property name="replicators[2]">Grape</property>
+
+				<widget class="SwatDisclosure">
+					<property name="title">Checkboxes</property>
+
+					<widget class="SwatFormField">
+						<property name="title">Check 1</property>
+						<widget class="SwatCheckbox" id="check1">
+						</widget>
+					</widget>
+					<widget class="SwatFormField">
+						<property name="title">Check 2</property>
+						<widget class="SwatCheckbox" id="check2">
+						</widget>
+					</widget>
+				</widget>
+
+			</widget>
+
+			<widget class="SwatReplicatorFormField">
+				<property name="replicators[0]">Spring</property>
+				<property name="replicators[1]">Summer</property>
+				<property name="replicators[2]">Fall</property>
+				<property name="replicators[3]">Winter</property>
+				<property name="title">Seasons</property>
+
+				<widget class="SwatDateEntry" />
+
+			</widget>
+
+		</widget>
+	</widget>
+</swatml>
