@@ -221,6 +221,10 @@ class DemoPage extends SitePage
 			$entries = array('SwatFrame');
 			break;
 
+		case 'ImageDisplay':
+			$entries = array('SwatImageDisplay');
+			break;
+
 		case 'MessageDisplay':
 			$entries = array('SwatMessageDisplay');
 			break;
