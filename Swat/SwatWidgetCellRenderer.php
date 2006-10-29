@@ -7,7 +7,9 @@ require_once 'Swat/exceptions/SwatException.php';
 
 /**
  *
- *
+ * @package   Swat
+ * @copyright 2006 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	SwatTitleable
