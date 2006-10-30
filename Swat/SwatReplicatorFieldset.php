@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Swat/SwatFieldset.php';
-require_once 'Swat/SwatContainer.php';
+require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatReplicable.php';
 
 /**
@@ -14,7 +14,8 @@ require_once 'Swat/SwatReplicable.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicable
+class SwatReplicatorFieldset extends SwatDisplayableContainer
+	implements SwatReplicable
 {
 	// {{{ public properties
 
@@ -30,9 +31,9 @@ class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicable
 	public $replicators = null;
 
 	// }}}
-	// {{{ private properties
+	// {{{ protected properties
 
-	private $widgets = array();
+	protected $widgets = array();
 
 	// }}}
 	// {{{ public function __construct()
@@ -63,28 +64,25 @@ class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicable
 	{
 		parent::init();
 
-		$local_children = array();
+		$children = array();
 
 		if ($this->replicators === null)
-			return;
+			$this->replicators = array(0 => null);
 
 		// first we add each child to the local array, and remove from the
 		// widget tree
 		foreach ($this->children as $child_widget)
-			$local_children[] = $this->remove($child_widget);
+			$children[] = $this->remove($child_widget);
 
-		$container = new SwatDisplayableContainer();
-		$container->id = $this->id;
-
-		// then we clone, change the id and add back to the widget tree
+		// then we clone, change the id and add back to the widget tree inside
+		// a replicated fieldset
 		foreach ($this->replicators as $id => $title) {
 			$field_set = new SwatFieldset();
 			$field_set->title = $title;
-			$container->add($field_set);
 			$suffix = '_'.$this->id.$id;
 			$this->widgets[$id] = array();
 
-			foreach ($local_children as $child) {
+			foreach ($children as $child) {
 				$new_child = clone $child;
 
 				if ($child->id !== null) {
@@ -92,6 +90,7 @@ class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicable
 					$new_child->id.= $suffix;
 				}
 
+				// update ids of cloned child descendants
 				if ($new_child instanceof SwatContainer) {
 					foreach ($new_child->getDescendants() as $descendant) {
 						if ($descendant->id !== null) {
@@ -103,9 +102,8 @@ class SwatReplicatorFieldset extends SwatFieldset implements SwatReplicable
 
 				$field_set->add($new_child);
 			}
+			$this->add($field_set);
 		}
-		$container->init();
-		$this->parent->replace($this, $container);
 	}
 
 	// }}}
