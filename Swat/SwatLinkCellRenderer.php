@@ -75,18 +75,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	public $link_value = null;
 
 	// }}}
-	// {{{ protected properties
-
-	/**
-	 * Additional CSS class to use for this link cell renderer
-	 *
-	 * This class is used on the XHTML anchor tag.
-	 *
-	 * @var string
-	 */
-	protected $class = null;
-
-	// }}}
 	// {{{ public function render()
 
 	/**
@@ -99,24 +87,58 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 		if (!$this->visible)
 			return;
 
-		if ($this->sensitive && ($this->link !== null)) {
-			$anchor = new SwatHtmlTag('a');
-			$anchor->setContent($this->getText(), $this->content_type);
-			$anchor->href = $this->getLink();
-			$anchor->title = $this->getTitle();
-			$anchor->class = $this->class;
+		if ($this->isSensitive())
+			$this->renderSensitive();
+		else
+			$this->renderInsensitive();
+	}
 
-			$anchor->display();
-		} else {
-			$span_tag = new SwatHtmlTag('span');
-			$span_tag->setContent($this->getText(), $this->content_type);
-			$span_tag->title = $this->getTitle();
-			$span_tag->class = 'swat-link-cell-renderer-insensitive';
-			if ($this->class !== null)
-				$span_tag->class.= ' '.$this->class;
+	// }}}
+	// {{{ protected function isSensitive()
 
-			$span_tag->display();
-		}
+	/**
+	 * Whether or not this link is sensitive
+	 *
+	 * Depends on the value of the sensitive property and whether or not a
+	 * link is set.
+	 *
+	 * @return boolean true if this link cell renderer is sensitive and false
+	 *                  if it is not.
+	 */
+	protected function isSensitive()
+	{
+		return ($this->sensitive && ($this->link !== null));
+	}
+
+	// }}}
+	// {{{ protected function renderSensitive()
+
+	/**
+	 * Renders this link as sensitive
+	 */
+	protected function renderSensitive()
+	{
+		$anchor_tag = new SwatHtmlTag('a');
+		$anchor_tag->setContent($this->getText(), $this->content_type);
+		$anchor_tag->href = $this->getLink();
+		$anchor_tag->title = $this->getTitle();
+		$anchor_tag->class = $this->getCSSClassString();
+		$anchor_tag->display();
+	}
+
+	// }}}
+	// {{{ protected function renderInsensitive()
+
+	/**
+	 * Renders this link as not sensitive
+	 */
+	protected function renderInsensitive()
+	{
+		$span_tag = new SwatHtmlTag('span');
+		$span_tag->setContent($this->getText(), $this->content_type);
+		$span_tag->title = $this->getTitle();
+		$span_tag->class = $this->getCSSClassString();
+		$span_tag->display();
 	}
 
 	// }}}
@@ -155,6 +177,24 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 			$link = sprintf($this->link, $this->link_value);
 
 		return $link;
+	}
+
+	// }}}
+	// {{{ public function getDataSpecificCSSClassNames()
+
+	/** 
+	 * Gets the data specific CSS class names for this cell renderer
+	 *
+	 * @return array the array of base CSS class names for this cell renderer.
+	 */
+	public function getDataSpecificCSSClassNames()
+	{
+		$classes = array();
+
+		if (!$this->isSensitive())
+			$classes[] = 'swat-link-cell-renderer-insensitive';
+
+		return $classes;
 	}
 
 	// }}}
