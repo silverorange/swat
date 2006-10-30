@@ -62,6 +62,55 @@ abstract class SwatOptionControl extends SwatInputControl
 	}
 
 	// }}}
+	// {{{ public function removeOption()
+
+	/**
+	 * Removes an option element
+	 *
+	 * @param SwatOption $option the option to remove.
+	 *
+	 * @return SwatOption the removed option or null if no option was removed.
+	 */
+	public function removeOption(SwatOption $option)
+	{
+		$removed_option = null;
+
+		foreach ($this->options as $key => $control_option) {
+			if ($control_option === $option) {
+				$removed_option = $control_option;
+				unset($this->options[$key]);
+			}
+		}
+
+		return $removed_option;
+	}
+
+	// }}}
+	// {{{ public function removeOptionsByValue()
+
+	/**
+	 * Removes an options elements by their value
+	 *
+	 * @param mixed $value the value of the option or options to remove.
+	 *
+	 * @return array an array of removed SwatOption objects or an empty array
+	 *                if no options are removed.
+	 */
+	public function removeOptionsByValue($value)
+	{
+		$removed_options = array();
+
+		foreach ($this->options as $key => $control_option) {
+			if ($control_option->value === $value) {
+				$removed_options[] = $control_option;
+				unset($this->options[$key]);
+			}
+		}
+
+		return $removed_options;
+	}
+
+	// }}}
 	// {{{ public function addOptionsByArray()
 
 	/**
