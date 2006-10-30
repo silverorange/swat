@@ -117,28 +117,36 @@ class SwatMessage extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function getCssClass()
+	// {{{ public function getCSSClass()
 
-	public function getCssClass()
+	/**
+	 * Gets the CSS class names of this message as a string
+	 *
+	 * @return string the CSS class names of this message.
+	 */
+	public function getCSSClass()
 	{
-		$class = 'swat-message';
+		$classes = array('swat-message');
 
 		switch ($this->type) {
-			case SwatMessage::NOTIFICATION :
-				$class.= ' swat-message-notification';
-				break;
-			case SwatMessage::WARNING :
-				$class.= ' swat-message-warning';
-				break;
-			case SwatMessage::ERROR :
-				$class.= ' swat-message-error';
-				break;
-			case SwatMessage::SYSTEM_ERROR :
-				$class.= ' swat-message-system-error';
-				break;
+		case SwatMessage::NOTIFICATION :
+			$classes[] = 'swat-message-notification';
+			break;
+		case SwatMessage::WARNING :
+			$classes[] = 'swat-message-warning';
+			break;
+		case SwatMessage::ERROR :
+			$classes[] = 'swat-message-error';
+			break;
+		case SwatMessage::SYSTEM_ERROR :
+			$classes[] = 'swat-message-system-error';
+			break;
 		}
 
-		return $class;
+		if ($this->secondary_content !== null)
+			$classes[] = 'swat-message-with-secondary';
+
+		return implode(' ', $classes);
 	}
 
 	// }}}
