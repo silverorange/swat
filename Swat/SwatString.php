@@ -600,6 +600,9 @@ class SwatString extends SwatObject
 		$value, $locale = null, $display_currency = false)
 	{
 		if ($locale !== null) {
+			if (strpos($locale, '.') === false)
+				$locale .= '.UTF-8';
+
 			$old_locale = setlocale(LC_ALL, 0);
 			setlocale(LC_ALL, $locale);
 		}
