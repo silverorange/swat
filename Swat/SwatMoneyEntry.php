@@ -172,8 +172,12 @@ class SwatMoneyEntry extends SwatEntry
 	 */
 	private function setLocale($locale)
 	{
-		if ($locale !== null)
+		if ($locale !== null) {
+			if (strpos($locale, '.') === false)
+				$locale .= '.UTF-8';
+
 			$locale = setlocale(LC_MONETARY, $locale);
+		}
 
 		return $locale;
 	}
