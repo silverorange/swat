@@ -1,5 +1,130 @@
+2006-10-30  gauthierm
+
+	* [r12428] swat/trunk/Swat/SwatReplicatorFieldset.php:
+	  update replicable fieldset so it doesn't extract itself from the
+	  widget tree.
+
+2006-10-30  nick
+
+	* [r12426] swat/trunk/Swat/SwatTextareaEditor.php:
+	  Added the style sheet to the Editor. For now, the css isn't in
+	  styles, because
+	  of the way it interacts with images and the fact that the Editor
+	  relies on
+	  various static html files.
+
+2006-10-30  gauthierm
+
+	* [r12419] swat/trunk/Swat/SwatOptionControl.php:
+	  add removeOption() and removeOptionsByValue() methods to
+	  SwatOptionControl.
+	* [r12406] swat/trunk/Swat/SwatLinkCellRenderer.php:
+	  - remove unused protected class property
+	  - use CSS class aggregating methods of SwatCellRenderer
+	  - make subclassing easier
+	* [r12405] swat/trunk/Swat/SwatMessage.php:
+	  tidy the getCSSClass() method in SwatMessage and include the
+	  secondary content class
+
+2006-10-29  gauthierm
+
+	* [r12403] swat/trunk/demo/include/DemoMenu.php,
+	  swat/trunk/demo/include/pages/DemoPage.php,
+	  swat/trunk/demo/include/pages/imagedisplay.xml:
+	  add image display demo
+	* [r12402] swat/trunk/demo/include/DemoMenu.php,
+	  swat/trunk/demo/include/pages/DemoPage.php,
+	  swat/trunk/demo/include/pages/replicable.xml:
+	  add replicable demos
+	* [r12396] swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  add class docblock
+	* [r12394]
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js:
+	  fix expandable checkbox tree javascript
+
+2006-10-28  gauthierm
+
+	* [r12393] swat/trunk/demo/include/DemoMenu.php,
+	  swat/trunk/demo/include/pages/DemoPage.php,
+	  swat/trunk/demo/include/pages/NavBar.php,
+	  swat/trunk/demo/include/pages/navbar.xml:
+	  added navbar demo
+	* [r12392] swat/trunk/demo/include/pages/DemoPage.php,
+	  swat/trunk/demo/include/pages/Flydown.php,
+	  swat/trunk/demo/include/pages/flydown.xml:
+	  add grouped flydown demo
+	* [r12391] swat/trunk/demo/include/pages/DemoPage.php,
+	  swat/trunk/demo/include/pages/RadioList.php,
+	  swat/trunk/demo/include/pages/radiolist.xml:
+	  add radio table demo
+	* [r12390] swat/trunk/demo/include/pages/DemoPage.php,
+	  swat/trunk/demo/include/pages/textarea.xml:
+	  add demo for XHTML validating textarea.
+	* [r12389] swat/trunk/Swat/SwatCascadeFlydown.php:
+	  Fix cascading flydown javascript. Fixes #161.
+	* [r12387] swat/trunk/Swat/SwatUI.php:
+	  deprecate the displayTidy() method.
+	* [r12386] swat/trunk/demo/include/layouts/xhtml/no-source.php:
+	  include documentation links even when source is not displayed
+	* [r12385] swat/trunk/demo/www/index.php:
+	  remove PEAR::Date from PackageConfig
+	* [r12384] swat/trunk/demo/include/pages/DemoPage.php:
+	  displayTidy() is officially broken
+	* [r12383] swat/trunk/demo/include/pages/DemoPage.php:
+	  documentation for input row
+	* [r12382] swat/trunk/demo/include/pages/TableViewInputRow.php,
+	  swat/trunk/demo/include/pages/tableviewinputrow.xml:
+	  demo for input row
+	* [r12381] swat/trunk/demo/include/pages/TableView.php:
+	  whitespace and fix folding
+	* [r12380] swat/trunk/demo/include/pages/tableview.xml:
+	  add ellipses
+	* [r12379] swat/trunk/demo/include/DemoMenu.php:
+	  add menu entry for input row demo
+	* [r12378] swat/trunk/demo/include/pages/DemoPage.php:
+	  add documentation links
+	* [r12377] swat/trunk/demo/include/pages/DetailsView.php,
+	  swat/trunk/demo/include/pages/detailsview.xml:
+	  add a vertical field to demo
+	* [r12376] swat/trunk/demo/include/pages/button.xml:
+	  fix confirmation button demo
+	* [r12375] swat/trunk/demo/include/DemoApplication.php:
+	  disable exception page
+
+2006-10-27  gauthierm
+
+	* [r12357] swat/trunk/demo/include/DemoApplication.php,
+	  swat/trunk/demo/include/pages/DemoPage.php:
+	  fix page loading
+	* [r12356] swat/trunk/demo/include/pages/Pagination.php,
+	  swat/trunk/demo/include/pages/pagination.xml:
+	  fix pagination demo
+	* [r12355] swat/trunk/demo/autoloader-rules.conf,
+	  swat/trunk/demo/include/DemoApplication.php,
+	  swat/trunk/demo/include/pages/FrontPage.php,
+	  swat/trunk/demo/www/index.php:
+	  fixes for swat demo application
+	* [r12354] swat/trunk/demo/include/layouts/xhtml/no-source.php,
+	  swat/trunk/demo/include/layouts/xhtml/no_source.php,
+	  swat/trunk/demo/include/pages/StringDemo.php:
+	  Fix string demo.
+	* [r12353] swat/trunk/demo/include/DemoDocumentationMenu.php:
+	  fix documentation links in demo
+	* [r12351] swat/trunk/Swat/SwatXHTMLTextarea.php:
+	  ignore some errors and further humanize
+	* [r12350] swat/trunk/Swat/SwatXHTMLTextarea.php:
+	  Humanize error messages
+
+2006-10-26  gauthierm
+
+	* [r12349] swat/trunk/Swat/SwatXHTMLTextarea.php:
+	  Add a textarea widget that validates its content against the
+	  XHTML strict DTD
+
 2006-10-25  nrf
 
+	* [r12315] swat/trunk/ChangeLog:
+	  prepare for release of 1.0.11
 	* [r12313] swat/trunk/ChangeLog, swat/trunk/package.php:
 	  prepare for release of 1.0.11
 
