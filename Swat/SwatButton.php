@@ -114,20 +114,20 @@ class SwatButton extends SwatControl
 		if (!$this->visible)
 			return;
 
-		$input_tag = new SwatHtmlTag('input');
-		$input_tag->type = 'submit';
-		$input_tag->name = $this->id;
-		$input_tag->id = $this->id;
-		$input_tag->value = $this->title;
-		$input_tag->class = $this->getCSSClassString();
-		$input_tag->tabindex = $this->tab_index;
-		$input_tag->accesskey = $this->access_key;
+		$button_tag = new SwatHtmlTag('button');
+		$button_tag->type = 'submit';
+		$button_tag->name = $this->id;
+		$button_tag->id = $this->id;
+		$button_tag->value = $this->id;
+		$button_tag->class = $this->getCSSClassString();
+		$button_tag->tabindex = $this->tab_index;
+		$button_tag->accesskey = $this->access_key;
 
 		if (!$this->isSensitive())
-			$input_tag->disabled = 'disabled';
+			$button_tag->disabled = 'disabled';
 
-
-		$input_tag->display();
+		$button_tag->setContent($this->title);
+		$button_tag->display();
 	}
 
 	// }}}
@@ -144,7 +144,7 @@ class SwatButton extends SwatControl
 	{
 		parent::process();
 
-		if (isset($_POST[$this->id])) {
+		if (isset($_POST[$this->id]) && $_POST[$this->id] == $this->id) {
 			$this->clicked = true;
 			$ancestor = $this->parent;
 
