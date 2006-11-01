@@ -213,8 +213,8 @@ fieldset.swat-form-field legend {
 
 /* Swat Buttons */
 
-.swat-header-form-field button.swat-primary,
-.swat-footer-form-field button.swat-primary {
+.swat-header-form-field input.swat-primary,
+.swat-footer-form-field input.swat-primary {
 	font-weight: bold;
 	color: #000;
 }
