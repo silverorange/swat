@@ -63,10 +63,12 @@ td.swat-calendar-control-flydowns {
 	white-space: nowrap;
 }
 
-.swat-calendar-header {
+th.swat-calendar-header {
 	width: 2em;
 	text-align: center;
 	font-weight: normal;
+	font-size: x-small;
+	padding: 2px;
 }
 
 .swat-calendar-cell {
@@ -104,10 +106,9 @@ td.swat-calendar-control-flydowns {
 	background: #eee;
 }
 
-.swat-calendar-close-controls {
+td.swat-calendar-close-controls {
 	text-align: center;
-	padding-top: 2px;
-	padding-bottom: 2px;
+	padding: 1px 0 3px 0;
 }
 
 .swat-calendar-close-controls a {
