@@ -114,20 +114,21 @@ class SwatButton extends SwatInputControl
 		if (!$this->visible)
 			return;
 
-		$button_tag = new SwatHtmlTag('button');
-		$button_tag->type = 'submit';
-		$button_tag->name = $this->id;
-		$button_tag->id = $this->id;
-		$button_tag->value = $this->id;
-		$button_tag->class = $this->getCSSClassString();
-		$button_tag->tabindex = $this->tab_index;
-		$button_tag->accesskey = $this->access_key;
+		// We don't use a button element because it is broken differently in
+		// IE6 and IE7
+		$input_tag = new SwatHtmlTag('input');
+		$input_tag->type = 'submit';
+		$input_tag->name = $this->id;
+		$input_tag->id = $this->id;
+		$input_tag->value = $this->title;
+		$input_tag->class = $this->getCSSClassString();
+		$input_tag->tabindex = $this->tab_index;
+		$input_tag->accesskey = $this->access_key;
 
 		if (!$this->isSensitive())
-			$button_tag->disabled = 'disabled';
+			$input_tag->disabled = 'disabled';
 
-		$button_tag->setContent($this->title);
-		$button_tag->display();
+		$input_tag->display();
 	}
 
 	// }}}
@@ -146,7 +147,7 @@ class SwatButton extends SwatInputControl
 
 		$data = &$this->getForm()->getFormData();
 
-		if (isset($data[$this->id]) && $data[$this->id] == $this->id) {
+		if (isset($data[$this->id])) {
 			$this->clicked = true;
 			$this->getForm()->button = $this;
 		}
