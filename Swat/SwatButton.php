@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
 
@@ -14,7 +14,7 @@ require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatButton extends SwatControl
+class SwatButton extends SwatInputControl
 {
 	// {{{ public properties
 
@@ -144,16 +144,11 @@ class SwatButton extends SwatControl
 	{
 		parent::process();
 
-		if (isset($_POST[$this->id]) && $_POST[$this->id] == $this->id) {
+		$data = &$this->getForm()->getFormData();
+
+		if (isset($data[$this->id]) && $data[$this->id] == $this->id) {
 			$this->clicked = true;
-			$ancestor = $this->parent;
-
-			while ($ancestor !== null) {
-				if ($ancestor instanceof SwatForm)
-					$ancestor->button = $this;
-
-				$ancestor = $ancestor->parent;
-			}
+			$this->getForm()->button = $this;
 		}
 	}
 
