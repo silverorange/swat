@@ -84,7 +84,7 @@ class SwatButton extends SwatInputControl
 	// {{{ public function __construct()
 
 	/**
-	 * Creates a new buton 
+	 * Creates a new button 
 	 *
 	 * @param string $id a non-visible unique id for this widget.
 	 *
