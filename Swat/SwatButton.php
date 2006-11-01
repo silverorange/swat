@@ -81,6 +81,23 @@ class SwatButton extends SwatInputControl
 	private $clicked = false;
 
 	// }}}
+	// {{{ public function __construct()
+
+	/**
+	 * Creates a new buton 
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->requires_id = true;
+	}
+
+	// }}}
 	// {{{ public function init()
 
 	/**
