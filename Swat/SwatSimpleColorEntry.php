@@ -139,7 +139,7 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 
 		$container_div_tag->close();
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -190,23 +190,20 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Displays simple color selector JavaScript
+	 * Gets simple color selector inline JavaScript
 	 *
 	 * The JavaScript is the majority of the simple color selector code
+	 *
+	 * @return string simple color selector inline JavaScript.
 	 */
-	private function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
 		$colors = "'".implode("', '", $this->colors)."'";
-
-		echo '<script type="text/javascript">'."\n";
-
-		echo "{$this->id}_obj = new SwatSimpleColorEntry(".
+		return "var {$this->id}_obj = new SwatSimpleColorEntry(".
 			"'{$this->id}', [{$colors}]);";
-
-		echo "\n</script>";
 	}
 
 	// }}}

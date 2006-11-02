@@ -720,7 +720,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		$table_tag->close();
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -1120,35 +1120,40 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ private function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Displays JavaScript required by this table-view as well as any
+	 * Gets inline JavaScript required by this table-view as well as any
 	 * JavaScript required by columns and/or rows.
 	 *
-	 * Column JavaSscript is displayed before extra row JavaScript.
+	 * Column JavaSscript is placed before extra row JavaScript.
+	 *
+	 * @return string inline JavaScript needed by this table-view.
 	 */
-	private function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
-		echo '<script type="text/javascript">';
-		echo "//<![CDATA[\n";
-
-		echo "var {$this->id} = new SwatTableView('{$this->id}');";
+		$javascript = sprintf("var %s = new SwatTableView('%s');",
+			$this->id, $this->id);
 
 		foreach ($this->columns as $column) {
-			$javascript = $column->getInlineJavaScript();
-			if (strlen($javascript) > 0)
-				echo "\n".$javascript;
+			$column_javascript = $column->getInlineJavaScript();
+			if (strlen($column_javascript) > 0)
+				$javascript.= "\n".$column_javascript;
+		}
+
+		foreach ($this->spanning_columns as $column) {
+			$column_javascript = $column->getInlineJavaScript();
+			if (strlen($column_javascript) > 0)
+				$javascript.= "\n".$column_javascript;
 		}
 
 		foreach ($this->extra_rows as $row) {
-			$javascript = $row->getInlineJavaScript();
-			if (strlen($javascript) > 0)
-				echo "\n".$javascript;
+			$row_javascript = $row->getInlineJavaScript();
+			if (strlen($row_javascript) > 0)
+				$javascript.= "\n".$row_javascript;
 		}
 
-		echo "\n//]]>";
-		echo '</script>';
+		return $javascript;
 	}
 
 	// }}}

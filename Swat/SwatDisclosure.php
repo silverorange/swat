@@ -116,24 +116,22 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$animate_div->close();
 		$container_div->close();
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavascript());
 
 		$control_div->close();
 	}
 
 	// }}}
-	// {{{ protected function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Outputs disclosure specific JavaScript
+	 * Gets disclosure specific inline JavaScript
+	 *
+	 * @return string disclosure specific inline JavaScript.
 	 */
-	protected function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
-		echo '<script type="text/javascript">';
-		echo "//<![CDATA[\n";
-		echo "var {$this->id}_obj = new SwatDisclosure('{$this->id}');\n";
-		echo "//]]>";
-		echo '</script>';
+		return "var {$this->id}_obj = new SwatDisclosure('{$this->id}');\n";
 	}
 
 	// }}}

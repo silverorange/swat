@@ -78,7 +78,7 @@ class SwatCascadeFlydown extends SwatFlydown
 			return;
 
 		parent::display();
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -123,25 +123,29 @@ class SwatCascadeFlydown extends SwatFlydown
 	}
 
 	// }}}
-	// {{{ private function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Displays the JavaScript that makes this control work
+	 * Gets the inline JavaScript that makes this control work
+	 *
+	 * @return string the inline JavaScript that makes this control work.
 	 */
-	private function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
-		echo '<script type="text/javascript">';
-		echo "//<![CDATA[\n";
-
-		printf("\n {$this->id}_cascade = new SwatCascade('%s', '%s'); ",
-			$this->cascade_from->id, $this->id);
+		$javascript = sprintf("var %s_cascade = new SwatCascade('%s', '%s');",
+			$this->id,
+			$this->cascade_from->id,
+			$this->id);
 
 		foreach($this->options as $parent => $options) {
 			$parent = serialize($parent);
 
 			if ($this->show_blank && count($options) > 1)
-				printf("\n {$this->id}_cascade.addChild('%s', '', '%s');",
-					$parent, Swat::_('choose one ...'));
+				$javascript.= sprintf(
+					"\n%s_cascade.addChild('%s', '', '%s');",
+					$this->id,
+					$parent,
+					Swat::_('choose one ...'));
 
 			foreach ($options as $option) {
 				$selected = ($option->value === $this->value) ?
@@ -153,13 +157,17 @@ class SwatCascadeFlydown extends SwatFlydown
 
 				$value = serialize($option->value);
 
-				printf("\n {$this->id}_cascade.addChild('%s', '%s', '%s', %s);",
-					$parent, $value, $title, $selected);
+				$javascript.= sprintf(
+					"\n%s_cascade.addChild('%s', '%s', '%s', %s);",
+					$this->id,
+					$parent,
+					$value,
+					$title,
+					$selected);
 			}
 		}
 
-		echo "\n//]]>";
-		echo '</script>';
+		return $javascript;
 	}
 
 	// }}}

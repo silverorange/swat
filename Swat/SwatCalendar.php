@@ -110,7 +110,7 @@ class SwatCalendar extends SwatControl
 
 		$container_div_tag->close();
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -130,21 +130,22 @@ class SwatCalendar extends SwatControl
 	}
 
 	// }}}
-	// {{{ private function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Displays calendar JavaScript
+	 * Gets inline calendar JavaScript
 	 *
-	 * The JavaScript is the majority of the calendar code
+	 * Inline JavaScript is the majority of the calendar code.
 	 */
-	private function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
 		static $shown = false;
 
 		if (!$shown) {
-			$this->displayJavaScriptTranslations();
-
+			$javascript = $this->getInlineJavaScriptTranslations();
 			$shown = true;
+		} else {
+			$javascript = '';
 		}
 
 		$swat_date_entry = (strlen($this->entry_id) != 0) ?
@@ -164,23 +165,27 @@ class SwatCalendar extends SwatControl
 			$end_date = '';
 		}
 
-		echo '<script type="text/javascript">'."\n";
+		$javascript.=
+			sprintf("var %s_obj = new SwatCalendar('%s', '%s', '%s', %s);",
+			$this->id,
+			$this->id,
+			$start_date,
+			$end_date,
+			$swat_date_entry);
 
-		echo "{$this->id}_obj = new SwatCalendar(".
-			"'{$this->id}', ".
-			"'{$start_date}', '{$end_date}', {$swat_date_entry});";
-
-		echo "\n</script>";
+		return $javascript;
 	}
 
 	// }}}
-	// {{{ private function displayJavaScriptTranslations()
+	// {{{ protected function getInlineJavaScriptTranslations()
 
 	/**
-	 * Displays translatable string resources for the JavaScript object for
+	 * Gets translatable string resources for the JavaScript object for
 	 * this widget
+	 *
+	 * @return string translatable JavaScript string resources for this widget.
 	 */
-	private function displayJavaScriptTranslations()
+	protected function getInlineJavaScriptTranslations()
 	{
 		/*
 		 * This date is arbitrary and is just used for getting week and
@@ -213,15 +218,14 @@ class SwatCalendar extends SwatControl
 		$nodate_text   = Swat::_('No Date');
 		$today_text    = Swat::_('Today');
 
-		echo '<script type="text/javascript">',
-			"SwatCalendar.week_names = {$week_names};\n",
-			"SwatCalendar.month_names = {$month_names};\n",
-			"SwatCalendar.prev_alt_text = '{$prev_alt_text}';\n",
-			"SwatCalendar.next_alt_text = '{$next_alt_text}';\n",
-			"SwatCalendar.close_text = '{$close_text}';\n",
-			"SwatCalendar.nodate_text = '{$nodate_text}';\n",
-			"SwatCalendar.today_text = '{$today_text}';\n",
-			'</script>';
+		return
+			"SwatCalendar.week_names = {$week_names};\n".
+			"SwatCalendar.month_names = {$month_names};\n".
+			"SwatCalendar.prev_alt_text = '{$prev_alt_text}';\n".
+			"SwatCalendar.next_alt_text = '{$next_alt_text}';\n".
+			"SwatCalendar.close_text = '{$close_text}';\n".
+			"SwatCalendar.nodate_text = '{$nodate_text}';\n".
+			"SwatCalendar.today_text = '{$today_text}';\n";
 	}
 
 	// }}}

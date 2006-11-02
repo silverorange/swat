@@ -156,7 +156,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
 		$div_tag->close();
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -202,26 +202,25 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	}
 
 	// }}}
-	// {{{ protected function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Displays the JavaScript for this checkbox entry list
+	 * Gets the inline JavaScript for this checkbox entry list
+	 *
+	 * @return string the inline JavaScript for this checkbox entry list.
 	 */
-	protected function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
-		echo '<script type="text/javascript">';
-		echo "//<![CDATA[\n";
-
-		printf("var %s_obj = new SwatCheckboxEntryList('%s');\n",
+		$javascript = sprintf(
+			"var %s_obj = new SwatCheckboxEntryList('%s');",
 			$this->id, $this->id);
 
 		// set check-all controller if it is visible
 		if (count($this->options) > 1)
-			printf("%s_obj.setController(%s_obj);\n",
+			$javascript.= sprintf("\n%s_obj.setController(%s_obj);",
 				$this->check_all->id, $this->id);
 
-		echo "\n//]]>";
-		echo '</script>';
+		return $javascript;
 	}
 
 	// }}}

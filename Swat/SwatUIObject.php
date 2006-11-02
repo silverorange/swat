@@ -282,6 +282,35 @@ abstract class SwatUIObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ protected function getInlineJavaScript()
+
+	/**
+	 * Gets inline JavaScript used by this user-interface object
+	 *
+	 * @return string inline JavaScript used by this user-interface object.
+	 */
+	protected function getInlineJavaScript()
+	{
+		return '';
+	}
+
+	// }}}
+	// {{{ protected function displayInlineJavaScript()
+
+	/**
+	 * Displays inline JavaScript properly encapsulating the script in a CDATA
+	 * section
+	 *
+	 * @param string $java_script the inline JavaScript to display.
+	 */
+	protected function displayInlineJavaScript($java_script)
+	{
+		echo '<script type="text/javascript">', "\n//<![CDATA[\n",
+			rtrim($java_script),
+			"\n//]]>\n</script>";
+	}
+
+	// }}}
 }
 
 ?>

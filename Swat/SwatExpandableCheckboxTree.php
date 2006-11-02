@@ -88,7 +88,42 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 
 		$div_tag->close();
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this expandable
+	 * checkbox tree 
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                expandable checkbox tree.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-expandable-checkbox-tree');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScript()
+
+	/**
+	 * Gets the inline JavaScript for this widget
+	 *
+	 * @return string the inline JavaScript for this widget
+	 */
+	protected function getInlineJavaScript()
+	{
+		$dependent_boxes = ($this->dependent_boxes) ? 'true' : 'false';
+		return sprintf(
+			"var %s_obj = new SwatExpandableCheckboxTree('%s', %s);\n",
+			$this->id,
+			$this->id,
+			$dependent_boxes);
 	}
 
 	// }}}
@@ -204,45 +239,6 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			$nodes++;
 
 		return $nodes;
-	}
-
-	// }}}
-	// {{{ protected function displayJavaScript()
-
-	/**
-	 * Displays the JavaScript for this check-all widget
-	 */
-	protected function displayJavaScript()
-	{
-		echo '<script type="text/javascript">';
-		echo "//<![CDATA[\n";
-
-		$dependent_boxes = ($this->dependent_boxes) ? 'true' : 'false';
-		
-		printf("var %s_obj = new SwatExpandableCheckboxTree('%s', %s);\n",
-			$this->id,
-			$this->id,
-			$dependent_boxes);
-		
-		echo "\n//]]>";
-		echo '</script>';
-	}
-
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
-	/**
-	 * Gets the array of CSS classes that are applied to this expandable
-	 * checkbox tree 
-	 *
-	 * @return array the array of CSS classes that are applied to this
-	 *                expandable checkbox tree.
-	 */
-	protected function getCSSClassNames()
-	{
-		$classes = array('swat-expandable-checkbox-tree');
-		$classes = array_merge($classes, $this->classes);
-		return $classes;
 	}
 
 	// }}}

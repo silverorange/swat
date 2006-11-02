@@ -200,7 +200,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		$div_tag->close();
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -350,6 +350,20 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
+	// {{{ protected function getInlineJavaScript()
+
+	/**
+	 * Gets the inline JavaScript required for this control
+	 *
+	 * @return string the inline JavaScript required for this control.
+	 */
+	protected function getInlineJavaScript()
+	{
+		return sprintf("var %s = new SwatTimeEntry('%s');\n",
+			$this->id, $this->id);
+	}
+
+	// }}}
 	// {{{ private function createFlydowns()
 
 	/**
@@ -487,21 +501,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	private function displayTime($time)
 	{
 		return $time->format('%r'); // TODO: %X
-	}
-
-	// }}}
-	// {{{ private function displayJavaScript()
-
-	/**
-	 * Outputs the JavaScript required for this control
-	 */
-	private function displayJavaScript()
-	{
-		echo '<script type="text/javascript">';
-
-		printf("var %s = new SwatTimeEntry('%s');\n", $this->id, $this->id);
-
-		echo '</script>';
 	}
 
 	// }}}

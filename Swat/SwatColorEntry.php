@@ -105,7 +105,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 
 		$div_tag->close();
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -176,21 +176,20 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ public function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Includes the JavaScript required for this control to function
+	 * Gets the inline JavaScript required for this control to function
 	 *
-	 * This creates an instance of the JavaScript object SwatColorEntry with
-	 * the name $this->id.'_obj'.
+	 * The inline JavaScript creates an instance of the JavaScript object
+	 * SwatColorEntry with the name $this->id.'_obj'.
+	 *
+	 * @return string the inline JavaScript required for this control to
+	 *                 function.
 	 */
-	private function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
-		echo '<script type="text/javascript">';
-		echo "//<![CDATA[\n";
-		echo "var {$this->id}_obj = new SwatColorEntry('{$this->id}');";
-		echo "\n//]]>";
-		echo '</script>';
+		return "var {$this->id}_obj = new SwatColorEntry('{$this->id}');";
 	}
 
 	// }}}

@@ -74,7 +74,7 @@ class SwatCheckAll extends SwatCheckbox
 
 		$div_tag->close();
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -94,21 +94,18 @@ class SwatCheckAll extends SwatCheckbox
 	}
 
 	// }}}
-	// {{{ private function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Displays the JavaScript for this check-all widget
+	 * Gets the inline JavaScript for this check-all widget
+	 *
+	 * @return string the inline JavaScript for this check-all widget.
 	 */
-	private function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
-		echo '<script type="text/javascript">';
-		echo "//<![CDATA[\n";
-
-		printf("var %s_obj = new SwatCheckAll('%s');\n",
+		return sprintf("var %s_obj = new SwatCheckAll('%s');",
 			$this->id, $this->id);
 
-		echo "\n//]]>";
-		echo '</script>';
 	}
 
 	// }}}

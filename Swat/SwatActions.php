@@ -196,7 +196,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 
 		$div_tag->close();
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -343,12 +343,15 @@ class SwatActions extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ protected function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/** 
-	 * Displays JavaScript required to show and hide selected action items
+	 * Gets inline JavaScript required to show and hide selected action items
+	 *
+	 * @return string inline JavaScript required to show and hide selected
+	 *                 action items.
 	 */
-	protected function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
 		$values = array();
 		if ($this->show_blank)
@@ -360,12 +363,11 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$selected_value = ($this->selected === null) ?
 			'null' : "'".$this->selected->id."'";
 
-		echo '<script type="text/javascript">';
-
-		printf("var %s = new SwatActions('%s', [%s], %s);\n", $this->id,
-			$this->id, implode(', ', $values), $selected_value);
-
-		echo '</script>';
+		return sprintf("var %s = new SwatActions('%s', [%s], %s);\n",
+			$this->id,
+			$this->id,
+			implode(', ', $values),
+			$selected_value);
 	}
 
 	// }}}
