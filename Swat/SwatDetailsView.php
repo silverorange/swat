@@ -42,7 +42,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	private $fields = array();
 
 	// }}}
-
 	// {{{ public function __construct()
 	/**
 	 * Creates a new details view
