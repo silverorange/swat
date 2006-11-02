@@ -189,7 +189,7 @@ class SwatForm extends SwatDisplayableContainer
 		$this->displayHiddenFields();
 		$form_tag->close();
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -460,18 +460,18 @@ class SwatForm extends SwatDisplayableContainer
 	}
 
 	// }}}
-	// {{{ private function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Displays JavaScript required for this form
+	 * Gets inline JavaScript required for this form
 	 *
 	 * Right now, this JavaScript focuses the first SwatControl in the form.
+	 *
+	 * @return string inline JavaScript required for this form.
 	 */
-	private function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
-		echo '<script type="text/javascript">'."\n";
-
-		echo "var {$this->id}_obj = new SwatForm('{$this->id}');\n";
+		$javascript = "var {$this->id}_obj = new SwatForm('{$this->id}');";
 
 		if ($this->autofocus) {
 			$focusable = true;
@@ -489,10 +489,11 @@ class SwatForm extends SwatDisplayableContainer
 			}
 
 			if ($focusable)
-				echo "{$this->id}_obj.setDefaultFocus('{$focus_id}');\n";
+				$javascript.=
+					"\n{$this->id}_obj.setDefaultFocus('{$focus_id}');";
 		}
 
-		echo '</script>';
+		return $javascript;
 	}
 
 	// }}}

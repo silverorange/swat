@@ -80,7 +80,7 @@ class SwatTextareaEditor extends SwatTextarea
 		if (!$this->visible)
 			return;
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -102,42 +102,65 @@ class SwatTextareaEditor extends SwatTextarea
 	}
 
 	// }}}
-	// {{{ public function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
-	private function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
-		$value = $this->rteSafe($this->value);
+		static $shown = false;
 
+		if (!$shown) {
+			$javascript = $this->getInlineJavaScriptTranslations();
+			$shown = true;
+		} else {
+			$javascript = '';
+		}
+
+		$value = $this->rteSafe($this->value);
 		$basehref = ($this->basehref === null) ? 'null' : $this->basehref;
 
-		echo '<script type="text/javascript">';
-		echo "//<![CDATA[\n";
+		$javascript.=
+			"initRTE('swat/images/textarea-editor/', 'swat/', '', false);";
 
-		$this->displayJavaScriptTranslations();
+		$javascript.= sprintf("\nwriteRichText('%s', '%s', '%s', '%s', '%s');",
+			$this->id,
+			$value,
+			$this->width,
+			$this->height,
+			$basehref);
 
-		echo 'initRTE("swat/images/textarea-editor/", "swat/", "", false);';
-		echo "writeRichText('{$this->id}', '{$value}', '{$this->width}', ".
-			"'{$this->height}', '{$basehref}');\n";
-
-		echo "\n//]]>";
-		echo '</script>';
+		return $javascript;
 	}
 
 	// }}}
-	// {{{ public function displayJavaScriptTranslations()
+	// {{{ protected function getInlineJavaScriptTranslations()
 
-	private function displayJavaScriptTranslations()
+	protected function getInlineJavaScriptTranslations()
 	{
-		echo " var rteT = new Array();";
+		$javascript = 'var rteT = {';
 
-		foreach($this->translations() as $k => $word)
-			echo "\n rteT['{$k}'] = '".str_replace("'", "\'", $word)."';";
+		$translations = $this->getTranslations();
+		$count = 0;
+		$num_translations = count($translations);
+		foreach ($translations as $key => $word) {
+			$count++;
+			if ($count == $num_translations) {
+				$javascript.= sprintf("\n\t%s: '%s'",
+					$key, str_replace("'", "\\'", $word));
+			} else {
+				$javascript.= sprintf("\n\t%s: '%s',",
+					$key, str_replace("'", "\\'", $word));
+			}
+		}
+
+		$javascript.= "\n};\n";
+
+		return $javascript;
 	}
 
 	// }}}
-	// {{{ private function translations()
+	// {{{ private function getTranslations()
 
-	private function translations()
+	private function getTranslations()
 	{
 		return array(
 			'bold' => Swat::_('Bold'),

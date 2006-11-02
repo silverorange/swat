@@ -183,7 +183,7 @@ class SwatCheckboxList extends SwatInputControl implements SwatState
 
 		$div_tag->close();
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -241,26 +241,24 @@ class SwatCheckboxList extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ protected function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Displays the JavaScript for this checkbox list
+	 * Gets the inline JavaScript for this checkbox list
+	 *
+	 * @return string the inline JavaScript for this checkbox list.
 	 */
-	protected function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
-		echo '<script type="text/javascript">';
-		echo "//<![CDATA[\n";
-
-		printf("var %s_obj = new SwatCheckboxList('%s');\n",
+		$javascript = sprintf("var %s_obj = new SwatCheckboxList('%s');",
 			$this->id, $this->id);
 
 		// set check-all controller if it is visible
 		if ($this->check_all->visible)
-			printf("%s_obj.setController(%s_obj);\n",
+			$javascript.= sprintf("\n%s_obj.setController(%s_obj);",
 				$this->check_all->id, $this->id);
 
-		echo "\n//]]>";
-		echo '</script>';
+		return $javascript;
 	}
 
 	// }}}

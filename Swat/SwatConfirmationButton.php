@@ -60,29 +60,30 @@ class SwatConfirmationButton extends SwatButton
 	public function display()
 	{
 		parent::display();
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
-	// {{{ private function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Outputs the JavaScript required for this control
+	 * Gets the inline JavaScript required for this control
+	 *
+	 * @return stirng the inline JavaScript required for this control.
 	 */
-	private function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
-		echo '<script type="text/javascript">', "\n//<![CDATA[\n";
-
-		printf("%s = new SwatConfirmationButton('%s');\n",
+		$javascript = sprintf("var %s = new SwatConfirmationButton('%s');",
 			$this->id, $this->id);
 
 		$message = str_replace("'", "\'", $this->confirmation_message);
 		$message = str_replace("\n", '\n', $message);
 		$message = str_ireplace('</script>', "</script' + '>", $message);
 
-		printf("%s.setMessage('%s');\n", $this->id, $message);
+		$javascript.= sprintf("\n%s.setMessage('%s');\n",
+			$this->id, $message);
 
-		echo "//]]>\n", '</script>';
+		return $javascript;
 	}
 
 	// }}}

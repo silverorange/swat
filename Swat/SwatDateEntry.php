@@ -303,7 +303,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		// calendar JavaScript is displayed last as it looks for a js object
 		// created here.
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 
 		if ($this->display_parts & self::CALENDAR) {
 			$this->calendar->display();
@@ -466,6 +466,26 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			$set->addEntrySet($this->calendar->getHtmlHeadEntrySet());
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScript()
+
+	/**
+	 * Gets the inline JavaScript required for this control
+	 *
+	 * @return string the inline JavaScript required for this control.
+	 */
+	protected function getInlineJavaScript()
+	{
+		$javascript = sprintf("var %s = new SwatDateEntry('%s');",
+			$this->id, $this->id);
+
+		if ($this->display_parts & self::TIME)
+			$javascript.= sprintf("\n%s.setSwatTime(%s_time_entry);",
+				$this->id, $this->id);
+
+		return $javascript;
 	}
 
 	// }}}
@@ -744,24 +764,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			$year = ' %Y';
 
 		return trim($date->format($month.$day.$year.$time));
-	}
-
-	// }}}
-	// {{{ private function displayJavaScript()
-
-	/**
-	 * Outputs the JavaScript required for this control
-	 */
-	private function displayJavaScript()
-	{
-		echo '<script type="text/javascript">';
-
-		printf("var %s = new SwatDateEntry('%s');\n", $this->id, $this->id);
-
-		if ($this->display_parts & self::TIME)
-			printf("%s.setSwatTime(%s_time_entry);\n", $this->id, $this->id);
-
-		echo '</script>';
 	}
 
 	// }}}

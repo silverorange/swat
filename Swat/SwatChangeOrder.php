@@ -128,7 +128,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
 		$div_tag->close();
 
-		$this->displayJavaScript();
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -183,20 +183,20 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
-	private function displayJavaScript()
+	/**
+	 * Gets the inline JavaScript required by this change-order control
+	 *
+	 * @return string the inline JavaScript required by this change-order
+	 *                 control.
+	 */
+	protected function getInlineJavaScript()
 	{
-		echo '<script type="text/javascript">';
-		echo "//<![CDATA[\n";
-
-		printf("%s_obj = new SwatChangeOrder('%s', %s);\n",
+		return sprintf("var %s_obj = new SwatChangeOrder('%s', %s);",
 			$this->id,
 			$this->id,
 			$this->isSensitive() ? 'true' : 'false');
-
-		echo "\n//]]>";
-		echo '</script>';
 	}
 
 	// }}}
