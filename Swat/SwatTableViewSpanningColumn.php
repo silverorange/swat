@@ -22,36 +22,6 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 	public $offset = 0;
 
 	// }}}
-	// {{{ protected function displayRenderers()
-	
-	/**
-	 * Renders each cell renderer in this column inside a wrapping XHTML
-	 * element
-	 *
-	 * @param mixed $data the data object being used to render the cell
-	 *                     renderers of this field.
-	 *
-	 * @throws SwatException
-	 */
-	protected function displayRenderers($row)
-	{
-		if ($this->offset > 0) {
-			$td_tag = new SwatHtmlTag('td');
-			$td_tag->colspan = $this->offset;
-			$td_tag->setContent('&nbsp;', 'text/xml');
-			$td_tag->display();
-		}
-
-		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
-		$td_tag->colspan =
-			$this->view->getVisibleColumnCount() - $this->offset;
-
-		$td_tag->open();
-		$this->displayRenderersInternal($row);
-		$td_tag->close();
-	}
-
-	// }}}
 	// {{{ public function hasVisibleRenderer()
 
 	/**
@@ -79,6 +49,36 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 		}
 
 		return $visible_renderers;
+	}
+
+	// }}}
+	// {{{ protected function displayRenderers()
+	
+	/**
+	 * Renders each cell renderer in this column inside a wrapping XHTML
+	 * element
+	 *
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
+	 *
+	 * @throws SwatException
+	 */
+	protected function displayRenderers($row)
+	{
+		if ($this->offset > 0) {
+			$td_tag = new SwatHtmlTag('td');
+			$td_tag->colspan = $this->offset;
+			$td_tag->setContent('&nbsp;', 'text/xml');
+			$td_tag->display();
+		}
+
+		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
+		$td_tag->colspan =
+			$this->view->getVisibleColumnCount() - $this->offset;
+
+		$td_tag->open();
+		$this->displayRenderersInternal($row);
+		$td_tag->close();
 	}
 
 	// }}}
