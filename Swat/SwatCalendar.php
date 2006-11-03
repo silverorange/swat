@@ -86,27 +86,7 @@ class SwatCalendar extends SwatControl
 		$container_div_tag->class = $this->getCSSClassString();
 		$container_div_tag->open();
 
-		$anchor_tag = new SwatHtmlTag('a');
-		$anchor_tag->href = "javascript:{$this->id}_obj.toggle();";
-		$anchor_tag->title = Swat::_('toggle calendar');
-		$anchor_tag->open();
-
-		$img_tag = new SwatHtmlTag('img');
-		$img_tag->src = 'packages/swat/images/calendar.png';
-		$img_tag->alt = Swat::_('calendar toggle graphic');
-		$img_tag->class = 'swat-calendar-icon';
-		$img_tag->id = $this->id.'_toggle';
-		$img_tag->display();
-
-		$anchor_tag->close();
-
-		echo '<br />';
-
-		$div_tag = new SwatHtmlTag('div');
-		$div_tag->id = $this->id.'_div';
-		$div_tag->class = 'swat-calendar-div-hide';
-		$div_tag->setContent('&nbsp;');
-		$div_tag->display();
+		// content is displayed with JavaScript
 
 		$container_div_tag->close();
 
@@ -212,11 +192,15 @@ class SwatCalendar extends SwatControl
 		}
 		$month_names = "['".implode("', '", $month_names)."']";
 
-		$prev_alt_text = Swat::_('Previous Month');
-		$next_alt_text = Swat::_('Next Month');
-		$close_text    = Swat::_('Close');
-		$nodate_text   = Swat::_('No Date');
-		$today_text    = Swat::_('Today');
+		$prev_alt_text     = Swat::_('Previous Month');
+		$next_alt_text     = Swat::_('Next Month');
+		$close_text        = Swat::_('Close');
+		$nodate_text       = Swat::_('No Date');
+		$today_text        = Swat::_('Today');
+
+		$open_toggle_text  = Swat::_('open calendar');
+		$close_toggle_text = Swat::_('close calendar');
+		$toggle_alt_text   = Swat::_('toggle calendar graphic');
 
 		return
 			"SwatCalendar.week_names = {$week_names};\n".
@@ -225,7 +209,10 @@ class SwatCalendar extends SwatControl
 			"SwatCalendar.next_alt_text = '{$next_alt_text}';\n".
 			"SwatCalendar.close_text = '{$close_text}';\n".
 			"SwatCalendar.nodate_text = '{$nodate_text}';\n".
-			"SwatCalendar.today_text = '{$today_text}';\n";
+			"SwatCalendar.today_text = '{$today_text}';\n".
+			"SwatCalendar.open_toggle_text = '{$open_toggle_text}';\n".
+			"SwatCalendar.close_toggle_text = '{$close_toggle_text}';\n".
+			"SwatCalendar.toggle_alt_text = '{$toggle_alt_text}';\n";
 	}
 
 	// }}}
