@@ -53,7 +53,27 @@ function SwatCalendar(id, start_date, end_date, swat_date_entry)
 		this.date = null;
 	}
 
+	this.drawButton();
+
 	this.open = false;
+}
+
+/**
+ * Displays the toggle button for this calendar control
+ */
+SwatCalendar.prototype.drawButton = function()
+{
+	var container = document.getElementById(this.id);
+	container.innerHTML =
+		'<a href="javascript:' + this.id + '_obj.toggle();" ' +
+		'title="' + SwatCalendar.open_text + '">' +
+		'<img src="packages/swat/images/calendar.png" ' +
+		'alt="' + SwatCalendar.toggle_alt_text + '" ' +
+		'class="swat-calendar-icon" id="' + this.id + '_toggle" />' +
+		'</a><br />' +
+		'<div id="' + this.id + '_div" class="swat-calendar-div-hide">' +
+		'&nbsp;' +
+		'</div>';
 }
 
 /**
@@ -107,6 +127,10 @@ SwatCalendar.next_alt_text = 'Next Month';
 SwatCalendar.close_text = 'Close';
 SwatCalendar.nodate_text = 'No Date';
 SwatCalendar.today_text = 'Today';
+
+SwatCalendar.open_toggle_text = 'open calendar';
+SwatCalendar.close_toggle_text = 'close calendar';
+SwatCalendar.toggle_alt_text = 'calendar toggle graphic';
 
 /**
  * Sets the values of an associated SwatDateEntry widget to the values
@@ -324,10 +348,18 @@ SwatCalendar.prototype.toggle = function()
 {
 	if (this.open) {
 		this.close();
+
+		document.getElementById(this.id + '_toggle').setAttribute(
+			'title', SwatCalendar.open_toggle_text);
+
 		calendar_div = document.getElementById(this.id + '_div');
 		SwatZIndexManager.lowerElement(calendar_div);
 	} else {
 		this.draw();
+
+		document.getElementById(this.id + '_toggle').setAttribute(
+			'title', SwatCalendar.close_toggle_text);
+
 		calendar_div = document.getElementById(this.id + '_div');
 		SwatZIndexManager.raiseElement(calendar_div);
 	}
@@ -532,7 +564,7 @@ SwatCalendar.prototype.draw = function()
 		} else {
 			cell_current = (dd == i) ? 'id="' + this.id + '_current_cell" ' : '';
 		}
-		onclick_action = this.id + '_obj.setDate(this, '+ yyyy + ',' + mm + ',' + i + ');';
+		onclick_action = this.id + '_obj.closeAndSetDate(' + yyyy + ',' + mm + ',' + i + ');';
 		if (calendar_start && i < start_date.getDate()) {
 			cell_class = 'swat-calendar-invalid-cell';
 			onclick_action = 'return false;';
