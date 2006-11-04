@@ -159,8 +159,8 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$close_text = Swat::_('close');
 
 		return
-			"SwatDisclosure.open_text = {$open_text};\n".
-			"SwatDisclosure.close_text = {$close_text};\n";
+			"SwatDisclosure.open_text = '{$open_text}';\n".
+			"SwatDisclosure.close_text = '{$close_text}';\n";
 	}
 
 	// }}}
