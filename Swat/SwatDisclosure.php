@@ -62,6 +62,9 @@ class SwatDisclosure extends SwatDisplayableContainer
 	 *
 	 * Creates appropriate divs and outputs closed or opened based on the
 	 * initial state.
+	 *
+	 * The disclosure is always displayed as opened in case the user has
+	 * JavaScript turned off.
 	 */
 	public function display()
 	{
@@ -79,19 +82,13 @@ class SwatDisclosure extends SwatDisplayableContainer
 
 		$input = new SwatHtmlTag('input');
 		$input->type = 'hidden';
-		$input->value = ($this->open) ? 'opened' : 'closed';
+		// initial value is blank, value is set by JavaScript
+		$input->value = '';
 		$input->id = $this->id.'_input';
 
 		$img = new SwatHtmlTag('img');
-
-		if ($this->open) {
-			$img->src = 'packages/swat/images/swat-disclosure-open.png';
-			$img->alt = Swat::_('close');
-		} else {
-			$img->src = 'packages/swat/images/swat-disclosure-closed.png';
-			$img->alt = Swat::_('open');
-		}
-
+		$img->src = 'packages/swat/images/swat-disclosure-open.png';
+		$img->alt = Swat::_('close');
 		$img->width = 16;
 		$img->height = 16;
 		$img->id = $this->id.'_img';
@@ -131,7 +128,39 @@ class SwatDisclosure extends SwatDisplayableContainer
 	 */
 	protected function getInlineJavaScript()
 	{
-		return "var {$this->id}_obj = new SwatDisclosure('{$this->id}');\n";
+		static $shown = false;
+
+		if (!$shown) {
+			$javascript = $this->getInlineJavaScriptTranslations();
+			$shown = true;
+		} else {
+			$javascript = '';
+		}
+
+		$open = ($this->open) ? 'true' : 'false';
+		$javascript.= sprintf("var %s_obj = new SwatDisclosure('%s', %s);",
+			$this->id, $this->id, $open);
+
+		return $javascript;
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScriptTranslations()
+
+	/**
+	 * Gets translatable string resources for the JavaScript object for
+	 * this widget
+	 *
+	 * @return string translatable JavaScript string resources for this widget.
+	 */
+	protected function getInlineJavaScriptTranslations()
+	{
+		$open_text  = Swat::_('open');
+		$close_text = Swat::_('close');
+
+		return
+			"SwatDisclosure.open_text = {$open_text};\n".
+			"SwatDisclosure.close_text = {$close_text};\n";
 	}
 
 	// }}}
@@ -146,12 +175,7 @@ class SwatDisclosure extends SwatDisplayableContainer
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-disclosure');
-
-		if ($this->open)
-			$classes[] = 'swat-disclosure-control-opened';
-		else
-			$classes[] = 'swat-disclosure-control-closed';
-
+		$classes[] = 'swat-disclosure-control-opened';
 		$classes = array_merge($classes, $this->classes);
 		return $classes;
 	}
