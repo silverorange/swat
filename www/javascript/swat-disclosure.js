@@ -1,4 +1,4 @@
-function SwatDisclosure(id)
+function SwatDisclosure(id, open)
 {
 	this.image = document.getElementById(id + '_img');
 	this.input = document.getElementById(id + '_input');
@@ -9,10 +9,20 @@ function SwatDisclosure(id)
 	this.semaphore = false;
 
 	// get initial state
-	if (this.input.value == 'opened') {
-		this.open();
+	if (this.input.value.length) {
+		// remembered state from post values
+		if (this.input.value == 'opened') {
+			this.open();
+		} else {
+			this.close();
+		}
 	} else {
-		this.close();
+		// initial display
+		if (open) {
+			this.open();
+		} else {
+			this.close();
+		}
 	}
 }
 
