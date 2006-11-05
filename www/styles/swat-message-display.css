@@ -40,7 +40,8 @@
 	margin-top: 0;
 }
 
-.swat-message-display-dismiss-link:link {
+.swat-message-display-dismiss-link:link,
+.swat-message-display-dismiss-link:visited {
 	float: right;
 	display: block;
 	font-size: 85%;
