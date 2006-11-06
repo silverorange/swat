@@ -708,7 +708,8 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		$table_tag->open();
 
-		$this->displayHeader();
+		if ($this->hasHeader())
+			$this->displayHeader();
 
 		if ($this->use_invalid_tfoot_ordering) {
 			$this->displayBody();
@@ -871,6 +872,28 @@ class SwatTableView extends SwatControl implements SwatUIParent
 			$set->addEntrySet($group->getHtmlHeadEntrySet());
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ protected function hasHeader()
+
+	/**
+	 * Whether this table has a header to display
+	 *
+	 * Each column is asked whether is has a header to display.
+	 */
+	protected function hasHeader()
+	{
+		$has_header = false;
+
+		foreach ($this->columns as $column) {
+			if ($column->hasHeader()) {
+				$has_header = true;
+				break;
+			}
+		}
+
+		return $has_header;
 	}
 
 	// }}}

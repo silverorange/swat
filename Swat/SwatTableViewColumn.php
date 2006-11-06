@@ -146,6 +146,17 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	}
 
 	// }}}
+	// {{{ public function hasHeader()
+
+	/**
+	 * Whether this column has a header to display
+	 */
+	public function hasHeader()
+	{
+		return ($this->visible && (strlen($this->title) > 0));
+	}
+
+	// }}}
 	// {{{ public function displayHeaderCell()
 
 	/**
