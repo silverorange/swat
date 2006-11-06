@@ -395,7 +395,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 
 		throw new SwatDBException(sprintf("A property named '%s' does not ".
 			'exist on the %s data-object. If the property corresponds '.
-			'directly to a database field it should be added as a private '.
+			'directly to a database field it should be added as a public '.
 			'property of this data object. If the property should access a '.
 			'sub-data-object, either specify a class when registering the '.
 			"internal property named '%s' or define a custom loader method ".
@@ -421,7 +421,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 			throw new SwatDBException(
 				"A property named '$key' does not exist on this ".
 				'dataobject.  If the property corresponds directly to '.
-				'a database field it should be added as a private property '.
+				'a database field it should be added as a public property '.
 				'of this data object.  If the property should access a '.
 				'sub-dataobject, specify a class when registering the '.
 				"internal field named '$key'.");
