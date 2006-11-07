@@ -21,7 +21,7 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 *
 	 * @var string
 	 */
-	public $value = '';
+	public $value = null;
 
 	/**
 	 * Rows
