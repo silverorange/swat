@@ -151,12 +151,27 @@ class SwatDBDataObject extends SwatObject implements Serializable
 		$db = $this->db;
 		$this->db = null;
 
-		//$string = parent::__toString();
+		$modified_properties = $this->getModifiedProperties();
+
 		ob_start();
 		printf('<h3>%s</h3>', get_class($this));
 		echo $this->isModified() ? '(modified)' : '(not modified)', '<br />';
 		foreach ($this->getProperties() as $name => $value) {
-			printf("%s = %s<br />\n", $name, $value);
+			if (isset($this->sub_data_objects[$name]))
+				$value = $this->sub_data_objects[$name];
+
+			$modified = isset($modified_properties[$name]);
+
+			if (is_object($value)) {
+				$modified = $value->isModified();
+				$value = get_class($value);
+			}
+
+			if ($value === null)
+				$value = '<null>';
+
+			printf("%s = %s%s<br />\n",
+				$name, $value, $modified ? ' (modified)' : '');
 		}
 		/*
 		$reflector = new ReflectionClass(get_class($this));
