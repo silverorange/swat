@@ -616,13 +616,32 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	 */
 	protected function saveInternal()
 	{
-		if ($this->table === null || $this->id_field === null)
+		if ($this->table === null) {
+			trigger_error(
+				sprintf('No table defined for %s', get_class($this)),
+				E_USER_NOTICE);
+
 			return;
+		}
+
+		if ($this->id_field === null) {
+			trigger_error(
+				sprintf('No id_field defined for %s', get_class($this)),
+				E_USER_NOTICE);
+
+			return;
+		}
 
 		$id_field = new SwatDBField($this->id_field, 'integer');
 
-		if (!property_exists($this, $id_field->name))
+		if (!property_exists($this, $id_field->name)) {
+			trigger_error(
+				sprintf("The id_field '%s' is not defined for %s",
+					$id_field->name, get_class($this)),
+				E_USER_NOTICE);
+
 			return;
+		}
 
 		$modified_properties = $this->getModifiedProperties();
 
