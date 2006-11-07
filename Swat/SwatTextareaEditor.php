@@ -69,7 +69,8 @@ class SwatTextareaEditor extends SwatTextarea
 	{
 		parent::process();
 
-		$this->value = str_replace("\n", "", $this->value);
+		if ($this->value !== null)
+			$this->value = str_replace("\n", '', $this->value);
 	}
 
 	// }}}
