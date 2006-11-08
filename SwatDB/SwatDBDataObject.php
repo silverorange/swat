@@ -244,7 +244,8 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	// }}}
 	// {{{ protected function registerInternalProperty()
 
-	protected function registerInternalProperty($name, $class = null, $autosave = false)
+	protected function registerInternalProperty($name, $class = null,
+		$autosave = false)
 	{
 		$this->internal_properties[$name] = null;
 		$this->internal_property_autosave[$name] = $autosave;
@@ -523,7 +524,8 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	 *
 	 * Only modified properties are updated.
 	 */
-	public function save() {
+	public function save()
+	{
 		$this->checkDB();
 
 		$transaction = new SwatDBTransaction($this->db);
@@ -560,7 +562,8 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	/**
 	 * Deletes this object from the database
 	 */
-	public function delete() {
+	public function delete()
+	{
 		$this->checkDB();
 		$this->deleteInternal();
 	}
@@ -680,7 +683,8 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	/**
 	 * Deletes this object from the database
 	 */
-	protected function deleteInternal() {
+	protected function deleteInternal()
+	{
 		if ($this->table === null || $this->id_field === null)
 			return;
 
