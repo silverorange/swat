@@ -125,7 +125,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	{
 		parent::process();
 
-		$this->processValue();
+		if (!$this->processValue())
+			return;
 
 		if ($this->required && $this->value === null) {
 			$msg = Swat::_('The %s field is required.');
@@ -217,15 +218,19 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
 	/**
 	 * Processes the value of this flydown from user-submitted form data
+	 *
+	 * @return boolean true if the value was processed from form data
 	 */
 	protected function processValue()
 	{
 		$data = &$this->getForm()->getFormData();
 
 		if (!isset($data[$this->id]))
-			return;
+			return false;
 
 		$this->value = unserialize($data[$this->id]);
+
+		return true;
 	}
 
 	// }}}
