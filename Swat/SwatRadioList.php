@@ -92,34 +92,26 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	}
 
 	// }}}
-	// {{{ public function process()
-
-	/**
-	 * Figures out what option was selected
-	 */
-	public function process()
-	{
-		// do not process this radio list if it was not submitted
-		if ($this->getForm()->getHiddenField($this->id.'_submitted') === null)
-			return;
-
-		parent::process();
-	}
-
-	// }}}
 	// {{{ protected function processValue()
 
 	/**
 	 * Processes the value of this radio list from user-submitted form data
+	 *
+	 * @return boolean true if the value was processed from form data
 	 */
 	protected function processValue()
 	{
+		if ($this->getForm()->getHiddenField($this->id.'_submitted') === null)
+			return false;
+
 		$data = &$this->getForm()->getFormData();
 
 		if (isset($data[$this->id]))
 			$this->value = unserialize($data[$this->id]);
 		else
 			$this->value = null;
+
+		return true;
 	}
 
 	// }}}
