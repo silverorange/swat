@@ -525,7 +525,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 					$li_tag->setContent($message->primary_content,
 						$message->content_type);
 
-					$li_tag->class = $message->getCssClass();
+					$li_tag->class = $message->getCSSClassString();
 					$li_tag->display();
 				}
 
