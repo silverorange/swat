@@ -11,7 +11,7 @@
 			</widget>
 
 			<widget class="SwatFormField">
-				<property name="title">XHTML Validting Text Area</property>
+				<property name="title">XHTML Validating Text Area</property>
 				<widget class="SwatXHTMLTextarea" id="textarea_xhtml" />
 			</widget>
 
