@@ -114,11 +114,7 @@ class SwatMessageDisplay extends SwatControl
 
 		foreach ($this->_messages as $key => $message) {
 			$li_tag->id = $this->id.'_'.$key;
-			$li_tag->class = $message->getCssClass();
-
-			if ($message->secondary_content !== null)
-				$li_tag->class .= ' swat-message-with-secondary';
-
+			$li_tag->class = $message->getCSSClassString();
 			$li_tag->open();
 
 			if ($message->type == SwatMessage::NOTIFICATION |
