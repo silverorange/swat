@@ -159,7 +159,7 @@ class SwatMessage extends SwatObject
 	 *
 	 * @deprecated Use SwatMessage::getCSSClassString() instead.
 	 */
-	public function getCSSClassString()
+	public function getCssClass()
 	{
 		return $this->getCSSClassString();
 	}
