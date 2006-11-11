@@ -23,7 +23,7 @@ class SwatCalendar extends SwatControl
 	 *
 	 * @var string
 	 */
-	public $entry_id = '';
+	public $entry_id;
 
 	/**
 	 * Start date of the valid range (inclusive).
@@ -86,7 +86,15 @@ class SwatCalendar extends SwatControl
 		$container_div_tag->class = $this->getCSSClassString();
 		$container_div_tag->open();
 
-		// content is displayed with JavaScript
+		// toggle button content is displayed with JavaScript
+
+		if ($this->entry_id === null) {
+			$input_tag = new SwatHtmlTag('input');
+			$input_tag->type = 'hidden';
+			$input_tag->id = $this->id.'_value';
+			$input_tag->name = $this->id.'_value';
+			$input_tag->display();
+		}
 
 		$container_div_tag->close();
 
@@ -128,8 +136,8 @@ class SwatCalendar extends SwatControl
 			$javascript = '';
 		}
 
-		$swat_date_entry = (strlen($this->entry_id) != 0) ?
-			$this->entry_id : 'null';
+		$swat_date_entry = ($this->entry_id === null) ?
+			'null' : $this->entry_id;
 
 		if (isset($this->valid_range_start))
 			$start_date = $this->valid_range_start->format('%m/%d/%Y');
