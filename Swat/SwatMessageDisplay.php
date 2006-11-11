@@ -7,7 +7,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
 require_once 'YUI/YUI.php';
 
 /**
- * A control to display page status messages  
+ * A control to display page status messages
  *
  * @package   Swat
  * @copyright 2005-2006 silverorange
@@ -116,7 +116,7 @@ class SwatMessageDisplay extends SwatControl
 			$li_tag->id = $this->id.'_'.$key;
 			$li_tag->class = $message->getCssClass();
 
-			if ($message->secondary_content !== null) 
+			if ($message->secondary_content !== null)
 				$li_tag->class .= ' swat-message-with-secondary';
 
 			$li_tag->open();
