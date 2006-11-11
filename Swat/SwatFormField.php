@@ -219,7 +219,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		$message_ul->open();
 
 		foreach ($messages as &$msg) {
-			$message_li->class = $msg->getCssClass();
+			$message_li->class = $msg->getCSSClassString();
 			$message_li->setContent($msg->primary_content, $msg->content_type);
 
 			if ($msg->secondary_content !== null) {
