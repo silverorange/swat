@@ -210,7 +210,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		if (!$this->hasMessage())
 			return;
 
-		$messages = &$this->getMessages();
+		$messages = $this->getMessages();
 
 		$message_ul = new SwatHtmlTag('ul');
 		$message_ul->class = 'swat-form-field-messages';
@@ -218,7 +218,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 		$message_ul->open();
 
-		foreach ($messages as &$msg) {
+		foreach ($messages as $msg) {
 			$message_li->class = $msg->getCSSClassString();
 			$message_li->setContent($msg->primary_content, $msg->content_type);
 
