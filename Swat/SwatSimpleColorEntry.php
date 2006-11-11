@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatState.php';
 require_once 'YUI/YUI.php';
 
