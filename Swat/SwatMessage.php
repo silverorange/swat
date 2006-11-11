@@ -117,14 +117,14 @@ class SwatMessage extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function getCSSClass()
+	// {{{ public function getCSSClassString()
 
 	/**
 	 * Gets the CSS class names of this message as a string
 	 *
 	 * @return string the CSS class names of this message.
 	 */
-	public function getCSSClass()
+	public function getCSSClassString()
 	{
 		$classes = array('swat-message');
 
@@ -147,6 +147,21 @@ class SwatMessage extends SwatObject
 			$classes[] = 'swat-message-with-secondary';
 
 		return implode(' ', $classes);
+	}
+
+	// }}}
+	// {{{ public function getCssClass()
+
+	/**
+	 * An alias for SwatMessage::getCSSClassString()
+	 *
+	 * @return string the CSS class names of this message.
+	 *
+	 * @deprecated Use SwatMessage::getCSSClassString() instead.
+	 */
+	public function getCSSClassString()
+	{
+		return $this->getCSSClassString();
 	}
 
 	// }}}
