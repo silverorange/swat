@@ -89,10 +89,18 @@ class SwatCalendar extends SwatControl
 		// toggle button content is displayed with JavaScript
 
 		if ($this->entry_id === null) {
+			if (isset($this->valid_range_start)) {
+				$value = $this->valid_range_start->format('%m/%d/%Y');
+			} else {
+				$today = new SwatDate();
+				$value = $today->format('%m/%d/%Y');
+			}
+
 			$input_tag = new SwatHtmlTag('input');
 			$input_tag->type = 'hidden';
 			$input_tag->id = $this->id.'_value';
 			$input_tag->name = $this->id.'_value';
+			$input_tag->value = $value;
 			$input_tag->display();
 		}
 
