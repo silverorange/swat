@@ -4,6 +4,7 @@ require_once 'Swat/SwatCellRenderer.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 require_once 'Swat/exceptions/SwatException.php';
+require_once 'Swat/SwatTitleable.php';
 
 /**
  *
