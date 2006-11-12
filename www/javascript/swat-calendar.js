@@ -570,65 +570,63 @@ SwatCalendar.prototype.draw = function()
 
 	var cur_html = '';
 	var end_day = (SwatCalendar.isLeapYear(yyyy) && mm == 2) ? 29 : dom[mm - 1];
-	var row_element = 0;
+	var prev_end_day = (SwatCalendar.isLeapYear(yyyy) && prev_month == 2) ?
+		29 : dom[prev_month - 1];
+
 	var cell_class = '';
 	var cell_current = '';
-	var onclick_action = '';
+	var onclick = '';
 
-	// calculate the lead gap
-	if (start_day != 0) {
-		cur_html = '<tr>';
-		cur_html = cur_html +
-			'<td class="swat-calendar-empty-cell" colspan="' + start_day +
-			'">&nbsp;</td>';
+	var cell = 0;
+	for (var row = 0; row < 6; row++) {
+		cur_html += '<tr>';
+		for (col = 0; col < 7; col++) {
+			cell++;
+			// this month days
+			if (cell > start_day && cell <= (start_day + end_day)) {
+				day = cell - start_day;
 
-		row_element = start_day;
+				if (dd == day) {
+					cell_class = 'swat-calendar-current-cell';
+					if (this.is_safari) {
+						cell_current = 'id="' + this.id + '_current_cell" ' +
+							'style="background-color: #406A9C; color: #fff;" ';
+					} else {
+						cell_current = 'id="' + this.id + '_current_cell" ';
+					}
+				} else {
+					cell_class = 'swat-calendar-cell';
+					cell_current = '';
+				}
+
+				onclick = ' onclick="' + this.id + '_obj.closeAndSetDate(' +
+					yyyy + ',' + mm + ',' + day + ');"';
+
+				// TODO
+				if (calendar_start && day < start_date.getDate()) {
+					cell_class = 'swat-calendar-invalid-cell';
+					onclick = '';
+				} else if (calendar_end && day > end_date.getDate()) {
+					cell_class = 'swat-calendar-invalid-cell';
+					onclick = '';
+				}
+
+				cur_html += '<td ' + cell_current + 'class="' + cell_class +
+					'"' + onclick + '>' + day + '</td>';
+
+			// previous month end days
+			} else if (cell <= start_day) {
+				cur_html += '<td class="swat-calendar-empty-cell">' +
+					(prev_end_day - start_day + cell) + '</td>';
+
+			// next month start days
+			} else {
+				cur_html += '<td class="swat-calendar-empty-cell">' +
+					(cell - end_day - start_day) + '</td>';
+			}
+		}
+		cur_html += '</tr>';
 	}
-		
-	for (i = 1; i <= end_day; i++) {
-
-		cell_class = (dd === i) ? 'swat-calendar-current-cell' : 'swat-calendar-cell';
-		if (this.is_safari) {
-			cell_current = (dd === i) ? 'id="' + this.id + '_current_cell" style="background-color: #406A9C; color: #fff;" ' : '';
-		} else {
-			cell_current = (dd === i) ? 'id="' + this.id + '_current_cell" ' : '';
-		}
-		onclick_action = this.id + '_obj.closeAndSetDate(' + yyyy + ',' + mm + ',' + i + ');';
-		if (calendar_start && i < start_date.getDate()) {
-			cell_class = 'swat-calendar-invalid-cell';
-			onclick_action = 'return false;';
-		} else if (calendar_end && i > end_date.getDate()) {
-			cell_class = 'swat-calendar-invalid-cell';
-			onclick_action = 'return false;';
-		}
-
-		if (row_element == 0) {
-			cur_html = cur_html + '<tr><td ' + cell_current + 'class="' + cell_class + '" onclick="' + onclick_action + '">' + i + '</td>';
-			row_element++;
-			continue;
-		}
-
-		if (row_element > 0 && row_element < 6) {
-			cur_html = cur_html + '<td ' + cell_current + 'class="' + cell_class + '" onclick="' + onclick_action + '">' + i + '</td>';
-			row_element++;
-			continue;
-		}
-
-		if (row_element == 6) {
-			cur_html = cur_html + '<td ' + cell_current + 'class="' + cell_class + '" onclick="' + onclick_action + '">' + i + '</td></tr>';
-			row_element = 0;
-			continue;
-		}
-	}
-
-	// calculate the end gap
-	if (row_element != 0) {
-		cur_html = cur_html +
-			'<td class="swat-calendar-empty-cell" colspan="' +
-			(7 - row_element) + '">&nbsp;</td>';
-	}
-
-	cur_html = cur_html + '</tr>';
 
 	// attach div to body so it can be positioned correctly
 	calendar_div = document.getElementById(this.id + '_div');

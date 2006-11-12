@@ -104,6 +104,8 @@ th.swat-calendar-header {
 	padding: 2px;
 	border: 1px #ccc solid;
 	background: #eee;
+	text-align: center;
+	color: #888;
 }
 
 td.swat-calendar-close-controls {
