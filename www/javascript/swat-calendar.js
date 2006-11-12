@@ -608,7 +608,6 @@ SwatCalendar.prototype.draw = function()
 				onclick = ' onclick="' + this.id + '_obj.closeAndSetDate(' +
 					yyyy + ',' + mm + ',' + day + ');"';
 
-				// TODO
 				if (calendar_start && day < start_date.getDate()) {
 					cell_class = 'swat-calendar-invalid-cell';
 					onclick = '';
