@@ -643,20 +643,23 @@ SwatCalendar.prototype.draw = function()
 	calendar_div.innerHTML = begin_table + date_controls + week_header +
 		cur_html + close_controls;
 
+	// position and display calendar
 	var toggle_button = document.getElementById(this.id + '_toggle');
 	this.selected_element = document.getElementById(this.id + '_current_cell');
+
+	calendar_div.style.display = 'block';
+	YAHOO.util.Dom.setXY(calendar_div, [0, 0]);
 
 	var offsets = YAHOO.util.Dom.getXY(toggle_button);
 	offsets[1] += toggle_button.offsetHeight;
 
-	calendar_div.style.display = 'block';
-	YAHOO.util.Dom.setXY(calendar_div, offsets);
-
-	// check if the calendar is floating off the screen to the right
+	// ensure calendar is displayed inside the window
+	// subtract 1 to prevent gecko rendering weirdness 
 	viewport_width = YAHOO.util.Dom.getViewportWidth();
 	if (offsets[0] + calendar_div.offsetWidth > viewport_width)
-		calendar_div.style.left =
-			(viewport_width - calendar_div.offsetWidth) + 'px';
+		offsets[0] = viewport_width - calendar_div.offsetWidth - 1;
+
+	YAHOO.util.Dom.setXY(calendar_div, offsets);
 
 	this.open = true;
 }
