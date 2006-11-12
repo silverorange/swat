@@ -545,11 +545,17 @@ SwatCalendar.prototype.draw = function()
 	var begin_table = '<table class="swat-calendar-frame" cellspacing="0">';
 
 	var week_header = '<tr>';
-	for (i = 0; i < SwatCalendar.week_names.length; i++)
-		week_header = week_header + '<th class="swat-calendar-header">' +
-		SwatCalendar.week_names[i] + '</th>';
+	for (i = 0; i < SwatCalendar.week_names.length; i++) {
+		if (i == SwatCalendar.week_names.length - 1) {
+			week_header += '<th class="swat-calendar-last-header">' +
+				SwatCalendar.week_names[i] + '</th>';
+		} else {
+			week_header += '<th class="swat-calendar-header">' +
+				SwatCalendar.week_names[i] + '</th>';
+		}
+	}
 
-	week_header = week_header + '</tr>';
+	week_header += '</tr>';
 
 	var close_controls = '<tr>' +
 		'<td class="swat-calendar-close-controls" colspan="7">' +
