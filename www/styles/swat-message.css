@@ -36,7 +36,7 @@
 	color: #FFF;
 	background-image: url(../images/tango/48/dialog-error.png);
 }
-* html.swat-message-error { /* IE hack */
+* html .swat-message-system-error { /* IE hack */
 	background-image: url(../images/tango/48/dialog-error-256.png);
 }
 
