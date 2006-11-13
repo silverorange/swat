@@ -195,7 +195,7 @@ SwatCalendar.prototype.setDate = function(element, yyyy, mm, dd)
  */
 SwatCalendar.prototype.close = function()
 {
-	calendar_div = document.getElementById(this.id + '_div');
+	var calendar_div = document.getElementById(this.id + '_div');
 	calendar_div.style.display = 'none';
 	this.open = false;
 }
@@ -368,7 +368,7 @@ SwatCalendar.prototype.toggle = function()
 		document.getElementById(this.id + '_toggle').setAttribute(
 			'title', SwatCalendar.open_toggle_text);
 
-		calendar_div = document.getElementById(this.id + '_div');
+		var calendar_div = document.getElementById(this.id + '_div');
 		SwatZIndexManager.lowerElement(calendar_div);
 	} else {
 		this.draw();
@@ -376,7 +376,7 @@ SwatCalendar.prototype.toggle = function()
 		document.getElementById(this.id + '_toggle').setAttribute(
 			'title', SwatCalendar.close_toggle_text);
 
-		calendar_div = document.getElementById(this.id + '_div');
+		var calendar_div = document.getElementById(this.id + '_div');
 		SwatZIndexManager.raiseElement(calendar_div);
 	}
 }
@@ -634,7 +634,7 @@ SwatCalendar.prototype.draw = function()
 	}
 
 	// attach div to body so it can be positioned correctly
-	calendar_div = document.getElementById(this.id + '_div');
+	var calendar_div = document.getElementById(this.id + '_div');
 	var body = document.getElementsByTagName('body')[0];
 	body.appendChild(calendar_div);
 
