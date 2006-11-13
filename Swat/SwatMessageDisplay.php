@@ -31,7 +31,7 @@ class SwatMessageDisplay extends SwatControl
 
 	// }}}
 	// {{{ public function __construct()
- 
+
 	/**
 	 * Creates a new message display
 	 *
@@ -103,8 +103,9 @@ class SwatMessageDisplay extends SwatControl
 		if (count($this->_messages) == 0)
 			return;
 
-		$ul_tag = new SwatHtmlTag('ul');
-		$li_tag = new SwatHtmlTag('li');
+		$ul_tag = new SwatHtmlTag('div');
+		$li_tag = new SwatHtmlTag('div');
+		$div_tag = new SwatHtmlTag('div');
 
 		$ul_tag->id = $this->id;
 		$ul_tag->class = $this->getCSSClassString();
@@ -117,16 +118,11 @@ class SwatMessageDisplay extends SwatControl
 			$li_tag->class = $message->getCSSClassString();
 			$li_tag->open();
 
-			if ($message->type == SwatMessage::NOTIFICATION |
-				$message->type == SwatMessage::WARNING) {
-				$dismiss_link = new SwatHtmlTag('a');
-				$dismiss_link->href =
-					"javascript:{$this->id}_obj.hideMessage({$key})";
+			$div_tag->class = 'swat-message-container';
+			$div_tag->open();
 
-				$dismiss_link->class = 'swat-message-display-dismiss-link';
-				$dismiss_link->title = _('Dismiss this Message');
-				$dismiss_link->setContent(_('Dismiss this Message'));
-				$dismiss_link->display();
+			if ($message->type == SwatMessage::NOTIFICATION ||
+				$message->type == SwatMessage::WARNING) {
 				$has_dismiss_link = true;
 			}
 
@@ -146,13 +142,14 @@ class SwatMessageDisplay extends SwatControl
 				$secondary_div->display();
 			}
 
+			$div_tag->close();
 			$li_tag->close();
 		}
 
 		$ul_tag->close();
 
 		if ($has_dismiss_link)
-			$this->displayJavaScript();
+			$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -172,18 +169,54 @@ class SwatMessageDisplay extends SwatControl
 	}
 
 	// }}}
-	// {{{ private function displayJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Displays the JavaScript for hiding messages
+	 * Gets the inline JavaScript for hiding messages
 	 */
-	private function displayJavaScript()
+	protected function getInlineJavaScript()
 	{
-		echo '<script type="text/javascript">'."\n";
-		printf("var %s_obj = new SwatMessageDisplay('%s', %s);\n",
-			$this->id, $this->id, count($this->_messages));
+		static $shown = false;
 
-		echo '</script>';
+		if (!$shown) {
+			$javascript = $this->getInlineJavaScriptTranslations();
+			$shown = true;
+		} else {
+			$javascript = '';
+		}
+
+		$hideable_messages = array();
+
+		foreach ($this->_messages as $key => $message) {
+			switch ($message->type) {
+			case SwatMessage::NOTIFICATION:
+			case SwatMessage::WARNING:
+				$hideable_messages[] = $key;
+				break;
+			}
+		}
+
+		$hideable_messages = '['.implode(', ', $hideable_messages).']';
+
+		$javascript.= sprintf("var %s_obj = new SwatMessageDisplay('%s', %s);",
+			$this->id, $this->id, $hideable_messages);
+
+		return $javascript;
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScriptTranslations()
+
+	/**
+	 * Gets translatable string resources for the JavaScript object for
+	 * this widget
+	 *
+	 * @return string translatable JavaScript string resources for this widget.
+	 */
+	protected function getInlineJavaScriptTranslations()
+	{
+		$close_text  = Swat::_('Dismiss message');
+		return "SwatMessageDisplay.close_text = '{$close_text}';\n";
 	}
 
 	// }}}
