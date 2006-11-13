@@ -1,25 +1,29 @@
 /* SwatMessageDisplay */
 
 .swat-message-display {
-	list-style-type: none;
-	margin: 0;
 	padding: 0;
+	margin: 1em 0 0 0;
 }
 
 .swat-message-display .swat-message {
-	border-width: 1px;
-	border-style: solid;
 	margin: 1em 0;
-	min-height: 38px;
-	padding: 12px 12px 12px 64px;
+	padding: 0;
 	background-position: 8px 8px;
 	background-repeat: no-repeat;
+	border-width: 1px;
+	border-style: solid;
 	-moz-border-radius: 8px;
 	border-radius: 8px;
+	overflow: hidden;
+}
+.swat-message-display .swat-message .swat-message-container {
+	padding: 12px 12px 12px 64px;
+	min-height: 38px;
 }
 
-.swat-message-display .swat-message-with-secondary {
-	padding-top: 12px;
+.swat-message-display .swat-message-container .swat-message-with-secondary {
+/* TODO: fix me */
+/*	padding-top: 12px;*/
 }
 
 /* Hack for min-height in IE  */
