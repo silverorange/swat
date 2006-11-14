@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatFlydown.php';
+require_once 'YUI/YUI.php';
 
 /**
  * A cascading flydown (aka combo-box) selection widget
@@ -60,6 +61,9 @@ class SwatCascadeFlydown extends SwatFlydown
 
 		$this->requires_id = true;
 
+		$yui = new YUI(array('dom', 'animation'));
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+
 		$this->addJavaScript('packages/swat/javascript/swat-cascade.js',
 			Swat::PACKAGE_ID);
 	}
@@ -103,8 +107,8 @@ class SwatCascadeFlydown extends SwatFlydown
 		$parent_value = $this->cascade_from->value;
 		if ($parent_value === null) {
 			if ($this->cascade_from->show_blank) {
-				$ret[] = new SwatOption('', '');
-				$ret[] = new SwatOption('', '');
+				$ret[] = new SwatOption('', '&nbsp;');
+				$ret[] = new SwatOption('', '&nbsp;');
 				return $ret;
 			} else {
 				$first_value = current($this->cascade_from->options)->value;
@@ -166,6 +170,9 @@ class SwatCascadeFlydown extends SwatFlydown
 					$selected);
 			}
 		}
+
+		$javascript.= sprintf("\n%s_cascade.init();",
+			$this->id);
 
 		return $javascript;
 	}
