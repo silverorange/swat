@@ -168,7 +168,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 
 			$modified = isset($modified_properties[$name]);
 
-			if (is_object($value)) {
+			if ($value instanceof SwatDBDataObject) {
 				$modified = $value->isModified();
 				$value = get_class($value);
 			}
