@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Swat 1.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-19 18:18-0300\n"
+"POT-Creation-Date: 2006-11-14 16:14-0400\n"
 "PO-Revision-Date: 2006-10-19 17:53-0300\n"
 "Last-Translator: Nathan Fredrickson <nathan@silverorange.com>\n"
 "Language-Team: silverorange\n"
@@ -30,22 +30,22 @@ msgstr ""
 #: ../Swat/SwatColorEntry.php.gettext:139
 #: ../Swat/SwatFileEntry.php.gettext:129 ../Swat/SwatEntry.php.gettext:223
 #: ../Swat/SwatEntry.php.gettext:225 ../Swat/SwatTextarea.php.gettext:116
-#: ../Swat/SwatFlydown.php.gettext:131
+#: ../Swat/SwatFlydown.php.gettext:132
 #: ../Swat/SwatTimeZoneEntry.php.gettext:138
 #, php-format
 msgid "The %s field is required."
 msgstr ""
 
-#: ../Swat/SwatColorEntry.php.gettext:290
+#: ../Swat/SwatColorEntry.php.gettext:289
 msgid "Set Color"
-msgstr ""
+msgstr "Set Colour"
 
-#: ../Swat/SwatColorEntry.php.gettext:295
+#: ../Swat/SwatColorEntry.php.gettext:294
 msgid "Set None"
 msgstr ""
 
-#: ../Swat/SwatColorEntry.php.gettext:299 ../Swat/SwatButton.php.gettext:223
-#: ../Swat/SwatTextareaEditor.php.gettext:167
+#: ../Swat/SwatColorEntry.php.gettext:298 ../Swat/SwatButton.php.gettext:236
+#: ../Swat/SwatTextareaEditor.php.gettext:194
 msgid "Cancel"
 msgstr ""
 
@@ -53,66 +53,68 @@ msgstr ""
 msgid "required"
 msgstr ""
 
-#: ../Swat/SwatExpandableCheckboxTree.php.gettext:139
-#: ../Swat/SwatDisclosure.php.gettext:89
+#: ../Swat/SwatExpandableCheckboxTree.php.gettext:174
+#: ../Swat/SwatDisclosure.php.gettext:91
+#: ../Swat/SwatDisclosure.php.gettext:159
+#: ../Swat/SwatFrameDisclosure.php.gettext:67
 msgid "close"
 msgstr ""
 
-#: ../Swat/SwatExpandableCheckboxTree.php.gettext:142
-#: ../Swat/SwatDisclosure.php.gettext:92
+#: ../Swat/SwatExpandableCheckboxTree.php.gettext:177
+#: ../Swat/SwatDisclosure.php.gettext:158
 msgid "open"
 msgstr ""
 
-#: ../Swat/SwatDate.php.gettext:237
+#: ../Swat/SwatDate.php.gettext:245
 msgid "%D"
 msgstr ""
 
-#: ../Swat/SwatDate.php.gettext:239
+#: ../Swat/SwatDate.php.gettext:247
 msgid "%m%d%y"
 msgstr ""
 
-#: ../Swat/SwatDate.php.gettext:241
+#: ../Swat/SwatDate.php.gettext:249
 msgid "%B %e, %Y"
 msgstr ""
 
-#: ../Swat/SwatDate.php.gettext:243
+#: ../Swat/SwatDate.php.gettext:251
 msgid "%A, %B %e, %Y"
 msgstr ""
 
-#: ../Swat/SwatDate.php.gettext:245
+#: ../Swat/SwatDate.php.gettext:253
 msgid "%B %e, %Y %i:%M %p"
 msgstr ""
 
-#: ../Swat/SwatDate.php.gettext:247
+#: ../Swat/SwatDate.php.gettext:255
 msgid "%A, %B %e, %Y %i:%M %p"
 msgstr ""
 
-#: ../Swat/SwatDate.php.gettext:249
+#: ../Swat/SwatDate.php.gettext:257
 msgid "%i:%M %p"
 msgstr ""
 
-#: ../Swat/SwatDate.php.gettext:251
+#: ../Swat/SwatDate.php.gettext:259
 msgid "%b %e, %Y"
 msgstr ""
 
-#: ../Swat/SwatDate.php.gettext:253
+#: ../Swat/SwatDate.php.gettext:261
 #, php-format
 msgid "%b %e"
 msgstr ""
 
-#: ../Swat/SwatDate.php.gettext:255
+#: ../Swat/SwatDate.php.gettext:263
 msgid "%b %e, %Y %i:%M %p"
 msgstr ""
 
-#: ../Swat/SwatDate.php.gettext:257
+#: ../Swat/SwatDate.php.gettext:265
 msgid "%b %e, %i:%M %p"
 msgstr ""
 
-#: ../Swat/SwatDate.php.gettext:259
+#: ../Swat/SwatDate.php.gettext:267
 msgid "%B %Y"
 msgstr ""
 
-#: ../Swat/SwatDate.php.gettext:261
+#: ../Swat/SwatDate.php.gettext:269
 msgid "%m / %Y"
 msgstr ""
 
@@ -136,21 +138,21 @@ msgstr ""
 msgid "Time is Required."
 msgstr ""
 
-#: ../Swat/SwatTimeEntry.php.gettext:458
+#: ../Swat/SwatTimeEntry.php.gettext:472
 #, php-format
 msgid "The time you have entered is invalid. It must be after %s."
 msgstr ""
 
-#: ../Swat/SwatTimeEntry.php.gettext:466
+#: ../Swat/SwatTimeEntry.php.gettext:480
 #, php-format
 msgid "The time you have entered is invalid. It must be before %s."
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:182 ../Swat/SwatButton.php.gettext:203
+#: ../Swat/SwatToolLink.php.gettext:182 ../Swat/SwatButton.php.gettext:216
 msgid "Create"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:187 ../Swat/SwatButton.php.gettext:208
+#: ../Swat/SwatToolLink.php.gettext:187 ../Swat/SwatButton.php.gettext:221
 msgid "Add"
 msgstr ""
 
@@ -158,7 +160,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:197 ../Swat/SwatButton.php.gettext:218
+#: ../Swat/SwatToolLink.php.gettext:197 ../Swat/SwatButton.php.gettext:231
 msgid "Delete"
 msgstr ""
 
@@ -182,39 +184,43 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: ../Swat/SwatCalendar.php.gettext:91
-msgid "toggle calendar"
-msgstr ""
-
-#: ../Swat/SwatCalendar.php.gettext:96
-msgid "calendar toggle graphic"
-msgstr ""
-
-#: ../Swat/SwatCalendar.php.gettext:210
+#: ../Swat/SwatCalendar.php.gettext:211
 msgid "Previous Month"
 msgstr ""
 
-#: ../Swat/SwatCalendar.php.gettext:211
+#: ../Swat/SwatCalendar.php.gettext:212
 msgid "Next Month"
 msgstr ""
 
-#: ../Swat/SwatCalendar.php.gettext:212
+#: ../Swat/SwatCalendar.php.gettext:213
 msgid "Close"
 msgstr ""
 
-#: ../Swat/SwatCalendar.php.gettext:213
+#: ../Swat/SwatCalendar.php.gettext:214
 msgid "No Date"
 msgstr ""
 
-#: ../Swat/SwatCalendar.php.gettext:214
+#: ../Swat/SwatCalendar.php.gettext:215
 msgid "Today"
 msgstr ""
 
-#: ../Swat/SwatButton.php.gettext:198
+#: ../Swat/SwatCalendar.php.gettext:217
+msgid "open calendar"
+msgstr ""
+
+#: ../Swat/SwatCalendar.php.gettext:218
+msgid "close calendar"
+msgstr ""
+
+#: ../Swat/SwatCalendar.php.gettext:219
+msgid "toggle calendar graphic"
+msgstr ""
+
+#: ../Swat/SwatButton.php.gettext:211
 msgid "Submit"
 msgstr ""
 
-#: ../Swat/SwatButton.php.gettext:213
+#: ../Swat/SwatButton.php.gettext:226
 msgid "Apply"
 msgstr ""
 
@@ -248,12 +254,12 @@ msgstr ""
 msgid "Day is Required."
 msgstr ""
 
-#: ../Swat/SwatDateEntry.php.gettext:695
+#: ../Swat/SwatDateEntry.php.gettext:715
 #, php-format
 msgid "The date you have entered is invalid. It must be on or after %s."
 msgstr ""
 
-#: ../Swat/SwatDateEntry.php.gettext:704
+#: ../Swat/SwatDateEntry.php.gettext:724
 #, php-format
 msgid "The date you have entered is invalid. It must be before %s."
 msgstr ""
@@ -309,100 +315,100 @@ msgstr ""
 msgid "Ascending"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:140
+#: ../Swat/SwatTextareaEditor.php.gettext:167
 msgid "Bold"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:141
+#: ../Swat/SwatTextareaEditor.php.gettext:168
 msgid "Italic"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:142
+#: ../Swat/SwatTextareaEditor.php.gettext:169
 msgid "Underline"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:143
+#: ../Swat/SwatTextareaEditor.php.gettext:170
 msgid "Align Left"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:144
+#: ../Swat/SwatTextareaEditor.php.gettext:171
 msgid "Align Right"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:145
+#: ../Swat/SwatTextareaEditor.php.gettext:172
 msgid "Align Center"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:146
+#: ../Swat/SwatTextareaEditor.php.gettext:173
 msgid "Ordered List"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:147
+#: ../Swat/SwatTextareaEditor.php.gettext:174
 msgid "Unordered List"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:148
+#: ../Swat/SwatTextareaEditor.php.gettext:175
 msgid "Indent"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:149
+#: ../Swat/SwatTextareaEditor.php.gettext:176
 msgid "Outdent"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:150
-#: ../Swat/SwatTextareaEditor.php.gettext:166
+#: ../Swat/SwatTextareaEditor.php.gettext:177
+#: ../Swat/SwatTextareaEditor.php.gettext:193
 msgid "Insert Link"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:151
+#: ../Swat/SwatTextareaEditor.php.gettext:178
 msgid "Horizontal Rule"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:152
+#: ../Swat/SwatTextareaEditor.php.gettext:179
 msgid "Highlight"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:153
+#: ../Swat/SwatTextareaEditor.php.gettext:180
 msgid "Quote"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:154
+#: ../Swat/SwatTextareaEditor.php.gettext:181
 msgid "Style"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:155
+#: ../Swat/SwatTextareaEditor.php.gettext:182
 msgid "Clear Formatting"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:156
+#: ../Swat/SwatTextareaEditor.php.gettext:183
 msgid "Paragraph"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:157
+#: ../Swat/SwatTextareaEditor.php.gettext:184
 msgid "Heading"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:158
+#: ../Swat/SwatTextareaEditor.php.gettext:185
 msgid "Address"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:159
+#: ../Swat/SwatTextareaEditor.php.gettext:186
 msgid "Formatted"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:162
+#: ../Swat/SwatTextareaEditor.php.gettext:189
 msgid "A URL is required"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:163
+#: ../Swat/SwatTextareaEditor.php.gettext:190
 msgid "URL"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:164
+#: ../Swat/SwatTextareaEditor.php.gettext:191
 msgid "Link Text"
 msgstr ""
 
-#: ../Swat/SwatTextareaEditor.php.gettext:165
+#: ../Swat/SwatTextareaEditor.php.gettext:192
 msgid "Target"
 msgstr ""
 
@@ -475,9 +481,8 @@ msgid ""
 "The %%s field has too many decimal values. The currency (%s) only allows %s."
 msgstr ""
 
-#: ../Swat/SwatMessageDisplay.php.gettext:127
-#: ../Swat/SwatMessageDisplay.php.gettext:128
-msgid "Dismiss this Message"
+#: ../Swat/SwatMessageDisplay.php.gettext:218
+msgid "Dismiss message"
 msgstr ""
 
 #: ../Swat/SwatTimeZoneEntry.php.gettext:142
@@ -501,8 +506,8 @@ msgstr ""
 msgid "Move to Bottom"
 msgstr ""
 
-#: ../Swat/SwatCascadeFlydown.php.gettext:118
-#: ../Swat/SwatCascadeFlydown.php.gettext:142
+#: ../Swat/SwatCascadeFlydown.php.gettext:122
+#: ../Swat/SwatCascadeFlydown.php.gettext:152
 msgid "choose one ..."
 msgstr ""
 
