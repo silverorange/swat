@@ -2,14 +2,23 @@ function SwatCascade(parent, child)
 {
 	this.parent = document.getElementById(parent);
 	this.child = document.getElementById(child);
-	this.init();
+	this.children = [];
+	this.blank_option = this.child[0];
+
+	YAHOO.util.Event.addListener(this.parent, 'change',
+		SwatCascade.parentChangeHandler, this);
+}
+
+SwatCascade.parentChangeHandler = function(event, object)
+{
+	object.update();
 }
 
 SwatCascade.prototype.update = function()
 {
 	var display = this.children[this.parent.value];
 
-	//reset the options
+	// reset the options
 	for (var i = 0; i < this.child.options.length; i++)
 		this.child.options[i] = null;
 	
@@ -35,19 +44,7 @@ SwatCascade.prototype.addChild = function(parent, value, title, selected)
 
 SwatCascade.prototype.init = function()
 {
-	this.children = [];
-	this.blank_option = this.child[0];
-	
-	var child_id = this.child.id;
-
-	if (!this.parent.value) 
-		this.child.disabled = true;
-
-	// TODO: use DOM event handling
-	this.parent.onchange = function() {
-		obj = eval(child_id + '_cascade');
-		obj.update();
-	}
+	this.update();
 }
 
 function SwatCascadeChild(value, title, selected)
