@@ -1,3 +1,264 @@
+2006-11-14  nick
+
+	* [r13019] swat/trunk/Swat/SwatHtmlHeadEntry.php:
+	  Fixed docs
+
+2006-11-14  gauthierm
+
+	* [r13000] swat/trunk/Swat/SwatCascadeFlydown.php,
+	  swat/trunk/www/javascript/swat-cascade.js:
+	  - Fix height of blank option on cascade flydown
+	  - Several fixups to cascade flydown JavaScript including:
+	  - use YUI for events
+	  - remember state on page refresh for smart browsers
+	  - properly initialize after all child elements are added
+	  
+	  These changes fix #69 among other things
+	* [r12999] swat/trunk/www/javascript/swat-cascade.js:
+	  coding conventions
+	* [r12998] swat/trunk/www/javascript/swat-calendar.js:
+	  Fix closeAndSetBlank() and only show the 'no date' link if using
+	  an associated date entry widget. Fixes #240.
+
+2006-11-13  steven
+
+	* [r12978] swat/trunk/www/images/tango/48/dialog-error-256.png:
+	  Better aliasing, or anti-aliasing, or whatever
+
+2006-11-13  gauthierm
+
+	* [r12977] swat/trunk/Swat/SwatMessageDisplay.php,
+	  swat/trunk/www/javascript/swat-message-display.js,
+	  swat/trunk/www/styles/swat-message-display.css:
+	  Several changes to the message display object:
+	  - display messages in divs rather than in a list
+	  - smooth animations
+	  - only show close links if JavaScript is enabled
+
+2006-11-13  steven
+
+	* [r12976] swat/trunk/www/styles/swat-message.css:
+	  Fix CSS typo that was breaking the IE6 icon for System Error
+	  SwatMessages
+	  Initial fix to #145
+
+2006-11-13  gauthierm
+
+	* [r12975] swat/trunk/www/javascript/swat-calendar.js:
+	  Fix JS errors in IE6.
+
+2006-11-12  gauthierm
+
+	* [r12954] swat/trunk/www/javascript/swat-calendar.js:
+	  TODO is already TODONE
+	* [r12953] swat/trunk/www/javascript/swat-calendar.js:
+	  better positioning code
+	* [r12952] swat/trunk/www/styles/swat-calendar.css:
+	  make cells a little wider for people with larger default fonts
+	* [r12951] swat/trunk/www/javascript/swat-calendar.js,
+	  swat/trunk/www/styles/swat-calendar.css:
+	  workaround for collapsing border bug in Safari and Konqueror
+	* [r12950] swat/trunk/www/javascript/swat-calendar.js,
+	  swat/trunk/www/styles/swat-calendar.css:
+	  - always display 6 rows in the calendar to prevent close
+	  controls from jumping up and down
+	  - display previous and next month days in empty cells
+
+2006-11-11  gauthierm
+
+	* [r12949] swat/trunk/Swat/SwatCalendar.php:
+	  have an initial value when not using an associated date entry
+	* [r12948] swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/www/javascript/swat-calendar.js:
+	  - fix initial title attribute of toggle button
+	  - make calendar better work without an associated date-entry
+	  - fix IE JavaScript errors when not using an associated
+	  date-entry (needs testing)
+	  - allow changing the month and year when not using an associated
+	  date-entry
+	  - make sure given date values are within the defined range in
+	  setDateValues
+	* [r12946] swat/trunk/Swat/SwatFormField.php:
+	  Prevent E_STRICT notices PHP 5 and 6 already assign by reference.
+	* [r12945] swat/trunk/Swat/SwatTableViewInputRow.php:
+	  respect api change in r12925
+	* [r12944] swat/trunk/demo/include/pages/textarea.xml:
+	  fix typo
+	* [r12937] swat/trunk/Swat/SwatSimpleColorEntry.php:
+	  fix required file
+	* [r12936] swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  add missing require
+	* [r12929] swat/trunk/Swat/SwatMessage.php:
+	  Fix duplicate method definition. Oops
+	* [r12928] swat/trunk/Swat/SwatMessageDisplay.php:
+	  respect api change in r12925
+	* [r12927] swat/trunk/Swat/SwatMessageDisplay.php:
+	  whitespace
+	* [r12925] swat/trunk/Swat/SwatFormField.php,
+	  swat/trunk/Swat/SwatMessage.php:
+	  Clean SwatMessage API to match other parts of Swat. Consistency
+	  is next to verbosity.
+
+2006-11-10  nrf
+
+	* [r12921] swat/trunk/Swat/SwatFlydown.php,
+	  swat/trunk/Swat/SwatRadioList.php:
+	  - Only process a SwatFlydown when it appears in the POST data.
+	  - Refactor SwatRadioList to reflect changes in SwatFlydown.
+
+2006-11-08  gauthierm
+
+	* [r12786] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  coding conventions
+
+2006-11-07  gauthierm
+
+	* [r12757] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  trigger notices when saveInternal() fails
+
+2006-11-07  nrf
+
+	* [r12753] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  Also display propeties that only have magic loader methods.
+	  It's hard to convert a loader method name back to a property
+	  name, so for now just include the ones that are listed in
+	  getSerializableDataObjects()
+
+2006-11-07  gauthierm
+
+	* [r12745] swat/trunk/Swat/SwatTextareaEditor.php:
+	  if value is null, maks sure the value remains null and don't do
+	  any post-processing
+	* [r12744] swat/trunk/Swat/SwatTextarea.php:
+	  make value null unless a value is entered
+
+2006-11-07  nrf
+
+	* [r12740] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  Better __toString() on dataobjects to help debugging.
+
+2006-11-06  gauthierm
+
+	* [r12732] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  fix misleading typo
+
+2006-11-06  nrf
+
+	* [r12678] swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTableViewColumn.php:
+	  Make SwatTableView query columns for existence of headers and
+	  suppress <thead> if there are no column headers.
+
+2006-11-05  steven
+
+	* [r12673] swat/trunk/www/styles/swat-message-display.css:
+	  add :visited pseudo-element to swat-message-display dismiss link.
+	  This :visited is required because without it these elements will
+	  be ignored when the link is visited
+	  Fixes ticket #143
+
+2006-11-04  gauthierm
+
+	* [r12670] swat/trunk/Swat/SwatDisclosure.php:
+	  fix JavaScript string translations
+	* [r12669] swat/trunk/Swat/SwatDisclosure.php,
+	  swat/trunk/www/javascript/swat-disclosure.js:
+	  - always display disclosures in the open state in case the user
+	  has JavaScript turned off
+	  - translate JavaScript strings in disclosure JavaScript
+
+2006-11-03  gauthierm
+
+	* [r12663] swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/www/javascript/swat-calendar.js:
+	  - Make SwatCalendar JavaScript responsible for displaying toggle
+	  button. This means the button won't show up and be useless for
+	  those with JavaScript disabled.
+	  - Revert to closeAndSetDate() behaviour for selecting a date.
+	  - Change the title of the toggle graphic depending on the
+	  closed/open state of the calendar.
+
+2006-11-02  gauthierm
+
+	* [r12596] swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/Swat/SwatCascadeFlydown.php,
+	  swat/trunk/Swat/SwatChangeOrder.php,
+	  swat/trunk/Swat/SwatCheckAll.php,
+	  swat/trunk/Swat/SwatCheckboxEntryList.php,
+	  swat/trunk/Swat/SwatCheckboxList.php,
+	  swat/trunk/Swat/SwatCheckboxTree.php,
+	  swat/trunk/Swat/SwatColorEntry.php,
+	  swat/trunk/Swat/SwatConfirmationButton.php,
+	  swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/Swat/SwatDisclosure.php,
+	  swat/trunk/Swat/SwatExpandableCheckboxTree.php,
+	  swat/trunk/Swat/SwatForm.php,
+	  swat/trunk/Swat/SwatSimpleColorEntry.php,
+	  swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTextareaEditor.php,
+	  swat/trunk/Swat/SwatTimeEntry.php,
+	  swat/trunk/Swat/SwatUIObject.php:
+	  Clean the way inline JavaScript is displayed by SwatUIObjects.
+	  Adds two new protected methods to SwatUIObject:
+	  displayInlineJavaScript() and getInlineJavaScript(). Also:
+	  
+	  - get inline JavaScript of spanning columns in table-views
+	  - fix variable declaration in simple color entry JavaScript
+	  - fix variable declaration in cascade flydown JavaScript
+	  - fix variable declaration in confirmation button JavaScript
+	  - fix variable declaration in calendar JavaScript
+	  - tidy RTE JavaScript in textarea editor
+	  - fix variable declaration in change-order JavaScript
+	  - various folding fixes
+	* [r12595] swat/trunk/Swat/SwatTableViewSpanningColumn.php:
+	  public before protected
+	* [r12593] swat/trunk/Swat/SwatDetailsView.php:
+	  whitespace
+
+2006-11-01  gauthierm
+
+	* [r12572] swat/trunk/Swat/SwatForm.php:
+	  require SwatFormField before using it in addWithField().
+	* [r12571] swat/trunk/Swat/SwatButton.php:
+	  fix typo
+	* [r12570] swat/trunk/Swat/SwatButton.php:
+	  make buttons require an id so the button property of submitted
+	  forms is always set correctly
+	* [r12569] swat/trunk/www/styles/swat.css:
+	  revert styles for r12576.
+	* [r12567] swat/trunk/Swat/SwatButton.php:
+	  We learned of a great new tag but unfortunately it is broken in
+	  different ways in both IE6 and IE7. The IE6 bug is impossible to
+	  work-around. Reverting to an input element. How depressing.
+	* [r12565] swat/trunk/Swat/SwatButton.php:
+	  extend SwatInputControl and use getForm() so buttons work in
+	  both get and post environments
+	* [r12564] swat/trunk/demo/include/pages/passwordentry.xml:
+	  turn off autocomplete for password demo so it stops changing my
+	  saved passwords
+	* [r12562] swat/trunk/www/styles/swat.css:
+	  style changes to go with r12561.
+	* [r12561] swat/trunk/Swat/SwatButton.php:
+	  Today we learned there is a powerful XHTML tag called 'button'.
+	  Lets use it in SwatButton.
+
+2006-11-01  steven
+
+	* [r12513] swat/trunk/www/styles/swat-calendar.css:
+	  Make day headers smaller and give footer links better padding
+
+2006-10-31  nick
+
+	* [r12495] swat/trunk/Swat/SwatMoneyEntry.php,
+	  swat/trunk/Swat/SwatString.php:
+	  Add UTF-8 by default to locales if not already appended
+
+2006-10-31  nrf
+
+	* [r12493] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.0.12
+
 2006-10-30  gauthierm
 
 	* [r12428] swat/trunk/Swat/SwatReplicatorFieldset.php:
