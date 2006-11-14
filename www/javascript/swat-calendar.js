@@ -215,7 +215,11 @@ SwatCalendar.prototype.closeAndSetDate = function(yyyy, mm, dd)
  */
 SwatCalendar.prototype.closeAndSetBlank = function()
 {
-	this.setDateValues('', '', '');
+	if (this.date !== null) {
+		this.date.setYear('');
+		this.date.setMonth('');
+		this.date.setDay('');
+	}
 	this.close();
 }
 
@@ -558,18 +562,23 @@ SwatCalendar.prototype.draw = function()
 	week_header += '</tr>';
 
 	var close_controls = '<tr>' +
-		'<td class="swat-calendar-close-controls" colspan="7">' +
-		'<a class="swat-calendar-cancel" href="javascript:' +
-		this.id + '_obj.closeAndSetBlank();">' + SwatCalendar.nodate_text + '</a>';
+		'<td class="swat-calendar-close-controls" colspan="7">';
 
-	if (today_ts >= start_ts && today_ts <= end_ts)
-		close_controls = close_controls +
-		'&nbsp;' +
-		'<a class="swat-calendar-today" href="javascript:' +
-		this.id + '_obj.closeAndSetToday();">' + SwatCalendar.today_text + '</a>';
+	if (this.date !== null) {
+		close_controls +=
+			'<a class="swat-calendar-cancel" href="javascript:' +
+			this.id + '_obj.closeAndSetBlank();">' + SwatCalendar.nodate_text +
+			'</a>&nbsp;';
+	}
 
-	close_controls = close_controls +
-		'&nbsp;' +
+	if (today_ts >= start_ts && today_ts <= end_ts) {
+		close_controls +=
+			'<a class="swat-calendar-today" href="javascript:' +
+			this.id + '_obj.closeAndSetToday();">' + SwatCalendar.today_text +
+			'</a>&nbsp;';
+	}
+
+	close_controls +=
 		'<a class="swat-calendar-close" href="javascript:' +
 		this.id + '_obj.close();">' + SwatCalendar.close_text + '</a> ' +
 		'</td></tr></table>';
