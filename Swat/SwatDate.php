@@ -219,6 +219,14 @@ class SwatDate extends Date
 	}
 
 	// }}}
+	// {{{ public function __toString()
+
+	public function __toString()
+	{
+		return $this->getDate();
+	}
+
+	// }}}
 	// {{{ public static function getFormatById()
 
 	/**
