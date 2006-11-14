@@ -62,7 +62,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	public abstract function display($uri_prefix = '');
 
 	// }}}
-	// {{{ public abstract function displayInline($path)
+	// {{{ public abstract function displayInline()
 
 	/**
 	 * Displays the resource referenced by this html head entry inline
