@@ -291,6 +291,33 @@ abstract class SwatWidget extends SwatUIObject
 	}
 
 	// }}}
+	// {{{ public function replaceWithContainer()
+
+	/**
+	 * Replace this widget with a new container
+	 * 
+	 * Replaces this widget in the widget tree with a new SwatContainer, then
+	 * add this widget to the new container.
+	 *
+	 * @throws SwatException
+	 *
+	 * @return SwatContainer a reference to the new container.
+	 */
+	public function replaceWithContainer()
+	{
+		if ($this->parent === null)
+			throw new SwatException('Widget does not have a parent, unable '.
+				'to replace this widget with a container.');
+
+		$container = new SwatContainer();
+		$parent = $this->parent;
+		$parent->replace($this, $container);
+		$container->add($this);
+
+		return $container;
+	}
+
+	// }}}
 }
 
 ?>
