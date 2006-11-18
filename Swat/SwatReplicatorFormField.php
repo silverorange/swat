@@ -14,7 +14,7 @@ require_once 'Swat/SwatFieldset.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatReplicatorFormField extends SwatFormField implements SwatReplicable
+class SwatReplicatorFormField extends SwatFieldset implements SwatReplicable
 {
 	// {{{ public properties
 
@@ -30,9 +30,9 @@ class SwatReplicatorFormField extends SwatFormField implements SwatReplicable
 	public $replicators = null; 
 
 	// }}}
-	// {{{ private properies
+	// {{{ protected properies
 
-	private $widgets = array();
+	protected $widgets = array();
 
 	// }}}
 	// {{{ public function __construct()
@@ -63,7 +63,7 @@ class SwatReplicatorFormField extends SwatFormField implements SwatReplicable
 	{
 		parent::init();
 
-		$local_children = array();
+		$children = array();
 
 		if ($this->replicators === null)
 			return;
@@ -71,29 +71,24 @@ class SwatReplicatorFormField extends SwatFormField implements SwatReplicable
 		// first we add each child to the local array, and remove from the
 		// widget tree
 		foreach ($this->children as $child_widget)
-			$local_children[] = $this->remove($child_widget);
-
-		$container = new SwatFieldset();
-		$container->id = $this->id;
-		$container->title = $this->title;
+			$children[] = $this->remove($child_widget);
 
 		// then we clone, change the id and add back to the widget tree
 		foreach ($this->replicators as $id => $title) {
 			$form_field = new SwatFormField();
 			$form_field->title = $title;
-			$container->add($form_field);
 			$suffix = '_'.$this->id.$id;
-
 			$this->widgets[$id] = array();
 
-			foreach ($local_children as $child) {
+			foreach ($children as $child) {
 				$new_child = clone $child;
 
-				if ($child->id !== null) {
+				if ($new_child->id !== null) {
 					$this->widgets[$id][$new_child->id] = $new_child;
 					$new_child->id.= $suffix;
 				}
 
+				// update ids of cloned child descendants
 				if ($new_child instanceof SwatContainer) {
 					foreach ($new_child->getDescendants() as $descendant) {
 						if ($descendant->id !== null) {
@@ -105,9 +100,8 @@ class SwatReplicatorFormField extends SwatFormField implements SwatReplicable
 
 				$form_field->add($new_child);
 			}
+			$this->add($form_field);
 		}
-		$container->init();
-		$this->parent->replace($this, $container);
 	}
 
 	// }}}
