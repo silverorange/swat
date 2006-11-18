@@ -61,8 +61,6 @@ class SwatReplicatorFormField extends SwatFieldset implements SwatReplicable
 	 */
 	public function init()
 	{
-		parent::init();
-
 		$children = array();
 
 		if ($this->replicators === null)
@@ -102,6 +100,8 @@ class SwatReplicatorFormField extends SwatFieldset implements SwatReplicable
 			}
 			$this->add($form_field);
 		}
+
+		parent::init();
 	}
 
 	// }}}

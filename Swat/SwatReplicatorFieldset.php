@@ -62,8 +62,6 @@ class SwatReplicatorFieldset extends SwatDisplayableContainer
 	 */
 	public function init()
 	{
-		parent::init();
-
 		$children = array();
 
 		if ($this->replicators === null)
@@ -104,6 +102,8 @@ class SwatReplicatorFieldset extends SwatDisplayableContainer
 			}
 			$this->add($field_set);
 		}
+
+		parent::init();
 	}
 
 	// }}}
