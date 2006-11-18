@@ -85,8 +85,8 @@ class SwatReplicatorFieldset extends SwatDisplayableContainer
 			foreach ($children as $child) {
 				$new_child = clone $child;
 
-				if ($child->id !== null) {
-					$this->widgets[$id][$child->id] = $new_child;
+				if ($new_child->id !== null) {
+					$this->widgets[$id][$new_child->id] = $new_child;
 					$new_child->id.= $suffix;
 				}
 
