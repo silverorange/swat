@@ -92,7 +92,7 @@ class SwatMessageDisplay extends SwatControl
 	/**
 	 * Displays the messages
 	 *
-	 * The CSS class of each message is determined by the type of message being
+	 * The CSS class of each message is determined by the message being
 	 * displayed.
 	 */
 	public function display()
@@ -103,23 +103,23 @@ class SwatMessageDisplay extends SwatControl
 		if (count($this->_messages) == 0)
 			return;
 
-		$ul_tag = new SwatHtmlTag('div');
-		$li_tag = new SwatHtmlTag('div');
-		$div_tag = new SwatHtmlTag('div');
+		$wrapper_div = new SwatHtmlTag('div');
+		$message_div = new SwatHtmlTag('div');
+		$container_div = new SwatHtmlTag('div');
 
-		$ul_tag->id = $this->id;
-		$ul_tag->class = $this->getCSSClassString();
-		$ul_tag->open();
+		$wrapper_div->id = $this->id;
+		$wrapper_div->class = $this->getCSSClassString();
+		$wrapper_div->open();
 
 		$has_dismiss_link = false;
 
 		foreach ($this->_messages as $key => $message) {
-			$li_tag->id = $this->id.'_'.$key;
-			$li_tag->class = $message->getCSSClassString();
-			$li_tag->open();
+			$message_div->id = $this->id.'_'.$key;
+			$message_div->class = $message->getCSSClassString();
+			$message_div->open();
 
-			$div_tag->class = 'swat-message-container';
-			$div_tag->open();
+			$container_div->class = 'swat-message-container';
+			$container_div->open();
 
 			if ($message->type == SwatMessage::NOTIFICATION ||
 				$message->type == SwatMessage::WARNING) {
@@ -142,11 +142,11 @@ class SwatMessageDisplay extends SwatControl
 				$secondary_div->display();
 			}
 
-			$div_tag->close();
-			$li_tag->close();
+			$container_div->close();
+			$message_div->close();
 		}
 
-		$ul_tag->close();
+		$wrapper_div->close();
 
 		if ($has_dismiss_link)
 			$this->displayInlineJavaScript($this->getInlineJavaScript());
