@@ -77,6 +77,19 @@ class SwatTreeFlydownNode extends SwatTreeNode
 	}
 
 	// }}}
+	// {{{ public function convertFromDataTree()
+
+	public static function convertFromDataTree(SwatDataTreeNode $tree)
+	{
+		$new_tree = new SwatTreeFlydownNode($tree->value, $tree->title);
+
+		foreach ($tree->getChildren() as $child_node)
+			$new_tree->addChild(self::convertFromDataTree($child_node));
+
+		return $new_tree;
+	}
+
+	// }}}
 }
 
 ?>
