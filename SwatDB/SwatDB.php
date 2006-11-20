@@ -1045,7 +1045,7 @@ class SwatDB extends SwatObject
 	}
 
 	// }}}
-	// {{{ public static function buildTreeOptionArray)
+	// {{{ public static function buildTreeOptionArray()
 
 	/**
 	 * Builds a tree structured option array
