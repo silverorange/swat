@@ -144,6 +144,20 @@ class SwatTreeFlydown extends SwatFlydown
 	}
 
 	// }}}
+	// {{{ public function getTree()
+
+	/**
+	 * Gets the tree collection of {@link SwatTreeFlydownNode} objects for this
+	 * tree flydown
+	 *
+	 * @return SwatFlydowTreeNode Tree of nodes
+ 	 */
+	public function getTree()
+	{
+		return $this->tree;
+	}
+
+	// }}}
 	// {{{ public function process()
 
 	/**

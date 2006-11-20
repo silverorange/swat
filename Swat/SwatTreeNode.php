@@ -63,6 +63,23 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator,
 	}
 
 	// }}}
+	// {{{ public function addTree()
+
+	/**
+	 * Adds a full tree structure to this node
+	 *
+	 * Identical to addChild() except that it removes the root node from
+	 * the passed tree.
+	 *
+	 * @param SwatTreeNode $tree the tree to add to this node.
+	 */
+	public function addTree($tree)
+	{
+		foreach ($tree->getChildren() as $child)
+			$this->addChild($child);
+	}
+
+	// }}}
 	// {{{ public function getPath()
 
 	/**
