@@ -7,7 +7,6 @@ require_once 'SwatDB/SwatDBField.php';
 require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/SwatDBDefaultRecordsetWrapper.php';
 require_once 'Swat/SwatDataTreeNode.php';
-require_once 'Swat/SwatTreeFlydownNode.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
@@ -1045,10 +1044,10 @@ class SwatDB extends SwatObject
 	}
 
 	// }}}
-	// {{{ public static function buildTreeOptionArray()
+	// {{{ public static function buildDataTree()
 
 	/**
-	 * Builds a tree structured option array
+	 * Build a tree of data nodes
 	 *
  	 * Convenience method to take a structured query with each row consisting of
 	 * an id, levelnum, and a title, and turning it into a tree of
@@ -1068,23 +1067,23 @@ class SwatDB extends SwatObject
 	 *
 	 * @param string $level_field_name the name of the database field
 	 *                                  representing the tree level.
-	 * @param SwatTreeFlydownNode $tree an optional tree to add nodes to. If no
+	 * @param SwatDataTreeNode $tree an optional tree to add nodes to. If no
 	 *                                   tree is specified, nodes are added to
 	 *                                   a new empty tree.
 	 *
-	 * @return SwatTreeFlydownNode a tree composed of
-	 *                              {@link SwatTreeFlydownNode} objects.
+	 * @return SwatDataTreeNode a tree composed of
+	 *                              {@link SwatDataTreeNode} objects.
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function buildTreeOptionArray($rs, $title_field_name,
+	public static function buildDataTree($rs, $title_field_name,
 		$id_field_name, $level_field_name, $tree = null)
 	{
 		$stack = array();
-		if ($tree !== null && $tree instanceof SwatTreeFlydownNode)
+		if ($tree !== null && $tree instanceof SwatDataTreeNode)
 			$current_parent = $tree;
 		else
-			$current_parent = new SwatTreeFlydownNode('', Swat::_('Root'));
+			$current_parent = new SwatDataTreeNode('', Swat::_('Root'));
 
 		$base_parent = $current_parent;
 		array_push($stack, $current_parent);
@@ -1102,7 +1101,7 @@ class SwatDB extends SwatObject
 				$current_parent = array_pop($stack);
 			}
 
-			$last_node = new SwatTreeFlydownNode($id, $title);
+			$last_node = new SwatDataTreeNode($id, $title);
 			$current_parent->addChild($last_node);
 		}
 
