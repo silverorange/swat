@@ -126,9 +126,10 @@ class SwatString extends SwatObject
 
 		$in_blocklevel = false;
 		foreach($paragraphs as &$paragraph) {
-			// don't wrap empty paragraphs in paragraph tags.
-			// this prevents an empty source string from translating to <p></p>
-			if (strlen($paragraph) == 0)
+			// ignore paragraphs containing all whitespace or empty paragraphs.
+			// this prevents empty paragraph tags from appearing in the
+			// returned string
+			if (strlen(trim($paragraph)) == 0)
 				continue;
 
 			$blocklevel_started =
