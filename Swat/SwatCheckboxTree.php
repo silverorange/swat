@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Swat/SwatTreeNode.php';
+require_once 'Swat/SwatDataTreeNode.php';
 require_once 'Swat/SwatCheckboxList.php';
 require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatState.php';
@@ -14,7 +14,7 @@ require_once 'Swat/SwatState.php';
  */
 class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 {
-	// {{{ proctected properties
+	// {{{ protected properties
 
 	/**
 	 * Checkbox tree structure
@@ -46,6 +46,22 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	 * @see SwatCheckboxTree::displayNode()
 	 */
 	private $input_tag = null;
+
+	// }}}
+	// {{{ public function __construct()
+
+	/**
+	 * Creates a new checkbox list
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatCheckboxList::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+		$this->setTree(new SwatDataTreeNode(null, 'root'));
+	}
 
 	// }}}
 	// {{{ public function display()
@@ -95,6 +111,20 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	public function setTree(SwatDataTreeNode $tree)
 	{
 		$this->tree = $tree;
+	}
+
+	// }}}
+	// {{{ public function getTree()
+
+	/**
+	 * Gets the tree collection of {@link SwatTreeNode} objects for this
+	 * tree flydown
+	 *
+	 * @return SwatTreeNode Tree of nodes
+ 	 */
+	public function getTree()
+	{
+		return $this->tree;
 	}
 
 	// }}}
