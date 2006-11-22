@@ -140,6 +140,9 @@ class SwatTreeFlydown extends SwatFlydown
 	 */
 	public function setTree(SwatTreeFlydownNode $tree)
 	{
+		if ($tree instanceof SwatDataTreeNode)
+			$tree = SwatTreeFlydownNode::convertFromDataTree($tree);
+
 		$this->tree = $tree;
 	}
 
