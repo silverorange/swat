@@ -1044,16 +1044,17 @@ class SwatDB extends SwatObject
 	}
 
 	// }}}
-	// {{{ public static function buildDataTree()
+	// {{{ public static function getDataTree()
 
 	/**
-	 * Build a tree of data nodes
+	 * Get a tree of data nodes
 	 *
  	 * Convenience method to take a structured query with each row consisting of
 	 * an id, levelnum, and a title, and turning it into a tree of
 	 * {@link SwatDataTreeNode} objects. The returned option array in the form
 	 * of a collection of {@link SwatDataTreeNode} objects can be used by other
-	 * classes, such as {@link SwatTreeFlydown}.
+	 * classes, such as {@link SwatTreeFlydown} and
+	 * {@link @SwatChecklistTree}.
 	 *
 	 * @param MDB2_Driver_Common $rs The MDB2 result set, usually the
 	 * 	result of a stored procedure. Must be wrapped in {@link
@@ -1076,7 +1077,7 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function buildDataTree($rs, $title_field_name,
+	public static function getDataTree($rs, $title_field_name,
 		$id_field_name, $level_field_name, $tree = null)
 	{
 		$stack = array();
