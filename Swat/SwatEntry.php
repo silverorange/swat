@@ -206,6 +206,24 @@ class SwatEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
+	// {{{ public function getFocusableHtmlId()
+
+	/**
+	 * Gets the id attribute of the XHTML element displayed by this widget
+	 * that should receive focus
+	 *
+	 * @return string the id attribute of the XHTML element displayed by this
+	 *                 widget that should receive focus or null if there is
+	 *                 no such element.
+	 *
+	 * @see SwatWidget::getFocusableHtmlId()
+	 */
+	public function getFocusableHtmlId()
+	{
+		return ($this->autocomplete) ? $this->id : $this->getNonce();
+	}
+
+	// }}}
 	// {{{ protected function getValidationMessage()
 
 	/**
@@ -275,24 +293,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 	protected function getDisplayValue()
 	{
 		return $this->value;
-	}
-
-	// }}}
-	// {{{ public function getFocusableHtmlId()
-
-	/**
-	 * Gets the id attribute of the XHTML element displayed by this widget
-	 * that should receive focus
-	 *
-	 * @return string the id attribute of the XHTML element displayed by this
-	 *                 widget that should receive focus or null if there is
-	 *                 no such element.
-	 *
-	 * @see SwatWidget::getFocusableHtmlId()
-	 */
-	public function getFocusableHtmlId()
-	{
-		return ($this->autocomplete) ? $this->id : $this->getNonce();
 	}
 
 	// }}}
