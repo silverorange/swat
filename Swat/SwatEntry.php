@@ -227,12 +227,13 @@ class SwatEntry extends SwatInputControl implements SwatState
 	// {{{ protected function getValidationMessage()
 
 	/**
-	 * Get validation message
+	 * Gets a validation message for this entry
 	 *
 	 * Can be used by sub-classes to change the validation messages.
 	 *
-	 * @param string $id a string identifier for the message.
-	 * @return string The validation message.
+	 * @param string $id the string identifier of the validation message.
+	 *
+	 * @return string the validation message.
 	 */
 	protected function getValidationMessage($id)
 	{
