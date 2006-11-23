@@ -157,8 +157,8 @@ class SwatFileEntry extends SwatInputControl
 		$note = null;
 
 		if ($this->accept_mime_types !== null && $this->display_mime_types) {
-			$note = Swat::ngettext("File type must be '%s'",
-				"Valid file types are: %s",
+			$note = Swat::ngettext('File type must be %s.',
+				'Valid file types are: %s.',
 				count($this->accept_mime_types));
 
 			$note = sprintf($note, implode(', ', $this->accept_mime_types));
