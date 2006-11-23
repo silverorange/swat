@@ -91,10 +91,10 @@ class SwatFileEntry extends SwatInputControl
 		$input_tag->accesskey = $this->access_key;
 		$input_tag->size = $this->size;
 
+		// note: the 'accept' attribute is part of the w3c
+		// standard, but ignored by most browsers
 		if ($this->accept_mime_types !== null)
 			$input_tag->accept = implode(',', $this->accept_mime_types);
-			//note: the 'accept' attribute is part of the w3c
-			//standard, but ignored by most browsers
 
 		$input_tag->display();
 	}
