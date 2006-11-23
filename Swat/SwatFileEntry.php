@@ -150,21 +150,25 @@ class SwatFileEntry extends SwatInputControl
 	 * {@link SwatFileEntry::$display_mimetypes} is set to true and
 	 * {@link SwatFileEntry::$accept_mime_types} has entries.
 	 *
-	 * @return string an informative note of how to use this control.
+	 * @return SwatMessage a note listing the accepted mime-types for this
+	 *                      file entry widget or null if any mime-type is
+	 *                      accepted.
+	 *
+	 * @see SwatControl::getNote()
 	 */
 	public function getNote()
 	{
-		$note = null;
+		$message = null;
 
 		if ($this->accept_mime_types !== null && $this->display_mime_types) {
-			$note = Swat::ngettext('File type must be %s.',
+			$message = new SwatMessage(sprintf(Swat::ngettext(
+				'File type must be %s.',
 				'Valid file types are: %s.',
-				count($this->accept_mime_types));
-
-			$note = sprintf($note, implode(', ', $this->accept_mime_types));
+				count($this->accept_mime_types)),
+				implode(', ', $this->accept_mime_types)));
 		}
 
-		return $note;
+		return $message;
 	}
 
 	// }}}
