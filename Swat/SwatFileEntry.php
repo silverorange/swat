@@ -91,8 +91,8 @@ class SwatFileEntry extends SwatInputControl
 		$input_tag->accesskey = $this->access_key;
 		$input_tag->size = $this->size;
 
-		// note: the 'accept' attribute is part of the w3c
-		// standard, but ignored by most browsers
+		// note: the 'accept' attribute is part of the w3c standard, but
+		//       is ignored by most browsers
 		if ($this->accept_mime_types !== null)
 			$input_tag->accept = implode(',', $this->accept_mime_types);
 
@@ -117,10 +117,10 @@ class SwatFileEntry extends SwatInputControl
 		else
 			$this->file = $_FILES[$this->id];
 
+		// note: an array is returned even if no file is uploaded, so check
+		//       the filename
 		if ($this->file['name'] == null)
 			$this->file = null;
-			// note: an array is returned even if
-			//       no file is uploaded, so check the filename
 
 		if (!$this->required && $this->file === null) {
 			return;
