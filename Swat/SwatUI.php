@@ -610,6 +610,9 @@ class SwatUI extends SwatObject
 
 		// type is always set in the DTD
 		$type = $property_node->getAttribute('type');
+		// temp work-around since the DTD is not defaulting the type
+		if (strlen($type) == 0)
+			$type = 'implicit-string';
 
 		$parsed_value =
 			$this->parseValue($name, $value, $type, $translatable, $object);
