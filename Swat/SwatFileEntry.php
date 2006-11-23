@@ -126,17 +126,17 @@ class SwatFileEntry extends SwatInputControl
 			return;
 
 		} elseif ($this->file === null) {
-			$msg = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$message = $this->getValidationMessage('required');
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 
 		} elseif ($this->accept_mime_types !== null &&
 			!in_array($this->getMimeType(), $this->accept_mime_types)) {
 
-			$msg = sprintf(
-				Swat::_('The %%s field must be of the following type(s): %s.'),
+			$message = sprintf(
+				$this->getValidationMessage('mime-type'),
 				implode(', ', $this->accept_mime_types));
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 		}
 	}
 
@@ -299,6 +299,30 @@ class SwatFileEntry extends SwatInputControl
 	}
 
 	// }}}
+	// {{{ protected function getValidationMessage()
+
+	/**
+	 * Gets a validation message for this file entry
+	 *
+	 * Can be used by sub-classes to change the validation messages.
+	 *
+	 * @param string $id the string identifier of the validation message.
+	 *
+	 * @return string the validation message.
+	 */
+	protected function getValidationMessage($id)
+	{
+		switch ($id) {
+		case 'required':
+			return Swat::_('The %s field is required.');
+		case 'mime-type':
+			return
+				Swat::_('The %%s field must be of the following type(s): %s.');
+		default:
+			return null;
+		}
+	}
+
 	// {{{ protected function getCSSClassNames()
 
 	/**
