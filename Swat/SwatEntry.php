@@ -240,9 +240,9 @@ class SwatEntry extends SwatInputControl implements SwatState
 		case 'required':
 			return Swat::_('The %s field is required.');
 		case 'too-long':
-			return Swat::_('The %s field is required.');
-		case 'too-short':
 			return Swat::_('The %%s field can be at most %s characters long.');
+		case 'too-short':
+			return Swat::_('The %%s must be at least %s characters long.');
 		default:
 			return null;
 		}
