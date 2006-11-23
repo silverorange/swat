@@ -162,24 +162,41 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 				$this->prototype_widget->display();
 			}
 		} else {
-			$form = $this->getForm();
-			$widget = $this->getClonedWidget($this->replicator_id);
-			$this->applyPropertyValuesToClonedWidget($widget);
+			if ($this->prototype_widget->id === null)
+				throw new SwatException(
+					'Prototype widget must have a non-null id.');
 
-			if ($form === null) {
+			$widget = $this->getClonedWidget($this->replicator_id);
+			if ($widget === null)
+				return;
+
+			$form = $this->getForm();
+			if ($form === null)
 				throw new SwatException('Cell renderer container must be inside '.
 					'a SwatForm for SwatWidgetCellRenderer to work.');
+
+			$form->addHiddenField($this->prototype_widget->id.'_replicators',
+				array_keys($this->clones));
+
+			if ($form->isProcessed()) {
+				// save widget state if the form was processed
+				if ($widget instanceof SwatState)
+					$state = $widget->getState();
+				elseif ($widget instanceof SwatContainer)
+					$state = $widget->getDescendentStates();
+
+				$this->applyPropertyValuesToClonedWidget($widget);
+
+				// restore widget state to replace initial values
+				if ($widget instanceof SwatState)
+					$widget->setState($state);
+				elseif ($widget instanceof SwatContainer)
+					$widget->setDescendentStates($state);
 			} else {
-				if ($this->prototype_widget->id === null)
-					throw new SwatException(
-						'Prototype widget must have a non-null id.');
-				else
-					$form->addHiddenField($this->prototype_widget->id.'_replicators',
-						array_keys($this->clones));
+				$this->applyPropertyValuesToClonedWidget($widget);
 			}
 
-			if ($widget !== null)
-				$widget->display();
+			$widget->display();
 		}
 	}
 
@@ -415,7 +432,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	// {{{ private function applyPropertyValuesToClonedWidget()
 
 	private function applyPropertyValuesToClonedWidget($cloned_widget)
-{
+	{
 		foreach ($this->property_values as $name => $value) {
 			$object = $this->mappings[$name]['object'];
 			$property = $this->mappings[$name]['property'];
