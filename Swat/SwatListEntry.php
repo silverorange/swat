@@ -278,43 +278,43 @@ class SwatListEntry extends SwatEntry
 	 * delimiter is used. Developers are responsible for ensuring that users
 	 * are notified what type of delimiters are used.
 	 *
-	 * @return string an informative note of how to use this list entry.
+	 * @return SwatMessage an informative note of how to use this list entry.
 	 *
 	 * @see SwatControl::getNote()
 	 */
 	public function getNote()
 	{
-		$note = null;
+		$message = null;
 
 		if ($this->max_entries !== null && $this->max_entries > 0 &&
 			$this->min_entries === null) {
 
-			$note = sprintf(Swat::ngettext(
+			$message = new SwatMessage(sprintf(Swat::ngettext(
 				'List can contain at most %s entry',
 				'List can contain at most %s entries',
 				$this->max_entries),
-				SwatString::numberFormat($this->max_entries));
+				SwatString::numberFormat($this->max_entries)));
 
 		} elseif (($this->max_entries === null  ||
 			$this->max_entries == 0) &&
 			$this->min_entries !== null && $this->required == true) {
 
-			$note = sprintf(Swat::ngettext(
+			$message = new SwatMessage(sprintf(Swat::ngettext(
 				'List must contain at least %s entry',
 				'List must contain at least %s entries',
 				$this->min_entries),
-				SwatString::numberFormat($this->min_entries));
+				SwatString::numberFormat($this->min_entries)));
 
 		} elseif ($this->max_entries !== null && $this->max_entries > 0 &&
 			$this->min_entries !== null && $this->required == true) {
 
-			$note = sprintf(
+			$message = new SwatMessage(sprintf(
 				'List must contain between %s and %s entries.',
 				SwatString::numberFormat($this->min_entries),
-				SwatString::numberFormat($this->max_entries));
+				SwatString::numberFormat($this->max_entries)));
 		}
 
-		return $note;
+		return $message;
 	}
 
 	// }}}

@@ -246,8 +246,12 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	protected function displayNotes()
 	{
 		$notes = array();
-		if ($this->note !== null)
-			$notes[] = $this->note;
+
+		if ($this->note !== null) {
+			$note = new SwatMessage($this->note);
+			$note->content_type = $this->note_content_type;
+			$notes[] = $note;
+		}
 
 		$control = $this->getFirstDescendant('SwatControl');
 		if ($control !== null) {
@@ -257,9 +261,10 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		}
 
 		if (count($notes) == 1) {
+			$note = reset($notes);
 			$note_div = new SwatHtmlTag('div');
 			$note_div->class = 'swat-note';
-			$note_div->setContent(reset($notes), $this->note_content_type);
+			$note_div->setContent($note->primary_content, $note->content_type);
 			$note_div->display();
 		} elseif (count($notes) > 1) {
 			$note_list = new SwatHtmlTag('ul');
@@ -268,8 +273,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 			$li_tag = new SwatHtmlTag('li');
 			foreach ($notes as $note) {
-				// TODO: get content type of control note.
-				$li_tag->setContent($note, $this->note_content_type);
+				$li_tag->setContent($note->primary_content,
+					$note->content_type);
+
 				$li_tag->display();
 			}
 
