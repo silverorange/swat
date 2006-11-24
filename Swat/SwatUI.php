@@ -170,27 +170,28 @@ class SwatUI extends SwatObject
 
 		$html_errors_value = self::initializeErrorHandler();
 
-		$document = DOMDocument::load($xml_file);
+		$document = new DOMDocument();
+		$document->resolveExternals = true;
+		$document->validate = true;
+		$document->load($xml_file);
+
+		self::restoreErrorHandler($html_errors_value);
 
 		// make sure we are using the correct document type
 		if (count(self::$validation_errors) == 0 &&
 			($document->doctype === null ||
 			strcmp($document->doctype->name, 'swatml') != 0)) {
-			self::restoreErrorHandler($html_errors_value);
 			throw new SwatInvalidSwatMLException(
 				'SwatUI can only parse SwatML documents: ',
 				0, $xml_file);
 		}
 
-		if (count(self::$validation_errors) > 0 || !$document->validate()) {
-			self::restoreErrorHandler($html_errors_value);
+		if (count(self::$validation_errors) > 0) {
 			throw new SwatInvalidSwatMLException(
 				"Invalid SwatML:\n".
 				implode("\n", self::$validation_errors),
 				0, $xml_file);
 		}
-
-		self::restoreErrorHandler($html_errors_value);
 
 		$this->parseUI($document->documentElement, $container);
 	}
