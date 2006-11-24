@@ -27,7 +27,7 @@ class SwatReplicatorFormField extends SwatFieldset implements SwatReplicable
 	 *
 	 * @var array
 	 */
-	public $replicators = null; 
+	public $replicators = null;
 
 	// }}}
 	// {{{ protected properies
