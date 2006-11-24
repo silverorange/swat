@@ -1,3 +1,23 @@
+2006-11-24  nrf
+
+	* [r13264] swat/branches/1.0.x:
+	  Make a branch.
+
+2006-11-14  nrf
+
+	* [r13028] swat/tags/release-1.0.13:
+	  tag release 1.0.13
+	* [r13027] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.0.13
+	* [r13026] swat/trunk/locale/en_CA/LC_MESSAGES/swat.mo,
+	  swat/trunk/locale/en_GB/LC_MESSAGES/swat.mo,
+	  swat/trunk/locale/en_US/LC_MESSAGES/swat.mo,
+	  swat/trunk/po/en_CA.po, swat/trunk/po/en_GB.po,
+	  swat/trunk/po/en_US.po:
+	  Update translations.
+	* [r13025] swat/trunk/Swat/SwatDate.php:
+	  Add a __toString() method.
+
 2006-11-14  nick
 
 	* [r13019] swat/trunk/Swat/SwatHtmlHeadEntry.php:
