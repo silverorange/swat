@@ -92,9 +92,11 @@ class SwatToolbar extends SwatDisplayableContainer
 	protected function displayChildren()
 	{
 		foreach ($this->children as &$child) {
-			echo '<li>';
+			ob_start();
 			$child->display();
-			echo '</li>';
+			$content = ob_get_clean();
+			if (strlen($content) > 0) {
+				echo '<li>', $content, '</li>';
 		}
 	}
 
