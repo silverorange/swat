@@ -24,6 +24,7 @@ class SwatForm extends SwatDisplayableContainer
 
 	const PROCESS_FIELD = '_swat_form_process';
 	const HIDDEN_FIELD = '_swat_form_hidden_fields';
+	const SERIALIZED_PREFIX = '_swat_form_serialized_';
 
 	// }}}
 	// {{{ public properties
@@ -231,6 +232,12 @@ class SwatForm extends SwatDisplayableContainer
 	 *
 	 * Adds a form field to this form that is not shown to the user.
 	 * Hidden form fields are outputted as type="hidden" input tags.
+	 * Values are serialized before being output so the value can be either a
+	 * primitive type or an object.  Unserialization happens automatically 
+	 * when used with SwatForm::getHiddenField() to retrieve the value.  For
+	 * non-array and non-object types, the value is also stored in an 
+	 * unserialized form that can be retrieved without
+	 * SwatForm::getHiddenField();
 	 *
 	 * @param string $name the name of the field.
 	 * @param mixed $value the value of the field, either a string or an array.
@@ -260,9 +267,11 @@ class SwatForm extends SwatDisplayableContainer
 			$raw_data = $this->getFormData();
 
 			if (isset($raw_data[self::PROCESS_FIELD]) &&
-				$raw_data[self::PROCESS_FIELD] == $this->id &&
-				isset($raw_data[$name]))
-					return $raw_data[$name];
+				$raw_data[self::PROCESS_FIELD] == $this->id) {
+					$serialized_field_name = self::SERIALIZED_PREFIX.$name;
+					if (isset($raw_data[$serialized_field_name]))
+						return unserialize($raw_data[$serialized_field_name]);
+			}
 		}
 
 		return null;
@@ -355,7 +364,7 @@ class SwatForm extends SwatDisplayableContainer
 		$raw_data = $this->getFormData();
 
 		if (isset($raw_data[self::HIDDEN_FIELD]))
-			$fields = $raw_data[self::HIDDEN_FIELD];
+			$fields = unserialize($raw_data[self::HIDDEN_FIELD]);
 		else
 			return;
 
@@ -363,9 +372,10 @@ class SwatForm extends SwatDisplayableContainer
 			return;
 
 		foreach ($fields as $name) {
-			if (isset($raw_data[$name])) {
-				$value = $raw_data[$name];
-				$this->addHiddenField($name, $value);
+			$serialized_field_name = self::SERIALIZED_PREFIX.$name;
+			if (isset($raw_data[$serialized_field_name])) {
+				$value = unserialize($raw_data[$serialized_field_name]);
+				$this->hidden_fields[$name] = $value;
 			}
 		}
 	}
@@ -423,21 +433,23 @@ class SwatForm extends SwatDisplayableContainer
 		echo '<div class="swat-input-hidden">';
 
 		foreach ($this->hidden_fields as $name => $value) {
-			if (is_array($value)) {
-				foreach ($value as $v) {
-					$input_tag->name = $name.'[]';
-					$input_tag->value = $v;
-					$input_tag->display();
-				}
-			} elseif ($value !== null) {
+			// display unserialized value
+			if ($value !== null && !is_array($value) && !is_object($value)) {
 				$input_tag->name = $name;
 				$input_tag->value = $value;
 				$input_tag->display();
 			}
 
+			// display serialized value
+			$input_tag->name = self::SERIALIZED_PREFIX.$name;
+			$input_tag->value = serialize($value);
+			$input_tag->display();
+		}
+
+		if (count($this->hidden_fields) > 0) {
 			// array of field names
-			$input_tag->name = self::HIDDEN_FIELD.'[]';
-			$input_tag->value = $name;
+			$input_tag->name = self::HIDDEN_FIELD;
+			$input_tag->value = serialize(array_keys($this->hidden_fields));
 			$input_tag->display();
 		}
 
