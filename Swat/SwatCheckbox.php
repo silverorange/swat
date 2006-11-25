@@ -139,7 +139,7 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 	 */
 	public function getFocusableHtmlId()
 	{
-		return $this->id;
+		return ($this->visible) ? $this->id : null;
 	}
 
 	// }}}
