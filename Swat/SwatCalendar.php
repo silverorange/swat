@@ -19,13 +19,6 @@ class SwatCalendar extends SwatControl
 	// {{{ public properties
 
 	/**
-	 * Id of the {@link SwatDateEntry} this calendar corresponds to
-	 *
-	 * @var string
-	 */
-	public $entry_id;
-
-	/**
 	 * Start date of the valid range (inclusive).
 	 *
 	 * @var Date
@@ -88,21 +81,19 @@ class SwatCalendar extends SwatControl
 
 		// toggle button content is displayed with JavaScript
 
-		if ($this->entry_id === null) {
-			if (isset($this->valid_range_start)) {
-				$value = $this->valid_range_start->format('%m/%d/%Y');
-			} else {
-				$today = new SwatDate();
-				$value = $today->format('%m/%d/%Y');
-			}
-
-			$input_tag = new SwatHtmlTag('input');
-			$input_tag->type = 'hidden';
-			$input_tag->id = $this->id.'_value';
-			$input_tag->name = $this->id.'_value';
-			$input_tag->value = $value;
-			$input_tag->display();
+		if ($this->valid_range_start === null) {
+			$today = new SwatDate();
+			$value = $today->format('%m/%d/%Y');
+		} else {
+			$value = $this->valid_range_start->format('%m/%d/%Y');
 		}
+
+		$input_tag = new SwatHtmlTag('input');
+		$input_tag->type = 'hidden';
+		$input_tag->id = $this->id.'_value';
+		$input_tag->name = $this->id.'_value';
+		$input_tag->value = $value;
+		$input_tag->display();
 
 		$container_div_tag->close();
 
@@ -144,9 +135,6 @@ class SwatCalendar extends SwatControl
 			$javascript = '';
 		}
 
-		$swat_date_entry = ($this->entry_id === null) ?
-			'null' : $this->entry_id;
-
 		if (isset($this->valid_range_start))
 			$start_date = $this->valid_range_start->format('%m/%d/%Y');
 		else 
@@ -162,12 +150,11 @@ class SwatCalendar extends SwatControl
 		}
 
 		$javascript.=
-			sprintf("var %s_obj = new SwatCalendar('%s', '%s', '%s', %s);",
+			sprintf("var %s_obj = new SwatCalendar('%s', '%s', '%s');",
 			$this->id,
 			$this->id,
 			$start_date,
-			$end_date,
-			$swat_date_entry);
+			$end_date);
 
 		return $javascript;
 	}

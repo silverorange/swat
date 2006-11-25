@@ -296,18 +296,16 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		echo '</span>';
 
+		if ($this->display_parts & self::CALENDAR) {
+			$this->calendar->display();
+		}
+
 		if ($this->display_parts & self::TIME) {
 			echo ' ';
 			$this->time_entry->display();
 		}
 
-		// calendar JavaScript is displayed last as it looks for a js object
-		// created here.
 		$this->displayInlineJavaScript($this->getInlineJavaScript());
-
-		if ($this->display_parts & self::CALENDAR) {
-			$this->calendar->display();
-		}
 
 		$div_tag->close();
 	}
@@ -478,11 +476,15 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf("var %s = new SwatDateEntry('%s');",
+		$javascript = sprintf("var %s_obj = new SwatDateEntry('%s');",
 			$this->id, $this->id);
 
 		if ($this->display_parts & self::TIME)
-			$javascript.= sprintf("\n%s.setSwatTime(%s_time_entry);",
+			$javascript.= sprintf("\n%s_obj.setSwatTime(%s_time_entry);",
+				$this->id, $this->id);
+
+		if ($this->display_parts & self::CALENDAR)
+			$javascript.= sprintf("\n%s_calendar_obj.setSwatDateEntry(%s_obj);",
 				$this->id, $this->id);
 
 		return $javascript;
@@ -694,7 +696,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		require_once 'Swat/SwatCalendar.php';
 		$this->calendar = new SwatCalendar($this->id.'_calendar');
 		$this->calendar->parent = $this;
-		$this->calendar->entry_id = $this->id;
 		$this->calendar->valid_range_start = $this->valid_range_start;
 		$this->calendar->valid_range_end   = $this->valid_range_end;
 	}
