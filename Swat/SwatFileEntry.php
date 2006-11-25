@@ -299,7 +299,7 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public function getFocusableHtmlId()
 	{
-		return $this->id;
+		return ($this->visible) ? $this->id : null;
 	}
 
 	// }}}

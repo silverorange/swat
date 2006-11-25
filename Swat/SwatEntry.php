@@ -220,7 +220,10 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 */
 	public function getFocusableHtmlId()
 	{
-		return ($this->autocomplete) ? $this->id : $this->getNonce();
+		if ($this->visible)
+			return ($this->autocomplete) ? $this->id : $this->getNonce();
+		else
+			return null;
 	}
 
 	// }}}
