@@ -24,9 +24,8 @@
  * @param string id
  * @param string start_date
  * @param string end_date
- * @param SwatDateEntry swat_date_entry
  */
-function SwatCalendar(id, start_date, end_date, swat_date_entry)
+function SwatCalendar(id, start_date, end_date)
 {
 	this.id = id;
 	this.is_safari = (/Safari|Konqueror|KHTML/gi).test(navigator.userAgent);
@@ -46,17 +45,24 @@ function SwatCalendar(id, start_date, end_date, swat_date_entry)
 		this.end_date = new Date(year, 0, 1);
 	}
 
-	if (typeof(SwatDateEntry) != 'undefined' &&
-		swat_date_entry instanceof SwatDateEntry) {
-		this.date = swat_date_entry;
-	} else {
-		this.date = null;
-		this.value = document.getElementById(this.id + '_value');
-	}
+	this.date = null;
+	this.value = document.getElementById(this.id + '_value');
 
 	this.drawButton();
 
 	this.open = false;
+}
+
+/**
+ * Associates this calendar control with an existing SwatDateEntry JavaScript
+ * object
+ *
+ * @param SwatDateEntry entry
+ */
+SwatCalendar.prototype.setSwatDateEntry = function(entry)
+{
+	if (typeof(SwatDateEntry) != 'undefined' && entry instanceof SwatDateEntry)
+		this.date = entry;
 }
 
 /**
