@@ -91,6 +91,9 @@ class SwatString extends SwatObject
 		$text = str_replace("\r\n", "\n", $text);
 		$text = str_replace("\r", "\n", $text);
 
+		// remove trailing whitespace
+		$text = rtrim($text);
+
 		// replace continuous strings of whitespace containing a
 		// double lf with two line breaks
 		$text = preg_replace('/[\xa0\s]*\n\n[\xa0\s]*/su', "\n\n", $text);
@@ -122,6 +125,29 @@ class SwatString extends SwatObject
 
 		$text = preg_replace($ending_breaking_then_break, "\\1", $text);
 
+		// temporarily remove scripts and styles so they are not formatted
+		$script_style_search =
+			'/<(script|style)[^<>]*?>(.*?)<\/(script|style)>/usi';
+
+		$scripts_and_styles = array();
+		$script_tags = preg_match_all($script_style_search, $text,
+			$scripts_and_styles);
+
+		// save script and style content
+		$scripts_and_styles = $scripts_and_styles[2];
+
+		if (count($scripts_and_styles) > 0) {
+			// replace script and style content with sprintf place holders
+			$text = str_replace('%', '%%', $text);
+			$script_style_replace = 
+				'/(<(script|style)[^<>]*?>).*?(<\/(script|style)>)/usi';
+
+			$text = preg_replace($script_style_replace, '\1%s\3', $text);
+		}
+
+		// match paragraphs that are entirely script or style content
+		$script_style = '/^<(script|style)[^<>]*?>%s<\/(script|style)>$/ui';
+
 		$paragraphs = explode("\n\n", $text);
 
 		$in_blocklevel = false;
@@ -141,9 +167,11 @@ class SwatString extends SwatObject
 			if ($blocklevel_started)
 				$in_blocklevel = true;
 
+			$is_script_or_style = (preg_match($script_style, $paragraph) == 1);
+
 			// don't wrap this paragraph in <p> tags if we are in a blocklevel
-			// tag already
-			if ($in_blocklevel) {
+			// tag already or if the paragraph is a script or style
+			if ($in_blocklevel || $is_script_or_style) {
 				$paragraph = $paragraph."\n\n";
 			} else {
 				$paragraph = '<p>'.$paragraph."</p>\n\n";
@@ -156,6 +184,11 @@ class SwatString extends SwatObject
 		$text = implode('', $paragraphs);
 
 		$text = preg_replace('/([^\n])\n([^\n])/su', '\1<br />\2', $text);
+
+		if (count($scripts_and_styles) > 0) {
+			// replace script and style content
+			$text = vsprintf($text, $scripts_and_styles);
+		}
 
 		$text = rtrim($text);
 
