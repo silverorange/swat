@@ -61,6 +61,16 @@ class SwatString extends SwatObject
 		'ul',     'var',
 	);
 
+	/**
+	 * XHTML elements where the content is pre-formatted and should not be
+	 * modified
+	 *
+	 * @var array
+	 */
+	public static $preformatted_elements = array(
+		'script', 'style', 'pre',
+	);
+
 	// }}}
 	// {{{ public static function toXHTML()
 
@@ -82,6 +92,7 @@ class SwatString extends SwatObject
 	{
 		$blocklevel_elements = implode('|', self::$blocklevel_elements);
 		$breaking_elements = implode('|', self::$breaking_elements);
+		$preformatted_elements = implode('|', self::$preformatted_elements);
 
 		// regular expressions to match blocklevel tags
 		$starting_blocklevel = '/^<('.$blocklevel_elements.')[^<>]*?>/siu';
@@ -125,28 +136,31 @@ class SwatString extends SwatObject
 
 		$text = preg_replace($ending_breaking_then_break, "\\1", $text);
 
-		// temporarily remove scripts and styles so they are not formatted
-		$script_style_search =
-			'/<(script|style)[^<>]*?>(.*?)<\/(script|style)>/usi';
+		// temporarily remove preformatted content so it is not auto-formatted
+		$preformatted_search = '/<('.$preformatted_elements.')[^<>]*?>'.
+			'(.*?)'.
+			'<\/('.$preformatted_elements.')>/usi';
 
-		$scripts_and_styles = array();
-		$script_tags = preg_match_all($script_style_search, $text,
-			$scripts_and_styles);
+		$preformatted_content = array();
+		preg_match_all($preformatted_search, $text, $preformatted_content);
 
-		// save script and style content
-		$scripts_and_styles = $scripts_and_styles[2];
+		// save preformatted content
+		$preformatted_content = $preformatted_content[2];
 
-		if (count($scripts_and_styles) > 0) {
-			// replace script and style content with sprintf place holders
+		if (count($preformatted_content) > 0) {
+			// replace preformatted content with sprintf place-holders
 			$text = str_replace('%', '%%', $text);
-			$script_style_replace = 
-				'/(<(script|style)[^<>]*?>).*?(<\/(script|style)>)/usi';
+			$preformat_replace = '/(<('.$preformatted_elements.')[^<>]*?>)'.
+				'.*?'.
+				'(<\/('.$preformatted_elements.')>)/usi';
 
-			$text = preg_replace($script_style_replace, '\1%s\3', $text);
+			$text = preg_replace($preformat_replace, '\1%s\3', $text);
 		}
 
-		// match paragraphs that are entirely script or style content
-		$script_style = '/^<(script|style)[^<>]*?>%s<\/(script|style)>$/ui';
+		// match paragraphs that are entirely preformatted elements
+		$preformat = '/^<('.$preformatted_elements.')[^<>]*?>'.
+			'%s'.
+			'<\/('.$preformatted_elements.')>$/ui';
 
 		$paragraphs = explode("\n\n", $text);
 
@@ -167,11 +181,11 @@ class SwatString extends SwatObject
 			if ($blocklevel_started)
 				$in_blocklevel = true;
 
-			$is_script_or_style = (preg_match($script_style, $paragraph) == 1);
+			$is_preformatted = (preg_match($preformat, $paragraph) == 1);
 
 			// don't wrap this paragraph in <p> tags if we are in a blocklevel
-			// tag already or if the paragraph is a script or style
-			if ($in_blocklevel || $is_script_or_style) {
+			// tag already or if the paragraph is preformatted element.
+			if ($in_blocklevel || $is_preformatted) {
 				$paragraph = $paragraph."\n\n";
 			} else {
 				$paragraph = '<p>'.$paragraph."</p>\n\n";
@@ -185,9 +199,9 @@ class SwatString extends SwatObject
 
 		$text = preg_replace('/([^\n])\n([^\n])/su', '\1<br />\2', $text);
 
-		if (count($scripts_and_styles) > 0) {
-			// replace script and style content
-			$text = vsprintf($text, $scripts_and_styles);
+		if (count($preformatted_content) > 0) {
+			// replace preformatted content
+			$text = vsprintf($text, $preformatted_content);
 		}
 
 		$text = rtrim($text);
