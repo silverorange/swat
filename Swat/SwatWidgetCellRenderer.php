@@ -183,7 +183,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 				if ($widget instanceof SwatState)
 					$state = $widget->getState();
 				elseif ($widget instanceof SwatContainer)
-					$state = $widget->getDescendentStates();
+					$state = $widget->getDescendantStates();
 
 				$this->applyPropertyValuesToClonedWidget($widget);
 
@@ -191,7 +191,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 				if ($widget instanceof SwatState)
 					$widget->setState($state);
 				elseif ($widget instanceof SwatContainer)
-					$widget->setDescendentStates($state);
+					$widget->setDescendantStates($state);
 			} else {
 				$this->applyPropertyValuesToClonedWidget($widget);
 			}
