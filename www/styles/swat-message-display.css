@@ -7,6 +7,7 @@
 
 .swat-message-display .swat-message {
 	margin: 1em 0;
+	position: relative;
 	padding: 0;
 	background-position: 8px 8px;
 	background-repeat: no-repeat;
@@ -35,6 +36,7 @@
 	padding-top: 12px;
 }
 
+.swat-message-display-dismiss-link,
 .swat-message-display-dismiss-link:link,
 .swat-message-display-dismiss-link:visited {
 	float: right;
