@@ -8,6 +8,11 @@ require_once 'Swat/SwatFormField.php';
 /**
  * A file upload widget
  *
+ * Note: Mime-type detection is done with the
+ * {@link http://pecl.php.net/package/Fileinfo Fileinfo} extension if avaiable.
+ * Mime-type detection falls back to the mime_content_type() function if
+ * Fileinfo is not available but Fileinfo is highly recommended.
+ *
  * @package   Swat
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
@@ -126,17 +131,17 @@ class SwatFileEntry extends SwatInputControl
 			return;
 
 		} elseif ($this->file === null) {
-			$msg = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$message = $this->getValidationMessage('required');
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 
 		} elseif ($this->accept_mime_types !== null &&
 			!in_array($this->getMimeType(), $this->accept_mime_types)) {
 
-			$msg = sprintf(
-				Swat::_('The %%s field must be of the following type(s): %s.'),
+			$message = sprintf(
+				$this->getValidationMessage('mime-type'),
 				implode(', ', $this->accept_mime_types));
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 		}
 	}
 
@@ -238,10 +243,19 @@ class SwatFileEntry extends SwatInputControl
 	public function getMimeType()
 	{
 		if ($this->isUploaded() && $this->mime_type === null) {
-			if (file_exists($this->getTempFileName()))
-				$this->mime_type = mime_content_type($this->getTempFileName());
-			else
+			$temp_file_name = $this->getTempFileName();
+			if (file_exists($temp_file_name)) {
+				// use fileinfo extension if available otherwise fallback to
+				// mime_content_type()
+				if (class_exists('finfo')) {
+					$finfo = new finfo(FILEINFO_MIME);
+					$this->mime_type = $finfo->file($temp_file_name);
+				} else {
+					$this->mime_type = mime_content_type($temp_file_name);
+				}
+			} else {
 				$this->mime_type = $this->file['type'];
+			}
 		}
 
 		return $this->mime_type;
@@ -299,6 +313,30 @@ class SwatFileEntry extends SwatInputControl
 	}
 
 	// }}}
+	// {{{ protected function getValidationMessage()
+
+	/**
+	 * Gets a validation message for this file entry
+	 *
+	 * Can be used by sub-classes to change the validation messages.
+	 *
+	 * @param string $id the string identifier of the validation message.
+	 *
+	 * @return string the validation message.
+	 */
+	protected function getValidationMessage($id)
+	{
+		switch ($id) {
+		case 'required':
+			return Swat::_('The %s field is required.');
+		case 'mime-type':
+			return
+				Swat::_('The %%s field must be of the following type(s): %s.');
+		default:
+			return null;
+		}
+	}
+
 	// {{{ protected function getCSSClassNames()
 
 	/**
