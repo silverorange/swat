@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+
 /**
  * Removes PHP string concatenations inside gettext markers given a PHP source
  * file

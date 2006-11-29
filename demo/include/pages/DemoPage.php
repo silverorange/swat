@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+
 require_once 'Swat/SwatNavBar.php';
 require_once 'Swat/SwatUI.php';
 require_once 'Site/pages/SitePage.php';
