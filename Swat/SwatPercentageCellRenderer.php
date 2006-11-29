@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+
 require_once 'Swat/SwatNumericCellRenderer.php';
 require_once 'Swat/SwatString.php';
 

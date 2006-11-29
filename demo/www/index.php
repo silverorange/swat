@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+
 @include_once 'PackageConfig.php';
 if (class_exists('PackageConfig')) {
 	PackageConfig::setWorkDirPosition(3);

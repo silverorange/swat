@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+
 require_once 'Swat/SwatCheckboxCellRenderer.php';
 require_once 'Swat/SwatTableViewColumn.php';
 require_once 'Swat/SwatTableViewCheckAllRow.php';
