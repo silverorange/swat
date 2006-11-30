@@ -47,10 +47,11 @@ class SwatConfirmEmailEntry extends SwatEmailEntry
 
 		if ($this->email_widget->value !== null) {
 			if (strcmp($this->email_widget->value, $this->value) != 0) {
-				$msg = Swat::_('Email address and confirmation email address do not match.');
+				$message = Swat::_('Email address and confirmation email '.
+					'address do not match.');
 
-				$this->addMessage(
-					new SwatMessage($msg, SwatMessage::ERROR));
+				$this->addMessage(new SwatMessage($message,
+					SwatMessage::ERROR));
 			}
 		}
 	}

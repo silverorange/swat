@@ -32,8 +32,8 @@ class SwatFloatEntry extends SwatNumericEntry
 		$float_value = $this->getNumericValue();
 
 		if ($float_value === null) {
-			$msg = Swat::_('The %s field must be a number.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$message = Swat::_('The %s field must be a number.');
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 		} else {
 			$this->value = $float_value;
 		}
@@ -47,7 +47,8 @@ class SwatFloatEntry extends SwatNumericEntry
 		$lc = localeconv();
 		$decimal_pos = strpos($this->value, $lc['decimal_point']);
 		$decimals = ($decimal_pos !== false) ?
-			strlen($this->value) - $decimal_pos - strlen($lc['decimal_point']) : 0;
+			strlen($this->value) - $decimal_pos - strlen($lc['decimal_point']) :
+			0;
 
 		if (is_numeric($this->value))
 			return SwatString::numberFormat($this->value, $decimals, null,

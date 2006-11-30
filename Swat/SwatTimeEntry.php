@@ -235,13 +235,15 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			$all_empty = $all_empty && ($ampm === null);
 
 			if ($this->required_parts & self::HOUR && $hour === null) {
-				$msg = Swat::_('Hour is Required.');
-				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+				$message = Swat::_('Hour is Required.');
+				$this->addMessage(new SwatMessage($message,
+					SwatMessage::ERROR));
 			}
 
 			if ($this->required_parts & self::HOUR && $ampm === null) {
-				$msg = Swat::_('AM/PM is Required.');
-				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+				$message = Swat::_('AM/PM is Required.');
+				$this->addMessage(new SwatMessage($message,
+					SwatMessage::ERROR));
 			}
 
 			$hour = intval($hour);
@@ -261,8 +263,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			$all_empty = $all_empty && ($minute === null);
 
 			if ($this->required_parts & self::MINUTE && $minute === null) {
-				$msg = Swat::_('Minute is Required.');
-				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+				$message = Swat::_('Minute is Required.');
+				$this->addMessage(new SwatMessage($message,
+					SwatMessage::ERROR));
 			}
 
 			$minute = intval($minute);
@@ -276,8 +279,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			$all_empty = $all_empty && ($second === null);
 
 			if ($this->required_parts & self::SECOND && $second === null) {
-				$msg = Swat::_('Second is Required.');
-				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+				$message = Swat::_('Second is Required.');
+				$this->addMessage(new SwatMessage($message,
+					SwatMessage::ERROR));
 			}
 
 			$second = intval($second);
@@ -286,8 +290,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		}
 
 		if ($this->required && $all_empty) {
-			$msg = Swat::_('Time is Required.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$message = Swat::_('Time is Required.');
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 		}
 
 		$this->value = new SwatDate();
@@ -339,7 +343,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this time entry widget 
+	 * Gets the array of CSS classes that are applied to this time entry widget
 	 *
 	 * @return array the array of CSS classes that are applied to this time
 	 *                entry widget.
@@ -446,7 +450,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	private function createAmPmFlydown()
 	{
 		$this->am_pm_flydown = new SwatFlydown($this->id.'_ampm');
-		$this->am_pm_flydown->addOptionsByArray(array('am' => 'AM', 'pm' => 'PM'));
+		$this->am_pm_flydown->addOptionsByArray(array('am' => 'AM',
+			'pm' => 'PM'));
+
 		$this->am_pm_flydown->parent = $this;
 	}
 
@@ -471,19 +477,19 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		if (Date::compare($this->value, $this->valid_range_start, true) == -1) {
 
-			$msg = sprintf(Swat::_('The time you have entered is invalid. '.
+			$message = sprintf(Swat::_('The time you have entered is invalid. '.
 				'It must be after %s.'),
 				$this->displayTime($this->valid_range_start));
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 
 		} elseif (Date::compare($this->value, $this->valid_range_end, true) == 1) {
 
-			$msg = sprintf(Swat::_('The time you have entered is invalid. '.
+			$message = sprintf(Swat::_('The time you have entered is invalid. '.
 				'It must be before %s.'),
 				$this->displayTime($this->valid_range_end));
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 
 		}
 	}

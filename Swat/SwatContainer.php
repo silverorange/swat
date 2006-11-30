@@ -463,12 +463,12 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	public function getMessages()
 	{
-		$msgs = $this->messages;
+		$messages = $this->messages;
 
 		foreach ($this->children as &$child)
-			$msgs = array_merge($msgs, $child->getMessages());
+			$messages = array_merge($messages, $child->getMessages());
 
-		return $msgs;
+		return $messages;
 	}
 
 	// }}}
@@ -483,16 +483,16 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	public function hasMessage()
 	{
-		$has_msg = false;
+		$has_message = false;
 
 		foreach ($this->children as &$child) {
 			if ($child->hasMessage()) {
-				$has_msg = true;
+				$has_message = true;
 				break;
 			}
 		}
 
-		return $has_msg;
+		return $has_message;
 	}
 
 	// }}}

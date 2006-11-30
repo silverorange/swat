@@ -107,14 +107,14 @@ class SwatMoneyEntry extends SwatEntry
 		$value = SwatString::toFloat($value);
 
 		if ($value === null) {
-			$msg = Swat::_('The %%s field must be a monetary value '.
+			$message = Swat::_('The %%s field must be a monetary value '.
 				'formatted for %s (i.e. %s).');
 
-			$msg = sprintf($msg,
+			$message = sprintf($message,
 				$lc['int_curr_symbol'],
 				money_format('%n', 1000.95));
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 
 		} else {
 
@@ -125,15 +125,15 @@ class SwatMoneyEntry extends SwatEntry
 			if ($frac_pos !== false &&
 				strlen(substr($value, $frac_pos + 1)) > $lc_frac) {
 
-				$msg = Swat::_('The %%s field has too many decimal values. '.
-					'The currency (%s) only allows %s.');
+				$message = Swat::_('The %%s field has too many decimal '.
+					'values. The currency (%s) only allows %s.');
 
-				$msg = sprintf($msg,
+				$message = sprintf($message,
 					rtrim($lc['int_curr_symbol']),
 					$lc['int_frac_digits']);
 
 				$this->addMessage(
-					new SwatMessage($msg, SwatMessage::ERROR));
+					new SwatMessage($message, SwatMessage::ERROR));
 			} else {
 				$this->value = (float) $value; 
 			}

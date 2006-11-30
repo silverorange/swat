@@ -47,10 +47,11 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry
 
 		if ($this->password_widget->value !== null) {
 			if (strcmp($this->password_widget->value, $this->value) != 0) {
-				$msg = Swat::_('Password and confirmation password do not match.');
+				$message = Swat::_('Password and confirmation password do not '.
+					'match.');
 
 				$this->addMessage(
-					new SwatMessage($msg, SwatMessage::ERROR));
+					new SwatMessage($message, SwatMessage::ERROR));
 			}
 		}
 	}

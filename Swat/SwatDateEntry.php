@@ -360,15 +360,16 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		}
 
 		if ($this->required && $all_empty) {
-			$msg = Swat::_('Date is Required.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$message = Swat::_('Date is Required.');
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 		}
 
 		if ($this->display_parts & self::YEAR) {
 			if (!$all_empty && $year === null && 
 				($this->required_parts & self::YEAR)) {
-				$msg = Swat::_('Year is Required.');
-				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+				$message = Swat::_('Year is Required.');
+				$this->addMessage(new SwatMessage($message,
+					SwatMessage::ERROR));
 			}
 		} else {
 			$year = 0;
@@ -377,8 +378,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		if ($this->display_parts & self::MONTH) {
 			if (!$all_empty && $month === null &&
 				($this->required_parts & self::MONTH)) {
-				$msg = Swat::_('Month is Required.');
-				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+				$message = Swat::_('Month is Required.');
+				$this->addMessage(new SwatMessage($message,
+					SwatMessage::ERROR));
 			}
 		} else {
 			$month = 1;
@@ -387,8 +389,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		if ($this->display_parts & self::DAY) {
 			if (!$all_empty && $day === null &&
 				($this->required_parts & self::DAY)) {
-				$msg = Swat::_('Day is Required.');
-				$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+				$message = Swat::_('Day is Required.');
+				$this->addMessage(new SwatMessage($message,
+					SwatMessage::ERROR));
 			}
 		} else {
 			$day = 1;
@@ -715,20 +718,20 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		if (Date::compare($this->value, $this->valid_range_start, true) == -1) {
 
-			$msg = sprintf(Swat::_('The date you have entered is invalid. '.
+			$message = sprintf(Swat::_('The date you have entered is invalid. '.
 				'It must be on or after %s.'),
 				$this->getFormattedDate($this->valid_range_start));
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 
 		} elseif
 			(Date::compare($this->value, $this->valid_range_end, true) == 1) {
 
-			$msg = sprintf(Swat::_('The date you have entered is invalid. '.
+			$message = sprintf(Swat::_('The date you have entered is invalid. '.
 				'It must be before %s.'),
 				$this->getFormattedDate($this->valid_range_end));
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 		}
 	}
 
