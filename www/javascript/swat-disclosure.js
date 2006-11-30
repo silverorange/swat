@@ -134,5 +134,9 @@ SwatDisclosure.handleOpen = function(type, args, disclosure)
 {
 	// allow font resizing to work again
 	disclosure.animate_div.style.height = '';
+
+	// re-set overflow to visible for styles that might depend on it
+	disclosure.animate_div.style.overflow = 'visible';
+
 	disclosure.semaphore = false;
 }
