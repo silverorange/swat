@@ -39,10 +39,10 @@ class SwatEmailEntry extends SwatEntry
 		}
 
 		if (filter_var($this->value, FILTER_VALIDATE_EMAIL) === false) {
-			$msg = Swat::_('The email address you have entered is not '.
+			$message = Swat::_('The email address you have entered is not '.
 				'properly formatted.');
 
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 		}
 	}
 
