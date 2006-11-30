@@ -55,9 +55,12 @@ XHTML;
 
 		$html_errors_value = self::initializeErrorHandler();
 
-		$document = DOMDocument::loadXML($xhtml_content);
+		$document = new DOMDocument()
+		$document->resolveExternals = true;
+		$document->validate = true;
+		$document->loadXML($xhtml_content);
 
-		if (count(self::$validation_errors) > 0 || !$document->validate())
+		if (count(self::$validation_errors) > 0)
 			$this->addMessage($this->getValidationErrorMessage());
 
 		self::restoreErrorHandler($html_errors_value);
