@@ -47,7 +47,7 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 	 */
 	public function __construct($id = null)
 	{
-		parent::__construct();
+		parent::__construct($id);
 		$this->requires_id = true;
 	}
 
