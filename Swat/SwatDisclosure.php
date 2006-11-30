@@ -73,33 +73,12 @@ class SwatDisclosure extends SwatDisplayableContainer
 		if (!$this->visible)
 			return;
 
-		$control_div = new SwatHtmlTag('div');
-		$control_div->id = $this->id;
-		$control_div->class = $this->getCSSClassString();
-
-		$anchor = new SwatHtmlTag('a');
-		$anchor->class = 'swat-disclosure-anchor';
-		$anchor->href = sprintf('javascript:%s_obj.toggle();', $this->id);
-		$anchor->setContent($this->title);
-
-		$input = new SwatHtmlTag('input');
-		$input->type = 'hidden';
-		// initial value is blank, value is set by JavaScript
-		$input->value = '';
-		$input->id = $this->id.'_input';
-
-		$img = new SwatHtmlTag('img');
-		$img->src = 'packages/swat/images/swat-disclosure-open.png';
-		$img->alt = Swat::_('close');
-		$img->width = 16;
-		$img->height = 16;
-		$img->id = $this->id.'_img';
-		$img->class = 'swat-disclosure-image';
-
-		$container_div = new SwatHtmlTag('div');
-		$container_div->class = 'swat-disclosure-container';
-
-		$animate_div = new SwatHtmlTag('div');
+		$control_div = $this->getControlDivTag();
+		$anchor = $this->getAnchorTag();
+		$input = $this->getInputTag();
+		$img = $this->getImgTag();
+		$container_div = $this->getContainerDivTag();
+		$animate_div = $this->getAnimateDivTag();
 
 		$control_div->open();
 		$anchor->open();
@@ -118,6 +97,82 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$this->displayInlineJavaScript($this->getInlineJavascript());
 
 		$control_div->close();
+	}
+
+	// }}}
+	// {{{ protected function getControlDivTag()
+
+	protected function getControlDivTag()
+	{
+		$div = new SwatHtmlTag('div');
+		$div->id = $this->id;
+		$div->class = $this->getCSSClassString();
+
+		return $div;
+	}
+
+	// }}}
+	// {{{ protected function getContainerDivTag()
+
+	protected function getContainerDivTag()
+	{
+		$div = new SwatHtmlTag('div');
+		$div->class = 'swat-disclosure-container';
+
+		return $div;
+	}
+
+	// }}}
+	// {{{ protected function getAnimateDivTag()
+
+	protected function getAnimateDivTag()
+	{
+		$div = new SwatHtmlTag('div');
+
+		return $div;
+	}
+
+	// }}}
+	// {{{ protected function getImgTag()
+
+	protected function getImgTag()
+	{
+		$img = new SwatHtmlTag('img');
+		$img->src = 'packages/swat/images/swat-disclosure-open.png';
+		$img->alt = Swat::_('close');
+		$img->width = 16;
+		$img->height = 16;
+		$img->id = $this->id.'_img';
+		$img->class = 'swat-disclosure-image';
+
+		return $img;
+	}
+
+	// }}}
+	// {{{ protected function getInputTag()
+
+	protected function getInputTag()
+	{
+		$input = new SwatHtmlTag('input');
+		$input->type = 'hidden';
+		// initial value is blank, value is set by JavaScript
+		$input->value = '';
+		$input->id = $this->id.'_input';
+
+		return $input;
+	}
+
+	// }}}
+	// {{{ protected function getAnchorTag()
+
+	protected function getAnchorTag()
+	{
+		$anchor = new SwatHtmlTag('a');
+		$anchor->class = 'swat-disclosure-anchor';
+		$anchor->href = sprintf('javascript:%s_obj.toggle();', $this->id);
+		$anchor->setContent($this->title);
+
+		return $anchor;
 	}
 
 	// }}}
