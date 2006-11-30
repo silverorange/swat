@@ -1075,26 +1075,26 @@ class SwatString extends SwatObject
 		$lc = localeconv();
 
 		switch ($lc['n_sign_posn']) {
-			// negative sign shown as: (5.00)
-			case 0:
-				if (strpos($string, '(') !== false)
-					return '-'.str_replace(
-						array('(', ')'), array(), $string);
-				break;
+		// negative sign shown as: (5.00)
+		case 0:
+			if (strpos($string, '(') !== false)
+				return '-'.str_replace(
+					array('(', ')'), array(), $string);
+			break;
 
-			// negative sign trails number: 5.00-
-			case 2:
-				if ($lc['negative_sign'] != '' &&
-					strpos($string, $lc['negative_sign']) !== false)
-					return '-'.str_replace(
-						$lc['negative_sign'], '', $string);
-				break;
-			// negative sign prefixes number: -5.00
-			default:
-				if ($lc['negative_sign'] != '' &&
-					strpos($string, $lc['negative_sign']) !== false)
-					return str_replace(
-						$lc['negative_sign'], '-', $string);
+		// negative sign trails number: 5.00-
+		case 2:
+			if ($lc['negative_sign'] != '' &&
+				strpos($string, $lc['negative_sign']) !== false)
+				return '-'.str_replace(
+					$lc['negative_sign'], '', $string);
+			break;
+		// negative sign prefixes number: -5.00
+		default:
+			if ($lc['negative_sign'] != '' &&
+				strpos($string, $lc['negative_sign']) !== false)
+				return str_replace(
+					$lc['negative_sign'], '-', $string);
 		}
 
 		return $string;
