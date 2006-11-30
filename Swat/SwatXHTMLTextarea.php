@@ -29,6 +29,8 @@ class SwatXHTMLTextarea extends SwatTextarea
 
 	public function process()
 	{
+		// {{{ defines the xhtml template
+
 		static $xhtml_template = '';
 
 		if (strlen($xhtml_template) == 0) {
@@ -49,6 +51,8 @@ class SwatXHTMLTextarea extends SwatTextarea
 XHTML;
 		}
 
+		// }}}
+
 		parent::process();
 
 		$xhtml_content = sprintf($xhtml_template, $this->value);
@@ -57,7 +61,7 @@ XHTML;
 
 		$document = new DOMDocument();
 		$document->resolveExternals = true;
-		$document->validate = true;
+		$document->validateOnParse = true;
 		$document->loadXML($xhtml_content);
 
 		if (count(self::$validation_errors) > 0)
