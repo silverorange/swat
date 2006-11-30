@@ -158,22 +158,21 @@ class SwatEntry extends SwatInputControl implements SwatState
 			return;
 
 		} elseif ($this->value === null) {
-			$message = $this->getValidationMessage('required');
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->addMessage($this->getValidationMessage('required'));
 
 		} elseif ($this->maxlength !== null && $len > $this->maxlength) {
-			$message = sprintf(
-				$this->getValidationMessage('too-long'),
-				$this->maxlength);
+			$message = $this->getValidationMessage('too-long');
+			$message->primary_content =
+				sprintf($message->primary_content, $this->maxlength);
 
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->addMessage($message);
 
 		} elseif ($this->minlength !== null && $len < $this->minlength) {
-			$message = sprintf(
-				$this->getValidationMessage('too-short'),
-				$this->minlength);
+			$message = $this->getValidationMessage('too-short');
+			$message->primary_content =
+				sprintf($message->primary_content, $this->minlength);
 
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->addMessage($message);
 		}
 	}
 
@@ -238,20 +237,27 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 *
 	 * @param string $id the string identifier of the validation message.
 	 *
-	 * @return string the validation message.
+	 * @return SwatMessage the validation message.
 	 */
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
 		case 'required':
-			return Swat::_('The %s field is required.');
+			$text = Swat::_('The %s field is required.');
+			break;
 		case 'too-long':
-			return Swat::_('The %%s field can be at most %s characters long.');
+			$text = Swat::_('The %%s field can be at most %s characters long.');
+			break;
 		case 'too-short':
-			return Swat::_('The %%s must be at least %s characters long.');
+			$text = Swat::_('The %%s must be at least %s characters long.');
+			break;
 		default:
-			return null;
+			$text = Swat::_('There is problem with the %s field.');
+			break;
 		}
+
+		$message = new SwatMessage($text, SwatMessage::ERROR);
+		return $message;
 	}
 
 	// }}}
