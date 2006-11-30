@@ -174,7 +174,7 @@ class SwatUI extends SwatObject
 
 		$document = new DOMDocument();
 		$document->resolveExternals = true;
-		$document->validate = true;
+		$document->validateOnParse = true;
 		$document->load($xml_file);
 
 		self::restoreErrorHandler($html_errors_value);
