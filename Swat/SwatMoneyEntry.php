@@ -94,10 +94,12 @@ class SwatMoneyEntry extends SwatEntry
 		$lc = localeconv();
 		$lc_frac = $lc['int_frac_digits'];
 
-		$replace = array($lc['int_curr_symbol'] => '',
-				$lc['currency_symbol'] => '',
-				$lc['mon_decimal_point'] => '.',
-				$lc['mon_thousands_sep'] => '');
+		$replace = array(
+			$lc['int_curr_symbol'] => '',
+			$lc['currency_symbol'] => '',
+			$lc['mon_decimal_point'] => '.',
+			$lc['mon_thousands_sep'] => '',
+		);
 
 		$value = str_replace(
 			array_keys($replace), array_values($replace), $this->value);
