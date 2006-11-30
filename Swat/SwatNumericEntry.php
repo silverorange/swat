@@ -77,22 +77,20 @@ abstract class SwatNumericEntry extends SwatEntry
 		if ($value !== null) {
 			if ($this->minimum_value !== null &&
 				$value < $this->minimum_value) {
-				$message = sprintf(
-					$this->getValidationMessage('below-minimum'),
+				$message = $this->getValidationMessage('below-minimum');
+				$message->primary_content = sprintf($message->primary_content, 
 					SwatString::numberFormat($this->minimum_value));
 
-				$this->addMessage(
-					new SwatMessage($message, SwatMessage::ERROR));
+				$this->addMessage($message);
 			}
 
 			if ($this->maximum_value !== null &&
 				$value > $this->maximum_value) {
-				$message = sprintf(
-					$this->getValidationMessage('above-maximum'),
+				$message = $this->getValidationMessage('above-maximum');
+				$message->primary_content = sprintf($message->primary_content, 
 					SwatString::numberFormat($this->maximum_value));
 
-				$this->addMessage(
-					new SwatMessage($message, SwatMessage::ERROR));
+				$this->addMessage($message);
 			}
 		}
 	}
@@ -101,20 +99,36 @@ abstract class SwatNumericEntry extends SwatEntry
 	// {{{ protected function getValidationMessage()
 
 	/**
-	 * Get validation message
+	 * Gets a validation message for this numeric entry
 	 *
 	 * @see SwatEntry::getValidationMessage()
+	 * @param string $id the string identifier of the validation message.
+	 *
+	 * @return SwatMessage the validation message.
 	 */
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
 		case 'below-minimum':
-			return Swat::_('The %%s field must not be less than %s.');
+			$message = new SwatMessage(
+				Swat::_('The %%s field must not be less than %s.'),
+				SwatMessage::ERROR);
+
+			break;
+
 		case 'above-maximum':
-			return Swat::_('The %%s field must not be more than %s.');
+			$message = new SwatMessage(
+				Swat::_('The %%s field must not be more than %s.'),
+				SwatMessage::ERROR);
+
+			break;
+
 		default:
-			return parent::getValidationMessage($id);
+			$message = parent::getValidationMessage($id);
+			break;
 		}
+
+		return $message;
 	}
 
 	// }}}

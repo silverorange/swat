@@ -31,12 +31,10 @@ class SwatIntegerEntry extends SwatNumericEntry
 
 		$integer_value = $this->getNumericValue();
 
-		if ($integer_value === null) {
-			$message = $this->getValidationMessage('integer');
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
-		} else {
+		if ($integer_value === null)
+			$this->addMessage($this->getValidationMessage('integer'));
+		else
 			$this->value = $integer_value;
-		}
 	}
 
 	// }}}
@@ -73,18 +71,29 @@ class SwatIntegerEntry extends SwatNumericEntry
 	// {{{ protected function getValidationMessage()
 
 	/**
-	 * Get validation message
+	 * Gets a validation message for this integer entry
 	 *
 	 * @see SwatEntry::getValidationMessage()
+	 * @param string $id the string identifier of the validation message.
+	 *
+	 * @return SwatMessage the validation message.
 	 */
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
 		case 'integer':
-			return Swat::_('The %s field must be an integer.');
+			$message = new SwatMessage(
+				Swat::_('The %s field must be an integer.'),
+				SwatMessage::ERROR);
+
+			break;
+
 		default:
-			return parent::getValidationMessage($id);
+			$message = parent::getValidationMessage($id);
+			break;
 		}
+
+		return $message;
 	}
 
 	// }}}
