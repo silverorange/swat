@@ -55,7 +55,7 @@ XHTML;
 
 		$html_errors_value = self::initializeErrorHandler();
 
-		$document = new DOMDocument()
+		$document = new DOMDocument();
 		$document->resolveExternals = true;
 		$document->validate = true;
 		$document->loadXML($xhtml_content);
