@@ -128,8 +128,11 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
 		$data = &$this->getForm()->getFormData();
 
-		if (strlen($data[$this->id.'_areas']) || strlen($data[$this->id.'_regions']))
-			$this->value = $data[$this->id.'_areas'].'/'.$data[$this->id.'_regions'];
+		if (strlen($data[$this->id.'_areas']) ||
+			strlen($data[$this->id.'_regions']))
+			$this->value = $data[$this->id.'_areas'].'/'.
+				$data[$this->id.'_regions'];
+
 		else
 			$this->value = null;
 
@@ -137,12 +140,12 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 			return;
 
 		} elseif ($this->value === null) {
-			$msg = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$message = Swat::_('The %s field is required.');
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 			
 		} elseif (!isset($GLOBALS['_DATE_TIMEZONE_DATA'][$this->value])) {
-			$msg = Swat::_('The %s field is an invalid time-zone.');
-			$this->addMessage(new SwatMessage($msg, SwatMessage::ERROR));
+			$message = Swat::_('The %s field is an invalid time-zone.');
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 			
 		}
 	}

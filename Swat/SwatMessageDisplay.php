@@ -70,21 +70,21 @@ class SwatMessageDisplay extends SwatControl
 	 *
 	 * Adds a new message. The message will be shown by the display() method
 	 *
-	 * @param mixed $msg either a {@link SwatMessage} object or a string to
+	 * @param mixed $message either a {@link SwatMessage} object or a string to
 	 *                    add to this display.
 	 *
 	 * @throws SwatInvalidClassException
 	 */
-	public function add($msg)
+	public function add($message)
 	{
-		if (is_string($msg)) {
-			$this->_messages[] = new SwatMessage($msg);
-		} elseif ($msg instanceof SwatMessage) {
-			$this->_messages[] = $msg;
+		if (is_string($message)) {
+			$this->_messages[] = new SwatMessage($message);
+		} elseif ($message instanceof SwatMessage) {
+			$this->_messages[] = $message;
 		} else {
 			throw new SwatInvalidClassException(
 				'Cannot add message. Message must be either a string or a '.
-				'SwatMessage.', 0, $msg);
+				'SwatMessage.', 0, $message);
 		}
 	}
 
