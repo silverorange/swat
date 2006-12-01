@@ -112,7 +112,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		echo '<table>';
 
 		if ($this->entry_column_title !== null) {
-			echo '<thead><tr><th></th><th>';
+			echo '<thead><tr><th>&nbsp;</th><th>';
 			echo $this->entry_column_title;
 			echo '</th></tr></thead>';
 		}
