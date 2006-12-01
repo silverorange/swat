@@ -12,14 +12,14 @@ function SwatCheckboxEntryList(id)
 			id + '_entry_' + this.check_list[i].value);
 
 		this.check_list[i]._index = i;
-		YAHOO.util.Event.addListener(this.check_list[i], 'change',
-			SwatCheckboxEntryList.changeHandler, this);
+		YAHOO.util.Event.addListener(this.check_list[i], 'click',
+			SwatCheckboxEntryList.clickHandler, this);
 	}
 
 	this.init();
 }
 
-SwatCheckboxEntryList.changeHandler = function(event, object)
+SwatCheckboxEntryList.clickHandler = function(event, object)
 {
 	object.checkAllInit();
 	var target = YAHOO.util.Event.getTarget(event);
