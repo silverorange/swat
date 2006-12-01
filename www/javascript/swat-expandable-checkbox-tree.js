@@ -45,7 +45,7 @@ SwatExpandableCheckboxTree.prototype.handleClick = function(checkbox)
 
 	// check parent elements
 	// split path into pieces
-	var path_exp = path.split('/');
+	var path_exp = path.split('.');
 
 	// skip the root
 	var root = path_exp.shift();
@@ -56,7 +56,7 @@ SwatExpandableCheckboxTree.prototype.handleClick = function(checkbox)
 	for (var i = 0; i < count - 1; i++) {
 		path_exp.pop();
 
-		var parent_path = root + '/' + path_exp.join('/');
+		var parent_path = root + '.' + path_exp.join('.');
 
 		// get parent checkbox element
 		var parent_checkbox =
