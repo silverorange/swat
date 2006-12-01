@@ -5,7 +5,7 @@ function SwatZIndexManager()
 {
 }
 
-SwatZIndexManager.elements = new Array();
+SwatZIndexManager.elements = [];
 
 /**
  * Default starting z-index for elements
