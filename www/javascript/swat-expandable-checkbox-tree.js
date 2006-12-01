@@ -10,7 +10,7 @@ function SwatExpandableCheckboxTree(id, dependent_boxes)
 		this.check_list = document.getElementsByName(id + '[]');
 
 		for (var i = 0; i < this.check_list.length; i++) {
-			YAHOO.util.Event.addListener(this.check_list[i], 'change',
+			YAHOO.util.Event.addListener(this.check_list[i], 'click',
 				SwatExpandableCheckboxTree.handleClick, this);
 		}
 	}
