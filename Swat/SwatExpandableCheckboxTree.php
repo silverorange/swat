@@ -151,7 +151,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			$index = $node->getIndex();
 		} else {
 			// index of other nodes is a combination of parent indexes
-			$index = $parent_index.'/'.$node->getIndex();
+			$index = $parent_index.'.'.$node->getIndex();
 
 			$li_tag = new SwatHtmlTag('li');
 
