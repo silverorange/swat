@@ -13,7 +13,7 @@ function SwatTableViewCheckboxColumn(id, table)
 	// a reference to a checkall widget (if it exists - set by the SwatCheckAll
 	// widget)
 	this.check_all = null;
-	this.check_list = new Array();
+	this.check_list = [];
 
 	/*
 	 * Get all checkboxes with name = id + [] and that are contained in the
