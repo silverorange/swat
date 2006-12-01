@@ -50,7 +50,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	{
 		parent::__construct($id);
 
-		$yui = new YUI(array('dom', 'event'));
+		$yui = new YUI(array('dom', 'event', 'animation'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript(
 			'packages/swat/javascript/swat-expandable-checkbox-tree.js',
@@ -215,6 +215,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		if (count($child_nodes) > 0) {
 
 			$ul_tag = new SwatHtmlTag('ul');
+			$div_tag = new SwatHtmlTag('div');
 
 			// don't make expandable if it is the root node
 			if (strlen($parent_index) != 0) {
@@ -224,6 +225,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 					'swat-expandable-checkbox-tree-closed';
 			}
 
+			$div_tag->open();
 			$ul_tag->open();
 
 			foreach ($child_nodes as $child_node) {
@@ -231,10 +233,11 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			}
 
 			$ul_tag->close();
+			$div_tag->close();
 		}
 
 		if (strlen($parent_index) != 0)
-			echo '</li>';
+			$li_tag->close();
 
 		// count checkable nodes
 		if ($node->value !== null)
