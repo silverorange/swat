@@ -104,6 +104,9 @@ SwatExpandableCheckboxTree.prototype.openBranch = function(branch_id)
 	YAHOO.util.Dom.removeClass(branch, 'swat-expandable-checkbox-tree-closed');
 	YAHOO.util.Dom.addClass(branch, 'swat-expandable-checkbox-tree-opened');
 
+	image.src = 'packages/swat/images/swat-disclosure-open.png';
+	image.alt = SwatExpandableCheckboxTree.closed_text;
+
 	// get display height
 	branch.parentNode.style.overflow = 'hidden';
 	branch.parentNode.style.height = '0';
@@ -122,7 +125,7 @@ SwatExpandableCheckboxTree.prototype.openBranch = function(branch_id)
 		YAHOO.util.Easing.easeOut);
 
 	animation.onComplete.subscribe(
-		SwatExpandableCheckboxTree.handleBranchOpen, [this, branch, image]);
+		SwatExpandableCheckboxTree.handleBranchOpen, [this, branch]);
 
 	animation.animate();
 }
@@ -132,6 +135,9 @@ SwatExpandableCheckboxTree.prototype.closeBranch = function(branch_id)
 	var branch = document.getElementById(this.id + '_' + branch_id + '_branch');
 	var image = document.getElementById(this.id + '_' + branch_id + '_img');
 
+	image.src = 'packages/swat/images/swat-disclosure-closed.png';
+	image.alt = SwatExpandableCheckboxTree.open_text;
+
 	branch.style.overflow = 'hidden';
 	branch.style.height = '';
 
@@ -140,7 +146,7 @@ SwatExpandableCheckboxTree.prototype.closeBranch = function(branch_id)
 		YAHOO.util.Easing.easingIn);
 
 	animation.onComplete.subscribe(
-		SwatExpandableCheckboxTree.handleBranchClose, [this, branch, image]);
+		SwatExpandableCheckboxTree.handleBranchClose, [this, branch]);
 
 	animation.animate();
 }
@@ -149,22 +155,14 @@ SwatExpandableCheckboxTree.handleBranchOpen = function(type, args, data)
 {
 	var tree = data[0];
 	var branch = data[1];
-	var image = data[2];
 
 	branch.style.height = '';
-
-	image.src = 'packages/swat/images/swat-disclosure-open.png';
-	image.alt = SwatExpandableCheckboxTree.closed_text;
 }
 
 SwatExpandableCheckboxTree.handleBranchClose = function(type, args, data)
 {
 	var tree = data[0];
 	var branch = data[1];
-	var image = data[2];
-
-	image.src = 'packages/swat/images/swat-disclosure-closed.png';
-	image.alt = SwatExpandableCheckboxTree.open_text;
 
 	YAHOO.util.Dom.addClass(branch, 'swat-expandable-checkbox-tree-closed');
 	YAHOO.util.Dom.removeClass(branch, 'swat-expandable-checkbox-tree-opened');
