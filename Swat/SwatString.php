@@ -433,7 +433,13 @@ class SwatString extends SwatObject
 	 *                             number of characters, pass a blank string in
 	 *                             the ellipses parameter.
 	 * @param string $ellipses the ellipses characters to append if the string
-	 *                          is shortened.
+	 *                          is shortened. By default, this is a
+	 *                          non-breaking space followed by a unicode
+	 *                          ellipses character.
+	 * @param boolean &$flag an optional boolean flag passed by reference to
+	 *                        the ellipsize function. If the given string is
+	 *                        ellipsized, the flag is set to true. If no
+	 *                        ellipsizing takes place, the flag is set to false.
 	 *
 	 * @return string the ellipsized string. The ellipsized string may be
 	 *                 appended with ellipses characters if it was longer than
@@ -441,7 +447,7 @@ class SwatString extends SwatObject
 	 */
 	public static function ellipsizeRight($string, $max_length,
 		// the space is a non-breaking space
-		$ellipses = ' …')
+		$ellipses = ' …', &$flag = null)
 	{
 		$matches = array();
 		self::stripEntities($string, $matches);
@@ -451,6 +457,7 @@ class SwatString extends SwatObject
 		// don't ellipsize if the string is short enough
 		if (strlen($string) <= $max_length) {
 			self::insertEntities($string, $matches, strlen($string));
+			$flag = false;
 			return $string;
 		}
 
@@ -472,6 +479,7 @@ class SwatString extends SwatObject
 
 		$string .= $ellipses;
 
+		$flag = true;
 		return $string;
 	}
 
@@ -504,7 +512,13 @@ class SwatString extends SwatObject
 	 *                             This length does not account for any ellipse
 	 *                             characters that may be appended.
 	 * @param string $ellipses the ellipses characters to insert if the string
-	 *                          is shortened.
+	 *                          is shortened. By default, this is a unicode
+	 *                          ellipses character padded by non-breaking
+	 *                          spaces.
+	 * @param boolean &$flag an optional boolean flag passed by reference to
+	 *                        the ellipsize function. If the given string is
+	 *                        ellipsized, the flag is set to true. If no
+	 *                        ellipsizing takes place, the flag is set to false.
 	 *
 	 * @return string the ellipsized string. The ellipsized string may include
 	 *                 ellipses characters in roughly the middle if it was
@@ -512,10 +526,9 @@ class SwatString extends SwatObject
 	 */
 	public static function ellipsizeMiddle($string, $max_length,
 		// the spaces are non-breaking spaces
-		$ellipses = ' … ')
+		$ellipses = ' … ', &$flag = null)
 	{
 		$string = trim($string);
-
 
 		$matches = array();
 		self::stripEntities($string, $matches);
@@ -523,6 +536,7 @@ class SwatString extends SwatObject
 		// don't ellipsize if the string is short enough
 		if (strlen($string) <= $max_length) {
 			self::insertEntities($string, $matches, strlen($string));
+			$flag = false;
 			return $string;
 		}
 
@@ -586,6 +600,7 @@ class SwatString extends SwatObject
 		self::insertEntities($string, $matches,
 			$hole_start, $hole_end, $hole_length);
 
+		$flag = true;
 		return $string;
 	}
 
