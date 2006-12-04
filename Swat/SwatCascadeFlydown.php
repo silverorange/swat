@@ -121,7 +121,7 @@ class SwatCascadeFlydown extends SwatFlydown
 
 		if ($this->show_blank && count($option_array) > 1) {
 			unset($ret[key($ret)]);
-			$ret[] = new SwatOption('', Swat::_('choose one ...'));
+			$ret[] = new SwatOption(null, Swat::_('choose one ...'));
 		}
 
 		$ret = array_merge($ret, $option_array);
@@ -148,8 +148,9 @@ class SwatCascadeFlydown extends SwatFlydown
 
 			if ($this->show_blank && count($options) > 1)
 				$javascript.= sprintf(
-					"\n%s_cascade.addChild('%s', '', '%s');",
+					"\n%s_cascade.addChild('%s', '%s', '%s');",
 					$this->id,
+					serialize(null),
 					$parent,
 					Swat::_('choose one ...'));
 
