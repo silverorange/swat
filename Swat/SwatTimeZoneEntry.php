@@ -49,6 +49,35 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 */
 	private $regions = array();
 
+	/**
+	 * A reference to the internal areas flydown
+	 *
+	 * This contains time-zone continents.
+	 *
+	 * @var SwatFlydown
+	 */
+	private $areas_flydown;
+
+	/**
+	 * A reference to the internal regions flydown
+	 *
+	 * This contains time-zone cities.
+	 *
+	 * @var SwatCascadeFlydown
+	 */
+	private $regions_flydown;
+
+	/**
+	 * An internal flag that is set to true when embedded widgets have been
+	 * created
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatTimeZoneEntry::createEmbeddedWidgets()
+	 */
+	 */
+	private $widgets_created = false;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -63,7 +92,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	{
 		parent::__construct($id);
 
-		$area_whitelist = array('Africa', 'America', 'Antarctica',
+		static $area_whitelist = array('Africa', 'America', 'Antarctica',
 			'Arctic', 'Asia', 'Atlantic', 'Australia', 'Europe',
 			'Indian', 'Pacific');
 
@@ -87,28 +116,20 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
+		$this->createEmbeddedWidgets();
+
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
-		$areas = new SwatFlydown();
-		$areas->addOptionsByArray($this->areas);
-		$areas->show_blank = false;
-		$areas->name = $this->id.'_areas';
-		$areas->id = $this->id.'_areas';
-		$areas->value = $this->getArea($this->value);
-		$areas->display();
+		$this->areas_flydown->addOptionsByArray($this->areas);
+		$this->areas_flydown->value = $this->getArea($this->value);
+		$this->areas_flydown->display();
 
-		$regions = new SwatCascadeFlydown();
-		$regions->options = $this->regions;
-		$regions->name = $this->id.'_regions';
-		$regions->id = $this->id.'_regions';
-		$regions->show_blank = true;
-		$regions->cascade_from = $areas;
-		$regions->width = '15em';
-		$regions->value = $this->getRegion($this->value);
-		$regions->display();
+		$this->regions_flydown->options = $this->regions;
+		$this->regions_flydown->value = $this->getRegion($this->value);
+		$this->regions_flydown->display();
 
 		$div_tag->close();
 	}
@@ -126,15 +147,17 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	{
 		parent::process();
 
-		$data = &$this->getForm()->getFormData();
+		$this->createEmbeddedWidgets();
 
-		if (strlen($data[$this->id.'_areas']) ||
-			strlen($data[$this->id.'_regions']))
-			$this->value = $data[$this->id.'_areas'].'/'.
-				$data[$this->id.'_regions'];
+		$this->areas_flydown->process();
+		$this->regions_flydown->process();
 
-		else
+		if ($this->areas_flydown->value === null ||
+			$this->regions_flydown->value === null)
 			$this->value = null;
+		else
+			$this->value = $this->areas_flydown->value.'/'.
+				$this->regions_flydown->value;
 
 		if (!$this->required && $this->value === null) {
 			return;
@@ -181,6 +204,28 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
+	// {{{ public function getHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects needed by this date entry 
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this date entry.
+	 *
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
+	 */
+	public function getHtmlHeadEntrySet()
+	{
+		$set = parent::getHtmlHeadEntrySet();
+		$this->createEmbeddedWidgets();
+
+		$set->addEntrySet($this->areas_flydown->getHtmlHeadEntrySet());
+		$set->addEntrySet($this->regions_flydown->getHtmlHeadEntrySet());
+
+		return $set;
+	}
+
+	// }}}
 	// {{{ protected function getCSSClassNames()
 
 	/**
@@ -195,6 +240,33 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		$classes = array('swat-time-zone-entry');
 		$classes = array_merge($classes, $this->classes);
 		return $classes;
+	}
+
+	// }}}
+	// {{{ private function createEmbeddedWidgets()
+
+	/**
+	 * Creates all internal widgets required for this time-zone entry
+	 */
+	private function createEmbeddedWidgets()
+	{ 
+		if (!$this->widgets_created) {
+			$this->areas_flydown = new SwatFlydown($this->id.'_areas');
+			$this->areas_flydown->addOptionsByArray($this->areas);
+			$this->areas_flydown->show_blank = false;
+			$this->areas_flydown->parent = $this;
+
+			$this->regions_flydown =
+				new SwatCascadeFlydown($this->id.'_regions');
+
+			$this->regions_flydown->show_blank = true;
+			$this->regions_flydown->blank_value = null;
+			$this->regions_flydown->cascade_from = $this->areas_flydown;
+			$this->regions_flydown->width = '15em';
+			$this->regions_flydown->parent = $this;
+
+			$this->widgets_created = true;
+		}
 	}
 
 	// }}}
