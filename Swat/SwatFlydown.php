@@ -147,7 +147,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	 * @param string $title the title of the divider. Defaults to two em
 	 *                       dashes.
 	 */
-	public function addDivider($title = '&#8212;&#8212;')
+	public function addDivider($title = '——')
 	{
 		$this->options[] = new SwatFlydownDivider('', $title);
 	}
