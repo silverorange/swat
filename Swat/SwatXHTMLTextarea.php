@@ -196,6 +196,14 @@ XHTML;
 			$error = str_replace('tag mismatch:', 'tag mismatch between',
 				$error);
 
+			$error = str_replace('xmlParseEntityRef: no name',
+				'unescaped apmersand. Use &amp;amp; instead of &amp;',
+				$error);
+
+			$error = str_replace('StartTag: invalid element name',
+				'unescaped less-than. Use &amp;lt; instead of &lt;',
+				$error);
+
 			// remove some stuff that only makes sense in document context
 			$error = preg_replace('/\s?line:? [0-9]+\s?/ui', ' ', $error);
 			$error = preg_replace('/in entity[:,.]?/ui', '', $error);
