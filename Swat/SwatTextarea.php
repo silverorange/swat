@@ -76,6 +76,10 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		// textarea tags cannot be self-closing
 		$value = ($this->value === null) ? '' : $this->value;
 
+		// escape value for display because we actually want to show entities
+		// for editing
+		$value = htmlspecialchars($value);
+
 		$textarea_tag = new SwatHtmlTag('textarea');
 		$textarea_tag->name = $this->id;
 		$textarea_tag->id = $this->id;
@@ -84,7 +88,7 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		//       a textarea for XHTML strict.
 		$textarea_tag->rows = $this->rows;
 		$textarea_tag->cols = $this->cols;
-		$textarea_tag->setContent($value, 'text/plain');
+		$textarea_tag->setContent($value, 'text/xml');
 		$textarea_tag->accesskey = $this->access_key;
 
 		if (!$this->isSensitive())
