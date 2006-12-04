@@ -28,7 +28,7 @@ class SwatFlydownDivider extends SwatOption
 	public function __construct($value = null, $title = null)
 	{
 		if ($title === null)
-			$title = str_repeat('&#8212;', 6);
+			$title = str_repeat('—', 6);
 
 		$this->value = $value;
 		$this->title = $title;
