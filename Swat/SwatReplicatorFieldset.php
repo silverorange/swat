@@ -12,7 +12,7 @@ require_once 'Swat/SwatReplicableFieldset.php';
  * @package    Swat
  * @copyright  2005-2006 silverorange
  * @license    http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
- * @deprecated Use SwatReplicableFieldset instead.
+ * @deprecated This class was renamed. Use SwatReplicableFieldset instead.
  * @see        SwatReplicableFieldset
  */
 class SwatReplicatorFieldset extends SwatReplicableFieldset
