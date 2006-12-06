@@ -258,8 +258,10 @@ class DemoPage extends SitePage
 
 		case 'Replicable':
 			$entries = array(
-				'SwatReplicatorFieldset',
-				'SwatReplicatorFormField',
+				'SwatReplicable',
+				'SwatReplicableContainer',
+				'SwatReplicableFieldset',
+				'SwatReplicableFormField',
 				);
 			break;
 
