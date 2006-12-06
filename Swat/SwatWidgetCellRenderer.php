@@ -265,8 +265,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 			$clones = array();
 			foreach ($this->clones as $replicator_id => $clone) {
-				if (in_array($replicator_id, $replicators))
-					$clones[$replicator_id] = $clone;
+				if (is_array($replicators) &&
+					in_array($replicator_id, $replicators))
+						$clones[$replicator_id] = $clone;
 			}
 		} else {
 			$clones = $this->clones;
