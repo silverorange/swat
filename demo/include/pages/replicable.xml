@@ -5,7 +5,7 @@
 		<property name="title">SwatReplicable Demos</property>
 		<widget class="SwatForm" id="my_form">
 
-			<widget class="SwatReplicatorFieldset">
+			<widget class="SwatReplicableFieldset">
 				<property name="replicators[0]">Apple</property>
 				<property name="replicators[1]">Orange</property>
 				<property name="replicators[2]">Grape</property>
@@ -27,15 +27,17 @@
 
 			</widget>
 
-			<widget class="SwatReplicatorFormField">
-				<property name="replicators[0]">Spring</property>
-				<property name="replicators[1]">Summer</property>
-				<property name="replicators[2]">Fall</property>
-				<property name="replicators[3]">Winter</property>
+			<widget class="SwatFieldset">
 				<property name="title">Seasons</property>
+				<widget class="SwatReplicableFormField">
+					<property name="replicators[0]">Spring</property>
+					<property name="replicators[1]">Summer</property>
+					<property name="replicators[2]">Fall</property>
+					<property name="replicators[3]">Winter</property>
 
-				<widget class="SwatDateEntry" />
+					<widget class="SwatDateEntry" />
 
+				</widget>
 			</widget>
 
 		</widget>
