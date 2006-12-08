@@ -62,6 +62,9 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 			$select_tag->id = $this->id;
 			$select_tag->class = $this->getCSSClassString();
 
+			if (!$this->isSensitive())
+				$select_tag->disabled = 'disabled';
+
 			$select_tag->open();
 
 			foreach ($display_tree->getChildren() as $child)
