@@ -75,6 +75,9 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 			$select_tag->id = $this->id;
 			$select_tag->class = $this->getCSSClassString();
 
+			if (!$this->isSensitive())
+				$select_tag->disabled = 'disabled';
+
 			$option_tag = new SwatHtmlTag('option');
 
 			$select_tag->open();
