@@ -48,7 +48,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
 	// }}}
 	// {{{ public function display()
-	
+
 	/**
 	 * Displays this flydown
 	 *
@@ -69,7 +69,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
 		// only show a select if there is more than one option
 		if (count($options) > 1) {
-			
+
 			$select_tag = new SwatHtmlTag('select');
 			$select_tag->name = $this->id;
 			$select_tag->id = $this->id;
