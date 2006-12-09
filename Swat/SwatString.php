@@ -234,7 +234,7 @@ class SwatString extends SwatObject
 	public static function minimizeEntities($text)
 	{
 		// decode any entities that might already exist
-		$text= html_entity_decode($text, ENT_COMPAT, 'UTF-8');
+		$text = html_entity_decode($text, ENT_COMPAT, 'UTF-8');
 
 		// encode all ampersands (&), less than (<), greater than (>), 
 		// and double quote (") characters as their XML entities 
@@ -655,26 +655,46 @@ class SwatString extends SwatObject
 	// {{{ public static function moneyFormat()
 
 	/**
-	 * Formats a number as a currency formatted string
+	 * Formats a numeric value as currency
 	 *
-	 * @param float $value the value to format.
+	 * The formatted currency string will be encoded as UTF-8.
+	 *
+	 * Note: This method does not work in some operating systems and in such
+	 *       cases, this method will throw an exception.
+	 *
+	 * @param float $value the numeric value to format.
 	 * @param string $locale an optional locale to use to format the value. If
-	 *                        no locale is specified, the default server locale
-	 *                        is used.
-	 * @param boolean $display_currency whether to append the currency symbol
-	 *                                   to the output.
+	 *                        no locale is specified, the current locale is
+	 *                        used.
+	 * @param boolean $display_currency whether to append the international
+	 *                                   currency symbol to the output.
 	 *
-	 * @return string the money formatted string.
+	 * @return string a UTF-8 encoded string containing the formatted currency
+	 *                 value.
+	 *
+	 * @throws SwatException if the PHP money_format() function is undefined.
+	 * @throws SwatException if the given locale could not be set.
 	 */
 	public static function moneyFormat(
 		$value, $locale = null, $display_currency = false)
 	{
+		if (!function_exists('money_format')) {
+			throw new SwatException('moneyFormat() method is not available '.
+				'on this operating system. See '.
+				'http://php.net/manual/en/function.money-format.php for '.
+				'details.');
+		}
+
 		if ($locale !== null) {
 			if (strpos($locale, '.') === false)
-				$locale .= '.UTF-8';
+				$locale.= '.UTF-8';
 
 			$old_locale = setlocale(LC_ALL, 0);
-			setlocale(LC_ALL, $locale);
+			if (setlocale(LC_ALL, $locale) === false) {
+				throw new SwatException(sprintf('Locale %s passed to the '.
+					'moneyFormat() method is not valid for this operating '.
+					'system.', $locale));
+			}
 		}
 
 		$output = money_format('%.2n', $value);
@@ -694,22 +714,24 @@ class SwatString extends SwatObject
 	// {{{ public static function numberFormat()
 
 	/**
-	 * Formats a number using locale seperators and in a UTF-8 safe way.
+	 * Formats a number using locale seperators in a UTF-8 safe way
 	 *
-	 * @param float $value the value to format.
-	 * @param int $decimals number of decimal places to display. By
-	 * 	default, the full number of decimal places of the value will be
-	 * 	displayed.
+	 * @param float $value the numeric value to format.
+	 * @param integer $decimals number of decimal places to display. By
+	 * 	                         default, the full number of decimal places of
+	 *                           the value will be displayed.
 	 * @param string $locale an optional locale to use to format the value. If
-	 *                        no locale is specified, the default server locale
-	 *                        is used.
-	 * @param boolean $show_thousands_seperator whether to display the 
-	 *                        thousands seperator (default true).
+	 *                        no locale is specified, the current locale is
+	 *                        used.
+	 * @param boolean $show_thousands_seperator whether or not to display the 
+	 *                        thousands seperator (default is true).
 	 *
 	 * @return string the number formatted string.
+	 *
+	 * @throws SwatException if the given locale could not be set.
 	 */
-	public static function numberFormat($value, $decimals = null, $locale = null, 
-		$show_thousands_seperator = true)
+	public static function numberFormat($value, $decimals = null,
+		$locale = null, $show_thousands_seperator = true)
 	{
 		// look up decimal precision if none is provided
 		if ($decimals === null)
@@ -722,11 +744,18 @@ class SwatString extends SwatObject
 		$output = htmlentities($output, null, 'UTF-8');
 
 		if ($locale !== null) {
+			if (strpos($locale, '.') === false)
+				$utf_locale.= '.UTF-8';
+
 			$old_locale = setlocale(LC_ALL, 0);
-			setlocale(LC_ALL, $locale);
+			if (setlocale(LC_ALL, $locale) === false) {
+				throw new SwatException(sprintf('Locale %s passed to the '.
+					'numberFormat() method is not valid for this operating '.
+					'system.', $locale));
+			}
 		}
 
-		// replace placeholder seperators with locale ones which
+		// replace placeholder seperators with locale-specific ones which
 		// might contain non-ASCII
 		$lc = localeconv();
 		$output = str_replace('.', $lc['decimal_point'], $output);
