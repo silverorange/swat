@@ -151,9 +151,15 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		foreach ($this->input_cells as $cell)
 			$cell->init();
 
-		// initialize replicators
-		$replicator_field =
-			$this->getForm()->getHiddenField($this->id.'_replicators');
+		/*
+		 * Initialize replicators
+		 *
+		 * Don't use getHiddenField() here because the serialized field is not
+		 * updated by the controlling JavaScript and will not contain added
+		 * replicator ids.
+		 */
+		$data = $this->getForm()->getFormData();
+		$replicator_field = $data[$this->id.'_replicators'];
 
 		if ($replicator_field === null || strlen($replicator_field) == 0)
 			// use generated ids
