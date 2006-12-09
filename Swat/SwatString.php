@@ -783,14 +783,14 @@ class SwatString extends SwatObject
 	public static function byteFormat($value)
 	{
 		$units = array(
-			0 => 'bytes',
+			0  => 'bytes',
 			10 => 'KiB',
 			20 => 'MiB',
 			30 => 'GiB',
 			40 => 'TiB',
 			50 => 'PiB',
-			60 => 'EiB'
-			);
+			60 => 'EiB',
+		);
 
 		$units = array_reverse($units, true);
 
