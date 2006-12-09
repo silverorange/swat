@@ -741,8 +741,6 @@ class SwatString extends SwatObject
 		$output =  number_format($value, $decimals, '.',
 			$show_thousands_seperator ? ',' : '');
 
-		$output = htmlentities($output, null, 'UTF-8');
-
 		if ($locale !== null) {
 			if (strpos($locale, '.') === false)
 				$utf_locale.= '.UTF-8';
