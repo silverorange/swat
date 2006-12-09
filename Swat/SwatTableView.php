@@ -805,7 +805,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 */
 	public function getMessages()
 	{
-		$messages = parent::hasMessages();
+		$messages = parent::getMessages();
 
 		if ($this->model !== null) {
 			$rows = $this->model->getRows();
