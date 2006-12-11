@@ -657,8 +657,6 @@ class SwatString extends SwatObject
 	/**
 	 * Formats a numeric value as currency
 	 *
-	 * The formatted currency string will be encoded as UTF-8.
-	 *
 	 * Note: This method does not work in some operating systems and in such
 	 *       cases, this method will throw an exception.
 	 *
@@ -674,9 +672,11 @@ class SwatString extends SwatObject
 	 *
 	 * @throws SwatException if the PHP money_format() function is undefined.
 	 * @throws SwatException if the given locale could not be set.
+	 * @throws SwatException if the locale-based output cannot be converted to
+	 *                        UTF-8.
 	 */
-	public static function moneyFormat(
-		$value, $locale = null, $display_currency = false)
+	public static function moneyFormat($value, $locale = null,
+		$display_currency = false)
 	{
 		if (!function_exists('money_format')) {
 			throw new SwatException('moneyFormat() method is not available '.
@@ -686,9 +686,6 @@ class SwatString extends SwatObject
 		}
 
 		if ($locale !== null) {
-			if (strpos($locale, '.') === false)
-				$locale.= '.UTF-8';
-
 			$old_locale = setlocale(LC_ALL, 0);
 			if (setlocale(LC_ALL, $locale) === false) {
 				throw new SwatException(sprintf('Locale %s passed to the '.
@@ -697,11 +694,22 @@ class SwatString extends SwatObject
 			}
 		}
 
+		// get character set of the locale that is used
+		$character_set = nl_langinfo(CODESET);
+
 		$output = money_format('%.2n', $value);
 
 		if ($display_currency) {
 			$lc = localeconv();
 			$output.= ' '.$lc['int_curr_symbol'];
+		}
+
+		// convert output to UTF-8
+		if ($character_set !== 'UTF-8') {
+			$output = iconv($character_set, 'UTF-8', $output);
+			if ($output === false)
+				throw new SwatException(sprintf('Could not convert %s output '.
+					'to UTF-8', $character_set));
 		}
 
 		if ($locale !== null)
@@ -714,7 +722,7 @@ class SwatString extends SwatObject
 	// {{{ public static function numberFormat()
 
 	/**
-	 * Formats a number using locale seperators in a UTF-8 safe way
+	 * Formats a number using locale-based separators
 	 *
 	 * @param float $value the numeric value to format.
 	 * @param integer $decimals number of decimal places to display. By
@@ -723,28 +731,27 @@ class SwatString extends SwatObject
 	 * @param string $locale an optional locale to use to format the value. If
 	 *                        no locale is specified, the current locale is
 	 *                        used.
-	 * @param boolean $show_thousands_seperator whether or not to display the 
-	 *                        thousands seperator (default is true).
+	 * @param boolean $show_thousands_separator whether or not to display the 
+	 *                        thousands separator (default is true).
 	 *
-	 * @return string the number formatted string.
+	 * @return string a UTF-8 encoded string containing the formatted number.
 	 *
 	 * @throws SwatException if the given locale could not be set.
+	 * @throws SwatException if the locale-based output cannot be converted to
+	 *                        UTF-8.
 	 */
 	public static function numberFormat($value, $decimals = null,
-		$locale = null, $show_thousands_seperator = true)
+		$locale = null, $show_thousands_separator = true)
 	{
 		// look up decimal precision if none is provided
 		if ($decimals === null)
 			$decimals = SwatString::getDecimalPrecision($value);
 
-		// number_format can't handle UTF-8 seperators, so insert placeholders
+		// number_format can't handle UTF-8 separators, so insert placeholders
 		$output =  number_format($value, $decimals, '.',
-			$show_thousands_seperator ? ',' : '');
+			$show_thousands_separator ? ',' : '');
 
 		if ($locale !== null) {
-			if (strpos($locale, '.') === false)
-				$utf_locale.= '.UTF-8';
-
 			$old_locale = setlocale(LC_ALL, 0);
 			if (setlocale(LC_ALL, $locale) === false) {
 				throw new SwatException(sprintf('Locale %s passed to the '.
@@ -753,11 +760,22 @@ class SwatString extends SwatObject
 			}
 		}
 
-		// replace placeholder seperators with locale-specific ones which
+		// get character set of the locale that is used
+		$character_set = nl_langinfo(CODESET);
+
+		// replace placeholder separators with locale-specific ones which
 		// might contain non-ASCII
 		$lc = localeconv();
 		$output = str_replace('.', $lc['decimal_point'], $output);
 		$output = str_replace(',', $lc['thousands_sep'], $output);
+
+		// convert output to UTF-8
+		if ($character_set !== 'UTF-8') {
+			$output = iconv($character_set, 'UTF-8', $output);
+			if ($output === false)
+				throw new SwatException(sprintf('Could not convert %s output '.
+					'to UTF-8', $character_set));
+		}
 
 		if ($locale !== null)
 			setlocale(LC_ALL, $old_locale);
