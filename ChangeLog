@@ -1,3 +1,625 @@
+2006-12-12  gauthierm
+
+	* [r13823] swat/trunk/Swat/SwatEmailEntry.php:
+	  Make email validation work on 5.1.x and 5.2.x.
+	* [r13817] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  Display recordset wrapper properties as well. An interface will
+	  be defined for this in the ambiguous future.
+	* [r13811] swat/trunk/Swat/SwatUIObject.php:
+	  Make getCSSClassString() final.
+	* [r13795] swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTableViewColumn.php,
+	  swat/trunk/Swat/SwatTableViewGroup.php:
+	  Add ability to specify the number of xhtml table columns a
+	  column object spans. For complex column objects, this value may
+	  not equal 1.
+
+2006-12-11  gauthierm
+
+	* [r13762] swat/trunk/Swat/SwatString.php:
+	  Remove mangling of the locale identifier in setlocale() calls in
+	  moneyFormat() and numberFormat(). Instead rely on iconv()
+	  (always in PHP5) to convert the locale's encoding to UTF-8. This
+	  makes these methods friendlier on systems that don't have
+	  character encodings included in locale identifiers.
+
+2006-12-09  gauthierm
+
+	* [r13740] swat/trunk/Swat/SwatString.php:
+	  I don't think we should be using htmlentities() there. If the
+	  string needs to be escaped, pass it through minimizeEntities().
+	* [r13739] swat/trunk/Swat/SwatString.php:
+	  Use array syntax conventions.
+	* [r13738] swat/trunk/Swat/SwatString.php:
+	  Tidy numberFormat() and moneyFormat() methods
+	* [r13737] swat/trunk/Swat/SwatTableView.php:
+	  Patch from Brad Griffith to fix message retrieval for
+	  SwatTableView objects.
+	* [r13732] swat/trunk/Swat/SwatTableViewInputRow.php:
+	  Perform an isset() check so this will work when the form was not
+	  submitted.
+	* [r13731] swat/trunk/Swat/SwatTableViewInputRow.php:
+	  Allow multiple rows to be entered by SwatTableViewInputRow again.
+
+2006-12-08  gauthierm
+
+	* [r13717] swat/trunk/Swat/SwatFlydown.php,
+	  swat/trunk/Swat/SwatGroupedFlydown.php:
+	  Patch by Brad Griffith to add sensitivity to SwatFlydown objects.
+	* [r13716] swat/trunk/Swat/SwatFlydown.php:
+	  Whitespace
+
+2006-12-06  gauthierm
+
+	* [r13664] swat/trunk/demo/include/pages/DemoPage.php:
+	  Update replicable documentation links in demo
+	* [r13663] swat/trunk/demo/include/pages/replicable.xml:
+	  Respect Swat replicator API changes.
+
+2006-12-06  nrf
+
+	* [r13640] swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  Check that $replicators is an array before looking for values in
+	  it.
+
+2006-12-05  gauthierm
+
+	* [r13631] swat/trunk/Swat/SwatReplicableFrame.php:
+	  Add a replicable frame. Fixes #353.
+	* [r13630] swat/trunk/Swat/SwatReplicatorFieldset.php:
+	  Add explaination to deprecated tag.
+	* [r13629] swat/trunk/Swat/SwatReplicatorFormField.php:
+	  Deprecate old SwatReplicatorFormField.
+	* [r13628] swat/trunk/Swat/SwatReplicableFormField.php:
+	  Rename ReplicatorFormField to ReplicableFormField and extend
+	  ReplicableContainer. This also has the side-effect of removing
+	  the fieldset around form fields. This can/should be added
+	  manually.
+	* [r13626] swat/trunk/Swat/SwatReplicatorFieldset.php:
+	  Deprecate SwatReplicatorFieldset in favour of
+	  SwatReplicableFieldset.
+	* [r13625] swat/trunk/Swat/SwatReplicableFieldset.php:
+	  Extend ReplicableContainer and rename ReplicatorFieldset to
+	  ReplicableFieldset.
+	* [r13624] swat/trunk/Swat/SwatReplicableContainer.php:
+	  add a base class for widgets that are replicable
+
+2006-12-04  isaac
+
+	* [r13597] swat/trunk/Swat/SwatFlydown.php,
+	  swat/trunk/Swat/SwatFlydownDivider.php:
+	  utf-8 baby
+
+2006-12-04  gauthierm
+
+	* [r13588] swat/trunk/Swat/SwatCascadeFlydown.php:
+	  Use correct YUI components
+	* [r13587] swat/trunk/Swat/SwatTimeZoneEntry.php:
+	  Make time-zone entry widget use embedded widgets. Fixes #340.
+	* [r13586] swat/trunk/Swat/SwatCascadeFlydown.php:
+	  Make blank value null like SwatFlydown
+	* [r13580] swat/trunk/Swat/SwatEntry.php,
+	  swat/trunk/Swat/SwatTextarea.php:
+	  Properly escape text input tag values s and textarea tag content
+	  so entered entities are visible and editable on subsequent edits.
+	* [r13576] swat/trunk/Swat/SwatXHTMLTextarea.php:
+	  Humanize some more errors.
+
+2006-12-02  gauthierm
+
+	* [r13564] swat/trunk/Swat/SwatString.php:
+	  Make it possible to know when ellipsizing has taken place in
+	  SwatString ellipsizing functions.
+
+2006-12-01  gauthierm
+
+	* [r13554] swat/trunk/Swat/SwatColorEntry.php:
+	  Fix an easy TODO for the SwatColorEntry::setState() method.
+	* [r13553] swat/trunk/Swat/SwatTableView.php:
+	  Remove TODO that seems to already be TODONE. I tested this.
+	* [r13550]
+	  swat/trunk/www/javascript/swat-table-view-checkbox-column.js,
+	  swat/trunk/www/javascript/swat-z-index-manager.js:
+	  Use array literal notation instead of object notaiton. This is
+	  faster and more compatible.
+	* [r13549] swat/trunk/www/javascript/swat-checkbox-list.js:
+	  Use click event instead of change event for checkbox list so it
+	  works in IE
+	* [r13548] swat/trunk/www/javascript/swat-checkbox-entry-list.js:
+	  Use click event rather than change on checkbox entry list so it
+	  works in IE.
+	* [r13547] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  display a space in the blank cell so it does not lose formatting
+	* [r13546] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  display tfoot before tbody to make XHTML valid.
+	* [r13545]
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js:
+	  use click event instead of change event to fix IE bugs
+	* [r13544] swat/trunk/Swat/SwatCheckboxTree.php:
+	  Use '.' instead of '/' as a path separator for XML ids. Finishes
+	  #337.
+	* [r13543] swat/trunk/Swat/SwatExpandableCheckboxTree.php,
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js:
+	  Use '.' instead of '/' as a path separator so XML ids will be
+	  valid. Fixes #337 for expandable checkbox tree.
+	* [r13542]
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js:
+	  Change the image before animating like the disclosure. I think
+	  this seems more natural.
+	* [r13541]
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js:
+	  - add animation for expandable checkbox tree nodes (Fixes #300)
+	  - refactor events so self is not needed
+	  - add missing var declarations
+	  - whitespace
+	* [r13540] swat/trunk/Swat/SwatExpandableCheckboxTree.php:
+	  wrap ul tags in divs to allow for animation
+
+2006-11-30  isaac
+
+	* [r13535] swat/trunk/Swat/SwatColorEntry.php,
+	  swat/trunk/Swat/SwatConfirmEmailEntry.php,
+	  swat/trunk/Swat/SwatConfirmPasswordEntry.php,
+	  swat/trunk/Swat/SwatContainer.php,
+	  swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/Swat/SwatFloatEntry.php,
+	  swat/trunk/Swat/SwatFlydown.php,
+	  swat/trunk/Swat/SwatFormField.php,
+	  swat/trunk/Swat/SwatListEntry.php,
+	  swat/trunk/Swat/SwatMessageDisplay.php,
+	  swat/trunk/Swat/SwatMoneyEntry.php,
+	  swat/trunk/Swat/SwatTextarea.php,
+	  swat/trunk/Swat/SwatTimeEntry.php,
+	  swat/trunk/Swat/SwatTimeZoneEntry.php,
+	  swat/trunk/SwatDB/SwatDB.php,
+	  swat/trunk/demo/include/pages/MessageDisplay.php:
+	  msg to message
+
+2006-11-30  gauthierm
+
+	* [r13526] swat/trunk/Swat/SwatXHTMLTextarea.php:
+	  add an optional boolean flag to ignore validation errors on the
+	  XHTML textarea. Fixes ticket #152 for the time being.
+	* [r13523] swat/trunk/Swat/SwatCheckbox.php:
+	  Pass id to parent constructor. How did this ever work???
+	* [r13518] swat/trunk/Swat/SwatXHTMLTextarea.php:
+	  fix misnamed property that enabled validation against the DTD
+	  and add folding to the template definition
+	* [r13514] swat/trunk/Swat/SwatUI.php:
+	  fix misnamed property that enables validation against the DTD.
+	* [r13511] swat/trunk/Swat/SwatXHTMLTextarea.php:
+	  fix syntax error
+	* [r13510] swat/trunk/Swat/SwatXHTMLTextarea.php:
+	  don't use the document object statically
+	* [r13509] swat/trunk/Swat/SwatEmailEntry.php:
+	  rename msg variable to message
+	* [r13508] swat/trunk/Swat/SwatEmailEntry.php:
+	  Use filter functions built-into PHP 5.2.x to validate email
+	  addresses
+	* [r13507] swat/trunk/Swat/SwatMoneyEntry.php,
+	  swat/trunk/Swat/SwatString.php:
+	  coding conventions
+
+2006-11-30  steven
+
+	* [r13502] swat/trunk/www/javascript/swat-disclosure.js,
+	  swat/trunk/www/styles/swat-frame-disclosure.css:
+	  Reset overflow to 'visible' after open animation is complete to
+	  work better with negative CSS margins
+	* [r13495]
+	  swat/trunk/www/styles/swat-title-link-cell-renderer.css:
+	  Initial styles for SwatFrameDisclosure - more to come
+
+2006-11-30  gauthierm
+
+	* [r13488] swat/trunk/Swat/SwatFrameDisclosure.php:
+	  add vim line and remove unnecesseary require
+
+2006-11-30  nrf
+
+	* [r13487] swat/trunk/Swat/SwatFrameDisclosure.php:
+	  Add a new container object, a subclass of SwatDisclosure that
+	  looks like a SwatFrame.
+	* [r13486] swat/trunk/Swat/SwatDisclosure.php:
+	  Refactor to make more sub-classable.
+	* [r13480] swat/trunk/Swat/SwatEntry.php,
+	  swat/trunk/Swat/SwatFileEntry.php,
+	  swat/trunk/Swat/SwatIntegerEntry.php,
+	  swat/trunk/Swat/SwatNumericEntry.php:
+	  fix #295: make getValidationMessage() in Swat controls return
+	  SwatMessage objects instead of strings
+
+2006-11-29  gauthierm
+
+	* [r13475] swat/trunk/Swat/SwatNavBar.php,
+	  swat/trunk/demo/include/pages/TableViewInputRow.php:
+	  update copyright
+	* [r13474] swat/trunk/Swat/Swat.php,
+	  swat/trunk/Swat/SwatActionItem.php,
+	  swat/trunk/Swat/SwatActionItemDivider.php,
+	  swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/Swat/SwatAutoloader.php,
+	  swat/trunk/Swat/SwatAutoloaderRule.php,
+	  swat/trunk/Swat/SwatBooleanCellRenderer.php,
+	  swat/trunk/Swat/SwatButton.php,
+	  swat/trunk/Swat/SwatByteCellRenderer.php,
+	  swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/Swat/SwatCascadeFlydown.php,
+	  swat/trunk/Swat/SwatCellRenderer.php,
+	  swat/trunk/Swat/SwatCellRendererContainer.php,
+	  swat/trunk/Swat/SwatCellRendererMapping.php,
+	  swat/trunk/Swat/SwatCellRendererSet.php,
+	  swat/trunk/Swat/SwatChangeOrder.php,
+	  swat/trunk/Swat/SwatCheckAll.php,
+	  swat/trunk/Swat/SwatCheckbox.php,
+	  swat/trunk/Swat/SwatCheckboxCellRenderer.php,
+	  swat/trunk/Swat/SwatCheckboxEntryList.php,
+	  swat/trunk/Swat/SwatCheckboxList.php,
+	  swat/trunk/Swat/SwatCheckboxTree.php,
+	  swat/trunk/Swat/SwatColorEntry.php,
+	  swat/trunk/Swat/SwatCommentHtmlHeadEntry.php,
+	  swat/trunk/Swat/SwatConfirmEmailEntry.php,
+	  swat/trunk/Swat/SwatConfirmPasswordEntry.php,
+	  swat/trunk/Swat/SwatConfirmationButton.php,
+	  swat/trunk/Swat/SwatContainer.php,
+	  swat/trunk/Swat/SwatContentBlock.php,
+	  swat/trunk/Swat/SwatControl.php,
+	  swat/trunk/Swat/SwatDataTreeNode.php,
+	  swat/trunk/Swat/SwatDate.php,
+	  swat/trunk/Swat/SwatDateCellRenderer.php,
+	  swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/Swat/SwatDetailsStore.php,
+	  swat/trunk/Swat/SwatDetailsView.php,
+	  swat/trunk/Swat/SwatDetailsViewField.php,
+	  swat/trunk/Swat/SwatDetailsViewVerticalField.php,
+	  swat/trunk/Swat/SwatDisclosure.php,
+	  swat/trunk/Swat/SwatDisplayableContainer.php,
+	  swat/trunk/Swat/SwatEmailEntry.php,
+	  swat/trunk/Swat/SwatEntry.php, swat/trunk/Swat/SwatError.php,
+	  swat/trunk/Swat/SwatErrorDisplayer.php,
+	  swat/trunk/Swat/SwatErrorLogger.php,
+	  swat/trunk/Swat/SwatExceptionDisplayer.php,
+	  swat/trunk/Swat/SwatExceptionLogger.php,
+	  swat/trunk/Swat/SwatExpandableCheckboxTree.php,
+	  swat/trunk/Swat/SwatFieldset.php,
+	  swat/trunk/Swat/SwatFileEntry.php,
+	  swat/trunk/Swat/SwatFloatEntry.php,
+	  swat/trunk/Swat/SwatFlydown.php,
+	  swat/trunk/Swat/SwatFlydownDivider.php,
+	  swat/trunk/Swat/SwatFooterFormField.php,
+	  swat/trunk/Swat/SwatForm.php, swat/trunk/Swat/SwatFormField.php,
+	  swat/trunk/Swat/SwatFrame.php,
+	  swat/trunk/Swat/SwatGroupedFlydown.php,
+	  swat/trunk/Swat/SwatGroupingFormField.php,
+	  swat/trunk/Swat/SwatHeaderFormField.php,
+	  swat/trunk/Swat/SwatHtmlHeadEntry.php,
+	  swat/trunk/Swat/SwatHtmlHeadEntrySet.php,
+	  swat/trunk/Swat/SwatHtmlTag.php,
+	  swat/trunk/Swat/SwatImageCellRenderer.php,
+	  swat/trunk/Swat/SwatImageDisplay.php,
+	  swat/trunk/Swat/SwatImageLinkCellRenderer.php,
+	  swat/trunk/Swat/SwatInputCell.php,
+	  swat/trunk/Swat/SwatInputControl.php,
+	  swat/trunk/Swat/SwatIntegerEntry.php,
+	  swat/trunk/Swat/SwatJavaScriptHtmlHeadEntry.php,
+	  swat/trunk/Swat/SwatLinkCellRenderer.php,
+	  swat/trunk/Swat/SwatListEntry.php,
+	  swat/trunk/Swat/SwatMessage.php,
+	  swat/trunk/Swat/SwatMessageDisplay.php,
+	  swat/trunk/Swat/SwatMoneyCellRenderer.php,
+	  swat/trunk/Swat/SwatMoneyEntry.php,
+	  swat/trunk/Swat/SwatNavBar.php,
+	  swat/trunk/Swat/SwatNavBarEntry.php,
+	  swat/trunk/Swat/SwatNullTextCellRenderer.php,
+	  swat/trunk/Swat/SwatNumericCellRenderer.php,
+	  swat/trunk/Swat/SwatNumericEntry.php,
+	  swat/trunk/Swat/SwatObject.php, swat/trunk/Swat/SwatOption.php,
+	  swat/trunk/Swat/SwatOptionControl.php,
+	  swat/trunk/Swat/SwatPagination.php,
+	  swat/trunk/Swat/SwatPasswordEntry.php,
+	  swat/trunk/Swat/SwatPercentageCellRenderer.php,
+	  swat/trunk/Swat/SwatRadioList.php,
+	  swat/trunk/Swat/SwatRadioTable.php,
+	  swat/trunk/Swat/SwatRemoveInputCell.php,
+	  swat/trunk/Swat/SwatReplicable.php,
+	  swat/trunk/Swat/SwatReplicatorFieldset.php,
+	  swat/trunk/Swat/SwatReplicatorFormField.php,
+	  swat/trunk/Swat/SwatSimpleColorEntry.php,
+	  swat/trunk/Swat/SwatState.php, swat/trunk/Swat/SwatString.php,
+	  swat/trunk/Swat/SwatStyleSheetHtmlHeadEntry.php,
+	  swat/trunk/Swat/SwatTableModel.php,
+	  swat/trunk/Swat/SwatTableStore.php,
+	  swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTableViewCheckAllRow.php,
+	  swat/trunk/Swat/SwatTableViewCheckboxColumn.php,
+	  swat/trunk/Swat/SwatTableViewColumn.php,
+	  swat/trunk/Swat/SwatTableViewGroup.php,
+	  swat/trunk/Swat/SwatTableViewInputRow.php,
+	  swat/trunk/Swat/SwatTableViewOrderableColumn.php,
+	  swat/trunk/Swat/SwatTableViewRow.php,
+	  swat/trunk/Swat/SwatTableViewSpanningColumn.php,
+	  swat/trunk/Swat/SwatTextCellRenderer.php,
+	  swat/trunk/Swat/SwatTextarea.php,
+	  swat/trunk/Swat/SwatTextareaEditor.php,
+	  swat/trunk/Swat/SwatTimeEntry.php,
+	  swat/trunk/Swat/SwatTimeZoneEntry.php,
+	  swat/trunk/Swat/SwatTitleable.php,
+	  swat/trunk/Swat/SwatToolLink.php,
+	  swat/trunk/Swat/SwatToolbar.php,
+	  swat/trunk/Swat/SwatTreeFlydown.php,
+	  swat/trunk/Swat/SwatTreeFlydownNode.php,
+	  swat/trunk/Swat/SwatTreeNode.php, swat/trunk/Swat/SwatUI.php,
+	  swat/trunk/Swat/SwatUIObject.php,
+	  swat/trunk/Swat/SwatUIParent.php,
+	  swat/trunk/Swat/SwatWidget.php,
+	  swat/trunk/Swat/SwatWidgetCellRenderer.php,
+	  swat/trunk/Swat/SwatXHTMLTextarea.php,
+	  swat/trunk/Swat/SwatYesNoFlydown.php,
+	  swat/trunk/Swat/exceptions/SwatClassNotFoundException.php,
+	  swat/trunk/Swat/exceptions/SwatDoesNotImplementException.php,
+	  swat/trunk/Swat/exceptions/SwatDuplicateIdException.php,
+	  swat/trunk/Swat/exceptions/SwatException.php,
+	  swat/trunk/Swat/exceptions/SwatFileNotFoundException.php,
+	  swat/trunk/Swat/exceptions/SwatInvalidCallbackException.php,
+	  swat/trunk/Swat/exceptions/SwatInvalidClassException.php,
+	  swat/trunk/Swat/exceptions/SwatInvalidConstantExpressionException.php,
+	  swat/trunk/Swat/exceptions/SwatInvalidPropertyException.php,
+	  swat/trunk/Swat/exceptions/SwatInvalidPropertyTypeException.php,
+	  swat/trunk/Swat/exceptions/SwatInvalidSwatMLException.php,
+	  swat/trunk/Swat/exceptions/SwatObjectNotFoundException.php,
+	  swat/trunk/Swat/exceptions/SwatUndefinedConstantException.php,
+	  swat/trunk/Swat/exceptions/SwatUndefinedMessageTypeException.php,
+	  swat/trunk/Swat/exceptions/SwatUndefinedStockTypeException.php,
+	  swat/trunk/Swat/exceptions/SwatWidgetNotFoundException.php,
+	  swat/trunk/SwatDB/SwatDB.php,
+	  swat/trunk/SwatDB/SwatDBDataObject.php,
+	  swat/trunk/SwatDB/SwatDBDefaultRecordsetWrapper.php,
+	  swat/trunk/SwatDB/SwatDBField.php,
+	  swat/trunk/SwatDB/SwatDBRecordsetWrapper.php,
+	  swat/trunk/SwatDB/SwatDBTransaction.php,
+	  swat/trunk/SwatDB/exceptions/SwatDBException.php,
+	  swat/trunk/demo/include/DemoApplication.php,
+	  swat/trunk/demo/include/DemoDocumentationLink.php,
+	  swat/trunk/demo/include/DemoDocumentationMenu.php,
+	  swat/trunk/demo/include/DemoMenu.php,
+	  swat/trunk/demo/include/pages/ChangeOrder.php,
+	  swat/trunk/demo/include/pages/Checkbox.php,
+	  swat/trunk/demo/include/pages/DemoPage.php,
+	  swat/trunk/demo/include/pages/DetailsView.php,
+	  swat/trunk/demo/include/pages/Disclosure.php,
+	  swat/trunk/demo/include/pages/Fieldset.php,
+	  swat/trunk/demo/include/pages/Flydown.php,
+	  swat/trunk/demo/include/pages/FrontPage.php,
+	  swat/trunk/demo/include/pages/MessageDisplay.php,
+	  swat/trunk/demo/include/pages/NavBar.php,
+	  swat/trunk/demo/include/pages/Pagination.php,
+	  swat/trunk/demo/include/pages/PasswordEntry.php,
+	  swat/trunk/demo/include/pages/RadioList.php,
+	  swat/trunk/demo/include/pages/StringDemo.php,
+	  swat/trunk/demo/include/pages/TableView.php,
+	  swat/trunk/demo/include/pages/TableViewInputRow.php,
+	  swat/trunk/demo/www/index.php, swat/trunk/package.php,
+	  swat/trunk/po/preprocess.php:
+	  Add preferred vim settings to the top of files in Swat. Fixes
+	  #116.
+	* [r13473] swat/trunk/Swat/SwatNavBar.php:
+	  save SwatNavBar in unix format
+	* [r13467] swat/trunk/Swat/SwatFileEntry.php:
+	  add note
+	* [r13466] swat/trunk/Swat/SwatFileEntry.php:
+	  Use Fileinfo extension SwatEntry if it exists. Fileinfo is able
+	  to detect more mime types than mime_content_type().
+
+2006-11-28  nrf
+
+	* [r13440] swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  Spelling matters
+
+2006-11-28  steven
+
+	* [r13401] swat/trunk/www/styles/swat-message-display.css:
+	  Minor padding tweaks to SwatMessageDisplay
+	* [r13400] swat/trunk/www/styles/swat-message-display.css:
+	  Add position:relative; to the SwatMessage to fix some IE
+	  rendering errors
+	  Also, apply dismiss link styles more broadly for IE's sake
+	* [r13398] swat/trunk/www/styles/swat-message-display.css:
+	  Fix broken padding in SwatMessages in IE, fix a TODO regarding
+	  padding differences between messages with and without secondary
+	  content
+
+2006-11-28  gauthierm
+
+	* [r13397] swat/trunk/Swat/SwatString.php:
+	  extend r13396 to <pre> tags and make it easier to add other tags
+	  to the list of element tags that behave this way (preformatted
+	  content).
+	* [r13396] swat/trunk/Swat/SwatString.php:
+	  Make SwatString::toXHTML() smart enough to not format stuff
+	  inside <script> tags. Let me know if this breaks anything. Fixes
+	  #316.
+
+2006-11-27  gauthierm
+
+	* [r13380] swat/trunk/Swat/SwatTextarea.php:
+	  Return null if no text is entered in a SwatTextarea. This is how
+	  SwatEntry behaves. This fixes #318.
+
+2006-11-25  gauthierm
+
+	* [r13315] swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/www/javascript/swat-calendar.js:
+	  Fix #159: SwatDateEntry style broken when displaying all parts.
+	  This also removes the entry_id property from SwatCalendar and
+	  renames the SwatDateEntry JavaScript object with an _obj suffix.
+	* [r13314] swat/trunk/Swat/SwatCheckbox.php,
+	  swat/trunk/Swat/SwatEntry.php,
+	  swat/trunk/Swat/SwatFileEntry.php,
+	  swat/trunk/Swat/SwatFlydown.php,
+	  swat/trunk/Swat/SwatTextarea.php:
+	  if control is not visible, return null as the focusable html id
+	  Fixes #313 in the Store package.
+
+2006-11-24  nrf
+
+	* [r13300] swat/trunk/Swat/SwatForm.php:
+	  Serialize values stored in hidden form fields using
+	  SwatForm::addHiddenField(). This will preserve type and allow
+	  the storing of serializable objects. Serialization is
+	  transparent when the value is retrieved with
+	  SwatForm::getHiddenField().
+	  
+	  The form still outputs an unserialized field as well to make
+	  this change backward compatible with code that accesses hidden
+	  fields without using SwatForm::getHiddenField(). Only
+	  non-object and non-array values are output this way.
+	  
+	  Finally, serialize the internal array of hidden field names.
+
+2006-11-24  isaac
+
+	* [r13262] swat/trunk/Swat/SwatReplicatorFormField.php,
+	  swat/trunk/Swat/SwatToolbar.php:
+	  shame on mike for breaking SwatToolBar, and a couple of ws fixes
+
+2006-11-24  gauthierm
+
+	* [r13261] swat/trunk/Swat/SwatToolbar.php:
+	  Only display li tags for children that have output. Fixes #302.
+
+2006-11-23  gauthierm
+
+	* [r13256] swat/trunk/Swat/SwatUI.php:
+	  Fix XML parsing of SwatUI in PHP 5.2.x. This does two things.
+	  Firstly, this change explicitly sets parsing options for
+	  validation and default attribute resolution on the document
+	  object before loading the XML file. These were previously
+	  implictly set in PHP. Secondly, the load() method is no longer
+	  called statically. Calling load statically triggers an E_STRICT
+	  error. As a result of these two changes, the error handling code
+	  can be slightly simplified.
+
+2006-11-23  nrf
+
+	* [r13247] swat/trunk/Swat/SwatUI.php:
+	  Add a temporary work-around
+
+2006-11-23  gauthierm
+
+	* [r13237] swat/trunk/Swat/SwatControl.php,
+	  swat/trunk/Swat/SwatFileEntry.php,
+	  swat/trunk/Swat/SwatFormField.php,
+	  swat/trunk/Swat/SwatListEntry.php:
+	  make getNote() return a SwatMessage. Fixes a TODO and fixes #296.
+	* [r13236] swat/trunk/Swat/SwatEntry.php:
+	  docblock tidy
+
+2006-11-23  nrf
+
+	* [r13234] swat/trunk/Swat/SwatEntry.php:
+	  Fix validation messages that were just plain wrong.
+
+2006-11-23  gauthierm
+
+	* [r13232] swat/trunk/Swat/SwatFileEntry.php:
+	  remove unnecessary quotation marks
+	* [r13230] swat/trunk/Swat/SwatFileEntry.php:
+	  move validation messages into their own method like SwatEntry.
+	* [r13228] swat/trunk/Swat/SwatEntry.php:
+	  public before protected
+	* [r13225] swat/trunk/Swat/SwatFileEntry.php:
+	  more note cleanup
+	* [r13224] swat/trunk/Swat/SwatFileEntry.php:
+	  put note in a more expected place
+
+2006-11-23  nrf
+
+	* [r13213] swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  Preserve widget state when the form has been processed.
+
+2006-11-22  nick
+
+	* [r13207] swat/trunk/SwatDB/SwatDB.php:
+	  rename buildDataTree to getDataTree
+	* [r13200] swat/trunk/Swat/SwatCheckboxTree.php,
+	  swat/trunk/Swat/SwatTreeFlydown.php,
+	  swat/trunk/Swat/SwatTreeFlydownNode.php:
+	  Bring the widgets that use tree nodes up to the new spec for
+	  dealing with
+	  nodes.
+
+2006-11-21  gauthierm
+
+	* [r13178] swat/trunk/Swat/SwatString.php:
+	  ignore paragraphs containing only whitespace as well as empty
+	  paragraphs
+	* [r13177] swat/trunk/Swat/SwatNullTextCellRenderer.php:
+	  add license tag
+	* [r13176] swat/trunk/Swat/SwatString.php:
+	  Fix for #270. Passing a blank string to SwatString::toXHTML
+	  results in <p></p>.
+
+2006-11-20  nick
+
+	* [r13153] swat/trunk/SwatDB/SwatDB.php:
+	  Rename buildTreeOptionArray to buildDataTree and make it return
+	  more generic
+	  SwatTreeDataNodes rather than Flydown-specific nodes.
+	* [r13151] swat/trunk/Swat/SwatTreeFlydown.php,
+	  swat/trunk/Swat/SwatTreeFlydownNode.php,
+	  swat/trunk/Swat/SwatTreeNode.php:
+	  Restructured the way SwatTreeFlydown uses nodes:
+	  - added getTree method to SwatTreeFlydown to allow append
+	  children to the
+	  existing root node
+	  - added a static method convertFromDataTree to
+	  SwatTreeFlydownNode to convert
+	  SwatDataTreeNodes to SwatTreeFlydownNodes
+	  - added addTree() to SwatTreeNode as a convenience method for
+	  adding all of the
+	  children of a node.
+	* [r13142] swat/trunk/SwatDB/SwatDB.php:
+	  fix doc
+
+2006-11-18  gauthierm
+
+	* [r13122] swat/trunk/Swat/SwatMessageDisplay.php:
+	  fix variable names
+	* [r13121] swat/trunk/Swat/SwatReplicatorFieldset.php,
+	  swat/trunk/Swat/SwatReplicatorFormField.php:
+	  call parent::init() after adding cloned widgets in replicable
+	  containers
+	* [r13120] swat/trunk/Swat/SwatReplicatorFieldset.php:
+	  check new_child instead of child for correctness
+	* [r13119] swat/trunk/Swat/SwatReplicatorFormField.php:
+	  Make FormField replicator extend Fieldset instead of FormField.
+	  This matches ReplicatorFieldset.
+
+2006-11-17  nrf
+
+	* [r13106] swat/trunk/Swat/SwatWidget.php:
+	  Add new method SwatWidget::replaceWithContainer()
+
+2006-11-14  nick
+
+	* [r13032] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  This was getting an error on things like SwatDate which aren't
+	  dataobjects.
+
+2006-11-14  nrf
+
+	* [r13027] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.0.13
+	* [r13026] swat/trunk/locale/en_CA/LC_MESSAGES/swat.mo,
+	  swat/trunk/locale/en_GB/LC_MESSAGES/swat.mo,
+	  swat/trunk/locale/en_US/LC_MESSAGES/swat.mo,
+	  swat/trunk/po/en_CA.po, swat/trunk/po/en_GB.po,
+	  swat/trunk/po/en_US.po:
+	  Update translations.
+	* [r13025] swat/trunk/Swat/SwatDate.php:
+	  Add a __toString() method.
+
 2006-11-14  nick
 
 	* [r13019] swat/trunk/Swat/SwatHtmlHeadEntry.php:
