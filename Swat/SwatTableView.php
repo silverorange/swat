@@ -524,6 +524,25 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getXhtmlColspan()
+
+	/**
+	 * Gets how many XHTML table columns the visible column objects of this
+	 * table-view object span on display
+	 *
+	 * @return integer the number of XHTML table columns the visible column
+	 *                  objects of this table-view object span on display.
+	 */
+	public function getXhtmlColspan()
+	{
+		$count = 0;
+		foreach ($this->getVisibleColumns() as $column)
+			$count += $column->getXhtmlColspan();
+
+		return $count;
+	}
+
+	// }}}
 	// {{{ public function getColumns()
 
 	/**
