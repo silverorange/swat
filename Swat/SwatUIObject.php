@@ -259,7 +259,7 @@ abstract class SwatUIObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ protected function getCSSClassString()
+	// {{{ protected final function getCSSClassString()
 
 	/**
 	 * Gets the string representation of this user-interface object's list of
@@ -272,7 +272,7 @@ abstract class SwatUIObject extends SwatObject
 	 *
 	 * @see SwatUIObject::getCSSClassNames()
 	 */
-	protected function getCSSClassString()
+	protected final function getCSSClassString()
 	{
 		$class_string = null;
 
