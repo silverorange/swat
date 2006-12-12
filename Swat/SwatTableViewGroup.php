@@ -98,7 +98,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 		$tr_tag->open();
 
 		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
-		$td_tag->colspan = $this->view->getVisibleColumnCount();
+		$td_tag->colspan = $this->view->getXhtmlColspan();
 		$td_tag->open();
 		$this->displayRenderersInternal($row);
 		$td_tag->close();

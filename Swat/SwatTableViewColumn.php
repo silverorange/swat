@@ -434,6 +434,20 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	}
 
 	// }}}
+	// {{{ public function getXhtmlColspan()
+
+	/**
+	 * Gets how many XHTML table columns this column object spans on display
+	 *
+	 * @return integer the number of XHTML table columns this column object
+	 *                  spans on display.
+	 */
+	public function getXhtmlColspan()
+	{
+		return 1;
+	}
+
+	// }}}
 	// {{{ protected function displayRenderers()
 
 	/**
