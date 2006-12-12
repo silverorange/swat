@@ -38,12 +38,44 @@ class SwatEmailEntry extends SwatEntry
 			return;
 		}
 
-		if (filter_var($this->value, FILTER_VALIDATE_EMAIL) === false) {
+		if ($this->validateEmailAddress($this->value)) {
 			$message = Swat::_('The email address you have entered is not '.
 				'properly formatted.');
 
 			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 		}
+	}
+
+	// }}}
+	// {{{ protected function validateEmailAddres()
+
+	/**
+	 * Validates an email address
+	 *
+	 * This uses the PHP 5.2.x filter_var() function if it is available.
+	 *
+	 * @param string $value the email address to validate.
+	 *
+	 * @return boolean true if <i>$value</i> is a valid email address and
+	 *                  false if it is not.
+	 */
+	protected function validateEmailAddres($value)
+	{
+		$valid = false;
+
+		if (function_exists('filter_var')) {
+			$valid =
+				(filter_var($this->value, FILTER_VALIDATE_EMAIL) === false);
+		} else {
+			$valid_name_word = '[-!#$%&\'*+.\\/0-9=?A-Z^_`{|}~]+';
+			$valid_domain_word = '[-!#$%&\'*+\\/0-9=?A-Z^_`{|}~]+';
+			$valid_address_regexp = '/^'.$valid_name_word.'@'.
+				$valid_domain_word.'(\.'.$valid_domain_word.')+$/ui';
+
+			$valid = (preg_match($valid_address_regexp, $this->value) === 0);
+		}
+
+		return $valid;
 	}
 
 	// }}}
