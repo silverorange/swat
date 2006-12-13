@@ -204,10 +204,10 @@ function SwatChangeOrder_updateDropPosition()
 function SwatChangeOrder_mouseupEventHandler(event)
 {
 	// only allow left click to do things
-	var is_safari = (/Safari|Konqueror|KHTML/gi).test(navigator.userAgent);
+	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
 	if ((is_ie && (window.event.button & 1) != 1) ||
-		(!is_ie && !is_safari && event.button != 0))
+		(!is_ie && !is_webkit && event.button != 0))
 		return false;
 
 	YAHOO.util.Event.removeListener(document, 'mousemove',
@@ -261,10 +261,10 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	YAHOO.util.Event.preventDefault(event);
 
 	// only allow left click to do things
-	var is_safari = (/Safari|Konqueror|KHTML/gi).test(navigator.userAgent);
+	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
 	if ((is_ie && (window.event.button & 1) != 1) ||
-		(!is_ie && !is_safari && event.button != 0))
+		(!is_ie && !is_webkit && event.button != 0))
 		return false;
 
 	if (!this.controller.sensitive)
@@ -323,7 +323,8 @@ function SwatChangeOrder_mousedownEventHandler(event)
  */
 function SwatChangeOrder(id, sensitive)
 {
-	this.is_safari = (/Safari|Konqueror|KHTML/gi).test(navigator.userAgent);
+	this.is_webkit =
+		(/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 
 	this.id = id;
 
@@ -331,7 +332,7 @@ function SwatChangeOrder(id, sensitive)
 	this.buttons = document.getElementsByName(this.id + '_buttons');
 
 	// Safari/KHTML workaround for CSS Level2 system colors
-	if (this.is_safari)
+	if (this.is_webkit)
 		this.list_div.style.borderColor = '#DCCEB2';
 
 	// the following two lines must be split on two lines to
@@ -466,14 +467,14 @@ SwatChangeOrder.prototype.choose = function(div)
 			this.active_div.className = 'swat-change-order-item';
 
 			// Safari/KHTML workaround for CSS Level2 system colors
-			if (this.is_safari)
+			if (this.is_webkit)
 				this.active_div.style.backgroundColor = '#fff';
 		}
 
 		div.className = 'swat-change-order-item swat-change-order-item-active';
 
 		// Safari/KHTML workaround for CSS Level2 system colors
-		if (this.is_safari)
+		if (this.is_webkit)
 			div.style.backgroundColor = '#406A9C';
 
 		this.active_div = div;
