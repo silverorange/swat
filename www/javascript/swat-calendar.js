@@ -28,7 +28,8 @@
 function SwatCalendar(id, start_date, end_date)
 {
 	this.id = id;
-	this.is_safari = (/Safari|Konqueror|KHTML/gi).test(navigator.userAgent);
+	this.is_webkit =
+		(/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 
 	var date = new Date();
 	if (start_date.length == 10) {
@@ -181,14 +182,14 @@ SwatCalendar.prototype.setDate = function(element, yyyy, mm, dd)
 	this.setDateValues(yyyy, mm, dd);
 	if (this.selected_element) {
 		this.selected_element.className = 'swat-calendar-cell';
-		if (this.is_safari) {
+		if (this.is_webkit) {
 			this.selected_element.style.backgroundColor = '';
 			this.selected_element.style.color = '';
 		}
 	}
 
 	element.className = 'swat-calendar-current-cell';
-	if (this.is_safari) {
+	if (this.is_webkit) {
 		element.style.backgroundColor = '#406A9C';
 		element.style.color = '#fff';
 	}
@@ -609,7 +610,7 @@ SwatCalendar.prototype.draw = function()
 
 				if (dd == day) {
 					cell_class = 'swat-calendar-current-cell';
-					if (this.is_safari) {
+					if (this.is_webkit) {
 						cell_current = 'id="' + this.id + '_current_cell" ' +
 							'style="background-color: #406A9C; color: #fff;" ';
 					} else {
