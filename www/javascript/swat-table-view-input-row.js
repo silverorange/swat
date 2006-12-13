@@ -55,7 +55,8 @@ function SwatTableViewInputRow(id, row_string)
  *
  * @var boolean
  */
-SwatTableViewInputRow.isSafari = (navigator.userAgent.indexOf('Safari') != -1);
+SwatTableViewInputRow.is_webkit =
+	(/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 
 /**
  * Gets an XML parser with a loadXML() method
@@ -121,7 +122,7 @@ SwatTableViewInputRow.parser = SwatTableViewInputRow_getXMLParser();
  * manually copy nodes from one document to the current document. These methods
  * parse a HTMLTableRowNode in one document into a table row in this document.
  */
-if (!document.importNode || SwatTableViewInputRow.isSafari) {
+if (!document.importNode || SwatTableViewInputRow.is_webkit) {
 
 	/**
 	 * Parses a table row from one document into another
@@ -219,7 +220,7 @@ SwatTableViewInputRow.prototype.addRow = function()
 	var dom = SwatTableViewInputRow.parser.loadXML(document_string);
 	var source_tr = dom.documentElement.getElementsByTagName('tr')[0];
 
-	if (document.importNode && !SwatTableViewInputRow.isSafari) {
+	if (document.importNode && !SwatTableViewInputRow.is_webkit) {
 		var dest_tr = document.importNode(source_tr, true);
 		this.enter_row.parentNode.insertBefore(dest_tr, this.enter_row);
 	} else {
