@@ -47,7 +47,7 @@ class SwatEmailEntry extends SwatEntry
 	}
 
 	// }}}
-	// {{{ protected function validateEmailAddres()
+	// {{{ protected function validateEmailAddress()
 
 	/**
 	 * Validates an email address
@@ -59,7 +59,7 @@ class SwatEmailEntry extends SwatEntry
 	 * @return boolean true if <i>$value</i> is a valid email address and
 	 *                  false if it is not.
 	 */
-	protected function validateEmailAddres($value)
+	protected function validateEmailAddress($value)
 	{
 		$valid = false;
 
