@@ -334,10 +334,11 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$this->action_flydown->show_blank = $this->show_blank;
 
 		foreach ($this->action_items as $item)
-			if ($item instanceof SwatActionItemDivider)
-				$this->action_flydown->addDivider();
-			else
-				$this->action_flydown->addOption($item->id, $item->title);
+			if ($item->visible)
+				if ($item instanceof SwatActionItemDivider)
+					$this->action_flydown->addDivider();
+				else
+					$this->action_flydown->addOption($item->id, $item->title);
 
 		$this->apply_button = new SwatButton($this->id.'_apply_button');
 		$this->apply_button->parent = $this;
