@@ -168,10 +168,10 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 	protected function displayTitle()
 	{
-		if ($this->title === null)
+		if ($this->title === null && $this->access_key === null)
 			return;
 
-		$title_tag = $this->getTitleTag($this->title);
+		$title_tag = $this->getTitleTag();
 		$title_tag->open();
 		$title_tag->displayContent();
 		$this->displayRequired();
@@ -317,14 +317,15 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 *
 	 * Subclasses can change this to change their appearance.
 	 * 
-	 * @param string $title title of the form field.
 	 * @return SwatHtmlTag a tag object containing the title.
 	 */
-	protected function getTitleTag($title)
+	protected function getTitleTag()
 	{
 		$label_tag = new SwatHtmlTag('label');
-		$label_tag->setContent(sprintf('%s: ', $title),
-			$this->title_content_type);
+
+		if ($this->title !== null)
+			$label_tag->setContent(sprintf('%s: ', $this->title),
+				$this->title_content_type);
 
 		$label_tag->for = $this->getFocusableHtmlId();
 		$label_tag->accesskey = $this->access_key;
