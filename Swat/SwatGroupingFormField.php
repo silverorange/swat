@@ -37,13 +37,14 @@ class SwatGroupingFormField extends SwatFormField
 	 *
 	 * Subclasses can change this to change their appearance.
 	 * 
-	 * @param $title string title of the form field.
 	 * @return SwatHtmlTag a tag object containing the title.
 	 */
-	protected function getTitleTag($title)
+	protected function getTitleTag()
 	{
 		$legend_tag = new SwatHtmlTag('legend');
-		$legend_tag->setContent($title);
+		$legend_tag->setContent($this->title,
+			$this->title_content_type);
+
 		return $legend_tag;
 	}
 
