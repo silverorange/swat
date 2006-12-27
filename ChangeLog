@@ -1,3 +1,30 @@
+2006-12-27  nrf
+
+	* [r14082] swat/branches/1.1.x:
+	  make a branch
+
+2006-12-13  nrf
+
+	* [r13845] swat/tags/release-1.1.2:
+	  tag release 1.1.2
+	* [r13844] swat/trunk/package.php:
+	  prepare for release of 1.1.2
+	* [r13843] swat/trunk/Swat/SwatEmailEntry.php:
+	  Spelling mistake.
+
+2006-12-12  nrf
+
+	* [r13829] swat/trunk/package.php:
+	  prepare for release of 1.1.1
+	* [r13828] swat/trunk/locale/en_CA/LC_MESSAGES/swat.mo,
+	  swat/trunk/locale/en_GB/LC_MESSAGES/swat.mo,
+	  swat/trunk/locale/en_US/LC_MESSAGES/swat.mo,
+	  swat/trunk/po/en_CA.po, swat/trunk/po/en_GB.po,
+	  swat/trunk/po/en_US.po:
+	  Update translations.
+	* [r13824] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.1.0
+
 2006-12-12  gauthierm
 
 	* [r13823] swat/trunk/Swat/SwatEmailEntry.php:
