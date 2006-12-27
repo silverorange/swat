@@ -138,13 +138,17 @@ class SwatTreeFlydown extends SwatFlydown
 	/**
 	 * Sets the tree to use for display
 	 *
-	 * @param SwatTreeFlydownNode or SwatDataTreeNode $tree the tree to use for
-	 *                        display.
+	 * @param SwatTreeFlydownNode|SwatDataTreeNode $tree the tree to use for
+	 *                                                    display.
 	 */
 	public function setTree($tree)
 	{
-		if ($tree instanceof SwatDataTreeNode)
+		if ($tree instanceof SwatDataTreeNode) {
 			$tree = SwatTreeFlydownNode::convertFromDataTree($tree);
+		} elseif (!($tree instanceof SwatTreeFlydownNode)) {
+			throw new SwatInvalidClassException('Tree must be an intance of '.
+				'either SwatDataTreeNode or SwatTreeFlydownNode.', 0, $tree);
+		}
 
 		$this->tree = $tree;
 	}
