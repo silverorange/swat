@@ -621,7 +621,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$text = '';
 
 		if ($this->show_month_number)
-			$text.= '('.str_pad($month, 2, '0', STR_PAD_LEFT).') ';
+			$text.= str_pad($month, 2, '0', STR_PAD_LEFT).' - ';
 
 		$text.= Date_Calc::getMonthFullName($month);
 
