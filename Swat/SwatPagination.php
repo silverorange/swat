@@ -257,13 +257,13 @@ class SwatPagination extends SwatControl
 
 			$anchor = new SwatHtmlTag('a');
 			$anchor->href = sprintf($link, (string) $this->prev_page);
-			$anchor->setContent(sprintf(Swat::_('%sPrevious'), '&#171;&nbsp;'));
+			$anchor->setContent(sprintf(Swat::_('%sPrevious'), '« '));
 			$anchor->class = 'swat-pagination-nextprev';
 			$anchor->display();
 		} else {
 			$span = new SwatHtmlTag('span');
 			$span->class = 'swat-pagination-nextprev';
-			$span->setContent(sprintf(Swat::_('%sPrevious'), '&#171;&nbsp;'));
+			$span->setContent(sprintf(Swat::_('%sPrevious'), '« '));
 			$span->display();
 		}
 	}
@@ -300,13 +300,13 @@ class SwatPagination extends SwatControl
 
 			$anchor = new SwatHtmlTag('a');
 			$anchor->href = sprintf($link, (string) $this->next_page);
-			$anchor->setContent(sprintf(Swat::_('Next%s'), '&nbsp;&#187;'));
+			$anchor->setContent(sprintf(Swat::_('Next%s'), ' »'));
 			$anchor->class = 'swat-pagination-nextprev';
 			$anchor->display();
 		} else {
 			$span = new SwatHtmlTag('span');
 			$span->class = 'swat-pagination-nextprev';
-			$span->setContent(sprintf(Swat::_('Next%s'), '&nbsp;&#187;'));
+			$span->setContent(sprintf(Swat::_('Next%s'), ' »'));
 			$span->display();
 		}
 	}
@@ -351,7 +351,7 @@ class SwatPagination extends SwatControl
 			if ($display) {
 				if ($j + 1 != $i) {
 					// ellipses
-					$span->setContent('&#8230;');
+					$span->setContent('…');
 					$span->display();
 				}
 
