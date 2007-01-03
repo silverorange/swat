@@ -257,12 +257,14 @@ class SwatPagination extends SwatControl
 
 			$anchor = new SwatHtmlTag('a');
 			$anchor->href = sprintf($link, (string) $this->prev_page);
+			// this is a non-breaking space
 			$anchor->setContent(sprintf(Swat::_('%sPrevious'), '« '));
 			$anchor->class = 'swat-pagination-nextprev';
 			$anchor->display();
 		} else {
 			$span = new SwatHtmlTag('span');
 			$span->class = 'swat-pagination-nextprev';
+			// this is a non-breaking space
 			$span->setContent(sprintf(Swat::_('%sPrevious'), '« '));
 			$span->display();
 		}
@@ -300,12 +302,14 @@ class SwatPagination extends SwatControl
 
 			$anchor = new SwatHtmlTag('a');
 			$anchor->href = sprintf($link, (string) $this->next_page);
+			// this is a non-breaking space
 			$anchor->setContent(sprintf(Swat::_('Next%s'), ' »'));
 			$anchor->class = 'swat-pagination-nextprev';
 			$anchor->display();
 		} else {
 			$span = new SwatHtmlTag('span');
 			$span->class = 'swat-pagination-nextprev';
+			// this is a non-breaking space
 			$span->setContent(sprintf(Swat::_('Next%s'), ' »'));
 			$span->display();
 		}
