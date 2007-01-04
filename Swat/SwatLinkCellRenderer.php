@@ -68,7 +68,8 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	public $value = null;
 
 	/**
-	 * A value or array of values to substitute into the link of this cell
+	 * A value or array of values to substitute into the link of this cell. The
+	 * value will automatically be url encoded when it is included in the link.
 	 *
 	 * @var mixed
 	 *
@@ -171,12 +172,19 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 
 	protected function getLink()
 	{
-		if ($this->link_value === null)
+		if ($this->link_value === null) {
 			$link = $this->link;
-		elseif (is_array($this->link_value))
-			$link = vsprintf($this->link, $this->link_value);
-		else
-			$link = sprintf($this->link, $this->link_value);
+		} elseif (is_array($this->link_value)) {
+			$link_values = array();
+
+			foreach ($this->link_value as $value)
+				$link_values = urlencode($value);
+
+			$link = vsprintf($this->link, $link_values);
+		} else {
+			$link_value = urlencode($this->link_value);
+			$link = sprintf($this->link, $link_value);
+		}
 
 		return $link;
 	}
