@@ -143,7 +143,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	}
 
 	// }}}
-	// {{{ public function getInheritanceCSSClassNames()
+	// {{{ public final function getInheritanceCSSClassNames()
 
 	/** 
 	 * Gets the CSS class names of this cell renderer based on the inheritance
@@ -166,7 +166,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 * @return array the array of CSS class names based on an inheritance tree
 	 *                for this cell renderer.
 	 */
-	public function getInheritanceCSSClassNames()
+	public final function getInheritanceCSSClassNames()
 	{
 		$php_class_name = get_class($this);
 		$css_class_names = array();
