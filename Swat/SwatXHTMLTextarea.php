@@ -114,9 +114,8 @@ XHTML;
 		$html_errors_value = self::initializeErrorHandler();
 
 		$document = new DOMDocument();
-		$document->resolveExternals = true;
-		$document->validateOnParse = true;
-		$document->loadXML($xhtml_content);
+		$document->loadXML($xhtml_content,
+			LIBXML_DTDLOAD | LIBXML_DTDATTR | LIBXML_DTDVALID);
 
 		if (count(self::$validation_errors) > 0 && !$ignore_validation_errors) {
 			$this->addMessage($this->getValidationErrorMessage());
