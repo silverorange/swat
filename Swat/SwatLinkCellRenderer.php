@@ -178,7 +178,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 			$link_values = array();
 
 			foreach ($this->link_value as $value)
-				$link_values = urlencode($value);
+				$link_values[] = urlencode($value);
 
 			$link = vsprintf($this->link, $link_values);
 		} else {
