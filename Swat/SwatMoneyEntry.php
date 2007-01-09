@@ -26,13 +26,22 @@ class SwatMoneyEntry extends SwatEntry
 	public $locale = null;
 
 	/**
-	 * Whether to display currency unit
+	 * Whether to display international currency unit
 	 *
 	 * If true, displays the international currency unit
 	 *
 	 * @var boolean
 	 */
 	public $display_currency = false;
+
+	/**
+	 * Number of decimal places to display and accept
+	 *
+	 * If set to null, the default number of decimal places is used.
+	 *
+	 * @var integer
+	 */
+	public $decimal_places = null;
 
 	// }}}
 	// {{{ public function __construct()
@@ -63,15 +72,14 @@ class SwatMoneyEntry extends SwatEntry
 	 */
 	public function display()
 	{
-		$locale = $this->setLocale($this->locale);
-		$lc = localeconv();
-
 		parent::display();
 
-		if ($this->display_currency)
+		if ($this->display_currency) {
+			$locale = $this->setLocale($this->locale);
+			$lc = localeconv();
 			echo SwatString::minimizeEntities(' '.$lc['int_curr_symbol']);
-
-		$this->setLocale($locale);
+			$this->setLocale($locale);
+		}
 	}
 
 	// }}}
@@ -148,15 +156,11 @@ class SwatMoneyEntry extends SwatEntry
 
 	protected function getDisplayValue()
 	{
-		$locale = $this->setLocale($this->locale);
-		$lc = localeconv();
-
 		if (is_numeric($this->value))
-			$value = money_format('%n', $this->value);
+			$value = SwatString::moneyFormat($this->value, $this->locale,
+				false, $this->decimal_places);
 		else
 			$value =  $this->value;
-
-		$this->setLocale($locale);
 
 		return $value;
 	}
