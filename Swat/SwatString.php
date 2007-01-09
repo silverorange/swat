@@ -661,11 +661,16 @@ class SwatString extends SwatObject
 	 *       cases, this method will throw an exception.
 	 *
 	 * @param float $value the numeric value to format.
-	 * @param string $locale an optional locale to use to format the value. If
-	 *                        no locale is specified, the current locale is
-	 *                        used.
-	 * @param boolean $display_currency whether to append the international
-	 *                                   currency symbol to the output.
+	 * @param string $locale optional locale to use to format the value. If no
+	 *                        locale is specified, the current locale is used.
+	 * @param boolean $display_currency optional flag specifing whether or not
+	 *                                   the international currency symbol is
+	 *                                   appended to the output. If not
+	 *                                   specified, the international currency
+	 *                                   symbol is omitted from the output.
+	 * @param integer $decimal_places optional number of decimal places to
+	 *                                 display. If not specified, the locale's
+	 *                                 default number of decimal places is used.
 	 *
 	 * @return string a UTF-8 encoded string containing the formatted currency
 	 *                 value.
@@ -676,7 +681,7 @@ class SwatString extends SwatObject
 	 *                        UTF-8.
 	 */
 	public static function moneyFormat($value, $locale = null,
-		$display_currency = false)
+		$display_currency = false, $decimal_places = null)
 	{
 		if (!function_exists('money_format')) {
 			throw new SwatException('moneyFormat() method is not available '.
@@ -697,7 +702,10 @@ class SwatString extends SwatObject
 		// get character set of the locale that is used
 		$character_set = nl_langinfo(CODESET);
 
-		$output = money_format('%.2n', $value);
+		$format_string = ($decimal_places === null) ? '%n' :
+			'%.'.((int)$decimal_places).'n';
+
+		$output = money_format($format_string, $value);
 
 		if ($display_currency) {
 			$lc = localeconv();

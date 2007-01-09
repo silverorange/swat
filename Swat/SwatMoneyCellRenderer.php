@@ -39,6 +39,16 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 	 */
 	public $display_currency = false;
 
+	/**
+	 * Number of decimal places to display
+	 *
+	 * If set to null, the default number of decimal places is used.
+	 *
+	 * @var integer
+	 * @see SwatString::moneyFormat()
+	 */
+	public $decimal_places = null;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -69,7 +79,8 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 
 		echo SwatString::minimizeEntities(
 			SwatString::moneyFormat(
-				$this->value, $this->locale, $this->display_currency));
+				$this->value, $this->locale, $this->display_currency,
+				$this->decimal_places));
 	}
 
 	// }}}
