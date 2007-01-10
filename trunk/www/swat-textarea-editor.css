@@ -1,0 +1,162 @@
+div.rteDiv {
+	border: 1px solid #CCC;
+	background: #F8F5F2;
+}
+
+div.rteDiv select {
+	font-size: 85%;
+}
+
+body.rtePopup {
+	margin: 10px;
+	background: #F8F5F2;
+}
+
+body.rtePopup form {
+	background: #FFF;
+	padding: 5px;
+}
+
+div.rteIframeDiv {
+	clear: both;
+	border: 1px solid #CCC;
+	border-top-color: #CCC;
+	border-left-color: #CCC;
+	border-right-color: #EEE;
+	border-bottom-color: #EEE;
+}
+
+iframe.rteIframe {
+	border: 0;
+	display: block;
+}
+
+div.rteToggleMode {
+	height: 30px;
+	border-top: 1px solid #CCC; 
+	padding-left: 3px;
+}
+
+div.rteToggleMode a, div.rteToggleMode a:visited {
+	padding-right: 3px;
+	margin-right: 2px;
+	font-size: 85%;
+	background: url('images/textarea-editor/toggle-mode.png') 100% -107px;
+	float: left;
+	display: block;
+	text-decoration: none;
+	color: #333;
+}
+
+div.rteToggleMode span {
+	height: 17px;
+	background: url('images/textarea-editor/toggle-mode.png') 0 -107px;
+	display: block;
+	float: left;
+	padding: 3px 2em;	
+}
+
+div.rteToggleMode a:hover {
+	background: url('images/textarea-editor/toggle-mode.png') 100% -207px;
+}
+
+div.rteToggleMode a:hover span {
+	background: url('images/textarea-editor/toggle-mode.png') 0 -207px;
+}
+
+div.rteToggleMode a.rteToggleModeDisabled, div.rteToggleMode a.rteToggleModeDisabled:hover {
+	cursor: default;
+	color: #666;
+	text-decoration: none;
+	background: url('images/textarea-editor/toggle-mode.png') 100% -5px;
+	position: relative;
+	top: -1px;
+}
+
+div.rteToggleMode a.rteToggleModeDisabled span, div.rteToggleMode a.rteToggleModeDisabled:hover span {
+	background: url('images/textarea-editor/toggle-mode.png') 0 -5px;
+	padding-top: 5px;
+}
+
+div.rteMenuButtons {
+	/*height: 23px;*/
+	padding: 3px 3px 0 3px;
+	/*border-bottom: 1px solid #CCC; */
+}
+
+div.rteMenuButtons div {
+	float: left;
+	padding: 0 0 2px 0;
+	margin-right: 5px;
+	white-space: nowrap;
+}
+
+div.rteMenuButtonsDisabled a {
+	filter: alpha(opacity = 25);
+	-moz-opacity: 0.25;
+	cursor: default;
+}
+
+div.rteMenuButtons a {
+	display: block;
+	width: 21px;
+	height: 19px;
+	text-indent: -1000em;
+	text-decoration: none;
+	float: left;
+	margin-right: 2px;
+}
+
+div.rteMenuButtons a:hover, div.rteMenuButtons a:focus {
+	background-position: 0 -100px;
+}
+
+div.rteMenuButtons a:active {
+	background-position: 0 -200px;
+}
+
+a.rteMenu-bold {
+	background-image: url('images/textarea-editor/bold.png');
+}
+a.rteMenu-italic {
+	background-image: url('images/textarea-editor/italic.png');
+}
+a.rteMenu-underline {
+	background-image: url('images/textarea-editor/underline.png');
+}
+a.rteMenu-align-left {
+	background-image: url('images/textarea-editor/align-left.png');
+}
+a.rteMenu-align-right {
+	background-image: url('images/textarea-editor/align-right.png');
+}
+a.rteMenu-align-center {
+	background-image: url('images/textarea-editor/align-center.png');
+}
+a.rteMenu-align-justify {
+	background-image: url('images/textarea-editor/align-justify.png');
+}
+a.rteMenu-indent {
+	background-image: url('images/textarea-editor/indent.png');
+}
+a.rteMenu-outdent {
+	background-image: url('images/textarea-editor/outdent.png');
+}
+a.rteMenu-ul {
+	background-image: url('images/textarea-editor/ul.png');
+}
+a.rteMenu-ol {
+	background-image: url('images/textarea-editor/ol.png');
+}
+a.rteMenu-link {
+	background-image: url('images/textarea-editor/link.png');
+}
+a.rteMenu-hr {
+	background-image: url('images/textarea-editor/hr.png');
+}
+a.rteMenu-hilite {
+	background-image: url('images/textarea-editor/hilite.png');
+}
+a.rteMenu-quote {
+	background-image: url('images/textarea-editor/quote.png');
+}

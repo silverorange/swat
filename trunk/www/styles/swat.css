@@ -1,0 +1,243 @@
+.swat-hidden { display: none; }
+
+img.swat-image-cell-renderer { vertical-align: middle; }
+
+.swat-none {
+	color: #888;
+}
+
+option.swat-flydown-option-divider {
+	color: #888;
+}
+
+
+/* SwatFrame */
+
+.swat-frame {
+	margin: 1em 0;
+	border: 1px solid #dcceb2;
+	background: #fff url(../images/swat-frame-background.png) top right no-repeat;
+}
+
+/* IE Hack */
+* html .swat-frame { position: relative; }
+
+.swat-frame .swat-frame-title {
+	margin: 1px 1px 0 1px;
+	padding: 2px 6px;
+	color: #6b5d40;
+	background: #f8f6f0 url(../images/swat-frame-header.png) bottom left repeat-x;
+}
+
+.swat-frame-contents {
+	padding: 16px;
+}
+
+.swat-frame .swat-frame-subtitle {
+	font-weight: normal;
+}
+
+
+/* SwatForm */
+
+.swat-form { margin: 0; padding: 0; }
+
+.swat-form label {
+	font-weight: bold;
+	color: #333;
+	cursor: default; /* For Konqueror */
+}
+
+label.swat-control {
+	font-weight: normal;
+	display: inline;
+}
+
+.swat-required {
+	font-weight: normal;
+	color: #c4a000;
+}
+
+.swat-note {
+	font-size: 85%;
+	color: #666;
+}
+
+ul.swat-note {
+	margin: 0;
+	padding: 0.3em 0 0 1.5em;
+}
+
+.swat-form-field-checkbox {
+	margin: 0 0 0.5em 0;
+}
+
+.swat-form-field-checkbox .swat-form-field-contents {
+	display: inline;
+}
+
+.swat-form-field-checkbox input {
+	vertical-align: middle;
+}
+
+.swat-checkbox-list ul,
+.swat-checkbox-tree ul,
+ul.swat-radio-list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.swat-checkbox-list input,
+.swat-checkbox-tree input,
+.swat-radio-list input {
+	vertical-align: middle;
+}
+
+.swat-checkbox-tree ul li ul li {
+	margin-left: 1em;
+}
+
+.swat-expandable-checkbox-tree input {
+	vertical-align: middle;
+}
+
+.swat-expandable-checkbox-tree ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.swat-expandable-checkbox-tree ul li ul li {
+	margin-left: 36px;
+	/*border: 1px solid red;*/
+}
+
+.swat-expandable-checkbox-tree ul li ul li.swat-expandable-checkbox-tree-expander {
+	margin-left: 20px;
+/*	border: 1px solid;*/
+}
+
+.swat-expandable-checkbox-tree-opened {
+	display: block;
+}
+
+.swat-expandable-checkbox-tree-closed {
+	display: none;
+}
+
+.swat-expandable-checkbox-tree-image {
+	vertical-align: text-top;
+}
+
+.swat-check-all input {
+	vertical-align: middle;
+}
+
+.swat-check-all label {
+	display: inline;
+}
+
+
+/* SwatFieldset */
+
+.swat-fieldset,
+fieldset.swat-form-field {
+	border: 1px solid #ccc;
+	margin-bottom: 1em;
+	padding: 0 1em 1em 1em;
+	position: relative;
+}
+
+.swat-fieldset legend,
+fieldset.swat-form-field legend {
+	font-weight: bold;
+	color: #666;
+	padding: 0 0.3em;
+	line-height: 2;
+}
+
+
+/* Swat Date Entry and SwatTimeEntry*/
+
+.swat-date-entry,
+.swat-time-entry {
+	white-space: nowrap;
+}
+
+
+/* Swat Actions */
+
+.swat-actions {
+	text-align: left;
+}
+
+.swat-actions-controls {
+	margin-bottom: 0.5em;
+}
+
+.swat-actions,
+.swat-header-form-field,
+.swat-footer-form-field {
+	padding: 1em 0;
+}
+
+.swat-frame .swat-actions,
+.swat-frame .swat-header-form-field,
+.swat-frame .swat-footer-form-field {
+	background: #f7f5f3 url(../images/swat-form-footer.png) top left repeat-x;
+	padding: 1em;
+	margin: 15px -15px -15px -15px;
+}
+
+.swat-frame .swat-header-form-field {
+	background: #f7f5f3 url(../images/swat-form-header.png) top left repeat-x;
+	margin: -15px -15px 15px -15px;
+	background-position: bottom left;
+}
+
+.swat-actions label {
+	display: inline;
+}
+
+.swat-actions-note {
+	color: #666;
+	font-size: 85%;
+	padding-top: 0.3em;
+}
+
+.swat-actions .swat-button-apply {
+	font-weight: bold;
+	color: #333;
+}
+
+/* Swat Buttons */
+
+.swat-header-form-field input.swat-primary,
+.swat-footer-form-field input.swat-primary {
+	font-weight: bold;
+	color: #000;
+}
+
+.swat-header-form-field .swat-button,
+.swat-footer-form-field .swat-button {
+	margin-right: 0.5em;
+	color: #666;
+}
+
+.swat-button-compact {
+	font-size: 80%;
+	padding: 0;
+	border-width: 1px;
+}
+
+.swat-nowrap {
+	white-space: nowrap;
+}
+
+
+/* Insensitive widgets */
+
+input.swat-insensitive {
+	background: #EEE;
+}

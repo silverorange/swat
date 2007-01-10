@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatFrame" id="my_frame">
+		<property name="title">SwatNavBar Demo</property>
+		<widget class="SwatForm" id="my_form">
+
+			<widget class="SwatNavBar" id="navbar" />
+			
+		</widget>
+	</widget>
+</swatml>
