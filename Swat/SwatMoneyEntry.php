@@ -48,6 +48,17 @@ class SwatMoneyEntry extends SwatEntry
 	public $decimal_places = null;
 
 	// }}}
+	// {{{ protected properties
+
+	/**
+	 * Locale-based formatting information
+	 *
+	 * @var array
+	 * @see SwatMoneyEntry::getFormattingInformation()
+	 */
+	protected $formatting_information;
+
+	// }}}
 	// {{{ public function __construct()
 
 	/**
@@ -79,10 +90,8 @@ class SwatMoneyEntry extends SwatEntry
 		parent::display();
 
 		if ($this->display_currency) {
-			$locale = $this->setLocale($this->locale);
-			$lc = localeconv();
+			$lc = $this->getFormattingInformation();
 			echo SwatString::minimizeEntities(' '.$lc['int_curr_symbol']);
-			$this->setLocale($locale);
 		}
 	}
 
@@ -102,9 +111,7 @@ class SwatMoneyEntry extends SwatEntry
 		if ($this->value === null)
 			return;
 
-		$locale = $this->setLocale($this->locale);
-		$lc = localeconv();
-		$this->setLocale($locale);
+		$lc = $this->getFormattingInformation();
 
 		$replace = array(
 			$lc['int_curr_symbol']   => '',
@@ -188,28 +195,85 @@ class SwatMoneyEntry extends SwatEntry
 	}
 
 	// }}}
-	// {{{ public function setLocale()
+	// {{{ protected function getFormattingInformation()
 
 	/**
-	 * Sets the locale
+	 * Gets locale-based formatting information for the locale of this money
+	 * entry widget
 	 *
-	 * This is used to get locale specific monetary information. After setting
-	 * the locale, remember to set the locale back to the default.
+	 * Strings in lcoale information are returned in UTF-8 no matter what
+	 * locale is used.
 	 *
-	 * @param string $locale the locale to set.
+	 * @return array an array of locale-based formatting information for the
+	 *                locale of this money entry widget.
 	 *
-	 * @return string the old locale.
+	 * @throws SwatException if the locale specified for this money entry
+	 *                       widget is not valid for the operating system.
 	 */
-	private function setLocale($locale)
+	protected function getFormattingInformation()
 	{
-		if ($locale !== null) {
-			if (strpos($locale, '.') === false)
-				$locale .= '.UTF-8';
+		if ($this->formatting_information === null) {
+			if ($this->locale !== null) {
+				$locale = setlocale(LC_ALL, 0);
+				if (setlocale(LC_ALL, $this->locale) === false) {
+					throw new SwatException(sprintf('Locale %s used in '.
+						'SwatMoneyEntry is not valid for this operating '.
+						'system.', $this->locale));
+				}
+			}
 
-			$locale = setlocale(LC_MONETARY, $locale);
+			$lc = localeconv();
+
+			$character_set = nl_langinfo(CODESET);
+			if ($this->locale !== null)
+				setlocale(LC_ALL, $locale);
+
+			// convert locale formatting information to UTF-8
+			if ($character_set !== 'UTF-8')
+				$lc = $this->iconvArray($character_set, 'UTF-8', $lc);
+
+			$this->formatting_information = $lc;
 		}
 
-		return $locale;
+		return $this->formatting_information;
+	}
+
+	// }}}
+	// {{{ private function iconvArray()
+
+	/**
+	 * Recursivly converts character set of strings in an array
+	 *
+	 * This is used to convert the formatting information array for a given
+	 * locale into UFT-8.
+	 *
+	 * @param string $from the character set to convert from.
+	 * @param string $to the character set to convert to.
+	 * @param array $array the array to convert.
+	 *
+	 * @return array a new array with all strings recursivly converted to the
+	 *                given character set.
+	 *
+	 * @throws SwatException if any component of the array can not be converted
+	 *                       from the <i>$from</i> character set to the
+	 *                       <i>$to</i> character set.
+	 */
+	private function iconvArray($from, $to, array $array)
+	{
+		foreach ($array as $key => $value) {
+			if (is_array($value)) {
+				$array[$key] = $this->iconvArray($from, $to, $value);
+			} elseif (is_string($value)) {
+				$output = iconv($from, $to, $value);
+				if ($output === false)
+					throw new SwatException(sprintf('Could not convert '.
+						'%s output to %s', $from, $to));
+
+				$array[$key] = $output;
+			}
+		}
+
+		return $array;
 	}
 
 	// }}}
