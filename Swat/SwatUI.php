@@ -172,14 +172,6 @@ class SwatUI extends SwatObject
 		libxml_clear_errors();
 		libxml_use_internal_errors($errors);
 
-		// make sure we are using the correct document type
-		if (count($xml_errors) == 0 && ($document->doctype === null ||
-			strcmp($document->doctype->name, 'swatml') != 0)) {
-			throw new SwatInvalidSwatMLException(
-				'SwatUI can only parse SwatML documents.',
-				0, $xml_file);
-		}
-
 		if (count($xml_errors) > 0) {
 			$message = '';
 			foreach ($xml_errors as $error)
