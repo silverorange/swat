@@ -327,6 +327,8 @@ class SwatString extends SwatObject
 
 		$text = preg_replace($search, $replace, $text);
 
+		$text = self::minimizeEntities($text);
+
 		$text = trim($text);
 
 		$search =
