@@ -78,9 +78,27 @@ class SwatConfirmationButton extends SwatButton
 		$javascript = sprintf("var %s = new SwatConfirmationButton('%s');",
 			$this->id, $this->id);
 
-		$message = str_replace("'", "\'", $this->confirmation_message);
+		$message = $this->confirmation_message;
+
+		// NOTE: Most of the following escaping is required to prevent XSS
+		//       attacks.
+
+		// escape escape characters
+		$message = str_replace('\\', '\\\\', $message); 
+
+		// escape single quotes
+		$message = str_replace("'", "\'", $message);
+
+		// convert newlines
 		$message = str_replace("\n", '\n', $message);
-		$message = str_ireplace('</script>', "</script' + '>", $message);
+
+		// break closing script tags
+		$message = preg_replace('/<\/(script)([^>]*)?>/ui', "</\\1' + '\\2>",
+			$message);
+
+		// escape CDATA closing triads
+		$message = str_replace(']]>', "' +\n//]]>\n']]>' +\n//<![CDATA[\n'",
+			$message);
 
 		$javascript.= sprintf("\n%s.setMessage('%s');\n",
 			$this->id, $message);
