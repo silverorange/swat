@@ -173,7 +173,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 	 */
 	public function setState($state)
 	{
-		$hex_color = '/#([a-f0-9]{3}|[a-f0-9]{6})/i'
+		$hex_color = '/#([a-f0-9]{3}|[a-f0-9]{6})/i';
 		if (preg_match($hex_color, $state) === 1)
 			$this->value = $state;
 	}
