@@ -75,7 +75,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 *
 	 * @see SwatTimeZoneEntry::createEmbeddedWidgets()
 	 */
-	 */
 	private $widgets_created = false;
 
 	// }}}
