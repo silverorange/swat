@@ -339,7 +339,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	 *
 	 * @param string $key the key to check.
 	 *
-	 * @return boolean true if a sub data object is loaded and false if it does
+	 * @return boolean true if a sub data object is loaded and false if it is 
 	 *                 not.
 	 */
 	protected function hasSubDataObject($key)
