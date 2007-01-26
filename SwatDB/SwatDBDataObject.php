@@ -332,6 +332,22 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	}
 
 	// }}}
+	// {{{ protected function hasSubDataObject()
+
+	/**
+	 * Whether or not a sub data object is loaded for the given key
+	 *
+	 * @param string $key the key to check.
+	 *
+	 * @return boolean true if a sub data object is loaded and false if it does
+	 *                 not.
+	 */
+	protected function hasSubDataObject($key)
+	{
+		return isset($this->sub_data_objects[(string)$key]);
+	}
+
+	// }}}
 	// {{{ private function getPublicProperties()
 
 	/**
