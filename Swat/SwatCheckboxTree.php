@@ -28,9 +28,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	 */
 	protected $tree = null;
 
-	// }}}
-	// {{{ private properties
-
 	/**
 	 * A label tag used for displaying tree nodes
 	 *
@@ -38,7 +35,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	 *
 	 * @see SwatCheckboxTree::displayNode()
 	 */
-	private $label_tag = null;
+	protected $label_tag = null;
 
 	/**
 	 * An input tag used for displaying tree nodes
@@ -47,7 +44,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	 *
 	 * @see SwatCheckboxTree::displayNode()
 	 */
-	private $input_tag = null;
+	protected $input_tag = null;
 
 	// }}}
 	// {{{ public function __construct()
