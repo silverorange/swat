@@ -6,6 +6,8 @@ function SwatExpandableCheckboxTree(id, dependent_boxes)
 	// a parent will check its children and checking all children of a parent
 	// will check the parent.
 	if (dependent_boxes) {
+		this.initTree();
+
 		// get all checkboxes in this tree
 		this.check_list = document.getElementsByName(id + '[]');
 
@@ -23,6 +25,72 @@ SwatExpandableCheckboxTree.handleClick = function(event, tree)
 {
 	var checkbox = YAHOO.util.Event.getTarget(event);
 	tree.handleClick(checkbox);
+}
+
+SwatExpandableCheckboxTree.prototype.initTree = function()
+{
+	var tree = document.getElementById(this.id);
+	var branch = null;
+
+	if (tree.firstChild && tree.firstChild.firstChild)
+		branch = tree.firstChild.firstChild;
+
+	// init all top-level checkboxes
+	if (branch !== null) {
+		var child_node = null;
+		var child_checkbox = null;
+
+		for (var i = 0; i < branch.childNodes.length; i++) {
+			child_node = branch.childNodes[i];
+			if (child_node.nodeName == 'LI') {
+				child_checkbox = child_node.firstChild;
+
+				// some nodes have expander links, the checkbox is the next node
+				if (child_checkbox.nodeName == 'A')
+					child_checkbox = child_checkbox.nextSibling;
+
+				if (child_checkbox.nodeName == 'INPUT' &&
+					child_checkbox.getAttribute('type') == 'checkbox') {
+					this.initTreeNode(child_checkbox);
+				}
+			}
+		}
+	}
+}
+
+SwatExpandableCheckboxTree.prototype.initTreeNode = function(checkbox)
+{
+	var path = checkbox.id.substr(this.id.length + 1);
+	var branch = document.getElementById(this.id + '_' + path + '_branch');
+
+	if (branch) {
+		var children_checked = true;
+		var child_node = null;
+		var child_checkbox = null;
+
+		for (var i = 0; i < branch.childNodes.length; i++) {
+			child_node = branch.childNodes[i];
+			if (child_node.nodeName == 'LI') {
+				child_checkbox = child_node.firstChild;
+
+				// some nodes have expander links, the checkbox is the next node
+				if (child_checkbox.nodeName == 'A')
+					child_checkbox = child_checkbox.nextSibling;
+
+				if (child_checkbox.nodeName == 'INPUT' &&
+					child_checkbox.getAttribute('type') == 'checkbox' &&
+					!this.initTreeNode(child_checkbox)) {
+					children_checked = false;
+					break;
+				}
+			}
+		}
+
+		// check this node based on state of children
+		checkbox.checked = children_checked;
+	}
+
+	return checkbox.checked;
 }
 
 SwatExpandableCheckboxTree.prototype.handleClick = function(checkbox)
