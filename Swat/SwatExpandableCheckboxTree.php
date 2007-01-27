@@ -75,7 +75,6 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		$div_tag->class = $this->getCSSClassString();
 
 		$this->label_tag = new SwatHtmlTag('label');
-		$this->label_tag->class = 'swat-control';
 
 		$this->input_tag = new SwatHtmlTag('input');
 		$this->input_tag->type = 'checkbox';
@@ -193,7 +192,21 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			}
 
 			if ($node->value === null) {
-				echo SwatString::minimizeEntities($node->title);
+				if ($this->dependent_boxes) {
+					// show a checkbox just for the check-all functionality
+					$this->input_tag->id = $this->id.'_'.$index;
+
+					$this->label_tag->for = $this->id.'_'.$index;
+					$this->label_tag->class =
+						'swat-control swat-expandable-checkbox-tree-null';
+
+					$this->label_tag->setContent($node->title);
+
+					$this->input_tag->display();
+					$this->label_tag->display();
+				} else {
+					echo SwatString::minimizeEntities($node->title);
+				}
 			} else {
 				$this->input_tag->id = $this->id.'_'.$index;
 				$this->input_tag->value = $node->value;
@@ -204,6 +217,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 					$this->input_tag->checked = null;
 
 				$this->label_tag->for = $this->id.'_'.$index;
+				$this->label_tag->class = 'swat-control';
 				$this->label_tag->setContent($node->title);
 
 				$this->input_tag->display();
