@@ -81,7 +81,6 @@ SwatExpandableCheckboxTree.prototype.initTreeNode = function(checkbox)
 					child_checkbox.getAttribute('type') == 'checkbox' &&
 					!this.initTreeNode(child_checkbox)) {
 					children_checked = false;
-					break;
 				}
 			}
 		}
