@@ -484,6 +484,39 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$javascript = sprintf("var %s_obj = new SwatDateEntry('%s');",
 			$this->id, $this->id);
 
+		if ($this->display_parts & self::DAY) {
+			$lookup_days = array();
+			foreach ($this->day_flydown->options as $key => $option)
+				$lookup_days[] = sprintf('%s: %s',
+					$option->value,
+					($this->day_flydown->show_blank) ? $key + 1 : $key);
+
+			$javascript.= sprintf("\n%s_obj.addLookupTable('day', {%s});",
+				$this->id, implode(', ', $lookup_days));
+		}
+
+		if ($this->display_parts & self::MONTH) {
+			$lookup_months = array();
+			foreach ($this->month_flydown->options as $key => $option)
+				$lookup_months[] = sprintf('%s: %s',
+					$option->value,
+					($this->month_flydown->show_blank) ? $key + 1 : $key);
+
+			$javascript.= sprintf("\n%s_obj.addLookupTable('month', {%s});",
+				$this->id, implode(', ', $lookup_months));
+		}
+
+		if ($this->display_parts & self::YEAR) {
+			$lookup_years = array();
+			foreach ($this->year_flydown->options as $key => $option)
+				$lookup_years[] = sprintf('%s: %s',
+					$option->value,
+					($this->year_flydown->show_blank) ? $key + 1 : $key);
+
+			$javascript.= sprintf("\n%s_obj.addLookupTable('year', {%s});",
+				$this->id, implode(', ', $lookup_years));
+		}
+
 		if ($this->display_parts & self::TIME)
 			$javascript.= sprintf("\n%s_obj.setSwatTime(%s_time_entry);",
 				$this->id, $this->id);

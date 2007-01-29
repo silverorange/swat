@@ -10,21 +10,55 @@ function SwatDateEntry(id)
 
 	if (this.year)
 		YAHOO.util.Event.addListener(this.year, 'change',
-			SwatDateEntry.handleChange, this);
+			SwatDateEntry.handleYearChange, this);
 
 	if (this.month)
 		YAHOO.util.Event.addListener(this.month, 'change',
-			SwatDateEntry.handleChange, this);
+			SwatDateEntry.handleMonthChange, this);
 
 	if (this.day)
 		YAHOO.util.Event.addListener(this.day, 'change',
-			SwatDateEntry.handleChange, this);
+			SwatDateEntry.handleDayChange, this);
+	
+	this.lookup_table = {};
+	this.reverse_lookup_table = {};
 }
 
-SwatDateEntry.handleChange = function(event, object)
+SwatDateEntry.handleYearChange = function(event, object)
 {
-	var active_flydown = YAHOO.util.Event.getTarget(event);
-	object.update(active_flydown);
+	var year_flydown = YAHOO.util.Event.getTarget(event);
+	object.update('year');
+}
+
+SwatDateEntry.handleMonthChange = function(event, object)
+{
+	var month_flydown = YAHOO.util.Event.getTarget(event);
+	object.update('month');
+}
+
+SwatDateEntry.handleDayChange = function(event, object)
+{
+	var day_flydown = YAHOO.util.Event.getTarget(event);
+	object.update('day');
+}
+
+SwatDateEntry.prototype.addLookupTable = function(table_name, table)
+{
+	this.lookup_table[table_name] = table;
+	this.reverse_lookup_table[table_name] = {};
+	for (key in table) {
+		this.reverse_lookup_table[table_name][table[key]] = key;
+	}
+}
+
+SwatDateEntry.prototype.lookup = function(table_name, key)
+{
+	return this.lookup_table[table_name][key];
+}
+
+SwatDateEntry.prototype.reverseLookup = function(table_name, key)
+{
+	return this.reverse_lookup_table[table_name][key];
 }
 
 SwatDateEntry.prototype.setSwatTime = function(swat_time)
@@ -51,47 +85,12 @@ SwatDateEntry.prototype.reset = function(reset_time)
 		this.swat_time.reset(false);
 }
 
-SwatDateEntry.prototype.parseInt = function(serialized_integer)
-{
-	var value = parseInt(serialized_integer.replace(/[^\d]*/, ''));
-	if (isNaN(value))
-		return null;
-
-	return value;
-}
-
-SwatDateEntry.prototype.getIntegerIndex = function(flydown, value)
-{
-	var flydown_value;
-	for (i = 0; i < flydown.options.length; i++) {
-		flydown_value = this.parseInt(flydown.options[i].value);
-		if (flydown_value == value)
-			return i;
-	}
-	return null;
-}
-
-SwatDateEntry.prototype.getYearIndex = function(year)
-{
-	return this.getIntegerIndex(this.year, year);
-}
-
-SwatDateEntry.prototype.getMonthIndex = function(month)
-{
-	return this.getIntegerIndex(this.month, month);
-}
-
-SwatDateEntry.prototype.getDayIndex = function(day)
-{
-	return this.getIntegerIndex(this.day, day);
-}
-
 SwatDateEntry.prototype.setNow = function(set_time)
 {
 	var now = new Date();
 
 	if (this.year && this.year.selectedIndex == 0) {
-		var this_year = this.getYearIndex(now.getFullYear());
+		var this_year = this.lookup('year', now.getFullYear());
 
 		if (this_year)
 			this.year.selectedIndex = this_year;
@@ -100,7 +99,7 @@ SwatDateEntry.prototype.setNow = function(set_time)
 	}
 
 	if (this.month && this.month.selectedIndex == 0) {
-		var this_month = this.getMonthIndex(now.getMonth() + 1);
+		var this_month = this.lookup('month', now.getMonth() + 1);
 
 		if (this_month)
 			this.month.selectedIndex = this_month;
@@ -109,7 +108,7 @@ SwatDateEntry.prototype.setNow = function(set_time)
 	}
 
 	if (this.day && this.day.selectedIndex == 0) {
-		var this_day = this.getDayIndex(now.getDate());
+		var this_day = this.lookup('day', now.getDate());
 		if (this_day)
 			this.day.selectedIndex = this_day;
 		else
@@ -129,7 +128,7 @@ SwatDateEntry.prototype.setDefault = function(set_time)
 		 * Default to this year if it exists in the options. This behaviour
 		 * is somewhat different from the others, but just makes common sense.
 		 */
-		var this_year = this.getYearIndex(now.getFullYear());
+		var this_year = this.lookup('year', now.getFullYear());
 
 		if (this_year)
 			this.year.selectedIndex = this_year;
@@ -147,14 +146,27 @@ SwatDateEntry.prototype.setDefault = function(set_time)
 		this.swat_time.setDefault(false);
 }
 
-SwatDateEntry.prototype.update = function(active_flydown)
+SwatDateEntry.prototype.update = function(field)
 {
 	// month is required for this, so stop if it doesn't exist
 	if (!this.month)
 		return;
 
+	var index = null;
+	switch (field) {
+		case 'day':
+			index = this.day.selectedIndex;
+			break;
+		case 'month':
+			index = this.month.selectedIndex;
+			break;
+		case 'year':
+			index = this.year.selectedIndex;
+			break;
+	}
+
 	// don't do anything if we select the blank option
-	if (this.parseInt(active_flydown.value) != null) {
+	if (this.reverseLookup(field, index) != null) {
 		var now = new Date();
 		var this_month = now.getMonth() + 1;
 
@@ -170,7 +182,7 @@ SwatDateEntry.prototype.getDay = function()
 	var day = null;
 
 	if (this.day)
-		day = this.parseInt(this.day.value);
+		day = this.reverseLookup('day', this.day.selectedIndex);
 
 	return day;
 }
@@ -180,7 +192,7 @@ SwatDateEntry.prototype.getMonth = function()
 	var month = null;
 
 	if (this.month)
-		month = this.parseInt(this.month.value);
+		month = this.reverseLookup('month', this.month.selectedIndex);
 
 	return month;
 }
@@ -190,7 +202,7 @@ SwatDateEntry.prototype.getYear = function()
 	var year = null;
 
 	if (this.year)
-		year = this.parseInt(this.year.value);
+		year = this.reverseLookup('year', this.year.selectedIndex);
 
 	return year;
 }
@@ -198,7 +210,7 @@ SwatDateEntry.prototype.getYear = function()
 SwatDateEntry.prototype.setDay = function(day)
 {
 	if (this.day) {
-		var this_day = this.getDayIndex(day);
+		var this_day = this.lookup('day', day);
 
 		if (this_day)
 			this.day.selectedIndex = this_day;
@@ -210,7 +222,7 @@ SwatDateEntry.prototype.setDay = function(day)
 SwatDateEntry.prototype.setMonth = function(month)
 {
 	if (this.month) {
-		var this_month = this.getMonthIndex(month);
+		var this_month = this.lookup('month', month);
 
 		if (this_month)
 			this.month.selectedIndex = this_month;
@@ -222,7 +234,7 @@ SwatDateEntry.prototype.setMonth = function(month)
 SwatDateEntry.prototype.setYear = function(year)
 {
 	if (this.year) {
-		var this_year = this.getYearIndex(year);
+		var this_year = this.lookup('year', year);
 
 		if (this_year)
 			this.year.selectedIndex = this_year;
