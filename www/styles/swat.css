@@ -142,7 +142,7 @@ ul.swat-radio-list {
 /* SwatFieldset */
 
 .swat-fieldset,
-fieldset.swat-form-field {
+.swat-grouping-form-field-fieldset {
 	border: 1px solid #ccc;
 	margin-bottom: 1em;
 	padding: 0 1em 1em 1em;
@@ -150,7 +150,7 @@ fieldset.swat-form-field {
 }
 
 .swat-fieldset legend,
-fieldset.swat-form-field legend {
+.swat-grouping-form-field legend {
 	font-weight: bold;
 	color: #666;
 	padding: 0 0.3em;
