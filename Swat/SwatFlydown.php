@@ -6,6 +6,7 @@ require_once 'Swat/SwatOptionControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
 require_once 'Swat/SwatFlydownDivider.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * A flydown (aka combo-box) selection widget
@@ -70,6 +71,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 		// only show a select if there is more than one option
 		if (count($options) > 1) {
 
+			$salt = $this->getForm()->getSalt();
+
 			$select_tag = new SwatHtmlTag('select');
 			$select_tag->name = $this->id;
 			$select_tag->id = $this->id;
@@ -83,7 +86,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 			$select_tag->open();
 
 			foreach ($options as $flydown_option) {
-				$option_tag->value = serialize($flydown_option->value);
+				$option_tag->value =
+					SwatString::signedSerialize($flydown_option->value, $salt);
 
 				if ($flydown_option instanceof SwatFlydownDivider) {
 					$option_tag->disabled = 'disabled';
@@ -228,12 +232,15 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	 */
 	protected function processValue()
 	{
-		$data = &$this->getForm()->getFormData();
+		$form = $this->getForm();
+
+		$data = &$form->getFormData();
+		$salt = $form->getSalt();
 
 		if (!isset($data[$this->id]))
 			return false;
 
-		$this->value = unserialize($data[$this->id]);
+		$this->value = SwatString::signedUnserialize($data[$this->id], $salt);
 
 		return true;
 	}
@@ -246,13 +253,15 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	 */
 	protected function displaySingle(SwatOption $flydown_option)
 	{
+		$salt = $this->getForm()->getSalt();
+
 		$title = $flydown_option->title;
 		$value = $flydown_option->value;
 
 		$hidden_tag = new SwatHtmlTag('input');
 		$hidden_tag->type = 'hidden';
 		$hidden_tag->name = $this->id;
-		$hidden_tag->value = serialize($value);
+		$hidden_tag->value = SwatString::signedSerialize($value, $salt);
 
 		$hidden_tag->display();
 

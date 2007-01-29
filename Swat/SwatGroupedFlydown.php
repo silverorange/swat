@@ -133,8 +133,11 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 
 			$optgroup_tag->close();
 		} else {
+			$salt = $this->getForm()->getSalt();
+
 			$option_tag = new SwatHtmlTag('option');
-			$option_tag->value = serialize($flydown_option->value);
+			$option_tag->value = SwatString::signedSerialize(
+				$flydown_option->value, $salt);
 
 			if ($flydown_option instanceof SwatFlydownDivider) {
 				$option_tag->disabled = 'disabled';
