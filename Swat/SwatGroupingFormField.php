@@ -16,22 +16,6 @@ require_once 'Swat/SwatFormField.php';
  */
 class SwatGroupingFormField extends SwatFormField
 {
-	// {{{ public function __construct()
-
-	/**
-	 * Constructor
-	 *
-	 * Sets the XHTML tag to use in this form field
-	 *
-	 * @param string $id the id of this form field.
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-		$this->container_tag = 'fieldset';
-	}
-
-	// }}}
 	// {{{ protected function getTitleTag()
 
 	/**
@@ -48,6 +32,39 @@ class SwatGroupingFormField extends SwatFormField
 			$this->title_content_type);
 
 		return $legend_tag;
+	}
+
+	// }}}
+	// {{{ public function display()
+
+	/**
+	 * Displays this form field
+	 *
+	 * Associates a label with the first widget of this container.
+	 */
+	public function display()
+	{
+		if (!$this->visible)
+			return;
+
+		if ($this->getFirst() === null)
+			return;
+
+		$container_tag = new SwatHtmlTag('div');
+		$container_tag->id = $this->id;
+		$container_tag->class = $this->getCSSClassString();
+
+		$fieldset_tag = new SwatHtmlTag('fieldset');
+		$fieldset_tag->class = 'swat-grouping-form-field-fieldset';
+
+		$container_tag->open();
+		$fieldset_tag->open();
+		$this->displayTitle();
+		$this->displayContent();
+		$this->displayMessages();
+		$this->displayNotes();
+		$fieldset_tag->close();
+		$container_tag->close();
 	}
 
 	// }}}
