@@ -402,6 +402,26 @@ class SwatForm extends SwatDisplayableContainer
 	}
 
 	// }}}
+	// {{{ public function getSalt()
+
+	/**
+	 * Gets the salt value to use when salting signature data
+	 *
+	 * {@link SwatInputControl} widgets may want ot use this value for salting
+	 * their own data. This can be done using:
+	 *
+	 * <code>
+	 * $salt = $this->getForm()->getSalt();
+	 * </code>
+	 *
+	 * @return string the value to use when salting signature data.
+	 */
+	public function setSalt($salt)
+	{
+		return $this->salt;
+	}
+
+	// }}}
 	// {{{ protected function processHiddenFields()
 
 	/**
