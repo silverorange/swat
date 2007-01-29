@@ -143,14 +143,16 @@ class SwatCascadeFlydown extends SwatFlydown
 			$this->cascade_from->id,
 			$this->id);
 
+		$salt = $this->getForm()->getSalt();
+
 		foreach($this->options as $parent => $options) {
-			$parent = serialize($parent);
+			$parent = SwatString::signedSerialize($parent, $salt);
 
 			if ($this->show_blank && count($options) > 1)
 				$javascript.= sprintf(
 					"\n%s_cascade.addChild('%s', '%s', '%s');",
 					$this->id,
-					serialize(null),
+					SwatString::signedSerialize(null, $salt),
 					$parent,
 					Swat::_('choose one ...'));
 
@@ -162,7 +164,7 @@ class SwatCascadeFlydown extends SwatFlydown
 				$title = str_replace("\n", '\n', $title);
 				$title = str_replace("'", "\\'", $title);
 
-				$value = serialize($option->value);
+				$value = SwatString::signedSerialize($option->value, $salt);
 
 				$javascript.= sprintf(
 					"\n%s_cascade.addChild('%s', '%s', '%s', %s);",
