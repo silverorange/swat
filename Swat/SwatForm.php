@@ -416,7 +416,7 @@ class SwatForm extends SwatDisplayableContainer
 	 *
 	 * @return string the value to use when salting signature data.
 	 */
-	public function setSalt($salt)
+	public function getSalt()
 	{
 		return $this->salt;
 	}
