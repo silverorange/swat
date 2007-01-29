@@ -75,3 +75,8 @@
 	padding: 0.5em;
 	margin: 0.5em 0;
 }
+
+.swat-grouping-form-field {
+	padding-top: 0;
+	padding-bottom: 0;
+}
