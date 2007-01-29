@@ -25,8 +25,8 @@ class SwatFooterFormField extends SwatFormField
 	 */
 	protected function getCSSClassNames()
 	{
-		$classes = array('swat-footer-form-field');
-		$classes = array_merge($classes, $this->classes);
+		$classes = parent::getCSSClassNames();
+		array_unshift($classes, 'swat-footer-form-field');
 		return $classes;
 	}
 
