@@ -25,8 +25,8 @@ class SwatHeaderFormField extends SwatFormField
 	 */
 	protected function getCSSClassNames()
 	{
-		$classes = array('swat-header-form-field');
-		$classes = array_merge($classes, $this->classes);
+		$classes = parent::getCSSClassNames();
+		array_unshift($classes, 'swat-header-form-field');
 		return $classes;
 	}
 
