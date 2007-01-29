@@ -1056,6 +1056,66 @@ class SwatString extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function signedSerialize()
+
+	/**
+	 * Serializes and signs a value using a salt
+	 *
+	 * By signing serialized data, it is possible to detect tampering of
+	 * serialized data. This is useful if serialized data is accepted from
+	 * user editable $_GET, $_POST or $_COOKIE data.
+	 *
+	 * @param mixed $data the data to serialize.
+	 * @param string $salt the signature salt.
+	 *
+	 * @return string the signed serialized value.
+	 *
+	 * @see SwatString::signedSerialize()
+	 */
+	public static function signedSerialize($data, $salt)
+	{
+		$serialized_data = serialize($data);
+		$signature_data = md5($serialized_data.(string)$salt);
+
+		return $signature_data.'|'.$serialized_data;
+	}
+
+	// }}}
+	// {{{ public static function signedUnserialize()
+
+	/**
+	 * Unserializes a signed serialized value
+	 *
+	 * @param string $data the signed serialized data.
+	 * @param string $salt the signature salt. This must be the same salt value
+	 *                      used to serialize the value.
+	 *
+	 * @return mixed the unserialized value.
+	 *
+	 * @throws SwatInvalidSerializedDataException if the signed serialized data
+	 *                                            has been tampered with.
+	 *
+	 * @see SwatString::signedSerialize()
+	 */
+	public static function signedUnserialize($data, $salt)
+	{
+		$data_exp = explode('|', (string)$data, 2);
+
+		if (count($data_exp) != 2)
+			throw new SwatInvalidSerializedDataException(
+				"Invalid signed serialized data '{$data}'.", 0, $data);
+
+		$signature_data = $data_exp[0];
+		$serialized_data = $data_exp[1];
+
+		if (md5($serialized_data.(string)$salt) != $signature_data)
+			throw new SwatInvalidSerializedDataException(
+				"Invalid signed serialized data '{$data}'.", 0, $data);
+
+		return unserialize($serialized_data);
+	}
+
+	// }}}
 	// {{{ private static function stripEntities()
 
 	/**
