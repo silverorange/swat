@@ -1077,7 +1077,7 @@ class SwatString extends SwatObject
 	public static function signedSerialize($data, $salt)
 	{
 		$serialized_data = serialize($data);
-		$signature_data = md5($serialized_data.(string)$salt);
+		$signature_data = self::hash($serialized_data.(string)$salt);
 
 		return $signature_data.'|'.$serialized_data;
 	}
@@ -1110,7 +1110,7 @@ class SwatString extends SwatObject
 		$signature_data = $data_exp[0];
 		$serialized_data = $data_exp[1];
 
-		if (md5($serialized_data.(string)$salt) != $signature_data)
+		if (self::hash($serialized_data.(string)$salt) != $signature_data)
 			throw new SwatInvalidSerializedDataException(
 				"Invalid signed serialized data '{$data}'.", 0, $data);
 
