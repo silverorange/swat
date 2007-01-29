@@ -4,7 +4,7 @@
 
 require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/exceptions/SwatInvalidSerializedDataException.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * A form widget which can contain other widgets
