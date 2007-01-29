@@ -4,6 +4,7 @@
 
 require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/exceptions/SwatInvalidSerializedDataException.php';
 
 /**
  * A form widget which can contain other widgets
@@ -27,6 +28,7 @@ class SwatForm extends SwatDisplayableContainer
 	const PROCESS_FIELD = '_swat_form_process';
 	const HIDDEN_FIELD = '_swat_form_hidden_fields';
 	const SERIALIZED_PREFIX = '_swat_form_serialized_';
+	const SIGNATURE_PREFIX = '_swat_form_signature_';
 
 	// }}}
 	// {{{ public properties
@@ -80,6 +82,17 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public $button = null;
 
+	/**
+	 * The default value to use for signature salt
+	 *
+	 * If this value is not null, all newly instantiated forms will call the
+	 * {@link SwatForm::setSalt()} method with this value as the <i>$salt</i>
+	 * parameter.
+	 *
+	 * @var string
+	 */
+	public static $default_salt = null;
+
 	// }}}
 	// {{{ protected properties
 
@@ -91,8 +104,18 @@ class SwatForm extends SwatDisplayableContainer
 	 * where all the values are passed as hidden fields in this form.
 	 *
 	 * @var array
+	 *
+	 * @see SwatForm::addHiddenField()
+	 * @see SwatForm::getHiddenField()
 	 */
 	protected $hidden_fields = array();
+
+	/**
+	 * The value to use when salting serialized data signatures
+	 *
+	 * @var string
+	 */
+	protected $salt = null;
 
 	// }}}
 	// {{{ private properties
@@ -119,6 +142,9 @@ class SwatForm extends SwatDisplayableContainer
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
+
+		if (self::$default_salt !== null)
+			$this->setSalt(self::$default_salt);
 
 		$this->requires_id = true;
 
@@ -232,17 +258,19 @@ class SwatForm extends SwatDisplayableContainer
 	/**
 	 * Adds a hidden form field
 	 *
-	 * Adds a form field to this form that is not shown to the user.
-	 * Hidden form fields are outputted as type="hidden" input tags.
-	 * Values are serialized before being output so the value can be either a
-	 * primitive type or an object.  Unserialization happens automatically 
-	 * when used with SwatForm::getHiddenField() to retrieve the value.  For
-	 * non-array and non-object types, the value is also stored in an 
-	 * unserialized form that can be retrieved without
-	 * SwatForm::getHiddenField();
+	 * Adds a form field to this form that is not shown to the user. Hidden
+	 * form fields are outputted as <i>type="hidden"</i> input tags. Values are
+	 * serialized before being output so the value can be either a primitive
+	 * type or an object. Unserialization happens automatically when
+	 * {@link SwatForm::getHiddenField()} is used to retrieve the value. For
+	 * non-array and non-object types, the value is also stored as an 
+	 * unserialized value that can be retrieved without using
+	 * SwatForm::getHiddenField().
 	 *
 	 * @param string $name the name of the field.
 	 * @param mixed $value the value of the field, either a string or an array.
+	 *
+	 * @see SwatForm::getHiddenField()
 	 */
 	public function addHiddenField($name, $value)
 	{
@@ -257,8 +285,15 @@ class SwatForm extends SwatDisplayableContainer
 	 *
 	 * @param string $name the name of the field whose value to get.
 	 *
-	 * @return mixed $value the value of the field, either a string or an 
-	 *        array, or null if the field does not exist.
+	 * @return mixed the value of the field. The type of the field is preserved
+	 *                from the call to {@link SwatForm::addHiddenField()}. If
+	 *                the field does not exist, null is returned.
+	 *
+	 * @throws SwatInvalidSerializedDataException if the serialized form data
+	 *                                            does not match the signature
+	 *                                            data.
+	 *
+	 * @see SwatForm::addHiddenField()
 	 */
 	public function getHiddenField($name)
 	{
@@ -270,9 +305,17 @@ class SwatForm extends SwatDisplayableContainer
 
 			if (isset($raw_data[self::PROCESS_FIELD]) &&
 				$raw_data[self::PROCESS_FIELD] == $this->id) {
-					$serialized_field_name = self::SERIALIZED_PREFIX.$name;
-					if (isset($raw_data[$serialized_field_name]))
-						return unserialize($raw_data[$serialized_field_name]);
+				$serialized_field_name = self::SERIALIZED_PREFIX.$name;
+				$signature_field_name = self::SIGNATURE_PREFIX.$name;
+				if (isset($raw_data[$serialized_field_name]) &&
+					isset($raw_data[$signature_field_name])) {
+					$serialized_data = $raw_data[$serialized_field_name];
+					$signature_data = $raw_data[$signature_field_name];
+					$this->checkSerializedData($serialized_data,
+						$signature_data);
+
+					return unserialize($serialized_data);
+				}
 			}
 		}
 
@@ -353,6 +396,19 @@ class SwatForm extends SwatDisplayableContainer
 	}
 
 	// }}}
+	// {{{ public function setSalt()
+
+	/**
+	 * Sets the salt value to use when salting signature data
+	 *
+	 * @param string $salt the value to use when salting signature data.
+	 */
+	public function setSalt($salt)
+	{
+		$this->salt = (string)$salt;
+	}
+
+	// }}}
 	// {{{ protected function processHiddenFields()
 
 	/**
@@ -360,23 +416,36 @@ class SwatForm extends SwatDisplayableContainer
 	 *
 	 * Checks submitted form data for hidden fields. If hidden fields are
 	 * found, properly re-adds them to this form.
+	 *
+	 * @throws SwatInvalidSerializedDataException if the serialized form data
+	 *                                            does not match the signature
+	 *                                            data.
 	 */
 	protected function processHiddenFields()
 	{
 		$raw_data = $this->getFormData();
 
-		if (isset($raw_data[self::HIDDEN_FIELD]))
-			$fields = unserialize($raw_data[self::HIDDEN_FIELD]);
-		else
+		$serialized_field_name = self::HIDDEN_FIELD;
+		$signature_field_name = self::SIGNATURE_PREFIX.self::HIDDEN_FIELD;
+		if (isset($raw_data[$serialized_field_name]) &&
+			isset($raw_data[$signature_field_name])) {
+			$serialized_data = $raw_data[$serialized_field_name];
+			$signature_data = $raw_data[$signature_field_name];
+			$this->checkSerializedData($serialized_data, $signature_data);
+			$fields = unserialize($serialized_data);
+		} else {
 			return;
-
-		if (!is_array($fields))
-			return;
+		}
 
 		foreach ($fields as $name) {
 			$serialized_field_name = self::SERIALIZED_PREFIX.$name;
-			if (isset($raw_data[$serialized_field_name])) {
-				$value = unserialize($raw_data[$serialized_field_name]);
+			$signature_field_name = self::SIGNATURE_PREFIX.$name;
+			if (isset($raw_data[$serialized_field_name]) &&
+				isset($raw_data[$signature_field_name])) {
+				$serialized_data = $raw_data[$serialized_field_name];
+				$signature_data = $raw_data[$signature_field_name];
+				$this->checkSerializedData($serialized_data, $signature_data);
+				$value = unserialize($serialized_data);
 				$this->hidden_fields[$name] = $value;
 			}
 		}
@@ -442,16 +511,34 @@ class SwatForm extends SwatDisplayableContainer
 				$input_tag->display();
 			}
 
+			$serialized_data = serialize(array_keys($this->hidden_fields));
+
 			// display serialized value
+			$serialized_data = serialize($value);
 			$input_tag->name = self::SERIALIZED_PREFIX.$name;
-			$input_tag->value = serialize($value);
+			$input_tag->value = $serialized_data;
+			$input_tag->display();
+
+			// display signature data
+			$input_tag->name = self::SIGNATURE_PREFIX.$name;
+			$input_tag->value = $this->getSerializedDataSignature(
+				$serialized_data);
+
 			$input_tag->display();
 		}
 
 		if (count($this->hidden_fields) > 0) {
 			// array of field names
+			$serialized_data = serialize(array_keys($this->hidden_fields));
+
 			$input_tag->name = self::HIDDEN_FIELD;
-			$input_tag->value = serialize(array_keys($this->hidden_fields));
+			$input_tag->value = $serialized_data;
+			$input_tag->display();
+
+			$input_tag->name = self::SIGNATURE_PREFIX.self::HIDDEN_FIELD;
+			$input_tag->value = $this->getSerializedDataSignature(
+				$serialized_data);
+
 			$input_tag->display();
 		}
 
@@ -508,6 +595,45 @@ class SwatForm extends SwatDisplayableContainer
 		}
 
 		return $javascript;
+	}
+
+	// }}}
+	// {{{ protected function getSerializedDataSignature()
+
+	/**
+	 * Gets the signature of serialized data
+	 *
+	 * @param string $serialized_data the data to get the signature for.
+	 *
+	 * @return string the signature data for the given serialized data.
+	 */
+	protected final function getSerializedDataSignature($serialized_data)
+	{
+		return md5($this->salt.(string)$serialized_data);
+	}
+
+	// }}}
+	// {{{ protected function checkSerializedData()
+
+	/**
+	 * Checks serialied data against signature data
+	 *
+	 * @param string $serialized_data the serialized data.
+	 * @param string $signature_data the signature data to verify against.
+	 *
+	 * @throws SwatInvalidSerializedDataException if the serialized data does
+	 *                                            not match the signature data.
+	 */
+	protected final function checkSerializedData($serialized_data,
+		$signature_data)
+	{
+		$calculated_signature_data =
+			$this->getSerializedDataSignature($serialized_data);
+
+		if ($calculated_signature_data !== $signature_data)
+			throw new SwatInvalidSerializedDataException(
+				"Invalid serialized data '{$serialized_data}'.", 0,
+				$serialized_data);
 	}
 
 	// }}}
