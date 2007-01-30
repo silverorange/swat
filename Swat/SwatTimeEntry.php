@@ -365,8 +365,43 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
-		return sprintf("var %s = new SwatTimeEntry('%s');\n",
+		$javascript = sprintf("var %s_obj = new SwatTimeEntry('%s');\n",
 			$this->id, $this->id);
+
+		if ($this->display_parts & self::HOUR) {
+			$lookup_hours = array();
+			foreach ($this->hour_flydown->options as $key => $option)
+				$lookup_hours[] = sprintf('%s: %s',
+					$option->value,
+					($this->hour_flydown->show_blank) ? $key + 1 : $key);
+
+			$javascript.= sprintf("\n%s_obj.addLookupTable('hour', {%s});",
+				$this->id, implode(', ', $lookup_hours));
+		}
+
+		if ($this->display_parts & self::MINUTE) {
+			$lookup_minutes = array();
+			foreach ($this->minute_flydown->options as $key => $option)
+				$lookup_minutes[] = sprintf('%s: %s',
+					$option->value,
+					($this->minute_flydown->show_blank) ? $key + 1 : $key);
+
+			$javascript.= sprintf("\n%s_obj.addLookupTable('minute', {%s});",
+				$this->id, implode(', ', $lookup_minutes));
+		}
+
+		if ($this->display_parts & self::SECOND) {
+			$lookup_seconds = array();
+			foreach ($this->second_flydown->options as $key => $option)
+				$lookup_seconds[] = sprintf('%s: %s',
+					$option->value,
+					($this->second_flydown->show_blank) ? $key + 1 : $key);
+
+			$javascript.= sprintf("\n%s_obj.addLookupTable('second', {%s});",
+				$this->id, implode(', ', $lookup_seconds));
+		}
+
+		return $javascript;
 	}
 
 	// }}}
