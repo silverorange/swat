@@ -164,7 +164,13 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 							array($mapping->array_key => $data_object->$field);
 				}
 			} else {
-				$renderer->$property = $data_object->$field;
+				// look for leading '!' and inverse value if found
+				if (strncmp($field , '!', 1) === 0) {
+					$field = substr($field, 1);
+					$renderer->$property = !($data_object->$field);
+				} else {
+					$renderer->$property = $data_object->$field;
+				}
 			}
 		}
 
