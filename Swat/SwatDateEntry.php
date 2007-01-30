@@ -518,7 +518,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		}
 
 		if ($this->display_parts & self::TIME)
-			$javascript.= sprintf("\n%s_obj.setSwatTime(%s_time_entry);",
+			$javascript.= sprintf("\n%s_obj.setSwatTime(%s_time_entry_obj);",
 				$this->id, $this->id);
 
 		if ($this->display_parts & self::CALENDAR)

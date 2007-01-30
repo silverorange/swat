@@ -11,25 +11,61 @@ function SwatTimeEntry(id)
 
 	if (this.hour)
 		YAHOO.util.Event.addListener(this.hour, 'change',
-			SwatTimeEntry.handleChange, this);
+			SwatTimeEntry.handleHourChange, this);
 
 	if (this.minute)
 		YAHOO.util.Event.addListener(this.minute, 'change',
-			SwatTimeEntry.handleChange, this);
+			SwatTimeEntry.handleMinuteChange, this);
 
 	if (this.second)
 		YAHOO.util.Event.addListener(this.second, 'change',
-			SwatTimeEntry.handleChange, this);
+			SwatTimeEntry.handleSecondChange, this);
 
 	if (this.ampm)
 		YAHOO.util.Event.addListener(this.ampm, 'change',
-			SwatTimeEntry.handleChange, this);
+			SwatTimeEntry.handleAmPmChange, this);
+
+	this.lookup_table = {};
+	this.reverse_lookup_table = {};
 }
 
-SwatTimeEntry.handleChange = function(event, object)
+SwatTimeEntry.handleHourChange = function(event, object)
 {
-	var active_flydown = YAHOO.util.Event.getTarget(event);
-	object.update(active_flydown);
+	object.update('hour');
+}
+
+SwatTimeEntry.handleMinuteChange = function(event, object)
+{
+	object.update('minute');
+}
+
+SwatTimeEntry.handleSecondChange = function(event, object)
+{
+	object.update('second');
+}
+
+SwatTimeEntry.handleAmPmChange = function(event, object)
+{
+	object.update('ampm');
+}
+
+SwatTimeEntry.prototype.addLookupTable = function(table_name, table)
+{
+	this.lookup_table[table_name] = table;
+	this.reverse_lookup_table[table_name] = {};
+	for (key in table) {
+		this.reverse_lookup_table[table_name][table[key]] = key;
+	}
+}
+
+SwatTimeEntry.prototype.lookup = function(table_name, key)
+{
+	return this.lookup_table[table_name][key];
+}
+
+SwatTimeEntry.prototype.reverseLookup = function(table_name, key)
+{
+	return this.reverse_lookup_table[table_name][key];
 }
 
 SwatTimeEntry.prototype.setSwatDate = function(swat_date)
@@ -64,62 +100,27 @@ SwatTimeEntry.prototype.setNow = function(set_date)
 	var now = new Date();	
 	
 	if (now.getHours() < 12) {
-		hour_out = now.getHours();
-		ampm_out = 1;
+		var hour = now.getHours();
+		var ampm = 1;
 	} else {
-		hour_out = (now.getHours() - 12);
-		ampm_out = 2;
+		var hour = (now.getHours() - 12);
+		var ampm = 2;
 	}
 	
 	if (this.hour && this.hour.selectedIndex == 0)
-		this.hour.selectedIndex = this.getHourIndex(hour_out);
+		this.hour.selectedIndex = this.lookup('hour', hour);
 		
 	if (this.minute && this.minute.selectedIndex == 0)
-		this.minute.selectedIndex = this.getMinuteIndex(now.getMinutes());
+		this.minute.selectedIndex = this.lookup('minute', now.getMinutes());
 		
 	if (this.second && this.second.selectedIndex == 0)
-		this.second.selectedIndex = this.getSecondIndex(now.getSeconds());
+		this.second.selectedIndex = this.lookup('second', now.getSeconds());
 		
 	if (this.ampm && this.ampm.selectedIndex == 0)
-		this.ampm.selectedIndex = ampm_out;
+		this.ampm.selectedIndex = ampm;
 	
 	if (this.swat_date && set_date)
 		this.swat_date.setNow(false);
-}
-
-SwatTimeEntry.prototype.parseInt = function(serialized_integer)
-{
-	var value = parseInt(serialized_integer.replace(/[^\d]*/, ''));
-	if (isNaN(value))
-		return null;
-
-	return value;
-}
-
-SwatTimeEntry.prototype.getIntegerIndex = function(flydown, value)
-{
-	var flydown_value;
-	for (i = 0; i < flydown.options.length; i++) {
-		flydown_value = this.parseInt(flydown.options[i].value);
-		if (flydown_value == value)
-			return i;
-	}
-	return null;
-}
-
-SwatTimeEntry.prototype.getHourIndex = function(hour)
-{
-	return this.getIntegerIndex(this.hour, hour);
-}
-
-SwatTimeEntry.prototype.getMinuteIndex = function(minute)
-{
-	return this.getIntegerIndex(this.minute, minute);
-}
-
-SwatTimeEntry.prototype.getSecondIndex = function(second)
-{
-	return this.getIntegerIndex(this.second, second);
 }
 
 SwatTimeEntry.prototype.setDefault = function(set_date)
@@ -140,19 +141,37 @@ SwatTimeEntry.prototype.setDefault = function(set_date)
 		this.swat_date.setDefault(false);
 }
 
-SwatTimeEntry.prototype.update = function(active_flydown)
+SwatTimeEntry.prototype.update = function(field)
 {
 	// hour is required for this, so stop if it doesn't exist
-	if (!this.hour) return;
-	
-	if (this.parseInt(active_flydown.value) != null) {
+	if (!this.hour)
+		return;
+
+	var index = null;
+	switch (field) {
+		case 'hour':
+			index = this.hour.selectedIndex;
+			break;
+		case 'minute':
+			index = this.minute.selectedIndex;
+			break;
+		case 'second':
+			index = this.second.selectedIndex;
+			break;
+		case 'ampm':
+			index = this.ampm.selectedIndex;
+			break;
+	}
+
+	// don't do anything if we select the blank option
+	if (index != 0) {
 		var now = new Date();	
 		var this_hour = now.getHours();
 		
 		if (this_hour > 11)
 			this_hour = this_hour - 12;
 		
-		if (this.parseInt(this.hour.value) == this_hour)
+		if (this.reverseLookup('hour', this.hour.selectedIndex) == this_hour)
 			this.setNow(true);
 		else
 			this.setDefault(true);
