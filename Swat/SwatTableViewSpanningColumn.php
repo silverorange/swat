@@ -76,7 +76,7 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 
 		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
 		$td_tag->colspan =
-			$this->view->getVisibleColumnCount() - $this->offset;
+			$this->view->getXhtmlColspan() - $this->offset;
 
 		$td_tag->open();
 		$this->displayRenderersInternal($row);
