@@ -171,6 +171,11 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 		$th_tag = new SwatHtmlTag('th', $this->getThAttributes());
 		$th_tag->scope = 'col';
+
+		$colspan = $this->getXhtmlColspan();
+		if ($colspan > 1)
+			$th_tag->colspan = $colspan;
+
 		$th_tag->open();
 		$this->displayHeader();
 		$th_tag->close();
@@ -460,6 +465,11 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	protected function displayRenderers($data)
 	{
 		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
+
+		$colspan = $this->getXhtmlColspan();
+		if ($colspan > 1)
+			$td_tag->colspan = $colspan;
+
 		$td_tag->open();
 		$this->displayRenderersInternal($data);
 		$td_tag->close();
