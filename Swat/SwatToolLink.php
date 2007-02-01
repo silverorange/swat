@@ -170,6 +170,9 @@ class SwatToolLink extends SwatControl
 	 * - delete
 	 * - preview
 	 * - change-order
+	 * - help
+	 * - print
+	 * - email
 	 *
 	 * @param string $stock_id the identifier of the stock type to use.
 	 * @param boolean $overwrite_properties whether to overwrite properties if
