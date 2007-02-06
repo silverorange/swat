@@ -1,0 +1,19 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatDisplayableContainer" id="content">
+		<widget class="SwatNavBar" id="navbar" />
+		<widget class="SwatFrame" id="main_frame" />
+		<widget class="DemoDocumentationMenuBar" id="documentation_links" />
+		<widget class="SwatContainer" id="source_container">
+			<widget class="SwatContentBlock">
+				<property name="content" type="string"><![CDATA[<h3>SwatML for this example:</h3>]]></property>
+				<property name="content_type" type="string">text/xml</property>
+			</widget>
+			<widget class="SwatContentBlock" id="source_view">
+				<property name="content_type" type="string">text/xml</property>
+			</widget>
+		</widget>
+	</widget>
+	<widget class="DemoMenuBar" id="menu" />
+</swatml>
