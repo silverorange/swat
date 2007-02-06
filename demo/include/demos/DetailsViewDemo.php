@@ -2,23 +2,22 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'DemoPage.php';
-require_once 'Swat/SwatDate.php';
+require_once 'Demo.php';
 
 /**
  * A demo using a details view
  *
  * @package   SwatDemo
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class DetailsView extends DemoPage
+class DetailsViewDemo extends Demo
 {
-	// {{{ public function initUI()
+	// {{{ public function buildDemoUI()
 
-	public function initUI()
+	public function buildDemoUI(SwatUI $ui)
 	{
-		$details_view = $this->ui->getWidget('details_view');
+		$details_view = $ui->getWidget('details_view');
         
 		$fruit = new FruitObject();
      
@@ -32,13 +31,13 @@ class DetailsView extends DemoPage
 		$fruit->harvest_date = '2005-10-31';
 		$fruit->cost         = .5;
 		$fruit->text         =
-			"Curabitur semper risus non turpis accumsan luctus. Nam libero ".
-			"erat, consequat sed, commodo quis, mollis eu, ligula. Curabitur ".
-			"imperdiet ultricies nisl. Suspendisse ac justo nec nisl ".
-			"sollicitudin vestibulum. Curabitur luctus pharetra mi. Mauris ".
-			"gravida luctus ante. Donec bibendum massa a risus. Sed et quam. ".
-			"Nam eu libero vel arcu semper placerat. Proin tristique quam at ".
-			"est. Donec vel sem.";
+			'Curabitur semper risus non turpis accumsan luctus. Nam libero '.
+			'erat, consequat sed, commodo quis, mollis eu, ligula. Curabitur '.
+			'imperdiet ultricies nisl. Suspendisse ac justo nec nisl '.
+			'sollicitudin vestibulum. Curabitur luctus pharetra mi. Mauris '.
+			'gravida luctus ante. Donec bibendum massa a risus. Sed et quam. '.
+			'Nam eu libero vel arcu semper placerat. Proin tristique quam at '.
+			'est. Donec vel sem.';
 
 		$details_view->data = $fruit;
 	}
@@ -47,7 +46,7 @@ class DetailsView extends DemoPage
 }
 
 /**
- * A demo using a details view
+ * An object to display in the Swat details view demo
  *
  * @package   SwatDemo
  * @copyright 2005-2006 silverorange

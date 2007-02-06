@@ -2,20 +2,20 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'DemoPage.php';
+require_once 'Demo.php';
 
 /**
  * A demo using a table view
  *
  * @package   SwatDemo
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class TableViewInputRow extends DemoPage
+class TableViewInputRowDemo extends Demo
 {
-	// private function initUI();
+	// private function buildDemoUI();
 
-	public function initUI()
+	public function buildDemoUI(SwatUI $ui)
 	{
 		$data = array(
 			array('Apple', false, true),
@@ -23,7 +23,7 @@ class TableViewInputRow extends DemoPage
 			array('Strawberry', true, false),
 		);
 
-		$table_view = $this->ui->getWidget('table_view');
+		$table_view = $ui->getWidget('table_view');
 		$table_store = new SwatTableStore();
 
 		foreach ($data as $datum) {

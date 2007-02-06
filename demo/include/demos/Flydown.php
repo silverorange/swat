@@ -2,28 +2,26 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'DemoPage.php';
-require_once 'Swat/SwatTreeFlydownNode.php';
-require_once 'Swat/SwatOption.php';
+require_once 'Demo.php';
 
 /**
  * A demo using flydowns
  *
- * This page sets up the various flydown widgets. All flydown widgets currently
+ * This demo sets up the various flydown widgets. All flydown widgets currently
  * must be set up manually as they contain SwatFlyDown options rather than
  * an array.
  *
  * @package   SwatDemo
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class Flydown extends DemoPage
+class FlydownDemo extends Demo
 {
-	// {{{ public function initUI()
+	// {{{ public function buildDemoUI()
 
-	public function initUI()
+	public function buildDemoUI(SwatUI $ui)
 	{
-		$flydown = $this->ui->getWidget('flydown');
+		$flydown = $ui->getWidget('flydown');
 		$flydown->options = array(
 			new SwatOption(0, 'Apple'),
 			new SwatOption(1, 'Orange'),
@@ -56,7 +54,7 @@ class Flydown extends DemoPage
 		$tree->addChild($apples);
 		$tree->addChild($oranges);
 
-		$tree_flydown = $this->ui->getWidget('tree_flydown');
+		$tree_flydown = $ui->getWidget('tree_flydown');
 		$tree_flydown->setTree($tree);
 
 		// grouped flydown
@@ -75,20 +73,20 @@ class Flydown extends DemoPage
 		$oranges->addChild(new SwatTreeFlydownNode('florida', 'Florida'));
 		$oranges->addChild(new SwatTreeFlydownNode('california', 'California'));
 		$oranges->addChild(new SwatTreeFlydownNode('mandarin', 'Mandarin'));
-		$grouped_flydown = $this->ui->getWidget('grouped_flydown');
+		$grouped_flydown = $ui->getWidget('grouped_flydown');
 		$grouped_flydown->setTree($grouped_tree);
 
 		$grouped_tree->addChild($apples);
 		$grouped_tree->addChild($oranges);
 
 		// cascading flydown
-		$cascade_from = $this->ui->getWidget('cascade_from');
+		$cascade_from = $ui->getWidget('cascade_from');
 		$cascade_from->options = array(
 			new SwatOption(0, 'Apple'),
 			new SwatOption(1, 'Orange')
 		);
 
-		$cascade_to = $this->ui->getWidget('cascade_to');
+		$cascade_to = $ui->getWidget('cascade_to');
 		$cascade_to->cascade_from = $cascade_from;
 
 		$cascade_to->options = array(

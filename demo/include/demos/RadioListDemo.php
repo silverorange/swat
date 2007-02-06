@@ -2,24 +2,22 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'DemoPage.php';
+require_once 'Demo.php';
 
 /**
  * A demo using a radiolist
  *
- * This page sets up the radiolist.
- *
  * @package   SwatDemo
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class RadioList extends DemoPage
+class RadioListDemo extends Demo
 {
-	// {{{ public function initUI()
+	// {{{ public function buildDemoUI()
 
-	public function initUI()
+	public function buildDemoUI(SwatUI $ui)
 	{
-		$radiolist = $this->ui->getWidget('radiolist');
+		$radiolist = $ui->getWidget('radiolist');
 		$radiolist->addOptionsByArray(array(
 			0 => 'Apple',
 			1 => 'Orange',
@@ -31,7 +29,7 @@ class RadioList extends DemoPage
 			7 => 'Grapefruit',
 			8 => 'Strawberry'));
 
-		$radiotable = $this->ui->getWidget('radiotable');
+		$radiotable = $ui->getWidget('radiotable');
 		$radiotable->addOptionsByArray(array(
 			0 => 'Apple',
 			1 => 'Orange',

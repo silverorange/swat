@@ -1,0 +1,32 @@
+<?php
+
+/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+
+require_once 'Demo.php';
+
+/**
+ * A demo using pagination widgets
+ *
+ * @package   SwatDemo
+ * @copyright 2006-2007 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ */
+class PaginationDemo extends Demo
+{
+	// {{{ public function buildDemoUI()
+
+	public function buildDemoUI(SwatUI $ui)
+	{
+		$ui->getWidget('medium')->setCurrentPage(4);
+
+		$ui->getWidget('beginning')->setCurrentPage(4);
+		$ui->getWidget('middle')->setCurrentPage(49);
+		$ui->getWidget('end')->setCurrentPage(94);
+
+		$ui->getWidget('small')->setCurrentPage(50);
+	}
+
+	// }}}
+}
+
+?>

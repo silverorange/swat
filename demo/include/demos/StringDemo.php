@@ -2,8 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'DemoPage.php';
-require_once '../include/DemoMenu.php';
+require_once 'Demo.php';
 
 /**
  * Several SwatString tests
@@ -12,10 +11,10 @@ require_once '../include/DemoMenu.php';
  * results in a SwatContentBlock.
  *
  * @package   SwatDemo
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class StringDemo extends DemoPage
+class StringDemo extends Demo
 {
 	// {{{ private properties
 
@@ -33,8 +32,9 @@ class StringDemo extends DemoPage
 	private $unformatted_text_blocks = array();
 
 	// }}}
-	// {{{ public function initUI()
-	public function initUI()
+	// {{{ public function buildDemoUI()
+
+	public function buildDemoUI(SwatUI $ui)
 	{
 		$this->text_blocks[] = "<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>".
 			"<blockquote>Etiam aliquet tincidunt augue. Cras dui. Quisque tincidunt pede vitae lorem.</blockquote>".
@@ -55,27 +55,27 @@ class StringDemo extends DemoPage
 			"<strong>Mauris tellus.</strong>Quisque sit amet nulla. Fusce vitae eros eu nunc volutpat aliquet. Donec nibh. Donec ac libero. Etiam dictum. Cras fringilla nunc at justo. Vestibulum quis magna eu nisl congue volutpat. Ut <em>facilisis lobortis</em> lacus. Nullam non urna at elit malesuada dictum. Integer quis ligula. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\n".
 			"Vivamus metus ligula, varius sodales, dictum in, posuere sagittis, nisl.\nSuspendisse potenti. Nulla non mauris id tortor eleifend auctor.<br />Nullam mattis odio ac diam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam ultrices mattis nisl. Nullam diam metus, vestibulum sit amet, lacinia at, condimentum at, dolor.";
 
-		$right_ellipsize = $this->ui->getWidget('right_ellipsize');
+		$right_ellipsize = $ui->getWidget('right_ellipsize');
 		ob_start();
 		$this->testEllipsizeRight(20);
 		$right_ellipsize->content = ob_get_clean();
 
-		$middle_ellipsize = $this->ui->getWidget('middle_ellipsize');
+		$middle_ellipsize = $ui->getWidget('middle_ellipsize');
 		ob_start();
 		$this->testEllipsizeMiddle(25);
 		$middle_ellipsize->content = ob_get_clean();
 
-		$condense = $this->ui->getWidget('condense');
+		$condense = $ui->getWidget('condense');
 		ob_start();
 		$this->testCondense();
 		$condense->content = ob_get_clean();
 
-		$condense_to_name = $this->ui->getWidget('condense_to_name');
+		$condense_to_name = $ui->getWidget('condense_to_name');
 		ob_start();
 		$this->testCondenseToName();
 		$condense_to_name->content = ob_get_clean();
 
-		$to_xhtml = $this->ui->getWidget('to_xhtml');
+		$to_xhtml = $ui->getWidget('to_xhtml');
 		ob_start();
 		$this->testToXHTML();
 		$to_xhtml->content = ob_get_clean();
