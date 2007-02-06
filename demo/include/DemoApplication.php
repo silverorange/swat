@@ -131,6 +131,7 @@ class DemoApplication
 	private function buildDemoMenuBar()
 	{
 		$this->layout_ui->getWidget('menu')->setEntries($this->available_demos);
+		$this->layout_ui->getWidget('menu')->setSelectedEntry($this->demo);
 	}
 
 	// }}}
