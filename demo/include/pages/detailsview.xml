@@ -1,57 +1,54 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
 <swatml>
-	<widget class="SwatFrame" id="my_frame">
-		<property name="title">SwatDetailsView Demo</property>
-		<widget class="SwatForm" id="my_form">
+	<widget class="SwatForm" id="my_form">
 
-			<widget class="SwatDetailsView" id="details_view">
-				<object class="SwatDetailsViewField">
-					<property name="title">Fruit</property>
-					<object class="SwatImageCellRenderer">
-						<property name="title" type="data">title</property>
-						<property name="image" type="data">image</property>
-						<property name="width" type="data">image_width</property>
-						<property name="height" type="data">image_height</property>
-					</object>
-					<object class="SwatTextCellRenderer">
-						<property name="text" type="data">title</property>
-					</object>
+		<widget class="SwatDetailsView" id="details_view">
+			<object class="SwatDetailsViewField">
+				<property name="title">Fruit</property>
+				<object class="SwatImageCellRenderer">
+					<property name="title" type="data">title</property>
+					<property name="image" type="data">image</property>
+					<property name="width" type="data">image_width</property>
+					<property name="height" type="data">image_height</property>
 				</object>
-				<object class="SwatDetailsViewField">
-					<property name="title">Makes Jam</property>
-					<object class="SwatBooleanCellRenderer">
-						<property name="value" type="data">makes_jam</property>
-					</object>
+				<object class="SwatTextCellRenderer">
+					<property name="text" type="data">title</property>
 				</object>
-				<object class="SwatDetailsViewField">
-					<property name="title">Makes Pie</property>
-					<object class="SwatBooleanCellRenderer">
-						<property name="value" type="data">makes_pie</property>
-					</object>
+			</object>
+			<object class="SwatDetailsViewField">
+				<property name="title">Makes Jam</property>
+				<object class="SwatBooleanCellRenderer">
+					<property name="value" type="data">makes_jam</property>
 				</object>
-				<object class="SwatDetailsViewField">
-					<property name="title">Harvest Date</property>
-					<object class="SwatDateCellRenderer">
-						<property name="date" type="data">harvest_date</property>
-						<property name="format" type="string">%B</property>
-					</object>
+			</object>
+			<object class="SwatDetailsViewField">
+				<property name="title">Makes Pie</property>
+				<object class="SwatBooleanCellRenderer">
+					<property name="value" type="data">makes_pie</property>
 				</object>
-				<object class="SwatDetailsViewField">
-					<property name="title">Cost per kg</property>
-					<object class="SwatMoneyCellRenderer">
-						<property name="value" type="data">cost</property>
-						<property name="locale" type="string">en_CA</property>
-					</object>
+			</object>
+			<object class="SwatDetailsViewField">
+				<property name="title">Harvest Date</property>
+				<object class="SwatDateCellRenderer">
+					<property name="date" type="data">harvest_date</property>
+					<property name="format" type="string">%B</property>
 				</object>
-				<object class="SwatDetailsViewVerticalField">
-					<property name="title">Text</property>
-					<object class="SwatTextCellRenderer">
-						<property name="text" type="data">text</property>
-					</object>
+			</object>
+			<object class="SwatDetailsViewField">
+				<property name="title">Cost per kg</property>
+				<object class="SwatMoneyCellRenderer">
+					<property name="value" type="data">cost</property>
+					<property name="locale" type="string">en_CA</property>
 				</object>
-			</widget>
-
+			</object>
+			<object class="SwatDetailsViewVerticalField">
+				<property name="title">Text</property>
+				<object class="SwatTextCellRenderer">
+					<property name="text" type="data">text</property>
+				</object>
+			</object>
 		</widget>
+
 	</widget>
 </swatml>

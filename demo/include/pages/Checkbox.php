@@ -21,6 +21,7 @@ class Checkbox extends DemoPage
 	public function initUI()
 	{
 		// regular checkbox tree
+/*
 		$tree = new SwatDataTreeNode(null, 'Root');
 
 		$apples = new SwatDataTreeNode(null, 'Apple');
@@ -49,10 +50,11 @@ class Checkbox extends DemoPage
 		$checkbox_tree = $this->ui->getWidget('checkbox_tree');
 		$checkbox_tree->setTree($tree);
 
+*/
 		// expandable checkbox tree
 		$tree = new SwatDataTreeNode(null, 'Root');
 
-		$apples = new SwatDataTreeNode(12, 'Apple');
+		$apples = new SwatDataTreeNode(null, 'Apple');
 		$apples->addChild(new SwatDataTreeNode(0, 'Mackintosh'));
 		$apples->addChild(new SwatDataTreeNode(1, 'Courtland'));
 		$apples->addChild(new SwatDataTreeNode(2, 'Golden Delicious'));

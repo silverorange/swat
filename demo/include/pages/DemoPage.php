@@ -20,7 +20,7 @@ require_once '../include/DemoDocumentationMenu.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class DemoPage extends SitePage
+class DemoPage
 {
 	// {{{ protected properties
 
@@ -35,11 +35,8 @@ class DemoPage extends SitePage
 	// }}}
 	// {{{ public function __construct()
 	
-	public function __construct(DemoApplication $app, $layout = null,
-		$demo = null)
+	public function __construct(DemoApplication $app, $demo)
 	{
-		parent::__construct($app, $layout);
-
 		$this->navbar = new SwatNavBar();
 		$this->ui = new SwatUI();
 		$this->ui->mapClassPrefixToPath('Demo', '../include/');
@@ -124,203 +121,6 @@ class DemoPage extends SitePage
 		$this->layout->startCapture('navbar');
 		$this->navbar->display();
 		$this->layout->endCapture();
-	}
-
-	// }}}
-	// {{{ protected function getDocumentationMenu()
-
-	protected function getDocumentationMenu()
-	{
-		switch ($this->demo) {
-		case 'Button':
-			$entries = array(
-				'SwatButton',
-				'SwatConfirmationButton'
-				);
-			break;
-
-		case 'Calendar':
-			$entries = array('SwatCalendar');
-			break;
-
-		case 'ChangeOrder':
-			$entries = array('SwatChangeOrder');
-			break;
-
-		case 'Checkbox':
-			$entries = array(
-				'SwatCheckbox',
-				'SwatCheckboxList',
-				'SwatCheckboxEntryList',
-				'SwatCheckboxTree',
-				'SwatExpandableCheckboxTree',
-				);
-			break;
-
-		case 'ColorEntry':
-			$entries = array(
-				'SwatColorEntry',
-				'SwatSimpleColorEntry'
-				);
-			break;
-
-		case 'DateEntry':
-			$entries = array(
-				'SwatDateEntry',
-				'SwatTimeEntry'
-				);
-			break;
-
-		case 'DetailsView':
-			$entries = array(
-				'SwatDetailsView',
-				'SwatDetailsViewField',
-				'SwatDetailsViewVerticalField',
-				'SwatBooleanCellRenderer',
-				'SwatDateCellRenderer',
-				'SwatImageCellRenderer',
-				'SwatMoneyCellRenderer',
-				'SwatTextCellRenderer'
-				);
-			break;
-
-		case 'Disclosure':
-			$entries = array('SwatDisclosure');
-			break;
-
-		case 'Entry':
-			$entries = array(
-				'SwatEntry',
-				'SwatListEntry',
-				'SwatEmailEntry',
-				'SwatIntegerEntry',
-				'SwatFloatEntry',
-				'SwatMoneyEntry'
-				);
-			break;
-
-		case 'Fieldset':
-			$entries = array('SwatFieldset');
-			break;
-
-		case 'FileEntry':
-			$entries = array('SwatFileEntry');
-			break;
-
-		case 'Flydown':
-			$entries = array(
-				'SwatFlydown',
-				'SwatFlydownTree',
-				'SwatGroupedFlydown',
-				'SwatCascadeFlydown',
-				'SwatFlydownDivider',
-				'SwatTreeFlydownNode',
-				'SwatOption',
-				);
-			break;
-
-		case 'Frame':
-			$entries = array('SwatFrame');
-			break;
-
-		case 'ImageDisplay':
-			$entries = array('SwatImageDisplay');
-			break;
-
-		case 'MessageDisplay':
-			$entries = array('SwatMessageDisplay');
-			break;
-
-		case 'NavBar':
-			$entries = array(
-				'SwatNavBar',
-				'SwatNavBarEntry',
-				);
-			break;
-
-		case 'Pagination':
-			$entries = array('SwatPagination');
-			break;
-
-		case 'PasswordEntry':
-			$entries = array(
-				'SwatPasswordEntry',
-				'SwatConfirmPasswordEntry'
-				);
-			break;
-
-		case 'RadioList':
-			$entries = array(
-				'SwatRadioList',
-				'SwatRadioTable',
-				);
-			break;
-
-		case 'Replicable':
-			$entries = array(
-				'SwatReplicable',
-				'SwatReplicableContainer',
-				'SwatReplicableFieldset',
-				'SwatReplicableFormField',
-				);
-			break;
-
-		case 'StringDemo':
-			$entries = array('SwatString');
-			break;
-
-		case 'TableView':
-			$entries = array(
-				'SwatTableView',
-				'SwatTableStore',
-				'SwatTableViewColumn',
-				'SwatTableViewCheckboxColumn',
-				'SwatCheckboxCellRenderer',
-				'SwatBooleanCellRenderer',
-				'SwatDateCellRenderer',
-				'SwatImageCellRenderer',
-				'SwatMoneyCellRenderer',
-				'SwatTextCellRenderer',
-				'SwatActions',
-				'SwatActionItem'
-				);
-			break;
-
-		case 'TableViewInputRow':
-			$entries = array(
-				'SwatTableView',
-				'SwatTableViewInputRow',
-				'SwatInputCell',
-				'SwatRemoveInputCell',
-				);
-			break;
-
-		case 'Textarea':
-			$entries = array(
-				'SwatTextarea',
-				'SwatXHTMLTextarea',
-				'SwatTextareaEditor'
-				);
-			break;
-
-		case 'TimeZoneEntry':
-			$entries = array('SwatTimeZoneEntry');
-			break;
-
-		case 'ToolLink':
-			$entries = array('SwatToolLink');
-			break;
-
-		case 'YesNoFlydown':
-			$entries = array('SwatYesNoFlydown');
-			break;
-
-		default:
-			$entries = array();
-			break;
-		}
-
-		return new DemoDocumentationMenu($entries);
 	}
 
 	// }}}
