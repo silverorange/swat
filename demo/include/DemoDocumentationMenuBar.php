@@ -2,7 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'DemoMenu.php';
+require_once 'DemoMenuBar.php';
 
 /**
  * The menu for the Swat Demo Application
@@ -14,23 +14,19 @@ require_once 'DemoMenu.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class DemoDocumentationMenu extends DemoMenu
+class DemoDocumentationMenuBar extends DemoMenuBar
 {
-	// {{{ public function __construct()
-
-	public function __construct($entries)
-	{
-		$this->entries = $entries;
-	}
-
-	// }}}
 	// {{{ public function display()
 
 	public function display()
 	{
 		if (count($this->entries) > 0) {
-			echo '<p id="documentation-menu"><span class="menutitle">';
+			$p_tag = new SwatHtmlTag('p');
+			$p_tag->id = $this->id;
+			$p_tag->class = 'demo-documentation-menu-bar';
+			$p_tag->open();
 
+			echo '<span class="menutitle">';
 			echo Swat::ngettext('Documentation Link', 'Documentation Links',
 				count($this->entries));
 
@@ -44,7 +40,7 @@ class DemoDocumentationMenu extends DemoMenu
 					strtolower($class).'.html">'.$class.'</a>';
 			}
 
-			echo '</p>';
+			$p_tag->close();
 		}
 	}
 
