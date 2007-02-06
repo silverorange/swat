@@ -2,26 +2,22 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'DemoPage.php';
-require_once 'Swat/SwatDataTreeNode.php';
+require_once 'Demo.php';
 
 /**
  * A demo using checkboxes
  *
- * This page sets up a tree for use in the SwatCheckboxTree demo.
- *
  * @package   SwatDemo
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class Checkbox extends DemoPage
+class CheckboxDemo extends Demo
 {
-	// {{{ public function initUI()
+	// {{{ public function buildDemoUI()
 
-	public function initUI()
+	public function buildDemoUI(SwatUI $ui)
 	{
 		// regular checkbox tree
-/*
 		$tree = new SwatDataTreeNode(null, 'Root');
 
 		$apples = new SwatDataTreeNode(null, 'Apple');
@@ -47,10 +43,9 @@ class Checkbox extends DemoPage
 		$tree->addChild($apples);
 		$tree->addChild($oranges);
 
-		$checkbox_tree = $this->ui->getWidget('checkbox_tree');
+		$checkbox_tree = $ui->getWidget('checkbox_tree');
 		$checkbox_tree->setTree($tree);
 
-*/
 		// expandable checkbox tree
 		$tree = new SwatDataTreeNode(null, 'Root');
 
@@ -76,7 +71,7 @@ class Checkbox extends DemoPage
 		
 		$tree->addChild($apples);
 		$tree->addChild($oranges);
-		$expandable_checkbox_tree = $this->ui->getWidget('expandable_checkbox_tree');
+		$expandable_checkbox_tree = $ui->getWidget('expandable_checkbox_tree');
 		$expandable_checkbox_tree->setTree($tree);
 	}
 

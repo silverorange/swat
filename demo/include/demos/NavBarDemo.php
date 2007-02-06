@@ -2,24 +2,22 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'DemoPage.php';
+require_once 'Demo.php';
 
 /**
  * A demo using a navbar widget
  *
- * This page sets the entries in the navbar widget
- *
  * @package   SwatDemo
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class NavBar extends DemoPage
+class NavBarDemo extends Demo
 {
-	// {{{ public function initUI()
+	// {{{ public function buildDemoUI()
 
-	public function initUI()
+	public function buildDemoUI(SwatUI $ui)
 	{
-		$navbar = $this->ui->getWidget('navbar');
+		$navbar = $ui->getWidget('navbar');
 		$navbar->addEntry(new SwatNavBarEntry('Home', '#'));
 		$navbar->addEntry(new SwatNavBarEntry('Demos', '#'));
 		$navbar->addEntry(new SwatNavBarEntry('NavBar'));

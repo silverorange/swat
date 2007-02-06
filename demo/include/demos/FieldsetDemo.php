@@ -2,25 +2,23 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'DemoPage.php';
+require_once 'Demo.php';
 
 /**
- * A demo using a change order widget
- *
- * This page sets up the change order widget.
+ * A demo using fieldsets
  *
  * @package   SwatDemo
- * @copyright 2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class ChangeOrder extends DemoPage
+class FieldsetDemo extends Demo
 {
-	// {{{ public function initUI()
+	// {{{ public function buildDemoUI()
 
-	public function initUI()
+	public function buildDemoUI(SwatUI $ui)
 	{
-		$order_widget = $this->ui->getWidget('change_order');
-		$order_widget->addOptionsByArray(array(
+		$radiolist = $ui->getWidget('radio_list');
+		$radiolist->addOptionsByArray(array(
 			0 => 'Apple',
 			1 => 'Orange',
 			2 => 'Banana',

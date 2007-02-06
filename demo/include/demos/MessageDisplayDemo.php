@@ -2,25 +2,22 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'DemoPage.php';
+require_once 'Demo.php';
 
 /**
  * A demo using a message display
  *
- * This page sets up a a number of messages and addes them
- * to the message display.
- *
  * @package   SwatDemo
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class MessageDisplay extends DemoPage
+class MessageDisplayDemo extends Demo
 {
-	// {{{ public function initUI()
+	// {{{ public function buildDemoUI()
 
-	public function initUI()
+	public function buildDemoUI(SwatUI $ui)
 	{
-		$short_message_display = $this->ui->getWidget('short_message_display');
+		$short_message_display = $ui->getWidget('short_message_display');
 
 		$short_message_display->add(
 			new SwatMessage('This is a notification message.',
@@ -36,7 +33,7 @@ class MessageDisplay extends DemoPage
 			new SwatMessage('This is a system error message.', 
 			SwatMessage::SYSTEM_ERROR));
 
-		$long_message_display = $this->ui->getWidget('long_message_display');
+		$long_message_display = $ui->getWidget('long_message_display');
 
 		$message = new SwatMessage('This is a notification message.', 
 			SwatMessage::NOTIFICATION);
