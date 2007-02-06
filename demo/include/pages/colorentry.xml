@@ -1,22 +1,19 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
 <swatml>
-	<widget class="SwatFrame" id="my_frame">
-		<property name="title">SwatColorEntry Demos</property>
-		<widget class="SwatForm" id="my_form">
+	<widget class="SwatForm" id="my_form">
 
-			<widget class="SwatFormField">
-				<property name="title">Complex Color Entry</property>
-				<widget class="SwatColorEntry" id="color_entry" />
-			</widget>
-
-			<widget class="SwatFormField">
-				<property name="title">Simple Color Entry</property>
-				<widget class="SwatSimpleColorEntry" id="simple_color_entry">
-					<property name="value">eed680</property>
-				</widget>
-			</widget>
-
+		<widget class="SwatFormField">
+			<property name="title">Complex Color Entry</property>
+			<widget class="SwatColorEntry" id="color_entry" />
 		</widget>
+
+		<widget class="SwatFormField">
+			<property name="title">Simple Color Entry</property>
+			<widget class="SwatSimpleColorEntry" id="simple_color_entry">
+				<property name="value">eed680</property>
+			</widget>
+		</widget>
+
 	</widget>
 </swatml>

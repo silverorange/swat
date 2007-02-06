@@ -1,46 +1,38 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
 <swatml>
-	<widget class="SwatFrame" id="my_frame">
-		<property name="title">SwatPagination Demos</property>
-		<widget class="SwatForm" id="my_form">
+	<widget class="SwatPagination" id="beginning">
+		<property name="page_size" type="integer">10</property>
+		<property name="total_records" type="integer">1000</property>
+		<property name="link">#</property>
+	</widget>
 
+	<widget class="SwatPagination" id="middle">
+		<property name="page_size" type="integer">10</property>
+		<property name="total_records" type="integer">1000</property>
+		<property name="link">#</property>
+	</widget>
 
-			<widget class="SwatPagination" id="beginning">
-				<property name="page_size" type="integer">10</property>
-				<property name="total_records" type="integer">1000</property>
-				<property name="link">#</property>
-			</widget>
+	<widget class="SwatPagination" id="end">
+		<property name="page_size" type="integer">10</property>
+		<property name="total_records" type="integer">1000</property>
+		<property name="link">#</property>
+	</widget>
 
-			<widget class="SwatPagination" id="middle">
-				<property name="page_size" type="integer">10</property>
-				<property name="total_records" type="integer">1000</property>
-				<property name="link">#</property>
-			</widget>
+	<widget class="SwatFieldset">
+		<property name="title">Using display_parts</property>
+		<widget class="SwatPagination" id="medium">
+			<property name="display_parts" type="constant">NEXT|PREV|PAGES</property>
+			<property name="page_size" type="integer">10</property>
+			<property name="total_records" type="integer">100</property>
+			<property name="link">#</property>
+		</widget>
 
-			<widget class="SwatPagination" id="end">
-				<property name="page_size" type="integer">10</property>
-				<property name="total_records" type="integer">1000</property>
-				<property name="link">#</property>
-			</widget>
-
-			<widget class="SwatFieldset">
-				<property name="title">Using display_parts</property>
-				<widget class="SwatPagination" id="medium">
-					<property name="display_parts" type="constant">NEXT|PREV|PAGES</property>
-					<property name="page_size" type="integer">10</property>
-					<property name="total_records" type="integer">100</property>
-					<property name="link">#</property>
-				</widget>
-
-				<widget class="SwatPagination" id="small">
-					<property name="display_parts" type="constant">NEXT|PREV</property>
-					<property name="page_size" type="integer">10</property>
-					<property name="total_records" type="integer">1000</property>
-					<property name="link">#</property>
-				</widget>
-			</widget>
-			
+		<widget class="SwatPagination" id="small">
+			<property name="display_parts" type="constant">NEXT|PREV</property>
+			<property name="page_size" type="integer">10</property>
+			<property name="total_records" type="integer">1000</property>
+			<property name="link">#</property>
 		</widget>
 	</widget>
 </swatml>

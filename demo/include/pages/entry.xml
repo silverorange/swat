@@ -1,74 +1,71 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
 <swatml>
-	<widget class="SwatFrame" id="my_frame">
-		<property name="title">SwatEntry Demos</property>
-		<widget class="SwatForm" id="my_form">
-			<property name="action">index.php?demo=Entry</property>
+	<widget class="SwatForm" id="my_form">
+		<property name="action">index.php?demo=Entry</property>
 
-			<widget class="SwatFormField">
-				<property name="title" type="string">Entry</property>
-				<widget class="SwatEntry" id="entry">
-					<property name="required" type="boolean">true</property>
-				</widget>
+		<widget class="SwatFormField">
+			<property name="title" type="string">Entry</property>
+			<widget class="SwatEntry" id="entry">
+				<property name="required" type="boolean">true</property>
 			</widget>
+		</widget>
 
-			<widget class="SwatFormField">
-				<property name="title" type="string">Email Entry</property>
-				<widget class="SwatEmailEntry" id="email">
-					<property name="value" type="string">test@example.com</property>
-					<property name="required" type="boolean">true</property>
-				</widget>
+		<widget class="SwatFormField">
+			<property name="title" type="string">Email Entry</property>
+			<widget class="SwatEmailEntry" id="email">
+				<property name="value" type="string">test@example.com</property>
+				<property name="required" type="boolean">true</property>
 			</widget>
+		</widget>
 
-			<widget class="SwatFormField">
-				<property name="title">List Entry</property>
-				<property name="note">Entries are delimited by commas.</property>
-				<widget class="SwatListEntry" id="list">
-					<property name="values[]">orange</property>
-					<property name="values[]">apple</property>
-					<property name="values[]">banana</property>
-					<property name="values[]">grapefruit</property>
-					<property name="values[]">mango</property>
-					<property name="required" type="boolean">true</property>
-					<property name="max_entries" type="integer">5</property>
-					<property name="minlength" type="integer">5</property>
-					<property name="maxlength" type="integer">10</property>
-				</widget>
+		<widget class="SwatFormField">
+			<property name="title">List Entry</property>
+			<property name="note">Entries are delimited by commas.</property>
+			<widget class="SwatListEntry" id="list">
+				<property name="values[]">orange</property>
+				<property name="values[]">apple</property>
+				<property name="values[]">banana</property>
+				<property name="values[]">grapefruit</property>
+				<property name="values[]">mango</property>
+				<property name="required" type="boolean">true</property>
+				<property name="max_entries" type="integer">5</property>
+				<property name="minlength" type="integer">5</property>
+				<property name="maxlength" type="integer">10</property>
 			</widget>
+		</widget>
 
-			<widget class="SwatFormField">
-				<property name="title" type="string">Integer Entry</property>
-				<widget class="SwatIntegerEntry" id="integer" />
+		<widget class="SwatFormField">
+			<property name="title" type="string">Integer Entry</property>
+			<widget class="SwatIntegerEntry" id="integer" />
+		</widget>
+
+		<widget class="SwatFormField">
+			<property name="title" type="string">Float Entry</property>
+			<widget class="SwatFloatEntry" id="float" />
+		</widget>
+
+		<widget class="SwatFormField">
+			<property name="title" type="string">Money Entry (CAD)</property>
+			<widget class="SwatMoneyEntry" id="money_CA">
+				<property name="value" type="float">1234567.89</property>
+				<property name="locale">en_CA</property>
+				<property name="display_currency" type="boolean">true</property>
 			</widget>
+		</widget>
 
-			<widget class="SwatFormField">
-				<property name="title" type="string">Float Entry</property>
-				<widget class="SwatFloatEntry" id="float" />
+		<widget class="SwatFormField">
+			<property name="title" type="string">Money Entry (French EUR)</property>
+			<widget class="SwatMoneyEntry" id="money_FR">
+				<property name="value" type="float">1234567.89</property>
+				<property name="locale">fr_FR.utf8</property>
+				<property name="display_currency" type="boolean">true</property>
 			</widget>
+		</widget>
 
-			<widget class="SwatFormField">
-				<property name="title" type="string">Money Entry (CAD)</property>
-				<widget class="SwatMoneyEntry" id="money_CA">
-					<property name="value" type="float">1234567.89</property>
-					<property name="locale">en_CA</property>
-					<property name="display_currency" type="boolean">true</property>
-				</widget>
-			</widget>
-
-			<widget class="SwatFormField">
-				<property name="title" type="string">Money Entry (French EUR)</property>
-				<widget class="SwatMoneyEntry" id="money_FR">
-					<property name="value" type="float">1234567.89</property>
-					<property name="locale">fr_FR.utf8</property>
-					<property name="display_currency" type="boolean">true</property>
-				</widget>
-			</widget>
-
-			<widget class="SwatFooterFormField">
-				<widget class="SwatButton">
-					<property name="title" type="string">Validate</property>
-				</widget>
+		<widget class="SwatFooterFormField">
+			<widget class="SwatButton">
+				<property name="title" type="string">Validate</property>
 			</widget>
 		</widget>
 	</widget>

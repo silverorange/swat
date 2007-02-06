@@ -1,16 +1,11 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
 <swatml>
-	<widget class="SwatFrame" id="my_frame">
-		<property name="title">SwatImageDisplay Demo</property>
-
-		<widget class="SwatImageDisplay">
-			<property name="image">http://swat.silverorange.com/skins/swat/logo.png</property>
-			<property name="width" type="integer">182</property>
-			<property name="height" type="integer">77</property>
-			<property name="alt">Image of the Swat Logo</property>
-			<property name="title">Swat: Swat Web Application Toolkit</property>
-		</widget>
-
+	<widget class="SwatImageDisplay">
+		<property name="image">http://swat.silverorange.com/skins/swat/logo.png</property>
+		<property name="width" type="integer">182</property>
+		<property name="height" type="integer">77</property>
+		<property name="alt">Image of the Swat Logo</property>
+		<property name="title">Swat: Swat Web Application Toolkit</property>
 	</widget>
 </swatml>
