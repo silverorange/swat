@@ -2,8 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'pages/FrontPage.php';
-
 /**
  * A demo application
  *
@@ -13,70 +11,384 @@ require_once 'pages/FrontPage.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class DemoApplication extends SiteWebApplication
+class DemoApplication
 {
-	// {{{ public function __construct()
+	// {{{ private properties
 
-	public function __construct($id)
-	{
-		parent::__construct($id);
-		$this->exception_page_source = null;
-	}
+	private $ui;
+	private $demo;
+	
+	private $available_demos = array(
+		'Button'            => 'SwatButton',
+		'Calendar'          => 'SwatCalendar',
+		'ChangeOrder'       => 'SwatChangeOrder',
+		'Checkbox'          => 'SwatCheckbox',
+		'ColorEntry'        => 'SwatColorEntry',
+		'DateEntry'         => 'SwatDateEntry',
+		'DetailsView'       => 'SwatDetailsView',
+		'Disclosure'        => 'SwatDisclosure',
+		'Entry'             => 'SwatEntry',
+		'Fieldset'          => 'SwatFieldset',
+		'FileEntry'         => 'SwatFileEntry',
+		'Flydown'           => 'SwatFlydown',
+		'Frame'             => 'SwatFrame',
+		'ImageDisplay'      => 'SwatImageDisplay',
+		'MessageDisplay'    => 'SwatMessageDisplay',
+		'NavBar'            => 'SwatNavBar',
+		'Pagination'        => 'SwatPagination',
+		'PasswordEntry'     => 'SwatPasswordEntry',
+		'RadioList'         => 'SwatRadioList',
+		'Replicable'        => 'SwatReplicable',
+		'String'            => 'SwatString',
+		'TableView'         => 'SwatTableView',
+		'TableViewInputRow' => 'SwatTableViewInputRow',
+		'Textarea'          => 'SwatTextarea',
+		'TimeZoneEntry'     => 'SwatTimeZoneEntry',
+		'ToolLink'          => 'SwatToolLink',
+		'YesNoFlydown'      => 'SwatYesNoFlydown',
+		);
 
 	// }}}
 	// {{{ public function run()
 
 	public function run()
 	{
-		$this->initModules();
-		$this->parseURI();
+		$this->layout_ui = new SwatUI();
+		$this->layout_ui->mapClassPrefixToPath('Demo', '../include/ui-objects');
+		$this->layout_ui->loadFromXML('../include/layout.xml');
 
-		$this->loadPage();
-		$this->page->layout->init();
-		$this->page->init();
-		$this->page->layout->process();
-		$this->page->process();
-		$this->page->layout->build();
-		$this->page->build();
-		$this->page->layout->finalize();
+		$this->demo = $this->getDemo();
 
-		$this->page->layout->display();
-	}
-
-	// }}}
-	// {{{ protected function loadPage()
-
-	/**
-	 * Loads the page
-	 */
-	protected function loadPage()
-	{
-		if ($this->page === null) {
-			$source = self::initVar('demo');
-			// simple security
-			$source = ($source === null) ? $source : basename($source);
-			$this->page = $this->resolvePage($source);
-		}
-	}
-
-	// }}}
-	// {{{ protected function resolvePage()
-
-	/**
-	 * Resolves a page for a particular source
-	 *
-	 * @return SitePage An instance of a SitePage is returned.
-	 */
-	protected function resolvePage($source)
-	{
-		if (file_exists('../include/pages/'.$source.'.php')) {
-			require_once '../include/pages/'.$source.'.php';
-			return new $source($this);
-		} elseif ($source === null) {
-			return new FrontPage($this);
+		if ($this->demo === null) {
+			$this->buildFrontPage();
+			$title = Swat::_('Swat Demo');
 		} else {
-			return new DemoPage($this, null, $source);
+			$this->buildTitle();
+			$this->buildDemo();
+			$this->buildDemoDocumentationMenuBar();
+			$this->buildSourceView();
+			$title = sprintf(Swat::_('%s - Swat Demo'),
+				$this->available_demos[$this->demo]);
 		}
+
+		$this->buildDemoMenuBar();
+
+		$this->layout_ui->init();
+		$this->layout_ui->process();
+
+		$this->buildLayout();
+	}
+
+	// }}}
+	// {{{ private function buildTitle()
+
+	private function buildTitle()
+	{
+		$this->layout_ui->getWidget('main_frame')->title =
+			sprintf(Swat::_('%s Demo'), $this->available_demos[$this->demo]);
+	} 
+
+	// }}}
+	// {{{ private function buildDemo()
+
+	private function buildDemo()
+	{
+		$this->demo_ui = new SwatUI();
+		$this->demo_ui->loadFromXML(
+			'../include/demos/'.strtolower($this->demo).'.xml',
+			$this->layout_ui->getWidget('main_frame'));
+		
+		if (file_exists('../include/demos/'.$this->demo.'Demo.php')) {
+			require_once '../include/demos/'.$this->demo.'Demo.php';
+
+			$class_name = $this->demo.'Demo';
+			if (class_exists($class_name)) {
+				$demo = new $class_name();
+				$demo->buildDemoUI($this->demo_ui);
+			}
+		}
+	}
+
+	// }}}
+	// {{{ private function buildSourceView()
+
+	private function buildSourceView()
+	{
+		$filename = '../include/demos/'.strtolower($this->demo).'.xml';
+		$code = file_get_contents($filename);
+		$code = str_replace("\t", '  ', $code);
+
+		$pre_tag = new SwatHtmlTag('pre');
+		$pre_tag->setContent($code);
+
+		$this->layout_ui->getWidget('source_view')->content =
+			$pre_tag->toString();
+	}
+
+	// }}}
+	// {{{ private function buildDemoMenuBar()
+
+	private function buildDemoMenuBar()
+	{
+		$this->layout_ui->getWidget('menu')->setEntries($this->available_demos);
+	}
+
+	// }}}
+	// {{{ private function buildDemoDocumentationMenuBar()
+
+	private function buildDemoDocumentationMenuBar()
+	{
+		switch ($this->demo) {
+		case 'Button':
+			$entries = array(
+				'SwatButton',
+				'SwatConfirmationButton'
+				);
+			break;
+
+		case 'Calendar':
+			$entries = array('SwatCalendar');
+			break;
+
+		case 'ChangeOrder':
+			$entries = array('SwatChangeOrder');
+			break;
+
+		case 'Checkbox':
+			$entries = array(
+				'SwatCheckbox',
+				'SwatCheckboxList',
+				'SwatCheckboxEntryList',
+				'SwatCheckboxTree',
+				'SwatExpandableCheckboxTree',
+				);
+			break;
+
+		case 'ColorEntry':
+			$entries = array(
+				'SwatColorEntry',
+				'SwatSimpleColorEntry'
+				);
+			break;
+
+		case 'DateEntry':
+			$entries = array(
+				'SwatDateEntry',
+				'SwatTimeEntry'
+				);
+			break;
+
+		case 'DetailsView':
+			$entries = array(
+				'SwatDetailsView',
+				'SwatDetailsViewField',
+				'SwatDetailsViewVerticalField',
+				'SwatBooleanCellRenderer',
+				'SwatDateCellRenderer',
+				'SwatImageCellRenderer',
+				'SwatMoneyCellRenderer',
+				'SwatTextCellRenderer'
+				);
+			break;
+
+		case 'Disclosure':
+			$entries = array('SwatDisclosure');
+			break;
+
+		case 'Entry':
+			$entries = array(
+				'SwatEntry',
+				'SwatListEntry',
+				'SwatEmailEntry',
+				'SwatIntegerEntry',
+				'SwatFloatEntry',
+				'SwatMoneyEntry'
+				);
+			break;
+
+		case 'Fieldset':
+			$entries = array('SwatFieldset');
+			break;
+
+		case 'FileEntry':
+			$entries = array('SwatFileEntry');
+			break;
+
+		case 'Flydown':
+			$entries = array(
+				'SwatFlydown',
+				'SwatFlydownTree',
+				'SwatGroupedFlydown',
+				'SwatCascadeFlydown',
+				'SwatFlydownDivider',
+				'SwatTreeFlydownNode',
+				'SwatOption',
+				);
+			break;
+
+		case 'Frame':
+			$entries = array('SwatFrame');
+			break;
+
+		case 'ImageDisplay':
+			$entries = array('SwatImageDisplay');
+			break;
+
+		case 'MessageDisplay':
+			$entries = array('SwatMessageDisplay');
+			break;
+
+		case 'NavBar':
+			$entries = array(
+				'SwatNavBar',
+				'SwatNavBarEntry',
+				);
+			break;
+
+		case 'Pagination':
+			$entries = array('SwatPagination');
+			break;
+
+		case 'PasswordEntry':
+			$entries = array(
+				'SwatPasswordEntry',
+				'SwatConfirmPasswordEntry'
+				);
+			break;
+
+		case 'RadioList':
+			$entries = array(
+				'SwatRadioList',
+				'SwatRadioTable',
+				);
+			break;
+
+		case 'Replicable':
+			$entries = array(
+				'SwatReplicable',
+				'SwatReplicableContainer',
+				'SwatReplicableFieldset',
+				'SwatReplicableFormField',
+				);
+			break;
+
+		case 'StringDemo':
+			$entries = array('SwatString');
+			break;
+
+		case 'TableView':
+			$entries = array(
+				'SwatTableView',
+				'SwatTableStore',
+				'SwatTableViewColumn',
+				'SwatTableViewCheckboxColumn',
+				'SwatCheckboxCellRenderer',
+				'SwatBooleanCellRenderer',
+				'SwatDateCellRenderer',
+				'SwatImageCellRenderer',
+				'SwatMoneyCellRenderer',
+				'SwatTextCellRenderer',
+				'SwatActions',
+				'SwatActionItem'
+				);
+			break;
+
+		case 'TableViewInputRow':
+			$entries = array(
+				'SwatTableView',
+				'SwatTableViewInputRow',
+				'SwatInputCell',
+				'SwatRemoveInputCell',
+				);
+			break;
+
+		case 'Textarea':
+			$entries = array(
+				'SwatTextarea',
+				'SwatXHTMLTextarea',
+				'SwatTextareaEditor'
+				);
+			break;
+
+		case 'TimeZoneEntry':
+			$entries = array('SwatTimeZoneEntry');
+			break;
+
+		case 'ToolLink':
+			$entries = array('SwatToolLink');
+			break;
+
+		case 'YesNoFlydown':
+			$entries = array('SwatYesNoFlydown');
+			break;
+
+		default:
+			$entries = array();
+			break;
+		}
+
+		$documentation_links = 
+			$this->layout_ui->getWidget('documentation_links');
+
+		$documentation_links->setEntries($entries);
+	}
+
+	// }}}
+	// {{{ private function buildFrontPage()
+
+	private function buildFrontPage()
+	{
+		$this->layout_ui->getWidget('source_container')->visible = false;
+
+		$content_block = new SwatContentBlock();
+		$content_block->content =
+			'This Swat demo site includes examples of Swat widgets and '.
+			'classes. Each demo includes the SwatML source and links to '.
+			'the related documentation for the classes used.';
+
+		$main_frame = $this->layout_ui->getWidget('main_frame');
+		$main_frame->title = 'Swat Demos';
+		$main_frame->add($content_block);
+	}
+
+	// }}}
+	// {{{ private function buildLayout()
+
+	private function buildLayout()
+	{
+		if ($this->demo === null) {
+			$title = Swat::_('Swat Demo');
+		} else {
+			$title = sprintf(Swat::_('%s - Swat Demo'),
+				$this->available_demos[$this->demo]);
+		}
+
+		ob_start();
+		$this->layout_ui->display();
+		$ui = ob_get_clean();
+
+		ob_start();
+		$this->layout_ui->getRoot()->getHtmlHeadEntrySet()->display();
+		$html_head_entries = ob_get_clean();
+
+		require '../include/layout.php';
+	}
+
+	// }}}
+	// {{{ private function getDemo()
+
+	/**
+	 * Gets the demo page
+	 */
+	private function getDemo()
+	{
+		$demo = isset($_GET['demo']) ? $_GET['demo'] : null;
+
+		// simple security
+		if (!array_key_exists($demo, $this->available_demos))
+			$demo = null;
+
+		return $demo;
 	}
 
 	// }}}
