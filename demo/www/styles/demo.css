@@ -1,43 +1,51 @@
-@import url("http://swat.silverorange.com/skins/swat/main.css");
-
-#demo-menu {
-	width: 182px;
-	position: absolute;
-	top: 16px;
-	left: 10%;
+body {
+	font-family: sans-serif;
 	font-size: 13px;
+	color: #333;
+	background-color: #F7F5F3;
+	padding: 2em 0;
 }
 
-#demo-menu ul {
+a:link			{ color: #3465a4; }
+a:visited		{ color: #3465a4; }
+a:hover			{ color: #204a87; }
+a:active		{ color: #3465a4; }
+
+#menu {
+	width: 182px;
+	position: absolute;
+	top: 3em;
+	left: 10%;
+}
+
+#menu h3 {
+	margin: 0;
+}
+
+
+#menu ul {
 	list-style: circle;
 	margin: 0;
 	padding: 0.5em 0 0.5em 2em;
 	color: #999;
 }
 
-#demo-menu ul li {
+#menu ul li {
 	margin-bottom: 0.3em;
 	font-weight: bold;
 }
 
-#demo-content {
+#content {
 	margin-left: 10%;
 	margin-right: 10%;
-	padding: 16px 0 0 15em;
-	font-size: 13px;
+	padding-left: 200px;
 }
 
-#source_code pre {
+pre {
 	margin: 0;
 	padding: 1em;
-	background: #f7f5f3;
+	background: #fff;
 	border: 1px solid #e7ddc8;
-	color: #333;
-	font-size: small;
-}
-
-#source_code h3 {
-	margin: 1em 0.5em 0.5em 0;
 }
 
 .text-block {
@@ -69,44 +77,8 @@ div.note {
 	background: #fe9;
 }
 
-#demo-content .swat-frame {
-	background: #d58935 url(../images/swat-frame-title-background.png) top left repeat-x;
-	border: none;
-	padding-top: 0;
-}
-
-#demo-content .swat-frame h2 {
-	background: url(../images/swat-frame-background-topright.png) top right no-repeat;
-	border: none;
-	color: #fff;
-	padding: 6px 16px 2px 16px;
-	margin: 0;
-	position: static;
-	display: block;
-	font-size: 130%;
-}
-
-#demo-content .swat-frame-contents {
-	background: #fff url(../images/swat-frame-contents-background.png) top left repeat-x;
-	border-left: 1px solid #d58935;
-	border-right: 1px solid #d58935;
-	border-bottom: 1px solid #d58935;
-	padding-top: 24px;
-}
-
 img { border: none; }
 form { margin: none; }
-
-#container {
-	clear: both;
-	position: relative;
-	border-top: 1px solid transparent; /* Good browser see this */
-	_border-top: 1px solid #fffbd6; /* IE sees this (and needs it for position) */
-}
-
-.demo-menu-title {
-	margin: 0;
-}
 
 .debug {
 	font-size: xx-small;
