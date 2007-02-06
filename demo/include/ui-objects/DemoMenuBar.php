@@ -17,6 +17,7 @@ class DemoMenuBar extends SwatControl
 	// {{{ protected properties
 
 	protected $entries = array();
+	protected $selected_entry;
 
 	// }}}
 	// {{{ public function display()
@@ -28,10 +29,23 @@ class DemoMenuBar extends SwatControl
 		$div_tag->class = 'demo-menu-bar';
 		$div_tag->open();
 
+		$a_tag = new SwatHtmlTag('a');
+		$span_tag = new SwatHtmlTag('span');
+		$span_tag->class = 'demo-menu-bar-selected';
+
 		echo '<h3>', Swat::_('Demos:'), '</h3><ul>';
 
 		foreach ($this->entries as $demo => $title) {
-			echo '<li><a href="index.php?demo='.$demo.'">'.$title.'</a></li>';
+			echo '<li>';
+			if ($this->selected_entry == $demo) {
+				$span_tag->setContent($title);
+				$span_tag->display();
+			} else {
+				$a_tag->href = 'index.php?demo='.$demo;
+				$a_tag->setContent($title);
+				$a_tag->display();
+			}
+			echo '</li>';
 		}
 
 
@@ -45,6 +59,14 @@ class DemoMenuBar extends SwatControl
 	public function setEntries(array $entries)
 	{
 		$this->entries = $entries;
+	}
+
+	// }}}
+	// {{{ public function setSelectedEntry()
+
+	public function setSelectedEntry($entry)
+	{
+		$this->selected_entry = $entry;
 	}
 
 	// }}}
