@@ -17,6 +17,14 @@ class TableViewInputRowDemo extends Demo
 
 	public function buildDemoUI(SwatUI $ui)
 	{
+		$message = new SwatMessage('Note:');
+		$message->secondary_content =
+			'These actions are for demonstration purposes only. '.
+			'The actions do not do anything as this page is not connected '.
+			'to a database.';
+
+		$ui->getWidget('note')->add($message);
+
 		$data = array(
 			array('Apple', false, true),
 			array('Orange', false, false),
