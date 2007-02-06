@@ -47,17 +47,7 @@
 				</object>
 			</object>
 		</widget>
-		<widget class="SwatContentBlock">
-			<property name="content_type">text/xml</property>
-			<property name="content"><![CDATA[
-			<div class="note">
-			Note: These actions are for demonstration purposes only.
-			The actions do not do anything as this page is not connected
-			to a database.
-			</div>
-			]]>
-			</property>
-		</widget>
+		<widget class="SwatMessageDisplay" id="note" />
 		<widget class="SwatActions" id="index_actions">
 			<widget class="SwatActionItem" id="havest_date">
 				<property name="title">set harvest date…</property>
