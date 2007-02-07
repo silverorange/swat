@@ -42,13 +42,13 @@ class SwatYUIComponent extends SwatObject
 	{
 		$this->id = $id;
 
-		$this->html_head_entry_set[SwatYUI::MODE_NORMAL] =
+		$this->html_head_entry_set['normal'] =
 			new SwatHtmlHeadEntrySet();
 
-		$this->html_head_entry_set[SwatYUI::MODE_DEBUG] =
+		$this->html_head_entry_set['debug'] =
 			new SwatHtmlHeadEntrySet();
 
-		$this->html_head_entry_set[SwatYUI::MODE_MIN] =
+		$this->html_head_entry_set['min'] =
 			new SwatHtmlHeadEntrySet();
 	}
 
@@ -138,7 +138,7 @@ class SwatYUIComponent extends SwatObject
 		$filename_template =
 			'packages/yui/'.$component_directory.'/'.$this->id.'%s.css';
 
-		foreach ($modes as $modei => $suffix) {
+		foreach ($modes as $mode => $suffix) {
 			$filename = sprintf($filename_template, $suffix);
 			$this->html_head_entry_set[$mode]->addEntry(
 				new SwatStyleSheetHtmlHeadEntry($filename,
@@ -149,10 +149,10 @@ class SwatYUIComponent extends SwatObject
 	// }}}
 	// {{{ public function getHtmlHeadEntrySet()
 
-	public function getHtmlHeadEntrySet($mode = YUI::MODE_MIN)
+	public function getHtmlHeadEntrySet($mode = 'min')
 	{
 		$set = new SwatHtmlHeadEntrySet();
-		if ($this->validateMode($mode)) {
+		if (isset($this->html_head_entry_set[$mode])) {
 			foreach ($this->dependencies as $component) {
 				$set->addEntrySet($component->getHtmlHeadEntrySet());
 			}
