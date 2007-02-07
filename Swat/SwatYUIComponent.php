@@ -149,6 +149,13 @@ class SwatYUIComponent extends SwatObject
 	// }}}
 	// {{{ public function getHtmlHeadEntrySet()
 
+	/**
+	 * Gets the set of {@link SwatHtmlHeadEntry} objects required for this
+	 * YUI component
+	 *
+	 * @return SwatHtmlHeadEntrySet the set of {@link SwatHtmlHeadEntry}
+	 *                               objects required for this YUI component.
+	 */
 	public function getHtmlHeadEntrySet($mode = 'min')
 	{
 		$set = new SwatHtmlHeadEntrySet();
