@@ -46,7 +46,7 @@ $package->setAPIStability('stable');
 $package->setNotes($notes);
 
 $package->addIgnore('package.php');
-$package->addIgnore('demo/www/packages/swat/');
+$package->addIgnore('yui/');
 
 $package->addMaintainer('lead', 'nrf', 'Nathan Fredrickson', 'nathan@silverorange.com');
 $package->addMaintainer('lead', 'gauthierm', 'Mike Gauthier', 'mike@silverorange.com');
