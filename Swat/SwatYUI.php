@@ -23,27 +23,68 @@ class SwatYUI
 {
 	// {{{ class constants
 
+	/**
+	 * @todo document me or get rid of me
+	 */
 	const PACKAGE_ID = 'YUI';
 
+	/**
+	 * Component mode for minimized version of JavaScript files.
+	 *
+	 * This is the default mode.
+	 */
 	const MODE_MIN = 'min';
+
+	/**
+	 * Component mode for debug version of JavaScript files.
+	 */
 	const MODE_DEBUG = 'debug';
+
+	/**
+	 * Component mode for normal version of JavaScript files.
+	 */
 	const MODE_NORMAL = '';
 
 	// }}}
 	// {{{ private static properties
 
+	/**
+	 * Static component definitions
+	 *
+	 * This array is used for each instance of SwatYUI and contains component
+	 * definitions and dependency information.
+	 *
+	 * @var array
+	 * @see SwatYUI::buildComponents()
+	 */
 	private static $components = array();
 
 	// }}}
 	// {{{ private properties
 
+	/**
+	 * The {@link SwatHtmlHeadEntrySet} required for this SwaYUI object
+	 *
+	 * @var SwatHtmlHeadEntrySet
+	 */
 	private $html_head_entry_set;
 
 	// }}}
 	// {{{ public function __construct()
 
+	/**
+	 * Creates a new SwatYUI HTML head entry set building object
+	 *
+	 * @param string|array $component_ids either a single YUI component id or
+	 *                                     an array of YUI component ids to
+	 *                                     build a HTML head entry set for.
+	 *
+	 * @param string $mode the YUI component mode to use. Should be one of the
+	 *                      SwatYUI::MODE_* constants. The default mode is
+	 *                      {@link SwatYUI::MODE_MIN}.
+	 */
 	public function __construct($component_ids = array(),
-		$mode = YUI::MODE_MIN)
+		$mode = SwatYUI::MODE_MIN)
 	{
 		self::buildComponents();
 
@@ -78,6 +119,12 @@ class SwatYUI
 	// }}}
 	// {{{ public function getHtmlHeadEntrySet()
 
+	/**
+	 * Gets the HTML head entry set required for the YUI components of this
+	 * object
+	 *
+	 * @return SwatHtmlHeadEntrySet
+	 */
 	public function getHtmlHeadEntrySet()
 	{
 		return $this->html_head_entry_set;
@@ -86,7 +133,19 @@ class SwatYUI
 	// }}}
 	// {{{ private function buildHtmlHeadEntrySet()
 
-	private function buildHtmlHeadEntrySet($component_ids, $mode)
+	/**
+	 * Builds the HTML head entry set required for the YUI components of this
+	 * object
+	 *
+	 * @param array $component_ids an array of YUI component ids to build
+	 *                              HTML head entries for.
+	 * @param string $mode the YUI component mode to use. Should be one of the
+	 *                      SwatYUI::MODE_* constants.
+	 *
+	 * @return SwatHtmlHeadEntrySet the full constructed set of HTML head
+	 *                               entries.
+	 */
+	private function buildHtmlHeadEntrySet(array $component_ids, $mode)
 	{
 		$set = new SwatHtmlHeadEntrySet();
 		foreach ($component_ids as $component_id) {
@@ -98,7 +157,13 @@ class SwatYUI
 
 	// }}}
 	// {{{ private static function buildComponents()
-	
+
+	/**
+	 * Builds the YUI component definitions and dependency information
+	 *
+	 * Since this is a large data structure, the actual building is only done
+	 * once and the result is stored in a static class variable.
+	 */
 	private static function buildComponents()
 	{
 		static $components_built = false;
