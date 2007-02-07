@@ -47,7 +47,7 @@ class SwatYUI extends SwatObject
 	// {{{ class constants
 
 	/**
-	 * @todo document me or get rid of me
+	 * Package ID for YUI component HTML head entries
 	 */
 	const PACKAGE_ID = 'YUI';
 
