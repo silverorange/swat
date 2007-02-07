@@ -7,6 +7,7 @@ require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
 require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
 require_once 'Swat/SwatHtmlHeadEntrySet.php';
 require_once 'Swat/SwatHtmlHeadEntry.php';
+require_once 'Swat/SwatYUI.php';
 
 /**
  * A component in the Yahoo UI Library
@@ -30,24 +31,36 @@ class SwatYUIComponent extends SwatObject
 	// }}}
 	// {{{ public function __construct()
 
+	/**
+	 * Creates a new YUI component
+	 *
+	 * @param string $id the identifier of this YUI component. This corresponds
+	 *                    to a directory name under the <i>build</i> directory
+	 *                    in the YUI distribution.
+	 */
 	public function __construct($id)
 	{
 		$this->id = $id;
 
-		$this->html_head_entry_set[YUI::MODE_NORMAL] =
+		$this->html_head_entry_set[SwatYUI::MODE_NORMAL] =
 			new SwatHtmlHeadEntrySet();
 
-		$this->html_head_entry_set[YUI::MODE_DEBUG] =
+		$this->html_head_entry_set[SwatYUI::MODE_DEBUG] =
 			new SwatHtmlHeadEntrySet();
 
-		$this->html_head_entry_set[YUI::MODE_MIN] =
+		$this->html_head_entry_set[SwatYUI::MODE_MIN] =
 			new SwatHtmlHeadEntrySet();
 	}
 
 	// }}}
 	// {{{ public function addDependency()
 
-	public function addDependency(YUIComponent $component)
+	/**
+	 * Adds a YUI component dependency to this YUI component
+	 *
+	 * @param SwatYUIComponent the YUI component this component depends on.
+	 */
+	public function addDependency(SwatYUIComponent $component)
 	{
 		$this->dependencies[] = $component;
 	}
@@ -55,37 +68,72 @@ class SwatYUIComponent extends SwatObject
 	// }}}
 	// {{{ public function addJavaScript()
 
-	public function addJavaScript($mode, $filename = '')
+	/**
+	 * Adds a {@link SwatJavaScriptHtmlHeadEntry} to this YUI component
+	 *
+	 * YUI component JavaScript is distributed in three modes:
+	 * - debug
+	 * - min
+	 * - normal
+	 *
+	 * Adding JavaScript using this method creates HTML head entries for each
+	 * of these three modes.
+	 *
+	 * @param string $component_directory optional. The YUI component directory
+	 *                                     the JavaScript exists in. If the
+	 *                                     directory is not specified, this
+	 *                                     component's id is used.
+	 */
+	public function addJavaScript($component_directory = '')
 	{
-		if (strlen($filename) == 0) {
-			$filename = 'packages/yui/'.$this->id.'/'.$this->id;
-			if (strlen($mode) > 0)
-				$filename.= '-'.$mode;
+		if (strlen($component_directory) == 0)
+			$component_directory = $this->id;
 
-			$filename.='.js';
-		}
+		$modes = array('-min', '-debug', '');
+		$filename_template =
+			'packages/yui/'.$component_directory.'/'.$this->id.'%s.js';
 
-		if ($this->validateMode($mode))
+		foreach ($modes as $mode) {
+			$filename = sprintf($filename_template, $mode);
 			$this->html_head_entry_set[$mode]->addEntry(
-				new SwatJavaScriptHtmlHeadEntry($filename, YUI::PACKAGE_ID));
+				new SwatJavaScriptHtmlHeadEntry($filename,
+					SwatYUI::PACKAGE_ID));
+		}
 	}
 
 	// }}}
 	// {{{ public function addStyleSheet()
 
-	public function addStyleSheet($mode, $filename = '')
+	/**
+	 * Adds a {@link SwatStyleSheetHtmlHeadEntry} to this YUI component
+	 *
+	 * YUI component style sheets are distributed in three modes:
+	 * - min
+	 * - normal
+	 *
+	 * Adding style sheets using this method creates HTML head entries for
+	 * these two modes.
+	 *
+	 * @param string $component_directory optional. The YUI component directory
+	 *                                     the style sheet exists in. If the
+	 *                                     directory is not specified, this
+	 *                                     component's id is used.
+	 */
+	public function addStyleSheet($component_directory = '')
 	{
-		if (strlen($filename) == 0) {
-			$filename = 'packages/yui/'.$this->id.'/'.$this->id;
-			if (strlen($mode) > 0)
-				$filename.= '-'.$mode;
+		if (strlen($component_directory) == 0)
+			$component_directory = $this->id;
 
-			$filename.='.css';
-		}
+		$modes = array('-min', '');
+		$filename_template =
+			'packages/yui/'.$component_directory.'/'.$this->id.'%s.css';
 
-		if ($this->validateMode($mode))
+		foreach ($modes as $mode) {
+			$filename = sprintf($filename_template, $mode);
 			$this->html_head_entry_set[$mode]->addEntry(
-				new SwatStyleSheetHtmlHeadEntry($filename, YUI::PACKAGE_ID));
+				new SwatStyleSheetHtmlHeadEntry($filename,
+					SwatYUI::PACKAGE_ID));
+		}
 	}
 
 	// }}}
@@ -102,17 +150,6 @@ class SwatYUIComponent extends SwatObject
 		}
 
 		return $set;
-	}
-
-	// }}}
-	// {{{ private function validateMode()
-
-	private function validateMode($mode)
-	{
-		static $valid_modes =
-			array(YUI::MODE_NORMAL, YUI::MODE_DEBUG, YUI::MODE_MIN);
-
-		return (in_array($mode, $valid_modes));
 	}
 
 	// }}}
