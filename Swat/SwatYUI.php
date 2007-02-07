@@ -1,10 +1,11 @@
 <?php
 
+/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlHeadEntrySet.php';
 require_once 'Swat/SwatYUIComponent.php';
-
-/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+require_once 'Swat/exceptions/SwatException.php'
 
 /**
  * Object for building Swat HTML head entry dependencies for Yahoo UI Library
@@ -88,6 +89,8 @@ class SwatYUI extends SwatObject
 	 */
 	public function __construct(array $component_ids, $mode = 'min')
 	{
+		$this->checkInstall();
+
 		self::buildComponents();
 
 		if (!is_array($component_ids))
@@ -265,6 +268,22 @@ class SwatYUI extends SwatObject
 		self::$components = $components;
 
 		$components_built = true;
+	}
+
+	// }}}
+	// {{{ private function checkInstall()
+
+	/**
+	 * Verifies the YUI library is installed and displays a helpful message if
+	 * it is not*
+	 *
+	 * @throws SwatException
+	 */
+	private function checkInstall()
+	{
+		$yui_installed = file_exists('packages/yui/yahoo/yahoo.js');
+		if (!$yui_installed)
+			throw new SwatException();
 	}
 
 	// }}}
