@@ -1,5 +1,374 @@
+2007-02-07  gauthierm
+
+	* [r14786] swat/trunk/Swat/SwatYUIComponent.php:
+	  documentation
+	* [r14784] swat/trunk/Swat/SwatYUI.php:
+	  documentation
+	* [r14782] swat/trunk/Swat/Swat.php:
+	  Fix typo
+	* [r14781] swat/trunk/Swat/Swat.php,
+	  swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/Swat/SwatCascadeFlydown.php,
+	  swat/trunk/Swat/SwatChangeOrder.php,
+	  swat/trunk/Swat/SwatCheckAll.php,
+	  swat/trunk/Swat/SwatCheckboxEntryList.php,
+	  swat/trunk/Swat/SwatCheckboxList.php,
+	  swat/trunk/Swat/SwatConfirmationButton.php,
+	  swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/Swat/SwatDisclosure.php,
+	  swat/trunk/Swat/SwatExpandableCheckboxTree.php,
+	  swat/trunk/Swat/SwatMessageDisplay.php,
+	  swat/trunk/Swat/SwatSimpleColorEntry.php,
+	  swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTimeEntry.php:
+	  Use new SwatYUI class.
+	* [r14780] swat/trunk/Swat/SwatYUI.php:
+	  Better error message
+	* [r14779] swat/trunk/Swat/SwatYUI.php:
+	  fix syntax error
+	* [r14778] swat/trunk/Swat/SwatYUI.php:
+	  Check to make sure YUI is installed
+	* [r14777] swat/trunk/Swat/SwatYUIComponent.php:
+	  get dependencies in the same mode
+	* [r14776] swat/trunk/Swat/SwatYUI.php:
+	  More documentation
+	* [r14775] swat/trunk/Swat/SwatYUI.php:
+	  Get rid of mode constants and just use documented strings.
+	* [r14774] swat/trunk/Swat/SwatYUIComponent.php:
+	  add entries to correct arrays
+	* [r14773] swat/trunk/Swat/SwatYUIComponent.php:
+	  add entries to correct arrays
+	* [r14772] swat/trunk/Swat/SwatYUIComponent.php:
+	  Add documentation and update addJavaScript and addStyleSheet
+	  methods to be easier to use.
+	* [r14771] swat/trunk/Swat/SwatYUI.php:
+	  Update component definitions to use new methods in
+	  SwatYUIComponent
+	* [r14768] swat/trunk/Swat/SwatYUIComponent.php:
+	  add @see to docblock and extend SwatObject
+	* [r14767] swat/trunk/Swat/SwatYUI.php:
+	  Extends SwatObject
+	* [r14766] swat/trunk/Swat/SwatYUI.php:
+	  fix typo
+	* [r14765] swat/trunk/Swat/SwatYUI.php:
+	  Add a chunk of explanitory documentation
+	* [r14764] swat/trunk/Swat/SwatYUI.php:
+	  Always require the first parameter to be an array for
+	  consistency.
+	* [r14763] swat/trunk/Swat/SwatYUI.php:
+	  Remove code to include all YUI components if no component is
+	  specified. I don't think we'd ever want this to happen
+	* [r14762] swat/trunk/Swat/SwatYUI.php:
+	  Added documentaiton
+	* [r14760] swat/trunk/Swat/SwatYUI.php:
+	  Add require
+	* [r14759] swat/trunk/Swat/SwatYUI.php,
+	  swat/trunk/Swat/SwatYUIComponent.php:
+	  Split SwatYUIComponent into a separate file
+	* [r14758] swat/trunk/Swat/SwatYUI.php:
+	  Update SwatYUI's license and other class level docblock
+	  information
+	* [r14757] swat/trunk/Swat/SwatYUI.php:
+	  Move our YUI wrapper to Swat.
+
+2007-02-06  gauthierm
+
+	* [r14731]
+	  swat/trunk/demo/include/demos/TableViewInputRowDemo.php,
+	  swat/trunk/demo/include/demos/tableviewinputrow.xml:
+	  Make note on input row demo use SwatMessageDisplay
+	* [r14730] swat/trunk/demo/include/demos/TableViewDemo.php,
+	  swat/trunk/demo/include/demos/tableview.xml:
+	  Use SwatMessageDisplay for note on table-view demo
+	* [r14729] swat/trunk/demo/include/ui-objects/DemoMenuBar.php:
+	  Put selected class on li for swat demo menu
+	* [r14727] swat/trunk/demo/include/DemoApplication.php,
+	  swat/trunk/demo/include/ui-objects/DemoMenuBar.php:
+	  highlight the selected menu item
+	* [r14726] swat/trunk/demo/include/DemoApplication.php:
+	  Updated demo application that no longer depends on Site package
+	* [r14725] swat/trunk/demo/include/layout.php,
+	  swat/trunk/demo/include/layout.xml:
+	  layouts for new Swat demo.
+	* [r14724] swat/trunk/demo/include/demos/Demo.php:
+	  Add vim line to Demo class
+	* [r14723] swat/trunk/demo/include/DemoDocumentationLink.php:
+	  remove file that was never used
+	* [r14722] swat/trunk/demo/include/DemoDocumentationMenuBar.php,
+	  swat/trunk/demo/include/DemoMenuBar.php,
+	  swat/trunk/demo/include/ui-objects/DemoDocumentationMenuBar.php,
+	  swat/trunk/demo/include/ui-objects/DemoMenuBar.php:
+	  Move demo menu bars to ui-objects directory.
+	* [r14721] swat/trunk/demo/include/ui-objects:
+	  new directory for demo ui objects
+	* [r14720] swat/trunk/demo/include/DemoDocumentationMenu.php,
+	  swat/trunk/demo/include/DemoDocumentationMenuBar.php,
+	  swat/trunk/demo/include/DemoMenu.php,
+	  swat/trunk/demo/include/DemoMenuBar.php:
+	  "Rename menus and make them swat widgets"
+	* [r14719] swat/trunk/demo/www/index.php:
+	  Simplified index.php to work with updated Swat demo
+	* [r14718] swat/trunk/demo/www/styles/demo.css:
+	  Simplified and tidied Swat demo styles courtesy of Steven
+	* [r14717] swat/trunk/demo/autoloader-rules.conf:
+	  remove site autoloader rules from swat demo
+	* [r14716] swat/trunk/demo/include/demos/DemoPage.php,
+	  swat/trunk/demo/include/demos/FrontPage.php:
+	  These page objects are not needed anymore
+	* [r14715] swat/trunk/demo/include/demos/checkbox.xml:
+	  whitespace
+	* [r14714] swat/trunk/demo/include/demos/frame.xml:
+	  add frame demo with subtitle
+	* [r14713] swat/trunk/demo/include/demos/Flydown.php,
+	  swat/trunk/demo/include/demos/FlydownDemo.php:
+	  Missed a rename
+	* [r14712] swat/trunk/demo/include/demos/ChangeOrder.php,
+	  swat/trunk/demo/include/demos/ChangeOrderDemo.php,
+	  swat/trunk/demo/include/demos/Checkbox.php,
+	  swat/trunk/demo/include/demos/CheckboxDemo.php,
+	  swat/trunk/demo/include/demos/Demo.php,
+	  swat/trunk/demo/include/demos/DetailsView.php,
+	  swat/trunk/demo/include/demos/DetailsViewDemo.php,
+	  swat/trunk/demo/include/demos/Disclosure.php,
+	  swat/trunk/demo/include/demos/DisclosureDemo.php,
+	  swat/trunk/demo/include/demos/Fieldset.php,
+	  swat/trunk/demo/include/demos/FieldsetDemo.php,
+	  swat/trunk/demo/include/demos/Flydown.php,
+	  swat/trunk/demo/include/demos/MessageDisplay.php,
+	  swat/trunk/demo/include/demos/MessageDisplayDemo.php,
+	  swat/trunk/demo/include/demos/NavBar.php,
+	  swat/trunk/demo/include/demos/NavBarDemo.php,
+	  swat/trunk/demo/include/demos/Pagination.php,
+	  swat/trunk/demo/include/demos/PaginationDemo.php,
+	  swat/trunk/demo/include/demos/PasswordEntry.php,
+	  swat/trunk/demo/include/demos/PasswordEntryDemo.php,
+	  swat/trunk/demo/include/demos/RadioList.php,
+	  swat/trunk/demo/include/demos/RadioListDemo.php,
+	  swat/trunk/demo/include/demos/StringDemo.php,
+	  swat/trunk/demo/include/demos/TableView.php,
+	  swat/trunk/demo/include/demos/TableViewDemo.php,
+	  swat/trunk/demo/include/demos/TableViewInputRow.php,
+	  swat/trunk/demo/include/demos/TableViewInputRowDemo.php,
+	  swat/trunk/demo/include/demos/string.xml,
+	  swat/trunk/demo/include/demos/stringdemo.xml:
+	  Restructure the demo pages into demo objects
+	* [r14711] swat/trunk/demo/include/demos,
+	  swat/trunk/demo/include/demos/Checkbox.php,
+	  swat/trunk/demo/include/demos/DemoPage.php,
+	  swat/trunk/demo/include/demos/button.xml,
+	  swat/trunk/demo/include/demos/calendar.xml,
+	  swat/trunk/demo/include/demos/changeorder.xml,
+	  swat/trunk/demo/include/demos/checkbox.xml,
+	  swat/trunk/demo/include/demos/colorentry.xml,
+	  swat/trunk/demo/include/demos/dateentry.xml,
+	  swat/trunk/demo/include/demos/detailsview.xml,
+	  swat/trunk/demo/include/demos/disclosure.xml,
+	  swat/trunk/demo/include/demos/entry.xml,
+	  swat/trunk/demo/include/demos/fieldset.xml,
+	  swat/trunk/demo/include/demos/fileentry.xml,
+	  swat/trunk/demo/include/demos/flydown.xml,
+	  swat/trunk/demo/include/demos/imagedisplay.xml,
+	  swat/trunk/demo/include/demos/messagedisplay.xml,
+	  swat/trunk/demo/include/demos/navbar.xml,
+	  swat/trunk/demo/include/demos/pagination.xml,
+	  swat/trunk/demo/include/demos/passwordentry.xml,
+	  swat/trunk/demo/include/demos/radiolist.xml,
+	  swat/trunk/demo/include/demos/replicable.xml,
+	  swat/trunk/demo/include/demos/stringdemo.xml,
+	  swat/trunk/demo/include/demos/tableview.xml,
+	  swat/trunk/demo/include/demos/tableviewinputrow.xml,
+	  swat/trunk/demo/include/demos/textarea.xml,
+	  swat/trunk/demo/include/demos/timezoneentry.xml,
+	  swat/trunk/demo/include/demos/toollink.xml,
+	  swat/trunk/demo/include/demos/yesnoflydown.xml,
+	  swat/trunk/demo/include/pages:
+	  Rename pages as demos.
+	* [r14709] swat/trunk/demo/include/layouts:
+	  Remove layouts dir.
+	* [r14708] swat/trunk/demo/include/pages/Checkbox.php,
+	  swat/trunk/demo/include/pages/DemoPage.php,
+	  swat/trunk/demo/include/pages/button.xml,
+	  swat/trunk/demo/include/pages/calendar.xml,
+	  swat/trunk/demo/include/pages/changeorder.xml,
+	  swat/trunk/demo/include/pages/checkbox.xml,
+	  swat/trunk/demo/include/pages/colorentry.xml,
+	  swat/trunk/demo/include/pages/dateentry.xml,
+	  swat/trunk/demo/include/pages/detailsview.xml,
+	  swat/trunk/demo/include/pages/disclosure.xml,
+	  swat/trunk/demo/include/pages/entry.xml,
+	  swat/trunk/demo/include/pages/fieldset.xml,
+	  swat/trunk/demo/include/pages/fileentry.xml,
+	  swat/trunk/demo/include/pages/flydown.xml,
+	  swat/trunk/demo/include/pages/frontpage.xml,
+	  swat/trunk/demo/include/pages/imagedisplay.xml,
+	  swat/trunk/demo/include/pages/messagedisplay.xml,
+	  swat/trunk/demo/include/pages/navbar.xml,
+	  swat/trunk/demo/include/pages/pagination.xml,
+	  swat/trunk/demo/include/pages/passwordentry.xml,
+	  swat/trunk/demo/include/pages/radiolist.xml,
+	  swat/trunk/demo/include/pages/replicable.xml,
+	  swat/trunk/demo/include/pages/stringdemo.xml,
+	  swat/trunk/demo/include/pages/tableview.xml,
+	  swat/trunk/demo/include/pages/tableviewinputrow.xml,
+	  swat/trunk/demo/include/pages/textarea.xml,
+	  swat/trunk/demo/include/pages/timezoneentry.xml,
+	  swat/trunk/demo/include/pages/toollink.xml,
+	  swat/trunk/demo/include/pages/yesnoflydown.xml:
+	  XML changes for new Swat demo.
+
+2007-02-01  nick
+
+	* [r14627] swat/trunk/Swat/SwatToolLink.php:
+	  Update the docs
+
+2007-01-30  nrf
+
+	* [r14582] swat/trunk/Swat/SwatCellRendererSet.php:
+	  Allow inverting of boolean data properties in XML using the '!'
+	  character as an operator.
+	* [r14535] swat/trunk/Swat/SwatTableViewColumn.php:
+	  By default, use getXhtmlColspan() to set the colspan on the TH
+	  and TD tags. This does not change the behavior of this class
+	  but makes it easier for subclasses to modify behavior.
+	* [r14534] swat/trunk/Swat/SwatTableViewSpanningColumn.php:
+	  Use actual total colspan instead column count when calculating a
+	  spanning column's colspan.
+
+2007-01-30  gauthierm
+
+	* [r14533] swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/Swat/SwatTimeEntry.php,
+	  swat/trunk/www/javascript/swat-time-entry.js:
+	  Refactor the SwatTimeEntry JavaScript so it no longer has to
+	  parse serialized PHP values into integers. This is analogous to
+	  r14531 for SwatDate but this also includes a couple of
+	  cleanups/bug fixes to the SwatTimeEntry JavaScript.
+
+2007-01-29  gauthierm
+
+	* [r14532] swat/trunk/Swat/SwatString.php:
+	  Use shorter hash length. This saved 4.5 kilobytes on the
+	  DateEntry demo page.
+	* [r14531] swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/www/javascript/swat-date-entry.js:
+	  Refactor the SwatDateEntry JavaScript so it no longer has to
+	  parse serialized PHP values into integers.
+
+2007-01-29  steven
+
+	* [r14530] swat/trunk/www/styles/swat-message.css:
+	  better padding for SwatGroupingFormField when there are messages
+	* [r14528] swat/trunk/www/styles/swat-message.css:
+	  whitespace
+	* [r14525] swat/trunk/Swat/SwatGroupingFormField.php,
+	  swat/trunk/www/styles/swat.css:
+	  Fix Ticket #471: "error highlighting of SwatRadioList looks a
+	  bit funny"
+	  Turns out this was NOT low-hanging fruit at all
+	* [r14522] swat/trunk/Swat/SwatHeaderFormField.php:
+	  Preserve CSS classes (swat-form-field-with-messages, etc.) on
+	  SwatHeaderFormField (follow up to r14521)
+	* [r14521] swat/trunk/Swat/SwatFooterFormField.php,
+	  swat/trunk/Swat/SwatGroupingFormField.php:
+	  Preserve CSS classes (swat-form-field-with-messages, etc.) on
+	  SwatFooterFormField and SwatGroupingFormField
+
+2007-01-29  gauthierm
+
+	* [r14520] swat/trunk/Swat/SwatCascadeFlydown.php,
+	  swat/trunk/Swat/SwatFlydown.php,
+	  swat/trunk/Swat/SwatGroupedFlydown.php:
+	  Use signed serialized values to prevent arbitrary object
+	  instantiation. Fixes ticket #539.
+	* [r14519] swat/trunk/Swat/SwatForm.php:
+	  Fix copy-paste typo
+	* [r14518] swat/trunk/Swat/SwatForm.php:
+	  Require SwatString in SwatForm and remove require for exception
+	  that is no longer used in SwatForm.
+	* [r14517] swat/trunk/Swat/SwatString.php:
+	  Require exception classes used in SwatString.
+	* [r14516] swat/trunk/Swat/SwatForm.php:
+	  Add getSalt() method to SwatForm().
+	* [r14515] swat/trunk/Swat/SwatForm.php:
+	  Use SwatString to sign and verify serialized values in SwatForm.
+	* [r14514] swat/trunk/Swat/SwatString.php:
+	  Add methods to SwatString to securely serialize and unserialize
+	  values.
+	* [r14498] swat/trunk/Swat/SwatForm.php:
+	  Salt serialized data on SwatForm to prevent malicious attempts
+	  to manipulate serialized data on forms.
+	* [r14495]
+	  swat/trunk/Swat/exceptions/SwatInvalidSerializedDataException.php:
+	  
+	  New exception type for ticket #539.
+
+2007-01-28  gauthierm
+
+	* [r14485]
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js:
+	  Shortcut break here will improperly ignore some nodes.
+
+2007-01-27  gauthierm
+
+	* [r14482] swat/trunk/Swat/SwatCheckboxTree.php:
+	  Make some properties protected as they are already used by
+	  SwatExpandableCheckboxTree
+	* [r14481] swat/trunk/Swat/SwatExpandableCheckboxTree.php:
+	  If dependent checkboxes are used, show a checkbox next to nodes
+	  with null values.
+	* [r14480]
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js:
+	  If dependent checkboxes are used, initialize the state of the
+	  parent nodes based on the state of child nodes.
+
+2007-01-26  gauthierm
+
+	* [r14474] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  fix typo
+	* [r14473] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  Add protected method to check if a sub data object is loaded.
+
+2007-01-16  dave
+
+	* [r14337] swat/trunk/Swat/SwatTimeZoneEntry.php:
+	  fix doc block
+	* [r14336] swat/trunk/Swat/SwatColorEntry.php:
+	  apparently we don't yet use SwatColorEntry anywhere
+
+2007-01-16  gauthierm
+
+	* [r14335] swat/trunk/Swat/SwatConfirmationButton.php:
+	  Fix ticket #488. Closes three XSS vectors:
+	  1. We don't escape the closing CDATA tag,
+	  2. browsers render hundreds of variations of <script/>, we only
+	  check for one (with case insensitivity), and,
+	  3. we escape single quotation marks but don't escape our escape
+	  character.
+	  All of these vectors are now closed.
+
+2007-01-15  nick
+
+	* [r14319] swat/trunk/Swat/SwatString.php:
+	  Text should have entities minimized
+
+2007-01-11  gauthierm
+
+	* [r14294] swat/trunk/Swat/SwatXHTMLTextarea.php:
+	  Use built-in libxml error handling function available in PHp
+	  since 5.1 for SwatXHTMLTextarea.
+	* [r14293] swat/trunk/Swat/SwatUI.php:
+	  With the options we pass to DOMDocument::load(), this type of
+	  error will never happen. The count() will be greater than 0 and
+	  the catch-all exception will be thrown.
+	* [r14292] swat/trunk/Swat/SwatUI.php:
+	  Use built-in libxml error handling that exists since PHP 5.1 in
+	  SwatUI XML parsing.
+
 2007-01-10  nrf
 
+	* [r14281] swat/trunk/ChangeLog:
+	  prepare for release of 1.2.0
 	* [r14279] swat/trunk/ChangeLog, swat/trunk/package.php:
 	  prepare for release of 1.2.0
 
