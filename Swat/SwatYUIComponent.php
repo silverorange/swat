@@ -2,6 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
 require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
 require_once 'Swat/SwatHtmlHeadEntrySet.php';
@@ -16,8 +17,9 @@ require_once 'Swat/SwatHtmlHeadEntry.php';
  * @package   Swat
  * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @see       SwatYUI
  */
-class SwatYUIComponent
+class SwatYUIComponent extends SwatObject
 {
 	// {{{ private properties
 
