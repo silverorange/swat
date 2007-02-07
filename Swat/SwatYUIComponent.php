@@ -154,7 +154,7 @@ class SwatYUIComponent extends SwatObject
 		$set = new SwatHtmlHeadEntrySet();
 		if (isset($this->html_head_entry_set[$mode])) {
 			foreach ($this->dependencies as $component) {
-				$set->addEntrySet($component->getHtmlHeadEntrySet());
+				$set->addEntrySet($component->getHtmlHeadEntrySet($mode));
 			}
 			$set->addEntrySet($this->html_head_entry_set[$mode]);
 		}
