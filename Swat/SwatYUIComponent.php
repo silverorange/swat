@@ -89,12 +89,17 @@ class SwatYUIComponent extends SwatObject
 		if (strlen($component_directory) == 0)
 			$component_directory = $this->id;
 
-		$modes = array('-min', '-debug', '');
+		$modes = array(
+			'min'    => '-min',
+			'debug'  => '-debug',
+			'normal' => '',
+		);
+
 		$filename_template =
 			'packages/yui/'.$component_directory.'/'.$this->id.'%s.js';
 
-		foreach ($modes as $mode) {
-			$filename = sprintf($filename_template, $mode);
+		foreach ($modes as $mode => $suffix) {
+			$filename = sprintf($filename_template, $suffix);
 			$this->html_head_entry_set[$mode]->addEntry(
 				new SwatJavaScriptHtmlHeadEntry($filename,
 					SwatYUI::PACKAGE_ID));
@@ -124,12 +129,17 @@ class SwatYUIComponent extends SwatObject
 		if (strlen($component_directory) == 0)
 			$component_directory = $this->id;
 
-		$modes = array('-min', '');
+		$modes = array(
+			'min'    => '-min',
+			'debug'  => '',
+			'normal' => '',
+		);
+
 		$filename_template =
 			'packages/yui/'.$component_directory.'/'.$this->id.'%s.css';
 
-		foreach ($modes as $mode) {
-			$filename = sprintf($filename_template, $mode);
+		foreach ($modes as $modei => $suffix) {
+			$filename = sprintf($filename_template, $suffix);
 			$this->html_head_entry_set[$mode]->addEntry(
 				new SwatStyleSheetHtmlHeadEntry($filename,
 					SwatYUI::PACKAGE_ID));
