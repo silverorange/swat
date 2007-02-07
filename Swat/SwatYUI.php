@@ -36,23 +36,6 @@ class SwatYUI extends SwatObject
 	 */
 	const PACKAGE_ID = 'YUI';
 
-	/**
-	 * Component mode for minimized version of JavaScript files.
-	 *
-	 * This is the default mode.
-	 */
-	const MODE_MIN = 'min';
-
-	/**
-	 * Component mode for debug version of JavaScript files.
-	 */
-	const MODE_DEBUG = 'debug';
-
-	/**
-	 * Component mode for normal version of JavaScript files.
-	 */
-	const MODE_NORMAL = '';
-
 	// }}}
 	// {{{ private static properties
 
@@ -86,10 +69,10 @@ class SwatYUI extends SwatObject
 	 * @param array $component_ids an array of YUI component ids to build a
 	 *                              HTML head entry set for.
 	 * @param string $mode the YUI component mode to use. Should be one of the
-	 *                      SwatYUI::MODE_* constants. The default mode is
-	 *                      {@link SwatYUI::MODE_MIN}.
+	 *                      'min', 'normal' or 'debug'. The default mode is
+	 *                      'min'.
 	 */
-	public function __construct(array $component_ids, $mode = SwatYUI::MODE_MIN)
+	public function __construct(array $component_ids, $mode = 'min')
 	{
 		self::buildComponents();
 
@@ -123,8 +106,7 @@ class SwatYUI extends SwatObject
 	 *
 	 * @param array $component_ids an array of YUI component ids to build
 	 *                              HTML head entries for.
-	 * @param string $mode the YUI component mode to use. Should be one of the
-	 *                      SwatYUI::MODE_* constants.
+	 * @param string $mode the YUI component mode to use.
 	 *
 	 * @return SwatHtmlHeadEntrySet the full constructed set of HTML head
 	 *                               entries.
