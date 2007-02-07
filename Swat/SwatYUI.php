@@ -91,27 +91,6 @@ class SwatYUI
 		if (!is_array($component_ids))
 			$component_ids = array($component_ids);
 
-		if (count($component_ids) == 0) {
-			$component_ids = array(
-				'animation',
-				'autocomplete',
-				'calendar',
-				'connection',
-				'container',
-				'dom',
-				'dragdrop',
-				'event',
-				'fonts',
-				'grids',
-				'logger',
-				'menu',
-				'reset',
-				'slider',
-				'treeview',
-				'yahoo',
-			);
-		}
-
 		$this->html_head_entry_set =
 			$this->buildHtmlHeadEntrySet($component_ids, $mode);
 	}
