@@ -174,7 +174,7 @@ class Swat
 	 */
 	public static function getDependencies()
 	{
-		return array(SwatUI::PACKAGE_ID);
+		return array(SwatYUI::PACKAGE_ID);
 	}
 
 	// }}}
