@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlHeadEntrySet.php';
 require_once 'Swat/SwatYUIComponent.php';
 
@@ -26,7 +27,7 @@ require_once 'Swat/SwatYUIComponent.php';
  * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatYUI
+class SwatYUI extends SwatObject
 {
 	// {{{ class constants
 
