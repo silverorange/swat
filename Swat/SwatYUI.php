@@ -14,7 +14,7 @@ require_once 'Swat/SwatYUIComponent.php';
  * manipulation and CSS positioning. YUI's JavaScript is separated into
  * separate components. This class takes a list of YUI components and generates
  * a set of {@link SwatHtmlHeadEntry} objects required for the YUI component.
- * This greatly simplified using YUI in Swat UI objects.
+ * This greatly simplifies using YUI in Swat UI objects.
  *
  * Example usage:
  * <code>
