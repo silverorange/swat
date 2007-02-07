@@ -17,6 +17,20 @@ require_once 'Swat/SwatYUIComponent.php';
  * a set of {@link SwatHtmlHeadEntry} objects required for the YUI component.
  * This greatly simplifies using YUI in Swat UI objects.
  *
+ * YUI components are distributed in three modes:
+ * - min
+ * - normal
+ * - debug
+ *
+ * The 'normal' mode is regular JavaScript and style-sheet code with full
+ * documentation and whitespace formatting. The 'min' mode is the same as
+ * 'normal' except the whitespace has been compressed and the comments have
+ * been stripped. The 'debug' mode is the same as normal except special
+ * debugging code has been added to the JavaScript.
+ *
+ * When using SwatYUI to generate a set of HTML head entries, you can specify
+ * one of the three modes to suit your needs.
+ *
  * Example usage:
  * <code>
  * $yui = new SwatYUI('dom');
