@@ -1,5 +1,7 @@
 <?php
 
+/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+
 require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
 require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
 require_once 'Swat/SwatHtmlHeadEntrySet.php';
@@ -8,11 +10,12 @@ require_once 'Swat/SwatHtmlHeadEntry.php';
 /**
  * A component in the Yahoo UI Library
  *
- * This class is used internally by the {@link YUI} class and is not meant to
- * be used by itself.
+ * This class is used internally by the {@link SwatYUI} class and is not meant
+ * to be used by itself.
  *
- * @package   YUI
- * @copyright 2006 silverorange
+ * @package   Swat
+ * @copyright 2006-2007 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class YUIComponent
 {
@@ -113,20 +116,28 @@ class YUIComponent
 	// }}}
 }
 
+?>
+<?php
+
+require_once 'Swat/SwatHtmlHeadEntrySet.php';
+
+/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+
 /**
- * Object for building HTML head entry dependencies for Yahoo UI Library
+ * Object for building Swat HTML head entry dependencies for Yahoo UI Library
  * components
  *
  * Example usage:
  * <code>
- * $yui = new YUI('dom');
+ * $yui = new SwatYUI('dom');
  * $html_head_entries = $yui->getHtmlHeadEntrySet();
  * </code>
  *
- * @package   YUI
- * @copyright 2006 silverorange
+ * @package   Swat
+ * @copyright 2006-2007 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class YUI
+class SwatYUI
 {
 	// {{{ class constants
 
