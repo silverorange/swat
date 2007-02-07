@@ -156,97 +156,57 @@ class SwatYUI extends SwatObject
 		if ($components_built)
 			return;
 
-		$components['animation'] = new YUIComponent('animation');
-		$components['animation']->addJavaScript(YUI::MODE_DEBUG);
-		$components['animation']->addJavaScript(YUI::MODE_MIN);
-		$components['animation']->addJavaScript(YUI::MODE_NORMAL);
+		$components['animation'] = new SwatYUIComponent('animation');
+		$components['animation']->addJavaScript();
 
-		$components['autocomplete'] = new YUIComponent('autocomplete');
-		$components['autocomplete']->addJavaScript(YUI::MODE_DEBUG);
-		$components['autocomplete']->addJavaScript(YUI::MODE_MIN);
-		$components['autocomplete']->addJavaScript(YUI::MODE_NORMAL);
+		$components['autocomplete'] = new SwatYUIComponent('autocomplete');
+		$components['autocomplete']->addJavaScript();
 
-		$components['calendar'] = new YUIComponent('calendar');
-		$components['calendar']->addJavaScript(YUI::MODE_DEBUG);
-		$components['calendar']->addJavaScript(YUI::MODE_MIN);
-		$components['calendar']->addJavaScript(YUI::MODE_NORMAL);
+		$components['calendar'] = new SwatYUIComponent('calendar');
+		$components['calendar']->addJavaScript();
 
-		$components['connection'] = new YUIComponent('connection');
-		$components['connection']->addJavaScript(YUI::MODE_DEBUG);
-		$components['connection']->addJavaScript(YUI::MODE_MIN);
-		$components['connection']->addJavaScript(YUI::MODE_NORMAL);
+		$components['connection'] = new SwatYUIComponent('connection');
+		$components['connection']->addJavaScript();
 
-		$components['container'] = new YUIComponent('container');
-		$components['container']->addJavaScript(YUI::MODE_DEBUG);
-		$components['container']->addJavaScript(YUI::MODE_MIN);
-		$components['container']->addJavaScript(YUI::MODE_NORMAL);
+		$components['container'] = new SwatYUIComponent('container');
+		$components['container']->addJavaScript();
 
-		$components['container_core'] = new YUIComponent('container');
-		$components['container_core']->addJavaScript(YUI::MODE_DEBUG,
-			'packages/yui/container/container_core-debug.js');
+		$components['container_core'] = new SwatYUIComponent('container_core');
+		$components['container_core']->addJavaScript('container');
 
-		$components['container_core']->addJavaScript(YUI::MODE_MIN,
-			'packages/yui/container/container_core-min.js');
+		$components['dom'] = new SwatYUIComponent('dom');
+		$components['dom']->addJavaScript();
 
-		$components['container_core']->addJavaScript(YUI::MODE_NORMAL,
-			'packages/yui/container/container_core.js');
+		$components['dragdrop'] = new SwatYUIComponent('dragdrop');
+		$components['dragdrop']->addJavaScript();
 
-		$components['dom'] = new YUIComponent('dom');
-		$components['dom']->addJavaScript(YUI::MODE_DEBUG);
-		$components['dom']->addJavaScript(YUI::MODE_MIN);
-		$components['dom']->addJavaScript(YUI::MODE_NORMAL);
+		$components['event'] = new SwatYUIComponent('event');
+		$components['event']->addJavaScript();
 
-		$components['dragdrop'] = new YUIComponent('dragdrop');
-		$components['dragdrop']->addJavaScript(YUI::MODE_DEBUG);
-		$components['dragdrop']->addJavaScript(YUI::MODE_MIN);
-		$components['dragdrop']->addJavaScript(YUI::MODE_NORMAL);
+		$components['fonts'] = new SwatYUIComponent('fonts');
+		$components['fonts']->addStyleSheet();
 
-		$components['event'] = new YUIComponent('event');
-		$components['event']->addJavaScript(YUI::MODE_DEBUG);
-		$components['event']->addJavaScript(YUI::MODE_MIN);
-		$components['event']->addJavaScript(YUI::MODE_NORMAL);
+		$components['grids'] = new SwatYUIComponent('grids');
+		$components['grids']->addStyleSheet();
 
-		$components['fonts'] = new YUIComponent('fonts');
-		$components['fonts']->addStyleSheet(YUI::MODE_MIN);
-		$components['fonts']->addStyleSheet(YUI::MODE_NORMAL);
+		$components['logger'] = new SwatYUIComponent('logger');
+		$components['logger']->addJavaScript();
 
-		$components['grids'] = new YUIComponent('grids');
-		$components['grids']->addStyleSheet(YUI::MODE_MIN);
-		$components['grids']->addStyleSheet(YUI::MODE_NORMAL);
+		$components['menu'] = new SwatYUIComponent('menu');
+		$components['menu']->addJavaScript();
+		$components['menu']->addStyleSheet('menu/assets');
 
-		$components['logger'] = new YUIComponent('logger');
-		$components['logger']->addJavaScript(YUI::MODE_DEBUG);
-		$components['logger']->addJavaScript(YUI::MODE_MIN);
-		$components['logger']->addJavaScript(YUI::MODE_NORMAL);
+		$components['reset'] = new SwatYUIComponent('reset');
+		$components['reset']->addStyleSheet();
 
-		$components['menu'] = new YUIComponent('menu');
-		$components['menu']->addJavaScript(YUI::MODE_DEBUG);
-		$components['menu']->addJavaScript(YUI::MODE_MIN);
-		$components['menu']->addJavaScript(YUI::MODE_NORMAL);
-		$components['menu']->addStyleSheet(YUI::MODE_NORMAL,
-			'packages/yui/menu/assets/menu.css');
+		$components['slider'] = new SwatYUIComponent('slider');
+		$components['slider']->addJavaScript();
 
-		$components['menu']->addStyleSheet(YUI::MODE_MIN,
-			'packages/yui/menu/assets/menu.css');
+		$components['treeview'] = new SwatYUIComponent('treeview');
+		$components['treeview']->addJavaScript();
 
-		$components['reset'] = new YUIComponent('reset');
-		$components['reset']->addStyleSheet(YUI::MODE_MIN);
-		$components['reset']->addStyleSheet(YUI::MODE_NORMAL);
-
-		$components['slider'] = new YUIComponent('slider');
-		$components['slider']->addJavaScript(YUI::MODE_DEBUG);
-		$components['slider']->addJavaScript(YUI::MODE_MIN);
-		$components['slider']->addJavaScript(YUI::MODE_NORMAL);
-
-		$components['treeview'] = new YUIComponent('treeview');
-		$components['treeview']->addJavaScript(YUI::MODE_DEBUG);
-		$components['treeview']->addJavaScript(YUI::MODE_MIN);
-		$components['treeview']->addJavaScript(YUI::MODE_NORMAL);
-
-		$components['yahoo'] = new YUIComponent('yahoo');
-		$components['yahoo']->addJavaScript(YUI::MODE_DEBUG);
-		$components['yahoo']->addJavaScript(YUI::MODE_MIN);
-		$components['yahoo']->addJavaScript(YUI::MODE_NORMAL);
+		$components['yahoo'] = new SwatYUIComponent('yahoo');
+		$components['yahoo']->addJavaScript();
 
 		// dependencies
 		$components['animation']->addDependency($components['yahoo']);
