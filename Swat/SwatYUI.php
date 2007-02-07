@@ -75,16 +75,13 @@ class SwatYUI
 	/**
 	 * Creates a new SwatYUI HTML head entry set building object
 	 *
-	 * @param string|array $component_ids either a single YUI component id or
-	 *                                     an array of YUI component ids to
-	 *                                     build a HTML head entry set for.
-	 *
+	 * @param array $component_ids an array of YUI component ids to build a
+	 *                              HTML head entry set for.
 	 * @param string $mode the YUI component mode to use. Should be one of the
 	 *                      SwatYUI::MODE_* constants. The default mode is
 	 *                      {@link SwatYUI::MODE_MIN}.
 	 */
-	public function __construct($component_ids = array(),
-		$mode = SwatYUI::MODE_MIN)
+	public function __construct(array $component_ids, $mode = SwatYUI::MODE_MIN)
 	{
 		self::buildComponents();
 
