@@ -9,6 +9,13 @@ require_once 'Swat/SwatYUIComponent.php';
  * Object for building Swat HTML head entry dependencies for Yahoo UI Library
  * components
  *
+ * Most of Swat's UI objects using JavaScript make use of the Yahoo User
+ * Interface Library (YUI) to abstract cross-browser event-handling, DOM
+ * manipulation and CSS positioning. YUI's JavaScript is separated into
+ * separate components. This class takes a list of YUI components and generates
+ * a set of {@link SwatHtmlHeadEntry} objects required for the YUI component.
+ * This greatly simplified using YUI in Swat UI objects.
+ *
  * Example usage:
  * <code>
  * $yui = new SwatYUI('dom');
