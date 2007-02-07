@@ -3,7 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatCheckboxList.php';
-require_once 'YUI/YUI.php';
+require_once 'Swat/SwatYUI.php';
 
 /**
  * A checkbox list widget with entries per item
@@ -68,7 +68,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	{
 		parent::__construct($id);
 
-		$yui = new YUI(array('dom', 'event'));
+		$yui = new SwatYUI(array('dom', 'event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript(

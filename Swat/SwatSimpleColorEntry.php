@@ -4,7 +4,7 @@
 
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatState.php';
-require_once 'YUI/YUI.php';
+require_once 'Swat/SwatYUI.php';
 
 /**
  * Simple color selector widget.
@@ -73,7 +73,7 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 
 		$this->requires_id = true;
 
-		$yui = new YUI('dom');
+		$yui = new SwatYUI(array('dom'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript(

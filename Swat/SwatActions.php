@@ -9,7 +9,7 @@ require_once 'Swat/SwatActionItem.php';
 require_once 'Swat/SwatActionItemDivider.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
-require_once 'YUI/YUI.php';
+require_once 'Swat/SwatYUI.php';
 
 /**
  * Actions widget
@@ -110,7 +110,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	{
 		parent::__construct($id);
 
-		$yui = new YUI(array('dom', 'event'));
+		$yui = new SwatYUI(array('dom', 'event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript('packages/swat/javascript/swat-actions.js',
 			Swat::PACKAGE_ID);

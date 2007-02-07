@@ -4,7 +4,7 @@
 
 require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatHtmlTag.php';
-require_once 'YUI/YUI.php';
+require_once 'Swat/SwatYUI.php';
 
 /**
  * A container to show and hide child widgets
@@ -46,7 +46,7 @@ class SwatDisclosure extends SwatDisplayableContainer
 		parent::__construct($id);
 		$this->requires_id = true;
 
-		$yui = new YUI(array('dom', 'animation'));
+		$yui = new SwatYUI(array('dom', 'animation'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript('packages/swat/javascript/swat-disclosure.js',

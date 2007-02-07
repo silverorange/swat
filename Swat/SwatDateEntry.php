@@ -6,7 +6,7 @@ require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatDate.php';
 require_once 'Swat/SwatState.php';
-require_once 'YUI/YUI.php';
+require_once 'Swat/SwatYUI.php';
 
 /**
  * A date entry widget
@@ -171,7 +171,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		$this->requires_id = true;
 
-		$yui = new YUI('event');
+		$yui = new SwatYUI(array('event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript('packages/swat/javascript/swat-date-entry.js',
 			Swat::PACKAGE_ID);
