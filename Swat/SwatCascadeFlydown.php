@@ -3,7 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatFlydown.php';
-require_once 'YUI/YUI.php';
+require_once 'Swat/SwatYUI.php';
 
 /**
  * A cascading flydown (aka combo-box) selection widget
@@ -63,7 +63,7 @@ class SwatCascadeFlydown extends SwatFlydown
 
 		$this->requires_id = true;
 
-		$yui = new YUI('event');
+		$yui = new SwatYUI(array('event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript('packages/swat/javascript/swat-cascade.js',

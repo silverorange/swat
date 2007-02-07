@@ -2,7 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'YUI/YUI.php';
+require_once 'Swat/SwatYUI.php';
 
 /**
  * Container for package wide static methods
@@ -174,7 +174,7 @@ class Swat
 	 */
 	public static function getDependencies()
 	{
-		return array(YUI::PACKAGE_ID);
+		return array(SwatUI::PACKAGE_ID);
 	}
 
 	// }}}

@@ -3,7 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatControl.php';
-require_once 'YUI/YUI.php';
+require_once 'Swat/SwatYUI.php';
 require_once 'Date.php';
 
 /**
@@ -50,7 +50,7 @@ class SwatCalendar extends SwatControl
 
 		$this->requires_id = true;
 
-		$yui = new YUI('dom');
+		$yui = new SwatYUI(array('dom'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript('packages/swat/javascript/swat-calendar.js',

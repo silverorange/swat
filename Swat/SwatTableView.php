@@ -13,7 +13,7 @@ require_once 'Swat/SwatTableViewInputRow.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/exceptions/SwatDuplicateIdException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
-require_once 'YUI/YUI.php';
+require_once 'Swat/SwatYUI.php';
 
 /**
  * A widget to display data in a tabular form
@@ -232,7 +232,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	{
 		parent::__construct($id);
 
-		$yui = new YUI('dom');
+		$yui = new SwatYUI(array('dom'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript('packages/swat/javascript/swat-table-view.js',

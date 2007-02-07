@@ -5,7 +5,7 @@
 require_once 'Swat/SwatOptionControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
-require_once 'YUI/YUI.php';
+require_once 'Swat/SwatYUI.php';
 
 /**
  * An element ordering widget
@@ -61,7 +61,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$this->requires_id = true;
 		$this->unique_values = true;
 
-		$yui = new YUI(array('dom', 'event'));
+		$yui = new SwatYUI(array('dom', 'event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript('packages/swat/javascript/swat-change-order.js',

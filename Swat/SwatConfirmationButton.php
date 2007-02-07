@@ -3,7 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatButton.php';
-require_once 'YUI/YUI.php';
+require_once 'Swat/SwatYUI.php';
 
 /**
  * A button widget with a javascript confirmation dialog
@@ -41,7 +41,7 @@ class SwatConfirmationButton extends SwatButton
 	{
 		parent::__construct($id);
 
-		$yui = new YUI('event');
+		$yui = new SwatYUI(array('event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript(
 			'packages/swat/javascript/swat-confirmation-button.js',
