@@ -301,6 +301,21 @@ class SwatActions extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getActionItems()
+
+	/**
+	 * Gets the array of current SwatActions
+	 *
+	 * @return array of SwatActionItems
+	 *
+	 * @see SwatActionItem
+	 */
+	public function getActionItems()
+	{
+		return $this->action_items;
+	}
+
+	// }}}
 	// {{{ protected function displayButton()
 
 	/**
