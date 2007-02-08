@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Swat 1.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-12 17:40-0400\n"
+"POT-Creation-Date: 2007-02-08 17:11-0400\n"
 "PO-Revision-Date: 2006-10-19 17:53-0300\n"
 "Last-Translator: Nathan Fredrickson <nathan@silverorange.com>\n"
 "Language-Team: silverorange\n"
@@ -28,9 +28,9 @@ msgid "Properties for class %s:"
 msgstr ""
 
 #: ../Swat/SwatColorEntry.php.gettext:141
-#: ../Swat/SwatFileEntry.php.gettext:337 ../Swat/SwatEntry.php.gettext:246
-#: ../Swat/SwatTextarea.php.gettext:125 ../Swat/SwatFlydown.php.gettext:137
-#: ../Swat/SwatTimeZoneEntry.php.gettext:166
+#: ../Swat/SwatFileEntry.php.gettext:337 ../Swat/SwatEntry.php.gettext:250
+#: ../Swat/SwatTextarea.php.gettext:125 ../Swat/SwatFlydown.php.gettext:141
+#: ../Swat/SwatTimeZoneEntry.php.gettext:165
 #, php-format
 msgid "The %s field is required."
 msgstr ""
@@ -52,13 +52,13 @@ msgstr ""
 msgid "required"
 msgstr ""
 
-#: ../Swat/SwatExpandableCheckboxTree.php.gettext:176
+#: ../Swat/SwatExpandableCheckboxTree.php.gettext:175
 #: ../Swat/SwatDisclosure.php.gettext:142
 #: ../Swat/SwatDisclosure.php.gettext:216
 msgid "close"
 msgstr ""
 
-#: ../Swat/SwatExpandableCheckboxTree.php.gettext:179
+#: ../Swat/SwatExpandableCheckboxTree.php.gettext:178
 #: ../Swat/SwatDisclosure.php.gettext:215
 msgid "open"
 msgstr ""
@@ -136,49 +136,49 @@ msgstr ""
 msgid "Time is Required."
 msgstr ""
 
-#: ../Swat/SwatTimeEntry.php.gettext:480
+#: ../Swat/SwatTimeEntry.php.gettext:515
 #, php-format
 msgid "The time you have entered is invalid. It must be after %s."
 msgstr ""
 
-#: ../Swat/SwatTimeEntry.php.gettext:488
+#: ../Swat/SwatTimeEntry.php.gettext:523
 #, php-format
 msgid "The time you have entered is invalid. It must be before %s."
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:184 ../Swat/SwatButton.php.gettext:218
+#: ../Swat/SwatToolLink.php.gettext:187 ../Swat/SwatButton.php.gettext:218
 msgid "Create"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:189 ../Swat/SwatButton.php.gettext:223
+#: ../Swat/SwatToolLink.php.gettext:192 ../Swat/SwatButton.php.gettext:223
 msgid "Add"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:194
+#: ../Swat/SwatToolLink.php.gettext:197
 msgid "Edit"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:199 ../Swat/SwatButton.php.gettext:233
+#: ../Swat/SwatToolLink.php.gettext:202 ../Swat/SwatButton.php.gettext:233
 msgid "Delete"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:204
+#: ../Swat/SwatToolLink.php.gettext:207
 msgid "Preview"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:209
+#: ../Swat/SwatToolLink.php.gettext:212
 msgid "Change Order"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:214
+#: ../Swat/SwatToolLink.php.gettext:217
 msgid "Help"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:219
+#: ../Swat/SwatToolLink.php.gettext:222
 msgid "Print"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:224
+#: ../Swat/SwatToolLink.php.gettext:227
 msgid "Email"
 msgstr ""
 
@@ -252,12 +252,12 @@ msgstr ""
 msgid "Day is Required."
 msgstr ""
 
-#: ../Swat/SwatDateEntry.php.gettext:721
+#: ../Swat/SwatDateEntry.php.gettext:754
 #, php-format
 msgid "The date you have entered is invalid. It must be on or after %s."
 msgstr ""
 
-#: ../Swat/SwatDateEntry.php.gettext:730
+#: ../Swat/SwatDateEntry.php.gettext:763
 #, php-format
 msgid "The date you have entered is invalid. It must be before %s."
 msgstr ""
@@ -282,17 +282,17 @@ msgstr[1] ""
 msgid "The %%s field must be of the following type(s): %s."
 msgstr ""
 
-#: ../Swat/SwatFileEntry.php.gettext:345 ../Swat/SwatEntry.php.gettext:255
+#: ../Swat/SwatFileEntry.php.gettext:345 ../Swat/SwatEntry.php.gettext:259
 #, php-format
 msgid "There is problem with the %s field."
 msgstr ""
 
-#: ../Swat/SwatEntry.php.gettext:249 ../Swat/SwatTextarea.php.gettext:130
+#: ../Swat/SwatEntry.php.gettext:253 ../Swat/SwatTextarea.php.gettext:130
 #, php-format
 msgid "The %%s field can be at most %s characters long."
 msgstr ""
 
-#: ../Swat/SwatEntry.php.gettext:252
+#: ../Swat/SwatEntry.php.gettext:256
 #, php-format
 msgid "The %%s must be at least %s characters long."
 msgstr ""
@@ -443,24 +443,24 @@ msgstr ""
 msgid "%s %s, displaying %s to %s"
 msgstr ""
 
-#: ../Swat/SwatPagination.php.gettext:260
-#: ../Swat/SwatPagination.php.gettext:266
+#: ../Swat/SwatPagination.php.gettext:261
+#: ../Swat/SwatPagination.php.gettext:268
 #, php-format
 msgid "%sPrevious"
 msgstr ""
 
-#: ../Swat/SwatPagination.php.gettext:284
+#: ../Swat/SwatPagination.php.gettext:286
 #, php-format
 msgid "Page %d of %d"
 msgstr ""
 
-#: ../Swat/SwatPagination.php.gettext:303
-#: ../Swat/SwatPagination.php.gettext:309
+#: ../Swat/SwatPagination.php.gettext:306
+#: ../Swat/SwatPagination.php.gettext:313
 #, php-format
 msgid "Next%s"
 msgstr ""
 
-#: ../Swat/SwatPagination.php.gettext:364
+#: ../Swat/SwatPagination.php.gettext:368
 #, php-format
 msgid "Go to page %d"
 msgstr ""
@@ -478,22 +478,38 @@ msgstr ""
 msgid "Check All"
 msgstr ""
 
-#: ../Swat/SwatMoneyEntry.php.gettext:110
+#: ../Swat/SwatMoneyEntry.php.gettext:129
 #, php-format
 msgid "The %%s field must be a monetary value formatted for %s (i.e. %s)."
 msgstr ""
 
-#: ../Swat/SwatMoneyEntry.php.gettext:128
+#: ../Swat/SwatMoneyEntry.php.gettext:150
 #, php-format
 msgid ""
-"The %%s field has too many decimal values. The currency (%s) only allows %s."
+"The %%s field has too many decimal places. The currency %s only allows %s."
 msgstr ""
+
+#: ../Swat/SwatMoneyEntry.php.gettext:160
+#, php-format
+msgid "The %s field must not have any decimal places."
+msgstr ""
+
+#: ../Swat/SwatMoneyEntry.php.gettext:163
+#, php-format
+msgid ""
+"The %%s field has too many decimal places. There can be at most one decimal "
+"place."
+msgid_plural ""
+"The %%s field has too many decimal places. There can be at most %s decimal "
+"places."
+msgstr[0] ""
+msgstr[1] ""
 
 #: ../Swat/SwatMessageDisplay.php.gettext:220
 msgid "Dismiss message"
 msgstr ""
 
-#: ../Swat/SwatTimeZoneEntry.php.gettext:170
+#: ../Swat/SwatTimeZoneEntry.php.gettext:169
 #, php-format
 msgid "The %s field is an invalid time-zone."
 msgstr ""
@@ -515,7 +531,7 @@ msgid "Move to Bottom"
 msgstr ""
 
 #: ../Swat/SwatCascadeFlydown.php.gettext:124
-#: ../Swat/SwatCascadeFlydown.php.gettext:155
+#: ../Swat/SwatCascadeFlydown.php.gettext:157
 msgid "choose one ..."
 msgstr ""
 
@@ -589,7 +605,7 @@ msgstr[1] ""
 msgid "Are you sure you wish to continue?"
 msgstr ""
 
-#: ../Swat/SwatXHTMLTextarea.php.gettext:235
+#: ../Swat/SwatXHTMLTextarea.php.gettext:207
 msgid "Ignore XHTML validation errors"
 msgstr ""
 
