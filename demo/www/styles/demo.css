@@ -3,7 +3,8 @@ body {
 	font-size: 13px;
 	color: #333;
 	background-color: #F7F5F3;
-	padding: 2em 0;
+	margin: 0;
+	padding-bottom: 2em;
 }
 
 a:link			{ color: #3465a4; }
@@ -14,31 +15,42 @@ a:active		{ color: #3465a4; }
 #menu {
 	width: 182px;
 	position: absolute;
-	top: 3em;
-	left: 10%;
+	top: 4em;
+	left: 2em;
 }
 
-#menu h3 {
-	margin: 0;
-}
-
-
-#menu ul {
+#menu {
 	list-style: circle;
 	margin: 0;
 	padding: 0.5em 0 0.5em 2em;
 	color: #999;
 }
 
-#menu ul li {
+#menu li {
 	margin-bottom: 0.3em;
 	font-weight: bold;
 }
 
 #content {
-	margin-left: 10%;
-	margin-right: 10%;
+	margin-left: 2em;
+	margin-right: 2em;
 	padding-left: 200px;
+}
+
+#navbar {
+	padding: 0.5em 2em;
+	margin-bottom: 2.5em;
+	background: #3465a4;
+	border-bottom: 2px solid #729fcf;
+	color: #eee;
+}
+
+#navbar a:link,
+#navbar a:visited,
+#navbar a:hover,
+#navbar a:active {
+	color: #fff;
+	font-weight: bold;
 }
 
 pre {
