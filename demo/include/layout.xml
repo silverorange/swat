@@ -1,8 +1,8 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
 <swatml>
+	<widget class="SwatNavBar" id="navbar" />
 	<widget class="SwatDisplayableContainer" id="content">
-		<widget class="SwatNavBar" id="navbar" />
 		<widget class="SwatFrame" id="main_frame" />
 		<widget class="DemoDocumentationMenuBar" id="documentation_links" />
 		<widget class="SwatContainer" id="source_container">
