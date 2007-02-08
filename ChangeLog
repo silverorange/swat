@@ -1,3 +1,46 @@
+2007-02-08  nrf
+
+	* [r14843] swat/trunk/locale/en_CA/LC_MESSAGES/swat.mo,
+	  swat/trunk/locale/en_GB/LC_MESSAGES/swat.mo,
+	  swat/trunk/locale/en_US/LC_MESSAGES/swat.mo,
+	  swat/trunk/po/en_CA.po, swat/trunk/po/en_GB.po,
+	  swat/trunk/po/en_US.po:
+	  Update translations
+
+2007-02-08  steven
+
+	* [r14833] swat/trunk/demo/www/styles/demo.css:
+	  Pretty up the demo a bit - use more of the screen, style up the
+	  nav bar
+
+2007-02-08  gauthierm
+
+	* [r14831] swat/trunk/demo/include/layout.xml:
+	  pull navbar outside main content div
+	* [r14830] swat/trunk/demo/include/ui-objects/DemoMenuBar.php:
+	  Remove header and wrapping div tag from demo menu bar
+	* [r14828] swat/trunk/demo/include/DemoApplication.php:
+	  Show a navbar on new swat demo
+
+2007-02-08  isaac
+
+	* [r14822] swat/trunk/Swat/SwatActions.php:
+	  add the ability to grab the current action items - this is
+	  useful for places where we want to be able to alter a set of
+	  action items after they've been built, without using individual
+	  widget id's
+
+2007-02-07  nrf
+
+	* [r14791] swat/trunk/package.php:
+	  prepare for release of 1.2.2
+	* [r14790] swat/trunk/package.php:
+	  PackageFileManager's concept of a path is lacking.
+	  Exclude the yui stuff from the package, but leave the duplicated
+	  swat files for now.
+	* [r14788] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.1
+
 2007-02-07  gauthierm
 
 	* [r14786] swat/trunk/Swat/SwatYUIComponent.php:
