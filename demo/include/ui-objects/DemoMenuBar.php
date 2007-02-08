@@ -24,16 +24,15 @@ class DemoMenuBar extends SwatControl
 
 	public function display()
 	{
-		$div_tag = new SwatHtmlTag('div');
-		$div_tag->id = $this->id;
-		$div_tag->class = 'demo-menu-bar';
-		$div_tag->open();
+		$ul_tag = new SwatHtmlTag('ul');
+		$ul_tag->id = $this->id;
+		$ul_tag->class = 'demo-menu-bar';
 
 		$a_tag = new SwatHtmlTag('a');
 		$span_tag = new SwatHtmlTag('span');
 		$li_tag = new SwatHtmlTag('li');
 
-		echo '<h3>', Swat::_('Demos:'), '</h3><ul>';
+		$ul_tag->open();
 
 		foreach ($this->entries as $demo => $title) {
 			$li_tag->class = ($this->selected_entry == $demo) ?
@@ -53,9 +52,7 @@ class DemoMenuBar extends SwatControl
 			$li_tag->close();
 		}
 
-
-		echo '</ul>';
-		$div_tag->close();
+		$ul_tag->close();
 	}
 
 	// }}}
