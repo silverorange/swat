@@ -72,6 +72,7 @@ class DemoApplication
 		}
 
 		$this->buildDemoMenuBar();
+		$this->buildDemoNavBar();
 
 		$this->layout_ui->init();
 		$this->layout_ui->process();
@@ -132,6 +133,21 @@ class DemoApplication
 	{
 		$this->layout_ui->getWidget('menu')->setEntries($this->available_demos);
 		$this->layout_ui->getWidget('menu')->setSelectedEntry($this->demo);
+	}
+
+	// }}}
+	// {{{ private function buildDemoNavBar()
+
+	private function buildDemoNavBar()
+	{
+		$navbar = $this->layout_ui->getWidget('navbar');
+		if ($this->demo) {
+			$title = $this->available_demos[$this->demo];
+			$navbar->addEntry(new SwatNavBarEntry('Swat Demos', '.'));
+			$navbar->addEntry(new SwatNavBarEntry($title));
+		} else {
+			$navbar->addEntry(new SwatNavBarEntry('Swat Demos'));
+		}
 	}
 
 	// }}}
