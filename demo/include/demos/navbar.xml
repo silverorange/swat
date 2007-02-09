@@ -1,5 +1,5 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
 <swatml>
-	<widget class="SwatNavBar" id="navbar" />
+	<widget class="SwatNavBar" id="navbar_demo" />
 </swatml>
