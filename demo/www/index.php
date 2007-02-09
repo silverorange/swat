@@ -14,6 +14,12 @@ SwatAutoloader::loadRules(dirname(__FILE__).'/../autoloader-rules.conf');
 require_once '../include/DemoApplication.php';
 
 $app = new DemoApplication('demo');
-$app->run();
+
+try {
+	$app->run();
+}
+catch (SwatException $exception) {
+	$exception->process(false);
+}
 
 ?>
