@@ -5,6 +5,7 @@
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * A radio list selection widget
