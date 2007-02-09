@@ -103,13 +103,17 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	 */
 	protected function processValue()
 	{
-		if ($this->getForm()->getHiddenField($this->id.'_submitted') === null)
+		$form = $this->getForm();
+
+		if ($form->getHiddenField($this->id.'_submitted') === null)
 			return false;
 
-		$data = &$this->getForm()->getFormData();
+		$data = &$form->getFormData();
+		$salt = $form->getSalt();
 
 		if (isset($data[$this->id]))
-			$this->value = unserialize($data[$this->id]);
+			$this->value =
+				SwatString::signedUnserialize($data[$this->id], $salt);
 		else
 			$this->value = null;
 
@@ -126,13 +130,17 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	 */
 	protected function displayOption(SwatOption $option)
 	{
+		$salt = $this->getForm()->getSalt();
+
 		if ($this->input_tag === null) {
 			$this->input_tag = new SwatHtmlTag('input');
 			$this->input_tag->type = 'radio';
 			$this->input_tag->name = $this->id;
 		}
 
-		$this->input_tag->value = serialize($option->value);
+		$this->input_tag->value =
+			SwatString::signedSerialize($option->value, $salt);
+
 		$this->input_tag->removeAttribute('checked');
 		$this->input_tag->id = $this->id.'_'.(string)$option->value;
 
