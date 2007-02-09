@@ -22,6 +22,7 @@
 				</widget>
 			</widget>
 		</widget>
+		<widget class="SwatButton"/>
 
 	</widget>
 </swatml>
