@@ -1,5 +1,26 @@
 2007-02-09  gauthierm
 
+	* [r14899] swat/trunk/demo/include/demos/radiolist.xml:
+	  Put button in a form field to fix XHTML validation error
+	* [r14898] swat/trunk/demo/include/demos/NavBarDemo.php,
+	  swat/trunk/demo/include/demos/navbar.xml:
+	  Fix XHTML validation error on navbar demo
+	* [r14897] swat/trunk/Swat/SwatSimpleColorEntry.php:
+	  Fix XHTML validaiton erorrs
+	* [r14896] swat/trunk/Swat/SwatColorEntry.php:
+	  Fix some XHTML validation errors on the color entry widget
+	* [r14895] swat/trunk/demo/include/DemoApplication.php,
+	  swat/trunk/demo/include/layout.xml:
+	  Add syntax highlighting and php code snippets to Swat demo.
+	  Fixes #583.
+
+2007-02-09  nrf
+
+	* [r14886] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.4
+
+2007-02-09  gauthierm
+
 	* [r14885] swat/trunk/demo/include/demos/radiolist.xml:
 	  add submit button to raidiolist demo
 	* [r14884] swat/trunk/Swat/SwatRadioList.php:
