@@ -86,7 +86,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		$input_tag->name = $this->id;
 		$input_tag->value = $this->value;
 		$input_tag->class = 'swat-color-entry-input';
-		$input_tag->disabled = 'true';
+		$input_tag->disabled = 'disabled';
 		$input_tag->accesskey = $this->access_key;
 
 		$input_tag->display();
@@ -97,6 +97,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 
 		$img_tag = new SwatHtmlTag('img');
 		$img_tag->src = 'packages/swat/images/color-palette.png';
+		$img_tag->alt = Swat::_('Color entry toggle graphic.');
 		$img_tag->id = $this->id.'_toggle';
 		$img_tag->class = 'swat-color-entry-toggle';
 		$img_tag->display();
