@@ -1,5 +1,16 @@
+2007-02-09  gauthierm
+
+	* [r14885] swat/trunk/demo/include/demos/radiolist.xml:
+	  add submit button to raidiolist demo
+	* [r14884] swat/trunk/Swat/SwatRadioList.php:
+	  Add require
+	* [r14883] swat/trunk/Swat/SwatRadioList.php:
+	  Properly serialize an unserialize signed data in SwatRadioList
+
 2007-02-08  nrf
 
+	* [r14855] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.3
 	* [r14843] swat/trunk/locale/en_CA/LC_MESSAGES/swat.mo,
 	  swat/trunk/locale/en_GB/LC_MESSAGES/swat.mo,
 	  swat/trunk/locale/en_US/LC_MESSAGES/swat.mo,
