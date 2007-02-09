@@ -124,6 +124,7 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 
 		$img_tag = new SwatHtmlTag('img');
 		$img_tag->src = 'packages/swat/images/color-palette.png';
+		$img_tag->alt = Swat::_('Color entry toggle graphic.');
 		$img_tag->class = 'swat-simple-color-entry-toggle';
 		$img_tag->id = $this->id.'_toggle';
 
