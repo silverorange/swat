@@ -22,7 +22,9 @@
 				</widget>
 			</widget>
 		</widget>
-		<widget class="SwatButton"/>
 
+		<widget class="SwatFooterFormField">
+			<widget class="SwatButton"/>
+		</widget>
 	</widget>
 </swatml>
