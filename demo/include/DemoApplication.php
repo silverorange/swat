@@ -66,7 +66,8 @@ class DemoApplication
 			$this->buildTitle();
 			$this->buildDemo();
 			$this->buildDemoDocumentationMenuBar();
-			$this->buildSourceView();
+			$this->buildXmlSourceView();
+			$this->buildPhpSourceView();
 			$title = sprintf(Swat::_('%s - Swat Demo'),
 				$this->available_demos[$this->demo]);
 		}
@@ -111,19 +112,44 @@ class DemoApplication
 	}
 
 	// }}}
-	// {{{ private function buildSourceView()
+	// {{{ private function buildXmlSourceView()
 
-	private function buildSourceView()
+	private function buildXmlSourceView()
 	{
 		$filename = '../include/demos/'.strtolower($this->demo).'.xml';
-		$code = file_get_contents($filename);
-		$code = str_replace("\t", '  ', $code);
+		if (file_exists($filename)) {
+			$this->layout_ui->getWidget('xml_source_container')->visible = true;
 
-		$pre_tag = new SwatHtmlTag('pre');
-		$pre_tag->setContent($code);
+			$code = file_get_contents($filename);
+			$code = str_replace("\t", '  ', $code);
+			$code = highlight_string($code, true);
 
-		$this->layout_ui->getWidget('source_view')->content =
-			$pre_tag->toString();
+			$pre_tag = new SwatHtmlTag('pre');
+			$pre_tag->setContent($code, 'text/xml');
+
+			$this->layout_ui->getWidget('xml_source_view')->content =
+				$pre_tag->toString();
+		}
+	}
+
+	// }}}
+	// {{{ private function buildPhpSourceView()
+
+	private function buildPhpSourceView()
+	{
+		$filename = '../include/demos/'.$this->demo.'Demo.php';
+		if (file_exists($filename)) {
+			$this->layout_ui->getWidget('php_source_container')->visible = true;
+
+			$code = file_get_contents($filename);
+			$code = str_replace("\t", '  ', $code);
+			$code = highlight_string($code, true);
+			$pre_tag = new SwatHtmlTag('pre');
+			$pre_tag->setContent($code, 'text/xml');
+
+			$this->layout_ui->getWidget('php_source_view')->content =
+				$pre_tag->toString();
+		}
 	}
 
 	// }}}
@@ -355,8 +381,6 @@ class DemoApplication
 
 	private function buildFrontPage()
 	{
-		$this->layout_ui->getWidget('source_container')->visible = false;
-
 		$content_block = new SwatContentBlock();
 		$content_block->content =
 			'This Swat demo site includes examples of Swat widgets and '.
