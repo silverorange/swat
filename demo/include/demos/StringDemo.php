@@ -37,7 +37,7 @@ class StringDemo extends Demo
 	public function buildDemoUI(SwatUI $ui)
 	{
 		$this->text_blocks[] = "<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>".
-			"<blockquote>Etiam aliquet tincidunt augue. Cras dui. Quisque tincidunt pede vitae lorem.</blockquote>".
+			"<blockquote><p>Etiam aliquet tincidunt augue. Cras dui. Quisque tincidunt pede vitae lorem.</p></blockquote>".
 			"<p>Aenean semper wisi sed mi. Integer fermentum magna non magna laoreet faucibus. Aenean molestie auctor ante. Donec vitae neque ut tellus tincidunt bibendum. Donec sit amet sem. In elementum tellus consectetuer turpis. Nam velit erat, pharetra vel, sollicitudin at, gravida eget, est. Etiam risus tortor, scelerisque in, consectetuer et, mollis a, leo. Donec auctor.</p>".
 			"<p>Mauris tellus. Quisque sit amet nulla. Fusce vitae eros eu nunc volutpat aliquet. Donec nibh. Donec ac libero. Etiam dictum. Cras fringilla nunc at justo. Vestibulum quis magna eu nisl congue volutpat. Ut facilisis lobortis lacus. Nullam non urna at elit malesuada dictum. Integer quis ligula. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>".
 			"<p>Vivamus metus ligula, varius sodales, dictum in, posuere sagittis, nisl. Suspendisse potenti. Nulla non mauris id tortor eleifend auctor. Nullam mattis odio ac diam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam ultrices mattis nisl. Nullam diam metus, vestibulum sit amet, lacinia at, condimentum at, dolor.</p>";
@@ -50,7 +50,7 @@ class StringDemo extends Demo
 			"<p>D'Vioule Minutt Schuebersonndeg r&euml;m um, op Gaas zw&euml;schen mat. Eise Engel j&eacute;ngt sin am, k&eacute; fond gesiess heemlech m&eacute;i. D'Gaassen Nuechtegall schn&eacute;iw&auml;iss fu ass, Noper r&euml;schten wee k&eacute;, ze d'B&euml;scher Schuebersonndeg gemaacht n&euml;t. Fest fr&euml;sch och hu. Iech Wand wielen et all, d&eacute; vun geet hannendrun.</p>";
 
 		$this->unformatted_text_blocks[] = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\n\n".
-			"<blockquote>Etiam aliquet tincidunt augue. Cras dui. Quisque tincidunt pede vitae lorem.</blockquote>\n\n".
+			"<blockquote><p>Etiam aliquet tincidunt augue. Cras dui. Quisque tincidunt pede vitae lorem.</p></blockquote>\n\n".
 			"Aenean semper wisi sed mi. Integer fermentum magna non magna laoreet faucibus. Aenean molestie auctor ante. Donec vitae neque ut tellus tincidunt bibendum. Donec sit amet sem. In elementum tellus consectetuer turpis. Nam velit erat, pharetra vel, sollicitudin at, gravida eget, est. Etiam risus tortor, scelerisque in, consectetuer et, mollis a, leo. Donec auctor.\n\n\n".
 			"<strong>Mauris tellus.</strong>Quisque sit amet nulla. Fusce vitae eros eu nunc volutpat aliquet. Donec nibh. Donec ac libero. Etiam dictum. Cras fringilla nunc at justo. Vestibulum quis magna eu nisl congue volutpat. Ut <em>facilisis lobortis</em> lacus. Nullam non urna at elit malesuada dictum. Integer quis ligula. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\n".
 			"Vivamus metus ligula, varius sodales, dictum in, posuere sagittis, nisl.\nSuspendisse potenti. Nulla non mauris id tortor eleifend auctor.<br />Nullam mattis odio ac diam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam ultrices mattis nisl. Nullam diam metus, vestibulum sit amet, lacinia at, condimentum at, dolor.";
