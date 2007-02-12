@@ -180,24 +180,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			$form->addHiddenField($this->prototype_widget->id.'_replicators',
 				array_keys($this->clones));
 
-			if ($form->isProcessed()) {
-				// save widget state if the form was processed
-				if ($widget instanceof SwatState)
-					$state = $widget->getState();
-				elseif ($widget instanceof SwatContainer)
-					$state = $widget->getDescendantStates();
-
-				$this->applyPropertyValuesToClonedWidget($widget);
-
-				// restore widget state to replace initial values
-				if ($widget instanceof SwatState)
-					$widget->setState($state);
-				elseif ($widget instanceof SwatContainer)
-					$widget->setDescendantStates($state);
-			} else {
-				$this->applyPropertyValuesToClonedWidget($widget);
-			}
-
+			$this->applyPropertyValuesToClonedWidget($widget);
 			$widget->display();
 		}
 	}
@@ -462,7 +445,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			if ($cloned_object === null)
 				throw new SwatException('Cloned widget tree does not match '.
 					'prototype widget tree.');
-			else
+			elseif ($cloned_object->$property instanceof SwatCellRendererMapping)
 				$cloned_object->$property = $value;
 		}
 	}
