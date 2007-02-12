@@ -60,6 +60,37 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 */
 	public $maxlength = null;
 
+	/**
+	 * Whether or not this textarea is dynamically resizeable with JavaScript
+	 *
+	 * @var boolean
+	 */
+	public $resizeable = true;
+
+	// }}}
+	// {{{ public function __construct()
+
+	/**
+	 * Creates a new textarea widget
+	 *
+	 * Sets the widget title to a default value.
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+		$yui = new SwatYUI(array('dom', 'event'));
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+		$this->addJavaScript('packages/swat/javascript/swat-textarea.js',
+			Swat::PACKAGE_ID);
+
+		$this->addStyleSheet('packages/swat/styles/swat-textarea.css',
+			Swat::PACKAGE_ID);
+	}
+
 	// }}}
 	// {{{ public function display()
 
@@ -80,6 +111,10 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		// for editing
 		$value = htmlspecialchars($value);
 
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->class = 'swat-textarea-container';
+		$div_tag->open();
+
 		$textarea_tag = new SwatHtmlTag('textarea');
 		$textarea_tag->name = $this->id;
 		$textarea_tag->id = $this->id;
@@ -95,6 +130,10 @@ class SwatTextarea extends SwatInputControl implements SwatState
 			$textarea_tag->disabled = 'disabled';
 
 		$textarea_tag->display();
+
+		$div_tag->close();
+
+		$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -195,6 +234,21 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		$classes = array('swat-textarea');
 		$classes = array_merge($classes, $this->classes);
 		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScript()
+
+	/**
+	 * Gets the inline JavaScript for this textarea widget
+	 *
+	 * @return string the inline JavaScript for this textarea widget.
+	 */
+	protected function getInlineJavaScript()
+	{
+		$resizeable = ($this->resizeable) ? 'true' : 'false';
+		return sprintf("var %s_obj = new SwatTextarea('%s', %s);",
+			$this->id, $this->id, $resizeable);
 	}
 
 	// }}}
