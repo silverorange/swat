@@ -1,3 +1,40 @@
+2007-02-12  nrf
+
+	* [r14940] swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  This is simpler and works properly. Fixes #562.
+
+2007-02-12  gauthierm
+
+	* [r14925] swat/trunk/www/javascript/swat-date-entry.js:
+	  Small code cleanups to SwatDateEntry JavaScript I forgot to
+	  commit a while ago.
+	* [r14924] swat/trunk/demo/include/demos/StringDemo.php:
+	  Remove invalid XHTML that SwatString::toXHTML is not responsible
+	  for.
+	* [r14922] swat/trunk/Swat/SwatTextarea.php:
+	  Resizable textarea boxes like drupal. #557. This is turned on by
+	  default.
+	* [r14921] swat/trunk/www/images/swat-textarea-resize-handle.png,
+	  swat/trunk/www/javascript/swat-textarea.js,
+	  swat/trunk/www/styles/swat-textarea.css:
+	  Resizeable textarea like drupal. There are a few PHP code
+	  changes accompanying this. Part of ticket #557.
+
+2007-02-12  desroches
+
+	* [r14914] swat/trunk/www/styles/swat-message-display.css:
+	  changed the 1px padding to just the bottom
+	* [r14913] swat/trunk/www/styles/swat-message-display.css:
+	  changed padding and margin to fix collapsing margins on swat
+	  display
+
+2007-02-09  nrf
+
+	* [r14904] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.5
+	* [r14903] swat/trunk/demo/www/index.php:
+	  Make exceptions display nicely in demo.
+
 2007-02-09  gauthierm
 
 	* [r14899] swat/trunk/demo/include/demos/radiolist.xml:
