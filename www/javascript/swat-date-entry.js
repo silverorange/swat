@@ -19,26 +19,23 @@ function SwatDateEntry(id)
 	if (this.day)
 		YAHOO.util.Event.addListener(this.day, 'change',
 			SwatDateEntry.handleDayChange, this);
-	
+
 	this.lookup_table = {};
 	this.reverse_lookup_table = {};
 }
 
 SwatDateEntry.handleYearChange = function(event, object)
 {
-	var year_flydown = YAHOO.util.Event.getTarget(event);
 	object.update('year');
 }
 
 SwatDateEntry.handleMonthChange = function(event, object)
 {
-	var month_flydown = YAHOO.util.Event.getTarget(event);
 	object.update('month');
 }
 
 SwatDateEntry.handleDayChange = function(event, object)
 {
-	var day_flydown = YAHOO.util.Event.getTarget(event);
 	object.update('day');
 }
 
@@ -166,7 +163,7 @@ SwatDateEntry.prototype.update = function(field)
 	}
 
 	// don't do anything if we select the blank option
-	if (this.reverseLookup(field, index) != null) {
+	if (index != 0) {
 		var now = new Date();
 		var this_month = now.getMonth() + 1;
 
