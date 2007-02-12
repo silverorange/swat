@@ -112,7 +112,7 @@ XHTML;
 		$xml_errors = libxml_get_errors();
 		libxml_clear_errors();
 		libxml_use_internal_errors($errors);
-		echo var_dump($xml_errors);
+		//echo var_dump($xml_errors);
 
 		if (count($xml_errors) > 0 && !$ignore_validation_errors) {
 			$this->addMessage($this->getValidationErrorMessage($xml_errors));
