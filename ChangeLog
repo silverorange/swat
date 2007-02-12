@@ -1,3 +1,13 @@
+2007-02-12  nick
+
+	* [r14957] swat/trunk/Swat/SwatXHTMLTextarea.php:
+	  echoing out debug in a committed file? lame.
+
+2007-02-12  nrf
+
+	* [r14946] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.7
+
 2007-02-12  desroches
 
 	* [r14944] swat/trunk/www/styles/swat-message-display.css:
