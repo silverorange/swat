@@ -198,15 +198,19 @@ class SwatCheckboxList extends SwatInputControl implements SwatState
 	 */
 	public function process()
 	{
-		if ($this->getForm()->getHiddenField($this->id.'_submitted') === null)
+		$form = $this->getForm();
+
+		if ($form->getHiddenField($this->id.'_submitted') === null)
 			return;
 
 		parent::process();
 
 		$this->check_all->process();
 
-		if (isset($_POST[$this->id]))
-			$this->values = $_POST[$this->id];
+		$data = &$form->getFormData();
+
+		if (isset($data[$this->id]))
+			$this->values = $data[$this->id];
 		else
 			$this->values = array();
 	}
