@@ -71,7 +71,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 		// only show a select if there is more than one option
 		if (count($options) > 1) {
 
-			$salt = $this->getForm()->getSalt();
+			if ($this->serialize_values)
+				$salt = $this->getForm()->getSalt();
 
 			$select_tag = new SwatHtmlTag('select');
 			$select_tag->name = $this->id;
@@ -86,8 +87,12 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 			$select_tag->open();
 
 			foreach ($options as $flydown_option) {
-				$option_tag->value =
-					SwatString::signedSerialize($flydown_option->value, $salt);
+				if ($this->serialize_values) {
+					$option_tag->value = SwatString::signedSerialize(
+						$flydown_option->value, $salt);
+				} else {
+					$option_tag->value = (string)$flydown_option->value;
+				}
 
 				if ($flydown_option instanceof SwatFlydownDivider) {
 					$option_tag->disabled = 'disabled';
@@ -235,12 +240,16 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 		$form = $this->getForm();
 
 		$data = &$form->getFormData();
-		$salt = $form->getSalt();
-
 		if (!isset($data[$this->id]))
 			return false;
 
-		$this->value = SwatString::signedUnserialize($data[$this->id], $salt);
+		if ($this->serialize_values) {
+			$salt = $form->getSalt();
+			$this->value = SwatString::signedUnserialize(
+				$data[$this->id], $salt);
+		} else {
+			$this->value = (string)$data[$this->id];
+		}
 
 		return true;
 	}
@@ -253,15 +262,19 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	 */
 	protected function displaySingle(SwatOption $flydown_option)
 	{
-		$salt = $this->getForm()->getSalt();
-
 		$title = $flydown_option->title;
 		$value = $flydown_option->value;
 
 		$hidden_tag = new SwatHtmlTag('input');
 		$hidden_tag->type = 'hidden';
 		$hidden_tag->name = $this->id;
-		$hidden_tag->value = SwatString::signedSerialize($value, $salt);
+
+		if ($this->serialize_values) {
+			$salt = $this->getForm()->getSalt();
+			$hidden_tag->value = SwatString::signedSerialize($value, $salt);
+		} else {
+			$hidden_tag->value = (string)$value;
+		}
 
 		$hidden_tag->display();
 

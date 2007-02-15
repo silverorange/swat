@@ -25,6 +25,22 @@ abstract class SwatOptionControl extends SwatInputControl
 	 */
 	public $options = array();
 
+	/**
+	 * Whether or not to serialize option values
+	 *
+	 * If option values are serialized, the PHP type is remembered between
+	 * page loads. This is useful if, for example, your array keys are a mix of
+	 * strings, integers or null values. You can also use complex objects as
+	 * option values if this property is set to <i>true</i>.
+	 *
+	 * If this property is set to <i>false</i>, the values are always converted
+	 * to strings. This is most useful for SwatForms using the GET method but
+	 * could be applicable in other circumstances.
+	 *
+	 * @var boolean
+	 */
+	public $serialize_values = true;
+
 	// }}}
 	// {{{ protected properties
 

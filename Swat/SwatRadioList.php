@@ -131,16 +131,19 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	 */
 	protected function displayOption(SwatOption $option)
 	{
-		$salt = $this->getForm()->getSalt();
-
 		if ($this->input_tag === null) {
 			$this->input_tag = new SwatHtmlTag('input');
 			$this->input_tag->type = 'radio';
 			$this->input_tag->name = $this->id;
 		}
 
-		$this->input_tag->value =
-			SwatString::signedSerialize($option->value, $salt);
+		if ($this->serialize_values) {
+			$salt = $this->getForm()->getSalt();
+			$this->input_tag->value =
+				SwatString::signedSerialize($option->value, $salt);
+		} else {
+			$this->input_tag->value = (string)$option->value;
+		}
 
 		$this->input_tag->removeAttribute('checked');
 		$this->input_tag->id = $this->id.'_'.(string)$option->value;
