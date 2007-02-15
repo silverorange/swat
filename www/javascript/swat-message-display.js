@@ -43,7 +43,13 @@ SwatMessageDisplay.prototype.hideMessage = function(message_index)
 			next_message_animation.animate();
 		} else {
 			// shrink top margin of element directly below message display
-			var node = message.parentNode.nextSibling.nextSibling;
+
+			// find first element node
+			var script_node = message.parentNode.nextSibling;
+			var node = script_node.nextSibling;
+			while (node && node.nodeType != 1)
+				node = node.nextSibling; 
+
 			if (node) {
 				var previous_message_animation = new YAHOO.util.Anim(
 					node, { marginTop: { to: 0 } }, duration, easing);
