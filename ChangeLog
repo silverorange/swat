@@ -1,3 +1,26 @@
+2007-02-15  gauthierm
+
+	* [r15032] swat/trunk/www/javascript/swat-message-display.js:
+	  Fix ticket #593: JavaScript Exception... 'Object cannot be
+	  created in this context' code: '9' nsresult.
+	* [r15023] swat/trunk/Swat/SwatFlydown.php,
+	  swat/trunk/Swat/SwatGroupedFlydown.php,
+	  swat/trunk/Swat/SwatOptionControl.php,
+	  swat/trunk/Swat/SwatRadioList.php:
+	  Add boolean flag to SwatOptionControl that controls whether or
+	  not option values are serialized.
+
+2007-02-13  gauthierm
+
+	* [r14977] swat/trunk/Swat/SwatCheckboxList.php:
+	  Patch from Brad Griffith to make SwatCheckboxList use
+	  SwatForm::getFormData() instead of $_POST.
+
+2007-02-12  nrf
+
+	* [r14959] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.8
+
 2007-02-12  nick
 
 	* [r14957] swat/trunk/Swat/SwatXHTMLTextarea.php:
