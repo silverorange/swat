@@ -145,6 +145,26 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	}
 
 	// }}}
+	// {{{ public function getNote()
+
+	/**
+	 * Gets a note letting the user know drag-and-drop is available for
+	 * ordering items
+	 *
+	 * @return SwatMessage a note letting the user know drag-and-drop is
+	 *                      available for ordering items.
+	 *
+	 * @see SwatControl::getNote()
+	 */
+	public function getNote()
+	{
+		$message = Swat::_('Items can be ordered by dragging-and-dropping '.
+			'with the mouse.');
+
+		return new SwatMessage($message);
+	}
+
+	// }}}
 	// {{{ public function getState()
 
 	public function getState()
