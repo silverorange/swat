@@ -6,6 +6,7 @@ img.swat-image-cell-renderer { vertical-align: middle; }
 	color: #888;
 }
 
+option.swat-blank-option,
 option.swat-flydown-option-divider {
 	color: #888;
 }
