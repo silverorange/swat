@@ -6,6 +6,7 @@ require_once 'Swat/SwatOptionControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
 require_once 'Swat/SwatFlydownDivider.php';
+require_once 'Swat/SwatFlydownBlankOption.php';
 require_once 'Swat/SwatString.php';
 
 /**
@@ -65,8 +66,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
 		if ($this->show_blank)
 			$options = array_merge(
-				array(new SwatOption(null, $this->blank_title)),
-				$options);
+				array(new SwatFlydownBlankOption(null,
+					$this->blank_title)), $options);
 
 		// only show a select if there is more than one option
 		if (count($options) > 1) {
@@ -97,6 +98,9 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 				if ($flydown_option instanceof SwatFlydownDivider) {
 					$option_tag->disabled = 'disabled';
 					$option_tag->class = 'swat-flydown-option-divider';
+				} elseif ($flydown_option instanceof SwatFlydownBlankOption) {
+					$option_tag->removeAttribute('disabled');
+					$option_tag->class = 'swat-blank-option';
 				} else {
 					$option_tag->removeAttribute('disabled');
 					$option_tag->removeAttribute('class');
