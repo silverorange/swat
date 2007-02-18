@@ -44,17 +44,17 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	 * The array is flat and contains three or six digit hex color
 	 * codes.
 	 *
-	 * @var array
+	 * The default palette is the
+	 * {@link http://tango.freedesktop.org/Tango_Icon_Theme_Guidelines#Color_Palette Tango Project color palette}.
 	 *
-	 * @todo create a default palette for the simple color entry widget.
+	 * @var array
 	 */
 	public $colors = array(
-		'eae8e3', 'bab5ab', '807d74', '565248', 'ffffff', '000000',
-		'c5d2c8', '83a67f', '5d7555', '445632', '46a046', '267726',
-		'e0b6af', 'c1665a', '884631', '663822', 'df421e', '990000',
-		'efe0cd', 'e0c39e', 'b39169', '826647', 'eed680', 'd1940c',
-		'ada7c8', '887fa3', '635b81', '494066',
-		'9db8d2', '7590ae', '4b6983', '314e6c',
+		'eeeeec', 'd3d7cf', 'babdb6', '888a85', '555753', '2e3436',
+		'fce94f', 'edd400', 'c4a000', 'fcaf3e', 'f57900', 'ce5c00',
+		'e9b96e', 'c17d11', '8f5902', '8ae234', '73d216', '4e9a06',
+		'729fcf', '3465a4', '204a87', 'ad7fa8', '75507b', '5c3566',
+		'ef2929', 'cc0000', 'a40000',
 		);
 
 	// }}}
