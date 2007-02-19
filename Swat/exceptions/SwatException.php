@@ -360,24 +360,32 @@ class SwatException extends Exception
 	/**
 	 * Displays style sheet required for XHMTL exception formatting
 	 *
-	 * @todo separate this into a separate file
+	 * This is purposly not in a separate file so that even if this exception
+	 * causes problems including other files the exception styles will be
+	 * displayed.
 	 */
 	protected function displayStyleSheet()
 	{
-		echo '<style>';
-		echo ".swat-exception { border: 1px solid #d43; margin: 1em; ".
-			"font-family: sans-serif; background: #fff !important; z-index: ".
-			"9999 !important; color: #000; text-align: left; min-width: ".
-			"400px; }\n";
+		static $displayed = false;
+		if (!$displayed) {
+			echo "<style>\n";
+			echo ".swat-exception { border: 1px solid #d43; margin: 1em; ".
+				"font-family: sans-serif; background: #fff !important; ".
+				"z-index: 9999 !important; color: #000; text-align: left; ".
+				"min-width: 400px; }\n";
 
-		echo ".swat-exception h3 { background: #e65; margin: 0; padding: ".
-			"5px; border-bottom: 2px solid #d43; color: #fff; }\n";
+			echo ".swat-exception h3 { background: #e65; margin: 0; padding: ".
+				"5px; border-bottom: 2px solid #d43; color: #fff; }\n";
 
-		echo ".swat-exception-body { padding: 0.8em; }\n";
-		echo ".swat-exception-message { margin-left: 2em; padding: 1em; }\n";
-		echo ".swat-exception dt { float: left; margin-left: 1em; }\n";
-		echo ".swat-exception dd { margin-bottom: 1em; }\n";
-		echo '</style>';
+			echo ".swat-exception-body { padding: 0.8em; }\n";
+			echo ".swat-exception-message { margin-left: 2em; ".
+				"padding: 1em; }\n";
+
+			echo ".swat-exception dt { float: left; margin-left: 1em; }\n";
+			echo ".swat-exception dd { margin-bottom: 1em; }\n";
+			echo "</style>";
+			$displayed = true;
+		}
 	}
 
 	// }}}
