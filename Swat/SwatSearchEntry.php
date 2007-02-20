@@ -25,6 +25,15 @@ class SwatSearch extends SwatEntry
 	public $title;
 
 	// }}}
+	// {{{ public function __construct()
+
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+		$this->title = Swat::_('Enter Search...');
+	}
+
+	// }}}
 	// {{{ protected function getDisplayValue()
 
 	/**
@@ -38,11 +47,8 @@ class SwatSearch extends SwatEntry
 	{
 		$value = '';
 
-		if ($this->value === null){
-			if ($this->title === null)
-				$value = Swat::_('Enter Search...');
-			else
-				$value = $this->title;
+		if ($this->value === null) {
+			$value = $this->title;
 		} else {
 			$value = parent::getDisplayValue();
 		}
