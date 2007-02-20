@@ -36,14 +36,18 @@ class SwatSearch extends SwatEntry
 	 */
 	protected function getDisplayValue()
 	{
+		$value = '';
+
 		if ($this->value === null){
 			if ($this->title === null)
-				return Swat::_('Enter Search...');
+				$value = Swat::_('Enter Search...');
 			else
-				return $this->title;
+				$value = $this->title;
 		} else {
-			return parent::getDisplayValue();
+			$value = parent::getDisplayValue();
 		}
+
+		return $value;
 	}
 
 	// }}}
