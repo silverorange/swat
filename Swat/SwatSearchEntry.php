@@ -18,7 +18,7 @@ class SwatSearch extends SwatEntry
 	/**
 	 * SwatSearch title value
 	 *
-	 * Text content of the widget, or defaults to 'Enter Search'.
+	 * Text content of the widget, or defaults to 'Enter Search …'.
 	 *
 	 * @var string
 	 */
@@ -30,7 +30,7 @@ class SwatSearch extends SwatEntry
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-		$this->title = Swat::_('Enter Search...');
+		$this->title = Swat::_('Enter Search …');
 	}
 
 	// }}}
