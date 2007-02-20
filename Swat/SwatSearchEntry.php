@@ -15,13 +15,13 @@ class SwatSearch extends SwatEntry
 {
 	// {{{ public properties
 
-    /**
-     * SwatSearch title value
-     *
-     * Text content of the widget, or defaults to 'Enter Search'.
-     *
-     * @var string
-     */
+	/**
+	 * SwatSearch title value
+	 *
+	 * Text content of the widget, or defaults to 'Enter Search'.
+	 *
+	 * @var string
+	 */
 	public $title;
 
 	// }}}
