@@ -38,7 +38,7 @@ class SwatSearch extends SwatEntry
 	{
 		if ($this->value === null){
 			if ($this->title === null)
-				return 'Enter Search...';
+				return Swat::_('Enter Search...');
 			else
 				return $this->title;
 		} else {
