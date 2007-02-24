@@ -135,6 +135,10 @@ class SwatYUIComponent extends SwatObject
 			'normal' => '',
 		);
 
+		// the menu.css is not distributed in a minimized form
+		if ($this->id = 'menu')
+			$modes['min'] = '';
+
 		$filename_template =
 			'packages/yui/'.$component_directory.'/'.$this->id.'%s.css';
 
