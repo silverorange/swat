@@ -90,17 +90,24 @@ abstract class SwatAbstractMenu extends SwatControl
 
 		$yui = new SwatYUI(array('menu'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addStyleSheet('packages/swat/styles/swat-menu.css');
+		$this->addStyleSheet('packages/swat/styles/swat-menu.css',
+			Swat::PACKAGE_ID);
+	}
+
+	protected function getJavaScriptClass()
+	{
+		return 'YAHOO.widget.Menu';
 	}
 
 	protected function getInlineJavaScript()
 	{
-		$properties = sprintf('{ clicktohide: %s, autosubmenudisplay: %s }',
+		$properties = sprintf('{ clicktohide: %s, autosubmenudisplay: %s, width: \'100px\', position: \'dynamic\' }',
 			$this->click_to_hide ? 'true' : 'false',
 			$this->auto_sub_menu_display ? 'true' : 'false');
 
-		$javascript = sprintf("var %s_obj = new YAHOO.widget.Menu('%s', %s);",
+		$javascript = sprintf("var %s_obj = new %s('%s', %s);",
 			$this->id,
+			$this->getJavaScriptClass(),
 			$this->id,
 			$properties);
 
@@ -157,6 +164,14 @@ class SwatMenu extends SwatAbstractMenu
 
 		if ($top_level)
 			$this->displayInlineJavaScript($this->getInlineJavaScript());
+	}
+}
+
+class SwatMenuBar extends SwatMenu
+{
+	protected function getJavaScriptClass()
+	{
+		return 'YAHOO.widget.MenuBar';
 	}
 }
 
