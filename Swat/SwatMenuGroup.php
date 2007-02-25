@@ -50,6 +50,7 @@ class SwatMenuGroup extends SwatControl
 	public function addItem(SwatMenuItem $item)
 	{
 		$this->items[] = $item;
+		$item->parent = $this;
 	}
 
 	// }}}

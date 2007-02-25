@@ -62,6 +62,7 @@ class SwatMenuItem extends SwatControl
 	public function setSubMenu(SwatAbstractMenu $menu)
 	{
 		$this->sub_menu = $menu;
+		$menu->parent = $this;
 	}
 
 	// }}}
