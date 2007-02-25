@@ -8,6 +8,9 @@ require_once 'Swat/SwatYUI.php';
 /**
  * Abstract base class for menus in Swat
  *
+ * Menu in Swat make use of the YUI menu widget and its progressive enhancement
+ * features.
+ *
  * @package   Swat
  * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
