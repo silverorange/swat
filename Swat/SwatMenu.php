@@ -58,11 +58,8 @@ class SwatMenu extends SwatAbstractMenu
 
 	/**
 	 * Displays this menu
-	 *
-	 * @param boolean $top_level optional. Whether or not this menu is a
-	 *                            top-level menu. Defaults to true.
 	 */
-	public function display($top_level = true)
+	public function display()
 	{
 		$displayed_classes = array();
 
@@ -89,7 +86,7 @@ class SwatMenu extends SwatAbstractMenu
 
 		$div_tag->close();
 
-		if ($top_level)
+		if ($this->parent === null || !($this->parent instanceof SwatMenuItem))
 			$this->displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
