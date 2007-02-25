@@ -90,7 +90,7 @@ abstract class SwatAbstractMenu extends SwatControl
 	 */
 	protected function getInlineJavaScript()
 	{
-		$properties = sprintf('{ clicktohide: %s, autosubmenudisplay: %s, width: \'100px\', position: \'dynamic\' }',
+		$properties = sprintf('{ clicktohide: %s, autosubmenudisplay: %s }',
 			$this->click_to_hide ? 'true' : 'false',
 			$this->auto_sub_menu_display ? 'true' : 'false');
 
