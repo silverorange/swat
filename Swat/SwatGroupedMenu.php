@@ -37,6 +37,7 @@ class SwatGroupedMenu extends SwatAbstractMenu
 	public function addGroup(SwatMenuGroup $group)
 	{
 		$this->groups[] = $group;
+		$group->parent = $this;
 	}
 
 	// }}}

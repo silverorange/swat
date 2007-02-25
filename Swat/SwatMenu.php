@@ -37,6 +37,7 @@ class SwatMenu extends SwatAbstractMenu
 	public function addItem(SwatMenuItem $item)
 	{
 		$this->items[] = $item;
+		$item->parent = $this;
 	}
 
 	// }}}
