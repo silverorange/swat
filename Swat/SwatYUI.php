@@ -131,11 +131,26 @@ class SwatYUI extends SwatObject
 	private function buildHtmlHeadEntrySet(array $component_ids, $mode)
 	{
 		$set = new SwatHtmlHeadEntrySet();
+
 		foreach ($component_ids as $component_id) {
 			$set->addEntrySet(
 				self::$components[$component_id]->getHtmlHeadEntrySet($mode));
 		}
+
+		$set->addEntry($this->getAttributionHtmlHeadEntry());
+
 		return $set;
+	}
+
+	// }}}
+	// {{{ private function getAttributionHtmlHeadEntry()
+
+	private function getAttributionHtmlHeadEntry()
+	{
+		$comment = "Yahoo! UI Library (YUI) is Copyright (c) 2007, ".
+			"Yahoo! Inc.\n\t     http://developer.yahoo.com/yui/license.html";
+
+		return new SwatCommentHtmlHeadEntry($comment, self::PACKAGE_ID);
 	}
 
 	// }}}
