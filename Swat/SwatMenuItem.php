@@ -107,9 +107,8 @@ class SwatMenuItem extends SwatControl
 	 */
 	protected function displaySubMenu()
 	{
-		if ($this->sub_menu !== null) {
-			$this->sub_menu->display(false);
-		}
+		if ($this->sub_menu !== null)
+			$this->sub_menu->display();
 	}
 
 	// }}}
