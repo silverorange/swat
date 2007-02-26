@@ -94,16 +94,19 @@ class SwatMenuGroup extends SwatControl implements SwatUIParent
 	 */
 	public function display($first = false)
 	{
-		$header_tag = new SwatHtmlTag('h6');
-		if ($first)
-			$header_tag->class = 'first-of-type';
+		if ($this->title !== null) {
+			$header_tag = new SwatHtmlTag('h6');
+			if ($first)
+				$header_tag->class = 'first-of-type';
 
-		$header_tag->setContent($this->title);
-		$header_tag->display();
+			$header_tag->setContent($this->title);
+			$header_tag->display();
+		}
 
 		$ul_tag = new SwatHtmlTag('ul');
+		$ul_tag->class = ($this->title === null) ? '' : 'hastitle ';
 		if ($first)
-			$ul_tag->class = 'first-of-type';
+			$ul_tag->class.= 'first-of-type';
 
 		$ul_tag->open();
 
