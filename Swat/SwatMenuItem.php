@@ -27,13 +27,35 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	// {{{ public properties
 
 	/**
-	 * The URI this menu items links to
+	 * The URI-reference (see RFC2396) linked by this menu item
 	 *
-	 * If no URI is specified, this menu item is not displayed as a link.
+	 * If no link is specified, this menu does not link to anything.
+	 *
+	 * Optionally uses vsprintf() syntax, for example:
+	 * <code>
+	 * $item->link = 'MySection/MyPage/%s?id=%s';
+	 * </code>
 	 *
 	 * @var string
+	 *
+	 * @see SwatMenuItem::$value
 	 */
-	public $uri;
+	public $link;
+
+	/**
+	 * A value or array of values to substitute into the <i>link</i> property
+	 * of this menu item
+	 *
+	 * The value property may be specified either as an array of values or as
+	 * a single value. If an array is passed, a call to vsprintf() is done
+	 * on the {@link SwatMenuItem::$link} property. If the value is a string
+	 * a single sprintf() call is made.
+	 *
+	 * @var array|string 
+	 *
+	 * @see SwatMenuItem::$link
+	 */
+	public $value;
 
 	/**
 	 * The user-visible title of this menu item
@@ -123,11 +145,18 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	 */
 	public function display()
 	{
-		if ($this->uri === null) {
+		if ($this->link === null) {
 			echo SwatString::minimizeEntities($this->title);
 		} else {
 			$anchor_tag = new SwatHtmlTag('a');
-			$anchor_tag->href = $this->uri;
+
+			if ($this->value === null)
+				$anchor_tag->href = $this->link;
+			elseif (is_array($this->value))
+				$anchor_tag->href = vsprintf($this->link, $this->value);
+			else
+				$anchor_tag->href = sprintf($this->link, $this->value);
+
 			$anchor_tag->setContent($this->title);
 			$anchor_tag->display();
 		}
