@@ -94,7 +94,7 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
-		$div_tag->class = 'yuimenu';
+		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
 		echo '<div class="bd">';
@@ -103,10 +103,18 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 		$ul_tag->class = 'first-of-type';
 		$ul_tag->open();
 
+		$li_tag = new SwatHtmlTag('li');
+		$li_tag->class = $this->getMenuItemCSSClassName().' first-of-type';
+		$first = true;
 		foreach ($this->items as $item) {
-			echo '<li class="yuimenuitem">';
+			$li_tag->open();
 			$item->display();
-			echo '</li>';
+			$li_tag->close();
+
+			if ($first) {
+				$li_tag->class = $this->getMenuItemCSSClassName();
+				$first = false;
+			}
 		}
 
 		$ul_tag->close();
@@ -117,6 +125,34 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 
 		if ($this->parent === null || !($this->parent instanceof SwatMenuItem))
 			$this->displayInlineJavaScript($this->getInlineJavaScript());
+	}
+
+	// }}}
+	// {{{ protected function getMenuItemCSSClassName()
+
+	/**
+	 * Gets the CSS class name to use for menu items in this menu
+	 *
+	 * @return string the CSS class name to use for menu items in this menu.
+	 */
+	protected function getMenuItemCSSClassName()
+	{
+		return 'yuimenuitem';
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this menu
+	 *
+	 * @return array the array of CSS classes that are applied to this menu.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('yuimenu');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}
