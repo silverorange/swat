@@ -1,0 +1,32 @@
+div.yuimenu {
+	background:#FFFFFF url(../images/swat-frame-background.png) no-repeat scroll right top;
+	border-color: #DCCEB2;
+}
+
+div.yuimenu h6,
+div.yuimenubar h6 {
+	color: #837352;
+}
+
+div.yuimenu li a,
+div.yuimenubar li a {
+	font-size: 13px;
+}
+
+div.yuimenu li a,
+div.yuimenubar li a {
+	color: #3F5ACE;
+	outline: none;
+}
+
+div.yuimenu li.selected a.selected,
+div.yuimenubar li.selected a.selected {
+	color: #3F5ACE;
+	text-decoration: underline;
+	outline: none;
+}
+
+div.yuimenu li.selected,
+div.yuimenubar li.selected {
+	background: none;
+}
