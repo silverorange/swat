@@ -88,7 +88,8 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 *
 	 * @param SwatWidget $child a reference to a child object to add.
 	 *
-	 * @see SwatUIParent, SwatUI, SwatInputCell::setWidget()
+	 * @see SwatUIParent
+	 * @see SwatInputCell::setWidget()
 	 *
 	 * @throws SwatException
 	 */

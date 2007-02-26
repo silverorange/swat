@@ -108,7 +108,8 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	 *
 	 * @throws SwatInvalidClassException
 	 *
-	 * @see SwatUIParent, SwatUI, SwatActionItem::setWidget()
+	 * @see SwatUIParent
+	 * @see SwatActionItem::setWidget()
 	 */
 	public function addChild(SwatObject $child)
 	{

@@ -14,7 +14,8 @@ require_once 'Swat/SwatMenu.php';
  * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
- * @see SwatMenu, SwatMenuItem
+ * @see SwatMenu
+ * @see SwatMenuItem
  */
 class SwatMenuBar extends SwatMenu
 {

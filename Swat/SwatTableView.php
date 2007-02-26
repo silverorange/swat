@@ -79,8 +79,8 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 *
 	 * @var SwatTableViewOrderableColumn
 	 *
-	 * @see SwatTableViewOrderableColumn,
-	 *      SwatTableView::setDefaultOrderbyColumn
+	 * @see SwatTableViewOrderableColumn
+	 * @see SwatTableView::setDefaultOrderbyColumn()
 	 */
 	public $default_orderby_column = null;
 
@@ -214,6 +214,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 * Only one input row is allowed for each table-view.
 	 *
 	 * @var boolean
+	 *
 	 * @see SwatTableViewInputRow
 	 */
 	private $has_input_row = false;
@@ -794,8 +795,10 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	 *
 	 * @throws SwatInvalidClassException
 	 *
-	 * @see SwatUIParent, SwatUI, SwatTableView::appendColumn(),
-	 *       SwatTableView::appendGroup(), SwatTableView::appendRow()
+	 * @see SwatUIParent
+	 * @see SwatTableView::appendColumn()
+	 * @see SwatTableView::appendGroup()
+	 * @see SwatTableView::appendRow()
 	 */
 	public function addChild(SwatObject $child)
 	{
