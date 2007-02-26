@@ -20,7 +20,8 @@ require_once 'Swat/exceptions/SwatException.php';
  * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
- * @see SwatMenu, SwatMenuGroup
+ * @see SwatMenu
+ * @see SwatMenuGroup
  */
 class SwatMenuItem extends SwatControl implements SwatUIParent
 {
@@ -106,7 +107,8 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	 * @throws SwatInvalidClassException
 	 * @throws SwatException if this menu item already has a sub-menu.
 	 *
-	 * @see SwatUIParent, SwatUI, SwatMenuItem::setSubMenu()
+	 * @see SwatUIParent
+	 * @see SwatMenuItem::setSubMenu()
 	 */
 	public function addChild(SwatObject $child)
 	{

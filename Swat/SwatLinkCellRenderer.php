@@ -73,7 +73,8 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	 *
 	 * @var mixed
 	 *
-	 * @see SwatLinkCellRenderer::$link, SwatLinkCellRenderer::$value
+	 * @see SwatLinkCellRenderer::$link
+	 * @see SwatLinkCellRenderer::$value
 	 */
 	public $link_value = null;
 

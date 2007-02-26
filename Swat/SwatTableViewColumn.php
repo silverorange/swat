@@ -79,8 +79,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 * column can contain one input cell for the input row.
 	 *
 	 * @var array
-	 * @see SwatTableViewColumn::setInputCell(),
-	 *      SwatTableViewColumn::getInputCell()
+	 *
+	 * @see SwatTableViewColumn::setInputCell()
+	 * @see SwatTableViewColumn::getInputCell()
 	 */
 	protected $input_cell = null;
 
@@ -301,7 +302,8 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 *
 	 * @param SwatInputCell $cell the input cell to set for this column.
 	 *
-	 * @see SwatTableViewColumn::init(), SwatTableViewInputRow
+	 * @see SwatTableViewColumn::init()
+	 * @see SwatTableViewInputRow
 	 */
 	public function setInputCell(SwatInputCell $cell)
 	{
@@ -343,8 +345,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 *
 	 * @return SwatInputCell the input cell of this column.
 	 *
-	 * @see SwatTableViewColumn::setInputCell(),
-	 *      SwatInputCell::getPrototypeWidget(), SwatTableViewInputRow
+	 * @see SwatTableViewColumn::setInputCell()
+	 * @see SwatInputCell::getPrototypeWidget()
+	 * @see SwatTableViewInputRow
 	 */
 	public function getInputCell()
 	{

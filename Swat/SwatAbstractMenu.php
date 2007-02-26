@@ -15,7 +15,8 @@ require_once 'Swat/SwatYUI.php';
  * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
- * @see SwatMenu, SwatGroupedMenu
+ * @see SwatMenu
+ * @see SwatGroupedMenu
  */
 abstract class SwatAbstractMenu extends SwatControl
 {
@@ -100,7 +101,7 @@ abstract class SwatAbstractMenu extends SwatControl
 			$this->id,
 			$properties);
 
-		$javascript.= sprintf("\n%s_obj.render('new-menu');\n%s_obj.show();",
+		$javascript.= sprintf("\n%s_obj.render();\n%s_obj.show();",
 			$this->id,
 			$this->id);
 
