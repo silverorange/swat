@@ -33,6 +33,34 @@ class SwatMenuBar extends SwatMenu
 	}
 
 	// }}}
+	// {{{ protected function getMenuItemCSSClass()
+
+	/**
+	 * Gets the CSS class name to use for menu items in this menu
+	 *
+	 * @return string the CSS class name to use for menu items in this menu.
+	 */
+	protected function getMenuItemCSSClassName()
+	{
+		return 'yuimenubaritem';
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this menu bar
+	 *
+	 * @return array the array of CSS classes that are applied to this menu bar.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('yuimenubar');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
+	}
+
+	// }}}
 }
 
 ?>
