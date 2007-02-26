@@ -29,7 +29,7 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	/**
 	 * The URI-reference (see RFC2396) linked by this menu item
 	 *
-	 * If no link is specified, this menu does not link to anything.
+	 * If no link is specified, this menu item does not link to anything.
 	 *
 	 * Optionally uses vsprintf() syntax, for example:
 	 * <code>
