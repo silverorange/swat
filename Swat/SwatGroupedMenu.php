@@ -2,9 +2,11 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatAbstractMenu.php';
 require_once 'Swat/SwatMenuGroup.php';
 require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A menu control where menu items are grouped together
@@ -15,7 +17,7 @@ require_once 'Swat/SwatHtmlTag.php';
  *
  * @see SwatMenuGroup
  */
-class SwatGroupedMenu extends SwatAbstractMenu
+class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 {
 	// {{{ protected properties
 
@@ -38,6 +40,33 @@ class SwatGroupedMenu extends SwatAbstractMenu
 	{
 		$this->groups[] = $group;
 		$group->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function addChild()
+
+	/**
+	 * Adds a child object
+	 * 
+	 * This method fulfills the {@link SwatUIParent} interface. It is used 
+	 * by {@link SwatUI} when building a widget tree and should not need to be
+	 * called elsewhere. To add a menu group to a grouped menu, use 
+	 * {@link SwatGroupedMenu::addGroup()}.
+	 *
+	 * @param SwatMenuGroup $child the child object to add.
+	 *
+	 * @throws SwatInvalidClassException
+	 *
+	 * @see SwatUIParent, SwatUI, SwatGroupedMenu::addGroup()
+	 */
+	public function addChild(SwatObject $child)
+	{
+		if ($child instanceof SwatMenuGroup)
+			$this->addGroup($child);
+		else
+			throw new SwatInvalidClassException(
+				'Only SwatMenuGroup objects may be nested within a '.
+				'SwatGroupedMenu object.', 0, $child);
 	}
 
 	// }}}

@@ -2,9 +2,11 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatAbstractMenu.php';
 require_once 'Swat/SwatMenuItem.php';
 require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A basic menu control
@@ -15,7 +17,7 @@ require_once 'Swat/SwatHtmlTag.php';
  *
  * @see SwatMenuItem
  */
-class SwatMenu extends SwatAbstractMenu
+class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 {
 	// {{{ protected properties
 
@@ -38,6 +40,33 @@ class SwatMenu extends SwatAbstractMenu
 	{
 		$this->items[] = $item;
 		$item->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function addChild()
+
+	/**
+	 * Adds a child object
+	 * 
+	 * This method fulfills the {@link SwatUIParent} interface. It is used 
+	 * by {@link SwatUI} when building a widget tree and should not need to be
+	 * called elsewhere. To add a menu item to a menu, use 
+	 * {@link SwatMenu::addItem()}.
+	 *
+	 * @param SwatMenuItem $child the child object to add.
+	 *
+	 * @throws SwatInvalidClassException
+	 *
+	 * @see SwatUIParent, SwatUI, SwatMenu::addItem()
+	 */
+	public function addChild(SwatObject $child)
+	{
+		if ($child instanceof SwatMenuItem)
+			$this->addItem($child);
+		else
+			throw new SwatInvalidClassException(
+				'Only SwatMenuItem objects may be nested within a '.
+				'SwatMenu object.', 0, $child);
 	}
 
 	// }}}
