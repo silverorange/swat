@@ -2,10 +2,13 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatString.php';
-require_once 'Swat/SwatMenu.php';
+require_once 'Swat/SwatAbstractMenu.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
+require_once 'Swat/exceptions/SwatException.php';
 
 /**
  * An item in a menu
@@ -19,7 +22,7 @@ require_once 'Swat/SwatMenu.php';
  *
  * @see SwatMenu, SwatMenuGroup
  */
-class SwatMenuItem extends SwatControl
+class SwatMenuItem extends SwatControl implements SwatUIParent
 {
 	// {{{ public properties
 
@@ -66,7 +69,40 @@ class SwatMenuItem extends SwatControl
 	}
 
 	// }}}
-	// {{{ pubic function init()
+	// {{{ public function addChild()
+
+	/**
+	 * Adds a child object
+	 * 
+	 * This method fulfills the {@link SwatUIParent} interface. It is used 
+	 * by {@link SwatUI} when building a widget tree and should not need to be
+	 * called elsewhere. To set the sub-menu for a menu item, use 
+	 * {@link SwatMenuItem::setSubMenu()}.
+	 *
+	 * @param SwatAbstractMenu $child the child object to add.
+	 *
+	 * @throws SwatInvalidClassException
+	 * @throws SwatException if this menu item already has a sub-menu.
+	 *
+	 * @see SwatUIParent, SwatUI, SwatMenuItem::setSubMenu()
+	 */
+	public function addChild(SwatObject $child)
+	{
+		if ($this->sub_menu === null) {
+			if ($child instanceof SwatAbstractMenu)
+				$this->setSubMenu($child);
+			else
+				throw new SwatInvalidClassException(
+					'Only a SwatAbstractMenu object may be nested within a '.
+					'SwatMenuItem object.', 0, $child);
+		} else {
+			throw new SwatException(
+				'Can only add one sub-menu to a menu item.');
+		}
+	}
+
+	// }}}
+	// {{{ public function init()
 
 	/**
 	 * Initializes this menu item
