@@ -278,8 +278,10 @@ class SwatNavBar extends SwatControl implements Countable
 
 		foreach ($this->entries as $entry) {
 			// display separator
-			if ($i > 1)
-				echo '&nbsp;&#187; ';
+			if ($i > 1) {
+				// first space is a non-breaking space
+				echo ' » ';
+			}
 
 			// link all entries or link all but the last entry
 			$link = ($link_last_entry || $i < $count);
