@@ -96,6 +96,9 @@ class SwatMenuGroup extends SwatControl implements SwatUIParent
 	 */
 	public function display($first = false)
 	{
+		if (!$this->visible)
+			return;
+
 		if ($this->title !== null) {
 			$header_tag = new SwatHtmlTag('h6');
 			if ($first)
