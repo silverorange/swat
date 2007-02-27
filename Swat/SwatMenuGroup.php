@@ -115,10 +115,22 @@ class SwatMenuGroup extends SwatControl implements SwatUIParent
 
 		$ul_tag->open();
 
+		$li_tag = new SwatHtmlTag('li');
+		$li_tag->class = 'first-of-type';
+		$first = true;
 		foreach ($this->items as $item) {
-			echo '<li class="yuimenuitem">';
+			ob_start();
 			$item->display();
-			echo '</li>';
+			$content = ob_get_clean();
+			if (strlen($content) > 0) {
+				$li_tag->setContent($content, 'text/xml');
+				$li_tag->display();
+
+				if ($first) {
+					$li_tag->class = $this->getMenuItemCSSClassName();
+					$first = false;
+				}
+			}
 		}
 
 		$ul_tag->close();
