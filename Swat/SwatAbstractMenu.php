@@ -9,7 +9,9 @@ require_once 'Swat/SwatYUI.php';
  * Abstract base class for menus in Swat
  *
  * Menu in Swat make use of the YUI menu widget and its progressive enhancement
- * features.
+ * features. Swat menus are always positioned statically. See
+ * {@link http://developer.yahoo.com/yui/docs/YAHOO.widget.Menu.html#position
+ * The YUI Menu documentation} for what this means.
  *
  * @package   Swat
  * @copyright 2007 silverorange
