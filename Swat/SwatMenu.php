@@ -128,6 +128,42 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getDescendants()
+
+	/**
+	 * Gets descendant widgets
+	 *
+	 * Retrieves an ordered array of all widgets in the widget subtree below 
+	 * this menu. Widgets are ordered in the array as they are found in 
+	 * a breadth-first traversal of the widget subtree.
+	 *
+	 * This method mirrors the behaviour of
+	 * {@link SwatContainer::getDescendants()}.
+	 *
+	 * @param string $class_name optional class name. If set, only widgets that
+	 *                            are instances of <i>$class_name</i> are
+	 *                            returned.
+	 *
+	 * @return array the descendant widgets of this menu.
+	 */
+	public function getDescendants($class_name = null)
+	{
+		$out = array();
+
+		foreach ($this->items as $item) {
+			if ($class_name === null || $item instanceof $class_name) {
+				if ($item->id === null)
+					$out[] = $item;
+				else
+					$out[$item->id] = $item;
+			}
+			$out = array_merge($out, $item->getDescendants($class_name));
+		}
+
+		return $out;
+	}
+
+	// }}}
 	// {{{ protected function getMenuItemCSSClassName()
 
 	/**
