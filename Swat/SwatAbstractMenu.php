@@ -65,6 +65,45 @@ abstract class SwatAbstractMenu extends SwatControl
 	}
 
 	// }}}
+	// {{{ public function setMenuItemValues()
+
+	/**
+	 * Sets the value of all {@link SwatMenuItem} objects within this menu
+	 *
+	 * This is usually easier than setting all the values manually if the
+	 * values are dynamic.
+	 *
+	 * @param string $value
+	 */
+	public function setMenuItemValues($value)
+	{
+		$items = $this->getDescendants('SwatMenuItem');
+		foreach ($items as $item)
+			$item->value = $value;
+	}
+
+	// }}}
+	// {{{ abstract public function getDescendants()
+
+	/**
+	 * Gets descendant widgets
+	 *
+	 * Retrieves an ordered array of all widgets in the widget subtree below 
+	 * this menu. Widgets are ordered in the array as they are found in 
+	 * a breadth-first traversal of the widget subtree.
+	 *
+	 * This method mirrors the behaviour of
+	 * {@link SwatContainer::getDescendants()}.
+	 *
+	 * @param string $class_name optional class name. If set, only widgets that
+	 *                            are instances of <i>$class_name</i> are
+	 *                            returned.
+	 *
+	 * @return array the descendant widgets of this menu.
+	 */
+	abstract public function getDescendants($class_name = null);
+
+	// }}}
 	// {{{ protected function getJavaScriptClass()
 
 	/**
@@ -91,19 +130,22 @@ abstract class SwatAbstractMenu extends SwatControl
 	 */
 	protected function getInlineJavaScript()
 	{
-		$properties = sprintf('{ clicktohide: %s, autosubmenudisplay: %s }',
+		$properties = sprintf('{ clicktohide: %s, autosubmenudisplay: %s, position: \'static\' }',
 			$this->click_to_hide ? 'true' : 'false',
 			$this->auto_sub_menu_display ? 'true' : 'false');
 
-		$javascript = sprintf("var %s_obj = new %s('%s', %s);",
+		$javascript = sprintf(
+			"function swat_create_menu_%1\$s(event)".
+			"\n{".
+				"\n\tvar %1\$s_obj = new %2\$s('%1\$s', %3\$s);".
+				"\n\t%1\$s_obj.render();".
+				"\n\t%1\$s_obj.show();".
+			"\n}".
+			"\nYAHOO.util.Event.onContentReady('%1\$s', ".
+				"swat_create_menu_%1\$s);",
 			$this->id,
 			$this->getJavaScriptClass(),
-			$this->id,
 			$properties);
-
-		$javascript.= sprintf("\n%s_obj.render();\n%s_obj.show();",
-			$this->id,
-			$this->id);
 
 		return $javascript;
 	}
