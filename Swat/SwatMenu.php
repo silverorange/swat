@@ -110,13 +110,17 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 		$li_tag->class = $this->getMenuItemCSSClassName().' first-of-type';
 		$first = true;
 		foreach ($this->items as $item) {
-			$li_tag->open();
+			ob_start();
 			$item->display();
-			$li_tag->close();
+			$content = ob_get_clean();
+			if (strlen($content) > 0) {
+				$li_tag->setContent($content, 'text/xml');
+				$li_tag->display();
 
-			if ($first) {
-				$li_tag->class = $this->getMenuItemCSSClassName();
-				$first = false;
+				if ($first) {
+					$li_tag->class = $this->getMenuItemCSSClassName();
+					$first = false;
+				}
 			}
 		}
 
