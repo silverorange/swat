@@ -127,7 +127,7 @@ class SwatMenuGroup extends SwatControl implements SwatUIParent
 				$li_tag->display();
 
 				if ($first) {
-					$li_tag->class = $this->getMenuItemCSSClassName();
+					$li_tag->class = null;
 					$first = false;
 				}
 			}
