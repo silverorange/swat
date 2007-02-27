@@ -7,6 +7,7 @@ require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatAbstractMenu.php';
+require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 require_once 'Swat/exceptions/SwatException.php';
 
@@ -65,6 +66,18 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	 */
 	public $title;
 
+	/**
+	 * The stock id of this menu item
+	 *
+	 * Specifying a stock id initializes this menu item with a set of
+	 * stock values.
+	 *
+	 * @var string
+	 *
+	 * @see SwatToolLink::setFromStock()
+	 */
+	public $stock_id = null;
+
 	// }}}
 	// {{{ protected properties
 
@@ -76,6 +89,13 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	 * @see SwatMenuItem::setSubMenu()
 	 */
 	protected $sub_menu;
+
+	/**
+	 * A CSS class set by the stock_id of this menu item
+	 *
+	 * @var string
+	 */
+	protected $stock_class = null;
 
 	// }}}
 	// {{{ public function setSubMenu()
@@ -133,6 +153,11 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	 */
 	public function init()
 	{
+		parent::init();
+
+		if ($this->stock_id !== null) 
+			$this->setFromStock($this->stock_id, false);
+
 		if ($this->sub_menu !== null)
 			$this->sub_menu->init();
 	}
@@ -148,9 +173,15 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	public function display()
 	{
 		if ($this->link === null) {
-			echo SwatString::minimizeEntities($this->title);
+			$span_tag = new SwatHtmlTag('span');
+			$span_tag->id = $this->id;
+			$span_tag->class = $this->getCSSClassString();
+			$span_tag->setContent($this->title);
+			$span_tag->display();
 		} else {
 			$anchor_tag = new SwatHtmlTag('a');
+			$anchor_tag->id = $this->id;
+			$anchor_tag->class = $this->getCSSClassString();
 
 			if ($this->value === null)
 				$anchor_tag->href = $this->link;
@@ -167,6 +198,90 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function setFromStock()
+
+	/**
+	 * Sets the values of this menu item to a stock type
+	 *
+	 * Valid stock type ids are:
+	 *
+	 * - create
+	 * - add
+	 * - edit
+	 * - delete
+	 * - preview
+	 * - change-order
+	 * - help
+	 * - print
+	 * - email
+	 *
+	 * @param string $stock_id the identifier of the stock type to use.
+	 * @param boolean $overwrite_properties whether to overwrite properties if
+	 *                                       they are already set.
+	 *
+	 * @throws SwatUndefinedStockTypeException
+	 */
+	public function setFromStock($stock_id, $overwrite_properties = true)
+	{
+		switch ($stock_id) {
+		case 'create':
+			$title = Swat::_('Create');
+			$class = 'swat-menu-item-create';
+			break;
+
+		case 'add':
+			$title = Swat::_('Add');
+			$class = 'swat-menu-item-add';
+			break;
+
+		case 'edit':
+			$title = Swat::_('Edit');
+			$class = 'swat-menu-item-edit';
+			break;
+
+		case 'delete':
+			$title = Swat::_('Delete');
+			$class = 'swat-menu-item-delete';
+			break;
+
+		case 'preview':
+			$title = Swat::_('Preview');
+			$class = 'swat-menu-item-preview';
+			break;
+
+		case 'change-order':
+			$title = Swat::_('Change Order');
+			$class = 'swat-menu-item-change-order';
+			break;
+
+		case 'help':
+			$title = Swat::_('Help');
+			$class = 'swat-menu-item-help';
+			break;
+
+		case 'print':
+			$title = Swat::_('Print');
+			$class = 'swat-menu-item-print';
+			break;
+
+		case 'email':
+			$title = Swat::_('Email');
+			$class = 'swat-menu-item-email';
+			break;
+
+		default:
+			throw new SwatUndefinedStockTypeException(
+				"Stock type with id of '{$stock_id}' not found.",
+				0, $stock_id);
+		}
+		
+		if ($overwrite_properties || ($this->title === null))
+			$this->title = $title;
+
+		$this->stock_class = $class;
+	}
+
+	// }}}
 	// {{{ protected function displaySubMenu()
 
 	/**
@@ -176,6 +291,27 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	{
 		if ($this->sub_menu !== null)
 			$this->sub_menu->display();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this menu item
+	 *
+	 * @return array the array of CSS classes that are applied to this menu
+	 *                item.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-menu-item');
+
+		if ($this->stock_class !== null)
+			$classes[] = $this->stock_class;
+
+		$classes = array_merge($classes, $this->classes);
+
+		return $classes;
 	}
 
 	// }}}
