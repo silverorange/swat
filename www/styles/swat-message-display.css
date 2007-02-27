@@ -36,6 +36,10 @@
 	padding-top: 12px;
 }
 
+.swat-message-with-secondary .swat-message-display-dismiss-link {
+	margin-top: 4px;
+}
+
 .swat-message-display-dismiss-link,
 .swat-message-display-dismiss-link:link,
 .swat-message-display-dismiss-link:visited {
