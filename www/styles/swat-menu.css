@@ -39,6 +39,10 @@ div.yuimenubar li.selected {
 	background: #f3efe5;
 }
 
+div.yuimenubar li.yuimenubaritem {
+	padding: 5px 10px 5px 15px;
+}
+
 div.yuimenubar li.yuimenubaritem,
 div.yuimenubar li.yuimenubaritem.first-of-type {
 	border-color: #F0EADE;
