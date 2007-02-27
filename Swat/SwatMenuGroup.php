@@ -122,6 +122,61 @@ class SwatMenuGroup extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function setMenuItemValues()
+
+	/**
+	 * Sets the value of all {@link SwatMenuItem} objects within this menu
+	 * group
+	 *
+	 * This is usually easier than setting all the values manually if the
+	 * values are dynamic.
+	 *
+	 * @param string $value
+	 */
+	public function setMenuItemValues($value)
+	{
+		$items = $this->getDescendants('SwatMenuItem');
+		foreach ($items as $item)
+			$item->value = $value;
+	}
+
+	// }}}
+	// {{{ public function getDescendants()
+
+	/**
+	 * Gets descendant widgets
+	 *
+	 * Retrieves an ordered array of all widgets in the widget subtree below 
+	 * this menu group. Widgets are ordered in the array as they are found in 
+	 * a breadth-first traversal of the widget subtree.
+	 *
+	 * This method mirrors the behaviour of
+	 * {@link SwatContainer::getDescendants()}.
+	 *
+	 * @param string $class_name optional class name. If set, only widgets that
+	 *                            are instances of <i>$class_name</i> are
+	 *                            returned.
+	 *
+	 * @return array the descendant widgets of this menu group.
+	 */
+	public function getDescendants($class_name = null)
+	{
+		$out = array();
+
+		foreach ($this->items as $item) {
+			if ($class_name === null || $item instanceof $class_name) {
+				if ($item->id === null)
+					$out[] = $item;
+				else
+					$out[$item->id] = $item;
+			}
+			$out = array_merge($out, $item->getDescendants($class_name));
+		}
+
+		return $out;
+	}
+
+	// }}}
 }
 
 ?>
