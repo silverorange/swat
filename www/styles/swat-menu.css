@@ -1,3 +1,11 @@
+div.yuimenubar {
+	background: #f6f2ea url(../images/swat-toolbar-background.png) top left repeat-x;
+	border-bottom: 1px solid #efe8da;
+	margin: -16px -16px 0 -16px;
+	list-style-type: none;
+	padding: 0;
+}
+
 div.yuimenu {
 	background:#FFFFFF url(../images/swat-frame-background.png) no-repeat scroll right top;
 	border-color: #DCCEB2;
@@ -21,12 +29,18 @@ div.yuimenubar li a {
 
 div.yuimenu li.selected a.selected,
 div.yuimenubar li.selected a.selected {
-	color: #3F5ACE;
-	text-decoration: underline;
+	color: #204A87;
+	text-decoration: none;
 	outline: none;
 }
 
 div.yuimenu li.selected,
 div.yuimenubar li.selected {
-	background: none;
+	background: #f3efe5;
+}
+
+div.yuimenubar li.yuimenubaritem,
+div.yuimenubar li.yuimenubaritem.first-of-type {
+	border-color: #F0EADE;
+	border-width: 0 1px 0 0;
 }
