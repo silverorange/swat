@@ -90,11 +90,19 @@ div.yuimenubar li.yuimenubaritem img {
 }
 
 div.yuimenubar li.yuimenubaritem.hassubmenu {
-	background: url(../images/swat-table-view-column-desc.png) center right no-repeat;
+	background: url(../images/swat-menubar-hassubmenu.png) center right no-repeat;
 }
 
 div.yuimenubar li.yuimenubaritem.hassubmenu a {
-	padding-right: 15px;
+	padding-right: 22px;
+}
+
+div.yuimenu li.yuimenuitem.hassubmenu {
+	background: url(../images/swat-menu-hassubmenu.png) center right no-repeat;
+}
+
+div.yuimenu li.yuimenuitem.hassubmenu a {
+	padding-right: 22px;
 }
 
 /* Stock types */
