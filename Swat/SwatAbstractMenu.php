@@ -132,23 +132,38 @@ abstract class SwatAbstractMenu extends SwatControl
 	 */
 	protected function getInlineJavaScript()
 	{
-		$properties = sprintf(
-			"{ clicktohide: %s, autosubmenudisplay: %s, position: 'static' }",
+		static $shown = false;
+
+		// Only display the onContentReady() loader function once.
+		if (!$shown) {
+			$javascript = "function swat_menu_create(parameters)".
+			"\n{".
+				"\n\tvar menu_obj = new parameters['class'](".
+					"parameters['id'], parameters['properties']);".
+				"\n\tmenu_obj.render();".
+				"\n\tmenu_obj.show();".
+			"\n}";
+			$shown = true;
+		} else {
+			$javascript = '';
+		}
+
+		$parameters = sprintf(
+			"{ id: '%s', class: %s, properties: { ".
+				"clicktohide: %s, ".
+				"autosubmenudisplay: %s, ".
+				"position: 'static' ".
+			"} }",
+			$this->id,
+			$this->getJavaScriptClass(),
 			$this->click_to_hide ? 'true' : 'false',
 			$this->auto_sub_menu_display ? 'true' : 'false');
 
-		$javascript = sprintf(
-			"function swat_create_menu_%1\$s(event)".
-			"\n{".
-				"\n\tvar %1\$s_obj = new %2\$s('%1\$s', %3\$s);".
-				"\n\t%1\$s_obj.render();".
-				"\n\t%1\$s_obj.show();".
-			"\n}".
-			"\nYAHOO.util.Event.onContentReady('%1\$s', ".
-				"swat_create_menu_%1\$s);",
+		$javascript.= sprintf(
+			"\nYAHOO.util.Event.onContentReady('%s', ".
+				"swat_menu_create, %s);",
 			$this->id,
-			$this->getJavaScriptClass(),
-			$properties);
+			$parameters);
 
 		return $javascript;
 	}
