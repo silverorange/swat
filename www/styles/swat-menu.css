@@ -16,9 +16,9 @@ div.yuimenubar h6 {
 	color: #837352;
 }
 
-div.yuimenu li a,
-div.yuimenubar li a {
-	font-size: 13px;
+div.yuimenu li,
+div.yuimenubar li {
+	font-size: 100%;
 }
 
 div.yuimenu li a,
