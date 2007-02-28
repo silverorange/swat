@@ -24,14 +24,14 @@ div.yuimenubar li {
 div.yuimenu li a,
 div.yuimenubar li a {
 	color: #3F5ACE;
-	outline: none;
+	outline-color: #efe8da;
 }
 
 div.yuimenu li.selected a.selected,
 div.yuimenubar li.selected a.selected {
 	color: #204A87;
 	text-decoration: none;
-	outline: none;
+	outline-color: #efe8da;
 }
 
 div.yuimenu li.selected,
