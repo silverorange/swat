@@ -1,3 +1,225 @@
+2007-03-01  gauthierm
+
+	* [r15517] swat/trunk/Swat/SwatRadioList.php:
+	  only display id of divider if it is set
+	* [r15516] swat/trunk/Swat/SwatRadioList.php,
+	  swat/trunk/Swat/SwatRadioTable.php,
+	  swat/trunk/www/styles/swat-radio-list.css,
+	  swat/trunk/www/styles/swat-radio-table.css:
+	  Do some TODOs in Swat. Make dividers work in radio lists/tables.
+
+2007-02-28  gauthierm
+
+	* [r15492] swat/trunk/Swat/SwatAbstractMenu.php:
+	  Fancy up the swat menu inline JavaScript to only display the
+	  onContentReady() loader function once.
+
+2007-02-28  steven
+
+	* [r15489] swat/trunk/www/styles/swat-menu.css:
+	  restor the Outline property
+	* [r15488] swat/trunk/www/styles/swat-menu.css:
+	  preserve Swat font size
+	* [r15487] swat/trunk/www/images/swat-menu-hassubmenu.png,
+	  swat/trunk/www/images/swat-menubar-hassubmenu.png,
+	  swat/trunk/www/styles/swat-menu.css:
+	  Add new arrows to indicate that menus have sub-menus
+	* [r15482] swat/trunk/www/styles/swat-menu.css:
+	  more CSS cleanup on SwatMenu - more to come
+
+2007-02-27  gauthierm
+
+	* [r15478] swat/trunk/Swat/SwatAbstractMenu.php:
+	  tidy docs
+	* [r15477] swat/trunk/Swat/SwatAbstractMenu.php:
+	  Add some docs
+	* [r15476] swat/trunk/Swat/SwatAbstractMenu.php:
+	  fix line length
+	* [r15475] swat/trunk/Swat/SwatMenuGroup.php:
+	  Remove code from SwatMenuGroup that was copied from SwatMenu
+	* [r15474] swat/trunk/Swat/SwatMenu.php,
+	  swat/trunk/Swat/SwatMenuGroup.php:
+	  Don't wrap li tags around menu items that are not visible.
+	* [r15473] swat/trunk/Swat/SwatGroupedMenu.php,
+	  swat/trunk/Swat/SwatMenu.php, swat/trunk/Swat/SwatMenuGroup.php,
+	  swat/trunk/Swat/SwatMenuItem.php:
+	  respect visible property
+	* [r15472] swat/trunk/Swat/SwatAbstractMenu.php:
+	  Add setMenuItemValues() method to SwatAbstractMenu.
+	  
+	  Also, rewrite the inline JavaScript so it will work in Internet
+	  Explorer.
+	* [r15471] swat/trunk/Swat/SwatGroupedMenu.php,
+	  swat/trunk/Swat/SwatMenu.php, swat/trunk/Swat/SwatMenuGroup.php,
+	  swat/trunk/Swat/SwatMenuItem.php:
+	  Add ability to get descendents to menu controls. This will be
+	  useful for methods like setMenuItemValues() which was added to
+	  SwatMenuGroup.
+	* [r15469] swat/trunk/Swat/SwatMenuItem.php:
+	  Support stock types for menu items
+
+2007-02-27  steven
+
+	* [r15468] swat/trunk/www/styles/swat-menu.css:
+	  some margin/padding fixes for the yuimenubar
+	* [r15467] swat/trunk/www/styles/swat-menu.css:
+	  Some styling on the yuimenubar
+
+2007-02-27  gauthierm
+
+	* [r15442] swat/trunk/www/styles/swat-message-display.css:
+	  Fix for ticket #650: Close button spacing is broken for
+	  SwatMessageDisplay when SwatMessage has secondary content.
+
+2007-02-26  gauthierm
+
+	* [r15360] swat/trunk/Swat/SwatAbstractMenu.php,
+	  swat/trunk/Swat/SwatActionItem.php,
+	  swat/trunk/Swat/SwatActionItemDivider.php,
+	  swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/Swat/SwatGroupedMenu.php,
+	  swat/trunk/Swat/SwatInputCell.php,
+	  swat/trunk/Swat/SwatLinkCellRenderer.php,
+	  swat/trunk/Swat/SwatMenuBar.php,
+	  swat/trunk/Swat/SwatMenuGroup.php,
+	  swat/trunk/Swat/SwatMenuItem.php,
+	  swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTableViewColumn.php:
+	  Fix @see tags. These are supposed to go one per line.
+	* [r15359] swat/trunk/Swat/SwatNavBar.php:
+	  UTF-8-itize XHTML entities in SwatNavBar
+	* [r15358] swat/trunk/Swat/SwatMenuGroup.php:
+	  Display the 'hastitle' CSS class for menu group ul tags so they
+	  look better with JavaScript disabled.
+	* [r15357] swat/trunk/Swat/SwatMenuItem.php:
+	  fix typo
+	* [r15356] swat/trunk/Swat/SwatMenuItem.php:
+	  Remove SwatMenuItem:: and use SwatMenuItem:: and SwatMenuItem::
+	  instead.
+	* [r15355] swat/trunk/Swat/SwatMenu.php,
+	  swat/trunk/Swat/SwatMenuBar.php:
+	  Small cleanups to SwatMenu and SwatMenuBar to get the correct
+	  CSS classes displaying for the menu bar.
+	* [r15354] swat/trunk/Swat/SwatGroupedMenu.php,
+	  swat/trunk/Swat/SwatMenu.php, swat/trunk/Swat/SwatMenuGroup.php,
+	  swat/trunk/Swat/SwatMenuItem.php:
+	  Make menu widgets implement SwatUIParent so menus can be defined
+	  in SwatML.
+
+2007-02-26  steven
+
+	* [r15352] swat/trunk/www/styles/swat-menu.css:
+	  Check in some rough initial styles for the SwatMenu - lots more
+	  to do here
+
+2007-02-25  gauthierm
+
+	* [r15351] swat/trunk/Swat/SwatAbstractMenu.php:
+	  Remove extra JavaScript properties until there are public
+	  properties to control them.
+	* [r15350] swat/trunk/Swat/SwatGroupedMenu.php,
+	  swat/trunk/Swat/SwatMenu.php, swat/trunk/Swat/SwatMenuItem.php:
+	  remove boolean flag from SwatMenu::display() and
+	  SwatGroupedMenu::display() now that parent references are
+	  properly hooked up.
+	* [r15349] swat/trunk/Swat/SwatGroupedMenu.php,
+	  swat/trunk/Swat/SwatMenu.php, swat/trunk/Swat/SwatMenuGroup.php,
+	  swat/trunk/Swat/SwatMenuItem.php:
+	  Set parent reference on menus, menu items and menu groups.
+	* [r15348] swat/trunk/Swat/SwatMenu.php:
+	  Cleanup SwatMenu.php and remove class definitions that are now
+	  defined in seprate files.
+	* [r15347] swat/trunk/Swat/SwatGroupedMenu.php:
+	  Cleanup and split SwatGroupedMenu into its own file.
+	* [r15346] swat/trunk/Swat/SwatAbstractMenu.php:
+	  Update abstract menu docblock with additional info.
+	* [r15345] swat/trunk/Swat/SwatMenuBar.php:
+	  Cleanup and split SwatMenuBar into its own file.
+	* [r15344] swat/trunk/Swat/SwatYUI.php:
+	  Automatically credit YUI when using YUI comonents
+	* [r15343] swat/trunk/Swat/SwatAbstractMenu.php:
+	  Cleanup and split SwatAbstractMenu into its own file.
+	* [r15342] swat/trunk/Swat/SwatMenuGroup.php:
+	  Cleanup and split SwatMenuGroup into its own file.
+	* [r15341] swat/trunk/Swat/SwatMenuItem.php:
+	  Cleanup and move SwatMenuItem into its own file.
+
+2007-02-24  gauthierm
+
+	* [r15340] swat/trunk/Swat/SwatMenu.php:
+	  Add menu-bar widget. At a later date this file will be split up
+	  and documented.
+	* [r15339] swat/trunk/Swat/SwatMenu.php,
+	  swat/trunk/www/styles/swat-menu.css:
+	  very rough start of a SwatMenu widget that uses Yahoo UI menus.
+	* [r15338] swat/trunk/Swat/SwatYUIComponent.php:
+	  Include correct msnu.css for YUI menus from SwatYUI.
+
+2007-02-20  charles
+
+	* [r15189] swat/trunk/Swat/SwatSearchEntry.php:
+	  Changed the class name to match the name of the file
+
+2007-02-20  gauthierm
+
+	* [r15188] swat/trunk/Swat/SwatSearchEntry.php:
+	  Use the UTF-8 ellipsis character
+	* [r15187] swat/trunk/Swat/SwatSearchEntry.php:
+	  Always set a default title when we create a new search entry.
+	  This simplifies the logic in getDisplayValue()
+	* [r15186] swat/trunk/Swat/SwatSearchEntry.php:
+	  Have only a single point of return. In most places, using this
+	  pattern is easier to read and harder to create bugs.
+	* [r15185] swat/trunk/Swat/SwatSearchEntry.php:
+	  Mark default string for translation
+	* [r15184] swat/trunk/Swat/SwatSearchEntry.php:
+	  Use tabs instead of spaces to indent docblock
+
+2007-02-20  charles
+
+	* [r15183] swat/trunk/Swat/SwatSearchEntry.php:
+	  Added a new search widget to the Swat toolkit.
+
+2007-02-19  gauthierm
+
+	* [r15134] swat/trunk/Swat/exceptions/SwatException.php:
+	  Only ever display SwatException styles once and add a note about
+	  why they are not in a separate file like other styles. Removes a
+	  @todo.
+
+2007-02-18  gauthierm
+
+	* [r15133] swat/trunk/Swat/SwatSimpleColorEntry.php:
+	  Use tango palette by default. Removes a @todo.
+
+2007-02-16  gauthierm
+
+	* [r15106] swat/trunk/Swat/SwatChangeOrder.php:
+	  Add a note to SwatChangeOrder widgets letting hte user know
+	  drag-and-drop is available
+	* [r15105] swat/trunk/demo/include/layout.php:
+	  Even though short_open_tags is on by default in PHP, some people
+	  have it turned off. In the interests of keeping the demo easy to
+	  set up, I'm removing the use of short_open_tags from the XHTML
+	  layout template.
+
+2007-02-16  nick
+
+	* [r15099] swat/trunk/Swat/SwatFlydown.php,
+	  swat/trunk/Swat/SwatFlydownBlankOption.php:
+	  Add a special class for blank options in flydowns
+
+2007-02-16  steven
+
+	* [r15095] swat/trunk/www/styles/swat.css:
+	  Style for blank SwatFlydown option - nick is checking in the
+	  hook for this
+
+2007-02-15  nrf
+
+	* [r15047] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.9
+
 2007-02-15  gauthierm
 
 	* [r15032] swat/trunk/www/javascript/swat-message-display.js:
