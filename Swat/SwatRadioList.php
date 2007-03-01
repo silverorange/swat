@@ -136,7 +136,9 @@ class SwatRadioList extends SwatFlydown implements SwatState
 	{
 		$span_tag = new SwatHtmlTag('span');
 		$span_tag->class = 'swat-radio-list-divider';
-		$span_tag->id = $this->id.'_'.(string)$option->value;
+		if ($option->value !== null)
+			$span_tag->id = $this->id.'_'.(string)$option->value;
+
 		$span_tag->setContent($option->title);
 		$span_tag->display();
 	}
