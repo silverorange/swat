@@ -58,7 +58,11 @@ class SwatRadioTable extends SwatRadioList
 			echo '<tr>';
 
 			if ($option instanceof SwatFlydownDivider) {
-				//ignore these for now TODO: make dividers work with radiolists
+				echo '<td class="swat-radio-table-input">';
+				echo '&nbsp;';
+				echo '</td><td>';
+				$this->displayDivider($option);
+				echo '</td>';
 			} else {					
 				echo '<td class="swat-radio-table-input">';
 				$this->displayOption($option);

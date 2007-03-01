@@ -48,6 +48,9 @@ class SwatRadioList extends SwatFlydown implements SwatState
 
 		$this->show_blank  = false;
 		$this->requires_id = true;
+
+		$this->addStyleSheet('packages/swat/styles/swat-radio-list.css',
+			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -82,7 +85,7 @@ class SwatRadioList extends SwatFlydown implements SwatState
 			echo '<li>';
 
 			if ($option instanceof SwatFlydownDivider) {
-				//ignore these for now TODO: make dividers work with radiolists
+				$this->displayDivider($option);
 			} else {					
 				$this->displayOption($option);
 				$this->displayOptionLabel($option);
@@ -119,6 +122,23 @@ class SwatRadioList extends SwatFlydown implements SwatState
 			$this->value = null;
 
 		return true;
+	}
+
+	// }}}
+	// {{{ protected function displayDivider()
+
+	/**
+	 * Displays a divider option in this radio list
+	 *
+	 * @param SwatOption $option
+	 */
+	protected function displayDivider(SwatOption $option)
+	{
+		$span_tag = new SwatHtmlTag('span');
+		$span_tag->class = 'swat-radio-list-divider';
+		$span_tag->id = $this->id.'_'.(string)$option->value;
+		$span_tag->setContent($option->title);
+		$span_tag->display();
 	}
 
 	// }}}
