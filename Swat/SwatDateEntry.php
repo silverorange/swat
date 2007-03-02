@@ -588,7 +588,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	protected function isEndDateValid()
 	{
 		return (Date::compare(
-			$this->value, $this->valid_range_start, true) < 0);
+			$this->value, $this->valid_range_end, true) < 0);
 	}
 
 	// }}}
