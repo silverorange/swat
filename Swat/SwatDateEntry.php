@@ -472,6 +472,20 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
+	// {{{ public function isValid()
+
+	/**
+	 * Checks if the entered date is within the valid range
+	 *
+	 * @return boolean true if the entered date is within the valid range and
+	 *                  false if the entered date is not within the valid range.
+	 */
+	public function isValid()
+	{
+		return ($this->isStartDateValid() && $this->isEndDateValid());
+	}
+
+	// }}}
 	// {{{ protected function getInlineJavaScript()
 
 	/**
@@ -542,6 +556,66 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$classes = array('swat-date-entry');
 		$classes = array_merge($classes, $this->classes);
 		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function isStartDateValid()
+
+	/**
+	 * Checks if the entered date is valid with respect to the valid start
+	 * date
+	 *
+	 * @return boolean true if the entered date is on or after the valid start
+	 *                  date and false if the entered date is before the valid
+	 *                  start date.
+	 */
+	protected function isStartDateValid()
+	{
+		return (Date::compare(
+			$this->value, $this->valid_range_start, true) >= 0);
+	}
+
+	// }}}
+	// {{{ protected function isEndDateValid()
+
+	/**
+	 * Checks if the entered date is valid with respect to the valid end date
+	 *
+	 * @return boolean true if the entered date is before the valid end date
+	 *                  and false if the entered date is on or after the valid
+	 *                  end date.
+	 */
+	protected function isEndDateValid()
+	{
+		return (Date::compare(
+			$this->value, $this->valid_range_start, true) < 0);
+	}
+
+	// }}}
+	// {{{ protected function validateRanges()
+
+	/**
+	 * Makes sure the date the user entered is within the valid range
+	 *
+	 * If the date is not within the valid range, this method attaches an
+	 * error message to this date entry.
+	 */
+	protected function validateRanges()
+	{
+		if (!$this->isStartDateValid()) {
+			$message = sprintf(Swat::_('The date you have entered is invalid. '.
+				'It must be on or after %s.'),
+				$this->getFormattedDate($this->valid_range_start));
+
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+
+		} elseif (!$this->isEndDateValid()) {
+			$message = sprintf(Swat::_('The date you have entered is invalid. '.
+				'It must be before %s.'),
+				$this->getFormattedDate($this->valid_range_end));
+
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+		}
 	}
 
 	// }}}
@@ -736,36 +810,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$this->calendar->parent = $this;
 		$this->calendar->valid_range_start = $this->valid_range_start;
 		$this->calendar->valid_range_end   = $this->valid_range_end;
-	}
-
-	// }}}
-	// {{{ private function validateRanges()
-
-	/**
-	 * Makes sure the date the user entered is within the valid range
-	 *
-	 * If the date is not within the valid range, this method attaches an
-	 * error message to this date entry.
-	 */
-	private function validateRanges()
-	{
-		if (Date::compare($this->value, $this->valid_range_start, true) == -1) {
-
-			$message = sprintf(Swat::_('The date you have entered is invalid. '.
-				'It must be on or after %s.'),
-				$this->getFormattedDate($this->valid_range_start));
-
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
-
-		} elseif
-			(Date::compare($this->value, $this->valid_range_end, true) >= 0) {
-
-			$message = sprintf(Swat::_('The date you have entered is invalid. '.
-				'It must be before %s.'),
-				$this->getFormattedDate($this->valid_range_end));
-
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
-		}
 	}
 
 	// }}}
