@@ -53,6 +53,20 @@ a.swat-tool-link-delete:hover {
 	background: #f3efe5 url(../images/swat-tool-link-delete.png) 6px center no-repeat;
 }
 
+.swat-toolbar .swat-tool-link-cancel:link,
+.swat-tool-link-cancel:link,
+.swat-toolbar .swat-tool-link-cancel:visited,
+.swat-tool-link-cancel:visited {
+	background: url(../images/swat-tool-link-cancel.png) 6px center no-repeat;
+	color: #C00;
+	padding-left: 28px;
+}
+
+.swat-toolbar a.swat-tool-link-cancel:hover,
+a.swat-tool-link-cancel:hover {
+	background: #f3efe5 url(../images/swat-tool-link-cancel.png) 6px center no-repeat;
+}
+
 .swat-toolbar .swat-tool-link-edit:link,
 .swat-tool-link-edit:link,
 .swat-toolbar .swat-tool-link-edit:visited,
