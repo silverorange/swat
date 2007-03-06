@@ -168,6 +168,7 @@ class SwatToolLink extends SwatControl
 	 * - add
 	 * - edit
 	 * - delete
+	 * - cancel
 	 * - preview
 	 * - change-order
 	 * - help
@@ -201,6 +202,11 @@ class SwatToolLink extends SwatControl
 		case 'delete':
 			$title = Swat::_('Delete');
 			$class = 'swat-tool-link-delete';
+			break;
+
+		case 'cancel':
+			$title = Swat::_('Cancel');
+			$class = 'swat-tool-link-cancel';
 			break;
 
 		case 'preview':
