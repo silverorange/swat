@@ -223,9 +223,13 @@ ul.swat-radio-list {
 .swat-header-form-field .swat-button,
 .swat-footer-form-field .swat-button {
 	margin-right: 0.5em;
-	color: #666;
+	color: #333;
 }
 
+.swat-header-form-field .swat-button.swat-insensitive,
+.swat-footer-form-field .swat-button.swat-insensitive {
+	color: #999;
+}
 .swat-button-compact {
 	font-size: 80%;
 	padding: 0;
@@ -240,5 +244,5 @@ ul.swat-radio-list {
 /* Insensitive widgets */
 
 input.swat-insensitive {
-	background: #EEE;
+	background: #eee;
 }
