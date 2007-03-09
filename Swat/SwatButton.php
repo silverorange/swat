@@ -270,6 +270,9 @@ class SwatButton extends SwatInputControl
 		if ($primary)
 			$classes[] = 'swat-primary';
 
+		if (!$this->isSensitive())
+			$classes[] = 'swat-insensitive';
+
 		if ($this->stock_class !== null)
 			$classes[] = $this->stock_class;
 
