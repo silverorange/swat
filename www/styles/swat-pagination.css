@@ -9,22 +9,22 @@
 	padding: 0.2em 0.5em;
 	font-size: 85%;
 	margin-right: 0.1em;
-	border: 1px solid #FFF;
+	border: 1px solid #fff;
 }
 
 .swat-pagination span.swat-pagination-current {
-	border: 3px solid #DDD;
+	border: 3px solid #ddd;
 	font-weight: bold;
 }
 
 .swat-pagination a {
-	border: 1px solid #DDD;
+	border: 1px solid #ddd;
 	text-decoration: none;
 }
 
 .swat-pagination a:hover {
-	background-color: #DDD;
-	border-color: #BBB;
+	background-color: #ddd;
+	border-color: #bbb;
 }
 
 .swat-pagination a.swat-pagination-nextprev {
@@ -42,4 +42,3 @@
 	margin: 0.2em;
 	padding-bottom: 3px;
 }
-

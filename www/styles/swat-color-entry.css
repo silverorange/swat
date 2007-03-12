@@ -79,7 +79,7 @@ td.swat-simple-color-palette-blank {
 	width: 14.5em; /* 14 */
 	padding: 0.5em;
 	border: 1px #999 solid;
-	background: #FFF;
+	background: #fff;
 	position: absolute;
 	display: none;
 	font-size: 120%;
@@ -130,7 +130,7 @@ td.swat-simple-color-palette-blank {
 
 .swat-color-entry-wrapper .active {
 	margin: 1 1 1 0px;
-	border: 1px solid #EEE;
+	border: 1px solid #eee;
 	width: 2em;
 	height: 1.6em;
 	overflow: hidden;
@@ -138,7 +138,7 @@ td.swat-simple-color-palette-blank {
 	
 .swat-color-entry-wrapper .swatch {
 	margin: 1 1 1 0px;
-	border: 1px solid #EEE;
+	border: 1px solid #eee;
 	overflow: hidden;
 	width: 2em;
 	height: 4em;

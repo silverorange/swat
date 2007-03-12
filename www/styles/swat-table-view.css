@@ -36,8 +36,8 @@ table.swat-table-view {
 .swat-table-view .swat-table-view-group {
 	font-weight: bold;
 	padding-top: 1em;
-	background: #FFF;
-	border-bottom: 1px solid #EEE;
+	background: #fff;
+	border-bottom: 1px solid #eee;
 }
 
 table.swat-table-view td.swat-boolean-cell-renderer,

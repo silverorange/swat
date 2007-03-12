@@ -33,7 +33,7 @@
 .swat-message-system-error {
 	border-color: #dc6e66;
 	background-color: #f33;
-	color: #FFF;
+	color: #fff;
 	background-image: url(../images/tango/48/dialog-error.png);
 }
 * html .swat-message-system-error { /* IE hack */
@@ -43,7 +43,7 @@
 .swat-message-notification .swat-message-secondary-content { color: #947140; }
 .swat-message-warning .swat-message-secondary-content { color: #947140; }
 .swat-message-error .swat-message-secondary-content { color: #d44034; }
-.swat-message-system-error .swat-message-secondary-content { color: #EEE; }
+.swat-message-system-error .swat-message-secondary-content { color: #eee; }
 
 
 /* SwatFormField Messages */
@@ -57,7 +57,7 @@
 
 .swat-form-field-messages .swat-message,
 .swat-table-view-input-row-messages .swat-message {
-	color: #C00;
+	color: #c00;
 	font-size: 85%;
 	padding: 4px 4px 4px 24px;
 	margin: 0.5em 0 0 0;
@@ -70,7 +70,7 @@
 
 .swat-form-field-with-messages {
 	position: relative;
-	border: 1px solid #C00;
+	border: 1px solid #c00;
 	background: #ffe3e0;
 	padding: 0.5em;
 	margin: 0.5em 0;
