@@ -42,6 +42,9 @@ SwatCheckAll.prototype.setController = function(controller)
 	if (this.controller === null) {
 		YAHOO.util.Event.addListener(this.check_all, 'click',
 			SwatCheckAll.clickHandler, controller);
+
+		YAHOO.util.Event.addListener(this.check_all, 'dblclick',
+			SwatCheckAll.clickHandler, controller);
 	}
 
 	this.controller = controller;

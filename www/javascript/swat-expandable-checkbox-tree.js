@@ -14,6 +14,9 @@ function SwatExpandableCheckboxTree(id, dependent_boxes)
 		for (var i = 0; i < this.check_list.length; i++) {
 			YAHOO.util.Event.addListener(this.check_list[i], 'click',
 				SwatExpandableCheckboxTree.handleClick, this);
+
+			YAHOO.util.Event.addListener(this.check_list[i], 'dblclick',
+				SwatExpandableCheckboxTree.handleClick, this);
 		}
 	}
 }

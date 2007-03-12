@@ -11,6 +11,9 @@ function SwatCheckboxList(id)
 	for (i = 0; i < this.check_list.length; i++) {
 		YAHOO.util.Event.addListener(this.check_list[i], 'click',
 			SwatCheckboxList.clickHandler, this);
+
+		YAHOO.util.Event.addListener(this.check_list[i], 'dblclick',
+			SwatCheckboxList.clickHandler, this);
 	}
 }
 
