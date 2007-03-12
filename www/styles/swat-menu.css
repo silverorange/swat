@@ -7,8 +7,8 @@ div.yuimenubar {
 }
 
 div.yuimenu {
-	background:#FFFFFF url(../images/swat-frame-background.png) no-repeat scroll right top;
-	border-color: #DCCEB2;
+	background:#fff url(../images/swat-frame-background.png) no-repeat scroll right top;
+	border-color: #dcceb2;
 }
 
 div.yuimenu h6,
@@ -23,13 +23,13 @@ div.yuimenubar li {
 
 div.yuimenu li a,
 div.yuimenubar li a {
-	color: #3F5ACE;
+	color: #3f5ace;
 	outline-color: #efe8da;
 }
 
 div.yuimenu li.selected a.selected,
 div.yuimenubar li.selected a.selected {
-	color: #204A87;
+	color: #204a87;
 	text-decoration: none;
 	outline-color: #efe8da;
 }
@@ -53,7 +53,7 @@ div.yuimenubar li.yuimenubaritem li.yuimenuitem a {
 
 div.yuimenubar li.yuimenubaritem a {
 	padding: 5px 10px 5px 15px;
-	border-color: #F0EADE;
+	border-color: #f0eade;
 	border-style: solid;
 	border-width: 0 1px 0 0;
 }
@@ -110,11 +110,10 @@ div.yuimenu li.yuimenuitem.hassubmenu a {
 div.yuimenubar .swat-menu-item-delete:link,
 div.yuimenubar .swat-menu-item-delete:visited {
 	background: url(../images/swat-tool-link-delete.png) 6px center no-repeat;
-	color: #C00;
+	color: #c00;
 	padding-left: 28px;
 }
 
 div.yuimenubar li.selected a.selected.swat-menu-item-delete {
 	background: #f3efe5 url(../images/swat-tool-link-delete.png) 6px center no-repeat;
 }
-

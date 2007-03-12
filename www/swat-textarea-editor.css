@@ -1,6 +1,6 @@
 div.rteDiv {
-	border: 1px solid #CCC;
-	background: #F8F5F2;
+	border: 1px solid #ccc;
+	background: #f8f5f2;
 }
 
 div.rteDiv select {
@@ -9,21 +9,21 @@ div.rteDiv select {
 
 body.rtePopup {
 	margin: 10px;
-	background: #F8F5F2;
+	background: #f8f5f2;
 }
 
 body.rtePopup form {
-	background: #FFF;
+	background: #fff;
 	padding: 5px;
 }
 
 div.rteIframeDiv {
 	clear: both;
-	border: 1px solid #CCC;
-	border-top-color: #CCC;
-	border-left-color: #CCC;
-	border-right-color: #EEE;
-	border-bottom-color: #EEE;
+	border: 1px solid #ccc;
+	border-top-color: #ccc;
+	border-left-color: #ccc;
+	border-right-color: #eee;
+	border-bottom-color: #eee;
 }
 
 iframe.rteIframe {
@@ -33,7 +33,7 @@ iframe.rteIframe {
 
 div.rteToggleMode {
 	height: 30px;
-	border-top: 1px solid #CCC; 
+	border-top: 1px solid #ccc; 
 	padding-left: 3px;
 }
 
@@ -81,7 +81,7 @@ div.rteToggleMode a.rteToggleModeDisabled span, div.rteToggleMode a.rteToggleMod
 div.rteMenuButtons {
 	/*height: 23px;*/
 	padding: 3px 3px 0 3px;
-	/*border-bottom: 1px solid #CCC; */
+	/*border-bottom: 1px solid #ccc; */
 }
 
 div.rteMenuButtons div {
