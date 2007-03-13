@@ -1,3 +1,68 @@
+2007-03-12  steven
+
+	* [r15787] swat/trunk/www/styles/swat-change-order.css,
+	  swat/trunk/www/styles/swat-color-entry.css,
+	  swat/trunk/www/styles/swat-disclosure.css,
+	  swat/trunk/www/styles/swat-menu.css,
+	  swat/trunk/www/styles/swat-message.css,
+	  swat/trunk/www/styles/swat-pagination.css,
+	  swat/trunk/www/styles/swat-table-view.css,
+	  swat/trunk/www/styles/swat-tool-link.css,
+	  swat/trunk/www/swat-textarea-editor.css:
+	  Lowercase and abbreviate CSS hex colors as per our convention (I
+	  was bored)
+
+2007-03-12  gauthierm
+
+	* [r15766] swat/trunk/www/javascript/swat-check-all.js,
+	  swat/trunk/www/javascript/swat-checkbox-entry-list.js,
+	  swat/trunk/www/javascript/swat-checkbox-list.js,
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js:
+	  Listen for double clicks as well as clicks on checkboxes to fix
+	  events in KHTML and possibly WebKit.
+
+2007-03-10  gauthierm
+
+	* [r15751] swat/trunk/www/javascript/swat-message-display.js:
+	  Change the message display hide animation to use the yahoo
+	  self-healing transition pattern. Despite the pretentious name I
+	  think this animation actually looks and feels better.
+
+2007-03-09  steven
+
+	* [r15738] swat/trunk/www/styles/swat.css:
+	  Make insensitive swat-buttons in form footers look more
+	  insensitive
+
+2007-03-09  gauthierm
+
+	* [r15737] swat/trunk/Swat/SwatButton.php:
+	  Add insensitive style to insensitive buttons.
+
+2007-03-06  steven
+
+	* [r15633] swat/trunk/www/images/swat-tool-link-cancel.png:
+	  Icon for Cancel stocktype for SwatToolLink
+	* [r15632] swat/trunk/Swat/SwatToolLink.php,
+	  swat/trunk/www/images/swat-tool-link-cancel.png,
+	  swat/trunk/www/styles/swat-tool-link.css:
+	  Add "Cancel" stock type to SwatToolLink - the icon is a copy of
+	  "delete" for now - a more appropriate icon is coming
+
+2007-03-02  gauthierm
+
+	* [r15565] swat/trunk/Swat/SwatDateEntry.php:
+	  Check valid_range_end instead of valid_range_start for
+	  validating end of date range.
+	* [r15554] swat/trunk/Swat/SwatDateEntry.php:
+	  Split up SwatDateEntry valid range calculation into separate
+	  protected methods to make subclassing easier.
+
+2007-03-01  nrf
+
+	* [r15521] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.10
+
 2007-03-01  gauthierm
 
 	* [r15517] swat/trunk/Swat/SwatRadioList.php:
