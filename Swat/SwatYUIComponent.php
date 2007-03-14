@@ -135,8 +135,8 @@ class SwatYUIComponent extends SwatObject
 			'normal' => '',
 		);
 
-		// the menu.css is not distributed in a minimized form
-		if ($this->id = 'menu')
+		// the menu.css and tabview.css is not distributed in a minimized form
+		if ($this->id == 'menu' || $this->id == 'tabview')
 			$modes['min'] = '';
 
 		$filename_template =
