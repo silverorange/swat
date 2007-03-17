@@ -743,7 +743,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 
 		$table_tag->close();
 
-		$this->displayInlineJavaScript($this->getInlineJavaScript());
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}

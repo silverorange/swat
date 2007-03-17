@@ -151,7 +151,7 @@ class SwatMessageDisplay extends SwatControl
 		$wrapper_div->close();
 
 		if ($has_dismiss_link)
-			$this->displayInlineJavaScript($this->getInlineJavaScript());
+			Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}

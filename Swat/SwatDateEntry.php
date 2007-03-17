@@ -307,7 +307,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			$this->time_entry->display();
 		}
 
-		$this->displayInlineJavaScript($this->getInlineJavaScript());
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 
 		$div_tag->close();
 	}

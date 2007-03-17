@@ -217,7 +217,7 @@ class SwatForm extends SwatDisplayableContainer
 		$this->displayHiddenFields();
 		$form_tag->close();
 
-		$this->displayInlineJavaScript($this->getInlineJavaScript());
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}

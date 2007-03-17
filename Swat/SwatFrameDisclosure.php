@@ -76,7 +76,7 @@ class SwatFrameDisclosure extends SwatDisclosure
 		$animate_div->close();
 		$container_div->close();
 
-		$this->displayInlineJavaScript($this->getInlineJavascript());
+		Swat::displayInlineJavaScript($this->getInlineJavascript());
 
 		$control_div->close();
 	}

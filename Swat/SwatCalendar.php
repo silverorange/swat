@@ -99,7 +99,7 @@ class SwatCalendar extends SwatControl
 
 		$container_div_tag->close();
 
-		$this->displayInlineJavaScript($this->getInlineJavaScript());
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}

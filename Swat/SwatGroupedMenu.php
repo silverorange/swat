@@ -118,7 +118,7 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 		$div_tag->close();
 
 		if ($this->parent === null || !($this->parent instanceof SwatMenuItem))
-			$this->displayInlineJavaScript($this->getInlineJavaScript());
+			Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}

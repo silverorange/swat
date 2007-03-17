@@ -83,7 +83,7 @@ class SwatTextareaEditor extends SwatTextarea
 		if (!$this->visible)
 			return;
 
-		$this->displayInlineJavaScript($this->getInlineJavaScript());
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
