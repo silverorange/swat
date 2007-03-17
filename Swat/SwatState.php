@@ -11,7 +11,7 @@
  */
 interface SwatState
 {
-	// {{{ public properties
+	// {{{ public function setState()
 
 	/**
 	 * Set the state of the control
@@ -24,6 +24,9 @@ interface SwatState
 	 * @param mixed $state The state to load into the control.
 	 */
 	public function setState($state);
+
+	// }}}
+	// {{{ public function getState()
 
 	/**
 	 * Get the state of the control
