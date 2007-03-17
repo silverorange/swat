@@ -184,13 +184,13 @@ class Swat
 	 * Displays inline JavaScript properly encapsulating the script in a CDATA
 	 * section
 	 *
-	 * @param string $java_script the inline JavaScript to display.
+	 * @param string $javascript the inline JavaScript to display.
 	 */
-	public static function displayInlineJavaScript($java_script)
+	public static function displayInlineJavaScript($javascript)
 	{
-		if (strlen($java_script) > 0) {
+		if (strlen($javascript) > 0) {
 			echo '<script type="text/javascript">', "\n//<![CDATA[\n",
-				rtrim($java_script),
+				rtrim($javascript),
 				"\n//]]>\n</script>";
 		}
 	}
