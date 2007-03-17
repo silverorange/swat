@@ -2,7 +2,7 @@
  * A table view row that can add an arbitrary number of data entry rows
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 
@@ -238,10 +238,19 @@ SwatTableViewInputRow.prototype.addRow = function()
 	dest_tr.className = 'swat-table-view-input-row';
 	dest_tr.id = this.id + '_row_' + replicator_id;
 
-	// run scripts
-	// a better way to do this might be to remvoe the script nodes from the
-	// document and then run the scripts. This way we can ensure the scripts
-	// are only run once.
+	var animation = new YAHOO.util.ColorAnim(dest_tr, 
+		{ backgroundColor: { from: '#fffbc9', to: '#ffffff' } }, 1,
+		YAHOO.util.Easing.easeOut);
+
+	animation.animate();
+
+	/*
+	 * Run scripts
+	 *
+	 * A better way to do this might be to remove the script nodes from the
+	 * document and then run the scripts. This way we can ensure the scripts
+	 * are only run once.
+	 */
 	var scripts = dom.documentElement.getElementsByTagName('script');
 	for (var i = 0; i < scripts.length; i++)
 		if (scripts[0].getAttribute('type') == 'text/javascript' &&
@@ -250,7 +259,7 @@ SwatTableViewInputRow.prototype.addRow = function()
 }
 
 /**
- * Remvoes a data row from the table
+ * Removes a data row from the table
  */
 SwatTableViewInputRow.prototype.removeRow = function(replicator_id)
 {
@@ -274,6 +283,7 @@ SwatTableViewInputRow.prototype.removeRow = function(replicator_id)
 	var row_id = this.id + '_row_' + replicator_id;
 	var row = document.getElementById(row_id);
 	if (row && row.parentNode !== null) {
-		row.parentNode.removeChild(row);
+		var removed_row = row.parentNode.removeChild(row);
+		delete removed_row;
 	}
 }

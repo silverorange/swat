@@ -8,6 +8,7 @@ require_once 'Swat/SwatContainer.php';
 require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatTableViewRow.php';
 require_once 'Swat/SwatRemoveInputCell.php';
+require_once 'Swat/SwatYUI.php';
 require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
@@ -26,7 +27,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * TODO: work out ids. id is required
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewInputRow extends SwatTableViewRow
@@ -119,6 +120,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	{
 		parent::__construct();
 		$this->enter_text = Swat::_('enter&nbsp;another');
+
+		$yui = new SwatYUI(array('animation'));
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript(
 			'packages/swat/javascript/swat-table-view-input-row.js',
 			Swat::PACKAGE_ID);
