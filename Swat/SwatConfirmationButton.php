@@ -62,7 +62,7 @@ class SwatConfirmationButton extends SwatButton
 	public function display()
 	{
 		parent::display();
-		$this->displayInlineJavaScript($this->getInlineJavaScript());
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}

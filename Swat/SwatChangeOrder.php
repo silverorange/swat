@@ -130,7 +130,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
 		$div_tag->close();
 
-		$this->displayInlineJavaScript($this->getInlineJavaScript());
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}

@@ -76,7 +76,7 @@ class SwatCheckAll extends SwatCheckbox
 
 		$div_tag->close();
 
-		$this->displayInlineJavaScript($this->getInlineJavaScript());
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}

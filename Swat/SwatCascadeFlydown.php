@@ -84,7 +84,7 @@ class SwatCascadeFlydown extends SwatFlydown
 			return;
 
 		parent::display();
-		$this->displayInlineJavaScript($this->getInlineJavaScript());
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}

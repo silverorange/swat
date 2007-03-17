@@ -133,7 +133,7 @@ class SwatTextarea extends SwatInputControl implements SwatState
 
 		$div_tag->close();
 
-		$this->displayInlineJavaScript($this->getInlineJavaScript());
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}

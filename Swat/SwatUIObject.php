@@ -297,22 +297,6 @@ abstract class SwatUIObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ protected function displayInlineJavaScript()
-
-	/**
-	 * Displays inline JavaScript properly encapsulating the script in a CDATA
-	 * section
-	 *
-	 * @param string $java_script the inline JavaScript to display.
-	 */
-	protected function displayInlineJavaScript($java_script)
-	{
-		echo '<script type="text/javascript">', "\n//<![CDATA[\n",
-			rtrim($java_script),
-			"\n//]]>\n</script>";
-	}
-
-	// }}}
 }
 
 ?>
