@@ -50,7 +50,7 @@ SwatCheckAll.prototype.setController = function(controller)
 	this.controller = controller;
 
 	controller.check_all = this;
-	controller.checkAllInit();
+	controller.updateCheckAll();
 }
 
 /**

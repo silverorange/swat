@@ -10,19 +10,19 @@ function SwatCheckboxList(id)
 
 	for (i = 0; i < this.check_list.length; i++) {
 		YAHOO.util.Event.addListener(this.check_list[i], 'click',
-			SwatCheckboxList.clickHandler, this);
+			this.handleClick, this, true);
 
 		YAHOO.util.Event.addListener(this.check_list[i], 'dblclick',
-			SwatCheckboxList.clickHandler, this);
+			this.handleClick, this, true);
 	}
 }
 
-SwatCheckboxList.clickHandler = function(event, object)
+SwatCheckboxList.prototype.handleClick = function(event)
 {
-	object.checkAllInit();
+	this.updateCheckAll();
 }
 
-SwatCheckboxList.prototype.checkAllInit = function ()
+SwatCheckboxList.prototype.updateCheckAll = function ()
 {
 	if (this.check_all == null)
 		return;
