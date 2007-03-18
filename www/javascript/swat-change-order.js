@@ -734,15 +734,22 @@ SwatChangeOrder.prototype.setSensitive = function(sensitive)
 SwatChangeOrder.prototype.updateValue = function()
 {
 	var temp = '';
+	var index = 0;
+	var drop_marker = SwatChangeOrder.dragging_drop_marker;
 
-	for (i = 0; i < this.list_div.childNodes.length; i++) {
-		if (i > 0)
-			temp = temp + ',';
+	// one less than list length so we don't count the sentinal node
+	for (i = 0; i < this.list_div.childNodes.length - 1; i++) {
+		// ignore drop marker node
+		if (this.list_div.childNodes[i] != drop_marker) {
+			if (index > 0)
+				temp += ',';
 
-		temp = temp + this.list_div.childNodes[i].order_value;
+			temp += this.list_div.childNodes[i].order_value;
 
-		// update node indexes
-		this.list_div.childNodes[i].order_index = i;
+			// update node indexes
+			this.list_div.childNodes[i].order_index = index;
+			index++;
+		}
 	}
 
 	var hidden_field = document.getElementById(this.id + '_value');
