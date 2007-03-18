@@ -381,6 +381,7 @@ function SwatChangeOrder(id, sensitive)
 	this.scrollList(this.getScrollPosition(this.list_div.firstChild));
 
 	this.sensitive = sensitive;
+	this.order_change_event = new YAHOO.util.CustomEvent('orderchange');
 }
 
 // }}}
@@ -744,8 +745,14 @@ SwatChangeOrder.prototype.updateValue = function()
 		this.list_div.childNodes[i].order_index = i;
 	}
 
+	var hidden_field = document.getElementById(this.id + '_value');
+
+	// fire order-changed event
+	if (temp != hidden_field.value)
+		this.order_change_event.fire(temp);
+
 	// update a hidden field with current order of keys
-	document.getElementById(this.id + '_value').value = temp;
+	hidden_field.value = temp;
 }
 
 // }}}
