@@ -171,7 +171,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 
 		echo '</div>';
 		$div_tag->close();
-		$this->displayInlineJavaScript($this->getInlineJavaScript());
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
