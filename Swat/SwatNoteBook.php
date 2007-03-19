@@ -15,7 +15,37 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  */
 class SwatNoteBook extends SwatWidget implements SwatUIParent
 {
+	// {{{ constants
 	
+	/**
+	 * Top Position
+	 *
+	 * The constant used to represent tabs on top.
+	 */
+	const POSITION_TOP = 1; 
+
+	/**
+	 * Right Position
+	 *
+	 * The constant used to represent tabs on the right.
+	 */
+	const POSITION_RIGHT = 2;
+
+	/**
+	 * Left Position
+	 *
+	 * The constant used to represent tabs on the left.
+	 */
+	const POSITION_LEFT = 3;
+	
+	/**
+	 * Bottom Position
+	 *
+	 * The constant used to represent tabs on the bottom.
+	 */
+	const POSITION_BOTTOM = 4;
+	
+	// }}}
 	// {{{ public properties
 	/**
 	 * Visible
@@ -32,6 +62,13 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 * @var string
 	 */
 	public $id = null;
+
+	/**
+	 * A value containing the desired position of the tabs
+	 *
+	 * @var constant
+	 */
+	public $tab_position = self::POSITION_TOP;
 
 	// }}}
 	// {{{ private properties
@@ -265,8 +302,23 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 */
 	protected function getInlineJavaScript()
 	{
-		return sprintf("var %s_obj = new YAHOO.widget.TabView('%s');",
-			$this->id, $this->id);
+		switch ($this->tab_position){
+		case self::POSITION_RIGHT:
+			$position = 'right';
+			break;
+		case self::POSITION_LEFT:
+			$position = 'left';
+			break;
+		case self::POSITION_BOTTOM:
+			$position = 'bottom';
+			break;
+		case self::POSITION_TOP:
+		default:
+			$position = 'top';
+			break;
+		}
+		return sprintf("var %s_obj = new YAHOO.widget.TabView".
+				"('%s', {orientation: '%s'});",$this->id, $this->id, $position);
 	}
 
 	// }}}
