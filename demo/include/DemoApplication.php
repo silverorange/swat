@@ -35,6 +35,7 @@ class DemoApplication
 		'ImageDisplay'      => 'SwatImageDisplay',
 		'MessageDisplay'    => 'SwatMessageDisplay',
 		'NavBar'            => 'SwatNavBar',
+		'NoteBook'          => 'SwatNoteBook',
 		'Pagination'        => 'SwatPagination',
 		'PasswordEntry'     => 'SwatPasswordEntry',
 		'RadioList'         => 'SwatRadioList',
@@ -285,6 +286,13 @@ class DemoApplication
 			$entries = array(
 				'SwatNavBar',
 				'SwatNavBarEntry',
+				);
+			break;
+
+		case 'NoteBook':
+			$entries = array(
+				'SwatNoteBook',
+				'SwatNoteBookPage',
 				);
 			break;
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="form">
+		<widget class="SwatNoteBook" id="my_notebook">
+			<widget class="SwatNoteBookPage" id="page1">
+				<property name="title">Title</property>
+				<widget class="SwatFormField" id="FormField2">
+				<property name="title">Form1</property>
+					<widget class="SwatSearchEntry" id="search">
+						<property name="title">Non-Default Title</property>
+					</widget>
+				</widget>
+			</widget>
+			<widget class="SwatNoteBookPage" id="page2">
+				<property name="title">Title2</property>
+				<widget class="SwatFormField" id="FormField3">
+				<property name="title">Form2</property>
+					<widget class="SwatSearchEntry" id="search2" />
+				</widget>  
+			</widget>
+		</widget>
+	</widget>
+</swatml>
