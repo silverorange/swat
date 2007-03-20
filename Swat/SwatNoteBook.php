@@ -47,6 +47,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 
 	// }}}
 	// {{{ public properties
+
 	/**
 	 * Visible
 	 *
@@ -71,7 +72,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	public $tab_position = self::POSITION_TOP;
 
 	// }}}
-	// {{{ private properties
+	// {{{ protected properties
 
 	/**
 	 * Pages affixed to this widget
