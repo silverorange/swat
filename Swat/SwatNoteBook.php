@@ -32,18 +32,18 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	const POSITION_RIGHT = 2;
 
 	/**
-	 * Left Position
-	 *
-	 * The constant used to represent tabs on the left.
-	 */
-	const POSITION_LEFT = 3;
-
-	/**
 	 * Bottom Position
 	 *
 	 * The constant used to represent tabs on the bottom.
 	 */
-	const POSITION_BOTTOM = 4;
+	const POSITION_BOTTOM = 3;
+
+	/**
+	 * Left Position
+	 *
+	 * The constant used to represent tabs on the left.
+	 */
+	const POSITION_LEFT = 4;
 
 	// }}}
 	// {{{ public properties
