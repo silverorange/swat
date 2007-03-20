@@ -93,26 +93,38 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function addChild()
 
 	/**
-	 * Adds a SwatNoteBookPage to this widget
+	 * Adds a {@link SwatNoteBookPage} to this notebook 
+	 * 
+	 * This method fulfills the {@link SwatUIParent} interface. It is used 
+	 * by {@link SwatUI} when building a widget tree and should not need to be
+	 * called elsewhere. To add a notebook page to a notebook, use 
+	 * {@link SwatNoteBook::addPage()}.
 	 *
-	 * @param object $object an instance of SwatNoteBookPage
+	 * @param SwatNoteBookPage $child the notebook page to add.
+	 *
+	 * @throws SwatInvalidClassException if the given object is not an instance
+	 *                                    of SwatNoteBookPage.
+	 *
+	 * @see SwatUIParent
+	 * @see SwatNoteBook::addPage()
 	 */
-	public function addChild(SwatObject $object)
+	public function addChild(SwatObject $child)
 	{
-		if ($object instanceof SwatNoteBookPage)
-			$this->addPage($object);
+		if ($child instanceof SwatNoteBookPage)
+			$this->addPage($child);
 		 else
 			throw new SwatInvalidClassException(
-				'You can only add SwatNoteBookPage.', 0, $object);
+				'Only SwatNoteBookPage objects may be nested within a '.
+				'SwatNoteBook object.', 0, $child);
 	}
 
 	// }}}
 	// {{{ public function addPage()
 
 	/**
-	 * Adds a SwatNoteBookPage to this widget.
+	 * Adds a {@link SwatNoteBookPage} to this notebook 
 	 *
-	 * @param object $page and instance of SwatNoteBookPage
+	 * @param SwatNoteBookPage $page the notebook page to add.
 	 */
 	public function addPage(SwatNoteBookPage $page)
 	{
@@ -124,13 +136,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function init()
 
 	/**
-	 * Initializaes this widget
-	 *
-	 * Initialization is done post-constuction. It is called by SwatUI and
-	 * may be called manually.
-	 *
-	 * Init allows properties to manually set on widgets between the
-	 * constructor and other initialization routines.
+	 * Initializaes this notebook 
 	 */
 	public function init()
 	{
@@ -143,10 +149,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function display()
 
 	/**
-	 * Displays this widget
-	 *
-	 * Displays this widget displays as well as recursively displays any child
-	 * widgets of this widget.
+	 * Displays this notebook
 	 */
 	public function display()
 	{
@@ -216,12 +219,9 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function addMessage()
 
 	/**
-	 * Adds a message
+	 * Adds a message to this notebook
 	 *
-	 * Adds a new mesage to this widget. The message will be shown by the
-	 * display() method as well as cause hasMessage() to return true.
-	 *
-	 * @param SwatMessage {@link Swat Message} the message object to add.
+	 * @param SwatMessage the message to add.
 	 *
 	 * @see SwatMessage
 	 */
@@ -236,10 +236,10 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	/**
 	 * Gets all messaages
 	 *
-	 * Gathers all messages from children of this widget and this widget
+	 * Gathers all messages from pages of this notebook and from this notebook
 	 * itself.
 	 *
-	 * @return array and array of {@link SwatMessage} objects.
+	 * @return array an array of {@link SwatMessage} objects.
 	 *
 	 * @see SwatMessage
 	 */
@@ -259,7 +259,8 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	/**
 	 * Checks for the presence of messages
 	 *
-	 * @return boolean true if there is a message in the subtree.
+	 * @return boolean true if there is a message in the widget subtree
+	 *                  starting with this notebook and false if there is not.
 	 */
 	public function hasMessage()
 	{
@@ -279,9 +280,9 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function getInlineJavaScript()
 
 	/**
-	 * Gets inline JavaScript used by this user-interface object
+	 * Gets the inline JavaScript used by this notebook
 	 *
-	 * @return string inline JavaScript used by this use-interface object.
+	 * @return string the inline JavaScript used by this notebook.
 	 */
 	protected function getInlineJavaScript()
 	{
