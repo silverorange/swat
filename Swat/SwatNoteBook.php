@@ -67,7 +67,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	/**
 	 * A value containing the desired position of the tabs
 	 *
-	 * @var constant
+	 * @var integer 
 	 */
 	public $tab_position = self::POSITION_TOP;
 
