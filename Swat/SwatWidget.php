@@ -93,7 +93,7 @@ abstract class SwatWidget extends SwatUIObject
 	// {{{ public function __construct()
 
 	/**
-	 * Creates a new SwatWidget
+	 * Creates a new widget
 	 *
 	 * @param string $id a non-visible unique id for this widget.
 	 */
@@ -120,6 +120,9 @@ abstract class SwatWidget extends SwatUIObject
 	// }}}
 	// {{{ abstract public function printWidgetTree()
 
+	/**
+	 * @todo document me
+	 */
 	abstract public function printWidgetTree();
 
 	// }}}
@@ -178,10 +181,11 @@ abstract class SwatWidget extends SwatUIObject
 	/**
 	 * Adds a message
 	 *
-	 * Adds a new message to this widget. The message will be shown by the
-	 * display() method as well as cause hasMessage() to return true.
+	 * Adds a new message to this widget. The message may be shown by the
+	 * display() method and will as cause {@link SwatWidget::hasMessage()} to
+	 * return as true.
 	 *
-	 * @param SwatMessage {@link SwatMessage} the message object to add.
+	 * @param SwatMessage the message object to add.
 	 *
 	 * @see SwatMessage
 	 */
@@ -208,7 +212,8 @@ abstract class SwatWidget extends SwatUIObject
 	/**
 	 * Checks for the presence of messages
 	 *
-	 * @return boolean true if there is an message in the subtree.
+	 * @return boolean true if there is an message in the widget subtree
+	 *                  starting at this widget and false if there is not.
 	 */
 	abstract public function hasMessage();
 
