@@ -88,7 +88,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	protected $messages = array();
 
 	// }}}
-	// {{{ public function __construct
+	// {{{ public function __construct()
 
 	/**
 	 * Creates a new SwatWidget
@@ -109,7 +109,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function addChild
+	// {{{ public function addChild()
 
 	/**
 	 * Adds a SwatNoteBookPage to this widget
@@ -126,7 +126,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function addPage
+	// {{{ public function addPage()
 
 	/**
 	 * Adds a SwatNoteBookPage to this widget.
@@ -140,7 +140,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function init
+	// {{{ public function init()
 
 	/**
 	 * Initializaes this widget
@@ -159,7 +159,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function display
+	// {{{ public function display()
 
 	/**
 	 * Displays this widget
@@ -213,7 +213,8 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function printWidgetTree
+	// {{{ public function printWidgetTree()
+
 	public function printWidgetTree()
 	{
 		echo get_class($this), ' ', $this->id;
@@ -231,7 +232,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function addMessage
+	// {{{ public function addMessage()
 
 	/**
 	 * Adds a message
@@ -249,7 +250,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function getMessages
+	// {{{ public function getMessages()
 
 	/**
 	 * Gets all messaages
@@ -272,7 +273,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function hasMessage
+	// {{{ public function hasMessage()
 
 	/**
 	 * Checks for the presence of messages
@@ -294,7 +295,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function getInlineJavaScript
+	// {{{ public function getInlineJavaScript()
 
 	/**
 	 * Gets inline JavaScript used by this user-interface object
