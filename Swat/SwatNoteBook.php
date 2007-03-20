@@ -16,13 +16,13 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
 class SwatNoteBook extends SwatWidget implements SwatUIParent
 {
 	// {{{ constants
-	
+
 	/**
 	 * Top Position
 	 *
 	 * The constant used to represent tabs on top.
 	 */
-	const POSITION_TOP = 1; 
+	const POSITION_TOP = 1;
 
 	/**
 	 * Right Position
@@ -37,14 +37,14 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 * The constant used to represent tabs on the left.
 	 */
 	const POSITION_LEFT = 3;
-	
+
 	/**
 	 * Bottom Position
 	 *
 	 * The constant used to represent tabs on the bottom.
 	 */
 	const POSITION_BOTTOM = 4;
-	
+
 	// }}}
 	// {{{ public properties
 	/**
@@ -72,7 +72,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 
 	// }}}
 	// {{{ private properties
-	
+
 	/**
 	 * Pages affixed to this widget
 	 *
@@ -107,10 +107,10 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 		$this->addStyleSheet('packages/swat/styles/swat-note-book.css',
 			Swat::PACKAGE_ID);
 	}
-	
-	// }}}	
+
+	// }}}
 	// {{{ public function addChild
-	
+
 	/**
 	 * Adds a SwatNoteBookPage to this widget
 	 *
@@ -121,11 +121,13 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 		if ($object instanceof SwatNoteBookPage)
 			$this->addPage($object);
 		 else
-			throw new SwatInvalidClassException('You can only add SwatNoteBookPage.', 0, $object);
+			throw new SwatInvalidClassException(
+				'You can only add SwatNoteBookPage.', 0, $object);
 	}
+
 	// }}}
 	// {{{ public function addPage
-	
+
 	/**
 	 * Adds a SwatNoteBookPage to this widget.
 	 *
@@ -139,7 +141,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 
 	// }}}
 	// {{{ public function init
-	
+
 	/**
 	 * Initializaes this widget
 	 *
@@ -150,16 +152,15 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 * constructor and other initialization routines.
 	 */
 	public function init()
-	{	
+	{
 		parent::init();
 		foreach($this->pages as $page)
 			$page->init();
-		
 	}
-	
+
 	// }}}
 	// {{{ public function display
-	
+
 	/**
 	 * Displays this widget
 	 *
@@ -170,7 +171,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	{
 		if (!$this->visible)
 			return;
-		
+
 		$li_counter = 0;
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
@@ -181,7 +182,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 		foreach ($this->pages as $page)
 		{
 			$li_counter++;
-			if ($li_counter == 1){
+			if ($li_counter == 1) {
 				$li_tag = new SwatHtmlTag('li');
 				$li_tag->class = 'selected';
 			} else {
@@ -193,7 +194,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 
 			$em_tag = new SwatHtmlTag('em');
 			$em_tag->setContent($page->title);
-			
+
 			$li_tag->open();
 			$anchor_tag->open();
 			$em_tag->display();
@@ -231,7 +232,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 
 	// }}}
 	// {{{ public function addMessage
-	
+
 	/**
 	 * Adds a message
 	 *
@@ -249,7 +250,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 
 	// }}}
 	// {{{ public function getMessages
-	
+
 	/**
 	 * Gets all messaages
 	 *
@@ -272,7 +273,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 
 	// }}}
 	// {{{ public function hasMessage
-	
+
 	/**
 	 * Checks for the presence of messages
 	 *
@@ -281,14 +282,14 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	public function hasMessage()
 	{
 		$has_message = false;
-		
+
 		foreach ($this->pages as $page) {
 			if ($page->hasMessage()) {
 				$has_message = true;
 				break;
 			}
 		}
-		
+
 		return $has_message;
 	}
 
@@ -302,7 +303,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 */
 	protected function getInlineJavaScript()
 	{
-		switch ($this->tab_position){
+		switch ($this->tab_position) {
 		case self::POSITION_RIGHT:
 			$position = 'right';
 			break;
@@ -317,10 +318,13 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 			$position = 'top';
 			break;
 		}
-		return sprintf("var %s_obj = new YAHOO.widget.TabView".
-				"('%s', {orientation: '%s'});",$this->id, $this->id, $position);
+
+		return sprintf("var %s_obj = new YAHOO.widget.TabView(".
+				"'%s', {orientation: '%s'});",
+				$this->id, $this->id, $position);
 	}
 
 	// }}}
 }
+
 ?>
