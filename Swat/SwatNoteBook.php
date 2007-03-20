@@ -49,22 +49,6 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public properties
 
 	/**
-	 * Visible
-	 *
-	 * Whether the widget is display. All widgets should respect this.
-	 *
-	 * @var boolean
-	 */
-	public $visible = true;
-
-	/**
-	 * A non-visible unique id for this widget, or null
-	 *
-	 * @var string
-	 */
-	public $id = null;
-
-	/**
 	 * A value containing the desired position of the tabs
 	 *
 	 * @var integer 
@@ -80,13 +64,6 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 * @var array
  	 */
 	protected $pages = array();
-
-	/**
-	 * Messages affixed to this widget
-	 *
-	 * @var array
-	 */
-	protected $messages = array();
 
 	// }}}
 	// {{{ public function __construct()
