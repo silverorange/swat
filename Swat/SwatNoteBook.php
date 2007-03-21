@@ -277,6 +277,27 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects needed by this container
+	 *
+	 * @reutnr SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 * this container.
+	 *
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
+	 */
+	public function getHtmlHeadEntrySet()
+	{
+		$set = parent::getHtmlHeadEntrySet();
+
+			foreach ($this->pages as $child_widget)
+			$set->addEntrySet($child_widget->getHtmlHeadEntrySet());
+
+		return $set;
+	}
+
+	// }}}
 	// {{{ public function getInlineJavaScript()
 
 	/**
