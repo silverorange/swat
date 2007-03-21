@@ -524,7 +524,7 @@ class SwatUI extends SwatObject
 		// name is required in the DTD
 		$name = trim($property_node->getAttribute('name'));
 		$value = $property_node->nodeValue;
-		
+
 		$array_property = false;
 
 		if (preg_match('/^(.*)\[(.*)\]$/u', $name, $regs)) {
