@@ -445,7 +445,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			if ($cloned_object === null)
 				throw new SwatException('Cloned widget tree does not match '.
 					'prototype widget tree.');
-			elseif ($cloned_object->$property instanceof SwatCellRendererMapping)
+
+			if ($cloned_object->$property instanceof SwatCellRendererMapping)
 				$cloned_object->$property = $value;
 		}
 	}
