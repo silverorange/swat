@@ -47,11 +47,10 @@ class SwatSearchEntry extends SwatEntry
 	{
 		$value = '';
 
-		if ($this->value === null) {
+		if ($this->value === null)
 			$value = $this->title;
-		} else {
+		else
 			$value = parent::getDisplayValue();
-		}
 
 		return $value;
 	}
