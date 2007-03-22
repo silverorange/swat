@@ -58,6 +58,15 @@ class NoteBookDemo extends Demo
 
 		$message->secondary_content = 'This message has secondary content.';
 		$long_message_display->add($message);
+
+		$message = new SwatMessage('Note:');
+		$message->secondary_content =
+		'The PHP at the bottom of the page is not required '.
+		'to use SwatNoteBook. It is simply for the '.
+		'message widgets.';
+
+		$ui->getWidget('note')->add($message);
+
 	}
 
 	// }}}
