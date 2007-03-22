@@ -2,6 +2,7 @@
 <!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
 <swatml>
 	<widget class="SwatForm" id="form">
+
 		<widget class="SwatFieldset">
 			<property name="title">Top Position</property>
 			<widget class="SwatNoteBook" id="my_notebook">
@@ -30,7 +31,8 @@
 					</widget>
 				</widget>
 			</widget>
-		</widget>	
+		</widget>
+
 		<widget class="SwatFieldset">
 			<property name="title">Right Position</property>
 			<widget class="SwatNoteBook" id="my_notebook2">
@@ -57,6 +59,7 @@
 				</widget>
 			</widget>
 		</widget>
+
 		<widget class="SwatFieldset">
 			<property name="title">Left Position</property>
 			<widget class="SwatNoteBook" id="my_notebook3">
@@ -77,6 +80,7 @@
 				</widget>
 			</widget>
 		</widget>
+
 		<widget class="SwatFieldset">
 			<property name="title">Bottom Position</property>
 			<widget class="SwatNoteBook" id="my_notebook4">
@@ -105,5 +109,7 @@
 				</widget>
 			</widget>
 		</widget>
+
+		<widget class="SwatMessageDisplay" id="note" />
 	</widget>
 </swatml>
