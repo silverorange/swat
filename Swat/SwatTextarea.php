@@ -61,6 +61,17 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	public $maxlength = null;
 
 	/**
+	 * A string containing characters that are ignored when calculating the
+	 * length this textarea's value
+	 *
+	 * By default, no characters are ignored when calculating the length of
+	 * this textarea's value.
+	 *
+	 * @var string 
+	 */
+	public $maxlength_ignored_characters = '';
+
+	/**
 	 * Whether or not this textarea is dynamically resizeable with JavaScript
 	 *
 	 * @var boolean
@@ -155,16 +166,16 @@ class SwatTextarea extends SwatInputControl implements SwatState
 			return;
 
 		$this->value = $data[$this->id];
-		$len = strlen($this->value);
+		$length = $this->getValueLength();
 
-		if ($len == 0)
+		if ($length == 0)
 			$this->value = null;
 
-		if ($this->required && $len == 0) {
+		if ($this->required && $length == 0) {
 			$message = Swat::_('The %s field is required.');
 			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 
-		} elseif ($this->maxlength !== null && $len > $this->maxlength) {
+		} elseif ($this->maxlength !== null && $length > $this->maxlength) {
 			$message = sprintf(
 				Swat::_('The %%s field can be at most %s characters long.'),
 				$this->maxlength);
@@ -219,6 +230,27 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	public function getFocusableHtmlId()
 	{
 		return ($this->visible) ? $this->id : null;
+	}
+
+	// }}}
+	// {{{ protected function getValueLength()
+
+	/**
+	 * Gets the computed length of the value of this textarea
+	 *
+	 * @return integer the length of the value of this textarea
+	 */
+	protected function getValueLength()
+	{
+		if ($this->maxlength_ignored_characters != '') {
+			$chars = preg_quote($this->maxlength_ignored_characters, '/');
+			$pattern = sprintf('/[%s]/u', $chars);
+			$value = preg_replace($pattern, '', $this->value);
+			$length = strlen($value);
+		} else {
+			$length = strlen($this->value);
+		}
+		return $length;
 	}
 
 	// }}}
