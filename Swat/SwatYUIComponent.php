@@ -123,8 +123,13 @@ class SwatYUIComponent extends SwatObject
 	 *                                     the style sheet exists in. If the
 	 *                                     directory is not specified, this
 	 *                                     component's id is used.
+	 * @param boolean $has_min_version optional. Whether or not the style-sheet
+	 *                                  for this component has a minimized
+	 *                                  version in the YUI distribution.
+	 *                                  Defaults to true.
 	 */
-	public function addStyleSheet($component_directory = '')
+	public function addStyleSheet($component_directory = '',
+		$has_min_version = true)
 	{
 		if (strlen($component_directory) == 0)
 			$component_directory = $this->id;
@@ -135,8 +140,7 @@ class SwatYUIComponent extends SwatObject
 			'normal' => '',
 		);
 
-		// the menu.css and tabview.css is not distributed in a minimized form
-		if ($this->id == 'menu' || $this->id == 'tabview')
+		if (!$has_min_version)
 			$modes['min'] = '';
 
 		$filename_template =
