@@ -50,7 +50,7 @@ class SwatCalendar extends SwatControl
 
 		$this->requires_id = true;
 
-		$yui = new SwatYUI(array('dom'));
+		$yui = new SwatYUI(array('dom', 'container'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript('packages/swat/javascript/swat-calendar.js',
