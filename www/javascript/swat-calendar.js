@@ -54,6 +54,7 @@ function SwatCalendar(id, start_date, end_date)
 		this.createOverlay, this, true);
 
 	this.open = false;
+	this.positioned = false;
 }
 
 /**
@@ -670,10 +671,15 @@ SwatCalendar.prototype.draw = function()
 		cur_html + close_controls;
 
 	if (!this.open) {
-		var toggle_button = document.getElementById(this.id + '_toggle');
-		this.overlay.cfg.setProperty('context', [toggle_button, 'tl', 'bl']);
-		this.overlay.show();
+		// only set position once
+		if (!this.positioned) {
+			var toggle_button = document.getElementById(this.id + '_toggle');
+			this.overlay.cfg.setProperty('context',
+				[toggle_button, 'tl', 'bl']);
 
+			this.positioned = true;
+		}
+		this.overlay.show();
 		this.open = true;
 	}
 }
