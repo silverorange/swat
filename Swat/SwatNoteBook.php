@@ -280,10 +280,11 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this container
+	 * Gets the {@link SwatHtmlHeadEntry} objects needed by this notebook
 	 *
-	 * @reutnr SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 * this container.
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this notebook and any UI objects in this
+	 *                               notebook's widget subtree.
 	 *
 	 * @see SwatUIObject::getHtmlHeadEntrySet()
 	 */
@@ -291,14 +292,14 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	{
 		$set = parent::getHtmlHeadEntrySet();
 
-			foreach ($this->pages as $child_widget)
-			$set->addEntrySet($child_widget->getHtmlHeadEntrySet());
+		foreach ($this->pages as $page)
+			$set->addEntrySet($page->getHtmlHeadEntrySet());
 
 		return $set;
 	}
 
 	// }}}
-	// {{{ public function getInlineJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
 	 * Gets the inline JavaScript used by this notebook
