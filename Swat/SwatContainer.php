@@ -422,21 +422,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ protected function displayChildren()
-
-	/**
-	 * Displays the child widgets of this container
-	 *
-	 * Subclasses that override the display method will typically call this
-	 * method to display child widgets.
-	 */
-	protected function displayChildren()
-	{
-		foreach ($this->children as &$child)
-			$child->display();
-	}
-
-	// }}}
 	// {{{ public function addMessage()
 
 	/**
@@ -589,6 +574,21 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 			}
 			echo '</ul>';
 		}
+	}
+
+	// }}}
+	// {{{ protected function displayChildren()
+
+	/**
+	 * Displays the child widgets of this container
+	 *
+	 * Subclasses that override the display method will typically call this
+	 * method to display child widgets.
+	 */
+	protected function displayChildren()
+	{
+		foreach ($this->children as &$child)
+			$child->display();
 	}
 
 	// }}}
