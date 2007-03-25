@@ -7,14 +7,28 @@ require_once 'Swat/SwatNavBarEntry.php';
 require_once 'Swat/SwatString.php';
 
 /**
- * Visible navigation tool
+ * Visible navigation tool (breadcrumb trail)
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @see       SwatNavBarEntry
  */
 class SwatNavBar extends SwatControl implements Countable
 {
+	// {{{ public properties
+
+	/**
+	 * Whether or not to display the last entry in this navbar as a link
+	 *
+	 * If set to false, the last entry is displayed as text even if the last
+	 * navbar entry has a link. Defaults to true.
+	 *
+	 * @var boolean
+	 */
+	$link_last_entry = true;
+
+	// }}}
 	// {{{ private properties
 
 	/**
@@ -257,13 +271,9 @@ class SwatNavBar extends SwatControl implements Countable
 	 * Displays this navigational bar
 	 *
 	 * Displays each entry separated by a special character and outputs
-	 * entries with URI's as anchor tags.
-	 *
-	 * @param boolean $link_last_entry if true will show the last entry as
-	 *                                  a hyperlink. If false, will show the
-	 *                                  last entry as just text.
+	 * navbar entries with links as anchor tags.
 	 */
-	public function display($link_last_entry = true)
+	public function display()
 	{
 		if (!$this->visible)
 			return;
@@ -284,7 +294,7 @@ class SwatNavBar extends SwatControl implements Countable
 			}
 
 			// link all entries or link all but the last entry
-			$link = ($link_last_entry || $i < $count);
+			$link = ($this->link_last_entry || $i < $count);
 			
 			$this->displayEntry($entry, $link);
 
