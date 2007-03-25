@@ -26,7 +26,17 @@ class SwatNavBar extends SwatControl implements Countable
 	 *
 	 * @var boolean
 	 */
-	$link_last_entry = true;
+	public $link_last_entry = true;
+
+	/**
+	 * Separator characters displayed between each navbar entry in this navbar
+	 *
+	 * The default separator is a non-breaking space followed by a right
+	 * guillemet followed by a breaking space.
+	 *
+	 * @var string
+	 */
+	public $separator = ' » ';
 
 	// }}}
 	// {{{ private properties
@@ -288,10 +298,8 @@ class SwatNavBar extends SwatControl implements Countable
 
 		foreach ($this->entries as $entry) {
 			// display separator
-			if ($i > 1) {
-				// first space is a non-breaking space
-				echo ' » ';
-			}
+			if ($i > 1)
+				echo SwatString::minimizeEntities($this->separator);
 
 			// link all entries or link all but the last entry
 			$link = ($this->link_last_entry || $i < $count);
