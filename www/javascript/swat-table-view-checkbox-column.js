@@ -39,7 +39,7 @@ SwatTableViewCheckboxColumn.handleClick = function(event, object)
 	object.checkAllInit();
 }
 
-SwatTableViewCheckboxColumn.prototype.checkAllInit = function()
+SwatTableViewCheckboxColumn.prototype.updateCheckAll = function()
 {
 	if (this.check_all == null)
 		return;
