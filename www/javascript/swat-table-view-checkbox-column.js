@@ -36,7 +36,7 @@ SwatTableViewCheckboxColumn.handleClick = function(event, object)
 {
 	var node = YAHOO.util.Event.getTarget(event);
 	object.highlightRow(node);
-	object.checkAllInit();
+	object.updateCheckAll();
 }
 
 SwatTableViewCheckboxColumn.prototype.updateCheckAll = function()
