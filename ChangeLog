@@ -1,3 +1,198 @@
+2007-03-25  gauthierm
+
+	* [r16175] swat/trunk/Swat/SwatNavBar.php:
+	  Added ability to set separator character to SwatNavBar. Also
+	  fixed a typo in my last commit.
+	* [r16174] swat/trunk/Swat/SwatNavBar.php:
+	  Remove optional parameter from display method and make it a
+	  public property controllable from SwatML. Also update
+	  documentation.
+
+2007-03-24  gauthierm
+
+	* [r16173] swat/trunk/Swat/SwatYUI.php,
+	  swat/trunk/Swat/SwatYUIComponent.php:
+	  Handle case where no minimized version of the CSS exists better
+	  and add YUI container CSS assets in SwatYUI component generation
+	  method.
+	* [r16172] swat/trunk/Swat/SwatContainer.php:
+	  protected after public
+	* [r16171] swat/trunk/Swat/SwatNoteBook.php:
+	  small code cleanups
+	* [r16170] swat/trunk/www/javascript/swat-calendar.js:
+	  Only set overlay position once.
+	* [r16169] swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/www/javascript/swat-calendar.js:
+	  Use Yahoo UI Library overlay widget to draw SwatCalendar. This
+	  fixes some tricky z-index bugs in IE6 and abstracts the
+	  JavaScript positioning code out of SwatCalendar. Finishes #741.
+
+2007-03-22  gauthierm
+
+	* [r16141] swat/trunk/Swat/SwatTextarea.php:
+	  Add maxlength_ignored_characters property to SwatTextarea to aid
+	  in fixing #750.
+
+2007-03-22  charles
+
+	* [r16111] swat/trunk/demo/include/demos/NoteBookDemo.php,
+	  swat/trunk/demo/include/demos/notebook.xml:
+	  Added some white space into the XML so it would help break up
+	  the file and make it easier to read.
+	  Also added a note at the end of the demo explaining that the PHP
+	  isn't required for SwatNoteBook itself.
+	* [r16090] swat/trunk/Swat/SwatSearchEntry.php:
+	  Removed some curly brackets that weren't required because they
+	  contain only single line statements.
+
+2007-03-21  gauthierm
+
+	* [r16084] swat/trunk/Swat/SwatCellRendererContainer.php:
+	  Always set object property to the new mapping object if an
+	  object is specified. This is a followup to ticket #562 and
+	  revision r14940. This allows widget cell renderers defined in
+	  PHP (rather than SwatML) to load data-properties proeprly.
+	* [r16083] swat/trunk/Swat/SwatUI.php:
+	  Whitespace
+	* [r16082] swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  else is not required here since we threw an exception
+
+2007-03-21  charles
+
+	* [r16080] swat/trunk/demo/include/demos/NoteBookDemo.php,
+	  swat/trunk/demo/include/demos/notebook.xml:
+	  Added more widgets to the demo to show many ways SwatNoteBook
+	  can be used.
+	* [r16079] swat/trunk/Swat/SwatNoteBook.php:
+	  Changed getHtmlHeadEntrySet() so that the notebook will display
+	  children widgets correctly.
+
+2007-03-20  gauthierm
+
+	* [r16051] swat/trunk/Swat/SwatNoteBookPage.php:
+	  Code cleanups
+	* [r16050] swat/trunk/Swat/SwatWidget.php:
+	  doc cleanup
+	* [r16049] swat/trunk/Swat/SwatNoteBook.php:
+	  Tidy and fill out documentation.
+	* [r16048] swat/trunk/Swat/SwatNoteBook.php:
+	  require correct files. SUIParent instead of SwatUIObject since
+	  that's what the class implements, SwatWidget since that's what
+	  the class extends, SwatYUI since it is used in the __construct()
+	  method, SwatNoteBookPage since it is used in the type hinting
+	  and as a stupid rule, we don't require SwatHtmlTag. We assume it
+	  is required elsewhere. We may fix this everywhere at some point
+	  in the ambiguous future.
+	* [r16047] swat/trunk/Swat/SwatNoteBook.php:
+	  Add links to SwatNoteBookPage in class-level docblock
+	* [r16046] swat/trunk/Swat/SwatNoteBook.php:
+	  use spaces to align constant values.
+	* [r16045] swat/trunk/Swat/SwatNoteBook.php:
+	  Use the same ordering used by CSS to list positions. There's no
+	  real advantage to this other than I'm used to the order
+	  top-right-bottom-left from CSS.
+	* [r16044] swat/trunk/Swat/SwatNoteBook.php:
+	  These properties are already defined in SwatWidget (the parent
+	  class). No need to redefine them here.
+	* [r16043] swat/trunk/Swat/SwatNoteBook.php:
+	  This is still an integer even though it is set to a constant.
+	* [r16042] swat/trunk/Swat/SwatNoteBook.php:
+	  these properties are protected, not private
+	* [r16041] swat/trunk/Swat/SwatNoteBook.php:
+	  Use parenthesis on folding titles to indicate these are methods.
+	* [r16040] swat/trunk/Swat/SwatNoteBook.php:
+	  Whitespace coding-convention fixes.
+
+2007-03-19  charles
+
+	* [r16039] swat/trunk/Swat/SwatNoteBook.php:
+	  Added support for right, left and bottom placement of tabs.
+
+2007-03-19  gauthierm
+
+	* [r16029] swat/trunk/Swat/SwatNoteBook.php:
+	  respect Swat inline javascript displaying API change.
+
+2007-03-19  charles
+
+	* [r16027] swat/trunk/Swat/SwatNoteBook.php:
+	  Changed a few convention errors mike pointed out.
+	* [r16026] swat/trunk/Swat/SwatNoteBook.php:
+	  Changes how 1 is added in the counter
+	* [r16024] swat/trunk/Swat/SwatNoteBook.php,
+	  swat/trunk/Swat/SwatNoteBookPage.php,
+	  swat/trunk/demo/include/DemoApplication.php,
+	  swat/trunk/demo/include/demos/notebook.xml,
+	  swat/trunk/www/styles/swat-note-book.css:
+	  This is the NoteBook Widget and demo files.
+
+2007-03-18  gauthierm
+
+	* [r16011] swat/trunk/www/javascript/swat-check-all.js,
+	  swat/trunk/www/javascript/swat-checkbox-entry-list.js,
+	  swat/trunk/www/javascript/swat-checkbox-list.js:
+	  Use YUI to cleanly extend and override the checkbox list for the
+	  checkbox entry list.
+	* [r16008] swat/trunk/www/javascript/swat-change-order.js:
+	  Clean up value updating method so events fire when they are
+	  supposed to.
+	* [r16007] swat/trunk/www/javascript/swat-change-order.js:
+	  Fire a YUI custom event when the order of elements changes.
+
+2007-03-17  gauthierm
+
+	* [r15995] swat/trunk/Swat/SwatTableViewInputRow.php,
+	  swat/trunk/www/javascript/swat-table-view-input-row.js:
+	  Highlight newly added rows using an animation effect. I think
+	  this is all we can do for ticket #714.
+	* [r15990] swat/trunk/Swat/Swat.php:
+	  Rename java_script as javascript like everywheres else. I think
+	  javascript is the conventional usage, not just for our code.
+	* [r15989] swat/trunk/Swat/Swat.php:
+	  Only display inline JavaScript if it is not an empty string.
+	* [r15984] swat/trunk/Swat/Swat.php,
+	  swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/Swat/SwatCascadeFlydown.php,
+	  swat/trunk/Swat/SwatChangeOrder.php,
+	  swat/trunk/Swat/SwatCheckAll.php,
+	  swat/trunk/Swat/SwatCheckboxEntryList.php,
+	  swat/trunk/Swat/SwatCheckboxList.php,
+	  swat/trunk/Swat/SwatCheckboxTree.php,
+	  swat/trunk/Swat/SwatColorEntry.php,
+	  swat/trunk/Swat/SwatConfirmationButton.php,
+	  swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/Swat/SwatDisclosure.php,
+	  swat/trunk/Swat/SwatExpandableCheckboxTree.php,
+	  swat/trunk/Swat/SwatForm.php,
+	  swat/trunk/Swat/SwatFrameDisclosure.php,
+	  swat/trunk/Swat/SwatGroupedMenu.php,
+	  swat/trunk/Swat/SwatMenu.php,
+	  swat/trunk/Swat/SwatMessageDisplay.php,
+	  swat/trunk/Swat/SwatSimpleColorEntry.php,
+	  swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTextarea.php,
+	  swat/trunk/Swat/SwatTextareaEditor.php,
+	  swat/trunk/Swat/SwatTimeEntry.php,
+	  swat/trunk/Swat/SwatUIObject.php:
+	  Make displayInlineJavaScript() a public static method of Swat so
+	  it can be used in objects that are not SwatUIObjects.
+	* [r15983] swat/trunk/Swat/SwatState.php:
+	  Fix folding.
+
+2007-03-14  gauthierm
+
+	* [r15895] swat/trunk/Swat/SwatYUI.php:
+	  Add component and dependencies for tab-view widget.
+	* [r15894] swat/trunk/Swat/SwatYUIComponent.php:
+	  Fix a typo and add tabview to the list of CSS file location
+	  exceptions.
+
+2007-03-13  nrf
+
+	* [r15835] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.11
+
 2007-03-12  steven
 
 	* [r15787] swat/trunk/www/styles/swat-change-order.css,
