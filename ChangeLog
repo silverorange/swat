@@ -1,3 +1,14 @@
+2007-03-26  gauthierm
+
+	* [r16206] swat/trunk/www/styles/swat-calendar.css:
+	  Update calendar styles to work with SwatCalendar's new YUI
+	  overlay.
+
+2007-03-26  nrf
+
+	* [r16190] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.12
+
 2007-03-25  gauthierm
 
 	* [r16175] swat/trunk/Swat/SwatNavBar.php:
