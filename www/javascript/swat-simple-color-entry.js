@@ -108,6 +108,7 @@ SwatSimpleColorEntry.prototype.close = function()
 {
 	this.overlay.hide();
 	this.toggle_button.setAttribute('title', SwatSimpleColorEntry.open_text);
+	SwatZIndexManager.lowerElement(this.palette);
 	this.is_open = false;
 }
 
@@ -125,6 +126,7 @@ SwatSimpleColorEntry.prototype.open = function()
 
 	this.overlay.show();
 	this.toggle_button.setAttribute('title', SwatSimpleColorEntry.close_text);
+	SwatZIndexManager.raiseElement(this.palette);
 	this.is_open = true;
 }
 
