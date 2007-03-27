@@ -56,9 +56,6 @@ class SwatCalendar extends SwatControl
 		$this->addJavaScript('packages/swat/javascript/swat-calendar.js',
 			Swat::PACKAGE_ID);
 
-		$this->addJavaScript('packages/swat/javascript/swat-z-index-manager.js',
-			Swat::PACKAGE_ID);
-
 		$this->addStyleSheet('packages/swat/styles/swat-calendar.css',
 			Swat::PACKAGE_ID);
 

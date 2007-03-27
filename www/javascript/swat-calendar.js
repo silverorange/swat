@@ -92,7 +92,7 @@ SwatCalendar.prototype.drawButton = function()
 		'<img src="packages/swat/images/calendar.png" ' +
 		'alt="' + SwatCalendar.toggle_alt_text + '" ' +
 		'class="swat-calendar-icon" id="' + this.id + '_toggle" />' +
-		'</a><br />' +
+		'</a>' +
 		'<div id="' + this.id + '_div" class="swat-calendar-div">' +
 			'<div class="hd"></div>' +
 			'<div class="bd"></div>' +
@@ -393,17 +393,11 @@ SwatCalendar.prototype.toggle = function()
 
 		document.getElementById(this.id + '_toggle').setAttribute(
 			'title', SwatCalendar.open_toggle_text);
-
-		var calendar_div = document.getElementById(this.id + '_div');
-		SwatZIndexManager.lowerElement(calendar_div);
 	} else {
 		this.draw();
 
 		document.getElementById(this.id + '_toggle').setAttribute(
 			'title', SwatCalendar.close_toggle_text);
-
-		var calendar_div = document.getElementById(this.id + '_div');
-		SwatZIndexManager.raiseElement(calendar_div);
 	}
 }
 
