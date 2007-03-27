@@ -13,7 +13,7 @@ require_once 'Swat/SwatYUI.php';
  * predefined color choices. It requires JavaScript to work correctly.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatSimpleColorEntry extends SwatInputControl implements SwatState
@@ -73,7 +73,7 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 
 		$this->requires_id = true;
 
-		$yui = new SwatYUI(array('dom'));
+		$yui = new SwatYUI(array('dom', 'event', 'container'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript(
@@ -117,28 +117,6 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		$swatch_div->id = $this->id.'_swatch';
 		$swatch_div->setContent('&nbsp;');
 		$swatch_div->display();
-
-		$anchor_tag = new SwatHtmlTag('a');
-		$anchor_tag->href = "javascript:{$this->id}_obj.toggle();";
-		$anchor_tag->open();
-
-		$img_tag = new SwatHtmlTag('img');
-		$img_tag->src = 'packages/swat/images/color-palette.png';
-		$img_tag->alt = Swat::_('Color entry toggle graphic.');
-		$img_tag->class = 'swat-simple-color-entry-toggle';
-		$img_tag->id = $this->id.'_toggle';
-
-		$img_tag->display();
-
-		$anchor_tag->close();
-
-		echo '<br />';
-
-		$div_tag = new SwatHtmlTag('div');
-		$div_tag->id = $this->id.'_palette';
-		$div_tag->class = 'swat-simple-color-palette-hidden';
-		$div_tag->setContent('&nbsp;');
-		$div_tag->display();
 
 		$container_div_tag->close();
 
@@ -204,9 +182,41 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
+		static $shown = false;
+
+		if (!$shown) {
+			$javascript = $this->getInlineJavaScriptTranslations();
+			$shown = true;
+		} else {
+			$javascript = '';
+		}
+
 		$colors = "'".implode("', '", $this->colors)."'";
-		return "var {$this->id}_obj = new SwatSimpleColorEntry(".
+		$javascript.= "var {$this->id}_obj = new SwatSimpleColorEntry(".
 			"'{$this->id}', [{$colors}]);";
+
+		return $javascript;
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScriptTranslations()
+
+	/**
+	 * Gets translatable string resources for the JavaScript object for
+	 * this widget
+	 *
+	 * @return string translatable JavaScript string resources for this widget.
+	 */
+	protected function getInlineJavaScriptTranslations()
+	{
+		$open_text         = Swat::_('open palette');
+		$close_text        = Swat::_('close palette');
+		$toggle_alt_text   = Swat::_('toggle palette graphic');
+
+		return
+			"SwatSimpleColorEntry.open_text = '{$open_text}';\n".
+			"SwatSimpleColorEntry.close_text = '{$close_text}';\n".
+			"SwatSimpleColorEntry.toggle_alt_text = '{$toggle_alt_text}';\n";
 	}
 
 	// }}}
