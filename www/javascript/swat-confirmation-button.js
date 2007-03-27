@@ -1,23 +1,25 @@
-function SwatConfirmationButton(id)
+function SwatConfirmationButton(id, show_processing_throbber)
 {
-	this.id = id;
-
-	this.button = document.getElementById(this.id);
-
-	YAHOO.util.Event.addListener(this.button, 'click',
-		SwatConfirmationButton.clickHandler, this);
+	this.confirmation_message = '';
+	SwatConfirmationButton.superclass.constructor.call(this, id,
+		show_processing_throbber);
 }
 
-SwatConfirmationButton.clickHandler = function(event, object)
-{
-	var confirmed = window.confirm(object.message);
+YAHOO.extend(SwatConfirmationButton, SwatButton, {
 
-	if (!confirmed) {
+handleClick: function(event, object)
+{
+	var confirmed = window.confirm(this.confirmation_message);
+	if (confirmed) {
+		SwatConfirmationButton.superclass.handleClick.call(this, event);
+	} else {
 		YAHOO.util.Event.preventDefault(event);
 	}
 }
 
-SwatConfirmationButton.prototype.setMessage = function(message)
+});
+
+SwatConfirmationButton.prototype.setConfirmationMessage = function(message)
 {
-	this.message = message;
+	this.confirmation_message = message;
 }

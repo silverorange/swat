@@ -2,6 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
@@ -9,7 +10,7 @@ require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
 /**
  * A button widget
  *
- * This widget displays as an XHTML form submit button, so it should be used
+ * This widget displays as an XHTML form submit button, so it must be used
  * within {@link SwatForm}.
  *
  * @package   Swat
@@ -58,6 +59,27 @@ class SwatButton extends SwatInputControl
 	 */
 	public $tab_index = null;
 
+	/**
+	 * Whether or not to show a processing throbber when this button is
+	 * clicked
+	 *
+	 * Showing a processing throbber is appropriate when this button is used
+	 * to submit forms that can take a long time to process. By default, the
+	 * processing throbber is not displayed.
+	 *
+	 * @var boolean
+	 */
+	public $show_processing_throbber = false;
+
+	/** 
+	 * Optional content to display beside the processing throbber
+	 *
+	 * @var string
+	 *
+	 * @see SwatButton::$show_processing_throbber
+	 */
+	public $processing_throbber_message = '';
+
 	// }}}
 	// {{{ protected properties
 
@@ -95,6 +117,12 @@ class SwatButton extends SwatInputControl
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
+
+		$yui = new SwatYUI(array('dom', 'event', 'animation'));
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+		$this->addJavaScript(
+			'packages/swat/javascript/swat-button.js',
+			Swat::PACKAGE_ID);
 
 		$this->requires_id = true;
 	}
@@ -148,6 +176,8 @@ class SwatButton extends SwatInputControl
 			$input_tag->disabled = 'disabled';
 
 		$input_tag->display();
+
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -279,6 +309,51 @@ class SwatButton extends SwatInputControl
 		$classes = array_merge($classes, $this->classes);
 
 		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function getJavaScriptClass()
+
+	/**
+	 * Gets the name of the JavaScript class to instantiate for this button 
+	 *
+	 * Subclasses of this class may want to return a subclass of the default
+	 * JavaScript button class.
+	 *
+	 * @return string the name of the JavaScript class to instantiate for this
+	 *                 button. Defaults to 'SwatButton'.
+	 */
+	protected function getJavaScriptClass()
+	{
+		return 'SwatButton';
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScript()
+
+	/**
+	 * Gets the inline JavaScript required for this control
+	 *
+	 * @return stirng the inline JavaScript required for this control.
+	 */
+	protected function getInlineJavaScript()
+	{
+		$show_processing_throbber = ($this->show_processing_throbber) ?
+			'true' : 'false';
+
+		$javascript = sprintf("var %s_obj = new %s('%s', %s);",
+			$this->id,
+			$this->getJavaScriptClass(),
+			$this->id,
+			$show_processing_throbber);
+
+		if ($this->show_processing_throbber) {
+			$javascript.= sprintf("\n%s_obj.setProcessingMessage(%s);",
+				$this->id, SwatString::quoteJavaScriptString(
+					$this->processing_throbber_message));
+		}
+
+		return $javascript;
 	}
 
 	// }}}
