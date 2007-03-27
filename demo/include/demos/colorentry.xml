@@ -15,5 +15,20 @@
 			</widget>
 		</widget>
 
+		<!-- make the simple color entry do something interesting -->
+		<widget class="SwatContentBlock">
+			<property name="content"><![CDATA[<script type="text/javascript">
+			function handleColorChange(type, color)
+			{
+				var navbar = document.getElementById('navbar');
+				navbar.style.background = color;
+			}
+
+			simple_color_entry_obj.color_change_event.subscribe(
+				handleColorChange);
+			</script>]]></property>
+			<property name="content_type">text/xml</property>
+		</widget>
+
 	</widget>
 </swatml>
