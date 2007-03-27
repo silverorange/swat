@@ -195,6 +195,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 				if ($this->dependent_boxes) {
 					// show a checkbox just for the check-all functionality
 					$this->input_tag->id = $this->id.'_'.$index;
+					$this->input_tag->value = null;
 
 					$this->label_tag->for = $this->id.'_'.$index;
 					$this->label_tag->class =
