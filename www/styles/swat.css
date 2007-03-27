@@ -240,6 +240,20 @@ ul.swat-radio-list {
 	white-space: nowrap;
 }
 
+.swat-button {
+	vertical-align: middle;
+}
+
+span.swat-button-processing-throbber {
+	opacity: 0;
+	filter: alpha(opacity=0);
+	-moz-opacity: 0;
+}
+
+span.swat-button-processing-throbber img {
+	margin: 0 0.5em;
+	vertical-align: middle;
+}
 
 /* Insensitive widgets */
 

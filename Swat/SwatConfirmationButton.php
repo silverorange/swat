@@ -52,17 +52,18 @@ class SwatConfirmationButton extends SwatButton
 	}
 
 	// }}}
-	// {{{ public function display()
+	// {{{ protected function getJavaScriptClass()
 
 	/**
-	 * Displays this button
+	 * Gets the name of the JavaScript class to instantiate for this
+	 * confirmation button 
 	 *
-	 * Outputs an XHTML input tag.
+	 * @return string the name of the JavaScript class to instantiate for this
+	 *                 confirmation button. 'SwatConfirmationButton'.
 	 */
-	public function display()
+	protected function getJavaScriptClass()
 	{
-		parent::display();
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		return 'SwatConfirmationButton';
 	}
 
 	// }}}
@@ -75,33 +76,10 @@ class SwatConfirmationButton extends SwatButton
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf("var %s = new SwatConfirmationButton('%s');",
-			$this->id, $this->id);
-
-		$message = $this->confirmation_message;
-
-		// NOTE: Most of the following escaping is required to prevent XSS
-		//       attacks.
-
-		// escape escape characters
-		$message = str_replace('\\', '\\\\', $message); 
-
-		// escape single quotes
-		$message = str_replace("'", "\'", $message);
-
-		// convert newlines
-		$message = str_replace("\n", '\n', $message);
-
-		// break closing script tags
-		$message = preg_replace('/<\/(script)([^>]*)?>/ui', "</\\1' + '\\2>",
-			$message);
-
-		// escape CDATA closing triads
-		$message = str_replace(']]>', "' +\n//]]>\n']]>' +\n//<![CDATA[\n'",
-			$message);
-
-		$javascript.= sprintf("\n%s.setMessage('%s');\n",
-			$this->id, $message);
+		$javascript = parent::getInlineJavaScript();
+		$javascript.= sprintf("\n%s_obj.setConfirmationMessage(%s);",
+			$this->id, SwatString::quoteJavaScriptString(
+				$this->confirmation_message));
 
 		return $javascript;
 	}
