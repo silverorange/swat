@@ -1118,6 +1118,54 @@ class SwatString extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function quoteJavaScriptString()
+
+	/**
+	 * Safely quotes a PHP string into a JavaScript string
+	 *
+	 * Strings are always quoted using single quotes. The following rules are
+	 * applied to prevent XSS attacks:
+	 *
+	 * - JavaScript string escape characters in the PHP string are escaped.
+	 * - Single quotation marks in the PHP string are escaped.
+	 * - Newline characters in the PHP string are converted to JavaScript
+	 *   newline characters.
+	 * - Closing script tags in the PHP string are broken into separate
+	 *   JavaScript strings.
+	 * - Closing CDATA triads are broken into multiple JavaScript strings.
+	 *
+	 * @param string $string the PHP string to quote as a JavaScript string.
+	 *
+	 * @return string the quoted JavaScript string. The quoted string is
+	 *                 wrapped in single quotation marks and is safe to display
+	 *                 in inline JavaScript.
+	 */
+	public static function quoteJavaScriptString($string)
+	{
+		// escape escape characters
+		$string = str_replace('\\', '\\\\', $string); 
+
+		// escape single quotes
+		$string = str_replace("'", "\'", $string);
+
+		// convert newlines
+		$string = str_replace("\n", '\n', $string);
+
+		// break closing script tags
+		$string = preg_replace('/<\/(script)([^>]*)?>/ui',
+			"</\\1' + '\\2>", $string);
+
+		// escape CDATA closing triads
+		$string = str_replace(']]>', "' +\n//]]>\n']]>' +\n//<![CDATA[\n'",
+			$string);
+
+		// quote string
+		$string = "'".$string."'";
+
+		return $string;
+	}
+
+	// }}}
 	// {{{ private static function stripEntities()
 
 	/**
