@@ -122,7 +122,6 @@ class SwatCascadeFlydown extends SwatFlydown
 			$option_array = $this->options[$parent_value];
 
 		if ($this->show_blank && count($option_array) > 1) {
-			unset($ret[key($ret)]);
 			$ret[] = new SwatOption(null, Swat::_('choose one ...'));
 		}
 
