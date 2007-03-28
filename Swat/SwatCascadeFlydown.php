@@ -109,10 +109,12 @@ class SwatCascadeFlydown extends SwatFlydown
 		$parent_value = $this->cascade_from->value;
 		if ($parent_value === null) {
 			if ($this->cascade_from->show_blank) {
+				// select the blank option on the cascade from
 				$ret[] = new SwatOption('', '&nbsp;');
 				$ret[] = new SwatOption('', '&nbsp;');
 				return $ret;
 			} else {
+				// select the first option on the cascade from
 				$first_value = current($this->cascade_from->options)->value;
 				$option_array = $this->options[$first_value];
 			}
