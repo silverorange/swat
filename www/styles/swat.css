@@ -49,6 +49,10 @@ option.swat-flydown-option-divider {
 	cursor: default; /* For Konqueror */
 }
 
+.swat-form .swat-insensitive label {
+	color: #999;
+}
+
 label.swat-control {
 	font-weight: normal;
 	display: inline;
