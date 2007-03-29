@@ -1,3 +1,70 @@
+2007-03-27  gauthierm
+
+	* [r16267] swat/trunk/Swat/SwatExpandableCheckboxTree.php:
+	  Patch from Bradd Griffith to explicitly set input tag value to
+	  null when displaying faux checkboxes on expandable checkbox tree.
+	* [r16250] swat/trunk/Swat/SwatButton.php,
+	  swat/trunk/Swat/SwatConfirmationButton.php,
+	  swat/trunk/www/images/swat-button-throbber.gif,
+	  swat/trunk/www/javascript/swat-button.js,
+	  swat/trunk/www/javascript/swat-confirmation-button.js,
+	  swat/trunk/www/styles/swat.css:
+	  Ticket #797: Make a throbber button for submitting forms that
+	  take a long time.
+	* [r16249] swat/trunk/Swat/SwatString.php:
+	  Add a method to safely quote PHP strings into JavaScript strings
+	  to SwatString.
+	* [r16238] swat/trunk/Swat/SwatSimpleColorEntry.php,
+	  swat/trunk/www/javascript/swat-simple-color-entry.js:
+	  Use z-index manager again.
+	* [r16236] swat/trunk/www/styles/swat-color-entry.css:
+	  Lighter outer border that matches the calendar popup better.
+	* [r16235] swat/trunk/demo/include/demos/colorentry.xml:
+	  Fix simple color entry event name.
+	* [r16234] swat/trunk/www/javascript/swat-simple-color-entry.js:
+	  Code cleanups. Mostly removing cases where
+	  document.getElementById() was used but not needed.
+	* [r16233] swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/www/javascript/swat-calendar.js:
+	  I spoke too soon. The z-index manager is still needed.
+	* [r16232] swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/www/javascript/swat-calendar.js:
+	  remove br tag and don't use z-index manager since YUI Overlay
+	  does this already.
+	* [r16231] swat/trunk/Swat/SwatSimpleColorEntry.php:
+	  Using YUI overlay means we do not need a z-index manager.
+	* [r16230] swat/trunk/Swat/SwatSimpleColorEntry.php,
+	  swat/trunk/demo/include/demos/colorentry.xml,
+	  swat/trunk/www/javascript/swat-simple-color-entry.js,
+	  swat/trunk/www/styles/swat-color-entry.css:
+	  Vastly improved simple color selector widget. There are one or
+	  two IE6 bugs to work out but on the whole, this is much better
+	  than before. New features:
+	  - uses YUI overlay to display popup palette
+	  - toggle button is displayed by javascript so won't appear for
+	  non-js browsers
+	  - translate strings used in JavaScript
+	  - fire an event when the colour is changed (check out the demo
+	  for an example of this)
+	  - build all elements using DOM instead of innerHTML
+	  - use click event handlers instead of anchor hrefs to select a
+	  colour
+	  - IE6 floating div CSS fix for the selected colour swatch
+
+2007-03-26  gauthierm
+
+	* [r16218]
+	  swat/trunk/www/javascript/swat-table-view-checkbox-column.js:
+	  Respect JavaScript API change
+	* [r16217]
+	  swat/trunk/www/javascript/swat-table-view-checkbox-column.js:
+	  Respect JavaScript API change.
+
+2007-03-26  nrf
+
+	* [r16207] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.13
+
 2007-03-26  gauthierm
 
 	* [r16206] swat/trunk/www/styles/swat-calendar.css:
