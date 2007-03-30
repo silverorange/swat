@@ -189,6 +189,23 @@ class SwatUI extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function hasWidget()
+
+	/**
+	 * Checks whether a widget exists
+	 *
+	 * Looks up a widget in the widget list by the widget's unique identifier.
+	 *
+	 * @param string $id the id of the widget to look for.
+	 *
+	 * @return boolean whether the widget exists.
+	 */
+	public function hasWidget($id)
+	{
+		return (array_key_exists($id, $this->widgets));
+	}
+
+	// }}}
 	// {{{ public function getWidget()
 
 	/**
