@@ -16,16 +16,53 @@ require_once 'Swat/SwatYUI.php';
  */
 class SwatExpandableCheckboxTree extends SwatCheckboxTree
 {
+	// {{{ class constants
+
+	/**
+	 * All branches are open
+	 */
+	const BRANCH_STATE_OPEN   = 1;
+
+	/**
+	 * All branches are closed
+	 */
+	const BRANCH_STATE_CLOSED = 2;
+
+	/**
+	 * Branches with checked options are open (default)
+	 */
+	const BRANCH_STATE_AUTO   = 3;
+
+	// }}}
 	// {{{ public properties
 
 	/**
-	 * The initial state of the tree
-	 *
-	 * All branches are either open or closed.
+	 * The initial branch state of the tree
 	 *
 	 * @var boolean
+	 *
+	 * @see SwatExpandableCheckboxTree::$branch_state
+	 *
+	 * @deprecated This property is replaced by the
+	 *             {@link SwatExpandableCheckboxTree::$branch_state} property.
+	 *             If this boolean property is specified, it will override the
+	 *             <i>$branch_state</i> property with either
+	 *             {@link SwatExpandableCheckboxTree:BRANCH_STATE_OPEN} or
+	 *             {@link SwatExpandableCheckboxTree:BRANCH_STATE_CLOSED}. This
+	 *             property will be removed in later versions of Swat.
 	 */
-	public $open = true;
+	public $open;
+
+	/**
+	 * Initial state of tree branches
+	 *
+	 * Should be set to one of the SwatExpandableCheckboxTree::BRANCH_STATE_*
+	 * constants. The default branch state is
+	 * {@link SwatExpandableCheckboxTree::BRANCH_STATE_AUTO}.
+	 *
+	 * @var integer
+	 */
+	public $branch_state = self::BRANCH_STATE_AUTO;
 
 	/**
 	 * Whether or not the state of child boxes depends on the state of
@@ -113,18 +150,33 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Gets the inline JavaScript for this widget
+	 * Gets the inline JavaScript for this expandable checkbox tree
 	 *
-	 * @return string the inline JavaScript for this widget
+	 * @return string the inline JavaScript for this expandable checkbox tree.
 	 */
 	protected function getInlineJavaScript()
 	{
+		// TODO: string translations
 		$dependent_boxes = ($this->dependent_boxes) ? 'true' : 'false';
+
+		if ($this->open !== null) {
+			$branch_state = ($this->open) ?
+				self::BRANCH_STATE_OPEN : self::BRANCH_STATE_CLOSED;
+		} else {
+			if ($this->branch_state !== self::BRANCH_STATE_OPEN &&
+				$this->branch_state !== self::BRANCH_STATE_CLOSED &&
+				$this->branch_state !== self::BRANCH_STATE_AUTO)
+				$branch_state = self::BRANCH_STATE_AUTO;
+			else
+				$branch_state = $this->branch_state;
+		}
+
 		return sprintf(
-			"var %s_obj = new SwatExpandableCheckboxTree('%s', %s);\n",
+			"var %s_obj = new SwatExpandableCheckboxTree('%s', %s, %s);",
 			$this->id,
 			$this->id,
-			$dependent_boxes);
+			$dependent_boxes,
+			$branch_state);
 	}
 
 	// }}}
@@ -170,13 +222,8 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 				
 				$img = new SwatHtmlTag('img');
 				
-				if ($this->open) {
-					$img->src = 'packages/swat/images/swat-disclosure-open.png';
-					$img->alt = Swat::_('close');
-				} else {
-					$img->src = 'packages/swat/images/swat-disclosure-closed.png';
-					$img->alt = Swat::_('open');
-				}
+				$img->src = 'packages/swat/images/swat-disclosure-open.png';
+				$img->alt = Swat::_('close');
 
 				$img->width = 16;
 				$img->height = 16;
@@ -235,9 +282,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			// don't make expandable if it is the root node
 			if (strlen($parent_index) != 0) {
 				$ul_tag->id = $this->id.'_'.$index.'_branch';
-				$ul_tag->class = ($this->open) ?
-					'swat-expandable-checkbox-tree-opened' :
-					'swat-expandable-checkbox-tree-closed';
+				$ul_tag->class = 'swat-expandable-checkbox-tree-opened';
 			}
 
 			$div_tag->open();
