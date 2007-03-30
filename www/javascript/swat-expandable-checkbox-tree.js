@@ -1,13 +1,18 @@
-function SwatExpandableCheckboxTree(id, dependent_boxes)
+function SwatExpandableCheckboxTree(id, dependent_boxes, branch_state)
 {
 	this.id = id;
 
-	// This flag sets the behaviour of checkboxes. If it is true then checking
-	// a parent will check its children and checking all children of a parent
-	// will check the parent.
-	if (dependent_boxes) {
-		this.initTree();
+	this.dependent_boxes = dependent_boxes;
+	this.branch_state = branch_state;
 
+	this.initTree();
+
+	/*
+	 * This flag sets the behaviour of checkboxes. If it is true then checking
+	 * a parent will check its children and checking all children of a parent
+	 * will check the parent.
+	 */
+	if (this.dependent_boxes) {
 		// get all checkboxes in this tree
 		this.check_list = document.getElementsByName(id + '[]');
 
@@ -23,6 +28,10 @@ function SwatExpandableCheckboxTree(id, dependent_boxes)
 
 SwatExpandableCheckboxTree.open_text = 'open';
 SwatExpandableCheckboxTree.close_text = 'close';
+
+SwatExpandableCheckboxTree.BRANCH_STATE_OPEN   = 1;
+SwatExpandableCheckboxTree.BRANCH_STATE_CLOSED = 2;
+SwatExpandableCheckboxTree.BRANCH_STATE_AUTO   = 3;
 
 SwatExpandableCheckboxTree.handleClick = function(event, tree)
 {
@@ -65,12 +74,17 @@ SwatExpandableCheckboxTree.prototype.initTreeNode = function(checkbox)
 {
 	var path = checkbox.id.substr(this.id.length + 1);
 	var branch = document.getElementById(this.id + '_' + path + '_branch');
+	var all_children_checked = checkbox.checked;
+	var any_children_checked = checkbox.checked;
+	var self = SwatExpandableCheckboxTree;
 
 	if (branch) {
-		var children_checked = true;
+		var state;
 		var child_node = null;
 		var child_checkbox = null;
 
+		all_children_checked = true;
+		any_children_checked = false;
 		for (var i = 0; i < branch.childNodes.length; i++) {
 			child_node = branch.childNodes[i];
 			if (child_node.nodeName == 'LI') {
@@ -81,18 +95,31 @@ SwatExpandableCheckboxTree.prototype.initTreeNode = function(checkbox)
 					child_checkbox = child_checkbox.nextSibling;
 
 				if (child_checkbox.nodeName == 'INPUT' &&
-					child_checkbox.getAttribute('type') == 'checkbox' &&
-					!this.initTreeNode(child_checkbox)) {
-					children_checked = false;
+					child_checkbox.getAttribute('type') == 'checkbox') {
+					state = this.initTreeNode(child_checkbox);
+
+					all_children_checked =
+						all_children_checked && state['all_children_checked'];
+
+					any_children_checked =
+						any_children_checked || state['any_children_checked'];
 				}
 			}
 		}
 
-		// check this node based on state of children
-		checkbox.checked = children_checked;
+		// check this node if all children are checked
+		if (this.dependent_boxes)
+			checkbox.checked = all_children_checked;
+
+		// close this node if no children are checked or branch state is closed
+		if (this.branch_state == self.BRANCH_STATE_CLOSED ||
+			(!any_children_checked &&
+			this.branch_state == self.BRANCH_STATE_AUTO))
+			this.closeBranch(path);
 	}
 
-	return checkbox.checked;
+	return { 'all_children_checked': all_children_checked,
+		'any_children_checked': any_children_checked };
 }
 
 SwatExpandableCheckboxTree.prototype.handleClick = function(checkbox)
@@ -160,13 +187,38 @@ SwatExpandableCheckboxTree.prototype.toggleBranch = function(branch_id)
 		'swat-expandable-checkbox-tree-opened');
 
 	if (opened) {
-		this.closeBranch(branch_id);
+		this.closeBranchWithAnimation(branch_id);
 	} else {
-		this.openBranch(branch_id);
+		this.openBranchWithAnimation(branch_id);
 	}
 }
 
 SwatExpandableCheckboxTree.prototype.openBranch = function(branch_id)
+{
+	var branch = document.getElementById(this.id + '_' + branch_id + '_branch');
+	var image = document.getElementById(this.id + '_' + branch_id + '_img');
+
+	YAHOO.util.Dom.removeClass(branch, 'swat-expandable-checkbox-tree-closed');
+	YAHOO.util.Dom.addClass(branch, 'swat-expandable-checkbox-tree-opened');
+
+	image.src = 'packages/swat/images/swat-disclosure-open.png';
+	image.alt = SwatExpandableCheckboxTree.closed_text;
+}
+
+SwatExpandableCheckboxTree.prototype.closeBranch = function(branch_id)
+{
+	var branch = document.getElementById(this.id + '_' + branch_id + '_branch');
+	var image = document.getElementById(this.id + '_' + branch_id + '_img');
+
+	YAHOO.util.Dom.addClass(branch, 'swat-expandable-checkbox-tree-closed');
+	YAHOO.util.Dom.removeClass(branch, 'swat-expandable-checkbox-tree-opened');
+
+	image.src = 'packages/swat/images/swat-disclosure-closed.png';
+	image.alt = SwatExpandableCheckboxTree.open_text;
+}
+
+SwatExpandableCheckboxTree.prototype.openBranchWithAnimation = function(
+	branch_id)
 {
 	var branch = document.getElementById(this.id + '_' + branch_id + '_branch');
 	var image = document.getElementById(this.id + '_' + branch_id + '_img');
@@ -200,7 +252,8 @@ SwatExpandableCheckboxTree.prototype.openBranch = function(branch_id)
 	animation.animate();
 }
 
-SwatExpandableCheckboxTree.prototype.closeBranch = function(branch_id)
+SwatExpandableCheckboxTree.prototype.closeBranchWithAnimation = function(
+	branch_id)
 {
 	var branch = document.getElementById(this.id + '_' + branch_id + '_branch');
 	var image = document.getElementById(this.id + '_' + branch_id + '_img');
