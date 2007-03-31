@@ -677,6 +677,9 @@ class SwatDBDataObject extends SwatObject implements Serializable
 		$values = array();
 
 		foreach ($this->getModifiedProperties() as $name => $value) {
+			if ($name === $id_field->name)
+				continue;
+
 			$type = $this->guessType($name, $value);
 
 			if ($type == 'date')
