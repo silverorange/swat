@@ -221,6 +221,43 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	}
 
 	// }}}
+	// {{{ public function duplicate()
+
+	/**
+	 * Duplicates this object
+	 *
+	 * A duplicate is less of an exact copy than a true clone. Like a clone, a
+	 * duplicate has all the same public property values.  Unlike a clone, a
+	 * duplicate does not have an id and therefore can be saved to the
+	 * database as a new row. This method recursively duplicates
+	 * sub-dataobjects which were registered with $autosave set to true.
+	 *
+	 * @return SwatDBDataobject a duplicate of this object.
+	 */
+	public function duplicate()
+	{
+		$class = get_class($this);
+		$new_object = new $class();
+		$id_field = new SwatDBField($this->id_field, 'integer');
+		
+		$properties = $this->getProperties();
+		foreach ($properties as $name => $value)
+			if ($name !== $id_field->name)
+				$new_object->$name = $value;
+
+		foreach ($this->internal_property_autosave as $name => $autosave) {
+			if ($autosave && isset($this->sub_data_objects[$name])) {
+				$object = $this->sub_data_objects[$name];
+				$new_object->$name = $object->duplicate();
+			}
+		}
+
+		$new_object->setDatabase($this->db);
+
+		return $new_object;
+	}
+
+	// }}}
 	// {{{ protected function setInternalValue()
 
 	protected function setInternalValue($name, $value)
