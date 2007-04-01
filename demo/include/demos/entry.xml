@@ -34,7 +34,7 @@
 				<property name="maxlength" type="integer">10</property>
 			</widget>
 		</widget>
-
+		
 		<widget class="SwatFormField">
 			<property name="title" type="string">Integer Entry</property>
 			<widget class="SwatIntegerEntry" id="integer" />
@@ -43,6 +43,11 @@
 		<widget class="SwatFormField">
 			<property name="title" type="string">Float Entry</property>
 			<widget class="SwatFloatEntry" id="float" />
+		</widget>
+
+		<widget class="swatFormField">
+			<property name="title">Percentage Entry</property>
+			<widget class="SwatPercentageEntry" id="percentage"/>
 		</widget>
 
 		<widget class="SwatFormField">
