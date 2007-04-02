@@ -1,3 +1,90 @@
+2007-04-02  gauthierm
+
+	* [r16474] swat/trunk/www/javascript/swat-calendar.js,
+	  swat/trunk/www/styles/swat-calendar.css:
+	  Revert YUI overlay change for SwatCalendar until ticket #857
+	  (Operation aborted error in MSIE) is fixed.
+
+2007-04-02  nrf
+
+	* [r16463] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  Add private property internal_property_autosave to serializable
+	  list.
+	* [r16462] swat/trunk/Swat/SwatPercentageEntry.php:
+	  Use '&&' as the logical AND operator.
+	* [r16461] swat/trunk/Swat/SwatPercentageEntry.php:
+	  whitespace
+
+2007-04-02  gauthierm
+
+	* [r16458] swat/trunk/Swat/SwatPercentageEntry.php:
+	  respect API change from r16457.
+	* [r16457] swat/trunk/Swat/SwatFloatEntry.php,
+	  swat/trunk/Swat/SwatIntegerEntry.php,
+	  swat/trunk/Swat/SwatNumericEntry.php:
+	  Clean up the getNumericValue() method to make it better suited
+	  for subclassing.
+
+2007-04-01  charles
+
+	* [r16456] swat/trunk/Swat/SwatPercentageEntry.php:
+	  Added documentation and fixed a fatal error caused by calling
+	  the incorrect
+	  file in the require once at the top of the file.
+	* [r16455] swat/trunk/demo/include/demos/entry.xml:
+	  The Swat Entry demo with SwatPercentageEntry added.
+	* [r16454] swat/trunk/Swat/SwatPercentageEntry.php:
+	  This is the PercentageEntry widget for ticket #815
+
+2007-03-31  gauthierm
+
+	* [r16400] swat/trunk/Swat/SwatActions.php:
+	  Get head entries for embedded widgets
+	* [r16399] swat/trunk/demo/include/demos/checkbox.xml:
+	  don't use deprecated feature in demo
+
+2007-03-31  nrf
+
+	* [r16397] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  Add new duplicate() method.
+	* [r16396] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  Id fields can not be modified.
+
+2007-03-30  gauthierm
+
+	* [r16394] swat/trunk/Swat/SwatExpandableCheckboxTree.php,
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js:
+	  Ticket #824: SwatExpandableCheckboxTree should default to having
+	  selected branches open. This change is fully backwards API
+	  compatible with the old behaviour. To get the new behaviour, you
+	  should no longer set the deprecated $open property on expandable
+	  checkbox trees.
+
+2007-03-30  nrf
+
+	* [r16367] swat/trunk/Swat/SwatUI.php:
+	  Add a new method SwatUI::hasWidget()
+
+2007-03-29  steven
+
+	* [r16359] swat/trunk/www/styles/swat.css:
+	  Grey out labels on swat form fields when insensitive (fixes #816)
+
+2007-03-29  nrf
+
+	* [r16303] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.14
+
+2007-03-28  gauthierm
+
+	* [r16279] swat/trunk/Swat/SwatCascadeFlydown.php:
+	  I think this broken code was supposed to remove the first array
+	  element. We should use array_shift() for that but above the $ret
+	  variable is defined as an empty array so we don't need to remove
+	  any elements.
+	* [r16278] swat/trunk/Swat/SwatCascadeFlydown.php:
+	  add comments
+
 2007-03-27  gauthierm
 
 	* [r16267] swat/trunk/Swat/SwatExpandableCheckboxTree.php:
