@@ -72,12 +72,14 @@ class SwatPercentageEntry extends SwatFloatEntry
 	 * 
 	 * This allows each widget to parse raw values and turn them into floats
 	 *
+	 * @param string $value the raw value to use to get the numeric value.
+	 *
 	 * @return mixed the numeric value of this entry widget or null if no 
 	 *							no numeric value is available.
 	 */ 
-	protected function getNumericValue()
+	protected function getNumericValue($value)
 	{
-		$value = trim($this->value);
+		$value = trim($value);
 		$value = str_replace('%','',$this->value);
 		return SwatString::toFloat($value);
 	}
