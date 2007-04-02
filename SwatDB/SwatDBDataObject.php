@@ -845,7 +845,8 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	{
 		return array('table', 'id_field',
 			'sub_data_objects', 'property_hashes', 'internal_properties',
-			'internal_property_classes', 'date_properties');
+			'internal_property_autosave', 'internal_property_classes',	
+			'date_properties');
 	}
 
 	// }}}
