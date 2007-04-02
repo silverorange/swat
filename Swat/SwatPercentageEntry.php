@@ -37,7 +37,7 @@ class SwatPercentageEntry extends SwatFloatEntry
 	 */
 	public function process()
 	{
-	parent::process();
+		parent::process();
 
 		if (($this->value >= 0) and ($this->value <= 100))
 			$this->value = $this->value / 100;
@@ -87,4 +87,4 @@ class SwatPercentageEntry extends SwatFloatEntry
 	// }}}
 }
 
-?>	
+?>
