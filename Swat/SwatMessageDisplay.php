@@ -155,6 +155,19 @@ class SwatMessageDisplay extends SwatControl
 	}
 
 	// }}}
+	// {{{ public function getMessageCount()
+
+	/**
+	 * Gets the number of messages in this message display
+	 *
+	 * @return integer the number of messages in this message display.
+	 */
+	public function getMessageCount()
+	{
+		return count($this->_messages);
+	}
+
+	// }}}
 	// {{{ protected function getCSSClassNames()
 
 	/**
