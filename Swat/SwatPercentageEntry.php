@@ -39,7 +39,7 @@ class SwatPercentageEntry extends SwatFloatEntry
 	{
 		parent::process();
 
-		if (($this->value >= 0) and ($this->value <= 100))
+		if (($this->value >= 0) && ($this->value <= 100))
 			$this->value = $this->value / 100;
 		else {
 			$message = Swat::_('Please use a number between 0 and 100');
@@ -60,7 +60,7 @@ class SwatPercentageEntry extends SwatFloatEntry
 	 */
 	protected function getDisplayValue()
 	{
-		if (is_float($this->value) and ($this->value >= 0) and ($this->value <= 100))
+		if (is_float($this->value) && ($this->value >= 0) && ($this->value <= 100))
 			return ($this->value * 100).'%';
 	}
 
