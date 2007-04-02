@@ -21,9 +21,15 @@
 	display: inline;
 }
 
-.swat-calendar-div {
+.swat-calendar-div-hide {
 	font-size: small;
 	background: #fff;
+	position: absolute;
+	display: none;
+}
+
+.swat-calendar-div-show {
+	display: block;
 }
 
 table.swat-calendar-frame {
