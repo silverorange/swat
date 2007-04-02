@@ -29,14 +29,12 @@ class SwatFloatEntry extends SwatNumericEntry
 		if ($this->value === null)
 			return;
 
-		$float_value = $this->getNumericValue();
+		$float_value = $this->getNumericValue($this->value);
 
-		if ($float_value === null) {
-			$message = Swat::_('The %s field must be a number.');
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
-		} else {
+		if ($float_value === null)
+			$this->addMessage($this->getValidationMessage('float'));
+		else
 			$this->value = $float_value;
-		}
 	}
 
 	// }}}
@@ -66,13 +64,44 @@ class SwatFloatEntry extends SwatNumericEntry
 	 * This allows each widget to parse raw values how they want to get numeric
 	 * values.
 	 *
-	 * @return mixed the numeric value of this entry widget of null if no
+	 * @param string $value the raw value to use to get the numeric value.
+	 *
+	 * @return mixed the numeric value of this entry widget or null if no
 	 *                numeric value is available.
 	 */
-	protected function getNumericValue()
+	protected function getNumericValue($value)
 	{
-		$value = trim($this->value);
+		$value = trim($value);
 		return SwatString::toFloat($value);
+	}
+
+	// }}}
+	// {{{ protected function getValidationMessage()
+
+	/**
+	 * Gets a validation message for this float entry
+	 *
+	 * @see SwatEntry::getValidationMessage()
+	 * @param string $id the string identifier of the validation message.
+	 *
+	 * @return SwatMessage the validation message.
+	 */
+	protected function getValidationMessage($id)
+	{
+		switch ($id) {
+		case 'float':
+			$message = new SwatMessage(
+				Swat::_('The %s field must be a number.'),
+				SwatMessage::ERROR);
+
+			break;
+
+		default:
+			$message = parent::getValidationMessage($id);
+			break;
+		}
+
+		return $message;
 	}
 
 	// }}}

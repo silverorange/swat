@@ -29,7 +29,7 @@ class SwatIntegerEntry extends SwatNumericEntry
 		if ($this->value === null)
 			return;
 
-		$integer_value = $this->getNumericValue();
+		$integer_value = $this->getNumericValue($this->value);
 
 		if ($integer_value === null)
 			$this->addMessage($this->getValidationMessage('integer'));
@@ -58,12 +58,14 @@ class SwatIntegerEntry extends SwatNumericEntry
 	 * This allows each widget to parse raw values how they want to get numeric
 	 * values.
 	 *
-	 * @return mixed the numeric value of this entry widget of null if no
+	 * @param string $value the raw value to use to get the numeric value.
+	 *
+	 * @return mixed the numeric value of this entry widget or null if no
 	 *                numeric value is available.
 	 */
-	protected function getNumericValue()
+	protected function getNumericValue($value)
 	{
-		$value = trim($this->value);
+		$value = trim($value);
 		return SwatString::toInteger($value);
 	}
 

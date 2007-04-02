@@ -73,7 +73,7 @@ abstract class SwatNumericEntry extends SwatEntry
 	{
 		parent::process();
 
-		$value = $this->getNumericValue();
+		$value = $this->getNumericValue($this->value);
 		if ($value !== null) {
 			if ($this->minimum_value !== null &&
 				$value < $this->minimum_value) {
@@ -140,10 +140,12 @@ abstract class SwatNumericEntry extends SwatEntry
 	 * This allows each widget to parse raw values how they want to get numeric
 	 * values.
 	 *
-	 * @return mixed the numeric value of this entry widget of null if no
+	 * @param string $value the raw value to use to get the numeric value.
+	 *
+	 * @return mixed the numeric value of this entry widget or null if no
 	 *                numeric value is available.
 	 */
-	abstract protected function getNumericValue();
+	abstract protected function getNumericValue($value);
 
 	// }}}
 }
