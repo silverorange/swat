@@ -40,19 +40,29 @@ class SwatFloatEntry extends SwatNumericEntry
 	// }}}
 	// {{{ protected function getDisplayValue()
 
-	protected function getDisplayValue()
+	/**
+	 * Formats a float value to display
+	 *
+	 * @param string $value the value to format for display.
+	 *
+	 * @return string the formatted value.
+	 */
+	protected function getDisplayValue($value)
 	{
-		$lc = localeconv();
-		$decimal_pos = strpos($this->value, $lc['decimal_point']);
-		$decimals = ($decimal_pos !== false) ?
-			strlen($this->value) - $decimal_pos - strlen($lc['decimal_point']) :
-			0;
+		if (is_numeric($value)) {
+			$lc = localeconv();
+			$decimal_pos = strpos($value, $lc['decimal_point']);
+			$decimals = ($decimal_pos !== false) ?
+				strlen($value) - $decimal_pos - strlen($lc['decimal_point']) :
+				0;
 
-		if (is_numeric($this->value))
-			return SwatString::numberFormat($this->value, $decimals, null,
+			$value = SwatString::numberFormat($value, $decimals, null,
 				$this->show_thousands_separator);
-		else
-			return $this->value;
+		} else {
+			$value = parent::getDisplayValue($value);
+		}
+
+		return $value;
 	}
 
 	// }}}

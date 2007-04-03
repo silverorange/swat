@@ -259,9 +259,11 @@ class SwatListEntry extends SwatEntry
 	 * For list entry, this is a delimiter separated string containing the
 	 * elements of {@link SwatListEntry::$values}.
 	 *
+	 * @param array $value the value to format for display.
+	 *
 	 * @return string the values displayed in the XHTML input.
 	 */
-	protected function getDisplayValue()
+	protected function getDisplayValue($value)
 	{
 		if ($this->trim_whitespace)
 			return implode($this->delimiter.' ', $this->values);

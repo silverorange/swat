@@ -37,22 +37,18 @@ class SwatSearchEntry extends SwatEntry
 	// {{{ protected function getDisplayValue()
 
 	/**
-	 * Displays a value for SwatSearch
+	 * Formats a value to display
 	 *
 	 * The methond returns either the title or the correct search entry.
 	 *
-	 * @return string the display value
+	 * @param string $value the value to format for display.
+	 *
+	 * @return string the formatted value.
 	 */
-	protected function getDisplayValue()
+	protected function getDisplayValue($value)
 	{
-		$value = '';
-
-		if ($this->value === null)
-			$value = $this->title;
-		else
-			$value = parent::getDisplayValue();
-
-		return $value;
+		return ($value === null) ?
+			$this->title : parent::getDisplayValue($value);
 	}
 
 	// }}}

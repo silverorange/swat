@@ -40,13 +40,22 @@ class SwatIntegerEntry extends SwatNumericEntry
 	// }}}
 	// {{{ protected function getDisplayValue()
 
-	protected function getDisplayValue()
+	/**
+	 * Formats an integer value to display
+	 *
+	 * @param string $value the value to format for display.
+	 *
+	 * @return string the formatted value.
+	 */
+	protected function getDisplayValue($value)
 	{
-		if (is_int($this->value))
-			return SwatString::numberFormat($this->value, 0, null,
+		if (is_int($value))
+			$value = SwatString::numberFormat($value, 0, null,
 				$this->show_thousands_separator);
 		else
-			return $this->value;
+			$value = parent::getDisplayValue($value);
+
+		return $value;
 	}
 
 	// }}}
