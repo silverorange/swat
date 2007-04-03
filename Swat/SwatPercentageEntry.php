@@ -27,10 +27,12 @@ class SwatPercentageEntry extends SwatFloatEntry
 		if (is_numeric($value)) {
 			$value = $value * 100;
 			$value = parent::getDisplayValue($value);
-			return $value.'%';
+			$value = $value.'%';
 		} else {
-			return parent::getDisplayValue($value);
+			$value = parent::getDisplayValue($value);
 		}
+
+		return $value;
 	}
 
 	// }}}
