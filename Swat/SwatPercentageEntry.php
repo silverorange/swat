@@ -13,21 +13,7 @@ require_once 'Swat/SwatFloatEntry.php';
  */ 
 class SwatPercentageEntry extends SwatFloatEntry
 {
-	// {{{ public function __construct()
-	
-	/**
-	 * Constructs the widget
-	 *
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$this->size = 5;
-	}
-
-	// }}}
-	// {{{ protected function getDisplayValue
+	// {{{ protected function getDisplayValue()
 
 	/**
 	 * Returns a value for this widget
@@ -36,12 +22,15 @@ class SwatPercentageEntry extends SwatFloatEntry
 	 *
 	 * @return string the final percentage value
 	 */
-	protected function getDisplayValue()
+	protected function getDisplayValue($value)
 	{
-		if (is_float($this->value))
-			return ($this->value * 100).'%';
+		if (is_float($value)){
+			$value = $value * 100;
+			$value = parent::getDisplayValue($value);
+			return $value.'%';
+		}
 		else
-			return $this->value;
+			return parent::getDisplayValue($value);
 	}
 
 	// }}}
