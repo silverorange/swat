@@ -27,28 +27,6 @@ class SwatPercentageEntry extends SwatFloatEntry
 	}
 
 	// }}}
-	// {{{ public function process()
-
-	/**
-	 * Checks to make sure that the value is a percentage value
-	 *
-	 * If the value of the widget is not valid then a message will be
-	 * displayed showing the user the type of error that took place.
-	 */
-	public function process()
-	{
-		parent::process();
-
-		if (($this->value >= 0) && ($this->value <= 100))
-			$this->value = $this->value / 100;
-		else {
-			$message = Swat::_('Please use a number between 0 and 100');
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
-		}
-		$this->value = $this->value;
-	}
-
-	// }}}
 	// {{{ protected function getDisplayValue
 
 	/**
@@ -60,8 +38,10 @@ class SwatPercentageEntry extends SwatFloatEntry
 	 */
 	protected function getDisplayValue()
 	{
-		if (is_float($this->value) && ($this->value >= 0) && ($this->value <= 100))
+		if (is_float($this->value))
 			return ($this->value * 100).'%';
+		else
+			return $this->value;
 	}
 
 	// }}}
@@ -80,8 +60,11 @@ class SwatPercentageEntry extends SwatFloatEntry
 	protected function getNumericValue($value)
 	{
 		$value = trim($value);
-		$value = str_replace('%','',$this->value);
-		return SwatString::toFloat($value);
+		$value = str_replace('%','',$value);
+		$value = parent::getNumericValue($value);
+		if ($value != null)
+			$value = $value / 100;
+		return $value;
 	}
 
 	// }}}
