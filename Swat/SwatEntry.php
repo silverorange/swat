@@ -282,7 +282,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 		if (!$this->isSensitive())
 			$tag->disabled = 'disabled';
 
-		$value = $this->getDisplayValue();
+		$value = $this->getDisplayValue($this->value);
 
 		// escape value for display because we actually want to show entities
 		// for editing
@@ -301,15 +301,17 @@ class SwatEntry extends SwatInputControl implements SwatState
 	// {{{ protected function getDisplayValue()
 
 	/**
-	 * Get value to display
+	 * Formats a value to display
 	 *
-	 * Can be used by sub-classes to change what is displayed
+	 * Can be used by subclasses to change what is displayed.
 	 *
-	 * @return string Value to display
+	 * @param string $value the value to format for display.
+	 *
+	 * @return string the formatted value.
 	 */
-	protected function getDisplayValue()
+	protected function getDisplayValue($value)
 	{
-		return $this->value;
+		return $value;
 	}
 
 	// }}}
