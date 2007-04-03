@@ -10,7 +10,7 @@ require_once 'Swat/SwatFloatEntry.php';
  * @package    Swat
  * @copyright  2007 silverorange
  * @lisence    http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
- */ 
+ */
 class SwatPercentageEntry extends SwatFloatEntry
 {
 	// {{{ protected function getDisplayValue()
@@ -24,35 +24,35 @@ class SwatPercentageEntry extends SwatFloatEntry
 	 */
 	protected function getDisplayValue($value)
 	{
-		if (is_float($value)){
+		if (is_float($value)) {
 			$value = $value * 100;
 			$value = parent::getDisplayValue($value);
 			return $value.'%';
-		}
-		else
+		} else
 			return parent::getDisplayValue($value);
 	}
 
 	// }}}
 	// {{{ protected function getNumericValue()
-	
+
 	/**
 	 * Gets the float value of this widget
-	 * 
+	 *
 	 * This allows each widget to parse raw values and turn them into floats
 	 *
 	 * @param string $value the raw value to use to get the numeric value.
 	 *
-	 * @return mixed the numeric value of this entry widget or null if no 
+	 * @return mixed the numeric value of this entry widget or null if no
 	 *							no numeric value is available.
-	 */ 
+	 */
 	protected function getNumericValue($value)
 	{
 		$value = trim($value);
-		$value = str_replace('%','',$value);
+		$value = str_replace('%', '', $value);
 		$value = parent::getNumericValue($value);
 		if ($value != null)
 			$value = $value / 100;
+
 		return $value;
 	}
 
