@@ -8,7 +8,7 @@ require_once 'Swat/SwatCellRenderer.php';
  * A renderer for a column of checkboxes
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckboxCellRenderer extends SwatCellRenderer
@@ -46,10 +46,8 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 		$input_tag->name = $this->id.'[]';
 		$input_tag->value = $this->value;
 
-		if (!$this->sensitive) {
+		if (!$this->sensitive)
 			$input_tag->disabled = 'disabled';
-			// TODO: add a style class for internet explorer if insensitive
-		}
 
 		if (isset($_POST[$this->id]))
 			if (in_array($this->value, $_POST[$this->id]))
