@@ -78,8 +78,9 @@ abstract class SwatNumericEntry extends SwatEntry
 			if ($this->minimum_value !== null &&
 				$value < $this->minimum_value) {
 				$message = $this->getValidationMessage('below-minimum');
-				$message->primary_content = sprintf($message->primary_content, 
-					SwatString::numberFormat($this->minimum_value));
+				$content = str_replace('%', '%%', 
+					$this->getDisplayValue($this->minimum_value));
+				$message->primary_content = sprintf($message->primary_content, $content);
 
 				$this->addMessage($message);
 			}
@@ -87,8 +88,9 @@ abstract class SwatNumericEntry extends SwatEntry
 			if ($this->maximum_value !== null &&
 				$value > $this->maximum_value) {
 				$message = $this->getValidationMessage('above-maximum');
-				$message->primary_content = sprintf($message->primary_content, 
-					SwatString::numberFormat($this->maximum_value));
+				$content = str_replace('%', '%%',
+					$this->getDisplayValue($this->maximum_value));
+				$message->primary_content = sprintf($message->primary_content, $content);
 
 				$this->addMessage($message);
 			}
