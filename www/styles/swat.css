@@ -264,3 +264,7 @@ span.swat-button-processing-throbber img {
 input.swat-insensitive {
 	background: #eee;
 }
+
+.swat-radio-list input.swat-insensitive {
+	background: transparent;
+}
