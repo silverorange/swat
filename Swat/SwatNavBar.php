@@ -135,7 +135,7 @@ class SwatNavBar extends SwatControl implements Countable
 		throw new SwatException(sprintf('Cannot replace element at position '.
 			'%s because NavBar does not contain an entry at position %s.',
 			$position,
-			$opsition));
+			$position));
 	}
 
 	// }}}
