@@ -97,6 +97,10 @@ class SwatString extends SwatObject
 		$blocklevel_elements = implode('|', self::$blocklevel_elements);
 		$breaking_elements = implode('|', self::$breaking_elements);
 		$preformatted_elements = implode('|', self::$preformatted_elements);
+		$xhtml_elements = implode('|', self::$xhtml_elements);
+
+		// regular expression to match all tags
+		$all_tags = '/(<\/?(?:'.$xhtml_elements.')[^<>]*?>)/siu';
 
 		// regular expressions to match blocklevel tags
 		$starting_blocklevel = '/^<('.$blocklevel_elements.')[^<>]*?>/siu';
@@ -187,13 +191,51 @@ class SwatString extends SwatObject
 
 			$is_preformatted = (preg_match($preformat, $paragraph) == 1);
 
-			// don't wrap this paragraph in <p> tags if we are in a blocklevel
-			// tag already or if the paragraph is preformatted element.
-			if ($in_blocklevel || $is_preformatted) {
+			// don't format wrap this paragraph if it is a preformatted
+			// element.
+			if ($is_preformatted) {
 				$paragraph = $paragraph."\n\n";
 			} else {
-				$paragraph = '<p>'.$paragraph."</p>\n\n";
+				// split paragraph into tags and text
+				$tags = array();
+				preg_match_all($all_tags, $paragraph, $tags,
+					PREG_OFFSET_CAPTURE);
+
+				$tags = $tags[0];
+				$text = preg_split($all_tags, $paragraph, -1,
+					PREG_SPLIT_OFFSET_CAPTURE);
+
+				$paragraph = '';
+
+				// filter tags and text back into paragraph
+				$tag_index = 0;
+				$text_index = 0;
+				$num_tags = count($tags);
+				$num_text = count($text);
+				while ($tag_index < $num_tags || $text_index < $num_text) {
+					if (isset($tags[$tag_index]) &&
+						$tags[$tag_index][1] < $text[$text_index][1]) {
+						// assume tags are already formatted
+						$paragraph.= $tags[$tag_index][0];
+						$tag_index++;
+					} elseif (isset($text[$text_index])) {
+						// minimize entities for text
+						$paragraph.=
+							self::minimizeEntities($text[$text_index][0]);
+
+						$text_index++;
+					}
+				}
+
+				// if we are in a blocklevel element, we are done
+				if ($in_blocklevel)
+					$paragraph.= "\n\n";
 			}
+
+			// if we are not in a blocklevel element or a preformatted
+			// element, wrap the paragraph in paragraph tags
+			if (!$in_blocklevel && !$is_preformatted)
+				$paragraph = '<p>'.$paragraph."</p>\n\n";
 
 			if ($blocklevel_ended)
 				$in_blocklevel = false;
