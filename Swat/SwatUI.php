@@ -192,13 +192,12 @@ class SwatUI extends SwatObject
 	// {{{ public function hasWidget()
 
 	/**
-	 * Checks whether a widget exists
-	 *
-	 * Looks up a widget in the widget list by the widget's unique identifier.
+	 * Checks whether this UI tree contains a specified widget
 	 *
 	 * @param string $id the id of the widget to look for.
 	 *
-	 * @return boolean whether the widget exists.
+	 * @return boolean true if this UI tree contains a widget with the given
+	 *                  <i>$id</i> and false if it does not.
 	 */
 	public function hasWidget($id)
 	{
