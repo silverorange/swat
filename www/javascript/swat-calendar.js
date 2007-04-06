@@ -13,7 +13,7 @@
  * 
  * Adapted with permission by silverorange. December 2004.
  *
- * @copyright 2004 Tribador Mediaworks, 2005 silverorange Inc.
+ * @copyright 2004 Tribador Mediaworks, 2005-2007 silverorange Inc.
  * @author Brian Munroe <bmunroe@tribador.net>
  * @author Michael Gauthier <mike@silverorange.com>
  */
@@ -49,9 +49,27 @@ function SwatCalendar(id, start_date, end_date)
 	this.date = null;
 	this.value = document.getElementById(this.id + '_value');
 
-	this.drawButton();
+	// Draw the calendar on window load to prevent "Operation Aborted" errors
+	// in MSIE 6 and 7.
+	YAHOO.util.Event.addListener(window, 'load',
+		this.createOverlay, this, true);
 
 	this.open = false;
+	this.positioned = false;
+}
+
+/**
+ * Creates calendar toggle button and overlay widget
+ */
+SwatCalendar.prototype.createOverlay = function(event)
+{
+	this.drawButton();
+	this.overlay = new YAHOO.widget.Overlay(this.id + '_div',
+		{ visible: false, constraintoviewport: true });
+
+	document.getElementById(this.id + '_div').style.display = 'block';
+
+	this.overlay.render(document.body);
 }
 
 /**
@@ -71,17 +89,39 @@ SwatCalendar.prototype.setSwatDateEntry = function(entry)
  */
 SwatCalendar.prototype.drawButton = function()
 {
+	var anchor = document.createElement('a');
+	anchor.setAttribute('href', 'javascript:' + this.id + '_obj.toggle();');
+	anchor.setAttribute('title', SwatCalendar.open_toggle_text);
+
+	var toggle_button = document.createElement('img');
+	toggle_button.setAttribute('id', this.id + '_toggle');
+	toggle_button.setAttribute('src', 'packages/swat/images/calendar.png');
+	toggle_button.setAttribute('alt', SwatCalendar.toggle_alt_text);
+	YAHOO.util.Dom.addClass(toggle_button, 'swat-calendar-icon');
+
+	anchor.appendChild(toggle_button);
+
+	var calendar_div = document.createElement('div');
+	calendar_div.setAttribute('id', this.id + '_div');
+	calendar_div.style.display = 'none';
+	YAHOO.util.Dom.addClass(calendar_div, 'swat-calendar-div');
+
+	var overlay_header = document.createElement('div');
+	YAHOO.util.Dom.addClass(overlay_header, 'hd');
+
+	var overlay_body = document.createElement('div');
+	YAHOO.util.Dom.addClass(overlay_body, 'bd');
+
+	var overlay_footer = document.createElement('div');
+	YAHOO.util.Dom.addClass(overlay_footer, 'ft');
+
+	calendar_div.appendChild(overlay_header);
+	calendar_div.appendChild(overlay_body);
+	calendar_div.appendChild(overlay_footer);
+
 	var container = document.getElementById(this.id);
-	container.innerHTML +=
-		'<a href="javascript:' + this.id + '_obj.toggle();" ' +
-		'title="' + SwatCalendar.open_toggle_text + '">' +
-		'<img src="packages/swat/images/calendar.png" ' +
-		'alt="' + SwatCalendar.toggle_alt_text + '" ' +
-		'class="swat-calendar-icon" id="' + this.id + '_toggle" />' +
-		'</a><br />' +
-		'<div id="' + this.id + '_div" class="swat-calendar-div-hide">' +
-		'&nbsp;' +
-		'</div>';
+	container.appendChild(anchor);
+	container.appendChild(calendar_div);
 }
 
 /**
@@ -202,8 +242,7 @@ SwatCalendar.prototype.setDate = function(element, yyyy, mm, dd)
  */
 SwatCalendar.prototype.close = function()
 {
-	var calendar_div = document.getElementById(this.id + '_div');
-	calendar_div.style.display = 'none';
+	this.overlay.hide();
 	this.open = false;
 }
 
@@ -649,34 +688,24 @@ SwatCalendar.prototype.draw = function()
 		cur_html += '</tr>';
 	}
 
-	// attach div to body so it can be positioned correctly
-	var calendar_div = document.getElementById(this.id + '_div');
-	var body = document.getElementsByTagName('body')[0];
-	body.appendChild(calendar_div);
-
 	// draw calendar
-	calendar_div.innerHTML = begin_table + date_controls + week_header +
+	var calendar_div = document.getElementById(this.id + '_div');
+	calendar_div.childNodes[1].innerHTML =
+		begin_table + date_controls + week_header +
 		cur_html + close_controls;
 
-	// position and display calendar
-	var toggle_button = document.getElementById(this.id + '_toggle');
-	this.selected_element = document.getElementById(this.id + '_current_cell');
+	if (!this.open) {
+		// only set position once
+		if (!this.positioned) {
+			var toggle_button = document.getElementById(this.id + '_toggle');
+			this.overlay.cfg.setProperty('context',
+				[toggle_button, 'tl', 'bl']);
 
-	calendar_div.style.display = 'block';
-	YAHOO.util.Dom.setXY(calendar_div, [0, 0]);
-
-	var offsets = YAHOO.util.Dom.getXY(toggle_button);
-	offsets[1] += toggle_button.offsetHeight;
-
-	// ensure calendar is displayed inside the window
-	// subtract 1 to prevent gecko rendering weirdness 
-	viewport_width = YAHOO.util.Dom.getViewportWidth();
-	if (offsets[0] + calendar_div.offsetWidth > viewport_width)
-		offsets[0] = viewport_width - calendar_div.offsetWidth - 1;
-
-	YAHOO.util.Dom.setXY(calendar_div, offsets);
-
-	this.open = true;
+			this.positioned = true;
+		}
+		this.overlay.show();
+		this.open = true;
+	}
 }
 
 // preload images
