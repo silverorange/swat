@@ -68,10 +68,12 @@ abstract class SwatOptionControl extends SwatInputControl
 	 */
 	public function addOption($value, $title = '', $content_type = 'text/plain')
 	{
-		if ($value instanceof SwatOption)
+		if ($value instanceof SwatOption) {
 			$option = $value;
-		else
+			$value = $option->value;
+		} else {
 			$option = new SwatOption($value, $title, $content_type);
+		}
 
 		if ($this->unique_values)
 			$this->options[$value] = $option;
