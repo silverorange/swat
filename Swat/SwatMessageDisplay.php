@@ -9,27 +9,55 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
 require_once 'Swat/SwatYUI.php';
 
 /**
- * A control to display page status messages
+ * A control to display {@link SwatMessage} objects
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMessageDisplay extends SwatControl
 {
+	// {{{ class constants
+
+	/**
+	 * Dismiss link for message is on.
+	 */
+	const DISMISS_ON   = 1;
+
+	/**
+	 * Dismiss link for message is off.
+	 */
+	const DISMISS_OFF  = 2;
+
+	/**
+	 * Dismiss link for message is automatically displayed for certain message
+	 * types.
+	 *
+	 * @see SwatMessageDisplay::getDismissableMessageTypes()
+	 */
+	const DISMISS_AUTO = 3;
+
+	// }}}
 	// {{{ private properties
 
 	/**
 	 * The messages to display
 	 *
-	 * The messages are stored as an array of references to SwatMessage
-	 * objects.
+	 * This is an array of {@link SwatMessage} objects.
 	 *
 	 * @var array
-	 *
-	 * @see SwatMessage
 	 */
 	private $_messages = array();
+
+	/**
+	 * Messages in this display that are dismissable
+	 *
+	 * This is an array with values corresponding to a keys in the
+	 * {@link SwatMessageDisplay::$_messages} array.
+	 *
+	 * @var array
+	 */
+	private $dismissable_messages = array();
 
 	// }}}
 	// {{{ public function __construct()
@@ -70,29 +98,47 @@ class SwatMessageDisplay extends SwatControl
 	 *
 	 * Adds a new message. The message will be shown by the display() method
 	 *
-	 * @param mixed $message either a {@link SwatMessage} object or a string to
-	 *                    add to this display.
+	 * @param string|SwatMessage $message the message to add. If the message is
+	 *                                     a string, a new {@link SwatMessage}
+	 *                                     object of the default message type
+	 *                                     is created.
+	 * @param integer $dismissable optional. Whether or not to show a dismiss
+	 *                              link for the added message on this message
+	 *                              display. This should be one of the
+	 *                              SwatMessageDisplay::DISMISS_* constants.
+	 *                              By default, the <i>$dismiss_link</i> is
+	 *                              set to
+	 *                              {@link SwatMessageDisplay::DISMISS_AUTO}.
 	 *
 	 * @throws SwatInvalidClassException
 	 */
-	public function add($message)
+	public function add($message, $dismissable = self::DISMISS_AUTO)
 	{
 		if (is_string($message)) {
-			$this->_messages[] = new SwatMessage($message);
-		} elseif ($message instanceof SwatMessage) {
-			$this->_messages[] = $message;
-		} else {
+			$message = new SwatMessage($message);
+		} elseif (!($message instanceof SwatMessage)) {
 			throw new SwatInvalidClassException(
-				'Cannot add message. Message must be either a string or a '.
+				'Cannot add message. $message must be either a string or a '.
 				'SwatMessage.', 0, $message);
 		}
+
+		$this->_messages[] = $message;
+
+		if ($dismissable == self::DISMISS_AUTO) {
+			$dismissable = (in_array($message->type,
+				$this->getDismissableMessageTypes())) ?
+				self::DISMISS_ON : self::DISMISS_OFF;
+		}
+
+		if ($dismissable == self::DISMISS_ON)
+			$this->dismissable_messages[] = count($this->_messages) - 1;
 	}
 
 	// }}}
 	// {{{ public function display()
 
 	/**
-	 * Displays the messages
+	 * Displays messages in this message display
 	 *
 	 * The CSS class of each message is determined by the message being
 	 * displayed.
@@ -102,7 +148,7 @@ class SwatMessageDisplay extends SwatControl
 		if (!$this->visible)
 			return;
 
-		if (count($this->_messages) == 0)
+		if ($this->getMessageCount() == 0)
 			return;
 
 		$wrapper_div = new SwatHtmlTag('div');
@@ -123,10 +169,8 @@ class SwatMessageDisplay extends SwatControl
 			$container_div->class = 'swat-message-container';
 			$container_div->open();
 
-			if ($message->type == SwatMessage::NOTIFICATION ||
-				$message->type == SwatMessage::WARNING) {
+			if (in_array($key, $this->dismissable_messages))
 				$has_dismiss_link = true;
-			}
 
 			$primary_content = new SwatHtmlTag('h3');
 			$primary_content->class = 'swat-message-primary-content';
@@ -168,6 +212,22 @@ class SwatMessageDisplay extends SwatControl
 	}
 
 	// }}}
+	// {{{ protected function getDismissableMessageTypes()
+
+	/**
+	 * Gets an array of message types that are dismissable by default
+	 *
+	 * @return array message types that are dismissable by default.
+	 */
+	protected function getDismissableMessageTypes()
+	{
+		return array(
+			SwatMessage::NOTIFICATION,
+			SwatMessage::WARNING,
+		);
+	}
+
+	// }}}
 	// {{{ protected function getCSSClassNames()
 
 	/**
@@ -200,21 +260,11 @@ class SwatMessageDisplay extends SwatControl
 			$javascript = '';
 		}
 
-		$hideable_messages = array();
-
-		foreach ($this->_messages as $key => $message) {
-			switch ($message->type) {
-			case SwatMessage::NOTIFICATION:
-			case SwatMessage::WARNING:
-				$hideable_messages[] = $key;
-				break;
-			}
-		}
-
-		$hideable_messages = '['.implode(', ', $hideable_messages).']';
+		$dismissable_messages =
+			'['.implode(', ', $this->dismissable_messages).']';
 
 		$javascript.= sprintf("var %s_obj = new SwatMessageDisplay('%s', %s);",
-			$this->id, $this->id, $hideable_messages);
+			$this->id, $this->id, $dismissable_messages);
 
 		return $javascript;
 	}
@@ -230,7 +280,7 @@ class SwatMessageDisplay extends SwatControl
 	 */
 	protected function getInlineJavaScriptTranslations()
 	{
-		$close_text  = Swat::_('Dismiss message');
+		$close_text  = Swat::_('Dismiss message.');
 		return "SwatMessageDisplay.close_text = '{$close_text}';\n";
 	}
 
