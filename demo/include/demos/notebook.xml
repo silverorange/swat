@@ -5,29 +5,46 @@
 
 		<widget class="SwatFieldset">
 			<property name="title">Top Position</property>
-			<widget class="SwatNoteBook" id="my_notebook">
-				<widget class="SwatNoteBookPage" id="page1">
-					<property name="title">XHTML Entry</property>
-					<widget class="SwatFormField" id="FormField2">
-						<property name="title">XHTML Area</property>
-						<widget class="SwatXHTMLTextarea" id="textarea_xhtml" />
-						<widget class="SwatButton" />
+			<widget class="SwatNoteBook">
+				<widget class="SwatNoteBookPage">
+					<property name="title">Lorum Ipsum</property>
+					<widget class="SwatContentBlock">
+						<property name="content">
+						Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed massa.
+						Proin aliquam lacus sed felis. Proin sit amet odio luctus ipsum
+						tristique gravida. Sed pharetra. Duis tortor lorem, porta in,
+						lacinia nec, molestie sed, dolor. Nulla tortor. Phasellus
+						scelerisque. Pellentesque orci nisl, aliquam eget, dictum quis,
+						imperdiet egestas, nibh. Ut ut ante. Proin metus urna, ornare at,
+						auctor eu, pretium vitae, nibh.
+						</property>
 					</widget>
 				</widget>
-				<widget class="SwatNoteBookPage" id="page2">
-					<property name="title">Text Entry</property>
-					<widget class="SwatFormField" id="FormField3">
-						<property name="title">Plain Text Area</property>
-						<widget class="SwatTextarea" id="textarea" />
-						<widget class="SwatButton" />
-					</widget> 
+				<widget class="SwatNoteBookPage">
+					<property name="title">Praesent Justo</property>
+					<widget class="SwatContentBlock">
+						<property name="content">
+						Praesent justo sem, sollicitudin vitae, eleifend quis, bibendum non,
+						diam. Vivamus sed leo. Proin molestie velit. Vestibulum sodales
+						lobortis augue. Phasellus tempor. Donec vulputate malesuada dolor.
+						In gravida. Ut placerat ipsum sit amet ligula ultricies posuere.
+						Vestibulum blandit fringilla elit. Maecenas et mi non sapien congue
+						pretium. Maecenas euismod lorem ac nisl. Morbi rhoncus tristique.
+						</property>
+					</widget>
 				</widget>
-				<widget class="SwatNoteBookPage" id="page13">
-					<property name="title">Text Editor</property>
-					<widget class="SwatFormField" id="FormField7">
-						<property name="title">Text Editor</property>
-						<widget class="SwatTextareaEditor" id="textarea_editor" />
-						<widget class="SwatButton" />
+				<widget class="SwatNoteBookPage">
+					<property name="title">Phasellus Tincidunt</property>
+					<widget class="SwatContentBlock">
+						<property name="content">
+						Phasellus tincidunt, purus et vehicula ultricies, felis sapien
+						cursus diam, quis ultrices dui metus sed ipsum. Donec sit amet odio.
+						Cras facilisis mattis libero. Morbi rhoncus tristique magna.
+						Cras urna enim, viverra gravida, fringilla quis, semper vitae, dui.
+						Pellentesque habitant morbi tristique senectus et netus et
+						malesuada fames ac turpis egestas. In consectetuer justo et dolor
+						eleifend tincidunt.
+						</property>
 					</widget>
 				</widget>
 			</widget>
@@ -35,26 +52,47 @@
 
 		<widget class="SwatFieldset">
 			<property name="title">Right Position</property>
-			<widget class="SwatNoteBook" id="my_notebook2">
+			<widget class="SwatNoteBook">
 				<property name="tab_position" type="constant">POSITION_RIGHT</property>
-				<widget class="SwatNoteBookPage" id="page3">
-					<property name="title">Swat Logo</property>
-					<widget class="SwatFormField" id="FormField4">
-						<widget class="SwatImageDisplay">
-							<property name="image">http://swat.silverorange.com/skins/swat/logo.png</property>
-							<property name="width" type="integer">182</property>
-							<property name="height" type="integer">77</property>
-							<property name="alt">Image of the Swat Logo</property>
-							<property name="title">Swat: Swat web Application Toolkit</property>
-						</widget>
+				<widget class="SwatNoteBookPage">
+					<property name="title">Lorum</property>
+					<widget class="SwatContentBlock">
+						<property name="content">
+						Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed massa.
+						Proin aliquam lacus sed felis. Proin sit amet odio luctus ipsum
+						tristique gravida. Sed pharetra. Duis tortor lorem, porta in,
+						lacinia nec, molestie sed, dolor. Nulla tortor. Phasellus
+						scelerisque. Pellentesque orci nisl, aliquam eget, dictum quis,
+						imperdiet egestas, nibh. Ut ut ante. Proin metus urna, ornare at,
+						auctor eu, pretium vitae, nibh.
+						</property>
 					</widget>
 				</widget>
-				<widget class="SwatNoteBookPage" id="page4">
-					<property name="title">Search</property>
-					<widget class="SwatFormField" id="FormField5">
-						<property name="title">Swat Search</property>
-						<widget class="SwatSearchEntry" id="search" />
-						<widget class="SwatButton" />
+				<widget class="SwatNoteBookPage">
+					<property name="title">Praesent</property>
+					<widget class="SwatContentBlock">
+						<property name="content">
+						Praesent justo sem, sollicitudin vitae, eleifend quis, bibendum non,
+						diam. Vivamus sed leo. Proin molestie velit. Vestibulum sodales
+						lobortis augue. Phasellus tempor. Donec vulputate malesuada dolor.
+						In gravida. Ut placerat ipsum sit amet ligula ultricies posuere.
+						Vestibulum blandit fringilla elit. Maecenas et mi non sapien congue
+						pretium. Maecenas euismod lorem ac nisl. Morbi rhoncus tristique.
+						</property>
+					</widget>
+				</widget>
+				<widget class="SwatNoteBookPage">
+					<property name="title">Phasellus</property>
+					<widget class="SwatContentBlock">
+						<property name="content">
+						Phasellus tincidunt, purus et vehicula ultricies, felis sapien
+						cursus diam, quis ultrices dui metus sed ipsum. Donec sit amet odio.
+						Cras facilisis mattis libero. Morbi rhoncus tristique magna.
+						Cras urna enim, viverra gravida, fringilla quis, semper vitae, dui.
+						Pellentesque habitant morbi tristique senectus et netus et
+						malesuada fames ac turpis egestas. In consectetuer justo et dolor
+						eleifend tincidunt.
+						</property>
 					</widget>
 				</widget>
 			</widget>
@@ -62,20 +100,47 @@
 
 		<widget class="SwatFieldset">
 			<property name="title">Left Position</property>
-			<widget class="SwatNoteBook" id="my_notebook3">
+			<widget class="SwatNoteBook">
 				<property name="tab_position" type="constant">POSITION_LEFT</property>
-				<widget class="SwatNoteBookPage" id="page5">
-					<property name="title">Primary Text Only</property>
-					<widget class="SwatFieldset" id="long_message_fieldset">
-						<property name="title">Primary Text Only</property>
-						<widget class="SwatMessageDisplay" id="short_message_display" />
+				<widget class="SwatNoteBookPage">
+					<property name="title">Lorum</property>
+					<widget class="SwatContentBlock">
+						<property name="content">
+						Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed massa.
+						Proin aliquam lacus sed felis. Proin sit amet odio luctus ipsum
+						tristique gravida. Sed pharetra. Duis tortor lorem, porta in,
+						lacinia nec, molestie sed, dolor. Nulla tortor. Phasellus
+						scelerisque. Pellentesque orci nisl, aliquam eget, dictum quis,
+						imperdiet egestas, nibh. Ut ut ante. Proin metus urna, ornare at,
+						auctor eu, pretium vitae, nibh.
+						</property>
 					</widget>
 				</widget>
-				<widget class="SwatNoteBookPage" id="page6">
-					<property name="title">Secondary Text Added</property>
-					<widget class="SwatFieldset" id="short_message_fieldset">
-						<property name="title">Secondary Text Added</property>
-						<widget class="SwatMessageDisplay" id="long_message_display" />
+				<widget class="SwatNoteBookPage">
+					<property name="title">Praesent</property>
+					<widget class="SwatContentBlock">
+						<property name="content">
+						Praesent justo sem, sollicitudin vitae, eleifend quis, bibendum non,
+						diam. Vivamus sed leo. Proin molestie velit. Vestibulum sodales
+						lobortis augue. Phasellus tempor. Donec vulputate malesuada dolor.
+						In gravida. Ut placerat ipsum sit amet ligula ultricies posuere.
+						Vestibulum blandit fringilla elit. Maecenas et mi non sapien congue
+						pretium. Maecenas euismod lorem ac nisl. Morbi rhoncus tristique.
+						</property>
+					</widget>
+				</widget>
+				<widget class="SwatNoteBookPage">
+					<property name="title">Phasellus</property>
+					<widget class="SwatContentBlock">
+						<property name="content">
+						Phasellus tincidunt, purus et vehicula ultricies, felis sapien
+						cursus diam, quis ultrices dui metus sed ipsum. Donec sit amet odio.
+						Cras facilisis mattis libero. Morbi rhoncus tristique magna.
+						Cras urna enim, viverra gravida, fringilla quis, semper vitae, dui.
+						Pellentesque habitant morbi tristique senectus et netus et
+						malesuada fames ac turpis egestas. In consectetuer justo et dolor
+						eleifend tincidunt.
+						</property>
 					</widget>
 				</widget>
 			</widget>
@@ -83,33 +148,51 @@
 
 		<widget class="SwatFieldset">
 			<property name="title">Bottom Position</property>
-			<widget class="SwatNoteBook" id="my_notebook4">
+			<widget class="SwatNoteBook">
 				<property name="tab_position" type="constant">POSITION_BOTTOM</property>
-				<widget class="SwatNoteBookPage" id="page7">
-					<property name="title">Individual Checkboxes</property>
-					<widget class="SwatFormField" id="FormField8">
-						<property name="title">Check 1</property>
-						<widget class="SwatCheckbox" id="check1" />
-					</widget>
-					<widget class="SwatFormField" id="FormField10">
-						<property name="title">Check 2</property>
-						<widget class="swatCheckbox" id="check2" />
+				<widget class="SwatNoteBookPage">
+					<property name="title">Lorum</property>
+					<widget class="SwatContentBlock">
+						<property name="content">
+						Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed massa.
+						Proin aliquam lacus sed felis. Proin sit amet odio luctus ipsum
+						tristique gravida. Sed pharetra. Duis tortor lorem, porta in,
+						lacinia nec, molestie sed, dolor. Nulla tortor. Phasellus
+						scelerisque. Pellentesque orci nisl, aliquam eget, dictum quis,
+						imperdiet egestas, nibh. Ut ut ante. Proin metus urna, ornare at,
+						auctor eu, pretium vitae, nibh.
+						</property>
 					</widget>
 				</widget>
-				<widget class="SwatNoteBookPage" id="page8">
-					<property name="title">Checkbox List</property>
-					<widget class="SwatFieldset" id="check_box_fieldset">
-						<property name="title">Checkbox List</property>
-						<widget class="SwatCheckboxList" id="checkboxlist">
-							<property name="options[0]">Apples</property>
-							<property name="options[1]">Oranges</property>
-							<property name="options[2]">Bananas</property>
-						</widget> 
+				<widget class="SwatNoteBookPage">
+					<property name="title">Praesent</property>
+					<widget class="SwatContentBlock">
+						<property name="content">
+						Praesent justo sem, sollicitudin vitae, eleifend quis, bibendum non,
+						diam. Vivamus sed leo. Proin molestie velit. Vestibulum sodales
+						lobortis augue. Phasellus tempor. Donec vulputate malesuada dolor.
+						In gravida. Ut placerat ipsum sit amet ligula ultricies posuere.
+						Vestibulum blandit fringilla elit. Maecenas et mi non sapien congue
+						pretium. Maecenas euismod lorem ac nisl. Morbi rhoncus tristique.
+						</property>
+					</widget>
+				</widget>
+				<widget class="SwatNoteBookPage">
+					<property name="title">Phasellus</property>
+					<widget class="SwatContentBlock">
+						<property name="content">
+						Phasellus tincidunt, purus et vehicula ultricies, felis sapien
+						cursus diam, quis ultrices dui metus sed ipsum. Donec sit amet odio.
+						Cras facilisis mattis libero. Morbi rhoncus tristique magna.
+						Cras urna enim, viverra gravida, fringilla quis, semper vitae, dui.
+						Pellentesque habitant morbi tristique senectus et netus et
+						malesuada fames ac turpis egestas. In consectetuer justo et dolor
+						eleifend tincidunt.
+						</property>
 					</widget>
 				</widget>
 			</widget>
 		</widget>
 
-		<widget class="SwatMessageDisplay" id="note" />
 	</widget>
 </swatml>
