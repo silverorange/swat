@@ -27,6 +27,7 @@ class SwatYUIComponent extends SwatObject
 	private $id;
 	private $dependencies = array();
 	private $html_head_entries = array();
+	private $beta = false;
 
 	// }}}
 	// {{{ public function __construct()
@@ -37,10 +38,14 @@ class SwatYUIComponent extends SwatObject
 	 * @param string $id the identifier of this YUI component. This corresponds
 	 *                    to a directory name under the <i>build</i> directory
 	 *                    in the YUI distribution.
+	 * @param boolean $beta optional. Whether or not this component is in beta.
+	 *                       Beta components have a slightly different naming
+	 *                       convention.
 	 */
-	public function __construct($id)
+	public function __construct($id, $beta = false)
 	{
 		$this->id = $id;
+		$this->beta = $beta;
 
 		$this->html_head_entry_set['normal'] =
 			new SwatHtmlHeadEntrySet();
@@ -95,8 +100,13 @@ class SwatYUIComponent extends SwatObject
 			'normal' => '',
 		);
 
-		$filename_template =
-			'packages/yui/'.$component_directory.'/'.$this->id.'%s.js';
+		if ($this->beta) {
+			$filename_template =
+				'packages/yui/'.$component_directory.'/'.$this->id.'-beta%s.js';
+		} else {
+			$filename_template =
+				'packages/yui/'.$component_directory.'/'.$this->id.'%s.js';
+		}
 
 		foreach ($modes as $mode => $suffix) {
 			$filename = sprintf($filename_template, $suffix);
