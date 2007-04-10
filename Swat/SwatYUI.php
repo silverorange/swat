@@ -195,6 +195,9 @@ class SwatYUI extends SwatObject
 		$components['dragdrop'] = new SwatYUIComponent('dragdrop');
 		$components['dragdrop']->addJavaScript();
 
+		$components['element'] = new SwatYUIComponent('element', true);
+		$components['element']->addJavaScript();
+
 		$components['event'] = new SwatYUIComponent('event');
 		$components['event']->addJavaScript();
 
@@ -263,6 +266,10 @@ class SwatYUI extends SwatObject
 		$components['dragdrop']->addDependency($components['dom']);
 		$components['dragdrop']->addDependency($components['event']);
 
+		$components['element']->addDependency($components['yahoo']);
+		$components['element']->addDependency($components['dom']);
+		$components['element']->addDependency($components['event']);
+
 		$components['event']->addDependency($components['yahoo']);
 
 		$components['grids']->addDependency($components['fonts']);
@@ -286,6 +293,7 @@ class SwatYUI extends SwatObject
 		$components['tabview']->addDependency($components['yahoo']);
 		$components['tabview']->addDependency($components['dom']);
 		$components['tabview']->addDependency($components['event']);
+		$components['tabview']->addDependency($components['element']);
 
 		$components['treeview']->addDependency($components['yahoo']);
 
