@@ -14,7 +14,7 @@ function SwatCheckboxEntryList(id)
 	this.updateFields();
 }
 
-YAHOO.extend(SwatCheckboxEntryList, SwatCheckboxList, {
+YAHOO.lang.extend(SwatCheckboxEntryList, SwatCheckboxList, {
 
 handleClick: function(event)
 {

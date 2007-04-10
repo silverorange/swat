@@ -5,7 +5,7 @@ function SwatConfirmationButton(id, show_processing_throbber)
 		show_processing_throbber);
 }
 
-YAHOO.extend(SwatConfirmationButton, SwatButton, {
+YAHOO.lang.extend(SwatConfirmationButton, SwatButton, {
 
 handleClick: function(event, object)
 {
