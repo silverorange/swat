@@ -13,17 +13,18 @@ require_once 'Demo.php';
  */
 class TableViewInputRowDemo extends Demo
 {
-	// private function buildDemoUI();
+	// {{{ public function buildDemoUI();
 
 	public function buildDemoUI(SwatUI $ui)
 	{
-		$message = new SwatMessage('Note:');
+		$message = new SwatMessage(
+			'These actions are for demonstration purposes only.');
+
 		$message->secondary_content =
-			'These actions are for demonstration purposes only. '.
 			'The actions do not do anything as this page is not connected '.
 			'to a database.';
 
-		$ui->getWidget('note')->add($message);
+		$ui->getWidget('note')->add($message, SwatMessageDisplay::DISMISS_OFF);
 
 		$data = array(
 			array('Apple', false, true),
