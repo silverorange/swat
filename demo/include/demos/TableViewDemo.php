@@ -17,13 +17,14 @@ class TableViewDemo extends Demo
 
 	public function buildDemoUI(SwatUI $ui)
 	{
-		$message = new SwatMessage('Note:');
+		$message = new SwatMessage(
+			'These actions are for demonstration purposes only.');
+
 		$message->secondary_content =
-			'These actions are for demonstration purposes only. '.
 			'The actions do not do anything as this page is not connected '.
 			'to a database.';
 
-		$ui->getWidget('note')->add($message);
+		$ui->getWidget('note')->add($message, SwatMessageDisplay::DISMISS_OFF);
 
 		$data = array(
 			array('images/apple.png', 28, 28, 'Apple', 'red', false, true,
