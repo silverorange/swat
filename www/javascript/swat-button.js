@@ -17,6 +17,16 @@ SwatButton.prototype.handleClick = function(event, object)
 {
 	if (this.show_processing_throbber) {
 		this.button.disabled = true;
+
+		// add button to form data manually since we disabled it above
+		var div = document.createElement('div');
+		var hidden_field = document.createElement('input');
+		hidden_field.setAttribute('type', 'hidden');
+		hidden_field.setAttribute('name', this.id);
+		hidden_field.setAttribute('value', this.button.value);
+		div.appendChild(hidden_field);
+		this.button.form.appendChild(div);
+		
 		this.button.form.submit(); // needed for IE
 		this.showThrobber();
 	}
