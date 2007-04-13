@@ -28,6 +28,8 @@ class RadioListDemo extends Demo
 			6 => 'Tangerine',
 			7 => 'Grapefruit',
 			8 => 'Strawberry'));
+		$radiolist->addDivider();
+		$radiolist->addOption(new SwatOption(9, 'I don\'t like fruit'));
 
 		$radiotable = $ui->getWidget('radiotable');
 		$radiotable->addOptionsByArray(array(
@@ -40,6 +42,8 @@ class RadioListDemo extends Demo
 			6 => 'Tangerine',
 			7 => 'Grapefruit',
 			8 => 'Strawberry'));
+		$radiotable->addDivider();
+		$radiotable->addOption(new SwatOption(9, 'I don\'t like fruit'));
 	}
 
 	// }}}
