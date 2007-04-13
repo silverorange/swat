@@ -6,6 +6,9 @@
 			<property name="title" type="string">Select a Date</property>
 			<widget class="SwatCalendar" id="calendar" />
 		</widget>
-			
+		<widget class="SwatFormField">
+			<property name="title" type="string">Select a Fruit (IE6 Z-Index Test)</property>
+			<widget class="SwatFlydown" id="flydown" />
+		</widget>
 	</widget>
 </swatml>
