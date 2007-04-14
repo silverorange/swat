@@ -8,7 +8,7 @@
  * This is an application to demonstrate various Swat widgets.
  *
  * @package   SwatDemo
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class DemoApplication
@@ -33,11 +33,13 @@ class DemoApplication
 		'Flydown'           => 'SwatFlydown',
 		'Frame'             => 'SwatFrame',
 		'ImageDisplay'      => 'SwatImageDisplay',
+		'Menu'              => 'SwatMenu',
 		'MessageDisplay'    => 'SwatMessageDisplay',
 		'NavBar'            => 'SwatNavBar',
 		'NoteBook'          => 'SwatNoteBook',
 		'Pagination'        => 'SwatPagination',
 		'PasswordEntry'     => 'SwatPasswordEntry',
+		'ProgressBar'       => 'SwatProgressBar',
 		'RadioList'         => 'SwatRadioList',
 		'Replicable'        => 'SwatReplicable',
 		'String'            => 'SwatString',
