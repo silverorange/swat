@@ -1,0 +1,38 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm">
+		<widget class="SwatFormField">
+			<property name="title" type="string">Download Status</property>
+			<widget class="SwatProgressBar">
+				<property name="value" type="float">0.30</property>
+				<property name="text">%s%% complete</property>
+				<property name="text_value" type="string">30</property>
+			</widget>
+		</widget>
+		<widget class="SwatFrame">
+			<property name="title">Other Orientations</property>
+			<widget class="SwatFormField">
+				<property name="title" type="string">Right to Left</property>
+				<widget class="SwatProgressBar">
+					<property name="value" type="float">0.30</property>
+					<property name="orientation" type="constant">ORIENTATION_RIGHT_TO_LEFT</property>
+				</widget>
+			</widget>
+			<widget class="SwatFormField">
+				<property name="title" type="string">Bottom to Top</property>
+				<widget class="SwatProgressBar">
+					<property name="value" type="float">0.30</property>
+					<property name="orientation" type="constant">ORIENTATION_BOTTOM_TO_TOP</property>
+				</widget>
+			</widget>
+			<widget class="SwatFormField">
+				<property name="title" type="string">Top to Bottom</property>
+				<widget class="SwatProgressBar">
+					<property name="value" type="float">0.30</property>
+					<property name="orientation" type="constant">ORIENTATION_TOP_TO_BOTTOM</property>
+				</widget>
+			</widget>
+		</widget>
+	</widget>
+</swatml>
