@@ -10,7 +10,7 @@ require_once 'Swat/SwatYUI.php';
  * A container to show and hide child widgets
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDisclosure extends SwatDisplayableContainer
@@ -231,8 +231,12 @@ class SwatDisclosure extends SwatDisplayableContainer
 	 */
 	protected function getCSSClassNames()
 	{
-		$classes = array('swat-disclosure');
-		$classes[] = 'swat-disclosure-control-opened';
+		$classes = array(
+			'swat-disclosure',
+			// always display open in case JavaScript is turned off
+			'swat-disclosure-control-opened',
+		);
+
 		$classes = array_merge($classes, $this->classes);
 		return $classes;
 	}
