@@ -309,6 +309,12 @@ class DemoApplication
 				);
 			break;
 
+		case 'ProgressBar':
+			$entries = array(
+				'SwatProgressBar',
+				);
+			break;
+
 		case 'RadioList':
 			$entries = array(
 				'SwatRadioList',
