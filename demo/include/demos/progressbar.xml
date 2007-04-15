@@ -10,6 +10,7 @@
 				<property name="text_value" type="string">30</property>
 			</widget>
 		</widget>
+		<widget class="SwatMessageDisplay" id="note" />
 		<widget class="SwatFrame">
 			<property name="title">Other Orientations</property>
 			<widget class="SwatFormField">
