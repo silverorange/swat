@@ -4,7 +4,7 @@
 	<widget class="SwatForm">
 		<widget class="SwatFormField">
 			<property name="title" type="string">Download Status</property>
-			<widget class="SwatProgressBar">
+			<widget class="SwatProgressBar" id="download_status">
 				<property name="value" type="float">0.30</property>
 				<property name="text">%s%% complete</property>
 				<property name="text_value" type="string">30</property>
@@ -33,6 +33,42 @@
 					<property name="orientation" type="constant">ORIENTATION_TOP_TO_BOTTOM</property>
 				</widget>
 			</widget>
+		</widget>
+
+		<!-- make the first progress bar do something interesting -->
+		<widget class="SwatContentBlock">
+			<property name="content"><![CDATA[<script type="text/javascript">
+			// update status bar text when value changes
+			function handleValueChange(type, value)
+			{
+				value = Math.round(value * 100000) / 1000;
+				download_status_obj.setText(value + '% complete');
+			}
+
+			// show generic text when in pulse-mode
+			function handlePulse(type)
+			{
+				download_status_obj.setText('downloading...');
+			}
+
+			// update value on mouse movement
+			function handleMouseMove(event, progress_bar)
+			{
+				var value = progress_bar.getValue();
+				if (value > 1) {
+					progress_bar.pulse();
+				} else {
+					progress_bar.setValue(value + 0.01);
+				}
+			}
+
+			YAHOO.util.Event.addListener('download_status', 'mousemove',
+				handleMouseMove, download_status_obj);
+
+			download_status_obj.changeValueEvent.subscribe(handleValueChange);
+			download_status_obj.pulseEvent.subscribe(handlePulse);
+			</script>]]></property>
+			<property name="content_type">text/xml</property>
 		</widget>
 	</widget>
 </swatml>
