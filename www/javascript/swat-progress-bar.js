@@ -19,8 +19,18 @@ function SwatProgressBar(id, orientation, value)
 
 	this.full = document.getElementById(this.id + '_full');
 	this.empty = document.getElementById(this.id + '_empty');
+	this.container = document.getElementById(this.id);
 
-	this.onValueChange = new YAHOO.util.CustomEvent('valuechange');
+	this.text_node = null;
+	for (var i = 0; i < this.container.childNodes.length; i++) {
+		if (this.container.childNodes[i].nodeType == 3) {
+			this.text_node = this.container.childNodes[i];
+			break;
+		}
+	}
+
+	this.changeValueEvent = new YAHOO.util.CustomEvent('changeValue');
+	this.pulseEvent       = new YAHOO.util.CustomEvent('pulse');
 }
 
 SwatProgressBar.ORIENTATION_LEFT_TO_RIGHT = 1;
@@ -65,7 +75,22 @@ SwatProgressBar.prototype.setValue = function(value)
 		break;
 	}
 
-	this.onValueChange.fire(this.value);
+	this.changeValueEvent.fire(this.value);
+}
+
+SwatProgressBar.prototype.setText = function(text)
+{
+	var new_text_node = document.createTextNode(text);
+
+	if (this.text_node) {
+		var old_text_node = this.text_node;
+		this.container.replaceChild(new_text_node, old_text_node);
+		delete old_text_node;
+	} else {
+		this.container.appendChild(new_text_node);
+	}
+
+	this.text_node = new_text_node;
 }
 
 SwatProgressBar.prototype.getValue = function()
@@ -114,6 +139,8 @@ SwatProgressBar.prototype.pulse = function()
 		this.pulse_direction = 1;
 
 	this.pulse_position += (this.pulse_step * this.pulse_direction);
+
+	this.pulseEvent.fire();
 
 	// preserve precision across multiple calls to pulse()
 	this.pulse_position =
