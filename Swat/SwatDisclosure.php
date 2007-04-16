@@ -74,19 +74,15 @@ class SwatDisclosure extends SwatDisplayableContainer
 			return;
 
 		$control_div = $this->getControlDivTag();
-		$anchor = $this->getAnchorTag();
+		$span = $this->getSpanTag();
 		$input = $this->getInputTag();
-		$img = $this->getImgTag();
 		$container_div = $this->getContainerDivTag();
 		$animate_div = $this->getAnimateDivTag();
 
 		$control_div->open();
-		$anchor->open();
+
+		$span->display();
 		$input->display();
-		$img->display();
-		echo ' ';
-		$anchor->displayContent();
-		$anchor->close();
 
 		$container_div->open();
 		$animate_div->open();
@@ -133,22 +129,6 @@ class SwatDisclosure extends SwatDisplayableContainer
 	}
 
 	// }}}
-	// {{{ protected function getImgTag()
-
-	protected function getImgTag()
-	{
-		$img = new SwatHtmlTag('img');
-		$img->src = 'packages/swat/images/swat-disclosure-open.png';
-		$img->alt = Swat::_('close');
-		$img->width = 16;
-		$img->height = 16;
-		$img->id = $this->id.'_img';
-		$img->class = 'swat-disclosure-image';
-
-		return $img;
-	}
-
-	// }}}
 	// {{{ protected function getInputTag()
 
 	protected function getInputTag()
@@ -163,16 +143,15 @@ class SwatDisclosure extends SwatDisplayableContainer
 	}
 
 	// }}}
-	// {{{ protected function getAnchorTag()
+	// {{{ protected function getSpanTag()
 
-	protected function getAnchorTag()
+	protected function getSpanTag()
 	{
-		$anchor = new SwatHtmlTag('a');
-		$anchor->class = 'swat-disclosure-anchor';
-		$anchor->href = sprintf('javascript:%s_obj.toggle();', $this->id);
-		$anchor->setContent($this->title);
+		$span = new SwatHtmlTag('span');
+		$span->class = 'swat-disclosure-span';
+		$span->setContent($this->title);
 
-		return $anchor;
+		return $span;
 	}
 
 	// }}}
