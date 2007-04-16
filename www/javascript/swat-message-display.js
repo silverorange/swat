@@ -1,54 +1,67 @@
 function SwatMessageDisplay(id, hideable_messages)
 {
 	this.id = id;
+	this.messages = [];
 
-	// draw dismiss links
+	// create message objects for this display
 	for (var i = 0; i < hideable_messages.length; i++) {
-		var message_container = document.getElementById(
-			this.id + '_' + hideable_messages[i]).firstChild;
-
-		message_container.innerHTML = '<a href="javascript:' + this.id +
-			'_obj.hideMessage(' + hideable_messages[i] + ');" ' +
-			'class="swat-message-display-dismiss-link" ' +
-			'title="' + SwatMessageDisplay.close_text + '">' +
-			SwatMessageDisplay.close_text + '</a>' +
-			message_container.innerHTML;
+		var message = new SwatMessageDisplayMessage(this.id,
+			hideable_messages[i]);
 	}
 }
 
-SwatMessageDisplay.close_text = 'Dismiss message';
+SwatMessageDisplayMessage.close_text = 'Dismiss message';
 
 /**
- * Hides a message in this display
- *
- * Uses the self-healing transition pattern described at
- * {@link http://developer.yahoo.com/ypatterns/pattern.php?pattern=selfhealing}.
+ * A message in a message display
  *
  * @param Number message_index the message to hide from this list.
  */
-SwatMessageDisplay.prototype.hideMessage = function(message_index)
+function SwatMessageDisplayMessage(message_display_id, message_index)
 {
-	var id = this.id + '_' + message_index;
-	var message = document.getElementById(id);
+	this.id = message_display_id + '_' + message_index;
+	this.message_div = document.getElementById(this.id);
+	this.drawDismissLink();
+}
 
-	if (message !== null) {
+SwatMessageDisplayMessage.prototype.drawDismissLink = function()
+{
+	var text = document.createTextNode(SwatMessageDisplayMessage.close_text);
+
+	var anchor = document.createElement('a');
+	anchor.href = '#';
+	anchor.title = SwatMessageDisplayMessage.close_text;
+	YAHOO.util.Dom.addClass(anchor, 'swat-message-display-dismiss-link');
+	YAHOO.util.Event.addListener(anchor, 'click', this.hide, this, true);
+	anchor.appendChild(text);
+
+	var container = this.message_div.firstChild;
+	container.insertBefore(anchor, container.firstChild);
+}
+
+/**
+ * Hides this message
+ *
+ * Uses the self-healing transition pattern described at
+ * {@link http://developer.yahoo.com/ypatterns/pattern.php?pattern=selfhealing}.
+ */
+SwatMessageDisplayMessage.prototype.hide = function()
+{
+	if (this.message_div !== null) {
 		// fade out message
-		var message_animation = new YAHOO.util.Anim(
-			message, { opacity: { to: 0 } },
-			0.3, YAHOO.util.Easing.easeOut);
+		var fade_animation = new YAHOO.util.Anim(this.message_div,
+			{ opacity: { to: 0 } }, 0.3, YAHOO.util.Easing.easingOut);
 
 		// after fading out, shrink the empty space away
-		message_animation.onComplete.subscribe(
-			SwatMessageDisplay.shrinkMessage, message);
-
-		message_animation.animate();
+		fade_animation.onComplete.subscribe(this.shrink, this, true);
+		fade_animation.animate();
 	}
 }
 
-SwatMessageDisplay.shrinkMessage = function(type, args, message)
+SwatMessageDisplayMessage.prototype.shrink = function()
 {
 	var duration = 0.3;
-	var easing = YAHOO.util.Easing.easingNone;
+	var easing = YAHOO.util.Easing.easeInStrong;
 
 	var attributes = {
 		height: { to: 0 },
@@ -56,10 +69,10 @@ SwatMessageDisplay.shrinkMessage = function(type, args, message)
 	}; 
 
 	// collapse margins
-	if (message.nextSibling) {
+	if (this.message_div.nextSibling) {
 		// shrink top margin of next message in message display
 		var next_message_animation = new YAHOO.util.Anim(
-			message.nextSibling, { marginTop: { to: 0 } },
+			this.message_div.nextSibling, { marginTop: { to: 0 } },
 			duration, easing);
 
 		next_message_animation.animate();
@@ -67,7 +80,7 @@ SwatMessageDisplay.shrinkMessage = function(type, args, message)
 		// shrink top margin of element directly below message display
 
 		// find first element node
-		var script_node = message.parentNode.nextSibling;
+		var script_node = this.message_div.parentNode.nextSibling;
 		var node = script_node.nextSibling;
 		while (node && node.nodeType != 1)
 			node = node.nextSibling; 
@@ -81,18 +94,17 @@ SwatMessageDisplay.shrinkMessage = function(type, args, message)
 	}
 
 	// disappear this message
-	var message_animation = new YAHOO.util.Anim(
-		message, attributes,
-		duration, easing);
+	var shrink_animation = new YAHOO.util.Anim(this.message_div,
+		attributes, duration, easing);
 
-	message_animation.onComplete.subscribe(
-		SwatMessageDisplay.removeMessage, message);
-
-	message_animation.animate();
+	shrink_animation.onComplete.subscribe(this.remove, this, true);
+	shrink_animation.animate();
 }
 
-SwatMessageDisplay.removeMessage = function(type, args, message)
+SwatMessageDisplayMessage.prototype.remove = function()
 {
-	var removed_node = message.parentNode.removeChild(message);
+	var removed_node =
+		this.message_div.parentNode.removeChild(this.message_div);
+
 	delete removed_node;
 }

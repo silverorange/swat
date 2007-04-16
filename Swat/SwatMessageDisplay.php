@@ -281,7 +281,7 @@ class SwatMessageDisplay extends SwatControl
 	protected function getInlineJavaScriptTranslations()
 	{
 		$close_text  = Swat::_('Dismiss message.');
-		return "SwatMessageDisplay.close_text = '{$close_text}';\n";
+		return "SwatMessageDisplayMessage.close_text = '{$close_text}';\n";
 	}
 
 	// }}}
