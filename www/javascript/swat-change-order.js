@@ -59,18 +59,30 @@ function SwatChangeOrder_mousemoveEventHandler(event)
  *
  * @return boolean false;
  */
-function SwatChangeOrder_keydownEventHandler(event)
+function SwatChangeOrder_keydownEventHandler(event, change_order)
 {
+	if (event.keyCode == 40) {
+		var element = document.getElementById('change_order_list').childNodes[7];
+		change_order.choose(element);
+		change_order.scrollList(change_order.getScrollPosition(element));
+		YAHOO.util.Event.preventDefault(event);
+	}
+	if (event.keyCode == 38) {
+		var element = document.getElementById('change_order_list').childNodes[6];
+		change_order.choose(element);
+		change_order.scrollList(change_order.getScrollPosition(element));
+		YAHOO.util.Event.preventDefault(event);
+	}
 	// user pressed escape
-	if (event.keyCode == 27) {
+	if (SwatChangeOrder.is_dragging && event.keyCode == 27) {
 		YAHOO.util.Event.removeListener(document, 'mousemove',
 			SwatChangeOrder_mousemoveEventHandler);
 
 		YAHOO.util.Event.removeListener(document, 'mouseup',
 			SwatChangeOrder_mouseupEventHandler);
 
-		YAHOO.util.Event.removeListener(document, 'keydown',
-			SwatChangeOrder_keydownEventHandler);
+//		YAHOO.util.Event.removeListener(document, 'keydown',
+//			SwatChangeOrder_keydownEventHandler);
 
 		var shadow_item = SwatChangeOrder.dragging_item;
 		var drop_marker = SwatChangeOrder.dragging_drop_marker;
@@ -216,8 +228,8 @@ function SwatChangeOrder_mouseupEventHandler(event)
 	YAHOO.util.Event.removeListener(document, 'mouseup',
 		SwatChangeOrder_mouseupEventHandler);
 
-	YAHOO.util.Event.removeListener(document, 'keydown',
-		SwatChangeOrder_keydownEventHandler);
+//	YAHOO.util.Event.removeListener(document, 'keydown',
+//		SwatChangeOrder_keydownEventHandler);
 
 	var shadow_item = SwatChangeOrder.dragging_item;
 	var drop_marker = SwatChangeOrder.dragging_drop_marker;
@@ -257,6 +269,9 @@ function SwatChangeOrder_mouseupEventHandler(event)
  */
 function SwatChangeOrder_mousedownEventHandler(event)
 {
+	this.focus();
+//	this.style.outlineWidth = '1px';
+//	this.style.outlineStyle = 'dotted';
 	// prevent text selection
 	YAHOO.util.Event.preventDefault(event);
 
@@ -305,9 +320,6 @@ function SwatChangeOrder_mousedownEventHandler(event)
 
 	YAHOO.util.Event.addListener(document, 'mouseup',
 		SwatChangeOrder_mouseupEventHandler);
-
-	YAHOO.util.Event.addListener(document, 'keydown',
-		SwatChangeOrder_keydownEventHandler);
 
 	return false;
 }
@@ -381,7 +393,10 @@ function SwatChangeOrder(id, sensitive)
 	this.scrollList(this.getScrollPosition(this.list_div.firstChild));
 
 	this.sensitive = sensitive;
-	this.order_change_event = new YAHOO.util.CustomEvent('orderchange');
+	this.orderChangeEvent = new YAHOO.util.CustomEvent('orderChange');
+
+	YAHOO.util.Event.addListener(document, 'keydown',
+		SwatChangeOrder_keydownEventHandler, this);
 }
 
 // }}}
@@ -756,7 +771,7 @@ SwatChangeOrder.prototype.updateValue = function()
 
 	// fire order-changed event
 	if (temp != hidden_field.value)
-		this.order_change_event.fire(temp);
+		this.orderChangeEvent.fire(temp);
 
 	// update a hidden field with current order of keys
 	hidden_field.value = temp;
