@@ -10,33 +10,33 @@ function SwatDateEntry(id)
 
 	if (this.year)
 		YAHOO.util.Event.addListener(this.year, 'change',
-			SwatDateEntry.handleYearChange, this);
+			this.handleYearChange, this, true);
 
 	if (this.month)
 		YAHOO.util.Event.addListener(this.month, 'change',
-			SwatDateEntry.handleMonthChange, this);
+			this.handleMonthChange, this, true);
 
 	if (this.day)
 		YAHOO.util.Event.addListener(this.day, 'change',
-			SwatDateEntry.handleDayChange, this);
+			this.handleDayChange, this, true);
 
 	this.lookup_table = {};
 	this.reverse_lookup_table = {};
 }
 
-SwatDateEntry.handleYearChange = function(event, object)
+SwatDateEntry.prototype.handleYearChange = function()
 {
-	object.update('year');
+	this.update('year');
 }
 
-SwatDateEntry.handleMonthChange = function(event, object)
+SwatDateEntry.prototype.handleMonthChange = function()
 {
-	object.update('month');
+	this.update('month');
 }
 
-SwatDateEntry.handleDayChange = function(event, object)
+SwatDateEntry.prototype.handleDayChange = function()
 {
-	object.update('day');
+	this.update('day');
 }
 
 SwatDateEntry.prototype.addLookupTable = function(table_name, table)
