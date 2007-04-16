@@ -27,16 +27,19 @@ function SwatTableViewCheckboxColumn(id, table)
 			this.check_list.push(items[i]);
 			this.highlightRow(items[i]);
 			YAHOO.util.Event.addListener(items[i], 'click',
-				SwatTableViewCheckboxColumn.handleClick, this);
+				this.handleClick, this, true);
+
+			YAHOO.util.Event.addListener(items[i], 'dblclick',
+				this.handleClick, this, true);
 		}
 	}
 }
 
-SwatTableViewCheckboxColumn.handleClick = function(event, object)
+SwatTableViewCheckboxColumn.prototype.handleClick = function(event)
 {
 	var node = YAHOO.util.Event.getTarget(event);
-	object.highlightRow(node);
-	object.updateCheckAll();
+	this.highlightRow(node);
+	this.updateCheckAll();
 }
 
 SwatTableViewCheckboxColumn.prototype.updateCheckAll = function()
