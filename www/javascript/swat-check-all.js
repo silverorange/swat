@@ -41,32 +41,22 @@ SwatCheckAll.prototype.setController = function(controller)
 	// only add the event handler the first time
 	if (this.controller === null) {
 		YAHOO.util.Event.addListener(this.check_all, 'click',
-			SwatCheckAll.clickHandler, controller);
+			this.clickHandler, this, true);
 
 		YAHOO.util.Event.addListener(this.check_all, 'dblclick',
-			SwatCheckAll.clickHandler, controller);
+			this.clickHandler, this, true);
 	}
 
 	this.controller = controller;
-
-	controller.check_all = this;
-	controller.updateCheckAll();
+	this.controller.check_all = this;
+	this.controller.updateCheckAll();
 }
 
 /**
- * Handles click events on a check-all object
- *
- * This is a static method.
- *
- * @param Event event the click event to handle.
- * @param SwatCheckboxList controller the JavaScript object that represents the
- *                                     checkbox list controlling this check-all
- *                                     object.
+ * Handles click events for this check-all object
  */
-SwatCheckAll.clickHandler = function(event, controller)
+SwatCheckAll.prototype.clickHandler = function()
 {
-	var check_all = YAHOO.util.Event.getTarget(event);
-
 	// check all checkboxes in the controller object
-	controller.checkAll(check_all.checked);
+	this.controller.checkAll(this.check_all.checked);
 }
