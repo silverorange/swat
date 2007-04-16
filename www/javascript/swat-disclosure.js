@@ -29,6 +29,15 @@ function SwatDisclosure(id, open)
 SwatDisclosure.open_text = 'open';
 SwatDisclosure.close_text = 'close';
 
+// preload images
+SwatDisclosure.open_image = new Image();
+SwatDisclosure.open_image.src =
+	'packages/swat/images/swat-disclosure-open.png';
+
+SwatDisclosure.closed_image = new Image();
+SwatDisclosure.closed_image.src =
+	'packages/swat/images/swat-disclosure-closed.png';
+
 SwatDisclosure.prototype.toggle = function()
 {
 	if (this.opened) {
@@ -45,7 +54,7 @@ SwatDisclosure.prototype.close = function()
 
 	this.semaphore = false;
 
-	this.image.src = 'packages/swat/images/swat-disclosure-closed.png';
+	this.image.src = SwatDisclosure.closed_image.src;
 	this.image.alt = SwatDisclosure.open_text;
 	this.input.value = 'closed';
 
@@ -67,7 +76,7 @@ SwatDisclosure.prototype.closeWithAnimation = function()
 	animation.onComplete.subscribe(this.handleClose, this, true);
 	animation.animate();
 
-	this.image.src = 'packages/swat/images/swat-disclosure-closed.png';
+	this.image.src = SwatDisclosure.closed_image.src;
 	this.image.alt = SwatDisclosure.open_text;
 	this.input.value = 'closed';
 	this.opened = false;
@@ -80,7 +89,7 @@ SwatDisclosure.prototype.open = function()
 
 	this.semaphore = false;
 
-	this.image.src = 'packages/swat/images/swat-disclosure-open.png';
+	this.image.src = SwatDisclosure.open_image.src;
 	this.image.alt = SwatDisclosure.close_text;
 	this.input.value = 'opened';
 	this.opened = true;
@@ -115,7 +124,7 @@ SwatDisclosure.prototype.openWithAnimation = function()
 	animation.onComplete.subscribe(this.handleOpen, this, true);
 	animation.animate();
 
-	this.image.src = 'packages/swat/images/swat-disclosure-open.png';
+	this.image.src = SwatDisclosure.open_image.src;
 	this.image.alt = SwatDisclosure.close_text;
 	this.input.value = 'opened';
 	this.opened = true;
