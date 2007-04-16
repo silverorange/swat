@@ -67,6 +67,7 @@ SwatSimpleColorEntry.prototype.drawButton = function()
 	this.palette = document.createElement('div');
 	this.palette.id = this.id + '_palette';
 	YAHOO.util.Dom.addClass(this.palette, 'swat-simple-color-entry-palette');
+	this.palette.style.display = 'none';
 
 	var overlay_header = document.createElement('div');
 	YAHOO.util.Dom.addClass(overlay_header, 'hd');
@@ -99,6 +100,7 @@ SwatSimpleColorEntry.prototype.createOverlay = function(event)
 		{ visible: false, constraintoviewport: true });
 
 	this.overlay.render(document.body);
+	this.palette.style.display = 'block';
 	this.is_drawn = true;
 }
 
