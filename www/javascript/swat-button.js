@@ -10,6 +10,7 @@ function SwatButton(id, show_processing_throbber)
 		this.handleClick, this, true);
 }
 
+SwatButton.throbber_alt_text = 'throbber';
 SwatButton.throbber_image = new Image();
 SwatButton.throbber_image.src = 'packages/swat/images/swat-button-throbber.gif';
 
@@ -21,9 +22,9 @@ SwatButton.prototype.handleClick = function(event, object)
 		// add button to form data manually since we disabled it above
 		var div = document.createElement('div');
 		var hidden_field = document.createElement('input');
-		hidden_field.setAttribute('type', 'hidden');
-		hidden_field.setAttribute('name', this.id);
-		hidden_field.setAttribute('value', this.button.value);
+		hidden_field.type = 'hidden';
+		hidden_field.name = this.id;
+		hidden_field.value = this.button.value;
 		div.appendChild(hidden_field);
 		this.button.form.appendChild(div);
 		
@@ -39,10 +40,10 @@ SwatButton.prototype.showThrobber = function()
 
 	var text = document.createTextNode(this.processing_message);
 	var image = document.createElement('img');
-	image.setAttribute('src', SwatButton.throbber_image.src);
-	image.setAttribute('width', '16');
-	image.setAttribute('height', '16');
-	image.setAttribute('alt', 'throbber');
+	image.src = SwatButton.throbber_image.src;
+	image.width = '16';
+	image.height = '16';
+	image.alt = SwatButton.throbber_alt_text;
 	span.appendChild(image);
 	span.appendChild(text);
 	this.button.parentNode.appendChild(span);
