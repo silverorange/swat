@@ -64,7 +64,7 @@ SwatDisclosure.prototype.closeWithAnimation = function()
 		YAHOO.util.Easing.easingIn); 
 
 	this.semaphore = true;
-	animation.onComplete.subscribe(SwatDisclosure.handleClose, this);
+	animation.onComplete.subscribe(this.handleClose, this, true);
 	animation.animate();
 
 	this.image.src = 'packages/swat/images/swat-disclosure-closed.png';
@@ -112,7 +112,7 @@ SwatDisclosure.prototype.openWithAnimation = function()
 		YAHOO.util.Easing.easeOut); 
 
 	this.semaphore = true;
-	animation.onComplete.subscribe(SwatDisclosure.handleOpen, this);
+	animation.onComplete.subscribe(this.handleOpen, this, true);
 	animation.animate();
 
 	this.image.src = 'packages/swat/images/swat-disclosure-open.png';
@@ -121,22 +121,20 @@ SwatDisclosure.prototype.openWithAnimation = function()
 	this.opened = true;
 }
 
-SwatDisclosure.handleClose = function(type, args, disclosure)
+SwatDisclosure.prototype.handleClose = function()
 {
-	YAHOO.util.Dom.removeClass(disclosure.div,
-		'swat-disclosure-control-opened');
-
-	YAHOO.util.Dom.addClass(disclosure.div, 'swat-disclosure-control-closed');
-	disclosure.semaphore = false;
+	YAHOO.util.Dom.removeClass(this.div, 'swat-disclosure-control-opened');
+	YAHOO.util.Dom.addClass(this.div, 'swat-disclosure-control-closed');
+	this.semaphore = false;
 }
 
-SwatDisclosure.handleOpen = function(type, args, disclosure)
+SwatDisclosure.prototype.handleOpen = function()
 {
 	// allow font resizing to work again
-	disclosure.animate_div.style.height = '';
+	this.animate_div.style.height = '';
 
 	// re-set overflow to visible for styles that might depend on it
-	disclosure.animate_div.style.overflow = 'visible';
+	this.animate_div.style.overflow = 'visible';
 
-	disclosure.semaphore = false;
+	this.semaphore = false;
 }
