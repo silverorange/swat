@@ -11,42 +11,42 @@ function SwatTimeEntry(id)
 
 	if (this.hour)
 		YAHOO.util.Event.addListener(this.hour, 'change',
-			SwatTimeEntry.handleHourChange, this);
+			this.handleHourChange, this, true);
 
 	if (this.minute)
 		YAHOO.util.Event.addListener(this.minute, 'change',
-			SwatTimeEntry.handleMinuteChange, this);
+			this.handleMinuteChange, this, true);
 
 	if (this.second)
 		YAHOO.util.Event.addListener(this.second, 'change',
-			SwatTimeEntry.handleSecondChange, this);
+			this.handleSecondChange, this, true);
 
 	if (this.ampm)
 		YAHOO.util.Event.addListener(this.ampm, 'change',
-			SwatTimeEntry.handleAmPmChange, this);
+			this.handleAmPmChange, this, true);
 
 	this.lookup_table = {};
 	this.reverse_lookup_table = {};
 }
 
-SwatTimeEntry.handleHourChange = function(event, object)
+SwatTimeEntry.prototype.handleHourChange = function()
 {
-	object.update('hour');
+	this.update('hour');
 }
 
-SwatTimeEntry.handleMinuteChange = function(event, object)
+SwatTimeEntry.prototype.handleMinuteChange = function()
 {
-	object.update('minute');
+	this.update('minute');
 }
 
-SwatTimeEntry.handleSecondChange = function(event, object)
+SwatTimeEntry.prototype.handleSecondChange = function()
 {
-	object.update('second');
+	this.update('second');
 }
 
-SwatTimeEntry.handleAmPmChange = function(event, object)
+SwatTimeEntry.prototype.handleAmPmChange = function()
 {
-	object.update('ampm');
+	this.update('ampm');
 }
 
 SwatTimeEntry.prototype.addLookupTable = function(table_name, table)
