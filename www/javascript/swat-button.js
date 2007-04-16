@@ -14,7 +14,7 @@ SwatButton.throbber_alt_text = 'throbber';
 SwatButton.throbber_image = new Image();
 SwatButton.throbber_image.src = 'packages/swat/images/swat-button-throbber.gif';
 
-SwatButton.prototype.handleClick = function(event, object)
+SwatButton.prototype.handleClick = function()
 {
 	if (this.show_processing_throbber) {
 		this.button.disabled = true;
