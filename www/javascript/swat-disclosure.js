@@ -1,9 +1,10 @@
 function SwatDisclosure(id, open)
 {
-	this.image = document.getElementById(id + '_img');
-	this.input = document.getElementById(id + '_input');
 	this.div = document.getElementById(id);
-	this.animate_div = this.div.firstChild.nextSibling.firstChild;
+	this.input = document.getElementById(id + '_input');
+	this.animate_div = this.div.firstChild.nextSibling.nextSibling.firstChild;
+
+	this.drawDisclosureLink();
 
 	// prevent closing during opening animation and vice versa
 	this.semaphore = false;
@@ -45,6 +46,32 @@ SwatDisclosure.prototype.toggle = function()
 	} else {
 		this.openWithAnimation();
 	}
+}
+
+SwatDisclosure.prototype.drawDisclosureLink = function()
+{
+	var span = this.div.firstChild;
+	if (span.firstChild && span.firstChild.nodeType == 3)
+		var text = document.createTextNode(' ' + span.firstChild.nodeValue);
+	else
+		var text = document.createTextNode('');
+
+	this.image = document.createElement('img');
+	this.image.src = SwatDisclosure.open_image.src;
+	this.image.alt = SwatDisclosure.close_text;
+	this.image.width = '16';
+	this.image.height = '16';
+	YAHOO.util.Dom.addClass(this.image, 'swat-disclosure-image');
+
+	var anchor = document.createElement('a');
+	anchor.href = '#';
+	YAHOO.util.Dom.addClass(anchor, 'swat-disclosure-anchor');
+	YAHOO.util.Event.addListener(anchor, 'click', this.toggle, this, true);
+
+	anchor.appendChild(this.image);
+	anchor.appendChild(text);
+
+	this.div.replaceChild(anchor, span);
 }
 
 SwatDisclosure.prototype.close = function()

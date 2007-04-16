@@ -10,6 +10,17 @@
 	background: #fff;
 }
 
+.swat-disclosure-span {
+	/* TODO: make this looks pretty */
+	position: relative;
+	top: 0.7em;
+	display: inline;
+	margin: 0 10px 0 5px;
+	padding: 0 5px 0 2px;
+	color: #666;
+	background: #fff;
+}
+
 .swat-disclosure-control-closed {
 	margin-bottom: 1.7em;
 }
