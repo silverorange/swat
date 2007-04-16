@@ -1,7 +1,5 @@
 function SwatActions(id, values, selected)
 {
-	var self = this;
-
 	this.id = id;
 	this.flydown = document.getElementById(id + '_action_flydown');
 	this.selected_element = (selected) ?
@@ -10,19 +8,19 @@ function SwatActions(id, values, selected)
 	this.values = values;
 
 	YAHOO.util.Event.addListener(this.flydown, 'change',
-		SwatActions.handleChange, this);
+		this.handleChange, this, true);
 }
 
-SwatActions.handleChange = function(event, object)
+SwatActions.prototype.handleChange = function()
 {
-	if (object.selected_element)
-		YAHOO.util.Dom.addClass(object.selected_element, 'swat-hidden');
+	if (this.selected_element)
+		YAHOO.util.Dom.addClass(this.selected_element, 'swat-hidden');
 
-	var id = object.id + '_' +
-		object.values[object.flydown.selectedIndex];
+	var id = this.id + '_' +
+		this.values[this.flydown.selectedIndex];
 
-	object.selected_element = document.getElementById(id);
+	this.selected_element = document.getElementById(id);
 
-	if (object.selected_element)
-		YAHOO.util.Dom.removeClass(object.selected_element, 'swat-hidden');
+	if (this.selected_element)
+		YAHOO.util.Dom.removeClass(this.selected_element, 'swat-hidden');
 }
