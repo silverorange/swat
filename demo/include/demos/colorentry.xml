@@ -24,7 +24,7 @@
 				navbar.style.background = color;
 			}
 
-			simple_color_entry_obj.colorChangedEvent.subscribe(
+			simple_color_entry_obj.colorChangeEvent.subscribe(
 				handleColorChange);
 			</script>]]></property>
 			<property name="content_type">text/xml</property>
