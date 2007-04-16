@@ -18,10 +18,10 @@ function SwatExpandableCheckboxTree(id, dependent_boxes, branch_state)
 
 		for (var i = 0; i < this.check_list.length; i++) {
 			YAHOO.util.Event.addListener(this.check_list[i], 'click',
-				SwatExpandableCheckboxTree.handleClick, this);
+				this.handleClick, this, true);
 
 			YAHOO.util.Event.addListener(this.check_list[i], 'dblclick',
-				SwatExpandableCheckboxTree.handleClick, this);
+				this.handleClick, this, true);
 		}
 	}
 }
@@ -32,12 +32,6 @@ SwatExpandableCheckboxTree.close_text = 'close';
 SwatExpandableCheckboxTree.BRANCH_STATE_OPEN   = 1;
 SwatExpandableCheckboxTree.BRANCH_STATE_CLOSED = 2;
 SwatExpandableCheckboxTree.BRANCH_STATE_AUTO   = 3;
-
-SwatExpandableCheckboxTree.handleClick = function(event, tree)
-{
-	var checkbox = YAHOO.util.Event.getTarget(event);
-	tree.handleClick(checkbox);
-}
 
 SwatExpandableCheckboxTree.prototype.initTree = function()
 {
@@ -122,8 +116,10 @@ SwatExpandableCheckboxTree.prototype.initTreeNode = function(checkbox)
 		'any_children_checked': any_children_checked };
 }
 
-SwatExpandableCheckboxTree.prototype.handleClick = function(checkbox)
+SwatExpandableCheckboxTree.prototype.handleClick = function(event)
 {
+	var checkbox = YAHOO.util.Event.getTarget(event);
+
 	// get path of checkbox from id
 	var path = checkbox.id.substr(this.id.length + 1);
 	var branch = document.getElementById(this.id + '_' + path + '_branch');
