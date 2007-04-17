@@ -103,6 +103,12 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		$container_div_tag->class = $this->getCSSClassString();
 		$container_div_tag->open();
 
+		$swatch_div = new SwatHtmlTag('div');
+		$swatch_div->class = 'swat-simple-color-entry-swatch';
+		$swatch_div->id = $this->id.'_swatch';
+		$swatch_div->setContent('&nbsp;');
+		$swatch_div->display();
+
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
 		$input_tag->id = $this->id.'_value';
@@ -111,12 +117,6 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		$input_tag->accesskey = $this->access_key;
 
 		$input_tag->display();
-
-		$swatch_div = new SwatHtmlTag('div');
-		$swatch_div->class = 'swat-simple-color-entry-swatch';
-		$swatch_div->id = $this->id.'_swatch';
-		$swatch_div->setContent('&nbsp;');
-		$swatch_div->display();
 
 		$container_div_tag->close();
 
@@ -182,41 +182,11 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
-		static $shown = false;
-
-		if (!$shown) {
-			$javascript = $this->getInlineJavaScriptTranslations();
-			$shown = true;
-		} else {
-			$javascript = '';
-		}
-
 		$colors = "'".implode("', '", $this->colors)."'";
-		$javascript.= "var {$this->id}_obj = new SwatSimpleColorEntry(".
+		$javascript = "var {$this->id}_obj = new SwatSimpleColorEntry(".
 			"'{$this->id}', [{$colors}]);";
 
 		return $javascript;
-	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScriptTranslations()
-
-	/**
-	 * Gets translatable string resources for the JavaScript object for
-	 * this widget
-	 *
-	 * @return string translatable JavaScript string resources for this widget.
-	 */
-	protected function getInlineJavaScriptTranslations()
-	{
-		$open_text         = Swat::_('open palette');
-		$close_text        = Swat::_('close palette');
-		$toggle_alt_text   = Swat::_('toggle palette graphic');
-
-		return
-			"SwatSimpleColorEntry.open_text = '{$open_text}';\n".
-			"SwatSimpleColorEntry.close_text = '{$close_text}';\n".
-			"SwatSimpleColorEntry.toggle_alt_text = '{$toggle_alt_text}';\n";
 	}
 
 	// }}}

@@ -40,34 +40,17 @@ function SwatSimpleColorEntry(id, colors)
 		this.createOverlay, this, true)
 }
 
-// preload images
-SwatSimpleColorEntry.palette_image = new Image();
-SwatSimpleColorEntry.palette_image.src =
-	'packages/swat/images/color-palette.png';
-
 /**
  * Displays the toggle button for this simple color entry
  */
 SwatSimpleColorEntry.prototype.drawButton = function()
 {
-	var anchor = document.createElement('a');
-	anchor.href = '#';
-	anchor.title = SwatSimpleColorEntry.open_text;
-	YAHOO.util.Event.addListener(anchor, 'click',
-		function(e, color_entry)
-		{
-			YAHOO.util.Event.preventDefault(e);
-			color_entry.toggle();
-		}, this);
-
-	this.toggle_button = document.createElement('img');
-	this.toggle_button.id = this.id + '_toggle';
-	this.toggle_button.src = SwatSimpleColorEntry.palette_image.src;
-	this.toggle_button.alt = SwatSimpleColorEntry.toggle_alt_text;
-	YAHOO.util.Dom.addClass(this.toggle_button,
-		'swat-simple-color-entry-toggle');
-
-	anchor.appendChild(this.toggle_button);
+	this.toggle_button = document.createElement('button');
+	this.toggle_button.type = 'button';
+	this.swatch.parentNode.replaceChild(this.toggle_button, this.swatch);
+	this.toggle_button.appendChild(this.swatch);
+	YAHOO.util.Event.addListener(this.toggle_button, 'click', this.toggle,
+		this, true);
 
 	this.palette = document.createElement('div');
 	this.palette.id = this.id + '_palette';
@@ -88,13 +71,8 @@ SwatSimpleColorEntry.prototype.drawButton = function()
 	this.palette.appendChild(overlay_footer);
 
 	var container = document.getElementById(this.id);
-	container.appendChild(anchor);
 	container.appendChild(this.palette);
 }
-
-SwatSimpleColorEntry.open_text = 'open palette';
-SwatSimpleColorEntry.close_text = 'close palette';
-SwatSimpleColorEntry.toggle_alt_text = 'toggle palette graphic.';
 
 /**
  * Creates simple color entry overlay widget when toggle button has been drawn
@@ -115,7 +93,6 @@ SwatSimpleColorEntry.prototype.createOverlay = function(event)
 SwatSimpleColorEntry.prototype.close = function()
 {
 	this.overlay.hide();
-	this.toggle_button.title = SwatSimpleColorEntry.open_text;
 	SwatZIndexManager.lowerElement(this.palette);
 	this.is_open = false;
 }
@@ -133,7 +110,6 @@ SwatSimpleColorEntry.prototype.open = function()
 	}
 
 	this.overlay.show();
-	this.toggle_button.title = SwatSimpleColorEntry.close_text;
 	SwatZIndexManager.raiseElement(this.palette);
 	this.is_open = true;
 }
