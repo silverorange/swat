@@ -66,7 +66,12 @@ SwatDisclosure.prototype.drawDisclosureLink = function()
 	var anchor = document.createElement('a');
 	anchor.href = '#';
 	YAHOO.util.Dom.addClass(anchor, 'swat-disclosure-anchor');
-	YAHOO.util.Event.addListener(anchor, 'click', this.toggle, this, true);
+	YAHOO.util.Event.addListener(anchor, 'click',
+		function(e, disclosure)
+		{
+				YAHOO.util.Event.preventDefault(e);
+				disclosure.toggle();
+		}, this);
 
 	anchor.appendChild(this.image);
 	anchor.appendChild(text);

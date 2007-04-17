@@ -53,7 +53,12 @@ SwatSimpleColorEntry.prototype.drawButton = function()
 	var anchor = document.createElement('a');
 	anchor.href = '#';
 	anchor.title = SwatSimpleColorEntry.open_text;
-	YAHOO.util.Event.addListener(anchor, 'click', this.toggle, this, true);
+	YAHOO.util.Event.addListener(anchor, 'click',
+		function(e, color_entry)
+		{
+			YAHOO.util.Event.preventDefault(e);
+			color_entry.toggle();
+		}, this);
 
 	this.toggle_button = document.createElement('img');
 	this.toggle_button.id = this.id + '_toggle';
@@ -224,6 +229,7 @@ SwatSimpleColorEntry.prototype.setColor = function(color_index)
  */
 SwatSimpleColorEntry.prototype.selectColor = function(event)
 {
+	YAHOO.util.Event.preventDefault(event);
 	var cell = YAHOO.util.Event.getTarget(event);
 	var color_index = cell.parentNode.id.split('_palette_')[1];
 

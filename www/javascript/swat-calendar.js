@@ -132,7 +132,12 @@ SwatCalendar.prototype.drawButton = function()
 	var anchor = document.createElement('a');
 	anchor.href = '#';
 	anchor.title = SwatCalendar.open_toggle_text;
-	YAHOO.util.Event.addListener(anchor, 'click', this.toggle, this, true);
+	YAHOO.util.Event.addListener(anchor, 'click',
+		function(e, calendar)
+		{
+			YAHOO.util.Event.preventDefault(e);
+			calendar.toggle();
+		}, this);
 
 	this.toggle_button = document.createElement('img');
 	this.toggle_button.id = this.id + '_toggle';
