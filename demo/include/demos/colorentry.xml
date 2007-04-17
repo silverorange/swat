@@ -4,12 +4,7 @@
 	<widget class="SwatForm" id="my_form">
 
 		<widget class="SwatFormField">
-			<property name="title">Complex Color Entry</property>
-			<widget class="SwatColorEntry" id="color_entry" />
-		</widget>
-
-		<widget class="SwatFormField">
-			<property name="title">Simple Color Entry</property>
+			<property name="title">Color Entry</property>
 			<widget class="SwatSimpleColorEntry" id="simple_color_entry">
 				<property name="value">eed680</property>
 			</widget>
