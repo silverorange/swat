@@ -11,9 +11,12 @@ require_once 'Swat/SwatState.php';
  * The colors are stored internally and accessed externally as 3 or 6 digit
  * hexidecimal values.
  *
- * @package   Swat
- * @copyright 2005-2006 silverorange
- * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @package    Swat
+ * @copyright  2005-2006 silverorange
+ * @license    http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @deprecated This widget is unmaintained and has known browser-compatibility
+ *             issues. At this point, either a suitable replacement is needed
+ *             or the widget JavaScript needs some major overhauling.
  */
 class SwatColorEntry extends SwatInputControl implements SwatState
 {
