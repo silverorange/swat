@@ -295,7 +295,7 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	drop_marker.style.borderBottomColor = '#aaa';
 	drop_marker.style.borderBottomWidth = '1px';
 	drop_marker.style.display = 'none';
-	drop_marker.setAttribute('id', 'drop');
+	drop_marker.id = 'drop';
 	
 	SwatChangeOrder.dragging_item = shadow_item;
 	SwatChangeOrder.dragging_drop_marker = drop_marker;
@@ -364,7 +364,6 @@ function SwatChangeOrder(id, sensitive)
 	// since the DOM only has an insertBefore() method we use a sentinel node
 	// to make moving nodes down easier.
 	var sentinel_node = document.createElement('div');
-	sentinel_node.setAttribute('id', 'debug');
 	sentinel_node.style.display = 'block';
 	this.list_div.appendChild(sentinel_node);
 
