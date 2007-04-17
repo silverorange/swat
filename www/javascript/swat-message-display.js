@@ -32,7 +32,13 @@ SwatMessageDisplayMessage.prototype.drawDismissLink = function()
 	anchor.href = '#';
 	anchor.title = SwatMessageDisplayMessage.close_text;
 	YAHOO.util.Dom.addClass(anchor, 'swat-message-display-dismiss-link');
-	YAHOO.util.Event.addListener(anchor, 'click', this.hide, this, true);
+	YAHOO.util.Event.addListener(anchor, 'click',
+		function(e, message)
+		{
+			YAHOO.util.Event.preventDefault(e);
+			message.hide();
+		}, this);
+
 	anchor.appendChild(text);
 
 	var container = this.message_div.firstChild;
