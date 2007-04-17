@@ -58,10 +58,50 @@ function SwatCalendar(id, start_date, end_date)
 	this.positioned = false;
 }
 
+// preload images
+SwatCalendar.go_previous_insensitive_image = new Image();
+SwatCalendar.go_previous_insensitive_image.src =
+	'packages/swat/images/go-previous-insensitive.png';
+
+SwatCalendar.go_next_insensitive_image = new Image();
+SwatCalendar.go_next_insensitive_image.src =
+	'packages/swat/images/go-next-insensitive.png';
+
+SwatCalendar.go_previous_image = new Image();
+SwatCalendar.go_previous_image.src = 'packages/swat/images/go-previous.png';
+
+SwatCalendar.go_next_image = new Image();
+SwatCalendar.go_next_image.src = 'packages/swat/images/go-next.png';
+
+SwatCalendar.toggle_image = new Image();
+SwatCalendar.toggle_image.src = 'packages/swat/images/calendar.png';
+
+// string data
+SwatCalendar.week_names = [
+	'Sun', 'Mon', 'Tue',
+	'Wed', 'Thu', 'Fri',
+	'Sat'];
+
+SwatCalendar.month_names = [
+	'Jan', 'Feb', 'Mar',
+	'Apr', 'May', 'Jun',
+	'Jul', 'Aug', 'Sep',
+	'Oct', 'Nov', 'Dec'];
+
+SwatCalendar.prev_alt_text = 'Previous Month';
+SwatCalendar.next_alt_text = 'Next Month';
+SwatCalendar.close_text = 'Close';
+SwatCalendar.nodate_text = 'No Date';
+SwatCalendar.today_text = 'Today';
+
+SwatCalendar.open_toggle_text = 'open calendar';
+SwatCalendar.close_toggle_text = 'close calendar';
+SwatCalendar.toggle_alt_text = 'calendar toggle graphic';
+
 /**
  * Creates calendar toggle button and overlay widget
  */
-SwatCalendar.prototype.createOverlay = function(event)
+SwatCalendar.prototype.createOverlay = function()
 {
 	this.drawButton();
 	this.overlay = new YAHOO.widget.Overlay(this.id + '_div',
@@ -90,19 +130,20 @@ SwatCalendar.prototype.setSwatDateEntry = function(entry)
 SwatCalendar.prototype.drawButton = function()
 {
 	var anchor = document.createElement('a');
-	anchor.setAttribute('href', 'javascript:' + this.id + '_obj.toggle();');
-	anchor.setAttribute('title', SwatCalendar.open_toggle_text);
+	anchor.href = '#';
+	anchor.title = SwatCalendar.open_toggle_text;
+	YAHOO.util.Event.addListener(anchor, 'click', this.toggle, this, true);
 
-	var toggle_button = document.createElement('img');
-	toggle_button.setAttribute('id', this.id + '_toggle');
-	toggle_button.setAttribute('src', 'packages/swat/images/calendar.png');
-	toggle_button.setAttribute('alt', SwatCalendar.toggle_alt_text);
-	YAHOO.util.Dom.addClass(toggle_button, 'swat-calendar-icon');
+	this.toggle_button = document.createElement('img');
+	this.toggle_button.id = this.id + '_toggle';
+	this.toggle_button.src = SwatCalendar.toggle_image.src;
+	this.toggle_button.alt = SwatCalendar.toggle_alt_text;
+	YAHOO.util.Dom.addClass(this.toggle_button, 'swat-calendar-icon');
 
-	anchor.appendChild(toggle_button);
+	anchor.appendChild(this.toggle_button);
 
 	var calendar_div = document.createElement('div');
-	calendar_div.setAttribute('id', this.id + '_div');
+	calendar_div.id = this.id + '_div';
 	calendar_div.style.display = 'none';
 	YAHOO.util.Dom.addClass(calendar_div, 'swat-calendar-div');
 
@@ -155,30 +196,6 @@ SwatCalendar.stringToDate = function(date_string)
 
 	return new Date(yyyy, mm - 1, dd);
 }
-
-/**
- * String data
- */
-SwatCalendar.week_names = [
-	'Sun', 'Mon', 'Tue',
-	'Wed', 'Thu', 'Fri',
-	'Sat'];
-
-SwatCalendar.month_names = [
-	'Jan', 'Feb', 'Mar',
-	'Apr', 'May', 'Jun',
-	'Jul', 'Aug', 'Sep',
-	'Oct', 'Nov', 'Dec'];
-
-SwatCalendar.prev_alt_text = 'Previous Month';
-SwatCalendar.next_alt_text = 'Next Month';
-SwatCalendar.close_text = 'Close';
-SwatCalendar.nodate_text = 'No Date';
-SwatCalendar.today_text = 'Today';
-
-SwatCalendar.open_toggle_text = 'open calendar';
-SwatCalendar.close_toggle_text = 'close calendar';
-SwatCalendar.toggle_alt_text = 'calendar toggle graphic';
 
 /**
  * Sets the values of an associated SwatDateEntry widget to the values
@@ -414,18 +431,12 @@ SwatCalendar.prototype.toggle = function()
 {
 	if (this.open) {
 		this.close();
-
-		document.getElementById(this.id + '_toggle').setAttribute(
-			'title', SwatCalendar.open_toggle_text);
-
+		this.toggle_button.title = SwatCalendar.open_toggle_text;
 		var calendar_div = document.getElementById(this.id + '_div');
 		SwatZIndexManager.lowerElement(calendar_div);
 	} else {
 		this.draw();
-
-		document.getElementById(this.id + '_toggle').setAttribute(
-			'title', SwatCalendar.close_toggle_text);
-
+		this.toggle_button.title = SwatCalendar.close_toggle_text;
 		var calendar_div = document.getElementById(this.id + '_div');
 		SwatZIndexManager.raiseElement(calendar_div);
 	}
@@ -697,25 +708,12 @@ SwatCalendar.prototype.draw = function()
 	if (!this.open) {
 		// only set position once
 		if (!this.positioned) {
-			var toggle_button = document.getElementById(this.id + '_toggle');
 			this.overlay.cfg.setProperty('context',
-				[toggle_button, 'tl', 'bl']);
+				[this.toggle_button, 'tl', 'bl']);
 
 			this.positioned = true;
 		}
 		this.overlay.show();
 		this.open = true;
 	}
-}
-
-// preload images
-if (document.images) {
-	image1 = new Image();
-	image1.src = 'packages/swat/images/go-previous-insensitive.png';
-	image2 = new Image();
-	image2.src = 'packages/swat/images/go-next-insensitive.png';
-	image3 = new Image();
-	image3.src = 'packages/swat/images/go-previous.png';
-	image4 = new Image();
-	image4.src = 'packages/swat/images/go-next.png';
 }
