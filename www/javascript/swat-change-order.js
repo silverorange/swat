@@ -59,30 +59,18 @@ function SwatChangeOrder_mousemoveEventHandler(event)
  *
  * @return boolean false;
  */
-function SwatChangeOrder_keydownEventHandler(event, change_order)
+function SwatChangeOrder_keydownEventHandler(event)
 {
-	if (event.keyCode == 40) {
-		var element = document.getElementById('change_order_list').childNodes[7];
-		change_order.choose(element);
-		change_order.scrollList(change_order.getScrollPosition(element));
-		YAHOO.util.Event.preventDefault(event);
-	}
-	if (event.keyCode == 38) {
-		var element = document.getElementById('change_order_list').childNodes[6];
-		change_order.choose(element);
-		change_order.scrollList(change_order.getScrollPosition(element));
-		YAHOO.util.Event.preventDefault(event);
-	}
 	// user pressed escape
-	if (SwatChangeOrder.is_dragging && event.keyCode == 27) {
+	if (event.keyCode == 27) {
 		YAHOO.util.Event.removeListener(document, 'mousemove',
 			SwatChangeOrder_mousemoveEventHandler);
 
 		YAHOO.util.Event.removeListener(document, 'mouseup',
 			SwatChangeOrder_mouseupEventHandler);
 
-//		YAHOO.util.Event.removeListener(document, 'keydown',
-//			SwatChangeOrder_keydownEventHandler);
+		YAHOO.util.Event.removeListener(document, 'keydown',
+			SwatChangeOrder_keydownEventHandler);
 
 		var shadow_item = SwatChangeOrder.dragging_item;
 		var drop_marker = SwatChangeOrder.dragging_drop_marker;
@@ -269,9 +257,6 @@ function SwatChangeOrder_mouseupEventHandler(event)
  */
 function SwatChangeOrder_mousedownEventHandler(event)
 {
-	this.focus();
-//	this.style.outlineWidth = '1px';
-//	this.style.outlineStyle = 'dotted';
 	// prevent text selection
 	YAHOO.util.Event.preventDefault(event);
 
@@ -320,6 +305,9 @@ function SwatChangeOrder_mousedownEventHandler(event)
 
 	YAHOO.util.Event.addListener(document, 'mouseup',
 		SwatChangeOrder_mouseupEventHandler);
+
+	YAHOO.util.Event.addListener(document, 'keydown',
+		SwatChangeOrder_keydownEventHandler);
 
 	return false;
 }
@@ -394,9 +382,6 @@ function SwatChangeOrder(id, sensitive)
 
 	this.sensitive = sensitive;
 	this.orderChangeEvent = new YAHOO.util.CustomEvent('orderChange');
-
-	YAHOO.util.Event.addListener(document, 'keydown',
-		SwatChangeOrder_keydownEventHandler, this);
 }
 
 // }}}
