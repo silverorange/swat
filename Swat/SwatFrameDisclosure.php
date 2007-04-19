@@ -52,23 +52,19 @@ class SwatFrameDisclosure extends SwatDisclosure
 		$header_tag->class = 'swat-frame-title';
 
 		$control_div = $this->getControlDivTag();
-		$anchor = $this->getAnchorTag();
-		$input = $this->getInputTag();
-		$img = $this->getImgTag();
-		$animate_div = $this->getAnimateDivTag();
-
+		$span_tag = $this->getSpanTag();
+		$input_tag = $this->getInputTag();
 		$container_div = $this->getContainerDivTag();
 		$container_div->class.= ' swat-frame-contents';
+		$animate_div = $this->getAnimateDivTag();
 
 		$control_div->open();
+
 		$header_tag->open();
-		$anchor->open();
-		$input->display();
-		$img->display();
-		echo ' ';
-		$anchor->displayContent();
-		$anchor->close();
+		$span_tag->display();
 		$header_tag->close();
+
+		$input_tag->display();
 
 		$container_div->open();
 		$animate_div->open();
@@ -79,6 +75,33 @@ class SwatFrameDisclosure extends SwatDisclosure
 		Swat::displayInlineJavaScript($this->getInlineJavascript());
 
 		$control_div->close();
+	}
+
+	// }}}
+	// {{{ protected function getSpanTag()
+
+	protected function getSpanTag()
+	{
+		$span_tag = parent::getSpanTag();
+		$span_tag->class = null;
+		return $span_tag;
+	}
+
+	// }}}
+	// {{{ protected function getJavaScriptClass()
+
+	/**
+	 * Gets the name of the JavaScript class to instantiate for this disclosure 
+	 *
+	 * Sub-classes of this class may want to return a sub-class of the default
+	 * JavaScript disclosure class.
+	 *
+	 * @return string the name of the JavaScript class to instantiate for this
+	 *                 disclosure. Defaults to 'SwatDisclosure'.
+	 */
+	protected function getJavaScriptClass()
+	{
+		return 'SwatFrameDisclosure';
 	}
 
 	// }}}

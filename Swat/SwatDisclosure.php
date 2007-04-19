@@ -155,6 +155,23 @@ class SwatDisclosure extends SwatDisplayableContainer
 	}
 
 	// }}}
+	// {{{ protected function getJavaScriptClass()
+
+	/**
+	 * Gets the name of the JavaScript class to instantiate for this disclosure 
+	 *
+	 * Sub-classes of this class may want to return a sub-class of the default
+	 * JavaScript disclosure class.
+	 *
+	 * @return string the name of the JavaScript class to instantiate for this
+	 *                 disclosure. Defaults to 'SwatDisclosure'.
+	 */
+	protected function getJavaScriptClass()
+	{
+		return 'SwatDisclosure';
+	}
+
+	// }}}
 	// {{{ protected function getInlineJavaScript()
 
 	/**
@@ -174,8 +191,8 @@ class SwatDisclosure extends SwatDisplayableContainer
 		}
 
 		$open = ($this->open) ? 'true' : 'false';
-		$javascript.= sprintf("var %s_obj = new SwatDisclosure('%s', %s);",
-			$this->id, $this->id, $open);
+		$javascript.= sprintf("var %s_obj = new %s('%s', %s);",
+			$this->id, $this->getJavaScriptClass(), $this->id, $open);
 
 		return $javascript;
 	}
