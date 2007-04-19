@@ -1,3 +1,17 @@
+2007-04-19  gauthierm
+
+	* [r17013] swat/trunk/Swat/SwatDisclosure.php,
+	  swat/trunk/Swat/SwatFrameDisclosure.php,
+	  swat/trunk/www/javascript/swat-disclosure.js:
+	  Add progressive enhancement support to SwatFrameDisclosure. I
+	  didn't bother creating a new JavaScript class since they differe
+	  only on one line.
+
+2007-04-19  nrf
+
+	* [r17002] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.16
+
 2007-04-17  gauthierm
 
 	* [r16900] swat/trunk/Swat/SwatSimpleColorEntry.php,
