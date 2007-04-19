@@ -48,9 +48,14 @@ SwatDisclosure.prototype.toggle = function()
 	}
 }
 
+SwatDisclosure.prototype.getSpan = function()
+{
+	return this.div.firstChild;
+}
+
 SwatDisclosure.prototype.drawDisclosureLink = function()
 {
-	var span = this.div.firstChild;
+	var span = this.getSpan();
 	if (span.firstChild && span.firstChild.nodeType == 3)
 		var text = document.createTextNode(' ' + span.firstChild.nodeValue);
 	else
@@ -76,7 +81,7 @@ SwatDisclosure.prototype.drawDisclosureLink = function()
 	anchor.appendChild(this.image);
 	anchor.appendChild(text);
 
-	this.div.replaceChild(anchor, span);
+	span.parentNode.replaceChild(anchor, span);
 }
 
 SwatDisclosure.prototype.close = function()
@@ -179,3 +184,17 @@ SwatDisclosure.prototype.handleOpen = function()
 
 	this.semaphore = false;
 }
+
+function SwatFrameDisclosure(id, open)
+{
+	SwatFrameDisclosure.superclass.constructor.call(this, id, open);
+}
+
+YAHOO.lang.extend(SwatFrameDisclosure, SwatDisclosure, {
+
+getSpan: function()
+{
+	return this.div.firstChild.firstChild;
+}
+
+});
