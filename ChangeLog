@@ -1,3 +1,291 @@
+2007-04-17  gauthierm
+
+	* [r16900] swat/trunk/Swat/SwatSimpleColorEntry.php,
+	  swat/trunk/www/javascript/swat-simple-color-entry.js:
+	  Make simple color entry widget even simpler by using the fabled
+	  button element.
+	* [r16899] swat/trunk/demo/include/demos/colorentry.xml:
+	  Reove deprecated widget from demo.
+	* [r16898] swat/trunk/Swat/SwatColorEntry.php:
+	  Deprecate due to lack of maintennance.
+	* [r16897] swat/trunk/www/javascript/swat-calendar.js,
+	  swat/trunk/www/javascript/swat-disclosure.js,
+	  swat/trunk/www/javascript/swat-message-display.js,
+	  swat/trunk/www/javascript/swat-simple-color-entry.js:
+	  Ticket #934: When using onclick events in Javascript, prevent
+	  navigation to # from happening.
+	* [r16896] swat/trunk/www/javascript/swat-calendar.js:
+	  Clean up:
+	  - better events
+	  - better dom element creation
+	  - better image preloading
+	* [r16895] swat/trunk/www/javascript/swat-change-order.js:
+	  Use property syntax instead of setAttribute and remove
+	  unnecessary id on the drop marker div.
+	* [r16894] swat/trunk/www/javascript/swat-change-order.js:
+	  remove experimental arrow key controls from swat-change-order
+	  that were accidentally checked in in r16853.
+
+2007-04-16  steven
+
+	* [r16890] swat/trunk/www/styles/swat-disclosure.css:
+	  Minor cleanup of SwatDisclosure styles when Javascript is off
+	  (it was a todo)
+
+2007-04-16  gauthierm
+
+	* [r16889]
+	  swat/trunk/www/javascript/swat-table-view-checkbox-column.js:
+	  Better event handling for table-view checkbox column JavaScript
+	  and add dblclick listener for Konqueror.
+	* [r16888] swat/trunk/www/javascript/swat-date-entry.js:
+	  Better event handling for SwatDate JavaScript.
+	* [r16887] swat/trunk/Swat/SwatDisclosure.php,
+	  swat/trunk/www/javascript/swat-disclosure.js,
+	  swat/trunk/www/styles/swat-disclosure.css:
+	  Better progressive enhancement and JavaScript events for
+	  SwatDisclosure. Now if JavaScript is not supported, the
+	  disclosures will look like fieldsets.
+	* [r16883] swat/trunk/www/javascript/swat-simple-color-entry.js:
+	  less jumpy overlay construction. I think this was a regression
+	  in YUI 2.2.0
+	* [r16881] swat/trunk/demo/include/demos/colorentry.xml:
+	  respect small API change.
+	* [r16880] swat/trunk/www/javascript/swat-simple-color-entry.js:
+	  - better event handling for simple-color-entry JavaScript
+	  - remove use of setAttribute() as it is documented as flakey on
+	  MDC
+	  - s/cellspacing/cellSpacing to work in more browsers
+	* [r16879] swat/trunk/www/javascript/swat-table-view-input-row.js:
+	  single instead of double quotes
+	* [r16878] swat/trunk/www/javascript/swat-actions.js:
+	  Better event handling code.
+	* [r16870] swat/trunk/www/javascript/swat-time-entry.js:
+	  Better event handling for date and time widget JavaScript
+	* [r16869]
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js:
+	  Remove unneeded static event handler.
+	* [r16863] swat/trunk/www/javascript/swat-check-all.js:
+	  Make click handler non-static.
+	* [r16862] swat/trunk/www/javascript/swat-confirmation-button.js:
+	  remove unused parameters. YUI events handles this properly.
+	* [r16861] swat/trunk/www/javascript/swat-button.js:
+	  remove unused parameters. YUI events handles this properly.
+	* [r16860] swat/trunk/Swat/SwatMessageDisplay.php,
+	  swat/trunk/www/javascript/swat-message-display.js:
+	  Clean up message-display JavaScript. Now with more OOP.
+	* [r16856] swat/trunk/www/javascript/swat-button.js:
+	  Remove use of setAttribute(). Though setAttribute is a well
+	  supported DOM Level 2 method, MDC recommends setting element
+	  properties directly. 'Using setAttribute() to modify certain
+	  attributes, most notably value in XUL and HTML and selected in
+	  HTML, works inconsistently, as the attribute specifies the
+	  default value. To access or modify the current values, you
+	  should use the properties. For example, use elt.value instead of
+	  elt.setAttribute('value', val).
+	* [r16855] swat/trunk/www/javascript/swat-disclosure.js:
+	  Preload disclosure triangle images in JavaScript.
+	* [r16853] swat/trunk/www/javascript/swat-change-order.js:
+	  Use YUI naming conventions for event name.
+	* [r16852] swat/trunk/www/javascript/swat-disclosure.js:
+	  remove static animation complete events in favour of prototyped
+	  methods.
+
+2007-04-15  steven
+
+	* [r16849]
+	  swat/trunk/www/images/swat-notebook-tab-bottom-active.png,
+	  swat/trunk/www/images/swat-notebook-tab-bottom.png,
+	  swat/trunk/www/images/swat-notebook-tab-left-active.png,
+	  swat/trunk/www/images/swat-notebook-tab-right-active.png,
+	  swat/trunk/www/images/swat-notebook-tab-top-active.png,
+	  swat/trunk/www/images/swat-notebook-tab-top.png,
+	  swat/trunk/www/styles/swat-note-book.css:
+	  stylings for the SwatNotebook widget
+
+2007-04-15  gauthierm
+
+	* [r16840] swat/trunk/demo/include/DemoApplication.php:
+	  Add documentation link for progress bar demo.
+	* [r16839] swat/trunk/demo/include/demos/ProgressBarDemo.php,
+	  swat/trunk/demo/include/demos/progressbar.xml:
+	  Add a note about JavaScript to progress bar demo.
+	* [r16838] swat/trunk/demo/include/demos/progressbar.xml:
+	  Add some interesting demonstrative JavaScript to progress-bar
+	  demo page.
+	* [r16837] swat/trunk/www/javascript/swat-progress-bar.js:
+	  - add pulse event
+	  - use YUI naming convention for change value event
+	  - add ability to set progress bar text
+
+2007-04-14  steven
+
+	* [r16836]
+	  swat/trunk/www/images/swat-progressbar-horizontal-background.png,
+	  
+	  swat/trunk/www/images/swat-progressbar-horizontal-full-background.png,
+	  swat/trunk/www/images/swat-progressbar-vertical-background.png,
+	  swat/trunk/www/images/swat-progressbar-vertical-full-background.png,
+	  swat/trunk/www/styles/swat-progress-bar.css:
+	  Some stylin' of progress bars - replace the system "Highlight"
+	  color, as it doesn't work in Safari
+
+2007-04-14  gauthierm
+
+	* [r16835] swat/trunk/Swat/SwatProgressBar.php,
+	  swat/trunk/demo/include/DemoApplication.php,
+	  swat/trunk/demo/include/demos/progressbar.xml,
+	  swat/trunk/www/javascript/swat-progress-bar.js,
+	  swat/trunk/www/styles/swat-progress-bar.css:
+	  New widget: SwatProgressBar
+	* [r16834] swat/trunk/Swat/SwatDisclosure.php:
+	  Clean up default array of class names and add a comment
+
+2007-04-13  nrf
+
+	* [r16831] swat/trunk/SwatDB/SwatDBClassMap.php:
+	  Create a SwatDBClassMap to eventually replace StoreClassMap
+
+2007-04-13  gauthierm
+
+	* [r16811] swat/trunk/demo/include/demos/RadioListDemo.php:
+	  Add dividers to radiolist demo.
+	* [r16810] swat/trunk/demo/include/demos/CalendarDemo.php,
+	  swat/trunk/demo/include/demos/calendar.xml:
+	  Add IE6 z-index test to calendar demo.
+	* [r16809] swat/trunk/demo/include/demos/TableViewDemo.php,
+	  swat/trunk/demo/include/demos/TableViewInputRowDemo.php:
+	  Clean up messages and make static messages non-dismissable on
+	  table view demos. Also, fix folding on input row demo.
+	* [r16808] swat/trunk/demo/include/demos/ButtonDemo.php,
+	  swat/trunk/demo/include/demos/button.xml:
+	  Add processing throbber to button demo.
+	* [r16807] swat/trunk/www/javascript/swat-button.js:
+	  Fix ticket #922:When using processing throbber, button value is
+	  lost from post data
+
+2007-04-10  gauthierm
+
+	* [r16752] swat/trunk/demo/include/demos/NoteBookDemo.php,
+	  swat/trunk/demo/include/demos/notebook.xml:
+	  Simplify the SwatNoteBook demo. The old demo was neat but really
+	  showed off much more than just the notebook widget. This keeps
+	  things simpler.
+	* [r16745] swat/trunk/www/javascript/swat-checkbox-entry-list.js,
+	  swat/trunk/www/javascript/swat-confirmation-button.js:
+	  Remove use of deprecated YUI API (deprecated in YUI 2.2.0).
+	* [r16744] swat/trunk/Swat/SwatYUI.php,
+	  swat/trunk/Swat/SwatYUIComponent.php:
+	  Update SwatYUI to work with new beta element component of YUI
+	  which was introduced in YUI 2.2.0.
+
+2007-04-09  gauthierm
+
+	* [r16706] swat/trunk/Swat/SwatMessageDisplay.php:
+	  Add ability to specifiy what messages are dismissable in a swat
+	  message display. The default behaviour is backwards compatible
+	  with the old bahaviour. The API is also backwards compatible.
+
+2007-04-08  gauthierm
+
+	* [r16677] swat/trunk/Swat/SwatOptionControl.php:
+	  Fix a bug when option control has unique values and
+	  addOption(SwatOption) is used.
+
+2007-04-06  gauthierm
+
+	* [r16668] swat/trunk/www/javascript/swat-calendar.js,
+	  swat/trunk/www/styles/swat-calendar.css:
+	  This should fix ticket #857 but it is pretty lame.
+	* [r16663] swat/trunk/Swat/SwatUI.php:
+	  tidy docs
+
+2007-04-05  gauthierm
+
+	* [r16644] swat/trunk/Swat/SwatString.php:
+	  Ticket #858: Make SwatString::toXHTML() handle html special
+	  characters better. This should be excellent but if it causes
+	  problems, let me know.
+
+2007-04-04  gauthierm
+
+	* [r16596] swat/trunk/Swat/SwatNumericEntry.php:
+	  coding conventions: whitespace and wrap lines at 80 chars
+
+2007-04-04  charles
+
+	* [r16593] swat/trunk/Swat/SwatNumericEntry.php:
+	  This is for the new Item Edit page so that it will display the
+	  correct error and also so that people can't use values over 100%
+	  or under 0%.
+
+2007-04-04  steven
+
+	* [r16582] swat/trunk/www/styles/swat.css:
+	  Don't grey out the background of swat-radio buttons when
+	  insensitive (ticket #773)
+
+2007-04-04  gauthierm
+
+	* [r16581] swat/trunk/Swat/SwatCheckboxCellRenderer.php:
+	  TODO TODONT
+
+2007-04-04  nick
+
+	* [r16580] swat/trunk/Swat/SwatNavBar.php:
+	  Typo
+
+2007-04-03  gauthierm
+
+	* [r16565] swat/trunk/Swat/SwatPercentageEntry.php:
+	  coding conventions: for the most part, a single return point
+	  results in fewer bugs.
+	* [r16564] swat/trunk/Swat/SwatPercentageEntry.php:
+	  When checking for null, use strict inequality operator. The lose
+	  equality operator compares '' == 0 == null. Strict equality
+	  treats these as different values.
+	* [r16563] swat/trunk/Swat/SwatPercentageEntry.php:
+	  is_numeric is safer than is_float here. is_numeric will return
+	  true for strings that are numbers as well as actual numbers.
+	  is_float will only return true if the value is a float.
+	* [r16562] swat/trunk/Swat/SwatPercentageEntry.php:
+	  coding conventions: If braces are used in part of an if
+	  statement, use them for the rest of the if statement.
+	* [r16561] swat/trunk/Swat/SwatPercentageEntry.php:
+	  coding conventions: whitespace
+
+2007-04-03  charles
+
+	* [r16560] swat/trunk/Swat/SwatPercentageEntry.php:
+	  Cleaned up the code even more and got ride of some useless
+	  methods.
+
+2007-04-03  gauthierm
+
+	* [r16559] swat/trunk/Swat/SwatEntry.php:
+	  Forgot to commit this with r16556.
+	* [r16556] swat/trunk/Swat/SwatFloatEntry.php,
+	  swat/trunk/Swat/SwatIntegerEntry.php,
+	  swat/trunk/Swat/SwatListEntry.php,
+	  swat/trunk/Swat/SwatSearchEntry.php:
+	  Refactor SwatEntry::getDisplayValue() to make it easier for
+	  subclasses to extend parent functionality.
+
+2007-04-03  charles
+
+	* [r16555] swat/trunk/Swat/SwatPercentageEntry.php:
+	  Made some code changes from Mikes comments.
+
+2007-04-02  gauthierm
+
+	* [r16497] swat/trunk/Swat/SwatMessageDisplay.php:
+	  Add getMessageCount() method to SwatMessageDisplay.
+
+2007-04-02  nrf
+
+	* [r16478] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.15
+
 2007-04-02  gauthierm
 
 	* [r16474] swat/trunk/www/javascript/swat-calendar.js,
