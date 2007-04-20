@@ -28,6 +28,14 @@ class DisclosureDemo extends Demo
 			6 => 'Tangerine',
 			7 => 'Grapefruit',
 			8 => 'Strawberry'));
+
+		$message = new SwatMessage('Both disclosure types support '.
+			'progressive enhancement.');
+
+		$message->secondary_content = 'Turn off JavaScript in your browser '.
+			'and reload the page for a demonstration.';
+
+		$ui->getWidget('note')->add($message, SwatMessageDisplay::DISMISS_OFF);
 	}
 
 	// }}}
