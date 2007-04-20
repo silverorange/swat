@@ -1,0 +1,103 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatFrame">
+		<property name="title">Menu Frame</property>
+	<widget class="SwatMenuBar">
+		<!-- property name="auto_sub_menu_display" type="boolean">false</property -->
+		<widget class="SwatMenuItem" id="test">
+			<property name="stock_id">add</property>
+			<widget class="SwatGroupedMenu">
+				<widget class="SwatMenuGroup">
+					<property name="title">Bad Apples</property>
+				<widget class="SwatMenuItem">
+					<property name="stock_id">edit</property>
+					<property name="title">Braeburn</property>
+					<property name="link">http://en.wikipedia.org/wiki/Braeburn</property>
+				</widget>
+				<widget class="SwatMenuItem">
+					<property name="title">Golden Delicious</property>
+					<property name="link">http://en.wikipedia.org/wiki/Golden_Delicious</property>
+				</widget>
+				<widget class="SwatMenuItem">
+					<property name="title">Granny Smith</property>
+					<property name="link">http://en.wikipedia.org/wiki/Granny_Smith</property>
+				</widget>
+				</widget>
+				<widget class="SwatMenuGroup">
+					<property name="title">Gooduns</property>
+				<widget class="SwatMenuItem">
+					<property name="title">Gravenstein</property>
+					<property name="link">http://en.wikipedia.org/wiki/Gravenstein</property>
+				</widget>
+				<widget class="SwatMenuItem">
+					<property name="title">Idared</property>
+					<property name="link">http://en.wikipedia.org/wiki/Idared</property>
+				</widget>
+				<widget class="SwatMenuItem">
+					<property name="title">McIntosh</property>
+					<property name="link">http://en.wikipedia.org/wiki/McIntosh</property>
+					<widget class="SwatMenu">
+						<widget class="SwatMenuItem">
+							<property name="title">Courtland</property>
+							<property name="link">http://en.wikipedia.org/wiki/Cortland_%28apple%29</property>
+						</widget>
+						<widget class="SwatMenuItem">
+							<property name="title">Macoun</property>
+							<property name="link">http://en.wikipedia.org/wiki/Macoun_apple</property>
+						</widget>
+					</widget>
+				</widget>
+				</widget>
+			</widget>
+		</widget>
+		<widget class="SwatMenuItem">
+			<property name="title">Oranges</property>
+			<widget class="SwatMenu">
+				<widget class="SwatMenuItem">
+					<property name="title">Blood</property>
+					<property name="link">http://en.wikipedia.org/wiki/Blood_orange</property>
+				</widget>
+				<widget class="SwatMenuItem">
+					<property name="title">Mandarin</property>
+					<property name="link">http://en.wikipedia.org/wiki/Mandarin_orange</property>
+				</widget>
+				<widget class="SwatMenuItem">
+					<property name="title">Seville</property>
+					<property name="link">http://en.wikipedia.org/wiki/Seville_orange</property>
+				</widget>
+				<widget class="SwatMenuItem">
+					<property name="title">Valencia</property>
+					<property name="link">http://en.wikipedia.org/wiki/Valencia_orange</property>
+				</widget>
+			</widget>
+		</widget>
+		<widget class="SwatMenuItem">
+			<property name="stock_id">delete</property>
+			<property name="link">#</property>
+		</widget>
+	</widget>
+	</widget>
+	<widget class="SwatFrame">
+		<property name="title">Toolbar Frame</property>
+		<widget class="SwatToolbar">
+			<widget class="SwatToolLink">
+				<property name="title">Add</property>
+				<property name="stock_id">create</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="title">Delete</property>
+				<property name="stock_id">delete</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="title">Edit</property>
+				<property name="stock_id">edit</property>
+				<property name="link">#</property>
+			</widget>
+		</widget>
+	</widget>
+</swatml>
