@@ -7,6 +7,7 @@ if (class_exists('PackageConfig')) {
 	PackageConfig::setWorkDirPosition(3);
 	PackageConfig::addPackage('site');
 	PackageConfig::addPackage('swat');
+	PackageConfig::addPackage('jquery');
 }
 
 require_once 'Swat/SwatAutoloader.php';
