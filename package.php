@@ -57,6 +57,7 @@ $package->setPhpDep('5.1.5');
 $package->setPearinstallerDep('1.4.0');
 $package->addPackageDepWithChannel('required', 'Date', 'pear.silverorange.com', '1.4.7so1');
 $package->addPackageDepWithChannel('optional', 'Yui', 'pear.silverorange.com', '1.0.4');
+$package->addPackageDepWithChannel('optional', 'jQuery', 'pear.silverorange.com', '1.0.0');
 $package->addPackageDepWithChannel('optional', 'MDB2', 'pear.php.net', '2.2.2');
 $package->generateContents();
 

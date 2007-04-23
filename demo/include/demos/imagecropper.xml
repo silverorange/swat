@@ -1,0 +1,33 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="my_form">
+
+		<widget class="SwatFieldset">
+			<property name="title">Cropper with no aspect ratio set</property>
+
+			<widget class="SwatImageCropper">
+				<property name="image_width" type="integer">400</property>
+				<property name="image_height" type="integer">260</property>
+				<property name="image_url">http://gallery.whitelands.com/files/small/photo57748.jpg</property>
+			</widget>
+
+		</widget>
+
+		<widget class="SwatFieldset">
+			<property name="title">Cropper with aspect ratio set</property>
+
+			<widget class="SwatImageCropper">
+				<property name="image_width" type="integer">260</property>
+				<property name="image_height" type="integer">400</property>
+				<property name="crop_box_ratio" type="float">2</property>
+				<property name="image_url">http://gallery.whitelands.com/files/small/photo57751.jpg</property>
+			</widget>
+
+		</widget>
+
+		<widget class="SwatFooterFormField">
+			<widget class="SwatButton"/>
+		</widget>
+	</widget>
+</swatml>

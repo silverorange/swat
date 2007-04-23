@@ -32,6 +32,7 @@ class DemoApplication
 		'FileEntry'         => 'SwatFileEntry',
 		'Flydown'           => 'SwatFlydown',
 		'Frame'             => 'SwatFrame',
+		'ImageCropper'      => 'SwatImageCropper',
 		'ImageDisplay'      => 'SwatImageDisplay',
 		'Menu'              => 'SwatMenu',
 		'MessageDisplay'    => 'SwatMessageDisplay',
@@ -274,6 +275,10 @@ class DemoApplication
 
 		case 'Frame':
 			$entries = array('SwatFrame');
+			break;
+
+		case 'ImageCropper':
+			$entries = array('SwatImageCropper');
 			break;
 
 		case 'ImageDisplay':
