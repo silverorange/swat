@@ -28,12 +28,13 @@ class SwatTile extends SwatCellRendererContainer
 	{
 		if (!$this->visible)
 			return;
+
+		echo '<div>';
 		foreach ($this->renderers as $renderer){
 			$this->renderers->applyMappingsToRenderer($renderer, $data);
-			echo '<div>';
 			$renderer->render();
-			echo '</div>';
 		}
+		echo '</div>';
 	}
 	// }}}
 	// {{{ public function init()
