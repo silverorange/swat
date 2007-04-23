@@ -129,10 +129,6 @@ class SwatImageCropper extends SwatInputControl
 		$this->crop_height = $data[$this->id.'_height'];
 		$this->crop_x = $data[$this->id.'_x'];
 		$this->crop_y = $data[$this->id.'_y'];
-
-		echo $this->crop_x.' '.$this->crop_y.' '.$this->crop_width.' '.$this->crop_height;
-
-		exit();
 	}
 
 	// }}}
