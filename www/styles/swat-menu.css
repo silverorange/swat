@@ -43,39 +43,18 @@ div.yuimenubar li.selected a.selected {
 }
 
 div.yuimenu li.yuimenuitem,
-div.yuimenubar li.yuimenubaritem {
-	padding: 0;
-	float: none;
-}
-
-div.yuimenubar li.yuimenubaritem li.yuimenuitem a {
-	border: 0;
-}
-
-div.yuimenubar li.yuimenubaritem a {
+div.yuimenubar li.yuimenubaritem,
+div.yuimenubar li.yuimenubaritem.first-of-type {
 	padding: 5px 10px 5px 15px;
-	border-color: #f0eade;
-	border-style: solid;
-	border-width: 0 1px 0 0;
-}
-
-div.yuimenu li.yuimenuitem a {
-	padding: 5px 10px 5px 15px;
-	display: block;
-}
-
-div.yuimenu li.hassubmenu a.hassubmenu {
 	float: none;
-	display: block;
-}
-
-div.yuimenubar ul li.yuimenubaritem.hassubmenu ul li.yuimenubaritem a {
 	border: 0;
 }
 
 div.yuimenubar li.yuimenubaritem,
 div.yuimenubar li.yuimenubaritem.first-of-type {
-	border: 0;
+	border-color: #f0eade;
+	border-style: solid;
+	border-width: 0 1px 0 0;
 }
 
 div.yuimenubar ul {
@@ -84,22 +63,6 @@ div.yuimenubar ul {
 
 div.yuimenu ul {
 	padding: 0;
-}
-
-div.yuimenubar li.yuimenubaritem img {
-	display: none;
-}
-
-div.yuimenubar li.yuimenubaritem.hassubmenu {
-	background: url(../images/swat-menubar-hassubmenu.png) center right no-repeat;
-}
-
-div.yuimenubar li.yuimenubaritem.hassubmenu a {
-	padding-right: 22px;
-}
-
-div.yuimenu li.yuimenuitem.hassubmenu {
-	background: url(../images/swat-menu-hassubmenu.png) center right no-repeat;
 }
 
 div.yuimenu li.yuimenuitem.hassubmenu a {
