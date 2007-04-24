@@ -3,7 +3,6 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatCellRendererContainer.php';
 
 /**
@@ -14,7 +13,6 @@ require_once 'Swat/SwatCellRendererContainer.php';
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDetailsViewField extends SwatCellRendererContainer
-	implements SwatUIParent
 {
 	// {{{ public properties
 
