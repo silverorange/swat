@@ -15,6 +15,7 @@ div.yuimenu h6,
 div.yuimenubar h6 {
 	color: #837352;
 	padding: 5px;
+	border: 0;
 }
 
 div.yuimenu li,
@@ -65,9 +66,6 @@ div.yuimenu ul {
 	padding: 0;
 }
 
-div.yuimenu li.yuimenuitem.hassubmenu a {
-	padding-right: 22px;
-}
 
 /* Stock types */
 
