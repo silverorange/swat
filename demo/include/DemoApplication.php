@@ -239,7 +239,10 @@ class DemoApplication
 			break;
 
 		case 'Disclosure':
-			$entries = array('SwatDisclosure');
+			$entries = array(
+				'SwatDisclosure',
+				'SwatFrameDisclosure',
+				);
 			break;
 
 		case 'Entry':
