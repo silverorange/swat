@@ -199,6 +199,26 @@ class SwatMessageDisplay extends SwatControl
 	}
 
 	// }}}
+	// {{{ public function isVisible()
+
+	/**
+	 * Gets whether or not this message display is visible
+	 *
+	 * The message display control respectes normal visibility rules. In
+	 * addition, a message display is considered not visible if it contains no
+	 * messages.
+	 *
+	 * @return boolean true if this message display is visible and false if it
+	 *                  is not.
+	 *
+	 * @see SwatUIObject::isVisible()
+	 */
+	public function isVisible()
+	{
+		return (($this->getMessageCount() > 0) && parent::isVisible());
+	}
+
+	// }}}
 	// {{{ public function getMessageCount()
 
 	/**
