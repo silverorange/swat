@@ -5,7 +5,6 @@ require_once 'Swat/SwatCellRendererContainer.php';
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 class SwatTile extends SwatCellRendererContainer
-	implements SwatUIParent
 {
 	// {{{ public properties
 	public $visible = true;
