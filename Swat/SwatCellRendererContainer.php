@@ -3,6 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatUIObject.php';
+require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatCellRendererSet.php';
 require_once 'Swat/SwatCellRendererMapping.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
@@ -14,7 +15,8 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * @copyright 2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatCellRendererContainer extends SwatUIObject
+abstract class SwatCellRendererContainer extends SwatUIObject implements
+	SwatUIParent
 {
 	// {{{ protected properties
 
