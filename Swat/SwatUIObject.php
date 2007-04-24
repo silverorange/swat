@@ -31,6 +31,17 @@ abstract class SwatUIObject extends SwatObject
 	public $parent = null;
 
 	/**
+	 * Visible
+	 *
+	 * Whether this UI object is displayed. All UI objects should respect this.
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatUIObject::isVisible()
+	 */
+	public $visible = true;
+
+	/**
 	 * A user-specified array of CSS classes that are applied to this
 	 * user-interface object
 	 *
@@ -215,6 +226,27 @@ abstract class SwatUIObject extends SwatObject
 	public function getHtmlHeadEntrySet()
 	{
 		return new SwatHtmlHeadEntrySet($this->html_head_entry_set);
+	}
+
+	// }}}
+	// {{{ public function isVisible()
+
+	/**
+	 * Gets whether or not this UI object is visible
+	 *
+	 * Looks at the visible property of the ancestors of this UI object to 
+	 * determine if this UI object is visible.
+	 *
+	 * @return boolean true if this UI object is visible and false if it is not.
+	 *
+	 * @see SwatUIObject::$visible
+	 */
+	public function isVisible()
+	{
+		if ($this->parent instanceof SwatUIObject)
+			return ($this->parent->isVisible() && $this->visible);
+		else
+			return $this->visible;
 	}
 
 	// }}}

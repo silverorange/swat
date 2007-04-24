@@ -24,15 +24,6 @@ abstract class SwatWidget extends SwatUIObject
 	public $id = null;
 
 	/**
-	 * Visible
-	 *
-	 * Whether the widget is displayed. All widgets should respect this.
-	 *
-	 * @var boolean
-	 */
-	public $visible = true;
-
-	/**
 	 * Sensitive
 	 *
 	 * Whether the widget is sensitive. If a widget is sensitive it reacts to
@@ -236,27 +227,6 @@ abstract class SwatWidget extends SwatUIObject
 			return ($this->parent->isSensitive() && $this->sensitive);
 		else
 			return $this->sensitive;
-	}
-
-	// }}}
-	// {{{ public function isVisible()
-
-	/**
-	 * Determines the visiblity of this widget.
-	 *
-	 * Looks at the visible property of the ancestors of this widget to 
-	 * determine if this widget is visible.
-	 *
-	 * @return boolean whether this widget is visible.
-	 *
-	 * @see SwatWidget::$visible
-	 */
-	public function isVisible()
-	{
-		if ($this->parent === null)
-			return $this->visible;
-		else
-			return ($this->parent->isVisible() && $this->visible);
 	}
 
 	// }}}
