@@ -25,16 +25,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	public $id = null;
 
 	/**
-	 * Visible
-	 *
-	 * Whether this cell renderer is rendered. All cell-renderer subclasses
-	 * widgets should respect this property in their render method.
-	 *
-	 * @var boolean
-	 */
-	public $visible = true;
-
-	/**
 	 * Sensitive
 	 *
 	 * Whether this renderer is sensitive. If a renderer is sensitive it reacts
