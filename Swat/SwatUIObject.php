@@ -216,16 +216,22 @@ abstract class SwatUIObject extends SwatObject
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this control
+	 * Gets the SwatHtmlHeadEntry objects needed by this UI object
+	 *
+	 * If this UI object is not visible, an empty set is returned to reduce
+	 * the number of required HTTP requests.
 	 *
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 *                               this control.
-	 *
-	 * @see SwatUIObject::getHtmlHeadEntrySet()
+	 *                               this UI object.
 	 */
 	public function getHtmlHeadEntrySet()
 	{
-		return new SwatHtmlHeadEntrySet($this->html_head_entry_set);
+		if ($this->isVisible())
+			$set = new SwatHtmlHeadEntrySet($this->html_head_entry_set);
+		else
+			$set = new SwatHtmlHeadEntrySet();
+
+		return $set;
 	}
 
 	// }}}
