@@ -7,7 +7,7 @@ function SwatConfirmationButton(id, show_processing_throbber)
 
 YAHOO.lang.extend(SwatConfirmationButton, SwatButton, {
 
-handleClick: function()
+handleClick: function(event)
 {
 	var confirmed = window.confirm(this.confirmation_message);
 	if (confirmed) {
