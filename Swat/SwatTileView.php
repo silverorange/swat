@@ -26,8 +26,6 @@ class SwatTileView extends SwatControl implements SwatUIParent
 	 * The tile of this tile view
 	 *
 	 * @var SwatTile
-	 *
-	 * @see SwatTile
 	 */
 
 	private $tile = null;
