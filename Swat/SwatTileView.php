@@ -47,12 +47,35 @@ class SwatTileView extends SwatControl implements SwatUIParent
 			' add SwatTiles to this widget.', 0, $child);
 	}
 	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this tile view
+	 *
+	 * @return array the array of CSS classes that are applied to this tile
+	 *                view.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-tile-view');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
+	}
+
+	// }}}
 	// {{{ public function display()
 	public function display()
 	{
+		$tile_view_tag = new SwatHtmlTag('div');
+		$tile_view_tag->id = $this->id;
+		$tile_view_tag->class = $this->getCSSClassString();
+		$tile_view_tag->open();
+
 		$datas = $this->model->getRows();
 		foreach ($datas as $data)
 			$this->tile->display($data);
+
+		$tile_view_tag->close();
 	}
 	// }}}
 	// {{{ public function process()
