@@ -15,29 +15,74 @@ class SwatTileView extends SwatControl implements SwatUIParent
 	private $tile = null;
 	// }}}
 	// {{{ public function __construct()
+
+	/**
+	 * Creates a new tile view
+	 *
+	 * @param string $id a non-visable unique id for this widget.
+	 *
+	 * @see SwatWidget:__construct()
+	 */
 	public function __construct()
 	{
 	}
 	// }}}
 	// {{{ public function init()
+
+	/**
+	 * Initializes this tile-view
+	 *
+	 * This initializes the tile view and the tile contained in the view.
+	 *
+	 * @see SwatWidget::init()
+	 */
 	public function init()
 	{
 		$this->tile->init();
 	}
 	// }}}
 	// {{{ public function getTile()
+
+	/**
+	 * Gets a reference to the tile contained in the view.
+	 *
+	 * @return SwatTile the requested tile
+	 */
 	public function getTile()
 	{
 		return $this->tile;
 	}
 	// }}}
 	// {{{ public function setTile()
+
+	/**
+	 * Sets the tile of this tile view
+	 *
+	 * @param SwatTile $tile the cile to set
+	 */
 	public function setTile(SwatTile $tile)
 	{
 		$this->tile = $tile;
 	}
 	// }}}
 	// {{{ public function addChild()
+
+	/**
+	 * Adds a child object
+	 *
+	 * This method fulfills the {@link SwatUIParent} interface. It is used
+	 * by {@link SwatUI} when building a widget tree and should not need to be
+	 * called elsewhere.
+	 *
+	 * To add a tile use {@link SwatTileView::SwatTile()}
+	 *
+	 * @param mixed $child a reference to a child object to add.
+	 *
+	 * @throws SwatInvalidClassException
+	 *
+	 * @see SwatUIParent
+	 * @see SwatTileView::setTile()
+	 */
 	public function addChild(SwatObject $child)
 	{
 		if ($child instanceof SwatTile)
@@ -64,6 +109,12 @@ class SwatTileView extends SwatControl implements SwatUIParent
 
 	// }}}
 	// {{{ public function display()
+
+	/**
+	 * Displays this tile view
+	 *
+	 * The tile view is display as a section of div tags
+	 */
 	public function display()
 	{
 		$tile_view_tag = new SwatHtmlTag('div');
@@ -79,6 +130,12 @@ class SwatTileView extends SwatControl implements SwatUIParent
 	}
 	// }}}
 	// {{{ public function process()
+
+	/**
+	 * Processes this tile view
+	 *
+	 * Process the tile contained by this tile view
+	 */
 	public function process()
 	{
 		parent::process();
@@ -87,6 +144,12 @@ class SwatTileView extends SwatControl implements SwatUIParent
 	}
 	// }}}
 	// {{{ public function getMessages()
+
+	/**
+	 * Gathers all messages from this tile view
+	 *
+	 * @return array an array of {@link SwatMessage} objects.
+	 */
 	public function getMessages()
 	{
 		$messages = parent::getMessages();
@@ -96,6 +159,13 @@ class SwatTileView extends SwatControl implements SwatUIParent
 	}
 	// }}}
 	// {{{ public function hasMessage()
+
+	/**
+	 * Gets whether or not this tile view has any messages
+	 *
+	 * @return boolean true if this tile view has one or more messages and
+	 *						false if it does not.
+	 */
 	public function hasMessage()
 	{
 		$has_message = parent::hasMessages();
