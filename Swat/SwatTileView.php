@@ -9,10 +9,29 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
 class SwatTileView extends SwatControl implements SwatUIParent
 {
 	// {{{ public properties
+
+	/**
+	 * A data structure that holds the data to display in this view
+	 *
+	 * The data structure used is some form of {@link SwatTableModel}
+	 *
+	 * @var SwatTabelModel
+	 */
 	public $model = null;
+
 	// }}}
 	// {{{ private properties
+	
+	/**
+	 * The tile of this tile view
+	 *
+	 * @var SwatTile
+	 *
+	 * @see SwatTile
+	 */
+
 	private $tile = null;
+
 	// }}}
 	// {{{ public function __construct()
 
