@@ -773,6 +773,56 @@ class SwatString extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function getInternationalCurrencySymbol()
+
+	/**
+	 * Gets the international currency symbol of a locale
+	 *
+	 * @param string $locale optional. Locale to get the international currency
+	 *                        symbol for. If no locale is specified, the
+	 *                        current locale is used.
+	 *
+	 * @return string the international currency symbol for the specified
+	 *                 locale. The symbol is UTF-8 encoded and does not include
+	 *                 the spacing character specified in the C99 standard.
+	 *
+	 * @throws SwatException if the given locale could not be set.
+	 */
+	public static function getInternationalCurrencySymbol($locale = null)
+	{
+		if ($locale !== null) {
+			$old_locale = setlocale(LC_MONETARY, 0);
+			if (setlocale(LC_MONETARY, $locale) === false) {
+				throw new SwatException(sprintf('Locale %s passed to the '.
+					'getInternationalCurrencySymbol() method is not valid '.
+					'for this operating system.', $locale));
+			}
+		}
+
+		// get character set of the locale that is used
+		$character_set = nl_langinfo(CODESET);
+
+		$lc = localeconv();
+		$symbol = $lc['int_curr_symbol'];
+
+		// convert output to UTF-8
+		if ($character_set !== 'UTF-8') {
+			$symbol = iconv($character_set, 'UTF-8', $symbol);
+			if ($symbol === false)
+				throw new SwatException(sprintf('Could not convert %s output '.
+					'to UTF-8', $character_set));
+		}
+
+		// strip C99-defined spacing character
+		$symbol = substr($symbol, 0, 3);
+
+		if ($locale !== null)
+			setlocale(LC_ALL, $old_locale);
+
+		return $symbol;
+	}
+
+	// }}}
 	// {{{ public static function numberFormat()
 
 	/**
