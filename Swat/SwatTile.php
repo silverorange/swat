@@ -1,28 +1,63 @@
 <?php
 
-require_once 'Swat/SwatCellRendererContainer.php';
-
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'Swat/SwatCellRendererContainer.php';
+
+/**
+ * A tile in a {@link SwatTileView}
+ *
+ * @package   Swat
+ * @copyright 2007 silverorange
+ * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
+ * @see       SwatTileView
+ */
 class SwatTile extends SwatCellRendererContainer
 {
 	// {{{ public properties
+
+	/**
+ 	 * Visible
+	 * 
+	 * Whether this UI object is diplayed. All UI objects should respect this.
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatUIObject::isVisible()
+	 */
 	public $visible = true;
 	
 	// }}}
 	// {{{ private properties
+
+	/**
+	 * Messages affixed to this widget
+	 *
+	 * @var array
+	 */
 	private  $messages = array();
 
 	// }}}
 	// {{{ public function __construct()
+
+	/**
+	 * Creates a new tile for the tile view
+	 */
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
 
 		$this->require_id = true;
 	}
+
 	// }}}
 	// {{{ public function display()
+
+	/**
+	 * Displays this tile
+	 *
+	 * Each data row is displayed between div tags in the tile
+	 */
 
 	public function display($data)
 	{
@@ -43,20 +78,40 @@ class SwatTile extends SwatCellRendererContainer
 
 	// }}}
 	// {{{ public function init()
+
+	/**
+	 * Initializes this tile
+	 *
+	 * This initializes the tile contained in the tile view
+	 */
 	public function init()
 	{
 		foreach ($this->renderers as $renderer)
 			$renderer->init();
 	}
+
 	// }}}
 	// {{{ public function process()
+
+	/**
+	 * Processes this tile
+	 *
+	 * Processes each renderer contained in the tile
+	 */
 	public function process()
 	{
 		foreach ($this->renderers as $renderer)
 			$renderer->process();
 	}
+
 	// }}}
 	// {{{ public function getMessages()
+
+	/**
+	 * Gathers all messages from this tile
+	 *
+	 * @return array an array of {@link SwatMessage} objects.
+	 */
 	public function getMessages()
 	{
 		$messages = $this->messages;
@@ -66,14 +121,31 @@ class SwatTile extends SwatCellRendererContainer
 
 		return $messages;
 	}
+
 	// }}}
 	// {{{ public function addMessages()
+
+	/**
+	 * Adds a message to this tile
+	 *
+	 * @param SwatMessage the message to add.
+	 *
+	 * @see SwatMessage
+	 */
 	public function addMessage(SwatMessage $message)
 	{
 		$this->messages[] = $message;
 	}
+
 	// }}}
 	// {{{ public function hasMessage()
+
+	/**
+	 * Gets wheter or not this tile has any messages
+	 *
+	 * @return boolean true if this tile has one or more messages and 
+	 *						false if it does not.
+	 */
 	public function hasMessage()
 	{
 		$has_message = false;
@@ -87,6 +159,7 @@ class SwatTile extends SwatCellRendererContainer
 		
 		return $has_message;
 	}
+
 	// }}}
 	// {{{ protected function getCSSClassNames()
 
