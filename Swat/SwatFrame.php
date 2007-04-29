@@ -80,15 +80,13 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 		$outer_div->open();
 
 		if ($this->title !== null) {
-			/*
-			 * Experimental: Header level is autocalculated based on the 
-			 * level of the frame in the widget tree.  Top level frame
-			 * is currently an <h2>.
-			 */
+
+			// default header level is h2
 			$level = 2;
 			$ancestor = $this->parent;
 
-			while ($ancestor !== null) {
+			// get appropriate header level, limit to h6
+			while ($ancestor !== null && $level < 6) {
 				if ($ancestor instanceof SwatFrame)
 					$level++;
 
