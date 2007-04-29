@@ -6,6 +6,14 @@ require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
+/**
+ * A tile view widget for containing a {@link SwatTile} tile
+ *
+ * @package   Swat
+ * @copyright 2007 silverorange
+ * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
+ * @see       SwatTile
+ */
 class SwatTileView extends SwatControl implements SwatUIParent
 {
 	// {{{ public properties
