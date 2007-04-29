@@ -69,7 +69,7 @@ class SwatTileView extends SwatControl implements SwatUIParent
 	// {{{ public function getTile()
 
 	/**
-	 * Gets a reference to the tile contained in the view.
+	 * Gets a reference to a tile contained in the view.
 	 *
 	 * @return SwatTile the requested tile
 	 */
@@ -81,9 +81,9 @@ class SwatTileView extends SwatControl implements SwatUIParent
 	// {{{ public function setTile()
 
 	/**
-	 * Sets the tile of this tile view
+	 * Sets a tile of this tile view
 	 *
-	 * @param SwatTile $tile the cile to set
+	 * @param SwatTile $tile the tile to set
 	 */
 	public function setTile(SwatTile $tile)
 	{

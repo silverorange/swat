@@ -19,11 +19,9 @@ class SwatTile extends SwatCellRendererContainer
 	/**
  	 * Visible
 	 * 
-	 * Whether this UI object is diplayed. All UI objects should respect this.
+	 * Whether this tile is diplayed.
 	 *
 	 * @var boolean
-	 *
-	 * @see SwatUIObject::isVisible()
 	 */
 	public $visible = true;
 	
@@ -31,7 +29,7 @@ class SwatTile extends SwatCellRendererContainer
 	// {{{ private properties
 
 	/**
-	 * Messages affixed to this widget
+	 * Messages affixed to this tile
 	 *
 	 * @var array
 	 */
@@ -41,7 +39,7 @@ class SwatTile extends SwatCellRendererContainer
 	// {{{ public function __construct()
 
 	/**
-	 * Creates a new tile for the tile view
+	 * Creates a new tile for a tile view
 	 */
 	public function __construct($id = null)
 	{
