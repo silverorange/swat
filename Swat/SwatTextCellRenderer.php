@@ -65,6 +65,11 @@ class SwatTextCellRenderer extends SwatCellRenderer
 		if (!$this->visible)
 			return;
 
+		$span = new SwatHtmlTag('span');
+		$span->class = $this->getCSSClassString();
+
+		$span->open();
+
 		if ($this->value === null)
 			$text = $this->text;
 		elseif (is_array($this->value))
@@ -76,6 +81,8 @@ class SwatTextCellRenderer extends SwatCellRenderer
 			echo SwatString::minimizeEntities($text);
 		else
 			echo $text;
+
+		$span->close();
 	}
 
 	// }}}
