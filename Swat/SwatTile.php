@@ -222,7 +222,7 @@ class SwatTile extends SwatCellRendererContainer
 	 */
 	protected function getBaseCSSClassNames()
 	{
-		return array();
+		return array('swat-tile');
 	}
 
 	// }}}
