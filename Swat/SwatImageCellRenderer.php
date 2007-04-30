@@ -114,9 +114,24 @@ class SwatImageCellRenderer extends SwatCellRenderer
 		// if it is not specified.
 		$image_tag->alt = ($this->alt === null) ? '' : $this->alt;
 
-		$image_tag->class = 'swat-image-cell-renderer';
+		$image_tag->class = $this->getCSSClassString();
 
 		$image_tag->display();
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this cell renderer 
+	 *
+	 * @return array the array of CSS classes that are applied to this cell renderer.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-image-cell-renderer');
+		$classes = array_merge($classes, $this->classes);
+		return $classes;
 	}
 
 	// }}}
