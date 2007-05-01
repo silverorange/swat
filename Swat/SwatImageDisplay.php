@@ -128,16 +128,21 @@ class SwatImageDisplay extends SwatControl
 
 		if ($this->occupy_width !== null &&
 			$this->occupy_width > $this->width)
-			$margin_x = intval(($this->occupy_width - $this->width) / 2);
+			$margin_x = $this->occupy_width - $this->width;
 			
 		if ($this->occupy_height !== null &&
 			$this->occupy_height > $this->height)
-			$margin_y = intval(($this->occupy_height - $this->height) / 2);
+			$margin_y = $this->occupy_height - $this->height;
 
 		if ($margin_x > 0 || $margin_y > 0)
-			$image_tag->style = sprintf('margin: %dpx %dpx;',
-				$margin_y, $margin_x);
-			
+			$image_tag->style = sprintf(
+				($margin_x % 2 == 0 && $margin_y % 2 == 0) ?
+					'margin: %dpx %dpx' :
+					'margin: %dpx %dpx %dpx %dpx;',
+				floor(((float) $margin_y) / 2),
+				ceil(((float) $margin_x) / 2),
+				ceil(((float) $margin_y) / 2),
+				floor(((float) $margin_x) / 2));
 
 		if ($this->title !== null)
 			$image_tag->title = $this->title;
