@@ -60,6 +60,26 @@ class SwatImageDisplay extends SwatControl
 	public $width = null;
 
 	/**
+	 * The total height that the image occupies
+	 *
+	 * Extra padding will be adding to the style of the img tag if the height is
+	 * less than occupy_height.
+	 *
+	 * @var integer
+	 */
+	public $occupy_height = null;
+
+	/**
+	 * The total width that the image occupies
+	 *
+	 * Extra padding will be adding to the style of the img tag if the width is
+	 * less than occupy_width.
+	 *
+	 * @var integer
+	 */
+	public $occupy_width = null;
+
+	/**
 	 * Image title
 	 *
 	 * The title attribute in the XHTML img tag.
@@ -102,6 +122,22 @@ class SwatImageDisplay extends SwatControl
 
 		if ($this->width !== null)
 			$image_tag->width = $this->width;
+
+		$padding_x = 0;
+		$padding_y = 0;
+
+		if ($this->occupy_width !== null &&
+			$this->occupy_width > $this->width)
+			$padding_x = intval(($this->occupy_width - $this->width) / 2);
+			
+		if ($this->occupy_height !== null &&
+			$this->occupy_height > $this->height)
+			$padding_y = intval(($this->occupy_height - $this->height) / 2);
+
+		if ($padding_x > 0 || $padding_y > 0)
+			$image_tag->style = sprintf('padding: %dpx %dpx;',
+				$padding_x, $padding_y);
+			
 
 		if ($this->title !== null)
 			$image_tag->title = $this->title;
