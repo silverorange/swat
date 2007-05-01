@@ -67,7 +67,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	/**
 	 * The total height that the image occupies
 	 *
-	 * Extra padding will be adding to the style of the img tag if the height is
+	 * Extra margin will be adding to the style of the img tag if the height is
 	 * less than occupy_height.
 	 *
 	 * @var integer
@@ -77,7 +77,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	/**
 	 * The total width that the image occupies
 	 *
-	 * Extra padding will be adding to the style of the img tag if the width is
+	 * Extra margin will be adding to the style of the img tag if the width is
 	 * less than occupy_width.
 	 *
 	 * @var integer
@@ -130,20 +130,20 @@ class SwatImageCellRenderer extends SwatCellRenderer
 		$image_tag->width = $this->width;
 		$image_tag->title = $this->title;
 
-		$padding_x = 0;
-		$padding_y = 0;
+		$margin_x = 0;
+		$margin_y = 0;
 
 		if ($this->occupy_width !== null &&
 			$this->occupy_width > $this->width)
-			$padding_x = intval(($this->occupy_width - $this->width) / 2);
+			$margin_x = intval(($this->occupy_width - $this->width) / 2);
 			
 		if ($this->occupy_height !== null &&
 			$this->occupy_height > $this->height)
-			$padding_y = intval(($this->occupy_height - $this->height) / 2);
+			$margin_y = intval(($this->occupy_height - $this->height) / 2);
 
-		if ($padding_x > 0 || $padding_y > 0)
-			$image_tag->style = sprintf('padding: %dpx %dpx;',
-				$padding_y, $padding_x);
+		if ($margin_x > 0 || $margin_y > 0)
+			$image_tag->style = sprintf('margin: %dpx %dpx;',
+				$margin_y, $margin_x);
 			
 
 		// alt is a required XHTML attribute. We should always display it even
