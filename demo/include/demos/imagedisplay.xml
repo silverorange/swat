@@ -5,6 +5,8 @@
 		<property name="image">http://swat.silverorange.com/skins/swat/logo.png</property>
 		<property name="width" type="integer">182</property>
 		<property name="height" type="integer">77</property>
+		<property name="occupy_width" type="integer">300</property>
+		<property name="occupy_height" type="integer">300</property>
 		<property name="alt">Image of the Swat Logo</property>
 		<property name="title">Swat: Swat Web Application Toolkit</property>
 	</widget>
