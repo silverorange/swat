@@ -136,7 +136,7 @@ class SwatImageDisplay extends SwatControl
 
 		if ($padding_x > 0 || $padding_y > 0)
 			$image_tag->style = sprintf('padding: %dpx %dpx;',
-				$padding_x, $padding_y);
+				$padding_y, $padding_x);
 			
 
 		if ($this->title !== null)
