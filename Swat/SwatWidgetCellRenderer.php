@@ -373,8 +373,15 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	public function getHtmlHeadEntrySet()
 	{
 		$set = parent::getHtmlHeadEntrySet();
-		foreach ($this->getClonedWidgets() as $widget)
-			$set->addEntrySet($widget->getHtmlHeadEntrySet());
+		$widgets = $this->getClonedWidgets();
+		if (count($widgets) > 0) {
+			foreach ($widgets as $widget)
+				$set->addEntrySet($widget->getHtmlHeadEntrySet());
+		} else {
+			$set->addEntrySet(
+				$this->getPrototypeWidget()->getHtmlHeadEntrySet());
+		}
+
 
 		return $set;
 	}
