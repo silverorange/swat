@@ -400,7 +400,7 @@ SwatCalendar.prototype.buildControls = function()
 					'selected="selected">' + SwatCalendar.month_names[i] + '</option>';
 			else
 				month_array = month_array + '<option value="' + eval(i + 1) + '">' +
-					SwtCalendar.month_names[i] + '</option>';
+					SwatCalendar.month_names[i] + '</option>';
 		}
 	} else {
 		for (i = 0; i < 12; i++) {
