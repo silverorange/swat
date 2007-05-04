@@ -402,7 +402,7 @@ class SwatPagination extends SwatControl
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-pagination');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

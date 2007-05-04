@@ -114,7 +114,7 @@ class SwatCalendar extends SwatControl
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-calendar');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

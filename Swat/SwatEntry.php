@@ -326,7 +326,8 @@ class SwatEntry extends SwatInputControl implements SwatState
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-entry');
-		$classes = array_merge($classes, $this->classes);
+
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

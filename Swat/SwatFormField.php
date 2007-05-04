@@ -305,7 +305,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		if ($this->hasMessage())
 			$classes[] = 'swat-form-field-with-messages';
 
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

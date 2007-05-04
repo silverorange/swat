@@ -348,7 +348,7 @@ class SwatNavBar extends SwatControl implements Countable
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-nav-bar');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

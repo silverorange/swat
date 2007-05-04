@@ -1114,7 +1114,7 @@ class SwatTableView extends SwatControl implements SwatUIParent
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-table-view');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

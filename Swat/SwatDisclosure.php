@@ -233,7 +233,7 @@ class SwatDisclosure extends SwatDisplayableContainer
 			'swat-disclosure-control-opened',
 		);
 
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

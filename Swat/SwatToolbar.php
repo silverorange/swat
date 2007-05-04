@@ -113,7 +113,7 @@ class SwatToolbar extends SwatDisplayableContainer
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-toolbar');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

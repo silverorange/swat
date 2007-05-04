@@ -349,7 +349,7 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 		if ($this->stock_class !== null)
 			$classes[] = $this->stock_class;
 
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 
 		return $classes;
 	}

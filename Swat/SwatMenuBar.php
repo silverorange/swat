@@ -57,7 +57,7 @@ class SwatMenuBar extends SwatMenu
 	protected function getCSSClassNames()
 	{
 		$classes = array('yuimenubar');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

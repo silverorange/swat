@@ -308,7 +308,7 @@ class SwatProgressBar extends SwatControl
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-progress-bar');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

@@ -142,7 +142,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-expandable-checkbox-tree');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 
