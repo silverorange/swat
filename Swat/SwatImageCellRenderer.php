@@ -171,7 +171,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-image-cell-renderer');
-		$classes = array_merge($classes, parent::getCSSClassNames());
+		$classes = array_merge($classes, $this->classes);
 		return $classes;
 	}
 
