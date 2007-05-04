@@ -76,6 +76,9 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 		if ($this->value)
 			$input_tag->checked = 'checked';
 
+		if (!$this->isSensitive())
+			$input_tag->disabled = 'disabled';
+
 		$input_tag->display();
 	}
 
