@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="400.00000px"
+   height="300.00000px"
+   id="svg1572"
+   sodipodi:version="0.32"
+   inkscape:version="0.42"
+   sodipodi:docbase="/home/steven"
+   sodipodi:docname="swat-logo.svg">
+  <defs
+     id="defs1574">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3080">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3082" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop3084" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3050">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3052" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop3054" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2166">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop2168" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop2170" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3060">
+      <stop
+         id="stop3062"
+         offset="0.0000000"
+         style="stop-color:#000000;stop-opacity:0.24489796;" />
+      <stop
+         id="stop3064"
+         offset="1.0000000"
+         style="stop-color:#000000;stop-opacity:0.0000000;" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3080"
+       id="linearGradient1616"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.545455,0.000000,0.000000,0.540000,295.0000,188.7245)"
+       x1="-234.00000"
+       y1="-355.08218"
+       x2="-238.00000"
+       y2="-102.36803" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3050"
+       id="linearGradient1626"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.599999,0.000000,0.000000,0.500000,307.0000,178.8189)"
+       x1="-312.19952"
+       y1="-385.63782"
+       x2="-342.58075"
+       y2="-179.63782" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2166"
+       id="linearGradient1630"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.566666,0.000000,0.000000,0.750000,298.0000,240.7284)"
+       x1="-193.00000"
+       y1="-179.13782"
+       x2="-163.50000"
+       y2="-21.137817" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3060"
+       id="linearGradient1634"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.599889,0.000000,0.000000,0.545355,306.9540,191.6101)"
+       x1="-239.09114"
+       y1="-26.637817"
+       x2="-270.00024"
+       y2="-171.63782" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3060"
+       id="linearGradient2368"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.599999,0.000000,0.000000,0.750000,307.0000,240.7285)"
+       x1="-239.09114"
+       y1="-26.637817"
+       x2="-270.00024"
+       y2="-171.63782" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2166"
+       id="linearGradient1369"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.566666,0.000000,0.000000,0.750000,298.0000,380.7284)"
+       x1="-193.00000"
+       y1="-179.13782"
+       x2="-163.50000"
+       y2="-21.137817" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3050"
+       id="linearGradient1371"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.599999,0.000000,0.000000,0.500000,307.0000,318.8189)"
+       x1="-312.19952"
+       y1="-385.63782"
+       x2="-342.58075"
+       y2="-179.63782" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3080"
+       id="linearGradient1373"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.545455,0.000000,0.000000,0.540000,295.0000,328.7245)"
+       x1="-234.00000"
+       y1="-355.08218"
+       x2="-238.00000"
+       y2="-102.36803" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3060"
+       id="linearGradient1375"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.599999,0.000000,0.000000,0.750000,307.0000,380.7285)"
+       x1="-239.09114"
+       y1="-26.637817"
+       x2="-270.00024"
+       y2="-171.63782" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.00000000"
+     inkscape:cx="260.40159"
+     inkscape:cy="93.405158"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:grid-points="true"
+     inkscape:window-width="1061"
+     inkscape:window-height="1057"
+     inkscape:window-x="225"
+     inkscape:window-y="25" />
+  <metadata
+     id="metadata1577">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:0.099999972;color:#000000;fill:#000000;fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:1.0000000;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1388"
+       width="180.00000"
+       height="75.000000"
+       x="57.000000"
+       y="57.000000"
+       rx="5.0000000"
+       ry="5.0000000"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <rect
+       style="opacity:1.0000000;color:#000000;fill:#d58935;fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:2.5000000;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1392"
+       width="180.00000"
+       height="75.000000"
+       x="55.000000"
+       y="55.000000"
+       rx="5.0000000"
+       ry="5.0000000"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <rect
+       style="opacity:1.0000000;color:#000000;fill:url(#linearGradient1630);fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:1.0000000;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1394"
+       width="170.00000"
+       height="75.000000"
+       x="60.000000"
+       y="55.000000"
+       rx="5.6666675"
+       ry="7.5000010"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <rect
+       style="opacity:1.0000000;color:#000000;fill:#fffbc9;fill-opacity:0.94117647;fill-rule:nonzero;stroke:none;stroke-width:1.0000000;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1396"
+       width="170.00000"
+       height="75.000000"
+       x="60.000000"
+       y="55.000000"
+       rx="5.0000000"
+       ry="5.0000000"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <rect
+       style="opacity:1.0000000;color:#000000;fill:url(#linearGradient1626);fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:1.0000000;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1398"
+       width="180.00000"
+       height="50.000000"
+       x="55.000000"
+       y="55.000000"
+       rx="5.0000000"
+       ry="5.0000005"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <text
+       xml:space="preserve"
+       style="font-size:45.320362px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0.0000000;text-align:start;text-decoration:none;line-height:125.00000%;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;opacity:1.0000000;color:#000000;fill:#426c9e;fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible;font-family:MetaBookLF-Roman"
+       x="123.63012"
+       y="99.297188"
+       id="text1400"
+       sodipodi:linespacing="125.00000%"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000"><tspan
+         sodipodi:role="line"
+         id="tspan1402"
+         x="123.63012"
+         y="99.297188">Swat</tspan></text>
+    <rect
+       style="opacity:1.0000000;color:#000000;fill:#ffffff;fill-opacity:1.0000000;fill-rule:nonzero;stroke:#de9b51;stroke-width:2.7267749;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1404"
+       width="27.267750"
+       height="27.267750"
+       x="72.724037"
+       y="72.920235"
+       rx="5.4535503"
+       ry="5.4535503"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <path
+       style="opacity:1.0000000;color:#000000;fill:#d58935;fill-opacity:1.0000000;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.0907100;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       d="M 102.10649,66.394881 C 101.17096,66.464054 100.31393,66.943410 99.765323,67.704344 L 88.059496,88.397850 L 81.670903,82.187817 C 80.970220,81.245247 79.806410,80.766501 78.645295,80.943218 C 77.484190,81.119946 76.515509,81.923243 76.126976,83.031590 C 75.738444,84.139947 75.993539,85.372243 76.790172,86.235256 L 85.738182,95.540387 C 86.358316,96.287534 87.286270,96.709813 88.256969,96.686614 C 89.227669,96.663403 90.134376,96.197267 90.718113,95.421346 L 104.84445,71.513692 C 105.61692,70.523480 105.73306,69.170978 105.14072,68.063569 C 104.54838,66.956160 103.35892,66.302007 102.10649,66.394881 z "
+       id="path1406"
+       sodipodi:nodetypes="ccccssccsccsc"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <text
+       xml:space="preserve"
+       style="font-size:45.320362px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125.00000%;writing-mode:lr-tb;text-anchor:start;opacity:0.30813953;fill:#426c9e;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:MetaBookLF-Roman"
+       x="124.72083"
+       y="100.3879"
+       id="text1408"
+       sodipodi:linespacing="125.00000%"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000"
+       inkscape:export-filename="/home/steven/swat-logo.png"><tspan
+         sodipodi:role="line"
+         id="tspan1410"
+         x="124.72083"
+         y="100.38790">Swat</tspan></text>
+    <path
+       style="opacity:0.49999997;fill:url(#linearGradient1616);fill-opacity:1.0000000;fill-rule:evenodd;stroke:none;stroke-width:1.5877184px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000"
+       d="M 55.000000,82.000000 C 55.000000,82.000000 97.804252,70.767312 147.72727,82.000000 C 207.72727,95.500010 235.00000,82.000000 235.00000,82.000000 L 235.00000,65.000000 C 235.00000,55.000000 235.00000,55.000000 225.00000,55.000000 L 65.909091,55.000004 C 55.000000,55.000004 55.000000,55.000004 55.000000,65.800011 L 55.000000,82.000000 z "
+       id="path1414"
+       sodipodi:nodetypes="cssccccc"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <rect
+       style="opacity:1.0000000;color:#000000;fill:url(#linearGradient2368);fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:1.0000000;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1390"
+       width="180.00000"
+       height="75.000000"
+       x="55.000000"
+       y="55.000000"
+       rx="5.0000000"
+       ry="5.0000000"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <text
+       xml:space="preserve"
+       style="font-size:15.201925px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0.0000000;text-align:start;text-decoration:none;line-height:125.00000%;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;opacity:1.0000000;color:#000000;fill:#426c9e;fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible;font-family:MetaBookLF-Roman"
+       x="71.661835"
+       y="122.28371"
+       id="text1454"
+       sodipodi:linespacing="125.00000%"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000"><tspan
+         sodipodi:role="line"
+         id="tspan1456"
+         x="71.661835"
+         y="122.28371">Web Application Toolkit</tspan></text>
+    <rect
+       style="opacity:0.099999972;color:#000000;fill:#000000;fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:1.0000000;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1339"
+       width="180.00000"
+       height="75.000000"
+       x="57.000000"
+       y="197.00000"
+       rx="5.0000000"
+       ry="5.0000000"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <rect
+       style="opacity:1.0000000;color:#000000;fill:#d58935;fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:2.5000000;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1341"
+       width="180.00000"
+       height="75.000000"
+       x="55.000000"
+       y="195.00000"
+       rx="5.0000000"
+       ry="5.0000000"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <rect
+       style="opacity:1.0000000;color:#000000;fill:url(#linearGradient1369);fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:1.0000000;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1343"
+       width="170.00000"
+       height="75.000000"
+       x="60.000000"
+       y="195.00000"
+       rx="5.6666675"
+       ry="7.5000010"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <rect
+       style="opacity:1.0000000;color:#000000;fill:#fffbc9;fill-opacity:0.94117647;fill-rule:nonzero;stroke:none;stroke-width:1.0000000;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1345"
+       width="170.00000"
+       height="75.000000"
+       x="60.000000"
+       y="195.00000"
+       rx="5.0000000"
+       ry="5.0000000"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <rect
+       style="opacity:1.0000000;color:#000000;fill:url(#linearGradient1371);fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:1.0000000;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1347"
+       width="180.00000"
+       height="50.000000"
+       x="55.000000"
+       y="195.00000"
+       rx="5.0000000"
+       ry="5.0000005"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <text
+       xml:space="preserve"
+       style="font-size:45.320362px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0.0000000;text-align:start;text-decoration:none;line-height:125.00000%;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;opacity:1.0000000;color:#000000;fill:#426c9e;fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible;font-family:MetaBookLF-Roman"
+       x="121.63012"
+       y="239.29718"
+       id="text1349"
+       sodipodi:linespacing="125.00000%"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000"><tspan
+         sodipodi:role="line"
+         id="tspan1351"
+         x="121.63012"
+         y="239.29718">Swat</tspan></text>
+    <rect
+       style="opacity:1.0000000;color:#000000;fill:#ffffff;fill-opacity:1.0000000;fill-rule:nonzero;stroke:#de9b51;stroke-width:2.7267749;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1353"
+       width="27.267750"
+       height="27.267750"
+       x="78.724037"
+       y="212.92023"
+       rx="5.4535503"
+       ry="5.4535503"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <path
+       style="opacity:1.0000000;color:#000000;fill:#d58935;fill-opacity:1.0000000;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.0907100;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       d="M 108.10649,206.39488 C 107.17096,206.46405 106.31393,206.94341 105.76532,207.70434 L 94.059496,228.39785 L 87.670903,222.18782 C 86.970220,221.24525 85.806410,220.76650 84.645295,220.94322 C 83.484190,221.11995 82.515509,221.92324 82.126976,223.03159 C 81.738444,224.13995 81.993539,225.37224 82.790172,226.23526 L 91.738182,235.54039 C 92.358316,236.28753 93.286270,236.70981 94.256969,236.68661 C 95.227669,236.66340 96.134380,236.19727 96.718110,235.42135 L 110.84445,211.51369 C 111.61692,210.52348 111.73306,209.17098 111.14072,208.06357 C 110.54838,206.95616 109.35892,206.30201 108.10649,206.39488 z "
+       id="path1355"
+       sodipodi:nodetypes="ccccssccsccsc"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <text
+       xml:space="preserve"
+       style="font-size:45.320362px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125.00000%;writing-mode:lr-tb;text-anchor:start;opacity:0.30813953;fill:#426c9e;fill-opacity:1.0000000;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000;font-family:MetaBookLF-Roman"
+       x="122.72083"
+       y="240.38791"
+       id="text1357"
+       sodipodi:linespacing="125.00000%"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000"
+       inkscape:export-filename="/home/steven/swat-logo.png"><tspan
+         sodipodi:role="line"
+         id="tspan1359"
+         x="122.72083"
+         y="240.38791">Swat</tspan></text>
+    <path
+       style="opacity:0.49999997;fill:url(#linearGradient1373);fill-opacity:1.0000000;fill-rule:evenodd;stroke:none;stroke-width:1.5877184px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1.0000000"
+       d="M 55.000000,222.00000 C 55.000000,222.00000 97.804252,210.76731 147.72727,222.00000 C 207.72727,235.50001 235.00000,222.00000 235.00000,222.00000 L 235.00000,205.00000 C 235.00000,195.00000 235.00000,195.00000 225.00000,195.00000 L 65.909091,195.00000 C 55.000000,195.00000 55.000000,195.00000 55.000000,205.80001 L 55.000000,222.00000 z "
+       id="path1361"
+       sodipodi:nodetypes="cssccccc"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <rect
+       style="opacity:1.0000000;color:#000000;fill:url(#linearGradient1375);fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:1.0000000;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible"
+       id="rect1363"
+       width="180.00000"
+       height="75.000000"
+       x="55.000000"
+       y="195.00000"
+       rx="5.0000000"
+       ry="5.0000000"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000" />
+    <text
+       xml:space="preserve"
+       style="font-size:15.201925px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0.0000000;text-align:start;text-decoration:none;line-height:125.00000%;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;opacity:1.0000000;color:#000000;fill:#426c9e;fill-opacity:1.0000000;fill-rule:nonzero;stroke:none;stroke-width:1.0000000px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:0.0000000;stroke-opacity:1.0000000;visibility:visible;display:inline;overflow:visible;font-family:MetaBookLF-Roman"
+       x="71.661835"
+       y="262.28369"
+       id="text1365"
+       sodipodi:linespacing="125.00000%"
+       inkscape:export-filename="/home/steven/swat-logo.png"
+       inkscape:export-xdpi="90.000000"
+       inkscape:export-ydpi="90.000000"><tspan
+         sodipodi:role="line"
+         id="tspan1367"
+         x="71.661835"
+         y="262.28369">Web Application Toolkit</tspan></text>
+  </g>
+</svg>
