@@ -119,7 +119,7 @@ class SwatFrameDisclosure extends SwatDisclosure
 		$classes[] = 'swat-frame';
 		$classes[] = 'swat-disclosure-control-opened';
 		$classes[] = 'swat-frame-disclosure';
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

@@ -91,7 +91,7 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-fieldset');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

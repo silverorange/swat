@@ -550,7 +550,7 @@ class SwatForm extends SwatDisplayableContainer
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-form');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

@@ -238,7 +238,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-checkbox-entry-list');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

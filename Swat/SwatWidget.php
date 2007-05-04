@@ -295,6 +295,24 @@ abstract class SwatWidget extends SwatUIObject
 	}
 
 	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS  classes that are applied  to this widget
+	 *
+	 * @return array the array of CSS  classes that are applied to this widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array();
+
+		if (!$this->isSensitive())
+			$classes[] = 'swat-insensitive';
+
+		return $classes;
+	}
+
+	// }}}
 }
 
 ?>

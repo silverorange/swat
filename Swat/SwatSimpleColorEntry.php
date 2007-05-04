@@ -166,7 +166,7 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-simple-color-entry');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

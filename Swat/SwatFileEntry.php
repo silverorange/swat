@@ -362,7 +362,7 @@ class SwatFileEntry extends SwatInputControl
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-file-entry');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

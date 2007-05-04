@@ -129,7 +129,7 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-frame');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

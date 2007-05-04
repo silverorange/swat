@@ -194,7 +194,7 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 	protected function getCSSClassNames()
 	{
 		$classes = array('yuimenu');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 

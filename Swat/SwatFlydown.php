@@ -296,7 +296,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	protected function getCSSClassNames()
 	{
 		$classes = array('swat-flydown');
-		$classes = array_merge($classes, $this->classes);
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 
