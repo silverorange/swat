@@ -309,6 +309,8 @@ abstract class SwatWidget extends SwatUIObject
 		if (!$this->isSensitive())
 			$classes[] = 'swat-insensitive';
 
+		$classes = array_merge($classes, parent::getCSSClassNames());
+
 		return $classes;
 	}
 
