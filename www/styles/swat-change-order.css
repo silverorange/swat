@@ -19,18 +19,18 @@
 div.swat-change-order-item:hover {
 }
 
-.swat-change-order-insensitive .swat-change-order-item {
+.swat-insensitive .swat-change-order-item {
 	background: #eee;
 }
 
-.swat-change-order-insensitive .swat-change-order-item-active {
+.swat-insensitive .swat-change-order-item-active {
 	background: #888;
 }
 
-.swat-change-order-insensitive div.swat-change-order-item:hover {
+.swat-insensitive div.swat-change-order-item:hover {
 }
 
-.swat-change-order-insensitive div.swat-change-order-item-active:hover {
+.swat-insensitive div.swat-change-order-item-active:hover {
 }
 
 .swat-change-order-list {
