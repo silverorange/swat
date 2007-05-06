@@ -2,6 +2,8 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'Swat/exceptions/SwatException.php';
+require_once 'Swat/exceptions/SwatInvalidTypeException.php';
 require_once 'Swat/exceptions/SwatCrossSiteRequestForgeryException.php';
 require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatHtmlTag.php';
@@ -13,10 +15,11 @@ require_once 'Swat/SwatString.php';
  * SwatForms are very useful for processing widgets. For most widgets, if they
  * are not inside a SwatForm they will not be able to be processed properly.
  *
- * With Swat's default style, SwatForms are not visible to the user.
+ * With Swat's default style, SwatForm widgets have no visible margins, padding
+ * or borders.
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatForm extends SwatDisplayableContainer
@@ -192,7 +195,7 @@ class SwatForm extends SwatDisplayableContainer
 		$valid_methods = array(SwatForm::METHOD_POST, SwatForm::METHOD_GET);
 
 		if (!in_array($method, $valid_methods))
-			throw new SwatException("'$method' is not a valid form method.");
+			throw new SwatException("‘{$method}’ is not a valid form method.");
 
 		$this->method = $method;
 	}
@@ -297,9 +300,17 @@ class SwatForm extends SwatDisplayableContainer
 	 * @param mixed $value the value of the field, either a string or an array.
 	 *
 	 * @see SwatForm::getHiddenField()
+	 *
+	 * @throws SwatInvalidTypeException if an attempt is made to add a value
+	 *                                  of type 'resource'.
 	 */
 	public function addHiddenField($name, $value)
 	{
+		if (is_resource($value))
+			throw new SwatInvalidTypeException(
+				'Cannot add a hidden field of type ‘resource’ to a SwatForm.',
+				0, $value);
+
 		$this->hidden_fields[$name] = $value;
 	}
 
@@ -552,8 +563,7 @@ class SwatForm extends SwatDisplayableContainer
 		 */
 		if ($this->authentication_token !== null) {
 			if ($this->authentication_token != $token)
-				//throw new SwatCrossSiteRequestForgeryException(
-				throw new SwatException(
+				throw new SwatCrossSiteRequestForgeryException(
 					'Authentication token does not match. '.
 					'Possible cross-site request forgery prevented.');
 		}
