@@ -1,3 +1,324 @@
+2007-05-06  gauthierm
+
+	* [r17384]
+	  swat/trunk/Swat/exceptions/SwatInvalidTypeException.php:
+	  New exception for invalid types.
+	* [r17383] swat/trunk/Swat/SwatForm.php:
+	  Small fixes and throw an exception when you try to add a hidden
+	  field of type resource.
+	* [r17382] swat/trunk/Swat/SwatForm.php,
+	  swat/trunk/Swat/exceptions/SwatCrossSiteRequestForgeryException.php:
+	  
+	  Ticket #961: Add optional anti CSRF token support to SwatForm.
+
+2007-05-04  gauthierm
+
+	* [r17371] swat/trunk/www/javascript/swat-calendar.js:
+	  Fix typo that would have resulted in blank month names in the
+	  month flydown.
+	* [r17370] swat/trunk/Swat/SwatTextarea.php:
+	  clarify note.
+	* [r17369] swat/trunk/Swat/SwatCheckbox.php:
+	  When a checkbox is set as insensitive by Swat, display the input
+	  tag with disabled='disabled'.
+
+2007-05-04  steven
+
+	* [r17368]
+	  swat/trunk/resources/icons/dialog-information-22.xcf.bz2:
+	  Update Gimp original file to match my last commit
+
+2007-05-04  gauthierm
+
+	* [r17367] swat/trunk/Swat/SwatImageCellRenderer.php:
+	  Image cell renderer is not a SwatWidget and does not need the
+	  change from ticket #884 (r17358).
+	* [r17366] swat/trunk/Swat/SwatDetailsViewField.php,
+	  swat/trunk/Swat/SwatTableViewColumn.php,
+	  swat/trunk/Swat/SwatTile.php:
+	  Details-view field, table-view column and tile-view tile are not
+	  SwatWidgets and do not need the change from ticket #884 (r17358).
+
+2007-05-04  steven
+
+	* [r17365]
+	  swat/trunk/www/images/tango/22/dialog-information-256.png,
+	  swat/trunk/www/images/tango/22/dialog-information.png:
+	  Make the 22px light bulb a bit more yellow, less grey
+
+2007-05-04  gauthierm
+
+	* [r17364] swat/trunk/www/styles/swat-change-order.css:
+	  Ticket #992: Change the CSS class swat-change-order-insensitive.
+	* [r17361] swat/trunk/Swat/SwatWidget.php:
+	  Still output custom CSS classes ($this->classes) on widgets.
+	* [r17360] swat/trunk/Swat/SwatEntry.php:
+	  Whitespace
+
+2007-05-04  steven
+
+	* [r17359]
+	  swat/trunk/www/images/tango/16/dialog-information-256.png,
+	  swat/trunk/www/images/tango/16/dialog-information.png,
+	  swat/trunk/www/images/tango/22/dialog-information-256.png,
+	  swat/trunk/www/images/tango/22/dialog-information.png,
+	  swat/trunk/www/images/tango/48/dialog-information-256.png,
+	  swat/trunk/www/images/tango/48/dialog-information.png:
+	  Apparently, lightbulbs are not blue. Try out some yellow ones
+	  instead.
+
+2007-05-04  charles
+
+	* [r17358] swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/Swat/SwatButton.php,
+	  swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/Swat/SwatChangeOrder.php,
+	  swat/trunk/Swat/SwatCheckAll.php,
+	  swat/trunk/Swat/SwatCheckboxEntryList.php,
+	  swat/trunk/Swat/SwatCheckboxList.php,
+	  swat/trunk/Swat/SwatCheckboxTree.php,
+	  swat/trunk/Swat/SwatColorEntry.php,
+	  swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/Swat/SwatDetailsView.php,
+	  swat/trunk/Swat/SwatDetailsViewField.php,
+	  swat/trunk/Swat/SwatDisclosure.php,
+	  swat/trunk/Swat/SwatDisplayableContainer.php,
+	  swat/trunk/Swat/SwatEntry.php,
+	  swat/trunk/Swat/SwatExpandableCheckboxTree.php,
+	  swat/trunk/Swat/SwatFieldset.php,
+	  swat/trunk/Swat/SwatFileEntry.php,
+	  swat/trunk/Swat/SwatFlydown.php, swat/trunk/Swat/SwatForm.php,
+	  swat/trunk/Swat/SwatFormField.php,
+	  swat/trunk/Swat/SwatFrame.php,
+	  swat/trunk/Swat/SwatFrameDisclosure.php,
+	  swat/trunk/Swat/SwatImageCellRenderer.php,
+	  swat/trunk/Swat/SwatImageDisplay.php,
+	  swat/trunk/Swat/SwatMenu.php, swat/trunk/Swat/SwatMenuBar.php,
+	  swat/trunk/Swat/SwatMenuItem.php,
+	  swat/trunk/Swat/SwatMessageDisplay.php,
+	  swat/trunk/Swat/SwatNavBar.php,
+	  swat/trunk/Swat/SwatPagination.php,
+	  swat/trunk/Swat/SwatProgressBar.php,
+	  swat/trunk/Swat/SwatRadioList.php,
+	  swat/trunk/Swat/SwatSimpleColorEntry.php,
+	  swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTableViewColumn.php,
+	  swat/trunk/Swat/SwatTextarea.php, swat/trunk/Swat/SwatTile.php,
+	  swat/trunk/Swat/SwatTileView.php,
+	  swat/trunk/Swat/SwatTimeEntry.php,
+	  swat/trunk/Swat/SwatTimeZoneEntry.php,
+	  swat/trunk/Swat/SwatToolbar.php, swat/trunk/Swat/SwatWidget.php:
+	  Fix for ticket #884, this will cause output of swat-insensitive
+	  CSS class on
+	  all sensitivity-aware widgets.
+
+2007-05-04  steven
+
+	* [r17353] swat/trunk/resources, swat/trunk/resources/assets,
+	  swat/trunk/resources/assets/Swat diagram.svg,
+	  swat/trunk/resources/assets/palette.png,
+	  swat/trunk/resources/assets/swat-logo.svg,
+	  swat/trunk/resources/icons,
+	  swat/trunk/resources/icons/admin-document-with-contents.png,
+	  swat/trunk/resources/icons/admin-edit.png,
+	  swat/trunk/resources/icons/admin-person.png,
+	  swat/trunk/resources/icons/admin-products.png,
+	  swat/trunk/resources/icons/b_details.png,
+	  swat/trunk/resources/icons/b_details_folder.png,
+	  swat/trunk/resources/icons/catalog.png,
+	  swat/trunk/resources/icons/close-left-menu.xcf,
+	  swat/trunk/resources/icons/close.svg,
+	  swat/trunk/resources/icons/customer.png,
+	  swat/trunk/resources/icons/dialog-information-16.xcf.bz2,
+	  swat/trunk/resources/icons/dialog-information-22.xcf.bz2,
+	  swat/trunk/resources/icons/dialog-information.svg,
+	  swat/trunk/resources/icons/document-open.xcf.bz2,
+	  swat/trunk/resources/icons/generic-object.png,
+	  swat/trunk/resources/icons/generic-object.xcf,
+	  swat/trunk/resources/icons/internet-web-browser.xcf.bz2,
+	  swat/trunk/resources/icons/item.svg,
+	  swat/trunk/resources/icons/path3835.png,
+	  swat/trunk/resources/icons/product-icon.xcf,
+	  swat/trunk/resources/icons/product-icons.png,
+	  swat/trunk/resources/icons/shade-icons-proposal.xcf,
+	  swat/trunk/resources/icons/shopping-cart.svg,
+	  swat/trunk/resources/icons/swat-folder-16.xcf.bz2,
+	  swat/trunk/resources/icons/swat-folder.xcf.bz2,
+	  swat/trunk/resources/icons/swat-store-item-links.xcf,
+	  swat/trunk/resources/icons/swat-tool-link-cancel.xcf.gz,
+	  swat/trunk/resources/icons/swat-tool-link-edit.png,
+	  swat/trunk/resources/icons/system-users.png,
+	  swat/trunk/resources/icons/test.png,
+	  swat/trunk/resources/icons/x.png:
+	  Add icon/logo assets
+
+2007-05-01  nick
+
+	* [r17339] swat/trunk/Swat/SwatImageCellRenderer.php,
+	  swat/trunk/Swat/SwatImageDisplay.php:
+	  Deal with 1px offsets nicely - only use 4 coordinates if we have
+	  to
+	* [r17338] swat/trunk/Swat/SwatImageCellRenderer.php,
+	  swat/trunk/Swat/SwatImageDisplay.php:
+	  Switch to margins
+	* [r17336] swat/trunk/Swat/SwatImageCellRenderer.php,
+	  swat/trunk/Swat/SwatImageDisplay.php:
+	  Whoops, backwards
+	* [r17334] swat/trunk/demo/include/demos/imagedisplay.xml:
+	  Add new occupy_width/height to demo
+	* [r17333] swat/trunk/Swat/SwatImageCellRenderer.php,
+	  swat/trunk/Swat/SwatImageDisplay.php:
+	  Add occupy width & height to image displays
+
+2007-05-01  gauthierm
+
+	* [r17299] swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  If there are no replicated widgets, build head entries from
+	  prototype widget.
+	* [r17298] swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  Build html head entries from cloned widgets in widget cell
+	  renderer.
+
+2007-04-30  steven
+
+	* [r17271] swat/trunk/Swat/SwatTile.php:
+	  Default class for swat-tile divs
+
+2007-04-30  nrf
+
+	* [r17255] swat/trunk/Swat/SwatImageCellRenderer.php,
+	  swat/trunk/Swat/SwatTextCellRenderer.php:
+	  Use the existing SwatUIObject::$classes on cell renderers.
+
+2007-04-29  gauthierm
+
+	* [r17250] swat/trunk/Swat/SwatFrame.php:
+	  I think it is safe to say the automatic header level feature of
+	  SwatFrame is no-longer an experimental feature. I also added
+	  code to limit the header level to h6.
+
+2007-04-29  charles
+
+	* [r17249] swat/trunk/Swat/SwatTile.php,
+	  swat/trunk/Swat/SwatTileView.php:
+	  Changed some of the docs to better comply with documentation
+	  convention.
+	* [r17248] swat/trunk/Swat/SwatTileView.php:
+	  Added a few fixes for the docs and also some lisence things that
+	  were not
+	  included in the first commit.
+	* [r17247] swat/trunk/Swat/SwatTile.php:
+	  Added doncumentation to SwatTile.
+
+2007-04-28  gauthierm
+
+	* [r17242] swat/trunk/Swat/SwatString.php:
+	  Add function to get the international currency symbol of a
+	  locale.
+
+2007-04-27  gauthierm
+
+	* [r17219] swat/trunk/Swat/SwatTile.php:
+	  Add CSS classes to tile divs.
+
+2007-04-27  charles
+
+	* [r17215] swat/trunk/Swat/SwatTileView.php:
+	  Fixed a small doc error for SwatTileView.
+	* [r17214] swat/trunk/Swat/SwatTileView.php:
+	  Forgot to add docs for public properties.
+	* [r17213] swat/trunk/Swat/SwatTileView.php:
+	  Docs for the tile view widget.
+
+2007-04-27  steven
+
+	* [r17212] swat/trunk/Swat/SwatTileView.php:
+	  Add getCSSClassNames() and a wrapper div that uses those class
+	  names
+
+2007-04-24  steven
+
+	* [r17165] swat/trunk/www/styles/swat-menu.css:
+	  Minor style fixes
+	* [r17164] swat/trunk/www/styles/swat-menu.css:
+	  Still broken, but some fixes for latest YUI changes
+
+2007-04-24  gauthierm
+
+	* [r17162] swat/trunk/www/styles/swat-menu.css:
+	  
+	* [r17158] swat/trunk/demo/include/DemoApplication.php:
+	  Add frame disclosure documentation link.
+	* [r17157] swat/trunk/www/javascript/swat-button.js,
+	  swat/trunk/www/javascript/swat-confirmation-button.js:
+	  Fix event handling for confirmation button.
+
+2007-04-24  nick
+
+	* [r17156] swat/trunk/demo/include/demos/imagecropper.xml,
+	  swat/trunk/demo/www/images/crop1.jpg,
+	  swat/trunk/demo/www/images/crop2.jpg:
+	  Make the demo images local
+
+2007-04-24  gauthierm
+
+	* [r17154] swat/trunk/Swat/SwatMessageDisplay.php:
+	  Don't consider a message display with no messages as visible.
+	  This has the desired effect of
+	  swat-message-display-head-entries.patch submitted by Brad
+	  Griffith.
+	* [r17153] swat/trunk/Swat/SwatUIObject.php:
+	  Only return HTML ehad entries for visible UI objects. This
+	  originated as a patch from Brad Griffith.
+	* [r17152] swat/trunk/Swat/SwatTile.php:
+	  Clean up addChild() method of cell renderer container classes.
+	* [r17151] swat/trunk/Swat/SwatCellRendererContainer.php,
+	  swat/trunk/Swat/SwatDetailsViewField.php,
+	  swat/trunk/Swat/SwatTableViewColumn.php:
+	  Clean up addChild() method of cell renderer container classes.
+	* [r17150] swat/trunk/Swat/SwatCellRenderer.php,
+	  swat/trunk/Swat/SwatTableViewRow.php,
+	  swat/trunk/Swat/SwatUIObject.php,
+	  swat/trunk/Swat/SwatWidget.php:
+	  Move visibility to SwatUIObject. Ticket #955.
+
+2007-04-23  nick
+
+	* [r17110] swat/trunk/Swat/SwatImageCropper.php:
+	  Remove debug code
+	* [r17109] swat/trunk/Swat/SwatImageCropper.php,
+	  swat/trunk/demo/include/DemoApplication.php,
+	  swat/trunk/demo/include/demos/ImageCropper.xml,
+	  swat/trunk/demo/include/demos/imagecropper.xml,
+	  swat/trunk/demo/www/index.php, swat/trunk/package.php,
+	  swat/trunk/www/javascript/swat-image-cropper.js,
+	  swat/trunk/www/styles/swat-image-cropper.css:
+	  First commit of the new image cropper widget.
+	  - nathan, can you double check that the entries I made in
+	  package.php makes
+	  sense.
+
+2007-04-23  charles
+
+	* [r17097] swat/trunk/Swat/SwatTile.php:
+	  Made the div tags work correctly in Swat Tile.
+	* [r17096] swat/trunk/Swat/SwatTile.php,
+	  swat/trunk/Swat/SwatTileView.php:
+	  Here is SwatTileView and SwatTile, docs still need to be added.
+
+2007-04-20  gauthierm
+
+	* [r17030] swat/trunk/demo/include/demos/DisclosureDemo.php,
+	  swat/trunk/demo/include/demos/disclosure.xml:
+	  Add SwatFrameDisclosure to demo.
+	* [r17020] swat/trunk/demo/include/demos/menu.xml:
+	  Add menu demo. The menu is still an alpha quality widget in Swat.
+
+2007-04-19  nrf
+
+	* [r17014] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.17
+
 2007-04-19  gauthierm
 
 	* [r17013] swat/trunk/Swat/SwatDisclosure.php,
