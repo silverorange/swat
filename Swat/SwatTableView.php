@@ -10,6 +10,7 @@ require_once 'Swat/SwatTableViewSpanningColumn.php';
 require_once 'Swat/SwatTableViewGroup.php';
 require_once 'Swat/SwatTableViewRow.php';
 require_once 'Swat/SwatTableViewInputRow.php';
+require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/exceptions/SwatDuplicateIdException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 require_once 'Swat/SwatYUI.php';
@@ -21,7 +22,7 @@ require_once 'Swat/SwatYUI.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTableView extends SwatView
+class SwatTableView extends SwatView implements SwatUIParent
 {
 	// {{{ public properties
 
