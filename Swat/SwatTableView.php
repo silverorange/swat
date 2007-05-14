@@ -2,7 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatControl.php';
+require_once 'Swat/SwatView.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatTableViewColumn.php';
 require_once 'Swat/SwatTableViewOrderableColumn.php';
@@ -10,7 +10,6 @@ require_once 'Swat/SwatTableViewSpanningColumn.php';
 require_once 'Swat/SwatTableViewGroup.php';
 require_once 'Swat/SwatTableViewRow.php';
 require_once 'Swat/SwatTableViewInputRow.php';
-require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/exceptions/SwatDuplicateIdException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 require_once 'Swat/SwatYUI.php';
@@ -22,18 +21,9 @@ require_once 'Swat/SwatYUI.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatTableView extends SwatControl implements SwatUIParent
+class SwatTableView extends SwatView
 {
 	// {{{ public properties
-
-	/**
-	 * A data structure that holds the data to display in this view
-	 *
-	 * The data structure used is some form of {@link SwatTableModel}.
-	 *
-	 * @var SwatTableModel
-	 */
-	public $model = null;
 
 	/**
 	 * The values of the checked checkboxes
