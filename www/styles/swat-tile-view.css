@@ -1,0 +1,14 @@
+.swat-tile {
+	width: 106px;
+	height: 11em;
+	padding: 10px;
+	margin: 5px 10px;
+	float: left;
+	text-align: center;
+	border: 1px solid transparent;
+}
+
+.swat-tile:hover {
+	border: 1px solid #555753;
+}
+
