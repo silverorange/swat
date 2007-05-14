@@ -3,7 +3,6 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatControl.php';
-require_once 'Swat/SwatUIParent.php';
 
 /**
  * An abstract class to derive views from
@@ -12,7 +11,7 @@ require_once 'Swat/SwatUIParent.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatView extends SwatControl implements SwatUIParent
+abstract class SwatView extends SwatControl
 {
 	// {{{ public properties
 
@@ -38,26 +37,6 @@ abstract class SwatView extends SwatControl implements SwatUIParent
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-	}
-
-	// }}}
-	// {{{ public function addChild()
-
-	/**
-	 * Adds a child object
-	 *
-	 * This method fulfills the {@link SwatUIParent} interface. It is used
-	 * by {@link SwatUI} when building a widget tree and should not be need to
-	 * be called elsewhere.
-	 *
-	 * @param mixed $child a reference to a child object to add.
-	 *
-	 * @throws SwatInvalidClassException
-	 *
-	 * @see SwatUIParent
-	 */
-	public function addChild(SwatObject $child)
-	{
 	}
 
 	// }}}
