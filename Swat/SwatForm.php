@@ -97,19 +97,6 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public static $default_salt = null;
 
-	/**
-	 * The default value to use for authentication token
-	 *
-	 * Authentication tokens are used to prevent cross-site request forgeries.
-	 *
-	 * If this value is not null, all newly instantiated forms will call the
-	 * {@link SwatForm::setAuthenticationToken()} method with this value as
-	 * the <i>$token</i> parameter.
-	 *
-	 * @var string
-	 */
-	public static $default_authentication_token = null;
-
 	// }}}
 	// {{{ protected properties
 
@@ -134,13 +121,6 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	protected $salt = null;
 
-	/**
-	 * The token value used to prevent cross-site request forgeries
-	 *
-	 * @var string
-	 */
-	protected $authentication_token = null;
-
 	// }}}
 	// {{{ private properties
 
@@ -152,6 +132,20 @@ class SwatForm extends SwatDisplayableContainer
 	 * @var string
 	 */
 	private $method = SwatForm::METHOD_POST;
+
+	/**
+	 * The token value used to prevent cross-site request forgeries
+	 *
+	 * If this value is not null, all submitted forms will be authenticated
+	 * with this token value.
+	 *
+	 * @var string
+	 *
+	 * @see SwatForm::setAuthenticationToken()
+	 * @see SwatForm::clearAuthenticationToken()
+	 * @see SwatForm::processAuthenticationToken()
+	 */
+	private static $authentication_token = null;
 
 	// }}}
 	// {{{ public function __construct()
@@ -170,8 +164,8 @@ class SwatForm extends SwatDisplayableContainer
 		if (self::$default_salt !== null)
 			$this->setSalt(self::$default_salt);
 
-		if (self::$default_authentication_token !== null)
-			$this->setAuthenticationToken(self::$default_authentication_token);
+//		if (self::$default_authentication_token !== null)
+//			$this->setAuthenticationToken(self::$default_authentication_token);
 
 		$this->requires_id = true;
 
@@ -460,13 +454,13 @@ class SwatForm extends SwatDisplayableContainer
 	}
 
 	// }}}
-	// {{{ public function setAuthenticationToken()
+	// {{{ public static function setAuthenticationToken()
 
 	/**
 	 * Sets the token value used to prevent cross-site request forgeries
 	 *
-	 * When this form is processed, if the authentication token is set, the
-	 * form data must contain this token.
+	 * After the authentication token is set, when any form is processed, the
+	 * the submitted form data must contain this token.
 	 *
 	 * For the safest results, this token should be taken from an active
 	 * session. The same token should be used for the same user over
@@ -476,23 +470,25 @@ class SwatForm extends SwatDisplayableContainer
 	 * @param string $token the value used to prevent cross-site request
 	 *                       forgeries.
 	 */
-	public function setAuthenticationToken($token)
+	public static function setAuthenticationToken($token)
 	{
-		$this->authentication_token = (string)$token;
+		self::$authentication_token = (string)$token;
 	}
 
 	// }}}
-	// {{{ public function clearAuthenticationToken()
+	// {{{ public static function clearAuthenticationToken()
 
 	/**
 	 * Clears the token value used to prevent cross-site request forgeries
 	 *
-	 * When this form is processed, no cross-site request forgery checks will
-	 * be made.
+	 * After this method is called, when any form is processed, no cross-site
+	 * request forgery checks will be made. This is acceptable if a user's
+	 * session is ending and the threat of cross-site request forgeries is
+	 * gone.
 	 */
-	public function clearAuthenticationToken()
+	public static function clearAuthenticationToken()
 	{
-		$this->authentication_token = null;
+		self::$authentication_token = null;
 	}
 
 	// }}}
@@ -535,18 +531,18 @@ class SwatForm extends SwatDisplayableContainer
 	// {{{ protected function processAuthenticationToken()
 
 	/**
-	 * Checks this form's authentication token against submitted form data
+	 * Checks the authentication token against submitted form data
 	 *
 	 * This catches cross-site request forgeries if the
-	 * {@link SwatForm::setAuthenticationToken()} method was previously used
-	 * on this form.
+	 * {@link SwatForm::setAuthenticationToken()} method was previously called.
 	 *
 	 * This method should run before other form processing methods in order
-	 * to ensure the request is genuine.
+	 * to ensure the request is safe to process.
 	 *
-	 * @throws SwatCrossSiteRequestForgeryException when this form's token does
-	 *                                              not match the token in
-	 *                                              submitted form data.
+	 * @throws SwatCrossSiteRequestForgeryException when the authentication
+	 *                                              token does not match the
+	 *                                              token in submitted form
+	 *                                              data.
 	 */
 	protected function processAuthenticationToken()
 	{
@@ -561,8 +557,8 @@ class SwatForm extends SwatDisplayableContainer
 		 * If this form's authentication token is set, the token in submitted
 		 * data must match.
 		 */
-		if ($this->authentication_token !== null) {
-			if ($this->authentication_token != $token)
+		if (self::$authentication_token !== null) {
+			if (self::$authentication_token != $token)
 				throw new SwatCrossSiteRequestForgeryException(
 					'Authentication token does not match. '.
 					'Possible cross-site request forgery prevented.');
@@ -653,9 +649,9 @@ class SwatForm extends SwatDisplayableContainer
 		}
 
 		// display authentication token
-		if ($this->authentication_token !== null) {
+		if (self::$authentication_token !== null) {
 			$serialized_data = SwatString::signedSerialize(
-				$this->authentication_token, $this->salt);
+				self::$authentication_token, $this->salt);
 
 			$input_tag = new SwatHtmlTag('input');
 			$input_tag->type = 'hidden';
