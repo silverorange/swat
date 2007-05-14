@@ -3,7 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatString.php';
-require_once 'Swat/SwatEntry.php';
+require_once 'Swat/SwatNumericEntry.php';
 
 /**
  * A money entry widget
@@ -12,7 +12,7 @@ require_once 'Swat/SwatEntry.php';
  * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatMoneyEntry extends SwatEntry
+class SwatMoneyEntry extends SwatNumericEntry
 {
 	// {{{ public properties
 
@@ -59,25 +59,6 @@ class SwatMoneyEntry extends SwatEntry
 	protected $formatting_information;
 
 	// }}}
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new money entry widget
-	 *
-	 * Sets the input size to 15 by default.
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$this->size = 10;
-	}
-
-	// }}}
 	// {{{ public function display()
 
 	/**
@@ -107,7 +88,7 @@ class SwatMoneyEntry extends SwatEntry
 	public function process()
 	{
 		parent::process();
-
+		
 		if ($this->value === null)
 			return;
 
@@ -276,6 +257,23 @@ class SwatMoneyEntry extends SwatEntry
 		return $array;
 	}
 
+	// }}}
+	// {{{ abstract function getNumericValue()
+	
+	/**
+	 * Gets the numeric value of this widget
+	 *
+	 * This allows each widget to parse raw values how they want to get numeric
+	 * values.
+	 *
+	 * @param string $value the raw value to use to get the numeric value.
+	 *
+	 * @return mixed the numeric value of this entry widget or null if no
+	 *                numeric value is available.
+	 */
+	protected function getNumericValue($value)
+	{
+	}
 	// }}}
 }
 
