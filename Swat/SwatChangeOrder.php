@@ -197,7 +197,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	{
 		$classes = array('swat-change-order');
 
-		$classes = array_merge($classes, parent::getCSSClassName());
+		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
 
