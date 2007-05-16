@@ -253,7 +253,11 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 					$this->input_tag->display();
 					$this->label_tag->display();
 				} else {
-					echo SwatString::minimizeEntities($node->title);
+					$span_tag = new SwatHtmlTag('span');
+					$span_tag->id = $this->id.'_'.$index;
+					$span_tag->class = 'swat-expandable-checkbox-tree-null-node';
+					$span_tag->setContent($node->title);
+					$span_tag->display();
 				}
 			} else {
 				$this->input_tag->id = $this->id.'_'.$index;

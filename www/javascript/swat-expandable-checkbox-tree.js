@@ -33,77 +33,99 @@ SwatExpandableCheckboxTree.BRANCH_STATE_OPEN   = 1;
 SwatExpandableCheckboxTree.BRANCH_STATE_CLOSED = 2;
 SwatExpandableCheckboxTree.BRANCH_STATE_AUTO   = 3;
 
+SwatExpandableCheckboxTree.getTreeNode = function(branch_child_node)
+{
+	child_node = null;
+	returned_node = null;
+
+	if (branch_child_node.nodeName == 'LI') {
+		child_node = branch_child_node.firstChild;
+
+		/*
+		 * Some nodes have expander links, the node we're looking for is the
+		 * next node.
+		 */
+		if (child_node.nodeName == 'A')
+			child_node = child_node.nextSibling;
+
+		// look for a checkbox
+		if (child_node.nodeName == 'INPUT' &&
+			child_node.getAttribute('type') == 'checkbox') {
+			returned_node = child_node;
+		}
+
+		/*
+		 * Look for a span. This occurs when dependent checkboxes is off and a
+		 * null value is used for a node.
+		 */
+		if (child_node.nodeName == 'SPAN' &&
+			YAHOO.util.Dom.hasClass(child_node,
+				'swat-expandable-checkbox-tree-null-node')) {
+
+			returned_node = child_node;
+		}
+	}
+
+	return returned_node;
+}
+
 SwatExpandableCheckboxTree.prototype.initTree = function()
 {
+	var self = SwatExpandableCheckboxTree;
 	var tree = document.getElementById(this.id);
 	var branch = null;
 
 	if (tree.firstChild && tree.firstChild.firstChild)
 		branch = tree.firstChild.firstChild;
 
-	// init all top-level checkboxes
-	if (branch !== null) {
+	// initialize all top-level tree nodes
+	if (branch) {
 		var child_node = null;
-		var child_checkbox = null;
-
 		for (var i = 0; i < branch.childNodes.length; i++) {
-			child_node = branch.childNodes[i];
-			if (child_node.nodeName == 'LI') {
-				child_checkbox = child_node.firstChild;
-
-				// some nodes have expander links, the checkbox is the next node
-				if (child_checkbox.nodeName == 'A')
-					child_checkbox = child_checkbox.nextSibling;
-
-				if (child_checkbox.nodeName == 'INPUT' &&
-					child_checkbox.getAttribute('type') == 'checkbox') {
-					this.initTreeNode(child_checkbox);
-				}
-			}
+			child_node = self.getTreeNode(branch.childNodes[i]);
+			if (child_node)
+				this.initTreeNode(child_node);
 		}
 	}
 }
 
-SwatExpandableCheckboxTree.prototype.initTreeNode = function(checkbox)
+SwatExpandableCheckboxTree.prototype.initTreeNode = function(node)
 {
-	var path = checkbox.id.substr(this.id.length + 1);
-	var branch = document.getElementById(this.id + '_' + path + '_branch');
-	var all_children_checked = checkbox.checked;
-	var any_children_checked = checkbox.checked;
 	var self = SwatExpandableCheckboxTree;
+	var path = node.getAttribute('id').substr(this.id.length + 1);
+	var branch = document.getElementById(this.id + '_' + path + '_branch');
+	var is_checkbox_node = 
+		(node.nodeName == 'INPUT' && node.getAttribute('type') == 'checkbox');
+
+	if (is_checkbox_node) {
+		var all_children_checked = node.checked;
+		var any_children_checked = node.checked;
+	} else {
+		var all_children_checked = false;
+		var any_children_checked = false;
+	}
 
 	if (branch) {
 		var state;
 		var child_node = null;
-		var child_checkbox = null;
 
 		all_children_checked = true;
 		any_children_checked = false;
 		for (var i = 0; i < branch.childNodes.length; i++) {
-			child_node = branch.childNodes[i];
-			if (child_node.nodeName == 'LI') {
-				child_checkbox = child_node.firstChild;
+			child_node = self.getTreeNode(branch.childNodes[i]);
+			if (child_node) {
+				state = this.initTreeNode(child_node);
+				all_children_checked =
+					all_children_checked && state['all_children_checked'];
 
-				// some nodes have expander links, the checkbox is the next node
-				if (child_checkbox.nodeName == 'A')
-					child_checkbox = child_checkbox.nextSibling;
-
-				if (child_checkbox.nodeName == 'INPUT' &&
-					child_checkbox.getAttribute('type') == 'checkbox') {
-					state = this.initTreeNode(child_checkbox);
-
-					all_children_checked =
-						all_children_checked && state['all_children_checked'];
-
-					any_children_checked =
-						any_children_checked || state['any_children_checked'];
-				}
+				any_children_checked =
+					any_children_checked || state['any_children_checked'];
 			}
 		}
 
 		// check this node if all children are checked
-		if (this.dependent_boxes)
-			checkbox.checked = all_children_checked;
+		if (this.dependent_boxes && is_checkbox_node)
+			node.checked = all_children_checked;
 
 		// close this node if no children are checked or branch state is closed
 		if (this.branch_state == self.BRANCH_STATE_CLOSED ||
