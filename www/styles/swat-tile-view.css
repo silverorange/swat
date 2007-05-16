@@ -7,3 +7,12 @@
 	text-align: center;
 	border: 1px solid transparent;
 }
+
+.swat-tile-view .swat-check-all {
+	clear: left;
+	margin: 10px;
+}
+
+.swat-tile-view .highlight {
+	background: #f7f5f3 url(../images/swat-table-view-cell-highlight-background.png) bottom repeat-x;
+}
