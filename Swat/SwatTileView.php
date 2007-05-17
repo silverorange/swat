@@ -177,6 +177,11 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 		$this->check_all->process();
 		$this->tile->process();
+
+		if ($this->hasCheckboxCellRenderer('items'))
+			if (isset($_POST['items']) && is_array($_POST['items']))
+				$this->checked_items = $_POST['items'];
+
 	}
 	// }}}
 	// {{{ public function getMessages()
@@ -288,16 +293,22 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 	protected function showCheckAll()
 	{
-		if (!$this->show_check_all || $this->model->getRowCount() < 2)
-			return false;
+		return ($this->show_check_all && $this->model->getRowCount() > 2
+			&& $this->hasCheckboxCellRenderer('items'));
+	}
+	// }}}
+	// {{{ protected function hasCheckboxCellRenderer()
 
+	protected function hasCheckboxCellRenderer($renderer_id)
+	{
 		foreach ($this->tile->getRenderers() as $renderer)
-			if ($renderer->id == 'items')
+			if ($renderer->id == $renderer_id)
 				return true;
 
 		return false;
 	}
 	// }}}
+
 	// {{{ private function createEmbeddedWidgets()
 
 	/**
