@@ -1,3 +1,98 @@
+2007-05-17  nick
+
+	* [r17569] swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTileView.php, swat/trunk/Swat/SwatView.php:
+	  Move checked_items up to SwatView and implement that
+	  functionality into
+	  SwatTileView. SwatTileView now supports all of the basic
+	  functionality for an
+	  admin index that we're used to from SwatTableView
+
+2007-05-16  mike
+
+	* [r17560] swat/trunk/Swat/SwatChangeOrder.php:
+	  Fix typo that caused fatal error.
+
+2007-05-16  gauthierm
+
+	* [r17549] swat/trunk/Swat/SwatExpandableCheckboxTree.php,
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js:
+	  Initialize branch state of expandable checkbox tree correctly
+	  when not all nodes contain checkboxes. This originated as a
+	  patch submitted by Brad Griffith.
+
+2007-05-16  nick
+
+	* [r17547] swat/trunk/Swat/SwatTileView.php,
+	  swat/trunk/www/javascript/swat-tile-view.js,
+	  swat/trunk/www/styles/swat-tile-view.css:
+	  Add check-all to SwatTileView. I think this makes sense to add
+	  it directly in
+	  the view, versus doing it in some sort of Row (like
+	  SwatTableView). Still a
+	  little rough maybe?
+
+2007-05-15  steven
+
+	* [r17529] swat/trunk/www/styles/swat-tile-view.css:
+	  update default swat tile styles
+
+2007-05-14  charles
+
+	* [r17524] swat/trunk/Swat/SwatMoneyEntry.php:
+	  This is for ticket #993, SwatMoneyEntry now extends
+	  SwatNumericEntry. Becasue
+	  it now extends SwatNumeric Entry it requires a getNumericValue
+	  method which
+	  was added but does nohting. I am not sure if I should rework the
+	  widget
+	  to make use of this function but I will add it to the ticket for
+	  now.
+
+2007-05-14  nick
+
+	* [r17523] swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTileView.php, swat/trunk/Swat/SwatView.php:
+	  mike: nick: Why does SwatView implement SwatUIParent? It doesn't
+	  actually implement
+	  that method.
+	  
+	  nick: both SwatTableView and SwatTileView do - so I thought
+	  maybe I'd push it up into
+	  the parent - I was still considering whether or not that made
+	  sense. Should we
+	  just let the descendants implement SwatUIParent?
+	  
+	  mike: It doesn't make sense to put it in SwatTileView unless
+	  both subclasses use the
+	  same implementation.
+	  
+	  nick: you mean SwatView, right?
+	  
+	  mike: yeah
+	  
+	  nick: ok - I'll switch that back.
+	* [r17521] swat/trunk/www/styles/swat-tile-view.css:
+	  Early commit of a swat-tile view default css class. Still needs
+	  some work.
+	* [r17519] swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTileView.php, swat/trunk/Swat/SwatView.php:
+	  Add a base class to SwatTableView and SwatTileView. This allows
+	  us to use
+	  SwatTileView in place of SwatTableView in admins
+
+2007-05-14  gauthierm
+
+	* [r17515] swat/trunk/Swat/SwatForm.php:
+	  Make CSRF authentication token static across all forms. This
+	  will allow the processing of a form to set the authentication
+	  token and have it affect the display of all forms.
+
+2007-05-09  nrf
+
+	* [r17428] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.18
+
 2007-05-06  gauthierm
 
 	* [r17384]
