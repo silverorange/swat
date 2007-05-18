@@ -9,7 +9,7 @@ YAHOO.lang.extend(SwatConfirmationButton, SwatButton, {
 
 handleClick: function(event)
 {
-	var confirmed = window.confirm(this.confirmation_message);
+	var confirmed = confirm(this.confirmation_message);
 	if (confirmed) {
 		SwatConfirmationButton.superclass.handleClick.call(this, event);
 	} else {
