@@ -288,37 +288,110 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	// {{{ public function getDescendants()
 
 	/**
-	 * Gets descendant widgets
+	 * Gets descendant UI-objects
 	 *
-	 * Retrieves an ordered array of all widgets in the widget subtree below 
-	 * this menu item. Widgets are ordered in the array as they are found in 
-	 * a breadth-first traversal of the widget subtree.
-	 *
-	 * This method mirrors the behaviour of
-	 * {@link SwatContainer::getDescendants()}.
-	 *
-	 * @param string $class_name optional class name. If set, only widgets that
-	 *                            are instances of <i>$class_name</i> are
+	 * @param string $class_name optional class name. If set, only UI-objects
+	 *                            that are instances of <i>$class_name</i> are
 	 *                            returned.
 	 *
-	 * @return array the descendant widgets of this menu item.
+	 * @return array the descendant UI-objects of this menu item. If
+	 *                descendent objects have identifiers, the identifier is
+	 *                used as the array key.
+	 *
+	 * @see SwatUIParent::getDescendants()
 	 */
 	public function getDescendants($class_name = null)
 	{
+		if ($class_name !== null && !class_exists($class_name))
+			return array();
+
 		$out = array();
 
 		if ($this->sub_menu !== null) {
-			$sub_menu = $this->sub_menu;
-			if ($class_name === null || $sub_menu instanceof $class_name) {
-				if ($sub_menu->id === null)
-					$out[] = $sub_menu;
+			if ($class_name === null ||
+				$this->sub_menu instanceof $class_name) {
+				if ($this->sub_menu->id === null)
+					$out[] = $this->sub_menu;
 				else
-					$out[$sub_menu->id] = $sub_menu;
+					$out[$this->sub_menu->id] = $this->sub_menu;
 			}
-			$out = array_merge($out, $sub_menu->getDescendants($class_name));
+
+			if ($this->sub_menu instanceof SwatUIParent)
+				$out = array_merge($out,
+					$this->sub_menu->getDescendants($class_name));
 		}
 
 		return $out;
+	}
+
+	// }}}
+	// {{{ public function getFirstDescendant()
+
+	/**
+	 * Gets the first descendent UI-object of a specific class
+	 *
+	 * @param string $class_name class name to look for.
+	 *
+	 * @return SwatUIObject the first descendant widget or null if no matching
+	 *                       descendant is found.
+	 *
+	 * @see SwatUIParent::getFirstDescendant()
+	 */
+	public function getFirstDescendant($class_name)
+	{
+		if (!class_exists($class_name))
+			return null;
+
+		$out = null;
+
+		if ($this->sub_menu instanceof SwatUIParent)
+			$out = $this->sub_menu->getFirstDescendant($class_name);
+
+		if ($out === null && $this->sub_menu instanceof $class_name)
+			$out = $this->sub_menu;
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ public function getDescendantStates()
+
+	/**
+	 * Gets descendant states
+	 *
+	 * Retrieves an array of states of all stateful UI-objects in the widget
+	 * subtree below this menu item.
+	 *
+	 * @return array an array of UI-object states with UI-object identifiers as
+	 *                array keys.
+	 */
+	public function getDescendantStates()
+	{
+		$states = array();
+
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			$states[$id] = $object->getState();
+
+		return $states;
+	}
+
+	// }}}
+	// {{{ public function setDescendantStates()
+
+	/**
+	 * Sets descendant states
+	 *
+	 * Sets states on all stateful UI-objects in the widget subtree below this
+	 * menu item.
+	 *
+	 * @param array $states an array of UI-object states with UI-object
+	 *                       identifiers as array keys.
+	 */
+	public function setDescendantStates($states)
+	{
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			if (isset($states[$id]))
+				$object->setState($states[$id]);
 	}
 
 	// }}}

@@ -7,10 +7,10 @@ require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
- * A single entry in a SwatActions widget
+ * A single entry in a {@link SwatActions} widget
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see SwatActions
@@ -98,10 +98,10 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 
 	/**
 	 * Adds a child object
-	 * 
-	 * This method fulfills the {@link SwatUIParent} interface. It is used 
+	 *
+	 * This method fulfills the {@link SwatUIParent} interface. It is used
 	 * by {@link SwatUI} when building a widget tree and should not need to be
-	 * called elsewhere. To set the a widget in an action item, use 
+	 * called elsewhere. To set the a widget in an action item, use
 	 * {@link SwatActionItem::setWidget()}.
 	 *
 	 * @param SwatWidget $child a reference to a child object to add.
@@ -140,6 +140,115 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 			$set->addEntrySet($this->widget->getHtmlHeadEntrySet());
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ public function getDescendants()
+
+	/**
+	 * Gets descendant UI-objects
+	 *
+	 * @param string $class_name optional class name. If set, only UI-objects
+	 *                            that are instances of <i>$class_name</i> are
+	 *                            returned.
+	 *
+	 * @return array the descendant UI-objects of this action item. If
+	 *                descendent objects have identifiers, the identifier is
+	 *                used as the array key.
+	 *
+	 * @see SwatUIParent::getDescendants()
+	 */
+	public function getDescendants($class_name = null)
+	{
+		if ($class_name !== null && !class_exists($class_name))
+			return array();
+
+		$out = array();
+
+		if ($this->widget !== null) {
+			if ($class_name === null || $this->widget instanceof $class_name) {
+				if ($this->widget->id === null)
+					$out[] = $this->widget;
+				else
+					$out[$this->widget->id] = $this->widget;
+			}
+
+			if ($this->widget instanceof SwatUIParent)
+				$out = array_merge($out,
+					$this->widget->getDescendants($class_name));
+		}
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ public function getFirstDescendant()
+
+	/**
+	 * Gets the first descendent UI-object of a specific class
+	 *
+	 * @param string $class_name class name to look for.
+	 *
+	 * @return SwatUIObject the first descendant widget or null if no matching
+	 *                       descendant is found.
+	 *
+	 * @see SwatUIParent::getFirstDescendant()
+	 */
+	public function getFirstDescendant($class_name)
+	{
+		if (!class_exists($class_name))
+			return null;
+
+		$out = null;
+
+		if ($this->widget instanceof SwatUIParent)
+			$out = $this->widget->getFirstDescendant($class_name);
+
+		if ($out === null && $this->widget instanceof $class_name)
+			$out = $this->widget;
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ public function getDescendantStates()
+
+	/**
+	 * Gets descendant states
+	 *
+	 * Retrieves an array of states of all stateful UI-objects in the widget
+	 * subtree below this action item.
+	 *
+	 * @return array an array of UI-object states with UI-object identifiers as
+	 *                array keys.
+	 */
+	public function getDescendantStates()
+	{
+		$states = array();
+
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			$states[$id] = $object->getState();
+
+		return $states;
+	}
+
+	// }}}
+	// {{{ public function setDescendantStates()
+
+	/**
+	 * Sets descendant states
+	 *
+	 * Sets states on all stateful UI-objects in the widget subtree below this
+	 * action item.
+	 *
+	 * @param array $states an array of UI-object states with UI-object
+	 *                       identifiers as array keys.
+	 */
+	public function setDescendantStates($states)
+	{
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			if (isset($states[$id]))
+				$object->setState($states[$id]);
 	}
 
 	// }}}

@@ -12,7 +12,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * Abstract base class for objects which contain cell renderers.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatCellRendererContainer extends SwatUIObject implements
@@ -96,7 +96,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	 * Gets the cell renderers of this column
 	 * 
 	 * Returns an the array of {@link SwatCellRenderer} objects contained
-	 * by this column.
+	 * by this cell renderer container.
 	 *
 	 * @return array the cell renderers contained by this column.
 	 */
@@ -174,6 +174,128 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 			throw new SwatInvalidClassException(
 				'Only SwatCellRender objects may be nested within '.
 				get_class($this).' objects.', 0, $child);
+	}
+
+	// }}}
+	// {{{ public function getDescendants()
+
+	/**
+	 * Gets descendant UI-objects
+	 *
+	 * @param string $class_name optional class name. If set, only UI-objects
+	 *                            that are instances of <i>$class_name</i> are
+	 *                            returned.
+	 *
+	 * @return array the descendant UI-objects of this cell renderer container.
+	 *                If descendent objects have identifiers, the identifier is
+	 *                used as the array key.
+	 *
+	 * @see SwatUIParent::getDescendants()
+	 */
+	public function getDescendants($class_name = null)
+	{
+		if ($class !== null && !class_exists($class_name))
+			return array();
+
+		$out = array();
+
+		foreach ($this->getRenderers() as $renderer) {
+			if ($class_name === null || $renderer instanceof $class_name) {
+				if ($renderer->id === null)
+					$out[] = $renderer;
+				else
+					$out[$renderer->id] = $renderer;
+			}
+
+			if ($renderer instanceof SwatUIParent)
+				$out = array_merge($out,
+					$renderer->getDescendants($class_name));
+		}
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ public function getFirstDescendant()
+
+	/**
+	 * Gets the first descendent UI-object of a specific class
+	 *
+	 * @param string $class_name class name to look for.
+	 *
+	 * @return SwatUIObject the first descendant UI-object or null if no
+	 *                       matching descendant is found.
+	 *
+	 * @see SwatUIParent::getFirstDescendant()
+	 */
+	public function getFirstDescendant($class_name)
+	{
+		if (!class_exists($class_name))
+			return null;
+
+		$out = null;
+
+		$renderers = $this->getRenderers();
+
+		foreach ($renderers as $renderer) {
+			if ($renderer instanceof SwatUIParent) {
+				$out = $renderer->getFirstDescendant($class_name);
+				if ($out !== null)
+					break;
+			}
+		}
+
+		if ($out === null) {
+			foreach ($renderers as $renderer) {
+				if ($renderer instanceof $class_name) {
+					$out = $renderer;
+					break;
+				}
+			}
+		}
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ public function getDescendantStates()
+
+	/**
+	 * Gets descendant states
+	 *
+	 * Retrieves an array of states of all stateful UI-objects in the widget
+	 * subtree below this cell renderer container.
+	 *
+	 * @return array an array of UI-object states with UI-object identifiers as
+	 *                array keys.
+	 */
+	public function getDescendantStates()
+	{
+		$states = array();
+
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			$states[$id] = $object->getState();
+
+		return $states;
+	}
+
+	// }}}
+	// {{{ public function setDescendantStates()
+
+	/**
+	 * Sets descendant states
+	 *
+	 * Sets states on all stateful UI-objects in the widget subtree below this
+	 * cell renderer container.
+	 *
+	 * @param array $states an array of UI-object states with UI-object
+	 *                       identifiers as array keys.
+	 */
+	public function setDescendantStates($states)
+	{
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			if (isset($states[$id]))
+				$object->setState($states[$id]);
 	}
 
 	// }}}

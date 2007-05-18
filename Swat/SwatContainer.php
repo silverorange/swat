@@ -79,7 +79,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
 	/**
 	 * Adds a widget
-	 * 
+	 *
 	 * Adds a widget as a child of this container. The widget must not have
 	 * a parent already. The parent of the added widget is set to
 	 * reference this container.
@@ -96,8 +96,8 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
 	/**
 	 * Replace a widget
-	 * 
-	 * Replaces a child widget in this container. The parent of the removed 
+	 *
+	 * Replaces a child widget in this container. The parent of the removed
 	 * widget is set to null.
 	 *
 	 * @param SwatWidget $widget a reference to the widget to be replaced.
@@ -131,7 +131,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
 	/**
 	 * Removes a widget
-	 * 
+	 *
 	 * Removes a child widget from this container. The parent of the widget is
 	 * set to null.
 	 *
@@ -233,7 +233,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	/**
 	 * Gets the first child widget
 	 *
-	 * Retrieves the first child widget from the list of widgets in the 
+	 * Retrieves the first child widget from the list of widgets in the
 	 * container.
 	 *
 	 * @return SwatWidget the first widget or null.
@@ -279,19 +279,23 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	// {{{ public function getDescendants()
 
 	/**
-	 * Gets descendant widgets
+	 * Gets descendant UI-objects
 	 *
-	 * Retrieves an ordered array of all widgets in the widget subtree below 
-	 * this container. Widgets are ordered in the array as they are found in 
-	 * a breadth-first traversal of the subtree.
+	 * @param string $class_name optional class name. If set, only UI-objects
+	 *                            that are instances of <i>$class_name</i> are
+	 *                            returned.
 	 *
-	 * @param string $class_name optional class name. If set, only widgets that
-	 *                            are instances of $class_name are returned.
+	 * @return array the descendant UI-objects of this container. If descendent
+	 *                objects have identifiers, the identifier is used as the
+	 *                array key.
 	 *
-	 * @return array the descendant widgets of this container.
+	 * @see SwatUIParent::getDescendants()
 	 */
 	public function getDescendants($class_name = null)
 	{
+		if ($class_name !== null && !class_exists($class_name))
+			return array();
+
 		$out = array();
 
 		foreach ($this->children as $child_widget) {
@@ -302,7 +306,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 					$out[$child_widget->id] = $child_widget;
 			}
 
-			if ($child_widget instanceof SwatContainer)
+			if ($child_widget instanceof SwatUIParent)
 				$out = array_merge($out,
 					$child_widget->getDescendants($class_name));
 		}
@@ -314,18 +318,14 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	// {{{ public function getFirstDescendant()
 
 	/**
-	 * Gets the first descendent widget of a specific class
-	 *
-	 * Retrieves the first descendant widget in the subtree that is a 
-	 * descendant of the specified class name. This uses a depth-first
-	 * traversal to search the tree.
+	 * Gets the first descendent UI-object of a specific class
 	 *
 	 * @param string $class_name class name to look for.
 	 *
-	 * @return mixed the first descendant widget or null if no matching
-	 *                descendant is found.
+	 * @return SwatUIObject the first descendant UI-object or null if no
+	 *                       matching descendant is found.
 	 *
-	 * @see SwatWidget::getFirstAncestor()
+	 * @see SwatUIParent::getFirstDescendant()
 	 */
 	public function getFirstDescendant($class_name)
 	{
@@ -335,7 +335,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		$out = null;
 
 		foreach ($this->children as $child_widget) {
-			if ($child_widget instanceof SwatContainer) {
+			if ($child_widget instanceof SwatUIParent) {
 				$out = $child_widget->getFirstDescendant($class_name);
 				if ($out !== null)
 					break;
@@ -360,17 +360,18 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	/**
 	 * Gets descendant states
 	 *
-	 * Retrieves an array of states of all SwatControl widgets in the widget 
+	 * Retrieves an array of states of all stateful UI-objects in the widget
 	 * subtree below this container.
 	 *
-	 * @return array the widget states keyed by widget id.
+	 * @return array an array of UI-object states with UI-object identifiers as
+	 *                array keys.
 	 */
 	public function getDescendantStates()
 	{
 		$states = array();
 
-		foreach ($this->getDescendants('SwatState') as $id => $widget)
-			$states[$id] = $widget->getState();
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			$states[$id] = $object->getState();
 
 		return $states;
 	}
@@ -381,16 +382,17 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	/**
 	 * Sets descendant states
 	 *
-	 * Sets states on all SwatControl widgets in the widget subtree below this 
+	 * Sets states on all stateful UI-objects in the widget subtree below this
 	 * container.
 	 *
-	 * @param array $states the widget states keyed by widget id.
+	 * @param array $states an array of UI-object states with UI-object
+	 *                       identifiers as array keys.
 	 */
 	public function setDescendantStates($states)
 	{
-		foreach ($this->getDescendants('SwatState') as $id => $widget)
+		foreach ($this->getDescendants('SwatState') as $id => $object)
 			if (isset($states[$id]))
-				$widget->setState($states[$id]);
+				$object->setState($states[$id]);
 	}
 
 	// }}}
@@ -485,10 +487,10 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
 	/**
 	 * Adds a child object
-	 * 
-	 * This method fulfills the {@link SwatUIParent} interface. It is used 
+	 *
+	 * This method fulfills the {@link SwatUIParent} interface. It is used
 	 * by {@link SwatUI} when building a widget tree and should not need to be
-	 * called elsewhere. To add a widget to a container use 
+	 * called elsewhere. To add a widget to a container use
 	 * {@link SwatContainer::add()}.
 	 *
 	 * @param SwatWidget $child a reference to the child object to add.
@@ -620,7 +622,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	protected function sendAddNotifySignal($widget)
 	{
 		$this->notifyOfAdd($widget);
-		
+
 		if ($this->parent !== null && $this->parent instanceof SwatContainer)
 			$this->parent->sendAddNotifySignal($widget);
 	}

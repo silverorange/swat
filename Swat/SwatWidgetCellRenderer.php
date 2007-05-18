@@ -11,7 +11,7 @@ require_once 'Swat/SwatTitleable.php';
 /**
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
@@ -43,7 +43,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	// {{{ public function addChild()
 
 	/**
-	 * Fufills addChild
+	 * Fulfills SwatUIParent::addChild()
 	 *
 	 * @throws SwatException
 	 */
@@ -52,8 +52,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 		if ($this->prototype_widget === null)
 			$this->setPrototypeWidget($child);
 		else
-			throw new SwatException('Can only add one widget to a widget '.
-				'cell renderer');
+			throw new SwatException(
+				'Can only add one widget to a widget cell renderer');
 	}
 
 	// }}}
@@ -384,6 +384,133 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ public function getDescendants()
+
+	/**
+	 * Gets descendant UI-objects
+	 *
+	 * The descendant UI-objects of a widget cell renderer are cloned widgets,
+	 * not the prototype widget.
+	 *
+	 * @param string $class_name optional class name. If set, only UI-objects
+	 *                            that are instances of <i>$class_name</i> are
+	 *                            returned.
+	 *
+	 * @return array the descendant UI-objects of this widget cell renderer. If
+	 *                descendent objects have identifiers, the identifier is
+	 *                used as the array key.
+	 *
+	 * @see SwatUIParent::getDescendants()
+	 */
+	public function getDescendants($class_name = null)
+	{
+		if ($class_name !== null && !class_exists($class_name))
+			return array();
+
+		$out = array();
+
+		foreach ($this->getClonedWidgets() as $cloned_widget) {
+			if ($class_name === null || $cloned_widget instanceof $class_name) {
+				if ($cloned_widget->id === null)
+					$out[] = $cloned_widget;
+				else
+					$out[$cloned_widget->id] = $cloned_widget;
+			}
+
+			if ($cloned_widget instanceof SwatUIParent)
+				$out = array_merge($out,
+					$cloned_widget->getDescendants($class_name));
+		}
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ public function getFirstDescendant()
+
+	/**
+	 * Gets the first descendent UI-object of a specific class
+	 *
+	 * The descendant UI-objects of a widget cell renderer are cloned widgets,
+	 * not the prototype widget.
+	 *
+	 * @param string $class_name class name to look for.
+	 *
+	 * @return SwatUIObject the first descendant widget or null if no matching
+	 *                       descendant is found.
+	 *
+	 * @see SwatUIParent::getFirstDescendant()
+	 */
+	public function getFirstDescendant($class_name)
+	{
+		if (!class_exists($class_name))
+			return null;
+
+		$out = null;
+
+		$cloned_widgets = $this->getClonedWidgets();
+
+		foreach ($cloned_widgets as $cloned_widget) {
+			if ($cloned_widget instanceof SwatUIParent) {
+				$out = $cloned_widget->getFirstDescendant($class_name);
+				if ($out !== null)
+					break;
+			}
+		}
+
+		if ($out === null) {
+			foreach ($cloned_widgets as $cloned_widget) {
+			if ($cloned_widget instanceof $class_name) {
+				$out = $cloned_widget;
+				break;
+			}
+		}
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ public function getDescendantStates()
+
+	/**
+	 * Gets descendant states
+	 *
+	 * Retrieves an array of states of all stateful UI-objects in the widget
+	 * subtree below this widget cell renderer.
+	 *
+	 * @return array an array of UI-object states with UI-object identifiers as
+	 *                array keys.
+	 */
+	public function getDescendantStates()
+	{
+		$states = array();
+
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			$states[$id] = $object->getState();
+
+		return $states;
+	}
+
+	// }}}
+	// {{{ public function setDescendantStates()
+
+	/**
+	 * Sets descendant states
+	 *
+	 * Sets states on all stateful UI-objects in the widget subtree below this
+	 * widget cell renderer.
+	 *
+	 * @param array $states an array of UI-object states with UI-object
+	 *                       identifiers as array keys.
+	 */
+	public function setDescendantStates($states)
+	{
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			if (isset($states[$id]))
+				$object->setState($states[$id]);
 	}
 
 	// }}}
