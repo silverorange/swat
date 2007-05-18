@@ -33,10 +33,8 @@ class SwatYesNoFlydown extends SwatFlydown
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-		$this->addOptionsByArray(array(
-			self::NO  => Swat::_('No'),
-			self::YES => Swat::_('Yes'),
-		));
+		$this->addOption(self::NO,  Swat::_('No'));
+		$this->addOption(self::YES, Swat::_('Yes'));
 	}
 
 	// }}}
