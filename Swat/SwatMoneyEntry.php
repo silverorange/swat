@@ -116,7 +116,7 @@ class SwatMoneyEntry extends SwatFloatEntry
 					SwatString::numberFormat($max_decimal_places));
 
 				// C99 specification includes spacing character, remove it
-				$currency = str_replace('%', '%%',
+				$currency_formatted = str_replace('%', '%%',
 					substr($lc['int_curr_symbol'], 0, 3));
 
 				$message->primary_content = sprintf($message->primary_content,
@@ -204,7 +204,7 @@ class SwatMoneyEntry extends SwatFloatEntry
 	 *
 	 * @return SwatMessage the validation message.
 	 */
-	protected function getValidationMessage()
+	protected function getValidationMessage($id)
 	{
 		$lc = $this->getFormattingInformation();
 
