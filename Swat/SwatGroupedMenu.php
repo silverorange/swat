@@ -153,8 +153,7 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 			}
 
 			if ($group instanceof SwatUIParent)
-				$out = array_merge($out,
-					$group->getDescendants($class_name));
+				$out = array_merge($out, $group->getDescendants($class_name));
 		}
 
 		return $out;
@@ -234,7 +233,7 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 	 * @param array $states an array of UI-object states with UI-object
 	 *                       identifiers as array keys.
 	 */
-	public function setDescendantStates($states)
+	public function setDescendantStates(array $states)
 	{
 		foreach ($this->getDescendants('SwatState') as $id => $object)
 			if (isset($states[$id]))
