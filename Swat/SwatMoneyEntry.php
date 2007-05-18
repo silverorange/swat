@@ -148,21 +148,26 @@ class SwatMoneyEntry extends SwatFloatEntry
 	// }}}
 	// {{{ protected function getDisplayValue()
 
-	protected function getDisplayValue()
+	/**
+	 * Formats a monetary value to display
+	 *
+	 * @param string $value the value to format for display.
+	 *
+	 * @return string the formatted value.
+	 */
+	protected function getDisplayValue($value)
 	{
-		// show what the user entered if it does not validate
-		if (!$this->hasMessage() && is_numeric($this->value))
-			$value = SwatString::moneyFormat($this->value, $this->locale,
+		// if the value is valid, format accordingly
+		if (!$this->hasMessage() && is_numeric($value))
+			$value = SwatString::moneyFormat($value, $this->locale,
 				false, $this->decimal_places);
-		else
-			$value = $this->value;
 
 		return $value;
 	}
 
 	// }}}
 	// {{{ protected function getNumericValue()
-	
+
 	/**
 	 * Gets the numeric value of this money entry
 	 *
