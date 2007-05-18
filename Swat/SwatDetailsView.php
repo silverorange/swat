@@ -12,7 +12,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * A widget to display field-value pairs
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDetailsView extends SwatControl implements SwatUIParent
@@ -206,6 +206,125 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 			$set->addEntrySet($field->getHtmlHeadEntrySet());
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ public function getDescendants()
+
+	/**
+	 * Gets descendant UI-objects
+	 *
+	 * @param string $class_name optional class name. If set, only UI-objects
+	 *                            that are instances of <i>$class_name</i> are
+	 *                            returned.
+	 *
+	 * @return array the descendant UI-objects of this detials view. If
+	 *                descendant objects have identifiers, the identifier is
+	 *                used as the array key.
+	 *
+	 * @see SwatUIParent::getDescendants()
+	 */
+	public function getDescendants($class_name = null)
+	{
+		if ($class !== null && !class_exists($class_name))
+			return array();
+
+		$out = array();
+
+		foreach ($this->fields as $field) {
+			if ($class_name === null || $field instanceof $class_name) {
+				if ($field->id === null)
+					$out[] = $field;
+				else
+					$out[$field->id] = $field;
+			}
+
+			if ($field instanceof SwatUIParent)
+				$out = array_merge($out, $field->getDescendants($class_name));
+		}
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ public function getFirstDescendant()
+
+	/**
+	 * Gets the first descendent UI-object of a specific class
+	 *
+	 * @param string $class_name class name to look for.
+	 *
+	 * @return SwatUIObject the first descendant UI-object or null if no
+	 *                       matching descendant is found.
+	 *
+	 * @see SwatUIParent::getFirstDescendant()
+	 */
+	public function getFirstDescendant($class_name)
+	{
+		if (!class_exists($class_name))
+			return null;
+
+		$out = null;
+
+		foreach ($this->fields as $field) {
+			if ($field instanceof SwatUIParent) {
+				$out = $field->getFirstDescendant($class_name);
+				if ($out !== null)
+					break;
+			}
+		}
+
+		if ($out === null) {
+			foreach ($this->fields as $field) {
+				if ($field instanceof $class_name) {
+					$out = $field;
+					break;
+				}
+			}
+		}
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ public function getDescendantStates()
+
+	/**
+	 * Gets descendant states
+	 *
+	 * Retrieves an array of states of all stateful UI-objects in the widget
+	 * subtree below this details view.
+	 *
+	 * @return array an array of UI-object states with UI-object identifiers as
+	 *                array keys.
+	 */
+	public function getDescendantStates()
+	{
+		$states = array();
+
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			$states[$id] = $object->getState();
+
+		return $states;
+	}
+
+	// }}}
+	// {{{ public function setDescendantStates()
+
+	/**
+	 * Sets descendant states
+	 *
+	 * Sets states on all stateful UI-objects in the widget subtree below this
+	 * details view.
+	 *
+	 * @param array $states an array of UI-object states with UI-object
+	 *                       identifiers as array keys.
+	 */
+	public function setDescendantStates(array $states)
+	{
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			if (isset($states[$id]))
+				$object->setState($states[$id]);
 	}
 
 	// }}}
