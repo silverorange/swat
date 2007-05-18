@@ -211,7 +211,7 @@ class SwatMoneyEntry extends SwatFloatEntry
 		switch ($id) {
 		case 'float':
 			// C99 specification includes spacing character, remove it
-			$currency = substr($lc['int_curr_symbol'], 0, 3),
+			$currency = substr($lc['int_curr_symbol'], 0, 3);
 			$example = SwatString::moneyFormat(1036.95, $this->locale);
 			$message = new SwatMessage(sprintf(Swat::_(
 				'The %%s field must be a monetary value '.
