@@ -827,7 +827,7 @@ class SwatUI extends SwatObject
 
 		$eval_stack = array();
 		foreach ($queue as $value) {
-			if (array_key_exists($value, $operators)) {
+			if (is_string($value) && array_key_exists($value, $operators)) {
 				$b = array_pop($eval_stack);
 				$a = array_pop($eval_stack);
 
