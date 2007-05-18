@@ -19,7 +19,7 @@ require_once 'Swat/SwatYUI.php';
  * A widget to display data in a tabular form
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableView extends SwatView implements SwatUIParent
@@ -874,6 +874,218 @@ class SwatTableView extends SwatView implements SwatUIParent
 			$set->addEntrySet($group->getHtmlHeadEntrySet());
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ public function getDescendants()
+
+	/**
+	 * Gets descendant UI-objects
+	 *
+	 * @param string $class_name optional class name. If set, only UI-objects
+	 *                            that are instances of <i>$class_name</i> are
+	 *                            returned.
+	 *
+	 * @return array the descendant UI-objects of this table-view. If
+	 *                descendant objects have identifiers, the identifier is
+	 *                used as the array key.
+	 *
+	 * @see SwatUIParent::getDescendants()
+	 */
+	public function getDescendants($class_name = null)
+	{
+		if ($class !== null && !class_exists($class_name))
+			return array();
+
+		$out = array();
+
+		foreach ($this->columns as $column) {
+			if ($class_name === null || $column instanceof $class_name) {
+				if ($column->id === null)
+					$out[] = $column;
+				else
+					$out[$column->id] = $column;
+			}
+
+			if ($column instanceof SwatUIParent)
+				$out = array_merge($out, $column->getDescendants($class_name));
+		}
+
+		foreach ($this->spanning_columns as $column) {
+			if ($class_name === null || $column instanceof $class_name) {
+				if ($column->id === null)
+					$out[] = $column;
+				else
+					$out[$column->id] = $column;
+			}
+
+			if ($column instanceof SwatUIParent)
+				$out = array_merge($out, $column->getDescendants($class_name));
+		}
+
+		foreach ($this->groups as $group) {
+			if ($class_name === null || $group instanceof $class_name) {
+				if ($group->id === null)
+					$out[] = $group;
+				else
+					$out[$group->id] = $group;
+			}
+
+			if ($group instanceof SwatUIParent)
+				$out = array_merge($out, $group->getDescendants($class_name));
+		}
+
+		foreach ($this->extra_rows as $row) {
+			if ($class_name === null || $row instanceof $class_name) {
+				if ($row->id === null)
+					$out[] = $row;
+				else
+					$out[$row->id] = $row;
+			}
+
+			if ($row instanceof SwatUIParent)
+				$out = array_merge($out, $row->getDescendants($class_name));
+		}
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ public function getFirstDescendant()
+
+	/**
+	 * Gets the first descendent UI-object of a specific class
+	 *
+	 * @param string $class_name class name to look for.
+	 *
+	 * @return SwatUIObject the first descendant UI-object or null if no
+	 *                       matching descendant is found.
+	 *
+	 * @see SwatUIParent::getFirstDescendant()
+	 */
+	public function getFirstDescendant($class_name)
+	{
+		if (!class_exists($class_name))
+			return null;
+
+		$out = null;
+
+		foreach ($this->columns as $column) {
+			if ($column instanceof SwatUIParent) {
+				$out = $column->getFirstDescendant($class_name);
+				if ($out !== null)
+					break;
+			}
+		}
+
+		if ($out === null) {
+			foreach ($this->spanning_columns as $column) {
+				if ($column instanceof SwatUIParent) {
+					$out = $column->getFirstDescendant($class_name);
+					if ($out !== null)
+						break;
+				}
+			}
+		}
+
+		if ($out === null) {
+			foreach ($this->groups as $group) {
+				if ($group instanceof SwatUIParent) {
+					$out = $group->getFirstDescendant($class_name);
+					if ($out !== null)
+						break;
+				}
+			}
+		}
+
+		if ($out === null) {
+			foreach ($this->extra_rows as $row) {
+				if ($row instanceof SwatUIParent) {
+					$out = $row->getFirstDescendant($class_name);
+					if ($out !== null)
+						break;
+				}
+			}
+		}
+
+		if ($out === null) {
+			foreach ($this->columns as $column) {
+				if ($column instanceof $class_name) {
+					$out = $column;
+					break;
+				}
+			}
+		}
+
+		if ($out === null) {
+			foreach ($this->spanning_columns as $column) {
+				if ($column instanceof $class_name) {
+					$out = $column;
+					break;
+				}
+			}
+		}
+
+		if ($out === null) {
+			foreach ($this->groups as $group) {
+				if ($group instanceof $class_name) {
+					$out = $group;
+					break;
+				}
+			}
+		}
+
+		if ($out === null) {
+			foreach ($this->extra_rows as $row) {
+				if ($row instanceof $class_name) {
+					$out = $row;
+					break;
+				}
+			}
+		}
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ public function getDescendantStates()
+
+	/**
+	 * Gets descendant states
+	 *
+	 * Retrieves an array of states of all stateful UI-objects in the widget
+	 * subtree below this table-view.
+	 *
+	 * @return array an array of UI-object states with UI-object identifiers as
+	 *                array keys.
+	 */
+	public function getDescendantStates()
+	{
+		$states = array();
+
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			$states[$id] = $object->getState();
+
+		return $states;
+	}
+
+	// }}}
+	// {{{ public function setDescendantStates()
+
+	/**
+	 * Sets descendant states
+	 *
+	 * Sets states on all stateful UI-objects in the widget subtree below this
+	 * table-view.
+	 *
+	 * @param array $states an array of UI-object states with UI-object
+	 *                       identifiers as array keys.
+	 */
+	public function setDescendantStates(array $states)
+	{
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			if (isset($states[$id]))
+				$object->setState($states[$id]);
 	}
 
 	// }}}
