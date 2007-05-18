@@ -85,27 +85,6 @@ abstract class SwatAbstractMenu extends SwatControl
 	}
 
 	// }}}
-	// {{{ abstract public function getDescendants()
-
-	/**
-	 * Gets descendant widgets
-	 *
-	 * Retrieves an ordered array of all widgets in the widget subtree below 
-	 * this menu. Widgets are ordered in the array as they are found in 
-	 * a breadth-first traversal of the widget subtree.
-	 *
-	 * This method mirrors the behaviour of
-	 * {@link SwatContainer::getDescendants()}.
-	 *
-	 * @param string $class_name optional class name. If set, only widgets that
-	 *                            are instances of <i>$class_name</i> are
-	 *                            returned.
-	 *
-	 * @return array the descendant widgets of this menu.
-	 */
-	abstract public function getDescendants($class_name = null);
-
-	// }}}
 	// {{{ protected function getJavaScriptClass()
 
 	/**
