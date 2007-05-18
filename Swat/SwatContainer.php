@@ -388,7 +388,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 * @param array $states an array of UI-object states with UI-object
 	 *                       identifiers as array keys.
 	 */
-	public function setDescendantStates($states)
+	public function setDescendantStates(array $states)
 	{
 		foreach ($this->getDescendants('SwatState') as $id => $object)
 			if (isset($states[$id]))
