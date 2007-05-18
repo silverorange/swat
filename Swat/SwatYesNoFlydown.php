@@ -8,15 +8,15 @@ require_once 'Swat/SwatFlydown.php';
  * A flydown (aka combo-box) selection widget for a Yes/No option.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatYesNoFlydown extends SwatFlydown
 {
 	// {{{ constants
 
-	const NO = 1;
-	const YES = 2;
+	const NO  = false;
+	const YES = true;
 
 	// }}}
 	// {{{ public function __construct()
@@ -33,31 +33,10 @@ class SwatYesNoFlydown extends SwatFlydown
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
-		$this->addOptionsByArray(array(self::NO => Swat::_('No'),
-			self::YES => Swat::_('Yes')));
-	}
-
-	// }}}
-	// {{{ public function getValuesAsBoolean()
-
-	/**
-	 * Gets the value of this yes/no flydown as a boolean
-	 *
-	 * If the value is not set, this methods returns null.
-	 *
-	 * @return boolean the value of this yes/no flywdown.
-	 */
-	public function getValueAsBoolean()
-	{
-		switch ($this->value) {
-		case self::NO:
-			return false;
-		case self::YES:
-			return true;
-		default:
-			return null;
-		}
+		$this->addOptionsByArray(array(
+			self::NO  => Swat::_('No'),
+			self::YES => Swat::_('Yes'),
+		));
 	}
 
 	// }}}
