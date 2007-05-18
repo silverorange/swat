@@ -33,10 +33,10 @@ function SwatChangeOrder_mousemoveEventHandler(event)
 		SwatChangeOrder.is_dragging = true;
 		shadow_item.style.display = 'block';
 		shadow_item.scroll_timer =
-			window.setInterval('SwatChangeOrder_scrollTimerHandler()', 100);
+			setInterval('SwatChangeOrder_scrollTimerHandler()', 100);
 
 		shadow_item.update_timer =
-			window.setInterval('SwatChangeOrder_updateTimerHandler()', 300);
+			setInterval('SwatChangeOrder_updateTimerHandler()', 300);
 	}
 
 	var left = YAHOO.util.Event.getPageX(event) - shadow_item.mouse_offset_x;
@@ -76,9 +76,9 @@ function SwatChangeOrder_keydownEventHandler(event)
 		var drop_marker = SwatChangeOrder.dragging_drop_marker;
 		var list_div = shadow_item.original_item.parentNode;
 
-		window.clearInterval(shadow_item.timer);
-		window.clearInterval(shadow_item.scroll_timer);
-		window.clearInterval(shadow_item.update_timer);
+		clearInterval(shadow_item.timer);
+		clearInterval(shadow_item.scroll_timer);
+		clearInterval(shadow_item.update_timer);
 
 		shadow_item.parentNode.removeChild(shadow_item);
 		if (drop_marker.parentNode !== null)
@@ -223,8 +223,8 @@ function SwatChangeOrder_mouseupEventHandler(event)
 	var drop_marker = SwatChangeOrder.dragging_drop_marker;
 	var list_div = shadow_item.original_item.parentNode;
 
-	window.clearInterval(shadow_item.scroll_timer);
-	window.clearInterval(shadow_item.update_timer);
+	clearInterval(shadow_item.scroll_timer);
+	clearInterval(shadow_item.update_timer);
 
 	// reposition the item
 	// TODO: don't update this if the position is the same as originally
@@ -525,7 +525,7 @@ SwatChangeOrder.prototype.moveToTop = function()
 SwatChangeOrder.prototype.moveToTopHelper = function(steps)
 {
 	if (this.moveUpHelper(steps)) {
-		window.setTimeout('SwatChangeOrder_staticMoveToTop(' +
+		setTimeout('SwatChangeOrder_staticMoveToTop(' +
 			this.id + '_obj, ' + steps + ');',
 			SwatChangeOrder.animation_delay);
 	} else {
@@ -570,7 +570,7 @@ SwatChangeOrder.prototype.moveToBottom = function()
 SwatChangeOrder.prototype.moveToBottomHelper = function(steps)
 {
 	if (this.moveDownHelper(steps)) {
-		window.setTimeout('SwatChangeOrder_staticMoveToBottom(' +
+		setTimeout('SwatChangeOrder_staticMoveToBottom(' +
 			this.id + '_obj, ' + steps + ');',
 			SwatChangeOrder.animation_delay);
 	} else {
