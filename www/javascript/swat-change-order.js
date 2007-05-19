@@ -206,7 +206,7 @@ function SwatChangeOrder_mouseupEventHandler(event)
 	// only allow left click to do things
 	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
-	if ((is_ie && (window.event.button & 1) != 1) ||
+	if ((is_ie && (event.button & 1) != 1) ||
 		(!is_ie && !is_webkit && event.button != 0))
 		return false;
 
@@ -263,7 +263,7 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	// only allow left click to do things
 	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
-	if ((is_ie && (window.event.button & 1) != 1) ||
+	if ((is_ie && (event.button & 1) != 1) ||
 		(!is_ie && !is_webkit && event.button != 0))
 		return false;
 
@@ -786,8 +786,8 @@ SwatChangeOrder.prototype.getScrollPosition = function(element)
 /**
  * Scrolls the list to a y-position
  *
- * This method acts the same as window.scrollTo() but it acts on a div instead
- * of the window.
+ * This method acts the same as scrollTo() but it acts on a div instead of the
+ * window.
  *
  * @param number y_coord the y value to scroll the list to in pixels.
  */
