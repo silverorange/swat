@@ -20,7 +20,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * together.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
@@ -37,14 +37,14 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 *     1 => array('widget_id' => $widget1_reference)
 	 * );
 	 * </code>
-	 * The 0 and 1 represent numeric row identifiers. The 'widge_id' string
+	 * The 0 and 1 represent numeric row identifiers. The 'widget_id' string
 	 * represents the original identifier of the widget in this cell. The
 	 * widget references are references to the cloned widgets.
 	 *
 	 * @var array
 	 */
 	private $widgets = array();
-	
+
 	/**
 	 * A cache of cloned widgets
 	 *
@@ -66,7 +66,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	// {{{ protected properties
 
 	/**
-	 * The widget displayed in this cell
+	 * The prototype widget displayed in this cell
 	 *
 	 * @var SwatWidget
 	 */
@@ -74,24 +74,22 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 
 	// }}}
 	// {{{ public function addChild()
-	
+
 	/**
 	 * Adds a child object
-	 * 
-	 * This method fulfills the {@link SwatUIParent} interface. It is used 
-	 * by {@link SwatUI} when building a widget tree and should not need to be
-	 * called elsewhere. To set the widget for an input cell use
-	 * {@link SwatInputCell::setWidget()}.
 	 *
-	 * If you try to add more than one widget to this cell, an exception is
-	 * thrown.
+	 * This method fulfills the {@link SwatUIParent} interface. It is used
+	 * by {@link SwatUI} when building a widget tree and should not need to be
+	 * called elsewhere. To set the prototype widget for an input cell use
+	 * {@link SwatInputCell::setWidget()}.
 	 *
 	 * @param SwatWidget $child a reference to a child object to add.
 	 *
 	 * @see SwatUIParent
 	 * @see SwatInputCell::setWidget()
 	 *
-	 * @throws SwatException
+	 * @throws SwatException if you try to add more than one prototype widget
+	 *                       to this input cell.
 	 */
 	public function addChild(SwatObject $child)
 	{
@@ -99,7 +97,8 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 			$this->setWidget($child);
 		else
 			throw new SwatException('Can only add one widget to an input '.
-				'cell. Use a container if you want to add multiple widgets.');
+				'cell. Add a SwatContainer instance if you need to add '.
+				'multiple widgets.');
 	}
 
 	// }}}
@@ -108,7 +107,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	/**
 	 * Initializes this input cell
 	 *
-	 * This calls {@link SwatWidget::init()} on the cell's widget.
+	 * This calls {@link SwatWidget::init()} on the cell's prototype widget.
 	 */
 	public function init()
 	{
@@ -164,7 +163,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 *
 	 * Implements the {SwatTitleable::getTitle()} interface.
 	 *
-	 * @return the title of this input cell.
+	 * @return string the title of this input cell.
 	 */
 	public function getTitle()
 	{
@@ -178,9 +177,9 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	// {{{ public function setWidget()
 
 	/**
-	 * Sets the widget of this input cell
+	 * Sets the prototype widget of this input cell
 	 *
-	 * @param SwatWidget $widget the new widget of this input cell.
+	 * @param SwatWidget $widget the new prototype widget of this input cell.
 	 */
 	public function setWidget(SwatWidget $widget)
 	{
@@ -191,16 +190,18 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	// }}}
 	// {{{ public function getPrototypeWidget()
 
-	/** 
+	/**
 	 * Gets the widget of this input cell
 	 *
-	 * You usually want to get one of the cloned widgets in this cell. This can
-	 * be done easiest through the {@link SwatTableViewInputRow::getWidget()}
-	 * method.
+	 * Instead of the prototype widget, you usually want to get one of the
+	 * cloned widgets in this cell. This can be done by using the
+	 * {@link SwatTableViewInputRow::getWidget()} method or by using the
+	 * {@link SwatInpueCell::getWidget()} method.
 	 *
-	 * @return SwatWidget the widget of this input cell.
+	 * @return SwatWidget the prototype widget of this input cell.
 	 *
-	 * @see SwatTableViewInputRow::getWidget(), SwatInputCell::getWidget()
+	 * @see SwatTableViewInputRow::getWidget()
+	 * @see SwatInputCell::getWidget()
 	 */
 	public function getPrototypeWidget()
 	{
@@ -214,13 +215,15 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 * Gets a particular widget in this input cell
 	 *
 	 * @param integer $row_identifier the numeric row identifier of the widget.
-	 * @param string $widget_id the unique identifier of the widget. If no id
-	 *                           is specified, the root widget of this cell is
-	 *                           returned for the given row.
+	 * @param string $widget_id optional. The unique identifier of the widget.
+	 *                           If no <i>$widget_id</i> is specified, the root
+	 *                           widget of this cell is returned for the given
+	 *                           <i>$row_identifier</i>.
 	 *
 	 * @return SwatWidget the requested widget object.
 	 *
-	 * @throws SwatException
+	 * @throws SwatException if the specified widget does not exist in this
+	 *                       input cell.
 	 */
 	public function getWidget($row_identifier, $widget_id = null)
 	{
@@ -285,10 +288,10 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	/**
 	 * Gets the input row this cell belongs to
 	 *
-	 * If this input-cell is not added to a table-view yet or the table-view
-	 * this cell is added to does not have an input-row then null is returned.
+	 * If this input-cell is not yet added to a table-view, or if the parent
+	 * table-view of this cell does not have an input-row, null is returned.
 	 *
-	 * @return the input row this cell belongs to.
+	 * @return SwatTableViewInputRow the input row this cell belongs to.
 	 */
 	protected function getInputRow()
 	{
@@ -307,14 +310,11 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	/**
 	 * Gets a cloned widget given a unique identifier
 	 *
-	 * The cloned widget is stored in the {@link SwatInputCell::$clones} array.
-	 *
 	 * @param string $replicator_id the unique identifier of the new cloned
 	 *                               widget. The actual cloned widget id is
 	 *                               constructed from this identifier and from
 	 *                               the input row that this input cell belongs
 	 *                               to.
-	 *                               
 	 *
 	 * @return SwatWidget the new cloned widget or the cloned widget retrieved
 	 *                     from the {@link SwatInputCell::$clones} array.
