@@ -30,7 +30,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 	// }}}
 	// {{{ private properties
-	
+
 	/**
 	 * The tile of this tile view
 	 *
@@ -40,7 +40,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	private $tile = null;
 
 	/**
-	 * The check-all widget for this row 
+	 * The check-all widget for this row
 	 *
 	 * @var SwatCheckAll
 	 */
@@ -342,7 +342,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function getInlineJavaScript()
+	// {{{ protected function getInlineJavaScript()
 
 	/**
 	 * Gets the inline JavaScript required for this row
@@ -351,7 +351,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 *
 	 * @see SwatTableViewRow::getInlineJavaScript()
 	 */
-	public function getInlineJavaScript()
+	protected function getInlineJavaScript()
 	{
 		if (!$this->showCheckAll())
 			return '';
@@ -412,14 +412,13 @@ class SwatTileView extends SwatView implements SwatUIParent
 		return false;
 	}
 	// }}}
-
 	// {{{ private function createEmbeddedWidgets()
 
 	/**
 	 * Creates internal widgets required for this check-all row
 	 */
 	private function createEmbeddedWidgets()
-	{ 
+	{
 			$this->check_all = new SwatCheckAll();
 			$this->check_all->parent = $this;
 	}
