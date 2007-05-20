@@ -382,6 +382,107 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	}
 
 	// }}}
+	// {{{ public function getDescendants()
+
+	/**
+	 * Gets descendant UI-objects
+	 *
+	 * @param string $class_name optional class name. If set, only UI-objects
+	 *                            that are instances of <i>$class_name</i> are
+	 *                            returned.
+	 *
+	 * @return array the descendant UI-objects of this table-view column. If
+	 *                descendent objects have identifiers, the identifier is
+	 *                used as the array key.
+	 *
+	 * @see SwatUIParent::getDescendants()
+	 */
+	public function getDescendants($class_name = null)
+	{
+		if ($class !== null && !class_exists($class_name))
+			return array();
+
+		$out = array();
+
+		foreach ($this->getRenderers() as $renderer) {
+			if ($class_name === null || $renderer instanceof $class_name) {
+				if ($renderer->id === null)
+					$out[] = $renderer;
+				else
+					$out[$renderer->id] = $renderer;
+			}
+
+			if ($renderer instanceof SwatUIParent)
+				$out = array_merge($out,
+					$renderer->getDescendants($class_name));
+		}
+
+		if ($this->input_cell !== null) {
+			if ($class_name === null ||
+				$this->input_cell instanceof $class_name) {
+				if ($this->input_cell->id === null)
+					$out[] = $this->input_cell;
+				else
+					$out[$this->input_cell->id] = $this->input_cell;
+			}
+
+			if ($this->input_cell instanceof SwatUIParent)
+				$out = array_merge($out,
+					$this->input_cell->getDescendants($class_name));
+		}
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ public function getFirstDescendant()
+
+	/**
+	 * Gets the first descendent UI-object of a specific class
+	 *
+	 * @param string $class_name class name to look for.
+	 *
+	 * @return SwatUIObject the first descendant UI-object or null if no
+	 *                       matching descendant is found.
+	 *
+	 * @see SwatUIParent::getFirstDescendant()
+	 */
+	public function getFirstDescendant($class_name)
+	{
+		if (!class_exists($class_name))
+			return null;
+
+		$out = null;
+
+		$renderers = $this->getRenderers();
+
+		foreach ($renderers as $renderer) {
+			if ($renderer instanceof SwatUIParent) {
+				$out = $renderer->getFirstDescendant($class_name);
+				if ($out !== null)
+					break;
+			}
+		}
+
+		if ($out === null && $this->input_cell instanceof SwatUIParent)
+			$out = $this->input_cell->getFirstDescendant($class_name);
+
+		if ($out === null) {
+			foreach ($renderers as $renderer) {
+				if ($renderer instanceof $class_name) {
+					$out = $renderer;
+					break;
+				}
+			}
+		}
+
+		if ($out === null && $this->input_cell instanceof $class_name)
+			$out = $this->input_cell;
+
+		return $out;
+	}
+
+	// }}}
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
