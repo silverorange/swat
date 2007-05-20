@@ -134,8 +134,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 		if ($child instanceof SwatTile)
 			$this->setTile($child);
 		else
-		throw new SwatInvalidClassException('You can only'.
-			' add SwatTiles to this widget.', 0, $child);
+			throw new SwatInvalidClassException(
+				'Only SwatTile objects can be added to a SwatTileView.',
+				0, $child);
 	}
 	// }}}
 	// {{{ public function display()
