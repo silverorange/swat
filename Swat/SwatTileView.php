@@ -40,7 +40,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	private $tile = null;
 
 	/**
-	 * The check-all widget for this row
+	 * The check-all widget for this tile view 
 	 *
 	 * @var SwatCheckAll
 	 */
@@ -324,10 +324,10 @@ class SwatTileView extends SwatView implements SwatUIParent
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this check-all row
+	 * Gets the SwatHtmlHeadEntry objects needed by this tile view
 	 *
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 *                               this check-all row.
+	 *                               this tile view.
 	 *
 	 * @see SwatUIObject::getHtmlHeadEntrySet()
 	 */
@@ -345,9 +345,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Gets the inline JavaScript required for this row
+	 * Gets the inline JavaScript required for this tile view 
 	 *
-	 * @return string the inline JavaScript required for this row.
+	 * @return string the inline JavaScript required for this tile view.
 	 *
 	 * @see SwatTableViewRow::getInlineJavaScript()
 	 */
@@ -415,7 +415,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	// {{{ private function createEmbeddedWidgets()
 
 	/**
-	 * Creates internal widgets required for this check-all row
+	 * Creates internal widgets required for this tile view
 	 */
 	private function createEmbeddedWidgets()
 	{
