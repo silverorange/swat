@@ -632,9 +632,17 @@ class SwatTableView extends SwatView implements SwatUIParent
 	/**
 	 * Gets the first extra row of the specified class from this table-view
 	 *
+	 * Unlike the {@link SwatUIParent::getFirstDescendant()} method, this
+	 * method only checks this table-view and does not check the child objects
+	 * of this table-view.
+	 *
 	 * @param string $class_name the class name to filter by.
 	 *
-	 * @return SwatTableViewRow the first extra row of the specified class.
+	 * @return SwatTableViewRow the first extra row of the specified class or
+	 *                          null if no such row object exists in this
+	 *                          table-view.
+	 *
+	 * @see SwatUIParent::getFirstDescendant()
 	 */
 	public function getFirstRowByClass($class_name)
 	{
