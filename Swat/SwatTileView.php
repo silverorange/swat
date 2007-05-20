@@ -70,11 +70,12 @@ class SwatTileView extends SwatView implements SwatUIParent
 			'packages/swat/javascript/swat-table-view-checkbox-column.js',
 			Swat::PACKAGE_ID);
 	}
+
 	// }}}
 	// {{{ public function init()
 
 	/**
-	 * Initializes this tile-view
+	 * Initializes this tile view
 	 *
 	 * This initializes the tile view and the tile contained in the view.
 	 *
@@ -86,6 +87,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 		$this->check_all->init();
 		$this->tile->init();
 	}
+
 	// }}}
 	// {{{ public function getTile()
 
@@ -98,6 +100,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		return $this->tile;
 	}
+
 	// }}}
 	// {{{ public function setTile()
 
@@ -110,6 +113,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		$this->tile = $tile;
 	}
+
 	// }}}
 	// {{{ public function addChild()
 
@@ -138,13 +142,14 @@ class SwatTileView extends SwatView implements SwatUIParent
 				'Only SwatTile objects can be added to a SwatTileView.',
 				0, $child);
 	}
+
 	// }}}
 	// {{{ public function display()
 
 	/**
 	 * Displays this tile view
 	 *
-	 * The tile view is display as a section of div tags
+	 * This tile view is display as a section of div tags.
 	 */
 	public function display()
 	{
@@ -164,13 +169,14 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
+
 	// }}}
 	// {{{ public function process()
 
 	/**
 	 * Processes this tile view
 	 *
-	 * Process the tile contained by this tile view
+	 * Process the tile contained by this tile view.
 	 */
 	public function process()
 	{
@@ -184,6 +190,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 				$this->checked_items = $_POST['items'];
 
 	}
+
 	// }}}
 	// {{{ public function getDescendants()
 
@@ -194,7 +201,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 *                            that are instances of <i>$class_name</i> are
 	 *                            returned.
 	 *
-	 * @return array the descendant UI-objects of this detials view. If
+	 * @return array the descendant UI-objects of this tile view. If
 	 *                descendant objects have identifiers, the identifier is
 	 *                used as the array key.
 	 *
@@ -202,7 +209,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function getDescendants($class_name = null)
 	{
-
 		if ($class !== null && !class_exists($class_name))
 			return array();
 
@@ -242,7 +248,10 @@ class SwatTileView extends SwatView implements SwatUIParent
 		$out = null;
 
 		if ($this->tile instanceof SwatUIParent)
-			$out = $field->getFirstDescendant($class_name);
+			$out = $this->tile->getFirstDescendant($class_name);
+
+		if ($out === null && $this->tile instanceof $class_name)
+			$out = $this->tile;
 
 		return $out;
 	}
@@ -254,7 +263,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 * Gets descendant states
 	 *
 	 * Retrieves an array of states of all stateful UI-objects in the widget
-	 * subtree below this details view.
+	 * subtree below this tile view.
 	 *
 	 * @return array an array of UI-object states with UI-object identifiers as
 	 *                array keys.
@@ -276,7 +285,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 * Sets descendant states
 	 *
 	 * Sets states on all stateful UI-objects in the widget subtree below this
-	 * details view.
+	 * tile view.
 	 *
 	 * @param array $states an array of UI-object states with UI-object
 	 *                       identifiers as array keys.
@@ -300,9 +309,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		$messages = parent::getMessages();
 		$messages = array_merge($messages. $this->tile->messages);
-
 		return $messages;
 	}
+
 	// }}}
 	// {{{ public function hasMessage()
 
@@ -321,6 +330,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 		return $has_message;
 	}
+
 	// }}}
 	// {{{ public function getHtmlHeadEntrySet()
 
@@ -396,14 +406,21 @@ class SwatTileView extends SwatView implements SwatUIParent
 	// }}}
 	// {{{ protected function showCheckAll()
 
+	/**
+	 * @todo document me.
+	 */
 	protected function showCheckAll()
 	{
 		return ($this->show_check_all && $this->model->getRowCount() > 2
 			&& $this->hasCheckboxCellRenderer('items'));
 	}
+
 	// }}}
 	// {{{ protected function hasCheckboxCellRenderer()
 
+	/**
+	 * @todo document me.
+	 */
 	protected function hasCheckboxCellRenderer($renderer_id)
 	{
 		foreach ($this->tile->getRenderers() as $renderer)
@@ -412,6 +429,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 		return false;
 	}
+
 	// }}}
 	// {{{ private function createEmbeddedWidgets()
 
@@ -420,8 +438,8 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	private function createEmbeddedWidgets()
 	{
-			$this->check_all = new SwatCheckAll();
-			$this->check_all->parent = $this;
+		$this->check_all = new SwatCheckAll();
+		$this->check_all->parent = $this;
 	}
 
 	// }}}
