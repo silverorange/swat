@@ -218,7 +218,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 *                            that are instances of <i>$class_name</i> are
 	 *                            returned.
 	 *
-	 * @return array the descendant UI-objects of this detials view. If
+	 * @return array the descendant UI-objects of this details view. If
 	 *                descendant objects have identifiers, the identifier is
 	 *                used as the array key.
 	 *
