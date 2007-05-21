@@ -69,7 +69,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			$suffix++;
 		}
 
-		$this->mappings[$mangled_name] = 
+		$this->mappings[$mangled_name] =
 			array('object' => $object, 'property' => $name);
 
 		return $mangled_name;
@@ -201,7 +201,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	// }}}
 	// {{{ public function getPrototypeWidget()
 
-	/** 
+	/**
 	 * Gets the prototype widget of this widget cell renderer
 	 *
 	 * @return SwatWidget the prototype widget of this widget cell renderer.
@@ -214,7 +214,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	// }}}
 	// {{{ public function getWidget()
 
-	/** 
+	/**
 	 * Gets a cloned widget from this widget cell renderer
 	 *
 	 * @param integer $replicator the replicator id of the cloned widget.
@@ -231,7 +231,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	// }}}
 	// {{{ public function getClonedWidgets()
 
-	/** 
+	/**
 	 * Gets an array of cloned widgets indexed by the replicator_id
 	 *
 	 * If this cell renderer's form is submitted, only cloned widgets that were
@@ -262,7 +262,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	// }}}
 	// {{{ public function getDataSpecificCSSClassNames()
 
-	/** 
+	/**
 	 * Gets the data specific CSS class names for this widget cell renderer
 	 *
 	 * If the widget within this cell renderer has messages, a CSS class of
@@ -463,9 +463,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 		if ($out === null) {
 			foreach ($cloned_widgets as $cloned_widget) {
-			if ($cloned_widget instanceof $class_name) {
-				$out = $cloned_widget;
-				break;
+				if ($cloned_widget instanceof $class_name) {
+					$out = $cloned_widget;
+					break;
+				}
 			}
 		}
 
@@ -563,7 +564,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			$cloned_descendendents = array($cloned_widget);
 
 			if ($this->prototype_widget instanceof SwatContainer) {
-				$prototype_descendendents = array_merge($prototype_descendendents, 
+				$prototype_descendendents = array_merge($prototype_descendendents,
 					$this->prototype_widget->getDescendants());
 
 				$cloned_descendendents = array_merge($cloned_descendendents,
@@ -577,7 +578,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 					break;
 				}
 			}
-			
+
 			if ($cloned_object === null)
 				throw new SwatException('Cloned widget tree does not match '.
 					'prototype widget tree.');
