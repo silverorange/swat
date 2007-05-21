@@ -9,7 +9,7 @@ require_once 'Swat/SwatReplicable.php';
  * A container that replicates itself and its children
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatReplicableContainer extends SwatDisplayableContainer
@@ -86,7 +86,7 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 				}
 
 				// update ids of cloned child descendants
-				if ($new_child instanceof SwatContainer) {
+				if ($new_child instanceof SwatUIParent) {
 					foreach ($new_child->getDescendants() as $descendant) {
 						if ($descendant->id !== null) {
 							$this->widgets[$id][$descendant->id] = $descendant;
