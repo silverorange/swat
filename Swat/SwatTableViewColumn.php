@@ -399,7 +399,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function getDescendants($class_name = null)
 	{
-		if ($class !== null && !class_exists($class_name))
+		if ($class_name !== null && !class_exists($class_name))
 			return array();
 
 		$out = array();
