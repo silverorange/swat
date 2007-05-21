@@ -602,7 +602,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 		if ($new_widget->id !== null)
 			$new_widget->id.= $suffix;
 
-		if ($new_widget instanceof SwatContainer)
+		if ($new_widget instanceof SwatUIParent)
 			foreach ($new_widget->getDescendants() as $descendant)
 				if ($descendant->id !== null)
 					$descendant->id.= $suffix;
