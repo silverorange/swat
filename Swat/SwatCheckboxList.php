@@ -233,6 +233,13 @@ class SwatCheckboxList extends SwatInputControl implements SwatState
 	// }}}
 	// {{{ public function setState()
 
+	/**
+	 * Sets the current state of this checkbox list 
+	 *
+	 * @param array $state the new state of this checkbox list.
+	 *
+	 * @see SwatState::setState()
+	 */
 	public function setState($state)
 	{
 		$this->values = $state;
@@ -241,6 +248,13 @@ class SwatCheckboxList extends SwatInputControl implements SwatState
 	// }}}
 	// {{{ public function getState()
 
+	/**
+	 * Gets the current state of this checkbox list 
+	 *
+	 * @return array the current state of this checkbox list.
+	 *
+	 * @see SwatState::getState()
+	 */
 	public function getState()
 	{
 		return $this->values;

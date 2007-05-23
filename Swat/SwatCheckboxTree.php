@@ -127,36 +127,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	}
 
 	// }}}
-	// {{{ public function getState()
-
-	/**
-	 * Gets the current state of this checkbox tree
-	 *
-	 * @return array the current state of this checkbox tree.
-	 *
-	 * @see SwatState::getState()
-	 */
-	public function getState()
-	{
-		return $this->value;
-	}
-
-	// }}}
-	// {{{ public function setState()
-
-	/**
-	 * Sets the current state of this checkbox tree
-	 *
-	 * @param array $state the new state of this checkbox tree.
-	 *
-	 * @see SwatState::setState()
-	 */
-	public function setState($state)
-	{
-		$this->value = $state;
-	}
-
-	// }}}
 	// {{{ protected function getCSSClassNames()
 
 	/**
