@@ -41,6 +41,13 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 */
 	protected $db = null;
 
+	/**
+	 * A class-mapping object
+	 *
+	 * @var StoreClassMap
+	 */
+	protected $class_map;
+
 	// }}}
 	// {{{ private properties
 
@@ -70,6 +77,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 */
 	public function __construct($rs = null)
 	{
+		$this->class_map = SwatDBClassMap::instance();
+
 		$this->init();
 
 		if ($rs === null)

@@ -6,6 +6,7 @@ require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatDate.php';
 require_once 'Swat/exceptions/SwatClassNotFoundException.php';
 require_once 'SwatDB/SwatDB.php';
+require_once 'SwatDB/SwatDBClassMap.php';
 require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 
@@ -60,6 +61,13 @@ class SwatDBDataObject extends SwatObject implements Serializable
 
 	protected $table = null;
 	protected $id_field = null;
+
+	/**
+	 * A class-mapping object
+	 *
+	 * @var StoreClassMap
+	 */
+	protected $class_map;
 	
 	// }}}
 	// {{{ public function __construct()
@@ -69,6 +77,8 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	 */
 	public function __construct($data = null)
 	{
+		$this->class_map = SwatDBClassMap::instance();
+
 		$this->init();
 
 		if ($data !== null)
@@ -828,6 +838,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 
 	protected function wakeup()
 	{
+		$this->class_map = SwatDBClassMap::instance();
 	}
 
 	// }}}
