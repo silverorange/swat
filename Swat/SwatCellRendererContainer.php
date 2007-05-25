@@ -187,14 +187,15 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	 *                            returned.
 	 *
 	 * @return array the descendant UI-objects of this cell renderer container.
-	 *                If descendent objects have identifiers, the identifier is
+	 *                If descendant objects have identifiers, the identifier is
 	 *                used as the array key.
 	 *
 	 * @see SwatUIParent::getDescendants()
 	 */
 	public function getDescendants($class_name = null)
 	{
-		if ($class_name !== null && !class_exists($class_name))
+		if (!($class_name === null ||
+			class_exists($class_name) || interface_exists($class_name)))
 			return array();
 
 		$out = array();
@@ -219,7 +220,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	// {{{ public function getFirstDescendant()
 
 	/**
-	 * Gets the first descendent UI-object of a specific class
+	 * Gets the first descendant UI-object of a specific class
 	 *
 	 * @param string $class_name class name to look for.
 	 *
@@ -230,7 +231,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	 */
 	public function getFirstDescendant($class_name)
 	{
-		if (!class_exists($class_name))
+		if (!class_exists($class_name) && !interface_exists($class_name))
 			return null;
 
 		$out = null;

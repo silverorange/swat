@@ -38,7 +38,7 @@ interface SwatUIParent
 	 *                            that are instances of <i>$class_name</i> are
 	 *                            returned.
 	 *
-	 * @return array the descendant UI-objects of this object. If descendent
+	 * @return array the descendant UI-objects of this object. If descendant
 	 *                objects have identifiers, the identifier is used as the
 	 *                array key.
 	 */
@@ -48,7 +48,7 @@ interface SwatUIParent
 	// {{{ public function getFirstDescendant()
 
 	/**
-	 * Gets the first descendent UI-object of a specific class
+	 * Gets the first descendant UI-object of a specific class
 	 *
 	 * Retrieves the first descendant UI-object in the subtree that is a
 	 * descendant of the specified class name. This uses a depth-first

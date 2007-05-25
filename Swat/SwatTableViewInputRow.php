@@ -660,7 +660,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 				if ($widget->id !== null)
 					$widget->id.= $suffix;
 
-				if ($widget instanceof SwatContainer) {
+				if ($widget instanceof SwatUIParent) {
 					$descendants = $widget->getDescendants();
 					foreach ($descendants as $descendant)
 						if ($descendant->id !== null)
