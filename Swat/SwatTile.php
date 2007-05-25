@@ -36,19 +36,6 @@ class SwatTile extends SwatCellRendererContainer
 	private  $messages = array();
 
 	// }}}
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new tile for a tile view
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$this->require_id = true;
-	}
-
-	// }}}
 	// {{{ public function display()
 
 	/**
