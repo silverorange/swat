@@ -584,7 +584,7 @@ class SwatForm extends SwatDisplayableContainer
 
 			if ($widget instanceof SwatFileEntry) {
 				$this->encoding_type = 'multipart/form-data';
-			} elseif ($widget instanceof SwatContainer) {
+			} elseif ($widget instanceof SwatUIParent) {
 				$descendants = $widget->getDescendants();
 				foreach ($descendants as $sub_widget) {
 					if ($sub_widget instanceof SwatFileEntry) {

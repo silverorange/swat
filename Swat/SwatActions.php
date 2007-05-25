@@ -332,14 +332,15 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 *                            returned.
 	 *
 	 * @return array the descendant UI-objects of this actions widget. If
-	 *                descendent objects have identifiers, the identifier is
+	 *                descendant objects have identifiers, the identifier is
 	 *                used as the array key.
 	 *
 	 * @see SwatUIParent::getDescendants()
 	 */
 	public function getDescendants($class_name = null)
 	{
-		if ($class_name !== null && !class_exists($class_name))
+		if (!($class_name === null ||
+			class_exists($class_name) || interface_exists($class_name)))
 			return array();
 
 		$out = array();
@@ -364,7 +365,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	// {{{ public function getFirstDescendant()
 
 	/**
-	 * Gets the first descendent UI-object of a specific class
+	 * Gets the first descendant UI-object of a specific class
 	 *
 	 * @param string $class_name class name to look for.
 	 *
@@ -375,7 +376,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	public function getFirstDescendant($class_name)
 	{
-		if (!class_exists($class_name))
+		if (!class_exists($class_name) && !interface_exists($class_name))
 			return null;
 
 		$out = null;

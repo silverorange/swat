@@ -400,14 +400,15 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 *                            returned.
 	 *
 	 * @return array the descendant UI-objects of this widget cell renderer. If
-	 *                descendent objects have identifiers, the identifier is
+	 *                descendant objects have identifiers, the identifier is
 	 *                used as the array key.
 	 *
 	 * @see SwatUIParent::getDescendants()
 	 */
 	public function getDescendants($class_name = null)
 	{
-		if ($class_name !== null && !class_exists($class_name))
+		if (!($class_name === null ||
+			class_exists($class_name) || interface_exists($class_name)))
 			return array();
 
 		$out = array();
@@ -432,7 +433,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	// {{{ public function getFirstDescendant()
 
 	/**
-	 * Gets the first descendent UI-object of a specific class
+	 * Gets the first descendant UI-object of a specific class
 	 *
 	 * The descendant UI-objects of a widget cell renderer are cloned widgets,
 	 * not the prototype widget.
@@ -446,7 +447,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 */
 	public function getFirstDescendant($class_name)
 	{
-		if (!class_exists($class_name))
+		if (!class_exists($class_name) && !interface_exists($class_name))
 			return null;
 
 		$out = null;
@@ -560,21 +561,21 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			$object = $this->mappings[$name]['object'];
 			$property = $this->mappings[$name]['property'];
 
-			$prototype_descendendents = array($this->prototype_widget);
-			$cloned_descendendents = array($cloned_widget);
+			$prototype_descendants = array($this->prototype_widget);
+			$cloned_descendants = array($cloned_widget);
 
-			if ($this->prototype_widget instanceof SwatContainer) {
-				$prototype_descendendents = array_merge($prototype_descendendents,
+			if ($this->prototype_widget instanceof SwatUIParent) {
+				$prototype_descendants = array_merge($prototype_descendants,
 					$this->prototype_widget->getDescendants());
 
-				$cloned_descendendents = array_merge($cloned_descendendents,
+				$cloned_descendants = array_merge($cloned_descendants,
 					$this->cloned_widget->getDescendants());
 			}
 
 			$cloned_object = null;
-			foreach ($prototype_descendendents as $index => $prototype_object) {
+			foreach ($prototype_descendants as $index => $prototype_object) {
 				if ($object === $prototype_object) {
-					$cloned_object = $cloned_descendendents[$index];
+					$cloned_object = $cloned_descendants[$index];
 					break;
 				}
 			}

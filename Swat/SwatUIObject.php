@@ -194,7 +194,7 @@ abstract class SwatUIObject extends SwatObject
 	 * @return mixed the first ancestor object or null if no matching ancestor
 	 *                is found.
 	 *
-	 * @see SwatContainer::getFirstDescendant()
+	 * @see SwatUIParent::getFirstDescendant()
 	 */
 	public function getFirstAncestor($class_name)
 	{
