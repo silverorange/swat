@@ -216,15 +216,18 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 		$out = array();
 
-		if ($class_name === null || $this->tile instanceof $class_name) {
-			if ($this->tile->id === null)
-				$out[] = $this->tile;
-			else
-				$out[$this->tile->id] = $this->id;
-		}
+		if ($this->tile !== null) {
+			if ($class_name === null || $this->tile instanceof $class_name) {
+				if ($this->tile->id === null)
+					$out[] = $this->tile;
+				else
+					$out[$this->tile->id] = $this->id;
+			}
 
-		if ($this->tile instanceof SwatUIParent)
-			$out = array_merge($out, $this->tile->getDescendants($class_name));
+			if ($this->tile instanceof SwatUIParent)
+				$out = array_merge($out,
+					$this->tile->getDescendants($class_name));
+		}
 
 		return $out;
 	}
