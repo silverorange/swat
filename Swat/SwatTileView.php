@@ -112,6 +112,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	public function setTile(SwatTile $tile)
 	{
 		$this->tile = $tile;
+		$tile->parent = $this;
 	}
 
 	// }}}
