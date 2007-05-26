@@ -17,11 +17,22 @@ class SwatCheckAll extends SwatCheckbox
 	// {{{ public properties
 
 	/**
-	 * Optional text to display next to the checkbox, by default "Check All".
+	 * Optional checkbox label title
+	 *
+	 * Defaults to "Check All".
 	 *
 	 * @var string
 	 */
 	public $title = null;
+
+	/**
+	 * Optional content type for title
+	 *
+	 * Defaults to text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $content_type = 'text/plain';
 
 	// }}}
 	// {{{ public function __construct()
@@ -63,7 +74,7 @@ class SwatCheckAll extends SwatCheckbox
 
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->for = $this->id.'_value';
-		$label_tag->setContent($this->title);
+		$label_tag->setContent($this->title, $this->content_type);
 		$label_tag->open();
 
 		$old_id = $this->id;
