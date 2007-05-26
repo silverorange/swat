@@ -20,10 +20,11 @@ class SwatTileView extends SwatView implements SwatUIParent
 	// {{{ public properties
 
 	/**
-	 * Show check all
+	 * Whether to show a "check all" widget
 	 *
-	 * Whether to show a "check all" widget.  For this option to work, the
-	 * table view must contain a column with an id of "checkbox".
+	 * For this option to have an effect, this tile view's tile must contain a
+	 * {@link SwatCheckboxCellRenderer}.
+	 *
 	 * @var boolean
 	 */
 	public $show_check_all = true;
@@ -36,13 +37,14 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 *
 	 * @var SwatTile
 	 */
-
 	private $tile = null;
 
 	/**
-	 * The check-all widget for this tile view 
+	 * The check-all widget for this tile view
 	 *
 	 * @var SwatCheckAll
+	 *
+	 * @see SwatTileView::$show_check_all
 	 */
 	private $check_all;
 
@@ -56,9 +58,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 *
 	 * @see SwatWidget:__construct()
 	 */
-	public function __construct()
+	public function __construct($id = null)
 	{
-		parent::__construct();
+		parent::__construct($id);
 
 		$this->addStyleSheet('packages/swat/styles/swat-tile-view.css',
 			Swat::PACKAGE_ID);
@@ -79,13 +81,16 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 *
 	 * This initializes the tile view and the tile contained in the view.
 	 *
-	 * @see SwatWidget::init()
+	 * @see SwatView::init()
 	 */
 	public function init()
 	{
+		parent::init();
+
 		$this->createEmbeddedWidgets();
 		$this->check_all->init();
-		$this->tile->init();
+		if ($this->tile !== null)
+			$this->tile->init();
 	}
 
 	// }}}
@@ -111,6 +116,10 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function setTile(SwatTile $tile)
 	{
+		// if we're overwriting an existing tile, remove it's parent link
+		if ($this->tile !== null)
+			$this->tile->parent = null;
+
 		$this->tile = $tile;
 		$tile->parent = $this;
 	}
@@ -127,21 +136,27 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 *
 	 * To add a tile use {@link SwatTileView::SwatTile()}
 	 *
-	 * @param mixed $child a reference to a child object to add.
+	 * @param SwatTile $child a reference to a child object to add.
 	 *
-	 * @throws SwatInvalidClassException
+	 * @throws SwatInvalidClassException if the added object is not a tile.
+	 * @throws SwatException if more than one tile is added to this tile view.
 	 *
 	 * @see SwatUIParent
 	 * @see SwatTileView::setTile()
 	 */
 	public function addChild(SwatObject $child)
 	{
-		if ($child instanceof SwatTile)
+		if ($child instanceof SwatTile) {
+			if ($this->tile !== null)
+				throw new SwatException(
+					'Only one tile may be added to a tile view.');
+
 			$this->setTile($child);
-		else
+		} else {
 			throw new SwatInvalidClassException(
 				'Only SwatTile objects can be added to a SwatTileView.',
 				0, $child);
+		}
 	}
 
 	// }}}
@@ -149,8 +164,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 	/**
 	 * Displays this tile view
-	 *
-	 * This tile view is display as a section of div tags.
 	 */
 	public function display()
 	{
@@ -159,12 +172,19 @@ class SwatTileView extends SwatView implements SwatUIParent
 		$tile_view_tag->class = $this->getCSSClassString();
 		$tile_view_tag->open();
 
-		$datas = $this->model->getRows();
-		foreach ($datas as $data)
-			$this->tile->display($data);
+		if ($this->tile !== null) {
+			$rows = $this->model->getRows();
+			foreach ($rows as $data)
+				$this->tile->display($data);
+		}
 
 		if ($this->showCheckAll())
 			$this->check_all->display();
+
+		$clear_div_tag = new SwatHtmlTag('div');
+		$clear_div_tag->style = 'clear: left;';
+		$clear_div_tag->setContent('');
+		$clear_div_tag->display();
 
 		$tile_view_tag->close();
 
@@ -184,12 +204,8 @@ class SwatTileView extends SwatView implements SwatUIParent
 		parent::process();
 
 		$this->check_all->process();
-		$this->tile->process();
-
-		if ($this->hasCheckboxCellRenderer('items'))
-			if (isset($_POST['items']) && is_array($_POST['items']))
-				$this->checked_items = $_POST['items'];
-
+		if ($this->tile !== null)
+			$this->tile->process();
 	}
 
 	// }}}
@@ -313,7 +329,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 	public function getMessages()
 	{
 		$messages = parent::getMessages();
-		$messages = array_merge($messages. $this->tile->messages);
+		if ($this->tile !== null)
+			$messages = array_merge($messages, $this->tile->messages);
+
 		return $messages;
 	}
 
@@ -328,10 +346,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function hasMessage()
 	{
-		$has_message = parent::hasMessages();
-
-		if ($this->tile->hasMessages())
-			$has_message = true;
+		$has_message = parent::hasMessage()
+		if (!$has_message && $this->tile !== null)
+			$has_message = $this->tile->hasMessage();
 
 		return $has_message;
 	}
@@ -351,6 +368,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		$set = parent::getHtmlHeadEntrySet();
 
+		if ($this->tile !== null)
+			$set->addEntrySet($this->tile->getHtmlHeadEntrySet());
+
 		if ($this->showCheckAll())
 			$set->addEntrySet($this->check_all->getHtmlHeadEntrySet());
 
@@ -361,7 +381,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	// {{{ protected function getInlineJavaScript()
 
 	/**
-	 * Gets the inline JavaScript required for this tile view 
+	 * Gets the inline JavaScript required for this tile view
 	 *
 	 * @return string the inline JavaScript required for this tile view.
 	 *
@@ -372,24 +392,25 @@ class SwatTileView extends SwatView implements SwatUIParent
 		if (!$this->showCheckAll())
 			return '';
 
-		ob_start();
+		$renderer = $this->getCheckboxCellRenderer();
 
-		printf("var %s = new SwatTileView('%s');",
+		$javascript = sprintf("var %s = new SwatTileView('%s');",
 			$this->id, $this->id);
 
 		// TODO: SwatTableViewCheckboxColumn has all the functionality we need,
 		// but it needs to somehow be renamed to be be shared between a
 		// TableView and TileView (SwatViewCheckbox maybe?)
-		printf("var %s = new SwatTableViewCheckboxColumn(%s, %s);",
-			$this->id, "'items'", $this->id);
+		$javascript.= sprintf(
+			"\nvar %s = new SwatTableViewCheckboxColumn('%s', %s);",
+			$this->id, $renderer->id, $this->id);
 
-		echo $this->check_all->getInlineJavascript();
+		$javascript.= "\n".$this->check_all->getInlineJavascript();
 
 		// set the controller of the check-all widget
-		printf("%s_obj.setController(%s);",
+		$javascript.= sprintf("\n%s_obj.setController(%s);",
 			$this->check_all->id, $this->id);
 
-		return ob_get_clean();
+		return $javascript;
 	}
 
 	// }}}
@@ -417,22 +438,31 @@ class SwatTileView extends SwatView implements SwatUIParent
 	protected function showCheckAll()
 	{
 		return ($this->show_check_all && $this->model->getRowCount() > 2
-			&& $this->hasCheckboxCellRenderer('items'));
+			&& $this->getCheckboxCellRenderer() !== null);
 	}
 
 	// }}}
-	// {{{ protected function hasCheckboxCellRenderer()
+	// {{{ protected function getCheckboxCellRenderer()
 
 	/**
-	 * @todo document me.
+	 * Gets the first checkbox cell renderer in this tile view's tile
+	 *
+	 * @return SwatCheckboxCellRenderewr the first checkbox cell renderer in
+	 *                                   this tile view's tile or null if no
+	 *                                   such cell renderer exists.
 	 */
-	protected function hasCheckboxCellRenderer($renderer_id)
+	protected function getCheckboxCellRenderer()
 	{
-		foreach ($this->tile->getRenderers() as $renderer)
-			if ($renderer->id == $renderer_id)
-				return true;
+		$checkbox_cell_renderer = null;
 
-		return false;
+		foreach ($this->tile->getRenderers() as $renderer) {
+			if ($renderer instanceof SwatCheckboxCellRenderer) {
+				$checkbox_cell_renderer = $renderer;
+				break;
+			}
+		}
+
+		return $checkbox_cell_renderer;
 	}
 
 	// }}}
