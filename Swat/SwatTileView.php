@@ -112,6 +112,60 @@ class SwatTileView extends SwatView implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function process()
+
+	/**
+	 * Processes this tile view
+	 *
+	 * Process the tile contained by this tile view.
+	 */
+	public function process()
+	{
+		parent::process();
+
+		$this->check_all->process();
+		if ($this->tile !== null)
+			$this->tile->process();
+	}
+
+	// }}}
+	// {{{ public function display()
+
+	/**
+	 * Displays this tile view
+	 */
+	public function display()
+	{
+		$tile_view_tag = new SwatHtmlTag('div');
+		$tile_view_tag->id = $this->id;
+		$tile_view_tag->class = $this->getCSSClassString();
+		$tile_view_tag->open();
+
+		if ($this->tile !== null) {
+			$rows = $this->model->getRows();
+			foreach ($rows as $data)
+				$this->tile->display($data);
+		}
+
+		if ($this->showCheckAll()) {
+			if ($this->check_all_title !== null) {
+				$this->check_all->title = $this->check_all_title;
+				$this->check_all->content_type = $this->check_all_content_type;
+			}
+			$this->check_all->display();
+		}
+
+		$clear_div_tag = new SwatHtmlTag('div');
+		$clear_div_tag->style = 'clear: left;';
+		$clear_div_tag->setContent('');
+		$clear_div_tag->display();
+
+		$tile_view_tag->close();
+
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+	}
+
+	// }}}
 	// {{{ public function getTile()
 
 	/**
@@ -175,60 +229,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 				'Only SwatTile objects can be added to a SwatTileView.',
 				0, $child);
 		}
-	}
-
-	// }}}
-	// {{{ public function display()
-
-	/**
-	 * Displays this tile view
-	 */
-	public function display()
-	{
-		$tile_view_tag = new SwatHtmlTag('div');
-		$tile_view_tag->id = $this->id;
-		$tile_view_tag->class = $this->getCSSClassString();
-		$tile_view_tag->open();
-
-		if ($this->tile !== null) {
-			$rows = $this->model->getRows();
-			foreach ($rows as $data)
-				$this->tile->display($data);
-		}
-
-		if ($this->showCheckAll()) {
-			if ($this->check_all_title !== null) {
-				$this->check_all->title = $this->check_all_title;
-				$this->check_all->content_type = $this->check_all_content_type;
-			}
-			$this->check_all->display();
-		}
-
-		$clear_div_tag = new SwatHtmlTag('div');
-		$clear_div_tag->style = 'clear: left;';
-		$clear_div_tag->setContent('');
-		$clear_div_tag->display();
-
-		$tile_view_tag->close();
-
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
-	}
-
-	// }}}
-	// {{{ public function process()
-
-	/**
-	 * Processes this tile view
-	 *
-	 * Process the tile contained by this tile view.
-	 */
-	public function process()
-	{
-		parent::process();
-
-		$this->check_all->process();
-		if ($this->tile !== null)
-			$this->tile->process();
 	}
 
 	// }}}
