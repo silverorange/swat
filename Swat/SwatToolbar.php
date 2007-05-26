@@ -84,7 +84,7 @@ class SwatToolbar extends SwatDisplayableContainer
 	{
 		$tools = array();
 		foreach ($this->getDescendants('SwatToolLink') as $tool)
-			if ($tools->getFirstAncestor('SwatToolbar') === $this)
+			if ($tool->getFirstAncestor('SwatToolbar') === $this)
 				$tools[] = $tool;
 
 		return $tools;
