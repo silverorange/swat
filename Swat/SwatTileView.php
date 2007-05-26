@@ -29,6 +29,24 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public $show_check_all = true;
 
+	/**
+	 * Optional label title for the check-all widget
+	 *
+	 * Defaults to "Check All".
+	 *
+	 * @var string
+	 */
+	public $check_all_title;
+
+	/**
+	 * Optional content type for check-all widget title
+	 *
+	 * Defaults to text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $check_all_content_type = 'text/plain';
+
 	// }}}
 	// {{{ private properties
 
@@ -178,8 +196,13 @@ class SwatTileView extends SwatView implements SwatUIParent
 				$this->tile->display($data);
 		}
 
-		if ($this->showCheckAll())
+		if ($this->showCheckAll()) {
+			if ($this->check_all_title !== null) {
+				$this->check_all->title = $this->check_all_title;
+				$this->check_all->content_type = $this->check_all_content_type;
+			}
 			$this->check_all->display();
+		}
 
 		$clear_div_tag = new SwatHtmlTag('div');
 		$clear_div_tag->style = 'clear: left;';
