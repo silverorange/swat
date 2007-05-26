@@ -346,7 +346,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function hasMessage()
 	{
-		$has_message = parent::hasMessage()
+		$has_message = parent::hasMessage();
 		if (!$has_message && $this->tile !== null)
 			$has_message = $this->tile->hasMessage();
 
