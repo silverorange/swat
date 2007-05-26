@@ -47,6 +47,7 @@ class DemoApplication
 		'TableView'         => 'SwatTableView',
 		'TableViewInputRow' => 'SwatTableViewInputRow',
 		'Textarea'          => 'SwatTextarea',
+		'TileView'          => 'SwatTileView',
 		'TimeZoneEntry'     => 'SwatTimeZoneEntry',
 		'ToolLink'          => 'SwatToolLink',
 		'YesNoFlydown'      => 'SwatYesNoFlydown',
@@ -374,6 +375,17 @@ class DemoApplication
 				'SwatTextarea',
 				'SwatXHTMLTextarea',
 				'SwatTextareaEditor'
+				);
+			break;
+
+		case 'TileView':
+			$entries = array(
+				'SwatTileView',
+				'SwatTile',
+				'SwatTableStore',
+				'SwatCheckboxCellRenderer',
+				'SwatDateCellRenderer',
+				'SwatTextCellRenderer',
 				);
 			break;
 
