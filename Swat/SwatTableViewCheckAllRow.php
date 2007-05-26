@@ -14,6 +14,27 @@ require_once 'Swat/SwatCheckAll.php';
  */
 class SwatTableViewCheckAllRow extends SwatTableViewRow
 {
+	// {{{ public properties
+
+	/**
+	 * Optional checkbox label title
+	 *
+	 * Defaults to "Check All".
+	 *
+	 * @var string
+	 */
+	public $title = null;
+
+	/**
+	 * Optional content type for title
+	 *
+	 * Defaults to text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $content_type = 'text/plain';
+
+	// }}}
 	// {{{ private properties
 
 	/**
@@ -144,6 +165,8 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 			$td_tag->colspan = count($columns) - $position;
 
 		$td_tag->open();
+		$this->check_all->title = $this->title;
+		$this->check_all->content_type = $this->content_type;
 		$this->check_all->display();
 		$td_tag->close();
 
