@@ -165,8 +165,10 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 			$td_tag->colspan = count($columns) - $position;
 
 		$td_tag->open();
-		$this->check_all->title = $this->title;
-		$this->check_all->content_type = $this->content_type;
+		if ($this->title !== null) {
+			$this->check_all->title = $this->title;
+			$this->check_all->content_type = $this->content_type;
+		}
 		$this->check_all->display();
 		$td_tag->close();
 
