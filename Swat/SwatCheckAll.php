@@ -23,7 +23,7 @@ class SwatCheckAll extends SwatCheckbox
 	 *
 	 * @var string
 	 */
-	public $title = null;
+	public $title;
 
 	/**
 	 * Optional content type for title
