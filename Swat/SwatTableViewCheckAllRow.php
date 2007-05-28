@@ -23,7 +23,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 *
 	 * @var string
 	 */
-	public $title = null;
+	public $title;
 
 	/**
 	 * Optional content type for title
