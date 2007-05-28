@@ -105,11 +105,11 @@ class SwatPagination extends SwatControl
 	/**
 	 * Current page
 	 *
-	 * The number of the current page. The value is zero based.
+	 * The number of the current page.
 	 *
 	 * @var integer
 	 */
-	protected $current_page = 0;
+	protected $current_page = 1;
 
 	/**
 	 * The total number of pages in the database
@@ -228,7 +228,7 @@ class SwatPagination extends SwatControl
 	{
 		$this->current_page = $page;
 
-		$this->current_record = $this->current_page * $this->page_size;
+		$this->current_record = ($this->current_page - 1) * $this->page_size;
 	}
 
 	// }}}
@@ -284,7 +284,7 @@ class SwatPagination extends SwatControl
 		$div->class = 'swat-pagination-position';
 
 		$div->setContent(sprintf(Swat::_('Page %d of %d'),
-			$this->current_page + 1, $this->total_pages));
+			$this->current_page, $this->total_pages));
 
 		$div->display();
 	}
@@ -323,7 +323,7 @@ class SwatPagination extends SwatControl
 	 */
 	protected function displayPages()
 	{
-		$j = -1;
+		$j = 0;
 
 		$link = $this->getLink();
 
@@ -332,20 +332,20 @@ class SwatPagination extends SwatControl
 		$current = new SwatHtmlTag('span');
 		$current->class = 'swat-pagination-current';
 
-		for ($i = 0; $i < $this->total_pages; $i++) {
+		for ($i = 1; $i <= $this->total_pages; $i++) {
 			$display = false;
 
-			if ($this->current_page < 7 && $i < 10) {
+			if ($this->current_page < 7 && $i <= 10) {
 				// Current page is in the first 6, show the first 10 pages
 				$display = true;
 
-			} elseif ($this->current_page >= $this->total_pages - 7 &&
+			} elseif ($this->current_page > $this->total_pages - 6 &&
 				$i >= $this->total_pages - 10) {
 
 				// Current page is in the last 6, show the last 10 pages
 				$display = true;
 
-			} elseif ($i <= 1 || $i >= $this->total_pages -2 ||
+			} elseif ($i < 3 || $i > $this->total_pages - 2 ||
 				abs($this->current_page - $i) <= 3) {
 
 				// Always show the first 2, last 2, and middle 6 pages
@@ -360,14 +360,14 @@ class SwatPagination extends SwatControl
 				}
 
 				if ($i == $this->current_page) {
-					$current->setContent((string)($i + 1));
+					$current->setContent((string)$i);
 					$current->display();
 				} else {
 					$anchor->href = sprintf($link, (string)$i);
 					$anchor->title =
-						sprintf(Swat::_('Go to page %d'), ($i + 1));
+						sprintf(Swat::_('Go to page %d'), ($i));
 
-					$anchor->setContent((string)($i + 1));
+					$anchor->setContent((string)($i));
 					$anchor->display();
 				}
 
