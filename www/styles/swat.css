@@ -268,3 +268,10 @@ input.swat-insensitive {
 .swat-radio-list input.swat-insensitive {
 	background: transparent;
 }
+
+
+/* SwatFormField */
+
+.swat-form-field {
+	margin: 0 0 0.5em 0;
+}
