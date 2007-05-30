@@ -146,12 +146,11 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function init()
 
 	/**
-	 * Initializaes this notebook 
+	 * Initializes this notebook 
 	 */
 	public function init()
 	{
 		parent::init();
-
 		foreach($this->pages as $page)
 			$page->init();
 	}
@@ -160,15 +159,11 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function process()
 
 	/**
-	 * Processes this widget
-	 *
-	 * After a form submit, this widget processes itself and its dependencies
-	 * and then recursively processes  any of its child widgets.
+	 * Processes this notebook 
 	 */
 	public function process()
 	{
-		$this->processed = true;
-
+		parent::process();
 		foreach($this->pages as $page)
 			$page->process();
 	}
