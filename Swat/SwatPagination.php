@@ -7,10 +7,12 @@ require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatString.php';
 
 /**
- * A widget to allow navigation between paginated data
+ * A widget to allow navigation between paged data
+ *
+ * SwatPagination pages start at page 1, not page 0.
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatPagination extends SwatControl
