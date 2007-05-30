@@ -264,7 +264,7 @@ class SwatPagination extends SwatControl
 	 */
 	protected function displayPrev()
 	{
-		if ($this->prev_page != 0) {
+		if ($this->prev_page > 0) {
 			$link = $this->getLink();
 
 			$anchor = new SwatHtmlTag('a');
@@ -309,7 +309,7 @@ class SwatPagination extends SwatControl
 	 */
 	protected function displayNext()
 	{
-		if ($this->next_page != 0) {
+		if ($this->next_page > 0) {
 			$link = $this->getLink();
 
 			$anchor = new SwatHtmlTag('a');
