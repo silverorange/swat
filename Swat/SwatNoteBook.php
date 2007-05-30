@@ -141,8 +141,26 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	public function init()
 	{
 		parent::init();
+
 		foreach($this->pages as $page)
 			$page->init();
+	}
+
+	// }}}
+	// {{{ public function process()
+
+	/**
+	 * Processes this widget
+	 *
+	 * After a form submit, this widget processes itself and its dependencies
+	 * and then recursively processes  any of its child widgets.
+	 */
+	public function process()
+	{
+		$this->processed = true;
+
+		foreach($this->pages as $page)
+			$page->process();
 	}
 
 	// }}}
