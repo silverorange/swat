@@ -58,6 +58,16 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 */
 	public $tab_position = self::POSITION_TOP;
 
+	/**
+	 * Selected page 
+	 *
+	 * The id of the {@link SwatNoteBookPage} to show as selected.
+	 * By default, the first tab is selected.
+	 *
+	 * @var string
+	 */
+	public $selected_page;
+
 	// }}}
 	// {{{ protected properties
 
@@ -184,12 +194,11 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 		foreach ($this->pages as $page)
 		{
 			$li_counter++;
-			if ($li_counter == 1) {
-				$li_tag = new SwatHtmlTag('li');
+			$li_tag = new SwatHtmlTag('li');
+
+			if (($this->selected_page=== null && $li_counter == 1) ||
+				($page->id == $this->selected_page))
 				$li_tag->class = 'selected';
-			} else {
-				$li_tag = new SwatHtmlTag('li');
-			}
 
 			$anchor_tag = new SwatHtmlTag('a');
 			$anchor_tag->href = '#'.$page->id;
