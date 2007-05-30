@@ -17,65 +17,80 @@ class SwatPagination extends SwatControl
 {
 	// {{{ class constants
 
+	/**
+	 * Display part constant for the displaying 'next' link
+	 */
 	const NEXT     = 1;
+
+	/**
+	 * Display part constant for displaying the 'previous' link
+	 */
 	const PREV     = 2;
+
+	/**
+	 * Display part constant for displaying a textual description of the
+	 * current position
+	 */
 	const POSITION = 4;
+
+	/**
+	 * Display part constant for displaying a list of pages close to the
+	 * current page
+	 */
 	const PAGES    = 8;
 
 	// }}}
 	// {{{ public properties
 
 	/**
-	 * Link
+	 * The URI linked by this pagination widget
 	 *
-	 * The url to link to including a conversion string which is replaced
-	 * by the page number (i.e. "mydir/page%s").
+	 * The first sprintf placeholder (%s) in the URI will be replaced with
+	 * the current page number. For example: "mydir/page%s".
 	 *
 	 * @var string
 	 */
 	public $link = null;
 
 	/**
-	 * Page size
-	 *
-	 * The number of records that are displayed per page.
+	 * The number of records displayed on a page
 	 *
 	 * @var integer
 	 */
 	public $page_size = 20;
 
 	/**
-	 * Total records
-	 *
-	 * The total number of records that are available for display.
+	 * The total number of records that are available for display
 	 *
 	 * @var integer
 	 */
 	public $total_records = 0;
 
 	/**
-	 * Current record
-	 *
-	 * The record that is currently being displayed first on the page.
+	 * The index of the first record being displayed on the current page
 	 *
 	 * @var integer
 	 */
 	public $current_record = 0;
 
 	/**
-	 * Displayed date parts
+	 * Displayed pagination parts
 	 *
-	 * Bitwise combination of {@link SwatPagination::PREV},
-	 * {@link SwatPagination::NEXT}, {@link SwatPagination::PAGES},
-	 * and {@link SwatPagination::POSITION}
+	 * The display parts property is a bitwise combination of the
+	 * {@link SwatPagination::PREV}, {@link SwatPagination::NEXT},
+	 * {@link SwatPagination::PAGES} and {@link SwatPagination::POSITION}
+	 * constants.
 	 *
 	 * For example, to show a pagination widget with just next and previous
 	 * links use the following:
 	 *
 	 * <code>
 	 * $pagination->display_parts = SwatPagination::PREV |
-	 * SwatPagination::NEXT;
+	 *     SwatPagination::NEXT;
 	 * </code>
+	 *
+	 * Defaults to <code>SwatPagination::POSITION | SwatPagination::NEXT |
+	 * SwatPagination::PREV | SwatPagination::PAGES</code>.
 	 *
 	 * @var integer
 	 */
@@ -103,16 +118,16 @@ class SwatPagination extends SwatControl
 	protected $prev_page = 0;
 
 	/**
-	 * Current page
-	 *
-	 * The number of the current page.
+	 * The current page number
 	 *
 	 * @var integer
 	 */
 	protected $current_page = 1;
 
 	/**
-	 * The total number of pages in the database
+	 * The total number of pages in the record set
+	 *
+	 * This is not the number of <i>records</i> in the record set.
 	 *
 	 * @var integer
 	 */
@@ -123,8 +138,6 @@ class SwatPagination extends SwatControl
 
 	/**
 	 * Creates a new pagination widget
-	 *
-	 * Enforces that a unique id is set.
 	 *
 	 * @param string $id a non-visible unique id for this widget.
 	 *
@@ -147,16 +160,17 @@ class SwatPagination extends SwatControl
 	// {{{ public function getResultsMessage()
 
 	/**
-	 * Get Results Message
+	 * Gets a human readable summary of the current state of this pagination
+	 * widget
 	 *
-	 * Takes the current state of a {@link SwatPagination} widget and
-	 * outputs a human readable summary of what is currently shown.
+	 * @param $unit string optional. The type of unit being returned. By
+	 *                      default this is 'record'.
+	 * @param $unit_plural string optional. The plural version of the
+	 *                             <i>$unit</i> parameter. By default this is
+	 *                             'records'.
 	 *
-	 * @param $unit string Type of unit being returned (default 'record')
-	 * @param $unit string Plural type of unit being returned (default
-	 *        'records')
-	 *
-	 * @return string Results message
+	 * @return string a human readable summary of the current state of this
+	 *                 pagination widget.
 	 */
 	public function getResultsMessage($unit = null, $unit_plural = null)
 	{
