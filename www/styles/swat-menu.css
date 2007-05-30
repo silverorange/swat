@@ -1,10 +1,11 @@
 div.yuimenu {
 	background:#fff url(../images/swat-frame-background.png) no-repeat scroll right top;
-	border-color: #dcceb2;
+	border-color: #dcceb2;	
 }
 
 div.yuimenubar {
 	background: #f6f2ea url(../images/swat-toolbar-background.png) top left repeat-x;
+	border: 0;
 	border-bottom: 1px solid #efe8da;
 	margin: -16px -16px 0 -16px;
 	list-style-type: none;
@@ -16,6 +17,7 @@ div.yuimenubar h6 {
 	color: #837352;
 	padding: 5px;
 	border: 0;
+	text-align: left;
 }
 
 div.yuimenu li,
@@ -46,8 +48,14 @@ div.yuimenubar li.selected a.selected {
 div.yuimenu li.yuimenuitem,
 div.yuimenubar li.yuimenubaritem,
 div.yuimenubar li.yuimenubaritem.first-of-type {
-	padding: 5px 10px 5px 15px;
+	padding: 5px 10px 5px 0;
 	border: 0;
+}
+
+div.yuimenu li.yuimenuitem a,
+div.yuimenubar li.yuimenubaritem a,
+div.yuimenubar li.yuimenubaritem.first-of-type a {
+	padding-left: 15px;
 }
 
 div.yuimenubar li.yuimenubaritem,
@@ -77,4 +85,18 @@ div.yuimenubar .swat-menu-item-delete:visited {
 
 div.yuimenubar li.selected a.selected.swat-menu-item-delete {
 	background: #f3efe5 url(../images/swat-tool-link-delete.png) 6px center no-repeat;
+}
+
+div.yuimenu li.hassubmenu em.submenuindicator {
+	margin-right: 0;
+}
+
+div.yuimenubar li.hassubmenu,
+div.yuimenubar li.hashelptext {
+	text-align: left;
+}
+
+div.yuimenubar div.yuimenu li.hassubmenu,
+div.yuimenubar div.yuimenu li.hashelptext {
+	text-align: right;
 }
