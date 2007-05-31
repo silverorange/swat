@@ -65,9 +65,14 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	/**
 	 * A class-mapping object
 	 *
-	 * @var StoreClassMap
+	 * @var SwatDBClassMap
 	 */
 	protected $class_map;
+
+	/**
+	 * @var boolean
+	 */
+	protected $read_only = false;
 	
 	// }}}
 	// {{{ public function __construct()
@@ -82,14 +87,14 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	public function __construct($data = null, $read_only = false)
 	{
 		$this->class_map = SwatDBClassMap::instance();
+		$this->read_only = $read_only;
 
 		$this->init();
 
 		if ($data !== null)
 			$this->initFromRow($data);
 
-		if (!$read_only)
-			$this->generatePropertyHashes();
+		$this->generatePropertyHashes();
 	}
 
 	// }}}
@@ -114,6 +119,9 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	 */
 	public function isModified()
 	{
+		if ($this->read_only)
+			return false;
+
 		$property_array = $this->getProperties();
 
 		foreach ($property_array as $name => $value) {
@@ -140,6 +148,9 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	 */
 	public function getModifiedProperties()
 	{
+		if ($this->read_only)
+			return array();
+
 		$property_array = $this->getProperties();
 		$modified_properties = array();
 
@@ -360,6 +371,9 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	 */
 	protected function generatePropertyHashes()
 	{
+		if ($this->read_only)
+			return;
+
 		$property_array = $this->getProperties();
 
 		foreach ($property_array as $name => $value) {
@@ -597,6 +611,10 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	 */
 	public function save()
 	{
+		if ($this->read_only)
+			throw new SwatDBException('This dataobject was
+					loaded read-only and cannot be saved.');
+
 		$this->checkDB();
 
 		$transaction = new SwatDBTransaction($this->db);
