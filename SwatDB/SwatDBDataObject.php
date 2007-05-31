@@ -74,8 +74,12 @@ class SwatDBDataObject extends SwatObject implements Serializable
 
 	/**
 	 * @param mixed $data
+	 * @param boolean $read_only Whether this data object is read only. Setting
+	 *                read-only to true will improve the performance of
+	 *                creating large amounts of dataobjects that will never be
+	 *                saved.
 	 */
-	public function __construct($data = null)
+	public function __construct($data = null, $read_only = false)
 	{
 		$this->class_map = SwatDBClassMap::instance();
 
@@ -84,7 +88,8 @@ class SwatDBDataObject extends SwatObject implements Serializable
 		if ($data !== null)
 			$this->initFromRow($data);
 
-		$this->generatePropertyHashes();
+		if (!$read_only)
+			$this->generatePropertyHashes();
 	}
 
 	// }}}
