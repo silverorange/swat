@@ -4,6 +4,7 @@
 
 require_once 'Swat/SwatObject.php';
 require_once 'SwatDB/SwatDBTransaction.php';
+require_once 'SwatDB/SwatDBClassMap.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
@@ -44,7 +45,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	/**
 	 * A class-mapping object
 	 *
-	 * @var StoreClassMap
+	 * @var SwatDBClassMap
 	 */
 	protected $class_map;
 
