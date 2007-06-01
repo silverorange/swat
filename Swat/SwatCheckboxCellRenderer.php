@@ -181,8 +181,15 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 	public function getInlineJavaScript()
 	{
 		$view = $this->getFirstAncestor('SwatView');
-		return sprintf("var %s = new SwatCheckboxCellRenderer('%s', %s);",
-			$this->id, $this->id, $view->id);
+		if ($view !== null) {
+			$javascript = sprintf(
+				"var %s = new SwatCheckboxCellRenderer('%s', %s);",
+				$this->id, $this->id, $view->id);
+		} else {
+			$javascript = '';
+		}
+
+		return $javascript;
 	}
 
 	// }}}
