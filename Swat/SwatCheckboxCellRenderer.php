@@ -126,9 +126,6 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 		if (!$this->visible)
 			return;
 
-		$div_tag = new SwatHtmlTag('div');
-		$div_tag->open();
-
 		if ($this->title !== null) {
 			$label_tag = new SwatHtmlTag('label');
 			$label_tag->for = $this->id.'_checkbox_'.$this->value;
@@ -153,8 +150,6 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 			$label_tag->displayContent();
 			$label_tag->close();
 		}
-
-		$div_tag->close();
 	}
 
 	// }}}
