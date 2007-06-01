@@ -24,7 +24,7 @@
 				<object class="SwatTextCellRenderer">
 					<property name="text">)</property>
 				</object>
-				<object class="SwatCheckboxCellRenderer" id="tile_items">
+				<object class="SwatCheckboxCellRenderer" id="items">
 					<property name="value" type="data">title</property>
 					<property name="title" type="string">select fruit</property>
 				</object>
