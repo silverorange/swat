@@ -737,11 +737,6 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 	/**
 	 * Processes this table-view
-	 *
-	 * Processes each column in this view and then sets the checked items of
-	 * this table view by getting the items from a special column called
-	 * 'checkbox'. If a column with this unique identifier does not exist,
-	 * the checked items of this view are set to an empty array.
 	 */
 	public function process()
 	{
@@ -756,6 +751,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 		foreach ($this->extra_rows as $row)
 			$row->process();
 
+		// this is part of the old selection API
 		if ($this->hasColumn('checkbox')) {
 			$items = $this->getColumn('checkbox');
 			$this->checked_items = $items->getItems();
@@ -1206,7 +1202,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 			if ($has_message)
 				$tr_tag->class = $tr_tag->class.' swat-error';
-				
+
 			$tr_tag->class =
 				$tr_tag->class.' swat-table-view-spanning-column';
 

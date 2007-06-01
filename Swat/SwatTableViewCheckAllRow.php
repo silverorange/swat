@@ -4,12 +4,13 @@
 
 require_once 'Swat/SwatTableViewRow.php';
 require_once 'Swat/SwatCheckAll.php';
+require_once 'Swat/SwatTableViewColumn.php';
 
 /**
  * A an extra row containing a check-all widget
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewCheckAllRow extends SwatTableViewRow
@@ -38,12 +39,13 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	// {{{ private properties
 
 	/**
-	 * The unique identifier of the checkbox column that this check-all row
-	 * is bound to
+	 * The table-view checkbox column to which this check-all row is bound
 	 *
-	 * @var string
+	 * @var SwatTableViewCheckboxColumn
 	 */
-	private $column_id;
+	private $column;
+
+	private $list_id;
 
 	/**
 	 * The check-all widget for this row 
@@ -66,15 +68,19 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	// {{{ public function __construct()
 
 	/**
-	 * Creates a new check-all row
+	 * Creates a new table-view check-all row
 	 *
-	 * @param string $column_id the unique identifier of the checkbox column
-	 *                           that this check-all row is bound to.
+	 * @param SwatTableViewCheckboxColumn $column the table-view checkbox
+	 *                                             column to which this
+	 *                                             check-all row is bound.
+	 * @param string $list_id the identifier of the checkbox list that controls
+	 *                         the check-all widget of this row.
 	 */
-	public function __construct($column_id)
+	public function __construct(SwatTableViewCheckboxColumn $column, $list_id)
 	{
 		parent::__construct();
-		$this->column_id = $column_id;
+		$this->column = $column;
+		$this->list_id = $list_id;
 	}
 
 	// }}}
@@ -145,11 +151,12 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 
 		// find checkbox column position
 		$position = 0;
-		foreach ($columns as $column)
-			if ($column->id == $this->column_id)
+		foreach ($columns as $column) {
+			if ($column === $this->column)
 				break;
 			else
 				$position++;
+		}
 
 		if ($position > 0) {
 			$td_before_tag = new SwatHtmlTag('td');
@@ -179,9 +186,9 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	// {{{ public function getInlineJavaScript()
 
 	/**
-	 * Gets the inline JavaScript required for this row
+	 * Gets the inline JavaScript required for this check-all row
 	 *
-	 * @return string the inline JavaScript required for this row.
+	 * @return string the inline JavaScript required for this check-all row.
 	 *
 	 * @see SwatTableViewRow::getInlineJavaScript()
 	 */
@@ -192,7 +199,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 
 		// set the controller of the check-all widget
 		return sprintf("%s_obj.setController(%s);",
-			$this->check_all->id, $this->column_id);
+			$this->check_all->id, $this->list_id);
 	}
 
 	// }}}

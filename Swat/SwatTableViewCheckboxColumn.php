@@ -5,13 +5,21 @@
 require_once 'Swat/SwatCheckboxCellRenderer.php';
 require_once 'Swat/SwatTableViewColumn.php';
 require_once 'Swat/SwatTableViewCheckAllRow.php';
-require_once 'Swat/SwatHtmlTag.php';
 
 /**
- * A checkbox column.
+ * A special table-view column designed to contain a checkbox cell renderer
+ *
+ * A checkbox column adds a check-all row to the parent view. The check all
+ * widget is used for controlling checkbox cell renderers. If your table-view
+ * does not need check-all functionality a regular table-view column will
+ * suffice.
+ *
+ * Checkbox columns must contain at least one {@link SwatCheckboxCellRenderer}.
+ * If this column contains more than one checkbox cell renderer, the check-all
+ * widget only applies to the first checkbox renderer.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewCheckboxColumn extends SwatTableViewColumn
@@ -19,59 +27,116 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 	// {{{ public properties
 
 	/**
-	 * Show check all
+	 * Whether to show a check-all row for this checkbox column
 	 *
-	 * Whether to show a "check all" widget.  For this option to work, the
-	 * table view must contain a column with an id of "checkbox".
+	 * This property only has an effect if a {@link SwatCheckboxCellRenderer}
+	 * is present inside this column.
+	 *
+	 * If a check-all row is never needed, use a regular
+	 * {@link SwatTableViewColumn} instead of a checkbox column.
+	 *
 	 * @var boolean
 	 */
 	public $show_check_all = true;
 
 	/**
-	 * Highlight row
+	 * Optional label title for the check-all widget
 	 *
-	 * Whether to add JavaScript to highlight the current row of a
-	 * {@link SwatTableView} when the checkbox is clicked.
+	 * Defaults to "Check All".
+	 *
+	 * @var string
+	 */
+	public $check_all_title;
+
+	/**
+	 * Optional content type for check-all widget title
+	 *
+	 * Defaults to text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $check_all_content_type = 'text/plain';
+
+	/**
+	 * Whether or not this column is responsible for highlighting selected
+	 * table-view rows
 	 *
 	 * @var boolean
+	 *
+	 * @deprecated this property has no effect anymore. Table-view rows are
+	 *             always highlighted when selected. The column does not
+	 *             control row highlighting anymore.
 	 */
 	public $highlight_row = true;
 
 	// }}}
 	// {{{ private properties
 
-	private $items = null;
+	/**
+	 * The selected rows of this checkbox column after processing this column
+	 *
+	 * @var array
+	 *
+	 * @see SwatView::getSelection()
+	 *
+	 * @deprecated this is part of the old selection API.
+	 */
+	private $items = array();
 
-	private $checkbox_renderer = null;
-
-	// }}}
-	// {{{ public function __construct()
-
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-table-view-checkbox-column.js',
-			Swat::PACKAGE_ID);
-	}
+	/**
+	 * Check-all row added by this column to the parent table-view
+	 *
+	 * @var SwatTableViewCheckAllRow
+	 *
+	 * @see SwatTableViewCheckboxColumn::$show_check_all
+	 */
+	private $check_all;
 
 	// }}}
 	// {{{ public function init()
 
+	/**
+	 * Initializes this checkbox column
+	 */
 	public function init()
 	{
 		parent::init();
+		$this->createEmbeddedWidgets();
+
+		$this->check_all->init();
+
+		/*
+		 * Ideally, setting the title and content type of the check-all row
+		 * would be done at display time. Unfortunately there is no way for
+		 * a column to access this time so we set the properties in init.
+		 */
+		if ($this->check_all_title !== null) {
+			$this->check_all->title = $this->check_all_title;
+			$this->check_all->content_type = $this->check_all_content_type;
+		}
+
 		if ($this->show_check_all)
-			$this->view->appendRow(new SwatTableViewCheckAllRow($this->id));
+			$this->parent->appendRow($this->check_all);
 	}
 
 	// }}}
 	// {{{ public function process()
 
+	/**
+	 * Processes this checkbox column
+	 *
+	 * Column-level processing is needed for the deprecated selection API.
+	 *
+	 * @see SwatView::getSelection()
+	 */
 	public function process()
 	{
-		$item_name = $this->getRendererName();
+		parent::process();
 
+		$this->check_all->process();
+
+		// this is part of the old selection API
+		$item_name = $this->getCheckboxRendererId();
 		if (isset($_POST[$item_name]) && is_array($_POST[$item_name]))
 			$this->items = $_POST[$item_name];
 	}
@@ -79,19 +144,33 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 	// }}}
 	// {{{ public function getItems()
 
+	/**
+	 * Gets the selected rows of this checkbox column
+	 *
+	 * @return array the selected rows of this checkbox column.
+	 *
+	 * @see SwatView::getSelection()
+	 *
+	 * @deprecated This is part of the old selection API. Use the selection API
+	 *             defined in SwatView instead.
+	 */
 	public function getItems()
 	{
 		return $this->items;
 	}
 
 	// }}}
-	// {{{ public function getRendererName()
+	// {{{ public function getCheckboxRendererId()
 
-	private function getRendererName()
+	/**
+	 * Gets the identifier of the first checkbox cell renderer in this column
+	 *
+	 * @return string the indentifier of the first checkbox cell renderer in
+	 *                 this column.
+	 */
+	private function getCheckboxRendererId()
 	{
-		$renderer = $this->getCheckboxRenderer();
-
-		return $renderer->id;
+		return $this->getCheckboxRenderer()->id;
 	}
 
 	// }}}
@@ -99,32 +178,21 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 
 	private function getCheckboxRenderer()
 	{
-		foreach ($this->renderers as $renderer) 
+		foreach ($this->getRenderers() as $renderer)
 			if ($renderer instanceof SwatCheckboxCellRenderer)
 				return $renderer;
 
-		throw new SwatException("The column '{$this->id}' must contain a ".
-			'checkbox cell renderer.');
+		throw new SwatException("The checkbox column ‘{$this->id}’ must ".
+			'contain a checkbox cell renderer.');
 	}
 
 	// }}}
-	// {{{ public function getInlineJavaScript()
+	// {{{ private function createEmbeddedWidgets()
 
-	/**
-	 * Gets the inline JavaScript for the highlight row
-	 *
-	 * @return string the inline JavaScript for the highlight row.
-	 *
-	 * @see SwatTableViewColumn::getInlineJavaScript()
-	 */
-	public function getInlineJavaScript()
+	private function createEmbeddedWidgets()
 	{
-		if (!$this->highlight_row)
-			return '';
-
-		$item_name = $this->getRendererName();
-		return "var {$this->id} = new SwatTableViewCheckboxColumn(".
-			"'{$item_name}', {$this->view->id});";
+		$renderer_id = $this->getCheckboxRendererId();
+		$this->check_all = new SwatTableViewCheckAllRow($this, $renderer_id);
 	}
 
 	// }}}
