@@ -416,11 +416,11 @@ class SwatTileView extends SwatView implements SwatUIParent
 			$this->id, $this->id);
 
 		if ($this->tile !== null) {
-			$tile_javascript = $tile->getRendererInlineJavaScript();
+			$tile_javascript = $this->tile->getRendererInlineJavaScript();
 			if (strlen($tile_javascript) > 0)
 				$javascript.= "\n".$tile_javascript;
 
-			$tile_javascript = $tile->getInlineJavaScript();
+			$tile_javascript = $this->tile->getInlineJavaScript();
 			if (strlen($tile_javascript) > 0)
 				$javascript.= "\n".$tile_javascript;
 		}
