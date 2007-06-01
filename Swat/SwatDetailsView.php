@@ -158,6 +158,8 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 		$table_tag->open();
 		$this->displayContent();
 		$table_tag->close();
+
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -342,6 +344,34 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 		$classes = array('swat-details-view');
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScript()
+
+	/**
+	 * Gets the inline JavaScript needed by this details view as well as any
+	 * inline JavaScript needed by fields
+	 *
+	 * @return string inline JavaScript needed by this details view.
+	 */
+	protected function getInlineJavaScript()
+	{
+		$javascript = '';
+
+		foreach ($this->fields as $field) {
+			$field_javascript = $field->getRendererInlineJavaScript();
+			if (strlen($field_javascript) > 0)
+				$javascript.= "\n".$field_javascript;
+		}
+
+		foreach ($this->fields as $field) {
+			$field_javascript = $field->getInlineJavaScript();
+			if (strlen($field_javascript) > 0)
+				$javascript.= "\n".$field_javascript;
+		}
+
+		return $javascript;
 	}
 
 	// }}}

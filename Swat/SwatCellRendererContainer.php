@@ -300,6 +300,51 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	}
 
 	// }}}
+	// {{{ public function getHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects needed by this cell renderer
+	 * container 
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this cell renderer container.
+	 *
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
+	 */
+	public function getHtmlHeadEntrySet()
+	{
+		$set = parent::getHtmlHeadEntrySet();
+		$renderers = $this->getRenderers();
+		foreach ($renderers as $renderer)
+			$set->addEntrySet($renderer->getHtmlHeadEntrySet());
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getRendererInlineJavaScript()
+
+	/**
+	 * Gets inline JavaScript used by all cell renderers within this cell
+	 * renderer container
+	 *
+	 * @return string the inline JavaScript used by all cell renderers within
+	 *                 this cell renderer container.
+	 */
+	public function getRendererInlineJavaScript()
+	{
+		$javascript = '';
+
+		foreach ($this->getRenderers() as $renderer) {
+			$renderer_javascirpt = $renderer->getInlineJavaScript();
+			if (strlen($renderer_javascript) > 0)
+				$javascript = "\n".$renderer_javascript;
+		}
+
+		return $javascript;
+	}
+
+	// }}}
 }
 
 ?>
