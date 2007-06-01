@@ -43,7 +43,6 @@ class SwatTile extends SwatCellRendererContainer
 	 *
 	 * Each data row is displayed between div tags in the tile
 	 */
-
 	public function display($data)
 	{
 		if (!$this->visible)
