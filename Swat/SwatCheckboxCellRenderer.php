@@ -141,6 +141,9 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 		$checkbox_tag->name = $this->id.'[]';
 		$checkbox_tag->id = $this->id.'_checkbox_'.$this->value;
 		$checkbox_tag->value = $this->value;
+		if (!$this->sensitive)
+			$checkbox_tag->disabled = 'disabled';
+
 		if (in_array($this->value, $this->selected_values))
 			$checkbox_tag->checked = 'checked';
 
