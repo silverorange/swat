@@ -430,7 +430,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 			$javascript.= "\n".$this->check_all->getInlineJavascript();
 
 			// set the controller of the check-all widget
-			$javascript.= sprintf("\n%s_obj.setController(%s_obj);",
+			$javascript.= sprintf("\n%s_obj.setController(%s);",
 				$this->check_all->id, $renderer->id);
 		}
 
