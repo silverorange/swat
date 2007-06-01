@@ -336,7 +336,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 		$javascript = '';
 
 		foreach ($this->getRenderers() as $renderer) {
-			$renderer_javascirpt = $renderer->getInlineJavaScript();
+			$renderer_javascript = $renderer->getInlineJavaScript();
 			if (strlen($renderer_javascript) > 0)
 				$javascript = "\n".$renderer_javascript;
 		}
