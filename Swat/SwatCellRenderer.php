@@ -133,6 +133,52 @@ abstract class SwatCellRenderer extends SwatUIObject
 	}
 
 	// }}}
+	// {{{ public function getInlineJavaScript()
+
+	/**
+	 * Gets ths inline JavaScript required by this cell renderer
+	 *
+	 * @return string the inline JavaScript required by this cell renderer.
+	 */
+	public function getInlineJavaScript()
+	{
+		return '';
+	}
+
+	// }}}
+	// {{{ public function getBaseCSSClassNames()
+
+	/** 
+	 * Gets the base CSS class names for this cell renderer
+	 *
+	 * This is the recommended place for cell-renderer subclasses to add extra
+	 * hard-coded CSS classes.
+	 *
+	 * @return array the array of base CSS class names for this cell renderer.
+	 */
+	public function getBaseCSSClassNames()
+	{
+		return array();
+	}
+
+	// }}}
+	// {{{ public function getDataSpecificCSSClassNames()
+
+	/** 
+	 * Gets the data specific CSS class names for this cell renderer
+	 *
+	 * This is the recommended place for cell-renderer subclasses to add extra
+	 * hard-coded CSS classes that depend on data-bound properties of this
+	 * cell-renderer.
+	 *
+	 * @return array the array of base CSS class names for this cell renderer.
+	 */
+	public function getDataSpecificCSSClassNames()
+	{
+		return array();
+	}
+
+	// }}}
 	// {{{ public final function getInheritanceCSSClassNames()
 
 	/** 
@@ -176,39 +222,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 		}
 
 		return $css_class_names;
-	}
-
-	// }}}
-	// {{{ public function getBaseCSSClassNames()
-
-	/** 
-	 * Gets the base CSS class names for this cell renderer
-	 *
-	 * This is the recommended place for cell-renderer subclasses to add extra
-	 * hard-coded CSS classes.
-	 *
-	 * @return array the array of base CSS class names for this cell renderer.
-	 */
-	public function getBaseCSSClassNames()
-	{
-		return array();
-	}
-
-	// }}}
-	// {{{ public function getDataSpecificCSSClassNames()
-
-	/** 
-	 * Gets the data specific CSS class names for this cell renderer
-	 *
-	 * This is the recommended place for cell-renderer subclasses to add extra
-	 * hard-coded CSS classes that depend on data-bound properties of this
-	 * cell-renderer.
-	 *
-	 * @return array the array of base CSS class names for this cell renderer.
-	 */
-	public function getDataSpecificCSSClassNames()
-	{
-		return array();
 	}
 
 	// }}}

@@ -412,26 +412,27 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	protected function getInlineJavaScript()
 	{
-		if (!$this->showCheckAll())
-			return '';
-
-		$renderer = $this->getCheckboxCellRenderer();
-
 		$javascript = sprintf("var %s = new SwatTileView('%s');",
 			$this->id, $this->id);
 
-		// TODO: SwatTableViewCheckboxColumn has all the functionality we need,
-		// but it needs to somehow be renamed to be be shared between a
-		// TableView and TileView (SwatViewCheckbox maybe?)
-		$javascript.= sprintf(
-			"\nvar %s = new SwatTableViewCheckboxColumn('%s', %s);",
-			$this->id, $renderer->id, $this->id);
+		if ($this->tile !== null) {
+			$tile_javascript = $tile->getRendererInlineJavaScript();
+			if (strlen($tile_javascript) > 0)
+				$javascript.= "\n".$tile_javascript;
 
-		$javascript.= "\n".$this->check_all->getInlineJavascript();
+			$tile_javascript = $tile->getInlineJavaScript();
+			if (strlen($tile_javascript) > 0)
+				$javascript.= "\n".$tile_javascript;
+		}
 
-		// set the controller of the check-all widget
-		$javascript.= sprintf("\n%s_obj.setController(%s);",
-			$this->check_all->id, $this->id);
+		if ($this->showCheckAll()) {
+			$renderer = $this->getCheckboxCellRenderer();
+			$javascript.= "\n".$this->check_all->getInlineJavascript();
+
+			// set the controller of the check-all widget
+			$javascript.= sprintf("\n%s_obj.setController(%s_obj);",
+				$this->check_all->id, $this->render->id);
+		}
 
 		return $javascript;
 	}
@@ -470,7 +471,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	/**
 	 * Gets the first checkbox cell renderer in this tile view's tile
 	 *
-	 * @return SwatCheckboxCellRenderewr the first checkbox cell renderer in
+	 * @return SwatCheckboxCellRenderer the first checkbox cell renderer in
 	 *                                   this tile view's tile or null if no
 	 *                                   such cell renderer exists.
 	 */

@@ -497,10 +497,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	public function getHtmlHeadEntrySet()
 	{
 		$set = parent::getHtmlHeadEntrySet();
-		$renderers = $this->getRenderers();
-		foreach ($renderers as $renderer)
-			$set->addEntrySet($renderer->getHtmlHeadEntrySet());
-
 		if ($this->input_cell !== null)
 			$set->addEntrySet($this->input_cell->getHtmlHeadEntrySet());
 

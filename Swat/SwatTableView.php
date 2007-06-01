@@ -1380,6 +1380,18 @@ class SwatTableView extends SwatView implements SwatUIParent
 			$this->id, $this->id);
 
 		foreach ($this->columns as $column) {
+			$column_javascript = $column->getRendererInlineJavaScript();
+			if (strlen($column_javascript) > 0)
+				$javascript.= "\n".$column_javascript;
+		}
+
+		foreach ($this->spanning_columns as $column) {
+			$column_javascript = $column->getRendererInlineJavaScript();
+			if (strlen($column_javascript) > 0)
+				$javascript.= "\n".$column_javascript;
+		}
+
+		foreach ($this->columns as $column) {
 			$column_javascript = $column->getInlineJavaScript();
 			if (strlen($column_javascript) > 0)
 				$javascript.= "\n".$column_javascript;
