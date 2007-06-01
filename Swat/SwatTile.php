@@ -14,18 +14,6 @@ require_once 'Swat/SwatCellRendererContainer.php';
  */
 class SwatTile extends SwatCellRendererContainer
 {
-	// {{{ public properties
-
-	/**
- 	 * Visible
-	 * 
-	 * Whether this tile is diplayed.
-	 *
-	 * @var boolean
-	 */
-	public $visible = true;
-	
-	// }}}
 	// {{{ private properties
 
 	/**
