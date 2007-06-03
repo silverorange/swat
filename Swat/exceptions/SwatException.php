@@ -30,6 +30,17 @@ class SwatException extends Exception
 	protected $class = null;
 
 	/**
+	 * Array of sensitive parameter names this exception should filter out of
+	 * its stack trace
+	 *
+	 * Exception subclasses should add parameter names to this list. By
+	 * default, no parameters are filtered.
+	 *
+	 * @var array
+	 */
+	protected $sensitive_param_names = array();
+
+	/**
 	 * @var SwatExceptionDisplayer
 	 */
 	protected static $displayer = null;
@@ -208,9 +219,15 @@ class SwatException extends Exception
 		$count = count($this->backtrace);
 
 		foreach ($this->backtrace as $entry) {
+			$class = array_key_exists('class', $entry) ?
+				$entry['class'] : null;
+
+			$function = array_key_exists('function', $entry) ?
+				$entry['function'] : null;
 
 			if (array_key_exists('args', $entry))
-				$arguments = $this->getArguments($entry['args']);
+				$arguments = $this->getArguments(
+					$entry['args'], $function, $class);
 			else
 				$arguments = '';
 
@@ -219,9 +236,9 @@ class SwatException extends Exception
 				array_key_exists('file', $entry) ? $entry['file'] : 'unknown',
 				array_key_exists('line', $entry) ? $entry['line'] : 'unknown',
 				str_repeat(' ', 8),
-				array_key_exists('class', $entry) ? $entry['class'] : '',
+				($class === null) ? '' : $class,
 				array_key_exists('type', $entry) ? $entry['type'] : '',
-				$entry['function'],
+				($function === null) ? '' : $function,
 				$arguments);
 		}
 
@@ -262,9 +279,15 @@ class SwatException extends Exception
 		$count = count($this->backtrace);
 
 		foreach ($this->backtrace as $entry) {
+			$class = array_key_exists('class', $entry) ?
+				$entry['class'] : null;
+
+			$function = array_key_exists('function', $entry) ?
+				$entry['function'] : null;
 
 			if (array_key_exists('args', $entry))
-				$arguments = htmlentities($this->getArguments($entry['args']),
+				$arguments = htmlentities($this->getArguments(
+					$entry['args'], $function, $class),
 					null, 'UTF-8');
 			else
 				$arguments = '';
@@ -275,9 +298,9 @@ class SwatException extends Exception
 				--$count,
 				array_key_exists('file', $entry) ? $entry['file'] : 'unknown',
 				array_key_exists('line', $entry) ? $entry['line'] : 'unknown',
-				array_key_exists('class', $entry) ? $entry['class'] : '',
+				($class === null) ? '' : $class,
 				array_key_exists('type', $entry) ? $entry['type'] : '',
-				$entry['function'],
+				($function === null) ? '' : $function,
 				$arguments);
 		}
 
@@ -329,29 +352,86 @@ class SwatException extends Exception
 	/**
 	 * Formats a method call's arguments
 	 *
-	 * @param mixed an array of arguments or a single argument.
+	 * This method is also responsible for filtering sensitive parameters
+	 * out of the final stack trace.
+	 *
+	 * @param array|string $args an array of arguments or a single argument.
+	 * @param string $method optional. The current method or function.
+	 * @param string $class optional. The current class name.
 	 *
 	 * @return string the arguments formatted into a comma delimited string.
 	 */
-	protected function getArguments($args)
+	protected function getArguments($args, $function = null, $class = null)
 	{
 		if (is_array($args)) {
-			foreach ($args as &$arg) {
-				if (is_object($arg)) {
-					$arg = '<'.get_class($arg).' object>';
-				} elseif ($arg === null) {
-					$arg = '<null>';
-				} elseif (is_string($arg)) {
-					$arg = "'".$arg."'";
-				} elseif (is_array($arg)) {
-					$arg = 'array('.$this->getArguments($arg).')';
+			$params = array();
+
+			// try to get function or method parameter list using reflection
+			if ($class !== null && $function !== null && class_exists($class)) {
+				$class_reflector = new ReflectionClass($class);
+				if ($class_reflector->hasMethod($function)) {
+					$reflector = $class_reflector->getMethod($function);
+					$params = $reflector->getParameters();
 				}
+			} elseif ($function !== null && function_exists($function)) {
+				$reflector = new ReflectionFunction($function);
+				$params = $reflector->getParameters();
 			}
 
-			return implode(', ', $args);
+			$formatted_values = array();
+			for ($i = 0; $i < count($args); $i++) {
+				$value = $args[$i];
+
+				$name = (array_key_exists($i, $params)) ?
+					$params[$i]->getName() : null;
+	
+				if ($name !== null &&
+					in_array($name, $this->sensitive_param_names)) {
+					$formatted_value =
+						$this->formatSensitiveParam($name, $value);
+				} elseif (is_object($value)) {
+					$formatted_value = '<'.get_class($value).' object>';
+				} elseif ($value === null) {
+					$formatted_value = '<null>';
+				} elseif (is_string($value)) {
+					$formatted_value = "'".$value."'";
+				} elseif (is_array($value)) {
+					$formatted_value =
+						'array('.$this->getArguments($value).')';
+				}
+
+				$formatted_values[] = $formatted_value;
+			}
+
+			$output = implode(', ', $formatted_values);
 		} else {
-			return $args;
+			$output = $this->getArguments(array($args), $function, $class);
 		}
+
+		return $output;
+	}
+
+	// }}}
+	// {{{ protected function formatSensitiveParams()
+
+	/**
+	 * Removes sensitive information from a parameter value and formats
+	 * the parameter as a string
+	 *
+	 * This is used, for example, to filter credit/debit card numbers from
+	 * stack traces. By default, a string of the form
+	 * "[$<i>$name</i> FILTERED]" is returned.
+	 *
+	 * @param string $name the name of the parameter.
+	 * @param mixed $value the sensitive value of the parameter.
+	 *
+	 * @return string the filtered formatted version of the parameter.
+	 *
+	 * @see SwatException::$sensitive_param_names
+	 */
+	protected function formatSensitiveParam($name, $value)
+	{
+		return '[$'.$name.' FILTERED]';
 	}
 
 	// }}}
