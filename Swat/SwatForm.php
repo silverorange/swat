@@ -561,7 +561,8 @@ class SwatForm extends SwatDisplayableContainer
 			if (self::$authentication_token != $token)
 				throw new SwatCrossSiteRequestForgeryException(
 					'Authentication token does not match. '.
-					'Possible cross-site request forgery prevented.');
+					'Possible cross-site request forgery prevented.',
+					0, $this);
 		}
 	}
 
