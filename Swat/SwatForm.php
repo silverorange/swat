@@ -328,23 +328,29 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public function getHiddenField($name)
 	{
-		if (isset($this->hidden_fields[$name]))
-			return $this->hidden_fields[$name];
+		$data = null;
 
-		if (!$this->processed) {
+		// get value of a hidden field we've already unserialized after
+		// processing this form
+		if (isset($this->hidden_fields[$name])) {
+			$data = $this->hidden_fields[$name];
+
+		// otherwise, make sure this form was processed and get hidden field
+		// from raw form data
+		} elseif (!$this->processed) {
 			$raw_data = $this->getFormData();
 
 			if (isset($raw_data[self::PROCESS_FIELD]) &&
 				$raw_data[self::PROCESS_FIELD] == $this->id) {
 				$serialized_field_name = self::SERIALIZED_PREFIX.$name;
 				if (isset($raw_data[$serialized_field_name])) {
-					return SwatString::signedUnserialize(
-						$raw_data[$serialized_field_name], $this->salt);
+					$data = $this->unserializeHiddenField(
+						$raw_data[$serialized_field_name]);
 				}
 			}
 		}
 
-		return null;
+		return $data;
 	}
 
 	// }}}
@@ -519,10 +525,8 @@ class SwatForm extends SwatDisplayableContainer
 		foreach ($fields as $name) {
 			$serialized_field_name = self::SERIALIZED_PREFIX.$name;
 			if (isset($raw_data[$serialized_field_name])) {
-				$value = SwatString::signedUnserialize(
-					$raw_data[$serialized_field_name], $this->salt);
-
-				$this->hidden_fields[$name] = $value;
+				$this->hidden_fields[$name] = $this->unserializeHiddenField(
+					$raw_data[$serialized_field_name]);
 			}
 		}
 	}
@@ -630,9 +634,7 @@ class SwatForm extends SwatDisplayableContainer
 			}
 
 			// display serialized value
-			$serialized_data = SwatString::signedSerialize(
-				$value, $this->salt);
-
+			$serialized_data = $this->serializeHiddenField($value);
 			$input_tag->name = self::SERIALIZED_PREFIX.$name;
 			$input_tag->value = $serialized_data;
 			$input_tag->display();
@@ -714,6 +716,60 @@ class SwatForm extends SwatDisplayableContainer
 		}
 
 		return $javascript;
+	}
+
+	// }}}
+	// {{{ protected function serializeHiddenField()
+
+	/**
+	 * Serializes a hidden field value into a string safe for including in
+	 * form data
+	 *
+	 * @param mixed $value the hidden field value to serialize.
+	 *
+	 * @return string the hidden field value serialized for safely including in
+	 *                 form data.
+	 */
+	protected function serializeHiddenField($value)
+	{
+		$value = SwatString::signedSerialize($value, $this->salt);
+
+		// escape special characters that confuse browsers (mostly IE;
+		// null characters confuse all browsers)
+		$value = str_replace('\\', '\\\\', $value);
+		$value = str_replace("\x00", '\x00', $value);
+		$value = str_replace("\x0a", '\x0a', $value);
+		$value = str_replace("\x0d", '\x0d', $value);
+
+		return $value;
+	}
+
+	// }}}
+	// {{{ protected function unserializeHiddenField()
+
+	/**
+	 * Unserializes a hidden field value that was serialized using
+	 * {@link SwatForm::serializeHiddenField()}
+	 *
+	 * @param string $value the hidden field value to unserialize.
+	 *
+	 * @return mixed the unserialized value.
+	 *
+	 * @throws SwatInvalidSerializedDataException if the serialized form data
+	 *                                            does not match the signature
+	 *                                            data.
+	 */
+	protected function unserializeHiddenField($value)
+	{
+		// unescape special characters (see serializeHiddenField())
+		$value = str_replace('\x00', "\x00", $value);
+		$value = str_replace('\x0a', "\x0a", $value);
+		$value = str_replace('\x0d', "\x0d", $value);
+		$value = str_replace('\\\\', '\\',   $value);
+
+		$value = SwatString::signedUnserialize($value, $this->salt);
+
+		return $value;
 	}
 
 	// }}}
