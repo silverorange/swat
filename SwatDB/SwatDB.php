@@ -118,6 +118,8 @@ class SwatDB extends SwatObject
 	public static function updateColumn($db, $table, $field, $value, $id_field,
 		$ids, $where = null)
 	{
+		$ids = SwatDB::initArray($ids);
+
 		if (count($ids) == 0)
 			return;
 
@@ -481,6 +483,8 @@ class SwatDB extends SwatObject
 		$id_field = new SwatDBField($id_field, 'integer');
 		$value_field = new SwatDBField($value_field, 'integer');
 		$bound_field = new SwatDBField($bound_field, 'integer');
+
+		$values = SwatDB::initArray($values);
 
 		$delete_sql = 'delete from %s where %s = %s';
 
@@ -1164,6 +1168,33 @@ class SwatDB extends SwatObject
 
 		foreach ($fields as &$field)
 			$field = new SwatDBField($field, 'text');
+	}
+
+	// }}}
+	// {{{ private static function initArray()
+
+	/**
+	 * Checks to see if an array is actually an implementation of the Iterator
+	 * interface and converts it to an array of values if it does.
+	 *
+	 * @param array|Iterator $array
+	 * @return array
+	 * @throws SwatDBException
+	 */
+	private function initArray($array)
+	{
+		if (is_array($array)) {
+			return $array;
+		} elseif ($array instanceof Iterator) {
+			$return = array();
+			foreach ($array as $value)
+				$return[] = $value;
+
+			return $return;
+		} else {
+			throw new SwatDBException(
+				'Value is not an array');
+		}	
 	}
 
 	// }}}
