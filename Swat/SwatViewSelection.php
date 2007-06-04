@@ -67,19 +67,6 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
 	}
 
 	// }}}
-	// {{{ public function getValues()
-
-	/**
-	 * Returns an array of selected values
-	 *
-	 * @return array the selected values 
-	 */
-	public function getValues()
-	{
-		return $this->selected_items;
-	}
-
-	// }}}
 	// {{{ public function current()
 
 	/**
