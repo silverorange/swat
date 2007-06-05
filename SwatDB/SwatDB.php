@@ -1174,12 +1174,17 @@ class SwatDB extends SwatObject
 	// {{{ private static function initArray()
 
 	/**
-	 * Checks to see if an array is actually an implementation of the Iterator
-	 * interface and converts it to an array of values if it does.
+	 * Noramlizes Iterator objects into simple arrays
 	 *
-	 * @param array|Iterator $array
-	 * @return array
-	 * @throws SwatDBException
+	 * Checks a variable to see if it is an array or if it is an Iterator. If
+	 * the variable is an Iterator, converts it to an array of values.
+	 *
+	 * @param array|Iterator $array the variable to normalize. 
+	 *
+	 * @return array the normalized array
+	 *
+	 * @throws SwatDBException if the <i>$array</i> parameter is not an array
+	 *                         or an Iterator.
 	 */
 	private function initArray($array)
 	{
@@ -1191,10 +1196,9 @@ class SwatDB extends SwatObject
 				$return[] = $value;
 
 			return $return;
-		} else {
-			throw new SwatDBException(
-				'Value is not an array');
-		}	
+		}
+
+		throw new SwatDBException('Value is not an array');
 	}
 
 	// }}}
