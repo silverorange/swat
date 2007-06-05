@@ -795,6 +795,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		require_once 'Swat/SwatTimeEntry.php';
 		$this->time_entry = new SwatTimeEntry($this->id.'_time_entry');
 		$this->time_entry->parent = $this;
+		$this->time_entry->value = $this->value;
 	}
 
 	// }}}
