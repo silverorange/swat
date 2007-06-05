@@ -209,7 +209,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		if ($this->display_parts & self::HOUR) {
 			if ($this->value !== null)
-				$this->am_pm_flydown->value = ($this->value->getHour() > 12) ?
+				$this->am_pm_flydown->value = ($this->value->getHour() < 12 ||
+					$this->value->getHour() == 0) ?
 					'am' : 'pm';
 
 			$this->am_pm_flydown->display();
