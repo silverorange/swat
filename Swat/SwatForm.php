@@ -259,11 +259,8 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public function process()
 	{
-		$raw_data = $this->getFormData();
+		$this->processed = $this->isSubmitted();
 
-		$this->processed = (isset($raw_data[self::PROCESS_FIELD]) &&
-			$raw_data[self::PROCESS_FIELD] == $this->id);
-		
 		if ($this->processed) {
 			// always process authentication token first
 			$this->processAuthenticationToken();
@@ -337,16 +334,12 @@ class SwatForm extends SwatDisplayableContainer
 
 		// otherwise, make sure this form was processed and get hidden field
 		// from raw form data
-		} elseif (!$this->processed) {
+		} elseif (!$this->processed && $this->isSubmitted()) {
 			$raw_data = $this->getFormData();
-
-			if (isset($raw_data[self::PROCESS_FIELD]) &&
-				$raw_data[self::PROCESS_FIELD] == $this->id) {
-				$serialized_field_name = self::SERIALIZED_PREFIX.$name;
-				if (isset($raw_data[$serialized_field_name])) {
-					$data = $this->unserializeHiddenField(
-						$raw_data[$serialized_field_name]);
-				}
+			$serialized_field_name = self::SERIALIZED_PREFIX.$name;
+			if (isset($raw_data[$serialized_field_name])) {
+				$data = $this->unserializeHiddenField(
+					$raw_data[$serialized_field_name]);
 			}
 		}
 
