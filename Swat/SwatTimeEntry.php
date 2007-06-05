@@ -183,22 +183,37 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->createFlydowns();
 
 		if ($this->display_parts & self::HOUR) {
+			if ($this->value !== null)
+				$this->hour_flydown->value = (int) $this->value->getHour();
+
 			$this->hour_flydown->display();
 			if ($this->display_parts & (self::MINUTE | self::SECOND))
 				echo ':';
 		}
 
 		if ($this->display_parts & self::MINUTE) {
+			if ($this->value !== null)
+				$this->minute_flydown->value = (int) $this->value->getMinute();
+
 			$this->minute_flydown->display();
 			if ($this->display_parts & self::SECOND)
 				echo ':';
 		}
 
-		if ($this->display_parts & self::SECOND)
-			$this->second_flydown->display();
+		if ($this->display_parts & self::SECOND) {
+			if ($this->value !== null)
+				$this->second_flydown->value = (int) $this->value->getSecond();
 
-		if ($this->display_parts & self::HOUR)
+			$this->second_flydown->display();
+		}
+
+		if ($this->display_parts & self::HOUR) {
+			if ($this->value !== null)
+				$this->am_pm_flydown->value = ($this->value->getHour() > 12) ?
+					'am' : 'pm';
+
 			$this->am_pm_flydown->display();
+		}
 
 		$div_tag->close();
 
