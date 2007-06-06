@@ -184,7 +184,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		if ($this->display_parts & self::HOUR) {
 			if ($this->value !== null)
-				$this->hour_flydown->value = (int) $this->value->getHour();
+				$this->hour_flydown->value = $this->value->getHour();
 
 			$this->hour_flydown->display();
 			if ($this->display_parts & (self::MINUTE | self::SECOND))
@@ -193,7 +193,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		if ($this->display_parts & self::MINUTE) {
 			if ($this->value !== null)
-				$this->minute_flydown->value = (int) $this->value->getMinute();
+				$this->minute_flydown->value = $this->value->getMinute();
 
 			$this->minute_flydown->display();
 			if ($this->display_parts & self::SECOND)
@@ -202,7 +202,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		if ($this->display_parts & self::SECOND) {
 			if ($this->value !== null)
-				$this->second_flydown->value = (int) $this->value->getSecond();
+				$this->second_flydown->value = $this->value->getSecond();
 
 			$this->second_flydown->display();
 		}
