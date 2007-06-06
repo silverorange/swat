@@ -304,6 +304,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		if ($this->display_parts & self::TIME) {
 			echo ' ';
+			$this->time_entry->value = $this->value;
 			$this->time_entry->display();
 		}
 
@@ -795,7 +796,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		require_once 'Swat/SwatTimeEntry.php';
 		$this->time_entry = new SwatTimeEntry($this->id.'_time_entry');
 		$this->time_entry->parent = $this;
-		$this->time_entry->value = $this->value;
 	}
 
 	// }}}
