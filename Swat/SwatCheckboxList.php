@@ -28,7 +28,6 @@ class SwatCheckboxList extends SwatInputControl implements SwatState
 	 * @var array
 	 */
 	public $options = null;
-	//TODO: shouldn't this use addOptionsByArray() like flydown?
 
 	/**
 	 * Optional content type for option titles
