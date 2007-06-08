@@ -88,19 +88,41 @@ class SwatException extends Exception
 	}
 
 	// }}}
-	// {{{ public static function addSensitiveParameterName()
+	// {{{ public static function addSensitiveParameter()
 
 	/**
-	 * Adds a parameter name to the list of sensitive parameter names that
-	 * are filtered upon display
+	 * Adds a parameter name to the list of sensitive parameters that are
+	 * filtered upon display
 	 *
 	 * @param string $name the sensitive parameter name.
+	 * @param string $function optional. The function of method name the
+	 *                          parameter belongs to.
+	 * @param string $class optional. The class name the method belongs to.
 	 */
-	public static function addSensitiveParameterName($name)
+	public static function addSensitiveParameter($name, $function = '',
+		$class = '')
 	{
-		$name = strval($name);
+		if (strlen($class) > 0 && strlen($function) > 0)
+			$name = $class.'::'.$function.'('.$name.')';
+		elseif (strlen($function) > 0)
+			$name = $fucntion.'('.$name.')';
+
 		if (!in_array($name, self::$sensitive_param_names))
 			self::$sensitive_param_names[] = $name;
+	}
+
+	// }}}
+	// {{{ public static function setupHandler()
+
+	/**
+	 * Set the PHP exception handler to use SwatException
+	 *
+	 * @param string $class the exception class containing a static handle()
+	 *                       method.
+	 */
+	public static function setupHandler($class = 'SwatException')
+	{
+		set_exception_handler(array($class, 'handle'));
 	}
 
 	// }}}
@@ -401,7 +423,7 @@ class SwatException extends Exception
 					$params[$i]->getName() : null;
 	
 				if ($name !== null &&
-					in_array($name, self::$sensitive_param_names)) {
+					self::isSensitiveParamater($name, $function, $class)) {
 					$formatted_value =
 						$this->formatSensitiveParam($name, $value);
 				} elseif (is_object($value)) {
@@ -484,17 +506,28 @@ class SwatException extends Exception
 	}
 
 	// }}}
-	// {{{ public static function setupHandler()
+	// {{{ private static function isSensitiveParamater()
 
 	/**
-	 * Set the PHP exception handler to use SwatException
+	 * Gets whether or not a given paramater is sensitive
 	 *
-	 * @param string $class the exception class containing a static handle()
-	 *                       method.
+	 * @param string $name the parameter name.
+	 * @param string $function optional. The function of method name the
+	 *                          parameter belongs to.
+	 * @param string $class optional. The class name the method belongs to.
+	 *
+	 * @return boolean true if this paramater is sensitive and false if it is
+	 *                  not.
 	 */
-	public static function setupHandler($class = 'SwatException')
+	private static function isSensitiveParamater($name, $function = '',
+		$class = '')
 	{
-		set_exception_handler(array($class, 'handle'));
+		if (strlen($class) > 0 && strlen($function) > 0)
+			$name = $class.'::'.$function.'('.$name.')';
+		elseif (strlen($function) > 0)
+			$name = $fucntion.'('.$name.')';
+
+		return (in_array($name, self::$sensitive_param_names));
 	}
 
 	// }}}
