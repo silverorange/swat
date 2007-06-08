@@ -30,17 +30,6 @@ class SwatException extends Exception
 	protected $class = null;
 
 	/**
-	 * Array of sensitive parameter names this exception should filter out of
-	 * its stack trace
-	 *
-	 * Exception subclasses should add parameter names to this list. By
-	 * default, no parameters are filtered.
-	 *
-	 * @var array
-	 */
-	protected $sensitive_param_names = array();
-
-	/**
 	 * @var SwatExceptionDisplayer
 	 */
 	protected static $displayer = null;
@@ -49,6 +38,16 @@ class SwatException extends Exception
 	 * @var SwatExceptionLogger
 	 */
 	protected static $logger = null;
+
+	/**
+	 * Array of sensitive parameter names this exception should filter out of
+	 * its stack trace
+	 *
+	 * @var array
+	 *
+	 * @see SwatException::addSensitiveParameterName()
+	 */
+	protected static $sensitive_param_names = array();
 
 	// }}}
 	// {{{ public static function setLogger()
@@ -86,6 +85,22 @@ class SwatException extends Exception
 	public static function setDisplayer(SwatExceptionDisplayer $displayer)
 	{
 		self::$displayer = $displayer;
+	}
+
+	// }}}
+	// {{{ public static function addSensitiveParameterName()
+
+	/**
+	 * Adds a parameter name to the list of sensitive parameter names that
+	 * are filtered upon display
+	 *
+	 * @param string $name the sensitive parameter name.
+	 */
+	public static function addSensitiveParameterName($name)
+	{
+		$name = strval($name);
+		if (!in_array($name, self::$sensitive_param_names))
+			self::$sensitive_param_names[] = $name;
 	}
 
 	// }}}
@@ -386,7 +401,7 @@ class SwatException extends Exception
 					$params[$i]->getName() : null;
 	
 				if ($name !== null &&
-					in_array($name, $this->sensitive_param_names)) {
+					in_array($name, self::$sensitive_param_names)) {
 					$formatted_value =
 						$this->formatSensitiveParam($name, $value);
 				} elseif (is_object($value)) {
@@ -412,7 +427,7 @@ class SwatException extends Exception
 	}
 
 	// }}}
-	// {{{ protected function formatSensitiveParams()
+	// {{{ protected function formatSensitiveParam()
 
 	/**
 	 * Removes sensitive information from a parameter value and formats
