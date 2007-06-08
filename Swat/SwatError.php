@@ -347,8 +347,11 @@ class SwatError
 	 */
 	public static function handle($errno, $errstr, $errfile, $errline)
 	{
-		$error = new SwatError($errno, $errstr, $errfile, $errline);
-		$error->process();
+		// only handle error if error reporting is not suppressed
+		if (error_reporting() != 0) {
+			$error = new SwatError($errno, $errstr, $errfile, $errline);
+			$error->process();
+		}
 	}
 
 	// }}}
@@ -454,7 +457,7 @@ class SwatError
 		 * All run-time errors as specified in the error_reporting directive
 		 * are handled.
 		 */
-		set_error_handler(array('SwatError', 'handle'), error_level());
+		set_error_handler(array('SwatError', 'handle'), error_reporting());
 	}
 
 	// }}}
