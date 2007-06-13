@@ -103,8 +103,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
 		$input_tag->name = $this->id.'[]';
-		if ($this->onchange !== null)
-			$input_tag->onchange = $this->onchange;
 
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
