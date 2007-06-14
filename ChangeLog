@@ -1,3 +1,488 @@
+2007-06-13  charles
+
+	* [r17982] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  Ticket #1049, removes any reference to onchange from the widget.
+
+2007-06-08  gauthierm
+
+	* [r17954] swat/trunk/Swat/exceptions/SwatException.php:
+	  Allow filtering specific paramaters based on class and function
+	  name as well as paramater name.
+	* [r17951] swat/trunk/Swat/exceptions/SwatException.php:
+	  Make sensitive parameter names a static property of
+	  SwatException and create a method to add sensitive parameter
+	  names.
+	* [r17950] swat/trunk/Swat/SwatError.php:
+	  Small fixes to SwatError. Fix for error_level is not a valid PHP
+	  function and move some changes from SiteError::handle() to
+	  SwatError.
+	* [r17948] swat/trunk/Swat/SwatTableView.php:
+	  Remove useless @see tag.
+
+2007-06-08  steven
+
+	* [r17946] swat/trunk/www/styles/swat.css:
+	  Make swat-form header, footer, and action areas positioned
+	  relative to avoid an IE7 rendering bug with negative margins
+
+2007-06-06  gauthierm
+
+	* [r17915] swat/trunk/Swat/SwatCheckboxList.php:
+	  SwatCheckboxList probably should use addOptionsByArray(). I've
+	  created a ticket to make SwatCheckboxList extend
+	  SwatOptionControl. It's not an easy job as there will be API
+	  breakage and old code will need updating.
+	* [r17914] swat/trunk/Swat/SwatCheckboxList.php:
+	  Remove onchange attribute. It is from a long time ago when the
+	  onchange attribute was used for the check-all behaviour.
+	* [r17913] swat/trunk/Swat/SwatExpandableCheckboxTree.php:
+	  Add string translations to SwatExpandableCheckboxTree JavaScript.
+	* [r17910] swat/trunk/Swat/SwatTimeEntry.php:
+	  Don't cast to int. These methods are already documented as
+	  returning int.
+	* [r17908] swat/trunk/Swat/SwatDateEntry.php:
+	  Set embedded time entry widget value in display() rather than on
+	  creation in case the value of this date entry changed since the
+	  embedded widgets were created.
+
+2007-06-05  nick
+
+	* [r17901] swat/trunk/Swat/SwatTimeEntry.php:
+	  Fix the am/pm logic
+	* [r17900] swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/Swat/SwatTimeEntry.php:
+	  Set the value of the time entry, and then set the flydowns for
+	  each time-part.
+	  Did this really never work before and we hadn't noticed yet? Or
+	  am I really
+	  missing something?
+
+2007-06-05  gauthierm
+
+	* [r17891] swat/trunk/Swat/SwatForm.php:
+	  Replace two conditional statements with the equivalent
+	  isSubmitted() method.
+	* [r17883] swat/trunk/SwatDB/SwatDB.php:
+	  Small cleanups to documentation and syntax.
+
+2007-06-04  nick
+
+	* [r17877] swat/trunk/SwatDB/SwatDB.php:
+	  Allow values passed in as a simple array (updateColumn and
+	  updateBinding) to be either an array or a SwatViewSelection.
+	  This makes using SwatViewSelection to preform things like
+	  action-updates much simpler.
+
+2007-06-04  gauthierm
+
+	* [r17875] swat/trunk/Swat/SwatForm.php:
+	  When serializing/unserializing hidden fields in SwatForm, escape
+	  special characters that are mangled by common browsers. This
+	  fixes a bug where objects with private properties cannot be
+	  unserialized correctly using SwatForm.
+	* [r17862] swat/trunk/Swat/SwatViewSelection.php:
+	  Remove getValues(). The selection _is_ the values.
+
+2007-06-03  nick
+
+	* [r17855] swat/trunk/Swat/SwatViewSelection.php:
+	  Add a method for returning the selected_values array.
+	  This makes it so we can replace lines like this on index pages:
+	  $this->app->getPage()->setItems($view->selected_items);
+	  with:
+	  $this->app->getPage()->setItems($view->getSelection()->getValues());
+	  
+	  Mike - there are several different ways we could do this. Let me
+	  know if you
+	  would rather some other method.
+
+2007-06-03  gauthierm
+
+	* [r17852] swat/trunk/Swat/exceptions/SwatException.php:
+	  Add ability to filter sensitive parameters from stack traces to
+	  SwatException. This is required for ticket #1025 in the Store
+	  package: Payment exceptions can contain credit card numbers.
+	* [r17850] swat/trunk/Swat/SwatForm.php,
+	  swat/trunk/Swat/exceptions/SwatCrossSiteRequestForgeryException.php:
+	  
+	  Save a reference to the form that failed authentication when
+	  throwing CSRF exceptions.
+	* [r17849] swat/trunk/www/javascript/swat-button.js:
+	  Fix ticket #1034: SwatButton javascript is causing throbber gif
+	  to be requested when not being used.
+
+2007-06-01  gauthierm
+
+	* [r17845] swat/trunk/Swat/SwatCheckboxCellRenderer.php:
+	  Remove unnecessary div element.
+	* [r17844] swat/trunk/Swat/SwatCheckboxCellRenderer.php:
+	  Allow sensitive property to affect checkbox cells again.
+	* [r17843] swat/trunk/Swat/SwatTileView.php:
+	  Remove unnecessary line break. getRendererInlineJavaScript
+	  already adds line breaks.
+	* [r17842] swat/trunk/Swat/SwatCheckboxCellRenderer.php:
+	  Only display checkbox JavaScript if cell renderer is in a
+	  SwatView.
+	* [r17841] swat/trunk/Swat/SwatTileView.php:
+	  Fix name of checkbox cell renderer object variable in tile view
+	  inline JavaScript.
+	* [r17840] swat/trunk/Swat/SwatCheckboxCellRenderer.php,
+	  swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTableViewCheckAllRow.php,
+	  swat/trunk/Swat/SwatTableViewCheckboxColumn.php,
+	  swat/trunk/Swat/SwatView.php,
+	  swat/trunk/Swat/SwatViewSelection.php,
+	  swat/trunk/Swat/SwatViewSelector.php,
+	  swat/trunk/www/javascript/swat-checkbox-cell-renderer.js,
+	  swat/trunk/www/javascript/swat-table-view-checkbox-column.js,
+	  swat/trunk/www/javascript/swat-table-view.js,
+	  swat/trunk/www/javascript/swat-tile-view.js,
+	  swat/trunk/www/javascript/swat-view.js:
+	  Ticket #1013: Review use of checkbox column and checkboxes on
+	  TableView/TileView. Summary of changes:
+	  - using multiple selectors on a single view no longer breaks
+	  things,
+	  - new interface SwatViewSelector implemented by objects that
+	  perform selection on views,
+	  - new SwatView::getSelection() method instead of
+	  SwatView::$items property,
+	  - backwards compatible, but using the new API is encouraged,
+	  - simplify table-view checkbox column -- most functionality is
+	  moved to the cell renderer,
+	  - JavaScript handles multiple selectors on a single view,
+	  - table-view column JavaScript no longer used in tile view.
+	* [r17835] swat/trunk/demo/include/demos/tileview.xml:
+	  Change id of tile view checkbox cell renderer in tile-view demo.
+	* [r17832] swat/trunk/Swat/SwatTileView.php:
+	  Fix typo
+	* [r17831] swat/trunk/Swat/SwatTileView.php:
+	  Reference variable correctly.
+	* [r17830] swat/trunk/Swat/SwatCellRendererContainer.php:
+	  Fix typo.
+	* [r17829] swat/trunk/Swat/SwatCellRenderer.php,
+	  swat/trunk/Swat/SwatCellRendererContainer.php,
+	  swat/trunk/Swat/SwatDetailsView.php,
+	  swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTableViewColumn.php,
+	  swat/trunk/Swat/SwatTileView.php:
+	  Inline JavaScript cleanup for views and cell renderers:
+	  - add public method to get inline javascript for cell renderer
+	  - collect head entries of renderers in cell renderer container
+	  by default
+	  - display inline javascript of details view fields in the
+	  details view
+	  - add a public method to cell renderer container to get inline
+	  javascript of all renderers
+	* [r17828] swat/trunk/Swat/SwatTile.php:
+	  The visible property is already defined in SwatUIObject.
+	* [r17827] swat/trunk/Swat/SwatTile.php:
+	  Whitespace
+	* [r17826] swat/trunk/Swat/SwatTile.php:
+	  Whitespace
+
+2007-05-31  nick
+
+	* [r17824] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  Better implementation of read_only
+	* [r17823] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  Setting read-only on dataobjects can improve loading performance
+	  by about 25%
+	* [r17820] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Fix documentation. Also require SwatDBClassMap which is
+	  instansiated in the
+	  constructor.
+
+2007-05-30  nick
+
+	* [r17815] swat/trunk/Swat/SwatPagination.php:
+	  This is more inline with our normal value comparisons
+	* [r17814] swat/trunk/Swat/SwatPagination.php:
+	  Fix next/prev values from old zero-based system (thanks for
+	  pointing that our
+	  mike)
+
+2007-05-30  gauthierm
+
+	* [r17811] swat/trunk/Swat/SwatPagination.php:
+	  Small doc fixes for SwatPagination.
+	* [r17810] swat/trunk/Swat/SwatPagination.php:
+	  Documentation fixes for SwatPagination.
+
+2007-05-30  steven
+
+	* [r17809] swat/trunk/www/styles/swat-menu.css:
+	  A variety of CSS fixes
+
+2007-05-30  gauthierm
+
+	* [r17808] swat/trunk/Swat/SwatNoteBook.php:
+	  Fix documentation and call parent implementation of process
+	  rather than copy-pasting code.
+
+2007-05-30  steven
+
+	* [r17807] swat/trunk/www/styles/swat-menu.css:
+	  Rough initial fixes for SwatMenu CSS
+
+2007-05-30  nick
+
+	* [r17802] swat/trunk/Swat/SwatNoteBook.php:
+	  Add optional selected_page property to open up a tab other than
+	  the first one.
+	* [r17801] swat/trunk/Swat/SwatNoteBook.php:
+	  Notebooks have to process their pages. This took me an hour to
+	  figure out why
+	  the form wasn't processing correctly once I added the notebook
+	  to the edit
+	  page.
+
+2007-05-29  steven
+
+	* [r17790] swat/trunk/Swat/SwatFormField.php,
+	  swat/trunk/www/styles/swat-form-field.css,
+	  swat/trunk/www/styles/swat.css:
+	  Move SwatFormField styles into swat.css, since it only had three
+	  lines and isn't worth another HTTP request
+
+2007-05-28  nick
+
+	* [r17755] swat/trunk/Swat/SwatPagination.php:
+	  Forgot the next/prev links
+	* [r17754] swat/trunk/Swat/SwatPagination.php:
+	  Make SwatPagination 1 based rather than 0 based.
+
+2007-05-28  gauthierm
+
+	* [r17719] swat/trunk/Swat/SwatCheckAll.php,
+	  swat/trunk/Swat/SwatTableViewCheckAllRow.php:
+	  Remove explicit nulls. PHP does this already and the title is
+	  defaulted to a different value in the constructor anyways.
+
+2007-05-26  gauthierm
+
+	* [r17713] swat/trunk/Swat/SwatToolbar.php:
+	  Fix typo in SwatToolbar comitted in r17702.
+	* [r17712] swat/trunk/demo/include/DemoApplication.php,
+	  swat/trunk/demo/include/demos/TileViewDemo.php,
+	  swat/trunk/demo/include/demos/tileview.xml:
+	  Add tile view demo to Swat demo.
+	* [r17711] swat/trunk/Swat/SwatTileView.php:
+	  Order init, process and display conventionally.
+	* [r17710] swat/trunk/Swat/SwatTileView.php:
+	  Add ability to specify title and content type for tile-view
+	  check-all widget.
+	* [r17709] swat/trunk/Swat/SwatTileView.php:
+	  Fix syntax error.
+	* [r17708] swat/trunk/Swat/SwatTileView.php:
+	  Fixes for SwatTileView:
+	  - documentation fixes -- remove references to table view
+	  - add missing id argument to constructor
+	  - check if the tile is null before performing actions with it.
+	  This is equivalent to table view in that table view iterates
+	  columns before performing actions on them
+	  - when setting the tile on a tile view that already has a tile,
+	  disconnect the previous tile's parent reference
+	  - fix addChild documentation and throw an exception if more than
+	  one tile is added with addChild
+	  - display a clearing div after all tiles are displayed
+	  - fix syntax typo in getMessages
+	  - fix references to non-existent method hasMessages in hasMessage
+	  - gather html head entries from the tile as well as the
+	  check-all widget
+	  - clean up inline javascript
+	  - don't hard-code the id of the checkbox cell renderer used by
+	  the check-all widget
+	  - whitespace fixes
+	* [r17707] swat/trunk/Swat/SwatTableViewCheckAllRow.php:
+	  Only set title if it is not null.
+	* [r17706] swat/trunk/Swat/SwatCheckAll.php,
+	  swat/trunk/Swat/SwatTableViewCheckAllRow.php:
+	  Add optional title and content type to SwatTableViewCheckAllRow.
+	  Add optional content type to SwatCheckAll.
+
+2007-05-25  gauthierm
+
+	* [r17705] swat/trunk/Swat/SwatTileView.php:
+	  Don't try to get descendants of a non-existant tile in
+	  SwatTileView.
+	* [r17704] swat/trunk/Swat/SwatTileView.php:
+	  Set parent reference on child tile in SwatTileView.
+	* [r17703] swat/trunk/Swat/SwatTile.php:
+	  SwatUIObject does not have the requires_id property so this
+	  constructor does nothing. SwatUIObject probably _should_ have
+	  the requires_id property.
+	* [r17702] swat/trunk/Swat/SwatActionItem.php,
+	  swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/Swat/SwatCellRendererContainer.php,
+	  swat/trunk/Swat/SwatContainer.php,
+	  swat/trunk/Swat/SwatDetailsView.php,
+	  swat/trunk/Swat/SwatForm.php,
+	  swat/trunk/Swat/SwatGroupedMenu.php,
+	  swat/trunk/Swat/SwatInputCell.php, swat/trunk/Swat/SwatMenu.php,
+	  swat/trunk/Swat/SwatMenuGroup.php,
+	  swat/trunk/Swat/SwatMenuItem.php,
+	  swat/trunk/Swat/SwatNoteBook.php,
+	  swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTableViewColumn.php,
+	  swat/trunk/Swat/SwatTableViewInputRow.php,
+	  swat/trunk/Swat/SwatTileView.php,
+	  swat/trunk/Swat/SwatToolbar.php,
+	  swat/trunk/Swat/SwatUIObject.php,
+	  swat/trunk/Swat/SwatUIParent.php,
+	  swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  Cleanup SwatUIParent descendant methods:
+	  - check if interface_exists when shortcut exiting recursive
+	  descendant methods,
+	  - fix spelling errors,
+	  - fix a few instances that were checking for SwatContainer
+	  instead of SwatUIParent,
+	  - only get tool links of the current tool bar in
+	  SwatToolbar::getToolLinks().
+
+2007-05-24  nick
+
+	* [r17675] swat/trunk/SwatDB/SwatDBDataObject.php,
+	  swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Add class_map references here instead of in the Store package
+
+2007-05-23  gauthierm
+
+	* [r17649] swat/trunk/Swat/SwatCheckboxList.php,
+	  swat/trunk/Swat/SwatCheckboxTree.php:
+	  Remove getState() and setState() from SwatCheckboxTree since
+	  they are broken and the parent implementation is correct. Add
+	  documentation missing documentation for SwatCheckboxList state
+	  methods. This bug dates from r577 and the fix was prompted by a
+	  patch from Brad Griffith.
+
+2007-05-21  gauthierm
+
+	* [r17641] swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/Swat/SwatCellRendererContainer.php,
+	  swat/trunk/Swat/SwatDetailsView.php,
+	  swat/trunk/Swat/SwatGroupedMenu.php,
+	  swat/trunk/Swat/SwatMenu.php, swat/trunk/Swat/SwatMenuGroup.php,
+	  swat/trunk/Swat/SwatNoteBook.php,
+	  swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTableViewColumn.php,
+	  swat/trunk/Swat/SwatTileView.php:
+	  Fix misnamed variable.
+	* [r17638] swat/trunk/Swat/SwatReplicableContainer.php,
+	  swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  Make cloning of descendant UI-objects in SwatWidgetCellRenderer
+	  and SwatReplicableContainer check for SwatUIParent instead of
+	  SwatContainer now that the descendant methods are defined in
+	  SwatUIParent.
+	* [r17637] swat/trunk/Swat/SwatInputCell.php:
+	  Add new SwatUIParent descendant methods to SwatInputCell and fix
+	  a TODO that was fixed by moving descendant methods to
+	  SwatUIParent.
+	* [r17634] swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  Fix syntax error and whitespace.
+
+2007-05-20  gauthierm
+
+	* [r17633] swat/trunk/Swat/SwatInputCell.php:
+	  Documentation cleanups for SwatInputCell.
+	* [r17632] swat/trunk/Swat/SwatTableView.php:
+	  More documentation for SwatTableView::getFirstRowByClass().
+	* [r17631] swat/trunk/www/javascript/swat-message-display.js:
+	  Fix memory leak in IE6 on SwatMessageDisplay. Purge event
+	  handlers on message when removing it from the document.
+	* [r17630] swat/trunk/Swat/SwatTableViewColumn.php:
+	  Include input cell in table-view column descendant methods.
+	* [r17629] swat/trunk/Swat/SwatDetailsView.php:
+	  Fix typo. s/detials/details/
+	* [r17628] swat/trunk/Swat/SwatTileView.php:
+	  - Fix more documentation that was copy-pasted incorrectly.
+	  - Fix incorrect whitespace.
+	  - Fix some things Nick missed in r17620 for the new SwatUIParent
+	  methods.
+	  - Added todo docblocks to new check-all related methods.
+	* [r17627] swat/trunk/Swat/SwatTileView.php:
+	  Fix indentation.
+	* [r17626] swat/trunk/Swat/SwatTileView.php:
+	  Fix references to check-all widget in tile view. SHAMEsvn di
+	  SwatTileView.php
+	* [r17625] swat/trunk/Swat/SwatTileView.php:
+	  SwatTileView::getInlineJavaScript() should not need to be
+	  public. Also, whitespace fixes.
+
+2007-05-19  gauthierm
+
+	* [r17621] swat/trunk/www/javascript/swat-change-order.js,
+	  swat/trunk/www/javascript/swat-textarea.js:
+	  Remove more useless window indirection from Swat JavaScript.
+
+2007-05-19  nick
+
+	* [r17620] swat/trunk/Swat/SwatTileView.php:
+	  Implement Descendent methods for SwatUIParent. Mike, I'm pretty
+	  sure I got this
+	  right, a TileView only has a single tile. Look ok to you?
+
+2007-05-18  gauthierm
+
+	* [r17619] swat/trunk/Swat/SwatDetailsView.php:
+	  Add new SwatUIParent descendant methods to SwatDetailsView. Part
+	  of ticket #1012.
+	* [r17618] swat/trunk/Swat/SwatUI.php:
+	  Prevent warning when parsing boolean constants in SwatML.
+	* [r17617] swat/trunk/Swat/SwatYesNoFlydown.php:
+	  Don't use booleans as array keys.
+	* [r17616] swat/trunk/Swat/SwatYesNoFlydown.php:
+	  Set SwatYesNoFlydown::YES and SwatYesNoFlydown::NO constants to
+	  true and false respectively. As a result, the
+	  getValueAsBoolean() is no longer needed.
+	* [r17615] swat/trunk/Swat/SwatTableView.php:
+	  Add extra SwatUIParent methods to SwatTableView. Part of ticket
+	  #1012.
+	* [r17614] swat/trunk/Swat/SwatAbstractMenu.php:
+	  Remove abstract method that's already declared in SwatUIParent
+	  from SwatAbstractMenu.
+	* [r17611] swat/trunk/Swat/SwatActionItem.php,
+	  swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/Swat/SwatCellRendererContainer.php,
+	  swat/trunk/Swat/SwatContainer.php,
+	  swat/trunk/Swat/SwatGroupedMenu.php,
+	  swat/trunk/Swat/SwatMenu.php, swat/trunk/Swat/SwatMenuGroup.php,
+	  swat/trunk/Swat/SwatMenuItem.php,
+	  swat/trunk/Swat/SwatNoteBook.php,
+	  swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  Fix type hinting
+	* [r17610] swat/trunk/Swat/SwatActionItem.php,
+	  swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/Swat/SwatCellRendererContainer.php,
+	  swat/trunk/Swat/SwatContainer.php,
+	  swat/trunk/Swat/SwatGroupedMenu.php,
+	  swat/trunk/Swat/SwatMenu.php, swat/trunk/Swat/SwatMenuGroup.php,
+	  swat/trunk/Swat/SwatMenuItem.php,
+	  swat/trunk/Swat/SwatNoteBook.php,
+	  swat/trunk/Swat/SwatUIParent.php,
+	  swat/trunk/Swat/SwatWidgetCellRenderer.php:
+	  First part of ticket #1012: Move additional methods into
+	  SwatUIParent interface.
+	* [r17601] swat/trunk/www/javascript/swat-change-order.js,
+	  swat/trunk/www/javascript/swat-confirmation-button.js:
+	  Remove unnecessary 'window' redirection. The 'window' is already
+	  the global scope object in browser JavaScript.
+	* [r17600] swat/trunk/Swat/SwatMoneyEntry.php:
+	  Pass in the error message id to the getValidationMessage()
+	  method and fix a misnamed variable.
+	* [r17599] swat/trunk/Swat/SwatMoneyEntry.php:
+	  Fix syntax error.
+	* [r17598] swat/trunk/Swat/SwatMoneyEntry.php:
+	  Whitespace and cleanup getDisplayValue().
+	* [r17597] swat/trunk/Swat/SwatMoneyEntry.php:
+	  Review and cleanup SwatMoneyEntry. There are quite a few changes
+	  here including extending SwatFloatEntry instead of
+	  SwatNumericEntry.
+
+2007-05-17  nrf
+
+	* [r17573] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.19
+
 2007-05-17  nick
 
 	* [r17569] swat/trunk/Swat/SwatTableView.php,
