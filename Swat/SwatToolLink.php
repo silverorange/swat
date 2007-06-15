@@ -10,7 +10,7 @@ require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
  * A a tool link in the widget tree
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatToolLink extends SwatControl
@@ -29,14 +29,14 @@ class SwatToolLink extends SwatControl
 	 *
 	 * @see SwatToolLink::$value
 	 */
-	public $link = '';
+	public $link = null;
 
 	/**
 	 * The title of this link
 	 *
 	 * @var string
 	 */
-	public $title = '';
+	public $title = null;
 
 	/**
 	 * A value or array of values to substitute into the link of this cell
@@ -132,28 +132,10 @@ class SwatToolLink extends SwatControl
 		if (!$this->visible)
 			return;
 
-		if ($this->isSensitive()) {
-			$anchor_tag = new SwatHtmlTag('a');
-			$anchor_tag->id = $this->id;
-			$anchor_tag->class = $this->getCSSClassString();
-
-			if ($this->value === null)
-				$anchor_tag->href = $this->link;
-			elseif (is_array($this->value))
-				$anchor_tag->href = vsprintf($this->link, $this->value);
-			else
-				$anchor_tag->href = sprintf($this->link, $this->value);
-
-			$anchor_tag->accesskey = $this->access_key;
-			$anchor_tag->setContent($this->title);
-			$anchor_tag->display();
-		} else {
-			$span_tag = new SwatHtmlTag('span');
-			$span_tag->id = $this->id;
-			$span_tag->class = $this->getCSSClassString();
-			$span_tag->setContent($this->title);
-			$span_tag->display();
-		}
+		if ($this->isSensitive())
+			$this->getSensitiveTag()->display();
+		else
+			$this->getInsensitiveTag()->display();
 	}
 
 	// }}}
@@ -268,6 +250,55 @@ class SwatToolLink extends SwatControl
 		$classes = array_merge($classes, $this->classes);
 
 		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function getSensitiveTag()
+
+	/**
+	 * Gets the tag used to display this tool link when it is sensitive
+	 *
+	 * @return SwatHtmlTag the tag used to display this tool link when it is
+	 *                      sensitive.
+	 */
+	protected function getSensitiveTag()
+	{
+		$tag = new SwatHtmlTag('a');
+
+		$tag->id = $this->id;
+		$tag->class = $this->getCSSClassString();
+
+		if ($this->value === null)
+			$tag->href = $this->link;
+		elseif (is_array($this->value))
+			$tag->href = vsprintf($this->link, $this->value);
+		else
+			$tag->href = sprintf($this->link, $this->value);
+
+		$tag->accesskey = $this->access_key;
+		$tag->setContent($this->title);
+
+		return $tag;
+	}
+
+	// }}}
+	// {{{ protected function getInsensitiveTag()
+
+	/**
+	 * Gets the tag used to display this tool link when it is not sensitive
+	 *
+	 * @return SwatHtmlTag the tag used to display this tool link when it is
+	 *                      not sensitive.
+	 */
+	protected function getInsensitiveTag()
+	{
+		$tag = new SwatHtmlTag('span');
+
+		$tag->id = $this->id;
+		$tag->class = $this->getCSSClassString();
+		$tag->setContent($this->title);
+
+		return $tag;
 	}
 
 	// }}}
