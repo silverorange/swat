@@ -1108,6 +1108,32 @@ class SwatString extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function getSalt()
+
+	/**
+	 * Gets a salt value of the specified length
+	 *
+	 * Useful for securing passwords or other one-way encrypted fields that
+	 * may be succeptable to a dictionary attack.
+	 *
+	 * This method generates a random ASCII string of the specified length. All
+	 * ASCII characters except the null character (0x00) may be included in
+	 * the returned string.
+	 *
+	 * @param integer $length the desired length of the salt.
+	 *
+	 * @return string a salt value of the specified length.
+	 */
+	public static function getSalt($length)
+	{
+		$salt = '';
+		for ($i = 0; $i < $length; $i++)
+			$salt.= chr(mt_rand(1, 127));
+
+		return $salt;
+	}
+
+	// }}}
 	// {{{ public static function stripXHTMLTags()
 
 	/**
