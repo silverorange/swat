@@ -1,3 +1,21 @@
+2007-06-17  gauthierm
+
+	* [r18038] swat/trunk/Swat/SwatString.php:
+	  Add SwatString::getSalt(). This will be useful for ticket #1059:
+	  salt user passwords.
+
+2007-06-15  gauthierm
+
+	* [r18024] swat/trunk/Swat/SwatToolLink.php:
+	  Fix a couple of default values that should have been null
+	  instead of blank strings and move HTML tag creationinto separate
+	  protected methods to aid in subclassing.
+
+2007-06-14  nrf
+
+	* [r18000] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.20
+
 2007-06-13  charles
 
 	* [r17982] swat/trunk/Swat/SwatCheckboxEntryList.php:
