@@ -48,6 +48,7 @@ class DemoApplication
 		'TableViewInputRow' => 'SwatTableViewInputRow',
 		'Textarea'          => 'SwatTextarea',
 		'TileView'          => 'SwatTileView',
+		'TimeEntry'         => 'SwatTimeEntry',
 		'TimeZoneEntry'     => 'SwatTimeZoneEntry',
 		'ToolLink'          => 'SwatToolLink',
 		'YesNoFlydown'      => 'SwatYesNoFlydown',
@@ -220,10 +221,7 @@ class DemoApplication
 			break;
 
 		case 'DateEntry':
-			$entries = array(
-				'SwatDateEntry',
-				'SwatTimeEntry'
-				);
+			$entries = array('SwatDateEntry');
 			break;
 
 		case 'DetailsView':
@@ -387,6 +385,10 @@ class DemoApplication
 				'SwatDateCellRenderer',
 				'SwatTextCellRenderer',
 				);
+			break;
+
+		case 'TimeEntry':
+			$entries = array('SwatTimeEntry');
 			break;
 
 		case 'TimeZoneEntry':
