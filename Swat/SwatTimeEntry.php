@@ -8,15 +8,14 @@ require_once 'Swat/SwatDate.php';
 require_once 'Swat/SwatState.php';
 require_once 'Swat/SwatYUI.php';
 
-// TODO: figure out why the valid-ranges are getting having the time inproperly
-//       offset.
-
 /**
  * A time entry widget
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @todo      Should we add a display_time_zone paramater?
+ * @todo      Should it be possible to set time zone from this widget?
  */
 class SwatTimeEntry extends SwatInputControl implements SwatState
 {
@@ -33,7 +32,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 * Time of this time entry widget
 	 *
 	 * The year, month and day fields of the Date object are unused and
-	 * undefined.
+	 * undefined. If the state of this time entry does not represent a valid
+	 * time, the value will be null.
 	 *
 	 * @var Date
 	 */
@@ -77,7 +77,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 * Start time of the valid range (inclusive)
 	 *
 	 * Defaults to 00:00:00. The year, month and day fields of the Date object
-	 * are ignored and undefined.
+	 * are ignored and undefined. This value is inclusive.
 	 *
 	 * @var Date
 	 */
@@ -87,11 +87,18 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 * End time of the valid range (inclusive)
 	 *
 	 * Defaults to 23:59:59. The year, month and day fields of the Date object
-	 * are ignored and undefined.
+	 * are ignored and undefined. This value is inclusive.
 	 *
 	 * @var Date
 	 */
 	public $valid_range_end;
+
+	/**
+	 * Whether or not times are entered and displayed in 12-hour format
+	 *
+	 * @var boolean
+	 */
+	public $twelve_hour = true;
 
 	// }}}
 	// {{{ private properties
@@ -130,7 +137,34 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 *
 	 * @var boolean
 	 */
-	private $created = false;
+	private $widgets_created = false;
+
+	/**
+	 * Default year value used for time value
+	 *
+	 * Defined here so internal time comparisons all happen on the same day.
+	 *
+	 * @var integer
+	 */
+	private static $date_year = 2000;
+
+	/**
+	 * Default month value used for time value
+	 *
+	 * Defined here so internal time comparisons all happen on the same day.
+	 *
+	 * @var integer
+	 */
+	private static $date_month = 1;
+
+	/**
+	 * Default day value used for time value
+	 *
+	 * Defined here so internal time comparisons all happen on the same day.
+	 *
+	 * @var integer
+	 */
+	private static $date_day = 1;
 
 	// }}}
 	// {{{ public function __construct()
@@ -150,10 +184,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		parent::__construct($id);
 
 		$this->display_parts  = self::HOUR | self::MINUTE;
-		$this->required_parts = $this->display_parts;
 
-		$this->valid_range_start = new SwatDate('0000-01-01T00:00:00.0000Z');
-		$this->valid_range_end   = new SwatDate('0000-01-01T23:59:59.0000Z');
+		$this->valid_range_start = new SwatDate('2000-01-01T00:00:00.0000Z');
+		$this->valid_range_end   = new SwatDate('2000-01-01T23:59:59.0000Z');
 
 		$yui = new SwatYUI(array('event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
@@ -166,9 +199,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 	/**
 	 * Displays this time entry
-	 *
-	 * Creates internal widgets if they do not exits then displays required
-	 * JavaScript, then displays internal widgets.
 	 */
 	public function display()
 	{
@@ -180,20 +210,39 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
-		$this->createFlydowns();
+		$this->createEmbeddedWidgets();
 
 		if ($this->display_parts & self::HOUR) {
-			if ($this->value !== null)
-				$this->hour_flydown->value = $this->value->getHour();
+			if ($this->hour_flydown->value === null && $this->value !== null) {
+				// work around a bug in PEAR::Date that returns hour as a string
+				$hour = intval($this->value->getHour());
+
+				// convert 24-hour value to 12-hour display
+				if ($this->twelve_hour) {
+					if ($hour > 12)
+						$hour -= 12;
+
+					if ($hour == 0)
+						$hour = 12;
+				}
+
+				$this->hour_flydown->value = $hour;
+			}
 
 			$this->hour_flydown->display();
+
 			if ($this->display_parts & (self::MINUTE | self::SECOND))
 				echo ':';
 		}
 
 		if ($this->display_parts & self::MINUTE) {
-			if ($this->value !== null)
-				$this->minute_flydown->value = $this->value->getMinute();
+			if ($this->minute_flydown->value === null &&
+				$this->value !== null) {
+				// work around a bug in PEAR::Date that returns minutes as a
+				// 2-character string
+				$minute = intval($this->value->getMinute());
+				$this->minute_flydown->value = $minute;
+			}
 
 			$this->minute_flydown->display();
 			if ($this->display_parts & self::SECOND)
@@ -201,17 +250,16 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		}
 
 		if ($this->display_parts & self::SECOND) {
-			if ($this->value !== null)
+			if ($this->second_flydown->value === null && $this->value !== null)
 				$this->second_flydown->value = $this->value->getSecond();
 
 			$this->second_flydown->display();
 		}
 
-		if ($this->display_parts & self::HOUR) {
-			if ($this->value !== null)
-				$this->am_pm_flydown->value = ($this->value->getHour() < 12 ||
-					$this->value->getHour() == 0) ?
-					'am' : 'pm';
+		if (($this->display_parts & self::HOUR) && $this->twelve_hour) {
+			if ($this->am_pm_flydown->value === null && $this->value !== null)
+				$this->am_pm_flydown->value =
+					($this->value->getHour() < 12) ? 'am' : 'pm';
 
 			$this->am_pm_flydown->display();
 		}
@@ -222,14 +270,29 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
+	// {{{ public function init()
+
+	/** 
+	 * Initialize this time entry
+	 *
+	 * Sets this time entry to required if any of the
+	 * {@link SwatTimeEntry::$required_parts} are set.
+	 */
+	public function init()
+	{
+		$this->required = $this->required || ($this->required_parts != 0);
+
+		parent::init();
+	}
+
+	// }}}
 	// {{{ public function process()
 
 	/**
 	 * Processes this time entry
 	 *
-	 * Creates internal widgets if they do not exist and then assigns their
-	 * values based on the time entered by the user. If the time is not valid,
-	 * an error message is attached to this time entry.
+	 * If the time is not valid an error message is attached to this time
+	 * entry.
 	 */
 	public function process()
 	{
@@ -238,36 +301,51 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		if (!$this->isVisible())
 			return;
 
-		$this->createFlydowns();
+		$this->createEmbeddedWidgets();
+
+		$hour   = 0;
+		$minute = 0;
+		$second = 0;
 
 		$all_empty = true;
+		$any_empty = false;
 
 		if ($this->display_parts & self::HOUR) {
 			$this->hour_flydown->process();
-			$this->am_pm_flydown->process();
 			$hour = $this->hour_flydown->value;
-			$ampm = $this->am_pm_flydown->value;
-			$all_empty = $all_empty && ($hour === null);
-			$all_empty = $all_empty && ($ampm === null);
 
-			if ($this->required_parts & self::HOUR && $hour === null) {
-				$message = Swat::_('Hour is Required.');
-				$this->addMessage(new SwatMessage($message,
-					SwatMessage::ERROR));
-			}
-
-			if ($this->required_parts & self::HOUR && $ampm === null) {
-				$message = Swat::_('AM/PM is Required.');
-				$this->addMessage(new SwatMessage($message,
-					SwatMessage::ERROR));
-			}
-
-			$hour = intval($hour);
-
-			if ($ampm == 'pm') {
-				$hour += 12;
-				if ($hour == 24)
+			if ($hour === null) {
+				if ($this->required_parts & self::HOUR) {
+					$any_empty = true;
+				} else {
+					$all_empty = false;
 					$hour = 0;
+				}
+			} else {
+				$all_empty = false;
+			}
+
+			if ($this->twelve_hour) {
+				$this->am_pm_flydown->process();
+				$am_pm = $this->am_pm_flydown->value;
+
+				if ($am_pm === null) {
+					if ($this->required_parts & self::HOUR) {
+						$any_empty = true;
+					} else {
+						$all_empty = false;
+						$am_pm = 'am';
+					}
+				} else {
+					$all_empty = false;
+				}
+
+				// convert 12-hour display to 24-hour value
+				if ($hour !== null && $am_pm == 'pm') {
+					$hour += 12;
+					if ($hour == 24)
+						$hour = 0;
+				}
 			}
 		} else {
 			$hour = 0;
@@ -276,15 +354,18 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		if ($this->display_parts & self::MINUTE) {
 			$this->minute_flydown->process();
 			$minute = $this->minute_flydown->value;
-			$all_empty = $all_empty && ($minute === null);
 
-			if ($this->required_parts & self::MINUTE && $minute === null) {
-				$message = Swat::_('Minute is Required.');
-				$this->addMessage(new SwatMessage($message,
-					SwatMessage::ERROR));
+			if ($minute === null) {
+				if ($this->required_parts & self::MINUTE) {
+					$any_empty = true;
+				} else {
+					$all_empty = false;
+					$minute = 0;
+				}
+			} else {
+				$all_empty = false;
 			}
 
-			$minute = intval($minute);
 		} else {
 			$minute = 0;
 		}
@@ -292,34 +373,42 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		if ($this->display_parts & self::SECOND) {
 			$this->second_flydown->process();
 			$second = $this->second_flydown->value;
-			$all_empty = $all_empty && ($second === null);
 
-			if ($this->required_parts & self::SECOND && $second === null) {
-				$message = Swat::_('Second is Required.');
-				$this->addMessage(new SwatMessage($message,
-					SwatMessage::ERROR));
+			if ($second === null) {
+				if ($this->required_parts & self::SECOND) {
+					$any_empty = true;
+				} else {
+					$all_empty = false;
+					$second = 0;
+				}
+			} else {
+				$all_empty = false;
 			}
 
-			$second = intval($second);
 		} else {
 			$second = 0;
 		}
 
-		if ($this->required && $all_empty) {
-			$message = Swat::_('Time is Required.');
+		if ($all_empty) {
+			$message = Swat::_('The %s field is required.');
 			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->value = null;
+		} elseif ($any_empty) {
+			$message = Swat::_('The %s field is not a valid time.');
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->value = null;
+		} else {
+			$this->value = new SwatDate();
+			$this->value->setYear(self::$date_year);
+			$this->value->setMonth(self::$date_month);
+			$this->value->setDay(self::$date_day);
+			$this->value->setHour($hour);
+			$this->value->setMinute($minute);
+			$this->value->setSecond($second);
+			$this->value->setTZ('UTC');
+
+			$this->validateRanges();
 		}
-
-		$this->value = new SwatDate();
-		$this->value->setYear(0);
-		$this->value->setMonth(1);
-		$this->value->setDay(1);
-		$this->value->setHour($hour);
-		$this->value->setMinute($minute);
-		$this->value->setSecond($second);
-		$this->value->setTZ('UTC');
-
-		$this->validateRanges();
 	}
 
 	// }}}
@@ -421,28 +510,98 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private function createFlydowns()
+	// {{{ protected function validateRanges()
 
 	/**
-	 * Creates all internal widgets required for this date entry
+	 * Makes sure the date the user entered is within the valid range
+	 *
+	 * If the time is not within the valid range, this method attaches an
+	 * error message to this time entry.
 	 */
-	private function createFlydowns()
+	protected function validateRanges()
 	{
-		if ($this->created) return;
+		if (!$this->isStartTimeValid()) {
+			$message = sprintf(Swat::_('The time you have entered is invalid. '.
+				'It must be on or after %s.'),
+				$this->getFormattedTime($this->valid_range_start));
 
-		$this->created = true;
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 
-		if ($this->display_parts & self::HOUR)
-			$this->createHourFlydown();
+		} elseif (!$this->isEndTimeValid()) {
+			$message = sprintf(Swat::_('The time you have entered is invalid. '.
+				'It must be on or before %s.'),
+				$this->getFormattedTime($this->valid_range_end));
 
-		if ($this->display_parts & self::MINUTE)
-			$this->createMinuteFlydown();
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+		}
+	}
 
-		if ($this->display_parts & self::SECOND)
-			$this->createSecondFlydown();
+	// }}}
+	// {{{ protected function isStartTimeValid()
 
-		if ($this->display_parts & self::HOUR)
-			$this->createAmPmFlydown();
+	/**
+	 * Checks if the entered time is valid with respect to the valid start
+	 * time
+	 *
+	 * @return boolean true if the entered time is on or after the valid start
+	 *                  time and false if the entered time is before the valid
+	 *                  start time.
+	 */
+	protected function isStartTimeValid()
+	{
+		$this->valid_range_start->setYear(self::$date_year);
+		$this->valid_range_start->setMonth(self::$date_month);
+		$this->valid_range_start->setDay(self::$date_day);
+		$this->valid_range_start->setTZ('UTC');
+
+		return (Date::compare(
+			$this->value, $this->valid_range_start, true) >= 0);
+	}
+
+	// }}}
+	// {{{ protected function isEndTimeValid()
+
+	/**
+	 * Checks if the entered time is valid with respect to the valid end time
+	 *
+	 * @return boolean true if the entered time is before the valid end time
+	 *                  and false if the entered time is on or after the valid
+	 *                  end time.
+	 */
+	protected function isEndTimeValid()
+	{
+		$this->valid_range_end->setYear(self::$date_year);
+		$this->valid_range_end->setMonth(self::$date_month);
+		$this->valid_range_end->setDay(self::$date_day);
+		$this->valid_range_end->setTZ('UTC');
+
+		return (Date::compare(
+			$this->value, $this->valid_range_end, true) <= 0);
+	}
+
+	// }}}
+	// {{{ private function createEmbeddedWidgets()
+
+	/**
+	 * Creates all internal widgets required for this time entry
+	 */
+	private function createEmbeddedWidgets()
+	{
+		if (!$this->widgets_created) {
+			if ($this->display_parts & self::HOUR) {
+				$this->createHourFlydown();
+				if ($this->twelve_hour)
+					$this->createAmPmFlydown();
+			}
+
+			if ($this->display_parts & self::MINUTE)
+				$this->createMinuteFlydown();
+
+			if ($this->display_parts & self::SECOND)
+				$this->createSecondFlydown();
+
+			$this->widgets_created = true;
+		}
 	}
 
 	// }}}
@@ -456,8 +615,13 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->hour_flydown = new SwatFlydown($this->id.'_hour');
 		$this->hour_flydown->parent = $this;
 
-		for ($i = 1; $i <= 12; $i++)
-			$this->hour_flydown->addOption($i, $i);
+		if ($this->twelve_hour) {
+			for ($i = 1; $i <= 12; $i++)
+				$this->hour_flydown->addOption($i, $i);
+		} else {
+			for ($i = 0; $i < 24; $i++)
+				$this->hour_flydown->addOption($i, $i);
+		}
 	}
 
 	// }}}
@@ -488,7 +652,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->second_flydown->parent = $this;
 
 		for ($i = 0; $i <= 59; $i++)
-			$this->second_flydown->addOptions($i,
+			$this->second_flydown->addOption($i,
 				str_pad($i, 2 ,'0', STR_PAD_LEFT));
 	}
 
@@ -500,66 +664,50 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 */
 	private function createAmPmFlydown()
 	{
-		$this->am_pm_flydown = new SwatFlydown($this->id.'_ampm');
-		$this->am_pm_flydown->addOptionsByArray(array('am' => 'AM',
-			'pm' => 'PM'));
+		$this->am_pm_flydown = new SwatFlydown($this->id.'_am_pm');
+		$this->am_pm_flydown->addOptionsByArray(array(
+			'am' => Swat::_('am'),
+			'pm' => Swat::_('pm'),
+		));
 
 		$this->am_pm_flydown->parent = $this;
 	}
 
 	// }}}
-	// {{{ private function validateRanges()
+	// {{{ private function getFormattedTime()
 
 	/**
-	 * Makes sure the date the user entered is within the valid range
+	 * Formats a time for display in error messages
 	 *
-	 * If the time is not within the valid range, this method attaches an
-	 * error message to this time entry.
+	 * @param Date $time the time to format.
+	 *
+	 * @return string the formatted time.
 	 */
-	private function validateRanges()
+	private function getFormattedTime(Date $time)
 	{
-		$this->valid_range_start->setYear(0);
-		$this->valid_range_start->setMonth(1);
-		$this->valid_range_start->setDay(1);
+		$format = '';
 
-		$this->valid_range_end->setYear(0);
-		$this->valid_range_end->setMonth(1);
-		$this->valid_range_end->setDay(1);
-
-		if (Date::compare($this->value, $this->valid_range_start, true) == -1) {
-
-			$message = sprintf(Swat::_('The time you have entered is invalid. '.
-				'It must be after %s.'),
-				$this->displayTime($this->valid_range_start));
-
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
-
-		} elseif (Date::compare($this->value, $this->valid_range_end, true) == 1) {
-
-			$message = sprintf(Swat::_('The time you have entered is invalid. '.
-				'It must be before %s.'),
-				$this->displayTime($this->valid_range_end));
-
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
-
+		if ($this->display_parts & self::HOUR) {
+			$format.= ($this->twelve_hour) ? '%i' : '%h';
+			if ($this->display_parts & (self::MINUTE | self::SECOND))
+				$format.= ':';
 		}
-	}
 
-	// }}}
-	// {{{ private function displayTime()
+		if ($this->display_parts & self::MINUTE) {
+			$format.= '%M';
+			if ($this->display_parts & self::SECOND)
+				$format.= ':';
+		}
 
-	/**
-	 * Converts a time to a human readable string
-	 *
-	 * This is a convenience method.
-	 *
-	 * @param Date $time the time to convert to a string.
-	 *
-	 * @return string the time converted to a string.
-	 */
-	private function displayTime($time)
-	{
-		return $time->format('%r'); // TODO: %X
+		if ($this->display_parts & self::SECOND) {
+			$format.= '%S';
+		}
+
+		if (($this->display_parts & self::HOUR) && $this->twelve_hour) {
+			$format.= ' %p';
+		}
+
+		return $time->format($format);
 	}
 
 	// }}}
