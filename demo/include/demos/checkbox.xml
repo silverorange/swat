@@ -21,28 +21,14 @@
 		<widget class="SwatFieldset">
 			<property name="title">Checkbox Entry List</property>
 
-			<widget class="SwatCheckboxEntryList">
-				<property name="options[0]">Apple</property>
-				<property name="options[1]">Orange</property>
-				<property name="options[2]">Banana</property>
-				<property name="options[3]">Pear</property>
-				<property name="options[4]">Pineapple</property>
-				<property name="options[5]">Kiwi</property>
-			</widget>
+			<widget class="SwatCheckboxEntryList" id="checkbox_entry_list" />
 
 		</widget>
 		<widget class="SwatFieldset">
 			<property name="title">Checkbox List</property>
 
 			<widget class="SwatCheckboxList" id="checkbox_list">
-				<property name="options[0]">Apple</property>
-				<property name="options[1]">Orange</property>
-				<property name="options[2]">Banana</property>
-				<property name="options[3]">Pear</property>
-				<property name="options[4]">Pineapple</property>
-				<property name="options[5]">Kiwi</property>
 				<property name="values[]" type="integer">1</property>
-				<property name="values[]" type="integer">4</property>
 			</widget>
 			
 		</widget>
