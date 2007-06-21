@@ -9,7 +9,7 @@ require_once 'Swat/SwatYUI.php';
  * A checkbox list widget with entries per item
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckboxEntryList extends SwatCheckboxList
@@ -124,27 +124,27 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		}
 
 		echo '<tbody>';
-		foreach ($this->options as $value => $title) {
+		foreach ($this->options as $option) {
 			echo '<tr><td>';
 
-			$input_tag->value = (string)$value;
+			$input_tag->value = (string)$option->value;
 			$input_tag->removeAttribute('checked');
 
-			if (in_array($value, $this->values))
+			if (in_array($option->value, $this->values))
 				$input_tag->checked = 'checked';
 
 			$input_tag->id = $this->id.'_'.$input_tag->value;
 			$input_tag->display();
 
 			$label_tag->for = $this->id.'_'.$input_tag->value;
-			$label_tag->setContent($title, $this->content_type);
+			$label_tag->setContent($option->title, $this->content_type);
 			$label_tag->display();
 
 			echo '</td><td>';
 
-			$widget = $this->getEntryWidget($value);
-			if (isset($this->entry_values[$value]))
-				$widget->value = $this->entry_values[$value];
+			$widget = $this->getEntryWidget($option->value);
+			if (isset($this->entry_values[$option->value]))
+				$widget->value = $this->entry_values[$option->value];
 
 			$widget->display();
 
