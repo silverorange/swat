@@ -19,21 +19,11 @@ require_once 'Swat/SwatExceptionLogger.php';
  * {@link SwatException::setLogger()} and {@link SwatException::setDisplayer()}.
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatException extends Exception
 {
-	// {{{ private properties
-	
-	/**
-	 * A variable to represent if the excception was manually handled
-	 *
-	 * @var boolean
-	 */
-	private $handled = null;
-
-	// }}}
 	// {{{ protected properties
 
 	protected $backtrace = null;
@@ -58,6 +48,16 @@ class SwatException extends Exception
 	 * @see SwatException::addSensitiveParameterName()
 	 */
 	protected static $sensitive_param_names = array();
+
+	// }}}
+	// {{{ private properties
+
+	/**
+	 * Whether or not this excception was manually handled
+	 *
+	 * @var boolean
+	 */
+	private $handled = false;
 
 	// }}}
 	// {{{ public static function setLogger()
@@ -164,6 +164,14 @@ class SwatException extends Exception
 	 *
 	 * Processing involves displaying errors, logging errors and sending
 	 * error message emails
+	 *
+	 * @param boolean $exit optional. Whether or not to exit after processing
+	 *                       this exception. If unspecified, defaults to true.
+	 * @param boolean $handled optional. Whether or not this exception was
+	 *                          manually handled. If unspecified defaults to
+	 *                          true. Usually this paramater should be true
+	 *                          if you catch an exception and manually call
+	 *                          process on the exception.
 	 */
 	public function process($exit = true, $handled = true)
 	{
@@ -385,9 +393,10 @@ class SwatException extends Exception
 	// {{{ public function wasHandled()
 	
 	/**
-	 * Tells you if the exception was handled 
+	 * Gets whether or not this exception was manually handled 
 	 *
-	 * @reutrn boolean
+	 * @return boolean true if this exception wa smanually handled and false
+	 *                  if it was not.
 	 */
 	public function wasHandled()
 	{
@@ -400,21 +409,18 @@ class SwatException extends Exception
 	/**
 	 * Handles an exception
 	 *
-	 * Runs the process() method on SwatException exceptions and displays all
-	 * other exceptions. Also used to pass $handled = false to the process()
-	 * method to represent the fact that the exception was not handled manually.
+	 * Wraps a generic exception in a SwatException object and process the
+	 * SwatException object.
 	 *
 	 * @param Exception $e the exception to handle.
 	 */
-	public static function handle($e)
+	public static function handle(Exception $e)
 	{
-		if ($e instanceof SwatException) {
-			$e->process(true, false);
-		} else {
-			// wrap other exceptions in SwatExceptions
+		// wrap other exceptions in SwatExceptions
+		if (!($e instanceof SwatException))
 			$e = new SwatException($e);
-			$e->process(true, false);
-		}
+
+		$e->process(true, false);
 	}
 
 	// }}}
