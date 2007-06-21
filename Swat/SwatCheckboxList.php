@@ -135,21 +135,21 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		echo '<ul>';
 
-		foreach ($this->options as $value => $title) {
+		foreach ($this->options as $option) {
 
 			echo '<li>';
-
-			$input_tag->value = (string)$value;
+				
+			$input_tag->value = (string)$option->value;
 			$input_tag->removeAttribute('checked');
 
-			if (in_array($value, $this->values))
+			if (in_array($option->value, $this->values))
 				$input_tag->checked = 'checked';
 
 			$input_tag->id = $this->id.'_'.$input_tag->value;
 			$input_tag->display();
 
 			$label_tag->for = $this->id.'_'.$input_tag->value;
-			$label_tag->setContent($title, $this->content_type);
+			$label_tag->setContent($option->title, $this->content_type);
 			$label_tag->display();
 
 			echo '</li>';
