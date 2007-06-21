@@ -2,7 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatInputControl.php';
+require_once 'Swat/SwatOptionControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatCheckAll.php';
 require_once 'Swat/SwatState.php';
@@ -13,22 +13,13 @@ require_once 'Swat/SwatYUI.php';
  * A checkbox list widget
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatCheckboxList extends SwatInputControl implements SwatState
+class SwatCheckboxList extends SwatOptionControl implements SwatState
 {
 	// {{{ public properties
-
-	/**
-	 * Checkbox list options
-	 *
-	 * An array of options for the radio list in the form value => title.
-	 *
-	 * @var array
-	 */
-	public $options = null;
-
+	
 	/**
 	 * Optional content type for option titles
 	 *
