@@ -15,7 +15,6 @@ require_once 'Swat/SwatYUI.php';
  * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @todo      Should we add a display_time_zone paramater?
- * @todo      Should it be possible to set time zone from this widget?
  */
 class SwatTimeEntry extends SwatInputControl implements SwatState
 {
