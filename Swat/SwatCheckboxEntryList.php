@@ -90,7 +90,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	 */
 	public function display()
 	{
-		if (!$this->visible || $this->options === null)
+		$options = $this->getOptions();
+
+		if (!$this->visible || count($options) == 0)
 			return;
 
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
@@ -116,14 +118,14 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
 		// Only show the check all control if more than one checkable item is
 		// displayed.
-		if (count($this->options) > 1) {
+		if (count($options) > 1) {
 			echo '<tfoot><tr><td colspan="2">';
 			$this->check_all->display();
 			echo '</td></tr></tfoot>';
 		}
 
 		echo '<tbody>';
-		foreach ($this->options as $key => $option) {
+		foreach ($options as $key => $option) {
 			echo '<tr><td>';
 
 			$checkbox_id = $key.'_'.$option->value;
@@ -201,7 +203,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	public function reset()
 	{
 		parent::reset();
-		$this->entry_values = key($this->options);
+		$this->entry_values = array();
 	}
 
 	// }}}
@@ -219,7 +221,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 			$this->id, $this->id);
 
 		// set check-all controller if it is visible
-		if (count($this->options) > 1)
+		if (count($this->getOptions()) > 1)
 			$javascript.= sprintf("\n%s_obj.setController(%s_obj);",
 				$this->check_all->id, $this->id);
 
