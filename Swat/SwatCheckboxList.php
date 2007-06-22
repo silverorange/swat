@@ -114,7 +114,9 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	 */
 	public function display()
 	{
-		if (!$this->visible || $this->options === null)
+		$options = $this->getOptions();
+
+		if (!$this->visible || count($options) == 0)
 			return;
 
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
@@ -135,7 +137,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		echo '<ul>';
 
-		foreach ($this->options as $key => $option) {
+		foreach ($options as $key => $option) {
 
 			echo '<li>';
 				
@@ -159,7 +161,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		// Only show the check all control if more than one checkable item is
 		// displayed.
-		$this->check_all->visible = (count($this->options) > 1);
+		$this->check_all->visible = (count($options) > 1);
 		$this->check_all->display();
 
 		$div_tag->close();
@@ -205,8 +207,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	 */
 	public function reset()
 	{
-		reset($this->options);
-		$this->values = key($this->options);
+		$this->values = array();
 	}
 
 	// }}}
