@@ -130,7 +130,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
-		$input_tag->name = $this->id.'['.$key.']';
 
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
@@ -143,6 +142,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 				
 			$input_tag->value = (string)$option->value;
 			$input_tag->removeAttribute('checked');
+			$input_tag->name = $this->id.'['.$key.']';
 
 			if (in_array($option->value, $this->values))
 				$input_tag->checked = 'checked';
