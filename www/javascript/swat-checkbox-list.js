@@ -5,7 +5,17 @@
  */
 function SwatCheckboxList(id)
 {
-	this.check_list = document.getElementsByName(id + '[]');
+	this.check_list = [];
+
+	var container = document.getElementById(id);
+	var input_elements = container.getElementsByTagName('INPUT');
+	for (var i = 0; i < input_elements.length; i++) {
+		if (input_elements[i].type == 'checkbox' &&
+			input_elements[i].id.substring(0, id.length) == id) {
+			this.check_list.push(input_elements[i]);
+		}
+	}
+
 	this.check_all = null; // a reference to a check-all js object 
 
 	for (i = 0; i < this.check_list.length; i++) {

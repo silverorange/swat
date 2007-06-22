@@ -102,7 +102,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
-		$input_tag->name = $this->id.'[]';
 
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
@@ -124,27 +123,30 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		}
 
 		echo '<tbody>';
-		foreach ($this->options as $option) {
+		foreach ($this->options as $key => $option) {
 			echo '<tr><td>';
+
+			$checkbox_id = $key.'_'.$option->value;
 
 			$input_tag->value = (string)$option->value;
 			$input_tag->removeAttribute('checked');
+			$input_tag->name = $this->id.'['.$key.']';
 
 			if (in_array($option->value, $this->values))
 				$input_tag->checked = 'checked';
 
-			$input_tag->id = $this->id.'_'.$input_tag->value;
+			$input_tag->id = $this->id.'_'.$checkbox_id;
 			$input_tag->display();
 
-			$label_tag->for = $this->id.'_'.$input_tag->value;
+			$label_tag->for = $this->id.'_'.$checkbox_id;
 			$label_tag->setContent($option->title, $this->content_type);
 			$label_tag->display();
 
 			echo '</td><td>';
 
-			$widget = $this->getEntryWidget($option->value);
-			if (isset($this->entry_values[$option->value]))
-				$widget->value = $this->entry_values[$option->value];
+			$widget = $this->getEntryWidget($checkbox_id);
+			if (isset($this->entry_values[$checkbox_id]))
+				$widget->value = $this->entry_values[$checkbox_id];
 
 			$widget->display();
 
@@ -179,8 +181,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
 		$this->entry_values = array();
 
-		foreach ($this->values as $value) {
-			$widget = $this->getEntryWidget($value);
+		foreach ($this->values as $key => $value) {
+			$checkbox_id = $key.'_'.$value;
+			$widget = $this->getEntryWidget($checkbox_id);
 			$widget->process();
 			$this->entry_values[$value] = $widget->value;
 		}
