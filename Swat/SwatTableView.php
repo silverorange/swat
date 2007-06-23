@@ -31,13 +31,15 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * sorted by
 	 *
 	 * If no sorting is currently happening, this can be null. Alternatively,
-	 * this can be set and the column itself may be set to no sorting.
-	 *
-	 * TODO: Check if this documentation is correct.
+	 * this can be set to a SwatTableViewOrderableColumn and the column itself
+	 * may be set to no sorting.
 	 *
 	 * @var SwatTableViewOrderableColumn
+	 *
+	 * @todo Clean up this API. Making this a public property is prone to
+	 *       misuse.
 	 */
-	public $orderby_column = null;
+	public $orderby_column;
 
 	/**
 	 * The column of this table-view that the data in the model is sorted by
