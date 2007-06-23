@@ -1201,8 +1201,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 			if ($has_message)
 				$tr_tag->class = $tr_tag->class.' swat-error';
 
-			$tr_tag->class =
-				$tr_tag->class.' swat-table-view-spanning-column';
+			$tr_tag->class.= ' swat-table-view-spanning-column';
 
 			foreach ($this->spanning_columns as $column) {
 				if ($column->visible && $column->hasVisibleRenderer($row)) {
