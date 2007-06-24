@@ -12,7 +12,7 @@ require_once 'Swat/SwatYUI.php';
  * A date entry widget
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDateEntry extends SwatInputControl implements SwatState
@@ -240,6 +240,22 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
+	// {{{ public function init()
+
+	/** 
+	 * Initialize this time entry
+	 *
+	 * Sets this time entry to required if any of the
+	 * {@link SwatTimeEntry::$required_parts} are set.
+	 */
+	public function init()
+	{
+		$this->required = $this->required || ($this->required_parts != 0);
+
+		parent::init();
+	}
+
+	// }}}
 	// {{{ public function display()
 
 	/**
@@ -265,7 +281,11 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		/*
 		 * NOTE: Using php date functions here because the Date class does not
 		 *       seem to support locale-ordering of date parts.
+		 *
 		 * This returns something like: mm/dd/yy or dd.mm.yyyy
+		 *
+		 * This is used for locale-based formatting of the widget. We might be
+		 * able to do this better using nl_langinfo().
 		 */
 		$order = split('[/.-]', strftime('%x', mktime(0, 0, 0, 1, 2, 2003)));
 
@@ -277,20 +297,26 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			$y = ($datepart == 2003 || $datepart == 3);
 
 			if ($m && $datepart == 1 && $this->display_parts & self::MONTH) {
-				if ($this->value !== null)
+				if ($this->month_flydown->value === null &&
+					$this->value !== null) {
 					$this->month_flydown->value = $this->value->getMonth();
+				}
 
 				$this->month_flydown->display();
 			} elseif ($d && $datepart == 2 &&
 				$this->display_parts & self::DAY) {
 
-				if ($this->value !== null)
+				if ($this->day_flydown->value === null &&
+					$this->value !== null) {
 					$this->day_flydown->value = $this->value->getDay();
+				}
 
 				$this->day_flydown->display();
 			} elseif ($y && $this->display_parts & self::YEAR) {
-				if ($this->value !== null)
+				if ($this->year_flydown->value === null &&
+					$this->value !== null) {
 					$this->year_flydown->value = $this->value->getYear();
+				}
 
 				$this->year_flydown->display();
 			}
@@ -304,7 +330,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		if ($this->display_parts & self::TIME) {
 			echo ' ';
-			$this->time_entry->value = $this->value;
+			if ($this->time_entry->value === null && $this->value !== null)
+				$this->time_entry->value = $this->value;
+
 			$this->time_entry->display();
 		}
 
@@ -327,78 +355,94 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		parent::process();
 
+		if (!$this->isVisible())
+			return;
+
 		$this->createEmbeddedWidgets();
 
+		$year = 0;
+		$month = 1;
+		$day = 1;
+		$hour = 0;
+		$minute = 0;
+		$second = 0;
+
 		$all_empty = true;
+		$any_empty = false;
 
 		if ($this->display_parts & self::YEAR) {
 			$this->year_flydown->process();
 			$year = $this->year_flydown->value;
-			$all_empty = $all_empty && ($year === null);
+			if ($year === null) {
+				if ($this->required_parts & self::YEAR) {
+					$any_empty = true;
+				} else {
+					$all_empty = false;
+					$year = 0;
+				}
+			} else {
+				$all_empty = false;
+			}
 		}
 
 		if ($this->display_parts & self::MONTH) {
 			$this->month_flydown->process();
 			$month = $this->month_flydown->value;
-			$all_empty = $all_empty && ($month === null);
+			if ($month === null) {
+				if ($this->required_parts & self::MONTH) {
+					$any_empty = true;
+				} else {
+					$all_empty = false;
+					$month = 1;
+				}
+			} else {
+				$all_empty = false;
+			}
 		}
 
 		if ($this->display_parts & self::DAY) {
 			$this->day_flydown->process();
 			$day = $this->day_flydown->value;
-			$all_empty = $all_empty && ($day === null);
+			if ($day === null) {
+				if ($this->required_parts & self::DAY) {
+					$any_empty = true;
+				} else {
+					$all_empty = false;
+					$day = 1;
+				}
+			} else {
+				$all_empty = false;
+			}
 		}
 
 		if ($this->display_parts & self::TIME) {
 			$this->time_entry->process();
-			$hour = $this->time_entry->value->getHour();
-			$minute = $this->time_entry->value->getMinute();
-			$second = $this->time_entry->value->getSecond();
-		} else {
-			$hour = 0;
-			$minute = 0;
-			$second = 0;
-		}
-
-		if ($this->required && $all_empty) {
-			$message = Swat::_('Date is Required.');
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
-		}
-
-		if ($this->display_parts & self::YEAR) {
-			if (!$all_empty && $year === null && 
-				($this->required_parts & self::YEAR)) {
-				$message = Swat::_('Year is Required.');
-				$this->addMessage(new SwatMessage($message,
-					SwatMessage::ERROR));
+			if ($this->time_entry->value === null) {
+				if ($this->required_parts & self::TIME) {
+					$any_empty = true;
+				} else {
+					$all_empty = false;
+					$hour = 0;
+					$minute = 0;
+					$second = 0;
+					$this->time_entry->value =
+						new SwatDate('2000-01-01T00:00:00.0000Z');
+				}
+			} else {
+				$hour = $this->time_entry->value->getHour();
+				$minute = $this->time_entry->value->getMinute();
+				$second = $this->time_entry->value->getSecond();
+				$all_empty = false;
 			}
-		} else {
-			$year = 0;
-		}
-
-		if ($this->display_parts & self::MONTH) {
-			if (!$all_empty && $month === null &&
-				($this->required_parts & self::MONTH)) {
-				$message = Swat::_('Month is Required.');
-				$this->addMessage(new SwatMessage($message,
-					SwatMessage::ERROR));
-			}
-		} else {
-			$month = 1;
-		}
-
-		if ($this->display_parts & self::DAY) {
-			if (!$all_empty && $day === null &&
-				($this->required_parts & self::DAY)) {
-				$message = Swat::_('Day is Required.');
-				$this->addMessage(new SwatMessage($message,
-					SwatMessage::ERROR));
-			}
-		} else {
-			$day = 1;
 		}
 
 		if ($all_empty) {
+			$message = Swat::_('The %s field is required.');
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->value = null;
+		} elseif ($any_empty) {
+			$message = Swat::_('The %s field is not a valid date.');
+			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 			$this->value = null;
 		} else {
 			$this->value = new SwatDate();
