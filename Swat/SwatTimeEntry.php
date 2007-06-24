@@ -95,9 +95,11 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	/**
 	 * Whether or not times are entered and displayed in 12-hour format
 	 *
+	 * If not specified, defaults to the default format of the current locale.
+	 *
 	 * @var boolean
 	 */
-	public $twelve_hour = true;
+	public $twelve_hour;
 
 	// }}}
 	// {{{ private properties
@@ -194,6 +196,11 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript('packages/swat/javascript/swat-time-entry.js',
 			Swat::PACKAGE_ID);
+
+		// guess twelve-hour or twenty-four hour default based on locale
+		$locale_format = nl_langinfo(T_FMT);
+		$this->twelve_hour = 
+			(preg_match('/(%T|%R|%k|.*%H.*)/', $locale_format) == 1);
 	}
 
 	// }}}
