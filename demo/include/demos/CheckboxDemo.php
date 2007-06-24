@@ -21,7 +21,7 @@ class CheckboxDemo extends Demo
 		$tree = new SwatDataTreeNode(null, 'Root');
 
 		$apples = new SwatDataTreeNode(null, 'Apple');
-		$apples->addChild(new SwatDataTreeNode(0, 'Mackintosh'));
+		$apples->addChild(new SwatDataTreeNode(0, 'McIntosh'));
 		$apples->addChild(new SwatDataTreeNode(1, 'Courtland'));
 		$apples->addChild(new SwatDataTreeNode(2, 'Golden Delicious'));
 		$apples->addChild(new SwatDataTreeNode(3, 'Fuji'));
@@ -50,7 +50,7 @@ class CheckboxDemo extends Demo
 		$tree = new SwatDataTreeNode(null, 'Root');
 
 		$apples = new SwatDataTreeNode(null, 'Apple');
-		$apples->addChild(new SwatDataTreeNode(0, 'Mackintosh'));
+		$apples->addChild(new SwatDataTreeNode(0, 'McIntosh'));
 		$apples->addChild(new SwatDataTreeNode(1, 'Courtland'));
 		$apples->addChild(new SwatDataTreeNode(2, 'Golden Delicious'));
 		$apples->addChild(new SwatDataTreeNode(3, 'Fuji'));
@@ -76,8 +76,8 @@ class CheckboxDemo extends Demo
 
 		// checkbox list
 		$checkbox_list_options = array(
-			0 => 'Mackintosh',
-			1 => 'Coutland',
+			0 => 'McIntosh',
+			1 => 'Courtland',
 			2 => 'Golden Delicious',
 			3 => 'Fuji',
 			4 => 'Granny Smith');

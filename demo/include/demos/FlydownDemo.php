@@ -38,7 +38,7 @@ class FlydownDemo extends Demo
 		$tree = new SwatTreeFlydownNode(null, 'Root');
 
 		$apples = new SwatTreeFlydownNode('apple', 'Apple');
-		$apples->addChild(new SwatTreeFlydownNode('mackintosh', 'Mackintish'));
+		$apples->addChild(new SwatTreeFlydownNode('mackintosh', 'McIntosh'));
 		$apples->addChild(new SwatTreeFlydownNode('courtland', 'Courtland'));
 		$apples->addChild(new SwatTreeFlydownNode('golden', 'Golden Delicious'));
 		$apples->addChild(new SwatTreeFlydownNode('fuji', 'Fuji'));
@@ -61,7 +61,7 @@ class FlydownDemo extends Demo
 		$grouped_tree = new SwatTreeFlydownNode(null, 'Root');
 
 		$apples = new SwatTreeFlydownNode(null, 'Apple');
-		$apples->addChild(new SwatTreeFlydownNode('mackintosh', 'Mackintish'));
+		$apples->addChild(new SwatTreeFlydownNode('mackintosh', 'McIntosh'));
 		$apples->addChild(new SwatTreeFlydownNode('courtland', 'Courtland'));
 		$apples->addChild(new SwatTreeFlydownNode('golden', 'Golden Delicious'));
 		$apples->addChild(new SwatTreeFlydownNode('fuji', 'Fuji'));
