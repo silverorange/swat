@@ -240,22 +240,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ public function init()
-
-	/** 
-	 * Initialize this time entry
-	 *
-	 * Sets this time entry to required if any of the
-	 * {@link SwatTimeEntry::$required_parts} are set.
-	 */
-	public function init()
-	{
-		$this->required = $this->required || ($this->required_parts != 0);
-
-		parent::init();
-	}
-
-	// }}}
 	// {{{ public function display()
 
 	/**
@@ -358,7 +342,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 				if ($this->required_parts & self::YEAR) {
 					$any_empty = true;
 				} else {
-					$all_empty = false;
 					$year = 0;
 				}
 			} else {
@@ -373,7 +356,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 				if ($this->required_parts & self::MONTH) {
 					$any_empty = true;
 				} else {
-					$all_empty = false;
 					$month = 1;
 				}
 			} else {
@@ -388,7 +370,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 				if ($this->required_parts & self::DAY) {
 					$any_empty = true;
 				} else {
-					$all_empty = false;
 					$day = 1;
 				}
 			} else {
@@ -402,12 +383,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 				if ($this->required_parts & self::TIME) {
 					$any_empty = true;
 				} else {
-					$all_empty = false;
 					$hour = 0;
 					$minute = 0;
 					$second = 0;
-					$this->time_entry->value =
-						new SwatDate('2000-01-01T00:00:00.0000Z');
 				}
 			} else {
 				$hour = $this->time_entry->value->getHour();
@@ -418,8 +396,11 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		}
 
 		if ($all_empty) {
-			$message = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			if ($this->required) {
+				$message = Swat::_('The %s field is required.');
+				$this->addMessage(new SwatMessage($message,
+					SwatMessage::ERROR));
+			}
 			$this->value = null;
 		} elseif ($any_empty) {
 			$message = Swat::_('The %s field is not a valid date.');

@@ -309,22 +309,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ public function init()
-
-	/** 
-	 * Initialize this time entry
-	 *
-	 * Sets this time entry to required if any of the
-	 * {@link SwatTimeEntry::$required_parts} are set.
-	 */
-	public function init()
-	{
-		$this->required = $this->required || ($this->required_parts != 0);
-
-		parent::init();
-	}
-
-	// }}}
 	// {{{ public function process()
 
 	/**
@@ -357,7 +341,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 				if ($this->required_parts & self::HOUR) {
 					$any_empty = true;
 				} else {
-					$all_empty = false;
 					$hour = 0;
 				}
 			} else {
@@ -372,7 +355,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 					if ($this->required_parts & self::HOUR) {
 						$any_empty = true;
 					} else {
-						$all_empty = false;
 						$am_pm = 'am';
 					}
 				} else {
@@ -396,7 +378,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 				if ($this->required_parts & self::MINUTE) {
 					$any_empty = true;
 				} else {
-					$all_empty = false;
 					$minute = 0;
 				}
 			} else {
@@ -412,7 +393,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 				if ($this->required_parts & self::SECOND) {
 					$any_empty = true;
 				} else {
-					$all_empty = false;
 					$second = 0;
 				}
 			} else {
@@ -421,8 +401,11 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		}
 
 		if ($all_empty) {
-			$message = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			if ($this->required) {
+				$message = Swat::_('The %s field is required.');
+				$this->addMessage(new SwatMessage($message,
+					SwatMessage::ERROR));
+			}
 			$this->value = null;
 		} elseif ($any_empty) {
 			$message = Swat::_('The %s field is not a valid time.');
