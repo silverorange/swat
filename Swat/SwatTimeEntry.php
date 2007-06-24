@@ -182,15 +182,44 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	{
 		parent::__construct($id);
 
-		$this->display_parts  = self::HOUR | self::MINUTE;
+		$this->display_parts = self::HOUR | self::MINUTE;
+		$this->required_parts = $this->display_parts;
 
 		$this->valid_range_start = new SwatDate('2000-01-01T00:00:00.0000Z');
 		$this->valid_range_end   = new SwatDate('2000-01-01T23:59:59.0000Z');
+
+		$this->requires_id = true;
 
 		$yui = new SwatYUI(array('event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript('packages/swat/javascript/swat-time-entry.js',
 			Swat::PACKAGE_ID);
+	}
+
+	// }}}
+	// {{{ public function __clone()
+
+	/**
+	 * Clones the embedded widgets of this time entry widget
+	 */
+	public function __clone()
+	{
+		$this->valid_range_start = clone $this->valid_range_start;
+		$this->valid_range_end = clone $this->valid_range_end;
+
+		if ($this->widgets_created) {
+			if ($this->display_parts & self::HOUR) {
+				$this->hour_flydown = clone $this->hour_flydown;
+				if ($this->twelve_hour)
+					$this->am_pm_flydown = clone $this->am_pm_flydown;
+			}
+
+			if ($this->display_parts & self::MINUTE)
+				$this->minute_flydown = clone $this->minute_flydown;
+
+			if ($this->display_parts & self::SECOND)
+				$this->second_flydown = clone $this->second_flydown;
+		}
 	}
 
 	// }}}
@@ -204,12 +233,14 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
+		$this->createEmbeddedWidgets();
+
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
-		$this->createEmbeddedWidgets();
+		echo '<span class="swat-time-entry-span">';
 
 		if ($this->display_parts & self::HOUR) {
 			if ($this->hour_flydown->value === null && $this->value !== null) {
@@ -263,9 +294,11 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			$this->am_pm_flydown->display();
 		}
 
-		$div_tag->close();
+		echo '</span>';
 
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+
+		$div_tag->close();
 	}
 
 	// }}}
@@ -346,8 +379,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 						$hour = 0;
 				}
 			}
-		} else {
-			$hour = 0;
 		}
 
 		if ($this->display_parts & self::MINUTE) {
@@ -364,9 +395,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			} else {
 				$all_empty = false;
 			}
-
-		} else {
-			$minute = 0;
 		}
 
 		if ($this->display_parts & self::SECOND) {
@@ -383,9 +411,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			} else {
 				$all_empty = false;
 			}
-
-		} else {
-			$second = 0;
 		}
 
 		if ($all_empty) {
