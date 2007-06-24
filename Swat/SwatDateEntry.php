@@ -278,41 +278,22 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		echo '<span class="swat-date-entry-span">';
 
-		/*
-		 * NOTE: Using php date functions here because the Date class does not
-		 *       seem to support locale-ordering of date parts.
-		 *
-		 * This returns something like: mm/dd/yy or dd.mm.yyyy
-		 *
-		 * This is used for locale-based formatting of the widget. We might be
-		 * able to do this better using nl_langinfo().
-		 */
-		$order = split('[/.-]', strftime('%x', mktime(0, 0, 0, 1, 2, 2003)));
-
-		foreach ($order as $datepart) {
-			$m = ($datepart == 1);
-			$d = ($datepart == 2);
-			// strftime outputs the year as either 2003 or 03 depending
-			// on the locale
-			$y = ($datepart == 2003 || $datepart == 3);
-
-			if ($m && $datepart == 1 && $this->display_parts & self::MONTH) {
-				if ($this->month_flydown->value === null &&
-					$this->value !== null) {
-					$this->month_flydown->value = $this->value->getMonth();
-				}
-
-				$this->month_flydown->display();
-			} elseif ($d && $datepart == 2 &&
-				$this->display_parts & self::DAY) {
-
+		foreach ($this->getDatePartOrder() as $datepart) {
+			if ($datepart == 'd' && $this->display_parts & self::DAY) {
 				if ($this->day_flydown->value === null &&
 					$this->value !== null) {
 					$this->day_flydown->value = $this->value->getDay();
 				}
 
 				$this->day_flydown->display();
-			} elseif ($y && $this->display_parts & self::YEAR) {
+			} elseif ($datepart == 'm' && $this->display_parts & self::MONTH) {
+				if ($this->month_flydown->value === null &&
+					$this->value !== null) {
+					$this->month_flydown->value = $this->value->getMonth();
+				}
+
+				$this->month_flydown->display();
+			} elseif ($datepart == 'y' && $this->display_parts & self::YEAR) {
 				if ($this->year_flydown->value === null &&
 					$this->value !== null) {
 					$this->year_flydown->value = $this->value->getYear();
@@ -892,6 +873,58 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			$year = ' %Y';
 
 		return trim($date->format($month.$day.$year.$time));
+	}
+
+	// }}}
+	// {{{ private function getDatePartOrder()
+
+	/**
+	 * Gets the order of date parts for the current locale
+	 *
+	 * Note: The technique used within this method does not work correcty for
+	 * RTL languages that display month names, month abbreviations or weekday
+	 * names. Since we're displaying months textually these locales may have
+	 * date parts incorrectly ordered.
+	 *
+	 * @return array an array containg the values 'd', 'm' and 'y' in the
+	 *                correct order for the current locale.
+	 */
+	private function getDatePartOrder()
+	{
+		$format = nl_langinfo(D_FMT);
+
+		// expand short form format
+		$format = str_replace('%D', '%m/%d/%y', $format);
+
+		$day = $month = $year = null;
+
+		$matches = array();
+		if (preg_match('/(%d|%e)/', $format, $matches,
+			PREG_OFFSET_CAPTURE) == 1)
+			$day = $matches[0][1];
+
+		$matches = array();
+		if (preg_match('/(%[bB]|%m)/', $format, $matches,
+			PREG_OFFSET_CAPTURE) == 1)
+			$month = $matches[0][1];
+
+		$matches = array();
+		if (preg_match('/(%[Yy])/', $format, $matches,
+			PREG_OFFSET_CAPTURE) == 1)
+			$year = $matches[0][1];
+
+		if ($day === null  || $month === null || $year === null) {
+			// fallback to d-m-y if the locale format is unknown
+			$order = array('d', 'm', 'y');
+		} else {
+			$order = array();
+			$order[$day] = 'd';
+			$order[$month] = 'm';
+			$order[$year] = 'y';
+			ksort($order);
+		}
+
+		return $order;
 	}
 
 	// }}}
