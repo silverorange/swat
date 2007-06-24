@@ -4,8 +4,9 @@
 	<widget class="SwatForm" id="my_form">
 
 		<widget class="SwatFormField">
-			<property name="title" type="string">Time</property>
+			<property name="title" type="string">Twelve Hour</property>
 			<widget class="SwatTimeEntry" id="time">
+				<property name="twelve_hour" type="boolean">true</property>
 				<property name="required_parts" type="constant">HOUR | MINUTE</property>
 			</widget>
 		</widget>
