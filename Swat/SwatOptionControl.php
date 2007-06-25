@@ -57,14 +57,19 @@ abstract class SwatOptionControl extends SwatInputControl
 	// {{{ public function addOption()
 
 	/**
-	 * Add an option element
+	 * Adds an option to this option control
 	 *
-	 * @param mixed $value Either a simply value for the option, or a
-	 *                      {@link SwatOption} object. If a
-	 *                      {@link SwatOption} object is used, the
-	 *                      $title parameter of addOption will be ignored.
-	 * @param string $title The title of the option element.
-	 * @param string $content_type Optional content type of the title.
+	 * @param mixed|SwatOption $value either a value for the option, or a
+	 *                                 {@link SwatOption} object. If a
+	 *                                 SwatOption is used, the <i>$title</i>
+	 *                                 and <i>$content_type</i> paramaters of
+	 *                                 this method call are ignored.
+	 * @param string $title the title of the added option. Ignored if the
+	 *                       <i>$value</i> parameter is a SwatOption object.
+	 * @param string $content_type optional. The content type of the title. If
+	 *                              not specified, defaults to 'text/plain'.
+	 *                              Ignored if the <i>$value</i> paramater is
+	 *                              a SwatOption object.
 	 */
 	public function addOption($value, $title = '', $content_type = 'text/plain')
 	{
