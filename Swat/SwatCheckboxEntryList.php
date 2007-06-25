@@ -141,7 +141,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 			$input_tag->display();
 
 			$label_tag->for = $this->id.'_'.$checkbox_id;
-			$label_tag->setContent($option->title, $this->content_type);
+			$label_tag->setContent($option->title, $option->content_type);
 			$label_tag->display();
 
 			echo '</td><td>';
