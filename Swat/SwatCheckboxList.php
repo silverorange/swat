@@ -19,15 +19,6 @@ require_once 'Swat/SwatYUI.php';
 class SwatCheckboxList extends SwatOptionControl implements SwatState
 {
 	// {{{ public properties
-	
-	/**
-	 * Optional content type for option titles
-	 *
-	 * Default text/plain, use text/xml for XHTML fragments.
-	 *
-	 * @var string
-	 */
-	public $content_type = 'text/plain';
 
 	/**
 	 * List values 
@@ -151,7 +142,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 			$input_tag->display();
 
 			$label_tag->for = $this->id.'_'.$key.'_'.$input_tag->value;
-			$label_tag->setContent($option->title, $this->content_type);
+			$label_tag->setContent($option->title, $option->content_type);
 			$label_tag->display();
 
 			echo '</li>';
