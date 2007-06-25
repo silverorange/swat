@@ -115,7 +115,7 @@ class SwatException extends Exception
 		if (strlen($class) > 0 && strlen($function) > 0)
 			$name = $class.'::'.$function.'('.$name.')';
 		elseif (strlen($function) > 0)
-			$name = $fucntion.'('.$name.')';
+			$name = $function.'('.$name.')';
 
 		if (!in_array($name, self::$sensitive_param_names))
 			self::$sensitive_param_names[] = $name;
@@ -565,7 +565,7 @@ class SwatException extends Exception
 		if (strlen($class) > 0 && strlen($function) > 0)
 			$name = $class.'::'.$function.'('.$name.')';
 		elseif (strlen($function) > 0)
-			$name = $fucntion.'('.$name.')';
+			$name = $function.'('.$name.')';
 
 		return (in_array($name, self::$sensitive_param_names));
 	}
