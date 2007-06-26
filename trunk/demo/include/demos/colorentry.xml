@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="my_form">
+
+		<widget class="SwatFormField">
+			<property name="title">Color Entry</property>
+			<widget class="SwatSimpleColorEntry" id="simple_color_entry">
+				<property name="value">eed680</property>
+			</widget>
+		</widget>
+
+		<!-- make the simple color entry do something interesting -->
+		<widget class="SwatContentBlock">
+			<property name="content"><![CDATA[<script type="text/javascript">
+			function handleColorChange(type, color)
+			{
+				var navbar = document.getElementById('navbar');
+				navbar.style.background = color;
+			}
+
+			simple_color_entry_obj.colorChangeEvent.subscribe(
+				handleColorChange);
+			</script>]]></property>
+			<property name="content_type">text/xml</property>
+		</widget>
+
+	</widget>
+</swatml>

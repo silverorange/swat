@@ -1,0 +1,98 @@
+.yui-navset .yui-nav li a, .yui-navset .yui-content {
+    border:1px solid #dcceb2;  /* label and content borders */
+}
+
+.yui-navset .yui-nav .selected a, .yui-navset .yui-nav a:hover, .yui-navset .yui-content {
+    background-color: #fff; /* active tab, tab hover, and content bgcolor */
+}
+
+.yui-navset .yui-nav .selected a, .yui-navset .yui-nav a:hover {
+    /* active tab, tab hover, background */
+	background-color: #fff;
+	background-image: url(../images/swat-notebook-tab-top-active.png);
+	background-position: top left;
+	background-repeat: repeat-x;
+}
+
+.yui-navset .yui-nav a {
+	background-color: #f6f2ea;
+	background-image: url(../images/swat-notebook-tab-top.png);
+	background-position: top left;
+	background-repeat: repeat-x;
+}
+
+.yui-navset .yui-nav li em { margin:.5em; } /* tab padding */
+
+.yui-navset .yui-nav a:focus em {
+	outline-style: dotted;
+	outline-width: 1px;
+}
+
+/* defaults to orientation "top" */
+.yui-navset .yui-nav .selected a {
+    border-bottom-width:0; /* no bottom border for active tab */
+    padding-bottom:1px; /* to match height of other tabs */
+}
+
+.yui-navset .yui-content {
+    margin-top:-1px; /* for active tab overlap */
+	padding: 1em;
+}
+
+/* overrides for other orientations */
+
+.yui-navset-bottom .yui-nav .selected a {
+    border-width:0 1px 1px; /* no top border for active tab */
+    padding:1px 0 0; /* to match height of other tabs */
+}
+
+.yui-navset-bottom .yui-content {
+    margin:0 0 -1px; /* for active tab overlap */
+}
+
+.yui-navset-left .yui-nav li.selected a {
+    border-width:1px 0 1px 1px; /* no right border for active tab */
+    padding:0 1px 0 0; /* to match width of other tabs */
+}
+
+.yui-navset-left .yui-content {
+    margin:0 0 0 -1px; /* for active tab overlap */
+}
+
+.yui-navset-right .yui-nav li.selected a {
+    border-width:1px 1px 1px 0; /* no left border for active tab */
+    padding:0 0 0 1px; /* to match width of other tabs */
+}
+
+.yui-navset-right .yui-content {
+    margin:0 -1px 0 0; /* for active tab overlap */
+}
+
+.yui-navset-bottom .yui-nav .selected a,
+.yui-navset-bottom .yui-nav a:hover {
+    /* active tab, tab hover, background */
+	background-image: url(../images/swat-notebook-tab-bottom-active.png);
+	background-position: bottom left;
+}
+
+.yui-navset-bottom .yui-nav a {
+	background-image: url(../images/swat-notebook-tab-bottom.png);
+	background-position: bottom left;
+}
+
+.yui-navset-left .yui-nav .selected a,
+.yui-navset-left .yui-nav a:hover {
+    /* active tab, tab hover, background */
+	background-image: url(../images/swat-notebook-tab-left-active.png);
+	background-position: top left;
+	background-repeat: no-repeat;
+}
+
+.yui-navset-right .yui-nav .selected a,
+.yui-navset-right .yui-nav a:hover {
+    /* active tab, tab hover, background */
+	background-image: url(../images/swat-notebook-tab-right-active.png);
+	background-position: top right;
+	background-repeat: no-repeat;
+}
+

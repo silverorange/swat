@@ -1,0 +1,102 @@
+div.yuimenu {
+	background:#fff url(../images/swat-frame-background.png) no-repeat scroll right top;
+	border-color: #dcceb2;	
+}
+
+div.yuimenubar {
+	background: #f6f2ea url(../images/swat-toolbar-background.png) top left repeat-x;
+	border: 0;
+	border-bottom: 1px solid #efe8da;
+	margin: -16px -16px 0 -16px;
+	list-style-type: none;
+	padding: 0;
+}
+
+div.yuimenu h6,
+div.yuimenubar h6 {
+	color: #837352;
+	padding: 5px;
+	border: 0;
+	text-align: left;
+}
+
+div.yuimenu li,
+div.yuimenubar li {
+	font-size: 100%;
+}
+
+div.yuimenu li a,
+div.yuimenubar li a {
+	color: #3f5ace;
+	outline-color: #efe8da;
+}
+
+div.yuimenu li.selected a.selected,
+div.yuimenubar li.selected a.selected {
+	color: #204a87;
+	text-decoration: none;
+	outline-color: #efe8da;
+}
+
+div.yuimenu li.selected,
+div.yuimenubar li.selected,
+div.yuimenu li.selected a.selected,
+div.yuimenubar li.selected a.selected {
+	background: #f3efe5;
+}
+
+div.yuimenu li.yuimenuitem,
+div.yuimenubar li.yuimenubaritem,
+div.yuimenubar li.yuimenubaritem.first-of-type {
+	padding: 5px 10px 5px 0;
+	border: 0;
+}
+
+div.yuimenu li.yuimenuitem a,
+div.yuimenubar li.yuimenubaritem a,
+div.yuimenubar li.yuimenubaritem.first-of-type a {
+	padding-left: 15px;
+}
+
+div.yuimenubar li.yuimenubaritem,
+div.yuimenubar li.yuimenubaritem.first-of-type {
+	border-color: #f0eade;
+	border-style: solid;
+	border-width: 0 1px 0 0;
+}
+
+div.yuimenubar ul {
+	padding: 5px 0;
+}
+
+div.yuimenu ul {
+	padding: 0;
+}
+
+
+/* Stock types */
+
+div.yuimenubar .swat-menu-item-delete:link,
+div.yuimenubar .swat-menu-item-delete:visited {
+	background: url(../images/swat-tool-link-delete.png) 6px center no-repeat;
+	color: #c00;
+	padding-left: 28px;
+}
+
+div.yuimenubar li.selected a.selected.swat-menu-item-delete {
+	background: #f3efe5 url(../images/swat-tool-link-delete.png) 6px center no-repeat;
+}
+
+div.yuimenu li.hassubmenu em.submenuindicator {
+	margin-right: 0;
+}
+
+div.yuimenubar li.hassubmenu,
+div.yuimenubar li.hashelptext {
+	text-align: left;
+}
+
+div.yuimenubar div.yuimenu li.hassubmenu,
+div.yuimenubar div.yuimenu li.hashelptext {
+	text-align: right;
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="my_form">
+		<widget class="SwatFrame">
+			<property name="title">Normal Buttons</property>
+
+			<widget class="SwatFormField">
+				<property name="title" type="string">Submit Button</property>
+				<widget class="SwatButton" id="submit_button">
+					<property name="title" type="string">Submit Button</property>
+				</widget>
+			</widget>
+
+			<widget class="SwatFormField">
+				<property name="title" type="string">Confirm Button</property>
+				<widget class="SwatConfirmationButton" id="confirm_button">
+					<property name="title" type="string">Confirm Button</property>
+					<property name="confirmation_message" type="string">Are you sure you meant to press the button?</property>
+				</widget>
+			</widget>
+
+		</widget>
+		<widget class="SwatFrame">
+			<property name="title">Throbber Buttons</property>
+
+			<widget class="SwatFormField">
+				<property name="title" type="string">Submit Button</property>
+				<widget class="SwatButton" id="submit_throbber_button">
+					<property name="title" type="string">Submit Button</property>
+					<property name="show_processing_throbber" type="boolean">true</property>
+					<property name="processing_throbber_message">Loading ...</property>
+				</widget>
+			</widget>
+
+			<widget class="SwatFormField">
+				<property name="title" type="string">Confirm Button</property>
+				<widget class="SwatConfirmationButton" id="confirm_throbber_button">
+					<property name="title" type="string">Confirm Button</property>
+					<property name="confirmation_message" type="string">Are you sure you meant to press the button?</property>
+					<property name="show_processing_throbber" type="boolean">true</property>
+					<property name="processing_throbber_message">Please wait ...</property>
+				</widget>
+			</widget>
+
+		</widget>
+	</widget>
+</swatml>

@@ -1,0 +1,27 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="my_form">
+
+		<widget class="SwatFormField">
+			<property name="title">Default</property>
+			<widget class="SwatYesNoFlydown" id="yes_no_default" />
+		</widget>
+
+		<widget class="SwatFormField">
+			<property name="title">No blank, defaults to 'Yes'</property>
+			<widget class="SwatYesNoFlydown" id="yes_no_noblank">
+				<property name="show_blank" type="boolean">false</property>
+				<property name="value" type="constant">YES</property>
+			</widget>
+		</widget>
+
+		<widget class="SwatFormField">
+			<property name="title">Defaults to 'No'</property>
+			<widget class="SwatYesNoFlydown" id="yes_no_no">
+				<property name="value" type="constant">NO</property>
+			</widget>
+		</widget>
+
+	</widget>
+</swatml>

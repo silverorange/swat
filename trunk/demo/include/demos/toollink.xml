@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="my_form">
+		<widget class="SwatToolbar">
+			<widget class="SwatToolLink">
+				<property name="title">Add</property>
+				<property name="stock_id">create</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="title">Delete</property>
+				<property name="stock_id">delete</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="title">Edit</property>
+				<property name="stock_id">edit</property>
+				<property name="link">#</property>
+			</widget>
+		</widget>
+	</widget>
+</swatml>

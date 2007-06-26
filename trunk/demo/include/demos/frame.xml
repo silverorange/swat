@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatFrame" id="my_frame">
+		<property name="title">Title</property>
+	</widget>
+	<widget class="SwatFrame" id="my_other_frame">
+		<property name="title">Title</property>
+		<property name="subtitle">Subtitle</property>
+	</widget>
+</swatml>

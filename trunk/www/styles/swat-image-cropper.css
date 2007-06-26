@@ -1,0 +1,79 @@
+.swat-image-cropper-box {
+	position: absolute;
+	cursor: move;
+	background-repeat: no-repeat;
+}
+
+.swat-image-cropper-se, .swat-image-cropper-e, .swat-image-cropper-ne,
+	.swat-image-cropper-n, .swat-image-cropper-nw, .swat-image-cropper-w,
+	.swat-image-cropper-sw, .swat-image-cropper-s {
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	background-color: #333;
+	border: 1px solid #fff;
+	overflow: hidden;
+}
+
+.swat-image-cropper-se {
+	bottom: -10px;
+	right: -10px;
+	cursor: se-resize;
+}
+
+.swat-image-cropper-e {
+	top: 50%;
+	right: -10px;
+	margin-top: -5px;
+	cursor: e-resize;
+}
+
+.swat-image-cropper-ne {
+	top: -10px;
+	right: -10px;
+	cursor: ne-resize;
+}
+
+.swat-image-cropper-n {
+	top: -10px;
+	left: 50%;
+	margin-left: -5px;
+	cursor: n-resize;
+}
+
+.swat-image-cropper-nw {
+	top: -10px;
+	left: -10px;
+	cursor: nw-resize;
+}
+
+.swat-image-cropper-w {
+	top: 50%;
+	left: -10px;
+	margin-top: -5px;
+	cursor: w-resize;
+}
+
+.swat-image-cropper-sw {
+	left: -10px;
+	bottom: -10px;
+	cursor: sw-resize;
+}
+
+.swat-image-cropper-s {
+	bottom: -10px;
+	left: 50%;
+	margin-left: -5px;
+	cursor: s-resize;
+}
+
+.swat-image-cropper-background {
+	position: absolute;
+	background-color: #ccc;
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+}
+
+.swat-image-cropper {
+	position: relative;
+}

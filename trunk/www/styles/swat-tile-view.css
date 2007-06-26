@@ -1,0 +1,18 @@
+.swat-tile {
+	width: 100px;
+	height: 100px;
+	padding: 10px;
+	margin: 5px 10px;
+	float: left;
+	text-align: center;
+	border: 1px solid transparent;
+}
+
+.swat-tile-view .swat-check-all {
+	clear: left;
+	margin: 10px;
+}
+
+.swat-tile-view .highlight {
+	background: #f7f5f3 url(../images/swat-table-view-cell-highlight-background.png) bottom repeat-x;
+}

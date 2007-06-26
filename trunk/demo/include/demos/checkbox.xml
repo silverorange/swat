@@ -1,0 +1,61 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="my_form">
+
+		<widget class="SwatFieldset">
+			<property name="title">Individual Checkboxes</property>
+
+			<widget class="SwatFormField">
+				<property name="title">Check 1</property>
+				<widget class="SwatCheckbox" id="check1">
+				</widget>
+			</widget>
+			<widget class="SwatFormField">
+				<property name="title">Check 2</property>
+				<widget class="SwatCheckbox" id="check2">
+				</widget>
+			</widget>
+			
+		</widget>
+		<widget class="SwatFieldset">
+			<property name="title">Checkbox Entry List</property>
+
+			<widget class="SwatCheckboxEntryList" id="checkbox_entry_list" />
+
+		</widget>
+		<widget class="SwatFieldset">
+			<property name="title">Checkbox List</property>
+
+			<widget class="SwatCheckboxList" id="checkbox_list">
+				<property name="values[]" type="integer">1</property>
+			</widget>
+			
+		</widget>
+		<widget class="SwatFieldset">
+			<property name="title">Checkbox Tree</property>
+
+			<widget class="SwatCheckboxTree" id="checkbox_tree">
+				<property name="values[]" type="integer">1</property>
+				<property name="values[]" type="integer">4</property>
+				<property name="values[]" type="integer">7</property>
+			</widget>
+			
+		</widget>
+		<widget class="SwatFieldset">
+			<property name="title">Expandable Checkbox Tree</property>
+
+			<widget class="SwatExpandableCheckboxTree" id="expandable_checkbox_tree">
+				<property name="values[]" type="integer">2</property>
+				<property name="values[]" type="integer">3</property>
+				<property name="values[]" type="integer">8</property>
+			</widget>
+			
+		</widget>
+
+		<widget class="SwatFooterFormField">
+			<widget class="SwatButton" id="done" />
+		</widget>
+
+	</widget>
+</swatml>

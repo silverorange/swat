@@ -1,0 +1,163 @@
+/* SwatSimpleColorEntry */
+
+.swat-simple-color-entry-palette {
+	background: #fff;
+	border: 1px solid #ccc;
+	padding: 0;
+	margin: 0;
+}
+
+.swat-simple-color-entry-palette a {
+	text-decoration: none;
+}
+
+.swat-simple-color-entry-palette table {
+}
+
+.swat-simple-color-entry-palette table td {
+	width: 25px;
+}
+.swat-simple-color-entry-palette table td a {
+	display: block;
+	width: 100%;
+	height: 25px;
+	min-height: 25px;
+}	
+
+.swat-simple-color-entry-palette table td.swat-simple-color-entry-palette-selected a {
+	height: 21px;
+	min-height: 21px;
+}
+
+.swat-simple-color-entry-palette table td.swat-simple-color-entry-palette-selected {
+	border: 2px solid #000;
+	width: 21px;
+}
+
+.swat-simple-color-entry-swatch {
+	width: 7em;
+	border: 1px #ccc solid;
+	background: url(../images/color-entry-null.png);
+	margin: 2px;
+	float: left;
+	vertical-align: middle;
+	position: relative; /* IE floating div hack */
+}
+
+td.swat-simple-color-entry-palette-blank {
+	background: url(../images/color-entry-null.png);
+}
+
+.swat-simple-color-entry-toggle {
+	display: inline;
+	vertical-align: middle;
+	border: none;
+}
+
+/* SwatColorEntry */
+
+.swat-color-entry-input {
+	width: 7em;
+	height: 18px;
+	border: 1px #ccc solid;
+	background: url(../images/color-entry-null.png);
+	margin: 2px;
+	vertical-align: middle;
+}
+
+.swat-color-entry-toggle {
+	display: inline;
+	vertical-align: middle;
+	border: none;
+}
+
+.swat-color-entry-wrapper {
+	width: 14.5em; /* 14 */
+	padding: 0.5em;
+	border: 1px #999 solid;
+	background: #fff;
+	position: absolute;
+	display: none;
+	font-size: 120%;
+}
+
+.swat-color-entry-wrapper input {
+	font-size: xx-small;
+}
+
+.swat-color-entry-wrapper .palette {
+	width: 9.5em;
+	float: left;
+	padding: 0.1em;
+}
+
+.swat-color-entry-wrapper .scale {
+	width: 0.7em;
+	float: left;
+	padding: 0.05em;
+}
+
+.swat-color-entry-wrapper .swatches {
+	width: 1em;
+	float: left;
+	padding: 0.1em;
+}
+	
+.swat-color-entry-wrapper .palette-footer {
+	clear: left;
+	font-size: 60%;
+}
+
+.swat-color-entry-wrapper .rgb-input {
+	width: 3em;
+}
+.swat-color-entry-wrapper .hex-input {
+	width: 5em;
+}
+
+.swat-color-entry-wrapper .option {
+	width: 0.5em;
+	height: 0.5em;
+	overflow: hidden;
+	cursor: pointer;
+	cursor: hand;
+	float: left;
+}
+
+.swat-color-entry-wrapper .active {
+	margin: 1 1 1 0px;
+	border: 1px solid #eee;
+	width: 2em;
+	height: 1.6em;
+	overflow: hidden;
+}
+	
+.swat-color-entry-wrapper .swatch {
+	margin: 1 1 1 0px;
+	border: 1px solid #eee;
+	overflow: hidden;
+	width: 2em;
+	height: 4em;
+}
+
+.swat-color-entry-wrapper .button-set {
+	font-weight: bold;
+	margin: 0.2em;
+}
+
+.swat-color-entry-wrapper .button-cancel {
+	margin: 0.2em;
+}
+
+.swat-color-entry-wrapper .rgb {
+	float: left;
+}
+
+.swat-color-entry-wrapper .hex {
+	margin-left: 1em;
+	float: left;
+}
+
+.swat-color-entry-wrapper .palette-buttons {
+	clear: left;
+}

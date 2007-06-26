@@ -1,0 +1,64 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="my_form">
+
+		<widget class="SwatTableView" id="table_view">
+			<object class="SwatTableViewCheckboxColumn" id="checkbox">
+				<object class="SwatCheckboxCellRenderer" id="items">
+					<property name="value" type="data">title</property>
+				</object>
+				<object class="SwatRemoveInputCell" />
+			</object>
+			<object class="SwatTableViewColumn">
+				<property name="title">Fruit</property>
+				<object class="SwatTextCellRenderer">
+					<property name="text" type="data">title</property>
+				</object>
+				<object class="SwatInputCell">
+					<widget class="SwatEntry">
+						<property name="size" type="integer">10</property>
+					</widget>
+				</object>
+			</object>
+			<object class="SwatTableViewColumn">
+				<property name="title">Makes Jam</property>
+				<object class="SwatBooleanCellRenderer">
+					<property name="value" type="data">makes_jam</property>
+				</object>
+				<object class="SwatInputCell">
+					<widget class="SwatCheckbox" />
+				</object>
+			</object>
+			<object class="SwatTableViewColumn">
+				<property name="title">Makes Pie</property>
+				<object class="SwatBooleanCellRenderer">
+					<property name="value" type="data">makes_pie</property>
+				</object>
+				<object class="SwatInputCell">
+					<widget class="SwatCheckbox" />
+				</object>
+			</object>
+			<object class="SwatTableViewInputRow" id="input_row">
+				<property name="number" type="integer">2</property>
+			</object>
+		</widget>
+		<widget class="SwatMessageDisplay" id="note" />
+		<widget class="SwatActions" id="index_actions">
+			<property name="show_blank" type="boolean">false</property>
+			<widget class="SwatActionItem" id="add">
+				<property name="title">add new items</property>
+			</widget>
+			<widget class="SwatActionItemDivider" />
+			<widget class="SwatActionItem" id="makes_jam">
+				<property name="title">set jammable…</property>
+				<widget class="SwatFormField">
+					<property name="title">to</property>
+					<widget class="SwatYesNoFlydown">
+					</widget>
+				</widget>
+			</widget>
+		</widget>
+
+	</widget>
+</swatml>

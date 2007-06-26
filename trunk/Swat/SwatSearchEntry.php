@@ -1,0 +1,57 @@
+<?php
+
+/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+
+require_once 'Swat/SwatEntry.php';
+
+/**
+ * A single line search entry widget
+ *
+ * @package   Swat
+ * @copyright 2004-2007 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ */
+class SwatSearchEntry extends SwatEntry
+{
+	// {{{ public properties
+
+	/**
+	 * SwatSearch title value
+	 *
+	 * Text content of the widget, or defaults to 'Enter Search …'.
+	 *
+	 * @var string
+	 */
+	public $title;
+
+	// }}}
+	// {{{ public function __construct()
+
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+		$this->title = Swat::_('Enter Search …');
+	}
+
+	// }}}
+	// {{{ protected function getDisplayValue()
+
+	/**
+	 * Formats a value to display
+	 *
+	 * The methond returns either the title or the correct search entry.
+	 *
+	 * @param string $value the value to format for display.
+	 *
+	 * @return string the formatted value.
+	 */
+	protected function getDisplayValue($value)
+	{
+		return ($value === null) ?
+			$this->title : parent::getDisplayValue($value);
+	}
+
+	// }}}
+}
+
+?>

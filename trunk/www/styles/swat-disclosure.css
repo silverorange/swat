@@ -1,0 +1,39 @@
+.swat-disclosure-control { }
+
+.swat-disclosure-span,
+.swat-disclosure-anchor {
+	position: relative;
+	top: 0.7em;
+	display: inline;
+	margin: 0 10px 0 5px;
+	padding: 0 5px 0 2px;
+	color: #666;
+	background: #fff;
+}
+
+.swat-disclosure-span {
+	padding-left: 5px;
+}
+
+.swat-disclosure-control-closed {
+	margin-bottom: 1.7em;
+}
+
+.swat-disclosure-control-opened .swat-disclosure-container {
+	display: block;	
+	border: 1px solid #ddd;
+	padding: 16px;
+}
+
+.swat-disclosure-control-closed .swat-disclosure-container {
+	display: none;
+}
+
+.swat-disclosure-image {
+	border: none;
+	vertical-align: text-top;
+}
+
+.swat-disclosure-anchor {
+	text-decoration: none;
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+var rteT = window.opener.rteT;
+
+function AddLink() {
+	var oForm = document.linkForm;
+	
+	//validate form
+	if (oForm.url.value == '') {
+		alert(rteT['enter_url']);
+		return false;
+	}
+
+	var link = document.linkForm.url.value;
+	var target = document.linkForm.linkTarget.options[document.linkForm.linkTarget.selectedIndex].value;
+	window.opener.insertLink(link, target);
+	window.close();
+	return true;
+}
+
+document.writeln('<title>' + rteT['insert_link'] + '</title>');
+//-->
+</script>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<style type="text/css" media="all">@import "../admin/admin.css";</style>
+	<style type="text/css" media="all">@import "../swat/swat.css";</style>
+	<style type="text/css" media="all">@import "swat-textarea-editor.css";</style>
+</head>
+
+<body>
+
+</head>
+
+<body class="rtePopup">
+
+<form name="linkForm" onSubmit="return AddLink();">
+
+	<script language="JavaScript" type="text/javascript">
+	
+	document.writeln('<div class="swat-form-field"><label for="title">' + rteT['url'] + ':</label>');
+	document.writeln('<input name="url" type="text" id="url" size="40" onfocus="this.select();"></div>');
+
+	//document.writeln('<div class="swat-form-field"><label for="text">' + rteT['link_text'] + ':</label>');
+	//document.writeln('<input name="linkText" type="text" id="text" size="40" onfocus="this.select();"></div>');
+
+	document.writeln('<div class="swat-form-field"><label for="linkTarget">' + rteT['target'] + ':</label>');
+	document.writeln('<select name="linkTarget" id="linkTarget">');
+		document.writeln('<option value="_self" selected>_self</option>');
+		document.writeln('<option value="_blank">_blank</option>');
+		document.writeln('<option value="_parent">_parent</option>');
+		document.writeln('<option value="_top">_top</option>');
+	document.writeln('</select>');
+	document.writeln('</div>');
+
+	document.writeln('<div class="swat-form-footer">');
+		document.writeln('<input type="submit" value="' + rteT['insert_link'] + '" />');
+		document.writeln('<input type="submit" value="' + rteT['cancel'] + '" onClick="window.close();" />');
+	document.writeln('</div>');
+	</script>
+
+</form>
+
+</body>
+</html>

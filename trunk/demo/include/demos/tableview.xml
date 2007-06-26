@@ -1,0 +1,72 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="my_form">
+
+		<widget class="SwatTableView" id="table_view">
+			<object class="SwatTableViewCheckboxColumn" id="checkbox">
+				<object class="SwatCheckboxCellRenderer" id="items">
+					<property name="value" type="data">title</property>
+				</object>
+			</object>
+			<object class="SwatTableViewColumn">
+				<property name="title">Fruit</property>
+				<object class="SwatImageCellRenderer">
+					<property name="image" type="data">image</property>
+					<property name="width" type="data">image_width</property>
+					<property name="height" type="data">image_height</property>
+				</object>
+				<object class="SwatTextCellRenderer">
+					<property name="text" type="data">title</property>
+				</object>
+			</object>
+			<object class="SwatTableViewColumn">
+				<property name="title">Makes Jam</property>
+				<object class="SwatBooleanCellRenderer">
+					<property name="value" type="data">makes_jam</property>
+				</object>
+			</object>
+			<object class="SwatTableViewColumn">
+				<property name="title">Makes Pie</property>
+				<object class="SwatBooleanCellRenderer">
+					<property name="value" type="data">makes_pie</property>
+				</object>
+			</object>
+			<object class="SwatTableViewColumn">
+				<property name="title">Harvest Date</property>
+				<object class="SwatDateCellRenderer">
+					<property name="date" type="data">harvest_date</property>
+					<property name="format" type="string">%B</property>
+				</object>
+			</object>
+			<object class="SwatTableViewColumn">
+				<property name="title">Cost per kg</property>
+				<object class="SwatMoneyCellRenderer">
+					<property name="value" type="data">cost</property>
+					<property name="locale" type="string">en_CA</property>
+				</object>
+			</object>
+		</widget>
+		<widget class="SwatMessageDisplay" id="note" />
+		<widget class="SwatActions" id="index_actions">
+			<widget class="SwatActionItem" id="havest_date">
+				<property name="title">set harvest date…</property>
+				<widget class="SwatFormField">
+					<property name="title">to month</property>
+					<widget class="SwatDateEntry">
+						<property name="display_parts" type="constant">MONTH</property>
+					</widget>
+				</widget>
+			</widget>
+			<widget class="SwatActionItem" id="makes_jam">
+				<property name="title">set jammable…</property>
+				<widget class="SwatFormField">
+					<property name="title">to</property>
+					<widget class="SwatYesNoFlydown">
+					</widget>
+				</widget>
+			</widget>
+		</widget>
+
+	</widget>
+</swatml>
