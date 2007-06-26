@@ -472,6 +472,12 @@ class SwatException extends Exception
 					$formatted_value = '<null>';
 				} elseif (is_string($value)) {
 					$formatted_value = "'".$value."'";
+				} elseif (is_int($value) || is_float($value)) {
+					$formatted_value = strval($value);
+				} elseif (is_bool($value)) {
+					$formatted_value = ($value) ? 'true' : 'false';
+				} elseif (is_resource($value)) {
+					$formatted_value = '<resource>';
 				} elseif (is_array($value)) {
 					$formatted_value =
 						'array('.$this->getArguments($value).')';
