@@ -138,6 +138,29 @@ abstract class SwatOptionControl extends SwatInputControl
 	}
 
 	// }}}
+	// {{{ public function getOptionsByValue()
+
+	/**
+	 * Gets options from this option control by their value
+	 *
+	 * @param mixed $value the value of the option or options to get.
+	 *
+	 * @return array an array of SwatOption objects or an empty array if no
+	 *                options with the given value exist within this option
+	 *                control.
+	 */
+	public function getOptionsByValue($value)
+	{
+		$options = array();
+
+		foreach ($this->options as $option)
+			if ($option->value === $value)
+				$options[] = $control_option;
+
+		return $options;
+	}
+
+	// }}}
 	// {{{ protected function getOptions()
 
 	/**
