@@ -5,6 +5,7 @@
 		<widget class="SwatFormField">
 			<property name="title" type="string">Change Order</property>
 			<widget class="SwatChangeOrder" id="change_order" />
+			<widget class="SwatButton" />
 		</widget>
 	</widget>
 </swatml>
