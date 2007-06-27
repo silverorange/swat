@@ -6,10 +6,10 @@ require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatOption.php';
 
 /**
- * A base class for controls that need a set of options
+ * A base class for controls using a set of options
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatOptionControl extends SwatInputControl
@@ -29,8 +29,8 @@ abstract class SwatOptionControl extends SwatInputControl
 	 * Whether or not to serialize option values
 	 *
 	 * If option values are serialized, the PHP type is remembered between
-	 * page loads. This is useful if, for example, your array keys are a mix of
-	 * strings, integers or null values. You can also use complex objects as
+	 * page loads. This is useful if, for example, your option values are a mix
+	 * of strings, integers or null values. You can also use complex objects as
 	 * option values if this property is set to <i>true</i>.
 	 *
 	 * If this property is set to <i>false</i>, the values are always converted
@@ -40,18 +40,6 @@ abstract class SwatOptionControl extends SwatInputControl
 	 * @var boolean
 	 */
 	public $serialize_values = true;
-
-	// }}}
-	// {{{ protected properties
-
-	/**
-	 * Are values unique?
-	 *
-	 * Whether or not values of options are required to be unique.
-	 *
-	 * @var boolean
-	 */
-	protected $unique_values = false;
 
 	// }}}
 	// {{{ public function addOption()
@@ -73,24 +61,19 @@ abstract class SwatOptionControl extends SwatInputControl
 	 */
 	public function addOption($value, $title = '', $content_type = 'text/plain')
 	{
-		if ($value instanceof SwatOption) {
+		if ($value instanceof SwatOption)
 			$option = $value;
-			$value = $option->value;
-		} else {
-			$option = new SwatOption($value, $title, $content_type);
-		}
-
-		if ($this->unique_values)
-			$this->options[$value] = $option;
 		else
-			$this->options[] = $option;
+			$option = new SwatOption($value, $title, $content_type);
+
+		$this->options[] = $option;
 	}
 
 	// }}}
 	// {{{ public function removeOption()
 
 	/**
-	 * Removes an option element
+	 * Removes an option from this option control
 	 *
 	 * @param SwatOption $option the option to remove.
 	 *
@@ -114,7 +97,7 @@ abstract class SwatOptionControl extends SwatInputControl
 	// {{{ public function removeOptionsByValue()
 
 	/**
-	 * Removes an options elements by their value
+	 * Removes options from this option control by their value
 	 *
 	 * @param mixed $value the value of the option or options to remove.
 	 *
@@ -139,12 +122,16 @@ abstract class SwatOptionControl extends SwatInputControl
 	// {{{ public function addOptionsByArray()
 
 	/**
-	 * Add an option element
+	 * Adds options to this option control using an associative array
 	 *
-	 * @param array $options An associative array of options.
-	 * @param string $content_type Optional content type of the titles.
+	 * @param array $options an associative array of options. Keys are option
+	 *                        values. Values are option titles.
+	 * @param string $content_type optional. The content type of the option
+	 *                              titles. If not specified, defaults to
+	 *                              'text/plain'.
 	 */
-	public function addOptionsByArray($options, $content_type = 'text/plain')
+	public function addOptionsByArray(array $options,
+		$content_type = 'text/plain')
 	{
 		foreach ($options as $value => $title)
 			$this->addOption($value, $title, $content_type);
@@ -169,19 +156,22 @@ abstract class SwatOptionControl extends SwatInputControl
 	// {{{ protected function getOption()
 
 	/**
-	 * Gets a reference to an option
+	 * Gets an option within this option control
 	 *
-	 * If $unique_values is true, index is the $value of the option.
-	 * If $unique_values is false, index is the ordinal of the option.
+	 * @param integer $index the ordinal position of the option within this
+	 *                        option control.
 	 *
-	 * @return SwatOption a reference to the option, or null.
+	 * @return SwatOption a reference to the option, or null if no such option
+	 *                     exists within this option control.
 	 */
 	protected function getOption($index)
 	{
-		if (array_key_exists($index, $this->options))
-			return $this->options[$index];
+		$option = null;
 
-		return null;
+		if (array_key_exists($index, $this->options))
+			$option = $this->options[$index];
+
+		return $option;
 	}
 
 	// }}}
