@@ -13,8 +13,11 @@ require_once 'Swat/SwatYUI.php';
  * This widget uses JavaScript to present an orderable list of elements. The
  * ordering of elements is what this widget returns.
  *
+ * If two options are added to this control with equivalent values the returned
+ * order of the two options is arbitrary.
+ *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatChangeOrder extends SwatOptionControl implements SwatState
@@ -84,13 +87,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		if (!$this->visible)
 			return;
 
-		if ($this->values !== null) {
-			$ordered_options = array();
-			foreach ($this->values as $value)
-				$ordered_options[$value] = $this->getOption($value);
-
-			$this->options = $ordered_options;
-		}
+		$ordered_options = $this->getOrderedOptions();
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
@@ -106,12 +103,10 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$option_div = new SwatHtmltag('div');
 		$option_div->class = 'swat-change-order-item';
 
-		$count = 0;
-		foreach ($this->options as $option) {
+		foreach ($ordered_options as $option) {
 			$title = ($option->title === null) ? '' : $option->title;
 			$option_div->setContent($title, $option->content_type);
 			$option_div->display();
-			$count++;
 		}
 
 		$list_div->close();
@@ -120,11 +115,17 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
 		echo '<div style="clear: both;"></div>';
 
+		$values = array();
+		foreach ($ordered_options as $option) {
+			$values[] = SwatString::signedSerialize($option->value,
+				$this->getForm()->getSalt());
+		}
+
 		$hidden_tag = new SwatHtmlTag('input');
 		$hidden_tag->type = 'hidden';
 		$hidden_tag->id = $this->id.'_value';
 		$hidden_tag->name = $this->id;
-		$hidden_tag->value = implode(',', array_keys($this->options));
+		$hidden_tag->value = implode(',', $values);
 		$hidden_tag->display();
 
 		$div_tag->close();
@@ -139,8 +140,14 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	{
 		parent::process();
 
-		$data = &$this->getForm()->getFormData();
-		$this->values = explode(',', $data[$this->id]);
+		$form = $this->getForm();
+		$data = &$form->getFormData();
+		$this->values = array();
+		$values = explode(',', $data[$this->id]);
+		foreach ($values as $value) {
+			$value = SwatString::signedUnserialize($value, $form->getSalt());
+			$this->values[] = $value;
+		}
 	}
 
 	// }}}
@@ -180,6 +187,45 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	public function setState($state)
 	{
 		$this->values = $state;
+	}
+
+	// }}}
+	// {{{ public function getOrderedOptions()
+
+	/**
+	 * Gets the options of this change-order control ordered by the
+	 * values of this change-order
+	 *
+	 * If this control has two or more equivalent values, the order of options
+	 * having those values is arbitrary.
+	 *
+	 * @return array the options of this change-order control ordered by the
+	 *                values of this change-order.
+	 */
+	public function &getOrderedOptions()
+	{
+		if ($this->values === null) {
+			$ordered_options = $this->options;
+		} else {
+			// copy options array so we don't modify the original
+			$options = $this->options;
+			$ordered_options = array();
+			foreach ($this->values as $value) {
+				foreach ($options as $key => $option) {
+					if ($option->value === $value) {
+						$ordered_options[] = $option;
+						unset($options[$key]);
+						break;
+					}
+				}
+			}
+
+			// add leftover options
+			foreach ($options as $option)
+				$ordered_options[] = $option;
+		}
+
+		return $ordered_options;
 	}
 
 	// }}}
