@@ -59,7 +59,6 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	{
 		parent::__construct($id);
 		$this->requires_id = true;
-		$this->unique_values = true;
 
 		$yui = new SwatYUI(array('dom', 'event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
