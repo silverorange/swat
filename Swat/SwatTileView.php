@@ -457,7 +457,16 @@ class SwatTileView extends SwatView implements SwatUIParent
 	// {{{ protected function showCheckAll()
 
 	/**
-	 * @todo document me.
+	 * Whether or not a check-all widget is to be displayed for the tiles
+	 * of this tile view
+	 *
+	 * This depends on the {@link SwatTileView::$show_check_all} property as
+	 * well as whether or not this tile view contains a
+	 * {@link SwatCheckboxCellRenderer} and whether or not this tile view
+	 * contains enough tiles to warrent having a check-all widget
+	 *
+	 * @return boolean true if a check-all widget is to be displayed for this
+	 *                  tile view and false if it is not.
 	 */
 	protected function showCheckAll()
 	{
