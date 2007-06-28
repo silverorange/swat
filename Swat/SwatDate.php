@@ -208,7 +208,7 @@ class SwatDate extends Date
 	}
 
 	// }}}
-	// {{{ pulbic function clearTime()
+	// {{{ public function clearTime()
 
 	/**
 	 * Clears the time portion of the date object
