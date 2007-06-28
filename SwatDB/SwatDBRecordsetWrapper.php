@@ -5,19 +5,23 @@
 require_once 'Swat/SwatObject.php';
 require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/SwatDBClassMap.php';
+require_once 'SwatDB/SwatDBRecordable.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
+require_once 'Swat/exceptions/SwatInvalidClassException.php';
+require_once 'Swat/exceptions/SwatInvalidTypeException.php';
 
 /**
  * MDB2 Recordset Wrapper
  *
- * Used to wrap an MDB2 recordset into a traversable collection of objects.
+ * Used to wrap an MDB2 recordset into a traversable collection of record
+ * objects.
  *
  * @package   SwatDB
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatDBRecordsetWrapper extends SwatObject
-	implements Iterator, Serializable, Countable
+	implements Iterator, Serializable, Countable, SwatDBRecordable
 {
 	// {{{ protected properties
 
@@ -31,14 +35,17 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	/**
 	 * The name of a field to use as an index 
 	 *
-	 * This field is used to lookup objects using getIndex().
+	 * This field is used to lookup objects using getIndex(). If unspecified
+	 * by a recordset subclass, the subclass records will not be indexed.
 	 *
 	 * @var string
 	 */
 	protected $index_field = null;
 
 	/**
-	 * @var MDB2
+	 * The database driver to use for this recordset
+	 *
+	 * @var MDB2_Driver_Common
 	 */
 	protected $db = null;
 
@@ -95,7 +102,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 				} else {
 					$object = $this->instantiateRowWrapperObject($row);
 
-					if ($object instanceof SwatDBDataObject)
+					if ($object instanceof SwatDBRecordable)
 						$object->setDatabase($rs->db);
 				}
 
@@ -410,27 +417,6 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function isModified()
-
-	/**
-	 * Returns true if this object has been modified since it was loaded
-	 *
-	 * @return boolean true if this object was modified and false if this
-	 *                  object was not modified.
-	 */
-	public function isModified()
-	{
-		if (count($this->removed_objects) > 0)
-			return true;
-
-		foreach ($this->objects as $name => $object)
-			if ($object->isModified())
-				return true;		
-
-		return false;
-	}
-
-	// }}}
 
 	// manipulating of objects
 	// {{{ public function add()
@@ -505,6 +491,18 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function removeAll()
+
+	/**
+	 * Removes all objects from this recordset
+	 */
+	public function removeAll()
+	{
+		foreach ($this->objects as $object)
+			$this->remove($object);
+	}
+
+	// }}}
 	// {{{ public function reindex()
 
 	/**
@@ -532,27 +530,33 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	// {{{ public function setDatabase()
 
 	/**
-	 * @param MDB2_Driver_Common $db
+	 * Sets the database driver for this recordset
+	 *
+	 * The database is automatically set for all recordable records of this
+	 * recordset.
+	 *
+	 * @param MDB2_Driver_Common $db the database driver to use for this
+	 *                                recordset.
 	 */
 	public function setDatabase(MDB2_Driver_Common $db)
 	{
 		$this->db = $db;
 
 		foreach ($this->objects as $object)
-			if ($object instanceof SwatDBDataObject ||
-				$object instanceof SwatDBRecordsetWrapper)
-					$object->setDatabase($db);
+			if ($object instanceof SwatDBecordable)
+				$object->setDatabase($db);
 	}
 
 	// }}}
 	// {{{ public function save()
 
 	/**
-	 * Saves the set to the database.
+	 * Saves this recordset to the database
 	 *
-	 * Objects that were added are inserted into the database.
-	 * Objects that were modified are updated in the database.
-	 * Objects that were removed are deleted from the database.
+	 * Saving a recordset works as follows:
+	 *  1. Objects that were added are inserted into the database,
+	 *  2. Objects that were modified are updated in the database,
+	 *  3. Objects that were removed are deleted from the database.
 	 */
 	public function save()
 	{
@@ -575,6 +579,110 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 
 		$this->removed_objects = array();
 		$this->reindex();
+	}
+
+	// }}}
+	// {{{ public function load()
+
+	/**
+	 * Loads a set of records into this recordset
+	 *
+	 * It is recommended for performance that you use recordset wrappers to
+	 * wrap a MDB2 result set rather than using this load() method.
+	 *
+	 * @param array $object_indexes the index field values of the records to
+	 *                               load into this recordset.
+	 *
+	 * @return boolean true if all records loaded properly and false if one
+	 *                  or more records could not be loaded. If any records
+	 *                  fail to load, the recordset state remains unchanged.
+	 *
+	 * @throws SwatInvalidTypeException if the <i>$object_indexes</i> property
+	 *                                   is not an array.
+	 * @throws SwatInvalidClassException if this recordset's
+	 *                                    {@link SwatDBRecordsetWrapper::$row_wrapper_class}
+	 *                                    is not an instance of
+	 *                                    {@link SwatDBRecordable}.
+	 */
+	public function load($object_indexes)
+	{
+		if (!is_array($object_indexes))
+			throw new SwatInvalidTypeException(
+				'The $object_indexes property must be an array.',
+				0, $object_indexes);
+
+		if (!($this->row_wrapper_class instanceof SwatDBRecordable))
+			throw new SwatInvalidClassException(
+				'The recordset must define a row wrapper class that is an '.
+				'instance of SwatDBRecordable for recordset loading to work.',
+				0, $this->row_wrapper_class);
+
+		$success = true;
+
+		// try to load all records
+		$records = array();
+		foreach ($object_indexes as $index) {
+			$record = new $this->row_wrapper_class;
+			if ($record->load($index)) {
+				$records[] = $record;
+			} else {
+				$success = false;
+				break;
+			}
+		}
+
+		// successfully loaded all records, set this set's records to the
+		// loaded records
+		if ($success) {
+			$this->objects = array();
+			foreach($records as $record)
+				$this->add($record);
+
+			$this->removed_objects = array();
+			$this->reindex();
+		}
+
+		return $success;
+	}
+
+	// }}}
+	// {{{ public function delete()
+
+	/**
+	 * Deletes this set from the database
+	 *
+	 * All records contained in this recordset are removed from this set and
+	 * are deleted from the database.
+	 */
+	public function delete()
+	{
+		$this->removeAll();
+		$this->save();
+	}
+
+	// }}}
+	// {{{ public function isModified()
+
+	/**
+	 * Returns true if this recordset has been modified since it was loaded
+	 *
+	 * A recordset is considered modified if any of the contained records have
+	 * been modified or if any records have been removed from this set. Adding
+	 * an unmodified record to this set does not constitute modifying the set.
+	 *
+	 * @return boolean true if this recordset was modified and false if this
+	 *                  recordset was not modified.
+	 */
+	public function isModified()
+	{
+		if (count($this->removed_objects) > 0)
+			return true;
+
+		foreach ($this->objects as $name => $object)
+			if ($object->isModified())
+				return true;		
+
+		return false;
 	}
 
 	// }}}

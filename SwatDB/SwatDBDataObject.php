@@ -8,16 +8,18 @@ require_once 'Swat/exceptions/SwatClassNotFoundException.php';
 require_once 'SwatDB/SwatDB.php';
 require_once 'SwatDB/SwatDBClassMap.php';
 require_once 'SwatDB/SwatDBTransaction.php';
+require_once 'SwatDB/SwatDBRecordable.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
  * All public properties correspond to database fields
  *
  * @package   SwatDB
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDBDataObject extends SwatObject implements Serializable
+class SwatDBDataObject extends SwatObject
+	implements Serializable, SwatDBRecordable
 {
 	// {{{ private properties
 
@@ -109,35 +111,6 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	}
 
 	// }}}
-	// {{{ public function isModified()
-
-	/**
-	 * Returns true if this object has been modified since it was loaded
-	 *
-	 * @return boolean true if this object was modified and false if this
-	 *                  object was not modified.
-	 */
-	public function isModified()
-	{
-		if ($this->read_only)
-			return false;
-
-		$property_array = $this->getProperties();
-
-		foreach ($property_array as $name => $value) {
-			$hashed_value = md5(serialize($value));
-			if (strcmp($hashed_value, $this->property_hashes[$name]) != 0)
-				return true;
-		}
-
-		foreach ($this->sub_data_objects as $name => $object)
-			if (is_object($object) && $object->isModified())
-				return true;
-		
-		return false;
-	}
-
-	// }}}
 	// {{{ public function getModifiedProperties()
 
 	/**
@@ -196,8 +169,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 
 			$modified = isset($modified_properties[$name]);
 
-			if ($value instanceof SwatDBDataObject ||
-				$value instanceof SwatDBRecordsetWrapper) {
+			if ($value instanceof SwatDBRecordable) {
 				$modified = $value->isModified();
 				$value = get_class($value);
 			}
@@ -256,7 +228,7 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	 * duplicate has all the same public property values.  Unlike a clone, a
 	 * duplicate does not have an id and therefore can be saved to the
 	 * database as a new row. This method recursively duplicates
-	 * sub-dataobjects which were registered with $autosave set to true.
+	 * sub-dataobjects which were registered with <i>$autosave</i> set to true.
 	 *
 	 * @return SwatDBDataobject a duplicate of this object.
 	 */
@@ -563,42 +535,25 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	// {{{ public function setDatabase()
 
 	/**
-	 * @param MDB2 $db
+	 * Sets the database driver for this data-object
+	 *
+	 * The database is automatically set for all recordable sub-objects of this
+	 * data-object.
+	 *
+	 * @param MDB2_Driver_Common $db the database driver to use for this
+	 *                                data-object.
 	 */
-	public function setDatabase($db)
+	public function setDatabase(MDB2_Driver_Common $db)
 	{
 		$this->db = $db;
 		$serializable_sub_data_objects = $this->getSerializableSubDataObjects();
 
-		foreach ($this->sub_data_objects as $name => $object)
-			if ($object instanceof SwatDBDataObject ||
-				$object instanceof SwatDBRecordsetWrapper)
-					if (in_array($name, $serializable_sub_data_objects))
-						$object->setDatabase($db);
-	}
-
-	// }}}
-	// {{{ public function load()
-
-	/**
-	 * Loads this object's properties from the database given an id
-	 *
-	 * @param mixed $id the id of the database row to set this object's
-	 *               properties with.
-	 *
-	 * @return boolean whether data was sucessfully loaded.
-	 */
-	public function load($id)
-	{
-		$this->checkDB();
-		$row = $this->loadInternal($id);
-
-		if ($row === null)
-			return false;
-
-		$this->initFromRow($row);
-		$this->generatePropertyHashes();
-		return true;
+		foreach ($this->sub_data_objects as $name => $object) {
+			if (($object instanceof SwatDBRecordable) &&
+				in_array($name, $serializable_sub_data_objects)) {
+				$object->setDatabase($db);
+			}
+		}
 	}
 
 	// }}}
@@ -646,6 +601,30 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	}
 
 	// }}}
+	// {{{ public function load()
+
+	/**
+	 * Loads this object's properties from the database given an id
+	 *
+	 * @param mixed $id the id of the database row to set this object's
+	 *               properties with.
+	 *
+	 * @return boolean whether data was sucessfully loaded.
+	 */
+	public function load($id)
+	{
+		$this->checkDB();
+		$row = $this->loadInternal($id);
+
+		if ($row === null)
+			return false;
+
+		$this->initFromRow($row);
+		$this->generatePropertyHashes();
+		return true;
+	}
+
+	// }}}
 	// {{{ public function delete()
 
 	/**
@@ -655,6 +634,35 @@ class SwatDBDataObject extends SwatObject implements Serializable
 	{
 		$this->checkDB();
 		$this->deleteInternal();
+	}
+
+	// }}}
+	// {{{ public function isModified()
+
+	/**
+	 * Returns true if this object has been modified since it was loaded
+	 *
+	 * @return boolean true if this object was modified and false if this
+	 *                  object was not modified.
+	 */
+	public function isModified()
+	{
+		if ($this->read_only)
+			return false;
+
+		$property_array = $this->getProperties();
+
+		foreach ($property_array as $name => $value) {
+			$hashed_value = md5(serialize($value));
+			if (strcmp($hashed_value, $this->property_hashes[$name]) != 0)
+				return true;
+		}
+
+		foreach ($this->sub_data_objects as $name => $object)
+			if (is_object($object) && $object->isModified())
+				return true;
+		
+		return false;
 	}
 
 	// }}}
