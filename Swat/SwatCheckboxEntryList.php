@@ -134,7 +134,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 			$input_tag->removeAttribute('checked');
 			$input_tag->name = $this->id.'['.$key.']';
 
-			if (in_array($option->value, $this->values))
+			if (array_key_exists($key ,$this->values))
 				$input_tag->checked = 'checked';
 
 			$input_tag->id = $this->id.'_'.$checkbox_id;
@@ -187,7 +187,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 			$checkbox_id = $key.'_'.$value;
 			$widget = $this->getEntryWidget($checkbox_id);
 			$widget->process();
-			$this->entry_values[$value] = $widget->value;
+			$this->entry_values[] = $widget->value;
 		}
 	}
 
