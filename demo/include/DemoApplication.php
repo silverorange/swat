@@ -42,6 +42,7 @@ class DemoApplication
 		'PasswordEntry'     => 'SwatPasswordEntry',
 		'ProgressBar'       => 'SwatProgressBar',
 		'RadioList'         => 'SwatRadioList',
+		'Recaptcha'         => 'SwatReCaptcha',
 		'Replicable'        => 'SwatReplicable',
 		'String'            => 'SwatString',
 		'TableView'         => 'SwatTableView',
