@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="my_form">
+		<widget class="SwatFormField" id="myformfield">
+			<widget class="SwatReCaptcha" id="recaptcha">
+				<!-- Enter your own public and private keys from http://recaptcha.net/api/getkey -->
+			</widget>
+			<widget class="SwatButton" id="button" />
+		</widget>
+	</widget>
+</swatml>
