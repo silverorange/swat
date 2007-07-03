@@ -7,7 +7,7 @@ require_once 'Swat/SwatMessage.php';
 require_once 'Swat/SwatInputControl.php';
 
 /**
- * A widget used to display and validate ReCaptcha's
+ * A widget used to display and validate reCAPTCHA's
  *
  * @package   Swat
  * @copyright 2007 silverorange
@@ -56,7 +56,7 @@ class SwatReCaptcha extends SwatInputControl
 		if (!$this->visible)
 			return;
 
-		// passing null for second paramater becasue we display our own messages
+		// passing null for second paramater because we display our own messages
 		ReCaptcha::display($this->public_key, null, $this->secure);
 	}
 
@@ -74,17 +74,16 @@ class SwatReCaptcha extends SwatInputControl
 		$form = $this->getForm();
 		$data = $form->getFormData();
 
-		$resp = ReCaptcha::validate($this->private_key,
-											$_SERVER["REMOTE_ADDR"],	
-											$data["recaptcha_challenge_field"],
-											$data["recaptcha_response_field"]);
+		$response = ReCaptcha::validate($this->private_key,
+			$_SERVER['REMOTE_ADDR'],
+			$data['recaptcha_challenge_field'],
+			$data['recaptcha_response_field']);
 
-		if (!$resp->is_valid){
-			// do not validate
-			$message = new SwatMessage(Swat::_('The words you entered did not '.
-											'match the words displayed, '.
-											'please try again.'),
-											SwatMessage::ERROR);
+		if (!$response->is_valid) {
+			$message = new SwatMessage(Swat::_(
+				'The words you entered did not match the words displayed, '.
+				'please try again.'), SwatMessage::ERROR);
+
 			$this->addMessage($message);
 		}
 	}
