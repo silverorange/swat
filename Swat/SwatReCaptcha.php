@@ -49,21 +49,15 @@ class SwatReCaptcha extends SwatInputControl
 	// {{{ public function display()
 
 	/**
-	 * Displays the ReCaptcha widget
-	 *
-	 * Outputs the correct JavaScript for the widget and also checks
-	 * $secrue to determine if the secure server should be used.
+	 * Displays this ReCaptcha widget
 	 */
 	public function display()
 	{
 		if (!$this->visible)
 			return;
 
-		if ($this->secure)
-			//passing null becasue we have our own messages
-			echo ReCaptcha::display($this->public_key, null, $this->secure);
-		else
-			echo ReCaptcha::display($this->public_key);
+		// passing null for second paramater becasue we display our own messages
+		ReCaptcha::display($this->public_key, null, $this->secure);
 	}
 
 	// }}}
