@@ -71,16 +71,19 @@ class SwatReCaptcha extends SwatInputControl
 	 */
 	public function process()
 	{
+		$form = $this->getForm();
+		$data = $form->getFormData();
+
 		$resp = ReCaptcha::validate($this->private_key,
 											$_SERVER["REMOTE_ADDR"],	
-											$_POST["recaptcha_challenge_field"],
-											$_POST["recaptcha_response_field"]);
+											$data["recaptcha_challenge_field"],
+											$data["recaptcha_response_field"]);
 
 		if (!$resp->is_valid){
 			// do not validate
-			$message = new SwatMessage(Swat::_('The words you entered did not ' 
-											.'match the words displayed, ' 
-											.'please try again'), 
+			$message = new SwatMessage(Swat::_('The words you entered did not '.
+											'match the words displayed, '.
+											'please try again.'),
 											SwatMessage::ERROR);
 			$this->addMessage($message);
 		}
