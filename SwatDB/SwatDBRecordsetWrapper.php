@@ -97,14 +97,10 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 
 		if ($rs->numRows()) {
 			while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
-				if ($this->row_wrapper_class === null) {
-					$object = $row;
-				} else {
-					$object = $this->instantiateRowWrapperObject($row);
+				$object = $this->instantiateRowWrapperObject($row);
 
-					if ($object instanceof SwatDBRecordable)
-						$object->setDatabase($rs->db);
-				}
+				if ($object instanceof SwatDBRecordable)
+					$object->setDatabase($rs->db);
 
 				$this->objects[] = $object;
 
@@ -127,7 +123,13 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 */
 	protected function instantiateRowWrapperObject($row)
 	{
-		return new $this->row_wrapper_class($row);
+		if ($this->row_wrapper_class === null) {
+			$object = $row;
+		} else {
+			$object = new $this->row_wrapper_class($row);
+		}
+
+		return $object;
 	}
 
 	// }}}
