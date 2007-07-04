@@ -31,6 +31,27 @@ class SwatSearchEntry extends SwatEntry
 	{
 		parent::__construct($id);
 		$this->title = Swat::_('Enter Search …');
+		
+		$this->requires_id = true;
+
+		$this->addJavaScript('packages/swat/javascript/swat-search-entry.js',
+			Swat::PACKAGE_ID);
+	}
+
+	// }}}
+	// {{{ public function display()
+	
+	/**
+	 * Displays this search entry
+	 *
+	 *
+	 *
+	 */
+	public function display()
+	{
+		parent::display();
+
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -49,6 +70,23 @@ class SwatSearchEntry extends SwatEntry
 	{
 		return ($value === null) ?
 			$this->title : parent::getDisplayValue($value);
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScript
+
+	/**
+	 * Gets the inline JavaScript for this entry to function
+	 * 
+	 * The inline JavaScript creates an instance of the 
+	 * SwatSearchEntry widget with the name $this->id_'obj'.
+	 *
+	 * @return srting the inline JavaScript required for this control to 
+	 *					function
+	 */
+	protected function getInlineJavaScript()
+	{
+		return "var {$this->id}_obj = new SwatSearchEntry('{$this->id}');";
 	}
 
 	// }}}
