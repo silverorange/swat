@@ -13,28 +13,18 @@ require_once 'Swat/SwatEntry.php';
  */
 class SwatSearchEntry extends SwatEntry
 {
-	// {{{ public properties
-
-	/**
-	 * SwatSearch title value
-	 *
-	 * Text content of the widget, or defaults to 'Enter Search …'.
-	 *
-	 * @var string
-	 */
-	public $title;
-
-	// }}}
 	// {{{ public function __construct()
 
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-		$this->title = Swat::_('Enter Search …');
 		
 		$this->requires_id = true;
 
 		$this->addJavaScript('packages/swat/javascript/swat-search-entry.js',
+			Swat::PACKAGE_ID);
+
+		$this->addStyleSheet('packages/swat/styles/swat-search-entry.css',
 			Swat::PACKAGE_ID);
 	}
 
@@ -51,24 +41,6 @@ class SwatSearchEntry extends SwatEntry
 		parent::display();
 
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
-	}
-
-	// }}}
-	// {{{ protected function getDisplayValue()
-
-	/**
-	 * Formats a value to display
-	 *
-	 * The methond returns either the title or the correct search entry.
-	 *
-	 * @param string $value the value to format for display.
-	 *
-	 * @return string the formatted value.
-	 */
-	protected function getDisplayValue($value)
-	{
-		return ($value === null) ?
-			$this->title : parent::getDisplayValue($value);
 	}
 
 	// }}}
