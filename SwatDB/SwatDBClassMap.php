@@ -52,28 +52,40 @@ class SwatDBClassMap extends SwatObject
 	 * <code>
 	 * SwatDBClassMap::add('Object', 'MyObject');
 	 * SwatDBClassMap::add('MyObject', 'MyOtherObject');
-	 * echo SwatDBClassMap::resolve('Object'); // MyOtherObject
+	 * echo SwatDBClassMap::get('Object'); // MyOtherObject
 	 * </code>
 	 *
-	 * Because it is only possible to map from a parent class to a subclass,
-	 * it is impossible to create a dependency loop. If the
+	 * If a circular dependency is created, an exception is thrown. If the
 	 * <i>$from_class_name</i> is already mapped to another class the old
 	 * mapping is overwritten.
 	 *
 	 * @param string $from_class_name the class name to map from.
 	 * @param string $to_class_name the class name to map to. The mapped class
 	 *                               must be a subclass of the
-	 *                               <i>$from_class_name</i>.
+	 *                               <i>$from_class_name</i> otherwise class
+	 *                               resolution using
+	 *                               {@link SwatDBClassMap::get()} will throw
+	 *                               an exception.
 	 *
-	 * @throws SwatInvalidClassException if the <i>$to_class_name</i>
-	 *                                    paramater is not a subclass of the
-	 *                                    <i>$from_class_name</i>.
+	 * @throws SwatException if the added mapping creates a circular dependency.
 	 */
 	public static function add($from_class_name, $to_class_name)
 	{
-		if (!is_subclass_of($to_class_name, $from_class_name))
-			throw new SwatInvalidClassException(
-				'$to_class_name must be a subclass of $from_class_name');
+		// check for circular dependency
+		if (array_key_exists($to_class_name, self::$map)) {
+			$class_name = $to_class_name;
+			$child_class_names = array($class_name);
+			while (array_key_exists($class_name, self::$map)) {
+				$class_name = self::$map[$class_name];
+				$child_class_names[] = $class_name;
+			}
+
+			if (in_array($from_class_name, $child_class_names)) {
+				throw new SwatException(sprintf(
+					'Circular class dependency detected: %s => %s',
+					$from_class_name, implode(' => ', $child_class_names)));
+			}
+		}
 
 		self::$map[$from_class_name] = $to_class_name;
 	}
@@ -84,24 +96,29 @@ class SwatDBClassMap extends SwatObject
 	/**
 	 * Resolves a class name from the class map
 	 *
-	 * @param string $class_name the name of the class to resolve.
+	 * @param string $from_class_name the name of the class to resolve.
 	 *
 	 * @return string the resolved class name. If no class mapping exists for
 	 *                 for the given class name, the same class name is
 	 *                 returned.
+	 *
+	 * @throws SwatInvalidClassException if a mapped class is not a subclass of
+	 *                                    its original class.
 	 */
-	public static function get($class_name)
+	public static function get($from_class_name)
 	{
 		$include_paths = explode(':', get_include_path());
 
-		while (array_key_exists($class_name, self::$map)) {
-			$class_name = self::$map[$class_name];
+		while (array_key_exists($from_class_name, self::$map)) {
+			$to_class_name = self::$map[$from_class_name];
 
-			if (!class_exists($class_name) && count(self::$search_paths) > 0) {
+			// try to load class definition for $to_class_name
+			if (!class_exists($to_class_name) &&
+				count(self::$search_paths) > 0) {
 				foreach ($include_paths as $include_path) {
 					foreach (self::$search_paths as $search_path) {
 						$filename = sprintf('%s/%s/%s.php',
-							$include_path, $search_path, $class_name);
+							$include_path, $search_path, $to_class_name);
 
 						if (file_exists($filename)) {
 							require_once $filename;
@@ -110,9 +127,16 @@ class SwatDBClassMap extends SwatObject
 					}
 				}
 			}
+
+			if (!is_subclass_of($to_class_name, $from_class_name))
+				throw new SwatInvalidClassException(sprintf('Invalid '.
+					'class-mapping detected. %s is not a subclass of %s.',
+					$to_class_name, $from_class_name));
+
+			$from_class_name = $to_class_name;
 		}
 
-		return $class_name;
+		return $to_class_name;
 	}
 
 	// }}}
