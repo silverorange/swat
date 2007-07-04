@@ -44,8 +44,7 @@ class SwatSearchEntry extends SwatEntry
 	/**
 	 * Displays this search entry
 	 *
-	 *
-	 *
+	 * Outputs an appropriate XHTML tag and JavaScript.
 	 */
 	public function display()
 	{
