@@ -37,7 +37,7 @@ class SwatDBClassMap extends SwatObject
 	 *
 	 * @var array
 	 */
-	private static $search_path = array('.');
+	private static $search_paths = array('.');
 
 	// }}}
 	// {{{ public static function add()
@@ -97,9 +97,9 @@ class SwatDBClassMap extends SwatObject
 		while (array_key_exists($class_name, self::$map)) {
 			$class_name = self::$map[$class_name];
 
-			if (!class_exists($class_name) && count(self::$search_path) > 0) {
+			if (!class_exists($class_name) && count(self::$search_paths) > 0) {
 				foreach ($include_paths as $include_path) {
-					foreach (self::$search_path as $search_path) {
+					foreach (self::$search_paths as $search_path) {
 						$filename = sprintf('%s/%s/%s.php',
 							$include_path, $search_path, $class_name);
 
@@ -136,7 +136,7 @@ class SwatDBClassMap extends SwatObject
 		if (!in_array($search_path, self::$search_paths, true)) {
 			// add path to front of array since it is more likely we will find
 			// class-definitions in manually added search paths
-			array_shift(self::$search_paths, $search_path);
+			array_unshift(self::$search_paths, $search_path);
 		}
 	}
 
