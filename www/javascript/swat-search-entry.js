@@ -7,9 +7,9 @@ function SwatSearchEntry(id)
 	var label = null;
 	
 	for (var i = 0; i < labels.length; i++) {
-		 if (labels[i].htmlFor == this.id) {
-				label = labels[i];
-				break;
+		if (labels[i].htmlFor == this.id) {
+			label = labels[i];
+			break;
 		}
 	}
 
