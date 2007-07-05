@@ -4,8 +4,8 @@
 
 require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/exceptions/SwatInvalidTypeException.php';
-require_once 'Swat/exceptions/SwatCrossSiteRequestForgeryException.php';
 require_once 'Swat/SwatDisplayableContainer.php';
+require_once 'Swat/SwatMessageDisplay.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatString.php';
 
@@ -121,6 +121,22 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	protected $salt = null;
 
+	/**
+	 * Message display object used to display form-level errors for this form
+	 *
+	 * @var SwatMessageDisplay
+	 *
+	 * @see SwatForm::createMessageDisplay()
+	 */
+	protected $message_display;
+
+	/**
+	 * Whether or not the internal message display object has been created
+	 *
+	 * @var boolean
+	 */
+	protected $message_display_created = false;
+
 	// }}}
 	// {{{ private properties
 
@@ -235,6 +251,7 @@ class SwatForm extends SwatDisplayableContainer
 		$form_tag->class = $this->getCSSClassString();
 
 		$form_tag->open();
+		$this->displayMessages();
 		$this->displayChildren();
 		$this->displayHiddenFields();
 		$form_tag->close();
@@ -283,7 +300,7 @@ class SwatForm extends SwatDisplayableContainer
 	 * serialized before being output so the value can be either a primitive
 	 * type or an object. Unserialization happens automatically when
 	 * {@link SwatForm::getHiddenField()} is used to retrieve the value. For
-	 * non-array and non-object types, the value is also stored as an 
+	 * non-array and non-object types, the value is also stored as an
 	 * unserialized value that can be retrieved without using
 	 * SwatForm::getHiddenField().
 	 *
@@ -453,6 +470,25 @@ class SwatForm extends SwatDisplayableContainer
 	}
 
 	// }}}
+	// {{{ public function getHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects needed by this form
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this form.
+	 *
+	 * @see SwatUIObject::getHtmlHeadEntrySet()
+	 */
+	public function getHtmlHeadEntrySet()
+	{
+		$this->createMessageDisplay();
+		$set = parent::getHtmlHeadEntrySet();
+		$set->addEntrySet($this->message_display->getHtmlHeadEntrySet());
+		return $set;
+	}
+
+	// }}}
 	// {{{ public static function setAuthenticationToken()
 
 	/**
@@ -533,13 +569,8 @@ class SwatForm extends SwatDisplayableContainer
 	 * This catches cross-site request forgeries if the
 	 * {@link SwatForm::setAuthenticationToken()} method was previously called.
 	 *
-	 * This method should run before other form processing methods in order
-	 * to ensure the request is safe to process.
-	 *
-	 * @throws SwatCrossSiteRequestForgeryException when the authentication
-	 *                                              token does not match the
-	 *                                              token in submitted form
-	 *                                              data.
+	 * If an authentication token mismatch is detected, a message is added
+	 * to this form.
 	 */
 	protected function processAuthenticationToken()
 	{
@@ -554,12 +585,18 @@ class SwatForm extends SwatDisplayableContainer
 		 * If this form's authentication token is set, the token in submitted
 		 * data must match.
 		 */
-		if (self::$authentication_token !== null) {
-			if (self::$authentication_token != $token)
-				throw new SwatCrossSiteRequestForgeryException(
-					'Authentication token does not match. '.
-					'Possible cross-site request forgery prevented.',
-					0, $this);
+		if (self::$authentication_token !== null &&
+			self::$authentication_token != $token) {
+
+			$message = new SwatMessage(Swat::_(
+				'There is a problem with the information submitted.'),
+				SwatMessage::WARNING);
+
+			$message->secondary_content =
+				Swat::_('In order to ensure your security, we were '.
+					'unable to process your request. Please try again.');
+
+			$this->addMessage($message);
 		}
 	}
 
@@ -591,7 +628,6 @@ class SwatForm extends SwatDisplayableContainer
 					}
 				}
 			}
-			
 		}
 	}
 
@@ -657,6 +693,26 @@ class SwatForm extends SwatDisplayableContainer
 		}
 
 		echo '</div>';
+	}
+
+	// }}}
+	// {{{ protected function displayMessages()
+
+	/**
+	 * Displays the messages of this form
+	 *
+	 * The messages of this form, not including the messages of any subwidgets
+	 * are displayed in this form's embedded message display object.
+	 */
+	protected function displayMessages()
+	{
+		$this->createMessageDisplay();
+
+		foreach ($this->messages as $message)
+			$this->message_display->add($message,
+				SwatMessageDisplay::DISMISS_OFF);
+
+		$this->message_display->display();
 	}
 
 	// }}}
@@ -763,6 +819,22 @@ class SwatForm extends SwatDisplayableContainer
 		$value = SwatString::signedUnserialize($value, $this->salt);
 
 		return $value;
+	}
+
+	// }}}
+	// {{{ protected function createMessageDisplay()
+
+	/**
+	 * Creates the embedded message display used by this form
+	 */
+	protected function createMessageDisplay()
+	{
+		if (!$this->message_display_created) {
+			$this->message_display =
+				new SwatMessageDisplay($this->id.'_message_display');
+
+			$this->message_display_created = true;
+		}
 	}
 
 	// }}}
