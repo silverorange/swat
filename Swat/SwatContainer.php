@@ -471,12 +471,14 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	public function hasMessage()
 	{
-		$has_message = false;
+		$has_message = (count($this->messages) > 0);
 
-		foreach ($this->children as &$child) {
-			if ($child->hasMessage()) {
-				$has_message = true;
-				break;
+		if (!$has_message) {
+			foreach ($this->children as &$child) {
+				if ($child->hasMessage()) {
+					$has_message = true;
+					break;
+				}
 			}
 		}
 
