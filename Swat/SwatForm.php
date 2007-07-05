@@ -180,9 +180,6 @@ class SwatForm extends SwatDisplayableContainer
 		if (self::$default_salt !== null)
 			$this->setSalt(self::$default_salt);
 
-		if (self::$default_authentication_token !== null)
-			$this->setAuthenticationToken(self::$default_authentication_token);
-
 		$this->requires_id = true;
 
 		$this->addJavaScript('packages/swat/javascript/swat-form.js',
