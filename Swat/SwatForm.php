@@ -121,24 +121,17 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	protected $salt = null;
 
-	/**
-	 * Message display object used to display form-level errors for this form
-	 *
-	 * @var SwatMessageDisplay
-	 *
-	 * @see SwatForm::createMessageDisplay()
-	 */
-	protected $message_display;
-
-	/**
-	 * Whether or not the internal message display object has been created
-	 *
-	 * @var boolean
-	 */
-	protected $message_display_created = false;
-
 	// }}}
 	// {{{ private properties
+
+	/**
+	 * Whether or not this form was authenticated
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatForm::isAuthenticated()
+	 */
+	private $authenticated = false;
 
 	/**
 	 * The method to use for this form
@@ -248,7 +241,6 @@ class SwatForm extends SwatDisplayableContainer
 		$form_tag->class = $this->getCSSClassString();
 
 		$form_tag->open();
-		$this->displayMessages();
 		$this->displayChildren();
 		$this->displayHiddenFields();
 		$form_tag->close();
@@ -444,6 +436,25 @@ class SwatForm extends SwatDisplayableContainer
 	}
 
 	// }}}
+	// {{{ public function isAuthenticated()
+
+	/**
+	 * Whether or not this form is authenticated
+	 *
+	 * If form authentication is used, data should only be saved from
+	 * authenticated forms. An unauthenticated form may be a malicious
+	 * request.
+	 *
+	 * @return boolean true if this form is authenticated or if this form does
+	 *                  not use authentication. False if this form is
+	 *                  not authenticated.
+	 */
+	public function isAuthenticated()
+	{
+		return $this->authenticated;
+	}
+
+	// }}}
 	// {{{ public function setSalt()
 
 	/**
@@ -474,25 +485,6 @@ class SwatForm extends SwatDisplayableContainer
 	public function getSalt()
 	{
 		return $this->salt;
-	}
-
-	// }}}
-	// {{{ public function getHtmlHeadEntrySet()
-
-	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this form
-	 *
-	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 *                               this form.
-	 *
-	 * @see SwatUIObject::getHtmlHeadEntrySet()
-	 */
-	public function getHtmlHeadEntrySet()
-	{
-		$this->createMessageDisplay();
-		$set = parent::getHtmlHeadEntrySet();
-		$set->addEntrySet($this->message_display->getHtmlHeadEntrySet());
-		return $set;
 	}
 
 	// }}}
@@ -592,19 +584,9 @@ class SwatForm extends SwatDisplayableContainer
 		 * If this form's authentication token is set, the token in submitted
 		 * data must match.
 		 */
-		if (self::$authentication_token !== null &&
-			self::$authentication_token != $token) {
-
-			$message = new SwatMessage(Swat::_(
-				'There is a problem with the information submitted.'),
-				SwatMessage::WARNING);
-
-			$message->secondary_content =
-				Swat::_('In order to ensure your security, we were '.
-					'unable to process your request. Please try again.');
-
-			$this->addMessage($message);
-		}
+		$this->authenticated = 
+			(self::$authentication_token === null ||
+			self::$authentication_token === $token);
 	}
 
 	// }}}
@@ -700,26 +682,6 @@ class SwatForm extends SwatDisplayableContainer
 		}
 
 		echo '</div>';
-	}
-
-	// }}}
-	// {{{ protected function displayMessages()
-
-	/**
-	 * Displays the messages of this form
-	 *
-	 * The messages of this form, not including the messages of any subwidgets
-	 * are displayed in this form's embedded message display object.
-	 */
-	protected function displayMessages()
-	{
-		$this->createMessageDisplay();
-
-		foreach ($this->messages as $message)
-			$this->message_display->add($message,
-				SwatMessageDisplay::DISMISS_OFF);
-
-		$this->message_display->display();
 	}
 
 	// }}}
@@ -826,22 +788,6 @@ class SwatForm extends SwatDisplayableContainer
 		$value = SwatString::signedUnserialize($value, $this->salt);
 
 		return $value;
-	}
-
-	// }}}
-	// {{{ protected function createMessageDisplay()
-
-	/**
-	 * Creates the embedded message display used by this form
-	 */
-	protected function createMessageDisplay()
-	{
-		if (!$this->message_display_created) {
-			$this->message_display =
-				new SwatMessageDisplay($this->id.'_message_display');
-
-			$this->message_display_created = true;
-		}
 	}
 
 	// }}}
