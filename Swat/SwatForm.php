@@ -425,6 +425,16 @@ class SwatForm extends SwatDisplayableContainer
 	// }}}
 	// {{{ public function isSubmitted()
 
+	/**
+	 * Whether or not this form was submitted on the previous page request
+	 *
+	 * This method may becalled before or after the SwatForm::process() method.
+	 * and is thus sometimes more useful than SwatForm::isProcessed() which
+	 * only returns a meaningful value after SwatForm::process() is called.
+	 *
+	 * @return boolean true if this form was submitted on the previous page
+	 *                  request and false if it was not.
+	 */
 	public function isSubmitted()
 	{
 		$raw_data = $this->getFormData();
