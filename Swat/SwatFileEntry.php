@@ -131,6 +131,9 @@ class SwatFileEntry extends SwatInputControl
 
 		if (!$this->required && $this->file === null) {
 			return;
+			
+		} elseif (!$this->isSensitive()) {
+			return;
 
 		} elseif ($this->file === null) {
 			$message = $this->getValidationMessage('required');
