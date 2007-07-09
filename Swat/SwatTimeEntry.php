@@ -401,7 +401,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		}
 
 		if ($all_empty) {
-			if ($this->required) {
+			if ($this->required && $this->isSensitive()) {
 				$message = Swat::_('The %s field is required.');
 				$this->addMessage(new SwatMessage($message,
 					SwatMessage::ERROR));
