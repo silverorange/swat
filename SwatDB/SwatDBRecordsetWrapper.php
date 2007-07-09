@@ -202,7 +202,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 */
 	public function valid()
 	{
-		return isset($this->objects[$this->current_index]);
+		return array_key_exists($this->current_index, $this->objects);
 	}
 
 	// }}}
