@@ -122,7 +122,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
-		$this->areas_flydown->addOptionsByArray($this->areas);
 		$this->areas_flydown->value = $this->getArea($this->value);
 		$this->areas_flydown->display();
 
@@ -158,7 +157,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 			$this->value = $this->areas_flydown->value.'/'.
 				$this->regions_flydown->value;
 
-		if (!$this->required && $this->value === null) {
+		if (!$this->required && $this->value === null && $this->isSensitive()) {
 			return;
 
 		} elseif ($this->value === null) {
