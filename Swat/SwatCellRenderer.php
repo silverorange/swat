@@ -267,10 +267,30 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 * @param $property_name string the property name
 	 *
 	 * @see SwatCellRenderer::isPropertyStatic()
+	 *
+	 * @throws SwatInvalidPropertyException if the specified
+	 *                                       <i>$property_name</i> is not a
+	 *                                       non-static public property of
+	 *                                       this class.
 	 */
 	protected final function makePropertyStatic($property_name)
 	{
-		$this->static_properties[] = $property_name;
+		$reflector = new ReflectionObject($this);
+		if ($reflector->hasProperty($property_name)) {
+			$property = $reflector->getProperty($property_name);
+			if ($property->isPublic() && !$property->isStatic()) {
+				$this->static_properties[] = $property_name;
+			} else {
+				throw new SwatInvalidPropertyException(
+					"Property {$property_name} is not a non-static public "
+					"property and cannot be made static.",
+					0, $this, $property_name);
+			}
+		} else {
+			throw new SwatInvalidPropertyException(
+				"Can not make non-existant property {$property_name} static.",
+				0, $this, $property_name);
+		}
 	}
 
 	// }}}
