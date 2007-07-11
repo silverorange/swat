@@ -128,8 +128,8 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 * avoid conflicts.
 	 *
 	 * @param SwatUIObject $object the object containing the property that is
-	 *                            being mapped. Usually this is the cell 
-	 *                            renderer itself, but not necessarily. It 
+	 *                            being mapped. Usually this is the cell
+	 *                            renderer itself, but not necessarily. It
 	 *                            could be a UIObject within the cell renderer.
 	 * @param string $name the name of the property being mapped.
 	 *
@@ -158,7 +158,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	// }}}
 	// {{{ public function getBaseCSSClassNames()
 
-	/** 
+	/**
 	 * Gets the base CSS class names for this cell renderer
 	 *
 	 * This is the recommended place for cell-renderer subclasses to add extra
@@ -174,7 +174,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	// }}}
 	// {{{ public function getDataSpecificCSSClassNames()
 
-	/** 
+	/**
 	 * Gets the data specific CSS class names for this cell renderer
 	 *
 	 * This is the recommended place for cell-renderer subclasses to add extra
@@ -212,7 +212,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	// }}}
 	// {{{ public final function getInheritanceCSSClassNames()
 
-	/** 
+	/**
 	 * Gets the CSS class names of this cell renderer based on the inheritance
 	 * tree for this cell renderer
 	 *
