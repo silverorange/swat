@@ -25,8 +25,8 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 	 * Identifier of this checkbox cell renderer
 	 *
 	 * Identifier must be unique within this cell renderer's parent cell
-	 * renderer container. This property is required and must be a static
-	 * value, not a data-mapped value.
+	 * renderer container. This property is required and can not be a
+	 * data-mapped value.
 	 *
 	 * @var string
 	 */
