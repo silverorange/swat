@@ -40,7 +40,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	// {{{ protected properties
 
 	/**
-	 * A array containing the static properties of this cell renderer
+	 * An array containing the static properties of this cell renderer
 	 *
 	 * @var array
 	 */
