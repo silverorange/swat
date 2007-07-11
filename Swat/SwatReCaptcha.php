@@ -15,7 +15,7 @@ require_once 'Swat/SwatInputControl.php';
  */
 class SwatReCaptcha extends SwatInputControl
 {
-	// {{{ private properties
+	// {{{ public properties
 
 	/**
 	 * Public Key
@@ -56,7 +56,7 @@ class SwatReCaptcha extends SwatInputControl
 		if (!$this->visible)
 			return;
 
-		// passing null for second paramater because we display our own messages
+		// passing null, swat has messages that will handle errors for us
 		ReCaptcha::display($this->public_key, null, $this->secure);
 	}
 
