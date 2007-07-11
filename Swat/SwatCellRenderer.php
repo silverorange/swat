@@ -282,7 +282,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 				$this->static_properties[] = $property_name;
 			} else {
 				throw new SwatInvalidPropertyException(
-					"Property {$property_name} is not a non-static public "
+					"Property {$property_name} is not a non-static public ".
 					"property and cannot be made static.",
 					0, $this, $property_name);
 			}
