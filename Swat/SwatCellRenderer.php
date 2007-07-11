@@ -192,13 +192,15 @@ abstract class SwatCellRenderer extends SwatUIObject
 	// {{{ public function isPropertyStatic()
 
 	/**
-	 * Is this property static
+	 * Checks if a public property is static (can not be data-mapped)
 	 *
 	 * This method takes a property name and returns a boolean representing
 	 * weather or not the property has been made static.
 	 *
-	 * @param $property_name string the property name
-	 * @return boolean if the property is static
+	 * @param string $property_name the property name to check.
+	 *
+	 * @return boolean true if the property is static and false if the property
+	 *                  may be data-mapped.
 	 *
 	 * @see SwatCellRenderer::makePropertyStatic()
 	 */
