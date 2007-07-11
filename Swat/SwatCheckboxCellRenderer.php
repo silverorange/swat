@@ -84,6 +84,7 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 	public function __construct()
 	{
 		parent::__construct();
+
 		$this->makePropertyStatic('id');
 
 		$yui = new SwatYUI(array('dom'));
