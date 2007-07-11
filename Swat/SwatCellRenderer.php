@@ -10,7 +10,7 @@ require_once 'Swat/SwatUIObject.php';
  * Subclasses add public class variable to store data they need for rendering.
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatCellRenderer extends SwatUIObject
@@ -37,14 +37,14 @@ abstract class SwatCellRenderer extends SwatUIObject
 	public $sensitive = true;
 
 	// }}}
-	// {{{ protected properties
+	// {{{ private properties
 
 	/**
 	 * An array containing the static properties of this cell renderer
 	 *
 	 * @var array
 	 */
-	protected $static_properties = array();
+	private $static_properties = array();
 
 	// }}}
 	// {{{ abstract public function render()
@@ -259,7 +259,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	// {{{ protected final function makePropertyStatic()
 
 	/**
-	 * Make a property static
+	 * Make a public property static
 	 *
 	 * This method takes a property name and marks it as static, meaning that
 	 * a user can not data-map this property.
@@ -272,6 +272,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	{
 		$this->static_properties[] = $property_name;
 	}
+
 	// }}}
 }
 
