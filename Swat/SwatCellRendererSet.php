@@ -5,8 +5,8 @@
 require_once 'SwatObject.php';
 require_once 'SwatCellRenderer.php';
 require_once 'SwatCellRendererMapping.php';
+require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/exceptions/SwatObjectNotFoundException.php';
-require_once 'Swat/exceptions/SwatInvalidPropertyTypeException.php';
 
 /**
  * A collection of cell renderers with associated datafield-property mappings
@@ -79,7 +79,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 * @see SwatCellRendererSet::addMappingsToRenderer()
 	 */
 	public function addRendererWithMappings(SwatCellRenderer $renderer,
-		$mappings = array())
+		array $mappings = array())
 	{
 		$this->addRenderer($renderer);
 		$this->addMappingsToRenderer($renderer, $mappings);
@@ -95,12 +95,23 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 * @param SwatCellRenderer $renderer the cell renderer to add the mappings
 	 *                                    to.
 	 * @param array $mappings an array of SwatCellRendererMapping objects.
+	 *
+	 * @throws SwatException if an attepmt to map a static cell renderer
+	 *                        property is made.
 	 */
 	public function addMappingsToRenderer(SwatCellRenderer $renderer,
-		$mappings = array())
+		array $mappings = array())
 	{
 		$index = $this->findRendererIndex($renderer);
-		array_merge($this->mappings[$index], $mappings);
+
+		foreach ($mappings as $mapping) {
+			if ($renderer->isPropertyStatic($mapping->property))
+				throw new SwatException(sprintf(
+					'The %s property can not be data-mapped',
+					$mapping->property));
+
+			$this->mappings[$index][] = $mapping;
+		}
 	}
 
 	// }}}
@@ -113,15 +124,16 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 * @param SwatCellRenderer $renderer the cell renderer to add the mapping
 	 *                                    to.
 	 * @param SwatCellRendererMapping $mapping the mapping to add.
+	 *
+	 * @throws SwatException if an attepmt to map a static cell renderer
+	 *                        property is made.
 	 */
 	public function addMappingToRenderer(SwatCellRenderer $renderer,
 		SwatCellRendererMapping $mapping)
 	{
-		if ($renderer->isPropertyStatic($mapping->property)) {
-			throw new SwatInvalidPropertyTypeException(
-				sprintf('The %s property must not be data-mapped'
-					,$mapping->property));
-		}
+		if ($renderer->isPropertyStatic($mapping->property))
+			throw new SwatException(sprintf(
+				'The %s property can not be data-mapped', $mapping->property));
 
 		$index = $this->findRendererIndex($renderer);
 		$this->mappings[$index][] = $mapping;
