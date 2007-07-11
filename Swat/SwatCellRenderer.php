@@ -204,11 +204,9 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	public function isPropertyStatic($property_name)
 	{
-		if (in_array($property_name, $this->static_properties))
-			return true;
-		else
-			return false;
+		return (in_array($property_name, $this->static_properties));
 	}
+
 	// }}}
 	// {{{ public final function getInheritanceCSSClassNames()
 
