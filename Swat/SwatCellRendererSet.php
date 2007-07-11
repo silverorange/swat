@@ -6,6 +6,7 @@ require_once 'SwatObject.php';
 require_once 'SwatCellRenderer.php';
 require_once 'SwatCellRendererMapping.php';
 require_once 'Swat/exceptions/SwatObjectNotFoundException.php';
+require_once 'Swat/exceptions/SwatInvalidPropertyTypeException.php';
 
 /**
  * A collection of cell renderers with associated datafield-property mappings
@@ -116,6 +117,12 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	public function addMappingToRenderer(SwatCellRenderer $renderer,
 		SwatCellRendererMapping $mapping)
 	{
+		if ($renderer instanceof SwatCheckboxCellRenderer 
+				&& $mapping->property === 'id') {
+					throw new SwatInvalidPropertyTypeException(
+						'The id property must not be data-mapped');
+		}
+
 		$index = $this->findRendererIndex($renderer);
 		$this->mappings[$index][] = $mapping;
 	}
