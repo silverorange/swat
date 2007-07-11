@@ -117,10 +117,10 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	public function addMappingToRenderer(SwatCellRenderer $renderer,
 		SwatCellRendererMapping $mapping)
 	{
-		if ($renderer instanceof SwatCheckboxCellRenderer 
-				&& $mapping->property === 'id') {
-					throw new SwatInvalidPropertyTypeException(
-						'The id property must not be data-mapped');
+		if ($renderer->isPropertyStatic($mapping->property)) {
+			throw new SwatInvalidPropertyTypeException(
+				sprintf('The %s property must not be data-mapped'
+					,$mapping->property));
 		}
 
 		$index = $this->findRendererIndex($renderer);

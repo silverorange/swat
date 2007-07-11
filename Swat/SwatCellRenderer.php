@@ -37,6 +37,16 @@ abstract class SwatCellRenderer extends SwatUIObject
 	public $sensitive = true;
 
 	// }}}
+	// {{{ protected properties
+
+	/**
+	 * A array containing the static properties of this cell renderer
+	 *
+	 * @var array
+	 */
+	protected $static_properties = array();
+
+	// }}}
 	// {{{ abstract public function render()
 
 	/**
@@ -179,6 +189,27 @@ abstract class SwatCellRenderer extends SwatUIObject
 	}
 
 	// }}}
+	// {{{ public function isPropertyStatic()
+
+	/**
+	 * Is this property static
+	 *
+	 * This method takes a property name and returns a boolean representing
+	 * weather or not the property has been made static.
+	 *
+	 * @param $property_name string the property name
+	 * @return boolean if the property is static
+	 *
+	 * @see SwatCellRenderer::makePropertyStatic()
+	 */
+	public function isPropertyStatic($property_name)
+	{
+		if (in_array($property_name, $this->static_properties))
+			return true;
+		else
+			return false;
+	}
+	// }}}
 	// {{{ public final function getInheritanceCSSClassNames()
 
 	/** 
@@ -224,6 +255,23 @@ abstract class SwatCellRenderer extends SwatUIObject
 		return $css_class_names;
 	}
 
+	// }}}
+	// {{{ protected final function makePropertyStatic()
+
+	/**
+	 * Make a property static
+	 *
+	 * This method takes a property name and marks it as static, meaning that
+	 * a user can not data-map this property.
+	 *
+	 * @param $property_name string the property name
+	 *
+	 * @see SwatCellRenderer::isPropertyStatic()
+	 */
+	protected final function makePropertyStatic($property_name)
+	{
+		$this->static_properties[] = $property_name;
+	}
 	// }}}
 }
 
