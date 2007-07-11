@@ -73,13 +73,15 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 *
 	 * @param SwatCellRenderer $renderer the renderer to add.
 	 * @param array $mappings an array of SwatCellRendererMapping objects.
+	 *
+	 * @see SwatCellRendererSet::addRenderer()
+	 * @see SwatCellRendererSet::addMappingsToRenderer()
 	 */
 	public function addRendererWithMappings(SwatCellRenderer $renderer,
 		$mappings = array())
 	{
-		$this->renderers[] = $renderer;
-		$index = $this->findRendererIndex($renderer);
-		$this->mappings[$index] = $mappings;
+		$this->addRenderer($renderer);
+		$this->addMappingsToRenderer($renderer, $mappings);
 	}
 
 	// }}}
