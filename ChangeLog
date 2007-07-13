@@ -1,3 +1,253 @@
+2007-07-11  gauthierm
+
+	* [r18362] swat/trunk/Swat/SwatCheckboxCellRenderer.php:
+	  Small doc cleanup.
+	* [r18361] swat/trunk/Swat/SwatCellRendererSet.php:
+	  Remove an unnecessary find call when adding renderers to the set.
+	* [r18360] swat/trunk/Swat/SwatCellRendererSet.php:
+	  Throw an exception in addMappings as well as addMapping method.
+
+2007-07-11  charles
+
+	* [r18359] swat/trunk/Swat/SwatCellRenderer.php:
+	  Need to cat the two strings.
+
+2007-07-11  gauthierm
+
+	* [r18358] swat/trunk/Swat/SwatCheckboxCellRenderer.php:
+	  Whitespace.
+	* [r18357] swat/trunk/Swat/SwatCellRenderer.php:
+	  Only allow makePropertyStatic() on public non-static properties.
+	* [r18356] swat/trunk/Swat/SwatCellRenderer.php:
+	  Whitespace
+	* [r18355] swat/trunk/Swat/SwatCellRenderer.php:
+	  small documentation fixes.
+	* [r18354] swat/trunk/Swat/SwatCellRenderer.php:
+	  in_array already returns a boolean.
+	* [r18353] swat/trunk/Swat/SwatCellRenderer.php:
+	  This can be private since the method is protected final.
+
+2007-07-11  charles
+
+	* [r18352] swat/trunk/Swat/SwatCellRenderer.php,
+	  swat/trunk/Swat/SwatReCaptcha.php:
+	  Small doc fixes.
+	* [r18351] swat/trunk/Swat/SwatCellRenderer.php,
+	  swat/trunk/Swat/SwatCellRendererSet.php,
+	  swat/trunk/Swat/SwatCheckboxCellRenderer.php:
+	  Ticket #1024, much better way of creating static properties, now
+	  you can pick what properties you would like to be static and
+	  swat now knows not to data map them.
+	* [r18348] swat/trunk/Swat/SwatCellRendererSet.php:
+	  Ticket #1024, now the id property of checkboxes is static in the
+	  sense that it can no longer be data-mapped. An exception is
+	  thrown if it is data-mapped.
+
+2007-07-11  gauthierm
+
+	* [r18343] swat/trunk/Swat/SwatCellRendererSet.php:
+	  Reduce code duplication by calling equivalent methods.
+
+2007-07-09  gauthierm
+
+	* [r18332] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Fix a bug where recordset wrappers containing null objects will
+	  not iterate properly.
+
+2007-07-09  charles
+
+	* [r18331] swat/trunk/Swat/SwatTimeZoneEntry.php:
+	  The duplicate area bug was fixed by removing the
+	  addOptionsByArray call from the display method. The
+	  addOptionsByArray was called twice in the widget removing the
+	  one in display fixed this problem. Also made the required and
+	  sensitive properties of this widget work togeather, part of
+	  ticket #817.
+
+2007-07-09  gauthierm
+
+	* [r18330] swat/trunk/SwatDB/SwatDBClassMap.php:
+	  Return original class name if class is not mapped.
+
+2007-07-09  charles
+
+	* [r18329] swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/Swat/SwatTimeEntry.php:
+	  Ticket #817, TimeEntry and DateEntry now will not create an
+	  error message if they are both insensitive and required.
+	* [r18326] swat/trunk/Swat/SwatCascadeFlydown.php:
+	  Returns the correct value of the array instead of fasle.
+
+2007-07-06  charles
+
+	* [r18305] swat/trunk/Swat/SwatFileEntry.php:
+	  Part of ticket #817, if the file entry is both required and
+	  insensitive no error message is displayed, sensitive is
+	  considered the dominate property.
+
+2007-07-05  gauthierm
+
+	* [r18263] swat/trunk/Swat/SwatForm.php:
+	  Another attempt at fixing ticket #1018. This solution requires
+	  checking SwatForm::isAuthenticated() in code and not performing
+	  any action unless the form is authenticated. After trying
+	  several other solutions I think there is no way to cleanly
+	  automatically prevent form actions from happening without
+	  explicitly checking if the form is authenticated in site-level
+	  code.
+	* [r18262] swat/trunk/Swat/SwatForm.php:
+	  Documentation for SwatForm::isSubmitted(). Shame on Nathan for
+	  not adding this documentation when he introduced the method in
+	  r9201.
+	* [r18260] swat/trunk/Swat/SwatContainer.php:
+	  Containers could have messages too.
+	* [r18259] swat/trunk/Swat/SwatForm.php:
+	  I was wrong. This code is not supposed to be here at all.
+	* [r18258] swat/trunk/Swat/SwatForm.php:
+	  Add setting authentication token back to SwatForm. This was
+	  removed by accident.
+	* [r18257] swat/trunk/Swat/SwatForm.php:
+	  Ticket #1018: better end-user error messages for cross-site
+	  request forgery exceptions.
+
+2007-07-04  gauthierm
+
+	* [r18252] swat/trunk/SwatDB/SwatDBClassMap.php:
+	  Check subclass relationship of mapped classes during the get()
+	  method rather than add() since the required class definitions
+	  may not exist during the add() call. This also means circular
+	  dependencies are possible so add code to detect and report
+	  circular dependencies.
+
+2007-07-04  nick
+
+	* [r18251] swat/trunk/SwatDB/SwatDBClassMap.php:
+	  Fix mike's mess. Name class var correctly, and unshift rather
+	  than shift.
+	* [r18250] swat/trunk/www/javascript/swat-search-entry.js:
+	  Fix tab/spacing
+
+2007-07-04  charles
+
+	* [r18247] swat/trunk/www/styles/swat-search-entry.css:
+	  The style for the grayed out text. Used with SwatSearchEntry.
+	* [r18246] swat/trunk/Swat/SwatSearchEntry.php,
+	  swat/trunk/demo/include/demos/entry.xml,
+	  swat/trunk/www/javascript/swat-search-entry.js:
+	  More robust JavaScript that uses the label property for the
+	  title of the Search Widget instead of one hardcoded into the
+	  widget, also now the default title is gray to represent a
+	  difference between user entered text and that of the webpage.
+	* [r18243] swat/trunk/Swat/SwatSearchEntry.php:
+	  Added documentation.
+	* [r18242] swat/trunk/Swat/SwatSearchEntry.php,
+	  swat/trunk/demo/include/demos/entry.xml,
+	  swat/trunk/www/javascript/swat-search-entry.js:
+	  Ticket #1078, here is the javascript that clears the input field
+	  on the search entry when the user clicks on it. Aslo an updated
+	  entry demo page with search entry added.
+
+2007-07-04  gauthierm
+
+	* [r18241] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Make it easier for subclasses to use different row wrapper
+	  classes.
+
+2007-07-03  gauthierm
+
+	* [r18240] swat/trunk/Swat/SwatReCaptcha.php:
+	  Small coding convention fixes.
+
+2007-07-03  charles
+
+	* [r18239] swat/trunk/Swat/SwatReCaptcha.php:
+	  Small coding convention changes and removal of $_POST variable.
+
+2007-07-03  gauthierm
+
+	* [r18238] swat/trunk/Swat/SwatReCaptcha.php:
+	  Simplify display code.
+	* [r18237] swat/trunk/package.php:
+	  Add optional ReCaptcha dependency to Swat package.
+
+2007-07-03  charles
+
+	* [r18236] swat/trunk/Swat/SwatReCaptcha.php,
+	  swat/trunk/demo/include/DemoApplication.php,
+	  swat/trunk/demo/include/demos/recaptcha.xml:
+	  Ticket #1079, adds a ReCaptcha widget to swat and a demo showing
+	  the widget in use.
+
+2007-07-03  gauthierm
+
+	* [r18234] swat/trunk/demo/www/index.php:
+	  Use Swat exception handler on Swat demo.
+
+2007-06-29  gauthierm
+
+	* [r18226] swat/trunk/SwatDB/SwatDBClassMap.php:
+	  New, easier to use, static API for SwatDBClassMap. Old API is
+	  maintained and deprecated for backwards compatibility.
+
+2007-06-28  gauthierm
+
+	* [r18225] swat/trunk/SwatDB/SwatDBDataObject.php,
+	  swat/trunk/SwatDB/SwatDBRecordable.php,
+	  swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Add a common interface for SwatDBDataObject and
+	  SwatDBRecordsetWrapper called SwatDBRecordable.
+
+2007-06-28  charles
+
+	* [r18220] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  Ticket #1071, problems occured when two options with the same
+	  value were added to the checkbox entry list widget, now when the
+	  form is submitted the array keys of the options and those of the
+	  values are compared instead of the values names. This allows
+	  that right entries to remain checked and other entries with the
+	  same value not to become suddenly checked. Also the array of
+	  entry_values is now indexed by number and not by values, this
+	  prevents two widgets with the same value having only one entry
+	  in the entry_values array.
+
+2007-06-28  gauthierm
+
+	* [r18217] swat/trunk/Swat/SwatTileView.php:
+	  Do a todo.
+	* [r18216] swat/trunk/Swat/SwatDate.php:
+	  Fix folding
+
+2007-06-27  gauthierm
+
+	* [r18203] swat/trunk/demo/include/demos/changeorder.xml:
+	  Add submit button.
+	* [r18202] swat/trunk/Swat/SwatChangeOrder.php:
+	  Update SwatChangeOrder to work without the protected
+	  unique_values property. This also allows option values to be
+	  complex objects (not tested but should work).
+	* [r18201] swat/trunk/Swat/SwatChangeOrder.php:
+	  unique_values was removed in r18199.
+	* [r18200] swat/trunk/Swat/SwatOptionControl.php:
+	  Added public getOptionsByValue() method to SwatOptionControl.
+	* [r18199] swat/trunk/Swat/SwatOptionControl.php:
+	  Remove the 'unique_values' protected property since it can
+	  dramatically changes the behaviour of a SwatOptionControl
+	  subclasses. The unique_values property was not used anywhere.
+	  Also, clean up lots of documentation.
+
+2007-06-26  gauthierm
+
+	* [r18185] swat/trunk/Swat/exceptions/SwatException.php:
+	  Correctly format integers, floats, booleans and resources in
+	  SwatException stack traces.
+
+2007-06-26  nrf
+
+	* [r18176] swat/trunk/ChangeLog:
+	  prepare for release of 1.2.22
+	* [r18171] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.22
+
 2007-06-25  gauthierm
 
 	* [r18152] swat/trunk/Swat/exceptions/SwatException.php:
