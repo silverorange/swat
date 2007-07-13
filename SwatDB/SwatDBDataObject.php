@@ -458,10 +458,13 @@ class SwatDBDataObject extends SwatObject
 				$class = $this->internal_property_classes[$key];
 
 				if (class_exists($class)) {
+					$this->checkDB();
+
 					$object = new $class();
 					$object->setDatabase($this->db);
 					$object->load($id);
 					$this->sub_data_objects[$key] = $object;
+
 					return $object;
 				} else {
 					throw new SwatClassNotFoundException(sprintf("Class '%s' ".
