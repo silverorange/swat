@@ -690,7 +690,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 			return;
 
 		$show_no_records = true;
-		$row_count = $this->model->getRowCount();
+		$row_count = count($this->model);
 		foreach ($this->extra_rows as $row) {
 			if ($row->getVisibleByCount($row_count)) {
 				$show_no_records = false;
@@ -812,8 +812,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 		$messages = parent::getMessages();
 
 		if ($this->model !== null) {
-			$rows = $this->model->getRows();
-			foreach ($rows as $row)
+			foreach ($this->model as $row)
 				foreach ($this->columns as $column)
 					$messages =
 						array_merge($messages, $column->getMessages($row));
@@ -836,8 +835,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 		$has_message = parent::hasMessage();
 
 		if (!$has_message && $this->model !== null) {
-			$rows = $this->model->getRows();
-			foreach ($rows as $row) {
+			foreach ($this->model as $row) {
 				foreach ($this->columns as $column) {
 					if ($column->hasMessage($row)) {
 						$has_message = true;
@@ -1153,16 +1151,11 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 		echo '<tbody>';
 
+		$this->model->rewind();
+		$row = ($this->model->valid()) ? $this->model->current() : null;
 
-		$rows = $this->model->getRows();
-		if (is_array($rows))
-			$rows = new ArrayIterator($rows);
-
-		$rows->rewind();
-		$row = ($rows->valid()) ? $rows->current() : null;
-
-		$rows->next();
-		$next_row = ($rows->valid()) ? $rows->current() : null;
+		$this->model->next();
+		$next_row = ($this->model->valid()) ? $this->model->current() : null;
 
 		while ($row !== null) {
 			$count++;
@@ -1219,8 +1212,8 @@ class SwatTableView extends SwatView implements SwatUIParent
 				$group->displayFooter($row, $next_row);
 
 			$row = $next_row;
-			$rows->next();
-			$next_row = ($rows->valid()) ? $rows->current() : null;
+			$this->model->next();
+			$next_row = ($this->model->valid()) ? $this->model->current() : null;
 		}
 
 		echo '</tbody>';

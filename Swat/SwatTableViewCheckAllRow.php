@@ -137,7 +137,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	public function display()
 	{
-		if (!$this->visible || $this->view->model->getRowCount() < 2)
+		if (!$this->visible || count($this->view->model) < 2)
 			return;
 
 		$this->createEmbeddedWidgets();
@@ -194,7 +194,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	public function getInlineJavaScript()
 	{
-		if ($this->view->model->getRowCount() < 2)
+		if (count($this->view->model) < 2)
 			return '';
 
 		// set the controller of the check-all widget
