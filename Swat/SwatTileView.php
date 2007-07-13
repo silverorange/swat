@@ -141,11 +141,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 		$tile_view_tag->class = $this->getCSSClassString();
 		$tile_view_tag->open();
 
-		if ($this->tile !== null) {
-			$rows = $this->model->getRows();
-			foreach ($rows as $data)
+		if ($this->tile !== null)
+			foreach ($this->model as $data)
 				$this->tile->display($data);
-		}
 
 		if ($this->showCheckAll()) {
 			if ($this->check_all_title !== null) {
@@ -470,7 +468,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	protected function showCheckAll()
 	{
-		return ($this->show_check_all && $this->model->getRowCount() > 2
+		return ($this->show_check_all && count($this->model) > 2
 			&& $this->getCheckboxCellRenderer() !== null);
 	}
 

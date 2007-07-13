@@ -3,6 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatObject.php';
+require_once 'Swat/SwatTableModel.php';
 require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/SwatDBClassMap.php';
 require_once 'SwatDB/SwatDBRecordable.php';
@@ -14,14 +15,16 @@ require_once 'Swat/exceptions/SwatInvalidTypeException.php';
  * MDB2 Recordset Wrapper
  *
  * Used to wrap an MDB2 recordset into a traversable collection of record
- * objects.
+ * objects. Implements SwatTableModel so it can be used directly as a data
+ * model for a table view.
  *
  * @package   SwatDB
  * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatDBRecordsetWrapper extends SwatObject
-	implements Iterator, Serializable, Countable, SwatDBRecordable
+	implements Iterator, Serializable, Countable, SwatDBRecordable,
+		SwatTableModel
 {
 	// {{{ protected properties
 
