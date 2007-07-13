@@ -545,7 +545,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		$this->db = $db;
 
 		foreach ($this->objects as $object)
-			if ($object instanceof SwatDBecordable)
+			if ($object instanceof SwatDBRecordable)
 				$object->setDatabase($db);
 	}
 
