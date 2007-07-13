@@ -1,3 +1,15 @@
+2007-07-13  gauthierm
+
+	* [r18410] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Fix nasty typo bug.
+	* [r18408] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  Check db before loading sub data object.
+
+2007-07-13  nrf
+
+	* [r18390] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.23
+
 2007-07-11  gauthierm
 
 	* [r18362] swat/trunk/Swat/SwatCheckboxCellRenderer.php:
