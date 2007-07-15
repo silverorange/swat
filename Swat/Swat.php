@@ -196,6 +196,18 @@ class Swat
 	}
 
 	// }}}
+	// {{{ private function __construct()
+
+	/**
+	 * Don't allow instantiation of the Swat object
+	 *
+	 * This class contains only static methods and should not be instantiated.
+	 */
+	private function __construct()
+	{
+	}
+
+	// }}}
 }
 
 // {{{ dummy dngettext()
