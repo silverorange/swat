@@ -610,7 +610,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	protected function setupRenderers($data)
 	{
-		if ($this->renderers->getCount() == 0)
+		if (count($this->renderers) == 0)
 			throw new SwatException('No renderer has been provided for this '.
 				'column.');
 
