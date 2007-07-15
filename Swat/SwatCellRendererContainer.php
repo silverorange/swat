@@ -21,9 +21,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	// {{{ protected properties
 
 	/**
-	 * A set of SwatCellRenderer objects
-	 *
-	 * This object contains all the cell renderers for this column.
+	 * The set of SwatCellRenderer objects contained in this container
 	 *
 	 * @var SwatCellRendererSet
 	 */
@@ -45,17 +43,21 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	// {{{ public function addMappingToRenderer()
 
 	/**
-	 * Links a datafield to a renderer property
+	 * Links a data-field to a cell renderer property of a cell renderer
+	 * within this container
 	 *
-	 * @param SwatCellRenderer $renderer the cell renderer in this column that
-	 *                                    the datafield is mapped onto.
-	 * @param string $datafield the field of the data model to map to the
+	 * @param SwatCellRenderer $renderer the cell renderer in this container
+	 *                                    onto which the data-field is to be
+	 *                                    mapped.
+	 * @param string $data_field the field of the data model to map to the cell
 	 *                           renderer property.
-	 * @param string $property the property of the cell renderer that the
-	 *                          datafield is mapped to.
-	 * @param SwatUIObject $object optional object containing the property to
-	 *                              map when the property does not belong to
-	 *                              the cell renderer itself.
+	 * @param string $property the property of the cell renderer to which the
+	 *                          <i>$data_field</i> is mapped.
+	 * @param SwatUIObject $object optional. The object containing the property
+	 *                              to map when the property does not belong to
+	 *                              the cell renderer itself. If unspecified,
+	 *                              the <i>$property</i> must be a property of
+	 *                              the given cell renderer.
 	 *
 	 * @return SwatCellRendererMapping a new mapping object that has been
 	 *                                  added to the renderer.
@@ -79,7 +81,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	// {{{ public function addRenderer()
 
 	/**
-	 * Adds a cell renderer to this column's set of renderers
+	 * Adds a cell renderer to this container's set of renderers
 	 *
 	 * @param SwatCellRenderer $renderer the renderer to add.
 	 */
@@ -93,12 +95,9 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	// {{{ public function getRenderers()
 
 	/**
-	 * Gets the cell renderers of this column
-	 * 
-	 * Returns an the array of {@link SwatCellRenderer} objects contained
-	 * by this cell renderer container.
+	 * Gets the cell renderers of this container 
 	 *
-	 * @return array the cell renderers contained by this column.
+	 * @return array an array containing the cell renderers in this container.
 	 */
 	public function getRenderers()
 	{
@@ -113,12 +112,16 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	// {{{ public function getRenderer()
 
 	/**
-	 * Gets a cell renderers of this column by its unique identifier
+	 * Gets a cell renderer of this container by its unique identifier
 	 *
 	 * @param string the unique identifier of the cell renderer to get.
 	 * 
-	 * @return SwatCellRenderer the cell renderer of this column with the
+	 * @return SwatCellRenderer the cell renderer of this container with the
 	 *                           provided unique identifier.
+	 *
+	 * @throws SwatObjectNotFoundException if a renderer with the given
+	 *                                      <i>$renderer_id</i> does not exist
+	 *                                      in this container.
 	 */
 	public function getRenderer($renderer_id)
 	{
@@ -129,12 +132,16 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	// {{{ public function getRendererByPosition()
 
 	/**
-	 * Gets a cell renderer in this column based on its ordinal position
+	 * Gets a cell renderer in this container based on its ordinal position
 	 *
 	 * @param $position the ordinal position of the cell renderer to get. The
 	 *                   position is zero-based.
 	 *
 	 * @return SwatCellRenderer the renderer at the specified ordinal position.
+	 *
+	 * @throws SwatObjectNotFoundException if the requested <i>$position</i> is
+	 *                                      greater than the number of cell
+	 *                                      renderers in this container.
 	 */
 	public function getRendererByPosition($position = 0)
 	{
@@ -145,9 +152,11 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	// {{{ public function getFirstRenderer()
 
 	/**
-	 * Gets the first cell renderer in this column
+	 * Gets the first cell renderer in this container
 	 *
-	 * @return SwatCellRenderer the first renderer.
+	 * @return SwatCellRenderer the first cell renderer in this container or
+	 *                           null if this container contains no cell
+	 *                           renderers.
 	 */
 	public function getFirstRenderer()
 	{
@@ -162,7 +171,8 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	 * 
 	 * @param SwatCellRenderer $child the reference to the child object to add.
 	 *
-	 * @throws SwatInvalidClassException
+	 * @throws SwatInvalidClassException if the given <i>$child</i> is not an
+	 *                                    instance of {@link SwatCellRenderer}.
 	 *
 	 * @see SwatUIParent::addChild()
 	 */
