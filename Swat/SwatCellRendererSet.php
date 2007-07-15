@@ -31,7 +31,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 *
 	 * @var array
 	 */
-	private $renderer_by_id = array();
+	private $renderers_by_id = array();
 
 	/**
 	 * Cell renderer data-mappings of the renderers of this set
