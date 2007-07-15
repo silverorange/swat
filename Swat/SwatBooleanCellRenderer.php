@@ -50,8 +50,8 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	/**
 	 * The stock id of this SwatBooleanCellRenderer
 	 *
-	 * Specifying a stock id initializes this boolean cell renderer with a set of
-	 * stock values.
+	 * Specifying a stock id initializes this boolean cell renderer with a set
+	 * of stock values.
 	 *
 	 * @var string
 	 *
@@ -71,10 +71,13 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	 * - yes-no
 	 *
 	 * @param string $stock_id the identifier of the stock type to use.
-	 * @param boolean $overwrite_properties whether to overwrite properties if
-	 *                                       they are already set.
+	 * @param boolean $overwrite_properties optional. Whether to overwrite
+	 *                                       properties if they are already set.
+	 *                                       By default, properties are
+	 *                                       overwritten.
 	 *
-	 * @throws SwatUndefinedStockTypeException
+	 * @throws SwatUndefinedStockTypeException if an undefined <i>$stock_id</i>
+	 *                                         is used.
 	 */
 	public function setFromStock($stock_id, $overwrite_properties = true)
 	{
@@ -141,6 +144,9 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	// }}}
 	// {{{ protected function renderTrue()
 
+	/**
+	 * Renders a true value for this boolean cell renderer
+	 */
 	protected function renderTrue()
 	{
 		if ($this->content_type === 'text/plain')
@@ -152,6 +158,9 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	// }}}
 	// {{{ protected function renderFalse()
 
+	/**
+	 * Renders a false value for this boolean cell renderer
+	 */
 	protected function renderFalse()
 	{
 		if ($this->content_type === 'text/plain')
@@ -163,6 +172,12 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	// }}}
 	// {{{ protected function displayCheck()
 
+	/**
+	 * Renders a checkmark image for this boolean cell renderer
+	 *
+	 * This is used when this cell renderer has a
+	 * {@link SwatBooleanCellRenderer::$stock_id} of 'check-only'.
+	 */
 	protected function displayCheck()
 	{
 		$image_tag = new SwatHtmlTag('img');
