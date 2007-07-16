@@ -294,18 +294,7 @@ class SwatDBClassMap extends SwatObject
 	 */
 	public function resolveClass($name)
 	{
-		$class_name = $name;
-
-		if (array_key_exists($name, $this->mappings)) {
-			$class_name = $this->mappings[$name];
-
-			if (!class_exists($class_name) && $this->path !== null) {
-				$class_file = sprintf('%s/%s.php', $this->path, $class_name);
-				require_once $class_file;
-			}
-		}
-
-		return $class_name;
+		return SwatDBClassMap::get($name);
 	}
 
 	// }}}
