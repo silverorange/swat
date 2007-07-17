@@ -136,6 +136,22 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	}
 
 	// }}}
+	// {{{ protected function init()
+
+	/**
+	 * Initializes this recordset wrapper
+	 *
+	 * By default, the row wrapper class is set to null. Subclasses may change
+	 * this behaviour and optionally call additional initialization methods.
+	 */
+	protected function init()
+	{
+		$this->row_wrapper_class = null;
+	}
+
+	// }}}
+
+	// iteration
 	// {{{ public function current()
 
 	/**
@@ -209,45 +225,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function getFirst()
 
-	/**
-	 * Retrieves the first object
-	 *
-	 * @return mixed the first object or null if there are none.
-	 */
-	public function getFirst()
-	{
-		$first = null;
-
-		if (count($this->objects) > 0)
-			$first = $this->objects[0];
-
-		return $first;
-	}
-
-	// }}}
-	// {{{ public function getByIndex()
-
-	/**
-	 * Retrieves an object by index
-	 *
-	 * By default indexes are ordinal numbers unless the class property
-	 * $index_field is set.
-	 *
-	 * @return mixed the object or null if not found.
-	 */
-	public function getByIndex($index)
-	{
-		if (isset($this->objects_by_index[$index]))
-			return $this->objects_by_index[$index];
-		elseif (isset($this->objects[$index]))
-			return $this->objects[$index];
-
-		return null;
-	}
-
-	// }}}
+	// counting
 	// {{{ public function getCount()
 
 	/**
@@ -276,33 +255,6 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	public function count()
 	{
 		return count($this->objects);
-	}
-
-	// }}}
-	// {{{ public function getArray()
-
-	/**
-	 * Gets this recordset as an array of objects
-	 *
-	 * @return array this record set as an array.
-	 */
-	public function &getArray()
-	{
-		return $this->objects;
-	}
-
-	// }}}
-	// {{{ protected function init()
-
-	/**
-	 * Initializes this recordset wrapper
-	 *
-	 * By default, the row wrapper class is set to null. Subclasses may change
-	 * this behaviour and optionally call additional initialization methods.
-	 */
-	protected function init()
-	{
-		$this->row_wrapper_class = null;
 	}
 
 	// }}}
@@ -424,6 +376,58 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	// }}}
 
 	// manipulating of objects
+	// {{{ public function getArray()
+
+	/**
+	 * Gets this recordset as an array of objects
+	 *
+	 * @return array this record set as an array.
+	 */
+	public function &getArray()
+	{
+		return $this->objects;
+	}
+
+	// }}}
+	// {{{ public function getFirst()
+
+	/**
+	 * Retrieves the first object
+	 *
+	 * @return mixed the first object or null if there are none.
+	 */
+	public function getFirst()
+	{
+		$first = null;
+
+		if (count($this->objects) > 0)
+			$first = $this->objects[0];
+
+		return $first;
+	}
+
+	// }}}
+	// {{{ public function getByIndex()
+
+	/**
+	 * Retrieves an object by index
+	 *
+	 * By default indexes are ordinal numbers unless the class property
+	 * $index_field is set.
+	 *
+	 * @return mixed the object or null if not found.
+	 */
+	public function getByIndex($index)
+	{
+		if (isset($this->objects_by_index[$index]))
+			return $this->objects_by_index[$index];
+		elseif (isset($this->objects[$index]))
+			return $this->objects[$index];
+
+		return null;
+	}
+
+	// }}}
 	// {{{ public function add()
 
 	/**
