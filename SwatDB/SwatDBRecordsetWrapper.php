@@ -23,7 +23,7 @@ require_once 'Swat/exceptions/SwatInvalidTypeException.php';
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatDBRecordsetWrapper extends SwatObject
-	implements Serializable, SwatTableModel, SwatDBRecordable,
+	implements Serializable, SwatTableModel, SwatDBRecordable
 {
 	// {{{ protected properties
 
