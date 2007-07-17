@@ -8,6 +8,7 @@ require_once 'Swat/SwatCheckAll.php';
 require_once 'Swat/SwatState.php';
 require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatYUI.php';
+require_once 'Swat/exceptions/SwatException.php';
 
 /**
  * A checkbox list widget
@@ -69,11 +70,24 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 	/**
 	 * Initializes this checkbox list
+	 *
+	 * @throws SwatException if there are duplicate values in the options array
 	 */
 	public function init()
 	{
 		parent::init();
 		$this->check_all->init();
+
+		// checks to see if there are duplicate values in the options array
+		$options_count =  array();
+		foreach ($this->getOptions() as $option)
+			$options_count[] = $option->value;
+
+		foreach ((array_count_values($options_count)) as $count) {
+			if ($count > 1)
+				throw new SwatException(sprintf('Duplicate option values '.
+					'found in %s', $this->id));
+		}
 	}
 
 	// }}}
