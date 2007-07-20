@@ -159,6 +159,9 @@ class SwatRadioList extends SwatFlydown implements SwatState
 			$this->input_tag->name = $this->id;
 		}
 
+		if (!$this->isSensitive())
+			$this->input_tag->disabled = 'disabled';
+
 		if ($this->serialize_values) {
 			$salt = $this->getForm()->getSalt();
 			$this->input_tag->value =
