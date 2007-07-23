@@ -1,3 +1,86 @@
+2007-07-23  gauthierm
+
+	* [r18655] swat/trunk/SwatDB/SwatDB.php:
+	  Add implodeSelection() method to SwatDB.
+
+2007-07-20  charles
+
+	* [r18611] swat/trunk/Swat/SwatFlydown.php,
+	  swat/trunk/Swat/SwatRadioList.php:
+	  Part of ticket #817, sensitivity now works on SwatCheckbox lists
+	  and they no londer display an error if they are both insensitive
+	  and required.
+
+2007-07-17  charles
+
+	* [r18532] swat/trunk/Swat/SwatCheckboxEntryList.php,
+	  swat/trunk/Swat/SwatCheckboxList.php:
+	  Part of ticket #1102, revert changes made in r18220 to
+	  SwatCheckboxEntryList, instead of creating a complicted way to
+	  deal with check boxs with the same value we no longer allow a
+	  user to create a multiply check boxes with the same value so
+	  things won't silently break if they do.
+
+2007-07-17  gauthierm
+
+	* [r18512] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Fix parse error.
+	* [r18507] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  SwatTableModel already extends Iteratable and Countable.
+	* [r18506] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  The prev() method is not part of the SQL Iterator interface.
+	* [r18505] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  reorganize methods
+
+2007-07-16  nrf
+
+	* [r18468] swat/trunk/SwatDB/SwatDBClassMap.php:
+	  Make old API use new API internally
+
+2007-07-16  gauthierm
+
+	* [r18462] swat/trunk/SwatDB/SwatDBClassMap.php:
+	  If an absolute path is given as a search path in SwatDBClassMap,
+	  don't search relatively from the include path.
+
+2007-07-15  gauthierm
+
+	* [r18448] swat/trunk/Swat/Swat.php:
+	  Add a private constructor to Swat.php.
+	* [r18447] swat/trunk/Swat/SwatBooleanCellRenderer.php:
+	  Documentation.
+	* [r18446] swat/trunk/Swat/SwatDetailsViewField.php,
+	  swat/trunk/Swat/SwatTableViewColumn.php:
+	  Don't use deprecated interface.
+	* [r18445] swat/trunk/Swat/SwatCellRendererContainer.php:
+	  Rename parameter.
+	* [r18444] swat/trunk/Swat/SwatCellRendererContainer.php:
+	  Documentation cleanups.
+	* [r18443] swat/trunk/Swat/SwatCellRendererSet.php:
+	  fix typo.
+	* [r18442] swat/trunk/Swat/SwatCellRendererSet.php:
+	  Cleanup SwatCellRendererSet and use hash-tables for all lookups
+	  instead of a foreach loop. This code requires PHP 5.2.x or
+	  greater.
+
+2007-07-13  nrf
+
+	* [r18419] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  Re-apply 18220... accidently removed in previous commit
+	* [r18416] swat/trunk/Swat/SwatCheckboxEntryList.php,
+	  swat/trunk/Swat/SwatTableModel.php,
+	  swat/trunk/Swat/SwatTableStore.php,
+	  swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTableViewCheckAllRow.php,
+	  swat/trunk/Swat/SwatTileView.php,
+	  swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Make SwatTableModel a simple extension of Countable and Iterator
+	  interfaces.
+	  Make SwatDBRecordsetWrapper implement SwatTableModel so that
+	  recordsets can be used directly as a data model for a table view.
+	* [r18411] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.24
+
 2007-07-13  gauthierm
 
 	* [r18410] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
