@@ -136,7 +136,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 	}
 
 	// }}}
-
 	// {{{ public function getRowCount()
 
 	/**
