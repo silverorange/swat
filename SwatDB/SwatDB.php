@@ -5,10 +5,11 @@
 
 require_once 'MDB2.php';
 require_once 'Swat/SwatObject.php';
+require_once 'Swat/SwatDataTreeNode.php';
+require_once 'Swat/SwatViewSelection.php';
 require_once 'SwatDB/SwatDBField.php';
 require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/SwatDBDefaultRecordsetWrapper.php';
-require_once 'Swat/SwatDataTreeNode.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
@@ -1113,6 +1114,32 @@ class SwatDB extends SwatObject
 		}
 
 		return $base_parent;
+	}
+
+	// }}}
+	// {{{ public static function implodeSelection()
+
+	/**
+	 * Implodes a view selection object
+	 *
+	 * Each item in the view is quoted using the specified type.
+	 *
+	 * @param MDB2_Driver_Common $db the database connection to use to implode
+	 *                                the view.
+	 * @param SwatViewSelection $selection the selection to implode.
+	 * @param string $type optional. The datatype to use. Must be a valid MDB2
+	 *                      datatype. If unspecified, 'integer' is used.
+	 *
+	 * @return string the imploded view ready for inclusion in an SQL statement.
+	 */
+	public static function implodeSelection(MDB2_Driver_Common $db,
+		SwatViewSelection $selection, $type = 'integer')
+	{
+		$quoted_ids = array();
+		foreach ($selection as $id)
+			$quoted_ids[] = $db->quote($id, $type);
+
+		return implode(',', $quoted_ids);
 	}
 
 	// }}}
