@@ -1,0 +1,27 @@
+.swat-image-preview-display {
+	position:relative;
+}
+
+.swat-image-preview-overlay {
+	position: absolute;
+	opacity: 0.6;
+	filter:alpha(opacity = 80);
+	z-index: 999999;
+	top: 0;
+	left: 0;
+	background: #fff;
+}
+
+.swat-image-preview-lightbox {
+	position: absolute;
+	z-index: 1000000;
+	text-align: center;
+	top: 0;
+	left: 0;
+}
+
+.swat-image-preview-lightbox img {
+	position: absolute;
+	cursor: pointer;
+	display: block;
+}
