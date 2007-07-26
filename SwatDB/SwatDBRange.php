@@ -53,7 +53,7 @@ class SwatDBRange extends SwatObject
 	public function __construct($limit, $offset = 0)
 	{
 		$this->limit = $limit;
-		$this->offset = $offset;
+		$this->offset = intval($offset);
 	}
 
 	// }}}
@@ -80,6 +80,44 @@ class SwatDBRange extends SwatObject
 	public function getOffset()
 	{
 		return $this->offset;
+	}
+
+	// }}}
+	// {{{ public function combine()
+
+	/**
+	 * Combines this range with another range forming a new range
+	 *
+	 * Ranges are combined so the combined range includes both ranges. For
+	 * example, if a range of (10, 100) is combined with a
+	 * range of (20, 160) the resulting range will be (80, 100).
+	 *
+	 * <pre>
+	 * ..|====|................. range1
+	 * ...........|============| range2
+	 * ..|=====================| combined range
+	 * </pre>
+	 *
+	 * @param SwatDBRange $range the range to combine with this range.
+	 *
+	 * @return SwatDBRange the combined range.
+	 */
+	public function combine(SwatDBRange $range)
+	{
+		// find leftmost extent
+		$offset = min($this->getOffset(), $range->getOffset());
+
+		if ($this->getLimit() === null || $range->getLimit() === null) {
+			// rightmost extent is infinite
+			$limit = null;
+		} else {
+			// find rightmost extent and convert to limit with known offset
+			$this_limit = $this->getOffset() + $this->getLimit();
+			$range_limit = $range->getOffset() + $range->getLimit();
+			$limit = max($this_limit, $range_limit) - $offset;
+		}
+
+		return new SwatDBRange($limit, $offset);
 	}
 
 	// }}}
