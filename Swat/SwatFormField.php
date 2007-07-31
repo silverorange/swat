@@ -99,6 +99,19 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	protected $widget_class;
 
+	/**
+	 * Whether or not to show a colon after the title of this form field
+	 *
+	 * By default, a colon is shown. Subwidgets may control whether or not a
+	 * colon is displayed by setting this property in the
+	 * {@link SwatFormField::notifyOfAdd()} method.
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatFormField::notifyOfAdd()
+	 */
+	protected $show_colon = true;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -320,9 +333,13 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	{
 		$label_tag = new SwatHtmlTag('label');
 
-		if ($this->title !== null)
-			$label_tag->setContent(sprintf('%s: ', $this->title),
-				$this->title_content_type);
+		if ($this->title !== null) {
+			if ($this->show_colon)
+				$label_tag->setContent(sprintf(Swat::_('%s: '), $this->title),
+					$this->title_content_type);
+			else
+				$label_tag->setContent($this->title, $this->title_content_type);
+		}
 
 		$label_tag->for = $this->getFocusableHtmlId();
 		$label_tag->accesskey = $this->access_key;
@@ -346,6 +363,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	{
 		if (class_exists('SwatCheckbox') && $widget instanceof SwatCheckbox) {
 			$this->widget_class = 'swat-form-field-checkbox';
+		} elseif (class_exists('SwatSearchEntry') &&
+			$widget instanceof SwatSearchEntry) {
+			$this->show_colon = false;
 		}
 	}
 
