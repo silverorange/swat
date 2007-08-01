@@ -60,6 +60,11 @@ pre {
 	border: 1px solid #e7ddc8;
 }
 
+pre code,
+code pre {
+	font-size: 100%;
+}
+
 .text-block {
 	border: 5px solid #eee;
 	padding: 15px;
