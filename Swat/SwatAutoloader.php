@@ -9,14 +9,14 @@ require_once 'Swat/SwatAutoloaderRule.php';
  * Automatically requires PHP files for undefined classes
  *
  * This static class is responsible for resolving filenames from class names
- * of undefined classes. The PHP5 autoloader function is used to load files
+ * of undefined classes. The PHP5 spl_autoload function is used to load files
  * based on rules defined in this static class.
  *
  * To add a new autoloader rule, use the {@link SwatAutoloader::addRule()}
  * method.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatAutoloaderRule
  */
@@ -135,31 +135,46 @@ class SwatAutoloader extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function autoload()
+
+	/**
+	 * Provides an opportunity to define a class before causing a fatal error
+	 * when an undefined class is used
+	 *
+	 * If an appropriate file exists for the given class name, it is required.
+	 *
+	 * @param string $class_name the name of the undefined class.
+	 */
+	public static function autoload($class_name)
+	{
+		$filename = SwatAutoloader::getFileFromClass($class_name);
+
+		// We do not throw an exception here because is_callable() will break.
+
+		if ($filename !== null) {
+			require $filename;
+		}
+	}
+
+	// }}}
+	// {{{ public static function registerAutoload()
+
+	/**
+	 * Registers {@link SwatAutoload::autoload()} as an autoload function with
+	 * the spl_autoload function
+	 *
+	 * See {@link http://ca.php.net/manual/en/function.spl-autoload-register.php
+	 * the documentation on SPL autoloading} for details.
+	 */
+	public static function registerAutoload()
+	{
+		spl_autoload_register(array(__CLASS__, 'autoload'));
+	}
+
+	// }}}
 }
 
-// {{{ function __autoload()
-
-/**
- * Provides an opportunity to define a class before causing a fatal error when
- * an undefined class is used
- *
- * This implementation uses the {@link SwatAutoloader} to require an
- * appropriate file containing a class definition for the undefined class.
- *
- * See the PHP documentation on {@link http://php.net/__autoload __autoload()}.
- *
- * @param string $class_name the name of the undefined class.
- */
-function __autoload($class_name)
-{
-	$filename = SwatAutoloader::getFileFromClass($class_name);
-
-	// We do not throw an exception here because is_callable() will break.
-
-	if ($filename !== null)
-		require $filename;
-}
-
-// }}}
+// Register SwatAutoloader as an autoloader.
+SwatAutoloader::registerAutoload();
 
 ?>
