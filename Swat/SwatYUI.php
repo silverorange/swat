@@ -282,7 +282,6 @@ class SwatYUI extends SwatObject
 		$components['menu']->addDependency($components['yahoo']);
 		$components['menu']->addDependency($components['dom']);
 		$components['menu']->addDependency($components['event']);
-		$components['menu']->addDependency($components['fonts']);
 		$components['menu']->addDependency($components['container_core']);
 
 		$components['slider']->addDependency($components['yahoo']);
