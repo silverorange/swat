@@ -1,5 +1,12 @@
 .swat-image-preview-display {
-	position:relative;
+	position: relative;
+	padding: 2px;
+	background: #fff;
+	border: 1px solid #dcceb2;
+}
+
+.swat-image-preview-display:hover {
+	border-color: #3f5ace;
 }
 
 .swat-image-preview-overlay {
@@ -24,4 +31,7 @@
 	position: absolute;
 	cursor: pointer;
 	display: block;
+	padding: 8px;
+	background: #fff;
+	border: 1px solid #dcceb2;
 }
