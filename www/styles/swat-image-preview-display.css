@@ -1,25 +1,29 @@
-.swat-image-preview-display {
+.swat-image-preview-display-link {
 	position: relative;
 	padding: 2px;
 	background: #fff;
 	border: 1px solid #dcceb2;
 }
 
-.swat-image-preview-display:hover {
+.swat-image-preview-display-link img {
+	display: block;
+}
+
+.swat-image-preview-display-link:hover {
 	border-color: #3f5ace;
 }
 
 .swat-image-preview-overlay {
 	position: absolute;
 	opacity: 0.6;
-	filter:alpha(opacity = 80);
+	filter:alpha(opacity = 60);
 	z-index: 999999;
 	top: 0;
 	left: 0;
 	background: #fff;
 }
 
-.swat-image-preview-lightbox {
+.swat-image-preview-container {
 	position: absolute;
 	z-index: 1000000;
 	text-align: center;
@@ -27,7 +31,7 @@
 	left: 0;
 }
 
-.swat-image-preview-lightbox img {
+.swat-image-preview-container img {
 	position: absolute;
 	cursor: pointer;
 	display: block;

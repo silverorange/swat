@@ -72,13 +72,17 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	{
 		parent::__construct($id);
 
+		$this->requires_id = true;
+
 		$yui = new SwatYUI(array('dom', 'event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
-		$this->addJavaScript('packages/swat/javascript/swat-image-preview-display.js',
+		$this->addJavaScript(
+			'packages/swat/javascript/swat-image-preview-display.js',
 			Swat::PACKAGE_ID);
 
-		$this->addStyleSheet('packages/swat/styles/swat-image-preview-display.css',
+		$this->addStyleSheet(
+			'packages/swat/styles/swat-image-preview-display.css',
 			Swat::PACKAGE_ID);
 	}
 
@@ -93,7 +97,19 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 		if (!$this->visible)
 			return;
 
+		$anchor_tag = new SwatHtmlTag('a');
+		$anchor_tag->id = $this->id.'_link';
+		$anchor_tag->class = 'swat-image-preview-display-link';
+		$anchor_tag->href = $this->preview_image;
+		$anchor_tag->open();
+
 		parent::display();
+
+		$span_tag = new SwatHtmlTag('span');
+		$span_tag->setContent(Swat::_('View larger image'));
+		$span_tag->display();
+
+		$anchor_tag->close();
 
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
@@ -108,9 +124,13 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf("var %s = new SwatImagePreviewDisplay('%s', '%s', %d, %d);",
-			$this->id, $this->id, $this->preview_image,
-			$this->preview_width, $this->preview_height);
+		$javascript = sprintf(
+			"var %s = new SwatImagePreviewDisplay('%s', '%s', %d, %d);",
+			$this->id,
+			$this->id,
+			$this->preview_image,
+			$this->preview_width,
+			$this->preview_height);
 
 		return $javascript;
 	}
