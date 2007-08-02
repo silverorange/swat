@@ -116,6 +116,22 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	}
 
 	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this image display 
+	 *
+	 * @return array the array of CSS classes that are applied to this image
+	 *                display.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-image-preview-display');
+		$classes = array_merge($classes, parent::getCSSClassNames());
+		return $classes;
+	}
+
+	// }}}
 }
 
 ?>
