@@ -1,3 +1,81 @@
+2007-08-02  gauthierm
+
+	* [r19064] swat/trunk/Swat/SwatImagePreviewDisplay.php,
+	  swat/trunk/www/javascript/swat-image-preview-display.js,
+	  swat/trunk/www/styles/swat-image-preview-display.css:
+	  Tidy up image preview display. The styles are broken.
+
+2007-08-02  steven
+
+	* [r19043] swat/trunk/Swat/SwatImagePreviewDisplay.php,
+	  swat/trunk/www/styles/swat-image-preview-display.css:
+	  Style up the SwatImagePreviewDisplay a bit to make the thumbnail
+	  look more clickable
+	  Part of ticket #1167 (Enlarge view (lightbox) discoverability)
+
+2007-08-01  gauthierm
+
+	* [r19005] swat/trunk/Swat/SwatYUI.php:
+	  Menu does not depend on fonts.css. See
+	  http://developer.yahoo.com/yui/menu/#start.
+
+2007-08-01  steven
+
+	* [r18994] swat/trunk/demo/www/styles/demo.css:
+	  Keep pre and code tag css from the YUI fonts css from doubling
+	  up (thanks to Matthew Doll for pointing this out)
+
+2007-08-01  gauthierm
+
+	* [r18982] swat/trunk/Swat/SwatAutoloader.php:
+	  Make SwatAutoloader play nicely with others by registering it as
+	  an spl_autoload function rather than implementing the magic
+	  __autoload() function.
+
+2007-07-31  gauthierm
+
+	* [r18950] swat/trunk/Swat/SwatFormField.php:
+	  Don't show a colon on SwatSearchEntry widget labels.
+
+2007-07-26  gauthierm
+
+	* [r18760] swat/trunk/SwatDB/SwatDBRange.php:
+	  Add a method to combine two SwatDBRange objects.
+
+2007-07-25  nick
+
+	* [r18752] swat/trunk/Swat/SwatImagePreviewDisplay.php,
+	  swat/trunk/www/javascript/swat-image-preview-display.js,
+	  swat/trunk/www/styles/swat-image-preview-display.css:
+	  First commit of a SwatImagePreviewDisplay that uses YUI to
+	  display a lightbox
+	  style preview.
+	  
+	  Features added so far:
+	  - clicking anywhere after the preview is initiated will close it
+	  - image always fits in the viewable area of the page with padding
+	  
+	  Features we may want to add:
+	  - we could display the title of the image and a close link
+	  - it may make sense to add a border around the image
+	  - we can get rid of the semi-transparent background if people
+	  want
+	  - we could add a loading graphic - though the image usually
+	  loads quite fast
+	  (it may in fact be getting pre-loaded, I'm not sure)
+
+2007-07-23  gauthierm
+
+	* [r18680] swat/trunk/Swat/SwatTableModel.php:
+	  copyright
+	* [r18679] swat/trunk/Swat/SwatTableStore.php:
+	  whitespace
+
+2007-07-23  nrf
+
+	* [r18659] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.25
+
 2007-07-23  gauthierm
 
 	* [r18655] swat/trunk/SwatDB/SwatDB.php:
