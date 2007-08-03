@@ -99,15 +99,12 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 
 		$anchor_tag = new SwatHtmlTag('a');
 		$anchor_tag->id = $this->id.'_link';
+		$anchor_tag->title = Swat::_('View Larger Image');
 		$anchor_tag->class = 'swat-image-preview-display-link';
 		$anchor_tag->href = $this->preview_image;
 		$anchor_tag->open();
 
 		parent::display();
-
-		$span_tag = new SwatHtmlTag('span');
-		$span_tag->setContent(Swat::_('View larger image'));
-		$span_tag->display();
 
 		$anchor_tag->close();
 
