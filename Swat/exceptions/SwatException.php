@@ -432,7 +432,7 @@ class SwatException extends Exception
 	 * This method is also responsible for filtering sensitive parameters
 	 * out of the final stack trace.
 	 *
-	 * @param array|string $args an array of arguments or a single argument.
+	 * @param array $args an array of arguments.
 	 * @param string $method optional. The current method or function.
 	 * @param string $class optional. The current class name.
 	 *
@@ -440,58 +440,38 @@ class SwatException extends Exception
 	 */
 	protected function getArguments($args, $function = null, $class = null)
 	{
-		if (is_array($args)) {
-			$params = array();
+		$params = array();
 
-			// try to get function or method parameter list using reflection
-			if ($class !== null && $function !== null && class_exists($class)) {
-				$class_reflector = new ReflectionClass($class);
-				if ($class_reflector->hasMethod($function)) {
-					$reflector = $class_reflector->getMethod($function);
-					$params = $reflector->getParameters();
-				}
-			} elseif ($function !== null && function_exists($function)) {
-				$reflector = new ReflectionFunction($function);
+		// try to get function or method parameter list using reflection
+		if ($class !== null && $function !== null && class_exists($class)) {
+			$class_reflector = new ReflectionClass($class);
+			if ($class_reflector->hasMethod($function)) {
+				$reflector = $class_reflector->getMethod($function);
 				$params = $reflector->getParameters();
 			}
-
-			$formatted_values = array();
-			for ($i = 0; $i < count($args); $i++) {
-				$value = $args[$i];
-
-				$name = (array_key_exists($i, $params)) ?
-					$params[$i]->getName() : null;
-	
-				if ($name !== null &&
-					self::isSensitiveParamater($name, $function, $class)) {
-					$formatted_value =
-						$this->formatSensitiveParam($name, $value);
-				} elseif (is_object($value)) {
-					$formatted_value = '<'.get_class($value).' object>';
-				} elseif ($value === null) {
-					$formatted_value = '<null>';
-				} elseif (is_string($value)) {
-					$formatted_value = "'".$value."'";
-				} elseif (is_int($value) || is_float($value)) {
-					$formatted_value = strval($value);
-				} elseif (is_bool($value)) {
-					$formatted_value = ($value) ? 'true' : 'false';
-				} elseif (is_resource($value)) {
-					$formatted_value = '<resource>';
-				} elseif (is_array($value)) {
-					$formatted_value =
-						'array('.$this->getArguments($value).')';
-				}
-
-				$formatted_values[] = $formatted_value;
-			}
-
-			$output = implode(', ', $formatted_values);
-		} else {
-			$output = $this->getArguments(array($args), $function, $class);
+		} elseif ($function !== null && function_exists($function)) {
+			$reflector = new ReflectionFunction($function);
+			$params = $reflector->getParameters();
 		}
 
-		return $output;
+		// display each paramater
+		$formatted_values = array();
+		for ($i = 0; $i < count($args); $i++) {
+			$value = $args[$i];
+
+			$name = (array_key_exists($i, $params)) ?
+				$params[$i]->getName() : null;
+
+			if ($name !== null &&
+				self::isSensitiveParamater($name, $function, $class)) {
+				$formatted_values[] =
+					$this->formatSensitiveParam($name, $value);
+			} else {
+				$formatted_values[] = $this->formatValue($value);
+			}
+		}
+
+		return implode(', ', $formatted_values);
 	}
 
 	// }}}
@@ -515,6 +495,66 @@ class SwatException extends Exception
 	protected function formatSensitiveParam($name, $value)
 	{
 		return '[$'.$name.' FILTERED]';
+	}
+
+	// }}}
+	// {{{ protected function formatValue()
+
+	/**
+	 * Formats a paramater value for display in a stack trace
+	 *
+	 * @param mixed $value the value of the parameter.
+	 *
+	 * @return string the formatted version of the parameter.
+	 */
+	protected function formatValue($value)
+	{
+		$formatted_value = '<unknown paramater type>';
+
+		if (is_object($value)) {
+			$formatted_value = '<'.get_class($value).' object>';
+		} elseif ($value === null) {
+			$formatted_value = '<null>';
+		} elseif (is_string($value)) {
+			$formatted_value = "'".$value."'";
+		} elseif (is_int($value) || is_float($value)) {
+			$formatted_value = strval($value);
+		} elseif (is_bool($value)) {
+			$formatted_value = ($value) ? 'true' : 'false';
+		} elseif (is_resource($value)) {
+			$formatted_value = '<resource>';
+		} elseif (is_array($value)) {
+			// check whether or not array is associative
+			$keys = array_keys($value);
+			$associative = false;
+			$count = 0;
+			foreach ($keys as $key) {
+				if ($key !== $count) {
+					$associative = true;
+					break;
+				}
+				$count++;
+			}
+
+			$formatted_value = 'array(';
+
+			$count = 0;
+			foreach ($value as $key => $the_value) {
+				if ($count > 0) {
+					$formatted_value.= ', ';
+				}
+
+				if ($associative) {
+					$formatted_value.= $this->formatValue($key);
+					$formatted_value.= ' => ';
+				}
+				$formatted_value.= $this->formatValue($the_value);
+				$count++;
+			}
+			$formatted_value.= ')';
+		}
+
+		return $formatted_value;
 	}
 
 	// }}}
