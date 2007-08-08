@@ -585,8 +585,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	{
 		foreach ($this->objects as $object) {
 			$value = $object->getInternalValue($name);
-			$sub_data_object = $sub_data_objects[$value];
-			$object->$name = $sub_data_object;
+			if (isset($sub_data_objects[$value]))
+				$object->$name = $sub_data_objects[$value];
 		}
 	}
 
