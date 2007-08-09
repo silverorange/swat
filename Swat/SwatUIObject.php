@@ -16,7 +16,7 @@ require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
  * displayed.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatUIObject extends SwatObject
@@ -161,30 +161,6 @@ abstract class SwatUIObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ protected final function getUniqueId()
-
-	/**
-	 * Generates a unique id for this UI object
-	 *
-	 * Gets a unique id that may be used for the id property of this UI object.
-	 * Each time this method id called, a new unique identifier is generated so
-	 * you should only call this method once and set it to a property of this
-	 * object.
-	 *
-	 * @return string a unique identifier for this UI object.
-	 */
-	protected final function getUniqueId()
-	{
-		// Because this method is not static, this counter will start at zero
-		// for each class.
-		static $counter = 0;
-
-		$counter++;
-
-		return get_class($this).$counter;
-	}
-
-	// }}}
 	// {{{ public function getFirstAncestor()
 
 	/**
@@ -301,6 +277,19 @@ abstract class SwatUIObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ protected function getInlineJavaScript()
+
+	/**
+	 * Gets inline JavaScript used by this user-interface object
+	 *
+	 * @return string inline JavaScript used by this user-interface object.
+	 */
+	protected function getInlineJavaScript()
+	{
+		return '';
+	}
+
+	// }}}
 	// {{{ protected final function getCSSClassString()
 
 	/**
@@ -326,16 +315,27 @@ abstract class SwatUIObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ protected function getInlineJavaScript()
+	// {{{ protected final function getUniqueId()
 
 	/**
-	 * Gets inline JavaScript used by this user-interface object
+	 * Generates a unique id for this UI object
 	 *
-	 * @return string inline JavaScript used by this user-interface object.
+	 * Gets a unique id that may be used for the id property of this UI object.
+	 * Each time this method id called, a new unique identifier is generated so
+	 * you should only call this method once and set it to a property of this
+	 * object.
+	 *
+	 * @return string a unique identifier for this UI object.
 	 */
-	protected function getInlineJavaScript()
+	protected final function getUniqueId()
 	{
-		return '';
+		// Because this method is not static, this counter will start at zero
+		// for each class.
+		static $counter = 0;
+
+		$counter++;
+
+		return get_class($this).$counter;
 	}
 
 	// }}}
