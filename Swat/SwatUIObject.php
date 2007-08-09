@@ -161,18 +161,22 @@ abstract class SwatUIObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function getUniqueId()
+	// {{{ protected final function getUniqueId()
 
 	/**
-	 * Generates a unique id
+	 * Generates a unique id for this UI object
 	 *
-	 * Gets the an id that may be used for the id property of this widget.
-	 * Ids are auto-generated.
+	 * Gets a unique id that may be used for the id property of this UI object.
+	 * Each time this method id called, a new unique identifier is generated so
+	 * you should only call this method once and set it to a property of this
+	 * object.
 	 *
-	 * @return string a unique identifier.
+	 * @return string a unique identifier for this UI object.
 	 */
-	protected function getUniqueId()
+	protected final function getUniqueId()
 	{
+		// Because this method is not static, this counter will start at zero
+		// for each class.
 		static $counter = 0;
 
 		$counter++;
