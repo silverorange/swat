@@ -8,7 +8,7 @@ require_once 'Swat/SwatEntry.php';
  * A single line search entry widget
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatSearchEntry extends SwatEntry
@@ -44,7 +44,7 @@ class SwatSearchEntry extends SwatEntry
 	}
 
 	// }}}
-	// {{{ protected function getInlineJavaScript
+	// {{{ protected function getInlineJavaScript()
 
 	/**
 	 * Gets the inline JavaScript for this entry to function
