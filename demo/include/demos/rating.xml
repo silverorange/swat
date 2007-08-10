@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm">
+		<property name="action">index.php?demo=Rating</property>
+		<widget class="SwatFieldset">
+			<property name="title">Ratings</property>
+			<widget class="SwatFormField">
+				<property name="title" type="string">Four Star Rating</property>
+				<widget class="SwatRating" id="flydown" />
+			</widget>
+			<widget class="SwatButton"/>
+		</widget>
+	</widget>
+</swatml>
