@@ -15,6 +15,7 @@ function SwatView(id)
 	this.id = id;
 	this.item_selection_counts = [];
 	this.item_selectors = [];
+	this.selector_item_counts = [];
 	this.items = [];
 }
 
@@ -53,6 +54,21 @@ SwatView.prototype.getItemNodeKey = function(item_node)
 }
 
 /**
+ * Gets the number of items selected in this view for the specified selector
+ *
+ * @param String the selector identifier to coult the selected items for.
+ *
+ * @return Number the number of selected items for the given selector.
+ */
+SwatView.prototype.getSelectorItemCount = function(selector)
+{
+	if (this.selector_item_counts[selector])
+		return this.selector_item_counts[selector];
+
+	return 0;
+}
+
+/**
  * Selects an item node in this view
  *
  * An item may be selected multiple times by different selectors. This can
@@ -74,10 +90,18 @@ SwatView.prototype.selectItem = function(node, selector)
 	// if this item node is already not selected by the selector, increment
 	// the selection count
 	if (!this.item_selectors[key][selector]) {
+		// increment selection count for the item
 		if (this.item_selection_counts[key]) {
 			this.item_selection_counts[key]++;
 		} else {
 			this.item_selection_counts[key] = 1;
+		}
+
+		// increment item count for the selector
+		if (this.selector_item_counts[selector]) {
+			this.selector_item_counts[selector]++;
+		} else {
+			this.selector_item_counts[selector] = 1;
 		}
 	}
 
@@ -108,12 +132,21 @@ SwatView.prototype.deselectItem = function(node, selector)
 			// remember that the item node is not selected by the selector
 			this.item_selectors[key][selector] = false;
 
-			// decrement the selection count
-			if (this.item_selection_counts[key])
+			// decrement the selection count for the item
+			if (this.item_selection_counts[key]) {
 				this.item_selection_counts[key] =
 					Math.max(this.item_selection_counts[key] - 1, 0);
-			else
+			} else {
 				this.item_selection_counts[key] = 0;
+			}
+
+			// decrement the item count for the selector
+			if (this.selector_item_counts[selector]) {
+				this.selector_item_counts[selector] =
+					Math.max(this.selector_item_counts[selector] - 1, 0);
+			} else {
+				this.selector_item_counts[selector] = 0;
+			}
 		}
 	}
 }
