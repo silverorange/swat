@@ -110,9 +110,12 @@ class SwatActions extends SwatControl implements SwatUIParent
 	{
 		parent::__construct($id);
 
-		$yui = new SwatYUI(array('dom', 'event'));
+		$yui = new SwatYUI(array('dom', 'event', 'animation'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript('packages/swat/javascript/swat-actions.js',
+			Swat::PACKAGE_ID);
+
+		$this->addStyleSheet('packages/swat/styles/swat-actions.css',
 			Swat::PACKAGE_ID);
 	}
 
@@ -498,6 +501,15 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	protected function getInlineJavaScript()
 	{
+		static $shown = false;
+
+		if (!$shown) {
+			$javascript = $this->getInlineJavaScriptTranslations();
+			$shown = true;
+		} else {
+			$javascript = '';
+		}
+
 		$values = array();
 		if ($this->show_blank)
 			$values[] = "''";
@@ -508,11 +520,41 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$selected_value = ($this->selected === null) ?
 			'null' : "'".$this->selected->id."'";
 
-		return sprintf("var %s = new SwatActions('%s', [%s], %s);\n",
+		$javascript.= sprintf("var %s = new SwatActions('%s', [%s], %s);",
 			$this->id,
 			$this->id,
 			implode(', ', $values),
 			$selected_value);
+
+		return $javascript;
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScriptTranslations()
+
+	/**
+	 * Gets translatable string resources for the JavaScript object for
+	 * this widget
+	 *
+	 * @return string translatable JavaScript string resources for this widget.
+	 */
+	protected function getInlineJavaScriptTranslations()
+	{
+		$dismiss_text  = Swat::_('Dismiss message.');
+		$select_an_action_text = Swat::_('Please select an action.');
+		$select_an_item_text = Swat::_('Please select one or more items.');
+		$select_an_item_and_an_action_text =
+			Swat::_('Please select an action, and one or more items.');
+
+		return sprintf(
+			"SwatActions.dismiss_text = '%s';\n".
+			"SwatActions.select_an_action_text = '%s';\n".
+			"SwatActions.select_an_item_text = '%s';\n".
+			"SwatActions.select_an_item_and_an_action_text = '%s';\n",
+			$dismiss_text,
+			$select_an_action_text,
+			$select_an_item_text,
+			$select_an_item_and_an_action_text);
 	}
 
 	// }}}
