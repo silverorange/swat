@@ -11,9 +11,9 @@ function SwatTableView(id)
 
 	// look for tbody node
 	var tbody_node = null;
-	for (var i = 0; i < this.table_node.childNodes.lenght; i++) {
+	for (var i = 0; i < this.table_node.childNodes.length; i++) {
 		if (this.table_node.childNodes[i].nodeName == 'TBODY') {
-			tbody_node = this.tableNode.childNodes[i];
+			tbody_node = this.table_node.childNodes[i];
 			break;
 		}
 	}
