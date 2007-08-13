@@ -561,6 +561,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		if (empty($values))
 			return null;
 
+		$this->db->loadModule('Datatype', null, true);
 		$quoted_values = $this->db->datatype->implodeArray($values, $type);
 
 		$sql = sprintf($sql, $quoted_values);
