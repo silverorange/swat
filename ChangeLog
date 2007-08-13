@@ -1,5 +1,18 @@
 2007-08-13  gauthierm
 
+	* [r19354] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Make sure datatype module is loaded before performing
+	  implodearray.
+	* [r19349] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  Add todo.
+
+2007-08-13  nrf
+
+	* [r19347] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.27
+
+2007-08-13  gauthierm
+
 	* [r19346] swat/trunk/Swat/SwatCheckboxEntryList.php:
 	  Fix for displaying existing checkbox entry values.
 
