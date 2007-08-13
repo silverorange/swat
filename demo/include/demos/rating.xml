@@ -7,7 +7,7 @@
 			<property name="title">Ratings</property>
 			<widget class="SwatFormField">
 				<property name="title" type="string">Four Star Rating</property>
-				<widget class="SwatRating" id="flydown" />
+				<widget class="SwatRating" id="rating" />
 			</widget>
 			<widget class="SwatButton"/>
 		</widget>
