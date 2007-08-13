@@ -11,6 +11,8 @@ require_once 'Swat/SwatYUI.php';
  * @package   Swat
  * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @todo      Write better API for getting and setting entry values for a
+ *            checkbox option.
  */
 class SwatCheckboxEntryList extends SwatCheckboxList
 {
