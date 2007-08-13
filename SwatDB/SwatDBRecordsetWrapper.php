@@ -189,6 +189,17 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	}
 
 	// }}}
+	// {{{ protected function checkDB()
+
+	protected function checkDB()
+	{
+		if ($this->db === null)
+			throw new SwatDBException(
+				sprintf('No database available to this wrapper (%s). '.
+					'Call the setDatabase method.', get_class($this)));
+	}
+
+	// }}}
 
 	// array access
 	// {{{ public function offsetExists()
@@ -561,6 +572,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		if (empty($values))
 			return null;
 
+		$this->checkDB();
 		$this->db->loadModule('Datatype', null, true);
 		$quoted_values = $this->db->datatype->implodeArray($values, $type);
 
@@ -798,6 +810,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 */
 	public function save()
 	{
+		$this->checkDB();
 		$transaction = new SwatDBTransaction($this->db);
 		try {
 			foreach ($this->objects as $object) {
