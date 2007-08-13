@@ -1,3 +1,122 @@
+2007-08-13  gauthierm
+
+	* [r19346] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  Fix for displaying existing checkbox entry values.
+
+2007-08-13  charles
+
+	* [r19345] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  Change values to value.
+
+2007-08-13  steven
+
+	* [r19336] swat/trunk/Swat/SwatRating.php,
+	  swat/trunk/www/styles/swat-rating.css:
+	  Clean up SwatRating CSS a bit - add the swat-rating CSS class
+	  and any parent classes, scope CSS classes to prevent leaky
+	  styles. Fixes ticket #1232
+
+2007-08-13  charles
+
+	* [r19333] swat/trunk/Swat/SwatRating.php,
+	  swat/trunk/demo/include/demos/rating.xml,
+	  swat/trunk/www/javascript/swat-rating.js:
+	  Ticket # 1233, the swat rating widget can now be used multiply
+	  times on a single page.
+
+2007-08-10  charles
+
+	* [r19327] swat/trunk/demo/include/DemoApplication.php,
+	  swat/trunk/demo/include/demos/rating.xml:
+	  The demo to show off the new swat rating widget.
+	* [r19326] swat/trunk/www/images/swat-rating-stars.png,
+	  swat/trunk/www/javascript/swat-rating.js,
+	  swat/trunk/www/styles/swat-rating.css:
+	  The styles, javascript and images for the new swat rating widget.
+
+2007-08-10  steven
+
+	* [r19325] swat/trunk/resources/icons/swat-rating-stars.svgz:
+	  Add SVG original of SVG stars (adapted from an LGLP icon from
+	  jimmac)
+
+2007-08-10  charles
+
+	* [r19324] swat/trunk/Swat/SwatRating.php:
+	  Ticket #1127, the new rating widget for swat.
+	* [r19322] swat/trunk/Swat/SwatSearchEntry.php:
+	  Small copyright and doc changes.
+
+2007-08-10  gauthierm
+
+	* [r19321] swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/www/javascript/swat-actions.js,
+	  swat/trunk/www/styles/swat-actions.css:
+	  Alost fix #1217: Show JS warning when action is submitted with
+	  no items selected. There is still one TODO left to do on this
+	  ticket.
+	* [r19292] swat/trunk/www/javascript/swat-table-view.js:
+	  Fix nasty typo bugzillas in SwatTableView JavaScript object that
+	  prevented SwatView JavaScript from working.
+	* [r19291] swat/trunk/www/javascript/swat-view.js:
+	  Add SwatView::getSelectorItemCount() method to SwatView
+	  JavaScript object. This will help fix ticket #1217.
+
+2007-08-09  gauthierm
+
+	* [r19286] swat/trunk/Swat/SwatUIObject.php:
+	  Protected after public methods.
+	* [r19285] swat/trunk/Swat/SwatUIObject.php:
+	  Make SwatUIObject::getUniqueId() 'protected final' instead of
+	  'protected' and add and update documentation.
+
+2007-08-08  gauthierm
+
+	* [r19250] swat/trunk/Swat/exceptions/SwatException.php:
+	  Fix ticket #1215: SwatException notice. This also adds support
+	  for displaying keys for associative arrays in stack traces.
+	* [r19210] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Fix ticket #1216. This method used to use getByIndex() which
+	  returns null if the index is not found.
+
+2007-08-07  gauthierm
+
+	* [r19188] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Dozens of bug-fixes and enhancements to the recordset wrapper in
+	  SwatDB.
+	  Includes:
+	  - implement array access notation.
+	  - several documentation fixes and improvements.
+	  - several coding convention fixes.
+	  - in reindex(), clear the indexed array before rebuilding it.
+	  - make removeAll() efficiently remove all records rather than
+	  calling remove() for each record.
+	  - don't perform our own search in remove(). Use array_keys()
+	  instead.
+	  - update iterator index when removing records.
+	  - make getArray() return an array copy so we can't break the
+	  internal state of the recordset.
+	  - cleanup loadSubDataObjects() method and use implodeArray()
+	  instead of doing it manually.
+	  - remove unnecessary code in init().
+	  - only set database on SwatDBRecordable objects when adding them
+	  to the recordset.
+	  - don't commit transaction after a rollback in save().
+	  - Use SPL exception classes where appropriate.
+
+2007-08-03  steven
+
+	* [r19135] swat/trunk/Swat/SwatImagePreviewDisplay.php,
+	  swat/trunk/www/images/swat-image-preview-display-zoom.png,
+	  swat/trunk/www/styles/swat-image-preview-display.css:
+	  Move SwatImagePreviewDisplay text into a link title and add a
+	  zoom icon
+
+2007-08-02  nrf
+
+	* [r19095] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.26
+
 2007-08-02  gauthierm
 
 	* [r19064] swat/trunk/Swat/SwatImagePreviewDisplay.php,
