@@ -147,8 +147,8 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 			echo '</td><td>';
 
 			$widget = $this->getEntryWidget($checkbox_id);
-			if (isset($this->entry_values[$checkbox_id]))
-				$widget->value = $this->entry_values[$checkbox_id];
+			if (isset($this->entry_values[$option->value]))
+				$widget->value = $this->entry_values[$option->value];
 
 			$widget->display();
 
