@@ -3,6 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatFlydown.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A javascript widget for recording a four star rating
@@ -84,11 +85,14 @@ class SwatRating extends SwatFlydown
 	public function display()
 	{
 
-		echo '<div id="ratingdiv">';
+		$id = sprintf('ratingdiv_%s', $this->id);
+		$div = new SwatHtmlTag('div');
+		$div->id = $id;
+		$div->open();
 
 		parent::display();
 
-		echo '</div>';		
+		$div->close();		
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
