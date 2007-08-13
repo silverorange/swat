@@ -187,7 +187,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 			$checkbox_id = $key.'_'.$value;
 			$widget = $this->getEntryWidget($checkbox_id);
 			$widget->process();
-			$this->entry_values[$values] = $widget->value;
+			$this->entry_values[$value] = $widget->value;
 		}
 	}
 
