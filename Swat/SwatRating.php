@@ -75,6 +75,22 @@ class SwatRating extends SwatFlydown
 	}
 
 	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this calendar widget 
+	 *
+	 * @return array the array of CSS classes that are applied to this calendar
+	 *                widget.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-rating');
+		$classes = array_merge($classes, parent::getCSSClassNames());
+		return $classes;
+	}
+
+	// }}}
 	//  {{{ public function display()
 	
 	/**
@@ -88,6 +104,7 @@ class SwatRating extends SwatFlydown
 		$id = sprintf('ratingdiv_%s', $this->id);
 		$div = new SwatHtmlTag('div');
 		$div->id = $id;
+		$div->class = $this->getCSSClassString();
 		$div->open();
 
 		parent::display();
