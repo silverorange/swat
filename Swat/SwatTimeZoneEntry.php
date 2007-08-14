@@ -93,7 +93,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
 		static $area_whitelist = array('Africa', 'America', 'Antarctica',
 			'Arctic', 'Asia', 'Atlantic', 'Australia', 'Europe',
-			'Indian', 'Pacific');
+			'Indian', 'Pacific', 'UTC');
 
 		$time_zone_list = $this->parseAreaWhitelist($area_whitelist);
 		$this->setAreas($time_zone_list);
@@ -150,7 +150,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		$this->areas_flydown->process();
 		$this->regions_flydown->process();
 
-		if ($this->areas_flydown->value === null ||
+		if ($this->areas_flydown->value === 'UTC')
+			$this->value = 'UTC';
+		elseif ($this->areas_flydown->value === null ||
 			$this->regions_flydown->value === null)
 			$this->value = null;
 		else
@@ -318,10 +320,14 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	private function setAreas($time_zone_list)
 	{
 		ksort($time_zone_list);
-
+		
 		foreach ($time_zone_list as $name => $subregions) {
 			$this->areas[$name] = $name;
 			$this->regions[$name] = array();
+
+			// speical case for UTC flydown
+			if ($name === 'UTC')
+				$subregions = array('Coordinated Universal Time' => null);
 
 			$this->setRegions($subregions, $name);
 		}
@@ -343,7 +349,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	private function setRegions($time_zone_list, $area, $prefix = '')
 	{
 		ksort($time_zone_list);
-
+		
 		foreach ($time_zone_list as $name => $subregions) {
 
 			if (count($subregions))
@@ -376,6 +382,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	{
 		if ($time_zone === null)
 			return null;
+		if ($time_zone === 'UTC')
+			return 'UTC';
 
 		return substr($time_zone, 0, strpos($time_zone, '/'));
 	}
@@ -397,6 +405,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	{
 		if ($time_zone === null)
 			return null;
+		if ($time_zone === 'UTC')
+			return 'UTC';
 
 		return substr($time_zone, strpos($time_zone, '/') + 1);
 	}

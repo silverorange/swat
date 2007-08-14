@@ -19,15 +19,16 @@ SwatCascade.prototype.update = function()
 	var display = this.children[this.parent.value];
 
 	// reset the options
-	for (var i = 0; i < this.child.options.length; i++)
-		this.child.options[i] = null;
-	
+	for (var i = (this.child.options.length - 1); i > -1;  i--)
+		this.child.removeChild(this.child.options[i])
+
 	if (display) {
 		this.child.disabled = false;
 
 		for (i = 0; i < display.length; i++)
-			this.child.options[i] =
-				new Option(display[i].title, display[i].value);
+			this.child.appendChild(
+				new Option(display[i].title, display[i].value, display[i].selected));
+
 	} else {
 		this.child.options[0] = this.blank_option;
 		this.child.disabled = true;
