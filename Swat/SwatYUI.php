@@ -154,6 +154,30 @@ class SwatYUI extends SwatObject
 	}
 
 	// }}}
+	// {{{ private function checkInstall()
+
+	/**
+	 * Verifies the YUI library is installed and displays a helpful message if
+	 * it is not*
+	 *
+	 * @throws SwatException
+	 */
+	private function checkInstall()
+	{
+		$yui_installed = file_exists('packages/yui/yahoo/yahoo.js');
+		if (!$yui_installed)
+			throw new SwatException(
+				"Yahoo User Interface Library not found.\n\n".
+				"Most of Swat's UI objects using JavaScript make use of the ".
+				"Yahoo User Interface Library (YUI) to abstract cross-browser ".
+				"event-handling, DOM manipulation and CSS positioning.\n\n".
+				"You can download YUI from ".
+				"http://developer.yahoo.com/yui/download/.\n\n".
+				"Please download YUI and copy the contents of the 'build' ".
+				"directory into 'www-root/packages/yui'.\n\n");
+	}
+
+	// }}}
 	// {{{ private static function buildComponents()
 
 	/**
@@ -299,30 +323,6 @@ class SwatYUI extends SwatObject
 		self::$components = $components;
 
 		$components_built = true;
-	}
-
-	// }}}
-	// {{{ private function checkInstall()
-
-	/**
-	 * Verifies the YUI library is installed and displays a helpful message if
-	 * it is not*
-	 *
-	 * @throws SwatException
-	 */
-	private function checkInstall()
-	{
-		$yui_installed = file_exists('packages/yui/yahoo/yahoo.js');
-		if (!$yui_installed)
-			throw new SwatException(
-				"Yahoo User Interface Library not found.\n\n".
-				"Most of Swat's UI objects using JavaScript make use of the ".
-				"Yahoo User Interface Library (YUI) to abstract cross-browser ".
-				"event-handling, DOM manipulation and CSS positioning.\n\n".
-				"You can download YUI from ".
-				"http://developer.yahoo.com/yui/download/.\n\n".
-				"Please download YUI and copy the contents of the 'build' ".
-				"directory into 'www-root/packages/yui'.\n\n");
 	}
 
 	// }}}
