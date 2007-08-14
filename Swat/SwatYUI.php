@@ -200,6 +200,9 @@ class SwatYUI extends SwatObject
 		$components['autocomplete'] = new SwatYUIComponent('autocomplete');
 		$components['autocomplete']->addJavaScript();
 
+		$components['base'] = new SwatYUIComponent('base');
+		$components['base']->addStyleSheet();
+
 		$components['calendar'] = new SwatYUIComponent('calendar');
 		$components['calendar']->addJavaScript();
 
