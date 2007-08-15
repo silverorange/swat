@@ -48,10 +48,10 @@ class SwatRating extends SwatFlydown
 		parent::init();
 
 		$ratings = array(
-			1 => 'One Star',
-			2 => 'Two Stars',
-			3 => 'Three Stars',
-			4 => 'Four Stars');
+			1 => Swat::_('One Star'),
+			2 => Swat::_('Two Stars'),
+			3 => Swat::_('Three Stars'),
+			4 => Swat::_('Four Stars'));
 
 		$this->addOptionsByArray($ratings);
 		$this->serialize_values = false;
