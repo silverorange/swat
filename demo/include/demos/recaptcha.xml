@@ -5,6 +5,8 @@
 		<widget class="SwatFormField" id="myformfield">
 			<widget class="SwatReCaptcha" id="recaptcha">
 				<!-- Enter your own public and private keys from http://recaptcha.net/api/getkey -->
+				<property name="public_key" type="string">6LfrRgAAAAAAAIGGO3-lOjPvYqGc5RlpICTtybXZ</property>
+				<property name="private_key" type="string">6LfrRgAAAAAAAHBsp6qJkCAhOCE9mz4SAxN17_aE</property>
 			</widget>
 			<widget class="SwatButton" id="button" />
 		</widget>
