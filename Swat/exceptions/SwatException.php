@@ -268,15 +268,13 @@ class SwatException extends Exception
 	{
 		ob_start();
 
-		printf("Uncaught Exception: %s\n\nMessage:\n\t%s\n\n".
+		printf("%s Exception: %s\n\nMessage:\n\t%s\n\n".
 			"Created in file '%s' on line %s.\n\n",
+			$this->wasHandled ? 'Caught' : 'Uncaught',
 			$this->class,
 			$this->getMessage(),
 			$this->getFile(),
 			$this->getLine());
-
-		if ($this->wasHandled())
-			echo "Exception was handled\n\n";
 
 		echo "Stack Trace:\n";
 		$count = count($this->backtrace);
@@ -328,17 +326,16 @@ class SwatException extends Exception
 
 		echo '<div class="swat-exception">';
 
-		printf('<h3>Uncaught Exception: %s</h3>'.
+		printf('<h3>%s Exception: %s</h3>'.
 				'<div class="swat-exception-body">'.
 				'Message:<div class="swat-exception-message">%s</div>'.
 				'Created in file <strong>%s</strong> '.
 				'on line <strong>%s</strong>.<br /><br />',
+				$this->wasHandled ? 'Caught' : 'Uncaught',
 				$this->class,
 				nl2br($this->getMessage()),
 				$this->getFile(),
 				$this->getLine());
-		if ($this->wasHandled())
-			echo '<strong>Exception was handled</strong><br /><br />';
 
 		echo 'Stack Trace:<br /><dl>';
 		$count = count($this->backtrace);
