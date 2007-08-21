@@ -1,5 +1,53 @@
+2007-08-21  gauthierm
+
+	* [r19563] swat/trunk/Swat/SwatTileView.php:
+	  Remove reference to JavaScript that doesn't exist anymore.
+
+2007-08-21  nick
+
+	* [r19562] swat/trunk/Swat/exceptions/SwatException.php:
+	  This is a method, not a property.
+
+2007-08-21  gauthierm
+
+	* [r19556] swat/trunk/Swat/SwatForm.php:
+	  Add protectecd method to get form tag to ease subclassing.
+
+2007-08-20  nrf
+
+	* [r19549] swat/trunk/Swat/exceptions/SwatException.php:
+	  Cleanup exception messages
+
+2007-08-16  charles
+
+	* [r19444] swat/trunk/demo/include/demos/recaptcha.xml:
+	  These are the public and private keys so that the ReCaptcha demo
+	  will work on the live demo site.
+
+2007-08-15  charles
+
+	* [r19424] swat/trunk/Swat/SwatRating.php:
+	  Ticket #1236, make the strings translatable.
+
+2007-08-14  charles
+
+	* [r19421] swat/trunk/Swat/SwatTimeZoneEntry.php,
+	  swat/trunk/www/javascript/swat-cascade.js:
+	  Small fixes so that the time zone will now work with UTC and
+	  also so that the correct regions are displayed for their
+	  respective areas.
+
+2007-08-14  gauthierm
+
+	* [r19409] swat/trunk/Swat/SwatYUI.php:
+	  Add YUI base CSS component to SwatYUI.
+	* [r19408] swat/trunk/Swat/SwatYUI.php:
+	  Put private static function at the end.
+
 2007-08-13  nrf
 
+	* [r19365] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.29
 	* [r19364] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
 	  verify db exists before using it
 	* [r19356] swat/trunk/ChangeLog, swat/trunk/package.php:
