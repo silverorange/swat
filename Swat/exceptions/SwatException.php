@@ -270,7 +270,7 @@ class SwatException extends Exception
 
 		printf("%s Exception: %s\n\nMessage:\n\t%s\n\n".
 			"Created in file '%s' on line %s.\n\n",
-			$this->wasHandled ? 'Caught' : 'Uncaught',
+			$this->wasHandled() ? 'Caught' : 'Uncaught',
 			$this->class,
 			$this->getMessage(),
 			$this->getFile(),
@@ -331,7 +331,7 @@ class SwatException extends Exception
 				'Message:<div class="swat-exception-message">%s</div>'.
 				'Created in file <strong>%s</strong> '.
 				'on line <strong>%s</strong>.<br /><br />',
-				$this->wasHandled ? 'Caught' : 'Uncaught',
+				$this->wasHandled() ? 'Caught' : 'Uncaught',
 				$this->class,
 				nl2br($this->getMessage()),
 				$this->getFile(),
