@@ -233,12 +233,7 @@ class SwatForm extends SwatDisplayableContainer
 
 		$this->addHiddenField(self::PROCESS_FIELD, $this->id);
 
-		$form_tag = new SwatHtmlTag('form');
-		$form_tag->id = $this->id;
-		$form_tag->method = $this->method;
-		$form_tag->enctype = $this->encoding_type;
-		$form_tag->action = $this->action;
-		$form_tag->class = $this->getCSSClassString();
+		$form_tag = $this->getFormTag();
 
 		$form_tag->open();
 		$this->displayChildren();
@@ -682,6 +677,27 @@ class SwatForm extends SwatDisplayableContainer
 		}
 
 		echo '</div>';
+	}
+
+	// }}}
+	// {{{ protected fucntion getFormTag()
+
+	/**
+	 * Gets the XHTML form tag used to display this form
+	 *
+	 * @return SwatHtmlTag the XHTML form tag used to display this form.
+	 */
+	protected function getFormTag()
+	{
+		$form_tag = new SwatHtmlTag('form');
+
+		$form_tag->id = $this->id;
+		$form_tag->method = $this->method;
+		$form_tag->enctype = $this->encoding_type;
+		$form_tag->action = $this->action;
+		$form_tag->class = $this->getCSSClassString();
+
+		return $form_tag;
 	}
 
 	// }}}
