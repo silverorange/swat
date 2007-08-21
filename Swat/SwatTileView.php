@@ -85,10 +85,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 		$this->addJavaScript('packages/swat/javascript/swat-tile-view.js',
 			Swat::PACKAGE_ID);
-
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-table-view-checkbox-column.js',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
