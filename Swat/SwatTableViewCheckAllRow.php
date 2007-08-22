@@ -5,6 +5,7 @@
 require_once 'Swat/SwatTableViewRow.php';
 require_once 'Swat/SwatCheckAll.php';
 require_once 'Swat/SwatTableViewColumn.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A an extra row containing a check-all widget

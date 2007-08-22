@@ -6,6 +6,7 @@ require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatYUI.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * Progress bar

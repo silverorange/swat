@@ -7,6 +7,7 @@ require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatDate.php';
 require_once 'Swat/SwatState.php';
 require_once 'Swat/SwatYUI.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A date entry widget

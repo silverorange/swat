@@ -8,6 +8,7 @@ require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatActionItem.php';
 require_once 'Swat/SwatActionItemDivider.php';
 require_once 'Swat/SwatUIParent.php';
+require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 require_once 'Swat/SwatYUI.php';
 

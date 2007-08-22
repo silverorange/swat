@@ -4,6 +4,7 @@
 
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatState.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A color selector widget with palette
