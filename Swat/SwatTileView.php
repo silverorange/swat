@@ -5,6 +5,7 @@
 require_once 'Swat/SwatView.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatCheckAll.php';
+require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**

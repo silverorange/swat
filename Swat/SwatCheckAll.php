@@ -4,6 +4,7 @@
 
 require_once 'Swat/SwatCheckbox.php';
 require_once 'Swat/SwatYUI.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A "check all" JavaScript powered checkbox

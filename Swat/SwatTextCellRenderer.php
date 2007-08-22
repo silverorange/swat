@@ -3,6 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatCellRenderer.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A text cell renderer

@@ -6,6 +6,7 @@ require_once 'Swat/SwatCellRenderer.php';
 require_once 'Swat/SwatViewSelector.php';
 require_once 'Swat/SwatViewSelection.php';
 require_once 'Swat/SwatCheckbox.php';
+require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/exceptions/SwatException.php';
 
 /**

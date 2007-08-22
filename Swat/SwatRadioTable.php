@@ -3,6 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatRadioList.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * Special radio-list that can display multi-line list items using a

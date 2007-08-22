@@ -3,6 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatDetailsViewField.php';
+require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A visible field in a SwatDetailsView that has its label displayed above
