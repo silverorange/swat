@@ -5,6 +5,7 @@
 require_once 'Swat/SwatCheckboxList.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatYUI.php';
+require_once 'Swat/exceptions/SwatInvalidPropertyException.php';
 
 /**
  * A checkbox list widget with entries per item
@@ -235,9 +236,14 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	public function setEntryValue($option_value, $entry_value)
 	{
 		$options = $this->getOptions();
-		if (!isset($options[$option_value]))
-			throw SwatInvalidPropertyException(sprintf('The option with the '.
+		$option_values = array();
+		foreach ($options as $option)
+			$option_values[] = $option->value;
+
+		if (!in_array($option_value, $option_values)) {
+			throw new SwatInvalidPropertyException(sprintf('The option with the '.
 				'value of %s does not exist', $option_value));
+		}
 			
 		$this->getEntryWidget($option_value)->value = $entry_value;
 	}
