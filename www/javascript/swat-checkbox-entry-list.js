@@ -6,10 +6,9 @@ function SwatCheckboxEntryList(id)
 
 	var check_id;
 	for (i = 0; i < this.check_list.length; i++) {
-		// remove prepended widget id from beginning of string
-		checkbox_id = this.check_list[i].id.substring(id.length + 1);
+		var option = this.check_list[i];
 		this.entry_list[i] = document.getElementById(
-			id + '_entry_' + checkbox_id);
+			id + '_entry_' + option.value);
 
 		this.check_list[i]._index = i;
 	}
