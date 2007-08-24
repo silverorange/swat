@@ -193,7 +193,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	{
 		if (!$this->hasEntryWidget($option_value))
 			$entry_value = null;
-		else 
+		else
 			$entry_value = $this->getEntryWidget($option_value)->value;
 
 		return $entry_value;
@@ -205,7 +205,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	/**
 	 * Sets the entry value of a entry widget
 	 *
-	 * This is used to set the value of an entry widget 
+	 * This is used to set the value of an entry widget
 	 *
 	 * @param string $option_value the value of the option assigned to the
 	 *					entry widget.
@@ -225,7 +225,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 				'entry list',
 				$option_value));
 		}
-			
+
 		$this->getEntryWidget($option_value)->value = $entry_value;
 	}
 
@@ -237,7 +237,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	 *
 	 * TODO Add docs
 	 *
-	 * @param array $entry_values an array in the form of 
+	 * @param array $entry_values an array in the form of
 	 *					$option_value => $entry_value
 	 */
 	public function setEntryValuesByArray(array $entry_values)
@@ -291,14 +291,14 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	/**
 	 * Checks for the presense of an entry widget
 	 *
-	 * This is used to check and see if this checkbox list has a 
+	 * This is used to check and see if this checkbox list has a
 	 * certain entry widget for a certain option value.
 	 *
 	 * @param string $option_value the value of the option that the widget is
 	 *					assigned to.
 	 *
 	 * @return boolean whether or not this option value has an entry widget
-	 */ 
+	 */
 	protected function hasEntryWidget($option_value)
 	{
 		return isset($this->entry_widgets[$option_value]);
