@@ -40,14 +40,16 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	public $entry_maxlength = null;
 
 	// }}}
-	// {{{ private properties
+	// {{{ protected properties
 
 	/**
-	 * A list of entry widgets used by this checkbox entry list
+	 * The entry widgets used by this checkbox entry list
+	 *
+	 * This array is indexed by option values of this checkbox entry list.
 	 *
 	 * @var array
 	 */
-	private $entry_widgets = array();
+	protected $entry_widgets = array();
 
 	// }}}
 	// {{{ public function __construct()
@@ -173,9 +175,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		parent::process();
 
 		foreach ($this->values as $key => $option_value) {
-			$widget = $this->getEntryWidget($option_value);
-			$widget->process();
-			$this->setEntryvalue($option_value, $widget->value);
+			$widget = $this->getEntryWidget($option_value)->process();
+//			$widget->process();
+//			$this->setEntryvalue($option_value, $widget->value);
 		}
 	}
 
@@ -200,15 +202,12 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	// {{{ public function getEntryValue()
 
 	/**
-	 * Gets the entry value for a certain entry widget
-	 *
-	 * Used to obtain the value of a entry widget or null if the widget 
-	 *					doesn't exist.
+	 * Gets the value for an entry widget in this checkbox entry list
 	 *
 	 * @param string $option_value used to indentify the entry widget
 	 *
 	 * @return string the value of the entry widget or null if the widget
-	 *					doesn't exist.
+	 *                 doesn't exist.
 	 */
 	public function getEntryValue($option_value)
 	{
@@ -241,8 +240,10 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 			$option_values[] = $option->value;
 
 		if (!in_array($option_value, $option_values)) {
-			throw new SwatInvalidPropertyException(sprintf('The option with the '.
-				'value of %s does not exist', $option_value));
+			throw new SwatInvalidPropertyException(sprintf(
+				'No option with a value of "%s" exists in this checkbox '.
+				'entry list',
+				$option_value));
 		}
 			
 		$this->getEntryWidget($option_value)->value = $entry_value;
@@ -322,7 +323,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	 */
 	protected function getEntryWidget($option_value)
 	{
-		if (!isset($this->entry_widgets[$option_value])) {
+		if (!$this->hasEntryWidget($option_value)) {
 			$widget = new SwatEntry($this->id.'_entry_'.$option_value);
 			$widget->size = $this->entry_size;
 			$widget->maxlength = $this->entry_maxlength;
