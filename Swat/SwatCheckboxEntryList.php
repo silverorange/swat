@@ -174,11 +174,8 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
 		parent::process();
 
-		foreach ($this->values as $key => $option_value) {
+		foreach ($this->values as $key => $option_value)
 			$widget = $this->getEntryWidget($option_value)->process();
-//			$widget->process();
-//			$this->setEntryvalue($option_value, $widget->value);
-		}
 	}
 
 	// }}}
