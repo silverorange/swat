@@ -8,7 +8,17 @@ require_once 'Swat/SwatYUI.php';
 require_once 'Swat/exceptions/SwatInvalidPropertyException.php';
 
 /**
- * A checkbox list widget with entries per item
+ * A checkbox list widget with entries per option
+ *
+ * This widget can be used both to select multiple items from a list of options
+ * and to submit an associated text field with each selected option.
+ *
+ * Selecting options works just like a normal checkbox list. Accessing the
+ * associated text field is done using the
+ * {@link SwatCheckboxEntryList::getEntryValue()} and
+ * {@link SwatCheckboxEntryList::setEntryValue()} methods. For setting large
+ * numbers of text fields (during initialization, for example) use the
+ * {@link SwatCheckboxEntryList::setEntryValuesByArray()} method.
  *
  * @package   Swat
  * @copyright 2007 silverorange
@@ -182,18 +192,18 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	// {{{ public function getEntryValue()
 
 	/**
-	 * Gets the value for an entry widget in this checkbox entry list
+	 * Gets the value of an entry widget in this checkbox entry list
 	 *
 	 * @param string $option_value used to indentify the entry widget
 	 *
-	 * @return string the value of the entry widget or null if the widget
-	 *                 doesn't exist.
+	 * @return string the value of the specified entry widget or null if no
+	 *                 such widget exists.
 	 */
 	public function getEntryValue($option_value)
 	{
-		if (!$this->hasEntryWidget($option_value))
-			$entry_value = null;
-		else
+		$entry_value = null;
+
+		if ($this->hasEntryWidget($option_value))
 			$entry_value = $this->getEntryWidget($option_value)->value;
 
 		return $entry_value;
@@ -203,14 +213,15 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	// {{{ public function setEntryValue()
 
 	/**
-	 * Sets the entry value of a entry widget
+	 * Sets the value of an entry widget in this checkbox entry list
 	 *
-	 * This is used to set the value of an entry widget
+	 * @param string $option_value the value of the option for which to set
+	 *                              the entry widget value.
+	 * @param string $entry_value the value to set on the entry widget.
 	 *
-	 * @param string $option_value the value of the option assigned to the
-	 *					entry widget.
-	 *
-	 * @param string $entry_value the value you want the entry widget set to
+	 * @throws SwatInvalidPropertyException if the option value does not match
+	 *                                      an existing option value in this
+	 *                                      checkbox entry list.
 	 */
 	public function setEntryValue($option_value, $entry_value)
 	{
@@ -233,12 +244,20 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	// {{{ public function setEntryValuesByArray()
 
 	/**
-	 * Sets the values of multiply entry widgets
+	 * Sets the values of multiple entry widgets
 	 *
-	 * TODO Add docs
+	 * This is a convenience method to quickly set the entry values for one
+	 * or more options in this checkbox entry list. This calls
+	 * {@link SwatCheckboxEntryList::setEntryValue()} internally for each
+	 * entry in the <i>$entry_values</i> array.
 	 *
-	 * @param array $entry_values an array in the form of
-	 *					$option_value => $entry_value
+	 * @param array $entry_values an array indexed by option values of this
+	 *                             checkbox entry list with values of the entry
+	 *                             widget values.
+	 *
+	 * @throws SwatInvalidPropertyException if any option value (array key)
+	 *                                      does not match an existing option
+	 *                                      value in this checkbox entry list.
 	 */
 	public function setEntryValuesByArray(array $entry_values)
 	{
@@ -289,15 +308,13 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	// {{{ protected function hasEntryWidget()
 
 	/**
-	 * Checks for the presense of an entry widget
+	 * Checks if this checkbox entry list has an entry widget for a given
+	 * option value
 	 *
-	 * This is used to check and see if this checkbox list has a
-	 * certain entry widget for a certain option value.
+	 * @param string $option_value the value of the option to check.
 	 *
-	 * @param string $option_value the value of the option that the widget is
-	 *					assigned to.
-	 *
-	 * @return boolean whether or not this option value has an entry widget
+	 * @return boolean true if this checkbox entry list has an entry widget for
+	 *                  the given option value and false if it does not.
 	 */
 	protected function hasEntryWidget($option_value)
 	{
@@ -313,10 +330,11 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	 * This is used internally to create {@link SwatEntry} widgets for display
 	 * and processing.
 	 *
-	 * @param string $option_value the value of the option to get. If no entry
-	 *                   widget exists for the given option value, one is made.
+	 * @param string $option_value the value of the option for which to get
+	 *                              the entry widget. If no entry widget exists
+	 *                              for the given option value, one is created.
 	 *
-	 * @return SwatEntry the entry widget for the givin option value.
+	 * @return SwatEntry the entry widget for the given option value.
 	 */
 	protected function getEntryWidget($option_value)
 	{
