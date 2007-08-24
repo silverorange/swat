@@ -25,9 +25,8 @@ function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height)
 	this.opened = false;
 
 	// add overlay and preview image to document
-	var body = document.getElementsByTagName('body')[0];
-	body.appendChild(this.overlay);
-	body.appendChild(this.preview_container);
+	image_link.parentNode.appendChild(this.overlay);
+	image_link.parentNode.appendChild(this.preview_container);
 
 	// setup event handlers
 	YAHOO.util.Event.addListener(image_link, 'click',
@@ -56,6 +55,8 @@ SwatImagePreviewDisplay.prototype.open = function()
 	var max_width = YAHOO.util.Dom.getViewportWidth() - (padding * 2);
 	var max_height = YAHOO.util.Dom.getViewportHeight() - (padding * 2);
 
+	this.overlay.style.display = 'block';
+	YAHOO.util.Dom.setXY(this.overlay, [0, 0]);
 	this.overlay.style.width = YAHOO.util.Dom.getDocumentWidth() + 'px';
 	this.overlay.style.height = YAHOO.util.Dom.getDocumentHeight() + 'px';
 
