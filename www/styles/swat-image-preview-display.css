@@ -1,5 +1,5 @@
 .swat-image-preview-display-link {
-	position: relative;
+	/* note: relative positioning breaks background position in IE6 */
 	font-size: 85%;
 	padding-right: 16px;
 	background-image: url(../images/swat-image-preview-display-zoom.png);
