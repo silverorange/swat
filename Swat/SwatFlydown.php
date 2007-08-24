@@ -228,15 +228,18 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	 */
 	public function getFocusableHtmlId()
 	{
-		if (!$this->visible)
-			return null;
+		$focusable_id = null;
 
-		$count = count($this->getOptions());
+		if ($this->visible) {
+			$count = count($this->getOptions());
+			if ($this->show_blank)
+				$count++;
 
-		if ($this->show_blank)
-			$count++;
+			if ($count > 1)
+				$focusable_id = $this->id;
+		}
 
-		return ($count > 1) ? $this->id : null;
+		return $focusable_id;
 	}
 
 	// }}}
