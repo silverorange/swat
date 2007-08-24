@@ -179,23 +179,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	}
 
 	// }}}
-	// {{{ public function setEntryValuesByArray()
-
-	/**
-	 * Sets the values of multiply entry widgets
-	 *
-	 * TODO Add docs
-	 *
-	 * @param array $entry_values an array in the form of 
-	 *					$option_value => $entry_value
-	 */
-	public function setEntryValuesByArray(array $entry_values)
-	{
-		foreach ($entry_values as $option_value => $entry_value)
-			$this->setEntryValue($option_value, $entry_value);
-	}
-
-	// }}}
 	// {{{ public function getEntryValue()
 
 	/**
@@ -244,6 +227,23 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		}
 			
 		$this->getEntryWidget($option_value)->value = $entry_value;
+	}
+
+	// }}}
+	// {{{ public function setEntryValuesByArray()
+
+	/**
+	 * Sets the values of multiply entry widgets
+	 *
+	 * TODO Add docs
+	 *
+	 * @param array $entry_values an array in the form of 
+	 *					$option_value => $entry_value
+	 */
+	public function setEntryValuesByArray(array $entry_values)
+	{
+		foreach ($entry_values as $option_value => $entry_value)
+			$this->setEntryValue($option_value, $entry_value);
 	}
 
 	// }}}
