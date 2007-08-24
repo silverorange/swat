@@ -27,7 +27,7 @@ function SwatSimpleColorEntry(id, colors)
 	this.current_color = null;
 	this.colorChangeEvent = new YAHOO.util.CustomEvent('colorChange');
 
-	for (i = 0; i < this.colors.length; i++) {
+	for (var i = 0; i < this.colors.length; i++) {
 		if (this.input_tag.value == this.colors[i]) {
 			this.setColor(i);
 			break;
@@ -46,7 +46,12 @@ function SwatSimpleColorEntry(id, colors)
 SwatSimpleColorEntry.prototype.drawButton = function()
 {
 	this.toggle_button = document.createElement('button');
-	this.toggle_button.type = 'button';
+	YAHOO.util.Dom.addClass(this.toggle_button,
+		'swat-simple-color-entry-toggle-button');
+
+	// the type property is readonly in IE so use setAttribute() here
+	this.toggle_button.setAttribute('type', 'button');
+
 	this.swatch.parentNode.replaceChild(this.toggle_button, this.swatch);
 	this.toggle_button.appendChild(this.swatch);
 	YAHOO.util.Event.addListener(this.toggle_button, 'click', this.toggle,
@@ -135,7 +140,7 @@ SwatSimpleColorEntry.prototype.drawPalette = function()
 	var anchor;
 	var text;
 		
-	for (i = 0; i < num_cells; i++) {
+	for (var i = 0; i < num_cells; i++) {
 		if (i % this.columns == 0)
 			trow = document.createElement('tr');
 
