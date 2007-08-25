@@ -53,6 +53,11 @@ class SwatDBDataObject extends SwatObject
 	 */
 	private $date_properties = array();
 	
+	/**
+	 * @var boolean
+	 */
+	private $loaded_from_database = false;
+	
 	// }}}
 	// {{{ protected properties
 
@@ -330,6 +335,8 @@ class SwatDBDataObject extends SwatObject
 			if (isset($row[$name]))
 				$this->internal_properties[$name] = $row[$name];
 		}
+
+		$this->loaded_from_database = true;
 	}
 
 	// }}}
@@ -728,6 +735,11 @@ class SwatDBDataObject extends SwatObject
 		}
 
 		if ($this->id_field === null) {
+			if (!$this->loaded_from_database) {
+				$this->saveNewBinding();
+				return;
+			}
+
 			trigger_error(
 				sprintf('No id_field defined for %s', get_class($this)),
 				E_USER_NOTICE);
@@ -802,6 +814,34 @@ class SwatDBDataObject extends SwatObject
 		if ($id !== null)
 			SwatDB::deleteRow($this->db, $this->table,
 				$id_field->__toString(), $id);
+	}
+
+	// }}}
+	// {{{ protected function saveNewBinding()
+
+	/**
+	 * Saves a new binding object without an id to the database
+	 *
+	 * Only modified properties are saved. It is always inserted,
+	 * never updated.
+	 */
+	protected function saveNewBinding()
+	{
+		$modified_properties = $this->getModifiedProperties();
+
+		if (count($modified_properties) == 0)
+			return;
+
+		$fields = array();
+		$values = array();
+
+		foreach ($this->getModifiedProperties() as $name => $value) {
+			$type = $this->guessType($name, $value);
+			$fields[] = sprintf('%s:%s', $type, $name);
+			$values[$name] = $value;
+		}
+
+		SwatDB::insertRow($this->db, $this->table, $fields, $values);
 	}
 
 	// }}}
@@ -891,7 +931,7 @@ class SwatDBDataObject extends SwatObject
 		return array('table', 'id_field',
 			'sub_data_objects', 'property_hashes', 'internal_properties',
 			'internal_property_autosave', 'internal_property_classes',	
-			'date_properties');
+			'date_properties', 'loaded_from_database');
 	}
 
 	// }}}
