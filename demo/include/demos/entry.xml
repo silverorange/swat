@@ -56,7 +56,7 @@
 		</widget>
 
 		<widget class="SwatFormField">
-			<property name="title" type="string">Money Entry (CAD)</property>
+			<property name="title" type="string">Money Entry (Canadian Dollars)</property>
 			<widget class="SwatMoneyEntry" id="money_CA">
 				<property name="value" type="float">1234567.89</property>
 				<property name="locale">en_CA</property>
@@ -65,10 +65,10 @@
 		</widget>
 
 		<widget class="SwatFormField">
-			<property name="title" type="string">Money Entry (French EUR)</property>
+			<property name="title" type="string">Money Entry (British Pounds)</property>
 			<widget class="SwatMoneyEntry" id="money_FR">
 				<property name="value" type="float">1234567.89</property>
-				<property name="locale">fr_FR.utf8</property>
+				<property name="locale">en_GB</property>
 				<property name="display_currency" type="boolean">true</property>
 			</widget>
 		</widget>
