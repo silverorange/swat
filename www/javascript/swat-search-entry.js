@@ -1,11 +1,11 @@
 function SwatSearchEntry(id)
 {
 	this.id = id;
-	this.button = document.getElementById(this.id);
+	this.input = document.getElementById(this.id);
 
 	var labels = document.getElementsByTagName('label');
 	var label = null;
-	
+
 	for (var i = 0; i < labels.length; i++) {
 		if (labels[i].htmlFor == this.id) {
 			label = labels[i];
@@ -17,33 +17,33 @@ function SwatSearchEntry(id)
 		this.label_text =
 			(label.innerText) ? label.innerText : label.textContent;
 
-		if (this.button.value == '') {
-			YAHOO.util.Dom.addClass(this.button, 'swat-search-entry-empty');
-			this.button.value = this.label_text;
+		if (this.input.value == '') {
+			YAHOO.util.Dom.addClass(this.input, 'swat-search-entry-empty');
+			this.input.value = this.label_text;
 		}
 
 		label.style.display = 'none';
 
-		YAHOO.util.Event.addListener(this.button, 'focus', this.handleFocus,
+		YAHOO.util.Event.addListener(this.input, 'focus', this.handleFocus,
 			this, true);
 
-		YAHOO.util.Event.addListener(this.button, 'blur', this.handleBlur,
+		YAHOO.util.Event.addListener(this.input, 'blur', this.handleBlur,
 			this, true);
 	}
 }
 
 SwatSearchEntry.prototype.handleFocus = function(event)
 {
-	if (this.button.value == this.label_text) {
-		this.button.value = '';
-		YAHOO.util.Dom.removeClass(this.button, 'swat-search-entry-empty');
+	if (this.input.value == this.label_text) {
+		this.input.value = '';
+		YAHOO.util.Dom.removeClass(this.input, 'swat-search-entry-empty');
 	}
 }
 
 SwatSearchEntry.prototype.handleBlur = function(event)
 {
-	if (this.button.value == '') {
-		YAHOO.util.Dom.addClass(this.button, 'swat-search-entry-empty');
-		this.button.value = this.label_text;
+	if (this.input.value == '') {
+		YAHOO.util.Dom.addClass(this.input, 'swat-search-entry-empty');
+		this.input.value = this.label_text;
 	}
 }
