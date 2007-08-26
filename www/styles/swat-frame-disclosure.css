@@ -1,24 +1,25 @@
 /*
-	SwatFrameDisclosure styles assume that styles for both
-	SwatFrame and SwatDisclosure are already included
-*/
+ * SwatFrameDisclosure
+ *
+ * These styles assume that styles for both SwatFrame and SwatDisclosure are
+ * already included.
+ */
 
-.swat-frame-disclosure .swat-disclosure-anchor {
+.swat-frame-disclosure .swat-disclosure-anchor-opened,
+.swat-frame-disclosure .swat-disclosure-anchor-closed {
 	top: 0;
 	margin: 0;
-	padding: 0 5px 0 2px;
+	padding: 0 5px 0 24px;
 	color: #666;
-	background: none;
+	background-color: transparent;
+	background-position: 2px 50%;
 }
 
-.swat-frame-disclosure .swat-disclosure-anchor:hover {
+.swat-frame-disclosure .swat-disclosure-anchor-opened:hover,
+.swat-frame-disclosure .swat-disclosure-anchor-closed:hover {
 	color: #333;
 }
 
 .swat-frame-disclosure .swat-disclosure-container {
 	border: 0;
-}
-
-.swat-frame-disclosure .swat-disclosure-image {
-	vertical-align: baseline;
 }
