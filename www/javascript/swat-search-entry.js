@@ -14,15 +14,21 @@ function SwatSearchEntry(id)
 	}
 
 	if (label != null) {
-		this.label_text = (label.textContent) ? label.textContent : label.text;
+		this.label_text =
+			(label.innerText) ? label.innerText : label.textContent;
+
 		if (this.button.value == '') {
 			YAHOO.util.Dom.addClass(this.button, 'swat-search-entry-empty');
 			this.button.value = this.label_text;
 		}
 
 		label.style.display = 'none';
-		YAHOO.util.Event.addListener(this.button, 'focus', this.handleFocus, this, true);
-		YAHOO.util.Event.addListener(this.button, 'blur', this.handleBlur, this, true);
+
+		YAHOO.util.Event.addListener(this.button, 'focus', this.handleFocus,
+			this, true);
+
+		YAHOO.util.Event.addListener(this.button, 'blur', this.handleBlur,
+			this, true);
 	}
 }
 
