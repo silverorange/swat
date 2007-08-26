@@ -56,7 +56,10 @@ class SwatReCaptcha extends SwatInputControl
 		if (!$this->visible)
 			return;
 
-		// passing null, swat has messages that will handle errors for us
+		/*
+		 * Second parameter is null because errors are displayed as
+		 * SwatMessage objects affixed to this widget.
+		 */
 		ReCaptcha::display($this->public_key, null, $this->secure);
 	}
 
