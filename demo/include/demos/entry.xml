@@ -58,17 +58,17 @@
 		<widget class="SwatFormField">
 			<property name="title" type="string">Money Entry (Canadian Dollars)</property>
 			<widget class="SwatMoneyEntry" id="money_CA">
-				<property name="value" type="float">1234567.89</property>
+				<property name="value" type="float">12345.67</property>
 				<property name="locale">en_CA</property>
 				<property name="display_currency" type="boolean">true</property>
 			</widget>
 		</widget>
 
 		<widget class="SwatFormField">
-			<property name="title" type="string">Money Entry (British Pounds)</property>
-			<widget class="SwatMoneyEntry" id="money_FR">
-				<property name="value" type="float">1234567.89</property>
-				<property name="locale">en_GB</property>
+			<property name="title" type="string">Money Entry (Brazillian Reais)</property>
+			<widget class="SwatMoneyEntry" id="money_BR">
+				<property name="value" type="float">12345.67</property>
+				<property name="locale">pt_BR</property>
 				<property name="display_currency" type="boolean">true</property>
 			</widget>
 		</widget>
