@@ -81,8 +81,8 @@ class SwatReCaptcha extends SwatInputControl
 
 		if (!$response->is_valid) {
 			$message = new SwatMessage(Swat::_(
-				'The words you entered did not match the words displayed, '.
-				'please try again.'), SwatMessage::ERROR);
+				'The words you entered did not match the words displayed. '.
+				'Please try again.'), SwatMessage::ERROR);
 
 			$this->addMessage($message);
 		}
