@@ -26,8 +26,7 @@ $app = new DemoApplication('demo');
 
 try {
 	$app->run();
-}
-catch (SwatException $exception) {
+} catch (SwatException $exception) {
 	$exception->process(false);
 }
 
