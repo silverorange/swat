@@ -1330,7 +1330,7 @@ class SwatString extends SwatObject
 			$position = $matches[0][$i][1];
 
 			// offsets are byte offsets, not character offsets
-			if (function_exists('mb_strlen') &&
+			if (extension_loaded('mbstring') &&
 				mb_internal_encoding() == 'UTF-8') {
 				$substr = mb_substr($string, 0, $position, 'latin1');
 				$byte_len = mb_strlen($substr, 'latin1');

@@ -63,7 +63,7 @@ class SwatEmailEntry extends SwatEntry
 	{
 		$valid = false;
 
-		if (function_exists('filter_var')) {
+		if (extension_loaded('filter')) {
 			$valid =
 				(filter_var($this->value, FILTER_VALIDATE_EMAIL) === false);
 		} else {
