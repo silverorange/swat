@@ -32,7 +32,7 @@ function SwatSearchEntry(id)
 	}
 }
 
-SwatSearchEntry.prototype.handleFocus = function(event)
+SwatSearchEntry.prototype.handleFocus = function(e)
 {
 	if (this.input.value == this.label_text) {
 		this.input.value = '';
@@ -40,7 +40,7 @@ SwatSearchEntry.prototype.handleFocus = function(event)
 	}
 }
 
-SwatSearchEntry.prototype.handleBlur = function(event)
+SwatSearchEntry.prototype.handleBlur = function(e)
 {
 	if (this.input.value == '') {
 		YAHOO.util.Dom.addClass(this.input, 'swat-search-entry-empty');
