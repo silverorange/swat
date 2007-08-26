@@ -1,14 +1,44 @@
+/*
+ * SwatDisclosure
+ *
+ * Since disclosures can be nested, closed styles must follow open styles.
+ */
+
 .swat-disclosure-control { }
 
 .swat-disclosure-span,
-.swat-disclosure-anchor {
+.swat-disclosure-anchor-opened,
+.swat-disclosure-anchor-closed {
 	position: relative;
 	top: 0.7em;
 	display: inline;
 	margin: 0 10px 0 5px;
-	padding: 0 5px 0 2px;
+	padding: 0 5px 0 22px;
 	color: #666;
-	background: #fff;
+	background-color: #fff;
+}
+
+.swat-disclosure-anchor-opened,
+.swat-disclosure-anchor-closed {
+	text-decoration: none;
+}
+
+.swat-disclosure-anchor-opened {
+	background-image: url(../images/swat-disclosure-open.png);
+	background-position: 2px 0;
+	background-repeat: no-repeat; 
+}
+* html .swat-disclosure-anchor-opened { /* IE hack */
+	background-image: url(../images/swat-disclosure-open-1-bit.png);
+}
+
+.swat-disclosure-anchor-closed {
+	background-image: url(../images/swat-disclosure-closed.png);
+	background-position: 2px 1px;
+	background-repeat: no-repeat; 
+}
+* html .swat-disclosure-anchor-closed { /* IE hack */
+	background-image: url(../images/swat-disclosure-closed-1-bit.png);
 }
 
 .swat-disclosure-span {
@@ -27,13 +57,4 @@
 
 .swat-disclosure-control-closed .swat-disclosure-container {
 	display: none;
-}
-
-.swat-disclosure-image {
-	border: none;
-	vertical-align: text-top;
-}
-
-.swat-disclosure-anchor {
-	text-decoration: none;
 }

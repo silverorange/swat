@@ -4,40 +4,26 @@ function SwatDisclosure(id, open)
 	this.input = document.getElementById(id + '_input');
 	this.animate_div = this.div.firstChild.nextSibling.nextSibling.firstChild;
 
+	// get initial state
+	if (this.input.value.length) {
+		// remembered state from post values
+		this.opened = (this.input.value == 'opened');
+	} else {
+		// initial display
+		this.opened = open;
+	}
+
 	this.drawDisclosureLink();
 
 	// prevent closing during opening animation and vice versa
 	this.semaphore = false;
 
-	// get initial state
-	if (this.input.value.length) {
-		// remembered state from post values
-		if (this.input.value == 'opened') {
-			this.open();
-		} else {
-			this.close();
-		}
-	} else {
-		// initial display
-		if (open) {
-			this.open();
-		} else {
-			this.close();
-		}
-	}
+	// set initial display state
+	if (this.opened)
+		this.open();
+	else
+		this.close();
 }
-
-SwatDisclosure.open_text = 'open';
-SwatDisclosure.close_text = 'close';
-
-// preload images
-SwatDisclosure.open_image = new Image();
-SwatDisclosure.open_image.src =
-	'packages/swat/images/swat-disclosure-open.png';
-
-SwatDisclosure.closed_image = new Image();
-SwatDisclosure.closed_image.src =
-	'packages/swat/images/swat-disclosure-closed.png';
 
 SwatDisclosure.prototype.toggle = function()
 {
@@ -57,31 +43,27 @@ SwatDisclosure.prototype.drawDisclosureLink = function()
 {
 	var span = this.getSpan();
 	if (span.firstChild && span.firstChild.nodeType == 3)
-		var text = document.createTextNode(' ' + span.firstChild.nodeValue);
+		var text = document.createTextNode(span.firstChild.nodeValue);
 	else
 		var text = document.createTextNode('');
 
-	this.image = document.createElement('img');
-	this.image.src = SwatDisclosure.open_image.src;
-	this.image.alt = SwatDisclosure.close_text;
-	this.image.width = '16';
-	this.image.height = '16';
-	YAHOO.util.Dom.addClass(this.image, 'swat-disclosure-image');
+	this.anchor = document.createElement('a');
+	this.anchor.href = '#';
+	if (this.opened)
+		YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-opened');
+	else
+		YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-closed');
 
-	var anchor = document.createElement('a');
-	anchor.href = '#';
-	YAHOO.util.Dom.addClass(anchor, 'swat-disclosure-anchor');
-	YAHOO.util.Event.addListener(anchor, 'click',
-		function(e, disclosure)
+	YAHOO.util.Event.addListener(this.anchor, 'click',
+		function(e)
 		{
 				YAHOO.util.Event.preventDefault(e);
-				disclosure.toggle();
-		}, this);
+				this.toggle();
+		}, this, true);
 
-	anchor.appendChild(this.image);
-	anchor.appendChild(text);
+	this.anchor.appendChild(text);
 
-	span.parentNode.replaceChild(anchor, span);
+	span.parentNode.replaceChild(this.anchor, span);
 }
 
 SwatDisclosure.prototype.close = function()
@@ -89,10 +71,11 @@ SwatDisclosure.prototype.close = function()
 	YAHOO.util.Dom.removeClass(this.div, 'swat-disclosure-control-opened');
 	YAHOO.util.Dom.addClass(this.div, 'swat-disclosure-control-closed');
 
+	YAHOO.util.Dom.removeClass(this.anchor, 'swat-disclosure-anchor-opened');
+	YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-closed');
+
 	this.semaphore = false;
 
-	this.image.src = SwatDisclosure.closed_image.src;
-	this.image.alt = SwatDisclosure.open_text;
 	this.input.value = 'closed';
 
 	this.opened = false;
@@ -102,6 +85,9 @@ SwatDisclosure.prototype.closeWithAnimation = function()
 {
 	if (this.semaphore)
 		return;
+
+	YAHOO.util.Dom.removeClass(this.anchor, 'swat-disclosure-anchor-opened');
+	YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-closed');
 
 	this.animate_div.style.overflow = 'hidden';
 	this.animate_div.style.height = '';
@@ -113,8 +99,6 @@ SwatDisclosure.prototype.closeWithAnimation = function()
 	animation.onComplete.subscribe(this.handleClose, this, true);
 	animation.animate();
 
-	this.image.src = SwatDisclosure.closed_image.src;
-	this.image.alt = SwatDisclosure.open_text;
 	this.input.value = 'closed';
 	this.opened = false;
 }
@@ -124,10 +108,11 @@ SwatDisclosure.prototype.open = function()
 	YAHOO.util.Dom.removeClass(this.div, 'swat-disclosure-control-closed');
 	YAHOO.util.Dom.addClass(this.div, 'swat-disclosure-control-opened');
 
+	YAHOO.util.Dom.removeClass(this.anchor, 'swat-disclosure-anchor-closed');
+	YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-opened');
+
 	this.semaphore = false;
 
-	this.image.src = SwatDisclosure.open_image.src;
-	this.image.alt = SwatDisclosure.close_text;
 	this.input.value = 'opened';
 	this.opened = true;
 }
@@ -139,6 +124,9 @@ SwatDisclosure.prototype.openWithAnimation = function()
 
 	YAHOO.util.Dom.removeClass(this.div, 'swat-disclosure-control-closed');
 	YAHOO.util.Dom.addClass(this.div, 'swat-disclosure-control-opened');
+
+	YAHOO.util.Dom.removeClass(this.anchor, 'swat-disclosure-anchor-closed');
+	YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-opened');
 
 	// get display height
 	this.animate_div.parentNode.style.overflow = 'hidden';
@@ -161,8 +149,6 @@ SwatDisclosure.prototype.openWithAnimation = function()
 	animation.onComplete.subscribe(this.handleOpen, this, true);
 	animation.animate();
 
-	this.image.src = SwatDisclosure.open_image.src;
-	this.image.alt = SwatDisclosure.close_text;
 	this.input.value = 'opened';
 	this.opened = true;
 }
@@ -171,6 +157,7 @@ SwatDisclosure.prototype.handleClose = function()
 {
 	YAHOO.util.Dom.removeClass(this.div, 'swat-disclosure-control-opened');
 	YAHOO.util.Dom.addClass(this.div, 'swat-disclosure-control-closed');
+
 	this.semaphore = false;
 }
 

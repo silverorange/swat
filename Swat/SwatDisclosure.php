@@ -181,39 +181,11 @@ class SwatDisclosure extends SwatDisplayableContainer
 	 */
 	protected function getInlineJavaScript()
 	{
-		static $shown = false;
-
-		if (!$shown) {
-			$javascript = $this->getInlineJavaScriptTranslations();
-			$shown = true;
-		} else {
-			$javascript = '';
-		}
-
 		$open = ($this->open) ? 'true' : 'false';
 		$javascript.= sprintf("var %s_obj = new %s('%s', %s);",
 			$this->id, $this->getJavaScriptClass(), $this->id, $open);
 
 		return $javascript;
-	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScriptTranslations()
-
-	/**
-	 * Gets translatable string resources for the JavaScript object for
-	 * this widget
-	 *
-	 * @return string translatable JavaScript string resources for this widget.
-	 */
-	protected function getInlineJavaScriptTranslations()
-	{
-		$open_text  = Swat::_('open');
-		$close_text = Swat::_('close');
-
-		return
-			"SwatDisclosure.open_text = '{$open_text}';\n".
-			"SwatDisclosure.close_text = '{$close_text}';\n";
 	}
 
 	// }}}
