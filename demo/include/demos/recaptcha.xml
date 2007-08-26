@@ -8,6 +8,8 @@
 				<property name="public_key" type="string">6LfrRgAAAAAAAIGGO3-lOjPvYqGc5RlpICTtybXZ</property>
 				<property name="private_key" type="string">6LfrRgAAAAAAAHBsp6qJkCAhOCE9mz4SAxN17_aE</property>
 			</widget>
+		</widget>
+		<widget class="SwatFooterFormField">
 			<widget class="SwatButton" id="button" />
 		</widget>
 	</widget>
