@@ -34,6 +34,12 @@
 
 .swat-message-display .swat-message-with-secondary .swat-message-container {
 	padding-top: 12px;
+	min-height: 36px;
+}
+
+/* Hack for min-height in IE  */
+* html .swat-message-display .swat-with-secondary .swat-message-container {
+	height: 36px;
 }
 
 .swat-message-with-secondary .swat-message-display-dismiss-link {
