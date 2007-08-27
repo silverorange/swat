@@ -182,10 +182,8 @@ class SwatDisclosure extends SwatDisplayableContainer
 	protected function getInlineJavaScript()
 	{
 		$open = ($this->open) ? 'true' : 'false';
-		$javascript.= sprintf("var %s_obj = new %s('%s', %s);",
+		return sprintf("var %s_obj = new %s('%s', %s);",
 			$this->id, $this->getJavaScriptClass(), $this->id, $open);
-
-		return $javascript;
 	}
 
 	// }}}
