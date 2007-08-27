@@ -1,51 +1,60 @@
-function SwatCascade(parent, child)
+function SwatCascade(from_flydown_id, to_flydown_id)
 {
-	this.parent = document.getElementById(parent);
-	this.child = document.getElementById(child);
+	this.from_flydown = document.getElementById(from_flydown_id);
+	this.to_flydown = document.getElementById(to_flydown_id);
 	this.children = [];
-	this.blank_option = this.child[0];
 
-	YAHOO.util.Event.addListener(this.parent, 'change',
-		SwatCascade.parentChangeHandler, this);
+	YAHOO.util.Event.addListener(this.from_flydown, 'change',
+		this.handleChange, this, true);
 }
 
-SwatCascade.parentChangeHandler = function(event, object)
+SwatCascade.prototype.handleChange = function(e)
 {
-	object.update();
+	this.update(false);
 }
 
-SwatCascade.prototype.update = function()
+SwatCascade.prototype.update = function(selected)
 {
-	var display = this.children[this.parent.value];
+	var child_options = this.children[this.from_flydown.value];
 
-	// reset the options
-	for (var i = (this.child.options.length - 1); i > -1;  i--)
-		this.child.removeChild(this.child.options[i])
+	// clear old options
+	this.to_flydown.options.length = 0;
 
-	if (display) {
-		this.child.disabled = false;
+	if (child_options) {
+		this.to_flydown.disabled = false;
 
-		for (i = 0; i < display.length; i++)
-			this.child.appendChild(
-				new Option(display[i].title, display[i].value, display[i].selected));
+		for (var i = 0; i < child_options.length; i++) {
+			// only select default option if we are intializing
+			if (selected)
+				this.to_flydown.options[this.to_flydown.options.length] =
+					new Option(child_options[i].title,
+						child_options[i].value, child_options[i].selected);
+			else
+				this.to_flydown.options[this.to_flydown.options.length] =
+					new Option(child_options[i].title,
+						child_options[i].value);
+		}
 
 	} else {
-		this.child.options[0] = this.blank_option;
-		this.child.disabled = true;
+		// the following string contains UTF-8 encoded non breaking spaces
+		this.to_flydown.options[0] = new Option('      ', 0);
+		this.to_flydown.disabled = true;
 	}
 }
 
-SwatCascade.prototype.addChild = function(parent, value, title, selected)
+SwatCascade.prototype.addChild = function(from_flydown_value, value, title,
+	selected)
 {
-	if (!this.children[parent])
-		this.children[parent] = [];
+	if (!this.children[from_flydown_value])
+		this.children[from_flydown_value] = [];
 
-	this.children[parent].push(new SwatCascadeChild(value, title, selected));
+	this.children[from_flydown_value].push(
+		new SwatCascadeChild(value, title, selected));
 }
 
 SwatCascade.prototype.init = function()
 {
-	this.update();
+	this.update(true);
 }
 
 function SwatCascadeChild(value, title, selected)
