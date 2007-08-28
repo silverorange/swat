@@ -47,11 +47,11 @@
 .image-cropper .cropper .m { top:50%; margin-top:-3px; }
 .image-cropper .cropper .c { left:50%; margin-left:-3px; }
 
-.image-cropper .cropper .l.t { cursor:nw-resize; }
-.image-cropper .cropper .c.t { cursor:n-resize;  }
-.image-cropper .cropper .r.t { cursor:ne-resize; }
-.image-cropper .cropper .l.m { cursor:w-resize;  }
-.image-cropper .cropper .r.m { cursor:e-resize;  }
-.image-cropper .cropper .l.b { cursor:sw-resize; }
-.image-cropper .cropper .c.b { cursor:s-resize;  }
-.image-cropper .cropper .r.b { cursor:se-resize; }
+.image-cropper .cropper .tl { cursor:nw-resize; }
+.image-cropper .cropper .tc { cursor:n-resize;  }
+.image-cropper .cropper .tr { cursor:ne-resize; }
+.image-cropper .cropper .ml { cursor:w-resize;  }
+.image-cropper .cropper .mr { cursor:e-resize;  }
+.image-cropper .cropper .bl { cursor:sw-resize; }
+.image-cropper .cropper .bc { cursor:s-resize;  }
+.image-cropper .cropper .br { cursor:se-resize; }

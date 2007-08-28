@@ -358,34 +358,42 @@ YAHOO.widget.ImageCropper = function ( img, config ) {
                 case 0:
                     YD.addClass( hook, "t" );
                     YD.addClass( hook, "l" );
+                    YD.addClass( hook, "tl" );
                     break;
                 case 1:
                     YD.addClass( hook, "t" );
                     YD.addClass( hook, "r" );
+                    YD.addClass( hook, "tr" );
                     break;
                 case 2:
                     YD.addClass( hook, "b" );
                     YD.addClass( hook, "l" );
+                    YD.addClass( hook, "bl" );
                     break;
                 case 3:
                     YD.addClass( hook, "b" );
                     YD.addClass( hook, "r" );
+                    YD.addClass( hook, "br" );
                     break;
                 case 4:
                     YD.addClass( hook, "t" );
                     YD.addClass( hook, "c" );
+                    YD.addClass( hook, "tc" );
                     break;
                 case 5:
                     YD.addClass( hook, "m" );
                     YD.addClass( hook, "r" );
+                    YD.addClass( hook, "mr" );
                     break;
                 case 6:
                     YD.addClass( hook, "b" );
                     YD.addClass( hook, "c" );
+                    YD.addClass( hook, "bc" );
                     break;
                 case 7:
                     YD.addClass( hook, "m" );
                     YD.addClass( hook, "l" );
+                    YD.addClass( hook, "ml" );
                     break;
             }
 
