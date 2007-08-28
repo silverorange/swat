@@ -8,8 +8,8 @@
 
 			<widget class="SwatImageCropper">
 				<property name="image_width" type="integer">400</property>
-				<property name="image_height" type="integer">260</property>
-				<property name="image_url">images/crop1.jpg</property>
+				<property name="image_height" type="integer">267</property>
+				<property name="image_uri">images/crop1.jpg</property>
 			</widget>
 
 		</widget>
@@ -18,10 +18,10 @@
 			<property name="title">Cropper with aspect ratio set</property>
 
 			<widget class="SwatImageCropper">
-				<property name="image_width" type="integer">260</property>
+				<property name="image_width" type="integer">267</property>
 				<property name="image_height" type="integer">400</property>
-				<property name="crop_box_ratio" type="float">2</property>
-				<property name="image_url">images/crop2.jpg</property>
+				<property name="crop_box_ratio" type="float">2.0</property>
+				<property name="image_uri">images/crop2.jpg</property>
 			</widget>
 
 		</widget>
