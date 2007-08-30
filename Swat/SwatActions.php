@@ -11,6 +11,7 @@ require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 require_once 'Swat/SwatYUI.php';
+require_once 'Swat/exceptions/SwatException.php';
 
 /**
  * Actions widget
@@ -52,6 +53,18 @@ class SwatActions extends SwatControl implements SwatUIParent
 	public $auto_reset = true;
 
 	// }}}
+	// {{{ protected properties
+
+	/**
+	 * The available actions for this actions selector indexed by id
+	 *
+	 * This array only contains actions that have a non-null id.
+	 *
+	 * @var array
+	 */
+	protected $action_items_by_id = array();
+
+	// }}}
 	// {{{ private properties
 
 	/**
@@ -78,16 +91,6 @@ class SwatActions extends SwatControl implements SwatUIParent
 	private $action_items = array();
 
 	/**
-	 * The available actions for this actions selector indexed by id
-	 *
-	 * This array only contains actions that have a non-null id.
-	 *
-	 * @var array
-	 */
-	protected $action_items_by_id = array();
-
-
-	/**
 	 * An internal flag that is set to true when embedded widgets have been
 	 * created
 	 *
@@ -96,6 +99,24 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 * @see SwatActions::createEmbeddedWidgets()
 	 */
 	private $widgets_created = false;
+
+	/**
+	 * The view containing itmes acted upon by this actions control
+	 *
+	 * @var SwatView
+	 *
+	 * @see SwatActions::setViewSelector()
+	 */
+	private $view;
+
+	/**
+	 * The selector used to select items acted upon by this actions control
+	 *
+	 * @var SwatViewSelector
+	 *
+	 * @see SwatActions::setViewSelector()
+	 */
+	private $selector;
 
 	// }}}
 	// {{{ public function __construct()
@@ -447,6 +468,39 @@ class SwatActions extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function setViewSelector()
+
+	/**
+	 * Sets the optional view and selector of this actions control
+	 *
+	 * If a view and selector are specified for this actions control,
+	 * submitting the form is prevented until one or more items in the view
+	 * are selected by the selector.
+	 *
+	 * @param SwatView $view the view items must be selected in.
+	 * @param SwatViewSelector $selector optional. The selector in the view
+	 *                                    that must select the items. If not
+	 *                                    specified, the first selector in the
+	 *                                    view is used.
+	 *
+	 * @throws SwatException if no selector is specified and the the specified
+	 *                       view does not have a selector.
+	 */
+	public function setViewSelector(SwatView $view,
+		SwatViewSelector $selector = null)
+	{
+		if ($selector === null)
+			$selector = $view->getFirstDescendant('SwatViewSelector');
+
+		if ($selector === null)
+			throw new SwatException(
+				'No selector was specified and view does not have a selector');
+
+		$this->view = $view;
+		$this->selector = $selector;
+	}
+
+	// }}}
 	// {{{ protected function displayButton()
 
 	/**
@@ -521,11 +575,16 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$selected_value = ($this->selected === null) ?
 			'null' : "'".$this->selected->id."'";
 
-		$javascript.= sprintf("var %s = new SwatActions('%s', [%s], %s);",
+		$javascript.= sprintf("var %s_obj = new SwatActions('%s', [%s], %s);",
 			$this->id,
 			$this->id,
 			implode(', ', $values),
 			$selected_value);
+
+		if ($this->view !== null && $this->selector !== null) {
+			$javascript.= sprintf("\n%s_obj.setViewSelector(%s, '%s');",
+				$this->id, $this->view->id, $this->selector->getId());
+		}
 
 		return $javascript;
 	}
