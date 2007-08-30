@@ -61,6 +61,26 @@ class SwatSelectList extends SwatCheckboxList
 	}
 
 	// }}}
+	// {{{ public function getNote()
+
+	/**
+	 * Gets a note letting the user know the select list can select multiple
+	 * options 
+	 *
+	 * @return SwatMessage a note letting the user know the select list can
+	 *                      select multiple options.
+	 *
+	 * @see SwatControl::getNote()
+	 */
+	public function getNote()
+	{
+		$message = Swat::_(
+			'You can select multiple items by holding down the Ctrl key.');
+
+		return new SwatMessage($message);
+	}
+
+	// }}}
 }
 
 ?>
