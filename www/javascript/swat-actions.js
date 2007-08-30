@@ -9,6 +9,8 @@ function SwatActions(id, values, selected)
 
 	this.values = values;
 	this.message_shown = false;
+	this.view = null;
+	this.selector_id = null;
 
 	// create message content area
 	this.message_content = document.createElement('span');
@@ -54,6 +56,14 @@ SwatActions.select_an_item_text = 'Please select one or more items.';
 SwatActions.select_an_item_and_an_action_text =
 	'Please select an action, and one or more items.';
 
+SwatActions.prototype.setViewSelector = function(view, selector_id)
+{
+	if (view.getSelectorItemCount) {
+		this.view = view;
+		this.selector_id = selector_id;
+	}
+}
+
 SwatActions.prototype.handleChange = function()
 {
 	if (this.selected_element)
@@ -77,8 +87,12 @@ SwatActions.prototype.handleButtonClick = function(e)
 	else
 		is_blank = (value_exp[1] == 'N;');
 
-	// TODO: make this dynamic
-	var items_selected = (index_view.getSelectorItemCount('items') > 0);
+	if (this.view) {
+		var items_selected =
+			(this.view.getSelectorItemCount(this.selector_id) > 0);
+	} else {
+		var items_selected = true;
+	}
 
 	var message;
 	if (is_blank && !items_selected) {
