@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="my_form">
+
+		<widget class="SwatGroupingFormField">
+			<property name="title">Select One or More Fruits</property>
+
+			<widget class="SwatSelectList" id="select_list">
+				<property name="values[]" type="integer">1</property>
+				<property name="values[]" type="integer">3</property>
+			</widget>
+		</widget>
+			
+		<widget class="SwatFooterFormField">
+			<widget class="SwatButton" id="done" />
+		</widget>
+
+	</widget>
+</swatml>

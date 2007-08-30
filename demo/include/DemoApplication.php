@@ -17,7 +17,7 @@ class DemoApplication
 
 	private $ui;
 	private $demo;
-	
+
 	private $available_demos = array(
 		'Button'            => 'SwatButton',
 		'Calendar'          => 'SwatCalendar',
@@ -45,6 +45,7 @@ class DemoApplication
 		'Rating'            => 'SwatRating',
 		'Recaptcha'         => 'SwatReCaptcha',
 		'Replicable'        => 'SwatReplicable',
+		'SelectList'        => 'SwatSelectList',
 		'String'            => 'SwatString',
 		'TableView'         => 'SwatTableView',
 		'TableViewInputRow' => 'SwatTableViewInputRow',
@@ -107,7 +108,7 @@ class DemoApplication
 		$this->demo_ui->loadFromXML(
 			'../include/demos/'.strtolower($this->demo).'.xml',
 			$this->layout_ui->getWidget('main_frame'));
-		
+
 		if (file_exists('../include/demos/'.$this->demo.'Demo.php')) {
 			require_once '../include/demos/'.$this->demo.'Demo.php';
 
@@ -338,6 +339,10 @@ class DemoApplication
 				'SwatReplicableFieldset',
 				'SwatReplicableFormField',
 				);
+			break;
+
+		case 'SelectListDemo':
+			$entries = array('SwatSelectList');
 			break;
 
 		case 'StringDemo':
