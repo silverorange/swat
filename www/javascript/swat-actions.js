@@ -36,12 +36,7 @@ function SwatActions(id, values, selected)
 	this.message_span.appendChild(message_dismiss);
 
 	// add message span to document
-	if (button.nextSibling) {
-		button.parentNode.insertBefore(this.message_span,
-			button.nextSibling);
-	} else {
-		button.parentNode.appendChild(this.message_span);
-	}
+	button.parentNode.appendChild(this.message_span);
 
 	YAHOO.util.Event.addListener(this.flydown, 'change',
 		this.handleChange, this, true);
