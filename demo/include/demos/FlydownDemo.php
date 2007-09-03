@@ -91,7 +91,7 @@ class FlydownDemo extends Demo
 
 		$cascade_to->options = array(
 			0 => array(
-				new SwatOption(0, 'Mackintosh'),
+				new SwatOption(0, 'McIntosh'),
 				new SwatOption(1, 'Courtland'),
 				new SwatOption(2, 'Golden Delicious'),
 				new SwatOption(3, 'Fuji'),
