@@ -260,7 +260,14 @@ class SwatFileEntry extends SwatInputControl
 					$finfo = new finfo(FILEINFO_MIME);
 					$this->mime_type = $finfo->file($temp_file_name);
 				} else {
-					$this->mime_type = mime_content_type($temp_file_name);
+					if (function_exists('mime_content_type'))
+						$this->mime_type = mime_content_type($temp_file_name);
+					else
+						throw new SwatException('The function'.
+							' mime_content_type does not exist. Make sure'.
+							' that a magic.mime file exists and that'.
+							' mime_magic.debug is turned on in the php.ini'.
+							' file.');
 				}
 			} else {
 				$this->mime_type = $this->file['type'];
