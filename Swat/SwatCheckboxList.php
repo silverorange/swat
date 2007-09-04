@@ -179,8 +179,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 	/**
 	 * Processes this checkbox list widget
-	 *
-	 * @return array Array of checked values
 	 */
 	public function process()
 	{
