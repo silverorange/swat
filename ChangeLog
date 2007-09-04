@@ -1,3 +1,233 @@
+2007-09-04  gauthierm
+
+	* [r19835] swat/trunk/Swat/SwatFileEntry.php:
+	  Review of r19830. mime_content_type only exists if a
+	  compile-time flag is specified.
+
+2007-09-03  charles
+
+	* [r19830] swat/trunk/Swat/SwatFileEntry.php:
+	  Ticket #1272, an exception is now thrown if the
+	  mime_content_type function does not exist, the exception will
+	  help guide the user to a solution.
+
+2007-09-03  gauthierm
+
+	* [r19829] swat/trunk/demo/include/demos/FlydownDemo.php:
+	  In the swat demo, use McIntosh the apple, not Mackintosh the
+	  raincoat.
+
+2007-08-30  gauthierm
+
+	* [r19798] swat/trunk/Swat/SwatSelectList.php:
+	  Use same passive wording as the change-order control.
+	* [r19797] swat/trunk/Swat/SwatSelectList.php:
+	  Add a handy note (this content might need to automatically
+	  change for OS X.
+	* [r19796] swat/trunk/demo/include/DemoApplication.php,
+	  swat/trunk/demo/include/demos/SelectListDemo.php,
+	  swat/trunk/demo/include/demos/selectlist.xml:
+	  Add select list to Swat demo.
+	* [r19795] swat/trunk/Swat/SwatSelectList.php:
+	  Select list widget.
+	* [r19789] swat/trunk/www/javascript/swat-actions.js:
+	  Always add message span to end of button container.
+	* [r19787] swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/www/javascript/swat-actions.js:
+	  Add ability to specify what view and selector control the
+	  actions control. Part of ticket #1217.
+
+2007-08-28  gauthierm
+
+	* [r19741] swat/trunk/www/javascript/swat-yui-image-cropper.js,
+	  swat/trunk/www/styles/swat-yui-image-cropper.css:
+	  Image cropepr resize hook cursor styles that work in IE6.
+	* [r19740] swat/trunk/www/javascript/swat-confirmation-button.js:
+	  event is a reserved word in JS
+	* [r19739] swat/trunk/package.php:
+	  jQuery is no longer a dependency of Swat.
+	* [r19738] swat/trunk/Swat/SwatImageCropper.php,
+	  swat/trunk/demo/include/demos/imagecropper.xml,
+	  swat/trunk/www/javascript/swat-image-cropper.js,
+	  swat/trunk/www/javascript/swat-yui-image-cropper.js,
+	  swat/trunk/www/styles/swat-image-cropper.css,
+	  swat/trunk/www/styles/swat-yui-image-cropper.css:
+	  Better image cropper that doesn't depend on jQuery. This also
+	  cleans up a lot of documentation and API. This works in IE6 and
+	  also remembers its state across form submits.
+
+2007-08-27  gauthierm
+
+	* [r19721] swat/trunk/www/styles/swat-tile-view.css:
+	  Fix ticket #1254: TileView is broken in IE6. This adds position:
+	  relative; to tiles and removes the unsupported transparent
+	  border from tiles.
+	* [r19720] swat/trunk/Swat/SwatCascadeFlydown.php,
+	  swat/trunk/www/javascript/swat-cascade.js:
+	  Ticket #1248: CascadeFlydown doesn't work in IE6. Use a
+	  documented older way of interacting with select options that
+	  works in IE6. Also, general syntax cleanups and improvements to
+	  JavaScript. Also, fix blank option display in
+	  SwatCascadeFlydown.php.
+	* [r19709] swat/trunk/Swat/SwatDisclosure.php:
+	  Fix undefined variable.
+
+2007-08-26  gauthierm
+
+	* [r19708] swat/trunk/www/javascript/swat-search-entry.js:
+	  event is a keyword in JavaScript.
+	* [r19707] swat/trunk/www/javascript/swat-search-entry.js:
+	  Fix name of object property. This is a text input, not a button.
+	* [r19706] swat/trunk/www/javascript/swat-search-entry.js:
+	  Fix for ticket #1255: This should work better in IE but isn't
+	  tested yet.
+	* [r19700] swat/trunk/Swat/SwatDisclosure.php,
+	  swat/trunk/www/images/swat-disclosure-closed-1-bit.png,
+	  swat/trunk/www/images/swat-disclosure-open-1-bit.png,
+	  swat/trunk/www/javascript/swat-disclosure.js,
+	  swat/trunk/www/styles/swat-disclosure.css,
+	  swat/trunk/www/styles/swat-frame-disclosure.css:
+	  Add and use 1-bit transparent images in IE6. This changes
+	  disclosure widgets from using image elements to using background
+	  images styled in CSS.
+	* [r19698] swat/trunk/Swat/SwatReCaptcha.php:
+	  Tidy up comment.
+	* [r19697] swat/trunk/Swat/SwatReCaptcha.php:
+	  Fix reCAPTCHA validation message. This should at least be a
+	  semicolon if not a period.
+	* [r19696] swat/trunk/demo/include/demos/recaptcha.xml:
+	  Put submit button in a footer form field for recaptch demo.
+	* [r19695] swat/trunk/demo/www/index.php:
+	  coding conventions for try catch block.
+	* [r19694] swat/trunk/demo/www/index.php:
+	  Add recaptcha package to swat demo index.php and add a multiline
+	  comment explaining the use of package config in the demo.
+	* [r19693] swat/trunk/demo/include/demos/entry.xml:
+	  Use a simpler locale that has an ASCII representation of
+	  currency symbol for money entry demo.
+	* [r19692] swat/trunk/demo/include/demos/entry.xml:
+	  For the money entry demo, don't use a system-specific locale
+	  modifier for the demonstration locale.
+	* [r19691] swat/trunk/Swat/SwatEmailEntry.php,
+	  swat/trunk/Swat/SwatFileEntry.php,
+	  swat/trunk/Swat/SwatString.php:
+	  Use extension_loaded() instead of class/function_exists() where
+	  possible.
+	* [r19690] swat/trunk/www/styles/swat-message-display.css:
+	  Fix bottom padding for small font sizes for messages with
+	  secondary content. This looks a lot better in Safari for example.
+	* [r19689] swat/trunk/demo/include/demos/ImageCropper.xml:
+	  Remove file that was both incorrectly named and served no
+	  purpose. This file prevented SVN checkouts on OS X or Windows
+	  from succeeding.
+
+2007-08-25  nrf
+
+	* [r19676] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  Currently binding data objects can not be saved since they don't
+	  have a single id field. Sometime in the future when dataobjects
+	  are refactored I'd like to treat binding dataobjects the same as
+	  regular dataobjects but with multiple ids. However in the
+	  meantime this patch allows for the intial saving of new binding
+	  data objects that were manually instantiated and not loaded from
+	  the database.
+	  
+	  I'm using this for VanBourgondien import. Nick, you may have a
+	  use for this in the gallery.
+
+2007-08-24  gauthierm
+
+	* [r19664] swat/trunk/www/styles/swat-image-preview-display.css:
+	  Fix ticket 1253.
+	* [r19662]
+	  swat/trunk/www/javascript/swat-image-preview-display.js:
+	  Append elements to link parent instead of body to fix IE crasher
+	  bug. Ticket #1249.
+	* [r19659] swat/trunk/www/javascript/swat-simple-color-entry.js,
+	  swat/trunk/www/styles/swat-color-entry.css:
+	  Fix ticket #1252: SimpleColorEntry is broken in IE6. This fixes
+	  an IE quirk where the button type property is readonly, adds
+	  some var declerations and sets the width of the button for IE.
+	* [r19657] swat/trunk/www/javascript/swat-checkbox-entry-list.js:
+	  'event' is a JavaScript keyword.
+	* [r19656] swat/trunk/Swat/SwatFlydown.php:
+	  Easier-to-read logic for getting focusable id.
+	* [r19655] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  Require SwatEntry in SwatCheckboxEntryList
+	* [r19654] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  Documentation fixes and additions.
+	* [r19652] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  We don't need key here.
+	* [r19651] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  Remove trailing whitespace.
+	* [r19650] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  Put setEntryValuesByArray() after setEntryValue().
+	* [r19649] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  Remove unneeded lines.
+	* [r19648] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  Small cleanups.
+
+2007-08-23  charles
+
+	* [r19623] swat/trunk/Swat/SwatCheckboxEntryList.php:
+	  It should be looking at the options value not at the keys in the
+	  array.
+
+2007-08-23  nrf
+
+	* [r19622] swat/trunk/Swat/SwatFlydown.php:
+	  Only return a focusable id when a flydown is displayed.
+
+2007-08-23  charles
+
+	* [r19606] swat/trunk/Swat/SwatCheckboxEntryList.php,
+	  swat/trunk/www/javascript/swat-checkbox-entry-list.js:
+	  New SwatCheckboxEntryList made by mike. This should make
+	  SwatCheckboxEntryLists easier to understand. Now site code will
+	  need to be changed.
+
+2007-08-22  charles
+
+	* [r19589] swat/trunk/Swat/SwatTableViewSpanningColumn.php:
+	  Revert to the pervious change, titles on spanning columns aren't
+	  ready to be commited yet.
+	* [r19588] swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/Swat/SwatBooleanCellRenderer.php,
+	  swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/Swat/SwatCheckAll.php,
+	  swat/trunk/Swat/SwatCheckboxCellRenderer.php,
+	  swat/trunk/Swat/SwatCheckboxEntryList.php,
+	  swat/trunk/Swat/SwatCheckboxTree.php,
+	  swat/trunk/Swat/SwatColorEntry.php,
+	  swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/Swat/SwatDetailsViewVerticalField.php,
+	  swat/trunk/Swat/SwatDisplayableContainer.php,
+	  swat/trunk/Swat/SwatExpandableCheckboxTree.php,
+	  swat/trunk/Swat/SwatGroupedFlydown.php,
+	  swat/trunk/Swat/SwatGroupingFormField.php,
+	  swat/trunk/Swat/SwatImageCellRenderer.php,
+	  swat/trunk/Swat/SwatImageCropper.php,
+	  swat/trunk/Swat/SwatImageLinkCellRenderer.php,
+	  swat/trunk/Swat/SwatImagePreviewDisplay.php,
+	  swat/trunk/Swat/SwatNavBar.php,
+	  swat/trunk/Swat/SwatNoteBook.php,
+	  swat/trunk/Swat/SwatNoteBookPage.php,
+	  swat/trunk/Swat/SwatProgressBar.php,
+	  swat/trunk/Swat/SwatRadioTable.php,
+	  swat/trunk/Swat/SwatRemoveInputCell.php,
+	  swat/trunk/Swat/SwatSimpleColorEntry.php,
+	  swat/trunk/Swat/SwatTableViewCheckAllRow.php,
+	  swat/trunk/Swat/SwatTableViewInputRow.php,
+	  swat/trunk/Swat/SwatTableViewSpanningColumn.php,
+	  swat/trunk/Swat/SwatTextCellRenderer.php,
+	  swat/trunk/Swat/SwatTile.php, swat/trunk/Swat/SwatTileView.php:
+	  Added SwatHtmlTag require statements to widgets that use it.
+
+2007-08-21  nrf
+
+	* [r19564] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.30
+
 2007-08-21  gauthierm
 
 	* [r19563] swat/trunk/Swat/SwatTileView.php:
