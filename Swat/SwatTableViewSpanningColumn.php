@@ -67,7 +67,7 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 	 */
 	protected function displayRenderers($row)
 	{
-		if ($this->title !== '') {
+		if (strlen($this->title) > 0) {
 			if ($this->offset === 0)
 				$this->offset = 1;
 					
