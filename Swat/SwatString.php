@@ -1089,13 +1089,8 @@ class SwatString extends SwatObject
 	 */
 	public static function hash($string)
 	{
-		$hash = md5($string);
-
-		$string = '';
-		for ($i = 0; $i < strlen($hash) / 2; $i++)
-			$string .= chr(hexdec(substr($hash, $i * 2, 2)));
-
-		$hash = base64_encode($string);
+		$hash = md5($string, true);
+		$hash = base64_encode($hash);
 
 		// remove padding characters
 		$hash = str_replace('=', '', $hash);
