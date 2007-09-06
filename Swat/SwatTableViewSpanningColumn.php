@@ -73,7 +73,7 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 					
 			$th_tag = new SwatHtmlTag('th', $this->getThAttributes());	
 			$th_tag->colspan = $this->offset;	
-			$th_tag->setContent(($this->title.':'), 'text/plain');
+			$th_tag->setContent($this->title.':');
 			$th_tag->display();
 		} elseif ($this->offset > 0) {
 			$td_tag = new SwatHtmlTag('td');
