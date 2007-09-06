@@ -71,3 +71,10 @@ tr.swat-table-view-input-row-messages {
 tfoot.swat-table-view-invalid-tfoot-ordering {
 	display: table-row-group;
 }
+
+
+/* SwatTableViewSpanningColumn */
+
+.swat-table-view .swat-table-view-spanning-column th {
+	text-align: right;
+}
