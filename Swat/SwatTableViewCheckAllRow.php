@@ -46,6 +46,14 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	private $column;
 
+	/**
+	 * The identifier of the checkbox list that controls the check-all widget
+	 * of this row
+	 *
+	 * @var string
+	 *
+	 * @see SwatTableViewCheckAllRow::__construct()
+	 */
 	private $list_id;
 
 	/**
