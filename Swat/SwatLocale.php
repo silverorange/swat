@@ -303,7 +303,7 @@ class SwatLocale
 	public static function getCurrencyFormat($locale = null)
 	{
 		if ($locale !== null) {
-			$old_locale = setlocale(LC_MONETARY, 0);
+			$old_locale = setlocale(LC_MONETARY, '0');
 			if (setlocale(LC_MONETARY, $locale) === false) {
 				throw new SwatException(sprintf('Locale %s passed to the '.
 					'getCurrencyFormat() method is not valid for this '.
@@ -359,11 +359,11 @@ class SwatLocale
 	public static function getInternationalCurrencyFormat($locale = null)
 	{
 		if ($locale !== null) {
-			$old_locale = setlocale(LC_MONETARY, 0);
+			$old_locale = setlocale(LC_MONETARY, '0');
 			if (setlocale(LC_MONETARY, $locale) === false) {
 				throw new SwatException(sprintf('Locale %s passed to the '.
-					'getCurrencyFormat() method is not valid for this '.
-					'operating system.', $locale));
+					'getCurrencyInternationalFormat() method is not valid '.
+					'for this operating system.', $locale));
 			}
 		}
 
@@ -390,6 +390,70 @@ class SwatLocale
 			setlocale(LC_ALL, $old_locale);
 
 		return $format;
+	}
+
+	// }}}
+	// {{{ public static function getEncoding()
+
+	/**
+	 * Gets the character encoding used by a locale
+	 *
+	 * @param string $locale optional. The locale for which to get the
+	 *                        character encoding. If not specified, the current
+	 *                        locale is used.
+	 *
+	 * @return string the character encoding for the specified locale. If the
+	 *                 character encoding could not be detected, null is
+	 *                 returned.
+	 */
+	public static function getEncoding($locale = null)
+	{
+		$encoding = null;
+
+		if ($locale !== null) {
+			$old_locale = setlocale(LC_ALL, '0');
+			if (setlocale(LC_ALL, $locale) === false) {
+				throw new SwatException(sprintf('Locale %s passed to the '.
+					'getEncoding() method is not valid for this '.
+					'operating system.', $locale));
+			}
+		}
+
+		if (function_exists('nl_langinfo') && is_callable('nl_langinfo')) {
+
+			$encoding = nl_langinfo(CODESET);
+
+		} else {
+
+			// try to detect encoding from locale identifier
+			$lc_ctype = null;
+			$lc_all = setlocale(LC_ALL, '0');
+			$lc_all_exp = explode(';', $lc_all);
+			if (count($lc_all_exp) == 1) {
+				$lc_ctype = reset($lc_all_exp);
+			} else {
+				foreach ($lc_all_exp as $lc) {
+					if (strncmp($lc, 'LC_CTYPE', 8) == 0) {
+						$lc_ctype = $lc;
+						break;
+					}
+				}
+			}
+
+			if ($lc_ctype !== null) {
+				$lc_ctype_exp = explode('.', $lc_ctype, 2);
+				if (count($lc_ctype_exp) == 2) {
+					$encoding = $lc_ctype_exp[1];
+				}
+			}
+
+		}
+
+		if ($locale !== null) {
+			setlocale(LC_ALL, $old_locale);
+		}
+
+		return $encoding;
 	}
 
 	// }}}
