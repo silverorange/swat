@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/exceptions/SwatException.php';
+require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatCurrencyFormat.php';
 
 /**
@@ -12,7 +13,7 @@ require_once 'Swat/SwatCurrencyFormat.php';
  * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatLocale
+class SwatLocale extends SwatObject
 {
 	// {{{ public static formatCurrency()
 
