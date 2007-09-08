@@ -453,6 +453,11 @@ class SwatLocale
 			setlocale(LC_ALL, $old_locale);
 		}
 
+		// assume encoding is a code-page if encoding is numeric
+		if ($encoding !== null && ctype_digit($encoding)) {
+			$encoding = 'CP'.$encoding;
+		}
+
 		return $encoding;
 	}
 
