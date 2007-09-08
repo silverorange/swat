@@ -11,7 +11,6 @@ require_once 'Swat/SwatCurrencyFormat.php';
  * @package   Swat
  * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
- * @todo      Always return UTF-8 strings from getCurrencyFormat()
  */
 class SwatLocale
 {
@@ -297,14 +296,18 @@ class SwatLocale
 	 *
 	 * @throws SwatException if the specified locale is not valid for the
 	 *                        current operating system.
-	 *
-	 * @todo return string properties as UTF-8 even for non-UTF-8 locales.
 	 */
 	public static function getCurrencyFormat($locale = null)
 	{
 		if ($locale !== null) {
-			$old_locale = setlocale(LC_MONETARY, '0');
+			$monetary_locale = setlocale(LC_MONETARY, '0');
+			$ctype_locale = setlocale(LC_CTYPE, '0');
 			if (setlocale(LC_MONETARY, $locale) === false) {
+				throw new SwatException(sprintf('Locale %s passed to the '.
+					'getCurrencyFormat() method is not valid for this '.
+					'operating system.', $locale));
+			}
+			if (setlocale(LC_CTYPE, $locale) === false) {
 				throw new SwatException(sprintf('Locale %s passed to the '.
 					'getCurrencyFormat() method is not valid for this '.
 					'operating system.', $locale));
@@ -312,6 +315,11 @@ class SwatLocale
 		}
 
 		$lc = localeconv();
+
+		// convert locale info to UTF-8
+		$encoding = self::getEncoding();
+		if ($encoding !== null && $encoding !== 'UTF-8')
+			$lc = self::iconvArray($encoding, 'UTF-8', $lc);
 
 		$format = new SwatCurrencyFormat();
 		$format->fractional_digits     = $lc['frac_digits'];
@@ -330,8 +338,10 @@ class SwatLocale
 		$format->p_sign                = $lc['positive_sign'];
 		$format->n_sign                = $lc['negative_sign'];
 
-		if ($locale !== null)
-			setlocale(LC_ALL, $old_locale);
+		if ($locale !== null) {
+			setlocale(LC_MONETARY, $monetary_locale);
+			setlocale(LC_CTYPE, $ctype_locale);
+		}
 
 		return $format;
 	}
@@ -359,15 +369,26 @@ class SwatLocale
 	public static function getInternationalCurrencyFormat($locale = null)
 	{
 		if ($locale !== null) {
-			$old_locale = setlocale(LC_MONETARY, '0');
+			$monetary_locale = setlocale(LC_MONETARY, '0');
+			$ctype_locale = setlocale(LC_CTYPE, '0');
 			if (setlocale(LC_MONETARY, $locale) === false) {
 				throw new SwatException(sprintf('Locale %s passed to the '.
-					'getCurrencyInternationalFormat() method is not valid '.
-					'for this operating system.', $locale));
+					'getCurrencyFormat() method is not valid for this '.
+					'operating system.', $locale));
+			}
+			if (setlocale(LC_CTYPE, $locale) === false) {
+				throw new SwatException(sprintf('Locale %s passed to the '.
+					'getCurrencyFormat() method is not valid for this '.
+					'operating system.', $locale));
 			}
 		}
 
 		$lc = localeconv();
+
+		// convert locale info to UTF-8
+		$encoding = self::getEncoding();
+		if ($encoding !== null && $encoding !== 'UTF-8')
+			$lc = self::iconvArray($encoding, 'UTF-8', $lc);
 
 		$format = new SwatCurrencyFormat();
 		$format->fractional_digits     = $lc['int_frac_digits'];
@@ -386,8 +407,10 @@ class SwatLocale
 		$format->p_sign                = $lc['positive_sign'];
 		$format->n_sign                = $lc['negative_sign'];
 
-		if ($locale !== null)
-			setlocale(LC_ALL, $old_locale);
+		if ($locale !== null) {
+			setlocale(LC_MONETARY, $monetary_locale);
+			setlocale(LC_CTYPE, $ctype_locale);
+		}
 
 		return $format;
 	}
@@ -411,8 +434,8 @@ class SwatLocale
 		$encoding = null;
 
 		if ($locale !== null) {
-			$old_locale = setlocale(LC_ALL, '0');
-			if (setlocale(LC_ALL, $locale) === false) {
+			$old_locale = setlocale(LC_CTYPE, '0');
+			if (setlocale(LC_CTYPE, $locale) === false) {
 				throw new SwatException(sprintf('Locale %s passed to the '.
 					'getEncoding() method is not valid for this '.
 					'operating system.', $locale));
@@ -450,7 +473,7 @@ class SwatLocale
 		}
 
 		if ($locale !== null) {
-			setlocale(LC_ALL, $old_locale);
+			setlocale(LC_CTYPE, $old_locale);
 		}
 
 		// assume encoding is a code-page if encoding is numeric
@@ -459,6 +482,43 @@ class SwatLocale
 		}
 
 		return $encoding;
+	}
+
+	// }}}
+	// {{{ private function iconvArray()
+
+	/**
+	 * Recursivly converts the character encoding of all strings in an array
+	 *
+	 * @param string $from the character encoding to convert from.
+	 * @param string $to the character encoding to convert to.
+	 * @param array $array the array to convert.
+	 *
+	 * @return array a new array with all strings converted to the given
+	 *                character encoding.
+	 *
+	 * @throws SwatException if any component of the array can not be converted
+	 *                       from the <i>$from</i> character encoding to the
+	 *                       <i>$to</i> character encoding.
+	 */
+	private static function iconvArray($from, $to, array $array)
+	{
+		if ($from != $to) {
+			foreach ($array as $key => $value) {
+				if (is_array($value)) {
+					$array[$key] = self::iconvArray($from, $to, $value);
+				} elseif (is_string($value)) {
+					$output = iconv($from, $to, $value);
+					if ($output === false)
+						throw new SwatException(sprintf('Could not convert '.
+							'%s output to %s', $from, $to));
+
+					$array[$key] = $output;
+				}
+			}
+		}
+
+		return $array;
 	}
 
 	// }}}
