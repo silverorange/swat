@@ -706,6 +706,10 @@ class SwatString extends SwatObject
 	 * Note: This method does not work in some operating systems and in such
 	 *       cases, this method will throw an exception.
 	 *
+	 * Note: This method is deprecated. Use {@link SwatLocale::formatCurrency()}
+	 *       instead. The newer method is more flexible and works across more
+	 *       platforms.
+	 *
 	 * @param float $value the numeric value to format.
 	 * @param string $locale optional locale to use to format the value. If no
 	 *                        locale is specified, the current locale is used.
@@ -725,6 +729,9 @@ class SwatString extends SwatObject
 	 * @throws SwatException if the given locale could not be set.
 	 * @throws SwatException if the locale-based output cannot be converted to
 	 *                        UTF-8.
+	 *
+	 * @deprecated Use {@link SwatLocale::foramtCurrency()} instead. It is more
+	 *             flexible and works across more platforms.
 	 */
 	public static function moneyFormat($value, $locale = null,
 		$display_currency = false, $decimal_places = null)
@@ -1404,6 +1411,18 @@ class SwatString extends SwatObject
 
 		return ($decimal_pos !== false) ?
 				strlen($value) - $decimal_pos - strlen($lc['decimal_point']) : 0;
+	}
+
+	// }}}
+	// {{{ private function __construct()
+
+	/**
+	 * Don't allow instantiation of the SwatString object
+	 *
+	 * This class contains only static methods and should not be instantiated.
+	 */
+	private function __construct()
+	{
 	}
 
 	// }}}
