@@ -69,7 +69,7 @@ class SwatLocale extends SwatObject
 			2 : $format->fractional_digits;
 
 		$positive = ($value > 0);
-		$integer_part = abs(floor($value));
+		$integer_part = floor(abs($value));
 		$frac_part = abs(fmod($value, 1));
 		$frac_part = round($frac_part * pow(10, $fractional_digits));
 
