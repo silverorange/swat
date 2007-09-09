@@ -96,10 +96,15 @@ class SwatLocale extends SwatObject
 					$grouping_previous = $grouping;
 				}
 
-				array_push($grouping_values,
-					$grouping_total % pow(10, $grouping));
+				$grouping_value = $grouping_total % pow(10, $grouping);
 
 				$grouping_total = floor($grouping_total / pow(10, $grouping));
+				if ($grouping_total > 0) {
+					$grouping_value = str_pad($grouping_value, $grouping, '0',
+						STR_PAD_LEFT);
+				}
+
+				array_push($grouping_values, $grouping_value);
 			}
 
 			// last grouping repeats until integer part is finished
@@ -119,11 +124,17 @@ class SwatLocale extends SwatObject
 					array_push($grouping_values, $grouping_total);
 				} else {
 					while ($grouping_total > 0) {
-						array_push($grouping_values,
-							$grouping_total % pow(10, $grouping));
+						$grouping_value = $grouping_total % pow(10, $grouping);
 
 						$grouping_total =
 							floor($grouping_total / pow(10, $grouping));
+
+						if ($grouping_total > 0) {
+							$grouping_value = str_pad($grouping_value,
+								$grouping, '0', STR_PAD_LEFT);
+						}
+
+						array_push($grouping_values, $grouping_value);
 					}
 				}
 			}
