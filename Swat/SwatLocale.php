@@ -78,7 +78,7 @@ class SwatLocale extends SwatObject
 		$grouping_values = array();
 		$groupings = $format->grouping;
 		$grouping_total = $integer_part;
-		if (count($groupings) == 0) {
+		if (count($groupings) == 0 || $grouping_total == 0) {
 			array_push($grouping_values, $grouping_total);
 		} else {
 			$grouping_previous = 0;
