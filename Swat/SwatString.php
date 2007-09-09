@@ -730,7 +730,7 @@ class SwatString extends SwatObject
 	 * @throws SwatException if the locale-based output cannot be converted to
 	 *                        UTF-8.
 	 *
-	 * @deprecated Use {@link SwatLocale::foramtCurrency()} instead. It is more
+	 * @deprecated Use {@link SwatLocale::formatCurrency()} instead. It is more
 	 *             flexible and works across more platforms.
 	 */
 	public static function moneyFormat($value, $locale = null,
