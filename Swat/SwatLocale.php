@@ -72,6 +72,7 @@ class SwatLocale extends SwatObject
 		$integer_part = floor(abs($value));
 		$frac_part = abs(fmod($value, 1));
 		$frac_part = round($frac_part * pow(10, $fractional_digits));
+		$frac_part = str_pad($frac_part, $fractional_digits, '0', STR_PAD_LEFT);
 
 		// group integer part with thousands separators
 		$grouping_values = array();
