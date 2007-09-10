@@ -293,6 +293,47 @@ class SwatLocale extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function parseCurrency()
+
+	/**
+	 * Parses a formatted currency string into a floating point number
+	 *
+	 * @param string $string the formatted currency string.
+	 * @param string $locale optional. The locale of the currency string. If
+	 *                        not specified, the current locale is used.
+	 *
+	 * @return float the numeric value of the parsed currency. If the given
+	 *                value could not be parsed, null is returned.
+	 */
+	public static function parseCurrency($string, $locale = null)
+	{
+		$value = null;
+
+		$format = self::getCurrencyFormat($locale);
+		$int_format = self::getInternationalCurrencyFormat($locale);
+
+		$n_sign = ($format->n_sign == '') ? '-' : $format->n_sign;
+
+		$negative = (strpos($string, $n_sign) !== false);
+
+		$string = str_replace($format->symbol, '', $string);
+		$string = str_replace($int_format->symbol, '', $string);
+		$string = str_replace($format->thousands_separator, '', $string);
+		$string = str_replace($format->decimal_separator, '.', $string);
+		$string = str_replace($format->p_sign, '', $string);
+		$string = str_replace($n_sign, '', $string);
+		$string = str_replace(' ', '', $string);
+
+		if ($negative)
+			$string = '-'.$string;
+
+		if (preg_match('/[^0-9.-]/', $string) != 1)
+			$value = floatval($string);
+
+		return $value;
+	}
+
+	// }}}
 	// {{{ public static function getCurrencyFormat()
 
 	/**
