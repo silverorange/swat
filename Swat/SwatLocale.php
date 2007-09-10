@@ -15,7 +15,7 @@ require_once 'Swat/SwatCurrencyFormat.php';
  */
 class SwatLocale extends SwatObject
 {
-	// {{{ public static formatCurrency()
+	// {{{ public static function formatCurrency()
 
 	/**
 	 * Formats a monetary value using a localized format
