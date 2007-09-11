@@ -29,10 +29,10 @@ require_once 'Swat/exceptions/SwatInvalidConstantExpressionException.php';
  */
 class SwatUI extends SwatObject
 {
-	// {{{ protected properties
+	// {{{ private properties
 
 	/**
-	 * An array that maps other package classes to filenames
+	 * An associative array of class-prefix-to-filename-mappings
 	 *
 	 * The array is of the form:
 	 *    package_prefix => path
@@ -42,10 +42,7 @@ class SwatUI extends SwatObject
 	 *
 	 * @var array
 	 */
-	protected $class_map = array('Swat' => 'Swat');
-
-	// }}}
-	// {{{ private properties
+	private static $class_map = array();
 
 	/**
 	 * An array of widgets populated when a UI file is parsed
@@ -93,7 +90,7 @@ class SwatUI extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function mapClassPrefixToPath()
+	// {{{ public static function mapClassPrefixToPath()
 
 	/**
 	 * Maps a class prefix to a path for filename lookup in this UI
@@ -105,9 +102,9 @@ class SwatUI extends SwatObject
 	 *                              path.
 	 * @param string $path the path to map the given class prefix to.
 	 */
-	public function mapClassPrefixToPath($class_prefix, $path)
+	public static function mapClassPrefixToPath($class_prefix, $path)
 	{
-		$this->class_map[$class_prefix] = $path;
+		self::$class_map[$class_prefix] = $path;
 	}
 
 	// }}}
@@ -148,7 +145,7 @@ class SwatUI extends SwatObject
 
 		// try to guess the translation callback based on the
 		// filename of the xml
-		$class_map_reversed = array_reverse($this->class_map, true);
+		$class_map_reversed = array_reverse(self::$class_map, true);
 		foreach ($class_map_reversed as $prefix => $path) {
 			if (strpos($xml_file, $prefix) !== false &&
 				is_callable(array($prefix, 'gettext'))) {
@@ -488,7 +485,7 @@ class SwatUI extends SwatObject
 		if (!class_exists($class)) {
 
 			$class_file = null;
-			foreach ($this->class_map as $package_prefix => $path) {
+			foreach (self::$class_map as $package_prefix => $path) {
 				if (strncmp($class, $package_prefix, strlen($package_prefix)) == 0) {
 					$class_file = "{$path}/{$class}.php";
 					break;

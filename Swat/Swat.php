@@ -3,6 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatYUI.php';
+require_once 'Swat/SwatUI.php';
 
 /**
  * Container for package wide static methods
@@ -241,5 +242,6 @@ if (!function_exists("dgettext")) {
 // }}}
 
 Swat::setupGettext();
+SwatUI::mapClassPrefixToPath('Swat', 'Swat');
 
 ?>
