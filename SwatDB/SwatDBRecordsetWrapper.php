@@ -523,25 +523,29 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	// {{{ public function getInternalValues()
 
 	/**
-	 * Get values from an internal property for each dataobject in the set
+	 * Gets the values of an internal property for each record in this set
 	 *
-	 * @param string $name name of the property to load.
+	 * @param string $name name of the internal property to get.
 	 *
 	 * @return array an array of values.
+	 *
+	 * @throws SwatDBException if records in this recordset do not have an
+	 *                         internal value with the specified <i>$name</i>.
 	 */
 	public function getInternalValues($name)
 	{
-		if (count($this) == 0)
-			return;
-
-		if (!$this->getFirst()->hasInternalValue($name))
-			throw new SwatDBException(
-				"Dataobjects do not contain an internal field named '$name'.");
-
 		$values = array();
 
-		foreach ($this->objects as $object)
-			$values[] = $object->getInternalValue($name);
+		if (count($this) > 0) {
+			if (!$this->getFirst()->hasInternalValue($name)) {
+				throw new SwatDBException(
+					"Records in this recordset do not contain an internal ".
+					"field named '{$name}'.");
+			}
+
+			foreach ($this->objects as $object)
+				$values[] = $object->getInternalValue($name);
+		}
 
 		return $values;
 	}
