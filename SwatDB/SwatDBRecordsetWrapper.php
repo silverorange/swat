@@ -569,20 +569,21 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	public function loadAllSubDataObjects($name, MDB2_Driver_Common $db, $sql,
 		$wrapper, $type = 'integer')
 	{
+		$sub_data_objects = null;
+
 		$values = $this->getInternalValues($name);
 		$values = array_filter($values,
 			create_function('$value', 'return $value !== null;'));
 
-		if (empty($values))
-			return null;
+		if (count($values) > 0) {
+			$this->checkDB();
+			$this->db->loadModule('Datatype', null, true);
+			$quoted_values = $this->db->datatype->implodeArray($values, $type);
 
-		$this->checkDB();
-		$this->db->loadModule('Datatype', null, true);
-		$quoted_values = $this->db->datatype->implodeArray($values, $type);
-
-		$sql = sprintf($sql, $quoted_values);
-		$sub_data_objects = SwatDB::query($db, $sql, $wrapper);
-		$this->attachSubDataObjects($name, $sub_data_objects);
+			$sql = sprintf($sql, $quoted_values);
+			$sub_data_objects = SwatDB::query($db, $sql, $wrapper);
+			$this->attachSubDataObjects($name, $sub_data_objects);
+		}
 
 		return $sub_data_objects;
 	}
