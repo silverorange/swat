@@ -531,6 +531,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 *
 	 * @throws SwatDBException if records in this recordset do not have an
 	 *                         internal value with the specified <i>$name</i>.
+	 *
+	 * @see SwatDBDataObject::getInternalValue()
 	 */
 	public function getInternalValues($name)
 	{
