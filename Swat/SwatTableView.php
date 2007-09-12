@@ -18,6 +18,10 @@ require_once 'Swat/SwatYUI.php';
 /**
  * A widget to display data in a tabular form
  *
+ * Records in this table-view's model may be selected by the user by adding a
+ * view-selector to this table-view. See {@link SwatView} for details on how to
+ * use {@link SwatViewSelector} objects.
+ *
  * @package   Swat
  * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1

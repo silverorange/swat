@@ -11,6 +11,10 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
 /**
  * A tile view widget for containing a {@link SwatTile} tile
  *
+ * Records in this tile-view's model may be selected by the user by adding a
+ * view-selector to this tile-view. See {@link SwatView} for details on how to
+ * use {@link SwatViewSelector} objects.
+ *
  * @package   Swat
  * @copyright 2007 silverorange
  * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
