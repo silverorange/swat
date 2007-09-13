@@ -124,6 +124,8 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		if (!$this->visible || count($options) == 0)
 			return;
 
+		parent::display();
+
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
 		// outer div is required because the check-all widget is outside the

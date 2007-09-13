@@ -128,6 +128,8 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 		if (!$this->visible)
 			return;
 
+		parent::render();
+
 		if ($this->stock_id === null)
 			$this->setFromStock('check-only', false);
 		else

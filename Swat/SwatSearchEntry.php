@@ -38,6 +38,9 @@ class SwatSearchEntry extends SwatEntry
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return;
+
 		parent::display();
 
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());

@@ -45,6 +45,8 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 		if (!$this->visible)
 			return;
 
+		parent::render();
+
 		echo $this->getDisplayValue();
 	}
 

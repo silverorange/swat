@@ -48,6 +48,8 @@ class SwatFrameDisclosure extends SwatDisclosure
 		if (!$this->visible)
 			return;
 
+		SwatWidget::display();
+
 		$header_tag = new SwatHtmlTag('h2');
 		$header_tag->class = 'swat-frame-title';
 

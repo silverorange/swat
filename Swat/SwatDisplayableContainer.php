@@ -24,6 +24,8 @@ class SwatDisplayableContainer extends SwatContainer
 		if (!$this->visible)
 			return;
 
+		SwatWidget::display();
+
 		$div = new SwatHtmlTag('div');
 		$div->id = $this->id;
 		$div->class = $this->getCSSClassString();

@@ -693,6 +693,8 @@ class SwatTableView extends SwatView implements SwatUIParent
 		if ($this->model === null)
 			return;
 
+		parent::display();
+
 		$show_no_records = true;
 		$row_count = count($this->model);
 		foreach ($this->extra_rows as $row) {
@@ -709,6 +711,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 			$div->class = 'swat-none';
 			$div->setContent($this->no_records_message,
 				$this->no_records_message_type);
+
 			$div->display();
 			return;
 		}

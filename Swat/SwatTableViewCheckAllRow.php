@@ -149,6 +149,8 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		if (!$this->visible || count($this->view->model) < 2)
 			return;
 
+		parent::display();
+
 		$this->createEmbeddedWidgets();
 
 		$columns = $this->view->getVisibleColumns();

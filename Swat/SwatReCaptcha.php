@@ -56,6 +56,8 @@ class SwatReCaptcha extends SwatInputControl
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		/*
 		 * Second parameter is null because errors are displayed as
 		 * SwatMessage objects affixed to this widget.
@@ -74,6 +76,8 @@ class SwatReCaptcha extends SwatInputControl
 	 */
 	public function process()
 	{
+		parent::process();
+
 		$form = $this->getForm();
 		$data = $form->getFormData();
 

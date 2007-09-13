@@ -151,6 +151,8 @@ class SwatMessageDisplay extends SwatControl
 		if ($this->getMessageCount() == 0)
 			return;
 
+		parent::display();
+
 		$wrapper_div = new SwatHtmlTag('div');
 		$message_div = new SwatHtmlTag('div');
 		$container_div = new SwatHtmlTag('div');

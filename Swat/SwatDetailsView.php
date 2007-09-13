@@ -151,6 +151,8 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$table_tag = new SwatHtmlTag('table');
 		$table_tag->id = $this->id;
 		$table_tag->class = $this->getCSSClassString();

@@ -61,6 +61,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$options = $this->getOptions();
 		$selected = false;
 

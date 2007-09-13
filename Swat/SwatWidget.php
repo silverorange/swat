@@ -80,6 +80,15 @@ abstract class SwatWidget extends SwatUIObject
 	 */
 	protected $processed = false;
 
+	/**
+	 * Whether or not this widget has been displayed
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatWidget::display()
+	 */
+	protected $displayed = false;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -98,7 +107,7 @@ abstract class SwatWidget extends SwatUIObject
 	}
 
 	// }}}
-	// {{{ abstract public function display()
+	// {{{ public function display()
 
 	/**
 	 * Displays this widget
@@ -106,7 +115,10 @@ abstract class SwatWidget extends SwatUIObject
 	 * Displays this widget displays as well as recursively displays any child
 	 * widgets of this widget.
 	 */
-	abstract public function display();
+	public function display()
+	{
+		$this->displayed = true;
+	}
 
 	// }}}
 	// {{{ abstract public function printWidgetTree()
@@ -164,6 +176,28 @@ abstract class SwatWidget extends SwatUIObject
 	{
 		$set = $this->getHtmlHeadEntrySet();
 		$set->display();
+	}
+
+	// }}}
+	// {{{ public function getHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects needed by this widget 
+	 *
+	 * If this widget has not been displayed, an empty set is returned to
+	 * reduce the number of required HTTP requests.
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this widget.
+	 */
+	public function getHtmlHeadEntrySet()
+	{
+		if ($this->isDisplayed())
+			$set = new SwatHtmlHeadEntrySet($this->html_head_entry_set);
+		else
+			$set = new SwatHtmlHeadEntrySet();
+
+		return $set;
 	}
 
 	// }}}
@@ -240,6 +274,19 @@ abstract class SwatWidget extends SwatUIObject
 	public function isProcessed()
 	{
 		return $this->processed;
+	}
+
+	// }}}
+	// {{{ public function isDisplayed()
+
+	/**
+	 * Whether or not this widget is displayed
+	 *
+	 * @return boolean whether or not this widget is displayed.
+	 */
+	public function isDisplayed()
+	{
+		return $this->displayed;
 	}
 
 	// }}}

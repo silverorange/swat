@@ -71,6 +71,8 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		if (!$this->visible)
 			return;
 
+		SwatWidget::display();
+
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
 		$div_tag = new SwatHtmlTag('div');

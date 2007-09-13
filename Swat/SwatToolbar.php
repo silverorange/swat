@@ -43,6 +43,8 @@ class SwatToolbar extends SwatDisplayableContainer
 		if (!$this->visible)
 			return;
 
+		SwatWidget::display();
+
 		$toolbar_ul = new SwatHtmlTag('ul');
 		$toolbar_ul->id = $this->id;
 		$toolbar_ul->class = $this->getCSSClassString();

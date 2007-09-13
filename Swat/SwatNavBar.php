@@ -289,6 +289,8 @@ class SwatNavBar extends SwatControl implements Countable
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$count = count($this);
 		$i = 1;
 

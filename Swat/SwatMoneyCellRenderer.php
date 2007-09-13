@@ -77,6 +77,8 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 		if (!$this->visible)
 			return;
 
+		parent::render();
+
 		echo SwatString::minimizeEntities(
 			SwatString::moneyFormat(
 				$this->value, $this->locale, $this->display_currency,

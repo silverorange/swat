@@ -180,6 +180,8 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$li_counter = 0;
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;

@@ -50,6 +50,8 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 		if (!$this->visible)
 			return;
 
+		SwatWidget::display();
+
 		// tree is copied for display so we can add a blank node if show_blank
 		// is true
 		$display_tree = $this->getDisplayTree();

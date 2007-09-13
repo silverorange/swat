@@ -158,6 +158,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 		if (!$this->visible)
 			return;
 
+		parent::render();
+
 		if ($this->replicator_id === null) {
 			if ($this->prototype_widget !== null) {
 				$this->applyPropertyValuesToPrototypeWidget();
@@ -373,6 +375,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	public function getHtmlHeadEntrySet()
 	{
 		$set = parent::getHtmlHeadEntrySet();
+
 		$widgets = $this->getClonedWidgets();
 		if (count($widgets) > 0) {
 			foreach ($widgets as $widget)
@@ -381,7 +384,6 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			$set->addEntrySet(
 				$this->getPrototypeWidget()->getHtmlHeadEntrySet());
 		}
-
 
 		return $set;
 	}

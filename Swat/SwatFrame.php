@@ -70,6 +70,8 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 		if (!$this->visible)
 			return;
 
+		SwatWidget::display();
+
 		$outer_div = new SwatHtmlTag('div');
 		$outer_div->id = $this->id;
 		$outer_div->class = $this->getCSSClassString();

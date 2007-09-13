@@ -70,6 +70,8 @@ class SwatDateCellRenderer extends SwatCellRenderer
 		if (!$this->visible)
 			return;
 
+		parent::render();
+
 		if ($this->date !== null) {
 			// Time zone conversion mutates the original object so create a new
 			// date for display. This also converts a string date to an object.

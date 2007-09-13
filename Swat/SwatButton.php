@@ -161,6 +161,8 @@ class SwatButton extends SwatInputControl
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		// We don't use a button element because it is broken differently in
 		// IE6 and IE7
 		$input_tag = new SwatHtmlTag('input');

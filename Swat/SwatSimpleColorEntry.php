@@ -98,6 +98,8 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	{
 		if (!$this->visible)
 			return;
+		
+		parent::display();
 
 		$container_div_tag = new SwatHtmlTag('div');
 		$container_div_tag->id = $this->id;

@@ -54,6 +54,9 @@ class SwatImageLinkCellRenderer extends SwatImageCellRenderer
 	 */
 	public function render()
 	{
+		if (!$this->visible)
+			return;
+
 		if ($this->sensitive) {
 			$anchor = new SwatHtmlTag('a');
 
