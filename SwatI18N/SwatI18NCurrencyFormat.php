@@ -5,13 +5,13 @@ require_once 'Swat/SwatObject.php';
 /**
  * Information for formatting currency values
  *
- * @package   Swat
+ * @package   SwatI18N
  * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatLocale::formatCurrency()
  * @see       SwatLocale::getCurrencyFormat()
  */
-class SwatCurrencyFormat extends SwatObject
+class SwatI18NCurrencyFormat extends SwatObject
 {
 	// {{{ public properties
 

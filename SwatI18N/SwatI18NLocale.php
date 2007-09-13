@@ -2,18 +2,18 @@
 
 require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/SwatObject.php';
-require_once 'Swat/SwatCurrencyFormat.php';
+require_once 'SwatI18N/SwatI18NCurrencyFormat.php';
 
 /**
  * Internationalization and localization methods
  *
  * This class contains static methods related for formatting localized values.
  *
- * @package   Swat
+ * @package   SwatI18N
  * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatLocale extends SwatObject
+class SwatI18NLocale extends SwatObject
 {
 	// {{{ public static function formatCurrency()
 
