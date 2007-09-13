@@ -471,6 +471,26 @@ class SwatI18NLocale extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function getInternationalCurrencySymbol()
+
+	/**
+	 * Gets the international currency symbol of this locale
+	 *
+	 * @return string the international currency symbol for this locale. The
+	 *                 symbol is UTF-8 encoded and does not include the spacing
+	 *                 character specified in the C99 standard.
+	 */
+	public function getInternationalCurrencySymbol()
+	{
+		$lc = $this->getLocaleInfo();
+
+		// strip C99-defined spacing character
+		$symbol = substr($lc['int_curr_symbol'], 0, 3);
+
+		return $symbol;
+	}
+
+	// }}}
 	// {{{ public function getLocaleInfo()
 
 	/**
