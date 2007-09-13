@@ -2,6 +2,7 @@
 
 require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/SwatObject.php';
+require_once 'SwatI18N/SwatI18NNumberFormat.php';
 require_once 'SwatI18N/SwatI18NCurrencyFormat.php';
 
 /**
@@ -42,9 +43,10 @@ class SwatI18NLocale extends SwatObject
 	 * @param string $locale optional. The locale in which to format the
 	 *                        monetary value. If not specified, the current
 	 *                        locale is used.
-	 * @param SwatCurrencyFormat $format optional. Currency formatting
-	 *                                    information that overrides the
-	 *                                    formatting for the specified locale.
+	 * @param SwatI18NCurrencyFormat $format optional. Currency formatting
+	 *                                        information that overrides the
+	 *                                        formatting for the specified
+	 *                                        locale.
 	 *
 	 * @return string a UTF-8 encoded string containing the formatted monetary
 	 *                 value.
@@ -53,7 +55,7 @@ class SwatI18NLocale extends SwatObject
 	 *                       current operating system.
 	 */
 	public static function formatCurrency($value, $international = false,
-		$locale = null, SwatCurrencyFormat $format = null)
+		$locale = null, SwatI18NCurrencyFormat $format = null)
 	{
 		$currency_format = ($international) ?
 			self::getInternationalCurrencyFormat($locale) :
@@ -375,7 +377,7 @@ class SwatI18NLocale extends SwatObject
 		if ($encoding !== null && $encoding !== 'UTF-8')
 			$lc = self::iconvArray($encoding, 'UTF-8', $lc);
 
-		$format = new SwatCurrencyFormat();
+		$format = new SwatI18NCurrencyFormat();
 		$format->fractional_digits     = $lc['frac_digits'];
 		$format->p_cs_precedes         = $lc['p_cs_precedes'];
 		$format->n_cs_precedes         = $lc['n_cs_precedes'];
@@ -444,7 +446,7 @@ class SwatI18NLocale extends SwatObject
 		if ($encoding !== null && $encoding !== 'UTF-8')
 			$lc = self::iconvArray($encoding, 'UTF-8', $lc);
 
-		$format = new SwatCurrencyFormat();
+		$format = new SwatI18NCurrencyFormat();
 		$format->fractional_digits     = $lc['int_frac_digits'];
 		$format->p_cs_precedes         = $lc['p_cs_precedes'];
 		$format->n_cs_precedes         = $lc['n_cs_precedes'];
