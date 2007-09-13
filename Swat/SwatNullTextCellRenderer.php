@@ -59,15 +59,15 @@ class SwatNullTextCellRenderer extends SwatTextCellRenderer
 		if (!$this->visible)
 			return;
 
-		if (($this->strict && $this->text === null) ||
-			(!$this->strict && $this->text == null)) {
+		$is_null = ($this->strict) ?
+			($this->text === null) : ($this->text == null);
 
+		if ($is_null) {
 			$this->text = $this->null_text;
 
 			echo '<span class="swat-null-text-cell-renderer">';
 			parent::render();
 			echo '</span>';
-
 		} else {
 			parent::render();
 		}
