@@ -6,9 +6,10 @@ require_once 'SwatI18N/SwatI18NNumberFormat.php';
 require_once 'SwatI18N/SwatI18NCurrencyFormat.php';
 
 /**
- * Internationalization and localization methods
+ * A locale object
  *
- * This class contains static methods related for formatting localized values.
+ * Locale objects are used to format and parse values according to locale-
+ * specific rules.
  *
  * @package   SwatI18N
  * @copyright 2007 silverorange
@@ -16,10 +17,144 @@ require_once 'SwatI18N/SwatI18NCurrencyFormat.php';
  */
 class SwatI18NLocale extends SwatObject
 {
-	// {{{ public static function formatCurrency()
+	// {{{ protected properties
 
 	/**
-	 * Formats a monetary value using a localized format
+	 * The locale string or array specified in the constructor for this locale
+	 *
+	 * @var array|string
+	 */
+	protected $locale;
+
+	/**
+	 * The locale info array of this locale as provided by localeconv()
+	 *
+	 * @var array
+	 */
+	protected $locale_info;
+
+	/**
+	 * The preferred locale as selected by the operating system if the
+	 * {@link SwatI18NLocale::$locale} property is an array
+	 *
+	 * @var string
+	 */
+	protected $preferred_locale;
+
+	/**
+	 * The number format used by this locale
+	 *
+	 * @var SwatI18NNumberFormat
+	 */
+	protected $number_format;
+
+	/**
+	 * The national currency format used by this locale
+	 *
+	 * @var SwatI18NCurrencyFormat
+	 */
+	protected $national_currency_format;
+
+	/**
+	 * The international currency format used by this locale
+	 *
+	 * @var SwatI18NCurrencyFormat
+	 */
+	protected $international_currency_format;
+
+	/**
+	 * The previous locales indexed by the lc-type constant used to set the
+	 * locale
+	 *
+	 * This is used by the {@link SwatI18NLocale::set()} and
+	 * {@link SwatI18NLocale::reset()} methods to reset the locale back to the
+	 * previous value.
+	 *
+	 * @var array
+	 */
+	protected $old_locale_by_category = array();
+
+	// }}}
+	// {{{ public function __construct()
+
+	/**
+	 * Creates a new locale object
+	 *
+	 * @param array|string $locale the locale identifier of this locale object.
+	 *                              If the locale is not valid for the current
+	 *                              operating system, an exception is thrown.
+	 *                              If no locale is specified, the current
+	 *                              locale is used. Multiple locale identifiers
+	 *                              may be specified in an array. In this case,
+	 *                              the first valid locale is used.
+	 *
+	 * @throws SwatException if the specified <i>$locale</i> is not valid for
+	 *                       the current operating system.
+	 */
+	public function __construct($locale = null)
+	{
+		$this->locale = $locale;
+
+		if ($this->locale === null) {
+			$this->preferred_locale = setlocale(LC_ALL, '0');
+		} else {
+			$old_locale = setlocale(LC_ALL, '0');
+			$this->preferred_locale = setlocale(LC_ALL, $this->locale);
+			if ($this->preferred_locale === false) {
+				throw new SwatException("The locale {$this->locale} is not ".
+					"valid for this operating system.");
+			}
+		}
+
+		$this->buildLocaleInfo();
+		$this->buildNumberFormat();
+		$this->buildNationalCurrencyFormat();
+		$this->buildInternationalCurrencyFormat();
+
+		if ($this->locale !== null) {
+			setlocale(LC_ALL, $old_locale);
+		}
+	}
+
+	// }}}
+	// {{{ public function set()
+
+	/**
+	 * Sets the system locale to this locale
+	 *
+	 * @param integer $category optional. The lc-type constant specifying the
+	 *                           category of functions affected by setting the
+	 *                           system locale. If not specified, defaults to
+	 *                           LC_ALL.
+	 */
+	public function set($category = LC_ALL)
+	{
+		$this->old_locale_by_category[$category] = setlocale($category, '0');
+		setlocale($category, $this->locale);
+	}
+
+	// }}}
+	// {{{ public function reset()
+
+	/**
+	 * Resets the system to the previous locale after a call to
+	 * {@link SwatI18NLocale::set()}
+	 *
+	 * @param integer $category optional. The lc-type constant specifying the
+	 *                           category of functions affected by resetting
+	 *                           the system locale. If not specified, defaults
+	 *                           to LC_ALL.
+	 */
+	public function reset($category = LC_ALL)
+	{
+		setlocale($category, $this->old_locale_by_category[$category]);
+	}
+
+	// }}}
+	// {{{ public function formatCurrency()
+
+	/**
+	 * Formats a monetary value for this locale
 	 *
 	 * This is similar to PHP's money_format() function except is is more
 	 * customizable because specific parts of the locale formatting may be
@@ -38,15 +173,10 @@ class SwatI18NLocale extends SwatObject
 	 *                                monetary value using the international
 	 *                                currency format. If not specified, the
 	 *                                monetary value is formatted using the
-	 *                                national currency format of the specified
-	 *                                locale.
-	 * @param string $locale optional. The locale in which to format the
-	 *                        monetary value. If not specified, the current
-	 *                        locale is used.
+	 *                                national currency format.
 	 * @param SwatI18NCurrencyFormat $format optional. Currency formatting
 	 *                                        information that overrides the
-	 *                                        formatting for the specified
-	 *                                        locale.
+	 *                                        formatting for this locale.
 	 *
 	 * @return string a UTF-8 encoded string containing the formatted monetary
 	 *                 value.
@@ -54,12 +184,12 @@ class SwatI18NLocale extends SwatObject
 	 * @throws SwatException if the specified locale is not valid for the
 	 *                       current operating system.
 	 */
-	public static function formatCurrency($value, $international = false,
-		$locale = null, SwatI18NCurrencyFormat $format = null)
+	public function formatCurrency($value, $international = false,
+		SwatI18NCurrencyFormat $format = null)
 	{
 		$currency_format = ($international) ?
-			self::getInternationalCurrencyFormat($locale) :
-			self::getCurrencyFormat($locale);
+			$this->getInternationalCurrencyFormat() :
+			$this->getNationalCurrencyFormat();
 
 		if ($format !== null)
 			$currency_format->override($format);
@@ -295,35 +425,37 @@ class SwatI18NLocale extends SwatObject
 	}
 
 	// }}}
-	// {{{ public static function parseCurrency()
+	// {{{ public function parseCurrency()
 
 	/**
-	 * Parses a formatted currency string into a floating point number
+	 * Parses a currency string formatted for this locale into a floating-point
+	 * number
 	 *
 	 * @param string $string the formatted currency string.
-	 * @param string $locale optional. The locale of the currency string. If
-	 *                        not specified, the current locale is used.
 	 *
 	 * @return float the numeric value of the parsed currency. If the given
 	 *                value could not be parsed, null is returned.
 	 */
-	public static function parseCurrency($string, $locale = null)
+	public function parseCurrency($string)
 	{
 		$value = null;
 
-		$format = self::getCurrencyFormat($locale);
-		$int_format = self::getInternationalCurrencyFormat($locale);
+		$lc = $this->getLocaleInfo();
 
-		$n_sign = ($format->n_sign == '') ? '-' : $format->n_sign;
+		$negative_sign = ($lc['negative_sign'] == '') ?
+			'-' : $lc['negative_sign'];
 
-		$negative = (strpos($string, $n_sign) !== false);
+		$decimal_point = ($lc['mon_decimal_point'] == '') ?
+			$lc['decimal_point'] : $lc['mon_decimal_point'];
 
-		$string = str_replace($format->symbol, '', $string);
-		$string = str_replace($int_format->symbol, '', $string);
-		$string = str_replace($format->thousands_separator, '', $string);
-		$string = str_replace($format->decimal_separator, '.', $string);
-		$string = str_replace($format->p_sign, '', $string);
-		$string = str_replace($n_sign, '', $string);
+		$negative = (strpos($string, $negative_sign) !== false);
+
+		$string = str_replace($lc['currency_symbol'], '', $string);
+		$string = str_replace($lc['int_curr_symbol'], '', $string);
+		$string = str_replace($lc['mon_thousands_sep'], '', $string);
+		$string = str_replace($decimal_point, '.', $string);
+		$string = str_replace($lc['positive_sign'], '', $string);
+		$string = str_replace($negative_sign, '', $string);
 		$string = str_replace(' ', '', $string);
 
 		if ($negative)
@@ -336,167 +468,80 @@ class SwatI18NLocale extends SwatObject
 	}
 
 	// }}}
-	// {{{ public static function getCurrencyFormat()
+	// {{{ public function getNationalCurrencyFormat()
 
 	/**
-	 * Gets a currency format object for a given locale
+	 * Gets the national currency format for this locale
 	 *
-	 * @param string $locale optional. The locale to get the currency format
-	 *                        for. If the locale is not valid for the current
-	 *                        operating system, an exception is thrown. If no
-	 *                        locale is specified, the current locale is used.
-	 *
-	 * @return SwatCurrencyFormat a currency format object for the specified
-	 *                             locale. All string properties of the object
-	 *                             are UTF-8 encoded.
-	 *
-	 * @throws SwatException if the specified locale is not valid for the
-	 *                        current operating system.
+	 * @return SwatI18NCurrencyFormat a currency format object for this locale.
+	 *                                 All string properties of the object are
+	 *                                 UTF-8 encoded.
 	 */
-	public static function getCurrencyFormat($locale = null)
+	public function getNationalCurrencyFormat()
 	{
-		if ($locale !== null) {
-			$monetary_locale = setlocale(LC_MONETARY, '0');
-			$ctype_locale = setlocale(LC_CTYPE, '0');
-			if (setlocale(LC_MONETARY, $locale) === false) {
-				throw new SwatException(sprintf('Locale %s passed to the '.
-					'getCurrencyFormat() method is not valid for this '.
-					'operating system.', $locale));
-			}
-			if (setlocale(LC_CTYPE, $locale) === false) {
-				throw new SwatException(sprintf('Locale %s passed to the '.
-					'getCurrencyFormat() method is not valid for this '.
-					'operating system.', $locale));
-			}
-		}
-
-		$lc = localeconv();
-
-		// convert locale info to UTF-8
-		$encoding = self::getEncoding();
-		if ($encoding !== null && $encoding !== 'UTF-8')
-			$lc = self::iconvArray($encoding, 'UTF-8', $lc);
-
-		$format = new SwatI18NCurrencyFormat();
-		$format->fractional_digits     = $lc['frac_digits'];
-		$format->p_cs_precedes         = $lc['p_cs_precedes'];
-		$format->n_cs_precedes         = $lc['n_cs_precedes'];
-		$format->p_separate_by_space   = $lc['p_sep_by_space'];
-		$format->n_separate_by_space   = $lc['n_sep_by_space'];
-		$format->p_sign_position       = $lc['p_sign_posn'];
-		$format->n_sign_position       = $lc['n_sign_posn'];
-		$format->decimal_separator     = ($lc['mon_decimal_point'] == '') ?
-			$lc['decimal_point'] : $lc['mon_decimal_point'];
-
-		$format->thousands_separator   = $lc['mon_thousands_sep'];
-		$format->symbol                = $lc['currency_symbol'];
-		$format->grouping              = $lc['mon_grouping'];
-		$format->p_sign                = $lc['positive_sign'];
-		$format->n_sign                = $lc['negative_sign'];
-
-		if ($locale !== null) {
-			setlocale(LC_MONETARY, $monetary_locale);
-			setlocale(LC_CTYPE, $ctype_locale);
-		}
-
-		return $format;
+		return clone $this->national_currency_format;
 	}
 
 	// }}}
-	// {{{ public static function getInternationalCurrencyFormat()
+	// {{{ public function getInternationalCurrencyFormat()
 
 	/**
-	 * Gets an international currency format object for a given locale
+	 * Gets the international currency format for this locale
 	 *
-	 * @param string $locale optional. The locale to get the currency format
-	 *                        for. If the locale is not valid for the current
-	 *                        operating system, an exception is thrown. If no
-	 *                        locale is specified, the current locale is used.
-	 *
-	 * @return SwatCurrencyFormat a currency format object for the specified
-	 *                             locale. All string properties of the object
-	 *                             are UTF-8 encoded.
-	 *
-	 * @throws SwatException if the specified locale is not valid for the
-	 *                        current operating system.
-	 *
-	 * @todo return string properties as UTF-8 even for non-UTF-8 locales.
+	 * @return SwatI18NCurrencyFormat a currency format object for this locale.
+	 *                                 All string properties of the object are
+	 *                                 UTF-8 encoded.
 	 */
-	public static function getInternationalCurrencyFormat($locale = null)
+	public function getInternationalCurrencyFormat($locale = null)
 	{
-		if ($locale !== null) {
-			$monetary_locale = setlocale(LC_MONETARY, '0');
-			$ctype_locale = setlocale(LC_CTYPE, '0');
-			if (setlocale(LC_MONETARY, $locale) === false) {
-				throw new SwatException(sprintf('Locale %s passed to the '.
-					'getCurrencyFormat() method is not valid for this '.
-					'operating system.', $locale));
-			}
-			if (setlocale(LC_CTYPE, $locale) === false) {
-				throw new SwatException(sprintf('Locale %s passed to the '.
-					'getCurrencyFormat() method is not valid for this '.
-					'operating system.', $locale));
-			}
-		}
-
-		$lc = localeconv();
-
-		// convert locale info to UTF-8
-		$encoding = self::getEncoding();
-		if ($encoding !== null && $encoding !== 'UTF-8')
-			$lc = self::iconvArray($encoding, 'UTF-8', $lc);
-
-		$format = new SwatI18NCurrencyFormat();
-		$format->fractional_digits     = $lc['int_frac_digits'];
-		$format->p_cs_precedes         = $lc['p_cs_precedes'];
-		$format->n_cs_precedes         = $lc['n_cs_precedes'];
-		$format->p_separate_by_space   = $lc['p_sep_by_space'];
-		$format->n_separate_by_space   = $lc['n_sep_by_space'];
-		$format->p_sign_position       = $lc['p_sign_posn'];
-		$format->n_sign_position       = $lc['n_sign_posn'];
-		$format->decimal_separator     = ($lc['mon_decimal_point'] == '') ?
-			$lc['decimal_point'] : $lc['mon_decimal_point'];
-
-		$format->thousands_separator   = $lc['mon_thousands_sep'];
-		$format->symbol                = $lc['int_curr_symbol'];
-		$format->grouping              = $lc['mon_grouping'];
-		$format->p_sign                = $lc['positive_sign'];
-		$format->n_sign                = $lc['negative_sign'];
-
-		if ($locale !== null) {
-			setlocale(LC_MONETARY, $monetary_locale);
-			setlocale(LC_CTYPE, $ctype_locale);
-		}
-
-		return $format;
+		return clone $this->international_currency_format;
 	}
 
 	// }}}
-	// {{{ public static function getEncoding()
+	// {{{ public function getLocaleInfo()
 
 	/**
-	 * Gets the character encoding used by a locale
+	 * Gets numeric formatting information for this locale
 	 *
-	 * @param string $locale optional. The locale for which to get the
-	 *                        character encoding. If not specified, the current
-	 *                        locale is used.
+	 * This returns the same information that the PHP localeconv() function
+	 * returns with two differences. This method always returns strings in
+	 * UTF-8 and the system locale does not need to be set to this locale to
+	 * get the information.
 	 *
-	 * @return string the character encoding for the specified locale. If the
-	 *                 character encoding could not be detected, null is
-	 *                 returned.
+	 * @return array the numeric formatting information for this locale.
 	 */
-	public static function getEncoding($locale = null)
+	public function getLocaleInfo()
+	{
+		return $this->locale_info;
+	}
+
+	// }}}
+	// {{{ public function __toString()
+
+	/**
+	 * Gets a string representation of this locale
+	 *
+	 * This returns the preferred locale identifier of this locale.
+	 *
+	 * @return string a string representation of this locale.
+	 */
+	public function __toString()
+	{
+		return $this->preferred_locale;
+	}
+
+	// }}}
+	// {{{ protected function detectCharacterEncoding()
+
+	/**
+	 * Detects the character encoding used by this locale
+	 *
+	 * @return string the character encoding used by this locale. If the
+	 *                 encoding could not be detected, null is returned.
+	 */
+	protected function detectCharacterEncoding()
 	{
 		$encoding = null;
-
-		if ($locale !== null) {
-			$old_locale = setlocale(LC_CTYPE, '0');
-			if (setlocale(LC_CTYPE, $locale) === false) {
-				throw new SwatException(sprintf('Locale %s passed to the '.
-					'getEncoding() method is not valid for this '.
-					'operating system.', $locale));
-			}
-		}
 
 		if (function_exists('nl_langinfo') && is_callable('nl_langinfo')) {
 
@@ -528,16 +573,114 @@ class SwatI18NLocale extends SwatObject
 
 		}
 
-		if ($locale !== null) {
-			setlocale(LC_CTYPE, $old_locale);
-		}
-
 		// assume encoding is a code-page if encoding is numeric
 		if ($encoding !== null && ctype_digit($encoding)) {
 			$encoding = 'CP'.$encoding;
 		}
 
 		return $encoding;
+	}
+
+	// }}}
+	// {{{ protected function buildLocaleInfo()
+
+	/**
+	 * Builds the locale info array for this locale
+	 */
+	protected function buildLocaleInfo()
+	{
+		$this->locale_info = localeconv();
+
+		// convert locale info to UTF-8
+		$character_encoding = $this->detectCharacterEncoding();
+		if ($character_encoding !== null && $character_encoding !== 'UTF-8') {
+			$this->locale_info = $this->iconvArray($character_encoding,
+				'UTF-8', $this->locale_info);
+		}
+	}
+
+	// }}}
+	// {{{ protected function buildNumberFormat()
+
+	/**
+	 * Builds the number format of this locale
+	 */
+	protected function buildNumberFormat()
+	{
+		$lc = $this->getLocaleInfo();
+
+		$format = new SwatI18NNumberFormat();
+
+		$format->fractional_digits     = $lc['frac_digits'];
+		$format->decimal_separator     = $lc['decimal_point'];
+		$format->thousands_separator   = $lc['thousands_sep'];
+		$format->grouping              = $lc['mon_grouping'];
+		$format->p_sign                = $lc['positive_sign'];
+		$format->n_sign                = $lc['negative_sign'];
+
+		$this->number_format = $format;
+	}
+
+	// }}}
+	// {{{ protected function buildNationalCurrencyFormat()
+
+	/**
+	 * Builds the national currency format of this locale
+	 */
+	protected function buildNationalCurrencyFormat()
+	{
+		$lc = $this->getLocaleInfo();
+
+		$format = new SwatI18NCurrencyFormat();
+
+		$format->fractional_digits     = $lc['frac_digits'];
+		$format->p_cs_precedes         = $lc['p_cs_precedes'];
+		$format->n_cs_precedes         = $lc['n_cs_precedes'];
+		$format->p_separate_by_space   = $lc['p_sep_by_space'];
+		$format->n_separate_by_space   = $lc['n_sep_by_space'];
+		$format->p_sign_position       = $lc['p_sign_posn'];
+		$format->n_sign_position       = $lc['n_sign_posn'];
+		$format->decimal_separator     = ($lc['mon_decimal_point'] == '') ?
+			$lc['decimal_point'] : $lc['mon_decimal_point'];
+
+		$format->thousands_separator   = $lc['mon_thousands_sep'];
+		$format->symbol                = $lc['currency_symbol'];
+		$format->grouping              = $lc['mon_grouping'];
+		$format->p_sign                = $lc['positive_sign'];
+		$format->n_sign                = $lc['negative_sign'];
+
+		$this->national_currency_format = $format;
+	}
+
+	// }}}
+	// {{{ protected function buildInternationalCurrencyFormat()
+
+	/**
+	 * Builds the internatiobal currency format for this locale
+	 */
+	protected function buildInternationalCurrencyFormat()
+	{
+		$lc = $this->getLocaleInfo();
+
+		$format = new SwatI18NCurrencyFormat();
+
+		$format->fractional_digits     = $lc['int_frac_digits'];
+		$format->p_cs_precedes         = $lc['p_cs_precedes'];
+		$format->n_cs_precedes         = $lc['n_cs_precedes'];
+		$format->p_separate_by_space   = $lc['p_sep_by_space'];
+		$format->n_separate_by_space   = $lc['n_sep_by_space'];
+		$format->p_sign_position       = $lc['p_sign_posn'];
+		$format->n_sign_position       = $lc['n_sign_posn'];
+		$format->decimal_separator     = ($lc['mon_decimal_point'] == '') ?
+			$lc['decimal_point'] : $lc['mon_decimal_point'];
+
+		$format->thousands_separator   = $lc['mon_thousands_sep'];
+		$format->symbol                = $lc['int_curr_symbol'];
+		$format->grouping              = $lc['mon_grouping'];
+		$format->p_sign                = $lc['positive_sign'];
+		$format->n_sign                = $lc['negative_sign'];
+
+		$this->international_currency_format = $format;
 	}
 
 	// }}}
@@ -557,12 +700,12 @@ class SwatI18NLocale extends SwatObject
 	 *                       from the <i>$from</i> character encoding to the
 	 *                       <i>$to</i> character encoding.
 	 */
-	private static function iconvArray($from, $to, array $array)
+	private function iconvArray($from, $to, array $array)
 	{
 		if ($from != $to) {
 			foreach ($array as $key => $value) {
 				if (is_array($value)) {
-					$array[$key] = self::iconvArray($from, $to, $value);
+					$array[$key] = $this->iconvArray($from, $to, $value);
 				} elseif (is_string($value)) {
 					$output = iconv($from, $to, $value);
 					if ($output === false)
@@ -575,18 +718,6 @@ class SwatI18NLocale extends SwatObject
 		}
 
 		return $array;
-	}
-
-	// }}}
-	// {{{ private function __construct()
-
-	/**
-	 * Don't allow instantiation of the SwatLocale object
-	 *
-	 * This class contains only static methods and should not be instantiated.
-	 */
-	private function __construct()
-	{
 	}
 
 	// }}}
