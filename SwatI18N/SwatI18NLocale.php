@@ -180,9 +180,6 @@ class SwatI18NLocale extends SwatObject
 	 *
 	 * @return string a UTF-8 encoded string containing the formatted monetary
 	 *                 value.
-	 *
-	 * @throws SwatException if the specified locale is not valid for the
-	 *                       current operating system.
 	 */
 	public function formatCurrency($value, $international = false,
 		SwatI18NCurrencyFormat $format = null)
@@ -196,90 +193,9 @@ class SwatI18NLocale extends SwatObject
 
 		$format = $currency_format;
 
-		// default fractional digits to 2 if locale is missing value
-		$fractional_digits = ($format->fractional_digits == CHAR_MAX) ?
-			2 : $format->fractional_digits;
+		$formatted_value = $this->partiallyFormatNumber($value, $format);
 
-		$positive = ($value > 0);
-		$integer_part = floor(abs($value));
-		$frac_part = abs(fmod($value, 1));
-		$frac_part = round($frac_part * pow(10, $fractional_digits));
-		$frac_part = str_pad($frac_part, $fractional_digits, '0', STR_PAD_LEFT);
-
-		// group integer part with thousands separators
-		$grouping_values = array();
-		$groupings = $format->grouping;
-		$grouping_total = $integer_part;
-		if (count($groupings) == 0 || $grouping_total == 0) {
-			array_push($grouping_values, $grouping_total);
-		} else {
-			$grouping_previous = 0;
-			while (count($groupings) > 1 && $grouping_total > 0) {
-				$grouping = array_shift($groupings);
-
-				// a grouping of 0 means use previous grouping
-				if ($grouping == 0) {
-					$grouping = $grouping_previous;
-				// a grouping of CHAR_MAX means no more grouping
-				} elseif ($grouping == CHAR_MAX) {
-					array_push($grouping_values, $grouping_total);
-					break;
-				} else {
-					$grouping_previous = $grouping;
-				}
-
-				$grouping_value = $grouping_total % pow(10, $grouping);
-
-				$grouping_total = floor($grouping_total / pow(10, $grouping));
-				if ($grouping_total > 0) {
-					$grouping_value = str_pad($grouping_value, $grouping, '0',
-						STR_PAD_LEFT);
-				}
-
-				array_push($grouping_values, $grouping_value);
-			}
-
-			// last grouping repeats until integer part is finished
-			$grouping = array_shift($groupings);
-
-			// a grouping of CHAR_MAX means no more grouping
-			if ($grouping == CHAR_MAX) {
-				array_push($grouping_values, $grouping_total);
-			} else {
-				// a grouping of 0 means use previous grouping
-				if ($grouping == 0) {
-					$grouping = $grouping_previous;
-				}
-
-				// a grouping of 0 as the last grouping means no more grouping
-				if ($grouping == 0) {
-					array_push($grouping_values, $grouping_total);
-				} else {
-					while ($grouping_total > 0) {
-						$grouping_value = $grouping_total % pow(10, $grouping);
-
-						$grouping_total =
-							floor($grouping_total / pow(10, $grouping));
-
-						if ($grouping_total > 0) {
-							$grouping_value = str_pad($grouping_value,
-								$grouping, '0', STR_PAD_LEFT);
-						}
-
-						array_push($grouping_values, $grouping_value);
-					}
-				}
-			}
-		}
-
-		$grouping_values = array_reverse($grouping_values);
-
-		// we now have a formatted number
-		$formatted_value =
-			implode($format->thousands_separator, $grouping_values).
-			$format->decimal_separator.$frac_part;
-
-		if ($positive) {
+		if ($value > 0) {
 			$sign = $format->p_sign; 
 			$sign_position = $format->p_sign_position;
 			$cs_precedes = $format->p_cs_precedes;
@@ -425,6 +341,48 @@ class SwatI18NLocale extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function formatNumber()
+
+	/**
+	 * Formats a numeric value for this locale
+	 *
+	 * This methods uses the POSIX.2 LC_NUMERIC specification for formatting
+	 * numeric values.
+	 *
+	 * @param float $value the numeric value to format.
+	 * @param SwatI18NNumberFormat $format optional. Number formatting
+	 *                                      information that overrides the
+	 *                                      formatting for this locale.
+	 *
+	 * @return string a UTF-8 encoded string containing the formatted numeric 
+	 *                 value.
+	 */
+	public function formatNumber($value, SwatI18NNumberFormat $format = null)
+	{
+		$number_format = $this->getNumberFormat();
+
+		if ($format !== null)
+			$number_format->override($format);
+
+		$format = $number_format;
+
+		$formatted_value = $this->partiallyFormatNumber($value, $format);
+
+		if ($value > 0) {
+			$sign = $format->p_sign; 
+		} else {
+			$sign = $format->n_sign; 
+			// default negative sign if format is missing value
+			if ($sign == '')
+				$sign = '-';
+		}
+
+		$formatted_value = $sign.$formatted_value;
+
+		return $formatted_value;
+	}
+
+	// }}}
 	// {{{ public function parseCurrency()
 
 	/**
@@ -468,14 +426,29 @@ class SwatI18NLocale extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function getNumberFormat()
+
+	/**
+	 * Gets the number format for this locale
+	 *
+	 * @return SwatI18NNumberFormat the number format object for this locale.
+	 *                               All string properties of the object are
+	 *                               UTF-8 encoded.
+	 */
+	public function getNumberFormat()
+	{
+		return clone $this->number_format;
+	}
+
+	// }}}
 	// {{{ public function getNationalCurrencyFormat()
 
 	/**
 	 * Gets the national currency format for this locale
 	 *
-	 * @return SwatI18NCurrencyFormat a currency format object for this locale.
-	 *                                 All string properties of the object are
-	 *                                 UTF-8 encoded.
+	 * @return SwatI18NCurrencyFormat the national currency format for this
+	 *                                 locale. All string properties of the
+	 *                                 object are UTF-8 encoded.
 	 */
 	public function getNationalCurrencyFormat()
 	{
@@ -488,11 +461,11 @@ class SwatI18NLocale extends SwatObject
 	/**
 	 * Gets the international currency format for this locale
 	 *
-	 * @return SwatI18NCurrencyFormat a currency format object for this locale.
-	 *                                 All string properties of the object are
-	 *                                 UTF-8 encoded.
+	 * @return SwatI18NCurrencyFormat the international currency format for this
+	 *                                 locale. All string properties of the
+	 *                                 object are UTF-8 encoded.
 	 */
-	public function getInternationalCurrencyFormat($locale = null)
+	public function getInternationalCurrencyFormat()
 	{
 		return clone $this->international_currency_format;
 	}
@@ -681,6 +654,106 @@ class SwatI18NLocale extends SwatObject
 		$format->n_sign                = $lc['negative_sign'];
 
 		$this->international_currency_format = $format;
+	}
+
+	// }}}
+	// {{{ protected function partiallyFormatNumber()
+
+	/**
+	 * Partially formats a value according to format-specific rules
+	 *
+	 * This is a number formatting helper method. It is responsible for
+	 * grouping integer-part digits and displaying the decimal point and
+	 * fractional digits.
+	 *
+	 * @param float $value the value to format.
+	 * @param SwatI18NNumberFormat the number format to use.
+	 *
+	 * @return string the formatted value.
+	 */
+	protected function partiallyFormatNumber($value,
+		SwatI18NNumberFormat $format)
+	{
+		// default fractional digits to 2 if locale is missing value
+		$fractional_digits = ($format->fractional_digits == CHAR_MAX) ?
+			2 : $format->fractional_digits;
+
+		$integer_part = floor(abs($value));
+		$frac_part = abs(fmod($value, 1));
+		$frac_part = round($frac_part * pow(10, $fractional_digits));
+		$frac_part = str_pad($frac_part, $fractional_digits, '0', STR_PAD_LEFT);
+
+		// group integer part with thousands separators
+		$grouping_values = array();
+		$groupings = $format->grouping;
+		$grouping_total = $integer_part;
+		if (count($groupings) == 0 || $grouping_total == 0) {
+			array_push($grouping_values, $grouping_total);
+		} else {
+			$grouping_previous = 0;
+			while (count($groupings) > 1 && $grouping_total > 0) {
+				$grouping = array_shift($groupings);
+
+				// a grouping of 0 means use previous grouping
+				if ($grouping == 0) {
+					$grouping = $grouping_previous;
+				// a grouping of CHAR_MAX means no more grouping
+				} elseif ($grouping == CHAR_MAX) {
+					array_push($grouping_values, $grouping_total);
+					break;
+				} else {
+					$grouping_previous = $grouping;
+				}
+
+				$grouping_value = $grouping_total % pow(10, $grouping);
+
+				$grouping_total = floor($grouping_total / pow(10, $grouping));
+				if ($grouping_total > 0) {
+					$grouping_value = str_pad($grouping_value, $grouping, '0',
+						STR_PAD_LEFT);
+				}
+
+				array_push($grouping_values, $grouping_value);
+			}
+
+			// last grouping repeats until integer part is finished
+			$grouping = array_shift($groupings);
+
+			// a grouping of CHAR_MAX means no more grouping
+			if ($grouping == CHAR_MAX) {
+				array_push($grouping_values, $grouping_total);
+			} else {
+				// a grouping of 0 means use previous grouping
+				if ($grouping == 0) {
+					$grouping = $grouping_previous;
+				}
+
+				// a grouping of 0 as the last grouping means no more grouping
+				if ($grouping == 0) {
+					array_push($grouping_values, $grouping_total);
+				} else {
+					while ($grouping_total > 0) {
+						$grouping_value = $grouping_total % pow(10, $grouping);
+
+						$grouping_total =
+							floor($grouping_total / pow(10, $grouping));
+
+						if ($grouping_total > 0) {
+							$grouping_value = str_pad($grouping_value,
+								$grouping, '0', STR_PAD_LEFT);
+						}
+
+						array_push($grouping_values, $grouping_value);
+					}
+				}
+			}
+		}
+
+		$grouping_values = array_reverse($grouping_values);
+
+		// we now have a formatted number
+		return implode($format->thousands_separator, $grouping_values).
+			$format->decimal_separator.$frac_part;
 	}
 
 	// }}}
