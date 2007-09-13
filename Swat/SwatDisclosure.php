@@ -73,6 +73,8 @@ class SwatDisclosure extends SwatDisplayableContainer
 		if (!$this->visible)
 			return;
 
+		SwatWidget::display();
+
 		$control_div = $this->getControlDivTag();
 		$span = $this->getSpanTag();
 		$input = $this->getInputTag();

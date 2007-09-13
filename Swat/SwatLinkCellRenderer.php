@@ -91,6 +91,8 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 		if (!$this->visible)
 			return;
 
+		parent::render();
+
 		if ($this->isSensitive())
 			$this->renderSensitive();
 		else

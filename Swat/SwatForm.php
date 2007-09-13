@@ -231,6 +231,8 @@ class SwatForm extends SwatDisplayableContainer
 		if (!$this->visible)
 			return;
 
+		SwatWidget::display();
+
 		$this->addHiddenField(self::PROCESS_FIELD, $this->id);
 
 		$form_tag = $this->getFormTag();

@@ -68,6 +68,9 @@ class SwatMoneyEntry extends SwatFloatEntry
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return;
+
 		parent::display();
 
 		if ($this->display_currency) {

@@ -105,6 +105,8 @@ class SwatEntry extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$input_tag = $this->getInputTag();
 		$input_tag->display();
 

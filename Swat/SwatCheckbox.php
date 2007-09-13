@@ -64,6 +64,8 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
 		$input_tag = new SwatHtmlTag('input');

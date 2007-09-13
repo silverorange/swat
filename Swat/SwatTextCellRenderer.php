@@ -66,6 +66,8 @@ class SwatTextCellRenderer extends SwatCellRenderer
 		if (!$this->visible)
 			return;
 
+		parent::render();
+
 		$span = new SwatHtmlTag('span');
 		$span->class = $this->getCSSClassString();
 

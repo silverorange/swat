@@ -202,6 +202,11 @@ class SwatPagination extends SwatControl
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return;
+
+		parent::display();
+
 		$this->calculatePages();
 
 		if ($this->total_pages > 1) {

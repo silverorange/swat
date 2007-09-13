@@ -87,6 +87,8 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$ordered_options = $this->getOrderedOptions();
 
 		$div_tag = new SwatHtmlTag('div');

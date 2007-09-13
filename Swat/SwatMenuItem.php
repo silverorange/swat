@@ -175,6 +175,8 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		if ($this->link === null) {
 			$span_tag = new SwatHtmlTag('span');
 			$span_tag->id = $this->id;

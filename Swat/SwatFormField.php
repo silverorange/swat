@@ -161,6 +161,8 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		if ($this->getFirst() === null)
 			return;
 
+		SwatWidget::display();
+
 		$container_tag = new SwatHtmlTag($this->container_tag);
 		$container_tag->id = $this->id;
 		$container_tag->class = $this->getCSSClassString();

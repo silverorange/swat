@@ -421,6 +421,8 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$this->displayChildren();
 	}
 

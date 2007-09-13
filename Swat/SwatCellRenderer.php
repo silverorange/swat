@@ -46,18 +46,28 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	private $static_properties = array();
 
+	/**
+	 * How many times this cell renderer was rendered
+	 *
+	 * @var integer
+	 */
+	private $render_count = 0;
+
 	// }}}
-	// {{{ abstract public function render()
+	// {{{ public function render()
 
 	/**
 	 * Renders this cell
 	 *
 	 * Renders this cell using the values currently stored in class variables.
 	 *
-	 * Cell renderer subclasses should implement this method to do all
-	 * output neccessary to display the cell.
+	 * Cell renderer subclasses should extend this method to do all output
+	 * neccessary to display the cell.
 	 */
-	abstract public function render();
+	public function render()
+	{
+		$this->render_count++;
+	}
 
 	// }}}
 	// {{{ public function init()
@@ -186,6 +196,28 @@ abstract class SwatCellRenderer extends SwatUIObject
 	public function getDataSpecificCSSClassNames()
 	{
 		return array();
+	}
+
+	// }}}
+	// {{{ public function getHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects needed by this cell renderer
+	 *
+	 * If this renderer has never been rendered, an empty set is returned to
+	 * reduce the number of required HTTP requests.
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this cell renderer.
+	 */
+	public function getHtmlHeadEntrySet()
+	{
+		if ($this->render_count > 0)
+			$set = new SwatHtmlHeadEntrySet($this->html_head_entry_set);
+		else
+			$set = new SwatHtmlHeadEntrySet();
+
+		return $set;
 	}
 
 	// }}}

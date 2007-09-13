@@ -45,6 +45,8 @@ class SwatContentBlock extends SwatControl
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		if ($this->content_type === 'text/plain')
 			echo SwatString::minimizeEntities($this->content);
 		else

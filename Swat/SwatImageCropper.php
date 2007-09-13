@@ -140,6 +140,8 @@ class SwatImageCropper extends SwatInputControl
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$this->autoCropBoxDimensions();
 
 		$div_tag = new SwatHtmlTag('div');

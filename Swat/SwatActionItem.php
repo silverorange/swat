@@ -67,6 +67,11 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return;
+
+		parent::display();
+
 		$this->widget->display();
 	}
 

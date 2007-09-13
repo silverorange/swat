@@ -129,6 +129,8 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 		if (!$this->visible)
 			return;
 
+		parent::render();
+
 		if ($this->title !== null) {
 			$label_tag = new SwatHtmlTag('label');
 			$label_tag->for = $this->id.'_checkbox_'.$this->value;

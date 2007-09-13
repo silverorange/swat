@@ -232,6 +232,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 */
 	public function display()
 	{
+		parent::display();
+
 		if (count($this->replicators) < $this->number) {
 			$diff = $this->number - count($this->replicators);
 			$next_replicator = (count($this->replicators) == 0) ? 0 :

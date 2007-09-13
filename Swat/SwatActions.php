@@ -172,6 +172,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$this->createEmbeddedWidgets();
 
 		// set the flydown back to its initial state (no persistence)

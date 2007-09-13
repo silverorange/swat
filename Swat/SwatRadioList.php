@@ -66,6 +66,8 @@ class SwatRadioList extends SwatFlydown implements SwatState
 		if (!$this->visible || $options === null)
 			return;
 
+		SwatWidget::display();
+
 		// add a hidden field so we can check if this list was submitted on
 		// the process step
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);

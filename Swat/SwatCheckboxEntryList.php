@@ -103,6 +103,8 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		if (!$this->visible || count($options) == 0)
 			return;
 
+		SwatWidget::display();
+
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
 		$div_tag = new SwatHtmlTag('div');

@@ -60,6 +60,8 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 		if (!$this->visible)
 			return;
 
+		SwatWidget::display();
+
 		$fieldset_tag = new SwatHtmlTag('fieldset');
 		$fieldset_tag->id = $this->id;
 		$fieldset_tag->class = $this->getCSSClassString();

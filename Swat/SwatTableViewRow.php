@@ -30,6 +30,27 @@ abstract class SwatTableViewRow extends SwatUIObject
 	public $id = null;
 
 	// }}}
+	// {{{ protected properties
+
+	/**
+	 * Whether or not this row has been processed
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatTableViewRow::process()
+	 */
+	protected $processed = false;
+
+	/**
+	 * Whether or not this row has been displayed
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatTableViewRow::display()
+	 */
+	protected $displayed = false;
+
+	// }}}
 	// {{{ public function init()
 
 	/**
@@ -59,15 +80,45 @@ abstract class SwatTableViewRow extends SwatUIObject
 	 */
 	public function process()
 	{
+		$this->processed = true;
 	}
 
 	// }}}
-	// {{{ public abstract function display()
+	// {{{ public function display()
 
 	/**
 	 * Displays this row
 	 */
-	public abstract function display();
+	public abstract function display()
+	{
+		$this->displayed = true;
+	}
+
+	// }}}
+	// {{{ public function isProcessed()
+
+	/**
+	 * Whether or not this row is processed
+	 *
+	 * @return boolean whether or not this row is processed.
+	 */
+	public function isProcessed()
+	{
+		return $this->processed;
+	}
+
+	// }}}
+	// {{{ public function isDisplayed()
+
+	/**
+	 * Whether or not this row is displayed
+	 *
+	 * @return boolean whether or not this row is displayed.
+	 */
+	public function isDisplayed()
+	{
+		return $this->displayed;
+	}
 
 	// }}}
 	// {{{ public function getInlineJavaScript()
@@ -105,6 +156,28 @@ abstract class SwatTableViewRow extends SwatUIObject
 			return false;
 
 		return true;
+	}
+
+	// }}}
+	// {{{ public function getHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects needed by this row 
+	 *
+	 * If this row has not been displayed, an empty set is returned to reduce
+	 * the number of required HTTP requests.
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this row.
+	 */
+	public function getHtmlHeadEntrySet()
+	{
+		if ($this->isDisplayed())
+			$set = new SwatHtmlHeadEntrySet($this->html_head_entry_set);
+		else
+			$set = new SwatHtmlHeadEntrySet();
+
+		return $set;
 	}
 
 	// }}}

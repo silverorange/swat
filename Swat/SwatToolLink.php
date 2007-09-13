@@ -132,6 +132,8 @@ class SwatToolLink extends SwatControl
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		if ($this->isSensitive())
 			$this->getSensitiveTag()->display();
 		else

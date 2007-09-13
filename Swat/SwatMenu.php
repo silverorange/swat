@@ -93,6 +93,8 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$displayed_classes = array();
 
 		$div_tag = new SwatHtmlTag('div');

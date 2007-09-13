@@ -137,6 +137,14 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function display()
 	{
+		if (!$this->visible)
+			return;
+
+		if ($this->model === null)
+			return;
+
+		parent::display();
+
 		$tile_view_tag = new SwatHtmlTag('div');
 		$tile_view_tag->id = $this->id;
 		$tile_view_tag->class = $this->getCSSClassString();

@@ -125,10 +125,10 @@ XHTML;
 
 	public function display()
 	{
-		$this->createEmbeddedWidgets();
-
 		if (!$this->visible)
 			return;
+
+		$this->createEmbeddedWidgets();
 
 		parent::display();
 

@@ -108,6 +108,8 @@ class SwatImageDisplay extends SwatControl
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$image_tag = new SwatHtmlTag('img');
 		$image_tag->id = $this->id;
 		$image_tag->class = $this->getCSSClassString();

@@ -118,6 +118,8 @@ class SwatImageCellRenderer extends SwatCellRenderer
 		if (!$this->visible)
 			return;
 
+		parent::render();
+
 		$image_tag = new SwatHtmlTag('img');
 
 		if ($this->value === null)

@@ -77,6 +77,8 @@ class SwatCalendar extends SwatControl
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$container_div_tag = new SwatHtmlTag('div');
 		$container_div_tag->id = $this->id;
 		$container_div_tag->class = $this->getCSSClassString();

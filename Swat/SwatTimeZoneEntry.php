@@ -115,6 +115,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$this->createEmbeddedWidgets();
 
 		$div_tag = new SwatHtmlTag('div');

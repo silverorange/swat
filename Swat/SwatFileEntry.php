@@ -90,6 +90,8 @@ class SwatFileEntry extends SwatInputControl
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'file';
 		$input_tag->name = $this->id;

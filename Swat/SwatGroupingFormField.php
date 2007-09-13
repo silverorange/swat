@@ -51,6 +51,8 @@ class SwatGroupingFormField extends SwatFormField
 		if ($this->getFirst() === null)
 			return;
 
+		SwatWidget::display();
+
 		$container_tag = new SwatHtmlTag('div');
 		$container_tag->id = $this->id;
 		$container_tag->class = $this->getCSSClassString();

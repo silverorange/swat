@@ -115,6 +115,8 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		if (!$this->visible)
 			return;
 
+		parent::display();
+
 		// textarea tags cannot be self-closing when using HTML parser on XHTML
 		$value = ($this->value === null) ? '' : $this->value;
 
