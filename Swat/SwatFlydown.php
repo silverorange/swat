@@ -109,7 +109,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 				}
 
 				$value = ($this->serialize_values) ?
-					(string)$flydown_option->value : $flydown_option->value;
+					$flydown_option->value : (string)$flydown_option->value;
 
 				if ($this->value === $value && !$selected &&
 					!($flydown_option instanceof SwatFlydownDivider)) {
