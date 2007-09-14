@@ -94,7 +94,8 @@ class SwatI18NNumberFormat extends SwatObject
 		$new_format = clone $this;
 
 		foreach ($format as $key => $value)
-			$new_format->$key = $value;
+			if ($value !== null)
+				$new_format->$key = $value;
 
 		return $new_format;
 	}
