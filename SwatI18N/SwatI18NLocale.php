@@ -607,7 +607,7 @@ class SwatI18NLocale extends SwatObject
 		$format->fractional_digits     = $lc['frac_digits'];
 		$format->decimal_separator     = $lc['decimal_point'];
 		$format->thousands_separator   = $lc['thousands_sep'];
-		$format->grouping              = $lc['mon_grouping'];
+		$format->grouping              = $lc['grouping'];
 		$format->p_sign                = $lc['positive_sign'];
 		$format->n_sign                = $lc['negative_sign'];
 
