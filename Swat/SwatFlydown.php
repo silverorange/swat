@@ -108,8 +108,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 					$option_tag->removeAttribute('class');
 				}
 
-				if ($this->value === $flydown_option->value &&
-					$selected === false &&
+				if ($this->value === (string)$flydown_option->value &&
+					!$selected &&
 					!($flydown_option instanceof SwatFlydownDivider)) {
 
 					$option_tag->selected = 'selected';
