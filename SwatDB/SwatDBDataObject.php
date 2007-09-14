@@ -431,8 +431,8 @@ class SwatDBDataObject extends SwatObject
 	 */
 	private function &getProperties()
 	{
-		$property_array = &$this->getPublicProperties();
-		$property_array = &array_merge($property_array,
+		$property_array = $this->getPublicProperties();
+		$property_array = array_merge($property_array,
 			$this->internal_properties);
 
 		return $property_array;
