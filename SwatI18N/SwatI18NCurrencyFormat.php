@@ -16,6 +16,13 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
 	// {{{ public properties
 
 	/**
+	 * Number of fractional digits
+	 *
+	 * @var integer
+	 */
+	public $fractional_digits;
+
+	/**
 	 * Whether or not currency symbol preceds a positive value
 	 *
 	 * True if <code>$symbol</code> precedes a positive value, false if it
@@ -93,48 +100,6 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
 	public $symbol;
 
 	// }}}
-	// {{{ public function override()
-
-	/**
-	 * Overrides values of this currency format with another currency format
-	 *
-	 * Only non-null values of the new format are overridden on this format.
-	 * For example, it is possible to override just the currency symbol by
-	 * creating a new currency formatting object that contains only the symbol
-	 * and passing the new object to this format's override() method.
-	 *
-	 * @param SwatI18NNumberFormat $format the format with which to override
-	 *                                      this format.
-	 */
-	public function override(SwatI18NNumberFormat $format)
-	{
-		parent::override($format);
-
-		if ($format instanceof SwatI18NCurrencyFormat) {
-			if ($format->p_cs_precedes !== null)
-				$this->p_cs_precedes = $format->p_cs_precedes;
-
-			if ($format->n_cs_precedes !== null)
-				$this->n_cs_precedes = $format->n_cs_precedes;
-
-			if ($format->p_separate_by_space !== null)
-				$this->p_separate_by_space = $format->p_separate_by_space;
-
-			if ($format->n_separate_by_space !== null)
-				$this->n_separate_by_space = $format->n_separate_by_space;
-
-			if ($format->p_sign_position !== null)
-				$this->p_sign_position = $format->p_sign_position;
-
-			if ($format->n_sign_position !== null)
-				$this->n_sign_position = $format->n_sign_position;
-
-			if ($format->symbol !== null)
-				$this->symbol = $format->symbol;
-		}
-	}
-
-	// }}}
 	// {{{ public function __toString()
 
 	/**
@@ -145,6 +110,8 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
 	public function __toString()
 	{
 		$string = parent::__toString();
+
+		$string.= 'fractional_digits => '.$this->fractional_digits."\n";
 
 		$string.= 'p_cs_precedes => ';
 		$string.= ($this->p_cs_precedes) ? 'true' : 'false';

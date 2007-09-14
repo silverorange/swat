@@ -174,26 +174,31 @@ class SwatI18NLocale extends SwatObject
 	 *                                currency format. If not specified, the
 	 *                                monetary value is formatted using the
 	 *                                national currency format.
-	 * @param SwatI18NCurrencyFormat $format optional. Currency formatting
-	 *                                        information that overrides the
-	 *                                        formatting for this locale.
+	 * @param array $format optional. An associative array of currency
+	 *                       formatting information that overrides the
+	 *                       formatting for this locale. The array is of the
+	 *                       form <i>'property' => value</i>. For example, use
+	 *                       the value <code>array('grouping' => 0)</code> to
+	 *                       turn off numeric groupings.
 	 *
 	 * @return string a UTF-8 encoded string containing the formatted monetary
 	 *                 value.
+	 *
+	 * @throws SwatException if a property name specified in the <i>$format</i>
+	 *                       parameter is invalid.
 	 */
 	public function formatCurrency($value, $international = false,
-		SwatI18NCurrencyFormat $format = null)
+		array $format = array())
 	{
-		$currency_format = ($international) ?
-			$this->getInternationalCurrencyFormat() :
-			$this->getNationalCurrencyFormat();
+		$format = ($international) ?
+			$this->getInternationalCurrencyFormat()->override($format) :
+			$this->getNationalCurrencyFormat()->override($format);
 
-		if ($format !== null)
-			$currency_format->override($format);
+		$integer_part = $this->formatIntegerGroupings($value, $format);
+		$fractional_part =
+			$this->formatFractionalPart($value, null, $format);
 
-		$format = $currency_format;
-
-		$formatted_value = $this->partiallyFormatNumber($value, $format);
+		$formatted_value = $integer_part.$fractional_part;
 
 		if ($value > 0) {
 			$sign = $format->p_sign; 
@@ -350,23 +355,29 @@ class SwatI18NLocale extends SwatObject
 	 * numeric values.
 	 *
 	 * @param float $value the numeric value to format.
-	 * @param SwatI18NNumberFormat $format optional. Number formatting
-	 *                                      information that overrides the
-	 *                                      formatting for this locale.
+	 * @param integer $decimans optional. The number of fractional digits to
+	 *                           include in the returned string. If not
+	 *                           specified, no fractional digits are returned.
+	 * @param array $format optional. An associative array of number formatting
+	 *                       information that overrides the formatting for this
+	 *                       locale. The array is of the form
+	 *                       <i>'property' => value</i>. For example, use the
+	 *                       value <code>array('grouping' => 0)</code> to turn
+	 *                       off numeric groupings.
 	 *
 	 * @return string a UTF-8 encoded string containing the formatted numeric 
 	 *                 value.
+	 *
+	 * @throws SwatException if a property name specified in the <i>$format</i>
+	 *                       parameter is invalid.
 	 */
-	public function formatNumber($value, SwatI18NNumberFormat $format = null)
+	public function formatNumber($value, $decimals = 0, array $format = array())
 	{
-		$number_format = $this->getNumberFormat();
+		$format = $this->getNumberFormat()->override($format);
 
-		if ($format !== null)
-			$number_format->override($format);
-
-		$format = $number_format;
-
-		$formatted_value = $this->partiallyFormatNumber($value, $format);
+		$integer_part = $this->formatIntegerGroupings($value, $format);
+		$fractional_part =
+			$this->formatFractionalPart($value, $decimals, $format);
 
 		if ($value > 0) {
 			$sign = $format->p_sign; 
@@ -377,7 +388,7 @@ class SwatI18NLocale extends SwatObject
 				$sign = '-';
 		}
 
-		$formatted_value = $sign.$formatted_value;
+		$formatted_value = $sign.$integer_part.$fractional_part;
 
 		return $formatted_value;
 	}
@@ -604,7 +615,6 @@ class SwatI18NLocale extends SwatObject
 
 		$format = new SwatI18NNumberFormat();
 
-		$format->fractional_digits     = $lc['frac_digits'];
 		$format->decimal_separator     = $lc['decimal_point'];
 		$format->thousands_separator   = $lc['thousands_sep'];
 		$format->grouping              = $lc['grouping'];
@@ -677,36 +687,28 @@ class SwatI18NLocale extends SwatObject
 	}
 
 	// }}}
-	// {{{ protected function partiallyFormatNumber()
+	// {{{ protected function formatIntegerGroupings()
 
 	/**
-	 * Partially formats a value according to format-specific rules
+	 * Formats the integer part of a value according to format-specific numeric
+	 * groupings
 	 *
 	 * This is a number formatting helper method. It is responsible for
-	 * grouping integer-part digits and displaying the decimal point and
-	 * fractional digits.
+	 * grouping integer-part digits. Grouped digits are separated using the
+	 * thousands separator character specified by the format object.
 	 *
 	 * @param float $value the value to format.
 	 * @param SwatI18NNumberFormat the number format to use.
 	 *
-	 * @return string the formatted value.
+	 * @return string the grouped integer part of the value.
 	 */
-	protected function partiallyFormatNumber($value,
+	protected function formatIntegerGroupings($value,
 		SwatI18NNumberFormat $format)
 	{
-		// default fractional digits to 2 if locale is missing value
-		$fractional_digits = ($format->fractional_digits == CHAR_MAX) ?
-			2 : $format->fractional_digits;
-
-		$integer_part = floor(abs($value));
-		$frac_part = abs(fmod($value, 1));
-		$frac_part = round($frac_part * pow(10, $fractional_digits));
-		$frac_part = str_pad($frac_part, $fractional_digits, '0', STR_PAD_LEFT);
-
 		// group integer part with thousands separators
 		$grouping_values = array();
 		$groupings = $format->grouping;
-		$grouping_total = $integer_part;
+		$grouping_total = floor(abs($value));
 		if (count($groupings) == 0 || $grouping_total == 0) {
 			array_push($grouping_values, $grouping_total);
 		} else {
@@ -771,9 +773,54 @@ class SwatI18NLocale extends SwatObject
 
 		$grouping_values = array_reverse($grouping_values);
 
-		// we now have a formatted number
-		return implode($format->thousands_separator, $grouping_values).
-			$format->decimal_separator.$frac_part;
+		// join groupings using thousands separator
+		$formatted_value =
+			implode($format->thousands_separator, $grouping_values);
+
+		return $formatted_value;
+	}
+
+	// }}}
+	// {{{ protected function formatFractionalPart()
+
+	/**
+	 * Formats the fractional  part of a value
+	 *
+	 * @param float $value the value to format.
+	 * @param integer $decimals the number of fractional digits to include in
+	 *                           the returned string. Use <i>null</i> to get
+	 *                           the value from the <i>$format</i>.
+	 * @param SwatI18NNumberFormat $format the number formatting object to use
+	 *                                      to format the fractional digits.
+	 *
+	 * @return string the formatted fractional digits. If the number of
+	 *                 displayed fractional digits is greater than zero, the
+	 *                 string is prepended with the decimal separator character
+	 *                 of the format object.
+	 */
+	protected function formatFractionalPart($value, $decimals,
+		SwatI18NNumberFormat $format)
+	{
+		if ($decimals === null) {
+			// default fractional digits to 2 if locale is missing value
+			$fractional_digits = ($format->fractional_digits == CHAR_MAX) ?
+				2 : $format->fractional_digits;
+		} else {
+			$fractional_digits = $decimals;
+		}
+
+		if ($fractional_digits == 0) {
+			$formatted_value = '';
+		} else {
+			$frac_part = abs(fmod($value, 1));
+			$frac_part = round($frac_part * pow(10, $fractional_digits));
+			$frac_part = str_pad($frac_part, $fractional_digits, '0',
+				STR_PAD_LEFT);
+
+			$formatted_value = $format->decimal_separator.$frac_part;
+		}
+
+		return $formatted_value;
 	}
 
 	// }}}

@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Swat/SwatObject.php';
+require_once 'Swat/exceptions/SwatException.php';
 
 /**
  * Information for formatting numeric values
@@ -14,13 +15,6 @@ require_once 'Swat/SwatObject.php';
 class SwatI18NNumberFormat extends SwatObject
 {
 	// {{{ public properties
-
-	/**
-	 * Number of fractional digits
-	 *
-	 * @var integer
-	 */
-	public $fractional_digits;
 
 	/**
 	 * Decimal point character
@@ -61,35 +55,48 @@ class SwatI18NNumberFormat extends SwatObject
 	// {{{ public function override()
 
 	/**
-	 * Overrides values of this number format with another number format
+	 * Gets a new number format object with certain properties overridden from
+	 * specified values
 	 *
-	 * Only non-null values of the new format are overridden on this format.
-	 * For example, it is possible to override just the negative sign by
-	 * creating a new number formatting object that contains only the sign
-	 * and passing the new object to this format's override() method.
+	 * The override information is specified as an associative array with
+	 * array keys representing property names of this formatting object and
+	 * array values being the overridden values.
 	 *
-	 * @param SwatI18NNumberFormat $format the format with which to override
-	 *                                      this format.
+	 * For example, to override the positive and negative signs of this format,
+	 * use:
+	 * <code>
+	 * <?php
+	 * $format->override(array('n_sign' => 'neg', 'p_sign' => 'pos'));
+	 * ?>
+	 * </code>
+	 *
+	 * @param array $format the format information with which to override thss
+	 *                       format.
+	 *
+	 * @return SwatI18NNumberFormat a copy of this number format with the
+	 *                               specified properties set to the new values.
+	 *
+	 * @throws SwatException if any of the array keys do not match a formatting
+	 *                       property of this property.
 	 */
-	public function override(SwatI18NNumberFormat $format)
+	public function override(array $format)
 	{
-		if ($format->fractional_digits !== null)
-			$this->fractional_digits = $format->fractional_digits;
+		$reflector = new ReflectionObject($this);
 
-		if ($format->decimal_separator !== null)
-			$this->decimal_separator = $format->decimal_separator;
+		foreach ($format as $key => $value) {
+			if (!$reflector->hasProperty($key)) {
+				throw new SwatException("Number formatting information ".
+					"contains invalid property {$key} and cannot override ".
+					"this number format.");
+			}
+		}
 
-		if ($format->thousands_separator !== null)
-			$this->thousands_separator = $format->thousands_separator;
+		$new_format = clone $this;
 
-		if ($format->grouping !== null)
-			$this->grouping = $format->grouping;
+		foreach ($format as $key => $value)
+			$new_format->$key = $value;
 
-		if ($format->p_sign !== null)
-			$this->p_sign = $format->p_sign;
-
-		if ($format->n_sign !== null)
-			$this->n_sign = $format->n_sign;
+		return $new_format;
 	}
 
 	// }}}
@@ -103,8 +110,6 @@ class SwatI18NNumberFormat extends SwatObject
 	public function __toString()
 	{
 		$string = '';
-
-		$string.= 'fractional_digits => '.$this->fractional_digits."\n";
 
 		$string.= 'decimal_separator => '.$this->decimal_separator."\n";
 
