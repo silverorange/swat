@@ -14,7 +14,7 @@ require_once 'Swat/SwatYUI.php';
  * @package   Swat
  * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
- * @todo      Should we add a display_time_zone paramater?
+ * @todo      Should we add a display_time_zone parameter?
  */
 class SwatTimeEntry extends SwatInputControl implements SwatState
 {
