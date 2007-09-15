@@ -75,10 +75,25 @@ class SwatI18NLocale extends SwatObject
 	protected $old_locale_by_category = array();
 
 	// }}}
-	// {{{ public function __construct()
+	// {{{ private properties
 
 	/**
-	 * Creates a new locale object
+	 * Cache of existing locale objects
+	 *
+	 * This is an array of SwatI18NLocale objects indexed by the preferred
+	 * locale for this operating system.
+	 *
+	 * @var array
+	 *
+	 * @see SwatI18NLocale::get()
+	 */
+	private static $locales = array();
+
+	// }}}
+	// {{{ public static function get()
+
+	/**
+	 * Gets a locale object
 	 *
 	 * @param array|string $locale the locale identifier of this locale object.
 	 *                              If the locale is not valid for the current
@@ -91,29 +106,43 @@ class SwatI18NLocale extends SwatObject
 	 * @throws SwatException if the specified <i>$locale</i> is not valid for
 	 *                       the current operating system.
 	 */
-	public function __construct($locale = null)
+	public static function get($locale = null)
 	{
-		$this->locale = $locale;
+		$locale_object = null;
 
-		if ($this->locale === null) {
-			$this->preferred_locale = setlocale(LC_ALL, '0');
+		if ($locale === null) {
+			$locale_key = setlocale(LC_ALL, '0');
+			if (array_key_exists($locale_key, self::$locales)) {
+				$locale_object = self::$locales[$locale_key];
+			}
+		} elseif (is_array($locale)) {
+			foreach ($locale as $locale_key) {
+				if (array_key_exists($locale_key, self::$locales)) {
+					$locale_object = self::$locales[$locale_key];
+					break;
+				}
+			}
 		} else {
-			$old_locale = setlocale(LC_ALL, '0');
-			$this->preferred_locale = setlocale(LC_ALL, $this->locale);
-			if ($this->preferred_locale === false) {
-				throw new SwatException("The locale {$this->locale} is not ".
-					"valid for this operating system.");
+			if (array_key_exists($locale, self::$locales)) {
+				$locale_object = self::$locales[$locale_key];
 			}
 		}
 
-		$this->buildLocaleInfo();
-		$this->buildNumberFormat();
-		$this->buildNationalCurrencyFormat();
-		$this->buildInternationalCurrencyFormat();
-
-		if ($this->locale !== null) {
-			setlocale(LC_ALL, $old_locale);
+		if ($locale_object === null) {
+			$locale_object = new SwatI18NLocale($locale);
+			if ($locale === null) {
+				$locale_key = $locale_object->__toString();
+				self::$locales[$locale_key] = $locale_object;
+			} elseif (is_array($locale)) {
+				foreach ($locale as $locale_key) {
+					self::$locales[$locale_key] = $locale_object;
+				}
+			} else {
+				self::$locales[$locale] = $locale_object;
+			}
 		}
+
+		return $locale_object;
 	}
 
 	// }}}
@@ -821,6 +850,53 @@ class SwatI18NLocale extends SwatObject
 		}
 
 		return $formatted_value;
+	}
+
+	// }}}
+	// {{{ private function __construct()
+
+	/**
+	 * Creates a new locale object
+	 *
+	 * This constructor is private. Locale objects should be instantiated using
+	 * the static {@link SwatI18NLocale::get()} method.
+	 *
+	 * @param array|string $locale the locale identifier of this locale object.
+	 *                              If the locale is not valid for the current
+	 *                              operating system, an exception is thrown.
+	 *                              If no locale is specified, the current
+	 *                              locale is used. Multiple locale identifiers
+	 *                              may be specified in an array. In this case,
+	 *                              the first valid locale is used.
+	 *
+	 * @throws SwatException if the specified <i>$locale</i> is not valid for
+	 *                       the current operating system.
+	 *
+	 * @see SwatI18NLocale::get()
+	 */
+	private function __construct($locale = null)
+	{
+		$this->locale = $locale;
+
+		if ($this->locale === null) {
+			$this->preferred_locale = setlocale(LC_ALL, '0');
+		} else {
+			$old_locale = setlocale(LC_ALL, '0');
+			$this->preferred_locale = setlocale(LC_ALL, $this->locale);
+			if ($this->preferred_locale === false) {
+				throw new SwatException("The locale {$this->locale} is not ".
+					"valid for this operating system.");
+			}
+		}
+
+		$this->buildLocaleInfo();
+		$this->buildNumberFormat();
+		$this->buildNationalCurrencyFormat();
+		$this->buildInternationalCurrencyFormat();
+
+		if ($this->locale !== null) {
+			setlocale(LC_ALL, $old_locale);
+		}
 	}
 
 	// }}}
