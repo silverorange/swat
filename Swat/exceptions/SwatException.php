@@ -460,7 +460,7 @@ class SwatException extends Exception
 				$params[$i]->getName() : null;
 
 			if ($name !== null &&
-				self::isSensitiveParamater($name, $function, $class)) {
+				self::isSensitiveParameter($name, $function, $class)) {
 				$formatted_values[] =
 					$this->formatSensitiveParam($name, $value);
 			} else {
@@ -589,7 +589,7 @@ class SwatException extends Exception
 	}
 
 	// }}}
-	// {{{ private static function isSensitiveParamater()
+	// {{{ private static function isSensitiveParameter()
 
 	/**
 	 * Gets whether or not a given parameter is sensitive
@@ -602,7 +602,7 @@ class SwatException extends Exception
 	 * @return boolean true if this parameter is sensitive and false if it is
 	 *                  not.
 	 */
-	private static function isSensitiveParamater($name, $function = '',
+	private static function isSensitiveParameter($name, $function = '',
 		$class = '')
 	{
 		if (strlen($class) > 0 && strlen($function) > 0)
