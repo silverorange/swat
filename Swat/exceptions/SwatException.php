@@ -169,7 +169,7 @@ class SwatException extends Exception
 	 *                       this exception. If unspecified, defaults to true.
 	 * @param boolean $handled optional. Whether or not this exception was
 	 *                          manually handled. If unspecified defaults to
-	 *                          true. Usually this paramater should be true
+	 *                          true. Usually this parameter should be true
 	 *                          if you catch an exception and manually call
 	 *                          process on the exception.
 	 */
@@ -451,7 +451,7 @@ class SwatException extends Exception
 			$params = $reflector->getParameters();
 		}
 
-		// display each paramater
+		// display each parameter
 		$formatted_values = array();
 		for ($i = 0; $i < count($args); $i++) {
 			$value = $args[$i];
@@ -498,7 +498,7 @@ class SwatException extends Exception
 	// {{{ protected function formatValue()
 
 	/**
-	 * Formats a paramater value for display in a stack trace
+	 * Formats a parameter value for display in a stack trace
 	 *
 	 * @param mixed $value the value of the parameter.
 	 *
@@ -506,7 +506,7 @@ class SwatException extends Exception
 	 */
 	protected function formatValue($value)
 	{
-		$formatted_value = '<unknown paramater type>';
+		$formatted_value = '<unknown parameter type>';
 
 		if (is_object($value)) {
 			$formatted_value = '<'.get_class($value).' object>';
@@ -592,14 +592,14 @@ class SwatException extends Exception
 	// {{{ private static function isSensitiveParamater()
 
 	/**
-	 * Gets whether or not a given paramater is sensitive
+	 * Gets whether or not a given parameter is sensitive
 	 *
 	 * @param string $name the parameter name.
 	 * @param string $function optional. The function of method name the
 	 *                          parameter belongs to.
 	 * @param string $class optional. The class name the method belongs to.
 	 *
-	 * @return boolean true if this paramater is sensitive and false if it is
+	 * @return boolean true if this parameter is sensitive and false if it is
 	 *                  not.
 	 */
 	private static function isSensitiveParamater($name, $function = '',
