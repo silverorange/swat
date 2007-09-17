@@ -39,16 +39,6 @@ class SwatException extends Exception
 	 */
 	protected static $logger = null;
 
-	/**
-	 * Array of sensitive parameter names this exception should filter out of
-	 * its stack trace
-	 *
-	 * @var array
-	 *
-	 * @see SwatException::addSensitiveParameterName()
-	 */
-	protected static $sensitive_param_names = array();
-
 	// }}}
 	// {{{ private properties
 
@@ -95,55 +85,6 @@ class SwatException extends Exception
 	public static function setDisplayer(SwatExceptionDisplayer $displayer)
 	{
 		self::$displayer = $displayer;
-	}
-
-	// }}}
-	// {{{ public static function addSensitiveParameter()
-
-	/**
-	 * Adds a parameter name to the list of sensitive parameters that are
-	 * filtered upon display
-	 *
-	 * @param string $name the sensitive parameter name.
-	 * @param string $function optional. The function of method name the
-	 *                          parameter belongs to.
-	 * @param string $class optional. The class name the method belongs to.
-	 */
-	public static function addSensitiveParameter($name, $function = '',
-		$class = '')
-	{
-		if (strlen($class) > 0 && strlen($function) > 0)
-			$name = $class.'::'.$function.'('.$name.')';
-		elseif (strlen($function) > 0)
-			$name = $function.'('.$name.')';
-
-		if (!in_array($name, self::$sensitive_param_names))
-			self::$sensitive_param_names[] = $name;
-	}
-
-	// }}}
-	// {{{ public static function isSensitiveParameter()
-
-	/**
-	 * Gets whether or not a given parameter is sensitive
-	 *
-	 * @param string $name the parameter name.
-	 * @param string $function optional. The function of method name the
-	 *                          parameter belongs to.
-	 * @param string $class optional. The class name the method belongs to.
-	 *
-	 * @return boolean true if this parameter is sensitive and false if it is
-	 *                  not.
-	 */
-	public static function isSensitiveParameter($name, $function = '',
-		$class = '')
-	{
-		if (strlen($class) > 0 && strlen($function) > 0)
-			$name = $class.'::'.$function.'('.$name.')';
-		elseif (strlen($function) > 0)
-			$name = $function.'('.$name.')';
-
-		return (in_array($name, self::$sensitive_param_names));
 	}
 
 	// }}}
@@ -455,7 +396,7 @@ class SwatException extends Exception
 	 * out of the final stack trace.
 	 *
 	 * @param array $args an array of arguments.
-	 * @param string $method optional. The current method or function.
+	 * @param string $function optional. The current method or function.
 	 * @param string $class optional. The current class name.
 	 *
 	 * @return string the arguments formatted into a comma delimited string.
@@ -463,17 +404,18 @@ class SwatException extends Exception
 	protected function getArguments($args, $function = null, $class = null)
 	{
 		$params = array();
+		$method = null;
 
 		// try to get function or method parameter list using reflection
 		if ($class !== null && $function !== null && class_exists($class)) {
 			$class_reflector = new ReflectionClass($class);
 			if ($class_reflector->hasMethod($function)) {
-				$reflector = $class_reflector->getMethod($function);
-				$params = $reflector->getParameters();
+				$method = $class_reflector->getMethod($function);
+				$params = $method->getParameters();
 			}
 		} elseif ($function !== null && function_exists($function)) {
-			$reflector = new ReflectionFunction($function);
-			$params = $reflector->getParameters();
+			$method = new ReflectionFunction($function);
+			$params = $method->getParameters();
 		}
 
 		// display each parameter
@@ -481,11 +423,15 @@ class SwatException extends Exception
 		for ($i = 0; $i < count($args); $i++) {
 			$value = $args[$i];
 
-			$name = (array_key_exists($i, $params)) ?
-				$params[$i]->getName() : null;
+			if ($method !== null && array_key_exists($i, $params)) {
+				$name = $params[$i]->getName();
+				$sensitive = $this->isSensitiveParameter($method, $name);
+			} else {
+				$name = null;
+				$sensitive = false;
+			}
 
-			if ($name !== null &&
-				self::isSensitiveParameter($name, $function, $class)) {
+			if ($name !== null && $sensitive) {
 				$formatted_values[] =
 					$this->formatSensitiveParam($name, $value);
 			} else {
@@ -614,6 +560,53 @@ class SwatException extends Exception
 	}
 
 	// }}}
+	// {{{ protected function isSensitiveParameter()
+
+	/**
+	 * Detects whether or not a parameter is sensitive from the method-level
+	 * documentation of the parameter's method
+	 *
+	 * Parameters with the following docblock tag are considered sensitive:
+	 * <code>
+	 * <?php
+	 * /**
+	 *  * @sensitive $parameter_name
+	 *  *\/
+	 * ?>
+	 * </code>
+	 *
+	 * @param ReflectionFunctionAbstract $method the method the parameter to
+	 *                                            which the parameter belongs.
+	 * @param string $name the name of the parameter.
+	 *
+	 * @return boolean true if the parameter is sensitive and false if the
+	 *                  method is not sensitive.
+	 */
+	protected function isSensitiveParameter(ReflectionFunctionAbstract $method,
+		$name)
+	{
+		$sensitive = false;
+
+		$exp =
+			'/^.*@sensitive\s+\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*).*$/';
+
+		$documentation = $method->getDocComment();
+		$documentation = str_replace("\r", "\n", $documentation);
+		$documentation_exp = explode("\n", $documentation);
+		foreach ($documentation_exp as $documentation_line) {
+			$matches = array();
+			if (preg_match($exp, $documentation_line, $matches) == 1 &&
+				$matches[1] == $name) {
+				$sensitive = true;
+				break;
+			}
+		}
+
+		return $sensitive;
+	}
+
+	// }}}
+
 }
 
 ?>
