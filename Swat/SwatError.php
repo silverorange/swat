@@ -4,7 +4,6 @@
 
 require_once 'Swat/SwatErrorDisplayer.php';
 require_once 'Swat/SwatErrorLogger.php';
-require_once 'Swat/exceptions/SwatException.php';
 
 /**
  * An error in Swat
@@ -13,8 +12,12 @@ require_once 'Swat/exceptions/SwatException.php';
  * execution and can not be caught. Errors in Swat have handy methods for
  * outputting nicely formed error messages and logging errors.
  *
+ * Like {@link SwatException}, SwatError filters sensitive data from stack
+ * trace parameters. See the class-level documentation of SwatException for
+ * details on how this works.
+ *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatError
@@ -387,17 +390,18 @@ class SwatError
 	protected function getArguments($args, $function = null, $class = null)
 	{
 		$params = array();
+		$method = null;
 
 		// try to get function or method parameter list using reflection
 		if ($class !== null && $function !== null && class_exists($class)) {
 			$class_reflector = new ReflectionClass($class);
 			if ($class_reflector->hasMethod($function)) {
-				$reflector = $class_reflector->getMethod($function);
-				$params = $reflector->getParameters();
+				$method = $class_reflector->getMethod($function);
+				$params = $method->getParameters();
 			}
 		} elseif ($function !== null && function_exists($function)) {
-			$reflector = new ReflectionFunction($function);
-			$params = $reflector->getParameters();
+			$method = new ReflectionFunction($function);
+			$params = $method->getParameters();
 		}
 
 		// display each parameter
@@ -405,11 +409,15 @@ class SwatError
 		for ($i = 0; $i < count($args); $i++) {
 			$value = $args[$i];
 
-			$name = (array_key_exists($i, $params)) ?
-				$params[$i]->getName() : null;
+			if ($method !== null && array_key_exists($i, $params)) {
+				$name = $params[$i]->getName();
+				$sensitive = $this->isSensitiveParameter($method, $name);
+			} else {
+				$name = null;
+				$sensitive = false;
+			}
 
-			if ($name !== null &&
-				SwatException::isSensitiveParameter($name, $function, $class)) {
+			if ($name !== null && $sensitive) {
 				$formatted_values[] =
 					$this->formatSensitiveParam($name, $value);
 			} else {
@@ -561,6 +569,52 @@ class SwatError
 			$out = $error_types[$this->severity];
 
 		return $out;
+	}
+
+	// }}}
+	// {{{ protected function isSensitiveParameter()
+
+	/**
+	 * Detects whether or not a parameter is sensitive from the method-level
+	 * documentation of the parameter's method
+	 *
+	 * Parameters with the following docblock tag are considered sensitive:
+	 * <code>
+	 * <?php
+	 * /**
+	 *  * @sensitive $parameter_name
+	 *  *\/
+	 * ?>
+	 * </code>
+	 *
+	 * @param ReflectionFunctionAbstract $method the method the parameter to
+	 *                                            which the parameter belongs.
+	 * @param string $name the name of the parameter.
+	 *
+	 * @return boolean true if the parameter is sensitive and false if the
+	 *                  method is not sensitive.
+	 */
+	protected function isSensitiveParameter(ReflectionFunctionAbstract $method,
+		$name)
+	{
+		$sensitive = false;
+
+		$exp =
+			'/^.*@sensitive\s+\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*).*$/';
+
+		$documentation = $method->getDocComment();
+		$documentation = str_replace("\r", "\n", $documentation);
+		$documentation_exp = explode("\n", $documentation);
+		foreach ($documentation_exp as $documentation_line) {
+			$matches = array();
+			if (preg_match($exp, $documentation_line, $matches) == 1 &&
+				$matches[1] == $name) {
+				$sensitive = true;
+				break;
+			}
+		}
+
+		return $sensitive;
 	}
 
 	// }}}
