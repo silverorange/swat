@@ -4,6 +4,7 @@
 
 require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatFloatEntry.php';
+require_once 'SwatI18N/SwatI18NLocale.php';
 
 /**
  * A money entry widget
@@ -19,16 +20,16 @@ class SwatMoneyEntry extends SwatFloatEntry
 	/**
 	 * Optional locale for currency format
 	 *
-	 * If no locale is specified, the default server locale is used.
+	 * If no locale is specified, the current system locale is used.
 	 *
 	 * @var string
 	 */
 	public $locale = null;
 
 	/**
-	 * Whether to display international currency unit
+	 * Whether to display international currency symbol
 	 *
-	 * If true, displays the international currency unit
+	 * If true, displays the international currency symbol after the input box.
 	 *
 	 * @var boolean
 	 */
@@ -48,23 +49,12 @@ class SwatMoneyEntry extends SwatFloatEntry
 	public $decimal_places = null;
 
 	// }}}
-	// {{{ private properties
-
-	/**
-	 * Locale-based formatting information
-	 *
-	 * @var array
-	 * @see SwatMoneyEntry::getFormattingInformation()
-	 */
-	private $formatting_information;
-
-	// }}}
 	// {{{ public function display()
 
 	/**
 	 * Displays this money entry widget
 	 *
-	 * The widget is displayed as an input box and an optional monetary unit.
+	 * The widget is displayed as an input box and an optional currency symbol.
 	 */
 	public function display()
 	{
@@ -74,10 +64,9 @@ class SwatMoneyEntry extends SwatFloatEntry
 		parent::display();
 
 		if ($this->display_currency) {
-			$lc = $this->getFormattingInformation();
-			// C99 specification includes spacing character, remove it
-			$currency = substr($lc['int_curr_symbol'], 0, 3);
-			echo SwatString::minimizeEntities(' '.$currency);
+			$locale = SwatI18NLocale::get($this->locale);
+			echo SwatString::minimizeEntities(' '.
+				$locale->getInternationalCurrencySymbol());
 		}
 	}
 
@@ -98,29 +87,45 @@ class SwatMoneyEntry extends SwatFloatEntry
 		if ($this->value === null)
 			return;
 
-		$lc = $this->getFormattingInformation();
-
+		$locale = SwatI18NLocale::get($this->locale);
+		$format = $locale->getNationalCurrencyFormat();
 		$max_decimal_places = ($this->decimal_places === null) ?
-			$lc['int_frac_digits'] : $this->decimal_places;
+			$format->fractional_digits : $this->decimal_places;
 
-		// get the number of fractional decimal places
-		$decimal_position = strpos((string)$this->value, '.');
-		$decimal_places = ($decimal_position === false) ?
-			0 : strlen((string)$this->value) - $decimal_position - 1;
+		$value = $this->getRawValue();
+
+		// Get the number of entered fractional digits places from the raw
+		// value. This checks the raw value instead of the processed value
+		// because the processed value could have been parsed into a float by
+		// this point.
+		$decimal_position = strpos((string)$value, $format->decimal_separator);
+		if ($decimal_position === false) {
+			$decimal_places = 0;
+		} else {
+			$fractional_digits = substr(rtrim((string)$value, '0'),
+				$decimal_position + strlen($format->decimal_separator));
+
+			$decimal_places = preg_match_all('/[0-9]/', $fractional_digits,
+				$matches = array());
+		}
 
 		// check if length of the given fractional part is more than the
 		// allowed length
 		if ($decimal_places > $max_decimal_places) {
+
+			// validation failed so reset value to the raw value
+			$this->value = $value;
+
 			if ($this->decimal_places === null) {
 				$message =
 					$this->getValidationMessage('currency-decimal-places');
 
 				$max_decimal_places_formatted = str_replace('%', '%%',
-					SwatString::numberFormat($max_decimal_places));
+					$locale->formatNumber($max_decimal_places));
 
 				// C99 specification includes spacing character, remove it
 				$currency_formatted = str_replace('%', '%%',
-					substr($lc['int_curr_symbol'], 0, 3));
+					$locale->getInternationalCurrencySymbol());
 
 				$message->primary_content = sprintf($message->primary_content,
 					$currency_formatted,
@@ -130,7 +135,7 @@ class SwatMoneyEntry extends SwatFloatEntry
 					$message = $this->getValidationMessage('no-decimal-places');
 				} else {
 					$max_decimal_places_formatted = str_replace('%', '%%',
-						SwatString::numberFormat($max_decimal_places));
+						$locale->formatNumber($max_decimal_places));
 
 					// note: not using getValidationMessage() because of
 					// ngettext. We may want to add this ability to that method
@@ -161,9 +166,10 @@ class SwatMoneyEntry extends SwatFloatEntry
 	protected function getDisplayValue($value)
 	{
 		// if the value is valid, format accordingly
-		if (!$this->hasMessage() && is_numeric($value))
-			$value = SwatString::moneyFormat($value, $this->locale,
-				false, $this->decimal_places);
+		if (!$this->hasMessage() && is_numeric($value)) {
+			$value = SwatI18NLocale::get($this->locale)->formatCurrency($value,
+				false, array('fractional_digits' => $this->decimal_places));
+		}
 
 		return $value;
 	}
@@ -181,19 +187,7 @@ class SwatMoneyEntry extends SwatFloatEntry
 	 */
 	protected function getNumericValue($value)
 	{
-		$lc = $this->getFormattingInformation();
-
-		$replace = array(
-			$lc['int_curr_symbol']   => '',
-			$lc['currency_symbol']   => '',
-			$lc['mon_decimal_point'] => '.',
-			$lc['mon_thousands_sep'] => '',
-		);
-
-		$value = str_replace(
-			array_keys($replace), array_values($replace), $value);
-
-		return parent::getNumericValue($value);
+		return SwatI18NLocale::get($this->locale)->parseCurrency($value);
 	}
 
 	// }}}
@@ -209,13 +203,13 @@ class SwatMoneyEntry extends SwatFloatEntry
 	 */
 	protected function getValidationMessage($id)
 	{
-		$lc = $this->getFormattingInformation();
-
 		switch ($id) {
 		case 'float':
-			// C99 specification includes spacing character, remove it
-			$currency = substr($lc['int_curr_symbol'], 0, 3);
-			$example = SwatString::moneyFormat(1036.95, $this->locale);
+			$locale = SwatI18NLocale::get($this->locale);
+			$currency = $locale->getInternationalCurrencySymbol();
+			$example = $locale->formatCurrency(1036.95, false,
+				array('fractional_digits' => $this->decimal_places));
+
 			$message = new SwatMessage(sprintf(Swat::_(
 				'The %%s field must be a monetary value '.
 				'formatted for %s (i.e. %s).'),
@@ -243,88 +237,6 @@ class SwatMoneyEntry extends SwatFloatEntry
 		}
 
 		return $message;
-	}
-
-	// }}}
-	// {{{ protected final function getFormattingInformation()
-
-	/**
-	 * Gets locale-based formatting information for the locale of this money
-	 * entry widget
-	 *
-	 * Strings in lcoale information are returned in UTF-8 no matter what
-	 * locale is used.
-	 *
-	 * @return array an array of locale-based formatting information for the
-	 *                locale of this money entry widget.
-	 *
-	 * @throws SwatException if the locale specified for this money entry
-	 *                       widget is not valid for the operating system.
-	 */
-	protected final function &getFormattingInformation()
-	{
-		if ($this->formatting_information === null) {
-			if ($this->locale !== null) {
-				$locale = setlocale(LC_ALL, 0);
-				if (setlocale(LC_ALL, $this->locale) === false) {
-					throw new SwatException(sprintf('Locale %s used in '.
-						'SwatMoneyEntry is not valid for this operating '.
-						'system.', $this->locale));
-				}
-			}
-
-			$lc = localeconv();
-
-			$character_set = nl_langinfo(CODESET);
-			if ($this->locale !== null)
-				setlocale(LC_ALL, $locale);
-
-			// convert locale formatting information to UTF-8
-			if ($character_set !== 'UTF-8')
-				$lc = $this->iconvArray($character_set, 'UTF-8', $lc);
-
-			$this->formatting_information = $lc;
-		}
-
-		return $this->formatting_information;
-	}
-
-	// }}}
-	// {{{ private function iconvArray()
-
-	/**
-	 * Recursivly converts character set of strings in an array
-	 *
-	 * This is used to convert the formatting information array for a given
-	 * locale into UFT-8.
-	 *
-	 * @param string $from the character set to convert from.
-	 * @param string $to the character set to convert to.
-	 * @param array $array the array to convert.
-	 *
-	 * @return array a new array with all strings recursivly converted to the
-	 *                given character set.
-	 *
-	 * @throws SwatException if any component of the array can not be converted
-	 *                       from the <i>$from</i> character set to the
-	 *                       <i>$to</i> character set.
-	 */
-	private function iconvArray($from, $to, array $array)
-	{
-		foreach ($array as $key => $value) {
-			if (is_array($value)) {
-				$array[$key] = $this->iconvArray($from, $to, $value);
-			} elseif (is_string($value)) {
-				$output = iconv($from, $to, $value);
-				if ($output === false)
-					throw new SwatException(sprintf('Could not convert '.
-						'%s output to %s', $from, $to));
-
-				$array[$key] = $output;
-			}
-		}
-
-		return $array;
 	}
 
 	// }}}
