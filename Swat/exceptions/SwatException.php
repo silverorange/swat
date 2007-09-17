@@ -122,6 +122,31 @@ class SwatException extends Exception
 	}
 
 	// }}}
+	// {{{ public static function isSensitiveParameter()
+
+	/**
+	 * Gets whether or not a given parameter is sensitive
+	 *
+	 * @param string $name the parameter name.
+	 * @param string $function optional. The function of method name the
+	 *                          parameter belongs to.
+	 * @param string $class optional. The class name the method belongs to.
+	 *
+	 * @return boolean true if this parameter is sensitive and false if it is
+	 *                  not.
+	 */
+	public static function isSensitiveParameter($name, $function = '',
+		$class = '')
+	{
+		if (strlen($class) > 0 && strlen($function) > 0)
+			$name = $class.'::'.$function.'('.$name.')';
+		elseif (strlen($function) > 0)
+			$name = $function.'('.$name.')';
+
+		return (in_array($name, self::$sensitive_param_names));
+	}
+
+	// }}}
 	// {{{ public static function setupHandler()
 
 	/**
@@ -586,31 +611,6 @@ class SwatException extends Exception
 			echo "</style>";
 			$displayed = true;
 		}
-	}
-
-	// }}}
-	// {{{ private static function isSensitiveParameter()
-
-	/**
-	 * Gets whether or not a given parameter is sensitive
-	 *
-	 * @param string $name the parameter name.
-	 * @param string $function optional. The function of method name the
-	 *                          parameter belongs to.
-	 * @param string $class optional. The class name the method belongs to.
-	 *
-	 * @return boolean true if this parameter is sensitive and false if it is
-	 *                  not.
-	 */
-	private static function isSensitiveParameter($name, $function = '',
-		$class = '')
-	{
-		if (strlen($class) > 0 && strlen($function) > 0)
-			$name = $class.'::'.$function.'('.$name.')';
-		elseif (strlen($function) > 0)
-			$name = $function.'('.$name.')';
-
-		return (in_array($name, self::$sensitive_param_names));
 	}
 
 	// }}}

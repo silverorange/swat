@@ -4,6 +4,7 @@
 
 require_once 'Swat/SwatErrorDisplayer.php';
 require_once 'Swat/SwatErrorLogger.php';
+require_once 'Swat/exceptions/SwatException.php';
 
 /**
  * An error in Swat
@@ -408,7 +409,7 @@ class SwatError
 				$params[$i]->getName() : null;
 
 			if ($name !== null &&
-				self::isSensitiveParameter($name, $function, $class)) {
+				SwatException::isSensitiveParameter($name, $function, $class)) {
 				$formatted_values[] =
 					$this->formatSensitiveParam($name, $value);
 			} else {
