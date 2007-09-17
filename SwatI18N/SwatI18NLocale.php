@@ -124,7 +124,7 @@ class SwatI18NLocale extends SwatObject
 			}
 		} else {
 			if (array_key_exists($locale, self::$locales)) {
-				$locale_object = self::$locales[$locale_key];
+				$locale_object = self::$locales[$locale];
 			}
 		}
 
