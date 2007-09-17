@@ -132,27 +132,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 	{
 		parent::process();
 
-		$data = &$this->getForm()->getFormData();
-
-		if ($this->autocomplete) {
-			$id = $this->id;
-		} else {
-			if (isset($data[$this->id.'_nonce'])) {
-				$id = $data[$this->id.'_nonce'];
-			} else {
-				$this->value = null;
-				return;
-			}
-		}
-
-		if (!isset($data[$id])) {
-			$this->value = null;
-			return;
-		} elseif (strlen($data[$id]) == 0) {
-			$this->value = null;
-		} else {
-			$this->value = $data[$id];
-		}
+		$this->value = $this->getRawValue();
 
 		$len = ($this->value === null) ? 0 : strlen($this->value);
 
@@ -341,6 +321,37 @@ class SwatEntry extends SwatInputControl implements SwatState
 			$this->nonce = 'n'.md5(rand());
 
 		return $this->nonce;
+	}
+
+	// }}}
+	// {{{ protected function getRawValue()
+
+	/**
+	 * Gets the raw value entered by the user before processing
+	 *
+	 * @return string the rav value entred by the user before processing.
+	 */
+	protected function getRawValue()
+	{
+		$value = null;
+
+		$data = &$this->getForm()->getFormData();
+
+		if ($this->autocomplete) {
+			$id = $this->id;
+			if (isset($data[$id]) && strlen($data[$id]) > 0) {
+				$value = $data[$id];
+			}
+		} else {
+			if (isset($data[$this->id.'_nonce'])) {
+				$id = $data[$this->id.'_nonce'];
+				if (isset($data[$id]) && strlen($data[$id]) > 0) {
+					$value = $data[$id];
+				}
+			}
+		}
+
+		return $value;
 	}
 
 	// }}}
