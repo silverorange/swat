@@ -81,10 +81,10 @@ class SwatI18NNumberFormat extends SwatObject
 	 */
 	public function override(array $format)
 	{
-		$reflector = new ReflectionObject($this);
+		$vars = get_object_vars($this);
 
 		foreach ($format as $key => $value) {
-			if (!$reflector->hasProperty($key)) {
+			if (!array_key_exists($key, $vars)) {
 				throw new SwatException("Number formatting information ".
 					"contains invalid property {$key} and cannot override ".
 					"this number format.");
