@@ -464,6 +464,19 @@ class SwatTableView extends SwatView implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function hasSpanningColumn()
+
+	/**
+	 * Returns true if a spanning column with the given id exists within this table-view
+	 *
+	 * @return SwatTableViewSpanningColumn the requested spanning column.
+	 */
+	public function hasSpanningColumn($id)
+	{
+		return array_key_exists($id, $this->spanning_columns_by_id);
+	}
+
+	// }}}
 	// {{{ public function hasGroup()
 
 	/**
