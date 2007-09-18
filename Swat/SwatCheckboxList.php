@@ -30,6 +30,13 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	 */
 	public $values = array();
 
+	/**
+	 * Whether to show the check all box
+	 *
+	 * @var boolean
+	 */
+	public $show_check_all = true;
+
 	// }}}
 	// {{{ protected properties
 
@@ -168,7 +175,9 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		// Only show the check all control if more than one checkable item is
 		// displayed.
-		$this->check_all->visible = (count($options) > 1);
+		$this->check_all->visible =
+			$this->show_check_all && (count($options) > 1);
+
 		$this->check_all->display();
 
 		$div_tag->close();
