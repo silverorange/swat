@@ -37,6 +37,15 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	 */
 	public $show_check_all = true;
 
+	/**
+	 * Optional number of parts to split this checkbox list into when displaying
+	 *
+	 * Each part is output as a separate XHTML unordered list (<ul>).
+	 *
+	 * @var integer
+	 */
+	public $split_list;
+
 	// }}}
 	// {{{ protected properties
 
@@ -150,8 +159,18 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		echo '<ul>';
 
+		if ($this->split_list === null)
+			$max = null;
+		else
+			$max = (integer)floor(count($options) / $this->split_list);
+
+		$count = 0;
 		foreach ($options as $key => $option) {
 
+			if ($max !== null && $count === $max)
+				echo '</ul><ul>';
+
+			$count++;
 			echo '<li>';
 				
 			$input_tag->value = (string)$option->value;
