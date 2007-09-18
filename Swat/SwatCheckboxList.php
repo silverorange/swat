@@ -38,13 +38,13 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	public $show_check_all = true;
 
 	/**
-	 * Optional number of parts to split this checkbox list into when displaying
+	 * Number of columns to display this checkbox list as
 	 *
-	 * Each part is output as a separate XHTML unordered list (<ul>).
+	 * Each column is output as a separate XHTML unordered list.
 	 *
 	 * @var integer
 	 */
-	public $split_list;
+	public $columns = 1;
 
 	// }}}
 	// {{{ protected properties
@@ -157,18 +157,19 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
 
-		echo '<ul>';
-
-		if ($this->split_list === null)
-			$max = null;
-		else
-			$max = (integer)floor(count($options) / $this->split_list);
-
+		$current_column = 1;
+		$max = (integer)floor(count($options) / $this->columns);
 		$count = 0;
-		foreach ($options as $key => $option) {
+		$ul_tag = new SwatHtmlTag('ul');
+		$ul_tag->id = sprintf('%_column_%s', $this->id, $current_column);
+		$ul_tag->open();
 
-			if ($max !== null && $count === $max)
-				echo '</ul><ul>';
+		foreach ($options as $key => $option) {
+			if ($count === $max) {
+				$ul_tag->close();
+				$ul_tag->id = sprintf('%_column_%s', $this->id, $current_column);
+				$ul_tag->open();
+			}
 
 			$count++;
 			echo '<li>';
@@ -190,7 +191,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 			echo '</li>';
 		}
 
-		echo '</ul>';
+		$ul_tag->close();
 
 		// Only show the check all control if more than one checkable item is
 		// displayed.
