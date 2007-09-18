@@ -85,6 +85,10 @@ ul.swat-note {
 	vertical-align: middle;
 }
 
+.swat-checkbox-list-column {
+	float: left;
+}
+
 .swat-checkbox-list ul,
 .swat-checkbox-tree ul,
 ul.swat-radio-list {

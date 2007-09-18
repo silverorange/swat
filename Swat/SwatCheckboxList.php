@@ -38,9 +38,12 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	public $show_check_all = true;
 
 	/**
-	 * Number of columns to display this checkbox list as
+	 * Number of columns in which this list is displayed
 	 *
-	 * Each column is output as a separate XHTML unordered list.
+	 * If unspecified, the list will be displayed in one column.
+	 *
+	 * Each column is displayed using a separate XHTML unordered list
+	 * (<code>&lt;ul&gt;</code>).
 	 *
 	 * @var integer
 	 */
@@ -78,6 +81,9 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		$yui = new SwatYUI(array('event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript('packages/swat/javascript/swat-checkbox-list.js',
+			Swat::PACKAGE_ID);
+
+		$this->addJavaScript('packages/swat/javascript/swat.css',
 			Swat::PACKAGE_ID);
 	}
 
@@ -142,6 +148,9 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		parent::display();
 
+		// prevent divide by zero and negative columns
+		$columns = ($this->columns > 0) ? $this->columns : 1;
+
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
 		// outer div is required because the check-all widget is outside the
@@ -157,23 +166,34 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
 
+		// maximum number of options in each column
+		$num_column_options = ceil(count($options) / $columns);
 		$current_column = 1;
-		$max = (integer)floor(count($options) / $this->columns);
 		$count = 0;
+
 		$ul_tag = new SwatHtmlTag('ul');
-		$ul_tag->id = sprintf('%_column_%s', $this->id, $current_column);
+		if ($columns > 1) {
+			$ul_tag->id = sprintf('%_column_%s', $this->id, $current_column);
+			$ul_tag->class = 'swat-checkbox-list-column';
+		}
 		$ul_tag->open();
 
 		foreach ($options as $key => $option) {
-			if ($count === $max) {
+
+			if ($count == $num_column_options) {
 				$ul_tag->close();
-				$ul_tag->id = sprintf('%_column_%s', $this->id, $current_column);
+
+				// start a new column
+				$current_column++;
+				$ul_tag->id =
+					sprintf('%_column_%s', $this->id, $current_column);
+
 				$ul_tag->open();
 			}
 
 			$count++;
 			echo '<li>';
-				
+
 			$input_tag->value = (string)$option->value;
 			$input_tag->removeAttribute('checked');
 			$input_tag->name = $this->id.'['.$key.']';
@@ -197,6 +217,10 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		// displayed.
 		$this->check_all->visible =
 			$this->show_check_all && (count($options) > 1);
+
+		// Show clear div if columns are used
+		if ($columns > 1)
+			echo '<div style="clear: left;"></div>';
 
 		$this->check_all->display();
 
