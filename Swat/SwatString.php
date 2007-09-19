@@ -10,7 +10,7 @@ require_once 'Swat/exceptions/SwatInvalidSerializedDataException.php';
  * String Tools
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatString extends SwatObject
@@ -1283,6 +1283,108 @@ class SwatString extends SwatObject
 		$string = "'".$string."'";
 
 		return $string;
+	}
+
+	// }}}
+	// {{{ public static function validateUtf8()
+
+	/**
+	 * Checks whether or not a string is valid UTF-8
+	 *
+	 * UTF-8 validation is adapted from Toby Inkster's PHP UTF-8 Validation
+	 * Library found at
+	 * {@link http://tobyinkster.co.uk/blog/2007/03/21/utf8-validation/}.
+	 * Like Swat, Toby's library is available under the LGPL v2.1 or later.
+	 *
+	 * Unlike Toby's validation function, this method does not modify the
+	 * original string.
+	 *
+	 * Limitations:
+	 *
+	 *   Note that in UTF-8, most characters have several alternative
+	 *   representations. RFC 3629 says that the shortest representation
+	 *   is the correct one. Other representations ("overlong forms")
+	 *   are not valid. Earlier UTF-8 specifications did not prohibit
+	 *   overlong forms, though suggest emitting a warning when one is
+	 *   encountered. This function DOES NOT CHECK FOR OVERLONG FORMS!
+	 *
+	 * @param string $string the string to check.
+	 *
+	 * @return boolean true if the string is valid UTF-8 and false if it is not.
+	 *
+	 * @author    Michael Gauthier <mike@silverorange>
+	 * @author    Toby Inkster <URL:http://tobyinkster.co.uk/>
+	 * @copyright 2007 silverorange
+	 * @copyright 2007 Toby Inkster
+	 */
+	public static function validateUtf8($string)
+	{
+		$valid = true;
+		$byte_length = mb_strlen($string, '8bit');
+		$byte_position = 0;
+
+		while ($byte_position < $byte_length && $valid) {
+			// get current byte
+			$z = ord(mb_substr($string, $byte_position, 1, '8bit'));
+
+			// "Seven Z" notation - single byte character
+			if ($z <= 0x7f) {
+				// always valid
+
+			// "Five Y, Six Z" notation - 2 byte character
+			} elseif ($z >= 0xc2 && $z <= 0xdf) {
+				if ($byte_position + 1 < $byte_length) {
+					$byte_position++;
+					$y = ord(mb_substr($string, $byte_position, 1, '8bit'));
+					if ($y < 0x80 || $y > 0xbf) {
+						$valid = false;
+					}
+				} else {
+					$valid = false;
+				}
+
+			// "Four X, Six Y, Six Z" notation - 3 byte character
+			} elseif ($z >= 0xe0 && $z <= 0xef) {
+				if ($byte_position + 2 < $byte_length) {
+					$byte_position++;
+					$y = ord(mb_substr($string, $byte_position, 1, '8bit'));
+					$byte_position++;
+					$x = ord(mb_substr($string, $byte_position, 1, '8bit'));
+					if (($y < 0x80 || $y > 0xbf) ||
+						($x < 0x80 || $x > 0xbf)) {
+						$valid = false;
+					}
+				} else {
+					$valid = false;
+				}
+
+			// "Three W, Six X, Six Y, Six Z" notation - 4 byte character
+			} elseif ($z >= 0xf0 && $z <= 0xf4) {
+				if ($byte_position + 3 < $byte_length) {
+					$byte_position++;
+					$y = ord(mb_substr($string, $byte_position, 1, '8bit'));
+					$byte_position++;
+					$x = ord(mb_substr($string, $byte_position, 1, '8bit'));
+					$byte_position++;
+					$w = ord(mb_substr($string, $byte_position, 1, '8bit'));
+					if (($y < 0x80 || $y > 0xbf) ||
+						($x < 0x80 || $x > 0xbf) ||
+						($w < 0x80 || $w > 0xbf)) {
+						$valid = false;
+					}
+				} else {
+					$valid = false;
+				}
+
+			// invalid start byte
+			} else {
+				$valid = false;
+			}
+
+			$byte_position++;
+		}
+
+		return $valid;
 	}
 
 	// }}}
