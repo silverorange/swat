@@ -53,6 +53,13 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	 */
 	public $value = null;
 
+	/**
+	 * The XHTML tag to wrap content with
+	 *
+	 * @var string
+	 */
+	public $wrapper_tag = 'span';
+
 	// }}}
 	// {{{ public function render()
 
@@ -68,10 +75,10 @@ class SwatTextCellRenderer extends SwatCellRenderer
 
 		parent::render();
 
-		$span = new SwatHtmlTag('span');
-		$span->class = $this->getCSSClassString();
+		$tag = new SwatHtmlTag($this->wrapper_tag);
+		$tag->class = $this->getCSSClassString();
 
-		$span->open();
+		$tag->open();
 
 		if ($this->value === null)
 			$text = $this->text;
@@ -85,7 +92,7 @@ class SwatTextCellRenderer extends SwatCellRenderer
 		else
 			echo $text;
 
-		$span->close();
+		$tag->close();
 	}
 
 	// }}}
