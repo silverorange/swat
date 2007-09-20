@@ -132,6 +132,12 @@ class SwatEntry extends SwatInputControl implements SwatState
 	{
 		parent::process();
 
+		// if nothing was submitted by the user, shortcut return 
+		if (!$this->hasRawValue()) {
+			$this->value = null;
+			return;
+		}
+
 		$this->value = $this->getRawValue();
 
 		$len = ($this->value === null) ? 0 : strlen($this->value);
@@ -331,6 +337,8 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 *
 	 * @return string the rav value entred by the user before processing or
 	 *                 null if no value was entered by the user.
+	 *
+	 * @see SwatEntry::hasRawValue()
 	 */
 	protected function getRawValue()
 	{
@@ -353,6 +361,43 @@ class SwatEntry extends SwatInputControl implements SwatState
 		}
 
 		return $value;
+	}
+
+	// }}}
+	// {{{ protected function hasRawValue()
+
+	/**
+	 * Gets whether or not a value was submitted by the user for this entry
+	 *
+	 * Note: Users can submit a value of nothing and this method will return
+	 * true. This method only returns false if no data was submitted at all.
+	 *
+	 * @return boolean true if a value was submitted by the user for this entry
+	 *                  and false if no value was submitted by the user.
+	 *
+	 * @see SwatEntry::getRawValue()
+	 */
+	protected function hasRawValue()
+	{
+		$has_value = false;
+
+		$data = &$this->getForm()->getFormData();
+
+		if ($this->autocomplete) {
+			$id = $this->id;
+			if (isset($data[$id])) {
+				$has_value = true;
+			}
+		} else {
+			if (isset($data[$this->id.'_nonce'])) {
+				$id = $data[$this->id.'_nonce'];
+				if (isset($data[$id])) {
+					$has_value = true;
+				}
+			}
+		}
+
+		return $has_value;
 	}
 
 	// }}}
