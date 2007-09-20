@@ -29,6 +29,10 @@
 .swat-rating .star,
 .swat-rating .star a {background: url(../images/swat-rating-stars.png) no-repeat 0 0px;}
 
+* html .swat-rating .star,
+* html .swat-rating .star a { /* IE hack */
+	background: url(../images/swat-rating-stars.png) no-repeat 0 0px;}
+
 .swat-rating .star a {
 	display: block;
 	width: 100%;
