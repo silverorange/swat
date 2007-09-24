@@ -568,13 +568,15 @@ class SwatI18NLocale extends SwatObject
 		$string = str_replace($search, $replace, $string);
 
 		if (preg_match('/[^0-9.-]/', $string) != 1) {
-			if ($value > (float)PHP_INT_MAX)
+			if ($string > (float)PHP_INT_MAX)
 				throw new SwatException(
 					'Floating point value is too big to be an integer');
 
-			if ($value < (float)(-PHP_INT_MAX - 1))
+			if ($string < (float)(-PHP_INT_MAX - 1)) {
+				echo $value;
 				throw new SwatException(
 					'Floating point value is too small to be an integer');
+			}
 
 			$value = intval($string);
 		}
