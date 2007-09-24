@@ -500,7 +500,7 @@ class SwatI18NLocale extends SwatObject
 	 * locale would be annoying for users. For example, '1000' should not be
 	 * rejected because it wasn't formatted as '1,000'.
 	 *
-	 * @param string $string the formatted currency string.
+	 * @param string $string the formatted string.
 	 *
 	 * @return float the numeric value of the parsed string. If the given
 	 *                value could not be parsed, null is returned.
@@ -547,6 +547,86 @@ class SwatI18NLocale extends SwatObject
 
 		if (preg_match('/[^0-9.-]/', $string) != 1)
 			$value = floatval($string);
+
+		return $value;
+	}
+
+	// }}}
+	// {{{ public function parseInteger()
+
+	/**
+	 * Parses a numeric string formatted for this locale into an integer number
+	 *
+	 * If the string has fractional digits, the returned integer value is
+	 * rounded according to the rounding rules for
+	 * {@link http://php.net/manual/en/function.intval.php intval()}.
+	 *
+	 * Note: The number does not have to be formatted exactly correctly to be
+	 * parsed. Checking too closely how well a formatted number matches its
+	 * locale would be annoying for users. For example, '1000' should not be
+	 * rejected because it wasn't formatted as '1,000'.
+	 *
+	 * If the number is too large to fit in PHP's integer range (depends on
+	 * system architecture), an exception is thrown.
+	 *
+	 * @param string $string the formatted string.
+	 *
+	 * @return integer the numeric value of the parsed string. If the given
+	 *                  value could not be parsed, null is returned.
+	 *
+	 * @throws SwatException if the converted number is too large to fit in an
+	 *                        integer or if the converted number is too small
+	 *                        to fit in an integer.
+	 */
+	public function parseInteger($string)
+	{
+		$value = null;
+
+		$lc = $this->getLocaleInfo();
+
+		$negative_sign = ($lc['negative_sign'] == '') ?
+			'-' : $lc['negative_sign'];
+
+		// check if negative numbers are displayed as (5.00)
+		if ($lc['n_sign_posn'] == 0) {
+			$negative = (strpos($string, '(') !== false);
+			if ($negative) {
+				$string = str_replace(array('(', ')'), array('', ''), $string);
+			}
+		} else {
+			$negative = (strpos($string, $negative_sign) !== false);
+		}
+
+		$search = array(
+			$lc['thousands_sep'],
+			$lc['positive_sign'],
+			$negative_sign,
+			' ',
+		);
+
+		$replace = array(
+			'',
+			'',
+			'',
+			'',
+		);
+
+		$string = str_replace($search, $replace, $string);
+
+		if ($negative)
+			$string = '-'.$string;
+
+		if (preg_match('/[^0-9.-]/', $string) != 1) {
+			if ($value > (float)PHP_INT_MAX)
+				throw new SwatException(
+					'Floating point value is too big to be an integer');
+
+			if ($value < (float)(-PHP_INT_MAX - 1))
+				throw new SwatException(
+					'Floating point value is too small to be an integer');
+
+			$value = intval($string);
+		}
 
 		return $value;
 	}
