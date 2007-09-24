@@ -13,6 +13,19 @@ require_once 'Swat/SwatEntry.php';
  */
 class SwatSearchEntry extends SwatEntry
 {
+	// {{{ public properties
+
+	/**
+	 * An XHTML name for this search entry widget
+	 *
+	 * The name is used as the XHTML form element name. This is useful for
+	 * HTTP GET forms where the input name is displayed in the request URI.
+	 *
+	 * @var string
+	 */
+	public $name;
+
+	// }}}
 	// {{{ public function __construct()
 
 	public function __construct($id = null)
@@ -61,6 +74,17 @@ class SwatSearchEntry extends SwatEntry
 	protected function getInlineJavaScript()
 	{
 		return "var {$this->id}_obj = new SwatSearchEntry('{$this->id}');";
+	}
+
+	// }}}
+	// {{{ protected function getInputTag()
+
+	protected function getInputTag()
+	{
+		$tag = parent::getInputTag();
+		$tag->name = $this->name;
+
+		return $tag;
 	}
 
 	// }}}
