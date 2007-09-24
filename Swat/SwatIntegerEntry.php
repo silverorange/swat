@@ -3,13 +3,13 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatNumericEntry.php';
-require_once 'Swat/SwatString.php';
+require_once 'SwatI18N/SwatI18NLocale.php';
 
 /**
  * An integer entry widget
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatIntegerEntry extends SwatNumericEntry
@@ -49,11 +49,16 @@ class SwatIntegerEntry extends SwatNumericEntry
 	 */
 	protected function getDisplayValue($value)
 	{
-		if (is_int($value))
-			$value = SwatString::numberFormat($value, 0, null,
-				$this->show_thousands_separator);
-		else
+		if (is_int($value)) {
+			$locale = SwatI18NLocale::get();
+			$thousands_separator =
+				($this->show_thousands_separator) ? null : '';
+
+			$value = $locale->formatNumber($value, 0,
+				array('thousands_separator' => $thousands_separator));
+		} else {
 			$value = parent::getDisplayValue($value);
+		}
 
 		return $value;
 	}
@@ -74,8 +79,8 @@ class SwatIntegerEntry extends SwatNumericEntry
 	 */
 	protected function getNumericValue($value)
 	{
-		$value = trim($value);
-		return SwatString::toInteger($value);
+		$locale = SwatI18NLocale::get();
+		return $locale->parseInteger($value);
 	}
 
 	// }}}
