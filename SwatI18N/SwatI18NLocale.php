@@ -229,7 +229,7 @@ class SwatI18NLocale extends SwatObject
 
 		$formatted_value = $integer_part.$fractional_part;
 
-		if ($value > 0) {
+		if ($value >= 0) {
 			$sign = $format->p_sign; 
 			$sign_position = $format->p_sign_position;
 			$cs_precedes = $format->p_cs_precedes;
@@ -408,7 +408,7 @@ class SwatI18NLocale extends SwatObject
 		$fractional_part =
 			$this->formatFractionalPart($value, $decimals, $format);
 
-		if ($value > 0) {
+		if ($value >= 0) {
 			$sign = $format->p_sign; 
 		} else {
 			$sign = $format->n_sign; 
