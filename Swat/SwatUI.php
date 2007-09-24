@@ -85,8 +85,8 @@ class SwatUI extends SwatObject
 	 */
 	public function __construct($container = null)
 	{
-		if (!extension_loaded('xml'))
-			throw new SwatException('SwatUI requires the xml php extension.');
+		if (!extension_loaded('dom'))
+			throw new SwatException('SwatUI requires the DOM php extension.');
 
 
 		if ($container !== null && $container instanceof SwatContainer)
