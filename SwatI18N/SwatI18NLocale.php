@@ -440,22 +440,10 @@ class SwatI18NLocale extends SwatObject
 
 		$lc = $this->getLocaleInfo();
 
-		$negative_sign = ($lc['negative_sign'] == '') ?
-			'-' : $lc['negative_sign'];
-
 		$decimal_point = ($lc['mon_decimal_point'] == '') ?
 			$lc['decimal_point'] : $lc['mon_decimal_point'];
 
-
-		// check if negative numbers are displayed as (5.00)
-		if ($lc['n_sign_posn'] == 0) {
-			$negative = (strpos($string, '(') !== false);
-			if ($negative) {
-				$string = str_replace(array('(', ')'), array('', ''), $string);
-			}
-		} else {
-			$negative = (strpos($string, $negative_sign) !== false);
-		}
+		$string = $this->parseNegativeNotation($string);
 
 		$search = array(
 			$lc['currency_symbol'],
@@ -463,7 +451,6 @@ class SwatI18NLocale extends SwatObject
 			$lc['mon_thousands_sep'],
 			$decimal_point,
 			$lc['positive_sign'],
-			$negative_sign,
 			' ',
 		);
 
@@ -474,13 +461,9 @@ class SwatI18NLocale extends SwatObject
 			'.',
 			'',
 			'',
-			'',
 		);
 
 		$string = str_replace($search, $replace, $string);
-
-		if ($negative)
-			$string = '-'.$string;
 
 		if (preg_match('/[^0-9.-]/', $string) != 1)
 			$value = floatval($string);
@@ -511,24 +494,12 @@ class SwatI18NLocale extends SwatObject
 
 		$lc = $this->getLocaleInfo();
 
-		$negative_sign = ($lc['negative_sign'] == '') ?
-			'-' : $lc['negative_sign'];
-
-		// check if negative numbers are displayed as (5.00)
-		if ($lc['n_sign_posn'] == 0) {
-			$negative = (strpos($string, '(') !== false);
-			if ($negative) {
-				$string = str_replace(array('(', ')'), array('', ''), $string);
-			}
-		} else {
-			$negative = (strpos($string, $negative_sign) !== false);
-		}
+		$string = $this->parseNegativeNotation($string);
 
 		$search = array(
 			$lc['thousands_sep'],
 			$lc['decimal_point'],
 			$lc['positive_sign'],
-			$negative_sign,
 			' ',
 		);
 
@@ -537,13 +508,9 @@ class SwatI18NLocale extends SwatObject
 			'.',
 			'',
 			'',
-			'',
 		);
 
 		$string = str_replace($search, $replace, $string);
-
-		if ($negative)
-			$string = '-'.$string;
 
 		if (preg_match('/[^0-9.-]/', $string) != 1)
 			$value = floatval($string);
@@ -584,23 +551,11 @@ class SwatI18NLocale extends SwatObject
 
 		$lc = $this->getLocaleInfo();
 
-		$negative_sign = ($lc['negative_sign'] == '') ?
-			'-' : $lc['negative_sign'];
-
-		// check if negative numbers are displayed as (5.00)
-		if ($lc['n_sign_posn'] == 0) {
-			$negative = (strpos($string, '(') !== false);
-			if ($negative) {
-				$string = str_replace(array('(', ')'), array('', ''), $string);
-			}
-		} else {
-			$negative = (strpos($string, $negative_sign) !== false);
-		}
+		$string = $this->parseNegativeNotation($string);
 
 		$search = array(
 			$lc['thousands_sep'],
 			$lc['positive_sign'],
-			$negative_sign,
 			' ',
 		);
 
@@ -608,13 +563,9 @@ class SwatI18NLocale extends SwatObject
 			'',
 			'',
 			'',
-			'',
 		);
 
 		$string = str_replace($search, $replace, $string);
-
-		if ($negative)
-			$string = '-'.$string;
 
 		if (preg_match('/[^0-9.-]/', $string) != 1) {
 			if ($value > (float)PHP_INT_MAX)
@@ -1100,6 +1051,48 @@ class SwatI18NLocale extends SwatObject
 		}
 
 		return $array;
+	}
+
+	// }}}
+	// {{{ private function parseNegativeNotation
+
+	/**
+	 * Parses the negative notation for a numeric string formatted in this
+	 * locale
+	 *
+	 * @param string $string the formatted string.
+	 *
+	 * @return string the formatted string with the negative notation parsed
+	 *                 and normalized into a form readable by intval() and
+	 *                 floatval().
+	 */
+	private function parseNegativeNotation($string)
+	{
+		$lc = $this->getLocaleInfo();
+
+		$negative = false;
+		$negative_sign = ($lc['negative_sign'] == '') ?
+			'-' : $lc['negative_sign'];
+
+		// check for negative sign shown as: (5.00)
+		if ($lc['n_sign_posn'] == 0) {
+			if (strpos($string, '(') !== false) {
+				$negative = true;
+				$string = '-'.str_replace(
+					array('(', ')'), array(), $string);
+			}
+		} else {
+			if (strpos($string, $negative_sign) !== false) {
+				$negative = true;
+				$string = str_replace($negative_sign, '', $string);
+			}
+		}
+
+		if ($negative) {
+			$string = '-'.$string;
+		}
+
+		return $string;
 	}
 
 	// }}}
