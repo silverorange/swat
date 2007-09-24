@@ -80,9 +80,15 @@ class SwatUI extends SwatObject
 	 * @param SwatContainer $container an optional reference to a container
 	 *                                  object that will be the root element of
 	 *                                  the widget tree.
+	 *
+	 * @throws SwatException
 	 */
 	public function __construct($container = null)
 	{
+		if (!extension_loaded('xml'))
+			throw new SwatException('SwatUI requires the xml php extension.');
+
+
 		if ($container !== null && $container instanceof SwatContainer)
 			$this->root = $container;
 		else
