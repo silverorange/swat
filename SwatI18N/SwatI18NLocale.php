@@ -446,15 +446,38 @@ class SwatI18NLocale extends SwatObject
 		$decimal_point = ($lc['mon_decimal_point'] == '') ?
 			$lc['decimal_point'] : $lc['mon_decimal_point'];
 
-		$negative = (strpos($string, $negative_sign) !== false);
 
-		$string = str_replace($lc['currency_symbol'], '', $string);
-		$string = str_replace($lc['int_curr_symbol'], '', $string);
-		$string = str_replace($lc['mon_thousands_sep'], '', $string);
-		$string = str_replace($decimal_point, '.', $string);
-		$string = str_replace($lc['positive_sign'], '', $string);
-		$string = str_replace($negative_sign, '', $string);
-		$string = str_replace(' ', '', $string);
+		// check if negative numbers are displayed as (5.00)
+		if ($lc['n_sign_posn'] == 0) {
+			$negative = (strpos($string, '(') !== false);
+			if ($negative) {
+				$string = str_replace(array('(', ')'), array('', ''), $string);
+			}
+		} else {
+			$negative = (strpos($string, $negative_sign) !== false);
+		}
+
+		$search = array(
+			$lc['currency_symbol'],
+			$lc['int_curr_symbol'],
+			$lc['mon_thousands_sep'],
+			$decimal_point,
+			$lc['positive_sign'],
+			$negative_sign,
+			' ',
+		);
+
+		$replace = array(
+			'',
+			'',
+			'',
+			'.',
+			'',
+			'',
+			'',
+		);
+
+		$string = str_replace($search, $replace, $string);
 
 		if ($negative)
 			$string = '-'.$string;
