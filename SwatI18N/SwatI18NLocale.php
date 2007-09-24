@@ -857,7 +857,8 @@ class SwatI18NLocale extends SwatObject
 		$grouping_values = array();
 		$groupings = $format->grouping;
 		$grouping_total = floor(abs($value));
-		if (count($groupings) == 0 || $grouping_total == 0) {
+		if (count($groupings) == 0 || $grouping_total == 0 ||
+			$format->thousands_separator == '') {
 			array_push($grouping_values, $grouping_total);
 		} else {
 			$grouping_previous = 0;
