@@ -82,7 +82,9 @@ class SwatSearchEntry extends SwatEntry
 	protected function getInputTag()
 	{
 		$tag = parent::getInputTag();
-		$tag->name = $this->name;
+
+		if ($this->name !== null)
+			$tag->name = $this->name;
 
 		return $tag;
 	}
