@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+
+	<!-- This is a RelaxNG schema for SwatML.
+		 copyright 2007 silverorange Inc. -->
+
+	<start>
+		<ref name="swatml"/>
+	</start>
+
+	<define name="swatml">
+		<element name="swatml">
+			<interleave>
+				<zeroOrMore>
+					<ref name="widget"/>
+				</zeroOrMore>
+				<zeroOrMore>
+					<ref name="object"/>
+				</zeroOrMore>
+			</interleave>
+		</element>
+	</define>
+
+	<!-- base widgets -->
+	<define name="widget">
+		<element name="widget">
+			<attribute name="class" />
+			<optional>
+				<attribute name="id" />
+			</optional>
+			<zeroOrMore>
+				<ref name="property"/>
+			</zeroOrMore>
+			<interleave>
+				<zeroOrMore>
+					<ref name="widget"/>
+				</zeroOrMore>
+				<zeroOrMore>
+					<ref name="object"/>
+				</zeroOrMore>
+			</interleave>
+		</element>
+	</define>
+
+	<!-- table view columns or cell renderers
+		 these are interface elements that are not widgets -->
+	<define name="object">
+		<element name="object">
+			<attribute name="class" />
+			<optional>
+				<attribute name="id" />
+			</optional>
+			<zeroOrMore>
+				<ref name="property"/>
+			</zeroOrMore>
+			<zeroOrMore>
+				<ref name="widget"/>
+			</zeroOrMore>
+			<zeroOrMore>
+				<ref name="object"/>
+			</zeroOrMore>
+		</element>
+	</define>
+
+	<!-- interface element properties -->
+	<define name="property">
+		<element name="property">
+			<attribute name="name"/>
+			<optional>
+				<attribute name="translatable">
+					<choice>
+						<value type="string">yes</value>
+						<value type="string">no</value>
+					</choice>
+				</attribute>
+			</optional>
+			<optional>
+				<attribute name="type">
+					<choice>
+						<value type="string">integer</value>
+						<value type="string">boolean</value>
+						<value type="string">string</value>
+						<!-- implicit-string is legacy, same as string -->
+						<value type="string">implicit-string</value>
+						<value type="string">float</value>
+						<value type="string">data</value>
+						<value type="string">constant</value>
+						<value type="string">date</value>
+					</choice>
+				</attribute>
+			</optional>
+			<optional>
+				<attribute name="comments"/>
+			</optional>
+			<text/>
+		</element>
+	</define>
+
+</grammar>
