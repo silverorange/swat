@@ -8,6 +8,10 @@
 .swat-disclosure-control-closed {
 	min-height: 2.4em;
 }
+* html .swat-disclosure-control-opened,
+* html .swat-disclosure-control-closed { /* IE hack */
+	height: 2.4em;
+}
 
 .swat-disclosure-span,
 .swat-disclosure-anchor-opened,
