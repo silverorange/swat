@@ -103,8 +103,13 @@ class SwatDetailsStore extends SwatObject
 		if (array_key_exists($name, $this->data))
 			return $this->data[$name];
 
-		if ($this->base_object !== null && isset($this->base_object->$name))
-			return $this->base_object->$name;
+		if ($this->base_object !== null) {
+			if (property_exists($this->base_object, $name))
+				return $this->base_object->$name;
+
+			if (method_exists($this->base_object, '__get'))
+				return $this->base_object->$name;
+		}
 
 		throw new SwatInvalidPropertyException(
 			"Property '{$name}' does not exist in details store.",
