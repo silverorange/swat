@@ -11,7 +11,7 @@ require_once 'Swat/SwatObject.php';
  * another object.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDetailsStore extends SwatObject
@@ -19,7 +19,6 @@ class SwatDetailsStore extends SwatObject
 	// {{{ private properties
 
 	private $base_object = null;
-	private $base_reflector = null;
 	private $data = array();
 
 	// }}}
@@ -28,9 +27,6 @@ class SwatDetailsStore extends SwatObject
 	public function __construct($base_object = null)
 	{
 		$this->base_object = $base_object;
-		if ($this->base_object !== null)
-			$this->base_reflector =
-				new ReflectionClass(get_class($this->base_object));
 	}
 
 	// }}}
@@ -62,16 +58,8 @@ class SwatDetailsStore extends SwatObject
 		if (array_key_exists($name, $this->data))
 			return $this->data[$name];
 
-		if ($this->base_object !== null) {
-			if ($this->base_reflector->hasProperty($name)) {
-				$property = $this->base_reflector->getProperty($name);
-				if ($property->isPublic())
-					return $property->getValue($this->base_object);
-			}
-
-			if ($this->base_reflector->hasMethod('__get'))
-				return $this->base_object->$name;
-		}
+		if ($this->base_object !== null && isset($this->base_object->$name))
+			return $this->base_object->$name;
 
 		throw new SwatInvalidPropertyException(
 			"Property '{$name}' does not exist in details store.",
