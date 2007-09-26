@@ -14,6 +14,7 @@ require_once 'Swat/exceptions/SwatInvalidPropertyException.php';
  * @package   Swat
  * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @todo      Document parsePath().
  */
 class SwatDetailsStore extends SwatObject
 {
