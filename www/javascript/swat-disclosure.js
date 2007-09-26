@@ -1,8 +1,9 @@
 function SwatDisclosure(id, open)
 {
+	this.id = id;
 	this.div = document.getElementById(id);
 	this.input = document.getElementById(id + '_input');
-	this.animate_div = this.div.firstChild.nextSibling.nextSibling.firstChild;
+	this.animate_div = this.getAnimateDiv();
 
 	// get initial state
 	if (this.input.value.length) {
@@ -37,6 +38,11 @@ SwatDisclosure.prototype.toggle = function()
 SwatDisclosure.prototype.getSpan = function()
 {
 	return this.div.firstChild;
+}
+
+SwatDisclosure.prototype.getAnimateDiv = function()
+{
+	return this.div.firstChild.nextSibling.nextSibling.firstChild;
 }
 
 SwatDisclosure.prototype.drawDisclosureLink = function()
@@ -91,9 +97,9 @@ SwatDisclosure.prototype.closeWithAnimation = function()
 
 	this.animate_div.style.overflow = 'hidden';
 	this.animate_div.style.height = '';
-	var attributes = { height: { to: 0 } }; 
+	var attributes = { height: { to: 0 } };
 	var animation = new YAHOO.util.Anim(this.animate_div, attributes, 0.25,
-		YAHOO.util.Easing.easingIn); 
+		YAHOO.util.Easing.easeOut);
 
 	this.semaphore = true;
 	animation.onComplete.subscribe(this.handleClose, this, true);
@@ -140,10 +146,10 @@ SwatDisclosure.prototype.openWithAnimation = function()
 	this.animate_div.style.visibility = 'visible';
 	this.animate_div.parentNode.style.height = '';
 	this.animate_div.parentNode.style.overflow = 'visible';
-	
-	var attributes = { height: { to: height, from: 0 } }; 
+
+	var attributes = { height: { to: height, from: 0 } };
 	var animation = new YAHOO.util.Anim(this.animate_div, attributes, 0.5,
-		YAHOO.util.Easing.easeOut); 
+		YAHOO.util.Easing.easeOut);
 
 	this.semaphore = true;
 	animation.onComplete.subscribe(this.handleOpen, this, true);
