@@ -74,6 +74,26 @@ class SwatDetailsStore extends SwatObject
 	// }}}
 	// {{{ private function __get()
 
+	/**
+	 * Gets a property of this details store
+	 *
+	 * Properties are retrieved in the following manner:
+	 * 1. If the property name contains a dot (.) the results of
+	 *    {@link SwatDetailsStore::parsePath()} are returned.
+	 * 2. If the property was manually set on this details store, the manually
+	 *    set value is returned.
+	 * 3. If the property exists on the base object of this details store, the
+	 *    the base object's property value is returned.
+	 * 4. The property could not be found in this details store and an
+	 *    exception is thrown.
+	 *
+	 * @param string $name the name of the property to get.
+	 *
+	 * @return mixed the value of the property.
+	 *
+	 * @throws SwatInvalidPropertyException if the property does not exist in
+	 *                                       this details store.
+	 */
 	private function __get($name)
 	{
 		if (strpos($name, '.') !== false)
