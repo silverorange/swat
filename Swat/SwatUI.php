@@ -71,6 +71,15 @@ class SwatUI extends SwatObject
 
 	private $translation_callback = null;
 
+	/**
+	 * Whether or not parsed SwatML files should be validated against a schema
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatUI::setValidateMode()
+	 */
+	private static $validate_mode = true;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -87,7 +96,6 @@ class SwatUI extends SwatObject
 	{
 		if (!extension_loaded('dom'))
 			throw new SwatException('SwatUI requires the DOM php extension.');
-
 
 		if ($container !== null && $container instanceof SwatContainer)
 			$this->root = $container;
@@ -114,6 +122,36 @@ class SwatUI extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function setValidateMode()
+
+	/**
+	 * Sets the default validation mode used by {@link SwatUI::loadFromXML()}
+	 *
+	 * SwatML documents may optionally be validated against the SwatML schema
+	 * when they are loaded. Validation ensures the SwatML will be parsed
+	 * correctly and is quite useful for development to catch errors in
+	 * SwatML documents. By default, SwatUI validates all SwatML files loaded
+	 * using {@link SwatUI::loadFromXML()}.
+	 *
+	 * In some situations, validation may not be desireable for performance
+	 * reasons. For example, on a live server where all SwatML documents have
+	 * already been validated during development, validation is not useful.
+	 *
+	 * The overall performance hit of validation is quite low compared to
+	 * performing database queries; however, the option to turn it off is here.
+	 *
+	 * The schema format used to validate SwatML documents is RelaxNG.
+	 *
+	 * @param boolean $mode true if validation should be performed by default
+	 *                       and false if validation should not be performed
+	 *                       by default.
+	 */
+	public static function setValidateMode($mode)
+	{
+		self::$validate_mode = (boolean)$mode;
+	}
+
+	// }}}
 	// {{{ public function loadFromXML()
 
 	/**
@@ -121,6 +159,11 @@ class SwatUI extends SwatObject
 	 *
 	 * @param string $filename the filename of the XML UI file to load.
 	 * @param SwatContainer $root the container to load the XML UI into.
+	 * @param boolean $validate optional. Whether or not to validate the parsed
+	 *                           SwatML file. If not specified, whether or not
+	 *                           to validate is deferred to the default
+	 *                           validation mode set by the static method
+	 *                           {@link SwatUI::setValidateMode()}.
 	 *
 	 * @throws SwatFileNotFoundException, SwatInvalidSwatMLException,
 	 *         SwatDuplicateIdException, SwatInvalidClassException, 
@@ -129,10 +172,13 @@ class SwatUI extends SwatObject
 	 *         SwatInvalidConstantExpressionException,
 	 *         SwatUndefinedConstantException
 	 */
-	public function loadFromXML($filename, $container = null)
+	public function loadFromXML($filename, $container = null, $validate = null)
 	{
 		if ($container === null)
 			$container = $this->root;
+
+		if ($validate === null)
+			$validate = self::$validate_mode;
 
 		$xml_file = null;
 
@@ -168,8 +214,16 @@ class SwatUI extends SwatObject
 		$errors = libxml_use_internal_errors(true);
 
 		$document = new DOMDocument();
-		$document->load($xml_file,
-			LIBXML_DTDLOAD | LIBXML_DTDATTR | LIBXML_DTDVALID);
+		$document->load($xml_file);
+		if ($validate) {
+			// check for pear installed version first and if not found, fall
+			// back to version in svn
+			$schema_file = '@DATA-DIR@/Swat/system/swatml.rng';
+			if (!file_exists($schema_file)) {
+				$schema_file = dirname(__FILE__).'/../system/swatml.rng';
+			}
+			$document->relaxNGValidate($schema_file);
+		}
 
 		$xml_errors = libxml_get_errors();
 		libxml_clear_errors();
@@ -485,7 +539,7 @@ class SwatUI extends SwatObject
 	 */
 	private function parseObject($node)
 	{
-		// class is required in the DTD
+		// class is required in the schema 
 		$class = $node->getAttribute('class');
 
 		if (!class_exists($class)) {
@@ -516,7 +570,7 @@ class SwatUI extends SwatObject
 
 		$object = new $class();
 
-		// id is optional in the DTD
+		// id is optional in the schema 
 		if ($node->hasAttribute('id'))
 			$object->id = $node->getAttribute('id');
 
@@ -540,7 +594,7 @@ class SwatUI extends SwatObject
 	{
 		$class_properties = get_class_vars(get_class($object));
 
-		// name is required in the DTD
+		// name is required in the schema 
 		$name = trim($property_node->getAttribute('name'));
 		$value = $property_node->nodeValue;
 
@@ -560,12 +614,20 @@ class SwatUI extends SwatObject
 				0, $object, $name);
 		}
 
-		// translatable is always set in the DTD
-		$translatable = (strcmp($property_node->getAttribute('translatable'),
-			'yes') == 0);
+		// translatable is optional in the schema
+		if ($property_node->hasAttribute('translatable')) {
+			$translatable =
+				$property_node->getAttribute('translatable') == 'yes';
+		} else {
+			$translatable = 'no';
+		}
 
-		// type is always set in the DTD
-		$type = $property_node->getAttribute('type');
+		// type is optional in the schema
+		if ($property_node->hasAttribute('type')) {
+			$type = $property_node->getAttribute('type');
+		} else {
+			$type = 'implicit-string';
+		}
 
 		$parsed_value =
 			$this->parseValue($name, $value, $type, $translatable, $object);
