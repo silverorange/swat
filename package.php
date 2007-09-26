@@ -26,8 +26,12 @@ $result = $package->setOptions(
 		'baseinstalldir'    => '/',
 		'packagedirectory'  => './',
 		'dir_roles'         => array(
-			'www' => 'data',
-			'demo' => 'data',
+			'Swat'     => 'php',
+			'SwatDB'   => 'php',
+			'SwatI18N' => 'php',
+			'www'      => 'data',
+			'demo'     => 'data',
+			'system'   => 'data',
 		),
 	)
 );
@@ -52,6 +56,7 @@ $package->addMaintainer('lead', 'nrf', 'Nathan Fredrickson', 'nathan@silverorang
 $package->addMaintainer('lead', 'gauthierm', 'Mike Gauthier', 'mike@silverorange.com');
 
 $package->addReplacement('Swat/Swat.php', 'pear-config', '@DATA-DIR@', 'data_dir');
+$package->addReplacement('Swat/SwatUI.php', 'pear-config', '@DATA-DIR@', 'data_dir');
 
 $package->setPhpDep('5.1.5');
 $package->setPearinstallerDep('1.4.0');
