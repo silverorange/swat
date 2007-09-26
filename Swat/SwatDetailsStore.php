@@ -93,6 +93,16 @@ class SwatDetailsStore extends SwatObject
 	// }}}
 	// {{{ private function __set()
 
+	/**
+	 * Manually sets a property of this details store
+	 *
+	 * If a base object is used, it is not modified by this method. Manually
+	 * set properties override properties of the base object when calling
+	 * {@link SwatDetailsStore::__get()} or {@link SwatDetailsStore::__isset()}.
+	 *
+	 * @param string $name the name of the property to set.
+	 * @param mixed $value the value of the property.
+	 */
 	private function __set($name, $value)
 	{
 		$this->data[$name] = $value;
