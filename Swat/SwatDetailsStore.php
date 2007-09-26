@@ -50,7 +50,7 @@ class SwatDetailsStore extends SwatObject
 	 */
 	public function __construct($base_object = null)
 	{
-		if ($base_object !== null && is_object($base_object)
+		if ($base_object !== null && is_object($base_object))
 			$this->base_object = $base_object;
 	}
 
