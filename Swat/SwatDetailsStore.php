@@ -101,11 +101,25 @@ class SwatDetailsStore extends SwatObject
 	// }}}
 	// {{{ private function __isset()
 
+	/**
+	 * Gets whether or not a property is set for this details store
+	 *
+	 * First, the manually set properties are checked. Then the properties of
+	 * the base object are checked if there is a base object.
+	 *
+	 * @param string $name the name of the property to check.
+	 *
+	 * @return boolean true if the property is set for this details store and
+	 *                  false if it is not.
+	 */
 	private function __isset($name)
 	{
-		return
-			isset($this->data[$name]) ||
-			isset($this->base_object->$name);
+		$is_set = isset($this->data[$name]);
+
+		if (!$is_set && $this->base_object !== null)
+			$is_set = isset($this->base_object->$name);
+
+		return $is_set;
 	}
 
 	// }}}
