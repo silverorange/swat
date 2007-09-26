@@ -80,6 +80,7 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$input = $this->getInputTag();
 		$container_div = $this->getContainerDivTag();
 		$animate_div = $this->getAnimateDivTag();
+		$padding_div = $this->getPaddingDivTag();
 
 		$control_div->open();
 
@@ -88,7 +89,9 @@ class SwatDisclosure extends SwatDisplayableContainer
 
 		$container_div->open();
 		$animate_div->open();
+		$padding_div->open();
 		$this->displayChildren();
+		$padding_div->close();
 		$animate_div->close();
 		$container_div->close();
 
@@ -126,6 +129,17 @@ class SwatDisclosure extends SwatDisplayableContainer
 	protected function getAnimateDivTag()
 	{
 		$div = new SwatHtmlTag('div');
+
+		return $div;
+	}
+
+	// }}}
+	// {{{ protected function getPaddingDivTag()
+
+	protected function getPaddingDivTag()
+	{
+		$div = new SwatHtmlTag('div');
+		$div->class = 'swat-disclosure-padding-container';
 
 		return $div;
 	}

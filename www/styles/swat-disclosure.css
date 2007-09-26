@@ -4,7 +4,10 @@
  * Since disclosures can be nested, closed styles must follow open styles.
  */
 
-.swat-disclosure-control { }
+.swat-disclosure-control-opened,
+.swat-disclosure-control-closed {
+	min-height: 2.4em;
+}
 
 .swat-disclosure-span,
 .swat-disclosure-anchor-opened,
@@ -45,16 +48,19 @@
 	padding-left: 5px;
 }
 
-.swat-disclosure-control-closed {
-	margin-bottom: 1.7em;
-}
-
 .swat-disclosure-control-opened .swat-disclosure-container {
 	display: block;	
 	border: 1px solid #ddd;
-	padding: 16px;
 }
 
 .swat-disclosure-control-closed .swat-disclosure-container {
 	display: none;
+}
+
+.swat-disclosure-control-opened .swat-disclosure-padding-container {
+	padding: 16px;
+}
+
+.swat-disclosure-control-closed .swat-disclosure-padding-container {
+	padding: 0;
 }
