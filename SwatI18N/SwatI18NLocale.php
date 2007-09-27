@@ -224,8 +224,13 @@ class SwatI18NLocale extends SwatObject
 			$this->getNationalCurrencyFormat()->override($format);
 
 		$integer_part = $this->formatIntegerGroupings($value, $format);
+
+		// default fractional digits to 2 if locale is missing value
+		$fractional_digits = ($format->fractional_digits == CHAR_MAX) ?
+			2 : $format->fractional_digits;
+
 		$fractional_part =
-			$this->formatFractionalPart($value, null, $format);
+			$this->formatFractionalPart($value, $fractional_digits, $format);
 
 		$formatted_value = $integer_part.$fractional_part;
 
@@ -927,9 +932,8 @@ class SwatI18NLocale extends SwatObject
 	 * Formats the fractional  part of a value
 	 *
 	 * @param float $value the value to format.
-	 * @param integer $decimals the number of fractional digits to include in
-	 *                           the returned string. Use <i>null</i> to get
-	 *                           the value from the <i>$format</i>.
+	 * @param integer $fractional_digits the number of fractional digits to
+	 *                                    include in the returned string.
 	 * @param SwatI18NNumberFormat $format the number formatting object to use
 	 *                                      to format the fractional digits.
 	 *
@@ -938,17 +942,9 @@ class SwatI18NLocale extends SwatObject
 	 *                 string is prepended with the decimal separator character
 	 *                 of the format object.
 	 */
-	protected function formatFractionalPart($value, $decimals,
+	protected function formatFractionalPart($value, $fractional_digits,
 		SwatI18NNumberFormat $format)
 	{
-		if ($decimals === null) {
-			// default fractional digits to 2 if locale is missing value
-			$fractional_digits = ($format->fractional_digits == CHAR_MAX) ?
-				2 : $format->fractional_digits;
-		} else {
-			$fractional_digits = $decimals;
-		}
-
 		if ($fractional_digits == 0) {
 			$formatted_value = '';
 		} else {
