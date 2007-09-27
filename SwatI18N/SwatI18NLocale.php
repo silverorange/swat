@@ -384,7 +384,7 @@ class SwatI18NLocale extends SwatObject
 	 * numeric values.
 	 *
 	 * @param float $value the numeric value to format.
-	 * @param integer $decimans optional. The number of fractional digits to
+	 * @param integer $decimals optional. The number of fractional digits to
 	 *                           include in the returned string. If not
 	 *                           specified, no fractional digits are returned.
 	 * @param array $format optional. An associative array of number formatting
