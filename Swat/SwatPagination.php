@@ -4,7 +4,7 @@
 
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/SwatI18NLocale.php';
+require_once 'SwatI18N/SwatI18NLocale.php';
 
 /**
  * A widget to allow navigation between paged data
