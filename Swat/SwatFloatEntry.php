@@ -3,13 +3,13 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatNumericEntry.php';
-require_once 'Swat/SwatString.php';
+require_once 'SwatI18N/SwatI18NLocale.php';
 
 /**
  * A float entry widget
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFloatEntry extends SwatNumericEntry
@@ -50,14 +50,18 @@ class SwatFloatEntry extends SwatNumericEntry
 	protected function getDisplayValue($value)
 	{
 		if (is_numeric($value)) {
-			$lc = localeconv();
+			$locale = SwatI18NLocale::get();
+			$thousands_separator =
+				($this->show_thousands_separator) ? null : '';
+
+			$lc = $locale->getLocaleInfo();
 			$decimal_pos = strpos($value, $lc['decimal_point']);
 			$decimals = ($decimal_pos !== false) ?
 				strlen($value) - $decimal_pos - strlen($lc['decimal_point']) :
 				0;
 
-			$value = SwatString::numberFormat($value, $decimals, null,
-				$this->show_thousands_separator);
+			$value = $locale->formatNumber($value, $decimals,
+				array('thousands_separator' => $thousands_separator));
 		} else {
 			$value = parent::getDisplayValue($value);
 		}
@@ -81,8 +85,8 @@ class SwatFloatEntry extends SwatNumericEntry
 	 */
 	protected function getNumericValue($value)
 	{
-		$value = trim($value);
-		return SwatString::toFloat($value);
+		$locale = SwatI18NLocale::get();
+		return $locale->parseFloat($value);
 	}
 
 	// }}}
