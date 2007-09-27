@@ -4,7 +4,7 @@
 
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/SwatString.php';
+require_once 'Swat/SwatI18NLocale.php';
 
 /**
  * A widget to allow navigation between paged data
@@ -187,11 +187,12 @@ class SwatPagination extends SwatControl
 			$message = sprintf(Swat::_('One %s.'), $unit);
 
 		} else {
+			$locale = SwatI18NLocale::get();
 			$message = sprintf(Swat::_('%s %s, displaying %s to %s'),
-				SwatString::numberFormat($this->total_records),
+				$locale->formatNumber($this->total_records),
 				$unit_plural,
-				SwatString::numberFormat($this->current_record + 1),
-				SwatString::numberFormat(min($this->current_record +
+				$locale->formatNumber($this->current_record + 1),
+				$locale->formatNumber(min($this->current_record +
 					$this->page_size, $this->total_records)));
 		}
 
