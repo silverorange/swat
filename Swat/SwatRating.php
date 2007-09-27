@@ -6,7 +6,7 @@ require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
- * A javascript widget for recording a four star rating
+ * A control for recording a rating out of four values
  *
  * @package   Swat
  * @copyright 2007 silverorange
@@ -17,9 +17,10 @@ class SwatRating extends SwatFlydown
 	// {{{ public function __construct()
 
 	/**
-	 * Creates a new rating widget
+	 * Creates a new rating control
 	 *
-	 * @param string $id a non-visible unique id for this rating widget.
+	 * @param string $id optional. A non-visible unique id for this rating
+	 *                    control.
 	 */
 	public function __construct($id = null)
 	{
@@ -38,10 +39,7 @@ class SwatRating extends SwatFlydown
 	// {{{ public function init()
 
 	/**
-	 * Initializes this rating widget
-	 *
-	 * Initializes this rating widget by creating and adding the options
-	 * to the flydown.
+	 * Initializes this rating control
 	 */
 	public function init()
 	{
@@ -62,41 +60,23 @@ class SwatRating extends SwatFlydown
 	// {{{ public function process()
 
 	/**
-	 * Processes this rating widget
+	 * Processes this rating control 
 	 *
-	 * Process this rating widget and converts the value if it is a string
+	 * Processes this rating control and converts the value if it is a string.
 	 */
 	public function process()
 	{
 		parent::process();
 
-		if (is_string($this->value)) 
+		if (is_string($this->value))
 			$this->value = intval($this->value);
 	}
 
 	// }}}
-	// {{{ protected function getCSSClassNames()
-
-	/**
-	 * Gets the array of CSS classes that are applied to this calendar widget 
-	 *
-	 * @return array the array of CSS classes that are applied to this calendar
-	 *                widget.
-	 */
-	protected function getCSSClassNames()
-	{
-		$classes = array('swat-rating');
-		$classes = array_merge($classes, parent::getCSSClassNames());
-		return $classes;
-	}
-
-	// }}}
 	//  {{{ public function display()
-	
+
 	/**
-	 * Displays this rating widget
-	 *
-	 * Displays this rating widget as a XHTML select
+	 * Displays this rating control 
 	 */
 	public function display()
 	{
@@ -111,21 +91,33 @@ class SwatRating extends SwatFlydown
 
 		parent::display();
 
-		$div->close();		
+		$div->close();
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
-	// {{{ protceted function getInlineJavaScript()
+	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the inline JavaScript for this rating to function
-	 * 
-	 * The inline JavaScript creates an instance of the 
-	 * SwatRating widget with the name $this->id_'obj'.
+	 * Gets the array of CSS classes that are applied to this rating control
 	 *
-	 * @return string the inline JavaScript required for this control to 
-	 *					function
+	 * @return array the array of CSS classes that are applied to this rating 
+	 *                control.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-rating');
+		$classes = array_merge($classes, parent::getCSSClassNames());
+		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScript()
+
+	/**
+	 * Gets the inline JavaScript for this rating control
+	 *
+	 * @return string the inline JavaScript required for this rating control.
 	 */
 	protected function getInlineJavaScript()
 	{
