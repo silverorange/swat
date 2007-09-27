@@ -3,13 +3,13 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatEntry.php';
-require_once 'Swat/SwatString.php';
+require_once 'SwatI18N/SwatI18NLocale.php';
 
 /**
  * An input control for entering a delimited list of data
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatListEntry extends SwatEntry
@@ -137,6 +137,7 @@ class SwatListEntry extends SwatEntry
 		}
 
 		$this->values = $this->splitValues($this->value);
+		$locale = SwatI18NLocale::get();
 
 		if (!$this->required && count($this->values) == 0) {
 			return;
@@ -146,7 +147,7 @@ class SwatListEntry extends SwatEntry
 
 			$message = sprintf(
 				Swat::_('The %%s field cannot have more than %s entries.'),
-				SwatString::numberFormat($this->max_entries));
+				$locale->formatNumber($this->max_entries));
 
 			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 
@@ -157,7 +158,7 @@ class SwatListEntry extends SwatEntry
 				'The %%s field must have at least %s entry.',
 				'The %%s field must have at least %s entries.',
 				$this->min_entries),
-				SwatString::numberFormat($this->min_entries));
+				$locale->formatNumber($this->min_entries));
 
 			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 		}
@@ -178,7 +179,7 @@ class SwatListEntry extends SwatEntry
 					'Entries in the %%s field must be less than %s '.
 					'characters long.',
 					$this->maxlength),
-					SwatString::numberFormat($this->maxlength)).' ';
+					$locale->formatNumber($this->maxlength)).' ';
 
 				$max_length_error_values[] = $value;
 
@@ -189,7 +190,7 @@ class SwatListEntry extends SwatEntry
 					'Entries in the %%s field must be at least %s '.
 					'characters long.',
 					$this->minlength),
-					SwatString::numberFormat($this->minlength)).' ';
+					$locale->formatNumber($this->minlength)).' ';
 
 				$min_length_error_values[] = $value;
 			}
@@ -201,7 +202,7 @@ class SwatListEntry extends SwatEntry
 				'The following entries are too short: %s.',
 				count($min_length_error_values)),
 				implode(', ', $min_length_error_values),
-				SwatString::numberFormat(count($min_length_error_values)));
+				$locale->formatNumber(count($min_length_error_values)));
 
 			$this->addMessage(new SwatMessage($min_length_msg,
 				SwatMessage::ERROR));
@@ -213,7 +214,7 @@ class SwatListEntry extends SwatEntry
 				'The following entries are too long: %s.',
 				count($max_length_error_values)),
 				implode(', ', $max_length_error_values),
-				SwatString::numberFormat(count($max_length_error_values)));
+				$locale->formatNumber(count($max_length_error_values)));
 
 			$this->addMessage(new SwatMessage($max_length_msg,
 				SwatMessage::ERROR));
@@ -292,6 +293,7 @@ class SwatListEntry extends SwatEntry
 	public function getNote()
 	{
 		$message = null;
+		$locale = SwatI18NLocale::get();
 
 		if ($this->max_entries !== null && $this->max_entries > 0 &&
 			$this->min_entries === null) {
@@ -300,7 +302,7 @@ class SwatListEntry extends SwatEntry
 				'List can contain at most %s entry',
 				'List can contain at most %s entries',
 				$this->max_entries),
-				SwatString::numberFormat($this->max_entries)));
+				$locale->formatNumber($this->max_entries)));
 
 		} elseif (($this->max_entries === null  ||
 			$this->max_entries == 0) &&
@@ -310,15 +312,15 @@ class SwatListEntry extends SwatEntry
 				'List must contain at least %s entry',
 				'List must contain at least %s entries',
 				$this->min_entries),
-				SwatString::numberFormat($this->min_entries)));
+				$locale->formatNumber($this->min_entries)));
 
 		} elseif ($this->max_entries !== null && $this->max_entries > 0 &&
 			$this->min_entries !== null && $this->required == true) {
 
 			$message = new SwatMessage(sprintf(
 				'List must contain between %s and %s entries.',
-				SwatString::numberFormat($this->min_entries),
-				SwatString::numberFormat($this->max_entries)));
+				$locale->formatNumber($this->min_entries),
+				$locale->formatNumber($this->max_entries)));
 		}
 
 		return $message;
