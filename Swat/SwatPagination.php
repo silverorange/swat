@@ -178,20 +178,24 @@ class SwatPagination extends SwatControl
 		if ($unit_plural === null)
 			$unit_plural = Swat::_('records');
 
+		$message = '';
 
-		if ($this->total_records == 0)
-			return sprintf(Swat::_('No %s.'), $unit_plural);
+		if ($this->total_records == 0) {
+			$message = sprintf(Swat::_('No %s.'), $unit_plural);
 
-		elseif ($this->total_records == 1)
-			return sprintf(Swat::_('One %s.'), $unit);
+		} elseif ($this->total_records == 1) {
+			$message = sprintf(Swat::_('One %s.'), $unit);
 
-		else
-			return sprintf(Swat::_('%s %s, displaying %s to %s'),
+		} else {
+			$message = sprintf(Swat::_('%s %s, displaying %s to %s'),
 				SwatString::numberFormat($this->total_records),
 				$unit_plural,
 				SwatString::numberFormat($this->current_record + 1),
 				SwatString::numberFormat(min($this->current_record +
 					$this->page_size, $this->total_records)));
+		}
+
+		return $message;
 	}
 
 	// }}}
