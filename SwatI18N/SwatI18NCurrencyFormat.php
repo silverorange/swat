@@ -93,6 +93,20 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
 	public $n_sign_position;
 
 	/**
+	 * Positive sign
+	 *
+	 * @var string
+	 */
+	public $p_sign;
+
+	/**
+	 * Negative sign
+	 *
+	 * @var string
+	 */
+	public $n_sign;
+
+	/**
 	 * Currency symbol
 	 *
 	 * @var string
@@ -132,6 +146,10 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
 		$string.= 'p_sign_position => '.$this->p_sign_position."\n";
 
 		$string.= 'n_sign_position => '.$this->n_sign_position."\n";
+
+		$string.= 'p_sign => '.$this->p_sign."\n";
+
+		$string.= 'n_sign => '.$this->n_sign."\n";
 
 		$string.= 'symbol => '.$this->symbol."\n";
 

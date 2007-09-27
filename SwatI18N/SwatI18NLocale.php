@@ -408,14 +408,7 @@ class SwatI18NLocale extends SwatObject
 		$fractional_part =
 			$this->formatFractionalPart($value, $decimals, $format);
 
-		if ($value >= 0) {
-			$sign = $format->p_sign; 
-		} else {
-			$sign = $format->n_sign; 
-			// default negative sign if format is missing value
-			if ($sign == '')
-				$sign = '-';
-		}
+		$sign = ($value < 0) ? '-' : '';
 
 		$formatted_value = $sign.$integer_part.$fractional_part;
 
@@ -766,8 +759,6 @@ class SwatI18NLocale extends SwatObject
 		$format->decimal_separator     = $lc['decimal_point'];
 		$format->thousands_separator   = $lc['thousands_sep'];
 		$format->grouping              = $lc['grouping'];
-		$format->p_sign                = $lc['positive_sign'];
-		$format->n_sign                = $lc['negative_sign'];
 
 		$this->number_format = $format;
 	}

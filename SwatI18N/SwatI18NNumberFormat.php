@@ -37,20 +37,6 @@ class SwatI18NNumberFormat extends SwatObject
 	 */
 	public $grouping;
 
-	/**
-	 * Positive sign
-	 *
-	 * @var string
-	 */
-	public $p_sign;
-
-	/**
-	 * Negative sign
-	 *
-	 * @var string
-	 */
-	public $n_sign;
-
 	// }}}
 	// {{{ public function override()
 
@@ -121,10 +107,6 @@ class SwatI18NNumberFormat extends SwatObject
 			implode(', ', $this->grouping) : $this->grouping;
 
 		$string.= "\n";
-
-		$string.= 'p_sign => '.$this->p_sign."\n";
-
-		$string.= 'n_sign => '.$this->n_sign."\n";
 
 		return $string;
 	}
