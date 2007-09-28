@@ -39,7 +39,7 @@ SwatRating.prototype.setupStyles = function()
 	YAHOO.util.Dom.addClass(this.stardiv, 'rating');
 
 	// make the stars
-	for (var i=1; i<=4; i++) {
+	for (var i = 1; i <= 4; i++) {
 		// first, make a div and then an a-element in it
 		var star = document.createElement('div');
 		star.id = this.id + '_star' + i;
@@ -58,7 +58,7 @@ SwatRating.prototype.setupStyles = function()
 
 	this.ratingdiv.appendChild(this.stardiv);
 
-	for (var i=1; i<=parseInt(this.flydown.value); i++) {
+	for (var i = 1; i <= parseInt(this.flydown.value); i++) {
 		var star = YAHOO.util.Dom.get(this.id + '_star' + i);
 		var a = star.firstChild;
 		YAHOO.util.Dom.addClass(star, 'on');
@@ -68,7 +68,7 @@ SwatRating.prototype.setupStyles = function()
 SwatRating.prototype.handleFocus = function(event, focus_star)
 {
 	// code to handle the focus on the star
-	for (var i=1; i<=focus_star; i++) {
+	for (var i = 1; i <= focus_star; i++) {
 		var star = YAHOO.util.Dom.get(this.id + '_star' + i);
 		var a = star.firstChild;
 		YAHOO.util.Dom.addClass(star, 'hover');
@@ -78,7 +78,7 @@ SwatRating.prototype.handleFocus = function(event, focus_star)
 SwatRating.prototype.handleBlur = function(event)
 {
 	// code to handle movement away from the star
-	for (var i=1; i<=4; i++) {
+	for (var i = 1; i <= 4; i++) {
 		var star = YAHOO.util.Dom.get(this.id + '_star' + i);
 		YAHOO.util.Dom.removeClass(star, 'hover');
 	}
@@ -87,15 +87,15 @@ SwatRating.prototype.handleBlur = function(event)
 SwatRating.prototype.handleClick = function(event, clicked_star)
 {
 	// this resets the on style for each star
-	for (var i=1; i<=4; i++) {
-		var star = YAHOO.util.Dom.get( this.id + '_star' + i);
+	for (var i = 1; i <= 4; i++) {
+		var star = YAHOO.util.Dom.get(this.id + '_star' + i);
 		var a = star.firstChild;
 		YAHOO.util.Dom.removeClass(star, 'on');
 	}
 
 	if (this.flydown.value === clicked_star.toString()){
 		this.flydown.value = null;
-		for (var i=1; i<=4; i++) {
+		for (var i = 1; i <= 4; i++) {
 			var star = YAHOO.util.Dom.get(this.id + '_star' + i);
 			var a = star.firstChild;
 			YAHOO.util.Dom.removeClass(star, 'hover');
@@ -113,7 +113,7 @@ SwatRating.prototype.handleClick = function(event, clicked_star)
 	}
 
 	// cycle trought 1..5 stars
-	for (var i=1; i<=clicked_star; i++) {
+	for (var i = 1; i <= clicked_star; i++) {
 		var star = YAHOO.util.Dom.get(this.id + '_star' + i);
 		var a = star.firstChild;
 		YAHOO.util.Dom.addClass(star, 'on');
