@@ -32,12 +32,12 @@ class SwatDBDataObject extends SwatObject
 	 * @var array
 	 */
 	private $sub_data_objects = array();
-	
+
 	/**
 	 * @var array
 	 */
 	private $internal_properties = array();
-	
+
 	/**
 	 * @var array
 	 */
@@ -52,12 +52,12 @@ class SwatDBDataObject extends SwatObject
 	 * @var array
 	 */
 	private $date_properties = array();
-	
+
 	/**
 	 * @var boolean
 	 */
 	private $loaded_from_database = false;
-	
+
 	// }}}
 	// {{{ protected properties
 
@@ -80,7 +80,7 @@ class SwatDBDataObject extends SwatObject
 	 * @var boolean
 	 */
 	protected $read_only = false;
-	
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -242,7 +242,7 @@ class SwatDBDataObject extends SwatObject
 		$class = get_class($this);
 		$new_object = new $class();
 		$id_field = new SwatDBField($this->id_field, 'integer');
-		
+
 		$properties = $this->getProperties();
 		foreach ($properties as $name => $value)
 			if ($name !== $id_field->name)
@@ -384,7 +384,7 @@ class SwatDBDataObject extends SwatObject
 	 *
 	 * @param string $key the key to check.
 	 *
-	 * @return boolean true if a sub data object is loaded and false if it is 
+	 * @return boolean true if a sub data object is loaded and false if it is
 	 *                 not.
 	 */
 	protected function hasSubDataObject($key)
@@ -671,7 +671,7 @@ class SwatDBDataObject extends SwatObject
 		foreach ($this->sub_data_objects as $name => $object)
 			if (is_object($object) && $object->isModified())
 				return true;
-		
+
 		return false;
 	}
 
@@ -783,7 +783,7 @@ class SwatDBDataObject extends SwatObject
 		}
 
 		if ($id === null) {
-			$this->$id_ref = 
+			$this->$id_ref =
 				SwatDB::insertRow($this->db, $this->table, $fields, $values,
 					$id_field->__toString());
 		} else {
@@ -895,7 +895,7 @@ class SwatDBDataObject extends SwatObject
 
 	// }}}
 	// {{{ public function unserialize()
-	
+
 	public function unserialize($data)
 	{
 		$this->wakeup();
@@ -930,7 +930,7 @@ class SwatDBDataObject extends SwatObject
 	{
 		return array('table', 'id_field',
 			'sub_data_objects', 'property_hashes', 'internal_properties',
-			'internal_property_autosave', 'internal_property_classes',	
+			'internal_property_autosave', 'internal_property_classes',
 			'date_properties', 'loaded_from_database');
 	}
 

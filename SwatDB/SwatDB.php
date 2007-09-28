@@ -39,7 +39,7 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function query($db, $sql, 
+	public static function query($db, $sql,
 		$wrapper = 'SwatDBDefaultRecordsetWrapper', $types = null)
 	{
 		$mdb2_types = $types === null ? true : $types;
@@ -86,7 +86,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Update a column
 	 *
- 	 * Convenience method to update a single database field for one or more 
+ 	 * Convenience method to update a single database field for one or more
 	 * rows. One convenient use of this method is for processing {@link
 	 * SwatAction}s
 	 * that change a single database field.
@@ -95,21 +95,21 @@ class SwatDB extends SwatObject
 	 *
 	 * @param string $table The database table to query.
 	 *
-	 * @param string $field The name of the database field to update. Can be 
-	 *        given in the form type:name where type is a standard MDB2 
-	 *        datatype. If type is ommitted, then integer is assummed for this 
+	 * @param string $field The name of the database field to update. Can be
+	 *        given in the form type:name where type is a standard MDB2
+	 *        datatype. If type is ommitted, then integer is assummed for this
 	 *        field.
 	 *
-	 * @param mixed $value The value to store in database field $field. The 
+	 * @param mixed $value The value to store in database field $field. The
 	 *        type should correspond to the type of $field.
 	 *
 	 * @param string $id_field The name of the database field that contains the
 	 *        the id. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        standard MDB2 datatype. If type is ommitted, then integer is
 	 *        assummed for this field.
 	 *
 	 * @param array $ids An array of identifiers corresponding to the database
-	 *        rows to be updated. The type of the individual identifiers should 
+	 *        rows to be updated. The type of the individual identifiers should
 	 *        correspond to the type of $id_field.
 	 *
 	 * @param string $where An optional additional where clause.
@@ -136,7 +136,7 @@ class SwatDB extends SwatObject
 
 		$where = ($where === null) ? '' : 'and '.$where;
 
-		$sql = sprintf($sql, 
+		$sql = sprintf($sql,
 			$table,
 			$field->name,
 			$db->quote($value, $field->type),
@@ -154,28 +154,28 @@ class SwatDB extends SwatObject
 	 * Query a column
 	 *
  	 * Convenience method to query for values in a single database column.
-	 * One convenient use of this method is for loading values from a binding 
+	 * One convenient use of this method is for loading values from a binding
 	 * table.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 *
 	 * @param string $table The database table to query.
 	 *
-	 * @param string $field The name of the database field to query. Can be 
-	 *        given in the form type:name where type is a standard MDB2 
-	 *        datatype. If type is ommitted, then integer is assummed for this 
+	 * @param string $field The name of the database field to query. Can be
+	 *        given in the form type:name where type is a standard MDB2
+	 *        datatype. If type is ommitted, then integer is assummed for this
 	 *        field.
 	 *
 	 * @param string $id_field The name of the database field that contains the
 	 *        the id.  If not null this will be used to construct a where clause
 	 *        to limit results. Can be given in the form type:name where type is
-	 *        a standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        a standard MDB2 datatype. If type is ommitted, then integer is
 	 *        assummed for this field.
 	 *
-	 * @param mixed $id The value to look for in the $id_field. The type should 
+	 * @param mixed $id The value to look for in the $id_field. The type should
 	 *        correspond to the type of $id_field.
 	 *
-	 * @return array An associative array of $id_field => $field 
+	 * @return array An associative array of $id_field => $field
 	 *
 	 * @throws SwatDBException
 	 */
@@ -276,18 +276,18 @@ class SwatDB extends SwatObject
 	 *
 	 * @param string $table The database table to query.
 	 *
-	 * @param string $field The name of the database field to query. Can be 
-	 *        given in the form type:name where type is a standard MDB2 
-	 *        datatype. If type is ommitted, then integer is assummed for this 
+	 * @param string $field The name of the database field to query. Can be
+	 *        given in the form type:name where type is a standard MDB2
+	 *        datatype. If type is ommitted, then integer is assummed for this
 	 *        field.
 	 *
 	 * @param string $id_field The name of the database field that contains the
 	 *        the id.  If not null this will be used to construct a where clause
 	 *        to limit results. Can be given in the form type:name where type is
-	 *        a standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        a standard MDB2 datatype. If type is ommitted, then integer is
 	 *        assummed for this field.
 	 *
-	 * @param mixed $id The value to look for in the $id_field. The type should 
+	 * @param mixed $id The value to look for in the $id_field. The type should
 	 *        correspond to the type of $id_field.
 	 *
 	 * @return mixed The value queried for a single result.
@@ -331,16 +331,16 @@ class SwatDB extends SwatObject
 	 *
 	 * @param string $table The database table to query.
 	 *
-	 * @param array $fields An array of fields to be queried. Can be 
-	 *        given in the form type:name where type is a standard MDB2 
+	 * @param array $fields An array of fields to be queried. Can be
+	 *        given in the form type:name where type is a standard MDB2
 	 *        datatype. If type is ommitted, then text is assummed.
 	 *
 	 * @param string $id_field The name of the database field that contains the
 	 *        the id. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        standard MDB2 datatype. If type is ommitted, then integer is
 	 *        assummed for this field.
 	 *
-	 * @param mixed $id The value to look for in the id field column. The 
+	 * @param mixed $id The value to look for in the id field column. The
 	 *        type should correspond to the type of $field.
 	 *
 	 * @return Object A row object.
@@ -391,7 +391,7 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function executeStoredProc($db, $proc, $params, 
+	public static function executeStoredProc($db, $proc, $params,
 		$wrapper = 'SwatDBDefaultRecordsetWrapper', $types = null)
 	{
 		$db->loadModule('Function');
@@ -402,13 +402,13 @@ class SwatDB extends SwatObject
 		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
 		$mdb2_types = $types === null ? true : $types;
 
-        $rs = $db->function->executeStoredProc(
+		$rs = $db->function->executeStoredProc(
 			$proc, $params, $mdb2_types, true, $mdb2_wrapper);
 
 		if (MDB2::isError($rs))
 			throw new SwatDBException($rs);
 
-        return $rs;
+		return $rs;
 	}
 
 	// }}}
@@ -417,7 +417,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Execute a stored procedure that returns a single value
 	 *
- 	 * Convenience method to execute a stored procedure that returns a single 
+ 	 * Convenience method to execute a stored procedure that returns a single
 	 * value.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
@@ -436,9 +436,9 @@ class SwatDB extends SwatObject
 		if (!is_array($params))
 			$params = array($params);
 
-        $rs = SwatDB::executeStoredProc($db, $proc, $params);
-        $row = $rs->getFirst();
-        return current($row);
+		$rs = SwatDB::executeStoredProc($db, $proc, $params);
+		$row = $rs->getFirst();
+		return current($row);
 	}
 
 	// }}}
@@ -447,7 +447,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Update a binding table
 	 *
- 	 * Convenience method to update rows in a binding table. It will delete 
+ 	 * Convenience method to update rows in a binding table. It will delete
 	 * and insert rows as necessary.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
@@ -459,7 +459,7 @@ class SwatDB extends SwatObject
 	 *        a standard MDB2 datatype. If type is ommitted, then integer is
 	 *        assummed for this field.
 	 *
-	 * @param mixed $id The value to store in the $id_field. The type should 
+	 * @param mixed $id The value to store in the $id_field. The type should
 	 *        correspond to the type of $id_field.
 	 *
 	 * @param string $value_field The name of the binding table field that
@@ -467,8 +467,8 @@ class SwatDB extends SwatObject
 	 *        form type:name where type is a standard MDB2 datatype. If type is
 	 *        ommitted, then integer is assummed for this field.
 	 *
-	 * @param array $values An array of values that should be stored in the 
-	 *        $value_field. The type of the individual values should 
+	 * @param array $values An array of values that should be stored in the
+	 *        $value_field. The type of the individual values should
 	 *        correspond to the type of $value_field.
 	 *
 	 * @param string $bound_table The table bound through the binding table.
@@ -489,7 +489,7 @@ class SwatDB extends SwatObject
 
 		$delete_sql = 'delete from %s where %s = %s';
 
-		$delete_sql = sprintf($delete_sql, 
+		$delete_sql = sprintf($delete_sql,
 			$table,
 			$id_field->name,
 			$db->quote($id, $id_field->type));
@@ -504,7 +504,7 @@ class SwatDB extends SwatObject
 			$insert_sql = 'insert into %s (%s, %s) select %s, %s from %s '.
 				'where %s not in (select %s from %s where %s = %s) and %s in (%s)';
 
-			$insert_sql = sprintf($insert_sql, 
+			$insert_sql = sprintf($insert_sql,
 				$table,
 				$id_field->name,
 				$value_field->name,
@@ -558,18 +558,18 @@ class SwatDB extends SwatObject
 	 *
 	 * @param string $table The database table to update.
 	 *
-	 * @param array $fields An array of fields to be updated. Can be 
-	 *        given in the form type:name where type is a standard MDB2 
+	 * @param array $fields An array of fields to be updated. Can be
+	 *        given in the form type:name where type is a standard MDB2
 	 *        datatype. If type is ommitted, then text is assummed.
 	 *
 	 * @param array $values An associative array of values to store in the
 	 *        database.  The array keys should correspond to field names.
-	 *        The type of the individual values should correspond to the 
+	 *        The type of the individual values should correspond to the
 	 *        field type.
 	 *
 	 * @param string $id_field The name of the database field that contains an
-	 *        identifier of row to be updated. Can be given in the form 
-	 *        type:name where type is a standard MDB2 datatype. If type is 
+	 *        identifier of row to be updated. Can be given in the form
+	 *        type:name where type is a standard MDB2 datatype. If type is
 	 *        ommitted, then integer is assummed for this field.
 	 *		  If $id_field is set, the value in the $id_field column of
 	 *        the inserted row is returned.
@@ -627,32 +627,32 @@ class SwatDB extends SwatObject
 
 	// }}}
 	// {{{ public static function updateRow()
-	
+
 	/**
 	 * Update a row
 	 *
- 	 * Convenience method to update multiple fields of a single database row. 
+ 	 * Convenience method to update multiple fields of a single database row.
 	 * One convenient use of this method is for save data on an edit page.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 *
 	 * @param string $table The database table to update.
 	 *
-	 * @param array $fields An array of fields to be updated. Can be 
-	 *        given in the form type:name where type is a standard MDB2 
+	 * @param array $fields An array of fields to be updated. Can be
+	 *        given in the form type:name where type is a standard MDB2
 	 *        datatype. If type is ommitted, then text is assummed.
 	 *
 	 * @param array $values An associative array of values to store in the
 	 *        database.  The array keys should correspond to field names.
-	 *        The type of the individual values should correspond to the 
+	 *        The type of the individual values should correspond to the
 	 *        field type.
 	 *
 	 * @param string $id_field The name of the database field that contains an
-	 *        identifier of row to be updated. Can be given in the form 
-	 *        type:name where type is a standard MDB2 datatype. If type is 
+	 *        identifier of row to be updated. Can be given in the form
+	 *        type:name where type is a standard MDB2 datatype. If type is
 	 *        ommitted, then integer is assummed for this field.
 	 *
-	 * @param mixed $id The value to look for in the $id_field column. The 
+	 * @param mixed $id The value to look for in the $id_field column. The
 	 *        type should correspond to the type of $field.
 	 *
 	 * @throws SwatDBException
@@ -687,22 +687,22 @@ class SwatDB extends SwatObject
 
 	// }}}
 	// {{{ public static function deleteRow()
-	
+
 	/**
 	 * Delete a row
 	 *
- 	 * Convenience method to delete a single database row. 
+ 	 * Convenience method to delete a single database row.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 *
 	 * @param string $table The database table to delete from.
 	 *
 	 * @param string $id_field The name of the database field that contains an
-	 *        identifier of row to be deleted. Can be given in the form 
-	 *        type:name where type is a standard MDB2 datatype. If type is 
+	 *        identifier of row to be deleted. Can be given in the form
+	 *        type:name where type is a standard MDB2 datatype. If type is
 	 *        ommitted, then integer is assummed for this field.
 	 *
-	 * @param mixed $id The value to look for in the $id_field column. The 
+	 * @param mixed $id The value to look for in the $id_field column. The
 	 *        type should correspond to the type of $field.
 	 *
 	 * @throws SwatDBException
@@ -728,30 +728,30 @@ class SwatDB extends SwatObject
 	 *
  	 * Convenience method to query for a set of options, each consisting of
 	 * an id and a title. The returned option array in the form of
-	 * $id => $title can be passed directly to other classes, such as 
+	 * $id => $title can be passed directly to other classes, such as
 	 * {@link SwatFlydown} for example.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 *
 	 * @param string $table The database table to query.
 	 *
-	 * @param string $title_field The name of the database field to query for 
+	 * @param string $title_field The name of the database field to query for
 	 *        the title. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then text is 
+	 *        standard MDB2 datatype. If type is ommitted, then text is
 	 *        assummed for this field.
 	 *
-	 * @param string $id_field The name of the database field to query for 
+	 * @param string $id_field The name of the database field to query for
 	 *        the id. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        standard MDB2 datatype. If type is ommitted, then integer is
 	 *        assummed for this field.
 	 *
-	 * @param string $order_by_clause Optional comma deliminated list of 
+	 * @param string $order_by_clause Optional comma deliminated list of
 	 *        database field names to use in the <i>order by</i> clause.
 	 *        Do not include "order by" in the string; only include the list
 	 *        of field names. Pass null to skip over this paramater.
 	 *
-	 * @param string $where_clause Optional <i>where</i> clause to limit the 
-	 *        returned results.  Do not include "where" in the string; only 
+	 * @param string $where_clause Optional <i>where</i> clause to limit the
+	 *        returned results.  Do not include "where" in the string; only
 	 *        include the conditionals.
 	 *
 	 * @return array An array in the form of $id => $title.
@@ -775,7 +775,7 @@ class SwatDB extends SwatObject
 
 		SwatDB::debug($sql);
 		$rs = SwatDB::query($db, $sql, null);
-		
+
 		$options = array();
 
 		while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
@@ -793,7 +793,7 @@ class SwatDB extends SwatObject
 	// }}}
 	// {{{ public static function getCascadeOptionArray()
 
-    /**
+	/**
 	 * Query for an option array cascaded by a field
 	 *
  	 * Convenience method to query for a set of options, each consisting of
@@ -805,28 +805,28 @@ class SwatDB extends SwatObject
 	 *
 	 * @param string $table The database table to query.
 	 *
-	 * @param string $title_field The name of the database field to query for 
+	 * @param string $title_field The name of the database field to query for
 	 *        the title. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then text is 
+	 *        standard MDB2 datatype. If type is ommitted, then text is
 	 *        assummed for this field.
 	 *
-	 * @param string $id_field The name of the database field to query for 
+	 * @param string $id_field The name of the database field to query for
 	 *        the id. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        standard MDB2 datatype. If type is ommitted, then integer is
 	 *        assummed for this field.
 	 *
-	 * @param string $cascade_field The name of the database field to cascade 
+	 * @param string $cascade_field The name of the database field to cascade
 	 *        the options by. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        standard MDB2 datatype. If type is ommitted, then integer is
 	 *        assummed for this field.
 	 *
-	 * @param string $order_by_clause Optional comma deliminated list of 
+	 * @param string $order_by_clause Optional comma deliminated list of
 	 *        database field names to use in the <i>order by</i> clause.
 	 *        Do not include "order by" in the string; only include the list
 	 *        of field names. Pass null to skip over this paramater.
 	 *
-	 * @param string $where_clause Optional <i>where</i> clause to limit the 
-	 *        returned results.  Do not include "where" in the string; only 
+	 * @param string $where_clause Optional <i>where</i> clause to limit the
+	 *        returned results.  Do not include "where" in the string; only
 	 *        include the conditionals.
 	 *
 	 * @return array An array in the form of $id => $title.
@@ -868,7 +868,7 @@ class SwatDB extends SwatObject
 				$current = $row->$cascade_field_name;
 				$options[$current] = array();
 			}
-			
+
 			$options[$current][$row->$id_field_name] = $row->$title_field_name;
 		}
 
@@ -889,14 +889,14 @@ class SwatDB extends SwatObject
 	 *
 	 * @param string $table The database table to query.
 	 *
-	 * @param string $title_field The name of the database field to query for 
+	 * @param string $title_field The name of the database field to query for
 	 *        the title. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then text is 
+	 *        standard MDB2 datatype. If type is ommitted, then text is
 	 *        assummed for this field.
 	 *
-	 * @param string $id_field The name of the database field to query for 
+	 * @param string $id_field The name of the database field to query for
 	 *        the id. Can be given in the form type:name where type is a
-	 *        standard MDB2 datatype. If type is ommitted, then integer is 
+	 *        standard MDB2 datatype. If type is ommitted, then integer is
 	 *        assummed for this field.
 	 *
 	 * @param string $group_table The database table that the group titles come
@@ -917,7 +917,7 @@ class SwatDB extends SwatObject
 	 *        where type is a standard MDB2 datatype. If type is ommitted, then
 	 *        integer is assummed for this field.
 	 *
-	 * @param string $order_by_clause Optional comma deliminated list of 
+	 * @param string $order_by_clause Optional comma deliminated list of
 	 *        database field names to use in the <i>order by</i> clause.
 	 *        Do not include "order by" in the string; only include the list
 	 *        of field names. Pass null to skip over this paramater.
@@ -966,7 +966,7 @@ class SwatDB extends SwatObject
 
 		if ($order_by_clause != null)
 			$sql.= ' order by '.$order_by_clause;
-		
+
 		$rs = SwatDB::query($db, $sql, null);
 
 		$options = array();
@@ -1004,8 +1004,8 @@ class SwatDB extends SwatObject
 	 *
 	 * @param string $table The database table to update.
 	 *
-	 * @param string $field The field to be return the max value of. Can be 
-	 *        given in the form type:name where type is a standard MDB2 
+	 * @param string $field The field to be return the max value of. Can be
+	 *        given in the form type:name where type is a standard MDB2
 	 *        datatype. If type is ommitted, then text is assummed.
 	 *
 	 * @return mixed The max value of field specified.
@@ -1015,7 +1015,7 @@ class SwatDB extends SwatObject
 	public static function getFieldMax($db, $table, $field)
 	{
 		$field = new SwatDBField($field, 'integer');
-			
+
 		$sql = sprintf('select max(%s) as %s from %s',
 			$field->name, $field->name, $table);
 
@@ -1034,7 +1034,7 @@ class SwatDB extends SwatObject
 	 * @param mixed $value The value to check for null on
 	 *
 	 * @param boolean $neg Whether to return the operator for a negative
-	 *        comparison 
+	 *        comparison
 	 *
 	 * @return string SQL operator
 	 */
@@ -1095,7 +1095,7 @@ class SwatDB extends SwatObject
 
 		$base_parent = $current_parent;
 		array_push($stack, $current_parent);
-		$last_node = $current_parent;	
+		$last_node = $current_parent;
 
 		foreach ($rs as $row) {
 			$title = $row->$title_field_name;
@@ -1206,7 +1206,7 @@ class SwatDB extends SwatObject
 	 * Checks a variable to see if it is an array or if it is an Iterator. If
 	 * the variable is an Iterator, converts it to an array of values.
 	 *
-	 * @param array|Iterator $array the variable to normalize. 
+	 * @param array|Iterator $array the variable to normalize.
 	 *
 	 * @return array the normalized array
 	 *
