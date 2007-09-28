@@ -33,7 +33,7 @@ SwatZIndexManager.raiseElement = function(element)
 	} else {
 		var index = SwatZIndexManager.start;
 	}
-	
+
 	element.style.zIndex = index;
 
 	SwatZIndexManager.elements.push(element);
@@ -79,7 +79,7 @@ SwatZIndexManager.removeElement = function(element)
 	if (position == -1) {
 		return null;
 	}
-	
+
 	// remove element from list
 	SwatZIndexManager.elements.splice(position, 1);
 
