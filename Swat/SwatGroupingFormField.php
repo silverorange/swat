@@ -8,7 +8,7 @@ require_once 'Swat/SwatHtmlTag.php';
 /**
  * A grouping form field
  *
- * A specialized form field that semantically groups controls in an 
+ * A specialized form field that semantically groups controls in an
  * XHTML 'fieldset' tag.
  *
  * @package   Swat
@@ -23,7 +23,7 @@ class SwatGroupingFormField extends SwatFormField
 	 * Get a SwatHtmlTag to display the title.
 	 *
 	 * Subclasses can change this to change their appearance.
-	 * 
+	 *
 	 * @return SwatHtmlTag a tag object containing the title.
 	 */
 	protected function getTitleTag()

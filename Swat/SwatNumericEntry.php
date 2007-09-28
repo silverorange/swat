@@ -20,7 +20,7 @@ abstract class SwatNumericEntry extends SwatEntry
 	 * Show Thousands Seperator
 	 *
 	 * Whether or not to show a thousands separator (shown depending on
-	 * locale). 
+	 * locale).
 	 *
 	 * @var boolean
 	 */
@@ -139,7 +139,7 @@ abstract class SwatNumericEntry extends SwatEntry
 
 	// }}}
 	// {{{ abstract protected function getNumericValue()
-	
+
 	/**
 	 * Gets the numeric value of this widget
 	 *

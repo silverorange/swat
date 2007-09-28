@@ -71,7 +71,7 @@ class SwatButton extends SwatInputControl
 	 */
 	public $show_processing_throbber = false;
 
-	/** 
+	/**
 	 * Optional content to display beside the processing throbber
 	 *
 	 * @var string
@@ -108,7 +108,7 @@ class SwatButton extends SwatInputControl
 	// {{{ public function __construct()
 
 	/**
-	 * Creates a new button 
+	 * Creates a new button
 	 *
 	 * @param string $id a non-visible unique id for this widget.
 	 *
@@ -133,7 +133,7 @@ class SwatButton extends SwatInputControl
 	/**
 	 * Initializes this widget
 	 *
-	 * Loads properties from stock if $stock_id is set, otherwise sets a 
+	 * Loads properties from stock if $stock_id is set, otherwise sets a
 	 * default stock title.
 	 *
 	 * @see SwatWidget::init()
@@ -142,7 +142,7 @@ class SwatButton extends SwatInputControl
 	{
 		parent::init();
 
-		if ($this->stock_id === null) 
+		if ($this->stock_id === null)
 			$this->setFromStock('submit', false);
 		else
 			$this->setFromStock($this->stock_id, false);
@@ -314,7 +314,7 @@ class SwatButton extends SwatInputControl
 	// {{{ protected function getJavaScriptClass()
 
 	/**
-	 * Gets the name of the JavaScript class to instantiate for this button 
+	 * Gets the name of the JavaScript class to instantiate for this button
 	 *
 	 * Subclasses of this class may want to return a subclass of the default
 	 * JavaScript button class.

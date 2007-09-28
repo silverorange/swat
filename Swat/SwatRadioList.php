@@ -88,7 +88,7 @@ class SwatRadioList extends SwatFlydown implements SwatState
 
 			if ($option instanceof SwatFlydownDivider) {
 				$this->displayDivider($option);
-			} else {					
+			} else {
 				$this->displayOption($option);
 				$this->displayOptionLabel($option);
 			}

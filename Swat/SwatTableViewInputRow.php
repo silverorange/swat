@@ -80,7 +80,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 * @var SwatToolLink
 	 */
 	private $enter_another_link = null;
-	
+
 	/**
 	 * Whether or no the embedded widgets of this row have been created
 	 *
@@ -238,7 +238,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$diff = $this->number - count($this->replicators);
 			$next_replicator = (count($this->replicators) == 0) ? 0 :
 				end($this->replicators) + 1;
- 
+
 			for ($i = $next_replicator; $i < $diff + $next_replicator; $i++)
 				$this->replicators[] = $i;
 		}
@@ -441,7 +441,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this date entry 
+	 * Gets the SwatHtmlHeadEntry objects needed by this date entry
 	 *
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this date entry.

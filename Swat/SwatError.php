@@ -33,7 +33,7 @@ class SwatError
 	 */
 	protected $message;
 
-	/** 
+	/**
 	 * The severity of this error
 	 *
 	 * Error severity should be one of the E_* constants defined by PHP.
@@ -181,7 +181,7 @@ class SwatError
 	// {{{ public function log()
 
 	/**
-	 * Logs this error 
+	 * Logs this error
 	 *
 	 * The error is logged to the webserver error log.
 	 */
@@ -215,7 +215,7 @@ class SwatError
 	// {{{ public function getSummary()
 
 	/**
-	 * Gets a one-line short text summary of this error 
+	 * Gets a one-line short text summary of this error
 	 *
 	 * This summary is useful for log entries and error email titles.
 	 *
@@ -354,7 +354,7 @@ class SwatError
 	// {{{ public static function handle()
 
 	/**
-	 * Handles an error 
+	 * Handles an error
 	 *
 	 * When an error occurs, a SwatError object is created and processed.
 	 *

@@ -174,7 +174,7 @@ class SwatDisclosure extends SwatDisplayableContainer
 	// {{{ protected function getJavaScriptClass()
 
 	/**
-	 * Gets the name of the JavaScript class to instantiate for this disclosure 
+	 * Gets the name of the JavaScript class to instantiate for this disclosure
 	 *
 	 * Sub-classes of this class may want to return a sub-class of the default
 	 * JavaScript disclosure class.

@@ -23,7 +23,7 @@ abstract class SwatTableViewRow extends SwatUIObject
 	public $view = null;
 
 	/**
-	 * Unique identifier of this row 
+	 * Unique identifier of this row
 	 *
 	 * @param string
 	 */
@@ -124,8 +124,8 @@ abstract class SwatTableViewRow extends SwatUIObject
 	// {{{ public function getInlineJavaScript()
 
 	/**
-	 * Gets the inline JavaScript required by this row 
-	 * 
+	 * Gets the inline JavaScript required by this row
+	 *
 	 * All inline JavaScript is displayed after the table-view has been
 	 * displayed.
 	 *
@@ -162,7 +162,7 @@ abstract class SwatTableViewRow extends SwatUIObject
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this row 
+	 * Gets the SwatHtmlHeadEntry objects needed by this row
 	 *
 	 * If this row has not been displayed, an empty set is returned to reduce
 	 * the number of required HTTP requests.

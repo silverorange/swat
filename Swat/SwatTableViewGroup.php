@@ -46,7 +46,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 
 	/**
 	 * The current value of the group_by field of the table model for the
-	 * grouping footer 
+	 * grouping footer
 	 *
 	 * This value is used so that this grouping footer is not displayed for
 	 * every row. The grouping footer is only displayed when the value of the
@@ -125,7 +125,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 
 	// }}}
 	// {{{ protected function displayRenderers()
-	
+
 	/**
 	 * Displays the renderers for this column
 	 *
@@ -196,8 +196,8 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	// }}}
 	// {{{ protected function getBaseCSSClassNames()
 
-	/** 
-	 * Gets the base CSS class names of this table-view group 
+	/**
+	 * Gets the base CSS class names of this table-view group
 	 *
 	 * @return array the array of base CSS class names for this table-view
 	 *                group.

@@ -460,7 +460,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this date entry 
+	 * Gets the SwatHtmlHeadEntry objects needed by this date entry
 	 *
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this date entry.
@@ -556,7 +556,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this date entry widget 
+	 * Gets the array of CSS classes that are applied to this date entry widget
 	 *
 	 * @return array the array of CSS classes that are applied to this date
 	 *                entry widget.
@@ -635,7 +635,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 * Creates all internal widgets required for this date entry
 	 */
 	private function createEmbeddedWidgets()
-	{ 
+	{
 		if (!$this->widgets_created) {
 			if ($this->display_parts & self::YEAR)
 				$this->createYearFlydown();

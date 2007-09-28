@@ -76,7 +76,7 @@ class SwatToolbar extends SwatDisplayableContainer
 
 	/**
 	 * Gets the tool links of this toolbar
-	 * 
+	 *
 	 * Returns an the array of {@link SwatToolLink} objects contained
 	 * by this toolbar.
 	 *

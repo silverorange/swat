@@ -581,7 +581,7 @@ class SwatForm extends SwatDisplayableContainer
 		 * If this form's authentication token is set, the token in submitted
 		 * data must match.
 		 */
-		$this->authenticated = 
+		$this->authenticated =
 			(self::$authentication_token === null ||
 			self::$authentication_token === $token);
 	}

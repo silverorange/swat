@@ -207,7 +207,7 @@ XHTML;
 				Swat::_('Ignore XHTML validation errors');
 
 			$this->ignore_errors_field->parent = $this;
-			
+
 			$this->ignore_errors_checkbox =
 				new SwatCheckbox($this->id.'_ignore_checkbox');
 

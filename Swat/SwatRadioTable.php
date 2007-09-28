@@ -46,7 +46,7 @@ class SwatRadioTable extends SwatRadioList
 		// add a hidden field so we can check if this list was submitted on
 		// the process step
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
-		
+
 		if ($this->show_blank)
 			$options = array_merge(
 				array(new SwatOption(null, $this->blank_title)),
@@ -57,7 +57,7 @@ class SwatRadioTable extends SwatRadioList
 		$table_tag->class = $this->getCSSClassString();
 		$table_tag->open();
 
-		foreach ($options as $option) {	
+		foreach ($options as $option) {
 			echo '<tr>';
 
 			if ($option instanceof SwatFlydownDivider) {
@@ -66,7 +66,7 @@ class SwatRadioTable extends SwatRadioList
 				echo '</td><td>';
 				$this->displayDivider($option);
 				echo '</td>';
-			} else {					
+			} else {
 				echo '<td class="swat-radio-table-input">';
 				$this->displayOption($option);
 				echo '</td><td>';

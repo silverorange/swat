@@ -40,7 +40,7 @@ class SwatDisplayableContainer extends SwatContainer
 
 	/**
 	 * Gets the array of CSS classes that are applied to this displayable
-	 * container 
+	 * container
 	 *
 	 * @return array the array of CSS classes that are applied to this
 	 *                displayable container.

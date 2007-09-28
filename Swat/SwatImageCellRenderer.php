@@ -139,7 +139,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 		if ($this->occupy_width !== null &&
 			$this->occupy_width > $this->width)
 			$margin_x = $this->occupy_width - $this->width;
-			
+
 		if ($this->occupy_height !== null &&
 			$this->occupy_height > $this->height)
 			$margin_y = $this->occupy_height - $this->height;
@@ -167,7 +167,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this cell renderer 
+	 * Gets the array of CSS classes that are applied to this cell renderer
 	 *
 	 * @return array the array of CSS classes that are applied to this cell renderer.
 	 */

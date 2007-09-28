@@ -71,7 +71,7 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 			$children[] = $this->remove($child_widget);
 
 		// then we clone, change the id and add back to the widget tree inside
-		// a replicated container 
+		// a replicated container
 		foreach ($this->replicators as $id => $title) {
 			$container = $this->getContainer($id, $title);
 			$suffix = '_'.$this->id.$id;

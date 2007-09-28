@@ -136,7 +136,7 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator,
 	{
 		return $this->children;
 	}
-	
+
 	// }}}
 	// {{{ public function hasChildren()
 
@@ -233,7 +233,7 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator,
 	{
 		return reset($this->children);
 	}
-	
+
 	// }}}
 	// {{{ public function valid()
 

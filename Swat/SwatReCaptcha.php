@@ -26,7 +26,7 @@ class SwatReCaptcha extends SwatInputControl
 	 * @var string
 	 */
 	public $public_key = null;
-	
+
 	/**
 	 * Private Key
 	 *
@@ -38,11 +38,11 @@ class SwatReCaptcha extends SwatInputControl
 	public $private_key = null;
 
 	/**
-	 * If you are displaying a page to the user over SSL, be sure to set this 
+	 * If you are displaying a page to the user over SSL, be sure to set this
 	 * to true so an error dialog doesn't come up in the user's browser.
 	 *
 	 * @var boolean
-	 */ 
+	 */
 	public $secure = false;
 
 	// }}}
@@ -71,7 +71,7 @@ class SwatReCaptcha extends SwatInputControl
 	/**
 	 * Processes this ReCaptcha Widget
 	 *
-	 * If the user entered an incorrect response a message is displayed and 
+	 * If the user entered an incorrect response a message is displayed and
 	 * validation is halted.
 	 */
 	public function process()

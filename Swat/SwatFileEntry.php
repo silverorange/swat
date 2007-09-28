@@ -133,7 +133,7 @@ class SwatFileEntry extends SwatInputControl
 
 		if (!$this->required && $this->file === null) {
 			return;
-			
+
 		} elseif (!$this->isSensitive()) {
 			return;
 
@@ -145,7 +145,7 @@ class SwatFileEntry extends SwatInputControl
 			!in_array($this->getMimeType(), $this->accept_mime_types)) {
 
 			$message = $this->getValidationMessage('mime-type');
-			$message->primary_content = sprintf($message->primary_content, 
+			$message->primary_content = sprintf($message->primary_content,
 				implode(', ', $this->accept_mime_types));
 
 			$this->addMessage($message);

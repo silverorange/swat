@@ -57,7 +57,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 * @var boolean
 	 */
 	private $mappings_applied = false;
-	
+
 	// }}}
 	// {{{ public function addRenderer()
 
@@ -186,7 +186,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 
 					if ($mapping->array_key === null)
 						$array_ref[] = $data_object->$field;
-					else	
+					else
 						$array_ref[$mapping->array_key] = $data_object->$field;
 
 				} else {
@@ -196,7 +196,7 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 					if ($mapping->array_key === null)
 						$renderer->$property = array($data_object->$field);
 					else
-						$renderer->$property = 
+						$renderer->$property =
 							array($mapping->array_key => $data_object->$field);
 				}
 			} else {

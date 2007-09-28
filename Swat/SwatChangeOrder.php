@@ -235,7 +235,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
 	/**
 	 * Gets the array of CSS classes that are applied to this change-order
-	 * widget 
+	 * widget
 	 *
 	 * @return array the array of CSS classes that are applied to this
 	 *                change-order widget.
@@ -273,7 +273,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$buttons_div = new SwatHtmlTag('div');
 		$buttons_div->class = 'swat-change-order-buttons';
 		$buttons_div->open();
-		
+
 		$btn_tag = new SwatHtmlTag('input');
 		$btn_tag->type = 'button';
 		if (!$this->isSensitive())
@@ -284,7 +284,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$btn_tag->name = "{$this->id}_buttons";
 		$btn_tag->class = 'swat-change-order-top';
 		$btn_tag->display();
-		
+
 		echo '<br />';
 
 		$btn_tag->value = Swat::_('Move Up');
@@ -292,7 +292,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$btn_tag->name = "{$this->id}_buttons";
 		$btn_tag->class = 'swat-change-order-up';
 		$btn_tag->display();
-		
+
 		echo '<br />';
 
 		$btn_tag->value = Swat::_('Move Down');
@@ -300,9 +300,9 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$btn_tag->name = "{$this->id}_buttons";
 		$btn_tag->class = 'swat-change-order-down';
 		$btn_tag->display();
-		
+
 		echo '<br />';
-		
+
 		$btn_tag->value = Swat::_('Move to Bottom');
 		$btn_tag->onclick = "{$this->id}_obj.moveToBottom();";
 		$btn_tag->name = "{$this->id}_buttons";

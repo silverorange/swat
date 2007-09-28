@@ -56,7 +56,7 @@ class SwatConfirmationButton extends SwatButton
 
 	/**
 	 * Gets the name of the JavaScript class to instantiate for this
-	 * confirmation button 
+	 * confirmation button
 	 *
 	 * @return string the name of the JavaScript class to instantiate for this
 	 *                 confirmation button. 'SwatConfirmationButton'.

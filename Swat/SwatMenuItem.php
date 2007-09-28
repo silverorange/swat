@@ -53,7 +53,7 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	 * on the {@link SwatMenuItem::$link} property. If the value is a string
 	 * a single sprintf() call is made.
 	 *
-	 * @var array|string 
+	 * @var array|string
 	 *
 	 * @see SwatMenuItem::$link
 	 */
@@ -116,10 +116,10 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 
 	/**
 	 * Adds a child object
-	 * 
-	 * This method fulfills the {@link SwatUIParent} interface. It is used 
+	 *
+	 * This method fulfills the {@link SwatUIParent} interface. It is used
 	 * by {@link SwatUI} when building a widget tree and should not need to be
-	 * called elsewhere. To set the sub-menu for a menu item, use 
+	 * called elsewhere. To set the sub-menu for a menu item, use
 	 * {@link SwatMenuItem::setSubMenu()}.
 	 *
 	 * @param SwatAbstractMenu $child the child object to add.
@@ -155,7 +155,7 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	{
 		parent::init();
 
-		if ($this->stock_id !== null) 
+		if ($this->stock_id !== null)
 			$this->setFromStock($this->stock_id, false);
 
 		if ($this->sub_menu !== null)
@@ -279,7 +279,7 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 				"Stock type with id of '{$stock_id}' not found.",
 				0, $stock_id);
 		}
-		
+
 		if ($overwrite_properties || ($this->title === null))
 			$this->title = $title;
 

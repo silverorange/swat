@@ -58,7 +58,7 @@ class SwatNoteBookPage extends SwatContainer
 		$div_tag->open();
 		parent::display();
 		$div_tag->close();
-	 }
+	}
 
 	// }}}
 }

@@ -67,7 +67,7 @@ class SwatSelectList extends SwatCheckboxList
 
 	/**
 	 * Gets a note letting the user know the select list can select multiple
-	 * options 
+	 * options
 	 *
 	 * @return SwatMessage a note letting the user know the select list can
 	 *                      select multiple options.

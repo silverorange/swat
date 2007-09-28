@@ -98,7 +98,7 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	{
 		if (!$this->visible)
 			return;
-		
+
 		parent::display();
 
 		$container_div_tag = new SwatHtmlTag('div');
@@ -161,7 +161,7 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 
 	/**
 	 * Gets the array of CSS classes that are applied to this simple color
-	 * entry widget 
+	 * entry widget
 	 *
 	 * @return array the array of CSS classes that are applied to this simple
 	 *                color entry widget.

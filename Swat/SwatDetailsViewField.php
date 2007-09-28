@@ -91,7 +91,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	 *
 	 * @param mixed $data a data object used to display the cell renderers in
 	 *                      this field.
-	 * @param boolean $odd whether this is an odd or even field so alternating 
+	 * @param boolean $odd whether this is an odd or even field so alternating
 	 *                      style can be applied.
 	 */
 	public function display($data, $odd)
@@ -174,7 +174,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this field 
+	 * Gets the SwatHtmlHeadEntry objects needed by this field
 	 *
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this details-view field.
@@ -279,8 +279,8 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	// }}}
 	// {{{ protected function getBaseCSSClassNames()
 
-	/** 
-	 * Gets the base CSS class names of this details-view field 
+	/**
+	 * Gets the base CSS class names of this details-view field
 	 *
 	 * This is the recommended place for field subclasses to add extra hard-
 	 * coded CSS classes.

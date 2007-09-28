@@ -55,7 +55,7 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 
 	// }}}
 	// {{{ protected function displayRenderers()
-	
+
 	/**
 	 * Renders each cell renderer in this column inside a wrapping XHTML
 	 * element
@@ -70,9 +70,9 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 		if (strlen($this->title) > 0) {
 			if ($this->offset > 1)
 				$this->offset = 1;
-					
-			$th_tag = new SwatHtmlTag('th', $this->getThAttributes());	
-			$th_tag->colspan = $this->offset;	
+
+			$th_tag = new SwatHtmlTag('th', $this->getThAttributes());
+			$th_tag->colspan = $this->offset;
 			$th_tag->setContent($this->title.':');
 			$th_tag->display();
 		} elseif ($this->offset > 0) {

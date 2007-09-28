@@ -18,7 +18,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
 class SwatDetailsView extends SwatControl implements SwatUIParent
 {
 	// {{{ public properties
-	
+
 	/**
 	 * An object containing values to display
 	 *

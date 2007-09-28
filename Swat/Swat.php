@@ -223,7 +223,7 @@ if (!function_exists("dngettext")) {
 			return $messageid1;
 
 		return $messageid2;
-    }
+	}
 }
 
 // }}}
@@ -232,7 +232,7 @@ if (!function_exists("dngettext")) {
 /*
  * Define a dummy dgettext() for when gettext is not available.
  */
-if (!function_exists("dgettext")) {  
+if (!function_exists("dgettext")) {
 	function dgettext($domain, $messageid)
 	{
 		return $messageid;

@@ -131,7 +131,7 @@ class SwatImageDisplay extends SwatControl
 		if ($this->occupy_width !== null &&
 			$this->occupy_width > $this->width)
 			$margin_x = $this->occupy_width - $this->width;
-			
+
 		if ($this->occupy_height !== null &&
 			$this->occupy_height > $this->height)
 			$margin_y = $this->occupy_height - $this->height;
@@ -160,7 +160,7 @@ class SwatImageDisplay extends SwatControl
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this image display 
+	 * Gets the array of CSS classes that are applied to this image display
 	 *
 	 * @return array the array of CSS classes that are applied to this image
 	 *                display.

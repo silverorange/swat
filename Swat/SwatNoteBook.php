@@ -55,12 +55,12 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	/**
 	 * A value containing the desired position of the tabs
 	 *
-	 * @var integer 
+	 * @var integer
 	 */
 	public $tab_position = self::POSITION_TOP;
 
 	/**
-	 * Selected page 
+	 * Selected page
 	 *
 	 * The id of the {@link SwatNoteBookPage} to show as selected.
 	 * By default, the first tab is selected.
@@ -104,11 +104,11 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function addChild()
 
 	/**
-	 * Adds a {@link SwatNoteBookPage} to this notebook 
-	 * 
-	 * This method fulfills the {@link SwatUIParent} interface. It is used 
+	 * Adds a {@link SwatNoteBookPage} to this notebook
+	 *
+	 * This method fulfills the {@link SwatUIParent} interface. It is used
 	 * by {@link SwatUI} when building a widget tree and should not need to be
-	 * called elsewhere. To add a notebook page to a notebook, use 
+	 * called elsewhere. To add a notebook page to a notebook, use
 	 * {@link SwatNoteBook::addPage()}.
 	 *
 	 * @param SwatNoteBookPage $child the notebook page to add.
@@ -123,7 +123,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	{
 		if ($child instanceof SwatNoteBookPage)
 			$this->addPage($child);
-		 else
+		else
 			throw new SwatInvalidClassException(
 				'Only SwatNoteBookPage objects may be nested within a '.
 				'SwatNoteBook object.', 0, $child);
@@ -133,7 +133,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function addPage()
 
 	/**
-	 * Adds a {@link SwatNoteBookPage} to this notebook 
+	 * Adds a {@link SwatNoteBookPage} to this notebook
 	 *
 	 * @param SwatNoteBookPage $page the notebook page to add.
 	 */
@@ -147,7 +147,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function init()
 
 	/**
-	 * Initializes this notebook 
+	 * Initializes this notebook
 	 */
 	public function init()
 	{
@@ -160,7 +160,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function process()
 
 	/**
-	 * Processes this notebook 
+	 * Processes this notebook
 	 */
 	public function process()
 	{

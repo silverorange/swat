@@ -93,7 +93,7 @@ class SwatCascadeFlydown extends SwatFlydown
 	/**
 	 * Gets the options of this flydown as a flat array
 	 *
-	 * For the cascading flydown, the array returned 
+	 * For the cascading flydown, the array returned
 	 *
 	 * The array is of the form:
 	 *    value => title

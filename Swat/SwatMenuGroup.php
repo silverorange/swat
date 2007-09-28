@@ -61,10 +61,10 @@ class SwatMenuGroup extends SwatControl implements SwatUIParent
 
 	/**
 	 * Adds a child object
-	 * 
-	 * This method fulfills the {@link SwatUIParent} interface. It is used 
+	 *
+	 * This method fulfills the {@link SwatUIParent} interface. It is used
 	 * by {@link SwatUI} when building a widget tree and should not need to be
-	 * called elsewhere. To add a menu item to a menu group, use 
+	 * called elsewhere. To add a menu item to a menu group, use
 	 * {@link SwatMenuGroup::addItem()}.
 	 *
 	 * @param SwatMenuItem $child the child object to add.

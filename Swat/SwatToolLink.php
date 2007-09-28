@@ -77,7 +77,7 @@ class SwatToolLink extends SwatControl
 	// {{{ protected properties
 
 	/**
-	 * A CSS class set by the stock_id of this tool link 
+	 * A CSS class set by the stock_id of this tool link
 	 *
 	 * @var string
 	 */
@@ -117,7 +117,7 @@ class SwatToolLink extends SwatControl
 	{
 		parent::init();
 
-		if ($this->stock_id !== null) 
+		if ($this->stock_id !== null)
 			$this->setFromStock($this->stock_id, false);
 	}
 
@@ -223,7 +223,7 @@ class SwatToolLink extends SwatControl
 				"Stock type with id of '{$stock_id}' not found.",
 				0, $stock_id);
 		}
-		
+
 		if ($overwrite_properties || ($this->title === null))
 			$this->title = $title;
 
@@ -234,7 +234,7 @@ class SwatToolLink extends SwatControl
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this tool link 
+	 * Gets the array of CSS classes that are applied to this tool link
 	 *
 	 * @return array the array of CSS classes that are applied to this tool
 	 *                link.

@@ -137,7 +137,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 
 	/**
 	 * Gets the array of CSS classes that are applied to this expandable
-	 * checkbox tree 
+	 * checkbox tree
 	 *
 	 * @return array the array of CSS classes that are applied to this
 	 *                expandable checkbox tree.
@@ -243,7 +243,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 
 				$li_tag->class = 'swat-expandable-checkbox-tree-expander';
 				$li_tag->open();
-				
+
 				$anchor = new SwatHtmlTag('a');
 				$anchor->href =
 					sprintf("javascript:%s_obj.toggleBranch('%s');",
@@ -251,9 +251,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 						$index);
 
 				$anchor->open();
-				
+
 				$img = new SwatHtmlTag('img');
-				
+
 				$img->src = 'packages/swat/images/swat-disclosure-open.png';
 				$img->alt = Swat::_('close');
 

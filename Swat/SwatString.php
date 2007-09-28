@@ -182,10 +182,10 @@ class SwatString extends SwatObject
 
 			$blocklevel_started =
 				(preg_match($starting_blocklevel, $paragraph) == 1);
-				
+
 			$blocklevel_ended =
 				(preg_match($ending_blocklevel, $paragraph) == 1);
-				
+
 			if ($blocklevel_started)
 				$in_blocklevel = true;
 
@@ -268,7 +268,7 @@ class SwatString extends SwatObject
 	 * - the minimal number of characters necessary are then escaped as entities:
 	 *         ampersands (&) => &amp;
 	 *          less than (<) => &lt;
-	 *       greater than (>) => &gt; 
+	 *       greater than (>) => &gt;
 	 *	     double quote (") => &quot;
 	 *
 	 * @param string $text the UTF-8 text string to convert.
@@ -280,8 +280,8 @@ class SwatString extends SwatObject
 		// decode any entities that might already exist
 		$text = html_entity_decode($text, ENT_COMPAT, 'UTF-8');
 
-		// encode all ampersands (&), less than (<), greater than (>), 
-		// and double quote (") characters as their XML entities 
+		// encode all ampersands (&), less than (<), greater than (>),
+		// and double quote (") characters as their XML entities
 		$text = htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
 
 		return $text;
@@ -307,16 +307,16 @@ class SwatString extends SwatObject
 		$output = '';
 
 		foreach ($parts as $index => $part) {
-		    switch ($index % 3) {
-	        case 0:
-    	        // the stuff in between
-	            $output.= self::minimizeEntities($part);
-    	        break;
-	        case 1:
-    	        // a valid tag
-	            $output.= $part;
-	            break;
-		    }
+			switch ($index % 3) {
+			case 0:
+				// the stuff in between
+				$output.= self::minimizeEntities($part);
+				break;
+			case 1:
+				// a valid tag
+				$output.= $part;
+				break;
+			}
 		}
 
 		return $output;
@@ -380,7 +380,7 @@ class SwatString extends SwatObject
 			// cr or lf with a non-breaking space padded bullet
 			'/[\xa0\s]*[\n\r][\xa0\s]*/su';
 
-		$replace = 
+		$replace =
 			// the spaces around the bullet are non-breaking spaces
 			'  •  ';
 
@@ -394,7 +394,7 @@ class SwatString extends SwatObject
 
 	// }}}
 	// {{{ public static function condenseToName()
-	
+
 	/**
 	 * Condenses a string to a name
 	 *
@@ -512,7 +512,7 @@ class SwatString extends SwatObject
 
 		// chop at max length
 		$string = substr($string, 0, $max_length);
-		
+
 		// find the last space up to the max_length in the string
 		$chop_pos = strrpos($string, ' ');
 
@@ -696,7 +696,7 @@ class SwatString extends SwatObject
 		$string = SwatString::removeLeadingPunctuation($string);
 		return $string;
 	}
-	
+
 	// }}}
 	// {{{ public static function moneyFormat()
 
@@ -842,7 +842,7 @@ class SwatString extends SwatObject
 	 * @param string $locale an optional locale to use to format the value. If
 	 *                        no locale is specified, the current locale is
 	 *                        used.
-	 * @param boolean $show_thousands_separator whether or not to display the 
+	 * @param boolean $show_thousands_separator whether or not to display the
 	 *                        thousands separator (default is true).
 	 *
 	 * @return string a UTF-8 encoded string containing the formatted number.
@@ -922,14 +922,14 @@ class SwatString extends SwatObject
 		$units = array_reverse($units, true);
 
 		// get log2()
-	    $log = (integer) (log10($value) / log10(2)); 
+		$log = (integer) (log10($value) / log10(2));
 
-    	foreach ($units as $power => $unit) {
+		foreach ($units as $power => $unit) {
 			if ($log >= $power) {
-		    	return round($value / pow(2, $power), 1) . ' ' . $unit;
+				return round($value / pow(2, $power), 1) . ' ' . $unit;
 			}
 		}
-    
+
 		return '';
 	}
 
@@ -942,12 +942,12 @@ class SwatString extends SwatObject
 	 * @param string $input the string to pad.
 	 * @param int $pad_length length in characters to pad to.
 	 * @param string $pad_string string to use for padding.
-	 * @param int $pad_type type of padding to use: STR_PAD_LEFT, 
+	 * @param int $pad_type type of padding to use: STR_PAD_LEFT,
 	 *                       STR_PAD_RIGHT, or STR_PAD_BOTH.
 	 *
 	 * @return string the padded string.
 	 */
-	public static function pad($input, $pad_length, $pad_string = ' ', 
+	public static function pad($input, $pad_length, $pad_string = ' ',
 		$pad_type = STR_PAD_RIGHT)
 	{
 		$output = '';
@@ -980,7 +980,7 @@ class SwatString extends SwatObject
 				$output = $input . substr($padding, 0, $length);
 			}
 		} else {
-           $output = $input;
+			$output = $input;
 		}
 		return $output;
 	}
@@ -993,7 +993,7 @@ class SwatString extends SwatObject
 	 *
 	 * If the string can not be converted to an integer, the method returns
 	 * null. If the number has values after the decimal point, the value is
-	 * rounded according to the rounding rules for 
+	 * rounded according to the rounding rules for
 	 * {@link http://php.net/manual/en/function.intval.php intval()}.
 	 *
 	 * If the number is too large to fit in PHP's integer range (depends on
@@ -1263,7 +1263,7 @@ class SwatString extends SwatObject
 	public static function quoteJavaScriptString($string)
 	{
 		// escape escape characters
-		$string = str_replace('\\', '\\\\', $string); 
+		$string = str_replace('\\', '\\\\', $string);
 
 		// escape single quotes
 		$string = str_replace("'", "\'", $string);
@@ -1456,7 +1456,7 @@ class SwatString extends SwatObject
 				break;
 			} elseif ($position >= $hole_end) {
 				// this entity falls after the hole
-				$offset = -$hole_end + $hole_length + $hole_start + 1; 
+				$offset = -$hole_end + $hole_length + $hole_start + 1;
 				$string = substr($string, 0, $position + $offset).
 					$entity.
 					substr($string, $position + $offset + 1);

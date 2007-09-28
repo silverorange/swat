@@ -55,7 +55,7 @@ class SwatRemoveInputCell extends SwatInputCell
 				'inside table-views with an input-row.');
 
 		$content = new SwatContentBlock();
-		
+
 		ob_start();
 
 		$anchor_tag = new SwatHtmlTag('a');
