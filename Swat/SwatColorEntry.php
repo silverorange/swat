@@ -59,7 +59,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 			Swat::PACKAGE_ID);
 
 		$this->addJavaScript('packages/swat/javascript/swat-z-index-manager.js',
-			 Swat::PACKAGE_ID);
+			Swat::PACKAGE_ID);
 
 		$this->addStyleSheet('packages/swat/styles/swat-color-entry.css',
 			Swat::PACKAGE_ID);
@@ -207,7 +207,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 
 	/**
 	 * Gets the array of CSS classes that are applied to this color entry
-	 * widget 
+	 * widget
 	 *
 	 * @return array the array of CSS classes that are applied to this color
 	 *                entry widget.

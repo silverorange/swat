@@ -121,8 +121,8 @@ class SwatDate extends Date
 	const DF_MY                     = 12;
 
 	/**
-	* 08 / 2002
-	*/
+	 * 08 / 2002
+	 */
 	const DF_CC_MY                  = 13;
 
 	// }}}
@@ -188,17 +188,17 @@ class SwatDate extends Date
 			$out = $this->tz->getDSTLongName();
 			break;
 		case self::TZ_CURRENT_SHORT:
-			$out = $this->tz->inDaylightTime($this) ? 
+			$out = $this->tz->inDaylightTime($this) ?
 				$this->tz->getDSTShortName() : $this->tz->getShortName();
 
 			break;
 		case self::TZ_CURRENT_LONG:
-			$out = $this->tz->inDaylightTime($this) ? 
+			$out = $this->tz->inDaylightTime($this) ?
 				$this->tz->getDSTLongName() : $this->tz->getLongName();
 
 			break;
 		case self::TZ_COMBINED:
-			$out = sprintf('%s/%s', 
+			$out = sprintf('%s/%s',
 				$this->tz->getShortName(), $this->tz->getDSTShortName());
 
 			break;
@@ -237,7 +237,7 @@ class SwatDate extends Date
 	 * @param integer $id the id of the format string to retrieve.
 	 *
 	 * @return string the formatting string that was requested.
-	 * 
+	 *
 	 * @throws SwatException
 	 */
 	public static function getFormatById($id)

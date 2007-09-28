@@ -76,7 +76,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 * The default direction of ordering
 	 *
 	 * The default direction of ordering before the GET variables are processed.
-	 * When the GET variables are processed, they change $direction and 
+	 * When the GET variables are processed, they change $direction and
 	 * $default_direction remains unchanged.  Valid values are
 	 * ORDER_BY_DIR_* constants.
 	 *
@@ -97,7 +97,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 	// }}}
 	// {{{ public function init()
-	
+
 	/**
 	 * Initializes this column
 	 *
@@ -114,13 +114,13 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 	/**
 	 * Sets the direction of ordering
-	 * 
+	 *
 	 * This method sets the direction of ordering of the column, either asc,
 	 * desc, or none.
 	 *
 	 * @param $direction integer One of the ORDER_BY_DIR_* class contants
-	 * @param $set_as_orderby_column boolean Whether to set this column as the 
-	 *                                    column currently used for ordering 
+	 * @param $set_as_orderby_column boolean Whether to set this column as the
+	 *                                    column currently used for ordering
 	 *                                    of the view
 	 */
 	public function setDirection($direction)
@@ -268,7 +268,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	// }}}
 	// {{{ protected function getBaseCSSClassNames()
 
-	/** 
+	/**
 	 * Gets the base CSS class names of this orderable table-view column
 	 *
 	 * @return array the array of base CSS class names for this orderable
@@ -310,7 +310,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 		case 'descending':
 		case 'desc':
 			$this->direction = self::ORDER_BY_DIR_DESCENDING;
-				
 			break;
 
 		default:
@@ -356,7 +355,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 		$link = $this->link.'?';
 		$first = true;
 
-		foreach($vars as $name => $value) { 
+		foreach($vars as $name => $value) {
 			if ($first)
 				$first = false;
 			else

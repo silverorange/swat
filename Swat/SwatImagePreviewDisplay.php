@@ -137,7 +137,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this image display 
+	 * Gets the array of CSS classes that are applied to this image display
 	 *
 	 * @return array the array of CSS classes that are applied to this image
 	 *                display.

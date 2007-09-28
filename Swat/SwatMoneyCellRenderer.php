@@ -25,7 +25,7 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 
 	/**
 	 * Monetary value
-	 * 
+	 *
 	 * @var float
 	 */
 	public $value;

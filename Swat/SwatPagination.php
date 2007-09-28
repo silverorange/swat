@@ -416,7 +416,7 @@ class SwatPagination extends SwatControl
 
 	/**
 	 * Gets the array of CSS classes that are applied to this pagination
-	 * widget 
+	 * widget
 	 *
 	 * @return array the array of CSS classes that are applied to this
 	 *                pagination widget.

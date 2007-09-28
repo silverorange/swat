@@ -107,7 +107,7 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 
 		if ($overwrite_properties || ($this->false_content === null))
 			$this->false_content = $false_content;
-		
+
 		if ($overwrite_properties || ($this->true_content === null))
 			$this->true_content = $true_content;
 

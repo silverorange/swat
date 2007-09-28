@@ -95,14 +95,14 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 				$ancestor = $ancestor->parent;
 			}
 
-			$header_tag = new SwatHtmlTag('h'.$level);			
+			$header_tag = new SwatHtmlTag('h'.$level);
 			$header_tag->class = 'swat-frame-title';
 			$header_tag->setContent($this->title);
 
 			if ($this->subtitle === null) {
 				$header_tag->display();
 			} else {
-				$span_tag = new SwatHtmlTag('span');			
+				$span_tag = new SwatHtmlTag('span');
 				$span_tag->class = 'swat-frame-subtitle';
 				$span_tag->setContent($this->subtitle);
 
@@ -124,7 +124,7 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this frame 
+	 * Gets the array of CSS classes that are applied to this frame
 	 *
 	 * @return array the array of CSS classes that are applied to this frame.
 	 */

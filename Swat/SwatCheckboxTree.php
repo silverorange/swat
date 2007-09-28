@@ -105,7 +105,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	// }}}
 	// {{{ public function setTree()
 
-	/** 
+	/**
 	 * Sets the tree to use for display
 	 *
 	 * @param SwatDataTreeNode $tree the tree to use for display.
@@ -133,7 +133,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this checkbox tree 
+	 * Gets the array of CSS classes that are applied to this checkbox tree
 	 *
 	 * @return array the array of CSS classes that are applied to this checkbox
 	 *                tree.

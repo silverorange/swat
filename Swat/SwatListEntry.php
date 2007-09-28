@@ -71,7 +71,7 @@ class SwatListEntry extends SwatEntry
 	 * must enter.
 	 *
 	 * Note: If {@link SwatInputControl::$required} is set to false, this
-	 * property has no effect. 
+	 * property has no effect.
 	 *
 	 * @var integer
 	 * @see SwatInputControl::$required

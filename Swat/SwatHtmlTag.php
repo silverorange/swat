@@ -195,7 +195,7 @@ class SwatHtmlTag extends SwatObject
 	/**
 	 * Closes this tag
 	 *
-	 * Outputs the closing tag. Should be paired with a call to 
+	 * Outputs the closing tag. Should be paired with a call to
 	 * {@link SwatHtmlTag::open()}.
 	 *
 	 * @see SwatHtmlTag::open()
@@ -207,7 +207,7 @@ class SwatHtmlTag extends SwatObject
 
 	// }}}
 	// {{{ public function toString()
-	
+
 	/**
 	 * Gets this tag as a string
 	 *
@@ -229,7 +229,7 @@ class SwatHtmlTag extends SwatObject
 
 	// }}}
 	// {{{ public function __toString()
-	
+
 	/**
 	 * Gets this tag as a string
 	 *

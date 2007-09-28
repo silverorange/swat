@@ -38,9 +38,9 @@ abstract class SwatWidget extends SwatUIObject
 	/**
 	 * Stylesheet
 	 *
-	 * The URI of a stylesheet for use with this widget. If this property is 
+	 * The URI of a stylesheet for use with this widget. If this property is
 	 * set before {@link SwatWidget::init()} then the
-	 * {@link SwatUIObject::addStyleSheet() method will be called to add this 
+	 * {@link SwatUIObject::addStyleSheet() method will be called to add this
 	 * stylesheet to the header entries. Primarily this should be used by
 	 * SwatUI to set a stylesheet in SwatML. To set a stylesheet in PHP code,
 	 * it is recommended to call addStyleSheet() directly.
@@ -182,7 +182,7 @@ abstract class SwatWidget extends SwatUIObject
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this widget 
+	 * Gets the SwatHtmlHeadEntry objects needed by this widget
 	 *
 	 * If this widget has not been displayed, an empty set is returned to
 	 * reduce the number of required HTTP requests.
@@ -222,7 +222,7 @@ abstract class SwatWidget extends SwatUIObject
 	/**
 	 * Gets all messages
 	 *
-	 * Gathers all messages from children of this widget and this widget 
+	 * Gathers all messages from children of this widget and this widget
 	 * itself.
 	 *
 	 * @return array an array of {@link SwatMessage} objects.
@@ -248,7 +248,7 @@ abstract class SwatWidget extends SwatUIObject
 	/**
 	 * Determines the sensitivity of this widget.
 	 *
-	 * Looks at the sensitive property of the ancestors of this widget to 
+	 * Looks at the sensitive property of the ancestors of this widget to
 	 * determine if this widget is sensitive.
 	 *
 	 * @return boolean whether this widget is sensitive.
@@ -319,7 +319,7 @@ abstract class SwatWidget extends SwatUIObject
 
 	/**
 	 * Replace this widget with a new container
-	 * 
+	 *
 	 * Replaces this widget in the widget tree with a new SwatContainer, then
 	 * add this widget to the new container.
 	 *

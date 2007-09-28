@@ -31,7 +31,7 @@ class SwatSearchEntry extends SwatEntry
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-		
+
 		$this->requires_id = true;
 
 		$this->addJavaScript('packages/swat/javascript/swat-search-entry.js',
@@ -43,7 +43,7 @@ class SwatSearchEntry extends SwatEntry
 
 	// }}}
 	// {{{ public function display()
-	
+
 	/**
 	 * Displays this search entry
 	 *
@@ -64,11 +64,11 @@ class SwatSearchEntry extends SwatEntry
 
 	/**
 	 * Gets the inline JavaScript for this entry to function
-	 * 
-	 * The inline JavaScript creates an instance of the 
+	 *
+	 * The inline JavaScript creates an instance of the
 	 * SwatSearchEntry widget with the name $this->id_'obj'.
 	 *
-	 * @return srting the inline JavaScript required for this control to 
+	 * @return srting the inline JavaScript required for this control to
 	 *					function
 	 */
 	protected function getInlineJavaScript()

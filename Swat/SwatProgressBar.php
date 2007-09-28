@@ -129,7 +129,7 @@ class SwatProgressBar extends SwatControl
 	// }}}
 	// {{{ public function __construct()
 
-	/** 
+	/**
 	 * Creates a new progress bar
 	 *
 	 * @param string $id a non-visible unique id for this widget.
@@ -281,7 +281,7 @@ class SwatProgressBar extends SwatControl
 
 		if ($this->content_type === 'text/plain')
 			echo SwatString::minimizeEntities($text);
-		else 
+		else
 			echo $text;
 	}
 
@@ -303,7 +303,7 @@ class SwatProgressBar extends SwatControl
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this progress bar 
+	 * Gets the array of CSS classes that are applied to this progress bar
 	 *
 	 * @return array the array of CSS classes that are applied to this progress
 	 *                bar.

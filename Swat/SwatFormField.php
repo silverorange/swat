@@ -29,7 +29,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	public $title = null;
 
 	/**
-	 * Optional content type for the title 
+	 * Optional content type for the title
 	 *
 	 * Default text/plain, use text/xml for XHTML fragments.
 	 *
@@ -328,7 +328,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 * Get a SwatHtmlTag to display the title
 	 *
 	 * Subclasses can change this to change their appearance.
-	 * 
+	 *
 	 * @return SwatHtmlTag a tag object containing the title.
 	 */
 	protected function getTitleTag()

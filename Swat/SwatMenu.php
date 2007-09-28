@@ -47,10 +47,10 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 
 	/**
 	 * Adds a child object
-	 * 
-	 * This method fulfills the {@link SwatUIParent} interface. It is used 
+	 *
+	 * This method fulfills the {@link SwatUIParent} interface. It is used
 	 * by {@link SwatUI} when building a widget tree and should not need to be
-	 * called elsewhere. To add a menu item to a menu, use 
+	 * called elsewhere. To add a menu item to a menu, use
 	 * {@link SwatMenu::addItem()}.
 	 *
 	 * @param SwatMenuItem $child the child object to add.

@@ -40,7 +40,7 @@ class SwatTextareaEditor extends SwatTextarea
 	 *
 	 * @var string
 	 */
-	public $basehref = null; 
+	public $basehref = null;
 
 	// }}}
 	// {{{ public function __construct()

@@ -22,7 +22,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	// {{{ public properties
 
 	/**
-	 * List values 
+	 * List values
 	 *
 	 * The values of the selected items.
 	 *
@@ -116,7 +116,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this checkbox list 
+	 * Gets the SwatHtmlHeadEntry objects needed by this checkbox list
 	 *
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this checkbox list.
@@ -260,7 +260,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	/**
 	 * Reset this checkbox list.
 	 *
-	 * Reset the list to its default state. This is useful to call from a 
+	 * Reset the list to its default state. This is useful to call from a
 	 * display() method when persistence is not desired.
 	 */
 	public function reset()
@@ -272,7 +272,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	// {{{ public function setState()
 
 	/**
-	 * Sets the current state of this checkbox list 
+	 * Sets the current state of this checkbox list
 	 *
 	 * @param array $state the new state of this checkbox list.
 	 *
@@ -287,7 +287,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	// {{{ public function getState()
 
 	/**
-	 * Gets the current state of this checkbox list 
+	 * Gets the current state of this checkbox list
 	 *
 	 * @return array the current state of this checkbox list.
 	 *

@@ -67,7 +67,7 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 * By default, no characters are ignored when calculating the length of
 	 * this textarea's value.
 	 *
-	 * @var string 
+	 * @var string
 	 */
 	public $maxlength_ignored_characters = '';
 
@@ -259,7 +259,7 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this textarea 
+	 * Gets the array of CSS classes that are applied to this textarea
 	 *
 	 * @return array the array of CSS classes that are applied to this textarea.
 	 */

@@ -18,7 +18,7 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 
 	/**
 	 * Value can be either a float or an integer
-	 * 
+	 *
 	 * @var float
 	 */
 	public $value;
@@ -27,7 +27,7 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 	 * Precision
 	 *
 	 * Optionally round the value to a certain precision
-	 * 
+	 *
 	 * @var integer
 	 */
 	public $precision = null;

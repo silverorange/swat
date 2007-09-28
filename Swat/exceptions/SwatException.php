@@ -373,9 +373,9 @@ class SwatException extends Exception
 
 	// }}}
 	// {{{ public function wasHandled()
-	
+
 	/**
-	 * Gets whether or not this exception was manually handled 
+	 * Gets whether or not this exception was manually handled
 	 *
 	 * @return boolean true if this exception wa smanually handled and false
 	 *                  if it was not.
@@ -384,10 +384,10 @@ class SwatException extends Exception
 	{
 		return $this->handled;
 	}
-	
+
 	// }}}
 	// {{{ public static function handle()
-	
+
 	/**
 	 * Handles an exception
 	 *

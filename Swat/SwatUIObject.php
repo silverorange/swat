@@ -166,7 +166,7 @@ abstract class SwatUIObject extends SwatObject
 	/**
 	 * Gets the first ancestor object of a specific class
 	 *
-	 * Retrieves the first ancestor object in the parent path that is a 
+	 * Retrieves the first ancestor object in the parent path that is a
 	 * descendant of the specified class name.
 	 *
 	 * @param string $class_name class name to look for.
@@ -220,7 +220,7 @@ abstract class SwatUIObject extends SwatObject
 	/**
 	 * Gets whether or not this UI object is visible
 	 *
-	 * Looks at the visible property of the ancestors of this UI object to 
+	 * Looks at the visible property of the ancestors of this UI object to
 	 * determine if this UI object is visible.
 	 *
 	 * @return boolean true if this UI object is visible and false if it is not.

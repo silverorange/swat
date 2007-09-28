@@ -167,11 +167,11 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		} elseif ($this->value === null) {
 			$message = Swat::_('The %s field is required.');
 			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
-			
+
 		} elseif (!isset($GLOBALS['_DATE_TIMEZONE_DATA'][$this->value])) {
 			$message = Swat::_('The %s field is an invalid time-zone.');
 			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
-			
+
 		}
 	}
 
@@ -209,7 +209,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this date entry 
+	 * Gets the SwatHtmlHeadEntry objects needed by this date entry
 	 *
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this date entry.
@@ -232,7 +232,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
 	/**
 	 * Gets the array of CSS classes that are applied to this time zone entry
-	 * widget 
+	 * widget
 	 *
 	 * @return array the array of CSS classes that are applied to this time
 	 *                zone entry widget.
@@ -251,7 +251,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 * Creates all internal widgets required for this time-zone entry
 	 */
 	private function createEmbeddedWidgets()
-	{ 
+	{
 		if (!$this->widgets_created) {
 			$this->areas_flydown = new SwatFlydown($this->id.'_areas');
 			$this->areas_flydown->addOptionsByArray($this->areas);
@@ -322,7 +322,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	private function setAreas($time_zone_list)
 	{
 		ksort($time_zone_list);
-		
+
 		foreach ($time_zone_list as $name => $subregions) {
 			$this->areas[$name] = $name;
 			$this->regions[$name] = array();
@@ -351,7 +351,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	private function setRegions($time_zone_list, $area, $prefix = '')
 	{
 		ksort($time_zone_list);
-		
+
 		foreach ($time_zone_list as $name => $subregions) {
 
 			if (count($subregions))

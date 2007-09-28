@@ -57,7 +57,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	private $list_id;
 
 	/**
-	 * The check-all widget for this row 
+	 * The check-all widget for this row
 	 *
 	 * @var SwatCheckAll
 	 */
@@ -220,7 +220,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 * Creates internal widgets required for this check-all row
 	 */
 	private function createEmbeddedWidgets()
-	{ 
+	{
 		if (!$this->widgets_created) {
 			$this->check_all = new SwatCheckAll();
 			$this->check_all->parent = $this;

@@ -109,7 +109,7 @@ class SwatCalendar extends SwatControl
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this calendar widget 
+	 * Gets the array of CSS classes that are applied to this calendar widget
 	 *
 	 * @return array the array of CSS classes that are applied to this calendar
 	 *                widget.
@@ -142,7 +142,7 @@ class SwatCalendar extends SwatControl
 
 		if (isset($this->valid_range_start))
 			$start_date = $this->valid_range_start->format('%m/%d/%Y');
-		else 
+		else
 			$start_date = '';
 
 		if (isset($this->valid_range_end)) {
@@ -150,7 +150,7 @@ class SwatCalendar extends SwatControl
 			$tmp = clone $this->valid_range_end;
 			$tmp->subtractSeconds(1);
 			$end_date = $tmp->format('%m/%d/%Y');
-		} else { 
+		} else {
 			$end_date = '';
 		}
 

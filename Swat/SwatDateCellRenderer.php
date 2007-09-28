@@ -53,7 +53,7 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	 * for PEAR::Date_TimeZone or as a Date_TimeZone object. If the render
 	 * time zone is null, no time zone conversion is performed.
 	 *
-	 * @var string|Date_TimeZone 
+	 * @var string|Date_TimeZone
 	 */
 	public $display_time_zone = null;
 

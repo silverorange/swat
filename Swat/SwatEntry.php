@@ -132,7 +132,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 	{
 		parent::process();
 
-		// if nothing was submitted by the user, shortcut return 
+		// if nothing was submitted by the user, shortcut return
 		if (!$this->hasRawValue()) {
 			$this->value = null;
 			return;

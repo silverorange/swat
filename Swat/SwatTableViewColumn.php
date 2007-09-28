@@ -72,7 +72,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 	/**
 	 * An optional {@link SwatInputCell} object for this column
-	 * 
+	 *
 	 * If this column's view has a {@link SwatTableViewInputRow} then this
 	 * column can contain one input cell for the input row.
 	 *
@@ -87,7 +87,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 * Whether or not this column was automatically assigned a unique
 	 * identifier
 	 *
-	 * @var boolean 
+	 * @var boolean
 	 */
 	protected $has_auto_id = false;
 
@@ -281,7 +281,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 	/**
 	 * Gets the inline JavaScript required by this column
-	 * 
+	 *
 	 * All inline JavaScript is displayed after the table-view has been
 	 * displayed.
 	 *
@@ -357,7 +357,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 	/**
 	 * Add a child object to this object
-	 * 
+	 *
 	 * @param SwatCellRenderer $child the reference to the child object to add.
 	 *
 	 * @throws SwatException, SwatInvalidClassException
@@ -487,7 +487,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this column 
+	 * Gets the SwatHtmlHeadEntry objects needed by this column
 	 *
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this column.
@@ -556,7 +556,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 	/**
 	 * Renders each cell renderer in this column inside a wrapping XHTML
-	 * element 
+	 * element
 	 *
 	 * @param mixed $data the data object being used to render the cell
 	 *                     renderers of this field.
@@ -596,7 +596,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 				echo ' ';
 
 			$renderer->render();
-		}	
+		}
 	}
 
 	// }}}
@@ -688,7 +688,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	// }}}
 	// {{{ protected function getBaseCSSClassNames()
 
-	/** 
+	/**
 	 * Gets the base CSS class names of this table-view column
 	 *
 	 * This is the recommended place for column subclasses to add extra hard-

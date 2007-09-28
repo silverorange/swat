@@ -86,7 +86,7 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this fieldset 
+	 * Gets the array of CSS classes that are applied to this fieldset
 	 *
 	 * @return array the array of CSS classes that are applied to this fieldset.
 	 */

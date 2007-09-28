@@ -41,7 +41,7 @@ abstract class SwatControl extends SwatWidget
 		} else {
 			$field_title = '';
 		}
- 
+
 		if ($message->content_type === 'text/plain')
 			$content = SwatString::minimizeEntities($message->primary_content);
 		else
@@ -59,7 +59,7 @@ abstract class SwatControl extends SwatWidget
 	/**
 	 * Gets all messages
 	 *
-	 * Gathers all messages from children of this widget and this widget 
+	 * Gathers all messages from children of this widget and this widget
 	 * itself.
 	 *
 	 * @return array an array of {@link SwatMessage} objects.

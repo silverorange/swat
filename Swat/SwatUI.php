@@ -36,8 +36,8 @@ class SwatUI extends SwatObject
 	 *
 	 * The array is of the form:
 	 *    package_prefix => path
-	 * Where package prefix is the classname prefix used in this package and 
-	 * path is the relative path where the source files for this package may 
+	 * Where package prefix is the classname prefix used in this package and
+	 * path is the relative path where the source files for this package may
 	 * be included from.
 	 *
 	 * @var array
@@ -166,7 +166,7 @@ class SwatUI extends SwatObject
 	 *                           {@link SwatUI::setValidateMode()}.
 	 *
 	 * @throws SwatFileNotFoundException, SwatInvalidSwatMLException,
-	 *         SwatDuplicateIdException, SwatInvalidClassException, 
+	 *         SwatDuplicateIdException, SwatInvalidClassException,
 	 *         SwatInvalidPropertyException, SwatInvalidPropertyTypeException,
 	 *         SwatDoesNotImplementException, SwatClassNotFoundException,
 	 *         SwatInvalidConstantExpressionException,
@@ -405,7 +405,7 @@ class SwatUI extends SwatObject
 	 * @param SwatUIObject $parent the parent object (usually a SwatContainer)
 	 *                              to add parsed objects to.
 	 *
-	 * @throws SwatDuplicateIdException, SwatInvalidClassException, 
+	 * @throws SwatDuplicateIdException, SwatInvalidClassException,
 	 *         SwatInvalidPropertyException, SwatInvalidPropertyTypeException,
 	 *         SwatDoesNotImplementException, SwatClassNotFoundException,
 	 *         SwatInvalidConstantExpressionException,
@@ -416,7 +416,7 @@ class SwatUI extends SwatObject
 		array_push($this->stack, $parent);
 
 		foreach ($node->childNodes as $child_node) {
-			
+
 			// only parse element nodes. ignore text nodes
 			if ($child_node->nodeType == XML_ELEMENT_NODE) {
 
@@ -539,7 +539,7 @@ class SwatUI extends SwatObject
 	 */
 	private function parseObject($node)
 	{
-		// class is required in the schema 
+		// class is required in the schema
 		$class = $node->getAttribute('class');
 
 		if (!class_exists($class)) {
@@ -570,7 +570,7 @@ class SwatUI extends SwatObject
 
 		$object = new $class();
 
-		// id is optional in the schema 
+		// id is optional in the schema
 		if ($node->hasAttribute('id'))
 			$object->id = $node->getAttribute('id');
 
@@ -594,7 +594,7 @@ class SwatUI extends SwatObject
 	{
 		$class_properties = get_class_vars(get_class($object));
 
-		// name is required in the schema 
+		// name is required in the schema
 		$name = trim($property_node->getAttribute('name'));
 		$value = $property_node->nodeValue;
 
@@ -634,7 +634,7 @@ class SwatUI extends SwatObject
 
 		if ($array_property) {
 			if ($parsed_value instanceof SwatCellRendererMapping) {
-				// it was a type=data property, 
+				// it was a type=data property,
 				// so the parsed value is a mapping object
 				$parsed_value->is_array = true;
 				$parsed_value->array_key = $array_key;
@@ -770,7 +770,7 @@ class SwatUI extends SwatObject
 
 		if ($this->translation_callback !== null)
 			return call_user_func($this->translation_callback, $value);
-			
+
 		return $value;
 	}
 
@@ -830,7 +830,7 @@ class SwatUI extends SwatObject
 			0, $expression);
 
 		foreach ($tokens as $token) {
-			
+
 			if (strcmp($token, '(') == 0) {
 				array_push($stack, $token);
 

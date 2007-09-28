@@ -95,7 +95,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	// {{{ public function getRenderers()
 
 	/**
-	 * Gets the cell renderers of this container 
+	 * Gets the cell renderers of this container
 	 *
 	 * @return array an array containing the cell renderers in this container.
 	 */
@@ -115,7 +115,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	 * Gets a cell renderer of this container by its unique identifier
 	 *
 	 * @param string the unique identifier of the cell renderer to get.
-	 * 
+	 *
 	 * @return SwatCellRenderer the cell renderer of this container with the
 	 *                           provided unique identifier.
 	 *
@@ -168,7 +168,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 
 	/**
 	 * Add a child object to this object
-	 * 
+	 *
 	 * @param SwatCellRenderer $child the reference to the child object to add.
 	 *
 	 * @throws SwatInvalidClassException if the given <i>$child</i> is not an
@@ -314,7 +314,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this cell renderer
-	 * container 
+	 * container
 	 *
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this cell renderer container.

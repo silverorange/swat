@@ -22,7 +22,7 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
 	 *
 	 * @param mixed $data a data object used to display the cell renderers in
 	 *                      this field.
-	 * @param boolean $odd whether this is an odd or even field so alternating 
+	 * @param boolean $odd whether this is an odd or even field so alternating
 	 *                      style can be applied.
 	 *
 	 * @see SwatDetailsViewField::display()
@@ -92,8 +92,8 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
 	// }}}
 	// {{{ protected function getBaseCSSClassNames()
 
-	/** 
-	 * Gets the base CSS class names of this details-view field 
+	/**
+	 * Gets the base CSS class names of this details-view field
 	 *
 	 * @return array the array of base CSS class names for this vertical
 	 *                details-view field.

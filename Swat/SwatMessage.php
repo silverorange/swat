@@ -6,7 +6,7 @@ require_once 'Swat/SwatObject.php';
 require_once 'Swat/exceptions/SwatUndefinedMessageTypeException.php';
 
 /**
- * A data class to store a message  
+ * A data class to store a message
  *
  * SwatMessage objects are used thoughout Swat. The most noticeable
  * place they are used is for validating entry widgets. See
@@ -22,14 +22,14 @@ class SwatMessage extends SwatObject
 
 	/**
 	 * Notification message type
-	 * 
+	 *
 	 * An informative message that doesn't require any action by the user.
 	 */
 	const NOTIFICATION = 1;
 
 	/**
 	 * Warning message type
-	 * 
+	 *
 	 * A warning message that requires the attention of the user, but is
 	 * not critical and does not necessarily require any action by the user.
 	 */
@@ -37,7 +37,7 @@ class SwatMessage extends SwatObject
 
 	/**
 	 * Error message type
-	 * 
+	 *
 	 * An error message that requires the attention of the user and that is
 	 * expected/handled by the application.
 	 * eg. Missing required fields

@@ -60,7 +60,7 @@ class SwatRating extends SwatFlydown
 	// {{{ public function process()
 
 	/**
-	 * Processes this rating control 
+	 * Processes this rating control
 	 *
 	 * Processes this rating control and converts the value if it is a string.
 	 */
@@ -76,7 +76,7 @@ class SwatRating extends SwatFlydown
 	//  {{{ public function display()
 
 	/**
-	 * Displays this rating control 
+	 * Displays this rating control
 	 */
 	public function display()
 	{
@@ -99,7 +99,7 @@ class SwatRating extends SwatFlydown
 	/**
 	 * Gets the array of CSS classes that are applied to this rating control
 	 *
-	 * @return array the array of CSS classes that are applied to this rating 
+	 * @return array the array of CSS classes that are applied to this rating
 	 *                control.
 	 */
 	protected function getCSSClassNames()

@@ -39,7 +39,7 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 	// {{{ public function __construct()
 
 	/**
-	 * Creates a new checkbox 
+	 * Creates a new checkbox
 	 *
 	 * @param string $id a non-visible unique id for this widget.
 	 *

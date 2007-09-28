@@ -119,7 +119,7 @@ class SwatNavBar extends SwatControl implements Countable
 	 *                                at the given position with.
 	 *
 	 * @return SwatNavBarEntry the replaced entry.
-	 * 
+	 *
 	 * @thows SwatException
 	 */
 
@@ -147,7 +147,7 @@ class SwatNavBar extends SwatControl implements Countable
 	 *
 	 * If the entry is not in this navigation bar, an exception is thrown.
 	 *
-	 * @param integer $position zero-based ordinal position of the entry to 
+	 * @param integer $position zero-based ordinal position of the entry to
 	 *                           fetch.  If position is negative, the entry
 	 *                           position is counted from the end of the nav
 	 *                           bar (-1 will return one from the end).  Use
@@ -306,7 +306,7 @@ class SwatNavBar extends SwatControl implements Countable
 
 			// link all entries or link all but the last entry
 			$link = ($this->link_last_entry || $i < $count);
-			
+
 			$this->displayEntry($entry, $link);
 
 			$i++;
@@ -343,7 +343,7 @@ class SwatNavBar extends SwatControl implements Countable
 	// {{{ protected function getCSSClassNames()
 
 	/**
-	 * Gets the array of CSS classes that are applied to this navigational bar 
+	 * Gets the array of CSS classes that are applied to this navigational bar
 	 *
 	 * @return array the array of CSS classes that are applied to this
 	 *                navigational bar.

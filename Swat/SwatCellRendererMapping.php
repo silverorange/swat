@@ -21,28 +21,28 @@ class SwatCellRendererMapping extends SwatObject
 	 * @var string
 	 */
 	public $property;
-	
+
 	/**
 	 * The name of the data field.
 	 *
 	 * @var string
 	 */
 	public $field;
-	
+
 	/**
 	 * Whether the property is an array.
 	 *
 	 * @var boolean
 	 */
 	public $is_array = false;
-	
+
 	/**
 	 * The array key if the property is an indexed array.
 	 *
 	 * @var mixed
 	 */
 	public $array_key = null;
-	
+
 	// }}}
 	// {{{ public function __construct()
 
