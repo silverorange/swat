@@ -83,15 +83,13 @@ class SwatRating extends SwatFlydown
 		if (!$this->visible)
 			return;
 
-		$id = sprintf('ratingdiv_%s', $this->id);
 		$div = new SwatHtmlTag('div');
-		$div->id = $id;
+		$div->id = $this->id.'_rating_div';
 		$div->class = $this->getCSSClassString();
 		$div->open();
-
 		parent::display();
-
 		$div->close();
+
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
