@@ -411,7 +411,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 			$key = $this->current()->{$this->index_field};
 		else
 			$key = $this->current_index;
-		
+
 		return $key;
 	}
 

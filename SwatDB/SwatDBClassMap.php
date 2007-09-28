@@ -136,7 +136,7 @@ class SwatDBClassMap extends SwatObject
 								require_once $filename;
 								break 2;
 							}
-						} 
+						}
 					}
 				}
 			}
@@ -263,9 +263,9 @@ class SwatDBClassMap extends SwatObject
 	/**
 	 * Adds a class-mapping to the class-mapping object
 	 *
-	 * @param string $store_class_name the name of the package 
-	 *                                  class to override.
-	 * @param string $class_nam the name of the site-specific class.
+	 * @param string $package_class_name the name of the package class to
+	 *                                    override.
+	 * @param string $class_name the name of the site-specific class.
 	 *
 	 * @deprecated Use the static method {@link SwatDBClassMap::add()}.
 	 */

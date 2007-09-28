@@ -37,10 +37,10 @@ class SwatDBField extends SwatObject
 
 	/**
 	 * @param string $field A string representation of a database field in the
-	 *        form [<type>:]<name> where <name> is the name of the database 
+	 *        form [<type>:]<name> where <name> is the name of the database
 	 *        field and <type> is any standard MDB2 datatype.
 	 *
-	 * @param string $default_type The type to use by default if it is not 
+	 * @param string $default_type The type to use by default if it is not
 	 *        specified in the $field string. Any standard MDB2 datatype
 	 *        is valid here.
 	 */
@@ -64,7 +64,7 @@ class SwatDBField extends SwatObject
 	 * Get the field as a string
 	 *
 	 * @return string A string representation of a database field in the
-	 *        form <type>:<name> where <name> is the name of the database 
+	 *        form <type>:<name> where <name> is the name of the database
 	 *        field and <type> is a standard MDB2 datatype.
 	 */
 	public function __toString()
