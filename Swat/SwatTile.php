@@ -116,7 +116,7 @@ class SwatTile extends SwatCellRendererContainer
 	/**
 	 * Gets wheter or not this tile has any messages
 	 *
-	 * @return boolean true if this tile has one or more messages and 
+	 * @return boolean true if this tile has one or more messages and
 	 *						false if it does not.
 	 */
 	public function hasMessage()
@@ -129,7 +129,7 @@ class SwatTile extends SwatCellRendererContainer
 				break;
 			}
 		}
-		
+
 		return $has_message;
 	}
 
@@ -187,7 +187,7 @@ class SwatTile extends SwatCellRendererContainer
 	// }}}
 	// {{{ protected function getBaseCSSClassNames()
 
-	/** 
+	/**
 	 * Gets the base CSS class names of this tile
 	 *
 	 * This is the recommended place for column subclasses to add extra hard-
