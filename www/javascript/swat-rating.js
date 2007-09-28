@@ -1,19 +1,26 @@
 /**
- * AJAXy Star-rating Script For Yahoo! UI Library (YUI)
+ * Rating control for Swat
+ *
+ * Based on the AJAXy Star-rating Script For Yahoo! UI Library (YUI)
  *
  * By Ville Säävuori <Ville@Unessa.net>
  * http://www.unessa.net/en/hoyci/projects/yui-star-rating/
  * 
- * Based loosely on Wil Stuckeys jQuery Star Rating Plugin:
+ * In turn, based loosely on Wil Stuckeys jQuery Star Rating Plugin:
  * http://sandbox.wilstuckey.com/jquery-ratings/
  * 
  * Respecting the original licence, this script is also
  * dual licensed under the MIT and GPL licenses:
- *   http://www.opensource.org/licenses/mit-license.php
- *   http://www.gnu.org/licenses/gpl.html
  *
- * Version history
- * 0.1 - First version (2007-04-06)
+ *  - http://www.opensource.org/licenses/mit-license.php
+ *  - http://www.gnu.org/licenses/gpl.html
+ *
+ * Adapted for Swat by silverorange
+ *
+ * Adaptations copyright 2007 silverorange. As permitted by the MIT license,
+ * adaptations are licensed under the LGPL License 2.1:
+ *
+ *  - http://www.gnu.org/copyleft/lesser.html
  */
 
 function SwatRating(id)
