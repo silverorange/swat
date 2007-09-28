@@ -93,7 +93,7 @@ SwatRating.prototype.handleClick = function(event, clicked_star)
 		YAHOO.util.Dom.removeClass(star, 'on');
 	}
 
-	if (this.flydown.value === clicked_star.toString()){
+	if (this.flydown.value === clicked_star.toString()) {
 		this.flydown.value = null;
 		for (var i = 1; i <= 4; i++) {
 			var star = YAHOO.util.Dom.get(this.id + '_star' + i);
