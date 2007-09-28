@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  *
  * @package   Swat
  * @copyright 2007 silverorange
- * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRating extends SwatFlydown
 {
