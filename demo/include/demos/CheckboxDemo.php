@@ -26,7 +26,7 @@ class CheckboxDemo extends Demo
 		$apples->addChild(new SwatDataTreeNode(2, 'Golden Delicious'));
 		$apples->addChild(new SwatDataTreeNode(3, 'Fuji'));
 		$apples->addChild(new SwatDataTreeNode(4, 'Granny Smith'));
-		
+
 		$oranges = new SwatDataTreeNode(null, 'Orange');
 		$oranges->addChild(new SwatDataTreeNode(5, 'Navel'));
 
@@ -39,7 +39,7 @@ class CheckboxDemo extends Demo
 		$oranges->addChild(new SwatDataTreeNode(9,  'Florida'));
 		$oranges->addChild(new SwatDataTreeNode(10, 'California'));
 		$oranges->addChild(new SwatDataTreeNode(11, 'Mandarin'));
-		
+
 		$tree->addChild($apples);
 		$tree->addChild($oranges);
 
@@ -55,7 +55,7 @@ class CheckboxDemo extends Demo
 		$apples->addChild(new SwatDataTreeNode(2, 'Golden Delicious'));
 		$apples->addChild(new SwatDataTreeNode(3, 'Fuji'));
 		$apples->addChild(new SwatDataTreeNode(4, 'Granny Smith'));
-		
+
 		$oranges = new SwatDataTreeNode(13, 'Orange');
 		$oranges->addChild(new SwatDataTreeNode(5, 'Navel'));
 
@@ -68,7 +68,7 @@ class CheckboxDemo extends Demo
 		$oranges->addChild(new SwatDataTreeNode(9,  'Florida'));
 		$oranges->addChild(new SwatDataTreeNode(10, 'California'));
 		$oranges->addChild(new SwatDataTreeNode(11, 'Mandarin'));
-		
+
 		$tree->addChild($apples);
 		$tree->addChild($oranges);
 		$expandable_checkbox_tree = $ui->getWidget('expandable_checkbox_tree');

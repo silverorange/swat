@@ -60,8 +60,12 @@ class DemoApplication
 	// }}}
 	// {{{ public function run()
 
+	/**
+	 * test
+	 */
 	public function run()
 	{
+		SwatError::setupHandler();
 		$this->layout_ui = new SwatUI();
 		$this->layout_ui->mapClassPrefixToPath('Demo', '../include/ui-objects');
 		$this->layout_ui->loadFromXML('../include/layout.xml');
@@ -97,7 +101,7 @@ class DemoApplication
 	{
 		$this->layout_ui->getWidget('main_frame')->title =
 			sprintf(Swat::_('%s Demo'), $this->available_demos[$this->demo]);
-	} 
+	}
 
 	// }}}
 	// {{{ private function buildDemo()
@@ -415,7 +419,7 @@ class DemoApplication
 			break;
 		}
 
-		$documentation_links = 
+		$documentation_links =
 			$this->layout_ui->getWidget('documentation_links');
 
 		$documentation_links->setEntries($entries);

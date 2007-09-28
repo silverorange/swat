@@ -26,7 +26,7 @@ class StringDemo extends Demo
 		'Br&eacute;t Dall Schiet hu n&euml;t, um w&auml;it onser hirem get, si Dall gemaacht Fletschen bei.',
 		'Pellentesque iaculis egestas nibh.',
 		'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;');
-	
+
 	private $text_blocks = array();
 
 	private $unformatted_text_blocks = array();

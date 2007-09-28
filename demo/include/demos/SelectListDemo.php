@@ -5,7 +5,7 @@
 require_once 'Demo.php';
 
 /**
- * A demo using a select list 
+ * A demo using a select list
  *
  * @package   SwatDemo
  * @copyright 2005-2007 silverorange

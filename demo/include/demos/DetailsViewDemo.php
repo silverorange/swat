@@ -18,11 +18,11 @@ class DetailsViewDemo extends Demo
 	public function buildDemoUI(SwatUI $ui)
 	{
 		$details_view = $ui->getWidget('details_view');
-        
+
 		$fruit = new FruitObject();
-     
+
 		$fruit->align        = 'middle';
-		$fruit->title        = 'Apple';   
+		$fruit->title        = 'Apple';
 		$fruit->image        = 'images/apple.png';
 		$fruit->image_width  = 28;
 		$fruit->image_height = 28;
