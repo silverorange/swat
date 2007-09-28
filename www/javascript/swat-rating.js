@@ -5,10 +5,10 @@
  *
  * By Ville Säävuori <Ville@Unessa.net>
  * http://www.unessa.net/en/hoyci/projects/yui-star-rating/
- * 
+ *
  * In turn, based loosely on Wil Stuckeys jQuery Star Rating Plugin:
  * http://sandbox.wilstuckey.com/jquery-ratings/
- * 
+ *
  * Respecting the original licence, this script is also
  * dual licensed under the MIT and GPL licenses:
  *
@@ -37,8 +37,8 @@ SwatRating.prototype.setupStyles = function()
 {
 	YAHOO.util.Dom.setStyle(this.flydown, 'display', 'none');
 	YAHOO.util.Dom.addClass(this.stardiv, 'rating');
-                
-		// make the stars
+
+	// make the stars
 	for (var i=1; i<=4; i++) {
 		// first, make a div and then an a-element in it
 		var star = document.createElement('div');
@@ -55,7 +55,7 @@ SwatRating.prototype.setupStyles = function()
 		YAHOO.util.Event.addListener(star, 'mouseout', this.handleBlur, this, true);
 		YAHOO.util.Event.addListener(star, 'click', this.handleClick, i, this);
 	}
-	
+
 	this.ratingdiv.appendChild(this.stardiv);
 
 	for (var i=1; i<=parseInt(this.flydown.value); i++) {
@@ -67,7 +67,7 @@ SwatRating.prototype.setupStyles = function()
 
 SwatRating.prototype.handleFocus = function(event, focus_star)
 {
-	//code to handle the focus on the star
+	// code to handle the focus on the star
 	for (var i=1; i<=focus_star; i++) {
 		var star = YAHOO.util.Dom.get(this.id + '_star' + i);
 		var a = star.firstChild;
@@ -77,7 +77,7 @@ SwatRating.prototype.handleFocus = function(event, focus_star)
 
 SwatRating.prototype.handleBlur = function(event)
 {
-	//code to handle movement away from the star
+	// code to handle movement away from the star
 	for (var i=1; i<=4; i++) {
 		var star = YAHOO.util.Dom.get(this.id + '_star' + i);
 		YAHOO.util.Dom.removeClass(star, 'hover');
@@ -117,5 +117,5 @@ SwatRating.prototype.handleClick = function(event, clicked_star)
 		var star = YAHOO.util.Dom.get(this.id + '_star' + i);
 		var a = star.firstChild;
 		YAHOO.util.Dom.addClass(star, 'on');
-	}	
+	}
 }
