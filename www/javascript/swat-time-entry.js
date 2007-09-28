@@ -99,7 +99,7 @@ SwatTimeEntry.prototype.reset = function(reset_date)
 
 SwatTimeEntry.prototype.setNow = function(set_date)
 {
-	var now = new Date();	
+	var now = new Date();
 
 	if (this.twelve_hour) {
 		if (now.getHours() < 12) {
@@ -110,19 +110,19 @@ SwatTimeEntry.prototype.setNow = function(set_date)
 			var am_pm = 2;
 		}
 	}
-	
+
 	if (this.hour && this.hour.selectedIndex == 0)
 		this.hour.selectedIndex = this.lookup('hour', hour);
-		
+
 	if (this.minute && this.minute.selectedIndex == 0)
 		this.minute.selectedIndex = this.lookup('minute', now.getMinutes());
-		
+
 	if (this.second && this.second.selectedIndex == 0)
 		this.second.selectedIndex = this.lookup('second', now.getSeconds());
-		
+
 	if (this.am_pm && this.am_pm.selectedIndex == 0)
 		this.am_pm.selectedIndex = am_pm;
-	
+
 	if (this.swat_date && set_date)
 		this.swat_date.setNow(false);
 }
@@ -132,7 +132,7 @@ SwatTimeEntry.prototype.setDefault = function(set_date)
 	if (this.hour && this.hour.selectedIndex == 0)
 		this.hour.selectedIndex = 1;
 
-	if (this.minute && this.minute.selectedIndex == 0) 
+	if (this.minute && this.minute.selectedIndex == 0)
 		this.minute.selectedIndex = 1;
 
 	if (this.second && this.second.selectedIndex == 0)
@@ -170,7 +170,7 @@ SwatTimeEntry.prototype.update = function(field)
 
 	// don't do anything if we select the blank option
 	if (index > 0) {
-		var now = new Date();	
+		var now = new Date();
 		var this_hour = now.getHours();
 
 		if (this.twelve_hour) {
