@@ -17,7 +17,11 @@
 function SwatTextarea(id, resizeable)
 {
 	this.id = id;
-	if (resizeable) {
+
+	// WebKit has a built-in text-area resizer
+	var is_webkit = (/AppleWebKit/gi).test(navigator.userAgent);
+
+	if (resizeable && !is_webkit) {
 		YAHOO.util.Event.onContentReady(
 			this.id, this.handleOnAvailable, this, true);
 	}
