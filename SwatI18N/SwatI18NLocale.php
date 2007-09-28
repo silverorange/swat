@@ -235,12 +235,12 @@ class SwatI18NLocale extends SwatObject
 		$formatted_value = $integer_part.$fractional_part;
 
 		if ($value >= 0) {
-			$sign = $format->p_sign; 
+			$sign = $format->p_sign;
 			$sign_position = $format->p_sign_position;
 			$cs_precedes = $format->p_cs_precedes;
 			$separate_by_space = $format->p_separate_by_space;
 		} else {
-			$sign = $format->n_sign; 
+			$sign = $format->n_sign;
 			$sign_position = $format->n_sign_position;
 			$cs_precedes = $format->n_cs_precedes;
 			$separate_by_space = $format->n_separate_by_space;
@@ -399,7 +399,7 @@ class SwatI18NLocale extends SwatObject
 	 *                       value <code>array('grouping' => 0)</code> to turn
 	 *                       off numeric groupings.
 	 *
-	 * @return string a UTF-8 encoded string containing the formatted numeric 
+	 * @return string a UTF-8 encoded string containing the formatted numeric
 	 *                 value.
 	 *
 	 * @throws SwatException if a property name specified in the <i>$format</i>
