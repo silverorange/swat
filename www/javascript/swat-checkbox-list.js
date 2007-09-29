@@ -18,7 +18,7 @@ function SwatCheckboxList(id)
 
 	this.check_all = null; // a reference to a check-all js object
 
-	for (i = 0; i < this.check_list.length; i++) {
+	for (var i = 0; i < this.check_list.length; i++) {
 		YAHOO.util.Event.addListener(this.check_list[i], 'click',
 			this.handleClick, this, true);
 
@@ -38,7 +38,7 @@ SwatCheckboxList.prototype.updateCheckAll = function ()
 		return;
 
 	var count = 0;
-	for (i = 0; i < this.check_list.length; i++)
+	for (var i = 0; i < this.check_list.length; i++)
 		if (this.check_list[i].checked)
 			count++;
 		else if (count > 0)
@@ -49,6 +49,6 @@ SwatCheckboxList.prototype.updateCheckAll = function ()
 
 SwatCheckboxList.prototype.checkAll = function(checked)
 {
-	for (i = 0; i < this.check_list.length; i++)
+	for (var i = 0; i < this.check_list.length; i++)
 		this.check_list[i].checked = checked;
 }

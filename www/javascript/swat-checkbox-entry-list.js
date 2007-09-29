@@ -5,7 +5,7 @@ function SwatCheckboxEntryList(id)
 	SwatCheckboxEntryList.superclass.constructor.call(this, id);
 
 	var check_id;
-	for (i = 0; i < this.check_list.length; i++) {
+	for (var i = 0; i < this.check_list.length; i++) {
 		var option = this.check_list[i];
 		this.entry_list[i] = document.getElementById(
 			id + '_entry_' + option.value);
@@ -28,7 +28,7 @@ handleClick: function(e)
 checkAll: function(checked)
 {
 	SwatCheckboxEntryList.superclass.checkAll.call(this, checked);
-	for (i = 0; i < this.check_list.length; i++)
+	for (var i = 0; i < this.check_list.length; i++)
 		this.setEntrySensitivity(i, checked);
 }
 
@@ -57,6 +57,6 @@ SwatCheckboxEntryList.prototype.setEntrySensitivity = function(index,
 
 SwatCheckboxEntryList.prototype.updateFields = function()
 {
-	for (i = 0; i < this.check_list.length; i++)
+	for (var i = 0; i < this.check_list.length; i++)
 		this.setEntrySensitivity(i, this.check_list[i].checked);
 }

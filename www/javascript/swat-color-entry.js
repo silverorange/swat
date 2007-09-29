@@ -72,8 +72,8 @@ SwatColorEntry.prototype.drawPalette = function()
 	var start = 0;
 	var ret = '';
 
-	for (row = start; row < 12; row ++) {
-		for (col = 0; col < 18; col++) {
+	for (var row = start; row < 12; row ++) {
+		for (var col = 0; col < 18; col++) {
 			var r = Math.floor(row / 6) + ((Math.floor(col / 6) * 2));
 			var g = (col % 12 < 6) ? (col % 6) : ((col - 1) - ((col % 6) * 2));
 			var b = (row < 6) ? (row % 6) : ((row - 1) - ((row % 6) * 2));
@@ -87,24 +87,23 @@ SwatColorEntry.prototype.drawPalette = function()
 SwatColorEntry.prototype.drawTintScale = function(r, g, b)
 {
 	var tint_scale = '';
+	var R;
+	var G;
+	var B;
 
-	for (i=0; i < this.shades.length; i++) {
+	for (var i = 0; i < this.shades.length; i++) {
 		R = Math.round(r + (255 - r) * this.shades[i]);
 		G = Math.round(g + (255 - g) * this.shades[i]);
 		B = Math.round(b + (255 - b) * this.shades[i]);
-		set_color = "(" + R + "," + G + "," + B + ")";
-		tint_scale = tint_scale + this.drawDiv(R, G, B);
+		tint_scale += this.drawDiv(R, G, B);
 	}
 
-	for (i = 0; i < this.shades.length; i++) {
+	for (var i = 0; i < this.shades.length; i++) {
 		R = Math.round(r * this.shades[i]);
 		G = Math.round(g * this.shades[i]);
 		B = Math.round(b * this.shades[i]);
-		set_color = "(" + R + "," + G + "," + B + ")";
-		tint_scale = tint_scale + this.drawDiv(R, G, B);
+		tint_scale += this.drawDiv(R, G, B);
 	}
-
-	var tint_div = document.getElementById(this.id + '_tintscale');
 
 	return tint_scale;
 }
@@ -165,7 +164,7 @@ SwatColorEntry.prototype.setPalette = function(r, g, b)
  */
 SwatColorEntry.prototype.updateSwatch = function(r, g, b)
 {
-	color = r + ',' + g + ',' + b;
+	var color = r + ',' + g + ',' + b;
 	var swatch_obj = document.getElementById(this.id + '_swatch');
 	swatch_obj.style.background = 'rgb(' + color + ')';
 	swatch_obj.title = 'rgb: (' + color + ') hex: #' + this.rgb_to_hex(r, g, b);
@@ -176,7 +175,7 @@ SwatColorEntry.prototype.updateSwatch = function(r, g, b)
 
 SwatColorEntry.prototype.updateActiveSwatch = function(r, g, b)
 {
-	color = r + ',' + g + ',' + b;
+	var color = r + ',' + g + ',' + b;
 	swatch_obj = document.getElementById(this.id + '_active_swatch');
 	swatch_obj.style.background = 'rgb(' + color + ')';
 	swatch_obj.title = 'rgb: (" + color + ") hex: #' + this.rgb_to_hex(r, g, b);
@@ -213,8 +212,8 @@ SwatColorEntry.prototype.rgb_to_hex = function(r, g, b)
 
 SwatColorEntry.prototype.dec_to_hex = function(val)
 {
-	v1 = Math.floor(val / 16);
-	v2 = Math.floor(val % 16);
+	var v1 = Math.floor(val / 16);
+	var v2 = Math.floor(val % 16);
 
 	return this.hex[(v1 < 16) ? v1 : 0] + this.hex[(v2 < 16) ? v2 : 0];
 }

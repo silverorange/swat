@@ -23,7 +23,7 @@ function SwatCheckboxCellRenderer(id, view)
 	 */
 	var view_node = document.getElementById(this.view.id);
 	var input_nodes = view_node.getElementsByTagName('input');
-	for (i = 0; i < input_nodes.length; i++) {
+	for (var i = 0; i < input_nodes.length; i++) {
 		if (input_nodes[i].name == id + '[]') {
 			this.check_list.push(input_nodes[i]);
 			this.updateNode(input_nodes[i]);
@@ -49,7 +49,7 @@ SwatCheckboxCellRenderer.prototype.updateCheckAll = function()
 		return;
 
 	var count = 0;
-	for (i = 0; i < this.check_list.length; i++)
+	for (var i = 0; i < this.check_list.length; i++)
 		if (this.check_list[i].checked)
 			count++;
 		else if (count > 0)
@@ -60,7 +60,7 @@ SwatCheckboxCellRenderer.prototype.updateCheckAll = function()
 
 SwatCheckboxCellRenderer.prototype.checkAll = function(checked)
 {
-	for (i = 0; i < this.check_list.length; i++) {
+	for (var i = 0; i < this.check_list.length; i++) {
 		this.check_list[i].checked = checked;
 		this.updateNode(this.check_list[i]);
 	}
