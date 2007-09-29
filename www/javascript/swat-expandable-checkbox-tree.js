@@ -94,7 +94,7 @@ SwatExpandableCheckboxTree.prototype.initTreeNode = function(node)
 	var self = SwatExpandableCheckboxTree;
 	var path = node.getAttribute('id').substr(this.id.length + 1);
 	var branch = document.getElementById(this.id + '_' + path + '_branch');
-	var is_checkbox_node = 
+	var is_checkbox_node =
 		(node.nodeName == 'INPUT' && node.getAttribute('type') == 'checkbox');
 
 	if (is_checkbox_node) {

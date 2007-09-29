@@ -134,12 +134,12 @@ SwatSimpleColorEntry.prototype.drawPalette = function()
 	else
 		var num_cells = this.colors.length +
 			(this.columns - (this.colors.length % this.columns));
-	
+
 	var trow;
 	var tcell;
 	var anchor;
 	var text;
-		
+
 	for (var i = 0; i < num_cells; i++) {
 		if (i % this.columns == 0)
 			trow = document.createElement('tr');

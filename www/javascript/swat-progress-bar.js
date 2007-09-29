@@ -114,7 +114,7 @@ SwatProgressBar.prototype.pulse = function()
 		this.full.style.width = (this.pulse_width * 100) + '%';
 		this.full.style.left = '-' + (this.pulse_position * 100) + '%';
 		break;
-	
+
 	case SwatProgressBar.ORIENTATION_BOTTOM_TO_TOP:
 		this.full.style.height = (this.pulse_width * 100) + '%';
 		this.full.style.top =

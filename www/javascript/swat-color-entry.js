@@ -11,7 +11,7 @@ function SwatColorEntry(id)
 	this.shades =    [1, 0.80, 0.60, 0.40, 0.20, 0];
 
 	this.entryElement = document.getElementById(this.id + '_value');
-	
+
 	if (this.entryElement.value.length == 6) {
 		this.setHex(this.entryElement.value);
 		this.setRGB();
@@ -74,13 +74,13 @@ SwatColorEntry.prototype.drawPalette = function()
 
 	for (row = start; row < 12; row ++) {
 		for (col = 0; col < 18; col++) {
-			var r = Math.floor(row / 6) + ((Math.floor(col / 6) * 2));			
+			var r = Math.floor(row / 6) + ((Math.floor(col / 6) * 2));
 			var g = (col % 12 < 6) ? (col % 6) : ((col - 1) - ((col % 6) * 2));
 			var b = (row < 6) ? (row % 6) : ((row - 1) - ((row % 6) * 2));
 			ret = ret + this.drawDiv(this.colors[r], this.colors[g], this.colors[b]);
 		}
 	}
-	
+
 	return ret;
 }
 
@@ -103,7 +103,7 @@ SwatColorEntry.prototype.drawTintScale = function(r, g, b)
 		set_color = "(" + R + "," + G + "," + B + ")";
 		tint_scale = tint_scale + this.drawDiv(R, G, B);
 	}
-	
+
 	var tint_div = document.getElementById(this.id + '_tintscale');
 
 	return tint_scale;
@@ -173,7 +173,7 @@ SwatColorEntry.prototype.updateSwatch = function(r, g, b)
 	document.getElementById(this.id + '_tintscale').innerHTML =
 		this.drawTintScale(r, g, b);
 }
-	
+
 SwatColorEntry.prototype.updateActiveSwatch = function(r, g, b)
 {
 	color = r + ',' + g + ',' + b;
@@ -188,7 +188,7 @@ SwatColorEntry.prototype.updateRGB = function(r, g, b)
 	document.getElementById(this.id + '_color_input_g').value = g;
 	document.getElementById(this.id + '_color_input_b').value = b;
 }
-	
+
 SwatColorEntry.prototype.updateHex = function(r, g, b)
 {
 	var hex_input = document.getElementById(this.id + '_color_input_hex');
@@ -215,7 +215,7 @@ SwatColorEntry.prototype.dec_to_hex = function(val)
 {
 	v1 = Math.floor(val / 16);
 	v2 = Math.floor(val % 16);
-	
+
 	return this.hex[(v1 < 16) ? v1 : 0] + this.hex[(v2 < 16) ? v2 : 0];
 }
 

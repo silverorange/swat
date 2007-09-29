@@ -25,18 +25,18 @@ function initRTE(imgPath, incPath, css) {
 	//set paths vars
 	imagesPath = imgPath;
 	includesPath = incPath;
-	
+
 	if (isRichText) document.writeln('<style type="text/css">@import "swat/swat-textarea-editor.css";</style>');
 }
 
 function initCheckRichText() {
 	//set browser vars
 	var ua = navigator.userAgent.toLowerCase();
-	isIE = ((ua.indexOf("msie") != -1) && (ua.indexOf("opera") == -1) && (ua.indexOf("webtv") == -1)); 
+	isIE = ((ua.indexOf("msie") != -1) && (ua.indexOf("opera") == -1) && (ua.indexOf("webtv") == -1));
 	isGecko = (ua.indexOf("gecko") != -1);
 	isSafari = (ua.indexOf("safari") != -1);
 	isKonqueror = (ua.indexOf("konqueror") != -1);
-	
+
 	//check to see if designMode mode is available
 	//Safari/Konqueror think they are designMode capable even though they are not
 	if (document.getElementById && document.designMode && !isSafari && !isKonqueror) {
@@ -50,9 +50,9 @@ function writeRichText(rte, html, width, height, basehref) {
 
 		if (allRTEs.length > 0) allRTEs += ";";
 		allRTEs += rte;
-		
+
 		document.writeln('<div class="rteDiv" style="width:' + width + ';">');
-		
+
 		document.writeln('<div id="Menu_' + rte + '" class="rteMenu">');
 		/*
 			document.writeln('<div id="MenuFormatting_' + rte + '" class="rteMenuFormatting">');
@@ -77,7 +77,7 @@ function writeRichText(rte, html, width, height, basehref) {
 		*/
 
 		document.write('<div id="MenuButtons_' + rte + '" class="rteMenuButtons">');
-		
+
 		document.write('<div>');
 			document.writeln('	<select id="formatblock_' + rte + '" onchange="selectFont(\'' + rte + '\', this.id);">');
 			document.writeln('		<option value="">[' + rteT['style'] + ']</option>');
@@ -94,107 +94,107 @@ function writeRichText(rte, html, width, height, basehref) {
 			document.writeln('	</select>');
 		document.write('</div>');
 		document.write('<div>');
-		
+
 		document.write('<a href="#" class="rteMenu-bold"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'bold\', \'\'); return false;"');
 			document.write('title="' + rteT['bold'] + '">' + rteT['bold'] + '</a>');
-		
+
 		document.write('<a href="#" class="rteMenu-italic"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'italic\', \'\'); return false;"');
 			document.write('title="' + rteT['italic'] + '">' + rteT['italic'] + '</a>');
-		
+
 		document.write('<a href="#" class="rteMenu-underline"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'underline\', \'\'); return false;"');
 			document.write('title="' + rteT['underline'] + '">' + rteT['underline'] + '</a>');
-		
+
 		document.write('</div>');
 		document.write('<div>');
-		
+
 		document.write('<a href="#" class="rteMenu-align-left"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'justifyleft\', \'\'); return false;"');
 			document.write('title="' + rteT['align_left'] + '">' + rteT['align_left'] + '</a>');
-		
+
 		document.write('<a href="#" class="rteMenu-align-center"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'justifycenter\', \'\'); return false;"');
 			document.write('title="' + rteT['align_center'] + '">' + rteT['align_center'] + '</a>');
-		
+
 		document.write('<a href="#" class="rteMenu-align-right"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'justifyright\', \'\'); return false;"');
 			document.write('title="' + rteT['align_right'] + '">' + rteT['align_right'] + '</a>');
-		/*	
+		/*
 		document.write('<a href="#" class="rteMenu-align-justify"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'jusitfyfull\', \'\'); return false;"');
 			document.write('title="justify full">justify full</a>');
 		*/
 		document.write('</div>');
 		document.write('<div>');
-		
+
 		document.write('<a href="#" class="rteMenu-ul"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'insertunorderedlist\', \'\'); return false;"');
 			document.write('title="' + rteT['unordered_list'] + '">' + rteT['unordered_list'] + '</a>');
-		
+
 		document.write('<a href="#" class="rteMenu-ol"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'insertorderedlist\', \'\'); return false;"');
 			document.write('title="' + rteT['ordered_list'] + '">' + rteT['ordered_list'] + '</a>');
-		
+
 		document.write('<a href="#" class="rteMenu-indent"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'indent\', \'\'); return false;"');
 			document.write('title="' + rteT['indent'] + '">' + rteT['indent'] + '</a>');
-		
+
 		document.write('<a href="#" class="rteMenu-outdent"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'outdent\', \'\'); return false;"');
 			document.write('title="' + rteT['outdent'] + '">' + rteT['outdent'] + '</a>');
-		
+
 		document.write('</div>');
 		document.write('<div>');
-		
+
 		document.write('<a href="#" class="rteMenu-link"');
 			document.write('onClick="dlgInsertLink(\'' + rte + '\', \'link\'); return false;"');
 			document.write('title="' + rteT['insert_link'] + '">' + rteT['insert_link'] + '</a>');
-		
+
 		document.write('<a href="#" class="rteMenu-hr"');
 			document.write('onClick="rteCommand(\'' + rte + '\', \'inserthorizontalrule\', \'\'); return false;"');
 			document.write('title="' + rteT['horizontal_rule'] + '">' + rteT['horizontal_rule'] + '</a>');
-		
+
 		document.write('</div>');
 		document.write('<div>');
-		
+
 		document.write('<a href="#" class="rteMenu-hilite"');
 			document.write('onClick="hiliteText(\'' + rte + '\'); return false;"');
 			document.write('title="' + rteT['highlight'] + '">' + rteT['highlight'] + '</a>');
-		
+
 		document.write('<a href="#" class="rteMenu-quote"');
 			document.write('onClick="insertQuote(\'' + rte + '\'); return false;"');
 			document.write('title="' + rteT['quote'] + '">' + rteT['quote'] + '</a>');
-		
+
 		document.write('</div>'); //end menu group
-	
+
 		document.write('</div>'); //end menu buttons
 		document.write('</div>'); //end whole menu
-		
+
 		document.write('<br style="clear:both;">'); //end whole menu
 
-		document.writeln('<div class="rteIframeDiv">');	
+		document.writeln('<div class="rteIframeDiv">');
 		document.writeln('<iframe class="rteIframe" id="' + rte + '" name="' + rte + '"');
 			document.writeln('style="width:100%; height: ' + height + ';"');
 			document.writeln('src="' + includesPath + 'swat-textarea-editor-blank.html"></iframe>');
-		document.writeln('</div>');	
+		document.writeln('</div>');
 
-		document.writeln('<div class="rteToggleMode">');	
+		document.writeln('<div class="rteToggleMode">');
 				document.writeln('<a class="rteToggleModeDisabled"');
 					document.writeln('id="_rteToggleNormal' + rte + '" href="#"');
 					document.writeln('onclick="toggleHTMLSrc(\'' + rte + '\', 0); return false;">');
 					document.writeln('<span>Normal</span></a>');
-		
+
 				document.writeln('<a href="#" id="_rteToggleSource' + rte + '"');
 					document.writeln('onclick="toggleHTMLSrc(\'' + rte + '\', 1); return false;">');
 					document.writeln('<span>Source</span></a>');
-		document.writeln('</div>');	
-		document.writeln('<input type="hidden" id="_rteModeSource' + rte + '" value="0" />');	
+		document.writeln('</div>');
+		document.writeln('<input type="hidden" id="_rteModeSource' + rte + '" value="0" />');
 
 		//iframe for the palette - unremark this if you want a palette control
 		//document.writeln('<iframe width="154" height="104" id="cp' + rte + '" src="' + includesPath + 'swat-textarea-editor-palette.html" marginwidth="0" marginheight="0" scrolling="no" style="visibility:hidden; position: absolute;"></iframe>');
-		
+
 		html = convertTags(html);
 		html = html.replace("\n", '<br />', 'g');
 
@@ -202,7 +202,7 @@ function writeRichText(rte, html, width, height, basehref) {
 		document.writeln('<input type="hidden" name="' + rte + '_wysiwyg" value="true" />');
 
 		document.writeln('</div>'); //end editor
-		
+
 		enableDesignMode(rte, html, basehref);
 
 	} else {
@@ -241,7 +241,7 @@ function enableDesignMode(rte, html, basehref) {
 		frameHtml += ".highlight { background: #FF0; }";
 		frameHtml += ".quote { border: 5px solid #CCC;}";
 		frameHtml += "</style>\n";
-		
+
 	//}
 	frameHtml += "</head>\n";
 	frameHtml += "<body class=\"normal\">\n";
@@ -249,8 +249,8 @@ function enableDesignMode(rte, html, basehref) {
 	frameHtml += "\n"; // content gets loaded onload
 	frameHtml += "</body>\n";
 	frameHtml += "</html>";
-	
-	
+
+
 	if (document.all) {
 		var oRTE = frames[rte].document;
 		oRTE.open('text/html', 'replace');
@@ -271,7 +271,7 @@ function enableDesignMode(rte, html, basehref) {
 				if (isGecko) {
 					//attach a keyboard handler for gecko browsers to make keyboard shortcuts work
 					oRTE.addEventListener("keypress", geckoKeyPress, true);
-					
+
 					//switch to non-CSS mode (inserts <tag></tag> instead of <span style=""><span>)
 					oRTE.execCommand("useCSS", false, true);
 					appendFormOnSubmit(rte);
@@ -306,9 +306,9 @@ function appendFormOnSubmit(rte) {
 	myform.onsubmit = function() {
 		if (document.getElementById("_rteModeSource" + rte).value == 1)
 			toggleHTMLSrc(rte, false);
-	
+
 		setHiddenVal(rte);
-		
+
 		var prev_elements = this.__msh_prevOnSubmit;
 		if (typeof prev_elements != "undefined")
 			for (var elem in prev_elements)
@@ -320,26 +320,26 @@ function appendFormOnSubmit(rte) {
 function setHiddenVal(rte) {
 	//set hidden form field value for current rte
 	var oHdnField = document.getElementById('hdn' + rte);
-	
+
 	if (oHdnField.value == null) oHdnField.value = "";
 
 	if (document.all)
 		oHdnField.value = frames[rte].document.body.innerHTML;
 	else
 		oHdnField.value = document.getElementById(rte).contentWindow.document.body.innerHTML;
-	
+
 	oHdnField.value = convertTags(oHdnField.value);
-	
+
 	//if there is no content (other than formatting) set value to nothing
 	if (stripHTML(oHdnField.value.replace("&nbsp;", " ")) == "" &&
 		oHdnField.value.toLowerCase().search("<hr") == -1 &&
 		oHdnField.value.toLowerCase().search("<img") == -1) oHdnField.value = "";
 }
 
-function rteCommand(rte, command, option) {	
+function rteCommand(rte, command, option) {
 	if (document.getElementById("_rteModeSource" + rte).value == 1)
 		return;
-	
+
 	//function to perform command
 	var oRTE;
 	if (document.all) {
@@ -347,7 +347,7 @@ function rteCommand(rte, command, option) {
 	} else {
 		oRTE = document.getElementById(rte).contentWindow;
 	}
-	
+
 	try {
 		oRTE.focus();
 	  	oRTE.document.execCommand(command, false, option);
@@ -365,7 +365,7 @@ function toggleHTMLSrc(rte, edit_src) {
 
 	//contributed by Bob Hutzel (thanks Bob!)
 	var oHdnField = document.getElementById('hdn' + rte);
-	
+
 	document.getElementById("_rteModeSource" + rte).value = edit_src;
 
 	if (edit_src) {
@@ -379,7 +379,7 @@ function toggleHTMLSrc(rte, edit_src) {
 
 		toggleFormatting(rte);
 		setHiddenVal(rte);
-		
+
 		if (document.all) {
 			frames[rte].document.body.innerText = oHdnField.value;
 			frames[rte].document.body.className = 'editor';
@@ -394,13 +394,13 @@ function toggleHTMLSrc(rte, edit_src) {
 		//we are unchecking the box
 		var element = document.getElementById("MenuButtons_" + rte);
 		element.className = 'rteMenuButtons';
-		
+
 		document.getElementById('_rteToggleNormal' + rte).className = 'rteToggleModeDisabled';
 		document.getElementById('_rteToggleSource' + rte).className = null;
 		document.getElementById('formatblock_' + rte).disabled = false;
-		
+
 		toggleFormatting(rte);
-		
+
 		if (document.all) {
 			//fix for IE
 			var output = escape(frames[rte].document.body.innerText);
@@ -426,7 +426,7 @@ function dlgColorPalette(rte, command) {
 
 	//function to display or hide color palettes
 	setRange(rte);
-	
+
 	//get dialog position
 	var oDialog = document.getElementById('cp' + rte);
 	var buttonElement = document.getElementById(command + '_' + rte);
@@ -434,7 +434,7 @@ function dlgColorPalette(rte, command) {
 	var iTopPos = getOffsetTop(buttonElement) + (buttonElement.offsetHeight + 4);
 	oDialog.style.left = (iLeftPos) + "px";
 	oDialog.style.top = (iTopPos) + "px";
-	
+
 	if ((command == parent.command) && (rte == currentRTE)) {
 		//if current command dialog is currently open, close it
 		if (oDialog.style.visibility == "hidden") {
@@ -450,7 +450,7 @@ function dlgColorPalette(rte, command) {
 		}
 		showHideElement(oDialog, 'show');
 	}
-	
+
 	//save current values
 	parent.command = command;
 	currentRTE = rte;
@@ -459,10 +459,10 @@ function dlgColorPalette(rte, command) {
 function dlgInsertTable(rte, command) {
 	//function to open/close insert table dialog
 	//save current values
-	
+
 	if (document.getElementById("_rteModeSource" + rte).value == 1)
 		return;
-	
+
 	parent.command = command;
 	currentRTE = rte;
 	InsertTable = popUpWin(includesPath + 'swat-textarea-editor-insert-table.html', 'InsertTable', 360, 180, '');
@@ -471,10 +471,10 @@ function dlgInsertTable(rte, command) {
 function dlgInsertLink(rte, command) {
 	//function to open/close insert table dialog
 	//save current values
-	
+
 	if (document.getElementById("_rteModeSource" + rte).value == 1)
 		return;
-	
+
 	parent.command = command;
 	currentRTE = rte;
 	popUpWin(includesPath + 'swat-textarea-editor-insert-link.html', 'InsertLink', 360, 180, '');
@@ -514,22 +514,22 @@ function setColor(color) {
 
 	if (document.all) {
 		if (parentCommand == "hilitecolor") parentCommand = "backcolor";
-		
+
 		//retrieve selected range
 		rng.select();
 	}
-	
+
 	if (parentCommand == "hilitecolor")
 		setBackgroundColor(color);
 	else
 		rteCommand(rte, parentCommand, color);
-	
+
 	showHideElement('cp' + rte, "hide");
 }
 
 function setBackgroundColor(rte, color) {
 	rng = setRange(rte);
-	
+
 	if (document.all) {
 		//retrieve selected range
 		rng.select();
@@ -545,11 +545,11 @@ function setBackgroundColor(rte, color) {
 
 function addImage(rte) {
 	//function to add image
-	
+
 	if (document.getElementById("_rteModeSource" + rte).value == 1)
 		return;
-	
-	imagePath = prompt('Enter Image URL:', 'http://');				
+
+	imagePath = prompt('Enter Image URL:', 'http://');
 	if ((imagePath != null) && (imagePath != "")) {
 		rteCommand(rte, 'InsertImage', imagePath);
 	}
@@ -557,14 +557,14 @@ function addImage(rte) {
 
 function hiliteText(rte) {
 	currentRTE = rte;
-	
+
 	var content = getHTMLOfSelection(rte);
 	insertHTML('<span class="highlight">' + content + '</span>');
 }
 
 function insertQuote(rte) {
 	currentRTE = rte;
-	
+
 	var content = getHTMLOfSelection(rte);
 	insertHTML('<blockquote class="quote">' + content + '</blockquote><br />');
 }
@@ -575,13 +575,13 @@ function getOffsetTop(elm) {
 	var mOffsetTop = elm.offsetTop;
 	var mOffsetParent = elm.offsetParent;
 	var parents_up = 1; //the positioning div is 2 elements up the tree
-	
+
 	while(parents_up > 0) {
 		mOffsetTop += mOffsetParent.offsetTop;
 		mOffsetParent = mOffsetParent.offsetParent;
 		parents_up--;
 	}
-	
+
 	return mOffsetTop;
 }
 
@@ -591,13 +591,13 @@ function getOffsetLeft(elm) {
 	var mOffsetLeft = elm.offsetLeft;
 	var mOffsetParent = elm.offsetParent;
 	var parents_up = 1;
-	
+
 	while(parents_up > 0) {
 		mOffsetLeft += mOffsetParent.offsetLeft;
 		mOffsetParent = mOffsetParent.offsetParent;
 		parents_up--;
 	}
-	
+
 	return mOffsetLeft;
 }
 
@@ -607,7 +607,7 @@ function selectFont(rte, selectname) {
 	// First one is always a label
 	if (idx != 0) {
 		var selected = document.getElementById(selectname).options[idx].value;
-		
+
 		if (selected == 'clearformat') {
 			clearFormat(rte);
 		} else {
@@ -622,14 +622,14 @@ function selectFont(rte, selectname) {
 function insertHTML(html) {
 	//function to add HTML -- thanks dannyuk1982
 	var rte = currentRTE;
-	
+
 	var oRTE;
 	if (document.all) {
 		oRTE = frames[rte];
 	} else {
 		oRTE = document.getElementById(rte).contentWindow;
 	}
-	
+
 	oRTE.focus();
 	if (document.all) {
 		var oRng = oRTE.document.selection.createRange();
@@ -644,11 +644,11 @@ function insertHTML(html) {
 function showHideElement(element, showHide) {
 	//function to show or hide elements
 	//element variable can be string or object
-	
+
 	if (document.getElementById(element)) {
 		element = document.getElementById(element);
 	}
-	
+
 	if (showHide == "show") {
 		element.style.visibility = "visible";
 	} else if (showHide == "hide") {
@@ -661,7 +661,7 @@ function setRange(rte) {
 	var oRTE;
 	if (document.all) {
 		oRTE = frames[rte];
-		var selection = oRTE.document.selection; 
+		var selection = oRTE.document.selection;
 		if (selection != null) rng = selection.createRange();
 	} else {
 		oRTE = document.getElementById(rte).contentWindow;
@@ -674,15 +674,15 @@ function setRange(rte) {
 function stripHTML(oldString) {
 	//function to strip all html
 	var newString = oldString.replace(/(<([^>]+)>)/ig,"");
-	
+
 	//replace carriage returns and line feeds
    newString = newString.replace(/\r\n/g," ");
    newString = newString.replace(/\n/g," ");
    newString = newString.replace(/\r/g," ");
-	
+
 	//trim string
 	newString = trim(newString);
-	
+
 	return newString;
 }
 
@@ -698,18 +698,18 @@ function trim(inputString) {
    if (typeof inputString != "string") return inputString;
    var retValue = inputString;
    var ch = retValue.substring(0, 1);
-	
+
    while (ch == " ") { // Check for spaces at the beginning of the string
       retValue = retValue.substring(1, retValue.length);
       ch = retValue.substring(0, 1);
    }
    ch = retValue.substring(retValue.length - 1, retValue.length);
-	
+
    while (ch == " ") { // Check for spaces at the end of the string
       retValue = retValue.substring(0, retValue.length - 1);
       ch = retValue.substring(retValue.length - 1, retValue.length);
    }
-	
+
 	// Note that there are two spaces in the string - look for multiple spaces within the string
    while (retValue.indexOf("  ") != -1) {
 		// Again, there are two spaces in each of the strings
@@ -720,7 +720,7 @@ function trim(inputString) {
 
 function getHTMLOfSelection(rte) {
 	var range = setRange(rte);
-	
+
 	if (document.all) {
 		return range.htmlText;
 	} else {
@@ -740,7 +740,7 @@ function geckoKeyPress(evt) {
 	//function to add bold, italic, and underline shortcut commands to gecko RTEs
 	//contributed by Anti Veeranna (thanks Anti!)
 	var rte = evt.target.id;
-	
+
 	if (evt.ctrlKey) {
 		var key = String.fromCharCode(evt.charCode).toLowerCase();
 		var cmd = '';
@@ -752,7 +752,7 @@ function geckoKeyPress(evt) {
 
 		if (cmd) {
 			rteCommand(rte, cmd, null);
-			
+
 			// stop the event bubble
 			evt.preventDefault();
 			evt.stopPropagation();
@@ -776,21 +776,21 @@ function ieKeyPress(evt, rte) {
 
 function raiseButton(e) {
 	var el = window.event.srcElement;
-	
+
 	if (isMenuButton(el))
 		el.className = 'rteImageRaised';
 }
 
 function normalButton(e) {
 	var el = window.event.srcElement;
-	
+
 	if (isMenuButton(el))
 		el.className = 'rteImage';
 }
 
 function lowerButton(e) {
 	var el = window.event.srcElement;
-	
+
 	if (isMenuButton(el))
 		el.className = 'rteImageLowered';
 }
@@ -846,7 +846,7 @@ function appendDocumentOnLoad(rte) {
 	}
 
 	window.onload = function() {
-		onloadRTE(rte);		
+		onloadRTE(rte);
 
 		var prev_elements = this.__msh_prevOnLoad;
 		if (typeof prev_elements != "undefined")
@@ -856,7 +856,7 @@ function appendDocumentOnLoad(rte) {
 }
 
 function onloadRTE(rte) {
-	initCheckRichText();	
+	initCheckRichText();
 
 	if (!isRichText)
 		return;
@@ -873,7 +873,7 @@ function onloadRTE(rte) {
 
 window.onunload = function(ev) {
 	initCheckRichText();
-	
+
 	if (!isRichText)
 		return;
 

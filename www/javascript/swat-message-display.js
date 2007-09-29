@@ -72,7 +72,7 @@ SwatMessageDisplayMessage.prototype.shrink = function()
 	var attributes = {
 		height: { to: 0 },
 		marginBottom: { to: 0 }
-	}; 
+	};
 
 	// collapse margins
 	if (this.message_div.nextSibling) {
@@ -89,7 +89,7 @@ SwatMessageDisplayMessage.prototype.shrink = function()
 		var script_node = this.message_div.parentNode.nextSibling;
 		var node = script_node.nextSibling;
 		while (node && node.nodeType != 1)
-			node = node.nextSibling; 
+			node = node.nextSibling;
 
 		if (node) {
 			var previous_message_animation = new YAHOO.util.Anim(
