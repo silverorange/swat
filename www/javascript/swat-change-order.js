@@ -737,7 +737,7 @@ SwatChangeOrder.prototype.updateValue = function()
 	var drop_marker = SwatChangeOrder.dragging_drop_marker;
 
 	// one less than list length so we don't count the sentinal node
-	for (i = 0; i < this.list_div.childNodes.length - 1; i++) {
+	for (var i = 0; i < this.list_div.childNodes.length - 1; i++) {
 		// ignore drop marker node
 		if (this.list_div.childNodes[i] != drop_marker) {
 			if (index > 0)
@@ -810,7 +810,7 @@ SwatChangeOrder.prototype.scrollList = function(y_coord)
 	}
 
 	// offsetHeight is clientHeight + padding
-	factor = (y_coord - half_list_height) /
+	var factor = (y_coord - half_list_height) /
 		(this.list_div.scrollHeight - this.list_div.offsetHeight);
 
 	this.list_div.scrollTop = Math.floor(

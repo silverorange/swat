@@ -138,6 +138,7 @@ if (!document.importNode || SwatTableViewInputRow.is_webkit) {
 	{
 		var child_node;
 		var dest_td;
+		var source_attributes;
 		for (var i = 0; i < source_tr.childNodes.length; i++) {
 			child_node = source_tr.childNodes[i];
 			if (child_node.nodeType == 1 && child_node.nodeName == 'td') {

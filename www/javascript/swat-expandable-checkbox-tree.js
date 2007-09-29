@@ -35,8 +35,8 @@ SwatExpandableCheckboxTree.BRANCH_STATE_AUTO   = 3;
 
 SwatExpandableCheckboxTree.getTreeNode = function(branch_child_node)
 {
-	child_node = null;
-	returned_node = null;
+	var child_node = null;
+	var returned_node = null;
 
 	if (branch_child_node.nodeName == 'LI') {
 		child_node = branch_child_node.firstChild;

@@ -43,7 +43,7 @@ SwatDateEntry.prototype.addLookupTable = function(table_name, table)
 {
 	this.lookup_table[table_name] = table;
 	this.reverse_lookup_table[table_name] = {};
-	for (key in table) {
+	for (var key in table) {
 		this.reverse_lookup_table[table_name][table[key]] = key;
 	}
 }

@@ -68,7 +68,7 @@ SwatZIndexManager.removeElement = function(element)
 {
 	// find element
 	var position = -1;
-	for (i = 0; i < SwatZIndexManager.elements.length; i++) {
+	for (var i = 0; i < SwatZIndexManager.elements.length; i++) {
 		if (SwatZIndexManager.elements[i] === element) {
 			position = i;
 			break;
@@ -89,7 +89,7 @@ SwatZIndexManager.removeElement = function(element)
 		var new_index = 0;
 		var lowest_index = parseInt(SwatZIndexManager.elements[0].style.zIndex);
 
-		for (i = 0; i < SwatZIndexManager.elements.length; i++) {
+		for (var i = 0; i < SwatZIndexManager.elements.length; i++) {
 			old_index = parseInt(SwatZIndexManager.elements[i].style.zIndex);
 			new_index = SwatZIndexManager.start + old_index - lowest_index;
 			SwatZIndexManager.elements[i].style.zIndex = new_index;
