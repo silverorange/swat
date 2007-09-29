@@ -4,7 +4,7 @@ function SwatActions(id, values, selected)
 	this.flydown = document.getElementById(id + '_action_flydown');
 	this.selected_element = (selected) ?
 		document.getElementById(id + '_' + selected) : null;
-	
+
 	var button = document.getElementById(id + '_apply_button');
 
 	this.values = values;

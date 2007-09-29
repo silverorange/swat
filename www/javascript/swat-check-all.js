@@ -30,7 +30,7 @@ SwatCheckAll.prototype.setState = function(checked)
  * Sets the controlling checkbox list
  *
  * This adds an event handler to the check-all to update the list when this
- * check-all is checked/unchecked. 
+ * check-all is checked/unchecked.
  *
  * @param SwatCheckboxList controller the JavaScript object that represents the
  *                                     checkbox list controlling this check-all

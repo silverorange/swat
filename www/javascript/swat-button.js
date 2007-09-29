@@ -34,7 +34,7 @@ SwatButton.prototype.handleClick = function(event)
 		hidden_field.value = this.button.value;
 		div.appendChild(hidden_field);
 		this.button.form.appendChild(div);
-		
+
 		this.button.form.submit(); // needed for IE
 		this.showThrobber();
 	}

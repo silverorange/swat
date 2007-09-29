@@ -133,7 +133,7 @@ SwatDateEntry.prototype.setDefault = function(set_time)
 			this.year.selectedIndex = 1;
 	}
 
-	if (this.month && this.month.selectedIndex == 0) 
+	if (this.month && this.month.selectedIndex == 0)
 		this.month.selectedIndex = 1;
 
 	if (this.day && this.day.selectedIndex == 0)

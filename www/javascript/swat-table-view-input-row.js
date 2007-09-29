@@ -30,7 +30,7 @@ function SwatTableViewInputRow(id, row_string)
 	 * when given a DTD. The XML string is encoded in UTF-8 with no special
 	 * entities at this point.
 	 */
-	this.row_string = "<?xml version='1.0' encoding='UTF-8'?>\n" + 
+	this.row_string = "<?xml version='1.0' encoding='UTF-8'?>\n" +
 		'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">' +
 		'<head><title>row</title></head><body><table>' +
 		row_string +
@@ -238,7 +238,7 @@ SwatTableViewInputRow.prototype.addRow = function()
 	dest_tr.className = 'swat-table-view-input-row';
 	dest_tr.id = this.id + '_row_' + replicator_id;
 
-	var animation = new YAHOO.util.ColorAnim(dest_tr, 
+	var animation = new YAHOO.util.ColorAnim(dest_tr,
 		{ backgroundColor: { from: '#fffbc9', to: '#ffffff' } }, 1,
 		YAHOO.util.Easing.easeOut);
 
@@ -265,7 +265,7 @@ SwatTableViewInputRow.prototype.removeRow = function(replicator_id)
 {
 	if (!this.initReplicators())
 		return;
-		
+
 	// remove replicator_id from replicators array
 	var replicator_index = -1;
 	for (var i = 0; i < this.replicators.length; i++) {

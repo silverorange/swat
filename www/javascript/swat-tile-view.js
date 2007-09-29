@@ -39,7 +39,7 @@ getItemNode: function(node)
 	// we reached the body element without finding the tile node
 	if (tile_node.nodeName == 'BODY')
 		tile_node = node;
-	
+
 	return tile_node;
 }
 

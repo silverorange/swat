@@ -241,7 +241,7 @@ function SwatChangeOrder_mouseupEventHandler(event)
 	SwatChangeOrder.dragging_item = null;
 	SwatChangeOrder.dragging_drop_marker = null;
 	SwatChangeOrder.is_dragging = false;
-	
+
 	return false;
 }
 
@@ -296,7 +296,7 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	drop_marker.style.borderBottomWidth = '1px';
 	drop_marker.style.display = 'none';
 	drop_marker.id = 'drop';
-	
+
 	SwatChangeOrder.dragging_item = shadow_item;
 	SwatChangeOrder.dragging_drop_marker = drop_marker;
 
@@ -341,7 +341,7 @@ function SwatChangeOrder(id, sensitive)
 	var value_array = hidden_value.value.split(',');
 	var count = 0;
 	var node = null;
-	
+
 	// remove text nodes and set value on nodes
 	for (var i = 0; i < this.list_div.childNodes.length; i++) {
 		node = this.list_div.childNodes[i];
@@ -581,7 +581,7 @@ SwatChangeOrder.prototype.moveToBottomHelper = function(steps)
 
 // }}}
 // {{{ moveUp()
-	
+
 /**
  * Moves the active element up one space
  *
@@ -776,7 +776,7 @@ SwatChangeOrder.prototype.getScrollPosition = function(element)
 	else
 		var y_position = element.offsetTop +
 			(element.offsetHeight / 2);
-	
+
 	return y_position;
 }
 
@@ -812,7 +812,7 @@ SwatChangeOrder.prototype.scrollList = function(y_coord)
 	// offsetHeight is clientHeight + padding
 	factor = (y_coord - half_list_height) /
 		(this.list_div.scrollHeight - this.list_div.offsetHeight);
-		
+
 	this.list_div.scrollTop = Math.floor(
 		(this.list_div.scrollHeight - this.list_div.clientHeight) * factor);
 }

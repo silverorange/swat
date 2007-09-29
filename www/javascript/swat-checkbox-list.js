@@ -16,7 +16,7 @@ function SwatCheckboxList(id)
 		}
 	}
 
-	this.check_all = null; // a reference to a check-all js object 
+	this.check_all = null; // a reference to a check-all js object
 
 	for (i = 0; i < this.check_list.length; i++) {
 		YAHOO.util.Event.addListener(this.check_list[i], 'click',

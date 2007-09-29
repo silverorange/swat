@@ -10,7 +10,7 @@
  * documentation. No representations are made about the suitability of this
  * software for any purpose. It is provided "as is" without express or
  * implied warranty.
- * 
+ *
  * Adapted with permission by silverorange. December 2004.
  *
  * @copyright 2004 Tribador Mediaworks, 2005-2007 silverorange Inc.
@@ -308,7 +308,7 @@ SwatCalendar.prototype.closeAndSetToday = function()
 
 	this.setDateValues(yyyy, mm, dd);
 
-	this.close();	
+	this.close();
 }
 
 /**
@@ -457,7 +457,7 @@ SwatCalendar.prototype.draw = function()
 	var dd   = (arguments[2]) ? arguments[2] : null;
 
 	var today = new Date();
-		
+
 	var start_ts = start_date.getTime();
 	var end_ts   = end_date.getTime();
 	var today_ts = today.getTime();
