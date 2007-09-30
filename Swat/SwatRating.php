@@ -2,6 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'Swat/SwatCompositeControl.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatHtmlTag.php';
 
@@ -12,8 +13,18 @@ require_once 'Swat/SwatHtmlTag.php';
  * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatRating extends SwatFlydown
+class SwatRating extends SwatCompositeControl
 {
+	// {{{ public properties
+
+	/**
+	 * The value of this rating control
+	 *
+	 * @var integer
+	 */
+	public $value = 0;
+
+	// }}}
 	// {{{ public function __construct()
 
 	/**
@@ -45,15 +56,14 @@ class SwatRating extends SwatFlydown
 	{
 		parent::init();
 
+		$flydown = $this->getEmbeddedWidget('flydown');
 		$ratings = array(
 			1 => Swat::_('One Star'),
 			2 => Swat::_('Two Stars'),
 			3 => Swat::_('Three Stars'),
 			4 => Swat::_('Four Stars'));
 
-		$this->addOptionsByArray($ratings);
-		$this->serialize_values = false;
-		$this->unique_values = true;
+		$flydown->addOptionsByArray($ratings);
 	}
 
 	// }}}
@@ -61,15 +71,13 @@ class SwatRating extends SwatFlydown
 
 	/**
 	 * Processes this rating control
-	 *
-	 * Processes this rating control and converts the value if it is a string.
 	 */
 	public function process()
 	{
 		parent::process();
 
-		if (is_string($this->value))
-			$this->value = intval($this->value);
+		$flydown = $this->getEmbeddedWidget('flydown');
+		$this->value = (integer)$flydown->value;
 	}
 
 	// }}}
@@ -80,14 +88,19 @@ class SwatRating extends SwatFlydown
 	 */
 	public function display()
 	{
+		parent::display();
+
 		if (!$this->visible)
 			return;
 
+		$flydown = $this->getEmbeddedWidget('flydown');
+		$flydown->value = (string)$this->value;
+
 		$div = new SwatHtmlTag('div');
-		$div->id = $this->id.'_rating_div';
+		$div->id = $this->id;
 		$div->class = $this->getCSSClassString();
 		$div->open();
-		parent::display();
+		$flydown->display();
 		$div->close();
 
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
@@ -120,6 +133,22 @@ class SwatRating extends SwatFlydown
 	protected function getInlineJavaScript()
 	{
 		return "var {$this->id}_obj = new SwatRating('{$this->id}');";
+	}
+
+	// }}}
+	// {{{ protected function createEmbeddedWidgets()
+
+	/**
+	 * Creates the embedded flydown used by this rating control
+	 *
+	 * @see SwatCompositeControl::createEmbeddedWidgets()
+	 */
+	protected function createEmbeddedWidgets()
+	{
+		$flydown = new SwatFlydown();
+		$flydown->id = $this->id.'_flydown';
+		$flydown->serialize_values = false;
+		$this->embedWidget($flydown, 'flydown');
 	}
 
 	// }}}

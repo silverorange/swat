@@ -52,9 +52,9 @@
 function SwatRating(id)
 {
 	this.id = id;
-	this.flydown = document.getElementById(this.id);
+	this.flydown = document.getElementById(this.id + '_flydown');
 	this.stardiv = document.createElement('div');
-	this.ratingdiv = document.getElementById(this.id + '_rating_div');
+	this.ratingdiv = document.getElementById(this.id);
 
 	this.setupStyles();
 }
