@@ -168,7 +168,7 @@ abstract class SwatCompositeControl extends SwatControl
 	 *                                     specified key exists in this
 	 *                                     composite control.
 	 */
-	protected function getEmbeddedWidget($key);
+	protected function getEmbeddedWidget($key)
 	{
 		$this->confirmEmbeddedWidgets();
 
