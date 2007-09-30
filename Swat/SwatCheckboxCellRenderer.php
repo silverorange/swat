@@ -96,6 +96,16 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 	}
 
 	// }}}
+	// {{{ public function init()
+
+	public function init()
+	{
+		// auto-generate an id of no id is set
+		if ($this->id === null)
+			$this->id = $this->getUniqueId();
+	}
+
+	// }}}
 	// {{{ public function process()
 
 	/**
