@@ -207,7 +207,7 @@ abstract class SwatCompositeControl extends SwatControl
 	 * {@link SwatCompositeControl::getEmbeddedWidget()} is used so it rarely
 	 * needs to be called manually.
 	 */
-	protected final function comfirmEmbeddedWidgets()
+	protected final function confirmEmbeddedWidgets()
 	{
 		if (!$this->embedded_widgets_created) {
 			$this->createEmbeddedWidgets();
