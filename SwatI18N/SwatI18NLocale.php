@@ -391,7 +391,7 @@ class SwatI18NLocale extends SwatObject
 	 * @param float $value the numeric value to format.
 	 * @param integer $decimals optional. The number of fractional digits to
 	 *                           include in the returned string. If not
-	 *                           specified, no fractional digits are returned.
+	 *                           specified, all fractional digits are included.
 	 * @param array $format optional. An associative array of number formatting
 	 *                       information that overrides the formatting for this
 	 *                       locale. The array is of the form
@@ -405,9 +405,13 @@ class SwatI18NLocale extends SwatObject
 	 * @throws SwatException if a property name specified in the <i>$format</i>
 	 *                       parameter is invalid.
 	 */
-	public function formatNumber($value, $decimals = 0, array $format = array())
+	public function formatNumber($value, $decimals = null,
+		array $format = array())
 	{
 		$format = $this->getNumberFormat()->override($format);
+
+		if ($decimals === null)
+			$decimals = $this->getFractionalPrecision($value);
 
 		$integer_part = $this->formatIntegerGroupings($value, $format);
 		$fractional_part =
@@ -999,6 +1003,50 @@ class SwatI18NLocale extends SwatObject
 		}
 
 		return $string;
+	}
+
+	// }}}
+	// {{{ protected function getFractionalPrecision()
+
+	/**
+	 * Gets the fractional precision of a floating point number
+	 *
+	 * This gets the number of digits after the decimal point.
+	 *
+	 * @param float $value the value for which to get the fractional precision.
+	 *
+	 * @return integer the fractional precision of the value.
+	 */
+	protected function getFractionalPrecision($value)
+	{
+		/*
+		 * This is a bit hacky (and probably slow). We get the string
+		 * representation and then count the number of digits after the decimal
+		 * separator. This may or may not be faster than the equivalent
+		 * IEEE-754 decomposition (written in PHP). The string-based code has
+		 * not been profiled against the equivalent IEEE-754 code.
+		 */
+
+		// get current locale
+		$locale = self::get();
+
+		$precision = 0;
+		$lc = $locale->getLocaleInfo();
+		$str_value = (string)$value;
+
+		$e_pos = stripos($str_value, 'E-');
+		if ($e_pos !== false) {
+			$precision += (integer)substr($str_value, $e_pos + 2);
+			$str_value = substr($str_value, 0, $e_pos);
+		}
+
+		$decimal_pos = strpos($str_value, $lc['decimal_point']);
+		if ($decimal_pos !== false) {
+			$precision += strlen($str_value) - $decimal_pos -
+				strlen($lc['decimal_point']);
+		}
+
+		return $precision;
 	}
 
 	// }}}
