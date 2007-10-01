@@ -83,7 +83,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		$this->addJavaScript('packages/swat/javascript/swat-checkbox-list.js',
 			Swat::PACKAGE_ID);
 
-		$this->addJavaScript('packages/swat/javascript/swat.css',
+		$this->addStyleSheet('packages/swat/styles/swat.css',
 			Swat::PACKAGE_ID);
 	}
 
