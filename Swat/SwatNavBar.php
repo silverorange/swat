@@ -307,7 +307,7 @@ class SwatNavBar extends SwatControl implements Countable
 			// link all entries or link all but the last entry
 			$link = ($this->link_last_entry || $i < $count);
 
-			$this->displayEntry($entry, $link);
+			$this->displayEntry($entry, $link, ($i == 1));
 
 			$i++;
 		}
@@ -324,18 +324,29 @@ class SwatNavBar extends SwatControl implements Countable
 	 * @param SwatNavBarEntry $entry the entry to display.
 	 * @param boolean $link whether or not to hyperlink the given entry if the
 	 *                       entry has a link set.
+	 * @param boolean $first whether or not this entry should be displayed as
+	 *                        the first entry.
 	 */
-	protected function displayEntry(SwatNavBarEntry $entry, $show_link = true)
+	protected function displayEntry(SwatNavBarEntry $entry, $show_link = true,
+		$first = false)
 	{
 		$title = ($entry->title === null) ? '' : $entry->title;
 
 		if ($entry->link !== null && $show_link) {
-			$link_tag = new SwatHtmlTag('a');
-			$link_tag->href = $entry->link;
-			$link_tag->setContent($title);
-			$link_tag->display();
+			$a_tag = new SwatHtmlTag('a');
+			if ($first)
+				$a_tag->class = 'swat-navbar-first';
+
+			$a_tag->href = $entry->link;
+			$a_tag->setContent($title);
+			$a_tag->display();
 		} else {
-			echo SwatString::minimizeEntities($title);
+			$span_tag = new SwatHtmlTag('span');
+			if ($first)
+				$span_tag->class = 'swat-navbar-first';
+
+			$span_tag->setContent($title);
+			$span_tag->display();
 		}
 	}
 
