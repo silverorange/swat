@@ -580,22 +580,43 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	/**
 	 * Renders each cell renderer in this column
 	 *
-	 * Cell renderers are rendered in order with a space character separating
-	 * each renderer.
+	 * If there is once cell renderer in this column, it is rendered by itself.
+	 * If there is more than one cell renderer in this column, cell renderers
+	 * are rendered in order inside separate <i>span</i> elements. Each
+	 * <i>span</i> element is separated with a breaking space character.
 	 *
 	 * @param mixed $data the data object being used to render the cell
 	 *                     renderers of this field.
 	 */
 	protected function displayRenderersInternal($data)
 	{
-		$first = true;
-		foreach ($this->renderers as $renderer) {
-			if ($first)
-				$first = false;
-			else
-				echo ' ';
+		if (count($this->renderers) == 1) {
+			$this->renderers->getFirst()->render();
+		} else {
+			$span_tag = new SwatHtmlTag('span');
 
-			$renderer->render();
+			$first = true;
+			foreach ($this->renderers as $renderer) {
+				if ($first)
+					$first = false;
+				else
+					echo ' ';
+
+				// get renderer class names
+				$classes = $renderer->getInheritanceCSSClassNames();
+				$classes = array_merge($classes,
+					$renderer->getBaseCSSClassNames());
+
+				$classes = array_merge($classes,
+					$renderer->getDataSpecificCSSClassNames());
+
+				$classes = array_merge($classes, $renderer->classes);
+
+				$span_tag->class = implode(' ', $classes);
+				$span_tag->open();
+				$renderer->render();
+				$span_tag->close();
+			}
 		}
 	}
 

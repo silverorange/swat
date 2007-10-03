@@ -28,9 +28,10 @@ class SwatTile extends SwatCellRendererContainer
 	// {{{ public function display()
 
 	/**
-	 * Displays this tile
+	 * Displays this tile using a data object
 	 *
-	 * Each data row is displayed between div tags in the tile
+	 * @param mixed $data a data object used to display the cell renderers in
+	 *                     this tile.
 	 */
 	public function display($data)
 	{
@@ -41,10 +42,10 @@ class SwatTile extends SwatCellRendererContainer
 		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
-		foreach ($this->renderers as $renderer) {
+		foreach ($this->renderers as $renderer)
 			$this->renderers->applyMappingsToRenderer($renderer, $data);
-			$renderer->render();
-		}
+
+		$this->displayRenderersInternal($data);
 
 		$div_tag->close();
 	}
@@ -134,6 +135,45 @@ class SwatTile extends SwatCellRendererContainer
 	}
 
 	// }}}
+	// {{{ protected function displayRenderersInternal()
+
+	/**
+	 * Renders each cell renderer in this tile
+	 *
+	 * If there is once cell renderer in this tile, it is rendered by itself.
+	 * If there is more than one cell renderer in this tile, cell renderers
+	 * are rendered in order inside separate <i>span</i> elements. There is no
+	 * separation between nultiple cell renderers within a single tile.
+	 *
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
+	 */
+	protected function displayRenderersInternal($data)
+	{
+		if (count($this->renderers) == 1) {
+			$this->renderers->getFirst()->render();
+		} else {
+			$span_tag = new SwatHtmlTag('span');
+			foreach ($this->renderers as $renderer) {
+				// get renderer class names
+				$classes = $renderer->getInheritanceCSSClassNames();
+				$classes = array_merge($classes,
+				$renderer->getBaseCSSClassNames());
+
+				$classes = array_merge($classes,
+				$renderer->getDataSpecificCSSClassNames());
+
+				$classes = array_merge($classes, $renderer->classes);
+
+				$span_tag->class = implode(' ', $classes);
+				$span_tag->open();
+				$renderer->render();
+				$span_tag->close();
+			}
+		}
+	}
+
+	// }}}
 	// {{{ protected function getCSSClassNames()
 
 	/**
@@ -202,4 +242,5 @@ class SwatTile extends SwatCellRendererContainer
 
 	// }}}
 }
+
 ?>
