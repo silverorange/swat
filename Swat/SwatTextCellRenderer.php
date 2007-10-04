@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A text cell renderer
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextCellRenderer extends SwatCellRenderer
@@ -53,13 +53,6 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	 */
 	public $value = null;
 
-	/**
-	 * The XHTML tag to wrap content with
-	 *
-	 * @var string
-	 */
-	public $wrapper_tag = 'span';
-
 	// }}}
 	// {{{ public function render()
 
@@ -75,11 +68,6 @@ class SwatTextCellRenderer extends SwatCellRenderer
 
 		parent::render();
 
-		$tag = new SwatHtmlTag($this->wrapper_tag);
-		$tag->class = $this->getCSSClassString();
-
-		$tag->open();
-
 		if ($this->value === null)
 			$text = $this->text;
 		elseif (is_array($this->value))
@@ -91,8 +79,6 @@ class SwatTextCellRenderer extends SwatCellRenderer
 			echo SwatString::minimizeEntities($text);
 		else
 			echo $text;
-
-		$tag->close();
 	}
 
 	// }}}
