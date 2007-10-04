@@ -142,8 +142,8 @@ class SwatTile extends SwatCellRendererContainer
 	 *
 	 * If there is once cell renderer in this tile, it is rendered by itself.
 	 * If there is more than one cell renderer in this tile, cell renderers
-	 * are rendered in order inside separate <i>span</i> elements. There is no
-	 * separation between nultiple cell renderers within a single tile.
+	 * are rendered in order inside separate <i>div</i> elements. There is no
+	 * separation between multiple cell renderers within a single tile.
 	 *
 	 * @param mixed $data the data object being used to render the cell
 	 *                     renderers of this field.
@@ -153,22 +153,25 @@ class SwatTile extends SwatCellRendererContainer
 		if (count($this->renderers) == 1) {
 			$this->renderers->getFirst()->render();
 		} else {
-			$span_tag = new SwatHtmlTag('span');
+			$div_tag = new SwatHtmlTag('div');
 			foreach ($this->renderers as $renderer) {
 				// get renderer class names
-				$classes = $renderer->getInheritanceCSSClassNames();
+				$classes = array('swat-tile-view-tile-renderer');
 				$classes = array_merge($classes,
-				$renderer->getBaseCSSClassNames());
+					$renderer->getInheritanceCSSClassNames());
+
+				$classes = array_merge($classes,
+					$renderer->getBaseCSSClassNames());
 
 				$classes = array_merge($classes,
 				$renderer->getDataSpecificCSSClassNames());
 
 				$classes = array_merge($classes, $renderer->classes);
 
-				$span_tag->class = implode(' ', $classes);
-				$span_tag->open();
+				$div_tag->class = implode(' ', $classes);
+				$div_tag->open();
 				$renderer->render();
-				$span_tag->close();
+				$div_tag->close();
 			}
 		}
 	}

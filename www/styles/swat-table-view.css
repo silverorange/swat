@@ -78,3 +78,8 @@ tfoot.swat-table-view-invalid-tfoot-ordering {
 .swat-table-view .swat-table-view-spanning-column th {
 	text-align: right;
 }
+
+/* Cell renderers in columns */
+div.swat-table-view-column-renderer {
+	display: inline;
+}

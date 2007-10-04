@@ -582,8 +582,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 *
 	 * If there is once cell renderer in this column, it is rendered by itself.
 	 * If there is more than one cell renderer in this column, cell renderers
-	 * are rendered in order inside separate <i>span</i> elements. Each
-	 * <i>span</i> element is separated with a breaking space character.
+	 * are rendered in order inside separate <i>div</i> elements. Each
+	 * <i>div</i> element is separated with a breaking space character and the
+	 * div elements are displayed inline by default.
 	 *
 	 * @param mixed $data the data object being used to render the cell
 	 *                     renderers of this field.
@@ -593,7 +594,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		if (count($this->renderers) == 1) {
 			$this->renderers->getFirst()->render();
 		} else {
-			$span_tag = new SwatHtmlTag('span');
+			$div_tag = new SwatHtmlTag('div');
 
 			$first = true;
 			foreach ($this->renderers as $renderer) {
@@ -603,7 +604,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 					echo ' ';
 
 				// get renderer class names
-				$classes = $renderer->getInheritanceCSSClassNames();
+				$classes = array('swat-table-view-column-renderer');
+				$classes = array_merge($classes,
+					$renderer->getInheritanceCSSClassNames());
+
 				$classes = array_merge($classes,
 					$renderer->getBaseCSSClassNames());
 
@@ -612,10 +616,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 				$classes = array_merge($classes, $renderer->classes);
 
-				$span_tag->class = implode(' ', $classes);
-				$span_tag->open();
+				$div_tag->class = implode(' ', $classes);
+				$div_tag->open();
 				$renderer->render();
-				$span_tag->close();
+				$div_tag->close();
 			}
 		}
 	}
