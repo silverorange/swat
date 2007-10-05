@@ -1,3 +1,729 @@
+2007-10-05  steven
+
+	* [r20993] swat/trunk/www/styles/swat.css:
+	  turn off bullets on SwatCheckboxList lists
+
+2007-10-04  gauthierm
+
+	* [r20946] swat/trunk/Swat/SwatTextCellRenderer.php:
+	  Remove wrapping tag in SwatTextCellRenderer. Columns and tiles
+	  now wrap a containing tag around each cell renderer if there are
+	  multiple cell renderers in the column or tile. The containing
+	  tag has the same class information used here.
+	* [r20945] swat/trunk/Swat/SwatTableViewColumn.php,
+	  swat/trunk/Swat/SwatTile.php,
+	  swat/trunk/www/styles/swat-table-view.css:
+	  Display cell renderers in div elements because block-level
+	  elements may not be contained in inline elements and some cell
+	  renderers use block-level elements.
+
+2007-10-03  gauthierm
+
+	* [r20898] swat/trunk/Swat/SwatTableViewColumn.php,
+	  swat/trunk/Swat/SwatTile.php:
+	  Display multiple cell renderers in the same cell renderer
+	  container inside span elements.
+
+2007-10-02  nick
+
+	* [r20809] swat/trunk/Swat/SwatString.php:
+	  Fix documentation (mike - I think this is correct)
+
+2007-10-02  gauthierm
+
+	* [r20798] swat/trunk/Swat/SwatNavBar.php:
+	  Add special class to first element in navbar list in case the
+	  first element needs different style. Also, for unlinked entries,
+	  display them in a span tag.
+
+2007-10-01  steven
+
+	* [r20755] swat/trunk/Swat/SwatCheckboxList.php:
+	  fix css/javascript mixup (mike's shame)
+
+2007-10-01  gauthierm
+
+	* [r20714] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  For formatting numbers, show all fractional digits by default.
+	  This code is hacky but it's the same or better than what's
+	  already in SwatString.
+
+2007-09-30  gauthierm
+
+	* [r20713] swat/trunk/Swat/SwatRating.php,
+	  swat/trunk/www/javascript/swat-rating.js:
+	  Mkae SwatRating extend SwatCompositeControl instead of
+	  SwatFlydown. The rating control is not a flydown but it uses one.
+	* [r20712] swat/trunk/Swat/SwatCompositeControl.php:
+	  Fix typo
+	* [r20711] swat/trunk/Swat/SwatCompositeControl.php,
+	  swat/trunk/Swat/SwatCompositeWidget.php:
+	  Rename SwatCompositeControl file to match classname.
+	* [r20710] swat/trunk/Swat/SwatCompositeWidget.php:
+	  Fix method definition.
+	* [r20709] swat/trunk/www/javascript/swat-rating.js:
+	  Clean up copyrights and licensing information for swat rating
+	  control. Advice taken from
+	  http://www.softwarefreedom.org/resources/2007/gpl-non-gpl-collaboration.html
+	* [r20708] swat/trunk/Swat/SwatCheckboxCellRenderer.php:
+	  Autogenerate id of checkbox cell renderer if not set.
+
+2007-09-29  gauthierm
+
+	* [r20707] swat/trunk/www/javascript/swat-calendar.js,
+	  swat/trunk/www/javascript/swat-change-order.js,
+	  swat/trunk/www/javascript/swat-checkbox-cell-renderer.js,
+	  swat/trunk/www/javascript/swat-checkbox-entry-list.js,
+	  swat/trunk/www/javascript/swat-checkbox-list.js,
+	  swat/trunk/www/javascript/swat-color-entry.js,
+	  swat/trunk/www/javascript/swat-date-entry.js,
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js,
+	  swat/trunk/www/javascript/swat-table-view-input-row.js,
+	  swat/trunk/www/javascript/swat-time-entry.js,
+	  swat/trunk/www/javascript/swat-z-index-manager.js:
+	  Declare some variables. I didn't bother checking textarea-editor
+	  because it should be removed and replaced completely rather than
+	  cleaned up.
+	* [r20706] swat/trunk/www/javascript/swat-actions.js,
+	  swat/trunk/www/javascript/swat-button.js,
+	  swat/trunk/www/javascript/swat-calendar.js,
+	  swat/trunk/www/javascript/swat-change-order.js,
+	  swat/trunk/www/javascript/swat-check-all.js,
+	  swat/trunk/www/javascript/swat-checkbox-list.js,
+	  swat/trunk/www/javascript/swat-color-entry.js,
+	  swat/trunk/www/javascript/swat-date-entry.js,
+	  swat/trunk/www/javascript/swat-expandable-checkbox-tree.js,
+	  swat/trunk/www/javascript/swat-message-display.js,
+	  swat/trunk/www/javascript/swat-progress-bar.js,
+	  swat/trunk/www/javascript/swat-simple-color-entry.js,
+	  swat/trunk/www/javascript/swat-table-view-input-row.js,
+	  swat/trunk/www/javascript/swat-textarea-editor.js,
+	  swat/trunk/www/javascript/swat-tile-view.js:
+	  Whitespace in JavaScript.
+
+2007-09-28  gauthierm
+
+	* [r20698] swat/trunk/www/javascript/swat-textarea.js:
+	  Don't use resizeable textarea in webikit since it has a built-in
+	  resize function.
+	* [r20696] swat/trunk/demo/include/DemoApplication.php,
+	  swat/trunk/demo/include/demos/CheckboxDemo.php,
+	  swat/trunk/demo/include/demos/DetailsViewDemo.php,
+	  swat/trunk/demo/include/demos/MessageDisplayDemo.php,
+	  swat/trunk/demo/include/demos/SelectListDemo.php,
+	  swat/trunk/demo/include/demos/StringDemo.php:
+	  Whitespace.
+	* [r20695] swat/trunk/SwatDB/SwatDB.php,
+	  swat/trunk/SwatDB/SwatDBClassMap.php,
+	  swat/trunk/SwatDB/SwatDBDataObject.php,
+	  swat/trunk/SwatDB/SwatDBDefaultRecordsetWrapper.php,
+	  swat/trunk/SwatDB/SwatDBField.php,
+	  swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Whitespace.
+	* [r20694] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Whitespace.
+	* [r20693] swat/trunk/Swat/Swat.php,
+	  swat/trunk/Swat/SwatBooleanCellRenderer.php,
+	  swat/trunk/Swat/SwatButton.php,
+	  swat/trunk/Swat/SwatByteCellRenderer.php,
+	  swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/Swat/SwatCascadeFlydown.php,
+	  swat/trunk/Swat/SwatCellRendererContainer.php,
+	  swat/trunk/Swat/SwatCellRendererMapping.php,
+	  swat/trunk/Swat/SwatCellRendererSet.php,
+	  swat/trunk/Swat/SwatChangeOrder.php,
+	  swat/trunk/Swat/SwatCheckbox.php,
+	  swat/trunk/Swat/SwatCheckboxList.php,
+	  swat/trunk/Swat/SwatCheckboxTree.php,
+	  swat/trunk/Swat/SwatColorEntry.php,
+	  swat/trunk/Swat/SwatConfirmationButton.php,
+	  swat/trunk/Swat/SwatControl.php, swat/trunk/Swat/SwatDate.php,
+	  swat/trunk/Swat/SwatDateCellRenderer.php,
+	  swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/Swat/SwatDetailsView.php,
+	  swat/trunk/Swat/SwatDetailsViewField.php,
+	  swat/trunk/Swat/SwatDetailsViewVerticalField.php,
+	  swat/trunk/Swat/SwatDisclosure.php,
+	  swat/trunk/Swat/SwatDisplayableContainer.php,
+	  swat/trunk/Swat/SwatEntry.php, swat/trunk/Swat/SwatError.php,
+	  swat/trunk/Swat/SwatExpandableCheckboxTree.php,
+	  swat/trunk/Swat/SwatFieldset.php,
+	  swat/trunk/Swat/SwatFileEntry.php, swat/trunk/Swat/SwatForm.php,
+	  swat/trunk/Swat/SwatFormField.php,
+	  swat/trunk/Swat/SwatFrame.php,
+	  swat/trunk/Swat/SwatFrameDisclosure.php,
+	  swat/trunk/Swat/SwatGroupingFormField.php,
+	  swat/trunk/Swat/SwatHtmlTag.php,
+	  swat/trunk/Swat/SwatImageCellRenderer.php,
+	  swat/trunk/Swat/SwatImageDisplay.php,
+	  swat/trunk/Swat/SwatImagePreviewDisplay.php,
+	  swat/trunk/Swat/SwatListEntry.php, swat/trunk/Swat/SwatMenu.php,
+	  swat/trunk/Swat/SwatMenuGroup.php,
+	  swat/trunk/Swat/SwatMenuItem.php,
+	  swat/trunk/Swat/SwatMessage.php,
+	  swat/trunk/Swat/SwatMoneyCellRenderer.php,
+	  swat/trunk/Swat/SwatNavBar.php,
+	  swat/trunk/Swat/SwatNoteBook.php,
+	  swat/trunk/Swat/SwatNoteBookPage.php,
+	  swat/trunk/Swat/SwatNumericCellRenderer.php,
+	  swat/trunk/Swat/SwatNumericEntry.php,
+	  swat/trunk/Swat/SwatPagination.php,
+	  swat/trunk/Swat/SwatProgressBar.php,
+	  swat/trunk/Swat/SwatRadioList.php,
+	  swat/trunk/Swat/SwatRadioTable.php,
+	  swat/trunk/Swat/SwatRating.php,
+	  swat/trunk/Swat/SwatReCaptcha.php,
+	  swat/trunk/Swat/SwatRemoveInputCell.php,
+	  swat/trunk/Swat/SwatReplicableContainer.php,
+	  swat/trunk/Swat/SwatSearchEntry.php,
+	  swat/trunk/Swat/SwatSelectList.php,
+	  swat/trunk/Swat/SwatSimpleColorEntry.php,
+	  swat/trunk/Swat/SwatString.php,
+	  swat/trunk/Swat/SwatTableViewCheckAllRow.php,
+	  swat/trunk/Swat/SwatTableViewColumn.php,
+	  swat/trunk/Swat/SwatTableViewGroup.php,
+	  swat/trunk/Swat/SwatTableViewInputRow.php,
+	  swat/trunk/Swat/SwatTableViewOrderableColumn.php,
+	  swat/trunk/Swat/SwatTableViewRow.php,
+	  swat/trunk/Swat/SwatTableViewSpanningColumn.php,
+	  swat/trunk/Swat/SwatTextarea.php,
+	  swat/trunk/Swat/SwatTextareaEditor.php,
+	  swat/trunk/Swat/SwatTimeZoneEntry.php,
+	  swat/trunk/Swat/SwatToolLink.php,
+	  swat/trunk/Swat/SwatToolbar.php,
+	  swat/trunk/Swat/SwatTreeNode.php, swat/trunk/Swat/SwatUI.php,
+	  swat/trunk/Swat/SwatUIObject.php,
+	  swat/trunk/Swat/SwatWidget.php,
+	  swat/trunk/Swat/SwatXHTMLTextarea.php,
+	  swat/trunk/Swat/exceptions/SwatException.php:
+	  Whitespace.
+	* [r20691] swat/trunk/Swat/SwatCompositeWidget.php:
+	  Add a base class for composite widgets.
+	* [r20689] swat/trunk/Swat/SwatYUI.php:
+	  whitespace
+	* [r20688] swat/trunk/Swat/SwatTile.php:
+	  whitespace
+	* [r20687] swat/trunk/Swat/SwatGroupedMenu.php:
+	  Whitespace
+	* [r20686] swat/trunk/www/javascript/swat-z-index-manager.js:
+	  Whitespace
+	* [r20685] swat/trunk/www/javascript/swat-time-entry.js:
+	  whitespace
+	* [r20684] swat/trunk/www/javascript/swat-rating.js:
+	  More whitespace.
+	* [r20683] swat/trunk/www/javascript/swat-rating.js:
+	  More whitespace.
+	* [r20682] swat/trunk/www/javascript/swat-rating.js:
+	  Whitespace
+	* [r20681] swat/trunk/Swat/SwatRating.php,
+	  swat/trunk/www/javascript/swat-rating.js:
+	  Use a more conventional name for rating div.
+	* [r20680] swat/trunk/www/javascript/swat-rating.js:
+	  Clarify licensing and copyright.
+	* [r20679] swat/trunk/Swat/SwatRating.php:
+	  fix typo
+
+2007-09-27  gauthierm
+
+	* [r20678] swat/trunk/Swat/SwatRating.php:
+	  Documentation, coding conventions, tyops, copy and paste errors.
+	* [r20677] swat/trunk/Swat/SwatListEntry.php:
+	  Use SwatI18NLocale in SwatListEntry
+	* [r20646] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Fractional digits is only for monetary values according to C99.
+	* [r20645] swat/trunk/Swat/SwatPagination.php:
+	  Fix require path.
+	* [r20640] swat/trunk/SwatI18N/SwatI18NCurrencyFormat.php,
+	  swat/trunk/SwatI18N/SwatI18NLocale.php,
+	  swat/trunk/SwatI18N/SwatI18NNumberFormat.php:
+	  Negative and positive signs returned by localeconv() are only
+	  for use in monetary values according to C99 specification.
+	* [r20639] swat/trunk/Swat/SwatPagination.php:
+	  Use SwatI18NLocale to format numbers in SwatPagination.
+	* [r20638] swat/trunk/Swat/SwatPagination.php:
+	  Use one return point. There was no point using elseif here
+	  unless there was one return point.
+	* [r20637] swat/trunk/Swat/SwatFloatEntry.php:
+	  Make SwatFloatEntry use SwatI18NLocale. This will easily allow
+	  specifying the locale in the future.
+	* [r20636] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Fix doc typo.
+
+2007-09-26  gauthierm
+
+	* [r20634] swat/trunk/Swat/SwatUI.php:
+	  Remove DTD validation and use RelaxNG schema validation instead.
+	  This allows validation on the local machine without having to do
+	  the complicated set up of an XML catalogue. Also, add API to
+	  disable validation entirely if it is not desired.
+	* [r20633] swat/trunk/package.php:
+	  Update package.php to install system directory.
+	* [r20632] swat/trunk/swatml.rng, swat/trunk/system/swatml.rng:
+	  Move swatml.rng to system directory.
+	* [r20631] swat/trunk/Swat/system, swat/trunk/system:
+	  I created this dir in the wrong place.
+	* [r20630] swat/trunk/Swat/system:
+	  System dir for Swat supporting filed.
+	* [r20629] swat/trunk/swatml.rng, swat/trunk/www/swatml.rng:
+	  Move RelaxNG schema out of www into root Swat dir.
+	* [r20626] swat/trunk/Swat/SwatDetailsStore.php:
+	  Add todo.
+	* [r20625] swat/trunk/Swat/SwatDetailsStore.php:
+	  PHP sucks. isset( = null) is false. PHP sucks.
+	* [r20624] swat/trunk/Swat/SwatDetailsStore.php:
+	  Fix parse error.
+	* [r20623] swat/trunk/Swat/SwatDetailsStore.php:
+	  Require exception class.
+	* [r20622] swat/trunk/Swat/SwatDetailsStore.php:
+	  Docs for SwatDetailsStore::__get().
+	* [r20621] swat/trunk/Swat/SwatDetailsStore.php:
+	  docs
+	* [r20620] swat/trunk/Swat/SwatDetailsStore.php:
+	  Clean up and fix SwatDetailsStore::__isset().
+	* [r20619] swat/trunk/Swat/SwatDetailsStore.php:
+	  Add some docs.
+	* [r20618] swat/trunk/Swat/SwatDetailsStore.php:
+	  Only allow base_object to be an object.
+	* [r20617] swat/trunk/Swat/SwatDetailsStore.php:
+	  Remove reflection. I think this does the same thing.
+	* [r20616] swat/trunk/www/javascript/swat-disclosure.js:
+	  Add method getAnimateDiv() that makes subclassing easier.
+	* [r20612] swat/trunk/www/styles/swat-disclosure.css:
+	  Min-height hack for IE6.
+	* [r20611] swat/trunk/Swat/SwatDisclosure.php,
+	  swat/trunk/www/styles/swat-disclosure.css:
+	  Smoothly opening and closing disclosures. Doesn't work in IE6
+	  but this widget is already broken in IE6.
+
+2007-09-25  gauthierm
+
+	* [r20603] swat/trunk/www/swatml.rng:
+	  A RelaxNG schema for SwatML.
+	* [r20592] swat/trunk/Swat/SwatSearchEntry.php:
+	  Only override name if it is set.
+
+2007-09-24  gauthierm
+
+	* [r20572] swat/trunk/Swat/SwatUI.php:
+	  We use the dom extension, not the xml extension.
+
+2007-09-24  nrf
+
+	* [r20562] swat/trunk/Swat/SwatSearchEntry.php:
+	  Add property to optionally set an XHTML name. This should make
+	  SiteKeywordEntry obsolete.
+	* [r20559] swat/trunk/Swat/SwatUI.php:
+	  Throw exception if xml extension is not loaded.
+
+2007-09-24  gauthierm
+
+	* [r20535] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Don't format value zero as negative>
+	* [r20501] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Don't do grouping algorithm if there is no thousands separator.
+	* [r20499] swat/trunk/Swat/SwatIntegerEntry.php:
+	  Use SwatI18NLocale in SwatIntegerEntry. Specifying a locale
+	  could be added in the future.
+	* [r20498] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Fix integer overflow detection.
+	* [r20497] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Make method protected instead of private.
+	* [r20496] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Add private SwatI18NLocale::parseNegativeNotation() and use it
+	  in number parsing methods.
+	* [r20495] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Add SwatI18NLocale::parseInteger().
+	* [r20494] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Add SwatI18NLocale::parseFloat().
+	* [r20493] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Parse currencies that display negative values in parentheses
+	  correctly.
+
+2007-09-21  gauthierm
+
+	* [r20466] swat/trunk/Swat/SwatMoneyCellRenderer.php:
+	  Use SwatI18NLocale to format monetary values for
+	  SwatMoneyCellRenderer. This will allow custom overriding of
+	  specific format parts in the future. This also makes
+	  SwatMoneyCellRenderer work in Windows.
+
+2007-09-20  charlesp
+
+	* [r20461] swat/trunk/www/styles/swat-rating.css:
+	  Ammended CSS IE hack to show the proper image.
+	* [r20460] swat/trunk/www/styles/swat-rating.css:
+	  Modified CSS for 8bit rating stars - with IE hack added.
+	* [r20459] swat/trunk/www/images/swat-rating-stars-256.png:
+	  256 color verion of rating stars.
+
+2007-09-20  gauthierm
+
+	* [r20455] swat/trunk/Swat/SwatContainer.php:
+	  With r20454 I don't think this is necessary.
+	* [r20454] swat/trunk/Swat/SwatEntry.php:
+	  Fix a bug caused by r20318 that didn't shortcut return when no
+	  value was submitted by the user. This caused validation errors
+	  on widgets that were not visible on the form.
+
+2007-09-20  nrf
+
+	* [r20448] swat/trunk/Swat/SwatTextCellRenderer.php:
+	  Make the XHTML tag that wraps the content configurable. This
+	  allows it to be changed to a DIV when the content contains
+	  block-level elements that can not be placed within a SPAN.
+
+2007-09-19  gauthierm
+
+	* [r20427] swat/trunk/Swat/SwatString.php:
+	  Add SwatString::validateUtf8()
+
+2007-09-18  gauthierm
+
+	* [r20389] swat/trunk/Swat/SwatCheckboxList.php,
+	  swat/trunk/www/styles/swat.css:
+	  Add default styles to checkbox list columns and increment
+	  current_column when displaying a new column. Use ceil() instead
+	  of floor() so largest columns are always on the left.
+
+2007-09-18  charles
+
+	* [r20388] swat/trunk/Swat/SwatContainer.php:
+	  If the container isn't visible then I don't think it should
+	  process it's children.
+
+2007-09-18  nrf
+
+	* [r20385] swat/trunk/Swat/SwatCheckboxList.php:
+	  Rename property, add ids to each column, cleanup.
+	* [r20379] swat/trunk/Swat/SwatCheckboxList.php:
+	  Add optional property to split a list into parts when displaying
+	  it.
+	  We might want to put an id on each UL that identifies which part
+	  it is.
+	* [r20370] swat/trunk/Swat/SwatCheckboxList.php:
+	  Add a $show_check_all property.
+
+2007-09-17  nrf
+
+	* [r20354] swat/trunk/Swat/SwatTableView.php:
+	  Add a new method.
+
+2007-09-17  gauthierm
+
+	* [r20333] swat/trunk/SwatI18N/SwatI18NNumberFormat.php:
+	  This is 150 times faster and does the same thing.
+	* [r20332] swat/trunk/Swat/SwatMoneyEntry.php:
+	  Use SwatI18NLocale in SwatMoneyEntry. This moves all the
+	  locale-based parsing, display and character set conversion out
+	  of SwatMoneyEntry making the code a lot cleaner. Also, fix a bug
+	  where the value would display incorrectly if too many decimal
+	  digits were entered.
+	* [r20331] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Fix typo.
+	* [r20330] swat/trunk/Swat/SwatError.php:
+	  Use docblock to detect parameter sensitivity in SwatError.
+	* [r20328] swat/trunk/Swat/exceptions/SwatException.php:
+	  Docs.
+	* [r20327] swat/trunk/Swat/exceptions/SwatException.php:
+	  Use PHP5 reflection to detect sensitive parameters from method
+	  documentation. This is awesome.
+	* [r20320] swat/trunk/Swat/SwatError.php,
+	  swat/trunk/Swat/exceptions/SwatException.php:
+	  Make SwatException::isSensitiveParameter() public so that
+	  SwatError can use it.
+	* [r20319] swat/trunk/Swat/SwatEntry.php:
+	  docs
+	* [r20318] swat/trunk/Swat/SwatEntry.php:
+	  Split retrieving raw value into its own protected method in
+	  SwatEntry.
+
+2007-09-15  gauthierm
+
+	* [r20313] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Cache locale objects as they are used. This reduces the number
+	  of setlocale(), localeconv() and nl_langinfo() calls if the same
+	  locale is used more than once in a single request.
+	* [r20311] swat/trunk/Swat/SwatError.php:
+	  For SwatError, filter sensitive parameters from error messages
+	  and clean up display of values (should fix the multiple quoting
+	  of arguments that are present multiple times in the stack trace).
+	* [r20310] swat/trunk/Swat/exceptions/SwatException.php:
+	  s/Paramater/Parameter
+	* [r20309] swat/trunk/Swat/SwatOptionControl.php,
+	  swat/trunk/Swat/SwatTimeEntry.php,
+	  swat/trunk/Swat/exceptions/SwatException.php:
+	  s/paramater/parameter
+
+2007-09-14  gauthierm
+
+	* [r20308] swat/trunk/SwatI18N/SwatI18NNumberFormat.php:
+	  Only override non-null values.
+	* [r20304] swat/trunk/SwatI18N/SwatI18NCurrencyFormat.php,
+	  swat/trunk/SwatI18N/SwatI18NLocale.php,
+	  swat/trunk/SwatI18N/SwatI18NNumberFormat.php:
+	  - Make it possible to override formattin ginformation using an
+	  associative array.
+	  - Add decimals parameter to formatNumber() method and remove
+	  fractional_digits from NumberFormat object.
+	  - Split formatting numeric groupings and fractional digits into
+	  two separate methods.
+	  - Make Format->override() return a new format object.
+
+2007-09-14  nrf
+
+	* [r20303] swat/trunk/Swat/SwatFlydown.php:
+	  Fix inverted logic
+
+2007-09-14  gauthierm
+
+	* [r20290] swat/trunk/Swat/SwatFlydown.php:
+	  Only cast to string in comparison if serialize_values is true.
+
+2007-09-14  nrf
+
+	* [r20286] swat/trunk/Swat/SwatFlydown.php:
+	  When serialize_values is false we cast as a string above, so we
+	  should cast as a string here too.
+
+2007-09-14  gauthierm
+
+	* [r20264] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Get numeric grouping instead of monetary grouping in
+	  buildNumberFormat().
+	* [r20259] swat/trunk/SwatDB/SwatDBDataObject.php:
+	  Don't bother using references here. Arrays are only copied in
+	  memory when they are modified. Additionally, assigning by
+	  reference only works for variables, not functions. This used to
+	  trigger an E_STRICT warning.
+
+2007-09-13  gauthierm
+
+	* [r20210] swat/trunk/Swat/SwatTableViewRow.php:
+	  This is not abstract anymore.
+	* [r20209] swat/trunk/Swat/SwatActionItem.php,
+	  swat/trunk/Swat/SwatActions.php,
+	  swat/trunk/Swat/SwatBooleanCellRenderer.php,
+	  swat/trunk/Swat/SwatButton.php,
+	  swat/trunk/Swat/SwatByteCellRenderer.php,
+	  swat/trunk/Swat/SwatCalendar.php,
+	  swat/trunk/Swat/SwatCellRenderer.php,
+	  swat/trunk/Swat/SwatChangeOrder.php,
+	  swat/trunk/Swat/SwatCheckbox.php,
+	  swat/trunk/Swat/SwatCheckboxCellRenderer.php,
+	  swat/trunk/Swat/SwatCheckboxEntryList.php,
+	  swat/trunk/Swat/SwatCheckboxList.php,
+	  swat/trunk/Swat/SwatCheckboxTree.php,
+	  swat/trunk/Swat/SwatColorEntry.php,
+	  swat/trunk/Swat/SwatContainer.php,
+	  swat/trunk/Swat/SwatContentBlock.php,
+	  swat/trunk/Swat/SwatDateCellRenderer.php,
+	  swat/trunk/Swat/SwatDateEntry.php,
+	  swat/trunk/Swat/SwatDetailsView.php,
+	  swat/trunk/Swat/SwatDisclosure.php,
+	  swat/trunk/Swat/SwatDisplayableContainer.php,
+	  swat/trunk/Swat/SwatEntry.php,
+	  swat/trunk/Swat/SwatExpandableCheckboxTree.php,
+	  swat/trunk/Swat/SwatFieldset.php,
+	  swat/trunk/Swat/SwatFileEntry.php,
+	  swat/trunk/Swat/SwatFlydown.php, swat/trunk/Swat/SwatForm.php,
+	  swat/trunk/Swat/SwatFormField.php,
+	  swat/trunk/Swat/SwatFrame.php,
+	  swat/trunk/Swat/SwatFrameDisclosure.php,
+	  swat/trunk/Swat/SwatGroupedFlydown.php,
+	  swat/trunk/Swat/SwatGroupedMenu.php,
+	  swat/trunk/Swat/SwatGroupingFormField.php,
+	  swat/trunk/Swat/SwatImageCellRenderer.php,
+	  swat/trunk/Swat/SwatImageCropper.php,
+	  swat/trunk/Swat/SwatImageDisplay.php,
+	  swat/trunk/Swat/SwatImageLinkCellRenderer.php,
+	  swat/trunk/Swat/SwatLinkCellRenderer.php,
+	  swat/trunk/Swat/SwatListEntry.php, swat/trunk/Swat/SwatMenu.php,
+	  swat/trunk/Swat/SwatMenuGroup.php,
+	  swat/trunk/Swat/SwatMenuItem.php,
+	  swat/trunk/Swat/SwatMessageDisplay.php,
+	  swat/trunk/Swat/SwatMoneyCellRenderer.php,
+	  swat/trunk/Swat/SwatMoneyEntry.php,
+	  swat/trunk/Swat/SwatNavBar.php,
+	  swat/trunk/Swat/SwatNoteBook.php,
+	  swat/trunk/Swat/SwatNumericCellRenderer.php,
+	  swat/trunk/Swat/SwatPagination.php,
+	  swat/trunk/Swat/SwatPercentageCellRenderer.php,
+	  swat/trunk/Swat/SwatProgressBar.php,
+	  swat/trunk/Swat/SwatRadioList.php,
+	  swat/trunk/Swat/SwatRadioTable.php,
+	  swat/trunk/Swat/SwatRating.php,
+	  swat/trunk/Swat/SwatReCaptcha.php,
+	  swat/trunk/Swat/SwatSearchEntry.php,
+	  swat/trunk/Swat/SwatSelectList.php,
+	  swat/trunk/Swat/SwatSimpleColorEntry.php,
+	  swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTableViewCheckAllRow.php,
+	  swat/trunk/Swat/SwatTableViewInputRow.php,
+	  swat/trunk/Swat/SwatTableViewRow.php,
+	  swat/trunk/Swat/SwatTextCellRenderer.php,
+	  swat/trunk/Swat/SwatTextarea.php,
+	  swat/trunk/Swat/SwatTextareaEditor.php,
+	  swat/trunk/Swat/SwatTileView.php,
+	  swat/trunk/Swat/SwatTimeEntry.php,
+	  swat/trunk/Swat/SwatTimeZoneEntry.php,
+	  swat/trunk/Swat/SwatToolLink.php,
+	  swat/trunk/Swat/SwatToolbar.php, swat/trunk/Swat/SwatWidget.php,
+	  swat/trunk/Swat/SwatWidgetCellRenderer.php,
+	  swat/trunk/Swat/SwatXHTMLTextarea.php:
+	  Get html head entries for widgets, cell renderers and table view
+	  rows that were displayed. This fixes strange bugs where
+	  replicated widget visibility varied between replication and
+	  prevented head entries from being gathered correctly. Fixes
+	  ticket #1322 in particular.
+	* [r20208] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Add method to get international currency symbol.
+	* [r20192] swat/trunk/Swat/SwatNullTextCellRenderer.php:
+	  Clean up conditional code.
+	* [r20177] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Add formatNumber() method and create helper method used by both
+	  formatNumber() and formatCurrency().
+	* [r20176] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Make locale into a non-static object.
+	* [r20175] swat/trunk/SwatI18N/SwatI18NCurrencyFormat.php,
+	  swat/trunk/SwatI18N/SwatI18NLocale.php,
+	  swat/trunk/SwatI18N/SwatI18NNumberFormat.php:
+	  Add base number format object and fix class names.
+	* [r20174] swat/trunk/Swat/SwatCurrencyFormat.php,
+	  swat/trunk/Swat/SwatLocale.php, swat/trunk/SwatI18N,
+	  swat/trunk/SwatI18N/SwatI18NCurrencyFormat.php,
+	  swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Move locale methods to a sub-package.
+
+2007-09-12  gauthierm
+
+	* [r20154] swat/trunk/Swat/SwatTableView.php,
+	  swat/trunk/Swat/SwatTileView.php:
+	  Add pointers to documentation on selection API.
+
+2007-09-11  gauthierm
+
+	* [r20112] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Add @see tag.
+	* [r20111] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Clean code so there is one return point.
+	* [r20110] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  This workaround is not needed anymore.
+	* [r20109] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Don't return null from getInternalValues() and clean up
+	  documentation. This is in response to r20060.
+
+2007-09-11  nrf
+
+	* [r20082] swat/trunk/Swat/Swat.php, swat/trunk/Swat/SwatUI.php:
+	  Make the SwatUI class map static.
+
+2007-09-10  nrf
+
+	* [r20060] swat/trunk/SwatDB/SwatDBRecordsetWrapper.php:
+	  Check for null case before array_filter() chokes on it.
+
+2007-09-10  gauthierm
+
+	* [r20043] swat/trunk/Swat/SwatLocale.php:
+	  Fix docblock
+	* [r20042] swat/trunk/Swat/SwatLocale.php:
+	  Number parsing method.
+
+2007-09-09  gauthierm
+
+	* [r20041] swat/trunk/Swat/SwatLocale.php:
+	  Handle values with no integer part properly.
+	* [r20040] swat/trunk/Swat/SwatLocale.php:
+	  Zero-pad integer-part groupings to grouping length.
+	* [r20039] swat/trunk/Swat/SwatLocale.php:
+	  Zero-pad fractional digits to fractional digit lengt.
+	* [r20038] swat/trunk/Swat/SwatLocale.php:
+	  Don't round down negative numbers.
+
+2007-09-09  nick
+
+	* [r20037] swat/trunk/Swat/SwatString.php:
+	  typo
+
+2007-09-08  gauthierm
+
+	* [r20036] swat/trunk/Swat/SwatString.php:
+	  Add private constructor to SwatString and deprecate the
+	  moneyFormat() method.
+	* [r20035] swat/trunk/Swat/SwatLocale.php:
+	  Extend SwatObject.
+	* [r20034] swat/trunk/Swat/SwatLocale.php:
+	  Return UTF-8 strings from getCurrencyFormat.
+	* [r20033] swat/trunk/Swat/SwatLocale.php:
+	  Assume numeric encodings are really referring to a code-page and
+	  modify the output encoding accordingly.
+	* [r20032] swat/trunk/Swat/SwatLocale.php:
+	  add SwatLocale::getEncoding() to get the character encoding of
+	  locales. This should work on most platforms.
+	* [r20031] swat/trunk/Swat/SwatCurrencyFormat.php,
+	  swat/trunk/Swat/SwatLocale.php:
+	  Method for formatting monetary values that doesn't use
+	  money_format(). Part of ticket #1287. There is a bit of
+	  character encoding cleanup work to do here before the ticket can
+	  be finished.
+
+2007-09-07  gauthierm
+
+	* [r20007] swat/trunk/Swat/SwatTableViewCheckAllRow.php:
+	  Add docs.
+
+2007-09-06  charles
+
+	* [r19994] swat/trunk/Swat/SwatTableViewSpanningColumn.php:
+	  charles: I see that the SwatTableViewSpanning column outputs
+	  colspan="1" if there is only one colspan - that should
+	  probably only output if it's > 1 - I think?
+
+2007-09-06  steven
+
+	* [r19987] swat/trunk/www/styles/swat-table-view.css:
+	  Add CSS styling for SwatTableViewSpanningColumn (right align the
+	  title) Ticket #1280
+
+2007-09-06  charles
+
+	* [r19984] swat/trunk/Swat/SwatTableViewSpanningColumn.php:
+	  This argument defaults to 'text/plain' so it is no longer needed.
+	* [r19962] swat/trunk/Swat/SwatTableViewSpanningColumn.php:
+	  Suggestions from Mike, this also fixes Ticket #1280, now the
+	  title uses the CSS that the other titles use.
+
+2007-09-05  nrf
+
+	* [r19952] swat/trunk/Swat/SwatTableViewSpanningColumn.php:
+	  Using strlen() is preferred over comparing to an empty string.
+
+2007-09-05  charles
+
+	* [r19938] swat/trunk/Swat/SwatTableViewSpanningColumn.php:
+	  Ticket #1225, Spanning Columns can now display titles that can
+	  be set using the title property. The title will appear before
+	  the contents of the spanning column. This may need some styling
+	  done.
+
+2007-09-05  gauthierm
+
+	* [r19924] swat/trunk/Swat/SwatString.php:
+	  This is over 10 times faster in KCacheGrind profiles and does
+	  the same thing. For widgets that use a lot of serialized values
+	  (SwatDateEntry for example) this used to add up to about 30% of
+	  the overhead of using Swat. Kudos to Mark PK for noticing this.
+
+2007-09-04  gauthierm
+
+	* [r19901] swat/trunk/Swat/SwatCheckboxList.php:
+	  Documentation fix. The process() methods doesn't return anything.
+
+2007-09-04  nrf
+
+	* [r19849] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.31
+
 2007-09-04  gauthierm
 
 	* [r19835] swat/trunk/Swat/SwatFileEntry.php:
