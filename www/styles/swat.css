@@ -97,6 +97,12 @@ ul.swat-radio-list {
 	padding: 0;
 }
 
+.swat-checkbox-list ul li,
+.swat-checkbox-tree ul li,
+ul.swat-radio-list li {
+	list-style-type: none;
+}
+
 .swat-checkbox-list input,
 .swat-checkbox-tree input,
 .swat-radio-list input {
