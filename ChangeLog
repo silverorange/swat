@@ -1,3 +1,13 @@
+2007-10-05  gauthierm
+
+	* [r21043] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  regular expression was broken. Use is_numeric() instead.
+
+2007-10-05  nrf
+
+	* [r21015] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.32
+
 2007-10-05  steven
 
 	* [r20993] swat/trunk/www/styles/swat.css:
