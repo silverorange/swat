@@ -467,7 +467,7 @@ class SwatI18NLocale extends SwatObject
 
 		$string = str_replace($search, $replace, $string);
 
-		if (preg_match('/[^0-9.-]/', $string) != 1)
+		if (is_numeric($string))
 			$value = floatval($string);
 
 		return $value;
@@ -514,7 +514,7 @@ class SwatI18NLocale extends SwatObject
 
 		$string = str_replace($search, $replace, $string);
 
-		if (preg_match('/[^0-9.-]/', $string) != 1)
+		if (is_numeric($string))
 			$value = floatval($string);
 
 		return $value;
@@ -569,7 +569,7 @@ class SwatI18NLocale extends SwatObject
 
 		$string = str_replace($search, $replace, $string);
 
-		if (preg_match('/[^0-9.-]/', $string) != 1) {
+		if (is_numeric($string)) {
 			if ($string > (float)PHP_INT_MAX)
 				throw new SwatException(
 					'Floating point value is too big to be an integer');
