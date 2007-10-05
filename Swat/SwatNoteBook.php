@@ -189,8 +189,10 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 		$div_tag->open();
 
 		echo'<ul class="yui-nav">';
-		foreach ($this->pages as $page)
-		{
+		foreach ($this->pages as $page) {
+			if (!$page->visible)
+				continue;
+
 			$li_counter++;
 			$li_tag = new SwatHtmlTag('li');
 
