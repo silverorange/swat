@@ -1,3 +1,8 @@
+2007-10-05  nrf
+
+	* [r21044] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.33
+
 2007-10-05  gauthierm
 
 	* [r21043] swat/trunk/SwatI18N/SwatI18NLocale.php:
