@@ -3,13 +3,13 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatCellRenderer.php';
-require_once 'Swat/SwatString.php';
+require_once 'SwatI18N/SwatI18NLocale.php';
 
 /**
  * A numeric cell renderer
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatNumericCellRenderer extends SwatCellRenderer
@@ -55,10 +55,14 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 
 	public function getDisplayValue()
 	{
-		if (is_numeric($this->value))
-			return SwatString::numberFormat($this->value, $this->precision);
-		else
-			return $this->value;
+		$value = $this->value;
+
+		if (is_numeric($this->value)) {
+			$locale = SwatI18NLocale::get();
+			$value = $locale->formatNumber($this->value, $this->precision);
+		}
+
+		return $value;
 	}
 
 	// }}}
