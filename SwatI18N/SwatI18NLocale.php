@@ -103,6 +103,8 @@ class SwatI18NLocale extends SwatObject
 	 *                              may be specified in an array. In this case,
 	 *                              the first valid locale is used.
 	 *
+	 * @return SwatI18NLocale a locale object for the requested <i>$locale</i>.
+	 *
 	 * @throws SwatException if the specified <i>$locale</i> is not valid for
 	 *                       the current operating system.
 	 */
