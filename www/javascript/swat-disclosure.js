@@ -14,10 +14,15 @@ function SwatDisclosure(id, open)
 		this.opened = open;
 	}
 
-	this.drawDisclosureLink();
-
 	// prevent closing during opening animation and vice versa
 	this.semaphore = false;
+
+	YAHOO.util.Event.onAvailable(this.id, this.init, this, true);
+}
+
+SwatDisclosure.prototype.init = function()
+{
+	this.drawDisclosureLink();
 
 	// set initial display state
 	if (this.opened)
