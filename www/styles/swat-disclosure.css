@@ -28,12 +28,13 @@
 .swat-disclosure-anchor-opened,
 .swat-disclosure-anchor-closed {
 	text-decoration: none;
+	display: inline-block; /* Give "layout". IE6/7 hack. */
 }
 
 .swat-disclosure-anchor-opened {
 	background-image: url(../images/swat-disclosure-open.png);
 	background-position: 2px 0;
-	background-repeat: no-repeat; 
+	background-repeat: no-repeat;
 }
 * html .swat-disclosure-anchor-opened { /* IE hack */
 	background-image: url(../images/swat-disclosure-open-1-bit.png);
@@ -42,7 +43,7 @@
 .swat-disclosure-anchor-closed {
 	background-image: url(../images/swat-disclosure-closed.png);
 	background-position: 2px 1px;
-	background-repeat: no-repeat; 
+	background-repeat: no-repeat;
 }
 * html .swat-disclosure-anchor-closed { /* IE hack */
 	background-image: url(../images/swat-disclosure-closed-1-bit.png);
@@ -53,7 +54,7 @@
 }
 
 .swat-disclosure-control-opened .swat-disclosure-container {
-	display: block;	
+	display: block;
 	border: 1px solid #ddd;
 }
 
