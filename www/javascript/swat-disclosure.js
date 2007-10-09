@@ -23,6 +23,7 @@ function SwatDisclosure(id, open)
 SwatDisclosure.prototype.init = function()
 {
 	this.drawDisclosureLink();
+	this.drawPeekabooFix();
 
 	// set initial display state
 	if (this.opened)
@@ -48,6 +49,28 @@ SwatDisclosure.prototype.getSpan = function()
 SwatDisclosure.prototype.getAnimateDiv = function()
 {
 	return this.div.firstChild.nextSibling.nextSibling.firstChild;
+}
+
+SwatDisclosure.prototype.drawPeekabooFix = function()
+{
+	/*
+	 * This fix is needed for IE6/7 and fixes display of relative positioned
+	 * elements below this disclosure during and after animations.
+	 */
+	var container = document.getElementById(this.id);
+	var empty_div = document.createElement('div');
+	var peekaboo_div = document.createElement('div');
+	peekaboo_div.style.height = '0';
+	peekaboo_div.style.margin = '0';
+	peekaboo_div.style.padding = '0';
+	peekaboo_div.style.border = 'none';
+	peekaboo_div.appendChild(empty_div);
+
+	if (container.nextSibling) {
+		container.parentNode.insertBefore(peekaboo_div, container.nextSibling);
+	} else {
+		container.parentNode.appendChild(peekaboo_div);
+	}
 }
 
 SwatDisclosure.prototype.drawDisclosureLink = function()
