@@ -44,9 +44,9 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 	/**
 	 * Gets the title of this frame
 	 *
-	 * Implements the {SwatTitleable::getTitle()} interface.
+	 * Implements the {@link SwatTitleable::getTitle()} interface.
 	 *
-	 * @return the title of this frame.
+	 * @return string the title of this frame.
 	 */
 	public function getTitle()
 	{
