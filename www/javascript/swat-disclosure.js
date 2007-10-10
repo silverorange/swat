@@ -53,23 +53,29 @@ SwatDisclosure.prototype.getAnimateDiv = function()
 
 SwatDisclosure.prototype.drawPeekabooFix = function()
 {
-	/*
-	 * This fix is needed for IE6/7 and fixes display of relative positioned
-	 * elements below this disclosure during and after animations.
-	 */
 	var container = document.getElementById(this.id);
-	var empty_div = document.createElement('div');
-	var peekaboo_div = document.createElement('div');
-	peekaboo_div.style.height = '0';
-	peekaboo_div.style.margin = '0';
-	peekaboo_div.style.padding = '0';
-	peekaboo_div.style.border = 'none';
-	peekaboo_div.appendChild(empty_div);
+	if (container.currentStyle &&
+		typeof container.currentStyle.hasLayout != 'undefined') {
+		/*
+		 * This fix is needed for IE6/7 and fixes display of relative
+		 * positioned elements below this disclosure during and after
+		 * animations.
+		 */
 
-	if (container.nextSibling) {
-		container.parentNode.insertBefore(peekaboo_div, container.nextSibling);
-	} else {
-		container.parentNode.appendChild(peekaboo_div);
+		var empty_div = document.createElement('div');
+		var peekaboo_div = document.createElement('div');
+		peekaboo_div.style.height = '0';
+		peekaboo_div.style.margin = '0';
+		peekaboo_div.style.padding = '0';
+		peekaboo_div.style.border = 'none';
+		peekaboo_div.appendChild(empty_div);
+
+		if (container.nextSibling) {
+			container.parentNode.insertBefore(peekaboo_div,
+				container.nextSibling);
+		} else {
+			container.parentNode.appendChild(peekaboo_div);
+		}
 	}
 }
 
@@ -198,7 +204,7 @@ SwatDisclosure.prototype.handleClose = function()
 SwatDisclosure.prototype.handleOpen = function()
 {
 	// allow font resizing to work again
-	this.animate_div.style.height = '';
+	this.animate_div.style.height = 'auto';
 
 	// re-set overflow to visible for styles that might depend on it
 	this.animate_div.style.overflow = 'visible';
