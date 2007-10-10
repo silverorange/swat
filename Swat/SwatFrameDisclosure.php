@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A frame-like container to show and hide child widgets
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFrameDisclosure extends SwatDisclosure
@@ -50,7 +50,19 @@ class SwatFrameDisclosure extends SwatDisclosure
 
 		SwatWidget::display();
 
-		$header_tag = new SwatHtmlTag('h2');
+		// default header level is h2
+		$level = 2;
+		$ancestor = $this->parent;
+
+		// get appropriate header level, limit to h6
+		while ($ancestor !== null && $level < 6) {
+			if ($ancestor instanceof SwatFrame)
+				$level++;
+
+			$ancestor = $ancestor->parent;
+		}
+
+		$header_tag = new SwatHtmlTag('h'.$level);
 		$header_tag->class = 'swat-frame-title';
 
 		$control_div = $this->getControlDivTag();
@@ -95,11 +107,11 @@ class SwatFrameDisclosure extends SwatDisclosure
 	/**
 	 * Gets the name of the JavaScript class to instantiate for this disclosure
 	 *
-	 * Sub-classes of this class may want to return a sub-class of the default
+	 * Subclasses of this class may want to return a sub-class of the default
 	 * JavaScript disclosure class.
 	 *
 	 * @return string the name of the JavaScript class to instantiate for this
-	 *                 disclosure. Defaults to 'SwatDisclosure'.
+	 *                 frame disclosure.
 	 */
 	protected function getJavaScriptClass()
 	{
