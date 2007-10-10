@@ -3,6 +3,9 @@
  *
  * Since disclosures can be nested, closed styles must follow open styles.
  */
+.swat-disclosure {
+	position: relative; /* IE hack */
+}
 
 .swat-disclosure-control-opened,
 .swat-disclosure-control-closed {
@@ -17,8 +20,8 @@
 .swat-disclosure-anchor-opened,
 .swat-disclosure-anchor-closed {
 	position: relative;
+	display: inline-block; /* Give "layout" IE hack. */
 	top: 0.7em;
-	display: inline;
 	margin: 0 10px 0 5px;
 	padding: 0 5px 0 22px;
 	color: #666;
@@ -28,7 +31,6 @@
 .swat-disclosure-anchor-opened,
 .swat-disclosure-anchor-closed {
 	text-decoration: none;
-	display: inline-block; /* Give "layout". IE6/7 hack. */
 }
 
 .swat-disclosure-anchor-opened {
