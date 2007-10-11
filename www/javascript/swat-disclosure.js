@@ -130,7 +130,7 @@ SwatDisclosure.prototype.closeWithAnimation = function()
 	YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-closed');
 
 	this.animate_div.style.overflow = 'hidden';
-	this.animate_div.style.height = '';
+	this.animate_div.style.height = 'auto';
 	var attributes = { height: { to: 0 } };
 	var animation = new YAHOO.util.Anim(this.animate_div, attributes, 0.25,
 		YAHOO.util.Easing.easeOut);
@@ -174,7 +174,7 @@ SwatDisclosure.prototype.openWithAnimation = function()
 	this.animate_div.style.visibility = 'hidden';
 	this.animate_div.style.overflow = 'hidden';
 	this.animate_div.style.display = 'block';
-	this.animate_div.style.height = '';
+	this.animate_div.style.height = 'auto';
 	var height = this.animate_div.offsetHeight;
 	this.animate_div.style.height = '0';
 	this.animate_div.style.visibility = 'visible';
