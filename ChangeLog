@@ -1,5 +1,60 @@
+2007-10-12  steven
+
+	* [r21316] swat/trunk/www/styles/swat-message.css:
+	  Turn off bullets on swat-message list items
+
+2007-10-11  gauthierm
+
+	* [r21256] swat/trunk/www/styles/swat-disclosure.css:
+	  IE7 hack to fix disappearing borders.
+	* [r21255] swat/trunk/www/javascript/swat-disclosure.js:
+	  Replace some empty strings with the more correct 'auto'.
+
+2007-10-10  gauthierm
+
+	* [r21245] swat/trunk/www/javascript/swat-disclosure.js:
+	  Clean up JavaScript that inserts IE6 peekaboo hack divs. It is
+	  only inserted for bad browsers now.
+	* [r21244] swat/trunk/www/styles/swat-disclosure.css:
+	  More fixes for IE6/7. This makes the initial position of
+	  disclosure titles correct when no javascript is used. This took
+	  about 5 hours to debug.
+	* [r21233] swat/trunk/Swat/SwatFrame.php:
+	  Documentation fixes.
+	* [r21232] swat/trunk/Swat/SwatFrameDisclosure.php:
+	  Make frame disclosur ehave automatic header level like frame.
+
+2007-10-09  gauthierm
+
+	* [r21206] swat/trunk/www/javascript/swat-disclosure.js:
+	  Add hack to fix display of position: relative elements below the
+	  currently closing disclosure during animation in IE6/7. What a
+	  browser. What a browser.
+	* [r21195] swat/trunk/www/styles/swat-disclosure.css:
+	  GIve disclosure anchors 'layout' thus fixing background position
+	  problems of ticket #1274.
+	* [r21193] swat/trunk/www/javascript/swat-disclosure.js:
+	  Fix initial position of disclosure anchors in IE6.
+
+2007-10-08  gauthierm
+
+	* [r21174] swat/trunk/SwatI18N/SwatI18NLocale.php:
+	  Add @return tag.
+	* [r21168] swat/trunk/Swat/SwatNumericCellRenderer.php:
+	  Use SwatI18NLocale in SwatNumericCellRenderer. This will allow
+	  easily adding a locale property to the numeric cell renderer
+	  later.
+
+2007-10-05  gauthierm
+
+	* [r21113] swat/trunk/Swat/SwatNoteBook.php:
+	  Patch from Brad Griffith to check if notebook page is visible
+	  before displaying its tab.
+
 2007-10-05  nrf
 
+	* [r21079] swat/trunk/ChangeLog, swat/trunk/package.php:
+	  prepare for release of 1.2.34
 	* [r21044] swat/trunk/ChangeLog, swat/trunk/package.php:
 	  prepare for release of 1.2.33
 
