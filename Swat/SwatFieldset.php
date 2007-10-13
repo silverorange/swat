@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * An HTML fieldset tag with an optional HTML legend title.
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
@@ -36,6 +36,27 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 	 * @var string
 	 */
 	public $access_key = null;
+
+	// }}}
+	// {{{ public function __construct()
+
+	/**
+	 * Creates a new fieldset
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 *
+	 * @see SwatWidget::__construct()
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->requires_id = true;
+
+		// JavaScript for IE peekaboo hack
+		$this->addJavaScript('packages/swat/javascript/swat-fieldset.js',
+			Swat::PACKAGE_ID);
+	}
 
 	// }}}
 	// {{{ public function getTitle()
@@ -79,7 +100,23 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 
 		$this->displayChildren();
 
+		Swat::displayInlineJavaScript($this->getInlineJavascript());
+
 		$fieldset_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScript()
+
+	/**
+	 * Gets fieldset specific inline JavaScript
+	 *
+	 * @return string fieldset specific inline JavaScript.
+	 */
+	protected function getInlineJavaScript()
+	{
+		return sprintf("var %s_obj = new SwatFieldset('%s');",
+			$this->id, $this->id);
 	}
 
 	// }}}
