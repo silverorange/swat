@@ -353,26 +353,79 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 */
 	public function appendRow(SwatTableViewRow $row)
 	{
-		if ($row instanceof SwatTableViewInputRow && $this->has_input_row)
-			throw new SwatException('Only one input row may be added to a '.
-				'table view.');
-		elseif ($row instanceof SwatTableViewInputRow)
-			$this->has_input_row = true;
+		$this->validateRow($row);
 
 		$this->extra_rows[] = $row;
 
-		if ($row->id !== null) {
-			if (array_key_exists($row->id, $this->rows_by_id))
-				throw new SwatDuplicateIdException(
-					"A row with the id '{$row->id}' already exists ".
-					'in this table-view.',
-					0, $row->id);
-
+		if ($row->id !== null)
 			$this->rows_by_id[$row->id] = $row;
-		}
 
 		$row->view = $this;
 		$row->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function addRowBefore()
+
+	/**
+	 * Adds a new row before an existing table view row 
+	 *
+	 * @param SwatTableViewRow $new_row the new row to add.
+	 * @param SwatTableViewRow $source_row the row before which the
+	 *        new row will be added.
+	 *
+	 * @throws SwatException
+	 */
+	public function addRowBefore(SwatTableViewRow $new_row,
+		SwatTableViewRow $source_row)
+	{
+		$this->validateRow($new_row);
+
+		$key = array_search($source_row, $this->extra_rows, true);
+
+		if ($key === false)
+			throw new SwatException('The source row could not be found.');
+
+		array_splice($this->extra_rows, $key, 1,
+			array($new_row, $source_row));
+
+		if ($new_row->id !== null)
+			$this->rows_by_id[$new_row->id] = $new_row;
+
+		$new_row->view = $this;
+		$new_row->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function addRowAfter()
+
+	/**
+	 * Adds a new row after an existing table view row 
+	 *
+	 * @param SwatTableViewRow $new_row the new row to add.
+	 * @param SwatTableViewRow $source_row the row after which the
+	 *        new row will be added.
+	 *
+	 * @throws SwatException
+	 */
+	public function addRowAfter(SwatTableViewRow $new_row,
+		SwatTableViewRow $source_row)
+	{
+		$this->validateRow($new_row);
+
+		$key = array_search($source_row, $this->extra_rows, true);
+
+		if ($key === false)
+			throw new SwatException('The source row could not be found.');
+
+		array_splice($this->extra_rows, $key, 1,
+			array($source_row, $new_row));
+
+		if ($new_row->id !== null)
+			$this->rows_by_id[$new_row->id] = $new_row;
+
+		$new_row->view = $this;
+		$new_row->parent = $this;
 	}
 
 	// }}}
@@ -1369,6 +1422,33 @@ class SwatTableView extends SwatView implements SwatUIParent
 			$class_string = implode(' ', $classes);
 
 		return $class_string;
+	}
+
+	// }}}
+	// {{{ protected function validateRow()
+
+	/**
+	 * Checks to make sure that a new SwatTableView row is valid 
+	 *
+	 * @param SwatTableViewRow $row the row to validate.
+	 *
+	 * @throws SwatException
+	 */
+	protected function validateRow(SwatTableViewRow $row)
+	{
+		if ($row instanceof SwatTableViewInputRow && $this->has_input_row)
+			throw new SwatException('Only one input row may be added to a '.
+				'table view.');
+		elseif ($row instanceof SwatTableViewInputRow)
+			$this->has_input_row = true;
+
+		if ($row->id !== null) {
+			if (array_key_exists($row->id, $this->rows_by_id))
+				throw new SwatDuplicateIdException(
+					"A row with the id '{$row->id}' already exists ".
+					'in this table-view.',
+					0, $row->id);
+		}
 	}
 
 	// }}}
