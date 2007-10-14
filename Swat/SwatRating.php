@@ -2,7 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatCompositeControl.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatHtmlTag.php';
 
@@ -13,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatRating extends SwatCompositeControl
+class SwatRating extends SwatInputControl
 {
 	// {{{ public properties
 
@@ -56,7 +55,7 @@ class SwatRating extends SwatCompositeControl
 	{
 		parent::init();
 
-		$flydown = $this->getEmbeddedWidget('flydown');
+		$flydown = $this->getCompositeWidget('flydown');
 		$ratings = array(
 			1 => Swat::_('One Star'),
 			2 => Swat::_('Two Stars'),
@@ -76,7 +75,7 @@ class SwatRating extends SwatCompositeControl
 	{
 		parent::process();
 
-		$flydown = $this->getEmbeddedWidget('flydown');
+		$flydown = $this->getCompositeWidget('flydown');
 		$this->value = (integer)$flydown->value;
 	}
 
@@ -93,7 +92,7 @@ class SwatRating extends SwatCompositeControl
 		if (!$this->visible)
 			return;
 
-		$flydown = $this->getEmbeddedWidget('flydown');
+		$flydown = $this->getCompositeWidget('flydown');
 		$flydown->value = (string)$this->value;
 
 		$div = new SwatHtmlTag('div');
@@ -136,19 +135,19 @@ class SwatRating extends SwatCompositeControl
 	}
 
 	// }}}
-	// {{{ protected function createEmbeddedWidgets()
+	// {{{ protected function createCompositeWidgets()
 
 	/**
-	 * Creates the embedded flydown used by this rating control
+	 * Creates the composite flydown used by this rating control
 	 *
-	 * @see SwatCompositeControl::createEmbeddedWidgets()
+	 * @see SwatWidget::createCompositeWidgets()
 	 */
-	protected function createEmbeddedWidgets()
+	protected function createCompositeWidgets()
 	{
 		$flydown = new SwatFlydown();
 		$flydown->id = $this->id.'_flydown';
 		$flydown->serialize_values = false;
-		$this->embedWidget($flydown, 'flydown');
+		$this->addCompositeWidget($flydown, 'flydown');
 	}
 
 	// }}}
