@@ -4,12 +4,37 @@
 
 require_once 'Swat/SwatUIObject.php';
 require_once 'Swat/SwatMessage.php';
+require_once 'Swat/exceptions/SwatDuplicateIdException.php';
+require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
 
 /**
  * Base class for all widgets
  *
+ * Widget composition:
+ *
+ * Complicated widgets composed of multiple individual widgets can be easily
+ * built using SwatWidget's composite features. The main methods used for
+ * widget composition are:
+ * {@link SwatWidget::createCompositeWidgets()},
+ * {@link SwatWidget::addCompositeWidget()} and
+ * {@link SwatWidget::getCompositeWidget()}.
+ *
+ * Developers should implement the <i>createCompositeWidgets()</i> method by
+ * creating composite widgets and adding them to this widget by calling
+ * <i>addCompositeWidget()</i>. As long as the parent implemtations of init()
+ * and process() are called, nothing further needs to be done for init() and
+ * process(). For the display() method, developers can use the
+ * <i>getCompositeWidget()</i> method to retrieve a specifie composite widget
+ * for display. Composite widgets are <i>not</i> displayed by the default
+ * implementation of display().
+ *
+ * In keeping with object-oriented composition theory, none of the composite
+ * widgets are publically accessible. Methods could be added to make composite
+ * widgets available publically, but in that case it would be better to just
+ * extend {@link SwatContainer}.
+ *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatWidget extends SwatUIObject
@@ -48,6 +73,28 @@ abstract class SwatWidget extends SwatUIObject
 	 * @var string
 	 */
 	public $stylesheet = null;
+
+	// }}}
+	// {{{ private properties
+
+	/**
+	 * Composite widgets of this widget
+	 *
+	 * Array is of the form 'key' => widget.
+	 *
+	 * @var array
+	 */
+	private $composite_widgets = array();
+
+	/**
+	 * Whether or not composite widgets have been created
+	 *
+	 * This flag is used by {@link SwatWidget::confirmCompositeWidgets()} to
+	 * ensure composite widgets are only created once.
+	 *
+	 * @var boolean
+	 */
+	private $composite_widgets_created = false;
 
 	// }}}
 	// {{{ protected properties
@@ -136,10 +183,15 @@ abstract class SwatWidget extends SwatUIObject
 	 *
 	 * After a form submit, this widget processes itself and its dependencies
 	 * and then recursively processes  any of its child widgets.
+	 *
+	 * Composite widgets of this widget are automatically processed as well.
 	 */
 	public function process()
 	{
 		$this->processed = true;
+
+		foreach ($this->getCompositeWidgets() as $widget)
+			$widget->process();
 	}
 
 	// }}}
@@ -153,6 +205,8 @@ abstract class SwatWidget extends SwatUIObject
 	 *
 	 * Init allows properties to be manually set on widgets between the
 	 * constructor and other initialization routines.
+	 *
+	 * Composite widgets of this widget are automatically initialized as well.
 	 */
 	public function init()
 	{
@@ -161,6 +215,9 @@ abstract class SwatWidget extends SwatUIObject
 
 		if ($this->stylesheet !== null)
 			$this->addStyleSheet($this->stylesheet);
+
+		foreach ($this->getCompositeWidgets() as $widget)
+			$widget->init();
 	}
 
 	// }}}
@@ -196,6 +253,9 @@ abstract class SwatWidget extends SwatUIObject
 			$set = new SwatHtmlHeadEntrySet($this->html_head_entry_set);
 		else
 			$set = new SwatHtmlHeadEntrySet();
+
+		foreach ($this->getCompositeWidgets() as $widget)
+			$set->addEntrySet($widget->getHtmlHeadEntrySet());
 
 		return $set;
 	}
@@ -359,6 +419,126 @@ abstract class SwatWidget extends SwatUIObject
 		$classes = array_merge($classes, parent::getCSSClassNames());
 
 		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function createCompositeWidgets()
+
+	/**
+	 * Creates and adds composite widgets of this widget
+	 *
+	 * Created composite widgets should be adde in this method using
+	 * {@link SwatWidgetControl::addCompositeWidget()}.
+	 */
+	protected function createCompositeWidgets()
+	{
+	}
+
+	// }}}
+	// {{{ protected final function addCompositeWidget()
+
+	/**
+	 * Adds a composite a widget to this widget
+	 *
+	 * @param SwatWidget $widget the composite widget to add.
+	 * @param string $key a key identifying the widget so it may be retrieved
+	 *                     later. The key does not have to be the widget's id
+	 *                     but the key does have to be unique within this
+	 *                     widget relative to the keys of other composite
+	 *                     widgets.
+	 *
+	 * @throws SwatDuplicateIdException if a composite widget with the
+	 *                                   specified key is already added to this
+	 *                                   widget.
+	 * @throws SwatException if the specified widget is already the child of
+	 *                        another object.
+	 */
+	protected final function addCompositeWidget(SwatWidget $widget, $key)
+	{
+		if (array_key_exists($key, $this->composite_widgets))
+			throw new SwatDuplicateIdException(sprintf(
+				"A composite widget with the key '%s' already exists in this ".
+				"widget.", $key), 0, $key);
+
+		if ($widget->parent !== null)
+			throw new SwatException('Cannot add a composite widget that '.
+				'already has a parent.');
+
+		$this->composite_widgets[$key] = $widget;
+		$widget->parent = $this;
+	}
+
+	// }}}
+	// {{{ protected final function getCompositeWidget()
+
+	/**
+	 * Gets a composite widget of this widget by the composite widget's key
+	 *
+	 * This is used by other methods to retrieve a specific composite widget.
+	 * This method ensures composite widgets are created before trying to
+	 * retrieve the specified widget.
+	 *
+	 * @param string $key the key of the composite widget to get.
+	 *
+	 * @return SwatWidget the specified composite widget.
+	 *
+	 * @throws SwatWidgetNotFoundException if no composite widget with the
+	 *                                     specified key exists in this widget.
+	 */
+	protected final function getCompositeWidget($key)
+	{
+		$this->confirmCompositeWidgets();
+
+		if (!array_key_exists($key, $this->composite_widgets))
+			throw new SwatWidgetNotFoundException(sprintf(
+				"Composite widget with key of '%s' not found in %s. Make sure ".
+				"the compoite widget was created and added to this widget.",
+				$key, get_class($this)), 0, $key);
+
+		return $this->composite_widgets[$key];
+	}
+
+	// }}}
+	// {{{ protected final function getCompositeWidgets()
+
+	/**
+	 * Gets all composite widgets added to this widget
+	 *
+	 * This method ensures composite widgets are created before retrieving the
+	 * widgets.
+	 *
+	 * @return array all composite wigets added to this widget. The array is
+	 *                indexed by the composite widget keys.
+	 *
+	 * @see SwatWidget::addCompositeWidget()
+	 */
+	protected final function getCompositeWidgets()
+	{
+		$this->confirmCompositeWidgets();
+		return $this->composite_widgets;
+	}
+
+	// }}}
+	// {{{ protected final function confirmCompositeWidgets()
+
+	/**
+	 * Confirms composite widgets have been created
+	 *
+	 * Widgets are only created once. This method may be called multiple times
+	 * in different places to ensure composite widgets are available. In general,
+	 * it is best to call this method before attempting to use composite
+	 * widgets.
+	 *
+	 * This method is called by the default implementations of init(),
+	 * process() and is called any time {@link SwatWidget::getCompositeWidget()}
+	 * is called so it rarely needs to be called manually.
+	 */
+	protected final function confirmCompositeWidgets()
+	{
+		if (!$this->composite_widgets_created) {
+			$this->createCompositeWidgets();
+			$this->composite_widgets_created = true;
+		}
 	}
 
 	// }}}
