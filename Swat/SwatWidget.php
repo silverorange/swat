@@ -29,8 +29,8 @@ require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
  * implementation of display().
  *
  * In keeping with object-oriented composition theory, none of the composite
- * widgets are publically accessible. Methods could be added to make composite
- * widgets available publically, but in that case it would be better to just
+ * widgets are publicly accessible. Methods could be added to make composite
+ * widgets available publicly, but in that case it would be better to just
  * extend {@link SwatContainer}.
  *
  * @package   Swat
