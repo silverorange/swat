@@ -17,11 +17,6 @@ function SwatSearchEntry(id)
 		this.label_text =
 			(label.innerText) ? label.innerText : label.textContent;
 
-		if (this.input.value == '') {
-			YAHOO.util.Dom.addClass(this.input, 'swat-search-entry-empty');
-			this.input.value = this.label_text;
-		}
-
 		label.style.display = 'none';
 
 		YAHOO.util.Event.addListener(this.input, 'focus', this.handleFocus,
@@ -29,21 +24,38 @@ function SwatSearchEntry(id)
 
 		YAHOO.util.Event.addListener(this.input, 'blur', this.handleBlur,
 			this, true);
+
+		var text = document.createTextNode(this.label_text);
+		this.span = document.createElement('span');
+		YAHOO.util.Dom.addClass(this.span, 'swat-search-entry-empty');
+		this.span.appendChild(text);
+		this.span.style.position = 'absolute';
+
+		if (this.input.value == '')
+			this.span.style.display = 'block';
+		else
+			this.span.style.display = 'none';
+
+		YAHOO.util.Event.addListener(this.span, 'mousedown',
+			this.handleMouseDown, this, true);
+
+		this.input.parentNode.insertBefore(this.span, this.input);
 	}
+}
+
+SwatSearchEntry.prototype.handleMouseDown = function(e)
+{
+	this.input.focus();
 }
 
 SwatSearchEntry.prototype.handleFocus = function(e)
 {
-	if (this.input.value == this.label_text) {
-		this.input.value = '';
-		YAHOO.util.Dom.removeClass(this.input, 'swat-search-entry-empty');
-	}
+	this.span.style.display = 'none';
 }
 
 SwatSearchEntry.prototype.handleBlur = function(e)
 {
 	if (this.input.value == '') {
-		YAHOO.util.Dom.addClass(this.input, 'swat-search-entry-empty');
-		this.input.value = this.label_text;
+		this.span.style.display = 'block';
 	}
 }
