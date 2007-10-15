@@ -1,3 +1,5 @@
-input.swat-search-entry-empty {
-	    color: #888;
+span.swat-search-entry-empty {
+	color: #888;
+	position: absolute;
+	margin: 0.2em;
 }
