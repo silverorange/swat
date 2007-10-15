@@ -20,6 +20,7 @@ class SwatSearchEntry extends SwatEntry
 	 *
 	 * The name is used as the XHTML form element name. This is useful for
 	 * HTTP GET forms where the input name is displayed in the request URI.
+	 * If the name is not specified, the widget id is used as the name.
 	 *
 	 * @var string
 	 */
