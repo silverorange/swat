@@ -24,7 +24,7 @@ require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
  * <i>addCompositeWidget()</i>. As long as the parent implemtations of init()
  * and process() are called, nothing further needs to be done for init() and
  * process(). For the display() method, developers can use the
- * <i>getCompositeWidget()</i> method to retrieve a specifie composite widget
+ * <i>getCompositeWidget()</i> method to retrieve a specific composite widget
  * for display. Composite widgets are <i>not</i> displayed by the default
  * implementation of display().
  *
