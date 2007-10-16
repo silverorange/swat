@@ -261,23 +261,23 @@ abstract class SwatWidget extends SwatUIObject
 	}
 
 	// }}}
-	// {{{ abstract public function addMessage()
+	// {{{ public function addMessage()
 
 	/**
-	 * Adds a message
+	 * Adds a message to this widget
 	 *
-	 * Adds a new message to this widget. The message may be shown by the
-	 * display() method and will as cause {@link SwatWidget::hasMessage()} to
-	 * return as true.
+	 * The message may be shown by the display() method and will as cause
+	 * {@link SwatWidget::hasMessage()} to return as true.
 	 *
-	 * @param SwatMessage the message object to add.
-	 *
-	 * @see SwatMessage
+	 * @param SwatMessage $message the message to add.
 	 */
-	abstract public function addMessage(SwatMessage $message);
+	public function addMessage(SwatMessage $message)
+	{
+		$this->messages[] = $message;
+	}
 
 	// }}}
-	// {{{ abstract public function getMessages()
+	// {{{ public function getMessages()
 
 	/**
 	 * Gets all messages
@@ -285,22 +285,43 @@ abstract class SwatWidget extends SwatUIObject
 	 * Gathers all messages from children of this widget and this widget
 	 * itself.
 	 *
-	 * @return array an array of {@link SwatMessage} objects.
+	 * Messages from composite widgets of this widget are included by default.
 	 *
-	 * @see SwatMessage
+	 * @return array an array of {@link SwatMessage} objects.
 	 */
-	abstract public function getMessages();
+	public function getMessages()
+	{
+		$messages = $this->messages;
+		foreach ($this->getCompositeWidgets() as $widget)
+			$messages = array_merge($messages, $widget->getMessages());
+
+		return $messages;
+	}
 
 	// }}}
-	// {{{ abstract public function hasMessage()
+	// {{{ public function hasMessage()
 
 	/**
 	 * Checks for the presence of messages
 	 *
-	 * @return boolean true if there is an message in the widget subtree
-	 *                  starting at this widget and false if there is not.
+	 * @return boolean true if this widget or the subtree below this widget has
+	 *                  one or more messages.
 	 */
-	abstract public function hasMessage();
+	public function hasMessage()
+	{
+		$has_message = (count($this->messages) > 0);
+
+		if (!$has_message) {
+			foreach ($this->getCompositeWidgets() as $widget) {
+				if ($widget->hasMessage()) {
+					$has_message = true;
+					break;
+				}
+			}
+		}
+
+		return $has_message;
+	}
 
 	// }}}
 	// {{{ public function isSensitive()

@@ -243,21 +243,6 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function addMessage()
-
-	/**
-	 * Adds a message to this notebook
-	 *
-	 * @param SwatMessage the message to add.
-	 *
-	 * @see SwatMessage
-	 */
-	public function addMessage(SwatMessage $message)
-	{
-		$this->messages[] = $message;
-	}
-
-	// }}}
 	// {{{ public function getMessages()
 
 	/**
@@ -272,7 +257,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 */
 	public function getMessages()
 	{
-		$messages = $this->messages;
+		$messages = parent::getMessages();
 
 		foreach ($this->pages as $page)
 			$messages = array_merge($messages, $page->getMessages());
@@ -286,12 +271,12 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	/**
 	 * Checks for the presence of messages
 	 *
-	 * @return boolean true if there is a message in the widget subtree
-	 *                  starting with this notebook and false if there is not.
+	 * @return boolean true if this notebook or the subtree below this notebook
+	 *                  has one or more messages.
 	 */
 	public function hasMessage()
 	{
-		$has_message = false;
+		$has_message = parent::hasMessage();
 
 		foreach ($this->pages as $page) {
 			if ($page->hasMessage()) {
