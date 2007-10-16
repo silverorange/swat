@@ -22,7 +22,7 @@ class SwatTile extends SwatCellRendererContainer
 	 *
 	 * @var array
 	 */
-	private  $messages = array();
+	private $messages = array();
 
 	// }}}
 	// {{{ public function display()
