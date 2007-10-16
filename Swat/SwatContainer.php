@@ -427,35 +427,20 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function addMessage()
-
-	/**
-	 * Adds a message
-	 *
-	 * @param SwatMessage the message object to add.
-	 *
-	 * @see SwatWidget::AddMessage()
-	 */
-	public function addMessage(SwatMessage $message)
-	{
-		$this->messages[] = $message;
-	}
-
-	// }}}
 	// {{{ public function getMessages()
 
 	/**
 	 * Gets all messages
 	 *
-	 * @return array the gathered SwatMessage objects.
+	 * @return array an array of gathered {@link SwatMessage} objects.
 	 *
 	 * @see SwatWidget::getMessages()
 	 */
 	public function getMessages()
 	{
-		$messages = $this->messages;
+		$messages = parent::getMessages();
 
-		foreach ($this->children as &$child)
+		foreach ($this->children as $child)
 			$messages = array_merge($messages, $child->getMessages());
 
 		return $messages;
@@ -467,13 +452,14 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	/**
 	 * Checks for the presence of messages
 	 *
-	 * @return boolean true if there is an message in the subtree.
+	 * @return boolean true if this container or the subtree below this
+	 *                  container has one or more messages.
 	 *
 	 * @see SwatWidget::hasMessages()
 	 */
 	public function hasMessage()
 	{
-		$has_message = (count($this->messages) > 0);
+		$has_message = parent::hasMessage();
 
 		if (!$has_message) {
 			foreach ($this->children as &$child) {

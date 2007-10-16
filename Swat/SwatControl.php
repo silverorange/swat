@@ -18,12 +18,13 @@ abstract class SwatControl extends SwatWidget
 	// {{{ public function addMessage()
 
 	/**
-	 * Adds a message
+	 * Adds a message to this control
 	 *
 	 * Before the message is added, the content is updated with the name of
-	 * this controls's parent field if the field exists.
+	 * this controls's parent title field if the parent implements the
+	 * {@link SwatTitleable} interface.
 	 *
-	 * @param SwatMessage $message the message object to add.
+	 * @param SwatMessage $message the message to add.
 	 *
 	 * @see SwatWidget::addMessage()
 	 */
@@ -50,41 +51,7 @@ abstract class SwatControl extends SwatWidget
 		$message->primary_content = sprintf($content, $field_title);
 		$message->content_type = 'text/xml';
 
-		$this->messages[] = $message;
-	}
-
-	// }}}
-	// {{{ public function getMessages()
-
-	/**
-	 * Gets all messages
-	 *
-	 * Gathers all messages from children of this widget and this widget
-	 * itself.
-	 *
-	 * @return array an array of {@link SwatMessage} objects.
-	 *
-	 * @see SwatWidget::getMessages()
-	 * @see SwatMessage
-	 */
-	public function getMessages()
-	{
-		return $this->messages;
-	}
-
-	// }}}
-	// {{{ public function hasMessage()
-
-	/**
-	 * Checks for the presence of messages
-	 *
-	 * @return boolean true if there is an message in the subtree.
-	 *
-	 * @see SwatWidget::hasMessage()
-	 */
-	public function hasMessage()
-	{
-		return (count($this->messages) > 0);
+		parent::addMessage($message);
 	}
 
 	// }}}
