@@ -31,6 +31,15 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	public $title = '';
 
 	/**
+	 * Optional content type for the title
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $title_content_type = 'text/plain';
+
+	/**
 	 * The {@link SwatDetailsView} associated with this field
 	 *
 	 * @var SwatDetailsView
@@ -121,7 +130,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	{
 		$th_tag = new SwatHtmlTag('th');
 		$th_tag->scope = 'row';
-		$th_tag->setContent($this->title.':');
+		$th_tag->setContent($this->title.':', $this->title_content_type);
 		$th_tag->display();
 	}
 
