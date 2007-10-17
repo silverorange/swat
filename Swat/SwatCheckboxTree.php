@@ -179,6 +179,9 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 				else
 					$this->input_tag->checked = null;
 
+				if (!$this->isSensitive())
+					$this->input_tag->disabled = 'disabled';
+
 				$this->label_tag->for = $this->id.'_'.$index;
 				$this->label_tag->setContent($node->title);
 
