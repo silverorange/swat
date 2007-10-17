@@ -276,6 +276,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 					$this->input_tag->id = $this->id.'_'.$index;
 					$this->input_tag->value = null;
 
+					if (!$this->isSensitive())
+						$this->input_tag->disabled = 'disabled';
+
 					$this->label_tag->for = $this->id.'_'.$index;
 					$this->label_tag->class =
 						'swat-control swat-expandable-checkbox-tree-null';
@@ -299,6 +302,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 					$this->input_tag->checked = 'checked';
 				else
 					$this->input_tag->checked = null;
+
+				if (!$this->isSensitive())
+					$this->input_tag->disabled = 'disabled';
 
 				$this->label_tag->for = $this->id.'_'.$index;
 				$this->label_tag->class = 'swat-control';

@@ -201,6 +201,9 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 			if (in_array($option->value, $this->values))
 				$input_tag->checked = 'checked';
 
+			if (!$this->isSensitive())
+				$this->input_tag->disabled = 'disabled';
+
 			$input_tag->id = $this->id.'_'.$key.'_'.$input_tag->value;
 			$input_tag->display();
 
