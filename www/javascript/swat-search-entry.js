@@ -17,6 +17,9 @@ function SwatSearchEntry(id)
 		this.label_text =
 			(label.innerText) ? label.innerText : label.textContent;
 
+		this.input_name = this.input.name;
+		this.input_value = this.input.value;
+
 		label.style.display = 'none';
 
 		YAHOO.util.Event.addListener(this.input, 'focus', this.handleFocus,
@@ -25,105 +28,37 @@ function SwatSearchEntry(id)
 		YAHOO.util.Event.addListener(this.input, 'blur', this.handleBlur,
 			this, true);
 
-		this.faux_input = document.createElement('input');
-		this.faux_input.setAttribute('type', 'text');
-		this.faux_input.value = this.label_text;
-		this.faux_input.size = this.input.size;
-
-		YAHOO.util.Dom.addClass(this.faux_input, 'swat-entry');
-		YAHOO.util.Dom.addClass(this.faux_input, 'swat-search-entry-empty');
-		YAHOO.util.Event.addListener(this.faux_input, 'mousedown',
-			this.handleMouseDown, this, true);
-
-		YAHOO.util.Event.addListener(this.faux_input, 'focus',
-			this.handleMouseDown, this, true);
-
 		if (this.input.value == '')
-			this.showFauxInput();
+			this.showLabelText();
 		else
-			this.hideFauxInput();
+			this.hideLabelText();
 	}
-}
-
-SwatSearchEntry.prototype.handleMouseDown = function(e)
-{
-	YAHOO.util.Event.preventDefault(e);
-	this.hideFauxInput();
-	this.input.focus();
 }
 
 SwatSearchEntry.prototype.handleFocus = function(e)
 {
-	this.hideFauxInput();
+	this.hideLabelText();
 }
 
 SwatSearchEntry.prototype.handleBlur = function(e)
 {
 	if (this.input.value == '')
-		this.showFauxInput();
+		this.showLabelText();
 }
 
-SwatSearchEntry.prototype.showFauxInput = function()
+SwatSearchEntry.prototype.showLabelText = function()
 {
-	// update computed styles to match real input
-	var styles = [
-		'paddingTop',        'paddingRight',
-		'paddingBottom',     'paddingLeft',
-
-		'marginTop',         'marginRight',
-		'marginBottom',      'marginLeft',
-
-		'borderTopWidth',    'borderRightWidth',
-		'borderBottomWidth', 'borderLeftWidth',
-
-		'borderTopStyle',    'borderRightStyle',
-		'borderBottomStyle', 'borderLeftStyle'
-	];
-
-	for (var i = 0; i < styles.length; i++) {
-		var current_style = YAHOO.util.Dom.getStyle(this.input, styles[i]);
-		this.faux_input.style[styles[i]] = current_style;
-	}
-
-	// hack for IE and WebKit default border styles
-	var border_styles = [
-		'borderTopStyle',    'borderRightStyle',
-		'borderBottomStyle', 'borderTopStyle'
-	];
-
-	var inset_border = false;
-	for (var i = 0; i < border_styles.length; i++) {
-		var current_style = YAHOO.util.Dom.getStyle(this.input,
-			border_styles[i]);
-
-		if (current_style == 'inset') {
-			inset_border = true;
-			break;
-		}
-	}
-
-	// only set border color if border is not inset (hack for IE and WebKit)
-	if (!inset_border) {
-		var border_colors = [
-			'borderTopColor',    'borderRightColor',
-			'borderBottomColor', 'borderLeftColor'
-		];
-
-
-		for (var i = 0; i < border_colors.length; i++) {
-			var current_style = YAHOO.util.Dom.getStyle(this.input,
-				border_colors[i]);
-
-			this.faux_input.style[border_colors[i]] = current_style;
-		}
-	}
-
-	if (this.input.parentNode)
-		this.input.parentNode.replaceChild(this.faux_input, this.input);
+	YAHOO.util.Dom.addClass(this.input, 'swat-search-entry-empty');
+	this.input.name = '';
+	this.input_value = this.input.value;
+	this.input.value = this.label_text;
 }
 
-SwatSearchEntry.prototype.hideFauxInput = function()
+SwatSearchEntry.prototype.hideLabelText = function()
 {
-	if (this.faux_input.parentNode)
-		this.faux_input.parentNode.replaceChild(this.input, this.faux_input);
+	if (this.input.name == '') {
+		this.input.name = this.input_name;
+		this.input.value = this.input_value;
+		YAHOO.util.Dom.removeClass(this.input, 'swat-search-entry-empty');
+	}
 }
