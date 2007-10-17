@@ -735,15 +735,19 @@ class SwatForm extends SwatDisplayableContainer
 			$focusable = true;
 			if ($this->default_focused_control === null) {
 				$control = $this->getFirstDescendant('SwatControl');
-				if ($control === null || $control->id === null)
+				if ($control === null) {
 					$focusable = false;
-				else
-					$focus_id = $control->id;
+				} else {
+					$focus_id = $control->getFocusableHtmlId();
+					if ($focus_id === null)
+						$focusable = false;
+				}
 			} else {
-				if ($this->default_focused_control->id === null)
+				$focus_id =
+					$this->default_focused_control->getFocusableHtmlId();
+
+				if ($focus_id === null)
 					$focusable = false;
-				else
-					$focus_id = $this->default_focused_control->id;
 			}
 
 			if ($focusable)
