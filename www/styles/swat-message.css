@@ -1,6 +1,7 @@
 /* SwatMessage */
 
 .swat-message-notification {
+	zoom: 1; /* IE hack */
 	border-color: #f0dca1;
 	background-color: #fffbc9;
 	color: #7b4b09;
@@ -11,6 +12,7 @@
 }
 
 .swat-message-warning {
+	zoom: 1; /* IE hack */
 	border-color: #facd00;
 	background-color: #ff9;
 	color: #533a15;
@@ -21,6 +23,7 @@
 }
 
 .swat-message-error {
+	zoom: 1; /* IE hack */
 	border-color: #dc6e66;
 	background-color: #ffe3e0;
 	color: #e31b0c;
@@ -31,6 +34,7 @@
 }
 
 .swat-message-system-error {
+	zoom: 1; /* IE hack */
 	border-color: #dc6e66;
 	background-color: #f33;
 	color: #fff;
