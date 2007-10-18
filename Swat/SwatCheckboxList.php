@@ -160,12 +160,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
-		$input_tag = new SwatHtmlTag('input');
-		$input_tag->type = 'checkbox';
-
-		$label_tag = new SwatHtmlTag('label');
-		$label_tag->class = 'swat-control';
-
 		// maximum number of options in each column
 		$num_column_options = ceil(count($options) / $columns);
 		$current_column = 1;
@@ -178,7 +172,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		}
 		$ul_tag->open();
 
-		foreach ($options as $key => $option) {
+		foreach ($options as $index => $option) {
 
 			if ($count == $num_column_options) {
 				$ul_tag->close();
@@ -192,26 +186,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 			}
 
 			$count++;
-			echo '<li>';
-
-			$input_tag->value = (string)$option->value;
-			$input_tag->removeAttribute('checked');
-			$input_tag->name = $this->id.'['.$key.']';
-
-			if (in_array($option->value, $this->values))
-				$input_tag->checked = 'checked';
-
-			if (!$this->isSensitive())
-				$this->input_tag->disabled = 'disabled';
-
-			$input_tag->id = $this->id.'_'.$key.'_'.$input_tag->value;
-			$input_tag->display();
-
-			$label_tag->for = $this->id.'_'.$key.'_'.$input_tag->value;
-			$label_tag->setContent($option->title, $option->content_type);
-			$label_tag->display();
-
-			echo '</li>';
+			$this->displayOption($option, $index);
 		}
 
 		$ul_tag->close();
@@ -299,6 +274,50 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	public function getState()
 	{
 		return $this->values;
+	}
+
+	// }}}
+	// {{{ protected function displayOption()
+
+	/**
+	 * Displays one option in this checkbox list
+	 */
+	protected function displayOption($option, $index)
+	{
+		$input_tag = new SwatHtmlTag('input');
+		$input_tag->type = 'checkbox';
+		$input_tag->id = $this->id.'_'.$index.'_'.$input_tag->value;
+		$input_tag->name = $this->id.'['.$index.']';
+		$input_tag->value = (string)$option->value;
+		$input_tag->removeAttribute('checked');
+
+		if (in_array($option->value, $this->values))
+			$input_tag->checked = 'checked';
+
+		if (!$this->isSensitive())
+			$this->input_tag->disabled = 'disabled';
+
+		$label_tag = new SwatHtmlTag('label');
+		$label_tag->class = 'swat-control';
+		$label_tag->for = $this->id.'_'.$index.'_'.$input_tag->value;
+		$label_tag->setContent($option->title, $option->content_type);
+
+		$li_tag = $this->getLiTag($option);
+
+		$li_tag->open();
+		$input_tag->display();
+		$label_tag->display();
+		$li_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function getLiTag()
+
+	protected function getLiTag($option)
+	{
+		$tag = new SwatHtmlTag('li');
+
+		return $tag;
 	}
 
 	// }}}
