@@ -280,9 +280,13 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	// {{{ protected function displayOption()
 
 	/**
-	 * Displays one option in this checkbox list
+	 * Helper method to display a single option of this checkbox list
+	 *
+	 * @param SwatOption $option the option to display.
+	 * @param integer $index a numeric index indicating which option is being
+	 *                        displayed.
 	 */
-	protected function displayOption($option, $index)
+	protected function displayOption(SwatOption $option, $index)
 	{
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
