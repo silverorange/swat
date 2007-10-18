@@ -135,6 +135,24 @@ class SwatMessageDisplay extends SwatControl
 	}
 
 	// }}}
+	// {{{ public function get()
+
+	/**
+	 * Get a message in this message display
+	 *
+	 * @return SwatMessage the message.
+	 */
+	public function get($index = 0)
+	{
+		if ($index < $this->getMessageCount())
+			$message = $this->_messages[$index];
+		else
+			$message = null;
+
+		return $message;
+	}
+
+	// }}}
 	// {{{ public function display()
 
 	/**
