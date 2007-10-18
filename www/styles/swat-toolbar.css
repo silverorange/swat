@@ -26,3 +26,11 @@ ul.swat-toolbar {
 	text-decoration: none;
 	background-color: transparent;
 }
+
+
+/* SwatToolbar when inside a SwatNotebook */
+
+.yui-navset div.yui-content div ul.swat-toolbar {
+	margin: 0 -12px;
+	top: -12px;
+}
