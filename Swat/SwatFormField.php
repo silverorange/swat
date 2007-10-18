@@ -69,6 +69,19 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public $access_key = null;
 
+	/**
+	 * Whether or not to show a colon after the title of this form field
+	 *
+	 * By default, a colon is shown. Subwidgets may control whether or not a
+	 * colon is displayed by setting this property in the
+	 * {@link SwatFormField::notifyOfAdd()} method.
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatFormField::notifyOfAdd()
+	 */
+	public $show_colon = true;
+
 	// }}}
 	// {{{ protected properties
 
@@ -98,19 +111,6 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 * @see SwatFormField::notifyOfAdd()
 	 */
 	protected $widget_class;
-
-	/**
-	 * Whether or not to show a colon after the title of this form field
-	 *
-	 * By default, a colon is shown. Subwidgets may control whether or not a
-	 * colon is displayed by setting this property in the
-	 * {@link SwatFormField::notifyOfAdd()} method.
-	 *
-	 * @var boolean
-	 *
-	 * @see SwatFormField::notifyOfAdd()
-	 */
-	protected $show_colon = true;
 
 	// }}}
 	// {{{ public function __construct()
