@@ -61,8 +61,16 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 	public function getPropertyNameToMap(SwatUIObject $object, $name)
 	{
+		if ($this === $object)
+			return $name;
+
 		$mangled_name = $name;
 		$suffix = 0;
+
+		if (property_exists($this, $name)) {
+			$mangled_name = $name.$suffix;
+			$suffix++;
+		}
 
 		while (array_key_exists($mangled_name, $this->mappings)) {
 			$mangled_name = $name.$suffix;
