@@ -336,19 +336,15 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		$out = null;
 
 		foreach ($this->children as $child_widget) {
+			if ($child_widget instanceof $class_name) {
+				$out = $child_widget;
+				break;
+			}
+
 			if ($child_widget instanceof SwatUIParent) {
 				$out = $child_widget->getFirstDescendant($class_name);
 				if ($out !== null)
 					break;
-			}
-		}
-
-		if ($out === null) {
-			foreach ($this->children as $child_widget) {
-				if ($child_widget instanceof $class_name) {
-					$out = $child_widget;
-					break;
-				}
 			}
 		}
 

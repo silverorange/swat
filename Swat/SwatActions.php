@@ -409,19 +409,15 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$out = null;
 
 		foreach ($this->action_items as $action_item) {
+			if ($action_item instanceof $class_name) {
+				$out = $action_item;
+				break;
+			}
+
 			if ($action_item instanceof SwatUIParent) {
 				$out = $action_item->getFirstDescendant($class_name);
 				if ($out !== null)
 					break;
-			}
-		}
-
-		if ($out === null) {
-			foreach ($this->action_items as $action_item) {
-				if ($action_item instanceof $class_name) {
-					$out = $action_item;
-					break;
-				}
 			}
 		}
 

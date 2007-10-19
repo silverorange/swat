@@ -347,11 +347,11 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 
 		$out = null;
 
-		if ($this->sub_menu instanceof SwatUIParent)
-			$out = $this->sub_menu->getFirstDescendant($class_name);
-
-		if ($out === null && $this->sub_menu instanceof $class_name)
+		if ($this->sub_menu instanceof $class_name)
 			$out = $this->sub_menu;
+
+		if ($out === null && $this->sub_menu instanceof SwatUIParent)
+			$out = $this->sub_menu->getFirstDescendant($class_name);
 
 		return $out;
 	}

@@ -454,22 +454,16 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 		$out = null;
 
-		$cloned_widgets = $this->getClonedWidgets();
+		foreach ($this->getClonedWidgets() as $cloned_widget) {
+			if ($cloned_widget instanceof $class_name) {
+				$out = $cloned_widget;
+				break;
+			}
 
-		foreach ($cloned_widgets as $cloned_widget) {
 			if ($cloned_widget instanceof SwatUIParent) {
 				$out = $cloned_widget->getFirstDescendant($class_name);
 				if ($out !== null)
 					break;
-			}
-		}
-
-		if ($out === null) {
-			foreach ($cloned_widgets as $cloned_widget) {
-				if ($cloned_widget instanceof $class_name) {
-					$out = $cloned_widget;
-					break;
-				}
 			}
 		}
 

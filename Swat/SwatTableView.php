@@ -1047,6 +1047,11 @@ class SwatTableView extends SwatView implements SwatUIParent
 		$out = null;
 
 		foreach ($this->columns as $column) {
+			if ($column instanceof $class_name) {
+				$out = $column;
+				break;
+			}
+
 			if ($column instanceof SwatUIParent) {
 				$out = $column->getFirstDescendant($class_name);
 				if ($out !== null)
@@ -1056,6 +1061,11 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 		if ($out === null) {
 			foreach ($this->spanning_columns as $column) {
+				if ($column instanceof $class_name) {
+					$out = $column;
+					break;
+				}
+
 				if ($column instanceof SwatUIParent) {
 					$out = $column->getFirstDescendant($class_name);
 					if ($out !== null)
@@ -1066,6 +1076,11 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 		if ($out === null) {
 			foreach ($this->groups as $group) {
+				if ($group instanceof $class_name) {
+					$out = $group;
+					break;
+				}
+
 				if ($group instanceof SwatUIParent) {
 					$out = $group->getFirstDescendant($class_name);
 					if ($out !== null)
@@ -1076,46 +1091,15 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 		if ($out === null) {
 			foreach ($this->extra_rows as $row) {
+				if ($row instanceof $class_name) {
+					$out = $row;
+					break;
+				}
+
 				if ($row instanceof SwatUIParent) {
 					$out = $row->getFirstDescendant($class_name);
 					if ($out !== null)
 						break;
-				}
-			}
-		}
-
-		if ($out === null) {
-			foreach ($this->columns as $column) {
-				if ($column instanceof $class_name) {
-					$out = $column;
-					break;
-				}
-			}
-		}
-
-		if ($out === null) {
-			foreach ($this->spanning_columns as $column) {
-				if ($column instanceof $class_name) {
-					$out = $column;
-					break;
-				}
-			}
-		}
-
-		if ($out === null) {
-			foreach ($this->groups as $group) {
-				if ($group instanceof $class_name) {
-					$out = $group;
-					break;
-				}
-			}
-		}
-
-		if ($out === null) {
-			foreach ($this->extra_rows as $row) {
-				if ($row instanceof $class_name) {
-					$out = $row;
-					break;
 				}
 			}
 		}

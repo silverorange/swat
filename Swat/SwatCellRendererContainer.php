@@ -246,22 +246,16 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 
 		$out = null;
 
-		$renderers = $this->getRenderers();
+		foreach ($this->getRenderers() as $renderer) {
+			if ($renderer instanceof $class_name) {
+				$out = $renderer;
+				break;
+			}
 
-		foreach ($renderers as $renderer) {
 			if ($renderer instanceof SwatUIParent) {
 				$out = $renderer->getFirstDescendant($class_name);
 				if ($out !== null)
 					break;
-			}
-		}
-
-		if ($out === null) {
-			foreach ($renderers as $renderer) {
-				if ($renderer instanceof $class_name) {
-					$out = $renderer;
-					break;
-				}
 			}
 		}
 

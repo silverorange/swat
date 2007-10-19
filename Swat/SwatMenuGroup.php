@@ -217,19 +217,15 @@ class SwatMenuGroup extends SwatControl implements SwatUIParent
 		$out = null;
 
 		foreach ($this->items as $item) {
+			if ($item instanceof $class_name) {
+				$out = $item;
+				break;
+			}
+
 			if ($item instanceof SwatUIParent) {
 				$out = $item->getFirstDescendant($class_name);
 				if ($out !== null)
 					break;
-			}
-		}
-
-		if ($out === null) {
-			foreach ($this->items as $item) {
-				if ($item instanceof $class_name) {
-					$out = $item;
-					break;
-				}
 			}
 		}
 
