@@ -371,19 +371,15 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 		$out = null;
 
 		foreach ($this->pages as $page) {
+			if ($page instanceof $class_name) {
+				$out = $page;
+				break;
+			}
+
 			if ($page instanceof SwatUIParent) {
 				$out = $page->getFirstDescendant($class_name);
 				if ($out !== null)
 					break;
-			}
-		}
-
-		if ($out === null) {
-			foreach ($this->pages as $page) {
-				if ($page instanceof $class_name) {
-					$out = $page;
-					break;
-				}
 			}
 		}
 

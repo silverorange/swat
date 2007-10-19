@@ -207,11 +207,11 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 
 		$out = null;
 
-		if ($this->widget instanceof SwatUIParent)
-			$out = $this->widget->getFirstDescendant($class_name);
-
-		if ($out === null && $this->widget instanceof $class_name)
+		if ($this->widget instanceof $class_name)
 			$out = $this->widget;
+
+		if ($out === null && $this->widget instanceof SwatUIParent)
+			$out = $this->widget->getFirstDescendant($class_name);
 
 		return $out;
 	}

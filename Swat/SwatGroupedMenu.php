@@ -183,19 +183,15 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 		$out = null;
 
 		foreach ($this->groups as $group) {
+			if ($group instanceof $class_name) {
+				$out = $group;
+				break;
+			}
+
 			if ($group instanceof SwatUIParent) {
 				$out = $group->getFirstDescendant($class_name);
 				if ($out !== null)
 					break;
-			}
-		}
-
-		if ($out === null) {
-			foreach ($this->groups as $group) {
-				if ($group instanceof $class_name) {
-					$out = $group;
-					break;
-				}
 			}
 		}
 

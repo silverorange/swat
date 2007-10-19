@@ -453,32 +453,13 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		if (!class_exists($class_name) && !interface_exists($class_name))
 			return null;
 
-		$out = null;
-
-		$renderers = $this->getRenderers();
-
-		foreach ($renderers as $renderer) {
-			if ($renderer instanceof SwatUIParent) {
-				$out = $renderer->getFirstDescendant($class_name);
-				if ($out !== null)
-					break;
-			}
-		}
-
-		if ($out === null && $this->input_cell instanceof SwatUIParent)
-			$out = $this->input_cell->getFirstDescendant($class_name);
-
-		if ($out === null) {
-			foreach ($renderers as $renderer) {
-				if ($renderer instanceof $class_name) {
-					$out = $renderer;
-					break;
-				}
-			}
-		}
+		$out = parent::getFirstDescendant($class_name);
 
 		if ($out === null && $this->input_cell instanceof $class_name)
 			$out = $this->input_cell;
+
+		if ($out === null && $this->input_cell instanceof SwatUIParent)
+			$out = $this->input_cell->getFirstDescendant($class_name);
 
 		return $out;
 	}

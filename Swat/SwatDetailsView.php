@@ -272,19 +272,15 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 		$out = null;
 
 		foreach ($this->fields as $field) {
+			if ($field instanceof $class_name) {
+				$out = $field;
+				break;
+			}
+
 			if ($field instanceof SwatUIParent) {
 				$out = $field->getFirstDescendant($class_name);
 				if ($out !== null)
 					break;
-			}
-		}
-
-		if ($out === null) {
-			foreach ($this->fields as $field) {
-				if ($field instanceof $class_name) {
-					$out = $field;
-					break;
-				}
 			}
 		}
 
