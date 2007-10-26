@@ -15,14 +15,11 @@
 					<property name="text" type="data">title</property>
 				</object>
 				<object class="SwatTextCellRenderer">
-					<property name="text"> (harvest date: </property>
+					<property name="text">harvest date:</property>
 				</object>
 				<object class="SwatDateCellRenderer">
 					<property name="date" type="data">harvest_date</property>
 					<property name="format" type="string">%B</property>
-				</object>
-				<object class="SwatTextCellRenderer">
-					<property name="text">)</property>
 				</object>
 				<object class="SwatCheckboxCellRenderer" id="items">
 					<property name="value" type="data">title</property>
