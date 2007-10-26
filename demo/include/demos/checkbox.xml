@@ -21,7 +21,7 @@
 		<widget class="SwatFieldset">
 			<property name="title">Checkbox Entry List</property>
 
-			<widget class="SwatCheckboxEntryList" id="checkbox_entry_list" />
+			<widget class="SwatCheckboxEntryList" id="checkbox_entry_list"/>
 
 		</widget>
 		<widget class="SwatFieldset">
@@ -29,6 +29,7 @@
 
 			<widget class="SwatCheckboxList" id="checkbox_list">
 				<property name="values[]" type="integer">1</property>
+				<property name="columns" type="integer">2</property>
 			</widget>
 			
 		</widget>
