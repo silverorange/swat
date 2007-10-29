@@ -17,7 +17,7 @@ function SwatSearchEntry(id)
 		this.label_text =
 			(label.innerText) ? label.innerText : label.textContent;
 
-		this.input_name = this.input.name;
+		this.input_name = this.input.getAttribute('name');
 		this.input_value = this.input.value;
 
 		label.style.display = 'none';
@@ -49,15 +49,15 @@ SwatSearchEntry.prototype.handleBlur = function(e)
 SwatSearchEntry.prototype.showLabelText = function()
 {
 	YAHOO.util.Dom.addClass(this.input, 'swat-search-entry-empty');
-	this.input.name = '';
+	this.input.removeAttribute('name');
 	this.input_value = this.input.value;
 	this.input.value = this.label_text;
 }
 
 SwatSearchEntry.prototype.hideLabelText = function()
 {
-	if (this.input.name == '') {
-		this.input.name = this.input_name;
+	if (!this.input.getAttribute('name')) {
+		this.input.setAttribute('name', this.input_name);
 		this.input.value = this.input_value;
 		YAHOO.util.Dom.removeClass(this.input, 'swat-search-entry-empty');
 	}
