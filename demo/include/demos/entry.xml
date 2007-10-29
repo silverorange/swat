@@ -34,12 +34,12 @@
 				<property name="maxlength" type="integer">10</property>
 			</widget>
 		</widget>
-	
+
 		<widget class="SwatFormField">
 			<property name="title" type="string">Enter Search</property>
 			<widget class="SwatSearchEntry" />
 		</widget>
-			
+
 		<widget class="SwatFormField">
 			<property name="title" type="string">Integer Entry</property>
 			<widget class="SwatIntegerEntry" id="integer" />
