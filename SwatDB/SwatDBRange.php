@@ -83,6 +83,19 @@ class SwatDBRange extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function addOffset()
+
+	/**
+	 * Increases the offset of this range
+	 *
+	 * @param integer $offset the amount by which to increase the offset.
+	 */
+	public function addOffset($offset)
+	{
+		$this->offset += intval($offset);
+	}
+
+	// }}}
 	// {{{ public function combine()
 
 	/**
