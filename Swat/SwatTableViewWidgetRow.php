@@ -1,13 +1,17 @@
 <?php
 
+/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+
 require_once 'Swat/SwatTableViewRow.php';
 require_once 'Swat/SwatUIParent.php';
+require_once 'Swat/SwatWidget.php';
 
 /**
- * A table view row with an embedded widget
+ * A table view row with an optional contained widget
  *
  * @package   Swat
  * @copyright 2006-2007 silverorange
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 {
@@ -44,8 +48,8 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	/**
 	 * Whether to display the widget in the left or right cell of the row
 	 *
-	 * By default, the vutton displays in the left cell. Use the POSITION_*
-	 * constants to control the widget position.
+	 * By default, the widget displays in the left cell. Use the POSITION_*
+	 * constants to control the widget position within this row.
 	 *
 	 * @var integer
 	 */
@@ -55,46 +59,83 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	// {{{ protected properties
 
 	/**
-	 * Whether or not the internal widgets used by this row have been created
-	 * or not
+	 * The contained widget
 	 *
-	 * @var boolean
-	 */
-	protected $widgets_created = false;
-
-	/**
-	 * The embedded widget
+	 * @var SwatWidget
 	 *
-	 * @var SwatButton
+	 * @see SwatTableViewWidgetRow::setWidget()
 	 */
-	protected $widget = null;
+	protected $widget;
 
 	// }}}
 	// {{{ public function addChild()
 
 	/**
-	 * Fulfills SwatUIParent::addChild()
+	 * Adds a child object
+	 *
+	 * This method fulfills the {@link SwatUIParent} interface. It is used
+	 * by {@link SwatUI} when building a widget tree and should not need to be
+	 * called elsewhere. To set the widget for this row,
+	 * {@link SwatTableViewWidgetRow::setWidget()}.
+	 *
+	 * @param SwatWidget $child a reference to the child object to add.
 	 *
 	 * @throws SwatException
+	 * @throws SwatInvalidClassException
+	 *
+	 * @see SwatTableViewWidgetRow::setWidget()
 	 */
 	public function addChild(SwatObject $child)
 	{
-		if ($this->widget === null)
-			$this->setWidget($child);
-		else
+		if (!($child instanceof SwatWidget))
+			throw new SwatInvalidClassException(sprintf(
+				'Only SwatWidget objects may be nested within '.
+				'SwatTableViewWidgetRow. Attempting to add "%s".',
+				get_class($child)), 0, $child);
+
+		if ($this->widget !== null)
 			throw new SwatException(
-				'Can only add one widget to a widget cell renderer');
+				'Can only set one widget for a widget row.');
+
+		$this->setWidget($child);
 	}
 
 	// }}}
 	// {{{ public function getDescendants()
 
+	/**
+	 * Gets descendant UI-objects
+	 *
+	 * @param string $class_name optional class name. If set, only UI-objects
+	 *                            that are instances of <i>$class_name</i> are
+	 *                            returned.
+	 *
+	 * @return array the descendant UI-objects of this widget row. If
+	 *                descendant objects have identifiers, the identifier is
+	 *                used as the array key.
+	 *
+	 * @see SwatUIParent::getDescendants()
+	 */
 	public function getDescendants($class_name = null)
 	{
+		if (!($class_name === null ||
+			class_exists($class_name) || interface_exists($class_name)))
+			return array();
+
 		$out = array();
 
-		if ($this->widget instanceof SwatUIParent)
-			$out = $this->widget->getDescendants($class_name);
+		if ($this->widget !== null) {
+			if ($class_name === null || $this->widget instanceof $class_name) {
+				if ($this->widget->id === null)
+					$out[] = $this->widget;
+				else
+					$out[$this->widget->id] = $this->widget;
+			}
+
+			if ($this->widget instanceof SwatUIParent)
+				$out = array_merge($out,
+					$this->widget->getDescendants($class_name));
+		}
 
 		return $out;
 	}
@@ -102,11 +143,27 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	// }}}
 	// {{{ public function getFirstDescendant()
 
+	/**
+	 * Gets the first descendant UI-object of a specific class
+	 *
+	 * @param string $class_name class name to look for.
+	 *
+	 * @return SwatUIObject the first descendant UI-object or null if no
+	 *                       matching descendant is found.
+	 *
+	 * @see SwatUIParent::getFirstDescendant()
+	 */
 	public function getFirstDescendant($class_name)
 	{
+		if (!class_exists($class_name) && !interface_exists($class_name))
+			return null;
+
 		$out = null;
 
-		if ($this->widget instanceof SwatUIParent)
+		if ($this->widget instanceof $class_name)
+			$out = $this->widget;
+
+		if ($out === null && $this->widget instanceof SwatUIParent)
 			$out = $this->widget->getFirstDescendant($class_name);
 
 		return $out;
@@ -115,34 +172,61 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	// }}}
 	// {{{ public function getDescendantStates()
 
+	/**
+	 * Gets descendant states
+	 *
+	 * Retrieves an array of states of all stateful UI-objects in the widget
+	 * subtree below this action item.
+	 *
+	 * @return array an array of UI-object states with UI-object identifiers as
+	 *                array keys.
+	 */
 	public function getDescendantStates()
 	{
-		$out = null;
+		$states = array();
 
-		if ($this->widget instanceof SwatUIParent)
-			$this->widget->getDescendantStates();
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			$states[$id] = $object->getState();
 
-		return $out;
+		return $states;
 	}
 
 	// }}}
 	// {{{ public function setDescendantStates()
 
+	/**
+	 * Sets descendant states
+	 *
+	 * Sets states on all stateful UI-objects in the widget subtree below this
+	 * action item.
+	 *
+	 * @param array $states an array of UI-object states with UI-object
+	 *                       identifiers as array keys.
+	 */
 	public function setDescendantStates(array $states)
 	{
-		if ($this->widget instanceof SwatUIParent)
-			$this->widget->setDescendantStates($states);
+		foreach ($this->getDescendants('SwatState') as $id => $object)
+			if (isset($states[$id]))
+				$object->setState($states[$id]);
 	}
 
 	// }}}
 	// {{{ public function setWidget()
 
 	/**
+	 * Sets the widget contained in this row
 	 *
-	 * @param SwatWidget $widget
+	 * @param SwatWidget $widget the widget to contain in this row.
+	 *
+	 * @throws SwatException if the added widget is already the child of
+	 *                       another object.
 	 */
 	public function setWidget(SwatWidget $widget)
 	{
+		if ($this->widget->parent !== null)
+			throw new SwatException('Attempting to add a widget that already '.
+				'has a parent.');
+
 		$this->widget = $widget;
 		$widget->parent = $this;
 	}
@@ -151,8 +235,10 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	// {{{ public function getWidget()
 
 	/**
+	 * Gets the widget contained in this row
 	 *
-	 * @return SwatWidget the embedded widget.
+	 * @return SwatWidget the widget contained in this row or null if this
+	 *                    row does not contain a widget.
 	 */
 	public function getWidget()
 	{
@@ -164,7 +250,10 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 
 	public function init()
 	{
-		$this->widget->init();
+		parent::init();
+
+		if ($this->widget !== null)
+			$this->widget->init();
 	}
 
 	// }}}
@@ -172,7 +261,10 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 
 	public function process()
 	{
-		$this->widget->process();
+		parent::process();
+
+		if ($this->widget !== null)
+			$this->widget->process();
 	}
 
 	// }}}
@@ -182,6 +274,8 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	{
 		if (!$this->visible)
 			return;
+
+		parent::display();
 
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->id = $this->id;
@@ -228,7 +322,9 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	public function getHtmlHeadEntrySet()
 	{
 		$set = parent::getHtmlHeadEntrySet();
-		$set->addEntrySet($this->widget->getHtmlHeadEntrySet());
+		if ($this->widget !== null)
+			$set->addEntrySet($this->widget->getHtmlHeadEntrySet());
+
 		return $set;
 	}
 
