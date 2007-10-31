@@ -90,9 +90,9 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	 */
 	public function setWidget(SwatWidget $widget)
 	{
-		if ($this->widget != null)
+		if ($this->widget !== null)
 			throw new SwatException('SwatUI: Only one widget can be nested '.
-				'within an SwatActionItem');
+				'within a SwatActionItem');
 
 		$this->widget = $widget;
 		$widget->parent = $this;
