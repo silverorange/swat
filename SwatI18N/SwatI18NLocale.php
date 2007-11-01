@@ -577,7 +577,6 @@ class SwatI18NLocale extends SwatObject
 					'Floating point value is too big to be an integer');
 
 			if ($string < (float)(-PHP_INT_MAX - 1)) {
-				echo $value;
 				throw new SwatException(
 					'Floating point value is too small to be an integer');
 			}
