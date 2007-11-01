@@ -225,7 +225,7 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	 */
 	public function setWidget(SwatWidget $widget)
 	{
-		if ($this->widget->parent !== null)
+		if ($widget->parent !== null)
 			throw new SwatException('Attempting to add a widget that already '.
 				'has a parent.');
 
