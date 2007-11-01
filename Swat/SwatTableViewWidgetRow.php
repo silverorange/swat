@@ -33,8 +33,9 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	// {{{ public properties
 
 	/**
-	 * How far from the right side the table the widget should be displayed
-	 * measured in columns
+	 * How far from the end of the row the widget should be displayed measured
+	 * in columns. The end of the row this offset is relative to is detemined
+	 * by the $postion property.
 	 *
 	 * @var integer
 	 */
@@ -285,34 +286,37 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 
 		$colspan = $this->view->getXhtmlColspan();
 		$td_tag = new SwatHtmlTag('td');
-		$td_tag->colspan = $colspan - $this->offset;
 
 		$tr_tag->open();
 
-		if ($this->position === self::POSITION_LEFT || $this->offset == 0) {
+		if ($this->position === self::POSITION_RIGHT) {
+			$td_tag->colspan = $colspan - $this->offset;
 			$td_tag->class = 'widget-cell';
 			$td_tag->open();
 			$this->widget->display();
 			$td_tag->close();
-		} else {
-			$td_tag->open();
-			echo '&nbsp;';
-			$td_tag->close();
-		}
 
-		if ($this->offset > 0) {
-			$td_tag->colspan = $this->offset;
-
-			if ($this->position === self::POSITION_RIGHT) {
-				$td_tag->class = 'widget-cell';
-				$td_tag->open();
-				$this->widget->display();
-				$td_tag->close();
-			} else {
+			if ($this->offset > 0) {
+				$td_tag->class = null;
+				$td_tag->colspan = $this->offset;
 				$td_tag->open();
 				echo '&nbsp;';
 				$td_tag->close();
 			}
+		} else {
+			if ($this->offset > 0) {
+				$td_tag->class = null;
+				$td_tag->colspan = $this->offset;
+				$td_tag->open();
+				echo '&nbsp;';
+				$td_tag->close();
+			}
+
+			$td_tag->colspan = $colspan - $this->offset;
+			$td_tag->class = 'widget-cell';
+			$td_tag->open();
+			$this->widget->display();
+			$td_tag->close();
 		}
 
 		$tr_tag->close();
