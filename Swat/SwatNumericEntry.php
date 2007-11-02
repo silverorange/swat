@@ -73,7 +73,12 @@ abstract class SwatNumericEntry extends SwatEntry
 	{
 		parent::process();
 
-		$value = $this->getNumericValue($this->value);
+		try {
+			$value = $this->getNumericValue($this->value);
+		} catch (SwatIntegerOverflowException $e) {
+			$value = null;
+		}
+
 		if ($value !== null) {
 			if ($this->minimum_value !== null &&
 				$value < $this->minimum_value) {

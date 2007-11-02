@@ -2,6 +2,7 @@
 
 require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/SwatObject.php';
+require_once 'Swat/exceptions/SwatIntegerOverflowException.php';
 require_once 'SwatI18N/SwatI18NNumberFormat.php';
 require_once 'SwatI18N/SwatI18NCurrencyFormat.php';
 
@@ -545,9 +546,9 @@ class SwatI18NLocale extends SwatObject
 	 * @return integer the numeric value of the parsed string. If the given
 	 *                  value could not be parsed, null is returned.
 	 *
-	 * @throws SwatException if the converted number is too large to fit in an
-	 *                        integer or if the converted number is too small
-	 *                        to fit in an integer.
+	 * @throws SwatIntegerOverflowException if the converted number is too large
+	 *                  to fit in an integer or if the converted number is too
+	 *                  small to fit in an integer.
 	 */
 	public function parseInteger($string)
 	{
@@ -573,12 +574,14 @@ class SwatI18NLocale extends SwatObject
 
 		if (is_numeric($string)) {
 			if ($string > (float)PHP_INT_MAX)
-				throw new SwatException(
-					'Floating point value is too big to be an integer');
+				throw new SwatIntegerOverflowException(
+					'Floating point value is too big to be an integer',
+					null, 1);
 
 			if ($string < (float)(-PHP_INT_MAX - 1)) {
-				throw new SwatException(
-					'Floating point value is too small to be an integer');
+				throw new SwatIntegerOverflowException(
+					'Floating point value is too small to be an integer',
+					null, -1);
 			}
 
 			$value = intval($string);
