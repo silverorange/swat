@@ -37,6 +37,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 	private $mappings = array();
 	private $clones = array();
+	private $widgets = array();
 	private $property_values = array();
 
 	// }}}
@@ -225,17 +226,64 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	// {{{ public function getWidget()
 
 	/**
-	 * Gets a cloned widget from this widget cell renderer
+	 * Retrives a reference to a replicated widget
 	 *
-	 * @param integer $replicator the replicator id of the cloned widget.
-	 * @return SwatWidget the cloned widget identified by $replicator.
+	 * @param string $replicator_id the replicator id of the replicated widget
+	 * @param string $widget_id the unique id of the original widget, or null
+	 *                           to get the root
+	 *
+	 * @return SwatWidget a reference to the replicated widget, or null if the
+	 *                     widget is not found.
 	 */
-	public function getWidget($replicator)
+	public function getWidget($replicator_id, $widget_id = null)
 	{
-		if (isset($this->clones[$replicator]))
-			return $this->clones[$replicator];
+		$widget = null;
 
-		return null;
+		if ($widget_id === null) {
+			if (isset($this->widgets[$replicator_id]))
+				$widget = current($this->widgets[$replicator_id]);
+		} else {
+			if (isset($this->widgets[$replicator_id][$widget_id]))
+				$widget = $this->widgets[$replicator_id][$widget_id];
+		}
+
+		return $widget;
+	}
+
+	// }}}
+	// {{{ public function getWidgets()
+
+	/**
+	 * Gets an array of replicated widgets indexed by the replicator_id
+	 *
+	 * If this cell renderer's form is submitted, only cloned widgets that were
+	 * displayed and processed are returned.
+	 *
+	 * @param string $widget_id the unique id of the original widget, or null
+	 *                           to get the root
+	 *
+	 * @return array an array of widgets indexed by replicator_id
+	 */
+	public function &getWidgets($widget_id = null)
+	{
+		$form = $this->getForm();
+		if ($form !== null && $form->isSubmitted()) {
+			$replicators = $form->getHiddenField(
+				$this->prototype_widget->id.'_replicators');
+
+			$widgets = array();
+			if (is_array($replicators)) {
+				foreach ($this->clones as $replicator_id => $clone) {
+					if (in_array($replicator_id, $replicators))
+						$widgets[$replicator_id] =
+							$this->getWidget($replicator_id, $widget_id);
+				}
+			}
+		} else {
+			$widgets = $this->clones;
+		}
+
+		return $widgets;
 	}
 
 	// }}}
@@ -246,6 +294,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 *
 	 * If this cell renderer's form is submitted, only cloned widgets that were
 	 * displayed and processed are returned.
+	 *
+ 	 * @deprecated Use {@link SwatWidgetCellRenderer::getWidgets()} instead.
+	 *              Pass null to getWidgets() for the same output as this
+	 *              method.
 	 *
 	 * @return array an array of widgets indexed by replicator_id
 	 */
@@ -603,14 +655,21 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 		$suffix = '_'.$replicator;
 		$new_widget = clone $this->prototype_widget;
+		$this->widgets[$replicator] = array();
 
-		if ($new_widget->id !== null)
+		if ($new_widget->id !== null) {
+			$this->widgets[$replicator][$new_widget->id] = $new_widget;
 			$new_widget->id.= $suffix;
+		}
 
-		if ($new_widget instanceof SwatUIParent)
-			foreach ($new_widget->getDescendants() as $descendant)
-				if ($descendant->id !== null)
+		if ($new_widget instanceof SwatUIParent) {
+			foreach ($new_widget->getDescendants() as $descendant) {
+				if ($descendant->id !== null) {
+					$this->widgets[$replicator][$descendant->id] = $descendant;
 					$descendant->id.= $suffix;
+				}
+			}
+		}
 
 		$new_widget->init();
 
