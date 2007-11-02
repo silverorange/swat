@@ -1,13 +1,29 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
 <swatml>
-	<widget class="SwatImageDisplay">
-		<property name="image">http://swat.silverorange.com/skins/swat/logo.png</property>
-		<property name="width" type="integer">182</property>
-		<property name="height" type="integer">77</property>
-		<property name="occupy_width" type="integer">300</property>
-		<property name="occupy_height" type="integer">300</property>
-		<property name="alt">Image of the Swat Logo</property>
-		<property name="title">Swat: Swat Web Application Toolkit</property>
+	<widget class="SwatFieldset">
+		<property name="title">Image Display</property>
+		<widget class="SwatImageDisplay">
+			<property name="image">images/swat-logo.png</property>
+			<property name="width" type="integer">182</property>
+			<property name="height" type="integer">77</property>
+			<property name="occupy_width" type="integer">300</property>
+			<property name="occupy_height" type="integer">300</property>
+			<property name="alt">Image of the Swat Logo</property>
+			<property name="title">Swat: Swat Web Application Toolkit</property>
+		</widget>
+	</widget>
+	<widget class="SwatFieldset">
+		<property name="title">Image Display with Preview</property>
+		<widget class="SwatImagePreviewDisplay">
+			<property name="image">images/swat-logo.png</property>
+			<property name="width" type="integer">182</property>
+			<property name="height" type="integer">77</property>
+			<property name="alt">Image of the Swat Logo</property>
+			<property name="title">Swat: Swat Web Application Toolkit</property>
+			<property name="preview_image">images/swat-logo-large.png</property>
+			<property name="preview_width" type="integer">500</property>
+			<property name="preview_height" type="integer">212</property>
+		</widget>
 	</widget>
 </swatml>
