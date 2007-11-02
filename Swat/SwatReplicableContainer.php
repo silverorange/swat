@@ -122,6 +122,7 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 	 */
 	public function getWidget($widget_id, $replicator_id)
 	{
+		// TODO: reverse the params of this function and default $widget_id to null
 		$widget = null;
 
 		if (isset($this->widgets[$replicator_id][$widget_id]))
