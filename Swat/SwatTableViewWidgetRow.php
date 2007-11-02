@@ -289,35 +289,13 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 
 		$tr_tag->open();
 
-		if ($this->position === self::POSITION_RIGHT) {
-			$td_tag->colspan = $colspan - $this->offset;
-			$td_tag->class = 'widget-cell';
-			$td_tag->open();
-			$this->widget->display();
-			$td_tag->close();
+		if ($this->offset > 0 && $this->position === self::POSITION_LEFT)
+			$this->displayOffsetCell($this->offset);
 
-			if ($this->offset > 0) {
-				$td_tag->class = null;
-				$td_tag->colspan = $this->offset;
-				$td_tag->open();
-				echo '&nbsp;';
-				$td_tag->close();
-			}
-		} else {
-			if ($this->offset > 0) {
-				$td_tag->class = null;
-				$td_tag->colspan = $this->offset;
-				$td_tag->open();
-				echo '&nbsp;';
-				$td_tag->close();
-			}
+		$this->displayWidgetCell();
 
-			$td_tag->colspan = $colspan - $this->offset;
-			$td_tag->class = 'widget-cell';
-			$td_tag->open();
-			$this->widget->display();
-			$td_tag->close();
-		}
+		if ($this->offset > 0 && $this->position === self::POSITION_RIGHT)
+			$this->displayOffsetCell($this->offset);
 
 		$tr_tag->close();
 	}
@@ -332,6 +310,33 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 			$set->addEntrySet($this->widget->getHtmlHeadEntrySet());
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ protected function displayOffsetCell()
+
+	protected function displayOffsetCell($offset)
+	{
+		$td_tag = new SwatHtmlTag('td');
+		$td_tag->class = null;
+		$td_tag->colspan = $offset;
+		$td_tag->open();
+		echo '&nbsp;';
+		$td_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function displayWidgetCell()
+
+	protected function displayWidgetCell()
+	{
+			$td_tag = new SwatHtmlTag('td');
+			$colspan = $this->view->getXhtmlColspan();
+			$td_tag->colspan = $colspan - $this->offset;
+			$td_tag->class = 'widget-cell';
+			$td_tag->open();
+			$this->widget->display();
+			$td_tag->close();
 	}
 
 	// }}}
