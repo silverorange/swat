@@ -32,6 +32,7 @@ table.swat-table-view {
 
 .swat-table-view td.swat-image-link-cell-renderer { width: 22px; }
 .swat-table-view td.swat-checkbox-cell-renderer { width: 24px; }
+.swat-table-view td.swat-radio-button-cell-renderer { width: 24px; }
 
 .swat-table-view .swat-table-view-group {
 	font-weight: bold;
