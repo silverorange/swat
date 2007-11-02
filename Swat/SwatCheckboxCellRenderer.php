@@ -93,16 +93,9 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 		$this->addJavaScript(
 			'packages/swat/javascript/swat-checkbox-cell-renderer.js',
 			Swat::PACKAGE_ID);
-	}
 
-	// }}}
-	// {{{ public function init()
-
-	public function init()
-	{
-		// auto-generate an id of no id is set
-		if ($this->id === null)
-			$this->id = $this->getUniqueId();
+		// auto-generate an id to use if no id is set
+		$this->id = $this->getUniqueId();
 	}
 
 	// }}}
