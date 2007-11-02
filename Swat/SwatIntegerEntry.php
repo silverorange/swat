@@ -29,12 +29,24 @@ class SwatIntegerEntry extends SwatNumericEntry
 		if ($this->value === null)
 			return;
 
-		$integer_value = $this->getNumericValue($this->value);
+		try {
+			$integer_value = $this->getNumericValue($this->value);
 
-		if ($integer_value === null)
-			$this->addMessage($this->getValidationMessage('integer'));
-		else
-			$this->value = $integer_value;
+			if ($integer_value === null)
+				$this->addMessage($this->getValidationMessage('integer'));
+			else
+				$this->value = $integer_value;
+
+		} catch (SwatIntegerOverflowException $e) {
+			if ($e->getSign() > 0)
+				$this->addMessage($this->getValidationMessage(
+					'integer-maximum'));
+			else
+				$this->addMessage($this->getValidationMessage(
+					'integer-minimum'));
+
+			$integer_value = null;
+		}
 	}
 
 	// }}}
@@ -100,6 +112,20 @@ class SwatIntegerEntry extends SwatNumericEntry
 		case 'integer':
 			$message = new SwatMessage(
 				Swat::_('The %s field must be an integer.'),
+				SwatMessage::ERROR);
+
+			break;
+
+		case 'integer-maximum':
+			$message = new SwatMessage(
+				Swat::_('The %s field is too big.'),
+				SwatMessage::ERROR);
+
+			break;
+
+		case 'integer-minimum':
+			$message = new SwatMessage(
+				Swat::_('The %s field is too small.'),
 				SwatMessage::ERROR);
 
 			break;
