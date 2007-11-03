@@ -765,7 +765,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$start_month = $this->valid_range_start->getMonth();
 		$end_month   = $this->valid_range_end->getMonth();
 
-		$end_check = clone($this->valid_range_start);
+		$end_check = clone $this->valid_range_start;
 		$end_check->addSeconds(2678400); // add 31 days
 
 		if ($start_year == $end_year && $start_month == $end_month) {
