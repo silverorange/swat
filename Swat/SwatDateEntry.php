@@ -774,7 +774,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			$end_day   = $this->valid_range_end->getDay();
 
 			for ($i = $start_day; $i <= $end_day; $i++)
-				$this->day_flydown->addOptions($i, $i);
+				$this->day_flydown->addOption($i, $i);
 
 		} elseif (Date::compare($end_check, $this->valid_range_end, true) != -1) {
 
