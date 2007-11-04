@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * be expanded
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatExpandableCheckboxTree extends SwatCheckboxTree
@@ -182,12 +182,19 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 				$branch_state = $this->branch_state;
 		}
 
+		$expandable_node_ids = array_map(
+			array('SwatString', 'quoteJavaScriptString'),
+			$this->getExpandableNodeIds($this->tree));
+
+		$expandable_node_ids = implode(', ', $expandable_node_ids);
+
 		$javascript.= sprintf(
-			"var %s_obj = new SwatExpandableCheckboxTree('%s', %s, %s);",
+			"var %s_obj = new SwatExpandableCheckboxTree('%s', %s, %s, [%s]);",
 			$this->id,
 			$this->id,
 			$dependent_boxes,
-			$branch_state);
+			$branch_state,
+			$expandable_node_ids);
 
 		return $javascript;
 	}
@@ -237,38 +244,10 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			$index = $parent_index.'.'.$node->getIndex();
 
 			$li_tag = new SwatHtmlTag('li');
+			if (count($child_nodes) > 0)
+				$li_tag->id = $this->id.'_'.$index.'_container';
 
-			// display expander
-			if (count($child_nodes) > 0) {
-
-				$li_tag->class = 'swat-expandable-checkbox-tree-expander';
-				$li_tag->open();
-
-				$anchor = new SwatHtmlTag('a');
-				$anchor->href =
-					sprintf("javascript:%s_obj.toggleBranch('%s');",
-						$this->id,
-						$index);
-
-				$anchor->open();
-
-				$img = new SwatHtmlTag('img');
-
-				$img->src = 'packages/swat/images/swat-disclosure-open.png';
-				$img->alt = Swat::_('close');
-
-				$img->width = 16;
-				$img->height = 16;
-				$img->id = $this->id.'_'.$index.'_img';
-				$img->class = 'swat-expandable-checkbox-tree-image';
-
-				$img->display();
-
-				$anchor->close();
-			} else {
-				$li_tag->class = null;
-				$li_tag->open();
-			}
+			$li_tag->open();
 
 			if ($node->value === null) {
 				if ($this->dependent_boxes) {
@@ -290,7 +269,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 				} else {
 					$span_tag = new SwatHtmlTag('span');
 					$span_tag->id = $this->id.'_'.$index;
-					$span_tag->class = 'swat-expandable-checkbox-tree-null-node';
+					$span_tag->class =
+						'swat-expandable-checkbox-tree-null-node';
+
 					$span_tag->setContent($node->title);
 					$span_tag->display();
 				}
@@ -346,6 +327,47 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			$nodes++;
 
 		return $nodes;
+	}
+
+	// }}}
+	// {{{ private function getExpandableNodeIds()
+
+	/**
+	 * Gets the node XHTML ids of all expandable nodes in this expandable
+	 * checkbox tree
+	 *
+	 * @param SwatDataTreeNode $node the root node.
+	 * @param string $parent_id optional. The XHTML id of the parent node. Not
+	 *                           required for the checkbox tree root node.
+	 *
+	 * @return array an array of expandable node XHTML ids.
+	 */
+	private function getExpandableNodeIds(SwatDataTreeNode $node,
+		$parent_id = '')
+	{
+		$expandable_ids = array();
+
+		$child_nodes = $node->getChildren();
+		if (count($child_nodes) > 0) {
+
+			if (strlen($parent_id) == 0) {
+				// id of the first node is just the node index and is not
+				// expandable
+				$id = $node->getIndex();
+			} else {
+				// id of other nodes is a combination of parent id
+				$id = $parent_id.'.'.$node->getIndex();
+				$expandable_ids[] = $id;
+			}
+
+			foreach ($child_nodes as $child_node) {
+				$expandable_ids = array_merge($expandable_ids,
+					$this->getExpandableNodeIds($child_node, $id));
+			}
+
+		}
+
+		return $expandable_ids;
 	}
 
 	// }}}
