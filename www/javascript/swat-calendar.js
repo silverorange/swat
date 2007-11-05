@@ -382,7 +382,7 @@ SwatCalendar.prototype.buildControls = function()
 					'selected="selected">' + SwatCalendar.month_names[i] + '</option>';
 			else
 				month_array = month_array + '<option value="' + eval(i + 1) + '">' +
-					SwatCalender.month_names[i] + '</option>';
+					SwatCalendar.month_names[i] + '</option>';
 		}
 	} else if ((end_date.getYear() - start_date.getYear()) == 1) {
 		for (var i = start_date.getMonth(); i <= 11; i++) {
@@ -391,7 +391,7 @@ SwatCalendar.prototype.buildControls = function()
 					'selected="selected">' + SwatCalendar.month_names[i] + '</option>';
 			else
 				month_array = month_array + '<option value="' + eval(i + 1) + '">' +
-					SwatCalender.month_names[i] + '</option>';
+					SwatCalendar.month_names[i] + '</option>';
 		}
 
 		for (var i = 0; i <= end_date.getMonth(); i++) {
