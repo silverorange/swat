@@ -11,7 +11,7 @@ require_once 'Swat/SwatCheckbox.php';
  * XHTML Strict DTD
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatXHTMLTextarea extends SwatTextarea
@@ -40,29 +40,11 @@ class SwatXHTMLTextarea extends SwatTextarea
 	protected $has_validation_errors = false;
 
 	/**
-	 * Embedded form field to contain checkbox control used to ignore XHTML
-	 * validation errors
-	 *
-	 * @var SwatFormField
-	 */
-	protected $ignore_errors_field = null;
-
-	/**
-	 * Embedded checkbox control used to ignore XHTML validation errors
+	 * Composite checkbox control used to ignore XHTML validation errors
 	 *
 	 * @var SwatCheckbox
 	 */
-	protected $ignore_errors_checkbox = null;
-
-	/**
-	 * An internal flag that is set to true when embedded widgets have been
-	 * created
-	 *
-	 * @var boolean
-	 *
-	 * @see SwatXHTMLTextarea::createEmbeddedWidgets()
-	 */
-	protected $widgets_created = false;
+	protected $ignore_errors_checkbox;
 
 	// }}}
 	// {{{ public function process
@@ -95,9 +77,6 @@ XHTML;
 
 		parent::process();
 
-		$this->createEmbeddedWidgets();
-		$this->ignore_errors_field->process();
-
 		$ignore_validation_errors = ($this->allow_ignore_validation_errors &&
 			$this->ignore_errors_checkbox->value);
 
@@ -112,7 +91,6 @@ XHTML;
 		$xml_errors = libxml_get_errors();
 		libxml_clear_errors();
 		libxml_use_internal_errors($errors);
-		//echo var_dump($xml_errors);
 
 		if (count($xml_errors) > 0 && !$ignore_validation_errors) {
 			$this->addMessage($this->getValidationErrorMessage($xml_errors));
@@ -128,14 +106,14 @@ XHTML;
 		if (!$this->visible)
 			return;
 
-		$this->createEmbeddedWidgets();
-
 		parent::display();
 
 		if ($this->allow_ignore_validation_errors &&
 			($this->has_validation_errors ||
-			$this->ignore_errors_checkbox->value))
-			$this->ignore_errors_field->display();
+			$this->ignore_errors_checkbox->value)) {
+			$ignore_field = $this->getCompositeWidget('ignore_field');
+			$ignore_field->display();
+		}
 	}
 
 	// }}}
@@ -195,27 +173,23 @@ XHTML;
 	}
 
 	// }}}
-	// {{{ protected function createEmbeddedWidgets()
+	// {{{ protected function createCompositeWidgets()
 
-	protected function createEmbeddedWidgets()
+	/**
+	 * Creates the composite checkbox used by this XHTML textarea
+	 *
+	 * @see SwatWidget::createCompositeWidgets()
+	 */
+	protected function createCompositeWidgets()
 	{
-		if (!$this->widgets_created) {
-			$this->ignore_errors_field =
-				new SwatFormField($this->id.'_ignore_field');
+		$this->ignore_errors_checkbox =
+			new SwatCheckbox($this->id.'_ignore_checkbox');
 
-			$this->ignore_errors_field->title =
-				Swat::_('Ignore XHTML validation errors');
+		$ignore_field = new SwatFormField($this->id.'_ignore_field');
+		$ignore_field->title = Swat::_('Ignore XHTML validation errors');
+		$ignore_field->add($this->ignore_errors_checkbox);
 
-			$this->ignore_errors_field->parent = $this;
-
-			$this->ignore_errors_checkbox =
-				new SwatCheckbox($this->id.'_ignore_checkbox');
-
-			$this->ignore_errors_field->add(
-				$this->ignore_errors_checkbox);
-
-			$this->widgets_created = true;
-		}
+		$this->addCompositeWidget($ignore_field, 'ignore_field');
 	}
 
 	// }}}
