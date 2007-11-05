@@ -142,7 +142,8 @@ XHTML;
 			$error = $error_object->message;
 
 			// further humanize
-			$error = str_replace('tag mismatch:', 'tag mismatch between',
+			$error = str_replace('tag mismatch:',
+				Swat::_('tag mismatch between'),
 				$error);
 
 			// remove some stuff that only makes sense in document context
@@ -151,11 +152,20 @@ XHTML;
 			$error = strtolower($error);
 
 			$error = str_replace('xmlparseentityref: no name',
-				'unescaped apmersand. Use &amp;amp; instead of &amp;',
+				Swat::_('unescaped apmersand. Use &amp;amp; instead of &amp;'),
 				$error);
 
 			$error = str_replace('starttag: invalid element name',
-				'unescaped less-than. Use &amp;lt; instead of &lt;',
+				Swat::_('unescaped less-than. Use &amp;lt; instead of &lt;'),
+				$error);
+
+			$error = str_replace('specification mandate value for attribute',
+				Swat::_('a value is required for the attribute'),
+				$error);
+
+			$error = preg_replace(
+				'/^no declaration for attribute (.*?) of element (.*?)$/',
+				Swat::_('the attribute \1 is not valid for the element \2'),
 				$error);
 
 			$error = trim($error);
@@ -164,7 +174,7 @@ XHTML;
 				$errors[] = $error;
 		}
 
-		$content = '%s must be valid XHTML markup: ';
+		$content = Swat::_('%s must be valid XHTML markup: ');
 		$content.= '<ul><li>'.implode(',</li><li>', $errors).'.</li></ul>';
 		$message = new SwatMessage($content, SwatMessage::ERROR);
 		$message->content_type = 'text/xml';
