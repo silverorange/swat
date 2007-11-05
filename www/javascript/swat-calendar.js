@@ -611,7 +611,7 @@ SwatCalendar.prototype.draw = function()
 	var begin_table = '<table class="swat-calendar-frame" cellspacing="0">';
 
 	var week_header = '<tr>';
-	for (i = 0; i < SwatCalendar.week_names.length; i++) {
+	for (var i = 0; i < SwatCalendar.week_names.length; i++) {
 		if (i == SwatCalendar.week_names.length - 1) {
 			week_header += '<th class="swat-calendar-last-header">' +
 				SwatCalendar.week_names[i] + '</th>';
