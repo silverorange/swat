@@ -168,6 +168,11 @@ XHTML;
 				Swat::_('the attribute \1 is not valid for the element \2'),
 				$error);
 
+			$error = str_replace('attvalue: " or \' expected',
+				Swat::_('attribute values must be contained within quotation '.
+					'marks'),
+				$error);
+
 			$error = trim($error);
 
 			if (!in_array($error, $ignored_errors))
