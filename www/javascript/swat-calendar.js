@@ -552,18 +552,16 @@ SwatCalendar.prototype.draw = function()
 		prev_year  = prev_year - 1;
 	}
 
-	var calendar_end = false;
-	var calendar_start = false;
-
 	var end_year     = end_date.getFullYear();
 	var start_year   = start_date.getFullYear();
 	var end_month    = end_date.getMonth();
 	var start_month  = start_date.getMonth();
 
-	if (this_year == start_year && this_month == (start_month + 1))
-		calendar_start = true;
-	else if (this_year == end_year && this_month == (end_month + 1))
-		calendar_end = true;
+	var calendar_start =
+		(this_year == start_year && this_month == (start_month + 1))
+
+	var calendar_end =
+		(this_year == end_year && this_month == (end_month + 1))
 
 	if (calendar_start) {
 		var prev_link = 'return false;';
