@@ -102,6 +102,17 @@ SwatSearchEntry.prototype.showLabelText = function()
 	this.input.value = this.label_text;
 }
 
+SwatSearchEntry.prototype.isLabelTextShown = function()
+{
+	if (this.input.hasAttribute) {
+		var shown = (!this.input.hasAttribute('name'));
+	} else {
+		var shown = (!this.input.getAttribute('name'));
+	}
+
+	return shown;
+}
+
 SwatSearchEntry.prototype.hideLabelText = function()
 {
 	var hide = false;
