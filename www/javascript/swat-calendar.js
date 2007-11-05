@@ -532,6 +532,18 @@ SwatCalendar.prototype.draw = function()
 		yyyy = yyyy + 1900;
 	}
 
+	// sanity check. make sure the date is in the valid range
+	var display_date = new Date(yyyy, mm - 1, dd);
+	if (display_date < this.start_date) {
+		yyyy = this.start_date.getFullYear();
+		mmm = this.start_date.getMonth() + 1;
+		dd = this.start_date.getDate();
+	} else if (display_date >= this.end_date) {
+		yyyy = this.end_date.getFullYear();
+		mm = this.end_date.getMonth() + 1;
+		dd = this.end_date.getDate();
+	}
+
 	var new_date = new Date(yyyy, mm - 1, 1);
 	var start_day = new_date.getDay();
 
