@@ -10,7 +10,9 @@
 
 		<widget class="SwatFormField">
 			<property name="title">XHTML Validating Text Area</property>
-			<widget class="SwatXHTMLTextarea" id="textarea_xhtml" />
+			<widget class="SwatXHTMLTextarea" id="textarea_xhtml">
+				<property name="allow_ignore_validation_errors" type="boolean">true</property>
+			</widget>
 		</widget>
 
 		<widget class="SwatFormField">
