@@ -311,7 +311,7 @@ class SwatError
 				'Occurred in file <strong>%s</strong> '.
 				'on line <strong>%s</strong>.<br /><br />',
 				$this->getSeverityString(),
-				nl2br($this->message),
+				nl2br(htmlspecialchars($this->message)),
 				$this->file,
 				$this->line);
 
@@ -327,7 +327,7 @@ class SwatError
 
 
 			if (array_key_exists('args', $entry))
-				$arguments = htmlentities($this->getArguments(
+				$arguments = htmlspecialchars($this->getArguments(
 					$entry['args'], $function, $class),
 					null, 'UTF-8');
 			else
@@ -532,7 +532,7 @@ class SwatError
 				"min-width: 400px; }\n";
 
 			echo ".swat-exception h3 { background: #e65; margin: 0; padding: ".
-				"border-bottom: 2px solid #d43; color: #fff; }\n";
+				"border-bottom: 1px solid #d43; color: #fff; }\n";
 
 			echo ".swat-exception-body { padding: 0.8em; }\n";
 			echo ".swat-exception-message { margin-left: 2em; padding: 1em; ".

@@ -318,7 +318,7 @@ class SwatException extends Exception
 				'on line <strong>%s</strong>.<br /><br />',
 				$this->wasHandled() ? 'Caught' : 'Uncaught',
 				$this->class,
-				nl2br($this->getMessage()),
+				nl2br(htmlspecialchars($this->getMessage())),
 				$this->getFile(),
 				$this->getLine());
 
@@ -333,7 +333,7 @@ class SwatException extends Exception
 				$entry['function'] : null;
 
 			if (array_key_exists('args', $entry))
-				$arguments = htmlentities($this->getArguments(
+				$arguments = htmlspecialchars($this->getArguments(
 					$entry['args'], $function, $class),
 					null, 'UTF-8');
 			else
@@ -565,7 +565,7 @@ class SwatException extends Exception
 				"min-width: 400px; }\n";
 
 			echo ".swat-exception h3 { background: #e65; margin: 0; padding: ".
-				"5px; border-bottom: 2px solid #d43; color: #fff; }\n";
+				"5px; border-bottom: 1px solid #d43; color: #fff; }\n";
 
 			echo ".swat-exception-body { padding: 0.8em; }\n";
 			echo ".swat-exception-message { margin-left: 2em; ".
