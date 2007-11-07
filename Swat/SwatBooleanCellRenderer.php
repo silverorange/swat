@@ -42,11 +42,11 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	/**
 	 * Optional content type
 	 *
-	 * Default text/plain, use text/xml for XHTML fragments.
+	 * Defaults to text/plain, use text/xml for XHTML fragments.
 	 *
 	 * @var string
 	 */
-	public $content_type = null;
+	public $content_type = 'text/plain';
 
 	/**
 	 * The stock id of this SwatBooleanCellRenderer
@@ -92,7 +92,7 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 
 		case 'check-only':
 			$content_type = 'text/xml';
-			$false_content = '&nbsp;';
+			$false_content = ' '; // non-breaking space
 
 			ob_start();
 			$this->displayCheck();
