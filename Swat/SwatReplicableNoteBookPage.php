@@ -15,76 +15,6 @@ require_once 'Swat/SwatNoteBookPage.php';
  */
 class SwatReplicableNoteBookPage extends SwatReplicableContainer
 {
-	// {{{ public function init()
-
-	/**
-	 * Initilizes this replicable notebook page
-	 *
-	 * Goes through the internal widgets, clones them, and adds them to the
-	 * widget tree.
-	 */
-	public function init()
-	{
-		$notebook = $this->getCompositeWidget('notebook');
-		$children = array();
-
-		if ($this->replicators === null)
-			$this->replicators = array(0 => null);
-
-		// first we add each child to the local array, and remove from the
-		// widget tree
-		foreach ($this->children as $child_widget)
-			$children[] = $this->remove($child_widget);
-
-		// then we clone, change the id and add back to the widget tree inside
-		// a replicated container
-		foreach ($this->replicators as $id => $title) {
-			$container = $this->getContainer($id, $title);
-			$suffix = '_'.$this->id.$id;
-			$this->widgets[$id] = array();
-
-			foreach ($children as $child) {
-				$new_child = clone $child;
-
-				if ($new_child->id !== null) {
-					$this->widgets[$id][$new_child->id] = $new_child;
-					$new_child->id.= $suffix;
-				}
-
-				// update ids of cloned child descendants
-				if ($new_child instanceof SwatUIParent) {
-					foreach ($new_child->getDescendants() as $descendant) {
-						if ($descendant->id !== null) {
-							$this->widgets[$id][$descendant->id] = $descendant;
-							$descendant->id.= $suffix;
-						}
-					}
-				}
-
-				if ($container === null)
-					$this->add($new_child);
-				else
-					$container->add($new_child);
-			}
-
-			if ($container !== null)
-				$notebook->addPage($container);
-		}
-
-		parent::init();
-	}
-
-	// }}}
-	// {{{ public function display()
-
-	public function display()
-	{
-		SwatWidget::display();
-		$notebook = $this->getCompositeWidget('notebook');
-		$notebook->display();
-	}
-
-	// }}}
 	// {{{ protected function getContainer()
 
 	/**
@@ -109,17 +39,16 @@ class SwatReplicableNoteBookPage extends SwatReplicableContainer
 	}
 
 	// }}}
-	// {{{ protected function createCompositeWidgets()
+	// {{{ protected function getContainerParent()
 
 	/**
-	 * Creates the composite notebook used by this replicable notebook page
+	 * Gets the notebook object that contains replicated notebook pages
 	 *
-	 * @see SwatWidget::createCompositeWidgets()
+	 * @return SwatUIParent the parent object of replicated containers.
 	 */
-	protected function createCompositeWidgets()
+	protected function getContainerParent()
 	{
-		$notebook = new SwatNoteBook($this->id.'_notebook');
-		$this->addCompositeWidget($notebook, 'notebook');
+		return new SwatNoteBook($this->id.'_notebook');
 	}
 
 	// }}}
