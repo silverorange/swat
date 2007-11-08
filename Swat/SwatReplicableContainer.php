@@ -60,6 +60,10 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 	 */
 	public function init()
 	{
+		$container_parent = $this->getContainerParent();
+		if ($container_parent === null)
+			$container_parent = $this;
+
 		$children = array();
 
 		if ($this->replicators === null)
@@ -96,14 +100,17 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 				}
 
 				if ($container === null)
-					$this->add($new_child);
+					$container_parent->addChild($new_child);
 				else
 					$container->add($new_child);
 			}
 
 			if ($container !== null)
-				$this->add($container);
+				$container_parent->addChild($container);
 		}
+
+		if ($container_parent !== $this)
+			$this->add($container_parent);
 
 		parent::init();
 	}
@@ -129,6 +136,24 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 			$widget = $this->widgets[$replicator_id][$widget_id];
 
 		return $widget;
+	}
+
+	// }}}
+	// {{{ protected function getContainerParent()
+
+	/**
+	 * Gets an optional UI-parent class that contains the replicated containers
+	 *
+	 * This is useful if the containers only belong in a certain type of parent
+	 * object but the parent object is not a SwatDisplayableContainer.
+	 *
+	 * @return SwatUIParent the parent object of replicated containers. If null,
+	 *                       replicated containers are added directly to this
+	 *                       container.
+	 */
+	protected function getContainerParent()
+	{
+		return null;
 	}
 
 	// }}}
