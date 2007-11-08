@@ -62,15 +62,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	private $tile = null;
 
-	/**
-	 * The check-all widget for this tile view
-	 *
-	 * @var SwatCheckAll
-	 *
-	 * @see SwatTileView::$show_check_all
-	 */
-	private $check_all;
-
 	// }}}
 	// {{{ public function __construct()
 
@@ -106,8 +97,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		parent::init();
 
-		$this->createEmbeddedWidgets();
-		$this->check_all->init();
 		if ($this->tile !== null)
 			$this->tile->init();
 	}
@@ -124,7 +113,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		parent::process();
 
-		$this->check_all->process();
 		if ($this->tile !== null)
 			$this->tile->process();
 	}
@@ -155,11 +143,12 @@ class SwatTileView extends SwatView implements SwatUIParent
 				$this->tile->display($data);
 
 		if ($this->showCheckAll()) {
+			$check_all = $this->getCompositeWidget('check_all');
 			if ($this->check_all_title !== null) {
-				$this->check_all->title = $this->check_all_title;
-				$this->check_all->content_type = $this->check_all_content_type;
+				$check_all->title = $this->check_all_title;
+				$check_all->content_type = $this->check_all_content_type;
 			}
-			$this->check_all->display();
+			$check_all->display();
 		}
 
 		$clear_div_tag = new SwatHtmlTag('div');
@@ -401,9 +390,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		if ($this->tile !== null)
 			$set->addEntrySet($this->tile->getHtmlHeadEntrySet());
 
-		if ($this->showCheckAll())
-			$set->addEntrySet($this->check_all->getHtmlHeadEntrySet());
-
 		return $set;
 	}
 
@@ -433,12 +419,14 @@ class SwatTileView extends SwatView implements SwatUIParent
 		}
 
 		if ($this->showCheckAll()) {
+			$check_all = $this->getCompositeWidget('check_all');
+
 			$renderer = $this->getCheckboxCellRenderer();
-			$javascript.= "\n".$this->check_all->getInlineJavascript();
+			$javascript.= "\n".$check_all->getInlineJavascript();
 
 			// set the controller of the check-all widget
 			$javascript.= sprintf("\n%s_obj.setController(%s);",
-				$this->check_all->id, $renderer->id);
+				$check_all->id, $renderer->id);
 		}
 
 		return $javascript;
@@ -506,15 +494,15 @@ class SwatTileView extends SwatView implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ private function createEmbeddedWidgets()
+	// {{{ protected function createCompositeWidgets()
 
 	/**
-	 * Creates internal widgets required for this tile view
+	 * Creates the composite check-all widget used by this tile view
 	 */
-	private function createEmbeddedWidgets()
+	protected function createCompositeWidgets()
 	{
-		$this->check_all = new SwatCheckAll();
-		$this->check_all->parent = $this;
+		$check_all = new SwatCheckAll();
+		$this->addCompositeWidget($check_all, 'check_all');
 	}
 
 	// }}}
