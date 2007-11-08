@@ -68,37 +68,11 @@ class SwatActions extends SwatControl implements SwatUIParent
 	// {{{ private properties
 
 	/**
-	 * A reference to an internal flydown widget that displays available
-	 * actions.
-	 *
-	 * @var SwatFlydown
-	 */
-	private $action_flydown = null;
-
-	/**
-	 * A reference to an internal button that is clicked to carry out the
-	 * currently selected action.
-	 *
-	 * @var SwatButton
-	 */
-	private $apply_button;
-
-	/**
 	 * The available actions for this actions selector.
 	 *
 	 * @var array
 	 */
 	private $action_items = array();
-
-	/**
-	 * An internal flag that is set to true when embedded widgets have been
-	 * created
-	 *
-	 * @var boolean
-	 *
-	 * @see SwatActions::createEmbeddedWidgets()
-	 */
-	private $widgets_created = false;
 
 	/**
 	 * The view containing itmes acted upon by this actions control
@@ -174,15 +148,15 @@ class SwatActions extends SwatControl implements SwatUIParent
 
 		parent::display();
 
-		$this->createEmbeddedWidgets();
+		$flydown = $this->getCompositeWidget('action_flydown');
 
 		// set the flydown back to its initial state (no persistence)
 		if ($this->auto_reset)
-			$this->action_flydown->reset();
+			$flydown->reset();
 
 		// select the current action item based upon the flydown value
-		if (isset($this->action_items_by_id[$this->action_flydown->value]))
-			$this->selected = $this->action_items_by_id[$this->action_flydown->value];
+		if (isset($this->action_items_by_id[$flydown->value]))
+			$this->selected = $this->action_items_by_id[$flydown->value];
 		else
 			$this->selected = null;
 
@@ -194,11 +168,11 @@ class SwatActions extends SwatControl implements SwatUIParent
 		echo '<div class="swat-actions-controls">';
 
 		$label = new SwatHtmlTag('label');
-		$label->for = $this->id.'_action_flydown';
-		$label->setContent(sprintf('%s: ', Swat::_('Action')));
+		$label->for = $flydown->getFocusableHtmlId();
+		$label->setContent(Swat::_('Action: '));
 		$label->display();
 
-		$this->action_flydown->display();
+		$flydown->display();
 		echo ' ';
 		$this->displayButton();
 
@@ -241,8 +215,6 @@ class SwatActions extends SwatControl implements SwatUIParent
 	public function process()
 	{
 		parent::process();
-
-		$this->createEmbeddedWidgets();
 
 		$this->action_flydown->process();
 		$selected_id = $this->action_flydown->value;
@@ -320,15 +292,10 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	public function getHtmlHeadEntrySet()
 	{
-		$this->createEmbeddedWidgets();
-
 		$set = parent::getHtmlHeadEntrySet();
 
 		foreach ($this->action_items as $child_widget)
 			$set->addEntrySet($child_widget->getHtmlHeadEntrySet());
-
-		$set->addEntrySet($this->action_flydown->getHtmlHeadEntrySet());
-		$set->addEntrySet($this->apply_button->getHtmlHeadEntrySet());
 
 		return $set;
 	}
@@ -508,39 +475,36 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	protected function displayButton()
 	{
-		$this->apply_button->display();
+		$button = $this->getCompositeWidget('apply_button');
+		$button->display();
 	}
 
 	// }}}
-	// {{{ protected function createEmbeddedWidgets()
+	// {{{ protected function createCompositeWidgets()
 
 	/**
-	 * Creates internal widgets
-	 *
-	 * Widgets references are assigned to private class properties. Widgets are
-	 * only created once even if this method is called multiple times.
+	 * Creates and the composite flydown and button widgets of this actions
+	 * control
 	 */
-	protected function createEmbeddedWidgets()
+	protected function createCompositeWidgets()
 	{
-		if ($this->widgets_created)
-			return;
+		$flydown = new SwatFlydown($this->id.'_action_flydown');
+		$flydown->show_blank = $this->show_blank;
 
-		$this->widgets_created = true;
-
-		$this->action_flydown = new SwatFlydown($this->id.'_action_flydown');
-		$this->action_flydown->parent = $this;
-		$this->action_flydown->show_blank = $this->show_blank;
-
-		foreach ($this->action_items as $item)
-			if ($item->visible)
+		foreach ($this->action_items as $item) {
+			if ($item->visible) {
 				if ($item instanceof SwatActionItemDivider)
-					$this->action_flydown->addDivider();
+					$flydown->addDivider();
 				else
-					$this->action_flydown->addOption($item->id, $item->title);
+					$flydown->addOption($item->id, $item->title);
+			}
+		}
 
-		$this->apply_button = new SwatButton($this->id.'_apply_button');
-		$this->apply_button->parent = $this;
-		$this->apply_button->setFromStock('apply');
+		$this->addCompositeWidget($flydown, 'action_flydown');
+
+		$button = new SwatButton($this->id.'_apply_button');
+		$button->setFromStock('apply');
+		$this->addCompositeWidget($button, 'apply_button');
 	}
 
 	// }}}
