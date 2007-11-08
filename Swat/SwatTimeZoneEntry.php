@@ -49,34 +49,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 */
 	private $regions = array();
 
-	/**
-	 * A reference to the internal areas flydown
-	 *
-	 * This contains time-zone continents.
-	 *
-	 * @var SwatFlydown
-	 */
-	private $areas_flydown;
-
-	/**
-	 * A reference to the internal regions flydown
-	 *
-	 * This contains time-zone cities.
-	 *
-	 * @var SwatCascadeFlydown
-	 */
-	private $regions_flydown;
-
-	/**
-	 * An internal flag that is set to true when embedded widgets have been
-	 * created
-	 *
-	 * @var boolean
-	 *
-	 * @see SwatTimeZoneEntry::createEmbeddedWidgets()
-	 */
-	private $widgets_created = false;
-
 	// }}}
 	// {{{ public function __construct()
 
@@ -97,9 +69,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
 		$time_zone_list = $this->parseAreaWhitelist($area_whitelist);
 		$this->setAreas($time_zone_list);
-
-		$this->addJavaScript('packages/swat/javascript/swat-cascade.js',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -117,19 +86,20 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
 		parent::display();
 
-		$this->createEmbeddedWidgets();
+		$areas_flydown = $this->getCompositeWidget('areas_flydown');
+		$regions_flydown = $this->getCompositeWidget('regions_flydown');
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
-		$this->areas_flydown->value = $this->getArea($this->value);
-		$this->areas_flydown->display();
+		$areas_flydown->value = $this->getArea($this->value);
+		$areas_flydown->display();
 
-		$this->regions_flydown->options = $this->regions;
-		$this->regions_flydown->value = $this->getRegion($this->value);
-		$this->regions_flydown->display();
+		$regions_flydown->options = $this->regions;
+		$regions_flydown->value = $this->getRegion($this->value);
+		$regions_flydown->display();
 
 		$div_tag->close();
 	}
@@ -147,19 +117,16 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	{
 		parent::process();
 
-		$this->createEmbeddedWidgets();
+		$areas_flydown = $this->getCompositeWidget('areas_flydown');
+		$regions_flydown = $this->getCompositeWidget('regions_flydown');
 
-		$this->areas_flydown->process();
-		$this->regions_flydown->process();
-
-		if ($this->areas_flydown->value === 'UTC')
+		if ($areas_flydown->value === 'UTC')
 			$this->value = 'UTC';
-		elseif ($this->areas_flydown->value === null ||
-			$this->regions_flydown->value === null)
+		elseif ($areas_flydown->value === null ||
+			$regions_flydown->value === null)
 			$this->value = null;
 		else
-			$this->value = $this->areas_flydown->value.'/'.
-				$this->regions_flydown->value;
+			$this->value = $areas_flydown->value.'/'.$regions_flydown->value;
 
 		if (!$this->required && $this->value === null && $this->isSensitive()) {
 			return;
@@ -206,28 +173,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ public function getHtmlHeadEntrySet()
-
-	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this date entry
-	 *
-	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 *                               this date entry.
-	 *
-	 * @see SwatUIObject::getHtmlHeadEntrySet()
-	 */
-	public function getHtmlHeadEntrySet()
-	{
-		$set = parent::getHtmlHeadEntrySet();
-		$this->createEmbeddedWidgets();
-
-		$set->addEntrySet($this->areas_flydown->getHtmlHeadEntrySet());
-		$set->addEntrySet($this->regions_flydown->getHtmlHeadEntrySet());
-
-		return $set;
-	}
-
-	// }}}
 	// {{{ protected function getCSSClassNames()
 
 	/**
@@ -245,30 +190,24 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private function createEmbeddedWidgets()
+	// {{{ protected function createCompositeWidgets()
 
 	/**
 	 * Creates all internal widgets required for this time-zone entry
 	 */
-	private function createEmbeddedWidgets()
+	protected function createCompositeWidgets()
 	{
-		if (!$this->widgets_created) {
-			$this->areas_flydown = new SwatFlydown($this->id.'_areas');
-			$this->areas_flydown->addOptionsByArray($this->areas);
-			$this->areas_flydown->show_blank = false;
-			$this->areas_flydown->parent = $this;
+		$areas_flydown = new SwatFlydown($this->id.'_areas');
+		$areas_flydown->addOptionsByArray($this->areas);
+		$areas_flydown->show_blank = false;
+		$this->addCompositeWidget($areas_flydown, 'areas_flydown');
 
-			$this->regions_flydown =
-				new SwatCascadeFlydown($this->id.'_regions');
-
-			$this->regions_flydown->show_blank = true;
-			$this->regions_flydown->blank_value = null;
-			$this->regions_flydown->cascade_from = $this->areas_flydown;
-			$this->regions_flydown->width = '15em';
-			$this->regions_flydown->parent = $this;
-
-			$this->widgets_created = true;
-		}
+		$regions_flydown = new SwatCascadeFlydown($this->id.'_regions');
+		$regions_flydown->show_blank = true;
+		$regions_flydown->blank_value = null;
+		$regions_flydown->cascade_from = $areas_flydown;
+		$regions_flydown->width = '15em';
+		$this->addCompositeWidget($regions_flydown, 'regions_flydown');
 	}
 
 	// }}}
