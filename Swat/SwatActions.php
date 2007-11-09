@@ -216,8 +216,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 	{
 		parent::process();
 
-		$this->action_flydown->process();
-		$selected_id = $this->action_flydown->value;
+		$flydown = $this->getCompositeWidget('action_flydown');
+		$selected_id = $flydown->value;
 
 		if (isset($this->action_items_by_id[$selected_id])) {
 			$this->selected = $this->action_items_by_id[$selected_id];
