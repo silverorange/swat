@@ -246,7 +246,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	// {{{ public function unsetWidget()
 
 	/**
-	 * Unsets a replicated widget within this cell
+	 * Unsets a cloned widget within this cell
 	 *
 	 * This is useful if you are deleting a row from an input row.
 	 *
