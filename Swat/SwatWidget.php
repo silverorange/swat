@@ -449,7 +449,7 @@ abstract class SwatWidget extends SwatUIObject
 	 * Creates and adds composite widgets of this widget
 	 *
 	 * Created composite widgets should be added in this method using
-	 * {@link SwatWidgetControl::addCompositeWidget()}.
+	 * {@link SwatWidget::addCompositeWidget()}.
 	 */
 	protected function createCompositeWidgets()
 	{
