@@ -722,6 +722,8 @@ class SwatUI extends SwatObject
 	 * @param string $value the value of the property.
 	 * @param SwatUIObject $object the object the property applies to.
 	 *
+	 * @return SwatCellRendererMapping the parsed mapping object.
+	 *
 	 * @throws SwatInvalidPropertyTypeException
 	 */
 	private function parseMapping($name, $value, SwatUIObject $object)
