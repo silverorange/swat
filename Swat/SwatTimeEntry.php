@@ -107,42 +107,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	// {{{ private properties
 
 	/**
-	 * A reference to the internal hour flydown
-	 *
-	 * @var SwatFlydown
-	 */
-	private $hour_flydown;
-
-	/**
-	 * A reference to the internal minute flydown
-	 *
-	 * @var SwatFlydown
-	 */
-	private $minute_flydown;
-
-	/**
-	 * A reference to the internal second flydown
-	 *
-	 * @var SwatFlydown
-	 */
-	private $second_flydown;
-
-	/**
-	 * A reference to the internal am/pm flydown
-	 *
-	 * @var SwatFlydown
-	 */
-	private $am_pm_flydown;
-
-	/**
-	 * An internal flag telling whether internal widgets have been
-	 * created or not
-	 *
-	 * @var boolean
-	 */
-	private $widgets_created = false;
-
-	/**
 	 * Default year value used for time value
 	 *
 	 * Defined here so internal time comparisons all happen on the same day.
@@ -189,6 +153,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->display_parts = self::HOUR | self::MINUTE;
 		$this->required_parts = $this->display_parts;
 
+		// Don't specify a zero offset for these times as it triggers a
+		// PEAR::Date bug. All comparisons are explicitly done in UTC.
 		$this->valid_range_start = new SwatDate('2000-01-01T00:00:00');
 		$this->valid_range_end   = new SwatDate('2000-01-01T23:59:59');
 
@@ -209,26 +175,12 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	// {{{ public function __clone()
 
 	/**
-	 * Clones the embedded widgets of this time entry widget
+	 * Clones the valid time range of this time entry
 	 */
 	public function __clone()
 	{
 		$this->valid_range_start = clone $this->valid_range_start;
 		$this->valid_range_end = clone $this->valid_range_end;
-
-		if ($this->widgets_created) {
-			if ($this->display_parts & self::HOUR) {
-				$this->hour_flydown = clone $this->hour_flydown;
-				if ($this->twelve_hour)
-					$this->am_pm_flydown = clone $this->am_pm_flydown;
-			}
-
-			if ($this->display_parts & self::MINUTE)
-				$this->minute_flydown = clone $this->minute_flydown;
-
-			if ($this->display_parts & self::SECOND)
-				$this->second_flydown = clone $this->second_flydown;
-		}
 	}
 
 	// }}}
@@ -244,8 +196,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		parent::display();
 
-		$this->createEmbeddedWidgets();
-
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
@@ -254,7 +204,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		echo '<span class="swat-time-entry-span">';
 
 		if ($this->display_parts & self::HOUR) {
-			if ($this->hour_flydown->value === null && $this->value !== null) {
+			$hour_flydown = $this->getCompositeWidget('hour_flydown');
+			if ($hour_flydown->value === null && $this->value !== null) {
 				// work around a bug in PEAR::Date that returns hour as a string
 				$hour = intval($this->value->getHour());
 
@@ -267,42 +218,44 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 						$hour = 12;
 				}
 
-				$this->hour_flydown->value = $hour;
+				$hour_flydown->value = $hour;
 			}
 
-			$this->hour_flydown->display();
+			$hour_flydown->display();
 
 			if ($this->display_parts & (self::MINUTE | self::SECOND))
 				echo ':';
 		}
 
 		if ($this->display_parts & self::MINUTE) {
-			if ($this->minute_flydown->value === null &&
-				$this->value !== null) {
+			$minute_flydown = $this->getCompositeWidget('minute_flydown');
+			if ($minute_flydown->value === null && $this->value !== null) {
 				// work around a bug in PEAR::Date that returns minutes as a
 				// 2-character string
 				$minute = intval($this->value->getMinute());
-				$this->minute_flydown->value = $minute;
+				$minute_flydown->value = $minute;
 			}
 
-			$this->minute_flydown->display();
+			$minute_flydown->display();
 			if ($this->display_parts & self::SECOND)
 				echo ':';
 		}
 
 		if ($this->display_parts & self::SECOND) {
-			if ($this->second_flydown->value === null && $this->value !== null)
-				$this->second_flydown->value = $this->value->getSecond();
+			$second_flydown = $this->getCompositeWidget('second_flydown');
+			if ($second_flydown->value === null && $this->value !== null)
+				$second_flydown->value = $this->value->getSecond();
 
-			$this->second_flydown->display();
+			$second_flydown->display();
 		}
 
 		if (($this->display_parts & self::HOUR) && $this->twelve_hour) {
-			if ($this->am_pm_flydown->value === null && $this->value !== null)
-				$this->am_pm_flydown->value =
+			$am_pm_flydown = $this->getCompositeWidget('am_pm_flydown');
+			if ($am_pm_flydown->value === null && $this->value !== null)
+				$am_pm_flydown->value =
 					($this->value->getHour() < 12) ? 'am' : 'pm';
 
-			$this->am_pm_flydown->display();
+			$am_pm_flydown->display();
 		}
 
 		echo '</span>';
@@ -328,8 +281,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		if (!$this->isVisible())
 			return;
 
-		$this->createEmbeddedWidgets();
-
 		$hour   = 0;
 		$minute = 0;
 		$second = 0;
@@ -338,9 +289,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$any_empty = false;
 
 		if ($this->display_parts & self::HOUR) {
-			$this->hour_flydown->process();
-			$hour = $this->hour_flydown->value;
-
+			$hour_flydown = $this->getCompositeWidget('hour_flydown');
+			$hour = $hour_flydown->value;
 			if ($hour === null) {
 				if ($this->required_parts & self::HOUR) {
 					$any_empty = true;
@@ -352,9 +302,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			}
 
 			if ($this->twelve_hour) {
-				$this->am_pm_flydown->process();
-				$am_pm = $this->am_pm_flydown->value;
-
+				$am_pm_flydown = $this->getCompositeWidget('am_pm_flydown');
+				$am_pm = $am_pm_flydown->value;
 				if ($am_pm === null) {
 					if ($this->required_parts & self::HOUR) {
 						$any_empty = true;
@@ -375,9 +324,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		}
 
 		if ($this->display_parts & self::MINUTE) {
-			$this->minute_flydown->process();
-			$minute = $this->minute_flydown->value;
-
+			$minute_flydown = $this->getCompositeWidget('minute_flydown');
+			$minute = $minute_flydown->value;
 			if ($minute === null) {
 				if ($this->required_parts & self::MINUTE) {
 					$any_empty = true;
@@ -390,9 +338,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		}
 
 		if ($this->display_parts & self::SECOND) {
-			$this->second_flydown->process();
-			$second = $this->second_flydown->value;
-
+			$second_flydown = $this->getCompositeWidget('second_flydown');
+			$second = $second_flydown->value;
 			if ($second === null) {
 				if ($this->required_parts & self::SECOND) {
 					$any_empty = true;
@@ -492,33 +439,39 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			$this->id, $this->id);
 
 		if ($this->display_parts & self::HOUR) {
+			$hour_flydown = $this->getCompositeWidget('hour_flydown');
+
 			$lookup_hours = array();
-			foreach ($this->hour_flydown->options as $key => $option)
+			foreach ($hour_flydown->options as $key => $option)
 				$lookup_hours[] = sprintf('%s: %s',
 					$option->value,
-					($this->hour_flydown->show_blank) ? $key + 1 : $key);
+					($hour_flydown->show_blank) ? $key + 1 : $key);
 
 			$javascript.= sprintf("\n%s_obj.addLookupTable('hour', {%s});",
 				$this->id, implode(', ', $lookup_hours));
 		}
 
 		if ($this->display_parts & self::MINUTE) {
+			$minute_flydown = $this->getCompositeWidget('minute_flydown');
+
 			$lookup_minutes = array();
-			foreach ($this->minute_flydown->options as $key => $option)
+			foreach ($minute_flydown->options as $key => $option)
 				$lookup_minutes[] = sprintf('%s: %s',
 					$option->value,
-					($this->minute_flydown->show_blank) ? $key + 1 : $key);
+					($minute_flydown->show_blank) ? $key + 1 : $key);
 
 			$javascript.= sprintf("\n%s_obj.addLookupTable('minute', {%s});",
 				$this->id, implode(', ', $lookup_minutes));
 		}
 
 		if ($this->display_parts & self::SECOND) {
+			$second_flydown = $this->getCompositeWidget('second_flydown');
+
 			$lookup_seconds = array();
-			foreach ($this->second_flydown->options as $key => $option)
+			foreach ($second_flydown->options as $key => $option)
 				$lookup_seconds[] = sprintf('%s: %s',
 					$option->value,
-					($this->second_flydown->show_blank) ? $key + 1 : $key);
+					($second_flydown->show_blank) ? $key + 1 : $key);
 
 			$javascript.= sprintf("\n%s_obj.addLookupTable('second', {%s});",
 				$this->id, implode(', ', $lookup_seconds));
@@ -598,28 +551,31 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private function createEmbeddedWidgets()
+	// {{{ protected function createCompositeWidgets()
 
 	/**
-	 * Creates all internal widgets required for this time entry
+	 * Creates the composite widgets used by this time entry
+	 *
+	 * @see SwatWidget::createCompositeWidgets()
 	 */
-	private function createEmbeddedWidgets()
+	protected function createCompositeWidgets()
 	{
-		if (!$this->widgets_created) {
-			if ($this->display_parts & self::HOUR) {
-				$this->createHourFlydown();
-				if ($this->twelve_hour)
-					$this->createAmPmFlydown();
-			}
+		if ($this->display_parts & self::HOUR) {
+			$this->addCompositeWidget(
+				$this->createHourFlydown(), 'hour_flydown');
 
-			if ($this->display_parts & self::MINUTE)
-				$this->createMinuteFlydown();
-
-			if ($this->display_parts & self::SECOND)
-				$this->createSecondFlydown();
-
-			$this->widgets_created = true;
+			if ($this->twelve_hour)
+				$this->addCompositeWidget(
+					$this->createAmPmFlydown(), 'am_pm_flydown');
 		}
+
+		if ($this->display_parts & self::MINUTE)
+			$this->addCompositeWidget(
+				$this->createMinuteFlydown(), 'minute_flydown');
+
+		if ($this->display_parts & self::SECOND)
+			$this->addCompositeWidget(
+				$this->createSecondFlydown(), 'second_flydown');
 	}
 
 	// }}}
@@ -627,19 +583,22 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 	/**
 	 * Creates the hour flydown for this time entry
+	 *
+	 * @return the hour flydown for this time entry.
 	 */
 	private function createHourFlydown()
 	{
-		$this->hour_flydown = new SwatFlydown($this->id.'_hour');
-		$this->hour_flydown->parent = $this;
+		$flydown = new SwatFlydown($this->id.'_hour');
 
 		if ($this->twelve_hour) {
 			for ($i = 1; $i <= 12; $i++)
-				$this->hour_flydown->addOption($i, $i);
+				$flydown->addOption($i, $i);
 		} else {
 			for ($i = 0; $i < 24; $i++)
-				$this->hour_flydown->addOption($i, $i);
+				$flydown->addOption($i, $i);
 		}
+
+		return $flydown;
 	}
 
 	// }}}
@@ -647,15 +606,17 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 	/**
 	 * Creates the minute flydown for this time entry
+	 *
+	 * @return SwatFlydown the minute flydown for this time entry.
 	 */
 	private function createMinuteFlydown()
 	{
-		$this->minute_flydown = new SwatFlydown($this->id.'_minute');
-		$this->minute_flydown->parent = $this;
+		$flydown = new SwatFlydown($this->id.'_minute');
 
 		for ($i = 0; $i <= 59; $i++)
-			$this->minute_flydown->addOption($i,
-				str_pad($i, 2, '0', STR_PAD_LEFT));
+			$flydown->addOption($i, str_pad($i, 2, '0', STR_PAD_LEFT));
+
+		return $flydown;
 	}
 
 	// }}}
@@ -663,15 +624,17 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 	/**
 	 * Creates the second flydown for this time entry
+	 *
+	 * @return SwatFlydown the second flydown for this time entry.
 	 */
 	private function createSecondFlydown()
 	{
-		$this->second_flydown = new SwatFlydown($this->id.'_second');
-		$this->second_flydown->parent = $this;
+		$flydown = new SwatFlydown($this->id.'_second');
 
 		for ($i = 0; $i <= 59; $i++)
-			$this->second_flydown->addOption($i,
-				str_pad($i, 2 ,'0', STR_PAD_LEFT));
+			$flydown->addOption($i, str_pad($i, 2 ,'0', STR_PAD_LEFT));
+
+		return $flydown;
 	}
 
 	// }}}
@@ -679,16 +642,18 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 	/**
 	 * Creates the am/pm flydown for this time entry
+	 *
+	 * @return SwatFlydown the am/pm flydown for this time entry.
 	 */
 	private function createAmPmFlydown()
 	{
-		$this->am_pm_flydown = new SwatFlydown($this->id.'_am_pm');
-		$this->am_pm_flydown->addOptionsByArray(array(
+		$flydown = new SwatFlydown($this->id.'_am_pm');
+		$flydown->addOptionsByArray(array(
 			'am' => Swat::_('am'),
 			'pm' => Swat::_('pm'),
 		));
 
-		$this->am_pm_flydown->parent = $this;
+		return $flydown;
 	}
 
 	// }}}
