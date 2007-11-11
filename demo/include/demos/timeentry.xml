@@ -23,15 +23,15 @@
 			<property name="title" type="string">Valid Range</property>
 			<property name="note" type="string">Time must be between 9:00 am and 5:00 pm.</property>
 			<widget class="SwatTimeEntry" id="time_valid_range">
-				<property name="valid_range_start" type="date">2000-01-01T09:00:00.0000Z</property>
-				<property name="valid_range_end" type="date">2000-01-01T17:00:00.0000Z</property>
+				<property name="valid_range_start" type="date">2000-01-01T09:00:00</property>
+				<property name="valid_range_end" type="date">2000-01-01T17:00:00</property>
 			</widget>
 		</widget>
 
 		<widget class="SwatFormField">
 			<property name="title" type="string">Default Value (with Seconds)</property>
 			<widget class="SwatTimeEntry" id="time_default">
-				<property name="value" type="date">2000-01-01T11:11:11.0000Z</property>
+				<property name="value" type="date">2000-01-01T11:11:11</property>
 				<property name="display_parts" type="constant">HOUR | MINUTE | SECOND</property>
 			</widget>
 		</widget>
