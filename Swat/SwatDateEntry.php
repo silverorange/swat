@@ -581,6 +581,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function isStartDateValid()
 	{
+		$this->valid_range_start->setTZ('UTC');
 		return (Date::compare(
 			$this->value, $this->valid_range_start, true) >= 0);
 	}
@@ -597,6 +598,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function isEndDateValid()
 	{
+		$this->valid_range_end->setTZ('UTC');
 		return (Date::compare(
 			$this->value, $this->valid_range_end, true) < 0);
 	}
