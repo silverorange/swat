@@ -471,7 +471,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 */
 	private function displayInputRows()
 	{
-		$columns = $this->view->getVisibleColumns();
+		$columns = $this->parent->getVisibleColumns();
 
 		foreach ($this->replicators as $replicator_id) {
 
@@ -578,7 +578,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 */
 	private function displayEnterAnotherRow()
 	{
-		$columns = $this->view->getVisibleColumns();
+		$columns = $this->parent->getVisibleColumns();
 
 		$this->createEmbeddedWidgets();
 
@@ -645,7 +645,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 */
 	private function getRowString()
 	{
-		$columns = $this->view->getVisibleColumns();
+		$columns = $this->parent->getVisibleColumns();
 
 		ob_start();
 
