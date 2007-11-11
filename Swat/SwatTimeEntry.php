@@ -76,7 +76,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 * Start time of the valid range (inclusive)
 	 *
 	 * Defaults to 00:00:00. The year, month and day fields of the Date object
-	 * are ignored and undefined. This value is inclusive.
+	 * are ignored and undefined. This value is inclusive. The time-zone of
+	 * this date is ignored. Internal time comparisons are done in UTC.
 	 *
 	 * @var Date
 	 */
@@ -86,7 +87,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 * End time of the valid range (inclusive)
 	 *
 	 * Defaults to 23:59:59. The year, month and day fields of the Date object
-	 * are ignored and undefined. This value is inclusive.
+	 * are ignored and undefined. This value is inclusive. The time-zone of
+	 * this date is ignored. Internal time comparisons are done in UTC.
 	 *
 	 * @var Date
 	 */
@@ -187,8 +189,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->display_parts = self::HOUR | self::MINUTE;
 		$this->required_parts = $this->display_parts;
 
-		$this->valid_range_start = new SwatDate('2000-01-01T00:00:00.0000Z');
-		$this->valid_range_end   = new SwatDate('2000-01-01T23:59:59.0000Z');
+		$this->valid_range_start = new SwatDate('2000-01-01T00:00:00');
+		$this->valid_range_end   = new SwatDate('2000-01-01T23:59:59');
 
 		$this->requires_id = true;
 
@@ -199,7 +201,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		// guess twelve-hour or twenty-four hour default based on locale
 		$locale_format = nl_langinfo(T_FMT);
-		$this->twelve_hour = 
+		$this->twelve_hour =
 			(preg_match('/(%T|%R|%k|.*%H.*)/', $locale_format) == 0);
 	}
 
