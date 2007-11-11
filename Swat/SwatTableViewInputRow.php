@@ -584,26 +584,29 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 		/*
 		 * Get column position of enter-a-new-row text. The text is displayed
-		 * underneath the first input cell that is not blank.
+		 * underneath the first input cell that is not blank. If all cells are
+		 * blank, text is displayed underneath the first cell.
 		 */
-		$start_position = 0;
+		$position = 0;
+		$colspan = 0;
 		foreach ($columns as $column) {
-			if (isset($this->input_cells[$column->id]) &&
-				!($this->input_cells[$column->id] instanceof SwatRemoveInputCell))
+			if (array_key_exists($column->id, $this->input_cells) &&
+				!($this->input_cells[$column->id] instanceof SwatRemoveInputCell)) {
+				$position = $colspan;
 				break;
-
-			$start_position++;
+			}
+			$colspan += $column->getXhtmlColspan();
 		}
-		$close_length = count($columns) - $start_position - 1;
+
+		$close_length = $this->parent->getXhtmlColspan() - $position - 1;
 
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->id = $this->id.'_enter_row';
 		$tr_tag->open();
 
-
-		if ($start_position > 0) {
+		if ($position > 0) {
 			$td = new SwatHtmlTag('td');
-			$td->colspan = $start_position;
+			$td->colspan = $position;
 			$td->open();
 			echo '&nbsp;';
 			$td->close();
