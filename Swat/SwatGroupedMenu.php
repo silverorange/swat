@@ -240,6 +240,33 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function copy()
+
+	/**
+	 * Performs a deep copy of the UI tree starting with this UI object
+	 *
+	 * @param string $id_prefix optional. A prefix to prepend to copied UI
+	 *                           objects in the UI tree.
+	 *
+	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
+	 *                       object.
+	 *
+	 * @see SwatUIObject::copy()
+	 */
+	public function copy($id_prefix = '')
+	{
+		$copy = parent::copy($id_prefix);
+
+		foreach ($this->groups as $key => $group) {
+			$copy_group = $group->copy($id_prefix);
+			$copy_group->parent = $copy;
+			$copy->groups[$key] = $copy_group;
+		}
+
+		return $copy;
+	}
+
+	// }}}
 }
 
 ?>

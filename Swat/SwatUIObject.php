@@ -257,6 +257,34 @@ abstract class SwatUIObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function copy()
+
+	/**
+	 * Performs a deep copy of the UI tree starting with this UI object
+	 *
+	 * To perform a shallow copy, use PHP's clone keyword.
+	 *
+	 * @param string $id_prefix optional. A prefix to prepend to copied UI
+	 *                           objects in the UI tree. This can be used to
+	 *                           ensure object ids are unique for a copied UI
+	 *                           tree. If not specified, UI objects in the
+	 *                           returned copy will have identical ids to the
+	 *                           original tree. This can cause problems if both
+	 *                           the original and copy are displayed during the
+	 *                           same request.
+	 *
+	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
+	 *                       object. The returned UI object does not have a
+	 *                       parent and can be inserted into another UI tree.
+	 */
+	public function copy($id_prefix = '')
+	{
+		$copy = clone $this;
+		$copy->parent = null;
+		return $copy;
+	}
+
+	// }}}
 	// {{{ protected function getCSSClassNames()
 
 	/**

@@ -313,6 +313,22 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function copy()
+
+	public function copy($id_prefix = '')
+	{
+		$copy = parent::copy($id_prefix);
+
+		if ($this->widget !== null) {
+			$copy_widget = $this->widget->copy($id_prefix);
+			$copy_widget->parent = $copy;
+			$copy->widget = $copy_widget;
+		}
+
+		return $copy;
+	}
+
+	// }}}
 	// {{{ protected function displayOffsetCell()
 
 	protected function displayOffsetCell($offset)

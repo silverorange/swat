@@ -349,6 +349,31 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	}
 
 	// }}}
+	// {{{ public function copy()
+
+	public function copy($id_prefix = '')
+	{
+		$copy = parent::copy($id_prefix);
+		$copy->renderers = new SwatCellRendererSet();
+
+		foreach ($this->renderers as $renderer) {
+			$copy_renderer = $renderer->copy($id_prefix);
+			$copy_renderer->parent = $copy;
+			$copy->renderers->addRenderer($copy_renderer);
+
+			$copy_mappings = array();
+			$mappings = $this->renderers->getMappingsByRenderer($renderer);
+			foreach ($mappings as $mapping)
+				$copy_mappings[] = clone $mapping;
+
+			$copy->renderers->addMappingsToRenderer(
+				$copy_renderer, $copy_mappings);
+		}
+
+		return $copy;
+	}
+
+	// }}}
 }
 
 ?>

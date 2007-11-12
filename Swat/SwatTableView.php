@@ -1149,6 +1149,69 @@ class SwatTableView extends SwatView implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function copy()
+
+	/**
+	 * Performs a deep copy of the UI tree starting with this UI object
+	 *
+	 * @param string $id_prefix optional. A prefix to prepend to copied UI
+	 *                           objects in the UI tree.
+	 *
+	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
+	 *                       object.
+	 *
+	 * @see SwatUIObject::copy()
+	 */
+	public function copy($id_prefix = '')
+	{
+		$copy = parent::copy($id_prefix);
+
+		$copy->columns_by_id = array();
+		foreach ($this->columns as $key => $column) {
+			$copy_column = $column->copy($id_prefix);
+			$copy_column->parent = $copy;
+			$copy->columns[$key] = $copy_column;
+			if ($copy_column->id !== null) {
+				$copy->columns_by_id[$copy_column->id] = $copy_column;
+			}
+		}
+
+		$copy->spanning_columns_by_id = array();
+		foreach ($this->spanning_columns as $key => $column) {
+			$copy_column = $column->copy($id_prefix);
+			$copy_column->parent = $copy;
+			$copy->spanning_columns[$key] = $copy_column;
+			if ($copy_column->id !== null) {
+				$copy->spanning_columns_by_id[$copy_column->id] = $copy_column;
+			}
+		}
+
+		$copy->groups_by_id = array();
+		foreach ($this->groups as $key => $group) {
+			$copy_group = $group->copy($id_prefix);
+			$copy_group->parent = $copy;
+			$copy->groups[$key] = $copy_group;
+			if ($copy_group->id !== null) {
+				$copy->groups_by_id[$copy_group->id] = $copy_group;
+			}
+		}
+
+		$copy->rows_by_id = array();
+		foreach ($this->extra_rows as $key => $row) {
+			$copy_row = $row->copy($id_prefix);
+			$copy_row->parent = $copy;
+			$copy->extra_rows[$key] = $copy_row;
+			if ($copy_row->id !== null) {
+				$copy->rows_by_id[$copy_row->id] = $copy_row;
+			}
+		}
+
+		// TODO: what to do with view selectors?
+
+		return $copy;
+	}
+
+	// }}}
 	// {{{ protected function hasHeader()
 
 	/**

@@ -60,6 +60,12 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 	 */
 	public function init()
 	{
+		// Make sure this replicator has a unique id before replicating
+		// chidren. This is because replicated children use the id of this
+		// replicable container as a prefix.
+		if ($this->id === null)
+			$this->id = $this->getUniqueId();
+
 		$container_parent = $this->getContainerParent();
 		if ($container_parent === null)
 			$container_parent = $this;
@@ -78,31 +84,32 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 		// a replicated container
 		foreach ($this->replicators as $id => $title) {
 			$container = $this->getContainer($id, $title);
-			$suffix = '_'.$this->id.$id;
 			$this->widgets[$id] = array();
+			$prefix = $this->id.'_'.$id.'_';
 
 			foreach ($children as $child) {
-				$new_child = clone $child;
+				$copy_child = $child->copy($prefix);
 
-				if ($new_child->id !== null) {
-					$this->widgets[$id][$new_child->id] = $new_child;
-					$new_child->id.= $suffix;
+				if ($copy_child->id !== null) {
+					// lookup array uses original ids
+					$old_id = substr($copy_child->id, strlen($prefix));
+					$this->widgets[$id][$old_id] = $copy_child;
 				}
 
-				// update ids of cloned child descendants
-				if ($new_child instanceof SwatUIParent) {
-					foreach ($new_child->getDescendants() as $descendant) {
+				if ($copy_child instanceof SwatUIParent) {
+					foreach ($copy_child->getDescendants() as $descendant) {
 						if ($descendant->id !== null) {
-							$this->widgets[$id][$descendant->id] = $descendant;
-							$descendant->id.= $suffix;
+							// lookup array uses original ids
+							$old_id = substr($descendant->id, strlen($prefix));
+							$this->widgets[$id][$old_id] = $descendant;
 						}
 					}
 				}
 
 				if ($container === null)
-					$container_parent->addChild($new_child);
+					$container_parent->addChild($copy_child);
 				else
-					$container->add($new_child);
+					$container->add($copy_child);
 			}
 
 			if ($container !== null)
