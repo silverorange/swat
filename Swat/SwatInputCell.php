@@ -406,6 +406,53 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	}
 
 	// }}}
+	// {{{ public function copy()
+
+	/**
+	 * Performs a deep copy of the UI tree starting with this UI object
+	 *
+	 * @param string $id_prefix optional. A prefix to prepend to copied UI
+	 *                           objects in the UI tree.
+	 *
+	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
+	 *                       object.
+	 *
+	 * @see SwatUIObject::copy()
+	 */
+	public function copy($id_prefix = '')
+	{
+		$copy = parent::copy($id_prefix);
+
+		if ($this->widget !== null) {
+			$copy_widget = $this->widget->copy($id_prefix);
+			$copy_widget->parent = $copy;
+			$copy->widget = $copy_widget;
+		}
+
+		foreach ($this->clones as $replicator_id => $clone) {
+			$copy_clone = $clone->copy($id_prefix);
+			$copy_clone->parent = $copy;
+			$copy->clones[$replicator_id] = $copy_clone;
+			if ($copy_child->id !== null) {
+				$copy->children_by_id[$copy_child->id] = $copy_child;
+			}
+
+			$clone->widgets[$replicator_id] = array();
+			$clone->widgets[$replicator_id][$copy_clone->id] = $copy_clone;
+			if ($copy_clone instanceof SwatUIParent) {
+				foreach ($copy_clone->getDescendants() as $descendant) {
+					if ($descendant->id !== null) {
+						$copy->widgets[$replicator_id][$descendant->id] =
+							$descendant;
+					}
+				}
+			}
+		}
+
+		return $copy;
+	}
+
+	// }}}
 	// {{{ protected function getInputRow()
 
 	/**
@@ -442,7 +489,8 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 * @return SwatWidget the new cloned widget or the cloned widget retrieved
 	 *                     from the {@link SwatInputCell::$clones} array.
 	 *
-	 * @throws SwatException
+	 * @throws SwatException if this input cell does not belong to a table-view
+	 *                       with an input row.
 	 */
 	protected function getClonedWidget($replicator_id)
 	{
@@ -456,24 +504,24 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		if ($row === null)
 			throw new SwatException('Cannot clone widgets until cell is '.
 				'added to a table-view and an input-row is added to the '.
-				'table-view');
+				'table-view.');
 
-		$suffix = '_'.$row->id.'_'.$replicator_id;
-		$new_widget = clone $this->widget;
+		$prefix = $row->id.'_'.$replicator_id.'_';
+		$new_widget = $this->widget->copy($prefix);
+		$new_widget->parent = $this;
 
 		if ($new_widget->id !== null) {
-			$this->widgets[$replicator_id][$new_widget->id] = $new_widget;
-			$new_widget->id.= $suffix;
+			// lookup array uses original ids
+			$old_id = substr($new_widget->id, strlen($prefix));
+			$this->widgets[$replicator_id][$old_id] = $new_widget;
 		}
 
 		if ($new_widget instanceof SwatUIParent) {
-			$descendants = $new_widget->getDescendants();
-			foreach ($descendants as $descendant) {
+			foreach ($new_widget->getDescendants() as $descendant) {
 				if ($descendant->id !== null) {
-					$this->widgets[$replicator_id][$descendant->id] =
-						$descendant;
-
-					$descendant->id.= $suffix;
+					// lookup array uses original ids
+					$old_id = substr($descendant->id, strlen($prefix));
+					$this->widgets[$replicator_id][$old_id] = $descendant;
 				}
 			}
 		}

@@ -199,6 +199,19 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 	}
 
 	// }}}
+	// {{{ public function copy()
+
+	public function copy($id_prefix = '')
+	{
+		$copy = parent::copy($id_prefix);
+
+		if (strlen($id_prefix) > 0)
+			$copy->id = $id_prefix.$copy->id;
+
+		return $copy;
+	}
+
+	// }}}
 	// {{{ private function getForm()
 
 	/**
