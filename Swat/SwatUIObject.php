@@ -279,6 +279,11 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public function copy($id_prefix = '')
 	{
+		if (is_numeric($id_prefix)) {
+			trigger_error('A numeric id prefix will cause problems. Ids '.
+				'should always begin with [A-Za-z_].', E_USER_WARNING);
+		}
+
 		$copy = clone $this;
 		$copy->parent = null;
 		return $copy;
