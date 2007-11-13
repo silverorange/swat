@@ -119,6 +119,15 @@ abstract class SwatWidget extends SwatUIObject
 	protected $requires_id = false;
 
 	/**
+	 * Whether or not this widget has been initialized
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatWidget::init()
+	 */
+	protected $initialized = false;
+
+	/**
 	 * Whether or not this widget has been processed
 	 *
 	 * @var boolean
@@ -159,11 +168,15 @@ abstract class SwatWidget extends SwatUIObject
 	/**
 	 * Initializes this widget
 	 *
-	 * Initialization is done post-construction. It is called by SwatUI and
-	 * may be called manually.
+	 * Initialization is done post-construction. Initilization may be done
+	 * manually by calling init() on the UI tree at any time. If a call to
+	 * {@link SwatWidget::process()} or {SwatWidget::display()} is made before
+	 * the tree is initialized, this init() method is called automatically. As
+	 * a result, you often do not need to worry about calling init().
 	 *
-	 * Init allows properties to be manually set on widgets between the
-	 * constructor and other initialization routines.
+	 * Having an initialization method separate from the constructor allows
+	 * properties to be manually set on widgets after construction but before
+	 * initilization.
 	 *
 	 * Composite widgets of this widget are automatically initialized as well.
 	 */
@@ -177,6 +190,8 @@ abstract class SwatWidget extends SwatUIObject
 
 		foreach ($this->getCompositeWidgets() as $widget)
 			$widget->init();
+
+		$this->initialized = true;
 	}
 
 	// }}}
@@ -189,13 +204,19 @@ abstract class SwatWidget extends SwatUIObject
 	 * and then recursively processes  any of its child widgets.
 	 *
 	 * Composite widgets of this widget are automatically processed as well.
+	 *
+	 * If this widget has not been initialized, it is automatically initialized
+	 * before processing.
 	 */
 	public function process()
 	{
-		$this->processed = true;
+		if (!$this->isInitialized())
+			$this->init();
 
 		foreach ($this->getCompositeWidgets() as $widget)
 			$widget->process();
+
+		$this->processed = true;
 	}
 
 	// }}}
@@ -206,9 +227,15 @@ abstract class SwatWidget extends SwatUIObject
 	 *
 	 * Displays this widget displays as well as recursively displays any child
 	 * widgets of this widget.
+	 *
+	 * If this widget has not been initialized, it is automatically initialized
+	 * before displaying.
 	 */
 	public function display()
 	{
+		if (!$this->isInitialized())
+			$this->init();
+
 		$this->displayed = true;
 	}
 
@@ -334,6 +361,19 @@ abstract class SwatWidget extends SwatUIObject
 			return ($this->parent->isSensitive() && $this->sensitive);
 		else
 			return $this->sensitive;
+	}
+
+	// }}}
+	// {{{ public function isInitialized()
+
+	/**
+	 * Whether or not this widget is initialized
+	 *
+	 * @return boolean whether or not this widget is initialized.
+	 */
+	public function isInitialized()
+	{
+		return $this->initialized;
 	}
 
 	// }}}
