@@ -88,7 +88,6 @@ class DemoApplication
 		$this->buildDemoMenuBar();
 		$this->buildDemoNavBar();
 
-		$this->layout_ui->init();
 		$this->layout_ui->process();
 
 		$this->buildLayout();
@@ -108,10 +107,9 @@ class DemoApplication
 
 	private function buildDemo()
 	{
-		$this->demo_ui = new SwatUI();
+		$this->demo_ui = new SwatUI($this->layout_ui->getWidget('main_frame'));
 		$this->demo_ui->loadFromXML(
-			'../include/demos/'.strtolower($this->demo).'.xml',
-			$this->layout_ui->getWidget('main_frame'));
+			'../include/demos/'.strtolower($this->demo).'.xml');
 
 		if (file_exists('../include/demos/'.$this->demo.'Demo.php')) {
 			require_once '../include/demos/'.$this->demo.'Demo.php';
