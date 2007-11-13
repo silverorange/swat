@@ -154,47 +154,6 @@ abstract class SwatWidget extends SwatUIObject
 	}
 
 	// }}}
-	// {{{ public function display()
-
-	/**
-	 * Displays this widget
-	 *
-	 * Displays this widget displays as well as recursively displays any child
-	 * widgets of this widget.
-	 */
-	public function display()
-	{
-		$this->displayed = true;
-	}
-
-	// }}}
-	// {{{ abstract public function printWidgetTree()
-
-	/**
-	 * @todo document me
-	 */
-	abstract public function printWidgetTree();
-
-	// }}}
-	// {{{ public function process()
-
-	/**
-	 * Processes this widget
-	 *
-	 * After a form submit, this widget processes itself and its dependencies
-	 * and then recursively processes  any of its child widgets.
-	 *
-	 * Composite widgets of this widget are automatically processed as well.
-	 */
-	public function process()
-	{
-		$this->processed = true;
-
-		foreach ($this->getCompositeWidgets() as $widget)
-			$widget->process();
-	}
-
-	// }}}
 	// {{{ public function init()
 
 	/**
@@ -218,6 +177,39 @@ abstract class SwatWidget extends SwatUIObject
 
 		foreach ($this->getCompositeWidgets() as $widget)
 			$widget->init();
+	}
+
+	// }}}
+	// {{{ public function process()
+
+	/**
+	 * Processes this widget
+	 *
+	 * After a form submit, this widget processes itself and its dependencies
+	 * and then recursively processes  any of its child widgets.
+	 *
+	 * Composite widgets of this widget are automatically processed as well.
+	 */
+	public function process()
+	{
+		$this->processed = true;
+
+		foreach ($this->getCompositeWidgets() as $widget)
+			$widget->process();
+	}
+
+	// }}}
+	// {{{ public function display()
+
+	/**
+	 * Displays this widget
+	 *
+	 * Displays this widget displays as well as recursively displays any child
+	 * widgets of this widget.
+	 */
+	public function display()
+	{
+		$this->displayed = true;
 	}
 
 	// }}}
@@ -451,6 +443,14 @@ abstract class SwatWidget extends SwatUIObject
 
 		return $copy;
 	}
+
+	// }}}
+	// {{{ abstract public function printWidgetTree()
+
+	/**
+	 * @todo document me
+	 */
+	abstract public function printWidgetTree();
 
 	// }}}
 	// {{{ protected function getCSSClassNames()
