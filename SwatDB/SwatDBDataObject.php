@@ -503,6 +503,9 @@ class SwatDBDataObject extends SwatObject
 			if (is_object($value)) {
 				$this->sub_data_objects[$key] = $value;
 				$this->setInternalValue($key, $value->getId());
+			} elseif ($value === null) {
+				unset($this->sub_data_objects[$key]);
+				$this->setInternalValue($key, $value);
 			} else {
 				$this->setInternalValue($key, $value);
 			}
