@@ -155,10 +155,14 @@ class SwatUI extends SwatObject
 	// {{{ public function loadFromXML()
 
 	/**
-	 * Loads a UI from an XML file
+	 * Loads a UI tree from an XML file
 	 *
 	 * @param string $filename the filename of the XML UI file to load.
-	 * @param SwatContainer $root the container to load the XML UI into.
+	 * @param SwatContainer $root optional. The container into which to load
+	 *                             the UI tree. The specified container must
+	 *                             already be a member of this UI. If not
+	 *                             specified, the UI tree will be loaded into
+	 *                             the root container of this UI.
 	 * @param boolean $validate optional. Whether or not to validate the parsed
 	 *                           SwatML file. If not specified, whether or not
 	 *                           to validate is deferred to the default
@@ -174,8 +178,27 @@ class SwatUI extends SwatObject
 	 */
 	public function loadFromXML($filename, $container = null, $validate = null)
 	{
-		if ($container === null)
+		if ($container === null) {
 			$container = $this->root;
+		} else {
+			// ensure container belongs to this UI
+			$found = false;
+			$object = $container;
+			while ($object !== null) {
+				if ($object === $this->root) {
+					$found = true;
+					break;
+				}
+				$object = $object->parent;
+			}
+			if (!$found) {
+				throw new SwatException(
+					'Cannot load a UI tree into a container that is not part '.
+					'of this SwatUI. If you need to load a UI tree into '.
+					'another SwatUI you should specify the root container '.
+					'when constructing this SwatUI.');
+			}
+		}
 
 		if ($validate === null)
 			$validate = self::$validate_mode;
