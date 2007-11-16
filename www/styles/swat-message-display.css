@@ -14,7 +14,7 @@
 	border-width: 1px;
 	border-style: solid;
 	-moz-border-radius: 8px;
-	border-radius: 8px;
+	-webkit-border-radius: 8px;
 	overflow: hidden;
 }
 .swat-message-display .swat-message .swat-message-container {
