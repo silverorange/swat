@@ -224,19 +224,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		$this->check_all->process();
 
-		$data = &$form->getFormData();
-
-		if (isset($data[$this->id])) {
-			if (is_array($data[$this->id])) {
-				$this->values = $data[$this->id];
-			} elseif (strlen($data[$this->id]) > 0) {
-				$this->values = array($data[$this->id]);
-			} else {
-				$this->values = array();
-			}
-		} else {
-			$this->values = array();
-		}
+		$this->processValues();
 	}
 
 	// }}}
@@ -281,6 +269,30 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	public function getState()
 	{
 		return $this->values;
+	}
+
+	// }}}
+	// {{{ protected function processValues()
+
+	/**
+	 * Processes the values of this checkbox list from raw form data
+	 */
+	protected function processValues()
+	{
+		$form = $this->getForm();
+		$data = &$form->getFormData();
+
+		if (isset($data[$this->id])) {
+			if (is_array($data[$this->id])) {
+				$this->values = $data[$this->id];
+			} elseif (strlen($data[$this->id]) > 0) {
+				$this->values = array($data[$this->id]);
+			} else {
+				$this->values = array();
+			}
+		} else {
+			$this->values = array();
+		}
 	}
 
 	// }}}
