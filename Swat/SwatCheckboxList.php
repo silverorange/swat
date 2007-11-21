@@ -226,10 +226,17 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		$data = &$form->getFormData();
 
-		if (isset($data[$this->id]))
-			$this->values = $data[$this->id];
-		else
+		if (isset($data[$this->id])) {
+			if (is_array($data[$this->id])) {
+				$this->values = $data[$this->id];
+			} elseif (strlen($data[$this->id]) > 0) {
+				$this->values = array($data[$this->id]);
+			} else {
+				$this->values = array();
+			}
+		} else {
 			$this->values = array();
+		}
 	}
 
 	// }}}
