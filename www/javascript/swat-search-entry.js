@@ -28,11 +28,11 @@ function SwatSearchEntry(id)
 		YAHOO.util.Event.addListener(this.input, 'blur', this.handleBlur,
 			this, true);
 
-		YAHOO.util.Event.onDOMReady(this.onLoad, this, true);
+		YAHOO.util.Event.onDOMReady(this.init, this, true);
 	}
 }
 
-SwatSearchEntry.prototype.onLoad = function()
+SwatSearchEntry.prototype.init = function()
 {
 	if (this.input.value == '') {
 		this.showLabelText();
