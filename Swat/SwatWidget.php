@@ -598,15 +598,30 @@ abstract class SwatWidget extends SwatUIObject
 	 * This method ensures composite widgets are created before retrieving the
 	 * widgets.
 	 *
+	 * @param string $class_name optional class name. If set, only widgets
+	 *                            that are instances of <i>$class_name</i> are
+	 *                            returned.
+	 *
 	 * @return array all composite wigets added to this widget. The array is
 	 *                indexed by the composite widget keys.
 	 *
 	 * @see SwatWidget::addCompositeWidget()
 	 */
-	protected final function getCompositeWidgets()
+	protected final function getCompositeWidgets($class_name = null)
 	{
 		$this->confirmCompositeWidgets();
-		return $this->composite_widgets;
+
+		if (!($class_name === null ||
+			class_exists($class_name) || interface_exists($class_name)))
+			return array();
+
+		$out = array();
+
+		foreach ($this->composite_widgets as $key => $widget)
+			if ($class_name === null || $widget instanceof $class_name)
+				$out[$key] = $widget;
+
+		return $out;
 	}
 
 	// }}}
