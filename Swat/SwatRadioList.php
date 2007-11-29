@@ -4,7 +4,6 @@
 
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/SwatState.php';
 require_once 'Swat/SwatString.php';
 
 /**
@@ -14,7 +13,7 @@ require_once 'Swat/SwatString.php';
  * @copyright 2005-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatRadioList extends SwatFlydown implements SwatState
+class SwatRadioList extends SwatFlydown
 {
 	// {{{ private properties
 
