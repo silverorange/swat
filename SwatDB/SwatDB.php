@@ -608,10 +608,10 @@ class SwatDB extends SwatObject
 				$value_list);
 
 			SwatDB::debug($sql);
-			$rs = $db->query($sql);
+			$result = $db->exec($sql);
 
-			if (MDB2::isError($rs))
-				throw new SwatDBException($rs);
+			if (MDB2::isError($rrsult))
+				throw new SwatDBException($result);
 
 			if ($id_field !== null)
 				$ret = SwatDB::getFieldMax($db, $table, $id_field);
