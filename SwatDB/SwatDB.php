@@ -610,7 +610,7 @@ class SwatDB extends SwatObject
 			SwatDB::debug($sql);
 			$result = $db->exec($sql);
 
-			if (MDB2::isError($rrsult))
+			if (MDB2::isError($result))
 				throw new SwatDBException($result);
 
 			if ($id_field !== null)
