@@ -14,7 +14,7 @@ require_once 'Swat/SwatObject.php';
  * Usage:
  * <code>
  * &lt;?php
- * $iterator = new SwatDBReadAheadIterator($recordset);
+ * $iterator = new SwatDBReadaheadIterator($recordset);
  * while($iterator->iterate()) {
  *     $current = $iterator->getCurrent();
  *     $next = $iterator->getNext();
@@ -118,7 +118,7 @@ class SwatDBReadaheadIterator extends SwatObject
 	 * @return mixed the next item in the iterator. If there is no next item,
 	 *                null is returned. This may or may not mean the current
 	 *                item is the last item. Use
-	 *                {@link SwatDBReadAheadIterator::isLast()} to check if
+	 *                {@link SwatDBReadaheadIterator::isLast()} to check if
 	 *                the current item is the last item.
 	 */
 	public function getNext()
