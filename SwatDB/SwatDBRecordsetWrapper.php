@@ -577,6 +577,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		$values = array_filter($values,
 			create_function('$value', 'return $value !== null;'));
 
+		$values = array_unique($values);
+
 		if (count($values) > 0) {
 			$this->checkDB();
 			$this->db->loadModule('Datatype', null, true);
