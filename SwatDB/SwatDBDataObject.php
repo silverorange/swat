@@ -500,7 +500,7 @@ class SwatDBDataObject extends SwatObject
 		if (method_exists($this, $this->getLoaderMethod($key))) {
 			$this->sub_data_objects[$key] = $value;
 		} elseif ($this->hasInternalValue($key)) {
-			if (is_object($value)) {
+			if ($value instanceof SwatDBDataObject) {
 				$this->sub_data_objects[$key] = $value;
 				$this->setInternalValue($key, $value->getId());
 			} elseif ($value === null) {
