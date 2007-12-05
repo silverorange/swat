@@ -668,23 +668,9 @@ class SwatDBDataObject extends SwatObject
 
 		$transaction = new SwatDBTransaction($this->db);
 		try {
-			foreach ($this->internal_property_autosave as $name => $autosave) {
-				if ($autosave && $this->hasSubDataObject($name)) {
-					$object = $this->getSubDataObject($name);
-					$object->save();
-					$this->setInternalValue($name, $object->getId());
-				}
-			}
-
+			$this->saveInternalProperties();
 			$this->saveInternal();
-
-			foreach ($this->sub_data_objects as $name => $object) {
-				$saver_method = 'save'.
-					str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
-
-				if (method_exists($this, $saver_method))
-					call_user_func(array($this, $saver_method));
-			}
+			$this->saveSubDataObjects();
 		} catch (Exception $e) {
 			$transaction->rollback();
 			throw $e;
@@ -873,6 +859,34 @@ class SwatDBDataObject extends SwatObject
 		} else {
 			SwatDB::updateRow($this->db, $this->table, $fields, $values,
 				$id_field->__toString(), $id);
+		}
+	}
+
+	// }}}
+	// {{{ protected function saveInternalProperties()
+
+	protected function saveInternalProperties()
+	{
+		foreach ($this->internal_property_autosave as $name => $autosave) {
+			if ($autosave && $this->hasSubDataObject($name)) {
+				$object = $this->getSubDataObject($name);
+				$object->save();
+				$this->setInternalValue($name, $object->getId());
+			}
+		}
+	}
+
+	// }}}
+	// {{{ protected function saveSubDataObjects()
+
+	protected function saveSubDataObjects()
+	{
+		foreach ($this->sub_data_objects as $name => $object) {
+			$saver_method = 'save'.
+				str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
+
+			if (method_exists($this, $saver_method))
+				call_user_func(array($this, $saver_method));
 		}
 	}
 
