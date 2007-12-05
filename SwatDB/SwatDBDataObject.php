@@ -174,7 +174,7 @@ class SwatDBDataObject extends SwatObject
 		printf('<h3>%s</h3>', get_class($this));
 		echo $this->isModified() ? '(modified)' : '(not modified)', '<br />';
 		foreach ($properties as $name => $value) {
-			if (isset($this->sub_data_objects[$name]))
+			if ($this->hasSubDataObject($name))
 				$value = $this->sub_data_objects[$name];
 
 			$modified = isset($modified_properties[$name]);
@@ -254,7 +254,7 @@ class SwatDBDataObject extends SwatObject
 				$new_object->$name = $value;
 
 		foreach ($this->internal_property_autosave as $name => $autosave) {
-			if ($autosave && isset($this->sub_data_objects[$name])) {
+			if ($autosave && $this->hasSubDataObject($name)) {
 				$object = $this->sub_data_objects[$name];
 				$new_object->$name = $object->duplicate();
 			}
@@ -298,11 +298,7 @@ class SwatDBDataObject extends SwatObject
 		$this->internal_properties[$name] = null;
 		$this->internal_property_autosave[$name] = $autosave;
 		$this->internal_property_accessible[$name] = $accessible;
-
-		if ($class === null)
-			unset($this->internal_property_classes[$name]);
-		else
-			$this->internal_property_classes[$name] = $class;
+		$this->internal_property_classes[$name] = $class;
 	}
 
 	// }}}
@@ -383,6 +379,24 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ protected function setSubDataObject()
+
+	protected function setSubDataObject($name, $value)
+	{
+		// Can't add type-hinting because dataobjects may not be dataobjects.
+		// Go figure.
+		$this->sub_data_objects[$name] = $value;
+	}
+
+	// }}}
+	// {{{ protected function unsetSubDataObject()
+
+	protected function unsetSubDataObject($name)
+	{
+		unset($this->sub_data_objects[$name]);
+	}
+
+	// }}}
 	// {{{ protected function hasSubDataObject()
 
 	/**
@@ -395,7 +409,7 @@ class SwatDBDataObject extends SwatObject
 	 */
 	protected function hasSubDataObject($key)
 	{
-		return isset($this->sub_data_objects[(string)$key]);
+		return (isset($this->sub_data_objects[(string)$key]));
 	}
 
 	// }}}
@@ -449,67 +463,24 @@ class SwatDBDataObject extends SwatObject
 
 	private function __get($key)
 	{
-		if (array_key_exists($key, $this->internal_property_accessible) &&
-			$this->internal_property_accessible[$key]) {
+		$value = $this->getUsingLoaderMethod($key);
 
-			if (isset($this->sub_data_objects[$key])) {
+		if ($value === false)
+			$value = $this->getUsingInternalProperty($key);
 
-				// return loaded sub-dataobject
-				return $this->sub_data_objects[$key];
-
-			} elseif ($this->hasInternalValue($key)) {
-
-				$id = $this->getInternalValue($key);
-
-				// no value is set so nothing to load
-				if ($id === null)
-					return null;
-
-				// autoload sub-dataobject and return
-				if (array_key_exists($key, $this->internal_property_classes)) {
-					$class = $this->internal_property_classes[$key];
-
-					if (class_exists($class)) {
-						$this->checkDB();
-
-						$object = new $class();
-						$object->setDatabase($this->db);
-						$object->load($id); // autoload
-						$this->sub_data_objects[$key] = $object;
-
-						return $object;
-					}
-
-					throw new SwatClassNotFoundException(sprintf(
-						"Class '%s' registered for internal property '%s' ".
-						"does not exist.",
-						$class, $key), 0, $class);
-				}
-
-			}
-
-		} else {
-
-			// use loader method to load sub-dataobject and return
+		if ($value === false) {
 			$loader_method = $this->getLoaderMethod($key);
-			if (method_exists($this, $loader_method)) {
-				$this->checkDB();
-				$this->sub_data_objects[$key] =
-					call_user_func(array($this, $loader_method));
-
-				return $this->sub_data_objects[$key];
-			}
-
+			throw new SwatDBException(sprintf("A property named '%s' does not ".
+				"exist on the %s data-object. If the property corresponds ".
+				"directly to a database field it should be added as a public ".
+				"property of this data object. If the property should access ".
+				"a sub-data-object, either specify a class when registering ".
+				"the internal property named '%s' or define a custom loader ".
+				"method named '%s()'.",
+				$key, get_class($this), $key, $loader_method));
 		}
 
-		throw new SwatDBException(sprintf("A property named '%s' does not ".
-			'exist on the %s data-object. If the property corresponds '.
-			'directly to a database field it should be added as a public '.
-			'property of this data object. If the property should access a '.
-			'sub-data-object, either specify a class when registering the '.
-			"internal property named '%s' or define a custom loader method ".
-			"named '%s()'.",
-			$key, get_class($this), $key, $loader_method));
+		return $value;
 	}
 
 	// }}}
@@ -520,19 +491,19 @@ class SwatDBDataObject extends SwatObject
 		if (method_exists($this, $this->getLoaderMethod($key))) {
 
 			if ($value === null) {
-				unset($this->sub_data_objects[$key]);
+				$this->unsetSubDataObject($key);
 			} else {
-				$this->sub_data_objects[$key] = $value;
+				$this->setSubDataObject($key, $value);
 			}
 
 		} elseif ($this->hasInternalValue($key) &&
 			$this->internal_property_accessible[$key]) {
 
 			if ($value instanceof SwatDBDataObject) {
-				$this->sub_data_objects[$key] = $value;
+				$this->setSubDataObject($key, $value);
 				$this->setInternalValue($key, $value->getId());
 			} elseif ($value === null) {
-				unset($this->sub_data_objects[$key]);
+				$this->unsetSubDataObject($key);
 				$this->setInternalValue($key, $value);
 			} else {
 				$this->setInternalValue($key, $value);
@@ -556,9 +527,9 @@ class SwatDBDataObject extends SwatObject
 	private function __isset($key)
 	{
 		return
-			isset($this->sub_data_objects[$key]) ||
-			method_exists($this, $this->getLoaderMethod($key)) ||
-			$this->hasInternalValue($key);
+			(method_exists($this, $this->getLoaderMethod($key))) ||
+			($this->hasInternalValue($key) &&
+			$this->internal_property_accessible[$key]);
 	}
 
 	// }}}
@@ -570,6 +541,78 @@ class SwatDBDataObject extends SwatObject
 			ucwords(str_replace('_', ' ', $key)));
 
 		return $loader_method;
+	}
+
+	// }}}
+	// {{{ private function getUsingLoaderMethod()
+
+	private function getUsingLoaderMethod($key)
+	{
+		$value = false;
+
+		$loader_method = $this->getLoaderMethod($key);
+		if (method_exists($this, $loader_method)) {
+			if ($this->hasSubDataObject($key)) {
+
+				// return loaded sub-dataobject
+				$value = $this->sub_data_objects[$key];
+
+			} else {
+
+				// use loader method to load sub-dataobject
+				$this->checkDB();
+				$this->setSubDataObject($key,
+					call_user_func(array($this, $loader_method)));
+
+				$value = $this->sub_data_objects[$key];
+			}
+		}
+
+		return $value;
+	}
+
+	// }}}
+	// {{{ private function getUsingInternalProperty()
+
+	private function getUsingInternalProperty($key)
+	{
+		$value = false;
+
+		if (array_key_exists($key, $this->internal_property_accessible) &&
+			$this->internal_property_accessible[$key]) {
+
+			if ($this->hasSubDataObject($key)) {
+				// return loaded sub-dataobject
+				$value = $this->sub_data_objects[$key];
+			} elseif ($this->hasInternalValue($key)) {
+				$value = $this->getInternalValue($key);
+
+				if ($value !== null &&
+					isset($this->internal_property_classes[$key])) {
+
+					// autoload sub-dataobject
+					$class = $this->internal_property_classes[$key];
+
+					if (!class_exists($class)) {
+						throw new SwatClassNotFoundException(sprintf(
+							"Class '%s' registered for internal property '%s' ".
+							"does not exist.",
+							$class, $key), 0, $class);
+					}
+
+					$this->checkDB();
+
+					$object = new $class();
+					$object->setDatabase($this->db);
+					$object->load($value); // autoload
+					$this->setSubDataObject($key, $object);
+
+					$value = $object;
+				}
+			}
+		}
+
+		return $value;
 	}
 
 	// }}}
@@ -618,7 +661,7 @@ class SwatDBDataObject extends SwatObject
 		$transaction = new SwatDBTransaction($this->db);
 		try {
 			foreach ($this->internal_property_autosave as $name => $autosave) {
-				if ($autosave && isset($this->sub_data_objects[$name])) {
+				if ($autosave && $this->hasSubDataObject($name)) {
 					$object = $this->sub_data_objects[$name];
 					$object->save();
 					$this->setInternalValue($name, $object->getId());
@@ -702,7 +745,7 @@ class SwatDBDataObject extends SwatObject
 		}
 
 		foreach ($this->sub_data_objects as $name => $object)
-			if (is_object($object) && $object->isModified())
+			if ($object instanceof SwatDBRecordable && $object->isModified())
 				return true;
 
 		return false;
@@ -910,7 +953,7 @@ class SwatDBDataObject extends SwatObject
 		$serializable_sub_data_objects = $this->getSerializableSubDataObjects();
 		foreach ($this->sub_data_objects as $name => $object)
 			if (!in_array($name, $serializable_sub_data_objects))
-				unset($this->sub_data_objects[$name]);
+				$this->unsetSubDataObject($name);
 
 		foreach ($this->getSerializablePrivateProperties() as $property)
 			$data[$property] = &$this->$property;
