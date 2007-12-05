@@ -175,7 +175,7 @@ class SwatDBDataObject extends SwatObject
 		echo $this->isModified() ? '(modified)' : '(not modified)', '<br />';
 		foreach ($properties as $name => $value) {
 			if ($this->hasSubDataObject($name))
-				$value = $this->sub_data_objects[$name];
+				$value = $this->getSubDataObject($name);
 
 			$modified = isset($modified_properties[$name]);
 
@@ -255,7 +255,7 @@ class SwatDBDataObject extends SwatObject
 
 		foreach ($this->internal_property_autosave as $name => $autosave) {
 			if ($autosave && $this->hasSubDataObject($name)) {
-				$object = $this->sub_data_objects[$name];
+				$object = $this->getSubDataObject($name);
 				$new_object->$name = $object->duplicate();
 			}
 		}
@@ -376,6 +376,14 @@ class SwatDBDataObject extends SwatObject
 		$id_field = new SwatDBField($this->id_field, 'integer');
 		$temp = $id_field->name;
 		return $this->$temp;
+	}
+
+	// }}}
+	// {{{ protected function getSubDataObject()
+
+	protected function getSubDataObject($name)
+	{
+		return $this->sub_data_objects[$name];
 	}
 
 	// }}}
@@ -555,7 +563,7 @@ class SwatDBDataObject extends SwatObject
 			if ($this->hasSubDataObject($key)) {
 
 				// return loaded sub-dataobject
-				$value = $this->sub_data_objects[$key];
+				$value = $this->getSubDataObject($key);
 
 			} else {
 
@@ -564,7 +572,7 @@ class SwatDBDataObject extends SwatObject
 				$this->setSubDataObject($key,
 					call_user_func(array($this, $loader_method)));
 
-				$value = $this->sub_data_objects[$key];
+				$value = $this->getSubDataObject($key);
 			}
 		}
 
@@ -583,7 +591,7 @@ class SwatDBDataObject extends SwatObject
 
 			if ($this->hasSubDataObject($key)) {
 				// return loaded sub-dataobject
-				$value = $this->sub_data_objects[$key];
+				$value = $this->getSubDataObject($key);
 			} elseif ($this->hasInternalValue($key)) {
 				$value = $this->getInternalValue($key);
 
@@ -653,8 +661,8 @@ class SwatDBDataObject extends SwatObject
 	public function save()
 	{
 		if ($this->read_only)
-			throw new SwatDBException('This dataobject was
-					loaded read-only and cannot be saved.');
+			throw new SwatDBException('This dataobject was loaded read-only '.
+				'and cannot be saved.');
 
 		$this->checkDB();
 
@@ -662,7 +670,7 @@ class SwatDBDataObject extends SwatObject
 		try {
 			foreach ($this->internal_property_autosave as $name => $autosave) {
 				if ($autosave && $this->hasSubDataObject($name)) {
-					$object = $this->sub_data_objects[$name];
+					$object = $this->getSubDataObject($name);
 					$object->save();
 					$this->setInternalValue($name, $object->getId());
 				}
