@@ -514,6 +514,7 @@ class SwatDBDataObject extends SwatObject
 				$this->unsetSubDataObject($key);
 				$this->setInternalValue($key, $value);
 			} else {
+				// TODO: Maybe unset sub dataobject here
 				$this->setInternalValue($key, $value);
 			}
 
@@ -888,6 +889,25 @@ class SwatDBDataObject extends SwatObject
 			if (method_exists($this, $saver_method))
 				call_user_func(array($this, $saver_method));
 		}
+
+		/*
+		 * This handles the case where an internal property sub-dataobject also
+		 * exists in a sub-dataobject using a saver method. After the saver
+		 * method runs, the id of the internal property sub-dataobject is known
+		 * so we update it and then save this object's internal values again.
+		 */
+		foreach (array_keys($this->internal_properties) as $name) {
+			if ($this->hasSubDataObject($name)) {
+				$sub_data_object = $this->getSubDataObject($name);
+				if ($sub_data_object instanceof SwatDBDataObject) {
+					$id = $sub_data_object->getId();
+					$this->setInternalValue($name, $id);
+				}
+			}
+		}
+
+		// If no internal values have been updated this does nothing.
+		$this->saveInternal();
 	}
 
 	// }}}
