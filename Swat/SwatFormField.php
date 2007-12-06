@@ -78,6 +78,15 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public $show_colon = true;
 
+	/*
+	 * Display the title of the form field after the widget code
+	 *
+	 * By default, title is not reversed
+	 *
+	 * @var boolean
+	 */
+	public $title_reversed = null;
+
 	// }}}
 	// {{{ protected properties
 
@@ -164,8 +173,15 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		$container_tag->class = $this->getCSSClassString();
 
 		$container_tag->open();
-		$this->displayTitle();
-		$this->displayContent();
+
+		if ($this->title_reversed === true) {
+			$this->displayContent();
+			$this->displayTitle();
+		} else {
+			$this->displayTitle();
+			$this->displayContent();
+		}
+
 		$this->displayMessages();
 		$this->displayNotes();
 		$container_tag->close();
@@ -351,7 +367,8 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	/**
 	 * Notifies this widget that a widget was added
 	 *
-	 * This sets a special class on this form field if a checkbox is added.
+	 * This sets class propertes on this form field when certain classes of
+	 * widgets are added.
 	 *
 	 * @param SwatWidget $widget the widget that has been added.
 	 *
@@ -361,6 +378,13 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	{
 		if (class_exists('SwatCheckbox') && $widget instanceof SwatCheckbox) {
 			$this->widget_class = 'swat-form-field-checkbox';
+
+			// don't set these properties if title_reversed is explicitly set in
+			// the xml
+			if ($this->title_reversed === null) {
+				$this->title_reversed = true;
+				$this->show_colon = false;
+			}
 		} elseif (class_exists('SwatSearchEntry') &&
 			$widget instanceof SwatSearchEntry) {
 			$this->show_colon = false;
