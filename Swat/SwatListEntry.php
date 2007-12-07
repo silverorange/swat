@@ -306,7 +306,7 @@ class SwatListEntry extends SwatEntry
 
 		} elseif (($this->max_entries === null  ||
 			$this->max_entries == 0) &&
-			$this->min_entries !== null && $this->required == true) {
+			$this->min_entries > 1 && $this->required == true) {
 
 			$message = new SwatMessage(sprintf(Swat::ngettext(
 				'List must contain at least %s entry',
