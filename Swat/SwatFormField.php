@@ -81,7 +81,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	/*
 	 * Display the title of the form field after the widget code
 	 *
-	 * By default, title is not reversed
+	 * This is automatically set for some widget types, but defaults to null
+	 * (which we treat the same as false) to allow the value to be manually set
+	 * for said widgets.
 	 *
 	 * @var boolean
 	 */
