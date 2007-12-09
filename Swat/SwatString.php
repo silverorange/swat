@@ -1080,6 +1080,48 @@ class SwatString extends SwatObject
 		return (is_numeric($value)) ? floatval($value) : null;
 	}
 	// }}}
+	// {{{ public static function arrayToList()
+
+	/**
+	 * Convert an array into a human-readable deliminated list.
+	 *
+	 * @param array $array the array to convert.
+	 * @param string $conjunction the list's conjunction. Usually 'and' or
+	 *                            'or'.
+	 * @param string $delimiter the list delimiter. If list items should
+	 *                          additionally be padded with a space, the delimiter
+	 *                          should also include the space.
+	 * @param boolean $display_final_delimiter whether or not the final list
+	 *                          item should be separated from the list with a
+	 *                          delimiter.
+	 *
+	 * @return string The formatted list.
+	 */
+	public static function arrayToList(array $array, $conjunction = 'and',
+		$delimiter = ', ', $display_final_delimiter = true)
+	{
+		$count = 0;
+		$list = '';
+
+		foreach ($array as $value) {
+			if ($count != 0) {
+				if ($count == count($array) - 1) {
+					$list.= ($display_final_delimiter && count($array) > 2) ?
+						$delimiter : ' ';
+
+					$list.= $conjunction.' ';
+				} else {
+					$list.= $delimiter;
+				}
+			}
+
+			$list.= $value;
+			$count++;
+		}
+
+		return $list;
+	}
+	// }}}
 	// {{{ public static function hash()
 
 	/**
