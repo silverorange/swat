@@ -269,7 +269,7 @@ class SwatListEntry extends SwatEntry
 	 */
 	protected function getDisplayValue($value)
 	{
-		if ($this->trim_whitespace)
+		if ($this->trim_whitespace && $this->delimiter != ' ')
 			return implode($this->delimiter.' ', $this->values);
 		else
 			return implode($this->delimiter, $this->values);
