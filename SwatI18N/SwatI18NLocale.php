@@ -200,6 +200,9 @@ class SwatI18NLocale extends SwatObject
 	 * This methods uses the POSIX.2 LC_MONETARY specification for formatting
 	 * monetary values.
 	 *
+	 * Numeric values are rounded to the specified number of fractional digits
+	 * using a round-to-even rounding method.
+	 *
 	 * @param float $value the monetary value to format.
 	 * @param boolean $international optional. Whether or not to format the
 	 *                                monetary value using the international
@@ -226,11 +229,13 @@ class SwatI18NLocale extends SwatObject
 			$this->getInternationalCurrencyFormat()->override($format) :
 			$this->getNationalCurrencyFormat()->override($format);
 
-		$integer_part = $this->formatIntegerGroupings($value, $format);
-
 		// default fractional digits to 2 if locale is missing value
 		$fractional_digits = ($format->fractional_digits == CHAR_MAX) ?
 			2 : $format->fractional_digits;
+
+		$value = $this->roundToEven($value, $fractional_digits);
+
+		$integer_part = $this->formatIntegerGroupings($value, $format);
 
 		$fractional_part =
 			$this->formatFractionalPart($value, $fractional_digits, $format);
@@ -391,6 +396,9 @@ class SwatI18NLocale extends SwatObject
 	 * This methods uses the POSIX.2 LC_NUMERIC specification for formatting
 	 * numeric values.
 	 *
+	 * Numeric values are rounded to the specified number of fractional digits
+	 * using a round-half-up rounding method (PHP's default round).
+	 *
 	 * @param float $value the numeric value to format.
 	 * @param integer $decimals optional. The number of fractional digits to
 	 *                           include in the returned string. If not
@@ -415,6 +423,8 @@ class SwatI18NLocale extends SwatObject
 
 		if ($decimals === null)
 			$decimals = $this->getFractionalPrecision($value);
+
+		$value = round($value, $decimals);
 
 		$integer_part = $this->formatIntegerGroupings($value, $format);
 		$fractional_part =
@@ -1051,6 +1061,44 @@ class SwatI18NLocale extends SwatObject
 		}
 
 		return $precision;
+	}
+
+	// }}}
+	// {{{ protected function roundToEven()
+
+	/**
+	 * Rounds a number to the specified number of fractional digits using the
+	 * round-to-even rounding method
+	 *
+	 * Round-to-even is primarily used for monetary values. See
+	 * {@link http://en.wikipedia.org/wiki/Rounding#Round-to-even_method}.
+	 *
+	 * @param float $value the value to round.
+	 * @param integer $fractional_digits the number of fractional digits in the
+	 *                                    rounded result.
+	 *
+	 * @return float the rounded value.
+	 */
+	protected function roundToEven($value, $fractional_digits)
+	{
+		$exp = pow(10, $fractional_digits);
+		$ends_in_five = (abs(intval($value * 10 * $exp)) % 10 == 5);
+		if ($ends_in_five) {
+			$frac_part = abs(fmod($value, 1));
+			// check if fractional part is odd
+			if (intval($frac_part * $exp) & 0x01 == 0x01) {
+				// round up on odd
+				$value = ceil($value * $exp) / $exp;
+			} else {
+				// round down on even
+				$value = floor($value * $exp) / $exp;
+			}
+		} else {
+			// use normal rounding
+			$value = round($value, $fractional_digits);
+		}
+
+		return $value;
 	}
 
 	// }}}
