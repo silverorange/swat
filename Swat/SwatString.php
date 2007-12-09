@@ -1096,30 +1096,24 @@ class SwatString extends SwatObject
 	 *                          delimiter.
 	 *
 	 * @return string The formatted list.
+	 *
+	 * @todo Think about using a mask to make this as flexible as possible for
+	 *       different locales.
 	 */
 	public static function arrayToList(array $array, $conjunction = 'and',
 		$delimiter = ', ', $display_final_delimiter = true)
 	{
-		$count = 0;
-		$list = '';
-
-		foreach ($array as $value) {
-			if ($count != 0) {
-				if ($count == count($array) - 1) {
-					$list.= ($display_final_delimiter && count($array) > 2) ?
-						$delimiter : ' ';
-
-					$list.= $conjunction.' ';
-				} else {
-					$list.= $delimiter;
-				}
-			}
-
-			$list.= $value;
-			$count++;
+		if (count($array) == 1) {
+			return $array[0];
+		} elseif (count($array) == 2) {
+			return sprintf('%s %s %s', $array[0], $conjunction, $array[1]);
+		} elseif (count($array) > 2) {
+			$last_element = array_pop($array);
+			return sprintf('%s%s%s',
+				implode($delimiter, $array),
+				$display_final_delimiter ? $delimiter : ' ',
+				$conjunction.' '.$last_element);
 		}
-
-		return $list;
 	}
 	// }}}
 	// {{{ public static function hash()
