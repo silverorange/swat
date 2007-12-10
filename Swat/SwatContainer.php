@@ -39,6 +39,24 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	protected $children_by_id = array();
 
 	// }}}
+	// {{{ public function __clone()
+
+	public function __clone()
+	{
+		$children = $this->children;
+		$this->children = array();
+		$this->children_by_id = array();
+
+		foreach ($children as $key => $child) {
+			$new_child = clone $child;
+			$new_child->parent = $this;
+			$this->children[$key] = $new_child;
+			if ($new_child->id !== null)
+				$this->children_by_id[$new_child->id] = $new_child;
+		}
+	}
+
+	// }}}
 	// {{{ public function init()
 
 	/**
@@ -545,37 +563,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 			}
 			echo '</ul>';
 		}
-	}
-
-	// }}}
-	// {{{ public function copy()
-
-	/**
-	 * Performs a deep copy of the UI tree starting with this UI object
-	 *
-	 * @param string $id_prefix optional. A prefix to prepend to copied UI
-	 *                           objects in the UI tree.
-	 *
-	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
-	 *                       object.
-	 *
-	 * @see SwatUIObject::copy()
-	 */
-	public function copy($id_prefix = '')
-	{
-		$copy = parent::copy($id_prefix);
-		$copy->children_by_id = array();
-
-		foreach ($this->children as $key => $child_widget) {
-			$copy_child = $child_widget->copy($id_prefix);
-			$copy_child->parent = $copy;
-			$copy->children[$key] = $copy_child;
-			if ($copy_child->id !== null) {
-				$copy->children_by_id[$copy_child->id] = $copy_child;
-			}
-		}
-
-		return $copy;
 	}
 
 	// }}}

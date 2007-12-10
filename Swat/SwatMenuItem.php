@@ -398,33 +398,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function copy()
-
-	/**
-	 * Performs a deep copy of the UI tree starting with this UI object
-	 *
-	 * @param string $id_prefix optional. A prefix to prepend to copied UI
-	 *                           objects in the UI tree.
-	 *
-	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
-	 *                       object.
-	 *
-	 * @see SwatUIObject::copy()
-	 */
-	public function copy($id_prefix = '')
-	{
-		$copy = parent::copy($id_prefix);
-
-		if ($this->sub_menu !== null) {
-			$copy_sub_menu = $this->sub_menu->copy($id_prefix);
-			$copy_sub_menu->parent = $copy;
-			$copy->sub_menu = $copy_sub_menu;
-		}
-
-		return $copy;
-	}
-
-	// }}}
 	// {{{ protected function displaySubMenu()
 
 	/**

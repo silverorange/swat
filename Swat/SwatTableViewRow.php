@@ -181,30 +181,6 @@ abstract class SwatTableViewRow extends SwatUIObject
 	}
 
 	// }}}
-	// {{{ public function copy()
-
-	/**
-	 * Performs a deep copy of the UI tree starting with this UI object
-	 *
-	 * @param string $id_prefix optional. A prefix to prepend to copied UI
-	 *                           objects in the UI tree.
-	 *
-	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
-	 *                       object.
-	 *
-	 * @see SwatUIObject::copy()
-	 */
-	public function copy($id_prefix = '')
-	{
-		$copy = parent::copy($id_prefix);
-
-		if (strlen($id_prefix) > 0 && $copy->id !== null)
-			$copy->id = $id_prefix.$copy->id;
-
-		return $copy;
-	}
-
-	// }}}
 }
 
 ?>

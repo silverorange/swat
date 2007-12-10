@@ -20,16 +20,6 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	// {{{ public properties
 
 	/**
-	 * Identifier of this widget cell renderer
-	 *
-	 * Identifier must be unique. This property is required and cannot be a
-	 * data-mapped value.
-	 *
-	 * @var string
-	 */
-	public $id;
-
-	/**
 	 * Unique value used to uniquely identify the replicated widget.
 	 * If null, no replicating is done and the prototype widget is used.
 	 */
@@ -49,22 +39,6 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	private $clones = array();
 	private $widgets = array();
 	private $property_values = array();
-
-	// }}}
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new radio button cell renderer
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-
-		$this->makePropertyStatic('id');
-
-		// auto-generate an id to use if no id is set
-		$this->id = $this->getUniqueId();
-	}
 
 	// }}}
 	// {{{ public function addChild()
@@ -679,23 +653,20 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 		if ($this->prototype_widget === null)
 			return;
 
-		$prefix = $this->id.'_'.$replicator.'_';
-		$new_widget = $this->prototype_widget->copy($prefix);
-		$new_widget->parent = $this;
+		$suffix = '_'.$replicator;
+		$new_widget = clone $this->prototype_widget;
 		$this->widgets[$replicator] = array();
 
 		if ($new_widget->id !== null) {
-			// lookup array uses original ids
-			$old_id = substr($new_widget->id, strlen($prefix));
-			$this->widgets[$replicator][$old_id] = $new_widget;
+			$this->widgets[$replicator][$new_widget->id] = $new_widget;
+			$new_widget->id.= $suffix;
 		}
 
 		if ($new_widget instanceof SwatUIParent) {
 			foreach ($new_widget->getDescendants() as $descendant) {
 				if ($descendant->id !== null) {
-					// lookup array uses original ids
-					$old_id = substr($descendant->id, strlen($prefix));
-					$this->widgets[$replicator][$old_id] = $descendant;
+					$this->widgets[$replicator][$descendant->id] = $descendant;
+					$descendant->id.= $suffix;
 				}
 			}
 		}

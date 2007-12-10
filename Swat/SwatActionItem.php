@@ -258,33 +258,6 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function copy()
-
-	/**
-	 * Performs a deep copy of the UI tree starting with this UI object
-	 *
-	 * @param string $id_prefix optional. A prefix to prepend to copied UI
-	 *                           objects in the UI tree.
-	 *
-	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
-	 *                       object.
-	 *
-	 * @see SwatUIObject::copy()
-	 */
-	public function copy($id_prefix = '')
-	{
-		$copy = parent::copy($id_prefix);
-
-		if ($this->widget !== null) {
-			$copy_widget = $this->widget->copy($id_prefix);
-			$copy_widget->parent = $copy;
-			$copy->widget = $copy_widget;
-		}
-
-		return $copy;
-	}
-
-	// }}}
 }
 
 ?>
