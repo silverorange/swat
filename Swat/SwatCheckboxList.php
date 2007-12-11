@@ -38,14 +38,17 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	public $show_check_all = true;
 
 	/**
-	 * Number of columns in which this list is displayed
+	 * Defines the columns in which this list is displayed
 	 *
 	 * If unspecified, the list will be displayed in one column.
 	 *
 	 * Each column is displayed using a separate XHTML unordered list
-	 * (<code>&lt;ul&gt;</code>).
+	 * (<code>&lt;ul&gt;</code>). If the value is an integer it specifies
+	 * the number of columns to display. If the value is an array of
+	 * integers it specifies the number of checkboxes to display in each
+	 * column.
 	 *
-	 * @var integer
+	 * @var integer or array of integers
 	 */
 	public $columns = 1;
 
@@ -148,9 +151,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		parent::display();
 
-		// prevent divide by zero and negative columns
-		$columns = ($this->columns > 0) ? $this->columns : 1;
-
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
 		// outer div is required because the check-all widget is outside the
@@ -161,7 +161,15 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		$div_tag->open();
 
 		// maximum number of options in each column
-		$num_column_options = ceil(count($options) / $columns);
+		if (is_array($this->columns)) {
+			$columns = $this->columns;
+		} else {
+			// prevent divide by zero and negative columns
+			$columns = ($this->columns > 0) ? $this->columns : 1;
+			$num_column_options = ceil(count($options) / $columns);
+			$columns = array($num_column_options);
+		}
+
 		$current_column = 1;
 		$count = 0;
 
@@ -172,6 +180,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		}
 		$ul_tag->open();
 
+		$num_column_options = array_shift($columns);
 		foreach ($options as $index => $option) {
 
 			if ($count == $num_column_options) {
@@ -183,6 +192,10 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 					sprintf('%_column_%s', $this->id, $current_column);
 
 				$ul_tag->open();
+
+				$count = 0;
+				if (count($columns))
+					$num_column_options = array_shift($columns);
 			}
 
 			$count++;
