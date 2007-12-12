@@ -79,6 +79,7 @@ ul.swat-note {
 
 .swat-form-field-checkbox .swat-form-field-contents {
 	display: inline;
+	margin-right: 0.3em;
 }
 
 .swat-form-field-checkbox input {
