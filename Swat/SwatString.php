@@ -1085,8 +1085,7 @@ class SwatString extends SwatObject
 	/**
 	 * Convert an iterabled variable into a human-readable deliminated list.
 	 *
-	 * @param mixed $iterator the iterable variable to convert, either an array or
-	 *                     an Iterator.
+	 * @param array|Iterator $iterator the object to convert to a list.
 	 * @param string $conjunction the list's conjunction. Usually 'and' or
 	 *                            'or'.
 	 * @param string $delimiter the list delimiter. If list items should
@@ -1108,7 +1107,8 @@ class SwatString extends SwatObject
 	{
 		if (is_array($iterator))
 			$iterator = new ArrayIterator($iterator);
-		elseif (!$iterator instanceof Iterator)
+
+		if (!($iterator instanceof Iterator))
 			throw new SwatException('Value is not an Iterator or array');
 
 		if (count($iterator) == 1) {
