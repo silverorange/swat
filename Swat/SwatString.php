@@ -1080,12 +1080,13 @@ class SwatString extends SwatObject
 		return (is_numeric($value)) ? floatval($value) : null;
 	}
 	// }}}
-	// {{{ public static function arrayToList()
+	// {{{ public static function toList()
 
 	/**
-	 * Convert an array into a human-readable deliminated list.
+	 * Convert an iterabled variable into a human-readable deliminated list.
 	 *
-	 * @param array $array the array to convert.
+	 * @param mixed $iterator the iterable variable to convert, either an array or
+	 *                     an Iterator.
 	 * @param string $conjunction the list's conjunction. Usually 'and' or
 	 *                            'or'.
 	 * @param string $delimiter the list delimiter. If list items should
@@ -1097,23 +1098,43 @@ class SwatString extends SwatObject
 	 *
 	 * @return string The formatted list.
 	 *
+	 * @throws SwatException if the iterator value is not an array or Iterator
+	 *
 	 * @todo Think about using a mask to make this as flexible as possible for
 	 *       different locales.
 	 */
-	public static function arrayToList(array $array, $conjunction = 'and',
+	public static function toList($iterator, $conjunction = 'and',
 		$delimiter = ', ', $display_final_delimiter = true)
 	{
-		if (count($array) == 1) {
-			return $array[0];
-		} elseif (count($array) == 2) {
-			return sprintf('%s %s %s', $array[0], $conjunction, $array[1]);
-		} elseif (count($array) > 2) {
-			$last_element = array_pop($array);
-			return sprintf('%s%s%s',
-				implode($delimiter, $array),
-				$display_final_delimiter ? $delimiter : ' ',
-				$conjunction.' '.$last_element);
+		if (is_array($iterator))
+			$iterator = new ArrayIterator($iterator);
+		elseif (!$iterator instanceof Iterator)
+			throw new SwatException('Value is not an Iterator or array');
+
+		if (count($iterator) == 1) {
+			$list = $array->current();
+		} else {
+			$count = 0;
+			$list = '';
+
+			foreach ($iterator as $value) {
+				if ($count != 0) {
+					if ($count == count($iterator) - 1) {
+						$list.= ($display_final_delimiter
+							&& count($iterator) > 2) ? $delimiter : ' ';
+
+						$list.= $conjunction.' ';
+					} else {
+						$list.= $delimiter;
+					}
+				}
+
+				$list.= $value;
+				$count++;
+			}
 		}
+
+		return $list;
 	}
 	// }}}
 	// {{{ public static function hash()
