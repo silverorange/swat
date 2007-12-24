@@ -280,22 +280,78 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 */
 	public function appendColumn(SwatTableViewColumn $column)
 	{
-		$this->columns[] = $column;
+		$this->validateColumn($column);
 
-		// note: This works because the id property is set before children are
-		// added to parents in SwatUI.
-		if ($column->id !== null) {
-			if (array_key_exists($column->id, $this->columns_by_id))
-				throw new SwatDuplicateIdException(
-					"A column with the id '{$column->id}' already exists ".
-					'in this table view.',
-					0, $column->id);
-
+		if ($column->id !== null)
 			$this->columns_by_id[$column->id] = $column;
-		}
 
 		$column->view = $this;
 		$column->parent = $this;
+		$this->columns[] = $column;
+	}
+
+	// }}}
+	// {{{ public function addColumnBefore()
+
+	/**
+	 * Adds a new column before an existing table view column
+	 *
+	 * @param SwatTableViewColumn $new_column the new column to add.
+	 * @param SwatTableViewColumn $source_column the column before which the
+	 *        new column will be added.
+	 *
+	 * @thcolumns SwatException
+	 */
+	public function addColumnBefore(SwatTableViewColumn $new_column,
+		SwatTableViewColumn $source_column)
+	{
+		$this->validateColumn($new_column);
+
+		$key = array_search($source_column, $this->columns, true);
+
+		if ($key === false)
+			throw new SwatException('The source column could not be found.');
+
+		$new_column->view = $this;
+		$new_column->parent = $this;
+
+		array_splice($this->columns, $key, 1,
+			array($new_column, $source_column));
+
+		if ($new_column->id !== null)
+			$this->columns_by_id[$new_column->id] = $new_column;
+	}
+
+	// }}}
+	// {{{ public function addColumnAfter()
+
+	/**
+	 * Adds a new column after an existing table view column
+	 *
+	 * @param SwatTableViewColumn $new_column the new column to add.
+	 * @param SwatTableViewColumn $source_column the column after which the
+	 *        new column will be added.
+	 *
+	 * @thcolumns SwatException
+	 */
+	public function addColumnAfter(SwatTableViewColumn $new_column,
+		SwatTableViewColumn $source_column)
+	{
+		$this->validateColumn($new_column);
+
+		$key = array_search($source_column, $this->columns, true);
+
+		if ($key === false)
+			throw new SwatException('The source column could not be found.');
+
+		array_splice($this->columns, $key, 1,
+			array($source_column, $new_column));
+
+		if ($new_column->id !== null)
+			$this->columns_by_id[$new_column->id] = $new_column;
+
+		$new_column->view = $this;
+		$new_column->parent = $this;
 	}
 
 	// }}}
@@ -368,7 +424,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	// {{{ public function addRowBefore()
 
 	/**
-	 * Adds a new row before an existing table view row 
+	 * Adds a new row before an existing table view row
 	 *
 	 * @param SwatTableViewRow $new_row the new row to add.
 	 * @param SwatTableViewRow $source_row the row before which the
@@ -400,7 +456,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	// {{{ public function addRowAfter()
 
 	/**
-	 * Adds a new row after an existing table view row 
+	 * Adds a new row after an existing table view row
 	 *
 	 * @param SwatTableViewRow $new_row the new row to add.
 	 * @param SwatTableViewRow $source_row the row after which the
@@ -1475,7 +1531,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	// {{{ protected function validateRow()
 
 	/**
-	 * Checks to make sure that a new SwatTableView row is valid 
+	 * Checks to make sure that a new SwatTableView row is valid
 	 *
 	 * @param SwatTableViewRow $row the row to validate.
 	 *
@@ -1495,6 +1551,29 @@ class SwatTableView extends SwatView implements SwatUIParent
 					"A row with the id '{$row->id}' already exists ".
 					'in this table-view.',
 					0, $row->id);
+		}
+	}
+
+	// }}}
+	// {{{ protected function validateColumn()
+
+	/**
+	 * Checks to make sure that a new SwatTableView column is valid
+	 *
+	 * @param SwatTableViewColumn $column the column to validate.
+	 *
+	 * @throws SwatException
+	 */
+	protected function validateColumn(SwatTableViewColumn $column)
+	{
+		// note: This works because the id property is set before children are
+		// added to parents in SwatUI.
+		if ($column->id !== null) {
+			if (array_key_exists($column->id, $this->columns_by_id))
+				throw new SwatDuplicateIdException(
+					"A column with the id '{$column->id}' already exists ".
+					'in this table view.',
+					0, $column->id);
 		}
 	}
 
