@@ -953,6 +953,10 @@ class SwatTableView extends SwatView implements SwatUIParent
 				foreach ($this->columns as $column)
 					$messages =
 						array_merge($messages, $column->getMessages($row));
+
+			foreach ($this->extra_rows as $row)
+				if ($row instanceof SwatTableViewWidgetRow)
+					$messages =	array_merge($messages, $row->getMessages());
 		}
 
 		return $messages;
@@ -978,6 +982,16 @@ class SwatTableView extends SwatView implements SwatUIParent
 						$has_message = true;
 						break 2;
 					}
+				}
+			}
+		}
+
+		if (!$has_message) {
+			foreach ($this->extra_rows as $row) {
+				if ($row instanceof SwatTableViewWidgetRow &&
+					$row->hasMessage()) {
+					$has_message = true;
+					break;
 				}
 			}
 		}
