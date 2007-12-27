@@ -329,6 +329,47 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getMessages()
+
+	/**
+	 * Gathers all messages from this table-view-row
+	 *
+	 * @return array an array of {@link SwatMessage} objects.
+	 */
+	public function getMessages()
+	{
+		$messages = array();
+
+		foreach ($this->getDescendants() as $widget)
+			if ($widget->hasMessage())
+				$messages[] = $widget->getMessage();
+
+		return $messages;
+	}
+
+	// }}}
+	// {{{ public function hasMessage()
+
+	/**
+	 * Gets whether or not the widgets in this row have any messages
+	 *
+	 * @return boolean true if this table-view row has one or more messages
+	 *                  and false if it does not.
+	 */
+	public function hasMessage()
+	{
+		$has_message = false;
+		foreach ($this->getDescendants() as $widget) {
+			if ($widget->hasMessage()) {
+				$has_message = true;
+				break;
+			}
+		}
+
+		return $has_message;
+	}
+
+	// }}}
 	// {{{ protected function displayOffsetCell()
 
 	protected function displayOffsetCell($offset)
