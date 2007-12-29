@@ -206,11 +206,11 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	// {{{ public function getFields()
 
 	/**
-	 * Get the fields from this details view
+	 * Get the fields of this details-view
 	 *
-	 * @return array a reference to an array of fields from this view.
+	 * @return array the fields of this details-view.
 	 */
-	public function &getFields()
+	public function getFields()
 	{
 		return $this->fields;
 	}
