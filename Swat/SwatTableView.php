@@ -291,21 +291,21 @@ class SwatTableView extends SwatView implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function addColumnBefore()
+	// {{{ public function insertColumnBefore()
 
 	/**
-	 * Adds a column before an existing column in this table-view
+	 * Inserts a column before an existing column in this table-view
 	 *
-	 * @param SwatTableViewColumn $column the column to add.
+	 * @param SwatTableViewColumn $column the column to insert.
 	 * @param SwatTableViewColumn $reference_column the column before which the
-	 *                                               column will be added.
+	 *                                               column will be inserted.
 	 *
 	 * @throws SwatWidgetNotFoundException if the reference column does not
 	 *                                     exist in this table-view.
 	 * @throws SwatDuplicateIdException if the column has the same id as a
 	 *                                  column already in this table-view.
 	 */
-	public function addColumnBefore(SwatTableViewColumn $column,
+	public function insertColumnBefore(SwatTableViewColumn $column,
 		SwatTableViewColumn $reference_column)
 	{
 		$this->validateColumn($column);
@@ -327,21 +327,21 @@ class SwatTableView extends SwatView implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function addColumnAfter()
+	// {{{ public function insertColumnAfter()
 
 	/**
-	 * Adds a column after an existing column in this table-view
+	 * Inserts a column after an existing column in this table-view
 	 *
-	 * @param SwatTableViewColumn $column the column to add.
+	 * @param SwatTableViewColumn $column the column to insert.
 	 * @param SwatTableViewColumn $reference_column the column after which the
-	 *                                               column will be added.
+	 *                                               column will be inserted.
 	 *
 	 * @throws SwatWidgetNotFoundException if the reference column does not
 	 *                                     exist in this table-view.
 	 * @throws SwatDuplicateIdException if the column has the same id as a
 	 *                                  column already in this table-view.
 	 */
-	public function addColumnAfter(SwatTableViewColumn $column,
+	public function insertColumnAfter(SwatTableViewColumn $column,
 		SwatTableViewColumn $reference_column)
 	{
 		$this->validateColumn($column);
@@ -429,14 +429,14 @@ class SwatTableView extends SwatView implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function addRowBefore()
+	// {{{ public function insertRowBefore()
 
 	/**
-	 * Adds a row before an existing row in this table-view
+	 * Inserts a row before an existing row in this table-view
 	 *
-	 * @param SwatTableViewRow $row the row to add.
+	 * @param SwatTableViewRow $row the row to insert.
 	 * @param SwatTableViewRow $reference_row the row before which the row will
-	 *                                         be added.
+	 *                                         be inserted.
 	 *
 	 * @throws SwatWidgetNotFoundException if the reference row does not exist
 	 *                                     in this table-view.
@@ -445,7 +445,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @throws SwatException if the row is an input row and this table-view
 	 *                       already contains an input-row.
 	 */
-	public function addRowBefore(SwatTableViewRow $row,
+	public function insertRowBefore(SwatTableViewRow $row,
 		SwatTableViewRow $reference_row)
 	{
 		$this->validateRow($row);
@@ -466,14 +466,14 @@ class SwatTableView extends SwatView implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function addRowAfter()
+	// {{{ public function insertRowAfter()
 
 	/**
-	 * Adds a row after an existing row in this table-view
+	 * Inserts a row after an existing row in this table-view
 	 *
-	 * @param SwatTableViewRow $row the row to add.
+	 * @param SwatTableViewRow $row the row to insert.
 	 * @param SwatTableViewRow $reference_row the row after which the row will
-	 *                                         be added.
+	 *                                         be inserted.
 	 *
 	 * @throws SwatWidgetNotFoundException if the reference row does not exist
 	 *                                     in this table-view.
@@ -482,7 +482,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @throws SwatException if the row is an input row and this table-view
 	 *                       already contains an input-row.
 	 */
-	public function addRowAfter(SwatTableViewRow $row,
+	public function insertRowAfter(SwatTableViewRow $row,
 		SwatTableViewRow $reference_row)
 	{
 		$this->validateRow($row);
