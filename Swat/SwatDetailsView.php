@@ -6,7 +6,9 @@ require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatDetailsViewField.php';
 require_once 'Swat/SwatUIParent.php';
+require_once 'Swat/exceptions/SwatDuplicateIdException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
+require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
 
 /**
  * A widget to display field-value pairs
@@ -42,6 +44,19 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 * @var array
 	 */
 	private $fields = array();
+
+	/**
+	 * The fields of this details-view indexed by their unique identifier
+	 *
+	 * A unique identifier is not required so this array does not necessarily
+	 * contain all fields in the view. It serves as an efficient data
+	 * structure to lookup fields by their id.
+	 *
+	 * The array is structured as id => field reference.
+	 *
+	 * @var array
+	 */
+	private $fields_by_id = array();
 
 	// }}}
 	// {{{ public function __construct()
@@ -84,11 +99,91 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	/**
 	 * Appends a field to this details view
 	 *
-	 * @param SwatDetailViewField $field the field to append
+	 * The field is appended below existing fields.
+	 *
+	 * @param SwatDetailViewField $field the field to append.
+	 *
+	 * @throws SwatDuplicateIdException if the field has the same id as a field
+	 *                                  already in this details-view.
 	 */
 	public function appendField(SwatDetailsViewField $field)
 	{
+		$this->validateField($field);
+
+		if ($field->id !== null)
+			$this->fields_by_id[$field->id] = $field;
+
 		$this->fields[] = $field;
+
+		$field->view = $this;
+		$field->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function insertFieldBefore()
+
+	/**
+	 * Inserts a field before an existing field in this details-view
+	 *
+	 * @param SwatDetailsViewField $field the field to insert.
+	 * @param SwatDetailsViewField $reference_field the field before which the
+	 *                                             field will be inserted.
+	 *
+	 * @throws SwatWidgetNotFoundException if the reference field does not
+	 *                                     exist in this details-view.
+	 * @throws SwatDuplicateIdException if the field has the same id as a field
+	 *                                  already in this details-view.
+	 */
+	public function insertFieldBefore(SwatDetailsViewField $field,
+		SwatDetailsViewField $reference_field)
+	{
+		$this->validateField($field);
+
+		$key = array_search($reference_field, $this->fields, true);
+
+		if ($key === false)
+			throw new SwatWidgetNotFoundException('The reference field could '.
+				'not be found in this details-view.');
+
+		array_splice($this->fields, $key, 1, array($field, $reference_field));
+
+		if ($field->id !== null)
+			$this->fields_by_id[$field->id] = $field;
+
+		$field->view = $this;
+		$field->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function insertFieldAfter()
+
+	/**
+	 * Inserts a field after an existing field in this details-view
+	 *
+	 * @param SwatDetailsViewField $field the field to insert.
+	 * @param SwatDetailsViewField $reference_field the field after which the
+	 *                                             field will be inserted.
+	 *
+	 * @throws SwatWidgetNotFoundException if the reference field does not
+	 *                                     exist in this details-view.
+	 * @throws SwatDuplicateIdException if the field has the same id as a field
+	 *                                  already in this details-view.
+	 */
+	public function insertFieldAfter(SwatDetailsViewField $field,
+		SwatDetailsViewField $reference_field)
+	{
+		$this->validateField($field);
+
+		$key = array_search($reference_field, $this->fields, true);
+
+		if ($key === false)
+			throw new SwatWidgetNotFoundException('The reference field could '.
+				'not be found in this details-view.');
+
+		array_splice($this->fields, $key, 1, array($reference_field, $field));
+
+		if ($field->id !== null)
+			$this->fields_by_id[$field->id] = $field;
 
 		$field->view = $this;
 		$field->parent = $this;
@@ -98,9 +193,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	// {{{ public function getFieldCount()
 
 	/**
-	 * Gets the number of fields of this details view
+	 * Gets the number of fields of this details-view
 	 *
-	 * @return integer the number of fields of this details view.
+	 * @return integer the number of fields in  this details-view.
 	 */
 	public function getFieldCount()
 	{
@@ -124,18 +219,23 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	// {{{ public function getField()
 
 	/**
-	 * Get a reference to a field
+	 * Gets a field in this details view by the field's id
 	 *
-	 * @ return SwatDetailsViewField Matching field
+	 * @param string $id the id of the field in this details-view to get.
+	 *
+	 * @return SwatDetailsViewField the field in this details-view with the
+	 *                               specified id.
+	 *
+	 * @throws SwatWidgetNotFoundException if no field with the given id exists
+	 *                                     in this details view.
 	 */
 	public function getField($id)
 	{
-		$fields = $this->getFields();
-		foreach ($fields as $field)
-			if ($id == $field->id)
-				return $field;
+		if (!array_key_exists($id, $this->fields_by_id))
+			throw new SwatWidgetNotFoundException(
+				"Field with an id of '{$id}' not found.");
 
-		throw new SwatException("Field with an id of '$id' not found.");
+		return $this->fields_by_id[$id];
 	}
 
 	// }}}
@@ -346,13 +446,42 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	{
 		$copy = parent::copy($id_prefix);
 
+		$copy->fields_by_id = array();
 		foreach ($this->fields as $key => $field) {
 			$copy_field = $field->copy($id_prefix);
 			$copy_field->parent = $copy;
 			$copy->fields[$key] = $copy_field;
+			if ($copy_field->id !== null) {
+				$copy->fields_by_id[$copy_field->id] = $copy_field;
+			}
 		}
 
 		return $copy;
+	}
+
+	// }}}
+	// {{{ protected function validateField()
+
+	/**
+	 * Ensures a field added to this details-view is valid for this
+	 * details-view
+	 *
+	 * @param SwatTableViewField $field the field to check.
+	 *
+	 * @throws SwatDuplicateIdException if the field has the same id as a
+	 *                                  field already in this details-view.
+	 */
+	protected function validateField(SwatDetailsViewField $field)
+	{
+		// note: This works because the id property is set before children are
+		// added to parents in SwatUI.
+		if ($field->id !== null) {
+			if (array_key_exists($field->id, $this->fields_by_id))
+				throw new SwatDuplicateIdException(
+					"A field with the id '{$field->id}' already exists ".
+					'in this details-view.',
+					0, $field->id);
+		}
 	}
 
 	// }}}
