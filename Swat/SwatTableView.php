@@ -1564,15 +1564,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 */
 	public function appendRow(SwatTableViewRow $row)
 	{
-		$this->validateRow($row);
-
-		$this->extra_rows[] = $row;
-
-		if ($row->id !== null)
-			$this->rows_by_id[$row->id] = $row;
-
-		$row->view = $this;
-		$row->parent = $this;
+		$this->insertRow($row);
 	}
 
 	// }}}
@@ -1595,21 +1587,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	public function insertRowBefore(SwatTableViewRow $row,
 		SwatTableViewRow $reference_row)
 	{
-		$this->validateRow($row);
-
-		$key = array_search($reference_row, $this->extra_rows, true);
-
-		if ($key === false)
-			throw new SwatWidgetNotFoundException('The reference row could '.
-				'not be found in this table-view.');
-
-		array_splice($this->extra_rows, $key, 1, array($row, $reference_row));
-
-		if ($row->id !== null)
-			$this->rows_by_id[$row->id] = $row;
-
-		$row->view = $this;
-		$row->parent = $this;
+		$this->insertRow($row, $reference_row, false);
 	}
 
 	// }}}
@@ -1632,21 +1610,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	public function insertRowAfter(SwatTableViewRow $row,
 		SwatTableViewRow $reference_row)
 	{
-		$this->validateRow($row);
-
-		$key = array_search($reference_row, $this->extra_rows, true);
-
-		if ($key === false)
-			throw new SwatWidgetNotFoundException('The reference row could '.
-				'not be found in this table-view.');
-
-		array_splice($this->extra_rows, $key, 1, array($reference_row, $row));
-
-		if ($row->id !== null)
-			$this->rows_by_id[$row->id] = $row;
-
-		$row->view = $this;
-		$row->parent = $this;
+		$this->insertRow($row, $reference_row, true);
 	}
 
 	// }}}
@@ -1769,6 +1733,79 @@ class SwatTableView extends SwatView implements SwatUIParent
 					'in this table-view.',
 					0, $row->id);
 		}
+	}
+
+	// }}}
+	// {{{ protected function insertRow()
+
+	/**
+	 * Helper method to insert rows into this table-view
+	 *
+	 * @param SwatTableViewRow $row the row to insert.
+	 * @param SwatTableViewRow $reference_row optional. An existing row within
+	 *                                         this table-view to which the
+	 *                                         inserted row is relatively
+	 *                                         positioned. If not specified,
+	 *                                         the row is inserted at the
+	 *                                         beginning or the end of this
+	 *                                         table-view's list of extra rows.
+	 * @param boolean $after optional. If true and a reference row is specified,
+	 *                        the row is inserted immediately before the
+	 *                        reference row. If true and no reference row is
+	 *                        specified, the row is inserted at the beginning
+	 *                        of the extra row list. If false and a reference
+	 *                        row is specified, the row is inserted immediately
+	 *                        after the reference row. If false and no
+	 *                        reference row is specified, the row is inserted
+	 *                        at the end of the extra row list. Defaults to
+	 *                        false.
+	 *
+	 * @throws SwatWidgetNotFoundException if the reference row does not exist
+	 *                                     in this table-view.
+	 * @throws SwatDuplicateIdException if the row to be inserted has the same
+	 *                                  id as a row already in this table-view.
+	 *
+	 * @see SwatTableView::appendRow()
+	 * @see SwatTableView::insertRowBefore()
+	 * @see SwatTableView::insertRowAfter()
+	 */
+	protected function insertRow(SwatTableViewRow $row,
+		SwatTableViewRow $reference_row = null, $after = true)
+	{
+		$this->validateRow($row);
+
+		if ($reference_row !== null) {
+			$key = array_search($reference_row, $this->extra_rows, true);
+
+			if ($key === false) {
+				throw new SwatWidgetNotFoundException('The reference row '.
+					'could not be found in this table-view.');
+			}
+
+			if ($after) {
+				// insert after reference row
+				array_splice($this->extra_rows, $key, 1,
+					array($reference_row, $row));
+			} else {
+				// insert before reference row
+				array_splice($this->extra_rows, $key, 1,
+					array($row, $reference_row));
+			}
+		} else {
+			if ($after) {
+				// append to array
+				$this->extra_rows[] = $row;
+			} else {
+				// prepend to array
+				array_unshift($this->extra_rows, $row);
+			}
+		}
+
+		if ($row->id !== null)
+			$this->rows_by_id[$row->id] = $row;
+
+		$row->view = $this; // deprecated reference
+		$row->parent = $this;
 	}
 
 	// }}}
