@@ -11,9 +11,11 @@ require_once 'Swat/SwatTableViewGroup.php';
 require_once 'Swat/SwatTableViewRow.php';
 require_once 'Swat/SwatTableViewInputRow.php';
 require_once 'Swat/SwatUIParent.php';
+require_once 'Swat/SwatYUI.php';
+require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/exceptions/SwatDuplicateIdException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
-require_once 'Swat/SwatYUI.php';
+require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
 
 /**
  * A widget to display data in a tabular form
