@@ -101,7 +101,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	public $use_invalid_tfoot_ordering = false;
 
 	// }}}
-	// {{{ private properties
+	// {{{ protected properties
 
 	/**
 	 * The columns of this table-view indexed by their unique identifier
@@ -114,7 +114,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * @var array
 	 */
-	private $columns_by_id = array();
+	protected $columns_by_id = array();
 
 	/**
 	 * The row columns of this table-view indexed by their unique identifier
@@ -127,7 +127,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * @var array
 	 */
-	private $spanning_columns_by_id = array();
+	protected $spanning_columns_by_id = array();
 
 	/**
 	 * The groups of this table-view indexed by their unique identifier
@@ -140,7 +140,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * @var array
 	 */
-	private $groups_by_id = array();
+	protected $groups_by_id = array();
 
 	/**
 	 * The extra rows of this table-view indexed by their unique identifier
@@ -153,14 +153,14 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * @var array
 	 */
-	private $rows_by_id = array();
+	protected $rows_by_id = array();
 
 	/**
 	 * The columns of this table-view
 	 *
 	 * @var array
 	 */
-	private $columns = array();
+	protected $columns = array();
 
 	/**
 	 * Row column objects for this table view
@@ -169,7 +169,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * @see SwatTableView::addSpanningColumn()
 	 */
-	private $spanning_columns = array();
+	protected $spanning_columns = array();
 
 	/**
 	 * Grouping objects for this table view
@@ -178,7 +178,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * @see SwatTableView::addGroup()
 	 */
-	private $groups = array();
+	protected $groups = array();
 
 	/**
 	 * Any extra rows that were appended to this view
@@ -188,7 +188,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * @var array
 	 */
-	private $extra_rows = array();
+	protected $extra_rows = array();
 
 	/**
 	 * Whether or not this table view has an input row
@@ -199,7 +199,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * @see SwatTableViewInputRow
 	 */
-	private $has_input_row = false;
+	protected $has_input_row = false;
 
 	// }}}
 
@@ -1183,7 +1183,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 	/**
 	 * Returns true if a column with the given id exists within this
-	 * table view
+	 * table-view
 	 *
 	 * @param string $id the unique identifier of the column within this
 	 *                    table view to check the existance of.
@@ -1200,16 +1200,20 @@ class SwatTableView extends SwatView implements SwatUIParent
 	// {{{ public function getColumn()
 
 	/**
-	 * Gets a reference to a column in this table-view by its unique identifier
+	 * Gets a column in this table-view by the column's id
+	 *
+	 * @param string $id the id of the column to get.
 	 *
 	 * @return SwatTableViewColumn the requested column.
 	 *
-	 * @throws SwatException
+	 * @throws SwatWidgetNotFoundException if no column with the specified id
+	 *                                     exists in this table-view.
 	 */
 	public function getColumn($id)
 	{
 		if (!array_key_exists($id, $this->columns_by_id))
-			throw new SwatException("Column with an id of '{$id}' not found.");
+			throw new SwatWidgetNotFoundException(
+				"Column with an id of '{$id}' not found.");
 
 		return $this->columns_by_id[$id];
 	}
@@ -1220,9 +1224,9 @@ class SwatTableView extends SwatView implements SwatUIParent
 	/**
 	 * Gets all columns of this table-view as an array
 	 *
-	 * @return array a reference to the the columns of this view.
+	 * @return array the columns of this table-view.
 	 */
-	public function &getColumns()
+	public function getColumns()
 	{
 		return $this->columns;
 	}
@@ -1246,9 +1250,9 @@ class SwatTableView extends SwatView implements SwatUIParent
 	/**
 	 * Gets all visible columns of this table-view as an array
 	 *
-	 * @return array a reference to the the visible columns of this view.
+	 * @return array the visible columns of this table-view.
 	 */
-	public function &getVisibleColumns()
+	public function getVisibleColumns()
 	{
 		$columns = array();
 		foreach ($this->columns as $column)
@@ -1358,16 +1362,21 @@ class SwatTableView extends SwatView implements SwatUIParent
 	// {{{ public function getSpanningColumn()
 
 	/**
-	 * Gets a reference to a spanning column in this table-view by its unique identifier
+	 * Gets a spanning column in this table-view by the spanning column's id
+	 *
+	 * @param string $id the id of the row to get.
 	 *
 	 * @return SwatTableViewSpanningColumn the requested spanning column.
 	 *
-	 * @throws SwatException
+	 * @throws SwatWidgetNotFoundException if no spanning column with the
+	 *                                     specified id exists in this
+	 *                                     table-view.
 	 */
 	public function getSpanningColumn($id)
 	{
 		if (!array_key_exists($id, $this->spanning_columns_by_id))
-			throw new SwatException("Spanning column with an id of '{$id}' not found.");
+			throw new SwatWidgetNotFoundException(
+				"Spanning column with an id of '{$id}' not found.");
 
 		return $this->spanning_columns_by_id[$id];
 	}
@@ -1378,9 +1387,9 @@ class SwatTableView extends SwatView implements SwatUIParent
 	/**
 	 * Gets all spanning columns of this table-view as an array
 	 *
-	 * @return array a reference to the spanning columns of this view.
+	 * @return array the spanning columns of this table-view.
 	 */
-	public function &getSpanningColumns()
+	public function getSpanningColumns()
 	{
 		return $this->spanning_columns;
 	}
@@ -1430,16 +1439,20 @@ class SwatTableView extends SwatView implements SwatUIParent
 	// {{{ public function getGroup()
 
 	/**
-	 * Gets a reference to a group in this table-view by its unique identifier
+	 * Gets a group in this table-view by the group's id
+	 *
+	 * @param string $id the id of the group to get.
 	 *
 	 * @return SwatTableViewGroup the requested group.
 	 *
-	 * @throws SwatException
+	 * @throws SwatWidgetNotFoundException if no group with the specified id
+	 *                                     exists in this table-view.
 	 */
 	public function getGroup($id)
 	{
 		if (!array_key_exists($id, $this->groups_by_id))
-			throw new SwatException("Group with an id of '{$id}' not found.");
+			throw new SwatWidgetNotFoundException(
+				"Group with an id of '{$id}' not found.");
 
 		return $this->groups_by_id[$id];
 	}
@@ -1450,9 +1463,9 @@ class SwatTableView extends SwatView implements SwatUIParent
 	/**
 	 * Gets all groups of this table-view as an array
 	 *
-	 * @return array a reference to the the groups of this view.
+	 * @return array the the groups of this table-view.
 	 */
-	public function &getGroups()
+	public function getGroups()
 	{
 		return $this->groups;
 	}
@@ -1581,16 +1594,20 @@ class SwatTableView extends SwatView implements SwatUIParent
 	// {{{ public function getRow()
 
 	/**
-	 * Gets a reference to a row in this table-view by its unique identifier
+	 * Gets a row in this table-view by the row's id
+	 *
+	 * @param string $id the id of the row to get.
 	 *
 	 * @return SwatTableViewRow the requested row.
 	 *
-	 * @throws SwatException
+	 * @throws SwatWidgetNotFoundException if no row with the specified id
+	 *                                     exists in this table-view.
 	 */
 	public function getRow($id)
 	{
 		if (!array_key_exists($id, $this->rows_by_id))
-			throw new SwatException("Row with an id of '{$id}' not found.");
+			throw new SwatWidgetNotFoundException(
+				"Row with an id of '{$id}' not found.");
 
 		return $this->rows_by_id[$id];
 	}
