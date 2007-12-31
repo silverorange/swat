@@ -202,6 +202,8 @@ class SwatTableView extends SwatView implements SwatUIParent
 	private $has_input_row = false;
 
 	// }}}
+
+	// general methods
 	// {{{ public function __construct()
 
 	/**
@@ -266,558 +268,6 @@ class SwatTableView extends SwatView implements SwatUIParent
 			if (!array_key_exists($column->id, $this->spanning_columns_by_id))
 				$this->spanning_columns_by_id[$column->id] = $column;
 		}
-	}
-
-	// }}}
-	// {{{ public function appendColumn()
-
-	/**
-	 * Appends a column to this table-view
-	 *
-	 * @param SwatTableViewColumn $column the column to append.
-	 *
-	 * @throws SwatDuplicateIdException if the column has the same id as a
-	 *                                  column already in this table-view.
-	 */
-	public function appendColumn(SwatTableViewColumn $column)
-	{
-		$this->validateColumn($column);
-
-		$this->columns[] = $column;
-
-		if ($column->id !== null)
-			$this->columns_by_id[$column->id] = $column;
-
-		$column->view = $this;
-		$column->parent = $this;
-	}
-
-	// }}}
-	// {{{ public function insertColumnBefore()
-
-	/**
-	 * Inserts a column before an existing column in this table-view
-	 *
-	 * @param SwatTableViewColumn $column the column to insert.
-	 * @param SwatTableViewColumn $reference_column the column before which the
-	 *                                               column will be inserted.
-	 *
-	 * @throws SwatWidgetNotFoundException if the reference column does not
-	 *                                     exist in this table-view.
-	 * @throws SwatDuplicateIdException if the column has the same id as a
-	 *                                  column already in this table-view.
-	 */
-	public function insertColumnBefore(SwatTableViewColumn $column,
-		SwatTableViewColumn $reference_column)
-	{
-		$this->validateColumn($column);
-
-		$key = array_search($reference_column, $this->columns, true);
-
-		if ($key === false)
-			throw new SwatWidgetNotFoundException('The reference column '.
-				'could not be found in this table-view.');
-
-		array_splice($this->columns, $key, 1,
-			array($column, $reference_column));
-
-		if ($column->id !== null)
-			$this->columns_by_id[$column->id] = $column;
-
-		$column->view = $this;
-		$column->parent = $this;
-	}
-
-	// }}}
-	// {{{ public function insertColumnAfter()
-
-	/**
-	 * Inserts a column after an existing column in this table-view
-	 *
-	 * @param SwatTableViewColumn $column the column to insert.
-	 * @param SwatTableViewColumn $reference_column the column after which the
-	 *                                               column will be inserted.
-	 *
-	 * @throws SwatWidgetNotFoundException if the reference column does not
-	 *                                     exist in this table-view.
-	 * @throws SwatDuplicateIdException if the column has the same id as a
-	 *                                  column already in this table-view.
-	 */
-	public function insertColumnAfter(SwatTableViewColumn $column,
-		SwatTableViewColumn $reference_column)
-	{
-		$this->validateColumn($column);
-
-		$key = array_search($reference_column, $this->columns, true);
-
-		if ($key === false)
-			throw new SwatWidgetNotFoundException('The reference column '.
-				'could not be found in this table-view.');
-
-		array_splice($this->columns, $key, 1,
-			array($reference_column, $column));
-
-		if ($column->id !== null)
-			$this->columns_by_id[$column->id] = $column;
-
-		$column->view = $this;
-		$column->parent = $this;
-	}
-
-	// }}}
-	// {{{ public function appendGroup()
-
-	/**
-	 * Appends a grouping object to this table-view
-	 *
-	 * A grouping object affects how the data in the table model is displayed
-	 * in this table-view. With a grouping, rows are split into groups with
-	 * special group headers above each group.
-	 *
-	 * @param SwatTableViewGroup $group the table-view grouping to use for this
-	 *                                   table-view.
-	 *
-	 * @see SwatTableViewGroup
-	 */
-	public function appendGroup(SwatTableViewGroup $group)
-	{
-		$this->groups[] = $group;
-		$group->view = $this;
-		$group->parent = $this;
-	}
-
-	// }}}
-	// {{{ public function appendSpanningColumn()
-
-	/**
-	 * Appends a spanning column object to this table-view
-	 *
-	 * @param SwatTableViewSpanningColumn $column the table-view spanning column to use for this
-	 *                                   table-view.
-	 *
-	 * @see SwatTableViewSpanningColumn
-	 */
-	public function appendSpanningColumn(SwatTableViewSpanningColumn $column)
-	{
-		$this->spanning_columns[] = $column;
-		$column->view = $this;
-		$column->parent = $this;
-	}
-
-	// }}}
-	// {{{ public function appendRow()
-
-	/**
-	 * Appends a single row to this table-view
-	 *
-	 * Rows appended to table-views are displayed after all the data from the
-	 * table-view model is displayed.
-	 *
-	 * @param SwatTableViewRow $row the row to append.
-	 *
-	 * @throws SwatDuplicateIdException if the row has the same id as a row
-	 *                                  already in this table-view.
-	 */
-	public function appendRow(SwatTableViewRow $row)
-	{
-		$this->validateRow($row);
-
-		$this->extra_rows[] = $row;
-
-		if ($row->id !== null)
-			$this->rows_by_id[$row->id] = $row;
-
-		$row->view = $this;
-		$row->parent = $this;
-	}
-
-	// }}}
-	// {{{ public function insertRowBefore()
-
-	/**
-	 * Inserts a row before an existing row in this table-view
-	 *
-	 * @param SwatTableViewRow $row the row to insert.
-	 * @param SwatTableViewRow $reference_row the row before which the row will
-	 *                                         be inserted.
-	 *
-	 * @throws SwatWidgetNotFoundException if the reference row does not exist
-	 *                                     in this table-view.
-	 * @throws SwatDuplicateIdException if the row has the same id as a row
-	 *                                  already in this table-view.
-	 * @throws SwatException if the row is an input row and this table-view
-	 *                       already contains an input-row.
-	 */
-	public function insertRowBefore(SwatTableViewRow $row,
-		SwatTableViewRow $reference_row)
-	{
-		$this->validateRow($row);
-
-		$key = array_search($reference_row, $this->extra_rows, true);
-
-		if ($key === false)
-			throw new SwatWidgetNotFoundException('The reference row could '.
-				'not be found in this table-view.');
-
-		array_splice($this->extra_rows, $key, 1, array($row, $reference_row));
-
-		if ($row->id !== null)
-			$this->rows_by_id[$row->id] = $row;
-
-		$row->view = $this;
-		$row->parent = $this;
-	}
-
-	// }}}
-	// {{{ public function insertRowAfter()
-
-	/**
-	 * Inserts a row after an existing row in this table-view
-	 *
-	 * @param SwatTableViewRow $row the row to insert.
-	 * @param SwatTableViewRow $reference_row the row after which the row will
-	 *                                         be inserted.
-	 *
-	 * @throws SwatWidgetNotFoundException if the reference row does not exist
-	 *                                     in this table-view.
-	 * @throws SwatDuplicateIdException if the row has the same id as a row
-	 *                                  already in this table-view.
-	 * @throws SwatException if the row is an input row and this table-view
-	 *                       already contains an input-row.
-	 */
-	public function insertRowAfter(SwatTableViewRow $row,
-		SwatTableViewRow $reference_row)
-	{
-		$this->validateRow($row);
-
-		$key = array_search($reference_row, $this->extra_rows, true);
-
-		if ($key === false)
-			throw new SwatWidgetNotFoundException('The reference row could '.
-				'not be found in this table-view.');
-
-		array_splice($this->extra_rows, $key, 1, array($reference_row, $row));
-
-		if ($row->id !== null)
-			$this->rows_by_id[$row->id] = $row;
-
-		$row->view = $this;
-		$row->parent = $this;
-	}
-
-	// }}}
-	// {{{ public function setDefaultOrderbyColumn()
-
-	/**
-	 * Sets a default column to use for ordering the data of this table-view
-	 *
-	 * @param SwatTableViewOrderableColumn the column in this view to use
-	 *                                      for default ordering
-	 * @param integer $direction the default direction of the ordered column.
-	 *
-	 * @throws SwatException
-	 *
-	 * @see SwatTableView::$default_orderby_column
-	 */
-	public function setDefaultOrderbyColumn(
-		SwatTableViewOrderableColumn $column,
-		$direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING)
-	{
-		if ($column->view !== $this)
-			throw new SwatException('Can only set the default orderby on '.
-				'orderable columns in this view.');
-
-		// this method sets properties on the table-view
-		$column->setDirection($direction);
-	}
-
-	// }}}
-	// {{{ public function getGroups()
-
-	/**
-	 * Gets all groups of this table-view as an array
-	 *
-	 * @return array a reference to the the groups of this view.
-	 */
-	public function &getGroups()
-	{
-		return $this->groups;
-	}
-
-	// }}}
-	// {{{ public function getGroup()
-
-	/**
-	 * Gets a reference to a group in this table-view by its unique identifier
-	 *
-	 * @return SwatTableViewGroup the requested group.
-	 *
-	 * @throws SwatException
-	 */
-	public function getGroup($id)
-	{
-		if (!array_key_exists($id, $this->groups_by_id))
-			throw new SwatException("Group with an id of '{$id}' not found.");
-
-		return $this->groups_by_id[$id];
-	}
-
-	// }}}
-	// {{{ public function getSpanningColumns()
-
-	/**
-	 * Gets all spanning columns of this table-view as an array
-	 *
-	 * @return array a reference to the spanning columns of this view.
-	 */
-	public function &getSpanningColumns()
-	{
-		return $this->spanning_columns;
-	}
-
-	// }}}
-	// {{{ public function getSpanningColumn()
-
-	/**
-	 * Gets a reference to a spanning column in this table-view by its unique identifier
-	 *
-	 * @return SwatTableViewSpanningColumn the requested spanning column.
-	 *
-	 * @throws SwatException
-	 */
-	public function getSpanningColumn($id)
-	{
-		if (!array_key_exists($id, $this->spanning_columns_by_id))
-			throw new SwatException("Spanning column with an id of '{$id}' not found.");
-
-		return $this->spanning_columns_by_id[$id];
-	}
-
-	// }}}
-	// {{{ public function hasSpanningColumn()
-
-	/**
-	 * Returns true if a spanning column with the given id exists within this table-view
-	 *
-	 * @return SwatTableViewSpanningColumn the requested spanning column.
-	 */
-	public function hasSpanningColumn($id)
-	{
-		return array_key_exists($id, $this->spanning_columns_by_id);
-	}
-
-	// }}}
-	// {{{ public function hasGroup()
-
-	/**
-	 * Returns true if a group with the given id exists within this table-view
-	 *
-	 * @param string $id the unique identifier of the group within this table-
-	 *                    view to check the existance of.
-	 *
-	 * @return boolean true if the group exists in this table-view and false if
-	 *                  it does not.
-	 */
-	public function hasGroup($id)
-	{
-		return array_key_exists($id, $this->groups_by_id);
-	}
-
-	// }}}
-	// {{{ public function getColumnCount()
-
-	/**
-	 * Gets the number of columns in this table-view
-	 *
-	 * @return integer the number of columns of this table-view.
-	 */
-	public function getColumnCount()
-	{
-		return count($this->columns);
-	}
-
-	// }}}
-	// {{{ public function getVisibleColumnCount()
-
-	/**
-	 * Gets the number of visible columns in this table-view
-	 *
-	 * @return integer the number of visible columns of this table-view.
-	 */
-	public function getVisibleColumnCount()
-	{
-		return count($this->getVisibleColumns());
-	}
-
-	// }}}
-	// {{{ public function getXhtmlColspan()
-
-	/**
-	 * Gets how many XHTML table columns the visible column objects of this
-	 * table-view object span on display
-	 *
-	 * @return integer the number of XHTML table columns the visible column
-	 *                  objects of this table-view object span on display.
-	 */
-	public function getXhtmlColspan()
-	{
-		$count = 0;
-		foreach ($this->getVisibleColumns() as $column)
-			$count += $column->getXhtmlColspan();
-
-		return $count;
-	}
-
-	// }}}
-	// {{{ public function getColumns()
-
-	/**
-	 * Gets all columns of this table-view as an array
-	 *
-	 * @return array a reference to the the columns of this view.
-	 */
-	public function &getColumns()
-	{
-		return $this->columns;
-	}
-
-	// }}}
-	// {{{ public function getVisibleColumns()
-
-	/**
-	 * Gets all visible columns of this table-view as an array
-	 *
-	 * @return array a reference to the the visible columns of this view.
-	 */
-	public function &getVisibleColumns()
-	{
-		$columns = array();
-		foreach ($this->columns as $column)
-			if ($column->visible)
-				$columns[] = $column;
-
-		return $columns;
-	}
-
-	// }}}
-	// {{{ public function getColumn()
-
-	/**
-	 * Gets a reference to a column in this table-view by its unique identifier
-	 *
-	 * @return SwatTableViewColumn the requested column.
-	 *
-	 * @throws SwatException
-	 */
-	public function getColumn($id)
-	{
-		if (!array_key_exists($id, $this->columns_by_id))
-			throw new SwatException("Column with an id of '{$id}' not found.");
-
-		return $this->columns_by_id[$id];
-	}
-
-	// }}}
-	// {{{ public function hasColumn()
-
-	/**
-	 * Returns true if a column with the given id exists within this
-	 * table view
-	 *
-	 * @param string $id the unique identifier of the column within this
-	 *                    table view to check the existance of.
-	 *
-	 * @return boolean true if the column exists in this table view and
-	 *                  false if it does not.
-	 */
-	public function hasColumn($id)
-	{
-		return array_key_exists($id, $this->columns_by_id);
-	}
-
-	// }}}
-	// {{{ public function getRow()
-
-	/**
-	 * Gets a reference to a row in this table-view by its unique identifier
-	 *
-	 * @return SwatTableViewRow the requested row.
-	 *
-	 * @throws SwatException
-	 */
-	public function getRow($id)
-	{
-		if (!array_key_exists($id, $this->rows_by_id))
-			throw new SwatException("Row with an id of '{$id}' not found.");
-
-		return $this->rows_by_id[$id];
-	}
-
-	// }}}
-	// {{{ public function getRowsByClass()
-
-	/**
-	 * Gets all the extra rows of the specified class from this table-view
-	 *
-	 * @param string $class_name the class name to filter by.
-	 *
-	 * @return array all the extra rows of the specified class.
-	 */
-	public function getRowsByClass($class_name)
-	{
-		$rows = array();
-		foreach ($this->extra_rows as $row)
-			if ($row instanceof $class_name)
-				$rows[] = $row;
-
-		return $rows;
-	}
-
-	// }}}
-	// {{{ public function getFirstRowByClass()
-
-	/**
-	 * Gets the first extra row of the specified class from this table-view
-	 *
-	 * Unlike the {@link SwatUIParent::getFirstDescendant()} method, this
-	 * method only checks this table-view and does not check the child objects
-	 * of this table-view.
-	 *
-	 * @param string $class_name the class name to filter by.
-	 *
-	 * @return SwatTableViewRow the first extra row of the specified class or
-	 *                          null if no such row object exists in this
-	 *                          table-view.
-	 *
-	 * @see SwatUIParent::getFirstDescendant()
-	 */
-	public function getFirstRowByClass($class_name)
-	{
-		$my_row = null;
-		foreach ($this->extra_rows as $row) {
-			if ($row instanceof $class_name) {
-				$my_row = $row;
-				break;
-			}
-		}
-		return $my_row;
-	}
-
-	// }}}
-	// {{{ public function hasRow()
-
-	/**
-	 * Returns true if a row with the given id exists within this table-view
-	 *
-	 * @param string $id the unique identifier of the row within this
-	 *                    table-view to check the existance of.
-	 *
-	 * @return boolean true if the row exists in this table-view and false if
-	 *                  it does not.
-	 */
-	public function hasRow($id)
-	{
-		return array_key_exists($id, $this->rows_by_id);
 	}
 
 	// }}}
@@ -1010,6 +460,25 @@ class SwatTableView extends SwatView implements SwatUIParent
 		}
 
 		return $has_message;
+	}
+
+	// }}}
+	// {{{ public function getXhtmlColspan()
+
+	/**
+	 * Gets how many XHTML table columns the visible column objects of this
+	 * table-view object span on display
+	 *
+	 * @return integer the number of XHTML table columns the visible column
+	 *                  objects of this table-view object span on display.
+	 */
+	public function getXhtmlColspan()
+	{
+		$count = 0;
+		foreach ($this->getVisibleColumns() as $column)
+			$count += $column->getXhtmlColspan();
+
+		return $count;
 	}
 
 	// }}}
@@ -1563,63 +1032,6 @@ class SwatTableView extends SwatView implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ protected function validateRow()
-
-	/**
-	 * Ensures a row added to this table-view is valid for this table-view
-	 *
-	 * @param SwatTableViewRow $row the row to check.
-	 *
-	 * @throws SwatDuplicateIdException if the row has the same id as a row
-	 *                                  already in this table-view.
-	 * @throws SwatException if the row is an input row and this table-view
-	 *                       already contains an input-row.
-	 */
-	protected function validateRow(SwatTableViewRow $row)
-	{
-		if ($row instanceof SwatTableViewInputRow) {
-			if ($this->has_input_row) {
-				throw new SwatException('Only one input row may be added to '.
-					'a table-view.');
-			} else {
-				$this->has_input_row = true;
-			}
-		}
-
-		if ($row->id !== null) {
-			if (array_key_exists($row->id, $this->rows_by_id))
-				throw new SwatDuplicateIdException(
-					"A row with the id '{$row->id}' already exists ".
-					'in this table-view.',
-					0, $row->id);
-		}
-	}
-
-	// }}}
-	// {{{ protected function validateColumn()
-
-	/**
-	 * Ensures a column added to this table-view is valid for this table-view
-	 *
-	 * @param SwatTableViewColumn $column the column to check.
-	 *
-	 * @throws SwatDuplicateIdException if the column has the same id as a
-	 *                                  column already in this table-view.
-	 */
-	protected function validateColumn(SwatTableViewColumn $column)
-	{
-		// note: This works because the id property is set before children are
-		// added to parents in SwatUI.
-		if ($column->id !== null) {
-			if (array_key_exists($column->id, $this->columns_by_id))
-				throw new SwatDuplicateIdException(
-					"A column with the id '{$column->id}' already exists ".
-					'in this table view.',
-					0, $column->id);
-		}
-	}
-
-	// }}}
 	// {{{ protected function getInlineJavaScript()
 
 	/**
@@ -1666,6 +1078,604 @@ class SwatTableView extends SwatView implements SwatUIParent
 		}
 
 		return $javascript;
+	}
+
+	// }}}
+
+	// column methods
+	// {{{ public function appendColumn()
+
+	/**
+	 * Appends a column to this table-view
+	 *
+	 * @param SwatTableViewColumn $column the column to append.
+	 *
+	 * @throws SwatDuplicateIdException if the column has the same id as a
+	 *                                  column already in this table-view.
+	 */
+	public function appendColumn(SwatTableViewColumn $column)
+	{
+		$this->validateColumn($column);
+
+		$this->columns[] = $column;
+
+		if ($column->id !== null)
+			$this->columns_by_id[$column->id] = $column;
+
+		$column->view = $this;
+		$column->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function insertColumnBefore()
+
+	/**
+	 * Inserts a column before an existing column in this table-view
+	 *
+	 * @param SwatTableViewColumn $column the column to insert.
+	 * @param SwatTableViewColumn $reference_column the column before which the
+	 *                                               column will be inserted.
+	 *
+	 * @throws SwatWidgetNotFoundException if the reference column does not
+	 *                                     exist in this table-view.
+	 * @throws SwatDuplicateIdException if the column has the same id as a
+	 *                                  column already in this table-view.
+	 */
+	public function insertColumnBefore(SwatTableViewColumn $column,
+		SwatTableViewColumn $reference_column)
+	{
+		$this->validateColumn($column);
+
+		$key = array_search($reference_column, $this->columns, true);
+
+		if ($key === false)
+			throw new SwatWidgetNotFoundException('The reference column '.
+				'could not be found in this table-view.');
+
+		array_splice($this->columns, $key, 1,
+			array($column, $reference_column));
+
+		if ($column->id !== null)
+			$this->columns_by_id[$column->id] = $column;
+
+		$column->view = $this;
+		$column->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function insertColumnAfter()
+
+	/**
+	 * Inserts a column after an existing column in this table-view
+	 *
+	 * @param SwatTableViewColumn $column the column to insert.
+	 * @param SwatTableViewColumn $reference_column the column after which the
+	 *                                               column will be inserted.
+	 *
+	 * @throws SwatWidgetNotFoundException if the reference column does not
+	 *                                     exist in this table-view.
+	 * @throws SwatDuplicateIdException if the column has the same id as a
+	 *                                  column already in this table-view.
+	 */
+	public function insertColumnAfter(SwatTableViewColumn $column,
+		SwatTableViewColumn $reference_column)
+	{
+		$this->validateColumn($column);
+
+		$key = array_search($reference_column, $this->columns, true);
+
+		if ($key === false)
+			throw new SwatWidgetNotFoundException('The reference column '.
+				'could not be found in this table-view.');
+
+		array_splice($this->columns, $key, 1,
+			array($reference_column, $column));
+
+		if ($column->id !== null)
+			$this->columns_by_id[$column->id] = $column;
+
+		$column->view = $this;
+		$column->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function hasColumn()
+
+	/**
+	 * Returns true if a column with the given id exists within this
+	 * table view
+	 *
+	 * @param string $id the unique identifier of the column within this
+	 *                    table view to check the existance of.
+	 *
+	 * @return boolean true if the column exists in this table view and
+	 *                  false if it does not.
+	 */
+	public function hasColumn($id)
+	{
+		return array_key_exists($id, $this->columns_by_id);
+	}
+
+	// }}}
+	// {{{ public function getColumn()
+
+	/**
+	 * Gets a reference to a column in this table-view by its unique identifier
+	 *
+	 * @return SwatTableViewColumn the requested column.
+	 *
+	 * @throws SwatException
+	 */
+	public function getColumn($id)
+	{
+		if (!array_key_exists($id, $this->columns_by_id))
+			throw new SwatException("Column with an id of '{$id}' not found.");
+
+		return $this->columns_by_id[$id];
+	}
+
+	// }}}
+	// {{{ public function getColumns()
+
+	/**
+	 * Gets all columns of this table-view as an array
+	 *
+	 * @return array a reference to the the columns of this view.
+	 */
+	public function &getColumns()
+	{
+		return $this->columns;
+	}
+
+	// }}}
+	// {{{ public function getColumnCount()
+
+	/**
+	 * Gets the number of columns in this table-view
+	 *
+	 * @return integer the number of columns of this table-view.
+	 */
+	public function getColumnCount()
+	{
+		return count($this->columns);
+	}
+
+	// }}}
+	// {{{ public function getVisibleColumns()
+
+	/**
+	 * Gets all visible columns of this table-view as an array
+	 *
+	 * @return array a reference to the the visible columns of this view.
+	 */
+	public function &getVisibleColumns()
+	{
+		$columns = array();
+		foreach ($this->columns as $column)
+			if ($column->visible)
+				$columns[] = $column;
+
+		return $columns;
+	}
+
+	// }}}
+	// {{{ public function getVisibleColumnCount()
+
+	/**
+	 * Gets the number of visible columns in this table-view
+	 *
+	 * @return integer the number of visible columns of this table-view.
+	 */
+	public function getVisibleColumnCount()
+	{
+		return count($this->getVisibleColumns());
+	}
+
+	// }}}
+	// {{{ public function setDefaultOrderbyColumn()
+
+	/**
+	 * Sets a default column to use for ordering the data of this table-view
+	 *
+	 * @param SwatTableViewOrderableColumn the column in this view to use
+	 *                                      for default ordering
+	 * @param integer $direction the default direction of the ordered column.
+	 *
+	 * @throws SwatException
+	 *
+	 * @see SwatTableView::$default_orderby_column
+	 */
+	public function setDefaultOrderbyColumn(
+		SwatTableViewOrderableColumn $column,
+		$direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING)
+	{
+		if ($column->view !== $this)
+			throw new SwatException('Can only set the default orderby on '.
+				'orderable columns in this view.');
+
+		// this method sets properties on the table-view
+		$column->setDirection($direction);
+	}
+
+	// }}}
+	// {{{ protected function validateColumn()
+
+	/**
+	 * Ensures a column added to this table-view is valid for this table-view
+	 *
+	 * @param SwatTableViewColumn $column the column to check.
+	 *
+	 * @throws SwatDuplicateIdException if the column has the same id as a
+	 *                                  column already in this table-view.
+	 */
+	protected function validateColumn(SwatTableViewColumn $column)
+	{
+		// note: This works because the id property is set before children are
+		// added to parents in SwatUI.
+		if ($column->id !== null) {
+			if (array_key_exists($column->id, $this->columns_by_id))
+				throw new SwatDuplicateIdException(
+					"A column with the id '{$column->id}' already exists ".
+					'in this table view.',
+					0, $column->id);
+		}
+	}
+
+	// }}}
+
+	// spanning column methods
+	// {{{ public function appendSpanningColumn()
+
+	/**
+	 * Appends a spanning column object to this table-view
+	 *
+	 * @param SwatTableViewSpanningColumn $column the table-view spanning column to use for this
+	 *                                   table-view.
+	 *
+	 * @see SwatTableViewSpanningColumn
+	 */
+	public function appendSpanningColumn(SwatTableViewSpanningColumn $column)
+	{
+		$this->spanning_columns[] = $column;
+		$column->view = $this;
+		$column->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function hasSpanningColumn()
+
+	/**
+	 * Returns true if a spanning column with the given id exists within this table-view
+	 *
+	 * @return SwatTableViewSpanningColumn the requested spanning column.
+	 */
+	public function hasSpanningColumn($id)
+	{
+		return array_key_exists($id, $this->spanning_columns_by_id);
+	}
+
+	// }}}
+	// {{{ public function getSpanningColumn()
+
+	/**
+	 * Gets a reference to a spanning column in this table-view by its unique identifier
+	 *
+	 * @return SwatTableViewSpanningColumn the requested spanning column.
+	 *
+	 * @throws SwatException
+	 */
+	public function getSpanningColumn($id)
+	{
+		if (!array_key_exists($id, $this->spanning_columns_by_id))
+			throw new SwatException("Spanning column with an id of '{$id}' not found.");
+
+		return $this->spanning_columns_by_id[$id];
+	}
+
+	// }}}
+	// {{{ public function getSpanningColumns()
+
+	/**
+	 * Gets all spanning columns of this table-view as an array
+	 *
+	 * @return array a reference to the spanning columns of this view.
+	 */
+	public function &getSpanningColumns()
+	{
+		return $this->spanning_columns;
+	}
+
+	// }}}
+
+	// grouping methods
+	// {{{ public function appendGroup()
+
+	/**
+	 * Appends a grouping object to this table-view
+	 *
+	 * A grouping object affects how the data in the table model is displayed
+	 * in this table-view. With a grouping, rows are split into groups with
+	 * special group headers above each group.
+	 *
+	 * @param SwatTableViewGroup $group the table-view grouping to use for this
+	 *                                   table-view.
+	 *
+	 * @see SwatTableViewGroup
+	 */
+	public function appendGroup(SwatTableViewGroup $group)
+	{
+		$this->groups[] = $group;
+		$group->view = $this;
+		$group->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function hasGroup()
+
+	/**
+	 * Returns true if a group with the given id exists within this table-view
+	 *
+	 * @param string $id the unique identifier of the group within this table-
+	 *                    view to check the existance of.
+	 *
+	 * @return boolean true if the group exists in this table-view and false if
+	 *                  it does not.
+	 */
+	public function hasGroup($id)
+	{
+		return array_key_exists($id, $this->groups_by_id);
+	}
+
+	// }}}
+	// {{{ public function getGroup()
+
+	/**
+	 * Gets a reference to a group in this table-view by its unique identifier
+	 *
+	 * @return SwatTableViewGroup the requested group.
+	 *
+	 * @throws SwatException
+	 */
+	public function getGroup($id)
+	{
+		if (!array_key_exists($id, $this->groups_by_id))
+			throw new SwatException("Group with an id of '{$id}' not found.");
+
+		return $this->groups_by_id[$id];
+	}
+
+	// }}}
+	// {{{ public function getGroups()
+
+	/**
+	 * Gets all groups of this table-view as an array
+	 *
+	 * @return array a reference to the the groups of this view.
+	 */
+	public function &getGroups()
+	{
+		return $this->groups;
+	}
+
+	// }}}
+
+	// extra row methods
+	// {{{ public function appendRow()
+
+	/**
+	 * Appends a single row to this table-view
+	 *
+	 * Rows appended to table-views are displayed after all the data from the
+	 * table-view model is displayed.
+	 *
+	 * @param SwatTableViewRow $row the row to append.
+	 *
+	 * @throws SwatDuplicateIdException if the row has the same id as a row
+	 *                                  already in this table-view.
+	 */
+	public function appendRow(SwatTableViewRow $row)
+	{
+		$this->validateRow($row);
+
+		$this->extra_rows[] = $row;
+
+		if ($row->id !== null)
+			$this->rows_by_id[$row->id] = $row;
+
+		$row->view = $this;
+		$row->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function insertRowBefore()
+
+	/**
+	 * Inserts a row before an existing row in this table-view
+	 *
+	 * @param SwatTableViewRow $row the row to insert.
+	 * @param SwatTableViewRow $reference_row the row before which the row will
+	 *                                         be inserted.
+	 *
+	 * @throws SwatWidgetNotFoundException if the reference row does not exist
+	 *                                     in this table-view.
+	 * @throws SwatDuplicateIdException if the row has the same id as a row
+	 *                                  already in this table-view.
+	 * @throws SwatException if the row is an input row and this table-view
+	 *                       already contains an input-row.
+	 */
+	public function insertRowBefore(SwatTableViewRow $row,
+		SwatTableViewRow $reference_row)
+	{
+		$this->validateRow($row);
+
+		$key = array_search($reference_row, $this->extra_rows, true);
+
+		if ($key === false)
+			throw new SwatWidgetNotFoundException('The reference row could '.
+				'not be found in this table-view.');
+
+		array_splice($this->extra_rows, $key, 1, array($row, $reference_row));
+
+		if ($row->id !== null)
+			$this->rows_by_id[$row->id] = $row;
+
+		$row->view = $this;
+		$row->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function insertRowAfter()
+
+	/**
+	 * Inserts a row after an existing row in this table-view
+	 *
+	 * @param SwatTableViewRow $row the row to insert.
+	 * @param SwatTableViewRow $reference_row the row after which the row will
+	 *                                         be inserted.
+	 *
+	 * @throws SwatWidgetNotFoundException if the reference row does not exist
+	 *                                     in this table-view.
+	 * @throws SwatDuplicateIdException if the row has the same id as a row
+	 *                                  already in this table-view.
+	 * @throws SwatException if the row is an input row and this table-view
+	 *                       already contains an input-row.
+	 */
+	public function insertRowAfter(SwatTableViewRow $row,
+		SwatTableViewRow $reference_row)
+	{
+		$this->validateRow($row);
+
+		$key = array_search($reference_row, $this->extra_rows, true);
+
+		if ($key === false)
+			throw new SwatWidgetNotFoundException('The reference row could '.
+				'not be found in this table-view.');
+
+		array_splice($this->extra_rows, $key, 1, array($reference_row, $row));
+
+		if ($row->id !== null)
+			$this->rows_by_id[$row->id] = $row;
+
+		$row->view = $this;
+		$row->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function hasRow()
+
+	/**
+	 * Returns true if a row with the given id exists within this table-view
+	 *
+	 * @param string $id the unique identifier of the row within this
+	 *                    table-view to check the existance of.
+	 *
+	 * @return boolean true if the row exists in this table-view and false if
+	 *                  it does not.
+	 */
+	public function hasRow($id)
+	{
+		return array_key_exists($id, $this->rows_by_id);
+	}
+
+	// }}}
+	// {{{ public function getRow()
+
+	/**
+	 * Gets a reference to a row in this table-view by its unique identifier
+	 *
+	 * @return SwatTableViewRow the requested row.
+	 *
+	 * @throws SwatException
+	 */
+	public function getRow($id)
+	{
+		if (!array_key_exists($id, $this->rows_by_id))
+			throw new SwatException("Row with an id of '{$id}' not found.");
+
+		return $this->rows_by_id[$id];
+	}
+
+	// }}}
+	// {{{ public function getRowsByClass()
+
+	/**
+	 * Gets all the extra rows of the specified class from this table-view
+	 *
+	 * @param string $class_name the class name to filter by.
+	 *
+	 * @return array all the extra rows of the specified class.
+	 */
+	public function getRowsByClass($class_name)
+	{
+		$rows = array();
+		foreach ($this->extra_rows as $row)
+			if ($row instanceof $class_name)
+				$rows[] = $row;
+
+		return $rows;
+	}
+
+	// }}}
+	// {{{ public function getFirstRowByClass()
+
+	/**
+	 * Gets the first extra row of the specified class from this table-view
+	 *
+	 * Unlike the {@link SwatUIParent::getFirstDescendant()} method, this
+	 * method only checks this table-view and does not check the child objects
+	 * of this table-view.
+	 *
+	 * @param string $class_name the class name to filter by.
+	 *
+	 * @return SwatTableViewRow the first extra row of the specified class or
+	 *                          null if no such row object exists in this
+	 *                          table-view.
+	 *
+	 * @see SwatUIParent::getFirstDescendant()
+	 */
+	public function getFirstRowByClass($class_name)
+	{
+		$my_row = null;
+		foreach ($this->extra_rows as $row) {
+			if ($row instanceof $class_name) {
+				$my_row = $row;
+				break;
+			}
+		}
+		return $my_row;
+	}
+
+	// }}}
+	// {{{ protected function validateRow()
+
+	/**
+	 * Ensures a row added to this table-view is valid for this table-view
+	 *
+	 * @param SwatTableViewRow $row the row to check.
+	 *
+	 * @throws SwatDuplicateIdException if the row has the same id as a row
+	 *                                  already in this table-view.
+	 * @throws SwatException if the row is an input row and this table-view
+	 *                       already contains an input-row.
+	 */
+	protected function validateRow(SwatTableViewRow $row)
+	{
+		if ($row instanceof SwatTableViewInputRow) {
+			if ($this->has_input_row) {
+				throw new SwatException('Only one input row may be added to '.
+					'a table-view.');
+			} else {
+				$this->has_input_row = true;
+			}
+		}
+
+		if ($row->id !== null) {
+			if (array_key_exists($row->id, $this->rows_by_id))
+				throw new SwatDuplicateIdException(
+					"A row with the id '{$row->id}' already exists ".
+					'in this table-view.',
+					0, $row->id);
+		}
 	}
 
 	// }}}
