@@ -1097,15 +1097,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 */
 	public function appendColumn(SwatTableViewColumn $column)
 	{
-		$this->validateColumn($column);
-
-		$this->columns[] = $column;
-
-		if ($column->id !== null)
-			$this->columns_by_id[$column->id] = $column;
-
-		$column->view = $this;
-		$column->parent = $this;
+		$this->insertColumn($column);
 	}
 
 	// }}}
@@ -1126,22 +1118,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	public function insertColumnBefore(SwatTableViewColumn $column,
 		SwatTableViewColumn $reference_column)
 	{
-		$this->validateColumn($column);
-
-		$key = array_search($reference_column, $this->columns, true);
-
-		if ($key === false)
-			throw new SwatWidgetNotFoundException('The reference column '.
-				'could not be found in this table-view.');
-
-		array_splice($this->columns, $key, 1,
-			array($column, $reference_column));
-
-		if ($column->id !== null)
-			$this->columns_by_id[$column->id] = $column;
-
-		$column->view = $this;
-		$column->parent = $this;
+		$this->insertColumn($column, $reference_column, false);
 	}
 
 	// }}}
@@ -1162,22 +1139,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	public function insertColumnAfter(SwatTableViewColumn $column,
 		SwatTableViewColumn $reference_column)
 	{
-		$this->validateColumn($column);
-
-		$key = array_search($reference_column, $this->columns, true);
-
-		if ($key === false)
-			throw new SwatWidgetNotFoundException('The reference column '.
-				'could not be found in this table-view.');
-
-		array_splice($this->columns, $key, 1,
-			array($reference_column, $column));
-
-		if ($column->id !== null)
-			$this->columns_by_id[$column->id] = $column;
-
-		$column->view = $this;
-		$column->parent = $this;
+		$this->insertColumn($column, $reference_column, true);
 	}
 
 	// }}}
@@ -1319,12 +1281,89 @@ class SwatTableView extends SwatView implements SwatUIParent
 		// note: This works because the id property is set before children are
 		// added to parents in SwatUI.
 		if ($column->id !== null) {
-			if (array_key_exists($column->id, $this->columns_by_id))
+			if (array_key_exists($column->id, $this->columns_by_id)) {
 				throw new SwatDuplicateIdException(
 					"A column with the id '{$column->id}' already exists ".
 					'in this table view.',
 					0, $column->id);
+			}
 		}
+	}
+
+	// }}}
+	// {{{ protected function insertColumn()
+
+	/**
+	 * Helper method to insert columns into this table-view
+	 *
+	 * @param SwatTableViewColumn $column the column to insert.
+	 * @param SwatTableViewColumn $reference_column optional. An existing column
+	 *                                               within this table-view to
+	 *                                               which the inserted column
+	 *                                               is relatively positioned.
+	 *                                               If not specified, the
+	 *                                               column is inserted at the
+	 *                                               beginning or the end of
+	 *                                               this table-view's list of
+	 *                                               columns.
+	 * @param boolean $after optional. If true and a reference column is
+	 *                        specified, the column is inserted immediately
+	 *                        before the reference column. If true and no
+	 *                        reference column is specified, the column is
+	 *                        inserted at the beginning of the column list. If
+	 *                        false and a reference column is specified, the
+	 *                        column is inserted immediately after the reference
+	 *                        column. If false and no reference column is
+	 *                        specified, the column is inserted at the end of
+	 *                        the column list. Defaults to false.
+	 *
+	 * @throws SwatWidgetNotFoundException if the reference column does not
+	 *                                     exist in this table-view.
+	 * @throws SwatDuplicateIdException if the column to be inserted has the
+	 *                                  same id as a column already in this
+	 *                                  table-view.
+	 *
+	 * @see SwatTableView::appendColumn()
+	 * @see SwatTableView::insertColumnBefore()
+	 * @see SwatTableView::insertColumnAfter()
+	 */
+	protected function insertColumn(SwatTableViewColumn $column,
+		SwatTableViewColumn $reference_column = null, $after = true)
+	{
+		$this->validateColumn($column);
+
+		if ($reference_column !== null) {
+			$key = array_search($reference_column, $this->columns, true);
+
+			if ($key === false) {
+				throw new SwatWidgetNotFoundException('The reference column '.
+					'could not be found in this table-view.');
+			}
+
+			if ($after) {
+				// insert after reference column
+				array_splice($this->columns, $key, 1,
+					array($reference_column, $column));
+			} else {
+				// insert before reference column
+				array_splice($this->columns, $key, 1,
+					array($column, $reference_column));
+			}
+		} else {
+			if ($after) {
+				// append to array
+				$this->columns[] = $column;
+			} else {
+				// prepend to array
+				array_unshift($this->columns, $column);
+			}
+		}
+
+		if ($column->id !== null)
+			$this->columns_by_id[$column->id] = $column;
+
+		$column->view = $this; // deprecated reference
+		$column->parent = $this;
 	}
 
 	// }}}
