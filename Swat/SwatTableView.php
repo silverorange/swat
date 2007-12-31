@@ -1406,14 +1406,25 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * in this table-view. With a grouping, rows are split into groups with
 	 * special group headers above each group.
 	 *
-	 * @param SwatTableViewGroup $group the table-view grouping to use for this
-	 *                                   table-view.
+	 * Multiple groupings may be added to table-views.
+	 *
+	 * @param SwatTableViewGroup $group the table-view grouping to append to
+	 *                                   this table-view.
 	 *
 	 * @see SwatTableViewGroup
+	 *
+	 * @throws SwatDuplicateIdException if the group has the same id as a
+	 *                                  group already in this table-view.
 	 */
 	public function appendGroup(SwatTableViewGroup $group)
 	{
+		$this->validateGroup($group);
+
 		$this->groups[] = $group;
+
+		if ($group->id !== null)
+			$this->groups_by_id[$group->id] = $group;
+
 		$group->view = $this;
 		$group->parent = $this;
 	}
@@ -1468,6 +1479,30 @@ class SwatTableView extends SwatView implements SwatUIParent
 	public function getGroups()
 	{
 		return $this->groups;
+	}
+
+	// }}}
+	// {{{ protected function validateGroup()
+
+	/**
+	 * Ensures a group added to this table-view is valid for this table-view
+	 *
+	 * @param SwatTableViewGroup $group the group to check.
+	 *
+	 * @throws SwatDuplicateIdException if the group has the same id as a
+	 *                                  group already in this table-view.
+	 */
+	protected function validateGroup(SwatTableViewGroup $group)
+	{
+		// note: This works because the id property is set before children are
+		// added to parents in SwatUI.
+		if ($group->id !== null) {
+			if (array_key_exists($group->id, $this->groups_by_id))
+				throw new SwatDuplicateIdException(
+					"A group with the id '{$group->id}' already exists ".
+					'in this table view.',
+					0, $group->id);
+		}
 	}
 
 	// }}}
