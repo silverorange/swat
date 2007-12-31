@@ -43,6 +43,8 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	 * The {@link SwatDetailsView} associated with this field
 	 *
 	 * @var SwatDetailsView
+	 *
+	 * @deprecated Use {@link SwatUIObject::$parent} instead.
 	 */
 	public $view = null;
 
