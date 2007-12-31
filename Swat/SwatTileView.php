@@ -399,7 +399,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
 	 *
-	 * @param string $id_prefix optional. A prefix to prepend to copied UI
+	 * @param string $id_suffix optional. A suffix to append to copied UI
 	 *                           objects in the UI tree.
 	 *
 	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
@@ -407,13 +407,13 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 *
 	 * @see SwatUIObject::copy()
 	 */
-	public function copy($id_prefix = '')
+	public function copy($id_suffix = '')
 	{
-		$copy = parent::copy($id_prefix);
+		$copy = parent::copy($id_suffix);
 		$copy->children_by_id = array();
 
 		if ($this->tile !== null) {
-			$copy_tile = $this->tile->copy($id_prefix);
+			$copy_tile = $this->tile->copy($id_suffix);
 			$copy_tile->parent = $copy;
 			$copy->tile = $copy_tile;
 		}

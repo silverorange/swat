@@ -538,7 +538,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
 	 *
-	 * @param string $id_prefix optional. A prefix to prepend to copied UI
+	 * @param string $id_suffix optional. A suffix to append to copied UI
 	 *                           objects in the UI tree.
 	 *
 	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
@@ -546,15 +546,15 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 *
 	 * @see SwatUIObject::copy()
 	 */
-	public function copy($id_prefix = '')
+	public function copy($id_suffix = '')
 	{
-		$copy = parent::copy($id_prefix);
+		$copy = parent::copy($id_suffix);
 
-		if (strlen($id_prefix) > 0 && $copy->id !== null)
-			$copy->id = $id_prefix.$copy->id;
+		if (strlen($id_suffix) > 0 && $copy->id !== null)
+			$copy->id = $copy->id.$id_suffix;
 
 		if ($this->input_cell !== null) {
-			$copy_input_cell = $this->input_cell->copy($id_prefix);
+			$copy_input_cell = $this->input_cell->copy($id_suffix);
 			$copy_input_cell->parent = $copy;
 			$copy->input_cell = $copy_input_cell;
 		}

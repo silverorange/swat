@@ -203,12 +203,15 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 	// }}}
 	// {{{ public function copy()
 
-	public function copy($id_prefix = '')
+	/**
+	 * TODO: document me
+	 */
+	public function copy($id_suffix = '')
 	{
-		$copy = parent::copy($id_prefix);
+		$copy = parent::copy($id_suffix);
 
-		if (strlen($id_prefix) > 0)
-			$copy->id = $id_prefix.$copy->id;
+		if (strlen($id_suffix) > 0)
+			$copy->id = $copy->id.$id_suffix;
 
 		return $copy;
 	}

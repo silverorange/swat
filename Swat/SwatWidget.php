@@ -460,7 +460,7 @@ abstract class SwatWidget extends SwatUIObject
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
 	 *
-	 * @param string $id_prefix optional. A prefix to prepend to copied UI
+	 * @param string $id_suffix optional. A suffix to append to copied UI
 	 *                           objects in the UI tree.
 	 *
 	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
@@ -468,15 +468,15 @@ abstract class SwatWidget extends SwatUIObject
 	 *
 	 * @see SwatUIObject::copy()
 	 */
-	public function copy($id_prefix = '')
+	public function copy($id_suffix = '')
 	{
-		$copy = parent::copy($id_prefix);
+		$copy = parent::copy($id_suffix);
 
-		if (strlen($id_prefix) > 0 && $copy->id !== null)
-			$copy->id = $id_prefix.$copy->id;
+		if (strlen($id_suffix) > 0 && $copy->id !== null)
+			$copy->id = $copy->id.$id_suffix;
 
 		foreach ($this->composite_widgets as $key => $composite_widget) {
-			$composite_copy = $composite_widget->copy($id_prefix);
+			$composite_copy = $composite_widget->copy($id_suffix);
 			$composite_copy->parent = $copy;
 			$copy->composite_widgets[$key] = $composite_copy;
 		}

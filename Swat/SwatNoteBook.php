@@ -433,7 +433,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
 	 *
-	 * @param string $id_prefix optional. A prefix to prepend to copied UI
+	 * @param string $id_suffix optional. A suffix to append to copied UI
 	 *                           objects in the UI tree.
 	 *
 	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
@@ -441,12 +441,12 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 *
 	 * @see SwatUIObject::copy()
 	 */
-	public function copy($id_prefix = '')
+	public function copy($id_suffix = '')
 	{
-		$copy = parent::copy($id_prefix);
+		$copy = parent::copy($id_suffix);
 
 		foreach ($this->pages as $key => $page) {
-			$copy_page = $page->copy($id_prefix);
+			$copy_page = $page->copy($id_suffix);
 			$copy_page->parent = $copy;
 			$copy->pages[$key] = $copy_page;
 		}

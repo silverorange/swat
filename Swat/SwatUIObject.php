@@ -264,7 +264,7 @@ abstract class SwatUIObject extends SwatObject
 	 *
 	 * To perform a shallow copy, use PHP's clone keyword.
 	 *
-	 * @param string $id_prefix optional. A prefix to prepend to copied UI
+	 * @param string $id_suffix optional. A suffix to append to copied UI
 	 *                           objects in the UI tree. This can be used to
 	 *                           ensure object ids are unique for a copied UI
 	 *                           tree. If not specified, UI objects in the
@@ -277,14 +277,8 @@ abstract class SwatUIObject extends SwatObject
 	 *                       object. The returned UI object does not have a
 	 *                       parent and can be inserted into another UI tree.
 	 */
-	public function copy($id_prefix = '')
+	public function copy($id_suffix = '')
 	{
-		if (strlen($id_prefix) > 0 && is_numeric($id_prefix[0])) {
-			trigger_error('An id prefix that begins with a number will cause '.
-				'problems. Ids should always begin with [A-Za-z_].',
-				E_USER_WARNING);
-		}
-
 		$copy = clone $this;
 		$copy->parent = null;
 		return $copy;

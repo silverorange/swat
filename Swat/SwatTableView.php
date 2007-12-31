@@ -716,7 +716,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
 	 *
-	 * @param string $id_prefix optional. A prefix to prepend to copied UI
+	 * @param string $id_suffix optional. A suffix to append to copied UI
 	 *                           objects in the UI tree.
 	 *
 	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
@@ -724,13 +724,13 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * @see SwatUIObject::copy()
 	 */
-	public function copy($id_prefix = '')
+	public function copy($id_suffix = '')
 	{
-		$copy = parent::copy($id_prefix);
+		$copy = parent::copy($id_suffix);
 
 		$copy->columns_by_id = array();
 		foreach ($this->columns as $key => $column) {
-			$copy_column = $column->copy($id_prefix);
+			$copy_column = $column->copy($id_suffix);
 			$copy_column->parent = $copy;
 			$copy->columns[$key] = $copy_column;
 			if ($copy_column->id !== null) {
@@ -740,7 +740,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 		$copy->spanning_columns_by_id = array();
 		foreach ($this->spanning_columns as $key => $column) {
-			$copy_column = $column->copy($id_prefix);
+			$copy_column = $column->copy($id_suffix);
 			$copy_column->parent = $copy;
 			$copy->spanning_columns[$key] = $copy_column;
 			if ($copy_column->id !== null) {
@@ -750,7 +750,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 		$copy->groups_by_id = array();
 		foreach ($this->groups as $key => $group) {
-			$copy_group = $group->copy($id_prefix);
+			$copy_group = $group->copy($id_suffix);
 			$copy_group->parent = $copy;
 			$copy->groups[$key] = $copy_group;
 			if ($copy_group->id !== null) {
@@ -760,7 +760,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 		$copy->rows_by_id = array();
 		foreach ($this->extra_rows as $key => $row) {
-			$copy_row = $row->copy($id_prefix);
+			$copy_row = $row->copy($id_suffix);
 			$copy_row->parent = $copy;
 			$copy->extra_rows[$key] = $copy_row;
 			if ($copy_row->id !== null) {

@@ -62,7 +62,7 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 	{
 		// Make sure this replicator has a unique id before replicating
 		// chidren. This is because replicated children use the id of this
-		// replicable container as a prefix.
+		// replicable container as a suffix.
 		if ($this->id === null)
 			$this->id = $this->getUniqueId();
 
@@ -85,14 +85,14 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 		foreach ($this->replicators as $id => $title) {
 			$container = $this->getContainer($id, $title);
 			$this->widgets[$id] = array();
-			$prefix = $this->id.'_'.$id.'_';
+			$suffix = '_'.$this->id.'_'.$id;
 
 			foreach ($children as $child) {
-				$copy_child = $child->copy($prefix);
+				$copy_child = $child->copy($suffix);
 
 				if ($copy_child->id !== null) {
 					// lookup array uses original ids
-					$old_id = substr($copy_child->id, strlen($prefix));
+					$old_id = substr($copy_child->id, 0, -strlen($suffix));
 					$this->widgets[$id][$old_id] = $copy_child;
 				}
 
@@ -100,7 +100,9 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 					foreach ($copy_child->getDescendants() as $descendant) {
 						if ($descendant->id !== null) {
 							// lookup array uses original ids
-							$old_id = substr($descendant->id, strlen($prefix));
+							$old_id = substr($descendant->id, 0,
+								-strlen($suffix));
+
 							$this->widgets[$id][$old_id] = $descendant;
 						}
 					}

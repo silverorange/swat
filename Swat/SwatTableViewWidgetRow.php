@@ -315,12 +315,15 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	// }}}
 	// {{{ public function copy()
 
-	public function copy($id_prefix = '')
+	/**
+	 * TODO: document me
+	 */
+	public function copy($id_suffix = '')
 	{
-		$copy = parent::copy($id_prefix);
+		$copy = parent::copy($id_suffix);
 
 		if ($this->widget !== null) {
-			$copy_widget = $this->widget->copy($id_prefix);
+			$copy_widget = $this->widget->copy($id_suffix);
 			$copy_widget->parent = $copy;
 			$copy->widget = $copy_widget;
 		}
