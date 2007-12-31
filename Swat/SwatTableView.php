@@ -276,18 +276,20 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * @param SwatTableViewColumn $column the column to append.
 	 *
-	 * @throws SwatDuplicateIdException
+	 * @throws SwatDuplicateIdException if the column has the same id as a
+	 *                                  column already in this table-view.
 	 */
 	public function appendColumn(SwatTableViewColumn $column)
 	{
 		$this->validateColumn($column);
+
+		$this->columns[] = $column;
 
 		if ($column->id !== null)
 			$this->columns_by_id[$column->id] = $column;
 
 		$column->view = $this;
 		$column->parent = $this;
-		$this->columns[] = $column;
 	}
 
 	// }}}
@@ -413,7 +415,8 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * @param SwatTableViewRow $row the row to append.
 	 *
-	 * @throws SwatException
+	 * @throws SwatDuplicateIdException if the row has the same id as a row
+	 *                                  already in this table-view.
 	 */
 	public function appendRow(SwatTableViewRow $row)
 	{
