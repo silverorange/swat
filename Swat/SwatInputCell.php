@@ -411,7 +411,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
 	 *
-	 * @param string $id_prefix optional. A prefix to prepend to copied UI
+	 * @param string $id_suffix optional. A suffix to append to copied UI
 	 *                           objects in the UI tree.
 	 *
 	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
@@ -419,18 +419,18 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 *
 	 * @see SwatUIObject::copy()
 	 */
-	public function copy($id_prefix = '')
+	public function copy($id_suffix = '')
 	{
-		$copy = parent::copy($id_prefix);
+		$copy = parent::copy($id_suffix);
 
 		if ($this->widget !== null) {
-			$copy_widget = $this->widget->copy($id_prefix);
+			$copy_widget = $this->widget->copy($id_suffix);
 			$copy_widget->parent = $copy;
 			$copy->widget = $copy_widget;
 		}
 
 		foreach ($this->clones as $replicator_id => $clone) {
-			$copy_clone = $clone->copy($id_prefix);
+			$copy_clone = $clone->copy($id_suffix);
 			$copy_clone->parent = $copy;
 			$copy->clones[$replicator_id] = $copy_clone;
 			if ($copy_child->id !== null) {
@@ -506,13 +506,13 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 				'added to a table-view and an input-row is added to the '.
 				'table-view.');
 
-		$prefix = $row->id.'_'.$replicator_id.'_';
-		$new_widget = $this->widget->copy($prefix);
+		$suffix = '_'.$replicator_id.'_'.$row->id;
+		$new_widget = $this->widget->copy($suffix);
 		$new_widget->parent = $this;
 
 		if ($new_widget->id !== null) {
 			// lookup array uses original ids
-			$old_id = substr($new_widget->id, strlen($prefix));
+			$old_id = substr($new_widget->id, 0, -strlen($suffix));
 			$this->widgets[$replicator_id][$old_id] = $new_widget;
 		}
 
@@ -520,7 +520,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 			foreach ($new_widget->getDescendants() as $descendant) {
 				if ($descendant->id !== null) {
 					// lookup array uses original ids
-					$old_id = substr($descendant->id, strlen($prefix));
+					$old_id = substr($descendant->id, 0, -strlen($suffix));
 					$this->widgets[$replicator_id][$old_id] = $descendant;
 				}
 			}

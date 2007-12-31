@@ -679,14 +679,14 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 		if ($this->prototype_widget === null)
 			return;
 
-		$prefix = $this->id.'_'.$replicator.'_';
-		$new_widget = $this->prototype_widget->copy($prefix);
+		$suffix = '_'.$this->id.'_'.$replicator;
+		$new_widget = $this->prototype_widget->copy($suffix);
 		$new_widget->parent = $this;
 		$this->widgets[$replicator] = array();
 
 		if ($new_widget->id !== null) {
 			// lookup array uses original ids
-			$old_id = substr($new_widget->id, strlen($prefix));
+			$old_id = substr($new_widget->id, 0, -strlen($suffix));
 			$this->widgets[$replicator][$old_id] = $new_widget;
 		}
 
@@ -694,7 +694,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			foreach ($new_widget->getDescendants() as $descendant) {
 				if ($descendant->id !== null) {
 					// lookup array uses original ids
-					$old_id = substr($descendant->id, strlen($prefix));
+					$old_id = substr($descendant->id, 0, -strlen($suffix));
 					$this->widgets[$replicator][$old_id] = $descendant;
 				}
 			}

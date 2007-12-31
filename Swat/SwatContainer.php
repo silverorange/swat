@@ -553,7 +553,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
 	 *
-	 * @param string $id_prefix optional. A prefix to prepend to copied UI
+	 * @param string $id_suffix optional. A suffix to append to copied UI
 	 *                           objects in the UI tree.
 	 *
 	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
@@ -561,13 +561,13 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 *
 	 * @see SwatUIObject::copy()
 	 */
-	public function copy($id_prefix = '')
+	public function copy($id_suffix = '')
 	{
-		$copy = parent::copy($id_prefix);
+		$copy = parent::copy($id_suffix);
 		$copy->children_by_id = array();
 
 		foreach ($this->children as $key => $child_widget) {
-			$copy_child = $child_widget->copy($id_prefix);
+			$copy_child = $child_widget->copy($id_suffix);
 			$copy_child->parent = $copy;
 			$copy->children[$key] = $copy_child;
 			if ($copy_child->id !== null) {

@@ -351,13 +351,16 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	// }}}
 	// {{{ public function copy()
 
-	public function copy($id_prefix = '')
+	/**
+	 * TODO: docs
+	 */
+	public function copy($id_suffix = '')
 	{
-		$copy = parent::copy($id_prefix);
+		$copy = parent::copy($id_suffix);
 		$copy->renderers = new SwatCellRendererSet();
 
 		foreach ($this->renderers as $renderer) {
-			$copy_renderer = $renderer->copy($id_prefix);
+			$copy_renderer = $renderer->copy($id_suffix);
 			$copy_renderer->parent = $copy;
 			$copy->renderers->addRenderer($copy_renderer);
 
