@@ -316,7 +316,15 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	// {{{ public function copy()
 
 	/**
-	 * TODO: document me
+	 * Performs a deep copy of the UI tree starting with this UI object
+	 *
+	 * @param string $id_suffix optional. A suffix to append to copied UI
+	 *                           objects in the UI tree.
+	 *
+	 * @return SwatUIObject a deep copy of the UI tree starting with this UI
+	 *                       object.
+	 *
+	 * @see SwatUIObject::copy()
 	 */
 	public function copy($id_suffix = '')
 	{
