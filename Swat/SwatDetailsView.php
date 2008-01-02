@@ -466,7 +466,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 * Ensures a field added to this details-view is valid for this
 	 * details-view
 	 *
-	 * @param SwatTableViewField $field the field to check.
+	 * @param SwatDetailsViewField $field the field to check.
 	 *
 	 * @throws SwatDuplicateIdException if the field has the same id as a
 	 *                                  field already in this details-view.
