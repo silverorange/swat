@@ -108,15 +108,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 */
 	public function appendField(SwatDetailsViewField $field)
 	{
-		$this->validateField($field);
-
-		if ($field->id !== null)
-			$this->fields_by_id[$field->id] = $field;
-
-		$this->fields[] = $field;
-
-		$field->view = $this;
-		$field->parent = $this;
+		$this->insertField($field);
 	}
 
 	// }}}
@@ -137,21 +129,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	public function insertFieldBefore(SwatDetailsViewField $field,
 		SwatDetailsViewField $reference_field)
 	{
-		$this->validateField($field);
-
-		$key = array_search($reference_field, $this->fields, true);
-
-		if ($key === false)
-			throw new SwatWidgetNotFoundException('The reference field could '.
-				'not be found in this details-view.');
-
-		array_splice($this->fields, $key, 1, array($field, $reference_field));
-
-		if ($field->id !== null)
-			$this->fields_by_id[$field->id] = $field;
-
-		$field->view = $this;
-		$field->parent = $this;
+		$this->insertField($field, $reference_field, false);
 	}
 
 	// }}}
@@ -172,21 +150,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	public function insertFieldAfter(SwatDetailsViewField $field,
 		SwatDetailsViewField $reference_field)
 	{
-		$this->validateField($field);
-
-		$key = array_search($reference_field, $this->fields, true);
-
-		if ($key === false)
-			throw new SwatWidgetNotFoundException('The reference field could '.
-				'not be found in this details-view.');
-
-		array_splice($this->fields, $key, 1, array($reference_field, $field));
-
-		if ($field->id !== null)
-			$this->fields_by_id[$field->id] = $field;
-
-		$field->view = $this;
-		$field->parent = $this;
+		$this->insertField($field, $reference_field, true);
 	}
 
 	// }}}
@@ -482,6 +446,82 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 					'in this details-view.',
 					0, $field->id);
 		}
+	}
+
+	// }}}
+	// {{{ protected function insertField()
+
+	/**
+	 * Helper method to insert fields into this details-view
+	 *
+	 * @param SwatDetailsViewField $field the field to insert.
+	 * @param SwatDetailsViewField $reference_field optional. An existing field
+	 *                                               within this details-view to
+	 *                                               which the inserted field
+	 *                                               is relatively positioned.
+	 *                                               If not specified, the
+	 *                                               field is inserted at the
+	 *                                               beginning or the end of
+	 *                                               this details-view's list of
+	 *                                               fields.
+	 * @param boolean $after optional. If true and a reference field is
+	 *                        specified, the field is inserted immediately
+	 *                        before the reference field. If true and no
+	 *                        reference field is specified, the field is
+	 *                        inserted at the beginning of the field list. If
+	 *                        false and a reference field is specified, the
+	 *                        field is inserted immediately after the reference
+	 *                        field. If false and no reference field is
+	 *                        specified, the field is inserted at the end of
+	 *                        the field list. Defaults to false.
+	 *
+	 * @throws SwatWidgetNotFoundException if the reference field does not
+	 *                                     exist in this details-view.
+	 * @throws SwatDuplicateIdException if the field to be inserted has the
+	 *                                  same id as a field already in this
+	 *                                  details-view.
+	 *
+	 * @see SwatDetailsView::appendField()
+	 * @see SwatDetailsView::insertFieldBefore()
+	 * @see SwatDetailsView::insertFieldAfter()
+	 */
+	protected function insertField(SwatDetailsViewField $field,
+		SwatDetailsViewField $reference_field = null, $after = true)
+	{
+		$this->validateField($field);
+
+		if ($reference_field !== null) {
+			$key = array_search($reference_field, $this->fields, true);
+
+			if ($key === false) {
+				throw new SwatWidgetNotFoundException('The reference field '.
+					'could not be found in this details-view.');
+			}
+
+			if ($after) {
+				// insert after reference field
+				array_splice($this->fields, $key, 1,
+					array($reference_field, $field));
+			} else {
+				// insert before reference field
+				array_splice($this->fields, $key, 1,
+					array($field, $reference_field));
+			}
+		} else {
+			if ($after) {
+				// append to array
+				$this->fields[] = $field;
+			} else {
+				// prepend to array
+				array_unshift($this->fields, $field);
+			}
+		}
+
+		if ($field->id !== null)
+			$this->fields_by_id[$field->id] = $field;
+
+		$field->view = $this; // deprecated reference
+		$field->parent = $this;
 	}
 
 	// }}}
