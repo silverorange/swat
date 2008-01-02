@@ -111,24 +111,6 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	}
 
 	// }}}
-	// {{{ public function __set()
-
-	/**
-	 * Maps a data field to a property of a widget in the widget tree
-	 *
-	 * TODO: document me better
-	 */
-	public function __set($name, $value)
-	{
-		if (array_key_exists($name, $this->mappings)) {
-			$this->property_values[$name] = $value;
-		} else {
-			// TODO: throw something meaningful
-			throw new SwatException();
-		}
-	}
-
-	// }}}
 	// {{{ public function init()
 
 	/**
@@ -595,6 +577,24 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 		foreach ($this->getDescendants('SwatState') as $id => $object)
 			if (isset($states[$id]))
 				$object->setState($states[$id]);
+	}
+
+	// }}}
+	// {{{ private function __set()
+
+	/**
+	 * Maps a data field to a property of a widget in the widget tree
+	 *
+	 * TODO: document me better
+	 */
+	private function __set($name, $value)
+	{
+		if (array_key_exists($name, $this->mappings)) {
+			$this->property_values[$name] = $value;
+		} else {
+			// TODO: throw something meaningful
+			throw new SwatException();
+		}
 	}
 
 	// }}}
