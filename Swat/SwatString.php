@@ -26,8 +26,6 @@ class SwatString extends SwatObject
 		'p',          'pre',     'dl',     'div',
 		'blockquote', 'form',    'h[1-6]', 'table',
 		'fieldset',   'address', 'ul',     'ol',
-		'dd',         'dt',      'td',     'th',
-		'tr',
 	);
 
 	/**
@@ -37,7 +35,17 @@ class SwatString extends SwatObject
 	 * @var array
 	 */
 	public static $breaking_elements = array(
-		'li', 'tbody', 'tfoot', 'thead',
+		'li', 'dd', 'dt',
+	);
+
+	/**
+	 * These XHTML elements are used for tables
+	 *
+	 * @var array
+	 */
+	public static $table_elements = array(
+		'thead', 'tfoot',    'tbody', 'tr', 'th', 'td',
+		'col',   'colgroup',
 	);
 
 	/**
@@ -98,6 +106,7 @@ class SwatString extends SwatObject
 		$breaking_elements = implode('|', self::$breaking_elements);
 		$preformatted_elements = implode('|', self::$preformatted_elements);
 		$xhtml_elements = implode('|', self::$xhtml_elements);
+		$table_elements = implode('|', self::$table_elements);
 
 		// regular expression to match all tags
 		$all_tags = '/(<\/?(?:'.$xhtml_elements.')[^<>]*?>)/siu';
@@ -112,6 +121,12 @@ class SwatString extends SwatObject
 
 		// remove trailing whitespace
 		$text = rtrim($text);
+
+		// remove whitespace before table elements
+		$text = preg_replace('/\s+(<\/?(?:'.$table_elements.')[^<>]*?>)/usi', '\1', $text);
+
+		// remove whitespace after table elements
+		$text = preg_replace('/(<\/?(?:'.$table_elements.')[^<>]*?>)\s+/usi', '\1', $text);
 
 		// replace continuous strings of whitespace containing a
 		// double lf with two line breaks
