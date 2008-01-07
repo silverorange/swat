@@ -123,10 +123,12 @@ class SwatString extends SwatObject
 		$text = rtrim($text);
 
 		// remove whitespace before table elements
-		$text = preg_replace('/\s+(<\/?(?:'.$table_elements.')[^<>]*?>)/usi', '\1', $text);
+		$text = preg_replace('/\s+(<\/?(?:'.$table_elements.')[^<>]*?>)/usi',
+			'\1', $text);
 
 		// remove whitespace after table elements
-		$text = preg_replace('/(<\/?(?:'.$table_elements.')[^<>]*?>)\s+/usi', '\1', $text);
+		$text = preg_replace('/(<\/?(?:'.$table_elements.')[^<>]*?>)\s+/usi',
+			'\1', $text);
 
 		// replace continuous strings of whitespace containing a
 		// double lf with two line breaks
