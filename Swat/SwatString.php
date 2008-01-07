@@ -37,7 +37,7 @@ class SwatString extends SwatObject
 	 * @var array
 	 */
 	public static $breaking_elements = array(
-		'li',         'tbody',   'tfoot',   'thead',
+		'li', 'tbody', 'tfoot', 'thead',
 	);
 
 	/**
