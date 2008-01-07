@@ -281,6 +281,10 @@ input.swat-insensitive {
 	background: transparent;
 }
 
+select.swat-insensitive {
+	background: #eee;
+}
+
 
 /* SwatFormField */
 
