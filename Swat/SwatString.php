@@ -119,8 +119,8 @@ class SwatString extends SwatObject
 		$text = str_replace("\r\n", "\n", $text);
 		$text = str_replace("\r", "\n", $text);
 
-		// remove trailing whitespace
-		$text = rtrim($text);
+		// remove leading and trailing whitespace to prevent extra paragraphs
+		$text = trim($text);
 
 		// remove whitespace before table elements
 		$text = preg_replace('/\s+(<\/?(?:'.$table_elements.')[^<>]*?>)/usi',
