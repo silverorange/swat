@@ -8,7 +8,7 @@ var rteT = window.opener.rteT;
 
 function AddLink() {
 	var oForm = document.linkForm;
-	
+
 	//validate form
 	if (oForm.url.value == '') {
 		alert(rteT['enter_url']);
@@ -32,16 +32,12 @@ document.writeln('<title>' + rteT['insert_link'] + '</title>');
 	<style type="text/css" media="all">@import "swat-textarea-editor.css";</style>
 </head>
 
-<body>
-
-</head>
-
 <body class="rtePopup">
 
 <form name="linkForm" onSubmit="return AddLink();">
 
 	<script language="JavaScript" type="text/javascript">
-	
+
 	document.writeln('<div class="swat-form-field"><label for="title">' + rteT['url'] + ':</label>');
 	document.writeln('<input name="url" type="text" id="url" size="40" onfocus="this.select();"></div>');
 
