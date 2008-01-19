@@ -9,7 +9,7 @@
 function AddTable() {
 	var widthType = (document.tableForm.widthType.value == "pixels") ? "" : "%";
 	var html = '<table border="' + document.tableForm.border.value + '" cellpadding="' + document.tableForm.padding.value + '" ';
-	
+
 	html += 'cellspacing="' + document.tableForm.spacing.value + '" width="' + document.tableForm.width.value + widthType + '">\n';
 	for (var rows = 0; rows < document.tableForm.rows.value; rows++) {
 		html += "<tr>\n";
@@ -19,7 +19,7 @@ function AddTable() {
 		html+= "</tr>\n";
 	}
 	html += "</table>\n";
-	
+
 	window.opener.insertHTML(html);
 	window.close();
 }
