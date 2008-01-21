@@ -125,6 +125,11 @@ class SwatDate extends Date
 	 */
 	const DF_CC_MY                  = 13;
 
+	/**
+	 * 2002
+	 */
+	const DF_Y                      = 14;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -269,6 +274,8 @@ class SwatDate extends Date
 			return Swat::_('%B %Y');
 		case self::DF_CC_MY:
 			return Swat::_('%m / %Y');
+		case self::DF_Y:
+			return Swat::_('%Y');
 		default:
 			throw new Exception("Unknown date format id '$id'.");
 		}
