@@ -912,6 +912,49 @@ class SwatString extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function ordinalNumberFormat()
+
+	/**
+	 * Formats an integer as an ordinal number (1st, 2nd, 3rd)
+	 *
+	 * This method uses english suffixes and is not translatable.
+	 *
+	 * @param integer $value the numeric value to format.
+	 */
+	public static function ordinalNumberFormat($value)
+	{
+		$value = intval($value);
+		$last_digit = $value - intval($value / 10) * 10;
+
+		switch ($value) {
+		case 11:
+		case 12:
+		case 13:
+			$suffix = 'th';
+			break;
+
+		default:
+			switch ($last_digit) {
+			case 1:
+				$suffix = 'st';
+				break;
+			case 2:
+				$suffix = 'nd';
+				break;
+			case 3:
+				$suffix = 'rd';
+				break;
+			default:
+				$suffix = 'th';
+			}
+		}
+
+		$output = (string)$value.$suffix;
+
+		return $output;
+	}
+
+	// }}}
 	// {{{ public static function byteFormat()
 
 	/**
