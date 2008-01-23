@@ -113,7 +113,7 @@ class SwatDBDataObject extends SwatObject
 	// {{{ public function setTable()
 
 	/**
-	 * @param database $table
+	 * @param string $table Database table
 	 */
 	public function setTable($table)
 	{
