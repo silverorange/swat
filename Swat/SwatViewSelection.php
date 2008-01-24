@@ -156,6 +156,22 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
 	}
 
 	// }}}
+	// {{{ public function contains()
+
+	/**
+	 * Checks whether or not this selection contains an item
+	 *
+	 * @param mixed $item the item to check.
+	 *
+	 * @return boolean true if this selection contains the specified item and
+	 *                  false if it does not.
+	 */
+	public function contains($item)
+	{
+		return in_array($item, $this->selected_items);
+	}
+
+	// }}}
 }
 
 ?>
