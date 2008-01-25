@@ -147,8 +147,15 @@ class SwatActions extends SwatControl implements SwatUIParent
 			return;
 
 		parent::display();
-
 		$flydown = $this->getCompositeWidget('action_flydown');
+		foreach ($this->action_items as $item) {
+			if ($item->visible) {
+				if ($item instanceof SwatActionItemDivider)
+					$flydown->addDivider();
+				else
+					$flydown->addOption($item->id, $item->title);
+			}
+		}
 
 		// set the flydown back to its initial state (no persistence)
 		if ($this->auto_reset)
@@ -522,15 +529,6 @@ class SwatActions extends SwatControl implements SwatUIParent
 	{
 		$flydown = new SwatFlydown($this->id.'_action_flydown');
 		$flydown->show_blank = $this->show_blank;
-
-		foreach ($this->action_items as $item) {
-			if ($item->visible) {
-				if ($item instanceof SwatActionItemDivider)
-					$flydown->addDivider();
-				else
-					$flydown->addOption($item->id, $item->title);
-			}
-		}
 
 		$this->addCompositeWidget($flydown, 'action_flydown');
 
