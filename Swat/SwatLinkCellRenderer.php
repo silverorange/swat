@@ -78,13 +78,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	 */
 	public $link_value = null;
 
-	/**
-	 * Link target
-	 *
-	 * @var string
-	 */
-	public $target;
-
 	// }}}
 	// {{{ public function render()
 
@@ -136,7 +129,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 		$anchor_tag->href = $this->getLink();
 		$anchor_tag->title = $this->getTitle();
 		$anchor_tag->class = $this->getCSSClassString();
-		$anchor_tag->target = $this->target;
 		$anchor_tag->display();
 	}
 
