@@ -1,0 +1,7 @@
+.yui-toolbar-container div.yui-toolbar-group-parastyle {
+	clear: left;
+}
+
+.yui-skin-sam .yui-toolbar-container div.yui-toolbar-subcont {
+	padding-bottom: 0.6em;
+}

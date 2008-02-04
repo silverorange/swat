@@ -3,6 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatTextarea.php';
+require_once 'Swat/SwatYUI.php';
 
 /**
  * A wysiwyg text entry widget
@@ -31,7 +32,7 @@ class SwatTextareaEditor extends SwatTextarea
 	 *
 	 * @var string
 	 */
-	public $height = '15em';
+	public $height = '25em';
 
 	/**
 	 * Base-Href
@@ -56,11 +57,14 @@ class SwatTextareaEditor extends SwatTextarea
 	{
 		parent::__construct($id);
 
+		$yui = new SwatYUI(array('editor'));
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+
 		$this->addJavaScript(
 			'packages/swat/javascript/swat-textarea-editor.js',
 			Swat::PACKAGE_ID);
 
-		$this->addStyleSheet('packages/swat/swat-textarea-editor.css',
+		$this->addStyleSheet('packages/swat/styles/swat-textarea-editor.css',
 			Swat::PACKAGE_ID);
 	}
 
@@ -84,6 +88,35 @@ class SwatTextareaEditor extends SwatTextarea
 			return;
 
 		SwatWidget::display();
+
+		// textarea tags cannot be self-closing when using HTML parser on XHTML
+		$value = ($this->value === null) ? '' : $this->value;
+
+		// escape value for display because we actually want to show entities
+		// for editing
+		$value = htmlspecialchars($value);
+
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->class = 'swat-textarea-container yui-skin-sam';
+		$div_tag->open();
+
+		$textarea_tag = new SwatHtmlTag('textarea');
+		$textarea_tag->name = $this->id;
+		$textarea_tag->id = $this->id;
+		$textarea_tag->class = $this->getCSSClassString();
+		// NOTE: The attributes rows and cols are required in
+		//       a textarea for XHTML strict.
+		$textarea_tag->rows = $this->rows;
+		$textarea_tag->cols = $this->cols;
+		$textarea_tag->setContent($value, 'text/xml');
+		$textarea_tag->accesskey = $this->access_key;
+
+		if (!$this->isSensitive())
+			$textarea_tag->disabled = 'disabled';
+
+		$textarea_tag->display();
+
+		$div_tag->close();
 
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
@@ -111,27 +144,12 @@ class SwatTextareaEditor extends SwatTextarea
 
 	protected function getInlineJavaScript()
 	{
-		static $shown = false;
-
-		if (!$shown) {
-			$javascript = $this->getInlineJavaScriptTranslations();
-			$shown = true;
-		} else {
-			$javascript = '';
-		}
-
-		$value = $this->rteSafe($this->value);
-		$basehref = ($this->basehref === null) ? 'null' : $this->basehref;
-
-		$javascript.=
-			"initRTE('swat/images/textarea-editor/', 'swat/', '', false);";
-
-		$javascript.= sprintf("\nwriteRichText('%s', '%s', '%s', '%s', '%s');",
+		$javascript = sprintf(
+			"var %s_obj = new SwatTextareaEditor('%s', '%s', '%s');",
 			$this->id,
-			$value,
+			$this->id,
 			$this->width,
-			$this->height,
-			$basehref);
+			$this->height);
 
 		return $javascript;
 	}

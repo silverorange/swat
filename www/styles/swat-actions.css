@@ -1,4 +1,7 @@
 /* SwatActions */
+.swat-actions .swat-actions-controls * {
+	vertical-align: middle;
+}
 
 .swat-actions .swat-actions-message {
 	border: 1px solid #f0dca1;
@@ -29,4 +32,8 @@
 
 .swat-actions .swat-actions-message-dismiss-link:hover {
 	background-position: 0 -14px;
+}
+
+.swat-actions label {
+	display: inline;
 }
