@@ -226,9 +226,6 @@ class SwatYUI extends SwatObject
 		$components['reset'] = new SwatYUIComponent('reset');
 		$components['reset']->addStyleSheet();
 
-		$components['skin'] = new SwatYUIComponent('skin');
-		$components['skin']->addStyleSheet('assets/skins/sam', false);
-
 		$components['slider'] = new SwatYUIComponent('slider');
 		$components['slider']->addJavaScript();
 
@@ -290,7 +287,6 @@ class SwatYUI extends SwatObject
 		$components['editor']->addDependency($components['event']);
 		$components['editor']->addDependency($components['element']);
 		$components['editor']->addDependency($components['button']);
-		$components['editor']->addDependency($components['skin']);
 
 		$components['element']->addDependency($components['yahoo']);
 		$components['element']->addDependency($components['dom']);
