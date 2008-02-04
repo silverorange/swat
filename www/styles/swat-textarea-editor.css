@@ -5,3 +5,28 @@
 .yui-skin-sam .yui-toolbar-container div.yui-toolbar-subcont {
 	padding-bottom: 0.6em;
 }
+
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-editcode span.yui-toolbar-icon {
+	background-image: url(../images/swat-textarea-editor-source-edit.gif );
+	background-position: 0 1px;
+	left: 5px;
+}
+
+.yui-skin-sam .yui-toolbar-container .yui-button-editcode-selected span.yui-toolbar-icon {
+	background-image: url(../images/swat-textarea-editor-source-edit.gif );
+	background-position: 0 1px;
+	left: 5px;
+}
+
+.swat-textarea-editor-hidden {
+	visibility: hidden;
+	top: -9999px;
+	left: -9999px;
+	position: absolute;
+}
+
+.swat-textarea-container textarea.swat-textarea-editor {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
