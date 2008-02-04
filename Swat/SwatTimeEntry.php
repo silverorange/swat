@@ -315,11 +315,10 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 				}
 
 				// convert 12-hour display to 24-hour value
-				if ($hour !== null && $am_pm == 'pm') {
+				if ($hour !== null && $am_pm == 'pm' && $hour != 12)
 					$hour += 12;
-					if ($hour == 24)
-						$hour = 0;
-				}
+				if ($hour == 12 && $am_pm == 'am')
+					$hour = 0;
 			}
 		}
 
