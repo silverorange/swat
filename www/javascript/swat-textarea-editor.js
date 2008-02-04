@@ -12,10 +12,7 @@ SwatTextareaEditor.prototype.init = function()
 {
 	var config = {
 		height: this.height,
-		width: this.width,
-		dompath: true,
-		focusAtStart: true,
-		titlebar: 'Text'
+		width: this.width
 	};
 
 	this.editor = new YAHOO.widget.SimpleEditor(this.id, config);
@@ -75,7 +72,8 @@ SwatTextareaEditor.prototype.init = function()
 		{ group: 'insertitem', label: 'Insert Item',
 			buttons: [
 				{ type: 'push', label: 'HTML Link CTRL + SHIFT + L', value: 'createlink', disabled: true },
-				{ type: 'push', label: 'Insert Image', value: 'insertimage' }
+				{ type: 'push', label: 'Insert Image', value: 'insertimage' },
+				{ type: 'push', label: 'Edit HTML Code', value: 'editcode'}
 			]
 		}
 	];
@@ -105,13 +103,6 @@ SwatTextareaEditor.prototype.init = function()
 
 SwatTextareaEditor.prototype.addSourceEditButton = function()
 {
-	var source_edit_button_config = {
-		type: 'push', label: 'Edit HTML Code', value: 'editcode'
-	};
-
-	this.editor.toolbar.addButtonToGroup(source_edit_button_config,
-		'insertitem');
-
 	this.editor.toolbar.on('editcodeClick', this.toggleSourceEditor,
 		this, true);
 }
@@ -136,7 +127,6 @@ SwatTextareaEditor.prototype.showSourceEditor = function()
 		this.editor.toolbar.set('disabled', true);
 		this.editor.toolbar.getButtonByValue('editcode').set('disabled', false);
 		this.editor.toolbar.selectButton('editcode');
-		this.editor.dompath.innerHTML = 'Editing HTML Code';
 		this.editor.hide();
 
 		this.show_source_editor = true;
