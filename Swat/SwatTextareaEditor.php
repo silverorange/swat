@@ -57,7 +57,7 @@ class SwatTextareaEditor extends SwatTextarea
 	{
 		parent::__construct($id);
 
-		$yui = new SwatYUI(array('editor'));
+		$yui = new SwatYUI(array('simpleeditor'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript(
@@ -144,7 +144,16 @@ class SwatTextareaEditor extends SwatTextarea
 
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf(
+		static $shown = false;
+
+		if (!$shown) {
+			$javascript = $this->getInlineJavaScriptTranslations();
+			$shown = true;
+		} else {
+			$javascript = '';
+		}
+
+		$javascript.= sprintf(
 			"var %s_obj = new SwatTextareaEditor('%s', '%s', '%s');",
 			$this->id,
 			$this->id,
@@ -159,25 +168,24 @@ class SwatTextareaEditor extends SwatTextarea
 
 	protected function getInlineJavaScriptTranslations()
 	{
-		$javascript = 'var rteT = {';
-
-		$translations = $this->getTranslations();
-		$count = 0;
-		$num_translations = count($translations);
-		foreach ($translations as $key => $word) {
-			$count++;
-			if ($count == $num_translations) {
-				$javascript.= sprintf("\n\t%s: '%s'",
-					$key, str_replace("'", "\\'", $word));
-			} else {
-				$javascript.= sprintf("\n\t%s: '%s',",
-					$key, str_replace("'", "\\'", $word));
-			}
-		}
-
-		$javascript.= "\n};\n";
-
+		// TODO
+		$javascript = '';
 		return $javascript;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this textarea
+	 *
+	 * @return array the array of CSS classes that are applied to this textarea.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-textarea-editor');
+		$classes = array_merge($classes, parent::getCSSClassNames());
+		return $classes;
 	}
 
 	// }}}
