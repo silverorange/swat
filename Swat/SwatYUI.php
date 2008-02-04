@@ -177,6 +177,10 @@ class SwatYUI extends SwatObject
 		$components['base'] = new SwatYUIComponent('base');
 		$components['base']->addStyleSheet();
 
+		$components['button'] = new SwatYUIComponent('button');
+		$components['button']->addJavaScript();
+		$components['button']->addStyleSheet('button/assets/skins/sam', false);
+
 		$components['calendar'] = new SwatYUIComponent('calendar');
 		$components['calendar']->addJavaScript();
 
@@ -196,6 +200,10 @@ class SwatYUI extends SwatObject
 		$components['dragdrop'] = new SwatYUIComponent('dragdrop');
 		$components['dragdrop']->addJavaScript();
 
+		$components['editor'] = new SwatYUIComponent('editor', true);
+		$components['editor']->addJavaScript();
+		$components['editor']->addStyleSheet('editor/assets/skins/sam', false);
+
 		$components['element'] = new SwatYUIComponent('element', true);
 		$components['element']->addJavaScript();
 
@@ -213,10 +221,13 @@ class SwatYUI extends SwatObject
 
 		$components['menu'] = new SwatYUIComponent('menu');
 		$components['menu']->addJavaScript();
-		$components['menu']->addStyleSheet('menu/assets', false);
+		$components['menu']->addStyleSheet('menu/assets/skins/sam', false);
 
 		$components['reset'] = new SwatYUIComponent('reset');
 		$components['reset']->addStyleSheet();
+
+		$components['skin'] = new SwatYUIComponent('skin');
+		$components['skin']->addStyleSheet('assets/skins/sam', false);
 
 		$components['slider'] = new SwatYUIComponent('slider');
 		$components['slider']->addJavaScript();
@@ -242,6 +253,13 @@ class SwatYUI extends SwatObject
 		$components['autocomplete']->addDependency($components['connection']);
 		$components['autocomplete']->addDependency($components['animation']);
 
+		$components['button']->addDependency($components['yahoo']);
+		$components['button']->addDependency($components['dom']);
+		$components['button']->addDependency($components['event']);
+		$components['button']->addDependency($components['element']);
+		$components['button']->addDependency($components['container_core']);
+		$components['button']->addDependency($components['menu']);
+
 		$components['calendar']->addDependency($components['yahoo']);
 		$components['calendar']->addDependency($components['dom']);
 		$components['calendar']->addDependency($components['event']);
@@ -266,6 +284,13 @@ class SwatYUI extends SwatObject
 		$components['dragdrop']->addDependency($components['yahoo']);
 		$components['dragdrop']->addDependency($components['dom']);
 		$components['dragdrop']->addDependency($components['event']);
+
+		$components['editor']->addDependency($components['yahoo']);
+		$components['editor']->addDependency($components['dom']);
+		$components['editor']->addDependency($components['event']);
+		$components['editor']->addDependency($components['element']);
+		$components['editor']->addDependency($components['button']);
+		$components['editor']->addDependency($components['skin']);
 
 		$components['element']->addDependency($components['yahoo']);
 		$components['element']->addDependency($components['dom']);
