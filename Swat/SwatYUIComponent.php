@@ -88,11 +88,18 @@ class SwatYUIComponent extends SwatObject
 	 *                                     the JavaScript exists in. If the
 	 *                                     directory is not specified, this
 	 *                                     component's id is used.
+	 * @param string $filename optional. The filename of the YUI JavaScript for
+	 *                          this component. If not specified, the name of
+	 *                          the component is used. Do not specify the file
+	 *                          extension or the -min/-debug suffix here.
 	 */
-	public function addJavaScript($component_directory = '')
+	public function addJavaScript($component_directory = '', $filename = '')
 	{
 		if (strlen($component_directory) == 0)
 			$component_directory = $this->id;
+
+		if (strlen($filename) == 0)
+			$filename = $this->id;
 
 		$modes = array(
 			'min'    => '-min',
@@ -102,10 +109,10 @@ class SwatYUIComponent extends SwatObject
 
 		if ($this->beta) {
 			$filename_template =
-				'packages/yui/'.$component_directory.'/'.$this->id.'-beta%s.js';
+				'packages/yui/'.$component_directory.'/'.$filename.'-beta%s.js';
 		} else {
 			$filename_template =
-				'packages/yui/'.$component_directory.'/'.$this->id.'%s.js';
+				'packages/yui/'.$component_directory.'/'.$filename.'%s.js';
 		}
 
 		foreach ($modes as $mode => $suffix) {
@@ -133,16 +140,23 @@ class SwatYUIComponent extends SwatObject
 	 *                                     the style sheet exists in. If the
 	 *                                     directory is not specified, this
 	 *                                     component's id is used.
+	 * @param string $filename optional. The filename of the YUI style-sheet for
+	 *                          this component. If not specified, the name of
+	 *                          the component is used. Do not specify the file
+	 *                          extension or the -min  suffix here.
 	 * @param boolean $has_min_version optional. Whether or not the style-sheet
 	 *                                  for this component has a minimized
 	 *                                  version in the YUI distribution.
 	 *                                  Defaults to true.
 	 */
-	public function addStyleSheet($component_directory = '',
+	public function addStyleSheet($component_directory = '', $filename = '',
 		$has_min_version = true)
 	{
 		if (strlen($component_directory) == 0)
 			$component_directory = $this->id;
+
+		if (strlen($filename) == 0)
+			$filename = $this->id;
 
 		$modes = array(
 			'min'    => '-min',
@@ -154,7 +168,7 @@ class SwatYUIComponent extends SwatObject
 			$modes['min'] = '';
 
 		$filename_template =
-			'packages/yui/'.$component_directory.'/'.$this->id.'%s.css';
+			'packages/yui/'.$component_directory.'/'.$filename.'%s.css';
 
 		foreach ($modes as $mode => $suffix) {
 			$filename = sprintf($filename_template, $suffix);
