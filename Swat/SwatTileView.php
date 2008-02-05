@@ -108,10 +108,21 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 * Processes this tile view
 	 *
 	 * Process the tile contained by this tile view.
+	 *
+	 * Unlike SwatWidget, composite widgets of this tile are not automatically
+	 * processed. This allows tile-views to be created outside a SwatForm.
 	 */
 	public function process()
 	{
-		parent::process();
+		if (!$this->isInitialized())
+			$this->init();
+
+		if ($this->showCheckAll()) {
+			$check_all = $this->getCompositeWidget('check_all');
+			$check_all->process();
+		}
+
+		$this->processed = true;
 
 		if ($this->tile !== null)
 			$this->tile->process();
@@ -495,8 +506,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	protected function showCheckAll()
 	{
-		return ($this->show_check_all && count($this->model) > 2
-			&& $this->getCheckboxCellRenderer() !== null);
+		return ($this->show_check_all && count($this->model) > 2 &&
+			$this->getCheckboxCellRenderer() !== null &&
+			$this->getFirstAncestor('SwatForm') !== null);
 	}
 
 	// }}}
