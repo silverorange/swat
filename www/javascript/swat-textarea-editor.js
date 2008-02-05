@@ -10,12 +10,16 @@ function SwatTextareaEditor(id, width, height)
 
 SwatTextareaEditor.prototype.init = function()
 {
+	YAHOO.util.Dom.addClass(document.body, 'yui-skin-sam');
+
 	var config = {
 		height: this.height,
-		width: this.width
+		width: this.width,
+		limitCommands: true,
+		markup: 'xhtml'
 	};
 
-	this.editor = new YAHOO.widget.SimpleEditor(this.id, config);
+	this.editor = new YAHOO.widget.Editor(this.id, config);
 
 	this.editor._defaultToolbar.buttonType = 'basic';
 	this.editor._defaultToolbar.titlebar = '';
@@ -30,8 +34,7 @@ SwatTextareaEditor.prototype.init = function()
 				{ type: 'push', label: 'Subscript', value: 'subscript', disabled: true },
 				{ type: 'push', label: 'Superscript', value: 'superscript', disabled: true },
 				{ type: 'separator' },
-				{ type: 'push', label: 'Remove Formatting', value: 'removeformat', disabled: true },
-				{ type: 'push', label: 'Show/Hide Hidden Elements', value: 'hiddenelements' }
+				{ type: 'push', label: 'Remove Formatting', value: 'removeformat', disabled: true }
 			]
 		},
 		{ type: 'separator' },
@@ -99,6 +102,7 @@ SwatTextareaEditor.prototype.init = function()
 	}, this.editor, true);
 
 	this.editor.render();
+	this.editor.panel
 }
 
 SwatTextareaEditor.prototype.addSourceEditButton = function()
