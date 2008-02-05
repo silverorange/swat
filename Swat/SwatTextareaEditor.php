@@ -57,7 +57,7 @@ class SwatTextareaEditor extends SwatTextarea
 	{
 		parent::__construct($id);
 
-		$yui = new SwatYUI(array('simpleeditor'));
+		$yui = new SwatYUI(array('editor'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript(
@@ -66,17 +66,6 @@ class SwatTextareaEditor extends SwatTextarea
 
 		$this->addStyleSheet('packages/swat/styles/swat-textarea-editor.css',
 			Swat::PACKAGE_ID);
-	}
-
-	// }}}
-	// {{{ public function process()
-
-	public function process()
-	{
-		parent::process();
-
-		if ($this->value !== null)
-			$this->value = str_replace("\n", '', $this->value);
 	}
 
 	// }}}
@@ -97,7 +86,7 @@ class SwatTextareaEditor extends SwatTextarea
 		$value = htmlspecialchars($value);
 
 		$div_tag = new SwatHtmlTag('div');
-		$div_tag->class = 'swat-textarea-container yui-skin-sam';
+		$div_tag->class = 'swat-textarea-container';
 		$div_tag->open();
 
 		$textarea_tag = new SwatHtmlTag('textarea');
@@ -108,7 +97,7 @@ class SwatTextareaEditor extends SwatTextarea
 		//       a textarea for XHTML strict.
 		$textarea_tag->rows = $this->rows;
 		$textarea_tag->cols = $this->cols;
-		$textarea_tag->setContent($value, 'text/xml');
+		$textarea_tag->setContent($value);
 		$textarea_tag->accesskey = $this->access_key;
 
 		if (!$this->isSensitive())
@@ -223,30 +212,6 @@ class SwatTextareaEditor extends SwatTextarea
 			'insert_link' => Swat::_('Insert Link'),
 			'cancel' => Swat::_('Cancel')
 		);
-	}
-
-	// }}}
-	// {{{ private function rteSafe()
-
-	private function rteSafe($value)
-	{
-		//returns safe code for preloading in the RTE
-
-		//convert all types of single quotes
-		$value = str_replace(chr(145), chr(39), $value);
-		$value = str_replace(chr(146), chr(39), $value);
-		$value = str_replace("'", "&#39;", $value);
-
-		//convert all types of double quotes
-		$value = str_replace(chr(147), chr(34), $value);
-		$value = str_replace(chr(148), chr(34), $value);
-		$value = str_replace('"', '&quot;', $value);
-
-		//replace carriage returns & line feeds
-		$value = str_replace(chr(10), " ", $value);
-		$value = str_replace(chr(13), " ", $value);
-
-		return $value;
 	}
 
 	// }}}
