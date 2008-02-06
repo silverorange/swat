@@ -106,7 +106,9 @@ SwatTimeEntry.prototype.setNow = function(set_date)
 			var hour = now.getHours();
 			var am_pm = 1;
 		} else {
-			var hour = (now.getHours() - 12);
+			var hour = (now.getHours());
+			if (hour != 12)
+				hour -= 12;
 			var am_pm = 2;
 		}
 	}
