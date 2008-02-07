@@ -103,11 +103,12 @@ SwatTimeEntry.prototype.setNow = function(set_date)
 	var hour = now.getHours();
 
 	if (this.twelve_hour) {
-		if (now.getHours() < 12) {
+		if (hour < 12) { // 0000-1100 is am
 			var am_pm = 1;
-		} else {
+		} else { // 1200-2300 is pm
 			if (hour != 12)
 				hour -= 12;
+
 			var am_pm = 2;
 		}
 	}
