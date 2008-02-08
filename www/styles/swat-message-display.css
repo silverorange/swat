@@ -61,6 +61,7 @@
 	text-indent: -2000em;
 	text-decoration: none;
 	outline: none;
+	line-height: 1;
 }
 
 .swat-message-display-dismiss-link:hover {
