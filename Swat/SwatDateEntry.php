@@ -99,6 +99,13 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	public $show_month_number = false;
 
+	/**
+	 * Whether or not this time entry should auto-complete to the current date
+	 *
+	 * @var boolean
+	 */
+	 public $use_current_date = true;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -191,6 +198,12 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		parent::display();
 
+		$hidden = new SwatHtmlTag('input');
+		$hidden->id = $this->id.'_use_current_date';
+		$hidden->type = 'hidden';
+		$hidden->value = $this->use_current_date;
+		$hidden->display();
+
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
@@ -238,6 +251,11 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		if ($this->display_parts & self::TIME) {
 			$time_entry = $this->getCompositeWidget('time_entry');
+
+			// if we aren't using the current date then we won't use the
+			// current time
+			if (!$this->use_current_date)
+				$time_entry->use_current_time = false;
 
 			echo ' ';
 			if ($time_entry->value === null && $this->value !== null)
