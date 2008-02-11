@@ -5,7 +5,8 @@ function SwatDateEntry(id)
 	this.year = document.getElementById(id + '_year');
 	this.month = document.getElementById(id + '_month');
 	this.day = document.getElementById(id + '_day');
-	this.use_current_date = document.getElementById(id + '_use_current_date');
+	this.use_current_date = new Boolean(
+		parseInt(document.getElementById(id + '_use_current_date')));
 
 	this.swat_time = null;
 
@@ -168,8 +169,7 @@ SwatDateEntry.prototype.update = function(field)
 		var now = new Date();
 		var this_month = now.getMonth() + 1;
 
-		if (this.getMonth() == this_month &&
-			this.use_current_date.value == '1')
+		if (this.getMonth() == this_month && this.use_current_date.value)
 			this.setNow(true);
 		else
 			this.setDefault(true);
