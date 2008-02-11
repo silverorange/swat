@@ -6,6 +6,7 @@ function SwatTimeEntry(id)
 	this.minute = document.getElementById(id + '_minute');
 	this.second = document.getElementById(id + '_second');
 	this.am_pm = document.getElementById(id + '_am_pm');
+	this.use_current_time = document.getElementById(id + '_use_current_time');
 
 	this.twelve_hour = (this.hour !== null && this.am_pm !== null);
 
@@ -131,8 +132,12 @@ SwatTimeEntry.prototype.setNow = function(set_date)
 
 SwatTimeEntry.prototype.setDefault = function(set_date)
 {
-	if (this.hour && this.hour.selectedIndex == 0)
-		this.hour.selectedIndex = 1;
+	if (this.hour && this.hour.selectedIndex == 0) {
+		if (this.am_pm)
+			this.hour.selectedIndex = 12;
+		else
+			this.hour.selectedIndex = 1;
+	}
 
 	if (this.minute && this.minute.selectedIndex == 0)
 		this.minute.selectedIndex = 1;
@@ -183,7 +188,8 @@ SwatTimeEntry.prototype.update = function(field)
 				this_hour = 12;
 		}
 
-		if (this.reverseLookup('hour', this.hour.selectedIndex) == this_hour)
+		if (this.reverseLookup('hour', this.hour.selectedIndex) == this_hour &&
+			this.use_current_time.value == '1')
 			this.setNow(true);
 		else
 			this.setDefault(true);
