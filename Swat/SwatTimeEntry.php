@@ -103,6 +103,13 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 */
 	public $twelve_hour;
 
+	/**
+	 * Whether or not this time entry should auto-complete to the current time
+	 *
+	 * @var boolean
+	 */
+	 public $use_current_time = true;
+
 	// }}}
 	// {{{ private properties
 
@@ -195,6 +202,12 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			return;
 
 		parent::display();
+
+		$hidden = new SwatHtmlTag('input');
+		$hidden->id = $this->id.'_use_current_time';
+		$hidden->type = 'hidden';
+		$hidden->value = $this->use_current_time;
+		$hidden->display();
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
