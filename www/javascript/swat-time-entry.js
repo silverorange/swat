@@ -6,7 +6,8 @@ function SwatTimeEntry(id)
 	this.minute = document.getElementById(id + '_minute');
 	this.second = document.getElementById(id + '_second');
 	this.am_pm = document.getElementById(id + '_am_pm');
-	this.use_current_time = document.getElementById(id + '_use_current_time');
+	this.use_current_time = new Boolean(
+		parseInt(document.getElementById(id + '_use_current_time')));
 
 	this.twelve_hour = (this.hour !== null && this.am_pm !== null);
 
@@ -189,7 +190,7 @@ SwatTimeEntry.prototype.update = function(field)
 		}
 
 		if (this.reverseLookup('hour', this.hour.selectedIndex) == this_hour &&
-			this.use_current_time.value == '1')
+			this.use_current_time.value)
 			this.setNow(true);
 		else
 			this.setDefault(true);
