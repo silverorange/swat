@@ -139,8 +139,9 @@ class SwatDBDataObject extends SwatObject
 
 		foreach ($property_array as $name => $value) {
 			$hashed_value = md5(serialize($value));
-			if (strcmp($hashed_value, $this->property_hashes[$name]) != 0)
-				$modified_properties[$name] = $value;
+			if (array_key_exists($name, $this->property_hashes) &&
+				strcmp($hashed_value, $this->property_hashes[$name]) != 0)
+					$modified_properties[$name] = $value;
 		}
 
 		return $modified_properties;
