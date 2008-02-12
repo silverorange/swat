@@ -39,6 +39,16 @@ class SwatToolLink extends SwatControl
 	public $title = null;
 
 	/**
+	 * Optional content type for the title of the link
+	 *     default text/plain
+	 *     use text/xml for XHTML fragments
+	 *
+	 * @var string
+	 */
+	public $content_type = 'text/plain';
+
+
+	/**
 	 * A value or array of values to substitute into the link of this cell
 	 *
 	 * The value property may be specified either as an array of values or as
@@ -278,7 +288,7 @@ class SwatToolLink extends SwatControl
 			$tag->href = sprintf($this->link, $this->value);
 
 		$tag->accesskey = $this->access_key;
-		$tag->setContent($this->title);
+		$tag->setContent($this->title, $this->content_type);
 
 		return $tag;
 	}
@@ -298,7 +308,7 @@ class SwatToolLink extends SwatControl
 
 		$tag->id = $this->id;
 		$tag->class = $this->getCSSClassString();
-		$tag->setContent($this->title);
+		$tag->setContent($this->title, $this->content_type);
 
 		return $tag;
 	}
