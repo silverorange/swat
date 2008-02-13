@@ -441,8 +441,10 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf("var %s_obj = new SwatTimeEntry('%s', %d);\n",
-			$this->id, $this->id, $this->use_current_time);
+		$use_current_time = ($this->use_current_time) ? 'true' : 'false';
+
+		$javascript = sprintf("var %s_obj = new SwatTimeEntry('%s', %s);\n",
+			$this->id, $this->id, $use_current_time);
 
 		if ($this->display_parts & self::HOUR) {
 			$hour_flydown = $this->getCompositeWidget('hour_flydown');
