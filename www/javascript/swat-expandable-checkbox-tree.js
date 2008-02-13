@@ -49,16 +49,17 @@ SwatExpandableCheckboxTree.prototype.drawExpander = function(expander_node_id)
 	image.height = '16';
 	image.src = 'packages/swat/images/swat-disclosure-open.png';
 	image.alt = SwatExpandableCheckboxTree.close_text;
-	YAHOO.util.Event.addListener(image, 'click',
+
+	var anchor = document.createElement('a');
+	anchor.href = '#';
+	anchor.appendChild(image);
+
+	YAHOO.util.Event.addListener(anchor, 'click',
 		function (e, args)
 		{
 			YAHOO.util.Event.preventDefault(e);
 			args[0].toggleBranch(args[1]);
 		}, [this, expander_node_id]);
-
-	var anchor = document.createElement('a');
-	anchor.href = '#';
-	anchor.appendChild(image);
 
 	list_item.insertBefore(anchor, list_item.firstChild);
 
