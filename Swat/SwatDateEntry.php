@@ -198,12 +198,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		parent::display();
 
-		$hidden = new SwatHtmlTag('input');
-		$hidden->id = $this->id.'_use_current_date';
-		$hidden->type = 'hidden';
-		$hidden->value = $this->use_current_date;
-		$hidden->display();
-
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
@@ -438,8 +432,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf("var %s_obj = new SwatDateEntry('%s');",
-			$this->id, $this->id);
+		$javascript = sprintf("var %s_obj = new SwatDateEntry('%s', %d);",
+			$this->id, $this->id, $this->use_current_date);
 
 		if ($this->display_parts & self::DAY) {
 			$day_flydown = $this->getCompositeWidget('day_flydown');
