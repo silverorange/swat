@@ -1,7 +1,7 @@
 function SwatTimeEntry(id, use_current_time)
 {
 	this.id = id;
-	this.use_current_time = new Boolean(use_current_time);
+	this.use_current_time = use_current_time;
 
 	this.hour = document.getElementById(id + '_hour');
 	this.minute = document.getElementById(id + '_minute');
@@ -189,7 +189,7 @@ SwatTimeEntry.prototype.update = function(field)
 		}
 
 		if (this.reverseLookup('hour', this.hour.selectedIndex) == this_hour &&
-			this.use_current_time.value)
+			this.use_current_time)
 			this.setNow(true);
 		else
 			this.setDefault(true);
