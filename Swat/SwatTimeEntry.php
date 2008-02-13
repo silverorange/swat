@@ -203,12 +203,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		parent::display();
 
-		$hidden = new SwatHtmlTag('input');
-		$hidden->id = $this->id.'_use_current_time';
-		$hidden->type = 'hidden';
-		$hidden->value = $this->use_current_time;
-		$hidden->display();
-
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
@@ -447,8 +441,8 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf("var %s_obj = new SwatTimeEntry('%s');\n",
-			$this->id, $this->id);
+		$javascript = sprintf("var %s_obj = new SwatTimeEntry('%s', %d);\n",
+			$this->id, $this->id, $this->use_current_time);
 
 		if ($this->display_parts & self::HOUR) {
 			$hour_flydown = $this->getCompositeWidget('hour_flydown');
