@@ -1,13 +1,12 @@
-function SwatTimeEntry(id)
+function SwatTimeEntry(id, use_current_time)
 {
 	this.id = id;
+	this.use_current_time = new Boolean(use_current_time);
 
 	this.hour = document.getElementById(id + '_hour');
 	this.minute = document.getElementById(id + '_minute');
 	this.second = document.getElementById(id + '_second');
 	this.am_pm = document.getElementById(id + '_am_pm');
-	this.use_current_time = new Boolean(
-		parseInt(document.getElementById(id + '_use_current_time')));
 
 	this.twelve_hour = (this.hour !== null && this.am_pm !== null);
 

@@ -1,12 +1,11 @@
-function SwatDateEntry(id)
+function SwatDateEntry(id, use_current_date)
 {
 	this.id = id;
+	this.use_current_date = new Boolean(use_current_date);
 
 	this.year = document.getElementById(id + '_year');
 	this.month = document.getElementById(id + '_month');
 	this.day = document.getElementById(id + '_day');
-	this.use_current_date = new Boolean(
-		parseInt(document.getElementById(id + '_use_current_date')));
 
 	this.swat_time = null;
 
