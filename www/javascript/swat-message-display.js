@@ -99,6 +99,16 @@ SwatMessageDisplayMessage.prototype.shrink = function()
 		}
 	}
 
+	// if this is the last message in the display, shrink the message display
+	// top margin to zero.
+	if (this.message_div.parentNode.childNodes.length == 1) {
+		var message_display_animation = new YAHOO.util.Anim(
+			this.message_div.parentNode, { marginTop: { to: 0 } }, duration,
+			easing);
+
+		message_display_animation.animate();
+	}
+
 	// disappear this message
 	var shrink_animation = new YAHOO.util.Anim(this.message_div,
 		attributes, duration, easing);
