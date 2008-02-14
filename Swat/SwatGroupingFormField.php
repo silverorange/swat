@@ -29,8 +29,7 @@ class SwatGroupingFormField extends SwatFormField
 	protected function getTitleTag()
 	{
 		$legend_tag = new SwatHtmlTag('legend');
-		$legend_tag->setContent($this->title,
-			$this->title_content_type);
+		$legend_tag->setContent($this->title, $this->title_content_type);
 
 		return $legend_tag;
 	}
@@ -64,9 +63,9 @@ class SwatGroupingFormField extends SwatFormField
 		$fieldset_tag->open();
 		$this->displayTitle();
 		$this->displayContent();
-		$this->displayMessages();
 		$this->displayNotes();
 		$fieldset_tag->close();
+		$this->displayMessages();
 		$container_tag->close();
 	}
 
