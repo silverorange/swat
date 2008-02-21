@@ -22,7 +22,7 @@ class SwatDisclosure extends SwatDisplayableContainer
 	 *
 	 * @var string
 	 */
-	public $title = 'Disclosure';
+	public $title = '';
 
 	/**
 	 * The initial state of the disclosure
