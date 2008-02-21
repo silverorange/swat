@@ -262,7 +262,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 *
 	 * <code>
 	 * foreach ($row->getReplicators() as $replicator_id)
-	 *     $my_widget = $row->getWidget($replicator_id);
+	 *     $my_widget = $row->getWidget('my_column', $replicator_id);
 	 * </code>
 	 *
 	 * @return array the replicator ids of this input row.
