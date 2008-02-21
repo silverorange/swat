@@ -38,6 +38,9 @@ class SwatRating extends SwatInputControl
 
 		$this->requires_id = true;
 
+		$yui = new SwatYUI(array('dom', 'animation'));
+		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+
 		$this->addJavaScript('packages/swat/javascript/swat-rating.js',
 			Swat::PACKAGE_ID);
 
