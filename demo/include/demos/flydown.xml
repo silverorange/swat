@@ -26,11 +26,11 @@
 					<property name="show_blank" type="boolean">false</property>
 				</widget>
 			</widget>
-			
+
 		</widget>
 		<widget class="SwatFieldset">
 			<property name="title">Cascading Flydowns</property>
-			
+
 			<widget class="SwatFormField">
 				<property name="title" type="string">Cascade From</property>
 				<widget class="SwatFlydown" id="cascade_from">
