@@ -242,10 +242,6 @@ ul.swat-radio-list li {
 	color: #333;
 }
 
-.swat-header-form-field .swat-button.swat-insensitive,
-.swat-footer-form-field .swat-button.swat-insensitive {
-	color: #999;
-}
 .swat-button-compact {
 	font-size: 80%;
 	padding: 0;
@@ -269,20 +265,6 @@ span.swat-button-processing-throbber {
 span.swat-button-processing-throbber img {
 	margin: 0 0.5em;
 	vertical-align: middle;
-}
-
-/* Insensitive widgets */
-
-input.swat-insensitive {
-	background: #eee;
-}
-
-.swat-radio-list input.swat-insensitive {
-	background: transparent;
-}
-
-select.swat-insensitive {
-	background: #eee;
 }
 
 
