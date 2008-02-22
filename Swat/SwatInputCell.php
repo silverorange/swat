@@ -506,7 +506,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 				'added to a table-view and an input-row is added to the '.
 				'table-view.');
 
-		$suffix = '_'.$replicator_id.'_'.$row->id;
+		$suffix = '_'.$row->id.'_'.$replicator_id;
 		$new_widget = $this->widget->copy($suffix);
 		$new_widget->parent = $this;
 
