@@ -663,16 +663,10 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 			if (isset($this->input_cells[$column->id])) {
 				$widget = $this->input_cells[$column->id]->getPrototypeWidget();
-				if ($widget->id !== null)
-					$widget->id.= $suffix;
-
-				if ($widget instanceof SwatUIParent) {
-					$descendants = $widget->getDescendants();
-					foreach ($descendants as $descendant)
-						if ($descendant->id !== null)
-							$descendant->id.= $suffix;
-				}
+				$widget = $widget->copy($suffix);
+				$widget->parent = $this->getForm(); // so display will work.
 				$widget->display();
+				unset($widget);
 			} else {
 				echo '&nbsp;';
 			}
