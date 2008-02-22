@@ -331,7 +331,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 			$input_tag->checked = 'checked';
 
 		if (!$this->isSensitive())
-			$this->input_tag->disabled = 'disabled';
+			$input_tag->disabled = 'disabled';
 
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
