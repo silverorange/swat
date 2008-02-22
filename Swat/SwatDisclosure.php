@@ -167,7 +167,7 @@ class SwatDisclosure extends SwatDisplayableContainer
 
 		$span = new SwatHtmlTag('span');
 		$span->class = 'swat-disclosure-span';
-		$span->setContent(title);
+		$span->setContent($title);
 
 		return $span;
 	}
