@@ -155,7 +155,7 @@ abstract class SwatOptionControl extends SwatInputControl
 
 		foreach ($this->options as $option)
 			if ($option->value === $value)
-				$options[] = $control_option;
+				$options[] = $option;
 
 		return $options;
 	}
