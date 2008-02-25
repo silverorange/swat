@@ -164,7 +164,7 @@ class SwatTile extends SwatCellRendererContainer
 					$renderer->getBaseCSSClassNames());
 
 				$classes = array_merge($classes,
-				$renderer->getDataSpecificCSSClassNames());
+					$renderer->getDataSpecificCSSClassNames());
 
 				$classes = array_merge($classes, $renderer->classes);
 
