@@ -16,3 +16,8 @@
 .swat-tile-view .highlight {
 	background: #f7f5f3 url(../images/swat-table-view-cell-highlight-background.png) bottom repeat-x;
 }
+
+.swat-tile-view .insensitive {
+	filter: alpha(opacity = 60);
+	opacity: 0.60;
+}
