@@ -38,12 +38,12 @@ class SwatTile extends SwatCellRendererContainer
 		if (!$this->visible)
 			return;
 
+		foreach ($this->renderers as $renderer)
+			$this->renderers->applyMappingsToRenderer($renderer, $data);
+
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
-
-		foreach ($this->renderers as $renderer)
-			$this->renderers->applyMappingsToRenderer($renderer, $data);
 
 		$this->displayRenderersInternal($data);
 
