@@ -70,12 +70,19 @@ class SwatTreeFlydown extends SwatFlydown
 		if (!$this->visible)
 			return;
 
-		// temporarily set the value to the path for parent::display()
 		$actual_value = $this->value;
-		$this->value = $this->path;
+		if (count($this->path) == 0 && $this->value !== null) {
+			// If there is a value but not a path, assume the value is the
+			// first element in the path.
+			$this->value = array($this->value);
+		} else {
+			// temporarily set the value to the path for parent::display()
+			$this->value = $this->path;
+		}
 
 		parent::display();
 
+		// set value back to actual value after parent::display()
 		$this->value = $actual_value;
 	}
 
