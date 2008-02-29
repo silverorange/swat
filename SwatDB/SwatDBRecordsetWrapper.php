@@ -323,8 +323,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 			$value->setDatabase($this->db);
 
 		// Remove object from removed list if it was on list of removed
-		// objects. This should happen after adding the new object above
-		// in case we replaced the same object.
+		// objects. This step needs to happen after adding the new record
+		// for the case where we replaced an object with itself.
 		$keys = array_keys($this->removed_objects, $value, true);
 		foreach ($keys as $key)
 			unset($this->removed_objects[$key]);
@@ -818,23 +818,27 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 * Saves this recordset to the database
 	 *
 	 * Saving a recordset works as follows:
-	 *  1. Objects that were added are inserted into the database,
-	 *  2. Objects that were modified are updated in the database,
-	 *  3. Objects that were removed are deleted from the database.
+	 *  1. Objects that were removed are deleted from the database.
+	 *  2. Objects that were added are inserted into the database,
+	 *  3. Objects that were modified are updated in the database,
+	 *
+	 * Deleting is performed before adding incase a new row with the same
+	 * values as a deleted row is added. For example, a binding is removed and
+	 * an identical binding is added.
 	 */
 	public function save()
 	{
 		$this->checkDB();
 		$transaction = new SwatDBTransaction($this->db);
 		try {
-			foreach ($this->objects as $object) {
-				$object->setDatabase($this->db);
-				$object->save();
-			}
-
 			foreach ($this->removed_objects as $object) {
 				$object->setDatabase($this->db);
 				$object->delete();
+			}
+
+			foreach ($this->objects as $object) {
+				$object->setDatabase($this->db);
+				$object->save();
 			}
 
 			$transaction->commit();
