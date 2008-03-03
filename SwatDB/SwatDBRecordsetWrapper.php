@@ -605,10 +605,13 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	public function attachSubDataObjects($name,
 		SwatDBRecordsetWrapper $sub_data_objects)
 	{
-		if ($this->index_field === null)
-			throw new SwatDBException(
-				"Index field must be specified on this wrapper ".
-				"in order to attach sub-dataobjects.");
+		if ($sub_data_objects->index_field === null) {
+			throw new SwatDBException(sprintf(
+				'Index field must be specified in the sub-data-object '.
+				'recordset wrapper class (%s::init()) '.
+				'in order to attach recordset as sub-dataobjects.',
+				get_class($sub_data_objects)));
+		}
 
 		foreach ($this->objects as $object) {
 			$value = $object->getInternalValue($name);
