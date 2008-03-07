@@ -9,10 +9,10 @@ require_once 'Swat/SwatTableModel.php';
  * A data structure that can be used with the SwatTableView
  *
  * A new table store is empty by default. Use the
- * {@link SwatTableStore::addRow()} method to add rows to a table store.
+ * {@link SwatTableStore::add()} method to add rows to a table store.
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableStore extends SwatObject implements SwatTableModel
