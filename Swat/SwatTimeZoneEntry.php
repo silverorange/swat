@@ -226,25 +226,23 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 */
 	private function parseAreaWhitelist($area_whitelist)
 	{
-		$regions = array();
+		$areas = array();
 
-		foreach ($GLOBALS['_DATE_TIMEZONE_DATA'] as $key => $obj) {
-			$tok = strtok($key, '/');
-			$current = &$regions;
+		$tz_data = Date_TimeZone::getAvailableIDs();
 
-			if (!in_array($tok, $area_whitelist))
-				continue;
+		foreach ($tz_data as $id) {
+			$area = $this->getArea($id);
+			if (in_array($area, $area_whitelist)) {
+				$region = $this->getRegion($id);
+				if (!array_key_exists($area, $areas)) {
+					$areas[$area] = array();
+				}
 
-			while ($tok !== false) {
-				if (!isset($current[$tok]))
-					$current[$tok] = array();
-
-				$current = &$current[$tok];
-				$tok = strtok('/');
+				$areas[$area][] = $region;
 			}
 		}
 
-		return $regions;
+		return $areas;
 	}
 
 	// }}}
@@ -255,22 +253,23 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 *
 	 * Builds the class variable array $areas.
 	 *
-	 * @param array $time_zone_list a tree structured array of areas, regions,
-	 *                               and subregions.
+	 * @param array $time_zone_list a tree structured array of areas and
+	 *                               regions.
 	 */
 	private function setAreas($time_zone_list)
 	{
 		ksort($time_zone_list);
 
-		foreach ($time_zone_list as $name => $subregions) {
-			$this->areas[$name] = $name;
-			$this->regions[$name] = array();
+		foreach ($time_zone_list as $area => $regions) {
+			$this->areas[$area]   = $area;
+			$this->regions[$area] = array();
 
 			// speical case for UTC flydown
-			if ($name === 'UTC')
-				$subregions = array('Coordinated Universal Time' => null);
+			if ($area === 'UTC') {
+				$regions = array('Coordinated Universal Time');
+			}
 
-			$this->setRegions($subregions, $name);
+			$this->setRegions($regions, $area);
 		}
 	}
 
@@ -278,32 +277,23 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ private function setRegions()
 
 	/**
-	 * Sets regions
+	 * Builds the internal array of {@link SwatOptions} for the specified
+	 * regions
 	 *
-	 * Builds the class variable array $regions.
-	 *
-	 * @param array $time_zone_list a tree structured array of areas, regions,
-	 *                               and subregions.
+	 * @param array $regions an array of regions.
 	 * @param string $area the region's area.
-	 * @param string $prefix a list of parent regions appended to sub-regions.
 	 */
-	private function setRegions($time_zone_list, $area, $prefix = '')
+	private function setRegions($regions, $area)
 	{
-		ksort($time_zone_list);
+		sort($regions);
 
-		foreach ($time_zone_list as $name => $subregions) {
+		foreach ($regions as $region) {
+			$title = $this->getRegionTitle($region);
 
-			if (count($subregions))
-				$this->setRegions($subregions, $area, $prefix.$name.'/');
-			else {
-				$title = $prefix.$name;
+			if (isset($GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$region]))
+				$title.= ' ('.$GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$region]['shortname'].')';
 
-				if (isset($GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$title]))
-					$title.= ' ('.$GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$title]['shortname'].')';
-
-				$this->regions[$area][] =
-					new SwatOption($name, str_replace('_', ' ', $title));
-			}
+			$this->regions[$area][] = new SwatOption($region, $title);
 		}
 	}
 
@@ -321,12 +311,15 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 */
 	private function getArea($time_zone)
 	{
-		if ($time_zone === null)
-			return null;
-		if ($time_zone === 'UTC')
-			return 'UTC';
+		$area = null;
 
-		return substr($time_zone, 0, strpos($time_zone, '/'));
+		if ($time_zone === 'UTC') {
+			$area = 'UTC';
+		} elseif ($time_zone !== null) {
+			$area = reset(explode('/', $time_zone, 2));
+		}
+
+		return $area;
 	}
 
 	// }}}
@@ -335,21 +328,46 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	/**
 	 * Gets a region from a time-zone identifier
 	 *
-	 * Returns the region part of a full time-zone.
+	 * @param string $time_zone the time-zone identifier from which to get the
+	 *                           region.
 	 *
-	 * @param string $time_zone the time-zone identifier to get the
-	 *                           region from.
-	 *
-	 * @return string a region name.
+	 * @return string the region part of a full time-zone indentifier.
 	 */
 	private function getRegion($time_zone)
 	{
-		if ($time_zone === null)
-			return null;
-		if ($time_zone === 'UTC')
-			return 'UTC';
+		$region = null;
 
-		return substr($time_zone, strpos($time_zone, '/') + 1);
+		if ($time_zone === 'UTC') {
+			$region = 'UTC';
+		} elseif ($time_zone !== null) {
+			$region = end(explode('/', $time_zone, 2));
+		}
+
+		return $region;
+	}
+
+	// }}}
+	// {{{ private function getRegionTitle()
+
+	/**
+	 * Gets a formatted region title from the region part of a time-zone
+	 * identifier
+	 *
+	 * @param string $region the region part of the time-zone identifier.
+	 *
+	 * @return string the formatted region title.
+	 */
+	private function getRegionTitle($region)
+	{
+		$region = str_replace('_', ' ', $region);
+
+		$region = explode('/', $region);
+		$title = array_shift($region);
+		foreach ($region as $part) {
+			$title.= ' ('.$part.')';
+		}
+
+		return $title;
 	}
 
 	// }}}
