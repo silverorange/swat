@@ -25,6 +25,7 @@ function SwatCheckboxCellRenderer(id, view)
 	var input_nodes = view_node.getElementsByTagName('input');
 	for (var i = 0; i < input_nodes.length; i++) {
 		if (input_nodes[i].name == id + '[]') {
+			input_nodes[i]._index = this.check_list.length;
 			this.check_list.push(input_nodes[i]);
 			this.updateNode(input_nodes[i]);
 			YAHOO.util.Event.addListener(input_nodes[i], 'click',
@@ -34,13 +35,16 @@ function SwatCheckboxCellRenderer(id, view)
 				this.handleClick, this, true);
 		}
 	}
+
+	this.last_clicked_index = null;
 }
 
-SwatCheckboxCellRenderer.prototype.handleClick = function(event)
+SwatCheckboxCellRenderer.prototype.handleClick = function(e)
 {
-	var checkbox_node = YAHOO.util.Event.getTarget(event);
-	this.updateNode(checkbox_node);
+	var checkbox_node = YAHOO.util.Event.getTarget(e);
+	this.updateNode(checkbox_node, e.shiftKey);
 	this.updateCheckAll();
+	this.last_clicked_index = checkbox_node._index;
 }
 
 SwatCheckboxCellRenderer.prototype.updateCheckAll = function()
@@ -66,10 +70,46 @@ SwatCheckboxCellRenderer.prototype.checkAll = function(checked)
 	}
 }
 
-SwatCheckboxCellRenderer.prototype.updateNode = function(checkbox_node)
+SwatCheckboxCellRenderer.prototype.checkBetween = function(a, b)
 {
-	if (checkbox_node.checked)
+	if (a > b) {
+		var c = ++a;
+		a = ++b;
+		b = c;
+	}
+
+	for (var i = a; i < b; i++) {
+		this.check_list[i].checked = true;
+		this.view.selectItem(this.check_list[i], this.id);
+	}
+}
+
+SwatCheckboxCellRenderer.prototype.uncheckBetween = function(a, b)
+{
+	if (a > b) {
+		var c = ++a;
+		a = ++b;
+		b = c;
+	}
+
+	for (var i = a; i < b; i++) {
+		this.check_list[i].checked = false;
+		this.view.deselectItem(this.check_list[i], this.id);
+	}
+}
+
+SwatCheckboxCellRenderer.prototype.updateNode = function(checkbox_node,
+	shift_key)
+{
+	if (checkbox_node.checked) {
 		this.view.selectItem(checkbox_node, this.id);
-	else
+		if (shift_key && this.last_clicked_index !== null) {
+			this.checkBetween(this.last_clicked_index, checkbox_node._index);
+		}
+	} else {
 		this.view.deselectItem(checkbox_node, this.id);
+		if (shift_key && this.last_clicked_index !== null) {
+			this.uncheckBetween(this.last_clicked_index, checkbox_node._index);
+		}
+	}
 }
