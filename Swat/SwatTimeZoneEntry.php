@@ -117,28 +117,27 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	{
 		parent::process();
 
-		$areas_flydown = $this->getCompositeWidget('areas_flydown');
+		$areas_flydown   = $this->getCompositeWidget('areas_flydown');
 		$regions_flydown = $this->getCompositeWidget('regions_flydown');
+		$tz_data         = Date_TimeZone::getAvailableIDs();
 
-		if ($areas_flydown->value === 'UTC')
+		if ($areas_flydown->value === 'UTC') {
 			$this->value = 'UTC';
-		elseif ($areas_flydown->value === null ||
-			$regions_flydown->value === null)
+		} elseif ($areas_flydown->value === null ||
+			$regions_flydown->value === null) {
 			$this->value = null;
-		else
+		} else {
 			$this->value = $areas_flydown->value.'/'.$regions_flydown->value;
+		}
 
 		if (!$this->required && $this->value === null && $this->isSensitive()) {
 			return;
-
 		} elseif ($this->value === null) {
 			$message = Swat::_('The %s field is required.');
 			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
-
-		} elseif (!isset($GLOBALS['_DATE_TIMEZONE_DATA'][$this->value])) {
+		} elseif (!array_key_exists($this->value, $tz_data)) {
 			$message = Swat::_('The %s field is an invalid time-zone.');
 			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
-
 		}
 	}
 
@@ -264,7 +263,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 			$this->areas[$area]   = $area;
 			$this->regions[$area] = array();
 
-			// speical case for UTC flydown
+			// special case for UTC area
 			if ($area === 'UTC') {
 				$regions = array($this->getRegion('UTC'));
 			}
