@@ -2,7 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Date.php';
+require_once 'Date/TimeZone.php';
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatCascadeFlydown.php';
@@ -266,7 +266,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
 			// speical case for UTC flydown
 			if ($area === 'UTC') {
-				$regions = array('Coordinated Universal Time');
+				$regions = array($this->getRegion('UTC'));
 			}
 
 			$this->setRegions($regions, $area);
@@ -338,7 +338,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		$region = null;
 
 		if ($time_zone === 'UTC') {
-			$region = 'UTC';
+			$region = 'Coordinated_Universal_Time'; // fake region for UTC
 		} elseif ($time_zone !== null) {
 			$region = end(explode('/', $time_zone, 2));
 		}
