@@ -33,10 +33,20 @@ function SwatCheckboxCellRenderer(id, view)
 
 			YAHOO.util.Event.addListener(input_nodes[i], 'dblclick',
 				this.handleClick, this, true);
+
+			// prevent selecting label text when shify key is held
+			YAHOO.util.Event.addListener(input_nodes[i].parentNode, 'mousedown',
+				this.handleMouseDown, this, true);
 		}
 	}
 
 	this.last_clicked_index = null;
+}
+
+SwatCheckboxCellRenderer.prototype.handleMouseDown = function(e)
+{
+	// prevent selecting label text when shify key is held
+	YAHOO.util.Event.preventDefault(e);
 }
 
 SwatCheckboxCellRenderer.prototype.handleClick = function(e)
