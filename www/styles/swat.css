@@ -73,6 +73,13 @@ ul.swat-note {
 	padding: 0.3em 0 0 1.5em;
 }
 
+div.swat-note { padding-top: 0.3em; }
+
+.swat-note ul {
+	margin: 0.3em 0;
+	padding-left: 2em;
+}
+
 .swat-form-field-checkbox {
 	margin: 0 0 0.5em 0;
 }
