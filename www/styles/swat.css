@@ -93,8 +93,9 @@ div.swat-note { padding-top: 0.3em; }
 	vertical-align: middle;
 }
 
-.swat-checkbox-list-column {
+.swat-checkbox-list .swat-checkbox-list-column {
 	float: left;
+	padding-right: 1em;
 }
 
 .swat-checkbox-list ul,
