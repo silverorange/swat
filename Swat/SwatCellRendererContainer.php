@@ -102,7 +102,8 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	public function getRenderers()
 	{
 		$out = array();
-		foreach ($this->renderers as $renderer)
+		$renderers = clone $this->renderers;
+		foreach ($renderers as $renderer)
 			$out[] = $renderer;
 
 		return $out;
