@@ -50,6 +50,27 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	private $widgets = array();
 	private $property_values = array();
 
+	/**
+	 * Whether or not renderings of this cell renderer are using a dynamic
+	 * {@link SwatWidgetCellRenderer::$replicator_id} to create cloned widgets
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatWidgetCellRenderer::render()
+	 */
+	private $using_clone_replication = false;
+
+	/**
+	 * Whether or not renderings of this cell renderer are using a null
+	 * {@link SwatWidgetCellRenderer::$replicator_id} and rendering the
+	 * prototype widget instead of cloned widgets
+	 *
+	 * @var boolean
+	 *
+	 * @see SwatWidgetCellRenderer::render()
+	 */
+	private $using_null_replication = false;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -178,14 +199,31 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 		parent::render();
 
 		if ($this->replicator_id === null) {
+			if ($this->using_clone_replication) {
+				throw new SwatException('Cannot mix null replicator_id values '.
+					'with non-null replicator_id values. Make sure this '.
+					'widget cell renderer\'s replicator_id is set before '.
+					'rendering this renderer.');
+			}
+
 			if ($this->prototype_widget !== null) {
 				$this->applyPropertyValuesToPrototypeWidget();
 				$this->prototype_widget->display();
 			}
+
+			$this->using_null_replication = true;
 		} else {
-			if ($this->prototype_widget->id === null)
+			if ($this->using_null_replication) {
+				throw new SwatException('Cannot mix non-null replicator_id '.
+					'values with null replicator_id values. All prior '.
+					'renderings of this widget cell renderer have had a null '.
+					'value for the replicator_id.');
+			}
+
+			if ($this->prototype_widget->id === null) {
 				throw new SwatException(
 					'Prototype widget must have a non-null id.');
+			}
 
 			$widget = $this->getClonedWidget($this->replicator_id);
 			if ($widget === null)
@@ -201,6 +239,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 			$this->applyPropertyValuesToClonedWidget($widget);
 			$widget->display();
+
+			$this->using_clone_replication = true;
 		}
 	}
 
