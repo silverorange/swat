@@ -669,14 +669,22 @@ class SwatDBDataObject extends SwatObject
 
 		$transaction = new SwatDBTransaction($this->db);
 		try {
+			$property_hashes = $this->property_hashes;
 			$this->saveInternalProperties();
 			$this->saveInternal();
+			$this->generatePropertyHashes();
 			$this->saveSubDataObjects();
+
+			// Save again in-case values have been changed in saveSubDataObjects()
+			if ($this->id_field !== null)
+				$this->saveInternal();
+
+			$transaction->commit();
 		} catch (Exception $e) {
+			$this->property_hashes = $property_hashes;
 			$transaction->rollback();
 			throw $e;
 		}
-		$transaction->commit();
 
 		$this->generatePropertyHashes();
 	}
@@ -905,9 +913,6 @@ class SwatDBDataObject extends SwatObject
 				}
 			}
 		}
-
-		// If no internal values have been updated this does nothing.
-		$this->saveInternal();
 	}
 
 	// }}}
