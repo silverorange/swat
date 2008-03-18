@@ -1386,7 +1386,9 @@ class SwatString extends SwatObject
 		$string = str_replace("'", "\'", $string);
 
 		// convert newlines
-		$string = str_replace("\n", '\n', $string);
+		$string = str_replace("\r\n", "\n", $string);
+		$string = str_replace("\r",   "\n", $string);
+		$string = str_replace("\n",   '\n', $string);
 
 		// break closing script tags
 		$string = preg_replace('/<\/(script)([^>]*)?>/ui',
