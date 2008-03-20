@@ -95,6 +95,15 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	}
 
 	// }}}
+	// {{{ public function process()
+
+	public function process()
+	{
+		foreach ($this->renderers as $renderer)
+			$renderer->process();
+	}
+
+	// }}}
 	// {{{ public function display()
 
 	/**
