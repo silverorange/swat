@@ -94,6 +94,46 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function process()
+
+	/**
+	 * Processes this details-view
+	 */
+	public function process()
+	{
+		parent::process();
+
+		foreach ($this->fields as $field)
+			$field->process();
+	}
+
+	// }}}
+	// {{{ public function display()
+
+	/**
+	 * Displays this details view
+	 *
+	 * Displays details view as tabular XHTML.
+	 */
+	public function display()
+	{
+		if (!$this->visible)
+			return;
+
+		parent::display();
+
+		$table_tag = new SwatHtmlTag('table');
+		$table_tag->id = $this->id;
+		$table_tag->class = $this->getCSSClassString();
+
+		$table_tag->open();
+		$this->displayContent();
+		$table_tag->close();
+
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+	}
+
+	// }}}
 	// {{{ public function appendField()
 
 	/**
@@ -200,32 +240,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 				"Field with an id of '{$id}' not found.");
 
 		return $this->fields_by_id[$id];
-	}
-
-	// }}}
-	// {{{ public function display()
-
-	/**
-	 * Displays this details view
-	 *
-	 * Displays details view as tabular XHTML.
-	 */
-	public function display()
-	{
-		if (!$this->visible)
-			return;
-
-		parent::display();
-
-		$table_tag = new SwatHtmlTag('table');
-		$table_tag->id = $this->id;
-		$table_tag->class = $this->getCSSClassString();
-
-		$table_tag->open();
-		$this->displayContent();
-		$table_tag->close();
-
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
