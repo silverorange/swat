@@ -10,36 +10,12 @@ function SwatCascade(from_flydown_id, to_flydown_id)
 
 SwatCascade.prototype.handleChange = function(e)
 {
-	this.update(false);
+	this.update();
 }
 
-SwatCascade.prototype.update = function(selected)
+SwatCascade.prototype.update = function()
 {
-	var child_options = this.children[this.from_flydown.value];
-
-	// clear old options
-	this.to_flydown.options.length = 0;
-
-	if (child_options) {
-		this.to_flydown.disabled = false;
-
-		for (var i = 0; i < child_options.length; i++) {
-			// only select default option if we are intializing
-			if (selected)
-				this.to_flydown.options[this.to_flydown.options.length] =
-					new Option(child_options[i].title,
-						child_options[i].value, child_options[i].selected);
-			else
-				this.to_flydown.options[this.to_flydown.options.length] =
-					new Option(child_options[i].title,
-						child_options[i].value);
-		}
-
-	} else {
-		// the following string contains UTF-8 encoded non breaking spaces
-		this.to_flydown.options[0] = new Option('      ', 0);
-		this.to_flydown.disabled = true;
-	}
+	this._updateHelper(false);
 }
 
 SwatCascade.prototype.addChild = function(from_flydown_value, value, title,
@@ -54,7 +30,41 @@ SwatCascade.prototype.addChild = function(from_flydown_value, value, title,
 
 SwatCascade.prototype.init = function()
 {
-	this.update(true);
+	this._updateHelper(true);
+}
+
+SwatCascade.prototype._updateHelper = function(init)
+{
+	var child_options = this.children[this.from_flydown.value];
+
+	// clear old options
+	this.to_flydown.options.length = 0;
+
+	if (child_options) {
+		this.to_flydown.disabled = false;
+
+		for (var i = 0; i < child_options.length; i++) {
+			// only select default option if we are intializing
+			if (init) {
+				this.to_flydown.options[this.to_flydown.options.length] =
+					new Option(child_options[i].title,
+						child_options[i].value, child_options[i].selected);
+
+				if (child_options[i].selected) {
+					this.to_flydown.value = child_options[i].value;
+				}
+			} else {
+				this.to_flydown.options[this.to_flydown.options.length] =
+					new Option(child_options[i].title,
+						child_options[i].value);
+			}
+		}
+
+	} else {
+		// the following string contains UTF-8 encoded non breaking spaces
+		this.to_flydown.options[0] = new Option('      ', 0);
+		this.to_flydown.disabled = true;
+	}
 }
 
 function SwatCascadeChild(value, title, selected)
