@@ -70,6 +70,7 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
+		$input_tag->class = $this->getCSSClassString();
 		$input_tag->name = $this->id;
 		$input_tag->id = $this->id;
 		$input_tag->value = '1';
@@ -147,6 +148,22 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 	public function getFocusableHtmlId()
 	{
 		return ($this->visible) ? $this->id : null;
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this checkbox
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                checkbox.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-checkbox');
+		$classes = array_merge($classes, parent::getCSSClassNames());
+		return $classes;
 	}
 
 	// }}}
