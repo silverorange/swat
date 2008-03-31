@@ -958,39 +958,88 @@ class SwatString extends SwatObject
 	// {{{ public static function byteFormat()
 
 	/**
-	 * Format bytes in human readible IEC standard units.
+	 * Format bytes in human readible units
 	 *
-	 * See the Wikipedia article on
-	 * {@link http://en.wikipedia.org/wiki/Mebibyte mebibytes} for more details.
+	 * By default, bytes are formatted using canonical, ambiguous, base-10
+	 * prefixed units. Bytes may optionally be formatted using unambiguous IEC
+	 * standard binary prefixes. See the National Institute of Standards and
+	 * Technology's page on binary unit prefixes as
+	 * {@link http://physics.nist.gov/cuu/Units/binary.html} for details.
 	 *
 	 * @param integer $value the value in bytes to format.
+	 * @param integer $magnitude optional. The power of 2 to use as the unit
+	 *                            base. This value will be rounded to the
+	 *                            nearest ten if specified. If less than zero
+	 *                            or not specified, the highest power less
+	 *                            than <i>$value<i/> will be used.
+	 * @param boolean $iec_units optional. Whether or not to use IEC binary
+	 *                            multiple prefixed units (Mebibyte). Defaults
+	 *                            to using canonical units.
 	 *
 	 * @return string the byte value formated according to IEC units.
 	 */
-	public static function byteFormat($value)
+	public static function byteFormat($value, $magnitude = -1,
+		$iec_units = false)
 	{
-		$units = array(
-			0  => 'bytes',
-			10 => 'KiB',
-			20 => 'MiB',
-			30 => 'GiB',
-			40 => 'TiB',
-			50 => 'PiB',
-			60 => 'EiB',
-		);
-
-		$units = array_reverse($units, true);
+		if ($iec_units) {
+			$units = array(
+				0  => 'bytes',
+				10 => 'KiB',
+				20 => 'MiB',
+				30 => 'GiB',
+				40 => 'TiB',
+				50 => 'PiB',
+				60 => 'EiB',
+			);
+		} else {
+			$units = array(
+				0  => 'bytes',
+				10 => 'KB',
+				20 => 'MB',
+				30 => 'GB',
+				40 => 'TB',
+				50 => 'PB',
+				60 => 'EB',
+			);
+		}
 
 		// get log2()
 		$log = (integer) (log10($value) / log10(2));
 
-		foreach ($units as $power => $unit) {
-			if ($log >= $power) {
-				return round($value / pow(2, $power), 1) . ' ' . $unit;
+		$power = null;
+		$unit  = null;
+
+		if ($magnitude > 0) {
+			$magnitude = round($magnitude / 10) * 10;
+			if (array_key_exists($magnitude, $units)) {
+				$power = $magnitude;
+				$unit  = $units[$magnitude];
+			}
+		} else {
+			$units = array_reverse($units, true);
+			foreach ($units as $unit_power => $unit_title) {
+				if ($log >= $unit_power) {
+					$power = $unit_power;
+					$unit  = $unit_title;
+					break;
+				}
 			}
 		}
 
-		return '';
+		// no suitable magnitude, use highest units available
+		if ($power === null) {
+			$power = 60;
+			$unit  = $units[60];
+		}
+
+		$value = $value / pow(2, $power);
+		if ($power == 0) {
+			$formatted_value = self::numberFormat($value, 0);
+		} else {
+			$formatted_value = self::numberFormat($value, 1);
+		}
+
+		return $formatted_value . ' ' . $unit;
 	}
 
 	// }}}
