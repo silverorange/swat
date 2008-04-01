@@ -69,7 +69,7 @@ class SwatUI extends SwatObject
 	 */
 	private $stack = array();
 
-	private $translation_callback = null;
+	private $translation_callback = 'gettext';
 
 	/**
 	 * Whether or not parsed SwatML files should be validated against a schema
