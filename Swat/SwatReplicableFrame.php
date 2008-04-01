@@ -6,9 +6,9 @@ require_once 'Swat/SwatFrame.php';
 require_once 'Swat/SwatReplicableContainer.php';
 
 /**
- * A form field container that replicates its children
+ * A framer that replicates its children
  *
- * The form field can dynamically create widgets based on an array of
+ * The frame can dynamically create widgets based on an array of
  * replicators identifiers.
  *
  * @package   Swat
@@ -35,9 +35,9 @@ class SwatReplicableFrame extends SwatReplicableContainer
 	 */
 	protected function getContainer($id, $title)
 	{
-		$form_field = new SwatFrame();
-		$form_field->title = $title;
-		return $form_field;
+		$frame = new SwatFrame();
+		$frame->title = $title;
+		return $frame;
 	}
 
 	// }}}
