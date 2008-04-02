@@ -85,6 +85,7 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 		foreach ($this->replicators as $id => $title) {
 			$container = $this->getContainer($id, $title);
 			$this->widgets[$id] = array();
+			$this->widgets[$id][$this->id] = $container;
 			$suffix = '_'.$this->id.'_'.$id;
 
 			foreach ($children as $child) {
