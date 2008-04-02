@@ -6,13 +6,13 @@ require_once 'Swat/SwatFrame.php';
 require_once 'Swat/SwatReplicableContainer.php';
 
 /**
- * A framer that replicates its children
+ * A frame that replicates its children
  *
  * The frame can dynamically create widgets based on an array of
  * replicators identifiers.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2008 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatReplicableFrame extends SwatReplicableContainer
