@@ -37,7 +37,7 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 	// {{{ public function __construct()
 
 	/**
-	 * Creates a new replicator fieldset
+	 * Creates a new replicator container
 	 *
 	 * @param string $id a non-visible unique id for this widget.
 	 *
@@ -53,7 +53,7 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 	// {{{ public function init()
 
 	/**
-	 * Initilizes this replicable fieldset
+	 * Initilizes this replicable container
 	 *
 	 * Goes through the internal widgets, clones them, and adds them to the
 	 * widget tree.
