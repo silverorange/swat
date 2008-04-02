@@ -69,7 +69,7 @@ class SwatUI extends SwatObject
 	 */
 	private $stack = array();
 
-	private $translation_callback = 'gettext';
+	private $translation_callback;
 
 	/**
 	 * Whether or not parsed SwatML files should be validated against a schema
@@ -228,6 +228,15 @@ class SwatUI extends SwatObject
 				$this->translation_callback = array($prefix, 'gettext');
 			}
 		}
+
+		// fall back to the global gettext function if no package-specific
+		// one was found
+		if ($this->translation_callback === null &&
+			extension_loaded('gettext')) {
+
+			$this->translation_callback = 'gettext';
+		}
+
 
 		if ($xml_file === null)
 			throw new SwatFileNotFoundException(
