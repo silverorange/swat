@@ -53,19 +53,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	public $columns = 1;
 
 	// }}}
-	// {{{ protected properties
-
-	/**
-	 * The check-all widget for this list
-	 *
-	 * The check-all is displayed if the list has more than one checkable
-	 * item and is an easy way for users to check/uncheck the entire list.
-	 *
-	 * @var SwatCheckAll
-	 */
-	protected $check_all = null;
-
-	// }}}
 	// {{{ public function __construct()
 
 	/**
@@ -79,8 +66,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	{
 		parent::__construct($id);
 		$this->requires_id = true;
-		$this->check_all = new SwatCheckAll();
-		$this->check_all->parent = $this;
 		$yui = new SwatYUI(array('event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript('packages/swat/javascript/swat-checkbox-list.js',
@@ -101,7 +86,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	public function init()
 	{
 		parent::init();
-		$this->check_all->init();
 
 		// checks to see if there are duplicate values in the options array
 		$options_count =  array();
@@ -129,7 +113,8 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	public function getHtmlHeadEntrySet()
 	{
 		$set = parent::getHtmlHeadEntrySet();
-		$set->addEntrySet($this->check_all->getHtmlHeadEntrySet());
+		$set->addEntrySet($this->getCompositeWidget(
+			'check_all')->getHtmlHeadEntrySet());
 		return $set;
 	}
 
@@ -206,14 +191,15 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		// Only show the check all control if more than one checkable item is
 		// displayed.
-		$this->check_all->visible =
+		$check_all = $this->getCompositeWidget('check_all');
+		$check_all->visible =
 			$this->show_check_all && (count($options) > 1);
 
 		// Show clear div if columns are used
 		if ($columns > 1)
 			echo '<div style="clear: left;"></div>';
 
-		$this->check_all->display();
+		$check_all->display();
 
 		$div_tag->close();
 
@@ -234,9 +220,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 			return;
 
 		parent::process();
-
-		if ($this->show_check_all)
-			$this->check_all->process();
 
 		$this->processValues();
 	}
@@ -371,9 +354,10 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 			$this->id, $this->id);
 
 		// set check-all controller if it is visible
-		if ($this->check_all->visible)
+		$check_all = $this->getCompositeWidget('check_all');
+		if ($check_all->visible)
 			$javascript.= sprintf("\n%s_obj.setController(%s_obj);",
-				$this->check_all->id, $this->id);
+				$check_all->id, $this->id);
 
 		return $javascript;
 	}
@@ -392,6 +376,20 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		$classes = array('swat-checkbox-list');
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function createCompositeWidgets()
+
+	/**
+	 * Creates and adds composite widgets of this widget
+	 *
+	 * Created composite widgets should be added in this method using
+	 * {@link SwatWidget::addCompositeWidget()}.
+	 */
+	protected function createCompositeWidgets()
+	{
+		$this->addCompositeWidget(new SwatCheckAll(), 'check_all');
 	}
 
 	// }}}
