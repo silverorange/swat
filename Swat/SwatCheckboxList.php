@@ -14,7 +14,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * A checkbox list widget
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2008 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckboxList extends SwatOptionControl implements SwatState
@@ -97,25 +97,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 				throw new SwatException(sprintf('Duplicate option values '.
 					'found in %s', $this->id));
 		}
-	}
-
-	// }}}
-	// {{{ public function getHtmlHeadEntrySet()
-
-	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this checkbox list
-	 *
-	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 *                               this checkbox list.
-	 *
-	 * @see SwatUIObject::getHtmlHeadEntrySet()
-	 */
-	public function getHtmlHeadEntrySet()
-	{
-		$set = parent::getHtmlHeadEntrySet();
-		$set->addEntrySet($this->getCompositeWidget(
-			'check_all')->getHtmlHeadEntrySet());
-		return $set;
 	}
 
 	// }}}
