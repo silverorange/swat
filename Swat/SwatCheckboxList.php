@@ -235,7 +235,8 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		parent::process();
 
-		$this->check_all->process();
+		if ($this->show_check_all)
+			$this->check_all->process();
 
 		$this->processValues();
 	}
