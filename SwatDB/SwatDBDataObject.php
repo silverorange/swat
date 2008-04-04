@@ -4,6 +4,7 @@
 
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatDate.php';
+require_once 'Swat/SwatString.php';
 require_once 'Swat/exceptions/SwatClassNotFoundException.php';
 require_once 'SwatDB/SwatDB.php';
 require_once 'SwatDB/SwatDBClassMap.php';
@@ -189,7 +190,9 @@ class SwatDBDataObject extends SwatObject
 				$value = '<null>';
 
 			printf("%s = %s%s<br />\n",
-				$name, $value, $modified ? ' (modified)' : '');
+				SwatString::minimizeEntities($name),
+				SwatString::minimizeEntities($value),
+				$modified ? ' (modified)' : '');
 		}
 		/*
 		$reflector = new ReflectionClass(get_class($this));
