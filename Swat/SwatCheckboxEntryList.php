@@ -4,6 +4,7 @@
 
 require_once 'Swat/SwatCheckboxList.php';
 require_once 'Swat/SwatEntry.php';
+require_once 'Swat/SwatFormField.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatYUI.php';
 require_once 'Swat/exceptions/SwatInvalidPropertyException.php';
@@ -192,6 +193,57 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	}
 
 	// }}}
+	// {{{ public function getMessages()
+
+	/**
+	 * Gets all messages
+	 *
+	 * @return array an array of gathered {@link SwatMessage} objects.
+	 *
+	 * @see SwatWidget::getMessages()
+	 */
+	public function getMessages()
+	{
+		$messages = parent::getMessages();
+
+		$options = $this->getOptions();
+		foreach ($options as $option) {
+			$widget = $this->getEntryWidget($option->value);
+			$messages = array_merge($messages, $widget->getMessages());
+		}
+
+		return $messages;
+	}
+
+	// }}}
+	// {{{ public function hasMessage()
+
+	/**
+	 * Checks for the presence of messages
+	 *
+	 * @return boolean true if this checkbox list or any of the entry widgets
+	 *                  in this checkbox list have one or more messages.
+	 *
+	 * @see SwatWidget::hasMessages()
+	 */
+	public function hasMessage()
+	{
+		$has_message = parent::hasMessage();
+
+		if (!$has_message) {
+			$options = $this->getOptions();
+			foreach ($options as $option) {
+				if ($this->getEntryWidget($option->value)->hasMessage()) {
+					$has_message = true;
+					break;
+				}
+			}
+		}
+
+		return $has_message;
+	}
+
+	// }}}
 	// {{{ public function getEntryValue()
 
 	/**
@@ -328,33 +380,54 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	// {{{ protected function getEntryWidget()
 
 	/**
-	 * Gets an entry widget of this checkbox entry list
+	 * Gets a widget tree for the entry widget of this checkbox entry list
 	 *
-	 * This is used internally to create {@link SwatEntry} widgets for display
-	 * and processing.
+	 * This is used internally to create the widget tree containing a
+	 * {@link SwatEntry} widget for display and processing.
 	 *
 	 * @param string $option_value the value of the option for which to get
 	 *                              the entry widget. If no entry widget exists
 	 *                              for the given option value, one is created.
 	 *
-	 * @return SwatEntry the entry widget for the given option value.
+	 * @return SwatContainer the widget tree containing the entry widget for
+	 *                       the given option value.
 	 */
 	protected function getEntryWidget($option_value)
 	{
 		if (!$this->hasEntryWidget($option_value)) {
-			$widget = new SwatEntry($this->id.'_entry_'.$option_value);
-			$widget->size = $this->entry_size;
-			$widget->maxlength = $this->entry_maxlength;
-			$widget->parent = $this;
-			$widget->init();
-			$this->entry_widgets[$option_value] = $widget;
+			$container = new SwatFormField($this->id.'_field_'.$option_value);
+			$container->add($this->createEntryWidget($option_value));
+			$container->parent = $this;
+			$container->init();
+			$this->entry_widgets[$option_value] = $container;
 		}
 
 		return $this->entry_widgets[$option_value];
 	}
 
 	// }}}
+	// {{{ protected function createEntryWidget()
 
+	/**
+	 * Creates an entry widget of this checkbox entry list
+	 *
+	 * Subclasses may override this method to create a different widget type.
+	 *
+	 * @param string $option_value the value of the option for which to get
+	 *                              the entry widget.
+	 *
+	 * @return SwatEntry the new entry widget for the given option value.
+	 */
+	protected function createEntryWidget($option_value)
+	{
+		$widget = new SwatMoneyEntry($this->id.'_entry_'.$option_value);
+		$widget->size = $this->entry_size;
+		$widget->maxlength = $this->entry_maxlength;
+		$widget->required = true;
+		return $widget;
+	}
+
+	// }}}
 }
 
 ?>
