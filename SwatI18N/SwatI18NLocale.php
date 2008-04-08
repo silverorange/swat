@@ -890,7 +890,8 @@ class SwatI18NLocale extends SwatObject
 					$grouping_previous = $grouping;
 				}
 
-				$grouping_value = $grouping_total % pow(10, $grouping);
+				$grouping_value =
+					floor(fmod($grouping_total, pow(10, $grouping)));
 
 				$grouping_total = floor($grouping_total / pow(10, $grouping));
 				if ($grouping_total > 0) {
@@ -918,7 +919,8 @@ class SwatI18NLocale extends SwatObject
 					array_push($grouping_values, $grouping_total);
 				} else {
 					while ($grouping_total > 0) {
-						$grouping_value = $grouping_total % pow(10, $grouping);
+						$grouping_value =
+							floor(fmod($grouping_total, pow(10, $grouping)));
 
 						$grouping_total =
 							floor($grouping_total / pow(10, $grouping));
