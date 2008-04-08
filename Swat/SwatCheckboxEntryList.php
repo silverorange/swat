@@ -292,7 +292,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 				$option_value));
 		}
 
-		$this->getEntryWidget($option_value)->value = $entry_value;
+		$this->getEntryWidget($option_value)->getFirst()->value = $entry_value;
 	}
 
 	// }}}
