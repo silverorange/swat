@@ -230,7 +230,7 @@ class SwatI18NLocale extends SwatObject
 			$this->getNationalCurrencyFormat()->override($format);
 
 		// default fractional digits to 2 if locale is missing value
-		$fractional_digits = ($format->fractional_digits == CHAR_MAX) ?
+		$fractional_digits = ($format->fractional_digits === CHAR_MAX) ?
 			2 : $format->fractional_digits;
 
 		$value = $this->roundToEven($value, $fractional_digits);
@@ -259,15 +259,15 @@ class SwatI18NLocale extends SwatObject
 		}
 
 		// default sign position if locale is missing value
-		if ($sign_position == CHAR_MAX)
+		if ($sign_position === CHAR_MAX)
 			$sign_position = 1;
 
 		// default currency symbol position if locale is missing value
-		if ($cs_precedes == CHAR_MAX)
+		if ($cs_precedes === CHAR_MAX)
 			$sign_position = true;
 
 		// default separate by space if locale is missing value
-		if ($separate_by_space == CHAR_MAX)
+		if ($separate_by_space === CHAR_MAX)
 			$separate_by_space = false;
 
 		// trim spacing character off international currency symbol
@@ -721,11 +721,11 @@ class SwatI18NLocale extends SwatObject
 			$lc_ctype = null;
 			$lc_all = setlocale(LC_ALL, '0');
 			$lc_all_exp = explode(';', $lc_all);
-			if (count($lc_all_exp) == 1) {
+			if (count($lc_all_exp) === 1) {
 				$lc_ctype = reset($lc_all_exp);
 			} else {
 				foreach ($lc_all_exp as $lc) {
-					if (strncmp($lc, 'LC_CTYPE', 8) == 0) {
+					if (strncmp($lc, 'LC_CTYPE', 8) === 0) {
 						$lc_ctype = $lc;
 						break;
 					}
@@ -734,7 +734,7 @@ class SwatI18NLocale extends SwatObject
 
 			if ($lc_ctype !== null) {
 				$lc_ctype_exp = explode('.', $lc_ctype, 2);
-				if (count($lc_ctype_exp) == 2) {
+				if (count($lc_ctype_exp) === 2) {
 					$encoding = $lc_ctype_exp[1];
 				}
 			}
@@ -871,7 +871,7 @@ class SwatI18NLocale extends SwatObject
 		$grouping_values = array();
 		$groupings = $format->grouping;
 		$grouping_total = floor(abs($value));
-		if (count($groupings) == 0 || $grouping_total == 0 ||
+		if (count($groupings) === 0 || $grouping_total === 0 ||
 			$format->thousands_separator == '') {
 			array_push($grouping_values, $grouping_total);
 		} else {
@@ -880,10 +880,10 @@ class SwatI18NLocale extends SwatObject
 				$grouping = array_shift($groupings);
 
 				// a grouping of 0 means use previous grouping
-				if ($grouping == 0) {
+				if ($grouping === 0) {
 					$grouping = $grouping_previous;
 				// a grouping of CHAR_MAX means no more grouping
-				} elseif ($grouping == CHAR_MAX) {
+				} elseif ($grouping === CHAR_MAX) {
 					array_push($grouping_values, $grouping_total);
 					break;
 				} else {
@@ -906,16 +906,16 @@ class SwatI18NLocale extends SwatObject
 			$grouping = array_shift($groupings);
 
 			// a grouping of CHAR_MAX means no more grouping
-			if ($grouping == CHAR_MAX) {
+			if ($grouping === CHAR_MAX) {
 				array_push($grouping_values, $grouping_total);
 			} else {
 				// a grouping of 0 means use previous grouping
-				if ($grouping == 0) {
+				if ($grouping === 0) {
 					$grouping = $grouping_previous;
 				}
 
 				// a grouping of 0 as the last grouping means no more grouping
-				if ($grouping == 0) {
+				if ($grouping === 0) {
 					array_push($grouping_values, $grouping_total);
 				} else {
 					while ($grouping_total > 0) {
@@ -965,7 +965,7 @@ class SwatI18NLocale extends SwatObject
 	protected function formatFractionalPart($value, $fractional_digits,
 		SwatI18NNumberFormat $format)
 	{
-		if ($fractional_digits == 0) {
+		if ($fractional_digits === 0) {
 			$formatted_value = '';
 		} else {
 			$frac_part = abs(fmod($value, 1));
@@ -1001,7 +1001,7 @@ class SwatI18NLocale extends SwatObject
 			'-' : $lc['negative_sign'];
 
 		// check for negative sign shown as: (5.00)
-		if ($lc['n_sign_posn'] == 0) {
+		if ($lc['n_sign_posn'] === 0) {
 			if (strpos($string, '(') !== false) {
 				$negative = true;
 				$string = '-'.str_replace(
