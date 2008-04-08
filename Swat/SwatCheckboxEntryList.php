@@ -420,10 +420,9 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	 */
 	protected function createEntryWidget($option_value)
 	{
-		$widget = new SwatMoneyEntry($this->id.'_entry_'.$option_value);
+		$widget = new SwatEntry($this->id.'_entry_'.$option_value);
 		$widget->size = $this->entry_size;
 		$widget->maxlength = $this->entry_maxlength;
-		$widget->required = true;
 		return $widget;
 	}
 
