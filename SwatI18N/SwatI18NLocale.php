@@ -1084,11 +1084,11 @@ class SwatI18NLocale extends SwatObject
 	protected function roundToEven($value, $fractional_digits)
 	{
 		$exp = pow(10, $fractional_digits);
-		$ends_in_five = (abs(intval($value * 10 * $exp)) % 10 == 5);
+		$frac_part = abs(fmod($value, 1)) * $exp;
+		$ends_in_five = (intval($frac_part * 10) % 10 === 5);
 		if ($ends_in_five) {
-			$frac_part = abs(fmod($value, 1));
 			// check if fractional part is odd
-			if (intval($frac_part * $exp) & 0x01 == 0x01) {
+			if ((intval($frac_part) & 0x01) === 0x01) {
 				// round up on odd
 				$value = ceil($value * $exp) / $exp;
 			} else {
