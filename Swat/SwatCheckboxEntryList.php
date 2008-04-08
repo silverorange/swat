@@ -258,8 +258,10 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	{
 		$entry_value = null;
 
-		if ($this->hasEntryWidget($option_value))
-			$entry_value = $this->getEntryWidget($option_value)->value;
+		if ($this->hasEntryWidget($option_value)) {
+			$entry = $this->getEntryWidget($option_value)->getFirst();
+			$entry_value = $entry->value;
+		}
 
 		return $entry_value;
 	}
