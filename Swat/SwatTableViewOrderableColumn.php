@@ -240,20 +240,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	}
 
 	// }}}
-	// {{{ protected function displayRenderer()
-
-	/**
-	 * Renders the cell renderer
-	 *
-	 * @param SwatCellRenderer $renderer the cell renderer to be renderered
-	 */
-	protected function displayRenderer(SwatCellRenderer $renderer)
-	{
-		$prefix = ($this->view->id === null) ? '': $this->view->id.'_';
-		$renderer->render($prefix);
-	}
-
-	// }}}
 	// {{{ protected function getBaseCSSClassNames()
 
 	/**

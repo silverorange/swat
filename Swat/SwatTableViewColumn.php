@@ -629,23 +629,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 				$div_tag->class = implode(' ', $classes);
 				$div_tag->open();
-				$this->displayRenderer($renderer);
+				$renderer->render();
 				$div_tag->close();
 			}
 		}
-	}
-
-	// }}}
-	// {{{ protected function displayRenderer()
-
-	/**
-	 * Renders the cell renderer
-	 *
-	 * @param SwatCellRenderer $renderer the cell renderer to be renderered
-	 */
-	protected function displayRenderer(SwatCellRenderer $renderer)
-	{
-		$renderer->render();
 	}
 
 	// }}}
