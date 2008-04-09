@@ -240,32 +240,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	}
 
 	// }}}
-	// {{{ protected function displayRenderers()
-
-	/**
-	 * Renders each cell renderer in this orderable table-view column
-	 *
-	 * @param mixed $data the data object being used to render the cell
-	 *                     renderers of this field.
-	 *
-	 * @see SwatTableViewColumn::displayRenderers()
-	 */
-	protected function displayRenderers($row)
-	{
-		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
-		$td_tag->open();
-
-		$prefix = ($this->view->id === null)? '': $this->view->id.'_';
-
-		foreach ($this->renderers as $renderer) {
-			$renderer->render($prefix);
-			echo ' ';
-		}
-
-		$td_tag->close();
-	}
-
-	// }}}
 	// {{{ protected function getBaseCSSClassNames()
 
 	/**
