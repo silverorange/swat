@@ -289,8 +289,15 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		foreach ($regions as $region) {
 			$title = $this->getRegionTitle($region);
 
-			if (isset($GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$region]))
-				$title.= ' ('.$GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$region]['shortname'].')';
+			if (isset($GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$region])) {
+				$data = $GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$region];
+
+				if (strlen($data['dstshortname']) > 0 )
+					$title.= sprintf(' (%s/%s)',
+						$data['shortname'], $data['dstshortname']);
+				else
+					$title.= sprintf(' (%s)', $data['shortname']);
+			}
 
 			$this->regions[$area][] = new SwatOption($region, $title);
 		}
