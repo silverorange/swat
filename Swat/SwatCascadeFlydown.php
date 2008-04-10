@@ -88,6 +88,59 @@ class SwatCascadeFlydown extends SwatFlydown
 	}
 
 	// }}}
+	// {{{ public function addOption()
+
+	/**
+	 * Adds an option to this option control
+	 *
+	 * @param mixed $parent the value of the parent value frome which this
+	 *                       option cascades.
+	 *
+	 * @param mixed|SwatOption $value either a value for the option, or a
+	 *                                 {@link SwatOption} object. If a
+	 *                                 SwatOption is used, the <i>$title</i>
+	 *                                 and <i>$content_type</i> parameters of
+	 *                                 this method call are ignored.
+	 * @param string $title the title of the added option. Ignored if the
+	 *                       <i>$value</i> parameter is a SwatOption object.
+	 * @param string $content_type optional. The content type of the title. If
+	 *                              not specified, defaults to 'text/plain'.
+	 *                              Ignored if the <i>$value</i> parameter is
+	 *                              a SwatOption object.
+	 */
+	public function addOption($parent, $value, $title = '', $content_type = 'text/plain')
+	{
+		if ($value instanceof SwatOption)
+			$option = $value;
+		else
+			$option = new SwatOption($value, $title, $content_type);
+
+		$this->options[$parent][] = $option;
+	}
+
+	// }}}
+	// {{{ public function addOptionsByArray()
+
+	/**
+	 * Adds options to this option control using an associative array
+	 *
+	 * @param array $options an array of options. Keys are option
+	 *                        parent values. Values are an associative array of
+	 *                        title, value pairs.
+	 * @param string $content_type optional. The content type of the option
+	 *                              titles. If not specified, defaults to
+	 *                              'text/plain'.
+	 */
+	public function addOptionsByArray(array $options,
+		$content_type = 'text/plain')
+	{
+		foreach ($options as $parent => $child_options)
+			foreach ($child_options as $value => $title)
+				$this->addOption($parent, $value, $title,
+					$content_type);
+	}
+
+	// }}}
 	// {{{ protected function getOptions()
 
 	/**
