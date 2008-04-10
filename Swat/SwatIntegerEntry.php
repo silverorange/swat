@@ -110,9 +110,15 @@ class SwatIntegerEntry extends SwatNumericEntry
 	{
 		switch ($id) {
 		case 'integer':
-			$message = new SwatMessage(
-				Swat::_('The %s field must be an integer.'),
-				SwatMessage::ERROR);
+			if ($this->minimum_value < 0) {
+				$message = new SwatMessage(
+					Swat::_('The %s field must be an integer.'),
+					SwatMessage::ERROR);
+			} else {
+				$message = new SwatMessage(
+					Swat::_('The %s field must be a whole number.'),
+					SwatMessage::ERROR);
+			}
 
 			break;
 
