@@ -850,7 +850,7 @@ class SwatDB extends SwatObject
 
 		$sql .= ' order by '.$cascade_field->name;
 		if ($order_by_clause !== null)
-			$sql.', '.$order_by_clause;
+			$sql.= ', '.$order_by_clause;
 
 		$rs = SwatDB::query($db, $sql, null);
 
