@@ -75,7 +75,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	private $action_items = array();
 
 	/**
-	 * The view containing itmes acted upon by this actions control
+	 * The view containing items acted upon by this actions control
 	 *
 	 * @var SwatView
 	 *
@@ -572,6 +572,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 			$this->id,
 			implode(', ', $values),
 			$selected_value);
+
 
 		if ($this->view !== null && $this->selector !== null) {
 			$javascript.= sprintf("\n%s_obj.setViewSelector(%s, '%s');",
