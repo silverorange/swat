@@ -369,16 +369,29 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
 			$this->value = null;
 		} else {
-			$this->value = new SwatDate();
-			$this->value->setYear(self::$date_year);
-			$this->value->setMonth(self::$date_month);
-			$this->value->setDay(self::$date_day);
-			$this->value->setHour($hour);
-			$this->value->setMinute($minute);
-			$this->value->setSecond($second);
-			$this->value->setTZ('UTC');
+			try {
+				$date = new SwatDate();
+				$error = $date->setDayMonthYear(self::$date_day,
+					self::$date_month, self::$date_year);
 
-			$this->validateRanges();
+				if (PEAR::isError($error))
+					throw new SwatException('Invalid date.');
+
+				$error = $date->setHourMinuteSecond($hour, $minute, $second);
+				if (PEAR::isError($error))
+					throw new SwatException('Invalid date.');
+
+				$date->setTZ('UTC');
+
+				$this->value = $date;
+				$this->validateRanges();
+			} catch (SwatException $e) {
+				$message = Swat::_('The %s field is not a valid time.');
+				$this->addMessage(new SwatMessage($message,
+					SwatMessage::ERROR));
+
+				$this->value = null;
+			}
 		}
 	}
 
