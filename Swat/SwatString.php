@@ -983,63 +983,59 @@ class SwatString extends SwatObject
 	{
 		if ($iec_units) {
 			$units = array(
-				0  => 'bytes',
-				10 => 'KiB',
-				20 => 'MiB',
-				30 => 'GiB',
-				40 => 'TiB',
-				50 => 'PiB',
 				60 => 'EiB',
+				50 => 'PiB',
+				40 => 'TiB',
+				30 => 'GiB',
+				20 => 'MiB',
+				10 => 'KiB',
+				0  => 'bytes',
 			);
 		} else {
 			$units = array(
-				0  => 'bytes',
-				10 => 'KB',
-				20 => 'MB',
-				30 => 'GB',
-				40 => 'TB',
-				50 => 'PB',
 				60 => 'EB',
+				50 => 'PB',
+				40 => 'TB',
+				30 => 'GB',
+				20 => 'MB',
+				10 => 'KB',
+				0  => 'bytes',
 			);
 		}
 
-		// get log2()
-		$log = (integer) (log10($value) / log10(2));
-
-		$power = null;
-		$unit  = null;
+		$unit_magnitude = null;
 
 		if ($magnitude > 0) {
 			$magnitude = round($magnitude / 10) * 10;
 			if (array_key_exists($magnitude, $units)) {
-				$power = $magnitude;
-				$unit  = $units[$magnitude];
+				$unit_magnitude = $magnitude;
+			} else {
+				$unit_magnitude = reset($units); // default magnitude
 			}
 		} else {
-			$units = array_reverse($units, true);
-			foreach ($units as $unit_power => $unit_title) {
-				if ($log >= $unit_power) {
-					$power = $unit_power;
-					$unit  = $unit_title;
-					break;
+			if ($value == 0) {
+				$unit_magnitude = 0;
+			} else {
+				$log = round(log10($value) / log10(2)); // get log2()
+
+				$unit_magnitude = reset($units); // default magnitude
+				foreach ($units as $magnitude => $title) {
+					if ($log >= $magnitude) {
+						$unit_magnitude = $magnitude;
+						break;
+					}
 				}
 			}
 		}
 
-		// no suitable magnitude, use highest units available
-		if ($power === null) {
-			$power = 60;
-			$unit  = $units[60];
-		}
-
-		$value = $value / pow(2, $power);
-		if ($power == 0) {
+		$value = $value / pow(2, $unit_magnitude);
+		if ($unit_magnitude == 0) {
 			$formatted_value = self::numberFormat($value, 0);
 		} else {
 			$formatted_value = self::numberFormat($value, 1);
 		}
 
-		return $formatted_value . ' ' . $unit;
+		return $formatted_value . ' ' . $units[$unit_magnitude];
 	}
 
 	// }}}
