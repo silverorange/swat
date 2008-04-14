@@ -169,7 +169,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	 */
 	public function addDivider($title = '——')
 	{
-		$this->options[] = new SwatFlydownDivider('', $title);
+		$this->options[] = new SwatFlydownDivider(null, $title);
 	}
 
 	// }}}
