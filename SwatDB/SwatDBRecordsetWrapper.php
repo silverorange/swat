@@ -886,7 +886,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 				'The $object_indexes property must be an array.',
 				0, $object_indexes);
 
-		if (!($this->row_wrapper_class instanceof SwatDBRecordable))
+		if (!(is_subclass_of($this->row_wrapper_class, 'SwatDBRecordable')))
 			throw new SwatInvalidClassException(
 				'The recordset must define a row wrapper class that is an '.
 				'instance of SwatDBRecordable for recordset loading to work.',
@@ -896,8 +896,10 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 
 		// try to load all records
 		$records = array();
+		$class_name = $this->row_wrapper_class;
 		foreach ($object_indexes as $index) {
-			$record = new $this->row_wrapper_class();
+			$record = new $class_name();
+			$record->setDatabase($this->db);
 			if ($record->load($index)) {
 				$records[] = $record;
 			} else {
