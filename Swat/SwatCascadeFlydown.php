@@ -93,9 +93,8 @@ class SwatCascadeFlydown extends SwatFlydown
 	/**
 	 * Adds an option to this option control
 	 *
-	 * @param mixed $parent the value of the parent value frome which this
+	 * @param mixed $parent the value of the parent value from which this
 	 *                       option cascades.
-	 *
 	 * @param mixed|SwatOption $value either a value for the option, or a
 	 *                                 {@link SwatOption} object. If a
 	 *                                 SwatOption is used, the <i>$title</i>
@@ -108,7 +107,8 @@ class SwatCascadeFlydown extends SwatFlydown
 	 *                              Ignored if the <i>$value</i> parameter is
 	 *                              a SwatOption object.
 	 */
-	public function addOption($parent, $value, $title = '', $content_type = 'text/plain')
+	public function addOption($parent, $value, $title = '',
+		$content_type = 'text/plain')
 	{
 		if ($value instanceof SwatOption)
 			$option = $value;
@@ -124,9 +124,9 @@ class SwatCascadeFlydown extends SwatFlydown
 	/**
 	 * Adds options to this option control using an associative array
 	 *
-	 * @param array $options an array of options. Keys are option
-	 *                        parent values. Values are an associative array of
-	 *                        title, value pairs.
+	 * @param array $options an array of options. Keys are option parent values.
+	 *                        Values are a 2-element associative array of
+	 *                        title => value pairs.
 	 * @param string $content_type optional. The content type of the option
 	 *                              titles. If not specified, defaults to
 	 *                              'text/plain'.
