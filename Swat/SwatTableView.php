@@ -1062,7 +1062,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 			}
 
 			foreach ($this->spanning_columns as $column) {
-				if ($spanning_column->visible) {
+				if ($column->visible) {
 					$column_javascript = $column->getRendererInlineJavaScript();
 					if (strlen($column_javascript) > 0)
 						$javascript.= "\n".$column_javascript;
@@ -1079,7 +1079,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 		}
 
 		foreach ($this->spanning_columns as $column) {
-			if ($spanning_column->visible) {
+			if ($column->visible) {
 				$column_javascript = $column->getInlineJavaScript();
 				if (strlen($column_javascript) > 0)
 					$javascript.= "\n".$column_javascript;
