@@ -1049,34 +1049,49 @@ class SwatTableView extends SwatView implements SwatUIParent
 		$javascript = sprintf("var %s = new SwatTableView('%s');",
 			$this->id, $this->id);
 
+		$has_rows = ($this->model instanceof SwatTableModel &&
+			count($this->model) > 0);
+
+		if ($has_rows) {
+			foreach ($this->columns as $column) {
+				if ($column->visible) {
+					$column_javascript = $column->getRendererInlineJavaScript();
+					if (strlen($column_javascript) > 0)
+						$javascript.= "\n".$column_javascript;
+				}
+			}
+
+			foreach ($this->spanning_columns as $column) {
+				if ($spanning_column->visible) {
+					$column_javascript = $column->getRendererInlineJavaScript();
+					if (strlen($column_javascript) > 0)
+						$javascript.= "\n".$column_javascript;
+				}
+			}
+		}
+
 		foreach ($this->columns as $column) {
-			$column_javascript = $column->getRendererInlineJavaScript();
-			if (strlen($column_javascript) > 0)
-				$javascript.= "\n".$column_javascript;
+			if ($column->visible) {
+				$column_javascript = $column->getInlineJavaScript();
+				if (strlen($column_javascript) > 0)
+					$javascript.= "\n".$column_javascript;
+			}
 		}
 
 		foreach ($this->spanning_columns as $column) {
-			$column_javascript = $column->getRendererInlineJavaScript();
-			if (strlen($column_javascript) > 0)
-				$javascript.= "\n".$column_javascript;
-		}
-
-		foreach ($this->columns as $column) {
-			$column_javascript = $column->getInlineJavaScript();
-			if (strlen($column_javascript) > 0)
-				$javascript.= "\n".$column_javascript;
-		}
-
-		foreach ($this->spanning_columns as $column) {
-			$column_javascript = $column->getInlineJavaScript();
-			if (strlen($column_javascript) > 0)
-				$javascript.= "\n".$column_javascript;
+			if ($spanning_column->visible) {
+				$column_javascript = $column->getInlineJavaScript();
+				if (strlen($column_javascript) > 0)
+					$javascript.= "\n".$column_javascript;
+			}
 		}
 
 		foreach ($this->extra_rows as $row) {
-			$row_javascript = $row->getInlineJavaScript();
-			if (strlen($row_javascript) > 0)
-				$javascript.= "\n".$row_javascript;
+			if ($row->visible) {
+				$row_javascript = $row->getInlineJavaScript();
+				if (strlen($row_javascript) > 0)
+					$javascript.= "\n".$row_javascript;
+			}
 		}
 
 		return $javascript;
