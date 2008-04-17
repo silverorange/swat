@@ -369,6 +369,8 @@ class SwatString extends SwatObject
 			'/<style[^<>]*?>.*?<\/style[^<>]*?>/siu',
 			// replace blocklevel tags with line breaks.
 			'/<\/?('.$blocklevel_elements.')[^<>]*?>/siu',
+			// replace <br /> and <hr /> tags with line breaks.
+			'/<[hb]r[^<>]*?\/?>/siu',
 			// remove inline tags
 			// (only tags remaining after blocklevel tags removed)
 			'/<[\/\!]*?[^<>]*?>/su',
@@ -381,6 +383,7 @@ class SwatString extends SwatObject
 			"\n“",
 			"”\n",
 			'',
+			"\n",
 			"\n",
 			'',
 			' ',
