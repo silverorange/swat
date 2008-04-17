@@ -67,24 +67,26 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 	 */
 	protected function displayRenderers($row)
 	{
+		$offset = $this->offset;
+
 		if (strlen($this->title) > 0) {
-			if ($this->offset > 1)
-				$this->offset = 1;
+			if ($offset == 0)
+				$offset = 1;
 
 			$th_tag = new SwatHtmlTag('th', $this->getThAttributes());
-			$th_tag->colspan = $this->offset;
+			$th_tag->colspan = $offset;
 			$th_tag->setContent($this->title.':');
 			$th_tag->display();
-		} elseif ($this->offset > 0) {
+		} elseif ($offset > 0) {
 			$td_tag = new SwatHtmlTag('td');
-			$td_tag->colspan = $this->offset;
+			$td_tag->colspan = $offset;
 			$td_tag->setContent('&nbsp;', 'text/xml');
 			$td_tag->display();
 		}
 
 		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
 		$td_tag->colspan =
-			$this->view->getXhtmlColspan() - $this->offset;
+			$this->view->getXhtmlColspan() - $offset;
 
 		$td_tag->open();
 		$this->displayRenderersInternal($row);
