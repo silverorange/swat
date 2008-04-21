@@ -338,7 +338,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		if ($this->widget_class !== null)
 			$classes[] = $this->widget_class;
 
-		if ($htis->display_messages && $this->hasMessage())
+		if ($this->display_messages && $this->hasMessage())
 			$classes[] = 'swat-form-field-with-messages';
 
 		if ($this->required)
