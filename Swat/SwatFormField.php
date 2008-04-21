@@ -89,6 +89,16 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public $title_reversed = null;
 
+	/**
+	 * Whether or not to display validation messages in this form field
+	 *
+	 * Defaults to true. Set to false to prevent the displaying of messages in
+	 * this form field.
+	 *
+	 * @var boolean
+	 */
+	public $display_messages = true;
+
 	// }}}
 	// {{{ protected properties
 
@@ -235,7 +245,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 	protected function displayMessages()
 	{
-		if (!$this->hasMessage())
+		if (!$this->display_messages || !$this->hasMessage())
 			return;
 
 		$messages = $this->getMessages();
@@ -328,7 +338,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		if ($this->widget_class !== null)
 			$classes[] = $this->widget_class;
 
-		if ($this->hasMessage())
+		if ($htis->display_messages && $this->hasMessage())
 			$classes[] = 'swat-form-field-with-messages';
 
 		if ($this->required)
