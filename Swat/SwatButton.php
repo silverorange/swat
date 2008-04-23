@@ -90,9 +90,6 @@ class SwatButton extends SwatInputControl
 	 */
 	protected $stock_class = null;
 
-	// }}}
-	// {{{ private properties
-
 	/**
 	 * Clicked
 	 *
@@ -102,7 +99,7 @@ class SwatButton extends SwatInputControl
 	 *
 	 * @var boolean
 	 */
-	private $clicked = false;
+	protected $clicked = false;
 
 	// }}}
 	// {{{ public function __construct()
