@@ -129,7 +129,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 
 		// Only show the check all control if more than one checkable item is
 		// displayed.
-		if (count($options) > 1) {
+		if ($this->show_check_all && count($options) > 1) {
 			echo '<tfoot><tr><td colspan="2">';
 			$this->getCompositeWidget('check_all')->display();
 			echo '</td></tr></tfoot>';
@@ -337,7 +337,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 			$this->id, $this->id);
 
 		// set check-all controller if it is visible
-		if (count($this->getOptions()) > 1)
+		if ($this->show_check_all && count($this->getOptions()) > 1)
 			$javascript.= sprintf("\n%s_obj.setController(%s_obj);",
 				$this->getCompositeWidget('check_all')->id, $this->id);
 
