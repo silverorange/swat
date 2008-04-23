@@ -275,6 +275,10 @@ span.swat-button-processing-throbber img {
 	vertical-align: middle;
 }
 
+.swat-image-button {
+	cursor: pointer;
+	cursor: hand;
+}
 
 /* SwatFormField */
 
