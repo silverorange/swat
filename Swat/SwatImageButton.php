@@ -97,8 +97,6 @@ class SwatImageButton extends SwatButton
 
 		SwatWidget::display();
 
-		print_r($_POST);
-
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'image';
 		$input_tag->id = $this->id;
