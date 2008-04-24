@@ -71,7 +71,7 @@ class SwatImageButton extends SwatButton
 	 */
 	public function process()
 	{
-		parent::process();
+		SwatWidget::process();
 
 		$data = &$this->getForm()->getFormData();
 
@@ -100,6 +100,7 @@ class SwatImageButton extends SwatButton
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'image';
 		$input_tag->id = $this->id;
+		$input_tag->name = $this->id;
 		$input_tag->class = $this->getCSSClassString();
 
 		if (count($this->values))
