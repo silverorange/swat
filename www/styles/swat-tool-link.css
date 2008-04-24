@@ -16,7 +16,7 @@
 
 a.swat-tool-link:hover {
 	text-decoration: underline;
-	background: #f3efe5;
+	background-color: #f3efe5;
 }
 
 .swat-toolbar .swat-tool-link-add:link,
@@ -35,73 +35,85 @@ a.swat-tool-link:hover {
 }
 
 a.swat-tool-link-add:hover,
-a.swat-tool-link-create:hover {
-	background: #f3efe5 url(../images/swat-tool-link-create.png) 6px center no-repeat;
+a.swat-tool-link-create:hover,
+.swat-toolbar a.swat-tool-link-add:hover,
+.swat-toolbar a.swat-tool-link-create:hover {
+	background-image: url(../images/swat-tool-link-create.png);
 }
 
 .swat-toolbar .swat-tool-link-delete:link,
 .swat-tool-link-delete:link,
 .swat-toolbar .swat-tool-link-delete:visited,
 .swat-tool-link-delete:visited {
-	background: url(../images/swat-tool-link-delete.png) 6px center no-repeat;
+	background-image: url(../images/swat-tool-link-delete.png)
+	background-position: 6px center;
+	background-repeat: no-repeat;
 	color: #c00;
 	padding-left: 28px;
 }
 
 .swat-toolbar a.swat-tool-link-delete:hover,
 a.swat-tool-link-delete:hover {
-	background: #f3efe5 url(../images/swat-tool-link-delete.png) 6px center no-repeat;
+	background: url(../images/swat-tool-link-delete.png) 6px center no-repeat;
 }
 
 .swat-toolbar .swat-tool-link-cancel:link,
 .swat-tool-link-cancel:link,
 .swat-toolbar .swat-tool-link-cancel:visited,
 .swat-tool-link-cancel:visited {
-	background: url(../images/swat-tool-link-cancel.png) 6px center no-repeat;
+	background-image: url(../images/swat-tool-link-cancel.png);
+	background-position: 6px center;
+	background-repeat: no-repeat;
 	color: #c00;
 	padding-left: 28px;
 }
 
 .swat-toolbar a.swat-tool-link-cancel:hover,
 a.swat-tool-link-cancel:hover {
-	background: #f3efe5 url(../images/swat-tool-link-cancel.png) 6px center no-repeat;
+	background: url(../images/swat-tool-link-cancel.png) 6px center no-repeat;
 }
 
 .swat-toolbar .swat-tool-link-edit:link,
 .swat-tool-link-edit:link,
 .swat-toolbar .swat-tool-link-edit:visited,
 .swat-tool-link-edit:visited {
-	background: url(../images/swat-tool-link-edit.png) 6px center no-repeat;
+	background-image: url(../images/swat-tool-link-edit.png);
+	background-position: 6px center;
+	background-repeat: no-repeat;
 	padding-left: 28px;
 }
 
 .swat-toolbar a.swat-tool-link-edit:hover,
 a.swat-tool-link-edit:hover {
-	background: #f3efe5 url(../images/swat-tool-link-edit.png) 6px center no-repeat;
+	background-image: url(../images/swat-tool-link-edit.png);
 }
 
 .swat-toolbar .swat-tool-link-print:link,
 .swat-tool-link-print:link,
 .swat-toolbar .swat-tool-link-print:visited,
 .swat-tool-link-print:visited {
-	background: url(../images/swat-tool-link-print.png) 6px center no-repeat;
+	background-image: url(../images/swat-tool-link-print.png);
+	background-position: 6px center;
+	background-repeat: no-repeat;
 	padding-left: 28px;
 }
 
 .swat-toolbar a.swat-tool-link-print:hover,
 a.swat-tool-link-print:hover {
-	background: #f3efe5 url(../images/swat-tool-link-print.png) 6px center no-repeat;
+	background: url(../images/swat-tool-link-print.png) 6px center no-repeat;
 }
 
 .swat-toolbar .swat-tool-link-email:link,
 .swat-tool-link-email:link,
 .swat-toolbar .swat-tool-link-email:visited,
 .swat-tool-link-email:visited {
-	background: url(../images/swat-tool-link-email.png) 6px center no-repeat;
+	background-image: url(../images/swat-tool-link-email.png);
+	background-position: 6px center;
+	background-repeat: no-repeat;
 	padding-left: 28px;
 }
 
 .swat-toolbar a.swat-tool-link-email:hover,
 a.swat-tool-link-email:hover {
-	background: #f3efe5 url(../images/swat-tool-link-email.png) 6px center no-repeat;
+	background: url(../images/swat-tool-link-email.png) 6px center no-repeat;
 }
