@@ -23,6 +23,30 @@ require_once 'SwatDB/exceptions/SwatDBException.php';
  */
 class SwatDB extends SwatObject
 {
+// {{{ public static function connect()
+
+	/**
+	 * Connect to a database
+	 *
+ 	 * Convenience method to connect to a database.
+	 *
+	 * @param string $dsn The DSN to connect to.
+	 *
+	 * @return MDB2_Driver_Common $db The database connection.
+	 *
+	 * @throws SwatDBException
+	 */
+	public static function connect($dsn)
+	{
+		$db = MDB2::connect($dsn);
+
+		if (PEAR::isError($db))
+			throw new SwatDBException($db);
+
+		return $db;
+	}
+
+	// }}}
 	// {{{ public static function query()
 
 	/**
