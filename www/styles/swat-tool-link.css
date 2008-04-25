@@ -45,7 +45,7 @@ a.swat-tool-link-create:hover,
 .swat-tool-link-delete:link,
 .swat-toolbar .swat-tool-link-delete:visited,
 .swat-tool-link-delete:visited {
-	background-image: url(../images/swat-tool-link-delete.png)
+	background-image: url(../images/swat-tool-link-delete.png);
 	background-position: 6px center;
 	background-repeat: no-repeat;
 	color: #c00;
