@@ -440,6 +440,9 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public function isAuthenticated()
 	{
+		if (!$this->isSubmitted())
+			return true;
+
 		$raw_data = $this->getFormData();
 
 		$token = null;
