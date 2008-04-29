@@ -125,15 +125,6 @@ class SwatForm extends SwatDisplayableContainer
 	// {{{ private properties
 
 	/**
-	 * Whether or not this form was authenticated
-	 *
-	 * @var boolean
-	 *
-	 * @see SwatForm::isAuthenticated()
-	 */
-	private $authenticated = false;
-
-	/**
 	 * The method to use for this form
 	 *
 	 * Is one of SwatForm::METHOD_* constants.
@@ -265,8 +256,6 @@ class SwatForm extends SwatDisplayableContainer
 		$this->processed = $this->isSubmitted();
 
 		if ($this->processed) {
-			// always process authentication token first
-			$this->processAuthenticationToken();
 			$this->processHiddenFields();
 
 			foreach ($this->children as $child)
@@ -438,6 +427,9 @@ class SwatForm extends SwatDisplayableContainer
 	/**
 	 * Whether or not this form is authenticated
 	 *
+	 * This catches cross-site request forgeries if the
+	 * {@link SwatForm::setAuthenticationToken()} method was previously called.
+	 *
 	 * If form authentication is used, data should only be saved from
 	 * authenticated forms. An unauthenticated form may be a malicious
 	 * request.
@@ -448,7 +440,19 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public function isAuthenticated()
 	{
-		return $this->authenticated;
+		$raw_data = $this->getFormData();
+
+		$token = null;
+		if (isset($raw_data[self::AUTHENTICATION_TOKEN_FIELD]))
+			$token = SwatString::signedUnserialize(
+				$raw_data[self::AUTHENTICATION_TOKEN_FIELD], $this->salt);
+
+		/*
+		 * If this form's authentication token is set, the token in submitted
+		 * data must match.
+		 */
+		return (self::$authentication_token === null ||
+			self::$authentication_token === $token);
 	}
 
 	// }}}
@@ -554,36 +558,6 @@ class SwatForm extends SwatDisplayableContainer
 					$raw_data[$serialized_field_name]);
 			}
 		}
-	}
-
-	// }}}
-	// {{{ protected function processAuthenticationToken()
-
-	/**
-	 * Checks the authentication token against submitted form data
-	 *
-	 * This catches cross-site request forgeries if the
-	 * {@link SwatForm::setAuthenticationToken()} method was previously called.
-	 *
-	 * If an authentication token mismatch is detected, a message is added
-	 * to this form.
-	 */
-	protected function processAuthenticationToken()
-	{
-		$raw_data = $this->getFormData();
-
-		$token = null;
-		if (isset($raw_data[self::AUTHENTICATION_TOKEN_FIELD]))
-			$token = SwatString::signedUnserialize(
-				$raw_data[self::AUTHENTICATION_TOKEN_FIELD], $this->salt);
-
-		/*
-		 * If this form's authentication token is set, the token in submitted
-		 * data must match.
-		 */
-		$this->authenticated =
-			(self::$authentication_token === null ||
-			self::$authentication_token === $token);
 	}
 
 	// }}}
