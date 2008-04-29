@@ -101,6 +101,7 @@ class SwatImageButton extends SwatButton
 		$input_tag->type = 'image';
 		$input_tag->id = $this->id;
 		$input_tag->name = $this->id;
+		$input_tag->value = $this->title;
 		$input_tag->class = $this->getCSSClassString();
 
 		if (count($this->values))
