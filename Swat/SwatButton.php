@@ -80,6 +80,13 @@ class SwatButton extends SwatInputControl
 	 */
 	public $processing_throbber_message = '';
 
+	/**
+	 * Optional confirmation message to display when this button is clicked
+	 *
+	 * @var string
+	 */
+	public $confirmation_message = null;
+
 	// }}}
 	// {{{ protected properties
 
@@ -348,6 +355,11 @@ class SwatButton extends SwatInputControl
 				$this->id, SwatString::quoteJavaScriptString(
 					$this->processing_throbber_message));
 		}
+
+		if ($this->confirmation_message !== null)
+			$javascript.= sprintf("\n%s_obj.setConfirmationMessage(%s);",
+				$this->id, SwatString::quoteJavaScriptString(
+					$this->confirmation_message));
 
 		return $javascript;
 	}
