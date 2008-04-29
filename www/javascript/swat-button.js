@@ -13,6 +13,7 @@ function SwatButton(id, show_processing_throbber)
 	this.button = document.getElementById(this.id);
 	this.show_processing_throbber = show_processing_throbber;
 	this.processing_message = '';
+	this.confirmation_message = '';
 
 	YAHOO.util.Event.addListener(this.button, 'click',
 		this.handleClick, this, true);
@@ -21,22 +22,29 @@ function SwatButton(id, show_processing_throbber)
 SwatButton.throbber_image_loaded = false;
 SwatButton.throbber_alt_text = 'throbber';
 
-SwatButton.prototype.handleClick = function(event)
+SwatButton.prototype.handleClick = function(e)
 {
-	if (this.show_processing_throbber) {
-		this.button.disabled = true;
+	var confirmed = (this.confirmation_message) ?
+		confirm(this.confirmation_message) : true;
 
-		// add button to form data manually since we disabled it above
-		var div = document.createElement('div');
-		var hidden_field = document.createElement('input');
-		hidden_field.type = 'hidden';
-		hidden_field.name = this.id;
-		hidden_field.value = this.button.value;
-		div.appendChild(hidden_field);
-		this.button.form.appendChild(div);
+	if (confirmed) {
+		if (this.show_processing_throbber) {
+			this.button.disabled = true;
 
-		this.button.form.submit(); // needed for IE
-		this.showThrobber();
+			// add button to form data manually since we disabled it above
+			var div = document.createElement('div');
+			var hidden_field = document.createElement('input');
+			hidden_field.type = 'hidden';
+			hidden_field.name = this.id;
+			hidden_field.value = this.button.value;
+			div.appendChild(hidden_field);
+			this.button.form.appendChild(div);
+
+			this.button.form.submit(); // needed for IE
+			this.showThrobber();
+		}
+	} else {
+		YAHOO.util.Event.preventDefault(e);
 	}
 }
 
@@ -63,4 +71,9 @@ SwatButton.prototype.showThrobber = function()
 SwatButton.prototype.setProcessingMessage = function(message)
 {
 	this.processing_message = message;
+}
+
+SwatButton.prototype.setConfirmationMessage = function(message)
+{
+	this.confirmation_message = message;
 }
