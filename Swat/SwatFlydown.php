@@ -297,7 +297,10 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
 		$hidden_tag->display();
 
-		echo $title;
+		$span_tag = new SwatHtmlTag('span');
+		$span_tag->class = 'swat-flydown-single';
+		$span_tag->setContent($title, $flydown_option->content_type);
+		$span_tag->display();
 	}
 
 	// }}}
