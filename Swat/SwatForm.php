@@ -136,14 +136,14 @@ class SwatForm extends SwatDisplayableContainer
 	/**
 	 * The token value used to prevent cross-site request forgeries
 	 *
-	 * If this value is not null, all submitted forms will be authenticated
-	 * with this token value.
+	 * If this value is not null, all submitted forms may be checked to see if
+	 * they are authenticated with this token value.
 	 *
 	 * @var string
 	 *
 	 * @see SwatForm::setAuthenticationToken()
 	 * @see SwatForm::clearAuthenticationToken()
-	 * @see SwatForm::processAuthenticationToken()
+	 * @see SwatForm::isAuthenticated()
 	 */
 	private static $authentication_token = null;
 
@@ -427,10 +427,10 @@ class SwatForm extends SwatDisplayableContainer
 	/**
 	 * Whether or not this form is authenticated
 	 *
-	 * This catches cross-site request forgeries if the
+	 * This can be used to catch cross-site request forgeries if the
 	 * {@link SwatForm::setAuthenticationToken()} method was previously called.
 	 *
-	 * If form authentication is used, data should only be saved from
+	 * If form authentication is used, processing should only be performed on
 	 * authenticated forms. An unauthenticated form may be a malicious
 	 * request.
 	 *
@@ -440,6 +440,10 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public function isAuthenticated()
 	{
+		/*
+		 * If this form was not submitted, consider it authenticated. Processing
+		 * should be idempotent on forms that were not submitted.
+		 */
 		if (!$this->isSubmitted())
 			return true;
 
@@ -501,9 +505,9 @@ class SwatForm extends SwatDisplayableContainer
 	 * the submitted form data must contain this token.
 	 *
 	 * For the safest results, this token should be taken from an active
-	 * session. The same token should be used for the same user over
-	 * multiple requests. The token should be unique to a user's session and
-	 * should be difficult to guess.
+	 * session. For usability reasons, the same token should be used for the
+	 * same user over multiple requests. The token should be unique to a user's
+	 * session and should be difficult to guess.
 	 *
 	 * @param string $token the value used to prevent cross-site request
 	 *                       forgeries.
@@ -519,10 +523,10 @@ class SwatForm extends SwatDisplayableContainer
 	/**
 	 * Clears the token value used to prevent cross-site request forgeries
 	 *
-	 * After this method is called, when any form is processed, no cross-site
-	 * request forgery checks will be made. This is acceptable if a user's
-	 * session is ending and the threat of cross-site request forgeries is
-	 * gone.
+	 * After this method is called, no cross-site request forgery detection can
+	 * be performed, and all forms will be considered authenticated. This is
+	 * acceptable if a user's session is ending and the threat of cross-site
+	 * request forgeries is gone.
 	 */
 	public static function clearAuthenticationToken()
 	{
@@ -605,10 +609,10 @@ class SwatForm extends SwatDisplayableContainer
 	 * returned correctly as arrays.
 	 *
 	 * This methods also generates an array of hidden field names and passes
-	 * them as hidden fields as well.
+	 * them as hidden fields.
 	 *
 	 * If an authentication token is set on this form to prevent cross-site
-	 * request forgeries, the token is displayed in a hidden field as well.
+	 * request forgeries, the token is displayed in a hidden field.
 	 */
 	protected function displayHiddenFields()
 	{
