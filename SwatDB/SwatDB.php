@@ -18,21 +18,22 @@ require_once 'SwatDB/exceptions/SwatDBException.php';
  * Static convenience methods for working with a database.
  *
  * @package   SwatDB
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2008 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDB extends SwatObject
 {
-// {{{ public static function connect()
+	// {{{ public static function connect()
 
 	/**
-	 * Connect to a database
+	 * Connects to a database
 	 *
- 	 * Convenience method to connect to a database.
+ 	 * Convenience method to connect to a database and get a driver instance
+	 * for that database.
 	 *
-	 * @param string $dsn The DSN to connect to.
+	 * @param string $dsn the DSN to which to connect.
 	 *
-	 * @return MDB2_Driver_Common $db The database connection.
+	 * @return MDB2_Driver_Common $db the database connection.
 	 *
 	 * @throws SwatDBException
 	 */
