@@ -442,7 +442,7 @@ class SwatForm extends SwatDisplayableContainer
 	{
 		/*
 		 * If this form was not submitted, consider it authenticated. Processing
-		 * should be idempotent on forms that were not submitted.
+		 * should be safe on forms that were not submitted.
 		 */
 		if (!$this->isSubmitted())
 			return true;
