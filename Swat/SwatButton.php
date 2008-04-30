@@ -14,7 +14,7 @@ require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
  * within {@link SwatForm}.
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2008 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatButton extends SwatInputControl
@@ -22,9 +22,7 @@ class SwatButton extends SwatInputControl
 	// {{{ public properties
 
 	/**
-	 * Title
-	 *
-	 * The visible text on this button.
+	 * The visible text on this button
 	 *
 	 * @var string
 	 */
@@ -33,7 +31,8 @@ class SwatButton extends SwatInputControl
 	/**
 	 * The stock id of this button
 	 *
-	 * Specifying a stock id initializes this button with a set of stock values.
+	 * Specifying a stock id before the {@link SwatButton::init()} method is
+	 * called causes this button to be initialized with a set of stock values.
 	 *
 	 * @var string
 	 *
@@ -42,18 +41,17 @@ class SwatButton extends SwatInputControl
 	public $stock_id = null;
 
 	/**
-	 * Access key
+	 * The access key for this button
 	 *
-	 * Access key for this button, for keyboard nagivation.
+	 * The access key is used for keyboard nagivation and screen readers.
 	 *
 	 * @var string
 	 */
 	public $access_key = null;
 
 	/**
-	 * Tab index
-	 *
-	 * The ordinal tab index position of the XHTML input tag, or null.
+	 * The ordinal tab index position of the XHTML input tag, or null if the
+	 * tab index should be automatically set by the browser
 	 *
 	 * @var integer
 	 */
@@ -82,6 +80,10 @@ class SwatButton extends SwatInputControl
 
 	/**
 	 * Optional confirmation message to display when this button is clicked
+	 *
+	 * If this message is specified, users will have to click through a
+	 * JavaScript confirmation dialog to submit the form. If this is null, no
+	 * confirmation is performed.
 	 *
 	 * @var string
 	 */
