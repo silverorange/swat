@@ -41,24 +41,6 @@ class SwatImageButton extends SwatButton
 	 */
 	public $values = array();
 
-	/**
-	 * Image height
-	 *
-	 * The height attribute in the XHTML img tag.
-	 *
-	 * @var integer
-	 */
-	public $height = null;
-
-	/**
-	 * Image width
-	 *
-	 * The width attribute in the XHTML img tag.
-	 *
-	 * @var integer
-	 */
-	public $width = null;
-
 	// }}}
 	// {{{ public function process()
 
@@ -108,12 +90,6 @@ class SwatImageButton extends SwatButton
 			$input_tag->src = vsprintf($this->image, $this->values);
 		else
 			$input_tag->src = $this->image;
-
-		if ($this->height !== null)
-			$input_tag->height = $this->height;
-
-		if ($this->width !== null)
-			$input_tag->width = $this->width;
 
 		if ($this->title !== null)
 			$input_tag->title = $this->title;
