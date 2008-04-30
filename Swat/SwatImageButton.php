@@ -11,7 +11,7 @@ require_once 'Swat/SwatButton.php';
  * within {@link SwatForm}.
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2008 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageButton extends SwatButton
@@ -21,7 +21,7 @@ class SwatImageButton extends SwatButton
 	/**
 	 * Image
 	 *
-	 * The src attribute in the XHTML img tag.
+	 * The src attribute in the XHTML input tag.
 	 *
 	 * @var string
 	 */
