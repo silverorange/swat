@@ -151,8 +151,12 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 		if (!$this->sensitive)
 			$radio_button_tag->disabled = 'disabled';
 
-		if ($this->value === $this->selected_value)
-			$radio_button_tag->checked = 'checked';
+		$view = $this->getFirstAncestor('SwatView');
+		if ($view !== null) {
+			$selection = $view->getSelection($this);
+			if ($selection->contains($this->value))
+				$radio_button_tag->checked = 'checked';
+		}
 
 		$radio_button_tag->display();
 

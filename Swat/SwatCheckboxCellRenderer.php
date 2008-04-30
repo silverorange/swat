@@ -149,8 +149,12 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 		if (!$this->sensitive)
 			$checkbox_tag->disabled = 'disabled';
 
-		if (in_array($this->value, $this->selected_values))
-			$checkbox_tag->checked = 'checked';
+		$view = $this->getFirstAncestor('SwatView');
+		if ($view !== null) {
+			$selection = $view->getSelection($this);
+			if ($selection->contains($this->value))
+				$checkbox_tag->checked = 'checked';
+		}
 
 		$checkbox_tag->display();
 
