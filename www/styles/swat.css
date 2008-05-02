@@ -58,7 +58,7 @@ label.swat-control {
 	display: inline;
 }
 
-.swat-required {
+span.swat-required {
 	font-weight: normal;
 	color: #c4a000;
 }
