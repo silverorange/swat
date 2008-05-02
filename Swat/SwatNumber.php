@@ -27,7 +27,7 @@ class SwatNumber extends SwatObject
 	public static function roundToEven($value, $fractional_digits)
 	{
 		$power = pow(10, $fractional_digits);
-		$fracional_part = abs(fmod($value, 1)) * $power;
+		$fractional_part = abs(fmod($value, 1)) * $power;
 		$ends_in_five = (intval($fractional_part * 10) % 10 === 5);
 		if ($ends_in_five) {
 			// check if fractional part is odd
