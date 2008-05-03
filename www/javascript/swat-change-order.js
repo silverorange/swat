@@ -169,7 +169,7 @@ function SwatChangeOrder_updateDropPosition()
 		Math.floor(shadow_item.offsetWidth / 2) -
 		YAHOO.util.Dom.getX(list_div) + list_div.scrollLeft;
 
-	var is_grid = shadow_item.original_item.controller.isGrid(list_div);
+	var is_grid = shadow_item.original_item.controller.isGrid();
 
 	for (var i = 0; i < list_div.childNodes.length; i++) {
 		var node = list_div.childNodes[i];
@@ -328,8 +328,7 @@ function SwatChangeOrder_mousedownEventHandler(event)
 
 	var drop_marker = document.createElement('div');
 
-	var list_div = shadow_item.original_item.parentNode;
-	if (this.controller.isGrid(list_div)) {
+	if (this.controller.isGrid()) {
 		drop_marker.style.borderLeftStyle = 'solid';
 		drop_marker.style.borderLeftColor = '#aaa';
 		drop_marker.style.borderLeftWidth = '1px';
@@ -870,9 +869,9 @@ SwatChangeOrder.prototype.scrollList = function(y_coord)
  * Whether this SwatChangeOrder widget represents a vertical list (default) or
  * a grid of items.
  */
-SwatChangeOrder.prototype.isGrid = function(list_div)
+SwatChangeOrder.prototype.isGrid = function()
 {
-	var node = list_div.childNodes[0];
+	var node = this.list_div.childNodes[0];
 	return (YAHOO.util.Dom.getStyle(node, 'float') != 'none');
 }
 
