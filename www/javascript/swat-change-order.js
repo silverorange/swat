@@ -161,29 +161,65 @@ function SwatChangeOrder_updateDropPosition()
 	var drop_marker = SwatChangeOrder.dragging_drop_marker;
 	var list_div = shadow_item.original_item.parentNode;
 
-	var middle = YAHOO.util.Dom.getY(shadow_item) +
+	var y_middle = YAHOO.util.Dom.getY(shadow_item) +
 		Math.floor(shadow_item.offsetHeight / 2) -
 		YAHOO.util.Dom.getY(list_div) + list_div.scrollTop;
 
+	var x_middle = YAHOO.util.Dom.getX(shadow_item) +
+		Math.floor(shadow_item.offsetWidth / 2) -
+		YAHOO.util.Dom.getX(list_div) + list_div.scrollLeft;
+
+	var is_grid = shadow_item.original_item.controller.isGrid(list_div);
+
 	for (var i = 0; i < list_div.childNodes.length; i++) {
 		var node = list_div.childNodes[i];
-		if (node !== drop_marker &&
-			middle < node.offsetTop + Math.floor(node.offsetHeight / 2)) {
 
-			var next_sibling =
-				(drop_marker === shadow_item.original_item.nextSibling) ?
-				drop_marker.nextSibling : shadow_item.original_item.nextSibling;
+		if (is_grid) {
+			var node_top = node.offsetTop;
+			var node_bottom = node_top + node.offsetHeight;
+			var node_left = node.offsetLeft - Math.floor((node.offsetWidth) / 2);
+			var node_right = node_left + node.offsetWidth;
 
-			// hide the drop marker if no move is taking place
-			if (node === shadow_item.original_item || node === next_sibling) {
-				drop_marker.style.display = 'none';
-			} else {
-				drop_marker.style.display = 'block';
+			if (node !== drop_marker &&
+				y_middle > node_top && y_middle < node_bottom
+				&& x_middle > node_left && x_middle < node_right) {
+
+				var next_sibling =
+					(drop_marker === shadow_item.original_item.nextSibling) ?
+					drop_marker.nextSibling : shadow_item.original_item.nextSibling;
+
+				// hide the drop marker if no move is taking place
+				if (node === shadow_item.original_item || node === next_sibling) {
+					drop_marker.style.display = 'none';
+				} else {
+					drop_marker.style.display = 'block';
+					drop_marker.style.paddingTop = '2px';
+					drop_marker.style.height = (node.offsetHeight - 4) + 'px';
+				}
+
+				node.parentNode.insertBefore(drop_marker, node);
+
+				break;
 			}
+		} else {
+			if (node !== drop_marker &&
+				y_middle < node.offsetTop + Math.floor(node.offsetHeight / 2)) {
 
-			node.parentNode.insertBefore(drop_marker, node);
+				var next_sibling =
+					(drop_marker === shadow_item.original_item.nextSibling) ?
+					drop_marker.nextSibling : shadow_item.original_item.nextSibling;
 
-			break;
+				// hide the drop marker if no move is taking place
+				if (node === shadow_item.original_item || node === next_sibling) {
+					drop_marker.style.display = 'none';
+				} else {
+					drop_marker.style.display = 'block';
+				}
+
+				node.parentNode.insertBefore(drop_marker, node);
+
+				break;
+			}
 		}
 	}
 }
@@ -291,9 +327,19 @@ function SwatChangeOrder_mousedownEventHandler(event)
 		YAHOO.util.Dom.getY(this);
 
 	var drop_marker = document.createElement('div');
-	drop_marker.style.borderBottomStyle = 'solid';
-	drop_marker.style.borderBottomColor = '#aaa';
-	drop_marker.style.borderBottomWidth = '1px';
+
+	var list_div = shadow_item.original_item.parentNode;
+	if (this.controller.isGrid(list_div)) {
+		drop_marker.style.borderLeftStyle = 'solid';
+		drop_marker.style.borderLeftColor = '#aaa';
+		drop_marker.style.borderLeftWidth = '1px';
+		drop_marker.style.cssFloat = 'left';
+	} else {
+		drop_marker.style.borderBottomStyle = 'solid';
+		drop_marker.style.borderBottomColor = '#aaa';
+		drop_marker.style.borderBottomWidth = '1px';
+	}
+
 	drop_marker.style.display = 'none';
 	drop_marker.id = 'drop';
 
@@ -815,6 +861,19 @@ SwatChangeOrder.prototype.scrollList = function(y_coord)
 
 	this.list_div.scrollTop = Math.floor(
 		(this.list_div.scrollHeight - this.list_div.clientHeight) * factor);
+}
+
+// }}}
+// {{{ isGrid()
+
+/**
+ * Whether this SwatChangeOrder widget represents a vertical list (default) or
+ * a grid of items.
+ */
+SwatChangeOrder.prototype.isGrid = function(list_div)
+{
+	var node = list_div.childNodes[0];
+	return (YAHOO.util.Dom.getStyle(node, 'float') != 'none');
 }
 
 // }}}
