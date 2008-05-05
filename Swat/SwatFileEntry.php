@@ -213,6 +213,30 @@ class SwatFileEntry extends SwatInputControl
 	}
 
 	// }}}
+	// {{{ public function getUniqueFileName()
+
+	/**
+	 * Gets a unique file name for the uploaded file for the given path.
+	 *
+	 * If the original file name is already unqiue, it will be used, otherwise
+	 * a number will be appended to the end of the file name to make it unique.
+	 *
+	 * @param string path where the file is to be saved
+	 *
+	 * @return string the unique file name
+	 *
+	 * @see SwatFileEntry::getFileName()
+	 */
+	public function getUniqueFileName($path)
+	{
+		if (is_dir($path))
+			return $this->generateUniqueFileName($path);
+		else
+			throw new SwatException("Path '{$path}' is not a ".
+				'directory or does not exist.');
+	}
+
+	// }}}
 	// {{{ public function getTempFileName()
 
 	/**
@@ -298,7 +322,7 @@ class SwatFileEntry extends SwatInputControl
 			return false;
 
 		if ($dst_filename === null)
-			$dst_filename = $this->getFileName();
+			$dst_filename = $this->getUniqueFileName($dst_dir);
 
 		if (is_dir($dst_dir))
 			return move_uploaded_file($this->file['tmp_name'],
@@ -372,6 +396,29 @@ class SwatFileEntry extends SwatInputControl
 		$classes = array('swat-file-entry');
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
+	}
+
+	// }}}
+	// {{{ private function generateUniqueFileName()
+
+	private function generateUniqueFileName($path, $count = 0) {
+		if (strpos($this->getFileName(), '.') === false) {
+			$extension = '';
+			$base_name = $this->getFileName();
+		} else {
+			$extension = '.'.array_pop(explode('.', $this->getFileName()));
+			$base_name = basename($this->getFileName(), $extension);
+		}
+
+		if ($count > 0)
+			$file_name = $base_name.$count.$extension;
+		else
+			$file_name = $base_name.$extension;
+
+		if (file_exists($path.'/'.$file_name))
+			return $this->generateUniqueFileName($path, $count + 1);
+		else
+			return $file_name;
 	}
 
 	// }}}
