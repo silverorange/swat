@@ -177,8 +177,9 @@ function SwatChangeOrder_updateDropPosition()
 		if (is_grid) {
 			var node_top = node.offsetTop;
 			var node_bottom = node_top + node.offsetHeight;
-			var node_left = node.offsetLeft - Math.floor((node.offsetWidth) / 2);
+			var node_left = node.offsetLeft;
 			var node_right = node_left + node.offsetWidth;
+			var node_middle = node_left + Math.floor((node.offsetWidth) / 2);
 
 			if (node !== drop_marker &&
 				y_middle > node_top && y_middle < node_bottom
@@ -197,7 +198,17 @@ function SwatChangeOrder_updateDropPosition()
 					drop_marker.style.height = (node.offsetHeight - 4) + 'px';
 				}
 
-				node.parentNode.insertBefore(drop_marker, node);
+				// dragging-object is on the left side of the grid item
+				if (x_middle < node_middle)
+					node.parentNode.insertBefore(drop_marker, node);
+
+				// dragging-object is on the right side of the grid item and
+				else if (list_div.childNodes.length != (i + 1))
+					node.parentNode.insertBefore(drop_marker, list_div.childNodes[i + 1]);
+
+				// dragging-object is on the right side of the grid item and the last node
+				else
+					node.parentNode.appendChild(drop_marker);
 
 				break;
 			}
