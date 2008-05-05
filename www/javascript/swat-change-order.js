@@ -202,13 +202,13 @@ function SwatChangeOrder_updateDropPosition()
 				if (x_middle < node_middle)
 					node.parentNode.insertBefore(drop_marker, node);
 
-				// dragging-object is on the right side of the grid item and
-				else if (list_div.childNodes.length != (i + 1))
-					node.parentNode.insertBefore(drop_marker, list_div.childNodes[i + 1]);
-
-				// dragging-object is on the right side of the grid item and the last node
-				else
+				// dragging-object is on the right side of the last grid item
+				else if (list_div.childNodes.length == (i + 1))
 					node.parentNode.appendChild(drop_marker);
+
+				// dragging-object is on the right side of the grid item
+				else
+					node.parentNode.insertBefore(drop_marker, list_div.childNodes[i + 1]);
 
 				break;
 			}
