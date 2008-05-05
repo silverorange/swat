@@ -190,7 +190,7 @@ function SwatChangeOrder_updateDropPosition()
 					drop_marker.nextSibling : shadow_item.original_item.nextSibling;
 
 				// hide the drop marker if no move is taking place
-				if (node === shadow_item.original_item || node === next_sibling) {
+				if (node === shadow_item.original_item) {
 					drop_marker.style.display = 'none';
 				} else {
 					drop_marker.style.display = 'block';
