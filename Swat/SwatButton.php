@@ -185,7 +185,10 @@ class SwatButton extends SwatInputControl
 
 		$input_tag->display();
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		if ($this->show_processing_throbber ||
+			$this->confirmation_message !== null) {
+			Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		}
 	}
 
 	// }}}
@@ -352,7 +355,8 @@ class SwatButton extends SwatInputControl
 			$this->id,
 			$show_processing_throbber);
 
-		if ($this->show_processing_throbber) {
+		if ($this->show_processing_throbber &&
+			$this->processing_throbber_message !== null) {
 			$javascript.= sprintf("\n%s_obj.setProcessingMessage(%s);",
 				$this->id, SwatString::quoteJavaScriptString(
 					$this->processing_throbber_message));
