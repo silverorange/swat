@@ -147,8 +147,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 		$this->createEmbeddedWidgets();
 		$this->enter_another_link->title = $this->enter_text;
-		$this->enter_another_link->link =
-			"javascript:{$this->id}_obj.addRow();";
+		$this->enter_another_link->link = sprintf("javascript:%s_obj.addRow();",
+			$this->getId());
 
 		$this->enter_another_link->init();
 
@@ -164,8 +164,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		 * replicator ids.
 		 */
 		$data = $this->getForm()->getFormData();
-		$replicator_field = isset($data[$this->id.'_replicators']) ?
-			$data[$this->id.'_replicators'] : null;
+		$replicator_field = isset($data[$this->getId().'_replicators']) ?
+			$data[$this->getId().'_replicators'] : null;
 
 		if ($replicator_field === null || strlen($replicator_field) == 0)
 			// use generated ids
@@ -244,7 +244,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		}
 
 		// add replicator ids to the form as a hidden field
-		$this->getForm()->addHiddenField($this->id.'_replicators',
+		$this->getForm()->addHiddenField($this->getId().'_replicators',
 			implode(',', $this->replicators));
 
 		$this->displayInputRows();
@@ -434,7 +434,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$row_string = str_replace("\n", '\n', $row_string);
 
 		return sprintf("var %s_obj = new SwatTableViewInputRow('%s', '%s');",
-			$this->id, $this->id, trim($row_string));
+			$this->getId(), $this->getId(), trim($row_string));
 	}
 
 	// }}}
@@ -456,6 +456,20 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$set->addEntrySet($this->enter_another_link->getHtmlHeadEntrySet());
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ private function getId()
+
+	private function getId()
+	{
+		$id = $this->id;
+
+		if ($this->parent->id !== null) {
+			$id = $this->parent->id.'_'.$id;
+		}
+
+		return $id;
 	}
 
 	// }}}
@@ -487,7 +501,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 			$tr_tag = new SwatHtmlTag('tr');
 			$tr_tag->class = 'swat-table-view-input-row';
-			$tr_tag->id = $this->id.'_row_'.$replicator_id;
+			$tr_tag->id = $this->getId().'_row_'.$replicator_id;
 
 			if ($row_has_messages && $this->show_row_messages)
 				$tr_tag->class.= ' swat-error';
@@ -601,7 +615,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$close_length = $this->parent->getXhtmlColspan() - $position - 1;
 
 		$tr_tag = new SwatHtmlTag('tr');
-		$tr_tag->id = $this->id.'_enter_row';
+		$tr_tag->id = $this->getId().'_enter_row';
 		$tr_tag->open();
 
 		if ($position > 0) {
@@ -659,7 +673,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$td_tag = new SwatHtmlTag('td', $td_attributes);
 			$td_tag->open();
 
-			$suffix = '_'.$this->id.'_%s';
+			$suffix = '_'.$this->getId().'_%s';
 
 			if (isset($this->input_cells[$column->id])) {
 				$widget = $this->input_cells[$column->id]->getPrototypeWidget();
