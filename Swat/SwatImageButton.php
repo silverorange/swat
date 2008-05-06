@@ -99,7 +99,10 @@ class SwatImageButton extends SwatButton
 
 		$input_tag->display();
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		if ($this->show_processing_throbber ||
+			$this->confirmation_message !== null) {
+			Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		}
 	}
 
 	// }}}
