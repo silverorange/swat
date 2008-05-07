@@ -78,6 +78,15 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 */
 	public $resizeable = true;
 
+	/**
+	 * Read only?
+	 *
+	 * If read-only, the textarea will not allow editing its contents
+	 *
+	 * @var boolean
+	 */
+	public $read_only = false;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -138,6 +147,9 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		$textarea_tag->cols = $this->cols;
 		$textarea_tag->setContent($value, 'text/xml');
 		$textarea_tag->accesskey = $this->access_key;
+
+		if ($this->read_only)
+			$textarea_tag->readonly = 'readonly';
 
 		if (!$this->isSensitive())
 			$textarea_tag->disabled = 'disabled';
