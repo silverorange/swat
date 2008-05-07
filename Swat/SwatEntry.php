@@ -81,6 +81,15 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 */
 	public $autocomplete = true;
 
+	/**
+	 * Read only?
+	 *
+	 * If read-only, the input will not allow editing its contents
+	 *
+	 * @var boolean
+	 */
+	public $read_only = false;
+
 	// }}}
 	// {{{ protected properties
 
@@ -266,6 +275,9 @@ class SwatEntry extends SwatInputControl implements SwatState
 		$tag->id = ($this->autocomplete) ? $this->id : $this->getNonce();
 		$tag->class = $this->getCSSClassString();
 		$tag->onfocus = 'this.select();';
+
+		if ($this->read_only)
+			$tag->readonly = 'readonly';
 
 		if (!$this->isSensitive())
 			$tag->disabled = 'disabled';
