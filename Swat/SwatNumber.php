@@ -42,6 +42,8 @@ class SwatNumber extends SwatObject
 			// use normal rounding
 			$value = round($value, $fractional_digits);
 		}
+
+		return $value;
 	}
 
 	// }}}
