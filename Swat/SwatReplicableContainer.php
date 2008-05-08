@@ -167,7 +167,7 @@ class SwatReplicableContainer extends SwatDisplayableContainer
 	}
 
 	// }}}
-	// {{{ abstract protected function getContainer()
+	// {{{ protected function getContainer()
 
 	/**
 	 * Gets a container to contain replicated widgets for this replicable
