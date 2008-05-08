@@ -11,9 +11,12 @@ require_once 'Swat/SwatReplicableContainer.php';
  * The disclosure can dynamically create widgets based on an array of
  * replicators identifiers.
  *
- * @package   Swat
- * @copyright 2005-2008 silverorange
- * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @package    Swat
+ * @copyright  2008 silverorange
+ * @license    http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @deprecated Use a SwatReplicableContainer with a SwatDisclosure as the only
+ *             child widget. Automatic title-setting functionality will need to
+ *             be implemented manually.
  */
 class SwatReplicableDisclosure extends SwatReplicableContainer
 {
