@@ -11,9 +11,12 @@ require_once 'Swat/SwatReplicableContainer.php';
  * This widget can dynamically create widgets based on an array of
  * replicator identifiers.
  *
- * @package   Swat
- * @copyright 2005-2006 silverorange
- * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @package    Swat
+ * @copyright  2005-2008 silverorange
+ * @license    http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @deprecated Use a SwatReplicableContainer with a SwatFieldset as the only
+ *             child widget. Automatic title-setting functionality will need to
+ *             be implemented manually.
  */
 class SwatReplicableFieldset extends SwatReplicableContainer
 {
