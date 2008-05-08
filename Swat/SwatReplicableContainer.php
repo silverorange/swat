@@ -12,7 +12,7 @@ require_once 'Swat/SwatReplicable.php';
  * @copyright 2005-2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatReplicableContainer extends SwatDisplayableContainer
+class SwatReplicableContainer extends SwatDisplayableContainer
 	implements SwatReplicable
 {
 	// {{{ public properties
@@ -183,7 +183,10 @@ abstract class SwatReplicableContainer extends SwatDisplayableContainer
 	 *                        container. If null is returned, the widgets are
 	 *                        replicated directly in the widget tree.
 	 */
-	abstract protected function getContainer($id, $title);
+	protected function getContainer($id, $title)
+	{
+		return new SwatDisplayableContainer($id);
+	}
 
 	// }}}
 }
