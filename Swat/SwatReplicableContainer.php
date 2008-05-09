@@ -72,12 +72,6 @@ class SwatReplicableContainer extends SwatDisplayableContainer
 	 */
 	public function init()
 	{
-		// Make sure this replicator has a unique id before replicating
-		// chidren. This is because replicated children use the id of this
-		// replicable container as a suffix.
-		if ($this->id === null)
-			$this->id = $this->getUniqueId();
-
 		// TODO: remove this when deprecated $replicators property is removed
 		if ($this->replication_ids === null)
 			$this->replication_ids = array_keys($this->replicators);
@@ -103,10 +97,7 @@ class SwatReplicableContainer extends SwatDisplayableContainer
 		if (!in_array($id, $this->replication_ids))
 			$this->replication_ids[] = $id;
 
-		$suffix = '_'.$this->id.'_'.$id;
-		// TODO: since the prototype widget ids are unique in the UI,
-		//       shouldn't it be enough to just append the replication id?
-		//$suffix = '_'.$id;
+		$suffix = '_'.$id;
 
 		foreach ($this->prototype_widgets as $prototype_widget) {
 			$widget = $prototype_widget->copy($suffix);
