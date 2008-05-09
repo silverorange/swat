@@ -3,7 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatReplicableContainer.php';
-require_once 'Swat/SwatNoteBook.php';
+require_once 'Swat/SwatNoteBookChild.php';
 require_once 'Swat/SwatNoteBookPage.php';
 
 /**
@@ -12,43 +12,65 @@ require_once 'Swat/SwatNoteBookPage.php';
  * @package   Swat
  * @copyright 2007 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @deprecated Use a SwatNoteBook with a SwatReplicableNoteBookChild within.
+ *             Within the SwatReplicableNoteBookChild place one or more
+ *             SwatNoteBookPage objects to be replicated. The automatic
+ *             title-setting functionality has been removed and will need
+ *             to be implemented manually.
  */
-class SwatReplicableNoteBookPage extends SwatReplicableContainer
+class SwatReplicableNoteBookPage extends SwatReplicableContainer implements SwatNoteBookChild
 {
-	// {{{ protected function getContainer()
+	// {{{ public function init()
 
 	/**
-	 * Gets a container to contain replicated widgets for this replicable
-	 * container
-	 *
-	 * @param string $id the replicator id for the container.
-	 * @param stirng $title the title of the container. The container may or
-	 *                       may not use this title.
-	 *
-	 * @return SwatContainer the container object to which replciated widgets
-	 *                        are added. The container is added to the widget
-	 *                        tree after adding the replicated widgets to the
-	 *                        container. If null is returned, the widgets are
-	 *                        replicated directly in the widget tree.
+	 * Initilizes this replicable note book page
 	 */
-	protected function getContainer($id, $title)
+	public function init()
 	{
-		$page = new SwatNoteBookPage($id);
-		$page->title = $title;
-		return $page;
+		$children = array();
+		foreach ($this->children as $child_widget)
+			$children[] = $this->remove($child_widget);
+
+		$page = new SwatNoteBookPage();
+		$page->id = $page->getUniqueId();
+		$page_prototype_id = $page->id;
+
+		foreach ($children as $child_widget)
+			$page->add($child_widget);
+
+		$this->add($page);
+
+		parent::init();
+
+		foreach ($this->replicators as $id => $title) {
+			$page = $this->getWidget($page_prototype_id, $id);
+			$page->title = $title;
+		}
+
+		$note_book = new SwatNoteBook($this->id.'_notebook');
+
+		foreach ($this->children as $child_widget) {
+			$page = $this->remove($child_widget);
+			$note_book->addPage($page);
+		}
+
+		$this->add($note_book);
 	}
 
 	// }}}
-	// {{{ protected function getContainerParent()
+	// {{{ public function getPages()
 
 	/**
-	 * Gets the notebook object that contains replicated notebook pages
+	 * Get all note book pages in this child
 	 *
-	 * @return SwatUIParent the parent object of replicated containers.
+	 * Implements the SwatNoteBookChild interface.
+	 *
+	 * @return array an array of {@link SwatNoteBookPage} objects.
+	 * @see SwatNoteBookChild
 	 */
-	protected function getContainerParent()
+	public function getPages()
 	{
-		return new SwatNoteBook($this->id.'_notebook');
+		return $this->children;
 	}
 
 	// }}}

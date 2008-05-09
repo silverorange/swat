@@ -6,6 +6,7 @@ require_once 'Swat/SwatWidget.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatYUI.php';
 require_once 'Swat/SwatNoteBookPage.php';
+require_once 'Swat/SwatNoteBookChild.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
@@ -73,6 +74,13 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ protected properties
 
 	/**
+	 * Note book child objects initally added to this widget
+	 *
+	 * @var array
+ 	 */
+	protected $children = array();
+
+	/**
 	 * Pages affixed to this widget
 	 *
 	 * @var array
@@ -104,29 +112,30 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function addChild()
 
 	/**
-	 * Adds a {@link SwatNoteBookPage} to this notebook
+	 * Adds a {@link SwatNoteBookChild} to this notebook
 	 *
 	 * This method fulfills the {@link SwatUIParent} interface. It is used
 	 * by {@link SwatUI} when building a widget tree and should not need to be
 	 * called elsewhere. To add a notebook page to a notebook, use
 	 * {@link SwatNoteBook::addPage()}.
 	 *
-	 * @param SwatNoteBookPage $child the notebook page to add.
+	 * @param SwatNoteBookChild $child the notebook child to add.
 	 *
 	 * @throws SwatInvalidClassException if the given object is not an instance
-	 *                                    of SwatNoteBookPage.
+	 *                                    of SwatNoteBookChild.
 	 *
 	 * @see SwatUIParent
-	 * @see SwatNoteBook::addPage()
 	 */
 	public function addChild(SwatObject $child)
 	{
-		if ($child instanceof SwatNoteBookPage)
-			$this->addPage($child);
-		else
+		if ($child instanceof SwatNoteBookChild) {
+			$this->children[] = $child;
+			$child->parent = $this;
+		} else {
 			throw new SwatInvalidClassException(
-				'Only SwatNoteBookPage objects may be nested within a '.
+				'Only SwatNoteBookChild objects may be nested within a '.
 				'SwatNoteBook object.', 0, $child);
+		}
 	}
 
 	// }}}
@@ -152,8 +161,12 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	public function init()
 	{
 		parent::init();
-		foreach($this->pages as $page)
-			$page->init();
+
+		foreach($this->children as $child) {
+			$child->init();
+			foreach($child->getPages() as $page)
+				$this->addPage($page);
+		}
 	}
 
 	// }}}

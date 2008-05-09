@@ -20,27 +20,32 @@ require_once 'Swat/SwatReplicableContainer.php';
  */
 class SwatReplicableFormField extends SwatReplicableContainer
 {
-	// {{{ protected function getContainer()
+	// {{{ public function init()
 
 	/**
-	 * Gets a container to contain replicated widgets for this replicable
-	 * container
-	 *
-	 * @param string $id the replicator id for the container.
-	 * @param stirng $title the title of the container. The container may or
-	 *                       may not use this title.
-	 *
-	 * @return SwatContainer the container object to which replciated widgets
-	 *                        are added. The container is added to the widget
-	 *                        tree after adding the replicated widgets to the
-	 *                        container. If null is returned, the widgets are
-	 *                        replicated directly in the widget tree.
+	 * Initilizes this replicable form field
 	 */
-	protected function getContainer($id, $title)
+	public function init()
 	{
-		$form_field = new SwatFormField();
-		$form_field->title = $title;
-		return $form_field;
+		$children = array();
+		foreach ($this->children as $child_widget)
+			$children[] = $this->remove($child_widget);
+
+		$field = new SwatFormField();
+		$field->id = $field->getUniqueId();
+		$prototype_id = $field->id;
+
+		foreach ($children as $child_widget)
+			$field->add($child_widget);
+
+		$this->add($field);
+
+		parent::init();
+
+		foreach ($this->replicators as $id => $title) {
+			$field = $this->getWidget($prototype_id, $id);
+			$field->title = $title;
+		}
 	}
 
 	// }}}
