@@ -449,7 +449,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 * submitting the form is prevented until one or more items in the view
 	 * are selected by the selector.
 	 *
-	 * @param SwatView $view the view items must be selected in.
+	 * @param SwatView $view the view items must be selected in. Specify null
+	 *                        to remove any existing view selector.
 	 * @param SwatViewSelector $selector optional. The selector in the view
 	 *                                    that must select the items. If not
 	 *                                    specified, the first selector in the
@@ -461,12 +462,17 @@ class SwatActions extends SwatControl implements SwatUIParent
 	public function setViewSelector(SwatView $view,
 		SwatViewSelector $selector = null)
 	{
-		if ($selector === null)
-			$selector = $view->getFirstDescendant('SwatViewSelector');
+		if ($view === null) {
+			$selector = null;
+		} else {
+			if ($selector === null)
+				$selector = $view->getFirstDescendant('SwatViewSelector');
 
-		if ($selector === null)
-			throw new SwatException(
-				'No selector was specified and view does not have a selector');
+			if ($selector === null)
+				throw new SwatException(
+					'No selector was specified and view does not have a '.
+					'selector');
+		}
 
 		$this->view = $view;
 		$this->selector = $selector;
