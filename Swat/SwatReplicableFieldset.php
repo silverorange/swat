@@ -20,27 +20,32 @@ require_once 'Swat/SwatReplicableContainer.php';
  */
 class SwatReplicableFieldset extends SwatReplicableContainer
 {
-	// {{{ protected function getContainer()
+	// {{{ public function init()
 
 	/**
-	 * Gets a container to contain replicated widgets for this replicable
-	 * container
-	 *
-	 * @param string $id the replicator id for the container.
-	 * @param stirng $title the title of the container. The container may or
-	 *                       may not use this title.
-	 *
-	 * @return SwatContainer the container object to which replciated widgets
-	 *                        are added. The container is added to the widget
-	 *                        tree after adding the replicated widgets to the
-	 *                        container. If null is returned, the widgets are
-	 *                        replicated directly in the widget tree.
+	 * Initilizes this replicable fieldset
 	 */
-	protected function getContainer($id, $title)
+	public function init()
 	{
+		$children = array();
+		foreach ($this->children as $child_widget)
+			$children[] = $this->remove($child_widget);
+
 		$fieldset = new SwatFieldset();
-		$fieldset->title = $title;
-		return $fieldset;
+		$fieldset->id = $fieldset->getUniqueId();
+		$prototype_id = $fieldset->id;
+
+		foreach ($children as $child_widget)
+			$fieldset->add($child_widget);
+
+		$this->add($fieldset);
+
+		parent::init();
+
+		foreach ($this->replicators as $id => $title) {
+			$fieldset = $this->getWidget($prototype_id, $id);
+			$fieldset->title = $title;
+		}
 	}
 
 	// }}}

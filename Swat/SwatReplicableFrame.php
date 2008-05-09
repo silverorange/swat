@@ -20,27 +20,32 @@ require_once 'Swat/SwatReplicableContainer.php';
  */
 class SwatReplicableFrame extends SwatReplicableContainer
 {
-	// {{{ protected function getContainer()
+	// {{{ public function init()
 
 	/**
-	 * Gets a container to contain replicated widgets for this replicable
-	 * container
-	 *
-	 * @param string $id the replicator id for the container.
-	 * @param stirng $title the title of the container. The container may or
-	 *                       may not use this title.
-	 *
-	 * @return SwatContainer the container object to which replciated widgets
-	 *                        are added. The container is added to the widget
-	 *                        tree after adding the replicated widgets to the
-	 *                        container. If null is returned, the widgets are
-	 *                        replicated directly in the widget tree.
+	 * Initilizes this replicable frame
 	 */
-	protected function getContainer($id, $title)
+	public function init()
 	{
+		$children = array();
+		foreach ($this->children as $child_widget)
+			$children[] = $this->remove($child_widget);
+
 		$frame = new SwatFrame();
-		$frame->title = $title;
-		return $frame;
+		$frame->id = $frame->getUniqueId();
+		$prototype_id = $frame->id;
+
+		foreach ($children as $child_widget)
+			$frame->add($child_widget);
+
+		$this->add($frame);
+
+		parent::init();
+
+		foreach ($this->replicators as $id => $title) {
+			$frame = $this->getWidget($prototype_id, $id);
+			$frame->title = $title;
+		}
 	}
 
 	// }}}

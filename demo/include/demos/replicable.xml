@@ -3,38 +3,50 @@
 <swatml>
 	<widget class="SwatForm" id="my_form">
 
-		<widget class="SwatReplicableFieldset">
-			<property name="replicators[0]">Apple</property>
-			<property name="replicators[1]">Orange</property>
-			<property name="replicators[2]">Grape</property>
+		<widget class="SwatReplicableContainer">
+			<property name="replication_ids[]" type="integer">0</property>
+			<property name="replication_ids[]" type="integer">1</property>
 
-			<widget class="SwatDisclosure">
-				<property name="title">Checkboxes</property>
-
+			<widget class="SwatFieldset">
+				<property name="title">Title</property>
 				<widget class="SwatFormField">
-					<property name="title">Check 1</property>
-					<widget class="SwatCheckbox" id="check1">
+					<property name="title">Name</property>
+					<widget class="SwatEntry" id="entry1">
 					</widget>
 				</widget>
-				<widget class="SwatFormField">
-					<property name="title">Check 2</property>
-					<widget class="SwatCheckbox" id="check2">
+				<widget class="SwatDisclosure">
+					<property name="title">Checkboxes</property>
+
+					<widget class="SwatFormField">
+						<property name="title">Check 1</property>
+						<widget class="SwatCheckbox" id="check1">
+						</widget>
+					</widget>
+					<widget class="SwatFormField">
+						<property name="title">Check 2</property>
+						<widget class="SwatCheckbox" id="check2">
+						</widget>
 					</widget>
 				</widget>
 			</widget>
-
 		</widget>
 
 		<widget class="SwatFieldset">
 			<property name="title">Seasons</property>
-			<widget class="SwatReplicableFormField">
-				<property name="replicators[0]">Spring</property>
-				<property name="replicators[1]">Summer</property>
-				<property name="replicators[2]">Fall</property>
-				<property name="replicators[3]">Winter</property>
-
-				<widget class="SwatDateEntry" />
-
+			<widget class="SwatNoteBook">
+				<widget class="SwatReplicableNoteBookChild">
+					<property name="replication_ids[]" type="integer">0</property>
+					<property name="replication_ids[]" type="integer">1</property>
+					<property name="replication_ids[]" type="integer">2</property>
+					<widget class="SwatNoteBookPage">
+						<property name="title">Page</property>
+						<widget class="SwatDateEntry" />
+					</widget>
+				</widget>
+				<widget class="SwatNoteBookPage">
+					<property name="title">Extra Page</property>
+					<widget class="SwatEntry" />
+				</widget>
 			</widget>
 		</widget>
 
