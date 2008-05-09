@@ -69,7 +69,9 @@ class SwatRadioTable extends SwatRadioList
 			} else {
 				echo '<td class="swat-radio-table-input">';
 				$this->displayOption($option);
-				echo '</td><td>';
+				printf('</td><td id="%s">',
+					$this->id.'_'.(string)$option->value.'_label');
+
 				$this->displayOptionLabel($option);
 				echo '</td>';
 			}
