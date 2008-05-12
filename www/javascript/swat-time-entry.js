@@ -32,6 +32,33 @@ function SwatTimeEntry(id, use_current_time)
 	this.reverse_lookup_table = {};
 }
 
+SwatTimeEntry.prototype.setSensitivity = function(sensitivity)
+{
+	var elements = [];
+
+	if (this.hour)
+		elements.push(this.hour);
+
+	if (this.minute)
+		elements.push(this.minute);
+
+	if (this.second)
+		elements.push(this.second);
+
+	if (this.am_pm)
+		elements.push(this.am_pm);
+
+	for (var i = 0; i < elements.length; i++) {
+		if (sensitivity) {
+			elements[i].disabled = false;
+			YAHOO.util.Dom.removeClass(elements[i], 'swat-insensitive');
+		} else {
+			elements[i].disabled = true;
+			YAHOO.util.Dom.addClass(elements[i], 'swat-insensitive');
+		}
+	}
+}
+
 SwatTimeEntry.prototype.handleHourChange = function()
 {
 	this.update('hour');
