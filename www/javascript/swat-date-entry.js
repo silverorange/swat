@@ -179,15 +179,15 @@ SwatDateEntry.prototype.update = function(field)
 
 	var index = null;
 	switch (field) {
-		case 'day':
-			index = this.day.selectedIndex;
-			break;
-		case 'month':
-			index = this.month.selectedIndex;
-			break;
-		case 'year':
-			index = this.year.selectedIndex;
-			break;
+	case 'day':
+		index = this.day.selectedIndex;
+		break;
+	case 'month':
+		index = this.month.selectedIndex;
+		break;
+	case 'year':
+		index = this.year.selectedIndex;
+		break;
 	}
 
 	// don't do anything if we select the blank option
