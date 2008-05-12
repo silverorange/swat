@@ -25,6 +25,33 @@ function SwatDateEntry(id, use_current_date)
 	this.reverse_lookup_table = {};
 }
 
+SwatDateEntry.prototype.setSensitivity = function(sensitivity)
+{
+	var elements = [];
+
+	if (this.year)
+		elements.push(this.year);
+
+	if (this.month)
+		elements.push(this.month);
+
+	if (this.day)
+		elements.push(this.day);
+
+	for (var i = 0; i < elements.length; i++) {
+		if (sensitivity) {
+			elements[i].disabled = false;
+			YAHOO.util.Dom.removeClass(elements[i], 'swat-insensitive');
+		} else {
+			elements[i].disabled = true;
+			YAHOO.util.Dom.addClass(elements[i], 'swat-insensitive');
+		}
+	}
+
+	if (this.swat_time)
+		this.swat_time.setSensitivity(sensitivity);
+}
+
 SwatDateEntry.prototype.handleYearChange = function()
 {
 	this.update('year');
