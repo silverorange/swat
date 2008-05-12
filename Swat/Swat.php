@@ -217,6 +217,25 @@ class Swat
  * Define a dummy dngettext() for when gettext is not available.
  */
 if (!function_exists("dngettext")) {
+	/**
+	 * Dummy translation function performs a passthrough on string to be
+	 * translated
+	 *
+	 * This function is for compatibility with PHP installations not using
+	 * gettext.
+	 *
+	 * @package   Swat
+	 * @copyright 2005-2006 silverorange
+	 * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+	 *
+	 * @param string $domain the translation domain. Ignored.
+	 * @param string $messageid1 the singular form.
+	 * @param string $messageid2 the plural form.
+	 * @Param integer $n the number.
+	 *
+	 * @return string <i>$messageid1</i> id <i>$n</i> is one, otherwise
+	 *                <i>$messageid2</i>.
+	 */
 	function dngettext($domain, $messageid1, $messageid2, $n)
 	{
 		if ($n == 1)
@@ -233,6 +252,22 @@ if (!function_exists("dngettext")) {
  * Define a dummy dgettext() for when gettext is not available.
  */
 if (!function_exists("dgettext")) {
+	/**
+	 * Dummy translation function performs a passthrough on string to be
+	 * translated
+	 *
+	 * This function is for compatibility with PHP installations not using
+	 * gettext.
+	 *
+	 * @package   Swat
+	 * @copyright 2005-2006 silverorange
+	 * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+	 *
+	 * @param string $domain the translation domain. Ignored.
+	 * @param string $messageid the string to be translated.
+	 *
+	 * @return string <i>$messageid</i>.
+	 */
 	function dgettext($domain, $messageid)
 	{
 		return $messageid;
