@@ -36,21 +36,37 @@ function SwatTextarea(id, resizeable)
  */
 SwatTextarea.prototype.handleOnAvailable = function()
 {
-	var textarea = document.getElementById(this.id);
-	var width = textarea.offsetWidth;
+	this.textarea = document.getElementById(this.id);
 
-	var div = document.createElement('div');
+	this.handle_div = document.createElement('div');
 
-	YAHOO.util.Dom.addClass(div, 'swat-textarea-resize-handle');
-	div.style.width = width + 'px';
-	div.style.height = SwatTextarea.resize_handle_height + 'px';
-	div.style.fontSize = '0'; // for IE6 height
+	var style_width = YAHOO.util.Dom.getStyle(this.textarea, 'width');
 
-	div._textarea = textarea;
+	YAHOO.util.Dom.addClass(this.handle_div, 'swat-textarea-resize-handle');
 
-	textarea.parentNode.appendChild(div);
+	if (style_width.indexOf('%') != -1) {
+		var left_border = YAHOO.util.Dom.getStyle(this.textarea,
+			'borderLeftWidth');
 
-	YAHOO.util.Event.addListener(div, 'mousedown',
+		var right_border = YAHOO.util.Dom.getStyle(this.textarea,
+			'borderRightWidth');
+
+		this.handle_div.style.width = style_width;
+		this.handle_div.style.paddingLeft = left_border;
+		this.handle_div.style.paddingRight = right_border;
+	} else {
+		var width = this.textarea.offsetWidth;
+		this.handle_div.style.width = width + 'px';
+	}
+
+	this.handle_div.style.height = SwatTextarea.resize_handle_height + 'px';
+	this.handle_div.style.fontSize = '0'; // for IE6 height
+
+	this.handle_div._textarea = this.textarea;
+
+	this.textarea.parentNode.appendChild(this.handle_div);
+
+	YAHOO.util.Event.addListener(this.handle_div, 'mousedown',
 		SwatTextarea_mousedownEventHandler);
 }
 
