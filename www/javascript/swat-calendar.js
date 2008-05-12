@@ -19,7 +19,7 @@
  */
 
 /**
- * Creates a SwatCalendar javascript object
+ * Creates a SwatCalendar JavaScript object
  *
  * @param string id
  * @param string start_date
@@ -320,7 +320,7 @@ SwatCalendar.prototype.redraw = function()
 	var end_date = this.end_date;
 
 	var month_flydown = document.getElementById(this.id + '_month_flydown');
-	for (var i = 0; i < month_flydown.options.length;i++){
+	for (var i = 0; i < month_flydown.options.length;i++) {
 		if (month_flydown.options[i].selected) {
 			var mm = month_flydown.options[i].value;
 			break;
