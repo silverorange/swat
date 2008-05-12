@@ -137,23 +137,7 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		$div_tag->class = 'swat-textarea-container';
 		$div_tag->open();
 
-		$textarea_tag = new SwatHtmlTag('textarea');
-		$textarea_tag->name = $this->id;
-		$textarea_tag->id = $this->id;
-		$textarea_tag->class = $this->getCSSClassString();
-		// NOTE: The attributes rows and cols are required in
-		//       a textarea for XHTML strict.
-		$textarea_tag->rows = $this->rows;
-		$textarea_tag->cols = $this->cols;
-		$textarea_tag->setContent($value, 'text/xml');
-		$textarea_tag->accesskey = $this->access_key;
-
-		if ($this->read_only)
-			$textarea_tag->readonly = 'readonly';
-
-		if (!$this->isSensitive())
-			$textarea_tag->disabled = 'disabled';
-
+		$textarea_tag = $this->getTextareaTag();
 		$textarea_tag->display();
 
 		$div_tag->close();
@@ -244,6 +228,37 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	public function getFocusableHtmlId()
 	{
 		return ($this->visible) ? $this->id : null;
+	}
+
+	// }}}
+	// {{{ protected function getTextareaTag()
+
+	/**
+	 * Gets the textarea tag used to display this textarea control
+	 *
+	 * @return SwatHtmlTag the textarea tag used to display this textarea
+	 *                     control.
+	 */
+	protected function getTextareaTag()
+	{
+		$textarea_tag = new SwatHtmlTag('textarea');
+		$textarea_tag->name = $this->id;
+		$textarea_tag->id = $this->id;
+		$textarea_tag->class = $this->getCSSClassString();
+		// NOTE: The attributes rows and cols are required in
+		//       a textarea for XHTML strict.
+		$textarea_tag->rows = $this->rows;
+		$textarea_tag->cols = $this->cols;
+		$textarea_tag->setContent($value, 'text/xml');
+		$textarea_tag->accesskey = $this->access_key;
+
+		if ($this->read_only)
+			$textarea_tag->readonly = 'readonly';
+
+		if (!$this->isSensitive())
+			$textarea_tag->disabled = 'disabled';
+
+		return $textarea_tag;
 	}
 
 	// }}}
