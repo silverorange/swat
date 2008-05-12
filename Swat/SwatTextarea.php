@@ -126,13 +126,6 @@ class SwatTextarea extends SwatInputControl implements SwatState
 
 		parent::display();
 
-		// textarea tags cannot be self-closing when using HTML parser on XHTML
-		$value = ($this->value === null) ? '' : $this->value;
-
-		// escape value for display because we actually want to show entities
-		// for editing
-		$value = htmlspecialchars($value);
-
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->class = 'swat-textarea-container';
 		$div_tag->open();
@@ -241,6 +234,13 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 */
 	protected function getTextareaTag()
 	{
+		// textarea tags cannot be self-closing when using HTML parser on XHTML
+		$value = ($this->value === null) ? '' : $this->value;
+
+		// escape value for display because we actually want to show entities
+		// for editing
+		$value = htmlspecialchars($value);
+
 		$textarea_tag = new SwatHtmlTag('textarea');
 		$textarea_tag->name = $this->id;
 		$textarea_tag->id = $this->id;
