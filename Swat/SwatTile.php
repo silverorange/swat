@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A tile in a {@link SwatTileView}
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2008 silverorange
  * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
  * @see       SwatTileView
  */
@@ -38,16 +38,8 @@ class SwatTile extends SwatCellRendererContainer
 		if (!$this->visible)
 			return;
 
-		foreach ($this->renderers as $renderer)
-			$this->renderers->applyMappingsToRenderer($renderer, $data);
-
-		$div_tag = new SwatHtmlTag('div');
-		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
-
-		$this->displayRenderersInternal($data);
-
-		$div_tag->close();
+		$this->setupRenderers($data);
+		$this->displayRenderers($data);
 	}
 
 	// }}}
@@ -135,12 +127,54 @@ class SwatTile extends SwatCellRendererContainer
 	}
 
 	// }}}
+	// {{{ protected function setupRenderers()
+
+	/**
+	 * Sets properties of renderers using data from current row
+	 *
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
+	 */
+	protected function setupRenderers($data)
+	{
+		if (count($this->renderers) == 0)
+			throw new SwatException('No renderer has been provided for this '.
+				'tile.');
+
+		$sensitive = $this->parent->isSensitive();
+
+		// Set the properties of the renderers to the value of the data field.
+		foreach ($this->renderers as $renderer) {
+			$this->renderers->applyMappingsToRenderer($renderer, $data);
+			$renderer->sensitive = $renderer->sensitive && $sensitive;
+		}
+	}
+
+	// }}}
+	// {{{ protected function displayRenderers()
+
+	/**
+	 * Renders cell renderers
+	 *
+	 * @param mixed $data the data object being used to render the cell
+	 *                     renderers of this field.
+	 */
+	protected function displayRenderers($data)
+	{
+		$div_tag = new SwatHtmlTag('div');
+		$div_tag->class = $this->getCSSClassString();
+		$div_tag->open();
+		$this->displayRenderersInternal($data);
+		$div_tag->close();
+	}
+
+	// }}}
 	// {{{ protected function displayRenderersInternal()
 
 	/**
 	 * Renders each cell renderer in this tile
 	 *
-	 * If there is once cell renderer in this tile, it is rendered by itself.
+	 * If there is one cell renderer in this tile, it is rendered by itself.
 	 * If there is more than one cell renderer in this tile, cell renderers
 	 * are rendered in order inside separate <i>div</i> elements. There is no
 	 * separation between multiple cell renderers within a single tile.

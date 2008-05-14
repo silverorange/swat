@@ -53,6 +53,31 @@ class SwatTileView extends SwatView implements SwatUIParent
 	public $check_all_content_type = 'text/plain';
 
 	// }}}
+	// {{{ protected properties
+
+	/**
+	 * The groups of this tile-view indexed by their unique identifier
+	 *
+	 * A unique identifier is not required so this array does not necessarily
+	 * contain all groups in the view. It serves as an efficient data structure
+	 * to lookup groups by their id.
+	 *
+	 * The array is structured as id => group reference.
+	 *
+	 * @var array
+	 */
+	protected $groups_by_id = array();
+
+	/**
+	 * Grouping objects for this tile-view
+	 *
+	 * @var array
+	 *
+	 * @see SwatTileView::addGroup()
+	 */
+	protected $groups = array();
+
+	// }}}
 	// {{{ private properties
 
 	/**
@@ -99,6 +124,13 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 		if ($this->tile !== null)
 			$this->tile->init();
+
+		foreach ($this->groups as $group) {
+			$group->init();
+			// index the group by id if it is not already indexed
+			if (!array_key_exists($group->id, $this->groups_by_id))
+				$this->groups_by_id[$group->id] = $group;
+		}
 	}
 
 	// }}}
@@ -149,9 +181,25 @@ class SwatTileView extends SwatView implements SwatUIParent
 		$tile_view_tag->class = $this->getCSSClassString();
 		$tile_view_tag->open();
 
-		if ($this->tile !== null)
-			foreach ($this->model as $data)
-				$this->tile->display($data);
+		$this->model->rewind();
+		$row = ($this->model->valid()) ? $this->model->current() : null;
+
+		$this->model->next();
+		$next_row = ($this->model->valid()) ? $this->model->current() : null;
+
+		while ($row !== null) {
+			foreach ($this->groups as $group)
+				$group->display($row);
+
+			$this->tile->display($row);
+
+			foreach ($this->groups as $group)
+				$group->displayFooter($row, $next_row);
+
+			$row = $next_row;
+			$this->model->next();
+			$next_row = ($this->model->valid()) ? $this->model->current() : null;
+		}
 
 		if ($this->showCheckAll()) {
 			$check_all = $this->getCompositeWidget('check_all');
@@ -173,37 +221,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function getTile()
-
-	/**
-	 * Gets a reference to a tile contained in the view.
-	 *
-	 * @return SwatTile the requested tile
-	 */
-	public function getTile()
-	{
-		return $this->tile;
-	}
-
-	// }}}
-	// {{{ public function setTile()
-
-	/**
-	 * Sets a tile of this tile view
-	 *
-	 * @param SwatTile $tile the tile to set
-	 */
-	public function setTile(SwatTile $tile)
-	{
-		// if we're overwriting an existing tile, remove it's parent link
-		if ($this->tile !== null)
-			$this->tile->parent = null;
-
-		$this->tile = $tile;
-		$tile->parent = $this;
-	}
-
-	// }}}
 	// {{{ public function addChild()
 
 	/**
@@ -213,19 +230,24 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 * by {@link SwatUI} when building a widget tree and should not need to be
 	 * called elsewhere.
 	 *
-	 * To add a tile use {@link SwatTileView::SwatTile()}
+	 * To set the SwatTile to use, use {@link SwatTileView::setTile()}.
+	 * To add a SwatTileViewGroup use {@link SwatTileView::appendGroup()}.
 	 *
-	 * @param SwatTile $child a reference to a child object to add.
+	 * @param SwatTile|SwatTileViewGroup $child a reference to a child object to
+	 *                               add.
 	 *
 	 * @throws SwatInvalidClassException if the added object is not a tile.
 	 * @throws SwatException if more than one tile is added to this tile view.
 	 *
 	 * @see SwatUIParent
 	 * @see SwatTileView::setTile()
+	 * @see SwatTileView::appendGroup()
 	 */
 	public function addChild(SwatObject $child)
 	{
-		if ($child instanceof SwatTile) {
+		if ($child instanceof SwatTileViewGroup)
+			$this->appendGroup($child);
+		elseif ($child instanceof SwatTile) {
 			if ($this->tile !== null)
 				throw new SwatException(
 					'Only one tile may be added to a tile view.');
@@ -273,6 +295,18 @@ class SwatTileView extends SwatView implements SwatUIParent
 			if ($this->tile instanceof SwatUIParent)
 				$out = array_merge($out,
 					$this->tile->getDescendants($class_name));
+		}
+
+		foreach ($this->groups as $group) {
+			if ($class_name === null || $group instanceof $class_name) {
+				if ($group->id === null)
+					$out[] = $group;
+				else
+					$out[$group->id] = $group;
+			}
+
+			if ($group instanceof SwatUIParent)
+				$out = array_merge($out, $group->getDescendants($class_name));
 		}
 
 		return $out;
@@ -401,6 +435,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 		if ($this->tile !== null)
 			$set->addEntrySet($this->tile->getHtmlHeadEntrySet());
 
+		foreach ($this->groups as $group)
+			$set->addEntrySet($group->getHtmlHeadEntrySet());
+
 		return $set;
 	}
 
@@ -429,6 +466,16 @@ class SwatTileView extends SwatView implements SwatUIParent
 			$copy->tile = $copy_tile;
 		}
 
+		$copy->groups_by_id = array();
+		foreach ($this->groups as $key => $group) {
+			$copy_group = $group->copy($id_suffix);
+			$copy_group->parent = $copy;
+			$copy->groups[$key] = $copy_group;
+			if ($copy_group->id !== null) {
+				$copy->groups_by_id[$copy_group->id] = $copy_group;
+			}
+		}
+
 		// TODO: what to do with view selectors?
 
 		return $copy;
@@ -442,7 +489,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 *
 	 * @return string the inline JavaScript required for this tile view.
 	 *
-	 * @see SwatTableViewRow::getInlineJavaScript()
+	 * @see SwatTile::getInlineJavaScript()
 	 */
 	protected function getInlineJavaScript()
 	{
@@ -545,6 +592,150 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		$check_all = new SwatCheckAll();
 		$this->addCompositeWidget($check_all, 'check_all');
+	}
+
+	// }}}
+
+	// tile methods
+	// {{{ public function getTile()
+
+	/**
+	 * Gets a reference to a tile contained in the view.
+	 *
+	 * @return SwatTile the requested tile
+	 */
+	public function getTile()
+	{
+		return $this->tile;
+	}
+
+	// }}}
+	// {{{ public function setTile()
+
+	/**
+	 * Sets a tile of this tile view
+	 *
+	 * @param SwatTile $tile the tile to set
+	 */
+	public function setTile(SwatTile $tile)
+	{
+		// if we're overwriting an existing tile, remove it's parent link
+		if ($this->tile !== null)
+			$this->tile->parent = null;
+
+		$this->tile = $tile;
+		$tile->parent = $this;
+	}
+
+	// }}}
+
+	// grouping methods
+	// {{{ public function appendGroup()
+
+	/**
+	 * Appends a grouping object to this tile-view
+	 *
+	 * A grouping object affects how the data in the model is displayed
+	 * in this tile-view. With a grouping, a row splits tiles into groups with
+	 * special group headers above each group.
+	 *
+	 * Multiple groupings may be added to tile-views.
+	 *
+	 * @param SwatTileViewGroup $group the tile-view grouping to append to
+	 *                                   this tile-view.
+	 *
+	 * @see SwatTileViewGroup
+	 *
+	 * @throws SwatDuplicateIdException if the group has the same id as a
+	 *                                  group already in this tile-view.
+	 */
+	public function appendGroup(SwatTileViewGroup $group)
+	{
+		$this->validateGroup($group);
+
+		$this->groups[] = $group;
+
+		if ($group->id !== null)
+			$this->groups_by_id[$group->id] = $group;
+
+		$group->view = $this;
+		$group->parent = $this;
+	}
+
+	// }}}
+	// {{{ public function hasGroup()
+
+	/**
+	 * Returns true if a group with the given id exists within this tile-view
+	 *
+	 * @param string $id the unique identifier of the group within this tile-
+	 *                    view to check the existance of.
+	 *
+	 * @return boolean true if the group exists in this tile-view and false if
+	 *                  it does not.
+	 */
+	public function hasGroup($id)
+	{
+		return array_key_exists($id, $this->groups_by_id);
+	}
+
+	// }}}
+	// {{{ public function getGroup()
+
+	/**
+	 * Gets a group in this tile-view by the group's id
+	 *
+	 * @param string $id the id of the group to get.
+	 *
+	 * @return SwatTileViewGroup the requested group.
+	 *
+	 * @throws SwatWidgetNotFoundException if no group with the specified id
+	 *                                     exists in this tile-view.
+	 */
+	public function getGroup($id)
+	{
+		if (!array_key_exists($id, $this->groups_by_id))
+			throw new SwatWidgetNotFoundException(
+				"Group with an id of '{$id}' not found.");
+
+		return $this->groups_by_id[$id];
+	}
+
+	// }}}
+	// {{{ public function getGroups()
+
+	/**
+	 * Gets all groups of this tile-view as an array
+	 *
+	 * @return array the the groups of this tile-view.
+	 */
+	public function getGroups()
+	{
+		return $this->groups;
+	}
+
+	// }}}
+	// {{{ protected function validateGroup()
+
+	/**
+	 * Ensures a group added to this tile-view is valid for this tile-view
+	 *
+	 * @param SwatTileViewGroup $group the group to check.
+	 *
+	 * @throws SwatDuplicateIdException if the group has the same id as a
+	 *                                  group already in this tile-view.
+	 */
+	protected function validateGroup(SwatTileViewGroup $group)
+	{
+		// note: This works because the id property is set before children are
+		// added to parents in SwatUI.
+		if ($group->id !== null) {
+			if (array_key_exists($group->id, $this->groups_by_id))
+				throw new SwatDuplicateIdException(
+					"A group with the id '{$group->id}' already exists ".
+					'in this tile view.',
+					0, $group->id);
+		}
 	}
 
 	// }}}
