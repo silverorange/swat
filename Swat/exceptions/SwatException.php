@@ -30,7 +30,7 @@ require_once 'Swat/SwatExceptionLogger.php';
  * <?php
  * /**
  *  * @sensitive $parameter_name
- *  *\/
+ *  {@*}
  * </code>
  * Any parameter having the <i>@sensitive</i> tag in its method-level
  * documentation will be filtered out of stack traces. IMPORATNT: Each tag can
@@ -590,7 +590,7 @@ class SwatException extends Exception
 	 * <?php
 	 * /**
 	 *  * @sensitive $parameter_name
-	 *  *\/
+	 *  {@*}
 	 * ?>
 	 * </code>
 	 *
