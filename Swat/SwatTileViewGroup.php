@@ -10,9 +10,9 @@ require_once 'Swat/SwatHtmlTag.php';
  *
  * This is a tile element that creates a visible break in the tile view.
  * It usually makes sense to place it before other tile view tiles as it is
- * always displayed on a row by itself and never mixed with other tiles. This
- * special tile is only displayed when the value of the group_by field changes;
- * it is not displayed once for every row.
+ * always displayed as a divider by itself and never mixed with other tiles.
+ * This special tile is only displayed when the value of the group_by field
+ * changes; it is not displayed once for every row.
  *
  * @package   Swat
  * @copyright 2005-2008 silverorange
@@ -30,7 +30,7 @@ class SwatTileViewGroup extends SwatTile
 	public $id = null;
 
 	/**
-	 * The field of the table store to group rows by
+	 * The field of the table model to group rows by
 	 *
 	 * @var string
 	 */
@@ -61,7 +61,7 @@ class SwatTileViewGroup extends SwatTile
 	 * between the given rows.
 	 *
 	 * @param mixed $row a data object containing the data for the first row in
-	 *                    in the table store for this group.
+	 *                    in the table model for this group.
 	 * @param mixed $row a data object containing the data for the current row
 	 *                    being displayed in the tile-view.
 	 * @param mixed $next_row a data object containing the data for the next
@@ -85,7 +85,7 @@ class SwatTileViewGroup extends SwatTile
 	 * The grouping header is displayed at the beginning of a group.
 	 *
 	 * @param mixed $row a data object containing the data for the first row in
-	 *                    in the table store for this group.
+	 *                    in the table model for this group.
 	 */
 	protected function displayGroupHeader($row)
 	{
@@ -111,7 +111,7 @@ class SwatTileViewGroup extends SwatTile
 	 * overriding this method.
 	 *
 	 * @param mixed $row a data object containing the data for the last row in
-	 *                    in the table store for this group.
+	 *                    in the table model for this group.
 	 */
 	protected function displayGroupFooter($row)
 	{
@@ -124,11 +124,11 @@ class SwatTileViewGroup extends SwatTile
 	 * Displays the renderers for this tile
 	 *
 	 * The renderes are only displayed once for every time the value of the
-	 * group_by field changes and the renderers are displayed on their own
-	 * separate table row.
+	 * group_by field changes and the renderers are displayed as a divider
+	 * between tiles.
 	 *
 	 * @param mixed $row a data object containing the data for a single row
-	 *                    in the table store for this group.
+	 *                    in the table model for this group.
 	 *
 	 * @throws SwatException
 	 */
