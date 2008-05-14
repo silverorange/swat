@@ -472,7 +472,7 @@ class SwatException extends Exception
 	 *
 	 * This is used, for example, to filter credit/debit card numbers from
 	 * stack traces. By default, a string of the form
-	 * "[$<i>$name</i> FILTERED]" is returned.
+	 * "[<i>$name</i> FILTERED]" is returned.
 	 *
 	 * @param string $name the name of the parameter.
 	 * @param mixed $value the sensitive value of the parameter.
