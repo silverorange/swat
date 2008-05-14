@@ -64,6 +64,11 @@ class SwatDBDataObject extends SwatObject
 	 */
 	private $loaded_from_database = false;
 
+	/**
+	 * @var boolean
+	 */
+	private $id_set_on_save = false;
+
 	// }}}
 	// {{{ protected properties
 
@@ -759,6 +764,65 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function rollback()
+
+	/**
+	 * Resets this dataobject back to a pre-saved state.
+	 *
+	 * This method is useful when using database transactions to rollback a
+	 * save if an error occurs. This method is only useful if the dataobject is
+	 * persistent and not rebuilt with the next page load.
+	 *
+	 * This method <em>does not</em> rollback the database, it only resets the
+	 * dataobjects.
+	 *
+	 * When performing a database rollback, call SwatDBDataobject::rollback() to
+	 * set the now-non-existent referenced objects back to null and reset the
+	 * data object's id to null if set on save.
+	 *
+	 * Example usage:
+	 * <code>
+	 * $tranaction = new SwatDBTransaction($db);
+	 *
+	 * try {
+	 *   $data_object->save();
+	 * } catch (Exception $e) {
+	 *   $transaction->rollback();
+	 *   $data_object->rollback();
+	 * }
+	 *
+	 * $transaction->commit();
+	 * </code>
+	 */
+	public function rollback()
+	{
+		if ($this->id_set_on_save) {
+			$id_field = new SwatDBField($this->id_field, 'integer');
+			$id_ref = $id_field->name;
+			$this->$id_ref = null;
+		}
+
+		foreach ($this->sub_data_objects as $name => $object) {
+			$rollback_method = 'rollback'.
+				str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
+
+			if (method_exists($this, $rollback_method))
+				call_user_func(array($this, $rollback_method));
+		}
+
+		foreach (array_keys($this->internal_properties) as $name) {
+			if ($this->hasSubDataObject($name)) {
+				$sub_data_object = $this->getSubDataObject($name);
+				if ($sub_data_object instanceof SwatDBDataObject) {
+					$sub_data_object->rollback();
+					$id = $sub_data_object->getId();
+					$this->setInternalValue($name, $id);
+				}
+			}
+		}
+	}
+
+	// }}}
 	// {{{ protected function checkDB()
 
 	protected function checkDB()
@@ -869,6 +933,8 @@ class SwatDBDataObject extends SwatObject
 			$this->$id_ref =
 				SwatDB::insertRow($this->db, $this->table, $fields, $values,
 					$id_field->__toString());
+
+			$this->id_set_on_save = true;
 		} else {
 			SwatDB::updateRow($this->db, $this->table, $fields, $values,
 				$id_field->__toString(), $id);
