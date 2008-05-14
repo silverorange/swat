@@ -52,7 +52,7 @@ abstract class SwatAbstractMenu extends SwatControl
 	 *
 	 * @param string $id a non-visible unique id for this widget.
 	 *
-	 * @see swatwidget::__construct()
+	 * @see SwatWidget::__construct()
 	 */
 	public function __construct($id = null)
 	{
