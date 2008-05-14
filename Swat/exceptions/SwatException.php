@@ -194,9 +194,11 @@ class SwatException extends Exception
 	// {{{ public function display()
 
 	/**
-	 * Display this exception
+	 * Displays this exception
 	 *
-	 * The exception is display as either txt or XHMTL.
+	 * This exception is displayed as either text or XHMTL depending on the
+	 * current execution context. If there is a request URI, this exception is
+	 * displayed as XHTML. Otherwise, this exception is displayed as text.
 	 */
 	public function display()
 	{
