@@ -91,6 +91,10 @@ class SwatTileViewGroup extends SwatTile
 	{
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->class = 'swat-tile-view-group';
+
+		if ($this->header_current === null)
+			$div_tag->class.= ' swat-tile-view-first-group';
+
 		$div_tag->open();
 		$this->displayRenderersInternal($row);
 		$div_tag->close();
@@ -138,9 +142,9 @@ class SwatTileViewGroup extends SwatTile
 		// only display the group headr if the value of the group-by field has
 		// changed
 		if ($row->$group_by !== $this->header_current) {
-			$this->header_current = $row->$group_by;
 			$this->resetSubGroups();
 			$this->displayGroupHeader($row);
+			$this->header_current = $row->$group_by;
 		}
 	}
 

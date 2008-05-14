@@ -24,4 +24,9 @@
 
 .swat-tile-view-group {
 	clear: left;
+	padding-top: 2em;
+}
+
+.swat-tile-view-first-group {
+	padding-top: 0em;
 }
