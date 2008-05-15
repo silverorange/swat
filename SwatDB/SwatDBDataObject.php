@@ -165,7 +165,7 @@ class SwatDBDataObject extends SwatObject
 		$this->db = null;
 
 		$modified_properties = $this->getModifiedProperties();
-		$properties = $this->getPublicProperties();
+		$properties = $this->getProperties();
 
 		foreach ($this->getSerializableSubDataObjects() as $name) {
 			if (!isset($properties[$name]))
@@ -181,10 +181,8 @@ class SwatDBDataObject extends SwatObject
 
 			$modified = isset($modified_properties[$name]);
 
-			if ($value instanceof SwatDBRecordable) {
-				$modified = $value->isModified();
+			if ($value instanceof SwatDBRecordable)
 				$value = get_class($value);
-			}
 
 			if ($value === null)
 				$value = '<null>';
@@ -252,15 +250,40 @@ class SwatDBDataObject extends SwatObject
 		$new_object = new $class();
 		$id_field = new SwatDBField($this->id_field, 'integer');
 
-		$properties = $this->getProperties();
+		// public properties
+		$properties = $this->getPublicProperties();
 		foreach ($properties as $name => $value)
 			if ($name !== $id_field->name)
-				$new_object->$name = $value;
+				$new_object->$name = $this->$name;
 
-		foreach ($this->internal_property_autosave as $name => $autosave) {
-			if ($autosave && $this->hasSubDataObject($name)) {
-				$object = $this->getSubDataObject($name);
+		// sub-dataobjects
+		foreach ($this->sub_data_objects as $name => $object) {
+			$saver_method = 'save'.
+				str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
+
+			$object->setDatabase($this->db);
+			if (method_exists($this, $saver_method))
 				$new_object->$name = $object->duplicate();
+			elseif (!array_key_exists($name, $this->internal_properties))
+				$new_object->$name = $object;
+		}
+
+		// internal properties
+		foreach ($this->internal_properties as $name => $value) {
+			if (!(array_key_exists($name, $this->internal_property_accessible)
+				&& $this->internal_property_accessible[$name]))
+				continue;
+
+			$autosave = $this->internal_property_autosave[$name];
+
+			if ($this->hasSubDataObject($name)) {
+				$object = $this->getSubDataObject($name);
+					if ($autosave)
+						$new_object->$name = $object->duplicate();
+					else
+						$new_object->$name = $object;
+			} else {
+				$new_object->$name = $value;
 			}
 		}
 
