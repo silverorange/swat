@@ -89,15 +89,15 @@ class SwatTileViewGroup extends SwatTile
 	 */
 	protected function displayGroupHeader($row)
 	{
-		$div_tag = new SwatHtmlTag('div');
-		$div_tag->class = 'swat-tile-view-group';
+		$heading_tag = new SwatHtmlTag('h4');
+		$heading_tag->class = 'swat-tile-view-group';
 
 		if ($this->header_current === null)
-			$div_tag->class.= ' swat-tile-view-first-group';
+			$heading_tag->class.= ' swat-tile-view-first-group';
 
-		$div_tag->open();
+		$heading_tag->open();
 		$this->displayRenderersInternal($row);
-		$div_tag->close();
+		$heading_tag->close();
 	}
 
 	// }}}
