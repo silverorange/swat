@@ -145,6 +145,32 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function duplicate()
+
+	/**
+	 * Duplicates this record set wrapper
+	 *
+	 * @return SwatDBRecordsetWrapper a duplicate of this object.
+	 * @see SwatDBDataobject::duplicate()
+	 */
+	public function duplicate()
+	{
+		$class = get_class($this);
+		$new_wrapper = new $class();
+
+		foreach ($this->getArray() as $object) {
+			$object->setDatabase($this->db);
+			$duplicate_object = $object->duplicate();
+			$duplicate_object->setDatabase($this->db);
+			$new_wrapper->add($duplicate_object);
+		}
+
+		$new_wrapper->setDatabase($this->db);
+
+		return $new_wrapper;
+	}
+
+	// }}}
 	// {{{ protected function instantiateRowWrapperObject()
 
 	/**
