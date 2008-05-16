@@ -974,7 +974,7 @@ class SwatString extends SwatObject
 	 *                            base. This value will be rounded to the
 	 *                            nearest ten if specified. If less than zero
 	 *                            or not specified, the highest power less
-	 *                            than <i>$value<i/> will be used.
+	 *                            than <i>$value</i> will be used.
 	 * @param boolean $iec_units optional. Whether or not to use IEC binary
 	 *                            multiple prefixed units (Mebibyte). Defaults
 	 *                            to using canonical units.
