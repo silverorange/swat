@@ -8,6 +8,7 @@ require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/SwatDBClassMap.php';
 require_once 'SwatDB/SwatDBRecordable.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
+require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 require_once 'Swat/exceptions/SwatInvalidTypeException.php';
 
@@ -220,7 +221,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	protected function checkDB()
 	{
 		if ($this->db === null)
-			throw new SwatDBException(
+			throw new SwatDBNoDatabaseException(
 				sprintf('No database available to this wrapper (%s). '.
 					'Call the setDatabase method.', get_class($this)));
 	}

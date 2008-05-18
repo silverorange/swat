@@ -11,6 +11,7 @@ require_once 'SwatDB/SwatDBClassMap.php';
 require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/SwatDBRecordable.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
+require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
 
 /**
  * All public properties correspond to database fields
@@ -787,7 +788,7 @@ class SwatDBDataObject extends SwatObject
 	protected function checkDB()
 	{
 		if ($this->db === null)
-			throw new SwatDBException(
+			throw new SwatDBNoDatabaseException(
 				sprintf('No database available to this dataobject (%s). '.
 					'Call the setDatabase method.', get_class($this)));
 	}
