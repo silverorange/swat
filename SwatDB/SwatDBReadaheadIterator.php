@@ -13,13 +13,13 @@ require_once 'Swat/SwatObject.php';
  *
  * Usage:
  * <code>
- * &lt;?php
+ * <?php
  * $iterator = new SwatDBReadaheadIterator($recordset);
  * while($iterator->iterate()) {
  *     $current = $iterator->getCurrent();
  *     $next = $iterator->getNext();
  * }
- * ?&gt;
+ * ?>
  * </code>
  *
  * @package   SwatDB
