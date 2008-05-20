@@ -4,6 +4,7 @@
 	padding: 10px;
 	margin: 5px 10px;
 	float: left;
+	display: inline; /* IE 6 hack */
 	text-align: center;
 	position: relative;
 }
