@@ -51,7 +51,7 @@ class SwatString extends SwatObject
 	/**
 	 * All XHTML elements
 	 *
-	 * Taken from {link http://www.w3.org/TR/html4/index/elements.html}.
+	 * Taken from {@link http://www.w3.org/TR/html4/index/elements.html}.
 	 *
 	 * @var array
 	 */
