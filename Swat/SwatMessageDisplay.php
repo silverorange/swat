@@ -234,6 +234,19 @@ class SwatMessageDisplay extends SwatControl
 	}
 
 	// }}}
+	// {{{ protected function getMessages()
+
+	/**
+	 * Gets the messages in this message display
+	 *
+	 * @return array the messages belonging to this message display.
+	 */
+	protected function getMessages()
+	{
+		return $this->_messages;
+	}
+
+	// }}}
 	// {{{ protected function getDismissableMessageTypes()
 
 	/**
