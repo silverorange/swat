@@ -12,7 +12,7 @@ require_once 'Swat/SwatYUI.php';
  * A control to display {@link SwatMessage} objects
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2008 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMessageDisplay extends SwatControl
@@ -38,7 +38,7 @@ class SwatMessageDisplay extends SwatControl
 	const DISMISS_AUTO = 3;
 
 	// }}}
-	// {{{ private properties
+	// {{{ protected properties
 
 	/**
 	 * The messages to display
@@ -47,13 +47,16 @@ class SwatMessageDisplay extends SwatControl
 	 *
 	 * @var array
 	 */
-	private $_messages = array();
+	protected $display_messages = array();
+
+	// }}}
+	// {{{ private properties
 
 	/**
 	 * Messages in this display that are dismissable
 	 *
 	 * This is an array with values corresponding to a keys in the
-	 * {@link SwatMessageDisplay::$_messages} array.
+	 * {@link SwatMessageDisplay::$display_messages} array.
 	 *
 	 * @var array
 	 */
@@ -122,7 +125,7 @@ class SwatMessageDisplay extends SwatControl
 				'SwatMessage.', 0, $message);
 		}
 
-		$this->_messages[] = $message;
+		$this->display_messages[] = $message;
 
 		if ($dismissable == self::DISMISS_AUTO) {
 			$dismissable = (in_array($message->type,
@@ -131,7 +134,7 @@ class SwatMessageDisplay extends SwatControl
 		}
 
 		if ($dismissable == self::DISMISS_ON)
-			$this->dismissable_messages[] = count($this->_messages) - 1;
+			$this->dismissable_messages[] = count($this->display_messages) - 1;
 	}
 
 	// }}}
@@ -163,7 +166,7 @@ class SwatMessageDisplay extends SwatControl
 
 		$has_dismiss_link = false;
 
-		foreach ($this->_messages as $key => $message) {
+		foreach ($this->display_messages as $key => $message) {
 			$message_div->id = $this->id.'_'.$key;
 			$message_div->class = $message->getCSSClassString();
 			$message_div->open();
@@ -230,20 +233,7 @@ class SwatMessageDisplay extends SwatControl
 	 */
 	public function getMessageCount()
 	{
-		return count($this->_messages);
-	}
-
-	// }}}
-	// {{{ protected function getMessages()
-
-	/**
-	 * Gets the messages in this message display
-	 *
-	 * @return array the messages belonging to this message display.
-	 */
-	protected function getMessages()
-	{
-		return $this->_messages;
+		return count($this->display_messages);
 	}
 
 	// }}}
