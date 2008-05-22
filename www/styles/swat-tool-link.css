@@ -54,7 +54,7 @@ a.swat-tool-link-create:hover,
 
 .swat-toolbar a.swat-tool-link-delete:hover,
 a.swat-tool-link-delete:hover {
-	background: url(../images/swat-tool-link-delete.png) 6px center no-repeat;
+	background-image: url(../images/swat-tool-link-delete.png);
 }
 
 .swat-toolbar .swat-tool-link-cancel:link,
@@ -70,7 +70,7 @@ a.swat-tool-link-delete:hover {
 
 .swat-toolbar a.swat-tool-link-cancel:hover,
 a.swat-tool-link-cancel:hover {
-	background: url(../images/swat-tool-link-cancel.png) 6px center no-repeat;
+	background-image: url(../images/swat-tool-link-cancel.png);
 }
 
 .swat-toolbar .swat-tool-link-edit:link,
@@ -100,7 +100,7 @@ a.swat-tool-link-edit:hover {
 
 .swat-toolbar a.swat-tool-link-print:hover,
 a.swat-tool-link-print:hover {
-	background: url(../images/swat-tool-link-print.png) 6px center no-repeat;
+	background-image: url(../images/swat-tool-link-print.png);
 }
 
 .swat-toolbar .swat-tool-link-email:link,
@@ -115,5 +115,5 @@ a.swat-tool-link-print:hover {
 
 .swat-toolbar a.swat-tool-link-email:hover,
 a.swat-tool-link-email:hover {
-	background: url(../images/swat-tool-link-email.png) 6px center no-repeat;
+	background-image: url(../images/swat-tool-link-email.png);
 }
