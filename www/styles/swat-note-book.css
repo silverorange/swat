@@ -21,7 +21,7 @@
 	background-repeat: repeat-x;
 }
 
-.yui-navset .yui-nav li em { margin:.5em; } /* tab padding */
+.yui-navset .yui-nav li em { padding:.5em; } /* tab padding */
 
 .yui-navset .yui-nav a:focus em {
 	outline-style: dotted;
