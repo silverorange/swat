@@ -97,6 +97,9 @@ class SwatImageButton extends SwatButton
 		$input_tag->tabindex = $this->tab_index;
 		$input_tag->accesskey = $this->access_key;
 
+		if (!$this->isSensitive())
+			$input_tag->disabled = 'disabled';
+
 		$input_tag->display();
 
 		if ($this->show_processing_throbber ||
