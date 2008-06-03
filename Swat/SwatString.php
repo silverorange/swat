@@ -1008,8 +1008,8 @@ class SwatString extends SwatObject
 
 		$unit_magnitude = null;
 
-		if ($magnitude > 0) {
-			$magnitude = round($magnitude / 10) * 10;
+		if ($magnitude >= 0) {
+			$magnitude = intval(round($magnitude / 10) * 10);
 			if (array_key_exists($magnitude, $units)) {
 				$unit_magnitude = $magnitude;
 			} else {
