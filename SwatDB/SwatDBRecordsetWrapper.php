@@ -143,7 +143,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 						$this->objects_by_index[$index] = $object;
 					}
 				}
-			} while ($rs->nextResult());
+			} while ($recordset->nextResult());
 		}
 	}
 
