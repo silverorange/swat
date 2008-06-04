@@ -170,9 +170,10 @@ abstract class SwatWidget extends SwatUIObject
 	 *
 	 * Initialization is done post-construction. Initilization may be done
 	 * manually by calling init() on the UI tree at any time. If a call to
-	 * {@link SwatWidget::process()} or {SwatWidget::display()} is made before
-	 * the tree is initialized, this init() method is called automatically. As
-	 * a result, you often do not need to worry about calling init().
+	 * {@link SwatWidget::process()} or {@link SwatWidget::display()} is made
+	 * before the tree is initialized, this init() method is called
+	 * automatically. As a result, you often do not need to worry about calling
+	 * <code>init()</code>.
 	 *
 	 * Having an initialization method separate from the constructor allows
 	 * properties to be manually set on widgets after construction but before
