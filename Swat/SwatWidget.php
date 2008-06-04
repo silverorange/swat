@@ -53,9 +53,9 @@ abstract class SwatWidget extends SwatUIObject
 	 * Sensitive
 	 *
 	 * Whether the widget is sensitive. If a widget is sensitive it reacts to
-	 * user input. Unsensitive widgets should display "grayed-out" to inform
+	 * user input. Insensitive widgets should display "grayed-out" to inform
 	 * the user they are not sensitive. All widgets that the user can interact
-	 * with should respect this.
+	 * with should respect this property.
 	 *
 	 * @var boolean
 	 */
@@ -170,9 +170,9 @@ abstract class SwatWidget extends SwatUIObject
 	 * Initializes this widget
 	 *
 	 * Initialization is done post-construction. Initilization may be done
-	 * manually by calling init() on the UI tree at any time. If a call to
-	 * {@link SwatWidget::process()} or {@link SwatWidget::display()} is made
-	 * before the tree is initialized, this init() method is called
+	 * manually by calling <code>init()</code> on the UI tree at any time. If a
+	 * call to {@link SwatWidget::process()} or {@link SwatWidget::display()}
+	 * is made  before the tree is initialized, this method is called
 	 * automatically. As a result, you often do not need to worry about calling
 	 * <code>init()</code>.
 	 *
@@ -265,8 +265,8 @@ abstract class SwatWidget extends SwatUIObject
 	 * If this widget has not been displayed, an empty set is returned to
 	 * reduce the number of required HTTP requests.
 	 *
-	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 *                               this widget.
+	 * @return SwatHtmlHeadEntrySet the {@link SwatHtmlHeadEntry} objects
+	 *                               needed by this widget.
 	 */
 	public function getHtmlHeadEntrySet()
 	{
@@ -287,8 +287,8 @@ abstract class SwatWidget extends SwatUIObject
 	/**
 	 * Adds a message to this widget
 	 *
-	 * The message may be shown by the display() method and will as cause
-	 * {@link SwatWidget::hasMessage()} to return as true.
+	 * The message may be shown by the {@link SwatWidget::display()} method and
+	 * will as cause {@link SwatWidget::hasMessage()} to return as true.
 	 *
 	 * @param SwatMessage $message the message to add.
 	 */
@@ -435,8 +435,8 @@ abstract class SwatWidget extends SwatUIObject
 	/**
 	 * Replace this widget with a new container
 	 *
-	 * Replaces this widget in the widget tree with a new SwatContainer, then
-	 * add this widget to the new container.
+	 * Replaces this widget in the widget tree with a new {@link SwatContainer},
+	 * then adds this widget to the new container.
 	 *
 	 * @throws SwatException
 	 *
@@ -601,8 +601,8 @@ abstract class SwatWidget extends SwatUIObject
 	 * widgets.
 	 *
 	 * @param string $class_name optional class name. If set, only widgets
-	 *                            that are instances of <i>$class_name</i> are
-	 *                            returned.
+	 *                            that are instances of <code>$class_name</code>
+	 *                            are returned.
 	 *
 	 * @return array all composite wigets added to this widget. The array is
 	 *                indexed by the composite widget keys.
