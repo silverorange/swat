@@ -966,7 +966,7 @@ class SwatString extends SwatObject
 	 * By default, bytes are formatted using canonical, ambiguous, base-10
 	 * prefixed units. Bytes may optionally be formatted using unambiguous IEC
 	 * standard binary prefixes. See the National Institute of Standards and
-	 * Technology's page on binary unit prefixes as
+	 * Technology's page on binary unit prefixes at
 	 * {@link http://physics.nist.gov/cuu/Units/binary.html} for details.
 	 *
 	 * @param integer $value the value in bytes to format.
