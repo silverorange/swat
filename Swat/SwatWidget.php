@@ -13,20 +13,21 @@ require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
  * Widget composition:
  *
  * Complicated widgets composed of multiple individual widgets can be easily
- * built using SwatWidget's composite features. The main methods used for
- * widget composition are:
+ * built using <code>SwatWidget</code>'s composite features. The main methods
+ * used for widget composition are:
  * {@link SwatWidget::createCompositeWidgets()},
  * {@link SwatWidget::addCompositeWidget()} and
  * {@link SwatWidget::getCompositeWidget()}.
  *
- * Developers should implement the <i>createCompositeWidgets()</i> method by
- * creating composite widgets and adding them to this widget by calling
- * <i>addCompositeWidget()</i>. As long as the parent implemtations of init()
- * and process() are called, nothing further needs to be done for init() and
- * process(). For the display() method, developers can use the
- * <i>getCompositeWidget()</i> method to retrieve a specific composite widget
- * for display. Composite widgets are <i>not</i> displayed by the default
- * implementation of display().
+ * Developers should implement the <code>createCompositeWidgets()</code> method
+ * by creating composite widgets and adding them to this widget by calling
+ * <code>addCompositeWidget()</code>. As long as the parent implemtations of
+ * {@link SwatWidget::init()} and {@link SwatWidget::process()} are called,
+ * nothing further needs to be done for <code>init()</code> and
+ * <code>process()</code>. For the {@link SwatWidget::display()} method,
+ * developers can use the <code>getCompositeWidget()</code> method to retrieve
+ * a specific composite widget for display. Composite widgets are <i>not</i>
+ * displayed by the default implementation of <code>display()</code>.
  *
  * In keeping with object-oriented composition theory, none of the composite
  * widgets are publicly accessible. Methods could be added to make composite
