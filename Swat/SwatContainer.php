@@ -199,7 +199,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 *
 	 * @param string $id the unique id of the widget to look for.
 	 *
-	 * @return SwatWidget the found widget or null not found.
+	 * @return SwatWidget the found widget or null if not found.
 	 */
 	public function getChild($id)
 	{
@@ -218,7 +218,8 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 * Retrieves the first child widget from the list of widgets in the
 	 * container.
 	 *
-	 * @return SwatWidget the first widget or null.
+	 * @return SwatWidget the first widget in this container or null if there
+	 *                    are no widgets in this container.
 	 */
 	public function getFirst()
 	{
@@ -239,7 +240,8 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 * Retrieves an array of all widgets directly contained by this container.
 	 *
 	 * @param string $class_name optional class name. If set, only widgets that
-	 *                            are instances of $class_name are returned.
+	 *                            are instances of <code>$class_name</code> are
+	 *                            returned.
 	 *
 	 * @return array the child widgets of this container.
 	 */
@@ -264,8 +266,8 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 * Gets descendant UI-objects
 	 *
 	 * @param string $class_name optional class name. If set, only UI-objects
-	 *                            that are instances of <i>$class_name</i> are
-	 *                            returned.
+	 *                            that are instances of <code>$class_name</code>
+	 *                            are returned.
 	 *
 	 * @return array the descendant UI-objects of this container. If descendant
 	 *                objects have identifiers, the identifier is used as the
@@ -378,7 +380,8 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	// {{{ public function process()
 
 	/**
-	 * Processes this container by calling process() on all children
+	 * Processes this container by calling {@link SwatWidget::process()} on all
+	 * children
 	 */
 	public function process()
 	{
@@ -392,7 +395,8 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	// {{{ public function display()
 
 	/**
-	 * Displays this container by calling display() on all children
+	 * Displays this container by calling {@link SwatWidget::display()} on all
+	 * children
 	 */
 	public function display()
 	{
@@ -433,7 +437,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 * @return boolean true if this container or the subtree below this
 	 *                  container has one or more messages.
 	 *
-	 * @see SwatWidget::hasMessages()
+	 * @see SwatWidget::hasMessage()
 	 */
 	public function hasMessage()
 	{
@@ -484,8 +488,8 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this container
 	 *
-	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 *                               this container.
+	 * @return SwatHtmlHeadEntrySet the {@link SwatHtmlHeadEntry} objects
+	 *                              needed by this container.
 	 *
 	 * @see SwatUIObject::getHtmlHeadEntrySet()
 	 */
