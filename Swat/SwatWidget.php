@@ -355,7 +355,7 @@ abstract class SwatWidget extends SwatUIObject
 	 *
 	 * @return boolean whether this widget is sensitive.
 	 *
-	 * @see SwatWidget::$sensitve
+	 * @see SwatWidget::$sensitive
 	 */
 	public function isSensitive()
 	{
