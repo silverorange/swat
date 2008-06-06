@@ -422,6 +422,9 @@ class SwatDBDataObject extends SwatObject
 		// Can't add type-hinting because dataobjects may not be dataobjects.
 		// Go figure.
 		$this->sub_data_objects[$name] = $value;
+		if ($value instanceof SwatDBRecordable && $this->db !== null) {
+			$value->setDatabase($this->db);
+		}
 	}
 
 	// }}}
