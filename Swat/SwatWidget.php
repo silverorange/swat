@@ -10,7 +10,7 @@ require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
 /**
  * Base class for all widgets
  *
- * Widget composition:
+ * <strong>Widget composition:</strong>
  *
  * Complicated widgets composed of multiple individual widgets can be easily
  * built using <code>SwatWidget</code>'s composite features. The main methods
