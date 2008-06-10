@@ -283,10 +283,10 @@ class SwatString extends SwatObject
 	 *
 	 * - any exisiting entities are decoded to their UTF-8 characaters
 	 * - the minimal number of characters necessary are then escaped as entities:
-	 *         ampersands (&) => &amp;
-	 *          less than (<) => &lt;
-	 *       greater than (>) => &gt;
-	 *	     double quote (") => &quot;
+	 *   - ampersands   (&) => &amp;
+	 *   - less than    (<) => &lt;
+	 *   - greater than (>) => &gt;
+	 *   - double quote (") => &quot;
 	 *
 	 * @param string $text the UTF-8 text string to convert.
 	 *
@@ -308,8 +308,8 @@ class SwatString extends SwatObject
 	// {{{ public static function minimizeEntitiesWithTags()
 
 	/**
-	 * Same as SwatString::minimizeEntities() but also accepts a list of tags
-	 * to preserve.
+	 * Same as {@link SwatString::minimizeEntities()} but also accepts a list
+	 * of tags to preserve.
 	 *
 	 * @param string $text the UTF-8 text string to convert.
 	 * @param array $tags names of tags that should be preserved.
@@ -418,8 +418,8 @@ class SwatString extends SwatObject
 	/**
 	 * Condenses a string to a name
 	 *
-	 * The generated name can be used for things like databsae identifiers and
-	 * site URL fragments.
+	 * The generated name can be used for things like database identifiers and
+	 * site URI fragments.
 	 *
 	 * example:
 	 * <code>
@@ -429,7 +429,8 @@ class SwatString extends SwatObject
 	 * </code>
 	 *
 	 * @param string $string the string to condense to a name.
-	 * @param integer $max_length the maximum length of the condensed name.
+	 * @param integer $max_length the maximum length of the condensed name in
+	 *                             characters.
 	 *
 	 * @return string the string condensed into a name.
 	 */
@@ -486,7 +487,7 @@ class SwatString extends SwatObject
 	 *
 	 * XHTML example:
 	 * <code>
-	 * $string = 'The &#8220;quick&#8221 brown fox jumped over the lazy dogs.';
+	 * $string = 'The &#8220;quick&#8221; brown fox jumped over the lazy dogs.';
 	 * // displays 'The &#8220;quick&#8221; brown ...'
 	 * echo SwatString::ellipsizeRight($string, 18, ' ...');
 	 * </code>
@@ -509,7 +510,7 @@ class SwatString extends SwatObject
 	 *
 	 * @return string the ellipsized string. The ellipsized string may be
 	 *                 appended with ellipses characters if it was longer than
-	 *                 max_length.
+	 *                 <code>$max_length</code>.
 	 */
 	public static function ellipsizeRight($string, $max_length,
 		// the space is a non-breaking space
@@ -588,7 +589,7 @@ class SwatString extends SwatObject
 	 *
 	 * @return string the ellipsized string. The ellipsized string may include
 	 *                 ellipses characters in roughly the middle if it was
-	 *                 longer than max_length.
+	 *                 longer than <code>$max_length</code>.
 	 */
 	public static function ellipsizeMiddle($string, $max_length,
 		// the spaces are non-breaking spaces
@@ -920,7 +921,7 @@ class SwatString extends SwatObject
 	/**
 	 * Formats an integer as an ordinal number (1st, 2nd, 3rd)
 	 *
-	 * This method uses english suffixes and is not translatable.
+	 * This method uses English suffixes and is not translatable.
 	 *
 	 * @param integer $value the numeric value to format.
 	 */
@@ -974,7 +975,7 @@ class SwatString extends SwatObject
 	 *                            base. This value will be rounded to the
 	 *                            nearest ten if specified. If less than zero
 	 *                            or not specified, the highest power less
-	 *                            than <i>$value</i> will be used.
+	 *                            than <code>$value</code> will be used.
 	 * @param boolean $iec_units optional. Whether or not to use IEC binary
 	 *                            multiple prefixed units (Mebibyte). Defaults
 	 *                            to using canonical units.
@@ -1050,8 +1051,9 @@ class SwatString extends SwatObject
 	 * @param string $input the string to pad.
 	 * @param int $pad_length length in characters to pad to.
 	 * @param string $pad_string string to use for padding.
-	 * @param int $pad_type type of padding to use: STR_PAD_LEFT,
-	 *                       STR_PAD_RIGHT, or STR_PAD_BOTH.
+	 * @param int $pad_type type of padding to use: <code>STR_PAD_LEFT</code>,
+	 *                       <code>STR_PAD_RIGHT</code>, or
+	 *                       <code>STR_PAD_BOTH</code>.
 	 *
 	 * @return string the padded string.
 	 */
@@ -1101,8 +1103,8 @@ class SwatString extends SwatObject
 	 *
 	 * If the string can not be converted to an integer, the method returns
 	 * null. If the number has values after the decimal point, the value is
-	 * rounded according to the rounding rules for
-	 * {@link http://php.net/manual/en/function.intval.php intval()}.
+	 * rounded according to the rounding rules for PHP's
+	 * {@link http://php.net/manual/en/function.intval.php intval} function.
 	 *
 	 * If the number is too large to fit in PHP's integer range (depends on
 	 * system architecture), an exception is thrown.
@@ -1191,7 +1193,8 @@ class SwatString extends SwatObject
 	// {{{ public static function toList()
 
 	/**
-	 * Convert an iterabled variable into a human-readable deliminated list.
+	 * Convert an iterable object or array into a human-readable deliminated
+	 * list.
 	 *
 	 * @param array|Iterator $iterator the object to convert to a list.
 	 * @param string $conjunction the list's conjunction. Usually 'and' or
@@ -1350,7 +1353,8 @@ class SwatString extends SwatObject
 	 *
 	 * By signing serialized data, it is possible to detect tampering of
 	 * serialized data. This is useful if serialized data is accepted from
-	 * user editable $_GET, $_POST or $_COOKIE data.
+	 * user editable <code>$_GET</code>, <code>$_POST</code> or
+	 * <code>$_COOKIE data</code>.
 	 *
 	 * @param mixed $data the data to serialize.
 	 * @param string $salt the signature salt.
@@ -1473,7 +1477,8 @@ class SwatString extends SwatObject
 	 *   is the correct one. Other representations ("overlong forms")
 	 *   are not valid. Earlier UTF-8 specifications did not prohibit
 	 *   overlong forms, though suggest emitting a warning when one is
-	 *   encountered. This function DOES NOT CHECK FOR OVERLONG FORMS!
+	 *   encountered. This function <stromg>does not check for overlong
+	 *   forms!</strong>
 	 *
 	 * @param string $string the string to check.
 	 *
