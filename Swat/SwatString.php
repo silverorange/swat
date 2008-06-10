@@ -1193,7 +1193,7 @@ class SwatString extends SwatObject
 	// {{{ public static function toList()
 
 	/**
-	 * Convert an iterable object or array into a human-readable deliminated
+	 * Convert an iterable object or array into a human-readable, delimited
 	 * list.
 	 *
 	 * @param array|Iterator $iterator the object to convert to a list.
