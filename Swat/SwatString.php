@@ -421,7 +421,7 @@ class SwatString extends SwatObject
 	 * The generated name can be used for things like database identifiers and
 	 * site URI fragments.
 	 *
-	 * example:
+	 * Example:
 	 * <code>
 	 * $string = 'The quick brown fox jumped over the lazy dogs.';
 	 * // displays 'thequickbrown'
@@ -478,7 +478,7 @@ class SwatString extends SwatObject
 	 * This method will properly account for any XHTML entities that may be
 	 * present in the given string.
 	 *
-	 * example:
+	 * Example:
 	 * <code>
 	 * $string = 'The quick brown fox jumped over the lazy dogs.';
 	 * // displays 'The quick brown ...'
@@ -560,7 +560,7 @@ class SwatString extends SwatObject
 	 * This method will properly account for any XHTML entities that may be
 	 * present in the given string.
 	 *
-	 * example:
+	 * Example:
 	 * <code>
 	 * $string = 'The quick brown fox jumped over the lazy dogs.';
 	 * // displays 'The quick ... dogs.'
