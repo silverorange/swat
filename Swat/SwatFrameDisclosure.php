@@ -92,6 +92,17 @@ class SwatFrameDisclosure extends SwatDisclosure
 	}
 
 	// }}}
+	// {{{ protected function getContainerDivTag()
+
+	protected function getContainerDivTag()
+	{
+		$div = new SwatHtmlTag('div');
+		$div->class = 'swat-disclosure-container swat-frame-disclosure-container';
+
+		return $div;
+	}
+
+	// }}}
 	// {{{ protected function getSpanTag()
 
 	protected function getSpanTag()
