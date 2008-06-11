@@ -292,7 +292,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 			if (isset($GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$region])) {
 				$data = $GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$region];
 
-				if (strlen($data['dstshortname']) > 0 )
+				if ($data['dstshortname'] != '')
 					$title.= sprintf(' (%s/%s)',
 						$data['shortname'], $data['dstshortname']);
 				else

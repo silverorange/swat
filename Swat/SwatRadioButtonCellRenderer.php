@@ -222,7 +222,7 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 	{
 		$copy = parent::copy($id_suffix);
 
-		if (strlen($id_suffix) > 0)
+		if ($id_suffix != '')
 			$copy->id = $copy->id.$id_suffix;
 
 		return $copy;

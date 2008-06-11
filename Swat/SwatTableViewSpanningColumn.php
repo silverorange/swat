@@ -69,7 +69,7 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 	{
 		$offset = $this->offset;
 
-		if (strlen($this->title) > 0) {
+		if ($this->title != '') {
 			if ($offset == 0)
 				$offset = 1;
 

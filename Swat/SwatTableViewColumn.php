@@ -154,7 +154,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function hasHeader()
 	{
-		return ($this->visible && (strlen($this->title) > 0));
+		return ($this->visible && $this->title != '');
 	}
 
 	// }}}
@@ -188,7 +188,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function displayHeader()
 	{
-		if (strlen($this->title) == 0)
+		if ($this->title == '')
 			$title = '&nbsp;';
 		else
 			$title = $this->title;
@@ -550,7 +550,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	{
 		$copy = parent::copy($id_suffix);
 
-		if (strlen($id_suffix) > 0 && $copy->id !== null)
+		if ($id_suffix != '' && $copy->id !== null)
 			$copy->id = $copy->id.$id_suffix;
 
 		if ($this->input_cell !== null) {

@@ -569,13 +569,13 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 
 		foreach ($this->fields as $field) {
 			$field_javascript = $field->getRendererInlineJavaScript();
-			if (strlen($field_javascript) > 0)
+			if ($field_javascript != '')
 				$javascript.= "\n".$field_javascript;
 		}
 
 		foreach ($this->fields as $field) {
 			$field_javascript = $field->getInlineJavaScript();
-			if (strlen($field_javascript) > 0)
+			if ($field_javascript != '')
 				$javascript.= "\n".$field_javascript;
 		}
 

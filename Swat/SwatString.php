@@ -194,7 +194,7 @@ class SwatString extends SwatObject
 			// ignore paragraphs containing all whitespace or empty paragraphs.
 			// this prevents empty paragraph tags from appearing in the
 			// returned string
-			if (strlen(trim($paragraph)) == 0)
+			if (trim($paragraph) == '')
 				continue;
 
 			$blocklevel_started =
@@ -436,8 +436,13 @@ class SwatString extends SwatObject
 	 */
 	public static function condenseToName($string, $max_length = 15)
 	{
-		if (strlen($string) == 0)
+		if (!is_string($string)) {
+			$string = strval($string);
+		}
+
+		if ($string == '') {
 			return $string;
+		}
 
 		// remove tags and make lowercase
 		$string = strip_tags(strtolower($string));

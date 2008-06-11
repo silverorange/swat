@@ -104,7 +104,7 @@ class SwatToolbar extends SwatDisplayableContainer
 			ob_start();
 			$child->display();
 			$content = ob_get_clean();
-			if (strlen($content) > 0)
+			if ($content != '')
 				echo '<li>', $content, '</li>';
 		}
 	}

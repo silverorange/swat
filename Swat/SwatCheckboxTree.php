@@ -162,7 +162,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		$parent_index = '')
 	{
 		// build a unique id of the indexes of the tree
-		if (strlen($parent_index) == 0) {
+		if ($parent_index == '') {
 			// index of the first node is just the node index
 			$index = $node->getIndex();
 		} else {
@@ -203,7 +203,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 			echo '</ul>';
 		}
 
-		if (strlen($parent_index) != 0)
+		if ($parent_index != '')
 			echo '</li>';
 
 		// count checkable nodes
