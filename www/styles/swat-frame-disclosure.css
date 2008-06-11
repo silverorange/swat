@@ -5,8 +5,8 @@
  * already included.
  */
 
-.swat-frame-disclosure .swat-disclosure-anchor-opened,
-.swat-frame-disclosure .swat-disclosure-anchor-closed {
+.swat-frame-disclosure .swat-frame-title .swat-disclosure-anchor-opened,
+.swat-frame-disclosure .swat-frame-title .swat-disclosure-anchor-closed {
 	top: 0;
 	margin: 0;
 	padding: 0 5px 0 24px;
@@ -20,6 +20,7 @@
 	color: #333;
 }
 
-.swat-frame-disclosure .swat-disclosure-container {
+.swat-frame-disclosure .swat-frame-disclosure-container,
+.swat-disclosure-control-opened .swat-frame-disclosure-container {
 	border: 0;
 }
