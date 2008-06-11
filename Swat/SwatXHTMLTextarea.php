@@ -55,7 +55,7 @@ class SwatXHTMLTextarea extends SwatTextarea
 
 		static $xhtml_template = '';
 
-		if (strlen($xhtml_template) == 0) {
+		if ($xhtml_template == '') {
 			$xhtml_template = <<<XHTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">

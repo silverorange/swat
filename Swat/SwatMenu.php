@@ -115,7 +115,7 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 			ob_start();
 			$item->display();
 			$content = ob_get_clean();
-			if (strlen($content) > 0) {
+			if ($content != '') {
 				$li_tag->setContent($content, 'text/xml');
 				$li_tag->display();
 

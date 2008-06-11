@@ -130,7 +130,7 @@ class SwatListEntry extends SwatEntry
 
 		if (!isset($data[$this->id])) {
 			$this->value = null;
-		} elseif (strlen($data[$this->id]) == 0) {
+		} elseif ($data[$this->id] == '') {
 			$this->value = null;
 		} else {
 			$this->value = $data[$this->id];

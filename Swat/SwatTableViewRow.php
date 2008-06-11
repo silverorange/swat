@@ -198,7 +198,7 @@ abstract class SwatTableViewRow extends SwatUIObject
 	{
 		$copy = parent::copy($id_suffix);
 
-		if (strlen($id_suffix) > 0 && $copy->id !== null)
+		if ($id_suffix != '' && $copy->id !== null)
 			$copy->id = $copy->id.$id_suffix;
 
 		return $copy;

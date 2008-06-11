@@ -635,7 +635,7 @@ class SwatUI extends SwatObject
 		if (preg_match('/^(.*)\[(.*)\]$/u', $name, $regs)) {
 			$array_property = true;
 			$name = $regs[1];
-			$array_key = strlen($regs[2]) == 0 ? null : $regs[2];
+			$array_key = ($regs[2] == '') ? null : $regs[2];
 		}
 
 		if (!array_key_exists($name, $class_properties)) {

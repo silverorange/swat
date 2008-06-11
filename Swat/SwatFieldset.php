@@ -91,8 +91,8 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 		if ($this->title !== null) {
 			$legend_tag = new SwatHtmlTag('legend');
 
-		if (strlen($this->access_key) > 0)
-			$legend_tag->accesskey = $this->access_key;
+			if ($this->access_key != '')
+				$legend_tag->accesskey = $this->access_key;
 
 			$legend_tag->setContent($this->title);
 			$legend_tag->display();

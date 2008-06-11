@@ -360,13 +360,13 @@ class SwatEntry extends SwatInputControl implements SwatState
 
 		if ($this->autocomplete) {
 			$id = $this->id;
-			if (isset($data[$id]) && strlen($data[$id]) > 0) {
+			if (isset($data[$id]) && $data[$id] != '') {
 				$value = $data[$id];
 			}
 		} else {
 			if (isset($data[$this->id.'_nonce'])) {
 				$id = $data[$this->id.'_nonce'];
-				if (isset($data[$id]) && strlen($data[$id]) > 0) {
+				if (isset($data[$id]) && $data[$id] != '') {
 					$value = $data[$id];
 				}
 			}

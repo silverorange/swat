@@ -167,7 +167,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$replicator_field = isset($data[$this->getId().'_replicators']) ?
 			$data[$this->getId().'_replicators'] : null;
 
-		if ($replicator_field === null || strlen($replicator_field) == 0)
+		if ($replicator_field === null || $replicator_field == '')
 			// use generated ids
 			for ($i = 0; $i < $this->number; $i++)
 				$this->replicators[] = $i;

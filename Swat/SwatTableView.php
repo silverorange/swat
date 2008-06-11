@@ -961,7 +961,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 		$footer_content = ob_get_clean();
 
-		if (strlen($footer_content) > 0) {
+		if ($footer_content != '') {
 			$tfoot_tag = new SwatHtmlTag('tfoot');
 			if ($this->use_invalid_tfoot_ordering)
 				$tfoot_tag->class = 'swat-table-view-invalid-tfoot-ordering';
@@ -1056,7 +1056,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 			foreach ($this->columns as $column) {
 				if ($column->visible) {
 					$column_javascript = $column->getRendererInlineJavaScript();
-					if (strlen($column_javascript) > 0)
+					if ($column_javascript != '')
 						$javascript.= "\n".$column_javascript;
 				}
 			}
@@ -1064,7 +1064,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 			foreach ($this->spanning_columns as $column) {
 				if ($column->visible) {
 					$column_javascript = $column->getRendererInlineJavaScript();
-					if (strlen($column_javascript) > 0)
+					if ($column_javascript != '')
 						$javascript.= "\n".$column_javascript;
 				}
 			}
@@ -1073,7 +1073,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 		foreach ($this->columns as $column) {
 			if ($column->visible) {
 				$column_javascript = $column->getInlineJavaScript();
-				if (strlen($column_javascript) > 0)
+				if ($column_javascript != '')
 					$javascript.= "\n".$column_javascript;
 			}
 		}
@@ -1081,7 +1081,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 		foreach ($this->spanning_columns as $column) {
 			if ($column->visible) {
 				$column_javascript = $column->getInlineJavaScript();
-				if (strlen($column_javascript) > 0)
+				if ($column_javascript != '')
 					$javascript.= "\n".$column_javascript;
 			}
 		}
@@ -1089,7 +1089,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 		foreach ($this->extra_rows as $row) {
 			if ($row->visible) {
 				$row_javascript = $row->getInlineJavaScript();
-				if (strlen($row_javascript) > 0)
+				if ($row_javascript != '')
 					$javascript.= "\n".$row_javascript;
 			}
 		}

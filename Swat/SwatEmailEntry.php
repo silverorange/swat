@@ -33,7 +33,7 @@ class SwatEmailEntry extends SwatEntry
 
 		$this->value = trim($this->value);
 
-		if (strlen($this->value) == 0) {
+		if ($this->value == '') {
 			$this->value = null;
 			return;
 		}

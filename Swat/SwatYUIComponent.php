@@ -95,10 +95,10 @@ class SwatYUIComponent extends SwatObject
 	 */
 	public function addJavaScript($component_directory = '', $filename = '')
 	{
-		if (strlen($component_directory) == 0)
+		if ($component_directory == '')
 			$component_directory = $this->id;
 
-		if (strlen($filename) == 0)
+		if ($filename == '')
 			$filename = $this->id;
 
 		$modes = array(
@@ -152,10 +152,10 @@ class SwatYUIComponent extends SwatObject
 	public function addStyleSheet($component_directory = '', $filename = '',
 		$has_min_version = true)
 	{
-		if (strlen($component_directory) == 0)
+		if ($component_directory == '')
 			$component_directory = $this->id;
 
-		if (strlen($filename) == 0)
+		if ($filename == '')
 			$filename = $this->id;
 
 		$modes = array(
