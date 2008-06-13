@@ -34,7 +34,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 
 	/**
 	 * A value or array of values to substitute into the
-	 * {@link SwatImageCellRenderer:;$image} property of this cell
+	 * {@link SwatImageCellRenderer::$image} property of this cell
 	 *
 	 * The value property may be specified either as an array of values or as
 	 * a single value. If an array is passed, a call to vsprintf() is done
