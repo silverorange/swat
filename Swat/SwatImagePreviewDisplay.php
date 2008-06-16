@@ -6,12 +6,13 @@ require_once 'Swat/SwatImageDisplay.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
- * Image display control
+ * Image preview display control
  *
- * This control simply displays a static image.
+ * This control displays an image and uses a lightbox-like effect to display
+ * another image when the first image is clicked.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2008 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImagePreviewDisplay extends SwatImageDisplay
@@ -85,6 +86,8 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 		$this->addStyleSheet(
 			'packages/swat/styles/swat-image-preview-display.css',
 			Swat::PACKAGE_ID);
+
+		$this->title = Swat::_('View Larger Image');
 	}
 
 	// }}}
@@ -98,18 +101,22 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 		if (!$this->visible)
 			return;
 
-		$anchor_tag = new SwatHtmlTag('a');
-		$anchor_tag->id = $this->id.'_link';
-		$anchor_tag->title = Swat::_('View Larger Image');
-		$anchor_tag->class = 'swat-image-preview-display-link';
-		$anchor_tag->href = $this->preview_image;
-		$anchor_tag->open();
+		if ($this->preview_image === null) {
+			parent::display();
+		} else {
+			$anchor_tag = new SwatHtmlTag('a');
+			$anchor_tag->id = $this->id.'_link';
+			$anchor_tag->title = $this->title;
+			$anchor_tag->class = 'swat-image-preview-display-link';
+			$anchor_tag->href = $this->preview_image;
+			$anchor_tag->open();
 
-		parent::display();
+			parent::display();
 
-		$anchor_tag->close();
+			$anchor_tag->close();
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+			Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		}
 	}
 
 	// }}}
