@@ -152,7 +152,7 @@ XHTML;
 			$error = strtolower($error);
 
 			$error = str_replace('xmlparseentityref: no name',
-				Swat::_('unescaped apmersand. Use &amp;amp; instead of &amp;'),
+				Swat::_('unescaped ampersand. Use &amp;amp; instead of &amp;'),
 				$error);
 
 			$error = str_replace('starttag: invalid element name',
