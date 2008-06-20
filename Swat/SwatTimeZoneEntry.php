@@ -198,7 +198,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	{
 		$areas_flydown = new SwatFlydown($this->id.'_areas');
 		$areas_flydown->addOptionsByArray($this->areas);
-		$areas_flydown->show_blank = false;
+		$areas_flydown->show_blank = true;
+		$areas_flydown->blank_title = Swat::_('choose region …');
 		$this->addCompositeWidget($areas_flydown, 'areas_flydown');
 
 		$regions_flydown = new SwatCascadeFlydown($this->id.'_regions');
