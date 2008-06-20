@@ -370,14 +370,15 @@ class SwatFileEntry extends SwatInputControl
 	// {{{ public static function getMaximumFileUploadSize()
 
 	/**
-	 * Returns the size (in bytes) of the upload size limit of the php
-	 * configuration.
+	 * Returns the size (in bytes) of the upload size limit of the PHP
+	 * configuration
 	 *
 	 * The maximum upload size is calculated based on the php ini values for
-	 * upload_max_filesize and post_max_size. Be aware that web server and POST
-	 * data settings can also effect upload size limits.
+	 * <code>upload_max_filesize</code> and <code>post_max_size</code>. Be
+	 * aware that web server and POST data settings can also affect the
+	 * maximum upload size limit.
 	 *
-	 * @return integer The maximum upload size in bytes.
+	 * @return integer the maximum upload size in bytes.
 	 */
 	public static function getMaximumFileUploadSize()
 	{
