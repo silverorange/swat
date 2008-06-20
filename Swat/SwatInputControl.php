@@ -50,7 +50,7 @@ abstract class SwatInputControl extends SwatControl
 	 * Gets the form that this control is contained in
 	 *
 	 * You can also get the parent form with the
-	 * {@link SwatWidget::getFirstAncestor() method but this method is more
+	 * {@link SwatUIObject::getFirstAncestor()} method but this method is more
 	 * convenient and throws an exception .
 	 *
 	 * @return SwatForm the form this control is in.
