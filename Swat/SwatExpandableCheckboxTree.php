@@ -236,7 +236,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		$child_nodes = $node->getChildren();
 
 		// build a unique id of the indexes of the tree
-		if ($parent_index == '') {
+		if ($parent_index === '' || $parent_index === null) {
 			// index of the first node is just the node index
 			$index = $node->getIndex();
 		} else {
@@ -319,8 +319,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			$div_tag->close();
 		}
 
-		if ($parent_index != '')
+		if ($parent_index !== '' && $parent_index !== null) {
 			$li_tag->close();
+		}
 
 		// count checkable nodes
 		if ($node->value !== null)
