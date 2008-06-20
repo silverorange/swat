@@ -1647,7 +1647,7 @@ class SwatString extends SwatObject
 	}
 
 	// }}}
-	//{{{ private static function parseNegativeNotation
+	//{{{ private static function parseNegativeNotation()
 
 	private static function parseNegativeNotation($string)
 	{
