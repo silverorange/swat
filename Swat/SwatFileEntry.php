@@ -54,6 +54,13 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public $access_key = null;
 
+	/**
+	 * Display maximum file upload size
+	 *
+	 * @var boolean
+	 */
+	public $display_maximum_upload_size = false;
+
 	// }}}
 	// {{{ private properties
 
@@ -106,6 +113,15 @@ class SwatFileEntry extends SwatInputControl
 			$input_tag->accept = implode(',', $this->accept_mime_types);
 
 		$input_tag->display();
+
+		if ($this->display_maximum_upload_size) {
+			$div_tag = new SwatHtmlTag('div');
+			$div_tag->class = 'swat-note';
+			$div_tag->setContent(sprintf(Swat::_('Maximum file size %s.'),
+				SwatString::byteFormat(self::getMaximumFileUploadSize())));
+
+			$div_tag->display();
+		}
 	}
 
 	// }}}
@@ -351,6 +367,25 @@ class SwatFileEntry extends SwatInputControl
 	}
 
 	// }}}
+	// {{{ public static function getMaximumFileUploadSize()
+
+	/**
+	 * Returns the size (in bytes) of the upload size limit of the php
+	 * configuration.
+	 *
+	 * The maximum upload size is calculated based on the php ini values for
+	 * upload_max_filesize and post_max_size. Be aware that web server and POST
+	 * data settings can also effect upload size limits.
+	 *
+	 * @return integer The maximum upload size in bytes.
+	 */
+	public static function getMaximumFileUploadSize()
+	{
+		return min(self::parseFileUploadSize(ini_get('post_max_size')),
+			self::parseFileUploadSize(ini_get('upload_max_filesize')));
+	}
+
+	// }}}
 	// {{{ protected function getValidationMessage()
 
 	/**
@@ -419,6 +454,30 @@ class SwatFileEntry extends SwatInputControl
 			return $this->generateUniqueFileName($path, $count + 1);
 		else
 			return $file_name;
+	}
+
+	// }}}
+	// {{{ private static function parseFileUploadSize()
+
+	private static function parseFileUploadSize($ini_value)
+	{
+		$size  = strtoupper(substr($ini_value, -1));
+		$value = (integer) substr($ini_value, 0, -1);
+
+		switch($size) {
+		case 'P':
+			$value *= 1024;
+		case 'T':
+			$value *= 1024;
+		case 'G':
+			$value *= 1024;
+		case 'M':
+			$value *= 1024;
+		case 'K':
+			$value *= 1024;
+		}
+
+		return $value;
 	}
 
 	// }}}
