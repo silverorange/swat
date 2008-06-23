@@ -181,6 +181,15 @@ ul.swat-radio-list li {
 	line-height: 2;
 }
 
+.swat-grouping-form-field .swat-form-field {
+	padding-top: 1em;
+}
+
+.swat-grouping-form-field .swat-form-field label {
+	color: #666;
+	font-weight: normal;
+}
+
 
 /* Swat Date Entry and SwatTimeEntry*/
 
