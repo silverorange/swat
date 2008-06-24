@@ -92,7 +92,7 @@ class SwatDBDataObject extends SwatObject
 	// {{{ private properties
 
 	/**
-	 * Cache of public properties array indexed by class name
+	 * Cache of public property names indexed by class name
 	 *
 	 * @var array
 	 */
@@ -477,21 +477,28 @@ class SwatDBDataObject extends SwatObject
 	{
 		$class = get_class($this);
 
+		// cache class public property names since reflection is expensive
 		if (!array_key_exists($class, self::$public_properties_cache)) {
 			$public_properties = array();
 
 			$reflector = new ReflectionClass($class);
 			foreach ($reflector->getProperties() as $property) {
 				if ($property->isPublic() && !$property->isStatic()) {
-					$public_properties[$property->getName()] =
-						$property->getValue($this);
+					$public_properties[] = $property->getName();
 				}
 			}
 
 			self::$public_properties_cache[$class] = $public_properties;
 		}
 
-		return self::$public_properties_cache[$class];
+		// get property values for this object
+		$names = self::$public_properties_cache[$class];
+		$properties = array();
+		foreach ($names as $name) {
+			$properties[$name] = $this->$name;
+		}
+
+		return $properties;
 	}
 
 	// }}}
