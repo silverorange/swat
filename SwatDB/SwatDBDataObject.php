@@ -89,6 +89,16 @@ class SwatDBDataObject extends SwatObject
 	protected $read_only = false;
 
 	// }}}
+	// {{{ private properties
+
+	/**
+	 * Cache of public properties array indexed by class name
+	 *
+	 * @var array
+	 */
+	private static $public_properties_cache = array();
+
+	// }}}
 	// {{{ public function __construct()
 
 	/**
@@ -463,16 +473,25 @@ class SwatDBDataObject extends SwatObject
 	 *                of this data-object. The array is of the form
 	 *                'property name' => 'property value'.
 	 */
-	private function &getPublicProperties()
+	private function getPublicProperties()
 	{
-		$public_properties = array();
-		$reflector = new ReflectionClass(get_class($this));
-		foreach ($reflector->getProperties() as $property)
-			if ($property->isPublic() && !$property->isStatic())
-				$public_properties[$property->getName()] =
-					$property->getValue($this);
+		$class = get_class($this);
 
-		return $public_properties;
+		if (!array_key_exists($class, self::$public_properties_cache)) {
+			$public_properties = array();
+
+			$reflector = new ReflectionClass($class);
+			foreach ($reflector->getProperties() as $property) {
+				if ($property->isPublic() && !$property->isStatic()) {
+					$public_properties[$property->getName()] =
+						$property->getValue($this);
+				}
+			}
+
+			self::$public_properties_cache[$class] = $public_properties;
+		}
+
+		return self::$public_properties_cache[$class];
 	}
 
 	// }}}
