@@ -250,13 +250,11 @@ ul.swat-radio-list li {
 .swat-header-form-field input.swat-primary,
 .swat-footer-form-field input.swat-primary {
 	font-weight: bold;
-	color: #000;
 }
 
 .swat-header-form-field .swat-button,
 .swat-footer-form-field .swat-button {
 	margin-right: 0.5em;
-	color: #333;
 }
 
 .swat-button-compact {
