@@ -644,12 +644,94 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 
 		foreach ($this->objects as $object) {
 			$value = $object->getInternalValue($name);
-			if (isset($sub_data_objects[$value]))
+			if (isset($sub_data_objects[$value])) {
 				$object->$name = $sub_data_objects[$value];
+			}
 		}
 	}
 
 	// }}}
+
+	// manipulating of sub-recordsets
+	// {{{ public function loadAllSubRecordsets()
+
+	/**
+	 * Efficiently loads sub-recordsets for records in this recordset
+	 *
+	 * @param string $name the name of the sub-recordset.
+	 * @param string $wrapper the name of the recordset wrapper class to use
+	 *                         for the sub-recordsets.
+	 * @param string $table the name of the table containing sub-records.
+	 * @param string $binding_field the name of the binding field in the
+	 *                               table containing sub-records. This should
+	 *                               be a field that contains index values from
+	 *                               this recordset (i.e., a foreign key).
+	 * @param string $where optional additional where clause to apply to the
+	 *                       sub-records.
+	 * @param string $order_by optional ordering of sub-recordsets.
+	 *
+	 * @throws SwatDBException if this recordset does not define an index
+	 *                         field.
+	 */
+	public function loadAllSubRecordsets($name, $wrapper,
+		$table, $binding_field, $where = '', $order_by = '')
+	{
+		$this->checkDB();
+
+		if ($this->index_field === null) {
+			throw new SwatDBException(sprintf(
+				'Index field must be specified in the recordset wrapper '.
+				'class (%s::init()) in order to attach sub-recordsets.',
+				get_class($this)));
+		}
+
+		// get record ids
+		$record_ids = array();
+		foreach ($this as $record) {
+			$record_ids[] = $record->{$this->index_field};
+		}
+		// note: this only works when index_field is an integer which is
+		// currently true anyway
+		$record_ids = $this->db->implodeArray($record_ids, 'integer');
+
+		// build SQL to select all records
+		$sql = sprintf('select %1$s.* from %1$s
+			where %2$s in (%3$s)',
+			$table, $binding_field, $record_ids);
+
+		if ($where != '') {
+			$sql.= ' and '.$where;
+		}
+
+		$sql.= ' order by '.$binding_field;
+		if ($order_by != '') {
+			$sql.= ', '.$order_by;
+		}
+
+		// get all records
+		$recordset = SwatDB::query($this->db, $sql, $wrapper);
+
+		// assign empty recordsets for all records in this set
+		foreach ($this as $record) {
+			$recordset = new $wrapper();
+			$record->$name = $recordset;
+		}
+
+		// split records into separate recordsets for records in this set
+		$current_record_id = null;
+		$current_recordset = null;
+		foreach ($recordset as $record) {
+			$record_id = $record->getInternalValue($binding_field);
+			if ($record_id !== $current_record_id) {
+				$current_record_id = $record_id;
+				$current_recordset = $this[$record_id]->$name;
+			}
+			$current_recordset->add($record);
+		}
+	}
+
+	// }}}
+
 
 	// manipulating of objects
 	// {{{ public function getArray()
