@@ -76,6 +76,24 @@ class SwatPagination extends SwatControl
 	public $current_record = 0;
 
 	/**
+	 * The text label displayed in the Next link
+	 *
+	 * Defaults to "Next".
+	 *
+	 * @var string
+	 */
+	public $next_label;
+
+	/**
+	 * The text label displayed in the Previous link
+	 *
+	 * Defaults to "Previous".
+	 *
+	 * @var string
+	 */
+	public $previous_label;
+
+	/**
 	 * Displayed pagination parts
 	 *
 	 * The display parts property is a bitwise combination of the
@@ -149,6 +167,9 @@ class SwatPagination extends SwatControl
 
 		$this->display_parts  = self::POSITION | self::NEXT |
 		                        self::PREV | self::PAGES;
+
+		$this->previous_label = Swat::_('Previous');
+		$this->next_label = Swat::_('Next');
 
 		$this->addStyleSheet('packages/swat/styles/swat-pagination.css',
 			Swat::PACKAGE_ID);
@@ -280,14 +301,14 @@ class SwatPagination extends SwatControl
 			$anchor = new SwatHtmlTag('a');
 			$anchor->href = sprintf($link, (string) $this->prev_page);
 			// this is a non-breaking space
-			$anchor->setContent(sprintf(Swat::_('%sPrevious'), '« '));
+			$anchor->setContent('« ' . $this->previous_label);
 			$anchor->class = 'swat-pagination-nextprev';
 			$anchor->display();
 		} else {
 			$span = new SwatHtmlTag('span');
 			$span->class = 'swat-pagination-nextprev';
 			// this is a non-breaking space
-			$span->setContent(sprintf(Swat::_('%sPrevious'), '« '));
+			$span->setContent('« ' . $this->previous_label);
 			$span->display();
 		}
 	}
@@ -325,14 +346,14 @@ class SwatPagination extends SwatControl
 			$anchor = new SwatHtmlTag('a');
 			$anchor->href = sprintf($link, (string) $this->next_page);
 			// this is a non-breaking space
-			$anchor->setContent(sprintf(Swat::_('Next%s'), ' »'));
+			$anchor->setContent($this->next_label . ' »');
 			$anchor->class = 'swat-pagination-nextprev';
 			$anchor->display();
 		} else {
 			$span = new SwatHtmlTag('span');
 			$span->class = 'swat-pagination-nextprev';
 			// this is a non-breaking space
-			$span->setContent(sprintf(Swat::_('Next%s'), ' »'));
+			$span->setContent($this->next_label . ' »');
 			$span->display();
 		}
 	}
