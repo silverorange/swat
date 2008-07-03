@@ -352,6 +352,22 @@ class SwatListEntry extends SwatEntry
 	}
 
 	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this entry
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                entry.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-list-entry');
+		$classes = array_merge($classes, parent::getCSSClassNames());
+		return $classes;
+	}
+
+	// }}}
 }
 
 ?>

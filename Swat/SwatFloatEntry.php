@@ -119,6 +119,22 @@ class SwatFloatEntry extends SwatNumericEntry
 	}
 
 	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this entry
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                entry.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-float-entry');
+		$classes = array_merge($classes, parent::getCSSClassNames());
+		return $classes;
+	}
+
+	// }}}
 }
 
 ?>
