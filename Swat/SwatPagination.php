@@ -78,7 +78,7 @@ class SwatPagination extends SwatControl
 	/**
 	 * The text label displayed in the Next link
 	 *
-	 * Defaults to "Next".
+	 * Defaults to "Next »".
 	 *
 	 * @var string
 	 */
@@ -87,7 +87,7 @@ class SwatPagination extends SwatControl
 	/**
 	 * The text label displayed in the Previous link
 	 *
-	 * Defaults to "Previous".
+	 * Defaults to "« Previous".
 	 *
 	 * @var string
 	 */
