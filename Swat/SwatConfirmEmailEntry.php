@@ -57,6 +57,22 @@ class SwatConfirmEmailEntry extends SwatEmailEntry
 	}
 
 	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this entry
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                entry.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-confirm-email-entry');
+		$classes = array_merge($classes, parent::getCSSClassNames());
+		return $classes;
+	}
+
+	// }}}
 }
 
 ?>
