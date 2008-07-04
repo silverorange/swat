@@ -7,8 +7,7 @@ require_once 'Swat/SwatEntry.php';
 /**
  * A URL entry widget
  *
- * Automatically verifies that the value of the widget is a valid
- * URL.
+ * Automatically verifies that the value of the widget is a valid URL.
  *
  * @package   Swat
  * @copyright 2005-2008 silverorange
@@ -38,7 +37,7 @@ class SwatUrlEntry extends SwatEntry
 			return;
 		}
 
-		if ($this->validateUrl($this->value)) {
+		if (!$this->validateUrl($this->value)) {
 			$message = Swat::_('The URL you have entered is not '.
 				'properly formatted.');
 
@@ -52,16 +51,18 @@ class SwatUrlEntry extends SwatEntry
 	/**
 	 * Validates a URL
 	 *
-	 * This uses the PHP 5.2.x filter_var() function.
+	 * This uses the PHP 5.2.x {@link http://php.net/filter_var filter_var()}
+	 * function.
 	 *
 	 * @param string $value the URL to validate.
 	 *
-	 * @return boolean true if <i>$value</i> is a valid URL and
+	 * @return boolean true if <code>$value</code> is a valid URL and
 	 *                 false if it is not.
 	 */
 	protected function validateUrl($value)
 	{
-		$valid = (filter_var($this->value, FILTER_VALIDATE_URL) === false);
+		$flags = FILTER_FLAG_HOST_REQUIRED | FILTER_FLAG_SCHEME_REQUIRED;
+		$valid = (filter_var($value, FILTER_VALIDATE_URL, $flags) === false);
 		return $valid;
 	}
 
