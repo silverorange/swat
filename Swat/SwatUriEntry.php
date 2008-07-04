@@ -62,7 +62,7 @@ class SwatUriEntry extends SwatEntry
 	protected function validateUri($value)
 	{
 		$flags = FILTER_FLAG_HOST_REQUIRED | FILTER_FLAG_SCHEME_REQUIRED;
-		$valid = (filter_var($value, FILTER_VALIDATE_URL, $flags) === false);
+		$valid = (filter_var($value, FILTER_VALIDATE_URL, $flags) !== false);
 		return $valid;
 	}
 
