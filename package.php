@@ -6,7 +6,6 @@ require_once 'PEAR/PackageFileManager2.php';
 
 $version = '1.3.33';
 $notes = <<<EOT
-see ChangeLog
 EOT;
 
 $description =<<<EOT
@@ -60,7 +59,7 @@ $package->addReplacement('Swat/SwatUI.php', 'pear-config', '@DATA-DIR@', 'data_d
 
 $package->setPhpDep('5.1.5');
 $package->setPearinstallerDep('1.4.0');
-$package->addPackageDepWithChannel('required', 'Date', 'pear.php.net', '1.5.0a1');
+$package->addPackageDepWithChannel('required', 'Date', 'pear.silverorange.com.net', '1.5.0so5');
 $package->addPackageDepWithChannel('optional', 'Yui', 'pear.silverorange.com', '1.0.6');
 $package->addPackageDepWithChannel('optional', 'MDB2', 'pear.php.net', '2.2.2');
 $package->addPackageDepWithChannel('optional', 'ReCaptcha', 'pear.silverorange.com', '1.0.0');
