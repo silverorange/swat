@@ -28,15 +28,6 @@ require_once 'Swat/SwatHtmlTag.php';
  */
 class SwatRemoveInputCell extends SwatInputCell
 {
-	// {{{ public function __constuct()
-
-	public function __construct()
-	{
-		parent::__construct();
-		$this->addTangoAttribution();
-	}
-
-	// }}}
 	// {{{ public function init()
 
 	/**

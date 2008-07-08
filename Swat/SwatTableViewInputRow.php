@@ -127,8 +127,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$this->addJavaScript(
 			'packages/swat/javascript/swat-table-view-input-row.js',
 			Swat::PACKAGE_ID);
-
-		$this->addTangoAttribution();
 	}
 
 	// }}}
