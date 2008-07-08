@@ -521,6 +521,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	protected function displayButton()
 	{
 		$button = $this->getCompositeWidget('apply_button');
+		$button->setFromStock('apply');
 		$button->display();
 	}
 
@@ -539,7 +540,6 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$this->addCompositeWidget($flydown, 'action_flydown');
 
 		$button = new SwatButton($this->id.'_apply_button');
-		$button->setFromStock('apply');
 		$this->addCompositeWidget($button, 'apply_button');
 	}
 
