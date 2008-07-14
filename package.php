@@ -4,7 +4,7 @@
 
 require_once 'PEAR/PackageFileManager2.php';
 
-$version = '1.3.34';
+$version = '1.3.35';
 $notes = <<<EOT
 * made it possible to set the 'next' and 'previous' text for SwatPagination
 * added CSS classes to all SwatEntry widgets
