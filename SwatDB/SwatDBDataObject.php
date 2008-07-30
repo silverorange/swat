@@ -1054,10 +1054,15 @@ class SwatDBDataObject extends SwatObject
 	{
 		$data = array();
 
+		// unset subdataobjects that are not to be serialized
 		$serializable_sub_data_objects = $this->getSerializableSubDataObjects();
-		foreach ($this->sub_data_objects as $name => $object)
-			if (!in_array($name, $serializable_sub_data_objects))
+		$unset_objects = array();
+		foreach ($this->sub_data_objects as $name => $object) {
+			if (!in_array($name, $serializable_sub_data_objects)) {
+				$unset_objects[$name] = $this->getSubDataObject($name);
 				$this->unsetSubDataObject($name);
+			}
+		}
 
 		foreach ($this->getSerializablePrivateProperties() as $property)
 			$data[$property] = &$this->$property;
@@ -1070,7 +1075,14 @@ class SwatDBDataObject extends SwatObject
 			}
 		}
 
-		return serialize($data);
+		$serialized_data = serialize($data);
+
+		// restore unset sub-dataobjects on this object
+		foreach ($unset_objects as $name => $object) {
+			$this->setSubDataObject($name, $object);
+		}
+
+		return $serialized_data;
 	}
 
 	// }}}
