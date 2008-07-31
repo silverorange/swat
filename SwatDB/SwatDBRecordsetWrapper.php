@@ -732,8 +732,27 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 
 	// }}}
 
-
 	// manipulating of objects
+	// {{{ public function getIndexes()
+
+	/**
+	 * Gets the index values of the records in this recordset
+	 *
+	 * @return array the index values of the records in this recordset.
+	 */
+	public function getIndexes()
+	{
+		if ($this->index_field === null) {
+			throw new SwatDBException(sprintf(
+				'Index field must be specified in the recordset wrapper '.
+				'class (%s::init()) in order to get the record indexes.',
+				get_class($this)));
+		}
+
+		return array_keys($this->objects_by_index);
+	}
+
+	// }}}
 	// {{{ public function getArray()
 
 	/**
