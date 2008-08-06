@@ -195,7 +195,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	public function isExtendedCheckAllSelected()
 	{
 		$check_all = $this->getCompositeWidget('check_all');
-		return $check_all->extendedSelected();
+		return $check_all->isExtendedSelected();
 	}
 
 	// }}}
