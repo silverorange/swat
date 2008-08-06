@@ -35,6 +35,32 @@ class SwatCheckAll extends SwatCheckbox
 	 */
 	public $content_type = 'text/plain';
 
+	/**
+	 * Count for all items when displaying an extended-all checkbox
+	 *
+	 * When the check-all checkbox has been checked, an additional
+	 * checkbox will appear allowing the user to specify that they wish to
+	 * select all possible items. This is useful in cases where pagination
+	 * makes selecting all possible items impossible.
+	 *
+	 * @var integer
+	 */
+	public $extended_count = 0;
+
+	/**
+	 * Count for all visible items when displaying an extended-all checkbox
+	 *
+	 * @var integer
+	 */
+	public $visible_count = 0;
+
+	/**
+	 * Optional extended-all checkbox unit.
+	 *
+	 * Used for displaying a "check-all" message. Defaults to "items".
+	 */
+	public $unit;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -55,6 +81,19 @@ class SwatCheckAll extends SwatCheckbox
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript('packages/swat/javascript/swat-check-all.js',
 			Swat::PACKAGE_ID);
+	}
+
+	// }}}
+	// {{{ public function isExtendedSelected()
+
+	/**
+	 * Whether or not the extended-checkbox was checked
+	 *
+	 * @return boolean Whether or not the extended-checkbox was checked
+	 */
+	public function isExtendedSelected()
+	{
+		return $this->getCompositeWidget('extended_checkbox')->value;
 	}
 
 	// }}}
@@ -86,9 +125,48 @@ class SwatCheckAll extends SwatCheckbox
 		$label_tag->displayContent();
 		$label_tag->close();
 
+		if ($this->extended_count > $this->visible_count) {
+			$div_tag = new SwatHtmlTag('div');
+			$div_tag->id = $this->id.'_extended';
+			$div_tag->class = 'swat-hidden swat-extended-check-all';
+			$div_tag->open();
+			echo $this->getExtendedTitle();
+			$div_tag->close();
+		}
+
 		$div_tag->close();
 
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+	}
+
+	// }}}
+	// {{{ protected function getExtendedTitle()
+
+	protected function getExtendedTitle()
+	{
+		$locale = SwatI18NLocale::get();
+		$entity = ($this->unit === null) ? Swat::_('items') : $this->unit;
+
+		$checkbox = $this->getCompositeWidget('extended_checkbox');
+
+		ob_start();
+		$label_tag = new SwatHtmlTag('label');
+		$label_tag->for = $checkbox->id;
+		$label_tag->setContent(sprintf(Swat::_('Select all %s %s'),
+			$locale->formatNumber($this->extended_count), $entity));
+
+		$label_tag->open();
+		$checkbox->display();
+		$label_tag->displayContent();
+		$label_tag->close();
+		$checkbox_display = ob_get_clean();
+
+		$title = Swat::_('All %s %s on this page are selected. (%s)');
+
+		return sprintf($title,
+			$locale->formatNumber($this->visible_count),
+			$entity,
+			$checkbox_display);
 	}
 
 	// }}}
@@ -120,6 +198,15 @@ class SwatCheckAll extends SwatCheckbox
 		return sprintf("var %s_obj = new SwatCheckAll('%s');",
 			$this->id, $this->id);
 
+	}
+
+	// }}}
+	// {{{ protected function createCompositeWidgets()
+
+	protected function createCompositeWidgets()
+	{
+		$extended_checkbox = new SwatCheckbox();
+		$this->addCompositeWidget($extended_checkbox, 'extended_checkbox');
 	}
 
 	// }}}

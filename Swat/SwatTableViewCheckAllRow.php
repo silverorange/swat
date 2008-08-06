@@ -36,6 +36,32 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	public $content_type = 'text/plain';
 
+	/**
+	 * Count for all items when displaying an extended-all checkbox
+	 *
+	 * When the check-all checkbox has been checked, an additional
+	 * checkbox will appear allowing the user to specify that they wish to
+	 * select all possible items. This is useful in cases where pagination
+	 * makes selecting all possible items impossible.
+	 *
+	 * @var integer
+	 */
+	public $extended_count = 0;
+
+	/**
+	 * Count for all visible items when displaying an extended-all checkbox
+	 *
+	 * @var integer
+	 */
+	public $visible_count = 0;
+
+	/**
+	 * Optional extended-all checkbox unit.
+	 *
+	 * Used for displaying a "check-all" message. Defaults to "items".
+	 */
+	public $unit;
+
 	// }}}
 	// {{{ private properties
 
@@ -139,6 +165,19 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	}
 
 	// }}}
+	// {{{ public function isExtendedSelected()
+
+	/**
+	 * Whether or not the extended-checkbox was checked
+	 *
+	 * @return boolean Whether or not the extended-checkbox was checked
+	 */
+	public function isExtendedSelected()
+	{
+		return $this->check_all->isExtendedSelected();
+	}
+
+	// }}}
 	// {{{ public function display()
 
 	/**
@@ -187,7 +226,12 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 			$this->check_all->title = $this->title;
 			$this->check_all->content_type = $this->content_type;
 		}
+
+		$this->check_all->extended_count = $this->extended_count;
+		$this->check_all->visible_count = $this->visible_count;
+		$this->check_all->unit = $this->unit;
 		$this->check_all->display();
+
 		$td_tag->close();
 
 		$tr_tag->close();

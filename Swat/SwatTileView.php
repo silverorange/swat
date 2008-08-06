@@ -52,6 +52,32 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public $check_all_content_type = 'text/plain';
 
+	/**
+	 * Count for displaying an extended-all checkbox
+	 *
+	 * When the check-all checkbox has been checked, an additional
+	 * checkbox will appear allowing the user to specify that they wish to
+	 * select all possible items. This is useful in cases where pagination
+	 * makes selecting all possible items impossible.
+	 *
+	 * @var integer
+	 */
+	public $check_all_extended_count = 0;
+
+	/**
+	 * Count for all visible items when displaying an extended-all checkbox
+	 *
+	 * @var integer
+	 */
+	public $check_all_visible_count = 0;
+
+	/**
+	 * Optional extended-all checkbox unit.
+	 *
+	 * Used for displaying a "check-all" message. Defaults to "items".
+	 */
+	public $check_all_unit;
+
 	// }}}
 	// {{{ protected properties
 
@@ -149,15 +175,27 @@ class SwatTileView extends SwatView implements SwatUIParent
 		if (!$this->isInitialized())
 			$this->init();
 
-		if ($this->showCheckAll()) {
-			$check_all = $this->getCompositeWidget('check_all');
-			$check_all->process();
-		}
+		$check_all = $this->getCompositeWidget('check_all');
+		$check_all->process();
 
 		$this->processed = true;
 
 		if ($this->tile !== null)
 			$this->tile->process();
+	}
+
+	// }}}
+	// {{{ public function isExtendedCheckAllSelected()
+
+	/**
+	 * Whether or not the extended-check-all check-box was checked
+	 *
+	 * @return boolean Whether or not the extended-checkbox was checked
+	 */
+	public function isExtendedCheckAllSelected()
+	{
+		$check_all = $this->getCompositeWidget('check_all');
+		return $check_all->extendedSelected();
 	}
 
 	// }}}
@@ -203,10 +241,15 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 		if ($this->showCheckAll()) {
 			$check_all = $this->getCompositeWidget('check_all');
+
 			if ($this->check_all_title !== null) {
 				$check_all->title = $this->check_all_title;
 				$check_all->content_type = $this->check_all_content_type;
 			}
+
+			$check_all->extended_count = $this->check_all_extended_count;
+			$check_all->visible_count = $this->check_all_visible_count;
+			$check_all->unit = $this->check_all_unit;
 			$check_all->display();
 		}
 
