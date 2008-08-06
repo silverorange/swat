@@ -133,9 +133,9 @@ class SwatDate extends Date
 	// }}}
 	// {{{ public function __construct()
 
-	public function __construct($date = null)
+	public function __construct($date = null, $format = DATE_FORMAT_ISO)
 	{
-		parent::Date($date);
+		parent::Date($date, $format);
 	}
 
 	// }}}
