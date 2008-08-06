@@ -162,6 +162,15 @@ ul.swat-radio-list li {
 	display: inline;
 }
 
+.swat-extended-check-all {
+	padding: 10px;
+	margin: 10px;
+	background-color: #fffbc9;
+}
+
+.swat-extended-check-all input {
+	margin: 0 5px;
+}
 
 /* SwatFieldset */
 

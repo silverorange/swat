@@ -95,6 +95,8 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 	 */
 	public function process()
 	{
+		parent::process();
+
 		if ($this->getForm()->getHiddenField($this->id.'_submitted') === null)
 			return;
 

@@ -58,6 +58,32 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 	public $check_all_content_type = 'text/plain';
 
 	/**
+	 * Count for displaying an extended-all checkbox
+	 *
+	 * When the check-all checkbox has been checked, an additional
+	 * checkbox will appear allowing the user to specify that they wish to
+	 * select all possible items. This is useful in cases where pagination
+	 * makes selecting all possible items impossible.
+	 *
+	 * @var integer
+	 */
+	public $check_all_extended_count = 0;
+
+	/**
+	 * Count for all visible items when displaying an extended-all checkbox
+	 *
+	 * @var integer
+	 */
+	public $check_all_visible_count = 0;
+
+	/**
+	 * Optional extended-all checkbox unit.
+	 *
+	 * Used for displaying a "check-all" message. Defaults to "items".
+	 */
+	public $check_all_unit;
+
+	/**
 	 * Whether or not this column is responsible for highlighting selected
 	 * table-view rows
 	 *
@@ -105,16 +131,6 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 
 		$this->check_all->init();
 
-		/*
-		 * Ideally, setting the title and content type of the check-all row
-		 * would be done at display time. Unfortunately there is no way for
-		 * a column to access this time so we set the properties in init.
-		 */
-		if ($this->check_all_title !== null) {
-			$this->check_all->title = $this->check_all_title;
-			$this->check_all->content_type = $this->check_all_content_type;
-		}
-
 		if ($this->show_check_all)
 			$this->parent->appendRow($this->check_all);
 	}
@@ -139,6 +155,39 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 		$item_name = $this->getCheckboxRendererId();
 		if (isset($_POST[$item_name]) && is_array($_POST[$item_name]))
 			$this->items = $_POST[$item_name];
+	}
+
+	// }}}
+	// {{{ public function isExtendedCheckAllSelected()
+
+	/**
+	 * Whether or not the extended-check-all check-box was checked
+	 *
+	 * @return boolean Whether or not the extended-checkbox was checked
+	 */
+	public function isExtendedCheckAllSelected()
+	{
+		return $this->check_all->extendedSelected();
+	}
+
+	// }}}
+	// {{{ public function displayHeader()
+
+	/**
+	 * Displays the contents of the header cell for this column
+	 */
+	public function displayHeader()
+	{
+		if ($this->check_all_title !== null) {
+			$this->check_all->title = $this->check_all_title;
+			$this->check_all->content_type = $this->check_all_content_type;
+		}
+
+		$this->check_all->extended_count = $this->check_all_extended_count;
+		$this->check_all->visible_count = $this->check_all_visible_count;
+		$this->check_all->unit = $this->check_all_unit;
+
+		parent::displayHeader();
 	}
 
 	// }}}
@@ -184,6 +233,19 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 
 		throw new SwatException("The checkbox column ‘{$this->id}’ must ".
 			'contain a checkbox cell renderer.');
+	}
+
+	// }}}
+	// {{{ public function extendedCheckAllSelected()
+
+	/**
+	 * Whether or not the extended-check-all check-box was checked
+	 *
+	 * return @boolean Whether or not the extended-checkbox was checked
+	 */
+	public function extendedCheckAllSelected()
+	{
+		return $this->check_all->extendedSelected();
 	}
 
 	// }}}

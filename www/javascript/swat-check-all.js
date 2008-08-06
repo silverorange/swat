@@ -5,12 +5,18 @@
  * notifying its controller on state change.
  *
  * @param string id the unique identifier of this check-all object.
+ * @param integer extended_count the count of all selected items including
+ *                               those not currently visible.
+ * @param string extended_title a title to display next to the checkbox for
+ *                              selecting extended items
  */
-function SwatCheckAll(id)
+function SwatCheckAll(id, extended_count, extended_title)
 {
 	this.id = id;
 	this.check_all = document.getElementById(id + '_value');
 	this.controller = null;
+	this.extended_count = extended_count;
+	this.extended_title = extended_title;
 }
 
 /**
@@ -24,6 +30,15 @@ function SwatCheckAll(id)
 SwatCheckAll.prototype.setState = function(checked)
 {
 	this.check_all.checked = checked;
+	this.updateExtendedCheckbox();
+}
+
+SwatCheckAll.prototype.updateExtendedCheckbox = function()
+{
+	var container = document.getElementById(this.id + '_extended');
+
+	if (container)
+		container.style.display = (this.check_all.checked) ? 'block' : 'none';
 }
 
 /**
@@ -59,4 +74,5 @@ SwatCheckAll.prototype.clickHandler = function()
 {
 	// check all checkboxes in the controller object
 	this.controller.checkAll(this.check_all.checked);
+	this.updateExtendedCheckbox();
 }
