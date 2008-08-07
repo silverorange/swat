@@ -4,11 +4,10 @@
 
 require_once 'PEAR/PackageFileManager2.php';
 
-$version = '1.3.38';
+$version = '1.3.39';
 $notes = <<<EOT
-* made it possible to set the 'next' and 'previous' text for SwatPagination
-* added CSS classes to all SwatEntry widgets
-* added SwatUriEntry
+* Fix bug in SwatDBRecordsetWrapper::loadAllSubRecordsets()
+* add optional extended-check-all to checkall widget
 EOT;
 
 $description =<<<EOT
