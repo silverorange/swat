@@ -41,7 +41,13 @@ SwatCheckAll.prototype.updateExtendedCheckbox = function()
 		return;
 
 	if (this.check_all.checked) {
+		var in_attributes = { opacity: { from: 0, to: 1 } };
+		var in_animation = new YAHOO.util.Anim(container, in_attributes,
+			0.5, YAHOO.util.Easing.easeIn);
+
+		container.style.opacity = 0;
 		container.style.display = 'block';
+		in_animation.animate();
 	} else {
 		container.style.display = 'none';
 		container.getElementsByTagName('input')[0].checked = false;
