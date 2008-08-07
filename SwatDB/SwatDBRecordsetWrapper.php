@@ -713,8 +713,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 
 		// assign empty recordsets for all records in this set
 		foreach ($this as $record) {
-			$recordset = new $wrapper();
-			$record->$name = $recordset;
+			$empty_recordset = new $wrapper();
+			$record->$name = $empty_recordset;
 		}
 
 		// split records into separate recordsets for records in this set
