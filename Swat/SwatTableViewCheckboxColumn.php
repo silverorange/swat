@@ -167,7 +167,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 	 */
 	public function isExtendedCheckAllSelected()
 	{
-		return $this->check_all->extendedSelected();
+		return $this->check_all->isExtendedSelected();
 	}
 
 	// }}}
