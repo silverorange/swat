@@ -37,8 +37,15 @@ SwatCheckAll.prototype.updateExtendedCheckbox = function()
 {
 	var container = document.getElementById(this.id + '_extended');
 
-	if (container)
-		container.style.display = (this.check_all.checked) ? 'block' : 'none';
+	if (!container)
+		return;
+
+	if (this.check_all.checked) {
+		container.style.display = 'block';
+	} else {
+		container.style.display = 'none';
+		container.getElementsByTagName('input')[0].checked = false;
+	}
 }
 
 /**
