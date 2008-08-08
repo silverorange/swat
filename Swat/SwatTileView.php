@@ -175,8 +175,8 @@ class SwatTileView extends SwatView implements SwatUIParent
 		if (!$this->isInitialized())
 			$this->init();
 
-		$check_all = $this->getCompositeWidget('check_all');
-		$check_all->process();
+		if ($this->getFirstAncestor('SwatForm') !== null)
+			$this->getCompositeWidget('check_all')->process();
 
 		$this->processed = true;
 
@@ -633,8 +633,10 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	protected function createCompositeWidgets()
 	{
-		$check_all = new SwatCheckAll();
-		$this->addCompositeWidget($check_all, 'check_all');
+		if ($this->getFirstAncestor('SwatForm') !== null) {
+			$check_all = new SwatCheckAll();
+			$this->addCompositeWidget($check_all, 'check_all');
+		}
 	}
 
 	// }}}
