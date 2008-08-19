@@ -1464,7 +1464,7 @@ class SwatString extends SwatObject
 		);
 
 		// escape XSS vectors
-		$string = str_replace($search, $replace);
+		$string = str_replace($search, $replace, $string);
 
 		// quote string
 		$string = "'".$string."'";
