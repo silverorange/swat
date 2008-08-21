@@ -139,6 +139,8 @@ class SwatDB extends SwatObject
 	 *
 	 * @param string $where An optional additional where clause.
 	 *
+	 * @return integer the number of rows updated.
+	 *
 	 * @throws SwatDBException
 	 */
 	public static function updateColumn($db, $table, $field, $value, $id_field,
@@ -169,7 +171,7 @@ class SwatDB extends SwatObject
 			$id_list,
 			$where);
 
-		SwatDB::exec($db, $sql);
+		return SwatDB::exec($db, $sql);
 	}
 
 	// }}}
