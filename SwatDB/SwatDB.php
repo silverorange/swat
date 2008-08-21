@@ -169,7 +169,7 @@ class SwatDB extends SwatObject
 			$id_list,
 			$where);
 
-		SwatDB::query($db, $sql);
+		SwatDB::exec($db, $sql);
 	}
 
 	// }}}
