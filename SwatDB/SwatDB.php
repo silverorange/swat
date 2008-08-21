@@ -23,6 +23,25 @@ require_once 'SwatDB/exceptions/SwatDBException.php';
  */
 class SwatDB extends SwatObject
 {
+	// {{{ protected static properties
+
+	protected static $debug = false;
+
+	// }}}
+	// {{{ public static function setDebug()
+
+	/**
+	 * Sets the debug mode used by SwatDB
+	 *
+	 * @param boolean $debug optional. Whether or not to display SQL queries.
+	 *                        Defaults to true.
+	 */
+	public static function setDebug($debug = true)
+	{
+		self::$debug = (boolean)$debug;
+	}
+
+	// }}}
 	// {{{ public static function connect()
 
 	/**
@@ -1260,7 +1279,8 @@ class SwatDB extends SwatObject
 
 	private static function debug($message)
 	{
-		if (defined('SWATDB_DEBUG')) {
+		// SWATDB_DEBUG is legacy, use SwatDB::setDebug() instead
+		if (defined('SWATDB_DEBUG') || SwatDB::$debug) {
 			echo $message, "<hr />\n";
 		}
 	}
