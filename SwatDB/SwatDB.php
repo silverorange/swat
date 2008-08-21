@@ -1,7 +1,6 @@
 <?php
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
-// vim: set fdm=marker:
 
 require_once 'MDB2.php';
 require_once 'Swat/SwatObject.php';
