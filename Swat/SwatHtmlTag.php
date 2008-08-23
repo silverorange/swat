@@ -273,7 +273,8 @@ class SwatHtmlTag extends SwatObject
 
 		foreach ($this->attributes as $attribute => $value) {
 			if ($value !== null) {
-				echo ' ', $attribute, '="', SwatString::minimizeEntities($value), '"';
+				echo ' ', $attribute, '="',
+					SwatString::minimizeEntities($value), '"';
 			}
 		}
 
