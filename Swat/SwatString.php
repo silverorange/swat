@@ -1228,6 +1228,7 @@ class SwatString extends SwatObject
 			throw new SwatException('Value is not an Iterator or array');
 
 		if (count($iterator) == 1) {
+			$iterator->rewind();
 			$list = $iterator->current();
 		} else {
 			$count = 0;
