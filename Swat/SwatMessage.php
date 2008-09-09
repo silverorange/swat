@@ -3,7 +3,6 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatObject.php';
-require_once 'Swat/exceptions/SwatUndefinedMessageTypeException.php';
 
 /**
  * A data class to store a message
@@ -13,7 +12,7 @@ require_once 'Swat/exceptions/SwatUndefinedMessageTypeException.php';
  * also {@link SwatMessageDisplay}.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2008 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMessage extends SwatObject
@@ -24,16 +23,20 @@ class SwatMessage extends SwatObject
 	 * Notification message type
 	 *
 	 * An informative message that doesn't require any action by the user.
+	 *
+	 * @deprecated Use the string 'notice' instead.
 	 */
-	const NOTIFICATION = 1;
+	const NOTIFICATION = 'notice';
 
 	/**
 	 * Warning message type
 	 *
 	 * A warning message that requires the attention of the user, but is
 	 * not critical and does not necessarily require any action by the user.
+	 *
+	 * @deprecated Use the string 'warning' instead.
 	 */
-	const WARNING = 2;
+	const WARNING = 'warning';
 
 	/**
 	 * Error message type
@@ -41,16 +44,20 @@ class SwatMessage extends SwatObject
 	 * An error message that requires the attention of the user and that is
 	 * expected/handled by the application.
 	 * eg. Missing required fields
+	 *
+	 * @deprecated Use the string 'error' instead.
 	 */
-	const ERROR = 3;
+	const ERROR = 'error';
 
 	/**
 	 * System Error message type
 	 *
 	 * A system error that requires the attention of the user.
 	 * eg. Database connection error
+	 *
+	 * @deprecated Use the string 'system-error' instead.
 	 */
-	const SYSTEM_ERROR = 4;
+	const SYSTEM_ERROR = 'system-error';
 
 	// }}}
 	// {{{ public properties
@@ -58,7 +65,7 @@ class SwatMessage extends SwatObject
 	/**
 	 * Type of message
 	 *
-	 * @var integer
+	 * @var string
 	 */
 	public $type;
 
@@ -98,24 +105,13 @@ class SwatMessage extends SwatObject
 	 * Creates a new SwatMessage
 	 *
 	 * @param string $primary_content the primary text of the message.
-	 * @param integer $type the type of message. Must be a valid class
-	 *                       constant.
-	 *
-	 * @throws SwatUndefinedMessageTypeException
+	 * @param string $type optional. The type of message. If not specified,
+	 *                      'notice' is used.
 	 */
 	public function __construct($primary_content, $type = self::NOTIFICATION)
 	{
 		$this->primary_content = $primary_content;
-		$valid_types = $this->getTypes();
-
-		if ($type !== null) {
-			if (in_array($type, $valid_types))
-				$this->type = $type;
-			else
-				throw new SwatUndefinedMessageTypeException(
-					"'{$type}' is not a valid SwatMessage message type.",
-					0, $type);
-		}
+		$this->type = $type;
 	}
 
 	// }}}
@@ -130,6 +126,7 @@ class SwatMessage extends SwatObject
 	{
 		$classes = array('swat-message');
 
+		// legacy styles
 		switch ($this->type) {
 		case SwatMessage::NOTIFICATION :
 			$classes[] = 'swat-message-notification';
@@ -145,8 +142,13 @@ class SwatMessage extends SwatObject
 			break;
 		}
 
-		if ($this->secondary_content !== null)
+		if ($this->type != '') {
+			$classes[] = $this->type;
+		}
+
+		if ($this->secondary_content !== null) {
 			$classes[] = 'swat-message-with-secondary';
+		}
 
 		return implode(' ', $classes);
 	}
@@ -164,25 +166,6 @@ class SwatMessage extends SwatObject
 	public function getCssClass()
 	{
 		return $this->getCSSClassString();
-	}
-
-	// }}}
-	// {{{ protected function getTypes()
-
-	/**
-	 * Get valid message types
-	 *
-	 * @return array the valid types of a message.
-	 */
-	protected function getTypes()
-	{
-		$types = array(
-			self::NOTIFICATION,
-			self::WARNING,
-			self::ERROR,
-			self::SYSTEM_ERROR);
-
-		return $types;
 	}
 
 	// }}}
