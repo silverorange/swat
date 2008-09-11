@@ -82,7 +82,7 @@ class SwatTile extends SwatCellRendererContainer
 	{
 		$messages = $this->messages;
 
-		foreach ($this->renderers->renderers as $renderer)
+		foreach ($this->renderers as $renderer)
 			$messages = array_merge($messages, $renderer->getMessages());
 
 		return $messages;
@@ -116,7 +116,7 @@ class SwatTile extends SwatCellRendererContainer
 	{
 		$has_message = false;
 
-		foreach ($this->renderers->renderers as $renderer){
+		foreach ($this->renderers as $renderer){
 			if ($renderer->hasMessage()){
 				$has_message = true;
 				break;
