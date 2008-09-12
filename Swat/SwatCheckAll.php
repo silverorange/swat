@@ -152,7 +152,7 @@ class SwatCheckAll extends SwatCheckbox
 		ob_start();
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->for = $checkbox->id;
-		$label_tag->setContent(sprintf(Swat::_('Select all %s %s'),
+		$label_tag->setContent(sprintf(Swat::_('select all %s %s'),
 			$locale->formatNumber($this->extended_count), $entity));
 
 		$label_tag->open();

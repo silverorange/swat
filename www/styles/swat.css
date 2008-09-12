@@ -170,6 +170,11 @@ ul.swat-radio-list li {
 
 .swat-extended-check-all input {
 	margin: 0 5px;
+	vertical-align: text-bottom;
+}
+
+.swat-extended-check-all label {
+	margin: 0 5px 0 0;
 }
 
 /* SwatFieldset */
@@ -262,7 +267,9 @@ ul.swat-radio-list li {
 }
 
 .swat-header-form-field .swat-button,
-.swat-footer-form-field .swat-button {
+.swat-footer-form-field .swat-button,
+.swat-header-form-field .swat-reset-button,
+.swat-footer-form-field .swat-reset-button {
 	margin-right: 0.5em;
 }
 
@@ -276,7 +283,8 @@ ul.swat-radio-list li {
 	white-space: nowrap;
 }
 
-.swat-button {
+.swat-button,
+.swat-reset-button {
 	vertical-align: middle;
 }
 
@@ -294,6 +302,10 @@ span.swat-button-processing-throbber img {
 .swat-image-button {
 	cursor: pointer;
 	cursor: hand;
+}
+
+input.swat-insensitive {
+	cursor: default;
 }
 
 /* SwatFormField */
