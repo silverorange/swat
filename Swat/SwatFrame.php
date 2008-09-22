@@ -38,6 +38,15 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public $title_separator = ': ';
 
+	/**
+	 * Optional content type for the title
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $title_content_type = 'text/plain';
+
 	// }}}
 	// {{{ public function getTitle()
 
@@ -97,14 +106,15 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 
 			$header_tag = new SwatHtmlTag('h'.$level);
 			$header_tag->class = 'swat-frame-title';
-			$header_tag->setContent($this->title);
+			$header_tag->setContent($this->title, $this->title_content_type);
 
 			if ($this->subtitle === null) {
 				$header_tag->display();
 			} else {
 				$span_tag = new SwatHtmlTag('span');
 				$span_tag->class = 'swat-frame-subtitle';
-				$span_tag->setContent($this->subtitle);
+				$span_tag->setContent($this->subtitle,
+					$this->title_content_type);
 
 				$header_tag->open();
 				$header_tag->displayContent();
