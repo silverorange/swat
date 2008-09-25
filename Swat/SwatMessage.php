@@ -139,24 +139,14 @@ class SwatMessage extends SwatObject
 	{
 		$classes = array('swat-message');
 
-		// legacy styles
-		switch ($this->type) {
-		case SwatMessage::NOTIFICATION :
+		// legacy style for backwards compatibility
+		if ($this->type === 'notice') {
 			$classes[] = 'swat-message-notification';
-			break;
-		case SwatMessage::WARNING :
-			$classes[] = 'swat-message-warning';
-			break;
-		case SwatMessage::ERROR :
-			$classes[] = 'swat-message-error';
-			break;
-		case SwatMessage::SYSTEM_ERROR :
-			$classes[] = 'swat-message-system-error';
-			break;
 		}
 
+		// type-specific style
 		if ($this->type != '') {
-			$classes[] = $this->type;
+			$classes[] = 'swat-message-'.$this->type;
 		}
 
 		if ($this->secondary_content !== null) {
