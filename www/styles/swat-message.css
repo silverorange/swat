@@ -40,15 +40,24 @@
 	background-image: url(../images/tango/48/dialog-error-256.png);
 }
 
+.swat-message-cart {
+	border-color: #f0dca1;
+	background-color: #fffbc9;
+	color: #7b4b09;
+	background-image: url(../images/swat-message-cart.png);
+}
+
 .swat-message-notification .swat-message-primary-content { color: #7b4b09; }
 .swat-message-warning      .swat-message-primary-content { color: #533a15; }
 .swat-message-error        .swat-message-primary-content { color: #e31b0c; }
 .swat-message-system-error .swat-message-primary-content { color: #fff; }
+.store-message-cart        .swat-message-primary-content { color: #7b4b09; }
 
 .swat-message-notification .swat-message-secondary-content { color: #947140; }
 .swat-message-warning      .swat-message-secondary-content { color: #947140; }
 .swat-message-error        .swat-message-secondary-content { color: #d44034; }
 .swat-message-system-error .swat-message-secondary-content { color: #eee; }
+.swat-message-cart         .swat-message-secondary-content { color: #947140; }
 
 
 /* SwatFormField Messages */
