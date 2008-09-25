@@ -224,7 +224,7 @@ class SwatMessageDisplay extends SwatControl
 		$message_div = new SwatHtmlTag('div');
 		$container_div = new SwatHtmlTag('div');
 
-		$message_div->id = $this->id.'_'.$key;
+		$message_div->id = $this->id.'_'.$message_id;
 		$message_div->class = $message->getCSSClassString();
 		$message_div->open();
 
