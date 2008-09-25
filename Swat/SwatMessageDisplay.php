@@ -214,6 +214,10 @@ class SwatMessageDisplay extends SwatControl
 
 	/**
 	 * Display a single messages of this message display
+	 *
+	 * @param integer $message_id a unique identifier for the message within
+	 *                             this message display.
+	 * @param SwatMessage $message the message to display.
 	 */
 	protected function displayMessage($message_id, SwatMessage $message)
 	{
