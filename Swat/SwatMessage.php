@@ -121,7 +121,7 @@ class SwatMessage extends SwatObject
 	 * @param string $type optional. The type of message. If not specified,
 	 *                      'notice' is used.
 	 */
-	public function __construct($primary_content, $type = self::NOTIFICATION)
+	public function __construct($primary_content, $type = 'notice')
 	{
 		$this->primary_content = $primary_content;
 		$this->type = $type;
