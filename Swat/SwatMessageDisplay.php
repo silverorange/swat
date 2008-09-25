@@ -157,9 +157,6 @@ class SwatMessageDisplay extends SwatControl
 		parent::display();
 
 		$wrapper_div = new SwatHtmlTag('div');
-		$message_div = new SwatHtmlTag('div');
-		$container_div = new SwatHtmlTag('div');
-
 		$wrapper_div->id = $this->id;
 		$wrapper_div->class = $this->getCSSClassString();
 		$wrapper_div->open();
@@ -167,34 +164,10 @@ class SwatMessageDisplay extends SwatControl
 		$has_dismiss_link = false;
 
 		foreach ($this->display_messages as $key => $message) {
-			$message_div->id = $this->id.'_'.$key;
-			$message_div->class = $message->getCSSClassString();
-			$message_div->open();
-
-			$container_div->class = 'swat-message-container';
-			$container_div->open();
-
 			if (in_array($key, $this->dismissable_messages))
 				$has_dismiss_link = true;
 
-			$primary_content = new SwatHtmlTag('h3');
-			$primary_content->class = 'swat-message-primary-content';
-			$primary_content->setContent(
-				$message->primary_content, $message->content_type);
-
-			$primary_content->display();
-
-			if ($message->secondary_content !== null) {
-				$secondary_div = new SwatHtmlTag('div');
-				$secondary_div->class = 'swat-message-secondary-content';
-				$secondary_div->setContent(
-					$message->secondary_content, $message->content_type);
-
-				$secondary_div->display();
-			}
-
-			$container_div->close();
-			$message_div->close();
+			$this->displayMessage($key, $message);
 		}
 
 		$wrapper_div->close();
@@ -234,6 +207,44 @@ class SwatMessageDisplay extends SwatControl
 	public function getMessageCount()
 	{
 		return count($this->display_messages);
+	}
+
+	// }}}
+	// {{{ protected function displayMessage()
+
+	/**
+	 * Display a single messages of this message display
+	 */
+	protected function displayMessage($message_id, SwatMessage $message)
+	{
+		$message_div = new SwatHtmlTag('div');
+		$container_div = new SwatHtmlTag('div');
+
+		$message_div->id = $this->id.'_'.$key;
+		$message_div->class = $message->getCSSClassString();
+		$message_div->open();
+
+		$container_div->class = 'swat-message-container';
+		$container_div->open();
+
+		$primary_content = new SwatHtmlTag('h3');
+		$primary_content->class = 'swat-message-primary-content';
+		$primary_content->setContent(
+			$message->primary_content, $message->content_type);
+
+		$primary_content->display();
+
+		if ($message->secondary_content !== null) {
+			$secondary_div = new SwatHtmlTag('div');
+			$secondary_div->class = 'swat-message-secondary-content';
+			$secondary_div->setContent(
+				$message->secondary_content, $message->content_type);
+
+			$secondary_div->display();
+		}
+
+		$container_div->close();
+		$message_div->close();
 	}
 
 	// }}}
