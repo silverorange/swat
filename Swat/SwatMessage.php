@@ -8,8 +8,21 @@ require_once 'Swat/SwatObject.php';
  * A data class to store a message
  *
  * SwatMessage objects are used thoughout Swat. The most noticeable
- * place they are used is for validating entry widgets. See
- * also {@link SwatMessageDisplay}.
+ * place they are used is for validating entry widgets. See also
+ * {@link SwatMessageDisplay}, a control for displaying messages.
+ *
+ * A message has primary text, optional secondary text and a type. In order to
+ * ease the creation of new messages types, message types are not strictly
+ * defined. There are, however, several conventional message types. They are:
+ *
+ * - <strong>notice</strong>,
+ * - <strong>warning</strong>,
+ * - <strong>error</strong>,
+ * - <strong>system-error</strong>, and
+ * - <strong>cart</strong>.
+ *
+ * Messages do not have to use one of these types, but if they do, the message
+ * will automatically be appropriately styled by Swat.
  *
  * @package   Swat
  * @copyright 2005-2008 silverorange
