@@ -294,10 +294,8 @@ class SwatNavBar extends SwatControl implements Countable
 		$count = count($this);
 		$i = 1;
 
-		$div_tag = new SwatHtmlTag('div');
-		$div_tag->id = $this->id;
-		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
+		$container_tag = $this->getContainerTag();
+		$container_tag->open();
 
 		foreach ($this->entries as $entry) {
 			// display separator
@@ -312,7 +310,7 @@ class SwatNavBar extends SwatControl implements Countable
 			$i++;
 		}
 
-		$div_tag->close();
+		$container_tag->close();
 	}
 
 	// }}}
@@ -364,6 +362,24 @@ class SwatNavBar extends SwatControl implements Countable
 		$classes = array('swat-nav-bar');
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function getContainerTag()
+
+	/**
+	 * Gets the container tag for this navigational bar
+	 *
+	 * The container tag wraps around all entries in this navigational bar.
+	 *
+	 * @return SwatHtmlTag the container tag for this navigational bar.
+	 */
+	protected function getContainerTag()
+	{
+		$tag = new SwatHtmlTag('div');
+		$tag->id = $this->id;
+		$tag->class = $this->getCSSClassString();
+		return $tag;
 	}
 
 	// }}}
