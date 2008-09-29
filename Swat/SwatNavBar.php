@@ -276,6 +276,22 @@ class SwatNavBar extends SwatControl implements Countable
 	}
 
 	// }}}
+	// {{{ public function clear()
+
+	/**
+	 * Clears all entries from this navigational bar
+	 *
+	 * @return array an array of SwatNavBarEntry objects that were cleared from
+	 *                this navagational bar.
+	 */
+	public function clear()
+	{
+		$entries = $this->entries;
+		$this->entries = array();
+		return $entries;
+	}
+
+	// }}}
 	// {{{ public function display()
 
 	/**
