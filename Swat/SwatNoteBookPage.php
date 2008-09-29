@@ -74,7 +74,7 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 	 */
 	public function getPages()
 	{
-		return array($this);;
+		return array($this);
 	}
 
 	// }}}
