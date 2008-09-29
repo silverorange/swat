@@ -984,11 +984,22 @@ class SwatString extends SwatObject
 	 * @param boolean $iec_units optional. Whether or not to use IEC binary
 	 *                            multiple prefixed units (Mebibyte). Defaults
 	 *                            to using canonical units.
+	 * @param integer $significant_digits optional. The number of significant
+	 *                                     digits in the formatted result. If
+	 *                                     null, the value will be rounded and
+	 *                                     formatted one fractional digit.
+	 *                                     Otherwise, the value is rounded to
+	 *                                     the specified the number of digits.
+	 *                                     By default, this is three. If there
+	 *                                     are more integer digits than the
+	 *                                     specified number of significant
+	 *                                     digits, the value is rounded to the
+	 *                                     nearest integer.
 	 *
 	 * @return string the byte value formated according to IEC units.
 	 */
 	public static function byteFormat($value, $magnitude = -1,
-		$iec_units = false)
+		$iec_units = false, $significant_digits = 3)
 	{
 		if ($iec_units) {
 			$units = array(
@@ -1025,7 +1036,7 @@ class SwatString extends SwatObject
 			if ($value == 0) {
 				$unit_magnitude = 0;
 			} else {
-				$log = round(log10($value) / log10(2)); // get log2()
+				$log = floor(log10($value) / log10(2)); // get log2()
 
 				$unit_magnitude = reset($units); // default magnitude
 				foreach ($units as $magnitude => $title) {
@@ -1038,10 +1049,24 @@ class SwatString extends SwatObject
 		}
 
 		$value = $value / pow(2, $unit_magnitude);
+
 		if ($unit_magnitude == 0) {
+			// 'bytes' are always formatted as integers
 			$formatted_value = self::numberFormat($value, 0);
 		} else {
-			$formatted_value = self::numberFormat($value, 1);
+			if ($significant_digits !== null) {
+				// round to number of significant digits
+				$integer_digits = ceil(log10($value));
+
+				$fractional_digits =
+					max($significant_digits - $integer_digits, 0);
+
+				$formatted_value = self::numberFormat($value,
+					$fractional_digits);
+			} else {
+				// just round to one fractional digit
+				$formatted_value = self::numberFormat($value, 1);
+			}
 		}
 
 		return $formatted_value . ' ' . $units[$unit_magnitude];
