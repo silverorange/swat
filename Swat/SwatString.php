@@ -1056,7 +1056,7 @@ class SwatString extends SwatObject
 		} else {
 			if ($significant_digits !== null) {
 				// round to number of significant digits
-				$integer_digits = ceil(log10($value));
+				$integer_digits = floor(log10($value)) + 1;
 
 				$fractional_digits =
 					max($significant_digits - $integer_digits, 0);
