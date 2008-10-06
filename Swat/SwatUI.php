@@ -158,11 +158,12 @@ class SwatUI extends SwatObject
 	 * Loads a UI tree from an XML file
 	 *
 	 * @param string $filename the filename of the XML UI file to load.
-	 * @param SwatContainer $root optional. The container into which to load
-	 *                             the UI tree. The specified container must
-	 *                             already be a member of this UI. If not
-	 *                             specified, the UI tree will be loaded into
-	 *                             the root container of this UI.
+	 * @param SwatContainer $container optional. The container into which to
+	 *                                  load the UI tree. The specified
+	 *                                  container must already be a member of
+	 *                                  this UI. If not specified, the UI tree
+	 *                                  will be loaded into the root container
+	 *                                  of this UI.
 	 * @param boolean $validate optional. Whether or not to validate the parsed
 	 *                           SwatML file. If not specified, whether or not
 	 *                           to validate is deferred to the default
