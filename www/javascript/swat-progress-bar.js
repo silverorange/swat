@@ -19,15 +19,8 @@ function SwatProgressBar(id, orientation, value)
 
 	this.full = document.getElementById(this.id + '_full');
 	this.empty = document.getElementById(this.id + '_empty');
+	this.text = document.getElementById(this.id + '_text');
 	this.container = document.getElementById(this.id);
-
-	this.text_node = null;
-	for (var i = 0; i < this.container.childNodes.length; i++) {
-		if (this.container.childNodes[i].nodeType == 3) {
-			this.text_node = this.container.childNodes[i];
-			break;
-		}
-	}
 
 	this.changeValueEvent = new YAHOO.util.CustomEvent('changeValue');
 	this.pulseEvent       = new YAHOO.util.CustomEvent('pulse');
@@ -80,17 +73,11 @@ SwatProgressBar.prototype.setValue = function(value)
 
 SwatProgressBar.prototype.setText = function(text)
 {
-	var new_text_node = document.createTextNode(text);
-
-	if (this.text_node) {
-		var old_text_node = this.text_node;
-		this.container.replaceChild(new_text_node, old_text_node);
-		delete old_text_node;
+	if (this.text.innerText) {
+		this.text.innerText = text;
 	} else {
-		this.container.appendChild(new_text_node);
+		this.text.textContent = text;
 	}
-
-	this.text_node = new_text_node;
 }
 
 SwatProgressBar.prototype.getValue = function()
