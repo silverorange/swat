@@ -4,7 +4,7 @@
  * The progress bar is accurate to four decimal places. This translates
  * one-hundredth of a percent.
  *
- * @copyright 2007 silverorange
+ * @copyright 2007-2008 silverorange
  */
 function SwatProgressBar(id, orientation, value)
 {
@@ -17,13 +17,15 @@ function SwatProgressBar(id, orientation, value)
 	this.pulse_width = 0.15;
 	this.pulse_direction = 1;
 
-	this.full = document.getElementById(this.id + '_full');
-	this.empty = document.getElementById(this.id + '_empty');
-	this.text = document.getElementById(this.id + '_text');
+	this.full      = document.getElementById(this.id + '_full');
+	this.empty     = document.getElementById(this.id + '_empty');
+	this.text      = document.getElementById(this.id + '_text');
 	this.container = document.getElementById(this.id);
 
 	this.changeValueEvent = new YAHOO.util.CustomEvent('changeValue');
 	this.pulseEvent       = new YAHOO.util.CustomEvent('pulse');
+
+	this.animation  = null;
 }
 
 SwatProgressBar.ORIENTATION_LEFT_TO_RIGHT = 1;
@@ -33,8 +35,13 @@ SwatProgressBar.ORIENTATION_TOP_TO_BOTTOM = 4;
 
 SwatProgressBar.EPSILON = 0.0001;
 
+SwatProgressBar.ANIMATION_DURATION = 0.5;
+
 SwatProgressBar.prototype.setValue = function(value)
 {
+	if (this.value == value)
+		return;
+
 	this.value = value;
 
 	var full_width = 100 * value;
@@ -67,6 +74,101 @@ SwatProgressBar.prototype.setValue = function(value)
 		this.empty.style.height = empty_width + '%';
 		break;
 	}
+
+	this.changeValueEvent.fire(this.value);
+}
+
+SwatProgressBar.prototype.setValueWithAnimation = function(value)
+{
+	if (this.value == value)
+		return;
+
+	var old_full_width = 100 * this.value;
+	var old_empty_width = 100 - (100 * this.value);
+	old_full_width = (old_full_width > 100) ? 100 : old_full_width;
+	old_empty_width = (old_empty_width < 0) ? 0 : old_empty_width;
+
+	// set new value
+	this.value = value;
+
+	var new_full_width = 100 * value;
+	var new_empty_width = 100 - (100 * value);
+	new_full_width = (new_full_width > 100) ? 100 : new_full_width;
+	new_empty_width = (new_empty_width < 0) ? 0 : new_empty_width;
+
+	// reset position if bar was set to pulse-mode
+	if (this.orientation !== SwatProgressBar.ORIENTATION_BOTTOM_TO_TOP)
+		this.full.style.position = 'static';
+
+	// reset empty div if bar was set to pulse mode
+	this.empty.style.display = 'block';
+
+	var full_attributes  = {};
+
+	switch (this.orientation) {
+	case SwatProgressBar.ORIENTATION_LEFT_TO_RIGHT:
+	case SwatProgressBar.ORIENTATION_RIGHT_TO_LEFT:
+	default:
+		full_attributes['width'] = {
+			from: old_full_width,
+			to:   new_full_width,
+			unit: '%'
+		};
+		break;
+
+	case SwatProgressBar.ORIENTATION_BOTTOM_TO_TOP:
+		full_attributes['top'] = {
+			from: old_empty_width,
+			to:   new_empty_width,
+			unit: '%'
+		};
+		// fall through
+
+	case SwatProgressBar.ORIENTATION_TOP_TO_BOTTOM:
+		full_attributes['height'] = {
+			from: old_full_width,
+			to:   new_full_width,
+			unit: '%'
+		};
+		break;
+	}
+
+	// stop existing animation
+	if (this.animation !== null && this.animation.isAnimated()) {
+		this.animation.stop();
+	}
+
+	this.animation = new YAHOO.util.Anim(this.full, full_attributes,
+		SwatProgressBar.ANIMATION_DURATION);
+
+	// Synchronize empty div resizing with full div animation. Don't do
+	// this with a separate animation.
+	this.animation.onTween.subscribe(function() {
+		var percent = this.animation.currentFrame / this.animation.totalFrames;
+
+		var full_percent = old_full_width +
+			((new_full_width - old_full_width) * percent);
+
+		var empty_percent = 100.00 - full_percent;
+
+		switch (this.orientation) {
+		case SwatProgressBar.ORIENTATION_LEFT_TO_RIGHT:
+		case SwatProgressBar.ORIENTATION_RIGHT_TO_LEFT:
+		default:
+			this.empty.style.width = empty_percent + '%';
+			break;
+
+		case SwatProgressBar.ORIENTATION_BOTTOM_TO_TOP:
+			this.empty.style.top = -full_percent + '%';
+			// fall through
+
+		case SwatProgressBar.ORIENTATION_TOP_TO_BOTTOM:
+			this.empty.style.height = empty_percent + '%';
+			break;
+		}
+	}, this, true);
+
+	this.animation.animate();
 
 	this.changeValueEvent.fire(this.value);
 }
