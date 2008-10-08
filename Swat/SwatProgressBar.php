@@ -268,21 +268,24 @@ class SwatProgressBar extends SwatControl
 	 */
 	protected function displayText()
 	{
-		// don't do anything if there is no text for this progress bar
-		if ($this->text === null)
-			return;
+		if ($this->text === null) {
+			// still show an empty span if there is no text for this
+			// progress bar
+			$text = '';
+		} else {
+			if ($this->text_value === null)
+				$text = $this->text;
+			elseif (is_array($this->text_value))
+				$text = vsprintf($this->text, $this->text_value);
+			else
+				$text = sprintf($this->text, $this->text_value);
+		}
 
-		if ($this->text_value === null)
-			$text = $this->text;
-		elseif (is_array($this->text_value))
-			$text = vsprintf($this->text, $this->text_value);
-		else
-			$text = sprintf($this->text, $this->text_value);
-
-		if ($this->content_type === 'text/plain')
-			echo SwatString::minimizeEntities($text);
-		else
-			echo $text;
+		$span_tag = new SwatHtmlTag('span');
+		$span_tag->id = $this->id.'_text';
+		$span_tag->class = 'swat-progress-bar-text';
+		$span_tag->setContent($text, $this->content_type);
+		$span_tag->display();
 	}
 
 	// }}}
