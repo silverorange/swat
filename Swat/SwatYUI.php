@@ -203,12 +203,12 @@ class SwatYUI extends SwatObject
 		$components['dragdrop'] = new SwatYUIComponent('dragdrop');
 		$components['dragdrop']->addJavaScript();
 
-		$components['editor'] = new SwatYUIComponent('editor', true);
+		$components['editor'] = new SwatYUIComponent('editor');
 		$components['editor']->addJavaScript();
 		$components['editor']->addStyleSheet('editor/assets/skins/sam', '',
 			false);
 
-		$components['simpleeditor'] = new SwatYUIComponent('simpleeditor', true);
+		$components['simpleeditor'] = new SwatYUIComponent('simpleeditor');
 		$components['simpleeditor']->addJavaScript('editor');
 		$components['simpleeditor']->addStyleSheet('editor/assets/skins/sam',
 			'', false);
@@ -225,6 +225,11 @@ class SwatYUI extends SwatObject
 		$components['grids'] = new SwatYUIComponent('grids');
 		$components['grids']->addStyleSheet();
 
+		$components['imagecropper'] = new SwatYUIComponent('imagecropper', true);
+		$components['imagecropper']->addJavaScript();
+		$components['imagecropper']->addStyleSheet(
+			'imagecropper/assets/skins/sam', '', false);
+
 		$components['logger'] = new SwatYUIComponent('logger');
 		$components['logger']->addJavaScript();
 
@@ -235,12 +240,18 @@ class SwatYUI extends SwatObject
 		$components['reset'] = new SwatYUIComponent('reset');
 		$components['reset']->addStyleSheet();
 
+		$components['resize'] = new SwatYUIComponent('resize', true);
+		$components['resize']->addJavaScript();
+		$components['resize']->addStyleSheet(
+			'imagecropper/assets/skins/sam', '', false);
+
 		$components['slider'] = new SwatYUIComponent('slider');
 		$components['slider']->addJavaScript();
 
 		$components['tabview'] = new SwatYUIComponent('tabview');
 		$components['tabview']->addJavaScript();
-		$components['tabview']->addStyleSheet('tabview/assets', '', false);
+		$components['tabview']->addStyleSheet(
+			'tabview/assets/skins/sam', '', false);
 
 		$components['treeview'] = new SwatYUIComponent('treeview');
 		$components['treeview']->addJavaScript();
@@ -310,6 +321,13 @@ class SwatYUI extends SwatObject
 
 		$components['grids']->addDependency($components['fonts']);
 
+		$components['imagecropper']->addDependency($components['yahoo']);
+		$components['imagecropper']->addDependency($components['dom']);
+		$components['imagecropper']->addDependency($components['event']);
+		$components['imagecropper']->addDependency($components['element']);
+		$components['imagecropper']->addDependency($components['dragdrop']);
+		$components['imagecropper']->addDependency($components['resize']);
+
 		$components['logger']->addDependency($components['yahoo']);
 		$components['logger']->addDependency($components['dom']);
 		$components['logger']->addDependency($components['event']);
@@ -319,6 +337,12 @@ class SwatYUI extends SwatObject
 		$components['menu']->addDependency($components['dom']);
 		$components['menu']->addDependency($components['event']);
 		$components['menu']->addDependency($components['container_core']);
+
+		$components['resize']->addDependency($components['yahoo']);
+		$components['resize']->addDependency($components['dom']);
+		$components['resize']->addDependency($components['event']);
+		$components['resize']->addDependency($components['element']);
+		$components['resize']->addDependency($components['dragdrop']);
 
 		$components['slider']->addDependency($components['yahoo']);
 		$components['slider']->addDependency($components['dom']);
