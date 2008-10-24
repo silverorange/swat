@@ -240,7 +240,7 @@ class SwatYUI extends SwatObject
 		$components['reset'] = new SwatYUIComponent('reset');
 		$components['reset']->addStyleSheet();
 
-		$components['resize'] = new SwatYUIComponent('resize', true);
+		$components['resize'] = new SwatYUIComponent('resize');
 		$components['resize']->addJavaScript();
 		$components['resize']->addStyleSheet(
 			'imagecropper/assets/skins/sam', '', false);
