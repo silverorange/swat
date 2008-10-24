@@ -249,7 +249,7 @@ class SwatImageCropper extends SwatInputControl
 		// autoset width
 		if ($this->crop_box_width === null) {
 			if ($this->crop_box_ratio === null || $this->crop_box_ratio <= 1)
-				$this->crop_box_width = $this->image_width;
+				$this->crop_box_width = round($this->image_width * 0.95);
 			else
 				$this->crop_box_width =
 					round($this->image_height / $this->crop_box_ratio);
@@ -258,7 +258,7 @@ class SwatImageCropper extends SwatInputControl
 		// autoset height
 		if ($this->crop_box_height === null) {
 			if ($this->crop_box_ratio === null || $this->crop_box_ratio > 1)
-				$this->crop_box_height = $this->image_height;
+				$this->crop_box_height = round($this->image_height * 0.95);
 			else
 				$this->crop_box_height =
 					round($this->image_width * $this->crop_box_ratio);
