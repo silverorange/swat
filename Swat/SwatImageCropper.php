@@ -77,6 +77,20 @@ class SwatImageCropper extends SwatInputControl
 	public $crop_top;
 
 	/**
+	 * Minimum width of the crop bounding box
+	 *
+	 * @var integer
+	 */
+	public $min_width = 50;
+
+	/**
+	 * Minimum height of the crop bounding box
+	 *
+	 * @var integer
+	 */
+	public $min_height = 50;
+
+	/**
 	 * Alias for {@link SwatImageCropper::$crop_ratio}
 	 *
 	 * @var float
@@ -233,11 +247,20 @@ class SwatImageCropper extends SwatInputControl
 	{
 		$options = array();
 
-		if ($this->crop_width !== null)
+		if ($this->crop_width !== null) {
 			$options['initWidth'] = $this->crop_width;
+		}
 
-		if ($this->crop_height !== null)
+		if ($this->crop_height !== null) {
 			$options['initHeight'] = $this->crop_height;
+		}
+
+		$options['minWidth']  = intval($this->min_width);
+		$options['minHeight'] = intval($this->min_height);
+
+		if ($this->crop_height !== null) {
+			$options['initHeight'] = $this->crop_height;
+		}
 
 		if ($this->crop_left !== null && $this->crop_top !== null) {
 			$options['initialXY'] =
