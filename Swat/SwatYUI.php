@@ -197,6 +197,9 @@ class SwatYUI extends SwatObject
 		$components['container_core']->addStyleSheet('container/assets',
 			'container-core', false);
 
+		$components['datasource'] = new SwatYUIComponent('datasource');
+		$components['datasource']->addJavaScript();
+
 		$components['dom'] = new SwatYUIComponent('dom');
 		$components['dom']->addJavaScript();
 
@@ -269,6 +272,7 @@ class SwatYUI extends SwatObject
 		$components['autocomplete']->addDependency($components['event']);
 		$components['autocomplete']->addDependency($components['connection']);
 		$components['autocomplete']->addDependency($components['animation']);
+		$components['autocomplete']->addDependency($components['datasource']);
 
 		$components['button']->addDependency($components['yahoo']);
 		$components['button']->addDependency($components['dom']);
