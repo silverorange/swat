@@ -21,7 +21,7 @@ class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
 	 *
 	 * @var string
 	 */
-	protected $uri;
+	protected $link_uri;
 
 	/**
 	 * The title of this link
@@ -66,7 +66,7 @@ class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
 		$hash = md5($uri.$relationship.$type.$title);
 		parent::__construct($hash, $package_id);
 
-		$this->uri = $uri;
+		$this->link_uri = $uri;
 		$this->relationship = $relationship;
 		$this->type = $type;
 		$this->title = $title;
@@ -81,7 +81,7 @@ class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
 		$link->title = $this->title;
 		$link->rel = $this->relationship;
 		$link->type = $this->type;
-		$link->href = $this->uri;
+		$link->href = $this->link_uri;
 		$link->display();
 	}
 
