@@ -36,7 +36,7 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 	 *
 	 * If true, displays the international currency symbol. Use of this property
 	 * is discouraged in favour of using the
-	 * {@link SwatMoneyCellRendere::$international} property. Using this
+	 * {@link SwatMoneyCellRenderer::$international} property. Using this
 	 * property can render strings that are incorrect for the given locale.
 	 * Using the international property always renders strings correctly for the
 	 * specified locale.
