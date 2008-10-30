@@ -9,7 +9,7 @@ require_once 'Swat/SwatYUI.php';
  * A wysiwyg text entry widget
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2008 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextareaEditor extends SwatTextarea
@@ -37,7 +37,8 @@ class SwatTextareaEditor extends SwatTextarea
 	/**
 	 * Base-Href
 	 *
-	 * Optional base-href, used to reference images and other urls in the editor.
+	 * Optional base-href, used to reference images and other urls in the
+	 * editor.
 	 *
 	 * @var string
 	 */
@@ -86,7 +87,7 @@ class SwatTextareaEditor extends SwatTextarea
 		$value = htmlspecialchars($value);
 
 		$div_tag = new SwatHtmlTag('div');
-		$div_tag->class = 'swat-textarea-container';
+		$div_tag->class = 'swat-textarea-container yui-skin-sam';
 		$div_tag->open();
 
 		$textarea_tag = new SwatHtmlTag('textarea');
@@ -183,34 +184,34 @@ class SwatTextareaEditor extends SwatTextarea
 	private function getTranslations()
 	{
 		return array(
-			'bold' => Swat::_('Bold'),
-			'italic' => Swat::_('Italic'),
-			'underline' => Swat::_('Underline'),
-			'align_left' => Swat::_('Align Left'),
-			'align_right' => Swat::_('Align Right'),
-			'align_center' => Swat::_('Align Center'),
-			'ordered_list' => Swat::_('Ordered List'),
-			'unordered_list' => Swat::_('Unordered List'),
-			'indent' => Swat::_('Indent'),
-			'outdent' => Swat::_('Outdent'),
-			'insert_link' => Swat::_('Insert Link'),
-			'horizontal_rule' => Swat::_('Horizontal Rule'),
-			'highlight' => Swat::_('Highlight'),
-			'quote' => Swat::_('Quote'),
-			'style' => Swat::_('Style'),
+			'bold'             => Swat::_('Bold'),
+			'italic'           => Swat::_('Italic'),
+			'underline'        => Swat::_('Underline'),
+			'align_left'       => Swat::_('Align Left'),
+			'align_right'      => Swat::_('Align Right'),
+			'align_center'     => Swat::_('Align Center'),
+			'ordered_list'     => Swat::_('Ordered List'),
+			'unordered_list'   => Swat::_('Unordered List'),
+			'indent'           => Swat::_('Indent'),
+			'outdent'          => Swat::_('Outdent'),
+			'insert_link'      => Swat::_('Insert Link'),
+			'horizontal_rule'  => Swat::_('Horizontal Rule'),
+			'highlight'        => Swat::_('Highlight'),
+			'quote'            => Swat::_('Quote'),
+			'style'            => Swat::_('Style'),
 			'clear_formatting' => Swat::_('Clear Formatting'),
-			'paragraph' => Swat::_('Paragraph'),
-			'heading' => Swat::_('Heading'),
-			'address' => Swat::_('Address'),
-			'formatted' => Swat::_('Formatted'),
+			'paragraph'        => Swat::_('Paragraph'),
+			'heading'          => Swat::_('Heading'),
+			'address'          => Swat::_('Address'),
+			'formatted'        => Swat::_('Formatted'),
 
 			//pop-up link
-			'enter_url' => Swat::_('A URL is required'),
-			'url' => Swat::_('URL'),
-			'link_text' => Swat::_('Link Text'),
-			'target' => Swat::_('Target'),
-			'insert_link' => Swat::_('Insert Link'),
-			'cancel' => Swat::_('Cancel')
+			'enter_url'        => Swat::_('A URL is required'),
+			'url'              => Swat::_('URL'),
+			'link_text'        => Swat::_('Link Text'),
+			'target'           => Swat::_('Target'),
+			'insert_link'      => Swat::_('Insert Link'),
+			'cancel'           => Swat::_('Cancel'),
 		);
 	}
 
