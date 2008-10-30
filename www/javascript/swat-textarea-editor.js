@@ -78,6 +78,6 @@ SwatTextareaEditor.prototype.init = function()
 		}
 	};
 
-	this.editor = new YAHOO.widget.Editor(this.id, config);
+	this.editor = new YAHOO.widget.SimpleEditor(this.id, config);
 	this.editor.render();
 }
