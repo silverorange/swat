@@ -585,7 +585,7 @@ abstract class SwatWidget extends SwatUIObject
 		if (!array_key_exists($key, $this->composite_widgets))
 			throw new SwatWidgetNotFoundException(sprintf(
 				"Composite widget with key of '%s' not found in %s. Make sure ".
-				"the compoite widget was created and added to this widget.",
+				"the composite widget was created and added to this widget.",
 				$key, get_class($this)), 0, $key);
 
 		return $this->composite_widgets[$key];
