@@ -1,7 +1,7 @@
 .yui-skin-sam .yui-toolbar-container {
 	background: #f8f6f0 url(../images/swat-frame-header.png) repeat-x scroll left bottom;
 	margin: 1px 1px 0;
-	padding-bottom: 0.6em;
+	padding-bottom: 0.5em;
 }
 
 .yui-skin-sam .yui-toolbar-container:focus {

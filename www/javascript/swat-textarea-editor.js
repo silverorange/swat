@@ -16,19 +16,16 @@ SwatTextareaEditor.prototype.init = function()
 		limitCommands: true,
 		markup:        'xhtml',
 		toolbar:       {
-			buttonType: 'advanced',
-			collapse:   false,
-			titlebar:   false,
-			draggable:  false,
-			buttons:    [
+			buttonType:  'advanced',
+			collapse:    false,
+			titlebar:    false,
+			draggable:   false,
+			grouplabels: false,
+			buttons:     [
 				{ group: 'textstyle', label: 'Font Style',
 					buttons: [
 						{ type: 'push', label: 'Bold CTRL + SHIFT + B', value: 'bold' },
 						{ type: 'push', label: 'Italic CTRL + SHIFT + I', value: 'italic' },
-						{ type: 'push', label: 'Underline CTRL + SHIFT + U', value: 'underline' },
-						{ type: 'separator' },
-						{ type: 'push', label: 'Subscript', value: 'subscript', disabled: true },
-						{ type: 'push', label: 'Superscript', value: 'superscript', disabled: true }
 					]
 				},
 				{ type: 'separator' },
@@ -43,15 +40,6 @@ SwatTextareaEditor.prototype.init = function()
 						{ type: 'push', label: 'Undo', value: 'undo', disabled: true },
 						{ type: 'push', label: 'Redo', value: 'redo', disabled: true }
 
-					]
-				},
-				{ type: 'separator' },
-				{ group: 'alignment', label: 'Alignment',
-					buttons: [
-						{ type: 'push', label: 'Align Left CTRL + SHIFT + [', value: 'justifyleft' },
-						{ type: 'push', label: 'Align Center CTRL + SHIFT + |', value: 'justifycenter' },
-						{ type: 'push', label: 'Align Right CTRL + SHIFT + ]', value: 'justifyright' },
-						{ type: 'push', label: 'Justify', value: 'justifyfull' }
 					]
 				},
 				{ type: 'separator' },
