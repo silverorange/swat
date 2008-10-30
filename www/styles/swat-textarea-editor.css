@@ -1,32 +1,40 @@
-.yui-toolbar-container div.yui-toolbar-group-parastyle {
-	clear: left;
-}
-
-.yui-skin-sam .yui-toolbar-container div.yui-toolbar-subcont {
+.yui-skin-sam .yui-toolbar-container {
+	background: #f8f6f0 url(../images/swat-frame-header.png) repeat-x scroll left bottom;
+	margin: 1px 1px 0;
 	padding-bottom: 0.6em;
 }
 
-.yui-skin-sam .yui-toolbar-container .yui-toolbar-editcode span.yui-toolbar-icon {
-	background-image: url(../images/swat-textarea-editor-source-edit.gif );
-	background-position: 0 1px;
-	left: 5px;
+.yui-skin-sam .yui-toolbar-container:focus {
+	outline: none;
 }
 
-.yui-skin-sam .yui-toolbar-container .yui-button-editcode-selected span.yui-toolbar-icon {
-	background-image: url(../images/swat-textarea-editor-source-edit.gif );
-	background-position: 0 1px;
-	left: 5px;
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-subcont {
+	border: none;
 }
 
-.swat-textarea-editor-hidden {
-	visibility: hidden;
-	top: -9999px;
-	left: -9999px;
-	position: absolute;
+.yui-skin-sam .yui-editor-container {
+	border: 1px solid #dcceb2;
 }
 
-.swat-textarea-container textarea.swat-textarea-editor {
-	border: 0;
-	margin: 0;
-	padding: 0;
+.yui-skin-sam .yui-toolbar-container .yui-toolbar-group h3 {
+	font-weight: normal;
+	color: #666;
+}
+
+.yui-skin-sam .yui-toolbar-container .yui-push-button .first-child,
+.yui-skin-sam .yui-toolbar-container .yui-color-button .first-child,
+.yui-skin-sam .yui-toolbar-container .yui-menu-button .first-child,
+.yui-skin-sam .yui-toolbar-container .yui-push-button,
+.yui-skin-sam .yui-toolbar-container .yui-color-button,
+.yui-skin-sam .yui-toolbar-container .yui-menu-button {
+	border-color: #aaa;
+}
+
+.yui-skin-sam .yui-toolbar-container .yui-push-button-disabled .first-child,
+.yui-skin-sam .yui-toolbar-container .yui-color-button-disabled .first-child,
+.yui-skin-sam .yui-toolbar-container .yui-menu-button-disabled .first-child,
+.yui-skin-sam .yui-toolbar-container .yui-push-button-disabled,
+.yui-skin-sam .yui-toolbar-container .yui-color-button-disabled,
+.yui-skin-sam .yui-toolbar-container .yui-menu-button-disabled {
+	border-color: #ddd;
 }
