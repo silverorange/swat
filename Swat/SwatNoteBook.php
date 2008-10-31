@@ -163,6 +163,10 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 				$this->addPage($page);
 			}
 		}
+
+		foreach ($this->pages as $page) {
+			$page->init();
+		}
 	}
 
 	// }}}
