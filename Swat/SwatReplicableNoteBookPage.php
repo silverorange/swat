@@ -9,21 +9,23 @@ require_once 'Swat/SwatNoteBookPage.php';
 /**
  * A container that replicates itself and its children as pages of a notebook
  *
- * @package   Swat
- * @copyright 2007 silverorange
- * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
- * @deprecated Use a SwatNoteBook with a SwatReplicableNoteBookChild within.
- *             Within the SwatReplicableNoteBookChild place one or more
+ * @package    Swat
+ * @copyright  2008 silverorange
+ * @license    http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
+ * @deprecated Use a regular {@link SwatNoteBook} containing a
+ *             {@link SwatReplicableNoteBookChild}. Within the
+ *             SwatReplicableNoteBookChild, place one or more
  *             SwatNoteBookPage objects to be replicated. The automatic
- *             title-setting functionality has been removed and will need
- *             to be implemented manually.
+ *             title-setting functionality of SwatReplicableNoteBookPage is
+ *             not available using this approach.
  */
-class SwatReplicableNoteBookPage extends SwatReplicableContainer implements SwatNoteBookChild
+class SwatReplicableNoteBookPage extends SwatReplicableContainer
+	implements SwatNoteBookChild
 {
 	// {{{ public function init()
 
 	/**
-	 * Initilizes this replicable note book page
+	 * Initilizes this replicable notebook page
 	 */
 	public function init()
 	{
@@ -61,12 +63,12 @@ class SwatReplicableNoteBookPage extends SwatReplicableContainer implements Swat
 	// {{{ public function getPages()
 
 	/**
-	 * Get all note book pages in this child
+	 * Gets the notebook pages of this replicable notebook page
 	 *
-	 * Implements the SwatNoteBookChild interface.
+	 * Implements the {@link SwatNoteBookChild::getPages()} interface.
 	 *
-	 * @return array an array of {@link SwatNoteBookPage} objects.
-	 * @see SwatNoteBookChild
+	 * @return array an array containing all the replicated pages of this
+	 *                container.
 	 */
 	public function getPages()
 	{

@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A page in a {@link SwatNoteBook}
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2008 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatNoteBook
  */
@@ -65,12 +65,11 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 	// {{{ public function getPages()
 
 	/**
-	 * Get all note book pages in this child
+	 * Gets the notebook pages of this notebook page
 	 *
-	 * Implements the SwatNoteBookChild interface.
+	 * Implements the {@link SwatNoteBookChild::getPages()} interface.
 	 *
-	 * @return array an array of {@link SwatNoteBookPage} objects.
-	 * @see SwatNoteBookChild
+	 * @return array an array containing this page.
 	 */
 	public function getPages()
 	{

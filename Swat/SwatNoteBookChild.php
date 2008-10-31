@@ -4,16 +4,17 @@
  * A child of a {@link SwatNoteBook}
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2008 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatNoteBook
+ * @see       SwatNoteBookPage
  */
 interface SwatNoteBookChild
 {
 	// {{{ public function getPages()
 
 	/**
-	 * Get all note book pages in this child
+	 * Gets the notebook pages of this child
 	 *
 	 * @return array an array of {@link SwatNoteBookPage} objects.
 	 *
