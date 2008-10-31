@@ -7,31 +7,34 @@ require_once 'Swat/SwatNoteBookChild.php';
 require_once 'Swat/SwatNoteBookPage.php';
 
 /**
- * A container that replicates itself and its children as pages of a notebook
+ * A replicable container that replicates {@link SwatNoteBookChild} objects
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2008 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatReplicableNoteBookChild extends SwatReplicableContainer implements SwatNoteBookChild
+class SwatReplicableNoteBookChild extends SwatReplicableContainer
+	implements SwatNoteBookChild
 {
 	// {{{ public function getPages()
 
 	/**
-	 * Get all note book pages in this child
+	 * Gets the notebook pages of this replicable notebook child
 	 *
-	 * Implements the SwatNoteBookChild interface.
+	 * Implements the {@link SwatNoteBookChild::getPages()} interface.
 	 *
-	 * @return array an array of {@link SwatNoteBookPage} objects.
-	 * @see SwatNoteBookChild
+	 * @return array an array containing all the replicated pages of this
+	 *                child.
 	 */
 	public function getPages()
 	{
 		$pages = array();
 
-		foreach ($this->children as $child)
-			if ($child instanceof SwatNoteBookPage)
-				$pages[] = $child;
+		foreach ($this->children as $child) {
+			if ($child instanceof SwatNoteBookChild) {
+				$pages = array_merge($pages, $child->getPages());
+			}
+		}
 
 		return $pages;
 	}
@@ -40,26 +43,23 @@ class SwatReplicableNoteBookChild extends SwatReplicableContainer implements Swa
 	// {{{ public function addChild()
 
 	/**
-	 * Adds a {@link SwatNoteBookPage} to this replicable notebook child
+	 * Adds a {@link SwatNoteBookChild} to this replicable notebook child
 	 *
-	 * This method fulfills the {@link SwatUIParent} interface. It is used
-	 * by {@link SwatUI} when building a widget tree and should not need to be
-	 * called elsewhere. To add a notebook page to a notebook, use
-	 * {@link SwatNoteBook::addPage()}.
+	 * This method fulfills the {@link SwatUIParent} interface.
 	 *
-	 * @param SwatNoteBookPage $child the notebook page to add.
+	 * @param SwatNoteBookChild $child the notebook child to add.
 	 *
 	 * @throws SwatInvalidClassException if the given object is not an instance
-	 *                                    of SwatNoteBookPage.
+	 *                                    of SwatNoteBookChild.
 	 *
 	 * @see SwatUIParent
 	 */
 	public function addChild(SwatObject $child)
 	{
-		if (!($child instanceof SwatNoteBookPage))
+		if (!($child instanceof SwatNoteBookChild))
 			throw new SwatInvalidClassException(
 				'Only SwatNoteBookChild objects may be nested within a '.
-				'SwatNoteBook object.', 0, $child);
+				'SwatReplicableNoteBookChild object.', 0, $child);
 
 		parent::addChild($child);
 	}
