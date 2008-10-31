@@ -50,6 +50,7 @@ class DemoApplication
 		'TableView'         => 'SwatTableView',
 		'TableViewInputRow' => 'SwatTableViewInputRow',
 		'Textarea'          => 'SwatTextarea',
+		'TextareaEditor'    => 'SwatTextareaEditor',
 		'TileView'          => 'SwatTileView',
 		'TimeEntry'         => 'SwatTimeEntry',
 		'TimeZoneEntry'     => 'SwatTimeZoneEntry',
@@ -381,8 +382,11 @@ class DemoApplication
 			$entries = array(
 				'SwatTextarea',
 				'SwatXHTMLTextarea',
-				'SwatTextareaEditor'
 				);
+			break;
+
+		case 'TextareaEditor':
+			$entries = array('SwatTextareaEditor');
 			break;
 
 		case 'TileView':

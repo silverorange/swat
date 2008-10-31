@@ -15,11 +15,6 @@
 			</widget>
 		</widget>
 
-		<widget class="SwatFormField">
-			<property name="title">Visual Editor Text Area</property>
-			<widget class="SwatTextareaEditor" id="textarea_editor" />
-		</widget>
-
 		<widget class="SwatFooterFormField">
 			<widget class="SwatButton" />
 		</widget>

@@ -1,0 +1,21 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="my_form">
+
+		<widget class="SwatFormField">
+			<property name="title">Visual Editor Text Area</property>
+			<widget class="SwatTextareaEditor" id="textarea_editor">
+				<property name="value"><![CDATA[
+<h3>Hello, World!</h3>
+This is a visual editor<br/>with a bit of predefined text.
+				]]></property>
+			</widget>
+		</widget>
+
+		<widget class="SwatFooterFormField">
+			<widget class="SwatButton" />
+		</widget>
+
+	</widget>
+</swatml>
