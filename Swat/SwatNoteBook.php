@@ -23,30 +23,22 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ constants
 
 	/**
-	 * Top Position
-	 *
-	 * The constant used to represent tabs on top.
+	 * Positions notebook tabs on the top of notebook pages.
 	 */
 	const POSITION_TOP    = 1;
 
 	/**
-	 * Right Position
-	 *
-	 * The constant used to represent tabs on the right.
+	 * Positions notebook tabs on the right of notebook pages.
 	 */
 	const POSITION_RIGHT  = 2;
 
 	/**
-	 * Bottom Position
-	 *
-	 * The constant used to represent tabs on the bottom.
+	 * Positions notebook tabs on the bottom of notebook pages.
 	 */
 	const POSITION_BOTTOM = 3;
 
 	/**
-	 * Left Position
-	 *
-	 * The constant used to represent tabs on the left.
+	 * Positions notebook tabs on the left of notebook pages.
 	 */
 	const POSITION_LEFT   = 4;
 
@@ -54,7 +46,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public properties
 
 	/**
-	 * A value containing the desired position of the tabs
+	 * Position of tabs for this notebook
 	 *
 	 * @var integer
 	 */
@@ -63,8 +55,8 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	/**
 	 * Selected page
 	 *
-	 * The id of the {@link SwatNoteBookPage} to show as selected.
-	 * By default, the first tab is selected.
+	 * The id of the {@link SwatNoteBookPage} to show as selected. By default,
+	 * the first page is selected.
 	 *
 	 * @var string
 	 */
@@ -91,7 +83,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	// {{{ public function __construct()
 
 	/**
-	 * Creates a new SwatWidget
+	 * Creates a new notebook
 	 *
 	 * @param string $id a non-visable unique id for this widget.
 	 */
@@ -162,10 +154,11 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	{
 		parent::init();
 
-		foreach($this->children as $child) {
+		foreach ($this->children as $child) {
 			$child->init();
-			foreach($child->getPages() as $page)
+			foreach ($child->getPages() as $page) {
 				$this->addPage($page);
+			}
 		}
 	}
 
@@ -178,8 +171,9 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	public function process()
 	{
 		parent::process();
-		foreach($this->pages as $page)
+		foreach ($this->pages as $page) {
 			$page->process();
+		}
 	}
 
 	// }}}
