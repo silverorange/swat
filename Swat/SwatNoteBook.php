@@ -111,6 +111,9 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 * called elsewhere. To add a notebook page to a notebook, use
 	 * {@link SwatNoteBook::addPage()}.
 	 *
+	 * Note: This is the only way to add a SwatNoteBookChild that is not a
+	 *       SwatNoteBookPage.
+	 *
 	 * @param SwatNoteBookChild $child the notebook child to add.
 	 *
 	 * @throws SwatInvalidClassException if the given object is not an instance
