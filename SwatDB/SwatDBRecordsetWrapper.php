@@ -588,12 +588,20 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 * Loads all sub-data-objects for an internal property of the data-objects
 	 * in this recordset
 	 *
-	 * @param string $name name of the property to load.
+	 * This is used to efficiently load sub-objects when there is a one-to-one
+	 * relationship between the objects in this recordset and the sub-objects.
+	 * This is usually the case when there is a foreign key constraint in the
+	 * database table for the objects in this recordset.
+	 *
+	 * @param string $name name of the internal property to load.
 	 * @param MDB2_Driver_Common $db database object.
-	 * @param string $sql SQL to execute with placeholder for set of internal
-	 *                     values.
-	 * @param string $wrapper name of a recordset wrapper to use for
-	 *                         sub-data-objects.
+	 * @param string $sql SQL to execute with placeholder for the set of
+	 *                     internal property values. For example:
+	 *                     <code>select * from Foo where id in (%s)</code>.
+	 * @param string $wrapper the class name of the recordset wrapper to use
+	 *                         for the sub-data-objects.
+	 * @param string $type optional. The MDB2 datatype of the internal property
+	 *                      values. If not specified, 'integer' is used.
 	 *
 	 * @return SwatDBRecordsetWrapper an instance of the wrapper, or null.
 	 */
