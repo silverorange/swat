@@ -609,6 +609,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 			$first = true;
 			foreach ($this->renderers as $renderer) {
+				if (!$renderer->visible)
+					continue;
+
 				if ($first)
 					$first = false;
 				else
