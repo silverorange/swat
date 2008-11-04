@@ -842,56 +842,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 		while ($row !== null) {
 			$count++;
 
-			// display the groupings
-			foreach ($this->groups as $group)
-				$group->display($row);
-
-			// display a row of data
-			$tr_tag = new SwatHtmlTag('tr');
-			$tr_tag->class = $this->getRowClassString($row, $count);
-			foreach ($this->columns as $column)
-				$tr_tag->addAttributes($column->getTrAttributes($row));
-
-			// check for messages
-			$has_message = false;
-			foreach ($this->columns as $column) {
-				if ($column->hasMessage($row)) {
-					$has_message = true;
-					break;
-				}
-			}
-
-			if ($has_message)
-				$tr_tag->class = $tr_tag->class.' swat-error';
-
-			$tr_tag->open();
-
-			foreach ($this->columns as $column)
-				$column->display($row);
-
-			$tr_tag->close();
-
-			// display the row columns
-			$tr_tag = new SwatHtmlTag('tr');
-			$tr_tag->class = $this->getRowClassString($row, $count);
-
-			if ($has_message)
-				$tr_tag->class = $tr_tag->class.' swat-error';
-
-			$tr_tag->class.= ' swat-table-view-spanning-column';
-
-			foreach ($this->spanning_columns as $column) {
-				if ($column->visible && $column->hasVisibleRenderer($row)) {
-					$tr_tag->open();
-					$column->display($row);
-					$tr_tag->close();
-				}
-			}
-
-			$this->displayRowMessages($row);
-
-			foreach ($this->groups as $group)
-				$group->displayFooter($row, $next_row);
+			$this->displayRow($row, $next_row, $count);
 
 			$row = $next_row;
 			$this->model->next();
@@ -899,6 +850,88 @@ class SwatTableView extends SwatView implements SwatUIParent
 		}
 
 		echo '</tbody>';
+	}
+
+	// }}}
+	// {{{ protected function displayRow()
+
+	/**
+	 * Displays a row
+	 *
+	 * The contents reflect the data stored in the model of this table-view.
+	 * Things like row highlighting are done here.
+	 */
+	protected function displayRow($row, $next_row, $count)
+	{
+		$this->displayRowGroups($row, $next_row, $count);
+		$this->displayRowColumns($row, $next_row, $count);
+		$this->displayRowSpanningColumns($row, $next_row, $count);
+		$this->displayRowMessages($row);
+
+		foreach ($this->groups as $group)
+			$group->displayFooter($row, $next_row);
+	}
+
+	// }}}
+	// {{{ protected function displayRowGroups()
+
+	/**
+	 * Displays row groups
+	 */
+	protected function displayRowGroups($row, $next_row, $count)
+	{
+		foreach ($this->groups as $group)
+			$group->display($row);
+	}
+
+	// }}}
+	// {{{ protected function displayRowColumns()
+
+	/**
+	 * Displays the columns for a row
+	 */
+	protected function displayRowColumns($row, $next_row, $count)
+	{
+		// display a row of data
+		$tr_tag = new SwatHtmlTag('tr');
+		$tr_tag->class = $this->getRowClassString($row, $count);
+		foreach ($this->columns as $column)
+			$tr_tag->addAttributes($column->getTrAttributes($row));
+
+		if ($this->rowHasMessage($row))
+			$tr_tag->class.= ' swat-error';
+
+		$tr_tag->open();
+
+		foreach ($this->columns as $column)
+			$column->display($row);
+
+		$tr_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function displayRowSpanningColumns()
+
+	/**
+	 * Displays row spanning columns
+	 */
+	protected function displayRowSpanningColumns($row, $next_row, $count)
+	{
+		$tr_tag = new SwatHtmlTag('tr');
+		$tr_tag->class = $this->getRowClassString($row, $count);
+
+		if ($this->rowHasMessage($row))
+			$tr_tag->class = $tr_tag->class.' swat-error';
+
+		$tr_tag->class.= ' swat-table-view-spanning-column';
+
+		foreach ($this->spanning_columns as $column) {
+			if ($column->visible && $column->hasVisibleRenderer($row)) {
+				$tr_tag->open();
+				$column->display($row);
+				$tr_tag->close();
+			}
+		}
 	}
 
 	// }}}
@@ -969,6 +1002,31 @@ class SwatTableView extends SwatView implements SwatUIParent
 			$tfoot_tag->setContent($footer_content, 'text/xml');
 			$tfoot_tag->display();
 		}
+	}
+
+	// }}}
+	// {{{ protected function rowHasMessage()
+
+	/**
+	 * Whether any of the columns in the row has a message
+	 *
+	 * @param mixed $row The data object to use to check the column for
+     *                   messages 
+	 *
+	 * @return boolean Whether any of the columns in the row has a message 
+	 */
+	protected function rowHasMessage($row)
+	{
+		$has_message = false;
+
+		foreach ($this->columns as $column) {
+			if ($column->hasMessage($row)) {
+				$has_message = true;
+				break;
+			}
+		}
+
+		return $has_message;
 	}
 
 	// }}}
