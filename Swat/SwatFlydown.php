@@ -73,6 +73,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
 		// only show a select if there is more than one option
 		if (count($options) > 1) {
+			$flydown_value = ($this->serialize_values) ?
+				$this->value : (string)$this->value;
 
 			if ($this->serialize_values)
 				$salt = $this->getForm()->getSalt();
@@ -111,7 +113,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 				$value = ($this->serialize_values) ?
 					$flydown_option->value : (string)$flydown_option->value;
 
-				if ($this->value === $value && !$selected &&
+				if ($flydown_value === $value && !$selected &&
 					!($flydown_option instanceof SwatFlydownDivider)) {
 
 					$option_tag->selected = 'selected';
