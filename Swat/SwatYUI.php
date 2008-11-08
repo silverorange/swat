@@ -233,6 +233,9 @@ class SwatYUI extends SwatObject
 		$components['imagecropper']->addStyleSheet(
 			'imagecropper/assets/skins/sam', '', false);
 
+		$components['json'] = new SwatYUIComponent('json');
+		$components['json']->addJavaScript();
+
 		$components['logger'] = new SwatYUIComponent('logger');
 		$components['logger']->addJavaScript();
 
@@ -331,6 +334,8 @@ class SwatYUI extends SwatObject
 		$components['imagecropper']->addDependency($components['dragdrop']);
 		$components['imagecropper']->addDependency($components['element']);
 		$components['imagecropper']->addDependency($components['resize']);
+
+		$components['json']->addDependency($components['yahoo']);
 
 		$components['logger']->addDependency($components['yahoo']);
 		$components['logger']->addDependency($components['dom']);
