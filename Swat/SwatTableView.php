@@ -871,7 +871,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 */
 	protected function displayRow($row, $next_row, $count)
 	{
-		$this->displayRowGroups($row, $next_row, $count);
+		$this->displayRowGroupHeaders($row, $next_row, $count);
 		$this->displayRowColumns($row, $next_row, $count);
 		$this->displayRowSpanningColumns($row, $next_row, $count);
 		$this->displayRowMessages($row);
