@@ -833,6 +833,8 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 		echo '<tbody>';
 
+		// this uses read-ahread iteration
+
 		$this->model->rewind();
 		$row = ($this->model->valid()) ? $this->model->current() : null;
 
