@@ -856,10 +856,16 @@ class SwatTableView extends SwatView implements SwatUIParent
 	// {{{ protected function displayRow()
 
 	/**
-	 * Displays a row
+	 * Displays a single row
 	 *
 	 * The contents reflect the data stored in the model of this table-view.
 	 * Things like row highlighting are done here.
+	 *
+	 * @param mixed $row the row to display.
+	 * @param mixed $next_row the next row that will be displayed. If there is
+	 *                         no next row, this is null.
+	 * @param integer $count the ordinal position of the current row. Starts
+	 *                        at one.
 	 */
 	protected function displayRow($row, $next_row, $count)
 	{
@@ -867,21 +873,43 @@ class SwatTableView extends SwatView implements SwatUIParent
 		$this->displayRowColumns($row, $next_row, $count);
 		$this->displayRowSpanningColumns($row, $next_row, $count);
 		$this->displayRowMessages($row);
-
-		foreach ($this->groups as $group)
-			$group->displayFooter($row, $next_row);
+		$this->displayRowGroupFooters($row, $next_row, $count);
 	}
 
 	// }}}
-	// {{{ protected function displayRowGroups()
+	// {{{ protected function displayRowGroupHeaders()
 
 	/**
-	 * Displays row groups
+	 * Displays row group headers
+	 *
+	 * @param mixed $row the row to display.
+	 * @param mixed $next_row the next row that will be displayed. If there is
+	 *                         no next row, this is null.
+	 * @param integer $count the ordinal position of the current row. Starts
+	 *                        at one.
 	 */
-	protected function displayRowGroups($row, $next_row, $count)
+	protected function displayRowGroupHeaders($row, $next_row, $count)
 	{
 		foreach ($this->groups as $group)
 			$group->display($row);
+	}
+
+	// }}}
+	// {{{ protected function displayRowGroupFooters()
+
+	/**
+	 * Displays row group headers
+	 *
+	 * @param mixed $row the row to display.
+	 * @param mixed $next_row the next row that will be displayed. If there is
+	 *                         no next row, this is null.
+	 * @param integer $count the ordinal position of the current row. Starts
+	 *                        at one.
+	 */
+	protected function displayRowGroupFooters($row, $next_row, $count)
+	{
+		foreach ($this->groups as $group)
+			$group->displayFooter($row, $next_row);
 	}
 
 	// }}}
@@ -889,6 +917,12 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 	/**
 	 * Displays the columns for a row
+	 *
+	 * @param mixed $row the row to display.
+	 * @param mixed $next_row the next row that will be displayed. If there is
+	 *                         no next row, this is null.
+	 * @param integer $count the ordinal position of the current row. Starts
+	 *                        at one.
 	 */
 	protected function displayRowColumns($row, $next_row, $count)
 	{
@@ -914,6 +948,12 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 	/**
 	 * Displays row spanning columns
+	 *
+	 * @param mixed $row the row to display.
+	 * @param mixed $next_row the next row that will be displayed. If there is
+	 *                         no next row, this is null.
+	 * @param integer $count the ordinal position of the current row. Starts
+	 *                        at one.
 	 */
 	protected function displayRowSpanningColumns($row, $next_row, $count)
 	{
@@ -940,7 +980,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	/**
 	 * Displays a list of {@link SwatMessage} object for the given row
 	 *
-	 * @param mixed $row a data object to display row messages for.
+	 * @param mixed $row the row for which to display messages.
 	 */
 	protected function displayRowMessages($row)
 	{
@@ -1010,10 +1050,11 @@ class SwatTableView extends SwatView implements SwatUIParent
 	/**
 	 * Whether any of the columns in the row has a message
 	 *
-	 * @param mixed $row The data object to use to check the column for
-     *                   messages 
+	 * @param mixed $row the data object to use to check the column for
+	 *                    messages.
 	 *
-	 * @return boolean Whether any of the columns in the row has a message 
+	 * @return boolean true if any of the columns in the row has a message,
+	 *                 otherwise false.
 	 */
 	protected function rowHasMessage($row)
 	{
