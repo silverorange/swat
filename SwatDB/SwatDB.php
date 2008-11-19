@@ -263,7 +263,8 @@ class SwatDB extends SwatObject
 	 * @param string $sql The SQL to execute.
 	 * @param string $type Optional MDB2 datatype for the result.
 	 *
-	 * @return mixed The value queried for a single result.
+	 * @return mixed The value queried for a single result. Null when there are
+	 *         no results.
 	 *
 	 * @throws SwatDBException
 	 */
@@ -616,7 +617,7 @@ class SwatDB extends SwatObject
 	 *        identifier of row to be updated. Can be given in the form
 	 *        type:name where type is a standard MDB2 datatype. If type is
 	 *        ommitted, then integer is assummed for this field.
-	 *		  If $id_field is set, the value in the $id_field column of
+	 *        If $id_field is set, the value in the $id_field column of
 	 *        the inserted row is returned.
 	 *
 	 * @return mixed If $id_field is set, the value in the $id_field column of
