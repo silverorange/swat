@@ -125,26 +125,9 @@ class SwatImageDisplay extends SwatControl
 		if ($this->width !== null)
 			$image_tag->width = $this->width;
 
-		$margin_x = 0;
-		$margin_y = 0;
-
-		if ($this->occupy_width !== null &&
-			$this->occupy_width > $this->width)
-			$margin_x = $this->occupy_width - $this->width;
-
-		if ($this->occupy_height !== null &&
-			$this->occupy_height > $this->height)
-			$margin_y = $this->occupy_height - $this->height;
-
-		if ($margin_x > 0 || $margin_y > 0)
-			$image_tag->style = sprintf(
-				($margin_x % 2 == 0 && $margin_y % 2 == 0) ?
-					'margin: %dpx %dpx' :
-					'margin: %dpx %dpx %dpx %dpx;',
-				floor(((float) $margin_y) / 2),
-				ceil(((float) $margin_x) / 2),
-				ceil(((float) $margin_y) / 2),
-				floor(((float) $margin_x) / 2));
+		$image_tag->style = SwatImageDisplay::getOccupyMargin(
+			$this->width, $this->height, $this->occupy_width,
+			$this->occupy_height);
 
 		if ($this->title !== null)
 			$image_tag->title = $this->title;
@@ -154,6 +137,37 @@ class SwatImageDisplay extends SwatControl
 		$image_tag->alt = ($this->alt === null) ? '' : $this->alt;
 
 		$image_tag->display();
+	}
+
+	// }}}
+	// {{{ public static function getOccupyMargin()
+
+	public static function getOccupyMargin($width, $height,
+		$occupy_width = null, $occupy_height = null)
+	{
+		$margin_x = 0;
+		$margin_y = 0;
+
+		if ($occupy_width !== null && $occupy_width > $width)
+			$margin_x = $occupy_width - $width;
+
+		if ($occupy_height !== null && $occupy_height > $height)
+			$margin_y = $occupy_height - $height;
+
+		if ($margin_x > 0 || $margin_y > 0) {
+			$style = sprintf(
+				($margin_x % 2 == 0 && $margin_y % 2 == 0) ?
+					'margin: %dpx %dpx' :
+					'margin: %dpx %dpx %dpx %dpx;',
+				floor(((float) $margin_y) / 2),
+				ceil(((float) $margin_x) / 2),
+				ceil(((float) $margin_y) / 2),
+				floor(((float) $margin_x) / 2));
+		} else {
+			$style = null;
+		}
+
+		return $style;
 	}
 
 	// }}}
