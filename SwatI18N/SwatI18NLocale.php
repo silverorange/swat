@@ -419,6 +419,8 @@ class SwatI18NLocale extends SwatObject
 	public function formatNumber($value, $decimals = null,
 		array $format = array())
 	{
+		$value = (float) $value;
+
 		$format = $this->getNumberFormat()->override($format);
 
 		if ($decimals === null)
@@ -1042,6 +1044,8 @@ class SwatI18NLocale extends SwatObject
 		 * IEEE-754 decomposition (written in PHP). The string-based code has
 		 * not been profiled against the equivalent IEEE-754 code.
 		 */
+
+		$value = (float) $value;
 
 		// get current locale
 		$locale = self::get();
