@@ -1281,6 +1281,10 @@ class SwatDB extends SwatObject
 	{
 		// SWATDB_DEBUG is legacy, use SwatDB::setDebug() instead
 		if (defined('SWATDB_DEBUG') || SwatDB::$debug) {
+			$trace = debug_backtrace();
+			$i = 0;
+			while ($trace[$i]['class'] == 'SwatDB') $i++;
+			echo '<b>', $trace[$i]['class'], '::', $trace[$i]['function'], '()</b><br />';
 			echo $message, "<hr />\n";
 		}
 	}
