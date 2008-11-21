@@ -1283,7 +1283,7 @@ class SwatDB extends SwatObject
 		if (defined('SWATDB_DEBUG') || SwatDB::$debug) {
 			$trace = debug_backtrace();
 			$i = 0;
-			while ($trace[$i]['class'] == 'SwatDB') $i++;
+			while (strncmp($trace[$i]['class'], 'SwatDB', 6) == 0) $i++;
 			echo '<b>', $trace[$i]['class'], '::', $trace[$i]['function'], '()</b><br />';
 			echo $message, "<hr />\n";
 		}
