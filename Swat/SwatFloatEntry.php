@@ -54,13 +54,7 @@ class SwatFloatEntry extends SwatNumericEntry
 			$thousands_separator =
 				($this->show_thousands_separator) ? null : '';
 
-			$lc = $locale->getLocaleInfo();
-			$decimal_pos = strpos($value, $lc['decimal_point']);
-			$decimals = ($decimal_pos !== false) ?
-				strlen($value) - $decimal_pos - strlen($lc['decimal_point']) :
-				0;
-
-			$value = $locale->formatNumber($value, $decimals,
+			$value = $locale->formatNumber($value, null,
 				array('thousands_separator' => $thousands_separator));
 		} else {
 			$value = parent::getDisplayValue($value);
