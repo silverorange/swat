@@ -243,6 +243,21 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function hasField()
+
+	/**
+	 * Whether a field exists in this details view
+	 *
+	 * @param string $id the id of the field in this details-view to check.
+	 *
+	 * @return boolean whether a field with the specified id exists.
+	 */
+	public function hasField($id)
+	{
+		return array_key_exists($id, $this->fields_by_id);
+	}
+
+	// }}}
 	// {{{ public function addChild()
 
 	/**
