@@ -438,17 +438,21 @@ abstract class SwatWidget extends SwatUIObject
 	 * Replaces this widget in the widget tree with a new {@link SwatContainer},
 	 * then adds this widget to the new container.
 	 *
+	 * @param SwatContainer $container optional container to use
+	 *
 	 * @throws SwatException
 	 *
 	 * @return SwatContainer a reference to the new container.
 	 */
-	public function replaceWithContainer()
+	public function replaceWithContainer(SwatContainer $container = null)
 	{
 		if ($this->parent === null)
 			throw new SwatException('Widget does not have a parent, unable '.
 				'to replace this widget with a container.');
 
-		$container = new SwatContainer();
+		if ($container === null)
+			$container = new SwatContainer();
+
 		$parent = $this->parent;
 		$parent->replace($this, $container);
 		$container->add($this);
