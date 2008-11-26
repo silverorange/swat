@@ -137,7 +137,7 @@ class SwatError
 	 */
 	public static function setFatalSeverity($severity)
 	{
-		self::$fatal_severity = $serverity;
+		self::$fatal_severity = $severity;
 	}
 
 	// }}}
