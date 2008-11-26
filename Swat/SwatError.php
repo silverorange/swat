@@ -83,6 +83,11 @@ class SwatError
 	 */
 	protected static $logger = null;
 
+	/**
+	 * @var integer
+	 */
+	protected static $fatal_severity = E_USER_ERROR;
+
 	// }}}
 	// {{{ public static function setLogger()
 
@@ -119,6 +124,20 @@ class SwatError
 	public static function setDisplayer(SwatErrorDisplayer $displayer)
 	{
 		self::$displayer = $displayer;
+	}
+
+	// }}}
+	// {{{ public static function setFatalSeverity()
+
+	/**
+	 * Sets the severity of SwatError that should be fatal
+	 *
+	 * @param integer $severity a bitwise combination of PHP error severities
+	 *                           to be considered fatal.
+	 */
+	public static function setFatalSeverity($severity)
+	{
+		self::$fatal_severity = $serverity;
 	}
 
 	// }}}
@@ -173,7 +192,7 @@ class SwatError
 		if (ini_get('log_errors'))
 			$this->log();
 
-		if ($this->severity == E_USER_ERROR)
+		if ($this->severity & self::$fatal_severity)
 			exit(1);
 	}
 
