@@ -41,6 +41,9 @@ class SwatConfirmEmailEntry extends SwatEmailEntry
 	{
 		parent::process();
 
+		if ($this->value === null)
+			return;
+
 		if ($this->email_widget === null)
 			throw new SwatException("Property 'email_widget' is null. ".
 				'Expected a reference to a SwatEmailEntry.');
