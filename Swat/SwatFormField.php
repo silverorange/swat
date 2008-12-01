@@ -47,7 +47,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	/**
 	 * Optional note of text to display with the field
 	 *
-	 * @var boolean
+	 * @var string
 	 */
 	public $note = null;
 
