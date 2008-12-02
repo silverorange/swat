@@ -60,6 +60,44 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 */
 	public $preview_width = null;
 
+	/**
+	 * Whether or not to show a resize icon next to the image
+	 *
+	 * @var boolean
+	 */
+	public $show_icon = true;
+
+	/**
+	 * The href attribute in the XHTML anchor tag
+	 *
+	 * If JavaScript is not enabled, the image preview display will link to
+	 * this location
+	 *
+	 * Optionally uses vsprintf() syntax, for example:
+	 * <code>
+	 * $renderer->link = 'MySection/MyPage/%s?id=%s';
+	 * </code>
+	 *
+	 * @var string
+	 *
+	 * @see SwatImagePreviewDisplay::$link_value
+	 */
+	public $link;
+
+	/**
+	 * A value or array of values to substitute into the link
+	 *
+	 * The value property may be specified either as an array of values or as
+	 * a single value. If an array is passed, a call to vsprintf() is done
+	 * on the {@link SwatImageLinkCellRenderer::$link} property. If the value
+	 * is a string a single sprintf() call is made.
+	 *
+	 * @var mixed
+	 *
+	 * @see SwatImagePreviewDisplay::$link
+	 */
+	public $link_value = null;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -104,16 +142,31 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 		if ($this->preview_image === null) {
 			parent::display();
 		} else {
-			$anchor_tag = new SwatHtmlTag('a');
-			$anchor_tag->id = $this->id.'_link';
-			$anchor_tag->title = $this->title;
-			$anchor_tag->class = 'swat-image-preview-display-link';
-			$anchor_tag->href = $this->preview_image;
-			$anchor_tag->open();
+			if ($this->link !== null) {
+				$tag = new SwatHtmlTag('a');
+				if ($this->link_value === null) {
+					$tag->href = $this->link;
+				} elseif (is_array($this->link_value)) {
+					$tag->href = vsprintf($this->link, $this->link_value);
+				} else {
+					$tag->href = sprintf($this->link, $this->link_value);
+				}
+			} else {
+				$tag = new SwatHtmlTag('span');
+			}
 
+			$tag->id = $this->id.'_wrapper';
+			$tag->title = $this->title;
+
+			if ($this->show_icon) {
+				$tag->class = 'swat-image-preview-display-link';
+			} else {
+				$tag->class = 'swat-image-preview-display-link-plain';
+			}
+
+			$tag->open();
 			parent::display();
-
-			$anchor_tag->close();
+			$tag->close();
 
 			Swat::displayInlineJavaScript($this->getInlineJavaScript());
 		}
