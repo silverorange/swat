@@ -33,7 +33,10 @@ SwatImagePreviewDisplay.prototype.init = function()
 
 	// add preview image to document
 	var image_link = document.getElementById(this.id + '_link');
-	image_link.parentNode.appendChild(this.preview_container);
+
+	var body = document.getElementsByTagName('body')[0];
+	body.appendChild(this.preview_container);
+	body.style.position = 'relative';
 
 	// setup event handlers
 	YAHOO.util.Event.addListener(image_link, 'click',
@@ -71,10 +74,15 @@ SwatImagePreviewDisplay.prototype.open = function()
 
 	this.preview_container.style.display = 'block';
 
-	var x = (max_width - this.preview_image.width  + padding) / 2;
-	var y = (max_height - this.preview_image.height + padding) / 2;
+	// x is relative to center of page
+	var x = -Math.round((this.preview_image.width  + padding) / 2);
+	var y = Math.round((max_height - this.preview_image.height + padding) / 2);
 
-	YAHOO.util.Dom.setXY(this.preview_image, [x, y]);
+	YAHOO.util.Dom.setY(this.preview_container, y);
+
+	// set x
+	this.preview_container.style.left = '50%';
+	this.preview_container.style.marginLeft = x + 'px';
 
 	// focus link to capture keyboard events
 	this.preview_link.focus();

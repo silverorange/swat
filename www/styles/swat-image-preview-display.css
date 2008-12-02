@@ -33,12 +33,9 @@
 	position: absolute;
 	z-index: 1000000;
 	text-align: center;
-	top: 0;
-	left: 0;
 }
 
 .swat-image-preview-container img {
-	position: absolute;
 	cursor: pointer;
 	display: block;
 	padding: 8px;
