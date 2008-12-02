@@ -92,7 +92,8 @@ SwatImagePreviewDisplay.prototype.open = function()
 
 	// x is relative to center of page
 	var x = -Math.round((this.preview_image.width  + padding) / 2);
-	var y = Math.round((max_height - this.preview_image.height + padding) / 2);
+	var y = Math.round((max_height - this.preview_image.height + padding) / 2) +
+		window.scrollY;
 
 	YAHOO.util.Dom.setY(this.preview_container, y);
 
