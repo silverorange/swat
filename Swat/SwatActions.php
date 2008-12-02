@@ -580,8 +580,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 			'null' : SwatString::quoteJavaScriptString($item->selected->id);
 
 		$javascript.= sprintf("var %s_obj = new SwatActions(%s, [%s], %s);",
-			SwatString::quoteJavaScriptString($this->id),
 			$this->id,
+			SwatString::quoteJavaScriptString($this->id),
 			implode(', ', $values),
 			$selected_value);
 
