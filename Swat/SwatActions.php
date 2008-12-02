@@ -147,6 +147,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 			return;
 
 		parent::display();
+
 		$flydown = $this->getCompositeWidget('action_flydown');
 		foreach ($this->action_items as $item) {
 			if ($item->visible) {
@@ -300,6 +301,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 	public function getHtmlHeadEntrySet()
 	{
 		$set = parent::getHtmlHeadEntrySet();
+
+//		var_dump($set);
 
 		foreach ($this->action_items as $child_widget)
 			$set->addEntrySet($child_widget->getHtmlHeadEntrySet());
@@ -567,14 +570,17 @@ class SwatActions extends SwatControl implements SwatUIParent
 		if ($this->show_blank)
 			$values[] = "''";
 
-		foreach ($this->action_items as $item)
-			$values[] = "'".$item->id."'";
+		foreach ($this->action_items as $item) {
+			if ($item->visible) {
+				$values[] = SwatString::quoteJavaScriptString($item->id);
+			}
+		}
 
 		$selected_value = ($this->selected === null) ?
-			'null' : "'".$this->selected->id."'";
+			'null' : SwatString::quoteJavaScriptString($item->selected->id);
 
-		$javascript.= sprintf("var %s_obj = new SwatActions('%s', [%s], %s);",
-			$this->id,
+		$javascript.= sprintf("var %s_obj = new SwatActions(%s, [%s], %s);",
+			SwatString::quoteJavaScriptString($this->id),
 			$this->id,
 			implode(', ', $values),
 			$selected_value);
