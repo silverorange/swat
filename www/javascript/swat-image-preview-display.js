@@ -31,17 +31,33 @@ SwatImagePreviewDisplay.prototype.init = function()
 {
 	this.drawOverlay();
 
-	// add preview image to document
-	var image_link = document.getElementById(this.id + '_link');
+	var image_wrapper = document.getElementById(this.id + '_wrapper');
+	if (image_wrapper.tagName == 'SPAN') {
+		var image_link = document.createElement('a');
 
+		image_link.title     = image_wrapper.title;
+		image_link.className = image_wrapper.className;
+		image_link.href      = '#';
+
+		while (image_wrapper.firstChild) {
+			image_link.appendChild(image_wrapper.firstChild);
+		}
+
+		image_wrapper.parentNode.replaceChild(image_link, image_wrapper);
+		YAHOO.util.Event.addListener(image_link, 'click',
+			this.handleClick, this, true);
+	} else {
+		image_wrapper.href = '#';
+		YAHOO.util.Event.addListener(image_wrapper, 'click',
+			this.handleClick, this, true);
+	}
+
+	// add preview image to document
 	var body = document.getElementsByTagName('body')[0];
 	body.appendChild(this.preview_container);
 	body.style.position = 'relative';
 
 	// setup event handlers
-	YAHOO.util.Event.addListener(image_link, 'click',
-		this.handleClick, this, true);
-
 	YAHOO.util.Event.addListener(this.preview_container, 'click',
 		this.handleClick, this, true);
 

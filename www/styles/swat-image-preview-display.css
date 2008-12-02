@@ -7,14 +7,16 @@
 	background-repeat: no-repeat;
 }
 
-.swat-image-preview-display-link img {
+.swat-image-preview-display-link img,
+a.swat-image-preview-display-link-plain img {
 	vertical-align: top;
 	padding: 2px;
 	background: #fff;
 	border: 1px solid #dcceb2;
 }
 
-.swat-image-preview-display-link:hover img {
+a.swat-image-preview-display-link:hover img,
+a.swat-image-preview-display-link-plain:hover img {
 	border-color: #3f5ace;
 }
 
