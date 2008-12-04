@@ -1282,9 +1282,26 @@ class SwatDB extends SwatObject
 		// SWATDB_DEBUG is legacy, use SwatDB::setDebug() instead
 		if (defined('SWATDB_DEBUG') || SwatDB::$debug) {
 			$trace = debug_backtrace();
-			$i = 0;
-			while (strncmp($trace[$i]['class'], 'SwatDB', 6) == 0) $i++;
-			echo '<b>', $trace[$i]['class'], '::', $trace[$i]['function'], '()</b><br />';
+
+			// get first trace line that is not in the SwatDB package
+			foreach ($trace as $entry) {
+				if (!array_key_exists('class', $entry) ||
+					strncmp($entry['class'], 'SwatDB', 6) !== 0) {
+					break;
+				}
+			}
+
+			$class = (array_key_exists('class', $entry)) ?
+				$entry['class'] : null;
+
+			$function = (array_key_exists('function', $entry)) ?
+				$entry['function'] : null;
+
+			printf("<strong>%s%s%s()</strong><br />\n",
+				($class === null) ? '' : $class,
+				array_key_exists('type', $entry) ? $entry['type'] : '',
+				($function === null) ? '' : $function);
+
 			echo $message, "<hr />\n";
 		}
 	}
