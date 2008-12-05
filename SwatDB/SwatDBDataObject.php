@@ -603,10 +603,19 @@ class SwatDBDataObject extends SwatObject
 
 	private function getLoaderMethod($key)
 	{
-		$loader_method = 'load'.str_replace(' ', '',
-			ucwords(str_replace('_', ' ', $key)));
+		/*
+		 * Because this method is called so frequently, we cache the calculated
+		 * loader method names so we don't have to calculate them thousands of
+		 * times.
+		 */
+		static $cache = array();
 
-		return $loader_method;
+		if (!array_key_exists($key, $cache)) {
+			$cache[$key] = 'load'.str_replace(' ', '',
+				ucwords(str_replace('_', ' ', $key)));
+		}
+
+		return $cache[$key];
 	}
 
 	// }}}
