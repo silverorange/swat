@@ -27,7 +27,7 @@ a.swat-image-preview-display-link-plain:hover img {
 	z-index: 999999;
 	top: 0;
 	left: 0;
-	background: #fff;
+	background: #000;
 	width: 100%;
 }
 
@@ -35,6 +35,11 @@ a.swat-image-preview-display-link-plain:hover img {
 	position: absolute;
 	z-index: 1000000;
 	text-align: center;
+}
+
+.swat-image-preview-container a {
+	display: block;
+	outline: none;
 }
 
 .swat-image-preview-container img {
