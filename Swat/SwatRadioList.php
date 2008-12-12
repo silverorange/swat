@@ -178,8 +178,13 @@ class SwatRadioList extends SwatFlydown
 		$this->input_tag->removeAttribute('checked');
 		$this->input_tag->id = $this->id.'_'.(string)$option->value;
 
-		if ($option->value === $this->value)
-			$this->input_tag->checked = 'checked';
+		if ($this->serialize_values) {
+			if ($option->value === $this->value)
+				$this->input_tag->checked = 'checked';
+		} else {
+			if ((string)$option->value === $this->value)
+				$this->input_tag->checked = 'checked';
+		}
 
 		$this->input_tag->display();
 	}
