@@ -182,7 +182,7 @@ class SwatRadioList extends SwatFlydown
 			if ($option->value === $this->value)
 				$this->input_tag->checked = 'checked';
 		} else {
-			if ((string)$option->value === $this->value)
+			if ((string)$option->value === (string)$this->value)
 				$this->input_tag->checked = 'checked';
 		}
 
