@@ -91,9 +91,10 @@ SwatImagePreviewDisplay.prototype.open = function()
 	this.preview_container.style.display = 'block';
 
 	// x is relative to center of page
+	var scroll_top = YAHOO.util.Dom.getDocumentScrollTop();
 	var x = -Math.round((this.preview_image.width  + padding) / 2);
 	var y = Math.round((max_height - this.preview_image.height + padding) / 2) +
-		window.scrollY;
+		scroll_top;
 
 	YAHOO.util.Dom.setY(this.preview_container, y);
 
