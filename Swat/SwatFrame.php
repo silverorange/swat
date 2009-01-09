@@ -79,34 +79,6 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 	}
 
 	// }}}
-	// {{{ protected function getHeaderLevel()
-
-	protected function getHeaderLevel()
-	{
-		// default header level is h2
-		$level = 2;
-
-		if ($this->header_level === null) {
-			$ancestor = $this->parent;
-
-			// get appropriate header level, limit to h6
-			while ($ancestor !== null) {
-				if ($ancestor instanceof SwatFrame) {
-					$level = $ancestor->getHeaderLevel() + 1;
-					$level = min($level, 6);
-					break;
-				}
-
-				$ancestor = $ancestor->parent;
-			}
-		} else {
-			$level = $this->header_level;
-		}
-
-		return $level;
-	}
-
-	// }}}
 	// {{{ public function display()
 
 	/**
@@ -169,6 +141,34 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 		$classes = array('swat-frame');
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function getHeaderLevel()
+
+	protected function getHeaderLevel()
+	{
+		// default header level is h2
+		$level = 2;
+
+		if ($this->header_level === null) {
+			$ancestor = $this->parent;
+
+			// get appropriate header level, limit to h6
+			while ($ancestor !== null) {
+				if ($ancestor instanceof SwatFrame) {
+					$level = $ancestor->getHeaderLevel() + 1;
+					$level = min($level, 6);
+					break;
+				}
+
+				$ancestor = $ancestor->parent;
+			}
+		} else {
+			$level = $this->header_level;
+		}
+
+		return $level;
 	}
 
 	// }}}
