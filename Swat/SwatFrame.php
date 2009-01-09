@@ -47,6 +47,16 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public $title_content_type = 'text/plain';
 
+	/**
+	 * Optional header level for the title
+	 *
+	 * Setting this will override the automatic heading level calculation
+	 * based on nesting of frames.
+	 *
+	 * @var integer
+	 */
+	public $header_level;
+
 	// }}}
 	// {{{ public function getTitle()
 
@@ -66,6 +76,34 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 			return $this->subtitle;
 
 		return $this->title.': '.$this->subtitle;
+	}
+
+	// }}}
+	// {{{ protected function getHeaderLevel()
+
+	protected function getHeaderLevel()
+	{
+		// default header level is h2
+		$level = 2;
+
+		if ($this->header_level === null) {
+			$ancestor = $this->parent;
+
+			// get appropriate header level, limit to h6
+			while ($ancestor !== null) {
+				if ($ancestor instanceof SwatFrame) {
+					$level = $ancestor->getHeaderLevel() + 1;
+					$level = min($level, 6);
+					break;
+				}
+
+				$ancestor = $ancestor->parent;
+			}
+		} else {
+			$level = $this->header_level;
+		}
+
+		return $level;
 	}
 
 	// }}}
@@ -92,19 +130,7 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 
 		if ($this->title !== null) {
 
-			// default header level is h2
-			$level = 2;
-			$ancestor = $this->parent;
-
-			// get appropriate header level, limit to h6
-			while ($ancestor !== null && $level < 6) {
-				if ($ancestor instanceof SwatFrame)
-					$level++;
-
-				$ancestor = $ancestor->parent;
-			}
-
-			$header_tag = new SwatHtmlTag('h'.$level);
+			$header_tag = new SwatHtmlTag('h'.$this->getHeaderLevel());
 			$header_tag->class = 'swat-frame-title';
 			$header_tag->setContent($this->title, $this->title_content_type);
 
