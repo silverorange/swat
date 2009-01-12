@@ -813,9 +813,13 @@ class SwatDBDataObject extends SwatObject
 				return true;
 		}
 
-		foreach ($this->sub_data_objects as $name => $object)
-			if ($object instanceof SwatDBRecordable && $object->isModified())
-				return true;
+		foreach ($this->internal_property_autosave as $name => $autosave) {
+			if ($autosave && isset($this->sub_data_objects[$name])) {
+				$object = $this->sub_data_objects[$name];
+				if ($object instanceof SwatDBRecordable && $object->isModified())
+					return true;
+			}
+		}
 
 		return false;
 	}
