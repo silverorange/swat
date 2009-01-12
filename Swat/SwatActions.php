@@ -158,9 +158,14 @@ class SwatActions extends SwatControl implements SwatUIParent
 			}
 		}
 
-		// set the flydown back to its initial state (no persistence)
-		if ($this->auto_reset)
+		// set the flydown back to its initial state (no persistence). The
+		// flydown is never reset if there is a selected item and the selected
+		// items has a widget with one or more messages.
+		if ($this->auto_reset &&
+			(!$this->selected || !$this->selected->widget !== null ||
+			!$this->selected->widget->hasMessage())) {
 			$flydown->reset();
+		}
 
 		// select the current action item based upon the flydown value
 		if (isset($this->action_items_by_id[$flydown->value]))
