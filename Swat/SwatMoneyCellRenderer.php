@@ -101,15 +101,31 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 		parent::render();
 
 		$locale = SwatI18NLocale::get($this->locale);
+		$format = $this->getCurrencyFormat();
 
 		echo SwatString::minimizeEntities(
-			$locale->formatCurrency($this->value, $this->international,
-				array('fractional_digits' => $this->decimal_places)));
+			$locale->formatCurrency(
+				$this->value, $this->international, $format));
 
 		if (!$this->international && $this->display_currency) {
 			echo '&nbsp;', SwatString::minimizeEntities(
 			$locale->getInternationalCurrencySymbol());
 		}
+	}
+
+	// }}}
+	// {{{ protected function getCurrencyFormat()
+
+	/**
+	 * Gets currency format to use when rendering
+	 *
+	 * @see SwatMoneyCellRenderer::render()
+	 */
+	protected function getCurrencyFormat()
+	{
+		$format = array('fractional_digits' => $this->decimal_places);
+
+		return $format;
 	}
 
 	// }}}
