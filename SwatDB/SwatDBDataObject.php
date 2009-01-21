@@ -821,6 +821,17 @@ class SwatDBDataObject extends SwatObject
 			}
 		}
 
+		foreach ($this->sub_data_objects as $name => $object) {
+			$saver_method = 'save'.
+				str_replace(' ', '', ucwords(strtr($name, '_', ' ')));
+
+			if (method_exists($this, $saver_method)) {
+				$object = $this->sub_data_objects[$name];
+				if ($object instanceof SwatDBRecordable && $object->isModified())
+					return true;
+			}
+		}
+
 		return false;
 	}
 
