@@ -501,7 +501,7 @@ class SwatDB extends SwatObject
 	 * @param string $table The binding table to update.
 	 *
 	 * @param string $id_field The name of the binding table field that contains
-	 *        the fixed value.  Can be given in the form type:name where type is 
+	 *        the fixed value.  Can be given in the form type:name where type is
 	 *        a standard MDB2 datatype. If type is ommitted, then integer is
 	 *        assummed for this field.
 	 *
@@ -519,7 +519,7 @@ class SwatDB extends SwatObject
 	 *
 	 * @param string $bound_table The table bound through the binding table.
 	 *
-	 * @param string $bound_field The database field in the bound table that the 
+	 * @param string $bound_field The database field in the bound table that the
 	 *        binding table references.
 	 *
 	 * @throws SwatDBException
