@@ -1,0 +1,69 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="my_form">
+
+		<widget class="SwatFrame">
+			<property name="title">Radio Selector (Select One)</property>
+
+			<widget class="SwatTableView" id="radio_table_view">
+				<object class="SwatTableViewColumn">
+					<object class="SwatRadioButtonCellRenderer">
+						<property name="value" type="data">title</property>
+					</object>
+				</object>
+				<object class="SwatTableViewColumn">
+					<property name="title">Fruit</property>
+					<object class="SwatTextCellRenderer">
+						<property name="text" type="data">title</property>
+					</object>
+				</object>
+				<object class="SwatTableViewColumn">
+					<property name="title">Makes Jam</property>
+					<object class="SwatBooleanCellRenderer">
+						<property name="value" type="data">makes_jam</property>
+					</object>
+				</object>
+				<object class="SwatTableViewColumn">
+					<property name="title">Makes Pie</property>
+					<object class="SwatBooleanCellRenderer">
+						<property name="value" type="data">makes_pie</property>
+					</object>
+				</object>
+			</widget>
+
+		</widget>
+
+		<widget class="SwatFrame">
+			<property name="title">Checkbox Selector (Select Many)</property>
+
+			<widget class="SwatTableView" id="checkbox_table_view">
+				<object class="SwatTableViewCheckboxColumn">
+					<object class="SwatCheckboxCellRenderer">
+						<property name="value" type="data">title</property>
+					</object>
+				</object>
+				<object class="SwatTableViewColumn">
+					<property name="title">Fruit</property>
+					<object class="SwatTextCellRenderer">
+						<property name="text" type="data">title</property>
+					</object>
+				</object>
+				<object class="SwatTableViewColumn">
+					<property name="title">Makes Jam</property>
+					<object class="SwatBooleanCellRenderer">
+						<property name="value" type="data">makes_jam</property>
+					</object>
+				</object>
+				<object class="SwatTableViewColumn">
+					<property name="title">Makes Pie</property>
+					<object class="SwatBooleanCellRenderer">
+						<property name="value" type="data">makes_pie</property>
+					</object>
+				</object>
+			</widget>
+
+		</widget>
+
+	</widget>
+</swatml>
