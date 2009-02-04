@@ -55,6 +55,7 @@ class DemoApplication
 		'TimeEntry'         => 'SwatTimeEntry',
 		'TimeZoneEntry'     => 'SwatTimeZoneEntry',
 		'ToolLink'          => 'SwatToolLink',
+		'ViewSelector'      => 'SwatViewSelector',
 		'YesNoFlydown'      => 'SwatYesNoFlydown',
 		);
 
@@ -410,6 +411,16 @@ class DemoApplication
 
 		case 'ToolLink':
 			$entries = array('SwatToolLink');
+			break;
+
+		case 'ViewSelector':
+			$entries = array(
+				'SwatCheckboxCellRenderer',
+				'SwatRadioButtonCellRenderer',
+				'SwatView',
+				'SwatViewSelection',
+				'SwatViewSelector',
+				);
 			break;
 
 		case 'YesNoFlydown':
