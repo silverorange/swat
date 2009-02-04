@@ -541,7 +541,7 @@ class SwatDBDataObject extends SwatObject
 
 	private function __get($key)
 	{
-		if (in_array($name, $this->deprecated_properties))
+		if (in_array($key, $this->deprecated_properties))
 			return null;
 
 		$value = $this->getUsingLoaderMethod($key);
@@ -569,7 +569,7 @@ class SwatDBDataObject extends SwatObject
 
 	private function __set($key, $value)
 	{
-		if (in_array($name, $this->deprecated_properties))
+		if (in_array($key, $this->deprecated_properties))
 			return;
 
 		if (method_exists($this, $this->getLoaderMethod($key))) {
@@ -613,7 +613,7 @@ class SwatDBDataObject extends SwatObject
 	{
 		$is_set = false;
 
-		if (in_array($name, $this->deprecated_properties)) {
+		if (in_array($key, $this->deprecated_properties)) {
 			$is_set =
 				(method_exists($this, $this->getLoaderMethod($key))) ||
 				($this->hasInternalValue($key) &&
