@@ -1280,7 +1280,7 @@ class SwatDB extends SwatObject
 	private static function debug($message)
 	{
 		// SWATDB_DEBUG is legacy, use SwatDB::setDebug() instead
-		if (defined('SWATDB_DEBUG') || SwatDB::$debug) {
+		if (defined('SWATDB_DEBUG') || self::$debug) {
 			$trace = debug_backtrace();
 
 			// get first trace line that is not in the SwatDB package
