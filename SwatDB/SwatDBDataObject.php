@@ -475,6 +475,21 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ protected function setDeprecatedProperty()
+
+	protected function setDeprecatedProperty($key, $value)
+	{
+	}
+
+	// }}}
+	// {{{ protected function getDeprecatedProperty()
+
+	protected function getDeprecatedProperty($key)
+	{
+		return null;
+	}
+
+	// }}}
 	// {{{ private function getPublicProperties()
 
 	/**
@@ -542,7 +557,7 @@ class SwatDBDataObject extends SwatObject
 	private function __get($key)
 	{
 		if (in_array($key, $this->deprecated_properties))
-			return null;
+			return $this->setDeprecatedProperty($key);
 
 		$value = $this->getUsingLoaderMethod($key);
 
@@ -569,8 +584,10 @@ class SwatDBDataObject extends SwatObject
 
 	private function __set($key, $value)
 	{
-		if (in_array($key, $this->deprecated_properties))
+		if (in_array($key, $this->deprecated_properties)) {
+			$this->setDeprecatedProperty($key, $value);
 			return;
+		}
 
 		if (method_exists($this, $this->getLoaderMethod($key))) {
 
