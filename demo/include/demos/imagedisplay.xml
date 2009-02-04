@@ -26,4 +26,18 @@
 			<property name="preview_height" type="integer">212</property>
 		</widget>
 	</widget>
+	<widget class="SwatFieldset">
+		<property name="title">Image Display with Preview and no Icon</property>
+		<widget class="SwatImagePreviewDisplay">
+			<property name="image">images/swat-logo.png</property>
+			<property name="width" type="integer">182</property>
+			<property name="height" type="integer">77</property>
+			<property name="alt">Image of the Swat Logo</property>
+			<property name="title">Swat: Swat Web Application Toolkit</property>
+			<property name="preview_image">images/swat-logo-large.png</property>
+			<property name="preview_width" type="integer">500</property>
+			<property name="preview_height" type="integer">212</property>
+			<property name="show_icon" type="boolean">false</property>
+		</widget>
+	</widget>
 </swatml>
