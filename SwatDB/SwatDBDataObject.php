@@ -557,7 +557,7 @@ class SwatDBDataObject extends SwatObject
 	private function __get($key)
 	{
 		if (in_array($key, $this->deprecated_properties))
-			return $this->setDeprecatedProperty($key);
+			return $this->getDeprecatedProperty($key);
 
 		$value = $this->getUsingLoaderMethod($key);
 
