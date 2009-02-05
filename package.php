@@ -4,7 +4,7 @@
 
 require_once 'PEAR/PackageFileManager2.php';
 
-$version = '1.3.62';
+$version = '1.3.63';
 $notes = <<<EOT
 * Fix bug in SwatDBRecordsetWrapper::loadAllSubRecordsets()
 * add optional extended-check-all to checkall widget
