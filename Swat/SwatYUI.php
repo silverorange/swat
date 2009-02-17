@@ -49,7 +49,7 @@ class SwatYUI extends SwatObject
 	/**
 	 * Package ID for YUI component HTML head entries
 	 */
-	const PACKAGE_ID = 'YUI';
+	const PACKAGE_ID = 'SwatYUI';
 
 	// }}}
 	// {{{ private static properties
