@@ -47,7 +47,6 @@ class SwatToolLink extends SwatControl
 	 */
 	public $content_type = 'text/plain';
 
-
 	/**
 	 * A value or array of values to substitute into the link of this cell
 	 *
