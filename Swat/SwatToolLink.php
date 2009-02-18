@@ -83,6 +83,17 @@ class SwatToolLink extends SwatControl
 	 */
 	public $access_key = null;
 
+	/**
+	 * An optional tooltip for this element
+	 *
+	 * An optional string that will be displayed when the element is moused
+	 * moused over. Setting the tooltip property to null will display no
+	 * tooptip.
+	 *
+	 * @var string
+	 */
+	public $tooltip = null;
+
 	// }}}
 	// {{{ protected properties
 
@@ -287,6 +298,9 @@ class SwatToolLink extends SwatControl
 		else
 			$tag->href = sprintf($this->link, $this->value);
 
+		if ($this->tooltip !== null)
+			$tag->title = $this->tooltip;
+
 		$tag->accesskey = $this->access_key;
 		$tag->setContent($this->title, $this->content_type);
 
@@ -308,6 +322,10 @@ class SwatToolLink extends SwatControl
 
 		$tag->id = $this->id;
 		$tag->class = $this->getCSSClassString();
+
+		if ($this->tooltip !== null)
+			$tag->title = $this->tooltip;
+
 		$tag->setContent($this->title, $this->content_type);
 
 		return $tag;
