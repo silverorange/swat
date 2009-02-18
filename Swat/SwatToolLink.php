@@ -86,8 +86,7 @@ class SwatToolLink extends SwatControl
 	 * An optional tooltip for this element
 	 *
 	 * An optional string that will be displayed when the element is moused
-	 * moused over. Setting the tooltip property to null will display no
-	 * tooptip.
+	 * over. Setting the tooltip property to null will display no tooltip.
 	 *
 	 * @var string
 	 */
