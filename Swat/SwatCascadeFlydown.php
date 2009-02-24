@@ -199,33 +199,42 @@ class SwatCascadeFlydown extends SwatFlydown
 
 		$salt = $this->getForm()->getSalt();
 
-		foreach($this->options as $parent => $options) {
-			$parent = SwatString::signedSerialize($parent, $salt);
+		$flydown_value = ($this->serialize_values) ?
+			$this->value : (string)$this->value;
 
-			if ($this->show_blank && count($options) > 0)
+		foreach ($this->options as $parent => $options) {
+			if ($this->cascade_from->serialize_values)
+				$parent = SwatString::signedSerialize($parent, $salt);
+
+			if ($this->show_blank && count($options) > 0) {
+				if ($this->serialize_values)
+					$value = SwatString::signedSerialize(null, $salt);
+				else
+					$value = '';
+
 				$javascript.= sprintf(
-					"\n%s_cascade.addChild('%s', '%s', '%s');",
+					"\n%s_cascade.addChild(%s, %s, %s);",
 					$this->id,
-					$parent,
-					SwatString::signedSerialize(null, $salt),
-					Swat::_('choose one …'));
+					SwatString::quoteJavaScriptString($parent),
+					SwatString::quoteJavaScriptString($value),
+					SwatString::quoteJavaScriptString(Swat::_('choose one …')));
+			}
 
 			foreach ($options as $option) {
-				$selected = ($option->value === $this->value) ?
+				if ($this->serialize_values)
+					$value = SwatString::signedSerialize($option->value, $salt);
+				else
+					$value = (string)$option->value;
+
+				$selected = ($flydown_value === $value) ?
 					'true' : 'false';
 
-				$title = $option->title;
-				$title = str_replace("\n", '\n', $title);
-				$title = str_replace("'", "\\'", $title);
-
-				$value = SwatString::signedSerialize($option->value, $salt);
-
 				$javascript.= sprintf(
-					"\n%s_cascade.addChild('%s', '%s', '%s', %s);",
+					"\n%s_cascade.addChild(%s, %s, %s, %s);",
 					$this->id,
-					$parent,
-					$value,
-					$title,
+					SwatString::quoteJavaScriptString($parent),
+					SwatString::quoteJavaScriptString($value),
+					SwatString::quoteJavaScriptString($option->title),
 					$selected);
 			}
 		}
