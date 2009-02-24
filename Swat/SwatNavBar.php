@@ -39,6 +39,15 @@ class SwatNavBar extends SwatControl implements Countable
 	 */
 	public $separator = ' » ';
 
+	/**
+	 * Optional container tag for this navigational bar
+	 *
+	 * The container tag wraps around all entries in this navigational bar.
+	 *
+	 * @var SwatHtmlTag the container tag for this navigational bar.
+	 */
+	public $container_tag;
+
 	// }}}
 	// {{{ private properties
 
@@ -392,7 +401,11 @@ class SwatNavBar extends SwatControl implements Countable
 	 */
 	protected function getContainerTag()
 	{
-		$tag = new SwatHtmlTag('div');
+		if ($this->container_tag === null)
+			$tag = new SwatHtmlTag('div');
+		else
+			$tag = $this->container_tag;
+
 		$tag->id = $this->id;
 		$tag->class = $this->getCSSClassString();
 		return $tag;
