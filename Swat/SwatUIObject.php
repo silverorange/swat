@@ -16,7 +16,7 @@ require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
  * displayed.
  *
  * @package   Swat
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatUIObject extends SwatObject
@@ -147,17 +147,17 @@ abstract class SwatUIObject extends SwatObject
 	/**
 	 * Convenience method to add Tango attribution comment
 	 *
-	 * This method should be used if a UI object uses Tango icons. This is
-	 * required to comply with the CC attribution licence under which the Tango
-	 * icons are licenced.
+	 * Note: The Tango icons are now public domain and no attribution is
+	 * needed. This method remains for backwards compatibility.
 	 *
 	 * @param integer $package_id the package the tango attribution belongs
 	 *                             with.
+	 *
+	 * @deprecated The Tango icons are now public domain and no attribution is
+	 *             needed. This method remains for backwards compatibility.
 	 */
 	public function addTangoAttribution($package_id = Swat::PACKAGE_ID)
 	{
-		$this->addComment('Some icons by the Tango project '.
-			'http://www.Tango-Project.org', $package_id);
 	}
 
 	// }}}

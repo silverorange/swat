@@ -118,8 +118,6 @@ class SwatToolLink extends SwatControl
 
 		$this->addStyleSheet('packages/swat/styles/swat-tool-link.css',
 			Swat::PACKAGE_ID);
-
-		$this->addTangoAttribution();
 	}
 
 	// }}}
