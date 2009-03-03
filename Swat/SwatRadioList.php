@@ -82,8 +82,13 @@ class SwatRadioList extends SwatFlydown
 		$ul_tag->class = $this->getCSSClassString();
 		$ul_tag->open();
 
+		$li_tag = new SwatHtmlTag('li');
+		$count = 0;
+
 		foreach ($options as $option) {
-			echo '<li>';
+			$li_tag->id = $this->id.'_li_'.(string) $count;
+			$li_tag->open();
+			$count++;
 
 			if ($option instanceof SwatFlydownDivider) {
 				$this->displayDivider($option);
@@ -92,7 +97,7 @@ class SwatRadioList extends SwatFlydown
 				$this->displayOptionLabel($option);
 			}
 
-			echo '</li>';
+			$li_tag->close();
 		}
 
 		$ul_tag->close();
@@ -176,6 +181,9 @@ class SwatRadioList extends SwatFlydown
 		}
 
 		$this->input_tag->removeAttribute('checked');
+
+		// TODO: come up with a better system to set ids. This may  not be
+		// unique and may also not be valid XHTML
 		$this->input_tag->id = $this->id.'_'.(string)$option->value;
 
 		if ($this->serialize_values) {
