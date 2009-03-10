@@ -195,7 +195,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	// }}}
 	// {{{ public function getDataSpecificCSSClassNames()
 
-	/** 
+	/**
 	 * Gets the data specific CSS class names for this cell renderer
 	 *
 	 * @return array the array of base CSS class names for this cell renderer.
