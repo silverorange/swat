@@ -73,6 +73,11 @@ abstract class SwatNumericEntry extends SwatEntry
 	{
 		parent::process();
 
+		// trim value since it should be numeric.
+		$this->value = trim($this->value);
+		if ($this->value === '')
+			$this->value = null;
+
 		try {
 			$value = $this->getNumericValue($this->value);
 		} catch (SwatIntegerOverflowException $e) {
@@ -91,7 +96,6 @@ abstract class SwatNumericEntry extends SwatEntry
 
 				$this->addMessage($message);
 			}
-
 			if ($this->maximum_value !== null &&
 				$value > $this->maximum_value) {
 				$message = $this->getValidationMessage('above-maximum');
