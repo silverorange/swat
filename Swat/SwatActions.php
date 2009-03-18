@@ -307,8 +307,6 @@ class SwatActions extends SwatControl implements SwatUIParent
 	{
 		$set = parent::getHtmlHeadEntrySet();
 
-//		var_dump($set);
-
 		foreach ($this->action_items as $child_widget)
 			$set->addEntrySet($child_widget->getHtmlHeadEntrySet());
 
