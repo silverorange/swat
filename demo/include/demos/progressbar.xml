@@ -2,15 +2,26 @@
 <!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
 <swatml>
 	<widget class="SwatForm">
-		<widget class="SwatFormField">
-			<property name="title" type="string">Download Status</property>
-			<widget class="SwatProgressBar" id="download_status">
-				<property name="value" type="float">0.30</property>
-				<property name="text">%s%% complete</property>
-				<property name="text_value" type="string">30</property>
+		<widget class="SwatFrame">
+			<property name="title">JavaScript Demos</property>
+			<widget class="SwatMessageDisplay" id="note" />
+			<widget class="SwatFormField">
+				<property name="title" type="string">Download Progress</property>
+				<widget class="SwatProgressBar" id="download_progress">
+					<property name="value" type="float">0</property>
+					<property name="text">%s%% complete</property>
+					<property name="text_value" type="string">0</property>
+				</widget>
+			</widget>
+			<widget class="SwatFormField">
+				<property name="title" type="string">Upload Progress</property>
+				<widget class="SwatProgressBar" id="upload_progress">
+					<property name="value" type="float">0</property>
+					<property name="text">%s%% complete</property>
+					<property name="text_value" type="string">0</property>
+				</widget>
 			</widget>
 		</widget>
-		<widget class="SwatMessageDisplay" id="note" />
 		<widget class="SwatFrame">
 			<property name="title">Other Orientations</property>
 			<widget class="SwatFormField">
@@ -36,38 +47,62 @@
 			</widget>
 		</widget>
 
-		<!-- make the first progress bar do something interesting -->
+		<!-- make the progress bars do something interesting -->
 		<widget class="SwatContentBlock">
 			<property name="content"><![CDATA[<script type="text/javascript">
 			// update status bar text when value changes
-			function handleValueChange(type, value)
+			function handleDownloadValueChange(type, value)
 			{
 				value = Math.round(value * 100000) / 1000;
-				download_status_obj.setText(value + '% complete');
+				download_progress_obj.setText(value + '% complete');
 			}
 
 			// show generic text when in pulse-mode
-			function handlePulse(type)
+			function handleDownloadPulse(type)
 			{
-				download_status_obj.setText('downloading...');
+				download_progress_obj.setText('downloading...');
 			}
 
-			// update value on mouse movement
+			// increase value on mouse movement
 			function handleMouseMove(event, progress_bar)
 			{
 				var value = progress_bar.getValue();
 				if (value > 1) {
 					progress_bar.pulse();
 				} else {
-					progress_bar.setValue(value + 0.01);
+					var value = progress_bar.getValue() + 0.01;
+					progress_bar.setValue(value);
 				}
 			}
 
-			YAHOO.util.Event.addListener('download_status', 'mousemove',
-				handleMouseMove, download_status_obj);
+			YAHOO.util.Event.addListener('download_progress', 'mousemove',
+				handleMouseMove, download_progress_obj);
 
-			download_status_obj.changeValueEvent.subscribe(handleValueChange);
-			download_status_obj.pulseEvent.subscribe(handlePulse);
+			download_progress_obj.changeValueEvent.subscribe(
+				handleDownloadValueChange);
+
+			download_progress_obj.pulseEvent.subscribe(handleDownloadPulse);
+
+			// update status bar text when value changes
+			function handleUploadValueChange(type, value)
+			{
+				value = Math.round(value * 100000) / 1000;
+				upload_progress_obj.setText(value + '% complete');
+			}
+
+			// set random value on mouse click
+			function handleClick(event, progress_bar)
+			{
+				var value = Math.round(Math.random() * 100) / 100;
+				progress_bar.setValueWithAnimation(value);
+			}
+
+			YAHOO.util.Event.addListener('upload_progress', 'click',
+				handleClick, upload_progress_obj);
+
+			upload_progress_obj.changeValueEvent.subscribe(
+				handleUploadValueChange);
+
 			</script>]]></property>
 			<property name="content_type">text/xml</property>
 		</widget>

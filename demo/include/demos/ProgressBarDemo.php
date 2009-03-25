@@ -24,7 +24,8 @@ class ProgressBarDemo extends Demo
 			'Progress bars are easily controlled from JavaScript.');
 
 		$message->secondary_content =
-			'Mouse over the Download Status progress bar for a demonstration.';
+			'Mouse over the Download Progress bar or click the Upload '.
+			'Progress bar for a demonstration.';
 
 		$ui->getWidget('note')->add($message, SwatMessageDisplay::DISMISS_OFF);
 	}
