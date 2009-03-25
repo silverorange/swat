@@ -312,7 +312,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 *
 	 * @return array an array of widgets indexed by replicator_id
 	 */
-	public function &getWidgets($widget_id = null)
+	public function getWidgets($widget_id = null)
 	{
 		$form = $this->getForm();
 		if ($form !== null && $form->isSubmitted()) {
