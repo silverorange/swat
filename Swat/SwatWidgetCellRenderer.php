@@ -322,9 +322,19 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			$widgets = array();
 			if (is_array($replicators)) {
 				foreach ($this->clones as $replicator_id => $clone) {
-					if (in_array($replicator_id, $replicators))
+					if (in_array($replicator_id, $replicators)) {
+
+						if (!isset($this->widgets[$replicator_id][$widget_id])) {
+							throw new SwatWidgetNotFoundException(sprintf(
+								'No widget with the id "%s" exists in the '.
+								'cloned widget sub-tree of this '.
+								'SwatWidgetCellRenderer.', $widget_id),
+								0, $widget_id);
+						}
+
 						$widgets[$replicator_id] =
 							$this->getWidget($replicator_id, $widget_id);
+					}
 				}
 			}
 		} else {
