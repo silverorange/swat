@@ -173,12 +173,14 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 				$this->prototype_widget->id.'_replicators');
 
 		if ($replicators === null) {
-			if ($this->prototype_widget !== null)
+			if ($this->prototype_widget !== null &&
+				!$this->prototype_widget->isProcessed())
 				$this->prototype_widget->process();
 		} else {
 			foreach ($replicators as $replicator) {
 				$widget = $this->getClonedWidget($replicator);
-				$widget->process();
+				if (!$widget->isProcessed())
+					$widget->process();
 			}
 		}
 	}
