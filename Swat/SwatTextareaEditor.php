@@ -6,10 +6,14 @@ require_once 'Swat/SwatTextarea.php';
 require_once 'Swat/SwatYUI.php';
 
 /**
- * A wysiwyg text entry widget
+ * A what-you-see-is-what-you-get (WYSIWYG) XHTML textarea editor widget
+ *
+ * This textarea editor widget is powered by TinyMCE, which, like Swat is
+ * licensed under the LGPL. See {@link http://tinymce.moxiecode.com/} for
+ * details.
  *
  * @package   Swat
- * @copyright 2004-2008 silverorange
+ * @copyright 2004-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextareaEditor extends SwatTextarea
@@ -48,7 +52,7 @@ class SwatTextareaEditor extends SwatTextarea
 	// {{{ public function __construct()
 
 	/**
-	 * Creates a new wysiwyg textarea editor
+	 * Creates a new what-you-see-is-what-you-get XHTML textarea editor
 	 *
 	 * @param string $id a non-visible unique id for this widget.
 	 *
@@ -58,11 +62,11 @@ class SwatTextareaEditor extends SwatTextarea
 	{
 		parent::__construct($id);
 
-		$yui = new SwatYUI(array('editor'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+		$this->requires_id = true;
+		$this->rows = 30;
 
 		$this->addJavaScript(
-			'packages/swat/javascript/swat-textarea-editor.js',
+			'packages/swat/javascript/tiny_mce/tiny_mce.js',
 			Swat::PACKAGE_ID);
 
 		$this->addStyleSheet('packages/swat/styles/swat-textarea-editor.css',
@@ -134,33 +138,77 @@ class SwatTextareaEditor extends SwatTextarea
 
 	protected function getInlineJavaScript()
 	{
-		static $shown = false;
+		$buttons = array(
+			'bold',
+			'italic',
+			'formatselect',
+			'|',
+			'removeformat',
+			'|',
+			'undo',
+			'redo',
+			'|',
+			'outdent',
+			'indent',
+			'|',
+			'bullist',
+			'numlist',
+			'|',
+			'link',
+			'image',
+			'snippet',
+		);
 
-		if (!$shown) {
-			$javascript = $this->getInlineJavaScriptTranslations();
-			$shown = true;
-		} else {
-			$javascript = '';
+		$buttons = implode(',', $buttons);
+
+		$formats = array(
+			'p',
+			'blockquote',
+			'h1',
+			'h2',
+			'h3',
+			'h4',
+			'h5',
+			'h6',
+		);
+
+		$formats = implode(',', $formats);
+
+		$config = array(
+			'mode'                              => 'exact',
+			'elements'                          => $this->id,
+			'theme'                             => 'advanced',
+			'theme_advanced_buttons1'           => $buttons,
+			'theme_advanced_buttons2'           => '',
+			'theme_advanced_buttons3'           => '',
+			'theme_advanced_toolbar_location'   => 'top',
+			'theme_advanced_toolbar_align'      => 'left',
+			'theme_advanced_blockformats'       => $formats,
+//			'theme_advanced_resizing'           => true,
+//			'theme_advanced_resize_horizontal'  => false,
+//			'theme_advanced_path'               => false,
+//			'theme_advanced_statusbar_location' => 'bottom',
+			'plugins'                           => 'swat',
+		);
+
+		ob_start();
+
+		echo "tinyMCE.init({\n";
+
+		$lines = array();
+		foreach ($config as $name => $value) {
+			if (is_string($value)) {
+				$value = SwatString::quoteJavaScriptString($value);
+			} elseif (is_bool($value)) {
+				$value = ($value) ? 'true' : 'false';
+			}
+			$lines[] = "\t".$name.": ".$value;
 		}
 
-		$javascript.= sprintf(
-			"var %s_obj = new SwatTextareaEditor('%s', '%s', '%s');",
-			$this->id,
-			$this->id,
-			$this->width,
-			$this->height);
+		echo implode(",\n", $lines);
+		echo "\n});";
 
-		return $javascript;
-	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScriptTranslations()
-
-	protected function getInlineJavaScriptTranslations()
-	{
-		// TODO
-		$javascript = '';
-		return $javascript;
+		return ob_get_clean();
 	}
 
 	// }}}
@@ -176,43 +224,6 @@ class SwatTextareaEditor extends SwatTextarea
 		$classes = array('swat-textarea-editor');
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
-	}
-
-	// }}}
-	// {{{ private function getTranslations()
-
-	private function getTranslations()
-	{
-		return array(
-			'bold'             => Swat::_('Bold'),
-			'italic'           => Swat::_('Italic'),
-			'underline'        => Swat::_('Underline'),
-			'align_left'       => Swat::_('Align Left'),
-			'align_right'      => Swat::_('Align Right'),
-			'align_center'     => Swat::_('Align Center'),
-			'ordered_list'     => Swat::_('Ordered List'),
-			'unordered_list'   => Swat::_('Unordered List'),
-			'indent'           => Swat::_('Indent'),
-			'outdent'          => Swat::_('Outdent'),
-			'insert_link'      => Swat::_('Insert Link'),
-			'horizontal_rule'  => Swat::_('Horizontal Rule'),
-			'highlight'        => Swat::_('Highlight'),
-			'quote'            => Swat::_('Quote'),
-			'style'            => Swat::_('Style'),
-			'clear_formatting' => Swat::_('Clear Formatting'),
-			'paragraph'        => Swat::_('Paragraph'),
-			'heading'          => Swat::_('Heading'),
-			'address'          => Swat::_('Address'),
-			'formatted'        => Swat::_('Formatted'),
-
-			//pop-up link
-			'enter_url'        => Swat::_('A URL is required'),
-			'url'              => Swat::_('URL'),
-			'link_text'        => Swat::_('Link Text'),
-			'target'           => Swat::_('Target'),
-			'insert_link'      => Swat::_('Insert Link'),
-			'cancel'           => Swat::_('Cancel'),
-		);
 	}
 
 	// }}}
