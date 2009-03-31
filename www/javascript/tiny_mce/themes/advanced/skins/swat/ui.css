@@ -1,6 +1,6 @@
 /* Reset */
-.swatSkin table, .swatSkin tbody, .swatSkin a, .swatSkin img, .swatSkin tr, .swatSkin div, .swatSkin td, .swatSkin iframe, .swatSkin span, .swatSkin *, .swatSkin .mceText {border:0; margin:0; padding:0; background:transparent; white-space:nowrap; text-decoration:none; font-weight:normal; cursor.swat; color:#000; vertical-align:baseline; width:auto; border-collapse:separate; text-align:left}
-.swatSkin a:hover, .swatSkin a:link, .swatSkin a:visited, .swatSkin a:active {text-decoration:none; font-weight:normal; cursor.swat; color:#000}
+.swatSkin table, .swatSkin tbody, .swatSkin a, .swatSkin img, .swatSkin tr, .swatSkin div, .swatSkin td, .swatSkin iframe, .swatSkin span, .swatSkin *, .swatSkin .mceText {border:0; margin:0; padding:0; background:transparent; white-space:nowrap; text-decoration:none; font-weight:normal; cursor:default; color:#000; vertical-align:baseline; width:auto; border-collapse:separate; text-align:left}
+.swatSkin a:hover, .swatSkin a:link, .swatSkin a:visited, .swatSkin a:active {text-decoration:none; font-weight:normal; cursor:default; color:#000}
 .swatSkin table td {vertical-align:middle}
 
 /* Containers */
@@ -91,7 +91,7 @@
 .swatSkin .mceMenu a, .swatSkin .mceMenu span, .swatSkin .mceMenu {display:block}
 .swatSkin .mceMenu td {height:20px}
 .swatSkin .mceMenu a {position:relative;padding:3px 0 4px 0}
-.swatSkin .mceMenu .mceText {position:relative; display:block; font-family:Tahoma,Verdana,Arial,Helvetica; color:#000; cursor.swat; margin:0; padding:0 25px 0 25px; display:block}
+.swatSkin .mceMenu .mceText {position:relative; display:block; font-family:Tahoma,Verdana,Arial,Helvetica; color:#000; cursor:default; margin:0; padding:0 25px 0 25px; display:block}
 .swatSkin .mceMenu span.mceText, .swatSkin .mceMenu .mcePreview {font-size:11px}
 .swatSkin .mceMenu pre.mceText {font-family:Monospace}
 .swatSkin .mceMenu .mceIcon {position:absolute; top:0; left:0; width:22px;}
