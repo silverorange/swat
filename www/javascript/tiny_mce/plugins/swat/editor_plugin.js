@@ -170,6 +170,15 @@
 	{
 	}
 
+	Swat.Dialog.prototype.getData = function()
+	{
+		return {};
+	}
+
+	Swat.Dialog.prototype.setData = function(data)
+	{
+	}
+
 	Swat.Dialog.prototype.close = function(confirmed)
 	{
 		this.overlay.style.display = 'none';
@@ -197,8 +206,10 @@
 		Event.remove(DOM.doc, 'keypress', this.handleKeyPress);
 	}
 
-	Swat.Dialog.prototype.open = function()
+	Swat.Dialog.prototype.open = function(data)
 	{
+		this.setData(data);
+
 		// show select elements in IE6
 		if (tinyMCE.isIE6) {
 			selectElements = DOM.doc.getElementsByTagName('select');
@@ -234,11 +245,6 @@
 		this.overlay = DOM.create('div');
 		this.overlay.className = 'swat-textarea-editor-overlay';
 		DOM.doc.body.appendChild(this.overlay);
-	}
-
-	Swat.Dialog.prototype.getData = function()
-	{
-		return {};
 	}
 
 	Swat.Dialog.prototype.handleKeyPress = function(e)
@@ -278,11 +284,25 @@
 		return { 'link_uri': this.uriEntry.value };
 	},
 
-	open: function()
+	setData: function(data)
 	{
-		// TODO: Update title based to update or insert
-		this.insertButton.value = this.editor.getLang('swat.link_insert');
-		Swat.LinkDialog.superclass.open.call(this);
+		if (data['link_uri']) {
+			this.uriEntry.value = data['link_uri'];
+		}
+	},
+
+	open: function(data)
+	{
+		Swat.LinkDialog.superclass.open.call(this, data);
+
+		// set confirm button title
+		if (this.uriEntry.value.length) {
+			this.insertButton.value = this.editor.getLang('swat.link_update');
+			this.entryNote.style.display = 'block';
+		} else {
+			this.insertButton.value = this.editor.getLang('swat.link_insert');
+			this.entryNote.style.display = 'none';
+		}
 	},
 
 	drawDialog: function()
@@ -312,9 +332,9 @@
 		entryFormFieldContents.className = 'swat-form-field-contents';
 		entryFormFieldContents.appendChild(this.uriEntry);
 
-		var entryNote = DOM.create('div');
-		entryNote.className = 'swat-note';
-		entryNote.appendChild(
+		this.entryNote = DOM.create('div');
+		this.entryNote.className = 'swat-note';
+		this.entryNote.appendChild(
 			DOM.doc.createTextNode(
 				this.editor.getLang('swat.link_uri_field_note')
 			)
@@ -324,7 +344,7 @@
 		entryFormField.className = 'swat-form-field';
 		entryFormField.appendChild(entryLabel);
 		entryFormField.appendChild(entryFormFieldContents);
-		entryFormField.appendChild(entryNote);
+		entryFormField.appendChild(this.entryNote);
 
 		this.insertButton = DOM.create('input', { type: 'button' });
 		this.insertButton.className = 'swat-button swat-primary';
@@ -499,12 +519,16 @@
 		{
 			var se = ed.selection;
 
-			// if there is no selection, do nothing
+			// if there is no selection or not on a link, do nothing
 			if (se.isCollapsed() && !ed.dom.getParent(se.getNode(), 'A')) {
 				return;
 			}
 
-			that.dialogs['link'].open();
+			// get existing href
+			var uri = ed.dom.getAttrib(se.getNode(), 'href');
+			var data = { 'link_uri': uri };
+
+			that.dialogs['link'].open(data);
 		});
 
 		var that = this;

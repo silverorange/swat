@@ -5,7 +5,7 @@ swat: {
 	link_update: 'Update',
 	link_cancel: 'Cancel',
 	link_uri_field: 'Link URI:',
-	link_uri_field_note: 'Leave blank to remove an existing link.',
+	link_uri_field_note: 'Leave blank to remove existing link.',
 
 	snippet_desc: 'Insert HTML Snippet',
 	snippet_insert: 'Insert',
