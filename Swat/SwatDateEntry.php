@@ -645,29 +645,29 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$flydown = new SwatFlydown($this->id.'_month');
 
 		$start_year = $this->valid_range_start->getYear();
-		$tmp = clone $this->valid_range_end;
-		$tmp->subtractSeconds(1);
-		$end_year = $tmp->getYear();
+		$end_year   = $this->valid_range_end->getYear();
 
 		if ($end_year == $start_year) {
-
 			$start_month = $this->valid_range_start->getMonth();
 			$end_month = $this->valid_range_end->getMonth();
 
-			for ($i = $start_month; $i <= $end_month; $i++)
+			for ($i = $start_month; $i <= $end_month; $i++) {
 				$flydown->addOption($i, $this->getMonthOptionText($i));
-
+			}
 		} elseif (($end_year - $start_year) == 1) {
-
 			$start_month = $this->valid_range_start->getMonth();
-			$end_month = $this->valid_range_end->getMonth();
+			$tmp = clone $this->valid_range_end;
+			$tmp->subtractSeconds(1);
+			$end_month = $tmp->getMonth();
 
 			for ($i = $start_month; $i <= 12; $i++)
 				$flydown->addOption($i, $this->getMonthOptionText($i));
 
-			for ($i = 1; $i <= $end_month; $i++)
-				$flydown->addOption($i, $this->getMonthOptionText($i));
-
+			// if end month is december, we've already displayed above
+			if ($end_month < 12) {
+				for ($i = 1; $i <= $end_month; $i++)
+					$flydown->addOption($i, $this->getMonthOptionText($i));
+			}
 		} else {
 
 			for ($i = 1; $i <= 12; $i++)
