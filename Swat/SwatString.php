@@ -352,62 +352,108 @@ class SwatString extends SwatObject
 	 * @param integer $max_length the maximum length of the condensed text. If
 	 *                             null is specified, there is no maximum
 	 *                             length.
+	 * @param string $ellipses the ellipses characters to append if the string
+	 *                          is shortened. By default, this is a
+	 *                          non-breaking space followed by a unicode
+	 *                          ellipses character.
 	 *
 	 * @return string the condensed text. The condensed text is an XHTML
 	 *                 formatted string.
 	 */
-	public static function condense($text, $max_length = 300)
+	public static function condense($text, $max_length = 300, $ellipses = ' …')
 	{
-		$blocklevel_elements = implode('|', self::$blocklevel_elements);
+		// remove XML comments
+		$xml_comments = '/<!--.*?-->/siu';
+		$text = preg_replace($xml_comments, '', $text);
+
+		// remove style tags
+		$style_tags = '/<style[^<>]*?\>.*?<\/style[^<>]*?\>/siu';
+		$text = preg_replace($style_tags, '', $text);
+
+		// replace blocklevel tags with line breaks, but exclude blockquotes
+		// because they are handled in a special case
+		$blocklevel_elements = array_diff(
+			self::$blocklevel_elements,
+			array('blockquote')
+		);
+		$blocklevel_elements = implode('|', $blocklevel_elements);
+		$blocklevel_tags = '/<\/?(?:'.$blocklevel_elements.')[^<>]*?\>/siu';
+		$text = preg_replace($blocklevel_tags, "\n", $text);
+
+		// replace <br /> and <hr /> tags with line breaks.
+		$br_hr_tags = '/<[hb]r[^<>]*?\>/siu';
+		$text = preg_replace($br_hr_tags, "\n", $text);
+
+		// replace blockquote tags with curly quotation marks
 		$search = array(
-			// remove XML comments
-			'/<!--.*?-->/siu',
-			// replace blockquote tags with quotation marks
-			'/<blockquote[^<>]*?>/siu',
-			'/<\/blockquote[^<>]*?>/siu',
-			// remove style tags
-			'/<style[^<>]*?>.*?<\/style[^<>]*?>/siu',
-			// replace blocklevel tags with line breaks.
-			'/<\/?('.$blocklevel_elements.')[^<>]*?>/siu',
-			// replace <br /> and <hr /> tags with line breaks.
-			'/<[hb]r[^<>]*?\/?>/siu',
-			// remove inline tags
-			// (only tags remaining after blocklevel tags removed)
-			'/<[\/\!]*?[^<>]*?>/su',
-			// replace whitespaces with single spaces. \xa0 is &#160; is &nbsp;
-			'/[ \xa0\t]+/u',
+			'/<blockquote[^<>]*?\>\s*/siu',
+			'/\s*<\/blockquote[^<>]*?\>/siu',
 		);
 
-		$replace = array(
-			'',
-			"\n“",
-			"”\n",
-			'',
-			"\n",
-			"\n",
-			'',
-			' ',
-		);
-
+		$replace = array("\n“", "”\n");
 		$text = preg_replace($search, $replace, $text);
+
+		// remove inline tags
+		// (only tags remaining after blocklevel, br and hr tags removed)
+		$text = strip_tags($text);
+
+		// If there is a maxlength, truncate the text at twice the maxlength.
+		// This is done for speed as the next three operations are slow for
+		// long strings. This is not technically correct but should be correct
+		// most of the time unless the string is composed mostly of spaces
+		// and entities.
+		if ($max_length !== null) {
+			$truncated_text = substr($text, 0, $max_length * 2);
+
+			// estimate whether or not the result will be correct after
+			// minimizing and collapsing whitespace
+			$counts = count_chars($truncated_text, 1);
+			$count  = 0;
+
+			// check for whitespace that could be condensed.
+			// 0xa0 is a guestimate for 0xc2 0xa0 (non-breaking space) because
+			// count_chars() does not consider utf-8 encoding.
+			$chars  = array(0x20, 0x07, 0xa0);
+			foreach ($chars as $char) {
+				if (isset($counts[$char])) {
+					$count += $counts[$char];
+				}
+			}
+
+			// check for ampersands that could be entities
+			if (isset($counts[0x26])) {
+				// weight entities as six characters on average
+				$count += $counts[0x26] * 6;
+			}
+
+			if ($count < $max_length) {
+				// we should still have at least max_length real visible
+				// characters left after truncating, so use the truncated text
+				// and get a sweet speed increase.
+				$text = $truncated_text;
+			}
+		}
+
+		// replace whitespaces with single spaces
+		// First replace unicode nbsp characters with spaces so we do not have
+		// to match a unicode character in the regular expression.
+		$text = str_replace('·', ' ', $text);
+		$text = preg_replace('/[ \t]+/', ' ', $text);
 
 		$text = self::minimizeEntities($text);
 
 		$text = trim($text);
 
-		$search =
-			// replace continuous strings of whitespace containing either a
-			// cr or lf with a non-breaking space padded bullet
-			'/[\xa0\s]*[\n\r][\xa0\s]*/su';
+		// replace continuous strings of whitespace containing either a
+		// cr or lf with a non-breaking space padded bullet.
+		// the spaces around the bullet are non-breaking spaces
+		$search  = '/[\xa0\s]*[\n\r][\xa0\s]*/su';
+		$replace = '  •  ';
+		$text    = preg_replace($search, $replace, $text);
 
-		$replace =
-			// the spaces around the bullet are non-breaking spaces
-			'  •  ';
-
-		$text = preg_replace($search, $replace, $text);
-
-		if ($max_length !== null)
-			$text = SwatString::ellipsizeRight($text, $max_length);
+		if ($max_length !== null) {
+			$text = SwatString::ellipsizeRight($text, $max_length, $ellipses);
+		}
 
 		return $text;
 	}
