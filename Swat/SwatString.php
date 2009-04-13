@@ -438,7 +438,7 @@ class SwatString extends SwatObject
 		// First replace unicode nbsp characters with spaces so we do not have
 		// to match a unicode character in the regular expression.
 		$text = str_replace('·', ' ', $text);
-		$text = preg_replace('/[ \t]+/', ' ', $text);
+		$text = preg_replace('/[ \t]{2,}/', ' ', $text);
 
 		$text = self::minimizeEntities($text);
 
