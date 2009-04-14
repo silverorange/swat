@@ -10,7 +10,7 @@ require_once 'Swat/SwatState.php';
  * A single line text entry widget
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatEntry extends SwatInputControl implements SwatState
@@ -101,6 +101,17 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 */
 	protected $nonce = null;
 
+	/**
+	 * Whether or not to trim the value on process.
+	 *
+	 * If autotrim is true, then we trim all values before doing other
+	 * processing. When trimming, zero length strings are converted to null.
+	 *
+	 * @var boolean
+	 */
+	public $autotrim = false;
+
+
 	// }}}
 	// {{{ public function display()
 
@@ -148,6 +159,12 @@ class SwatEntry extends SwatInputControl implements SwatState
 		}
 
 		$this->value = $this->getRawValue();
+
+		if ($this->autotrim) {
+			$this->value = trim($this->value);
+			if ($this->value === '')
+				$this->value = null;
+		}
 
 		$len = ($this->value === null) ? 0 : strlen($this->value);
 

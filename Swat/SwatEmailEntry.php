@@ -11,11 +11,28 @@ require_once 'Swat/SwatEntry.php';
  * email address.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatEmailEntry extends SwatEntry
 {
+	// {{{ public function __construct()
+
+	/**
+	 * Creates a new Email Entry widget
+	 *
+	 * Sets autotrim to true by default.
+	 *
+	 * @param string $id a non-visible unique id for this widget.
+	 */
+	public function __construct($id = null)
+	{
+		parent::__construct($id);
+
+		$this->autotrim = true;
+	}
+
+	// }}}
 	// {{{ public function process()
 
 	/**
@@ -30,8 +47,6 @@ class SwatEmailEntry extends SwatEntry
 
 		if ($this->value === null)
 			return;
-
-		$this->value = trim($this->value);
 
 		if ($this->value == '') {
 			$this->value = null;
