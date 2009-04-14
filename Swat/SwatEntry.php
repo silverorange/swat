@@ -104,12 +104,12 @@ class SwatEntry extends SwatInputControl implements SwatState
 	/**
 	 * Whether or not to trim the value on process.
 	 *
-	 * If autotrim is true, then we trim all values before doing other
+	 * If auto_trim is true, then we trim all values before doing other
 	 * processing. When trimming, zero length strings are converted to null.
 	 *
 	 * @var boolean
 	 */
-	public $autotrim = false;
+	public $auto_trim = false;
 
 
 	// }}}
@@ -160,7 +160,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 
 		$this->value = $this->getRawValue();
 
-		if ($this->autotrim) {
+		if ($this->auto_trim) {
 			$this->value = trim($this->value);
 			if ($this->value === '')
 				$this->value = null;

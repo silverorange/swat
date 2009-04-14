@@ -21,7 +21,7 @@ class SwatEmailEntry extends SwatEntry
 	/**
 	 * Creates a new Email Entry widget
 	 *
-	 * Sets autotrim to true by default.
+	 * Sets auto_trim to true by default.
 	 *
 	 * @param string $id a non-visible unique id for this widget.
 	 */
@@ -29,7 +29,7 @@ class SwatEmailEntry extends SwatEntry
 	{
 		parent::__construct($id);
 
-		$this->autotrim = true;
+		$this->auto_trim = true;
 	}
 
 	// }}}
