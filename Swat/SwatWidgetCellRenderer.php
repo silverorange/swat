@@ -313,6 +313,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 *                           to get the root
 	 *
 	 * @return array an array of widgets indexed by replicator_id
+	 *
+	 * @throws SwatWidgetNotFoundException if a widget id is specified and no
+	 *                                     such widget exists in the subtree.
 	 */
 	public function getWidgets($widget_id = null)
 	{
@@ -326,7 +329,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 				foreach ($this->clones as $replicator_id => $clone) {
 					if (in_array($replicator_id, $replicators)) {
 
-						if (!isset($this->widgets[$replicator_id][$widget_id])) {
+						if ($widget_id !== null &&
+							!isset($this->widgets[$replicator_id][$widget_id])) {
 							throw new SwatWidgetNotFoundException(sprintf(
 								'No widget with the id "%s" exists in the '.
 								'cloned widget sub-tree of this '.
