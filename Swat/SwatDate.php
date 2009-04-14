@@ -220,9 +220,7 @@ class SwatDate extends Date
 	 */
 	public function clearTime()
 	{
-		$this->setHour(0);
-		$this->setMinute(0);
-		$this->setSecond(0);
+		$this->setHourMinuteSecond(0, 0, 0);
 	}
 
 	// }}}

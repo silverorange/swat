@@ -54,6 +54,22 @@ class SwatForm extends SwatDisplayableContainer
 	public $encoding_type = null;
 
 	/**
+	 * A list of character set encodings the server can process
+	 *
+	 * The client will use this list to pick an appropriate character set for
+	 * form data sent to the server.
+	 *
+	 * The list is formatted according to the HTML form
+	 * {@link http://www.w3.org/TR/html401/interact/forms.html#adef-accept-charset accept-charset}
+	 * attribute syntax.
+	 *
+	 * By default, the only accepted character set is UTF-8.
+	 *
+	 * @var string
+	 */
+	public $accept_charset = 'utf-8';
+
+	/**
 	 * Whether or not to automatically focus the a default SwatControl when
 	 * this form loads
 	 *
@@ -674,11 +690,16 @@ class SwatForm extends SwatDisplayableContainer
 	{
 		$form_tag = new SwatHtmlTag('form');
 
-		$form_tag->id = $this->id;
-		$form_tag->method = $this->method;
-		$form_tag->enctype = $this->encoding_type;
-		$form_tag->action = $this->action;
-		$form_tag->class = $this->getCSSClassString();
+		$form_tag->addAttributes(
+			array(
+				'id'             => $this->id,
+				'method'         => $this->method,
+				'enctype'        => $this->encoding_type,
+				'accept-charset' => $this->accept_charset,
+				'action'         => $this->action,
+				'class'          => $this->getCSSClassString(),
+			)
+		);
 
 		return $form_tag;
 	}
