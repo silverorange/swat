@@ -19,7 +19,7 @@ require_once 'Swat/SwatString.php';
  * or borders.
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2004-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatForm extends SwatDisplayableContainer
@@ -33,6 +33,11 @@ class SwatForm extends SwatDisplayableContainer
 	const HIDDEN_FIELD = '_swat_form_hidden_fields';
 	const AUTHENTICATION_TOKEN_FIELD = '_swat_form_authentication_token';
 	const SERIALIZED_PREFIX = '_swat_form_serialized_';
+
+	const ENCODING_FIELD        = '_swat_form_character_encoding';
+	const ENCODING_ENTITY_VALUE = '&auml;&trade;&reg;';
+	const ENCODING_UTF8_VALUE   = "\xc3\xa4\xe2\x84\xa2\xc2\xae";
+	const ENCODING_8BIT_VALUE   = "\xe4\x99\xae";
 
 	// }}}
 	// {{{ public properties
@@ -59,7 +64,7 @@ class SwatForm extends SwatDisplayableContainer
 	 * The client will use this list to pick an appropriate character set for
 	 * form data sent to the server.
 	 *
-	 * The list is formatted according to the HTML form
+	 * The list is formatted according to the HTML form element's
 	 * {@link http://www.w3.org/TR/html401/interact/forms.html#adef-accept-charset accept-charset}
 	 * attribute syntax.
 	 *
@@ -137,6 +142,34 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	protected $salt = null;
 
+	/**
+	 * The default encoding to assume for 8-bit content submitted from clients
+	 *
+	 * Form data is automatically converted from this encoding to UTF-8 when the
+	 * form is processed.
+	 *
+	 * By default, 'windows-1252' is used. This also handles ISO 8859-1 content
+	 * as Windows-1252 is a superset of ISO 8859-1.
+	 *
+	 * @var string
+	 *
+	 * @see SwatForm::setDefault8BitEncoding()
+	 * @see SwatForm::set8BitEncoding()
+	 */
+	protected static $default_8bit_encoding = 'windows-1252';
+
+	/**
+	 * The encoding to assume for 8-bit content submitted from clients
+	 *
+	 * Form data is automatically converted from this encoding to UTF-8 when the
+	 * form is processed.
+	 *
+	 * @var string
+	 *
+	 * @see SwatForm::set8BitEncoding()
+	 */
+	protected $_8bit_encoding = null;
+
 	// }}}
 	// {{{ private properties
 
@@ -177,8 +210,13 @@ class SwatForm extends SwatDisplayableContainer
 	{
 		parent::__construct($id);
 
-		if (self::$default_salt !== null)
+		if (self::$default_salt !== null) {
 			$this->setSalt(self::$default_salt);
+		}
+
+		if (self::$default_8bit_encoding !== null) {
+			$this->set8BitEncoding(self::$default_8bit_encoding);
+		}
 
 		$this->requires_id = true;
 
@@ -272,6 +310,7 @@ class SwatForm extends SwatDisplayableContainer
 		$this->processed = $this->isSubmitted();
 
 		if ($this->processed) {
+			$this->processEncoding();
 			$this->processHiddenFields();
 
 			foreach ($this->children as $child)
@@ -512,6 +551,45 @@ class SwatForm extends SwatDisplayableContainer
 	}
 
 	// }}}
+	// {{{ public function set8BitEncoding()
+
+	/**
+	 * Sets the encoding to assume for 8-bit content submitted from clients
+	 *
+	 * Form data is automatically converted from this character encoding to
+	 * UTF-8 when the form is processed.
+	 *
+	 * @param string $encoding the encoding to use. If null is specified, no
+	 *                          character encoding conversion is performed.
+	 *
+	 * @see SwatForm::setDefault8BitEncoding()
+	 */
+	public function set8BitEncoding($encoding)
+	{
+		$this->_8bit_encoding = $encoding;
+	}
+
+	// }}}
+	// {{{ public static function setDefault8BitEncoding()
+
+	/**
+	 * Sets the default encoding to assume for 8-bit content submitted from
+	 * clients
+	 *
+	 * Form data is automatically converted from this character encoding to
+	 * UTF-8 when the form is processed.
+	 *
+	 * @param string $encoding the encoding to use. If null is specified, no
+	 *                          character encoding conversion is performed.
+	 *
+	 * @see SwatForm::set8BitEncoding()
+	 */
+	public static function setDefault8BitEncoding($encoding)
+	{
+		self::$default_8bit_encoding = $encoding;
+	}
+
+	// }}}
 	// {{{ public static function setAuthenticationToken()
 
 	/**
@@ -584,6 +662,48 @@ class SwatForm extends SwatDisplayableContainer
 	}
 
 	// }}}
+	// {{{ protected function processEncoding()
+
+	/**
+	 * Detects 8-bit character encoding in form data and converts data to UTF-8
+	 *
+	 * Conversion is only performed if this form's 8-bit encoding is set. This
+	 * form's 8-bit encoding may be set automatically if the SwatForm default
+	 * 8-bit encoding is set.
+	 *
+	 * This algorithm is adapted from a blog post at
+	 * {@link http://blogs.sun.com/shankar/entry/how_to_handle_utf_8}.
+	 *
+	 * @throws SwatException if an 8-bit encoding is set and the form data is
+	 *                       neither 8-bit nor UTF-8.
+	 */
+	protected function processEncoding()
+	{
+		$raw_data = &$this->getFormData();
+
+		if ($this->_8bit_encoding !== null &&
+			isset($raw_data[self::ENCODING_FIELD])) {
+
+			$value = $raw_data[self::ENCODING_FIELD];
+
+			if ($value === self::ENCODING_8BIT_VALUE) {
+				// convert from our 8-bit encoding to utf-8
+				foreach ($raw_data as $key => &$value) {
+					$value = iconv($this->_8bit_encoding, 'utf-8', $value);
+				}
+				foreach ($_FILES as &$file) {
+					$file['name'] = iconv($this->_8bit_encoding, 'utf-8',
+						$file['name']);
+				}
+			} elseif ($value !== self::ENCODING_UTF8_VALUE) {
+				// it's not 8-bit or UTF-8. Time to panic!
+				throw new SwatException(
+					'Unknown form data character encoding.');
+			}
+		}
+	}
+
+	// }}}
 	// {{{ protected function notifyOfAdd()
 
 	/**
@@ -636,6 +756,14 @@ class SwatForm extends SwatDisplayableContainer
 		$input_tag->type = 'hidden';
 
 		echo '<div class="swat-input-hidden">';
+
+		if ($this->_8bit_encoding !== null) {
+			// The character encoding detection field is intentionally not using
+			// SwatHtmlTag to avoid minimizing entities.
+			echo '<input type="hidden" ',
+				'name="', self::ENCODING_FIELD, '" ',
+				'value="', self::ENCODING_ENTITY_VALUE, '" />';
+		}
 
 		foreach ($this->hidden_fields as $name => $value) {
 			// display unserialized value for primative types

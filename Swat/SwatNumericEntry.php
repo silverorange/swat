@@ -9,7 +9,7 @@ require_once 'Swat/SwatString.php';
  * Base class for numeric entry widgets
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatNumericEntry extends SwatEntry
@@ -50,7 +50,7 @@ abstract class SwatNumericEntry extends SwatEntry
 	/**
 	 * Creates a new numeric entry widget
 	 *
-	 * Sets the input size to 10 by default.
+	 * Sets the input size to 10 by default. Sets auto_trim to true by default.
 	 *
 	 * @param string $id a non-visible unique id for this widget.
 	 *
@@ -61,6 +61,7 @@ abstract class SwatNumericEntry extends SwatEntry
 		parent::__construct($id);
 
 		$this->size = 10;
+		$this->auto_trim = true;
 	}
 
 	// }}}
@@ -72,11 +73,6 @@ abstract class SwatNumericEntry extends SwatEntry
 	public function process()
 	{
 		parent::process();
-
-		// trim value since it should be numeric.
-		$this->value = trim($this->value);
-		if ($this->value === '')
-			$this->value = null;
 
 		try {
 			$value = $this->getNumericValue($this->value);
