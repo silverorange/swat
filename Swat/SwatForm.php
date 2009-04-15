@@ -148,8 +148,8 @@ class SwatForm extends SwatDisplayableContainer
 	 * Form data is automatically converted from this encoding to UTF-8 when the
 	 * form is processed.
 	 *
-	 * By default, 'windows-1252' is used. This also handles ISO-8859-1 content
-	 * as Windows-1252 is a superset of ISO-8859-1.
+	 * By default, 'windows-1252' is used. This also handles ISO 8859-1 content
+	 * as Windows-1252 is a superset of ISO 8859-1.
 	 *
 	 * @var string
 	 *
