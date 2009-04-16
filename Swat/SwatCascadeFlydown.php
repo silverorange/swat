@@ -134,10 +134,10 @@ class SwatCascadeFlydown extends SwatFlydown
 	public function addOptionsByArray(array $options,
 		$content_type = 'text/plain')
 	{
-		foreach ($options as $parent => $child_options)
+		foreach ($options as $parent => $child_options) {
 			foreach ($child_options as $value => $title)
-				$this->addOption($parent, $value, $title,
-					$content_type);
+				$this->addOption($parent, $value, $title, $content_type);
+		}
 	}
 
 	// }}}
@@ -171,8 +171,14 @@ class SwatCascadeFlydown extends SwatFlydown
 				$first_value = reset($this->cascade_from->options)->value;
 				$option_array = $this->options[$first_value];
 			}
-		} else
+		} elseif (isset($this->options[$parent_value])) {
 			$option_array = $this->options[$parent_value];
+		}  else {
+			// if the options array doesn't exist for this parent_value, then
+			// assume that means we don't want any values in this flydown for
+			// that option.
+			$option_array = array(new SwatOption(null, null));
+		}
 
 		if ($this->show_blank && count($option_array) > 1) {
 			$ret[] = new SwatOption(null, Swat::_('choose one ...'));
@@ -221,13 +227,21 @@ class SwatCascadeFlydown extends SwatFlydown
 			}
 
 			foreach ($options as $option) {
-				if ($this->serialize_values)
+				if ($this->serialize_values) {
+					// if they are serialized, we want to compare the actual
+					// values
+					$selected = ($flydown_value === $option->value) ?
+						'true' : 'false';
+
 					$value = SwatString::signedSerialize($option->value, $salt);
-				else
+				} else {
+					// if they are not serialized, we want to compare the string
+					// value
 					$value = (string)$option->value;
 
-				$selected = ($flydown_value === $value) ?
-					'true' : 'false';
+					$selected = ($flydown_value === $value) ?
+						'true' : 'false';
+				}
 
 				$javascript.= sprintf(
 					"\n%s_cascade.addChild(%s, %s, %s, %s);",
