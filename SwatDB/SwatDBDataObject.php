@@ -200,6 +200,9 @@ class SwatDBDataObject extends SwatObject
 			if ($value instanceof SwatDBRecordable)
 				$value = get_class($value);
 
+			if (is_bool($value))
+				$value = $value ? 'true' : 'false';
+
 			if ($value === null)
 				$value = '<null>';
 
