@@ -40,7 +40,7 @@ class SwatInvalidCallbackException extends SwatException
 	}
 
 	// }}}
-	// {{{ public function getCallbeck()
+	// {{{ public function getCallback()
 
 	/**
 	 * Gets the value the user tried to set the callback to

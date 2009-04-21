@@ -39,7 +39,7 @@ class SwatInvalidSerializedDataException extends SwatException
 	}
 
 	// }}}
-	// {{{ public function getCallbeck()
+	// {{{ public function getData()
 
 	/**
 	 * Gets the unsafe serialized data
