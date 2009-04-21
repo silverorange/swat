@@ -56,25 +56,7 @@ class SwatDetailsStore extends SwatObject
 	}
 
 	// }}}
-	// {{{ private function parsePath()
-
-	private function parsePath($object, $path)
-	{
-		$pos = strpos($path, '.');
-		$name = substr($path, 0, $pos);
-		$rest = substr($path, $pos + 1);
-		$sub_object = $object->$name;
-
-		if ($sub_object === null)
-			return null;
-		elseif (strpos($rest, '.') === false)
-			return $sub_object->$rest;
-		else
-			return $this->parsePath($sub_object, $rest);
-	}
-
-	// }}}
-	// {{{ private function __get()
+	// {{{ public function __get()
 
 	/**
 	 * Gets a property of this details store
@@ -96,7 +78,7 @@ class SwatDetailsStore extends SwatObject
 	 * @throws SwatInvalidPropertyException if the property does not exist in
 	 *                                       this details store.
 	 */
-	private function __get($name)
+	public function __get($name)
 	{
 		if (strpos($name, '.') !== false)
 			return $this->parsePath($this, $name);
@@ -118,7 +100,7 @@ class SwatDetailsStore extends SwatObject
 	}
 
 	// }}}
-	// {{{ private function __set()
+	// {{{ public function __set()
 
 	/**
 	 * Manually sets a property of this details store
@@ -130,13 +112,13 @@ class SwatDetailsStore extends SwatObject
 	 * @param string $name the name of the property to set.
 	 * @param mixed $value the value of the property.
 	 */
-	private function __set($name, $value)
+	public function __set($name, $value)
 	{
 		$this->data[$name] = $value;
 	}
 
 	// }}}
-	// {{{ private function __isset()
+	// {{{ public function __isset()
 
 	/**
 	 * Gets whether or not a property is set for this details store
@@ -149,7 +131,7 @@ class SwatDetailsStore extends SwatObject
 	 * @return boolean true if the property is set for this details store and
 	 *                  false if it is not.
 	 */
-	private function __isset($name)
+	public function __isset($name)
 	{
 		$is_set = isset($this->data[$name]);
 
@@ -157,6 +139,24 @@ class SwatDetailsStore extends SwatObject
 			$is_set = isset($this->base_object->$name);
 
 		return $is_set;
+	}
+
+	// }}}
+	// {{{ private function parsePath()
+
+	private function parsePath($object, $path)
+	{
+		$pos = strpos($path, '.');
+		$name = substr($path, 0, $pos);
+		$rest = substr($path, $pos + 1);
+		$sub_object = $object->$name;
+
+		if ($sub_object === null)
+			return null;
+		elseif (strpos($rest, '.') === false)
+			return $sub_object->$rest;
+		else
+			return $this->parsePath($sub_object, $rest);
 	}
 
 	// }}}
