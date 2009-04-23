@@ -127,7 +127,11 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 
 		$this->setDatabase($recordset->db);
 
-		if ($recordset->numRows() > 0) {
+		$count = $recordset->numRows();
+		if (MDB2::isError($count))
+			throw new SwatDBException($count->getMessage());
+
+		if ($count > 0) {
 			do {
 				while ($row = $recordset->fetchRow(MDB2_FETCHMODE_OBJECT)) {
 					$object = $this->instantiateRowWrapperObject($row);
