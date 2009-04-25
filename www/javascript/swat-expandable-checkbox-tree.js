@@ -30,9 +30,6 @@ function SwatExpandableCheckboxTree(id, dependent_boxes, branch_state,
 	}
 }
 
-SwatExpandableCheckboxTree.open_text = 'open';
-SwatExpandableCheckboxTree.close_text = 'close';
-
 SwatExpandableCheckboxTree.BRANCH_STATE_OPEN   = 1;
 SwatExpandableCheckboxTree.BRANCH_STATE_CLOSED = 2;
 SwatExpandableCheckboxTree.BRANCH_STATE_AUTO   = 3;
@@ -42,17 +39,11 @@ SwatExpandableCheckboxTree.prototype.drawExpander = function(expander_node_id)
 	var list_item = document.getElementById(
 		this.id + '_' + expander_node_id + '_container');
 
-	var image = document.createElement('img');
-	image.id = this.id + '_' + expander_node_id + '_image';
-	YAHOO.util.Dom.addClass(image, 'swat-expandable-checkbox-tree-image');
-	image.width = '16';
-	image.height = '16';
-	image.src = 'packages/swat/images/swat-disclosure-open.png';
-	image.alt = SwatExpandableCheckboxTree.close_text;
-
 	var anchor = document.createElement('a');
+	anchor.id = this.id + '_' + expander_node_id + '_anchor';
 	anchor.href = '#';
-	anchor.appendChild(image);
+	YAHOO.util.Dom.addClass(anchor,
+		'swat-expandable-checkbox-tree-anchor-opened');
 
 	YAHOO.util.Event.addListener(anchor, 'click',
 		function (e, args)
@@ -247,38 +238,47 @@ SwatExpandableCheckboxTree.prototype.toggleBranch = function(branch_id)
 SwatExpandableCheckboxTree.prototype.openBranch = function(branch_id)
 {
 	var branch = document.getElementById(this.id + '_' + branch_id + '_branch');
-	var image = document.getElementById(this.id + '_' + branch_id + '_image');
+	var anchor = document.getElementById(this.id + '_' + branch_id + '_anchor');
 
 	YAHOO.util.Dom.removeClass(branch, 'swat-expandable-checkbox-tree-closed');
 	YAHOO.util.Dom.addClass(branch, 'swat-expandable-checkbox-tree-opened');
 
-	image.src = 'packages/swat/images/swat-disclosure-open.png';
-	image.alt = SwatExpandableCheckboxTree.closed_text;
+	YAHOO.util.Dom.removeClass(anchor,
+		'swat-expandable-checkbox-tree-anchor-closed');
+
+	YAHOO.util.Dom.addClass(anchor,
+		'swat-expandable-checkbox-tree-anchor-opened');
 }
 
 SwatExpandableCheckboxTree.prototype.closeBranch = function(branch_id)
 {
 	var branch = document.getElementById(this.id + '_' + branch_id + '_branch');
-	var image = document.getElementById(this.id + '_' + branch_id + '_image');
+	var anchor = document.getElementById(this.id + '_' + branch_id + '_anchor');
 
 	YAHOO.util.Dom.addClass(branch, 'swat-expandable-checkbox-tree-closed');
 	YAHOO.util.Dom.removeClass(branch, 'swat-expandable-checkbox-tree-opened');
 
-	image.src = 'packages/swat/images/swat-disclosure-closed.png';
-	image.alt = SwatExpandableCheckboxTree.open_text;
+	YAHOO.util.Dom.addClass(anchor,
+		'swat-expandable-checkbox-tree-anchor-closed');
+
+	YAHOO.util.Dom.removeClass(anchor,
+		'swat-expandable-checkbox-tree-anchor-opened');
 }
 
 SwatExpandableCheckboxTree.prototype.openBranchWithAnimation = function(
 	branch_id)
 {
 	var branch = document.getElementById(this.id + '_' + branch_id + '_branch');
-	var image = document.getElementById(this.id + '_' + branch_id + '_image');
+	var anchor = document.getElementById(this.id + '_' + branch_id + '_anchor');
 
 	YAHOO.util.Dom.removeClass(branch, 'swat-expandable-checkbox-tree-closed');
 	YAHOO.util.Dom.addClass(branch, 'swat-expandable-checkbox-tree-opened');
 
-	image.src = 'packages/swat/images/swat-disclosure-open.png';
-	image.alt = SwatExpandableCheckboxTree.closed_text;
+	YAHOO.util.Dom.removeClass(anchor,
+		'swat-expandable-checkbox-tree-anchor-closed');
+
+	YAHOO.util.Dom.addClass(anchor,
+		'swat-expandable-checkbox-tree-anchor-opened');
 
 	// get display height
 	branch.parentNode.style.overflow = 'hidden';
@@ -307,10 +307,13 @@ SwatExpandableCheckboxTree.prototype.closeBranchWithAnimation = function(
 	branch_id)
 {
 	var branch = document.getElementById(this.id + '_' + branch_id + '_branch');
-	var image = document.getElementById(this.id + '_' + branch_id + '_image');
+	var anchor = document.getElementById(this.id + '_' + branch_id + '_anchor');
 
-	image.src = 'packages/swat/images/swat-disclosure-closed.png';
-	image.alt = SwatExpandableCheckboxTree.open_text;
+	YAHOO.util.Dom.addClass(anchor,
+		'swat-expandable-checkbox-tree-anchor-closed');
+
+	YAHOO.util.Dom.removeClass(anchor,
+		'swat-expandable-checkbox-tree-anchor-opened');
 
 	branch.style.overflow = 'hidden';
 	branch.style.height = '';
