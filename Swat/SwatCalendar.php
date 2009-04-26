@@ -14,7 +14,7 @@ require_once 'Date.php';
  * inside the {@link SwatDateEntry} widget but can be used by itself as well.
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCalendar extends SwatControl
@@ -206,7 +206,6 @@ class SwatCalendar extends SwatControl
 
 		$open_toggle_text  = Swat::_('open calendar');
 		$close_toggle_text = Swat::_('close calendar');
-		$toggle_alt_text   = Swat::_('toggle calendar graphic');
 
 		return
 			"SwatCalendar.week_names = {$week_names};\n".
@@ -217,8 +216,7 @@ class SwatCalendar extends SwatControl
 			"SwatCalendar.nodate_text = '{$nodate_text}';\n".
 			"SwatCalendar.today_text = '{$today_text}';\n".
 			"SwatCalendar.open_toggle_text = '{$open_toggle_text}';\n".
-			"SwatCalendar.close_toggle_text = '{$close_toggle_text}';\n".
-			"SwatCalendar.toggle_alt_text = '{$toggle_alt_text}';\n";
+			"SwatCalendar.close_toggle_text = '{$close_toggle_text}';\n";
 	}
 
 	// }}}

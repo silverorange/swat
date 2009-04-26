@@ -1,21 +1,24 @@
 /**
  * Calendar Widget Version 1.0
  *
- * calendar.js - Calendar Widget JavaScript Library
+ * Copyright (c) 2004 Tribador Mediaworks, 2004-2009 silverorange Inc.
  *
- * Permission to use, copy, modify, distribute, and sell this software and its
- * documentation for any purpose is hereby granted without fee, provided that
- * the above copyright notice appear in all copies and that both that
- * copyright notice and this permission notice appear in supporting
- * documentation. No representations are made about the suitability of this
- * software for any purpose. It is provided "as is" without express or
- * implied warranty.
+ * Portions of this code were adapted with permission from the
+ * 'Calendar Widget' JavaScript library, which is distributed under the
+ * following license:
  *
- * Adapted with permission by silverorange. December 2004.
+ *   Permission to use, copy, modify, distribute, and sell this software and
+ *   its documentation for any purpose is hereby granted without fee, provided
+ *   that the above copyright notice appear in all copies and that both that
+ *   copyright notice and this permission notice appear in supporting
+ *   documentation. No representations are made about the suitability of this
+ *   software for any purpose. It is provided "as is" without express or
+ *   implied warranty.
  *
- * @copyright 2004 Tribador Mediaworks, 2005-2007 silverorange Inc.
- * @author Brian Munroe <bmunroe@tribador.net>
- * @author Michael Gauthier <mike@silverorange.com>
+ * @copyright 2004 Tribador Mediaworks, 2004-2009 silverorange Inc.
+ * @author    Brian Munroe <bmunroe@tribador.net>
+ * @author    Michael Gauthier <mike@silverorange.com>
+ * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 
 /**
@@ -73,9 +76,6 @@ SwatCalendar.go_previous_image.src = 'packages/swat/images/go-previous.png';
 SwatCalendar.go_next_image = new Image();
 SwatCalendar.go_next_image.src = 'packages/swat/images/go-next.png';
 
-SwatCalendar.toggle_image = new Image();
-SwatCalendar.toggle_image.src = 'packages/swat/images/calendar.png';
-
 // string data
 SwatCalendar.week_names = [
 	'Sun', 'Mon', 'Tue',
@@ -96,7 +96,6 @@ SwatCalendar.today_text = 'Today';
 
 SwatCalendar.open_toggle_text = 'open calendar';
 SwatCalendar.close_toggle_text = 'close calendar';
-SwatCalendar.toggle_alt_text = 'calendar toggle graphic';
 
 /**
  * Creates calendar toggle button and overlay widget
@@ -129,23 +128,26 @@ SwatCalendar.prototype.setSwatDateEntry = function(entry)
  */
 SwatCalendar.prototype.drawButton = function()
 {
-	var anchor = document.createElement('a');
-	anchor.href = '#';
-	anchor.title = SwatCalendar.open_toggle_text;
-	YAHOO.util.Event.addListener(anchor, 'click',
-		function(e, calendar)
+	this.toggle_button = document.createElement('a');
+	this.toggle_button.id = this.id + '_toggle';
+	this.toggle_button.href = '#';
+	this.toggle_button.title = SwatCalendar.open_toggle_text;
+	YAHOO.util.Dom.addClass(this.toggle_button, 'swat-calendar-toggle-button');
+	YAHOO.util.Event.addListener(this.toggle_button, 'click',
+		function(e)
 		{
 			YAHOO.util.Event.preventDefault(e);
-			calendar.toggle();
-		}, this);
+			this.toggle();
+		},
+		this,
+		true
+	);
 
-	this.toggle_button = document.createElement('img');
-	this.toggle_button.id = this.id + '_toggle';
-	this.toggle_button.src = SwatCalendar.toggle_image.src;
-	this.toggle_button.alt = SwatCalendar.toggle_alt_text;
-	YAHOO.util.Dom.addClass(this.toggle_button, 'swat-calendar-icon');
-
-	anchor.appendChild(this.toggle_button);
+	if (this.is_webkit) {
+		// Zero-width-space holds the link open in WebKit browsers. Only apply
+		// to WebKit because IE can't display the character correctly.
+		this.toggle_button.appendChild(document.createTextNode('\u200b'));
+	}
 
 	var calendar_div = document.createElement('div');
 	calendar_div.id = this.id + '_div';
@@ -166,7 +168,7 @@ SwatCalendar.prototype.drawButton = function()
 	calendar_div.appendChild(overlay_footer);
 
 	var container = document.getElementById(this.id);
-	container.appendChild(anchor);
+	container.appendChild(this.toggle_button);
 	container.appendChild(calendar_div);
 }
 
