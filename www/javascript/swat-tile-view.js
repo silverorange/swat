@@ -6,13 +6,7 @@
 function SwatTileView(id)
 {
 	SwatTileView.superclass.constructor.call(this, id);
-
-	this.view_node = document.getElementById(this.id);
-
-	for (var i = 0; i < this.view_node.childNodes.length; i++) {
-		if (this.view_node.childNodes[i].nodeName == 'DIV')
-			this.items.push(this.view_node.childNodes[i]);
-	}
+	this.init();
 }
 
 YAHOO.lang.extend(SwatTileView, SwatView, {
@@ -44,6 +38,19 @@ getItemNode: function(node)
 }
 
 });
+
+SwatTileView.prototype.init = function()
+{
+	this.items = [];
+	this.view_node = document.getElementById(this.id);
+
+	for (var i = 0; i < this.view_node.childNodes.length; i++) {
+		var node_name = this.view_node.childNodes[i].nodeName.toLowerCase();
+		if (node_name == 'div') {
+			this.items.push(this.view_node.childNodes[i]);
+		}
+	}
+}
 
 /**
  * Selects an item node in this tile view

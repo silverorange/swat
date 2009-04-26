@@ -14,6 +14,13 @@ function SwatCheckboxCellRenderer(id, view)
 	 * the SwatCheckAll widget.
 	 */
 	this.check_all = null;
+	this.last_clicked_index = null;
+
+	this.init();
+}
+
+SwatCheckboxCellRenderer.prototype.init = function()
+{
 	this.check_list = [];
 
 	/*
@@ -24,7 +31,7 @@ function SwatCheckboxCellRenderer(id, view)
 	var view_node = document.getElementById(this.view.id);
 	var input_nodes = view_node.getElementsByTagName('input');
 	for (var i = 0; i < input_nodes.length; i++) {
-		if (input_nodes[i].name == id + '[]') {
+		if (input_nodes[i].name == this.id + '[]') {
 			input_nodes[i]._index = this.check_list.length;
 			this.check_list.push(input_nodes[i]);
 			this.updateNode(input_nodes[i]);
@@ -39,8 +46,6 @@ function SwatCheckboxCellRenderer(id, view)
 				this.handleMouseDown, this, true);
 		}
 	}
-
-	this.last_clicked_index = null;
 }
 
 SwatCheckboxCellRenderer.prototype.handleMouseDown = function(e)
