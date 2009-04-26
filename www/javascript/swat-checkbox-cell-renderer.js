@@ -74,7 +74,7 @@ SwatCheckboxCellRenderer.prototype.updateCheckAll = function()
 		else if (count > 0)
 			break; // can't possibly be all checked or none checked
 
-	this.check_all.setState(count == this.check_list.length);
+	this.check_all.setState(count > 0 && count == this.check_list.length);
 }
 
 SwatCheckboxCellRenderer.prototype.checkAll = function(checked)
