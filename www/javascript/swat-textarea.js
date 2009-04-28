@@ -2,7 +2,7 @@
  * A resizeable textarea widget
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 
@@ -67,7 +67,7 @@ SwatTextarea.prototype.handleOnAvailable = function()
 	this.textarea.parentNode.appendChild(this.handle_div);
 
 	YAHOO.util.Event.addListener(this.handle_div, 'mousedown',
-		SwatTextarea_mousedownEventHandler);
+		SwatTextarea.mousedownEventHandler, this.handle_div);
 }
 
 // }}}
@@ -115,32 +115,36 @@ SwatTextarea.min_height = 20;
 SwatTextarea.resize_handle_height = 7;
 
 // }}}
-// {{{ function SwatTextarea_mousedownEventHandler()
+// {{{ SwatTextarea.mousedownEventHandler()
 
 /**
  * Handles mousedown events for resize handles
  *
- * @param DOMEvent event the event to handle.
+ * @param DOMEvent   event the event to handle.
+ * @param DOMElement the drag handle being grabbed.
  *
  * @return boolean false
  */
-function SwatTextarea_mousedownEventHandler(event)
+SwatTextarea.mousedownEventHandler = function(e, handle)
 {
 	// prevent text selection
-	YAHOO.util.Event.preventDefault(event);
+	YAHOO.util.Event.preventDefault(e);
 
 	// only allow left click to do things
 	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
-	if ((is_ie && (event.button & 1) != 1) ||
-		(!is_ie && !is_webkit && event.button != 0))
+	if ((is_ie && (e.button & 1) != 1) ||
+		(!is_ie && !is_webkit && e.button != 0))
 		return false;
 
-	SwatTextarea.dragging_item = this;
+	SwatTextarea.dragging_item = handle;
 	SwatTextarea.dragging_mouse_origin_y =
-		YAHOO.util.Event.getPageY(event);
+		YAHOO.util.Event.getPageY(e);
 
-	var textarea = this._textarea;
+	var textarea = handle._textarea;
+
+	YAHOO.util.Dom.setStyle(textarea, 'opacity', 0.25);
+
 	var height = parseInt(YAHOO.util.Dom.getStyle(textarea, 'height'));
 	if (height) {
 		SwatTextarea.dragging_origin_height = height;
@@ -150,14 +154,14 @@ function SwatTextarea_mousedownEventHandler(event)
 	}
 
 	YAHOO.util.Event.addListener(document, 'mousemove',
-		SwatTextarea_mousemoveEventHandler);
+		SwatTextarea.mousemoveEventHandler, handle);
 
 	YAHOO.util.Event.addListener(document, 'mouseup',
-		SwatTextarea_mouseupEventHandler);
+		SwatTextarea.mouseupEventHandler, handle);
 }
 
 // }}}
-// {{{ function SwatTextarea_mousemoveEventHandler()
+// {{{ SwatTextarea.mousemoveEventHandler()
 
 /**
  * Handles mouse movement when dragging a resize bar
@@ -168,12 +172,12 @@ function SwatTextarea_mousedownEventHandler(event)
  *
  * @return boolean false.
  */
-function SwatTextarea_mousemoveEventHandler(event)
+SwatTextarea.mousemoveEventHandler = function(e, handle)
 {
 	var resize_handle = SwatTextarea.dragging_item;
 	var textarea = resize_handle._textarea;
 
-	var delta = YAHOO.util.Event.getPageY(event) -
+	var delta = YAHOO.util.Event.getPageY(e) -
 		SwatTextarea.dragging_mouse_origin_y;
 
 	var height = SwatTextarea.dragging_origin_height + delta;
@@ -184,35 +188,38 @@ function SwatTextarea_mousemoveEventHandler(event)
 }
 
 // }}}
-// {{{ function SwatTextarea_mouseupEventHandler()
+// {{{ SwatTextarea.mouseupEventHandler()
 
 /**
  * Handles mouseup events when dragging a resize bar
  *
  * Stops dragging.
  *
- * @param DOMEvent event the event that triggered this function.
+ * @param DOMEvent   event the event that triggered this function.
+ * @param DOMElement the drag handle being released.
  *
  * @return boolean false.
  */
-function SwatTextarea_mouseupEventHandler(event)
+SwatTextarea.mouseupEventHandler = function(e, handle)
 {
 	// only allow left click to do things
 	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
-	if ((is_ie && (event.button & 1) != 1) ||
-		(!is_ie && !is_webkit && event.button != 0))
+	if ((is_ie && (e.button & 1) != 1) ||
+		(!is_ie && !is_webkit && e.button != 0))
 		return false;
 
 	YAHOO.util.Event.removeListener(document, 'mousemove',
-		SwatTextarea_mousemoveEventHandler);
+		SwatTextarea.mousemoveEventHandler);
 
 	YAHOO.util.Event.removeListener(document, 'mouseup',
-		SwatTextarea_mouseupEventHandler);
+		SwatTextarea.mouseupEventHandler);
 
 	SwatTextarea.dragging_item = null;
 	SwatTextarea.dragging_mouse_origin_y = null;
 	SwatTextarea.dragging_origin_height = null;
+
+	YAHOO.util.Dom.setStyle(handle._textarea, 'opacity', 1);
 
 	return false;
 }
