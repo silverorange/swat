@@ -122,6 +122,18 @@ ul.swat-radio-list li {
 	margin-left: 1em;
 }
 
+a.swat-expandable-checkbox-tree-anchor-opened {
+	background: url(../images/swat-disclosure-open.png) top left no-repeat;
+	padding: 0 0 0 16px;
+	zoom: 1; /* IE hack */
+}
+
+a.swat-expandable-checkbox-tree-anchor-closed {
+	background: url(../images/swat-disclosure-closed.png) top left no-repeat;
+	padding: 0 0 0 16px;
+	zoom: 1; /* IE hack */
+}
+
 .swat-expandable-checkbox-tree input {
 	vertical-align: middle;
 }
@@ -134,12 +146,10 @@ ul.swat-radio-list li {
 
 .swat-expandable-checkbox-tree ul li ul li {
 	margin-left: 36px;
-	/*border: 1px solid red;*/
 }
 
 .swat-expandable-checkbox-tree ul li ul li.swat-expandable-checkbox-tree-expander {
 	margin-left: 20px;
-/*	border: 1px solid;*/
 }
 
 .swat-expandable-checkbox-tree-opened {

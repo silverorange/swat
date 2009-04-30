@@ -14,7 +14,7 @@ require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
  * A widget to display field-value pairs
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDetailsView extends SwatControl implements SwatUIParent
@@ -598,21 +598,28 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ private function displayContent()
+	// {{{ protected function displayContent()
 
 	/**
 	 * Displays each field of this view
 	 *
 	 * Displays each field of this view as an XHTML table row.
 	 */
-	private function displayContent()
+	protected function displayContent()
 	{
-		$count = 0;
+		$count = 1;
 
 		foreach ($this->fields as $field) {
-			$count++;
 			$odd = ($count % 2 == 1);
+
+			ob_start();
 			$field->display($this->data, $odd);
+			$content = ob_get_clean();
+
+			if ($content != '') {
+				echo $content;
+				$count++;
+			}
 		}
 	}
 

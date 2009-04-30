@@ -28,11 +28,13 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 * Whether to show a "check all" widget
 	 *
 	 * For this option to have an effect, this tile view's tile must contain a
-	 * {@link SwatCheckboxCellRenderer}.
+	 * {@link SwatCheckboxCellRenderer}. This is a tri-state value:
+	 * null (default) = display checkbox if their is more than one record,
+	 * true = always display checkbox, false = never display checkbox.
 	 *
 	 * @var boolean
 	 */
-	public $show_check_all = true;
+	public $show_check_all = null;
 
 	/**
 	 * Optional label title for the check-all widget
@@ -596,9 +598,18 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	protected function showCheckAll()
 	{
-		return ($this->show_check_all && count($this->model) > 2 &&
-			$this->getCheckboxCellRenderer() !== null &&
-			$this->getFirstAncestor('SwatForm') !== null);
+		if ($this->getCheckboxCellRenderer() === null ||
+			$this->getFirstAncestor('SwatForm') === null) {
+			$show = false;
+		} elseif ($this->show_check_all === null && count($this->model) > 1) {
+			$show = true;
+		} elseif ($this->show_check_all === true) {
+			$show = true;
+		} else {
+			$show = false;
+		}
+
+		return $show;
 	}
 
 	// }}}

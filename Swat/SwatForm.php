@@ -3,6 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/exceptions/SwatException.php';
+require_once 'Swat/exceptions/SwatInvalidCharacterEncodingException.php';
 require_once 'Swat/exceptions/SwatInvalidTypeException.php';
 require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatMessageDisplay.php';
@@ -697,8 +698,9 @@ class SwatForm extends SwatDisplayableContainer
 				}
 			} elseif ($value !== self::ENCODING_UTF8_VALUE) {
 				// it's not 8-bit or UTF-8. Time to panic!
-				throw new SwatException(
-					'Unknown form data character encoding.');
+				throw new SwatInvalidCharacterEncodingException(
+					"Unknown form data character encoding. Form data: \n".
+					file_get_contents('php://input'));
 			}
 		}
 	}

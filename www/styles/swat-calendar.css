@@ -136,10 +136,16 @@ td.swat-calendar-close-controls {
 	text-align: center;
 }
 
-.swat-calendar-icon {
-	vertical-align: middle;
-	margin-left: 2px;
-	border: 0;
+a.swat-calendar-toggle-button {
+	padding: 0 24px 5px 0;
+	background-image: url(../images/tango/22/office-calendar.png);
+	background-position: 1px -1px;
+	background-repeat: no-repeat;
+}
+
+* html a.swat-calendar-toggle-button { /* IE hacks */
+	background-image: url(../images/tango/22/office-calendar-256.png);
+	zoom: 1;
 }
 
 .swat-calendar-arrows {

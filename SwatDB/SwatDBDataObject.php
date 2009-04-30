@@ -165,6 +165,95 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function __get()
+
+	public function __get($key)
+	{
+		if (in_array($key, $this->deprecated_properties))
+			return $this->getDeprecatedProperty($key);
+
+		$value = $this->getUsingLoaderMethod($key);
+
+		if ($value === false)
+			$value = $this->getUsingInternalProperty($key);
+
+		if ($value === false) {
+			$loader_method = $this->getLoaderMethod($key);
+			throw new SwatDBException(sprintf("A property named '%s' does not ".
+				"exist on the %s data-object. If the property corresponds ".
+				"directly to a database field it should be added as a public ".
+				"property of this data object. If the property should access ".
+				"a sub-data-object, either specify a class when registering ".
+				"the internal property named '%s' or define a custom loader ".
+				"method named '%s()'.",
+				$key, get_class($this), $key, $loader_method));
+		}
+
+		return $value;
+	}
+
+	// }}}
+	// {{{ public function __set()
+
+	public function __set($key, $value)
+	{
+		if (in_array($key, $this->deprecated_properties)) {
+			$this->setDeprecatedProperty($key, $value);
+			return;
+		}
+
+		if (method_exists($this, $this->getLoaderMethod($key))) {
+
+			if ($value === null) {
+				$this->unsetSubDataObject($key);
+			} else {
+				$this->setSubDataObject($key, $value);
+			}
+
+		} elseif ($this->hasInternalValue($key) &&
+			$this->internal_property_accessible[$key]) {
+
+			if ($value instanceof SwatDBDataObject) {
+				$this->setSubDataObject($key, $value);
+				$this->setInternalValue($key, $value->getId());
+			} elseif ($value === null) {
+				$this->unsetSubDataObject($key);
+				$this->setInternalValue($key, $value);
+			} else {
+				// TODO: Maybe unset sub dataobject here
+				$this->setInternalValue($key, $value);
+			}
+
+		} else {
+
+			throw new SwatDBException(
+				"A property named '{$key}' does not exist on this ".
+				'dataobject.  If the property corresponds directly to '.
+				'a database field it should be added as a public property '.
+				'of this data object.  If the property should access a '.
+				'sub-dataobject, specify a class when registering the '.
+				"internal field named '{$key}'.");
+		}
+	}
+
+	// }}}
+	// {{{ public function __isset()
+
+	public function __isset($key)
+	{
+		$is_set = false;
+
+		if (in_array($key, $this->deprecated_properties)) {
+			$is_set =
+				(method_exists($this, $this->getLoaderMethod($key))) ||
+				($this->hasInternalValue($key) &&
+				$this->internal_property_accessible[$key]);
+		}
+
+		return $is_set;
+	}
+
+	// }}}
 	// {{{ public function __toString()
 
 	/**
@@ -199,6 +288,9 @@ class SwatDBDataObject extends SwatObject
 
 			if ($value instanceof SwatDBRecordable)
 				$value = get_class($value);
+
+			if (is_bool($value))
+				$value = $value ? 'true' : 'false';
 
 			if ($value === null)
 				$value = '<null>';
@@ -549,95 +641,6 @@ class SwatDBDataObject extends SwatObject
 			$this->internal_properties);
 
 		return $property_array;
-	}
-
-	// }}}
-	// {{{ private function __get()
-
-	private function __get($key)
-	{
-		if (in_array($key, $this->deprecated_properties))
-			return $this->getDeprecatedProperty($key);
-
-		$value = $this->getUsingLoaderMethod($key);
-
-		if ($value === false)
-			$value = $this->getUsingInternalProperty($key);
-
-		if ($value === false) {
-			$loader_method = $this->getLoaderMethod($key);
-			throw new SwatDBException(sprintf("A property named '%s' does not ".
-				"exist on the %s data-object. If the property corresponds ".
-				"directly to a database field it should be added as a public ".
-				"property of this data object. If the property should access ".
-				"a sub-data-object, either specify a class when registering ".
-				"the internal property named '%s' or define a custom loader ".
-				"method named '%s()'.",
-				$key, get_class($this), $key, $loader_method));
-		}
-
-		return $value;
-	}
-
-	// }}}
-	// {{{ private function __set()
-
-	private function __set($key, $value)
-	{
-		if (in_array($key, $this->deprecated_properties)) {
-			$this->setDeprecatedProperty($key, $value);
-			return;
-		}
-
-		if (method_exists($this, $this->getLoaderMethod($key))) {
-
-			if ($value === null) {
-				$this->unsetSubDataObject($key);
-			} else {
-				$this->setSubDataObject($key, $value);
-			}
-
-		} elseif ($this->hasInternalValue($key) &&
-			$this->internal_property_accessible[$key]) {
-
-			if ($value instanceof SwatDBDataObject) {
-				$this->setSubDataObject($key, $value);
-				$this->setInternalValue($key, $value->getId());
-			} elseif ($value === null) {
-				$this->unsetSubDataObject($key);
-				$this->setInternalValue($key, $value);
-			} else {
-				// TODO: Maybe unset sub dataobject here
-				$this->setInternalValue($key, $value);
-			}
-
-		} else {
-
-			throw new SwatDBException(
-				"A property named '{$key}' does not exist on this ".
-				'dataobject.  If the property corresponds directly to '.
-				'a database field it should be added as a public property '.
-				'of this data object.  If the property should access a '.
-				'sub-dataobject, specify a class when registering the '.
-				"internal field named '{$key}'.");
-		}
-	}
-
-	// }}}
-	// {{{ private function __isset()
-
-	private function __isset($key)
-	{
-		$is_set = false;
-
-		if (in_array($key, $this->deprecated_properties)) {
-			$is_set =
-				(method_exists($this, $this->getLoaderMethod($key))) ||
-				($this->hasInternalValue($key) &&
-				$this->internal_property_accessible[$key]);
-		}
-
-		return $is_set;
 	}
 
 	// }}}

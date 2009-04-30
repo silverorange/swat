@@ -159,15 +159,6 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	 */
 	protected function getInlineJavaScript()
 	{
-		static $shown = false;
-
-		if (!$shown) {
-			$javascript = $this->getInlineJavaScriptTranslations();
-			$shown = true;
-		} else {
-			$javascript = '';
-		}
-
 		$dependent_boxes = ($this->dependent_boxes) ? 'true' : 'false';
 
 		if ($this->open !== null) {
@@ -188,7 +179,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 
 		$expandable_node_ids = implode(', ', $expandable_node_ids);
 
-		$javascript.= sprintf(
+		$javascript = sprintf(
 			"var %s_obj = new SwatExpandableCheckboxTree('%s', %s, %s, [%s]);",
 			$this->id,
 			$this->id,
@@ -197,25 +188,6 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			$expandable_node_ids);
 
 		return $javascript;
-	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScriptTranslations()
-
-	/**
-	 * Gets translatable string resources for the JavaScript object for
-	 * this widget
-	 *
-	 * @return string translatable JavaScript string resources for this widget.
-	 */
-	protected function getInlineJavaScriptTranslations()
-	{
-		$close_text = Swat::_('close');
-		$open_text  = Swat::_('open');
-
-		return
-			"SwatExpandableCheckboxTree.close_text = '{$close_text}';\n".
-			"SwatExpandableCheckboxTree.open_text  = '{$open_text}';\n";
 	}
 
 	// }}}

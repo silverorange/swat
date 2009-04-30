@@ -636,14 +636,14 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	}
 
 	// }}}
-	// {{{ private function __set()
+	// {{{ public function __set()
 
 	/**
 	 * Maps a data field to a property of a widget in the widget tree
 	 *
 	 * TODO: document me better
 	 */
-	private function __set($name, $value)
+	public function __set($name, $value)
 	{
 		if (array_key_exists($name, $this->mappings)) {
 			$this->property_values[$name] = $value;

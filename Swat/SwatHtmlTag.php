@@ -228,6 +228,46 @@ class SwatHtmlTag extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function __get()
+
+	/**
+	 * Magic __get method
+	 *
+	 * This should never be called directly, but is invoked indirectly when
+	 * accessing properties of a tag object.
+	 *
+	 * @param string $attr the name of attribute to get.
+	 *
+	 * @return mixed the value of the attribute. If the attribute is not set,
+	 *                null is returned.
+	 */
+	public function __get($attribute)
+	{
+		if (isset($this->attributes[$attribute]))
+			return $this->attributes[$attribute];
+		else
+			return null;
+	}
+
+	// }}}
+	// {{{ public function __set()
+
+	/**
+	 * Magic __set method
+	 *
+	 * This should never be called directly, but is invoked indirectly when
+	 * setting properties of a tag object.
+	 *
+	 * @param string $attribute the name of attribute.
+	 * @param mixed $value the value of attribute.
+	 */
+	public function __set($attribute, $value)
+	{
+		$this->attributes[$attribute] =
+			($value === null) ? null : (string)$value;
+	}
+
+	// }}}
 	// {{{ public function __toString()
 
 	/**
@@ -282,46 +322,6 @@ class SwatHtmlTag extends SwatObject
 			echo ' />';
 		else
 			echo '>';
-	}
-
-	// }}}
-	// {{{ private function __get()
-
-	/**
-	 * Magic __get method
-	 *
-	 * This should never be called directly, but is invoked indirectly when
-	 * accessing properties of a tag object.
-	 *
-	 * @param string $attr the name of attribute to get.
-	 *
-	 * @return mixed the value of the attribute. If the attribute is not set,
-	 *                null is returned.
-	 */
-	private function __get($attribute)
-	{
-		if (isset($this->attributes[$attribute]))
-			return $this->attributes[$attribute];
-		else
-			return null;
-	}
-
-	// }}}
-	// {{{ private function __set()
-
-	/**
-	 * Magic __set method
-	 *
-	 * This should never be called directly, but is invoked indirectly when
-	 * setting properties of a tag object.
-	 *
-	 * @param string $attribute the name of attribute.
-	 * @param mixed $value the value of attribute.
-	 */
-	private function __set($attribute, $value)
-	{
-		$this->attributes[$attribute] =
-			($value === null) ? null : (string)$value;
 	}
 
 	// }}}
