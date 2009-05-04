@@ -1,6 +1,6 @@
 .swat-textarea-editor-overlay {
 	display: none;
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -13,12 +13,19 @@
 }
 
 .swat-textarea-editor-dialog {
+	background: #fff;
 	display: none;
 	position: absolute;
 	width: 450px;
+	padding: 0;
+	margin: 0;
+}
+
+.swat-textarea-editor-dialog .swat-frame {
 	border-width: 1px;
 	background: #fff;
 	padding: 15px;
+	margin: 0;
 }
 
 .swat-textarea-editor-dialog input.swat-entry {
