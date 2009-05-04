@@ -7,6 +7,7 @@
  * development environment. It can be installed using the public silverorange
  * PEAR channel but is not required for either Swat or the Swat demo.
  */
+set_include_path(get_include_path().':/so/sites/shot/pear/lib');
 @include_once 'PackageConfig.php';
 if (class_exists('PackageConfig')) {
 	PackageConfig::setWorkDirPosition(3);

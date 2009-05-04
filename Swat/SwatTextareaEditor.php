@@ -68,9 +68,6 @@ class SwatTextareaEditor extends SwatTextarea
 		$this->addJavaScript(
 			'packages/swat/javascript/tiny_mce/tiny_mce.js',
 			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-textarea-editor.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
