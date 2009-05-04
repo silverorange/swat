@@ -141,6 +141,7 @@ class SwatTextareaEditor extends SwatTextarea
 		$buttons = array(
 			'bold',
 			'italic',
+			'|',
 			'formatselect',
 			'|',
 			'removeformat',
@@ -189,7 +190,8 @@ class SwatTextareaEditor extends SwatTextarea
 //			'theme_advanced_path'               => false,
 //			'theme_advanced_statusbar_location' => 'bottom',
 			'skin'                              => 'swat',
-			'plugins'                           => 'swat',
+			'plugins'                           => 'swat,advimagescale',
+			'advimagescale_noresize_all'        => true,
 		);
 
 		ob_start();
