@@ -7,19 +7,49 @@
 			<property name="title">Visual Editor Text Area</property>
 			<widget class="SwatTextareaEditor" id="textarea_editor">
 				<property name="value"><![CDATA[
-<p>We&#8217;ve been using free and <a href="http://labs.silverorange.com/archives/2005/june/freeandopen">open-source software at silverorange</a> for years now. In the last year, though, we&#8217;ve begun releasing more of our internal web-development software stack under an open-source license.</p>
+<p>We&#8217;ve been using free and
+<a href="http://labs.silverorange.com/archives/2005/june/freeandopen">open-source
+software at silverorange</a> for years now. In the last year, though,
+we&#8217;ve begun releasing more of our internal web-development software stack
+under an open-source license.</p>
 
-<p>While our <a href="https://code.silverorange.com/wiki/Swat">Swat web application toolkit</a> (it&#8217;s <em>not a framework</em>) has been open since it&#8217;s inception, it has been missing some of the key infrastructure required for a healthy open-source project. The code was available, that was about it.</p>
+<p>While our <a href="https://code.silverorange.com/wiki/Swat">Swat web
+application toolkit</a> (it&#8217;s <em>not a framework</em>) has been open
+since it&#8217;s inception, it has been missing some of the key infrastructure
+required for a healthy open-source project. The code was available, that was
+about it.</p>
 
-<p>Now, with the new <a href="http://code.silverorange.com/">code.silverorange.com</a> website (based on <a href="http://trac.edgewall.org/">Trac</a> - a past nominee for silverorange <a href="http://labs.silverorange.com/archives/2008/january/employee2007">employee of the year</a>), we finally have the rest of the public project infrastructure in place.</p>
+<p>Now, with the new
+<a href="http://code.silverorange.com/">code.silverorange.com</a> website
+(based on <a href="http://trac.edgewall.org/">Trac</a> - a past nominee for
+silverorange <a href="http://labs.silverorange.com/archives/2008/january/employee2007">employee
+of the year</a>), we finally have the rest of the public project infrastructure
+in place.</p>
 
-<p>Most importantly among these changes, we finally have a public bug-tracking system! This took longer than expected because we had Swat bug-tracking tied in with our internal (private client) project tracking. The two are finally separated, and everything that should be open is now out in the open.</p>
+<p>Most importantly among these changes, we finally have a public bug-tracking
+system! This took longer than expected because we had Swat bug-tracking tied in
+with our internal (private client) project tracking. The two are finally
+separated, and everything that should be open is now out in the open.</p>
 
-<p>We&#8217;re are also now in a position to grant SVN commit access to external contributors when appropriate.</p>
+<p>We&#8217;re are also now in a position to grant SVN commit access to external
+contributors when appropriate.</p>
 
-<p>The silverorange code site isn&#8217;t limited to Swat either. We have a whole set of packages we use for developing client sites, including a <a href="http://code.silverorange.com/wiki/Admin">back-end website administration package</a>, an <a href="http://code.silverorange.com/wiki/Store">e-commerce package</a>, a <a href="http://code.silverorange.com/wiki/Pinhole">photo-gallery package</a>, and a (fledgling) <a href="http://code.silverorange.com/wiki/Blorg">weblog package</a>. Each of these projects now has a section of it&#8217;s own on the code.silverorange.com site, and they share a <a href="https://code.silverorange.com/wiki/Swat/GetInvolved">mailing list and Jabber chat room</a> with Swat.</p>
+<p>The silverorange code site isn&#8217;t limited to Swat either. We have a
+whole set of packages we use for developing client sites, including a
+<a href="http://code.silverorange.com/wiki/Admin">back-end website
+administration package</a>, an
+<a href="http://code.silverorange.com/wiki/Store">e-commerce package</a>, a
+<a href="http://code.silverorange.com/wiki/Pinhole">photo-gallery package</a>,
+and a (fledgling) <a href="http://code.silverorange.com/wiki/Blorg">weblog
+package</a>. Each of these projects now has a section of it&#8217;s own on the
+code.silverorange.com site, and they share a
+<a href="https://code.silverorange.com/wiki/Swat/GetInvolved">mailing list and
+Jabber chat room</a> with Swat.</p>
 
-<p>For those who have been patient enough to follow and participate in our open-source projects so far, we&#8217;re appreciative. We hope to be much more open to external collaboration and contributions with this new infrastructure.</p>
+<p>For those who have been patient enough to follow and participate in our
+open-source projects so far, we&#8217;re appreciative. We hope to be much more
+open to external collaboration and contributions with this new
+infrastructure.</p>
 				]]></property>
 			</widget>
 		</widget>
