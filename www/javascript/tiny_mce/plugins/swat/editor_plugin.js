@@ -854,7 +854,7 @@
 		if (e.childNodes.length != 1 || e.firstChild.nodeName != 'IMG') {
 			this.editor.focus();
 			this.editor.selection.select(e);
-			this.editor.selection.collapse(0);
+			this.editor.selection.collapse(false);
 		}
 
 		this.editor.execCommand('mceEndUndoLevel');
@@ -869,8 +869,73 @@
 
 	insertSnippet: function(content)
 	{
-		this.editor.execCommand('mceBeginUndoLevel');
-		this.editor.execCommand('mceInsertRawHTML', false, content);
+		var ed = this.editor;
+
+		ed.execCommand('mceBeginUndoLevel');
+
+		ed.selection.setContent('#mce_temp_content##mce_temp_cursor#');
+
+		// insert content
+		ed.setContent(
+			ed.getContent().replace(
+				/#mce_temp_content#/g,
+				content
+			)
+		);
+
+		// find cursor position
+		var nodes = this.editor.dom.select('body *');
+		var cursorNode = null;
+		var cursorPosition = -1;
+		for (var i = 0; i < nodes.length; i++) {
+			for (var j = 0; j < nodes[i].childNodes.length; j++) {
+				var childNode = nodes[i].childNodes[j];
+				if (childNode.nodeType == 3) {
+					cursorPosition = childNode.nodeValue.indexOf(
+						'#mce_temp_cursor#'
+					);
+
+					if (cursorPosition !== -1) {
+						cursorNode = childNode;
+						break;
+					}
+				}
+			}
+
+			if (cursorNode !== null) {
+				break;
+			}
+		}
+
+		// focus and position cursor
+		this.editor.focus();
+		if (cursorNode) {
+			var split = cursorNode.nodeValue.split('#mce_temp_cursor#', 2);
+			if (split[0] == '' && split[1] == '') {
+				var node = ed.getDoc().createTextNode('');
+				cursorNode.parentNode.replaceChild(node, cursorNode);
+				ed.selection.select(node);
+				ed.selection.collapse(false);
+			} else if (split[0] == '') {
+				var node = ed.getDoc().createTextNode(split[1]);
+				cursorNode.parentNode.replaceChild(node, cursorNode);
+				ed.selection.select(node);
+				ed.selection.collapse(true);
+			} else if (split[1] == '') {
+				var node = ed.getDoc().createTextNode(split[0]);
+				cursorNode.parentNode.replaceChild(node, cursorNode);
+				ed.selection.select(node);
+				ed.selection.collapse(false);
+			} else {
+				var leftNode = ed.getDoc().createTextNode(split[0]);
+				var rightNode = ed.getDoc().createTextNode(split[1]);
+				cursorNode.parentNode.replaceChild(rightNode, cursorNode);
+				rightNode.parentNode.insertBefore(leftNode, rightNode);
+				ed.selection.select(leftNode);
+				ed.selection.collapse(false);
+			}
+		}
+
 		this.editor.execCommand('mceEndUndoLevel');
 	},
 
