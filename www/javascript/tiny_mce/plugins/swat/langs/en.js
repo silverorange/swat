@@ -7,6 +7,14 @@ swat: {
 	link_uri_field: 'Link URI:',
 	link_uri_field_note: 'Leave blank to remove existing link.',
 
+	image_desc: 'Insert / Edit Image',
+	image_insert: 'Insert Image',
+	image_update: 'Update Image',
+	image_cancel: 'Cancel',
+	image_src_field: 'URI:',
+	image_title_field: 'Title:',
+	image_optional: '(optional)',
+
 	snippet_desc: 'Insert HTML Snippet',
 	snippet_insert: 'Insert',
 	snippet_cancel: 'Cancel',
