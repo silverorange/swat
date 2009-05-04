@@ -202,8 +202,9 @@
 		}
 
 		this.reset();
+		this.editor.focus();
 
-		Event.remove(DOM.doc, 'keypress', this.handleKeyPress);
+		Event.remove(DOM.doc, 'keydown', this.handleKeyPress);
 	}
 
 	Swat.Dialog.prototype.open = function(data)
@@ -221,15 +222,23 @@
 			}
 		}
 
-		var pos = DOM.getPos(this.editor.getContainer());
-		var top = pos.y + 50;
+		// display offsecreen to get dimensions
+		this.element.style.left    = '-10000px';
+		this.element.style.top     = '-10000px';
+		this.element.style.display = 'block';
+		var region = DOM.getRect(this.element);
+
+		var editorRegion = DOM.getRect(this.editor.getContainer());
+		var x = editorRegion.x + (editorRegion.w / 2) - (region.w / 2);
+		var y = editorRegion.y + 30;
 
 		this.overlay.style.display = 'block';
-		this.element.style.top = top + 'px';
+		this.element.style.left = x + 'px';
+		this.element.style.top = y + 'px';
 		this.element.style.display = 'block';
 		this.focus();
 
-		Event.add(DOM.doc, 'keypress', this.handleKeyPress, this);
+		Event.add(DOM.doc, 'keydown', this.handleKeyPress, this);
 	}
 
 	Swat.Dialog.prototype.drawDialog = function()
@@ -387,6 +396,172 @@
 	});
 
 	// }}}
+	// {{{ Swat.ImageDialog
+
+	Swat.ImageDialog = function(ed)
+	{
+		Swat.ImageDialog.superclass.constructor.call(this, ed);
+	}
+
+	Swat.extend(Swat.ImageDialog, Swat.Dialog, {
+
+	focus: function()
+	{
+		this.srcEntry.focus();
+	},
+
+	reset: function()
+	{
+		this.srcEntry.value   = '';
+		this.titleEntry.value = '';
+	},
+
+	getData: function()
+	{
+		return {
+			'image_src':   this.srcEntry.value,
+			'image_title': this.titleEntry.value
+		};
+	},
+
+	setData: function(data)
+	{
+		if (data['image_src']) {
+			this.srcEntry.value = data['image_src'];
+		}
+
+		if (data['image_title']) {
+			this.titleEntry.value = data['image_title'];
+		}
+	},
+
+	open: function(data)
+	{
+		Swat.ImageDialog.superclass.open.call(this, data);
+
+		// set confirm button title
+		if (this.srcEntry.value.length) {
+			this.insertButton.value = this.editor.getLang('swat.image_update');
+		} else {
+			this.insertButton.value = this.editor.getLang('swat.image_insert');
+		}
+	},
+
+	drawDialog: function()
+	{
+		Swat.ImageDialog.superclass.drawDialog.call(this);
+
+		var srcEntryId = this.editor.id + '_image_src_entry';
+
+		this.srcEntry = DOM.create('input', { id: srcEntryId, type: 'text' });
+		this.srcEntry.className = 'swat-entry';
+
+		// select all on focus
+		Event.add(this.srcEntry, 'focus', function(e)
+		{
+			this.select();
+		}, this.srcEntry);
+
+		var srcEntryLabel = DOM.create('label');
+		srcEntryLabel.htmlFor = srcEntryId;
+		srcEntryLabel.appendChild(
+			DOM.doc.createTextNode(
+				this.editor.getLang('swat.image_src_field')
+			)
+		);
+
+		var srcEntryFormFieldContents = DOM.create('div');
+		srcEntryFormFieldContents.className = 'swat-form-field-contents';
+		srcEntryFormFieldContents.appendChild(this.srcEntry);
+
+		var srcEntryFormField = DOM.create('div');
+		srcEntryFormField.className = 'swat-form-field';
+		srcEntryFormField.appendChild(srcEntryLabel);
+		srcEntryFormField.appendChild(srcEntryFormFieldContents);
+
+		var titleEntryId = this.editor.id + '_image_title_entry';
+
+		this.titleEntry = DOM.create(
+			'input',
+			{ id: titleEntryId, type: 'text' }
+		);
+		this.titleEntry.className = 'swat-entry';
+
+		// select all on focus
+		Event.add(this.titleEntry, 'focus', function(e)
+		{
+			this.select();
+		}, this.titleEntry);
+
+		var titleEntryLabelSpan = DOM.create('span');
+		titleEntryLabelSpan.className = 'swat-note';
+		titleEntryLabelSpan.appendChild(
+			DOM.doc.createTextNode(
+				this.editor.getLang('swat.image_optional')
+			)
+		);
+
+		var titleEntryLabel = DOM.create('label');
+		titleEntryLabel.htmlFor = titleEntryId;
+		titleEntryLabel.appendChild(
+			DOM.doc.createTextNode(
+				this.editor.getLang('swat.image_title_field')
+			)
+		);
+		titleEntryLabel.appendChild(DOM.doc.createTextNode(' '));
+		titleEntryLabel.appendChild(titleEntryLabelSpan);
+
+		var titleEntryFormFieldContents = DOM.create('div');
+		titleEntryFormFieldContents.className = 'swat-form-field-contents';
+		titleEntryFormFieldContents.appendChild(this.titleEntry);
+
+		var titleEntryFormField = DOM.create('div');
+		titleEntryFormField.className = 'swat-form-field';
+		titleEntryFormField.appendChild(titleEntryLabel);
+		titleEntryFormField.appendChild(titleEntryFormFieldContents);
+
+		this.insertButton = DOM.create('input', { type: 'button' });
+		this.insertButton.className = 'swat-button swat-primary';
+		this.insertButton.value = this.editor.getLang('swat.image_insert');
+		Event.add(this.insertButton, 'click', function(e)
+		{
+			this.close(true);
+		}, this);
+
+		var cancel = DOM.create('input', { type: 'button' });
+		cancel.className = 'swat-button';
+		cancel.value = this.editor.getLang('swat.image_cancel')
+		Event.add(cancel, 'click', function(e)
+		{
+			this.close(false);
+		}, this);
+
+		var footerFormFieldContents = DOM.create('div');
+		footerFormFieldContents.className = 'swat-form-field-contents';
+		footerFormFieldContents.appendChild(this.insertButton);
+		footerFormFieldContents.appendChild(cancel);
+
+		var footerFormField = DOM.create('div');
+		footerFormField.className = 'swat-footer-form-field';
+		footerFormField.appendChild(footerFormFieldContents);
+
+		var form = DOM.create('form');
+		form.className = 'swat-form';
+		form.appendChild(srcEntryFormField);
+		form.appendChild(titleEntryFormField);
+		form.appendChild(footerFormField);
+		Event.add(form, 'submit', function(e)
+		{
+			Event.cancel(e);
+			this.close(true);
+		}, this);
+
+		this.element.appendChild(form);
+	}
+
+	});
+
+	// }}}
 	// {{{ Swat.SnippetDialog
 
 	Swat.SnippetDialog = function(ed)
@@ -498,22 +673,33 @@
 
 		this.dialogs = {
 			'link':    new Swat.LinkDialog(ed),
-			'snippet': new Swat.SnippetDialog(ed)
-//			'image':   new Swat.ImageDialog(ed)
+			'snippet': new Swat.SnippetDialog(ed),
+			'image':   new Swat.ImageDialog(ed)
 		};
 
+		// dialog close handler for link dialog
 		this.dialogs['link'].onConfirm.add(function(dialog, data)
 		{
 			var uri = data['link_uri'];
 			this.insertLink(uri);
 		}, this);
 
+		// dialog close handler for image dialog
+		this.dialogs['image'].onConfirm.add(function(dialog, data)
+		{
+			var src   = data['image_src'];
+			var title = data['image_title'];
+//			this.insertSnippet(content);
+		}, this);
+
+		// dialog close handler for snippet dialog
 		this.dialogs['snippet'].onConfirm.add(function(dialog, data)
 		{
 			var content = data['snippet'];
 			this.insertSnippet(content);
 		}, this);
 
+		// link button
 		var that = this;
 		ed.addCommand('mceSwatLink', function()
 		{
@@ -531,39 +717,50 @@
 			that.dialogs['link'].open(data);
 		});
 
+		// image button
+		var that = this;
+		ed.addCommand('mceSwatImage', function()
+		{
+			var data = {};
+			that.dialogs['image'].open(data);
+		});
+
+		// snippet button
 		var that = this;
 		ed.addCommand('mceSwatSnippet', function()
 		{
 			that.dialogs['snippet'].open();
 		});
 
-		// register button
+		// register link button
 		ed.addButton('link', {
-			title: 'swat.link_desc',
-			cmd:   'mceSwatLink'
+			'title': 'swat.link_desc',
+			'cmd':   'mceSwatLink',
+			'class': 'mce_link'
 		});
 
-		// register keyboard shortcut
+		// register link keyboard shortcut
 		ed.addShortcut('crtl+k', 'swat.link_desc', 'mceSwatLink');
 
-		// register button
-		ed.addButton('snippet', {
-			title: 'swat.snippet_desc',
-			cmd:   'mceSwatSnippet'
+		// register image button
+		ed.addButton('image', {
+			'title': 'swat.image_desc',
+			'cmd':   'mceSwatImage',
+			'class': 'mce_image'
 		});
 
-		// register enable/disable event handler
+		// register snippet button
+		ed.addButton('snippet', {
+			'title': 'swat.snippet_desc',
+			'cmd':   'mceSwatSnippet',
+			'class': 'mce_snippet'
+		});
+
+		// register enable/disable event handler for link button
 		ed.onNodeChange.add(function(ed, cm, n, co) {
 			cm.setDisabled('link', co && n.nodeName != 'A');
 			cm.setActive('link', n.nodeName == 'A' && !n.name);
 		});
-	},
-
-	insertSnippet: function(content)
-	{
-		this.editor.execCommand('mceBeginUndoLevel');
-		this.editor.execCommand('mceInsertRawHTML', false, content);
-		this.editor.execCommand('mceEndUndoLevel');
 	},
 
 	insertLink: function(href)
@@ -621,6 +818,20 @@
 			this.editor.selection.collapse(0);
 		}
 
+		this.editor.execCommand('mceEndUndoLevel');
+	},
+
+	insertImage: function(content)
+	{
+//		this.editor.execCommand('mceBeginUndoLevel');
+//		this.editor.execCommand('mceInsertRawHTML', false, content);
+//		this.editor.execCommand('mceEndUndoLevel');
+	},
+
+	insertSnippet: function(content)
+	{
+		this.editor.execCommand('mceBeginUndoLevel');
+		this.editor.execCommand('mceInsertRawHTML', false, content);
 		this.editor.execCommand('mceEndUndoLevel');
 	},
 
