@@ -75,6 +75,34 @@
 	var Event      = tinymce.dom.Event;
 	var Dispatcher = tinymce.util.Dispatcher;
 
+	var _getRect = function(el)
+	{
+		if (typeof YAHOO.util.Dom == 'undefined') {
+			var region = DOM.getRect(el);
+		} else {
+			// Use YUI if available for more accurate measurements
+			var region = YAHOO.util.Dom.getRegion(el);
+			region.x = region.left;
+			region.y = region.top;
+			region.w = region.right - region.left;
+			region.h = region.bottom - region.top;
+		}
+
+		return region;
+	};
+
+	var _getDocumentHeight = function()
+	{
+		var viewPort = DOM.getViewPort();
+
+		var scrollHeight = (typeof document.scrollHeight == 'undefined') ?
+			document.body.scrollHeight : document.scrollHeight;
+
+		var h = Math.max(scrollHeight, viewPort.h);
+
+		return h;
+	};
+
 	// register language translations
 	tinymce.PluginManager.requireLangPack('swat');
 
@@ -182,7 +210,7 @@
 	Swat.Dialog.prototype.close = function(confirmed)
 	{
 		this.overlay.style.display = 'none';
-		this.element.style.display = 'none';
+		this.container.style.display = 'none';
 
 		// hide select elements in IE6
 		if (tinyMCE.isIE6) {
@@ -223,19 +251,26 @@
 		}
 
 		// display offsecreen to get dimensions
-		this.element.style.left    = '-10000px';
-		this.element.style.top     = '-10000px';
-		this.element.style.display = 'block';
-		var region = DOM.getRect(this.element);
+		this.container.style.left    = '-10000px';
+		this.container.style.top     = '-10000px';
+		this.container.style.display = 'block';
 
-		var editorRegion = DOM.getRect(this.editor.getContainer());
-		var x = editorRegion.x + (editorRegion.w / 2) - (region.w / 2);
+		var region = _getRect(this.container);
+
+		// in WebKit, the container element has no width for some reason so
+		// get the width of the table it contains.
+		var el = this.editor.getContainer().firstChild;
+		var editorRegion = _getRect(el);
+
+		var x = editorRegion.x + ((editorRegion.w  - region.w) / 2);
 		var y = editorRegion.y + 30;
 
+		this.overlay.style.height = _getDocumentHeight() + 'px';
 		this.overlay.style.display = 'block';
-		this.element.style.left = x + 'px';
-		this.element.style.top = y + 'px';
-		this.element.style.display = 'block';
+
+		this.container.style.left = x + 'px';
+		this.container.style.top = y + 'px';
+		this.container.style.display = 'block';
 		this.focus();
 
 		Event.add(DOM.doc, 'keydown', this.handleKeyPress, this);
@@ -243,10 +278,14 @@
 
 	Swat.Dialog.prototype.drawDialog = function()
 	{
-		this.element = DOM.create('div');
-		this.element.className = 'swat-frame swat-textarea-editor-dialog';
+		this.frame = DOM.create('div');
+		this.frame.className = 'swat-frame';
 
-		DOM.doc.body.appendChild(this.element);
+		this.container = DOM.create('div');
+		this.container.className = 'swat-textarea-editor-dialog';
+		this.container.appendChild(this.frame);
+
+		DOM.doc.body.appendChild(this.container);
 	}
 
 	Swat.Dialog.prototype.drawOverlay = function()
@@ -390,7 +429,7 @@
 			this.close(true);
 		}, this);
 
-		this.element.appendChild(form);
+		this.frame.appendChild(form);
 	}
 
 	});
@@ -556,7 +595,7 @@
 			this.close(true);
 		}, this);
 
-		this.element.appendChild(form);
+		this.frame.appendChild(form);
 	}
 
 	});
@@ -594,7 +633,7 @@
 
 		this.snippetEntry = DOM.create(
 			'textarea',
-			{ id: entryId, type: 'text', rows: 4, cols: 50 }
+			{ id: entryId, rows: 4, cols: 50 }
 		);
 
 		this.snippetEntry.className = 'swat-textarea';
@@ -651,7 +690,7 @@
 			this.close(true);
 		}, this);
 
-		this.element.appendChild(form);
+		this.frame.appendChild(form);
 	}
 
 	});
