@@ -4,29 +4,33 @@
 .swatSkin table td {vertical-align:middle}
 
 /* Containers */
-.swatSkin table {background:#F0F0EE}
+.swatSkin table {background: none;}
 .swatSkin iframe {display:block; background:#FFF}
 .swatSkin .mceToolbar {height:26px}
 .swatSkin .mceLeft {text-align:left}
 .swatSkin .mceRight {text-align:right}
 
 /* External */
-.swatSkin .mceExternalToolbar {position:absolute; border:1px solid #CCC; border-bottom:0; display:none;}
+.swatSkin .mceExternalToolbar {position:absolute; border:1px solid #f0eade; border-bottom:0; display:none;}
 .swatSkin .mceExternalToolbar td.mceToolbar {padding-right:13px;}
 .swatSkin .mceExternalClose {position:absolute; top:3px; right:3px; width:7px; height:7px; background:url(../../img/icons.gif) -820px 0}
 
 /* Layout */
-.swatSkin table.mceLayout {border:0; border-left:1px solid #CCC; border-right:1px solid #CCC}
-.swatSkin table.mceLayout tr.mceFirst td {border-top:1px solid #CCC}
-.swatSkin table.mceLayout tr.mceLast td {border-bottom:1px solid #CCC}
+.swatSkin table.mceLayout {border:0; border-left:1px solid #f0eade; border-right:1px solid #f0eade}
+.swatSkin table.mceLayout tr.mceFirst td {border-top:1px solid #f0eade}
+.swatSkin table.mceLayout tr.mceLast td {border-bottom:1px solid #f0eade}
 .swatSkin table.mceToolbar, .swatSkin tr.mceFirst .mceToolbar tr td, .swatSkin tr.mceLast .mceToolbar tr td {border:0; margin:0; padding:0;}
-.swatSkin td.mceToolbar {padding-top:1px; vertical-align:top}
-.swatSkin .mceIframeContainer {border-top:1px solid #CCC; border-bottom:1px solid #CCC}
+.swatSkin td.mceToolbar {
+	vertical-align:top;
+	background: #f8f6f0 url(../images/swat-textarea-editor-toolbar.png) repeat-x left bottom;
+	padding: 1px;
+}
+.swatSkin .mceIframeContainer {border-top:1px solid #f0eade; border-bottom:1px solid #f0eade}
 .swatSkin .mceStatusbar {font-family:'MS Sans Serif',sans-serif,Verdana,Arial; font-size:9pt; line-height:16px; overflow:visible; color:#000; display:block; height:20px}
 .swatSkin .mceStatusbar div {float:left; margin:2px}
 .swatSkin .mceStatusbar a.mceResize {display:block; float:right; background:url(../../img/icons.gif) -800px 0; width:20px; height:20px; cursor:se-resize}
 .swatSkin .mceStatusbar a:hover {text-decoration:underline}
-.swatSkin table.mceToolbar {margin-left:3px}
+.swatSkin table.mceToolbar {margin-left:2px; margin-right: 2px;}
 .swatSkin span.mceIcon, .swatSkin img.mceIcon {display:block; width:20px; height:20px}
 .swatSkin .mceIcon {background:url(../../img/icons.gif) no-repeat 20px 20px}
 .swatSkin td.mceCenter {text-align:center;}
@@ -34,24 +38,71 @@
 .swatSkin td.mceRight table {margin:0 0 0 auto;}
 
 /* Button */
-.swatSkin .mceButton {display:block; border:1px solid #F0F0EE; width:20px; height:20px; margin-right:1px}
-.swatSkin a.mceButtonEnabled:hover {border:1px solid #0A246A; background-color:#B2BBD0}
-.swatSkin a.mceButtonActive, .swatSkin a.mceButtonSelected {border:1px solid #0A246A; background-color:#C2CBE0}
+.swatSkin .mceButton {
+	display:block;
+	border: 1px solid #e3d7c1;
+	border-top-color: #f0eade;
+	border-left-color: #f0eade;
+	width:20px;
+	height:20px;
+	margin-right:1px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding: 1px;
+	background: #f8f6f0 url(../../../../../../images/swat-textarea-editor-button.png) repeat-x left bottom;
+}
+.swatSkin a.mceButtonEnabled:hover {
+	border-top-color: #dcceb2;
+	border-left-color: #dcceb2;
+	border-bottom-color: #c3b69e;
+	border-right-color: #c3b69e;
+}
+.swatSkin a.mceButtonActive,
+.swatSkin a.mceButtonSelected {
+	border-color: #fff;
+	border-top-color: #e3d7c1;
+	border-left-color: #e3d7c1;
+	background-position: top left;
+}
 .swatSkin .mceButtonDisabled .mceIcon {opacity:0.3; -ms-filter:'alpha(opacity=30)'; filter:alpha(opacity=30)}
+.swatSkin .mceButtonDisabled {
+	border-color: #f0eade;
+	background: none;
+}
 .swatSkin .mceButtonLabeled {width:auto}
 .swatSkin .mceButtonLabeled span.mceIcon {float:left}
 .swatSkin span.mceButtonLabel {display:block; font-size:10px; padding:4px 6px 0 22px; font-family:Tahoma,Verdana,Arial,Helvetica}
 .swatSkin .mceButtonDisabled .mceButtonLabel {color:#888}
 
 /* Separator */
-.swatSkin .mceSeparator {display:block; background:url(../../img/icons.gif) -180px 0; width:2px; height:20px; margin:2px 2px 0 4px}
+.swatSkin .mceSeparator {display:block; background: none; width:2px; height:20px; margin:2px 2px 0 2px}
 
 /* ListBox */
 .swatSkin .mceListBox {direction:ltr}
-.swatSkin .mceListBox, .swatSkin .mceListBox a {display:block}
-.swatSkin .mceListBox .mceText {padding-left:4px; width:70px; text-align:left; border:1px solid #CCC; border-right:0; background:#FFF; font-family:Tahoma,Verdana,Arial,Helvetica; font-size:11px; height:20px; line-height:20px; overflow:hidden}
-.swatSkin .mceListBox .mceOpen {width:9px; height:20px; background:url(../../img/icons.gif) -741px 0; margin-right:2px; border:1px solid #CCC;}
-.swatSkin table.mceListBoxEnabled:hover .mceText, .swatSkin .mceListBoxHover .mceText, .swatSkin .mceListBoxSelected .mceText {border:1px solid #A2ABC0; border-right:0; background:#FFF}
+.swatSkin .mceListBox, .swatSkin .mceListBox a {display:block; padding:1px;}
+.swatSkin .mceListBox .mceText {padding-left:4px; width:70px; text-align:left; border:1px solid #f0eade; border-right:0; background:#FFF; font-family:Tahoma,Verdana,Arial,Helvetica; font-size:11px; height:20px; line-height:20px; overflow:hidden}
+.swatSkin .mceListBox .mceOpen {
+	width:9px;
+	height:20px;
+	background:url(../../img/icons.gif) -741px 0;
+	margin-right:2px;
+	border:1px solid #f0eade;
+	border-radius-topright: 3px;
+	-moz-border-radius-topright: 3px;
+	border-radius-bottomright: 3px;
+	-moz-border-radius-bottomright: 3px;
+}
+.swatSkin table.mceListBoxEnabled:hover .mceText,
+.swatSkin .mceListBoxHover .mceText,
+.swatSkin .mceListBoxSelected .mceText {
+	border:1px solid #A2ABC0;
+	border-right:0;
+	background:#FFF;
+	border-radius-topleft: 3px;
+	-moz-border-radius-topleft: 3px;
+	border-radius-bottomleft: 3px;
+	-moz-border-radius-bottomleft: 3px;
+}
 .swatSkin table.mceListBoxEnabled:hover .mceOpen, .swatSkin .mceListBoxHover .mceOpen, .swatSkin .mceListBoxSelected .mceOpen {background-color:#FFF; border:1px solid #A2ABC0}
 .swatSkin .mceListBoxDisabled a.mceText {color:gray; background-color:transparent;}
 .swatSkin .mceListBoxMenu {overflow:auto; overflow-x:hidden}
@@ -137,6 +188,7 @@
 .swatSkin span.mce_justifycenter {background-position:-420px 0}
 .swatSkin span.mce_justifyfull {background-position:-440px 0}
 .swatSkin span.mce_anchor {background-position:-200px 0}
+.swatSkin span.mce_snippet {background-position:-320px 0}
 .swatSkin span.mce_indent {background-position:-400px 0}
 .swatSkin span.mce_outdent {background-position:-540px 0}
 .swatSkin span.mce_link {background-position:-500px 0}
