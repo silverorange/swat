@@ -218,11 +218,13 @@
 
 	Swat.Dialog.prototype.close = function(confirmed)
 	{
+		var ed = this.editor;
+
 		this.overlay.style.display = 'none';
 		this.container.style.display = 'none';
 
 		// hide select elements in IE6
-		if (tinyMCE.isIE6) {
+		if (tinymce.isIE6) {
 			selectElements = DOM.doc.getElementsByTagName('select');
 			for (var i = 0; i < selectElements.length; i++) {
 				if (typeof selectElements[i].style._visibility != 'undefined') {
@@ -232,11 +234,20 @@
 			}
 		}
 
-		this.editor.focus();
+		// remove editor focus handler
+		var obj = (ed.settings.content_editable) ?
+			ed.getBody() :
+			(!tinymce.isGecko) ?
+				ed.getWin() :
+				ed.getDoc();
+
+		Event.remove(obj, 'focus', this.handleEditorFocus);
+
+		ed.focus();
 
 		// restore selection (for IE6)
 		if (this.selection) {
-			this.editor.selection.moveToBookmark(this.selection);
+			ed.selection.moveToBookmark(this.selection);
 		}
 
 		if (confirmed) {
@@ -252,13 +263,25 @@
 
 	Swat.Dialog.prototype.open = function(data)
 	{
+		var ed = this.editor;
+
 		// save selection (for IE6)
-		this.selection = this.editor.selection.getBookmark();
+		this.selection = ed.selection.getBookmark();
+
+		// set up focus handler to prevent keyboard navigation back to the
+		// editor while this dialog is open
+		var obj = (ed.settings.content_editable) ?
+			ed.getBody() :
+			(!tinymce.isGecko) ?
+				ed.getWin() :
+				ed.getDoc();
+
+		Event.add(obj, 'focus', this.handleEditorFocus, this);
 
 		this.setData(data);
 
 		// show select elements in IE6
-		if (tinyMCE.isIE6) {
+		if (tinymce.isIE6) {
 			selectElements = DOM.doc.getElementsByTagName('select');
 			for (var i = 0; i < selectElements.length; i++) {
 				selectElements[i].style._visibility =
@@ -277,7 +300,7 @@
 
 		// in WebKit, the container element has no width for some reason so
 		// get the width of the table it contains.
-		var el = this.editor.getContainer().firstChild;
+		var el = ed.getContainer().firstChild;
 		var editorRect = _getRect(el);
 
 		var x = editorRect.x + ((editorRect.w  - rect.w) / 2);
@@ -323,6 +346,13 @@
 		if (which == 27) {
 			this.close(false);
 		}
+	}
+
+	Swat.Dialog.prototype.handleEditorFocus = function(e)
+	{
+		// move focus our of iframe for WebKit browsers
+		window.focus();
+		this.focus();
 	}
 
 	// }}}
