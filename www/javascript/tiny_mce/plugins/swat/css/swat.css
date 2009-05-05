@@ -38,27 +38,45 @@
 
 ul.swat-textarea-editor-mode-switcher {
 	list-style: none;
-	border: 1px solid #00f;
 	display: block;
 }
 
 ul.swat-textarea-editor-mode-switcher li {
 	list-style: none;
 	display: block;
+	font-size: 85%;
 }
 
 .swat-textarea-editor-mode-switcher a {
 	display: block;
-	padding: 5px;
+	position: relative;
+	top: -1px;
+	padding: 3px 6px;
 	float: right;
-	border: 1px solid #f00;
-	-moz-border-radius-bottomleft: 8px;
-	-moz-border-radius-bottomright: 8px;
-	-webkit-border-bottom-left-radius: 8px;
-	-webkit-border-bottom-right-radius: 8px;
-	margin-left: 2px;
+	border: 1px solid #dcceb2;
+	border-left-color: #f0eade;
+	-moz-border-radius-bottomleft: 6px;
+	-moz-border-radius-bottomright: 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
+	margin: 0 2px;
+	background: #fff url(../../../../../images/swat-textarea-editor-button.png) top left;
+}
+
+.swat-textarea-editor-mode-switcher a span {
+	color: #8f8162;
 }
 
 .swat-textarea-editor-mode-switcher a.selected {
-	background: #f88;
+	background: #dcceb2;
+	border-top-color: #fff;
+	background: #fff url(../../../../../images/swat-textarea-editor-button.png) bottom left repeat-x;
+	color: #6b5d40;
+	outline: #fff;
+	border-bottom-width: 2px;
+	padding-bottom: 2px;
+}
+
+.swat-textarea-editor-mode-switcher a.selected span {
+	color: #6b5d40;
 }
