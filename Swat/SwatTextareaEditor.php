@@ -187,8 +187,7 @@ class SwatTextareaEditor extends SwatTextarea
 //			'theme_advanced_path'               => false,
 //			'theme_advanced_statusbar_location' => 'bottom',
 			'skin'                              => 'swat',
-			'plugins'                           => 'swat,advimagescale',
-			'advimagescale_noresize_all'        => true,
+			'plugins'                           => 'swat,media',
 		);
 
 		ob_start();
