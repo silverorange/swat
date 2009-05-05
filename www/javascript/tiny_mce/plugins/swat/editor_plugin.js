@@ -181,7 +181,10 @@
 
 	Swat.Dialog = function(ed)
 	{
-		this.editor = ed;
+		this.editor    = ed;
+		this.selection = null;
+		this.frame     = null;
+		this.container = null;
 
 		this.drawOverlay();
 		this.drawDialog();
@@ -200,11 +203,16 @@
 
 	Swat.Dialog.prototype.getData = function()
 	{
-		return {};
+		return {
+			'selection': this.selection
+		};
 	}
 
 	Swat.Dialog.prototype.setData = function(data)
 	{
+		if (data['selection']) {
+			this.selection = data['selection'];
+		}
 	}
 
 	Swat.Dialog.prototype.close = function(confirmed)
@@ -329,11 +337,14 @@
 
 	getData: function()
 	{
-		return { 'link_uri': this.uriEntry.value };
+		var data = Swat.LinkDialog.superclass.getData.call(this);
+		data['link_uri'] = this.uriEntry.value;
+		return data;
 	},
 
 	setData: function(data)
 	{
+		Swat.LinkDialog.superclass.setData.call(this, data);
 		if (data['link_uri']) {
 			this.uriEntry.value = data['link_uri'];
 		}
@@ -457,14 +468,16 @@
 
 	getData: function()
 	{
-		return {
-			'image_src':   this.srcEntry.value,
-			'image_title': this.titleEntry.value
-		};
+		var data = Swat.ImageDialog.superclass.getData.call(this);
+		data['image_src']   = this.srcEntry.value;
+		data['image_title'] = this.titleEntry.value;
+		return data;
 	},
 
 	setData: function(data)
 	{
+		Swat.ImageDialog.superclass.setData.call(this, data);
+
 		if (data['image_src']) {
 			this.srcEntry.value = data['image_src'];
 		}
@@ -622,7 +635,9 @@
 
 	getData: function()
 	{
-		return { 'snippet': this.snippetEntry.value };
+		var data = Swat.SnippetDialog.superclass.getData.call(this);
+		data['snippet'] = this.snippetEntry.value;
+		return data;
 	},
 
 	drawDialog: function()
@@ -720,7 +735,8 @@
 		this.dialogs['link'].onConfirm.add(function(dialog, data)
 		{
 			var uri = data['link_uri'];
-			this.insertLink(uri);
+			var sel = data['selection'];
+			this.insertLink(uri, sel);
 		}, this);
 
 		// dialog close handler for image dialog
@@ -728,14 +744,15 @@
 		{
 			var src   = data['image_src'];
 			var title = data['image_title'];
-//			this.insertSnippet(content);
+//			this.insertImage(content);
 		}, this);
 
 		// dialog close handler for snippet dialog
 		this.dialogs['snippet'].onConfirm.add(function(dialog, data)
 		{
 			var content = data['snippet'];
-			this.insertSnippet(content);
+			var sel     = data['selection'];
+			this.insertSnippet(content, sel);
 		}, this);
 
 		// link button
@@ -751,7 +768,14 @@
 
 			// get existing href
 			var uri = ed.dom.getAttrib(se.getNode(), 'href');
-			var data = { 'link_uri': uri };
+
+			// save selection
+			var sel = ed.selection.getBookmark();
+
+			var data = {
+				'link_uri':  uri,
+				'selection': sel
+			};
 
 			that.dialogs['link'].open(data);
 		});
@@ -760,7 +784,13 @@
 		var that = this;
 		ed.addCommand('mceSwatImage', function()
 		{
-			var data = {};
+			// save selection
+			var sel = ed.selection.getBookmark();
+
+			var data = {
+				'selection': sel
+			};
+
 			that.dialogs['image'].open(data);
 		});
 
@@ -768,7 +798,14 @@
 		var that = this;
 		ed.addCommand('mceSwatSnippet', function()
 		{
-			that.dialogs['snippet'].open();
+			// save selection
+			var sel = ed.selection.getBookmark();
+
+			var data = {
+				'selection': sel
+			};
+
+			that.dialogs['snippet'].open(data);
 		});
 
 		// register link button
@@ -802,40 +839,46 @@
 		});
 	},
 
-	insertLink: function(href)
+	insertLink: function(href, sel)
 	{
-		var e = this.editor.selection.getNode();
 		//checkPrefix(href);
 
-		e = this.editor.dom.getParent(e, 'A');
+		var ed  = this.editor;
+		var dom = ed.dom;
+
+		// restore selection
+		ed.selection.moveToBookmark(sel);
+
+		// get selected link
+		var el = ed.selection.getNode();
+		el = dom.getParent(el, 'A');
 
 		// remove element if there is no href
 		if (!href) {
-			this.editor.execCommand('mceBeginUndoLevel');
-			var i = this.editor.selection.getBookmark();
-			this.editor.dom.remove(e, 1);
-			this.editor.selection.moveToBookmark(i);
-			this.editor.execCommand('mceEndUndoLevel');
+			ed.execCommand('mceBeginUndoLevel');
+			var i = ed.selection.getBookmark();
+			dom.remove(el, true);
+			ed.selection.moveToBookmark(i);
+			ed.execCommand('mceEndUndoLevel');
 			return;
 		}
 
-		this.editor.execCommand('mceBeginUndoLevel');
+		ed.execCommand('mceBeginUndoLevel');
 
 		// create new anchor elements
-		if (e == null) {
+		if (el == null) {
 
-			this.editor.getDoc().execCommand('unlink', false, null);
+			ed.getDoc().execCommand('unlink', false, null);
 
-			this.editor.execCommand(
+			ed.execCommand(
 				'CreateLink',
 				false,
 				'#mce_temp_url#',
 				{ skip_undo: 1 }
 			);
 
-			var dom = this.editor.dom;
 			var elements = tinymce.grep(
-				this.editor.dom.select('a'),
+				dom.select('a'),
 				function (n)
 				{
 					return (dom.getAttrib(n, 'href') == '#mce_temp_url#');
@@ -843,21 +886,21 @@
 			);
 
 			for (var i = 0; i < elements.length; i++) {
-				this.editor.dom.setAttrib(e = elements[i], 'href', href);
+				dom.setAttrib(el = elements[i], 'href', href);
 			}
 
 		} else {
-			this.editor.dom.setAttrib(e, 'href', href);
+			dom.setAttrib(el, 'href', href);
 		}
 
 		// don't move caret if selection was image
-		if (e.childNodes.length != 1 || e.firstChild.nodeName != 'IMG') {
-			this.editor.focus();
-			this.editor.selection.select(e);
-			this.editor.selection.collapse(false);
+		if (el.childNodes.length != 1 || el.firstChild.nodeName != 'IMG') {
+			ed.focus();
+			ed.selection.select(el);
+			ed.selection.collapse(false);
 		}
 
-		this.editor.execCommand('mceEndUndoLevel');
+		ed.execCommand('mceEndUndoLevel');
 	},
 
 	insertImage: function(content)
@@ -867,9 +910,12 @@
 //		this.editor.execCommand('mceEndUndoLevel');
 	},
 
-	insertSnippet: function(content)
+	insertSnippet: function(content, sel)
 	{
 		var ed = this.editor;
+
+		// restore selection
+		ed.selection.moveToBookmark(sel);
 
 		ed.execCommand('mceBeginUndoLevel');
 
