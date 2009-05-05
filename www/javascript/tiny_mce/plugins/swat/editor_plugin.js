@@ -203,16 +203,11 @@
 
 	Swat.Dialog.prototype.getData = function()
 	{
-		return {
-			'selection': this.selection
-		};
+		return {};
 	}
 
 	Swat.Dialog.prototype.setData = function(data)
 	{
-		if (data['selection']) {
-			this.selection = data['selection'];
-		}
 	}
 
 	Swat.Dialog.prototype.close = function(confirmed)
@@ -231,6 +226,13 @@
 			}
 		}
 
+		this.editor.focus();
+
+		// restore selection (for IE6)
+		if (this.selection) {
+			this.editor.selection.moveToBookmark(this.selection);
+		}
+
 		if (confirmed) {
 			this.onConfirm.dispatch(this, this.getData());
 		} else {
@@ -238,13 +240,15 @@
 		}
 
 		this.reset();
-		this.editor.focus();
 
 		Event.remove(DOM.doc, 'keydown', this.handleKeyPress);
 	}
 
 	Swat.Dialog.prototype.open = function(data)
 	{
+		// save selection (for IE6)
+		this.selection = this.editor.selection.getBookmark();
+
 		this.setData(data);
 
 		// show select elements in IE6
@@ -711,6 +715,7 @@
 	});
 
 	// }}}
+	// {{{ tinymce.plugins.SwatPlugin
 
 	// define plugin
 	tinymce.create('tinymce.plugins.SwatPlugin', {
@@ -735,8 +740,7 @@
 		this.dialogs['link'].onConfirm.add(function(dialog, data)
 		{
 			var uri = data['link_uri'];
-			var sel = data['selection'];
-			this.insertLink(uri, sel);
+			this.insertLink(uri);
 		}, this);
 
 		// dialog close handler for image dialog
@@ -751,8 +755,7 @@
 		this.dialogs['snippet'].onConfirm.add(function(dialog, data)
 		{
 			var content = data['snippet'];
-			var sel     = data['selection'];
-			this.insertSnippet(content, sel);
+			this.insertSnippet(content);
 		}, this);
 
 		// link button
@@ -769,14 +772,7 @@
 			// get existing href
 			var uri = ed.dom.getAttrib(se.getNode(), 'href');
 
-			// save selection
-			var sel = ed.selection.getBookmark();
-
-			var data = {
-				'link_uri':  uri,
-				'selection': sel
-			};
-
+			var data = { 'link_uri':  uri };
 			that.dialogs['link'].open(data);
 		});
 
@@ -784,13 +780,7 @@
 		var that = this;
 		ed.addCommand('mceSwatImage', function()
 		{
-			// save selection
-			var sel = ed.selection.getBookmark();
-
-			var data = {
-				'selection': sel
-			};
-
+			var data = {};
 			that.dialogs['image'].open(data);
 		});
 
@@ -798,13 +788,7 @@
 		var that = this;
 		ed.addCommand('mceSwatSnippet', function()
 		{
-			// save selection
-			var sel = ed.selection.getBookmark();
-
-			var data = {
-				'selection': sel
-			};
-
+			var data = {};
 			that.dialogs['snippet'].open(data);
 		});
 
@@ -839,15 +823,12 @@
 		});
 	},
 
-	insertLink: function(href, sel)
+	insertLink: function(href)
 	{
 		//checkPrefix(href);
 
 		var ed  = this.editor;
 		var dom = ed.dom;
-
-		// restore selection
-		ed.selection.moveToBookmark(sel);
 
 		// get selected link
 		var el = ed.selection.getNode();
@@ -910,12 +891,9 @@
 //		this.editor.execCommand('mceEndUndoLevel');
 	},
 
-	insertSnippet: function(content, sel)
+	insertSnippet: function(content)
 	{
 		var ed = this.editor;
-
-		// restore selection
-		ed.selection.moveToBookmark(sel);
 
 		ed.execCommand('mceBeginUndoLevel');
 
@@ -999,5 +977,7 @@
 
 	// register plugin
 	tinymce.PluginManager.add('swat', tinymce.plugins.SwatPlugin);
+
+	// }}}
 
 })();
