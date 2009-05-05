@@ -463,14 +463,14 @@
 	reset: function()
 	{
 		this.srcEntry.value   = '';
-		this.titleEntry.value = '';
+		this.altEntry.value = '';
 	},
 
 	getData: function()
 	{
 		var data = Swat.ImageDialog.superclass.getData.call(this);
-		data['image_src']   = this.srcEntry.value;
-		data['image_title'] = this.titleEntry.value;
+		data['image_src'] = this.srcEntry.value;
+		data['image_alt'] = this.altEntry.value;
 		return data;
 	},
 
@@ -482,8 +482,8 @@
 			this.srcEntry.value = data['image_src'];
 		}
 
-		if (data['image_title']) {
-			this.titleEntry.value = data['image_title'];
+		if (data['image_alt']) {
+			this.altEntry.value = data['image_alt'];
 		}
 	},
 
@@ -531,46 +531,46 @@
 		srcEntryFormField.appendChild(srcEntryLabel);
 		srcEntryFormField.appendChild(srcEntryFormFieldContents);
 
-		var titleEntryId = this.editor.id + '_image_title_entry';
+		var altEntryId = this.editor.id + '_image_alt_entry';
 
-		this.titleEntry = DOM.create(
+		this.altEntry = DOM.create(
 			'input',
-			{ id: titleEntryId, type: 'text' }
+			{ id: altEntryId, type: 'text' }
 		);
-		this.titleEntry.className = 'swat-entry';
+		this.altEntry.className = 'swat-entry';
 
 		// select all on focus
-		Event.add(this.titleEntry, 'focus', function(e)
+		Event.add(this.altEntry, 'focus', function(e)
 		{
 			this.select();
-		}, this.titleEntry);
+		}, this.altEntry);
 
-		var titleEntryLabelSpan = DOM.create('span');
-		titleEntryLabelSpan.className = 'swat-note';
-		titleEntryLabelSpan.appendChild(
+		var altEntryLabelSpan = DOM.create('span');
+		altEntryLabelSpan.className = 'swat-note';
+		altEntryLabelSpan.appendChild(
 			DOM.doc.createTextNode(
 				this.editor.getLang('swat.image_optional')
 			)
 		);
 
-		var titleEntryLabel = DOM.create('label');
-		titleEntryLabel.htmlFor = titleEntryId;
-		titleEntryLabel.appendChild(
+		var altEntryLabel = DOM.create('label');
+		altEntryLabel.htmlFor = altEntryId;
+		altEntryLabel.appendChild(
 			DOM.doc.createTextNode(
-				this.editor.getLang('swat.image_title_field')
+				this.editor.getLang('swat.image_alt_field')
 			)
 		);
-		titleEntryLabel.appendChild(DOM.doc.createTextNode(' '));
-		titleEntryLabel.appendChild(titleEntryLabelSpan);
+		altEntryLabel.appendChild(DOM.doc.createTextNode(' '));
+		altEntryLabel.appendChild(altEntryLabelSpan);
 
-		var titleEntryFormFieldContents = DOM.create('div');
-		titleEntryFormFieldContents.className = 'swat-form-field-contents';
-		titleEntryFormFieldContents.appendChild(this.titleEntry);
+		var altEntryFormFieldContents = DOM.create('div');
+		altEntryFormFieldContents.className = 'swat-form-field-contents';
+		altEntryFormFieldContents.appendChild(this.altEntry);
 
-		var titleEntryFormField = DOM.create('div');
-		titleEntryFormField.className = 'swat-form-field';
-		titleEntryFormField.appendChild(titleEntryLabel);
-		titleEntryFormField.appendChild(titleEntryFormFieldContents);
+		var altEntryFormField = DOM.create('div');
+		altEntryFormField.className = 'swat-form-field';
+		altEntryFormField.appendChild(altEntryLabel);
+		altEntryFormField.appendChild(altEntryFormFieldContents);
 
 		this.insertButton = DOM.create('input', { type: 'button' });
 		this.insertButton.className = 'swat-button swat-primary';
@@ -600,7 +600,7 @@
 		var form = DOM.create('form');
 		form.className = 'swat-form';
 		form.appendChild(srcEntryFormField);
-		form.appendChild(titleEntryFormField);
+		form.appendChild(altEntryFormField);
 		form.appendChild(footerFormField);
 		Event.add(form, 'submit', function(e)
 		{
