@@ -77,7 +77,10 @@
 
 	var _getRect = function(el)
 	{
-		if (typeof YAHOO.util.Dom == 'undefined') {
+		if (   typeof YAHOO == 'undefined'
+			|| typeof YAHOO.util == 'undefined'
+			|| typeof YAHOO.util.Dom == 'undefined'
+		) {
 			var region = DOM.getRect(el);
 		} else {
 			// Use YUI if available for more accurate measurements
@@ -722,13 +725,16 @@
 
 	init: function(ed, url)
 	{
+		// after rendering UI, draw tabs for visual editor
+		ed.onPostRender.add(this.drawSourceEditor, this);
+
 		// load plugin CSS
 		ed.onBeforeRenderUI.add(function()
 		{
 			DOM.loadCSS(url + '/css/swat.css');
 		});
 
-		this.editor  = ed;
+		this.editor = ed;
 
 		this.dialogs = {
 			'link':    new Swat.LinkDialog(ed),
@@ -837,6 +843,8 @@
 		});
 	},
 
+	// {{{ insertLink()
+
 	insertLink: function(href)
 	{
 		//checkPrefix(href);
@@ -898,6 +906,9 @@
 		ed.execCommand('mceEndUndoLevel');
 	},
 
+	// }}}
+	// {{{ insertImage()
+
 	insertImage: function(src, alt)
 	{
 		var ed  = this.editor;
@@ -944,6 +955,9 @@
 
 		ed.execCommand('mceEndUndoLevel');
 	},
+
+	// }}}
+	// {{{ insertSnippet()
 
 	insertSnippet: function(content)
 	{
@@ -1015,6 +1029,16 @@
 		}
 
 		ed.execCommand('mceEndUndoLevel');
+	},
+
+	// }}}
+
+	drawSourceEditor: function(ed)
+	{
+		var ed = this.editor;
+		var div = document.createElement('div');
+		div.appendChild(document.createTextNode('test'));
+		ed.getContainer().parentNode.appendChild(div);
 	},
 
 	getInfo: function()
