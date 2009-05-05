@@ -35,3 +35,30 @@
 .swat-textarea-editor-dialog textarea {
 	width: 98%;
 }
+
+ul.swat-textarea-editor-mode-switcher {
+	list-style: none;
+	border: 1px solid #00f;
+	display: block;
+}
+
+ul.swat-textarea-editor-mode-switcher li {
+	list-style: none;
+	display: block;
+}
+
+.swat-textarea-editor-mode-switcher a {
+	display: block;
+	padding: 5px;
+	float: right;
+	border: 1px solid #f00;
+	-moz-border-radius-bottomleft: 8px;
+	-moz-border-radius-bottomright: 8px;
+	-webkit-border-bottom-left-radius: 8px;
+	-webkit-border-bottom-right-radius: 8px;
+	margin-left: 2px;
+}
+
+.swat-textarea-editor-mode-switcher a.selected {
+	background: #f88;
+}

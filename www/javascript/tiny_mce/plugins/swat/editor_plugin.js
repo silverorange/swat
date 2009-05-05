@@ -179,6 +179,9 @@
 
 	};
 
+	Swat.MODE_VISUAL = 1;
+	Swat.MODE_SOURCE = 2;
+
 	// }}}
 	// {{{ Swat.Dialog
 
@@ -725,6 +728,8 @@
 
 	init: function(ed, url)
 	{
+		this.mode = Swat.MODE_VISUAL;
+
 		// after rendering UI, draw tabs for visual editor
 		ed.onPostRender.add(this.drawSourceEditor, this);
 
@@ -1036,9 +1041,58 @@
 	drawSourceEditor: function(ed)
 	{
 		var ed = this.editor;
-		var div = document.createElement('div');
-		div.appendChild(document.createTextNode('test'));
-		ed.getContainer().parentNode.appendChild(div);
+
+		visualSpan = document.createElement('span');
+		visualSpan.appendChild(
+			document.createTextNode(
+				ed.getLang('swat.mode_visual')
+			)
+		);
+
+		var visualLink = document.createElement('a');
+		visualLink.href = '#';
+		if (this.mode == Swat.MODE_VISUAL) {
+			visualLink.className = 'selected';
+		}
+		visualLink.appendChild(visualSpan);
+
+		var visualListItem = document.createElement('li');
+		visualListItem.appendChild(visualLink);
+
+		sourceSpan = document.createElement('span');
+		sourceSpan.appendChild(
+			document.createTextNode(
+				ed.getLang('swat.mode_source')
+			)
+		);
+
+		var sourceLink = document.createElement('a');
+		sourceLink.href = '#';
+		if (this.mode == Swat.MODE_SOURCE) {
+			sourceLink.className = 'selected';
+		}
+		sourceLink.appendChild(sourceSpan);
+
+		var sourceListItem = document.createElement('li');
+		sourceListItem.appendChild(sourceLink);
+
+		var ul = document.createElement('ul');
+		ul.className = 'swat-textarea-editor-mode-switcher';
+		ul.appendChild(sourceListItem);
+		ul.appendChild(visualListItem);
+
+
+		// get editor width
+		var el = this.editor.getContainer().firstChild;
+		var region = _getRect(el);
+
+		ul.style.width = region.w + 'px';
+
+		var clear = document.createElement('div');
+		clear.style.clear = 'right';
+
+		ed.getContainer().appendChild(ul);
+		ed.getContainer().appendChild(clear);
 	},
 
 	getInfo: function()
