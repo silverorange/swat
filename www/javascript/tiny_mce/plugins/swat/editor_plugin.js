@@ -466,7 +466,7 @@
 
 	reset: function()
 	{
-		this.srcEntry.value   = '';
+		this.srcEntry.value = '';
 		this.altEntry.value = '';
 	},
 
@@ -746,9 +746,9 @@
 		// dialog close handler for image dialog
 		this.dialogs['image'].onConfirm.add(function(dialog, data)
 		{
-			var src   = data['image_src'];
-			var title = data['image_title'];
-//			this.insertImage(content);
+			var src = data['image_src'];
+			var alt = data['image_alt'];
+			this.insertImage(src, alt);
 		}, this);
 
 		// dialog close handler for snippet dialog
@@ -762,15 +762,15 @@
 		var that = this;
 		ed.addCommand('mceSwatLink', function()
 		{
-			var se = ed.selection;
+			var sel = ed.selection;
 
 			// if there is no selection or not on a link, do nothing
-			if (se.isCollapsed() && !ed.dom.getParent(se.getNode(), 'A')) {
+			if (sel.isCollapsed() && !ed.dom.getParent(sel.getNode(), 'A')) {
 				return;
 			}
 
 			// get existing href
-			var uri = ed.dom.getAttrib(se.getNode(), 'href');
+			var uri = ed.dom.getAttrib(sel.getNode(), 'href');
 
 			var data = { 'link_uri':  uri };
 			that.dialogs['link'].open(data);
@@ -780,7 +780,21 @@
 		var that = this;
 		ed.addCommand('mceSwatImage', function()
 		{
-			var data = {};
+			var sel = ed.selection;
+
+			// if an image is selected, get its attributes
+			var el = ed.dom.getParent(sel.getNode(), 'IMG');
+			if (el) {
+				// get existing image data
+				var data = {
+					'image_src': ed.dom.getAttrib(el, 'src'),
+					'image_alt': ed.dom.getAttrib(el, 'alt')
+				};
+			} else {
+				// new image
+				var data = {};
+			}
+
 			that.dialogs['image'].open(data);
 		});
 
@@ -884,11 +898,51 @@
 		ed.execCommand('mceEndUndoLevel');
 	},
 
-	insertImage: function(content)
+	insertImage: function(src, alt)
 	{
-//		this.editor.execCommand('mceBeginUndoLevel');
-//		this.editor.execCommand('mceInsertRawHTML', false, content);
-//		this.editor.execCommand('mceEndUndoLevel');
+		var ed  = this.editor;
+		var dom = ed.dom;
+
+		// get selected image
+		var el = ed.selection.getNode();
+		el = dom.getParent(el, 'IMG');
+
+		ed.execCommand('mceBeginUndoLevel');
+
+		// create new img elements
+		if (el == null) {
+
+			ed.execCommand(
+				'InsertImage',
+				false,
+				'#mce_temp_src#',
+				{ skip_undo: 1 }
+			);
+
+			var elements = tinymce.grep(
+				dom.select('img'),
+				function (n)
+				{
+					return (dom.getAttrib(n, 'src') == '#mce_temp_src#');
+				}
+			);
+
+			for (var i = 0; i < elements.length; i++) {
+				el = elements[i];
+				dom.setAttrib(el, 'src', src);
+				if (alt) {
+					dom.setAttrib(el, 'alt', alt);
+				}
+			}
+
+		} else {
+			dom.setAttrib(el, 'src', src);
+			if (alt) {
+				dom.setAttrib(el, 'alt', alt);
+			}
+		}
+
+		ed.execCommand('mceEndUndoLevel');
 	},
 
 	insertSnippet: function(content)
