@@ -908,7 +908,7 @@
 		}
 
 		// focus and position cursor
-		this.editor.focus();
+		ed.focus();
 		if (cursorNode) {
 			var split = cursorNode.nodeValue.split('#mce_temp_cursor#', 2);
 			if (split[0] == '' && split[1] == '') {
@@ -936,7 +936,7 @@
 			}
 		}
 
-		this.editor.execCommand('mceEndUndoLevel');
+		ed.execCommand('mceEndUndoLevel');
 	},
 
 	getInfo: function()
