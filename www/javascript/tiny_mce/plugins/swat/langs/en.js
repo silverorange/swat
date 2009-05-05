@@ -12,7 +12,7 @@ swat: {
 	image_update: 'Update Image',
 	image_cancel: 'Cancel',
 	image_src_field: 'URI:',
-	image_title_field: 'Title:',
+	image_alt_field: 'Alternate Text:',
 	image_optional: '(optional)',
 
 	snippet_desc: 'Insert HTML Snippet',
