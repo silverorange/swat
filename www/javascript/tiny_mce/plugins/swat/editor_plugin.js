@@ -1095,6 +1095,8 @@
 
 		// get editor width
 		var el = this.editor.getContainer().firstChild;
+		var rect = _getRect(el);
+		ul.style.width = rect.w + 'px';
 
 		// Hack to set width on a 50ms timeout because the table has not yet
 		// been resized to fit the toolbar in older versions of WebKit.
