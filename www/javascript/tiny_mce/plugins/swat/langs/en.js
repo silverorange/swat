@@ -20,6 +20,9 @@ swat: {
 	snippet_cancel: 'Cancel',
 	snippet_field: 'HTML Snippet:',
 
+	mode_visual: 'Visual',
+	mode_source: 'Source',
+
 	is_email: 'The URI you entered seems to be an email address, do you want to add the required mailto: prefix?',
 	is_external: 'The URI you entered seems to external link, do you want to add the required http:// prefix?'
 }
