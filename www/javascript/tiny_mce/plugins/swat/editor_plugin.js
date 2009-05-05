@@ -81,17 +81,17 @@
 			|| typeof YAHOO.util == 'undefined'
 			|| typeof YAHOO.util.Dom == 'undefined'
 		) {
-			var region = DOM.getRect(el);
+			var rect = DOM.getRect(el);
 		} else {
 			// Use YUI if available for more accurate measurements
-			var region = YAHOO.util.Dom.getRegion(el);
-			region.x = region.left;
-			region.y = region.top;
-			region.w = region.right - region.left;
-			region.h = region.bottom - region.top;
+			var rect = YAHOO.util.Dom.getRegion(el);
+			rect.x = rect.left;
+			rect.y = rect.top;
+			rect.w = rect.right - rect.left;
+			rect.h = rect.bottom - rect.top;
 		}
 
-		return region;
+		return rect;
 	};
 
 	var _getDocumentHeight = function()
@@ -273,15 +273,15 @@
 		this.container.style.top     = '-10000px';
 		this.container.style.display = 'block';
 
-		var region = _getRect(this.container);
+		var rect = _getRect(this.container);
 
 		// in WebKit, the container element has no width for some reason so
 		// get the width of the table it contains.
 		var el = this.editor.getContainer().firstChild;
-		var editorRegion = _getRect(el);
+		var editorRect = _getRect(el);
 
-		var x = editorRegion.x + ((editorRegion.w  - region.w) / 2);
-		var y = editorRegion.y + 30;
+		var x = editorRect.x + ((editorRect.w  - rect.w) / 2);
+		var y = editorRect.y + 30;
 
 		this.overlay.style.height = _getDocumentHeight() + 'px';
 		this.overlay.style.display = 'block';
@@ -1084,9 +1084,13 @@
 
 		// get editor width
 		var el = this.editor.getContainer().firstChild;
-		var region = _getRect(el);
 
-		ul.style.width = region.w + 'px';
+		// Hack to set width on a 50ms timeout because the table has not yet
+		// been resized to fit the toolbar in older versions of WebKit.
+		setTimeout(function() {
+			var rect = _getRect(el);
+			ul.style.width = rect.w + 'px';
+		}, 50);
 
 		var clear = document.createElement('div');
 		clear.style.clear = 'right';
