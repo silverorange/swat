@@ -40,23 +40,36 @@
 /* Button */
 .swatSkin .mceButton {
 	display:block;
-	border: 1px solid #e3d7c1;
+	border: 1px solid #dcceb2;
 	border-top-color: #f0eade;
 	border-left-color: #f0eade;
 	width:20px;
 	height:20px;
-	margin-right:1px;
+	margin-right:-1px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
 	padding: 1px;
-	background: #f8f6f0 url(../../../../../../images/swat-textarea-editor-button.png) repeat-x left bottom;
+	position: relative;
+	background: #fff url(../../../../../../images/swat-textarea-editor-button.png) repeat-x left bottom;
+}
+.swatSkin .mceButton span {
+	opacity: 0.8;
+	-ms-filter:'alpha(opacity=80)';
+	filter:alpha(opacity=80)
 }
 .swatSkin a.mceButtonEnabled:hover {
 	border-top-color: #dcceb2;
 	border-left-color: #dcceb2;
 	border-bottom-color: #c3b69e;
 	border-right-color: #c3b69e;
+	background: #fff;
+	z-index: 2;
+}
+.swatSkin a.mceButtonEnabled:hover span {
+	opacity: 1;
+	-ms-filter:'alpha(opacity=100)';
+	filter:alpha(opacity=100)
 }
 .swatSkin a.mceButtonActive,
 .swatSkin a.mceButtonSelected {
@@ -74,6 +87,7 @@
 .swatSkin .mceButtonLabeled span.mceIcon {float:left}
 .swatSkin span.mceButtonLabel {display:block; font-size:10px; padding:4px 6px 0 22px; font-family:Tahoma,Verdana,Arial,Helvetica}
 .swatSkin .mceButtonDisabled .mceButtonLabel {color:#888}
+.swatSkin .mceToolbarEnd { padding-right: 1px; }
 
 /* Separator */
 .swatSkin .mceSeparator {display:block; background: none; width:2px; height:20px; margin:2px 2px 0 2px}
