@@ -728,7 +728,8 @@
 
 	init: function(ed, url)
 	{
-		this.mode = Swat.MODE_VISUAL;
+		this.mode     = Swat.MODE_VISUAL;
+		this.modeLink = [];
 
 		// after rendering UI, draw tabs for visual editor
 		ed.onPostRender.add(this.drawSourceEditor, this);
@@ -1055,6 +1056,11 @@
 			visualLink.className = 'selected';
 		}
 		visualLink.appendChild(visualSpan);
+		Event.add(visualLink, 'click', function(e)
+		{
+			Event.prevent(e);
+			this.setVisualMode();
+		}, this);
 
 		var visualListItem = document.createElement('li');
 		visualListItem.appendChild(visualLink);
@@ -1072,6 +1078,11 @@
 			sourceLink.className = 'selected';
 		}
 		sourceLink.appendChild(sourceSpan);
+		Event.add(sourceLink, 'click', function(e)
+		{
+			Event.prevent(e);
+			this.setSourceMode();
+		}, this);
 
 		var sourceListItem = document.createElement('li');
 		sourceListItem.appendChild(sourceLink);
@@ -1097,6 +1108,56 @@
 
 		ed.getContainer().appendChild(ul);
 		ed.getContainer().appendChild(clear);
+
+		this.modeLink[Swat.MODE_VISUAL] = visualLink;
+		this.modeLink[Swat.MODE_SOURCE] = sourceLink;
+	},
+
+	setVisualMode: function()
+	{
+		if (this.mode == Swat.MODE_VISUAL) {
+			return;
+		}
+
+		DOM.removeClass(
+			this.modeLink[Swat.MODE_SOURCE],
+			'selected'
+		);
+
+		DOM.addClass(
+			this.modeLink[Swat.MODE_VISUAL],
+			'selected'
+		);
+
+		this.mode = Swat.MODE_VISUAL;
+	},
+
+	setSourceMode: function()
+	{
+		if (this.mode == Swat.MODE_SOURCE) {
+			return;
+		}
+
+		DOM.removeClass(
+			this.modeLink[Swat.MODE_VISUAL],
+			'selected'
+		);
+
+		DOM.addClass(
+			this.modeLink[Swat.MODE_SOURCE],
+			'selected'
+		);
+
+		this.mode = Swat.MODE_SOURCE;
+	},
+
+	toggleMode: function()
+	{
+		if (this.mode == Swat.MODE_VISUAL) {
+			this.setSourceMode();
+		} else {
+			this.setVisualMode();
+		}
 	},
 
 	getInfo: function()
