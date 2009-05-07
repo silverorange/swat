@@ -87,7 +87,7 @@
 			var rect = YAHOO.util.Dom.getRegion(el);
 			rect.x = rect.left;
 			rect.y = rect.top;
-			rect.w = rect.right - rect.left;
+			rect.w = rect.right  - rect.left;
 			rect.h = rect.bottom - rect.top;
 		}
 
@@ -770,6 +770,12 @@
 			DOM.loadCSS(url + '/css/swat.css');
 		});
 
+		// load plugin content CSS
+		ed.onPostRender.add(function()
+		{
+			ed.dom.loadCSS(url + '/css/content.css');
+		});
+
 		this.editor = ed;
 
 		this.dialogs = {
@@ -1126,13 +1132,13 @@
 		// get editor width
 		var el = this.editor.getContainer().firstChild;
 		var rect = _getRect(el);
-		ul.style.width = rect.w + 'px';
+		ul.style.width = (rect.w + 2) + 'px';
 
 		// Hack to set width on a 50ms timeout because the table has not yet
 		// been resized to fit the toolbar in older versions of WebKit.
 		setTimeout(function() {
 			var rect = _getRect(el);
-			ul.style.width = rect.w + 'px';
+			ul.style.width = (rect.w + 2) + 'px';
 		}, 50);
 
 		var clear = document.createElement('div');
@@ -1162,6 +1168,39 @@
 		);
 
 		this.mode = Swat.MODE_VISUAL;
+
+		this.editor.setContent(
+			this.contentFromSource(
+				this.editor.getContent()
+			)
+		);
+	},
+
+	contentToSource: function(content)
+	{
+		content = content
+			.replace(/&/g,  '&amp;')
+			.replace(/</g,  '&lt;')
+			.replace(/"/g,  '&quot;')
+			.replace(/\n/g, '</p><p class="swat-textarea-editor-source">');
+
+		content = '<p class="swat-textarea-editor-source">' + content + '</p>';
+
+		return content;
+	},
+
+	contentFromSource: function(content)
+	{
+		content = content
+			.replace(/<\/p>\s*<p class="swat-textarea-editor-source">/g, '\n')
+			.replace(/&quot;/g,                                          '"')
+			.replace(/&lt;/g,                                            '<')
+			.replace(/&gt;/g,                                            '>')
+			.replace(/&amp;/g,                                           '&')
+			.replace(/^<p class="swat-textarea-editor-source">/,         '')
+			.replace(/<\/p>$/,                                           '');
+
+		return content;
 	},
 
 	setSourceMode: function()
@@ -1169,6 +1208,8 @@
 		if (this.mode == Swat.MODE_SOURCE) {
 			return;
 		}
+
+		var ed = this.editor;
 
 		DOM.removeClass(
 			this.modeLink[Swat.MODE_VISUAL],
@@ -1181,6 +1222,72 @@
 		);
 
 		this.mode = Swat.MODE_SOURCE;
+
+		this.editor.setContent(
+			this.contentToSource(
+				this.editor.getContent()
+			)
+		);
+
+		/*
+
+		// get padding of editor content
+		var body = this.editor.getBody();
+		var style = (tinymce.isIE) ?
+			body.currentStyle :
+			getComputedStyle(body, null);
+
+		// Gecko doesn't compute the correct style for iframe content so it
+		// is hardcoded
+		var padding = (tinymce.isGecko) ?
+			8 :
+			parseInt(style.marginLeft, 10);
+
+		var rect = DOM.getRect(this.editor.getContainer().firstChild);
+		var container = this.editor.getContainer().firstChild;
+		container.style.margin = '0';
+		container.style.padding = '0';
+
+		var el = this.editor.getElement();
+		el.style.overflow = 'visible';
+		el.value = this.editor.getContent();
+		el.style.position = 'absolute';
+		el.style.zIndex = '3';
+		el.style.borderStyle = 'none';
+		el.style.borderWidth = '0'; // For IE
+		el.style.resize = 'none'; // For WebKit
+		el.style.outline = 'none'; // For WebKit
+
+		// For Gecko, don't apply full padding because it makes the scrollbar
+		// look funny. Instead, hardcode padding at 1px.
+		if (tinymce.isGecko) {
+			el.style.padding = '1px';
+		} else {
+			el.style.padding = padding + 'px';
+		}
+
+		// Position textarea. Numeric offsets are to inset inside existing
+		// editor borders. For Gecko, numeric offsets are including hardcoded
+		// padding values.
+
+		var w = (tinymce.isGecko) ?
+			(rect.w - 4) :
+			(rect.w - (padding * 2) - 2);
+
+		var h = (tinymce.isGecko) ?
+			(rect.h - 4) :
+			(rect.h - (padding * 2) - 2);
+
+		h += 7;
+
+		el.style.width  = w + 'px';
+		el.style.height = h + 'px';
+		el.style.top = (rect.y + 1) + 'px';
+		el.style.left= (rect.x + 1) + 'px';
+
+		// display textarea
+		el.style.display = 'block';
+		*/
 	},
 
 	toggleMode: function()
