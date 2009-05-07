@@ -66,7 +66,7 @@ class SwatTextareaEditor extends SwatTextarea
 		$this->rows = 30;
 
 		$this->addJavaScript(
-			'packages/swat/javascript/tiny_mce/tiny_mce.js',
+			'packages/swat/javascript/tiny_mce/tiny_mce_src.js',
 			Swat::PACKAGE_ID);
 	}
 
@@ -162,6 +162,7 @@ class SwatTextareaEditor extends SwatTextarea
 		$formats = array(
 			'p',
 			'blockquote',
+			'pre',
 			'h1',
 			'h2',
 			'h3',
