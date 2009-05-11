@@ -1204,57 +1204,6 @@
 		ed.selection.collapse(true);
 	},
 
-	contentToSource: function(content)
-	{
-		// encode XML entities
-		content = content
-			.replace(/&/g, '&amp;')
-			.replace(/</g, '&lt;')
-			.replace(/"/g, '&quot;')
-
-		// convert newlines to paragraphs
-		content = content.replace(
-			/\n/g,
-			'</p><p class="swat-textarea-editor-source">'
-		);
-
-		// wrap in paragraph tags
-		content = '<p class="swat-textarea-editor-source">' + content + '</p>';
-
-		return content;
-	},
-
-	contentFromSource: function(content)
-	{
-		// remove leading and trailing paragraph tags
-		content = content.replace(
-			/^<p class="swat-textarea-editor-source">/,
-			''
-		);
-		content = content.replace(/<\/p>$/, '');
-
-		// remove extra nbsps inside empty paragraphs
-		content = content.replace(
-			/(<p class="swat-textarea-editor-source">)&nbsp;(<\/p>)/g,
-			'<p class="swat-textarea-editor-source"></p>'
-		);
-
-		// convert paragraphs back to newlines
-		content = content.replace(
-			/<\/p>[ \t\r\n]*<p class="swat-textarea-editor-source">/g,
-			'\n'
-		);
-
-		// decode XML entities
-		content = content
-			.replace(/&quot;/g, '"')
-			.replace(/&lt;/g,   '<')
-			.replace(/&gt;/g,   '>')
-			.replace(/&amp;/g,  '&');
-
-		return content;
-	},
-
 	setSourceMode: function()
 	{
 		if (this.mode == Swat.MODE_SOURCE) {
@@ -1366,6 +1315,57 @@
 		} else {
 			this.setVisualMode();
 		}
+	},
+
+	contentToSource: function(content)
+	{
+		// encode XML entities
+		content = content
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/"/g, '&quot;')
+
+		// convert newlines to paragraphs
+		content = content.replace(
+			/\n/g,
+			'</p><p class="swat-textarea-editor-source">'
+		);
+
+		// wrap in paragraph tags
+		content = '<p class="swat-textarea-editor-source">' + content + '</p>';
+
+		return content;
+	},
+
+	contentFromSource: function(content)
+	{
+		// remove leading and trailing paragraph tags
+		content = content.replace(
+			/^<p class="swat-textarea-editor-source">/,
+			''
+		);
+		content = content.replace(/<\/p>$/, '');
+
+		// remove extra nbsps inside empty paragraphs
+		content = content.replace(
+			/(<p class="swat-textarea-editor-source">)&nbsp;(<\/p>)/g,
+			'<p class="swat-textarea-editor-source"></p>'
+		);
+
+		// convert paragraphs back to newlines
+		content = content.replace(
+			/<\/p>[ \t\r\n]*<p class="swat-textarea-editor-source">/g,
+			'\n'
+		);
+
+		// decode XML entities
+		content = content
+			.replace(/&quot;/g, '"')
+			.replace(/&lt;/g,   '<')
+			.replace(/&gt;/g,   '>')
+			.replace(/&amp;/g,  '&');
+
+		return content;
 	},
 
 	getInfo: function()
