@@ -361,13 +361,12 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		if ($all_empty) {
 			if ($this->required && $this->isSensitive()) {
 				$message = Swat::_('The %s field is required.');
-				$this->addMessage(new SwatMessage($message,
-					SwatMessage::ERROR));
+				$this->addMessage(new SwatMessage($message, 'error'));
 			}
 			$this->value = null;
 		} elseif ($any_empty) {
 			$message = Swat::_('The %s field is not a valid time.');
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, 'error'));
 			$this->value = null;
 		} else {
 			try {
@@ -388,9 +387,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 				$this->validateRanges();
 			} catch (SwatException $e) {
 				$message = Swat::_('The %s field is not a valid time.');
-				$this->addMessage(new SwatMessage($message,
-					SwatMessage::ERROR));
-
+				$this->addMessage(new SwatMessage($message, 'error'));
 				$this->value = null;
 			}
 		}
@@ -518,14 +515,14 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 				'It must be on or after %s.'),
 				$this->getFormattedTime($this->valid_range_start));
 
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, 'error'));
 
 		} elseif (!$this->isEndTimeValid()) {
 			$message = sprintf(Swat::_('The time you have entered is invalid. '.
 				'It must be on or before %s.'),
 				$this->getFormattedTime($this->valid_range_end));
 
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, 'error'));
 		}
 	}
 

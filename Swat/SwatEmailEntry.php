@@ -57,7 +57,7 @@ class SwatEmailEntry extends SwatEntry
 			$message = Swat::_('The email address you have entered is not '.
 				'properly formatted.');
 
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, 'error'));
 		}
 	}
 

@@ -149,7 +149,7 @@ class SwatListEntry extends SwatEntry
 				Swat::_('The %%s field cannot have more than %s entries.'),
 				$locale->formatNumber($this->max_entries));
 
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, 'error'));
 
 		} elseif ($this->required &&
 			count($this->values) < $this->min_entries) {
@@ -160,7 +160,7 @@ class SwatListEntry extends SwatEntry
 				$this->min_entries),
 				$locale->formatNumber($this->min_entries));
 
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, 'error'));
 		}
 
 		// validate individual values
@@ -204,8 +204,7 @@ class SwatListEntry extends SwatEntry
 				implode(', ', $min_length_error_values),
 				$locale->formatNumber(count($min_length_error_values)));
 
-			$this->addMessage(new SwatMessage($min_length_msg,
-				SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($min_length_msg, 'error'));
 		}
 
 		if ($max_length_msg !== null) {
@@ -216,8 +215,7 @@ class SwatListEntry extends SwatEntry
 				implode(', ', $max_length_error_values),
 				$locale->formatNumber(count($max_length_error_values)));
 
-			$this->addMessage(new SwatMessage($max_length_msg,
-				SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($max_length_msg, 'error'));
 		}
 	}
 

@@ -134,10 +134,10 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 			return;
 		} elseif ($this->value === null) {
 			$message = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, 'error'));
 		} elseif (!in_array($this->value, $tz_data)) {
 			$message = Swat::_('The %s field is an invalid time-zone.');
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, 'error'));
 		}
 	}
 

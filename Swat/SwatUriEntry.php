@@ -41,7 +41,7 @@ class SwatUriEntry extends SwatEntry
 			$message = Swat::_('The URI you have entered is not '.
 				'properly formatted.');
 
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, 'error'));
 		}
 	}
 

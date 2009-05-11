@@ -123,14 +123,14 @@ abstract class SwatNumericEntry extends SwatEntry
 		case 'below-minimum':
 			$message = new SwatMessage(
 				Swat::_('The %%s field must not be less than %s.'),
-				SwatMessage::ERROR);
+				'error');
 
 			break;
 
 		case 'above-maximum':
 			$message = new SwatMessage(
 				Swat::_('The %%s field must not be more than %s.'),
-				SwatMessage::ERROR);
+				'error');
 
 			break;
 

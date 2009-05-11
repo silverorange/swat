@@ -146,7 +146,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 
 		} elseif ($this->value === null) {
 			$message = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($message, SwatMessage::ERROR));
+			$this->addMessage(new SwatMessage($message, 'error'));
 		}
 	}
 

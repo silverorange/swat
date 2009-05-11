@@ -414,7 +414,7 @@ class SwatFileEntry extends SwatInputControl
 			break;
 		}
 
-		$message = new SwatMessage($text, SwatMessage::ERROR);
+		$message = new SwatMessage($text, 'error');
 		return $message;
 	}
 

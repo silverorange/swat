@@ -99,8 +99,7 @@ class SwatFloatEntry extends SwatNumericEntry
 		switch ($id) {
 		case 'float':
 			$message = new SwatMessage(
-				Swat::_('The %s field must be a number.'),
-				SwatMessage::ERROR);
+				Swat::_('The %s field must be a number.'), 'error');
 
 			break;
 

@@ -260,8 +260,8 @@ class SwatMessageDisplay extends SwatControl
 	protected function getDismissableMessageTypes()
 	{
 		return array(
-			SwatMessage::NOTIFICATION,
-			SwatMessage::WARNING,
+			'notice',
+			'warning',
 		);
 	}
 

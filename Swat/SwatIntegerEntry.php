@@ -112,27 +112,23 @@ class SwatIntegerEntry extends SwatNumericEntry
 		case 'integer':
 			if ($this->minimum_value < 0) {
 				$message = new SwatMessage(
-					Swat::_('The %s field must be an integer.'),
-					SwatMessage::ERROR);
+					Swat::_('The %s field must be an integer.'), 'error');
 			} else {
 				$message = new SwatMessage(
-					Swat::_('The %s field must be a whole number.'),
-					SwatMessage::ERROR);
+					Swat::_('The %s field must be a whole number.'), 'error');
 			}
 
 			break;
 
 		case 'integer-maximum':
 			$message = new SwatMessage(
-				Swat::_('The %s field is too big.'),
-				SwatMessage::ERROR);
+				Swat::_('The %s field is too big.'), 'error');
 
 			break;
 
 		case 'integer-minimum':
 			$message = new SwatMessage(
-				Swat::_('The %s field is too small.'),
-				SwatMessage::ERROR);
+				Swat::_('The %s field is too small.'), 'error');
 
 			break;
 
