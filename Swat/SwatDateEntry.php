@@ -298,11 +298,13 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 				if ($this->required_parts & self::YEAR) {
 					$any_empty = true;
 				} else {
-					$year = 0;
+					$year = date('Y');
 				}
 			} else {
 				$all_empty = false;
 			}
+		} else {
+			$year = date('Y');
 		}
 
 		if ($this->display_parts & self::MONTH) {
