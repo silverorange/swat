@@ -1176,13 +1176,32 @@
 			'selected'
 		);
 
+		var ed = this.editor;
+
 		this.mode = Swat.MODE_VISUAL;
 
-		this.editor.setContent(
+		// enable toolbar, do this before set content so note update
+		// dispatcher updates toolbar state appropriately
+		var cm = ed.controlManager;
+		for (var id in cm.controls) {
+			if (   id != ed.id + '_undo'
+				&& id != ed.id + '_redo'
+			) {
+				cm.setDisabled(id, false);
+			}
+		}
+
+		ed.setContent(
 			this.contentFromSource(
-				this.editor.getContent()
+				ed.getContent()
 			)
 		);
+
+		ed.focus();
+
+		// move cursor to start (for IE)
+		ed.selection.select(ed.getBody().firstChild);
+		ed.selection.collapse(true);
 	},
 
 	contentToSource: function(content)
@@ -1258,20 +1277,26 @@
 
 
 		// disable toolbar
-		var cm = this.editor.controlManager;
+		var cm = ed.controlManager;
 		for (var id in cm.controls) {
-			if (   id != this.editor.id + '_undo'
-				&& id != this.editor.id + '_redo'
+			if (   id != ed.id + '_undo'
+				&& id != ed.id + '_redo'
 			) {
 				cm.setDisabled(id, true);
 			}
 		}
 
-		this.editor.setContent(
+		ed.setContent(
 			this.contentToSource(
-				this.editor.getContent()
+				ed.getContent()
 			)
 		);
+
+		ed.focus();
+
+		// move cursor to start (for IE)
+		ed.selection.select(ed.getBody().firstChild);
+		ed.selection.collapse(true);
 
 		/*
 
