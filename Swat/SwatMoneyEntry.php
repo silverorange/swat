@@ -145,7 +145,7 @@ class SwatMoneyEntry extends SwatFloatEntry
 						'The %%s field has too many decimal places. There '.
 						'can be at most %s decimal places.',
 						$max_decimal_places), $max_decimal_places_formatted),
-						SwatMessage::ERROR);
+						'error');
 				}
 			}
 
@@ -215,20 +215,20 @@ class SwatMoneyEntry extends SwatFloatEntry
 				'formatted for %s (i.e. %s).'),
 				str_replace('%', '%%', $currency),
 				str_replace('%', '%%', $example)),
-				SwatMessage::ERROR);
+				'error');
 
 			break;
 		case 'currency-decimal-places':
 			$message = new SwatMessage(Swat::_(
 				'The %%s field has too many decimal places. The '.
 				'currency %s only allows %s.'),
-				SwatMessage::ERROR);
+				'error');
 
 			break;
 		case 'no-decimal-places':
 			$message = new SwatMessage(
 				Swat::_('The %s field must not have any decimal places.'),
-				SwatMessage::ERROR);
+				'error');
 
 			break;
 		default:

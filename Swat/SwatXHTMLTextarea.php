@@ -181,7 +181,7 @@ XHTML;
 
 		$content = Swat::_('%s must be valid XHTML markup: ');
 		$content.= '<ul><li>'.implode(',</li><li>', $errors).'.</li></ul>';
-		$message = new SwatMessage($content, SwatMessage::ERROR);
+		$message = new SwatMessage($content, 'error');
 		$message->content_type = 'text/xml';
 
 		return $message;
