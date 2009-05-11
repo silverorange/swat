@@ -14,7 +14,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A date entry widget
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2004-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDateEntry extends SwatInputControl implements SwatState
@@ -795,26 +795,32 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 * @return string a date formatted according to the properties of this date
 	 *                 entry.
 	 */
-	private function getFormattedDate($date)
+	private function getFormattedDate(Date $date)
 	{
-		$time  = '';
-		$day   = '';
-		$month = '';
-		$year  = '';
+		// note: the display of the date is not locale specific as this
+		// is quite difficult without a good i18n/l10n library
 
-		if ($this->display_parts & self::TIME)
-			$time = ' %I:%M %p';
+		$format = '';
 
-		if ($this->display_parts & self::DAY)
-			$day = ' %d';
+		if ($this->display_parts & self::MONTH) {
+			$format.= ' %B';
+		}
 
-		if ($this->display_parts & self::MONTH)
-			$month = ' %B';
+		if ($this->display_parts & self::DAY) {
+			$format.= ' %e,';
+		}
 
-		if ($this->display_parts & self::YEAR)
-			$year = ' %Y';
+		if ($this->display_parts & self::YEAR) {
+			$format.= ' %Y';
+		}
 
-		return trim($date->format($month.$day.$year.$time));
+		if ($this->display_parts & self::TIME) {
+			$format.= ' %I:%M %p';
+		}
+
+		$format = trim($format, ', ');
+
+		return $date->format($format);
 	}
 
 	// }}}
