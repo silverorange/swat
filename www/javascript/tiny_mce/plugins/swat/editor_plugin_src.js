@@ -879,9 +879,18 @@
 		});
 
 		// register enable/disable event handler for link button
-		ed.onNodeChange.add(function(ed, cm, n, co) {
-			cm.setDisabled('link', co && n.nodeName != 'A');
-			cm.setActive('link', n.nodeName == 'A' && !n.name);
+		var t = this;
+		ed.onInit.add(function() {
+			ed.onNodeChange.add(function(ed, cm, n, co) {
+				cm.setDisabled(
+					'link',
+					(co && n.nodeName != 'A') || t.mode == Swat.MODE_SOURCE
+				);
+				cm.setActive(
+					'link',
+					n.nodeName == 'A' && !n.name && t.mode != Swat.MODE_SOURCE
+				);
+			});
 		});
 	},
 
@@ -1246,6 +1255,17 @@
 		);
 
 		this.mode = Swat.MODE_SOURCE;
+
+
+		// disable toolbar
+		var cm = this.editor.controlManager;
+		for (var id in cm.controls) {
+			if (   id != this.editor.id + '_undo'
+				&& id != this.editor.id + '_redo'
+			) {
+				cm.setDisabled(id, true);
+			}
+		}
 
 		this.editor.setContent(
 			this.contentToSource(
