@@ -761,11 +761,8 @@
 		this.editor = ed;
 
 		// after rendering UI, draw tabs for visual editor
-		ed.onPostRender.add(function()
-		{
-			this.drawModeSwitcher();
-			this.initMode();
-		}, this);
+		ed.onPostRender.add(this.drawModeSwitcher, this);
+		ed.onLoadContent.add(this.initMode, this);
 
 		// double up linebreaks around blocklevel elements
 		ed.onGetContent.add(function(ed, o)
@@ -1215,7 +1212,6 @@
 			if (ed.getContent().match(/id="#mce_source_mode"/)) {
 				this.setSourceMode();
 			} else {
-				alert('source');
 				this.setSourceMode(true);
 			}
 		} else {
@@ -1230,15 +1226,17 @@
 			return;
 		}
 
-		DOM.removeClass(
-			this.modeLink[Swat.MODE_SOURCE],
-			'selected'
-		);
+		if (this.modeLink) {
+			DOM.removeClass(
+				this.modeLink[Swat.MODE_SOURCE],
+				'selected'
+			);
 
-		DOM.addClass(
-			this.modeLink[Swat.MODE_VISUAL],
-			'selected'
-		);
+			DOM.addClass(
+				this.modeLink[Swat.MODE_VISUAL],
+				'selected'
+			);
+		}
 
 		var ed = this.editor;
 
@@ -1282,15 +1280,17 @@
 
 		var ed = this.editor;
 
-		DOM.removeClass(
-			this.modeLink[Swat.MODE_VISUAL],
-			'selected'
-		);
+		if (this.modeLink) {
+			DOM.removeClass(
+				this.modeLink[Swat.MODE_VISUAL],
+				'selected'
+			);
 
-		DOM.addClass(
-			this.modeLink[Swat.MODE_SOURCE],
-			'selected'
-		);
+			DOM.addClass(
+				this.modeLink[Swat.MODE_SOURCE],
+				'selected'
+			);
+		}
 
 		// disable toolbar
 		var cm = ed.controlManager;
