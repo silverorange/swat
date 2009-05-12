@@ -1433,6 +1433,10 @@
 		var el = ed.getBody();
 		var node = (tinymce.isIE) ? findChild(el, 1) : findChild(el, 3);
 
+		if (node === null) {
+			node = el.firstChild;
+		}
+
 		ed.selection.select(node);
 		ed.selection.collapse(1);
 	}
