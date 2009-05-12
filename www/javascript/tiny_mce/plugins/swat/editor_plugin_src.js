@@ -1263,11 +1263,8 @@
 
 			ed.focus();
 
-			var el = (tinymce.isGecko) ? ed.getBody().firstChild.firstChild :
-				ed.getBody().firstChild;
-
-			ed.selection.select(el);
-			ed.selection.collapse(true);
+			// move cursor to start (for IE and Firefox)
+			this.selectFirstTextNode();
 		}
 
 		this.mode = Swat.MODE_VISUAL;
@@ -1316,11 +1313,7 @@
 			ed.focus();
 
 			// move cursor to start (for IE and Firefox)
-			var el = (tinymce.isGecko) ? ed.getBody().firstChild.firstChild :
-				ed.getBody().firstChild;
-
-			ed.selection.select(el);
-			ed.selection.collapse(true);
+			this.selectFirstTextNode();
 		}
 
 		this.mode = Swat.MODE_SOURCE;
@@ -1407,6 +1400,41 @@
 			authorurl: 'http://www.silverorange.com/',
 			version:   '1.0'
 		};
+	},
+
+	selectFirstTextNode: function()
+	{
+		var ed = this.editor;
+
+		var findChild = function(el, type)
+		{
+			var node = null;
+
+			for (var i = 0; i < el.childNodes.length; i++) {
+				if (el.childNodes[i].nodeType == type) {
+					// only select non-empty text nodes
+					if (   type != 3
+						|| !el.childNodes[i].nodeValue.match(/^[\r\n\t ]*$/)
+					) {
+						node = el.childNodes[i];
+						break;
+					}
+				} else if (el.childNodes[i].nodeType == 1) {
+					node = findChild(el.childNodes[i], type);
+					if (node !== null) {
+						break;
+					}
+				}
+			}
+
+			return node;
+		};
+
+		var el = ed.getBody();
+		var node = (tinymce.isIE) ? findChild(el, 1) : findChild(el, 3);
+
+		ed.selection.select(node);
+		ed.selection.collapse(1);
 	}
 
 	});
