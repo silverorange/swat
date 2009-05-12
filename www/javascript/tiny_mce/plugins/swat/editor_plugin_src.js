@@ -1217,8 +1217,10 @@
 
 			ed.focus();
 
-			// move cursor to start (for IE and Firefox)
-			ed.selection.select(ed.getBody().firstChild.firstChild);
+			var el = (tinymce.isGecko) ? ed.getBody().firstChild.firstChild :
+				ed.getBody().firstChild;
+
+			ed.selection.select(el);
 			ed.selection.collapse(true);
 		}
 
@@ -1264,7 +1266,10 @@
 			ed.focus();
 
 			// move cursor to start (for IE and Firefox)
-			ed.selection.select(ed.getBody().firstChild.firstChild);
+			var el = (tinymce.isGecko) ? ed.getBody().firstChild.firstChild :
+				ed.getBody().firstChild;
+
+			ed.selection.select(el);
 			ed.selection.collapse(true);
 		}
 
