@@ -767,6 +767,30 @@
 			this.initMode();
 		}, this);
 
+		// double up linebreaks around blocklevel elements
+		ed.onGetContent.add(function(ed, o)
+		{
+			if (this.mode != Swat.MODE_SOURCE) {
+				var block = '(?:p|pre|dl|div|blockquote|form|h[1-6]|table'
+					+ '|fieldset|address|ul|ol)';
+
+				// match one or mode ending block-level tags, optionally
+				// separated by whitespace
+				var exp = new RegExp(
+					  '('
+					+ '<\/'+ block + '[^<>]*?>'
+					+ '(?:[\n\r\t ]<\/' + block + '[^<>]*?>)*'
+					+ ')[\n\r\t ]*',
+					'g'
+				);
+
+				o.content = o.content.replace(exp, '$1\n\n');
+
+				// trim trailing whitespace
+				o.content = o.content.replace(/[\r\n\t ]*$/, '');
+			}
+		}, this);
+
 		// load plugin CSS
 		ed.onBeforeRenderUI.add(function()
 		{
@@ -1188,7 +1212,12 @@
 		// initialize mode from form data
 		var modeStateEl = document.getElementById(ed.id + '_mode');
 		if (modeStateEl && modeStateEl.value == Swat.MODE_SOURCE) {
-			this.setSourceMode();
+			if (ed.getContent().match(/id="#mce_source_mode"/)) {
+				this.setSourceMode();
+			} else {
+				alert('source');
+				this.setSourceMode(true);
+			}
 		} else {
 			this.setVisualMode();
 		}
@@ -1337,7 +1366,7 @@
 	{
 		// remove source mode tag
 		content = content.replace(
-			/\s*id="#mce_source_mode"/,
+			/[\r\n\t ]*id="#mce_source_mode"/,
 			''
 		);
 
