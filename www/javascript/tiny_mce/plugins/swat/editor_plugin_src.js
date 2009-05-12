@@ -1217,8 +1217,8 @@
 
 			ed.focus();
 
-			// move cursor to start (for IE)
-			ed.selection.select(ed.getBody().firstChild);
+			// move cursor to start (for IE and Firefox)
+			ed.selection.select(ed.getBody().firstChild.firstChild);
 			ed.selection.collapse(true);
 		}
 
@@ -1263,8 +1263,8 @@
 
 			ed.focus();
 
-			// move cursor to start (for IE)
-			ed.selection.select(ed.getBody().firstChild);
+			// move cursor to start (for IE and Firefox)
+			ed.selection.select(ed.getBody().firstChild.firstChild);
 			ed.selection.collapse(true);
 		}
 
