@@ -18,21 +18,24 @@ require_once 'Swat/SwatYUI.php';
  */
 class SwatTextareaEditor extends SwatTextarea
 {
+	const MODE_VISUAL = 1;
+	const MODE_SOURCE = 2;
+
 	// {{{ public properties
 
 	/**
-	 * Width
+	 * Width of the editor
 	 *
-	 * Width of the editor. In percent, pixels, or ems.
+	 * Specified in CSS units (percent, pixels, ems, etc).
 	 *
 	 * @var string
 	 */
 	public $width = '100%';
 
 	/**
-	 * Height
+	 * Height of the editor
 	 *
-	 * Height of the editor. In percent, pixels, or ems.
+	 * Specified in CSS units (percent, pixels, ems, etc).
 	 *
 	 * @var string
 	 */
@@ -47,6 +50,18 @@ class SwatTextareaEditor extends SwatTextarea
 	 * @var string
 	 */
 	public $basehref = null;
+
+	/**
+	 * Editing mode to use
+	 *
+	 * Must be one of either {@link SwatTextareaEditor::MODE_VISUAL} or
+	 * {@link SwatTextareaEditor::MODE_SOURCE}.
+	 *
+	 * Defaults to <kbd>SwatTextareaEditor::MODE_VISUAL</kbd>.
+	 *
+	 * @var integer
+	 */
+	public $mode = self::MODE_VISUAL;
 
 	// }}}
 	// {{{ public function __construct()
@@ -88,7 +103,7 @@ class SwatTextareaEditor extends SwatTextarea
 		$value = htmlspecialchars($value);
 
 		$div_tag = new SwatHtmlTag('div');
-		$div_tag->class = 'swat-textarea-container yui-skin-sam';
+		$div_tag->class = 'swat-textarea-container';
 		$div_tag->open();
 
 		$textarea_tag = new SwatHtmlTag('textarea');
@@ -106,6 +121,13 @@ class SwatTextareaEditor extends SwatTextarea
 			$textarea_tag->disabled = 'disabled';
 
 		$textarea_tag->display();
+
+		// hidden field to preserve editing mode in form data
+		$input_tag = new SwatHtmlTag('input');
+		$input_tag->type = 'hidden';
+		$input_tag->id = $this->id.'_mode';
+		$input_tag->value = $this->mode;
+		$input_tag->display();
 
 		$div_tag->close();
 

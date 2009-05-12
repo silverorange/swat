@@ -758,11 +758,14 @@
 
 	init: function(ed, url)
 	{
-		this.mode     = Swat.MODE_VISUAL;
-		this.modeLink = [];
+		this.editor = ed;
 
 		// after rendering UI, draw tabs for visual editor
-		ed.onPostRender.add(this.drawSourceEditor, this);
+		ed.onPostRender.add(function()
+		{
+			this.drawModeSwitcher();
+			this.initMode();
+		}, this);
 
 		// load plugin CSS
 		ed.onBeforeRenderUI.add(function()
@@ -775,8 +778,6 @@
 		{
 			ed.dom.loadCSS(url + '/css/content.css');
 		});
-
-		this.editor = ed;
 
 		this.dialogs = {
 			'link':    new Swat.LinkDialog(ed),
@@ -1102,9 +1103,11 @@
 
 	// }}}
 
-	drawSourceEditor: function(ed)
+	drawModeSwitcher: function(ed)
 	{
 		var ed = this.editor;
+
+		this.modeLink = [];
 
 		visualSpan = document.createElement('span');
 		visualSpan.appendChild(
@@ -1115,7 +1118,7 @@
 
 		var visualLink = document.createElement('a');
 		visualLink.href = '#';
-		if (this.mode == Swat.MODE_VISUAL) {
+		if (this.mode != Swat.MODE_SOURCE) {
 			visualLink.className = 'selected';
 		}
 		visualLink.appendChild(visualSpan);
@@ -1178,6 +1181,20 @@
 		this.modeLink[Swat.MODE_SOURCE] = sourceLink;
 	},
 
+	initMode: function()
+	{
+		var ed = this.editor;
+
+		// initialize mode from form data
+		var modeStateEl = document.getElementById(ed.id + '_mode');
+		if (modeStateEl && modeStateEl.value == Swat.MODE_SOURCE) {
+			this.setSourceMode();
+		} else {
+			this.setVisualMode();
+		}
+
+	},
+
 	setVisualMode: function(updateContent)
 	{
 		if (this.mode == Swat.MODE_VISUAL) {
@@ -1225,6 +1242,10 @@
 		}
 
 		this.mode = Swat.MODE_VISUAL;
+		var modeStateEl = document.getElementById(ed.id + '_mode');
+		if (modeStateEl) {
+			modeStateEl.value = this.mode;
+		}
 	},
 
 	setSourceMode: function(updateContent)
@@ -1274,6 +1295,10 @@
 		}
 
 		this.mode = Swat.MODE_SOURCE;
+		var modeStateEl = document.getElementById(ed.id + '_mode');
+		if (modeStateEl) {
+			modeStateEl.value = this.mode;
+		}
 	},
 
 	toggleMode: function()
