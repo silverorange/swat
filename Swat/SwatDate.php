@@ -232,6 +232,50 @@ class SwatDate extends Date
 	}
 
 	// }}}
+	// {{{ public function getHumanReadableDateDiff()
+
+	/**
+	 * Get a human-readable string representing the difference between
+	 * two dates
+	 *
+	 * This method formats the date diff as the difference of seconds,
+	 * minutes, hours, or days between two dates. The closest major date
+	 * part will be used for the return value. For example, a difference of
+	 * 50 seconds returns "50 seconds" while a difference of 90 seconds
+	 * returns "1 minute".
+	 *
+	 * @param Date $compare_date Optional date to compare to. If null, the
+	 *                           the current date/time will be used.
+	 *
+	 * @return string A human-readable date diff
+	 */
+	public function getHumanReadableDateDiff(Date $compare_date = null)
+	{
+		if ($compare_date === null) {
+			$compare_date = new SwatDate();
+		}
+
+		$compare_ts = $compare_date->getTime();
+		$ts = $this->getTime();
+
+		if (($compare_ts - 60) < $ts) {
+			$count = $compare_ts - $ts;
+			$date_part = Swat::ngettext('second', 'seconds', $count);
+		} elseif (($compare_ts - 3600) < $ts) {
+			$count = (int) (($compare_ts - $ts) / 60);
+			$date_part = Swat::ngettext('minute', 'minutes', $count);
+		} elseif (($compare_ts - 86400) < $ts) {
+			$count = (int) (($compare_ts - $ts) / 3600);
+			$date_part = Swat::ngettext('hour', 'hours', $count);
+		} elseif (($compare_ts - 2073600) < $ts) {
+			$count = (int) (($compare_ts - $ts) / 86400);
+			$date_part = Swat::ngettext('day', 'days', $count);
+		}
+
+		return sprintf(Swat::_('%s %s'), $count, $date_part);
+	}
+
+	// }}}
 	// {{{ public static function getFormatById()
 
 	/**
