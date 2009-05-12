@@ -891,6 +891,24 @@
 					n.nodeName == 'A' && !n.name && t.mode != Swat.MODE_SOURCE
 				);
 			});
+
+
+			ed.undoManager.onUndo.add(function(ed, l)
+			{
+				if (l.content.match(/id="#mce_source_mode"/)) {
+					this.setSourceMode();
+				} else {
+					this.setVisualMode();
+				}
+			}, t);
+
+			ed.undoManager.onRedo.add(function(ed, l) {
+				if (l.content.match(/id="#mce_source_mode"/)) {
+					this.setSourceMode();
+				} else {
+					this.setVisualMode();
+				}
+			}, t);
 		});
 	},
 
@@ -1104,7 +1122,7 @@
 		Event.add(visualLink, 'click', function(e)
 		{
 			Event.prevent(e);
-			this.setVisualMode();
+			this.setVisualMode(true);
 		}, this);
 
 		var visualListItem = document.createElement('li');
@@ -1126,7 +1144,7 @@
 		Event.add(sourceLink, 'click', function(e)
 		{
 			Event.prevent(e);
-			this.setSourceMode();
+			this.setSourceMode(true);
 		}, this);
 
 		var sourceListItem = document.createElement('li');
@@ -1160,7 +1178,7 @@
 		this.modeLink[Swat.MODE_SOURCE] = sourceLink;
 	},
 
-	setVisualMode: function()
+	setVisualMode: function(updateContent)
 	{
 		if (this.mode == Swat.MODE_VISUAL) {
 			return;
@@ -1178,8 +1196,6 @@
 
 		var ed = this.editor;
 
-		this.mode = Swat.MODE_VISUAL;
-
 		// enable toolbar, do this before set content so note update
 		// dispatcher updates toolbar state appropriately
 		var cm = ed.controlManager;
@@ -1191,20 +1207,25 @@
 			}
 		}
 
-		ed.setContent(
-			this.contentFromSource(
-				ed.getContent()
-			)
-		);
+		if (updateContent) {
+			ed.execCommand(
+				'mceSetContent',
+				false,
+				this.contentFromSource(ed.getContent()),
+				{ skip_undo: 1 }
+			);
 
-		ed.focus();
+			ed.focus();
 
-		// move cursor to start (for IE)
-		ed.selection.select(ed.getBody().firstChild);
-		ed.selection.collapse(true);
+			// move cursor to start (for IE)
+			ed.selection.select(ed.getBody().firstChild);
+			ed.selection.collapse(true);
+		}
+
+		this.mode = Swat.MODE_VISUAL;
 	},
 
-	setSourceMode: function()
+	setSourceMode: function(updateContent)
 	{
 		if (this.mode == Swat.MODE_SOURCE) {
 			return;
@@ -1222,9 +1243,6 @@
 			'selected'
 		);
 
-		this.mode = Swat.MODE_SOURCE;
-
-
 		// disable toolbar
 		var cm = ed.controlManager;
 		for (var id in cm.controls) {
@@ -1235,85 +1253,30 @@
 			}
 		}
 
-		ed.setContent(
-			this.contentToSource(
-				ed.getContent()
-			)
-		);
+		if (updateContent) {
+			ed.execCommand(
+				'mceSetContent',
+				false,
+				this.contentToSource(ed.getContent()),
+				{ skip_undo: 1 }
+			);
 
-		ed.focus();
+			ed.focus();
 
-		// move cursor to start (for IE)
-		ed.selection.select(ed.getBody().firstChild);
-		ed.selection.collapse(true);
-
-		/*
-
-		// get padding of editor content
-		var body = this.editor.getBody();
-		var style = (tinymce.isIE) ?
-			body.currentStyle :
-			getComputedStyle(body, null);
-
-		// Gecko doesn't compute the correct style for iframe content so it
-		// is hardcoded
-		var padding = (tinymce.isGecko) ?
-			8 :
-			parseInt(style.marginLeft, 10);
-
-		var rect = DOM.getRect(this.editor.getContainer().firstChild);
-		var container = this.editor.getContainer().firstChild;
-		container.style.margin = '0';
-		container.style.padding = '0';
-
-		var el = this.editor.getElement();
-		el.style.overflow = 'visible';
-		el.value = this.editor.getContent();
-		el.style.position = 'absolute';
-		el.style.zIndex = '3';
-		el.style.borderStyle = 'none';
-		el.style.borderWidth = '0'; // For IE
-		el.style.resize = 'none'; // For WebKit
-		el.style.outline = 'none'; // For WebKit
-
-		// For Gecko, don't apply full padding because it makes the scrollbar
-		// look funny. Instead, hardcode padding at 1px.
-		if (tinymce.isGecko) {
-			el.style.padding = '1px';
-		} else {
-			el.style.padding = padding + 'px';
+			// move cursor to start (for IE)
+			ed.selection.select(ed.getBody().firstChild);
+			ed.selection.collapse(true);
 		}
 
-		// Position textarea. Numeric offsets are to inset inside existing
-		// editor borders. For Gecko, numeric offsets are including hardcoded
-		// padding values.
-
-		var w = (tinymce.isGecko) ?
-			(rect.w - 4) :
-			(rect.w - (padding * 2) - 2);
-
-		var h = (tinymce.isGecko) ?
-			(rect.h - 4) :
-			(rect.h - (padding * 2) - 2);
-
-		h += 7;
-
-		el.style.width  = w + 'px';
-		el.style.height = h + 'px';
-		el.style.top = (rect.y + 1) + 'px';
-		el.style.left= (rect.x + 1) + 'px';
-
-		// display textarea
-		el.style.display = 'block';
-		*/
+		this.mode = Swat.MODE_SOURCE;
 	},
 
 	toggleMode: function()
 	{
 		if (this.mode == Swat.MODE_VISUAL) {
-			this.setSourceMode();
+			this.setSourceMode(true);
 		} else {
-			this.setVisualMode();
+			this.setVisualMode(true);
 		}
 	},
 
@@ -1332,13 +1295,22 @@
 		);
 
 		// wrap in paragraph tags
-		content = '<p class="swat-textarea-editor-source">' + content + '</p>';
+		content =
+			  '<p id="#mce_source_mode" class="swat-textarea-editor-source">'
+			+ content
+			+ '</p>';
 
 		return content;
 	},
 
 	contentFromSource: function(content)
 	{
+		// remove source mode tag
+		content = content.replace(
+			/\s*id="#mce_source_mode"/,
+			''
+		);
+
 		// remove leading and trailing paragraph tags
 		content = content.replace(
 			/^<p class="swat-textarea-editor-source">/,
