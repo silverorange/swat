@@ -39,12 +39,18 @@
 ul.swat-textarea-editor-mode-switcher {
 	list-style: none;
 	display: block;
+	margin: 0;
+	padding: 0;
 }
 
 ul.swat-textarea-editor-mode-switcher li {
 	list-style: none;
-	display: block;
 	font-size: 85%;
+	margin: 0;
+	padding: 0;
+	float: right;
+	display: block;
+	width: auto;
 }
 
 .swat-textarea-editor-mode-switcher a {
@@ -52,7 +58,6 @@ ul.swat-textarea-editor-mode-switcher li {
 	position: relative;
 	top: -1px;
 	padding: 3px 6px;
-	float: right;
 	border: 1px solid #dcceb2;
 	border-left-color: #f0eade;
 	-moz-border-radius-bottomleft: 6px;
