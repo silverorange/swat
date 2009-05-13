@@ -1367,6 +1367,7 @@
 		content = content
 			.replace(/&/g, '&amp;')
 			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;') // not strictly required
 			.replace(/"/g, '&quot;')
 
 		// convert newlines to paragraphs
@@ -1440,24 +1441,56 @@
 		var doc = ed.getDoc();
 		var body = ed.getBody();
 
+		var an = n;
+
+		// detect and remove apple style spans
+		var removeAppleStyleSpans = function(n)
+		{
+			// clean all child nodes
+			var cn = n.firstChild;
+			while (cn) {
+				var next = cn.nextSibling;
+				if (cn.nodeType == 1) {
+					removeAppleStyleSpans(cn);
+				}
+				cn = next;
+			}
+
+			// clean self
+			if (n.className.indexOf('Apple-style-span') != -1) {
+				while (n.firstChild) {
+					n.parentNode.insertBefore(n.firstChild, n);
+				}
+				n.parentNode.removeChild(n);
+			}
+		};
+
+		removeAppleStyleSpans(body);
 
 		var convertNodeToPlainText = function(n)
 		{
 			// convert child nodes first
-			for (var i = 0; i < n.childNodes.length; i++) {
-				if (n.childNodes[i].nodeType == 1) {
-					convertNodeToPlainText(n.childNodes[i]);
+			cn = n.firstChild;
+			while (cn) {
+				var next = cn.nextSibling;
+				if (cn.nodeType == 1) {
+					convertNodeToPlainText(cn);
 				}
+				cn = next;
 			}
 
 			// add some whitespace
 			n.parentNode.insertBefore(doc.createTextNode(' '), n);
 
 			// take text nodes out of this node and put them in parent
-			// note: moving around text nodes seems to be buggy so we
-			// recreate them from innerHTML
-			var t = doc.createTextNode(n.innerHTML);
-			n.parentNode.insertBefore(t, n);
+			cn = n.firstChild;
+			while (cn) {
+				var next = cn.nextSibling;
+				if (cn.nodeType == 3) {
+					n.parentNode.insertBefore(cn, n);
+				}
+				cn = next;
+			}
 
 			// remove this node
 			n.parentNode.removeChild(n);
@@ -1465,9 +1498,7 @@
 
 		// Note: this is not working for inline pastes yet
 
-		while (n
-			&& n != body
-		) {
+		while (n && n != body) {
 			if (n.nodeType == 3) {
 				var next = n.previousSibling;
 				n.parentNode.removeChild(n);
