@@ -53,11 +53,6 @@
 	position: relative;
 	background: #fff url(../../../../../../images/swat-textarea-editor-button.png) repeat-x left bottom;
 }
-.swatSkin .mceButton span {
-	opacity: 0.8;
-	-ms-filter:'alpha(opacity=80)';
-	filter:alpha(opacity=80)
-}
 .swatSkin a.mceButtonEnabled:hover {
 	border-top-color: #dcceb2;
 	border-left-color: #dcceb2;
@@ -65,11 +60,6 @@
 	border-right-color: #c3b69e;
 	background: #fff;
 	z-index: 2;
-}
-.swatSkin a.mceButtonEnabled:hover span {
-	opacity: 1;
-	-ms-filter:'alpha(opacity=100)';
-	filter:alpha(opacity=100)
 }
 .swatSkin a.mceButtonActive,
 .swatSkin a.mceButtonSelected {
