@@ -751,10 +751,11 @@
 	});
 
 	// }}}
-	// {{{ tinymce.plugins.SwatPlugin
 
 	// define plugin
 	tinymce.create('tinymce.plugins.SwatPlugin', {
+
+	// {{{ tinymce.plugins.SwatPlugin.init()
 
 	init: function(ed, url)
 	{
@@ -799,6 +800,13 @@
 		{
 			ed.dom.loadCSS(url + '/css/content.css');
 		});
+
+		ed.onChange.add(function()
+		{
+			if (this.mode == Swat.MODE_SOURCE) {
+				this.convertToPlainText();
+			}
+		}, this);
 
 		this.dialogs = {
 			'link':    new Swat.LinkDialog(ed),
@@ -917,7 +925,7 @@
 
 			ed.undoManager.onUndo.add(function(ed, l)
 			{
-				if (l.content.match(/id="#mce_source_mode"/)) {
+				if (l.content.match(/class="#mce_source_mode"/)) {
 					this.setSourceMode();
 				} else {
 					this.setVisualMode();
@@ -925,7 +933,7 @@
 			}, t);
 
 			ed.undoManager.onRedo.add(function(ed, l) {
-				if (l.content.match(/id="#mce_source_mode"/)) {
+				if (l.content.match(/class="#mce_source_mode"/)) {
 					this.setSourceMode();
 				} else {
 					this.setVisualMode();
@@ -934,7 +942,8 @@
 		});
 	},
 
-	// {{{ insertLink()
+	// }}}
+	// {{{ tinymce.plugins.SwatPlugin.insertLink()
 
 	insertLink: function(href)
 	{
@@ -998,7 +1007,7 @@
 	},
 
 	// }}}
-	// {{{ insertImage()
+	// {{{ tinymce.plugins.SwatPlugin.insertImage()
 
 	insertImage: function(src, alt)
 	{
@@ -1048,7 +1057,7 @@
 	},
 
 	// }}}
-	// {{{ insertSnippet()
+	// {{{ tinymce.plugins.SwatPlugin.insertSnippet()
 
 	insertSnippet: function(content)
 	{
@@ -1123,6 +1132,7 @@
 	},
 
 	// }}}
+	// {{{ tinymce.plugins.SwatPlugin.drawModeSwitcher()
 
 	drawModeSwitcher: function(ed)
 	{
@@ -1202,6 +1212,9 @@
 		this.modeLink[Swat.MODE_SOURCE] = sourceLink;
 	},
 
+	// }}}
+	// {{{ tinymce.plugins.SwatPlugin.initMode()
+
 	initMode: function()
 	{
 		var ed = this.editor;
@@ -1209,7 +1222,7 @@
 		// initialize mode from form data
 		var modeStateEl = document.getElementById(ed.id + '_mode');
 		if (modeStateEl && modeStateEl.value == Swat.MODE_SOURCE) {
-			if (ed.getContent().match(/id="#mce_source_mode"/)) {
+			if (ed.getContent().match(/class="#mce_source_mode"/)) {
 				this.setSourceMode();
 			} else {
 				this.setSourceMode(true);
@@ -1220,11 +1233,16 @@
 
 	},
 
+	// }}}
+	// {{{ tinymce.plugins.SwatPlugin.setVisualMode()
+
 	setVisualMode: function(updateContent)
 	{
 		if (this.mode == Swat.MODE_VISUAL) {
 			return;
 		}
+
+		var ed = this.editor;
 
 		if (this.modeLink) {
 			DOM.removeClass(
@@ -1238,7 +1256,7 @@
 			);
 		}
 
-		var ed = this.editor;
+//		DOM.removeClass(ed.getBody(), 'swat-textarea-editor-source');
 
 		// enable toolbar, do this before set content so note update
 		// dispatcher updates toolbar state appropriately
@@ -1272,6 +1290,9 @@
 		}
 	},
 
+	// }}}
+	// {{{ tinymce.plugins.SwatPlugin.setSourceMode()
+
 	setSourceMode: function(updateContent)
 	{
 		if (this.mode == Swat.MODE_SOURCE) {
@@ -1291,6 +1312,8 @@
 				'selected'
 			);
 		}
+
+		DOM.addClass(ed.getBody(), 'swat-textarea-editor-source');
 
 		// disable toolbar
 		var cm = ed.controlManager;
@@ -1323,6 +1346,9 @@
 		}
 	},
 
+	// }}}
+	// {{{ tinymce.plugins.SwatPlugin.toggleMode()
+
 	toggleMode: function()
 	{
 		if (this.mode == Swat.MODE_VISUAL) {
@@ -1331,6 +1357,9 @@
 			this.setVisualMode(true);
 		}
 	},
+
+	// }}}
+	// {{{ tinymce.plugins.SwatPlugin.contentToSource()
 
 	contentToSource: function(content)
 	{
@@ -1343,44 +1372,51 @@
 		// convert newlines to paragraphs
 		content = content.replace(
 			/\n/g,
-			'</p><p class="swat-textarea-editor-source">'
+			'</p><p class="#mce_source_mode">'
 		);
 
 		// wrap in paragraph tags
 		content =
-			  '<p id="#mce_source_mode" class="swat-textarea-editor-source">'
+			  '<p class="#mce_source_mode">'
 			+ content
 			+ '</p>';
 
 		return content;
 	},
 
+	// }}}
+	// {{{ tinymce.plugins.SwatPlugin.contentFromSource()
+
 	contentFromSource: function(content)
 	{
-		// remove source mode tag
+		// remove source mode tags
 		content = content.replace(
-			/[\r\n\t ]*id="#mce_source_mode"/,
+			/[\r\n\t ]*class="#mce_source_mode"/,
 			''
 		);
 
 		// remove leading and trailing paragraph tags
 		content = content.replace(
-			/^<p class="swat-textarea-editor-source">/,
+			/^<p>/,
 			''
 		);
 		content = content.replace(/<\/p>$/, '');
 
 		// remove extra nbsps inside empty paragraphs
 		content = content.replace(
-			/(<p class="swat-textarea-editor-source">)&nbsp;(<\/p>)/g,
-			'<p class="swat-textarea-editor-source"></p>'
+			/(<p>)&nbsp;(<\/p>)/g,
+			'<p></p>'
 		);
 
 		// convert paragraphs back to newlines
 		content = content.replace(
-			/<\/p>[ \t\r\n]*<p class="swat-textarea-editor-source">/g,
+			/<\/p>[ \t\r\n]*<p>/g,
 			'\n'
 		);
+
+		// remove any other tags that might have been added via
+		// copy/paste
+		content = content.replace(/<\/?[^<>]*?>/g, '');
 
 		// decode XML entities
 		content = content
@@ -1392,6 +1428,74 @@
 		return content;
 	},
 
+	// }}}
+	// {{{ tinymce.plugins.SwatPlugin.convertToPlainText()
+
+	convertToPlainText: function()
+	{
+		var ed = this.editor;
+		var sel = ed.selection;
+		var n = ed.selection.getNode();
+		var b = sel.getBookmark();
+		var doc = ed.getDoc();
+		var body = ed.getBody();
+
+
+		var convertNodeToPlainText = function(n)
+		{
+			// convert child nodes first
+			for (var i = 0; i < n.childNodes.length; i++) {
+				if (n.childNodes[i].nodeType == 1) {
+					convertNodeToPlainText(n.childNodes[i]);
+				}
+			}
+
+			// add some whitespace
+			n.parentNode.insertBefore(doc.createTextNode(' '), n);
+
+			// take text nodes out of this node and put them in parent
+			// note: moving around text nodes seems to be buggy so we
+			// recreate them from innerHTML
+			var t = doc.createTextNode(n.innerHTML);
+			n.parentNode.insertBefore(t, n);
+
+			// remove this node
+			n.parentNode.removeChild(n);
+		};
+
+		// Note: this is not working for inline pastes yet
+
+		while (n
+			&& n != body
+		) {
+			if (n.nodeType == 3) {
+				var next = n.previousSibling;
+				n.parentNode.removeChild(n);
+				n = next;
+			} else {
+				if (n.className.indexOf('#mce_source_mode') != -1) {
+					break;
+				}
+
+				var next = n.previousSibling;
+
+				if (n.parentNode == body) {
+					var p = doc.createElement('p');
+					p.className = '#mce_source_mode';
+					body.insertBefore(p, n);
+					p.appendChild(n);
+				}
+
+				convertNodeToPlainText(n);
+
+				n = next;
+			}
+		}
+	},
+
+	// }}}
+	// {{{ tinymce.plugins.SwatPlugin.getInfo()
+
 	getInfo: function()
 	{
 		return {
@@ -1401,6 +1505,9 @@
 			version:   '1.0'
 		};
 	},
+
+	// }}}
+	// {{{ tinymce.plugins.SwatPlugin.selectFirstTextNode()
 
 	selectFirstTextNode: function()
 	{
@@ -1440,6 +1547,8 @@
 		ed.selection.select(node);
 		ed.selection.collapse(1);
 	}
+
+	// }}}
 
 	});
 
