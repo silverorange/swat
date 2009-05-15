@@ -1441,7 +1441,17 @@
 		var doc = ed.getDoc();
 		var body = ed.getBody();
 
-		var an = n;
+		// table elements get deleted
+		var table = /^(table|tr|td|th|tbody|thead|tfoot|col|colgroup|caption)$/;
+
+		// elements get deleted
+		var del   = /^(img|script|link|meta|title|hr|br|object|embed|video|audio)$/;
+
+		// elements get wrapped in source edit mode element
+		var block = /^(p|pre|dl|div|blockquote|form|h[1-6]|fieldset|address|ul|ol)$/;
+
+		// other elements (inline, etc) get appended to previous source
+		// edit mode element
 
 		// detect and remove apple style spans
 		var removeAppleStyleSpans = function(n)
@@ -1467,6 +1477,53 @@
 
 		removeAppleStyleSpans(body);
 
+		// make sure first node is a source edit mode element
+		while (body.firstChild
+			&& (
+				   body.firstChild.nodeType != 1
+				|| body.firstChild.className.indexOf('#mce_source_mode') == -1
+			)
+		) {
+			var name = body.firstChild.nodeName.toLowerCase();
+
+			if (name.match(table) || name.match(del)) {
+				// discard delete nodes or table nodes
+				body.removeChild(body.firstChild);
+			} else {
+				// wrap other nodes in source edit mode element
+				var p = doc.createElement('p');
+				p.className = '#mce_source_mode';
+				p.appendChild(body.firstChild);
+				body.insertBefore(p, body.firstChild);
+			}
+		}
+
+		// clean up node nesting and visiblility
+		var cn = body.firstChild;
+		while (cn) {
+			var next = cn.nextSibling;
+
+			var name = cn.nodeName.toLowerCase();
+
+			if (name.match(table) || name.match(del)) {
+				// discard delete nodes or table nodes
+				body.removeChild(cn);
+			} else if (name.match(block)) {
+				// wrap block nodes in source edit mode element
+				if (cn.className.indexOf('#mce_source_mode') == -1) {
+					var p = doc.createElement('p');
+					p.className = '#mce_source_mode';
+					body.insertBefore(p, cn);
+					p.appendChild(cn);
+				}
+			} else {
+				// append text and/or inline nodes to previousSibling
+				cn.previousSibling.appendChild(cn);
+			}
+
+			cn = next;
+		}
+
 		var convertNodeToPlainText = function(n)
 		{
 			// convert child nodes first
@@ -1479,49 +1536,38 @@
 				cn = next;
 			}
 
-			// add some whitespace
-			n.parentNode.insertBefore(doc.createTextNode(' '), n);
+			// only convert non-source-mode nodes
+			if (n.className.indexOf('#mce_source_mode') == -1) {
 
-			// take text nodes out of this node and put them in parent
-			cn = n.firstChild;
-			while (cn) {
-				var next = cn.nextSibling;
-				if (cn.nodeType == 3) {
-					n.parentNode.insertBefore(cn, n);
+				// add some whitespace
+				n.parentNode.insertBefore(doc.createTextNode(' '), n);
+
+				// take text nodes out of this node and put them in parent
+				cn = n.firstChild;
+				while (cn) {
+					var next = cn.nextSibling;
+					if (cn.nodeType == 3) {
+						n.parentNode.insertBefore(cn, n);
+					}
+					cn = next;
 				}
-				cn = next;
-			}
 
-			// remove this node
-			n.parentNode.removeChild(n);
+				// remove this node
+				n.parentNode.removeChild(n);
+
+			}
 		};
 
-		// Note: this is not working for inline pastes yet
-
-		while (n && n != body) {
-			if (n.nodeType == 3) {
-				var next = n.previousSibling;
-				n.parentNode.removeChild(n);
-				n = next;
-			} else {
-				if (n.className.indexOf('#mce_source_mode') != -1) {
-					break;
-				}
-
-				var next = n.previousSibling;
-
-				if (n.parentNode == body) {
-					var p = doc.createElement('p');
-					p.className = '#mce_source_mode';
-					body.insertBefore(p, n);
-					p.appendChild(n);
-				}
-
-				convertNodeToPlainText(n);
-
-				n = next;
+		var cn = body.firstChild;
+		while (cn) {
+			var next = cn.nextSibling;
+			if (cn.nodeType == 1) {
+				convertNodeToPlainText(cn);
 			}
+			cn = next;
 		}
+
+		sel.moveToBookmark(b);
 	},
 
 	// }}}
