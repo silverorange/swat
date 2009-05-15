@@ -1256,7 +1256,7 @@
 			);
 		}
 
-//		DOM.removeClass(ed.getBody(), 'swat-textarea-editor-source');
+		DOM.removeClass(ed.getBody(), 'swat-textarea-editor-source');
 
 		// enable toolbar, do this before set content so note update
 		// dispatcher updates toolbar state appropriately
@@ -1268,6 +1268,10 @@
 				cm.setDisabled(id, false);
 			}
 		}
+
+		// mode must be updated before content is changed to prevent extra
+		// cleanup from happening
+		this.mode = Swat.MODE_VISUAL;
 
 		if (updateContent) {
 			ed.execCommand(
@@ -1283,7 +1287,6 @@
 			this.selectFirstTextNode();
 		}
 
-		this.mode = Swat.MODE_VISUAL;
 		var modeStateEl = document.getElementById(ed.id + '_mode');
 		if (modeStateEl) {
 			modeStateEl.value = this.mode;
@@ -1392,7 +1395,7 @@
 	{
 		// remove source mode tags
 		content = content.replace(
-			/[\r\n\t ]*class="#mce_source_mode"/,
+			/[\r\n\t ]*class="#mce_source_mode"/g,
 			''
 		);
 
