@@ -1379,11 +1379,19 @@
 			'</p><p class="#mce_source_mode">'
 		);
 
+		// add nbsp to empty newlines
+		content = content.replace(
+			/<p class="#mce_source_mode"><\/p>/g,
+			'<p class="#mce_source_mode">&nbsp;</p>'
+		);
+
 		// wrap in paragraph tags
 		content =
 			  '<p class="#mce_source_mode">'
 			+ content
 			+ '</p>';
+
+		this.debug('CONTENT: ' + content);
 
 		return content;
 	},
@@ -1448,7 +1456,7 @@
 		var table = /^(table|tr|td|th|tbody|thead|tfoot|col|colgroup|caption)$/;
 
 		// elements get deleted
-		var del   = /^(img|script|link|meta|title|hr|br|object|embed|video|audio)$/;
+		var del   = /^(img|script|link|meta|title|hr|object|embed|video|audio)$/;
 
 		// elements get wrapped in source edit mode element
 		var block = /^(p|pre|dl|div|blockquote|form|h[1-6]|fieldset|address|ul|ol)$/;
@@ -1539,8 +1547,10 @@
 				cn = next;
 			}
 
-			// only convert non-source-mode nodes
-			if (n.className.indexOf('#mce_source_mode') == -1) {
+			// only convert non-source-mode nodes and non br nodes
+			if (   n.className.indexOf('#mce_source_mode') == -1
+				&& n.nodeName != 'BR'
+			) {
 
 				// add some whitespace
 				n.parentNode.insertBefore(doc.createTextNode(' '), n);
@@ -1587,6 +1597,21 @@
 	},
 
 	// }}}
+
+	// temp: remove me
+	debug: function(text)
+	{
+		text = text
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;');
+
+		var pres = document.getElementsByTagName('pre');
+		pres[0].style.whiteSpace = 'normal';
+		pres[0].innerHTML = text;
+	},
+
 	// {{{ tinymce.plugins.SwatPlugin.selectFirstTextNode()
 
 	selectFirstTextNode: function()
@@ -1629,6 +1654,7 @@
 	}
 
 	// }}}
+
 
 	});
 
