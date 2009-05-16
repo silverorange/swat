@@ -1,5 +1,33 @@
-p.swat-textarea-editor-source {
-	font-family: monospace;
+.swat-textarea-editor-source * {
 	margin: 0;
+}
+
+.swat-textarea-editor-source a,
+.swat-textarea-editor-source a:active,
+.swat-textarea-editor-source a:hover,
+.swat-textarea-editor-source a:link,
+.swat-textarea-editor-source a:visited {
+	color: #000;
+	text-decoration: none;
+}
+
+.swat-textarea-editor-source em,
+.swat-textarea-editor-source i,
+.swat-textarea-editor-source b,
+.swat-textarea-editor-source strong
+{
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: none;
+}
+
+.swat-textarea-editor-source h1,
+.swat-textarea-editor-source h2,
+.swat-textarea-editor-source h3,
+.swat-textarea-editor-source h4,
+.swat-textarea-editor-source h5,
+.swat-textarea-editor-source h6 {
+	font-size: 100%;
+	font-weight: normal;
 }
 
