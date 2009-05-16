@@ -1391,8 +1391,6 @@
 			+ content
 			+ '</p>';
 
-		this.debug('CONTENT: ' + content);
-
 		return content;
 	},
 

@@ -19,6 +19,7 @@
 	width: 450px;
 	padding: 0;
 	margin: 0;
+	text-align: left;
 }
 
 .swat-textarea-editor-dialog .swat-frame {
@@ -29,7 +30,7 @@
 }
 
 .swat-textarea-editor-dialog input.swat-entry {
-	width: 100%;
+	width: 98%;
 }
 
 .swat-textarea-editor-dialog textarea {
@@ -74,12 +75,13 @@ ul.swat-textarea-editor-mode-switcher li {
 
 .swat-textarea-editor-mode-switcher a.selected {
 	background: #dcceb2;
-	border-top-color: #fff;
+	border-top: none;
 	background: #fff url(../../../../../images/swat-textarea-editor-button.png) bottom left repeat-x;
 	color: #6b5d40;
 	outline: #fff;
 	border-bottom-width: 2px;
 	padding-bottom: 2px;
+	padding-top: 4px;
 }
 
 .swat-textarea-editor-mode-switcher a.selected span {
