@@ -1336,16 +1336,18 @@
 			}
 		}
 
-		// get style of iframe body to compute bg color
 		var bgElement = ed.getBody().firstChild || ed.getBody();
-		var style = (tinymce.isIE) ?
-			bgElement.currentStyle :
-			getComputedStyle(bgElement, null);
 
-		var bgColor = style.backgroundColor;
 
 		// get editor iframe for geometry
 		var iframe = ed.getWin().frameElement;
+
+		// get style of iframe to compute bg color
+		var style = (tinymce.isIE) ?
+			iframe.currentStyle :
+			getComputedStyle(iframe, null);
+
+		var bgColor = style.backgroundColor;
 
 		// get width and height
 		var w = iframe.clientWidth;
