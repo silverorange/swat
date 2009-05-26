@@ -761,8 +761,8 @@
 	{
 		this.editor = ed;
 
-		// after rendering UI, draw tabs for visual editor
-		ed.onPostRender.add(this.drawModeSwitcher, this);
+		// after rendering UI, draw source mode and tabs for visual editor
+		ed.onPostRender.add(this.drawSourceMode, this);
 		ed.onLoadContent.add(this.initMode, this);
 
 		// double up linebreaks around blocklevel elements
@@ -1101,6 +1101,42 @@
 	},
 
 	// }}}
+
+	drawSourceMode: function(ed)
+	{
+		var ed = this.editor;
+
+		// get textarea
+		var el = ed.getElement();
+
+		el.className         = 'swat-textarea';
+		el.style.overflowX   = 'hidden';
+		el.style.overflowY   = 'scroll';
+		el.style.borderStyle = 'none';
+		el.style.borderWidth = '0';    // For IE
+		el.style.resize      = 'none'; // For WebKit
+		el.style.outline     = 'none'; // For WebKit
+		el.style.padding     = '1px';
+		el.style.width       = '99.5%';
+
+		this.sourceContainer = document.createElement('div');
+
+		this.sourceContainer.className      = 'swat-textarea-container';
+		this.sourceContainer.style.display  = 'none';
+		this.sourceContainer.style.zIndex   = '3';
+		this.sourceContainer.style.position = 'absolute';
+		this.sourceContainer.style.backgroundColor = '#acf';
+
+		// add container to document
+		el.parentNode.replaceChild(this.sourceContainer, el);
+		this.sourceContainer.appendChild(el);
+
+		// set textarea as block again since it is in a display:none container
+		el.style.display = 'block';
+
+		this.drawModeSwitcher(ed);
+	},
+
 	// {{{ tinymce.plugins.SwatPlugin.drawModeSwitcher()
 
 	drawModeSwitcher: function(ed)
@@ -1157,7 +1193,6 @@
 		ul.className = 'swat-textarea-editor-mode-switcher';
 		ul.appendChild(sourceListItem);
 		ul.appendChild(visualListItem);
-
 
 		// get editor width
 		var el = this.editor.getContainer().firstChild;
@@ -1232,10 +1267,17 @@
 			}
 		}
 
-		// mode must be updated before content is changed to prevent extra
-		// cleanup from happening
-		this.mode = Swat.MODE_VISUAL;
+		// hide textarea
+		this.sourceContainer.style.display  = 'none';
 
+		// set content
+		var el = ed.getElement();
+		ed.setContent(el.value);
+
+		// give visual editor focus
+		ed.focus();
+
+		this.mode = Swat.MODE_VISUAL;
 		var modeStateEl = document.getElementById(ed.id + '_mode');
 		if (modeStateEl) {
 			modeStateEl.value = this.mode;
@@ -1275,63 +1317,30 @@
 			}
 		}
 
-		// get padding of editor content
-		var body = this.editor.getBody();
-		var doc  = this.editor.getDoc();
+		// get editor iframe for geometry
+		var iframe = ed.getWin().frameElement;
 
-		var body = this.editor.getBody();
-		var iframe = this.editor.getWin().frameElement;
-
-		// get width
-		var w = iframe.clientWidth
-
-		// get height
-		var scrollHeight = (typeof iframe.scrollHeight == 'undefined') ?
-			iframe.body.scrollHeight : iframe.scrollHeight;
-
-		var h = Math.max(scrollHeight, iframe.clientHeight);
+		// get width and height
+		var w = iframe.clientWidth;
+		var h = iframe.clientHeight;
 
 		// get position
-		var rect = _getRect(this.editor.getContentAreaContainer());
+		var rect = _getRect(ed.getContentAreaContainer());
 
-		var el = this.editor.getElement();
-		el.className = 'swat-textarea';
-		el.style.overflowX = 'hidden';
-		el.style.overflowY = 'scroll';
-		el.value = this.editor.getContent();
-		el.style.borderStyle = 'none';
-		el.style.borderWidth = '0'; // For IE
-		el.style.resize = 'none'; // For WebKit
-		el.style.outline = 'none'; // For WebKit
+		// get textarea
+		var el = ed.getElement();
 
-		// For Gecko, don't apply full padding because it makes the scrollbar
-		// look funny. Instead, hardcode padding at 1px.
-		el.style.padding = '1px';
-		padding = '1';
+		el.value         = this.editor.getContent();
+		el.style.height  = (h - 4) + 'px'; // account for textarea padding
 
-		// Position textarea. Numeric offsets are to inset inside existing
-		// editor borders. For Gecko, numeric offsets are including hardcoded
-		// padding values.
+		// position and size textarea container
+		this.sourceContainer.style.width    = w + 'px';
+		this.sourceContainer.style.height   = h + 'px';
+		this.sourceContainer.style.left     = '1px'; // TODO: get correct position
+		this.sourceContainer.style.top      = '30px'; // TODO: get correct position
 
-		var container = document.createElement('div');
-
-		container.className      = 'swat-textarea-container';
-		container.style.zIndex   = '3';
-		container.style.width    = w + 'px';
-		container.style.height   = h + 'px';
-		container.style.left     = '1px'; // TODO: get correct position
-		container.style.top      = '30px'; // TODO: get correct position
-		container.style.position = 'absolute';
-		container.style.backgroundColor = '#acf';
-
-		// add container to document
-		el.parentNode.replaceChild(container, el);
-		container.appendChild(el);
-
-		// position and display textarea
-		el.style.width = '99.5%';
-		el.style.height = (h - 4) + 'px'; // account for textarea padding
-		el.style.display = 'block';
+		// display textarea
+		this.sourceContainer.style.display  = 'block';
 
 		// give textarea focus
 		el.focus();
