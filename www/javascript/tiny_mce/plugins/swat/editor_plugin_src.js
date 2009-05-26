@@ -795,19 +795,6 @@
 			DOM.loadCSS(url + '/css/swat.css');
 		});
 
-		// load plugin content CSS
-		ed.onPostRender.add(function()
-		{
-			ed.dom.loadCSS(url + '/css/content.css');
-		});
-
-		ed.onChange.add(function()
-		{
-			if (this.mode == Swat.MODE_SOURCE) {
-				this.convertToPlainText();
-			}
-		}, this);
-
 		this.dialogs = {
 			'link':    new Swat.LinkDialog(ed),
 			'snippet': new Swat.SnippetDialog(ed),
@@ -921,24 +908,6 @@
 					n.nodeName == 'A' && !n.name && t.mode != Swat.MODE_SOURCE
 				);
 			});
-
-
-			ed.undoManager.onUndo.add(function(ed, l)
-			{
-				if (l.content.match(/class="#mce_source_mode"/)) {
-					this.setSourceMode();
-				} else {
-					this.setVisualMode();
-				}
-			}, t);
-
-			ed.undoManager.onRedo.add(function(ed, l) {
-				if (l.content.match(/class="#mce_source_mode"/)) {
-					this.setSourceMode();
-				} else {
-					this.setVisualMode();
-				}
-			}, t);
 		});
 	},
 
@@ -1222,11 +1191,7 @@
 		// initialize mode from form data
 		var modeStateEl = document.getElementById(ed.id + '_mode');
 		if (modeStateEl && modeStateEl.value == Swat.MODE_SOURCE) {
-			if (ed.getContent().match(/class="#mce_source_mode"/)) {
-				this.setSourceMode();
-			} else {
-				this.setSourceMode(true);
-			}
+			this.setSourceMode();
 		} else {
 			this.setVisualMode();
 		}
@@ -1236,7 +1201,7 @@
 	// }}}
 	// {{{ tinymce.plugins.SwatPlugin.setVisualMode()
 
-	setVisualMode: function(updateContent)
+	setVisualMode: function()
 	{
 		if (this.mode == Swat.MODE_VISUAL) {
 			return;
@@ -1256,8 +1221,6 @@
 			);
 		}
 
-		DOM.removeClass(ed.getBody(), 'swat-textarea-editor-source');
-
 		// enable toolbar, do this before set content so note update
 		// dispatcher updates toolbar state appropriately
 		var cm = ed.controlManager;
@@ -1273,20 +1236,6 @@
 		// cleanup from happening
 		this.mode = Swat.MODE_VISUAL;
 
-		if (updateContent) {
-			ed.execCommand(
-				'mceSetContent',
-				false,
-				this.contentFromSource(ed.getContent()),
-				{ skip_undo: 1 }
-			);
-
-			ed.focus();
-
-			// move cursor to start (for IE and Firefox)
-			this.selectFirstTextNode();
-		}
-
 		var modeStateEl = document.getElementById(ed.id + '_mode');
 		if (modeStateEl) {
 			modeStateEl.value = this.mode;
@@ -1296,7 +1245,7 @@
 	// }}}
 	// {{{ tinymce.plugins.SwatPlugin.setSourceMode()
 
-	setSourceMode: function(updateContent)
+	setSourceMode: function()
 	{
 		if (this.mode == Swat.MODE_SOURCE) {
 			return;
@@ -1316,8 +1265,6 @@
 			);
 		}
 
-		DOM.addClass(ed.getBody(), 'swat-textarea-editor-source');
-
 		// disable toolbar
 		var cm = ed.controlManager;
 		for (var id in cm.controls) {
@@ -1328,19 +1275,66 @@
 			}
 		}
 
-		if (updateContent) {
-			ed.execCommand(
-				'mceSetContent',
-				false,
-				this.contentToSource(ed.getContent()),
-				{ skip_undo: 1 }
-			);
+		// get padding of editor content
+		var body = this.editor.getBody();
+		var doc  = this.editor.getDoc();
 
-			ed.focus();
+		var body = this.editor.getBody();
+		var iframe = this.editor.getWin().frameElement;
 
-			// move cursor to start (for IE and Firefox)
-			this.selectFirstTextNode();
-		}
+		// get width
+		var w = iframe.clientWidth
+
+		// get height
+		var scrollHeight = (typeof iframe.scrollHeight == 'undefined') ?
+			iframe.body.scrollHeight : iframe.scrollHeight;
+
+		var h = Math.max(scrollHeight, iframe.clientHeight);
+
+		// get position
+		var rect = _getRect(this.editor.getContentAreaContainer());
+
+		var el = this.editor.getElement();
+		el.className = 'swat-textarea';
+		el.style.overflowX = 'hidden';
+		el.style.overflowY = 'scroll';
+		el.value = this.editor.getContent();
+		el.style.borderStyle = 'none';
+		el.style.borderWidth = '0'; // For IE
+		el.style.resize = 'none'; // For WebKit
+		el.style.outline = 'none'; // For WebKit
+
+		// For Gecko, don't apply full padding because it makes the scrollbar
+		// look funny. Instead, hardcode padding at 1px.
+		el.style.padding = '1px';
+		padding = '1';
+
+		// Position textarea. Numeric offsets are to inset inside existing
+		// editor borders. For Gecko, numeric offsets are including hardcoded
+		// padding values.
+
+		var container = document.createElement('div');
+
+		container.className      = 'swat-textarea-container';
+		container.style.zIndex   = '3';
+		container.style.width    = w + 'px';
+		container.style.height   = h + 'px';
+		container.style.left     = '1px'; // TODO: get correct position
+		container.style.top      = '30px'; // TODO: get correct position
+		container.style.position = 'absolute';
+		container.style.backgroundColor = '#acf';
+
+		// add container to document
+		el.parentNode.replaceChild(container, el);
+		container.appendChild(el);
+
+		// position and display textarea
+		el.style.width = '99.5%';
+		el.style.height = (h - 4) + 'px'; // account for textarea padding
+		el.style.display = 'block';
+
+		// give textarea focus
+		el.focus();
 
 		this.mode = Swat.MODE_SOURCE;
 		var modeStateEl = document.getElementById(ed.id + '_mode');
@@ -1362,226 +1356,6 @@
 	},
 
 	// }}}
-	// {{{ tinymce.plugins.SwatPlugin.contentToSource()
-
-	contentToSource: function(content)
-	{
-		// encode XML entities
-		content = content
-			.replace(/&/g, '&amp;')
-			.replace(/</g, '&lt;')
-			.replace(/>/g, '&gt;') // not strictly required
-			.replace(/"/g, '&quot;')
-
-		// convert newlines to paragraphs
-		content = content.replace(
-			/\n/g,
-			'</p><p class="#mce_source_mode">'
-		);
-
-		// add nbsp to empty newlines
-		content = content.replace(
-			/<p class="#mce_source_mode"><\/p>/g,
-			'<p class="#mce_source_mode">&nbsp;</p>'
-		);
-
-		// wrap in paragraph tags
-		content =
-			  '<p class="#mce_source_mode">'
-			+ content
-			+ '</p>';
-
-		return content;
-	},
-
-	// }}}
-	// {{{ tinymce.plugins.SwatPlugin.contentFromSource()
-
-	contentFromSource: function(content)
-	{
-		// remove source mode tags
-		content = content.replace(
-			/[\r\n\t ]*class="#mce_source_mode"/g,
-			''
-		);
-
-		// remove leading and trailing paragraph tags
-		content = content.replace(
-			/^<p>/,
-			''
-		);
-		content = content.replace(/<\/p>$/, '');
-
-		// remove extra nbsps inside empty paragraphs
-		content = content.replace(
-			/(<p>)&nbsp;(<\/p>)/g,
-			'<p></p>'
-		);
-
-		// convert paragraphs back to newlines
-		content = content.replace(
-			/<\/p>[ \t\r\n]*<p>/g,
-			'\n'
-		);
-
-		// remove any other tags that might have been added via
-		// copy/paste
-		content = content.replace(/<\/?[^<>]*?>/g, '');
-
-		// decode XML entities
-		content = content
-			.replace(/&quot;/g, '"')
-			.replace(/&lt;/g,   '<')
-			.replace(/&gt;/g,   '>')
-			.replace(/&amp;/g,  '&');
-
-		return content;
-	},
-
-	// }}}
-	// {{{ tinymce.plugins.SwatPlugin.convertToPlainText()
-
-	convertToPlainText: function()
-	{
-		var ed = this.editor;
-		var sel = ed.selection;
-		var n = ed.selection.getNode();
-		var b = sel.getBookmark();
-		var doc = ed.getDoc();
-		var body = ed.getBody();
-
-		// table elements get deleted
-		var table = /^(table|tr|td|th|tbody|thead|tfoot|col|colgroup|caption)$/;
-
-		// elements get deleted
-		var del   = /^(img|script|link|meta|title|hr|object|embed|video|audio)$/;
-
-		// elements get wrapped in source edit mode element
-		var block = /^(p|pre|dl|div|blockquote|form|h[1-6]|fieldset|address|ul|ol)$/;
-
-		// other elements (inline, etc) get appended to previous source
-		// edit mode element
-
-		// detect and remove apple style spans
-		var removeAppleStyleSpans = function(n)
-		{
-			// clean all child nodes
-			var cn = n.firstChild;
-			while (cn) {
-				var next = cn.nextSibling;
-				if (cn.nodeType == 1) {
-					removeAppleStyleSpans(cn);
-				}
-				cn = next;
-			}
-
-			// clean self
-			if (n.className.indexOf('Apple-style-span') != -1) {
-				while (n.firstChild) {
-					n.parentNode.insertBefore(n.firstChild, n);
-				}
-				n.parentNode.removeChild(n);
-			}
-		};
-
-		removeAppleStyleSpans(body);
-
-		// make sure first node is a source edit mode element
-		while (body.firstChild
-			&& (
-				   body.firstChild.nodeType != 1
-				|| body.firstChild.className.indexOf('#mce_source_mode') == -1
-			)
-		) {
-			var name = body.firstChild.nodeName.toLowerCase();
-
-			if (name.match(table) || name.match(del)) {
-				// discard delete nodes or table nodes
-				body.removeChild(body.firstChild);
-			} else {
-				// wrap other nodes in source edit mode element
-				var p = doc.createElement('p');
-				p.className = '#mce_source_mode';
-				p.appendChild(body.firstChild);
-				body.insertBefore(p, body.firstChild);
-			}
-		}
-
-		// clean up node nesting and visiblility
-		var cn = body.firstChild;
-		while (cn) {
-			var next = cn.nextSibling;
-
-			var name = cn.nodeName.toLowerCase();
-
-			if (name.match(table) || name.match(del)) {
-				// discard delete nodes or table nodes
-				body.removeChild(cn);
-			} else if (name.match(block)) {
-				// wrap block nodes in source edit mode element
-				if (cn.className.indexOf('#mce_source_mode') == -1) {
-					var p = doc.createElement('p');
-					p.className = '#mce_source_mode';
-					body.insertBefore(p, cn);
-					p.appendChild(cn);
-				}
-			} else {
-				// append text and/or inline nodes to previousSibling
-				cn.previousSibling.appendChild(cn);
-			}
-
-			cn = next;
-		}
-
-		var convertNodeToPlainText = function(n)
-		{
-			// convert child nodes first
-			cn = n.firstChild;
-			while (cn) {
-				var next = cn.nextSibling;
-				if (cn.nodeType == 1) {
-					convertNodeToPlainText(cn);
-				}
-				cn = next;
-			}
-
-			// only convert non-source-mode nodes and non br nodes
-			if (   n.className.indexOf('#mce_source_mode') == -1
-				&& n.nodeName != 'BR'
-			) {
-
-				// add some whitespace
-				n.parentNode.insertBefore(doc.createTextNode(' '), n);
-
-				// take text nodes out of this node and put them in parent
-				cn = n.firstChild;
-				while (cn) {
-					var next = cn.nextSibling;
-					if (cn.nodeType == 3) {
-						n.parentNode.insertBefore(cn, n);
-					}
-					cn = next;
-				}
-
-				// remove this node
-				n.parentNode.removeChild(n);
-
-			}
-		};
-
-		var cn = body.firstChild;
-		while (cn) {
-			var next = cn.nextSibling;
-			if (cn.nodeType == 1) {
-				convertNodeToPlainText(cn);
-			}
-			cn = next;
-		}
-
-		sel.moveToBookmark(b);
-	},
-
-	// }}}
 	// {{{ tinymce.plugins.SwatPlugin.getInfo()
 
 	getInfo: function()
@@ -1595,64 +1369,6 @@
 	},
 
 	// }}}
-
-	// temp: remove me
-	debug: function(text)
-	{
-		text = text
-			.replace(/&/g, '&amp;')
-			.replace(/</g, '&lt;')
-			.replace(/>/g, '&gt;')
-			.replace(/"/g, '&quot;');
-
-		var pres = document.getElementsByTagName('pre');
-		pres[0].style.whiteSpace = 'normal';
-		pres[0].innerHTML = text;
-	},
-
-	// {{{ tinymce.plugins.SwatPlugin.selectFirstTextNode()
-
-	selectFirstTextNode: function()
-	{
-		var ed = this.editor;
-
-		var findChild = function(el, type)
-		{
-			var node = null;
-
-			for (var i = 0; i < el.childNodes.length; i++) {
-				if (el.childNodes[i].nodeType == type) {
-					// only select non-empty text nodes
-					if (   type != 3
-						|| !el.childNodes[i].nodeValue.match(/^[\r\n\t ]*$/)
-					) {
-						node = el.childNodes[i];
-						break;
-					}
-				} else if (el.childNodes[i].nodeType == 1) {
-					node = findChild(el.childNodes[i], type);
-					if (node !== null) {
-						break;
-					}
-				}
-			}
-
-			return node;
-		};
-
-		var el = ed.getBody();
-		var node = (tinymce.isIE) ? findChild(el, 1) : findChild(el, 3);
-
-		if (node === null) {
-			node = el.firstChild;
-		}
-
-		ed.selection.select(node);
-		ed.selection.collapse(1);
-	}
-
-	// }}}
-
 
 	});
 

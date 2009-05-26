@@ -67,6 +67,8 @@ ul.swat-textarea-editor-mode-switcher li {
 	-webkit-border-bottom-right-radius: 6px;
 	margin: 0 2px;
 	background: #fff url(../../../../../images/swat-textarea-editor-button.png) top left;
+	float: right;
+	zoom: 1; /* IE hack */
 }
 
 .swat-textarea-editor-mode-switcher a span {
@@ -86,4 +88,9 @@ ul.swat-textarea-editor-mode-switcher li {
 
 .swat-textarea-editor-mode-switcher a.selected span {
 	color: #6b5d40;
+}
+
+.swat-textarea-editor-container {
+	position: relative; /* IE hack */
+	zoom: 1; /* IE hack */
 }
