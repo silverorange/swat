@@ -44,7 +44,7 @@ SwatTextarea.prototype.handleOnAvailable = function()
 
 	YAHOO.util.Dom.addClass(this.handle_div, 'swat-textarea-resize-handle');
 
-	if (style_width.indexOf('%') != -1) {
+/*	if (style_width.indexOf('%') != -1) {
 		var left_border = YAHOO.util.Dom.getStyle(this.textarea,
 			'borderLeftWidth');
 
@@ -57,7 +57,23 @@ SwatTextarea.prototype.handleOnAvailable = function()
 	} else {
 		var width = this.textarea.offsetWidth;
 		this.handle_div.style.width = width + 'px';
-	}
+	}*/
+
+	this.handle_div.style.width = '100%';
+
+	this.handle_div.style.paddingLeft = YAHOO.util.Dom.getStyle(
+		this.textarea,
+		'borderLeftWidth'
+	);
+
+	this.handle_div.style.paddingRight = YAHOO.util.Dom.getStyle(
+		this.textarea,
+		'borderRightWidth'
+	);
+
+	alert(this.textarea.offsetWidth);
+	alert(this.textarea.scrollWidth);
+	alert(this.textarea.clientWidth);
 
 	this.handle_div.style.height = SwatTextarea.resize_handle_height + 'px';
 	this.handle_div.style.fontSize = '0'; // for IE6 height
@@ -110,9 +126,9 @@ SwatTextarea.min_height = 20;
 /**
  * Height of the resize handle in pixels
  *
- * @var number
+ * @var Number
  */
-SwatTextarea.resize_handle_height = 7;
+SwatTextarea.resize_handle_height = 9;
 
 // }}}
 // {{{ SwatTextarea.mousedownEventHandler()

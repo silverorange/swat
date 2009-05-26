@@ -1,12 +1,23 @@
-div.swat-textarea-container textarea {
+div.swat-textarea-container {
+	width: 95%;
+/*	background: #faa;*/
+/*	outline: 1px solid #00f;*/
+}
+
+div.swat-textarea-container div textarea {
 	margin: 0;
 	padding: 0;
+	display: block;
+/*	border: 3px solid #0f0;*/
 }
 
 div.swat-textarea-resize-handle {
 	background: #f8f6f0 url(../images/swat-textarea-resize-handle.png) center center no-repeat;
 	border-bottom: 1px solid #dcceb2;
+	cursor: s-resize;
+/*	margin: 0 -6px 0 0;*/
 	margin: 0;
 	padding: 0;
-	cursor: s-resize;
+/*	padding: 0 6px 0 0;*/
+	overflow: hidden;
 }
