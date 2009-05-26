@@ -197,24 +197,24 @@
 
 		this.onConfirm = new Dispatcher(this);
 		this.onCancel  = new Dispatcher(this);
-	}
+	};
 
 	Swat.Dialog.prototype.reset = function()
 	{
-	}
+	};
 
 	Swat.Dialog.prototype.focus = function()
 	{
-	}
+	};
 
 	Swat.Dialog.prototype.getData = function()
 	{
 		return {};
-	}
+	};
 
 	Swat.Dialog.prototype.setData = function(data)
 	{
-	}
+	};
 
 	Swat.Dialog.prototype.close = function(confirmed)
 	{
@@ -259,7 +259,7 @@
 		this.reset();
 
 		Event.remove(DOM.doc, 'keydown', this.handleKeyPress);
-	}
+	};
 
 	Swat.Dialog.prototype.open = function(data)
 	{
@@ -315,7 +315,7 @@
 		this.focus();
 
 		Event.add(DOM.doc, 'keydown', this.handleKeyPress, this);
-	}
+	};
 
 	Swat.Dialog.prototype.drawDialog = function()
 	{
@@ -327,14 +327,14 @@
 		this.container.appendChild(this.frame);
 
 		DOM.doc.body.appendChild(this.container);
-	}
+	};
 
 	Swat.Dialog.prototype.drawOverlay = function()
 	{
 		this.overlay = DOM.create('div');
 		this.overlay.className = 'swat-textarea-editor-overlay';
 		DOM.doc.body.appendChild(this.overlay);
-	}
+	};
 
 	Swat.Dialog.prototype.handleKeyPress = function(e)
 	{
@@ -346,14 +346,14 @@
 		if (which == 27) {
 			this.close(false);
 		}
-	}
+	};
 
 	Swat.Dialog.prototype.handleEditorFocus = function(e)
 	{
 		// move focus our of iframe for WebKit browsers
 		window.focus();
 		this.focus();
-	}
+	};
 
 	// }}}
 	// {{{ Swat.LinkDialog
@@ -361,7 +361,7 @@
 	Swat.LinkDialog = function(ed)
 	{
 		Swat.LinkDialog.superclass.constructor.call(this, ed);
-	}
+	};
 
 	Swat.extend(Swat.LinkDialog, Swat.Dialog, {
 
@@ -378,15 +378,15 @@
 	getData: function()
 	{
 		var data = Swat.LinkDialog.superclass.getData.call(this);
-		data['link_uri'] = this.uriEntry.value;
+		data.link_uri = this.uriEntry.value;
 		return data;
 	},
 
 	setData: function(data)
 	{
 		Swat.LinkDialog.superclass.setData.call(this, data);
-		if (data['link_uri']) {
-			this.uriEntry.value = data['link_uri'];
+		if (data.link_uri) {
+			this.uriEntry.value = data.link_uri;
 		}
 	},
 
@@ -455,7 +455,7 @@
 
 		var cancel = DOM.create('input', { type: 'button' });
 		cancel.className = 'swat-button';
-		cancel.value = this.editor.getLang('swat.link_cancel')
+		cancel.value = this.editor.getLang('swat.link_cancel');
 		Event.add(cancel, 'click', function(e)
 		{
 			this.close(false);
@@ -491,7 +491,7 @@
 	Swat.ImageDialog = function(ed)
 	{
 		Swat.ImageDialog.superclass.constructor.call(this, ed);
-	}
+	};
 
 	Swat.extend(Swat.ImageDialog, Swat.Dialog, {
 
@@ -509,8 +509,8 @@
 	getData: function()
 	{
 		var data = Swat.ImageDialog.superclass.getData.call(this);
-		data['image_src'] = this.srcEntry.value;
-		data['image_alt'] = this.altEntry.value;
+		data.image_src = this.srcEntry.value;
+		data.image_alt = this.altEntry.value;
 		return data;
 	},
 
@@ -518,12 +518,12 @@
 	{
 		Swat.ImageDialog.superclass.setData.call(this, data);
 
-		if (data['image_src']) {
-			this.srcEntry.value = data['image_src'];
+		if (data.image_src) {
+			this.srcEntry.value = data.image_src;
 		}
 
-		if (data['image_alt']) {
-			this.altEntry.value = data['image_alt'];
+		if (data.image_alt) {
+			this.altEntry.value = data.image_alt;
 		}
 	},
 
@@ -622,7 +622,7 @@
 
 		var cancel = DOM.create('input', { type: 'button' });
 		cancel.className = 'swat-button';
-		cancel.value = this.editor.getLang('swat.image_cancel')
+		cancel.value = this.editor.getLang('swat.image_cancel');
 		Event.add(cancel, 'click', function(e)
 		{
 			this.close(false);
@@ -659,7 +659,7 @@
 	Swat.SnippetDialog = function(ed)
 	{
 		Swat.SnippetDialog.superclass.constructor.call(this, ed);
-	}
+	};
 
 	Swat.extend(Swat.SnippetDialog, Swat.Dialog, {
 
@@ -676,7 +676,7 @@
 	getData: function()
 	{
 		var data = Swat.SnippetDialog.superclass.getData.call(this);
-		data['snippet'] = this.snippetEntry.value;
+		data.snippet = this.snippetEntry.value;
 		return data;
 	},
 
@@ -720,7 +720,7 @@
 
 		var cancel = DOM.create('input', { type: 'button' });
 		cancel.className = 'swat-button';
-		cancel.value = this.editor.getLang('swat.snippet_cancel')
+		cancel.value = this.editor.getLang('swat.snippet_cancel');
 		Event.add(cancel, 'click', function(e)
 		{
 			this.close(false);
@@ -760,6 +760,8 @@
 	init: function(ed, url)
 	{
 		this.editor = ed;
+
+		var that = this;
 
 		// after rendering UI, draw source mode and tabs for visual editor
 		ed.onPostRender.add(this.drawSourceMode, this);
@@ -811,29 +813,28 @@
 		};
 
 		// dialog close handler for link dialog
-		this.dialogs['link'].onConfirm.add(function(dialog, data)
+		this.dialogs.link.onConfirm.add(function(dialog, data)
 		{
-			var uri = data['link_uri'];
+			var uri = data.link_uri;
 			this.insertLink(uri);
 		}, this);
 
 		// dialog close handler for image dialog
-		this.dialogs['image'].onConfirm.add(function(dialog, data)
+		this.dialogs.image.onConfirm.add(function(dialog, data)
 		{
-			var src = data['image_src'];
-			var alt = data['image_alt'];
+			var src = data.image_src;
+			var alt = data.image_alt;
 			this.insertImage(src, alt);
 		}, this);
 
 		// dialog close handler for snippet dialog
-		this.dialogs['snippet'].onConfirm.add(function(dialog, data)
+		this.dialogs.snippet.onConfirm.add(function(dialog, data)
 		{
-			var content = data['snippet'];
+			var content = data.snippet;
 			this.insertSnippet(content);
 		}, this);
 
 		// link button
-		var that = this;
 		ed.addCommand('mceSwatLink', function()
 		{
 			var sel = ed.selection;
@@ -847,37 +848,35 @@
 			var uri = ed.dom.getAttrib(sel.getNode(), 'href');
 
 			var data = { 'link_uri':  uri };
-			that.dialogs['link'].open(data);
+			that.dialogs.link.open(data);
 		});
 
 		// image button
-		var that = this;
 		ed.addCommand('mceSwatImage', function()
 		{
-			var sel = ed.selection;
+			var data, sel = ed.selection;
 
 			// if an image is selected, get its attributes
 			var el = ed.dom.getParent(sel.getNode(), 'IMG');
 			if (el) {
 				// get existing image data
-				var data = {
+				data = {
 					'image_src': ed.dom.getAttrib(el, 'src'),
 					'image_alt': ed.dom.getAttrib(el, 'alt')
 				};
 			} else {
 				// new image
-				var data = {};
+				data = {};
 			}
 
-			that.dialogs['image'].open(data);
+			that.dialogs.image.open(data);
 		});
 
 		// snippet button
-		var that = this;
 		ed.addCommand('mceSwatSnippet', function()
 		{
 			var data = {};
-			that.dialogs['snippet'].open(data);
+			that.dialogs.snippet.open(data);
 		});
 
 		// register link button
@@ -947,7 +946,7 @@
 		ed.execCommand('mceBeginUndoLevel');
 
 		// create new anchor elements
-		if (el == null) {
+		if (el === null) {
 
 			ed.getDoc().execCommand('unlink', false, null);
 
@@ -999,7 +998,7 @@
 		ed.execCommand('mceBeginUndoLevel');
 
 		// create new img elements
-		if (el == null) {
+		if (el === null) {
 
 			ed.execCommand(
 				'InsertImage',
@@ -1081,17 +1080,17 @@
 		ed.focus();
 		if (cursorNode) {
 			var split = cursorNode.nodeValue.split('#mce_temp_cursor#', 2);
-			if (split[0] == '' && split[1] == '') {
+			if (split[0] === '' && split[1] === '') {
 				var node = ed.getDoc().createTextNode('');
 				cursorNode.parentNode.replaceChild(node, cursorNode);
 				ed.selection.select(node);
 				ed.selection.collapse(false);
-			} else if (split[0] == '') {
+			} else if (split[0] === '') {
 				var node = ed.getDoc().createTextNode(split[1]);
 				cursorNode.parentNode.replaceChild(node, cursorNode);
 				ed.selection.select(node);
 				ed.selection.collapse(true);
-			} else if (split[1] == '') {
+			} else if (split[1] === '') {
 				var node = ed.getDoc().createTextNode(split[0]);
 				cursorNode.parentNode.replaceChild(node, cursorNode);
 				ed.selection.select(node);
