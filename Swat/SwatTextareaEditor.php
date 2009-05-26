@@ -18,9 +18,12 @@ require_once 'Swat/SwatYUI.php';
  */
 class SwatTextareaEditor extends SwatTextarea
 {
+	// {{{ class constants
+
 	const MODE_VISUAL = 1;
 	const MODE_SOURCE = 2;
 
+	// }}}
 	// {{{ public properties
 
 	/**
@@ -103,7 +106,7 @@ class SwatTextareaEditor extends SwatTextarea
 		$value = htmlspecialchars($value);
 
 		$div_tag = new SwatHtmlTag('div');
-		$div_tag->class = 'swat-textarea-container';
+		$div_tag->class = 'swat-textarea-editor-container';
 		$div_tag->open();
 
 		$textarea_tag = new SwatHtmlTag('textarea');
