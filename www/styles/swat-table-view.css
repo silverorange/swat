@@ -60,8 +60,8 @@ table.swat-table-view th.swat-money-cell-renderer {
 	background-image: url(../images/swat-table-view-cell-error-background.png);
 }
 
-.swat-table-view td.swat-error * {
-	border: #dc6e66 solid 2px;
+.swat-table-view td.swat-error {
+	background: #dc6e66;
 }
 
 tr.swat-table-view-input-row-messages {
