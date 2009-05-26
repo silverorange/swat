@@ -1125,7 +1125,6 @@
 		this.sourceContainer.style.display  = 'none';
 		this.sourceContainer.style.zIndex   = '3';
 		this.sourceContainer.style.position = 'absolute';
-		this.sourceContainer.style.backgroundColor = '#acf';
 
 		// add container to document
 		el.parentNode.replaceChild(this.sourceContainer, el);
@@ -1337,6 +1336,14 @@
 			}
 		}
 
+		// get style of iframe body to compute bg color
+		var bgElement = ed.getBody().firstChild || ed.getBody();
+		var style = (tinymce.isIE) ?
+			bgElement.currentStyle :
+			getComputedStyle(bgElement, null);
+
+		var bgColor = style.backgroundColor;
+
 		// get editor iframe for geometry
 		var iframe = ed.getWin().frameElement;
 
@@ -1358,6 +1365,9 @@
 		this.sourceContainer.style.height   = h + 'px';
 		this.sourceContainer.style.left     = '1px'; // TODO: get correct position
 		this.sourceContainer.style.top      = '30px'; // TODO: get correct position
+
+		// set background color
+		this.sourceContainer.style.backgroundColor = bgColor;
 
 		// display textarea
 		this.sourceContainer.style.display  = 'block';
