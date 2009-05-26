@@ -1372,7 +1372,7 @@
 		this.sourceContainer.style.top      = '30px'; // TODO: get correct position
 
 		// set background color
-		this.sourceContainer.style.backgroundColor = '#acf';
+		this.sourceContainer.style.backgroundColor = bgColor;
 
 		// display textarea
 		this.sourceContainer.style.display  = 'block';
