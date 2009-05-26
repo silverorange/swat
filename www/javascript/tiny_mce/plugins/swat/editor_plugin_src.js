@@ -789,6 +789,15 @@
 			}
 		}, this);
 
+		// if the form is submitted in source mode, push changes back to
+		// visual editor before the regular form submit hook runs
+		ed.onSubmit.addToTop(function(ed, e)
+		{
+			if (this.mode == Swat.MODE_SOURCE) {
+				this.setVisualMode();
+			}
+		}, this);
+
 		// load plugin CSS
 		ed.onBeforeRenderUI.add(function()
 		{
