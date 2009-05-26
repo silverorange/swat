@@ -1101,6 +1101,7 @@
 	},
 
 	// }}}
+	// {{{ tinymce.plugins.SwatPlugin.drawSourceMode()
 
 	drawSourceMode: function(ed)
 	{
@@ -1118,6 +1119,7 @@
 		el.style.outline     = 'none'; // For WebKit
 		el.style.padding     = '1px';
 		el.style.width       = '99.5%';
+		el.style.maxWidth    = '99.5%';
 
 		this.sourceContainer = document.createElement('div');
 
@@ -1136,6 +1138,7 @@
 		this.drawModeSwitcher(ed);
 	},
 
+	// }}}
 	// {{{ tinymce.plugins.SwatPlugin.drawModeSwitcher()
 
 	drawModeSwitcher: function(ed)
@@ -1369,7 +1372,7 @@
 		this.sourceContainer.style.top      = '30px'; // TODO: get correct position
 
 		// set background color
-		this.sourceContainer.style.backgroundColor = bgColor;
+		this.sourceContainer.style.backgroundColor = '#acf';
 
 		// display textarea
 		this.sourceContainer.style.display  = 'block';
