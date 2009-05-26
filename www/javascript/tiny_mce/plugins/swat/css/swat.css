@@ -56,6 +56,7 @@ ul.swat-textarea-editor-mode-switcher li {
 
 .swat-textarea-editor-mode-switcher a {
 	position: relative;
+	display: block;
 	top: -1px;
 	padding: 3px 6px;
 	border: 1px solid #dcceb2;
@@ -67,6 +68,10 @@ ul.swat-textarea-editor-mode-switcher li {
 	margin: 0 2px;
 	background: #fff url(../../../../../images/swat-textarea-editor-button.png) top left;
 	zoom: 1; /* IE hack */
+}
+
+* html .swat-textarea-editor-mode-switcher a {
+	display: inline; /* for IE6 */
 }
 
 .swat-textarea-editor-mode-switcher a span {
