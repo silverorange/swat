@@ -67,7 +67,6 @@ ul.swat-textarea-editor-mode-switcher li {
 	-webkit-border-bottom-right-radius: 6px;
 	margin: 0 2px;
 	background: #fff url(../../../../../images/swat-textarea-editor-button.png) top left;
-	float: right;
 	zoom: 1; /* IE hack */
 }
 
