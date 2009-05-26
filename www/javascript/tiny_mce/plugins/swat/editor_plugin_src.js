@@ -1199,7 +1199,13 @@
 			if (focus) {
 				var el = this.editor.getElement();
 				el.focus();
-				el.setSelectionRange(0, 0);
+				if (el.setSelectionRange) {
+					el.setSelectionRange(0, 0);
+				} else {
+					var r = el.createTextRange();
+					r.collapse(true);
+					r.moveToPoint(0);
+				}
 			}
 		}, this);
 
