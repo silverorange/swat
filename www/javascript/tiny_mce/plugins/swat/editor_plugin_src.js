@@ -1161,7 +1161,14 @@
 		Event.add(visualLink, 'click', function(e)
 		{
 			Event.prevent(e);
-			this.setVisualMode(true);
+			var focus = (this.mode != Swat.MODE_VISUAL);
+
+			this.setVisualMode();
+
+			// focus visual editor
+			if (focus) {
+				this.editor.focus();
+			}
 		}, this);
 
 		var visualListItem = document.createElement('li');
@@ -1183,7 +1190,17 @@
 		Event.add(sourceLink, 'click', function(e)
 		{
 			Event.prevent(e);
-			this.setSourceMode(true);
+
+			var focus = (this.mode != Swat.MODE_SOURCE);
+
+			this.setSourceMode();
+
+			// focus source editor
+			if (focus) {
+				var el = this.editor.getElement();
+				el.focus();
+				el.setSelectionRange(0, 0);
+			}
 		}, this);
 
 		var sourceListItem = document.createElement('li');
@@ -1274,9 +1291,6 @@
 		var el = ed.getElement();
 		ed.setContent(el.value);
 
-		// give visual editor focus
-		ed.focus();
-
 		this.mode = Swat.MODE_VISUAL;
 		var modeStateEl = document.getElementById(ed.id + '_mode');
 		if (modeStateEl) {
@@ -1342,9 +1356,6 @@
 		// display textarea
 		this.sourceContainer.style.display  = 'block';
 
-		// give textarea focus
-		el.focus();
-
 		this.mode = Swat.MODE_SOURCE;
 		var modeStateEl = document.getElementById(ed.id + '_mode');
 		if (modeStateEl) {
@@ -1375,7 +1386,7 @@
 			authorurl: 'http://www.silverorange.com/',
 			version:   '1.0'
 		};
-	},
+	}
 
 	// }}}
 
