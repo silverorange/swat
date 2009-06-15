@@ -221,25 +221,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 		$tile_view_tag->class = $this->getCSSClassString();
 		$tile_view_tag->open();
 
-		$this->model->rewind();
-		$row = ($this->model->valid()) ? $this->model->current() : null;
-
-		$this->model->next();
-		$next_row = ($this->model->valid()) ? $this->model->current() : null;
-
-		while ($row !== null) {
-			foreach ($this->groups as $group)
-				$group->display($row);
-
-			$this->tile->display($row);
-
-			foreach ($this->groups as $group)
-				$group->displayFooter($row, $next_row);
-
-			$row = $next_row;
-			$this->model->next();
-			$next_row = ($this->model->valid()) ? $this->model->current() : null;
-		}
+		$this->displayTiles();
 
 		if ($this->showCheckAll()) {
 			$check_all = $this->getCompositeWidget('check_all');
@@ -263,6 +245,82 @@ class SwatTileView extends SwatView implements SwatUIParent
 		$tile_view_tag->close();
 
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+	}
+
+	// }}}
+	// {{{ public function displayTiles()
+
+	/**
+	 * Displays the tiles of this tile view
+	 */
+	public function displayTiles()
+	{
+		// this uses read-ahead iteration
+
+		$this->model->rewind();
+		$record = ($this->model->valid()) ? $this->model->current() : null;
+
+		$this->model->next();
+		$next_record = ($this->model->valid()) ? $this->model->current() : null;
+
+		while ($record !== null) {
+
+			$this->displayTileGroupHeaders($record, $next_record);
+			$this->displayTile($record, $next_record);
+			$this->displayTileGroupFooters($record, $next_record);
+
+			$record = $next_record;
+			$this->model->next();
+			$next_record = ($this->model->valid()) ?
+				$this->model->current() : null;
+		}
+	}
+
+	// }}}
+	// {{{ public function displayTile()
+
+	/**
+	 * Displays a simgle tile of this tile view
+	 *
+	 * @param mixed $record the record to display.
+	 * @param mixed $next_record the next record to display. If there is no
+	 *                            next record, this is null.
+	 */
+	public function displayTile($record, $next_record)
+	{
+		$this->tile->display($record);
+	}
+
+	// }}}
+	// {{{ public function displayTileGroupHeaders()
+
+	/**
+	 * Displays time group headers
+	 *
+	 * @param mixed $record the record to display.
+	 * @param mixed $next_record the next record to display. If there is no
+	 *                            next record, this is null.
+	 */
+	public function displayTileGroupHeaders($record, $next_record)
+	{
+		foreach ($this->groups as $group)
+			$group->display($record);
+	}
+
+	// }}}
+	// {{{ public function displayTileGroupFooters()
+
+	/**
+	 * Displays time group footers
+	 *
+	 * @param mixed $record the record to display.
+	 * @param mixed $next_record the next record to display. If there is no
+	 *                            next record, this is null.
+	 */
+	public function displayTileGroupFooters($record, $next_record)
+	{
+		foreach ($this->groups as $group)
+			$group->displayFooter($record, $next_record);
 	}
 
 	// }}}
