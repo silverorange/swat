@@ -178,7 +178,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		// Show clear div if columns are used
 		if ($columns > 1)
-			echo '<div style="clear: left;"></div>';
+			echo '<div class="swat-clear"></div>';
 
 		$check_all->display();
 

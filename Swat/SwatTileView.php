@@ -238,7 +238,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 		}
 
 		$clear_div_tag = new SwatHtmlTag('div');
-		$clear_div_tag->style = 'clear: left;';
+		$clear_div_tag->class = 'swat-clear';
 		$clear_div_tag->setContent('');
 		$clear_div_tag->display();
 

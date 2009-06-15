@@ -1,5 +1,7 @@
 .swat-hidden { display: none; }
 
+.swat-clear { clear: both; }
+
 img.swat-image-cell-renderer { vertical-align: middle; }
 
 .swat-none {
