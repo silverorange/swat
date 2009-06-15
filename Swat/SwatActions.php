@@ -162,7 +162,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 		// flydown is never reset if there is a selected item and the selected
 		// items has a widget with one or more messages.
 		if ($this->auto_reset &&
-			($this->selected !== null || $this->selected->widget !== null ||
+			($this->selected === null || $this->selected->widget === null ||
 			!$this->selected->widget->hasMessage())) {
 			$flydown->reset();
 		}
