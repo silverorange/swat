@@ -295,7 +295,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	// {{{ public function displayTileGroupHeaders()
 
 	/**
-	 * Displays time group headers
+	 * Displays tile group headers
 	 *
 	 * @param mixed $record the record to display.
 	 * @param mixed $next_record the next record to display. If there is no
@@ -311,7 +311,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	// {{{ public function displayTileGroupFooters()
 
 	/**
-	 * Displays time group footers
+	 * Displays tile group footers
 	 *
 	 * @param mixed $record the record to display.
 	 * @param mixed $next_record the next record to display. If there is no
