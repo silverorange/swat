@@ -115,7 +115,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
 		$this->displayButtons();
 
-		echo '<div style="clear: both;"></div>';
+		echo '<div class="swat-clear"></div>';
 
 		$values = array();
 		foreach ($ordered_options as $option) {
