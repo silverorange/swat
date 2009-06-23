@@ -75,6 +75,11 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	public $dependent_boxes = true;
 
 	// }}}
+	// {{{ protected properties
+
+	protected $checked_parents = array();
+
+	// }}}
 	// {{{ public function __construct()
 
 	/**
@@ -122,10 +127,12 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 
 		$div_tag->open();
 
-		if ($this->tree !== null)
+		if ($this->tree !== null) {
+			$this->checked_parents = $this->values;
 			$num_nodes = $this->displayNode($this->tree);
-		else
+		} else {
 			$num_nodes = 0;
+		}
 
 		$div_tag->close();
 
@@ -226,6 +233,8 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 					// show a checkbox just for the check-all functionality
 					$this->input_tag->id = $this->id.'_'.$index;
 					$this->input_tag->value = null;
+					$this->input_tag->checked = ($this->nodeIsChecked($node)) ?
+						'checked' : null;
 
 					if (!$this->isSensitive())
 						$this->input_tag->disabled = 'disabled';
@@ -250,11 +259,8 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			} else {
 				$this->input_tag->id = $this->id.'_'.$index;
 				$this->input_tag->value = $node->value;
-
-				if (in_array($node->value, $this->values))
-					$this->input_tag->checked = 'checked';
-				else
-					$this->input_tag->checked = null;
+				$this->input_tag->checked = ($this->nodeIsChecked($node)) ?
+					'checked' : null;
 
 				if (!$this->isSensitive())
 					$this->input_tag->disabled = 'disabled';
@@ -300,6 +306,39 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			$nodes++;
 
 		return $nodes;
+	}
+
+	// }}}
+	// {{{ private function nodeIsChecked()
+
+	/**
+	 * Check whether the checkbox should be checked
+	 *
+	 * @param SwatDataTreeNode $node the node to check.
+	 *
+	 * @return boolean Whether the checkbox is checked or not.
+	 */
+	private function nodeIsChecked(SwatDataTreeNode $node)
+	{
+		$checked = false;
+
+		if (in_array($node->value, $this->values)) {
+			$checked = true;
+		} elseif ($this->dependent_boxes && $node->getParent() !== null) {
+			if (in_array($node->value, $this->checked_parents)) {
+				$checked = true;
+			} else {
+				$checked = $this->nodeIsChecked($node->getParent());
+
+				if ($checked) {
+					// cache checked parents to make recursion faster
+					$this->checked_parents[$node->value] = $node->value;
+				}
+			}
+		}
+
+
+		return $checked;
 	}
 
 	// }}}
