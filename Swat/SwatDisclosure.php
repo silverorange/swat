@@ -95,7 +95,7 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$animate_div->close();
 		$container_div->close();
 
-		Swat::displayInlineJavaScript($this->getInlineJavascript());
+		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 
 		$control_div->close();
 	}
