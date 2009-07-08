@@ -146,6 +146,14 @@ a.swat-expandable-checkbox-tree-anchor-closed {
 	padding: 0;
 }
 
+.swat-expandable-checkbox-tree ul li {
+	margin-left: 16px;
+}
+
+.swat-expandable-checkbox-tree ul li.swat-expandable-checkbox-tree-expander {
+	margin-left: 0;
+}
+
 .swat-expandable-checkbox-tree ul li ul li {
 	margin-left: 36px;
 }
