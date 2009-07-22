@@ -493,27 +493,77 @@ class SwatString extends SwatObject
 		// remove tags and make lowercase
 		$string = strip_tags(strtolower($string));
 
-		// remove html entities, convert non-alpha-numeric characters to spaces
-		// and condense whitespace
-		$search = array('/&#?\w+;/u', '/[^a-z0-9 ]/u', '/\s+/u');
-		$replace = array('', ' ', ' ');
+		if (class_exists('Net_IDNA')) {
+			// we have Net_IDNA, convert words to punycode
 
-		$string = preg_replace($search, $replace, $string);
+			// convert entities to utf-8
+			$string = self::minimizeEntities($string);
 
-		$string_exp = explode(' ', $string);
+			// convert non-alpha-numeric ascii characters to spaces and
+			// condense whitespace
+			$search = array(
+				'/[\x00-\x1f\x21-\x2f\x3a-\x40\x5b-\x60\x7b-\x7e]/u',
+				'/\s+/u',
+			);
+			$replace = array(' ', ' ');
+			$string = preg_replace($search, $replace, $string);
 
-		// first word too long, so forced to chop it
-		if (strlen($string_exp[0]) >= $max_length)
-			return substr($string_exp[0], 0 , $max_length);
+			// remove leading and tailing whitespace that may have been added
+			// during preg_replace()
+			$string = trim($string);
 
-		$string_out = '';
+			$idna = Net_IDNA::getInstance();
 
-		foreach ($string_exp as $word) {
-			// this word would push us over the limit
-			if (strlen($string_out) + strlen($word) > $max_length)
-				return $string_out;
+			// split into words
+			$string_utf8_exp = explode(' ', $string);
 
-			$string_out .= $word;
+			// convert words into punycode
+			$first = true;
+			$string_out = '';
+			foreach ($string_utf8_exp as $string_utf8) {
+
+				$encoded_word = $idna->encode($string_utf8);
+
+				if ($first) {
+					// first word too long, so forced to chop it
+					if (strlen($encoded_word) >= $max_length)
+						return substr($encoded_word, 0 , $max_length);
+
+					$first = false;
+				}
+
+				// this word would push us over the limit
+				if (strlen($string_out) + strlen($encoded_word) > $max_length)
+					return $string_out;
+
+				$string_out .= $encoded_word;
+			}
+
+		} else {
+			// remove html entities, convert non-alpha-numeric characters to
+			// spaces and condense whitespace
+			$search = array('/&#?\w+;/u', '/[^a-z0-9 ]/u', '/\s+/u');
+			$replace = array('', ' ', ' ');
+
+			$string = preg_replace($search, $replace, $string);
+
+			// split into words
+			$string_exp = explode(' ', $string);
+
+			// first word too long, so forced to chop it
+			if (strlen($string_exp[0]) >= $max_length)
+				return substr($string_exp[0], 0 , $max_length);
+
+			$string_out = '';
+
+			// add words to output until it is too long
+			foreach ($string_exp as $word) {
+				// this word would push us over the limit
+				if (strlen($string_out) + strlen($word) > $max_length)
+					return $string_out;
+
+				$string_out .= $word;
+			}
 		}
 
 		return $string_out;
