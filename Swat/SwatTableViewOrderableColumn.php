@@ -62,6 +62,9 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 */
 	public $unset_get_vars = array();
 
+	// }}}
+	// {{{ protected properties
+
 	/**
 	 * The direction of ordering
 	 *
@@ -70,7 +73,10 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 *
 	 * @var integer
 	 */
-	private $direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
+	protected $direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
+
+	// }}}
+	// {{{ private properties
 
 	/**
 	 * The default direction of ordering
@@ -259,6 +265,51 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	}
 
 	// }}}
+	// {{{ protected function getLinkPrefix()
+
+	/**
+	 * Gets the prefix for GET var links
+	 *
+	 * @return string The prefix for GET var links
+	 */
+	protected function getLinkPrefix()
+	{
+		// TODO: is id a required field of table views?
+		return $this->view->id.'_';
+	}
+
+	// }}}
+	// {{{ protected function getNextDirection()
+
+	/**
+	 * Gets the next direction or ordering in the rotation
+	 *
+	 * As a user clicks on the comun headers the direction of ordering changes
+	 * from NONE => ASCSENDING => DESCENDING => NONE in a loop.
+	 *
+	 * @return integer the next direction of ordering for this column.
+	 */
+	protected function getNextDirection()
+	{
+		switch ($this->direction) {
+		case self::ORDER_BY_DIR_NONE:
+			return self::ORDER_BY_DIR_ASCENDING;
+
+		case self::ORDER_BY_DIR_ASCENDING:
+			return self::ORDER_BY_DIR_DESCENDING;
+
+		case self::ORDER_BY_DIR_DESCENDING:
+		default:
+			if ($this->view->default_orderby_column === null)
+				// tri-state
+				return self::ORDER_BY_DIR_NONE;
+			else
+				// bi-state
+				return self::ORDER_BY_DIR_ASCENDING;
+		}
+	}
+
+	// }}}
 	// {{{ private function setDirectionByString()
 
 	/**
@@ -311,9 +362,8 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			if (in_array($name, $this->unset_get_vars))
 				unset($vars[$name]);
 
-		// TODO:: is id a required field for table views?
-		$key_orderby = $this->view->id.'_orderby';
-		$key_orderbydir = $this->view->id.'_orderbydir';
+		$key_orderby = $this->getLinkPrefix().'orderby';
+		$key_orderbydir = $this->getLinkPrefix().'orderbydir';
 
 		unset($vars[$key_orderby]);
 		unset($vars[$key_orderbydir]);
@@ -342,37 +392,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	}
 
 	// }}}
-	// {{{ private function getNextDirection()
-
-	/**
-	 * Gets the next direction or ordering in the rotation
-	 *
-	 * As a user clicks on the comun headers the direction of ordering changes
-	 * from NONE => ASCSENDING => DESCENDING => NONE in a loop.
-	 *
-	 * @return integer the next direction of ordering for this column.
-	 */
-	private function getNextDirection()
-	{
-		switch ($this->direction) {
-		case self::ORDER_BY_DIR_NONE:
-			return self::ORDER_BY_DIR_ASCENDING;
-
-		case self::ORDER_BY_DIR_ASCENDING:
-			return self::ORDER_BY_DIR_DESCENDING;
-
-		case self::ORDER_BY_DIR_DESCENDING:
-		default:
-			if ($this->view->default_orderby_column === null)
-				// tri-state
-				return self::ORDER_BY_DIR_NONE;
-			else
-				// bi-state
-				return self::ORDER_BY_DIR_ASCENDING;
-		}
-	}
-
-	// }}}
 	// {{{ private function initFromGetVariables()
 
 	/**
@@ -380,9 +399,8 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 */
 	private function initFromGetVariables()
 	{
-		// TODO: is id a required field of table views?
-		$key_orderby = $this->view->id.'_orderby';
-		$key_orderbydir = $this->view->id.'_orderbydir';
+		$key_orderby = $this->getLinkPrefix().'orderby';
+		$key_orderbydir = $this->getLinkPrefix().'orderbydir';
 
 		if (isset($_GET[$key_orderby]) && $_GET[$key_orderby] == $this->id) {
 			$this->view->orderby_column = $this;
