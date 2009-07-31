@@ -102,7 +102,7 @@ class SwatForm extends SwatDisplayableContainer
 	 * or null if the button is not set.
 	 *
 	 * You usually do not want to explicitly set this in your code because
-	 * other parts of Swat set this proprety automatically.
+	 * other parts of Swat set this property automatically.
 	 *
 	 * @var SwatButton
 	 */
