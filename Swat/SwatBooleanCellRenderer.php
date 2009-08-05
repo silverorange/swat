@@ -86,8 +86,8 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 
 		switch ($stock_id) {
 		case 'yes-no':
-			$false_content = 'No';
-			$true_content = 'Yes';
+			$false_content = Swat::_('No');
+			$true_content = Swat::_('Yes');
 			break;
 
 		case 'check-only':
