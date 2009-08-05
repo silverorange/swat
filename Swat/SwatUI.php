@@ -652,7 +652,7 @@ class SwatUI extends SwatObject
 			$translatable =
 				$property_node->getAttribute('translatable') == 'yes';
 		} else {
-			$translatable = 'no';
+			$translatable = false;
 		}
 
 		// type is optional in the schema
