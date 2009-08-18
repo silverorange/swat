@@ -117,8 +117,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		parent::display();
 
-		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
-
 		// outer div is required because the check-all widget is outside the
 		// unordered list
 		$div_tag = new SwatHtmlTag('div');
@@ -195,14 +193,19 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	 */
 	public function process()
 	{
-		$form = $this->getForm();
-
-		if ($form->getHiddenField($this->id.'_submitted') === null)
+		if (!$this->getForm()->isSubmitted())
 			return;
 
 		parent::process();
 
 		$this->processValues();
+
+		if ($this->required && count($this->values) == 0
+			&& $this->isSensitive()) {
+
+			$message = Swat::_('The %s field is required.');
+			$this->addMessage(new SwatMessage($message, 'error'));
+		}
 	}
 
 	// }}}
