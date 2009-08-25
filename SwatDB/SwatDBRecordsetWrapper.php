@@ -678,6 +678,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 *
 	 * @throws SwatDBException if this recordset does not define an index
 	 *                         field.
+	 *
+	 * @return SwatDBRecordsetWrapper a wrapper of the sub-recordsets, or null.
 	 */
 	public function loadAllSubRecordsets($name, $wrapper,
 		$table, $binding_field, $where = '', $order_by = '')
@@ -734,6 +736,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 			}
 			$current_recordset->add($record);
 		}
+
+		return $recordset;
 	}
 
 	// }}}
