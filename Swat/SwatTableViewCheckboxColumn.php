@@ -149,7 +149,8 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 	{
 		parent::process();
 
-		$this->check_all->process();
+		if ($this->show_check_all)
+			$this->check_all->process();
 
 		// this is part of the old selection API
 		$item_name = $this->getCheckboxRendererId();
