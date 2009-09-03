@@ -178,29 +178,7 @@ class SwatTextareaEditor extends SwatTextarea
 
 	protected function getInlineJavaScript()
 	{
-		$buttons = array(
-			'bold',
-			'italic',
-			'|',
-			'formatselect',
-			'|',
-			'removeformat',
-			'|',
-			'undo',
-			'redo',
-			'|',
-			'outdent',
-			'indent',
-			'|',
-			'bullist',
-			'numlist',
-			'|',
-			'link',
-			'image',
-			'snippet',
-		);
-
-		$buttons = implode(',', $buttons);
+		$buttons = implode(',', $this->getInlineJavaScriptButtons());
 
 		$formats = array(
 			'p',
@@ -248,6 +226,34 @@ class SwatTextareaEditor extends SwatTextarea
 		echo "\n});";
 
 		return ob_get_clean();
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScriptButtons()
+
+	protected function getInlineJavaScriptButtons()
+	{
+		return array(
+			'bold',
+			'italic',
+			'|',
+			'formatselect',
+			'|',
+			'removeformat',
+			'|',
+			'undo',
+			'redo',
+			'|',
+			'outdent',
+			'indent',
+			'|',
+			'bullist',
+			'numlist',
+			'|',
+			'link',
+			'image',
+			'snippet',
+		);
 	}
 
 	// }}}
