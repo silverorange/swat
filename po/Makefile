@@ -11,7 +11,7 @@ INSTALL = install
 INSTALLDIR = mkdir -p
 DATA_MODE = 660
 
-TRANSLATIONS := en_CA en_US en_GB
+TRANSLATIONS := en_CA en_US en_GB de_DE
 MO_FILES := $(patsubst %,%.mo, $(TRANSLATIONS))
 
 POTFILE = $(DOMAIN).pot
