@@ -29,20 +29,24 @@ class SwatTextareaEditor extends SwatTextarea
 	/**
 	 * Width of the editor
 	 *
-	 * Specified in CSS units (percent, pixels, ems, etc).
+	 * Specified in CSS units (percent, pixels, ems, etc). If not specified,
+	 * the {@link SwatTextarea::$cols} property will determine the width of
+	 * the editor.
 	 *
 	 * @var string
 	 */
-	public $width = '100%';
+	public $width = null;
 
 	/**
 	 * Height of the editor
 	 *
-	 * Specified in CSS units (percent, pixels, ems, etc).
+	 * Specified in CSS units (percent, pixels, ems, etc). If not specified,
+	 * the {@link SwatTextarea::$rows} property will determine the height of
+	 * the editor.
 	 *
 	 * @var string
 	 */
-	public $height = '25em';
+	public $height = null;
 
 	/**
 	 * Base-Href
@@ -119,6 +123,20 @@ class SwatTextareaEditor extends SwatTextarea
 		$textarea_tag->cols = $this->cols;
 		$textarea_tag->setContent($value);
 		$textarea_tag->accesskey = $this->access_key;
+
+		// set element styles if width and/or height are specified
+		if ($this->width !== null || $this->height !== null) {
+			if ($this->width !== null && $this->height !== null) {
+				$textarea_tag->style = sprintf('width: %s; height: %s;',
+					$this->width, $this->height);
+			} elseif ($this->width !== null) {
+				$textarea_tag->style = sprintf('width: %s;',
+					$this->width);
+			} else {
+				$textarea_tag->style = sprintf('height: %s;',
+					$this->height);
+			}
+		}
 
 		if (!$this->isSensitive())
 			$textarea_tag->disabled = 'disabled';
