@@ -1,0 +1,672 @@
+# German (Germany) translation of the Swat package.
+# Copyright (C) 2009 silverorange
+# This file is distributed under the same license as the Swat package.
+# silverorange <slice@silverorange.com>, 2009.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-03 10:58-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: ../Swat/SwatToolLink.php.gettext:189 ../Swat/SwatMenuItem.php.gettext:233
+#: ../Swat/SwatButton.php.gettext:259
+msgid "Create"
+msgstr ""
+
+#: ../Swat/SwatToolLink.php.gettext:194 ../Swat/SwatMenuItem.php.gettext:238
+#: ../Swat/SwatButton.php.gettext:264
+msgid "Add"
+msgstr ""
+
+#: ../Swat/SwatToolLink.php.gettext:199 ../Swat/SwatMenuItem.php.gettext:243
+msgid "Edit"
+msgstr ""
+
+#: ../Swat/SwatToolLink.php.gettext:204 ../Swat/SwatMenuItem.php.gettext:248
+#: ../Swat/SwatButton.php.gettext:274
+msgid "Delete"
+msgstr ""
+
+#: ../Swat/SwatToolLink.php.gettext:209 ../Swat/SwatColorEntry.php.gettext:308
+#: ../Swat/SwatButton.php.gettext:279
+msgid "Cancel"
+msgstr ""
+
+#: ../Swat/SwatToolLink.php.gettext:214 ../Swat/SwatMenuItem.php.gettext:253
+msgid "Preview"
+msgstr ""
+
+#: ../Swat/SwatToolLink.php.gettext:219 ../Swat/SwatMenuItem.php.gettext:258
+msgid "Change Order"
+msgstr ""
+
+#: ../Swat/SwatToolLink.php.gettext:224 ../Swat/SwatMenuItem.php.gettext:263
+msgid "Help"
+msgstr ""
+
+#: ../Swat/SwatToolLink.php.gettext:229 ../Swat/SwatMenuItem.php.gettext:268
+msgid "Print"
+msgstr ""
+
+#: ../Swat/SwatToolLink.php.gettext:234 ../Swat/SwatMenuItem.php.gettext:273
+msgid "Email"
+msgstr ""
+
+#: ../Swat/SwatCascadeFlydown.php.gettext:184
+msgid "choose one ..."
+msgstr ""
+
+#: ../Swat/SwatCascadeFlydown.php.gettext:226
+msgid "choose one …"
+msgstr ""
+
+#: ../Swat/SwatYesNoRadioList.php.gettext:36
+#: ../Swat/SwatYesNoFlydown.php.gettext:36
+#: ../Swat/SwatBooleanCellRenderer.php.gettext:89
+msgid "No"
+msgstr ""
+
+#: ../Swat/SwatYesNoRadioList.php.gettext:37
+#: ../Swat/SwatYesNoFlydown.php.gettext:37
+#: ../Swat/SwatBooleanCellRenderer.php.gettext:90
+#: ../Swat/SwatBooleanCellRenderer.php.gettext:188
+msgid "Yes"
+msgstr ""
+
+#: ../Swat/SwatTextarea.php.gettext:166 ../Swat/SwatColorEntry.php.gettext:148
+#: ../Swat/SwatDateEntry.php.gettext:358 ../Swat/SwatEntry.php.gettext:260
+#: ../Swat/SwatFileEntry.php.gettext:405
+#: ../Swat/SwatCheckboxList.php.gettext:206
+#: ../Swat/SwatFlydown.php.gettext:156 ../Swat/SwatTimeEntry.php.gettext:363
+#: ../Swat/SwatTimeZoneEntry.php.gettext:136
+#, php-format
+msgid "The %s field is required."
+msgstr ""
+
+#: ../Swat/SwatTextarea.php.gettext:171 ../Swat/SwatEntry.php.gettext:263
+#, php-format
+msgid "The %%s field can be at most %s characters long."
+msgstr ""
+
+#: ../Swat/SwatRating.php.gettext:63
+msgid "One Star"
+msgstr ""
+
+#: ../Swat/SwatRating.php.gettext:64
+msgid "Two Stars"
+msgstr ""
+
+#: ../Swat/SwatRating.php.gettext:65
+msgid "Three Stars"
+msgstr ""
+
+#: ../Swat/SwatRating.php.gettext:66
+msgid "Four Stars"
+msgstr ""
+
+#: ../Swat/SwatChangeOrder.php.gettext:169
+msgid "Items can be ordered by dragging-and-dropping with the mouse."
+msgstr ""
+
+#: ../Swat/SwatChangeOrder.php.gettext:282
+msgid "Move to Top"
+msgstr ""
+
+#: ../Swat/SwatChangeOrder.php.gettext:290
+msgid "Move Up"
+msgstr ""
+
+#: ../Swat/SwatChangeOrder.php.gettext:298
+msgid "Move Down"
+msgstr ""
+
+#: ../Swat/SwatChangeOrder.php.gettext:306
+msgid "Move to Bottom"
+msgstr ""
+
+#: ../Swat/SwatXHTMLTextarea.php.gettext:146
+msgid "tag mismatch between"
+msgstr ""
+
+#: ../Swat/SwatXHTMLTextarea.php.gettext:155
+msgid "unescaped ampersand. Use &amp;amp; instead of &amp;"
+msgstr ""
+
+#: ../Swat/SwatXHTMLTextarea.php.gettext:159
+msgid "unescaped less-than. Use &amp;lt; instead of &lt;"
+msgstr ""
+
+#: ../Swat/SwatXHTMLTextarea.php.gettext:163
+msgid "a value is required for the attribute"
+msgstr ""
+
+#: ../Swat/SwatXHTMLTextarea.php.gettext:168
+msgid "the attribute \\1 is not valid for the element \\2"
+msgstr ""
+
+#: ../Swat/SwatXHTMLTextarea.php.gettext:172
+msgid "attribute values must be contained within quotation marks"
+msgstr ""
+
+#: ../Swat/SwatXHTMLTextarea.php.gettext:182
+#, php-format
+msgid "%s must be valid XHTML markup: "
+msgstr ""
+
+#: ../Swat/SwatXHTMLTextarea.php.gettext:204
+msgid "Ignore XHTML validation errors"
+msgstr ""
+
+#: ../Swat/SwatConfirmPasswordEntry.php.gettext:50
+msgid "Password and confirmation password do not match."
+msgstr ""
+
+#: ../Swat/SwatFormField.php.gettext:225
+msgid "required"
+msgstr ""
+
+#: ../Swat/SwatFormField.php.gettext:367
+#, php-format
+msgid "%s: "
+msgstr ""
+
+#: ../Swat/SwatReCaptcha.php.gettext:90
+msgid ""
+"The words you entered did not match the words displayed. Please try again."
+msgstr ""
+
+#: ../Swat/SwatColorEntry.php.gettext:106
+msgid "Color entry toggle graphic."
+msgstr ""
+
+#: ../Swat/SwatColorEntry.php.gettext:299
+msgid "Set Color"
+msgstr ""
+
+#: ../Swat/SwatColorEntry.php.gettext:304
+msgid "Set None"
+msgstr ""
+
+#: ../Swat/SwatIntegerEntry.php.gettext:115
+#, php-format
+msgid "The %s field must be an integer."
+msgstr ""
+
+#: ../Swat/SwatIntegerEntry.php.gettext:118
+#, php-format
+msgid "The %s field must be a whole number."
+msgstr ""
+
+#: ../Swat/SwatIntegerEntry.php.gettext:125
+#, php-format
+msgid "The %s field is too big."
+msgstr ""
+
+#: ../Swat/SwatIntegerEntry.php.gettext:131
+#, php-format
+msgid "The %s field is too small."
+msgstr ""
+
+#: ../Swat/Swat.php.gettext:116
+#, php-format
+msgid "Methods for class %s:"
+msgstr ""
+
+#: ../Swat/Swat.php.gettext:139
+#, php-format
+msgid "Properties for class %s:"
+msgstr ""
+
+#: ../Swat/SwatTableViewOrderableColumn.php.gettext:189
+msgid "Descending"
+msgstr ""
+
+#: ../Swat/SwatTableViewOrderableColumn.php.gettext:194
+msgid "Ascending"
+msgstr ""
+
+#: ../Swat/SwatPagination.php.gettext:172
+msgid "« Previous"
+msgstr ""
+
+#: ../Swat/SwatPagination.php.gettext:173
+msgid "Next »"
+msgstr ""
+
+#: ../Swat/SwatPagination.php.gettext:198
+msgid "record"
+msgstr ""
+
+#: ../Swat/SwatPagination.php.gettext:201
+msgid "records"
+msgstr ""
+
+#: ../Swat/SwatPagination.php.gettext:206
+#, php-format
+msgid "No %s."
+msgstr ""
+
+#: ../Swat/SwatPagination.php.gettext:209
+#, php-format
+msgid "One %s."
+msgstr ""
+
+#: ../Swat/SwatPagination.php.gettext:213
+#, php-format
+msgid "%s %s, displaying %s to %s"
+msgstr ""
+
+#: ../Swat/SwatPagination.php.gettext:329
+#, php-format
+msgid "Page %d of %d"
+msgstr ""
+
+#: ../Swat/SwatPagination.php.gettext:411
+#, php-format
+msgid "Go to page %d"
+msgstr ""
+
+#: ../Swat/SwatEmailEntry.php.gettext:57
+msgid "The email address you have entered is not properly formatted."
+msgstr ""
+
+#: ../Swat/SwatTableViewInputRow.php.gettext:123
+msgid "enter&nbsp;another"
+msgstr ""
+
+#: ../Swat/SwatDateEntry.php.gettext:363 ../Swat/SwatDateEntry.php.gettext:382
+#, php-format
+msgid "The %s field is not a valid date."
+msgstr ""
+
+#: ../Swat/SwatDateEntry.php.gettext:564
+#, php-format
+msgid "The date you have entered is invalid. It must be on or after %s."
+msgstr ""
+
+#: ../Swat/SwatDateEntry.php.gettext:571
+#, php-format
+msgid "The date you have entered is invalid. It must be before %s."
+msgstr ""
+
+#: ../Swat/SwatListEntry.php.gettext:149
+#, php-format
+msgid "The %%s field cannot have more than %s entries."
+msgstr ""
+
+#: ../Swat/SwatListEntry.php.gettext:157
+#, php-format
+msgid "The %%s field must have at least %s entry."
+msgid_plural "The %%s field must have at least %s entries."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatListEntry.php.gettext:176
+#, php-format
+msgid "Entries in the %%s field must be less than %s character long."
+msgid_plural "Entries in the %%s field must be less than %s characters long."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatListEntry.php.gettext:187
+#, php-format
+msgid "Entries in the %%s field must be at least %s character long."
+msgid_plural "Entries in the %%s field must be at least %s characters long."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatListEntry.php.gettext:200
+#, php-format
+msgid "The following entry is too short: %s."
+msgid_plural "The following entries are too short: %s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatListEntry.php.gettext:211
+#, php-format
+msgid "The following entry is too long: %s."
+msgid_plural "The following entries are too long: %s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatListEntry.php.gettext:299
+#, php-format
+msgid "List can contain at most %s entry"
+msgid_plural "List can contain at most %s entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatListEntry.php.gettext:309
+#, php-format
+msgid "List must contain at least %s entry"
+msgid_plural "List must contain at least %s entries"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatDetailsViewField.php.gettext:144
+#, php-format
+msgid "%s:"
+msgstr ""
+
+#: ../Swat/SwatRemoveInputCell.php.gettext:57
+msgid "remove this row"
+msgstr ""
+
+#: ../Swat/SwatRemoveInputCell.php.gettext:65
+msgid "remove graphic"
+msgstr ""
+
+#: ../Swat/SwatConfirmationButton.php.gettext:33
+msgid "Are you sure you wish to continue?"
+msgstr ""
+
+#: ../Swat/SwatImagePreviewDisplay.php.gettext:128
+msgid "View Larger Image"
+msgstr ""
+
+#: ../Swat/SwatEntry.php.gettext:266
+#, php-format
+msgid "The %%s must be at least %s characters long."
+msgstr ""
+
+#: ../Swat/SwatEntry.php.gettext:269 ../Swat/SwatFileEntry.php.gettext:413
+#, php-format
+msgid "There is problem with the %s field."
+msgstr ""
+
+#: ../Swat/SwatButton.php.gettext:254
+msgid "Submit"
+msgstr ""
+
+#: ../Swat/SwatButton.php.gettext:269
+msgid "Apply"
+msgstr ""
+
+#: ../Swat/SwatNumericEntry.php.gettext:125
+#, php-format
+msgid "The %%s field must not be less than %s."
+msgstr ""
+
+#: ../Swat/SwatNumericEntry.php.gettext:132
+#, php-format
+msgid "The %%s field must not be more than %s."
+msgstr ""
+
+#: ../Swat/SwatFileEntry.php.gettext:120
+#, php-format
+msgid "Maximum file size %s."
+msgstr ""
+
+#: ../Swat/SwatFileEntry.php.gettext:192
+#, php-format
+msgid "File type must be %s."
+msgid_plural "Valid file types are: %s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatFileEntry.php.gettext:409
+#, php-format
+msgid "The %%s field must be of the following type(s): %s."
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:269
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatDate.php.gettext:272
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatDate.php.gettext:275
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatDate.php.gettext:278
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatDate.php.gettext:281
+msgid "month"
+msgid_plural "months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatDate.php.gettext:284
+msgid "year"
+msgid_plural "years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatDate.php.gettext:287
+#, php-format
+msgid "%s %s"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:306
+msgid "%D"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:308
+msgid "%m%d%y"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:310
+msgid "%B %e, %Y"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:312
+msgid "%A, %B %e, %Y"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:314
+msgid "%B %e, %Y %i:%M %p"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:316
+msgid "%A, %B %e, %Y %i:%M %p"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:318
+msgid "%i:%M %p"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:320
+msgid "%b %e, %Y"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:322
+#, php-format
+msgid "%b %e"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:324
+msgid "%b %e, %Y %i:%M %p"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:326
+msgid "%b %e, %i:%M %p"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:328
+msgid "%B %Y"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:330
+msgid "%m / %Y"
+msgstr ""
+
+#: ../Swat/SwatDate.php.gettext:332
+msgid "%Y"
+msgstr ""
+
+#: ../Swat/SwatCalendar.php.gettext:201
+msgid "Previous Month"
+msgstr ""
+
+#: ../Swat/SwatCalendar.php.gettext:202
+msgid "Next Month"
+msgstr ""
+
+#: ../Swat/SwatCalendar.php.gettext:203
+msgid "Close"
+msgstr ""
+
+#: ../Swat/SwatCalendar.php.gettext:204
+msgid "No Date"
+msgstr ""
+
+#: ../Swat/SwatCalendar.php.gettext:205
+msgid "Today"
+msgstr ""
+
+#: ../Swat/SwatCalendar.php.gettext:207
+msgid "open calendar"
+msgstr ""
+
+#: ../Swat/SwatCalendar.php.gettext:208
+msgid "close calendar"
+msgstr ""
+
+#: ../Swat/SwatConfirmEmailEntry.php.gettext:53
+msgid "Email address and confirmation email address do not match."
+msgstr ""
+
+#: ../Swat/SwatCheckAll.php.gettext:79
+msgid "Check All"
+msgstr ""
+
+#: ../Swat/SwatCheckAll.php.gettext:148
+msgid "items"
+msgstr ""
+
+#: ../Swat/SwatCheckAll.php.gettext:155
+#, php-format
+msgid "select all %s %s"
+msgstr ""
+
+#: ../Swat/SwatCheckAll.php.gettext:164
+#, php-format
+msgid "All %s %s on this page are selected. (%s)"
+msgstr ""
+
+#: ../Swat/SwatMoneyEntry.php.gettext:142
+#, php-format
+msgid ""
+"The %%s field has too many decimal places. There can be at most one decimal "
+"place."
+msgid_plural ""
+"The %%s field has too many decimal places. There can be at most %s decimal "
+"places."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../Swat/SwatMoneyEntry.php.gettext:213
+#, php-format
+msgid "The %%s field must be a monetary value formatted for %s (i.e. %s)."
+msgstr ""
+
+#: ../Swat/SwatMoneyEntry.php.gettext:222
+#, php-format
+msgid ""
+"The %%s field has too many decimal places. The currency %s only allows %s."
+msgstr ""
+
+#: ../Swat/SwatMoneyEntry.php.gettext:230
+#, php-format
+msgid "The %s field must not have any decimal places."
+msgstr ""
+
+#: ../Swat/SwatActions.php.gettext:185
+msgid "Action: "
+msgstr ""
+
+#: ../Swat/SwatActions.php.gettext:210
+msgid "Actions apply to checked items."
+msgstr ""
+
+#: ../Swat/SwatActions.php.gettext:634
+#: ../Swat/SwatMessageDisplay.php.gettext:321
+msgid "Dismiss message."
+msgstr ""
+
+#: ../Swat/SwatActions.php.gettext:635
+msgid "Please select an action."
+msgstr ""
+
+#: ../Swat/SwatActions.php.gettext:636
+msgid "Please select one or more items."
+msgstr ""
+
+#: ../Swat/SwatActions.php.gettext:638
+msgid "Please select an action, and one or more items."
+msgstr ""
+
+#: ../Swat/SwatFloatEntry.php.gettext:102
+#, php-format
+msgid "The %s field must be a number."
+msgstr ""
+
+#: ../Swat/SwatImageCropper.php.gettext:207
+msgid "Crop Image"
+msgstr ""
+
+#: ../Swat/SwatSelectList.php.gettext:79
+msgid "Multiple items can be selected by holding down the Ctrl key."
+msgstr ""
+
+#: ../Swat/SwatUriEntry.php.gettext:41
+msgid "The URI you have entered is not properly formatted."
+msgstr ""
+
+#: ../Swat/SwatTimeEntry.php.gettext:368 ../Swat/SwatTimeEntry.php.gettext:389
+#, php-format
+msgid "The %s field is not a valid time."
+msgstr ""
+
+#: ../Swat/SwatTimeEntry.php.gettext:514
+#, php-format
+msgid "The time you have entered is invalid. It must be on or after %s."
+msgstr ""
+
+#: ../Swat/SwatTimeEntry.php.gettext:521
+#, php-format
+msgid "The time you have entered is invalid. It must be on or before %s."
+msgstr ""
+
+#: ../Swat/SwatTimeEntry.php.gettext:671
+msgid "am"
+msgstr ""
+
+#: ../Swat/SwatTimeEntry.php.gettext:672
+msgid "pm"
+msgstr ""
+
+#: ../Swat/SwatTimeZoneEntry.php.gettext:139
+#, php-format
+msgid "The %s field is an invalid time-zone."
+msgstr ""
+
+#: ../Swat/SwatTimeZoneEntry.php.gettext:202
+msgid "choose region …"
+msgstr ""
+
+#: ../SwatDB/SwatDB.php.gettext:1028 ../SwatDB/SwatDB.php.gettext:1145
+msgid "Root"
+msgstr ""
