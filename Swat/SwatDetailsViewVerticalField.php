@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * its content
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDetailsViewVerticalField extends SwatDetailsViewField
@@ -59,10 +59,14 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
 	 */
 	public function displayHeader()
 	{
-		$div_tag = new SwatHtmlTag('div');
-		$div_tag->class = 'swat-details-view-field-header';
-		$div_tag->setContent($this->title.':');
-		$div_tag->display();
+		if ($this->title != '') {
+			$div_tag = new SwatHtmlTag('div');
+			$div_tag->class = 'swat-details-view-field-header';
+			$div_tag->setContent(sprintf(Swat::_('%s:'), $this->title),
+				$this->title_content_type);
+
+			$div_tag->display();
+		}
 	}
 
 	// }}}

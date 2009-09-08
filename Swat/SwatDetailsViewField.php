@@ -9,7 +9,7 @@ require_once 'Swat/SwatCellRendererContainer.php';
  * A visible field in a SwatDetailsView
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDetailsViewField extends SwatCellRendererContainer
@@ -141,8 +141,12 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	{
 		$th_tag = new SwatHtmlTag('th');
 		$th_tag->scope = 'row';
-		$th_tag->setContent(sprintf(Swat::_('%s:'), $this->title),
-			$this->title_content_type);
+		if ($this->title == '') {
+			$th_tag->setContent('&nbsp;');
+		} else {
+			$th_tag->setContent(sprintf(Swat::_('%s:'), $this->title),
+				$this->title_content_type);
+		}
 
 		$th_tag->display();
 	}
