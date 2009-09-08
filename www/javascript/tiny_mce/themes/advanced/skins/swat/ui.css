@@ -18,11 +18,11 @@
 /* Layout */
 .swatSkin table.mceLayout {border:0; border-left:1px solid #dcceb2; border-right:1px solid #dcceb2}
 .swatSkin table.mceLayout tr.mceFirst td {border-top:1px solid #dcceb2}
-.swatSkin table.mceLayout tr.mceLast td {border-bottom:1px solid #dcceb2}
+.swatSkin table.mceLayout tr.mceLast td {border-bottom:1px solid #dcceb2; border-top: 0;}
 .swatSkin table.mceToolbar, .swatSkin tr.mceFirst .mceToolbar tr td, .swatSkin tr.mceLast .mceToolbar tr td {border:0; margin:0; padding:0;}
 .swatSkin td.mceToolbar {
 	vertical-align:top;
-	background: #f8f6f0 url(../images/swat-textarea-editor-toolbar.png) repeat-x left bottom;
+	background: #f8f6f0 url(../../../../../../images/swat-textarea-editor-toolbar.png) repeat-x left bottom;
 	padding: 1px;
 }
 .swatSkin .mceIframeContainer {border-top:1px solid #f0eade; border-bottom:1px solid #f0eade}
