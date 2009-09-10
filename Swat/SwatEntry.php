@@ -109,7 +109,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 *
 	 * @var boolean
 	 */
-	public $auto_trim = false;
+	public $auto_trim = true;
 
 
 	// }}}
