@@ -16,23 +16,6 @@ require_once 'Swat/SwatEntry.php';
  */
 class SwatEmailEntry extends SwatEntry
 {
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new Email Entry widget
-	 *
-	 * Sets auto_trim to true by default.
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$this->auto_trim = true;
-	}
-
-	// }}}
 	// {{{ public function process()
 
 	/**

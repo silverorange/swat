@@ -50,7 +50,7 @@ abstract class SwatNumericEntry extends SwatEntry
 	/**
 	 * Creates a new numeric entry widget
 	 *
-	 * Sets the input size to 10 by default. Sets auto_trim to true by default.
+	 * Sets the input size to 10 by default.
 	 *
 	 * @param string $id a non-visible unique id for this widget.
 	 *
@@ -61,7 +61,6 @@ abstract class SwatNumericEntry extends SwatEntry
 		parent::__construct($id);
 
 		$this->size = 10;
-		$this->auto_trim = true;
 	}
 
 	// }}}
