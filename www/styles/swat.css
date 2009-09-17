@@ -308,15 +308,17 @@ a.swat-expandable-checkbox-tree-anchor-closed {
 	vertical-align: middle;
 }
 
-span.swat-button-processing-throbber {
+.swat-button-processing-throbber {
 	opacity: 0;
 	filter: alpha(opacity=0);
 	-moz-opacity: 0;
+	padding-left: 16px;
+	margin-left: 0.5em;
+	background: url(../images/swat-button-throbber.gif) no-repeat 0 0;
+	display: inline;
 }
-
-span.swat-button-processing-throbber img {
-	margin: 0 0.5em;
-	vertical-align: middle;
+.swat-button-processing-throbber-text {
+	padding-left: 20px;
 }
 
 .swat-image-button {

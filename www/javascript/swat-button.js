@@ -1,26 +1,22 @@
 function SwatButton(id, show_processing_throbber)
 {
-	if (show_processing_throbber && !SwatButton.throbber_image_loaded) {
-		SwatButton.throbber_image = new Image();
-		SwatButton.throbber_image.src =
-			'packages/swat/images/swat-button-throbber.gif';
-
-		SwatButton.throbber_image_loaded = true;
-	}
-
 	this.id = id;
 
 	this.button = document.getElementById(this.id);
+
+	// deprecated
 	this.show_processing_throbber = show_processing_throbber;
-	this.processing_message = '';
+
 	this.confirmation_message = '';
+	this.throbber_container = null;
+
+	if (show_processing_throbber) {
+		this.initThrobber();
+	}
 
 	YAHOO.util.Event.addListener(this.button, 'click',
 		this.handleClick, this, true);
 }
-
-SwatButton.throbber_image_loaded = false;
-SwatButton.throbber_alt_text = 'throbber';
 
 SwatButton.prototype.handleClick = function(e)
 {
@@ -28,7 +24,7 @@ SwatButton.prototype.handleClick = function(e)
 		confirm(this.confirmation_message) : true;
 
 	if (confirmed) {
-		if (this.show_processing_throbber) {
+		if (this.throbber_container !== null) {
 			this.button.disabled = true;
 
 			// add button to form data manually since we disabled it above
@@ -48,29 +44,35 @@ SwatButton.prototype.handleClick = function(e)
 	}
 }
 
+SwatButton.prototype.initThrobber = function()
+{
+	this.throbber_container = document.createElement('span');
+
+	YAHOO.util.Dom.addClass(this.throbber_container,
+		'swat-button-processing-throbber');
+
+	this.button.parentNode.appendChild(this.throbber_container);
+}
+
 SwatButton.prototype.showThrobber = function()
 {
-	var span = document.createElement('span');
-	YAHOO.util.Dom.addClass(span, 'swat-button-processing-throbber');
-
-	var text = document.createTextNode(this.processing_message);
-	var image = document.createElement('img');
-	image.src = SwatButton.throbber_image.src;
-	image.width = '16';
-	image.height = '16';
-	image.alt = SwatButton.throbber_alt_text;
-	span.appendChild(image);
-	span.appendChild(text);
-	this.button.parentNode.appendChild(span);
-	var animation = new YAHOO.util.Anim(span, { opacity: { to: 0.5 }}, 1,
-		YAHOO.util.Easing.easingNone);
+	var animation = new YAHOO.util.Anim(this.throbber_container,
+		{ opacity: { to: 0.5 }}, 1, YAHOO.util.Easing.easingNone);
 
 	animation.animate();
 }
 
 SwatButton.prototype.setProcessingMessage = function(message)
 {
-	this.processing_message = message;
+	if (this.throbber_container === null) {
+		this.initThrobber();
+	}
+
+	if (message.length > 0) {
+		this.throbber_container.appendChild(document.createTextNode(message));
+		YAHOO.util.Dom.addClass(this.throbber_container,
+			'swat-button-processing-throbber-text');
+	}
 }
 
 SwatButton.prototype.setConfirmationMessage = function(message)
