@@ -161,11 +161,20 @@ class SwatMessageDisplay extends SwatControl
 
 		$has_dismiss_link = false;
 
-		foreach ($this->display_messages as $key => $message) {
-			if (in_array($key, $this->dismissable_messages))
-				$has_dismiss_link = true;
+		$message_count = count($this->display_messages);
 
-			$this->displayMessage($key, $message);
+		$count = 1;
+		foreach ($this->display_messages as $key => $message) {
+			if (in_array($key, $this->dismissable_messages)) {
+				$has_dismiss_link = true;
+			}
+
+			$first = ($count === 1);
+			$last  = ($count === $message_count);
+
+			$this->displayMessage($key, $message, $first, $last);
+
+			$count++;
 		}
 
 		$wrapper_div->close();
@@ -211,19 +220,33 @@ class SwatMessageDisplay extends SwatControl
 	// {{{ protected function displayMessage()
 
 	/**
-	 * Display a single messages of this message display
+	 * Display a single message of this message display
 	 *
 	 * @param integer $message_id a unique identifier for the message within
 	 *                             this message display.
 	 * @param SwatMessage $message the message to display.
+	 * @param boolean $first optional. Whether or not the message is the first
+	 *                       message in this message display.
+	 * @param boolean $last optional. Whether or not the message is the last
+	 *                       message in this message display.
 	 */
-	protected function displayMessage($message_id, SwatMessage $message)
+	protected function displayMessage($message_id, SwatMessage $message,
+		$first = false, $last = false)
 	{
 		$message_div = new SwatHtmlTag('div');
 		$container_div = new SwatHtmlTag('div');
 
 		$message_div->id = $this->id.'_'.$message_id;
 		$message_div->class = $message->getCSSClassString();
+
+		if ($first) {
+			$message_div->class.= ' swat-message-first';
+		}
+
+		if ($last) {
+			$message_div->class.= ' swat-message-last';
+		}
+
 		$message_div->open();
 
 		$container_div->class = 'swat-message-container';
