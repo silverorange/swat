@@ -10,8 +10,6 @@ function SwatMessageDisplay(id, hideable_messages)
 	}
 }
 
-SwatMessageDisplayMessage.close_text = 'Dismiss message';
-
 /**
  * A message in a message display
  *
@@ -23,6 +21,10 @@ function SwatMessageDisplayMessage(message_display_id, message_index)
 	this.message_div = document.getElementById(this.id);
 	this.drawDismissLink();
 }
+
+SwatMessageDisplayMessage.close_text = 'Dismiss message';
+SwatMessageDisplayMessage.fade_duration = 0.3;
+SwatMessageDisplayMessage.shrink_duration = 0.3;
 
 SwatMessageDisplayMessage.prototype.drawDismissLink = function()
 {
@@ -56,7 +58,9 @@ SwatMessageDisplayMessage.prototype.hide = function()
 	if (this.message_div !== null) {
 		// fade out message
 		var fade_animation = new YAHOO.util.Anim(this.message_div,
-			{ opacity: { to: 0 } }, 0.3, YAHOO.util.Easing.easingOut);
+			{ opacity: { to: 0 } },
+			SwatMessageDisplayMessage.fade_duration,
+			YAHOO.util.Easing.easingOut);
 
 		// after fading out, shrink the empty space away
 		fade_animation.onComplete.subscribe(this.shrink, this, true);
@@ -66,7 +70,7 @@ SwatMessageDisplayMessage.prototype.hide = function()
 
 SwatMessageDisplayMessage.prototype.shrink = function()
 {
-	var duration = 0.3;
+	var duration = SwatMessageDisplayMessage.shrink_duration;
 	var easing = YAHOO.util.Easing.easeInStrong;
 
 	var attributes = {
@@ -102,6 +106,10 @@ SwatMessageDisplayMessage.prototype.shrink = function()
 	// if this is the last message in the display, shrink the message display
 	// top margin to zero.
 	if (this.message_div.parentNode.childNodes.length == 1) {
+
+		// collapse top margin of last message
+		attributes.marginTop = { to: 0 };
+
 		var message_display_animation = new YAHOO.util.Anim(
 			this.message_div.parentNode, { marginTop: { to: 0 } }, duration,
 			easing);
