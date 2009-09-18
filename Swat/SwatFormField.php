@@ -19,6 +19,12 @@ require_once 'Swat/SwatMessage.php';
  */
 class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 {
+	// {{{ constants
+
+	const DISPLAY_REQUIRED = 1;
+	const DISPLAY_OPTIONAL = 2;
+
+	// }}}
 	// {{{ public properties
 
 	/**
@@ -43,6 +49,19 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 * @var boolean
 	 */
 	public $required = false;
+
+	/**
+	 * Display the required status of this field
+	 *
+	 * Bitwise display options:
+	 * SwatFormField::DISPLAY_REQUIRED = display "required" if this field
+	 *                                   is required
+	 * SwatFormField::DISPLAY_OPTIONAL = display "optional" if this field
+	 *                                   is not required
+	 *
+	 * @var integer
+	 */
+	public $required_status_display = self::DISPLAY_REQUIRED;
 
 	/**
 	 * Optional note of text to display with the field
@@ -210,19 +229,28 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		$title_tag = $this->getTitleTag();
 		$title_tag->open();
 		$title_tag->displayContent();
-		$this->displayRequired();
+		$this->displayRequiredStatus();
 		$title_tag->close();
 	}
 
 	// }}}
-	// {{{ protected function displayRequired()
+	// {{{ protected function displayRequiredStatus()
 
-	protected function displayRequired()
+	protected function displayRequiredStatus()
 	{
-		if ($this->required) {
+		if ($this->required &&
+			$this->required_status_display & self::DISPLAY_REQUIRED) {
+
 			$span_tag = new SwatHtmlTag('span');
 			$span_tag->class = 'swat-required';
 			$span_tag->setContent(sprintf(' (%s)', Swat::_('required')));
+			$span_tag->display();
+		} elseif (!$this->required &&
+			$this->required_status_display & self::DISPLAY_OPTIONAL) {
+
+			$span_tag = new SwatHtmlTag('span');
+			$span_tag->class = 'swat-optional';
+			$span_tag->setContent(sprintf(' (%s)', Swat::_('optional')));
 			$span_tag->display();
 		}
 	}
@@ -403,6 +431,21 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		} elseif (class_exists('SwatSearchEntry') &&
 			$widget instanceof SwatSearchEntry) {
 			$this->show_colon = false;
+		}
+	}
+
+	// }}}
+
+	// deprecated
+	// {{{ protected function displayRequired()
+
+	protected function displayRequired()
+	{
+		if ($this->required) {
+			$span_tag = new SwatHtmlTag('span');
+			$span_tag->class = 'swat-required';
+			$span_tag->setContent(sprintf(' (%s)', Swat::_('required')));
+			$span_tag->display();
 		}
 	}
 
