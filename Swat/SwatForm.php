@@ -757,7 +757,7 @@ class SwatForm extends SwatDisplayableContainer
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
 
-		echo '<div class="swat-input-hidden">';
+		echo '<div class="swat-hidden">';
 
 		if ($this->_8bit_encoding !== null) {
 			// The character encoding detection field is intentionally not using
