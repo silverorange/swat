@@ -2,6 +2,7 @@ function SwatSearchEntry(id)
 {
 	this.id = id;
 	this.input = document.getElementById(this.id);
+	this.input._search_entry = this;
 
 	var labels = document.getElementsByTagName('label');
 	var label = null;
@@ -67,6 +68,9 @@ SwatSearchEntry.prototype.handleBlur = function(e)
 
 SwatSearchEntry.prototype.showLabelText = function()
 {
+	if (this.isLabelTextShown())
+		return;
+
 	YAHOO.util.Dom.addClass(this.input, 'swat-search-entry-empty');
 
 	if (this.input.hasAttribute) {
@@ -115,6 +119,9 @@ SwatSearchEntry.prototype.isLabelTextShown = function()
 
 SwatSearchEntry.prototype.hideLabelText = function()
 {
+	if (!this.isLabelTextShown())
+		return;
+
 	var hide = false;
 
 	if (this.input.hasAttribute) {
