@@ -15,11 +15,20 @@ class SwatJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 {
 	// {{{ public function display()
 
-	public function display($uri_prefix = '')
+	public function display($uri_prefix = '', $tag = null)
 	{
+		$uri = $this->uri;
+
+		// append tag if it is set
+		if ($tag !== null) {
+			$uri = (strpos($uri, '?') === false ) ?
+				$uri.'?'.$tag :
+				$uri.'&'.$tag;
+		}
+
 		printf('<script type="text/javascript" src="%s%s"></script>',
 			$uri_prefix,
-			$this->uri);
+			$uri);
 	}
 
 	// }}}

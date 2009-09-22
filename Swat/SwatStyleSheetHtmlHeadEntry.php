@@ -15,11 +15,20 @@ class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
 {
 	// {{{ public function display()
 
-	public function display($uri_prefix = '')
+	public function display($uri_prefix = '', $tag = null)
 	{
+		$uri = $this->uri;
+
+		// append tag if it is set
+		if ($tag !== null) {
+			$uri = (strpos($uri, '?') === false ) ?
+				$uri.'?'.$tag :
+				$uri.'&'.$tag;
+		}
+
 		printf('<style type="text/css" media="all">@import \'%s%s\';</style>',
 			$uri_prefix,
-			$this->uri);
+			$uri);
 	}
 
 	// }}}

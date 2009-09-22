@@ -75,7 +75,7 @@ class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
 	// }}}
 	// {{{ public function display()
 
-	public function display($uri_prefix = '')
+	public function display($uri_prefix = '', $tag = null)
 	{
 		$link = new SwatHtmlTag('link');
 		$link->title = $this->title;

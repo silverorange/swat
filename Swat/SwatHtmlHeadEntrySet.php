@@ -117,10 +117,13 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 *
 	 * @param string $uri_prefix an optional URI prefix to prepend to all the
 	 *                            displayed HTML head entries.
+	 * @param string $tag an optional tag to suffix the URI with. This is
+	 *                     suffixed as a HTTP get var and can be used to
+	 *                     explicitly refresh the browser cache.
 	 */
-	public function display($uri_prefix = '')
+	public function display($uri_prefix = '', $tag = null)
 	{
-		$parameters = array($uri_prefix);
+		$parameters = array($uri_prefix, $tag);
 
 		$this->displayEntriesRecursive(null,
 			'displayEntriesForPackage', $parameters);
@@ -196,7 +199,8 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	// }}}
 	// {{{ protected function displayEntriesForPackage()
 
-	protected function displayEntriesForPackage($package_id, $uri_prefix)
+	protected function displayEntriesForPackage($package_id, $uri_prefix,
+		$tag = null)
 	{
 		echo "\n\t", '<!-- head entries for ',
 			($package_id === null) ?
@@ -205,7 +209,7 @@ class SwatHtmlHeadEntrySet extends SwatObject
 		foreach ($this->entries_by_type as $entries) {
 			foreach ($entries as $entry) {
 				if ($entry->getPackageId() === $package_id) {
-					$entry->display($uri_prefix);
+					$entry->display($uri_prefix, $tag);
 					echo "\n\t";
 				}
 			}

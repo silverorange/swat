@@ -60,8 +60,11 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	 * Entries are displayed differently based on type.
 	 *
 	 * @param string $uri_prefix an optional string to prefix the URI with.
+	 * @param string $tag an optional tag to suffix the URI with. This is
+	 *                     suffixed as a HTTP get var and can be used to
+	 *                     explicitly refresh the browser cache.
 	 */
-	public abstract function display($uri_prefix = '');
+	public abstract function display($uri_prefix = '', $tag = null);
 
 	// }}}
 	// {{{ public abstract function displayInline()
