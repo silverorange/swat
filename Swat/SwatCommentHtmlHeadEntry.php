@@ -36,7 +36,7 @@ class SwatCommentHtmlHeadEntry extends SwatHtmlHeadEntry
 	// }}}
 	// {{{ public function display()
 
-	public function display($uri_prefix = '')
+	public function display($uri_prefix = '', $tag = null)
 	{
 		// double dashes are not allowed in XML comments
 		$comment = str_replace('--', '—', $this->comment);
