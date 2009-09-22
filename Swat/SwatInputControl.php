@@ -75,6 +75,33 @@ abstract class SwatInputControl extends SwatControl
 	}
 
 	// }}}
+	// {{{ protected function getValidationMessage()
+
+	/**
+	 * Gets a validation message for this control
+	 *
+	 * Can be used by sub-classes to change the validation messages.
+	 *
+	 * @param string $id the string identifier of the validation message.
+	 *
+	 * @return SwatMessage the validation message.
+	 */
+	protected function getValidationMessage($id)
+	{
+		switch ($id) {
+		case 'required':
+			$text = Swat::_('The %s field is required.');
+			break;
+		default:
+			$text = Swat::_('There is problem with the %s field.');
+			break;
+		}
+
+		$message = new SwatMessage($text, 'error');
+		return $message;
+	}
+
+	// }}}
 }
 
 ?>
