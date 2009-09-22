@@ -256,9 +256,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
-		case 'required':
-			$text = Swat::_('The %s field is required.');
-			break;
 		case 'too-long':
 			$text = Swat::_('The %%s field can be at most %s characters long.');
 			break;
@@ -266,11 +263,10 @@ class SwatEntry extends SwatInputControl implements SwatState
 			$text = Swat::_('The %%s must be at least %s characters long.');
 			break;
 		default:
-			$text = Swat::_('There is problem with the %s field.');
-			break;
+			return parent::getValidationMessage($id);
 		}
 
-		$message = new SwatMessage($text, SwatMessage::ERROR);
+		$message = new SwatMessage($text, 'error');
 		return $message;
 	}
 
