@@ -152,8 +152,16 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 		if (!$this->processValue())
 			return;
 
-		if ($this->required && $this->value === null && $this->isSensitive())
-			$this->addMessage($this->getValidationMessage('required'));
+		if ($this->required && $this->isSensitive()) {
+			// Make sure required works when a SwatFlydown isn't serialized.
+			// When not serialized, a zero-length string is treated as null.
+			// This means that you can't have a null value and a blank value
+			// except when serialized.
+			if (($this->serialize_values && $this->value === null) ||
+				strlen($this->value) == 0) {
+				$this->addMessage($this->getValidationMessage('required'));
+			}
+		}
 	}
 
 	// }}}
