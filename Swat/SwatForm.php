@@ -109,6 +109,19 @@ class SwatForm extends SwatDisplayableContainer
 	public $button = null;
 
 	/**
+	 * Whether or not to use auto-complete for elements in this form
+	 *
+	 * Autocomplete is a browser-specific extension that is enabled by default.
+	 * If the browser is autocompleting fields it shouldn't (e.g. login info
+	 * on a non-login page) the behaviour may be turned off by setting this to
+	 * false. In Swat, this currently only solves the problem for users with
+	 * JavaScript.
+	 *
+	 * @var boolean
+	 */
+	public $autocomplete = true;
+
+	/**
 	 * The default value to use for signature salt
 	 *
 	 * If this value is not null, all newly instantiated forms will call the
@@ -861,7 +874,10 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = "var {$this->id}_obj = new SwatForm('{$this->id}');";
+		$javascript = sprintf("var %s_obj = new %s(%s);",
+			$this->id,
+			$this->getJavaScriptClass(),
+			SwatString::quoteJavaScriptString($this->id));
 
 		if ($this->autofocus) {
 			$focusable = true;
@@ -887,7 +903,29 @@ class SwatForm extends SwatDisplayableContainer
 					"\n{$this->id}_obj.setDefaultFocus('{$focus_id}');";
 		}
 
+		if (!$this->autocomplete) {
+			$javascript.=
+				"\n{$this->id}_obj.setAutocomplete(false);";
+		}
+
 		return $javascript;
+	}
+
+	// }}}
+	// {{{ protected function getJavaScriptClass()
+
+	/**
+	 * Gets the name of the JavaScript class to instantiate for this form
+	 *
+	 * Sub-classes of this class may want to return a sub-class of the default
+	 * JavaScript form class.
+	 *
+	 * @return string the name of the JavaScript class to instantiate for this
+	 *                 form . Defaults to 'SwatForm'.
+	 */
+	protected function getJavaScriptClass()
+	{
+		return 'SwatForm';
 	}
 
 	// }}}

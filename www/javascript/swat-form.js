@@ -17,3 +17,8 @@ SwatForm.prototype.setDefaultFocus = function(element_id)
 	if (element && element.disabled == false && is_function(element.focus))
 		element.focus();
 }
+
+SwatForm.prototype.setAutocomplete = function(state)
+{
+	this.form_element.setAttribute('autocomplete', (state) ? 'on' : 'off');
+}
