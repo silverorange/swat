@@ -109,6 +109,61 @@ class SwatSearchEntry extends SwatEntry
 	}
 
 	// }}}
+	// {{{ protected function getRawValue()
+
+	/**
+	 * Gets the raw value entered by the user before processing
+	 *
+	 * @return string the raw value entred by the user before processing or
+	 *                 null if no value was entered by the user.
+	 */
+	protected function getRawValue()
+	{
+		$value = null;
+
+		if ($this->name === null) {
+			$value = parent::getRawValue();
+		} else {
+			$data = &$this->getForm()->getFormData();
+			$id = $this->name;
+			if (isset($data[$id]) && $data[$id] != '') {
+				$value = $data[$id];
+			}
+		}
+
+		return $value;
+	}
+
+	// }}}
+	// {{{ protected function hasRawValue()
+
+	/**
+	 * Gets whether or not a value was submitted by the user for this entry
+	 *
+	 * Note: Users can submit a value of nothing and this method will return
+	 * true. This method only returns false if no data was submitted at all.
+	 *
+	 * @return boolean true if a value was submitted by the user for this entry
+	 *                  and false if no value was submitted by the user.
+	 */
+	protected function hasRawValue()
+	{
+		$has_value = false;
+
+		if ($this->name === null) {
+			$has_value = parent::hasRawValue();
+		} else {
+			$data = &$this->getForm()->getFormData();
+			$id = $this->name;
+			if (isset($data[$id])) {
+				$has_value = true;
+			}
+		}
+
+		return $has_value;
+	}
+
+	// }}}
 }
 
 ?>

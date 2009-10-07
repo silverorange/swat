@@ -360,7 +360,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 	/**
 	 * Gets the raw value entered by the user before processing
 	 *
-	 * @return string the rav value entred by the user before processing or
+	 * @return string the raw value entred by the user before processing or
 	 *                 null if no value was entered by the user.
 	 *
 	 * @see SwatEntry::hasRawValue()
