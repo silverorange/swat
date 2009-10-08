@@ -182,7 +182,16 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf(
+		static $shown = false;
+
+		if (!$shown) {
+			$javascript = $this->getInlineJavaScriptTranslations();
+			$shown = true;
+		} else {
+			$javascript = '';
+		}
+
+		$javascript.= sprintf(
 			"var %s = new SwatImagePreviewDisplay('%s', '%s', %d, %d);",
 			$this->id,
 			$this->id,
@@ -191,6 +200,24 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 			$this->preview_height);
 
 		return $javascript;
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScriptTranslations()
+
+	/**
+	 * Gets translatable string resources for the JavaScript object for
+	 * this widget
+	 *
+	 * @return string translatable JavaScript string resources for this widget.
+	 */
+	protected function getInlineJavaScriptTranslations()
+	{
+		$close_text  = Swat::_('Close');
+
+		return sprintf(
+			"SwatImagePreviewDisplay.close_text = '%s';\n",
+			$close_text);
 	}
 
 	// }}}
