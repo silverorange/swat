@@ -8,8 +8,17 @@ function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height)
 	this.preview_image.width = preview_width;
 	this.preview_image.height = preview_height;
 
+	this.preview_close_text = document.createElement('span');
+	this.preview_close_text.className = 'swat-image-preview-close';
+	this.preview_close_text.appendChild(
+		document.createTextNode(
+			SwatImagePreviewDisplay.close_text
+		)
+	);
+
 	this.preview_link = document.createElement('a');
 	this.preview_link.href = '#';
+	this.preview_link.appendChild(this.preview_close_text);
 	this.preview_link.appendChild(this.preview_image);
 
 	this.preview_container = document.createElement('div');
@@ -24,13 +33,14 @@ function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height)
 }
 
 SwatImagePreviewDisplay.ie6 = false /*@cc_on || @_jscript_version < 5.7 @*/;
+SwatImagePreviewDisplay.close_text = 'Close';
 
 /**
  * Padding of preview image
  *
  * @var Number
  */
-SwatImagePreviewDisplay.padding = 20;
+SwatImagePreviewDisplay.padding = 16;
 
 SwatImagePreviewDisplay.prototype.init = function()
 {
@@ -49,11 +59,11 @@ SwatImagePreviewDisplay.prototype.init = function()
 		}
 
 		image_wrapper.parentNode.replaceChild(image_link, image_wrapper);
-		YAHOO.util.Event.addListener(image_link, 'click',
+		YAHOO.util.Event.on(image_link, 'click',
 			this.handleClick, this, true);
 	} else {
 		image_wrapper.href = '#';
-		YAHOO.util.Event.addListener(image_wrapper, 'click',
+		YAHOO.util.Event.on(image_wrapper, 'click',
 			this.handleClick, this, true);
 	}
 
@@ -63,37 +73,33 @@ SwatImagePreviewDisplay.prototype.init = function()
 	body.style.position = 'relative';
 
 	// setup event handlers
-	YAHOO.util.Event.addListener(this.preview_container, 'click',
+	YAHOO.util.Event.on(this.preview_container, 'click',
 		this.handleClick, this, true);
 
-	YAHOO.util.Event.addListener(this.preview_link, 'keypress',
+	YAHOO.util.Event.on(this.preview_link, 'keypress',
 		this.handleKeyPress, this, true);
 }
 
 SwatImagePreviewDisplay.prototype.open = function()
 {
+	// get approximate max height and width excluding close text
 	var padding = SwatImagePreviewDisplay.padding;
 	var max_width = YAHOO.util.Dom.getViewportWidth() - (padding * 2);
 	var max_height = YAHOO.util.Dom.getViewportHeight() - (padding * 2);
 
 	this.showOverlay();
 
-	// if preview image is larger than viewport width, scale down
-	if (this.preview_image.width > max_width) {
-		this.preview_image.width = max_width;
-		this.preview_image.height = (this.preview_image.height *
-			(max_width / this.preview_image.width));
-	}
+	this.scaleImage(max_width, max_height);
 
-	// if preview image is larger than viewport height, scale down
-	if (this.preview_image.height > max_height) {
-		this.preview_image.width = (this.preview_image.width *
-			(max_height / this.preview_image.height));
-
-		this.preview_image.height = max_height;
-	}
-
+	this.preview_container.style.visibility = 'hidden';
 	this.preview_container.style.display = 'block';
+
+	// now that is it displayed, adjust height for the close text
+	var region = YAHOO.util.Dom.getRegion(this.preview_close_text);
+	max_height -= (region.bottom - region.top);
+	this.scaleImage(max_width, max_height);
+
+	this.preview_container.style.visibility = 'visible';
 
 	// x is relative to center of page
 	var scroll_top = YAHOO.util.Dom.getDocumentScrollTop();
@@ -111,6 +117,24 @@ SwatImagePreviewDisplay.prototype.open = function()
 	this.preview_link.focus();
 
 	this.opened = true;
+}
+
+SwatImagePreviewDisplay.prototype.scaleImage = function(max_width, max_height)
+{
+	// if preview image is larger than viewport width, scale down
+	if (this.preview_image.width > max_width) {
+		this.preview_image.width = max_width;
+		this.preview_image.height = (this.preview_image.height *
+			(max_width / this.preview_image.width));
+	}
+
+	// if preview image is larger than viewport height, scale down
+	if (this.preview_image.height > max_height) {
+		this.preview_image.width = (this.preview_image.width *
+			(max_height / this.preview_image.height));
+
+		this.preview_image.height = max_height;
+	}
 }
 
 SwatImagePreviewDisplay.prototype.drawOverlay = function()

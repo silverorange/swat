@@ -35,9 +35,15 @@ a.swat-image-preview-display-link-plain:hover img {
 	position: absolute;
 	z-index: 1000000;
 	text-align: center;
+	border: 1px solid #dcceb2;
+	background: #fff;
+	padding: 8px;
+
+	-moz-border-radius: 8px;
 }
 
 .swat-image-preview-container a {
+	text-decoration: none;
 	display: block;
 	outline: none;
 }
@@ -45,7 +51,11 @@ a.swat-image-preview-display-link-plain:hover img {
 .swat-image-preview-container img {
 	cursor: pointer;
 	display: block;
-	padding: 8px;
-	background: #fff;
-	border: 1px solid #dcceb2;
+}
+
+span.swat-image-preview-close {
+	font-size: 200%;
+	font-weight: bold;
+	display: block;
+	padding: 0 0 8px 0;
 }
