@@ -57,29 +57,58 @@ class SwatRadioTable extends SwatRadioList
 		$table_tag->class = $this->getCSSClassString();
 		$table_tag->open();
 
-		foreach ($options as $option) {
-			echo '<tr>';
-
-			if ($option instanceof SwatFlydownDivider) {
-				echo '<td class="swat-radio-table-input">';
-				echo '&nbsp;';
-				echo '</td><td>';
-				$this->displayDivider($option);
-				echo '</td>';
-			} else {
-				echo '<td class="swat-radio-table-input">';
-				$this->displayOption($option);
-				printf('</td><td id="%s">',
-					$this->id.'_'.(string)$option->value.'_label');
-
-				$this->displayOptionLabel($option);
-				echo '</td>';
-			}
-
-			echo '</tr>';
+		foreach ($options as $index => $option) {
+			$this->displayRadioTableOption($option, $index);
 		}
 
 		$table_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function displayRadioTableOption()
+
+	/**
+	 * Displays a single option in this radio table
+	 *
+	 * @param SwatOption $option the option to display.
+	 * @param integer $index the numeric index of the option in this list.
+	 */
+	protected function displayRadioTableOption(SwatOption $option, $index)
+	{
+		$tr_tag = $this->getTrTag($option, $index);
+		$tr_tag->open();
+
+		if ($option instanceof SwatFlydownDivider) {
+			echo '<td class="swat-radio-table-input">';
+			echo '&nbsp;';
+			echo '</td><td class="swat-radio-table-label">';
+			$this->displayDivider($option);
+			echo '</td>';
+		} else {
+			echo '<td class="swat-radio-table-input">';
+			$this->displayOption($option);
+			printf('</td><td id="%s" class="swat-radio-table-label">',
+				$this->id.'_'.(string)$option->value.'_label');
+
+			$this->displayOptionLabel($option);
+			echo '</td>';
+		}
+
+		$tr_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function getTrTag()
+
+	/**
+	 * Gets the tr tag used to display a single option in this radio table
+	 *
+	 * @param SwatOption $option the option to display.
+	 * @param integer $index the numeric index of the option in this list.
+	 */
+	protected function getTrTag(SwatOption $option, $index)
+	{
+		return new SwatHtmlTag('tr');
 	}
 
 	// }}}
