@@ -92,6 +92,9 @@ abstract class SwatInputControl extends SwatControl
 		case 'required':
 			$text = Swat::_('The %s field is required.');
 			break;
+		case 'too-long':
+			$text = Swat::_('The %%s field can be at most %s characters long.');
+			break;
 		default:
 			$text = Swat::_('There is problem with the %s field.');
 			break;
