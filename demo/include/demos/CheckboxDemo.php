@@ -69,8 +69,13 @@ class CheckboxDemo extends Demo
 		$oranges->addChild(new SwatDataTreeNode(10, 'California'));
 		$oranges->addChild(new SwatDataTreeNode(11, 'Mandarin'));
 
+		$peaches = new SwatDataTreeNode(15, 'Peach');
+		$plums = new SwatDataTreeNode(16, 'Plum');
+
 		$tree->addChild($apples);
 		$tree->addChild($oranges);
+		$tree->addChild($peaches);
+		$tree->addChild($plums);
 		$expandable_checkbox_tree = $ui->getWidget('expandable_checkbox_tree');
 		$expandable_checkbox_tree->setTree($tree);
 
