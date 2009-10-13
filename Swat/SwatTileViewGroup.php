@@ -145,7 +145,7 @@ class SwatTileViewGroup extends SwatTile
 
 		$group_by = $this->group_by;
 
-		// only display the group headr if the value of the group-by field has
+		// only display the group header if the value of the group-by field has
 		// changed
 		if ($row->$group_by !== $this->header_current) {
 			$this->resetSubGroups();
