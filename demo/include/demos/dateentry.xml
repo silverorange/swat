@@ -17,6 +17,13 @@
 		</widget>
 
 		<widget class="SwatFormField">
+			<property name="title" type="string">Month and Day</property>
+			<widget class="SwatDateEntry" id="month_and_day">
+				<property name="display_parts" type="constant">MONTH|DAY</property>
+			</widget>
+		</widget>
+
+		<widget class="SwatFormField">
 			<property name="title" type="string">Creditcard Style</property>
 			<widget class="SwatDateEntry" id="cc_date">
 				<property name="display_parts" type="constant">YEAR|MONTH</property>
