@@ -185,6 +185,9 @@ class SwatYUI extends SwatObject
 		$components['calendar'] = new SwatYUIComponent('calendar');
 		$components['calendar']->addJavaScript();
 
+		$components['charts'] = new SwatYUIComponent('charts');
+		$components['charts']->addJavaScript();
+
 		$components['connection'] = new SwatYUIComponent('connection');
 		$components['connection']->addJavaScript();
 
@@ -216,7 +219,7 @@ class SwatYUI extends SwatObject
 		$components['simpleeditor']->addStyleSheet('editor/assets/skins/sam',
 			'', false);
 
-		$components['element'] = new SwatYUIComponent('element', true);
+		$components['element'] = new SwatYUIComponent('element');
 		$components['element']->addJavaScript();
 
 		$components['event'] = new SwatYUIComponent('event');
@@ -228,7 +231,7 @@ class SwatYUI extends SwatObject
 		$components['grids'] = new SwatYUIComponent('grids');
 		$components['grids']->addStyleSheet();
 
-		$components['imagecropper'] = new SwatYUIComponent('imagecropper', true);
+		$components['imagecropper'] = new SwatYUIComponent('imagecropper');
 		$components['imagecropper']->addJavaScript();
 		$components['imagecropper']->addStyleSheet(
 			'imagecropper/assets/skins/sam', '', false);
@@ -253,6 +256,9 @@ class SwatYUI extends SwatObject
 
 		$components['slider'] = new SwatYUIComponent('slider');
 		$components['slider']->addJavaScript();
+
+		$components['swf'] = new SwatYUIComponent('swf');
+		$components['swf']->addJavaScript();
 
 		$components['tabview'] = new SwatYUIComponent('tabview');
 		$components['tabview']->addJavaScript();
@@ -287,6 +293,14 @@ class SwatYUI extends SwatObject
 		$components['calendar']->addDependency($components['yahoo']);
 		$components['calendar']->addDependency($components['dom']);
 		$components['calendar']->addDependency($components['event']);
+
+		$components['charts']->addDependency($components['yahoo']);
+		$components['charts']->addDependency($components['dom']);
+		$components['charts']->addDependency($components['event']);
+		$components['charts']->addDependency($components['element']);
+		$components['charts']->addDependency($components['datasource']);
+		$components['charts']->addDependency($components['json']);
+		$components['charts']->addDependency($components['swf']);
 
 		$components['connection']->addDependency($components['yahoo']);
 		$components['connection']->addDependency($components['event']);
@@ -357,6 +371,11 @@ class SwatYUI extends SwatObject
 		$components['slider']->addDependency($components['dom']);
 		$components['slider']->addDependency($components['event']);
 		$components['slider']->addDependency($components['dragdrop']);
+
+		$components['swf']->addDependency($components['yahoo']);
+		$components['swf']->addDependency($components['dom']);
+		$components['swf']->addDependency($components['event']);
+		$components['swf']->addDependency($components['element']);
 
 		$components['tabview']->addDependency($components['yahoo']);
 		$components['tabview']->addDependency($components['dom']);
