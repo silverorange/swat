@@ -12,35 +12,52 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * This collection class manages all the sorting and merging of entries.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatHtmlHeadEntrySet extends SwatObject
 {
-	// {{{ private properties
+	// {{{ protected properties
 
 	/**
 	 * HTML head entries managed by this collection
 	 *
 	 * @var array
 	 */
-	private $entries = array();
+	protected $entries = array();
 
 	/**
-	 * HTML head entries orgainzed by type
+	 * HTML head entries organized by type
 	 *
 	 * @var array
 	 */
-	private $entries_by_type = array();
+	protected $entries_by_type = array();
 
 	/**
-	 * A lookup table of entry URIs that have already been added
-	 *
-	 * This table is used to avoid duplicates.
+	 * HTML head entries organized by package
 	 *
 	 * @var array
 	 */
-	private $uris = array();
+	protected $entries_by_package = array();
+
+	/**
+	 * A lookup table of entry URI's that have already been added
+	 *
+	 * Array keys are URI's. Array values are <kbd>true</kbd>. This table is
+	 * used to avoid adding duplicate entries.
+	 *
+	 * @var array
+	 */
+	protected $uris = array();
+
+	/**
+	 * Cache of the package dependency ordering for this entry set
+	 *
+	 * @var array
+	 *
+	 * @see SwatHtmlHeadEntrySet::getDependencyOrder()
+	 */
+	protected $dependency_order = null;
 
 	/**
 	 * A lookup table of packages that have already been displayed.
@@ -49,7 +66,7 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 *
 	 * @var array
 	 */
-	private $displayed_packages;
+	protected $displayed_packages;
 
 	// }}}
 	// {{{ public function __construct()
@@ -60,13 +77,9 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 * @param SwatHtmlHeadEntrySet $set an optional existing HTML head entry
 	 *                                   set to build this set from.
 	 */
-	public function __construct($set = null)
+	public function __construct(SwatHtmlHeadEntrySet $set = null)
 	{
 		if ($set !== null) {
-			if (!($set instanceof SwatHtmlHeadEntrySet))
-				throw new SwatInvalidClassException('Set must be an instance '.
-					'of SwatHtmlHeadEntrySet.');
-
 			$this->addEntrySet($set);
 		}
 	}
@@ -83,15 +96,37 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	{
 		$uri = $entry->getUri();
 
-		if (!in_array($uri, $this->uris)) {
-			$this->uris[] = $uri;
-			array_push($this->entries, $entry);
+		if (!array_key_exists($uri, $this->uris)) {
 
+			// add hash entry so we don't add entry twice
+			$this->uris[$uri] = true;
+
+			// add entry to the entries array
+			$this->entries[] = $entry;
+
+			// add entry by type
 			$type = $entry->getType();
-			if (!isset($this->entries_by_type[$type]))
+			if (!isset($this->entries_by_type[$type])) {
 				$this->entries_by_type[$type] = array();
+			}
+			$this->entries_by_type[$type][] = $entry;
 
-			array_push($this->entries_by_type[$type], $entry);
+			// add entry by package
+			$package = $entry->getPackageId();
+			if ($package === null) {
+				$package = '';
+			}
+			if (!isset($this->entries_by_package[$package])) {
+				$this->entries_by_package[$package] = array();
+			}
+			$this->entries_by_package[$package][] = $entry;
+
+			// clear package dependency order cache if a new package is
+			// introduced
+			if (is_array($this->dependency_order) &&
+				!array_key_exists($package, $this->dependency_order)) {
+				$this->dependency_order = null;
+			}
 		}
 	}
 
@@ -105,8 +140,9 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 */
 	public function addEntrySet(SwatHtmlHeadEntrySet $set)
 	{
-		foreach ($set->entries as $entry)
+		foreach ($set->entries as $entry) {
 			$this->addEntry($entry);
+		}
 	}
 
 	// }}}
@@ -123,10 +159,26 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 */
 	public function display($uri_prefix = '', $tag = null)
 	{
-		$parameters = array($uri_prefix, $tag);
+		$entries = $this->getSortedEntries();
 
-		$this->displayEntriesRecursive(null,
-			'displayEntriesForPackage', $parameters);
+		// display entries
+		$current_package = null;
+		$current_type    = null;
+		foreach ($entries as $entry) {
+
+			if ($current_package !== $entry->getPackageId() ||
+				$current_type !== $entry->getType()) {
+
+				$current_package = $entry->getPackageId();
+				$current_type    = $entry->getType();
+				echo "\n";
+			}
+
+			echo "\t";
+
+			$entry->display($uri_prefix, $tag);
+			echo "\n";
+		}
 
 		echo "\n";
 	}
@@ -139,101 +191,262 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 */
 	public function displayInline($path, $type = null)
 	{
-		$parameters = array($path, $type);
+		$entries = $this->getSortedEntries();
 
-		$this->displayEntriesRecursive(null,
-			'displayInlineEntriesForPackage', $parameters);
+		// display entries inline
+		$current_package = null;
+		$current_type    = null;
+		foreach ($entries as $entry) {
+			if ($type === null || $entry->getType() === $type) {
+				$entry->displayInline($path);
+				echo "\n\t";
+			}
+		}
 
 		echo "\n";
 	}
 
 	// }}}
-	// {{{ protected function displayEntriesRecursive()
+	// {{{ protected function getSortedEntries()
 
-	protected function displayEntriesRecursive($package_id,
-		$display_method, $display_method_parameters = array())
+	/**
+	 * Gets the entries of this set sorted by their correct display order
+	 *
+	 * @return array the entries of this set sorted by their correct display
+	 *               order.
+	 */
+	protected function getSortedEntries()
 	{
-		if ($package_id === null) {
-			$this->displayed_packages = array();
+		$entries = array();
 
-			/*
-			 * Displaying entries for the site code, so any non-null package
-			 * ids are dependencies of the site code and should be displayed
-			 * first.
-			 */
-			foreach ($this->entries as $entry)
-				if ($entry->getPackageId() !== null)
-					$this->displayEntriesRecursive($entry->getPackageId(),
-						$display_method, $display_method_parameters);
-
-		} else {
-			/*
-			 * Displaying entries for a package, so find what packages are
-			 * dependiencies of this package and display their entries first.
-			 */
-			$dependency_method = array($package_id, 'getDependencies');
-
-			if (is_callable($dependency_method)) {
-				$dependent_packages =
-					call_user_func(array($package_id, 'getDependencies'));
-
-				foreach ($dependent_packages as $dep_package_id)
-					$this->displayEntriesRecursive($dep_package_id,
-						$display_method, $display_method_parameters);
-			}
+		// get array of entries with native ordering so we can do a
+		// stable, user-defined sort
+		foreach ($this->entries as $key => $value) {
+			$entries[] = array(
+				'order'  => $key,
+				'object' => $value,
+			);
 		}
 
-		/*
-		 * Track which packages have already been displayed in order to
-		 * display each package exactly once.
-		 */
-		if (in_array($package_id, $this->displayed_packages))
-			return;
-		else
-			$this->displayed_packages[] = $package_id;
+		// stable-sort entries
+		usort($entries, array($this, 'compareEntries'));
 
-		array_unshift($display_method_parameters, $package_id);
-		call_user_func_array(array($this, $display_method), $display_method_parameters);
+		// put back in a flat array
+		$sorted_entries = array();
+		foreach ($entries as $entry) {
+			$sorted_entries[] = $entry['object'];
+		}
+
+		return $sorted_entries;
 	}
 
 	// }}}
-	// {{{ protected function displayEntriesForPackage()
+	// {{{ protected function compareEntries()
 
-	protected function displayEntriesForPackage($package_id, $uri_prefix,
-		$tag = null)
+	/**
+	 * Compares two {@link SwatHtmlHeadEntry} objects to get their display
+	 * order
+	 *
+	 * @param array $a left side of comparison. A two element array containing
+	 *                  the keys 'order' and 'object'. The 'order' key contains
+	 *                  the native ordering of the entry and the 'object' key
+	 *                  contains the entry object.
+	 * @param array $b left side of comparison. A two element array containing
+	 *                  the keys 'order' and 'object'. The 'order' key contains
+	 *                  the native ordering of the entry and the 'object' key
+	 *                  contains the entry object.
+	 *
+	 * @return integer a tri-value where -1 means the left side is less than
+	 *                  the right side, 1 means the left side is greater than
+	 *                  the right side and 0 means the left side and right
+	 *                  side are equivalent.
+	 */
+	protected function compareEntries(array $a, array $b)
 	{
-		echo "\n\t", '<!-- head entries for ',
-			($package_id === null) ?
-				'site code' : 'package '.$package_id, "-->\n\t";
 
-		foreach ($this->entries_by_type as $entries) {
-			foreach ($entries as $entry) {
-				if ($entry->getPackageId() === $package_id) {
-					$entry->display($uri_prefix, $tag);
-					echo "\n\t";
-				}
-			}
+		$a_object = $a['object'];
+		$b_object = $b['object'];
+
+		// compare entry type order
+		$type_order = $this->getTypeOrder();
+
+		$a_type = $a_object->getType();
+		$b_type = $b_object->getType();
+
+		if (!array_key_exists($a_type, $type_order)) {
+			$a_type = '__unknown__';
 		}
+
+		if (!array_key_exists($b_type, $type_order)) {
+			$b_type = '__unknown__';
+		}
+
+		if ($type_order[$a_type] > $type_order[$b_type]) {
+			return 1;
+		}
+
+		if ($type_order[$a_type] < $type_order[$b_type]) {
+			return -1;
+		}
+
+		// compare package dependency order
+		$dep_order = $this->getDependencyOrder();
+
+		$a_package_id = $a_object->getPackageId();
+		if ($a_package_id === null) {
+			$a_package_id = '__site__';
+		}
+
+		$b_package_id = $b_object->getPackageId();
+		if ($b_package_id === null) {
+			$b_package_id = '__site__';
+		}
+
+		if ($dep_order[$a_package_id] > $dep_order[$b_package_id]) {
+			return 1;
+		}
+
+		if ($dep_order[$a_package_id] < $dep_order[$b_package_id]) {
+			return -1;
+		}
+
+		// compare added order (keeps sort stable)
+		if ($a['order'] > $b['order']) {
+			return 1;
+		}
+
+		if ($a['order'] < $b['order']) {
+			return -1;
+		}
+
+		return 0;
 	}
 
 	// }}}
-	// {{{ protected function displayInlineEntriesForPackage()
+	// {{{ protected function getTypeOrder()
 
-	protected function displayInlineEntriesForPackage($package_id, $path,
-		$type)
+	/**
+	 * Gets the order in which HTML head entry types should be displayed
+	 *
+	 * This order is dependent on the way browsers parallelize requests and is
+	 * chosen to give the greatest amount of parallelization.
+	 *
+	 * @return array the order in which HTML head entries should be displayed.
+	 *               This is an associative array where the array key is the
+	 *               entry type and the array value is the relative display
+	 *               order, with lower values being displayed first.
+	 */
+	protected function getTypeOrder()
 	{
-		echo "\n\t", '<!-- inline entries for ',
-			($package_id === null) ?
-				'site code' : 'package '.$package_id, "-->\n\t";
+		return array(
+			'SwatStyleSheetHtmlHeadEntry' => 0,
+			'SwatJavaScriptHtmlHeadEntry' => 1,
+			'SwatLinkHtmlHeadEntry'       => 2,
+			'SwatCommentHtmlHeadEntry'    => 3,
+			'__unknown__'                 => 4,
+		);
+	}
 
-		foreach ($this->entries as $entry) {
-			if ($type === null || $entry->getType() === $type) {
-				if ($entry->getPackageId() === $package_id) {
-					$entry->displayInline($path);
-					echo "\n\t";
+	// }}}
+	// {{{ protected function getDependencyOrder()
+
+	/**
+	 * Gets the order in which HTML head entry packages should be displayed
+	 *
+	 * This order is determined by the package dependencies specified in the
+	 * static package info classes. For example, Swat's package dependencies
+	 * are found in {@link Swat::getDependencies()}.
+	 *
+	 * @return array the order in which HTML head entries should be displayed.
+	 *               This is an associative array where the array key is the
+	 *               package id and the array value is the relative display
+	 *               order, with lower values being displayed first.
+	 *
+	 * @see SwatHtmlHeadEntrySet::getDependencyOrderRecursive()
+	 */
+	protected function getDependencyOrder()
+	{
+		if ($this->dependency_order === null) {
+			$package_ids = array_keys($this->entries_by_package);
+
+			// get ordering of packages in this set
+			$order = $this->getDependencyOrderRecursive($package_ids);
+
+			// add site-code as last dependent
+			$order[] = '__site__';
+
+			$this->dependency_order = array_flip($order);
+		}
+
+		return $this->dependency_order;
+	}
+
+	// }}}
+	// {{{ protected function getDependencyOrderRecursive()
+
+	/**
+	 * Recursively gets the package dependency order of entries in this set
+	 *
+	 * @param array $package_ids unsorted array of package ids.
+	 * @param array $already_sorted package ids that have already been sorted.
+	 *
+	 * @return array a sorted array of package ids.
+	 *
+	 * @see SwatHtmlHeadEntrySet::getDependencyOrder()
+	 */
+	protected function getDependencyOrderRecursive(array $package_ids,
+		array $already_sorted = array())
+	{
+		$return = array();
+
+		foreach ($package_ids as $package_id) {
+
+			// skip site-code for dependency sorting, it goes at the end
+			if ($package_id == '') {
+				continue;
+			}
+
+			// if package is not already sorted
+			if (!in_array($package_id, $already_sorted)) {
+
+				// first check for sub-packages
+				$dependency_method = array($package_id, 'getDependencies');
+				if (is_callable($dependency_method)) {
+					$sub_packages = call_user_func($dependency_method);
+
+					// don't consider already sorted sub-packages
+					$sub_packages = array_diff($sub_packages, $already_sorted);
+
+					if (count($sub_packages) > 0) {
+
+						// get sub-package dependencies
+						$sub_package_dependencies =
+							$this->getDependencyOrderRecursive(
+								$sub_packages,
+								$already_sorted
+							);
+
+						// append sorted sub-package dependencies
+						$return = array_merge(
+							$return,
+							$sub_package_dependencies
+						);
+
+						$already_sorted = array_merge(
+							$already_sorted,
+							$sub_package_dependencies
+						);
+					}
 				}
+
+				// finally, append current package, after its dependencies
+				$return[] = $package_id;
+
+				$already_sorted[] = $package_id;
 			}
 		}
+
+		return $return;
 	}
 
 	// }}}
