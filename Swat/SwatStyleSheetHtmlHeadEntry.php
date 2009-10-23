@@ -26,7 +26,7 @@ class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
 				$uri.'&'.$tag;
 		}
 
-		printf('<link rel="stylesheet" href="%s%s" />',
+		printf('<link rel="stylesheet" type="text/css" href="%s%s" />',
 			$uri_prefix,
 			$uri);
 	}
