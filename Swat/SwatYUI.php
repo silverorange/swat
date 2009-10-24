@@ -203,6 +203,11 @@ class SwatYUI extends SwatObject
 		$components['datasource'] = new SwatYUIComponent('datasource');
 		$components['datasource']->addJavaScript();
 
+		$components['datatable'] = new SwatYUIComponent('datatable');
+		$components['datatable']->addJavaScript();
+		$components['datatable']->addStyleSheet('datatable/assets/skins/sam', '',
+			false);
+
 		$components['dom'] = new SwatYUIComponent('dom');
 		$components['dom']->addJavaScript();
 
@@ -245,6 +250,11 @@ class SwatYUI extends SwatObject
 		$components['menu'] = new SwatYUIComponent('menu');
 		$components['menu']->addJavaScript();
 		$components['menu']->addStyleSheet('menu/assets/skins/sam', '', false);
+
+		$components['paginator'] = new SwatYUIComponent('paginator');
+		$components['paginator']->addJavaScript();
+		$components['paginator']->addStyleSheet(
+			'paginator/assets/skins/sam', '', false);
 
 		$components['reset'] = new SwatYUIComponent('reset');
 		$components['reset']->addStyleSheet();
@@ -317,6 +327,14 @@ class SwatYUI extends SwatObject
 		$components['container_core']->addDependency($components['connection']);
 		$components['container_core']->addDependency($components['animation']);
 
+		$components['datatable']->addDependency($components['yahoo']);
+		$components['datatable']->addDependency($components['datasource']);
+		$components['datatable']->addDependency($components['dom']);
+		$components['datatable']->addDependency($components['dragdrop']);
+		$components['datatable']->addDependency($components['event']);
+		$components['datatable']->addDependency($components['element']);
+		$components['datatable']->addDependency($components['paginator']);
+
 		$components['dom']->addDependency($components['yahoo']);
 
 		$components['dragdrop']->addDependency($components['yahoo']);
@@ -360,6 +378,11 @@ class SwatYUI extends SwatObject
 		$components['menu']->addDependency($components['dom']);
 		$components['menu']->addDependency($components['event']);
 		$components['menu']->addDependency($components['container_core']);
+
+		$components['paginator']->addDependency($components['yahoo']);
+		$components['paginator']->addDependency($components['dom']);
+		$components['paginator']->addDependency($components['event']);
+		$components['paginator']->addDependency($components['element']);
 
 		$components['resize']->addDependency($components['yahoo']);
 		$components['resize']->addDependency($components['dom']);
