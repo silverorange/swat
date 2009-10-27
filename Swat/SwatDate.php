@@ -255,36 +255,8 @@ class SwatDate extends Date
 			$compare_date = new SwatDate();
 		}
 
-		$compare_ts = $compare_date->getTime();
-		$ts = $this->getTime();
-
-		$minute = 60;
-		$hour = $minute * 60;
-		$day = $hour * 24;
-		$month = $day * 30;
-		$year = $day * 365;
-
-		if (($compare_ts - $minute) < $ts) {
-			$count = $compare_ts - $ts;
-			$date_part = Swat::ngettext('second', 'seconds', $count);
-		} elseif (($compare_ts - $hour) < $ts) {
-			$count = floor(($compare_ts - $ts) / $minute);
-			$date_part = Swat::ngettext('minute', 'minutes', $count);
-		} elseif (($compare_ts - $day) < $ts) {
-			$count = floor(($compare_ts - $ts) / $hour);
-			$date_part = Swat::ngettext('hour', 'hours', $count);
-		} elseif (($compare_ts - $month) < $ts) {
-			$count = floor(($compare_ts - $ts) / $day);
-			$date_part = Swat::ngettext('day', 'days', $count);
-		} elseif (($compare_ts - $year) < $ts) {
-			$count = floor(($compare_ts - $ts) / $month);
-			$date_part = Swat::ngettext('month', 'months', $count);
-		} else {
-			$count = floor(($compare_ts - $ts) / $year);
-			$date_part = Swat::ngettext('year', 'years', $count);
-		}
-
-		return sprintf(Swat::_('%s %s'), $count, $date_part);
+		$seconds = $compare_date->getTime() - $this->getTime();
+		return SwatString::toHumanReadableTimePeriod($seconds, true);
 	}
 
 	// }}}
