@@ -1375,6 +1375,88 @@ class SwatString extends SwatObject
 		return $list;
 	}
 	// }}}
+	// {{{ public static function toHumanReadableTimePeriod()
+
+	/**
+	 * Get a human-readable string representing the difference a time
+	 * period.
+	 *
+	 * This method formats seconds as a time period such as
+	 * "5 years, 3 months, 2 days, 5 seconds"
+	 *
+	 * @param integer $seconds Seconds to format
+	 * @param boolean $largest_part If true, only the largest matching
+	 *                              date part is returned. For the above
+	 *                              example, "5 years" would be returned.
+	 *
+	 * @return string A human-readable time period
+	 */
+	public static function toHumanReadableTimePeriod($seconds,
+		$largest_part = false)
+	{
+		$seconds = abs($seconds);
+
+		$minute = 60;
+		$hour = $minute * 60;
+		$day = $hour * 24;
+		$month = $day * 30;
+		$year = $day * 365;
+
+		$periods = array();
+
+		if ($seconds > $year) {
+			$years = floor($seconds / $year);
+			$seconds -= $year * $years;
+			$periods[] = sprintf(
+				Swat::ngettext('%s year', '%s years', $years),
+				$years);
+		}
+
+		if ($seconds > $month) {
+			$months = floor($seconds / $month);
+			$seconds -= $month * $months;
+			$periods[] = sprintf(
+				Swat::ngettext('%s month', '%s months', $months),
+				$months);
+		}
+
+		if ($seconds > $day) {
+			$days = floor($seconds / $day);
+			$seconds -= $day * $days;
+			$periods[] = sprintf(
+				Swat::ngettext('%s day', '%s days', $days),
+				$days);
+		}
+
+		if ($seconds > $hour) {
+			$hours = floor($seconds / $hour);
+			$seconds -= $hour * $hours;
+			$periods[] = sprintf(
+				Swat::ngettext('%s hour', '%s hours', $hours),
+				$hours);
+		}
+
+		if ($seconds > $minute) {
+			$minutes = floor($seconds / $minute);
+			$seconds -= $minute * $minutes;
+			$periods[] = sprintf(
+				Swat::ngettext('%s minute', '%s minutes', $minutes),
+				$minutes);
+		}
+
+		if ($seconds > 0 || count($periods) == 0) {
+			$periods[] = sprintf(
+				Swat::ngettext('%s second', '%s seconds', $seconds),
+				$seconds);
+		}
+
+		if ($largest_part && count($periods) > 0)
+			return current($periods);
+		else
+			return self::toList($periods);
+	}
+
+	// }}}
 	// {{{ public static function hash()
 
 	/**
