@@ -31,3 +31,7 @@
 .swat-tile-view-first-group {
 	padding-top: 0em;
 }
+
+.swat-tile-view-clear {
+	clear: both;
+}
