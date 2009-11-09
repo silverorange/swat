@@ -82,6 +82,18 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public $check_all_unit;
 
+	/**
+	 * Tiles per row
+	 *
+	 * By default, tiles take up as much width of the page as is available
+	 * before wrapping. Setting this property will add an explicit break after
+	 * the specified number of tiles causing the tiles to wrap at the specified
+	 * number of tiles.
+	 *
+	 * @var integer
+	 */
+	public $tiles_per_row;
+
 	// }}}
 	// {{{ protected properties
 
@@ -265,12 +277,45 @@ class SwatTileView extends SwatView implements SwatUIParent
 		$this->model->next();
 		$next_record = ($this->model->valid()) ? $this->model->current() : null;
 
+		// tile count used for tiles-per-row option
+		$count = 1;
+
 		while ($record !== null) {
 
+			ob_start();
 			$this->displayTileGroupHeaders($record, $next_record);
-			$this->displayTile($record, $next_record);
-			$this->displayTileGroupFooters($record, $next_record);
+			$group_headers = ob_get_clean();
 
+			echo $group_headers;
+
+			// if group headers are displayed, reset tiles-per-row count
+			if ($group_headers != '') {
+				$count = 1;
+			}
+
+			$this->displayTile($record, $next_record);
+
+			// clear tiles-per-row
+			if ($this->tiles_per_row !== null &&
+				($count % $this->tiles_per_row === 0)) {
+				echo '<div class="swat-tile-view-clear"></div>';
+			}
+
+			ob_start();
+			$this->displayTileGroupFooters($record, $next_record);
+			$group_footers = ob_get_clean();
+
+			echo $group_footers;
+
+			// if group footers are displayed, reset tiles-per-row-count,
+			// otherwise, increase tiles-per-row-count
+			if ($group_footers != '') {
+				$count = 1;
+			} else {
+				$count++;
+			}
+
+			// get next record
 			$record = $next_record;
 			$this->model->next();
 			$next_record = ($this->model->valid()) ?
