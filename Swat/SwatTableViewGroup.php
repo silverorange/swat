@@ -75,10 +75,15 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	 */
 	public function displayFooter($row, $next_row)
 	{
+		if ($this->group_by === null)
+			throw new SwatException("Attribute 'group_by' must be set.");
+
 		$group_by = $this->group_by;
 
-		if ($next_row === null || $next_row->$group_by !== $row->$group_by)
+		if ($next_row === null ||
+			!$this->isEqual($row->$group_by, $next_row->$group_by)) {
 			$this->displayGroupFooter($row);
+		}
 	}
 
 	// }}}
@@ -147,11 +152,33 @@ class SwatTableViewGroup extends SwatTableViewColumn
 
 		// only display the group header if the value of the group-by field has
 		// changed
-		if ($row->$group_by !== $this->header_current) {
+		if (!$this->isEqual($this->header_current, $row->$group_by)) {
 			$this->header_current = $row->$group_by;
 			$this->resetSubGroups();
 			$this->displayGroupHeader($row);
 		}
+	}
+
+	// }}}
+	// {{{ protected function isEqual()
+
+	/**
+	 * Compares the value of the current row to the value of the current
+	 * group to see if the value has changed
+	 *
+	 * @param mixed $group_value the current group value.
+	 * @param mixed $row_value the current row value.
+	 *
+	 * @return boolean true if the row value is different from the current
+	 *                 group value. Otherwise, false.
+	 */
+	protected function isEqual($group_value, $row_value)
+	{
+		if ($group_value instanceof Date && $row_value instanceof Date) {
+			return (Date::compare($group_value, $row_value) === 0);
+		}
+
+		return ($group_value === $row_value);
 	}
 
 	// }}}
