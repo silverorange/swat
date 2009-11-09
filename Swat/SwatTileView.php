@@ -77,6 +77,8 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 * Optional extended-all checkbox unit.
 	 *
 	 * Used for displaying a "check-all" message. Defaults to "items".
+	 *
+	 * @var string
 	 */
 	public $check_all_unit;
 
