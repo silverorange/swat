@@ -4,11 +4,34 @@
  * Number tools
  *
  * @package   Swat
- * @copyright 2008 silverorange
+ * @copyright 2008-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatNumber extends SwatObject
 {
+	// {{{ public static function roundUp()
+
+	/**
+	 * Rounds a number to the specified number of fractional digits using the
+	 * round-half-up rounding method
+	 *
+	 * See {@link http://en.wikipedia.org/wiki/Rounding#Round_half_up}.
+	 *
+	 * @param float $value the value to round.
+	 * @param integer $fractional_digits the number of fractional digits in the
+	 *                                    rounded result.
+	 *
+	 * @return float the rounded value.
+	 */
+	public static function roundUp($value, $fractional_digits)
+	{
+		$power = pow(10, $fractional_digits);
+		$value = ceil($value * $power) / $power;
+
+		return $value;
+	}
+
+	// }}}
 	// {{{ public static function roundToEven()
 
 	/**
@@ -16,7 +39,7 @@ class SwatNumber extends SwatObject
 	 * round-to-even rounding method
 	 *
 	 * Round-to-even is primarily used for monetary values. See
-	 * {@link http://en.wikipedia.org/wiki/Rounding#Round-to-even_method}.
+	 * {@link http://en.wikipedia.org/wiki/Rounding#Round_half_to_even}.
 	 *
 	 * @param float $value the value to round.
 	 * @param integer $fractional_digits the number of fractional digits in the
