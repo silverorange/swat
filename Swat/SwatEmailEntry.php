@@ -50,7 +50,9 @@ class SwatEmailEntry extends SwatEntry
 	/**
 	 * Validates an email address
 	 *
-	 * This uses the PHP 5.2.x filter_var() function if it is available.
+	 * This doesn't use the PHP 5.2.x filter_var() function since it allows
+	 * addresses without TLD's since 5.2.9. If/when they add a flag to allow to
+	 * validate with TLD's, we can start using it again.
 	 *
 	 * @param string $value the email address to validate.
 	 *
@@ -61,17 +63,12 @@ class SwatEmailEntry extends SwatEntry
 	{
 		$valid = false;
 
-		if (extension_loaded('filter')) {
-			$valid =
-				(filter_var($this->value, FILTER_VALIDATE_EMAIL) === false);
-		} else {
-			$valid_name_word = '[-!#$%&\'*+.\\/0-9=?A-Z^_`{|}~]+';
-			$valid_domain_word = '[-!#$%&\'*+\\/0-9=?A-Z^_`{|}~]+';
-			$valid_address_regexp = '/^'.$valid_name_word.'@'.
-				$valid_domain_word.'(\.'.$valid_domain_word.')+$/ui';
+		$valid_name_word = '[-!#$%&\'*+.\\/0-9=?A-Z^_`{|}~]+';
+		$valid_domain_word = '[-!#$%&\'*+\\/0-9=?A-Z^_`{|}~]+';
+		$valid_address_regexp = '/^'.$valid_name_word.'@'.
+			$valid_domain_word.'(\.'.$valid_domain_word.')+$/ui';
 
-			$valid = (preg_match($valid_address_regexp, $this->value) === 0);
-		}
+		$valid = (preg_match($valid_address_regexp, $this->value) === 0);
 
 		return $valid;
 	}
