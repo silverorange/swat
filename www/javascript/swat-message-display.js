@@ -7,7 +7,17 @@ function SwatMessageDisplay(id, hideable_messages)
 	for (var i = 0; i < hideable_messages.length; i++) {
 		var message = new SwatMessageDisplayMessage(this.id,
 			hideable_messages[i]);
+
+		this.messages[i] = message;
 	}
+}
+
+SwatMessageDisplay.prototype.getMessage = function(index)
+{
+	if (this.messages[index])
+		return this.messages[index];
+	else
+		return false;
 }
 
 /**
