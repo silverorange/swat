@@ -11,7 +11,7 @@ require_once 'Swat/SwatTitleable.php';
 /**
  *
  * @package   Swat
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
@@ -707,20 +707,23 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 					$this->prototype_widget->getDescendants());
 
 				$cloned_descendants = array_merge($cloned_descendants,
-					$this->cloned_widget->getDescendants());
+					$cloned_widget->getDescendants());
 			}
 
 			$cloned_object = null;
 			foreach ($prototype_descendants as $index => $prototype_object) {
 				if ($object === $prototype_object) {
-					$cloned_object = $cloned_descendants[$index];
+					$cloned_object =
+						$this->widgets[$this->replicator_id][$object->id];
+
 					break;
 				}
 			}
 
-			if ($cloned_object === null)
+			if ($cloned_object === null) {
 				throw new SwatException('Cloned widget tree does not match '.
 					'prototype widget tree.');
+			}
 
 			if ($cloned_object->$property instanceof SwatCellRendererMapping)
 				$cloned_object->$property = $value;
