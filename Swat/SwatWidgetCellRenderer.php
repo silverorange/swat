@@ -97,11 +97,12 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 */
 	public function addChild(SwatObject $child)
 	{
-		if ($this->prototype_widget === null)
+		if ($this->prototype_widget === null) {
 			$this->setPrototypeWidget($child);
-		else
+		} else {
 			throw new SwatException(
 				'Can only add one widget to a widget cell renderer');
+		}
 	}
 
 	// }}}
@@ -148,9 +149,11 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			$replicators = $form->getHiddenField(
 				$this->prototype_widget->id.'_replicators');
 
-			if ($replicators !== null)
-				foreach ($replicators as $replicator)
+			if ($replicators !== null) {
+				foreach ($replicators as $replicator) {
 					$this->createClonedWidget($replicator);
+				}
+			}
 		}
 
 		if ($replicators === null)
@@ -166,21 +169,24 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	public function process()
 	{
 		$form = $this->getForm();
-		if ($form === null)
+		if ($form === null) {
 			$replicators = null;
-		else
+		} else {
 			$replicators = $form->getHiddenField(
 				$this->prototype_widget->id.'_replicators');
+		}
 
 		if ($replicators === null) {
 			if ($this->prototype_widget !== null &&
-				!$this->prototype_widget->isProcessed())
+				!$this->prototype_widget->isProcessed()) {
 				$this->prototype_widget->process();
+			}
 		} else {
 			foreach ($replicators as $replicator) {
 				$widget = $this->getClonedWidget($replicator);
-				if (!$widget->isProcessed())
+				if (!$widget->isProcessed()) {
 					$widget->process();
+				}
 			}
 		}
 	}
@@ -233,8 +239,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 			$form = $this->getForm();
 			if ($form === null)
-				throw new SwatException('Cell renderer container must be inside '.
-					'a SwatForm for SwatWidgetCellRenderer to work.');
+				throw new SwatException('Cell renderer container must be '.
+					'inside a SwatForm for SwatWidgetCellRenderer to work.');
 
 			$form->addHiddenField($this->prototype_widget->id.'_replicators',
 				array_keys($this->clones));
@@ -290,11 +296,13 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 		$widget = null;
 
 		if ($widget_id === null) {
-			if (isset($this->widgets[$replicator_id]))
+			if (isset($this->widgets[$replicator_id])) {
 				$widget = current($this->widgets[$replicator_id]);
+			}
 		} else {
-			if (isset($this->widgets[$replicator_id][$widget_id]))
+			if (isset($this->widgets[$replicator_id][$widget_id])) {
 				$widget = $this->widgets[$replicator_id][$widget_id];
+			}
 		}
 
 		return $widget;
@@ -328,7 +336,6 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			if (is_array($replicators)) {
 				foreach ($this->clones as $replicator_id => $clone) {
 					if (in_array($replicator_id, $replicators)) {
-
 						if ($widget_id !== null &&
 							!isset($this->widgets[$replicator_id][$widget_id])) {
 							throw new SwatWidgetNotFoundException(sprintf(
@@ -375,8 +382,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			$clones = array();
 			foreach ($this->clones as $replicator_id => $clone) {
 				if (is_array($replicators) &&
-					in_array($replicator_id, $replicators))
+					in_array($replicator_id, $replicators)) {
 						$clones[$replicator_id] = $clone;
+				}
 			}
 		} else {
 			$clones = $this->clones;
@@ -402,8 +410,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 		$classes = array();
 
 		if ($this->replicator_id !== null &&
-			$this->hasMessage($this->replicator_id))
+			$this->hasMessage($this->replicator_id)) {
 			$classes[] = 'swat-error';
+		}
 
 		return $classes;
 	}
@@ -426,11 +435,12 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	{
 		$messages = array();
 
-		if ($replicator_id !== null)
+		if ($replicator_id !== null) {
 			$messages = $this->getClonedWidget($replicator_id)->getMessages();
-		elseif ($this->replicator_id !== null)
+		} elseif ($this->replicator_id !== null) {
 			$messages =
 				$this->getClonedWidget($this->replicator_id)->getMessages();
+		}
 
 		return $messages;
 	}
@@ -454,12 +464,13 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	{
 		$has_message = false;
 
-		if ($replicator_id !== null)
+		if ($replicator_id !== null) {
 			$has_message =
 				$this->getClonedWidget($replicator_id)->hasMessage();
-		elseif ($this->replicator_id !== null)
+		} elseif ($this->replicator_id !== null) {
 			$has_message =
 				$this->getClonedWidget($this->replicator_id)->hasMessage();
+		}
 
 		return $has_message;
 	}
@@ -502,8 +513,9 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 		$widgets = $this->getClonedWidgets();
 		if (count($widgets) > 0) {
-			foreach ($widgets as $widget)
+			foreach ($widgets as $widget) {
 				$set->addEntrySet($widget->getHtmlHeadEntrySet());
+			}
 		} else {
 			$set->addEntrySet(
 				$this->getPrototypeWidget()->getHtmlHeadEntrySet());
@@ -534,22 +546,25 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	public function getDescendants($class_name = null)
 	{
 		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name)))
+			class_exists($class_name) || interface_exists($class_name))) {
 			return array();
+		}
 
 		$out = array();
 
 		foreach ($this->getClonedWidgets() as $cloned_widget) {
 			if ($class_name === null || $cloned_widget instanceof $class_name) {
-				if ($cloned_widget->id === null)
+				if ($cloned_widget->id === null) {
 					$out[] = $cloned_widget;
-				else
+				} else {
 					$out[$cloned_widget->id] = $cloned_widget;
+				}
 			}
 
-			if ($cloned_widget instanceof SwatUIParent)
+			if ($cloned_widget instanceof SwatUIParent) {
 				$out = array_merge($out,
 					$cloned_widget->getDescendants($class_name));
+			}
 		}
 
 		return $out;
@@ -630,9 +645,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 */
 	public function setDescendantStates(array $states)
 	{
-		foreach ($this->getDescendants('SwatState') as $id => $object)
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
 			if (isset($states[$id]))
 				$object->setState($states[$id]);
+		}
 	}
 
 	// }}}
