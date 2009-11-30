@@ -94,6 +94,25 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public $tiles_per_row;
 
+	/**
+	 * No records message text
+	 *
+	 * A message to show if the table view has no records to display. If
+	 * null, no message is displayed.
+	 *
+	 * @var string
+	 */
+	public $no_records_message = '<none>';
+
+	/**
+	 * Optional content type for the no records message
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $no_records_message_type = 'text/plain';
+
 	// }}}
 	// {{{ protected properties
 
@@ -229,6 +248,16 @@ class SwatTileView extends SwatView implements SwatUIParent
 			return;
 
 		parent::display();
+
+		if (count($this->model) == 0 && $this->no_records_message !== null) {
+			$div = new SwatHtmlTag('div');
+			$div->class = 'swat-none';
+			$div->setContent($this->no_records_message,
+				$this->no_records_message_type);
+
+			$div->display();
+			return;
+		}
 
 		$tile_view_tag = new SwatHtmlTag('div');
 		$tile_view_tag->id = $this->id;
