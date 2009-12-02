@@ -158,7 +158,7 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	 */
 	public function getDataSpecificCSSClassNames()
 	{
-		if ($this->value)
+		if ((boolean)$this->value)
 			return array('swat-boolean-cell-renderer-checked');
 		else
 			return array();
