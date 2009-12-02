@@ -145,6 +145,26 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	}
 
 	// }}}
+	// {{{ public function getDataSpecificCSSClassNames()
+
+	/**
+	 * Gets the data specific CSS class names for this cell renderer
+	 *
+	 * This is the recommended place for cell-renderer subclasses to add extra
+	 * hard-coded CSS classes that depend on data-bound properties of this
+	 * cell-renderer.
+	 *
+	 * @return array the array of base CSS class names for this cell renderer.
+	 */
+	public function getDataSpecificCSSClassNames()
+	{
+		if ($this->value)
+			return array('swat-boolean-cell-renderer-checked');
+		else
+			return array();
+	}
+
+	// }}}
 	// {{{ protected function renderTrue()
 
 	/**
