@@ -153,12 +153,12 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 			return;
 
 		if ($this->required && $this->isSensitive()) {
-			// Make sure required works when a SwatFlydown isn't serialized.
-			// When not serialized, a zero-length string is treated as null.
-			// This means that you can't have a null value and a blank value
-			// except when serialized.
+			// When values are not serialized, an empty string is treated as
+			// null. As a result, you should not use a null value and an empty
+			// string value in the same flydown except when using serialized
+			// values.
 			if (($this->serialize_values && $this->value === null) ||
-				strlen($this->value) == 0) {
+				(!$this->serialize_values && $this->value == '')) {
 				$this->addMessage($this->getValidationMessage('required'));
 			}
 		}
