@@ -9,7 +9,7 @@ require_once 'SwatI18N/SwatI18NLocale.php';
  * A currency cell renderer
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2009 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMoneyCellRenderer extends SwatCellRenderer
@@ -70,6 +70,16 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 	 */
 	public $decimal_places = null;
 
+	/**
+	 * What to display when value is null.
+	 *
+	 * If set to null, the default behaviour is for the value to be passed to
+	 * formatCurrency(). If not null, display this in a span instead.
+	 *
+	 * @var string
+	 */
+	public $null_display_value = null;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -98,18 +108,25 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 		if (!$this->visible)
 			return;
 
-		parent::render();
+		if ($this->value === null && $this->null_display_value !== null) {
+			$span_tag = new SwatHtmlTag('span');
+			$span_tag->class = 'swat-none';
+			$span_tag->setContent($this->null_display_value);
+			$span_tag->display();
+		} else {
+			parent::render();
 
-		$locale = SwatI18NLocale::get($this->locale);
-		$format = $this->getCurrencyFormat();
+			$locale = SwatI18NLocale::get($this->locale);
+			$format = $this->getCurrencyFormat();
 
-		echo SwatString::minimizeEntities(
-			$locale->formatCurrency(
-				$this->value, $this->international, $format));
+			echo SwatString::minimizeEntities(
+				$locale->formatCurrency(
+					$this->value, $this->international, $format));
 
-		if (!$this->international && $this->display_currency) {
-			echo '&nbsp;', SwatString::minimizeEntities(
-			$locale->getInternationalCurrencySymbol());
+			if (!$this->international && $this->display_currency) {
+				echo '&nbsp;', SwatString::minimizeEntities(
+				$locale->getInternationalCurrencySymbol());
+			}
 		}
 	}
 
