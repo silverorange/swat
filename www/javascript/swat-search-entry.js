@@ -35,7 +35,7 @@ function SwatSearchEntry(id)
 
 SwatSearchEntry.prototype.init = function()
 {
-	if (this.input.value == '') {
+	if (this.input.value == '' && !this.input._focused) {
 		this.showLabelText();
 	} else {
 		this.hideLabelText();
@@ -56,6 +56,9 @@ SwatSearchEntry.prototype.handleFocus = function(e)
 {
 	this.hideLabelText();
 	this.input.focus(); // IE hack to focus
+
+	// hack to enable initialization when focused
+	this.input._focused = true;
 }
 
 SwatSearchEntry.prototype.handleBlur = function(e)
@@ -64,6 +67,9 @@ SwatSearchEntry.prototype.handleBlur = function(e)
 		this.showLabelText();
 
 	YAHOO.util.Event.removeListener(this.input, 'keypress', this.handleKeyDown);
+
+	// hack to enable initialization when focused
+	this.input._focused = false;
 }
 
 SwatSearchEntry.prototype.showLabelText = function()
