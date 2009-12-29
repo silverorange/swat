@@ -88,7 +88,7 @@ class SwatDB extends SwatObject
 		$mdb2_types = $types === null ? true : $types;
 		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
 
-		SwatDB::debug($sql);
+		self::debug($sql);
 		$rs = $db->query($sql, $mdb2_types, true, $mdb2_wrapper);
 
 		if (MDB2::isError($rs))
@@ -114,7 +114,7 @@ class SwatDB extends SwatObject
 	 */
 	public static function exec($db, $sql)
 	{
-		SwatDB::debug($sql);
+		self::debug($sql);
 		$affected_rows = $db->exec($sql);
 
 		if (MDB2::isError($affected_rows))
@@ -164,7 +164,7 @@ class SwatDB extends SwatObject
 	public static function updateColumn($db, $table, $field, $value, $id_field,
 		$ids, $where = null)
 	{
-		$ids = SwatDB::initArray($ids);
+		$ids = self::initArray($ids);
 
 		if (count($ids) == 0)
 			return;
@@ -189,7 +189,7 @@ class SwatDB extends SwatObject
 			$id_list,
 			$where);
 
-		return SwatDB::exec($db, $sql);
+		return self::exec($db, $sql);
 	}
 
 	// }}}
@@ -242,7 +242,7 @@ class SwatDB extends SwatObject
 				$db->quote($id, $id_field->type));
 		}
 
-		SwatDB::debug($sql);
+		self::debug($sql);
 		$values = $db->queryCol($sql, $field->type);
 
 		if (MDB2::isError($values))
@@ -272,7 +272,7 @@ class SwatDB extends SwatObject
 	{
 		$mdb2_type = $type === null ? true : $type;
 
-		SwatDB::debug($sql);
+		self::debug($sql);
 		$value = $db->queryOne($sql, $mdb2_type);
 
 		if (MDB2::isError($value))
@@ -301,7 +301,7 @@ class SwatDB extends SwatObject
 	{
 		$mdb2_types = $types === null ? true : $types;
 
-		SwatDB::debug($sql);
+		self::debug($sql);
 		$row = $db->queryRow($sql, $mdb2_types, MDB2_FETCHMODE_OBJECT);
 
 		if (MDB2::isError($row))
@@ -355,7 +355,7 @@ class SwatDB extends SwatObject
 				$db->quote($id, $id_field->type));
 		}
 
-		SwatDB::debug($sql);
+		self::debug($sql);
 		$value = $db->queryOne($sql, $field->type);
 
 		if (MDB2::isError($value))
@@ -395,10 +395,10 @@ class SwatDB extends SwatObject
 	 */
 	public static function queryRowFromTable($db, $table, $fields, $id_field, $id)
 	{
-		SwatDB::initFields($fields);
+		self::initFields($fields);
 		$id_field = new SwatDBField($id_field, 'integer');
 		$sql = 'select %s from %s where %s = %s';
-		$field_list = implode(',', SwatDB::getFieldNameArray($fields));
+		$field_list = implode(',', self::getFieldNameArray($fields));
 
 		$sql = sprintf($sql,
 			$field_list,
@@ -406,7 +406,7 @@ class SwatDB extends SwatObject
 			$id_field->name,
 			$db->quote($id, $id_field->type));
 
-		$rs = SwatDB::query($db, $sql, null);
+		$rs = self::query($db, $sql, null);
 		$row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
 
 		if (MDB2::isError($row))
@@ -482,7 +482,7 @@ class SwatDB extends SwatObject
 		if (!is_array($params))
 			$params = array($params);
 
-		$rs = SwatDB::executeStoredProc($db, $proc, $params);
+		$rs = self::executeStoredProc($db, $proc, $params);
 		$row = $rs->getFirst();
 		return current($row);
 	}
@@ -531,7 +531,7 @@ class SwatDB extends SwatObject
 		$value_field = new SwatDBField($value_field, 'integer');
 		$bound_field = new SwatDBField($bound_field, 'integer');
 
-		$values = SwatDB::initArray($values);
+		$values = self::initArray($values);
 
 		$delete_sql = 'delete from %s where %s = %s';
 
@@ -573,16 +573,12 @@ class SwatDB extends SwatObject
 		$transaction = new SwatDBTransaction($db);
 		try {
 			if (count($values)) {
-				SwatDB::debug($insert_sql);
-				$ret = $db->query($insert_sql);
-				if (MDB2::isError($ret))
-					throw new SwatDBException($ret);
+				self::debug($insert_sql);
+				self::exec($db, $insert_sql);
 			}
 
-			SwatDB::debug($delete_sql);
-			$rs = $db->query($delete_sql);
-			if (MDB2::isError($rs))
-				throw new SwatDBException($rs);
+			self::debug($delete_sql);
+			self::exec($db, $delete_sql);
 
 		} catch (Exception $e) {
 			$transaction->rollback();
@@ -628,14 +624,14 @@ class SwatDB extends SwatObject
 	public static function insertRow($db, $table, $fields, $values,
 		$id_field = null)
 	{
-		SwatDB::initFields($fields);
+		self::initFields($fields);
 
 		$ret = null;
 
 		$transaction = new SwatDBTransaction($db);
 		try {
 			$sql = 'insert into %s (%s) values (%s)';
-			$field_list = implode(',', SwatDB::getFieldNameArray($fields));
+			$field_list = implode(',', self::getFieldNameArray($fields));
 
 			$values_in_order = array();
 
@@ -653,14 +649,14 @@ class SwatDB extends SwatObject
 				$field_list,
 				$value_list);
 
-			SwatDB::debug($sql);
+			self::debug($sql);
 			$result = $db->exec($sql);
 
 			if (MDB2::isError($result))
 				throw new SwatDBException($result);
 
 			if ($id_field !== null)
-				$ret = SwatDB::getFieldMax($db, $table, $id_field);
+				$ret = self::getFieldMax($db, $table, $id_field);
 
 		} catch (Exception $e) {
 			$transaction->rollback();
@@ -706,8 +702,7 @@ class SwatDB extends SwatObject
 	public static function updateRow($db, $table, $fields, $values, $id_field,
 		$id)
 	{
-
-		SwatDB::initFields($fields);
+		self::initFields($fields);
 		$id_field = new SwatDBField($id_field, 'integer');
 		$sql = 'update %s set %s where %s = %s';
 		$updates = array();
@@ -728,7 +723,7 @@ class SwatDB extends SwatObject
 			$id_field->name,
 			$db->quote($id, $id_field->type));
 
-		SwatDB::exec($db, $sql);
+		self::exec($db, $sql);
 	}
 
 	// }}}
@@ -763,7 +758,7 @@ class SwatDB extends SwatObject
 			$id_field->name,
 			$db->quote($id, $id_field->type));
 
-		SwatDB::exec($db, $sql);
+		self::exec($db, $sql);
 	}
 
 	// }}}
@@ -819,8 +814,8 @@ class SwatDB extends SwatObject
 		if ($order_by_clause != null)
 			$sql .= ' order by '.$order_by_clause;
 
-		SwatDB::debug($sql);
-		$rs = SwatDB::query($db, $sql, null);
+		self::debug($sql);
+		$rs = self::query($db, $sql, null);
 
 		$options = array();
 
@@ -898,7 +893,7 @@ class SwatDB extends SwatObject
 		if ($order_by_clause !== null)
 			$sql.= ', '.$order_by_clause;
 
-		$rs = SwatDB::query($db, $sql, null);
+		$rs = self::query($db, $sql, null);
 
 		$options = array();
 		$current = null;
@@ -1013,7 +1008,7 @@ class SwatDB extends SwatObject
 		if ($order_by_clause != null)
 			$sql.= ' order by '.$order_by_clause;
 
-		$rs = SwatDB::query($db, $sql, null);
+		$rs = self::query($db, $sql, null);
 
 		$options = array();
 
@@ -1065,7 +1060,7 @@ class SwatDB extends SwatObject
 		$sql = sprintf('select max(%s) as %s from %s',
 			$field->name, $field->name, $table);
 
-		return SwatDB::queryOne($db, $sql);
+		return self::queryOne($db, $sql);
 	}
 
 	// }}}
