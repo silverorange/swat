@@ -6,6 +6,7 @@ require_once 'MDB2.php';
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatDataTreeNode.php';
 require_once 'Swat/SwatViewSelection.php';
+require_once 'SwatI18N/SwatI18NLocale.php';
 require_once 'SwatDB/SwatDBField.php';
 require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/SwatDBDefaultRecordsetWrapper.php';
@@ -25,6 +26,8 @@ class SwatDB extends SwatObject
 	// {{{ protected static properties
 
 	protected static $debug = false;
+	protected static $debug_info = array();
+	protected static $debug_wrapper_depth = 0;
 
 	// }}}
 	// {{{ public static function setDebug()
@@ -88,11 +91,8 @@ class SwatDB extends SwatObject
 		$mdb2_types = $types === null ? true : $types;
 		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
 
-		self::debug($sql);
-		$rs = $db->query($sql, $mdb2_types, true, $mdb2_wrapper);
-
-		if (MDB2::isError($rs))
-			throw new SwatDBException($rs);
+		$rs = self::executeQuery($db, 'query',
+			array($sql, $mdb2_types, true, $mdb2_wrapper));
 
 		return $rs;
 	}
@@ -114,13 +114,7 @@ class SwatDB extends SwatObject
 	 */
 	public static function exec($db, $sql)
 	{
-		self::debug($sql);
-		$affected_rows = $db->exec($sql);
-
-		if (MDB2::isError($affected_rows))
-			throw new SwatDBException($affected_rows);
-
-		return $affected_rows;
+		return self::executeQuery($db, 'exec', array($sql));
 	}
 
 	// }}}
@@ -242,11 +236,8 @@ class SwatDB extends SwatObject
 				$db->quote($id, $id_field->type));
 		}
 
-		self::debug($sql);
-		$values = $db->queryCol($sql, $field->type);
-
-		if (MDB2::isError($values))
-			throw new SwatDBException($values);
+		$values = self::executeQuery($db, 'queryCol',
+			array($sql, $field->type));
 
 		return $values;
 	}
@@ -271,14 +262,7 @@ class SwatDB extends SwatObject
 	public static function queryOne($db, $sql, $type = null)
 	{
 		$mdb2_type = $type === null ? true : $type;
-
-		self::debug($sql);
-		$value = $db->queryOne($sql, $mdb2_type);
-
-		if (MDB2::isError($value))
-			throw new SwatDBException($value);
-
-		return $value;
+		return self::executeQuery($db, 'queryOne', array($sql, $mdb2_type));
 	}
 
 	// }}}
@@ -301,11 +285,8 @@ class SwatDB extends SwatObject
 	{
 		$mdb2_types = $types === null ? true : $types;
 
-		self::debug($sql);
-		$row = $db->queryRow($sql, $mdb2_types, MDB2_FETCHMODE_OBJECT);
-
-		if (MDB2::isError($row))
-			throw new SwatDBException($row);
+		$row = self::executeQuery($db, 'queryRow',
+			array($sql, $mdb2_types, MDB2_FETCHMODE_OBJECT));
 
 		return $row;
 	}
@@ -355,11 +336,7 @@ class SwatDB extends SwatObject
 				$db->quote($id, $id_field->type));
 		}
 
-		self::debug($sql);
-		$value = $db->queryOne($sql, $field->type);
-
-		if (MDB2::isError($value))
-			throw new SwatDBException($value);
+		$value = self::queryOne($db, $sql, $field->type);
 
 		return $value;
 	}
@@ -573,11 +550,9 @@ class SwatDB extends SwatObject
 		$transaction = new SwatDBTransaction($db);
 		try {
 			if (count($values)) {
-				self::debug($insert_sql);
 				self::exec($db, $insert_sql);
 			}
 
-			self::debug($delete_sql);
 			self::exec($db, $delete_sql);
 
 		} catch (Exception $e) {
@@ -649,11 +624,7 @@ class SwatDB extends SwatObject
 				$field_list,
 				$value_list);
 
-			self::debug($sql);
-			$result = $db->exec($sql);
-
-			if (MDB2::isError($result))
-				throw new SwatDBException($result);
+			$result = self::exec($db, $sql);
 
 			if ($id_field !== null)
 				$ret = self::getFieldMax($db, $table, $id_field);
@@ -814,7 +785,6 @@ class SwatDB extends SwatObject
 		if ($order_by_clause != null)
 			$sql .= ' order by '.$order_by_clause;
 
-		self::debug($sql);
 		$rs = self::query($db, $sql, null);
 
 		$options = array();
@@ -1184,6 +1154,22 @@ class SwatDB extends SwatObject
 	}
 
 	// }}}
+	// {{{ private static function executeQuery()
+
+	private static function executeQuery($db, $method, array $args)
+	{
+		self::debugStart(current($args)); // sql is always the first arg
+		$ret = call_user_func_array(array($db, $method), $args);
+		self::debugEnd();
+
+		if (MDB2::isError($ret)) {
+			throw new SwatDBException($ret);
+		}
+
+		return $ret;
+	}
+
+	// }}}
 	// {{{ private static function getFieldNameArray()
 
 	private static function getFieldNameArray($fields)
@@ -1270,9 +1256,9 @@ class SwatDB extends SwatObject
 	}
 
 	// }}}
-	// {{{ private static function debug()
+	// {{{ private static function debugStart()
 
-	private static function debug($message)
+	private static function debugStart($message)
 	{
 		// SWATDB_DEBUG is legacy, use SwatDB::setDebug() instead
 		if (defined('SWATDB_DEBUG') || self::$debug) {
@@ -1292,12 +1278,86 @@ class SwatDB extends SwatObject
 			$function = (array_key_exists('function', $entry)) ?
 				$entry['function'] : null;
 
+			ob_start();
 			printf("<strong>%s%s%s()</strong><br />\n",
 				($class === null) ? '' : $class,
 				array_key_exists('type', $entry) ? $entry['type'] : '',
 				($function === null) ? '' : $function);
 
-			echo $message, "<hr />\n";
+			echo $message;
+			$debug_message = ob_get_clean();
+
+			$debug_info = array();
+			$debug_info['message'] = $debug_message;
+			$debug_info['time'] = microtime(true) * 1000;
+			$debug_info['depth'] = self::$debug_wrapper_depth;
+			self::$debug_info[] = $debug_info;
+
+			self::$debug_wrapper_depth++;
+		}
+	}
+
+	// }}}
+	// {{{ private static function debugEnd()
+
+	private static function debugEnd()
+	{
+		// SWATDB_DEBUG is legacy, use SwatDB::setDebug() instead
+		if (defined('SWATDB_DEBUG') || self::$debug) {
+			self::$debug_wrapper_depth--;
+
+			if (self::$debug_wrapper_depth == 0) {
+				$count = 0;
+				$depth = 0;
+
+				foreach (self::$debug_info as $info) {
+					if ($info['depth'] < $depth) {
+						echo str_repeat('</blockquote>',
+							$depth - $info['depth']);
+					} elseif ($info['depth'] > $depth) {
+						echo '<blockquote class="swat-db-debug">';
+					} elseif ($info['depth'] == 0) {
+						echo '<hr />';
+					}
+
+					echo "\n".$info['message']."\n";
+
+					if (count(self::$debug_info) > $count + 1) {
+						$time = self::$debug_info[$count + 1]['time'];
+					} else {
+						$time = (microtime(true) * 1000);
+					}
+
+					$ms = $time - $info['time'];
+
+					$locale = SwatI18NLocale::get();
+					printf("<p><strong>%s ms</strong></p>\n",
+						$locale->formatNumber($ms, 3));
+
+					if ($info['depth'] == 0 &&  count(self::$debug_info) > 1) {
+						$ms = (microtime(true) * 1000) -
+							self::$debug_info[0]['time'];
+
+						echo '<p><strong>';
+
+						printf(Swat::_('Total time: %s ms (includes '.
+							'queries within the wrapper)'),
+							$locale->formatNumber($ms, 3));
+
+						echo '</strong></p>';
+					}
+
+					$count++;
+					$depth = $info['depth'];
+				}
+
+				if ($depth > 0) {
+					echo str_repeat('</blockquote>', $depth);
+				}
+
+				// reset debug info for the next query
+				self::$debug_info = array();
+			}
 		}
 	}
 

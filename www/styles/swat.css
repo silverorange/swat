@@ -336,3 +336,7 @@ input.swat-insensitive {
 .swat-form-field {
 	margin: 0 0 0.5em 0;
 }
+
+blockquote.swat-db-debug {
+	border: 1px solid #666;
+}
