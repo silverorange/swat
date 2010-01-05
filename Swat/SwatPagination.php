@@ -450,14 +450,14 @@ class SwatPagination extends SwatControl
 	}
 
 	// }}}
-	// {{{ private function calculatePages()
+	// {{{ protected function calculatePages()
 
 	/**
 	 * Calculates page totals
 	 *
 	 * Sets the internal total_pages, next_page and prev_page properties.
 	 */
-	private function calculatePages()
+	protected function calculatePages()
 	{
 		$this->total_pages = ceil($this->total_records / $this->page_size);
 
