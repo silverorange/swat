@@ -256,6 +256,9 @@ class SwatYUI extends SwatObject
 		$components['paginator']->addStyleSheet(
 			'paginator/assets/skins/sam', '', false);
 
+		$components['reset-fonts-grids'] = new SwatYUIComponent('reset-fonts-grids');
+		$components['reset-fonts-grids']->addStyleSheet('', '', false);
+
 		$components['reset'] = new SwatYUIComponent('reset');
 		$components['reset']->addStyleSheet();
 
