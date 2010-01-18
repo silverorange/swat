@@ -24,9 +24,11 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 	public $value;
 
 	/**
-	 * Precision
+	 * Number of digits to display after the decimal point
 	 *
-	 * Optionally round the value to a certain precision
+	 * If null, the native number of digits displayed by PHP is used. The native
+	 * number of digits could be a relatively large number of digits for uneven
+	 * fractions.
 	 *
 	 * @var integer
 	 */
