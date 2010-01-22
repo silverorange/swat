@@ -77,7 +77,7 @@ Swat:
     packages/swat/javascript/swat-z-index-manager.js:
     packages/swat/javascript/tiny_mce/tiny_mce.js:
 
-    # Style Sheet resources
+    # Style-sheet resources
     packages/swat/styles/swat-actions.css:
       Depends:
         - packages/swat/styles/swat.css
