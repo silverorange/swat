@@ -1,0 +1,142 @@
+##
+## Static Web-resource dependencies for the SwatYUI sub-package
+##
+## Copyright (c) 2010 silverorange
+##
+## This library is free software; you can redistribute it and/or modify
+## it under the terms of the GNU Lesser General Public License as
+## published by the Free Software Foundation; either version 2.1 of the
+## License, or (at your option) any later version.
+##
+## This library is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+## Lesser General Public License for more details.
+##
+## You should have received a copy of the GNU Lesser General Public
+## License along with this library; if not, write to the Free Software
+## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+##
+Swat:
+  Provides:
+
+    ##
+    ## JavaScript resources
+    ##
+
+    # Core
+    packages/yui/yahoo/yahoo.js:
+    packages/yui/dom/dom.js:
+      Depends:
+        - packages/yui/yahoo/yahoo.js
+    packages/yui/event/event.js:
+      Depends:
+        - packages/yui/yahoo/yahoo.js
+
+    # Utilities
+    packages/yui/animation/animation.js:
+      Depends:
+        - packages/yui/dom/dom.js
+        - packages/yui/event/event.js
+    packages/yui/connection/connection.js:
+      Depends:
+        - packages/yui/event/event.js
+    packages/yui/datasource/datasource.js:
+      Depends:
+        - packages/yui/event/event.js
+    packages/yui/dragdrop/dragdrop.js:
+      Depends:
+        - packages/yui/dom/dom.js
+        - packages/yui/event/event.js
+    packages/yui/element/element.js:
+      Depends:
+        - packages/yui/dom/dom.js
+        - packages/yui/event/event.js
+    packages/yui/json/json.js:
+      Depends:
+        - packages/yui/yahoo/yahoo.js
+    packages/yui/resize/resize.js:
+      Depends:
+        - packages/yui/dragdrop/dragdrop.js
+        - packages/yui/element/element.js
+    packages/yui/swf/swf.js:
+      Depends:
+        - packages/yui/element/element.js
+
+    # UI Widgets
+    packages/yui/button/button.js:
+      Depends:
+        - packages/yui/element/element.js
+    packages/yui/calendar/calendar.js:
+      Depends:
+        - packages/yui/dom/dom.js
+        - packages/yui/event/event.js
+    packages/yui/calendar/calendar.js:
+      Depends:
+        - packages/yui/dom/dom.js
+        - packages/yui/event/event.js
+    packages/yui/charts/charts.js:
+      Depends:
+        - packages/yui/element/element.js
+        - packages/yui/json/json.js
+        - packages/yui/datasource/datasource.js
+        - packages/yui/swf/swf.js
+    packages/yui/container/container.js:
+      Depends:
+        - packages/yui/element/element.js
+    packages/yui/container/container_core.js:
+      Depends:
+        - packages/yui/element/element.js
+    packages/yui/datatable/datatable.js:
+      Depends:
+        - packages/yui/element/element.js
+        - packages/yui/datasource/datasource.js
+    packages/yui/editor/editor.js:
+      Depends:
+        - packages/yui/container/container_core.js
+        - packages/yui/menu/menu.js
+        - packages/yui/button/button.js
+    packages/yui/imagecropper/imagecropper.js:
+      Depends:
+        - packages/yui/resize/resize.js
+    packages/yui/menu/menu.js:
+      Depends:
+        - packages/yui/container/container_core.js
+    packages/yui/editor/simpleeditor.js:
+      Depends:
+        - packages/yui/element/element.js
+    packages/yui/tabview/tabview.js:
+      Depends:
+        - packages/yui/element/element.js
+
+    ##
+    ## Style-sheet resources
+    ##
+
+    # Core
+    packages/yui/base/base.css:
+    packages/yui/fonts/fonts.css:
+    packages/yui/grids/grids.css:
+      Depends:
+        - packages/yui/fonts/fonts.css
+    packages/yui/reset/reset.css:
+
+    # Utilities
+    packages/yui/resize/assets/skins/sam/resize.css:
+
+    # UI Widgets
+    packages/yui/button/assets/skins/sam/button.css:
+    packages/yui/container/assets/skins/sam/container.css:
+    packages/yui/datatable/assets/skins/sam/datatable.css:
+    packages/yui/editor/assets/skins/sam/editor.css:
+      Depends:
+        - packages/yui/button/assets/skins/sam/button.css
+        - packages/yui/menu/assets/skins/sam/menu.css
+    packages/yui/editor/assets/skins/sam/simpleeditor.css:
+    packages/yui/imagecropper/assets/skins/sam/imagecropper.css:
+      Depends:
+        - packages/yui/resize/assets/skins/sam/resize.css
+    packages/yui/menu/assets/skins/sam/menu.css:
+    packages/yui/tabview/assets/skins/sam/tabview.css:
+
+# vim: set expandtab tabstop=2 shiftwidth=2 softtabstop=2:
