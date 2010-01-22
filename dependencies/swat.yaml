@@ -1,0 +1,131 @@
+##
+## Static Web-resource dependencies for the Swat package
+##
+## Copyright (c) 2010 silverorange
+##
+## This library is free software; you can redistribute it and/or modify
+## it under the terms of the GNU Lesser General Public License as
+## published by the Free Software Foundation; either version 2.1 of the
+## License, or (at your option) any later version.
+##
+## This library is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+## Lesser General Public License for more details.
+##
+## You should have received a copy of the GNU Lesser General Public
+## License along with this library; if not, write to the Free Software
+## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+##
+Swat:
+  Depends:
+    # Package Dependencies
+    - SwatYUI
+
+  Provides:
+
+    # JavaScript resources
+    packages/swat/javascript/swat-actions.js:
+    packages/swat/javascript/swat-button.js:
+    packages/swat/javascript/swat-calendar.js:
+      Depends:
+        - packages/swat/javascript/swat-z-index-manager.js
+    packages/swat/javascript/swat-cascade.js:
+    packages/swat/javascript/swat-change-order.js:
+    packages/swat/javascript/swat-date-entry.js:
+    packages/swat/javascript/swat-check-all.js:
+      OptionalDepends:
+        - packages/swat/javascript/swat-checkbox-cell-renderer.js
+        - packages/swat/javascript/swat-checkbox-list.js
+    packages/swat/javascript/swat-checkbox-cell-renderer.js:
+      Depends:
+        - packages/swat/javascript/swat-view.js
+    packages/swat/javascript/swat-checkbox-entry-list.js:
+      Depends:
+        - packages/swat/javascript/swat-checkbox-list.js
+    packages/swat/javascript/swat-checkbox-list.js:
+    packages/swat/javascript/swat-color-entry.js:
+      Depends:
+        - packages/swat/javascript/swat-z-index-manager.js
+    packages/swat/javascript/swat-date-entry.js:
+      OptionalDepends:
+        - packages/swat/javascript/swat-calendar.js
+        - packages/swat/javascript/swat-time-entry.js
+    packages/swat/javascript/swat-disclosure.js:
+    packages/swat/javascript/swat-expandable-checkbox-tree.js:
+    packages/swat/javascript/swat-fieldset.js:
+    packages/swat/javascript/swat-form.js:
+    packages/swat/javascript/swat-image-cropper.js:
+    packages/swat/javascript/swat-image-preview-display.js:
+    packages/swat/javascript/swat-message-display.js:
+    packages/swat/javascript/swat-progress-bar.js:
+    packages/swat/javascript/swat-radio-button-cell-renderer.js:
+    packages/swat/javascript/swat-rating.js:
+    packages/swat/javascript/swat-search-entry.js:
+    packages/swat/javascript/swat-simple-color-entry.js:
+      Depends:
+        - packages/swat/javascript/swat-z-index-manager.js
+    packages/swat/javascript/swat-table-view-input-row.js:
+    packages/swat/javascript/swat-table-view.js:
+      Depends:
+        - packages/swat/javascript/swat-view.js
+    packages/swat/javascript/swat-textarea.js:
+    packages/swat/javascript/swat-tile-view.js:
+      Depends:
+        - packages/swat/javascript/swat-view.js
+    packages/swat/javascript/swat-time-entry.js:
+    packages/swat/javascript/swat-z-index-manager.js:
+    packages/swat/javascript/tiny_mce/tiny_mce.js:
+
+    # Style Sheet resources
+    packages/swat/styles/swat-actions.css:
+      Depends:
+        - packages/swat/styles/swat.css
+    packages/swat/styles/swat-calendar.css:
+    packages/swat/styles/swat-change-order.css:
+      Depends:
+        - packages/swat/styles/swat.css
+    packages/swat/styles/swat-checkbox-entry-list.css:
+      Depends:
+        - packages/swat/styles/swat.css
+    packages/swat/styles/swat-color-entry.css:
+    packages/swat/styles/swat.css:
+    packages/swat/styles/swat-details-view.css:
+    packages/swat/styles/swat-disclosure.css:
+    packages/swat/styles/swat-frame-disclosure.css:
+      Depends:
+        - packages/swat/styles/swat-disclosure.css
+    packages/swat/styles/swat-image-preview-display.css:
+    packages/swat/styles/swat-menu.css:
+    packages/swat/styles/swat-message.css:
+      Depends:
+        - packages/swat/styles/swat.css
+    packages/swat/styles/swat-message-display.css:
+      Depends:
+        - packages/swat/styles/swat-message.css
+    packages/swat/styles/swat-money-cell-renderer.css:
+      Depends:
+        - packages/swat/styles/swat.css
+    packages/swat/styles/swat-note-book.css:
+    packages/swat/styles/swat-null-text-cell-renderer.css:
+    packages/swat/styles/swat-pagination.css:
+    packages/swat/styles/swat-progress-bar.css:
+    packages/swat/styles/swat-radio-list.css:
+    packages/swat/styles/swat-radio-table.css:
+    packages/swat/styles/swat-rating.css:
+    packages/swat/styles/swat-search-entry.css:
+      Depends:
+        - packages/swat/styles/swat.css
+    packages/swat/styles/swat-table-view.css:
+      Depends:
+        - packages/swat/styles/swat.css
+    packages/swat/styles/swat-textarea.css:
+    packages/swat/styles/swat-textarea-editor.css:
+    packages/swat/styles/swat-tile-view.css:
+      Depends:
+        - packages/swat/styles/swat.css
+    packages/swat/styles/swat-title-link-cell-renderer.css:
+    packages/swat/styles/swat-toolbar.css:
+    packages/swat/styles/swat-tool-link.css:
+
+# vim: set expandtab tabstop=2 shiftwidth=2 softtabstop=2:
