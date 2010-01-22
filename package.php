@@ -26,13 +26,14 @@ $result = $package->setOptions(
 		'baseinstalldir'    => '/',
 		'packagedirectory'  => './',
 		'dir_roles'         => array(
-			'Swat'     => 'php',
-			'SwatDB'   => 'php',
-			'SwatI18N' => 'php',
-			'www'      => 'data',
-			'demo'     => 'data',
-			'system'   => 'data',
-			'/'        => 'data'
+			'Swat'         => 'php',
+			'SwatDB'       => 'php',
+			'SwatI18N'     => 'php',
+			'www'          => 'data',
+			'demo'         => 'data',
+			'system'       => 'data',
+			'dependencies' => 'data',
+			'/'            => 'data',
 		),
 	)
 );
