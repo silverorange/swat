@@ -95,11 +95,20 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 		$outer_div->id = $this->id;
 		$outer_div->class = $this->getCSSClassString();
 
-		$inner_div = new SwatHtmlTag('div');
-		$inner_div->class = 'swat-frame-contents';
-
 		$outer_div->open();
+		$this->displayTitle();
+		$this->displayContent();
+		$outer_div->close();
+	}
 
+	// }}}
+	// {{{ protected function displayTitle()
+
+	/**
+	 * Displays this frame's title
+	 */
+	protected function displayTitle()
+	{
 		if ($this->title !== null) {
 
 			$header_tag = new SwatHtmlTag('h'.$this->getHeaderLevel());
@@ -121,11 +130,21 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 				$header_tag->close();
 			}
 		}
+	}
 
+	// }}}
+	// {{{ protected function displayContent()
+
+	/**
+	 * Displays this frame's content
+	 */
+	protected function displayContent()
+	{
+		$inner_div = new SwatHtmlTag('div');
+		$inner_div->class = 'swat-frame-contents';
 		$inner_div->open();
 		$this->displayChildren();
 		$inner_div->close();
-		$outer_div->close();
 	}
 
 	// }}}
