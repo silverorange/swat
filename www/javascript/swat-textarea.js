@@ -18,10 +18,7 @@ function SwatTextarea(id, resizeable)
 {
 	this.id = id;
 
-	// WebKit has a built-in text-area resizer
-	var is_webkit = (/AppleWebKit/gi).test(navigator.userAgent);
-
-	if (resizeable && !is_webkit) {
+	if (resizeable) {
 		YAHOO.util.Event.onContentReady(
 			this.id, this.handleOnAvailable, this, true);
 	}
@@ -37,6 +34,14 @@ function SwatTextarea(id, resizeable)
 SwatTextarea.prototype.handleOnAvailable = function()
 {
 	this.textarea = document.getElementById(this.id);
+
+	// check if textarea already is resizable, and if so, don't add resize
+	// handle.
+	var resize = YAHOO.util.Dom.getStyle(this.textarea, 'resize');
+	var resizable = (resize == 'both' || resize == 'vertical');
+	if (resizable) {
+		return;
+	}
 
 	this.handle_div = document.createElement('div');
 
