@@ -11,8 +11,9 @@
 }
 
 .swat-change-order-item-shadow {
-	opacity: 0.6;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
 	filter: alpha(opacity=60);
+	opacity: 0.6;
 	position: absolute;
 }
 

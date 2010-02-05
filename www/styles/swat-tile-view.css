@@ -19,7 +19,8 @@
 }
 
 .swat-tile-view .insensitive {
-	filter: alpha(opacity = 60);
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+	filter: alpha(opacity=60);
 	opacity: 0.60;
 }
 

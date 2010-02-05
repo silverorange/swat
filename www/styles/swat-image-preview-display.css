@@ -22,8 +22,9 @@ a.swat-image-preview-display-link-plain:hover img {
 
 .swat-image-preview-overlay {
 	position: absolute;
-	opacity: 0.6;
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
 	filter:alpha(opacity = 60);
+	opacity: 0.6;
 	z-index: 999999;
 	top: 0;
 	left: 0;
