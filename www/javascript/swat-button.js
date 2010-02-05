@@ -42,7 +42,7 @@ SwatButton.prototype.handleClick = function(e)
 	} else {
 		YAHOO.util.Event.preventDefault(e);
 	}
-}
+};
 
 SwatButton.prototype.initThrobber = function()
 {
@@ -52,7 +52,7 @@ SwatButton.prototype.initThrobber = function()
 		'swat-button-processing-throbber');
 
 	this.button.parentNode.appendChild(this.throbber_container);
-}
+};
 
 SwatButton.prototype.showThrobber = function()
 {
@@ -60,7 +60,7 @@ SwatButton.prototype.showThrobber = function()
 		{ opacity: { to: 0.5 }}, 1, YAHOO.util.Easing.easingNone);
 
 	animation.animate();
-}
+};
 
 SwatButton.prototype.setProcessingMessage = function(message)
 {
@@ -73,9 +73,9 @@ SwatButton.prototype.setProcessingMessage = function(message)
 		YAHOO.util.Dom.addClass(this.throbber_container,
 			'swat-button-processing-throbber-text');
 	}
-}
+};
 
 SwatButton.prototype.setConfirmationMessage = function(message)
 {
 	this.confirmation_message = message;
-}
+};
