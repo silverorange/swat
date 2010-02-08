@@ -248,7 +248,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Query a single value
 	 *
- 	 * Convenience method to query a single value in a single database column.
+	 * Convenience method to query a single value in a single database column.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 * @param string $sql The SQL to execute.
