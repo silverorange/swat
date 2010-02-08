@@ -354,13 +354,14 @@ class SwatNavBar extends SwatControl implements Countable
 		$first = false)
 	{
 		$title = ($entry->title === null) ? '' : $entry->title;
+		$link  = $this->getLink($entry);
 
-		if ($entry->link !== null && $show_link) {
+		if ($link !== null && $show_link) {
 			$a_tag = new SwatHtmlTag('a');
+			$a_tag->href = $link;
 			if ($first)
 				$a_tag->class = 'swat-navbar-first';
 
-			$a_tag->href = $entry->link;
 			$a_tag->setContent($title);
 			$a_tag->display();
 		} else {
@@ -371,6 +372,21 @@ class SwatNavBar extends SwatControl implements Countable
 			$span_tag->setContent($title);
 			$span_tag->display();
 		}
+	}
+
+	// }}}
+	// {{{ protected function getLink()
+
+	/**
+	 * Gets the link from an entry.
+	 *
+	 * @param SwatNavBarEntry $entry the entry to get the link from.
+	 *
+	 * @return string the entries link.
+	 */
+	protected function getLink(SwatNavBarEntry $entry)
+	{
+		return $entry->link;
 	}
 
 	// }}}
