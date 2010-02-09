@@ -166,12 +166,12 @@ SwatSimpleColorEntry.prototype.handleInputChange = function()
 	if (color.length == 3) {
 		var hex3 = /^[0-9a-f]{3}$/i;
 		if (!hex3.test(color)) {
-			color = false;
+			color = null;
 		}
 	} else if (color.length == 6) {
 		var hex6 = /^[0-9a-f]{6}$/i;
 		if (!hex6.test(color)) {
-			color = false;
+			color = null;
 		}
 	} else {
 		color = null;
@@ -255,11 +255,11 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 {
 	this.input_tag.value = color;
 
-	if (color) {
+	if (color === null) {
+		this.swatch.style.background = null;
+	} else {
 		this.hex_input_tag.value = color;
 		this.swatch.style.background = '#' + color;
-	} else {
-		this.swatch.style.background = null;
 	}
 
 	var changed = (this.current_color != color);
@@ -267,7 +267,11 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 	if (changed) {
 		this.current_color = color;
 
-		this.colorChangeEvent.fire('#' + color);
+		if (color === null)
+			this.colorChangeEvent.fire(null);
+		else
+			this.colorChangeEvent.fire('#' + color);
+
 		this.highlightPalleteEntry(color);
 	}
 }
@@ -302,7 +306,7 @@ SwatSimpleColorEntry.prototype.highlightPalleteEntry = function(color)
 		var palette_entry =
 			document.getElementById(this.id + '_palette_' + i);
 
-		if (this.current_color &&
+		if (this.current_color !== null &&
 			this.colors[i].toLowerCase() ==
 			this.current_color.toLowerCase()) {
 
