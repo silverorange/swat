@@ -21,6 +21,17 @@ function SwatSimpleColorEntry(id, colors)
 	this.input_tag = document.getElementById(this.id + '_value');
 	this.swatch = document.getElementById(this.id + '_swatch');
 
+	this.hex_input_tag = document.createElement('input');
+	this.hex_input_tag.type = 'text';
+	this.hex_input_tag.id = this.id + '_hex_color';
+	this.hex_input_tag.size = 6;
+
+	YAHOO.util.Event.addListener(this.hex_input_tag, 'change',
+		this.handleInputChange, this, true);
+
+	YAHOO.util.Event.addListener(this.hex_input_tag, 'keyup',
+		this.handleInputChange, this, true);
+
 	// this tries to make a square palette
 	this.columns = Math.ceil(Math.sqrt(this.colors.length));
 
@@ -29,16 +40,20 @@ function SwatSimpleColorEntry(id, colors)
 
 	for (var i = 0; i < this.colors.length; i++) {
 		if (this.input_tag.value == this.colors[i]) {
-			this.setColor(i);
+			this.setColor(this.colors[i]);
 			break;
 		}
 	}
 
 	this.drawButton();
 	this.drawPalette();
+	this.drawInput();
+
 	YAHOO.util.Event.onContentReady(this.id + '_palette',
 		this.createOverlay, this, true)
 }
+
+SwatSimpleColorEntry.set_text = 'Set';
 
 /**
  * Displays the toggle button for this simple color entry
@@ -120,6 +135,57 @@ SwatSimpleColorEntry.prototype.open = function()
 }
 
 /**
+ * Draws the hex input box
+ */
+SwatSimpleColorEntry.prototype.drawInput = function()
+{
+	var div_tag = document.createElement('div');
+	div_tag.className = 'swat-simple-color-entry-palette-hex-color';
+
+	var label_tag = document.createElement('label');
+	label_tag.for = this.id + '_hex_color';
+	var title = document.createTextNode('#');
+	label_tag.appendChild(title);
+
+	var button_tag = document.createElement('button');
+	button_tag.setAttribute('type', 'button');
+	var title = document.createTextNode(SwatSimpleColorEntry.set_text);
+	button_tag.appendChild(title);
+	YAHOO.util.Event.addListener(button_tag, 'click', this.toggle, this, true);
+
+	div_tag.appendChild(label_tag);
+	div_tag.appendChild(this.hex_input_tag);
+	div_tag.appendChild(button_tag);
+
+	this.palette.childNodes[1].appendChild(div_tag);
+}
+
+SwatSimpleColorEntry.prototype.handleInputChange = function()
+{
+	var color = this.hex_input_tag.value;
+
+	if (color[0] == '#') {
+		color = color.slice(1, color.length - 1);
+	}
+
+	if (color.length == 3) {
+		var hex3 = /^[0-9a-f]{3}$/i;
+		if (!hex3.test(color)) {
+			color = false;
+		}
+	} else if (color.length == 6) {
+		var hex6 = /^[0-9a-f]{6}$/i;
+		if (!hex6.test(color)) {
+			color = false;
+		}
+	}
+
+	if (color) {
+		this.setColor(color);
+	}
+}
+
+/**
  * Draws this color palette
  */
 SwatSimpleColorEntry.prototype.drawPalette = function()
@@ -150,7 +216,7 @@ SwatSimpleColorEntry.prototype.drawPalette = function()
 		if (i < this.colors.length) {
 			tcell.id = this.id + '_palette_' + i;
 			tcell.style.background = '#' + this.colors[i];
-			if (i == this.current_color)
+			if (this.colors[i] == this.current_color)
 				YAHOO.util.Dom.addClass(tcell,
 					'swat-simple-color-entry-palette-selected');
 
@@ -191,14 +257,16 @@ SwatSimpleColorEntry.prototype.toggle = function()
  * Sets the value of the color entry input tag to the selected color and
  * highlights the selected color
  *
- * @param number color_index the index of the selected color.
+ * @param number color the hex value of the color
  */
-SwatSimpleColorEntry.prototype.setColor = function(color_index)
+SwatSimpleColorEntry.prototype.setColor = function(color)
 {
-	this.input_tag.value = this.colors[color_index];
-	this.swatch.style.background = '#' + this.colors[color_index];
-	var changed = (this.current_color != color_index);
-	this.current_color = color_index;
+	this.input_tag.value = color;
+	this.hex_input_tag.value = color;
+	this.swatch.style.background = '#' + color;
+
+	var changed = (this.current_color != color);
+	this.current_color = color;
 	if (changed)
 		this.colorChangeEvent.fire(this.getColor());
 }
@@ -215,14 +283,25 @@ SwatSimpleColorEntry.prototype.selectColor = function(event)
 	var color_index = cell.parentNode.id.split('_palette_')[1];
 
 	if (this.current_color !== null) {
+		var current_index = null;
+
+		for (var i = 0; i < this.colors.length; i++) {
+			if (this.colors[i].toLowerCase() ==
+				this.current_color.toLowerCase()) {
+
+				current_index = i;
+				break;
+			}
+		}
+
 		var old_palette_entry =
-			document.getElementById(this.id + '_palette_' + this.current_color);
+			document.getElementById(this.id + '_palette_' + current_index);
 
 		YAHOO.util.Dom.removeClass(old_palette_entry,
 			'swat-simple-color-entry-palette-selected');
 	}
 
-	this.setColor(color_index);
+	this.setColor(this.colors[color_index]);
 
 	var palette_entry =
 		document.getElementById(this.id + '_palette_' + color_index);
@@ -235,5 +314,5 @@ SwatSimpleColorEntry.prototype.selectColor = function(event)
 
 SwatSimpleColorEntry.prototype.getColor = function()
 {
-	return '#' + this.colors[this.current_color];
+	return '#' + this.current_color;
 }

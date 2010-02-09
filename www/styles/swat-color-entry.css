@@ -7,6 +7,15 @@
 	margin: 0;
 }
 
+.swat-simple-color-entry-palette-hex-color {
+	text-align: center;
+	margin: 6px;
+}
+
+.swat-simple-color-entry-palette-hex-color button {
+	margin-left: 6px;
+}
+
 .swat-simple-color-entry-palette a {
 	text-decoration: none;
 }
@@ -22,7 +31,7 @@
 	width: 100%;
 	height: 25px;
 	min-height: 25px;
-}	
+}
 
 .swat-simple-color-entry-palette table td.swat-simple-color-entry-palette-selected a {
 	height: 21px;
