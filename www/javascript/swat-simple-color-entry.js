@@ -255,11 +255,11 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 {
 	this.input_tag.value = color;
 
-	if (color === null) {
-		this.swatch.style.background = null;
-	} else {
+	if (color) {
 		this.hex_input_tag.value = color;
 		this.swatch.style.background = '#' + color;
+	} else {
+		this.swatch.style.background = null;
 	}
 
 	var changed = (this.current_color != color);
@@ -302,7 +302,7 @@ SwatSimpleColorEntry.prototype.highlightPalleteEntry = function(color)
 		var palette_entry =
 			document.getElementById(this.id + '_palette_' + i);
 
-		if (this.current_color !== null &&
+		if (this.current_color &&
 			this.colors[i].toLowerCase() ==
 			this.current_color.toLowerCase()) {
 
