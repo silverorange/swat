@@ -138,7 +138,7 @@ SwatSimpleColorEntry.prototype.drawInput = function()
 	div_tag.className = 'swat-simple-color-entry-palette-hex-color';
 
 	var label_tag = document.createElement('label');
-	label_tag.for = this.id + '_hex_color';
+	label_tag.htmlFor = this.id + '_hex_color';
 	var title = document.createTextNode('#');
 	label_tag.appendChild(title);
 
