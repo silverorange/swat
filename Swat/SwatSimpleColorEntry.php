@@ -189,6 +189,9 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		$javascript = "var {$this->id}_obj = new SwatSimpleColorEntry(".
 			"'{$this->id}', [{$colors}]);";
 
+		$javascript.= sprintf("{$this->id}_obj.set_text = %s",
+			SwatString::quoteJavaScriptString('Set'));
+
 		return $javascript;
 	}
 
