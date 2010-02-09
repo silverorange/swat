@@ -38,12 +38,7 @@ function SwatSimpleColorEntry(id, colors)
 	this.current_color = null;
 	this.colorChangeEvent = new YAHOO.util.CustomEvent('colorChange');
 
-	for (var i = 0; i < this.colors.length; i++) {
-		if (this.input_tag.value == this.colors[i]) {
-			this.setColor(this.colors[i]);
-			break;
-		}
-	}
+	this.setColor(this.input_tag.value);
 
 	this.drawButton();
 	this.drawPalette();
@@ -178,11 +173,11 @@ SwatSimpleColorEntry.prototype.handleInputChange = function()
 		if (!hex6.test(color)) {
 			color = false;
 		}
+	} else {
+		color = null;
 	}
 
-	if (color) {
-		this.setColor(color);
-	}
+	this.setColor(color);
 }
 
 /**
@@ -216,9 +211,6 @@ SwatSimpleColorEntry.prototype.drawPalette = function()
 		if (i < this.colors.length) {
 			tcell.id = this.id + '_palette_' + i;
 			tcell.style.background = '#' + this.colors[i];
-			if (this.colors[i] == this.current_color)
-				YAHOO.util.Dom.addClass(tcell,
-					'swat-simple-color-entry-palette-selected');
 
 			anchor = document.createElement('a');
 			anchor.href = '#';
@@ -262,13 +254,22 @@ SwatSimpleColorEntry.prototype.toggle = function()
 SwatSimpleColorEntry.prototype.setColor = function(color)
 {
 	this.input_tag.value = color;
-	this.hex_input_tag.value = color;
-	this.swatch.style.background = '#' + color;
+
+	if (color === null) {
+		this.swatch.style.background = null;
+	} else {
+		this.hex_input_tag.value = color;
+		this.swatch.style.background = '#' + color;
+	}
 
 	var changed = (this.current_color != color);
-	this.current_color = color;
-	if (changed)
-		this.colorChangeEvent.fire(this.getColor());
+
+	if (changed) {
+		this.current_color = color;
+
+		this.colorChangeEvent.fire('#' + color);
+		this.highlightPalleteEntry(color);
+	}
 }
 
 /**
@@ -282,37 +283,35 @@ SwatSimpleColorEntry.prototype.selectColor = function(event)
 	var cell = YAHOO.util.Event.getTarget(event);
 	var color_index = cell.parentNode.id.split('_palette_')[1];
 
-	if (this.current_color !== null) {
-		var current_index = null;
-
-		for (var i = 0; i < this.colors.length; i++) {
-			if (this.colors[i].toLowerCase() ==
-				this.current_color.toLowerCase()) {
-
-				current_index = i;
-				break;
-			}
-		}
-
-		var old_palette_entry =
-			document.getElementById(this.id + '_palette_' + current_index);
-
-		YAHOO.util.Dom.removeClass(old_palette_entry,
-			'swat-simple-color-entry-palette-selected');
-	}
-
 	this.setColor(this.colors[color_index]);
 
 	var palette_entry =
 		document.getElementById(this.id + '_palette_' + color_index);
 
-	YAHOO.util.Dom.addClass(palette_entry,
-		'swat-simple-color-entry-palette-selected');
-
 	this.close();
 }
 
-SwatSimpleColorEntry.prototype.getColor = function()
+/**
+ * Highlights a pallete entry
+ *
+ * @param number color the hex value of the color
+ */
+SwatSimpleColorEntry.prototype.highlightPalleteEntry = function(color)
 {
-	return '#' + this.current_color;
+	for (var i = 0; i < this.colors.length; i++) {
+		var palette_entry =
+			document.getElementById(this.id + '_palette_' + i);
+
+		if (this.current_color !== null &&
+			this.colors[i].toLowerCase() ==
+			this.current_color.toLowerCase()) {
+
+			YAHOO.util.Dom.addClass(palette_entry,
+				'swat-simple-color-entry-palette-selected');
+		} else {
+			YAHOO.util.Dom.removeClass(palette_entry,
+				'swat-simple-color-entry-palette-selected');
+		}
+	}
 }
+
