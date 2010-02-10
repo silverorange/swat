@@ -63,8 +63,11 @@ td.swat-simple-color-entry-palette-blank {
 	border: none;
 }
 
+* html button.swat-simple-color-entry-toggle-button {
+	width: 8.20em;
+}
 button.swat-simple-color-entry-toggle-button {
-	width: 8.25em;
+	*width: 8.20em;
 }
 
 /* SwatColorEntry */
