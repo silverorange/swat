@@ -253,18 +253,18 @@ SwatSimpleColorEntry.prototype.toggle = function()
  */
 SwatSimpleColorEntry.prototype.setColor = function(color)
 {
-	this.input_tag.value = color;
-
-	if (color === null) {
-		this.swatch.style.background = null;
-	} else {
-		this.hex_input_tag.value = color;
-		this.swatch.style.background = '#' + color;
-	}
-
 	var changed = (this.current_color != color);
 
 	if (changed) {
+		this.input_tag.value = color;
+
+		if (color === null) {
+			this.swatch.style.background = null;
+		} else {
+			this.hex_input_tag.value = color;
+			this.swatch.style.background = '#' + color;
+		}
+
 		this.current_color = color;
 
 		if (color === null)
