@@ -1,7 +1,7 @@
 /**
  * Simple color entry widget
  *
- * @copyright 2005-2007 silverorange Inc.
+ * @copyright 2005-2010 silverorange Inc.
  */
 
 /**
@@ -291,8 +291,6 @@ SwatSimpleColorEntry.prototype.selectColor = function(event)
 
 	var palette_entry =
 		document.getElementById(this.id + '_palette_' + color_index);
-
-	this.close();
 }
 
 /**
