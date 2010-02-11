@@ -16,7 +16,6 @@ function SwatSimpleColorEntry(id, colors)
 	this.colors = colors;
 	this.is_open = false;
 	this.is_drawn = false;
-	this.is_positioned = false;
 
 	this.input_tag = document.getElementById(this.id + '_value');
 	this.swatch = document.getElementById(this.id + '_swatch');
@@ -117,12 +116,8 @@ SwatSimpleColorEntry.prototype.close = function()
  */
 SwatSimpleColorEntry.prototype.open = function()
 {
-	if (!this.is_positioned) {
-		this.overlay.cfg.setProperty('context',
-			[this.toggle_button, 'tl', 'bl']);
-
-		this.is_positioned = true;
-	}
+	this.overlay.cfg.setProperty('context',
+		[this.toggle_button, 'tl', 'bl']);
 
 	this.overlay.show();
 	SwatZIndexManager.raiseElement(this.palette);
@@ -288,9 +283,6 @@ SwatSimpleColorEntry.prototype.selectColor = function(event)
 	var color_index = cell.parentNode.id.split('_palette_')[1];
 
 	this.setColor(this.colors[color_index]);
-
-	var palette_entry =
-		document.getElementById(this.id + '_palette_' + color_index);
 }
 
 /**
