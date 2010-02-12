@@ -39,7 +39,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * </code>
  *
  * @package   Swat
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatYUI extends SwatObject
@@ -85,9 +85,9 @@ class SwatYUI extends SwatObject
 	 *                              HTML head entry set for.
 	 * @param string $mode the YUI component mode to use. Should be one of the
 	 *                      'min', 'normal' or 'debug'. The default mode is
-	 *                      'min'.
+	 *                      'normal'.
 	 */
-	public function __construct(array $component_ids, $mode = 'min')
+	public function __construct(array $component_ids, $mode = 'normal')
 	{
 		self::buildComponents();
 
