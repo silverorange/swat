@@ -69,6 +69,7 @@ $package->addPackageDepWithChannel('optional', 'Yui',       'pear.silverorange.c
 $package->addPackageDepWithChannel('optional', 'MDB2',      'pear.php.net',          '2.2.2');
 $package->addPackageDepWithChannel('optional', 'ReCaptcha', 'pear.silverorange.com', '1.0.0');
 $package->addPackageDepWithChannel('optional', 'Net_IDNA',  'pear.silverorange.com', '0.7.2so1');
+$package->addPackageDepWithChannel('required', 'Concentrate', 'pear.silverorange.com', '0.0.1');
 $package->generateContents();
 
 if (isset($_GET['make']) || (isset($_SERVER['argv']) && @$_SERVER['argv'][1] == 'make')) {
