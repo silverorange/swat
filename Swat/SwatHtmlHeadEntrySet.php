@@ -29,11 +29,6 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 */
 	protected $entries = array();
 
-	/**
-	 * @var boolean
-	 */
-	protected $iterator_valid = true;
-
 	// }}}
 	// {{{ public function __construct()
 
