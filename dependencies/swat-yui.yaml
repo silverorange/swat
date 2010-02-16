@@ -115,6 +115,10 @@ SwatYUI:
 
     # Core
     packages/yui/base/base.css:
+      Depends:
+        - packages/yui/reset/reset.css
+        - packages/yui/fonts/fonts.css
+        - packages/yui/grids/grids.css
     packages/yui/fonts/fonts.css:
     packages/yui/grids/grids.css:
       Depends:
