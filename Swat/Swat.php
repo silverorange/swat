@@ -2,14 +2,11 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatYUI.php';
-require_once 'Swat/SwatUI.php';
-
 /**
  * Container for package wide static methods
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class Swat
@@ -179,6 +176,7 @@ class Swat
 	 */
 	public static function getDependencies()
 	{
+		require_once 'Swat/SwatYUI.php';
 		return array(SwatYUI::PACKAGE_ID);
 	}
 
@@ -281,6 +279,5 @@ if (!function_exists("dgettext")) {
 // }}}
 
 Swat::setupGettext();
-SwatUI::mapClassPrefixToPath('Swat', 'Swat');
 
 ?>

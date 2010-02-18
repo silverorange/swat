@@ -24,7 +24,7 @@ require_once 'Swat/exceptions/SwatInvalidConstantExpressionException.php';
  * Generates a Swat widget tree from an XML UI file
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatUI extends SwatObject
@@ -35,14 +35,27 @@ class SwatUI extends SwatObject
 	 * An associative array of class-prefix-to-filename-mappings
 	 *
 	 * The array is of the form:
-	 *    package_prefix => path
-	 * Where package prefix is the classname prefix used in this package and
-	 * path is the relative path where the source files for this package may
-	 * be included from.
+	 * <code>
+	 * <?php
+	 * array(
+	 *    $package_prefix => $path,
+	 *    // ...
+	 * );
+	 * ?>
+	 * </code>
+	 *
+	 * Where <kbd>$package_prefix</kbd> is the class name prefix used for the
+	 * package and <kbd>$path</kbd> is the path where the source files
+	 * for the package may be included from. Paths should be relative to the
+	 * PHP include path.
 	 *
 	 * @var array
+	 *
+	 * @see SwatUI::mapClassPrefixToPath()
 	 */
-	private static $class_map = array();
+	private static $class_map = array(
+		'Swat' => 'Swat',
+	);
 
 	/**
 	 * An array of widgets populated when a UI file is parsed
@@ -109,12 +122,13 @@ class SwatUI extends SwatObject
 	/**
 	 * Maps a class prefix to a path for filename lookup in this UI
 	 *
-	 * The class path map is used to find required files for widget classes
+	 * The class path map is used to find source files for widget classes
 	 * specified in XML.
 	 *
 	 * @param string $class_prefix the prefix of the class to map to the given
 	 *                              path.
-	 * @param string $path the path to map the given class prefix to.
+	 * @param string $path the path to which to map the given class prefix.
+	 *                      Paths should be relative ot the PHP include path.
 	 */
 	public static function mapClassPrefixToPath($class_prefix, $path)
 	{
