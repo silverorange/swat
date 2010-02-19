@@ -57,6 +57,11 @@ td.swat-simple-color-entry-palette-blank {
 	background: url(../images/color-entry-null.png);
 }
 
+td.swat-simple-color-entry-palette-blank a {
+	color: #666;
+	font-weight: bold;
+}
+
 .swat-simple-color-entry-toggle {
 	display: inline;
 	vertical-align: middle;

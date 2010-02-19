@@ -22,6 +22,22 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	// {{{ public properties
 
 	/**
+	 * Show "none" option
+	 *
+	 * Whether or not to show an option for selected no color
+	 *
+	 * @var boolean
+	 */
+	public $none_option = true;
+
+	/**
+	 * "None" option title
+	 *
+	 * @var string
+	 */
+	public $none_option_title = null;
+
+	/**
 	 * Selected color
 	 *
 	 * The selected color in three or six digit hexidecimal representation.
@@ -73,6 +89,10 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		parent::__construct($id);
 
 		$this->requires_id = true;
+
+		if ($this->none_option_title === null) {
+			$this->none_option_title = Swat::_('None');
+		}
 
 		$yui = new SwatYUI(array('dom', 'event', 'container'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
@@ -186,11 +206,17 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	protected function getInlineJavaScript()
 	{
 		$colors = "'".implode("', '", $this->colors)."'";
-		$javascript = "var {$this->id}_obj = new SwatSimpleColorEntry(".
-			"'{$this->id}', [{$colors}]);";
 
-		$javascript.= sprintf("{$this->id}_obj.set_text = %s",
-			SwatString::quoteJavaScriptString('Set'));
+		if ($this->none_option) {
+			$none_option = ($this->none_option_title === null) ? 'null' :
+				SwatString::quoteJavaScriptString($this->none_option_title);
+		}
+
+		$javascript = "var {$this->id}_obj = new SwatSimpleColorEntry(".
+			"'{$this->id}', [{$colors}], {$none_option});\n";
+
+		$javascript.= sprintf("{$this->id}_obj.set_text = %s;\n",
+			SwatString::quoteJavaScriptString(Swat::_('Set')));
 
 		return $javascript;
 	}
