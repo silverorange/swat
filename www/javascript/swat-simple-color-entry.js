@@ -9,13 +9,16 @@
  *
  * @param string id
  * @param Array colors
+ * @param string none_option_title
  */
-function SwatSimpleColorEntry(id, colors)
+function SwatSimpleColorEntry(id, colors, none_option_title)
 {
 	this.id = id;
 	this.colors = colors;
 	this.is_open = false;
 	this.is_drawn = false;
+
+	this.none_option_title = none_option_title;
 
 	this.input_tag = document.getElementById(this.id + '_value');
 	this.swatch = document.getElementById(this.id + '_swatch');
@@ -196,6 +199,27 @@ SwatSimpleColorEntry.prototype.drawPalette = function()
 	var anchor;
 	var text;
 
+	if (this.none_option_title !== null) {
+		trow = document.createElement('tr');
+		tcell = document.createElement('td');
+		tcell.id = this.id + '_palette_null';
+		tcell.colSpan = this.columns;
+		YAHOO.util.Dom.addClass(tcell,
+			'swat-simple-color-entry-palette-blank');
+
+		text = document.createTextNode(this.none_option_title);
+
+		anchor = document.createElement('a');
+		anchor.href = '#';
+		anchor.appendChild(text);
+		tcell.appendChild(anchor);
+		trow.appendChild(tcell);
+		tbody.appendChild(trow);
+
+		YAHOO.util.Event.addListener(anchor, 'click', this.selectNull,
+			this, true);
+	}
+
 	for (var i = 0; i < num_cells; i++) {
 		if (i % this.columns == 0)
 			trow = document.createElement('tr');
@@ -255,6 +279,7 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 
 		if (color === null) {
 			this.swatch.style.background = null;
+			this.hex_input_tag.value = '';
 		} else {
 			this.hex_input_tag.value = color;
 			this.swatch.style.background = '#' + color;
@@ -269,6 +294,17 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 
 		this.highlightPalleteEntry(color);
 	}
+}
+
+/**
+ * Event handler that sets the color to null
+ *
+ * @param Event the event that triggered this select.
+ */
+SwatSimpleColorEntry.prototype.selectNull = function(event)
+{
+	YAHOO.util.Event.preventDefault(event);
+	this.setColor(null);
 }
 
 /**
@@ -292,6 +328,18 @@ SwatSimpleColorEntry.prototype.selectColor = function(event)
  */
 SwatSimpleColorEntry.prototype.highlightPalleteEntry = function(color)
 {
+	if (this.none_option_title !== null) {
+		var null_entry = document.getElementById(this.id + '_palette_null');
+
+		if (color === null) {
+			YAHOO.util.Dom.addClass(null_entry,
+				'swat-simple-color-entry-palette-selected');
+		} else {
+			YAHOO.util.Dom.removeClass(null_entry,
+				'swat-simple-color-entry-palette-selected');
+		}
+	}
+
 	for (var i = 0; i < this.colors.length; i++) {
 		var palette_entry =
 			document.getElementById(this.id + '_palette_' + i);
