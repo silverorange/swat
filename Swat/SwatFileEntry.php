@@ -13,10 +13,12 @@ require_once 'Swat/SwatFormField.php';
  * Note: Mime-type detection is done with the
  * {@link http://pecl.php.net/package/Fileinfo Fileinfo} extension if avaiable.
  * Mime-type detection falls back to the mime_content_type() function if
- * Fileinfo is not available but Fileinfo is highly recommended.
+ * Fileinfo is not available but Fileinfo is highly recommended. If no
+ * mime-type detection is supported by the server, mime-types are returned as
+ * 'application/octet-stream'.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFileEntry extends SwatInputControl
@@ -298,14 +300,25 @@ class SwatFileEntry extends SwatInputControl
 			if (file_exists($temp_file_name)) {
 				if (extension_loaded('fileinfo')) {
 					// use fileinfo extension if available
-					$finfo = new finfo(FILEINFO_MIME);
+
+					// PHP >= 5.3.0 supports returning only the mimetype
+					// without returning the encoding. See
+					// http://us3.php.net/manual/en/fileinfo.constants.php for
+					// details.
+					$mime_constant = (defined('FILEINFO_MIME_TYPE')) ?
+						FILEINFO_MIME_TYPE : FILEINFO_MIME;
+
+					$finfo = new finfo($mime_constant);
 					$this->mime_type = $finfo->file($temp_file_name);
 				} elseif (function_exists('mime_content_type')) {
 					// fallback to mime_content_type() if available
 					$this->mime_type = mime_content_type($temp_file_name);
 				} else {
-					// no mime-type functions so we have to rely on the headers
-					$this->mime_type = $this->file['type'];
+					// no mime-type functions, default to
+					// 'application/octet-stream'. Relying on HTTP headers
+					// could be a security problem so we never fall back to
+					// that option.
+					$this->mime_type = 'application/octet-stream';
 				}
 			} else {
 				$this->mime_type = $this->file['type'];
