@@ -41,6 +41,9 @@ function SwatActions(id, values, selected)
 	YAHOO.util.Event.addListener(this.flydown, 'change',
 		this.handleChange, this, true);
 
+	YAHOO.util.Event.addListener(this.flydown, 'keyup',
+		this.handleChange, this, true);
+
 	YAHOO.util.Event.addListener(button, 'click',
 		this.handleButtonClick, this, true);
 }
