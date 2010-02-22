@@ -52,9 +52,11 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 	 *                     explicitly refresh the browser cache.
 	 * @param boolean $combine whether or not to combine files. Defaults to
 	 *                          false.
+	 * @param boolean $minify whether or not to minify files. Defaults to
+	 *                         false.
 	 */
 	public function display(SwatHtmlHeadEntrySet $set,
-		$uri_prefix = '', $tag = null, $combine = false)
+		$uri_prefix = '', $tag = null, $combine = false, $minify = false)
 	{
 		$entries = $set->toArray();
 
@@ -84,7 +86,14 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 
 			echo "\t";
 
-			$entry->display($uri_prefix, $tag);
+			if ($entry->getType() === 'SwatJavaScriptHtmlHeadEntry' &&
+				$minify) {
+				$prefix = $uri_prefix . 'min/';
+			} else {
+				$prefix = $uri_prefix;
+			}
+
+			$entry->display($prefix, $tag);
 			echo "\n";
 		}
 
@@ -97,11 +106,21 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 	/**
 	 * Displays the contents of the set of HTML head entries inline
 	 */
-	public function displayInline($path, $type = null)
+	public function displayInline(SwatHtmlHeadEntrySet $set,
+		$path, $type = null)
 	{
-		$entries = $this->getSortedEntries($this->entries);
+		$entries = $set->toArray();
+
+		$uris = array_keys($entries);
+
+		// check for conflicts in the displayed set
+		$this->checkForConflicts($uris);
+
+		// sort
+		$entries = $this->getSortedEntries($entries);
 
 		// display entries inline
+		// TODO: Use Concentrate_Inliner to display CSS inline
 		foreach ($entries as $entry) {
 			if ($type === null || $entry->getType() === $type) {
 				$entry->displayInline($path);
