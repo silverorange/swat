@@ -16,21 +16,30 @@
 	margin-left: 6px;
 }
 
-.swat-simple-color-entry-palette a {
+.swat-simple-color-entry-palette a,
+.swat-simple-color-entry-palette a:link,
+.swat-simple-color-entry-palette a:visited,
+.swat-simple-color-entry-palette a:hover,
+.swat-simple-color-entry-palette a:active {
 	text-decoration: none;
 }
 
 .swat-simple-color-entry-palette table {
+	border-collapse: separate;
+	border-spacing: 1px;
 }
 
 .swat-simple-color-entry-palette table td {
 	width: 25px;
+	padding: 0;
 }
+
 .swat-simple-color-entry-palette table td a {
 	display: block;
 	width: 100%;
 	height: 25px;
 	min-height: 25px;
+	outline: none;
 }
 
 .swat-simple-color-entry-palette table td.swat-simple-color-entry-palette-selected a {
