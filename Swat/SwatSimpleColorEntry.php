@@ -109,6 +109,41 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
+	// {{{ public function process()
+
+	/**
+	 * Processes this color entry
+	 *
+	 * Ensures this color is a valid hex color.
+	 */
+	public function process()
+	{
+		parent::process();
+
+		$data = &$this->getForm()->getFormData();
+		if (isset($data[$this->id])) {
+			$this->value = $data[$this->id];
+		} else {
+			$this->value = null;
+		}
+
+		if ($this->value == '') {
+			$this->value = null;
+		}
+
+		if ($this->required && $this->value === null) {
+			$this->addMessage($this->getValidationMessage('required'));
+
+		} elseif ($this->value !== null &&
+			!$this->validateColor($this->value)) {
+			$message = sprintf(Swat::_('“%s” is not a valid color.'),
+				$this->value);
+
+			$this->addMessage(new SwatMessage($message, 'error'));
+		}
+	}
+
+	// }}}
 	// {{{ public function display()
 
 	/**
@@ -219,6 +254,35 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 			SwatString::quoteJavaScriptString(Swat::_('Set')));
 
 		return $javascript;
+	}
+
+	// }}}
+	// {{{ protected function validateColor()
+
+	/**
+	 * Validates a color
+	 *
+	 * A valid color is a 3 or 6 character hex string with values between
+	 * 0 and 255.
+	 *
+	 * @param string $value the color to validate.
+	 *
+	 * @return boolean true if <i>$value</i> is a valid color and
+	 *                  false if it is not.
+	 */
+	protected function validateColor($value)
+	{
+		$valid = false;
+
+		if (strlen($value) == 3) {
+			$regexp = '/^[0-9a-f]{3}/ui';
+		} elseif (strlen($value) == 6) {
+			$regexp = '/^[0-9a-f]{6}/ui';
+		}
+
+		$valid = (preg_match($regexp, $this->value) === 1);
+
+		return $valid;
 	}
 
 	// }}}
