@@ -270,6 +270,9 @@ class SwatYUI extends SwatObject
 		$components['slider'] = new SwatYUIComponent('slider');
 		$components['slider']->addJavaScript();
 
+		$components['stylesheet'] = new SwatYUIComponent('stylesheet');
+		$components['stylesheet']->addJavaScript();
+
 		$components['swf'] = new SwatYUIComponent('swf');
 		$components['swf']->addJavaScript();
 
