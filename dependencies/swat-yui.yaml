@@ -60,6 +60,8 @@ SwatYUI:
         - packages/yui/dragdrop/dragdrop.js
         - packages/yui/element/element.js
     packages/yui/stylesheet/stylesheet.js:
+      Depends:
+        - packages/yui/yahoo/yahoo.js
     packages/yui/swf/swf.js:
       Depends:
         - packages/yui/element/element.js
