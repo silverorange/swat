@@ -59,6 +59,7 @@ SwatYUI:
       Depends:
         - packages/yui/dragdrop/dragdrop.js
         - packages/yui/element/element.js
+    packages/yui/stylesheet/stylesheet.js:
     packages/yui/swf/swf.js:
       Depends:
         - packages/yui/element/element.js
@@ -99,6 +100,16 @@ SwatYUI:
     packages/yui/imagecropper/imagecropper.js:
       Depends:
         - packages/yui/resize/resize.js
+    packages/yui/paginator/paginator.js:
+      Depends:
+        - packages/yui/dom/dom.js
+        - packages/yui/event/event.js
+        - packages/yui/element/element.js
+    packages/yui/slider/slider.js:
+      Depends:
+        - packages/yui/dom/dom.js
+        - packages/yui/event/event.js
+        - packages/yui/dragdrop/dragdrop.js
     packages/yui/menu/menu.js:
       Depends:
         - packages/yui/container/container_core.js
