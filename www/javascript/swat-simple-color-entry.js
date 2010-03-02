@@ -102,6 +102,17 @@ SwatSimpleColorEntry.prototype.createOverlay = function(event)
 	this.overlay.render(document.body);
 	this.palette.style.display = 'block';
 	this.is_drawn = true;
+
+	this.close_div = document.createElement('div');
+	this.close_div.style.top = 0;
+	this.close_div.style.left = 0;
+	this.close_div.style.position = 'absolute';
+	this.close_div.style.display = 'none';
+
+	YAHOO.util.Event.addListener(this.close_div, 'click',
+		this.close, this, true);
+
+	document.getElementsByTagName('body')[0].appendChild(this.close_div);
 }
 
 /**
@@ -109,6 +120,9 @@ SwatSimpleColorEntry.prototype.createOverlay = function(event)
  */
 SwatSimpleColorEntry.prototype.close = function()
 {
+	this.close_div.style.display = 'none';
+	SwatZIndexManager.lowerElement(this.close_div);
+
 	this.overlay.hide();
 	SwatZIndexManager.lowerElement(this.palette);
 	this.is_open = false;
@@ -119,6 +133,12 @@ SwatSimpleColorEntry.prototype.close = function()
  */
 SwatSimpleColorEntry.prototype.open = function()
 {
+	this.close_div.style.width = YAHOO.util.Dom.getDocumentWidth() + 'px';
+	this.close_div.style.height = YAHOO.util.Dom.getDocumentHeight() + 'px';
+	this.close_div.style.display = 'block';
+
+	SwatZIndexManager.raiseElement(this.close_div);
+
 	this.overlay.cfg.setProperty('context',
 		[this.toggle_button, 'tl', 'bl']);
 
