@@ -245,6 +245,8 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 		if ($this->none_option) {
 			$none_option = ($this->none_option_title === null) ? 'null' :
 				SwatString::quoteJavaScriptString($this->none_option_title);
+		} else {
+			$none_option = 'null';
 		}
 
 		$javascript = "var {$this->id}_obj = new SwatSimpleColorEntry(".
