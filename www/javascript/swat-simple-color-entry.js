@@ -73,6 +73,12 @@ SwatSimpleColorEntry.prototype.drawButton = function()
 	YAHOO.util.Event.addListener(this.toggle_button, 'click', this.toggle,
 		this, true);
 
+    // focus link to capture keyboard events
+    this.toggle_button.focus();
+
+	YAHOO.util.Event.on(this.toggle_button, 'keypress',
+		this.handleKeyPress, this, true);
+
 	this.palette = document.createElement('div');
 	this.palette.id = this.id + '_palette';
 	YAHOO.util.Dom.addClass(this.palette, 'swat-simple-color-entry-palette');
@@ -289,7 +295,6 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 
 		if (color === null) {
 			this.swatch.style.background = null;
-			this.hex_input_tag.value = '';
 		} else {
 			this.hex_input_tag.value = color;
 			this.swatch.style.background = '#' + color;
@@ -313,6 +318,7 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
  */
 SwatSimpleColorEntry.prototype.selectNull = function(event)
 {
+	this.hex_input_tag.value = '';
 	YAHOO.util.Event.preventDefault(event);
 	this.setColor(null);
 }
@@ -407,4 +413,14 @@ SwatSimpleColorEntry.prototype.hideOverlay = function()
 				this.select_elements[i].style._visibility;
 		}
 	}
+}
+
+SwatSimpleColorEntry.prototype.handleKeyPress = function(e)
+{
+	YAHOO.util.Event.preventDefault(e);
+	alert(e.keyCode);
+
+	// close preview on backspace or escape
+	if (e.keyCode == 8 || e.keyCode == 27)
+		this.close();
 }
