@@ -31,10 +31,10 @@ function SwatSimpleColorEntry(id, colors, none_option_title)
 	this.hex_input_tag.id = this.id + '_hex_color';
 	this.hex_input_tag.size = 6;
 
-	YAHOO.util.Event.addListener(this.hex_input_tag, 'change',
+	YAHOO.util.Event.on(this.hex_input_tag, 'change',
 		this.handleInputChange, this, true);
 
-	YAHOO.util.Event.addListener(this.hex_input_tag, 'keyup',
+	YAHOO.util.Event.on(this.hex_input_tag, 'keyup',
 		this.handleInputChange, this, true);
 
 	// this tries to make a square palette
@@ -72,12 +72,6 @@ SwatSimpleColorEntry.prototype.drawButton = function()
 	this.toggle_button.appendChild(this.swatch);
 	YAHOO.util.Event.addListener(this.toggle_button, 'click', this.toggle,
 		this, true);
-
-    // focus link to capture keyboard events
-    this.toggle_button.focus();
-
-	YAHOO.util.Event.on(this.toggle_button, 'keypress',
-		this.handleKeyPress, this, true);
 
 	this.palette = document.createElement('div');
 	this.palette.id = this.id + '_palette';
@@ -126,6 +120,8 @@ SwatSimpleColorEntry.prototype.close = function()
 	this.container.hide();
 	SwatZIndexManager.lowerElement(this.palette);
 	this.is_open = false;
+
+	this.removeKeyPressHandler();
 }
 
 /**
@@ -141,6 +137,8 @@ SwatSimpleColorEntry.prototype.open = function()
 	this.container.show();
 	SwatZIndexManager.raiseElement(this.palette);
 	this.is_open = true;
+
+	this.addKeyPressHandler();
 }
 
 /**
@@ -418,9 +416,29 @@ SwatSimpleColorEntry.prototype.hideOverlay = function()
 SwatSimpleColorEntry.prototype.handleKeyPress = function(e)
 {
 	YAHOO.util.Event.preventDefault(e);
-	alert(e.keyCode);
 
 	// close preview on backspace or escape
 	if (e.keyCode == 8 || e.keyCode == 27)
 		this.close();
+}
+
+SwatSimpleColorEntry.prototype.handleKeyPress = function(e)
+{
+	// close preview on escape or enter key
+	if (e.keyCode == 27 || e.keyCode == 13) {
+		YAHOO.util.Event.preventDefault(e);
+		this.close();
+	}
+}
+
+SwatSimpleColorEntry.prototype.addKeyPressHandler = function()
+{
+	YAHOO.util.Event.addListener(document, 'keypress',
+		this.handleKeyPress, this, true);
+}
+
+SwatSimpleColorEntry.prototype.removeKeyPressHandler = function()
+{
+	YAHOO.util.Event.removeListener(document, 'keypress',
+		this.handleKeyPress, this, true);
 }
