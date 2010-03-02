@@ -23,6 +23,9 @@ function SwatSimpleColorEntry(id, colors, none_option_title)
 	this.input_tag = document.getElementById(this.id + '_value');
 	this.swatch = document.getElementById(this.id + '_swatch');
 
+	// list of select elements to hide for IE6
+	this.select_elements = [];
+
 	this.hex_input_tag = document.createElement('input');
 	this.hex_input_tag.type = 'text';
 	this.hex_input_tag.id = this.id + '_hex_color';
@@ -47,10 +50,11 @@ function SwatSimpleColorEntry(id, colors, none_option_title)
 	this.drawInput();
 
 	YAHOO.util.Event.onContentReady(this.id + '_palette',
-		this.createOverlay, this, true)
+		this.createContainer, this, true)
 }
 
 SwatSimpleColorEntry.set_text = 'Set';
+SwatSimpleColorEntry.ie6 = false /*@cc_on || @_jscript_version < 5.7 @*/;
 
 /**
  * Displays the toggle button for this simple color entry
@@ -74,18 +78,18 @@ SwatSimpleColorEntry.prototype.drawButton = function()
 	YAHOO.util.Dom.addClass(this.palette, 'swat-simple-color-entry-palette');
 	this.palette.style.display = 'none';
 
-	var overlay_header = document.createElement('div');
-	YAHOO.util.Dom.addClass(overlay_header, 'hd');
+	var header = document.createElement('div');
+	YAHOO.util.Dom.addClass(header, 'hd');
 
-	var overlay_body = document.createElement('div');
-	YAHOO.util.Dom.addClass(overlay_body, 'bd');
+	var body = document.createElement('div');
+	YAHOO.util.Dom.addClass(body, 'bd');
 
-	var overlay_footer = document.createElement('div');
-	YAHOO.util.Dom.addClass(overlay_footer, 'ft');
+	var footer = document.createElement('div');
+	YAHOO.util.Dom.addClass(footer, 'ft');
 
-	this.palette.appendChild(overlay_header);
-	this.palette.appendChild(overlay_body);
-	this.palette.appendChild(overlay_footer);
+	this.palette.appendChild(header);
+	this.palette.appendChild(body);
+	this.palette.appendChild(footer);
 
 	var container = document.getElementById(this.id);
 	container.appendChild(this.palette);
@@ -94,25 +98,16 @@ SwatSimpleColorEntry.prototype.drawButton = function()
 /**
  * Creates simple color entry overlay widget when toggle button has been drawn
  */
-SwatSimpleColorEntry.prototype.createOverlay = function(event)
+SwatSimpleColorEntry.prototype.createContainer = function(event)
 {
-	this.overlay = new YAHOO.widget.Overlay(this.id + '_palette',
+	this.container = new YAHOO.widget.Overlay(this.id + '_palette',
 		{ visible: false, constraintoviewport: true });
 
-	this.overlay.render(document.body);
+	this.container.render(document.body);
 	this.palette.style.display = 'block';
 	this.is_drawn = true;
 
-	this.close_div = document.createElement('div');
-	this.close_div.style.top = 0;
-	this.close_div.style.left = 0;
-	this.close_div.style.position = 'absolute';
-	this.close_div.style.display = 'none';
-
-	YAHOO.util.Event.addListener(this.close_div, 'click',
-		this.close, this, true);
-
-	document.getElementsByTagName('body')[0].appendChild(this.close_div);
+	this.drawOverlay();
 }
 
 /**
@@ -120,10 +115,9 @@ SwatSimpleColorEntry.prototype.createOverlay = function(event)
  */
 SwatSimpleColorEntry.prototype.close = function()
 {
-	this.close_div.style.display = 'none';
-	SwatZIndexManager.lowerElement(this.close_div);
+	this.hideOverlay();
 
-	this.overlay.hide();
+	this.container.hide();
 	SwatZIndexManager.lowerElement(this.palette);
 	this.is_open = false;
 }
@@ -133,16 +127,12 @@ SwatSimpleColorEntry.prototype.close = function()
  */
 SwatSimpleColorEntry.prototype.open = function()
 {
-	this.close_div.style.width = YAHOO.util.Dom.getDocumentWidth() + 'px';
-	this.close_div.style.height = YAHOO.util.Dom.getDocumentHeight() + 'px';
-	this.close_div.style.display = 'block';
+	this.showOverlay();
 
-	SwatZIndexManager.raiseElement(this.close_div);
-
-	this.overlay.cfg.setProperty('context',
+	this.container.cfg.setProperty('context',
 		[this.toggle_button, 'tl', 'bl']);
 
-	this.overlay.show();
+	this.container.show();
 	SwatZIndexManager.raiseElement(this.palette);
 	this.is_open = true;
 }
@@ -377,3 +367,44 @@ SwatSimpleColorEntry.prototype.highlightPalleteEntry = function(color)
 	}
 }
 
+SwatSimpleColorEntry.prototype.drawOverlay = function()
+{
+	this.overlay = document.createElement('div');
+
+	this.overlay.className = 'swat-simple-color-entry-overlay';
+	this.overlay.style.display = 'none';
+
+	YAHOO.util.Event.on(this.overlay, 'click', this.close, this, true);
+
+	var body = document.getElementsByTagName('body')[0];
+	body.appendChild(this.overlay);
+}
+
+SwatSimpleColorEntry.prototype.showOverlay = function()
+{
+	if (SwatSimpleColorEntry.ie6) {
+		this.select_elements = document.getElementsByTagName('select');
+		for (var i = 0; i < this.select_elements.length; i++) {
+			this.select_elements[i].style._visibility =
+				this.select_elements[i].style.visibility;
+
+			this.select_elements[i].style.visibility = 'hidden';
+		}
+	}
+
+	this.overlay.style.height = YAHOO.util.Dom.getDocumentHeight() + 'px';
+	this.overlay.style.display = 'block';
+	SwatZIndexManager.raiseElement(this.overlay);
+}
+
+SwatSimpleColorEntry.prototype.hideOverlay = function()
+{
+	SwatZIndexManager.lowerElement(this.overlay);
+	this.overlay.style.display = 'none';
+	if (SwatSimpleColorEntry.ie6) {
+		for (var i = 0; i < this.select_elements.length; i++) {
+			this.select_elements[i].style.visibility =
+				this.select_elements[i].style._visibility;
+		}
+	}
+}

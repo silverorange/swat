@@ -7,6 +7,14 @@
 	margin: 0;
 }
 
+.swat-simple-color-entry-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: 'red';
+	width: 100%;
+}
+
 .swat-simple-color-entry-palette-hex-color {
 	text-align: center;
 	margin: 6px;
