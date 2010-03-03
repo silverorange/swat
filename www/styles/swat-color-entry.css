@@ -1,48 +1,29 @@
 /* SwatSimpleColorEntry */
 
-.swat-simple-color-entry-palette {
-	background: #fff;
-	border: 1px solid #ccc;
-	padding: 0;
-	margin: 0;
-}
-
-.swat-simple-color-entry-overlay {
-	position: absolute;
-	top: 0;
-	left: 0;
-	background: 'red';
-	width: 100%;
-}
-
 .swat-simple-color-entry-palette-hex-color {
 	text-align: center;
 	margin: 6px;
 }
 
-.swat-simple-color-entry-palette-hex-color button {
-	margin-left: 6px;
-}
-
-.swat-simple-color-entry-palette a,
-.swat-simple-color-entry-palette a:link,
-.swat-simple-color-entry-palette a:visited,
-.swat-simple-color-entry-palette a:hover,
-.swat-simple-color-entry-palette a:active {
+.swat-simple-color-entry-table a,
+.swat-simple-color-entry-table a:link,
+.swat-simple-color-entry-table a:visited,
+.swat-simple-color-entry-table a:hover,
+.swat-simple-color-entry-table a:active {
 	text-decoration: none;
 }
 
-.swat-simple-color-entry-palette table {
+.swat-simple-color-entry-table {
 	border-collapse: separate;
 	border-spacing: 1px;
 }
 
-.swat-simple-color-entry-palette table td {
+.swat-simple-color-entry-table td {
 	width: 25px;
 	padding: 0;
 }
 
-.swat-simple-color-entry-palette table td a {
+.swat-simple-color-entry-table td a {
 	display: block;
 	width: 100%;
 	height: 25px;
@@ -50,18 +31,18 @@
 	outline: none;
 }
 
-.swat-simple-color-entry-palette table td.swat-simple-color-entry-palette-selected a {
+.swat-simple-color-entry-table td.swat-simple-color-entry-palette-selected a {
 	height: 21px;
 	min-height: 21px;
 }
 
-.swat-simple-color-entry-palette table td.swat-simple-color-entry-palette-selected {
+.swat-simple-color-entry-table td.swat-simple-color-entry-palette-selected {
 	border: 2px solid #000;
 	width: 21px;
 }
 
-.swat-simple-color-entry-swatch {
-	width: 7em;
+.swat-simple-color-entry .swat-overlay-toggle-button-content {
+	width: 6.2em;
 	border: 1px #ccc solid;
 	background: url(../images/color-entry-null.png);
 	margin: 2px;
@@ -72,6 +53,7 @@
 
 td.swat-simple-color-entry-palette-blank {
 	background: url(../images/color-entry-null.png);
+	text-align: center;
 }
 
 td.swat-simple-color-entry-palette-blank a {
@@ -83,13 +65,6 @@ td.swat-simple-color-entry-palette-blank a {
 	display: inline;
 	vertical-align: middle;
 	border: none;
-}
-
-* html button.swat-simple-color-entry-toggle-button {
-	width: 8.20em;
-}
-button.swat-simple-color-entry-toggle-button {
-	*width: 8.20em;
 }
 
 /* SwatColorEntry */

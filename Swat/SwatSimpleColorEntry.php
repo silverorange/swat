@@ -2,10 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatInputControl.php';
-require_once 'Swat/SwatState.php';
-require_once 'Swat/SwatYUI.php';
-require_once 'Swat/SwatHtmlTag.php';
+require_once 'Swat/SwatAbstractOverlay.php';
 
 /**
  * Simple color selector widget.
@@ -14,10 +11,10 @@ require_once 'Swat/SwatHtmlTag.php';
  * predefined color choices. It requires JavaScript to work correctly.
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatSimpleColorEntry extends SwatInputControl implements SwatState
+class SwatSimpleColorEntry extends SwatAbstractOverlay
 {
 	// {{{ public properties
 
@@ -36,24 +33,6 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	 * @var string
 	 */
 	public $none_option_title = null;
-
-	/**
-	 * Selected color
-	 *
-	 * The selected color in three or six digit hexidecimal representation.
-	 *
-	 * @var string
-	 */
-	public $value = null;
-
-	/**
-	 * Access key
-	 *
-	 * Access key for this simple color control, for keyboard nagivation.
-	 *
-	 * @var string
-	 */
-	public $access_key = null;
 
 	/**
 	 * Array of colors to display in this color selector
@@ -88,20 +67,16 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	{
 		parent::__construct($id);
 
-		$this->requires_id = true;
-
 		if ($this->none_option_title === null) {
 			$this->none_option_title = Swat::_('None');
 		}
-
-		$yui = new SwatYUI(array('dom', 'event', 'container'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript(
 			'packages/swat/javascript/swat-simple-color-entry.js',
 			Swat::PACKAGE_ID);
 
-		$this->addJavaScript('packages/swat/javascript/swat-z-index-manager.js',
+		$this->addJavaScript(
+			'packages/swat/javascript/swat-abstract-overlay.js',
 			Swat::PACKAGE_ID);
 
 		$this->addStyleSheet('packages/swat/styles/swat-color-entry.css',
@@ -144,74 +119,6 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ public function display()
-
-	/**
-	 * Displays this simple color selector widget
-	 */
-	public function display()
-	{
-		if (!$this->visible)
-			return;
-
-		parent::display();
-
-		$container_div_tag = new SwatHtmlTag('div');
-		$container_div_tag->id = $this->id;
-		$container_div_tag->class = $this->getCSSClassString();
-		$container_div_tag->open();
-
-		$swatch_div = new SwatHtmlTag('div');
-		$swatch_div->class = 'swat-simple-color-entry-swatch';
-		$swatch_div->id = $this->id.'_swatch';
-		$swatch_div->setContent('&nbsp;');
-		$swatch_div->display();
-
-		$input_tag = new SwatHtmlTag('input');
-		$input_tag->type = 'hidden';
-		$input_tag->id = $this->id.'_value';
-		$input_tag->name = $this->id;
-		$input_tag->value = $this->value;
-		$input_tag->accesskey = $this->access_key;
-
-		$input_tag->display();
-
-		$container_div_tag->close();
-
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
-	}
-
-	// }}}
-	// {{{ public function getState()
-
-	/**
-	 * Gets the current state of this simple color selector widget
-	 *
-	 * @return string the current state of this simple color selector widget.
-	 *
-	 * @see SwatState::getState()
-	 */
-	public function getState()
-	{
-		return $this->value;
-	}
-
-	// }}}
-	// {{{ public function setState()
-
-	/**
-	 * Sets the current state of this simple color selector widget
-	 *
-	 * @param string $state the new state of this simple color selector widget.
-	 *
-	 * @see SwatState::setState()
-	 */
-	public function setState($state)
-	{
-		$this->value = $state;
-	}
-
-	// }}}
 	// {{{ protected function getCSSClassNames()
 
 	/**
@@ -240,6 +147,8 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
+		$javascript = parent::getInlineJavaScript();
+
 		$colors = "'".implode("', '", $this->colors)."'";
 
 		if ($this->none_option) {
@@ -249,11 +158,8 @@ class SwatSimpleColorEntry extends SwatInputControl implements SwatState
 			$none_option = 'null';
 		}
 
-		$javascript = "var {$this->id}_obj = new SwatSimpleColorEntry(".
+		$javascript.= "\nvar {$this->id}_obj = new SwatSimpleColorEntry(".
 			"'{$this->id}', [{$colors}], {$none_option});\n";
-
-		$javascript.= sprintf("{$this->id}_obj.set_text = %s;\n",
-			SwatString::quoteJavaScriptString(Swat::_('Set')));
 
 		return $javascript;
 	}
