@@ -65,6 +65,7 @@ Swat:
     packages/swat/javascript/swat-simple-color-entry.js:
       Depends:
         - packages/swat/javascript/swat-z-index-manager.js
+        - packages/swat/javascript/swat-abstract-overlay.js
     packages/swat/javascript/swat-table-view-input-row.js:
     packages/swat/javascript/swat-table-view.js:
       Depends:
