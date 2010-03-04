@@ -15,6 +15,7 @@ function SwatAbstractOverlay(id)
 {
 	this.id = id;
 	this.div = document.getElementById(this.id + '_content');
+	this.value_field = document.getElementById(this.id + '_value');
 
 	this.is_open = false;
 	this.is_drawn = false;

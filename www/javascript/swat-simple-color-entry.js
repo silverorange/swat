@@ -193,6 +193,8 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 
 		this.current_color = color;
 
+		this.value_field.value = color;
+
 		if (color === null)
 			this.colorChangeEvent.fire(null);
 		else
