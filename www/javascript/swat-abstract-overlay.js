@@ -25,8 +25,7 @@ function SwatAbstractOverlay(id)
 
 	this.drawButton();
 
-	YAHOO.util.Event.onContentReady(this.id + '_overlay',
-		this.createOverlay, this, true)
+	YAHOO.util.Event.onDOMReady(this.createOverlay, this, true);
 }
 
 SwatAbstractOverlay.close_text = 'Close';
@@ -100,7 +99,8 @@ SwatAbstractOverlay.prototype.createOverlay = function(event)
 
 	this.overlay_content.childNodes[1].appendChild(this.getContent());
 
-	this.overlay.render(document.body);
+	this.overlay.render(this.value_field.parentNode);
+	//this.overlay.render(document.body);
 	this.overlay_content.style.display = 'block';
 	this.is_drawn = true;
 
@@ -179,7 +179,8 @@ SwatAbstractOverlay.prototype.drawCloseDiv = function()
 
 	YAHOO.util.Event.on(this.close_div, 'click', this.close, this, true);
 
-	document.body.appendChild(this.close_div);
+	this.value_field.parentNode.appendChild(this.close_div);
+	//document.body.appendChild(this.close_div);
 }
 
 // }}}
