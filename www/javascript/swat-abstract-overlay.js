@@ -14,7 +14,7 @@
 function SwatAbstractOverlay(id)
 {
 	this.id = id;
-	this.div = document.getElementById(this.id + '_content');
+	this.container = document.getElementById(this.id);
 	this.value_field = document.getElementById(this.id + '_value');
 
 	this.is_open = false;
@@ -24,8 +24,11 @@ function SwatAbstractOverlay(id)
 	this.select_elements = [];
 
 	this.drawButton();
+	this.drawCloseDiv();
 
 	YAHOO.util.Event.onDOMReady(this.createOverlay, this, true);
+	//YAHOO.util.Event.onContentReady(this.id + '_overlay',
+	//	this.createOverlay, this, true);
 }
 
 SwatAbstractOverlay.close_text = 'Close';
@@ -45,8 +48,7 @@ SwatAbstractOverlay.prototype.drawButton = function()
 	// the type property is readonly in IE so use setAttribute() here
 	this.toggle_button.setAttribute('type', 'button');
 
-	this.div.parentNode.appendChild(this.toggle_button);
-	//this.toggle_button.appendChild(this.div);
+	this.container.appendChild(this.toggle_button);
 	YAHOO.util.Event.on(this.toggle_button, 'click', this.toggle,
 		this, true);
 
@@ -99,12 +101,10 @@ SwatAbstractOverlay.prototype.createOverlay = function(event)
 
 	this.overlay_content.childNodes[1].appendChild(this.getContent());
 
-	this.overlay.render(this.value_field.parentNode);
+	this.overlay.render(this.container);
 	//this.overlay.render(document.body);
 	this.overlay_content.style.display = 'block';
 	this.is_drawn = true;
-
-	this.drawCloseDiv();
 }
 
 // }}}
@@ -134,8 +134,7 @@ SwatAbstractOverlay.prototype.open = function()
 {
 	this.showCloseDiv();
 
-	this.overlay.cfg.setProperty('context',
-		[this.toggle_button, 'tl', 'bl']);
+	this.overlay.cfg.setProperty('context', this.getOverlayContext());
 
 	this.overlay.show();
 	this.is_open = true;
@@ -143,6 +142,17 @@ SwatAbstractOverlay.prototype.open = function()
 	SwatZIndexManager.raiseElement(this.overlay_content);
 
 	this.addKeyPressHandler();
+}
+
+// }}}
+// {{{ SwatAbstractOverlay.prototype.getOverlayContext
+
+/**
+ * Get the context for positioning the overlay
+ */
+SwatAbstractOverlay.prototype.getOverlayContext = function()
+{
+	return [this.toggle_button, 'tl', 'bl'];
 }
 
 // }}}
@@ -179,7 +189,7 @@ SwatAbstractOverlay.prototype.drawCloseDiv = function()
 
 	YAHOO.util.Event.on(this.close_div, 'click', this.close, this, true);
 
-	this.value_field.parentNode.appendChild(this.close_div);
+	this.container.appendChild(this.close_div);
 	//document.body.appendChild(this.close_div);
 }
 
