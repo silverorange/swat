@@ -88,12 +88,6 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
 		$container_div_tag->class = $this->getCSSClassString();
 		$container_div_tag->open();
 
-		$content_div = new SwatHtmlTag('div');
-		$content_div->class = 'swat-overlay-content';
-		$content_div->id = $this->id.'_content';
-		$content_div->setContent('&nbsp;');
-		$content_div->display();
-
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
 		$input_tag->id = $this->id.'_value';
