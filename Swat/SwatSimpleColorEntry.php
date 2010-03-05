@@ -158,7 +158,9 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 			$none_option = 'null';
 		}
 
-		$javascript.= "\nvar {$this->id}_obj = new SwatSimpleColorEntry(".
+		$js_class_name = $this->getJavaScriptClassName();
+
+		$javascript.= "\nvar {$this->id}_obj = new {$js_class_name}(".
 			"'{$this->id}', [{$colors}], {$none_option});\n";
 
 		return $javascript;
@@ -191,6 +193,19 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 		$valid = (preg_match($regexp, $this->value) === 1);
 
 		return $valid;
+	}
+
+	// }}}
+	// {{{ protected function getJavaScriptClassName()
+
+	/**
+	 * Get the name of the java script class for this widget
+	 *
+	 * @return string Java script class name.
+	 */
+	protected function getJavaScriptClassName()
+	{
+		return 'SwatSimpleColorEntry';
 	}
 
 	// }}}
