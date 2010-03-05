@@ -26,9 +26,8 @@ function SwatAbstractOverlay(id)
 	this.drawButton();
 	this.drawCloseDiv();
 
-	YAHOO.util.Event.onDOMReady(this.createOverlay, this, true);
-	//YAHOO.util.Event.onContentReady(this.id + '_overlay',
-	//	this.createOverlay, this, true);
+	YAHOO.util.Event.onContentReady(this.id,
+		this.createOverlay, this, true);
 }
 
 SwatAbstractOverlay.close_text = 'Close';
