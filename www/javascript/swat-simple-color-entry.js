@@ -185,10 +185,12 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 		this.input_tag.value = color;
 
 		if (color === null) {
-			this.toggle_button_content.style.background = null;
+			YAHOO.util.Dom.setStyle(this.toggle_button_content,
+				'background', null);
 		} else {
 			this.hex_input_tag.value = color;
-			this.toggle_button_content.style.background = '#' + color;
+			YAHOO.util.Dom.setStyle(this.toggle_button_content,
+				'background', '#' + color);
 		}
 
 		this.current_color = color;
