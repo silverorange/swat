@@ -524,7 +524,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 						$messages = array_merge($messages,
 							$widget->getMessages());
 
-						$td_tag->class = 'swat-error'; // TODO
+						$td_tag->class.= ' swat-error';
 					}
 				}
 
