@@ -174,11 +174,11 @@ class SwatTextareaEditor extends SwatTextarea
 	}
 
 	// }}}
-	// {{{ protected function getInlineJavaScript()
+	// {{{ protected function getConfig()
 
-	protected function getInlineJavaScript()
+	protected function getConfig()
 	{
-		$buttons = implode(',', $this->getInlineJavaScriptButtons());
+		$buttons = implode(',', $this->getConfigButtons());
 
 		$formats = array(
 			'p',
@@ -205,15 +205,23 @@ class SwatTextareaEditor extends SwatTextarea
 			'theme_advanced_toolbar_align'      => 'left',
 			'theme_advanced_blockformats'       => $formats,
 			'skin'                              => 'swat',
-			'plugins'                           => 'swat,media',
+			'plugins'                           => 'media',
 		);
 
+		return $config;
+	}
+
+	// }}}
+	// {{{ protected function getInlineJavaScript()
+
+	protected function getInlineJavaScript()
+	{
 		ob_start();
 
 		echo "tinyMCE.init({\n";
 
 		$lines = array();
-		foreach ($config as $name => $value) {
+		foreach ($this->getConfig() as $name => $value) {
 			if (is_string($value)) {
 				$value = SwatString::quoteJavaScriptString($value);
 			} elseif (is_bool($value)) {
