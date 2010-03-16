@@ -205,10 +205,38 @@ class SwatTextareaEditor extends SwatTextarea
 			'theme_advanced_toolbar_align'      => 'left',
 			'theme_advanced_blockformats'       => $formats,
 			'skin'                              => 'swat',
-			'plugins'                           => 'media',
+			'plugins'                           => 'swat,media',
 		);
 
 		return $config;
+	}
+
+	// }}}
+	// {{{ protected function getConfigButtons()
+
+	protected function getConfigButtons()
+	{
+		return array(
+			'bold',
+			'italic',
+			'|',
+			'formatselect',
+			'|',
+			'removeformat',
+			'|',
+			'undo',
+			'redo',
+			'|',
+			'outdent',
+			'indent',
+			'|',
+			'bullist',
+			'numlist',
+			'|',
+			'link',
+			'image',
+			'snippet',
+		);
 	}
 
 	// }}}
@@ -234,34 +262,6 @@ class SwatTextareaEditor extends SwatTextarea
 		echo "\n});";
 
 		return ob_get_clean();
-	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScriptButtons()
-
-	protected function getInlineJavaScriptButtons()
-	{
-		return array(
-			'bold',
-			'italic',
-			'|',
-			'formatselect',
-			'|',
-			'removeformat',
-			'|',
-			'undo',
-			'redo',
-			'|',
-			'outdent',
-			'indent',
-			'|',
-			'bullist',
-			'numlist',
-			'|',
-			'link',
-			'image',
-			'snippet',
-		);
 	}
 
 	// }}}
