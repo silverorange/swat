@@ -28,11 +28,13 @@
 	width: 100%;
 	height: 25px;
 	min-height: 25px;
+	line-height: 25px;
 	outline: none;
 }
 
 .swat-simple-color-entry-table td.swat-simple-color-entry-palette-selected a {
 	height: 21px;
+	line-height: 21px;
 	min-height: 21px;
 }
 
