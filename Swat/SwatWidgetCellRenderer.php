@@ -11,7 +11,7 @@ require_once 'Swat/SwatTitleable.php';
 /**
  *
  * @package   Swat
- * @copyright 2006-2009 silverorange
+ * @copyright 2006-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
@@ -494,6 +494,21 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			$title = $this->parent->title;
 
 		return $title;
+	}
+
+	// }}}
+	// {{{ public function getTitleContentType()
+
+	/**
+	 * Gets the title content-type of this widget cell renderer
+	 *
+	 * Implements the {@link SwatTitleable::getTitleContentType()} interface.
+	 *
+	 * @return string the title content-type of this widget cell renderer.
+	 */
+	public function getTitleContentType()
+	{
+		return $this->title_content_type;
 	}
 
 	// }}}
