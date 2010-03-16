@@ -10,7 +10,7 @@ require_once 'Swat/SwatString.php';
  * Abstract base class for control widgets (non-container)
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatControl extends SwatWidget
@@ -35,10 +35,15 @@ abstract class SwatControl extends SwatWidget
 			if ($title === null)
 				$field_title = '';
 			else
-				$field_title =
-					'<strong>'.
-					SwatString::minimizeEntities($this->parent->getTitle()).
-					'</strong>';
+				if ($this->parent->getTitleContentType() === 'text/xml') {
+					$field_title =
+						'<strong>'.$this->parent->getTitle().'</strong>';
+				} else {
+					$field_title =
+						'<strong>'.
+						SwatString::minimizeEntities($this->parent->getTitle()).
+						'</strong>';
+				}
 		} else {
 			$field_title = '';
 		}

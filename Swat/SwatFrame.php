@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A container with a decorative frame and optional title
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
@@ -76,6 +76,21 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 			return $this->subtitle;
 
 		return $this->title.': '.$this->subtitle;
+	}
+
+	// }}}
+	// {{{ public function getTitleContentType()
+
+	/**
+	 * Gets the title content-type of this frame
+	 *
+	 * Implements the {@link SwatTitleable::getTitleContentType()} interface.
+	 *
+	 * @return string the title content-type of this frame.
+	 */
+	public function getTitleContentType()
+	{
+		return $this->title_content_type;
 	}
 
 	// }}}

@@ -14,7 +14,7 @@ require_once 'Swat/SwatMessage.php';
  * Adds a label and space to output messages.
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
@@ -179,6 +179,21 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	public function getTitle()
 	{
 		return $this->title;
+	}
+
+	// }}}
+	// {{{ public function getTitleContentType()
+
+	/**
+	 * Gets the title content-type of this form field
+	 *
+	 * Implements the {@link SwatTitleable::getTitleContentType()} interface.
+	 *
+	 * @return string the title content-type of this form field.
+	 */
+	public function getTitleContentType()
+	{
+		return $this->title_content_type;
 	}
 
 	// }}}
@@ -439,6 +454,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	// deprecated
 	// {{{ protected function displayRequired()
 
+	/**
+	 * @deprecated use the displayRequiredStatus() method instead
+	 */
 	protected function displayRequired()
 	{
 		if ($this->required) {
