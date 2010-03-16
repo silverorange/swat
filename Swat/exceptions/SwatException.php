@@ -320,7 +320,7 @@ class SwatException extends Exception
 				'on line <strong>%s</strong>.<br /><br />',
 				$this->wasHandled() ? 'Caught' : 'Uncaught',
 				$this->class,
-				nl2br(htmlspecialchars($this->getMessage())),
+				$this->getMessageAsHtml(),
 				$this->getFile(),
 				$this->getLine());
 
@@ -379,7 +379,7 @@ class SwatException extends Exception
 	/**
 	 * Gets whether or not this exception was manually handled
 	 *
-	 * @return boolean true if this exception wa smanually handled and false
+	 * @return boolean true if this exception was manually handled and false
 	 *                  if it was not.
 	 */
 	public function wasHandled()
@@ -405,6 +405,19 @@ class SwatException extends Exception
 			$e = new SwatException($e);
 
 		$e->process(true, false);
+	}
+
+	// }}}
+	// {{{ protected function getMessageAsHtml()
+
+	/**
+	 * Formats the exception's message as Html
+	 *
+	 * @return string the cleaned exception message.
+	 */
+	protected function getMessageAsHtml()
+	{
+		return nl2br(htmlspecialchars($this->getMessage()));
 	}
 
 	// }}}
