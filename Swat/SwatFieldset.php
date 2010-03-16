@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * An HTML fieldset tag with an optional HTML legend title.
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2004-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
@@ -27,6 +27,15 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 	 * @var string
 	 */
 	public $title = null;
+
+	/**
+	 * Optional content type for the title
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $title_content_type = 'text/plain';
 
 	/**
 	 * Access key
@@ -76,6 +85,21 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 	}
 
 	// }}}
+	// {{{ public function getTitleContentType()
+
+	/**
+	 * Gets the title content-type of this fieldset
+	 *
+	 * Implements the {@link SwatTitleable::getTitleContentType()} interface.
+	 *
+	 * @return string the title content-type of this fieldset.
+	 */
+	public function getTitleContentType()
+	{
+		return $this->title_content_type;
+	}
+
+	// }}}
 	// {{{ public function display()
 
 	public function display()
@@ -96,7 +120,7 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 			if ($this->access_key != '')
 				$legend_tag->accesskey = $this->access_key;
 
-			$legend_tag->setContent($this->title);
+			$legend_tag->setContent($this->title, $this->title_content_type);
 			$legend_tag->display();
 		}
 
