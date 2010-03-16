@@ -20,7 +20,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * together.
  *
  * @package   Swat
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
@@ -171,6 +171,21 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 			return '';
 		else
 			return $this->parent->title;
+	}
+
+	// }}}
+	// {{{ public function getTitleContentType()
+
+	/**
+	 * Gets the title content-type of this input cell
+	 *
+	 * Implements the {@link SwatTitleable::getTitleContentType()} interface.
+	 *
+	 * @return string the title content-type of this input cell.
+	 */
+	public function getTitleContentType()
+	{
+		return 'text/plain';
 	}
 
 	// }}}
