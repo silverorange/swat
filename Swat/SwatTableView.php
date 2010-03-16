@@ -1104,8 +1104,17 @@ class SwatTableView extends SwatView implements SwatUIParent
 	{
 		$classes = array();
 
-		if ($count % 2 == 1)
+		if ($count % 2 === 1) {
 			$classes[] = 'odd';
+		}
+
+		if ($count === 1) {
+			$classes[] = 'first';
+		}
+
+		if ($count === count($this->model)) {
+			$classes[] = 'last';
+		}
 
 		return $classes;
 	}
