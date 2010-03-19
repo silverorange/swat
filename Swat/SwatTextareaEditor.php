@@ -70,6 +70,17 @@ class SwatTextareaEditor extends SwatTextarea
 	 */
 	public $mode = self::MODE_VISUAL;
 
+	/**
+	 * Whether or not the mode switching behavior is enabled
+	 *
+	 * If set to false, only {@link SwatTextAreaEditor::$mode} will be ignored
+	 * and only {@link SwatTextAreaEditor::MODE_VISUAL} will be available for
+	 * the editor.
+	 *
+	 * @var boolean
+	 */
+	public $modes_enabled = true;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -194,6 +205,8 @@ class SwatTextareaEditor extends SwatTextarea
 
 		$formats = implode(',', $formats);
 
+		$modes = ($this->modes_enabled) ? 'yes' : 'no';
+
 		$config = array(
 			'mode'                              => 'exact',
 			'elements'                          => $this->id,
@@ -206,6 +219,7 @@ class SwatTextareaEditor extends SwatTextarea
 			'theme_advanced_blockformats'       => $formats,
 			'skin'                              => 'swat',
 			'plugins'                           => 'swat,media',
+			'swat_modes_enabled'                => $modes,
 		);
 
 		return $config;

@@ -764,8 +764,10 @@
 		var that = this;
 
 		// after rendering UI, draw source mode and tabs for visual editor
-		ed.onPostRender.add(this.drawSourceMode, this);
 		ed.onLoadContent.add(this.initMode, this);
+		if (ed.getParam('swat_modes_enabled', 'yes').toLowerCase() != 'no') {
+			ed.onPostRender.add(this.drawSourceMode, this);
+		}
 
 		// double up linebreaks around blocklevel elements
 		ed.onGetContent.add(function(ed, o)
@@ -1301,7 +1303,9 @@
 		}
 
 		// hide textarea
-		this.sourceContainer.style.display  = 'none';
+		if (this.sourceContainer) {
+			this.sourceContainer.style.display  = 'none';
+		}
 
 		// set content
 		var el = ed.getElement();
