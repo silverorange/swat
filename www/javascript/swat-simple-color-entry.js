@@ -188,7 +188,9 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 			YAHOO.util.Dom.setStyle(this.toggle_button_content,
 				'background', null);
 		} else {
-			this.hex_input_tag.value = color;
+			if (this.hex_input_tag.value != color) {
+				this.hex_input_tag.value = color;
+			}
 			YAHOO.util.Dom.setStyle(this.toggle_button_content,
 				'background', '#' + color);
 		}
@@ -197,10 +199,11 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 
 		this.value_field.value = color;
 
-		if (color === null)
+		if (color === null) {
 			this.colorChangeEvent.fire(null);
-		else
+		} else {
 			this.colorChangeEvent.fire('#' + color);
+		}
 
 		this.highlightPalleteEntry(color);
 	}
