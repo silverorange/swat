@@ -179,6 +179,10 @@ SwatSimpleColorEntry.prototype.handleInputChange = function()
  */
 SwatSimpleColorEntry.prototype.setColor = function(color)
 {
+	if (!/^([0-9a-f]{3}){1,2}$/i.test(color)) {
+		color = null;
+	}
+
 	var changed = (this.current_color != color);
 
 	if (changed) {
@@ -186,7 +190,7 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 
 		if (color === null) {
 			YAHOO.util.Dom.setStyle(this.toggle_button_content,
-				'background', '');
+				'background', null);
 		} else {
 			if (this.hex_input_tag.value != color) {
 				this.hex_input_tag.value = color;
