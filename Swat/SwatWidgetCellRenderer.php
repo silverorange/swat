@@ -508,7 +508,12 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 */
 	public function getTitleContentType()
 	{
-		return $this->title_content_type;
+		$title_content_type = 'text/plain';
+
+		if (isset($this->parent->title_content_type))
+			$title_content_type = $this->parent->title_content_type;
+
+		return $title_content_type;
 	}
 
 	// }}}
