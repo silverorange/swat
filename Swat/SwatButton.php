@@ -76,7 +76,7 @@ class SwatButton extends SwatInputControl
 	 *
 	 * @see SwatButton::$show_processing_throbber
 	 */
-	public $processing_throbber_message = '';
+	public $processing_throbber_message = null;
 
 	/**
 	 * Optional confirmation message to display when this button is clicked
@@ -355,8 +355,7 @@ class SwatButton extends SwatInputControl
 			$this->id,
 			$show_processing_throbber);
 
-		if ($this->show_processing_throbber &&
-			$this->processing_throbber_message !== null) {
+		if ($this->show_processing_throbber) {
 			$javascript.= sprintf("\n%s_obj.setProcessingMessage(%s);",
 				$this->id, SwatString::quoteJavaScriptString(
 					$this->processing_throbber_message));
