@@ -72,6 +72,9 @@ SwatButton.prototype.setProcessingMessage = function(message)
 		this.throbber_container.appendChild(document.createTextNode(message));
 		YAHOO.util.Dom.addClass(this.throbber_container,
 			'swat-button-processing-throbber-text');
+	} else {
+		// the following string is a UTF-8 encoded non breaking space
+		this.throbber_container.appendChild(document.createTextNode(' '))
 	}
 };
 
