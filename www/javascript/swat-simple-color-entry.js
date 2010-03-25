@@ -190,7 +190,7 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 
 		if (color === null) {
 			YAHOO.util.Dom.setStyle(this.toggle_button_content,
-				'background', null);
+				'background', '');
 		} else {
 			if (this.hex_input_tag.value != color) {
 				this.hex_input_tag.value = color;
