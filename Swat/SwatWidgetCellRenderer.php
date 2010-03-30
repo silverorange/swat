@@ -147,7 +147,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 		$form = $this->getForm();
 		if ($form !== null && $form->isSubmitted()) {
 			$replicators = $form->getHiddenField(
-				$this->prototype_widget->id.'_replicators');
+				$this->getReplicatorFieldName());
 
 			if ($replicators !== null) {
 				foreach ($replicators as $replicator) {
@@ -173,7 +173,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			$replicators = null;
 		} else {
 			$replicators = $form->getHiddenField(
-				$this->prototype_widget->id.'_replicators');
+				$this->getReplicatorFieldName());
 		}
 
 		if ($replicators === null) {
@@ -242,7 +242,8 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 				throw new SwatException('Cell renderer container must be '.
 					'inside a SwatForm for SwatWidgetCellRenderer to work.');
 
-			$form->addHiddenField($this->prototype_widget->id.'_replicators',
+			$form->addHiddenField(
+				$this->getReplicatorFieldName(),
 				array_keys($this->clones));
 
 			$this->applyPropertyValuesToClonedWidget($widget);
@@ -330,7 +331,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 		$form = $this->getForm();
 		if ($form !== null && $form->isSubmitted()) {
 			$replicators = $form->getHiddenField(
-				$this->prototype_widget->id.'_replicators');
+				$this->getReplicatorFieldName());
 
 			$widgets = array();
 			if (is_array($replicators)) {
@@ -377,7 +378,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 		$form = $this->getForm();
 		if ($form !== null && $form->isSubmitted()) {
 			$replicators = $form->getHiddenField(
-				$this->prototype_widget->id.'_replicators');
+				$this->getReplicatorFieldName());
 
 			$clones = array();
 			foreach ($this->clones as $replicator_id => $clone) {
@@ -687,6 +688,21 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			// TODO: throw something meaningful
 			throw new SwatException();
 		}
+	}
+
+	// }}}
+	// {{{ protected function getReplicatorFieldName()
+
+	protected function getReplicatorFieldName()
+	{
+		$name = 'replicators';
+
+		$widget = $this->getFirstAncestor('SwatWidget');
+		if ($widget->id) {
+			$name = $widget->id.'_'.$name;
+		}
+
+		return $name;
 	}
 
 	// }}}
