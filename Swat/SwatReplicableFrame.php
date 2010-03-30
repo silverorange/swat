@@ -42,9 +42,11 @@ class SwatReplicableFrame extends SwatReplicableContainer
 
 		parent::init();
 
-		foreach ($this->replicators as $id => $title) {
-			$frame = $this->getWidget($prototype_id, $id);
-			$frame->title = $title;
+		if ($this->replication_ids === null && is_array($this->replicators)) {
+			foreach ($this->replicators as $id => $title) {
+				$frame = $this->getWidget($prototype_id, $id);
+				$frame->title = $title;
+			}
 		}
 	}
 
