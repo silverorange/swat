@@ -100,6 +100,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	protected function displayGroupHeader($row)
 	{
 		$tr_tag = new SwatHtmlTag('tr');
+		$tr_tag->class = 'swat-table-view-group';
 		$tr_tag->open();
 
 		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
