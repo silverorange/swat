@@ -188,9 +188,13 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 			$regexp = '/^[0-9a-f]{3}/ui';
 		} elseif (strlen($value) == 6) {
 			$regexp = '/^[0-9a-f]{6}/ui';
+		} else {
+			$regexp = false;
 		}
 
-		$valid = (preg_match($regexp, $this->value) === 1);
+		if ($regexp !== false) {
+			$valid = (preg_match($regexp, $this->value) === 1);
+		}
 
 		return $valid;
 	}
