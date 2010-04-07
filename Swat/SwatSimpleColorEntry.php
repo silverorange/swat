@@ -102,6 +102,8 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 			$this->value = null;
 		}
 
+		$this->value = ltrim($this->value, '#');
+
 		if ($this->value == '') {
 			$this->value = null;
 		}
