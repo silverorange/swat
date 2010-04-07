@@ -216,7 +216,7 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 			this.colorChangeEvent.fire('#' + color);
 		}
 
-		this.highlightPalleteEntry(color);
+		this.highlightPaletteEntry(color);
 	}
 }
 
@@ -252,14 +252,14 @@ SwatSimpleColorEntry.prototype.selectColor = function(event)
 }
 
 // }}}
-// {{{ SwatSimpleColorEntry.prototype.highlightPalleteEntry
+// {{{ SwatSimpleColorEntry.prototype.highlightPaletteEntry
 
 /**
  * Highlights a pallete entry
  *
  * @param number color the hex value of the color
  */
-SwatSimpleColorEntry.prototype.highlightPalleteEntry = function(color)
+SwatSimpleColorEntry.prototype.highlightPaletteEntry = function(color)
 {
 	if (this.none_option_title !== null) {
 		var null_entry = document.getElementById(this.id + '_palette_null');
