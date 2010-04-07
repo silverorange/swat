@@ -186,11 +186,20 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 	var changed = (this.current_color != color);
 
 	if (changed) {
-		this.input_tag.value = color;
+		if (color === null) {
+			// IE fix, it sets string 'null' otherwise
+			this.input_tag.value = '';
+		} else {
+			this.input_tag.value = color;
+		}
 
 		if (color === null) {
+			if (this.hex_input_tag.value != '') {
+				// IE fix, it sets string 'null' otherwise
+				this.hex_input_tag.value = '';
+			}
 			YAHOO.util.Dom.setStyle(this.toggle_button_content,
-				'background', '');
+				'background', 'url(packages/swat/images/color-entry-null.png)');
 		} else {
 			if (this.hex_input_tag.value != color) {
 				this.hex_input_tag.value = color;
@@ -200,8 +209,6 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 		}
 
 		this.current_color = color;
-
-		this.value_field.value = color;
 
 		if (color === null) {
 			this.colorChangeEvent.fire(null);
@@ -221,10 +228,9 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
  *
  * @param Event the event that triggered this select.
  */
-SwatSimpleColorEntry.prototype.selectNull = function(event)
+SwatSimpleColorEntry.prototype.selectNull = function(e)
 {
-	this.hex_input_tag.value = '';
-	YAHOO.util.Event.preventDefault(event);
+	YAHOO.util.Event.preventDefault(e);
 	this.setColor(null);
 }
 
