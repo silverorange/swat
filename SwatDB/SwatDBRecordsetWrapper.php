@@ -693,6 +693,13 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 				get_class($this)));
 		}
 
+		// return empty recordset if this is an empty recordset
+		if (count($this) === 0) {
+			$recordset = new $wrapper();
+			$recordset->setDatabase($this->db);
+			return $recordset;
+		}
+
 		// get record ids
 		$record_ids = array();
 		foreach ($this as $record) {
