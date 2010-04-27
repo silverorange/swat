@@ -767,6 +767,15 @@ class SwatI18NLocale extends SwatObject
 			$this->locale_info = $this->iconvArray($character_encoding,
 				'UTF-8', $this->locale_info);
 		}
+
+		// special-cases and workarounds
+		switch ($this->preferred_locale) {
+		// Hebrew-Israeli
+		case 'he_IL':
+		case 'he_IL.utf8':
+			$this->locale_info['currency_symbol'] = '₪';
+			break;
+		}
 	}
 
 	// }}}
@@ -821,7 +830,6 @@ class SwatI18NLocale extends SwatObject
 		// Hebrew-Israeli
 		case 'he_IL':
 		case 'he_IL.utf8':
-			$format->symbol = '₪';
 			$format->p_sign_position = 1;
 			$format->n_sign_position = 1;
 			$format->p_cs_precedes = false;
