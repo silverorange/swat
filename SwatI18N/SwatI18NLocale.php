@@ -816,6 +816,19 @@ class SwatI18NLocale extends SwatObject
 		$format->p_sign                = $lc['positive_sign'];
 		$format->n_sign                = $lc['negative_sign'];
 
+		// special-cases and workarounds
+		switch ($this->preferred_locale) {
+		// Hebrew-Israeli
+		case 'he_IL':
+		case 'he_IL.utf8':
+			$format->symbol = '₪';
+			$format->p_sign_position = 1;
+			$format->n_sign_position = 1;
+			$format->p_cs_precedes = false;
+			$format->n_cs_precedes = false;
+			break;
+		}
+
 		$this->national_currency_format = $format;
 	}
 
