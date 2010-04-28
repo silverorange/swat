@@ -86,8 +86,9 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 
 			echo "\t";
 
-			if ($entry->getType() === 'SwatJavaScriptHtmlHeadEntry' &&
-				$minify) {
+			if ($minify &&
+				$entry->getType() === 'SwatJavaScriptHtmlHeadEntry' &&
+				$this->concentrator->isMinified($entry->getUri())) {
 				$prefix = $uri_prefix . 'min/';
 			} else {
 				$prefix = $uri_prefix;
@@ -123,6 +124,7 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 		// TODO: Use Concentrate_Inliner to display CSS inline
 		foreach ($entries as $entry) {
 			if ($type === null || $entry->getType() === $type) {
+				echo "\t", '<!-- ', $entry->getUri() , ' -->', "\n";
 				$entry->displayInline($path);
 				echo "\n\t";
 			}
