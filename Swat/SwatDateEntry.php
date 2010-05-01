@@ -14,7 +14,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A date entry widget
  *
  * @package   Swat
- * @copyright 2004-2009 silverorange
+ * @copyright 2004-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDateEntry extends SwatInputControl implements SwatState
@@ -648,16 +648,24 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		if ($end_year == $start_year) {
 			$start_month = $this->valid_range_start->getMonth();
-			$end_month = $this->valid_range_end->getMonth();
+			// Subtract a second from the end date. Since end date is exclusive,
+			// this means that if the end date is the first of a month, we'll
+			// prevent showing that month in the flydown.
+			$end_date = clone $this->valid_range_end;
+			$end_date->subtractSeconds(1);
+			$end_month = $end_date->getMonth();
 
 			for ($i = $start_month; $i <= $end_month; $i++) {
 				$flydown->addOption($i, $this->getMonthOptionText($i));
 			}
 		} elseif (($end_year - $start_year) == 1) {
 			$start_month = $this->valid_range_start->getMonth();
-			$tmp = clone $this->valid_range_end;
-			$tmp->subtractSeconds(1);
-			$end_month = $tmp->getMonth();
+			// Subtract a second from the end date. Since end date is exclusive,
+			// this means that if the end date is the first of a month, we'll
+			// prevent showing that month in the flydown.
+			$end_date = clone $this->valid_range_end;
+			$end_date->subtractSeconds(1);
+			$end_month = $end_date->getMonth();
 
 			for ($i = $start_month; $i <= 12; $i++)
 				$flydown->addOption($i, $this->getMonthOptionText($i));
@@ -668,7 +676,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 					$flydown->addOption($i, $this->getMonthOptionText($i));
 			}
 		} else {
-
 			for ($i = 1; $i <= 12; $i++)
 				$flydown->addOption($i, $this->getMonthOptionText($i));
 		}
