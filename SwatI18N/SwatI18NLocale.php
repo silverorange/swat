@@ -775,6 +775,15 @@ class SwatI18NLocale extends SwatObject
 		case 'he_IL.utf8':
 			$this->locale_info['currency_symbol'] = '₪';
 			break;
+
+		// Japanese and Chinese
+		case 'ja_JP':
+		case 'ja_JP.utf8':
+		case 'zh_CN':
+		case 'zh_CN.utf8':
+			// use single-width Yen character, renders by default in Windows
+			$this->locale_info['currency_symbol'] = '¥';
+			break;
 		}
 	}
 
