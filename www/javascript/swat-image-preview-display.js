@@ -6,6 +6,7 @@ function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height,
 	this.header = (typeof(header) == 'undefined') ? null : header;
 
 	this.preview_image = document.createElement('img');
+	this.preview_image.id = this.id;
 	this.preview_image.src = preview_src;
 	this.preview_image.width = preview_width;
 	this.preview_image.height = preview_height;
