@@ -98,6 +98,13 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 */
 	public $link_value = null;
 
+	/**
+	 * An optional html header to use in the preview window
+	 *
+	 * @var string
+	 */
+	public $header = null;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -192,12 +199,14 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 		}
 
 		$javascript.= sprintf(
-			"var %s = new SwatImagePreviewDisplay('%s', '%s', %d, %d);",
+			"var %s = new SwatImagePreviewDisplay('%s', '%s', %d, %d, %s);",
 			$this->id,
 			$this->id,
 			$this->preview_image,
 			$this->preview_width,
-			$this->preview_height);
+			$this->preview_height,
+			($this->header === null) ? 'null' :
+				SwatString::quoteJavaScriptString($this->header));
 
 		return $javascript;
 	}
