@@ -1,7 +1,9 @@
-function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height)
+function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height, header)
 {
 	this.id     = id;
 	this.opened = false;
+
+	this.header = (typeof(header) == 'undefined') ? null : header;
 
 	this.preview_image = document.createElement('img');
 	this.preview_image.src = preview_src;
@@ -24,6 +26,13 @@ function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height)
 	this.preview_container = document.createElement('div');
 	this.preview_container.className = 'swat-image-preview-container';
 	this.preview_container.style.display = 'none';
+
+	if (this.header !== null) {
+		var header = document.createElement('div');
+		header.innerHTML = this.header;
+		this.preview_container.appendChild(header);
+	}
+
 	this.preview_container.appendChild(this.preview_link);
 
 	// list of select elements to hide for IE6
