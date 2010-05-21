@@ -105,6 +105,16 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 */
 	public $header = null;
 
+	/**
+	 * Optional container width (default is the image width + padding)
+	 */
+	public $container_width = null;
+
+	/**
+	 * Optional container height (default is the image height + padding)
+	 */
+	public $container_height = null;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -199,7 +209,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 		}
 
 		$javascript.= sprintf(
-			"var %s = new SwatImagePreviewDisplay('%s', '%s', %d, %d, %s);",
+			"var %s = new SwatImagePreviewDisplay('%s', '%s', %d, %d, %s);\n",
 			$this->id,
 			$this->id,
 			$this->preview_image,
@@ -207,6 +217,16 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 			$this->preview_height,
 			($this->header === null) ? 'null' :
 				SwatString::quoteJavaScriptString($this->header));
+
+		if ($this->container_width !== null) {
+			$javascript.= sprintf("%s.width = %s;",
+				$this->id, (integer) $this->container_width);
+		}
+
+		if ($this->container_height !== null) {
+			$javascript.= sprintf("%s.height = %s;",
+				$this->id, (integer) $this->container_height);
+		}
 
 		return $javascript;
 	}
