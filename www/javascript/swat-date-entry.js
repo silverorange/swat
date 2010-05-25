@@ -7,7 +7,8 @@ function SwatDateEntry(id, use_current_date)
 	this.month = document.getElementById(id + '_month');
 	this.day = document.getElementById(id + '_day');
 
-	this.swat_time = null;
+	this.calendar = null;
+	this.time_entry = null;
 
 	if (this.year)
 		YAHOO.util.Event.addListener(this.year, 'change',
@@ -48,8 +49,11 @@ SwatDateEntry.prototype.setSensitivity = function(sensitivity)
 		}
 	}
 
-	if (this.swat_time)
-		this.swat_time.setSensitivity(sensitivity);
+	if (this.calendar)
+		this.calendar.setSensitivity(sensitivity);
+
+	if (this.time_entry)
+		this.time_entry.setSensitivity(sensitivity);
 }
 
 SwatDateEntry.prototype.handleYearChange = function()
@@ -86,13 +90,30 @@ SwatDateEntry.prototype.reverseLookup = function(table_name, key)
 	return this.reverse_lookup_table[table_name][key];
 }
 
-SwatDateEntry.prototype.setSwatTime = function(swat_time)
+SwatDateEntry.prototype.setCalendar = function(calendar)
+{
+	if (typeof SwatCalendar != 'undefined' &&
+		calendar instanceof SwatCalendar) {
+		this.calendar = calendar;
+		calendar.date_entry = this;
+	}
+}
+
+SwatDateEntry.prototype.setTimeEntry = function(time_entry)
 {
 	if (typeof SwatTimeEntry != 'undefined' &&
-		swat_time instanceof SwatTimeEntry) {
-		this.swat_time = swat_time;
-		swat_time.swat_date = this;
+		time_entry instanceof SwatTimeEntry) {
+		this.time_entry = time_entry;
+		time_entry.date_entry = this;
 	}
+}
+
+/**
+ * @deprecated Use setTimeEntry() instead.
+ */
+SwatDateEntry.prototype.setSwatTime = function(swat_time)
+{
+	this.setTimeEntry(swat_time);
 }
 
 SwatDateEntry.prototype.reset = function(reset_time)
@@ -106,8 +127,8 @@ SwatDateEntry.prototype.reset = function(reset_time)
 	if (this.day)
 		this.day.selectedIndex = 0;
 
-	if (this.swat_time && reset_time)
-		this.swat_time.reset(false);
+	if (this.time_entry && reset_time)
+		this.time_entry.reset(false);
 }
 
 SwatDateEntry.prototype.setNow = function(set_time)
@@ -140,8 +161,8 @@ SwatDateEntry.prototype.setNow = function(set_time)
 			this.day.selectedIndex = 1;
 	}
 
-	if (this.swat_time && set_time)
-		this.swat_time.setNow(false);
+	if (this.time_entry && set_time)
+		this.time_entry.setNow(false);
 }
 
 SwatDateEntry.prototype.setDefault = function(set_time)
@@ -167,8 +188,8 @@ SwatDateEntry.prototype.setDefault = function(set_time)
 	if (this.day && this.day.selectedIndex == 0)
 		this.day.selectedIndex = 1;
 
-	if (this.swat_time && set_time)
-		this.swat_time.setDefault(false);
+	if (this.time_entry && set_time)
+		this.time_entry.setDefault(false);
 }
 
 SwatDateEntry.prototype.update = function(field)

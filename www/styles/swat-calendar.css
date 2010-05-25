@@ -136,16 +136,26 @@ td.swat-calendar-close-controls {
 	text-align: center;
 }
 
-a.swat-calendar-toggle-button {
+.swat-calendar-toggle-button {
 	padding: 0 24px 5px 0;
 	background-image: url(../images/tango/22/office-calendar.png);
 	background-position: 1px -1px;
 	background-repeat: no-repeat;
+	background-color: white;
+	position: relative;
+	zoom: 1;
 }
 
-* html a.swat-calendar-toggle-button { /* IE hacks */
-	background-image: url(../images/tango/22/office-calendar-256.png);
-	zoom: 1;
+html .swat-calendar-toggle-button { /* IE hacks */
+	background-image: url(../images/tango/22/office-calendar-256.png)\9
+}
+
+.swat-insensitive .swat-calendar-toggle-button {
+	opacity: 0.6;
+}
+
+html .swat-insensitive .swat-calendar-toggle-button { /* IE hacks */
+	background-image: url(../images/tango/22/office-calendar-256-insensitive.png)\9
 }
 
 .swat-calendar-arrows {
