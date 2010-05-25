@@ -10,7 +10,7 @@ require_once 'Swat/SwatUIObject.php';
  * Subclasses add public class variable to store data they need for rendering.
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2004-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatCellRenderer extends SwatUIObject
@@ -53,6 +53,26 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	private $render_count = 0;
 
+	/**
+	 * Composite renderers of this renderer
+	 *
+	 * Array is of the form 'key' => renderer.
+	 *
+	 * @var array
+	 */
+	private $composite_renderers = array();
+
+	/**
+	 * Whether or not composite renderers have been created
+	 *
+	 * This flag is used by the
+	 * {@link SwatCellRenderer::confirmCompositeRenderers()} method to
+	 * ensure composite renderers are only created once.
+	 *
+	 * @var boolean
+	 */
+	private $composite_renderers_created = false;
+
 	// }}}
 	// {{{ public function render()
 
@@ -79,6 +99,9 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	public function init()
 	{
+		foreach ($this->getCompositeRenderers() as $renderer) {
+			$renderer->init();
+		}
 	}
 
 	// }}}
@@ -91,6 +114,9 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	public function process()
 	{
+		foreach ($this->getCompositeRenderers() as $renderer) {
+			$renderer->process();
+		}
 	}
 
 	// }}}
@@ -285,6 +311,143 @@ abstract class SwatCellRenderer extends SwatUIObject
 		}
 
 		return $css_class_names;
+	}
+
+	// }}}
+	// {{{ protected function createCompositeRenderers()
+
+	/**
+	 * Creates and adds composite renderers of this renderer
+	 *
+	 * Created composite renderers should be added in this method using
+	 * {@link SwatCellRenderer::addCompositeRenderer()}.
+	 */
+	protected function createCompositeRenderers()
+	{
+	}
+
+	// }}}
+	// {{{ protected final function addCompositeRenderer()
+
+	/**
+	 * Adds a composite a renderer to this renderer
+	 *
+	 * @param SwatCellRenderer $renderer the composite renderer to add.
+	 * @param string $key a key identifying the renderer so it may be retrieved
+	 *                     later. The key has to be unique within this renderer
+	 *                     relative to the keys of other composite renderers.
+	 *
+	 * @throws SwatDuplicateIdException if a composite renderer with the
+	 *                                   specified key is already added to this
+	 *                                   renderer.
+	 * @throws SwatException if the specified renderer is already the child of
+	 *                        another object.
+	 */
+	protected final function addCompositeRenderer(SwatCellRenderer $renderer,
+		$key)
+	{
+		if (array_key_exists($key, $this->composite_renderers))
+			throw new SwatDuplicateIdException(sprintf(
+				"A composite renderer with the key '%s' already exists in ".
+				"this renderer.", $key), 0, $key);
+
+		if ($renderer->parent !== null)
+			throw new SwatException('Cannot add a composite renderer that '.
+				'already has a parent.');
+
+		$this->composite_renderers[$key] = $renderer;
+		$renderer->parent = $this;
+	}
+
+	// }}}
+	// {{{ protected final function getCompositeRenderer()
+
+	/**
+	 * Gets a composite renderer of this renderer by the composite renderer's
+	 * key
+	 *
+	 * This is used by other methods to retrieve a specific composite renderer.
+	 * This method ensures composite renderers are created before trying to
+	 * retrieve the specified renderer.
+	 *
+	 * @param string $key the key of the composite renderer to get.
+	 *
+	 * @return SwatCellRenderer the specified composite renderer.
+	 *
+	 * @throws SwatWidgetNotFoundException if no composite renderer with the
+	 *                                     specified key exists in this
+	 *                                     renderer.
+	 */
+	protected final function getCompositeRenderer($key)
+	{
+		$this->confirmCompositeRenderers();
+
+		if (!array_key_exists($key, $this->composite_renderers))
+			throw new SwatWidgetNotFoundException(sprintf(
+				"Composite renderer with key of '%s' not found in %s. Make ".
+				"sure the composite renderer was created and added to this ".
+				"renderer.", $key, get_class($this)), 0, $key);
+
+		return $this->composite_renderers[$key];
+	}
+
+	// }}}
+	// {{{ protected final function getCompositeRenderers()
+
+	/**
+	 * Gets all composite renderers added to this renderer
+	 *
+	 * This method ensures composite renderers are created before retrieving
+	 * the renderers.
+	 *
+	 * @param string $class_name optional class name. If set, only renderers
+	 *                            that are instances of <code>$class_name</code>
+	 *                            are returned.
+	 *
+	 * @return array all composite wigets added to this renderer. The array is
+	 *                indexed by the composite renderer keys.
+	 *
+	 * @see SwatCellRenderer::addCompositeRenderer()
+	 */
+	protected final function getCompositeRenderers($class_name = null)
+	{
+		$this->confirmCompositeRenderers();
+
+		if (!($class_name === null ||
+			class_exists($class_name) || interface_exists($class_name)))
+			return array();
+
+		$out = array();
+
+		foreach ($this->composite_renderers as $key => $renderer)
+			if ($class_name === null || $renderer instanceof $class_name)
+				$out[$key] = $renderer;
+
+		return $out;
+	}
+
+	// }}}
+	// {{{ protected final function confirmCompositeRenderers()
+
+	/**
+	 * Confirms composite renderers have been created
+	 *
+	 * Renderers are only created once. This method may be called multiple
+	 * times in different places to ensure composite renderers are available.
+	 * In general, it is best to call this method before attempting to use
+	 * composite renderers.
+	 *
+	 * This method is called by the default implementations of init(),
+	 * process() and is called any time
+	 * {@link SwatCellRenderer::getCompositeRenderer()} is called so it rarely
+	 * needs to be called manually.
+	 */
+	protected final function confirmCompositeRenderers()
+	{
+		if (!$this->composite_renderers_created) {
+			$this->createCompositeRenderers();
+			$this->composite_renderers_created = true;
+		}
 	}
 
 	// }}}
