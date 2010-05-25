@@ -466,12 +466,15 @@ class DemoApplication
 				$this->available_demos[$this->demo]);
 		}
 
+		$concentrator = new Concentrate_Concentrator();
+		$displayer = new SwatHtmlHeadEntrySetDisplayer($concentrator);
+
 		ob_start();
 		$this->layout_ui->display();
 		$ui = ob_get_clean();
 
 		ob_start();
-		$this->layout_ui->getRoot()->getHtmlHeadEntrySet()->display();
+		$displayer->display($this->layout_ui->getRoot()->getHtmlHeadEntrySet());
 		$html_head_entries = ob_get_clean();
 
 		require '../include/layout.php';
