@@ -49,7 +49,8 @@ function SwatCalendar(id, start_date, end_date)
 		this.end_date = new Date(year, 0, 1);
 	}
 
-	this.date = null;
+	this.date_entry = null;
+
 	this.value = document.getElementById(this.id + '_value');
 
 	// Draw the calendar on window load to prevent "Operation Aborted" errors
@@ -102,6 +103,8 @@ SwatCalendar.close_toggle_text = 'close calendar';
  */
 SwatCalendar.prototype.createOverlay = function()
 {
+	this.container = document.getElementById(this.id);
+
 	this.drawButton();
 	this.overlay = new YAHOO.widget.Overlay(this.id + '_div',
 		{ visible: false, constraintoviewport: true });
@@ -117,10 +120,50 @@ SwatCalendar.prototype.createOverlay = function()
  *
  * @param SwatDateEntry entry
  */
+SwatCalendar.prototype.setDateEntry = function(date_entry)
+{
+	if (typeof(SwatDateEntry) != 'undefined' &&
+		date_entry instanceof SwatDateEntry) {
+		this.date_entry = date_entry;
+		date_entry.calendar = this;
+	}
+}
+
+/**
+ * @deprecated Use setDateEntry() instead.
+ */
 SwatCalendar.prototype.setSwatDateEntry = function(entry)
 {
-	if (typeof(SwatDateEntry) != 'undefined' && entry instanceof SwatDateEntry)
-		this.date = entry;
+	this.setDateEntry(entry);
+}
+
+SwatCalendar.prototype.setSensitivity = function(sensitivity)
+{
+	if (!sensitivity && this.open) {
+		this.close();
+	}
+
+	if (sensitivity) {
+		YAHOO.util.Dom.removeClass(this.container, 'swat-insensitive');
+
+		if (this.toggle_button_insensitive.parentNode) {
+			this.toggle_button_insensitive.parentNode.removeChild(
+				this.toggle_button_insensitive);
+		}
+
+		this.container.insertBefore(this.toggle_button,
+			this.container.firstChild);
+
+	} else {
+		YAHOO.util.Dom.addClass(this.container, 'swat-insensitive');
+
+		if (this.toggle_button.parentNode) {
+			this.toggle_button.parentNode.removeChild(this.toggle_button);
+		}
+
+		this.container.insertBefore(this.toggle_button_insensitive,
+			this.container.firstChild);
+	}
 }
 
 /**
@@ -128,12 +171,16 @@ SwatCalendar.prototype.setSwatDateEntry = function(entry)
  */
 SwatCalendar.prototype.drawButton = function()
 {
+	this.toggle_button_insensitive = document.createElement('span');
+	YAHOO.util.Dom.addClass(this.toggle_button_insensitive,
+		'swat-calendar-toggle-button');
+
 	this.toggle_button = document.createElement('a');
 	this.toggle_button.id = this.id + '_toggle';
 	this.toggle_button.href = '#';
 	this.toggle_button.title = SwatCalendar.open_toggle_text;
 	YAHOO.util.Dom.addClass(this.toggle_button, 'swat-calendar-toggle-button');
-	YAHOO.util.Event.addListener(this.toggle_button, 'click',
+	YAHOO.util.Event.on(this.toggle_button, 'click',
 		function(e)
 		{
 			YAHOO.util.Event.preventDefault(e);
@@ -147,6 +194,8 @@ SwatCalendar.prototype.drawButton = function()
 		// Zero-width-space holds the link open in WebKit browsers. Only apply
 		// to WebKit because IE can't display the character correctly.
 		this.toggle_button.appendChild(document.createTextNode('\u200b'));
+		this.toggle_button_insensitive.appendChild(
+			document.createTextNode('\u200b'));
 	}
 
 	var calendar_div = document.createElement('div');
@@ -167,9 +216,8 @@ SwatCalendar.prototype.drawButton = function()
 	calendar_div.appendChild(overlay_body);
 	calendar_div.appendChild(overlay_footer);
 
-	var container = document.getElementById(this.id);
-	container.appendChild(this.toggle_button);
-	container.appendChild(calendar_div);
+	this.container.appendChild(this.toggle_button);
+	this.container.appendChild(calendar_div);
 }
 
 /**
@@ -226,14 +274,14 @@ SwatCalendar.prototype.setDateValues = function(year, month, day)
 		day = this.end_date.getDate();
 	}
 
-	if (this.date === null) {
+	if (this.date_entry === null) {
 		// save internal date value in MM/DD/YYYY format
 		month = (month < 10) ? '0' + month : month;
 		this.value.value = month + '/' + day + '/' + year;
 	} else {
-		this.date.setYear(year);
-		this.date.setMonth(month);
-		this.date.setDay(day);
+		this.date_entry.setYear(year);
+		this.date_entry.setMonth(month);
+		this.date_entry.setDay(day);
 	}
 }
 
@@ -285,10 +333,10 @@ SwatCalendar.prototype.closeAndSetDate = function(yyyy, mm, dd)
  */
 SwatCalendar.prototype.closeAndSetBlank = function()
 {
-	if (this.date !== null) {
-		this.date.setYear('');
-		this.date.setMonth('');
-		this.date.setDay('');
+	if (this.date_entry !== null) {
+		this.date_entry.setYear('');
+		this.date_entry.setMonth('');
+		this.date_entry.setDay('');
 	}
 	this.close();
 }
@@ -465,10 +513,10 @@ SwatCalendar.prototype.draw = function()
 	var today_ts = today.getTime();
 
 	if (yyyy === null && mm === null) {
-		if (this.date) {
-			var d = this.date.getDay();
-			var m = this.date.getMonth();
-			var y = this.date.getYear();
+		if (this.date_entry) {
+			var d = this.date_entry.getDay();
+			var m = this.date_entry.getMonth();
+			var y = this.date_entry.getYear();
 
 			var day   = (d == null) ? today.getDate()      : parseInt(d);
 			var month = (m == null) ? today.getMonth() + 1 : parseInt(m);
@@ -499,10 +547,10 @@ SwatCalendar.prototype.draw = function()
 			yyyy = start_date.getYear();
 		}
 	} else if (dd === null) {
-		if (this.date) {
-			var d = this.date.getDay();
-			var m = this.date.getMonth();
-			var y = this.date.getYear();
+		if (this.date_entry) {
+			var d = this.date_entry.getDay();
+			var m = this.date_entry.getMonth();
+			var y = this.date_entry.getYear();
 
 			var day   = (d == null) ? today.getDate()      : parseInt(d);
 			var month = (m == null) ? today.getMonth() + 1 : parseInt(m);
@@ -638,7 +686,7 @@ SwatCalendar.prototype.draw = function()
 	var close_controls = '<tr>' +
 		'<td class="swat-calendar-close-controls" colspan="7">';
 
-	if (this.date !== null) {
+	if (this.date_entry !== null) {
 		close_controls +=
 			'<a class="swat-calendar-cancel" href="javascript:' +
 			this.id + '_obj.closeAndSetBlank();">' + SwatCalendar.nodate_text +

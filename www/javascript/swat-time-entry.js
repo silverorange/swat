@@ -10,7 +10,7 @@ function SwatTimeEntry(id, use_current_time)
 
 	this.twelve_hour = (this.hour !== null && this.am_pm !== null);
 
-	this.swat_date = null;
+	this.date_entry = null;
 
 	if (this.hour)
 		YAHOO.util.Event.addListener(this.hour, 'change',
@@ -98,13 +98,21 @@ SwatTimeEntry.prototype.reverseLookup = function(table_name, key)
 	return this.reverse_lookup_table[table_name][key];
 }
 
-SwatTimeEntry.prototype.setSwatDate = function(swat_date)
+SwatTimeEntry.prototype.setDateEntry = function(date_entry)
 {
 	if (typeof SwatDateEntry != 'undefined' &&
-		swat_date instanceof SwatDateEntry) {
-		this.swat_date = swat_date;
-		swat_date.swat_time = this;
+		date_entry instanceof SwatDateEntry) {
+		this.date_entry = date_entry;
+		date_entry.time_entry = this;
 	}
+}
+
+/**
+ * @deprecated Use setDateEntry() instead.
+ */
+SwatTimeEntry.prototype.setSwatDate = function(swat_date)
+{
+	this.setDateEntry(swat_date);
 }
 
 SwatTimeEntry.prototype.reset = function(reset_date)
@@ -121,8 +129,8 @@ SwatTimeEntry.prototype.reset = function(reset_date)
 	if (this.am_pm)
 		this.am_pm.selectedIndex = 0;
 
-	if (this.swat_date && reset_date)
-		this.swat_date.reset(false);
+	if (this.date_entry && reset_date)
+		this.date_entry.reset(false);
 }
 
 SwatTimeEntry.prototype.setNow = function(set_date)
@@ -153,8 +161,8 @@ SwatTimeEntry.prototype.setNow = function(set_date)
 	if (this.am_pm && this.am_pm.selectedIndex == 0)
 		this.am_pm.selectedIndex = am_pm;
 
-	if (this.swat_date && set_date)
-		this.swat_date.setNow(false);
+	if (this.date_entry && set_date)
+		this.date_entry.setNow(false);
 }
 
 SwatTimeEntry.prototype.setDefault = function(set_date)
@@ -175,8 +183,8 @@ SwatTimeEntry.prototype.setDefault = function(set_date)
 	if (this.am_pm && this.am_pm.selectedIndex == 0)
 		this.am_pm.selectedIndex = 1;
 
-	if (this.swat_date && set_date)
-		this.swat_date.setDefault(false);
+	if (this.date_entry && set_date)
+		this.date_entry.setDefault(false);
 }
 
 SwatTimeEntry.prototype.update = function(field)
