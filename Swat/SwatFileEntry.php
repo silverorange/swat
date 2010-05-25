@@ -298,8 +298,9 @@ class SwatFileEntry extends SwatInputControl
 		if ($this->isUploaded() && $this->mime_type === null) {
 			$temp_file_name = $this->getTempFileName();
 			if (file_exists($temp_file_name)) {
+
 				if (extension_loaded('fileinfo')) {
-					// use fileinfo extension if available
+					// Use the fileinfo extension if available.
 
 					// PHP >= 5.3.0 supports returning only the mimetype
 					// without returning the encoding. See
@@ -311,15 +312,18 @@ class SwatFileEntry extends SwatInputControl
 					$finfo = new finfo($mime_constant);
 					$this->mime_type = $finfo->file($temp_file_name);
 				} elseif (function_exists('mime_content_type')) {
-					// fallback to mime_content_type() if available
+					// Fall back to mime_content_type() if available.
 					$this->mime_type = mime_content_type($temp_file_name);
-				} else {
-					// no mime-type functions, default to
-					// 'application/octet-stream'. Relying on HTTP headers
-					// could be a security problem so we never fall back to
-					// that option.
+				}
+
+				// No mime-detection functions, or mime-detection function
+				// failed to detect the type. Default to
+				// 'application/octet-stream'. Relying on HTTP headers could
+				// be a security problem so we never fall back to that option.
+				if ($this->mime_type == '') {
 					$this->mime_type = 'application/octet-stream';
 				}
+
 			} else {
 				$this->mime_type = $this->file['type'];
 			}
