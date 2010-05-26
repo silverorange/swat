@@ -44,5 +44,26 @@
 			</widget>
 
 		</widget>
+		<widget class="SwatFrame">
+			<property name="title">Image Buttons</property>
+
+			<widget class="SwatFormField">
+				<property name="title" type="string">Image Button</property>
+				<widget class="SwatImageButton" id="image_button">
+					<property name="title" type="string">Image Button</property>
+					<property name="image" type="string">images/apple.png</property>
+				</widget>
+			</widget>
+
+			<widget class="SwatFormField">
+				<property name="title" type="string">Insensitive Image Button</property>
+				<widget class="SwatImageButton" id="insensitive_image_button">
+					<property name="title" type="string">Insensitive Image Button</property>
+					<property name="image" type="string">images/apple.png</property>
+					<property name="sensitive" type="boolean">false</property>
+				</widget>
+			</widget>
+
+		</widget>
 	</widget>
 </swatml>
