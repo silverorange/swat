@@ -2,6 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'Swat/exceptions/SwatObjectNotFoundException.php';
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatOption.php';
 
@@ -26,6 +27,38 @@ abstract class SwatOptionControl extends SwatInputControl
 	public $options = array();
 
 	/**
+	 * Metadata for the options of this control
+	 *
+	 * An array with the object hash of the option as the key and a sub-array
+	 * of name-value pairs as the metadata. For example:
+	 *
+	 * <code>
+	 * <?php
+	 * array(
+	 *     spl_object_hash($option1) => array(
+	 *         'classes' => array('small'),
+	 *     ),
+	 *     spl_object_hash($option2) => array(
+	 *         'classes' => array('large'),
+	 *     ),
+	 * );
+	 * ?>
+	 * </code>
+	 *
+	 * Any metadata may be added to options. It is up to the control to make
+	 * use of particular metadata fields. Common metadata fields are:
+	 *
+	 * - classes - an array of CSS classes
+	 *
+	 * @var array
+	 *
+	 * @see SwatOptionControl::addOption()
+	 * @see SwatOptionControl::addOptionMetadata()
+	 * @see SwatOptionControl::getOptionMetadata()
+	 */
+	protected $option_metadata = array();
+
+	/**
 	 * Whether or not to serialize option values
 	 *
 	 * If option values are serialized, the PHP type is remembered between
@@ -47,26 +80,154 @@ abstract class SwatOptionControl extends SwatInputControl
 	/**
 	 * Adds an option to this option control
 	 *
+	 * This method has a number of signatures. You can add an existing option
+	 * object, or create a new option object from a value and title:
+	 *
+	 * <code>
+	 * <?php
+	 * // 1. add a new option from value and title
+	 * $control->addOption(123, 'Option Title');
+	 *
+	 * // 2. add an existing option object
+	 * $option = new SwatOption(123, 'Option Title');
+	 * $control->addOption($option);
+	 *
+	 * // 3. add an option with metadata
+	 * $option = new SwatOption(123, 'Option Title');
+	 * $control->addOption($option, array('classes' => array('large')));
+	 * ?>
+	 * </code>
+	 *
 	 * @param mixed|SwatOption $value either a value for the option, or a
 	 *                                 {@link SwatOption} object. If a
-	 *                                 SwatOption is used, the <i>$title</i>
-	 *                                 and <i>$content_type</i> parameters of
-	 *                                 this method call are ignored.
-	 * @param string $title the title of the added option. Ignored if the
-	 *                       <i>$value</i> parameter is a SwatOption object.
+	 *                                 SwatOption is used, the
+	 *                                 <i>$content_type</i> parameter of
+	 *                                 this method call is ignored and the
+	 *                                 <i>$title</i> parameter may be used to
+	 *                                 specify option metadata.
+	 * @param array|string $title optional. Either a string containing the
+	 *                             title of the added option, or an array
+	 *                             containing metadata for the SwatOption
+	 *                             specified in the <i>$value</i> parameter.
 	 * @param string $content_type optional. The content type of the title. If
 	 *                              not specified, defaults to 'text/plain'.
 	 *                              Ignored if the <i>$value</i> parameter is
 	 *                              a SwatOption object.
+	 *
+	 * @see SwatOptionControl::$options
+	 * @see SwatOptionControl::addOptionMetadata()
 	 */
 	public function addOption($value, $title = '', $content_type = 'text/plain')
 	{
-		if ($value instanceof SwatOption)
+		if ($value instanceof SwatOption) {
 			$option = $value;
-		else
+		} else {
 			$option = new SwatOption($value, $title, $content_type);
+		}
 
 		$this->options[] = $option;
+
+		// initialize metadata
+		$key = $this->getOptionMetadataKey($option);
+		if (!isset($this->option_metadata[$key])) {
+			// use isset so we don't erase the metadata if an option is added
+			// twice
+			$this->option_metadata[$key] = array();
+		}
+
+		if ($value instanceof SwatOption && is_array($title)) {
+			$this->addOptionMetadata($option, $title);
+		} else {
+			$this->addOptionMetadata($option, array());
+		}
+	}
+
+	// }}}
+	// {{{ public function addOptionMetadata()
+
+	/**
+	 * Sets the metadata for an option
+	 *
+	 * Any metadata may be added to options. It is up to the control to make
+	 * use of particular metadata fields. Common metadata fields are:
+	 *
+	 * - classes - an array of CSS classes
+	 *
+	 * @param SwatOption $option the option for which to set the metadata.
+	 * @param array|string $metadata either an array of metadata to add to the
+	 *                                option, or a string specifying the name
+	 *                                of the metadata field to add.
+	 * @param mixed $value optional. If the <i>$metadata</i> parameter is a
+	 *                      string, this is the metadata value to set for the
+	 *                      option. Otherwise, this parameter is ignored.
+	 *
+	 * @see SwatOptionControl::addOption()
+	 * @see SwatOptionControl::getOptionMetadata()
+	 */
+	public function addOptionMetadata(SwatOption $option, $metadata,
+		$value = null)
+	{
+		if (!in_array($option, $this->options)) {
+			throw new SwatObjectNotFoundException(sprintf(
+				'The specified option "%s" does not exist in this option '.
+				'control.', $option->title));
+		}
+
+		$key = $this->getOptionMetadataKey($option);
+
+		if (is_array($metadata)) {
+			$this->option_metadata[$key] = array_merge(
+				$this->option_metadata[$key], $metadata);
+		} else {
+			$this->option_metadata[$key][$metadata] = $value;
+		}
+	}
+
+	// }}}
+	// {{{ public function getOptionMetadata()
+
+	/**
+	 * Gets the metadata for an option
+	 *
+	 * Any metadata may be added to options. It is up to the control to make
+	 * use of particular metadata fields. Common metadata fields are:
+	 *
+	 * - classes - an array of CSS classes
+	 *
+	 * @param SwatOption $option the option for which to get the metadata.
+	 * @param string $metadata optional. An optional metadata property to get.
+	 *                          If not specified, all available metadata for
+	 *                          the option is returned.
+	 *
+	 * @returns array|mixed an array of the metadata for this option, or a
+	 *                      specific metadata value if the <i>$metadata</i>
+	 *                      parameter is specified. If <i>$metadata</i> is
+	 *                      specified and no such metadata field exists for the
+	 *                      specified option, null is returned.
+	 *
+	 * @see SwatOptionControl::addOptionMetadata()
+	 */
+	public function getOptionMetadata(SwatOption $option, $metadata = null)
+	{
+		if (!in_array($option, $this->options)) {
+			throw new SwatObjectNotFoundException(sprintf(
+				'The specified option "%s" does not exist in this option '.
+				'control.', $option->title));
+		}
+
+		$key = $this->getOptionMetadataKey($option);
+
+		if ($metadata === null) {
+			$metadata = $this->option_metadata[$key];
+		} else {
+			if (isset($this->option_metadata[$key][$metadata])) {
+				$metadata = $this->option_metadata[$key][$metadata];
+			} else {
+				$metadata = null;
+			}
+		}
+
+		return $metadata;
 	}
 
 	// }}}
@@ -86,7 +247,13 @@ abstract class SwatOptionControl extends SwatInputControl
 		foreach ($this->options as $key => $control_option) {
 			if ($control_option === $option) {
 				$removed_option = $control_option;
+
+				// remove from options list
 				unset($this->options[$key]);
+
+				// remove metadata
+				$key = $this->getOptionMetadataKey($control_option);
+				unset($this->option_metadata[$key]);
 			}
 		}
 
@@ -111,7 +278,13 @@ abstract class SwatOptionControl extends SwatInputControl
 		foreach ($this->options as $key => $control_option) {
 			if ($control_option->value === $value) {
 				$removed_options[] = $control_option;
+
+				// remove from options list
 				unset($this->options[$key]);
+
+				// remove metadata
+				$metadata_key = $this->getOptionMetadataKey($control_option);
+				unset($this->option_metadata[$metadata_key]);
 			}
 		}
 
@@ -195,6 +368,22 @@ abstract class SwatOptionControl extends SwatInputControl
 			$option = $this->options[$index];
 
 		return $option;
+	}
+
+	// }}}
+	// {{{ protected function getOptionMetadataKey()
+
+	/**
+	 * Gets the key used to load and store metadata for an option
+	 *
+	 * @param SwatOption $option the option for which to get the key.
+	 *
+	 * @return string the key used to load and store metadata for the specified
+	 *                option.
+	 */
+	protected function getOptionMetadataKey(SwatOption $option)
+	{
+		return spl_object_hash($option);
 	}
 
 	// }}}
