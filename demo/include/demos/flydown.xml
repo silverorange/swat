@@ -3,6 +3,19 @@
 <swatml>
 	<widget class="SwatForm" id="my_form">
 
+		<!-- custom css for the flydown demo -->
+		<widget class="SwatContentBlock">
+			<property name="content"><![CDATA[<style>
+			option.orange {
+				color: #b60;
+			}
+			option.apple {
+				color: #a00;
+			}
+			</style>]]></property>
+			<property name="content_type">text/xml</property>
+		</widget>
+
 		<widget class="SwatFieldset">
 			<property name="title">Static Flydowns</property>
 

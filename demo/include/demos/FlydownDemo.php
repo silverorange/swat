@@ -12,7 +12,7 @@ require_once 'Demo.php';
  * an array.
  *
  * @package   SwatDemo
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class FlydownDemo extends Demo
@@ -22,17 +22,46 @@ class FlydownDemo extends Demo
 	public function buildDemoUI(SwatUI $ui)
 	{
 		$flydown = $ui->getWidget('flydown');
-		$flydown->options = array(
-			new SwatOption(0, 'Apple'),
-			new SwatOption(1, 'Orange'),
-			new SwatOption(2, 'Banana'),
-			new SwatOption(3, 'Pear'),
-			new SwatOption(4, 'Pineapple'),
-			new SwatOption(5, 'Kiwi'),
-			new SwatOption(6, 'Tangerine'),
-			new SwatOption(7, 'Grapefruit'),
-			new SwatOption(8, 'Strawberry')
-		);
+
+		$flydown->addOption(
+			new SwatOption('mackintosh', 'McIntosh'),
+			array('classes' => 'apple'));
+
+		$flydown->addOption(
+			new SwatOption('courtland', 'Courtland'),
+			array('classes' => 'apple'));
+
+		$flydown->addOption(
+			new SwatOption('golden', 'Golden Delicious'),
+			array('classes' => 'apple'));
+
+		$flydown->addOption(
+			new SwatOption('fuji', 'Fuji'),
+			array('classes' => 'apple'));
+
+		$flydown->addOption(
+			new SwatOption('smith', 'Granny Smith'),
+			array('classes' => 'apple'));
+
+		$flydown->addOption(
+			new SwatOption('navel', 'Navel'),
+			array('classes' => 'orange'));
+
+		$flydown->addOption(
+			new SwatOption('blood', 'Blood'),
+			array('classes' => 'orange'));
+
+		$flydown->addOption(
+			new SwatOption('florida', 'Florida'),
+			array('classes' => 'orange'));
+
+		$flydown->addOption(
+			new SwatOption('california', 'California'),
+			array('classes' => 'orange'));
+
+		$flydown->addOption(
+			new SwatOption('mandarin', 'Mandarin'),
+			array('classes' => 'orange'));
 
 		// tree flydown
 		$tree = new SwatTreeFlydownNode(null, 'Root');
