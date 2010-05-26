@@ -108,6 +108,16 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 				} else {
 					$option_tag->removeAttribute('disabled');
 					$option_tag->removeAttribute('class');
+
+					// add option-specific CSS classes from option metadata
+					$classes = $this->getOptionMetadata(
+						$flydown_option, 'classes');
+
+					if (is_array($classes)) {
+						$option_tag->class = implode(' ', $classes);
+					} elseif ($classes) {
+						$option_tag->class = strval($classes);
+					}
 				}
 
 				$value = ($this->serialize_values) ?

@@ -76,6 +76,15 @@ class SwatRadioTable extends SwatRadioList
 	protected function displayRadioTableOption(SwatOption $option, $index)
 	{
 		$tr_tag = $this->getTrTag($option, $index);
+
+		// add option-specific CSS classes from option metadata
+		$classes = $this->getOptionMetadata($option, 'classes');
+		if (is_array($classes)) {
+			$tr_tag->class = implode(' ', $classes);
+		} elseif ($classes) {
+			$tr_tag->class = strval($classes);
+		}
+
 		$tr_tag->open();
 
 		if ($option instanceof SwatFlydownDivider) {
