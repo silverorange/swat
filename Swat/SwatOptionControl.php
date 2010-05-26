@@ -2,7 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/exceptions/SwatObjectNotFoundException.php';
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatOption.php';
 
@@ -167,12 +166,6 @@ abstract class SwatOptionControl extends SwatInputControl
 	public function addOptionMetadata(SwatOption $option, $metadata,
 		$value = null)
 	{
-		if (!in_array($option, $this->options)) {
-			throw new SwatObjectNotFoundException(sprintf(
-				'The specified option "%s" does not exist in this option '.
-				'control.', $option->title));
-		}
-
 		$key = $this->getOptionMetadataKey($option);
 
 		if (is_array($metadata)) {
@@ -209,18 +202,17 @@ abstract class SwatOptionControl extends SwatInputControl
 	 */
 	public function getOptionMetadata(SwatOption $option, $metadata = null)
 	{
-		if (!in_array($option, $this->options)) {
-			throw new SwatObjectNotFoundException(sprintf(
-				'The specified option "%s" does not exist in this option '.
-				'control.', $option->title));
-		}
-
 		$key = $this->getOptionMetadataKey($option);
 
 		if ($metadata === null) {
-			$metadata = $this->option_metadata[$key];
+			if (isset($this->option_metadata[$key])) {
+				$metadata = $this->option_metadata[$key];
+			} else {
+				$metadata = array();
+			}
 		} else {
-			if (isset($this->option_metadata[$key][$metadata])) {
+			if (isset($this->option_metadata[$key]) &&
+				isset($this->option_metadata[$key][$metadata])) {
 				$metadata = $this->option_metadata[$key][$metadata];
 			} else {
 				$metadata = null;
