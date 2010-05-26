@@ -86,6 +86,17 @@ class SwatRadioList extends SwatFlydown
 		$count = 0;
 
 		foreach ($options as $option) {
+
+			// add option-specific CSS classes from option metadata
+			$classes = $this->getOptionMetadata($option, 'classes');
+			if (is_array($classes)) {
+				$li_tag->class = implode(' ', $classes);
+			} elseif ($classes) {
+				$li_tag->class = strval($classes);
+			} else {
+				$li_tag->removeAttribute('class');
+			}
+
 			$li_tag->id = $this->id.'_li_'.(string) $count;
 			$li_tag->open();
 			$count++;
