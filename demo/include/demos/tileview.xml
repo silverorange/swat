@@ -5,6 +5,7 @@
 
 		<widget class="SwatTileView" id="tile_view">
 			<property name="check_all_title">select all</property>
+			<property name="tiles_per_row" type="integer">2</property>
 			<object class="SwatTile" id="tile">
 				<object class="SwatImageCellRenderer">
 					<property name="image" type="data">image</property>
@@ -14,16 +15,16 @@
 				<object class="SwatTextCellRenderer">
 					<property name="text" type="data">title</property>
 				</object>
-				<object class="SwatTextCellRenderer">
-					<property name="text">harvest date:</property>
-				</object>
-				<object class="SwatDateCellRenderer">
-					<property name="date" type="data">harvest_date</property>
-					<property name="format" type="string">%B</property>
-				</object>
 				<object class="SwatCheckboxCellRenderer" id="items">
 					<property name="value" type="data">title</property>
 					<property name="title" type="string">select fruit</property>
+				</object>
+			</object>
+			<object class="SwatTileViewGroup">
+				<property name="group_by">harvest_date</property>
+				<object class="SwatDateCellRenderer">
+					<property name="date" type="data">harvest_date</property>
+					<property name="format" type="string">Harvest Month - %B</property>
 				</object>
 			</object>
 		</widget>
