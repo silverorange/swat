@@ -14,6 +14,21 @@
 			<widget class="SwatDateEntry" id="time_date">
 				<property name="display_parts" type="constant">YEAR|MONTH|DAY|TIME|CALENDAR</property>
 			</widget>
+
+			<!-- sensitivity toggle -->
+			<widget class="SwatContentBlock">
+				<property name="content"><![CDATA[
+				<input type="button" id="sensitive" value="toggle sensitivity" style="font-size: 85%;" />
+				<script type="text/javascript">
+				sensitive = true;
+				YAHOO.util.Event.on(document.getElementById('sensitive'), 'click',
+					function (e) {
+						sensitive = !sensitive;
+						time_date_obj.setSensitivity(sensitive);
+					});
+				</script>]]></property>
+				<property name="content_type">text/xml</property>
+			</widget>
 		</widget>
 
 		<widget class="SwatFormField">
@@ -32,6 +47,5 @@
 		</widget>
 
 		<widget class="SwatButton" />
-
 	</widget>
 </swatml>
