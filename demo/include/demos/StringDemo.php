@@ -25,7 +25,11 @@ class StringDemo extends Demo
 		'Vu bei Eisen p&auml;ift Keppchen, R&auml;is Blieder da dem, en n&euml;t ma\'n d\'Gaassen.',
 		'Br&eacute;t Dall Schiet hu n&euml;t, um w&auml;it onser hirem get, si Dall gemaacht Fletschen bei.',
 		'Pellentesque iaculis egestas nibh.',
-		'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;');
+		'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;',
+		'Hello, world.',
+		'Foobar',
+		'麻生十番',
+	);
 
 	private $text_blocks = array();
 
