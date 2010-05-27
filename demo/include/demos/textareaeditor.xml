@@ -6,18 +6,21 @@
 		<widget class="SwatFormField">
 			<property name="title">Visual Editor Text Area</property>
 			<widget class="SwatTextareaEditor" id="textarea_editor">
+				<property name="mode" type="constant">MODE_VISUAL</property>
 				<property name="value"><![CDATA[
-<p>We&#8217;ve been using free and
+<p><strong>We&#8217;ve been using free and
 <a href="http://labs.silverorange.com/archives/2005/june/freeandopen">open-source
-software at silverorange</a> for years now. In the last year, though,
+software at silverorange</a> for years now.</strong> In the last year, though,
 we&#8217;ve begun releasing more of our internal web-development software stack
 under an open-source license.</p>
 
+<blockquote>
 <p>While our <a href="https://code.silverorange.com/wiki/Swat">Swat web
 application toolkit</a> (it&#8217;s <em>not a framework</em>) has been open
 since it&#8217;s inception, it has been missing some of the key infrastructure
 required for a healthy open-source project. The code was available, that was
 about it.</p>
+</blockquote>
 
 <p>Now, with the new
 <a href="http://code.silverorange.com/">code.silverorange.com</a> website
