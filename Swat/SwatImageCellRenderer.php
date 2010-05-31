@@ -115,7 +115,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		if (!$this->visible)
+		if (!$this->visible || $this->image == '')
 			return;
 
 		parent::render();
