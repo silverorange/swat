@@ -114,6 +114,9 @@ class SwatFileEntry extends SwatInputControl
 		if ($this->accept_mime_types !== null)
 			$input_tag->accept = implode(',', $this->accept_mime_types);
 
+		if (!$this->isSensitive())
+			$input_tag->disabled = 'disabled';
+
 		$input_tag->display();
 
 		if ($this->display_maximum_upload_size) {
