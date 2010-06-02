@@ -82,7 +82,7 @@ class SwatHtmlTag extends SwatObject
 	 * closing tag.
 	 *
 	 * @param string $content content for the body of the XHTML tag
-	 * @param string $type mime type of the content.  Deafult is 'text/plain',
+	 * @param string $type mime type of the content.  Default is 'text/plain',
 	 *                      use 'text/xml' for XHTML fragments.
 	 */
 	public function setContent($content, $type = 'text/plain')
