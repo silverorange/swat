@@ -783,15 +783,32 @@ class SwatForm extends SwatDisplayableContainer
 		foreach ($this->hidden_fields as $name => $value) {
 			// display unserialized value for primative types
 			if ($value !== null && !is_array($value) && !is_object($value)) {
+
+				// SwatHtmlTag uses SwatString::minimizeEntities(), which
+				// prevents double-escaping entities. For hidden form-fields,
+				// we want data to be returned exactly as it was specified. This
+				// necessitates double-escaping to ensure any entities that were
+				// specified in the hidden field value are returned correctly.
+				$escaped_value = htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
+
 				$input_tag->name = $name;
-				$input_tag->value = $value;
+				$input_tag->value = $escaped_value;
 				$input_tag->display();
 			}
 
 			// display serialized value
 			$serialized_data = $this->serializeHiddenField($value);
+
+			// SwatHtmlTag uses SwatString::minimizeEntities(), which prevents
+			// double-escaping entities. For hidden form-fields, we want data
+			// to be returned exactly as it was specified. This  necessitates
+			// double-escaping to ensure any entities that were specified in
+			// the hidden field value are returned correctly.
+			$escaped_serialized_data = htmlspecialchars($serialized_data,
+				ENT_COMPAT, 'UTF-8');
+
 			$input_tag->name = self::SERIALIZED_PREFIX.$name;
-			$input_tag->value = $serialized_data;
+			$input_tag->value = $escaped_serialized_data;
 			$input_tag->display();
 		}
 
