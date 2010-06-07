@@ -1,12 +1,7 @@
-function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height, header)
+function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height)
 {
 	this.id     = id;
 	this.opened = false;
-
-	this.header = (typeof(header) == 'undefined') ? null : header;
-
-	this.width = null;
-	this.height = null;
 
 	this.preview_image = document.createElement('img');
 	this.preview_image.id = this.id + '_preview';
@@ -30,14 +25,6 @@ function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height,
 	this.preview_container = document.createElement('div');
 	this.preview_container.className = 'swat-image-preview-container';
 	this.preview_container.style.display = 'none';
-
-	if (this.header !== null) {
-		var header = document.createElement('div');
-		header.id = this.id + '_header';
-		header.innerHTML = this.header;
-		this.preview_container.appendChild(header);
-	}
-
 	this.preview_container.appendChild(this.preview_link);
 
 	// list of select elements to hide for IE6
@@ -108,34 +95,17 @@ SwatImagePreviewDisplay.prototype.open = function()
 	this.preview_container.style.visibility = 'hidden';
 	this.preview_container.style.display = 'block';
 
-	// now that is it displayed, adjust height for the close text and header
+	// now that is it displayed, adjust height for the close text
 	var region = YAHOO.util.Dom.getRegion(this.preview_close_text);
 	max_height -= (region.bottom - region.top);
-
-	if (this.header !== null) {
-		var region = YAHOO.util.Dom.getRegion(this.id + '_header');
-		max_height -= (region.bottom - region.top);
-	}
-
 	this.scaleImage(max_width, max_height);
 
 	this.preview_container.style.visibility = 'visible';
 
-	if (this.width === null) {
-		var width = this.preview_image.width;
-		var height = this.preview_image.height;
-	} else {
-		var width = this.width;
-		var height = this.height;
-	}
-
-	this.preview_container.style.width = width + 'px';
-	this.preview_container.style.height = height + 'px';
-
 	// x is relative to center of page
 	var scroll_top = YAHOO.util.Dom.getDocumentScrollTop();
-	var x = -Math.round((width  + padding) / 2);
-	var y = Math.round((max_height - height + padding) / 2) +
+	var x = -Math.round((this.preview_image.width  + padding) / 2);
+	var y = Math.round((max_height - this.preview_image.height + padding) / 2) +
 		scroll_top;
 
 	YAHOO.util.Dom.setY(this.preview_container, y);
