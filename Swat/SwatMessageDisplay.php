@@ -12,7 +12,7 @@ require_once 'Swat/SwatYUI.php';
  * A control to display {@link SwatMessage} objects
  *
  * @package   Swat
- * @copyright 2005-2008 silverorange
+ * @copyright 2005-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMessageDisplay extends SwatControl
@@ -49,9 +49,6 @@ class SwatMessageDisplay extends SwatControl
 	 */
 	protected $display_messages = array();
 
-	// }}}
-	// {{{ private properties
-
 	/**
 	 * Messages in this display that are dismissable
 	 *
@@ -60,7 +57,7 @@ class SwatMessageDisplay extends SwatControl
 	 *
 	 * @var array
 	 */
-	private $dismissable_messages = array();
+	protected $dismissable_messages = array();
 
 	// }}}
 	// {{{ public function __construct()
@@ -324,10 +321,32 @@ class SwatMessageDisplay extends SwatControl
 		$dismissable_messages =
 			'['.implode(', ', $this->dismissable_messages).']';
 
-		$javascript.= sprintf("var %s_obj = new SwatMessageDisplay('%s', %s);",
-			$this->id, $this->id, $dismissable_messages);
+		$javascript.= sprintf("var %s_obj = new %s('%s', %s);",
+			$this->id, $this->getJavaScriptClass(), $this->id,
+			$dismissable_messages);
 
 		return $javascript;
+	}
+
+	// }}}
+	// {{{ protected function getJavaScriptClass()
+
+	/**
+	 * Gets the inline JavaScript for hiding messages
+	 */
+	/**
+	 * Gets the name of the JavaScript class to instantiate for this message
+	 * display
+	 *
+	 * Sub-classes of this class may want to return a sub-class of the default
+	 * JavaScript form class.
+	 *
+	 * @return string the name of the JavaScript class to instantiate for this
+	 *                 form . Defaults to 'SwatMessageDisplay'.
+	 */
+	protected function getJavaScriptClass()
+	{
+		return 'SwatMessageDisplay';
 	}
 
 	// }}}
