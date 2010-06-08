@@ -332,9 +332,6 @@ class SwatMessageDisplay extends SwatControl
 	// {{{ protected function getJavaScriptClass()
 
 	/**
-	 * Gets the inline JavaScript for hiding messages
-	 */
-	/**
 	 * Gets the name of the JavaScript class to instantiate for this message
 	 * display
 	 *
