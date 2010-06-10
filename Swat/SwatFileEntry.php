@@ -142,34 +142,31 @@ class SwatFileEntry extends SwatInputControl
 	{
 		parent::process();
 
-		if (!isset($_FILES[$this->id]))
+		// The $_FILES[$this->id] array is always set unless the POST data
+		// was greater than the PHP's post_max_size ini setting.
+		if (!isset($_FILES[$this->id]) || !$this->isSensitive()) {
 			return;
-		else
+		}
+
+		if ($_FILES[$this->id]['error'] === UPLOAD_ERR_OK) {
 			$this->file = $_FILES[$this->id];
 
-		// note: an array is returned even if no file is uploaded, so check
-		//       the filename
-		if ($this->file['name'] == null)
-			$this->file = null;
+			if (!$this->hasValidMimeType()) {
+				$this->addMessage($this->getValidationMessage('mime-type'));
+			}
+		} else if ($_FILES[$this->id]['error'] === UPLOAD_ERR_NO_FILE) {
+			if ($this->required) {
+				$this->addMessage($this->getValidationMessage('required'));
+			}
+		} else if ($_FILES[$this->id]['error'] === UPLOAD_ERR_INI_SIZE ||
+			       $_FILES[$this->id]['error'] === UPLOAD_ERR_FORM_SIZE) {
 
-		if (!$this->required && $this->file === null) {
-			return;
-
-		} elseif (!$this->isSensitive()) {
-			return;
-
-		} elseif ($this->file === null) {
-			$message = $this->getValidationMessage('required');
-			$this->addMessage($message);
-
-		} elseif ($this->accept_mime_types !== null &&
-			!in_array($this->getMimeType(), $this->accept_mime_types)) {
-
-			$message = $this->getValidationMessage('mime-type');
-			$message->primary_content = sprintf($message->primary_content,
-				implode(', ', $this->accept_mime_types));
-
-			$this->addMessage($message);
+			$this->addMessage($this->getValidationMessage('too-large'));
+		} else {
+			// There are other status codes we may want to check for in the
+			// future. Upload status codes can be found here:
+			// http://php.net/manual/en/features.file-upload.errors.php
+			$this->addMessage($this->getValidationMessage('upload-error'));
 		}
 	}
 
@@ -425,16 +422,30 @@ class SwatFileEntry extends SwatInputControl
 			$text = Swat::_('The %s field is required.');
 			break;
 		case 'mime-type':
-			$text =
-				Swat::_('The %%s field must be of the following type(s): %s.');
+			$text = sprintf(Swat::_('The %%s field must be of the following '.
+					'type(s): %s.'),
+				implode(', ', $this->accept_mime_types));
+
+			break;
+		case 'too-large':
+			$text = Swat::_('The %s field exceeded the maximum allowed '.
+				'file size.');
+
+			break;
+		case 'upload-error':
+			$text = Swat::_('The %%s field encounted an error when trying to '.
+				'upload the file. Please try again.');
 
 			break;
 		default:
-			$text = Swat::_('There is problem with the %s field.');
+			$message = parent::getValidationMessage($id);
 			break;
 		}
 
-		$message = new SwatMessage($text, 'error');
+		if (!isset($message)) {
+			$message = new SwatMessage($text, 'error');
+		}
+
 		return $message;
 	}
 
@@ -452,6 +463,31 @@ class SwatFileEntry extends SwatInputControl
 		$classes = array('swat-file-entry');
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
+	}
+
+	// }}}
+	// {{{ protected function hasValidMimeType()
+
+	/**
+	 * Whether or not the uploaded file's mime type is valid
+	 *
+	 * Gets whether or not the upload file's mime type matches the accepted
+	 * mime types of this widget. Valid mime types for this widget are stored in
+	 * the {@link $accept_mime_types} array. If the {@link $accept_mime_types}
+	 * array is empty then the uploaded file's mime type is always valid.
+	 *
+	 * @return boolean whether or not this file's mime_type is valid.
+	 */
+	protected function hasValidMimeType()
+	{
+		$valid = false;
+
+		if ($this->isUploaded()) {
+			$valid = (is_array($this->accept_mime_types)) ?
+				in_array($this->getMimeType(), $this->accept_mime_types) : true;
+		}
+
+		return $valid;
 	}
 
 	// }}}
