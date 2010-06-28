@@ -138,7 +138,7 @@ SwatRating.prototype.handleClick = function(event, clicked_star)
 		}
 	}
 
-	// cycle trought stars
+	// cycle through stars
 	for (var i = 1; i <= clicked_star; i++) {
 		Dom.addClass(Dom.get(this.id + '_star' + i), 'on');
 	}
