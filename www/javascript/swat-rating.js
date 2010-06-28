@@ -49,82 +49,82 @@
  *    OTHER DEALINGS IN THE SOFTWARE.
  */
 
-function SwatRating(id)
+function SwatRating(id, max_value)
 {
-	this.id = id;
-	this.flydown = document.getElementById(this.id + '_flydown');
-	this.stardiv = document.createElement('div');
+	this.id        = id;
+	this.max_value = max_value;
+
+	this.flydown   = document.getElementById(this.id + '_flydown');
 	this.ratingdiv = document.getElementById(this.id);
+	this.stardiv   = document.createElement('div');
 
 	this.setupStyles();
 }
 
 SwatRating.prototype.setupStyles = function()
 {
-	YAHOO.util.Dom.setStyle(this.flydown, 'display', 'none');
-	YAHOO.util.Dom.addClass(this.stardiv, 'rating');
+	var Dom   = YAHOO.util.Dom;
+	var Event = YAHOO.util.Event;
 
-	// make the stars
-	for (var i = 1; i <= 4; i++) {
-		// first, make a div and then an a-element in it
+	Dom.setStyle(this.flydown, 'display', 'none');
+	Dom.addClass(this.stardiv, 'rating');
+
+	for (var i = 1; i <= this.max_value; i++) {
 		var star = document.createElement('div');
-		star.id = this.id + '_star' + i;
-		var a = document.createElement('a');
-		a.href = '#' + i;
-		a.innerHTML = i;
-		YAHOO.util.Dom.addClass(star, 'star');
-		star.appendChild(a);
+		star.id  = this.id + '_star' + i;
+
+		Dom.addClass(star, 'star');
+		if (i <= parseInt(this.flydown.value)) {
+			Dom.addClass(star, 'on');
+		}
+
+		var anchor  = document.createElement('a');
+		anchor.href = '#';
+
+		star.appendChild(anchor);
 		this.stardiv.appendChild(star);
 
-		// add needed listeners to every star
-		YAHOO.util.Event.addListener(star, 'mouseover', this.handleFocus, i, this);
-		YAHOO.util.Event.addListener(star, 'mouseout', this.handleBlur, this, true);
-		YAHOO.util.Event.addListener(star, 'click', this.handleClick, i, this);
+		Event.addListener(star, 'mouseover', this.handleFocus, i, this);
+		Event.addListener(star, 'mouseout', this.handleBlur, this, true);
+		Event.addListener(star, 'click', this.handleClick, i, this);
 	}
 
 	this.ratingdiv.appendChild(this.stardiv);
-
-	for (var i = 1; i <= parseInt(this.flydown.value); i++) {
-		var star = YAHOO.util.Dom.get(this.id + '_star' + i);
-		var a = star.firstChild;
-		YAHOO.util.Dom.addClass(star, 'on');
-	}
 }
 
 SwatRating.prototype.handleFocus = function(event, focus_star)
 {
+	var Dom = YAHOO.util.Dom;
+
 	// code to handle the focus on the star
 	for (var i = 1; i <= focus_star; i++) {
-		var star = YAHOO.util.Dom.get(this.id + '_star' + i);
-		var a = star.firstChild;
-		YAHOO.util.Dom.addClass(star, 'hover');
+		Dom.addClass(Dom.get(this.id + '_star' + i), 'hover');
 	}
 }
 
 SwatRating.prototype.handleBlur = function(event)
 {
+	var Dom = YAHOO.util.Dom;
+
 	// code to handle movement away from the star
-	for (var i = 1; i <= 4; i++) {
-		var star = YAHOO.util.Dom.get(this.id + '_star' + i);
-		YAHOO.util.Dom.removeClass(star, 'hover');
+	for (var i = 1; i <= this.max_value; i++) {
+		Dom.removeClass(Dom.get(this.id + '_star' + i), 'hover');
 	}
 }
 
 SwatRating.prototype.handleClick = function(event, clicked_star)
 {
+	var Dom = YAHOO.util.Dom;
+
 	// this resets the on style for each star
-	for (var i = 1; i <= 4; i++) {
-		var star = YAHOO.util.Dom.get(this.id + '_star' + i);
-		var a = star.firstChild;
-		YAHOO.util.Dom.removeClass(star, 'on');
+	for (var i = 1; i <= this.max_value; i++) {
+		Dom.removeClass(Dom.get(this.id + '_star' + i), 'on');
 	}
 
 	if (this.flydown.value === clicked_star.toString()) {
 		this.flydown.value = null;
-		for (var i = 1; i <= 4; i++) {
-			var star = YAHOO.util.Dom.get(this.id + '_star' + i);
-			var a = star.firstChild;
-			YAHOO.util.Dom.removeClass(star, 'hover');
+		for (var i = 1; i <= this.max_value; i++) {
+			Dom.removeClass(Dom.get(this.id + '_star' + i), 'hover');
 		}
 		return;
 	}
@@ -138,10 +138,8 @@ SwatRating.prototype.handleClick = function(event, clicked_star)
 		}
 	}
 
-	// cycle trought 1..5 stars
+	// cycle trought stars
 	for (var i = 1; i <= clicked_star; i++) {
-		var star = YAHOO.util.Dom.get(this.id + '_star' + i);
-		var a = star.firstChild;
-		YAHOO.util.Dom.addClass(star, 'on');
+		Dom.addClass(Dom.get(this.id + '_star' + i), 'on');
 	}
 }

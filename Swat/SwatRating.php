@@ -23,6 +23,13 @@ class SwatRating extends SwatInputControl
 	 */
 	public $value = 0;
 
+	/**
+	 * The max value of this rating control
+	 *
+	 * @var integer
+	 */
+	public $max_value = 4;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -59,13 +66,7 @@ class SwatRating extends SwatInputControl
 		parent::init();
 
 		$flydown = $this->getCompositeWidget('flydown');
-		$ratings = array(
-			1 => Swat::_('One Star'),
-			2 => Swat::_('Two Stars'),
-			3 => Swat::_('Three Stars'),
-			4 => Swat::_('Four Stars'));
-
-		$flydown->addOptionsByArray($ratings);
+		$flydown->addOptionsByArray($this->getRatings());
 	}
 
 	// }}}
@@ -109,6 +110,20 @@ class SwatRating extends SwatInputControl
 	}
 
 	// }}}
+	// {{{ protected function getRatings()
+
+	protected function getRatings()
+	{
+		$ratings = array();
+
+		for ($i = 1; $i <= $this->max_value; $i++) {
+			$ratings[$i] = sprintf('%s/%s', $i, $this->max_value);
+		}
+
+		return $ratings;
+	}
+
+	// }}}
 	// {{{ protected function getCSSClassNames()
 
 	/**
@@ -134,7 +149,7 @@ class SwatRating extends SwatInputControl
 	 */
 	protected function getInlineJavaScript()
 	{
-		return "var {$this->id}_obj = new SwatRating('{$this->id}');";
+		return "var {$this->id}_obj = new SwatRating('{$this->id}', '{$this->max_value}');";
 	}
 
 	// }}}
