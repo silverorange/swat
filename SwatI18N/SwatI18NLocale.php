@@ -460,7 +460,8 @@ class SwatI18NLocale extends SwatObject
 		$decimal_point = ($lc['mon_decimal_point'] == '') ?
 			$lc['decimal_point'] : $lc['mon_decimal_point'];
 
-		$string = $this->parseNegativeNotation($string);
+		$string = $this->parseNegativeNotation(
+			$string, $lc['negative_sign'], $lc['n_sign_posn']);
 
 		$search = array(
 			$lc['currency_symbol'],
@@ -1019,31 +1020,54 @@ class SwatI18NLocale extends SwatObject
 	 * locale
 	 *
 	 * @param string $string the formatted string.
+	 * @param string $n_sign optional. The negative sign to parse. If not
+	 *                        specified, the negative sign for this locale is
+	 *                        used.
+	 * @param integer $n_sign_position optional. The position of the negative
+	 *                                  sign in the formatted string. If not
+	 *                                  specified, the value 1 is assumed. This
+	 *                                  may be used to allow parsing
+	 *                                  parenthetical formatted negative values
+	 *                                  as used by some currencies.
 	 *
 	 * @return string the formatted string with the negative notation parsed
 	 *                 and normalized into a form readable by intval() and
 	 *                 floatval().
 	 */
-	protected function parseNegativeNotation($string)
+	protected function parseNegativeNotation($string, $n_sign = null,
+		$n_sign_position = 1)
 	{
 		$lc = $this->getLocaleInfo();
 
 		$negative = false;
-		$negative_sign = ($lc['negative_sign'] == '') ?
-			'-' : $lc['negative_sign'];
 
-		// check for negative sign shown as: (5.00)
-		if ($lc['n_sign_posn'] === 0) {
-			if (strpos($string, '(') !== false) {
-				$negative = true;
-				$string = '-'.str_replace(
-					array('(', ')'), array(), $string);
+		if ($n_sign == '') {
+			if ($lc['negative_sign'] == '') {
+				$negative_sign = '-';
+			} else {
+				$negative_sign = $lc['negative_sign'];
 			}
 		} else {
-			if (strpos($string, $negative_sign) !== false) {
-				$negative = true;
-				$string = str_replace($negative_sign, '', $string);
-			}
+			$negative_sign = $n_sign;
+		}
+
+		// filter out all chars except for digits and negative formatting chars
+		$char_class = '0-9'.preg_quote($negative_sign, '/');
+		if ($n_sign_position === 0) {
+			$char_class = '()'.$char_class;
+		}
+		$exp = '/[^'.$char_class.']/u';
+		$filtered = preg_replace($exp, '', $string);
+
+		if ($filtered[0] === '-' || $filtered[strlen($filtered) - 1] === '-') {
+			// always allow parsing by negative sign
+			$negative = true;
+			$string = str_replace($negative_sign, '', $string);
+		} elseif ($n_sign_position === 0 &&
+			$filtered[0] === '(' && $filtered[strlen($filtered) - 1] === ')') {
+			// parse parenthetical negative shown as: (5.00)
+			$negative = true;
+			$string = str_replace(array('(', ')'), '', $string);
 		}
 
 		if ($negative) {
