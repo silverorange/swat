@@ -1059,15 +1059,25 @@ class SwatI18NLocale extends SwatObject
 		$exp = '/[^'.$char_class.']/u';
 		$filtered = preg_replace($exp, '', $string);
 
-		if ($filtered[0] === '-' || $filtered[strlen($filtered) - 1] === '-') {
-			// always allow parsing by negative sign
-			$negative = true;
-			$string = str_replace($negative_sign, '', $string);
-		} elseif ($n_sign_position === 0 &&
-			$filtered[0] === '(' && $filtered[strlen($filtered) - 1] === ')') {
-			// parse parenthetical negative shown as: (5.00)
-			$negative = true;
-			$string = str_replace(array('(', ')'), '', $string);
+		if ($filtered != '') {
+
+			if ($filtered[0] === '-' ||
+				$filtered[strlen($filtered) - 1] === '-') {
+
+				// always allow parsing by negative sign
+				$negative = true;
+				$string = str_replace($negative_sign, '', $string);
+
+			} elseif ($n_sign_position === 0 &&
+				$filtered[0] === '(' &&
+				$filtered[strlen($filtered) - 1] === ')') {
+
+				// parse parenthetical negative shown as: (5.00)
+				$negative = true;
+				$string = str_replace(array('(', ')'), '', $string);
+
+			}
+
 		}
 
 		if ($negative) {
