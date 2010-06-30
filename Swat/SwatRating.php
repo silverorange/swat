@@ -2,14 +2,15 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
- * A control for recording a rating out of four values
+ * A control for recording a rating out of a variable number of values
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRating extends SwatInputControl
@@ -24,11 +25,11 @@ class SwatRating extends SwatInputControl
 	public $value = 0;
 
 	/**
-	 * The max value of this rating control
+	 * The maximum value of this rating control
 	 *
 	 * @var integer
 	 */
-	public $max_value = 4;
+	public $maximum_value = 4;
 
 	// }}}
 	// {{{ public function __construct()
@@ -116,8 +117,8 @@ class SwatRating extends SwatInputControl
 	{
 		$ratings = array();
 
-		for ($i = 1; $i <= $this->max_value; $i++) {
-			$ratings[$i] = sprintf('%s/%s', $i, $this->max_value);
+		for ($i = 1; $i <= $this->maximum_value; $i++) {
+			$ratings[$i] = sprintf('%s/%s', $i, $this->maximum_value);
 		}
 
 		return $ratings;
@@ -149,7 +150,9 @@ class SwatRating extends SwatInputControl
 	 */
 	protected function getInlineJavaScript()
 	{
-		return "var {$this->id}_obj = new SwatRating('{$this->id}', '{$this->max_value}');";
+		$quoted_string = SwatString::quoteJavaScriptString($this->id);
+		return sprintf('var %s_obj = new SwatRating(%s, %s);',
+			$this->id, $quoted_string, intval($this->maximum_value));
 	}
 
 	// }}}
