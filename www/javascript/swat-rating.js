@@ -94,7 +94,10 @@ SwatRating.prototype.setupStyles = function()
 
 SwatRating.prototype.handleFocus = function(event, focus_star)
 {
-	var Dom = YAHOO.util.Dom;
+	var Dom   = YAHOO.util.Dom;
+	var Event = YAHOO.util.Event;
+
+	Event.preventDefault(event);
 
 	// code to handle the focus on the star
 	for (var i = 1; i <= focus_star; i++) {
@@ -104,7 +107,10 @@ SwatRating.prototype.handleFocus = function(event, focus_star)
 
 SwatRating.prototype.handleBlur = function(event)
 {
-	var Dom = YAHOO.util.Dom;
+	var Dom   = YAHOO.util.Dom;
+	var Event = YAHOO.util.Event;
+
+	Event.preventDefault(event);
 
 	// code to handle movement away from the star
 	for (var i = 1; i <= this.max_value; i++) {
@@ -114,7 +120,10 @@ SwatRating.prototype.handleBlur = function(event)
 
 SwatRating.prototype.handleClick = function(event, clicked_star)
 {
-	var Dom = YAHOO.util.Dom;
+	var Dom   = YAHOO.util.Dom;
+	var Event = YAHOO.util.Event;
+
+	Event.preventDefault(event);
 
 	// this resets the on style for each star
 	for (var i = 1; i <= this.max_value; i++) {
