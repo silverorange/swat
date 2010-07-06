@@ -124,60 +124,52 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 
-		// maximum number of options in each column
-		if (is_array($this->columns)) {
-			$columns = $this->columns;
-		} else {
-			// prevent divide by zero and negative columns
-			$columns = ($this->columns > 0) ? $this->columns : 1;
-			$num_column_options = ceil(count($options) / $columns);
-			$columns = array($num_column_options);
-		}
-
 		$current_column = 1;
-		$count = 0;
+		$current_option = 0;
+		$columns = (is_array($this->columns)) ? $this->columns : array(ceil(
+			count($options) / (($this->columns > 0) ? $this->columns : 1)));
+
+		$multiple_columns = (count($options) > $columns[0]);
+		$maximum_options  = array_shift($columns);
 
 		$ul_tag = new SwatHtmlTag('ul');
-		if ($columns > 1) {
-			$ul_tag->id = sprintf('%_column_%s', $this->id, $current_column);
+		if ($multiple_columns) {
+			$ul_tag->id = sprintf('%s_column_%s', $this->id, $current_column);
 			$ul_tag->class = 'swat-checkbox-list-column';
 		}
 		$ul_tag->open();
 
-		$num_column_options = array_shift($columns);
 		foreach ($options as $index => $option) {
-
-			if ($count == $num_column_options) {
+			if ($current_option == $maximum_options) {
 				$ul_tag->close();
 
-				// start a new column
 				$current_column++;
-				$ul_tag->id =
-					sprintf('%_column_%s', $this->id, $current_column);
+				$current_option  = 0;
+				$maximum_options = (count($columns) > 0) ?
+					array_shift($columns) : $maximum_options;
+
+				$ul_tag->id = sprintf('%s_column_%s', $this->id,
+					$current_column);
+
+				$ul_tag->class = 'swat-checkbox-list-column';
 
 				$ul_tag->open();
-
-				$count = 0;
-				if (count($columns))
-					$num_column_options = array_shift($columns);
 			}
 
-			$count++;
+			$current_option++;
 			$this->displayOption($option, $index);
 		}
 
 		$ul_tag->close();
 
-		// Only show the check all control if more than one checkable item is
-		// displayed.
-		$check_all = $this->getCompositeWidget('check_all');
-		$check_all->visible =
-			$this->show_check_all && (count($options) > 1);
-
 		// Show clear div if columns are used
-		if ($columns > 1)
+		if ($multiple_columns) {
 			echo '<div class="swat-clear"></div>';
+		}
 
+		// Show the check all if more than one checkable item is displayed.
+		$check_all = $this->getCompositeWidget('check_all');
+		$check_all->visible = $this->show_check_all && (count($options) > 1);
 		$check_all->display();
 
 		$div_tag->close();
