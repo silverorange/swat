@@ -231,14 +231,20 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		$tz_data = Date_TimeZone::getAvailableIDs();
 
 		foreach ($tz_data as $id) {
-			$area = $this->getArea($id);
-			if (in_array($area, $area_whitelist)) {
-				$region = $this->getRegion($id);
-				if (!array_key_exists($area, $areas)) {
-					$areas[$area] = array();
-				}
+			// skip time zones without a 'longname' as they cause errors on
+			// Date instansiation.
+			if (array_key_exists('longname',
+				$GLOBALS['_DATE_TIMEZONE_DATA'][$id])) {
 
-				$areas[$area][] = $region;
+				$area = $this->getArea($id);
+				if (in_array($area, $area_whitelist)) {
+					$region = $this->getRegion($id);
+					if (!array_key_exists($area, $areas)) {
+						$areas[$area] = array();
+					}
+
+					$areas[$area][] = $region;
+				}
 			}
 		}
 
@@ -293,7 +299,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 			if (isset($GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$region])) {
 				$data = $GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$region];
 
-				if ($data['dstshortname'] != '')
+				if (!empty($data['dstshortname']))
 					$title.= sprintf(' (%s/%s)',
 						$data['shortname'], $data['dstshortname']);
 				else
