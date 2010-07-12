@@ -1,24 +1,52 @@
-function SwatForm(id)
+function SwatForm(id, connection_close_url)
 {
 	this.id = id;
 	this.form_element = document.getElementById(id);
+	this.connection_close_url = connection_close_url;
+
+	if (this.connection_close_url) {
+		YAHOO.util.Event.on(this.form_element, 'submit', this.handleSubmit,
+			this, true);
+	}
 }
 
 SwatForm.prototype.setDefaultFocus = function(element_id)
 {
 	// TODO: check if another element in this form is already focused
 
-	function is_function(obj)
+	function isFunction(obj)
 	{
 		return (typeof obj == 'function' || typeof obj == 'object');
 	}
 
 	var element = document.getElementById(element_id);
-	if (element && element.disabled == false && is_function(element.focus))
+	if (element && element.disabled == false && isFunction(element.focus))
 		element.focus();
-}
+};
 
 SwatForm.prototype.setAutocomplete = function(state)
 {
 	this.form_element.setAttribute('autocomplete', (state) ? 'on' : 'off');
-}
+};
+
+SwatForm.prototype.closePersistentConnection = function()
+{
+	if (this.connection_close_url) {
+		var callback = {
+			'success': function(o) {},
+			'failure': function(o) {}
+		};
+
+		var request = YAHOO.util.Connect.asyncRequest(
+			'GET',
+			this.connection_close_url,
+			callback);
+	}
+};
+
+SwatForm.prototype.handleSubmit = function(e)
+{
+	if (this.form_element.enctype == 'multipart/form-data') {
+		this.closePersistentConnection();
+	}
+};
