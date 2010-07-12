@@ -9,6 +9,7 @@ require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatMessageDisplay.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatString.php';
+require_once 'Swat/SwatYUI.php';
 
 /**
  * A form widget which can contain other widgets
@@ -20,7 +21,7 @@ require_once 'Swat/SwatString.php';
  * or borders.
  *
  * @package   Swat
- * @copyright 2004-2009 silverorange
+ * @copyright 2004-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatForm extends SwatDisplayableContainer
@@ -113,7 +114,7 @@ class SwatForm extends SwatDisplayableContainer
 	 *
 	 * Autocomplete is a browser-specific extension that is enabled by default.
 	 * If the browser is autocompleting fields it shouldn't (e.g. login info
-	 * on a non-login page) the behaviour may be turned off by setting this to
+	 * on a non-login page) the behavior may be turned off by setting this to
 	 * false. In Swat, this currently only solves the problem for users with
 	 * JavaScript.
 	 *
@@ -184,6 +185,35 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	protected $_8bit_encoding = null;
 
+	/**
+	 * The default URI at which a Connection: close header may be sent to the
+	 * browser
+	 *
+	 * The Connection: close header may be used to work around
+	 * {@link https://bugs.webkit.org/show_bug.cgi?id=5760 Webkit bug #5760}.
+	 *
+	 * By default, no Connection: close URI is specified. In this case, no
+	 * workaround is attempted when SwatForm forms are submitted.
+	 *
+	 * @var string
+	 *
+	 * @see SwatForm::setDefaultConnectionCloseUri()
+	 * @see SwatForm::setConnectionCloseUri()
+	 */
+	protected static $default_connection_close_uri = null;
+
+	/**
+	 * URI at which a Connection: close header may be sent to the browser
+	 *
+	 * This may be used to work around
+	 * {@link https://bugs.webkit.org/show_bug.cgi?id=5760 Webkit bug #5760}.
+	 *
+	 * @var string
+	 *
+	 * @see SwatForm::setConnectionCloseUri()
+	 */
+	protected $connection_close_uri = null;
+
 	// }}}
 	// {{{ private properties
 
@@ -230,6 +260,10 @@ class SwatForm extends SwatDisplayableContainer
 
 		if (self::$default_8bit_encoding !== null) {
 			$this->set8BitEncoding(self::$default_8bit_encoding);
+		}
+
+		if (self::$default_connection_close_uri !== null) {
+			$this->setConnectionCloseUri(self::$default_connection_close_uri);
 		}
 
 		$this->requires_id = true;
@@ -300,6 +334,12 @@ class SwatForm extends SwatDisplayableContainer
 		$this->displayChildren();
 		$this->displayHiddenFields();
 		$form_tag->close();
+
+		if ($this->connection_close_uri != '') {
+			$yui = new SwatYUI(array('connection'));
+			$this->html_head_entry_set->addEntrySet(
+				$yui->getHtmlHeadEntrySet());
+		}
 
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
@@ -584,6 +624,27 @@ class SwatForm extends SwatDisplayableContainer
 	}
 
 	// }}}
+	// {{{ public function setConnectionCloseUri()
+
+	/**
+	 * Sets the URI at which a Connection: close header may be sent to the
+	 * browser
+	 *
+	 * The Connection: close header may be used to work around
+	 * {@link https://bugs.webkit.org/show_bug.cgi?id=5760 Webkit bug #5760}.
+	 *
+	 * @param string $connection_close_uri the URI to use. If null is specified,
+	 *                                      no workarounds will be performed
+	 *                                      for Safari.
+	 *
+	 * @see SwatForm::setDefaultConnectionCloseUri()
+	 */
+	public function setConnectionCloseUri($connection_close_uri)
+	{
+		$this->connection_close_uri = $connection_close_uri;
+	}
+
+	// }}}
 	// {{{ public static function setDefault8BitEncoding()
 
 	/**
@@ -601,6 +662,28 @@ class SwatForm extends SwatDisplayableContainer
 	public static function setDefault8BitEncoding($encoding)
 	{
 		self::$default_8bit_encoding = $encoding;
+	}
+
+	// }}}
+	// {{{ public static function setDefaultConnectionCloseUri()
+
+	/**
+	 * Sets the default URI at which a Connection: close header may be sent to
+	 * the browser
+	 *
+	 * The Connection: close header may be used to work around
+	 * {@link https://bugs.webkit.org/show_bug.cgi?id=5760 Webkit bug #5760}.
+	 *
+	 * @param string $connection_close_uri the URI to use. If null is specified,
+	 *                                      no workarounds will be performed
+	 *                                      for Safari. The null behavior is
+	 *                                      the default behavior.
+	 *
+	 * @see SwatForm::setConnectionCloseUri()
+	 */
+	public static function setDefaultConnectionCloseUri($connection_close_uri)
+	{
+		self::$default_connection_close_uri = $connection_close_uri;
 	}
 
 	// }}}
@@ -891,10 +974,11 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf("var %s_obj = new %s(%s);",
+		$javascript = sprintf("var %s_obj = new %s(%s, %s);",
 			$this->id,
 			$this->getJavaScriptClass(),
-			SwatString::quoteJavaScriptString($this->id));
+			SwatString::quoteJavaScriptString($this->id),
+			SwatString::quoteJavaScriptString($this->connection_close_uri));
 
 		if ($this->autofocus) {
 			$focusable = true;
