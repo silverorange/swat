@@ -57,6 +57,18 @@ class SwatFileEntry extends SwatInputControl
 	public $access_key = null;
 
 	/**
+	 * Tab index
+	 *
+	 * The ordinal tab index position of the XHTML input tag, or null.
+	 * Values 1 or greater will affect the tab index of this widget. A value
+	 * of 0 or null will use the position of the input tag in the XHTML
+	 * character stream to determine tab order.
+	 *
+	 * @var integer
+	 */
+	public $tab_index = null;
+
+	/**
 	 * Display maximum file upload size
 	 *
 	 * @var boolean
@@ -107,6 +119,7 @@ class SwatFileEntry extends SwatInputControl
 		$input_tag->id = $this->id;
 		$input_tag->class = $this->getCSSClassString();
 		$input_tag->accesskey = $this->access_key;
+		$input_tag->tabindex = $this->tab_index;
 		$input_tag->size = $this->size;
 
 		// note: the 'accept' attribute is part of the w3c standard, but

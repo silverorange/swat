@@ -11,7 +11,7 @@ require_once 'Swat/SwatString.php';
  * A multi-line text entry widget
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextarea extends SwatInputControl implements SwatState
@@ -51,6 +51,18 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 * @var string
 	 */
 	public $access_key = null;
+
+	/**
+	 * Tab index
+	 *
+	 * The ordinal tab index position of the XHTML textarea tag, or null.
+	 * Values 1 or greater will affect the tab index of this widget. A value
+	 * of 0 or null will use the position of this textarea in the XHTML
+	 * character stream to determine tab order.
+	 *
+	 * @var integer
+	 */
+	public $tab_index = null;
 
 	/**
 	 * Maximum number of allowable characters or null if any number of
@@ -251,6 +263,7 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		$textarea_tag->cols = $this->cols;
 		$textarea_tag->setContent($value, 'text/xml');
 		$textarea_tag->accesskey = $this->access_key;
+		$textarea_tag->tabindex = $this->tab_index;
 
 		if ($this->read_only)
 			$textarea_tag->readonly = 'readonly';
