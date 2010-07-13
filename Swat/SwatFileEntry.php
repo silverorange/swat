@@ -473,18 +473,33 @@ class SwatFileEntry extends SwatInputControl
 	 *
 	 * Gets whether or not the upload file's mime type matches the accepted
 	 * mime types of this widget. Valid mime types for this widget are stored in
-	 * the {@link $accept_mime_types} array. If the {@link $accept_mime_types}
-	 * array is empty then the uploaded file's mime type is always valid.
+	 * the {@link SwatFileEntry::$accept_mime_types} array. If the
+	 * <kbd>$accept_mime_types</kbd> array is empty, the uploaded file's mime
+	 * type is always valid.
 	 *
-	 * @return boolean whether or not this file's mime_type is valid.
+	 * Some container formats may have multiple mime-types. In this case, if
+	 * any of the contained types are valid, we consider the file valid.
+	 *
+	 * @return boolean whether or not this file's mime type is valid.
 	 */
 	protected function hasValidMimeType()
 	{
 		$valid = false;
 
 		if ($this->isUploaded()) {
-			$valid = (is_array($this->accept_mime_types)) ?
-				in_array($this->getMimeType(), $this->accept_mime_types) : true;
+			// Some container formats can contain return multiple mime-types.
+			// If any of the contained types are valid, we consider the file
+			// valid.
+			$mime_types = explode(' ', $this->getMimeType());
+			if (is_array($this->accept_mime_types) &&
+				count($this->accept_mime_types) > 0) {
+
+				$types = array_intersect($mime_types, $this->accept_mime_types);
+				$valid = (count($types) > 0);
+
+			} else {
+				$valid = true;
+			}
 		}
 
 		return $valid;
