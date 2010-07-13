@@ -31,7 +31,8 @@ SwatForm.prototype.setAutocomplete = function(state)
 
 SwatForm.prototype.closePersistentConnection = function()
 {
-	if (this.connection_close_url && XMLHttpRequest) {
+	var is_safari_osx = /^.*mac os x.*safari.*$/i.test(navigator.userAgent);
+	if (is_safari_osx && this.connection_close_url && XMLHttpRequest) {
 		var request = new XMLHttpRequest();
 		request.open('GET', this.connection_close_url, false);
 		request.send(null);
