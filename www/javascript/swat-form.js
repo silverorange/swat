@@ -31,16 +31,10 @@ SwatForm.prototype.setAutocomplete = function(state)
 
 SwatForm.prototype.closePersistentConnection = function()
 {
-	if (this.connection_close_url) {
-		var callback = {
-			'success': function(o) {},
-			'failure': function(o) {}
-		};
-
-		var request = YAHOO.util.Connect.asyncRequest(
-			'GET',
-			this.connection_close_url,
-			callback);
+	if (this.connection_close_url && XMLHttpRequest) {
+		var request = new XMLHttpRequest();
+		request.open('GET', this.connection_close_url, false);
+		request.send(null);
 	}
 };
 
