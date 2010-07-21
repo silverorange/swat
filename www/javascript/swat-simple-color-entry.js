@@ -165,7 +165,9 @@ SwatSimpleColorEntry.prototype.handleInputChange = function()
 		color = null;
 	}
 
-	this.setColor(color);
+	if (color) {
+		this.setColor(color);
+	}
 }
 
 // }}}
