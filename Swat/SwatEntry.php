@@ -66,6 +66,9 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 * Tab index
 	 *
 	 * The ordinal tab index position of the XHTML input tag, or null.
+	 * Values 1 or greater will affect the tab index of this widget. A value
+	 * of 0 or null will use the position of the input tag in the XHTML
+	 * character stream to determine tab order.
 	 *
 	 * @var integer
 	 */
@@ -284,7 +287,8 @@ class SwatEntry extends SwatInputControl implements SwatState
 		$tag->name = ($this->autocomplete) ? $this->id : $this->getNonce();
 		$tag->id = ($this->autocomplete) ? $this->id : $this->getNonce();
 		$tag->class = $this->getCSSClassString();
-		$tag->onfocus = 'this.select();';
+		$tag->onfocus = 'this.select();this._focused=true;';
+		$tag->onblur = 'this._focused=false;';
 
 		if ($this->read_only)
 			$tag->readonly = 'readonly';
