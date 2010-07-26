@@ -435,19 +435,21 @@ class SwatFileEntry extends SwatInputControl
 			$text = Swat::_('The %s field is required.');
 			break;
 		case 'mime-type':
-			$text = sprintf(Swat::_('The %%s field must be of the following '.
-					'type(s): %s.'),
+			$text = sprintf(
+				Swat::_(
+					'The %%s field must be of the following type(s): %s.'),
 				implode(', ', $this->accept_mime_types));
 
 			break;
 		case 'too-large':
-			$text = Swat::_('The %s field exceeded the maximum allowed '.
-				'file size.');
+			$text = Swat::_(
+				'The %s field exceeds the maximum allowable file size.');
 
 			break;
 		case 'upload-error':
-			$text = Swat::_('The %%s field encounted an error when trying to '.
-				'upload the file. Please try again.');
+			$text = Swat::_(
+				'The %s field encounted an error when trying to upload '.
+				'the file. Please try again.');
 
 			break;
 		default:
