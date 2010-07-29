@@ -243,7 +243,7 @@ class SwatDBDataObject extends SwatObject
 	{
 		$is_set = false;
 
-		if (in_array($key, $this->deprecated_properties)) {
+		if (!in_array($key, $this->deprecated_properties)) {
 			$is_set =
 				(method_exists($this, $this->getLoaderMethod($key))) ||
 				($this->hasInternalValue($key) &&
