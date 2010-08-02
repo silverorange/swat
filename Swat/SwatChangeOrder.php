@@ -130,6 +130,12 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$hidden_tag->value = implode(',', $values);
 		$hidden_tag->display();
 
+		$hidden_items_tag = new SwatHtmlTag('input');
+		$hidden_items_tag->type = 'hidden';
+		$hidden_items_tag->id = $this->id.'_dynamic_items';
+		$hidden_items_tag->value = '';
+		$hidden_items_tag->display();
+
 		$div_tag->close();
 
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
