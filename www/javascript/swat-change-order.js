@@ -5,7 +5,7 @@
  * script.
  *
  * @package   Swat
- * @copyright 2004-2005 silverorange
+ * @copyright 2004-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 
@@ -278,6 +278,7 @@ function SwatChangeOrder_mouseupEventHandler(event)
 	if (drop_marker.parentNode !== null) {
 		list_div.insertBefore(shadow_item.original_item, drop_marker);
 		shadow_item.original_item.controller.updateValue();
+		shadow_item.original_item.controller.updateDynamicItemsValue();
 	}
 
 	shadow_item.parentNode.removeChild(shadow_item);
@@ -398,6 +399,12 @@ function SwatChangeOrder(id, sensitive)
 	var count = 0;
 	var node = null;
 
+	// re-populate list with dynamic items if page is refreshed
+	var items_value = document.getElementById(this.id + '_dynamic_items').value;
+	if (items_value != '') {
+		this.list_div.innerHTML = items_value;
+	}
+
 	// remove text nodes and set value on nodes
 	for (var i = 0; i < this.list_div.childNodes.length; i++) {
 		node = this.list_div.childNodes[i];
@@ -405,6 +412,14 @@ function SwatChangeOrder(id, sensitive)
 			this.list_div.removeChild(node);
 			i--;
 		} else if (node.nodeType == 1) {
+
+			// remove sentinel node and drop-shadow
+			if (node.id == this.id + '_sentinel' || node.id == 'drop') {
+				this.list_div.removeChild(node);
+				i--;
+				continue;
+			}
+
 			node.order_value = value_array[count];
 			node.order_index = count;
 			// assign a back reference for event handlers
@@ -413,6 +428,8 @@ function SwatChangeOrder(id, sensitive)
 			YAHOO.util.Event.addListener(node, 'mousedown',
 				SwatChangeOrder_mousedownEventHandler);
 
+			YAHOO.util.Dom.removeClass(node, 'swat-change-order-item-active');
+
 			count++;
 		}
 	}
@@ -420,6 +437,7 @@ function SwatChangeOrder(id, sensitive)
 	// since the DOM only has an insertBefore() method we use a sentinel node
 	// to make moving nodes down easier.
 	var sentinel_node = document.createElement('div');
+	sentinel_node.id = this.id + '_sentinel';
 	sentinel_node.style.display = 'block';
 	this.list_div.appendChild(sentinel_node);
 
@@ -430,10 +448,12 @@ function SwatChangeOrder(id, sensitive)
 	this.active_div = null;
 
 	// this is hard coded to true so we can chose the first element
-	this.sensitive = true;
+	if (this.list_div.firstChild !== sentinel_node) {
+		this.sensitive = true;
 
-	this.choose(this.list_div.firstChild);
-	this.scrollList(this.getScrollPosition(this.list_div.firstChild));
+		this.choose(this.list_div.firstChild);
+		this.scrollList(this.getScrollPosition(this.list_div.firstChild));
+	}
 
 	this.sensitive = sensitive;
 	this.orderChangeEvent = new YAHOO.util.CustomEvent('orderChange');
@@ -502,6 +522,132 @@ function SwatChangeOrder_staticMoveToTop(change_order, steps)
 function SwatChangeOrder_staticMoveToBottom(change_order, steps)
 {
 	change_order.moveToBottomHelper(steps);
+}
+
+// }}}
+// {{{ add()
+
+/**
+ * Dynamically adds an item to this change-order
+ *
+ * @param DOMElement el    the element to add to the select list.
+ * @param String     value the value to save for the order of the element.
+ *
+ * @return Boolean true if the element was added, otherwise false.
+ */
+SwatChangeOrder.prototype.add = function(el, value)
+{
+	if (!this.semaphore) {
+		// TODO queue elements and add when semaphore is available
+		return false;
+	}
+
+	YAHOO.util.Dom.addClass(el, 'swat-change-order-item');
+
+	YAHOO.util.Event.addListener(el, 'mousedown',
+		SwatChangeOrder_mousedownEventHandler);
+
+	var order_index = this.count();
+
+	el.controller  = this;
+	el.order_index = order_index;
+	el.order_value = value;
+
+	this.list_div.insertBefore(el, this.list_div.childNodes[order_index]);
+
+	// update hidden value
+	var value_array;
+	var hidden_value = document.getElementById(this.id + '_value');
+	if (hidden_value.value == '') {
+		value_array = [];
+	} else {
+		value_array = hidden_value.value.split(',');
+	}
+	value_array.push(value);
+	hidden_value.value = value_array.join(',');
+
+	this.updateDynamicItemsValue();
+
+	return true;
+}
+
+// }}}
+// {{{ remove()
+
+/**
+ * Dynamically removes an item from this change-order
+ *
+ * @param DOMElement el the element to remove.
+ *
+ * @return Boolean true if the element was removed, otherwise false.
+ */
+SwatChangeOrder.prototype.remove = function(el)
+{
+	if (!this.semaphore) {
+		// TODO queue elements and remove when semaphore is available
+		return false;
+	}
+
+	YAHOO.util.Event.purgeElement(el);
+
+	// remove from hidden value
+	var hidden_value = document.getElementById(this.id + '_value');
+	var value_array = hidden_value.value.split(',');
+	value_array.splice(el.order_index, 1);
+	hidden_value.value = value_array.join(',');
+
+	if (this.active_div === el) {
+		this.active_div = null;
+	}
+
+	this.list_div.removeChild(el);
+
+	this.updateDynamicItemsValue();
+
+	return true;
+}
+
+// }}}
+// {{{ count()
+
+/**
+ * Gets the number of items in this change-order
+ *
+ * @return Number the number of items in this change-order.
+ */
+SwatChangeOrder.prototype.count = function()
+{
+	return this.list_div.childNodes.length - 1;
+}
+
+// }}}
+// {{{ containsValue()
+
+/**
+ * Gets whether or not this change-order contains an item with the given value
+ *
+ * @param String value the value to check for.
+ *
+ * @return Boolean true if there is an item with the given value in this
+ *                 change-order, otherwise false.
+ */
+SwatChangeOrder.prototype.containsValue = function(value)
+{
+	var value_array;
+	var hidden_value = document.getElementById(this.id + '_value');
+	if (hidden_value.value == '') {
+		value_array = [];
+	} else {
+		value_array = hidden_value.value.split(',');
+	}
+
+	for (var i = 0; i < value_array.length; i++) {
+		if (value_array[i] === value) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 // }}}
@@ -587,6 +733,7 @@ SwatChangeOrder.prototype.moveToTopHelper = function(steps)
 	} else {
 		this.semaphore = true;
 		this.setButtonsSensitive(true);
+		this.updateDynamicItemsValue();
 	}
 }
 
@@ -632,6 +779,7 @@ SwatChangeOrder.prototype.moveToBottomHelper = function(steps)
 	} else {
 		this.semaphore = true;
 		this.setButtonsSensitive(true);
+		this.updateDynamicItemsValue();
 	}
 }
 
@@ -645,8 +793,10 @@ SwatChangeOrder.prototype.moveToBottomHelper = function(steps)
  */
 SwatChangeOrder.prototype.moveUp = function()
 {
-	if (this.semaphore && this.sensitive)
+	if (this.semaphore && this.sensitive) {
 		this.moveUpHelper(1);
+		this.updateDynamicItemsValue();
+	}
 }
 
 // }}}
@@ -659,8 +809,10 @@ SwatChangeOrder.prototype.moveUp = function()
  */
 SwatChangeOrder.prototype.moveDown = function()
 {
-	if (this.semaphore && this.sensitive)
+	if (this.semaphore && this.sensitive) {
 		this.moveDownHelper(1);
+		this.updateDynamicItemsValue();
+	}
 }
 
 // }}}
@@ -815,6 +967,21 @@ SwatChangeOrder.prototype.updateValue = function()
 
 	// update a hidden field with current order of keys
 	hidden_field.value = temp;
+}
+
+// }}}
+// {{{ updateDynamicItemsValue()
+
+/**
+ * Updates the value of the hidden field containing the dynamic item nodes
+ *
+ * This allows the changeorder state to stay consistent when the page is
+ * soft-refreshed after adding or removing items.
+ */
+SwatChangeOrder.prototype.updateDynamicItemsValue = function()
+{
+	var items_value = document.getElementById(this.id + '_dynamic_items');
+	items_value.value = this.list_div.innerHTML;
 }
 
 // }}}
