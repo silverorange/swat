@@ -58,24 +58,23 @@ function SwatRating(id, max_value)
 	this.ratingdiv = document.getElementById(this.id);
 	this.stardiv   = document.createElement('div');
 
-	this.setupStyles();
+	YAHOO.util.Event.onDOMReady(this.init, this, true);
 }
 
-SwatRating.prototype.setupStyles = function()
+SwatRating.prototype.init = function()
 {
 	var Dom   = YAHOO.util.Dom;
 	var Event = YAHOO.util.Event;
 
 	Dom.setStyle(this.flydown, 'display', 'none');
-	Dom.addClass(this.stardiv, 'rating');
 
 	for (var i = 1; i <= this.max_value; i++) {
 		var star = document.createElement('div');
 		star.id  = this.id + '_star' + i;
 
-		Dom.addClass(star, 'star');
+		Dom.addClass(star, 'swat-rating-star');
 		if (i <= parseInt(this.flydown.value)) {
-			Dom.addClass(star, 'on');
+			Dom.addClass(star, 'swat-rating-selected');
 		}
 
 		var anchor  = document.createElement('a');
@@ -84,12 +83,16 @@ SwatRating.prototype.setupStyles = function()
 		star.appendChild(anchor);
 		this.stardiv.appendChild(star);
 
-		Event.addListener(star, 'mouseover', this.handleFocus, i, this);
-		Event.addListener(star, 'mouseout', this.handleBlur, this, true);
-		Event.addListener(star, 'click', this.handleClick, i, this);
+		Event.on(star, 'mouseover', this.handleFocus, i, this);
+		Event.on(star, 'mouseout', this.handleBlur, this, true);
+		Event.on(star, 'click', this.handleClick, i, this);
 	}
 
+	var clear = document.createElement('div');
+	Dom.setStyle(clear, 'clear', 'both');
+
 	this.ratingdiv.appendChild(this.stardiv);
+	this.ratingdiv.appendChild(clear);
 }
 
 SwatRating.prototype.handleFocus = function(event, focus_star)
@@ -101,7 +104,7 @@ SwatRating.prototype.handleFocus = function(event, focus_star)
 
 	// code to handle the focus on the star
 	for (var i = 1; i <= focus_star; i++) {
-		Dom.addClass(Dom.get(this.id + '_star' + i), 'hover');
+		Dom.addClass(Dom.get(this.id + '_star' + i), 'swat-rating-hover');
 	}
 }
 
@@ -114,7 +117,7 @@ SwatRating.prototype.handleBlur = function(event)
 
 	// code to handle movement away from the star
 	for (var i = 1; i <= this.max_value; i++) {
-		Dom.removeClass(Dom.get(this.id + '_star' + i), 'hover');
+		Dom.removeClass(Dom.get(this.id + '_star' + i), 'swat-rating-hover');
 	}
 }
 
@@ -127,13 +130,14 @@ SwatRating.prototype.handleClick = function(event, clicked_star)
 
 	// this resets the on style for each star
 	for (var i = 1; i <= this.max_value; i++) {
-		Dom.removeClass(Dom.get(this.id + '_star' + i), 'on');
+		Dom.removeClass(Dom.get(this.id + '_star' + i), 'swat-rating-selected');
 	}
 
 	if (this.flydown.value === clicked_star.toString()) {
 		this.flydown.value = null;
 		for (var i = 1; i <= this.max_value; i++) {
-			Dom.removeClass(Dom.get(this.id + '_star' + i), 'hover');
+			Dom.removeClass(Dom.get(this.id + '_star' + i),
+				'swat-rating-hover');
 		}
 		return;
 	}
@@ -149,6 +153,6 @@ SwatRating.prototype.handleClick = function(event, clicked_star)
 
 	// cycle through stars
 	for (var i = 1; i <= clicked_star; i++) {
-		Dom.addClass(Dom.get(this.id + '_star' + i), 'on');
+		Dom.addClass(Dom.get(this.id + '_star' + i), 'swat-rating-selected');
 	}
 }
