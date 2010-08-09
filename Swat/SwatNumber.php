@@ -91,26 +91,26 @@ class SwatNumber extends SwatObject
 		case 11:
 		case 12:
 		case 13:
-			$ordinal_value.= 'th';
+			$ordinal_value.= Swat::_('th');
 			break;
 
 		default:
 			// Handle 1st, 2nd, 3rd
 			switch($value % 10) {
 			case 1:
-				$ordinal_value.= 'st';
+				$ordinal_value.= Swat::_('st');
 				break;
 
 			case 2:
-				$ordinal_value.= 'nd';
+				$ordinal_value.= Swat::_('nd');
 				break;
 
 			case 3:
-				$ordinal_value.= 'rd';
+				$ordinal_value.= Swat::_('rd');
 				break;
 
 			default:
-				$ordinal_value.= 'th';
+				$ordinal_value.= Swat::_('th');
 			}
 		}
 
