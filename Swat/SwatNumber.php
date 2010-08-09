@@ -70,6 +70,49 @@ class SwatNumber extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function ordinal()
+
+	/**
+	 * Simple method to return the ordinal value of a number.
+	 *
+	 * Only safe for use for english locales. Mostly taken from this the
+	 * following comment on php.net
+	 * {@link http://www.php.net/manual/en/function.number-format.php#89655}
+	 *
+	 * @param float $value the value to display as ordinal.
+	 *
+	 * @return string the ordinal value.
+	 */
+	public static function ordinal($value)
+	{
+		$ordinal_value = floor($value);
+		// Special case "10th"
+		if (($value / 10) % 10 == 1) {
+			$ordinal_value.= 'th';
+		} else {
+			// Handle 1st, 2nd, 3rd
+			switch($value % 10) {
+			case 1:
+				$ordinal_value.= 'st';
+				break;
+
+			case 2:
+				$ordinal_value.= 'nd';
+				break;
+
+			case 3:
+				$ordinal_value.= 'rd';
+				break;
+
+			default:
+				$ordinal_value.= 'th';
+			}
+		}
+
+		return $ordinal_value;
+	}
+
+	// }}}
 	// {{{ private function __construct()
 
 	/**
