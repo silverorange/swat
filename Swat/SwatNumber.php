@@ -85,11 +85,16 @@ class SwatNumber extends SwatObject
 	 */
 	public static function ordinal($value)
 	{
-		$ordinal_value = floor($value);
-		// Special case "10th"
-		if (($value / 10) % 10 == 1) {
+		$ordinal_value = abs($value);
+
+		switch ($ordinal_value % 100) {
+		case 11:
+		case 12:
+		case 13:
 			$ordinal_value.= 'th';
-		} else {
+			break;
+
+		default:
 			// Handle 1st, 2nd, 3rd
 			switch($value % 10) {
 			case 1:
