@@ -215,7 +215,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 			$this->preview_image,
 			$this->preview_width,
 			$this->preview_height,
-			(($this->show_title) ? 'true' : false));
+			(($this->show_title) ? 'true' : 'false'));
 
 		if ($this->container_width !== null) {
 			$javascript.= sprintf("%s.width = %s;",
