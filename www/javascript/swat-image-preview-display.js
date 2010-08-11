@@ -64,13 +64,10 @@ SwatImagePreviewDisplay.prototype.init = function()
 		image_wrapper.parentNode.replaceChild(image_link, image_wrapper);
 
 		if (this.show_title) {
-			var a_tag = document.createElement('a');
-			a_tag.href = '#';
-			a_tag.className = 'swat-image-preview-title';
-			a_tag.appendChild(document.createTextNode(image_wrapper.title))
-			image_link.parentNode.appendChild(a_tag);
-			YAHOO.util.Event.on(a_tag, 'click',
-				this.handleClick, this, true);
+			var span_tag = document.createElement('span');
+			span_tag.className = 'swat-image-preview-title';
+			span_tag.appendChild(document.createTextNode(image_wrapper.title))
+			image_link.appendChild(span_tag);
 		}
 
 		YAHOO.util.Event.on(image_link, 'click',
