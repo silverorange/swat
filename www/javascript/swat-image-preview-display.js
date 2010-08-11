@@ -1,7 +1,9 @@
-function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height)
+function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height,
+	show_title)
 {
 	this.id     = id;
 	this.opened = false;
+	this.show_title = show_title;
 
 	this.preview_image = document.createElement('img');
 	this.preview_image.id = this.id + '_preview';
@@ -60,6 +62,16 @@ SwatImagePreviewDisplay.prototype.init = function()
 		}
 
 		image_wrapper.parentNode.replaceChild(image_link, image_wrapper);
+
+		if (this.show_title) {
+			var a_tag = document.createElement('a');
+			a_tag.href = '#';
+			a_tag.appendChild(document.createTextNode(image_wrapper.title))
+			image_link.parentNode.appendChild(a_tag);
+			YAHOO.util.Event.on(a_tag, 'click',
+				this.handleClick, this, true);
+		}
+
 		YAHOO.util.Event.on(image_link, 'click',
 			this.handleClick, this, true);
 	} else {
