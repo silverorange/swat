@@ -66,6 +66,7 @@ SwatImagePreviewDisplay.prototype.init = function()
 		if (this.show_title) {
 			var a_tag = document.createElement('a');
 			a_tag.href = '#';
+			a_tag.className = 'swat-image-preview-title';
 			a_tag.appendChild(document.createTextNode(image_wrapper.title))
 			image_link.parentNode.appendChild(a_tag);
 			YAHOO.util.Event.on(a_tag, 'click',
