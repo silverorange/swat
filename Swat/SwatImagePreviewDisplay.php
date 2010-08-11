@@ -68,6 +68,13 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	public $show_icon = true;
 
 	/**
+	 * Whether or not to show a "View Larger Image" title below the image
+	 *
+	 * @var boolean
+	 */
+	public $show_title = false;
+
+	/**
 	 * The href attribute in the XHTML anchor tag
 	 *
 	 * If JavaScript is not enabled, the image preview display will link to
@@ -97,13 +104,6 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 * @see SwatImagePreviewDisplay::$link
 	 */
 	public $link_value = null;
-
-	/**
-	 * An optional html header to use in the preview window
-	 *
-	 * @var string
-	 */
-	public $header = null;
 
 	/**
 	 * Optional container width (default is the image width + padding)
@@ -215,8 +215,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 			$this->preview_image,
 			$this->preview_width,
 			$this->preview_height,
-			($this->header === null) ? 'null' :
-				SwatString::quoteJavaScriptString($this->header));
+			(($this->show_title) ? 'true' : false));
 
 		if ($this->container_width !== null) {
 			$javascript.= sprintf("%s.width = %s;",
