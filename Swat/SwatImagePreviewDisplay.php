@@ -68,7 +68,14 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	public $show_icon = true;
 
 	/**
-	 * Whether or not to show a "View Larger Image" title below the image
+	 * Whether or not to visibly display the title below the image
+	 *
+	 * By default no visible title is displayed.
+	 *
+	 * The visible title is only displayed if JavaScript is enabled. The
+	 * default title is "View Larger Image", but this may be changed by setting
+	 * the {@link SwatImageDisplay::$title} property of this image preview
+	 * display.
 	 *
 	 * @var boolean
 	 */
