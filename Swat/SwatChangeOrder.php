@@ -17,7 +17,7 @@ require_once 'Swat/SwatYUI.php';
  * order of the two options is arbitrary.
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatChangeOrder extends SwatOptionControl implements SwatState
@@ -151,10 +151,14 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$form = $this->getForm();
 		$data = &$form->getFormData();
 		$this->values = array();
-		$values = explode(',', $data[$this->id]);
-		foreach ($values as $value) {
-			$value = SwatString::signedUnserialize($value, $form->getSalt());
-			$this->values[] = $value;
+		if ($data[$this->id] !== '') {
+			$values = explode(',', $data[$this->id]);
+			foreach ($values as $value) {
+				$value = SwatString::signedUnserialize($value,
+					$form->getSalt());
+
+				$this->values[] = $value;
+			}
 		}
 	}
 
