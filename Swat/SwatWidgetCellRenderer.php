@@ -283,7 +283,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	// {{{ public function getWidget()
 
 	/**
-	 * Retrives a reference to a replicated widget
+	 * Retrieves a reference to a replicated widget
 	 *
 	 * @param string $replicator_id the replicator id of the replicated widget
 	 * @param string $widget_id the unique id of the original widget, or null
@@ -532,14 +532,14 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	{
 		$set = parent::getHtmlHeadEntrySet();
 
-		$widgets = $this->getClonedWidgets();
-		if (count($widgets) > 0) {
+		if ($this->using_null_replication) {
+			$set->addEntrySet(
+				$this->getPrototypeWidget()->getHtmlHeadEntrySet());
+		} else {
+			$widgets = $this->getWidgets();
 			foreach ($widgets as $widget) {
 				$set->addEntrySet($widget->getHtmlHeadEntrySet());
 			}
-		} else {
-			$set->addEntrySet(
-				$this->getPrototypeWidget()->getHtmlHeadEntrySet());
 		}
 
 		return $set;
@@ -573,7 +573,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 		$out = array();
 
-		foreach ($this->getClonedWidgets() as $cloned_widget) {
+		foreach ($this->getWidgets() as $cloned_widget) {
 			if ($class_name === null || $cloned_widget instanceof $class_name) {
 				if ($cloned_widget->id === null) {
 					$out[] = $cloned_widget;
@@ -614,7 +614,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 		$out = null;
 
-		foreach ($this->getClonedWidgets() as $cloned_widget) {
+		foreach ($this->getWidgets() as $cloned_widget) {
 			if ($cloned_widget instanceof $class_name) {
 				$out = $cloned_widget;
 				break;
