@@ -131,14 +131,6 @@ class SwatDate extends Date
 	const DF_Y                      = 14;
 
 	// }}}
-	// {{{ public function __construct()
-
-	public function __construct($date = null, $format = DATE_FORMAT_ISO)
-	{
-		parent::Date($date, $format);
-	}
-
-	// }}}
 	// {{{ public function format()
 
 	/**
