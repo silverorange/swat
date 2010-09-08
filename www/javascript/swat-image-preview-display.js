@@ -1,33 +1,13 @@
 function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height,
-	show_title)
+	show_title, preview_title)
 {
-	this.id     = id;
-	this.opened = false;
-	this.show_title = show_title;
-
-	this.preview_image = document.createElement('img');
-	this.preview_image.id = this.id + '_preview';
-	this.preview_image.src = preview_src;
-	this.preview_image.width = preview_width;
-	this.preview_image.height = preview_height;
-
-	this.preview_close_text = document.createElement('span');
-	this.preview_close_text.className = 'swat-image-preview-close';
-	this.preview_close_text.appendChild(
-		document.createTextNode(
-			SwatImagePreviewDisplay.close_text
-		)
-	);
-
-	this.preview_link = document.createElement('a');
-	this.preview_link.href = '#';
-	this.preview_link.appendChild(this.preview_close_text);
-	this.preview_link.appendChild(this.preview_image);
-
-	this.preview_container = document.createElement('div');
-	this.preview_container.className = 'swat-image-preview-container';
-	this.preview_container.style.display = 'none';
-	this.preview_container.appendChild(this.preview_link);
+	this.id             = id;
+	this.opened         = false;
+	this.show_title     = show_title;
+	this.preview_title  = preview_title;
+	this.preview_src    = preview_src;
+	this.preview_width  = preview_width;
+	this.preview_height = preview_height;
 
 	// list of select elements to hide for IE6
 	this.select_elements = [];
@@ -49,13 +29,22 @@ SwatImagePreviewDisplay.prototype.init = function()
 {
 	this.drawOverlay();
 
+	// link up the thumbnail image
 	var image_wrapper = document.getElementById(this.id + '_wrapper');
-	if (image_wrapper.tagName == 'SPAN') {
+	if (image_wrapper.tagName == 'A') {
+
+		image_wrapper.href = '#view';
+		YAHOO.util.Event.on(image_wrapper, 'click', function(e) {
+			YAHOO.util.Event.preventDefault(e);
+			this.open();
+		}, this, true);
+
+	} else {
 		var image_link = document.createElement('a');
 
 		image_link.title     = image_wrapper.title;
 		image_link.className = image_wrapper.className;
-		image_link.href      = '#';
+		image_link.href      = '#view';
 
 		while (image_wrapper.firstChild) {
 			image_link.appendChild(image_wrapper.firstChild);
@@ -70,29 +59,17 @@ SwatImagePreviewDisplay.prototype.init = function()
 			image_link.appendChild(span_tag);
 		}
 
-		YAHOO.util.Event.on(image_link, 'click',
-			this.handleClick, this, true);
-	} else {
-		image_wrapper.href = '#';
-		YAHOO.util.Event.on(image_wrapper, 'click',
-			this.handleClick, this, true);
+		YAHOO.util.Event.on(image_link, 'click', function(e) {
+			YAHOO.util.Event.preventDefault(e);
+			this.open();
+		}, this, true);
 	}
-
-	// add preview image to document
-	var body = document.getElementsByTagName('body')[0];
-	body.appendChild(this.preview_container);
-	body.style.position = 'relative';
-
-	// setup event handlers
-	YAHOO.util.Event.on(this.preview_container, 'click',
-		this.handleClick, this, true);
-
-	YAHOO.util.Event.on(this.preview_link, 'keypress',
-		this.handleKeyPress, this, true);
 }
 
 SwatImagePreviewDisplay.prototype.open = function()
 {
+	YAHOO.util.Event.on(document, 'keydown', this.handleKeyDown, this, true);
+
 	// get approximate max height and width excluding close text
 	var padding = SwatImagePreviewDisplay.padding;
 	var max_width = YAHOO.util.Dom.getViewportWidth() - (padding * 2);
@@ -106,26 +83,23 @@ SwatImagePreviewDisplay.prototype.open = function()
 	this.preview_container.style.display = 'block';
 
 	// now that is it displayed, adjust height for the close text
-	var region = YAHOO.util.Dom.getRegion(this.preview_close_text);
-	max_height -= (region.bottom - region.top);
-	this.scaleImage(max_width, max_height);
+//	var region = YAHOO.util.Dom.getRegion(this.preview_close_text);
+//	max_height -= (region.bottom - region.top);
+//	this.scaleImage(max_width, max_height);
 
 	this.preview_container.style.visibility = 'visible';
 
 	// x is relative to center of page
 	var scroll_top = YAHOO.util.Dom.getDocumentScrollTop();
-	var x = -Math.round((this.preview_image.width  + padding) / 2);
+	var x = -Math.round((this.preview_image.width + padding) / 2);
 	var y = Math.round((max_height - this.preview_image.height + padding) / 2) +
 		scroll_top;
 
-	YAHOO.util.Dom.setY(this.preview_container, y);
+	this.preview_container.style.top = y + 'px';
 
 	// set x
 	this.preview_container.style.left = '50%';
 	this.preview_container.style.marginLeft = x + 'px';
-
-	// focus link to capture keyboard events
-	this.preview_link.focus();
 
 	this.opened = true;
 }
@@ -155,10 +129,101 @@ SwatImagePreviewDisplay.prototype.drawOverlay = function()
 	this.overlay.className = 'swat-image-preview-overlay';
 	this.overlay.style.display = 'none';
 
-	YAHOO.util.Event.on(this.overlay, 'click', this.close, this, true);
+	SwatZIndexManager.raiseElement(this.overlay);
+
+	this.draw();
+
+	this.overlay.appendChild(this.preview_mask);
+	this.overlay.appendChild(this.preview_container);
 
 	var body = document.getElementsByTagName('body')[0];
 	body.appendChild(this.overlay);
+}
+
+SwatImagePreviewDisplay.prototype.draw = function()
+{
+	// overlay mask
+	this.preview_mask = document.createElement('a');
+	this.preview_mask.className = 'swat-image-preview-mask';
+	this.preview_mask.href = '#close';
+
+	SwatZIndexManager.raiseElement(this.preview_mask);
+
+	YAHOO.util.Event.on(this.preview_mask, 'click',
+		this.handleClick, this, true);
+
+	YAHOO.util.Event.on(this.preview_mask, 'mouseover', function(e) {
+		YAHOO.util.Dom.addClass(this.preview_close_link,
+			'swat-image-preview-close-hover');
+	}, this, true);
+
+	YAHOO.util.Event.on(this.preview_mask, 'mouseout', function(e) {
+		YAHOO.util.Dom.removeClass(this.preview_close_link,
+			'swat-image-preview-close-hover');
+	}, this, true);
+
+	// preview title
+	this.title = document.createElement('span');
+	this.title.className = 'swat-image-preview-title';
+	if (this.preview_title) {
+		this.title.appendChild(document.createTextNode(this.preview_title));
+	} else {
+		// non-breaking space to hold container open when there is no title
+		this.title.appendChild(document.createTextNode(' '));
+	}
+
+	// close link
+	this.preview_close_link = document.createElement('span');
+	this.preview_close_link.href = '#close';
+	this.preview_close_link.className = 'swat-image-preview-close';
+	this.preview_close_link.appendChild(
+		document.createTextNode(
+			SwatImagePreviewDisplay.close_text
+		)
+	);
+
+	SwatZIndexManager.raiseElement(this.preview_close_link);
+
+	// header
+	this.preview_header = document.createElement('span');
+	this.preview_header.className = 'swat-image-preview-header';
+	this.preview_header.appendChild(this.preview_close_link);
+	this.preview_header.appendChild(this.title);
+
+	SwatZIndexManager.raiseElement(this.preview_header);
+
+	// image
+	this.preview_image = document.createElement('img');
+	this.preview_image.id = this.id + '_preview';
+	this.preview_image.src = this.preview_src;
+	this.preview_image.width = this.preview_width;
+	this.preview_image.height = this.preview_height;
+
+	// image container
+	this.preview_container = document.createElement('a');
+	this.preview_container.href = '#close';
+	this.preview_container.className = 'swat-image-preview-container';
+	this.preview_container.style.display = 'none';
+	this.preview_container.appendChild(this.preview_header);
+	this.preview_container.appendChild(this.preview_image);
+
+	// For IE6 & 7
+	this.preview_container.style.width = this.preview_width + 'px';
+
+	SwatZIndexManager.raiseElement(this.preview_container);
+
+	YAHOO.util.Event.on(this.preview_container, 'click',
+		this.handleClick, this, true);
+
+	YAHOO.util.Event.on(this.preview_container, 'mouseover', function(e) {
+		YAHOO.util.Dom.addClass(this.preview_close_link,
+			'swat-image-preview-close-hover');
+	}, this, true);
+
+	YAHOO.util.Event.on(this.preview_container, 'mouseout', function(e) {
+		YAHOO.util.Dom.removeClass(this.preview_close_link,
+			'swat-image-preview-close-hover');
+	}, this, true);
 }
 
 SwatImagePreviewDisplay.prototype.showOverlay = function()
@@ -189,6 +254,8 @@ SwatImagePreviewDisplay.prototype.hideOverlay = function()
 
 SwatImagePreviewDisplay.prototype.close = function()
 {
+	YAHOO.util.Event.removeListener(document, 'keydown', this.handleKeyDown);
+
 	this.hideOverlay();
 
 	this.preview_container.style.display = 'none';
@@ -199,18 +266,14 @@ SwatImagePreviewDisplay.prototype.close = function()
 SwatImagePreviewDisplay.prototype.handleClick = function(e)
 {
 	YAHOO.util.Event.preventDefault(e);
-
-	if (this.opened)
-		this.close();
-	else
-		this.open();
+	this.close();
 }
 
-SwatImagePreviewDisplay.prototype.handleKeyPress = function(e)
+SwatImagePreviewDisplay.prototype.handleKeyDown = function(e)
 {
-	YAHOO.util.Event.preventDefault(e);
-
 	// close preview on backspace or escape
-	if (e.keyCode == 8 || e.keyCode == 27)
+	if (e.keyCode == 8 || e.keyCode == 27) {
+		YAHOO.util.Event.preventDefault(e);
 		this.close();
+	}
 }

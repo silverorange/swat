@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * another image when the first image is clicked.
  *
  * @package   Swat
- * @copyright 2005-2008 silverorange
+ * @copyright 2005-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImagePreviewDisplay extends SwatImageDisplay
@@ -122,6 +122,14 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 */
 	public $container_height = null;
 
+	/**
+	 * Optional title to display above the large image when the preview is
+	 * opened
+	 *
+	 * @var string
+	 */
+	public $preview_title = null;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -140,6 +148,10 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 
 		$yui = new SwatYUI(array('dom', 'event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+
+		$this->addJavaScript(
+			'packages/swat/javascript/swat-z-index-manager.js',
+			Swat::PACKAGE_ID);
 
 		$this->addJavaScript(
 			'packages/swat/javascript/swat-image-preview-display.js',
@@ -197,6 +209,25 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	}
 
 	// }}}
+	// {{{ protected function getJavaScriptClass()
+
+	/**
+	 * Gets the name of the JavaScript class to instantiate for this image
+	 * preview display
+	 *
+	 * Sub-classes of this class may want to return a sub-class of the default
+	 * JavaScript image preview class.
+	 *
+	 * @return string the name of the JavaScript class to instantiate for this
+	 *                 image preview display. Defaults to
+	 *                 'SwatImagePreviewDisplay'.
+	 */
+	protected function getJavaScriptClass()
+	{
+		return 'SwatImagePreviewDisplay';
+	}
+
+	// }}}
 	// {{{ protected function getInlineJavaScript()
 
 	/**
@@ -216,13 +247,16 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 		}
 
 		$javascript.= sprintf(
-			"var %s = new SwatImagePreviewDisplay('%s', '%s', %d, %d, %s);\n",
+			"var %s = new %s(\n".
+				"%s, %s, %s, %s, %s, %s);\n",
 			$this->id,
-			$this->id,
-			$this->preview_image,
-			$this->preview_width,
-			$this->preview_height,
-			(($this->show_title) ? 'true' : 'false'));
+			$this->getJavaScriptClass(),
+			SwatString::quoteJavaScriptString($this->id),
+			SwatString::quoteJavaScriptString($this->preview_image),
+			intval($this->preview_width),
+			intval($this->preview_height),
+			(($this->show_title) ? 'true' : 'false'),
+			SwatString::quoteJavaScriptString($this->preview_title));
 
 		if ($this->container_width !== null) {
 			$javascript.= sprintf("%s.width = %s;",

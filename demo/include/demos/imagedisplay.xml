@@ -24,6 +24,7 @@
 			<property name="preview_image">images/swat-logo-large.png</property>
 			<property name="preview_width" type="integer">500</property>
 			<property name="preview_height" type="integer">212</property>
+			<property name="preview_title">Lorem Ipsum Dolor</property>
 		</widget>
 	</widget>
 	<widget class="SwatFieldset">
