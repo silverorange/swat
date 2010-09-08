@@ -291,7 +291,10 @@ class DemoApplication
 			break;
 
 		case 'ImageDisplay':
-			$entries = array('SwatImageDisplay');
+			$entries = array(
+				'SwatImageDisplay',
+				'SwatImagePreviewDisplay',
+				);
 			break;
 
 		case 'MessageDisplay':
