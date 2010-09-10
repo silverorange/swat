@@ -239,8 +239,18 @@ SwatTableViewInputRow.prototype.addRow = function()
 	dest_tr.className = 'swat-table-view-input-row';
 	dest_tr.id = this.id + '_row_' + replicator_id;
 
+	var node = dest_tr;
+	var dest_color = 'transparent';
+	while (dest_color == 'transparent' && node) {
+		dest_color = YAHOO.util.Dom.getStyle(node, 'background-color');
+		node = node.parentNode;
+	}
+	if (dest_color == 'transparent') {
+		dest_color = '#ffffff';
+	}
+
 	var animation = new YAHOO.util.ColorAnim(dest_tr,
-		{ backgroundColor: { from: '#fffbc9', to: '#ffffff' } }, 1,
+		{ backgroundColor: { from: '#fffbc9', to: dest_color } }, 1,
 		YAHOO.util.Easing.easeOut);
 
 	animation.animate();
