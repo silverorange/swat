@@ -323,7 +323,7 @@ class SwatFileEntry extends SwatInputControl
 						FILEINFO_MIME_TYPE : FILEINFO_MIME;
 
 					$finfo = new finfo($mime_constant);
-					$this->mime_type = current(explode(';',
+					$this->mime_type = reset(explode(';',
 						$finfo->file($temp_file_name)));
 
 				} elseif (function_exists('mime_content_type')) {
