@@ -64,11 +64,12 @@ $package->setPhpDep('5.1.5');
 $package->setPearinstallerDep('1.4.0');
 $package->addExtensionDep('required', 'iconv');
 $package->addExtensionDep('required', 'mbstring');
-$package->addPackageDepWithChannel('required', 'Date',      'pear.silverorange.com', '1.5.0so6');
-$package->addPackageDepWithChannel('optional', 'Yui',       'pear.silverorange.com', '1.0.10');
-$package->addPackageDepWithChannel('optional', 'MDB2',      'pear.php.net',          '2.2.2');
-$package->addPackageDepWithChannel('optional', 'ReCaptcha', 'pear.silverorange.com', '1.0.0');
-$package->addPackageDepWithChannel('optional', 'Net_IDNA',  'pear.silverorange.com', '0.7.2so1');
+$package->addExtensionDep('required', 'intl');
+$package->addPackageDepWithChannel('required', 'HotDate',     'pear.silverorange.com', '0.0.1');
+$package->addPackageDepWithChannel('optional', 'Yui',         'pear.silverorange.com', '1.0.10');
+$package->addPackageDepWithChannel('optional', 'MDB2',        'pear.php.net',          '2.2.2');
+$package->addPackageDepWithChannel('optional', 'ReCaptcha',   'pear.silverorange.com', '1.0.0');
+$package->addPackageDepWithChannel('optional', 'Net_IDNA',    'pear.silverorange.com', '0.7.2so1');
 $package->addPackageDepWithChannel('required', 'Concentrate', 'pear.silverorange.com', '0.0.1');
 $package->generateContents();
 

@@ -13,7 +13,7 @@ require_once 'Swat/SwatYUI.php';
  * A time entry widget
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2004-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @todo      Should we add a display_time_zone parameter?
  */
@@ -371,17 +371,16 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		} else {
 			try {
 				$date = new SwatDate();
-				$error = $date->setDayMonthYear(self::$date_day,
-					self::$date_month, self::$date_year);
-
-				if (PEAR::isError($error))
+				if ($date->setDate(self::$date_year,
+					self::$date_month, self::$date_day) === false) {
 					throw new SwatException('Invalid date.');
+				}
 
-				$error = $date->setHourMinuteSecond($hour, $minute, $second);
-				if (PEAR::isError($error))
+				if ($date->setTime($hour, $minute, $second) === false) {
 					throw new SwatException('Invalid date.');
+				}
 
-				$date->setTZ('UTC');
+				$date->setTZById('UTC');
 
 				$this->value = $date;
 				$this->validateRanges();
@@ -542,9 +541,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->valid_range_start->setYear(self::$date_year);
 		$this->valid_range_start->setMonth(self::$date_month);
 		$this->valid_range_start->setDay(self::$date_day);
-		$this->valid_range_start->setTZ('UTC');
+		$this->valid_range_start->setTZById('UTC');
 
-		return (Date::compare(
+		return (SwatDate::compare(
 			$this->value, $this->valid_range_start, true) >= 0);
 	}
 
@@ -563,9 +562,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->valid_range_end->setYear(self::$date_year);
 		$this->valid_range_end->setMonth(self::$date_month);
 		$this->valid_range_end->setDay(self::$date_day);
-		$this->valid_range_end->setTZ('UTC');
+		$this->valid_range_end->setTZById('UTC');
 
-		return (Date::compare(
+		return (SwatDate::compare(
 			$this->value, $this->valid_range_end, true) <= 0);
 	}
 
@@ -685,31 +684,31 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 *
 	 * @return string the formatted time.
 	 */
-	private function getFormattedTime(Date $time)
+	private function getFormattedTime(SwatDate $time)
 	{
 		$format = '';
 
 		if ($this->display_parts & self::HOUR) {
-			$format.= ($this->twelve_hour) ? '%i' : '%h';
+			$format.= ($this->twelve_hour) ? 'h' : 'H';
 			if ($this->display_parts & (self::MINUTE | self::SECOND))
 				$format.= ':';
 		}
 
 		if ($this->display_parts & self::MINUTE) {
-			$format.= '%M';
+			$format.= 'mm';
 			if ($this->display_parts & self::SECOND)
 				$format.= ':';
 		}
 
 		if ($this->display_parts & self::SECOND) {
-			$format.= '%S';
+			$format.= 'ss';
 		}
 
 		if (($this->display_parts & self::HOUR) && $this->twelve_hour) {
-			$format.= ' %p';
+			$format.= ' a';
 		}
 
-		return $time->format($format);
+		return $time->formatLikeIntl($format);
 	}
 
 	// }}}

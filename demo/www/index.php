@@ -1,5 +1,7 @@
 <?php
 
+setlocale(LC_ALL, 'fr_FR.utf8');
+
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 /*
@@ -15,6 +17,7 @@ if (class_exists('PackageConfig')) {
 	PackageConfig::addPackage('swat');
 	PackageConfig::addPackage('jquery');
 	PackageConfig::addPackage('recaptcha');
+	PackageConfig::addPackage('hot-date');
 }
 
 require_once 'Swat/SwatAutoloader.php';
