@@ -10,7 +10,7 @@ require_once 'Swat/SwatString.php';
  * A text renderer.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDateCellRenderer extends SwatCellRenderer
@@ -20,10 +20,11 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	/**
 	 * Date to render
 	 *
-	 * This may either be a Date object, or may be an ISO-formatted date string
-	 * that can be passed into the SwatDate constructor.
+	 * This may either be a {@link SwatDate} object, or may be an
+	 * ISO-formatted date string that can be passed into the SwatDate
+	 * constructor.
 	 *
-	 * @var string|SwatDate|Date
+	 * @var string|SwatDate
 	 */
 	public $date = null;
 
@@ -38,7 +39,7 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	public $format = SwatDate::DF_DATE_TIME;
 
 	/**
-	 * Time Zone Format
+	 * Time zone format
 	 *
 	 * A time zone format class constant from SwatDate.
 	 *
@@ -49,11 +50,11 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	/**
 	 * The time zone to render the date in
 	 *
-	 * The time zone may be specified either as a time zone identifier valid
-	 * for PEAR::Date_TimeZone or as a Date_TimeZone object. If the render
-	 * time zone is null, no time zone conversion is performed.
+	 * The time zone may be specified either as a valid time zone identifier
+	 * or as a HotDateTimeZone object. If the render time zone is null, no
+	 * time zone conversion is performed.
 	 *
-	 * @var string|Date_TimeZone
+	 * @var string|HotDateTimeZone
 	 */
 	public $display_time_zone = null;
 
@@ -73,18 +74,30 @@ class SwatDateCellRenderer extends SwatCellRenderer
 		parent::render();
 
 		if ($this->date !== null) {
-			// Time zone conversion mutates the original object so create a new
-			// date for display. This also converts a string date to an object.
-			$date = new SwatDate($this->date);
-			if ($this->display_time_zone !== null) {
-				if ($this->display_time_zone instanceof Date_TimeZone)
-					$date->convertTZ($this->display_time_zone);
-				else
-					$date->convertTZbyID($this->display_time_zone);
+
+			if (is_string($this->date)) {
+				$date = new SwatDate($this->date);
+			} elseif ($this->date instanceof SwatDate) {
+				// Time zone conversion mutates the original object so create
+				// a new date for display.
+				$date = clone $this->date;
+			} else {
+				throw new InvalidArgumentException(
+					'The $date must be either a string or a SwatDate object.');
+			}
+
+			if ($this->display_time_zone instanceof HotDateTimeZone) {
+				$date->convertTZ($this->display_time_zone);
+			} elseif (is_string($this->display_time_zone)) {
+				$date->convertTZbyID($this->display_time_zone);
+			} elseif ($this->display_time_zone !== null) {
+				throw new InvalidArgumentException(
+					'The $display_time_zone must be either a string or a '.
+					'HotDateTimeZone object.');
 			}
 
 			echo SwatString::minimizeEntities(
-				$date->format($this->format, $this->time_zone_format));
+				$date->formatLikeIntl($this->format, $this->time_zone_format));
 		}
 	}
 

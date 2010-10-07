@@ -2,17 +2,17 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Date/TimeZone.php';
+require_once 'HotDate/HotDateTimeZone.php';
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatCascadeFlydown.php';
 require_once 'Swat/SwatState.php';
 
 /**
- * A time-zone selection widget
+ * A time zone selection widget
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTimeZoneEntry extends SwatInputControl implements SwatState
@@ -20,9 +20,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ public properties
 
 	/**
-	 * Time-zone identifier
+	 * Time zone identifier
 	 *
-	 * The id of the selected time-zone.
+	 * The id of the selected time zone.
 	 *
 	 * @var string
 	 */
@@ -32,7 +32,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ private properties
 
 	/**
-	 * Time-zone areas available for this time-zone entry widget
+	 * Time zone areas available for this time zone entry widget
 	 *
 	 * This is an array of flydown options. Areas are usually continents.
 	 *
@@ -41,7 +41,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	private $areas = array();
 
 	/**
-	 * Time-zone regions available for this time-zone entry widget
+	 * Time zone regions available for this time zone entry widget
 	 *
 	 * This is an array of flydown options. Regions are usually cities.
 	 *
@@ -53,7 +53,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ public function __construct()
 
 	/**
-	 * Creates a new time-zone selector widget
+	 * Creates a new time zone selector widget
 	 *
 	 * @param string $id a non-visible unique id for this widget.
 	 *
@@ -63,9 +63,19 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	{
 		parent::__construct($id);
 
-		static $area_whitelist = array('Africa', 'America', 'Antarctica',
-			'Arctic', 'Asia', 'Atlantic', 'Australia', 'Europe',
-			'Indian', 'Pacific', 'UTC');
+		static $area_whitelist = array(
+			HotDateTimeZone::AFRICA,
+			HotDateTimeZone::AMERICA,
+			HotDateTimeZone::ANTARCTICA,
+			HotDateTimeZone::ARCTIC,
+			HotDateTimeZone::ASIA,
+			HotDateTimeZone::ATLANTIC,
+			HotDateTimeZone::AUSTRALIA,
+			HotDateTimeZone::EUROPE,
+			HotDateTimeZone::INDIAN,
+			HotDateTimeZone::PACIFIC,
+			HotDateTimeZone::UTC,
+		);
 
 		$time_zone_list = $this->parseAreaWhitelist($area_whitelist);
 		$this->setAreas($time_zone_list);
@@ -75,9 +85,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ public function display()
 
 	/**
-	 * Displays this time-zone entry widget
+	 * Displays this time zone entry widget
 	 *
-	 * Outputs a cascading list of time-zones.
+	 * Outputs a cascading list of time zones.
 	 */
 	public function display()
 	{
@@ -108,7 +118,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ public function process()
 
 	/**
-	 * Processes this time-zone entry widget
+	 * Processes this time zone entry widget
 	 *
 	 * If any validation type errors occur, an error message is attached to
 	 * this entry widget.
@@ -119,7 +129,6 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
 		$areas_flydown   = $this->getCompositeWidget('areas_flydown');
 		$regions_flydown = $this->getCompositeWidget('regions_flydown');
-		$tz_data         = Date_TimeZone::getAvailableIDs();
 
 		if ($areas_flydown->value === 'UTC') {
 			$this->value = 'UTC';
@@ -135,9 +144,13 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		} elseif ($this->value === null) {
 			$message = Swat::_('The %s field is required.');
 			$this->addMessage(new SwatMessage($message, 'error'));
-		} elseif (!in_array($this->value, $tz_data)) {
-			$message = Swat::_('The %s field is an invalid time-zone.');
-			$this->addMessage(new SwatMessage($message, 'error'));
+		} else {
+			try {
+				$time_zone = new HotDateTimeZone($this->value);
+			} catch (Exception $e) {
+				$message = Swat::_('The %s field is an invalid time zone.');
+				$this->addMessage(new SwatMessage($message, 'error'));
+			}
 		}
 	}
 
@@ -145,9 +158,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ public function getState()
 
 	/**
-	 * Gets the current state of this time-zone entry widget
+	 * Gets the current state of this time zone entry widget
 	 *
-	 * @return string the current state of this time-zone entry widget.
+	 * @return string the current state of this time zone entry widget.
 	 *
 	 * @see SwatState::getState()
 	 */
@@ -160,9 +173,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ public function setState()
 
 	/**
-	 * Sets the current state of this time-zone entry widget
+	 * Sets the current state of this time zone entry widget
 	 *
-	 * @param string $state the new state of this time-zone entry widget.
+	 * @param string $state the new state of this time zone entry widget.
 	 *
 	 * @see SwatState::setState()
 	 */
@@ -183,7 +196,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 */
 	protected function getCSSClassNames()
 	{
-		$classes = array('swat-time-zone-entry');
+		$classes = array('swat-time zone-entry');
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
@@ -192,7 +205,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ protected function createCompositeWidgets()
 
 	/**
-	 * Creates all internal widgets required for this time-zone entry
+	 * Creates all internal widgets required for this time zone entry
 	 */
 	protected function createCompositeWidgets()
 	{
@@ -228,24 +241,21 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	{
 		$areas = array();
 
-		$tz_data = Date_TimeZone::getAvailableIDs();
+		$whitelist = 0;
+		foreach ($area_whitelist as $area) {
+			$whitelist = $whitelist | $area;
+		}
+
+		$tz_data = HotDateTimeZone::listIdentifiers($whitelist);
 
 		foreach ($tz_data as $id) {
-			// skip time zones without a 'longname' as they cause errors on
-			// Date instansiation.
-			if (array_key_exists('longname',
-				$GLOBALS['_DATE_TIMEZONE_DATA'][$id])) {
+			$area = $this->getArea($id);
+			$region = $this->getRegion($id);
 
-				$area = $this->getArea($id);
-				if (in_array($area, $area_whitelist)) {
-					$region = $this->getRegion($id);
-					if (!array_key_exists($area, $areas)) {
-						$areas[$area] = array();
-					}
-
-					$areas[$area][] = $region;
-				}
+			if (!array_key_exists($area, $areas)) {
+				$areas[$area] = array();
 			}
+			$areas[$area][] = $region;
 		}
 
 		return $areas;
@@ -283,8 +293,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ private function setRegions()
 
 	/**
-	 * Builds the internal array of {@link SwatOptions} for the specified
-	 * regions
+	 * Builds the internal array of {@link SwatOption} objects for the
+	 * specified regions
 	 *
 	 * @param array $regions an array of regions.
 	 * @param string $area the region's area.
@@ -293,17 +303,19 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	{
 		sort($regions);
 
+		$abbreviations = SwatDate::getTimeZoneAbbreviations();
+
 		foreach ($regions as $region) {
 			$title = $this->getRegionTitle($region);
 
-			if (isset($GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$region])) {
-				$data = $GLOBALS['_DATE_TIMEZONE_DATA'][$area.'/'.$region];
+			if (isset($abbreviations[$area.'/'.$region])) {
+				$data = $abbreviations[$area.'/'.$region];
 
-				if (!empty($data['dstshortname']))
-					$title.= sprintf(' (%s/%s)',
-						$data['shortname'], $data['dstshortname']);
-				else
-					$title.= sprintf(' (%s)', $data['shortname']);
+				if (!empty($data['dt']) && !empty($data['st'])) {
+					$title.= sprintf(' (%s/%s)', $data['st'], $data['dt']);
+				} elseif (!empty($data['st'])) {
+					$title.= sprintf(' (%s)', $data['st']);
+				}
 			}
 
 			$this->regions[$area][] = new SwatOption($region, $title);
@@ -314,11 +326,11 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ private function getArea()
 
 	/**
-	 * Gets an area from a time-zone identifier
+	 * Gets an area from a time zone identifier
 	 *
-	 * Returns the area part of a full time-zone.
+	 * Returns the area part of a full time zone.
 	 *
-	 * @param string $time_zone the time-zone identifier to get the area from.
+	 * @param string $time_zone the time zone identifier to get the area from.
 	 *
 	 * @return string an area name.
 	 */
@@ -339,12 +351,12 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ private function getRegion()
 
 	/**
-	 * Gets a region from a time-zone identifier
+	 * Gets a region from a time zone identifier
 	 *
-	 * @param string $time_zone the time-zone identifier from which to get the
+	 * @param string $time_zone the time zone identifier from which to get the
 	 *                           region.
 	 *
-	 * @return string the region part of a full time-zone indentifier.
+	 * @return string the region part of a full time zone indentifier.
 	 */
 	private function getRegion($time_zone)
 	{
@@ -363,10 +375,10 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	// {{{ private function getRegionTitle()
 
 	/**
-	 * Gets a formatted region title from the region part of a time-zone
+	 * Gets a formatted region title from the region part of a time zone
 	 * identifier
 	 *
-	 * @param string $region the region part of the time-zone identifier.
+	 * @param string $region the region part of the time zone identifier.
 	 *
 	 * @return string the formatted region title.
 	 */

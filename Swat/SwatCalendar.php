@@ -5,7 +5,7 @@
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatYUI.php';
 require_once 'Swat/SwatHtmlTag.php';
-require_once 'Date.php';
+require_once 'Swat/SwatDate.php';
 
 /**
  * Pop-up calendar widget
@@ -14,7 +14,7 @@ require_once 'Date.php';
  * inside the {@link SwatDateEntry} widget but can be used by itself as well.
  *
  * @package   Swat
- * @copyright 2004-2009 silverorange
+ * @copyright 2004-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCalendar extends SwatControl
@@ -24,14 +24,14 @@ class SwatCalendar extends SwatControl
 	/**
 	 * Start date of the valid range (inclusive).
 	 *
-	 * @var Date
+	 * @var SwatDate
 	 */
 	public $valid_range_start;
 
 	/**
 	 * End date of the valid range (exclusive).
 	 *
-	 * @var Date
+	 * @var SwatDate
 	 */
 	public $valid_range_end;
 
@@ -86,9 +86,9 @@ class SwatCalendar extends SwatControl
 
 		if ($this->valid_range_start === null) {
 			$today = new SwatDate();
-			$value = $today->format('%m/%d/%Y');
+			$value = $today->formatLikeIntl('MM/dd/yyyy');
 		} else {
-			$value = $this->valid_range_start->format('%m/%d/%Y');
+			$value = $this->valid_range_start->formatLikeIntl('MM/dd/yyyy');
 		}
 
 		$input_tag = new SwatHtmlTag('input');
@@ -139,7 +139,7 @@ class SwatCalendar extends SwatControl
 		}
 
 		if (isset($this->valid_range_start))
-			$start_date = $this->valid_range_start->format('%m/%d/%Y');
+			$start_date = $this->valid_range_start->formatLikeIntl('MM/dd/yyyy');
 		else
 			$start_date = '';
 
@@ -147,7 +147,7 @@ class SwatCalendar extends SwatControl
 			// JavaScript calendar is inclusive, subtract one second from range
 			$tmp = clone $this->valid_range_end;
 			$tmp->subtractSeconds(1);
-			$end_date = $tmp->format('%m/%d/%Y');
+			$end_date = $tmp->formatLikeIntl('MM/dd/yyyy');
 		} else {
 			$end_date = '';
 		}
@@ -177,7 +177,7 @@ class SwatCalendar extends SwatControl
 		 * This date is arbitrary and is just used for getting week and
 		 * month names.
 		 */
-		$date = new Date();
+		$date = new SwatDate();
 		$date->setDay(1);
 		$date->setMonth(1);
 		$date->setYear(1995);
@@ -185,7 +185,7 @@ class SwatCalendar extends SwatControl
 		// Get the names of weeks (locale-specific)
 		$week_names = array();
 		for ($i = 1; $i < 8; $i++) {
-			$week_names[] = $date->format('%a');
+			$week_names[] = $date->formatLikeIntl('eee');
 			$date->setDay($i + 1);
 		}
 		$week_names = "['".implode("', '", $week_names)."']";
@@ -193,7 +193,7 @@ class SwatCalendar extends SwatControl
 		// Get the names of months (locale-specific)
 		$month_names = array();
 		for ($i = 1; $i < 13; $i++) {
-			$month_names[] = $date->format('%b');
+			$month_names[] = $date->formatLikeIntl('MMM');
 			$date->setMonth($i + 1);
 		}
 		$month_names = "['".implode("', '", $month_names)."']";

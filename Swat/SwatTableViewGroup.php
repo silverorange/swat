@@ -2,6 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'Swat/SwatDate.php';
 require_once 'Swat/SwatTableViewColumn.php';
 require_once 'Swat/SwatHtmlTag.php';
 
@@ -15,7 +16,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * displayed once for every row.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewGroup extends SwatTableViewColumn
@@ -175,8 +176,9 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	 */
 	protected function isEqual($group_value, $row_value)
 	{
-		if ($group_value instanceof Date && $row_value instanceof Date) {
-			return (Date::compare($group_value, $row_value) === 0);
+		if ($group_value instanceof SwatDate &&
+			$row_value instanceof SwatDate) {
+			return (SwatDate::compare($group_value, $row_value) === 0);
 		}
 
 		return ($group_value === $row_value);

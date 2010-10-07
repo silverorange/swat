@@ -24,7 +24,7 @@
 				<property name="group_by">harvest_date</property>
 				<object class="SwatDateCellRenderer">
 					<property name="date" type="data">harvest_date</property>
-					<property name="format" type="string">Harvest Month - %B</property>
+					<property name="format" type="string">'Harvest Month - 'MMMM</property>
 				</object>
 			</object>
 		</widget>

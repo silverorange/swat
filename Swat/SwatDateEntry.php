@@ -173,7 +173,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$date->setHour(0);
 		$date->setMinute(0);
 		$date->setSecond(0);
-		$date->setTZ('UTC');
+		$date->setTZById('UTC');
 
 		$this->valid_range_start = clone $date;
 		$this->valid_range_end = clone $date;
@@ -366,15 +366,15 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		} else {
 			try {
 				$date = new SwatDate();
-				$error = $date->setDayMonthYear($day, $month, $year);
-				if (PEAR::isError($error))
+				if ($date->setDate($year, $month, $day) === false) {
 					throw new SwatException('Invalid date.');
+				}
 
-				$error = $date->setHourMinuteSecond($hour, $minute, $second);
-				if (PEAR::isError($error))
+				if ($date->setTime($hour, $minute, $second) === false) {;
 					throw new SwatException('Invalid date.');
+				}
 
-				$date->setTZ('UTC');
+				$date->setTZById('UTC');
 
 				$this->value = $date;
 				$this->validateRanges();
@@ -527,8 +527,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function isStartDateValid()
 	{
-		$this->valid_range_start->setTZ('UTC');
-		return (Date::compare(
+		$this->valid_range_start->setTZById('UTC');
+		return (SwatDate::compare(
 			$this->value, $this->valid_range_start, true) >= 0);
 	}
 
@@ -544,8 +544,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function isEndDateValid()
 	{
-		$this->valid_range_end->setTZ('UTC');
-		return (Date::compare(
+		$this->valid_range_end->setTZById('UTC');
+		return (SwatDate::compare(
 			$this->value, $this->valid_range_end, true) < 0);
 	}
 
@@ -700,7 +700,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		if ($this->show_month_number)
 			$text.= str_pad($month, 2, '0', STR_PAD_LEFT).' - ';
 
-		$text.= Date_Calc::getMonthFullName($month);
+		$date = new SwatDate('2010-'.$month.'-01');
+
+		$text.= $date->formatLikeIntl('MMMM');
 
 		return $text;
 	}
@@ -737,7 +739,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			for ($i = $start_day; $i <= $end_day; $i++)
 				$flydown->addOption($i, $i);
 
-		} elseif (Date::compare($end_check, $this->valid_range_end, true) != -1) {
+		} elseif (SwatDate::compare($end_check, $this->valid_range_end, true) != -1) {
 
 			$start_day = $this->valid_range_start->getDay();
 			$end_day   = $this->valid_range_end->getDay();
@@ -812,24 +814,24 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$format = '';
 
 		if ($this->display_parts & self::MONTH) {
-			$format.= ' %B';
+			$format.= ' MMMM';
 		}
 
 		if ($this->display_parts & self::DAY) {
-			$format.= ' %e,';
+			$format.= ' d,';
 		}
 
 		if ($this->display_parts & self::YEAR) {
-			$format.= ' %Y';
+			$format.= ' yyyy';
 		}
 
 		if ($this->display_parts & self::TIME) {
-			$format.= ' %I:%M %p';
+			$format.= ' h:mm a';
 		}
 
 		$format = trim($format, ', ');
 
-		return $date->format($format);
+		return $date->formatLikeIntl($format);
 	}
 
 	// }}}
