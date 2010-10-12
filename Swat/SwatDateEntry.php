@@ -806,7 +806,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 * @return string a date formatted according to the properties of this date
 	 *                 entry.
 	 */
-	private function getFormattedDate(Date $date)
+	private function getFormattedDate(SwatDate $date)
 	{
 		// note: the display of the date is not locale specific as this
 		// is quite difficult without a good i18n/l10n library
