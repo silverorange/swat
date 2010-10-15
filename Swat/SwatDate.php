@@ -761,6 +761,30 @@ class SwatDate extends HotDateTime
 	}
 
 	// }}}
+	// {{{ public static function getTimeZoneAbbreviation()
+
+	/**
+	 * Gets an array of time zone abbreviations for a specific time zone
+	 *
+	 * @param HotDateTimeZone $time_zone the new time zone.
+	 *
+	 * @return array an array containing one or both of
+	 *               - 'st' for the standard time abbreviation, and
+	 *               - 'dt' for the daylight time abbreviation.
+	 */
+	public static function getTimeZoneAbbreviation(HotDateTimeZone $time_zone)
+	{
+		$abbreviations = self::getTimeZoneAbbreviations();
+		$key = $time_zone->getName();
+
+		if (array_key_exists($key, $abbreviations)) {
+			$abbreviation = $abbreviations[$key];
+		}
+
+		return $abbreviation;
+	}
+
+	// }}}
 	// {{{ public static function compare()
 
 	/**
