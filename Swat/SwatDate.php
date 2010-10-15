@@ -676,9 +676,9 @@ class SwatDate extends HotDateTime
 	{
 		switch ($id) {
 		case self::DF_MDY:
-			return Swat::_('mm/dd/yy');
+			return Swat::_('MM/dd/yy');
 		case self::DF_MDY_SHORT:
-			return Swat::_('mmddyy');
+			return Swat::_('MMddyy');
 		case self::DF_DATE:
 			return Swat::_('MMMM d, yyyy');
 		case self::DF_DATE_LONG:
@@ -700,7 +700,7 @@ class SwatDate extends HotDateTime
 		case self::DF_MY:
 			return Swat::_('MMMM yyyy');
 		case self::DF_CC_MY:
-			return Swat::_('mm / yyyy');
+			return Swat::_('MM / yyyy');
 		case self::DF_Y:
 			return Swat::_('yyyy');
 		case self::DF_ISO_8601_BASIC:
