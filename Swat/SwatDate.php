@@ -991,6 +991,20 @@ class SwatDate extends HotDateTime
 	}
 
 	// }}}
+	// {{{ public function getDayOfYear()
+
+	/**
+	 * Gets the day of the year as a number from 1 to 365
+	 *
+	 * @return integer the day of the year of this date.
+	 */
+	public function getDayOfYear()
+	{
+		$day = (integer)$this->format('z');
+		return $day + 1; // the "z" format starts at 0
+	}
+
+	// }}}
 	// {{{ public function getDate() - deprecated
 
 	/**
