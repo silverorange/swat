@@ -89,7 +89,7 @@ class SwatDateCellRenderer extends SwatCellRenderer
 			if ($this->display_time_zone instanceof HotDateTimeZone) {
 				$date->convertTZ($this->display_time_zone);
 			} elseif (is_string($this->display_time_zone)) {
-				$date->convertTZbyID($this->display_time_zone);
+				$date->convertTZById($this->display_time_zone);
 			} elseif ($this->display_time_zone !== null) {
 				throw new InvalidArgumentException(
 					'The $display_time_zone must be either a string or a '.
