@@ -5,6 +5,21 @@
 require_once 'HotDate/HotDateTime.php';
 require_once 'Swat/Swat.php';
 
+// {{{ Date_TimeZone - deprecated, used only for session compatibility
+
+/**
+ * @deprecated Used only for session compatibility.
+ */
+class Date_TimeZone
+{
+	/**
+	 * @deprecated Used only for session compatibility.
+	 */
+	public $id;
+}
+
+// }}}
+
 /**
  * Date class and PEAR-compatibility layer
  *
@@ -19,6 +34,44 @@ require_once 'Swat/Swat.php';
  */
 class SwatDate extends HotDateTime
 {
+	// {{{ public properties - deprecated, used only for session compatibility
+
+	/**
+	 * @deprecated Used only for session compatibility.
+	 */
+	public $year;
+
+	/**
+	 * @deprecated Used only for session compatibility.
+	 */
+	public $month;
+
+	/**
+	 * @deprecated Used only for session compatibility.
+	 */
+	public $day;
+
+	/**
+	 * @deprecated Used only for session compatibility.
+	 */
+	public $hour;
+
+	/**
+	 * @deprecated Used only for session compatibility.
+	 */
+	public $minute;
+
+	/**
+	 * @deprecated Used only for session compatibility.
+	 */
+	public $second;
+
+	/**
+	 * @deprecated Used only for session compatibility.
+	 */
+	public $tz;
+
+	// }}}
 	// {{{ time zone format constants
 
 	/**
