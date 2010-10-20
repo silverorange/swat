@@ -1166,8 +1166,28 @@ class SwatDBDataObject extends SwatObject
 
 		$data = unserialize($data);
 
-		foreach ($data as $property => $value)
+		foreach ($data as $property => $value) {
+
+			if ($value instanceof SwatDate && isset($value->year)) {
+				// convert old dates to new dates
+				$date_string = sprintf(
+					'%04d-%02d-%02dT%02d:%02d:%02d',
+					$value->year,
+					$value->month,
+					$value->day,
+					$value->hour,
+					$value->minute,
+					$value->second);
+
+				$tz_id = $value->tz->id;
+
+				$value = new SwatDate($date_string);
+				$value->setTZById($tz_id);
+			}
+
 			$this->$property = $value;
+
+		}
 	}
 
 	// }}}
