@@ -996,6 +996,8 @@ class SwatDate extends HotDateTime
 	/**
 	 * Gets the day of the year as a number from 1 to 365
 	 *
+	 * This method is provided for backwards compatibility with PEAR::Date.
+	 *
 	 * @return integer the day of the year of this date.
 	 */
 	public function getDayOfYear()
