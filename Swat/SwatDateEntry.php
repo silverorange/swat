@@ -33,7 +33,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	/**
 	 * Date of this date entry widget
 	 *
-	 * @var Date
+	 * @var SwatDate
 	 */
 	public $value = null;
 
@@ -78,7 +78,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 *
 	 * Defaults to 20 years in the past.
 	 *
-	 * @var Date
+	 * @var SwatDate
 	 */
 	public $valid_range_start;
 
@@ -87,7 +87,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 *
 	 * Defaults to 20 years in the future.
 	 *
-	 * @var Date
+	 * @var SwatDate
 	 */
 	public $valid_range_end;
 
@@ -801,7 +801,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 * date entry widget. This is used primarily for returning formatted
 	 * valid start and valid end dates for user error messages.
 	 *
-	 * @param Date $date the date object to format.
+	 * @param SwatDate $date the date object to format.
 	 *
 	 * @return string a date formatted according to the properties of this date
 	 *                 entry.

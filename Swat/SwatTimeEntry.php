@@ -35,7 +35,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 * undefined. If the state of this time entry does not represent a valid
 	 * time, the value will be null.
 	 *
-	 * @var Date
+	 * @var SwatDate
 	 */
 	public $value = null;
 
@@ -80,7 +80,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 * are ignored and undefined. This value is inclusive. The time-zone of
 	 * this date is ignored. Internal time comparisons are done in UTC.
 	 *
-	 * @var Date
+	 * @var SwatDate
 	 */
 	public $valid_range_start;
 
@@ -91,7 +91,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 * are ignored and undefined. This value is inclusive. The time-zone of
 	 * this date is ignored. Internal time comparisons are done in UTC.
 	 *
-	 * @var Date
+	 * @var SwatDate
 	 */
 	public $valid_range_end;
 
@@ -680,7 +680,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	/**
 	 * Formats a time for display in error messages
 	 *
-	 * @param Date $time the time to format.
+	 * @param SwatDate $time the time to format.
 	 *
 	 * @return string the formatted time.
 	 */
