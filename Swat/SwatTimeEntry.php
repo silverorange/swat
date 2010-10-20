@@ -31,7 +31,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	/**
 	 * Time of this time entry widget
 	 *
-	 * The year, month and day fields of the Date object are unused and
+	 * The year, month and day fields of the SwatDate object are unused and
 	 * undefined. If the state of this time entry does not represent a valid
 	 * time, the value will be null.
 	 *
