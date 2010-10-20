@@ -948,7 +948,10 @@ class SwatDate extends HotDateTime
 			} else {
 				$offset_hours   = floor($offset / 60);
 				$offset_minutes = abs($offset % 60);
-				$offset = sprintf('%+03.0d:%02.0d', $offset_hours, $offset_minutes);
+				$offset = sprintf(
+					'%+03.0d:%02.0d',
+					$offset_hours,
+					$offset_minutes);
 			}
 			$date.= $offset;
 		}
