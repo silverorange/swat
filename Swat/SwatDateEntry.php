@@ -370,7 +370,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 					throw new SwatException('Invalid date.');
 				}
 
-				if ($date->setTime($hour, $minute, $second) === false) {;
+				if ($date->setTime($hour, $minute, $second) === false) {
 					throw new SwatException('Invalid date.');
 				}
 
