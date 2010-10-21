@@ -735,11 +735,11 @@ class SwatDate extends HotDateTime
 		case self::DF_DATE:
 			return Swat::_('MMMM d, yyyy');
 		case self::DF_DATE_LONG:
-			return Swat::_('eeee, MMMM d, yyyy');
+			return Swat::_('EEEE, MMMM d, yyyy');
 		case self::DF_DATE_TIME:
 			return Swat::_('MMMM d, yyyy h:mm a');
 		case self::DF_DATE_TIME_LONG:
-			return Swat::_('eeee, MMMM d, yyyy h:mm a');
+			return Swat::_('EEEE, MMMM d, yyyy h:mm a');
 		case self::DF_TIME:
 			return Swat::_('h:mm a');
 		case self::DF_DATE_SHORT:
