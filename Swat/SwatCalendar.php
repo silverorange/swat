@@ -185,7 +185,7 @@ class SwatCalendar extends SwatControl
 		// Get the names of weeks (locale-specific)
 		$week_names = array();
 		for ($i = 1; $i < 8; $i++) {
-			$week_names[] = $date->formatLikeIntl('eee');
+			$week_names[] = $date->formatLikeIntl('EEE');
 			$date->setDay($i + 1);
 		}
 		$week_names = "['".implode("', '", $week_names)."']";
