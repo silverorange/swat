@@ -1060,6 +1060,40 @@ class SwatDate extends HotDateTime
 	}
 
 	// }}}
+	// {{{ public function getNextDay()
+
+	/**
+	 * Gets a new date a day after this date
+	 *
+	 * This method is provided for backwards compatibility with PEAR::Date.
+	 *
+	 * @return a new SwatDate object on the next day of this date.
+	 */
+	public function getNextDay()
+	{
+		$date = clone $this;
+		$date->addDays(1);
+		return $date;
+	}
+
+	// }}}
+	// {{{ public function getPrevDay()
+
+	/**
+	 * Gets a new date a day before this date
+	 *
+	 * This method is provided for backwards compatibility with PEAR::Date.
+	 *
+	 * @return a new SwatDate object on the previous day of this date.
+	 */
+	public function getPrevDay()
+	{
+		$date = clone $this;
+		$date->subtractDays(1);
+		return $date;
+	}
+
+	// }}}
 	// {{{ public function getDate() - deprecated
 
 	/**
