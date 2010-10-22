@@ -65,7 +65,7 @@ $package->setPearinstallerDep('1.4.0');
 $package->addExtensionDep('required', 'iconv');
 $package->addExtensionDep('required', 'mbstring');
 $package->addExtensionDep('required', 'intl');
-$package->addPackageDepWithChannel('required', 'HotDate',     'pear.silverorange.com', '0.0.1');
+$package->addPackageDepWithChannel('required', 'HotDate',     'pear.silverorange.com', '0.1.1');
 $package->addPackageDepWithChannel('optional', 'Yui',         'pear.silverorange.com', '1.0.10');
 $package->addPackageDepWithChannel('optional', 'MDB2',        'pear.php.net',          '2.2.2');
 $package->addPackageDepWithChannel('optional', 'ReCaptcha',   'pear.silverorange.com', '1.0.0');
