@@ -465,7 +465,7 @@ class SwatDate extends HotDateTime
 		}
 
 		if ($locale == '') {
-			$locale = setlocale(LC_ALL, 0);
+			$locale = setlocale(LC_TIME, 0);
 		}
 
 		static $formatters = array();
