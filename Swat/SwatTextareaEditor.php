@@ -265,8 +265,8 @@ class SwatTextareaEditor extends SwatTextarea
 			"document.getElementsByTagName('base');\n";
 
 		echo "if ({$base_href}.length) {\n";
-		echo "\t{$base_href} = editor_base_{$base_href}[0];\n";
-		echo "\t{$base_href} = editor_base_{$base_href}.href;\n";
+		echo "\t{$base_href} = {$base_href}[0];\n";
+		echo "\t{$base_href} = {$base_href}.href;\n";
 		echo "} else {\n";
 		echo "\t{$base_href} = location.href.split('#', 2)[0];\n";
 		echo "\t{$base_href} = {$base_href}.split('?', 2)[0];\n";
