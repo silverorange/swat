@@ -60,6 +60,8 @@ function SwatCalendar(id, start_date, end_date)
 
 	this.open = false;
 	this.positioned = false;
+	this.drawn = false;
+	this.sensitive = true;
 }
 
 // preload images
@@ -146,24 +148,30 @@ SwatCalendar.prototype.setSensitivity = function(sensitivity)
 	if (sensitivity) {
 		YAHOO.util.Dom.removeClass(this.container, 'swat-insensitive');
 
-		if (this.toggle_button_insensitive.parentNode) {
-			this.toggle_button_insensitive.parentNode.removeChild(
-				this.toggle_button_insensitive);
-		}
+		if (this.drawn) {
+			if (this.toggle_button_insensitive.parentNode) {
+				this.toggle_button_insensitive.parentNode.removeChild(
+					this.toggle_button_insensitive);
+			}
 
-		this.container.insertBefore(this.toggle_button,
-			this.container.firstChild);
+			this.container.insertBefore(this.toggle_button,
+				this.container.firstChild);
+		}
 
 	} else {
 		YAHOO.util.Dom.addClass(this.container, 'swat-insensitive');
 
-		if (this.toggle_button.parentNode) {
-			this.toggle_button.parentNode.removeChild(this.toggle_button);
-		}
+		if (this.drawn) {
+			if (this.toggle_button.parentNode) {
+				this.toggle_button.parentNode.removeChild(this.toggle_button);
+			}
 
-		this.container.insertBefore(this.toggle_button_insensitive,
-			this.container.firstChild);
+			this.container.insertBefore(this.toggle_button_insensitive,
+				this.container.firstChild);
+		}
 	}
+
+	this.sensitive = sensitivity;
 }
 
 /**
@@ -216,8 +224,14 @@ SwatCalendar.prototype.drawButton = function()
 	calendar_div.appendChild(overlay_body);
 	calendar_div.appendChild(overlay_footer);
 
-	this.container.appendChild(this.toggle_button);
+	if (this.sensitive) {
+		this.container.appendChild(this.toggle_button);
+	} else {
+		this.container.appendChild(this.toggle_button_insensitive);
+	}
 	this.container.appendChild(calendar_div);
+
+	this.drawn = true;
 }
 
 /**
