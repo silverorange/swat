@@ -258,7 +258,21 @@ class SwatTextareaEditor extends SwatTextarea
 
 	protected function getInlineJavaScript()
 	{
+		$base_href = 'editor_base_'.$this->id;
 		ob_start();
+
+		echo "var {$base_href} = ".
+			"document.getElementsByTagName('base');\n";
+
+		echo "if ({$base_href}.length) {\n";
+		echo "\t{$base_href} = editor_base_{$base_href}[0];\n";
+		echo "\t{$base_href} = editor_base_{$base_href}.href;\n";
+		echo "} else {\n";
+		echo "\t{$base_href} = location.href.split('#', 2)[0];\n";
+		echo "\t{$base_href} = {$base_href}.split('?', 2)[0];\n";
+		echo "\t{$base_href} = {$base_href}.substring(\n";
+		echo "\t\t0, {$base_href}.lastIndexOf('/') + 1);\n";
+		echo "}\n";
 
 		echo "tinyMCE.init({\n";
 
@@ -271,6 +285,8 @@ class SwatTextareaEditor extends SwatTextarea
 			}
 			$lines[] = "\t".$name.": ".$value;
 		}
+
+		$lines[] = "\tdocument_base_url: editor_base_{$this->id}";
 
 		echo implode(",\n", $lines);
 		echo "\n});";
