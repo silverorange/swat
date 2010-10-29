@@ -832,8 +832,24 @@ class SwatDBDataObject extends SwatObject
 	 */
 	public function delete()
 	{
+		if ($this->read_only) {
+			throw new SwatDBException('This dataobject was loaded read-only '.
+				'and cannot be deleted.');
+		}
+
 		$this->checkDB();
-		$this->deleteInternal();
+
+		$transaction = new SwatDBTransaction($this->db);
+		try {
+			$property_hashes = $this->property_hashes;
+			$this->deleteInternal();
+
+			$transaction->commit();
+		} catch (Exception $e) {
+			$this->property_hashes = $property_hashes;
+			$transaction->rollback();
+			throw $e;
+		}
 	}
 
 	// }}}
