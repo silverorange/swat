@@ -13,7 +13,7 @@ require_once 'Swat/SwatYUI.php';
  * details.
  *
  * @package   Swat
- * @copyright 2004-2009 silverorange
+ * @copyright 2004-2010 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextareaEditor extends SwatTextarea
@@ -80,6 +80,42 @@ class SwatTextareaEditor extends SwatTextarea
 	 * @var boolean
 	 */
 	public $modes_enabled = true;
+
+	/**
+	 * An optional JSON server used to provide uploaded image data to the
+	 * insert image dialog
+	 *
+	 * If specified, the insert image diaplog will show a list of thumbnails
+	 * from which the user can select an image to insert.
+	 *
+	 * The server should return a JSON response formatted as follows:
+	 * <code>
+	 * [
+	 *   {
+	 *     'id':     $image_id,
+	 *     'images': {
+	 *       $size_shortname : {
+	 *         'title':  $visible_size_title,
+	 *         'uri':    $uri_of_image_at_size,
+	 *         'width':  $width_of_image_at_size,
+	 *         'height': $height_of_image_at_size
+	 *       },
+	 *       ... more image sizes ...
+	 *     }
+	 *   },
+	 *   ... more images ...
+	 * ]
+	 * </code>
+	 *
+	 * The size shortname <i>pinky</i> must be present and should be 48x48
+	 * pixels. If a size shortname of <i>small</i> is present, it will be
+	 * selected as the default size.
+	 *
+	 * Other data my be returned by the JSON server, and will be ignored.
+	 *
+	 * @var string
+	 */
+	public $image_server;
 
 	// }}}
 	// {{{ public function __construct()
@@ -206,6 +242,7 @@ class SwatTextareaEditor extends SwatTextarea
 		$formats = implode(',', $formats);
 
 		$modes = ($this->modes_enabled) ? 'yes' : 'no';
+		$image_server = ($this->image_server) ? $this->image_server : '';
 
 		$config = array(
 			'mode'                              => 'exact',
@@ -220,6 +257,7 @@ class SwatTextareaEditor extends SwatTextarea
 			'skin'                              => 'swat',
 			'plugins'                           => 'swat,media',
 			'swat_modes_enabled'                => $modes,
+			'swat_image_server'                 => $image_server,
 		);
 
 		return $config;
