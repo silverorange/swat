@@ -13,7 +13,10 @@ swat: {
 	image_cancel: 'Cancel',
 	image_src_field: 'URI:',
 	image_alt_field: 'Alternate Text:',
+	image_caption_field: 'Caption:',
 	image_optional: '(optional)',
+	image_uploads: 'Uploads',
+	image_from_uri: 'From URI',
 
 	snippet_desc: 'Insert HTML Snippet',
 	snippet_insert: 'Insert',

@@ -79,6 +79,14 @@ acronym {
 	cursor: help;
 }
 
+.image-captioned {
+	display: inline-block;
+	padding: 2px;
+	background: #e8e8e8;
+	overflow: hidden;
+}
+
+
 abbr,
 html\:abbr {
 	border-bottom: 1px dashed #ccc;
