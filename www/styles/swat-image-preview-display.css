@@ -38,6 +38,10 @@ a.swat-image-preview-display-link-plain:hover img {
 	filter:alpha(opacity = 75);
 	opacity: 0.75;
 }
+.swat-image-preview-mask:focus,
+.swat-image-preview-mask:active {
+	outline: none;
+}
 
 .swat-image-preview-header {
 	display: block;
