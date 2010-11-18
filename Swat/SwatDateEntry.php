@@ -621,9 +621,12 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		$start_year = $this->valid_range_start->getYear();
 
-		$tmp = clone $this->valid_range_end;
-		$tmp->subtractSeconds(1);
-		$end_year = $tmp->getYear();
+		// Subtract a second from the end date. Since end date is exclusive,
+		// this means that if the end date is the first of a year, we'll
+		// prevent showing that year in the flydown.
+		$range_end = clone $this->valid_range_end;
+		$range_end->subtractSeconds(1);
+		$end_year = $range_end->getYear();
 
 		for ($i = $start_year; $i <= $end_year; $i++)
 			$flydown->addOption($i, $i);
@@ -643,30 +646,21 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		$flydown = new SwatFlydown($this->id.'_month');
 
-		$start_year = $this->valid_range_start->getYear();
-		$end_year   = $this->valid_range_end->getYear();
+		// Subtract a second from the end date. This makes comparison correct,
+		// and prevents displaying extra months.
+		$range_end = clone $this->valid_range_end;
+		$range_end->subtractSeconds(1);
+
+		$start_year  = $this->valid_range_start->getYear();
+		$end_year    = $range_end->getYear();
+		$start_month = $this->valid_range_start->getMonth();
+		$end_month   = $range_end->getMonth();
 
 		if ($end_year == $start_year) {
-			$start_month = $this->valid_range_start->getMonth();
-			// Subtract a second from the end date. Since end date is exclusive,
-			// this means that if the end date is the first of a month, we'll
-			// prevent showing that month in the flydown.
-			$end_date = clone $this->valid_range_end;
-			$end_date->subtractSeconds(1);
-			$end_month = $end_date->getMonth();
-
 			for ($i = $start_month; $i <= $end_month; $i++) {
 				$flydown->addOption($i, $this->getMonthOptionText($i));
 			}
 		} elseif (($end_year - $start_year) == 1) {
-			$start_month = $this->valid_range_start->getMonth();
-			// Subtract a second from the end date. Since end date is exclusive,
-			// this means that if the end date is the first of a month, we'll
-			// prevent showing that month in the flydown.
-			$end_date = clone $this->valid_range_end;
-			$end_date->subtractSeconds(1);
-			$end_month = $end_date->getMonth();
-
 			for ($i = $start_month; $i <= 12; $i++)
 				$flydown->addOption($i, $this->getMonthOptionText($i));
 
@@ -719,30 +713,28 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		$flydown = new SwatFlydown($this->id.'_day');
 
+		// Subtract a second from the end date. This makes comparison correct,
+		// and prevents displaying extra days.
+		$range_end = clone $this->valid_range_end;
+		$range_end->subtractSeconds(1);
+
 		$start_year  = $this->valid_range_start->getYear();
-
-		$tmp = clone $this->valid_range_end;
-		$tmp->subtractSeconds(1);
-		$end_year = $tmp->getYear();
-
+		$end_year    = $range_end->getYear();
 		$start_month = $this->valid_range_start->getMonth();
-		$end_month   = $this->valid_range_end->getMonth();
+		$end_month   = $range_end->getMonth();
+		$start_day   = $this->valid_range_start->getDay();
+		$end_day     = $range_end->getDay();
 
 		$end_check = clone $this->valid_range_start;
 		$end_check->addSeconds(2678400); // add 31 days
 
 		if ($start_year == $end_year && $start_month == $end_month) {
-
-			$start_day = $this->valid_range_start->getDay();
-			$end_day   = $this->valid_range_end->getDay();
-
+			// Only days left in the month
 			for ($i = $start_day; $i <= $end_day; $i++)
 				$flydown->addOption($i, $i);
 
-		} elseif (SwatDate::compare($end_check, $this->valid_range_end, true) != -1) {
-
-			$start_day = $this->valid_range_start->getDay();
-			$end_day   = $this->valid_range_end->getDay();
+		} elseif (SwatDate::compare($end_check, $range_end, true) != -1) {
+			// extra days at the beginning of the next month allowed
 			$days_in_month = $this->valid_range_start->getDaysInMonth();
 
 			for ($i = $start_day; $i <= $days_in_month; $i++)
@@ -752,6 +744,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 				$flydown->addOption($i, $i);
 
 		} else {
+			// all days are valid
 			for ($i = 1; $i <= 31; $i++)
 				$flydown->addOption($i, $i);
 		}
