@@ -287,7 +287,15 @@ class SwatEntry extends SwatInputControl implements SwatState
 		$tag->name = ($this->autocomplete) ? $this->id : $this->getNonce();
 		$tag->id = ($this->autocomplete) ? $this->id : $this->getNonce();
 		$tag->class = $this->getCSSClassString();
-		$tag->onfocus = 'this.select();this._focused=true;';
+
+		// event handlers to select on focus
+		$tag->onmousedown = 'if (!this._focused) { this._focus_click = true; }';
+		$tag->onmouseup = 'if (this._focus_click) { '.
+			'this.select(); this._focus_click = false; }';
+
+		$tag->onfocus = 'this._focused=true; '.
+			'if (!this._focus_click) { this.select(); }';
+
 		$tag->onblur = 'this._focused=false;';
 
 		if ($this->read_only)
