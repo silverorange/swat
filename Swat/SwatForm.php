@@ -336,7 +336,7 @@ class SwatForm extends SwatDisplayableContainer
 		$form_tag->close();
 
 		if ($this->connection_close_uri != '') {
-			$yui = new SwatYUI(array('connection'));
+			$yui = new SwatYUI(array('event'));
 			$this->html_head_entry_set->addEntrySet(
 				$yui->getHtmlHeadEntrySet());
 		}
