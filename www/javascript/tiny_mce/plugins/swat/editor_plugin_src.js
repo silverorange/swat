@@ -519,7 +519,7 @@
 		this.uploadAltEntry.value = '';
 		this.uploadCaptionEntry.value = '';
 
-		if (this.imageData.length) {
+		if (typeof this.imageData != 'undefined' && this.imageData.length) {
 			this.selectUploadImage(0);
 			this.selectNotebookPage(0);
 		}
