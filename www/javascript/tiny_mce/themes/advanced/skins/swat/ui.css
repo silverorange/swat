@@ -40,37 +40,44 @@
 /* Button */
 .swatSkin .mceButton {
 	display:block;
-	border: 1px solid #dcceb2;
-	border-top-color: #f0eade;
-	border-left-color: #f0eade;
-	width:20px;
-	height:20px;
-	margin-right:-1px;
+	border: 1px solid #f7f4ed;
+	width: 20px;
+	height: 20px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
 	padding: 1px;
 	position: relative;
-	background: #fff url(../../../../../../images/swat-textarea-editor-button.png) repeat-x left bottom;
 }
 .swatSkin a.mceButtonEnabled:hover {
 	border-top-color: #dcceb2;
 	border-left-color: #dcceb2;
 	border-bottom-color: #c3b69e;
 	border-right-color: #c3b69e;
-	background: #fff;
+	background: #fff url(../../../../../../images/swat-textarea-editor-button.png) repeat-x left bottom;
 	z-index: 2;
 }
 .swatSkin a.mceButtonActive,
-.swatSkin a.mceButtonSelected {
-	border-color: #fff;
-	border-top-color: #e3d7c1;
-	border-left-color: #e3d7c1;
+.swatSkin a.mceButtonSelected,
+.swatSkin a.mceButtonEnabled:active {
+	border-left-color: #a18e70;
+	border-top-color: #a18e70;
+	border-right-color: #bdac91;
+	border-bottom-color: #bdac91;
+	background: #fff url(../../../../../../images/swat-textarea-editor-button.png) repeat-x left bottom;
 	background-position: top left;
+}
+.swatSkin a.mceButtonActive:hover,
+.swatSkin a.mceButtonSelected:hover {
+	border-left-color: #ab987b;
+	border-top-color: #ab987b;
+	border-right-color: #c7b79d;
+	border-bottom-color: #c7b79d;
+	background: #fff url(../../../../../../images/swat-textarea-editor-button.png) repeat-x left bottom;
+	background-position: 0 -22px;
 }
 .swatSkin .mceButtonDisabled .mceIcon {opacity:0.3; -ms-filter:'alpha(opacity=30)'; filter:alpha(opacity=30)}
 .swatSkin .mceButtonDisabled {
-	border-color: #f0eade;
 	background: none;
 }
 .swatSkin .mceButtonLabeled {width:auto}
@@ -85,7 +92,25 @@
 /* ListBox */
 .swatSkin .mceListBox {direction:ltr}
 .swatSkin .mceListBox, .swatSkin .mceListBox a {display:block; padding:1px;}
-.swatSkin .mceListBox .mceText {padding-left:4px; width:70px; text-align:left; border:1px solid #f0eade; border-right:0; background:#FFF; font-family:Tahoma,Verdana,Arial,Helvetica; font-size:11px; height:20px; line-height:20px; overflow:hidden}
+.swatSkin .mceListBox .mceText {
+	padding-left: 4px;
+	width: 70px;
+	text-align: left;
+	border: 1px solid #f0eade;
+	border-right: 0;
+	background: #fff;
+	font-family: Tahoma,Verdana,Arial,Helvetica;
+	font-size: 11px;
+	height: 20px;
+	line-height: 20px;
+	overflow: hidden;
+	border-top-left-radius: 3px;
+	-webkit-border-top-left-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	border-bottom-left-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomleft: 3px;
+}
 .swatSkin .mceListBox .mceOpen {
 	width:9px;
 	height:20px;
@@ -105,12 +130,12 @@
 	border:1px solid #A2ABC0;
 	border-right:0;
 	background:#FFF;
-	border-radius-topleft: 3px;
-	-moz-border-radius-topleft: 3px;
+	border-top-left-radius: 3px;
 	-webkit-border-top-left-radius: 3px;
-	border-radius-bottomleft: 3px;
-	-moz-border-radius-bottomleft: 3px;
+	-moz-border-radius-topleft: 3px;
+	border-bottom-left-radius: 3px;
 	-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomleft: 3px;
 }
 .swatSkin table.mceListBoxEnabled:hover .mceOpen, .swatSkin .mceListBoxHover .mceOpen, .swatSkin .mceListBoxSelected .mceOpen {background-color:#FFF; border:1px solid #A2ABC0}
 .swatSkin .mceListBoxDisabled a.mceText {color:gray; background-color:transparent;}
@@ -273,3 +298,4 @@
 .swatSkin span.mce_ins {background-position:-960px -20px}
 .swatSkin span.mce_pagebreak {background-position:0 -40px}
 .swatSkin .mce_spellchecker span.mceAction {background-position:-540px -20px}
+
