@@ -29,6 +29,7 @@
 table.swat-calendar-frame {
 	border-top: 1px solid #ccc;
 	border-left: 1px solid #ccc;
+	margin: 0;
 }
 
 .swat-calendar-control-frame {
@@ -168,4 +169,8 @@ html .swat-insensitive .swat-calendar-toggle-button { /* IE hacks */
 
 .swat-date-entry-span {
 	vertical-align: middle;
+}
+
+table.swat-calendar-frame table {
+	margin: 0;
 }
