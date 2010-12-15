@@ -575,7 +575,7 @@ class SwatDate extends HotDateTime
 
 	public function __toString()
 	{
-		return $this->format('c');
+		return $this->format('Y-m-d\TH:i:s');
 	}
 
 	// }}}
@@ -1107,11 +1107,12 @@ class SwatDate extends HotDateTime
 	 * @return string a PEAR-conanical formatted version of this date.
 	 *
 	 * @deprecated Use {@link SwatDate::formatLikeIntl()} instead. The format
-	 *             code <i>yyyy-MM-dd HH:mm:ss</i> is equivalent.
+	 *             code <i>yyyy-MM-dd HH:mm:ss</i> is equivalent. Alternatively,
+	 *             just cast the SwatDate object to a string.
 	 */
 	public function getDate()
 	{
-		return $this->formatLikeIntl('yyyy-MM-dd HH:mm:ss');
+		return $this->format('Y-m-d H:i:s');
 	}
 
 	// }}}
