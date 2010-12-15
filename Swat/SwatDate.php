@@ -1440,6 +1440,31 @@ class SwatDate extends HotDateTime
 	}
 
 	// }}}
+	// {{{ public function setDate()
+
+	/**
+	 * Sets the date fields for this date
+	 *
+	 * This differs from PHP's DateTime in that it returns false if the
+	 * parameters are not a valid date (i.e. February 31st).
+	 *
+	 * @param integer $year the year.
+	 * @param integer $month the month.
+	 * @param integer $day the day.
+	 *
+	 * @return mixed either this object on success, or false if the resulting
+	 *               date is not a valid date.
+	 */
+	public function setDate($year, $month, $day)
+	{
+		if (!checkdate($month, $day, $year)) {
+			return false;
+		}
+
+		return parent::setDate($year, $month, $day);
+	}
+
+	// }}}
 	// {{{ public function setYear()
 
 	/**
