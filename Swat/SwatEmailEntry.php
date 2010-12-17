@@ -74,21 +74,6 @@ class SwatEmailEntry extends SwatEntry
 	}
 
 	// }}}
-	// {{{ protected function getInputTag()
-
-	/**
-	 * Get the input tag to display
-	 *
-	 * @return SwatHtmlTag the input tag to display.
-	 */
-	protected function getInputTag()
-	{
-		$tag = parent::getInputTag();
-		$tag->type = 'email';
-		return $tag;
-	}
-
-	// }}}
 	// {{{ protected function getCSSClassNames()
 
 	/**

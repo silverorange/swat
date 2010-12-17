@@ -9,19 +9,12 @@ require_once 'Swat/SwatHtmlTag.php';
  * A link cell renderer
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2006 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatLinkCellRenderer extends SwatCellRenderer
 {
 	// {{{ public properties
-
-	/**
-	 * Id of the link
-	 *
-	 * @var string
-	 */
-	public $link_id;
 
 	/**
 	 * The href attribute in the XHTML anchor tag
@@ -126,7 +119,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	// }}}
 	// {{{ protected function renderSensitive()
 
-
 	/**
 	 * Renders this link as sensitive
 	 */
@@ -134,12 +126,9 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	{
 		$anchor_tag = new SwatHtmlTag('a');
 		$anchor_tag->setContent($this->getText(), $this->content_type);
-
-		$anchor_tag->id    = $this->getLinkId();
-		$anchor_tag->href  = $this->getLink();
+		$anchor_tag->href = $this->getLink();
 		$anchor_tag->title = $this->getTitle();
 		$anchor_tag->class = $this->getCSSClassString();
-
 		$anchor_tag->display();
 	}
 
@@ -153,11 +142,8 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	{
 		$span_tag = new SwatHtmlTag('span');
 		$span_tag->setContent($this->getText(), $this->content_type);
-
-		$span_tag->id    = $this->getLinkId();
 		$span_tag->title = $this->getTitle();
 		$span_tag->class = $this->getCSSClassString();
-
 		$span_tag->display();
 	}
 
@@ -204,14 +190,6 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 		}
 
 		return $link;
-	}
-
-	// }}}
-	// {{{ protected function getLinkId()
-
-	protected function getLinkId()
-	{
-		return $this->link_id;
 	}
 
 	// }}}
