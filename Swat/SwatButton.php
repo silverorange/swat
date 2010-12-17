@@ -169,7 +169,20 @@ class SwatButton extends SwatInputControl
 
 		parent::display();
 
-		$input_tag = $this->getInputTag();
+		// We don't use a button element because it is broken differently in
+		// IE6 and IE7
+		$input_tag = new SwatHtmlTag('input');
+		$input_tag->type = 'submit';
+		$input_tag->name = $this->id;
+		$input_tag->id = $this->id;
+		$input_tag->value = $this->title;
+		$input_tag->class = $this->getCSSClassString();
+		$input_tag->tabindex = $this->tab_index;
+		$input_tag->accesskey = $this->access_key;
+
+		if (!$this->isSensitive())
+			$input_tag->disabled = 'disabled';
+
 		$input_tag->display();
 
 		if ($this->show_processing_throbber ||
@@ -277,38 +290,6 @@ class SwatButton extends SwatInputControl
 			$this->title = $title;
 
 		$this->stock_class = $class;
-	}
-
-	// }}}
-	// {{{ protected function getInputTag()
-
-	/**
-	 * Get the HTML tag to display for this button
-	 *
-	 * Can be used by sub-classes to change the setup of the input tag.
-	 *
-	 * @return SwatHtmlTag the HTML tag to display for this button.
-	 */
-	protected function getInputTag()
-	{
-		// We do not use a 'button' element because it is broken differently in
-		// different versions of Internet Explorer
-
-		$tag = new SwatHtmlTag('input');
-
-		$tag->type = 'submit';
-		$tag->name = $this->id;
-		$tag->id = $this->id;
-		$tag->value = $this->title;
-		$tag->class = $this->getCSSClassString();
-		$tag->tabindex = $this->tab_index;
-		$tag->accesskey = $this->access_key;
-
-		if (!$this->isSensitive()) {
-			$tag->disabled = 'disabled';
-		}
-
-		return $tag;
 	}
 
 	// }}}
