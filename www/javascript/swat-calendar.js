@@ -30,6 +30,8 @@
  */
 function SwatCalendar(id, start_date, end_date)
 {
+	SwatCalendar.preloadImages();
+
 	this.id = id;
 	this.is_webkit =
 		(/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
@@ -64,20 +66,30 @@ function SwatCalendar(id, start_date, end_date)
 	this.sensitive = true;
 }
 
-// preload images
-SwatCalendar.go_previous_insensitive_image = new Image();
-SwatCalendar.go_previous_insensitive_image.src =
-	'packages/swat/images/go-previous-insensitive.png';
+SwatCalendar.images_preloaded = false;
 
-SwatCalendar.go_next_insensitive_image = new Image();
-SwatCalendar.go_next_insensitive_image.src =
-	'packages/swat/images/go-next-insensitive.png';
+SwatCalendar.preloadImages = function()
+{
+	if (SwatCalendar.images_preloaded) {
+		return;
+	}
 
-SwatCalendar.go_previous_image = new Image();
-SwatCalendar.go_previous_image.src = 'packages/swat/images/go-previous.png';
+	SwatCalendar.go_previous_insensitive_image = new Image();
+	SwatCalendar.go_previous_insensitive_image.src =
+		'packages/swat/images/go-previous-insensitive.png';
 
-SwatCalendar.go_next_image = new Image();
-SwatCalendar.go_next_image.src = 'packages/swat/images/go-next.png';
+	SwatCalendar.go_next_insensitive_image = new Image();
+	SwatCalendar.go_next_insensitive_image.src =
+		'packages/swat/images/go-next-insensitive.png';
+
+	SwatCalendar.go_previous_image = new Image();
+	SwatCalendar.go_previous_image.src = 'packages/swat/images/go-previous.png';
+
+	SwatCalendar.go_next_image = new Image();
+	SwatCalendar.go_next_image.src = 'packages/swat/images/go-next.png';
+
+	SwatCalendar.images_preloaded = true;
+}
 
 // string data
 SwatCalendar.week_names = [
