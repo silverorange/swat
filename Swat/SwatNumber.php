@@ -8,7 +8,7 @@ require_once 'Swat/SwatObject.php';
  * Number tools
  *
  * @package   Swat
- * @copyright 2008-2009 silverorange
+ * @copyright 2008-2011 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatNumber extends SwatObject
@@ -77,45 +77,76 @@ class SwatNumber extends SwatObject
 	// {{{ public static function ordinal()
 
 	/**
-	 * Simple method to return the ordinal value of a number.
+	 * Formats an integer as an ordinal number (1st, 2nd, 3rd)
 	 *
-	 * Only safe for use for english locales. Mostly taken from this the
-	 * following comment on php.net
+	 * If the 'intl' extension is available, the ICU number formatter and
+	 * string normalizers are used to get a correctly formatted ordinal for
+	 * the current locale.
+	 *
+	 * If the 'intl' extension is not available, this method is only safe for
+	 * English locales. The fallback implementation is mostly taken from the
+	 * following comment on php.net:
 	 * {@link http://www.php.net/manual/en/function.number-format.php#89655}
 	 *
-	 * @param float $value the value to display as ordinal.
+	 * @param integer $value the numeric value to format.
 	 *
-	 * @return string the ordinal value.
+	 * @return string the ordinal-formatted value.
 	 */
 	public static function ordinal($value)
 	{
-		$ordinal_value = abs($value);
+		$value = intval($value);
 
-		switch ($ordinal_value % 100) {
-		case 11:
-		case 12:
-		case 13:
-			$ordinal_value.= Swat::_('th');
-			break;
+		if (extension_loaded('intl')) {
 
-		default:
-			// Handle 1st, 2nd, 3rd
-			switch($value % 10) {
-			case 1:
-				$ordinal_value.= Swat::_('st');
-				break;
+			// get current locale
+			$locale = setlocale(LC_ALL, 0);
 
-			case 2:
-				$ordinal_value.= Swat::_('nd');
-				break;
+			static $formatters = array();
+			if (!isset($formatter[$locale])) {
+				$formatter[$locale] =
+					new NumberFormatter($locale, NumberFormatter::ORDINAL);
+			}
 
-			case 3:
-				$ordinal_value.= Swat::_('rd');
+			// format ordinal
+			$ordinal_value = $formatter[$locale]->format($value);
+
+			// decompose to latin-1 characters (removes superscripts)
+			$ordinal_value = Normalizer::normalize(
+				$ordinal_value,
+				Normalizer::FORM_KC);
+
+		} else {
+
+			// fallback implementation if icu is not available
+			$ordinal_value = abs($value);
+
+			switch ($ordinal_value % 100) {
+			case 11:
+			case 12:
+			case 13:
+				$ordinal_value = sprintf(Swat::_('%sth'), $ordinal_value);
 				break;
 
 			default:
-				$ordinal_value.= Swat::_('th');
+				// Handle 1st, 2nd, 3rd
+				switch($value % 10) {
+				case 1:
+					$ordinal_value = sprintf(Swat::_('%sst'), $ordinal_value);
+					break;
+
+				case 2:
+					$ordinal_value = sprintf(Swat::_('%snd'), $ordinal_value);
+					break;
+
+				case 3:
+					$ordinal_value = sprintf(Swat::_('%srd'), $ordinal_value);
+					break;
+
+				default:
+					$ordinal_value = sprintf(Swat::_('%sth'), $ordinal_value);
+				}
 			}
+
 		}
 
 		return $ordinal_value;

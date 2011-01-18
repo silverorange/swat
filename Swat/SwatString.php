@@ -3,6 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatObject.php';
+require_once 'Swat/SwatNumber.php';
 require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/exceptions/SwatInvalidSerializedDataException.php';
 
@@ -10,7 +11,7 @@ require_once 'Swat/exceptions/SwatInvalidSerializedDataException.php';
  * String Tools
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2011 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatString extends SwatObject
@@ -1022,41 +1023,15 @@ class SwatString extends SwatObject
 	/**
 	 * Formats an integer as an ordinal number (1st, 2nd, 3rd)
 	 *
-	 * This method uses English suffixes and is not translatable.
-	 *
 	 * @param integer $value the numeric value to format.
+	 *
+	 * @see SwatNumber::ordinal()
+	 *
+	 * @deprecated Use {@link SwatNumber::ordinal()} instead.
 	 */
 	public static function ordinalNumberFormat($value)
 	{
-		$value = intval($value);
-		$last_digit = $value - intval($value / 10) * 10;
-
-		switch ($value) {
-		case 11:
-		case 12:
-		case 13:
-			$suffix = 'th';
-			break;
-
-		default:
-			switch ($last_digit) {
-			case 1:
-				$suffix = 'st';
-				break;
-			case 2:
-				$suffix = 'nd';
-				break;
-			case 3:
-				$suffix = 'rd';
-				break;
-			default:
-				$suffix = 'th';
-			}
-		}
-
-		$output = (string)$value.$suffix;
-
-		return $output;
+		return SwatNumber::ordinal($value);
 	}
 
 	// }}}
