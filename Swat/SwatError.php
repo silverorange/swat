@@ -197,6 +197,32 @@ class SwatError
 	}
 
 	// }}}
+	// {{{ public function getMessage()
+
+	/**
+	 * Gets the original message string of this error
+	 *
+	 * @return string original message of this error.
+	 */
+	public function getMessage()
+	{
+		return $this->message;
+	}
+
+	// }}}
+	// {{{ public function getSeverity()
+
+	/**
+	 * Gets the severity of this error
+	 *
+	 * @return integer severity value as E_* PHP constant.
+	 */
+	public function getSeverity()
+	{
+		return $this->severity;
+	}
+
+	// }}}
 	// {{{ public function log()
 
 	/**
