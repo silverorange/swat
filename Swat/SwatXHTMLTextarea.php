@@ -47,7 +47,7 @@ class SwatXHTMLTextarea extends SwatTextarea
 	protected $ignore_errors_checkbox;
 
 	// }}}
-	// {{{ public function process
+	// {{{ public function process()
 
 	public function process()
 	{
@@ -80,7 +80,7 @@ XHTML;
 		$ignore_validation_errors = ($this->allow_ignore_validation_errors &&
 			$this->ignore_errors_checkbox->value);
 
-		$xhtml_content = sprintf($xhtml_template, $this->value);
+		$xhtml_content = sprintf($xhtml_template, $this->getXHTMLContent());
 
 		$errors = libxml_use_internal_errors(true);
 
@@ -205,6 +205,14 @@ XHTML;
 		$ignore_field->add($this->ignore_errors_checkbox);
 
 		$this->addCompositeWidget($ignore_field, 'ignore_field');
+	}
+
+	// }}}
+	// {{{ protected function getXHTMLContent()
+
+	protected function getXHTMLContent()
+	{
+		return $this->value;
 	}
 
 	// }}}
