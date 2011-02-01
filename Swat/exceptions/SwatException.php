@@ -173,6 +173,34 @@ class SwatException extends Exception
 	}
 
 	// }}}
+	// {{{ public function processAndContinue()
+
+	/**
+	 * Processes this exception and continues execution
+	 *
+	 * Processing involves displaying errors, logging errors and sending
+	 * error message emails
+	 */
+	public function processAndContinue()
+	{
+		$this->process(false, true);
+	}
+
+	// }}}
+	// {{{ public function processAndExit()
+
+	/**
+	 * Processes this exception and stops execution
+	 *
+	 * Processing involves displaying errors, logging errors and sending
+	 * error message emails
+	 */
+	public function processAndExit()
+	{
+		$this->process(true, true);
+	}
+
+	// }}}
 	// {{{ public function log()
 
 	/**
