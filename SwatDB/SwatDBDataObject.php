@@ -17,7 +17,7 @@ require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
  * All public properties correspond to database fields
  *
  * @package   SwatDB
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2011 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBDataObject extends SwatObject
@@ -948,6 +948,11 @@ class SwatDBDataObject extends SwatObject
 	 */
 	protected function saveInternal()
 	{
+		$modified_properties = $this->getModifiedProperties();
+
+		if (count($modified_properties) == 0)
+			return;
+
 		if ($this->table === null) {
 			trigger_error(
 				sprintf('No table defined for %s', get_class($this)),
@@ -980,18 +985,13 @@ class SwatDBDataObject extends SwatObject
 			return;
 		}
 
-		$modified_properties = $this->getModifiedProperties();
-
-		if (count($modified_properties) == 0)
-			return;
-
 		$id_ref = $id_field->name;
 		$id = $this->$id_ref;
 
 		$fields = array();
 		$values = array();
 
-		foreach ($this->getModifiedProperties() as $name => $value) {
+		foreach ($modified_properties as $name => $value) {
 			if ($name === $id_field->name)
 				continue;
 
