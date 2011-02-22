@@ -1369,7 +1369,8 @@ class SwatString extends SwatObject
 	public static function toHumanReadableTimePeriod($seconds,
 		$largest_part = false)
 	{
-		$seconds = abs($seconds);
+		// don't care about micro-seconds.
+		$seconds = floor(abs($seconds));
 
 		$minute = 60;
 		$hour = $minute * 60;
