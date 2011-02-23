@@ -325,6 +325,7 @@
 		this.frame.className = 'swat-frame';
 
 		this.container = DOM.create('div');
+		this.container.style.display = 'none';
 		this.container.className = 'swat-textarea-editor-dialog';
 		this.container.appendChild(this.frame);
 
@@ -887,7 +888,7 @@
 		if (this.imageServer) {
 			this.loadUploadImages();
 		} else {
-			this.selectNotebookPage(1);
+			this.selectNotebookPage(1, false);
 			this.hideNotebookPage(0);
 		}
 	},
@@ -922,7 +923,7 @@
 		}
 	},
 
-	selectNotebookPage: function(page)
+	selectNotebookPage: function(page, focus)
 	{
 		if (page != this.noteBookPage) {
 			for (var i = 0; i < this.notebookTabs.length; i++) {
@@ -948,7 +949,10 @@
 					);
 				}
 			}
-			this.focus();
+
+			if (typeof focus === 'undefined' || focus) {
+				this.focus();
+			}
 		}
 	},
 
