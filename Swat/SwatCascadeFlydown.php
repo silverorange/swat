@@ -181,7 +181,10 @@ class SwatCascadeFlydown extends SwatFlydown
 		}
 
 		if ($this->show_blank && count($option_array) > 1) {
-			$ret[] = new SwatOption(null, Swat::_('choose one ...'));
+			$blank_title = ($this->blank_title === null) ?
+				Swat::_('choose one ...') : $this->blank_title;
+
+			$ret[] = new SwatOption(null, $blank_title);
 		}
 
 		$ret = array_merge($ret, $option_array);
@@ -218,12 +221,15 @@ class SwatCascadeFlydown extends SwatFlydown
 				else
 					$value = '';
 
+				$blank_title = ($this->blank_title === null) ?
+					Swat::_('choose one ...') : $this->blank_title;
+
 				$javascript.= sprintf(
 					"\n%s_cascade.addChild(%s, %s, %s);",
 					$this->id,
 					SwatString::quoteJavaScriptString($parent),
 					SwatString::quoteJavaScriptString($value),
-					SwatString::quoteJavaScriptString(Swat::_('choose one …')));
+					SwatString::quoteJavaScriptString($blank_title));
 			}
 
 			foreach ($options as $option) {
