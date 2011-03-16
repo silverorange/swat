@@ -10,6 +10,12 @@ ul.swat-toolbar {
 	top: -16px;
 }
 
+ul.swat-toolbar-end {
+	border-bottom: none;
+	border-top: 1px solid #efe8da;
+	top: 16px;
+}
+
 .swat-toolbar li {
 	display: inline;
 }
