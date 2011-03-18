@@ -38,11 +38,11 @@ li.swat-accordion-page .swat-accordion-toggle-status {
 	height: 11px;
 }
 
-li.swat-accordion-page .swat-accordion-toggle-status-opened {
+li.swat-accordion-page-opened .swat-accordion-toggle-status {
 	background: url(../images/swat-accordion-open.png) top left no-repeat;
 }
 
-li.swat-accordion-page .swat-accordion-toggle-status-closed {
+li.swat-accordion-page-closed .swat-accordion-toggle-status {
 	background: url(../images/swat-accordion-closed.png) top left no-repeat;
 	margin-top: 2px;
 	margin-right: -2px;
