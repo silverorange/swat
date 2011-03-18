@@ -27,10 +27,10 @@ SwatAccordion.prototype.init = function()
 		if (YAHOO.util.Dom.hasClass(page.element, 'selected')) {
 			YAHOO.util.Dom.removeClass(page.element, 'selected');
 			this.current_page = page;
-			status_icon.className += ' swat-accordion-toggle-status-opened';
+			page.element.className += ' swat-accordion-page-opened';
 		} else {
 			page.animation.style.display = 'none';
-			status_icon.className += ' swat-accordion-toggle-status-closed';
+			page.element.className += ' swat-accordion-page-closed';
 		}
 
 		page.toggle.insertBefore(status_icon, page.toggle.firstChild);
@@ -99,7 +99,7 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page)
 	var new_to_height = new_region.height;
 
 	var anim = new YAHOO.util.Anim(
-		new_page.animation, { opacity: { to: 2 } },
+		new_page.animation, { opacity: { to: 2 } }, // TODO
 		SwatAccordion.resize_period,
 		YAHOO.util.Easing.easeBoth);
 
@@ -139,23 +139,21 @@ function SwatAccordionPage(el)
 
 SwatAccordionPage.prototype.setStatus = function(stat)
 {
-	var status_icon = this.toggle.firstChild;
-
 	if (stat === 'opened') {
 		YAHOO.util.Dom.removeClass(
-			status_icon,
-			'swat-accordion-toggle-status-closed');
+			this.element,
+			'swat-accordion-page-closed');
 
 		YAHOO.util.Dom.addClass(
-			status_icon,
-			'swat-accordion-toggle-status-opened');
+			this.element,
+			'swat-accordion-page-opened');
 	} else {
 		YAHOO.util.Dom.removeClass(
-			status_icon,
-			'swat-accordion-toggle-status-opened');
+			this.element,
+			'swat-accordion-page-opened');
 
 		YAHOO.util.Dom.addClass(
-			status_icon,
-			'swat-accordion-toggle-status-closed');
+			this.element,
+			'swat-accordion-page-closed');
 	}
 };
