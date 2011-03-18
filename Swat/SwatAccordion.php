@@ -8,7 +8,8 @@ require_once 'Swat/SwatNoteBook.php';
  * Accordion widget containing {@link SwatNoteBookPage} pages.
  *
  * This widget is like a notebook but instead of tabs, pages are displayed
- * stacked and open and close like disclosures.
+ * stacked and open and close like disclosures. It sounds like a ye-olde
+ * squeezebox.
  *
  * @package   Swat
  * @copyright 2011 silverorange
