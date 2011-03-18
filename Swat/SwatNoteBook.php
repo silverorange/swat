@@ -11,7 +11,7 @@ require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
- * Notebook widget for containing {@link SwatNoteBook} pages
+ * Notebook widget for containing {@link SwatNoteBookPage} pages
  *
  * @package   Swat
  * @copyright 2007 silverorange
