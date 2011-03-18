@@ -1,0 +1,49 @@
+ul.swat-accordion {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	border: 1px solid #dcceb2;
+}
+
+li.swat-accordion-page {
+	display: block;
+	list-style-type: none;
+	margin: 1px;
+}
+
+li.swat-accordion-page .swat-accordion-page-toggle {
+	display: block;
+	background: #f8f6f0;
+	padding: 2px 6px;
+	text-decoration: none;
+}
+
+
+li.swat-accordion-page .swat-accordion-page-toggle:hover {
+	background: #f1ebdf;
+}
+
+li.swat-accordion-page .swat-accordion-page-toggle em {
+	font-style: normal;
+}
+
+li.swat-accordion-page .swat-accordion-page-content {
+	padding: 16px;
+}
+
+li.swat-accordion-page .swat-accordion-toggle-status {
+	display: block;
+	float: right;
+	width: 11px;
+	height: 11px;
+}
+
+li.swat-accordion-page .swat-accordion-toggle-status-opened {
+	background: url(../images/swat-accordion-open.png) top left no-repeat;
+}
+
+li.swat-accordion-page .swat-accordion-toggle-status-closed {
+	background: url(../images/swat-accordion-closed.png) top left no-repeat;
+	margin-top: 2px;
+	margin-right: -2px;
+}

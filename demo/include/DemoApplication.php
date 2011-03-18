@@ -19,6 +19,7 @@ class DemoApplication
 	private $demo;
 
 	private $available_demos = array(
+		'Accordion'         => 'SwatAccordion',
 		'Button'            => 'SwatButton',
 		'Calendar'          => 'SwatCalendar',
 		'ChangeOrder'       => 'SwatChangeOrder',
@@ -57,7 +58,7 @@ class DemoApplication
 		'ToolLink'          => 'SwatToolLink',
 		'ViewSelector'      => 'SwatViewSelector',
 		'YesNoFlydown'      => 'SwatYesNoFlydown',
-		);
+	);
 
 	// }}}
 	// {{{ public function run()
@@ -195,6 +196,13 @@ class DemoApplication
 	private function buildDemoDocumentationMenuBar()
 	{
 		switch ($this->demo) {
+		case 'Accordion':
+			$entries = array(
+				'SwatAccordion',
+				'SwatNoteBookPage'
+				);
+			break;
+
 		case 'Button':
 			$entries = array(
 				'SwatButton',
