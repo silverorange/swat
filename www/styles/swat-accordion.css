@@ -36,14 +36,43 @@ li.swat-accordion-page .swat-accordion-toggle-status {
 	float: right;
 	width: 11px;
 	height: 11px;
+	margin-right: -2px;
+	background: url(../images/swat-accordion-open.png) top left no-repeat;
+	transition: all 0.25s;
+	-o-transition: all 0.25s;
+	-ms-transition: all 0.25s;
+	-moz-transition: all 0.25s;
+	-webkit-transition: all 0.25s;
+	transform-origin: 5px 7px;
+	-o-transform-origin: 5px 7px;
+	-ms-transform-origin: 5px 7px;
+	-moz-transform-origin: 5px 7px;
+	-webkit-transform-origin: 5px 7px;
 }
 
 li.swat-accordion-page-opened .swat-accordion-toggle-status {
-	background: url(../images/swat-accordion-open.png) top left no-repeat;
+	xbackground: url(../images/swat-accordion-closed.png) top left no-repeat;
+	xbackground: url(../images/swat-accordion-open.png) top left no-repeat;
 }
 
 li.swat-accordion-page-closed .swat-accordion-toggle-status {
+	transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+}
+
+.ie6 li.swat-accordion-page-opened .swat-accordion-toggle-status,
+.ie7 li.swat-accordion-page-opened .swat-accordion-toggle-status,
+.ie8 li.swat-accordion-page-opened .swat-accordion-toggle-status {
+	margin-right: -4px;
+}
+
+.ie6 li.swat-accordion-page-closed .swat-accordion-toggle-status,
+.ie7 li.swat-accordion-page-closed .swat-accordion-toggle-status,
+.ie8 li.swat-accordion-page-closed .swat-accordion-toggle-status {
 	background: url(../images/swat-accordion-closed.png) top left no-repeat;
 	margin-top: 2px;
-	margin-right: -2px;
+	margin-right: -5px;
 }
