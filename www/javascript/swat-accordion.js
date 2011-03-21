@@ -99,7 +99,7 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page)
 	var new_to_height = new_region.height;
 
 	var anim = new YAHOO.util.Anim(
-		new_page.animation, { opacity: { to: 2 } }, // TODO
+		new_page.animation, { },
 		SwatAccordion.resize_period,
 		YAHOO.util.Easing.easeBoth);
 
