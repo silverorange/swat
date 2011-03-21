@@ -4,6 +4,7 @@ function SwatAccordion(id)
 	this.current_page = null;
 	this.semaphore = false;
 	this.pageChangeEvent = new YAHOO.util.CustomEvent('pageChange');
+	this.postInitEvent = new YAHOO.util.CustomEvent('postInit');
 
 	YAHOO.util.Event.onDOMReady(this.init, this, true);
 }
@@ -46,6 +47,8 @@ SwatAccordion.prototype.init = function()
 
 		this.pages.push(page);
 	}
+
+	this.postInitEvent.fire();
 
 };
 
