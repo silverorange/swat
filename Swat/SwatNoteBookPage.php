@@ -56,6 +56,7 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
+		$div_tag->class = $this->getCSSClassString();
 		$div_tag->open();
 		parent::display();
 		$div_tag->close();
@@ -74,6 +75,22 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 	public function getPages()
 	{
 		return array($this);
+	}
+
+	// }}}
+	// {{{ protected function getCSSClassNames()
+
+	/**
+	 * Gets the array of CSS classes that are applied to this page
+	 *
+	 * @return array the array of CSS classes that are applied to this
+	 *                page.
+	 */
+	protected function getCSSClassNames()
+	{
+		$classes = array('swat-note-book-page');
+		$classes = array_merge($classes, parent::getCSSClassNames());
+		return $classes;
 	}
 
 	// }}}
