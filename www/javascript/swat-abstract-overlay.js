@@ -74,17 +74,8 @@ SwatAbstractOverlay.prototype.getToggleButton = function()
 SwatAbstractOverlay.prototype.getHeader = function()
 {
 	var header = document.createElement('div');
-
-	var close_link = document.createElement('a');
-	close_link.className = 'swat-overlay-close-link';
-	close_link.href = '#';
-	close_link.appendChild(document.createTextNode(
-		SwatAbstractOverlay.close_text));
-
-	YAHOO.util.Event.on(close_link, 'click', this.handleCloseLink, this, true);
-	header.appendChild(close_link);
 	YAHOO.util.Dom.addClass(header, 'hd');
-
+	header.appendChild(this.getCloseLink());
 	return header;
 }
 
@@ -106,6 +97,22 @@ SwatAbstractOverlay.prototype.getFooter = function()
 	var footer = document.createElement('div');
 	YAHOO.util.Dom.addClass(footer, 'ft');
 	return footer;
+}
+
+// }}}
+// {{{ SwatAbstractOverlay.prototype.getCloseLink
+
+SwatAbstractOverlay.prototype.getCloseLink = function()
+{
+	var close_link = document.createElement('a');
+	close_link.className = 'swat-overlay-close-link';
+	close_link.href = '#';
+	close_link.appendChild(document.createTextNode(
+		SwatAbstractOverlay.close_text));
+
+	YAHOO.util.Event.on(close_link, 'click', this.handleCloseLink, this, true);
+
+	return close_link;
 }
 
 // }}}

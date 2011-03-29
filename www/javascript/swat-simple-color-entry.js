@@ -9,14 +9,10 @@
  *
  * @copyright 2005-2010 silverorange Inc.
  */
-
 function SwatSimpleColorEntry(id, colors, none_option_title)
 {
-	SwatSimpleColorEntry.superclass.constructor.call(this, id);
-
 	this.colors = colors;
 	this.none_option_title = none_option_title;
-	this.input_tag = document.getElementById(this.id + '_value');
 
 	this.hex_input_tag = document.createElement('input');
 	this.hex_input_tag.type = 'text';
@@ -29,13 +25,18 @@ function SwatSimpleColorEntry(id, colors, none_option_title)
 	YAHOO.util.Event.on(this.hex_input_tag, 'keyup',
 		this.handleInputChange, this, true);
 
+	SwatSimpleColorEntry.superclass.constructor.call(this, id);
+
 	// this tries to make a square palette
 	this.columns = Math.ceil(Math.sqrt(this.colors.length));
 
 	this.current_color = null;
 	this.colorChangeEvent = new YAHOO.util.CustomEvent('colorChange');
 
-	this.setColor(this.input_tag.value);
+	YAHOO.util.Event.onDOMReady(function() {
+		this.input_tag = document.getElementById(this.id + '_value');
+		this.setColor(this.input_tag.value);
+	}, this, true);
 }
 
 // }}}
@@ -118,22 +119,8 @@ getBodyContent: function()
 
 	table.appendChild(tbody);
 
-	var hex_div = document.createElement('div');
-	hex_div.className = 'swat-simple-color-entry-palette-hex-color';
-
-	var label_tag = document.createElement('label');
-	label_tag.htmlFor = this.id + '_hex_color';
-	var title = document.createTextNode('#');
-	label_tag.appendChild(title);
-
-	hex_div.appendChild(label_tag);
-	hex_div.appendChild(this.hex_input_tag);
-
-
 	var div_tag = document.createElement('div');
 	div_tag.appendChild(table);
-	div_tag.appendChild(hex_div);
-
 	return div_tag;
 },
 
@@ -151,9 +138,31 @@ getToggleButton: function()
 	toggle_button.appendChild(this.toggle_button_content);
 
 	return toggle_button;
+},
+
+// }}}
+// {{{ getFooter
+
+getFooter: function()
+{
+	var title = document.createTextNode('#');
+
+	var label_tag = document.createElement('label');
+	label_tag.htmlFor = this.id + '_hex_color';
+	label_tag.appendChild(title);
+
+	var hex_div = document.createElement('div');
+	hex_div.className = 'swat-simple-color-entry-palette-hex-color';
+	hex_div.appendChild(label_tag);
+	hex_div.appendChild(this.hex_input_tag);
+
+	var footer = SwatSimpleColorEntry.superclass.getFooter.call(this);
+	footer.appendChild(hex_div);
+	return footer;
 }
 
 // }}}
+
 });
 
 // }}}
