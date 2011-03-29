@@ -42,9 +42,9 @@ function SwatSimpleColorEntry(id, colors, none_option_title)
 // {{{ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay)
 
 YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
-// {{{ getContent: function()
+// {{{ getBodyContent
 
-getContent: function()
+getBodyContent: function()
 {
 	var table = document.createElement('table');
 	table.className = 'swat-simple-color-entry-table';
@@ -135,6 +135,22 @@ getContent: function()
 	div_tag.appendChild(hex_div);
 
 	return div_tag;
+},
+
+// }}}
+// {{{ getToggleButton
+
+getToggleButton: function()
+{
+	var toggle_button = SwatSimpleColorEntry.superclass.getToggleButton.call(this);
+
+	this.toggle_button_content = document.createElement('div');
+	this.toggle_button_content.className = 'swat-overlay-toggle-button-content';
+	// the following string is a UTF-8 encoded non breaking space
+	this.toggle_button_content.appendChild(document.createTextNode(' '))
+	toggle_button.appendChild(this.toggle_button_content);
+
+	return toggle_button;
 }
 
 // }}}

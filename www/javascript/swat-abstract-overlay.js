@@ -23,7 +23,7 @@ function SwatAbstractOverlay(id)
 	// list of select elements to hide for IE6
 	this.select_elements = [];
 
-	this.drawButton();
+	this.draw();
 	this.drawCloseDiv();
 
 	YAHOO.util.Event.onContentReady(this.id,
@@ -33,35 +33,46 @@ function SwatAbstractOverlay(id)
 SwatAbstractOverlay.close_text = 'Close';
 
 // }}}
-// {{{ SwatAbstractOverlay.prototype.drawButton
+// {{{ SwatAbstractOverlay.prototype.draw
 
-/**
- * Displays the toggle button for this overlay
- */
-SwatAbstractOverlay.prototype.drawButton = function()
+SwatAbstractOverlay.prototype.draw = function()
 {
-	this.toggle_button = document.createElement('button');
-	YAHOO.util.Dom.addClass(this.toggle_button,
-		'swat-overlay-toggle-button');
-
-	// the type property is readonly in IE so use setAttribute() here
-	this.toggle_button.setAttribute('type', 'button');
-
-	this.container.appendChild(this.toggle_button);
-	YAHOO.util.Event.on(this.toggle_button, 'click', this.toggle,
-		this, true);
-
-	this.toggle_button_content = document.createElement('div');
-	this.toggle_button_content.className = 'swat-overlay-toggle-button-content';
-	// the following string is a UTF-8 encoded non breaking space
-	this.toggle_button_content.appendChild(document.createTextNode(' '))
-	this.toggle_button.appendChild(this.toggle_button_content);
-
 	this.overlay_content = document.createElement('div');
 	this.overlay_content.id = this.id + '_overlay';
 	YAHOO.util.Dom.addClass(this.overlay_content, 'swat-overlay');
 	this.overlay_content.style.display = 'none';
 
+	this.overlay_content.appendChild(this.getHeader());
+	this.overlay_content.appendChild(this.getBody());
+	this.overlay_content.appendChild(this.getFooter());
+
+	this.toggle_button = this.getToggleButton();
+	this.toggle_button.appendChild(this.overlay_content);
+
+	this.container.appendChild(this.toggle_button);
+}
+
+// }}}
+// {{{ SwatAbstractOverlay.prototype.getToggleButton
+
+SwatAbstractOverlay.prototype.getToggleButton = function()
+{
+	var toggle_button = document.createElement('button');
+	YAHOO.util.Dom.addClass(toggle_button, 'swat-overlay-toggle-button');
+
+	// the type property is readonly in IE so use setAttribute() here
+	toggle_button.setAttribute('type', 'button');
+
+	YAHOO.util.Event.on(toggle_button, 'click', this.toggle, this, true);
+
+	return toggle_button;
+}
+
+// }}}
+// {{{ SwatAbstractOverlay.prototype.getHeader
+
+SwatAbstractOverlay.prototype.getHeader = function()
+{
 	var header = document.createElement('div');
 
 	var close_link = document.createElement('a');
@@ -74,17 +85,27 @@ SwatAbstractOverlay.prototype.drawButton = function()
 	header.appendChild(close_link);
 	YAHOO.util.Dom.addClass(header, 'hd');
 
+	return header;
+}
+
+// }}}
+// {{{ SwatAbstractOverlay.prototype.getBody
+
+SwatAbstractOverlay.prototype.getBody = function()
+{
 	var body = document.createElement('div');
 	YAHOO.util.Dom.addClass(body, 'bd');
+	return body;
+}
 
+// }}}
+// {{{ SwatAbstractOverlay.prototype.getFooter
+
+SwatAbstractOverlay.prototype.getFooter = function()
+{
 	var footer = document.createElement('div');
 	YAHOO.util.Dom.addClass(footer, 'ft');
-
-	this.overlay_content.appendChild(header);
-	this.overlay_content.appendChild(body);
-	this.overlay_content.appendChild(footer);
-
-	this.toggle_button.appendChild(this.overlay_content);
+	return footer;
 }
 
 // }}}
@@ -98,10 +119,9 @@ SwatAbstractOverlay.prototype.createOverlay = function(event)
 	this.overlay = new YAHOO.widget.Overlay(this.id + '_overlay',
 		{ visible: false, constraintoviewport: true });
 
-	this.overlay_content.childNodes[1].appendChild(this.getContent());
+	this.overlay.body.appendChild(this.getBodyContent());
 
 	this.overlay.render(this.container);
-	//this.overlay.render(document.body);
 	this.overlay_content.style.display = 'block';
 	this.is_drawn = true;
 }
@@ -155,12 +175,12 @@ SwatAbstractOverlay.prototype.getOverlayContext = function()
 }
 
 // }}}
-// {{{ SwatAbstractOverlay.prototype.getContent
+// {{{ SwatAbstractOverlay.prototype.getBodyContent
 
 /**
  * Draws this overlay
  */
-SwatAbstractOverlay.prototype.getContent = function()
+SwatAbstractOverlay.prototype.getBodyContent = function()
 {
 	return document.createElement('div');
 }
@@ -189,7 +209,6 @@ SwatAbstractOverlay.prototype.drawCloseDiv = function()
 	YAHOO.util.Event.on(this.close_div, 'click', this.close, this, true);
 
 	this.container.appendChild(this.close_div);
-	//document.body.appendChild(this.close_div);
 }
 
 // }}}
