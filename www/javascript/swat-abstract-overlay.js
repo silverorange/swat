@@ -23,14 +23,21 @@ function SwatAbstractOverlay(id)
 	// list of select elements to hide for IE6
 	this.select_elements = [];
 
-	this.draw();
-	this.drawCloseDiv();
-
+	YAHOO.util.Event.onDOMReady(this.init, this, true);
 	YAHOO.util.Event.onContentReady(this.id,
 		this.createOverlay, this, true);
 }
 
 SwatAbstractOverlay.close_text = 'Close';
+
+// }}}
+// {{{ SwatAbstractOverlay.prototype.init
+
+SwatAbstractOverlay.prototype.init = function()
+{
+	this.draw();
+	this.drawCloseDiv();
+}
 
 // }}}
 // {{{ SwatAbstractOverlay.prototype.draw

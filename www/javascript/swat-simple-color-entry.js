@@ -11,9 +11,26 @@
  */
 function SwatSimpleColorEntry(id, colors, none_option_title)
 {
+	SwatSimpleColorEntry.superclass.constructor.call(this, id);
+
 	this.colors = colors;
 	this.none_option_title = none_option_title;
 
+	// this tries to make a square palette
+	this.columns = Math.ceil(Math.sqrt(this.colors.length));
+
+	this.current_color = null;
+	this.colorChangeEvent = new YAHOO.util.CustomEvent('colorChange');
+}
+
+// }}}
+// {{{ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay)
+
+YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
+// {{{ init
+
+init: function()
+{
 	this.hex_input_tag = document.createElement('input');
 	this.hex_input_tag.type = 'text';
 	this.hex_input_tag.id = this.id + '_hex_color';
@@ -25,24 +42,13 @@ function SwatSimpleColorEntry(id, colors, none_option_title)
 	YAHOO.util.Event.on(this.hex_input_tag, 'keyup',
 		this.handleInputChange, this, true);
 
-	SwatSimpleColorEntry.superclass.constructor.call(this, id);
+	SwatSimpleColorEntry.superclass.init.call(this);
 
-	// this tries to make a square palette
-	this.columns = Math.ceil(Math.sqrt(this.colors.length));
-
-	this.current_color = null;
-	this.colorChangeEvent = new YAHOO.util.CustomEvent('colorChange');
-
-	YAHOO.util.Event.onDOMReady(function() {
-		this.input_tag = document.getElementById(this.id + '_value');
-		this.setColor(this.input_tag.value);
-	}, this, true);
-}
+	this.input_tag = document.getElementById(this.id + '_value');
+	this.setColor(this.input_tag.value);
+},
 
 // }}}
-// {{{ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay)
-
-YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
 // {{{ getBodyContent
 
 getBodyContent: function()
