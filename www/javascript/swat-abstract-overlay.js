@@ -24,8 +24,6 @@ function SwatAbstractOverlay(id)
 	this.select_elements = [];
 
 	YAHOO.util.Event.onDOMReady(this.init, this, true);
-	YAHOO.util.Event.onContentReady(this.id,
-		this.createOverlay, this, true);
 }
 
 SwatAbstractOverlay.close_text = 'Close';
@@ -37,6 +35,7 @@ SwatAbstractOverlay.prototype.init = function()
 {
 	this.draw();
 	this.drawCloseDiv();
+	this.createOverlay();
 }
 
 // }}}
@@ -113,7 +112,7 @@ SwatAbstractOverlay.prototype.getCloseLink = function()
 {
 	var close_link = document.createElement('a');
 	close_link.className = 'swat-overlay-close-link';
-	close_link.href = '#';
+	close_link.href = '#close';
 	close_link.appendChild(document.createTextNode(
 		SwatAbstractOverlay.close_text));
 
