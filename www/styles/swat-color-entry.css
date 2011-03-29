@@ -43,12 +43,18 @@
 	width: 21px;
 }
 
+.swat-simple-color-entry .swat-overlay-toggle-button {
+	width: 8.2em;
+	padding: 4px 0;
+}
+
 .swat-simple-color-entry .swat-overlay-toggle-button-content {
 	width: 6.2em;
 	border: 1px #ccc solid;
+	border-bottom-color: #eee;
+	border-right-color: #eee;
 	background: url(../images/color-entry-null.png);
-	margin: 2px;
-	float: left;
+	margin: 0px auto;
 	vertical-align: middle;
 	position: relative; /* IE floating div hack */
 }
