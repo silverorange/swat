@@ -2,7 +2,7 @@
  * A resizeable textarea widget
  *
  * @package   Swat
- * @copyright 2007-2009 silverorange
+ * @copyright 2007-2011 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 
@@ -25,6 +25,40 @@ function SwatTextarea(id, resizeable)
 }
 
 // }}}
+// {{{ SwatTextarea.registerPendingTextarea()
+
+SwatTextarea.registerPendingTextarea = function(textarea)
+{
+	SwatTextarea.pending_textareas.push(textarea);
+
+	if (SwatTextarea.pending_interval === null) {
+		SwatTextarea.pending_interval = setInterval(
+			SwatTextarea.pollPendingTextareas,
+			SwatTextarea.pending_poll_interval * 1000
+		);
+	}
+};
+
+// }}}
+// {{{ SwatTextarea.pollPendingTextareas()
+
+SwatTextarea.pollPendingTextareas = function()
+{
+	for (var i = 0; i < SwatTextarea.pending_textareas.length; i++) {
+		if (SwatTextarea.pending_textareas[i].textarea.offsetWidth > 0) {
+			SwatTextarea.pending_textareas[i].initialize();
+			SwatTextarea.pending_textareas.splice(i, 1);
+			i--;
+		}
+	}
+
+	if (SwatTextarea.pending_textareas.length === 0) {
+		clearInterval(SwatTextarea.pending_interval)
+		SwatTextarea.pending_interval = null;
+	}
+};
+
+// }}}
 // {{{ handleOnAvailable()
 
 /**
@@ -37,17 +71,37 @@ SwatTextarea.prototype.handleOnAvailable = function()
 
 	// check if textarea already is resizable, and if so, don't add resize
 	// handle.
-	var resize = YAHOO.util.Dom.getStyle(this.textarea, 'resize');
-	var resizable = (resize == 'both' || resize == 'vertical');
-	if (resizable) {
-		return;
+	if (SwatTextarea.supports_resize) {
+		var resize = YAHOO.util.Dom.getStyle(this.textarea, 'resize');
+		if (resize == 'both' || resize == 'vertical') {
+			return;
+		}
 	}
 
 	this.handle_div = document.createElement('div');
+	this.handle_div.className = 'swat-textarea-resize-handle';
+	this.handle_div._textarea = this.textarea;
 
+	YAHOO.util.Event.addListener(this.handle_div, 'mousedown',
+		SwatTextarea.mousedownEventHandler, this.handle_div);
+
+	this.textarea.parentNode.appendChild(this.handle_div);
+
+	// if textarea is not currently visible, delay initilization
+	if (this.textarea.offsetWidth == 0) {
+		SwatTextarea.registerPendingTextarea(this);
+		return;
+	}
+
+	this.initialize();
+};
+
+// }}}
+// {{{ initialize()
+
+SwatTextarea.prototype.initialize = function()
+{
 	var style_width = YAHOO.util.Dom.getStyle(this.textarea, 'width');
-
-	YAHOO.util.Dom.addClass(this.handle_div, 'swat-textarea-resize-handle');
 
 	if (style_width.indexOf('%') != -1) {
 		var left_border = YAHOO.util.Dom.getStyle(this.textarea,
@@ -66,14 +120,7 @@ SwatTextarea.prototype.handleOnAvailable = function()
 
 	this.handle_div.style.height = SwatTextarea.resize_handle_height + 'px';
 	this.handle_div.style.fontSize = '0'; // for IE6 height
-
-	this.handle_div._textarea = this.textarea;
-
-	this.textarea.parentNode.appendChild(this.handle_div);
-
-	YAHOO.util.Event.addListener(this.handle_div, 'mousedown',
-		SwatTextarea.mousedownEventHandler, this.handle_div);
-}
+};
 
 // }}}
 // {{{ static properties
@@ -92,7 +139,7 @@ SwatTextarea.dragging_item = null;
  *
  * If no drag is taking place this value is null.
  *
- * @var number
+ * @var Number
  */
 SwatTextarea.dragging_mouse_origin_y = null;
 
@@ -101,23 +148,57 @@ SwatTextarea.dragging_mouse_origin_y = null;
  *
  * If no drag is taking place this value is null.
  *
- * @var number
+ * @var Number
  */
 SwatTextarea.dragging_origin_height = null;
 
 /**
  * Minimum height of resized textareas in pixels
  *
- * @var number
+ * @var Number
  */
 SwatTextarea.min_height = 20;
 
 /**
  * Height of the resize handle in pixels
  *
- * @var number
+ * @var Number
  */
 SwatTextarea.resize_handle_height = 7;
+
+/**
+ * Textarea objects that have not yet been initialized
+ *
+ * @var Array
+ */
+SwatTextarea.pending_textareas = [];
+
+/**
+ * Window interval used to check if pending textareas can be initialized
+ *
+ * @var Object
+ */
+SwatTextarea.pending_interval = null;
+
+/**
+ * Polling period in seconds for checking if pending textareas are ready
+ * to be initialized
+ *
+ * @var Number
+ */
+SwatTextarea.pending_poll_interval = 0.1; // in seconds
+
+/**
+ * Whether or not the browser supports the CSS3 resize property
+ *
+ * @var Boolean
+ */
+SwatTextarea.supports_resize = (function() {
+	var div = document.createElement('div');
+	var resize = YAHOO.util.Dom.getStyle(div, 'resize');
+	return (resize === '' || resize === 'none');
+})();
+
 
 // }}}
 // {{{ SwatTextarea.mousedownEventHandler()
@@ -163,7 +244,7 @@ SwatTextarea.mousedownEventHandler = function(e, handle)
 
 	YAHOO.util.Event.addListener(document, 'mouseup',
 		SwatTextarea.mouseupEventHandler, handle);
-}
+};
 
 // }}}
 // {{{ SwatTextarea.mousemoveEventHandler()
@@ -190,7 +271,7 @@ SwatTextarea.mousemoveEventHandler = function(e, handle)
 		textarea.style.height = height + 'px';
 
 	return false;
-}
+};
 
 // }}}
 // {{{ SwatTextarea.mouseupEventHandler()
@@ -227,6 +308,6 @@ SwatTextarea.mouseupEventHandler = function(e, handle)
 	YAHOO.util.Dom.setStyle(handle._textarea, 'opacity', 1);
 
 	return false;
-}
+};
 
 // }}}
