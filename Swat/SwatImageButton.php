@@ -41,6 +41,15 @@ class SwatImageButton extends SwatButton
 	 */
 	public $values = array();
 
+	/**
+	 * Image alt text
+	 *
+	 * The alt attribute in the input tag.
+	 *
+	 * @var string
+	 */
+	public $alt = null;
+
 	// }}}
 	// {{{ public function process()
 
@@ -84,6 +93,7 @@ class SwatImageButton extends SwatButton
 		$input_tag->id = $this->id;
 		$input_tag->name = $this->id;
 		$input_tag->value = $this->title;
+		$input_tag->alt = $this->alt;
 		$input_tag->class = $this->getCSSClassString();
 
 		if (count($this->values))
