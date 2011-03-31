@@ -101,9 +101,6 @@ class SwatImageButton extends SwatButton
 		else
 			$input_tag->src = $this->image;
 
-		if ($this->title !== null)
-			$input_tag->title = $this->title;
-
 		$input_tag->tabindex = $this->tab_index;
 		$input_tag->accesskey = $this->access_key;
 
