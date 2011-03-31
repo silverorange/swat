@@ -88,6 +88,14 @@ class SwatImageButton extends SwatButton
 
 		SwatWidget::display();
 
+		if ($this->alt == '') {
+			throw new SwatException(
+				'The $alt property of SwatImageButton must be set to an '.
+				'appropriate value. The "alt" attribute is required in '.
+				'HTML5 and can not be an empty string.'
+			);
+		}
+
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'image';
 		$input_tag->id = $this->id;
