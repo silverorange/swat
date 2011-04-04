@@ -96,7 +96,7 @@ abstract class SwatInputControl extends SwatControl
 			$text = Swat::_('The %%s field can be at most %s characters long.');
 			break;
 		default:
-			$text = Swat::_('There is problem with the %s field.');
+			$text = Swat::_('There is a problem with the %s field.');
 			break;
 		}
 
