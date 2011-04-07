@@ -136,6 +136,21 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 	}
 
 	// }}}
+	// {{{ public function addToStart()
+
+	/**
+	 * Adds a row to the beginning of this data structure
+	 *
+	 * @param $data the data of the row to add.
+	 *
+	 */
+	public function addToStart($data)
+	{
+		array_unshift($this->rows, $data);
+		$this->current_index++;
+	}
+
+	// }}}
 	// {{{ public function getRowCount()
 
 	/**
