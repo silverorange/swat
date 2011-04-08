@@ -25,6 +25,13 @@ abstract class SwatInputControl extends SwatControl
 	 */
 	public $required = false;
 
+	/**
+	 * Whether to use the field title in validation messages
+	 *
+	 * @var boolean
+	 */
+	public $show_field_title_in_messages = true;
+
 	// }}}
 	// {{{ public function init()
 
@@ -90,13 +97,22 @@ abstract class SwatInputControl extends SwatControl
 	{
 		switch ($id) {
 		case 'required':
-			$text = Swat::_('The %s field is required.');
+			$text = $this->show_field_title_in_messages ?
+				Swat::_('The %s field is required.') :
+				Swat::_('This field is required.');
+
 			break;
 		case 'too-long':
-			$text = Swat::_('The %%s field can be at most %s characters long.');
+			$text = $this->show_field_title_in_messages ?
+				Swat::_('The %%s field can be at most %s characters long.') :
+				Swat::_('This field can be at most %s characters long.');
+
 			break;
 		default:
-			$text = Swat::_('There is a problem with the %s field.');
+			$text = $this->show_field_title_in_messages ?
+				Swat::_('There is a problem with the %s field.') :
+				Swat::_('There is a problem with this field.');
+
 			break;
 		}
 

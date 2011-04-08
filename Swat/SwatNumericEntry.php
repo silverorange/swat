@@ -120,22 +120,26 @@ abstract class SwatNumericEntry extends SwatEntry
 	{
 		switch ($id) {
 		case 'below-minimum':
-			$message = new SwatMessage(
-				Swat::_('The %%s field must not be less than %s.'),
-				'error');
+			$text = $this->show_field_title_in_messages ?
+				Swat::_('The %%s field must not be less than %s.') :
+				Swat::_('This field must not be less than %s.');
 
 			break;
 
 		case 'above-maximum':
-			$message = new SwatMessage(
-				Swat::_('The %%s field must not be more than %s.'),
-				'error');
+			$text = $this->show_field_title_in_messages ?
+				Swat::_('The %%s field must not be more than %s.') :
+				Swat::_('This field must not be more than %s.');
 
 			break;
 
 		default:
 			$message = parent::getValidationMessage($id);
 			break;
+		}
+
+		if (!isset($message)) {
+			$message = new SwatMessage($text, 'error');
 		}
 
 		return $message;

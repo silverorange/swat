@@ -260,7 +260,10 @@ class SwatEntry extends SwatInputControl implements SwatState
 	{
 		switch ($id) {
 		case 'too-short':
-			$text = Swat::_('The %%s must be at least %s characters long.');
+			$text = $this->show_field_title_in_messages ?
+				Swat::_('This field must be at least %s characters long.') :
+				Swat::_('The %%s must be at least %s characters long.');
+
 			break;
 		default:
 			return parent::getValidationMessage($id);
