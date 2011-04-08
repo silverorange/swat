@@ -434,24 +434,30 @@ class SwatFileEntry extends SwatInputControl
 	{
 		switch ($id) {
 		case 'required':
-			$text = Swat::_('The %s field is required.');
+			$text = $this->show_field_title_in_messages ?
+				Swat::_('The %s field is required.') :
+				Swat::_('This field is required.');
 			break;
 		case 'mime-type':
-			$text = sprintf(
-				Swat::_(
-					'The %%s field must be of the following type(s): %s.'),
+			$text = sprintf($this->show_field_title_in_messages ?
+				Swat::_('The %%s field must be of the following type(s): %s.') :
+				Swat::_('This field must be of the following type(s): %s.'),
 				implode(', ', $this->accept_mime_types));
 
 			break;
 		case 'too-large':
-			$text = Swat::_(
-				'The %s field exceeds the maximum allowable file size.');
+			$text = $this->show_field_title_in_messages ?
+				Swat::_('The %s field exceeds the maximum allowable file '.
+					'size.') :
+				Swat::_('This field exceeds the maximum allowable file size.');
 
 			break;
 		case 'upload-error':
-			$text = Swat::_(
-				'The %s field encounted an error when trying to upload '.
-				'the file. Please try again.');
+			$text = $this->show_field_title_in_messages ?
+				Swat::_('The %s field encounted an error when trying to '.
+					'upload the file. Please try again.') :
+				Swat::_('This field encounted an error when trying to '.
+					'upload the file. Please try again.');
 
 			break;
 		default:

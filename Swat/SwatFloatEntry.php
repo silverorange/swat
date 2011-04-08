@@ -98,14 +98,19 @@ class SwatFloatEntry extends SwatNumericEntry
 	{
 		switch ($id) {
 		case 'float':
-			$message = new SwatMessage(
-				Swat::_('The %s field must be a number.'), 'error');
+			$text = $this->show_field_title_in_messages ?
+				Swat::_('The %s field must be a number.') :
+				Swat::_('This field must be a number.');
 
 			break;
 
 		default:
 			$message = parent::getValidationMessage($id);
 			break;
+		}
+
+		if (!isset($message)) {
+			$message = new SwatMessage($text, 'error');
 		}
 
 		return $message;
