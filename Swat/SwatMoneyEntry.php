@@ -218,6 +218,7 @@ class SwatMoneyEntry extends SwatFloatEntry
 				str_replace('%', '%%', $currency),
 				str_replace('%', '%%', $example));
 
+			$message = new SwatMessage($text, 'error');
 			break;
 		case 'currency-decimal-places':
 			$text = $this->show_field_title_in_messages ?
@@ -226,20 +227,18 @@ class SwatMoneyEntry extends SwatFloatEntry
 				Swat::_('This field has too many decimal places. The '.
 					'currency %s only allows %s.');
 
+			$message = new SwatMessage($text, 'error');
 			break;
 		case 'no-decimal-places':
 			$text = $this->show_field_title_in_messages ?
 				Swat::_('The %s field must not have any decimal places.') :
 				Swat::_('This field must not have any decimal places.');
 
+			$message = new SwatMessage($text, 'error');
 			break;
 		default:
 			$message = parent::getValidationMessage($id);
 			break;
-		}
-
-		if (!isset($message)) {
-			$message = new SwatMessage($text, 'error');
 		}
 
 		return $message;

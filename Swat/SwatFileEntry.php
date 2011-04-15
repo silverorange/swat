@@ -437,6 +437,8 @@ class SwatFileEntry extends SwatInputControl
 			$text = $this->show_field_title_in_messages ?
 				Swat::_('The %s field is required.') :
 				Swat::_('This field is required.');
+
+			$message = new SwatMessage($text, 'error');
 			break;
 		case 'mime-type':
 			$text = sprintf($this->show_field_title_in_messages ?
@@ -444,6 +446,7 @@ class SwatFileEntry extends SwatInputControl
 				Swat::_('This field must be of the following type(s): %s.'),
 				implode(', ', $this->accept_mime_types));
 
+			$message = new SwatMessage($text, 'error');
 			break;
 		case 'too-large':
 			$text = $this->show_field_title_in_messages ?
@@ -451,6 +454,7 @@ class SwatFileEntry extends SwatInputControl
 					'size.') :
 				Swat::_('This field exceeds the maximum allowable file size.');
 
+			$message = new SwatMessage($text, 'error');
 			break;
 		case 'upload-error':
 			$text = $this->show_field_title_in_messages ?
@@ -459,14 +463,11 @@ class SwatFileEntry extends SwatInputControl
 				Swat::_('This field encounted an error when trying to '.
 					'upload the file. Please try again.');
 
+			$message = new SwatMessage($text, 'error');
 			break;
 		default:
 			$message = parent::getValidationMessage($id);
 			break;
-		}
-
-		if (!isset($message)) {
-			$message = new SwatMessage($text, 'error');
 		}
 
 		return $message;

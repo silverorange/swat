@@ -119,7 +119,7 @@ class SwatIntegerEntry extends SwatNumericEntry
 					Swat::_('The %s field must be a whole number.') :
 					Swat::_('This field must be a whole number.');
 			}
-
+			$message = new SwatMessage($text, 'error');
 			break;
 
 		case 'integer-maximum':
@@ -127,6 +127,7 @@ class SwatIntegerEntry extends SwatNumericEntry
 				Swat::_('The %s field is too big.') :
 				Swat::_('This field is too big.');
 
+			$message = new SwatMessage($text, 'error');
 			break;
 
 		case 'integer-minimum':
@@ -134,15 +135,12 @@ class SwatIntegerEntry extends SwatNumericEntry
 				Swat::_('The %s field is too small.') :
 				Swat::_('The this field is too small.');
 
+			$message = new SwatMessage($text, 'error');
 			break;
 
 		default:
 			$message = parent::getValidationMessage($id);
 			break;
-		}
-
-		if (!isset($message)) {
-			$message = new SwatMessage($text, 'error');
 		}
 
 		return $message;

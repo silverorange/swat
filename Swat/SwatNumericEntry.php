@@ -124,6 +124,7 @@ abstract class SwatNumericEntry extends SwatEntry
 				Swat::_('The %%s field must not be less than %s.') :
 				Swat::_('This field must not be less than %s.');
 
+			$message = new SwatMessage($text, 'error');
 			break;
 
 		case 'above-maximum':
@@ -131,15 +132,12 @@ abstract class SwatNumericEntry extends SwatEntry
 				Swat::_('The %%s field must not be more than %s.') :
 				Swat::_('This field must not be more than %s.');
 
+			$message = new SwatMessage($text, 'error');
 			break;
 
 		default:
 			$message = parent::getValidationMessage($id);
 			break;
-		}
-
-		if (!isset($message)) {
-			$message = new SwatMessage($text, 'error');
 		}
 
 		return $message;
