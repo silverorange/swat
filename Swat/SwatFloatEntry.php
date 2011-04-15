@@ -102,15 +102,13 @@ class SwatFloatEntry extends SwatNumericEntry
 				Swat::_('The %s field must be a number.') :
 				Swat::_('This field must be a number.');
 
+			$message = new SwatMessage($text, 'error');
+
 			break;
 
 		default:
 			$message = parent::getValidationMessage($id);
 			break;
-		}
-
-		if (!isset($message)) {
-			$message = new SwatMessage($text, 'error');
 		}
 
 		return $message;
