@@ -18,7 +18,7 @@ require_once 'Swat/SwatFormField.php';
  * 'application/octet-stream'.
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2011 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFileEntry extends SwatInputControl
@@ -557,20 +557,24 @@ class SwatFileEntry extends SwatInputControl
 
 	private static function parseFileUploadSize($ini_value)
 	{
-		$size  = strtoupper(substr($ini_value, -1));
-		$value = (integer) substr($ini_value, 0, -1);
+		if (is_numeric($ini_value)) {
+			return $value = $ini_value;
+		} else {
+			$size  = strtoupper(substr($ini_value, -1));
+			$value = (integer) substr($ini_value, 0, -1);
 
-		switch($size) {
-		case 'P':
-			$value *= 1024;
-		case 'T':
-			$value *= 1024;
-		case 'G':
-			$value *= 1024;
-		case 'M':
-			$value *= 1024;
-		case 'K':
-			$value *= 1024;
+			switch($size) {
+			case 'P':
+				$value *= 1024;
+			case 'T':
+				$value *= 1024;
+			case 'G':
+				$value *= 1024;
+			case 'M':
+				$value *= 1024;
+			case 'K':
+				$value *= 1024;
+			}
 		}
 
 		return $value;
