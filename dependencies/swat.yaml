@@ -25,6 +25,7 @@ Swat:
   Provides:
 
     # JavaScript resources
+    packages/swat/javascript/swat-accordion.js:
     packages/swat/javascript/swat-actions.js:
     packages/swat/javascript/swat-button.js:
     packages/swat/javascript/swat-calendar.js:
@@ -80,6 +81,7 @@ Swat:
       Minify: No
 
     # Style-sheet resources
+    packages/swat/styles/swat-accordion.css:
     packages/swat/styles/swat-actions.css:
       Depends:
         - packages/swat/styles/swat.css
