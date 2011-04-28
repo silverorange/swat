@@ -135,9 +135,7 @@ class SwatFileEntry extends SwatInputControl
 		if ($this->display_maximum_upload_size) {
 			$div_tag = new SwatHtmlTag('div');
 			$div_tag->class = 'swat-note';
-			$div_tag->setContent(sprintf(Swat::_('Maximum file size %s.'),
-				SwatString::byteFormat(self::getMaximumFileUploadSize())));
-
+			$div_tag->setContent($this->getMaximumUploadSizeText());
 			$div_tag->display();
 		}
 	}
@@ -527,6 +525,15 @@ class SwatFileEntry extends SwatInputControl
 		}
 
 		return $valid;
+	}
+
+	// }}}
+	// {{{ protected function getMaximumUploadSizeText()
+
+	protected function getMaximumUploadSizeText()
+	{
+		return sprintf(Swat::_('Maximum file size %s.'),
+			SwatString::byteFormat(self::getMaximumFileUploadSize()));
 	}
 
 	// }}}
