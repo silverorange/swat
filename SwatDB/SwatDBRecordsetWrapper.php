@@ -736,16 +736,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		$current_record_id = null;
 		$current_recordset = null;
 		foreach ($recordset as $record) {
-			if ($record->hasInternalValue($binding_field)) {
-				$record_id = $record->getInternalValue($binding_field);
-			} else if (isset($record->$binding_field)) {
-				$record_id = $record->$binding_field;
-			} else {
-				throw new SwatDBException(sprintf(
-					'Binding field “%s ”does not exist on the sub recordset.',
-					$binding_field));
-			}
-
+			$record_id = $record->getInternalValue($binding_field);
 			if ($record_id !== $current_record_id) {
 				$current_record_id = $record_id;
 				$current_recordset = $this[$record_id]->$name;
