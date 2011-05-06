@@ -13,7 +13,7 @@ require_once 'Swat/SwatString.php';
  * A flydown (aka combo-box) selection widget
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2011 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFlydown extends SwatOptionControl implements SwatState
@@ -67,9 +67,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 		$selected = false;
 
 		if ($this->show_blank)
-			$options = array_merge(
-				array(new SwatFlydownBlankOption(null,
-					$this->blank_title)), $options);
+			$options = array_merge(array($this->getBlankOption()), $options);
 
 		// only show a select if there is more than one option
 		if (count($options) > 1) {
@@ -319,6 +317,19 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 		$span_tag->class = 'swat-flydown-single';
 		$span_tag->setContent($title, $flydown_option->content_type);
 		$span_tag->display();
+	}
+
+	// }}}
+	// {{{ protected function getBlankOption()
+
+	/**
+	 * Gets the the blank option for this flydown.
+	 *
+	 * @return SwatFlydownBlankOption the blank value option.
+	 */
+	protected function getBlankOption()
+	{
+		return new SwatFlydownBlankOption(null, $this->blank_title);
 	}
 
 	// }}}

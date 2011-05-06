@@ -14,7 +14,7 @@ require_once 'Swat/SwatYUI.php';
  * The value of the other SwatFlydown cascades to this SwatCascadeFlydown.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2011 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCascadeFlydown extends SwatFlydown
@@ -180,15 +180,20 @@ class SwatCascadeFlydown extends SwatFlydown
 			$option_array = array(new SwatOption(null, null));
 		}
 
-		if ($this->show_blank && count($option_array) > 1) {
-			$blank_title = ($this->blank_title === null) ?
-				Swat::_('choose one ...') : $this->blank_title;
-
-			$ret[] = new SwatOption(null, $blank_title);
-		}
-
 		$ret = array_merge($ret, $option_array);
+
 		return $ret;
+	}
+
+	// }}}
+	// {{{ protected function getBlankOption()
+
+	protected function getBlankOption()
+	{
+		$blank_title = ($this->blank_title === null) ?
+			Swat::_('choose one ...') : $this->blank_title;
+
+		return new SwatFlydownBlankOption(null, $blank_title);
 	}
 
 	// }}}
