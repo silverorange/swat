@@ -114,7 +114,7 @@ class SwatI18NLocale extends SwatObject
 		$locale_object = null;
 
 		if ($locale === null) {
-			$locale_key = setlocale(LC_ALL, '0');
+			$locale_key = self::setlocale(LC_ALL, '0');
 			if (array_key_exists($locale_key, self::$locales)) {
 				$locale_object = self::$locales[$locale_key];
 			}
@@ -149,6 +149,62 @@ class SwatI18NLocale extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function setlocale()
+
+	/**
+	 * Sets the current locale
+	 *
+	 * This is a wrapper for the system setlocale() function that provides
+	 * extra compatibility.
+	 *
+	 * @param integer $category optional. The lc-type constant specifying the
+	 *                           category of functions affected by setting
+	 *                           the system locale.
+	 * @param array|string $locale the locale identifier. Use '0' to return
+	 *                              the current system locale. Multiple locale
+	 *                              identifiers may be specified in an array.
+	 *                              In this case, the first valid locale is
+	 *                              used.
+	 *
+	 * @return string|boolean the new or current locale, or false if an invalid
+	 *                        <i>$locale</i> is specified.
+	 */
+	public static function setlocale($category, $locale)
+	{
+		$return = false;
+
+		static $categories = array(
+			'LC_COLLATE'  => LC_COLLATE,
+			'LC_CTYPE'    => LC_CTYPE,
+			'LC_MONETARY' => LC_MONETARY,
+			'LC_NUMERIC'  => LC_NUMERIC,
+			'LC_TIME'     => LC_TIME,
+			'LC_MESSAGES' => LC_MESSAGES,
+		);
+
+		$parts = explode(';', $locale);
+		if ($category === LC_ALL && count($parts) > 1) {
+
+			// Handle case when LC_ALL is undefined and we're passing a giant
+			// string with all the separate lc-type values.
+			foreach ($parts as $part) {
+				$part_exp = explode('=', $part, 2);
+				if (count($part_exp) === 2 &&
+					array_key_exists($part_exp[0], $categories)) {
+
+					$return = setlocale(
+						$categories[$part_exp[0]], $part_exp[1]);
+				}
+			}
+
+		} else {
+			$return = setlocale($category, $locale);
+		}
+
+		return $return;
+	}
+
+	// }}}
 	// {{{ public function set()
 
 	/**
@@ -161,8 +217,10 @@ class SwatI18NLocale extends SwatObject
 	 */
 	public function set($category = LC_ALL)
 	{
-		$this->old_locale_by_category[$category] = setlocale($category, '0');
-		setlocale($category, $this->locale);
+		$this->old_locale_by_category[$category] =
+			self::setlocale($category, '0');
+
+		self::setlocale($category, $this->locale);
 	}
 
 	// }}}
@@ -179,7 +237,7 @@ class SwatI18NLocale extends SwatObject
 	 */
 	public function reset($category = LC_ALL)
 	{
-		setlocale($category, $this->old_locale_by_category[$category]);
+		self::setlocale($category, $this->old_locale_by_category[$category]);
 	}
 
 	// }}}
@@ -722,7 +780,7 @@ class SwatI18NLocale extends SwatObject
 
 			// try to detect encoding from locale identifier
 			$lc_ctype = null;
-			$lc_all = setlocale(LC_ALL, '0');
+			$lc_all = self::setlocale(LC_ALL, '0');
 			$lc_all_exp = explode(';', $lc_all);
 			if (count($lc_all_exp) === 1) {
 				$lc_ctype = reset($lc_all_exp);
@@ -1198,10 +1256,10 @@ class SwatI18NLocale extends SwatObject
 		$this->locale = $locale;
 
 		if ($this->locale === null) {
-			$this->preferred_locale = setlocale(LC_ALL, '0');
+			$this->preferred_locale = self::setlocale(LC_ALL, '0');
 		} else {
-			$old_locale = setlocale(LC_ALL, '0');
-			$this->preferred_locale = setlocale(LC_ALL, $this->locale);
+			$old_locale = self::setlocale(LC_ALL, '0');
+			$this->preferred_locale = self::setlocale(LC_ALL, $this->locale);
 			if ($this->preferred_locale === false) {
 				throw new SwatException("The locale {$this->locale} is not ".
 					"valid for this operating system.");
@@ -1214,7 +1272,7 @@ class SwatI18NLocale extends SwatObject
 		$this->buildInternationalCurrencyFormat();
 
 		if ($this->locale !== null) {
-			setlocale(LC_ALL, $old_locale);
+			self::setlocale(LC_ALL, $old_locale);
 		}
 	}
 
