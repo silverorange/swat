@@ -695,7 +695,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 	protected function getReplicatorFieldName()
 	{
-		$name = 'replicators';
+		$name = $this->id.'_replicators';
 
 		$widget = $this->getFirstAncestor('SwatWidget');
 		if ($widget->id) {
