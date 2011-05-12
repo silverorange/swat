@@ -21,7 +21,7 @@ require_once 'Swat/SwatYUI.php';
  * or borders.
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2011 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatForm extends SwatDisplayableContainer
@@ -515,7 +515,7 @@ class SwatForm extends SwatDisplayableContainer
 	/**
 	 * Whether or not this form was submitted on the previous page request
 	 *
-	 * This method may becalled before or after the SwatForm::process() method.
+	 * This method may be called before or after the SwatForm::process() method.
 	 * and is thus sometimes more useful than SwatForm::isProcessed() which
 	 * only returns a meaningful value after SwatForm::process() is called.
 	 *
