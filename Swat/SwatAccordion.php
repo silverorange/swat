@@ -78,11 +78,12 @@ class SwatAccordion extends SwatNoteBook
 			$li_tag->open();
 
 			// toggle link
+			$title = ($page->title === null) ? '' : $page->title;
 			$anchor_tag = new SwatHtmlTag('a');
 			$anchor_tag->class = 'swat-accordion-page-toggle';
 			$anchor_tag->href = '#'.$page->id;
 			$em_tag = new SwatHtmlTag('em');
-			$em_tag->setContent($page->title);
+			$em_tag->setContent($title);
 			$anchor_tag->open();
 			$em_tag->display();
 			$anchor_tag->close();
