@@ -944,6 +944,10 @@ class SwatForm extends SwatDisplayableContainer
 			)
 		);
 
+		// we're going to validate data on the server, so turn off HTML5
+		// form validation
+		$form_tag->novalidate = 'novalidate';
+
 		return $form_tag;
 	}
 
