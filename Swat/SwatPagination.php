@@ -270,10 +270,9 @@ class SwatPagination extends SwatControl
 	 */
 	public function setCurrentPage($page)
 	{
-		$this->current_page = (int) $page;
+		$this->current_page = max(1, (int) $page);
 
-		$this->current_record = max(0,
-			($this->current_page - 1) * $this->page_size);
+		$this->current_record = ($this->current_page - 1) * $this->page_size;
 	}
 
 	// }}}
