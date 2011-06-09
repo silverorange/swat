@@ -56,7 +56,7 @@ class SwatTextareaEditor extends SwatTextarea
 	 *
 	 * @var string
 	 */
-	public $basehref = null;
+	public $base_href = null;
 
 	/**
 	 * Editing mode to use
@@ -116,6 +116,15 @@ class SwatTextareaEditor extends SwatTextarea
 	 * @var string
 	 */
 	public $image_server;
+
+	/**
+	 * Base-Href
+	 *
+	 * @var string
+	 *
+	 * @deprecated Use {@link SwatTextareaEditor::$base_href} instead.
+	 */
+	public $basehref = null;
 
 	// }}}
 	// {{{ public function __construct()
@@ -299,18 +308,23 @@ class SwatTextareaEditor extends SwatTextarea
 		$base_href = 'editor_base_'.$this->id;
 		ob_start();
 
-		echo "var {$base_href} = ".
-			"document.getElementsByTagName('base');\n";
+		if ($this->base_href === null) {
+			echo "var {$base_href} = ".
+				"document.getElementsByTagName('base');\n";
 
-		echo "if ({$base_href}.length) {\n";
-		echo "\t{$base_href} = {$base_href}[0];\n";
-		echo "\t{$base_href} = {$base_href}.href;\n";
-		echo "} else {\n";
-		echo "\t{$base_href} = location.href.split('#', 2)[0];\n";
-		echo "\t{$base_href} = {$base_href}.split('?', 2)[0];\n";
-		echo "\t{$base_href} = {$base_href}.substring(\n";
-		echo "\t\t0, {$base_href}.lastIndexOf('/') + 1);\n";
-		echo "}\n";
+			echo "if ({$base_href}.length) {\n";
+			echo "\t{$base_href} = {$base_href}[0];\n";
+			echo "\t{$base_href} = {$base_href}.href;\n";
+			echo "} else {\n";
+			echo "\t{$base_href} = location.href.split('#', 2)[0];\n";
+			echo "\t{$base_href} = {$base_href}.split('?', 2)[0];\n";
+			echo "\t{$base_href} = {$base_href}.substring(\n";
+			echo "\t\t0, {$base_href}.lastIndexOf('/') + 1);\n";
+			echo "}\n";
+		} else {
+			echo "var {$base_href} = ".
+				SwatString::quoteJavaScriptString($this->base_href).";\n";
+		}
 
 		echo "tinyMCE.init({\n";
 
@@ -324,7 +338,7 @@ class SwatTextareaEditor extends SwatTextarea
 			$lines[] = "\t".$name.": ".$value;
 		}
 
-		$lines[] = "\tdocument_base_url: editor_base_{$this->id}";
+		$lines[] = "\tdocument_base_url: {$base_href}";
 
 		echo implode(",\n", $lines);
 		echo "\n});";
