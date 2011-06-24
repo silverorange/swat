@@ -73,11 +73,11 @@ class SwatReplicableContainer extends SwatDisplayableContainer
 	public function init()
 	{
 		// TODO: remove this when deprecated $replicators property is removed
-		if ($this->replication_ids === null)
+		if ($this->replication_ids === null && $this->replicators !== null)
 			$this->replication_ids = array_keys($this->replicators);
 
 		if ($this->replication_ids === null)
-			$this->replicators = array(0);
+			$this->replication_ids = array(0);
 
 		// Remove children, these are now the prototype widgets
 		foreach ($this->children as $child_widget)
