@@ -55,6 +55,15 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	 */
 	public $visible = true;
 
+	/**
+	 * Whether or not to show a colon after the title of this details view field
+	 *
+	 * By default, a colon is shown.
+	 *
+	 * @var boolean
+	 */
+	public $show_colon = true;
+
 	// }}}
 	// {{{ protected properties
 
@@ -144,8 +153,12 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 		if ($this->title == '') {
 			$th_tag->setContent('&nbsp;');
 		} else {
-			$th_tag->setContent(sprintf(Swat::_('%s:'), $this->title),
-				$this->title_content_type);
+			if ($this->show_colon) {
+				$th_tag->setContent(sprintf(Swat::_('%s:'), $this->title),
+					$this->title_content_type);
+			} else {
+				$th_tag->setContent($this->title, $this->title_content_type);
+			}
 		}
 
 		$th_tag->display();
