@@ -312,15 +312,7 @@ class SwatFileEntry extends SwatInputControl
 
 				if (extension_loaded('fileinfo')) {
 					// Use the fileinfo extension if available.
-
-					// PHP >= 5.3.0 supports returning only the mimetype
-					// without returning the encoding. See
-					// http://us3.php.net/manual/en/fileinfo.constants.php for
-					// details.
-					$mime_constant = (defined('FILEINFO_MIME_TYPE')) ?
-						FILEINFO_MIME_TYPE : FILEINFO_MIME;
-
-					$finfo = new finfo($mime_constant);
+					$finfo = $this->getFinfo();
 					$this->mime_type = reset(explode(';',
 						$finfo->file($temp_file_name)));
 
@@ -534,6 +526,26 @@ class SwatFileEntry extends SwatInputControl
 	{
 		return sprintf(Swat::_('Maximum file size %s.'),
 			SwatString::byteFormat(self::getMaximumFileUploadSize()));
+	}
+
+	// }}}
+	// {{{ protected function getFinfo()
+
+	/**
+	 * Gets a new finfo resource
+	 *
+	 * @return mixed the magic database resource or FALSE on failure.
+	 */
+	protected function getFinfo()
+	{
+		// PHP >= 5.3.0 supports returning only the mimetype
+		// without returning the encoding. See
+		// http://us3.php.net/manual/en/fileinfo.constants.php for
+		// details.
+		$mime_constant = (defined('FILEINFO_MIME_TYPE')) ?
+			FILEINFO_MIME_TYPE : FILEINFO_MIME;
+
+		return new finfo($mime_constant);
 	}
 
 	// }}}
