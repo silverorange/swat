@@ -20,14 +20,15 @@ class ButtonDemo extends Demo
 
 	public function buildDemoUI(SwatUI $ui)
 	{
-		$submit = $ui->getWidget('submit_throbber_button');
+		$submit  = $ui->getWidget('submit_throbber_button');
 		$confirm = $ui->getWidget('confirm_throbber_button');
 
 		$submit->process();
 		$confirm->process();
 
-		if ($submit->hasBeenClicked() || $confirm->hasBeenClicked())
+		if ($submit->hasBeenClicked() || $confirm->hasBeenClicked()) {
 			sleep(2);
+		}
 	}
 
 	// }}}
