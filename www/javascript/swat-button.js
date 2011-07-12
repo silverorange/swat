@@ -26,6 +26,7 @@ SwatButton.prototype.handleClick = function(e)
 	if (confirmed) {
 		if (this.throbber_container !== null) {
 			this.button.disabled = true;
+			YAHOO.util.Dom.addClass(this.button, 'swat-insensitive');
 
 			// add button to form data manually since we disabled it above
 			var div = document.createElement('div');
