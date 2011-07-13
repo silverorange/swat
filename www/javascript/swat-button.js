@@ -14,11 +14,11 @@ function SwatButton(id, show_processing_throbber)
 		this.initThrobber();
 	}
 
-	YAHOO.util.Event.on(this.button.form, 'submit',
-		this.handleFormSubmit, this, true);
+	YAHOO.util.Event.addListener(this.button, 'click',
+		this.handleClick, this, true);
 }
 
-SwatButton.prototype.handleFormSubmit = function(e)
+SwatButton.prototype.handleClick = function(e)
 {
 	var confirmed = (this.confirmation_message) ?
 		confirm(this.confirmation_message) : true;
@@ -37,6 +37,7 @@ SwatButton.prototype.handleFormSubmit = function(e)
 			div.appendChild(hidden_field);
 			this.button.form.appendChild(div);
 
+			this.button.form.submit(); // needed for IE
 			this.showThrobber();
 		}
 	} else {
