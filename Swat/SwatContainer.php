@@ -164,6 +164,45 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function insertBefore()
+
+	/**
+	 * Adds a widget to this container before another widget
+	 *
+	 * @param SwatWidget $widget a reference to the widget to add.
+	 * @param SwatWidget $child a reference to the widget to add before.
+	 */
+	public function insertBefore(SwatWidget $widget, SwatWidget $child)
+	{
+		if ($widget->parent !== null) {
+			throw new SwatException('Attempting to add a widget that already '.
+				'has a parent.');
+		}
+
+		if ($child->parent !== $this) {
+			throw new SwatException('Attempting to insert before a child '.
+				'that is not in this container.');
+		}
+
+		$index = 0;
+		for ($i = 0; $i < count($this->children); $i++) {
+			if ($this->children[$i] === $child) {
+				$index = $i;
+				break;
+			}
+		}
+		array_splice($this->children, $index, 0, array($widget));
+
+		$widget->parent = $this;
+
+		if ($widget->id !== null) {
+			$this->children_by_id[$widget->id] = $widget;
+		}
+
+		$this->sendAddNotifySignal($widget);
+	}
+
+	// }}}
 	// {{{ public function packEnd()
 
 	/**
