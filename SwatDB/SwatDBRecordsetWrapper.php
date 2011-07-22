@@ -705,6 +705,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		foreach ($this as $record) {
 			$record_ids[] = $record->{$this->index_field};
 		}
+
 		// note: this only works when index_field is an integer which is
 		// currently true anyway
 		$record_ids = $this->db->implodeArray($record_ids, 'integer');
@@ -726,6 +727,35 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		// get all records
 		$recordset = SwatDB::query($this->db, $sql, $wrapper);
 
+		return $this->attachSubRecordset($name, $wrapper, $binding_field,
+			$recordset);
+	}
+
+	// }}}
+	// {{{ public function attachSubRecordset()
+
+	/**
+	 * Efficiently loads sub-recordsets for records in this recordset
+	 *
+	 * @param string $name the name of the sub-recordset.
+	 * @param string $wrapper the name of the recordset wrapper class to use
+	 *                         for the sub-recordsets.
+	 * @param string $binding_field the name of the binding field in the
+	 *                               table containing sub-records. This should
+	 *                               be a field that contains index values from
+	 *                               this recordset (i.e., a foreign key).
+	 * @param SwatDBRecordsetWrapper $recordset the recordset to attach
+	 *
+	 * @throws SwatDBException if this recordset does not define an index
+	 *                         field.
+	 *
+	 * @return SwatDBRecordsetWrapper a wrapper of the sub-recordsets, or null.
+	 */
+	public function attachSubRecordset($name, $wrapper, $binding_field,
+		SwatDBRecordsetWrapper $recordset)
+	{
+		$this->checkDB();
+
 		// assign empty recordsets for all records in this set
 		foreach ($this as $record) {
 			$empty_recordset = new $wrapper();
@@ -736,10 +766,21 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		$current_record_id = null;
 		$current_recordset = null;
 		foreach ($recordset as $record) {
-			$record_id = $record->getInternalValue($binding_field);
+			if ($record->hasInternalValue($binding_field)) {
+				$record_id = $record->getInternalValue($binding_field);
+			} else {
+				$record_id = $record->$binding_field;
+			}
+
 			if ($record_id !== $current_record_id) {
 				$current_record_id = $record_id;
 				$current_recordset = $this[$record_id]->$name;
+			}
+
+			if ($current_recordset === null) {
+				var_dump($binding_field);
+				var_dump($record);
+				exit;
 			}
 			$current_recordset->add($record);
 		}
