@@ -108,6 +108,19 @@
 		return h;
 	};
 
+	var _getEditorEl = function(editor)
+	{
+		var container = editor.getContainer();
+		var el;
+		for (var i = 0; i < container.childNodes.length; i++) {
+			if (DOM.hasClass(container.childNodes[i], 'mceLayout')) {
+				el = container.childNodes[i];
+				break;
+			}
+		}
+		return el;
+	};
+
 	// register language translations
 	tinymce.PluginManager.requireLangPack('swat');
 
@@ -293,6 +306,9 @@
 			}
 		}
 
+		SwatZIndexManager.raiseElement(this.overlay);
+		SwatZIndexManager.raiseElement(this.container);
+
 		// display offsecreen to get dimensions
 		this.container.style.left    = '-10000px';
 		this.container.style.top     = '-10000px';
@@ -302,18 +318,20 @@
 
 		// in WebKit, the container element has no width for some reason so
 		// get the width of the table it contains.
-		var el = ed.getContainer().firstChild;
-		var editorRect = _getRect(el);
+		var el = _getEditorEl(ed);
+		if (el) {
+			var editorRect = _getRect(el);
 
-		var x = editorRect.x + ((editorRect.w  - rect.w) / 2);
-		var y = editorRect.y + 30;
+			var x = editorRect.x + ((editorRect.w  - rect.w) / 2);
+			var y = editorRect.y + 30;
 
-		this.overlay.style.height = _getDocumentHeight() + 'px';
-		this.overlay.style.display = 'block';
+			this.overlay.style.height = _getDocumentHeight() + 'px';
+			this.overlay.style.display = 'block';
 
-		this.container.style.left = x + 'px';
-		this.container.style.top = y + 'px';
-		this.container.style.display = 'block';
+			this.container.style.left = x + 'px';
+			this.container.style.top = y + 'px';
+			this.container.style.display = 'block';
+		}
 		this.focus();
 
 		Event.add(DOM.doc, 'keydown', this.handleKeyPress, this);
@@ -1220,7 +1238,10 @@
 
 		// after rendering UI, draw source mode and tabs for visual editor
 		ed.onLoadContent.add(this.initMode, this);
-		if (ed.getParam('swat_modes_enabled', 'yes').toLowerCase() != 'no') {
+		var modes = ed.getParam('swat_modes_enabled', 'yes');
+		if (   modes === true
+			|| (typeof modes === 'string' && modes.toLowerCase() != 'no')
+		) {
 			ed.onPostRender.add(this.drawSourceMode, this);
 		}
 
@@ -1750,16 +1771,18 @@
 		ul.appendChild(visualListItem);
 
 		// get editor width
-		var el = this.editor.getContainer().firstChild;
-		var rect = _getRect(el);
-		ul.style.width = (rect.w + 2) + 'px';
-
-		// Hack to set width on a 50ms timeout because the table has not yet
-		// been resized to fit the toolbar in older versions of WebKit.
-		setTimeout(function() {
+		var el = _getEditorEl(this.editor);
+		if (el) {
 			var rect = _getRect(el);
 			ul.style.width = (rect.w + 2) + 'px';
-		}, 50);
+
+			// Hack to set width on a 50ms timeout because the table has not yet
+			// been resized to fit the toolbar in older versions of WebKit.
+			setTimeout(function() {
+				var rect = _getRect(el);
+				ul.style.width = (rect.w + 2) + 'px';
+			}, 500);
+		}
 
 		var clear = document.createElement('div');
 		clear.style.clear = 'right';
@@ -1947,7 +1970,5 @@
 
 	// register plugin
 	tinymce.PluginManager.add('swat', tinymce.plugins.SwatPlugin);
-
-	// }}}
 
 })();
