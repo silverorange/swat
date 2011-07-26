@@ -144,6 +144,10 @@ class SwatTextareaEditor extends SwatTextarea
 		$this->rows = 30;
 
 		$this->addJavaScript(
+			'packages/swat/javascript/swat-z-index-manager.js',
+			Swat::PACKAGE_ID);
+
+		$this->addJavaScript(
 			'packages/swat/javascript/tiny_mce/tiny_mce.js',
 			Swat::PACKAGE_ID);
 	}
@@ -236,7 +240,7 @@ class SwatTextareaEditor extends SwatTextarea
 	{
 		$buttons = implode(',', $this->getConfigButtons());
 
-		$formats = array(
+		$blockformats = array(
 			'p',
 			'blockquote',
 			'pre',
@@ -248,7 +252,7 @@ class SwatTextareaEditor extends SwatTextarea
 			'h6',
 		);
 
-		$formats = implode(',', $formats);
+		$blockformats = implode(',', $blockformats);
 
 		$modes = ($this->modes_enabled) ? 'yes' : 'no';
 		$image_server = ($this->image_server) ? $this->image_server : '';
@@ -262,11 +266,13 @@ class SwatTextareaEditor extends SwatTextarea
 			'theme_advanced_buttons3'           => '',
 			'theme_advanced_toolbar_location'   => 'top',
 			'theme_advanced_toolbar_align'      => 'left',
-			'theme_advanced_blockformats'       => $formats,
+			'theme_advanced_blockformats'       => $blockformats,
 			'skin'                              => 'swat',
-			'plugins'                           => 'swat,media',
+			'plugins'                           => 'swat,media,paste',
 			'swat_modes_enabled'                => $modes,
 			'swat_image_server'                 => $image_server,
+			'paste_remove_spans'                => true,
+			'paste_remove_styles'               => true,
 		);
 
 		return $config;
@@ -341,6 +347,50 @@ class SwatTextareaEditor extends SwatTextarea
 		$lines[] = "\tdocument_base_url: {$base_href}";
 
 		echo implode(",\n", $lines);
+
+		// Make removeformat button also clear inline alignments, styles,
+		// colors and classes.
+		echo ",\n".
+			"\tformats: {\n".
+			"\t\tremoveformat : [\n".
+			"\t\t\t{\n".
+			"\t\t\t\tselector     : 'b,strong,em,i,font,u,strike',\n".
+			"\t\t\t\tremove       : 'all',\n".
+			"\t\t\t\tsplit        : true,\n".
+			"\t\t\t\texpand       : false,\n".
+			"\t\t\t\tblock_expand : true,\n".
+			"\t\t\t\tdeep         : true\n".
+			"\t\t\t},\n".
+			"\t\t\t{\n".
+			"\t\t\t\tselector     : 'span',\n".
+			"\t\t\t\tattributes   : [\n".
+			"\t\t\t\t\t'style',\n".
+			"\t\t\t\t\t'class',\n".
+			"\t\t\t\t\t'align',\n".
+			"\t\t\t\t\t'color',\n".
+			"\t\t\t\t\t'background'\n".
+			"\t\t\t\t],\n".
+			"\t\t\t\tremove       : 'empty',\n".
+			"\t\t\t\tsplit        : true,\n".
+			"\t\t\t\texpand       : false,\n".
+			"\t\t\t\tdeep         : true\n".
+			"\t\t\t},\n".
+			"\t\t\t{\n".
+			"\t\t\t\tselector     : '*',\n".
+			"\t\t\t\tattributes   : [\n".
+			"\t\t\t\t\t'style',\n".
+			"\t\t\t\t\t'class',\n".
+			"\t\t\t\t\t'align',\n".
+			"\t\t\t\t\t'color',\n".
+			"\t\t\t\t\t'background'\n".
+			"\t\t\t\t],\n".
+			"\t\t\t\tsplit        : false,\n".
+			"\t\t\t\texpand       : false,\n".
+			"\t\t\t\tdeep         : true\n".
+			"\t\t\t}\n".
+			"\t\t]\n".
+			"\t}";
+
 		echo "\n});";
 
 		return ob_get_clean();
