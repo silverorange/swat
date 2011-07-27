@@ -766,22 +766,13 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		$current_record_id = null;
 		$current_recordset = null;
 		foreach ($recordset as $record) {
-			if ($record->hasInternalValue($binding_field)) {
-				$record_id = $record->getInternalValue($binding_field);
-			} else {
-				$record_id = $record->$binding_field;
-			}
+			$record_id = $record->getInternalValue($binding_field);
 
 			if ($record_id !== $current_record_id) {
 				$current_record_id = $record_id;
 				$current_recordset = $this[$record_id]->$name;
 			}
 
-			if ($current_recordset === null) {
-				var_dump($binding_field);
-				var_dump($record);
-				exit;
-			}
 			$current_recordset->add($record);
 		}
 
