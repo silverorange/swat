@@ -9,7 +9,7 @@ require_once 'SwatI18N/SwatI18NLocale.php';
  * An input control for entering a delimited list of data
  *
  * @package   Swat
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2011 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatListEntry extends SwatEntry
@@ -246,10 +246,11 @@ class SwatListEntry extends SwatEntry
 	 */
 	public function setState($values)
 	{
-		if (is_array($values))
-			$this->values = $value;
-		else
-			$this->values = $this->splitValues($value);
+		if (is_array($values)) {
+			$this->values = $values;
+		} else {
+			$this->values = $this->splitValues($values);
+		}
 	}
 
 	// }}}
@@ -267,10 +268,11 @@ class SwatListEntry extends SwatEntry
 	 */
 	protected function getDisplayValue($value)
 	{
-		if ($this->trim_whitespace && $this->delimiter != ' ')
+		if ($this->trim_whitespace && $this->delimiter != ' ') {
 			return implode($this->delimiter.' ', $this->values);
-		else
+		} else {
 			return implode($this->delimiter, $this->values);
+		}
 	}
 
 	// }}}
@@ -341,12 +343,17 @@ class SwatListEntry extends SwatEntry
 	 */
 	private function splitValues($value)
 	{
-		if ($this->trim_whitespace)
-			return preg_split('/['.$this->delimiter.'\s]/u', $value, -1,
-				PREG_SPLIT_NO_EMPTY);
+		$values = array();
 
-		return preg_split('/'.$this->delimiter.'/u', $value, -1,
-			PREG_SPLIT_NO_EMPTY);
+		if (strlen($value)) {
+			$values = explode($this->delimiter, $value);
+
+			if ($this->trim_whitespace) {
+				$values = array_map('trim', $values);
+			}
+		}
+
+		return $values;
 	}
 
 	// }}}
