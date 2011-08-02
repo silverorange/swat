@@ -11,7 +11,7 @@ require_once 'Swat/SwatEntry.php';
  * email address.
  *
  * @package   Swat
- * @copyright 2005-2009 silverorange
+ * @copyright 2005-2011 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatEmailEntry extends SwatEntry
@@ -36,7 +36,7 @@ class SwatEmailEntry extends SwatEntry
 			return;
 		}
 
-		if ($this->validateEmailAddress($this->value)) {
+		if (!self::validateEmailAddress($this->value)) {
 			$message = Swat::_('The email address you have entered is not '.
 				'properly formatted.');
 
@@ -45,7 +45,7 @@ class SwatEmailEntry extends SwatEntry
 	}
 
 	// }}}
-	// {{{ protected function validateEmailAddress()
+	// {{{ public static function validateEmailAddress()
 
 	/**
 	 * Validates an email address
@@ -59,16 +59,14 @@ class SwatEmailEntry extends SwatEntry
 	 * @return boolean true if <i>$value</i> is a valid email address and
 	 *                  false if it is not.
 	 */
-	protected function validateEmailAddress($value)
+	public static function validateEmailAddress($value)
 	{
-		$valid = false;
-
 		$valid_name_word = '[-!#$%&\'*+.\\/0-9=?A-Z^_`{|}~]+';
 		$valid_domain_word = '[-!#$%&\'*+\\/0-9=?A-Z^_`{|}~]+';
 		$valid_address_regexp = '/^'.$valid_name_word.'@'.
 			$valid_domain_word.'(\.'.$valid_domain_word.')+$/ui';
 
-		$valid = (preg_match($valid_address_regexp, $this->value) === 0);
+		$valid = (preg_match($valid_address_regexp, $value) === 1);
 
 		return $valid;
 	}
