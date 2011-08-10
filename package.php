@@ -4,7 +4,7 @@
 
 require_once 'PEAR/PackageFileManager2.php';
 
-$version = '1.4.86';
+$version = '1.4.87';
 $notes = <<<EOT
 No release notes for you!
 EOT;
