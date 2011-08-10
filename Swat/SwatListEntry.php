@@ -327,7 +327,7 @@ class SwatListEntry extends SwatEntry
 	}
 
 	// }}}
-	// {{{ private function splitValues()
+	// {{{ protected function splitValues()
 
 	/**
 	 * Splits a value string with entries separated by delimiters into
@@ -341,19 +341,17 @@ class SwatListEntry extends SwatEntry
 	 * @return array the string of delimiter separated values split into an
 	 *                array of values.
 	 */
-	private function splitValues($value)
+	protected function splitValues($value)
 	{
-		$values = array();
+		$delimiter = preg_quote($this->delimiter, '/');
 
-		if (strlen($value)) {
-			$values = explode($this->delimiter, $value);
-
-			if ($this->trim_whitespace) {
-				$values = array_map('trim', $values);
-			}
+		if ($this->trim_whitespace) {
+			$expression = '/\s*'.$delimiter.'\s*/u';
+		} else {
+			$expression = '/'.$delimiter.'/u';
 		}
 
-		return $values;
+		return preg_split($expression, $value, -1, PREG_SPLIT_NO_EMPTY);
 	}
 
 	// }}}
