@@ -1756,6 +1756,33 @@ class SwatString extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function validateEmailAddress()
+
+	/**
+	 * Validates an email address
+	 *
+	 * This doesn't use the PHP 5.2.x filter_var() function since it allows
+	 * addresses without TLD's since 5.2.9. If/when they add a flag to allow to
+	 * validate with TLD's, we can start using it again.
+	 *
+	 * @param string $value the email address to validate.
+	 *
+	 * @return boolean true if <i>$value</i> is a valid email address and
+	 *                  false if it is not.
+	 */
+	public static function validateEmailAddress($value)
+	{
+		$valid_name_word = '[-!#$%&\'*+.\\/0-9=?A-Z^_`{|}~]+';
+		$valid_domain_word = '[-!#$%&\'*+\\/0-9=?A-Z^_`{|}~]+';
+		$valid_address_regexp = '/^'.$valid_name_word.'@'.
+			$valid_domain_word.'(\.'.$valid_domain_word.')+$/ui';
+
+		$valid = (preg_match($valid_address_regexp, $value) === 1);
+
+		return $valid;
+	}
+
+	// }}}
 	// {{{ private static function stripEntities()
 
 	/**

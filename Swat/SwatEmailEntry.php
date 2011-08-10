@@ -36,39 +36,52 @@ class SwatEmailEntry extends SwatEntry
 			return;
 		}
 
-		if (!self::validateEmailAddress($this->value)) {
-			$message = Swat::_('The email address you have entered is not '.
-				'properly formatted.');
-
-			$this->addMessage(new SwatMessage($message, 'error'));
+		if (!$this->validateEmailAddress()) {
+			$this->addMessage($this->getValidationMessage('email'));
 		}
 	}
 
 	// }}}
-	// {{{ public static function validateEmailAddress()
+	// {{{ protected function validateEmailAddress()
 
 	/**
-	 * Validates an email address
+	 * Validates the email address value of this entry
 	 *
-	 * This doesn't use the PHP 5.2.x filter_var() function since it allows
-	 * addresses without TLD's since 5.2.9. If/when they add a flag to allow to
-	 * validate with TLD's, we can start using it again.
-	 *
-	 * @param string $value the email address to validate.
-	 *
-	 * @return boolean true if <i>$value</i> is a valid email address and
+	 * @return boolean true if this entry's value is a valid email address and
 	 *                  false if it is not.
 	 */
-	public static function validateEmailAddress($value)
+	protected function validateEmailAddress()
 	{
-		$valid_name_word = '[-!#$%&\'*+.\\/0-9=?A-Z^_`{|}~]+';
-		$valid_domain_word = '[-!#$%&\'*+\\/0-9=?A-Z^_`{|}~]+';
-		$valid_address_regexp = '/^'.$valid_name_word.'@'.
-			$valid_domain_word.'(\.'.$valid_domain_word.')+$/ui';
+		return SwatString::validateEmailAddress($this->value);
+	}
 
-		$valid = (preg_match($valid_address_regexp, $value) === 1);
+	// }}}
+	// {{{ protected function getValidationMessage()
 
-		return $valid;
+	/**
+	 * Gets a validation message for this email entry
+	 *
+	 * @see SwatEntry::getValidationMessage()
+	 * @param string $id the string identifier of the validation message.
+	 *
+	 * @return SwatMessage the validation message.
+	 */
+	protected function getValidationMessage($id)
+	{
+		switch ($id) {
+		case 'email':
+			$text = Swat::_('The email address you have entered is not '.
+				'properly formatted.');
+
+			$message = new SwatMessage($text, 'error');
+			break;
+
+		default:
+			$message = parent::getValidationMessage($id);
+			break;
+		}
+
+		return $message;
 	}
 
 	// }}}
