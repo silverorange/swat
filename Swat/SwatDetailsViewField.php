@@ -186,7 +186,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 		// Set the properties of the renderers to the value of the data field.
 		foreach ($this->renderers as $renderer) {
 			$this->renderers->applyMappingsToRenderer($renderer, $data);
-			$renderer->sensitive = $sensitive;
+			$renderer->sensitive = $renderer->sensitive && $sensitive;
 		}
 
 		$this->displayRenderers($data);
