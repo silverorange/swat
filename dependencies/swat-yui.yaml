@@ -59,6 +59,9 @@ SwatYUI:
       Depends:
         - packages/yui/dragdrop/dragdrop.js
         - packages/yui/element/element.js
+    packages/yui/selector/selector.js:
+      Depends:
+        - packages/yui/yahoo/yahoo.js
     packages/yui/stylesheet/stylesheet.js:
       Depends:
         - packages/yui/yahoo/yahoo.js

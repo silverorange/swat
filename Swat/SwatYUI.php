@@ -267,6 +267,9 @@ class SwatYUI extends SwatObject
 		$components['resize']->addStyleSheet(
 			'resize/assets/skins/sam', '', false);
 
+		$components['selector'] = new SwatYUIComponent('selector');
+		$components['selector']->addJavaScript();
+
 		$components['slider'] = new SwatYUIComponent('slider');
 		$components['slider']->addJavaScript();
 
@@ -395,6 +398,8 @@ class SwatYUI extends SwatObject
 		$components['resize']->addDependency($components['event']);
 		$components['resize']->addDependency($components['dragdrop']);
 		$components['resize']->addDependency($components['element']);
+
+		$components['selector']->addDependency($components['yahoo']);
 
 		$components['slider']->addDependency($components['yahoo']);
 		$components['slider']->addDependency($components['dom']);
