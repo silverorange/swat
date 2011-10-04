@@ -12,7 +12,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * Used as a base class for widgets which contain other widgets.
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2011 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatContainer extends SwatWidget implements SwatUIParent
@@ -126,7 +126,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	{
 		foreach ($this->children as $key => $child_widget) {
 			if ($child_widget === $widget) {
-				unset($this->children[$key]);
+				// use array_splice here instead of unset in order to re-index
+				// the array keys
+				array_splice($this->children, $key, 1);
 				$widget->parent = null;
 
 				if ($widget->id !== null)
