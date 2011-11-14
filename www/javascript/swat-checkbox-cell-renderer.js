@@ -69,7 +69,7 @@ SwatCheckboxCellRenderer.prototype.updateCheckAll = function()
 
 	var count = 0;
 	for (var i = 0; i < this.check_list.length; i++)
-		if (this.check_list[i].checked)
+		if (this.check_list[i].checked || this.check_list[i].disabled)
 			count++;
 		else if (count > 0)
 			break; // can't possibly be all checked or none checked
@@ -80,7 +80,9 @@ SwatCheckboxCellRenderer.prototype.updateCheckAll = function()
 SwatCheckboxCellRenderer.prototype.checkAll = function(checked)
 {
 	for (var i = 0; i < this.check_list.length; i++) {
-		this.check_list[i].checked = checked;
+		if (!this.check_list[i].disabled) {
+			this.check_list[i].checked = checked;
+		}
 		this.updateNode(this.check_list[i]);
 	}
 }
@@ -94,8 +96,10 @@ SwatCheckboxCellRenderer.prototype.checkBetween = function(a, b)
 	}
 
 	for (var i = a; i < b; i++) {
-		this.check_list[i].checked = true;
-		this.view.selectItem(this.check_list[i], this.id);
+		if (!this.check_list[i].disabled) {
+			this.check_list[i].checked = true;
+			this.view.selectItem(this.check_list[i], this.id);
+		}
 	}
 }
 

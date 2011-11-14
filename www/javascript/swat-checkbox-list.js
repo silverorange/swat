@@ -39,7 +39,7 @@ SwatCheckboxList.prototype.updateCheckAll = function ()
 
 	var count = 0;
 	for (var i = 0; i < this.check_list.length; i++)
-		if (this.check_list[i].checked)
+		if (this.check_list[i].checked || this.check_list[i].disabled)
 			count++;
 		else if (count > 0)
 			break; // can't possibly be all checked or none checked
@@ -49,6 +49,9 @@ SwatCheckboxList.prototype.updateCheckAll = function ()
 
 SwatCheckboxList.prototype.checkAll = function(checked)
 {
-	for (var i = 0; i < this.check_list.length; i++)
-		this.check_list[i].checked = checked;
+	for (var i = 0; i < this.check_list.length; i++) {
+		if (!this.check_list[i].disabled) {
+			this.check_list[i].checked = checked;
+		}
+	}
 }
