@@ -1,7 +1,7 @@
 /**
  * Calendar Widget Version 1.0
  *
- * Copyright (c) 2004 Tribador Mediaworks, 2004-2009 silverorange Inc.
+ * Copyright (c) 2004 Tribador Mediaworks, 2004-2011 silverorange Inc.
  *
  * Portions of this code were adapted with permission from the
  * 'Calendar Widget' JavaScript library, which is distributed under the
@@ -363,6 +363,9 @@ SwatCalendar.prototype.closeAndSetBlank = function()
 		this.date_entry.setYear('');
 		this.date_entry.setMonth('');
 		this.date_entry.setDay('');
+		if (this.date_entry.time_entry !== null) {
+			this.date_entry.time_entry.reset();
+		}
 	}
 	this.close();
 }
