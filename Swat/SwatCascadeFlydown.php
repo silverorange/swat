@@ -158,10 +158,12 @@ class SwatCascadeFlydown extends SwatFlydown
 	protected function &getOptions()
 	{
 		$ret = array();
-
-		$parent_value = $this->cascade_from->value;
+		$parent_value = $this->getParentValue();
 		if ($parent_value === null) {
-			if ($this->cascade_from->show_blank) {
+			if ($this->hasEmptyParent()) {
+				// allow for the parent not being set or empty.
+				$option_array = $this->options[null];
+			} elseif ($this->cascade_from->show_blank) {
 				// select the blank option on the cascade from
 				$ret[] = new SwatOption('', '&nbsp;');
 				$ret[] = new SwatOption('', '&nbsp;');
@@ -186,6 +188,40 @@ class SwatCascadeFlydown extends SwatFlydown
 	}
 
 	// }}}
+	// {{{ protected function getParentValue()
+
+	protected function getParentValue()
+	{
+		return ($this->cascade_from instanceof SwatFlydown) ?
+			$this->cascade_from->value : null;
+	}
+
+	// }}}
+	// {{{ protected function getParentOptions()
+
+	protected function getParentOptions()
+	{
+		return ($this->cascade_from instanceof SwatFlydown) ?
+			$this->cascade_from->getOptions() : array();
+	}
+
+	// }}}
+	// {{{ protected function hasEmptyParent()
+
+	protected function hasEmptyParent()
+	{
+		$count = count($this->getParentOptions());
+		if ($this->cascade_from instanceof SwatFlydown &&
+			$this->cascade_from->show_blank) {
+			$count++;
+		}
+
+		// A parent flydown with no options or a single option and no blank
+		// option are treated as empty.
+		return ($count < 2);
+	}
+
+	// }}}
 	// {{{ protected function getBlankOption()
 
 	protected function getBlankOption()
@@ -206,6 +242,11 @@ class SwatCascadeFlydown extends SwatFlydown
 	 */
 	protected function getInlineJavaScript()
 	{
+		// allow for the parent not being set or empty.
+		if ($this->hasEmptyParent()) {
+			return;
+		}
+
 		$javascript = sprintf("var %s_cascade = new SwatCascade('%s', '%s');",
 			$this->id,
 			$this->cascade_from->id,
