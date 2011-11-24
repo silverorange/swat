@@ -283,12 +283,12 @@ class SwatException extends Exception
 	{
 		ob_start();
 
-		printf("%s Exception: %s\n\nCode: %s\n\nMessage:\n\t%s\n\n".
+		printf("%s Exception: %s\n\nMessage: %s\n\nCode:\n\t%s\n\n".
 			"Created in file '%s' on line %s.\n\n",
 			$this->wasHandled() ? 'Caught' : 'Uncaught',
 			$this->class,
-			$this->getCode(),
 			$this->getMessage(),
+			$this->getCode(),
 			$this->getFile(),
 			$this->getLine());
 
