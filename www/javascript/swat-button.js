@@ -37,8 +37,11 @@ SwatButton.prototype.handleClick = function(e)
 			div.appendChild(hidden_field);
 			this.button.form.appendChild(div);
 
-			this.button.form.submit(); // needed for IE
 			this.showThrobber();
+			var form = YAHOO.util.Dom.getAncestorByTagName(this.button, 'form');
+			if (form) {
+				form.submit(); // needed for IE and WebKit
+			}
 		}
 	} else {
 		YAHOO.util.Event.preventDefault(e);
