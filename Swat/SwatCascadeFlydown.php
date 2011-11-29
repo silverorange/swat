@@ -212,7 +212,7 @@ class SwatCascadeFlydown extends SwatFlydown
 
 	protected function hasEmptyParent()
 	{
-		return (count($this->getParentOptions()) == 0);
+		return (count($this->getParentOptions()) === 0);
 	}
 
 	// }}}
@@ -220,7 +220,7 @@ class SwatCascadeFlydown extends SwatFlydown
 
 	protected function hasSingleParent()
 	{
-		return ((count($this->getParentOptions()) == 1) &&
+		return ((count($this->getParentOptions()) === 1) &&
 			$this->cascade_from->show_blank == false);
 	}
 
