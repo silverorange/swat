@@ -344,14 +344,14 @@ class SwatException extends Exception
 
 		printf('<h3>%s Exception: %s</h3>'.
 				'<div class="swat-exception-body">'.
-				'Code:<div class="swat-exception-message">%s</div>'.
 				'Message:<div class="swat-exception-message">%s</div>'.
+				'Code:<div class="swat-exception-message">%s</div>'.
 				'Created in file <strong>%s</strong> '.
 				'on line <strong>%s</strong>.<br /><br />',
 				$this->wasHandled() ? 'Caught' : 'Uncaught',
 				$this->class,
-				$this->getCode(),
 				$this->getMessageAsHtml(),
+				$this->getCode(),
 				$this->getFile(),
 				$this->getLine());
 
