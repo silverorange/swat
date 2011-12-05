@@ -195,7 +195,7 @@ class SwatCascadeFlydown extends SwatFlydown
 	protected function getParentValue()
 	{
 		return ($this->cascade_from instanceof SwatFlydown) ?
-			$this->cascade_from->value : 'null';
+			$this->cascade_from->value : null;
 	}
 
 	// }}}
