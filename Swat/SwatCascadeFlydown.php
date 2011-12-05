@@ -174,7 +174,7 @@ class SwatCascadeFlydown extends SwatFlydown
 				);
 			} else {
 				// select the first option on the cascade from
-				$first_value = reset($this->cascade_from->options)->value;
+				$first_value = reset($this->cascade_from->getOptions())->value;
 				$options = $this->options[$first_value];
 			}
 		} elseif (isset($this->options[$parent_value])) {
@@ -195,7 +195,7 @@ class SwatCascadeFlydown extends SwatFlydown
 	protected function getParentValue()
 	{
 		return ($this->cascade_from instanceof SwatFlydown) ?
-			$this->cascade_from->value : null;
+			$this->cascade_from->value : 'null';
 	}
 
 	// }}}
