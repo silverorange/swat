@@ -28,7 +28,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * TODO: work out ids. id is required
  *
  * @package   Swat
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewInputRow extends SwatTableViewRow
@@ -443,10 +443,10 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this date entry
+	 * Gets the SwatHtmlHeadEntry objects needed by this input row
 	 *
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 *                               this date entry.
+	 *                               this input row.
 	 *
 	 * @see SwatUIObject::getHtmlHeadEntrySet()
 	 */
@@ -456,6 +456,28 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 		$this->createEmbeddedWidgets();
 		$set->addEntrySet($this->enter_another_link->getHtmlHeadEntrySet());
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this input row
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               needed by this input row.
+	 *
+	 * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = parent::getAvailableHtmlHeadEntrySet();
+
+		$this->createEmbeddedWidgets();
+		$set->addEntrySet(
+			$this->enter_another_link->getAvailableHtmlHeadEntrySet());
 
 		return $set;
 	}

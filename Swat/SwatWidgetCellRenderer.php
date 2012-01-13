@@ -11,7 +11,7 @@ require_once 'Swat/SwatTitleable.php';
 /**
  *
  * @package   Swat
- * @copyright 2006-2010 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
@@ -539,6 +539,35 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			$widgets = $this->getWidgets();
 			foreach ($widgets as $widget) {
 				$set->addEntrySet($widget->getHtmlHeadEntrySet());
+			}
+		}
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this widget
+	 * cell renderer
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               needed by this widget cell renderer.
+	 *
+	 * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = parent::getAvailableHtmlHeadEntrySet();
+
+		if ($this->using_null_replication) {
+			$set->addEntrySet(
+				$this->getPrototypeWidget()->getAvailableHtmlHeadEntrySet());
+		} else {
+			$widgets = $this->getWidgets();
+			foreach ($widgets as $widget) {
+				$set->addEntrySet($widget->getAvailableHtmlHeadEntrySet());
 			}
 		}
 

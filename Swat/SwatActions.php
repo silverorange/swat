@@ -17,7 +17,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * Actions widget
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatActions extends SwatControl implements SwatUIParent
@@ -309,6 +309,29 @@ class SwatActions extends SwatControl implements SwatUIParent
 
 		foreach ($this->action_items as $child_widget)
 			$set->addEntrySet($child_widget->getHtmlHeadEntrySet());
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this actions
+	 * list
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               needed by this actions list.
+	 *
+	 * @see SwatWidget::getAvailableHtmlHeadEntrySet()
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = parent::getAvailableHtmlHeadEntrySet();
+
+		foreach ($this->action_items as $child_widget) {
+			$set->addEntrySet($child_widget->getAvailableHtmlHeadEntrySet());
+		}
 
 		return $set;
 	}

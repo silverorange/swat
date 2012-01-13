@@ -12,7 +12,7 @@ require_once 'Swat/SwatWidget.php';
  * A table view row with an optional contained widget
  *
  * @package   Swat
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
@@ -303,11 +303,42 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	// }}}
 	// {{{ public function getHtmlHeadEntrySet()
 
+	/**
+	 * Gets the SwatHtmlHeadEntry objects needed by this row
+	 *
+	 * If this row has not been displayed, an empty set is returned to reduce
+	 * the number of required HTTP requests.
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
+	 *                               this row.
+	 */
 	public function getHtmlHeadEntrySet()
 	{
 		$set = parent::getHtmlHeadEntrySet();
-		if ($this->widget !== null)
+
+		if ($this->widget !== null) {
 			$set->addEntrySet($this->widget->getHtmlHeadEntrySet());
+		}
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this row
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               needed by this row.
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = parent::getAvailableHtmlHeadEntrySet();
+
+		if ($this->widget !== null) {
+			$set->addEntrySet($this->widget->getAvailableHtmlHeadEntrySet());
+		}
 
 		return $set;
 	}

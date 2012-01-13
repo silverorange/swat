@@ -10,7 +10,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * A single entry in a {@link SwatActions} widget
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see SwatActions
@@ -141,8 +141,31 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	{
 		$set = parent::getHtmlHeadEntrySet();
 
-		if ($this->widget !== null)
+		if ($this->widget !== null) {
 			$set->addEntrySet($this->widget->getHtmlHeadEntrySet());
+		}
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this action item
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               neededthis action item.
+	 *
+	 * @see SwatWidget::getAvailableHtmlHeadEntrySet()
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = parent::geAvailabletHtmlHeadEntrySet();
+
+		if ($this->widget !== null) {
+			$set->addEntrySet($this->widget->getAvailableHtmlHeadEntrySet());
+		}
 
 		return $set;
 	}

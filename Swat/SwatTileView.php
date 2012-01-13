@@ -16,7 +16,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * use {@link SwatViewSelector} objects.
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2012 silverorange
  * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
  * @see       SwatTile
  */
@@ -613,11 +613,39 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		$set = parent::getHtmlHeadEntrySet();
 
-		if ($this->tile !== null)
+		if ($this->tile !== null) {
 			$set->addEntrySet($this->tile->getHtmlHeadEntrySet());
+		}
 
-		foreach ($this->groups as $group)
+		foreach ($this->groups as $group) {
 			$set->addEntrySet($group->getHtmlHeadEntrySet());
+		}
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this tile view
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               needed by this tile view.
+	 *
+	 * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = parent::getAvailableHtmlHeadEntrySet();
+
+		if ($this->tile !== null) {
+			$set->addEntrySet($this->tile->getAvailableHtmlHeadEntrySet());
+		}
+
+		foreach ($this->groups as $group) {
+			$set->addEntrySet($group->getAvailableHtmlHeadEntrySet());
+		}
 
 		return $set;
 	}

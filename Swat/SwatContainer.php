@@ -12,7 +12,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * Used as a base class for widgets which contain other widgets.
  *
  * @package   Swat
- * @copyright 2004-2011 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatContainer extends SwatWidget implements SwatUIParent
@@ -540,8 +540,31 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	{
 		$set = parent::getHtmlHeadEntrySet();
 
-		foreach ($this->children as $child_widget)
+		foreach ($this->children as $child_widget) {
 			$set->addEntrySet($child_widget->getHtmlHeadEntrySet());
+		}
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this container
+	 *
+	 * @return SwatHtmlHeadEntrySet the {@link SwatHtmlHeadEntry} objects that
+	 *                              may be needed by this container.
+	 *
+	 * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = parent::getAvailableHtmlHeadEntrySet();
+
+		foreach ($this->children as $child_widget) {
+			$set->addEntrySet($child_widget->getAvailableHtmlHeadEntrySet());
+		}
 
 		return $set;
 	}

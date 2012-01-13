@@ -20,7 +20,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * together.
  *
  * @package   Swat
- * @copyright 2006-2010 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
@@ -283,7 +283,7 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this row
+	 * Gets the SwatHtmlHeadEntry objects needed by this input cell
 	 *
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
 	 *                               this input cell.
@@ -294,6 +294,24 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	{
 		$set = parent::getHtmlHeadEntrySet();
 		$set->addEntrySet($this->widget->getHtmlHeadEntrySet());
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this input cell
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               needed by this input cell.
+	 *
+	 * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = parent::getAvailableHtmlHeadEntrySet();
+		$set->addEntrySet($this->widget->getAvailableHtmlHeadEntrySet());
 		return $set;
 	}
 

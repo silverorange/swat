@@ -25,7 +25,7 @@ require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
  * use {@link SwatViewSelector} objects.
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableView extends SwatView implements SwatUIParent
@@ -498,17 +498,55 @@ class SwatTableView extends SwatView implements SwatUIParent
 	{
 		$set = parent::getHtmlHeadEntrySet();
 
-		foreach ($this->columns as $column)
+		foreach ($this->columns as $column) {
 			$set->addEntrySet($column->getHtmlHeadEntrySet());
+		}
 
-		foreach ($this->spanning_columns as $column)
+		foreach ($this->spanning_columns as $column) {
 			$set->addEntrySet($column->getHtmlHeadEntrySet());
+		}
 
-		foreach ($this->extra_rows as $row)
+		foreach ($this->extra_rows as $row) {
 			$set->addEntrySet($row->getHtmlHeadEntrySet());
+		}
 
-		foreach ($this->groups as $group)
+		foreach ($this->groups as $group) {
 			$set->addEntrySet($group->getHtmlHeadEntrySet());
+		}
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this table
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               needed by this table-view.
+	 *
+	 * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = parent::getAvailableHtmlHeadEntrySet();
+
+		foreach ($this->columns as $column) {
+			$set->addEntrySet($column->getAvailableHtmlHeadEntrySet());
+		}
+
+		foreach ($this->spanning_columns as $column) {
+			$set->addEntrySet($column->getAvailableHtmlHeadEntrySet());
+		}
+
+		foreach ($this->extra_rows as $row) {
+			$set->addEntrySet($row->getAvailableHtmlHeadEntrySet());
+		}
+
+		foreach ($this->groups as $group) {
+			$set->addEntrySet($group->getAvailableHtmlHeadEntrySet());
+		}
 
 		return $set;
 	}

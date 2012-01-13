@@ -14,7 +14,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * Notebook widget for containing {@link SwatNoteBookPage} pages
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatNoteBookPage
  */
@@ -318,8 +318,33 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	{
 		$set = parent::getHtmlHeadEntrySet();
 
-		foreach ($this->pages as $page)
+		foreach ($this->pages as $page) {
 			$set->addEntrySet($page->getHtmlHeadEntrySet());
+		}
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the {@link SwatHtmlHeadEntry} objects that may be needed by this
+	 * notebook
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               needed by this notebook and any UI
+	 *                               objects in this notebook's widget subtree.
+	 *
+	 * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = parent::getAvailableHtmlHeadEntrySet();
+
+		foreach ($this->pages as $page) {
+			$set->addEntrySet($page->getAvailableHtmlHeadEntrySet());
+		}
 
 		return $set;
 	}

@@ -270,13 +270,35 @@ abstract class SwatWidget extends SwatUIObject
 	 */
 	public function getHtmlHeadEntrySet()
 	{
-		if ($this->isDisplayed())
+		if ($this->isDisplayed()) {
 			$set = new SwatHtmlHeadEntrySet($this->html_head_entry_set);
-		else
+		} else {
 			$set = new SwatHtmlHeadEntrySet();
+		}
 
-		foreach ($this->getCompositeWidgets() as $widget)
+		foreach ($this->getCompositeWidgets() as $widget) {
 			$set->addEntrySet($widget->getHtmlHeadEntrySet());
+		}
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this widget
+	 *
+	 * @return SwatHtmlHeadEntrySet the {@link SwatHtmlHeadEntry} objects that
+	 *                               may be needed by this widget.
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = new SwatHtmlHeadEntrySet($this->html_head_entry_set);
+
+		foreach ($this->getCompositeWidgets() as $widget) {
+			$set->addEntrySet($widget->getAvailableHtmlHeadEntrySet());
+		}
 
 		return $set;
 	}
