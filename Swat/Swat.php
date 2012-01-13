@@ -95,8 +95,9 @@ class Swat
 	public static function setupGettext()
 	{
 		$path = '@DATA-DIR@/Swat/locale';
-		if (substr($path, 0 ,1) === '@')
+		if (substr($path, 0, 1) === '@') {
 			$path = dirname(__FILE__).'/../locale';
+		}
 
 		bindtextdomain(Swat::GETTEXT_DOMAIN, $path);
 		bind_textdomain_codeset(Swat::GETTEXT_DOMAIN, 'UTF-8');
