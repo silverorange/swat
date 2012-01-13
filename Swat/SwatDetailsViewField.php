@@ -9,7 +9,7 @@ require_once 'Swat/SwatCellRendererContainer.php';
  * A visible field in a SwatDetailsView
  *
  * @package   Swat
- * @copyright 2005-2009 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDetailsViewField extends SwatCellRendererContainer
@@ -223,9 +223,35 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	public function getHtmlHeadEntrySet()
 	{
 		$set = parent::getHtmlHeadEntrySet();
+
 		$renderers = $this->getRenderers();
-		foreach ($renderers as $renderer)
+		foreach ($renderers as $renderer) {
 			$set->addEntrySet($renderer->getHtmlHeadEntrySet());
+		}
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this
+	 * details-view field
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               needed by this details-view field.
+	 *
+	 * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = parent::getAvailableHtmlHeadEntrySet();
+
+		$renderers = $this->getRenderers();
+		foreach ($renderers as $renderer) {
+			$set->addEntrySet($renderer->getAvailableHtmlHeadEntrySet());
+		}
 
 		return $set;
 	}

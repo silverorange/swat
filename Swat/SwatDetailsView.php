@@ -14,7 +14,7 @@ require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
  * A widget to display field-value pairs
  *
  * @package   Swat
- * @copyright 2005-2009 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDetailsView extends SwatControl implements SwatUIParent
@@ -288,10 +288,10 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
-	 * Gets the SwatHtmlHeadEntry objects needed by this details view
+	 * Gets the SwatHtmlHeadEntry objects needed by this details-view
 	 *
 	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects needed by
-	 *                               this details view.
+	 *                               this details-view.
 	 *
 	 * @see SwatUIObject::getHtmlHeadEntrySet()
 	 */
@@ -299,8 +299,32 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	{
 		$set = parent::getHtmlHeadEntrySet();
 
-		foreach ($this->fields as $field)
+		foreach ($this->fields as $field) {
 			$set->addEntrySet($field->getHtmlHeadEntrySet());
+		}
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this
+	 * details-view
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               needed by this details-view.
+	 *
+	 * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = parent::getAvailableHtmlHeadEntrySet();
+
+		foreach ($this->fields as $field) {
+			$set->addEntrySet($field->getAvailableHtmlHeadEntrySet());
+		}
 
 		return $set;
 	}

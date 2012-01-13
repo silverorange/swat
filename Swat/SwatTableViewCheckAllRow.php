@@ -11,7 +11,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A an extra row containing a check-all widget
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewCheckAllRow extends SwatTableViewRow
@@ -135,6 +135,27 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 
 		$set = parent::getHtmlHeadEntrySet();
 		$set->addEntrySet($this->check_all->getHtmlHeadEntrySet());
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this
+	 * check-all row
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               needed by this check-all row.
+	 *
+	 * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$this->createEmbeddedWidgets();
+
+		$set = parent::getAvailableHtmlHeadEntrySet();
+		$set->addEntrySet($this->check_all->getAvailableHtmlHeadEntrySet());
 		return $set;
 	}
 

@@ -20,7 +20,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * column's displayed TD tag.
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewColumn extends SwatCellRendererContainer
@@ -478,8 +478,33 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	public function getHtmlHeadEntrySet()
 	{
 		$set = parent::getHtmlHeadEntrySet();
-		if ($this->input_cell !== null)
+
+		if ($this->input_cell !== null) {
 			$set->addEntrySet($this->input_cell->getHtmlHeadEntrySet());
+		}
+
+		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this column
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               needed by this column.
+	 *
+	 * @see SwatUIObject::getAvailableHtmlHeadEntrySet()
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		$set = parent::getAvailableHtmlHeadEntrySet();
+
+		if ($this->input_cell !== null) {
+			$set->addEntrySet(
+				$this->input_cell->getAvailableHtmlHeadEntrySet());
+		}
 
 		return $set;
 	}

@@ -10,7 +10,7 @@ require_once 'Swat/SwatUIObject.php';
  * Subclasses add public class variable to store data they need for rendering.
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatCellRenderer extends SwatUIObject
@@ -238,12 +238,28 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	public function getHtmlHeadEntrySet()
 	{
-		if ($this->render_count > 0)
+		if ($this->render_count > 0) {
 			$set = new SwatHtmlHeadEntrySet($this->html_head_entry_set);
-		else
+		} else {
 			$set = new SwatHtmlHeadEntrySet();
+		}
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ public function getAvailableHtmlHeadEntrySet()
+
+	/**
+	 * Gets the SwatHtmlHeadEntry objects that may be needed by this cell
+	 * renderer
+	 *
+	 * @return SwatHtmlHeadEntrySet the SwatHtmlHeadEntry objects that may be
+	 *                               needed by this cell renderer.
+	 */
+	public function getAvailableHtmlHeadEntrySet()
+	{
+		return new SwatHtmlHeadEntrySet($this->html_head_entry_set);
 	}
 
 	// }}}
