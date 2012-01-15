@@ -54,9 +54,9 @@ function SwatRating(id, max_value)
 	this.id        = id;
 	this.max_value = max_value;
 
-	this.flydown   = document.getElementById(this.id + '_flydown');
-	this.ratingdiv = document.getElementById(this.id);
-	this.stardiv   = document.createElement('div');
+	this.flydown    = document.getElementById(this.id + '_flydown');
+	this.rating_div = document.getElementById(this.id);
+	this.star_div   = document.createElement('div');
 
 	YAHOO.util.Event.onDOMReady(this.init, this, true);
 }
@@ -81,7 +81,7 @@ SwatRating.prototype.init = function()
 		anchor.href = '#';
 
 		star.appendChild(anchor);
-		this.stardiv.appendChild(star);
+		this.star_div.appendChild(star);
 
 		Event.on(star, 'mouseover', this.handleFocus, i, this);
 		Event.on(star, 'mouseout', this.handleBlur, this, true);
@@ -91,8 +91,8 @@ SwatRating.prototype.init = function()
 	var clear = document.createElement('div');
 	Dom.setStyle(clear, 'clear', 'both');
 
-	this.ratingdiv.appendChild(this.stardiv);
-	this.ratingdiv.appendChild(clear);
+	this.rating_div.appendChild(this.star_div);
+	this.rating_div.appendChild(clear);
 }
 
 SwatRating.prototype.handleFocus = function(event, focus_star)
