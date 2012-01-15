@@ -134,7 +134,7 @@ SwatRating.prototype.handleClick = function(event, clicked_star)
 	}
 
 	if (this.flydown.value === clicked_star.toString()) {
-		this.flydown.value = null;
+		this.flydown.value = '';
 		for (var i = 1; i <= this.max_value; i++) {
 			Dom.removeClass(Dom.get(this.id + '_star' + i),
 				'swat-rating-hover');
