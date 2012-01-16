@@ -57,14 +57,31 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 		SwatCellRenderer::render();
 
 		if ($this->value !== null) {
+			$locale = SwatI18NLocale::get();
+
 			$value      = $this->getDisplayValue();
-			$difference = $this->maximum_value-$value;
+			$difference = $this->maximum_value - $value;
 
-			echo str_repeat('★', $value);
+			echo '<span class="rating">';
 
+			$content = str_repeat('★', $value);
 			if ($difference > 0) {
-				echo str_repeat('☆', $difference);
+				$content.= str_repeat('☆', $difference);
 			}
+
+			$value_tag = new SwatHtmlTag('span');
+			$value_tag->setContent($content);
+			$value_tag->class = 'value';
+			$value_tag->title = $locale->formatNumber($value, 1);
+			$value_tag->display();
+
+			$best_tag = new SwatHtmlTag('span');
+			$best_tag->class = 'best';
+			$best_tag->title = $locale->formatNumber($this->maximum_value, 1);
+			$best_tag->setContent('');
+			$best_tag->display();
+
+			echo '</span>';
 		}
 	}
 
