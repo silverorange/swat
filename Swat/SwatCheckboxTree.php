@@ -95,7 +95,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		// Only display the check-all widget if more than one checkable item is
 		// displayed.
 		$check_all = $this->getCompositeWidget('check_all');
-		$check_all->visible = ($num_nodes > 1);
+		$check_all->visible = ($num_nodes > 1 && $this->show_check_all);
 		$check_all->display();
 
 		$div_tag->close();
