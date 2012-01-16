@@ -29,7 +29,7 @@ class SwatRating extends SwatInputControl
 	 *
 	 * @var integer
 	 */
-	public $maximum_value = 4;
+	public $maximum_value = 5;
 
 	// }}}
 	// {{{ public function __construct()
