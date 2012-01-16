@@ -53,6 +53,11 @@ table.swat-table-view th.swat-money-cell-renderer {
 	text-align: right;
 }
 
+table.swat-table-view td.swat-rating-cell-renderer,
+table.swat-table-view th.swat-rating-cell-renderer {
+	text-align: left;
+}
+
 /* Error styling */
 
 .swat-table-view tbody tr.swat-error {
