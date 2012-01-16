@@ -22,7 +22,7 @@ class SwatRating extends SwatInputControl
 	 *
 	 * @var integer
 	 */
-	public $value = 0;
+	public $value = null;
 
 	/**
 	 * The maximum value of this rating control
