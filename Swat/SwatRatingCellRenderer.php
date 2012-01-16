@@ -28,7 +28,7 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 	 *
 	 * @var integer
 	 */
-	public $maximum_value = 4;
+	public $maximum_value = 5;
 
 	/**
 	 * Number of digits to display after the decimal point
