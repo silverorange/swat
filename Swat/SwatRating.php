@@ -81,7 +81,11 @@ class SwatRating extends SwatInputControl
 		parent::process();
 
 		$flydown = $this->getCompositeWidget('flydown');
-		$this->value = (integer)$flydown->value;
+		if ($flydown->value == '') {
+			$this->value = null;
+		} else {
+			$this->value = (integer)$flydown->value;
+		}
 	}
 
 	// }}}
