@@ -5,9 +5,16 @@
  */
 function SwatCheckboxList(id)
 {
+	this.id         = id;
 	this.check_list = [];
+	this.check_all  = null; // a reference to a check-all js object
+	YAHOO.util.Event.onDOMReady(this.init, this, true);
+}
 
-	var container = document.getElementById(id);
+SwatCheckboxList.prototype.init = function()
+{
+	var id = this.id;
+	var container = document.getElementById(this.id);
 	var input_elements = container.getElementsByTagName('INPUT');
 	for (var i = 0; i < input_elements.length; i++) {
 		if (input_elements[i].type == 'checkbox' &&
@@ -16,15 +23,15 @@ function SwatCheckboxList(id)
 		}
 	}
 
-	this.check_all = null; // a reference to a check-all js object
-
 	for (var i = 0; i < this.check_list.length; i++) {
-		YAHOO.util.Event.addListener(this.check_list[i], 'click',
+		YAHOO.util.Event.on(this.check_list[i], 'click',
 			this.handleClick, this, true);
 
-		YAHOO.util.Event.addListener(this.check_list[i], 'dblclick',
+		YAHOO.util.Event.on(this.check_list[i], 'dblclick',
 			this.handleClick, this, true);
 	}
+
+	this.updateCheckAll();
 }
 
 SwatCheckboxList.prototype.handleClick = function(event)
