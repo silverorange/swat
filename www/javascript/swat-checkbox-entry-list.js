@@ -1,22 +1,25 @@
 function SwatCheckboxEntryList(id)
 {
 	this.entry_list = [];
-
 	SwatCheckboxEntryList.superclass.constructor.call(this, id);
+}
 
-	var check_id;
+YAHOO.lang.extend(SwatCheckboxEntryList, SwatCheckboxList, {
+
+init: function()
+{
+	SwatCheckboxEntryList.superclass.init.call(this);
+
 	for (var i = 0; i < this.check_list.length; i++) {
 		var option = this.check_list[i];
 		this.entry_list[i] = document.getElementById(
-			id + '_entry_' + option.value);
+			this.id + '_entry_' + option.value);
 
 		this.check_list[i]._index = i;
 	}
 
 	this.updateFields();
-}
-
-YAHOO.lang.extend(SwatCheckboxEntryList, SwatCheckboxList, {
+},
 
 handleClick: function(e)
 {

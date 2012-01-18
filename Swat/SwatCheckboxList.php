@@ -326,16 +326,35 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf("var %s_obj = new SwatCheckboxList('%s');",
-			$this->id, $this->id);
+		$javascript = sprintf(
+			'var %s_obj = new %s(%s);',
+			$this->id,
+			$this->getJavaScriptClassName(),
+			SwatString::quoteJavaScriptString($this->id));
 
 		// set check-all controller if it is visible
 		$check_all = $this->getCompositeWidget('check_all');
-		if ($check_all->visible)
-			$javascript.= sprintf("\n%s_obj.setController(%s_obj);",
-				$check_all->id, $this->id);
+		if ($check_all->visible) {
+			$javascript.= sprintf(
+				"\n%s_obj.setController(%s_obj);",
+				$check_all->id,
+				$this->id);
+		}
 
 		return $javascript;
+	}
+
+	// }}}
+	// {{{ protected function getJavaScriptClassName()
+
+	/**
+	 * Get the name of the JavaScript class for this widget
+	 *
+	 * @return string JavaScript class name.
+	 */
+	protected function getJavaScriptClassName()
+	{
+		return 'SwatCheckboxList';
 	}
 
 	// }}}
