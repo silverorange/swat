@@ -188,6 +188,9 @@ class SwatYUI extends SwatObject
 		$components['charts'] = new SwatYUIComponent('charts');
 		$components['charts']->addJavaScript();
 
+		$components['cookie'] = new SwatYUIComponent('cookie');
+		$components['cookie']->addJavaScript();
+
 		$components['connection'] = new SwatYUIComponent('connection');
 		$components['connection']->addJavaScript();
 
@@ -320,6 +323,8 @@ class SwatYUI extends SwatObject
 		$components['charts']->addDependency($components['datasource']);
 		$components['charts']->addDependency($components['json']);
 		$components['charts']->addDependency($components['swf']);
+
+		$components['cookie']->addDependency($components['yahoo']);
 
 		$components['connection']->addDependency($components['yahoo']);
 		$components['connection']->addDependency($components['event']);
