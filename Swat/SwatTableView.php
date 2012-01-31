@@ -869,8 +869,6 @@ class SwatTableView extends SwatView implements SwatUIParent
 	{
 		$count = 0;
 
-		echo '<tbody>';
-
 		// this uses read-ahead iteration
 
 		$this->model->rewind();
@@ -879,17 +877,25 @@ class SwatTableView extends SwatView implements SwatUIParent
 		$this->model->next();
 		$next_row = ($this->model->valid()) ? $this->model->current() : null;
 
-		while ($row !== null) {
-			$count++;
+		if (count($this->model) > 0) {
+			echo '<tbody>';
 
-			$this->displayRow($row, $next_row, $count);
+			while ($row !== null) {
+				$count++;
 
-			$row = $next_row;
-			$this->model->next();
-			$next_row = ($this->model->valid()) ? $this->model->current() : null;
+				$this->displayRow($row, $next_row, $count);
+
+				$row = $next_row;
+				$this->model->next();
+				$next_row = ($this->model->valid()) ?
+					$this->model->current() : null;
+			}
+
+			echo '</tbody>';
+		} else {
+			// to validate in the case where the form has a tfoot but no rows
+			echo '<tbody class="swat-hidden"><tr><td></td></tr></tbody>';
 		}
-
-		echo '</tbody>';
 	}
 
 	// }}}
