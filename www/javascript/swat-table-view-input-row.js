@@ -222,8 +222,17 @@ SwatTableViewInputRow.prototype.addRow = function()
 	var source_tr = dom.documentElement.getElementsByTagName('tr')[0];
 
 	if (document.importNode && !SwatTableViewInputRow.is_webkit) {
-		var dest_tr = document.importNode(source_tr, true);
-		this.enter_row.parentNode.insertBefore(dest_tr, this.enter_row);
+		try {
+			var dest_tr = document.importNode(source_tr, true);
+			this.enter_row.parentNode.insertBefore(dest_tr, this.enter_row);
+		} catch (ex) {
+			/*
+			 * IE9 specific code. IE9 claims to support importNode, but fails
+			 * when it is called.
+			 */
+			var dest_tr = this.table.insertRow(this.enter_row.rowIndex);
+			SwatTableViewInputRow_parseTableRow(source_tr, dest_tr);
+		}
 	} else {
 		/*
 		 * Internet Explorer and Safari specific code
