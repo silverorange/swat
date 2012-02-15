@@ -1489,6 +1489,41 @@ class SwatString extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function getCryptSalt()
+
+	/**
+	 * Gets a salt value for crypt(3)
+	 *
+	 * This method generates a random ASCII string of the sepcified length.
+	 * Only the following characters, [./0-9A-Za-z], are included in the
+	 * returned string.
+	 *
+	 * @param integer $length the desired length of the crypt(3) salt.
+	 *
+	 * @return string a salt value of the specified length.
+	 */
+	public static function getCryptSalt($length)
+	{
+		$length = max(0, intval($length));
+
+		$salt = '';
+
+		for ($i = 0; $i < $length; $i++) {
+			$index = mt_rand(0, 63);
+
+			if ($index >= 38) {
+				$salt.= chr($index - 38 + 97);
+			} else if ($index >= 12) {
+				$salt.= chr($index - 12 + 65);
+			} else {
+				$salt.= chr($index + 46);
+			}
+		}
+
+		return $salt;
+	}
+
+	// }}}
 	// {{{ public static function stripXHTMLTags()
 
 	/**
