@@ -93,6 +93,13 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 */
 	public $read_only = false;
 
+	/**
+	 * Some text hinting to the user what should be entered in this entry
+	 *
+	 * @var string
+	 */
+	public $placeholder;
+
 	// }}}
 	// {{{ protected properties
 
@@ -318,6 +325,10 @@ class SwatEntry extends SwatInputControl implements SwatState
 		$tag->maxlength = $this->maxlength;
 		$tag->accesskey = $this->access_key;
 		$tag->tabindex = $this->tab_index;
+
+		if ($this->placeholder != '') {
+			$tag->placeholder = $this->placeholder;
+		}
 
 		return $tag;
 	}
