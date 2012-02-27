@@ -13,7 +13,7 @@ require_once 'Swat/SwatString.php';
  * A flydown (aka combo-box) selection widget
  *
  * @package   Swat
- * @copyright 2004-2011 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFlydown extends SwatOptionControl implements SwatState
@@ -182,10 +182,12 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	 *
 	 * @param string $title the title of the divider. Defaults to two em
 	 *                       dashes.
+	 * @param string $content_type optional. The content type of the divider. If
+	 *                              not specified, defaults to 'text/plain'.
 	 */
-	public function addDivider($title = '——')
+	public function addDivider($title = '——', $content_type = 'text/plain')
 	{
-		$this->options[] = new SwatFlydownDivider(null, $title);
+		$this->options[] = new SwatFlydownDivider(null, $title, $content_type);
 	}
 
 	// }}}

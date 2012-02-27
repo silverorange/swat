@@ -10,7 +10,7 @@ require_once 'Swat/SwatString.php';
  * A radio list selection widget
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRadioList extends SwatFlydown
@@ -160,7 +160,7 @@ class SwatRadioList extends SwatFlydown
 		if ($option->value !== null)
 			$span_tag->id = $this->id.'_'.(string)$option->value;
 
-		$span_tag->setContent($option->title);
+		$span_tag->setContent($option->title, $option->content_type);
 		$span_tag->display();
 	}
 
