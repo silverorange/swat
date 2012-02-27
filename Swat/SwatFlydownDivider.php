@@ -11,7 +11,7 @@ require_once 'Swat/SwatOption.php';
  * displaying of dividers and regular flydown options.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFlydownDivider extends SwatOption
@@ -24,14 +24,15 @@ class SwatFlydownDivider extends SwatOption
 	 * @param mixed $value value of the option. This defaults to null.
 	 * @param string $title displayed title of the divider. This defaults to
 	 *                       two em dashes.
+	 * @param string $content_type optional. The content type of the divider. If
+	 *                              not specified, defaults to 'text/plain'.
 	 */
-	public function __construct($value = null, $title = null)
+	public function __construct($value = null, $title = null, $content_type = 'text/plain')
 	{
 		if ($title === null)
 			$title = str_repeat('—', 6);
 
-		$this->value = $value;
-		$this->title = $title;
+		parent::__construct($value, $title, $content_type);
 	}
 
 	// }}}
