@@ -220,7 +220,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 			$anchor_tag->href = '#'.$page->id;
 
 			$em_tag = new SwatHtmlTag('em');
-			$em_tag->setContent($page->title);
+			$em_tag->setContent($page->title, $page->title_content_type);
 
 			$li_tag->open();
 			$anchor_tag->open();

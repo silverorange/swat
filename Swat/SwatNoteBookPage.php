@@ -25,6 +25,15 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 	 */
 	public $title;
 
+	/**
+	 * Optional content type
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $title_content_type = 'text/plain';
+
 	// }}}
 	// {{{ public function __construct()
 
