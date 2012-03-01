@@ -210,9 +210,11 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 			$li_counter++;
 			$li_tag = new SwatHtmlTag('li');
 
-			if (($this->selected_page=== null && $li_counter == 1) ||
+			$li_tag->class = 'tab'.$li_counter;
+
+			if (($this->selected_page === null && $li_counter == 1) ||
 				($page->id == $this->selected_page))
-				$li_tag->class = 'selected';
+				$li_tag->class.= ' selected';
 
 			$anchor_tag = new SwatHtmlTag('a');
 			$anchor_tag->href = '#'.$page->id;
