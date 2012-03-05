@@ -388,10 +388,6 @@ function SwatChangeOrder(id, sensitive)
 	this.list_div = document.getElementById(this.id + '_list');
 	this.buttons = document.getElementsByName(this.id + '_buttons');
 
-	// Safari/KHTML workaround for CSS Level2 system colors
-	if (this.is_webkit)
-		this.list_div.style.borderColor = '#DCCEB2';
-
 	// the following two lines must be split on two lines to
 	// handle a Firefox bug.
 	var hidden_value = document.getElementById(this.id + '_value');
@@ -667,17 +663,9 @@ SwatChangeOrder.prototype.choose = function(div)
 
 		if (this.active_div !== null) {
 			this.active_div.className = 'swat-change-order-item';
-
-			// Safari/KHTML workaround for CSS Level2 system colors
-			if (this.is_webkit)
-				this.active_div.style.backgroundColor = '#fff';
 		}
 
 		div.className = 'swat-change-order-item swat-change-order-item-active';
-
-		// Safari/KHTML workaround for CSS Level2 system colors
-		if (this.is_webkit)
-			div.style.backgroundColor = '#406A9C';
 
 		this.active_div = div;
 
