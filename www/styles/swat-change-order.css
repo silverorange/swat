@@ -1,13 +1,29 @@
 .swat-change-order-item {
-	background: #fff;
+	background-color: #fff;
 	margin: 0;
 	padding: 3px;
 	cursor: default;
 }
 
 .swat-change-order-item-active {
-	background: Highlight;
+	background-color: Highlight;
 	color: HighlightText;
+}
+
+.swat-change-order-item .swat-change-order-item-grippy {
+	display: block;
+	float: right;
+	width: 24px;
+	background-image: url(../images/swat-change-order-item-grippy.png);
+	background-repeat: no-repeat;
+	background-position: 100% 50%;
+	margin: -1px -3px -1px 0;
+	cursor: move;
+}
+
+.ie6 .swat-change-order-item .swat-change-order-item-grippy,
+.ie7 .swat-change-order-item .swat-change-order-item-grippy {
+	display: none;
 }
 
 .swat-change-order-item-shadow {
@@ -35,7 +51,8 @@ div.swat-change-order-item:hover {
 }
 
 .swat-change-order-list {
-	border: 1px ButtonShadow solid;
+	border-color: ButtonShadow;
+	border: 1px solid;
 	margin: 2px;
 	overflow: auto;
 	list-style: none;

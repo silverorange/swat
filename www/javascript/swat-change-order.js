@@ -453,6 +453,21 @@ function SwatChangeOrder(id, sensitive)
 
 	this.sensitive = sensitive;
 	this.orderChangeEvent = new YAHOO.util.CustomEvent('orderChange');
+
+	// add grippies
+	YAHOO.util.Event.on(window, 'load', function() {
+		var node, grippy, height;
+		for (var i = 0; i < this.list_div.childNodes.length; i++) {
+			node = this.list_div.childNodes[i];
+
+			grippy = document.createElement('span');
+			grippy.className = 'swat-change-order-item-grippy';
+			height = YAHOO.util.Dom.getRegion(node).height - 4;
+			grippy.style.height = height + 'px';
+			node.appendChild(grippy);
+
+		}
+	}, this, true);
 }
 
 // }}}
