@@ -24,3 +24,8 @@
 .swat-disclosure-control-opened .swat-frame-disclosure-container {
 	border: 0;
 }
+
+.swat-frame-disclosure-control-opened,
+.swat-frame-disclosure-control-closed {
+	min-height: 0;
+}
