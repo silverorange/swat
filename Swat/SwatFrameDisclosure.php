@@ -80,11 +80,13 @@ class SwatFrameDisclosure extends SwatDisclosure
 
 		$input_tag->display();
 
-		$container_div->open();
 		$animate_div->open();
+		echo '<div>';
+		$container_div->open();
 		$this->displayChildren();
-		$animate_div->close();
 		$container_div->close();
+		echo '</div>';
+		$animate_div->close();
 
 		Swat::displayInlineJavaScript($this->getInlineJavascript());
 
@@ -97,7 +99,8 @@ class SwatFrameDisclosure extends SwatDisclosure
 	protected function getContainerDivTag()
 	{
 		$div = new SwatHtmlTag('div');
-		$div->class = 'swat-disclosure-container swat-frame-disclosure-container';
+		$div->class = 'swat-disclosure-container '.
+			'swat-frame-disclosure-container';
 
 		return $div;
 	}
@@ -143,6 +146,7 @@ class SwatFrameDisclosure extends SwatDisclosure
 		$classes = array();
 		$classes[] = 'swat-frame';
 		$classes[] = 'swat-disclosure-control-opened';
+		$classes[] = 'swat-frame-disclosure-control-opened';
 		$classes[] = 'swat-frame-disclosure';
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;

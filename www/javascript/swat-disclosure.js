@@ -222,6 +222,38 @@ YAHOO.lang.extend(SwatFrameDisclosure, SwatDisclosure, {
 getSpan: function()
 {
 	return this.div.firstChild.firstChild;
+},
+
+close: function()
+{
+	SwatFrameDisclosure.superclass.close.call(this);
+	YAHOO.util.Dom.removeClass(this.div, 'swat-frame-disclosure-control-opened');
+	YAHOO.util.Dom.addClass(this.div, 'swat-frame-disclosure-control-closed');
+},
+
+handleClose: function()
+{
+	SwatFrameDisclosure.superclass.handleClose.call(this);
+	YAHOO.util.Dom.removeClass(this.div, 'swat-frame-disclosure-control-opened');
+	YAHOO.util.Dom.addClass(this.div, 'swat-frame-disclosure-control-closed');
+},
+
+open: function()
+{
+	SwatFrameDisclosure.superclass.open.call(this);
+	YAHOO.util.Dom.removeClass(this.div, 'swat-frame-disclosure-control-closed');
+	YAHOO.util.Dom.addClass(this.div, 'swat-frame-disclosure-control-opened');
+},
+
+openWithAnimation: function()
+{
+	if (this.semaphore)
+		return;
+
+	SwatFrameDisclosure.superclass.openWithAnimation.call(this);
+
+	YAHOO.util.Dom.removeClass(this.div, 'swat-frame-disclosure-control-closed');
+	YAHOO.util.Dom.addClass(this.div, 'swat-frame-disclosure-control-opened');
 }
 
 });
