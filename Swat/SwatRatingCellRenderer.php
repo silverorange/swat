@@ -19,6 +19,7 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 	const ROUND_FLOOR = 1;
 	const ROUND_CEIL  = 2;
 	const ROUND_UP    = 3;
+	const ROUND_NONE  = 4;
 
 	// }}}
 	// {{{ public properties
@@ -62,11 +63,16 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 			$value      = $this->getDisplayValue();
 			$difference = $this->maximum_value - $value;
 
-			echo '<span class="rating">';
+			$rating_class = floor(10 * min($value, $this->maximum_value));
+			$rating_class = 'rating-'.$rating_class;
 
-			$content = str_repeat('★', $value);
+			$outer_span = new SwatHtmlTag('span');
+			$outer_span->class = 'rating '.$rating_class;
+			$outer_span->open();
+
+			$content = str_repeat('★', ceil($value));
 			if ($difference > 0) {
-				$content.= str_repeat('☆', $difference);
+				$content.= str_repeat('☆', floor($difference));
 			}
 
 			$value_tag = new SwatHtmlTag('span');
@@ -81,7 +87,7 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 			$best_tag->setContent('');
 			$best_tag->display();
 
-			echo '</span>';
+			$outer_span->close();
 		}
 	}
 
@@ -101,6 +107,10 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 
 		case self::ROUND_UP:
 			$value = round($this->value, $this->precision);
+			break;
+
+		case self::ROUND_NONE:
+			$value = $this->value;
 			break;
 		}
 
