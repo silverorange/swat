@@ -20,6 +20,7 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 	const ROUND_CEIL  = 2;
 	const ROUND_UP    = 3;
 	const ROUND_NONE  = 4;
+	const ROUND_HALF  = 5;
 
 	// }}}
 	// {{{ public properties
@@ -111,6 +112,10 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 
 		case self::ROUND_NONE:
 			$value = $this->value;
+			break;
+
+		case self::ROUND_HALF:
+			$value = round($this->value * 2) / 2;
 			break;
 		}
 
