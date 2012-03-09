@@ -211,6 +211,9 @@ class SwatYUI extends SwatObject
 		$components['datatable']->addStyleSheet('datatable/assets/skins/sam', '',
 			false);
 
+		$components['event-delegate'] = new SwatYUIComponent('event-delegate');
+		$components['event-delegate']->addJavaScript('event-delegate');
+
 		$components['dom'] = new SwatYUIComponent('dom');
 		$components['dom']->addJavaScript();
 
