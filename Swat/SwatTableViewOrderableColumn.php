@@ -252,7 +252,8 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 *
 	 * @return string the direction of ordering.
 	 */
-	public function getDirectionAsString($direction_id = null)
+	public function getDirectionAsString($direction_id = null,
+		$include_nulls_ordering = true)
 	{
 		if ($direction_id === null) {
 			$direction_id = $this->direction;
@@ -277,7 +278,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 				$direction_id));
 		}
 
-		if ($this->nulls_ordering !== null) {
+		if ($include_nulls_ordering && $this->nulls_ordering !== null) {
 			switch ($this->nulls_ordering) {
 			case self::NULLS_FIRST:
 				$direction.= ' nulls first';
@@ -424,7 +425,8 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 		if ($next_dir != $this->default_direction) {
 			$vars[$key_orderby] = $this->id;
-			$vars[$key_orderbydir] = $this->getDirectionAsString($next_dir);
+			$vars[$key_orderbydir] = $this->getDirectionAsString($next_dir,
+				false);
 		}
 
 		// build the new link
