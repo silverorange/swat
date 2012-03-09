@@ -99,6 +99,13 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 */
 	public $read_only = false;
 
+	/**
+	 * Some text hinting to the user what should be entered in this entry
+	 *
+	 * @var string
+	 */
+	public $placeholder;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -270,6 +277,10 @@ class SwatTextarea extends SwatInputControl implements SwatState
 
 		if (!$this->isSensitive())
 			$textarea_tag->disabled = 'disabled';
+
+		if ($this->placeholder != '') {
+			$textarea_tag->placeholder = $this->placeholder;
+		}
 
 		return $textarea_tag;
 	}
