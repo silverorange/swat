@@ -16,7 +16,7 @@ require_once 'Swat/SwatString.php';
  * TODO: Implement this functionality with AJAX.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewOrderableColumn extends SwatTableViewColumn
@@ -38,6 +38,16 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 */
 	const ORDER_BY_DIR_ASCENDING = 2;
 
+	/**
+	 * Indicates ascending ordering is done
+	 */
+	const NULLS_FIRST = 1;
+
+	/**
+	 * Indicates ascending ordering is done
+	 */
+	const NULLS_LAST = 2;
+
 	// }}}
 	// {{{ public properties
 
@@ -52,6 +62,23 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 * @see SwatTableViewOrderableColumn::getLink()
 	 */
 	public $link = '';
+
+	/**
+	 * Optional setting of the ordering of null values.
+	 *
+	 * Either {@link SwatTableViewOrderableColumn::NULLS_FIRST} or
+	 * {@link SwatTableViewOrderableColumn::NULLS_LAST}. If not set, defaults to
+	 * the databases default behaviour.
+	 *
+	 * For example, to order by nulls last when ordering use the following:
+	 *
+	 * <code>
+	 * $column->nulls_ordering = SwatTableViewOrderableColumn::NULLS_LAST;
+	 * </code>
+	 *
+	 * @var integer
+	 */
+	public $nulls_ordering;
 
 	/**
 	 * HTTP GET variables to remove from the column header link
@@ -227,22 +254,47 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 */
 	public function getDirectionAsString($direction_id = null)
 	{
-		if ($direction_id === null)
+		if ($direction_id === null) {
 			$direction_id = $this->direction;
+		}
 
 		switch ($direction_id) {
 		case self::ORDER_BY_DIR_NONE:
-			return '';
+			$direction = '';
+			break;
 
 		case self::ORDER_BY_DIR_ASCENDING:
-			return 'asc';
+			$direction = 'asc';
+			break;
 
 		case self::ORDER_BY_DIR_DESCENDING:
-			return 'desc';
+			$direction = 'desc';
+			break;
 
 		default:
-			throw new SwatException("Ordering direction '$direction_id' not found.");
+			throw new SwatException(sprintf(
+				"Ordering direction '%s' not found.",
+				$direction_id));
 		}
+
+		if ($this->nulls_ordering !== null) {
+			switch ($this->nulls_ordering) {
+			case self::NULLS_FIRST:
+				$direction.= ' nulls first';
+				break;
+
+			case self::NULLS_LAST:
+				$direction.= ' nulls last';
+				break;
+
+			default:
+				throw new SwatException(
+					"Ordering weight '%s' not found.",
+					$this->nulls_ordering);
+			}
+		}
+
+		return $direction;
 	}
 
 	// }}}
