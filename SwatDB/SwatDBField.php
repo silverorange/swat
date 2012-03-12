@@ -19,6 +19,7 @@ class SwatDBField extends SwatObject
 
 	/**
 	 * The name of the database field
+	 *
 	 * @var string
 	 */
 	public $name;
