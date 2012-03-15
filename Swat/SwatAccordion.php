@@ -27,6 +27,15 @@ class SwatAccordion extends SwatNoteBook
 	 */
 	public $animate = true;
 
+	/**
+	 * Whether or not one page of the accordion is always open
+	 *
+	 * If false, the accordion can collapse to an all-closed state.
+	 *
+	 * @var boolean
+	 */
+	public $always_open = false;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -121,9 +130,19 @@ class SwatAccordion extends SwatNoteBook
 	 */
 	protected function getInlineJavaScript()
 	{
-		return sprintf("var %s_obj = new SwatAccordion('%s', %s);",
+		$javascript = sprintf("var %s_obj = new SwatAccordion('%s', %s);",
 			$this->id, $this->id,
 			$this->animate ? 'true' : 'false');
+
+		$javascript.= sprintf("\n%s_obj.animate = %s;",
+			$this->id,
+			$this->animate ? 'true' : 'false');
+
+		$javascript.= sprintf("\n%s_obj.always_open = %s;",
+			$this->id,
+			$this->always_open ? 'true' : 'false');
+
+		return $javascript;
 	}
 
 	// }}}

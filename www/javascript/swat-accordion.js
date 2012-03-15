@@ -1,8 +1,9 @@
-function SwatAccordion(id, animate)
+function SwatAccordion(id)
 {
 	this.id = id;
 	this.current_page = null;
-	this.animate = animate;
+	this.animate = true;
+	this.always_open = true; // by default, always keep one page open
 	this.semaphore = false;
 	this.pageChangeEvent = new YAHOO.util.CustomEvent('pageChange');
 	this.postInitEvent = new YAHOO.util.CustomEvent('postInit');
@@ -43,10 +44,16 @@ SwatAccordion.prototype.init = function()
 			YAHOO.util.Event.on(page.toggle, 'click', function (e) {
 				YAHOO.util.Event.preventDefault(e);
 
-				if (that.animate) {
-					that.setPageWithAnimation(the_page);
+				if (!that.always_open && the_page === that.current_page) {
+					var set_page = null;
 				} else {
-					that.setPage(the_page);
+					var set_page = the_page;
+				}
+
+				if (that.animate) {
+					that.setPageWithAnimation(set_page);
+				} else {
+					that.setPage(set_page);
 				}
 			});
 		})();
@@ -89,6 +96,7 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page)
 
 	var old_page = this.current_page;
 
+	// old_page === null means we're opening from a completely closed state
 	if (old_page !== null) {
 		var old_region = YAHOO.util.Dom.getRegion(old_page.animation);
 		var old_from_height = old_region.height;
@@ -96,23 +104,35 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page)
 		old_page.animation.style.overflow = 'hidden';
 	}
 
-	new_page.animation.style.overflow = 'hidden';
-	if (new_page.animation.style.height == '' ||
-		new_page.animation.style.height == 'auto') {
-		new_page.animation.style.height = '0';
-		new_from_height = 0;
+	// new_page === null means we're closing to a completely closed state
+	if (new_page === null) {
+		var new_to_height = 0;
+
+		var anim = new YAHOO.util.Anim(
+			old_page.animation, { },
+			SwatAccordion.resize_period,
+			YAHOO.util.Easing.easeBoth);
 	} else {
-		new_from_height = parseInt(new_page.animation.style.height);
+		new_page.animation.style.overflow = 'hidden';
+
+		if (new_page.animation.style.height == '' ||
+			new_page.animation.style.height == 'auto') {
+			new_page.animation.style.height = '0';
+			new_from_height = 0;
+		} else {
+			new_from_height = parseInt(new_page.animation.style.height);
+		}
+
+		new_page.animation.style.display = 'block';
+
+		var new_region = YAHOO.util.Dom.getRegion(new_page.content);
+		var new_to_height = new_region.height;
+
+		var anim = new YAHOO.util.Anim(
+			new_page.animation, { },
+			SwatAccordion.resize_period,
+			YAHOO.util.Easing.easeBoth);
 	}
-	new_page.animation.style.display = 'block';
-
-	var new_region = YAHOO.util.Dom.getRegion(new_page.content);
-	var new_to_height = new_region.height;
-
-	var anim = new YAHOO.util.Anim(
-		new_page.animation, { },
-		SwatAccordion.resize_period,
-		YAHOO.util.Easing.easeBoth);
 
 	anim.onTween.subscribe(function (name, data) {
 		var new_height = Math.floor(
@@ -125,11 +145,16 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page)
 			old_page.animation.style.height = old_height + 'px';
 		}
 
-		new_page.animation.style.height = new_height + 'px';
+		if (new_page !== null) {
+			new_page.animation.style.height = new_height + 'px';
+		}
 	}, this, true);
 
 	anim.onComplete.subscribe(function () {
-		new_page.animation.style.height = 'auto';
+		if (new_page !== null) {
+			new_page.animation.style.height = 'auto';
+		}
+
 		this.semaphore = false;
 	}, this, true);
 
@@ -139,7 +164,9 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page)
 		old_page.setStatus('closed');
 	}
 
-	new_page.setStatus('opened');
+	if (new_page !== null) {
+		new_page.setStatus('opened');
+	}
 
 	this.pageChangeEvent.fire(new_page, old_page);
 
