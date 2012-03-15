@@ -18,6 +18,16 @@ require_once 'Swat/SwatNoteBook.php';
  */
 class SwatAccordion extends SwatNoteBook
 {
+	// {{{ public properties
+
+	/**
+	 * Whether or not to animate the opening/closing of the accordion
+	 *
+	 * @var boolean
+	 */
+	public $animate = true;
+
+	// }}}
 	// {{{ public function __construct()
 
 	/**
@@ -112,8 +122,9 @@ class SwatAccordion extends SwatNoteBook
 	 */
 	protected function getInlineJavaScript()
 	{
-		return sprintf("var %s_obj = new SwatAccordion('%s');",
-			$this->id, $this->id);
+		return sprintf("var %s_obj = new SwatAccordion('%s', %s);",
+			$this->id, $this->id,
+			$this->animate ? 'true' : 'false');
 	}
 
 	// }}}
