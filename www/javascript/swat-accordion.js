@@ -1,7 +1,8 @@
-function SwatAccordion(id)
+function SwatAccordion(id, animate)
 {
 	this.id = id;
 	this.current_page = null;
+	this.animate = animate;
 	this.semaphore = false;
 	this.pageChangeEvent = new YAHOO.util.CustomEvent('pageChange');
 	this.postInitEvent = new YAHOO.util.CustomEvent('postInit');
@@ -41,7 +42,12 @@ SwatAccordion.prototype.init = function()
 			var the_page = page;
 			YAHOO.util.Event.on(page.toggle, 'click', function (e) {
 				YAHOO.util.Event.preventDefault(e);
-				that.setPageWithAnimation(the_page);
+
+				if (that.animate) {
+					that.setPageWithAnimation(the_page);
+				} else {
+					that.setPage(the_page);
+				}
 			});
 		})();
 
@@ -83,10 +89,12 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page)
 
 	var old_page = this.current_page;
 
-	var old_region = YAHOO.util.Dom.getRegion(old_page.animation);
-	var old_from_height = old_region.height;
-	var old_to_height = 0;
-	old_page.animation.style.overflow = 'hidden';
+	if (old_page !== null) {
+		var old_region = YAHOO.util.Dom.getRegion(old_page.animation);
+		var old_from_height = old_region.height;
+		var old_to_height = 0;
+		old_page.animation.style.overflow = 'hidden';
+	}
 
 	new_page.animation.style.overflow = 'hidden';
 	if (new_page.animation.style.height == '' ||
@@ -113,7 +121,10 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page)
 		var old_height = Math.ceil(
 			anim.doMethod('height', old_from_height, old_to_height));
 
-		old_page.animation.style.height = old_height + 'px';
+		if (old_page !== null) {
+			old_page.animation.style.height = old_height + 'px';
+		}
+
 		new_page.animation.style.height = new_height + 'px';
 	}, this, true);
 
@@ -124,7 +135,10 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page)
 
 	anim.animate();
 
-	old_page.setStatus('closed');
+	if (old_page !== null) {
+		old_page.setStatus('closed');
+	}
+
 	new_page.setStatus('opened');
 
 	this.pageChangeEvent.fire(new_page, old_page);
