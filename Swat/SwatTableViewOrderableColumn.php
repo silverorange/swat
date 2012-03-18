@@ -95,28 +95,35 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	/**
 	 * The direction of ordering
 	 *
-	 * The current direction of ordering for this column. Valid values are
-	 * ORDER_BY_DIR_* constants.
+	 * The current direction of ordering for this column. Valid values are:
+	 *
+	 * - {@link SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE},
+	 * - {@link SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING}, and
+	 * - {@link SwatTableViewOrderableColumn::ORDER_BY_DIR_ASCENDING}.
 	 *
 	 * @var integer
 	 */
 	protected $direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
 
-	// }}}
-	// {{{ private properties
-
 	/**
 	 * The default direction of ordering
 	 *
 	 * The default direction of ordering before the GET variables are processed.
-	 * When the GET variables are processed, they change $direction and
-	 * $default_direction remains unchanged.  Valid values are
-	 * ORDER_BY_DIR_* constants.
+	 * When the GET variables are processed, they change
+	 * {@link SwatTableViewOrderableColumn::$direction} and
+	 * <kbd>$default_direction</kbd> remains unchanged. Valid values are:
+	 *
+	 * - {@link SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE},
+	 * - {@link SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING}, and
+	 * - {@link SwatTableViewOrderableColumn::ORDER_BY_DIR_ASCENDING}.
 	 *
 	 * @var integer
 	 */
-	private $default_direction =
+	protected $default_direction =
 		SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
+
+	// }}}
+	// {{{ private properties
 
 	/**
 	 * The mode of ordering
@@ -124,7 +131,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 * The mode of switching between ordering states.
 	 * Valid values are ORDER_MODE_TRISTATE, and ORDER_MODE_BISTATE constants.
 	 *
-	 * @var int
+	 * @var integer
 	 */
 	//private $mode = SwatTableViewOrderableColumn::ORDER_MODE_TRISTATE;
 
@@ -149,20 +156,22 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 * Sets the direction of ordering
 	 *
 	 * This method sets the direction of ordering of the column, either asc,
-	 * desc, or none.
+	 * desc, or none. Valid directions are:
+	 *
+	 * - {@link SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE},
+	 * - {@link SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING}, and
+	 * - {@link SwatTableViewOrderableColumn::ORDER_BY_DIR_ASCENDING}.
 	 *
 	 * @param $direction integer One of the ORDER_BY_DIR_* class contants
-	 * @param $set_as_orderby_column boolean Whether to set this column as the
-	 *                                    column currently used for ordering
-	 *                                    of the view
 	 */
 	public function setDirection($direction)
 	{
 		$this->direction = $direction;
 		$this->default_direction = $direction;
 
-		if ($this->view->orderby_column === null)
+		if ($this->view->orderby_column === null) {
 			$this->view->orderby_column = $this;
+		}
 
 		$this->view->default_orderby_column = $this;
 
@@ -184,54 +193,34 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	{
 		$anchor = new SwatHtmlTag('a');
 		$anchor->href = $this->getLink();
+		$anchor->class = 'swat-table-view-orderable-column';
+
+		// Set direction-specific CSS class on the anchor.
+		if ($this->direction == self::ORDER_BY_DIR_DESCENDING) {
+			$anchor->class.= ' swat-table-view-orderable-column-descending';
+		} elseif ($this->direction == self::ORDER_BY_DIR_ASCENDING) {
+			$anchor->class.= ' swat-table-view-orderable-column-ascending';
+		}
 
 		$anchor->open();
 
-		// display image
-		if ($this->view->orderby_column === $this &&
-			$this->direction != self::ORDER_BY_DIR_NONE) {
+		// Display last word of the title in its own span so it can be styled
+		// with an image.
+		$title_exp = explode(' ', $this->title);
+		$last_word = array_pop($title_exp);
 
-			$span_tag = new SwatHtmlTag('span');
-			$span_tag->class = 'swat-nowrap';
-
-			$title_exp = explode(' ', $this->title);
-			$last_word = array_pop($title_exp);
-
-			if (count($title_exp))
-				$title = implode(' ', $title_exp).' ';
-			else
-				$title = '';
-
-			echo SwatString::minimizeEntities($title);
-
-			$span_tag->open();
-
-			echo SwatString::minimizeEntities($last_word);
-
-			$img = new SwatHtmlTag('img');
-
-			if ($this->direction == self::ORDER_BY_DIR_DESCENDING) {
-
-				$img->src = 'packages/swat/images/swat-table-view-column-desc.png';
-				$img->alt = Swat::_('Descending');
-
-			} elseif ($this->direction == self::ORDER_BY_DIR_ASCENDING) {
-
-				$img->src = 'packages/swat/images/swat-table-view-column-asc.png';
-				$img->alt = Swat::_('Ascending');
-
-			}
-
-			$img->width = 11;
-			$img->height = 11;
-
-			$img->display();
-
-			$span_tag->close();
-
+		if (count($title_exp)) {
+			$title = implode(' ', $title_exp).' ';
 		} else {
-			parent::displayHeader();
+			$title = '';
 		}
+
+		echo SwatString::minimizeEntities($title);
+
+		$span_tag = new SwatHtmlTag('span');
+		$span_tag->class = 'swat-table-view-orderable-column-title-last';
+		$span_tag->setContent($last_word);
+		$span_tag->display();
 
 		$anchor->close();
 	}
@@ -249,6 +238,9 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 * @param integer $direction_id an optional direction constant to convert
 	 *                               to a string rather than using this
 	 *                               column's current direction.
+	 * @param boolean $include_nulls_ordering optional. If specified, an extra
+	 *                                         string indicating the nulls
+	 *                                         ordering behaviour is appended.
 	 *
 	 * @return string the direction of ordering.
 	 */
@@ -290,8 +282,8 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 			default:
 				throw new SwatException(
-					"Ordering weight '%s' not found.",
-					$this->nulls_ordering);
+					sprintf("Nulls ordering '%s' not found.",
+						$this->nulls_ordering));
 			}
 		}
 
@@ -411,9 +403,11 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 		// unset GET vars that we want to ignore
 		$vars = $_GET;
 
-		foreach($vars as $name => $value)
-			if (in_array($name, $this->unset_get_vars))
+		foreach($vars as $name => $value) {
+			if (in_array($name, $this->unset_get_vars)) {
 				unset($vars[$name]);
+			}
+		}
 
 		$key_orderby = $this->getLinkPrefix().'orderby';
 		$key_orderbydir = $this->getLinkPrefix().'orderbydir';
@@ -459,8 +453,9 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 		if (isset($_GET[$key_orderby]) && $_GET[$key_orderby] == $this->id) {
 			$this->view->orderby_column = $this;
 
-			if (isset($_GET[$key_orderbydir]))
+			if (isset($_GET[$key_orderbydir])) {
 				$this->setDirectionByString($_GET[$key_orderbydir]);
+			}
 		}
 	}
 
