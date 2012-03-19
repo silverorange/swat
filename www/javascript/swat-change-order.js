@@ -464,7 +464,7 @@ function SwatChangeOrder(id, sensitive)
 			grippy.className = 'swat-change-order-item-grippy';
 			height = YAHOO.util.Dom.getRegion(node).height - 4;
 			grippy.style.height = height + 'px';
-			node.appendChild(grippy);
+			node.insertBefore(grippy, node.firstChild);
 
 		}
 	}, this, true);
