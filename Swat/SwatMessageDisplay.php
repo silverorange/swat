@@ -38,6 +38,18 @@ class SwatMessageDisplay extends SwatControl
 	const DISMISS_AUTO = 3;
 
 	// }}}
+	// {{{ public properties
+
+	/**
+	 * Text to display for closing the message
+	 *
+	 * By default, "Dismiss message."
+	 *
+	 * @var string
+	 */
+	public $close_text = null;
+
+	// }}}
 	// {{{ protected properties
 
 	/**
@@ -357,7 +369,9 @@ class SwatMessageDisplay extends SwatControl
 	 */
 	protected function getInlineJavaScriptTranslations()
 	{
-		$close_text  = Swat::_('Dismiss message.');
+		$close_text = ($this->close_text === null) ?
+			Swat::_('Dismiss message.') : $this->close_text;
+
 		return "SwatMessageDisplayMessage.close_text = '{$close_text}';\n";
 	}
 
