@@ -93,6 +93,8 @@ class SwatAccordion extends SwatNoteBook
 				$li_tag->class = 'swat-accordion-page';
 			}
 
+			$li_tag->class.= ' '.implode(' ', $page->classes);
+
 			$li_tag->open();
 
 			// toggle link
