@@ -149,7 +149,10 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 				$input_tag->checked = 'checked';
 
 			$input_tag->id = $this->id.'_'.$checkbox_id;
+			echo '<span class="swat-checkbox-wrapper">';
 			$input_tag->display();
+			echo '<span class="swat-checkbox-shim"></span>';
+			echo '</span>';
 
 			$label_tag->for = $this->id.'_'.$checkbox_id;
 			$label_tag->setContent($option->title, $option->content_type);

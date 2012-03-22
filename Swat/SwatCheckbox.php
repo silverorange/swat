@@ -82,7 +82,10 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 		if (!$this->isSensitive())
 			$input_tag->disabled = 'disabled';
 
+		echo '<span class="swat-checkbox-wrapper">';
 		$input_tag->display();
+		echo '<span class="swat-checkbox-shim"></span>';
+		echo '</span>';
 	}
 
 	// }}}

@@ -156,7 +156,10 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 				$checkbox_tag->checked = 'checked';
 		}
 
+		echo '<span class="swat-checkbox-wrapper">';
 		$checkbox_tag->display();
+		echo '<span class="swat-checkbox-shim"></span>';
+		echo '</span>';
 
 		if ($this->title !== null) {
 			$label_tag->displayContent();

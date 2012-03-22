@@ -186,7 +186,10 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 				$this->label_tag->for = $this->id.'_'.$index;
 				$this->label_tag->setContent($node->title);
 
+				echo '<span class="swat-checkbox-wrapper">';
 				$this->input_tag->display();
+				echo '<span class="swat-checkbox-shim"></span>';
+				echo '</span>';
 				$this->label_tag->display();
 			} else {
 				echo SwatString::minimizeEntities($node->title);

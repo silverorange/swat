@@ -205,7 +205,10 @@ class SwatRadioList extends SwatFlydown
 				$this->input_tag->checked = 'checked';
 		}
 
+		echo '<span class="swat-radio-wrapper">';
 		$this->input_tag->display();
+		echo '<span class="swat-radio-shim"></span>';
+		echo '</span>';
 	}
 
 	// }}}
