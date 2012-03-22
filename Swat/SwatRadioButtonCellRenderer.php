@@ -158,7 +158,10 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 				$radio_button_tag->checked = 'checked';
 		}
 
+		echo '<span class="swat-radio-wrapper">';
 		$radio_button_tag->display();
+		echo '<span class="swat-radio-shim"></span>';
+		echo '</span>';
 
 		if ($this->title !== null) {
 			$label_tag->displayContent();
