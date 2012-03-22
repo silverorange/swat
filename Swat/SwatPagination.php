@@ -169,8 +169,8 @@ class SwatPagination extends SwatControl
 		                        self::PREV | self::PAGES;
 
 		/* These strings include a non-breaking space */
-		$this->previous_label = Swat::_('« Previous');
-		$this->next_label = Swat::_('Next »');
+		$this->previous_label = Swat::_('‹ Previous');
+		$this->next_label = Swat::_('Next ›');
 
 		$this->addStyleSheet('packages/swat/styles/swat-pagination.css',
 			Swat::PACKAGE_ID);
