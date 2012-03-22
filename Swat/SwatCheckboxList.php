@@ -301,7 +301,10 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		$li_tag = $this->getLiTag($option);
 
 		$li_tag->open();
+		echo '<span class="swat-checkbox-wrapper">';
 		$input_tag->display();
+		echo '<span class="swat-checkbox-shim"></span>';
+		echo '</span>';
 		$label_tag->display();
 		$li_tag->close();
 	}
