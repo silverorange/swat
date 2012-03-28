@@ -835,6 +835,26 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function getLast()
+
+	/**
+	 * Retrieves the last object in this recordset
+	 *
+	 * @return mixed the last object or null if there are no objects in this
+	 *                recordset.
+	 */
+	public function getLast()
+	{
+		$last = null;
+
+		if (count($this->objects) > 0) {
+			$last = end($this->objects);
+		}
+
+		return $last;
+	}
+
+	// }}}
 	// {{{ public function getByIndex()
 
 	/**
