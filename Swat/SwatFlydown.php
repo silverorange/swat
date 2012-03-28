@@ -63,6 +63,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
 		parent::display();
 
+		echo '<span class="swat-flydown-wrapper">';
+
 		$options = $this->getOptions();
 		$selected = false;
 
@@ -142,6 +144,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 			// get first and only element
 			$this->displaySingle(current($options));
 		}
+
+		echo '</span>';
 	}
 
 	// }}}
