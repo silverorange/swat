@@ -675,6 +675,10 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 * @param string $where optional additional where clause to apply to the
 	 *                       sub-records.
 	 * @param string $order_by optional ordering of sub-recordsets.
+	 * @param string $fields optional list of fields to return. By default
+	 *                       all fields are returned. This can be used to
+	 *                       optimize tables with large text fields or a lot
+	 *                       of fields that aren't used in this context.
 	 *
 	 * @throws SwatDBException if this recordset does not define an index
 	 *                         field.
@@ -682,7 +686,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 * @return SwatDBRecordsetWrapper a wrapper of the sub-recordsets, or null.
 	 */
 	public function loadAllSubRecordsets($name, $wrapper,
-		$table, $binding_field, $where = '', $order_by = '')
+		$table, $binding_field, $where = '', $order_by = '',
+		$fields = '*')
 	{
 		$this->checkDB();
 
@@ -711,8 +716,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		$record_ids = $this->db->implodeArray($record_ids, 'integer');
 
 		// build SQL to select all records
-		$sql = sprintf('select %1$s.* from %1$s
-			where %2$s in (%3$s)',
+		$sql = sprintf('select %s from %s
+			where %s in (%s)',
+			$fields,
 			$table, $binding_field, $record_ids);
 
 		if ($where != '') {
