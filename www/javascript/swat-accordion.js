@@ -28,12 +28,12 @@ SwatAccordion.prototype.init = function()
 		status_icon.className = 'swat-accordion-toggle-status';
 
 		if (YAHOO.util.Dom.hasClass(page.element, 'selected')) {
-			YAHOO.util.Dom.removeClass(page.element, 'selected');
 			this.current_page = page;
-			page.element.className += ' swat-accordion-page-opened';
+			YAHOO.util.Dom.removeClass(page.element, 'selected');
+			YAHOO.util.Dom.addClass(page.element, 'swat-accordion-page-opened');
 		} else {
 			page.animation.style.display = 'none';
-			page.element.className += ' swat-accordion-page-closed';
+			YAHOO.util.Dom.addClass(page.element, 'swat-accordion-page-closed');
 		}
 
 		page.toggle.insertBefore(status_icon, page.toggle.firstChild);
@@ -135,17 +135,17 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page)
 	}
 
 	anim.onTween.subscribe(function (name, data) {
-		var new_height = Math.floor(
-			anim.doMethod('height', new_from_height, new_to_height));
-
-		var old_height = Math.ceil(
-			anim.doMethod('height', old_from_height, old_to_height));
-
 		if (old_page !== null) {
+			var old_height = Math.ceil(
+				anim.doMethod('height', old_from_height, old_to_height));
+
 			old_page.animation.style.height = old_height + 'px';
 		}
 
 		if (new_page !== null) {
+			var new_height = Math.floor(
+				anim.doMethod('height', new_from_height, new_to_height));
+
 			new_page.animation.style.height = new_height + 'px';
 		}
 	}, this, true);
