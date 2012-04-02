@@ -86,6 +86,7 @@ class SwatAccordion extends SwatNoteBook
 
 			$li_counter++;
 			$li_tag = new SwatHtmlTag('li');
+			$li_tag->id = $page->id;
 
 			if ($page->id === $this->selected_page) {
 				$li_tag->class = 'swat-accordion-page selected';

@@ -20,14 +20,28 @@ SwatAccordion.prototype.init = function()
 
 	var page;
 	var pages = YAHOO.util.Dom.getChildren(this.container);
-	for (var i = 0; i < pages.length; i++) {
 
+	// check to see if a page is open via a hash-tag
+	var hash_open_page = null;
+	for (var i = 0; i < pages.length; i++) {
+		if (location.hash == '#open_' + pages[i].id) {
+			hash_open_page = pages[i];
+		}
+	}
+
+	for (var i = 0; i < pages.length; i++) {
 		page = new SwatAccordionPage(pages[i]);
 
 		var status_icon = document.createElement('span');
 		status_icon.className = 'swat-accordion-toggle-status';
 
-		if (YAHOO.util.Dom.hasClass(page.element, 'selected')) {
+		page.toggle.insertBefore(status_icon, page.toggle.firstChild);
+		page.toggle.href = location.href.split('#')[0] + '#' +
+			'open_' + pages[i].id;
+
+		if (hash_open_page === page.element || (hash_open_page === null &&
+			YAHOO.util.Dom.hasClass(page.element, 'selected'))) {
+
 			this.current_page = page;
 			YAHOO.util.Dom.removeClass(page.element, 'selected');
 			YAHOO.util.Dom.addClass(page.element, 'swat-accordion-page-opened');
@@ -36,14 +50,10 @@ SwatAccordion.prototype.init = function()
 			YAHOO.util.Dom.addClass(page.element, 'swat-accordion-page-closed');
 		}
 
-		page.toggle.insertBefore(status_icon, page.toggle.firstChild);
-
 		var that = this;
 		(function() {
 			var the_page = page;
 			YAHOO.util.Event.on(page.toggle, 'click', function (e) {
-				YAHOO.util.Event.preventDefault(e);
-
 				if (!that.always_open && the_page === that.current_page) {
 					var set_page = null;
 				} else {
