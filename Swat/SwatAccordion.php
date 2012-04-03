@@ -133,8 +133,9 @@ class SwatAccordion extends SwatNoteBook
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf("var %s_obj = new SwatAccordion('%s', %s);",
-			$this->id, $this->id,
+		$javascript = sprintf("var %1\$s_obj = new %2\$s('%1\$s', %3\$s);",
+			$this->id,
+			$this->getJavascriptClassName(),
 			$this->animate ? 'true' : 'false');
 
 		$javascript.= sprintf("\n%s_obj.animate = %s;",
@@ -146,6 +147,14 @@ class SwatAccordion extends SwatNoteBook
 			$this->always_open ? 'true' : 'false');
 
 		return $javascript;
+	}
+
+	// }}}
+	// {{{ protected function getJavaScriptClassName()
+
+	protected function getJavaScriptClassName()
+	{
+		return 'SwatAccordion';
 	}
 
 	// }}}
