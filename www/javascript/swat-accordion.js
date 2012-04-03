@@ -22,12 +22,7 @@ SwatAccordion.prototype.init = function()
 	var pages = YAHOO.util.Dom.getChildren(this.container);
 
 	// check to see if a page is open via a hash-tag
-	var hash_open_page = null;
-	for (var i = 0; i < pages.length; i++) {
-		if (location.hash == '#open_' + pages[i].id) {
-			hash_open_page = pages[i];
-		}
-	}
+	var hash_open_page = this.getPageFromHash();
 
 	for (var i = 0; i < pages.length; i++) {
 		page = new SwatAccordionPage(pages[i]);
@@ -36,8 +31,7 @@ SwatAccordion.prototype.init = function()
 		status_icon.className = 'swat-accordion-toggle-status';
 
 		page.toggle.insertBefore(status_icon, page.toggle.firstChild);
-		page.toggle.href = location.href.split('#')[0] + '#' +
-			'open_' + pages[i].id;
+		this.addLinkHash(page);
 
 		if (hash_open_page === page.element || (hash_open_page === null &&
 			YAHOO.util.Dom.hasClass(page.element, 'selected'))) {
@@ -73,6 +67,27 @@ SwatAccordion.prototype.init = function()
 
 	this.postInitEvent.fire();
 
+};
+
+SwatAccordion.prototype.getPageFromHash = function()
+{
+	var pages = YAHOO.util.Dom.getChildren(this.container);
+
+	// check to see if a page is open via a hash-tag
+	var hash_open_page = null;
+	for (var i = 0; i < pages.length; i++) {
+		if (location.hash == '#open_' + pages[i].id) {
+			hash_open_page = pages[i];
+		}
+	}
+
+	return hash_open_page;
+};
+
+SwatAccordion.prototype.addLinkHash = function(page)
+{
+	page.toggle.href = location.href.split('#')[0] + '#' +
+		'open_' + page.element.id;
 };
 
 SwatAccordion.prototype.setPage = function(page)
