@@ -97,6 +97,10 @@ class SwatRadioList extends SwatFlydown
 				$li_tag->removeAttribute('class');
 			}
 
+			if ($option instanceof SwatFlydownDivider) {
+				$li_tag->class.= ' swat-radio-list-divider-li';
+			}
+
 			$li_tag->id = $this->id.'_li_'.(string) $count;
 			$li_tag->open();
 			$count++;
