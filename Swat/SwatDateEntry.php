@@ -355,12 +355,20 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		if ($all_empty) {
 			if ($this->required && $this->isSensitive()) {
-				$message = Swat::_('The %s field is required.');
+				if ($this->show_field_title_in_messages) {
+					$message = Swat::_('%s is required.');
+				} else {
+					$message = Swat::_('This field is required.');
+				}
 				$this->addMessage(new SwatMessage($message, 'error'));
 			}
 			$this->value = null;
 		} elseif ($any_empty) {
-			$message = Swat::_('The %s field is not a valid date.');
+			if ($this->show_field_title_in_messages) {
+				$message = Swat::_('%s is not a valid date.');
+			} else {
+				$message = Swat::_('This is not a valid date.');
+			}
 			$this->addMessage(new SwatMessage($message, 'error'));
 			$this->value = null;
 		} else {
