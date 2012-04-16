@@ -76,7 +76,7 @@ class SwatCheckAll extends SwatCheckbox
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-		$this->title = Swat::_('Check All');
+		$this->title = Swat::_('Select All');
 		$yui = new SwatYUI(array('event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript('packages/swat/javascript/swat-check-all.js',
@@ -114,7 +114,6 @@ class SwatCheckAll extends SwatCheckbox
 
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->for = $this->id.'_value';
-		$label_tag->setContent($this->title, $this->content_type);
 		$label_tag->open();
 
 		$old_id = $this->id;
@@ -122,7 +121,11 @@ class SwatCheckAll extends SwatCheckbox
 		parent::display();
 		$this->id = $old_id;
 
-		$label_tag->displayContent();
+		$span_tag = new SwatHtmlTag('span');
+		$span_tag->class = 'swat-check-all-title';
+		$span_tag->setContent($this->title, $this->content_type);
+		$span_tag->display();
+
 		$label_tag->close();
 
 		if ($this->extended_count > $this->visible_count) {
