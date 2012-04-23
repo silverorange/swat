@@ -52,6 +52,11 @@ SwatYUI:
       Depends:
         - packages/yui/dom/dom.js
         - packages/yui/event/event.js
+    packages/yui/event-delegate/event-delegate.js:
+      Depends:
+        - packages/yui/event/event.js
+      OptionalDepends:
+        - packages/yui/selector/selector.js
     packages/yui/json/json.js:
       Depends:
         - packages/yui/yahoo/yahoo.js
