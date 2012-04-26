@@ -206,7 +206,7 @@ class SwatDate extends HotDateTime
 	/**
 	 * Thu, 22 Aug 2002 18:05:26 Z
 	 */
-	const DF_RFC_822                = 17;
+	const DF_RFC_2822               = 17;
 
 	// }}}
 	// {{{ ISO 8601 option constants
@@ -661,8 +661,8 @@ class SwatDate extends HotDateTime
 			return 'Ymd\THis';
 		case self::DF_ISO_8601_EXTENDED:
 			return 'Y-m-d\TH:i:s';
-		case self::DF_RFC_822:
-			return 'D, d M Y H:i:s';
+		case self::DF_RFC_2822:
+			return 'r';
 		default:
 			throw new Exception("Unknown date format id '$id'.");
 		}
@@ -715,7 +715,7 @@ class SwatDate extends HotDateTime
 			return Swat::_('%Y%m%dT%H%M%S');
 		case self::DF_ISO_8601_EXTENDED:
 			return Swat::_('%Y-%m-%dT%H:%M:%S');
-		case self::DF_RFC_822:
+		case self::DF_RFC_2822:
 			return Swat::_('%a, %d %b %Y %T');
 		default:
 			throw new Exception("Unknown date format id '$id'.");
@@ -769,7 +769,7 @@ class SwatDate extends HotDateTime
 			return Swat::_('yyyyMMdd\'T\'HHmmss');
 		case self::DF_ISO_8601_EXTENDED:
 			return Swat::_('yyyy-MM-dd\'T\'HH:mm:ss');
-		case self::DF_RFC_822:
+		case self::DF_RFC_2822:
 			return Swat::_('EEE, dd MMM yyyy HH:mm:ss');
 		default:
 			throw new Exception("Unknown date format id '$id'.");
@@ -1011,21 +1011,18 @@ class SwatDate extends HotDateTime
 	}
 
 	// }}}
-	// {{{ public function getRFC822()
+	// {{{ public function getRFC2822()
 
 	/**
-	 * Gets this date formatted as required by RFC 822
+	 * Gets this date formatted as required by RFC 2822
 	 *
-	 * {@see http://tools.ietf.org/html/rfc822#section-5}
+	 * {@link http://tools.ietf.org/html/rfc2822#section-3.3}
 	 *
-	 * @return string this date formatted as an RFC 822 timestamp.
+	 * @return string this date formatted as an RFC 2822 timestamp.
 	 */
-	public function getRFC822()
+	public function getRFC2822()
 	{
-		$date   = $this->formatLikeIntl(self::DF_RFC_822);
-		$offset = $this->getFormattedOffsetById(self::DF_RFC_822);
-
-		return $date.' '.$offset;
+		return $this->format(self::DF_RFC_2822);
 	}
 
 	// }}}
@@ -1043,7 +1040,7 @@ class SwatDate extends HotDateTime
 		switch ($id) {
 		case self::DF_ISO_8601_BASIC:
 		case self::DF_ISO_8601_EXTENDED:
-		case self::DF_RFC_822:
+		case self::DF_RFC_2822:
 			$offset = $this->getOffset();
 			$offset = floor($offset / 60); // minutes
 
