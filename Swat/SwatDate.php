@@ -1001,7 +1001,7 @@ class SwatDate extends HotDateTime
 			$format.= '.SSSS';
 		}
 
-		$date = $this->formatLikeIntl($format);
+		$date = $this->format($format);
 
 		if (($options & self::ISO_TIME_ZONE) === self::ISO_TIME_ZONE) {
 			$date.= $this->getFormattedOffsetById($format);
