@@ -9,6 +9,9 @@ function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height,
 	this.preview_width  = preview_width;
 	this.preview_height = preview_height;
 
+	this.onOpen = new YAHOO.util.CustomEvent('open');
+	this.onClose = new YAHOO.util.CustomEvent('close');
+
 	// list of select elements to hide for IE6
 	this.select_elements = [];
 
@@ -36,6 +39,9 @@ SwatImagePreviewDisplay.prototype.init = function()
 		image_wrapper.href = '#view';
 		YAHOO.util.Event.on(image_wrapper, 'click', function(e) {
 			YAHOO.util.Event.preventDefault(e);
+			if (!this.opened) {
+				this.onOpen.fire('thumbnail');
+			}
 			this.open();
 		}, this, true);
 
@@ -61,6 +67,9 @@ SwatImagePreviewDisplay.prototype.init = function()
 
 		YAHOO.util.Event.on(image_link, 'click', function(e) {
 			YAHOO.util.Event.preventDefault(e);
+			if (!this.opened) {
+				this.onOpen.fire('thumbnail');
+			}
 			this.open();
 		}, this, true);
 	}
@@ -153,8 +162,13 @@ SwatImagePreviewDisplay.prototype.draw = function()
 
 	SwatZIndexManager.raiseElement(this.preview_mask);
 
-	YAHOO.util.Event.on(this.preview_mask, 'click',
-		this.handleClick, this, true);
+	YAHOO.util.Event.on(this.preview_mask, 'click', function(e) {
+		YAHOO.util.Event.preventDefault(e);
+		if (this.opened) {
+			this.onClose.fire('overlayMask');
+		}
+		this.close();
+	}, this, true);
 
 	YAHOO.util.Event.on(this.preview_mask, 'mouseover', function(e) {
 		YAHOO.util.Dom.addClass(this.preview_close_link,
@@ -216,8 +230,13 @@ SwatImagePreviewDisplay.prototype.draw = function()
 
 	SwatZIndexManager.raiseElement(this.preview_container);
 
-	YAHOO.util.Event.on(this.preview_container, 'click',
-		this.handleClick, this, true);
+	YAHOO.util.Event.on(this.preview_container, 'click', function(e) {
+		YAHOO.util.Event.preventDefault(e);
+		if (this.opened) {
+			this.onClose.fire('container');
+		}
+		this.close();
+	}, this, true);
 
 	YAHOO.util.Event.on(this.preview_container, 'mouseover', function(e) {
 		YAHOO.util.Dom.addClass(this.preview_close_link,
@@ -267,17 +286,14 @@ SwatImagePreviewDisplay.prototype.close = function()
 	this.opened = false;
 }
 
-SwatImagePreviewDisplay.prototype.handleClick = function(e)
-{
-	YAHOO.util.Event.preventDefault(e);
-	this.close();
-}
-
 SwatImagePreviewDisplay.prototype.handleKeyDown = function(e)
 {
 	// close preview on backspace or escape
 	if (e.keyCode == 8 || e.keyCode == 27) {
 		YAHOO.util.Event.preventDefault(e);
+		if (this.opened) {
+			this.onClose.fire('keyboard');
+		}
 		this.close();
 	}
 }
