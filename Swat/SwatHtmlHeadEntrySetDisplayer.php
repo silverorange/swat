@@ -291,8 +291,8 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 	{
 		return array(
 			'SwatStyleSheetHtmlHeadEntry' => 0,
-			'SwatJavaScriptHtmlHeadEntry' => 1,
-			'SwatLinkHtmlHeadEntry'       => 2,
+			'SwatLinkHtmlHeadEntry'       => 1,
+			'SwatJavaScriptHtmlHeadEntry' => 2,
 			'SwatCommentHtmlHeadEntry'    => 3,
 			'__unknown__'                 => 4,
 		);
