@@ -1,9 +1,10 @@
 /* SwatDetailsView */
+
 .swat-details-view td {
 	width: 70%;
 }
 
-.swat-details-view-field th, 
+.swat-details-view-field th,
 .swat-details-view-vertical-field th,
 .swat-details-view-vertical-field .swat-details-view-field-header {
 	vertical-align: top;

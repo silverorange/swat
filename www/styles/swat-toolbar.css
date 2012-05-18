@@ -20,8 +20,8 @@ ul.swat-toolbar-end {
 	display: inline;
 }
 
-/* SwatToolLink when inside a SwatToolbar */
 
+/* SwatToolLink when inside a SwatToolbar */
 
 .swat-toolbar .swat-tool-link,
 .swat-toolbar .swat-tool-link-insensitive {

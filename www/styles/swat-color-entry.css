@@ -123,7 +123,7 @@ td.swat-simple-color-entry-palette-blank a {
 	float: left;
 	padding: 0.1em;
 }
-	
+
 .swat-color-entry-wrapper .palette-footer {
 	clear: left;
 	font-size: 60%;
@@ -146,15 +146,15 @@ td.swat-simple-color-entry-palette-blank a {
 }
 
 .swat-color-entry-wrapper .active {
-	margin: 1 1 1 0px;
+	margin: 1px 1px 1px 0;
 	border: 1px solid #eee;
 	width: 2em;
 	height: 1.6em;
 	overflow: hidden;
 }
-	
+
 .swat-color-entry-wrapper .swatch {
-	margin: 1 1 1 0px;
+	margin: 1px 1px 1px 0;
 	border: 1px solid #eee;
 	overflow: hidden;
 	width: 2em;
