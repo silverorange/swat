@@ -11,8 +11,9 @@
 .swat-disclosure-control-closed {
 	min-height: 2.4em;
 }
-* html .swat-disclosure-control-opened,
-* html .swat-disclosure-control-closed { /* IE hack */
+
+.ie6 .swat-disclosure-control-opened,
+.ie6 .swat-disclosure-control-closed {
 	height: 2.4em;
 }
 
@@ -38,7 +39,8 @@
 	background-position: 2px 0;
 	background-repeat: no-repeat;
 }
-* html .swat-disclosure-anchor-opened { /* IE hack */
+
+.ie6 .swat-disclosure-anchor-opened {
 	background-image: url(../images/swat-disclosure-open-1-bit.png);
 }
 
@@ -47,7 +49,8 @@
 	background-position: 2px 1px;
 	background-repeat: no-repeat;
 }
-* html .swat-disclosure-anchor-closed { /* IE hack */
+
+.ie6 .swat-disclosure-anchor-closed {
 	background-image: url(../images/swat-disclosure-closed-1-bit.png);
 }
 
