@@ -5,6 +5,7 @@
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlHeadEntry.php';
 require_once 'Swat/SwatHtmlHeadEntrySet.php';
+require_once 'Swat/SwatInlineScriptList.php';
 require_once 'Swat/SwatCommentHtmlHeadEntry.php';
 require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
 require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
@@ -65,12 +66,18 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	protected $html_head_entry_set;
 
+	/**
+	 * @var SwatInlineScriptList
+	 */
+	protected $inline_scripts;
+
 	// }}}
 	// {{{ public function __construct()
 
 	public function __construct()
 	{
 		$this->html_head_entry_set = new SwatHtmlHeadEntrySet();
+		$this->inline_scripts = new SwatInlineScriptList();
 	}
 
 	// }}}
@@ -161,6 +168,14 @@ abstract class SwatUIObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function addInlineScript()
+
+	public function addInlineScript($script)
+	{
+		$this->inline_scripts->add($script);
+	}
+
+	// }}}
 	// {{{ public function getFirstAncestor()
 
 	/**
@@ -230,6 +245,28 @@ abstract class SwatUIObject extends SwatObject
 	public function getAvailableHtmlHeadEntrySet()
 	{
 		return new SwatHtmlHeadEntrySet($this->html_head_entry_set);
+	}
+
+	// }}}
+	// {{{ public function getInlineScripts()
+
+	/**
+	 * Gets the inline scripts needed by this UI object
+	 *
+	 * If this UI object is not visible, an empty set is returned.
+	 *
+	 * @return SwatInlineScriptList the inline scripts needed by this UI
+	 *                              object.
+	 */
+	public function getInlineScripts()
+	{
+		if ($this->isVisible()) {
+			$list = new SwatInlineScriptList($this->inline_scripts);
+		} else {
+			$list = new SwatInlineScriptList();
+		}
+
+		return $list;
 	}
 
 	// }}}
