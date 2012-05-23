@@ -651,6 +651,32 @@ class SwatTileView extends SwatView implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getInlineScripts()
+
+	/**
+	 * Gets the inline scripts needed by this tile view
+	 *
+	 * @return SwatInlineScriptList the inline scripts needed by this tile
+	 *                              view.
+	 *
+	 * @see SwatUIObject::getInlineScripts()
+	 */
+	public function getInlineScripts()
+	{
+		$list = parent::getInlineScripts();
+
+		if ($this->tile !== null) {
+			$list->add($this->tile->getInlineScripts());
+		}
+
+		foreach ($this->groups as $group) {
+			$list->add($group->getInlineScripts());
+		}
+
+		return $list;
+	}
+
+	// }}}
 	// {{{ public function copy()
 
 	/**

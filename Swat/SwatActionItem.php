@@ -171,6 +171,28 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getInlineScripts()
+
+	/**
+	 * Gets the inline scripts needed by this action item
+	 *
+	 * @return SwatInlineScriptList the inline scripts needed by this action
+	 *                              item.
+	 *
+	 * @see SwatUIObject::getInlineScripts()
+	 */
+	public function getInlineScripts()
+	{
+		$list = parent::getInlineScripts();
+
+		if ($this->widget !== null) {
+			$list->add($this->widget->getInlineScripts());
+		}
+
+		return $list;
+	}
+
+	// }}}
 	// {{{ public function getDescendants()
 
 	/**

@@ -35,7 +35,7 @@ require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
  * extend {@link SwatContainer}.
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatWidget extends SwatUIObject
@@ -301,6 +301,31 @@ abstract class SwatWidget extends SwatUIObject
 		}
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ public function getInlineScripts()
+
+	/**
+	 * Gets the inline scripts needed by this widget
+	 *
+	 * If this widget has not been displated, an empty set is returned.
+	 *
+	 * @return SwatInlineScriptList the inline scripts needed by this widget.
+	 */
+	public function getInlineScripts()
+	{
+		if ($this->isDisplayed()) {
+			$list = new SwatInlineScriptList($this->inline_scripts);
+		} else {
+			$list = new SwatInlineScriptList();
+		}
+
+		foreach ($this->getCompositeWidgets() as $widget) {
+			$list->add($widget->getInlineScripts());
+		}
+
+		return $list;
 	}
 
 	// }}}

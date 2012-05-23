@@ -352,6 +352,28 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getInlineScripts()
+
+	/**
+	 * Gets the inline scripts needed by this notebook
+	 *
+	 * @return SwatInlineScriptList the inline scripts needed by this
+	 *                              notebook.
+	 *
+	 * @see SwatUIObject::getInlineScripts()
+	 */
+	public function getInlineScripts()
+	{
+		$list = parent::getInlineScripts();
+
+		foreach ($this->pages as $page) {
+			$list->add($page->getInlineScripts());
+		}
+
+		return $list;
+	}
+
+	// }}}
 	// {{{ public function getDescendants()
 
 	/**
