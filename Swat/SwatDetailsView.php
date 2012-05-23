@@ -330,6 +330,28 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getInlineScripts()
+
+	/**
+	 * Gets the inline scripts needed by this details-view
+	 *
+	 * @return SwatInlineScriptList the inline scripts needed by this
+	 *                              details-view.
+	 *
+	 * @see SwatUIObject::getInlineScripts()
+	 */
+	public function getInlineScripts()
+	{
+		$list = parent::getInlineScripts();
+
+		foreach ($this->fields as $field) {
+			$list->add($field->getInlineScripts());
+		}
+
+		return $list;
+	}
+
+	// }}}
 	// {{{ public function getDescendants()
 
 	/**

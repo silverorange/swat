@@ -63,6 +63,16 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	public $unit;
 
 	// }}}
+	// {{{ protected properties
+
+	/**
+	 * The check-all widget for this row
+	 *
+	 * @var SwatCheckAll
+	 */
+	protected $check_all;
+
+	// }}}
 	// {{{ private properties
 
 	/**
@@ -81,13 +91,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 * @see SwatTableViewCheckAllRow::__construct()
 	 */
 	private $list_id;
-
-	/**
-	 * The check-all widget for this row
-	 *
-	 * @var SwatCheckAll
-	 */
-	private $check_all;
 
 	/**
 	 * An internal flag that is set to true when embedded widgets have been
@@ -135,6 +138,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 
 		$set = parent::getHtmlHeadEntrySet();
 		$set->addEntrySet($this->check_all->getHtmlHeadEntrySet());
+
 		return $set;
 	}
 
@@ -157,6 +161,27 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		$set = parent::getAvailableHtmlHeadEntrySet();
 		$set->addEntrySet($this->check_all->getAvailableHtmlHeadEntrySet());
 		return $set;
+	}
+
+	// }}}
+	// {{{ public function getInlineScripts()
+
+	/**
+	 * Gets the inline scripts needed by this check-all row
+	 *
+	 * @return SwatInlineScriptList the inline scripts needed by this
+	 *                              check-all row.
+	 *
+	 * @see SwatUIObject::getInlineScripts()
+	 */
+	public function getInlineScripts()
+	{
+		$this->createEmbeddedWidgets();
+
+		$list = parent::getInlineScripts();
+		$list->add($this->check_all->getInlineScripts());
+
+		return $list;
 	}
 
 	// }}}

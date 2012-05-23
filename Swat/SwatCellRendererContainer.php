@@ -319,9 +319,11 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	public function getHtmlHeadEntrySet()
 	{
 		$set = parent::getHtmlHeadEntrySet();
+
 		$renderers = $this->getRenderers();
-		foreach ($renderers as $renderer)
+		foreach ($renderers as $renderer) {
 			$set->addEntrySet($renderer->getHtmlHeadEntrySet());
+		}
 
 		return $set;
 	}
@@ -347,6 +349,29 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 		}
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ public function getInlineScripts()
+
+	/**
+	 * Gets the inline scripts needed by this cell renderer
+	 *
+	 * @return SwatInlineScriptList the inline scripts needed by this cell
+	 *                              renderer.
+	 *
+	 * @see SwatUIObject::getInlineScripts()
+	 */
+	public function getInlineScripts()
+	{
+		$list = parent::getInlineScripts();
+
+		$renderers = $this->getRenderers();
+		foreach ($renderers as $renderer) {
+			$list->add($renderer->getInlineScripts());
+		}
+
+		return $list;
 	}
 
 	// }}}
