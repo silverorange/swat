@@ -304,31 +304,6 @@ abstract class SwatWidget extends SwatUIObject
 	}
 
 	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this widget
-	 *
-	 * If this widget has not been displated, an empty set is returned.
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this widget.
-	 */
-	public function getInlineScripts()
-	{
-		if ($this->isDisplayed()) {
-			$list = new SwatInlineScriptList($this->inline_scripts);
-		} else {
-			$list = new SwatInlineScriptList();
-		}
-
-		foreach ($this->getCompositeWidgets() as $widget) {
-			$list->add($widget->getInlineScripts());
-		}
-
-		return $list;
-	}
-
-	// }}}
 	// {{{ public function addMessage()
 
 	/**

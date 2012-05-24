@@ -196,29 +196,6 @@ abstract class SwatTableViewRow extends SwatUIObject
 	}
 
 	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this row
-	 *
-	 * If this row has not been displayed, an empty list is returned.
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this row.
-	 *
-	 * @see SwatUIObject::getInlineScripts()
-	 */
-	public function getInlineScripts()
-	{
-		if ($this->isDisplayed()) {
-			$list = new SwatInlineScripts($this->inline_scripts);
-		} else {
-			$list = new SwatInlineScripts();
-		}
-
-		return $list;
-	}
-
-	// }}}
 	// {{{ public function copy()
 
 	/**

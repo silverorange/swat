@@ -263,30 +263,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	}
 
 	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this cell renderer
-	 *
-	 * If this renderer has never been rendered, an empty set is returned.
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this cell
-	 *                              renderer.
-	 *
-	 * @see SwatUIObject::getInlineScripts()
-	 */
-	public function getInlineScripts()
-	{
-		if ($this->render_count > 0) {
-			$list = new SwatInlineScripts($this->inline_scripts);
-		} else {
-			$list = new SwatInlineScripts();
-		}
-
-		return $list;
-	}
-
-	// }}}
 	// {{{ public function isPropertyStatic()
 
 	/**

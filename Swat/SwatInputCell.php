@@ -316,24 +316,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	}
 
 	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this input cell
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this
-	 *                              input cell.
-	 *
-	 * @see SwatUIObject::getInlineScripts()
-	 */
-	public function getInlineScripts()
-	{
-		$list = parent::getInlineScripts();
-		$list->add($this->widget->getInlineScripts());
-		return $list;
-	}
-
-	// }}}
 	// {{{ public function getDescendants()
 
 	/**

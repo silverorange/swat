@@ -164,27 +164,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	}
 
 	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this check-all row
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this
-	 *                              check-all row.
-	 *
-	 * @see SwatUIObject::getInlineScripts()
-	 */
-	public function getInlineScripts()
-	{
-		$this->createEmbeddedWidgets();
-
-		$list = parent::getInlineScripts();
-		$list->add($this->check_all->getInlineScripts());
-
-		return $list;
-	}
-
-	// }}}
 	// {{{ public function init()
 
 	/**

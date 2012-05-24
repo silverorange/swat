@@ -570,27 +570,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this container
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this container.
-	 *
-	 * @see SwatUIObject::getInlineScripts()
-	 */
-	public function getInlineScripts()
-	{
-		$list = parent::getInlineScripts();
-
-		foreach ($this->children as $child_widget) {
-			$list->add($child_widget->getInlineScripts());
-		}
-
-		return $list;
-	}
-
-	// }}}
 	// {{{ public function getFocusableHtmlId()
 
 	/**
