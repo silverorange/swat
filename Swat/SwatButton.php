@@ -123,13 +123,6 @@ class SwatButton extends SwatInputControl
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
-		$yui = new SwatYUI(array('dom', 'event', 'animation'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-button.js',
-			Swat::PACKAGE_ID);
-
 		$this->requires_id = true;
 	}
 
@@ -162,19 +155,26 @@ class SwatButton extends SwatInputControl
 	 *
 	 * Outputs an XHTML input tag.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$input_tag = $this->getInputTag();
-		$input_tag->display();
+		$input_tag->display($context);
 
 		if ($this->show_processing_throbber ||
 			$this->confirmation_message !== null) {
-			Swat::displayInlineJavaScript($this->getInlineJavaScript());
+
+			$yui = new SwatYUI(array('dom', 'event', 'animation'));
+
+			$context->addStyleSheet($yui->getStyleSheets());
+			$context->addScript($yui->getScripts());
+			$context->addScript('packages/swat/javascript/swat-button.js');
+			$context->addInlineScript($this->getInlineJavaScript());
 		}
 	}
 

@@ -267,9 +267,6 @@ class SwatForm extends SwatDisplayableContainer
 		}
 
 		$this->requires_id = true;
-
-		$this->addJavaScript('packages/swat/javascript/swat-form.js',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -319,29 +316,32 @@ class SwatForm extends SwatDisplayableContainer
 	 * This method also adds a hidden field called 'process' that is given
 	 * the unique identifier of this form as a value.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		$this->addHiddenField(self::PROCESS_FIELD, $this->id);
 
 		$form_tag = $this->getFormTag();
 
-		$form_tag->open();
-		$this->displayChildren();
-		$this->displayHiddenFields();
-		$form_tag->close();
+		$form_tag->open($context);
+		$this->displayChildren($context);
+		$this->displayHiddenFields($context);
+		$form_tag->close($context);
+
+		$context->addScript('packages/swat/javascript/swat-form.js');
 
 		if ($this->connection_close_uri != '') {
 			$yui = new SwatYUI(array('event'));
-			$this->html_head_entry_set->addEntrySet(
-				$yui->getHtmlHeadEntrySet());
+			$context->addScript($yui->getScripts());
+			$context->addStyleSheet($yui->getStyleSheets());
 		}
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -848,19 +848,21 @@ class SwatForm extends SwatDisplayableContainer
 	 * If an authentication token is set on this form to prevent cross-site
 	 * request forgeries, the token is displayed in a hidden field.
 	 */
-	protected function displayHiddenFields()
+	protected function displayHiddenFields(SwatDisplayContext $context)
 	{
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
 
-		echo '<div class="swat-hidden">';
+		$context->out('<div class="swat-hidden">');
 
 		if ($this->_8bit_encoding !== null) {
 			// The character encoding detection field is intentionally not using
 			// SwatHtmlTag to avoid minimizing entities.
-			echo '<input type="hidden" ',
-				'name="', self::ENCODING_FIELD, '" ',
-				'value="', self::ENCODING_ENTITY_VALUE, '" />';
+			$context->out(
+				'<input type="hidden" '.
+				'name="'.self::ENCODING_FIELD.'" ',
+				'value="'.self::ENCODING_ENTITY_VALUE.'" />'
+			);
 		}
 
 		foreach ($this->hidden_fields as $name => $value) {
@@ -876,7 +878,7 @@ class SwatForm extends SwatDisplayableContainer
 
 				$input_tag->name = $name;
 				$input_tag->value = $escaped_value;
-				$input_tag->display();
+				$input_tag->display($context);
 			}
 
 			// display serialized value
@@ -887,38 +889,45 @@ class SwatForm extends SwatDisplayableContainer
 			// to be returned exactly as it was specified. This  necessitates
 			// double-escaping to ensure any entities that were specified in
 			// the hidden field value are returned correctly.
-			$escaped_serialized_data = htmlspecialchars($serialized_data,
-				ENT_COMPAT, 'UTF-8');
+			$escaped_serialized_data = htmlspecialchars(
+				$serialized_data,
+				ENT_COMPAT,
+				'UTF-8'
+			);
 
 			$input_tag->name = self::SERIALIZED_PREFIX.$name;
 			$input_tag->value = $escaped_serialized_data;
-			$input_tag->display();
+			$input_tag->display($context);
 		}
 
 		// display hidden field names
 		if (count($this->hidden_fields) > 0) {
 			// array of field names
 			$serialized_data = SwatString::signedSerialize(
-				array_keys($this->hidden_fields), $this->salt);
+				array_keys($this->hidden_fields),
+				$this->salt
+			);
 
 			$input_tag->name = self::HIDDEN_FIELD;
 			$input_tag->value = $serialized_data;
-			$input_tag->display();
+			$input_tag->display($context);
 		}
 
 		// display authentication token
 		if (self::$authentication_token !== null) {
 			$serialized_data = SwatString::signedSerialize(
-				self::$authentication_token, $this->salt);
+				self::$authentication_token,
+				$this->salt
+			);
 
 			$input_tag = new SwatHtmlTag('input');
 			$input_tag->type = 'hidden';
 			$input_tag->name = self::AUTHENTICATION_TOKEN_FIELD;
 			$input_tag->value = $serialized_data;
-			$input_tag->display();
+			$input_tag->display($context);
 		}
 
-		echo '</div>';
+		$context->out('</div>');
 	}
 
 	// }}}

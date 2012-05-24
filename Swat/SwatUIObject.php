@@ -20,7 +20,7 @@ require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
  * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatUIObject extends SwatObject
+abstract class SwatUIObject
 {
 	// {{{ public properties
 

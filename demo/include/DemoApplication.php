@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Concentrate/Concentrator.php';
+
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 /**
@@ -480,13 +482,22 @@ class DemoApplication
 		$concentrator = new Concentrate_Concentrator();
 		$displayer = new SwatHtmlHeadEntrySetDisplayer($concentrator);
 
+		$context = new SwatDisplayContext();
+
 		ob_start();
-		$this->layout_ui->display();
+		$this->layout_ui->display($context);
 		$ui = ob_get_clean();
 
 		ob_start();
-		$displayer->display($this->layout_ui->getRoot()->getHtmlHeadEntrySet());
+		$displayer->display($context->getStyleSheets());
+		$displayer->display($context->getLinks());
+		$displayer->display($context->getComments());
 		$html_head_entries = ob_get_clean();
+
+		ob_start();
+		$displayer->display($context->getScripts());
+		$context->getInlineScripts()->display();
+		$foot_entries = ob_get_clean();
 
 		require '../include/layout.php';
 	}

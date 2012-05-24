@@ -440,15 +440,17 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	/**
 	 * Displays this container by calling {@link SwatWidget::display()} on all
 	 * children
+	 *
+	 * @param SwatDisplayContext $context
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
 		if (!$this->visible)
 			return;
 
-		parent::display();
+		parent::display($context);
 
-		$this->displayChildren();
+		$this->displayChildren($context);
 	}
 
 	// }}}
@@ -513,7 +515,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 *
 	 * @throws SwatInvalidClassException
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
 		if ($child instanceof SwatWidget) {
 			$this->add($child);
@@ -677,11 +679,14 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 *
 	 * Subclasses that override the display method will typically call this
 	 * method to display child widgets.
+	 *
+	 * @param SwatDisplayContext $context
 	 */
-	protected function displayChildren()
+	protected function displayChildren(SwatDisplayContext $context)
 	{
-		foreach ($this->children as &$child)
-			$child->display();
+		foreach ($this->children as &$child) {
+			$child->display($context);
+		}
 	}
 
 	// }}}

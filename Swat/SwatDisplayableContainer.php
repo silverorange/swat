@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * Base class for containers that display an XHTML element
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDisplayableContainer extends SwatContainer
@@ -18,21 +18,24 @@ class SwatDisplayableContainer extends SwatContainer
 
 	/**
 	 * Displays this container
+	 *
+	 * @param SwatDisplayContext $context
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		$div = new SwatHtmlTag('div');
 		$div->id = $this->id;
 		$div->class = $this->getCSSClassString();
 
-		$div->open();
-		$this->displayChildren();
-		$div->close();
+		$div->open($context);
+		$this->displayChildren($context);
+		$div->close($context);
 	}
 
 	// }}}

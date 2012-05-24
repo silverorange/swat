@@ -22,7 +22,7 @@ interface SwatUIParent
 	 *
 	 * @param SwatObject $child the child object to add to this parent object.
 	 */
-	public function addChild(SwatObject $child);
+	public function addChild(SwatUIObject $child);
 
 	// }}}
 	// {{{ public function getDescendants()

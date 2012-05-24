@@ -141,14 +141,14 @@ class SwatHtmlTag extends SwatObject
 	 *
 	 * @see SwatHtmlTag::open()
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context = null)
 	{
 		if ($this->content === null) {
-			$this->openInternal(true);
+			$this->openInternal($context, true);
 		} else {
-			$this->openInternal(false);
-			$this->displayContent();
-			$this->close();
+			$this->openInternal($context, false);
+			$this->displayContent($context);
+			$this->close($context);
 		}
 	}
 
@@ -162,13 +162,22 @@ class SwatHtmlTag extends SwatObject
 	 *
 	 * @see SwatHtmlTag::display()
 	 */
-	public function displayContent()
+	public function displayContent(SwatDisplayContext $context = null)
 	{
 		if ($this->content !== null) {
-			if ($this->content_type === 'text/plain')
-				echo SwatString::minimizeEntities($this->content);
-			else
-				echo $this->content;
+			if ($this->content_type === 'text/plain') {
+				if ($context instanceof SwatDisplayContext) {
+					$context->out(SwatString::minimizeEntities($this->content));
+				} else {
+					echo SwatString::minimizeEntities($this->content);
+				}
+			} else {
+				if ($context instanceof SwatDisplayContext) {
+					$context->out($this->content);
+				} else {
+					echo $this->content;
+				}
+			}
 		}
 	}
 
@@ -184,9 +193,9 @@ class SwatHtmlTag extends SwatObject
 	 *
 	 * @see SwatHtmlTag::close()
 	 */
-	public function open()
+	public function open(SwatDisplayContext $context = null)
 	{
-		$this->openInternal(false);
+		$this->openInternal($context, false);
 	}
 
 	// }}}
@@ -200,9 +209,13 @@ class SwatHtmlTag extends SwatObject
 	 *
 	 * @see SwatHtmlTag::open()
 	 */
-	public function close()
+	public function close(SwatDisplayContext $context = null)
 	{
-		echo '</', $this->tag_name, '>';
+		if ($context instanceof SwatDisplayContext) {
+			$context->out('</'.$this->tag_name.'>');
+		} else {
+			echo '</'.$this->tag_name.'>';
+		}
 	}
 
 	// }}}
@@ -296,7 +309,7 @@ class SwatHtmlTag extends SwatObject
 	}
 
 	// }}}
-	// {{{ private function openInternal()
+	// {{{ protected function openInternal()
 
 	/**
 	 * Outputs opening tag and all attributes
@@ -307,21 +320,40 @@ class SwatHtmlTag extends SwatObject
 	 * @param boolean $self_closing whether this tag should be displayed as a
 	 *                               self-closing tag.
 	 */
-	private function openInternal($self_closing = false)
+	protected function openInternal(SwatDisplayContext $context = null,
+		$self_closing = false)
 	{
-		echo '<', $this->tag_name;
+		if ($context instanceof SwatDisplayContext) {
+			$context->out('<'.$this->tag_name);
+		} else {
+			echo '<'.$this->tag_name;
+		}
 
 		foreach ($this->attributes as $attribute => $value) {
 			if ($value !== null) {
-				echo ' ', $attribute, '="',
-					SwatString::minimizeEntities($value), '"';
+				if ($context instanceof SwatDisplayContext) {
+					$context->out(' '.$attribute.'="'.
+						SwatString::minimizeEntities($value).'"');
+				} else {
+					echo ' '.$attribute.'="'.
+						SwatString::minimizeEntities($value).'"';
+				}
 			}
 		}
 
-		if ($self_closing)
-			echo ' />';
-		else
-			echo '>';
+		if ($self_closing) {
+			if ($context instanceof SwatDisplayContext) {
+				$context->out(' />');
+			} else {
+				echo ' />';
+			}
+		} else {
+			if ($context instanceof SwatDisplayContext) {
+				$context->out('>');
+			} else {
+				echo '>';
+			}
+		}
 	}
 
 	// }}}

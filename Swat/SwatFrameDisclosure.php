@@ -14,24 +14,6 @@ require_once 'Swat/SwatHtmlTag.php';
  */
 class SwatFrameDisclosure extends SwatDisclosure
 {
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new frame disclosure container
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$this->addStyleSheet('packages/swat/styles/swat-frame-disclosure.css',
-			Swat::PACKAGE_ID);
-	}
-
-	// }}}
 	// {{{ public function display()
 
 	/**
@@ -43,12 +25,13 @@ class SwatFrameDisclosure extends SwatDisclosure
 	 * The disclosure is always displayed as opened in case the user has
 	 * JavaScript turned off.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		// default header level is h2
 		$level = 2;
@@ -56,8 +39,9 @@ class SwatFrameDisclosure extends SwatDisclosure
 
 		// get appropriate header level, limit to h6
 		while ($ancestor !== null && $level < 6) {
-			if ($ancestor instanceof SwatFrame)
+			if ($ancestor instanceof SwatFrame) {
 				$level++;
+			}
 
 			$ancestor = $ancestor->parent;
 		}
@@ -72,25 +56,29 @@ class SwatFrameDisclosure extends SwatDisclosure
 		$container_div->class.= ' swat-frame-contents';
 		$animate_div = $this->getAnimateDivTag();
 
-		$control_div->open();
+		$control_div->open($context);
 
-		$header_tag->open();
-		$span_tag->display();
-		$header_tag->close();
+		$header_tag->open($context);
+		$span_tag->display($context);
+		$header_tag->close($context);
 
-		$input_tag->display();
+		$input_tag->display($context);
 
-		$animate_div->open();
+		$animate_div->open($context);
 		echo '<div>';
-		$container_div->open();
-		$this->displayChildren();
-		$container_div->close();
+		$container_div->open($context);
+		$this->displayChildren($context);
+		$container_div->close($context);
 		echo '</div>';
-		$animate_div->close();
+		$animate_div->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavascript());
+		$control_div->close($context);
 
-		$control_div->close();
+		$context->addStyleSheet(
+			'packages/swat/styles/swat-frame-disclosure.css'
+		);
+
+		$context->addInlineScript($this->getInlineJavascript());
 	}
 
 	// }}}

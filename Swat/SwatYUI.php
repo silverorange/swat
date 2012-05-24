@@ -113,6 +113,26 @@ class SwatYUI extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function getScripts()
+
+	public function getScripts()
+	{
+		return $this->html_head_entry_set->getByType(
+			'SwatJavaScriptHtmlHeadEntry'
+		);
+	}
+
+	// }}}
+	// {{{ public function getStyleSheets()
+
+	public function getStyleSheets()
+	{
+		return $this->html_head_entry_set->getByType(
+			'SwatStyleSheetHtmlHeadEntry'
+		);
+	}
+
+	// }}}
 	// {{{ private function buildHtmlHeadEntrySet()
 
 	/**

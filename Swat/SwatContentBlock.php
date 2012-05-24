@@ -40,17 +40,19 @@ class SwatContentBlock extends SwatControl
 	 *
 	 * Merely performs an echo of the content.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
-		if ($this->content_type === 'text/plain')
-			echo SwatString::minimizeEntities($this->content);
-		else
-			echo $this->content;
+		if ($this->content_type === 'text/plain') {
+			$context->out(SwatString::minimizeEntities($this->content));
+		} else {
+			$context->out($this->content);
+		}
 	}
 
 	// }}}

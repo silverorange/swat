@@ -382,9 +382,9 @@ class SwatUI extends SwatObject
 	 *
 	 * Displays this interface starting at the root element.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		$this->root->display();
+		$this->root->display($context);
 	}
 
 	// }}}
@@ -399,13 +399,13 @@ class SwatUI extends SwatObject
 	 *             whitespace between nodes. Use {@link SwatUI::display()}
 	 *             instead.
 	 */
-	public function displayTidy()
+	public function displayTidy(SwatDisplayContext $context)
 	{
 		$breaking_tags =
 			'@</?(div|p|table|tr|td|ul|li|ol|dl|option)[^<>]*>@ui';
 
 		ob_start();
-		$this->display();
+		$this->display($context);
 		$buffer = ob_get_clean();
 		$tidy = preg_replace($breaking_tags, "\n\\0\n", $buffer);
 		$tidy = str_replace("\n\n", "\n", $tidy);

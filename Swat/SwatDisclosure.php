@@ -45,15 +45,6 @@ class SwatDisclosure extends SwatDisplayableContainer
 	{
 		parent::__construct($id);
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('dom', 'animation'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addJavaScript('packages/swat/javascript/swat-disclosure.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-disclosure.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -67,13 +58,16 @@ class SwatDisclosure extends SwatDisplayableContainer
 	 *
 	 * The disclosure is always displayed as opened in case the user has
 	 * JavaScript turned off.
+	 *
+	 * @param SwatDisplayContext $context
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		$control_div = $this->getControlDivTag();
 		$span = $this->getSpanTag();
@@ -82,22 +76,28 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$animate_div = $this->getAnimateDivTag();
 		$padding_div = $this->getPaddingDivTag();
 
-		$control_div->open();
+		$control_div->open($context);
 
-		$span->display();
-		$input->display();
+		$span->display($context);
+		$input->display($context);
 
-		$container_div->open();
-		$animate_div->open();
-		$padding_div->open();
-		$this->displayChildren();
-		$padding_div->close();
-		$animate_div->close();
-		$container_div->close();
+		$container_div->open($context);
+		$animate_div->open($context);
+		$padding_div->open($context);
+		$this->displayChildren($context);
+		$padding_div->close($context);
+		$animate_div->close($context);
+		$container_div->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$control_div->close($context);
 
-		$control_div->close();
+		$yui = new SwatYUI(array('dom', 'animation'));
+
+		$context->addStyleSheet($yui->getStyleSheets());
+		$context->addStyleSheet('packages/swat/styles/swat-disclosure.css');
+		$context->addScript($yui->getScripts());
+		$context->addScript('packages/swat/javascript/swat-disclosure.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

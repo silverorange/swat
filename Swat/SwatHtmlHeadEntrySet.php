@@ -2,8 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Concentrate/Concentrator.php';
-require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlHeadEntry.php';
 require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
 require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
@@ -15,10 +13,10 @@ require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
  * of entries.
  *
  * @package   Swat
- * @copyright 2006-2010 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatHtmlHeadEntrySet extends SwatObject
+class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
 {
 	// {{{ protected properties
 
@@ -59,37 +57,72 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	}
 
 	// }}}
+
+	public function count()
+	{
+		return count($this->entries);
+	}
+
+	public function getIterator()
+	{
+		// returns an array copy by design
+		return $this->entries;
+	}
+
+	// {{{ public function add()
+
+	/**
+	 * Adds a HTML head entry to this set
+	 *
+	 * @param string|SwatHtmlHeadEntry|SwatHtmlHeadEntrySetstring $entry the
+	 *        entry or entries to add.
+	 */
+	public function add($entry)
+	{
+		if ($entry instanceof SwatHtmlHeadEntrySet) {
+			$this->entries = array_merge(
+				$this->entries,
+				$entry->entries
+			);
+		} else {
+			if (is_string($entry)) {
+				$class = $this->getClassFromType($entry);
+
+				if ($class === null) {
+					throw new SwatClassNotFoundException(
+						'SwatHtmlHeadEntry class not found for entry string '.
+						'of "'.$entry.'".');
+				}
+
+				$entry = new $class($entry, $package_id);
+			}
+
+			if (!($entry instanceof SwatHtmlHeadEntry)) {
+				throw new SwatInvalidTypeException(
+					'Added entry must be either a string or an instance of '.
+					'SwatHtmlHeadEntry or SwatHtmlHeadEntrySet.', 0, $entry);
+			}
+
+			$uri = $entry->getUri();
+			if (!isset($this->entries[$uri])) {
+				$this->entries[$uri] = $entry;
+			}
+		}
+	}
+
+	// }}}
 	// {{{ public function addEntry()
 
 	/**
 	 * Adds a HTML head entry to this set
 	 *
 	 * @param SwatHtmlHeadEntry|string $entry the entry to add.
+	 *
+	 * @deprecated Use SwatHtmlHeadEntrySet::add() instead.
 	 */
 	public function addEntry($entry, $package_id = null)
 	{
-		if (is_string($entry)) {
-			$class = $this->getClassFromType($entry);
-
-			if ($class === null) {
-				throw new SwatClassNotFoundException(
-					'SwatHtmlHeadEntry class not found for entry string of "'.
-					$entry.'".');
-			}
-
-			$entry = new $class($entry, $package_id);
-		}
-
-		if (!($entry instanceof SwatHtmlHeadEntry)) {
-			throw new SwatInvalidTypeException(
-				'Added entry must be either a string or an instance of a'.
-				'SwatHtmlHeadEntry.', 0, $entry);
-		}
-
-		$uri = $entry->getUri();
-		if (!array_key_exists($uri, $this->entries)) {
-			$this->entries[$uri] = $entry;
-		}
+		$this->add($entry);
 	}
 
 	// }}}
@@ -99,10 +132,12 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	 * Adds a set of HTML head entries to this set
 	 *
 	 * @param SwatHtmlHeadEntrySet $set the set to add.
+	 *
+	 * @deprecated Use SwatHtmlHeadEntrySet::add() instead.
 	 */
 	public function addEntrySet(SwatHtmlHeadEntrySet $set)
 	{
-		$this->entries = array_merge($this->entries, $set->entries);
+		$this->add($set);
 	}
 
 	// }}}
@@ -138,6 +173,20 @@ class SwatHtmlHeadEntrySet extends SwatObject
 		}
 
 		$this->type_map = array_merge($this->type_map, $type);
+	}
+
+	// }}}
+	// {{{ public function getByType()
+
+	public function getByType($type)
+	{
+		$set = new SwatHtmlHeadEntrySet();
+		foreach ($this->entries as $entry) {
+			if ($entry->getType() == $type) {
+				$set->addEntry($entry);
+			}
+		}
+		return $set;
 	}
 
 	// }}}

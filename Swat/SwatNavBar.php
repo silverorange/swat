@@ -309,33 +309,37 @@ class SwatNavBar extends SwatControl implements Countable
 	 * Displays each entry separated by a special character and outputs
 	 * navbar entries with links as anchor tags.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$count = count($this);
 		$i = 1;
 
 		$container_tag = $this->getContainerTag();
-		$container_tag->open();
+		$container_tag->open($context);
 
 		foreach ($this->entries as $entry) {
 			// display separator
-			if ($i > 1)
-				echo SwatString::minimizeEntities($this->separator);
+			if ($i > 1) {
+				$context->out(
+					SwatString::minimizeEntities($this->separator)
+				);
+			}
 
 			// link all entries or link all but the last entry
 			$link = ($this->link_last_entry || $i < $count);
 
-			$this->displayEntry($entry, $link, ($i == 1));
+			$this->displayEntry($context, $entry, $link, ($i == 1));
 
 			$i++;
 		}
 
-		$container_tag->close();
+		$container_tag->close($context);
 	}
 
 	// }}}
@@ -350,8 +354,8 @@ class SwatNavBar extends SwatControl implements Countable
 	 * @param boolean $first whether or not this entry should be displayed as
 	 *                        the first entry.
 	 */
-	protected function displayEntry(SwatNavBarEntry $entry, $show_link = true,
-		$first = false)
+	protected function displayEntry(SwatDisplayContext $context,
+		SwatNavBarEntry $entry, $show_link = true, $first = false)
 	{
 		$title = ($entry->title === null) ? '' : $entry->title;
 		$link  = $this->getLink($entry);
@@ -359,18 +363,20 @@ class SwatNavBar extends SwatControl implements Countable
 		if ($link !== null && $show_link) {
 			$a_tag = new SwatHtmlTag('a');
 			$a_tag->href = $link;
-			if ($first)
+			if ($first) {
 				$a_tag->class = 'swat-navbar-first';
+			}
 
 			$a_tag->setContent($title);
-			$a_tag->display();
+			$a_tag->display($context);
 		} else {
 			$span_tag = new SwatHtmlTag('span');
-			if ($first)
+			if ($first) {
 				$span_tag->class = 'swat-navbar-first';
+			}
 
 			$span_tag->setContent($title);
-			$span_tag->display();
+			$span_tag->display($context);
 		}
 	}
 

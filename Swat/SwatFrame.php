@@ -99,21 +99,22 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 	/**
 	 * Displays this frame
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		$outer_div = new SwatHtmlTag('div');
 		$outer_div->id = $this->id;
 		$outer_div->class = $this->getCSSClassString();
 
-		$outer_div->open();
-		$this->displayTitle();
-		$this->displayContent();
-		$outer_div->close();
+		$outer_div->open($context);
+		$this->displayTitle($context);
+		$this->displayContent($context);
+		$outer_div->close($context);
 	}
 
 	// }}}
@@ -122,7 +123,7 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 	/**
 	 * Displays this frame's title
 	 */
-	protected function displayTitle()
+	protected function displayTitle(SwatDisplayContext $context)
 	{
 		if ($this->title !== null) {
 
@@ -131,18 +132,18 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 			$header_tag->setContent($this->title, $this->title_content_type);
 
 			if ($this->subtitle === null) {
-				$header_tag->display();
+				$header_tag->display($context);
 			} else {
 				$span_tag = new SwatHtmlTag('span');
 				$span_tag->class = 'swat-frame-subtitle';
 				$span_tag->setContent($this->subtitle,
 					$this->title_content_type);
 
-				$header_tag->open();
-				$header_tag->displayContent();
-				echo $this->title_separator;
-				$span_tag->display();
-				$header_tag->close();
+				$header_tag->open($context);
+				$header_tag->displayContent($context);
+				$context->out($this->title_separator);
+				$span_tag->display($context);
+				$header_tag->close($context);
 			}
 		}
 	}
@@ -153,13 +154,13 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 	/**
 	 * Displays this frame's content
 	 */
-	protected function displayContent()
+	protected function displayContent(SwatDisplayContext $context)
 	{
 		$inner_div = new SwatHtmlTag('div');
 		$inner_div->class = 'swat-frame-contents';
-		$inner_div->open();
-		$this->displayChildren();
-		$inner_div->close();
+		$inner_div->open($context);
+		$this->displayChildren($context);
+		$inner_div->close($context);
 	}
 
 	// }}}

@@ -4,6 +4,7 @@
 
 require_once 'Swat/SwatUIObject.php';
 require_once 'Swat/SwatMessage.php';
+require_once 'Swat/SwatDisplayContext.php';
 require_once 'Swat/exceptions/SwatDuplicateIdException.php';
 require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
 
@@ -157,10 +158,7 @@ abstract class SwatWidget extends SwatUIObject
 	public function __construct($id = null)
 	{
 		parent::__construct();
-
 		$this->id = $id;
-		$this->addStylesheet('packages/swat/styles/swat.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -232,13 +230,18 @@ abstract class SwatWidget extends SwatUIObject
 	 *
 	 * If this widget has not been initialized, it is automatically initialized
 	 * before displaying.
+	 *
+	 * @param SwatDisplayContext $context
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->isInitialized())
+		if (!$this->isInitialized()) {
 			$this->init();
+		}
 
 		$this->displayed = true;
+
+		$context->addStyleSheet('packages/swat/styles/swat.css');
 	}
 
 	// }}}

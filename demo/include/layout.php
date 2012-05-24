@@ -12,5 +12,6 @@
 </head>
 <body>
 	<?php echo $ui; ?>
+	<?php echo $foot_entries; ?>
 </body>
 </html>
