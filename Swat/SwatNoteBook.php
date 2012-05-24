@@ -236,11 +236,8 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 
 		$div_tag->close($context);
 
-		$yui = new SwatYUI(array('tabview'));
-
-		$context->addStyleSheet($yui->getStyles());
+		$context->addYUI('tabview');
 		$context->addStyleSheet('packages/swat/styles/swat-note-book.css');
-		$context->addScript($yui->getScripts());
 		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
