@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A control for recording a rating out of a variable number of values
  *
  * @package   Swat
- * @copyright 2007-2010 silverorange
+ * @copyright 2007-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRating extends SwatInputControl
@@ -43,17 +43,7 @@ class SwatRating extends SwatInputControl
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('dom', 'animation'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addJavaScript('packages/swat/javascript/swat-rating.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-rating.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -94,12 +84,13 @@ class SwatRating extends SwatInputControl
 	/**
 	 * Displays this rating control
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		parent::display();
-
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
+
+		parent::display($context);
 
 		$flydown = $this->getCompositeWidget('flydown');
 		$flydown->value = (string)$this->value;
@@ -107,11 +98,14 @@ class SwatRating extends SwatInputControl
 		$div = new SwatHtmlTag('div');
 		$div->id = $this->id;
 		$div->class = $this->getCSSClassString();
-		$div->open();
-		$flydown->display();
-		$div->close();
+		$div->open($context);
+		$flydown->display($context);
+		$div->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addYUI('dom', 'event', 'animation');
+		$context->addScript('packages/swat/javascript/swat-rating.js');
+		$context->addStyleSheet('packages/swat/styles/swat-rating.css');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

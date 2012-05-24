@@ -4,7 +4,6 @@
 
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/SwatYUI.php';
 
 /**
  * An image cropping widget
@@ -13,7 +12,7 @@ require_once 'Swat/SwatYUI.php';
  * an image should be cropped.
  *
  * @package   Swat
- * @copyright 2008 silverorange
+ * @copyright 2008-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageCropper extends SwatInputControl
@@ -148,14 +147,7 @@ class SwatImageCropper extends SwatInputControl
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('imagecropper'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addJavaScript('packages/swat/javascript/swat-image-cropper.js',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -185,19 +177,20 @@ class SwatImageCropper extends SwatInputControl
 	/**
 	 * Displays this image cropper
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$this->autoCropBoxDimensions();
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = 'swat-image-cropper yui-skin-sam';
-		$div_tag->open();
+		$div_tag->open($context);
 
 		$image_tag = new SwatHtmlTag('img');
 		$image_tag->id = $this->id.'_image';
@@ -205,7 +198,7 @@ class SwatImageCropper extends SwatInputControl
 		$image_tag->width = $this->image_width;
 		$image_tag->height = $this->image_height;
 		$image_tag->alt = Swat::_('Crop Image');
-		$image_tag->display();
+		$image_tag->display($context);
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
@@ -213,26 +206,28 @@ class SwatImageCropper extends SwatInputControl
 		$input_tag->id = $this->id.'_width';
 		$input_tag->name = $this->id.'_width';
 		$input_tag->value = $this->crop_width;
-		$input_tag->display();
+		$input_tag->display($context);
 
 		$input_tag->id = $this->id.'_height';
 		$input_tag->name = $this->id.'_height';
 		$input_tag->value = $this->crop_height;
-		$input_tag->display();
+		$input_tag->display($context);
 
 		$input_tag->id = $this->id.'_x';
 		$input_tag->name = $this->id.'_x';
 		$input_tag->value = $this->crop_left;
-		$input_tag->display();
+		$input_tag->display($context);
 
 		$input_tag->id = $this->id.'_y';
 		$input_tag->name = $this->id.'_y';
 		$input_tag->value = $this->crop_top;
-		$input_tag->display();
+		$input_tag->display($context);
 
-		$div_tag->close();
+		$div_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addYUI('imagecropper');
+		$context->addScript('packages/swat/javascript/swat-image-cropper.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

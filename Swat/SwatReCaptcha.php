@@ -10,7 +10,7 @@ require_once 'Swat/SwatInputControl.php';
  * A widget used to display and validate reCAPTCHA's
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2012 silverorange
  * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
  */
 class SwatReCaptcha extends SwatInputControl
@@ -51,18 +51,19 @@ class SwatReCaptcha extends SwatInputControl
 	/**
 	 * Displays this ReCaptcha widget
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
-		/*
-		 * Second parameter is null because errors are displayed as
-		 * SwatMessage objects affixed to this widget.
-		 */
+		ob_start();
+		// Second parameter is null because errors are displayed as
+		// SwatMessage objects affixed to this widget.
 		ReCaptcha::display($this->public_key, null, $this->secure);
+		$context->out(ob_get_clean());
 	}
 
 	// }}}

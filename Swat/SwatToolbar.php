@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A toolbar container for a group of related {@link SwatToolLink} objects
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatToolbar extends SwatDisplayableContainer
@@ -26,9 +26,6 @@ class SwatToolbar extends SwatDisplayableContainer
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
-		$this->addStyleSheet('packages/swat/styles/swat-toolbar.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -38,20 +35,23 @@ class SwatToolbar extends SwatDisplayableContainer
 	 * Displays this toolbar as an unordered list with each sub-item
 	 * as a list item
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		$toolbar_ul = new SwatHtmlTag('ul');
 		$toolbar_ul->id = $this->id;
 		$toolbar_ul->class = $this->getCSSClassString();
 
-		$toolbar_ul->open();
-		$this->displayChildren();
-		$toolbar_ul->close();
+		$toolbar_ul->open($context);
+		$this->displayChildren($context);
+		$toolbar_ul->close($context);
+
+		$context->addStyleSheet('packages/swat/styles/swat-toolbar.css');
 	}
 
 	// }}}
@@ -98,14 +98,15 @@ class SwatToolbar extends SwatDisplayableContainer
 	/**
 	 * Displays the child widgets of this container
 	 */
-	protected function displayChildren()
+	protected function displayChildren(SwatDisplayContext $context)
 	{
 		foreach ($this->children as &$child) {
 			ob_start();
-			$child->display();
+			$child->display($context);
 			$content = ob_get_clean();
-			if ($content != '')
-				echo '<li>', $content, '</li>';
+			if ($content != '') {
+				$context->out('<li>'.$content.'</li>');
+			}
 		}
 	}
 

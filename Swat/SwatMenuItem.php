@@ -18,7 +18,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * {@link SwatMenuGroup} widgets.
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see SwatMenu
@@ -130,15 +130,16 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	 * @see SwatUIParent
 	 * @see SwatMenuItem::setSubMenu()
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
 		if ($this->sub_menu === null) {
-			if ($child instanceof SwatAbstractMenu)
+			if ($child instanceof SwatAbstractMenu) {
 				$this->setSubMenu($child);
-			else
+			} else {
 				throw new SwatInvalidClassException(
 					'Only a SwatAbstractMenu object may be nested within a '.
 					'SwatMenuItem object.', 0, $child);
+			}
 		} else {
 			throw new SwatException(
 				'Can only add one sub-menu to a menu item.');
@@ -170,36 +171,38 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	 *
 	 * If this item has a sub-menu, the sub-menu is also displayed.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		if ($this->link === null) {
 			$span_tag = new SwatHtmlTag('span');
 			$span_tag->id = $this->id;
 			$span_tag->class = $this->getCSSClassString();
 			$span_tag->setContent($this->title);
-			$span_tag->display();
+			$span_tag->display($context);
 		} else {
 			$anchor_tag = new SwatHtmlTag('a');
 			$anchor_tag->id = $this->id;
 			$anchor_tag->class = $this->getCSSClassString();
 
-			if ($this->value === null)
+			if ($this->value === null) {
 				$anchor_tag->href = $this->link;
-			elseif (is_array($this->value))
-				$anchor_tag->href = vsprintf($this->link, $this->value);
-			else
+			} elseif (is_array($this->value)) {
+			 	$anchor_tag->href = vsprintf($this->link, $this->value);
+			} else {
 				$anchor_tag->href = sprintf($this->link, $this->value);
+			}
 
 			$anchor_tag->setContent($this->title);
-			$anchor_tag->display();
+			$anchor_tag->display($context);
 		}
 
-		$this->displaySubMenu();
+		$this->displaySubMenu($context);
 	}
 
 	// }}}
@@ -430,10 +433,11 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	/**
 	 * Displays this menu item's sub-menu
 	 */
-	protected function displaySubMenu()
+	protected function displaySubMenu(SwatDisplayContext $context)
 	{
-		if ($this->sub_menu !== null)
-			$this->sub_menu->display();
+		if ($this->sub_menu !== null) {
+			$this->sub_menu->display($context);
+		}
 	}
 
 	// }}}

@@ -3,7 +3,6 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatTextarea.php';
-require_once 'Swat/SwatYUI.php';
 
 /**
  * A what-you-see-is-what-you-get (WYSIWYG) XHTML textarea editor widget
@@ -13,7 +12,7 @@ require_once 'Swat/SwatYUI.php';
  * details.
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextareaEditor extends SwatTextarea
@@ -139,28 +138,20 @@ class SwatTextareaEditor extends SwatTextarea
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
 		$this->rows = 30;
-
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-z-index-manager.js',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript(
-			'packages/swat/javascript/tiny_mce/tiny_mce.js',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
 	// {{{ public function display()
 
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		// textarea tags cannot be self-closing when using HTML parser on XHTML
 		$value = ($this->value === null) ? '' : $this->value;
@@ -171,7 +162,7 @@ class SwatTextareaEditor extends SwatTextarea
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->class = 'swat-textarea-editor-container';
-		$div_tag->open();
+		$div_tag->open($context);
 
 		$textarea_tag = new SwatHtmlTag('textarea');
 		$textarea_tag->name = $this->id;
@@ -201,18 +192,20 @@ class SwatTextareaEditor extends SwatTextarea
 		if (!$this->isSensitive())
 			$textarea_tag->disabled = 'disabled';
 
-		$textarea_tag->display();
+		$textarea_tag->display($context);
 
 		// hidden field to preserve editing mode in form data
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
 		$input_tag->id = $this->id.'_mode';
 		$input_tag->value = $this->mode;
-		$input_tag->display();
+		$input_tag->display($context);
 
-		$div_tag->close();
+		$div_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addScript('packages/swat/javascript/swat-z-index-manager.js');
+		$context->addScript('packages/swat/javascript/tiny_mce/tiny_mce.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

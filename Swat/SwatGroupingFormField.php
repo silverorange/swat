@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * XHTML 'fieldset' tag.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatGroupingFormField extends SwatFormField
@@ -42,15 +42,17 @@ class SwatGroupingFormField extends SwatFormField
 	 *
 	 * Associates a label with the first widget of this container.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		if ($this->getFirst() === null)
+		if ($this->getFirst() === null) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		$container_tag = new SwatHtmlTag('div');
 		$container_tag->id = $this->id;
@@ -59,14 +61,14 @@ class SwatGroupingFormField extends SwatFormField
 		$fieldset_tag = new SwatHtmlTag('fieldset');
 		$fieldset_tag->class = 'swat-grouping-form-field-fieldset';
 
-		$container_tag->open();
-		$fieldset_tag->open();
-		$this->displayTitle();
-		$this->displayContent();
-		$this->displayNotes();
-		$fieldset_tag->close();
-		$this->displayMessages();
-		$container_tag->close();
+		$container_tag->open($context);
+		$fieldset_tag->open($context);
+		$this->displayTitle($context);
+		$this->displayContent($context);
+		$this->displayNotes($context);
+		$fieldset_tag->close($context);
+		$this->displayMessages($context);
+		$container_tag->close($context);
 	}
 
 	// }}}

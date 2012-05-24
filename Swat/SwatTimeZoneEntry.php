@@ -12,7 +12,7 @@ require_once 'Swat/SwatState.php';
  * A time zone selection widget
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTimeZoneEntry extends SwatInputControl implements SwatState
@@ -89,12 +89,13 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 *
 	 * Outputs a cascading list of time zones.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$areas_flydown = $this->getCompositeWidget('areas_flydown');
 		$regions_flydown = $this->getCompositeWidget('regions_flydown');
@@ -102,16 +103,16 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
+		$div_tag->open($context);
 
 		$areas_flydown->value = $this->getArea($this->value);
-		$areas_flydown->display();
+		$areas_flydown->display($context);
 
 		$regions_flydown->options = $this->regions;
 		$regions_flydown->value = $this->getRegion($this->value);
-		$regions_flydown->display();
+		$regions_flydown->display($context);
 
-		$div_tag->close();
+		$div_tag->close($context);
 	}
 
 	// }}}

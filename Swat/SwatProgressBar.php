@@ -5,7 +5,6 @@
 require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatString.php';
-require_once 'Swat/SwatYUI.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
@@ -25,7 +24,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * percent.
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatProgressBar extends SwatControl
@@ -139,17 +138,7 @@ class SwatProgressBar extends SwatControl
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addStyleSheet('packages/swat/styles/swat-progress-bar.css',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript('packages/swat/javascript/swat-progress-bar.js',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -161,25 +150,29 @@ class SwatProgressBar extends SwatControl
 	 * @throws SwatException if this progress bar's <i>$length</i> property is
 	 *                       not a valid cascading style-sheet dimension.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
 
-		$div_tag->open();
+		$div_tag->open($context);
 
-		$this->displayBar();
-		$this->displayText();
+		$this->displayBar($context);
+		$this->displayText($context);
 
-		$div_tag->close();
+		$div_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addYUI('event');
+		$context->addStyleSheet('packages/swat/styles/swat-progress-bar.css');
+		$context->addScript('packages/swat/javascript/swat-progress-bar.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -191,13 +184,18 @@ class SwatProgressBar extends SwatControl
 	 * @throws SwatException if this progress bar's <i>$length</i> property is
 	 *                       not a valid cascading style-sheet dimension.
 	 */
-	protected function displayBar()
+	protected function displayBar(SwatDisplayContext $context)
 	{
 		// ensure length is in cascading style-sheet units
 		$dimension_pattern = '/([0-9]+(%|p[xtc]|e[mx]|in|[cm]m|)|auto)/';
-		if (preg_match($dimension_pattern, $this->length) == 0)
-			throw new SwatException(sprintf('$length must be specified in '.
-				'cascading style-sheet units. Value was: %s', $this->length));
+		if (preg_match($dimension_pattern, $this->length) == 0) {
+			throw new SwatException(
+				sprintf(
+					'$length must be specified in CSS units. Value was: %s',
+					$this->length
+				)
+			);
+		}
 
 		$bar_div_tag = new SwatHtmlTag('div');
 		$bar_div_tag->id = "{$this->id}_bar";
@@ -254,10 +252,10 @@ class SwatProgressBar extends SwatControl
 			break;
 		}
 
-		$bar_div_tag->open();
-		$full_div_tag->display();
-		$empty_div_tag->display();
-		$bar_div_tag->close();
+		$bar_div_tag->open($context);
+		$full_div_tag->display($context);
+		$empty_div_tag->display($context);
+		$bar_div_tag->close($context);
 	}
 
 	// }}}
@@ -266,26 +264,27 @@ class SwatProgressBar extends SwatControl
 	/**
 	 * Displays the text part of this progress bar
 	 */
-	protected function displayText()
+	protected function displayText(SwatDisplayContext $context)
 	{
 		if ($this->text === null) {
 			// still show an empty span if there is no text for this
 			// progress bar
 			$text = '';
 		} else {
-			if ($this->text_value === null)
+			if ($this->text_value === null) {
 				$text = $this->text;
-			elseif (is_array($this->text_value))
+			} elseif (is_array($this->text_value)) {
 				$text = vsprintf($this->text, $this->text_value);
-			else
+			} else {
 				$text = sprintf($this->text, $this->text_value);
+			}
 		}
 
 		$span_tag = new SwatHtmlTag('span');
 		$span_tag->id = $this->id.'_text';
 		$span_tag->class = 'swat-progress-bar-text';
 		$span_tag->setContent($text, $this->content_type);
-		$span_tag->display();
+		$span_tag->display($context);
 	}
 
 	// }}}

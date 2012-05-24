@@ -10,58 +10,45 @@ require_once 'Swat/SwatHtmlTag.php';
  * tabular format
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2012 silverorange
  */
 class SwatRadioTable extends SwatRadioList
 {
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new radio table
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$this->addStyleSheet('packages/swat/styles/swat-radio-table.css',
-			Swat::PACKAGE_ID);
-	}
-
-	// }}}
 	// {{{ public function display()
 
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
 		$options = $this->getOptions();
 
-		if (!$this->visible || $options === null)
+		if (!$this->visible || $options === null) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		// add a hidden field so we can check if this list was submitted on
 		// the process step
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
-		if ($this->show_blank)
+		if ($this->show_blank) {
 			$options = array_merge(
 				array(new SwatOption(null, $this->blank_title)),
-				$options);
+				$options
+			);
+		}
 
 		$table_tag = new SwatHtmlTag('table');
 		$table_tag->id = $this->id;
 		$table_tag->class = $this->getCSSClassString();
-		$table_tag->open();
+		$table_tag->open($context);
 
 		foreach ($options as $index => $option) {
-			$this->displayRadioTableOption($option, $index);
+			$this->displayRadioTableOption($context, $option, $index);
 		}
 
-		$table_tag->close();
+		$table_tag->close($context);
+
+		$context->addStyleSheet('packages/swat/styles/swat-radio-table.css');
 	}
 
 	// }}}
@@ -73,7 +60,8 @@ class SwatRadioTable extends SwatRadioList
 	 * @param SwatOption $option the option to display.
 	 * @param integer $index the numeric index of the option in this list.
 	 */
-	protected function displayRadioTableOption(SwatOption $option, $index)
+	protected function displayRadioTableOption(SwatDisplayContext $context,
+		SwatOption $option, $index)
 	{
 		$tr_tag = $this->getTrTag($option, $index);
 
@@ -85,25 +73,29 @@ class SwatRadioTable extends SwatRadioList
 			$tr_tag->class = strval($classes);
 		}
 
-		$tr_tag->open();
+		$tr_tag->open($context);
 
 		if ($option instanceof SwatFlydownDivider) {
-			echo '<td class="swat-radio-table-input">';
-			echo '&nbsp;';
-			echo '</td><td class="swat-radio-table-label">';
-			$this->displayDivider($option);
-			echo '</td>';
+			$context->out('<td class="swat-radio-table-input">');
+			$context->out('&nbsp;');
+			$context->out('</td><td class="swat-radio-table-label">');
+			$this->displayDivider($context, $option);
+			$context->out('</td>');
 		} else {
-			echo '<td class="swat-radio-table-input">';
-			$this->displayOption($option);
-			printf('</td><td id="%s" class="swat-radio-table-label">',
-				$this->id.'_'.(string)$option->value.'_label');
+			$context->out('<td class="swat-radio-table-input">');
+			$this->displayOption($context,$option);
+			$context->out(
+				sprintf(
+					'</td><td id="%s" class="swat-radio-table-label">',
+					$this->id.'_'.(string)$option->value.'_label'
+				)
+			);
 
-			$this->displayOptionLabel($option);
-			echo '</td>';
+			$this->displayOptionLabel($context, $option);
+			$context->out('</td>');
 		}
 
-		$tr_tag->close();
+		$tr_tag->close($context);
 	}
 
 	// }}}

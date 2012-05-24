@@ -15,7 +15,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * used to group together a set of {@link SwatMenuItem} objects.
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see SwatGroupedMenu
@@ -74,14 +74,15 @@ class SwatMenuGroup extends SwatControl implements SwatUIParent
 	 * @see SwatUIParent
 	 * @see SwatMenuGroup::addItem()
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
-		if ($child instanceof SwatMenuItem)
+		if ($child instanceof SwatMenuItem) {
 			$this->addItem($child);
-		else
+		} else {
 			throw new SwatInvalidClassException(
 				'Only SwatMenuItem objects may be nested within a '.
 				'SwatMenuGroup object.', 0, $child);
+		}
 	}
 
 	// }}}
@@ -94,39 +95,42 @@ class SwatMenuGroup extends SwatControl implements SwatUIParent
 	 *                        group in a {@link SwatGroupedMenu}. Defaults to
 	 *                        false.
 	 */
-	public function display($first = false)
+	public function display(SwatDisplayContext $context, $first = false)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		if ($this->title !== null) {
 			$header_tag = new SwatHtmlTag('h6');
-			if ($first)
+			if ($first) {
 				$header_tag->class = 'first-of-type';
+			}
 
 			$header_tag->setContent($this->title);
-			$header_tag->display();
+			$header_tag->display($context);
 		}
 
 		$ul_tag = new SwatHtmlTag('ul');
 		$ul_tag->class = ($this->title === null) ? '' : 'hastitle ';
-		if ($first)
+		if ($first) {
 			$ul_tag->class.= 'first-of-type';
+		}
 
-		$ul_tag->open();
+		$ul_tag->open($context);
 
 		$li_tag = new SwatHtmlTag('li');
 		$li_tag->class = 'first-of-type';
 		$first = true;
 		foreach ($this->items as $item) {
 			ob_start();
-			$item->display();
+			$item->display($context);
 			$content = ob_get_clean();
 			if ($content != '') {
 				$li_tag->setContent($content, 'text/xml');
-				$li_tag->display();
+				$li_tag->display($context);
 
 				if ($first) {
 					$li_tag->class = null;
@@ -135,7 +139,7 @@ class SwatMenuGroup extends SwatControl implements SwatUIParent
 			}
 		}
 
-		$ul_tag->close();
+		$ul_tag->close($context);
 	}
 
 	// }}}

@@ -11,7 +11,7 @@ require_once 'Swat/SwatCheckbox.php';
  * XHTML Strict DTD
  *
  * @package   Swat
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatXHTMLTextarea extends SwatTextarea
@@ -101,18 +101,19 @@ XHTML;
 	// }}}
 	// {{{ public function display()
 
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		if ($this->allow_ignore_validation_errors &&
 			($this->has_validation_errors ||
 			$this->ignore_errors_checkbox->value)) {
 			$ignore_field = $this->getCompositeWidget('ignore_field');
-			$ignore_field->display();
+			$ignore_field->display($context);
 		}
 	}
 

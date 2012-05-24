@@ -11,7 +11,7 @@ require_once 'Swat/SwatControl.php';
  * This control simply displays a static image.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageDisplay extends SwatControl
@@ -103,40 +103,48 @@ class SwatImageDisplay extends SwatControl
 	/**
 	 * Displays this image
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$image_tag = new SwatHtmlTag('img');
 		$image_tag->id = $this->id;
 		$image_tag->class = $this->getCSSClassString();
 
-		if (count($this->values))
+		if (count($this->values)) {
 			$image_tag->src = vsprintf($this->image, $this->values);
-		else
+		} else {
 			$image_tag->src = $this->image;
+		}
 
-		if ($this->height !== null)
+		if ($this->height !== null) {
 			$image_tag->height = $this->height;
+		}
 
-		if ($this->width !== null)
+		if ($this->width !== null) {
 			$image_tag->width = $this->width;
+		}
 
 		$image_tag->style = SwatImageDisplay::getOccupyMargin(
-			$this->width, $this->height, $this->occupy_width,
-			$this->occupy_height);
+			$this->width,
+			$this->height,
+			$this->occupy_width,
+			$this->occupy_height
+		);
 
-		if ($this->title !== null)
+		if ($this->title !== null) {
 			$image_tag->title = $this->title;
+		}
 
 		// alt is a required XHTML attribute. We should always display it even
 		// if it is not specified.
 		$image_tag->alt = ($this->alt === null) ? '' : $this->alt;
 
-		$image_tag->display();
+		$image_tag->display($context);
 	}
 
 	// }}}

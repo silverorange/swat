@@ -12,7 +12,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * A menu control where menu items are grouped together
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see SwatMenuGroup
@@ -60,14 +60,15 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 	 * @see SwatUIParent
 	 * @see SwatGroupedMenu::addGroup()
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
-		if ($child instanceof SwatMenuGroup)
+		if ($child instanceof SwatMenuGroup) {
 			$this->addGroup($child);
-		else
+		} else {
 			throw new SwatInvalidClassException(
 				'Only SwatMenuGroup objects may be nested within a '.
 				'SwatGroupedMenu object.', 0, $child);
+		}
 	}
 
 	// }}}
@@ -89,38 +90,41 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 	/**
 	 * Displays this grouped menu
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$displayed_classes = array();
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = 'yuimenu';
-		$div_tag->open();
+		$div_tag->open($context);
 
-		echo '<div class="bd">';
+		$context->out('<div class="bd">');
 
 		$first = true;
 		foreach ($this->groups as $group) {
 			if ($first) {
-				$group->display(true);
+				$group->display($context, true);
 				$first = false;
 			} else {
-				$group->display();
+				$group->display($context);
 			}
 		}
 
-		echo '</div>';
+		$context->out('</div>');
 
-		$div_tag->close();
+		$div_tag->close($context);
 
-		if ($this->parent === null || !($this->parent instanceof SwatMenuItem))
-			Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		if ($this->parent === null ||
+			!($this->parent instanceof SwatMenuItem)) {
+			$context->addInlineScript($this->getInlineJavaScript());
+		}
 	}
 
 	// }}}

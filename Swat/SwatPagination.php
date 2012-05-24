@@ -168,12 +168,9 @@ class SwatPagination extends SwatControl
 		$this->display_parts  = self::POSITION | self::NEXT |
 		                        self::PREV | self::PAGES;
 
-		/* These strings include a non-breaking space */
+		// These strings include a non-breaking space
 		$this->previous_label = Swat::_('‹ Previous');
 		$this->next_label = Swat::_('Next ›');
-
-		$this->addStyleSheet('packages/swat/styles/swat-pagination.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -227,12 +224,13 @@ class SwatPagination extends SwatControl
 	/**
 	 * Displays this pagination widget
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$this->calculatePages();
 
@@ -240,21 +238,27 @@ class SwatPagination extends SwatControl
 			$div_tag = new SwatHtmlTag('div');
 			$div_tag->id = $this->id;
 			$div_tag->class = $this->getCSSClassString();
-			$div_tag->open();
+			$div_tag->open($context);
 
-			if ($this->display_parts & self::POSITION)
-				$this->displayPosition();
+			if ($this->display_parts & self::POSITION) {
+				$this->displayPosition($context);
+			}
 
-			if ($this->display_parts & self::PREV)
-				$this->displayPrev();
+			if ($this->display_parts & self::PREV) {
+				$this->displayPrev($context);
+			}
 
-			if ($this->display_parts & self::PAGES)
-				$this->displayPages();
+			if ($this->display_parts & self::PAGES) {
+				$this->displayPages($context);
+			}
 
-			if ($this->display_parts & self::NEXT)
-				$this->displayNext();
+			if ($this->display_parts & self::NEXT) {
+				$this->displayNext($context);
+			}
 
-			$div_tag->close();
+			$div_tag->close($context);
+
+			$context->addStyleSheet('packages/swat/styles/swat-pagination.css');
 		}
 	}
 
@@ -294,7 +298,7 @@ class SwatPagination extends SwatControl
 	/**
 	 * Displays the previous page link
 	 */
-	protected function displayPrev()
+	protected function displayPrev(SwatDisplayContext $context)
 	{
 		if ($this->prev_page > 0) {
 			$link = $this->getLink();
@@ -304,12 +308,12 @@ class SwatPagination extends SwatControl
 			// this is a non-breaking space
 			$anchor->setContent($this->previous_label);
 			$anchor->class = 'swat-pagination-nextprev';
-			$anchor->display();
+			$anchor->display($context);
 		} else {
 			$span = new SwatHtmlTag('span');
 			$span->class = 'swat-pagination-nextprev';
 			$span->setContent($this->previous_label);
-			$span->display();
+			$span->display($context);
 		}
 	}
 
@@ -321,15 +325,20 @@ class SwatPagination extends SwatControl
 	 *
 	 * i.e. "1 of 3"
 	 */
-	protected function displayPosition()
+	protected function displayPosition(SwatDisplayContext $context)
 	{
 		$div = new SwatHtmlTag('div');
 		$div->class = 'swat-pagination-position';
 
-		$div->setContent(sprintf(Swat::_('Page %d of %d'),
-			$this->current_page, $this->total_pages));
+		$div->setContent(
+			sprintf(
+				Swat::_('Page %d of %d'),
+				$this->current_page,
+				$this->total_pages
+			)
+		);
 
-		$div->display();
+		$div->display($context);
 	}
 
 	// }}}
@@ -338,7 +347,7 @@ class SwatPagination extends SwatControl
 	/**
 	 * Displays the next page link
 	 */
-	protected function displayNext()
+	protected function displayNext(SwatDisplayContext $context)
 	{
 		if ($this->next_page > 0) {
 			$link = $this->getLink();
@@ -348,13 +357,13 @@ class SwatPagination extends SwatControl
 			// this is a non-breaking space
 			$anchor->setContent($this->next_label);
 			$anchor->class = 'swat-pagination-nextprev';
-			$anchor->display();
+			$anchor->display($context);
 		} else {
 			$span = new SwatHtmlTag('span');
 			$span->class = 'swat-pagination-nextprev';
 			// this is a non-breaking space
 			$span->setContent($this->next_label);
-			$span->display();
+			$span->display($context);
 		}
 	}
 
@@ -364,7 +373,7 @@ class SwatPagination extends SwatControl
 	/**
 	 * Displays a smart list of pages
 	 */
-	protected function displayPages()
+	protected function displayPages(SwatDisplayContext $context)
 	{
 		$j = 0;
 
@@ -399,19 +408,21 @@ class SwatPagination extends SwatControl
 				if ($j + 1 != $i) {
 					// ellipses
 					$span->setContent('…');
-					$span->display();
+					$span->display($context);
 				}
 
 				if ($i == $this->current_page) {
 					$current->setContent((string)$i);
-					$current->display();
+					$current->display($context);
 				} else {
 					$anchor->href = sprintf($link, (string)$i);
-					$anchor->title =
-						sprintf(Swat::_('Go to page %d'), ($i));
+					$anchor->title = sprintf(
+						Swat::_('Go to page %d'),
+						$i
+					);
 
-					$anchor->setContent((string)($i));
-					$anchor->display();
+					$anchor->setContent((string)$i);
+					$anchor->display($context);
 				}
 
 				$j = $i;

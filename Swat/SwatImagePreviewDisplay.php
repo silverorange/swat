@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * another image when the first image is clicked.
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImagePreviewDisplay extends SwatImageDisplay
@@ -143,23 +143,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('dom', 'event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-z-index-manager.js',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-image-preview-display.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet(
-			'packages/swat/styles/swat-image-preview-display.css',
-			Swat::PACKAGE_ID);
 
 		$this->title = Swat::_('View Larger Image');
 	}
@@ -170,13 +154,14 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	/**
 	 * Displays this image
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		if ($this->preview_image === null) {
-			parent::display();
+			parent::display($context);
 		} else {
 			if ($this->link !== null) {
 				$tag = new SwatHtmlTag('a');
@@ -200,11 +185,21 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 				$tag->class = 'swat-image-preview-display-link-plain';
 			}
 
-			$tag->open();
-			parent::display();
-			$tag->close();
+			$tag->open($context);
+			parent::display($context);
+			$tag->close($context);
 
-			Swat::displayInlineJavaScript($this->getInlineJavaScript());
+			$context->addYUI('dom', 'event');
+			$context->addScript(
+				'packages/swat/javascript/swat-z-index-manager.js'
+			);
+			$context->addScript(
+				'packages/swat/javascript/swat-image-preview-display.js'
+			);
+			$context->addStyleSheet(
+				'packages/swat/styles/swat-image-preview-display.css'
+			);
+			$context->addInlineScript($this->getInlineJavaScript());
 		}
 	}
 

@@ -11,7 +11,7 @@ require_once 'Swat/SwatString.php';
  * A multi-line text entry widget
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextarea extends SwatInputControl implements SwatState
@@ -107,30 +107,6 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	public $placeholder;
 
 	// }}}
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new textarea widget
-	 *
-	 * Sets the widget title to a default value.
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-		$yui = new SwatYUI(array('dom', 'event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-textarea.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-textarea.css',
-			Swat::PACKAGE_ID);
-	}
-
-	// }}}
 	// {{{ public function display()
 
 	/**
@@ -138,23 +114,27 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 *
 	 * Outputs an appropriate XHTML tag.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->class = 'swat-textarea-container';
-		$div_tag->open();
+		$div_tag->open($context);
 
 		$textarea_tag = $this->getTextareaTag();
-		$textarea_tag->display();
+		$textarea_tag->display($context);
 
-		$div_tag->close();
+		$div_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addYUI('dom', 'event');
+		$context->addScript('packages/swat/javascript/swat-textarea.js');
+		$context->addStyleSheet('packages/swat/styles/swat-textarea.css');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

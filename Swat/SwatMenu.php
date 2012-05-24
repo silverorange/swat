@@ -12,7 +12,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * A basic menu control
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see SwatMenuItem
@@ -59,14 +59,15 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 	 *
 	 * @see SwatUIParent, SwatUI, SwatMenu::addItem()
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
-		if ($child instanceof SwatMenuItem)
+		if ($child instanceof SwatMenuItem) {
 			$this->addItem($child);
-		else
+		} else {
 			throw new SwatInvalidClassException(
 				'Only SwatMenuItem objects may be nested within a '.
 				'SwatMenu object.', 0, $child);
+		}
 	}
 
 	// }}}
@@ -88,36 +89,37 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 	/**
 	 * Displays this menu
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$displayed_classes = array();
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
+		$div_tag->open($context);
 
-		echo '<div class="bd">';
+		$context->out('<div class="bd">');
 
 		$ul_tag = new SwatHtmlTag('ul');
 		$ul_tag->class = 'first-of-type';
-		$ul_tag->open();
+		$ul_tag->open($context);
 
 		$li_tag = new SwatHtmlTag('li');
 		$li_tag->class = $this->getMenuItemCSSClassName().' first-of-type';
 		$first = true;
 		foreach ($this->items as $item) {
 			ob_start();
-			$item->display();
+			$item->display($context);
 			$content = ob_get_clean();
 			if ($content != '') {
 				$li_tag->setContent($content, 'text/xml');
-				$li_tag->display();
+				$li_tag->display($context);
 
 				if ($first) {
 					$li_tag->class = $this->getMenuItemCSSClassName();
@@ -126,14 +128,16 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 			}
 		}
 
-		$ul_tag->close();
+		$ul_tag->close($context);
 
-		echo '</div>';
+		$context->out('</div>');
 
-		$div_tag->close();
+		$div_tag->close($context);
 
-		if ($this->parent === null || !($this->parent instanceof SwatMenuItem))
-			Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		if ($this->parent === null ||
+			!($this->parent instanceof SwatMenuItem)) {
+			$context->addInlineScript($this->getInlineJavaScript());
+		}
 	}
 
 	// }}}

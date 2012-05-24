@@ -110,24 +110,6 @@ class SwatToolLink extends SwatControl
 	protected $stock_class = null;
 
 	// }}}
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new toollink
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$this->addStyleSheet('packages/swat/styles/swat-tool-link.css',
-			Swat::PACKAGE_ID);
-	}
-
-	// }}}
 	// {{{ public function init()
 
 	/**
@@ -151,17 +133,21 @@ class SwatToolLink extends SwatControl
 	/**
 	 * Displays this tool link
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
-		if ($this->isSensitive())
-			$this->getSensitiveTag()->display();
-		else
-			$this->getInsensitiveTag()->display();
+		if ($this->isSensitive()) {
+			$this->getSensitiveTag()->display($context);
+		} else {
+			$this->getInsensitiveTag()->display($context);
+		}
+
+		$context->addStyleSheet('packages/swat/styles/swat-tool-link.css');
 	}
 
 	// }}}
