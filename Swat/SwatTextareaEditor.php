@@ -203,6 +203,7 @@ class SwatTextareaEditor extends SwatTextarea
 
 		$div_tag->close($context);
 
+		$context->addYUI('dom', 'event');
 		$context->addScript('packages/swat/javascript/swat-z-index-manager.js');
 		$context->addScript('packages/swat/javascript/tiny_mce/tiny_mce.js');
 		$context->addInlineScript($this->getInlineJavaScript());
