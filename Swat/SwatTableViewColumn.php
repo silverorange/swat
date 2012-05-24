@@ -510,27 +510,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	}
 
 	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this column
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this column.
-	 *
-	 * @see SwatUIObject::getInlineScripts()
-	 */
-	public function getInlineScripts()
-	{
-		$list = parent::getInlineScripts();
-
-		if ($this->input_cell !== null) {
-			$list->add($this->input_cell->getInlineScripts());
-		}
-
-		return $list;
-	}
-
-	// }}}
 	// {{{ public function getTdAttributes()
 
 	/**

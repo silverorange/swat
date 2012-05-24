@@ -483,27 +483,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	}
 
 	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this input row
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this input
-	 *                              row.
-	 *
-	 * @see SwatUIObject::getInlineScripts()
-	 */
-	public function getInlineScripts()
-	{
-		$list = parent::getInlineScripts();
-
-		$this->createEmbeddedWidgets();
-		$list->add($this->enter_another_link->getInlineScripts());
-
-		return $list;
-	}
-
-	// }}}
 	// {{{ private function getId()
 
 	private function getId()

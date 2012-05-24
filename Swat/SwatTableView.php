@@ -552,40 +552,6 @@ class SwatTableView extends SwatView implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this table-view
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this
-	 *                              table-view.
-	 *
-	 * @see SwatUIObject::getInlineScripts()
-	 */
-	public function getInlineScripts()
-	{
-		$list = parent::getInlineScripts();
-
-		foreach ($this->columns as $column) {
-			$list->add($column->getInlineScripts());
-		}
-
-		foreach ($this->spanning_columns as $column) {
-			$list->add($column->getInlineScripts());
-		}
-
-		foreach ($this->extra_rows as $row) {
-			$list->add($row->getInlineScripts());
-		}
-
-		foreach ($this->groups as $group) {
-			$list->add($group->getInlineScripts());
-		}
-
-		return $list;
-	}
-
-	// }}}
 	// {{{ public function getDescendants()
 
 	/**

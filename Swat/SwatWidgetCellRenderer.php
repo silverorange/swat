@@ -575,33 +575,6 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	}
 
 	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this widget cell renderer
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this widget
-	 *                              cell renderer.
-	 *
-	 * @see SwatUIObject::getInlineScripts()
-	 */
-	public function getInlineScripts()
-	{
-		$list = parent::getInlineScripts();
-
-		if ($this->using_null_replication) {
-			$list->add($this->getPrototypeWidget()->getInlineScripts());
-		} else {
-			$widgets = $this->getWidgets();
-			foreach ($widgets as $widget) {
-				$list->add($widget->getInlineScripts());
-			}
-		}
-
-		return $list;
-	}
-
-	// }}}
 	// {{{ public function getDescendants()
 
 	/**

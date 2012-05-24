@@ -344,27 +344,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	}
 
 	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this row
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this row.
-	 *
-	 * @see SwatUIObject::getInlineScripts()
-	 */
-	public function getInlineScripts()
-	{
-		$list = parent::getInlineScripts();
-
-		if ($this->widget !== null) {
-			$list->add($this->widget->getInlineScripts());
-		}
-
-		return $list;
-	}
-
-	// }}}
 	// {{{ public function copy()
 
 	/**

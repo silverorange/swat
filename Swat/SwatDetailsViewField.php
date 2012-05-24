@@ -257,29 +257,6 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	}
 
 	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this details-view field
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this
-	 *                              details-view field.
-	 *
-	 * @see SwatUIObject::getInlineScripts()
-	 */
-	public function getInlineScripts()
-	{
-		$list = parent::getInlineScripts();
-
-		$renderers = $this->getRenderers();
-		foreach ($renderers as $renderer) {
-			$list->add($renderer->getInlineScripts());
-		}
-
-		return $list;
-	}
-
-	// }}}
 	// {{{ protected function displayRenderers()
 
 	/**
