@@ -7,14 +7,13 @@ require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatCheckAll.php';
 require_once 'Swat/SwatState.php';
 require_once 'Swat/SwatString.php';
-require_once 'Swat/SwatYUI.php';
 require_once 'Swat/exceptions/SwatException.php';
 
 /**
  * A checkbox list widget
  *
  * @package   Swat
- * @copyright 2005-2008 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckboxList extends SwatOptionControl implements SwatState
@@ -66,13 +65,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	{
 		parent::__construct($id);
 		$this->requires_id = true;
-		$yui = new SwatYUI(array('event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-checkbox-list.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -108,21 +100,22 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	 * The check-all widget is only displayed if more than one checkable item
 	 * is displayed.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
 		$options = $this->getOptions();
 
-		if (!$this->visible || count($options) == 0)
+		if (!$this->visible || count($options) == 0) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		// outer div is required because the check-all widget is outside the
 		// unordered list
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
+		$div_tag->open($context);
 
 		$current_column = 1;
 		$current_option = 0;
@@ -137,44 +130,50 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 			$ul_tag->id = sprintf('%s_column_%s', $this->id, $current_column);
 			$ul_tag->class = 'swat-checkbox-list-column';
 		}
-		$ul_tag->open();
+		$ul_tag->open($context);
 
 		foreach ($options as $index => $option) {
 			if ($current_option == $maximum_options) {
-				$ul_tag->close();
+				$ul_tag->close($context);
 
 				$current_column++;
 				$current_option  = 0;
 				$maximum_options = (count($columns) > 0) ?
 					array_shift($columns) : $maximum_options;
 
-				$ul_tag->id = sprintf('%s_column_%s', $this->id,
-					$current_column);
+				$ul_tag->id = sprintf(
+					'%s_column_%s',
+					$this->id,
+					$current_column
+				);
 
 				$ul_tag->class = 'swat-checkbox-list-column';
 
-				$ul_tag->open();
+				$ul_tag->open($context);
 			}
 
 			$current_option++;
-			$this->displayOption($option, $index);
+			$this->displayOption($context, $option, $index);
 		}
 
-		$ul_tag->close();
+		$ul_tag->close($context);
 
 		// Show clear div if columns are used
 		if ($multiple_columns) {
-			echo '<div class="swat-clear"></div>';
+			$context->out('<div class="swat-clear"></div>');
 		}
 
 		// Show the check all if more than one checkable item is displayed.
 		$check_all = $this->getCompositeWidget('check_all');
 		$check_all->visible = $this->show_check_all && (count($options) > 1);
-		$check_all->display();
+		$check_all->display($context);
 
-		$div_tag->close();
+		$div_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addYUI('event');
+		$context->addStyleSheet('packages/swat/styles/swat.css');
+		$context->addScript('packages/swat/javascript/swat-checkbox-list.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -278,7 +277,8 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	 * @param integer $index a numeric index indicating which option is being
 	 *                        displayed.
 	 */
-	protected function displayOption(SwatOption $option, $index)
+	protected function displayOption(SwatDisplayContext $context,
+		SwatOption $option, $index)
 	{
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
@@ -287,11 +287,13 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		$input_tag->id = $this->id.'_'.$index;
 		$input_tag->removeAttribute('checked');
 
-		if (in_array($option->value, $this->values))
+		if (in_array($option->value, $this->values)) {
 			$input_tag->checked = 'checked';
+		}
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$input_tag->disabled = 'disabled';
+		}
 
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
@@ -300,13 +302,13 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		$li_tag = $this->getLiTag($option);
 
-		$li_tag->open();
-		echo '<span class="swat-checkbox-wrapper">';
-		$input_tag->display();
-		echo '<span class="swat-checkbox-shim"></span>';
-		echo '</span>';
-		$label_tag->display();
-		$li_tag->close();
+		$li_tag->open($context);
+		$context->out('<span class="swat-checkbox-wrapper">');
+		$input_tag->display($context);
+		$context->out('<span class="swat-checkbox-shim"></span>');
+		$context->out('</span>');
+		$label_tag->display($context);
+		$li_tag->close($context);
 	}
 
 	// }}}

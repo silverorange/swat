@@ -6,7 +6,6 @@ require_once 'Swat/SwatCheckboxList.php';
 require_once 'Swat/SwatEntry.php';
 require_once 'Swat/SwatFormField.php';
 require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/SwatYUI.php';
 require_once 'Swat/exceptions/SwatInvalidPropertyException.php';
 
 /**
@@ -23,7 +22,7 @@ require_once 'Swat/exceptions/SwatInvalidPropertyException.php';
  * {@link SwatCheckboxEntryList::setEntryValuesByArray()} method.
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckboxEntryList extends SwatCheckboxList
@@ -76,17 +75,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
-		$yui = new SwatYUI(array('dom', 'event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-checkbox-entry-list.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet(
-			'packages/swat/styles/swat-checkbox-entry-list.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -97,21 +85,22 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 	 *
 	 * @see SwatCheckboxList::display()
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
 		$options = $this->getOptions();
 
-		if (!$this->visible || count($options) == 0)
+		if (!$this->visible || count($options) == 0) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
+		$div_tag->open($context);
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
@@ -119,25 +108,29 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->class = 'swat-control';
 
-		echo '<table>';
+		$context->out('<table>');
 
 		if ($this->entry_column_title !== null) {
-			echo '<thead><tr><th>&nbsp;</th><th>';
-			echo $this->entry_column_title;
-			echo '</th></tr></thead>';
+			$context->out('<thead><tr><th>&nbsp;</th><th>');
+			$context->out(
+				SwatString::minimizeEntities(
+					$this->entry_column_title
+				)
+			);
+			$context->out('</th></tr></thead>');
 		}
 
 		// Only show the check all control if more than one checkable item is
 		// displayed.
 		if ($this->show_check_all && count($options) > 1) {
-			echo '<tfoot><tr><td colspan="2">';
-			$this->getCompositeWidget('check_all')->display();
-			echo '</td></tr></tfoot>';
+			$context->out('<tfoot><tr><td colspan="2">');
+			$this->getCompositeWidget('check_all')->display($context);
+			$context->out('</td></tr></tfoot>');
 		}
 
-		echo '<tbody>';
+		$context->out('<tbody>');
 		foreach ($options as $key => $option) {
-			echo '<tr><td>';
+			$context->out('<tr><td>');
 
 			$checkbox_id = $key.'_'.$option->value;
 
@@ -145,32 +138,41 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 			$input_tag->removeAttribute('checked');
 			$input_tag->name = $this->id.'['.$key.']';
 
-			if (in_array($option->value, $this->values))
+			if (in_array($option->value, $this->values)) {
 				$input_tag->checked = 'checked';
+			}
 
 			$input_tag->id = $this->id.'_'.$checkbox_id;
-			echo '<span class="swat-checkbox-wrapper">';
-			$input_tag->display();
-			echo '<span class="swat-checkbox-shim"></span>';
-			echo '</span>';
+			$context->out('<span class="swat-checkbox-wrapper">');
+			$input_tag->display($context);
+			$context->out('<span class="swat-checkbox-shim"></span>');
+			$context->out('</span>');
 
 			$label_tag->for = $this->id.'_'.$checkbox_id;
 			$label_tag->setContent($option->title, $option->content_type);
-			$label_tag->display();
+			$label_tag->display($context);
 
-			echo '</td><td>';
+			$context->out('</td><td>');
 
-			$this->getEntryWidget($option->value)->display();
+			$this->getEntryWidget($option->value)->display($context);
 
-			echo '</td></tr>';
+			$context->out('</td></tr>');
 		}
-		echo '</tbody>';
+		$context->out('</tbody>');
 
-		echo '</table>';
+		$context->out('</table>');
 
-		$div_tag->close();
+		$div_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addYUI('dom', 'event');
+		$context->addStyleSheet(
+			'packages/swat/styles/swat-checkbox-entry-list.css'
+		);
+		$context->addScript('packages/swat/javascript/swat-checkbox-list.js');
+		$context->addScript(
+			'packages/swat/javascript/swat-checkbox-entry-list.js'
+		);
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

@@ -3,14 +3,13 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatCheckbox.php';
-require_once 'Swat/SwatYUI.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A "check all" JavaScript powered checkbox
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckAll extends SwatCheckbox
@@ -77,10 +76,6 @@ class SwatCheckAll extends SwatCheckbox
 	{
 		parent::__construct($id);
 		$this->title = Swat::_('Select All');
-		$yui = new SwatYUI(array('event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-check-all.js',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -102,44 +97,50 @@ class SwatCheckAll extends SwatCheckbox
 	/**
 	 * Displays this check-all widget
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
+		$div_tag->open($context);
 
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->for = $this->id.'_value';
-		$label_tag->open();
+		$label_tag->open($context);
 
 		$old_id = $this->id;
 		$this->id.= '_value';
-		parent::display();
+		parent::display($context);
 		$this->id = $old_id;
 
 		$span_tag = new SwatHtmlTag('span');
 		$span_tag->class = 'swat-check-all-title';
 		$span_tag->setContent($this->title, $this->content_type);
-		$span_tag->display();
+		$span_tag->display($context);
 
-		$label_tag->close();
+		$label_tag->close($context);
 
 		if ($this->extended_count > $this->visible_count) {
 			$div_tag = new SwatHtmlTag('div');
 			$div_tag->id = $this->id.'_extended';
 			$div_tag->class = 'swat-hidden swat-extended-check-all';
-			$div_tag->open();
-			echo $this->getExtendedTitle();
-			$div_tag->close();
+			$div_tag->open($context);
+
+			// extended title is XHTML and should not be minified
+			$context->out($this->getExtendedTitle());
+
+			$div_tag->close($context);
 		}
 
-		$div_tag->close();
+		$div_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addYUI('event');
+		$context->addScript('packages/swat/javascript/swat-check-all.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

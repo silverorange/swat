@@ -3,7 +3,6 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'Swat/SwatControl.php';
-require_once 'Swat/SwatYUI.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatDate.php';
 
@@ -14,7 +13,7 @@ require_once 'Swat/SwatDate.php';
  * inside the {@link SwatDateEntry} widget but can be used by itself as well.
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCalendar extends SwatControl
@@ -48,20 +47,7 @@ class SwatCalendar extends SwatControl
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('dom', 'container'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addJavaScript('packages/swat/javascript/swat-calendar.js',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript('packages/swat/javascript/swat-z-index-manager.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-calendar.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -70,17 +56,18 @@ class SwatCalendar extends SwatControl
 	/**
 	 * Displays this calendar widget
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$container_div_tag = new SwatHtmlTag('div');
 		$container_div_tag->id = $this->id;
 		$container_div_tag->class = $this->getCSSClassString();
-		$container_div_tag->open();
+		$container_div_tag->open($context);
 
 		// toggle button content is displayed with JavaScript
 
@@ -96,11 +83,15 @@ class SwatCalendar extends SwatControl
 		$input_tag->id = $this->id.'_value';
 		$input_tag->name = $this->id.'_value';
 		$input_tag->value = $value;
-		$input_tag->display();
+		$input_tag->display($context);
 
-		$container_div_tag->close();
+		$container_div_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addYUI('dom', 'container');
+		$context->addStyleSheet('packages/swat/styles/swat-calendar.css');
+		$context->addScript('packages/swat/javascript/swat-calendar.js');
+		$context->addScript('packages/swat/javascript/swat-z-index-manager.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

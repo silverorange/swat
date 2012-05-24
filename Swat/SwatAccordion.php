@@ -12,7 +12,7 @@ require_once 'Swat/SwatNoteBook.php';
  * squeezebox.
  *
  * @package   Swat
- * @copyright 2011 silverorange
+ * @copyright 2011-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatNoteBookPage
  */
@@ -49,15 +49,6 @@ class SwatAccordion extends SwatNoteBook
 		parent::__construct($id);
 
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('yahoo', 'dom', 'event', 'animation'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addStyleSheet('packages/swat/styles/swat-accordion.css',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript('packages/swat/javascript/swat-accordion.js',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -66,23 +57,25 @@ class SwatAccordion extends SwatNoteBook
 	/**
 	 * Displays this notebook
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		$li_counter = 0;
 
 		$ul_tag = new SwatHtmlTag('ul');
 		$ul_tag->id = $this->id;
 		$ul_tag->class = 'swat-accordion';
-		$ul_tag->open();
+		$ul_tag->open($context);
 
 		foreach ($this->pages as $page) {
-			if (!$page->visible)
+			if (!$page->visible) {
 				continue;
+			}
 
 			$li_counter++;
 			$li_tag = new SwatHtmlTag('li');
@@ -95,8 +88,7 @@ class SwatAccordion extends SwatNoteBook
 			}
 
 			$li_tag->class.= ' '.implode(' ', $page->classes);
-
-			$li_tag->open();
+			$li_tag->open($context);
 
 			// toggle link
 			$title = ($page->title === null) ? '' : $page->title;
@@ -105,22 +97,26 @@ class SwatAccordion extends SwatNoteBook
 			$anchor_tag->href = '#'.$page->id;
 			$em_tag = new SwatHtmlTag('em');
 			$em_tag->setContent($title, $page->title_content_type);
-			$anchor_tag->open();
-			$em_tag->display();
-			$anchor_tag->close();
+			$anchor_tag->open($context);
+			$em_tag->display($context);
+			$anchor_tag->close($context);
 
 			// content
-			echo '<div class="swat-accordion-page-animation">';
-			echo '<div class="swat-accordion-page-content">';
-			$page->display();
-			echo '</div>';
-			echo '</div>';
+			$context->out('<div class="swat-accordion-page-animation">');
+			$context->out('<div class="swat-accordion-page-content">');
+			$page->display($context);
+			$context->out('</div>');
+			$context->out('</div>');
 
-			$li_tag->close();
+			$li_tag->close($context);
 		}
 
-		$ul_tag->close();
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$ul_tag->close($context);
+
+		$context->addYUI('yahoo', 'dom', 'event', 'animation');
+		$context->addStyleSheet('packages/swat/styles/swat-accordion.css');
+		$context->addScript('packages/swat/javascript/swat-accordion.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

@@ -90,14 +90,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('tabview'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addStyleSheet('packages/swat/styles/swat-note-book.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -121,7 +114,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 *
 	 * @see SwatUIParent
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
 		if ($child instanceof SwatNoteBookChild) {
 			$this->children[] = $child;
@@ -189,23 +182,26 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	/**
 	 * Displays this notebook
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$li_counter = 0;
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = 'yui-navset';
-		$div_tag->open();
+		$div_tag->open($context);
 
-		echo'<ul class="yui-nav">';
+		$context->out('<ul class="yui-nav">');
+
 		foreach ($this->pages as $page) {
-			if (!$page->visible)
+			if (!$page->visible) {
 				continue;
+			}
 
 			$li_counter++;
 			$li_tag = new SwatHtmlTag('li');
@@ -222,21 +218,30 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 			$em_tag = new SwatHtmlTag('em');
 			$em_tag->setContent($page->title, $page->title_content_type);
 
-			$li_tag->open();
-			$anchor_tag->open();
-			$em_tag->display();
-			$anchor_tag->close();
-			$li_tag->close();
+			$li_tag->open($context);
+			$anchor_tag->open($context);
+			$em_tag->display($context);
+			$anchor_tag->close($context);
+			$li_tag->close($context);
 		}
-		echo'</ul>';
 
-		echo '<div class="yui-content">';
-		foreach ($this->pages as $page)
-			$page->display();
+		$context->out('</ul>');
+		$context->out('<div class="yui-content">');
 
-		echo '</div>';
-		$div_tag->close();
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		foreach ($this->pages as $page) {
+			$page->display($context);
+		}
+
+		$context->out('</div>');
+
+		$div_tag->close($context);
+
+		$yui = new SwatYUI(array('tabview'));
+
+		$context->addStyleSheet($yui->getStyles());
+		$context->addStyleSheet('packages/swat/styles/swat-note-book.css');
+		$context->addScript($yui->getScripts());
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

@@ -4,7 +4,6 @@
 
 require_once 'Swat/SwatCheckboxTree.php';
 require_once 'Swat/SwatString.php';
-require_once 'Swat/SwatYUI.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
@@ -12,7 +11,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * be expanded
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatExpandableCheckboxTree extends SwatCheckboxTree
@@ -80,38 +79,18 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	protected $checked_parents = array();
 
 	// }}}
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new expandable checkbox tree
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$yui = new SwatYUI(array('dom', 'event', 'animation'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-expandable-checkbox-tree.js',
-			Swat::PACKAGE_ID);
-	}
-
-	// }}}
 	// {{{ public function display()
 
 	/**
 	 * Displays this expandable checkbox tree
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
@@ -125,18 +104,22 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		$this->input_tag->type = 'checkbox';
 		$this->input_tag->name = $this->id.'[]';
 
-		$div_tag->open();
+		$div_tag->open($context);
 
 		if ($this->tree !== null) {
 			$this->checked_parents = $this->values;
-			$num_nodes = $this->displayNode($this->tree);
+			$num_nodes = $this->displayNode($context, $this->tree);
 		} else {
 			$num_nodes = 0;
 		}
 
-		$div_tag->close();
+		$div_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addYUI('dom', 'event', 'animation');
+		$context->addScript(
+			'packages/swat/javascript/swat-expandable-checkbox-tree.js'
+		);
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -198,7 +181,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	}
 
 	// }}}
-	// {{{ private function displayNode()
+	// {{{ protected function displayNode()
 
 	/**
 	 * Displays a node in a tree as a checkbox input
@@ -209,8 +192,8 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	 *
 	 * @return integer the number of checkable nodes in the tree.
 	 */
-	private function displayNode(SwatDataTreeNode $node, $nodes = 0,
-		$parent_index = '')
+	protected function displayNode(SwatDisplayContext $context,
+		SwatDataTreeNode $node, $nodes = 0, $parent_index = '')
 	{
 		$child_nodes = $node->getChildren();
 
@@ -223,10 +206,11 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			$index = $parent_index.'.'.$node->getIndex();
 
 			$li_tag = new SwatHtmlTag('li');
-			if (count($child_nodes) > 0)
+			if (count($child_nodes) > 0) {
 				$li_tag->id = $this->id.'_'.$index.'_container';
+			}
 
-			$li_tag->open();
+			$li_tag->open($context);
 
 			if ($node->value === null) {
 				if ($this->dependent_boxes) {
@@ -236,8 +220,9 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 					$this->input_tag->checked = ($this->nodeIsChecked($node)) ?
 						'checked' : null;
 
-					if (!$this->isSensitive())
+					if (!$this->isSensitive()) {
 						$this->input_tag->disabled = 'disabled';
+					}
 
 					$this->label_tag->for = $this->id.'_'.$index;
 					$this->label_tag->class =
@@ -245,8 +230,8 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 
 					$this->label_tag->setContent($node->title);
 
-					$this->input_tag->display();
-					$this->label_tag->display();
+					$this->input_tag->display($context);
+					$this->label_tag->display($context);
 				} else {
 					$span_tag = new SwatHtmlTag('span');
 					$span_tag->id = $this->id.'_'.$index;
@@ -254,7 +239,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 						'swat-expandable-checkbox-tree-null-node';
 
 					$span_tag->setContent($node->title);
-					$span_tag->display();
+					$span_tag->display($context);
 				}
 			} else {
 				$this->input_tag->id = $this->id.'_'.$index;
@@ -262,15 +247,16 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 				$this->input_tag->checked = ($this->nodeIsChecked($node)) ?
 					'checked' : null;
 
-				if (!$this->isSensitive())
+				if (!$this->isSensitive()) {
 					$this->input_tag->disabled = 'disabled';
+				}
 
 				$this->label_tag->for = $this->id.'_'.$index;
 				$this->label_tag->class = 'swat-control';
 				$this->label_tag->setContent($node->title);
 
-				$this->input_tag->display();
-				$this->label_tag->display();
+				$this->input_tag->display($context);
+				$this->label_tag->display($context);
 			}
 		}
 
@@ -286,24 +272,30 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 				$ul_tag->class = 'swat-expandable-checkbox-tree-opened';
 			}
 
-			$div_tag->open();
-			$ul_tag->open();
+			$div_tag->open($context);
+			$ul_tag->open($context);
 
 			foreach ($child_nodes as $child_node) {
-				$nodes = $this->displayNode($child_node, $nodes, $index);
+				$nodes = $this->displayNode(
+					$context,
+					$child_node,
+					$nodes,
+					$index
+				);
 			}
 
-			$ul_tag->close();
-			$div_tag->close();
+			$ul_tag->close($context);
+			$div_tag->close($context);
 		}
 
 		if ($parent_index !== '' && $parent_index !== null) {
-			$li_tag->close();
+			$li_tag->close($context);
 		}
 
 		// count checkable nodes
-		if ($node->value !== null)
+		if ($node->value !== null) {
 			$nodes++;
+		}
 
 		return $nodes;
 	}

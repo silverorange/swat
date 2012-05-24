@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A checkbox array widget formatted into a tree
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckboxTree extends SwatCheckboxList implements SwatState
@@ -66,19 +66,20 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	// }}}
 	// {{{ public function display()
 
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
+		$div_tag->open($context);
 
 		$this->label_tag = new SwatHtmlTag('label');
 		$this->label_tag->class = 'swat-control';
@@ -87,20 +88,21 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		$this->input_tag->type = 'checkbox';
 		$this->input_tag->name = $this->id.'[]';
 
-		if ($this->tree !== null)
-			$num_nodes = $this->displayNode($this->tree);
-		else
+		if ($this->tree !== null) {
+			$num_nodes = $this->displayNode($context, $this->tree);
+		} else {
 			$num_nodes = 0;
+		}
 
 		// Only display the check-all widget if more than one checkable item is
 		// displayed.
 		$check_all = $this->getCompositeWidget('check_all');
 		$check_all->visible = ($num_nodes > 1 && $this->show_check_all);
-		$check_all->display();
+		$check_all->display($context);
 
-		$div_tag->close();
+		$div_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -147,7 +149,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	}
 
 	// }}}
-	// {{{ private function displayNode()
+	// {{{ protected function displayNode()
 
 	/**
 	 * Displays a node in a tree as a checkbox input
@@ -158,8 +160,8 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	 *
 	 * @return integer the number of checkable nodes in the tree.
 	 */
-	private function displayNode(SwatDataTreeNode $node, $nodes = 0,
-		$parent_index = '')
+	protected function displayNode(SwatDisplayContext $context,
+		SwatDataTreeNode $node, $nodes = 0, $parent_index = '')
 	{
 		// build a unique id of the indexes of the tree
 		if ($parent_index === '' || $parent_index === null) {
@@ -169,50 +171,58 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 			// index of other nodes is a combination of parent indexes
 			$index = $parent_index.'.'.$node->getIndex();
 
-			echo '<li>';
+			$context->out('<li>');
 
 			if (isset($node->value)) {
 				$this->input_tag->id = $this->id.'_'.$index;
 				$this->input_tag->value = $node->value;
 
-				if (in_array($node->value, $this->values))
+				if (in_array($node->value, $this->values)) {
 					$this->input_tag->checked = 'checked';
-				else
+				} else {
 					$this->input_tag->checked = null;
+				}
 
-				if (!$this->isSensitive())
+				if (!$this->isSensitive()) {
 					$this->input_tag->disabled = 'disabled';
+				}
 
 				$this->label_tag->for = $this->id.'_'.$index;
 				$this->label_tag->setContent($node->title);
 
-				echo '<span class="swat-checkbox-wrapper">';
-				$this->input_tag->display();
-				echo '<span class="swat-checkbox-shim"></span>';
-				echo '</span>';
-				$this->label_tag->display();
+				$context->out('<span class="swat-checkbox-wrapper">');
+				$this->input_tag->display($context);
+				$context->out('<span class="swat-checkbox-shim"></span>');
+				$context->out('</span>');
+				$this->label_tag->display($context);
 			} else {
-				echo SwatString::minimizeEntities($node->title);
+				$context->out(SwatString::minimizeEntities($node->title));
 			}
 		}
 
 		// display children
 		$child_nodes = $node->getChildren();
 		if (count($child_nodes) > 0) {
-			echo '<ul>';
+			$context->out('<ul>');
 			foreach ($child_nodes as $child_node) {
-				$nodes = $this->displayNode($child_node, $nodes, $index);
+				$nodes = $this->displayNode(
+					$context,
+					$child_node,
+					$nodes,
+					$index
+				);
 			}
-			echo '</ul>';
+			$context->out('</ul>');
 		}
 
 		if ($parent_index !== '' && $parent_index !== null) {
-			echo '</li>';
+			$context->out('</li>');
 		}
 
 		// count checkable nodes
-		if ($node->value !== null)
+		if ($node->value !== null) {
 			$nodes++;
+		}
 
 		return $nodes;
 	}

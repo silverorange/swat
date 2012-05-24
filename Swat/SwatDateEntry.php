@@ -131,11 +131,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$this->setValidRange(-20, 20);
 
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-date-entry.js',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -192,19 +187,20 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 * Creates internal widgets if they do not exits then displays required
 	 * JavaScript, then displays internal widgets.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
+		$div_tag->open($context);
 
-		echo '<span class="swat-date-entry-span">';
+		$context->out('<span class="swat-date-entry-span">');
 
 		foreach ($this->getDatePartOrder() as $datepart) {
 			if ($datepart == 'd' && $this->display_parts & self::DAY) {
@@ -215,7 +211,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 					$day_flydown->value = $this->value->getDay();
 				}
 
-				$day_flydown->display();
+				$day_flydown->display($context);
 			} elseif ($datepart == 'm' && $this->display_parts & self::MONTH) {
 				$month_flydown = $this->getCompositeWidget('month_flydown');
 
@@ -224,7 +220,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 					$month_flydown->value = $this->value->getMonth();
 				}
 
-				$month_flydown->display();
+				$month_flydown->display($context);
 			} elseif ($datepart == 'y' && $this->display_parts & self::YEAR) {
 				$year_flydown = $this->getCompositeWidget('year_flydown');
 
@@ -233,15 +229,15 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 					$year_flydown->value = $this->value->getYear();
 				}
 
-				$year_flydown->display();
+				$year_flydown->display($context);
 			}
 		}
 
-		echo '</span>';
+		$context->out('</span>');
 
 		if ($this->display_parts & self::CALENDAR) {
 			$calendar = $this->getCompositeWidget('calendar');
-			$calendar->display();
+			$calendar->display($context);
 		}
 
 		if ($this->display_parts & self::TIME) {
@@ -252,16 +248,18 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			if (!$this->use_current_date)
 				$time_entry->use_current_time = false;
 
-			echo ' ';
+			$context->out(' ');
 			if ($time_entry->value === null && $this->value !== null)
 				$time_entry->value = $this->value;
 
-			$time_entry->display();
+			$time_entry->display($context);
 		}
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$div_tag->close($context);
 
-		$div_tag->close();
+		$context->addYUI('event');
+		$context->addScript('packages/swat/javascript/swat-date-entry.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

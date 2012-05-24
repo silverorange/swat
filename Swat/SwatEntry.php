@@ -10,7 +10,7 @@ require_once 'Swat/SwatState.php';
  * A single line text entry widget
  *
  * @package   Swat
- * @copyright 2004-2009 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatEntry extends SwatInputControl implements SwatState
@@ -130,22 +130,23 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 *
 	 * Outputs an appropriate XHTML tag.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$input_tag = $this->getInputTag();
-		$input_tag->display();
+		$input_tag->display($context);
 
 		if (!$this->autocomplete) {
 			$nonce_tag = new SwatHtmlTag('input');
 			$nonce_tag->type = 'hidden';
 			$nonce_tag->name = $this->id.'_nonce';
 			$nonce_tag->value = $this->getNonce();
-			$nonce_tag->display();
+			$nonce_tag->display($context);
 		}
 	}
 

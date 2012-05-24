@@ -169,10 +169,7 @@ class SwatButton extends SwatInputControl
 		if ($this->show_processing_throbber ||
 			$this->confirmation_message !== null) {
 
-			$yui = new SwatYUI(array('dom', 'event', 'animation'));
-
-			$context->addStyleSheet($yui->getStyleSheets());
-			$context->addScript($yui->getScripts());
+			$context->addYUI('dom', 'event', 'animation');
 			$context->addScript('packages/swat/javascript/swat-button.js');
 			$context->addInlineScript($this->getInlineJavaScript());
 		}

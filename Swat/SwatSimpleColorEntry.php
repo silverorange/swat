@@ -11,7 +11,7 @@ require_once 'Swat/SwatAbstractOverlay.php';
  * predefined color choices. It requires JavaScript to work correctly.
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatSimpleColorEntry extends SwatAbstractOverlay
@@ -70,17 +70,6 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 		if ($this->none_option_title === null) {
 			$this->none_option_title = Swat::_('None');
 		}
-
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-simple-color-entry.js',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-abstract-overlay.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-color-entry.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -118,6 +107,27 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 
 			$this->addMessage(new SwatMessage($message, 'error'));
 		}
+	}
+
+	// }}}
+	// {{{ public function display()
+
+	/**
+	 * Displays this overlay widget
+	 */
+	public function display(SwatDisplayContext $context)
+	{
+		if (!$this->visible) {
+			return;
+		}
+
+		parent::display($context);
+
+		$context->addScript(
+			'packages/swat/javascript/swat-simple-color-entry.js'
+		);
+
+		$context->addStyleSheet('packages/swat/styles/swat-color-entry.css');
 	}
 
 	// }}}

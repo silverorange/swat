@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A page in a {@link SwatNoteBook}
  *
  * @package   Swat
- * @copyright 2007-2008 silverorange
+ * @copyright 2007-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatNoteBook
  */
@@ -58,17 +58,18 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 	 * Displays this notebook page as well as recursively displaying all child-
 	 * widgets of this page.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
-		parent::display();
-		$div_tag->close();
+		$div_tag->open($context);
+		parent::display($context);
+		$div_tag->close($context);
 	}
 
 	// }}}

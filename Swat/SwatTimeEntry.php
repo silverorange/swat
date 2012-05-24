@@ -7,13 +7,12 @@ require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatDate.php';
 require_once 'Swat/SwatState.php';
-require_once 'Swat/SwatYUI.php';
 
 /**
  * A time entry widget
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @todo      Should we add a display_time_zone parameter?
  */
@@ -168,11 +167,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		$this->requires_id = true;
 
-		$yui = new SwatYUI(array('event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-time-entry.js',
-			Swat::PACKAGE_ID);
-
 		// guess twelve-hour or twenty-four hour default based on locale
 		$locale_format = nl_langinfo(T_FMT);
 		$this->twelve_hour =
@@ -197,56 +191,58 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	/**
 	 * Displays this time entry
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
+		$div_tag->open($context);
 
-		echo '<span class="swat-time-entry-span">';
+		$context->out('<span class="swat-time-entry-span">');
 
 		if ($this->display_parts & self::HOUR) {
 			$hour_flydown = $this->getCompositeWidget('hour_flydown');
 			if ($hour_flydown->value === null && $this->value !== null) {
-				// work around a bug in PEAR::Date that returns hour as a string
-				$hour = intval($this->value->getHour());
+				$hour = $this->value->getHour();
 
 				// convert 24-hour value to 12-hour display
 				if ($this->twelve_hour) {
-					if ($hour > 12)
+					if ($hour > 12) {
 						$hour -= 12;
+					}
 
-					if ($hour == 0)
+					if ($hour == 0) {
 						$hour = 12;
+					}
 				}
 
 				$hour_flydown->value = $hour;
 			}
 
-			$hour_flydown->display();
+			$hour_flydown->display($context);
 
-			if ($this->display_parts & (self::MINUTE | self::SECOND))
-				echo ':';
+			if ($this->display_parts & (self::MINUTE | self::SECOND)) {
+				$context->out(':');
+			}
 		}
 
 		if ($this->display_parts & self::MINUTE) {
 			$minute_flydown = $this->getCompositeWidget('minute_flydown');
 			if ($minute_flydown->value === null && $this->value !== null) {
-				// work around a bug in PEAR::Date that returns minutes as a
-				// 2-character string
-				$minute = intval($this->value->getMinute());
+				$minute = $this->value->getMinute();
 				$minute_flydown->value = $minute;
 			}
 
-			$minute_flydown->display();
-			if ($this->display_parts & self::SECOND)
-				echo ':';
+			$minute_flydown->display($context);
+			if ($this->display_parts & self::SECOND) {
+				$context->out(':');
+			}
 		}
 
 		if ($this->display_parts & self::SECOND) {
@@ -254,7 +250,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			if ($second_flydown->value === null && $this->value !== null)
 				$second_flydown->value = $this->value->getSecond();
 
-			$second_flydown->display();
+			$second_flydown->display($context);
 		}
 
 		if (($this->display_parts & self::HOUR) && $this->twelve_hour) {
@@ -263,14 +259,16 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 				$am_pm_flydown->value =
 					($this->value->getHour() < 12) ? 'am' : 'pm';
 
-			$am_pm_flydown->display();
+			$am_pm_flydown->display($context);
 		}
 
-		echo '</span>';
+		$context->out('</span>');
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$div_tag->close($context);
 
-		$div_tag->close();
+		$context->addYUI('event');
+		$context->addScript('packages/swat/javascript/swat-time-entry.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

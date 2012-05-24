@@ -5,7 +5,6 @@
 require_once 'Swat/SwatOptionControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatState.php';
-require_once 'Swat/SwatYUI.php';
 
 /**
  * An element ordering widget
@@ -17,7 +16,7 @@ require_once 'Swat/SwatYUI.php';
  * order of the two options is arbitrary.
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatChangeOrder extends SwatOptionControl implements SwatState
@@ -62,18 +61,6 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	{
 		parent::__construct($id);
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('dom', 'event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addJavaScript('packages/swat/javascript/swat-change-order.js',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript('packages/swat/javascript/swat-z-index-manager.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-change-order.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -82,25 +69,26 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	/**
 	 * Displays this change-order control
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$ordered_options = $this->getOrderedOptions();
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
+		$div_tag->open($context);
 
 		$list_div = new SwatHtmlTag('div');
 		$list_div->style = "width: {$this->width}; height: {$this->height};";
 		$list_div->id = "{$this->id}_list";
 		$list_div->class = 'swat-change-order-list';
-		$list_div->open();
+		$list_div->open($context);
 
 		$option_div = new SwatHtmltag('div');
 		$option_div->class = 'swat-change-order-item';
@@ -108,19 +96,21 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		foreach ($ordered_options as $option) {
 			$title = ($option->title === null) ? '' : $option->title;
 			$option_div->setContent($title, $option->content_type);
-			$option_div->display();
+			$option_div->display($context);
 		}
 
-		$list_div->close();
+		$list_div->close($context);
 
-		$this->displayButtons();
+		$this->displayButtons($context);
 
-		echo '<div class="swat-clear"></div>';
+		$context->out('<div class="swat-clear"></div>');
 
 		$values = array();
 		foreach ($ordered_options as $option) {
-			$values[] = SwatString::signedSerialize($option->value,
-				$this->getForm()->getSalt());
+			$values[] = SwatString::signedSerialize(
+				$option->value,
+				$this->getForm()->getSalt()
+			);
 		}
 
 		$hidden_tag = new SwatHtmlTag('input');
@@ -128,17 +118,21 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$hidden_tag->id = $this->id.'_value';
 		$hidden_tag->name = $this->id;
 		$hidden_tag->value = implode(',', $values);
-		$hidden_tag->display();
+		$hidden_tag->display($context);
 
 		$hidden_items_tag = new SwatHtmlTag('input');
 		$hidden_items_tag->type = 'hidden';
 		$hidden_items_tag->id = $this->id.'_dynamic_items';
 		$hidden_items_tag->value = '';
-		$hidden_items_tag->display();
+		$hidden_items_tag->display($context);
 
-		$div_tag->close();
+		$div_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addYUI('dom', 'event');
+		$context->addStyleSheet('packages/swat/styles/swat-change-order.css');
+		$context->addScript('packages/swat/javascript/swat-change-order.js');
+		$context->addScript('packages/swat/javascript/swat-z-index-manager.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -276,50 +270,51 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private function displayButtons()
+	// {{{ protected function displayButtons()
 
-	private function displayButtons()
+	protected function displayButtons(SwatDisplayContext $context)
 	{
 		$buttons_div = new SwatHtmlTag('div');
 		$buttons_div->class = 'swat-change-order-buttons';
-		$buttons_div->open();
+		$buttons_div->open($context);
 
 		$btn_tag = new SwatHtmlTag('input');
 		$btn_tag->type = 'button';
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$btn_tag->disabled = 'disabled';
+		}
 
 		$btn_tag->value = Swat::_('Move to Top');
 		$btn_tag->onclick = "{$this->id}_obj.moveToTop();";
 		$btn_tag->name = "{$this->id}_buttons";
 		$btn_tag->class = 'swat-change-order-top';
-		$btn_tag->display();
+		$btn_tag->display($context);
 
-		echo '<br />';
+		$context->out('<br />');
 
 		$btn_tag->value = Swat::_('Move Up');
 		$btn_tag->onclick = "{$this->id}_obj.moveUp();";
 		$btn_tag->name = "{$this->id}_buttons";
 		$btn_tag->class = 'swat-change-order-up';
-		$btn_tag->display();
+		$btn_tag->display($context);
 
-		echo '<br />';
+		$context->out('<br />');
 
 		$btn_tag->value = Swat::_('Move Down');
 		$btn_tag->onclick = "{$this->id}_obj.moveDown();";
 		$btn_tag->name = "{$this->id}_buttons";
 		$btn_tag->class = 'swat-change-order-down';
-		$btn_tag->display();
+		$btn_tag->display($context);
 
-		echo '<br />';
+		$context->out('<br />');
 
 		$btn_tag->value = Swat::_('Move to Bottom');
 		$btn_tag->onclick = "{$this->id}_obj.moveToBottom();";
 		$btn_tag->name = "{$this->id}_buttons";
 		$btn_tag->class = 'swat-change-order-bottom';
-		$btn_tag->display();
+		$btn_tag->display($context);
 
-		$buttons_div->close();
+		$buttons_div->close($context);
 	}
 
 	// }}}

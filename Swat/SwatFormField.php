@@ -14,7 +14,7 @@ require_once 'Swat/SwatMessage.php';
  * Adds a label and space to output messages.
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
@@ -149,24 +149,6 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	protected $widget_class;
 
 	// }}}
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new form field
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$this->addStyleSheet('packages/swat/styles/swat-message.css',
-			Swat::PACKAGE_ID);
-	}
-
-	// }}}
 	// {{{ public function getTitle()
 
 	/**
@@ -204,54 +186,58 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 *
 	 * Associates a label with the first widget of this container.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		if ($this->getFirst() === null)
+		if ($this->getFirst() === null) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		$container_tag = new SwatHtmlTag($this->container_tag);
 		$container_tag->id = $this->id;
 		$container_tag->class = $this->getCSSClassString();
 
-		$container_tag->open();
+		$container_tag->open($context);
 
 		if ($this->title_reversed === true) {
-			$this->displayContent();
-			$this->displayTitle();
+			$this->displayContent($context);
+			$this->displayTitle($context);
 		} else {
-			$this->displayTitle();
-			$this->displayContent();
+			$this->displayTitle($context);
+			$this->displayContent($context);
 		}
 
-		$this->displayMessages();
-		$this->displayNotes();
-		$container_tag->close();
+		$this->displayMessages($context);
+		$this->displayNotes($context);
+
+		$container_tag->close($context);
 	}
 
 	// }}}
 	// {{{ protected function displayTitle()
 
-	protected function displayTitle()
+	protected function displayTitle(SwatDisplayContext $context)
 	{
-		if ($this->title === null && $this->access_key === null)
+		if ($this->title === null && $this->access_key === null) {
 			return;
+		}
 
 		$title_tag = $this->getTitleTag();
-		$title_tag->open();
-		$title_tag->displayContent();
-		$this->displayRequiredStatus();
-		$title_tag->close();
+		$title_tag->open($context);
+		$title_tag->displayContent($context);
+		$this->displayRequiredStatus($context);
+		$title_tag->close($context);
 	}
 
 	// }}}
 	// {{{ protected function displayRequiredStatus()
 
-	protected function displayRequiredStatus()
+	protected function displayRequiredStatus(SwatDisplayContext $context)
 	{
 		if ($this->required &&
 			$this->required_status_display & self::DISPLAY_REQUIRED) {
@@ -259,45 +245,46 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 			$span_tag = new SwatHtmlTag('span');
 			$span_tag->class = 'swat-required';
 			$span_tag->setContent(sprintf(' (%s)', Swat::_('required')));
-			$span_tag->display();
+			$span_tag->display($context);
 		} elseif (!$this->required &&
 			$this->required_status_display & self::DISPLAY_OPTIONAL) {
 
 			$span_tag = new SwatHtmlTag('span');
 			$span_tag->class = 'swat-optional';
 			$span_tag->setContent(sprintf(' (%s)', Swat::_('optional')));
-			$span_tag->display();
+			$span_tag->display($context);
 		}
 	}
 
 	// }}}
 	// {{{ protected function displayContent()
 
-	protected function displayContent()
+	protected function displayContent(SwatDisplayContext $context)
 	{
 		$contents_tag = new SwatHtmlTag($this->contents_tag);
 		$contents_tag->class = 'swat-form-field-contents';
 
-		$contents_tag->open();
-		$this->displayChildren();
-		$contents_tag->close();
+		$contents_tag->open($context);
+		$this->displayChildren($context);
+		$contents_tag->close($context);
 	}
 
 	// }}}
 	// {{{ protected function displayMessages()
 
-	protected function displayMessages()
+	protected function displayMessages(SwatDisplayContext $context)
 	{
-		if (!$this->display_messages || !$this->hasMessage())
+		if (!$this->display_messages || !$this->hasMessage()) {
 			return;
+		}
 
 		$messages = $this->getMessages();
 
 		$message_ul = new SwatHtmlTag('ul');
 		$message_ul->class = 'swat-form-field-messages';
-		$message_li = new SwatHtmlTag('li');
+		$message_ul->open($context);
 
-		$message_ul->open();
+		$message_li = new SwatHtmlTag('li');
 
 		foreach ($messages as $message) {
 			$message_li->class = $message->getCSSClassString();
@@ -309,23 +296,25 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 				$secondary_span->setContent($message->secondary_content,
 					$message->content_type);
 
-				$message_li->open();
-				$message_li->displayContent();
-				echo ' ';
-				$secondary_span->display();
-				$message_li->close();
+				$message_li->open($context);
+				$message_li->displayContent($context);
+				$context->out(' ');
+				$secondary_span->display($context);
+				$message_li->close($context);
 			} else {
-				$message_li->display();
+				$message_li->display($context);
 			}
 		}
 
-		$message_ul->close();
+		$message_ul->close($context);
+
+		$context->addStyleSheet('packages/swat/styles/swat-message.css');
 	}
 
 	// }}}
 	// {{{ protected function displayNotes()
 
-	protected function displayNotes()
+	protected function displayNotes(SwatDisplayContext $context)
 	{
 		$notes = array();
 
@@ -338,8 +327,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		$control = $this->getFirstDescendant('SwatControl');
 		if ($control !== null) {
 			$note = $control->getNote();
-			if ($note !== null)
+			if ($note !== null) {
 				$notes[] = $note;
+			}
 		}
 
 		if (count($notes) == 1) {
@@ -347,21 +337,21 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 			$note_div = new SwatHtmlTag('div');
 			$note_div->class = 'swat-note';
 			$note_div->setContent($note->primary_content, $note->content_type);
-			$note_div->display();
+			$note_div->display($context);
 		} elseif (count($notes) > 1) {
 			$note_list = new SwatHtmlTag('ul');
 			$note_list->class = 'swat-note';
-			$note_list->open();
+			$note_list->open($context);
 
 			$li_tag = new SwatHtmlTag('li');
 			foreach ($notes as $note) {
 				$li_tag->setContent($note->primary_content,
 					$note->content_type);
 
-				$li_tag->display();
+				$li_tag->display($context);
 			}
 
-			$note_list->close();
+			$note_list->close($context);
 		}
 	}
 

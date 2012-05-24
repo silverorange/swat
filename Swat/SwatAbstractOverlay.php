@@ -4,7 +4,6 @@
 
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatState.php';
-require_once 'Swat/SwatYUI.php';
 require_once 'Swat/SwatHtmlTag.php';
 
 /**
@@ -20,7 +19,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * SwatAbstractOverlay::getInlineJavaScript() method.
  *
  * @package   Swat
- * @copyright 2010 silverorange
+ * @copyright 2010-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
@@ -56,18 +55,7 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('dom', 'event', 'container'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-abstract-overlay.js',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript('packages/swat/javascript/swat-z-index-manager.js',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -76,17 +64,18 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
 	/**
 	 * Displays this overlay widget
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$container_div_tag = new SwatHtmlTag('div');
 		$container_div_tag->id = $this->id;
 		$container_div_tag->class = $this->getCSSClassString();
-		$container_div_tag->open();
+		$container_div_tag->open($context);
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
@@ -95,11 +84,16 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
 		$input_tag->value = $this->value;
 		$input_tag->accesskey = $this->access_key;
 
-		$input_tag->display();
+		$input_tag->display($context);
 
-		$container_div_tag->close();
+		$container_div_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addYUI('dom', 'event', 'container');
+		$context->addScript(
+			'packages/swat/javascript/swat-abstract-overlay.js'
+		);
+		$context->addScript('packages/swat/javascript/swat-z-index-manager.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

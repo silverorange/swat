@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * An HTML fieldset tag with an optional HTML legend title.
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
@@ -59,14 +59,7 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
-
-		// JavaScript for IE peekaboo hack
-		$yui = new SwatYUI(array('event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-fieldset.js',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -102,33 +95,38 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 	// }}}
 	// {{{ public function display()
 
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		$fieldset_tag = new SwatHtmlTag('fieldset');
 		$fieldset_tag->id = $this->id;
 		$fieldset_tag->class = $this->getCSSClassString();
-		$fieldset_tag->open();
+		$fieldset_tag->open($context);
 
 		if ($this->title !== null) {
 			$legend_tag = new SwatHtmlTag('legend');
 
-			if ($this->access_key != '')
+			if ($this->access_key != '') {
 				$legend_tag->accesskey = $this->access_key;
+			}
 
 			$legend_tag->setContent($this->title, $this->title_content_type);
-			$legend_tag->display();
+			$legend_tag->display($context);
 		}
 
-		$this->displayChildren();
+		$this->displayChildren($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavascript());
+		$fieldset_tag->close($context);
 
-		$fieldset_tag->close();
+		// JavaScript for IE peekaboo hack
+		$context->addYUI('event');
+		$context->addScript('packages/swat/javascript/swat-fieldset.js');
+		$context->addInlineScript($this->getInlineJavascript());
 	}
 
 	// }}}

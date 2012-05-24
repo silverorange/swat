@@ -10,7 +10,7 @@ require_once 'Swat/SwatState.php';
  * A checkbox entry widget
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckbox extends SwatInputControl implements SwatState
@@ -59,12 +59,13 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 	 *
 	 * Outputs an appropriate XHTML tag.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
@@ -76,16 +77,18 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 		$input_tag->value = '1';
 		$input_tag->accesskey = $this->access_key;
 
-		if ($this->value)
+		if ($this->value) {
 			$input_tag->checked = 'checked';
+		}
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$input_tag->disabled = 'disabled';
+		}
 
-		echo '<span class="swat-checkbox-wrapper">';
-		$input_tag->display();
-		echo '<span class="swat-checkbox-shim"></span>';
-		echo '</span>';
+		$context->out('<span class="swat-checkbox-wrapper">');
+		$input_tag->display($context);
+		$context->out('<span class="swat-checkbox-shim"></span>');
+		$context->out('</span>');
 	}
 
 	// }}}

@@ -39,7 +39,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * </code>
  *
  * @package   Swat
- * @copyright 2006-2010 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatYUI extends SwatObject
@@ -129,6 +129,16 @@ class SwatYUI extends SwatObject
 	{
 		return $this->html_head_entry_set->getByType(
 			'SwatStyleSheetHtmlHeadEntry'
+		);
+	}
+
+	// }}}
+	// {{{ public function getComments()
+
+	public function getComments()
+	{
+		return $this->html_head_entry_set->getByType(
+			'SwatCommentHtmlHeadEntry'
 		);
 	}
 

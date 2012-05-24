@@ -56,40 +56,47 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	 *
 	 * Displays this flydown as a XHTML select.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
-		echo '<span class="swat-flydown-wrapper">';
+		$context->out('<span class="swat-flydown-wrapper">');
 
 		$options = $this->getOptions();
 		$selected = false;
 
-		if ($this->show_blank)
-			$options = array_merge(array($this->getBlankOption()), $options);
+		if ($this->show_blank) {
+			$options = array_merge(
+				array($this->getBlankOption()),
+				$options
+			);
+		}
 
 		// only show a select if there is more than one option
 		if (count($options) > 1) {
 			$flydown_value = ($this->serialize_values) ?
 				$this->value : (string)$this->value;
 
-			if ($this->serialize_values)
+			if ($this->serialize_values) {
 				$salt = $this->getForm()->getSalt();
+			}
 
 			$select_tag = new SwatHtmlTag('select');
 			$select_tag->name = $this->id;
 			$select_tag->id = $this->id;
 			$select_tag->class = $this->getCSSClassString();
 
-			if (!$this->isSensitive())
+			if (!$this->isSensitive()) {
 				$select_tag->disabled = 'disabled';
+			}
 
 			$option_tag = new SwatHtmlTag('option');
 
-			$select_tag->open();
+			$select_tag->open($context);
 
 			foreach ($options as $flydown_option) {
 				if ($this->serialize_values) {
@@ -135,17 +142,17 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 				$option_tag->setContent($flydown_option->title,
 					$flydown_option->content_type);
 
-				$option_tag->display();
+				$option_tag->display($context);
 			}
 
-			$select_tag->close();
+			$select_tag->close($context);
 
 		} elseif (count($options) == 1) {
 			// get first and only element
-			$this->displaySingle(current($options));
+			$this->displaySingle($context, current($options));
 		}
 
-		echo '</span>';
+		$context->out('</span>');
 	}
 
 	// }}}
@@ -302,7 +309,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	/**
 	 * Displays this flydown if there is only a single option
 	 */
-	protected function displaySingle(SwatOption $flydown_option)
+	protected function displaySingle(SwatDisplayContext $context,
+		SwatOption $flydown_option)
 	{
 		$title = $flydown_option->title;
 		$value = $flydown_option->value;
@@ -318,12 +326,12 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 			$hidden_tag->value = (string)$value;
 		}
 
-		$hidden_tag->display();
+		$hidden_tag->display($context);
 
 		$span_tag = new SwatHtmlTag('span');
 		$span_tag->class = 'swat-flydown-single';
 		$span_tag->setContent($title, $flydown_option->content_type);
-		$span_tag->display();
+		$span_tag->display($context);
 	}
 
 	// }}}

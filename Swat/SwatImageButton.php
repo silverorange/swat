@@ -11,7 +11,7 @@ require_once 'Swat/SwatButton.php';
  * within {@link SwatForm}.
  *
  * @package   Swat
- * @copyright 2008-2011 silverorange
+ * @copyright 2008-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageButton extends SwatButton
@@ -81,12 +81,13 @@ class SwatImageButton extends SwatButton
 	 *
 	 * Outputs an XHTML input tag.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		if ($this->alt == '') {
 			throw new SwatException(
@@ -112,14 +113,15 @@ class SwatImageButton extends SwatButton
 		$input_tag->tabindex = $this->tab_index;
 		$input_tag->accesskey = $this->access_key;
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$input_tag->disabled = 'disabled';
+		}
 
-		$input_tag->display();
+		$input_tag->display($context);
 
 		if ($this->show_processing_throbber ||
 			$this->confirmation_message !== null) {
-			Swat::displayInlineJavaScript($this->getInlineJavaScript());
+			$context->addInlineScript($this->getInlineJavaScript());
 		}
 	}
 
