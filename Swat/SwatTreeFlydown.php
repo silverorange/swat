@@ -11,7 +11,7 @@ require_once 'Swat/SwatFlydown.php';
  * options
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTreeFlydown extends SwatFlydown
@@ -65,10 +65,11 @@ class SwatTreeFlydown extends SwatFlydown
 	/**
 	 * Displays this tree flydown
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		$actual_value = $this->value;
 		if (count($this->path) == 0 && $this->value !== null) {
@@ -80,7 +81,7 @@ class SwatTreeFlydown extends SwatFlydown
 			$this->value = $this->path;
 		}
 
-		parent::display();
+		parent::display($context);
 
 		// set value back to actual value after parent::display()
 		$this->value = $actual_value;

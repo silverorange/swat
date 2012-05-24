@@ -84,7 +84,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 * Cell renderer subclasses should extend this method to do all output
 	 * neccessary to display the cell.
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
 		$this->render_count++;
 	}

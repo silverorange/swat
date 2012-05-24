@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * root node.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatGroupedFlydown extends SwatTreeFlydown
@@ -45,12 +45,13 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 	 * displayed as optgroups if their value is null, they have children and
 	 * they are not dividers.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		// tree is copied for display so we can add a blank node if show_blank
 		// is true
@@ -65,20 +66,22 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 			$select_tag->id = $this->id;
 			$select_tag->class = $this->getCSSClassString();
 
-			if (!$this->isSensitive())
+			if (!$this->isSensitive()) {
 				$select_tag->disabled = 'disabled';
+			}
 
-			$select_tag->open();
+			$select_tag->open($context);
 
-			foreach ($display_tree->getChildren() as $child)
-				$this->displayNode($child, 1);
+			foreach ($display_tree->getChildren() as $child) {
+				$this->displayNode($context, $child, 1);
+			}
 
-			$select_tag->close();
+			$select_tag->close($context);
 
 		} elseif ($count == 1) {
 			// get first and only element
 			$option = reset($display_tree->getChildren())->getOption();
-			$this->displaySingle($option);
+			$this->displaySingle($context, $option);
 		}
 	}
 
@@ -118,8 +121,8 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 	 * @param boolean $selected whether or not an element has been selected
 	 *                           yet.
 	 */
-	protected function displayNode(SwatTreeFlydownNode $node, $level = 0,
-		$selected = false)
+	protected function displayNode(SwatDisplayContext $context,
+		SwatTreeFlydownNode $node, $level = 0, $selected = false)
 	{
 		$children = $node->getChildren();
 		$flydown_option = $node->getOption();
@@ -130,11 +133,17 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 
 			$optgroup_tag = new SwatHtmlTag('optgroup');
 			$optgroup_tag->label = $flydown_option->title;
-			$optgroup_tag->open();
-			foreach($node->getChildren() as $child_node)
-				$this->displayNode($child_node, $level + 1, $selected);
+			$optgroup_tag->open($context);
+			foreach ($node->getChildren() as $child_node) {
+				$this->displayNode(
+					$context,
+					$child_node,
+					$level + 1,
+					$selected
+				);
+			}
 
-			$optgroup_tag->close();
+			$optgroup_tag->close($context);
 		} else {
 			$option_tag = new SwatHtmlTag('option');
 
@@ -165,10 +174,16 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 			}
 
 			$option_tag->setContent($flydown_option->title);
-			$option_tag->display();
+			$option_tag->display($context);
 
-			foreach($children as $child_node)
-				$this->displayNode($child_node, $level + 1, $selected);
+			foreach ($children as $child_node) {
+				$this->displayNode(
+					$context,
+					$child_node,
+					$level + 1,
+					$selected
+				);
+			}
 		}
 	}
 

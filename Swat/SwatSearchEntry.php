@@ -8,7 +8,7 @@ require_once 'Swat/SwatEntry.php';
  * A single line search entry widget
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatSearchEntry extends SwatEntry
@@ -32,16 +32,7 @@ class SwatSearchEntry extends SwatEntry
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('dom', 'event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-search-entry.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-search-entry.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -52,14 +43,18 @@ class SwatSearchEntry extends SwatEntry
 	 *
 	 * Outputs an appropriate XHTML tag and JavaScript.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addYUI('dom', 'event');
+		$context->addScript('packages/swat/javascript/swat-search-entry.js');
+		$context->addStyleSheet('packages/swat/styles/swat-search-entry.css');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

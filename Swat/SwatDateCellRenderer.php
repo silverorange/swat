@@ -10,7 +10,7 @@ require_once 'Swat/SwatString.php';
  * A text renderer.
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDateCellRenderer extends SwatCellRenderer
@@ -66,12 +66,13 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::render();
+		parent::render($context);
 
 		if ($this->date !== null) {
 
@@ -96,8 +97,14 @@ class SwatDateCellRenderer extends SwatCellRenderer
 					'HotDateTimeZone object.');
 			}
 
-			echo SwatString::minimizeEntities(
-				$date->formatLikeIntl($this->format, $this->time_zone_format));
+			$context->out(
+				SwatString::minimizeEntities(
+					$date->formatLikeIntl(
+						$this->format,
+						$this->time_zone_format
+					)
+				)
+			);
 		}
 	}
 

@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * An image renderer
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageCellRenderer extends SwatCellRenderer
@@ -113,21 +113,23 @@ class SwatImageCellRenderer extends SwatCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible || $this->image == '')
+		if (!$this->visible || $this->image == '') {
 			return;
+		}
 
-		parent::render();
+		parent::render($context);
 
 		$image_tag = new SwatHtmlTag('img');
 
-		if ($this->value === null)
+		if ($this->value === null) {
 			$image_tag->src = $this->image;
-		elseif (is_array($this->value))
+		} elseif (is_array($this->value)) {
 			$image_tag->src = vsprintf($this->image, $this->value);
-		else
+		} else {
 			$image_tag->src = sprintf($this->image, $this->value);
+		}
 
 		$image_tag->height = $this->height;
 		$image_tag->width = $this->width;
@@ -160,7 +162,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 
 		$image_tag->class = $this->getCSSClassString();
 
-		$image_tag->display();
+		$image_tag->display($context);
 	}
 
 	// }}}

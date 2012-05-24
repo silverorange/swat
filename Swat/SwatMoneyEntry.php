@@ -10,7 +10,7 @@ require_once 'SwatI18N/SwatI18NLocale.php';
  * A money entry widget
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMoneyEntry extends SwatFloatEntry
@@ -56,17 +56,21 @@ class SwatMoneyEntry extends SwatFloatEntry
 	 *
 	 * The widget is displayed as an input box and an optional currency symbol.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		if ($this->display_currency) {
 			$locale = SwatI18NLocale::get($this->locale);
-			echo SwatString::minimizeEntities(' '.
-				$locale->getInternationalCurrencySymbol());
+			$context->out(
+				SwatString::minimizeEntities(
+					' '.$locale->getInternationalCurrencySymbol()
+				)
+			);
 		}
 	}
 

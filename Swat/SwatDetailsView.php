@@ -59,23 +59,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	private $fields_by_id = array();
 
 	// }}}
-	// {{{ public function __construct()
-	/**
-	 * Creates a new details view
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$this->addStyleSheet('packages/swat/styles/swat-details-view.css',
-			Swat::PACKAGE_ID);
-	}
-
-	// }}}
 	// {{{ public function init()
 
 	/**
@@ -115,22 +98,24 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 *
 	 * Displays details view as tabular XHTML.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$table_tag = new SwatHtmlTag('table');
 		$table_tag->id = $this->id;
 		$table_tag->class = $this->getCSSClassString();
 
-		$table_tag->open();
-		$this->displayContent();
-		$table_tag->close();
+		$table_tag->open($context);
+		$this->displayContent($context);
+		$table_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addStyleSheet('packages/swat/styles/swat-details-view.css');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -270,7 +255,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 *
 	 * @see SwatUIParent::addChild()
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
 		if ($child instanceof SwatDetailsViewField) {
 			$this->appendField($child);
@@ -651,7 +636,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 *
 	 * Displays each field of this view as an XHTML table row.
 	 */
-	protected function displayContent()
+	protected function displayContent(SwatDisplayContext $context)
 	{
 		$count = 1;
 
@@ -659,11 +644,11 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 			$odd = ($count % 2 == 1);
 
 			ob_start();
-			$field->display($this->data, $odd);
+			$field->display($context, $this->data, $odd);
 			$content = ob_get_clean();
 
 			if ($content != '') {
-				echo $content;
+				$context->out($content);
 				$count++;
 			}
 		}

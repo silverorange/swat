@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A cell renderer for a boolean value
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatBooleanCellRenderer extends SwatCellRenderer
@@ -123,25 +123,29 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::render();
+		parent::render($context);
 
-		if ($this->stock_id === null)
+		if ($this->stock_id === null) {
 			$this->setFromStock('check-only', false);
-		else
+		} else {
 			$this->setFromStock($this->stock_id, false);
+		}
 
-		if ($this->content_type = null)
+		if ($this->content_type = null) {
 			$this->content_type = 'text/plain';
+		}
 
-		if ((boolean)$this->value)
-			$this->renderTrue();
-		else
-			$this->renderFalse();
+		if ((boolean)$this->value) {
+			$this->renderTrue($context);
+		} else {
+			$this->renderFalse($context);
+		}
 	}
 
 	// }}}
@@ -170,12 +174,13 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	/**
 	 * Renders a true value for this boolean cell renderer
 	 */
-	protected function renderTrue()
+	protected function renderTrue(SwatDisplayContext $context)
 	{
-		if ($this->content_type === 'text/plain')
-			echo SwatString::minimizeEntities($this->true_content);
-		else
-			echo $this->true_content;
+		if ($this->content_type === 'text/plain') {
+			$context->out(SwatString::minimizeEntities($this->true_content));
+		} else {
+			$context->out($this->true_content);
+		}
 	}
 
 	// }}}
@@ -184,12 +189,13 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	/**
 	 * Renders a false value for this boolean cell renderer
 	 */
-	protected function renderFalse()
+	protected function renderFalse(SwatDisplayContext $context)
 	{
-		if ($this->content_type === 'text/plain')
-			echo SwatString::minimizeEntities($this->false_content);
-		else
-			echo $this->false_content;
+		if ($this->content_type === 'text/plain') {
+			$context->out(SwatString::minimizeEntities($this->false_content));
+		} else {
+			$context->out($this->false_content);
+		}
 	}
 
 	// }}}

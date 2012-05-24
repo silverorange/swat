@@ -18,7 +18,7 @@ require_once 'Swat/SwatFormField.php';
  * 'application/octet-stream'.
  *
  * @package   Swat
- * @copyright 2005-2011 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFileEntry extends SwatInputControl
@@ -106,12 +106,13 @@ class SwatFileEntry extends SwatInputControl
 	 *
 	 * Outputs an appropriate XHTML tag.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'file';
@@ -124,13 +125,15 @@ class SwatFileEntry extends SwatInputControl
 
 		// note: the 'accept' attribute is part of the w3c standard, but
 		//       is ignored by most browsers
-		if ($this->accept_mime_types !== null)
+		if ($this->accept_mime_types !== null) {
 			$input_tag->accept = implode(',', $this->accept_mime_types);
+		}
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$input_tag->disabled = 'disabled';
+		}
 
-		$input_tag->display();
+		$input_tag->display($context);
 
 		if ($this->display_maximum_upload_size) {
 			$div_tag = new SwatHtmlTag('div');

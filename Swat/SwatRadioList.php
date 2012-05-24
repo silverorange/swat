@@ -47,9 +47,6 @@ class SwatRadioList extends SwatFlydown
 
 		$this->show_blank  = false;
 		$this->requires_id = true;
-
-		$this->addStyleSheet('packages/swat/styles/swat-radio-list.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -58,14 +55,15 @@ class SwatRadioList extends SwatFlydown
 	/**
 	 * Displays this radio list
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
 		$options = $this->getOptions();
 
-		if (!$this->visible || $options === null)
+		if (!$this->visible || $options === null) {
 			return;
+		}
 
-		SwatWidget::display();
+		SwatWidget::display($context);
 
 		// add a hidden field so we can check if this list was submitted on
 		// the process step
@@ -73,14 +71,14 @@ class SwatRadioList extends SwatFlydown
 
 		if (count($options) == 1) {
 			// get first and only element
-			$this->displaySingle(current($options));
+			$this->displaySingle($context, current($options));
 			return;
 		}
 
 		$ul_tag = new SwatHtmlTag('ul');
 		$ul_tag->id = $this->id;
 		$ul_tag->class = $this->getCSSClassString();
-		$ul_tag->open();
+		$ul_tag->open($context);
 
 		$li_tag = new SwatHtmlTag('li');
 		$count = 0;
@@ -101,21 +99,23 @@ class SwatRadioList extends SwatFlydown
 				$li_tag->class.= ' swat-radio-list-divider-li';
 			}
 
-			$li_tag->id = $this->id.'_li_'.(string) $count;
+			$li_tag->id = $this->id.'_li_'.(string)$count;
 			$li_tag->open();
 			$count++;
 
 			if ($option instanceof SwatFlydownDivider) {
-				$this->displayDivider($option);
+				$this->displayDivider($context, $option);
 			} else {
-				$this->displayOption($option);
-				$this->displayOptionLabel($option);
+				$this->displayOption($context, $option);
+				$this->displayOptionLabel($context, $option);
 			}
 
-			$li_tag->close();
+			$li_tag->close($context);
 		}
 
-		$ul_tag->close();
+		$ul_tag->close($context);
+
+		$context->addStyleSheet('packages/swat/styles/swat-radio-list.css');
 	}
 
 	// }}}
@@ -157,7 +157,8 @@ class SwatRadioList extends SwatFlydown
 	 *
 	 * @param SwatOption $option
 	 */
-	protected function displayDivider(SwatOption $option)
+	protected function displayDivider(SwatDisplayContext $context,
+		SwatOption $option)
 	{
 		$span_tag = new SwatHtmlTag('span');
 		$span_tag->class = 'swat-radio-list-divider';
@@ -165,7 +166,7 @@ class SwatRadioList extends SwatFlydown
 			$span_tag->id = $this->id.'_'.(string)$option->value;
 
 		$span_tag->setContent($option->title, $option->content_type);
-		$span_tag->display();
+		$span_tag->display($context);
 	}
 
 	// }}}
@@ -176,7 +177,8 @@ class SwatRadioList extends SwatFlydown
 	 *
 	 * @param SwatOption $option
 	 */
-	protected function displayOption(SwatOption $option)
+	protected function displayOption(SwatDisplayContext $context,
+		SwatOption $option)
 	{
 		if ($this->input_tag === null) {
 			$this->input_tag = new SwatHtmlTag('input');
@@ -184,8 +186,9 @@ class SwatRadioList extends SwatFlydown
 			$this->input_tag->name = $this->id;
 		}
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$this->input_tag->disabled = 'disabled';
+		}
 
 		if ($this->serialize_values) {
 			$salt = $this->getForm()->getSalt();
@@ -209,10 +212,10 @@ class SwatRadioList extends SwatFlydown
 				$this->input_tag->checked = 'checked';
 		}
 
-		echo '<span class="swat-radio-wrapper">';
-		$this->input_tag->display();
-		echo '<span class="swat-radio-shim"></span>';
-		echo '</span>';
+		$context->out('<span class="swat-radio-wrapper">');
+		$this->input_tag->display($context);
+		$context->out('<span class="swat-radio-shim"></span>');
+		$context->out('</span>');
 	}
 
 	// }}}
@@ -223,7 +226,8 @@ class SwatRadioList extends SwatFlydown
 	 *
 	 * @param SwatOption $option
 	 */
-	protected function displayOptionLabel(SwatOption $option)
+	protected function displayOptionLabel(SwatDisplayContext $context,
+		SwatOption $option)
 	{
 		if ($this->label_tag === null) {
 			$this->label_tag = new SwatHtmlTag('label');
@@ -232,7 +236,7 @@ class SwatRadioList extends SwatFlydown
 
 		$this->label_tag->for = $this->id.'_'.(string)$option->value;
 		$this->label_tag->setContent($option->title, $option->content_type);
-		$this->label_tag->display();
+		$this->label_tag->display($context);
 	}
 
 	// }}}

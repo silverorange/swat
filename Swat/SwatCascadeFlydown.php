@@ -14,7 +14,7 @@ require_once 'Swat/SwatYUI.php';
  * The value of the other SwatFlydown cascades to this SwatCascadeFlydown.
  *
  * @package   Swat
- * @copyright 2005-2011 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCascadeFlydown extends SwatFlydown
@@ -60,14 +60,7 @@ class SwatCascadeFlydown extends SwatFlydown
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addJavaScript('packages/swat/javascript/swat-cascade.js',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -78,13 +71,17 @@ class SwatCascadeFlydown extends SwatFlydown
 	 *
 	 * {@link SwatFlydown::$show_blank} is set to false here.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		parent::display($context);
+
+		$context->addYUI('event');
+		$context->addScript('packages/swat/javascript/swat-cascade.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}

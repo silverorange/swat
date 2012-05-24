@@ -100,17 +100,18 @@ class SwatListEntry extends SwatEntry
 	/**
 	 * Displays this list entry
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		// Do not have a maxlength on the XHTML input tag. This relies on
 		// internal knowledge of the parent::display() method.
 		$old_maxlength = $this->maxlength;
 		$this->maxlength = null;
 
-		parent::display();
+		parent::display($context);
 
 		$this->maxlength = $old_maxlength;
 	}

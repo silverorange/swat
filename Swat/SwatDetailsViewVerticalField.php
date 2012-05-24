@@ -27,10 +27,11 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
 	 *
 	 * @see SwatDetailsViewField::display()
 	 */
-	public function display($data, $odd)
+	public function display(SwatDisplayContext $context, $data, $odd)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		$this->odd = $odd;
 
@@ -41,12 +42,12 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
 		$td_tag = new SwatHtmlTag('td');
 		$td_tag->colspan = 2;
 
-		$tr_tag->open();
-		$td_tag->open();
-		$this->displayHeader();
-		$this->displayValue($data);
-		$td_tag->close();
-		$tr_tag->close();
+		$tr_tag->open($context);
+		$td_tag->open($context);
+		$this->displayHeader($context);
+		$this->displayValue($context, $data);
+		$td_tag->close($context);
+		$tr_tag->close($context);
 	}
 
 	// }}}
@@ -57,15 +58,19 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
 	 *
 	 * @see SwatDetailsViewField::displayHeader()
 	 */
-	public function displayHeader()
+	public function displayHeader(SwatDisplayContext $context)
 	{
 		if ($this->title != '') {
 			$div_tag = new SwatHtmlTag('div');
 			$div_tag->class = 'swat-details-view-field-header';
-			$div_tag->setContent(sprintf(Swat::_('%s:'), $this->title),
-				$this->title_content_type);
-
-			$div_tag->display();
+			$div_tag->setContent(
+				sprintf(
+					Swat::_('%s:'),
+					$this->title
+				),
+				$this->title_content_type
+			);
+			$div_tag->display($context);
 		}
 	}
 
@@ -80,17 +85,17 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
 	 *
 	 * @see SwatDetailsViewField::displayRenderers()
 	 */
-	protected function displayRenderers($data)
+	protected function displayRenderers(SwatDisplayContext $context, $data)
 	{
 		$div_tag = new SwatHtmlTag('div');
-		$div_tag->open();
+		$div_tag->open($context);
 
 		foreach ($this->renderers as $renderer) {
-			$renderer->render();
-			echo ' ';
+			$renderer->render($context);
+			$context->out(' ');
 		}
 
-		$div_tag->close();
+		$div_tag->close($context);
 	}
 
 	// }}}

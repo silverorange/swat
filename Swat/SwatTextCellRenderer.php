@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A text cell renderer
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextCellRenderer extends SwatCellRenderer
@@ -61,24 +61,27 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::render();
+		parent::render($context);
 
-		if ($this->value === null)
+		if ($this->value === null) {
 			$text = $this->text;
-		elseif (is_array($this->value))
+		} elseif (is_array($this->value)) {
 			$text = vsprintf($this->text, $this->value);
-		else
+		} else {
 			$text = sprintf($this->text, $this->value);
+		}
 
-		if ($this->content_type === 'text/plain')
-			echo SwatString::minimizeEntities($text);
-		else
-			echo $text;
+		if ($this->content_type === 'text/plain') {
+			$context->out(SwatString::minimizeEntities($text));
+		} else {
+			$context->out($text);
+		}
 	}
 
 	// }}}

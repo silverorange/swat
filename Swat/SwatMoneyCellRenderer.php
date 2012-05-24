@@ -9,7 +9,7 @@ require_once 'SwatI18N/SwatI18NLocale.php';
  * A currency cell renderer
  *
  * @package   Swat
- * @copyright 2005-2009 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMoneyCellRenderer extends SwatCellRenderer
@@ -81,21 +81,6 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 	public $null_display_value = null;
 
 	// }}}
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a money cell renderer
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-
-		$this->addStyleSheet(
-			'packages/swat/styles/swat-money-cell-renderer.css',
-			Swat::PACKAGE_ID);
-	}
-
-	// }}}
 	// {{{ public function render()
 
 	/**
@@ -103,31 +88,45 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		if ($this->value === null && $this->null_display_value !== null) {
 			$span_tag = new SwatHtmlTag('span');
 			$span_tag->class = 'swat-none';
 			$span_tag->setContent($this->null_display_value);
-			$span_tag->display();
+			$span_tag->display($context);
 		} else {
-			parent::render();
+			parent::render($context);
 
 			$locale = SwatI18NLocale::get($this->locale);
 			$format = $this->getCurrencyFormat();
 
-			echo SwatString::minimizeEntities(
-				$locale->formatCurrency(
-					$this->value, $this->international, $format));
+			$context->out(
+				SwatString::minimizeEntities(
+					$locale->formatCurrency(
+						$this->value,
+						$this->international,
+						$format
+					)
+				)
+			);
 
 			if (!$this->international && $this->display_currency) {
-				echo '&nbsp;', SwatString::minimizeEntities(
-				$locale->getInternationalCurrencySymbol());
+				$context->out(
+					'&nbsp;'.SwatString::minimizeEntities(
+						$locale->getInternationalCurrencySymbol()
+					)
+				);
 			}
 		}
+
+		$context->addStyleSheet(
+			'packages/swat/styles/swat-money-cell-renderer.css'
+		);
 	}
 
 	// }}}

@@ -123,10 +123,11 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	 * @param boolean $odd whether this is an odd or even field so alternating
 	 *                      style can be applied.
 	 */
-	public function display($data, $odd)
+	public function display(SwatDisplayContext $context, $data, $odd)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		$this->odd = $odd;
 
@@ -134,10 +135,10 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 		$tr_tag->id = $this->id;
 		$tr_tag->class = $this->getCSSClassString();
 
-		$tr_tag->open();
-		$this->displayHeader();
-		$this->displayValue($data);
-		$tr_tag->close();
+		$tr_tag->open($context);
+		$this->displayHeader($context);
+		$this->displayValue($context, $data);
+		$tr_tag->close($context);
 	}
 
 	// }}}
@@ -146,7 +147,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	/**
 	 * Displays the header for this details view field
 	 */
-	public function displayHeader()
+	public function displayHeader(SwatDisplayContext $context)
 	{
 		$th_tag = new SwatHtmlTag('th');
 		$th_tag->scope = 'row';
@@ -154,14 +155,19 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 			$th_tag->setContent('&nbsp;');
 		} else {
 			if ($this->show_colon) {
-				$th_tag->setContent(sprintf(Swat::_('%s:'), $this->title),
-					$this->title_content_type);
+				$th_tag->setContent(
+					sprintf(
+						Swat::_('%s:'),
+						$this->title
+					),
+					$this->title_content_type
+				);
 			} else {
 				$th_tag->setContent($this->title, $this->title_content_type);
 			}
 		}
 
-		$th_tag->display();
+		$th_tag->display($context);
 	}
 
 	// }}}
@@ -175,11 +181,13 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	 *
 	 * @param mixed $data the data object to display in this field.
 	 */
-	public function displayValue($data)
+	public function displayValue(SwatDisplayContext $context, $data)
 	{
-		if (count($this->renderers) == 0)
-			throw new SwatException('No renderer has been provided for this '.
-				'field.');
+		if (count($this->renderers) === 0) {
+			throw new SwatException(
+				'No renderer has been provided for this field.'
+			);
+		}
 
 		$sensitive = $this->view->isSensitive();
 
@@ -189,7 +197,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 			$renderer->sensitive = $renderer->sensitive && $sensitive;
 		}
 
-		$this->displayRenderers($data);
+		$this->displayRenderers($context, $data);
 	}
 
 	// }}}
@@ -288,22 +296,23 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	 * @param mixed $data the data object being used to render the cell
 	 *                     renderers of this field.
 	 */
-	protected function displayRenderers($data)
+	protected function displayRenderers(SwatDisplayContext $context, $data)
 	{
 		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
-		$td_tag->open();
+		$td_tag->open($context);
 
 		$first = true;
 		foreach ($this->renderers as $renderer) {
-			if ($first)
+			if ($first) {
 				$first = false;
-			else
-				echo ' ';
+			} else {
+				$context->out(' ');
+			}
 
-			$renderer->render();
+			$renderer->render($context);
 		}
 
-		$td_tag->close();
+		$td_tag->close($context);
 	}
 
 	// }}}

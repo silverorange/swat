@@ -177,14 +177,15 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	 *
 	 * @see SwatUIParent::addChild()
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
-		if ($child instanceof SwatCellRenderer)
+		if ($child instanceof SwatCellRenderer) {
 			$this->addRenderer($child);
-		else
+		} else {
 			throw new SwatInvalidClassException(
 				'Only SwatCellRender objects may be nested within '.
 				get_class($this).' objects.', 0, $child);
+		}
 	}
 
 	// }}}
