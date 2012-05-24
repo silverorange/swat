@@ -65,18 +65,12 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	protected $html_head_entry_set;
 
-	/**
-	 * @var SwatInlineScriptList
-	 */
-	protected $inline_scripts;
-
 	// }}}
 	// {{{ public function __construct()
 
 	public function __construct()
 	{
 		$this->html_head_entry_set = new SwatHtmlHeadEntrySet();
-		$this->inline_scripts = new SwatInlineScriptList();
 	}
 
 	// }}}
