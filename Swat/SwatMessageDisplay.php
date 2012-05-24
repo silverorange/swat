@@ -6,13 +6,12 @@ require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatMessage.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
-require_once 'Swat/SwatYUI.php';
 
 /**
  * A control to display {@link SwatMessage} objects
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMessageDisplay extends SwatControl
@@ -84,20 +83,7 @@ class SwatMessageDisplay extends SwatControl
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
 		$this->requires_id = true;
-
-		$yui = new SwatYUI(array('animation'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addJavaScript('packages/swat/javascript/swat-message-display.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-message.css',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-message-display.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -153,20 +139,22 @@ class SwatMessageDisplay extends SwatControl
 	 * The CSS class of each message is determined by the message being
 	 * displayed.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		if ($this->getMessageCount() == 0)
+		if ($this->getMessageCount() == 0) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$wrapper_div = new SwatHtmlTag('div');
 		$wrapper_div->id = $this->id;
 		$wrapper_div->class = $this->getCSSClassString();
-		$wrapper_div->open();
+		$wrapper_div->open($context);
 
 		$has_dismiss_link = false;
 
@@ -181,15 +169,23 @@ class SwatMessageDisplay extends SwatControl
 			$first = ($count === 1);
 			$last  = ($count === $message_count);
 
-			$this->displayMessage($key, $message, $first, $last);
+			$this->displayMessage($context, $key, $message, $first, $last);
 
 			$count++;
 		}
 
-		$wrapper_div->close();
+		$wrapper_div->close($context);
 
-		if ($has_dismiss_link)
-			Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addStyleSheet('packages/swat/styles/swat-message.css');
+		$context->addStyleSheet(
+			'packages/swat/styles/swat-message-display.css'
+		);
+
+		if ($has_dismiss_link) {
+			$context->addYUI('event', 'animation');
+			$context->addScript('packages/swat/javascript/swat-message-display.js');
+			$context->addInlineScript($this->getInlineJavaScript());
+		}
 	}
 
 	// }}}
@@ -239,8 +235,8 @@ class SwatMessageDisplay extends SwatControl
 	 * @param boolean $last optional. Whether or not the message is the last
 	 *                       message in this message display.
 	 */
-	protected function displayMessage($message_id, SwatMessage $message,
-		$first = false, $last = false)
+	protected function displayMessage(SwatDisplayContext $context, $message_id,
+		SwatMessage $message, $first = false, $last = false)
 	{
 		$message_div = new SwatHtmlTag('div');
 		$container_div = new SwatHtmlTag('div');
@@ -256,29 +252,33 @@ class SwatMessageDisplay extends SwatControl
 			$message_div->class.= ' swat-message-last';
 		}
 
-		$message_div->open();
+		$message_div->open($context);
 
 		$container_div->class = 'swat-message-container';
-		$container_div->open();
+		$container_div->open($context);
 
 		$primary_content = new SwatHtmlTag('h3');
 		$primary_content->class = 'swat-message-primary-content';
 		$primary_content->setContent(
-			$message->primary_content, $message->content_type);
+			$message->primary_content,
+			$message->content_type
+		);
 
-		$primary_content->display();
+		$primary_content->display($context);
 
 		if ($message->secondary_content !== null) {
 			$secondary_div = new SwatHtmlTag('div');
 			$secondary_div->class = 'swat-message-secondary-content';
 			$secondary_div->setContent(
-				$message->secondary_content, $message->content_type);
+				$message->secondary_content,
+				$message->content_type
+			);
 
-			$secondary_div->display();
+			$secondary_div->display($context);
 		}
 
-		$container_div->close();
-		$message_div->close();
+		$container_div->close($context);
+		$message_div->close($context);
 	}
 
 	// }}}
