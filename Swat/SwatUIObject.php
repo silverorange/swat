@@ -5,7 +5,6 @@
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlHeadEntry.php';
 require_once 'Swat/SwatHtmlHeadEntrySet.php';
-require_once 'Swat/SwatInlineScriptList.php';
 require_once 'Swat/SwatCommentHtmlHeadEntry.php';
 require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
 require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
