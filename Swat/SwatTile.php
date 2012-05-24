@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A tile in a {@link SwatTileView}
  *
  * @package   Swat
- * @copyright 2007-2008 silverorange
+ * @copyright 2007-2012 silverorange
  * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
  * @see       SwatTileView
  */
@@ -33,13 +33,14 @@ class SwatTile extends SwatCellRendererContainer
 	 * @param mixed $data a data object used to display the cell renderers in
 	 *                     this tile.
 	 */
-	public function display($data)
+	public function display(SwatDisplayContext $context, $data)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		$this->setupRenderers($data);
-		$this->displayRenderers($data);
+		$this->displayRenderers($context, $data);
 	}
 
 	// }}}
@@ -159,13 +160,13 @@ class SwatTile extends SwatCellRendererContainer
 	 * @param mixed $data the data object being used to render the cell
 	 *                     renderers of this field.
 	 */
-	protected function displayRenderers($data)
+	protected function displayRenderers(SwatDisplayContext $context, $data)
 	{
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
-		$this->displayRenderersInternal($data);
-		$div_tag->close();
+		$div_tag->open($context);
+		$this->displayRenderersInternal($context, $data);
+		$div_tag->close($context);
 	}
 
 	// }}}
@@ -182,30 +183,37 @@ class SwatTile extends SwatCellRendererContainer
 	 * @param mixed $data the data object being used to render the cell
 	 *                     renderers of this field.
 	 */
-	protected function displayRenderersInternal($data)
+	protected function displayRenderersInternal(SwatDisplayContext $context,
+		$data)
 	{
 		if (count($this->renderers) == 1) {
-			$this->renderers->getFirst()->render();
+			$this->renderers->getFirst()->render($context);
 		} else {
 			$div_tag = new SwatHtmlTag('div');
 			foreach ($this->renderers as $renderer) {
 				// get renderer class names
 				$classes = array('swat-tile-view-tile-renderer');
-				$classes = array_merge($classes,
-					$renderer->getInheritanceCSSClassNames());
+				$classes = array_merge(
+					$classes,
+					$renderer->getInheritanceCSSClassNames()
+				);
 
-				$classes = array_merge($classes,
-					$renderer->getBaseCSSClassNames());
+				$classes = array_merge(
+					$classes,
+					$renderer->getBaseCSSClassNames()
+				);
 
-				$classes = array_merge($classes,
-					$renderer->getDataSpecificCSSClassNames());
+				$classes = array_merge(
+					$classes,
+					$renderer->getDataSpecificCSSClassNames()
+				);
 
 				$classes = array_merge($classes, $renderer->classes);
 
 				$div_tag->class = implode(' ', $classes);
-				$div_tag->open();
-				$renderer->render();
-				$div_tag->close();
+				$div_tag->open($context);
+				$renderer->render($context);
+				$div_tag->close($context);
 			}
 		}
 	}

@@ -10,7 +10,6 @@ require_once 'Swat/SwatActionItemDivider.php';
 require_once 'Swat/SwatUIParent.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
-require_once 'Swat/SwatYUI.php';
 require_once 'Swat/exceptions/SwatException.php';
 
 /**
@@ -105,14 +104,6 @@ class SwatActions extends SwatControl implements SwatUIParent
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
-		$yui = new SwatYUI(array('dom', 'event', 'animation'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-actions.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-actions.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -141,20 +132,22 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 * Javascript is displayed, then the display methods of the internal
 	 * widgets are called.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$flydown = $this->getCompositeWidget('action_flydown');
 		foreach ($this->action_items as $item) {
 			if ($item->visible) {
-				if ($item instanceof SwatActionItemDivider)
+				if ($item instanceof SwatActionItemDivider) {
 					$flydown->addDivider();
-				else
+				} else {
 					$flydown->addOption($item->id, $item->title);
+				}
 			}
 		}
 
@@ -168,28 +161,29 @@ class SwatActions extends SwatControl implements SwatUIParent
 		}
 
 		// select the current action item based upon the flydown value
-		if (isset($this->action_items_by_id[$flydown->value]))
+		if (isset($this->action_items_by_id[$flydown->value])) {
 			$this->selected = $this->action_items_by_id[$flydown->value];
-		else
+		} else {
 			$this->selected = null;
+		}
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
-		$div_tag->open();
+		$div_tag->open($context);
 
-		echo '<div class="swat-actions-controls">';
+		$context->out('<div class="swat-actions-controls">');
 
 		$label = new SwatHtmlTag('label');
 		$label->for = $flydown->getFocusableHtmlId();
 		$label->setContent(Swat::_('Action: '));
-		$label->display();
+		$label->display($context);
 
-		$flydown->display();
-		echo ' ';
-		$this->displayButton();
+		$flydown->display($context);
+		$context->out(' ');
+		$this->displayButton($context);
 
-		echo '</div>';
+		$context->out('</div>');
 
 		foreach ($this->action_items as $item) {
 			if ($item->widget !== null) {
@@ -200,19 +194,22 @@ class SwatActions extends SwatControl implements SwatUIParent
 
 				$div->id = $this->id.'_'.$item->id;
 
-				$div->open();
-				$item->display();
-				$div->close();
+				$div->open($context);
+				$item->display($context);
+				$div->close($context);
 			}
 		}
 
-		echo '<div class="swat-actions-note">';
-		echo Swat::_('Actions apply to checked items.');
-		echo '</div>';
+		$context->out('<div class="swat-actions-note">');
+		$context->out(Swat::_('Actions apply to checked items.'));
+		$context->out('</div>');
 
-		$div_tag->close();
+		$div_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addYUI('dom', 'event', 'animation');
+		$context->addScript('packages/swat/javascript/swat-actions.js');
+		$context->addStyleSheet('packages/swat/styles/swat-actions.css');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -282,14 +279,15 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 * @see SwatUIParent
 	 * @see SwatActions::addActionItem()
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
-		if ($child instanceof SwatActionItem)
+		if ($child instanceof SwatActionItem) {
 			$this->addActionItem($child);
-		else
+		} else {
 			throw new SwatInvalidClassException(
 				'Only SwatActionItem objects may be nested within a '.
 				'SwatAction object.', 0, $child);
+		}
 	}
 
 	// }}}
@@ -592,11 +590,11 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 *
 	 * Subclasses may override this method to display more buttons.
 	 */
-	protected function displayButton()
+	protected function displayButton(SwatDisplayContext $context)
 	{
 		$button = $this->getCompositeWidget('apply_button');
 		$button->setFromStock('apply');
-		$button->display();
+		$button->display($context);
 	}
 
 	// }}}

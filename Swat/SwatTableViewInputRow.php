@@ -121,12 +121,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	{
 		parent::__construct();
 		$this->enter_text = Swat::_('enter&nbsp;another');
-
-		$yui = new SwatYUI(array('animation'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-table-view-input-row.js',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -228,28 +222,37 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 * different number of rows than {SwatTableViewInputRow::$number} it
 	 * the user submitted number takes precedence.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->isVisible())
+		if (!$this->isVisible()) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		if (count($this->replicators) < $this->number) {
 			$diff = $this->number - count($this->replicators);
 			$next_replicator = (count($this->replicators) == 0) ? 0 :
 				end($this->replicators) + 1;
 
-			for ($i = $next_replicator; $i < $diff + $next_replicator; $i++)
+			for ($i = $next_replicator; $i < $diff + $next_replicator; $i++) {
 				$this->replicators[] = $i;
+			}
 		}
 
 		// add replicator ids to the form as a hidden field
-		$this->getForm()->addHiddenField($this->getId().'_replicators',
-			implode(',', $this->replicators));
+		$this->getForm()->addHiddenField(
+			$this->getId().'_replicators',
+			implode(',', $this->replicators)
+		);
 
-		$this->displayInputRows();
-		$this->displayEnterAnotherRow();
+		$this->displayInputRows($context);
+		$this->displayEnterAnotherRow($context);
+
+		$context->addYUI('animation');
+		$context->addScript(
+			'packages/swat/javascript/swat-table-view-input-row.js'
+		);
 	}
 
 	// }}}
@@ -528,7 +531,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 *
 	 * @see SwatTableViewInputRow::display()
 	 */
-	private function displayInputRows()
+	private function displayInputRows(SwatDisplayContext $context)
 	{
 		$columns = $this->parent->getVisibleColumns();
 
@@ -548,10 +551,11 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$tr_tag->class = 'swat-table-view-input-row';
 			$tr_tag->id = $this->getId().'_row_'.$replicator_id;
 
-			if ($row_has_messages && $this->show_row_messages)
+			if ($row_has_messages && $this->show_row_messages) {
 				$tr_tag->class.= ' swat-error';
+			}
 
-			$tr_tag->open();
+			$tr_tag->open($context);
 
 			foreach ($columns as $column) {
 				// use the same style as table-view column
@@ -571,43 +575,49 @@ class SwatTableViewInputRow extends SwatTableViewRow
 					}
 				}
 
-				$td_tag->open();
+				$td_tag->open($context);
 
-				if (isset($this->input_cells[$column->id]))
-					$this->input_cells[$column->id]->display($replicator_id);
-				else
-					echo '&nbsp;';
+				if (isset($this->input_cells[$column->id])) {
+					$this->input_cells[$column->id]->display(
+						$context,
+						$replicator_id
+					);
+				} else {
+					$context->out('&nbsp;');
+				}
 
-				$td_tag->close();
+				$td_tag->close($context);
 			}
-			$tr_tag->close();
+			$tr_tag->close($context);
 
 			if ($this->show_row_messages && count($messages) > 0) {
 				$tr_tag = new SwatHtmlTag('tr');
 				$tr_tag->class = 'swat-table-view-input-row-messages';
-				$tr_tag->open();
+				$tr_tag->open($context);
 
 				$td_tag = new SwatHtmlTag('td');
 				$td_tag->colspan = count($columns);
-				$td_tag->open();
+				$td_tag->open($context);
 
 				$ul_tag = new SwatHtmlTag('ul');
 				$ul_tag->class = 'swat-table-view-input-row-messages';
-				$ul_tag->open();
+				$ul_tag->open($context);
 
 				$li_tag = new SwatHtmlTag('li');
 				foreach ($messages as &$message) {
-					$li_tag->setContent($message->primary_content,
-						$message->content_type);
+					$li_tag->setContent(
+						$message->primary_content,
+						$message->content_type
+					);
 
 					$li_tag->class = $message->getCSSClassString();
-					$li_tag->display();
+					$li_tag->display($context);
 				}
 
-				$ul_tag->close();
+				$ul_tag->close($context);
 
-				$td_tag->close();
-				$tr_tag->close();
+				$td_tag->close($context);
+				$tr_tag->close($context);
 			}
 		}
 	}
@@ -635,7 +645,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	/**
 	 * Displays the enter-another-row row
 	 */
-	private function displayEnterAnotherRow()
+	private function displayEnterAnotherRow(SwatDisplayContext $context)
 	{
 		$columns = $this->parent->getVisibleColumns();
 
@@ -661,31 +671,31 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->id = $this->getId().'_enter_row';
-		$tr_tag->open();
+		$tr_tag->open($context);
 
 		if ($position > 0) {
 			$td = new SwatHtmlTag('td');
 			$td->colspan = $position;
-			$td->open();
-			echo '&nbsp;';
-			$td->close();
+			$td->open($context);
+			$context->out('&nbsp;');
+			$td->close($context);
 		}
 
 		// use the same style as table-view column
 		$td = new SwatHtmlTag('td', $column->getTdAttributes());
-		$td->open();
-		$this->enter_another_link->display();
-		$td->close();
+		$td->open($context);
+		$this->enter_another_link->display($context);
+		$td->close($context);
 
 		if ($close_length > 0) {
 			$td = new SwatHtmlTag('td');
 			$td->colspan = $close_length;
-			$td->open();
-			echo '&nbsp;';
-			$td->close();
+			$td->open($context);
+			$context->out('&nbsp;');
+			$td->close($context);
 		}
 
-		$tr_tag->close();
+		$tr_tag->close($context);
 	}
 
 	// }}}
@@ -704,6 +714,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 */
 	private function getRowString()
 	{
+		$context = new SwatDisplayContext();
+
 		$columns = $this->parent->getVisibleColumns();
 
 		ob_start();
@@ -716,7 +728,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$td_attributes = $column->getTdAttributes();
 
 			$td_tag = new SwatHtmlTag('td', $td_attributes);
-			$td_tag->open();
+			$td_tag->open($context);
 
 			$suffix = '_'.$this->getId().'_%s';
 
@@ -724,15 +736,15 @@ class SwatTableViewInputRow extends SwatTableViewRow
 				$widget = $this->input_cells[$column->id]->getPrototypeWidget();
 				$widget = $widget->copy($suffix);
 				$widget->parent = $this->getForm(); // so display will work.
-				$widget->display();
+				$widget->display($context);
 				unset($widget);
 			} else {
-				echo '&nbsp;';
+				$context->out('&nbsp;');
 			}
 
-			$td_tag->close();
+			$td_tag->close($context);
 		}
-		$tr_tag->close();
+		$tr_tag->close($context);
 
 		return ob_get_clean();
 	}

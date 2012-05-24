@@ -65,14 +65,15 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	 *
 	 * Calls this item's widget display method.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
-		$this->widget->display();
+		$this->widget->display($context);
 	}
 
 	// }}}
@@ -116,14 +117,15 @@ class SwatActionItem extends SwatControl implements SwatUIParent
 	 * @see SwatUIParent
 	 * @see SwatActionItem::setWidget()
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
-		if ($child instanceof SwatWidget)
+		if ($child instanceof SwatWidget) {
 			$this->setWidget($child);
-		else
+		} else {
 			throw new SwatInvalidClassException(
 				'Only SwatWidget objects may be nested within a '.
 				'SwatActionItem object.', 0, $child);
+		}
 	}
 
 	// }}}

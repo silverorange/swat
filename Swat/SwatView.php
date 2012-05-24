@@ -13,7 +13,7 @@ require_once 'Swat/exceptions/SwatObjectNotFoundException.php';
  * An abstract class from which to derive recordset views
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatView extends SwatControl
@@ -68,21 +68,16 @@ abstract class SwatView extends SwatControl
 	// }}}
 	// {{{ public function __construct()
 
-	/**
-	 * Creates a new recordset view
-	 *
-	 * @param string $id a non-visible unique id for this recordset view.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
+	public function display(SwatDisplayContext $context)
 	{
-		parent::__construct($id);
+		if (!$this->visible) {
+			return;
+		}
 
-		$yui = new SwatYUI(array('dom'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-view.js',
-			Swat::PACKAGE_ID);
+		parent::display($context);
+
+		$context->addYUI('dom');
+		$context->addScript('packages/swat/javascript/swat-view.js');
 	}
 
 	// }}}

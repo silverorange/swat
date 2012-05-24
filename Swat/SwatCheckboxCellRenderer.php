@@ -13,7 +13,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * A view selector cell renderer displayed as a checkbox
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatViewSelector
  */
@@ -88,12 +88,6 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 
 		$this->makePropertyStatic('id');
 
-		$yui = new SwatYUI(array('dom'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-checkbox-cell-renderer.js',
-			Swat::PACKAGE_ID);
-
 		// auto-generate an id to use if no id is set
 		$this->id = $this->getUniqueId();
 	}
@@ -127,18 +121,19 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 	/**
 	 * Renders this checkbox cell renderer
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::render();
+		parent::render($context);
 
 		if ($this->title !== null) {
 			$label_tag = new SwatHtmlTag('label');
 			$label_tag->for = $this->id.'_checkbox_'.$this->value;
 			$label_tag->setContent($this->title, $this->content_type);
-			$label_tag->open();
+			$label_tag->open($context);
 		}
 
 		$checkbox_tag = new SwatHtmlTag('input');
@@ -146,8 +141,9 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 		$checkbox_tag->name = $this->id.'[]';
 		$checkbox_tag->id = $this->id.'_checkbox_'.$this->value;
 		$checkbox_tag->value = $this->value;
-		if (!$this->sensitive)
+		if (!$this->sensitive) {
 			$checkbox_tag->disabled = 'disabled';
+		}
 
 		$view = $this->getFirstAncestor('SwatView');
 		if ($view !== null) {
@@ -156,15 +152,20 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 				$checkbox_tag->checked = 'checked';
 		}
 
-		echo '<span class="swat-checkbox-wrapper">';
-		$checkbox_tag->display();
-		echo '<span class="swat-checkbox-shim"></span>';
-		echo '</span>';
+		$context->out('<span class="swat-checkbox-wrapper">');
+		$checkbox_tag->display($context);
+		$context->out('<span class="swat-checkbox-shim"></span>');
+		$context->out('</span>');
 
 		if ($this->title !== null) {
-			$label_tag->displayContent();
-			$label_tag->close();
+			$label_tag->displayContent($context);
+			$label_tag->close($context);
 		}
+
+		$context->addYUI('dom');
+		$context->addScript(
+			'packages/swat/javascript/swat-checkbox-cell-renderer.js'
+		);
 	}
 
 	// }}}

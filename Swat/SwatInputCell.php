@@ -91,14 +91,15 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 * @throws SwatException if you try to add more than one prototype widget
 	 *                       to this input cell.
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
-		if ($this->widget === null)
+		if ($this->widget === null) {
 			$this->setWidget($child);
-		else
+		} else {
 			throw new SwatException('Can only add one widget to an input '.
 				'cell. Add a SwatContainer instance if you need to add '.
 				'multiple widgets.');
+		}
 	}
 
 	// }}}
@@ -149,10 +150,10 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 * @param integer $row_indentifier the numeric identifier of the input row
 	 *                                  that is being displayed.
 	 */
-	public function display($row_identifier)
+	public function display(SwatDisplayContext $context, $row_identifier)
 	{
 		$widget = $this->getClonedWidget($row_identifier);
-		$widget->display();
+		$widget->display($context);
 	}
 
 	// }}}

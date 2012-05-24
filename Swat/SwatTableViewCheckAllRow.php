@@ -164,27 +164,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	}
 
 	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this check-all row
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this
-	 *                              check-all row.
-	 *
-	 * @see SwatUIObject::getInlineScripts()
-	 */
-	public function getInlineScripts()
-	{
-		$this->createEmbeddedWidgets();
-
-		$list = parent::getInlineScripts();
-		$list->add($this->check_all->getInlineScripts());
-
-		return $list;
-	}
-
-	// }}}
 	// {{{ public function init()
 
 	/**
@@ -229,12 +208,13 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	/**
 	 * Displays this check-all row
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible || count($this->view->model) < 2)
+		if (!$this->visible || count($this->view->model) < 2) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$this->createEmbeddedWidgets();
 
@@ -243,31 +223,34 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->id = $this->id;
 		$tr_tag->class = $this->getCSSClassString();
-		$tr_tag->open();
+		$tr_tag->open($context);
 
 		// find checkbox column position
 		$position = 0;
 		foreach ($columns as $column) {
-			if ($column === $this->column)
+			if ($column === $this->column) {
 				break;
-			else
+			} else {
 				$position++;
+			}
 		}
 
 		if ($position > 0) {
 			$td_before_tag = new SwatHtmlTag('td');
 			$td_before_tag->setContent('&nbsp;', 'text/xml');
-			if ($position > 1)
+			if ($position > 1) {
 				$td_before_tag->colspan = $position;
+			}
 
-			$td_before_tag->display();
+			$td_before_tag->display($context);
 		}
 
 		$td_tag = new SwatHtmlTag('td');
-		if (count($columns) - $position > 1)
+		if (count($columns) - $position > 1) {
 			$td_tag->colspan = count($columns) - $position;
+		}
 
-		$td_tag->open();
+		$td_tag->open($context);
 		if ($this->title !== null) {
 			$this->check_all->title = $this->title;
 			$this->check_all->content_type = $this->content_type;
@@ -276,11 +259,11 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		$this->check_all->extended_count = $this->extended_count;
 		$this->check_all->visible_count = $this->visible_count;
 		$this->check_all->unit = $this->unit;
-		$this->check_all->display();
+		$this->check_all->display($context);
 
-		$td_tag->close();
+		$td_tag->close($context);
 
-		$tr_tag->close();
+		$tr_tag->close($context);
 	}
 
 	// }}}

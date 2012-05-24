@@ -149,27 +149,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 	private $tile = null;
 
 	// }}}
-	// {{{ public function __construct()
-
-	/**
-	 * Creates a new tile view
-	 *
-	 * @param string $id a non-visable unique id for this widget.
-	 *
-	 * @see SwatWidget:__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-
-		$this->addStyleSheet('packages/swat/styles/swat-tile-view.css',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript('packages/swat/javascript/swat-tile-view.js',
-			Swat::PACKAGE_ID);
-	}
-
-	// }}}
 	// {{{ public function init()
 
 	/**
@@ -239,34 +218,38 @@ class SwatTileView extends SwatView implements SwatUIParent
 	/**
 	 * Displays this tile view
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		if ($this->model === null)
+		if ($this->model === null) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		if (count($this->model) == 0 && $this->no_records_message !== null &&
 			$this->show_check_all !== true) {
 
 			$div = new SwatHtmlTag('div');
 			$div->class = 'swat-none';
-			$div->setContent($this->no_records_message,
-				$this->no_records_message_type);
+			$div->setContent(
+				$this->no_records_message,
+				$this->no_records_message_type
+			);
 
-			$div->display();
+			$div->display($context);
 			return;
 		}
 
 		$tile_view_tag = new SwatHtmlTag('div');
 		$tile_view_tag->id = $this->id;
 		$tile_view_tag->class = $this->getCSSClassString();
-		$tile_view_tag->open();
+		$tile_view_tag->open($context);
 
-		$this->displayTiles();
+		$this->displayTiles($context);
 
 		if ($this->showCheckAll()) {
 			$check_all = $this->getCompositeWidget('check_all');
@@ -279,17 +262,19 @@ class SwatTileView extends SwatView implements SwatUIParent
 			$check_all->extended_count = $this->check_all_extended_count;
 			$check_all->visible_count = $this->check_all_visible_count;
 			$check_all->unit = $this->check_all_unit;
-			$check_all->display();
+			$check_all->display($context);
 		}
 
 		$clear_div_tag = new SwatHtmlTag('div');
 		$clear_div_tag->class = 'swat-clear';
 		$clear_div_tag->setContent('');
-		$clear_div_tag->display();
+		$clear_div_tag->display($context);
 
-		$tile_view_tag->close();
+		$tile_view_tag->close($context);
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$context->addStyleSheet('packages/swat/styles/swat-tile-view.css');
+		$context->addScript('packages/swat/javascript/swat-tile-view.js');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -298,7 +283,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	/**
 	 * Displays the tiles of this tile view
 	 */
-	public function displayTiles()
+	public function displayTiles(SwatDisplayContext $context)
 	{
 		// this uses read-ahead iteration
 
@@ -314,29 +299,29 @@ class SwatTileView extends SwatView implements SwatUIParent
 		while ($record !== null) {
 
 			ob_start();
-			$this->displayTileGroupHeaders($record, $next_record);
+			$this->displayTileGroupHeaders($context, $record, $next_record);
 			$group_headers = ob_get_clean();
 
-			echo $group_headers;
+			$context->out($group_headers);
 
 			// if group headers are displayed, reset tiles-per-row count
 			if ($group_headers != '') {
 				$count = 1;
 			}
 
-			$this->displayTile($record, $next_record);
+			$this->displayTile($context, $record, $next_record);
 
 			// clear tiles-per-row
 			if ($this->tiles_per_row !== null &&
 				($count % $this->tiles_per_row === 0)) {
-				echo '<div class="swat-tile-view-clear"></div>';
+				$context->out('<div class="swat-tile-view-clear"></div>');
 			}
 
 			ob_start();
-			$this->displayTileGroupFooters($record, $next_record);
+			$this->displayTileGroupFooters($context, $record, $next_record);
 			$group_footers = ob_get_clean();
 
-			echo $group_footers;
+			$context->out($group_footers);
 
 			// if group footers are displayed, reset tiles-per-row-count,
 			// otherwise, increase tiles-per-row-count
@@ -364,9 +349,10 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 * @param mixed $next_record the next record to display. If there is no
 	 *                            next record, this is null.
 	 */
-	public function displayTile($record, $next_record)
+	public function displayTile(SwatDisplayContext $context, $record,
+		$next_record)
 	{
-		$this->tile->display($record);
+		$this->tile->display($context, $record);
 	}
 
 	// }}}
@@ -379,10 +365,12 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 * @param mixed $next_record the next record to display. If there is no
 	 *                            next record, this is null.
 	 */
-	public function displayTileGroupHeaders($record, $next_record)
+	public function displayTileGroupHeaders(SwatDisplayContext $context,
+		$record, $next_record)
 	{
-		foreach ($this->groups as $group)
-			$group->display($record);
+		foreach ($this->groups as $group) {
+			$group->display($context, $record);
+		}
 	}
 
 	// }}}
@@ -395,10 +383,12 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 * @param mixed $next_record the next record to display. If there is no
 	 *                            next record, this is null.
 	 */
-	public function displayTileGroupFooters($record, $next_record)
+	public function displayTileGroupFooters(SwatDisplayContext $context,
+		$record, $next_record)
 	{
-		foreach ($this->groups as $group)
-			$group->displayFooter($record, $next_record);
+		foreach ($this->groups as $group) {
+			$group->displayFooter($context, $record, $next_record);
+		}
 	}
 
 	// }}}
@@ -424,11 +414,11 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 * @see SwatTileView::setTile()
 	 * @see SwatTileView::appendGroup()
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
-		if ($child instanceof SwatTileViewGroup)
+		if ($child instanceof SwatTileViewGroup) {
 			$this->appendGroup($child);
-		elseif ($child instanceof SwatTile) {
+		} elseif ($child instanceof SwatTile) {
 			if ($this->tile !== null)
 				throw new SwatException(
 					'Only one tile may be added to a tile view.');

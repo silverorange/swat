@@ -19,7 +19,7 @@ require_once 'Swat/SwatTableViewCheckAllRow.php';
  * widget only applies to the first checkbox renderer.
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewCheckboxColumn extends SwatTableViewColumn
@@ -177,7 +177,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 	/**
 	 * Displays the contents of the header cell for this column
 	 */
-	public function displayHeader()
+	public function displayHeader(SwatDisplayContext $context)
 	{
 		if ($this->check_all_title !== null) {
 			$this->check_all->title = $this->check_all_title;
@@ -188,7 +188,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 		$this->check_all->visible_count = $this->check_all_visible_count;
 		$this->check_all->unit = $this->check_all_unit;
 
-		parent::displayHeader();
+		parent::displayHeader($context);
 	}
 
 	// }}}

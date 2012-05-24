@@ -13,7 +13,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * multiple rows, use {@link SwatCheckboxCellRenderer}.
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatViewSelector
  */
@@ -88,12 +88,6 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 
 		$this->makePropertyStatic('id');
 
-		$yui = new SwatYUI(array('dom'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-radio-button-cell-renderer.js',
-			Swat::PACKAGE_ID);
-
 		// auto-generate an id to use if no id is set
 		$this->id = $this->getUniqueId();
 	}
@@ -129,18 +123,19 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 	/**
 	 * Renders this radio button cell renderer
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::render();
+		parent::render($context);
 
 		if ($this->title !== null) {
 			$label_tag = new SwatHtmlTag('label');
 			$label_tag->for = $this->id.'_radio_button_'.$this->value;
 			$label_tag->setContent($this->title, $this->content_type);
-			$label_tag->open();
+			$label_tag->open($context);
 		}
 
 		$radio_button_tag = new SwatHtmlTag('input');
@@ -148,25 +143,32 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 		$radio_button_tag->name = $this->id;
 		$radio_button_tag->id = $this->id.'_radio_button_'.$this->value;
 		$radio_button_tag->value = $this->value;
-		if (!$this->sensitive)
+		if (!$this->sensitive) {
 			$radio_button_tag->disabled = 'disabled';
+		}
 
 		$view = $this->getFirstAncestor('SwatView');
 		if ($view !== null) {
 			$selection = $view->getSelection($this);
-			if ($selection->contains($this->value))
+			if ($selection->contains($this->value)) {
 				$radio_button_tag->checked = 'checked';
+			}
 		}
 
-		echo '<span class="swat-radio-wrapper">';
-		$radio_button_tag->display();
-		echo '<span class="swat-radio-shim"></span>';
-		echo '</span>';
+		$context->out('<span class="swat-radio-wrapper">');
+		$radio_button_tag->display($context);
+		$context->out('<span class="swat-radio-shim"></span>');
+		$context->out('</span>');
 
 		if ($this->title !== null) {
-			$label_tag->displayContent();
-			$label_tag->close();
+			$label_tag->displayContent($context);
+			$label_tag->close($context);
 		}
+
+		$context->addYUI('dom');
+		$context->addScript(
+			'packages/swat/javascript/swat-radio-button-cell-renderer.js'
+		);
 	}
 
 	// }}}

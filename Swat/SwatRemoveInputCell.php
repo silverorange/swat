@@ -88,12 +88,12 @@ class SwatRemoveInputCell extends SwatInputCell
 	 *
 	 * @see SwatInputCell::display()
 	 */
-	public function display($replicator_id)
+	public function display(SwatDisplayContext $context, $replicator_id)
 	{
 		$widget = $this->getClonedWidget($replicator_id);
 		// substitute the replicator_id into the content block's contents
 		$widget->content = str_replace('%s', $replicator_id, $widget->content);
-		$widget->display();
+		$widget->display($context);
 	}
 
 	// }}}

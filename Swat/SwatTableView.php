@@ -218,15 +218,6 @@ class SwatTableView extends SwatView implements SwatUIParent
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-
-		$yui = new SwatYUI(array('dom'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-		$this->addJavaScript('packages/swat/javascript/swat-table-view.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-table-view.css',
-			Swat::PACKAGE_ID);
 	}
 
 	// }}}
@@ -280,15 +271,17 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * The table view is displayed as an XHTML table.
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		if ($this->model === null)
+		if ($this->model === null) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$show_no_records = true;
 		$row_count = count($this->model);
@@ -307,7 +300,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 			$div->setContent($this->no_records_message,
 				$this->no_records_message_type);
 
-			$div->display();
+			$div->display($context);
 			return;
 		}
 
@@ -316,22 +309,26 @@ class SwatTableView extends SwatView implements SwatUIParent
 		$table_tag->class = $this->getCSSClassString();
 		$table_tag->cellspacing = '0';
 
-		$table_tag->open();
+		$table_tag->open($context);
 
-		if ($this->hasHeader())
-			$this->displayHeader();
-
-		if ($this->use_invalid_tfoot_ordering) {
-			$this->displayBody();
-			$this->displayFooter();
-		} else {
-			$this->displayFooter();
-			$this->displayBody();
+		if ($this->hasHeader()) {
+			$this->displayHeader($context);
 		}
 
-		$table_tag->close();
+		if ($this->use_invalid_tfoot_ordering) {
+			$this->displayBody($context);
+			$this->displayFooter($context);
+		} else {
+			$this->displayFooter($context);
+			$this->displayBody($context);
+		}
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		$table_tag->close($context);
+
+		$context->addYUI('dom');
+		$context->addScript('packages/swat/javascript/swat-table-view.js');
+		$context->addStyleSheet('packages/swat/styles/swat-table-view.css');
+		$context->addInlineScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -384,21 +381,22 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @see SwatTableView::appendGroup()
 	 * @see SwatTableView::appendRow()
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
-		if ($child instanceof SwatTableViewGroup)
+		if ($child instanceof SwatTableViewGroup) {
 			$this->appendGroup($child);
-		elseif ($child instanceof SwatTableViewSpanningColumn)
+		} elseif ($child instanceof SwatTableViewSpanningColumn) {
 			$this->appendSpanningColumn($child);
-		elseif ($child instanceof SwatTableViewRow)
+		} elseif ($child instanceof SwatTableViewRow) {
 			$this->appendRow($child);
-		elseif ($child instanceof SwatTableViewColumn)
+		} elseif ($child instanceof SwatTableViewColumn) {
 			$this->appendColumn($child);
-		else
+		} else {
 			throw new SwatInvalidClassException(
 				'Only SwatTableViewColumn, SwatTableViewGroup, or '.
 				'SwatTableViewRow objects may be nested within SwatTableView '.
 				'objects.', 0, $child);
+		}
 	}
 
 	// }}}
@@ -876,16 +874,17 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * Each column is asked to display its own header.
 	 * Rows in the header are outputted inside a <thead> HTML tag.
 	 */
-	protected function displayHeader()
+	protected function displayHeader(SwatDisplayContext $context)
 	{
-		echo '<thead>';
-		echo '<tr>';
+		$context->out('<thead>');
+		$context->out('<tr>');
 
-		foreach ($this->columns as $column)
-			$column->displayHeaderCell();
+		foreach ($this->columns as $column) {
+			$column->displayHeaderCell($context);
+		}
 
-		echo '</tr>';
-		echo '</thead>';
+		$context->out('</tr>');
+		$context->out('</thead>');
 	}
 
 	// }}}
@@ -899,7 +898,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * Table rows are displayed inside a <tbody> XHTML tag.
 	 */
-	protected function displayBody()
+	protected function displayBody(SwatDisplayContext $context)
 	{
 		$count = 0;
 
@@ -912,12 +911,12 @@ class SwatTableView extends SwatView implements SwatUIParent
 		$next_row = ($this->model->valid()) ? $this->model->current() : null;
 
 		if (count($this->model) > 0) {
-			echo '<tbody>';
+			$context->out('<tbody>');
 
 			while ($row !== null) {
 				$count++;
 
-				$this->displayRow($row, $next_row, $count);
+				$this->displayRow($context, $row, $next_row, $count);
 
 				$row = $next_row;
 				$this->model->next();
@@ -925,10 +924,12 @@ class SwatTableView extends SwatView implements SwatUIParent
 					$this->model->current() : null;
 			}
 
-			echo '</tbody>';
+			$context->out('</tbody>');
 		} else {
 			// to validate in the case where the form has a tfoot but no rows
-			echo '<tbody class="swat-hidden"><tr><td></td></tr></tbody>';
+			$context->out(
+				'<tbody class="swat-hidden"><tr><td></td></tr></tbody>'
+			);
 		}
 	}
 
@@ -947,13 +948,14 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @param integer $count the ordinal position of the current row. Starts
 	 *                        at one.
 	 */
-	protected function displayRow($row, $next_row, $count)
+	protected function displayRow(SwatDisplayContext $context, $row, $next_row,
+		$count)
 	{
-		$this->displayRowGroupHeaders($row, $next_row, $count);
-		$this->displayRowColumns($row, $next_row, $count);
-		$this->displayRowSpanningColumns($row, $next_row, $count);
-		$this->displayRowMessages($row);
-		$this->displayRowGroupFooters($row, $next_row, $count);
+		$this->displayRowGroupHeaders($context, $row, $next_row, $count);
+		$this->displayRowColumns($context, $row, $next_row, $count);
+		$this->displayRowSpanningColumns($context, $row, $next_row, $count);
+		$this->displayRowMessages($context, $row);
+		$this->displayRowGroupFooters($context, $row, $next_row, $count);
 	}
 
 	// }}}
@@ -968,10 +970,12 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @param integer $count the ordinal position of the current row. Starts
 	 *                        at one.
 	 */
-	protected function displayRowGroupHeaders($row, $next_row, $count)
+	protected function displayRowGroupHeaders(SwatDisplayContext $context,
+		$row, $next_row, $count)
 	{
-		foreach ($this->groups as $group)
-			$group->display($row);
+		foreach ($this->groups as $group) {
+			$group->display($context, $row);
+		}
 	}
 
 	// }}}
@@ -986,10 +990,12 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @param integer $count the ordinal position of the current row. Starts
 	 *                        at one.
 	 */
-	protected function displayRowGroupFooters($row, $next_row, $count)
+	protected function displayRowGroupFooters(SwatDisplayContext $context,
+		$row, $next_row, $count)
 	{
-		foreach ($this->groups as $group)
-			$group->displayFooter($row, $next_row);
+		foreach ($this->groups as $group) {
+			$group->displayFooter($context, $row, $next_row);
+		}
 	}
 
 	// }}}
@@ -1004,23 +1010,27 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @param integer $count the ordinal position of the current row. Starts
 	 *                        at one.
 	 */
-	protected function displayRowColumns($row, $next_row, $count)
+	protected function displayRowColumns(SwatDisplayContext $context, $row,
+		$next_row, $count)
 	{
 		// display a row of data
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->class = $this->getRowClassString($row, $count);
-		foreach ($this->columns as $column)
+		foreach ($this->columns as $column) {
 			$tr_tag->addAttributes($column->getTrAttributes($row));
+		}
 
-		if ($this->rowHasMessage($row))
+		if ($this->rowHasMessage($row)) {
 			$tr_tag->class.= ' swat-error';
+		}
 
-		$tr_tag->open();
+		$tr_tag->open($context);
 
-		foreach ($this->columns as $column)
-			$column->display($row);
+		foreach ($this->columns as $column) {
+			$column->display($context, $row);
+		}
 
-		$tr_tag->close();
+		$tr_tag->close($context);
 	}
 
 	// }}}
@@ -1035,21 +1045,23 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @param integer $count the ordinal position of the current row. Starts
 	 *                        at one.
 	 */
-	protected function displayRowSpanningColumns($row, $next_row, $count)
+	protected function displayRowSpanningColumns(SwatDisplayContext $context,
+		$row, $next_row, $count)
 	{
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->class = $this->getRowClassString($row, $count);
 
-		if ($this->rowHasMessage($row))
+		if ($this->rowHasMessage($row)) {
 			$tr_tag->class = $tr_tag->class.' swat-error';
+		}
 
 		$tr_tag->class.= ' swat-table-view-spanning-column';
 
 		foreach ($this->spanning_columns as $column) {
 			if ($column->visible && $column->hasVisibleRenderer($row)) {
-				$tr_tag->open();
-				$column->display($row);
-				$tr_tag->close();
+				$tr_tag->open($context);
+				$column->display($context, $row);
+				$tr_tag->close($context);
 			}
 		}
 	}
@@ -1062,7 +1074,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * @param mixed $row the row for which to display messages.
 	 */
-	protected function displayRowMessages($row)
+	protected function displayRowMessages(SwatDisplayContext $context, $row)
 	{
 		$messages = array();
 		foreach ($this->columns as $column)
@@ -1071,29 +1083,31 @@ class SwatTableView extends SwatView implements SwatUIParent
 		if (count($messages) > 0) {
 			$tr_tag = new SwatHtmlTag('tr');
 			$tr_tag->class = 'swat-table-view-input-row-messages';
-			$tr_tag->open();
+			$tr_tag->open($context);
 
 			$td_tag = new SwatHtmlTag('td');
 			$td_tag->colspan = $this->getVisibleColumnCount();
-			$td_tag->open();
+			$td_tag->open($context);
 
 			$ul_tag = new SwatHtmlTag('ul');
 			$ul_tag->class = 'swat-table-view-input-row-messages';
-			$ul_tag->open();
+			$ul_tag->open($context);
 
 			$li_tag = new SwatHtmlTag('li');
 			foreach ($messages as &$message) {
-				$li_tag->setContent($message->primary_content,
-					$message->content_type);
+				$li_tag->setContent(
+					$message->primary_content,
+					$message->content_type
+				);
 
 				$li_tag->class = $message->getCssClass();
-				$li_tag->display();
+				$li_tag->display($context);
 			}
 
-			$ul_tag->close();
+			$ul_tag->close($context);
 
-			$td_tag->close();
-			$tr_tag->close();
+			$td_tag->close($context);
+			$tr_tag->close($context);
 		}
 	}
 
@@ -1105,22 +1119,24 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 *
 	 * Rows in the footer are outputted inside a <tfoot> HTML tag.
 	 */
-	protected function displayFooter()
+	protected function displayFooter(SwatDisplayContext $context)
 	{
 		ob_start();
 
-		foreach ($this->extra_rows as $row)
-			$row->display();
+		foreach ($this->extra_rows as $row) {
+			$row->display($context);
+		}
 
 		$footer_content = ob_get_clean();
 
 		if ($footer_content != '') {
 			$tfoot_tag = new SwatHtmlTag('tfoot');
-			if ($this->use_invalid_tfoot_ordering)
+			if ($this->use_invalid_tfoot_ordering) {
 				$tfoot_tag->class = 'swat-table-view-invalid-tfoot-ordering';
+			}
 
 			$tfoot_tag->setContent($footer_content, 'text/xml');
-			$tfoot_tag->display();
+			$tfoot_tag->display($context);
 		}
 	}
 

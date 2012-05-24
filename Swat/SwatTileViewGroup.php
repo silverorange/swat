@@ -16,7 +16,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * changes; it is not displayed once for every row.
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTileViewGroup extends SwatTile
@@ -69,16 +69,17 @@ class SwatTileViewGroup extends SwatTile
 	 *                         row being displayed in the tile-view or null if
 	 *                         the current row is the last row.
 	 */
-	public function displayFooter($row, $next_row)
+	public function displayFooter(SwatDisplayContext $context, $row, $next_row)
 	{
-		if ($this->group_by === null)
+		if ($this->group_by === null) {
 			throw new SwatException("Attribute 'group_by' must be set.");
+		}
 
 		$group_by = $this->group_by;
 
 		if ($next_row === null ||
 			!$this->isEqual($row->$group_by, $next_row->$group_by)) {
-			$this->displayGroupFooter($row);
+			$this->displayGroupFooter($context, $row);
 		}
 	}
 
@@ -93,22 +94,23 @@ class SwatTileViewGroup extends SwatTile
 	 * @param mixed $row a data object containing the data for the first row in
 	 *                    in the table model for this group.
 	 */
-	protected function displayGroupHeader($row)
+	protected function displayGroupHeader(SwatDisplayContext $context, $row)
 	{
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->class = 'swat-tile-view-group';
 
-		if ($this->header_current === null)
+		if ($this->header_current === null) {
 			$div_tag->class.= ' swat-tile-view-first-group';
+		}
 
-		$div_tag->open();
+		$div_tag->open($context);
 
 		$heading_tag = new SwatHtmlTag('h4');
-		$heading_tag->open();
-		$this->displayRenderersInternal($row);
-		$heading_tag->close();
+		$heading_tag->open($context);
+		$this->displayRenderersInternal($context, $row);
+		$heading_tag->close($context);
 
-		$div_tag->close();
+		$div_tag->close($context);
 
 	}
 
@@ -125,7 +127,7 @@ class SwatTileViewGroup extends SwatTile
 	 * @param mixed $row a data object containing the data for the last row in
 	 *                    in the table model for this group.
 	 */
-	protected function displayGroupFooter($row)
+	protected function displayGroupFooter(SwatDisplayContext $context, $row)
 	{
 	}
 
@@ -144,10 +146,11 @@ class SwatTileViewGroup extends SwatTile
 	 *
 	 * @throws SwatException
 	 */
-	protected function displayRenderers($row)
+	protected function displayRenderers(SwatDisplayContext $context, $row)
 	{
-		if ($this->group_by === null)
+		if ($this->group_by === null) {
 			throw new SwatException("Attribute 'group_by' must be set.");
+		}
 
 		$group_by = $this->group_by;
 
@@ -155,7 +158,7 @@ class SwatTileViewGroup extends SwatTile
 		// changed
 		if (!$this->isEqual($this->header_current, $row->$group_by)) {
 			$this->resetSubGroups();
-			$this->displayGroupHeader($row);
+			$this->displayGroupHeader($context, $row);
 			$this->header_current = $row->$group_by;
 		}
 	}
