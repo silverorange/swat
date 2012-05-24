@@ -32,7 +32,7 @@
 				<property name="title">Harvest Date</property>
 				<object class="SwatDateCellRenderer">
 					<property name="date" type="data">harvest_date</property>
-					<property name="format" type="string">%B</property>
+					<property name="format" type="string">MMMM</property>
 				</object>
 			</object>
 			<object class="SwatDetailsViewField">
