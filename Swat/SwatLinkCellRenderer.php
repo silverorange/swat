@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A link cell renderer
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatLinkCellRenderer extends SwatCellRenderer
@@ -86,17 +86,19 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::render();
+		parent::render($context);
 
-		if ($this->isSensitive())
-			$this->renderSensitive();
-		else
-			$this->renderInsensitive();
+		if ($this->isSensitive()) {
+			$this->renderSensitive($context);
+		} else {
+			$this->renderInsensitive($context);
+		}
 	}
 
 	// }}}
@@ -122,14 +124,14 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	/**
 	 * Renders this link as sensitive
 	 */
-	protected function renderSensitive()
+	protected function renderSensitive(SwatDisplayContext $context)
 	{
 		$anchor_tag = new SwatHtmlTag('a');
 		$anchor_tag->setContent($this->getText(), $this->content_type);
 		$anchor_tag->href = $this->getLink();
 		$anchor_tag->title = $this->getTitle();
 		$anchor_tag->class = $this->getCSSClassString();
-		$anchor_tag->display();
+		$anchor_tag->display($context);
 	}
 
 	// }}}
@@ -138,13 +140,13 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	/**
 	 * Renders this link as not sensitive
 	 */
-	protected function renderInsensitive()
+	protected function renderInsensitive(SwatDisplayContext $context)
 	{
 		$span_tag = new SwatHtmlTag('span');
 		$span_tag->setContent($this->getText(), $this->content_type);
 		$span_tag->title = $this->getTitle();
 		$span_tag->class = $this->getCSSClassString();
-		$span_tag->display();
+		$span_tag->display($context);
 	}
 
 	// }}}

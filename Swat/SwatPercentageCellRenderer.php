@@ -9,7 +9,7 @@ require_once 'Swat/SwatString.php';
  * A percentage cell renderer
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 20062012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatPercentageCellRenderer extends SwatNumericCellRenderer
@@ -21,16 +21,17 @@ class SwatPercentageCellRenderer extends SwatNumericCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatCellRenderer::render();
+		SwatCellRenderer::render($context);
 
 		$old_value = $this->value;
 		$this->value = $this->value * 100;
-		printf('%s%%', $this->getDisplayValue());
+		$context->out(sprintf('%s%%', $this->getDisplayValue()));
 		$this->value = $old_value;
 	}
 

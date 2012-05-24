@@ -189,7 +189,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 * ordered, an image indicating the ordering is also displayed in the
 	 * header.
 	 */
-	public function displayHeader()
+	public function displayHeader(SwatDisplayContext $context)
 	{
 		$anchor = new SwatHtmlTag('a');
 		$anchor->href = $this->getLink();
@@ -202,7 +202,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			$anchor->class.= ' swat-table-view-orderable-column-ascending';
 		}
 
-		$anchor->open();
+		$anchor->open($context);
 
 		// Display last word of the title in its own span so it can be styled
 		// with an image.
@@ -215,14 +215,14 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			$title = '';
 		}
 
-		echo SwatString::minimizeEntities($title);
+		$context->out(SwatString::minimizeEntities($title));
 
 		$span_tag = new SwatHtmlTag('span');
 		$span_tag->class = 'swat-table-view-orderable-column-title-last';
 		$span_tag->setContent($last_word);
-		$span_tag->display();
+		$span_tag->display($context);
 
-		$anchor->close();
+		$anchor->close($context);
 	}
 
 	// }}}

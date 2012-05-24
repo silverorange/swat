@@ -9,7 +9,7 @@ require_once 'SwatI18N/SwatI18NLocale.php';
  * A numeric cell renderer
  *
  * @package   Swat
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatNumericCellRenderer extends SwatCellRenderer
@@ -42,14 +42,15 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::render();
+		parent::render($context);
 
-		echo $this->getDisplayValue();
+		$context->out($this->getDisplayValue());
 	}
 
 	// }}}

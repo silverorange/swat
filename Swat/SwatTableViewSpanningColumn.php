@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * This is a table view column that gets its own row.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewSpanningColumn extends SwatTableViewColumn
@@ -65,32 +65,33 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 	 *
 	 * @throws SwatException
 	 */
-	protected function displayRenderers($row)
+	protected function displayRenderers(SwatDisplayContext $context, $row)
 	{
 		$offset = $this->offset;
 
 		if ($this->title != '') {
-			if ($offset == 0)
+			if ($offset == 0) {
 				$offset = 1;
+			}
 
 			$th_tag = new SwatHtmlTag('th', $this->getThAttributes());
 			$th_tag->colspan = $offset;
 			$th_tag->setContent($this->title.':');
-			$th_tag->display();
+			$th_tag->display($context);
 		} elseif ($offset > 0) {
 			$td_tag = new SwatHtmlTag('td');
 			$td_tag->colspan = $offset;
 			$td_tag->setContent('&nbsp;', 'text/xml');
-			$td_tag->display();
+			$td_tag->display($context);
 		}
 
 		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
 		$td_tag->colspan =
 			$this->view->getXhtmlColspan() - $offset;
 
-		$td_tag->open();
-		$this->displayRenderersInternal($row);
-		$td_tag->close();
+		$td_tag->open($context);
+		$this->displayRenderersInternal($context, $row);
+		$td_tag->close($context);
 	}
 
 	// }}}

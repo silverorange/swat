@@ -12,7 +12,7 @@ require_once 'Swat/SwatString.php';
  * memory sizes.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatByteCellRenderer extends SwatCellRenderer
@@ -34,15 +34,19 @@ class SwatByteCellRenderer extends SwatCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::render();
+		parent::render($context);
 
-		echo SwatString::minimizeEntities(
-			SwatString::byteFormat($this->value));
+		$context->out(
+			SwatString::minimizeEntities(
+				SwatString::byteFormat($this->value)
+			)
+		);
 	}
 
 	// }}}

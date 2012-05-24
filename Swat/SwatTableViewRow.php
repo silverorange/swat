@@ -89,7 +89,7 @@ abstract class SwatTableViewRow extends SwatUIObject
 	/**
 	 * Displays this row
 	 */
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
 		$this->displayed = true;
 	}

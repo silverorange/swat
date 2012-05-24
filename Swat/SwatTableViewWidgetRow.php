@@ -88,17 +88,19 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	 *
 	 * @see SwatTableViewWidgetRow::setWidget()
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
-		if (!($child instanceof SwatWidget))
+		if (!($child instanceof SwatWidget)) {
 			throw new SwatInvalidClassException(sprintf(
 				'Only SwatWidget objects may be nested within '.
 				'SwatTableViewWidgetRow. Attempting to add "%s".',
 				get_class($child)), 0, $child);
+		}
 
-		if ($this->widget !== null)
+		if ($this->widget !== null) {
 			throw new SwatException(
 				'Can only set one widget for a widget row.');
+		}
 
 		$this->setWidget($child);
 	}
@@ -273,12 +275,13 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	// }}}
 	// {{{ public function display()
 
-	public function display()
+	public function display(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::display();
+		parent::display($context);
 
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->id = $this->id;
@@ -287,17 +290,19 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		$colspan = $this->view->getXhtmlColspan();
 		$td_tag = new SwatHtmlTag('td');
 
-		$tr_tag->open();
+		$tr_tag->open($context);
 
-		if ($this->offset > 0 && $this->position === self::POSITION_LEFT)
+		if ($this->offset > 0 && $this->position === self::POSITION_LEFT) {
 			$this->displayOffsetCell($this->offset);
+		}
 
-		$this->displayWidgetCell();
+		$this->displayWidgetCell($context);
 
-		if ($this->offset > 0 && $this->position === self::POSITION_RIGHT)
+		if ($this->offset > 0 && $this->position === self::POSITION_RIGHT) {
 			$this->displayOffsetCell($this->offset);
+		}
 
-		$tr_tag->close();
+		$tr_tag->close($context);
 	}
 
 	// }}}
@@ -341,27 +346,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		}
 
 		return $set;
-	}
-
-	// }}}
-	// {{{ public function getInlineScripts()
-
-	/**
-	 * Gets the inline scripts needed by this row
-	 *
-	 * @return SwatInlineScriptList the inline scripts needed by this row.
-	 *
-	 * @see SwatUIObject::getInlineScripts()
-	 */
-	public function getInlineScripts()
-	{
-		$list = parent::getInlineScripts();
-
-		if ($this->widget !== null) {
-			$list->add($this->widget->getInlineScripts());
-		}
-
-		return $list;
 	}
 
 	// }}}
@@ -435,28 +419,28 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	// }}}
 	// {{{ protected function displayOffsetCell()
 
-	protected function displayOffsetCell($offset)
+	protected function displayOffsetCell(SwatDisplayContext $context, $offset)
 	{
 		$td_tag = new SwatHtmlTag('td');
 		$td_tag->class = null;
 		$td_tag->colspan = $offset;
-		$td_tag->open();
-		echo '&nbsp;';
-		$td_tag->close();
+		$td_tag->open($context);
+		$context->out('&nbsp;');
+		$td_tag->close($context);
 	}
 
 	// }}}
 	// {{{ protected function displayWidgetCell()
 
-	protected function displayWidgetCell()
+	protected function displayWidgetCell(SwatDisplayContext $context)
 	{
 			$td_tag = new SwatHtmlTag('td');
 			$colspan = $this->view->getXhtmlColspan();
 			$td_tag->colspan = $colspan - $this->offset;
 			$td_tag->class = 'widget-cell';
-			$td_tag->open();
-			$this->widget->display();
-			$td_tag->close();
+			$td_tag->open($context);
+			$this->widget->display($context);
+			$td_tag->close($context);
 	}
 
 	// }}}

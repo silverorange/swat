@@ -16,7 +16,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * displayed once for every row.
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewGroup extends SwatTableViewColumn
@@ -74,16 +74,17 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	 *                         row being displayed in the table-view or null if
 	 *                         the current row is the last row.
 	 */
-	public function displayFooter($row, $next_row)
+	public function displayFooter(SwatDisplayContext $context, $row, $next_row)
 	{
-		if ($this->group_by === null)
+		if ($this->group_by === null) {
 			throw new SwatException("Attribute 'group_by' must be set.");
+		}
 
 		$group_by = $this->group_by;
 
 		if ($next_row === null ||
 			!$this->isEqual($row->$group_by, $next_row->$group_by)) {
-			$this->displayGroupFooter($row);
+			$this->displayGroupFooter($context, $row);
 		}
 	}
 
@@ -98,19 +99,19 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	 * @param mixed $row a data object containing the data for the first row in
 	 *                    in the table store for this group.
 	 */
-	protected function displayGroupHeader($row)
+	protected function displayGroupHeader(SwatDisplayContext $context, $row)
 	{
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->class = 'swat-table-view-group';
-		$tr_tag->open();
+		$tr_tag->open($context);
 
 		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
 		$td_tag->colspan = $this->view->getXhtmlColspan();
-		$td_tag->open();
-		$this->displayRenderersInternal($row);
-		$td_tag->close();
+		$td_tag->open($context);
+		$this->displayRenderersInternal($context, $row);
+		$td_tag->close($context);
 
-		$tr_tag->close();
+		$tr_tag->close($context);
 	}
 
 	// }}}
@@ -126,7 +127,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	 * @param mixed $row a data object containing the data for the last row in
 	 *                    in the table store for this group.
 	 */
-	protected function displayGroupFooter($row)
+	protected function displayGroupFooter(SwatDisplayContext $context, $row)
 	{
 	}
 
@@ -145,10 +146,11 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	 *
 	 * @throws SwatException
 	 */
-	protected function displayRenderers($row)
+	protected function displayRenderers(SawtDisplayContect $context, $row)
 	{
-		if ($this->group_by === null)
+		if ($this->group_by === null) {
 			throw new SwatException("Attribute 'group_by' must be set.");
+		}
 
 		$group_by = $this->group_by;
 
@@ -157,7 +159,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 		if (!$this->isEqual($this->header_current, $row->$group_by)) {
 			$this->header_current = $row->$group_by;
 			$this->resetSubGroups();
-			$this->displayGroupHeader($row);
+			$this->displayGroupHeader($context, $row);
 		}
 	}
 

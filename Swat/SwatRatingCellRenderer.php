@@ -9,7 +9,7 @@ require_once 'Swat/SwatString.php';
  * A rating cell renderer
  *
  * @package   Swat
- * @copyright 2010 silverorange
+ * @copyright 2010-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRatingCellRenderer extends SwatNumericCellRenderer
@@ -51,12 +51,13 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		SwatCellRenderer::render();
+		SwatCellRenderer::render($context);
 
 		if ($this->value !== null) {
 			$locale = SwatI18NLocale::get();
@@ -69,7 +70,7 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 
 			$outer_span = new SwatHtmlTag('span');
 			$outer_span->class = 'rating '.$rating_class;
-			$outer_span->open();
+			$outer_span->open($context);
 
 			$content = str_repeat('★', ceil($value));
 			if ($difference > 0) {
@@ -80,15 +81,15 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 			$value_tag->setContent($content);
 			$value_tag->class = 'value';
 			$value_tag->title = $locale->formatNumber($value, 1);
-			$value_tag->display();
+			$value_tag->display($context);
 
 			$best_tag = new SwatHtmlTag('span');
 			$best_tag->class = 'best';
 			$best_tag->title = $locale->formatNumber($this->maximum_value, 1);
 			$best_tag->setContent('');
-			$best_tag->display();
+			$best_tag->display($context);
 
-			$outer_span->close();
+			$outer_span->close($context);
 		}
 	}
 

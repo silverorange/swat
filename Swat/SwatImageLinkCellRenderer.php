@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A renderer that displays a hyperlinked image
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageLinkCellRenderer extends SwatImageCellRenderer
@@ -52,28 +52,30 @@ class SwatImageLinkCellRenderer extends SwatImageCellRenderer
 	 *
 	 * @see SwatCellRenderer::render()
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		if ($this->sensitive) {
 			$anchor = new SwatHtmlTag('a');
 
-			if ($this->link_value === null)
+			if ($this->link_value === null) {
 				$anchor->href = $this->link;
-			elseif (is_array($this->link_value))
+			} elseif (is_array($this->link_value)) {
 				$anchor->href = vsprintf($this->link, $this->link_value);
-			else
+			} else {
 				$anchor->href = sprintf($this->link, $this->link_value);
+			}
 
-			$anchor->open();
+			$anchor->open($context);
 		}
 
-		parent::render();
+		parent::render($context);
 
 		if ($this->sensitive) {
-			$anchor->close();
+			$anchor->close($context);
 		}
 	}
 
