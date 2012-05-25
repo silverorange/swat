@@ -10,7 +10,7 @@ require_once 'Swat/SwatNoteBookPage.php';
  * A replicable container that replicates {@link SwatNoteBookChild} objects
  *
  * @package   Swat
- * @copyright 2007-2008 silverorange
+ * @copyright 2007-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatReplicableNoteBookChild extends SwatReplicableContainer
@@ -54,12 +54,13 @@ class SwatReplicableNoteBookChild extends SwatReplicableContainer
 	 *
 	 * @see SwatUIParent
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
-		if (!($child instanceof SwatNoteBookChild))
+		if (!($child instanceof SwatNoteBookChild)) {
 			throw new SwatInvalidClassException(
 				'Only SwatNoteBookChild objects may be nested within a '.
 				'SwatReplicableNoteBookChild object.', 0, $child);
+		}
 
 		parent::addChild($child);
 	}
