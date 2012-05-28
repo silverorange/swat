@@ -865,8 +865,12 @@ class SwatDate extends HotDateTime
 	 */
 	public static function compare(HotDateTime $date1, HotDateTime $date2)
 	{
-		$seconds1 = $date1->getTimestamp();
-		$seconds2 = $date2->getTimestamp();
+		// Not using getTimestamp() here because it is clamped to the 32-bit
+		// signed integer range. Float compaison should be safe here as the
+		// number are within the double-precision offered by floats and can
+		// be represented exactly.
+		$seconds1 = (float)$date1->format('U');
+		$seconds2 = (float)$date2->format('U');
 
 		if ($seconds1 > $seconds2) {
 			return 1;
