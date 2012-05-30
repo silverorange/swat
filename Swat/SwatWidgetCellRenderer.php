@@ -95,7 +95,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 *
 	 * @throws SwatException
 	 */
-	public function addChild(SwatObject $child)
+	public function addChild(SwatUIObject $child)
 	{
 		if ($this->prototype_widget === null) {
 			$this->setPrototypeWidget($child);
@@ -199,12 +199,13 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 *
 	 * @throws SwatException
 	 */
-	public function render()
+	public function render(SwatDisplayContext $context)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		parent::render();
+		parent::render($context);
 
 		if ($this->replicator_id === null) {
 			if ($this->using_clone_replication) {
@@ -216,7 +217,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 
 			if ($this->prototype_widget !== null) {
 				$this->applyPropertyValuesToPrototypeWidget();
-				$this->prototype_widget->display();
+				$this->prototype_widget->display($context);
 			}
 
 			$this->using_null_replication = true;
@@ -234,20 +235,23 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 			}
 
 			$widget = $this->getClonedWidget($this->replicator_id);
-			if ($widget === null)
+			if ($widget === null) {
 				return;
+			}
 
 			$form = $this->getForm();
-			if ($form === null)
+			if ($form === null) {
 				throw new SwatException('Cell renderer container must be '.
 					'inside a SwatForm for SwatWidgetCellRenderer to work.');
+			}
 
 			$form->addHiddenField(
 				$this->getReplicatorFieldName(),
-				array_keys($this->clones));
+				array_keys($this->clones)
+			);
 
 			$this->applyPropertyValuesToClonedWidget($widget);
-			$widget->display();
+			$widget->display($context);
 
 			$this->using_clone_replication = true;
 		}

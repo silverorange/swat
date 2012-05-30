@@ -91,11 +91,8 @@ class SwatDisclosure extends SwatDisplayableContainer
 
 		$control_div->close($context);
 
-		$yui = new SwatYUI(array('dom', 'animation'));
-
-		$context->addStyleSheet($yui->getStyleSheets());
+		$context->addYUI('dom', 'animation');
 		$context->addStyleSheet('packages/swat/styles/swat-disclosure.css');
-		$context->addScript($yui->getScripts());
 		$context->addScript('packages/swat/javascript/swat-disclosure.js');
 		$context->addInlineScript($this->getInlineJavaScript());
 	}
