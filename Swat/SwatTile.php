@@ -9,20 +9,20 @@ require_once 'Swat/SwatHtmlTag.php';
  * A tile in a {@link SwatTileView}
  *
  * @package   Swat
- * @copyright 2007-2008 silverorange
+ * @copyright 2007-2012 silverorange
  * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
  * @see       SwatTileView
  */
 class SwatTile extends SwatCellRendererContainer
 {
-	// {{{ private properties
+	// {{{ protected properties
 
 	/**
 	 * Messages affixed to this tile
 	 *
 	 * @var array
 	 */
-	private $messages = array();
+	protected $messages = array();
 
 	// }}}
 	// {{{ public function display()
