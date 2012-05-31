@@ -575,7 +575,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		$messages = parent::getMessages();
 		if ($this->tile !== null)
-			$messages = array_merge($messages, $this->tile->messages);
+			$messages = array_merge($messages, $this->tile->getMessages());
 
 		return $messages;
 	}
