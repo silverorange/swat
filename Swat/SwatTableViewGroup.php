@@ -146,7 +146,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	 *
 	 * @throws SwatException
 	 */
-	protected function displayRenderers(SawtDisplayContect $context, $row)
+	protected function displayRenderers(SwatDisplayContext $context, $row)
 	{
 		if ($this->group_by === null) {
 			throw new SwatException("Attribute 'group_by' must be set.");
