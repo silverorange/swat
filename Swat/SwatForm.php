@@ -21,7 +21,7 @@ require_once 'Swat/SwatYUI.php';
  * or borders.
  *
  * @package   Swat
- * @copyright 2004-2011 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatForm extends SwatDisplayableContainer
@@ -336,8 +336,7 @@ class SwatForm extends SwatDisplayableContainer
 		$context->addScript('packages/swat/javascript/swat-form.js');
 
 		if ($this->connection_close_uri != '') {
-			$yui = new SwatYUI(array('event'));
-			$context->addScript($yui->getScripts());
+			$context->addYUI('event');
 			$context->addStyleSheet($yui->getStyleSheets());
 		}
 
@@ -860,7 +859,7 @@ class SwatForm extends SwatDisplayableContainer
 			// SwatHtmlTag to avoid minimizing entities.
 			$context->out(
 				'<input type="hidden" '.
-				'name="'.self::ENCODING_FIELD.'" ',
+				'name="'.self::ENCODING_FIELD.'" '.
 				'value="'.self::ENCODING_ENTITY_VALUE.'" />'
 			);
 		}
