@@ -1717,6 +1717,64 @@ class SwatDate extends HotDateTime
 	}
 
 	// }}}
+	// {{{ public function addWholeMonths()
+
+	/**
+	 * Adds months to this date without affecting the day of the month
+	 *
+	 * @var integer $months the number of months to add.
+	 *
+	 * @throws Exception if the resulting date is invalid (i.e. February 30) an
+	 *                   exception is thrown.
+	 */
+	public function addWholeMonths($months)
+	{
+		$success = true;
+
+		$month = $this->getMonth() + (integer)$months;
+
+		if ($month < 1) {
+			$month += 12;
+			$this->setYear($this->getYear() - 1);
+			$success = $this->setMonth($month);
+		} elseif ($month > 12) {
+			$month -= 12;
+			$this->setYear($this->getYear() + 1);
+			$success = $this->setMonth($month);
+		} else {
+			$success = $this->setMonth($month);
+		}
+
+		if (!$success) {
+			throw new Exception(
+				sprintf(
+					'Can not add %d whole months to %s.',
+					$months,
+					$this->format('c')
+				)
+			);
+		}
+
+		return $this;
+	}
+
+	// }}}
+	// {{{ public function subtractWholeMonths()
+
+	/**
+	 * Subtracts months to this date without affecting the day of the month
+	 *
+	 * @var integer $months the number of months to subtract.
+	 *
+	 * @throws Exception if the resulting date is invalid (i.e. February 30) an
+	 *                   exception is thrown.
+	 */
+	public function subtractWholeMonths($months)
+	{
+		return $this->addWholeMonths(-$months);
+	}
+
+	// }}}
 }
 
 ?>
