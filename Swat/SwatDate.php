@@ -1717,10 +1717,18 @@ class SwatDate extends HotDateTime
 	}
 
 	// }}}
-	// {{{ public function addWholeMonths()
+	// {{{ public function addStrictMonths()
 
 	/**
 	 * Adds months to this date without affecting the day of the month
+	 *
+	 * This differs from {@link SwatDate::addMonths()} in how dates at the end
+	 * of a month are handled. In SwatDate::addMonths(), if one month is added
+	 * to January 31, the resulting date will be March 2 or 3 depending on
+	 * if it is a leap year.
+	 *
+	 * In this method, if one month is added to January 31, an exception is
+	 * thrown.
 	 *
 	 * @param integer $months the number of months to add.
 	 *
@@ -1729,7 +1737,7 @@ class SwatDate extends HotDateTime
 	 * @throws Exception if the resulting date is invalid (i.e. February 30) an
 	 *                   exception is thrown.
 	 */
-	public function addWholeMonths($months)
+	public function addStrictMonths($months)
 	{
 		$months = (integer)$months;
 
@@ -1767,10 +1775,18 @@ class SwatDate extends HotDateTime
 	}
 
 	// }}}
-	// {{{ public function subtractWholeMonths()
+	// {{{ public function subtractStrictMonths()
 
 	/**
 	 * Subtracts months to this date without affecting the day of the month
+	 *
+	 * This differs from {@link SwatDate::subtractMonths()} in how dates at the
+	 * end of a month are handled. In SwatDate::subtractMonths(), if one month
+	 * is subtracted from March 30, the resulting date will be March 1 or 2
+	 * depending on if it is a leap year.
+	 *
+	 * In this method, if one month is subtracted from March 30, an exception
+	 * is thrown.
 	 *
 	 * @param integer $months the number of months to subtract.
 	 *
@@ -1779,9 +1795,9 @@ class SwatDate extends HotDateTime
 	 * @throws Exception if the resulting date is invalid (i.e. February 30) an
 	 *                   exception is thrown.
 	 */
-	public function subtractWholeMonths($months)
+	public function subtractStrictMonths($months)
 	{
-		return $this->addWholeMonths(-$months);
+		return $this->addStrictMonths(-$months);
 	}
 
 	// }}}
