@@ -1722,7 +1722,9 @@ class SwatDate extends HotDateTime
 	/**
 	 * Adds months to this date without affecting the day of the month
 	 *
-	 * @var integer $months the number of months to add.
+	 * @param integer $months the number of months to add.
+	 *
+	 * @return SwatDate this object.
 	 *
 	 * @throws Exception if the resulting date is invalid (i.e. February 30) an
 	 *                   exception is thrown.
@@ -1770,7 +1772,9 @@ class SwatDate extends HotDateTime
 	/**
 	 * Subtracts months to this date without affecting the day of the month
 	 *
-	 * @var integer $months the number of months to subtract.
+	 * @param integer $months the number of months to subtract.
+	 *
+	 * @return SwatDate this object.
 	 *
 	 * @throws Exception if the resulting date is invalid (i.e. February 30) an
 	 *                   exception is thrown.
