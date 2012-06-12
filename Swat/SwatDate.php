@@ -1729,21 +1729,27 @@ class SwatDate extends HotDateTime
 	 */
 	public function addWholeMonths($months)
 	{
-		$success = true;
+		$months = (integer)$months;
 
-		$month = $this->getMonth() + (integer)$months;
+		$years  = (integer)($months / 12);
+		$months = $months % 12;
+
+		$year  = $this->getYear()  + $years;
+		$month = $this->getMonth() + $months;
 
 		if ($month < 1) {
+			$year  -= 1;
 			$month += 12;
-			$this->setYear($this->getYear() - 1);
-			$success = $this->setMonth($month);
 		} elseif ($month > 12) {
+			$year  += 1;
 			$month -= 12;
-			$this->setYear($this->getYear() + 1);
-			$success = $this->setMonth($month);
-		} else {
-			$success = $this->setMonth($month);
 		}
+
+		$success = $this->setDate(
+			$year,
+			$month,
+			$this->getDay()
+		);
 
 		if (!$success) {
 			throw new Exception(
