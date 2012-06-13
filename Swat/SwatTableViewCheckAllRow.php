@@ -59,8 +59,21 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 * Optional extended-all checkbox unit.
 	 *
 	 * Used for displaying a "check-all" message. Defaults to "items".
+	 *
+	 * @var string
 	 */
 	public $unit;
+
+	/**
+	 * The ordinal tab index position of the XHTML input tag
+	 *
+	 * Values 1 or greater will affect the tab index of this widget. A value
+	 * of 0 or null will use the position of the input tag in the XHTML
+	 * character stream to determine tab order.
+	 *
+	 * @var integer
+	 */
+	public $tab_index;
 
 	// }}}
 	// {{{ protected properties
@@ -255,6 +268,7 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		$this->check_all->extended_count = $this->extended_count;
 		$this->check_all->visible_count = $this->visible_count;
 		$this->check_all->unit = $this->unit;
+		$this->check_all->tab_index = $this->tab_index;
 		$this->check_all->display();
 
 		$td_tag->close();

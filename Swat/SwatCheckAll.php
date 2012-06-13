@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A "check all" JavaScript powered checkbox
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckAll extends SwatCheckbox
@@ -58,6 +58,8 @@ class SwatCheckAll extends SwatCheckbox
 	 * Optional extended-all checkbox unit.
 	 *
 	 * Used for displaying a "check-all" message. Defaults to "items".
+	 *
+	 * @var string
 	 */
 	public $unit;
 
@@ -151,6 +153,7 @@ class SwatCheckAll extends SwatCheckbox
 		$entity = ($this->unit === null) ? Swat::_('items') : $this->unit;
 
 		$checkbox = $this->getCompositeWidget('extended_checkbox');
+		$checkbox->tabindex = $this->tab_index;
 
 		ob_start();
 		$label_tag = new SwatHtmlTag('label');
