@@ -13,7 +13,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * A view selector cell renderer displayed as a checkbox
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatViewSelector
  */
@@ -61,6 +61,17 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 	 * @var string
 	 */
 	public $content_type = 'text/plain';
+
+	/**
+	 * The ordinal tab index position of the XHTML input tag
+	 *
+	 * Values 1 or greater will affect the tab index of this widget. A value
+	 * of 0 or null will use the position of the input tag in the XHTML
+	 * character stream to determine tab order.
+	 *
+	 * @var integer
+	 */
+	public $tab_index;
 
 	// }}}
 	// {{{ private properties
@@ -146,6 +157,8 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 		$checkbox_tag->name = $this->id.'[]';
 		$checkbox_tag->id = $this->id.'_checkbox_'.$this->value;
 		$checkbox_tag->value = $this->value;
+		$checkbox_tag->tabindex = $this->tab_index;
+
 		if (!$this->sensitive)
 			$checkbox_tag->disabled = 'disabled';
 

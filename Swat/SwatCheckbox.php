@@ -10,7 +10,7 @@ require_once 'Swat/SwatState.php';
  * A checkbox entry widget
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckbox extends SwatInputControl implements SwatState
@@ -34,6 +34,17 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 	 * @var string
 	 */
 	public $access_key = null;
+
+	/**
+	 * The ordinal tab index position of the XHTML input tag
+	 *
+	 * Values 1 or greater will affect the tab index of this widget. A value
+	 * of 0 or null will use the position of the input tag in the XHTML
+	 * character stream to determine tab order.
+	 *
+	 * @var integer
+	 */
+	public $tab_index;
 
 	// }}}
 	// {{{ public function __construct()
@@ -75,6 +86,7 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 		$input_tag->id = $this->id;
 		$input_tag->value = '1';
 		$input_tag->accesskey = $this->access_key;
+		$input_tag->tabindex = $this->tab_index;
 
 		if ($this->value)
 			$input_tag->checked = 'checked';
