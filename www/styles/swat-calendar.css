@@ -2,7 +2,7 @@
  * Based on Calendar Widget Version 1.0
  *
  * Copyright (c) 2004, Tribador Mediaworks,
- * Copyright (c) 2006, silverorange Inc
+ * Copyright (c) 2006-2012, silverorange Inc
  *
  * Brian Munroe <bmunroe@tribador.net
  *
@@ -146,16 +146,20 @@ td.swat-calendar-close-controls {
 	zoom: 1;
 }
 
-html .swat-calendar-toggle-button { /* IE hacks */
-	background-image: url(../images/tango/22/office-calendar-256.png)\9
+.ie6 .swat-calendar-toggle-button,
+.ie7 .swat-calendar-toggle-button,
+.ie8 .swat-calendar-toggle-button {
+	background-image: url(../images/tango/22/office-calendar-256.png);
 }
 
 .swat-insensitive .swat-calendar-toggle-button {
 	opacity: 0.6;
 }
 
-html .swat-insensitive .swat-calendar-toggle-button { /* IE hacks */
-	background-image: url(../images/tango/22/office-calendar-256-insensitive.png)\9
+.ie6 .swat-insensitive .swat-calendar-toggle-button,
+.ie7 .swat-insensitive .swat-calendar-toggle-button,
+.ie8 .swat-insensitive .swat-calendar-toggle-button {
+	background-image: url(../images/tango/22/office-calendar-256-insensitive.png);
 }
 
 .swat-calendar-arrows {

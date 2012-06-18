@@ -15,7 +15,7 @@
  *   software for any purpose. It is provided "as is" without express or
  *   implied warranty.
  *
- * @copyright 2004 Tribador Mediaworks, 2004-2009 silverorange Inc.
+ * @copyright 2004 Tribador Mediaworks, 2004-2012 silverorange Inc.
  * @author    Brian Munroe <bmunroe@tribador.net>
  * @author    Michael Gauthier <mike@silverorange.com>
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
@@ -57,14 +57,30 @@ function SwatCalendar(id, start_date, end_date)
 
 	// Draw the calendar on window load to prevent "Operation Aborted" errors
 	// in MSIE 6 and 7.
-	YAHOO.util.Event.addListener(window, 'load',
-		this.createOverlay, this, true);
+	YAHOO.util.Event.on(window, 'load', this.createOverlay, this, true);
 
 	this.open = false;
 	this.positioned = false;
 	this.drawn = false;
 	this.sensitive = true;
 }
+
+/**
+ * Custom effect for hiding and showing the overlay
+ *
+ * Shows instantly and hides with configurable fade duration.
+ */
+SwatCalendar.Effect = function(overlay, duration)
+{
+	var effect = YAHOO.widget.ContainerEffect.FADE(overlay, duration);
+	effect.attrIn = {
+		attributes : { opacity: { from: 0, to: 1 } },
+		duration   : 0,
+		method     : YAHOO.util.Easing.easeIn
+	};
+	effect.init();
+	return effect;
+};
 
 SwatCalendar.images_preloaded = false;
 
@@ -120,8 +136,17 @@ SwatCalendar.prototype.createOverlay = function()
 	this.container = document.getElementById(this.id);
 
 	this.drawButton();
-	this.overlay = new YAHOO.widget.Overlay(this.id + '_div',
-		{ visible: false, constraintoviewport: true });
+	this.overlay = new YAHOO.widget.Overlay(
+		this.id + '_div',
+		{
+			visible             : false,
+			constraintoviewport : true,
+			effect              : {
+				effect:   SwatCalendar.Effect,
+				duration: 0.25
+			}
+		}
+	);
 
 	document.getElementById(this.id + '_div').style.display = 'block';
 
@@ -309,6 +334,8 @@ SwatCalendar.prototype.setDateValues = function(year, month, day)
 		this.date_entry.setMonth(month);
 		this.date_entry.setDay(day);
 	}
+
+	this.redraw();
 }
 
 /**
@@ -320,17 +347,9 @@ SwatCalendar.prototype.setDate = function(element, yyyy, mm, dd)
 	this.setDateValues(yyyy, mm, dd);
 	if (this.selected_element) {
 		this.selected_element.className = 'swat-calendar-cell';
-		if (this.is_webkit) {
-			this.selected_element.style.backgroundColor = '';
-			this.selected_element.style.color = '';
-		}
 	}
 
 	element.className = 'swat-calendar-current-cell';
-	if (this.is_webkit) {
-		element.style.backgroundColor = '#406A9C';
-		element.style.color = '#fff';
-	}
 
 	this.selected_element = element;
 }
@@ -342,8 +361,12 @@ SwatCalendar.prototype.close = function()
 {
 	this.overlay.hide();
 	this.open = false;
+	YAHOO.util.Event.removeListener(document, 'click',
+		this.handleDocumentClick);
 }
 
+
+// }}}
 /**
  * Closes this calendar and sets the associated date widget to the
  * specified date
@@ -359,6 +382,15 @@ SwatCalendar.prototype.closeAndSetDate = function(yyyy, mm, dd)
  */
 SwatCalendar.prototype.closeAndSetBlank = function()
 {
+	this.setBlank();
+	this.close();
+}
+
+/**
+ * Sets the associated date widget as blank
+ */
+SwatCalendar.prototype.setBlank = function()
+{
 	if (this.date_entry !== null) {
 		this.date_entry.setYear('');
 		this.date_entry.setMonth('');
@@ -367,7 +399,6 @@ SwatCalendar.prototype.closeAndSetBlank = function()
 			this.date_entry.time_entry.reset();
 		}
 	}
-	this.close();
 }
 
 /**
@@ -375,6 +406,15 @@ SwatCalendar.prototype.closeAndSetBlank = function()
  * date
  */
 SwatCalendar.prototype.closeAndSetToday = function()
+{
+	this.setToday();
+	this.close();
+}
+
+/**
+ * Sets the associated date widget to today's date
+ */
+SwatCalendar.prototype.setToday = function()
 {
 	var today = new Date();
 	var mm = today.getMonth() + 1;
@@ -386,8 +426,6 @@ SwatCalendar.prototype.closeAndSetToday = function()
 	}
 
 	this.setDateValues(yyyy, mm, dd);
-
-	this.close();
 }
 
 /**
@@ -516,13 +554,9 @@ SwatCalendar.prototype.toggle = function()
 	if (this.open) {
 		this.close();
 		this.toggle_button.title = SwatCalendar.open_toggle_text;
-		var calendar_div = document.getElementById(this.id + '_div');
-		SwatZIndexManager.lowerElement(calendar_div);
 	} else {
 		this.draw();
 		this.toggle_button.title = SwatCalendar.close_toggle_text;
-		var calendar_div = document.getElementById(this.id + '_div');
-		SwatZIndexManager.raiseElement(calendar_div);
 	}
 }
 
@@ -660,7 +694,8 @@ SwatCalendar.prototype.draw = function()
 		var prev_class = 'swat-calendar-arrows-off';
 	} else {
 		var prev_link = this.id + '_obj.draw(' +
-			prev_year + ',' + prev_month + ');';
+			prev_year + ',' + prev_month + '); ' +
+			'SwatCalendar.stopEventPropagation(event || window.event);"';
 
 		var prev_img  = 'go-previous.png';
 		var prev_class = 'swat-calendar-arrows';
@@ -672,7 +707,8 @@ SwatCalendar.prototype.draw = function()
 		var next_class = 'swat-calendar-arrows-off';
 	} else {
 		var next_link = this.id + '_obj.draw(' +
-			next_year + ',' + next_month + ');';
+			next_year + ',' + next_month + '); ' +
+			'SwatCalendar.stopEventPropagation(event || window.event);"';
 
 		var next_img  = 'go-next.png';
 		var next_class = 'swat-calendar-arrows';
@@ -718,14 +754,14 @@ SwatCalendar.prototype.draw = function()
 	if (this.date_entry !== null) {
 		close_controls +=
 			'<a class="swat-calendar-cancel" href="javascript:' +
-			this.id + '_obj.closeAndSetBlank();">' + SwatCalendar.nodate_text +
+			this.id + '_obj.setBlank();">' + SwatCalendar.nodate_text +
 			'</a>&nbsp;';
 	}
 
 	if (today_ts >= start_ts && today_ts <= end_ts) {
 		close_controls +=
 			'<a class="swat-calendar-today" href="javascript:' +
-			this.id + '_obj.closeAndSetToday();">' + SwatCalendar.today_text +
+			this.id + '_obj.setToday();">' + SwatCalendar.today_text +
 			'</a>&nbsp;';
 	}
 
@@ -754,19 +790,15 @@ SwatCalendar.prototype.draw = function()
 
 				if (dd == day) {
 					cell_class = 'swat-calendar-current-cell';
-					if (this.is_webkit) {
-						cell_current = 'id="' + this.id + '_current_cell" ' +
-							'style="background-color: #406A9C; color: #fff;" ';
-					} else {
-						cell_current = 'id="' + this.id + '_current_cell" ';
-					}
+					cell_current = 'id="' + this.id + '_current_cell" ';
 				} else {
 					cell_class = 'swat-calendar-cell';
 					cell_current = '';
 				}
 
-				onclick = ' onclick="' + this.id + '_obj.closeAndSetDate(' +
-					yyyy + ',' + mm + ',' + day + ');"';
+				onclick = ' onclick="' + this.id + '_obj.setDateValues(' +
+					yyyy + ',' + mm + ',' + day + '); ' +
+					'SwatCalendar.stopEventPropagation(event || window.event);"';
 
 				if (calendar_start && day < start_date.getDate()) {
 					cell_class = 'swat-calendar-invalid-cell';
@@ -800,6 +832,7 @@ SwatCalendar.prototype.draw = function()
 		cur_html + close_controls;
 
 	if (!this.open) {
+
 		// only set position once
 		if (!this.positioned) {
 			this.overlay.cfg.setProperty('context',
@@ -807,7 +840,45 @@ SwatCalendar.prototype.draw = function()
 
 			this.positioned = true;
 		}
+
 		this.overlay.show();
 		this.open = true;
+
+		YAHOO.util.Event.on(document, 'click', this.handleDocumentClick,
+			this, true);
 	}
-}
+};
+
+SwatCalendar.stopEventPropagation = function(e)
+{
+	if (e.stopPropagation) {
+		e.stopPropagation();
+	} else if (window.event) {
+		window.event.cancelBubble = true;
+	}
+
+};
+
+SwatCalendar.prototype.handleDocumentClick = function(e)
+{
+	var close = true;
+
+	var target = YAHOO.util.Event.getTarget(e);
+
+	if (target === this.toggle_button || target === this.overlay.element) {
+		close = false;
+	} else {
+		while (target.parentNode) {
+			target = target.parentNode;
+			if (target === this.overlay.element ||
+				YAHOO.util.Dom.hasClass(target, 'swat-calendar-frame')) {
+				close = false;
+				break;
+			}
+		}
+	}
+
+	if (close) {
+		this.close();
+	}
+};
