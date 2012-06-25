@@ -82,6 +82,8 @@ SwatTextarea.prototype.handleOnAvailable = function()
 	this.handle_div.className = 'swat-textarea-resize-handle';
 	this.handle_div._textarea = this.textarea;
 
+	this.textarea._resize = this;
+
 	YAHOO.util.Event.addListener(this.handle_div, 'touchstart',
 		SwatTextarea.touchstartEventHandler, this.handle_div);
 
