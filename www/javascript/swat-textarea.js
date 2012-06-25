@@ -252,7 +252,7 @@ SwatTextarea.supports_resize = (function() {
 
 	// Both iOS and Android feature detection say they support resize, but
 	// they do not. Fall back to checking the UA here.
-	return (!YAHOO.env.ua.ios && !YAHOO.env.us.android &&
+	return (!YAHOO.env.ua.ios && !YAHOO.env.ua.android &&
 		(resize === '' || resize === 'none'));
 })();
 
