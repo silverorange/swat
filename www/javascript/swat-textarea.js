@@ -249,7 +249,7 @@ SwatTextarea.pending_poll_interval = 0.1; // in seconds
 SwatTextarea.supports_resize = (function() {
 	var div = document.createElement('div');
 	var resize = YAHOO.util.Dom.getStyle(div, 'resize');
-	return (resize === '' || resize === 'none');
+	return (!YAHOO.env.ua.ios && (resize === '' || resize === 'none'));
 })();
 
 
