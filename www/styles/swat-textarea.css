@@ -1,3 +1,7 @@
+div.swat-textarea-container {
+	line-height: 1;
+}
+
 div.swat-textarea-container textarea {
 	margin: 0;
 	padding: 0;
