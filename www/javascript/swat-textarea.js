@@ -249,7 +249,11 @@ SwatTextarea.pending_poll_interval = 0.1; // in seconds
 SwatTextarea.supports_resize = (function() {
 	var div = document.createElement('div');
 	var resize = YAHOO.util.Dom.getStyle(div, 'resize');
-	return (!YAHOO.env.ua.ios && (resize === '' || resize === 'none'));
+
+	// Both iOS and Android feature detection say they support resize, but
+	// they do not. Fall back to checking the UA here.
+	return (!YAHOO.env.ua.ios && !YAHOO.env.us.android &&
+		(resize === '' || resize === 'none'));
 })();
 
 
