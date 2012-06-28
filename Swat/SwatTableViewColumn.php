@@ -42,6 +42,17 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	public $title = '';
 
 	/**
+	 * Optional content type for the title
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments. Note that if an
+	 * $abbreviated_title is set that this is ignored and minimizesEntities() is
+	 * called on the title as the title is used as a html tag attribute.
+	 *
+	 * @var string
+	 */
+	public $title_content_type = 'text/plain';
+
+	/**
 	 * Optional abbreviated title of this column
 	 *
 	 * If set, an HTML abbr tag is used to display the $title property along
@@ -50,6 +61,15 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 * @var string
 	 */
 	public $abbreviated_title = null;
+
+	/**
+	 * Optional content type for the abbreviated title.
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $abbreviated_title_content_type = 'text/plain';
 
 	/**
 	 * The {@link SwatTableView} associated with this column
@@ -194,11 +214,19 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 			$title = $this->title;
 
 		if ($this->abbreviated_title === null) {
-			echo SwatString::minimizeEntities($title);
+			if ($this->title_content_type === 'text/plain') {
+				echo SwatString::minimizeEntities($title);
+			} else {
+				echo $this->content;
+			}
 		} else {
 			$abbr_tag = new SwatHtmlTag('abbr');
-			$abbr_tag->title = $title;
-			$abbr_tag->setContent($this->abbreviated_title);
+			// Note: This always minimizes entities in titles regardless of
+			// $this->title_content_type, as its a html tag attribute.
+			$abbr_tag->title = SwatString::minimizeEntities($title);
+			$abbr_tag->setContent($this->abbreviated_title,
+				$this->abbreviated_title_content_type);
+
 			$abbr_tag->display();
 		}
 	}
