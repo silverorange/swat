@@ -215,11 +215,15 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			$title = '';
 		}
 
-		echo SwatString::minimizeEntities($title);
+		if ($this->title_content_type === 'text/plain') {
+			echo SwatString::minimizeEntities($title);
+		} else {
+			echo $title;
+		}
 
 		$span_tag = new SwatHtmlTag('span');
 		$span_tag->class = 'swat-table-view-orderable-column-title-last';
-		$span_tag->setContent($last_word);
+		$span_tag->setContent($last_word, $this->title_content_type);
 		$span_tag->display();
 
 		$anchor->close();

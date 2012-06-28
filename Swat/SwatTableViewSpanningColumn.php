@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * This is a table view column that gets its own row.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewSpanningColumn extends SwatTableViewColumn
@@ -75,7 +75,7 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 
 			$th_tag = new SwatHtmlTag('th', $this->getThAttributes());
 			$th_tag->colspan = $offset;
-			$th_tag->setContent($this->title.':');
+			$th_tag->setContent($this->title.':', $this->title_content_type);
 			$th_tag->display();
 		} elseif ($offset > 0) {
 			$td_tag = new SwatHtmlTag('td');
