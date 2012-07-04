@@ -4,20 +4,124 @@
 	<widget class="SwatForm" id="my_form">
 		<widget class="SwatToolbar">
 			<widget class="SwatToolLink">
-				<property name="title">Add</property>
 				<property name="stock_id">create</property>
 				<property name="link">#</property>
 			</widget>
 
 			<widget class="SwatToolLink">
-				<property name="title">Delete</property>
+				<property name="stock_id">cancel</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="stock_id">change-order</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
 				<property name="stock_id">delete</property>
 				<property name="link">#</property>
 			</widget>
 
 			<widget class="SwatToolLink">
-				<property name="title">Edit</property>
+				<property name="stock_id">download</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
 				<property name="stock_id">edit</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="stock_id">email</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="stock_id">print</property>
+				<property name="link">#</property>
+			</widget>
+		</widget>
+
+		<widget class="SwatToolLink">
+			<property name="stock_id">create</property>
+			<property name="link">#</property>
+		</widget>
+
+		<widget class="SwatToolLink">
+			<property name="stock_id">cancel</property>
+			<property name="link">#</property>
+		</widget>
+
+		<widget class="SwatToolLink">
+			<property name="stock_id">change-order</property>
+			<property name="link">#</property>
+		</widget>
+
+		<widget class="SwatToolLink">
+			<property name="stock_id">delete</property>
+			<property name="link">#</property>
+		</widget>
+
+		<widget class="SwatToolLink">
+			<property name="stock_id">download</property>
+			<property name="link">#</property>
+		</widget>
+
+		<widget class="SwatToolLink">
+			<property name="stock_id">edit</property>
+			<property name="link">#</property>
+		</widget>
+
+		<widget class="SwatToolLink">
+			<property name="stock_id">email</property>
+			<property name="link">#</property>
+		</widget>
+
+		<widget class="SwatToolLink">
+			<property name="stock_id">print</property>
+			<property name="link">#</property>
+		</widget>
+
+		<widget class="SwatToolbar">
+			<widget class="SwatToolLink">
+				<property name="stock_id">create</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="stock_id">cancel</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="stock_id">change-order</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="stock_id">delete</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="stock_id">download</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="stock_id">edit</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="stock_id">email</property>
+				<property name="link">#</property>
+			</widget>
+
+			<widget class="SwatToolLink">
+				<property name="stock_id">print</property>
 				<property name="link">#</property>
 			</widget>
 		</widget>
