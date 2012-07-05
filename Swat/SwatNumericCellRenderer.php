@@ -9,7 +9,7 @@ require_once 'SwatI18N/SwatI18NLocale.php';
  * A numeric cell renderer
  *
  * @package   Swat
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatNumericCellRenderer extends SwatCellRenderer
@@ -34,6 +34,16 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 	 */
 	public $precision = null;
 
+	/**
+	 * What to display when value is null.
+	 *
+	 * If set to null, the default behaviour is for the value to be passed to
+	 * formatCurrency(). If not null, display this in a span instead.
+	 *
+	 * @var string
+	 */
+	public $null_display_value = null;
+
 	// }}}
 	// {{{ public function render()
 
@@ -44,12 +54,28 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::render();
 
-		echo $this->getDisplayValue();
+		if ($this->value === null && $this->null_display_value !== null) {
+			$this->renderNullValue();
+		} else {
+			echo $this->getDisplayValue();
+		}
+	}
+
+	// }}}
+	// {{{ protected function renderNullValue()
+
+	protected function renderNullValue()
+	{
+		$span_tag = new SwatHtmlTag('span');
+		$span_tag->class = 'swat-none';
+		$span_tag->setContent($this->null_display_value);
+		$span_tag->display();
 	}
 
 	// }}}

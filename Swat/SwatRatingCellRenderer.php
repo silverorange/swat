@@ -9,7 +9,7 @@ require_once 'Swat/SwatString.php';
  * A rating cell renderer
  *
  * @package   Swat
- * @copyright 2010 silverorange
+ * @copyright 2010-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRatingCellRenderer extends SwatNumericCellRenderer
@@ -58,7 +58,9 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 
 		SwatCellRenderer::render();
 
-		if ($this->value !== null) {
+		if ($this->value === null && $this->null_display_value !== null) {
+			$this->renderNullValue();
+		} elseif ($this->value !== null) {
 			$locale = SwatI18NLocale::get();
 
 			$value      = $this->getDisplayValue();
