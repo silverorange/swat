@@ -208,16 +208,18 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function displayHeader()
 	{
-		if ($this->title == '')
+		if ($this->title == '') {
 			$title = '&nbsp;';
-		else
+			$this->title_content_type = 'text/xml';
+		} else {
 			$title = $this->title;
+		}
 
 		if ($this->abbreviated_title === null) {
 			if ($this->title_content_type === 'text/plain') {
 				echo SwatString::minimizeEntities($title);
 			} else {
-				echo $this->title;
+				echo $title;
 			}
 		} else {
 			$abbr_tag = new SwatHtmlTag('abbr');
