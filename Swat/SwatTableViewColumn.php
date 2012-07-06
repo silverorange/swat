@@ -217,7 +217,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 			if ($this->title_content_type === 'text/plain') {
 				echo SwatString::minimizeEntities($title);
 			} else {
-				echo $this->content;
+				echo $this->title;
 			}
 		} else {
 			$abbr_tag = new SwatHtmlTag('abbr');
