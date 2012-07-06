@@ -204,29 +204,25 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 		$anchor->open();
 
-		// Display last word of the title in its own span so it can be styled
-		// with an image.
-		$title_exp = explode(' ', $this->title);
-		$last_word = array_pop($title_exp);
-
-		if (count($title_exp)) {
-			$title = implode(' ', $title_exp).' ';
+		if ($this->abbreviated_title === null) {
+			$this->displayTitle(
+				$this->title,
+				$this->title_content_type
+			);
 		} else {
-			$title = '';
+			$abbr_tag = new SwatHtmlTag('abbr');
+			// Note: This always minimizes entities in titles regardless of
+			// $this->title_content_type, as its a html tag attribute.
+			$abbr_tag->title = SwatString::minimizeEntities($this->title);
+			$abbr_tag->open();
+
+			$this->displayTitle(
+				$this->abbreviated_title,
+				$this->abbreviated_title_content_type
+			);
+
+			$abbr_tag->close();
 		}
-
-		if ($this->title_content_type === 'text/plain') {
-			echo SwatString::minimizeEntities($title);
-		} else {
-			echo $title;
-		}
-
-		$span_tag = new SwatHtmlTag('span');
-		$span_tag->class = 'swat-table-view-orderable-column-title-last';
-		$span_tag->setContent($last_word, $this->title_content_type);
-		$span_tag->display();
-
-		$anchor->close();
 	}
 
 	// }}}
@@ -292,6 +288,34 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 		}
 
 		return $direction;
+	}
+
+	// }}}
+	// {{{ protected function displayTitle()
+
+	protected function displayTitle($title, $content_type)
+	{
+		// Display last word of the title in its own span so it can be styled
+		// with an image.
+		$title_exp = explode(' ', $title);
+		$last_word = array_pop($title_exp);
+
+		if (count($title_exp)) {
+			$title = implode(' ', $title_exp).' ';
+		} else {
+			$title = '';
+		}
+
+		if ($content_type === 'text/plain') {
+			echo SwatString::minimizeEntities($title);
+		} else {
+			echo $title;
+		}
+
+		$span_tag = new SwatHtmlTag('span');
+		$span_tag->class = 'swat-table-view-orderable-column-title-last';
+		$span_tag->setContent($last_word, $content_type);
+		$span_tag->display();
 	}
 
 	// }}}
