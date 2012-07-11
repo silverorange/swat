@@ -211,9 +211,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			);
 		} else {
 			$abbr_tag = new SwatHtmlTag('abbr');
-			// Note: This always minimizes entities in titles regardless of
-			// $this->title_content_type, as its a html tag attribute.
-			$abbr_tag->title = SwatString::minimizeEntities($this->title);
+			$abbr_tag->title = $this->title;
 			$abbr_tag->open();
 
 			$this->displayTitle(
@@ -223,6 +221,9 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
 			$abbr_tag->close();
 		}
+
+		$anchor->close();
+
 	}
 
 	// }}}
