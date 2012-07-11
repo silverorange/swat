@@ -223,7 +223,6 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 		}
 
 		$anchor->close();
-
 	}
 
 	// }}}
