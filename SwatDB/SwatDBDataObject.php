@@ -500,9 +500,35 @@ class SwatDBDataObject extends SwatObject
 
 		$property_array = $this->getProperties();
 
+		// Note: SwatDBDataObject::generatePropertyHash() is not used
+		// here because it would mean calling the expensive getProperties()
+		// method in a loop.
 		foreach ($property_array as $name => $value) {
 			$hashed_value = md5(serialize($value));
 			$this->property_hashes[$name] = $hashed_value;
+		}
+	}
+
+	// }}}
+	// {{{ protected function generatePropertyHash()
+
+	/**
+	 * Generates the MD5 hash for a property of this object
+	 *
+	 * @param string $property the name of the property for which to generate
+	 *                          the hash.
+	 */
+	protected function generatePropertyHash($property)
+	{
+		if ($this->read_only) {
+			return;
+		}
+
+		$property_array = $this->getProperties();
+
+		if (isset($property_array[$property])) {
+			$hashed_value = md5(serialize($property_array[$property]));
+			$this->property_hashes[$property] = $hashed_value;
 		}
 	}
 
