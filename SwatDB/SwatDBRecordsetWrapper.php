@@ -698,6 +698,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 				get_class($this)));
 		}
 
+		// default binding field type is integer
+		$binding_field = new SwatDBField($binding_field, 'integer');
+
 		// return empty recordset if this is an empty recordset
 		if (count($this) === 0) {
 			$recordset = new $wrapper();
@@ -711,21 +714,22 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 			$record_ids[] = $record->{$this->index_field};
 		}
 
-		// note: this only works when index_field is an integer which is
-		// currently true anyway
-		$record_ids = $this->db->implodeArray($record_ids, 'integer');
+		$record_ids = $this->db->implodeArray(
+			$record_ids,
+			$binding_field->type
+		);
 
 		// build SQL to select all records
 		$sql = sprintf('select %s from %s
 			where %s in (%s)',
 			$fields,
-			$table, $binding_field, $record_ids);
+			$table, $binding_field->name, $record_ids);
 
 		if ($where != '') {
 			$sql.= ' and '.$where;
 		}
 
-		$sql.= ' order by '.$binding_field;
+		$sql.= ' order by '.$binding_field->name;
 		if ($order_by != '') {
 			$sql.= ', '.$order_by;
 		}
@@ -733,7 +737,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		// get all records
 		$recordset = SwatDB::query($this->db, $sql, $wrapper);
 
-		return $this->attachSubRecordset($name, $wrapper, $binding_field,
+		return $this->attachSubRecordset($name, $wrapper, $binding_field->name,
 			$recordset);
 	}
 
