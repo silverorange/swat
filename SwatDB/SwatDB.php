@@ -18,7 +18,7 @@ require_once 'SwatDB/exceptions/SwatDBException.php';
  * Static convenience methods for working with a database.
  *
  * @package   SwatDB
- * @copyright 2005-2008 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDB extends SwatObject
@@ -1151,6 +1151,33 @@ class SwatDB extends SwatObject
 			$quoted_ids[] = $db->quote($id, $type);
 
 		return implode(',', $quoted_ids);
+	}
+
+	// }}}
+	// {{{ public static function implodeAndQuoteArray()
+
+	/**
+	 * Implodes an array of values into a quoted list.
+	 *
+	 * Each item in the array is quoted using the specified type.
+	 *
+	 * @param MDB2_Driver_Common $db the database connection to use to implode
+	 *                                the array.
+	 * @param array $values the array of values to implode.
+	 * @param string $type optional. The datatype to use. Must be a valid MDB2
+	 *                      datatype. If unspecified, 'integer' is used.
+	 *
+	 * @return string the imploded view ready for inclusion in an SQL statement.
+	 */
+	public static function implodeAndQuoteArray(MDB2_Driver_Common $db, $values,
+		$type = 'integer')
+	{
+		$quoted_values = array();
+		foreach ($values as $value) {
+			$quoted_values[] = $db->quote($value, $type);
+		}
+
+		return implode(',', $quoted_values);
 	}
 
 	// }}}
