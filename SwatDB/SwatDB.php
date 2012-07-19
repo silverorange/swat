@@ -1154,33 +1154,6 @@ class SwatDB extends SwatObject
 	}
 
 	// }}}
-	// {{{ public static function implodeAndQuoteArray()
-
-	/**
-	 * Implodes an array of values into a quoted list.
-	 *
-	 * Each item in the array is quoted using the specified type.
-	 *
-	 * @param MDB2_Driver_Common $db the database connection to use to implode
-	 *                                the array.
-	 * @param array $values the array of values to implode.
-	 * @param string $type optional. The datatype to use. Must be a valid MDB2
-	 *                      datatype. If unspecified, 'integer' is used.
-	 *
-	 * @return string the imploded view ready for inclusion in an SQL statement.
-	 */
-	public static function implodeAndQuoteArray(MDB2_Driver_Common $db, $values,
-		$type = 'integer')
-	{
-		$quoted_values = array();
-		foreach ($values as $value) {
-			$quoted_values[] = $db->quote($value, $type);
-		}
-
-		return implode(',', $quoted_values);
-	}
-
-	// }}}
 	// {{{ private static function executeQuery()
 
 	private static function executeQuery($db, $method, array $args)
