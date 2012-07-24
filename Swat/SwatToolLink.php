@@ -158,10 +158,31 @@ class SwatToolLink extends SwatControl
 
 		parent::display();
 
-		if ($this->isSensitive())
-			$this->getSensitiveTag()->display();
-		else
-			$this->getInsensitiveTag()->display();
+		$tag = ($this->isSensitive())
+			? $this->getSensitiveTag()
+			: $this->getInsensitiveTag();
+
+		$tag->open();
+
+		$icon_span = new SwatHtmlTag('span');
+
+		if ($this->isSensitive()) {
+			$icon_span->class = 'swat-tool-link-icon';
+		} else {
+			$icon_span->class =
+				'swat-tool-link-icon swat-tool-link-icon-insensitive';
+		}
+
+		$icon_span->setContent('');
+
+		$icon_span->display();
+
+		$title_span = new SwatHtmlTag('span');
+		$title_span->class = 'swat-tool-link-title';
+		$title_span->setContent($this->title, $this->content_type);
+		$title_span->display();
+
+		$tag->close();
 	}
 
 	// }}}
@@ -205,6 +226,11 @@ class SwatToolLink extends SwatControl
 		case 'edit':
 			$title = Swat::_('Edit');
 			$class = 'swat-tool-link-edit';
+			break;
+
+		case 'download':
+			$title = Swat::_('Download');
+			$class = 'swat-tool-link-download';
 			break;
 
 		case 'delete':
@@ -309,7 +335,6 @@ class SwatToolLink extends SwatControl
 			$tag->title = $this->tooltip;
 
 		$tag->accesskey = $this->access_key;
-		$tag->setContent($this->title, $this->content_type);
 
 		return $tag;
 	}
@@ -332,8 +357,6 @@ class SwatToolLink extends SwatControl
 
 		if ($this->tooltip !== null)
 			$tag->title = $this->tooltip;
-
-		$tag->setContent($this->title, $this->content_type);
 
 		return $tag;
 	}
