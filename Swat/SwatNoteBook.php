@@ -148,6 +148,33 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function getPage()
+
+	/**
+	 * Gets a page in this notebook
+	 *
+	 * Retrieves a page from the list of pages in this notebook based on
+	 * the unique identifier of the page.
+	 *
+	 * @param string $id the unique id of the page to look for.
+	 *
+	 * @return SwatNoteBookPage the found page or null if not found.
+	 */
+	public function getPage($id)
+	{
+		$found_page = null;
+
+		foreach ($this->pages as $page) {
+			if ($page->id == $id) {
+				$found_page = $page;
+				break;
+			}
+		}
+
+		return $found_page;
+	}
+
+	// }}}
 	// {{{ public function init()
 
 	/**
