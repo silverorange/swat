@@ -60,11 +60,6 @@ SwatRadioNoteBook.prototype.init = function()
 	}
 };
 
-SwatRadioNoteBook.handleClick = function(e)
-{
-
-};
-
 SwatRadioNoteBook.prototype.setPage = function(page)
 {
 };
@@ -91,18 +86,15 @@ SwatRadioNoteBook.prototype.openPageWithAnimation = function(page)
 	var region = YAHOO.util.Dom.getRegion(page.firstChild);
 	var height = region.height;
 
-	page.style.height = 'auto';
-	page.firstChild.style.height = '0';
-
 	var anim = new YAHOO.util.Anim(
-		page.firstChild,
+		page,
 		{ 'height': { to: height } },
 		SwatRadioNoteBook.SLIDE_DURATION,
 		YAHOO.util.Easing.easeIn
 	);
 
 	anim.onComplete.subscribe(function() {
-		page.firstChild.style.height = 'auto';
+		page.style.height = 'auto';
 
 		var anim = new YAHOO.util.Anim(
 			page,
@@ -121,7 +113,7 @@ SwatRadioNoteBook.prototype.closePage = function(page)
 {
 	YAHOO.util.Dom.setStyle(page, 'opacity', '0');
 	page.style.overflow = 'hidden';
-	page.firstChild.style.height = '0';
+	page.style.height = '0';
 };
 
 SwatRadioNoteBook.prototype.closePageWithAnimation = function(page)
@@ -136,7 +128,7 @@ SwatRadioNoteBook.prototype.closePageWithAnimation = function(page)
 	anim.onComplete.subscribe(function() {
 		page.style.overflow = 'hidden';
 		var anim = new YAHOO.util.Anim(
-			page.firstChild,
+			page,
 			{ height: { to: 0 } },
 			SwatRadioNoteBook.SLIDE_DURATION,
 			YAHOO.util.Easing.easeOut
