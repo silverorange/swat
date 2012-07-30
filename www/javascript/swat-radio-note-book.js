@@ -95,6 +95,7 @@ SwatRadioNoteBook.prototype.openPageWithAnimation = function(page)
 
 	anim.onComplete.subscribe(function() {
 		page.style.height = 'auto';
+		this.restorePageFocusability(page);
 
 		var anim = new YAHOO.util.Anim(
 			page,
@@ -104,7 +105,7 @@ SwatRadioNoteBook.prototype.openPageWithAnimation = function(page)
 		);
 
 		anim.animate();
-	});
+	}, this, true);
 
 	anim.animate();
 };
@@ -114,6 +115,7 @@ SwatRadioNoteBook.prototype.closePage = function(page)
 	YAHOO.util.Dom.setStyle(page, 'opacity', '0');
 	page.style.overflow = 'hidden';
 	page.style.height = '0';
+	this.removePageFocusability(page);
 };
 
 SwatRadioNoteBook.prototype.closePageWithAnimation = function(page)
@@ -126,7 +128,10 @@ SwatRadioNoteBook.prototype.closePageWithAnimation = function(page)
 	);
 
 	anim.onComplete.subscribe(function() {
+
 		page.style.overflow = 'hidden';
+		this.removePageFocusability(page);
+
 		var anim = new YAHOO.util.Anim(
 			page,
 			{ height: { to: 0 } },
@@ -135,7 +140,56 @@ SwatRadioNoteBook.prototype.closePageWithAnimation = function(page)
 		);
 
 		anim.animate();
-	});
+	}, this, true);
 
 	anim.animate();
+};
+
+SwatRadioNoteBook.prototype.removePageFocusability = function(page)
+{
+	var elements = YAHOO.util.Selector.query(
+		'input, select, textarea, button, a, *[tabindex]',
+		page
+	);
+
+	for (var i = 0; i < elements.length; i++) {
+		if (elements[i].getAttribute('_' + this.id + '_tabindex') === null) {
+			var tabindex;
+
+			if ('hasAttribute' in elements[i]) {
+				tabindex = elements[i].getAttribute('tabindex');
+			} else {
+				tabindex = elements[i].tabIndex; // for old IE
+				if (tabindex == 0) {
+					tabindex = null;
+				}
+			}
+
+			elements[i]['_' + this.id + '_tabindex'] = tabindex;
+			elements[i].tabindex = -1;
+			elements[i].setAttribute('tabIndex', -1); // For old IE
+		}
+	}
+};
+
+SwatRadioNoteBook.prototype.restorePageFocusability = function(page)
+{
+	var elements = YAHOO.util.Selector.query(
+		'input, select, textarea, button, a, *[tabindex]',
+		page
+	);
+
+	for (var i = 0; i < elements.length; i++) {
+		if (elements[i].getAttribute('_' + this.id + '_tabindex') != '') {
+			var tabindex = elements[i]['_' + this.id + '_tabindex'];
+			if (tabindex == '' || tabindex === null) {
+				elements[i].removeAttribute('tabindex');
+				elements[i].removeAttribute('tabIndex'); // For old IE
+			} else {
+				elements[i].tabindex = tabindex;
+				elements[i].setAttribute('tabIndex', tabindex); // For old IE
+			}
+			elements[i].removeAttribute('_' + this.id + '_tabindex');
+		}
+	}
 };
