@@ -25,6 +25,7 @@ class SwatDB extends SwatObject
 {
 	// {{{ protected static properties
 
+	protected static $query_count = 0;
 	protected static $debug = false;
 	protected static $debug_info = array();
 	protected static $debug_wrapper_depth = 0;
@@ -1158,6 +1159,7 @@ class SwatDB extends SwatObject
 
 	private static function executeQuery($db, $method, array $args)
 	{
+		self::$query_count++;
 		self::debugStart(current($args)); // sql is always the first arg
 		$ret = call_user_func_array(array($db, $method), $args);
 		self::debugEnd();
@@ -1291,6 +1293,7 @@ class SwatDB extends SwatObject
 			$debug_info['message'] = $debug_message;
 			$debug_info['time'] = microtime(true) * 1000;
 			$debug_info['depth'] = self::$debug_wrapper_depth;
+			$debug_info['count'] = self::$query_count;
 			self::$debug_info[] = $debug_info;
 
 			self::$debug_wrapper_depth++;
@@ -1322,6 +1325,10 @@ class SwatDB extends SwatObject
 
 					echo "\n".$info['message']."\n";
 
+					$locale = SwatI18NLocale::get();
+					printf("<p>Query #%s</p>\n",
+						$locale->formatNumber($info['count']));
+
 					if (count(self::$debug_info) > $count + 1) {
 						$time = self::$debug_info[$count + 1]['time'];
 					} else {
@@ -1330,7 +1337,6 @@ class SwatDB extends SwatObject
 
 					$ms = $time - $info['time'];
 
-					$locale = SwatI18NLocale::get();
 					printf("<p><strong>%s ms</strong></p>\n",
 						$locale->formatNumber($ms, 3));
 
