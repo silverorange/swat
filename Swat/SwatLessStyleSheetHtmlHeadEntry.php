@@ -11,7 +11,7 @@ require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
  * @copyright 2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SiteLessStyleSheetHtmlHeadEntry extends SwatStyleSheetHtmlHeadEntry
+class SwatLessStyleSheetHtmlHeadEntry extends SwatStyleSheetHtmlHeadEntry
 {
 	// {{{ public function display()
 
