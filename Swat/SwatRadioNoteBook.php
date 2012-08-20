@@ -583,17 +583,18 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 		$container->class = 'swat-radio-note-book';
 		$container->open();
 
-		$input = new SwatHtmlTag('input');
-		$input->type = 'hidden';
-		$input->name = $this->id;
-		$input->id = $this->id.'_'.$page->id;
-		$input->value = $this->id.'_'.$page->id;
-
 		$div = new SwatHtmlTag('td');
 		$div->class = 'swat-radio-note-book-page';
 		$div->open();
 		$page->display();
 		$div->close();
+
+		$input = new SwatHtmlTag('input');
+		$input->type = 'hidden';
+		$input->name = $this->id;
+		$input->id = $this->id.'_'.$page->id;
+		$input->value = $this->id.'_'.$page->id;
+		$input->display();
 
 		$container->close();
 	}
