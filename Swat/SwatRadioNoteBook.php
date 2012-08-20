@@ -220,74 +220,35 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 		// the process step
 		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
 
-		$table = new SwatHtmlTag('table');
-		$table->id = $this->id;
-		$table->class = 'swat-radio-note-book';
-		$table->open();
+		if (count($this->pages) === 1) {
+			$this->displaySinglePage(reset($this->pages));
+		} else {
 
-		echo '<tbody>';
+			$table = new SwatHtmlTag('table');
+			$table->id = $this->id;
+			$table->class = 'swat-radio-note-book';
+			$table->open();
 
-		$count = 0;
-		foreach ($this->pages as $page) {
-			if (!$page->visible) {
-				continue;
+			echo '<tbody>';
+
+			$count = 0;
+			foreach ($this->pages as $page) {
+				if (!$page->visible) {
+					continue;
+				}
+
+				$count++;
+
+				$this->displayPage($page, $count);
 			}
 
-			$count++;
+			echo '</tbody>';
 
-			echo '<tr class="swat-radio-note-book-option-row">';
-			echo '<td>';
+			$table->close();
 
-			$radio = new SwatHtmlTag('input');
-			$radio->type = 'radio';
-			$radio->name = $this->id;
-			$radio->id = $this->id.'_'.$page->id;
-			$radio->value = $this->id.'_'.$page->id;
+			Swat::displayInlineJavaScript($this->getInlineJavaScript());
 
-			if ($page->id == $this->selected_page) {
-				$radio->checked = 'checked';
-			}
-
-			echo '<span class="swat-radio-wrapper">';
-			$radio->display();
-			echo '<span class="swat-radio-shim"></span>';
-			echo '</span>';
-
-			echo '</td>';
-			echo '<td>';
-
-			$label = new SwatHtmlTag('label');
-			$label->for = $this->id.'_'.$page->id;
-			$label->setContent($page->title, $page->title_content_type);
-			$label->display();
-
-			echo '</td>';
-			echo '</tr>';
-
-			echo '<tr class="swat-radio-note-book-page-row">';
-			echo '<td></td>';
-
-			$td = new SwatHtmlTag('td');
-			$td->class = 'swat-radio-note-book-page';
-
-			if ($page->id == $this->selected_page) {
-				$td->class.= ' selected';
-			}
-
-			$td->open();
-			echo '<div class="swat-radio-note-book-page-container">';
-			$page->display();
-			echo '</div>';
-			$td->close();
-
-			echo '</tr>';
 		}
-
-		echo '</tbody>';
-
-		$table->close();
-
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -544,6 +505,97 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 		}
 
 		return $copy;
+	}
+
+	// }}}
+	// {{{ protected function displayPage()
+
+	/**
+	 * Displays an individual page in this radio notebook
+	 *
+	 * @param SwatNoteBookPage $page the page to display
+	 * @param integer $count the ordinal idnex of the page being displayed
+	 *                        starting at 1.
+	 */
+	protected function displayPage(SwatNoteBookPage $page, $count = 0)
+	{
+		echo '<tr class="swat-radio-note-book-option-row">';
+		echo '<td>';
+
+		$radio = new SwatHtmlTag('input');
+		$radio->type = 'radio';
+		$radio->name = $this->id;
+		$radio->id = $this->id.'_'.$page->id;
+		$radio->value = $this->id.'_'.$page->id;
+
+		if ($page->id == $this->selected_page) {
+			$radio->checked = 'checked';
+		}
+
+		echo '<span class="swat-radio-wrapper">';
+		$radio->display();
+		echo '<span class="swat-radio-shim"></span>';
+		echo '</span>';
+
+		echo '</td>';
+		echo '<td>';
+
+		$label = new SwatHtmlTag('label');
+		$label->for = $this->id.'_'.$page->id;
+		$label->setContent($page->title, $page->title_content_type);
+		$label->display();
+
+		echo '</td>';
+		echo '</tr>';
+
+		echo '<tr class="swat-radio-note-book-page-row">';
+		echo '<td></td>';
+
+		$td = new SwatHtmlTag('td');
+		$td->class = 'swat-radio-note-book-page';
+
+		if ($page->id == $this->selected_page) {
+			$td->class.= ' selected';
+		}
+
+		$td->open();
+		echo '<div class="swat-radio-note-book-page-container">';
+		$page->display();
+		echo '</div>';
+		$td->close();
+
+		echo '</tr>';
+	}
+
+	// }}}
+	// {{{ protected function displaySinglePage()
+
+	/**
+	 * Displays the only page of this notebook if this notebook contains only
+	 * one page
+	 *
+	 * @param SwatNoteBookPage $page the page to display.
+	 */
+	protected function displaySinglePage(SwatNoteBookPage $page)
+	{
+		$container = new SwatHtmlTag('div');
+		$container->id = $this->id;
+		$container->class = 'swat-radio-note-book';
+		$container->open();
+
+		$input = new SwatHtmlTag('input');
+		$input->type = 'hidden';
+		$input->name = $this->id;
+		$input->id = $this->id.'_'.$page->id;
+		$input->value = $this->id.'_'.$page->id;
+
+		$div = new SwatHtmlTag('td');
+		$div->class = 'swat-radio-note-book-page';
+		$div->open();
+		$page->display();
+		$div->close();
+
+		$container->close();
 	}
 
 	// }}}
