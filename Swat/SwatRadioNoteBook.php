@@ -583,7 +583,7 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 		$container->class = 'swat-radio-note-book';
 		$container->open();
 
-		$div = new SwatHtmlTag('td');
+		$div = new SwatHtmlTag('div');
 		$div->class = 'swat-radio-note-book-page';
 		$div->open();
 		$page->display();
