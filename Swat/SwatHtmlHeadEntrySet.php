@@ -6,6 +6,7 @@ require_once 'Concentrate/Concentrator.php';
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlHeadEntry.php';
 require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
+require_once 'Swat/SwatLessStyleSheetHtmlHeadEntry.php';
 require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
 
 /**
@@ -15,7 +16,7 @@ require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
  * of entries.
  *
  * @package   Swat
- * @copyright 2006-2010 silverorange
+ * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatHtmlHeadEntrySet extends SwatObject
@@ -40,6 +41,7 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	protected $type_map = array(
 		'/\.js$/'  => 'SwatJavaScriptHtmlHeadEntry',
 		'/\.css$/' => 'SwatStyleSheetHtmlHeadEntry',
+		'/\.less$/' => 'SwatLessStyleSheetHtmlHeadEntry',
 	);
 
 	// }}}
