@@ -211,9 +211,6 @@ class SwatYUI extends SwatObject
 		$components['datatable']->addStyleSheet('datatable/assets/skins/sam', '',
 			false);
 
-		$components['event-delegate'] = new SwatYUIComponent('event-delegate');
-		$components['event-delegate']->addJavaScript('event-delegate');
-
 		$components['dom'] = new SwatYUIComponent('dom');
 		$components['dom']->addJavaScript();
 
@@ -235,6 +232,14 @@ class SwatYUI extends SwatObject
 
 		$components['event'] = new SwatYUIComponent('event');
 		$components['event']->addJavaScript();
+
+		$components['event-delegate'] = new SwatYUIComponent('event-delegate');
+		$components['event-delegate']->addJavaScript('event-delegate');
+
+		$components['event-mouseenter'] = new SwatYUIComponent(
+			'event-mouseenter');
+
+		$components['event-mouseenter']->addJavaScript('event-mouseenter');
 
 		$components['fonts'] = new SwatYUIComponent('fonts');
 		$components['fonts']->addStyleSheet();
@@ -374,6 +379,10 @@ class SwatYUI extends SwatObject
 		$components['element']->addDependency($components['event']);
 
 		$components['event']->addDependency($components['yahoo']);
+
+		$components['event-delegate']->addDependency($components['event']);
+
+		$components['event-mouseenter']->addDependency($components['event']);
 
 		$components['grids']->addDependency($components['fonts']);
 
