@@ -234,12 +234,12 @@ class SwatYUI extends SwatObject
 		$components['event']->addJavaScript();
 
 		$components['event-delegate'] = new SwatYUIComponent('event-delegate');
-		$components['event-delegate']->addJavaScript('event-delegate');
+		$components['event-delegate']->addJavaScript();
 
 		$components['event-mouseenter'] = new SwatYUIComponent(
 			'event-mouseenter');
 
-		$components['event-mouseenter']->addJavaScript('event-mouseenter');
+		$components['event-mouseenter']->addJavaScript();
 
 		$components['fonts'] = new SwatYUIComponent('fonts');
 		$components['fonts']->addStyleSheet();
