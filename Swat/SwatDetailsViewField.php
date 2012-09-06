@@ -64,6 +64,14 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	 */
 	public $show_colon = true;
 
+	/**
+	 * Whether or not to include CSS classes from the first cell renderer
+	 * of this field in this field's CSS classes
+	 *
+	 * @see SwatDetailsViewField::getCSSClassNames()
+	 */
+	public $show_renderer_classes = true;
+
 	// }}}
 	// {{{ protected properties
 
@@ -295,6 +303,10 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	 * 1. hard-coded CSS classes from field subclasses,
 	 * 2. 'odd' if this is an odd row in the parent view,
 	 * 3. user-specified CSS classes on this field,
+	 *
+	 * If {@link SwatDetailsViewField::$show_renderer_classes} is true, the
+	 * following extra CSS classes are added:
+	 *
 	 * 4. the inheritance classes of the first cell renderer in this field,
 	 * 5. hard-coded CSS classes from the first cell renderer in this field,
 	 * 6. hard-coded data-specific CSS classes from the first cell renderer in
@@ -314,14 +326,17 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 		$classes = $this->getBaseCSSClassNames();
 
 		// odd
-		if ($this->odd)
+		if ($this->odd) {
 			$classes[] = 'odd';
+		}
 
 		// user-specified classes
 		$classes = array_merge($classes, $this->classes);
 
 		$first_renderer = $this->renderers->getFirst();
-		if ($first_renderer !== null) {
+		if ($this->show_renderer_classes &&
+			$first_renderer instanceof SwatCellRenderer) {
+
 			// renderer inheritance classes
 			$classes = array_merge($classes,
 				$first_renderer->getInheritanceCSSClassNames());
@@ -338,6 +353,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 			// renderer user-specified classes
 			$classes = array_merge($classes, $first_renderer->classes);
 		}
+
 		return $classes;
 	}
 

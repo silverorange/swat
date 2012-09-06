@@ -36,8 +36,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	public $sensitive = true;
 
-	public $aggregate_css_classes = true;
-
 	// }}}
 	// {{{ private properties
 
@@ -311,10 +309,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	public final function getInheritanceCSSClassNames()
 	{
-		if (!$this->aggregate_css_classes) {
-			return array();
-		}
-
 		$php_class_name = get_class($this);
 		$css_class_names = array();
 

@@ -15,6 +15,17 @@ require_once 'Swat/SwatHtmlTag.php';
  */
 class SwatTile extends SwatCellRendererContainer
 {
+	// {{{ public properties
+
+	/**
+	 * Whether or not to include CSS classes from the first cell renderer
+	 * of this tile in this tile's CSS classes
+	 *
+	 * @see SwatTile::getCSSClassNames()
+	 */
+	public $show_renderer_classes = true;
+
+	// }}}
 	// {{{ protected properties
 
 	/**
@@ -220,6 +231,10 @@ class SwatTile extends SwatCellRendererContainer
 	 *
 	 * 1. hard-coded CSS classes from tile subclasses,
 	 * 2. user-specified CSS classes on this tile,
+	 *
+	 * If {@link SwatTile::$show_renderer_classes} is true, the following
+	 * extra CSS classes are added:
+	 *
 	 * 3. the inheritance classes of the first cell renderer in this tile,
 	 * 4. hard-coded CSS classes from the first cell renderer in this tile,
 	 * 5. hard-coded data-specific CSS classes from the first cell renderer in
@@ -241,7 +256,9 @@ class SwatTile extends SwatCellRendererContainer
 		$classes = array_merge($classes, $this->classes);
 
 		$first_renderer = $this->renderers->getFirst();
-		if ($first_renderer !== null) {
+		if ($this->show_renderer_classes &&
+			$first_renderer instanceof SwatCellRenderer) {
+
 			// renderer inheritance classes
 			$classes = array_merge($classes,
 				$first_renderer->getInheritanceCSSClassNames());
@@ -258,6 +275,7 @@ class SwatTile extends SwatCellRendererContainer
 			// renderer user-specified classes
 			$classes = array_merge($classes, $first_renderer->classes);
 		}
+
 		return $classes;
 	}
 
