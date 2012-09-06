@@ -774,7 +774,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 					$first_renderer->getDataSpecificCSSClassNames());
 
 			// renderer user-specified classes
-			$classes = array_merge($classes, $first_renderer->classes);
+			if ($first_renderer->aggregate_css_classes) {
+				$classes = array_merge($classes, $first_renderer->classes);
+			}
 		}
 		return $classes;
 	}
