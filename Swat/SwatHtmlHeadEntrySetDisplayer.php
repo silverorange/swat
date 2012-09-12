@@ -92,7 +92,9 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 			$prefix = $uri_prefix;
 
 			if ($minify &&
-				$this->concentrator->isMinified($entry->getUri())) {
+				$this->concentrator->isMinified($entry->getUri()) &&
+				($compile ||
+				$entry->getType() !== 'SwatLessStyleSheetHtmlHeadEntry')) {
 				$prefix = $prefix . 'min/';
 			}
 
