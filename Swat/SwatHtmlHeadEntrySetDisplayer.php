@@ -13,7 +13,7 @@ require_once 'Swat/SwatHtmlHeadEntrySet.php';
  * entries.
  *
  * @package   Swat
- * @copyright 2010 silverorange
+ * @copyright 2010-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatHtmlHeadEntrySetDisplayer extends SwatObject
@@ -54,9 +54,12 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 	 *                          false.
 	 * @param boolean $minify whether or not to minify files. Defaults to
 	 *                         false.
+	 * @param boolean $compile whether or not to use compiled files. Defaults to
+	 *                          false.
 	 */
 	public function display(SwatHtmlHeadEntrySet $set,
-		$uri_prefix = '', $tag = null, $combine = false, $minify = false)
+		$uri_prefix = '', $tag = null, $combine = false, $minify = false,
+		$compile = false)
 	{
 		$entries = $set->toArray();
 
@@ -86,12 +89,17 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 
 			echo "\t";
 
+			$prefix = $uri_prefix;
+
 			if ($minify &&
-				$entry->getType() === 'SwatJavaScriptHtmlHeadEntry' &&
 				$this->concentrator->isMinified($entry->getUri())) {
-				$prefix = $uri_prefix . 'min/';
-			} else {
-				$prefix = $uri_prefix;
+				$prefix = $prefix . 'min/';
+			}
+
+			if ($compile &&
+				$entry->getType() === 'SwatLessStyleSheetHtmlHeadEntry') {
+				$prefix = $prefix . 'compiled/';
+				$entry = $entry->getStyleSheetHeadEntry();
 			}
 
 			$entry->display($prefix, $tag);
