@@ -5,6 +5,7 @@
 require_once 'Concentrate/Concentrator.php';
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlHeadEntrySet.php';
+require_once 'Swat/SwatInlineJavaScriptHtmlHeadEntry.php';
 
 /**
  * Displays HTML head entries
@@ -61,6 +62,22 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 		$uri_prefix = '', $tag = null, $combine = false, $minify = false,
 		$compile = false)
 	{
+		// clone set so displaying doesn't modify it
+		$set = clone $set;
+
+		// if not compiled and we have LESS entries, include the LESS client-
+		// side JavaScript.
+		if (count($set->getByType('SwatLessStyleSheetHtmlHeadEntry')) > 0 &&
+			!$compile && class_exists('Less')) {
+			$set->addEntry(
+				new SwatInlineJavaScriptHtmlHeadEntry(
+					'var less = { env: "development" };'
+				)
+			);
+			$set->addEntrySet(Less::getHtmlHeadEntrySet());
+		}
+
+
 		$entries = $set->toArray();
 
 		// combine files
@@ -300,11 +317,13 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 	protected function getTypeOrder()
 	{
 		return array(
-			'SwatStyleSheetHtmlHeadEntry' => 0,
-			'SwatLinkHtmlHeadEntry'       => 1,
-			'SwatJavaScriptHtmlHeadEntry' => 2,
-			'SwatCommentHtmlHeadEntry'    => 3,
-			'__unknown__'                 => 4,
+			'SwatStyleSheetHtmlHeadEntry'       => 0,
+			'SwatLessStyleSheetHtmlHeadEntry'   => 1,
+			'SwatLinkHtmlHeadEntry'             => 2,
+			'SwatInlineJavaScriptHtmlHeadEntry' => 3,
+			'SwatJavaScriptHtmlHeadEntry'       => 4,
+			'SwatCommentHtmlHeadEntry'          => 5,
+			'__unknown__'                       => 6,
 		);
 	}
 
