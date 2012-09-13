@@ -57,6 +57,9 @@ SwatYUI:
         - packages/yui/event/event.js
       OptionalDepends:
         - packages/yui/selector/selector.js
+    packages/yui/event-mouseenter/event-mouseenter.js:
+      Depends:
+        - packages/yui/event/event.js
     packages/yui/json/json.js:
       Depends:
         - packages/yui/yahoo/yahoo.js
