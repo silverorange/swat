@@ -2,12 +2,11 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Concentrate/Concentrator.php';
-require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatHtmlHeadEntry.php';
 require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
 require_once 'Swat/SwatLessStyleSheetHtmlHeadEntry.php';
 require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
+require_once 'Swat/SwatInlineJavaScriptHtmlHeadEntry.php';
 
 /**
  * A collection of HTML head entries
@@ -19,7 +18,7 @@ require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
  * @copyright 2006-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatHtmlHeadEntrySet extends SwatObject
+class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
 {
 	// {{{ protected properties
 
@@ -116,6 +115,38 @@ class SwatHtmlHeadEntrySet extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function count()
+
+	/**
+	 * Gets the number of entries in this set
+	 *
+	 * Fulfills the Coutnable interface.
+	 *
+	 * @return integer the number of entries in this set.
+	 */
+	public function count()
+	{
+		return count($this->entries);
+	}
+
+	// }}}
+	// {{{ public function getIterator()
+
+	/**
+	 * Gets an iterator over the entries in this set
+	 *
+	 * Fulfills the IteratorAggregate interface.
+	 *
+	 * @return Iterable an iterator over the entries in this set.
+	 */
+	public function getIterator()
+	{
+		// return an array copy by design to fulfil the IteratorAggregate
+		// interface.
+		return $this->entries;
+	}
+
+	// }}}
 	// {{{ public function addTypeMapping()
 
 	public function setTypeMapping($type, $class = null)
@@ -140,6 +171,31 @@ class SwatHtmlHeadEntrySet extends SwatObject
 		}
 
 		$this->type_map = array_merge($this->type_map, $type);
+	}
+
+	// }}}
+	// {{{ public function getByType()
+
+	/**
+	 * Gets a subset of this set by the entry type
+	 *
+	 * @param string $type the type of HTML head entry to get. For example,
+	 *                      'SwatJavaScriptHtmlHeadEntry'.
+	 *
+	 * @return SwatHtmlHeadEntrySet a subset of this set containing only
+	 *                              entries of the specified type. If no such
+	 *                              entries exist, an empty set is returned.
+	 */
+	public function getByType($type)
+	{
+		$class = __CLASS__;
+		$set = new $class();
+		foreach ($this->entries as $entry) {
+			if ($entry->getType() === $type) {
+				$set->addEntry($entry);
+			}
+		}
+		return $set;
 	}
 
 	// }}}
