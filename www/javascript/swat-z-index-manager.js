@@ -116,12 +116,12 @@ SwatZIndexManager.raiseElement = function(element, group)
 		var group_node;
 
 		if (SwatZIndexManager.groups[group]) {
+			group_node = SwatZIndexManager.groups[group];
+		} else {
 			group_node = new SwatZIndexNode();
 			SwatZIndexManager.groups[group] = group_node;
 			// add group to root
 			SwatZIndexManager.tree.add(group_node);
-		} else {
-			group_node = SwatZIndexManager.groups[group];
 		}
 
 		// add element node to end of group node
