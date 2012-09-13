@@ -1,3 +1,79 @@
+function SwatZIndexNode(element)
+{
+	if (element) {
+		this.element = element;
+		this.element._swat_z_index_node = this;
+	} else {
+		this.element = null
+	}
+
+	this.parent = null;
+	this.nodes = [];
+}
+
+SwatZIndexNode.prototype.add = function(node)
+{
+	for (var i = 0; i < this.nodes.length; i++) {
+		if (this.nodes[i] === node || this.nodes[i].id === node) {
+			return;
+		}
+	}
+
+	this.nodes.push(node);
+	node.parent = this;
+}
+
+SwatZIndexNode.prototype.remove = function(node)
+{
+	var found = false;
+
+	for (var i = 0; i < this.nodes.length; i++) {
+		if (this.nodes[i] === node) {
+			found = this.nodes[i];
+			found.parent = null;
+			this.nodes.splice(i, 1);
+			break;
+		}
+	}
+
+	return found;
+}
+
+SwatZIndexManager.reindex = function()
+{
+	SwatZIndexManager.reindexNode(
+		SwatZIndexManager.tree,
+		SwatZIndexManager.start
+	);
+}
+
+SwatZIndexManager.reindexNode = function(node, index)
+{
+	if (node.element) {
+		node.element.style.zIndex = index;
+		index++;
+	}
+
+	for (var i = 0; i < node.nodes.length; i++) {
+		index = SwatZIndexManager.reindexNode(node.nodes[i], index);
+	}
+
+	return index;
+}
+
+SwatZIndexManager.unindexNode = function(node)
+{
+	if (node.element) {
+		node.element.style.zIndex = 0;
+	}
+
+	for (var i = 0; i < node.nodes.length; i++) {
+		index = SwatZIndexManager.unindexNode(node.nodes[i]);
+	}
+
+	return index;
+}
+
 /**
  * An object to manage element z-indexes for a webpage
  */
@@ -5,7 +81,9 @@ function SwatZIndexManager()
 {
 }
 
-SwatZIndexManager.elements = [];
+SwatZIndexManager.tree = new SwatZIndexNode();
+
+SwatZIndexManager.groups = {};
 
 /**
  * Default starting z-index for elements
@@ -22,21 +100,79 @@ SwatZIndexManager.start = 10;
  *
  * @param DOMElement element the element to raise.
  */
-SwatZIndexManager.raiseElement = function(element)
+SwatZIndexManager.raiseElement = function(element, group)
 {
-	SwatZIndexManager.removeElement(element);
+	var node;
 
-	if (SwatZIndexManager.elements.length > 0) {
-		var position = SwatZIndexManager.elements.length - 1;
-		var index = parseInt(SwatZIndexManager.elements[position].style.zIndex);
-		index++;
+	// create node if it does not exist
+	if (element._swat_z_index_node) {
+		node = element._swat_z_index_node;
 	} else {
-		var index = SwatZIndexManager.start;
+		node = new SwatZIndexNode(element);
 	}
 
-	element.style.zIndex = index;
+	// create group node if it does not exist
+	if (group) {
+		var group_node;
 
-	SwatZIndexManager.elements.push(element);
+		if (SwatZIndexManager.groups[group]) {
+			group_node = new SwatZIndexNode();
+			SwatZIndexManager.groups[group] = group_node;
+			// add group to root
+			SwatZIndexManager.tree.add(group_node);
+		} else {
+			group_node = SwatZIndexManager.groups[group];
+		}
+
+		// add element node to end of group node
+		group_node.remove(node);
+		group_node.add(node);
+	} else {
+		// add element node to end of root
+		SwatZIndexManager.tree.remove(node);
+		SwatZIndexManager.tree.add(node);
+	}
+
+	SwatZIndexManager.reindex();
+}
+
+SwatZIndexManager.raiseGroup = function(group)
+{
+	if (!SwatZIndexManager.groups[group]) {
+		return;
+	}
+
+	var group = SwatZIndexManager.groups[group];
+
+	var parent = group.parent;
+	parent.remove(group);
+	parent.add(group);
+
+	SwatZIndexManager.reindex();
+}
+
+SwatZIndexManager.lowerGroup = function(group)
+{
+	if (!SwatZIndexManager.groups[group]) {
+		return;
+	}
+
+	var group = SwatZIndexManager.groups[group];
+	SwatZIndexManager.unindexNode(group);
+	SwatZIndexManager.removeGroup(group);
+}
+
+SwatZIndexManager.removeGroup = function(group)
+{
+	if (!SwatZIndexManager.groups[group]) {
+		return;
+	}
+
+	var group = SwatZIndexManager.groups[group];
+	group.parent.remove(group);
+	SwatZIndexManager.groups[group] = null;
+
+	SwatZIndexManager.reindex();
 }
 
 /**
@@ -48,53 +184,50 @@ SwatZIndexManager.raiseElement = function(element)
  * ordering to the first element.
  *
  * @param DOMElement element the element to lower.
+ * @param String group optional. The group name.
+ *
+ * @return mixed the element that was lowered or null if the element was not
+ *                found.
  */
-SwatZIndexManager.lowerElement = function(element)
+SwatZIndexManager.lowerElement = function(element, group)
 {
 	element.style.zIndex = 0;
 
-	SwatZIndexManager.removeElement(element);
+	return SwatZIndexManager.removeElement(element, group);
 }
 
 /**
  * Removes an element from the list of managed elements
  *
  * @param DOMElement element the element to remove
+ * @param String group optional. The group name.
  *
  * @return mixed the element that was removed or null if the element was not
  *                found.
  */
-SwatZIndexManager.removeElement = function(element)
+SwatZIndexManager.removeElement = function(element, group)
 {
-	// find element
-	var position = -1;
-	for (var i = 0; i < SwatZIndexManager.elements.length; i++) {
-		if (SwatZIndexManager.elements[i] === element) {
-			position = i;
-			break;
-		}
-	}
-
-	// element was not found
-	if (position == -1) {
+	if (!element._swat_z_index_node) {
 		return null;
 	}
 
-	// remove element from list
-	SwatZIndexManager.elements.splice(position, 1);
+	var node = element._swat_z_index_node;
+	if (node.parent) {
+		node.parent.remove(node);
+	}
 
-	// shift other elements down
-	if (SwatZIndexManager.elements.length > 0) {
-		var old_index = 0;
-		var new_index = 0;
-		var lowest_index = parseInt(SwatZIndexManager.elements[0].style.zIndex);
-
-		for (var i = 0; i < SwatZIndexManager.elements.length; i++) {
-			old_index = parseInt(SwatZIndexManager.elements[i].style.zIndex);
-			new_index = SwatZIndexManager.start + old_index - lowest_index;
-			SwatZIndexManager.elements[i].style.zIndex = new_index;
+	if (group) {
+		// if group is empty, remove it
+		if (SwatZIndexManager.groups[group]) {
+			var group_node = new SwatZIndexNode();
+			if (group_node.nodes.length === 0) {
+				group_node.parent.remove(group_node);
+				SwatZIndexManager.groups[group] = null;
+			}
 		}
 	}
+
+	SwatZIndexManager.reindex();
 
 	return element;
 }
