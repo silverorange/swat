@@ -8,7 +8,7 @@ require_once 'Swat/SwatObject.php';
  * Entry for the navbar navigation tool
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see SwatNavBar
@@ -34,6 +34,15 @@ class SwatNavBarEntry extends SwatObject
 	 */
 	public $link;
 
+	/**
+	 * Optional content type for title
+	 *
+	 * Default text/plain, use text/xml for XHTML fragments.
+	 *
+	 * @var string
+	 */
+	public $content_type = 'text/plain';
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -42,11 +51,14 @@ class SwatNavBarEntry extends SwatObject
 	 *
 	 * @param string $title the title of this entry.
 	 * @param string $link the web address this entry points to.
+	 * @param string $conm the web address this entry points to.
 	 */
-	public function __construct($title, $link = null)
+	public function __construct($title, $link = null,
+		$content_type = 'text/plain')
 	{
 		$this->title = $title;
 		$this->link = $link;
+		$this->content_type = $content_type;
 	}
 
 	// }}}

@@ -11,7 +11,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * Visible navigation tool (breadcrumb trail)
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatNavBarEntry
  */
@@ -68,10 +68,12 @@ class SwatNavBar extends SwatControl implements Countable
 	 *
 	 * @param string $title the entry title.
 	 * @param string $link an optional entry URI.
+	 * @param string $content_type an optional content type for the entry title.
 	 */
-	public function createEntry($title, $link = null)
+	public function createEntry($title, $link = null,
+		$content_type = 'text/plain')
 	{
-		$this->addEntry(new SwatNavBarEntry($title, $link));
+		$this->addEntry(new SwatNavBarEntry($title, $link, $content_type));
 	}
 
 	// }}}
@@ -362,14 +364,14 @@ class SwatNavBar extends SwatControl implements Countable
 			if ($first)
 				$a_tag->class = 'swat-navbar-first';
 
-			$a_tag->setContent($title);
+			$a_tag->setContent($title, $entry->content_type);
 			$a_tag->display();
 		} else {
 			$span_tag = new SwatHtmlTag('span');
 			if ($first)
 				$span_tag->class = 'swat-navbar-first';
 
-			$span_tag->setContent($title);
+			$span_tag->setContent($title, $entry->content_type);
 			$span_tag->display();
 		}
 	}
