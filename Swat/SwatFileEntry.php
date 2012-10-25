@@ -423,13 +423,6 @@ class SwatFileEntry extends SwatInputControl
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
-		case 'required':
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('%s is required.') :
-				Swat::_('This field is required.');
-
-			$message = new SwatMessage($text, 'error');
-			break;
 		case 'mime-type':
 			$text = sprintf($this->show_field_title_in_messages ?
 				Swat::_('The %%s field must be of the following type(s): %s.') :
