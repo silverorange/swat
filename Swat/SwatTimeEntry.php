@@ -360,12 +360,20 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		if ($all_empty) {
 			if ($this->required && $this->isSensitive()) {
-				$message = Swat::_('The %s field is required.');
+				if ($this->show_field_title_in_messages) {
+					$message = Swat::_('%s is required.');
+				} else {
+					$message = Swat::_('This field is required.');
+				}
 				$this->addMessage(new SwatMessage($message, 'error'));
 			}
 			$this->value = null;
 		} elseif ($any_empty) {
-			$message = Swat::_('The %s field is not a valid time.');
+			if ($this->show_field_title_in_messages) {
+				$message = Swat::_('%s is not a valid time.');
+			} else {
+				$message = Swat::_('This is not a valid time.');
+			}
 			$this->addMessage(new SwatMessage($message, 'error'));
 			$this->value = null;
 		} else {
@@ -385,7 +393,11 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 				$this->value = $date;
 				$this->validateRanges();
 			} catch (SwatException $e) {
-				$message = Swat::_('The %s field is not a valid time.');
+				if ($this->show_field_title_in_messages) {
+					$message = Swat::_('%s is not a valid time.');
+				} else {
+					$message = Swat::_('This is not a valid time.');
+				}
 				$this->addMessage(new SwatMessage($message, 'error'));
 				$this->value = null;
 			}

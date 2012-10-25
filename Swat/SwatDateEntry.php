@@ -387,7 +387,11 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 				$this->value = $date;
 				$this->validateRanges();
 			} catch (SwatException $e) {
-				$message = Swat::_('The %s field is not a valid date.');
+				if ($this->show_field_title_in_messages) {
+					$message = Swat::_('%s is not a valid date.');
+				} else {
+					$message = Swat::_('This is not a valid date.');
+				}
 				$this->addMessage(new SwatMessage($message, 'error'));
 				$this->value = null;
 			}
