@@ -14,7 +14,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * A checkbox list widget
  *
  * @package   Swat
- * @copyright 2005-2008 silverorange
+ * @copyright 2005-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckboxList extends SwatOptionControl implements SwatState
@@ -194,9 +194,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		if ($this->required && count($this->values) == 0
 			&& $this->isSensitive()) {
-
-			$message = Swat::_('The %s field is required.');
-			$this->addMessage(new SwatMessage($message, 'error'));
+			$this->addMessage($this->getValidationMessage('required'));
 		}
 	}
 
