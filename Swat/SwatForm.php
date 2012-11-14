@@ -21,7 +21,7 @@ require_once 'Swat/SwatYUI.php';
  * or borders.
  *
  * @package   Swat
- * @copyright 2004-2011 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatForm extends SwatDisplayableContainer
@@ -784,14 +784,58 @@ class SwatForm extends SwatDisplayableContainer
 			$value = $raw_data[self::ENCODING_FIELD];
 
 			if ($value === self::ENCODING_8BIT_VALUE) {
+
 				// convert from our 8-bit encoding to utf-8
 				foreach ($raw_data as $key => &$value) {
+					if (!mb_check_encoding($value, $this->_8bit_encoding)) {
+						// The 8-bit data is not valid for the 8-bit character
+						// encoding. This can happen, for example, if robots
+						// submit the 8-bit detection value and then submit
+						// UTF-8 encoded values.
+						throw new SwatInvalidCharacterEncodingException(
+							sprintf(
+								"Form submitted with 8-bit encoding but form ".
+								"data is not valid %s. If this form data is ".
+								"expected, use the ".
+								"SwatForm::set8BitEncoding() method to set an ".
+								"appropriate 8-bit encoding value.\n\nForm ".
+								"data: \n%s",
+								$this->_8bit_encoding,
+								file_get_contents('php://input')
+							)
+						);
+					}
+
 					$value = iconv($this->_8bit_encoding, 'utf-8', $value);
 				}
+
 				foreach ($_FILES as &$file) {
-					$file['name'] = iconv($this->_8bit_encoding, 'utf-8',
-						$file['name']);
+					$filename = $file['name'];
+					if (!mb_check_encoding($filename, $this->_8bit_encoding)) {
+						// The 8-bit data is not valid for the 8-bit character
+						// encoding. This can happen, for example, if robots
+						// submit the 8-bit detection value and then submit
+						// UTF-8 encoded values.
+						throw new SwatInvalidCharacterEncodingException(
+							sprintf(
+								"Form submitted with 8-bit encoding but form ".
+								"data is not valid %s. If this form data is ".
+								"expected, use the ".
+								"SwatForm::set8BitEncoding() method to set an ".
+								"appropriate 8-bit encoding value.\n\nForm ".
+								"data: \n%s",
+								$this->_8bit_encoding,
+								file_get_contents('php://input')
+							)
+						);
+					}
+					$file['name'] = iconv(
+						$this->_8bit_encoding,
+						'utf-8',
+						$filename
+					);
 				}
+
 			} elseif ($value !== self::ENCODING_UTF8_VALUE) {
 				// it's not 8-bit or UTF-8. Time to panic!
 				throw new SwatInvalidCharacterEncodingException(
