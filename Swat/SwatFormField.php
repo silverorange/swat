@@ -14,7 +14,7 @@ require_once 'Swat/SwatMessage.php';
  * Adds a label and space to output messages.
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2012 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
@@ -97,7 +97,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public $show_colon = true;
 
-	/*
+	/**
 	 * Display the title of the form field after the widget code
 	 *
 	 * This is automatically set for some widget types, but defaults to null
@@ -107,6 +107,15 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 * @var boolean
 	 */
 	public $title_reversed = null;
+
+	/**
+	 * Whether or not to show notes on this field before showing content
+	 *
+	 * By default, content is displayed before notes.
+	 *
+	 * @var boolean
+	 */
+	public $show_notes_first = false;
 
 	/**
 	 * Whether or not to display validation messages in this form field
@@ -221,15 +230,28 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		$container_tag->open();
 
 		if ($this->title_reversed === true) {
+			if ($this->show_notes_first) {
+				$this->displayNotes();
+			}
+
 			$this->displayContent();
 			$this->displayTitle();
 		} else {
 			$this->displayTitle();
+
+			if ($this->show_notes_first) {
+				$this->displayNotes();
+			}
+
 			$this->displayContent();
 		}
 
 		$this->displayMessages();
-		$this->displayNotes();
+
+		if (!$this->show_notes_first) {
+			$this->displayNotes();
+		}
+
 		$container_tag->close();
 	}
 
