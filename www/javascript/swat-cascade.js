@@ -6,6 +6,8 @@ function SwatCascade(from_flydown_id, to_flydown_id)
 
 	YAHOO.util.Event.addListener(this.from_flydown, 'change',
 		this.handleChange, this, true);
+
+	this.from_flydown._cascade = this;
 }
 
 SwatCascade.prototype.handleChange = function(e)
@@ -39,6 +41,11 @@ SwatCascade.prototype._updateHelper = function(init)
 
 	// clear old options
 	this.to_flydown.options.length = 0;
+
+	// update any children
+	if (this.to_flydown._cascade) {
+		this.to_flydown._cascade.update();
+	}
 
 	if (child_options) {
 		this.to_flydown.disabled = false;
