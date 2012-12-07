@@ -74,12 +74,28 @@ SwatTableView.prototype.selectItem = function(node, selector)
 
 	// highlight table row of selected item in this view
 	if (this.isSelected(row_node)) {
-		if (YAHOO.util.Dom.hasClass(row_node, 'odd')) {
+		var odd = (YAHOO.util.Dom.hasClass(row_node, 'odd') ||
+			YAHOO.util.Dom.hasClass(row_node, 'highlight-odd'));
+
+		if (odd) {
 			YAHOO.util.Dom.removeClass(row_node, 'odd');
 			YAHOO.util.Dom.addClass(row_node, 'highlight-odd');
-		} else if (!(YAHOO.util.Dom.hasClass(row_node, 'highlight-odd') ||
-			YAHOO.util.Dom.hasClass(row_node, 'highlight'))) {
+		} else {
 			YAHOO.util.Dom.addClass(row_node, 'highlight');
+		}
+
+		var spanning_row = row_node.nextSibling;
+		while (spanning_row && YAHOO.util.Dom.hasClass(
+			spanning_row, 'swat-table-view-spanning-column')) {
+
+			if (odd) {
+				YAHOO.util.Dom.removeClass(spanning_row, 'odd');
+				YAHOO.util.Dom.addClass(spanning_row, 'highlight-odd');
+			} else {
+				YAHOO.util.Dom.addClass(spanning_row, 'highlight');
+			}
+
+			spanning_row = spanning_row.nextSibling;
 		}
 	}
 }
@@ -102,11 +118,28 @@ SwatTableView.prototype.deselectItem = function(node, selector)
 
 	// unhighlight table row of item in this view
 	if (!this.isSelected(row_node)) {
-		if (YAHOO.util.Dom.hasClass(row_node, 'highlight-odd')) {
+		var odd = (YAHOO.util.Dom.hasClass(row_node, 'odd') ||
+			YAHOO.util.Dom.hasClass(row_node, 'highlight-odd'));
+
+		if (odd) {
 			YAHOO.util.Dom.removeClass(row_node, 'highlight-odd');
 			YAHOO.util.Dom.addClass(row_node, 'odd');
-		} else if (YAHOO.util.Dom.hasClass(row_node, 'highlight')) {
+		} else {
 			YAHOO.util.Dom.removeClass(row_node, 'highlight');
+		}
+
+		var spanning_row = row_node.nextSibling;
+		while (spanning_row && YAHOO.util.Dom.hasClass(
+			spanning_row, 'swat-table-view-spanning-column')) {
+
+			if (odd) {
+				YAHOO.util.Dom.removeClass(spanning_row, 'highlight-odd');
+				YAHOO.util.Dom.addClass(spanning_row, 'odd');
+			} else {
+				YAHOO.util.Dom.removeClass(spanning_row, 'highlight');
+			}
+
+			spanning_row = spanning_row.nextSibling;
 		}
 	}
 }
