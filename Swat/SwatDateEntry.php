@@ -658,16 +658,18 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		$flydown = new SwatFlydown($this->id.'_month');
 
-		// Subtract a second from the end date. This makes comparison correct,
-		// and prevents displaying extra months.
 		$range_end = clone $this->valid_range_end;
+		$difference  = $this->valid_range_start->diff($range_end);
+
+		// Subtract a second from the end date. This makes comparison correct,
+		// and prevents displaying extra months. The difference needs to happen
+		// before this to prevent December specific bugs.
 		$range_end->subtractSeconds(1);
 
 		$start_year  = $this->valid_range_start->getYear();
 		$end_year    = $range_end->getYear();
 		$start_month = $this->valid_range_start->getMonth();
 		$end_month   = $range_end->getMonth();
-		$difference  = $this->valid_range_start->diff($range_end);
 
 		if ($end_year == $start_year) {
 			// if the years match, only display the valid months.
