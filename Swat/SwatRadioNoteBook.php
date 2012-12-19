@@ -508,6 +508,40 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 	}
 
 	// }}}
+	// {{{ public function processValue()
+
+	/**
+	 * Processes the value of this radio list from user-submitted form data
+	 *
+	 * This method can be used to process the list value without processing
+	 * the selected page widget sub-tree.
+	 *
+	 * @return boolean true if the value was processed from form data
+	 */
+	public function processValue()
+	{
+		$form = $this->getForm();
+
+		if ($form->getHiddenField($this->id.'_submitted') === null) {
+			return false;
+		}
+
+		$data = &$form->getFormData();
+
+		if (isset($data[$this->id])) {
+			// get selected page id, strip off this id prefix
+			$this->selected_page = substr(
+				$data[$this->id],
+				strlen($this->id) + 1
+			);
+		} else {
+			$this->selected_page = null;
+		}
+
+		return true;
+	}
+
+	// }}}
 	// {{{ protected function displayPage()
 
 	/**
@@ -597,37 +631,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 		$input->display();
 
 		$container->close();
-	}
-
-	// }}}
-	// {{{ protected function processValue()
-
-	/**
-	 * Processes the value of this radio list from user-submitted form data
-	 *
-	 * @return boolean true if the value was processed from form data
-	 */
-	protected function processValue()
-	{
-		$form = $this->getForm();
-
-		if ($form->getHiddenField($this->id.'_submitted') === null) {
-			return false;
-		}
-
-		$data = &$form->getFormData();
-
-		if (isset($data[$this->id])) {
-			// get selected page id, strip off this id prefix
-			$this->selected_page = substr(
-				$data[$this->id],
-				strlen($this->id) + 1
-			);
-		} else {
-			$this->selected_page = null;
-		}
-
-		return true;
 	}
 
 	// }}}
