@@ -3,6 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 require_once 'HotDate/HotDateTime.php';
+require_once 'HotDate/HotDateInterval.php';
 require_once 'Swat/Swat.php';
 
 // {{{ Date_TimeZone - deprecated, used only for session compatibility
@@ -29,7 +30,7 @@ class Date_TimeZone
  * - localization
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDate extends HotDateTime
@@ -881,6 +882,76 @@ class SwatDate extends HotDateTime
 		}
 
 		return 0;
+	}
+
+	// }}}
+	// {{{ public static function getIntervalFromSeconds()
+
+	/**
+	 * Gets a date interval with appropriate values for the specified
+	 * number of seconds
+	 *
+	 * As this method applies on seconds, no time zone considerations
+	 * are made. Years are assumed to be 365 days. Months are assumed
+	 * to be 30 days.
+	 *
+	 * @param integer $seconds seconds for which to get interval.
+	 *
+	 * @return HotDateInterval a date interval with the relevant parts
+	 *                         set.
+	 */
+	public static function getIntervalFromSeconds($seconds)
+	{
+		// don't care about micro-seconds.
+		$seconds = floor(abs($seconds));
+
+		$minute = 60;
+		$hour = $minute * 60;
+		$day = $hour * 24;
+		$month = $day * 30;
+		$year = $day * 365;
+
+		$interval_spec = 'P';
+
+		if ($seconds > $year) {
+			$years = floor($seconds / $year);
+			$seconds -= $year * $years;
+			$interval_spec.= $years.'Y';
+		}
+
+		if ($seconds > $month) {
+			$months = floor($seconds / $month);
+			$seconds -= $month * $months;
+			$interval_spec.= $months.'M';
+		}
+
+		if ($seconds > $day) {
+			$days = floor($seconds / $day);
+			$seconds -= $day * $days;
+			$interval_spec.= $days.'D';
+		}
+
+		if ($seconds > 0 || $interval_spec === 'P') {
+			$interval_spec.= 'T';
+
+			if ($seconds > $hour) {
+				$hours = floor($seconds / $hour);
+				$seconds -= $hour * $hours;
+				$interval_spec.= $hours.'H';
+			}
+
+			if ($seconds > $minute) {
+				$minutes = floor($seconds / $minute);
+				$seconds -= $minute * $minutes;
+				$interval_spec.= $minutes.'M';
+			}
+
+			if ($seconds > 0) {
+				$interval_spec.= $seconds.'S';
+			}
+		}
+
+		return new HotDateInterval($interval_spec);
 	}
 
 	// }}}

@@ -4,6 +4,7 @@
 
 require_once 'Swat/SwatObject.php';
 require_once 'Swat/SwatNumber.php';
+require_once 'Swat/SwatDate.php';
 require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/exceptions/SwatInvalidSerializedDataException.php';
 
@@ -11,7 +12,7 @@ require_once 'Swat/exceptions/SwatInvalidSerializedDataException.php';
  * String Tools
  *
  * @package   Swat
- * @copyright 2005-2011 silverorange
+ * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatString extends SwatObject
@@ -1353,83 +1354,77 @@ class SwatString extends SwatObject
 	// {{{ public static function toHumanReadableTimePeriod()
 
 	/**
-	 * Get a human-readable string representing the difference a time
-	 * period.
+	 * Gets a human-readable string representing a time period
 	 *
-	 * This method formats seconds as a time period such as
-	 * "5 years, 3 months, 2 days, 5 seconds"
+	 * This method formats seconds as a time period. Given an example value
+	 * of 161740805, the formatted value "5 years, 3 months, 2 days and 5
+	 * seconds" is returned.
 	 *
-	 * @param integer $seconds Seconds to format
-	 * @param boolean $largest_part If true, only the largest matching
-	 *                              date part is returned. For the above
-	 *                              example, "5 years" would be returned.
+	 * As this method applies on seconds, no time zone considerations are
+	 * made. Years are assumed to be 365 days. Months are assumed to be 30
+	 * 30 days.
+	 *
+	 * @param integer $seconds seconds to format.
+	 * @param boolean $largest_part optional. If true, only the largest
+	 *                               matching date part is returned. For the
+	 *                               above example, "5 years" is returned.
 	 *
 	 * @return string A human-readable time period
 	 */
 	public static function toHumanReadableTimePeriod($seconds,
 		$largest_part = false)
 	{
-		// don't care about micro-seconds.
-		$seconds = floor(abs($seconds));
+		$interval = SwatDate::getIntervalFromSeconds($seconds);
 
-		$minute = 60;
-		$hour = $minute * 60;
-		$day = $hour * 24;
-		$month = $day * 30;
-		$year = $day * 365;
+		$parts = array();
 
-		$periods = array();
-
-		if ($seconds > $year) {
-			$years = floor($seconds / $year);
-			$seconds -= $year * $years;
-			$periods[] = sprintf(
-				Swat::ngettext('%s year', '%s years', $years),
-				$years);
+		if ($interval->y > 0) {
+			$parts[] = sprintf(
+				Swat::ngettext('%s year', '%s years', $interval->y),
+				$interval->y
+			);
 		}
 
-		if ($seconds > $month) {
-			$months = floor($seconds / $month);
-			$seconds -= $month * $months;
-			$periods[] = sprintf(
-				Swat::ngettext('%s month', '%s months', $months),
-				$months);
+		if ($interval->m > 0) {
+			$parts[] = sprintf(
+				Swat::ngettext('%s month', '%s months', $interval->m),
+				$interval->m
+			);
 		}
 
-		if ($seconds > $day) {
-			$days = floor($seconds / $day);
-			$seconds -= $day * $days;
-			$periods[] = sprintf(
-				Swat::ngettext('%s day', '%s days', $days),
-				$days);
+		if ($interval->d > 0) {
+			$parts[] = sprintf(
+				Swat::ngettext('%s day', '%s days', $interval->d),
+				$interval->d
+			);
 		}
 
-		if ($seconds > $hour) {
-			$hours = floor($seconds / $hour);
-			$seconds -= $hour * $hours;
-			$periods[] = sprintf(
-				Swat::ngettext('%s hour', '%s hours', $hours),
-				$hours);
+		if ($interval->h > 0) {
+			$parts[] = sprintf(
+				Swat::ngettext('%s hour', '%s hours', $interval->h),
+				$interval->h
+			);
 		}
 
-		if ($seconds > $minute) {
-			$minutes = floor($seconds / $minute);
-			$seconds -= $minute * $minutes;
-			$periods[] = sprintf(
-				Swat::ngettext('%s minute', '%s minutes', $minutes),
-				$minutes);
+		if ($interval->i > 0) {
+			$parts[] = sprintf(
+				Swat::ngettext('%s minute', '%s minutes', $interval->i),
+				$interval->i
+			);
 		}
 
-		if ($seconds > 0 || count($periods) == 0) {
-			$periods[] = sprintf(
-				Swat::ngettext('%s second', '%s seconds', $seconds),
-				$seconds);
+		if ($interval->s > 0) {
+			$parts[] = sprintf(
+				Swat::ngettext('%s second', '%s seconds', $interval->s),
+				$interval->s
+			);
 		}
 
-		if ($largest_part && count($periods) > 0)
-			return current($periods);
-		else
-			return self::toList($periods);
+		if ($largest_part && count($parts) > 0) {
+			return current($parts);
+		}
+
+		return self::toList($parts);
 	}
 
 	// }}}
