@@ -131,8 +131,8 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	public $preview_title = null;
 
 	/**
-	 * Only show the preview image when the preview width⨯height is smaller or
-	 * equal to the original width⨯height.
+	 * Only show the preview image when the preview area is smaller or equal to
+	 * the original area.
 	 *
 	 * @var boolean
 	 */
