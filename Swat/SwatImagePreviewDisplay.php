@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * another image when the first image is clicked.
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImagePreviewDisplay extends SwatImageDisplay
@@ -130,6 +130,14 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 */
 	public $preview_title = null;
 
+	/**
+	 * Only show the preview image when the preview width⨯height is smaller or
+	 * equal to the original width⨯height.
+	 *
+	 * @var boolean
+	 */
+	public $show_preview_when_smaller = false;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -175,7 +183,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 		if (!$this->visible)
 			return;
 
-		if ($this->preview_image === null) {
+		if (!$this->previewIsDisplayable()) {
 			parent::display();
 		} else {
 			if ($this->link !== null) {
@@ -206,6 +214,29 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 
 			Swat::displayInlineJavaScript($this->getInlineJavaScript());
 		}
+	}
+
+	// }}}
+	// {{{ protected function previewIsDisplayable()
+
+	/**
+	 * Checks whether the preview exists, and whether it should be displayed.
+	 *
+	 * @return boolean True if the preview should be displayed, false if it
+	 *                  should not.
+	 */
+	protected function previewIsDisplayable()
+	{
+		$image_area = $this->width * $this->height;
+		$preview_area = $this->preview_width * $this->preview_height;
+
+		return (
+			$this->preview_image != '' &&
+			(
+				$this->show_preview_when_smaller ||
+				$preview_are > $image_area
+			)
+		);
 	}
 
 	// }}}
