@@ -14,7 +14,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * A checkbox list widget
  *
  * @package   Swat
- * @copyright 2005-2012 silverorange
+ * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckboxList extends SwatOptionControl implements SwatState
@@ -274,7 +274,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	 *
 	 * @param SwatOption $option the option to display.
 	 * @param integer $index a numeric index indicating which option is being
-	 *                        displayed.
+	 *                        displayed. Starts as 0.
 	 */
 	protected function displayOption(SwatOption $option, $index)
 	{

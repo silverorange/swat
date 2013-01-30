@@ -10,7 +10,7 @@ require_once 'Swat/SwatString.php';
  * A radio list selection widget
  *
  * @package   Swat
- * @copyright 2005-2012 silverorange
+ * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRadioList extends SwatFlydown
@@ -83,7 +83,7 @@ class SwatRadioList extends SwatFlydown
 		$ul_tag->open();
 
 		$li_tag = new SwatHtmlTag('li');
-		$count = 0;
+		$index = 0;
 
 		foreach ($options as $option) {
 
@@ -101,18 +101,18 @@ class SwatRadioList extends SwatFlydown
 				$li_tag->class.= ' swat-radio-list-divider-li';
 			}
 
-			$li_tag->id = $this->id.'_li_'.(string) $count;
+			$li_tag->id = $this->id.'_li_'.(string) $index;
 			$li_tag->open();
-			$count++;
 
 			if ($option instanceof SwatFlydownDivider) {
-				$this->displayDivider($option);
+				$this->displayDivider($option, $index);
 			} else {
-				$this->displayOption($option);
-				$this->displayOptionLabel($option);
+				$this->displayOption($option, $index);
+				$this->displayOptionLabel($option, $index);
 			}
 
 			$li_tag->close();
+			$index++;
 		}
 
 		$ul_tag->close();
@@ -155,9 +155,11 @@ class SwatRadioList extends SwatFlydown
 	/**
 	 * Displays a divider option in this radio list
 	 *
-	 * @param SwatOption $option
+	 * @param SwatOption $option the divider option to display.
+	 * @param integer $index the numeric index of the option in this list.
+	 *                        Starts at 0.
 	 */
-	protected function displayDivider(SwatOption $option)
+	protected function displayDivider(SwatOption $option, $index)
 	{
 		$span_tag = new SwatHtmlTag('span');
 		$span_tag->class = 'swat-radio-list-divider';
@@ -174,9 +176,11 @@ class SwatRadioList extends SwatFlydown
 	/**
 	 * Displays an option in the radio list
 	 *
-	 * @param SwatOption $option
+	 * @param SwatOption $option the option to display.
+	 * @param integer $index the numeric index of the option in this list.
+	 *                        Starts at 0.
 	 */
-	protected function displayOption(SwatOption $option)
+	protected function displayOption(SwatOption $option, $index)
 	{
 		if ($this->input_tag === null) {
 			$this->input_tag = new SwatHtmlTag('input');
@@ -221,9 +225,11 @@ class SwatRadioList extends SwatFlydown
 	/**
 	 * Displays an option in the radio list
 	 *
-	 * @param SwatOption $option
+	 * @param SwatOption $option the option for which to display the label.
+	 * @param integer $index the numeric index of the option in this list.
+	 *                        Starts at 0.
 	 */
-	protected function displayOptionLabel(SwatOption $option)
+	protected function displayOptionLabel(SwatOption $option, $index)
 	{
 		if ($this->label_tag === null) {
 			$this->label_tag = new SwatHtmlTag('label');

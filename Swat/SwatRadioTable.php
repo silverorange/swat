@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * tabular format
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2013 silverorange
  */
 class SwatRadioTable extends SwatRadioList
 {
@@ -72,6 +72,7 @@ class SwatRadioTable extends SwatRadioList
 	 *
 	 * @param SwatOption $option the option to display.
 	 * @param integer $index the numeric index of the option in this list.
+	 *                        Starts at 0.
 	 */
 	protected function displayRadioTableOption(SwatOption $option, $index)
 	{
