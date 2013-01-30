@@ -97,8 +97,21 @@ class SwatRadioList extends SwatFlydown
 				$li_tag->removeAttribute('class');
 			}
 
+			$sensitive = $this->getOptionMetadata($option, 'sensitive');
+			if ($sensitive === false || !$this->isSensitive()) {
+				if ($li_tag->class === null) {
+					$li_tag->class = 'swat-insensitive';
+				} else {
+					$li_tag->class.= ' swat-insensitive';
+				}
+			}
+
 			if ($option instanceof SwatFlydownDivider) {
-				$li_tag->class.= ' swat-radio-list-divider-li';
+				if ($li_tag->class === null) {
+					$li_tag->class = 'swat-radio-list-divider-li';
+				} else {
+					$li_tag->class.= ' swat-radio-list-divider-li';
+				}
 			}
 
 			$li_tag->id = $this->id.'_li_'.(string)$index;
@@ -188,8 +201,12 @@ class SwatRadioList extends SwatFlydown
 			$this->input_tag->name = $this->id;
 		}
 
-		if (!$this->isSensitive())
+		$sensitive = $this->getOptionMetadata($option, 'sensitive');
+		if ($sensitive === false || !$this->isSensitive()) {
 			$this->input_tag->disabled = 'disabled';
+		} else {
+			$this->input_tag->removeAttribute('disabled');
+		}
 
 		if ($this->serialize_values) {
 			$salt = $this->getForm()->getSalt();
