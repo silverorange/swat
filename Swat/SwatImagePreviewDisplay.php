@@ -234,7 +234,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 			$this->preview_image != '' &&
 			(
 				$this->show_preview_when_smaller ||
-				$preview_are > $image_area
+				$preview_area > $image_area
 			)
 		);
 	}
