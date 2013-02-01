@@ -315,9 +315,14 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 
 			// if index field is set, index the object
 			if ($this->index_field !== null &&
-				isset($value->{$this->index_field}))
-				$this->objects_by_index[$value->{$this->index_field}] =
-					$value;
+				isset($value->{$this->index_field})) {
+				if ($value->hasInternalValue($this->index_field)) {
+					$index = $value->getInternalValue($this->index_field);
+				} else {
+					$index = $value->{$this->index_field};
+				}
+				$this->objects_by_index[$index] = $value;
+			}
 
 		// replace at offset
 		} else {
