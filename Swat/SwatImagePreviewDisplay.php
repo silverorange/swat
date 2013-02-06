@@ -293,12 +293,12 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 
 		if ($this->container_width !== null) {
 			$javascript.= sprintf("%s.width = %s;",
-				$this->id, (integer) $this->container_width);
+				$this->id, (integer)$this->container_width);
 		}
 
 		if ($this->container_height !== null) {
 			$javascript.= sprintf("%s.height = %s;",
-				$this->id, (integer) $this->container_height);
+				$this->id, (integer)$this->container_height);
 		}
 
 		return $javascript;
