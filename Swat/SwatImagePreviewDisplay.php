@@ -183,7 +183,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 		if (!$this->visible)
 			return;
 
-		if (!$this->previewIsDisplayable()) {
+		if (!$this->isPreviewDisplayable()) {
 			parent::display();
 		} else {
 			if ($this->link !== null) {
@@ -217,7 +217,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	}
 
 	// }}}
-	// {{{ protected function previewIsDisplayable()
+	// {{{ protected function isPreviewDisplayable()
 
 	/**
 	 * Checks whether the preview exists, and whether it should be displayed.
@@ -225,16 +225,18 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 * @return boolean True if the preview should be displayed, false if it
 	 *                  should not.
 	 */
-	protected function previewIsDisplayable()
+	protected function isPreviewDisplayable()
 	{
 		$image_area = $this->width * $this->height;
 		$preview_area = $this->preview_width * $this->preview_height;
+
+		$difference = ($preview_area - $image_area) / $image_area;
 
 		return (
 			$this->preview_image != '' &&
 			(
 				$this->show_preview_when_smaller ||
-				$preview_area > $image_area
+				$difference >= 0.2
 			)
 		);
 	}
