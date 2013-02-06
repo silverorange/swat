@@ -12,7 +12,7 @@ require_once 'SwatI18N/SwatI18NLocale.php';
  * SwatPagination pages start at page 1, not page 0.
  *
  * @package   Swat
- * @copyright 2004-2011 silverorange
+ * @copyright 2004-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatPagination extends SwatControl
@@ -270,7 +270,7 @@ class SwatPagination extends SwatControl
 	 */
 	public function setCurrentPage($page)
 	{
-		$this->current_page = max(1, (int) $page);
+		$this->current_page = max(1, (int)$page);
 
 		$this->current_record = ($this->current_page - 1) * $this->page_size;
 	}
