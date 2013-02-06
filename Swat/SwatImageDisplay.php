@@ -11,7 +11,7 @@ require_once 'Swat/SwatControl.php';
  * This control simply displays a static image.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageDisplay extends SwatControl
@@ -159,10 +159,11 @@ class SwatImageDisplay extends SwatControl
 				($margin_x % 2 == 0 && $margin_y % 2 == 0) ?
 					'margin: %dpx %dpx' :
 					'margin: %dpx %dpx %dpx %dpx;',
-				floor(((float) $margin_y) / 2),
-				ceil(((float) $margin_x) / 2),
-				ceil(((float) $margin_y) / 2),
-				floor(((float) $margin_x) / 2));
+				floor(((float)$margin_y) / 2),
+				ceil(((float)$margin_x) / 2),
+				ceil(((float)$margin_y) / 2),
+				floor(((float)$margin_x) / 2)
+			);
 		} else {
 			$style = null;
 		}
