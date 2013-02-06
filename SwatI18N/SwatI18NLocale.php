@@ -13,7 +13,7 @@ require_once 'SwatI18N/SwatI18NCurrencyFormat.php';
  * specific rules.
  *
  * @package   SwatI18N
- * @copyright 2007 silverorange
+ * @copyright 2007-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatI18NLocale extends SwatObject
@@ -477,7 +477,7 @@ class SwatI18NLocale extends SwatObject
 	public function formatNumber($value, $decimals = null,
 		array $format = array())
 	{
-		$value = (float) $value;
+		$value = (float)$value;
 
 		$format = $this->getNumberFormat()->override($format);
 
@@ -1167,7 +1167,7 @@ class SwatI18NLocale extends SwatObject
 		 * not been profiled against the equivalent IEEE-754 code.
 		 */
 
-		$value = (float) $value;
+		$value = (float)$value;
 
 		// get current locale
 		$locale = self::get();

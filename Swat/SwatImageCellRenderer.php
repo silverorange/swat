@@ -149,10 +149,11 @@ class SwatImageCellRenderer extends SwatCellRenderer
 				($margin_x % 2 == 0 && $margin_y % 2 == 0) ?
 					'margin: %dpx %dpx' :
 					'margin: %dpx %dpx %dpx %dpx;',
-				floor(((float) $margin_y) / 2),
-				ceil(((float) $margin_x) / 2),
-				ceil(((float) $margin_y) / 2),
-				floor(((float) $margin_x) / 2));
+				floor(((float)$margin_y) / 2),
+				ceil(((float)$margin_x) / 2),
+				ceil(((float)$margin_y) / 2),
+				floor(((float)$margin_x) / 2)
+			);
 
 		// alt is a required XHTML attribute. We should always display it even
 		// if it is not specified.
