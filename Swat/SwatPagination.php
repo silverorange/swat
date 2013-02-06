@@ -300,7 +300,7 @@ class SwatPagination extends SwatControl
 			$link = $this->getLink();
 
 			$anchor = new SwatHtmlTag('a');
-			$anchor->href = sprintf($link, (string) $this->prev_page);
+			$anchor->href = sprintf($link, (string)$this->prev_page);
 			// this is a non-breaking space
 			$anchor->setContent($this->previous_label);
 			$anchor->class = 'swat-pagination-nextprev';
@@ -344,7 +344,7 @@ class SwatPagination extends SwatControl
 			$link = $this->getLink();
 
 			$anchor = new SwatHtmlTag('a');
-			$anchor->href = sprintf($link, (string) $this->next_page);
+			$anchor->href = sprintf($link, (string)$this->next_page);
 			// this is a non-breaking space
 			$anchor->setContent($this->next_label);
 			$anchor->class = 'swat-pagination-nextprev';

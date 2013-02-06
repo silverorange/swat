@@ -1846,7 +1846,7 @@ class SwatString extends SwatObject
 	{
 		$lc = localeconv();
 
-		$decimal_pos = strpos((string) $value, $lc['decimal_point']);
+		$decimal_pos = strpos((string)$value, $lc['decimal_point']);
 
 		return ($decimal_pos !== false) ?
 				strlen($value) - $decimal_pos - strlen($lc['decimal_point']) : 0;
