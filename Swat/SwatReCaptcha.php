@@ -82,8 +82,8 @@ class SwatReCaptcha extends SwatInputControl
 		$data = $form->getFormData();
 
 		$remote_ip = null;
-		if (isset($_SERVER['X_FORWARDED_IP'])) {
-			$remote_ip = $_SERVER['X_FORWARDED_IP'];
+		if (isset($_SERVER['HTTP_X_FORWARDED_IP'])) {
+			$remote_ip = $_SERVER['HTTP_X_FORWARDED_IP'];
 		} elseif (isset($_SERVER['REMOTE_ADDR'])) {
 			$remote_ip = $_SERVER['REMOTE_ADDR'];
 		}
