@@ -10,7 +10,7 @@ require_once 'Swat/SwatInputControl.php';
  * A widget used to display and validate reCAPTCHA's
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2013 silverorange
  * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
  */
 class SwatReCaptcha extends SwatInputControl
@@ -81,8 +81,15 @@ class SwatReCaptcha extends SwatInputControl
 		$form = $this->getForm();
 		$data = $form->getFormData();
 
+		$remote_ip = null;
+		if (isset($_SERVER['X_FORWARDED_IP'])) {
+			$remote_ip = $_SERVER['X_FORWARDED_IP'];
+		} elseif (isset($_SERVER['REMOTE_ADDR'])) {
+			$remote_ip = $_SERVER['REMOTE_ADDR'];
+		}
+
 		$response = ReCaptcha::validate($this->private_key,
-			$_SERVER['REMOTE_ADDR'],
+			$remote_ip,
 			$data['recaptcha_challenge_field'],
 			$data['recaptcha_response_field']);
 
