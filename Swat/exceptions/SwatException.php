@@ -4,6 +4,7 @@
 
 require_once 'Swat/SwatExceptionDisplayer.php';
 require_once 'Swat/SwatExceptionLogger.php';
+require_once 'Swat/SwatString.php';
 
 /**
  * An exception in Swat
@@ -366,9 +367,15 @@ class SwatException extends Exception
 				$entry['function'] : null;
 
 			if (array_key_exists('args', $entry))
-				$arguments = htmlspecialchars($this->getArguments(
-					$entry['args'], $function, $class),
-					null, 'UTF-8');
+				$arguments = htmlspecialchars(
+					$this->getArguments(
+						$entry['args'],
+						$function,
+						$class
+					),
+					null,
+					'UTF-8'
+				);
 			else
 				$arguments = '';
 
@@ -458,7 +465,8 @@ class SwatException extends Exception
 	 * Formats a method call's arguments
 	 *
 	 * This method is also responsible for filtering sensitive parameters
-	 * out of the final stack trace.
+	 * out of the final stack trace and for cleaning up invalid encoding in
+	 * exception messages.
 	 *
 	 * @param array $args an array of arguments.
 	 * @param string $function optional. The current method or function.
@@ -549,7 +557,11 @@ class SwatException extends Exception
 		} elseif ($value === null) {
 			$formatted_value = '<null>';
 		} elseif (is_string($value)) {
-			$formatted_value = "'".$value."'";
+			if (SwatString::validateUtf8($value)) {
+				$formatted_value = "'".$value."'";
+			} else {
+				$formatted_value = '"'.SwatString::escapeBinary($value).'"';
+			}
 		} elseif (is_int($value) || is_float($value)) {
 			$formatted_value = strval($value);
 		} elseif (is_bool($value)) {
@@ -671,7 +683,6 @@ class SwatException extends Exception
 	}
 
 	// }}}
-
 }
 
 ?>
