@@ -1725,6 +1725,47 @@ class SwatString extends SwatObject
 	}
 
 	// }}}
+	// {{{ public static function escapeBinary()
+
+	/**
+	 * Escapes a binary string making it safe to display using ASCII encoding
+	 *
+	 * Newlines, tabs and returns are encoded as \n, \t and \r. Other
+	 * bytes are hexadecimal encoded (e.g. \xA6). Escaping the binary string
+	 * makes it valid UTF-8 as well as valid ASCII.
+	 *
+	 * @param string $string the string to escape.
+	 *
+	 * @return string the escaped, ASCII encoded string.
+	 */
+	public static function escapeBinary($string)
+	{
+		$escaped = '';
+
+		for ($i = 0; $i < mb_strlen($string, '8bit'); $i++) {
+			$char = mb_substr($string, $i, 1, '8bit');
+			$ord = ord($char);
+			if ($ord === 9) {
+				$escaped.= '\t';
+			} elseif ($ord === 10) {
+				$escaped.= '\n';
+			} elseif ($ord === 13) {
+				$escaped.= '\r';
+			} elseif ($ord === 92) {
+				$escaped.= '\\\\';
+			} elseif ($ord < 16) {
+				$escaped.= '\x0'.strtoupper(dechex($ord));
+			} elseif ($ord < 32 || $ord >= 127) {
+				$escaped.= '\x'.strtoupper(dechex($ord));
+			} else {
+				$escaped.= $char;
+			}
+		}
+
+		return $escaped;
+	}
+
+	// }}}
 	// {{{ private static function stripEntities()
 
 	/**
