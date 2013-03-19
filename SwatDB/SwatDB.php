@@ -606,29 +606,40 @@ class SwatDB extends SwatObject
 
 		$transaction = new SwatDBTransaction($db);
 		try {
-			$sql = 'insert into %s (%s) values (%s)';
-			$field_list = implode(',', self::getFieldNameArray($fields));
 
-			$values_in_order = array();
+			if (count($fields) === 0) {
+				$sql = sprintf(
+					'insert into %s values (default)',
+					$table
+				);
+			} else {
+				$field_list = implode(',', self::getFieldNameArray($fields));
 
-			foreach ($fields as &$field) {
-				$value = isset($values[$field->name]) ?
-					$values[$field->name] : null;
+				$values_in_order = array();
 
-				$values_in_order[] = $db->quote($value, $field->type);
+				foreach ($fields as &$field) {
+					$value = (isset($values[$field->name]))
+						? $values[$field->name]
+						: null;
+
+					$values_in_order[] = $db->quote($value, $field->type);
+				}
+
+				$value_list = implode(',', $values_in_order);
+
+				$sql = sprintf(
+					'insert into %s (%s) values (%s)',
+					$table,
+					$field_list,
+					$value_list
+				);
 			}
-
-			$value_list = implode(',', $values_in_order);
-
-			$sql = sprintf($sql,
-				$table,
-				$field_list,
-				$value_list);
 
 			$result = self::exec($db, $sql);
 
-			if ($id_field !== null)
+			if ($id_field !== null) {
 				$ret = self::getFieldMax($db, $table, $id_field);
+			}
 
 		} catch (Exception $e) {
 			$transaction->rollback();
