@@ -2,7 +2,7 @@
 	float: left;
 }
 
-.swat-rating-star a {
+.swat-rating-star {
 	display: block;
 	background: url(../images/swat-rating-stars.png) no-repeat 0 0px;
 	width: 20px;
@@ -10,14 +10,22 @@
 	cursor: pointer;
 }
 
-.ie6 .swat-rating-star a {
+.swat-rating-star:focus {
+	outline: none;
+}
+
+.ie6 .swat-rating-star {
 	background: url(../images/swat-rating-stars-256.png) no-repeat 0 0px;
 }
 
-.swat-rating-selected a {
+.swat-rating-selected {
 	background-position: 0 -20px;
 }
 
-.swat-rating-hover a {
+.swat-rating-hover {
 	background-position: 0 -40px;
+}
+
+.swat-rating-clear {
+	clear: left;
 }
