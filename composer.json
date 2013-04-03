@@ -1,0 +1,40 @@
+	"name": "silverorange/swat",
+	"description": "Web application toolkit.",
+	"type": "library",
+	"keywords": [ "swat", "toolkit", "widget" ],
+	"homepage": "https://code.silverorange.com/Swat",
+	"license": "LGPL-2.1",
+	"authors": [
+		{
+			"name": "Michael Gauthier",
+			"email": "mike@silverorange.com"
+		},
+		{
+			"name": "Nathan Frederikson",
+			"email": "nathan@silverorange.com"
+		},
+		{
+			"name": "Isaac Grant",
+			"email": "isaac@silverorange.com"
+		},
+		{
+			"name": "Nick Burka",
+			"email": "nick@silverorange.com"
+		},
+		{
+			"name": "Steven Garrity",
+			"email": "steven@silverorange.com"
+		}
+	],
+	"require"     : {
+		"php": ">=5.1.5",
+		"ext-iconv": "*",
+		"ext-intl": "*",
+		"ext-mbstring": "*",
+		"silverorange/hotdate": ">=0.1.1",
+		"silverorange/concentrate": ">=0.0.13"
+	},
+	"autoload": {
+		"classmap": [ "Swat", "SwatI18N", "SwatDB" ]
+	}
+}
