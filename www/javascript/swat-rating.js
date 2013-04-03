@@ -89,8 +89,6 @@ SwatRating.prototype.init = function()
 		Event.on(star, 'mouseout', this.handleBlur, this, true);
 		Event.on(star, 'click', this.handleClick, i, this);
 		Event.on(star, 'keypress', function(e, focus_star) {
-			console.log(focus_star);
-			console.log(Event.getCharCode(e));
 			if (Event.getCharCode(e) == 13 || Event.getCharCode(e) == 32) {
 				Event.preventDefault(e);
 				this.handleClick(e, focus_star);
