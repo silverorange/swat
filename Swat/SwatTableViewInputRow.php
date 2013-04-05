@@ -405,6 +405,55 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	}
 
 	// }}}
+	// {{{ public function getMessages()
+
+	/**
+	 * Gathers all messages from this table-view row
+	 *
+	 * @return array an array of {@link SwatMessage} objects.
+	 */
+	public function getMessages()
+	{
+		$messages = array();
+
+		foreach ($this->replicators as $replicator_id) {
+			foreach ($this->input_cells as $cell) {
+				$messages = array_merge(
+					$messages,
+					$cell->getWidget($replicator_id)->getMessages()
+				);
+			}
+		}
+
+		return $messages;
+	}
+
+	// }}}
+	// {{{ public function hasMessage()
+
+	/**
+	 * Gets whether or not the widgets in this row have any messages
+	 *
+	 * @return boolean true if this table-view row has one or more messages
+	 *                 and false if it does not.
+	 */
+	public function hasMessage()
+	{
+		$has_message = false;
+
+		foreach ($this->replicators as $replicator_id) {
+			foreach ($this->input_cells as $cell) {
+				if ($cell->getWidget($replicator_id)->hasMessage()) {
+					$has_messages = true;
+					break 2;
+				}
+			}
+		}
+
+		return $has_message;
+	}
+
+	// }}}
 	// {{{ public function getInlineJavaScript()
 
 	/**

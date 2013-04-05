@@ -8,7 +8,7 @@ require_once 'Swat/SwatUIObject.php';
  * Base class for a extra row displayed at the bottom of a table view
  *
  * @package   Swat
- * @copyright 2005-2012 silverorange
+ * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatTableViewRow extends SwatUIObject
@@ -193,6 +193,33 @@ abstract class SwatTableViewRow extends SwatUIObject
 	public function getAvailableHtmlHeadEntrySet()
 	{
 		return new SwatHtmlHeadEntrySet($this->html_head_entry_set);
+	}
+
+	// }}}
+	// {{{ public function getMessages()
+
+	/**
+	 * Gathers all messages from this table-view row
+	 *
+	 * @return array an array of {@link SwatMessage} objects.
+	 */
+	public function getMessages()
+	{
+		return array();
+	}
+
+	// }}}
+	// {{{ public function hasMessage()
+
+	/**
+	 * Gets whether or this row has any messages
+	 *
+	 * @return boolean true if this table-view row has one or more messages
+	 *                 and false if it does not.
+	 */
+	public function hasMessage()
+	{
+		return false;
 	}
 
 	// }}}
