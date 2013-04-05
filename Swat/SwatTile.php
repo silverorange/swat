@@ -118,10 +118,10 @@ class SwatTile extends SwatCellRendererContainer
 	// {{{ public function hasMessage()
 
 	/**
-	 * Gets wheter or not this tile has any messages
+	 * Gets whether or not this tile has any messages
 	 *
 	 * @return boolean true if this tile has one or more messages and
-	 *						false if it does not.
+	 *                 false if it does not.
 	 */
 	public function hasMessage()
 	{
