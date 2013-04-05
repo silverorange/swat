@@ -453,8 +453,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 		if (!$has_message) {
 			foreach ($this->extra_rows as $row) {
-				if ($row instanceof SwatTableViewWidgetRow &&
-					$row->hasMessage()) {
+				if ($row->hasMessage()) {
 					$has_message = true;
 					break;
 				}
