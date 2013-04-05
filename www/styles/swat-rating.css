@@ -29,3 +29,7 @@
 .swat-rating-clear {
 	clear: left;
 }
+
+.swat-insensitive .swat-rating-star {
+	cursor: default;
+}
