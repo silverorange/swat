@@ -53,10 +53,8 @@ function SwatRating(id, max_value)
 {
 	this.id        = id;
 	this.max_value = max_value;
-
-	this.flydown    = document.getElementById(this.id + '_flydown');
-	this.rating_div = document.getElementById(this.id);
-	this.stars      = [];
+	this.stars     = [];
+	this.sensitive = true;
 
 	YAHOO.util.Event.onDOMReady(this.init, this, true);
 }
@@ -65,6 +63,10 @@ SwatRating.prototype.init = function()
 {
 	var Dom   = YAHOO.util.Dom;
 	var Event = YAHOO.util.Event;
+
+	this.flydown    = document.getElementById(this.id + '_flydown');
+	this.rating_div = document.getElementById(this.id);
+	this.sensitive  = (!Dom.hasClass(this.rating_div, 'swat-insensitive'));
 
 	Dom.setStyle(this.flydown, 'display', 'none');
 
@@ -105,8 +107,25 @@ SwatRating.prototype.init = function()
 	this.rating_div.appendChild(clear);
 };
 
+SwatRating.prototype.setSensitivity = function(sensitivity)
+{
+	var Dom = YAHOO.util.Dom;
+
+	if (sensitivity) {
+		Dom.removeClass(this.rating_div, 'swat-insensitive');
+		this.sensitive = true;
+	} else {
+		Dom.addClass(this.rating_div, 'swat-insensitive');
+		this.sensitive = false;
+	}
+};
+
 SwatRating.prototype.handleFocus = function(event, focus_star)
 {
+	if (!this.sensitive) {
+		return;
+	}
+
 	var Dom   = YAHOO.util.Dom;
 	var Event = YAHOO.util.Event;
 
@@ -128,6 +147,10 @@ SwatRating.prototype.handleBlur = function(event)
 
 SwatRating.prototype.handleClick = function(event, clicked_star)
 {
+	if (!this.sensitive) {
+		return;
+	}
+
 	var Dom   = YAHOO.util.Dom;
 	var Event = YAHOO.util.Event;
 

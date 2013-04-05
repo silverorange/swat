@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A control for recording a rating out of a variable number of values
  *
  * @package   Swat
- * @copyright 2007-2010 silverorange
+ * @copyright 2007-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRating extends SwatInputControl
@@ -107,6 +107,9 @@ class SwatRating extends SwatInputControl
 		$div = new SwatHtmlTag('div');
 		$div->id = $this->id;
 		$div->class = $this->getCSSClassString();
+		if (!$this->isSensitive()) {
+			$div->class.= ' swat-insensitive';
+		}
 		$div->open();
 		$flydown->display();
 		$div->close();
