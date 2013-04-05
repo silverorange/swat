@@ -382,9 +382,9 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	{
 		$messages = array();
 
-		foreach ($this->getDescendants() as $widget)
-			if ($widget->hasMessage())
-				$messages[] = $widget->getMessage();
+		foreach ($this->getDescendants() as $widget) {
+			$messages = array_merge($messages, $widget->getMessages());
+		}
 
 		return $messages;
 	}
