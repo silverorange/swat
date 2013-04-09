@@ -154,7 +154,7 @@ SwatRating.prototype.handleClick = function(event, clicked_star)
 	var Dom   = YAHOO.util.Dom;
 	var Event = YAHOO.util.Event;
 
-	// this resets the on style for each star
+	// reset 'on' style for each star
 	for (var i = 0; i < this.max_value; i++) {
 		Dom.removeClass(this.stars[i], 'swat-rating-selected');
 	}
@@ -180,5 +180,49 @@ SwatRating.prototype.handleClick = function(event, clicked_star)
 	// cycle through stars
 	for (var i = 0; i < clicked_star; i++) {
 		Dom.addClass(this.stars[i], 'swat-rating-selected');
+	}
+};
+
+SwatRating.prototype.getValue = function()
+{
+	var value = null;
+
+	var index = this.flydown.value;
+	if (index !== null && index !== '') {
+		value = this.flydown.options[index].value;
+	}
+
+	return value;
+};
+
+SwatRating.prototype.setValue = function(rating)
+{
+	var Dom   = YAHOO.util.Dom;
+	var Event = YAHOO.util.Event;
+
+	// clear 'on' style for each star
+	for (var i = 0; i < this.max_value; i++) {
+		Dom.removeClass(this.stars[i], 'swat-rating-selected');
+	}
+
+	if (rating === '' || rating === null) {
+		this.flydown.value = '';
+		for (var i = 0; i < this.max_value; i++) {
+			Dom.removeClass(this.stars[i], 'swat-rating-hover');
+		}
+	} else {
+		// set the current value of the flydown
+		for (var i = 0; i < this.flydown.options.length; i++) {
+			var option = this.flydown.options[i];
+			if (option.value == rating) {
+				this.flydown.value = i;
+				break;
+			}
+		}
+
+		// set 'on' style for each star
+		for (var i = 0; i < rating; i++) {
+			Dom.addClass(this.stars[i], 'swat-rating-selected');
+		}
 	}
 };
