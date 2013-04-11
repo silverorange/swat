@@ -73,7 +73,7 @@ SwatImagePreviewDisplay.prototype.init = function()
 			this.open();
 		}, this, true);
 	}
-}
+};
 
 SwatImagePreviewDisplay.prototype.open = function()
 {
@@ -111,7 +111,7 @@ SwatImagePreviewDisplay.prototype.open = function()
 	this.preview_container.style.marginLeft = x + 'px';
 
 	this.opened = true;
-}
+};
 
 SwatImagePreviewDisplay.prototype.scaleImage = function(max_width, max_height)
 {
@@ -133,7 +133,7 @@ SwatImagePreviewDisplay.prototype.scaleImage = function(max_width, max_height)
 
 	// For IE 6 & 7
 	this.preview_container.style.width = this.preview_image.width + 'px';
-}
+};
 
 SwatImagePreviewDisplay.prototype.drawOverlay = function()
 {
@@ -171,12 +171,12 @@ SwatImagePreviewDisplay.prototype.draw = function()
 	}, this, true);
 
 	YAHOO.util.Event.on(this.preview_mask, 'mouseover', function(e) {
-		YAHOO.util.Dom.addClass(this.preview_close_link,
+		YAHOO.util.Dom.addClass(this.preview_close_button,
 			'swat-image-preview-close-hover');
 	}, this, true);
 
 	YAHOO.util.Event.on(this.preview_mask, 'mouseout', function(e) {
-		YAHOO.util.Dom.removeClass(this.preview_close_link,
+		YAHOO.util.Dom.removeClass(this.preview_close_button,
 			'swat-image-preview-close-hover');
 	}, this, true);
 
@@ -190,22 +190,14 @@ SwatImagePreviewDisplay.prototype.draw = function()
 		this.title.appendChild(document.createTextNode(' '));
 	}
 
-	// close link
-	this.preview_close_link = document.createElement('span');
-	this.preview_close_link.href = '#close';
-	this.preview_close_link.className = 'swat-image-preview-close';
-	this.preview_close_link.appendChild(
-		document.createTextNode(
-			SwatImagePreviewDisplay.close_text
-		)
-	);
-
-	SwatZIndexManager.raiseElement(this.preview_close_link);
+	// close button
+	this.preview_close_button = this.drawCloseButton();
+	SwatZIndexManager.raiseElement(this.preview_close_button);
 
 	// header
 	this.preview_header = document.createElement('span');
 	this.preview_header.className = 'swat-image-preview-header';
-	this.preview_header.appendChild(this.preview_close_link);
+	this.preview_header.appendChild(this.preview_close_button);
 	this.preview_header.appendChild(this.title);
 
 	SwatZIndexManager.raiseElement(this.preview_header);
@@ -239,15 +231,29 @@ SwatImagePreviewDisplay.prototype.draw = function()
 	}, this, true);
 
 	YAHOO.util.Event.on(this.preview_container, 'mouseover', function(e) {
-		YAHOO.util.Dom.addClass(this.preview_close_link,
+		YAHOO.util.Dom.addClass(this.preview_close_button,
 			'swat-image-preview-close-hover');
 	}, this, true);
 
 	YAHOO.util.Event.on(this.preview_container, 'mouseout', function(e) {
-		YAHOO.util.Dom.removeClass(this.preview_close_link,
+		YAHOO.util.Dom.removeClass(this.preview_close_button,
 			'swat-image-preview-close-hover');
 	}, this, true);
-}
+};
+
+SwatImagePreviewDisplay.prototype.drawCloseButton = function()
+{
+	var button = document.createElement('span');
+
+	button.className = 'swat-image-preview-close';
+	button.appendChild(
+		document.createTextNode(
+			SwatImagePreviewDisplay.close_text
+		)
+	);
+
+	return button;
+};
 
 SwatImagePreviewDisplay.prototype.showOverlay = function()
 {
@@ -262,7 +268,7 @@ SwatImagePreviewDisplay.prototype.showOverlay = function()
 	}
 	this.overlay.style.height = YAHOO.util.Dom.getDocumentHeight() + 'px';
 	this.overlay.style.display = 'block';
-}
+};
 
 SwatImagePreviewDisplay.prototype.hideOverlay = function()
 {
@@ -273,7 +279,7 @@ SwatImagePreviewDisplay.prototype.hideOverlay = function()
 				this.select_elements[i].style._visibility;
 		}
 	}
-}
+};
 
 SwatImagePreviewDisplay.prototype.close = function()
 {
@@ -284,7 +290,7 @@ SwatImagePreviewDisplay.prototype.close = function()
 	this.preview_container.style.display = 'none';
 
 	this.opened = false;
-}
+};
 
 SwatImagePreviewDisplay.prototype.handleKeyDown = function(e)
 {
@@ -296,4 +302,4 @@ SwatImagePreviewDisplay.prototype.handleKeyDown = function(e)
 		}
 		this.close();
 	}
-}
+};
