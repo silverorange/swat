@@ -322,9 +322,8 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 */
 	protected function getInlineJavaScriptTranslations()
 	{
-		if ($this->close_text === null) {
-			$close_text  = Swat::_('Close');
-		}
+		$close_text = ($this->close_text === null) ?
+			Swat::_('Close') : $this->close_text;
 
 		return sprintf(
 			"SwatImagePreviewDisplay.close_text = '%s';\n",
