@@ -138,6 +138,13 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 */
 	public $show_preview_when_smaller = false;
 
+	/**
+	 * Close text 
+	 *
+	 * @var string
+	 */
+	public $close_text = null;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -315,7 +322,9 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 */
 	protected function getInlineJavaScriptTranslations()
 	{
-		$close_text  = Swat::_('Close');
+		if ($this->close_text === null) {
+			$close_text  = Swat::_('Close');
+		}
 
 		return sprintf(
 			"SwatImagePreviewDisplay.close_text = '%s';\n",
