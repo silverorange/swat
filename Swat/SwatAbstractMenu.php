@@ -14,7 +14,7 @@ require_once 'Swat/SwatYUI.php';
  * YUI menu documentation} for what this means.
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see SwatMenu
@@ -62,8 +62,10 @@ abstract class SwatAbstractMenu extends SwatControl
 
 		$yui = new SwatYUI(array('menu'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addStyleSheet('packages/swat/styles/swat-menu.css',
-			Swat::PACKAGE_ID);
+		$this->addStyleSheet(
+			'packages/swat/styles/swat-menu.css',
+			Swat::PACKAGE_ID
+		);
 	}
 
 	// }}}
@@ -80,8 +82,9 @@ abstract class SwatAbstractMenu extends SwatControl
 	public function setMenuItemValues($value)
 	{
 		$items = $this->getDescendants('SwatMenuItem');
-		foreach ($items as $item)
+		foreach ($items as $item) {
 			$item->value = $value;
+		}
 	}
 
 	// }}}
@@ -111,45 +114,33 @@ abstract class SwatAbstractMenu extends SwatControl
 	 */
 	protected function getInlineJavaScript()
 	{
-		static $shown = false;
+		// cast to boolean
+		$click_to_hide = !!$this->click_to_hide;
+		$auto_sub_menu_display = !!$this->auto_sub_menu_display;
 
-		// Only display the onContentReady() loader function once.
-		if (!$shown) {
-			$javascript = "function swat_menu_create(parameters)".
-			"\n{".
-				"\n\tvar menu_obj = new parameters['menu_class'](".
-					"parameters['id'], parameters['properties']);".
-				"\n\tmenu_obj.render();".
-				"\n\tmenu_obj.show();".
-			"\n}";
-			$shown = true;
-		} else {
-			$javascript = '';
-		}
+		$parameters = array(
+			'clicktohide'        => $click_to_hide,
+			'autosubmenudisplay' => $auto_sub_menu_display,
+			'position'           => 'static',
+		);
 
-		$parameters = sprintf(
-			"{ id: '%s',
-				menu_class: %s,
-				properties: {
-					clicktohide: %s,
-					autosubmenudisplay: %s,
-					position: 'static'
-				}
-			}",
-			$this->id,
+		$parameters = json_encode($parameters);
+
+		return sprintf(
+			"YAHOO.util.Event.onContentReady(\n".
+			"\t%s,\n".
+			"\tfunction()\n".
+			"\t{\n".
+			"\t\tvar menu_obj = new %s(%s, %s);\n".
+			"\t\tmenu_obj.render();\n".
+			"\t\tmenu_obj.show();\n".
+			"\t}\n".
+			");\n",
+			SwatString::quoteJavaScriptString($this->id),
 			$this->getJavaScriptClass(),
-			$this->click_to_hide ? 'true' : 'false',
-			$this->auto_sub_menu_display ? 'true' : 'false');
-
-		$javascript.= sprintf(
-			"\nYAHOO.util.Event.onContentReady(
-				'%s',
-				swat_menu_create,
-				%s);",
-			$this->id,
-			$parameters);
-
-		return $javascript;
+			SwatString::quoteJavaScriptString($this->id),
+			$parameters
+		);
 	}
 
 	// }}}
