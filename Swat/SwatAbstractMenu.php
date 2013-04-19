@@ -117,7 +117,7 @@ abstract class SwatAbstractMenu extends SwatControl
 		if (!$shown) {
 			$javascript = "function swat_menu_create(parameters)".
 			"\n{".
-				"\n\tvar menu_obj = new parameters['class'](".
+				"\n\tvar menu_obj = new parameters['menu_class'](".
 					"parameters['id'], parameters['properties']);".
 				"\n\tmenu_obj.render();".
 				"\n\tmenu_obj.show();".
@@ -128,19 +128,24 @@ abstract class SwatAbstractMenu extends SwatControl
 		}
 
 		$parameters = sprintf(
-			"{ id: '%s', class: %s, properties: { ".
-				"clicktohide: %s, ".
-				"autosubmenudisplay: %s, ".
-				"position: 'static' ".
-			"} }",
+			"{ id: '%s',
+				menu_class: %s,
+				properties: {
+					clicktohide: %s,
+					autosubmenudisplay: %s,
+					position: 'static'
+				}
+			}",
 			$this->id,
 			$this->getJavaScriptClass(),
 			$this->click_to_hide ? 'true' : 'false',
 			$this->auto_sub_menu_display ? 'true' : 'false');
 
 		$javascript.= sprintf(
-			"\nYAHOO.util.Event.onContentReady('%s', ".
-				"swat_menu_create, %s);",
+			"\nYAHOO.util.Event.onContentReady(
+				'%s',
+				swat_menu_create,
+				%s);",
 			$this->id,
 			$parameters);
 
