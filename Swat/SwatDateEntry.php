@@ -14,7 +14,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A date entry widget
  *
  * @package   Swat
- * @copyright 2004-2012 silverorange
+ * @copyright 2004-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDateEntry extends SwatInputControl implements SwatState
@@ -685,12 +685,14 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			// if end month is december, we've already displayed above,
 			// otherwise loop around and show the earlier months as well.
 			if ($end_month < 12) {
-				for ($i = 1; $i <= $end_month; $i++)
+				for ($i = 1; $i <= $end_month; $i++) {
 					$flydown->addOption($i, $this->getMonthOptionText($i));
+				}
 			}
 		} else {
-			for ($i = 1; $i <= 12; $i++)
+			for ($i = 1; $i <= 12; $i++) {
 				$flydown->addOption($i, $this->getMonthOptionText($i));
+			}
 		}
 
 		return $flydown;
