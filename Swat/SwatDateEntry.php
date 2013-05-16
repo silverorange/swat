@@ -676,19 +676,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			for ($i = $start_month; $i <= $end_month; $i++) {
 				$flydown->addOption($i, $this->getMonthOptionText($i));
 			}
-		} elseif ($difference->y < 1) {
-			// display a shortened list that starts on the start month if the
-			// range end is within a year of the range start
-			for ($i = $start_month; $i <= 12; $i++)
-				$flydown->addOption($i, $this->getMonthOptionText($i));
-
-			// if end month is december, we've already displayed above,
-			// otherwise loop around and show the earlier months as well.
-			if ($end_month < 12) {
-				for ($i = 1; $i <= $end_month; $i++) {
-					$flydown->addOption($i, $this->getMonthOptionText($i));
-				}
-			}
 		} else {
 			for ($i = 1; $i <= 12; $i++) {
 				$flydown->addOption($i, $this->getMonthOptionText($i));
