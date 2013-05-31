@@ -17,7 +17,7 @@ require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
  * All public properties correspond to database fields
  *
  * @package   SwatDB
- * @copyright 2005-2011 silverorange
+ * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBDataObject extends SwatObject
@@ -294,6 +294,12 @@ class SwatDBDataObject extends SwatObject
 
 			if ($value === null)
 				$value = '<null>';
+
+			if (is_array($value)) {
+				$value = print_r($value, true);
+			}
+
+			$value = (string)$value;
 
 			printf("%s = %s%s<br />\n",
 				SwatString::minimizeEntities($name),
