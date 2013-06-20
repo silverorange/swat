@@ -60,12 +60,11 @@ $package->addMaintainer('lead', 'gauthierm', 'Mike Gauthier', 'mike@silverorange
 $package->addReplacement('Swat/Swat.php', 'pear-config', '@DATA-DIR@', 'data_dir');
 $package->addReplacement('Swat/SwatUI.php', 'pear-config', '@DATA-DIR@', 'data_dir');
 
-$package->setPhpDep('5.1.5');
+$package->setPhpDep('5.3.0');
 $package->setPearinstallerDep('1.4.0');
 $package->addExtensionDep('required', 'iconv');
 $package->addExtensionDep('required', 'mbstring');
 $package->addExtensionDep('required', 'intl');
-$package->addPackageDepWithChannel('required', 'HotDate',     'pear.silverorange.com', '0.1.1');
 $package->addPackageDepWithChannel('optional', 'Yui',         'pear.silverorange.com', '1.0.10');
 $package->addPackageDepWithChannel('optional', 'MDB2',        'pear.php.net',          '2.2.2');
 $package->addPackageDepWithChannel('optional', 'ReCaptcha',   'pear.silverorange.com', '1.0.0');

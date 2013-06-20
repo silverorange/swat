@@ -2,7 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'HotDate/HotDateTimeZone.php';
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatFlydown.php';
 require_once 'Swat/SwatCascadeFlydown.php';
@@ -64,17 +63,17 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		parent::__construct($id);
 
 		static $area_whitelist = array(
-			HotDateTimeZone::AFRICA,
-			HotDateTimeZone::AMERICA,
-			HotDateTimeZone::ANTARCTICA,
-			HotDateTimeZone::ARCTIC,
-			HotDateTimeZone::ASIA,
-			HotDateTimeZone::ATLANTIC,
-			HotDateTimeZone::AUSTRALIA,
-			HotDateTimeZone::EUROPE,
-			HotDateTimeZone::INDIAN,
-			HotDateTimeZone::PACIFIC,
-			HotDateTimeZone::UTC,
+			DateTimeZone::AFRICA,
+			DateTimeZone::AMERICA,
+			DateTimeZone::ANTARCTICA,
+			DateTimeZone::ARCTIC,
+			DateTimeZone::ASIA,
+			DateTimeZone::ATLANTIC,
+			DateTimeZone::AUSTRALIA,
+			DateTimeZone::EUROPE,
+			DateTimeZone::INDIAN,
+			DateTimeZone::PACIFIC,
+			DateTimeZone::UTC,
 		);
 
 		$time_zone_list = $this->parseAreaWhitelist($area_whitelist);
@@ -146,7 +145,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 			$this->addMessage(new SwatMessage($message, 'error'));
 		} else {
 			try {
-				$time_zone = new HotDateTimeZone($this->value);
+				$time_zone = new DateTimeZone($this->value);
 			} catch (Exception $e) {
 				$message = Swat::_('The %s field is an invalid time zone.');
 				$this->addMessage(new SwatMessage($message, 'error'));
@@ -246,7 +245,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 			$whitelist = $whitelist | $area;
 		}
 
-		$tz_data = HotDateTimeZone::listIdentifiers($whitelist);
+		$tz_data = DateTimeZone::listIdentifiers($whitelist);
 
 		foreach ($tz_data as $id) {
 			$area = $this->getArea($id);

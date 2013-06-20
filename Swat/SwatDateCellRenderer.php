@@ -51,10 +51,10 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	 * The time zone to render the date in
 	 *
 	 * The time zone may be specified either as a valid time zone identifier
-	 * or as a HotDateTimeZone object. If the render time zone is null, no
+	 * or as a DateTimeZone object. If the render time zone is null, no
 	 * time zone conversion is performed.
 	 *
-	 * @var string|HotDateTimeZone
+	 * @var string|DateTimeZone
 	 */
 	public $display_time_zone = null;
 
@@ -86,14 +86,14 @@ class SwatDateCellRenderer extends SwatCellRenderer
 					'The $date must be either a string or a SwatDate object.');
 			}
 
-			if ($this->display_time_zone instanceof HotDateTimeZone) {
+			if ($this->display_time_zone instanceof DateTimeZone) {
 				$date->convertTZ($this->display_time_zone);
 			} elseif (is_string($this->display_time_zone)) {
 				$date->convertTZById($this->display_time_zone);
 			} elseif ($this->display_time_zone !== null) {
 				throw new InvalidArgumentException(
 					'The $display_time_zone must be either a string or a '.
-					'HotDateTimeZone object.');
+					'DateTimeZone object.');
 			}
 
 			echo SwatString::minimizeEntities(
