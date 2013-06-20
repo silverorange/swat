@@ -2,8 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'HotDate/HotDateTime.php';
-require_once 'HotDate/HotDateInterval.php';
 require_once 'Swat/Swat.php';
 
 // {{{ Date_TimeZone - deprecated, used only for session compatibility
@@ -33,7 +31,7 @@ class Date_TimeZone
  * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDate extends HotDateTime
+class SwatDate extends DateTime
 {
 	// {{{ public properties - deprecated, used only for session compatibility
 
@@ -800,7 +798,7 @@ class SwatDate extends HotDateTime
 
 			self::$tz_abbreviations = array();
 
-			$abbreviations = HotDateTimeZone::listAbbreviations();
+			$abbreviations = DateTimeZone::listAbbreviations();
 			foreach ($abbreviations as $abbreviation => $time_zones) {
 
 				if (isset(self::$valid_tz_abbreviations[$abbreviation])) {
@@ -831,13 +829,13 @@ class SwatDate extends HotDateTime
 	/**
 	 * Gets an array of time zone abbreviations for a specific time zone
 	 *
-	 * @param HotDateTimeZone $time_zone the new time zone.
+	 * @param DateTimeZone $time_zone the new time zone.
 	 *
 	 * @return array an array containing one or both of
 	 *               - 'st' for the standard time abbreviation, and
 	 *               - 'dt' for the daylight time abbreviation.
 	 */
-	public static function getTimeZoneAbbreviation(HotDateTimeZone $time_zone)
+	public static function getTimeZoneAbbreviation(DateTimeZone $time_zone)
 	{
 		$abbreviations = self::getTimeZoneAbbreviations();
 		$key = $time_zone->getName();
@@ -857,14 +855,14 @@ class SwatDate extends HotDateTime
 	 *
 	 * This method is provided for backwards compatibility with PEAR::Date.
 	 *
-	 * @param HotDateTime $date1 the first date to compare.
-	 * @param HotDateTime $date2 the second date to compare.
+	 * @param DateTime $date1 the first date to compare.
+	 * @param DateTime $date2 the second date to compare.
 	 *
 	 * @return integer a tri-value where -1 indicates $date1 is before $date2,
 	 *                  0 indicates $date1 is equivalent to $date2 and 1
 	 *                  indicates $date1 is after $date2.
 	 */
-	public static function compare(HotDateTime $date1, HotDateTime $date2)
+	public static function compare(DateTime $date1, DateTime $date2)
 	{
 		// Not using getTimestamp() here because it is clamped to the 32-bit
 		// signed integer range. Float compaison should be safe here as the
@@ -897,7 +895,7 @@ class SwatDate extends HotDateTime
 	 *
 	 * @param integer $seconds seconds for which to get interval.
 	 *
-	 * @return HotDateInterval a date interval with the relevant parts
+	 * @return DateInterval a date interval with the relevant parts
 	 *                         set.
 	 */
 	public static function getIntervalFromSeconds($seconds)
@@ -951,7 +949,7 @@ class SwatDate extends HotDateTime
 			}
 		}
 
-		return new HotDateInterval($interval_spec);
+		return new DateInterval($interval_spec);
 	}
 
 	// }}}
@@ -1251,7 +1249,7 @@ class SwatDate extends HotDateTime
 	 *
 	 * @return integer the number of seconds since the UNIX epoch for this date.
 	 *
-	 * @deprecated Use {@link HotDateTime::getTimestamp()} instead.
+	 * @deprecated Use {@link DateTime::getTimestamp()} instead.
 	 */
 	public function getTime()
 	{
@@ -1266,14 +1264,14 @@ class SwatDate extends HotDateTime
 	 *
 	 * This method is provided for backwards compatibility with PEAR::Date.
 	 *
-	 * @param HotDateTimeZone $time_zone the new time zone.
+	 * @param DateTimeZone $time_zone the new time zone.
 	 *
 	 * @return mixed this object on success, or false if the time zone is
 	 *               invalid.
 	 *
 	 * @deprecated Use {@link SwatDate::setTimezone()} instead.
 	 */
-	public function convertTZ(HotDateTimeZone $time_zone)
+	public function convertTZ(DateTimeZone $time_zone)
 	{
 		return $this->setTimezone($time_zone);
 	}
@@ -1295,7 +1293,7 @@ class SwatDate extends HotDateTime
 	 */
 	public function convertTZById($time_zone_name)
 	{
-		return $this->setTimezone(new HotDateTimeZone($time_zone_name));
+		return $this->setTimezone(new DateTimeZone($time_zone_name));
 	}
 
 	// }}}
@@ -1305,12 +1303,12 @@ class SwatDate extends HotDateTime
 	 * Sets the time zone for this date and updates this date's time so the
 	 * hours are the same as with the old time zone
 	 *
-	 * @param HotDateTimeZone $time_zone the new time zone.
+	 * @param DateTimeZone $time_zone the new time zone.
 	 *
 	 * @return mixed this object on success, or false if the time zone name is
 	 *               invalid.
 	 */
-	public function setTZ(HotDateTimeZone $time_zone)
+	public function setTZ(DateTimeZone $time_zone)
 	{
 		$this->addSeconds($this->format('Z'));
 		$result = $this->setTimezone($time_zone);
@@ -1332,7 +1330,7 @@ class SwatDate extends HotDateTime
 	 */
 	public function setTZById($time_zone_name)
 	{
-		$this->setTZ(new HotDateTimeZone($time_zone_name));
+		$this->setTZ(new DateTimeZone($time_zone_name));
 	}
 
 	// }}}
@@ -1346,7 +1344,7 @@ class SwatDate extends HotDateTime
 	 */
 	public function toUTC()
 	{
-		return $this->setTimezone(new HotDateTimeZone('UTC'));
+		return $this->setTimezone(new DateTimeZone('UTC'));
 	}
 
 	// }}}
@@ -1378,7 +1376,7 @@ class SwatDate extends HotDateTime
 	public function addYears($years)
 	{
 		$years = (integer)$years;
-		$interval = new HotDateInterval('P'.$years.'Y');
+		$interval = new DateInterval('P'.$years.'Y');
 		return $this->add($interval);
 	}
 
@@ -1412,7 +1410,7 @@ class SwatDate extends HotDateTime
 	public function addMonths($months)
 	{
 		$months = (integer)$months;
-		$interval = new HotDateInterval('P'.$months.'M');
+		$interval = new DateInterval('P'.$months.'M');
 		return $this->add($interval);
 	}
 
@@ -1446,7 +1444,7 @@ class SwatDate extends HotDateTime
 	public function addDays($days)
 	{
 		$days = (integer)$days;
-		$interval = new HotDateInterval('P'.$days.'D');
+		$interval = new DateInterval('P'.$days.'D');
 		return $this->add($interval);
 	}
 
@@ -1480,7 +1478,7 @@ class SwatDate extends HotDateTime
 	public function addHours($hours)
 	{
 		$hours = (integer)$hours;
-		$interval = new HotDateInterval('PT'.$hours.'H');
+		$interval = new DateInterval('PT'.$hours.'H');
 		return $this->add($interval);
 	}
 
@@ -1511,7 +1509,7 @@ class SwatDate extends HotDateTime
 	public function addMinutes($minutes)
 	{
 		$minutes = (integer)$minutes;
-		$interval = new HotDateInterval('PT'.$minutes.'M');
+		$interval = new DateInterval('PT'.$minutes.'M');
 		return $this->add($interval);
 	}
 
@@ -1545,7 +1543,7 @@ class SwatDate extends HotDateTime
 	public function addSeconds($seconds)
 	{
 		$seconds = (float)$seconds;
-		$interval = new HotDateInterval('PT'.$seconds.'S');
+		$interval = new DateInterval('PT'.$seconds.'S');
 		return $this->add($interval);
 	}
 
@@ -1598,7 +1596,7 @@ class SwatDate extends HotDateTime
 	 * Sets the year of this date without affecting the other date parts
 	 *
 	 * This method is provided for backwards compatibility with PEAR::Date. You
-	 * may be able to use the method {@link HotDateTime::setDate()} instead.
+	 * may be able to use the method {@link DateTime::setDate()} instead.
 	 *
 	 * @param integer $year the new year. This should be the full four-digit
 	 *                       representation of the year.
@@ -1622,7 +1620,7 @@ class SwatDate extends HotDateTime
 	 * Sets the month of this date without affecting the other date parts
 	 *
 	 * This method is provided for backwards compatibility with PEAR::Date. You
-	 * may be able to use the method {@link HotDateTime::setDate()} instead.
+	 * may be able to use the method {@link DateTime::setDate()} instead.
 	 *
 	 * @param integer $month the new month. This must be a value between
 	 *                        1 and 12.
@@ -1646,7 +1644,7 @@ class SwatDate extends HotDateTime
 	 * Sets the day of this date without affecting the other date parts
 	 *
 	 * This method is provided for backwards compatibility with PEAR::Date. You
-	 * may be able to use the method {@link HotDateTime::setDate()} instead.
+	 * may be able to use the method {@link DateTime::setDate()} instead.
 	 *
 	 * @param integer $day the new day. This must be a value between 1 and 31.
 	 *
@@ -1669,7 +1667,7 @@ class SwatDate extends HotDateTime
 	 * Sets the hour of this date without affecting the other date parts
 	 *
 	 * This method is provided for backwards compatibility with PEAR::Date. You
-	 * may be able to use the method {@link HotDateTime::setTime()} instead.
+	 * may be able to use the method {@link DateTime::setTime()} instead.
 	 *
 	 * @param integer $hour the new hour. This must be a value between 0 and 23.
 	 *
@@ -1692,7 +1690,7 @@ class SwatDate extends HotDateTime
 	 * Sets the minute of this date without affecting the other date parts
 	 *
 	 * This method is provided for backwards compatibility with PEAR::Date. You
-	 * may be able to use the method {@link HotDateTime::setTime()} instead.
+	 * may be able to use the method {@link DateTime::setTime()} instead.
 	 *
 	 * @param integer $minute the new minute. This must be a value between
 	 *                         0 and 59.
@@ -1716,7 +1714,7 @@ class SwatDate extends HotDateTime
 	 * Sets the second of this date without affecting the other date parts
 	 *
 	 * This method is provided for backwards compatibility with PEAR::Date. You
-	 * may be able to use the method {@link HotDateTime::setTime()} instead.
+	 * may be able to use the method {@link DateTime::setTime()} instead.
 	 *
 	 * @param float $second the new second. This must be a value between
 	 *                      0 and 59. Microseconds are accepted.
@@ -1741,12 +1739,12 @@ class SwatDate extends HotDateTime
 	 *
 	 * This method is provided for backwards compatibility with PEAR::Date.
 	 *
-	 * @param HotDateTime $when the date to check.
+	 * @param DateTime $when the date to check.
 	 *
 	 * @return boolean true if this date is before the specified date, otherwise
 	 *                 false.
 	 */
-	public function before(HotDateTime $when)
+	public function before(DateTime $when)
 	{
 		return (self::compare($this, $when) == -1);
 	}
@@ -1759,12 +1757,12 @@ class SwatDate extends HotDateTime
 	 *
 	 * This method is provided for backwards compatibility with PEAR::Date.
 	 *
-	 * @param HotDateTime $when the date to check.
+	 * @param DateTime $when the date to check.
 	 *
 	 * @return boolean true if this date is after the specified date, otherwise
 	 *                 false.
 	 */
-	public function after(HotDateTime $when)
+	public function after(DateTime $when)
 	{
 		return (self::compare($this, $when) == 1);
 	}
@@ -1777,12 +1775,12 @@ class SwatDate extends HotDateTime
 	 *
 	 * This method is provided for backwards compatibility with PEAR::Date.
 	 *
-	 * @param HotDateTime $when the date to check.
+	 * @param DateTime $when the date to check.
 	 *
 	 * @return boolean true if this date is equivalent to the specified date,
 	 *                 otherwise false.
 	 */
-	public function equals(HotDateTime $when)
+	public function equals(DateTime $when)
 	{
 		return (self::compare($this, $when) == 0);
 	}
