@@ -1376,7 +1376,12 @@ class SwatDate extends DateTime
 	public function addYears($years)
 	{
 		$years = (integer)$years;
-		$interval = new DateInterval('P'.$years.'Y');
+		$interval = new DateInterval('P'.abs($years).'Y');
+
+		if ($years < 0) {
+			$interval->invert = 1;
+		}
+
 		return $this->add($interval);
 	}
 
@@ -1410,7 +1415,12 @@ class SwatDate extends DateTime
 	public function addMonths($months)
 	{
 		$months = (integer)$months;
-		$interval = new DateInterval('P'.$months.'M');
+		$interval = new DateInterval('P'.abs($months).'M');
+
+		if ($months < 0) {
+			$interval->invert = 1;
+		}
+
 		return $this->add($interval);
 	}
 
@@ -1444,7 +1454,12 @@ class SwatDate extends DateTime
 	public function addDays($days)
 	{
 		$days = (integer)$days;
-		$interval = new DateInterval('P'.$days.'D');
+		$interval = new DateInterval('P'.abs($days).'D');
+
+		if ($days < 0) {
+			$interval->invert = 1;
+		}
+
 		return $this->add($interval);
 	}
 
@@ -1478,7 +1493,12 @@ class SwatDate extends DateTime
 	public function addHours($hours)
 	{
 		$hours = (integer)$hours;
-		$interval = new DateInterval('PT'.$hours.'H');
+		$interval = new DateInterval('PT'.abs($hours).'H');
+
+		if ($hours < 0) {
+			$interval->invert = 1;
+		}
+
 		return $this->add($interval);
 	}
 
@@ -1512,12 +1532,17 @@ class SwatDate extends DateTime
 	public function addMinutes($minutes)
 	{
 		$minutes = (integer)$minutes;
-		$interval = new DateInterval('PT'.$minutes.'M');
+		$interval = new DateInterval('PT'.abs($minutes).'M');
+
+		if ($minutes < 0) {
+			$interval->invert = 1;
+		}
+
 		return $this->add($interval);
 	}
 
 	// }}}
-	// {{{ public function addMinutes()
+	// {{{ public function subtractMinutes()
 
 	/**
 	 * Subtracts the specified number of minutes from this date
@@ -1546,7 +1571,12 @@ class SwatDate extends DateTime
 	public function addSeconds($seconds)
 	{
 		$seconds = (float)$seconds;
-		$interval = new DateInterval('PT'.$seconds.'S');
+		$interval = new DateInterval('PT'.abs($seconds).'S');
+
+		if ($seconds < 0) {
+			$interval->invert = 1;
+		}
+
 		return $this->add($interval);
 	}
 
