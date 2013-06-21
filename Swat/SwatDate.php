@@ -1499,6 +1499,9 @@ class SwatDate extends DateTime
 		return $this->addHours($hours);
 	}
 
+	// }}}
+	// {{{ public function addMinutes()
+
 	/**
 	 * Adds the specified number of minutes to this date
 	 *
