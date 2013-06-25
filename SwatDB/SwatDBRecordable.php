@@ -1,10 +1,12 @@
 <?php
 
+/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+
 /**
  * Interface for data-bound objects that are recordable (saveable and loadable)
  *
  * @package   SwatDB
- * @copyright 2007 silverorange
+ * @copyright 2007-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 interface SwatDBRecordable
@@ -14,10 +16,14 @@ interface SwatDBRecordable
 	/**
 	 * Sets the database driver to use for this object
 	 *
-	 * @param MDB2_Driver_Common $db the database driver to use for this
+	 * @param MDB2_Driver_Common $db  the database driver to use for this
 	 *                                object.
+	 * @param array              $set optional array of objects passed through
+	 *                                recursive call containing all objects that
+	 *                                have been set already. Prevents infinite
+	 *                                recursion.
 	 */
-	public function setDatabase(MDB2_Driver_Common $db);
+	public function setDatabase(MDB2_Driver_Common $db, array $set = array());
 
 	// }}}
 	// {{{ public function save()

@@ -10,6 +10,7 @@ require_once 'SwatDB/SwatDB.php';
 require_once 'SwatDB/SwatDBClassMap.php';
 require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/SwatDBRecordable.php';
+require_once 'SwatDB/SwatDBMarshallable.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
 
@@ -21,7 +22,7 @@ require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBDataObject extends SwatObject
-	implements Serializable, SwatDBRecordable
+	implements Serializable, SwatDBRecordable, SwatDBMarshallable
 {
 	// {{{ private properties
 
@@ -155,7 +156,7 @@ class SwatDBDataObject extends SwatObject
 		$modified_properties = array();
 
 		foreach ($property_array as $name => $value) {
-			$hashed_value = md5(serialize($value));
+			$hashed_value = $this->getHashValue($value);
 			if (array_key_exists($name, $this->property_hashes) &&
 				strcmp($hashed_value, $this->property_hashes[$name]) != 0)
 					$modified_properties[$name] = $value;
@@ -510,7 +511,7 @@ class SwatDBDataObject extends SwatObject
 		// here because it would mean calling the expensive getProperties()
 		// method in a loop.
 		foreach ($property_array as $name => $value) {
-			$hashed_value = md5(serialize($value));
+			$hashed_value = $this->getHashValue($value);
 			$this->property_hashes[$name] = $hashed_value;
 		}
 	}
@@ -533,9 +534,26 @@ class SwatDBDataObject extends SwatObject
 		$property_array = $this->getProperties();
 
 		if (isset($property_array[$property])) {
-			$hashed_value = md5(serialize($property_array[$property]));
+			$hashed_value = $this->getHashValue($property_array[$property]);
 			$this->property_hashes[$property] = $hashed_value;
 		}
+	}
+
+	// }}}
+	// {{{ protected function getHashValue()
+
+	/**
+	 * Gets the hash of a value
+	 *
+	 * Used to detect modified properties.
+	 *
+	 * @param mixed $value the value to hash.
+	 *
+	 * @return string the hashed value.
+	 */
+	protected function getHashValue($value)
+	{
+		return md5(serialize($value));
 	}
 
 	// }}}
@@ -778,18 +796,28 @@ class SwatDBDataObject extends SwatObject
 	 * The database is automatically set for all recordable sub-objects of this
 	 * data-object.
 	 *
-	 * @param MDB2_Driver_Common $db the database driver to use for this
+	 * @param MDB2_Driver_Common $db  the database driver to use for this
 	 *                                data-object.
+	 * @param array              $set optional array of objects passed through
+	 *                                recursive call containing all objects that
+	 *                                have been set already. Prevents infinite
+	 *                                recursion.
 	 */
-	public function setDatabase(MDB2_Driver_Common $db)
+	public function setDatabase(MDB2_Driver_Common $db, array $set = array())
 	{
+		$key = spl_object_hash($this);
+
+		if (isset($set[$key])) {
+			// prevent infinite recursion on datastructure cycles
+			return;
+		}
+
 		$this->db = $db;
-		$serializable_sub_data_objects = $this->getSerializableSubDataObjects();
+		$set[$key] = true;
 
 		foreach ($this->sub_data_objects as $name => $object) {
-			if (($object instanceof SwatDBRecordable) &&
-				in_array($name, $serializable_sub_data_objects)) {
-				$object->setDatabase($db);
+			if ($object instanceof SwatDBRecordable) {
+				$object->setDatabase($db, $set);
 			}
 		}
 	}
@@ -901,7 +929,7 @@ class SwatDBDataObject extends SwatObject
 		$property_array = $this->getProperties();
 
 		foreach ($property_array as $name => $value) {
-			$hashed_value = md5(serialize($value));
+			$hashed_value = $this->getHashValue($value);
 			if (isset($this->property_hashes[$name]) &&
 				strcmp($hashed_value, $this->property_hashes[$name]) != 0)
 					return true;
@@ -1235,6 +1263,121 @@ class SwatDBDataObject extends SwatObject
 
 			$this->$property = $value;
 
+		}
+	}
+
+	// }}}
+	// {{{ public function marshall()
+
+	public function marshall(array $tree = array())
+	{
+		$data = array();
+
+		// specified tree for sub-data-objects
+		foreach ($tree as $key => $value) {
+			if (is_array($value)) {
+				$tree = $value;
+			} else {
+				$key = $value;
+				$tree = array();
+			}
+
+			if ($this->hasSubDataObject($key)) {
+				$sub_data_object = $this->getSubDataObject($key);
+				if ($sub_data_object instanceof SwatDBMarshallable) {
+					// need to save class name here because magic loaders
+					// have completely dynamic return classes.
+					$data['sub_data_objects'][$key] =
+						array(
+							get_class($sub_data_object),
+							$sub_data_object->marshall($tree)
+						);
+				} elseif (is_scalar($sub_data_object)) {
+					$data['sub_data_objects'][$key] =
+						$sub_data_object;
+				} else {
+					throw new SwatDBMarshallException(
+						sprintf(
+							'Unable to marshall requested property "%s" '.
+							'for object of class %s.',
+							$key,
+							get_class($this)
+						)
+					);
+				}
+			}
+		}
+
+		// private properties sans sub-data-objects property
+		$private_properties = $this->getSerializablePrivateProperties();
+		$private_properties = array_diff(
+			$private_properties,
+			array('sub_data_objects')
+		);
+		foreach ($private_properties as $property) {
+			$data[$property] = $this->$property;
+		}
+
+		// public properties
+		$reflector = new ReflectionObject($this);
+		foreach ($reflector->getProperties() as $property) {
+			if ($property->isPublic() && !$property->isStatic()) {
+				$name = $property->getName();
+				$data[$name] = $this->$name;
+			}
+		}
+
+		return $data;
+	}
+
+	// }}}
+	// {{{ public function unmarshall()
+
+	public function unmarshall(array $data = array())
+	{
+		// public properties
+		$reflector = new ReflectionObject($this);
+		foreach ($reflector->getProperties() as $property) {
+			if ($property->isPublic() && !$property->isStatic()) {
+				$name = $property->getName();
+				if (isset($data[$name])) {
+					$this->$name = $data[$name];
+				} else {
+					$this->$name = null;
+				}
+			}
+		}
+
+		// private properties sans sub-data-objects property
+		$private_properties = $this->getSerializablePrivateProperties();
+		$private_properties = array_diff(
+			$private_properties,
+			array('sub_data_objects')
+		);
+
+		foreach ($private_properties as $property) {
+			if (isset($data[$property])) {
+				$this->$property = $data[$property];
+			} else {
+				$this->$property = null;
+			}
+		}
+
+		// restore sub-data-objects;
+		if (isset($data['sub_data_objects'])) {
+			foreach ($data['sub_data_objects'] as $key => $object_data) {
+				if (is_array($object_data)) {
+					$class_name = $object_data[0];
+					if (is_subclass_of($class_name, 'SwatDBMarshallable')) {
+						$object_data = $object_data[1];
+						$object = new $class_name();
+						$object->unmarshall($object_data);
+						$this->sub_data_objects[$key] = $object;
+					}
+				} else {
+					$this->sub_data_objects[$key] = $object_data;
+				}
+			}
 		}
 	}
 

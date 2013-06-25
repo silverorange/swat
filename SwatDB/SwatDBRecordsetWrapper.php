@@ -7,6 +7,7 @@ require_once 'Swat/SwatTableModel.php';
 require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/SwatDBClassMap.php';
 require_once 'SwatDB/SwatDBRecordable.php';
+require_once 'SwatDB/SwatDBMarshallable.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
@@ -28,12 +29,13 @@ require_once 'Swat/exceptions/SwatInvalidTypeException.php';
  * have an index value.
  *
  * @package   SwatDB
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @todo      Add lazy instantiation of records.
  */
 abstract class SwatDBRecordsetWrapper extends SwatObject
-	implements Serializable, ArrayAccess, SwatTableModel, SwatDBRecordable
+	implements Serializable, ArrayAccess, SwatTableModel, SwatDBRecordable,
+	SwatDBMarshallable
 {
 	// {{{ protected properties
 
@@ -69,9 +71,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	/**
 	 * Records contained in this recordset
 	 *
-	 * If this recordset wrapper has a defined $index_field, this array is
-	 * indexed by the index field values of the objects. Otherwise, this array
-	 * is indexed numerically.
+	 * This array is indexed numerically.
 	 *
 	 * @var array
 	 */
@@ -550,6 +550,69 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function marshall()
+
+	public function marshall(array $tree = array())
+	{
+		$data = array();
+
+		$private_properties = array(
+			'row_wrapper_class',
+			'index_field',
+		);
+
+		foreach ($private_properties as $property) {
+			$data[$property] = $this->$property;
+		}
+
+		$data['objects'] = array();
+
+		foreach ($this->objects as $object) {
+			if ($object instanceof SwatDBMarshallable) {
+				$object_data = $object->marshall($tree);
+				$data['objects'][] = $object_data;
+			}
+		}
+
+		return $data;
+	}
+
+	// }}}
+	// {{{ public function unmarshall()
+
+	public function unmarshall(array $data = array())
+	{
+		$private_properties = array(
+			'row_wrapper_class',
+			'index_field',
+		);
+
+		foreach ($private_properties as $property) {
+			if (isset($data[$property])) {
+				$this->$property = $data[$property];
+			} else {
+				$this->$property = null;
+			}
+		}
+
+		$this->objects = array();
+		$this->objects_by_index = array();
+		if (is_subclass_of($this->row_wrapper_class, 'SwatDBMarshallable')) {
+			if (isset($data['objects'])) {
+				foreach ($data['objects'] as $object_data) {
+					$object = new $this->row_wrapper_class();
+					$object->unmarshall($object_data);
+					$this->objects[] = $object;
+				}
+			}
+			if ($this->index_field != '') {
+				$this->reindex();
+			}
+		}
+
+	}
+
+	// }}}
 
 	// manipulating of sub data objects
 	// {{{ public function getInternalValues()
@@ -1016,16 +1079,30 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 * The database is automatically set for all recordable records of this
 	 * recordset.
 	 *
-	 * @param MDB2_Driver_Common $db the database driver to use for this
+	 * @param MDB2_Driver_Common $db  the database driver to use for this
 	 *                                recordset.
+	 * @param array              $set optional array of objects passed through
+	 *                                recursive call containing all objects that
+	 *                                have been set already. Prevents infinite
+	 *                                recursion.
 	 */
-	public function setDatabase(MDB2_Driver_Common $db)
+	public function setDatabase(MDB2_Driver_Common $db, array $set = array())
 	{
-		$this->db = $db;
+		$key = spl_object_hash($this);
 
-		foreach ($this->objects as $object)
-			if ($object instanceof SwatDBRecordable)
-				$object->setDatabase($db);
+		if (isset($set[$key])) {
+			// prevent infinite recursion on datastructure cycles
+			return;
+		}
+
+		$this->db = $db;
+		$set[$key] = true;
+
+		foreach ($this->objects as $object) {
+			if ($object instanceof SwatDBRecordable) {
+				$object->setDatabase($db, $set);
+			}
+		}
 	}
 
 	// }}}
