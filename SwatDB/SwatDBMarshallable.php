@@ -18,7 +18,7 @@ require_once 'SwatDB/exceptions/SwatDBMarshallException.php';
  * @copyright 2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-interface SwatDBmarshallable
+interface SwatDBMarshallable
 {
 	// {{{ public function marshall()
 	/**
