@@ -4,21 +4,6 @@
 
 require_once 'Swat/Swat.php';
 
-// {{{ Date_TimeZone - deprecated, used only for session compatibility
-
-/**
- * @deprecated Used only for session compatibility.
- */
-class Date_TimeZone
-{
-	/**
-	 * @deprecated Used only for session compatibility.
-	 */
-	public $id;
-}
-
-// }}}
-
 /**
  * Date class and PEAR-compatibility layer
  *
@@ -31,46 +16,8 @@ class Date_TimeZone
  * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDate extends DateTime
+class SwatDate extends DateTime implements Serializable
 {
-	// {{{ public properties - deprecated, used only for session compatibility
-
-	/**
-	 * @deprecated Used only for session compatibility.
-	 */
-	public $year;
-
-	/**
-	 * @deprecated Used only for session compatibility.
-	 */
-	public $month;
-
-	/**
-	 * @deprecated Used only for session compatibility.
-	 */
-	public $day;
-
-	/**
-	 * @deprecated Used only for session compatibility.
-	 */
-	public $hour;
-
-	/**
-	 * @deprecated Used only for session compatibility.
-	 */
-	public $minute;
-
-	/**
-	 * @deprecated Used only for session compatibility.
-	 */
-	public $second;
-
-	/**
-	 * @deprecated Used only for session compatibility.
-	 */
-	public $tz;
-
-	// }}}
 	// {{{ time zone format constants
 
 	/**
@@ -1900,6 +1847,48 @@ class SwatDate extends DateTime
 	public function subtractStrictMonths($months)
 	{
 		return $this->addStrictMonths(-$months);
+	}
+
+	// }}}
+	// {{{ public function serialize()
+
+	/**
+	 * Serializes this date
+	 *
+	 * Serialization is provided for backwards compatibility with the
+	 * transitional HotDate package. The SwatDate serialize format is not
+	 * compatible with PHP 5.3+ native DateTime serialization.
+	 */
+	public function serialize()
+	{
+		$data = array(
+			$this->getTimestamp(),
+			$this->getTimeZone()->getName()
+		);
+
+		return serialize($data);
+	}
+
+	// }}}
+	// {{{ public function unserialize()
+
+	/**
+	 * Unserializes this date
+	 *
+	 * @param string $serialized the serialized date data.
+	 */
+	public function unserialize($serialized)
+	{
+		$data = unserialize($serialized);
+
+		// Calling __construct here is required to avoid PHP warnings. See
+		// PHP bug #65151. DateTime objects that are created through
+		// unserialization are not properly initialized until __construct() is
+		// called.
+		$this->__construct('@'.$data[0]);
+
+		// DateTime constructor with timestamp is always UTC so set time zone
+		$this->setTimezone(new DateTimeZone($data[1]));
 	}
 
 	// }}}
