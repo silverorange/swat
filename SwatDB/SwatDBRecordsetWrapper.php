@@ -31,7 +31,6 @@ require_once 'Swat/exceptions/SwatInvalidTypeException.php';
  * @package   SwatDB
  * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
- * @todo      Add lazy instantiation of records.
  */
 abstract class SwatDBRecordsetWrapper extends SwatObject
 	implements Serializable, ArrayAccess, SwatTableModel, SwatDBRecordable,
@@ -64,6 +63,13 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 * @see SwatDBRecordsetWrapper::setDatabase()
 	 */
 	protected $db;
+
+	/**
+	 * @var array
+	 *
+	 * @see SwatDBRecordsetWrapper::setOptions()
+	 */
+	protected $options = array();
 
 	// }}}
 	// {{{ private properties
@@ -113,26 +119,43 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	/**
 	 * Creates a new recordset wrapper
 	 *
-	 * @param MDB2_Result $recordset optional. The MDB2 recordset to wrap.
+	 * @param MDB2_Result_Common $rs      optional. The MDB2 result set to
+	 *                                    wrap.
+	 * @param array              $options optional. An array of options for
+	 *                                    this recordset.
 	 */
-	public function __construct($recordset = null)
+	public function __construct(MDB2_Result_Common $rs = null,
+		array $options = array())
 	{
 		$this->init();
+		$this->setOptions($options);
 
-		if ($recordset === null)
-			return;
+		if ($rs instanceof MDB2_Result_Common) {
+			$this->initializeFromResultSet($rs);
+		}
+	}
 
-		if (MDB2::isError($recordset))
-			throw new SwatDBException($recordset->getMessage());
+	// }}}
+	// {{{ public function initializeFromResultSet()
 
-		$this->setDatabase($recordset->db);
+	public function initializeFromResultSet(MDB2_Result_Common $rs)
+	{
+		if (MDB2::isError($rs)) {
+			throw new SwatDBException($rs->getMessage());
+		}
+
+		$this->objects = array();
+		$this->objects_by_index = array();
+
+		$this->setDatabase($rs->db);
 
 		do {
-			while ($row = $recordset->fetchRow(MDB2_FETCHMODE_OBJECT)) {
+			while ($row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT)) {
 				$object = $this->instantiateRowWrapperObject($row);
 
-				if ($object instanceof SwatDBRecordable)
-					$object->setDatabase($recordset->db);
+				if ($object instanceof SwatDBRecordable) {
+					$object->setDatabase($rs->db);
+				}
 
 				$this->objects[] = $object;
 
@@ -142,7 +165,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 					$this->objects_by_index[$index] = $object;
 				}
 			}
-		} while ($recordset->nextResult());
+		} while ($rs->nextResult());
 	}
 
 	// }}}
@@ -172,6 +195,92 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function setOptions()
+
+	/**
+	 * Sets one or more options for this recordset wrapper
+	 *
+	 * Subclasses may define additional options. The default options are:
+	 *
+	 * - <kbd>boolean read_only</kbd> if true, records are initialized as
+	 *                                read only. Defaults to false.
+	 *
+	 * @param array|string $options either an array containing key-value pairs
+	 *                              or a string cotnaining the option name to
+	 *                              set.
+	 * @param mixed        $value   optional. If <kbd>$options</kbd> was passed
+	 *                              as a string, this is the option value.
+	 *
+	 * @return SwatDBRecordsetWrapper the current object for fluent interface.
+	 */
+	public function setOptions($options, $value = null)
+	{
+		// if options passed as string then second param is option value
+		if (is_string($options)) {
+			$options = array($options => $value);
+		}
+
+		if (!is_array($options)) {
+			throw new InvalidArgumentException(
+				'The $options parameter must either be an array or a string '.
+				'containing the option name.'
+			);
+		}
+
+		// new options override existing options
+		$this->options = array_merge(
+			$options,
+			$this->options
+		);
+
+		return $this;
+	}
+
+	// }}}
+	// {{{ public function getOption()
+
+	/**
+	 * Gets an option value or a default value if the option is not set
+	 *
+	 * @param string $name    the option name.
+	 * @param mixed  $default the default value to return if the option is
+	 *                        not set for this recordset wrapper.
+	 *
+	 * @return mixed the option value or the default value if the option is
+	 *               not set.
+	 */
+	public function getOption($name, $default = null)
+	{
+		$value = $default;
+
+		if (isset($this->options[$name])) {
+			$value = $this->options[$name];
+		}
+
+		return $value;
+	}
+
+	// }}}
+	// {{{ public function copyEmpty()
+
+	/**
+	 * Creates a new empty copy of this recordset wrapper
+	 *
+	 * @return SwatDBRecordsetWrapper a new empty copy of this wrapper.
+	 */
+	public function copyEmpty()
+	{
+		$class_name = get_class($this);
+		$wrapper = new $class_name();
+
+		$wrapper->row_wrapper_class = $this->row_wrapper_class;
+		$wrapper->index_field       = $this->index_field;
+		$wrapper->options           = $this->options;
+
+		return $wrapper;
+	}
+
+	// }}}
 	// {{{ protected function instantiateRowWrapperObject()
 
 	/**
@@ -179,16 +288,19 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 *
 	 * @param stdClass $row the data row to use.
 	 *
-	 * @return stdClass the instantiated data object or the original object if
-	 *                   no <i>$row_wrapper_class</i> is defined for this
-	 *                   recordset wrapper.
+	 * @return mixed the instantiated data object or the original object if
+	 *               no <i>$row_wrapper_class</i> is defined for this
+	 *               recordset wrapper.
 	 */
 	protected function instantiateRowWrapperObject($row)
 	{
 		if ($this->row_wrapper_class === null) {
 			$object = $row;
 		} else {
-			$object = new $this->row_wrapper_class($row);
+			$object = new $this->row_wrapper_class(
+				$row,
+				$this->getOption('read_only')
+			);
 		}
 
 		return $object;
@@ -200,7 +312,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	/**
 	 * Initializes this recordset wrapper
 	 *
-	 * Subclasses are encoraged to specify a SwatDBDataObject subclass as this
+	 * Subclasses are encouraged to specify a SwatDBDataObject subclass as this
 	 * recordset's row wrapper class. See
 	 * {@link SwatDBRecordsetWrapper::$row_wrapper_class}.
 	 *
@@ -530,6 +642,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 			'index_field',
 			'objects',
 			'objects_by_index',
+			'options',
 		);
 
 		foreach ($private_properties as $property)
@@ -559,6 +672,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		$private_properties = array(
 			'row_wrapper_class',
 			'index_field',
+			'options',
 		);
 
 		foreach ($private_properties as $property) {
@@ -585,6 +699,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		$private_properties = array(
 			'row_wrapper_class',
 			'index_field',
+			'options',
 		);
 
 		foreach ($private_properties as $property) {
@@ -805,8 +920,12 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		// get all records
 		$recordset = SwatDB::query($this->db, $sql, $wrapper);
 
-		return $this->attachSubRecordset($name, $wrapper, $binding_field->name,
-			$recordset);
+		return $this->attachSubRecordset(
+			$name,
+			$wrapper,
+			$binding_field->name,
+			$recordset
+		);
 	}
 
 	// }}}
@@ -836,7 +955,11 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 
 		// assign empty recordsets for all records in this set
 		foreach ($this as $record) {
-			$empty_recordset = new $wrapper();
+			if ($wrapper instanceof SwatDBRecordsetWrapper) {
+				$empty_recordset = $wrapper->copyEmpty();
+			} else {
+				$empty_recordset = new $wrapper(null);
+			}
 			$record->$name = $empty_recordset;
 		}
 
