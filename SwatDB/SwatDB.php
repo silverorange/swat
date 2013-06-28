@@ -18,7 +18,7 @@ require_once 'SwatDB/exceptions/SwatDBException.php';
  * Static convenience methods for working with a database.
  *
  * @package   SwatDB
- * @copyright 2005-2012 silverorange
+ * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDB extends SwatObject
@@ -73,16 +73,25 @@ class SwatDB extends SwatObject
 	// {{{ public static function query()
 
 	/**
-	 * Query a recordset
+	 * Performs an SQL query
 	 *
- 	 * Convenience method to query.
+	 * @param MDB2_Driver_Common            $db      the database connection.
+	 * @param string                        $sql     the SQL to execute.
+	 * @param string|SwatDBRecordsetWrapper $wrapper optional. The object or
+	 *                                               name of class with which
+	 *                                               to wrap the result set. If
+	 *                                               not specified,
+	 *                                               {@link SwatDBDefaultRecordsetWrapper}
+	 *                                               is used. Specify
+	 *                                               <kbd>null</kbd> to return
+	 *                                               an unwrapped MDB2 result.
+	 * @param array                         $types   optional. An array of MDB2 datatypes
+	 *                                               for the columns of the
+	 *                                               result set.
 	 *
-	 * @param MDB2_Driver_Common $db The database connection.
-	 * @param string $sql The SQL to execute.
-	 * @param array $wrapper Optional name of class to wrap the recordset with.
-	 * @param array $types Optional array MDB2 datatypes for the recordset.
-	 *
-	 * @return MDB2_result_common A recordset containing the query result.
+	 * @return mixed A recordset containing the query result. If <i>$wrapper</i>
+	 *               is specified as null, a MDB2_Result_Common object is
+	 *               returned.
 	 *
 	 * @throws SwatDBException
 	 */
@@ -90,10 +99,21 @@ class SwatDB extends SwatObject
 		$wrapper = 'SwatDBDefaultRecordsetWrapper', $types = null)
 	{
 		$mdb2_types = $types === null ? true : $types;
-		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
 
-		$rs = self::executeQuery($db, 'query',
-			array($sql, $mdb2_types, true, $mdb2_wrapper));
+		$rs = self::executeQuery(
+			$db,
+			'query',
+			array($sql, $mdb2_types, true, false)
+		);
+
+		// Wrap results. Do it here instead of in MDB2 so we can wrap using
+		// an existing object instance.
+		if (is_string($wrapper)) {
+			$rs = new $wrapper($rs);
+		} elseif ($wrapper instanceof SwatDBRecordsetWrapper) {
+			$wrapper->initializeFromResultSet($rs);
+			$rs = $wrapper;
+		}
 
 		return $rs;
 	}
@@ -397,40 +417,63 @@ class SwatDB extends SwatObject
 	// {{{ public static function executeStoredProc()
 
 	/**
-	 * Execute a stored procedure
+	 * Performs a stored procedure
 	 *
- 	 * Convenience method to execute a stored procedure.
+	 * @param MDB2_Driver_Common            $db      the database connection.
+	 * @param string                        $proc    the name of the stored
+	 *                                               procedure to execute.
+	 * @param mixed                         $params  the parameters to pass to
+	 *                                               the stored procedure. Use
+	 *                                               an array for more than one
+	 *                                               parameter.
+	 * @param string|SwatDBRecordsetWrapper $wrapper optional. The object or
+	 *                                               name of class with which
+	 *                                               to wrap the result set. If
+	 *                                               not specified,
+	 *                                               {@link SwatDBDefaultRecordsetWrapper}
+	 *                                               is used. Specify
+	 *                                               <kbd>null</kbd> to return
+	 *                                               an unwrapped MDB2 result.
+	 * @param array                         $types   optional. An array of MDB2 datatypes
+	 *                                               for the columns of the
+	 *                                               result set.
 	 *
-	 * @param MDB2_Driver_Common $db The database connection.
-	 *
-	 * @param string $proc The name of the stored procedure to execute.
-	 *
-	 * @param mixed $params The parameters to pass to the stored procedure.
-	 *        Use an array for more than one parameter.
-	 *
-	 * @param mixed $wrapper Optional MDB2 wrapper class.
-	 * @param array $types Optional array MDB2 datatypes for the recordset.
-	 *
-	 * @return mixed An MDB2 recordset or an instance of the wrapper class.
+	 * @return mixed A recordset containing the query result. If <i>$wrapper</i>
+	 *               is specified as null, a MDB2_Result_Common object is
+	 *               returned.
 	 *
 	 * @throws SwatDBException
 	 */
 	public static function executeStoredProc($db, $proc, $params,
 		$wrapper = 'SwatDBDefaultRecordsetWrapper', $types = null)
 	{
-		$db->loadModule('Function');
-
-		if (!is_array($params))
+		if (!is_array($params)) {
 			$params = array($params);
+		}
 
-		$mdb2_wrapper = ($wrapper === null) ? false : $wrapper;
 		$mdb2_types = $types === null ? true : $types;
 
+		$db->loadModule('Function');
 		$rs = $db->function->executeStoredProc(
-			$proc, $params, $mdb2_types, true, $mdb2_wrapper);
+			$proc,
+			$params,
+			$mdb2_types,
+			true,
+			false
+		);
 
-		if (MDB2::isError($rs))
+		if (MDB2::isError($rs)) {
 			throw new SwatDBException($rs);
+		}
+
+		// Wrap results. Do it here instead of in MDB2 so we can wrap using
+		// an existing object instance.
+		if (is_string($wrapper)) {
+			$rs = new $wrapper($rs);
+		} elseif ($wrapper instanceof SwatDBRecordsetWrapper) {
+			$wrapper->initializeFromResultSet($rs);
+			$rs = $wrapper;
+		}
 
 		return $rs;
 	}
