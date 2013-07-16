@@ -19,7 +19,7 @@ require_once 'Swat/SwatTableViewCheckAllRow.php';
  * widget only applies to the first checkbox renderer.
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewCheckboxColumn extends SwatTableViewColumn
@@ -131,8 +131,9 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 
 		$this->check_all->init();
 
-		if ($this->show_check_all)
+		if ($this->show_check_all && $this->visible) {
 			$this->parent->appendRow($this->check_all);
+		}
 	}
 
 	// }}}
