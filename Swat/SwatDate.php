@@ -891,9 +891,7 @@ class SwatDate extends DateTime implements Serializable
 				$interval_spec.= $minutes.'M';
 			}
 
-			if ($seconds > 0) {
-				$interval_spec.= $seconds.'S';
-			}
+			$interval_spec.= $seconds.'S';
 		}
 
 		return new DateInterval($interval_spec);
