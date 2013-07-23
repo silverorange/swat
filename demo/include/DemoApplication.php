@@ -2,6 +2,8 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'Concentrate/Concentrator.php';
+
 /**
  * A demo application
  *
