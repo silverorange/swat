@@ -9,7 +9,6 @@ setlocale(LC_ALL, 'fr_FR.utf8');
  * development environment. It can be installed using the public silverorange
  * PEAR channel but is not required for either Swat or the Swat demo.
  */
-set_include_path(get_include_path().':/so/sites/shot/pear/lib');
 @include_once 'PackageConfig.php';
 if (class_exists('PackageConfig')) {
 	PackageConfig::setWorkDirPosition(3);
@@ -18,6 +17,7 @@ if (class_exists('PackageConfig')) {
 	PackageConfig::addPackage('jquery');
 	PackageConfig::addPackage('recaptcha');
 	PackageConfig::addPackage('hot-date');
+	PackageConfig::addPackage('concentrate');
 }
 
 require_once 'Swat/SwatAutoloader.php';
