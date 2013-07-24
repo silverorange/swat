@@ -4,7 +4,7 @@
 
 require_once 'PEAR/PackageFileManager2.php';
 
-$version = '2.0.2';
+$version = '2.0.3';
 $notes = <<<EOT
 No release notes for you!
 EOT;
@@ -21,7 +21,7 @@ PEAR::setErrorHandling(PEAR_ERROR_DIE);
 
 $result = $package->setOptions(
 	array(
-		'filelistgenerator' => 'svn',
+		'filelistgenerator' => 'file',
 		'simpleoutput'      => true,
 		'baseinstalldir'    => '/',
 		'packagedirectory'  => './',
