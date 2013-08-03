@@ -63,7 +63,16 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
 		parent::display();
 
-		echo '<span class="swat-flydown-wrapper">';
+		$wrapper_classes = array_merge(
+			array_diff(
+				$this->getCSSClassNames(),
+				array('swat-flydown')
+			),
+			array('swat-flydown-wrapper')
+		);
+		$wrapper = new SwatHtmlTag('span');
+		$wrapper->class = implode(' ', $wrapper_classes);
+		$wrapper->open();
 
 		$options = $this->getOptions();
 		$selected = false;
@@ -145,7 +154,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 			$this->displaySingle(current($options));
 		}
 
-		echo '</span>';
+		$wrapper->close();
 	}
 
 	// }}}
