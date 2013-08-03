@@ -13,7 +13,7 @@ require_once 'Swat/SwatYUI.php';
  * A time entry widget
  *
  * @package   Swat
- * @copyright 2004-2012 silverorange
+ * @copyright 2004-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @todo      Should we add a display_time_zone parameter?
  */
@@ -619,6 +619,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	private function createHourFlydown()
 	{
 		$flydown = new SwatFlydown($this->id.'_hour');
+		$flydown->classes = array('swat-time-entry-hour');
 
 		if ($this->twelve_hour) {
 			for ($i = 1; $i <= 12; $i++)
@@ -642,6 +643,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	private function createMinuteFlydown()
 	{
 		$flydown = new SwatFlydown($this->id.'_minute');
+		$flydown->classes = array('swat-time-entry-minute');
 
 		for ($i = 0; $i <= 59; $i++)
 			$flydown->addOption($i, str_pad($i, 2, '0', STR_PAD_LEFT));
@@ -660,6 +662,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	private function createSecondFlydown()
 	{
 		$flydown = new SwatFlydown($this->id.'_second');
+		$flydown->classes = array('swat-time-entry-second');
 
 		for ($i = 0; $i <= 59; $i++)
 			$flydown->addOption($i, str_pad($i, 2 ,'0', STR_PAD_LEFT));
@@ -678,6 +681,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	private function createAmPmFlydown()
 	{
 		$flydown = new SwatFlydown($this->id.'_am_pm');
+		$flydown->classes = array('swat-time-entry-ampm');
 		$flydown->addOptionsByArray(array(
 			'am' => Swat::_('am'),
 			'pm' => Swat::_('pm'),
