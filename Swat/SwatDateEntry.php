@@ -630,6 +630,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	private function createYearFlydown()
 	{
 		$flydown = new SwatFlydown($this->id.'_year');
+		$flydown->classes = array('swat-date-entry-year');
 
 		$start_year = $this->valid_range_start->getYear();
 
@@ -657,6 +658,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	private function createMonthFlydown()
 	{
 		$flydown = new SwatFlydown($this->id.'_month');
+		$flydown->classes = array('swat-date-entry-month');
 
 		$range_end = clone $this->valid_range_end;
 		$difference  = $this->valid_range_start->diff($range_end);
@@ -720,6 +722,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	private function createDayFlydown()
 	{
 		$flydown = new SwatFlydown($this->id.'_day');
+		$flydown->classes = array('swat-date-entry-day');
 
 		// Subtract a second from the end date. This makes comparison correct,
 		// and prevents displaying extra days.
@@ -772,6 +775,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		require_once 'Swat/SwatTimeEntry.php';
 		$time_entry = new SwatTimeEntry($this->id.'_time_entry');
+		$time_entry->classes = array('swat-date-entry-time');
 		return $time_entry;
 	}
 
@@ -787,6 +791,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		require_once 'Swat/SwatCalendar.php';
 		$calendar = new SwatCalendar($this->id.'_calendar');
+		$calendar->classes = array('swat-date-entry-calendar');
 		$calendar->valid_range_start = $this->valid_range_start;
 		$calendar->valid_range_end   = $this->valid_range_end;
 		return $calendar;
