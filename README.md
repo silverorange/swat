@@ -6,7 +6,7 @@ Swat is an open-source [LGPL]([http://www.gnu.org/licenses/lgpl.html) web-applic
 toolkit built using [PHP](http://www.php.net/). It is primarily developed and
 maintained by [silverorange](http://www.silverorange.com), but participation and
 contributions are welcome. Check out what it can do in the
-(Swat demo)[http://swat.silverorange.com/demo/].
+[http://swat.silverorange.com/demo/](Swat demo).
 
 Swat is *not* a full-stack web framework. Swat is an interface toolkit analogous to
 [Gtk](http://gtk.org/ Gtk), but for web applications instead of native applications.
@@ -27,6 +27,7 @@ repository as a Composer source.
 ## Get Involved
 
  * [Mailing List](http://mailman.silverorange.com/mailman/listinfo/swat-devel)
+ * [2.0 Roadmap](https://github.com/silverorange/swat/wiki/2.0-Roadmap[why Swat was created](https://github.com/silverorange/swat/wiki/History).).
 
 ## Features
 
