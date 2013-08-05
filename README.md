@@ -17,7 +17,7 @@ Read about [why Swat was created](https://github.com/silverorange/swat/wiki/Hist
 Swat releases are published to the silverorange PEAR channel.
 
 ```
-$ pear add-channel pear.silverorange.com
+$ pear channel-discover pear.silverorange.com
 $ pear install so/Swat
 ```
 
