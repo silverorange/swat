@@ -1,4 +1,4 @@
-# swat
+# Swat
 
 Web Application Toolkit. Widgets and more.
 
