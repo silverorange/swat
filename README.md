@@ -24,6 +24,12 @@ $ pear install so/Swat
 You can also install Swat using Composer. It's not on packagist yet, but you can add this Git
 repository as a Composer source.
 
+## Documentation
+
+ * [Simple Example](https://github.com/silverorange/swat/wiki/Simple-Example)
+ * [API Documentation](http://docs.silverorange.com/swat/package-summary.html)
+ * [Installation tutorial](http://labs.silverorange.com/archive/2007/february/swatdemo)
+
 ## Get Involved
 
  * [Mailing List](http://mailman.silverorange.com/mailman/listinfo/swat-devel)
