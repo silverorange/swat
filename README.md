@@ -33,8 +33,8 @@ repository as a Composer source.
 ## Get Involved
 
  * [Mailing List](http://mailman.silverorange.com/mailman/listinfo/swat-devel)
- * [2.0 Roadmap](https://github.com/silverorange/swat/wiki/2.0-Roadmap[why Swat was created](https://github.com/silverorange/swat/wiki/History).).
-
+ * [2.0 Roadmap](https://github.com/silverorange/swat/wiki/2.0-Roadmap)
+ 
 ## Features
 
  * object-oriented PHP 5 code
