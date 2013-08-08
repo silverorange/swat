@@ -1261,7 +1261,16 @@ class SwatDBDataObject extends SwatObject
 				$value->setTZById($tz_id);
 			}
 
-			$this->$property = $value;
+			if ($property === 'internal_properties') {
+				// merge with null properties from init() so that newly
+				// defined properties work on old serialized data.
+				$this->$property = array_merge(
+					$this->$property,
+					$value
+				);
+			} else {
+				$this->$property = $value;
+			}
 
 		}
 	}
