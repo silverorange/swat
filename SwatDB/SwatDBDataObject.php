@@ -1402,9 +1402,14 @@ class SwatDBDataObject extends SwatObject
 
 	protected function getSerializablePrivateProperties()
 	{
-		return array('table', 'id_field',
-			'sub_data_objects', 'property_hashes', 'internal_properties',
-			'loaded_from_database', 'read_only'
+		return array(
+			'table',
+			'id_field',
+			'sub_data_objects',
+			'property_hashes',
+			'internal_properties',
+			'loaded_from_database',
+			'read_only'
 		);
 	}
 
