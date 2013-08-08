@@ -1242,6 +1242,15 @@ class SwatDBDataObject extends SwatObject
 
 		$data = unserialize($data);
 
+		// Ignore properties that shouldn't have been serialized. These
+		// can be removed in the future.
+		$ignored_properties = array(
+			'internal_property_autosave',
+			'internal_property_accessible',
+			'internal_property_classes',
+			'date_properties',
+		);
+
 		foreach ($data as $property => $value) {
 
 			if ($value instanceof SwatDate && isset($value->year)) {
@@ -1261,7 +1270,16 @@ class SwatDBDataObject extends SwatObject
 				$value->setTZById($tz_id);
 			}
 
-			$this->$property = $value;
+			if ($property === 'internal_properties') {
+				// merge with null properties from init() so that newly
+				// defined properties work on old serialized data.
+				$this->$property = array_merge(
+					$this->$property,
+					$value
+				);
+			} elseif (!isset($ignored_properties[$property])) {
+				$this->$property = $value;
+			}
 
 		}
 	}
@@ -1402,11 +1420,15 @@ class SwatDBDataObject extends SwatObject
 
 	protected function getSerializablePrivateProperties()
 	{
-		return array('table', 'id_field',
-			'sub_data_objects', 'property_hashes', 'internal_properties',
-			'internal_property_autosave', 'internal_property_classes',
-			'internal_property_accessible', 'date_properties',
-			'loaded_from_database', 'read_only');
+		return array(
+			'table',
+			'id_field',
+			'sub_data_objects',
+			'property_hashes',
+			'internal_properties',
+			'loaded_from_database',
+			'read_only'
+		);
 	}
 
 	// }}}
