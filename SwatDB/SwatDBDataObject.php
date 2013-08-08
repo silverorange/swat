@@ -1242,6 +1242,15 @@ class SwatDBDataObject extends SwatObject
 
 		$data = unserialize($data);
 
+		// Ignore properties that shouldn't have been serialized. These
+		// can be removed in the future.
+		$ignored_properties = array(
+			'internal_property_autosave',
+			'internal_property_accessible',
+			'internal_property_classes',
+			'date_properties',
+		);
+
 		foreach ($data as $property => $value) {
 
 			if ($value instanceof SwatDate && isset($value->year)) {
@@ -1268,7 +1277,7 @@ class SwatDBDataObject extends SwatObject
 					$this->$property,
 					$value
 				);
-			} else {
+			} elseif (!isset($ignored_properties[$property])) {
 				$this->$property = $value;
 			}
 
