@@ -10,11 +10,31 @@ require_once 'Swat/SwatEntry.php';
  * Automatically verifies that the value of the widget is a valid URI.
  *
  * @package   Swat
- * @copyright 2005-2008 silverorange
+ * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatUriEntry extends SwatEntry
 {
+	// {{{ public properties
+
+	/**
+	 * Whether or not to require the scheme for the URI
+	 *
+	 * If no scheme is specified, the default scheme will be prepended.
+	 *
+	 * @var boolean
+	 */
+	public $require_scheme = true;
+
+	/**
+	 * Default scheme to use if $require_scheme is false and the URI
+	 * isn't valid.
+	 *
+	 * @var string
+	 */
+	public $default_scheme = 'http://';
+
+	// }}}
 	// {{{ public function process()
 
 	/**
@@ -37,7 +57,15 @@ class SwatUriEntry extends SwatEntry
 			return;
 		}
 
-		if (!$this->validateUri($this->value)) {
+		$valid = $this->validateUri($this->value);
+		if (!$valid && !$this->require_scheme) {
+			if ($this->validateUri($this->default_scheme.$this->value)) {
+				$this->value = $this->default_scheme.$this->value;
+				$valid = true;
+			}
+		}
+
+		if (!$valid) {
 			$message = Swat::_('The URI you have entered is not '.
 				'properly formatted.');
 
