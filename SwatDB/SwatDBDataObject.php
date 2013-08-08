@@ -1404,9 +1404,8 @@ class SwatDBDataObject extends SwatObject
 	{
 		return array('table', 'id_field',
 			'sub_data_objects', 'property_hashes', 'internal_properties',
-			'internal_property_autosave', 'internal_property_classes',
-			'internal_property_accessible', 'date_properties',
-			'loaded_from_database', 'read_only');
+			'loaded_from_database', 'read_only'
+		);
 	}
 
 	// }}}
