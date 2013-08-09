@@ -24,10 +24,10 @@ class SwatUriEntry extends SwatEntry
 	 *
 	 * @var boolean
 	 */
-	public $require_scheme = true;
+	public $scheme_required = true;
 
 	/**
-	 * Default scheme to use if $require_scheme is false and the URI
+	 * Default scheme to use if $scheme_required is false and the URI
 	 * isn't valid.
 	 *
 	 * @var string
@@ -57,19 +57,23 @@ class SwatUriEntry extends SwatEntry
 			return;
 		}
 
-		$valid = $this->validateUri($this->value);
-		if (!$valid && !$this->require_scheme) {
+		if (!$this->validateUri($this->value)) {
 			if ($this->validateUri($this->default_scheme.$this->value)) {
-				$this->value = $this->default_scheme.$this->value;
-				$valid = true;
+				if ($this->scheme_required) {
+					$message = sprintf(Swat::_('The URI you have entered '.
+						'does not include a scheme (e.g. %s).'),
+						$this->default_scheme);
+
+					$this->addMessage(new SwatMessage($message, 'error'));
+				} else {
+					$this->value = $this->default_scheme.$this->value;
+				}
+			} else {
+				$message = Swat::_('The URI you have entered is not '.
+					'properly formatted.');
+
+				$this->addMessage(new SwatMessage($message, 'error'));
 			}
-		}
-
-		if (!$valid) {
-			$message = Swat::_('The URI you have entered is not '.
-				'properly formatted.');
-
-			$this->addMessage(new SwatMessage($message, 'error'));
 		}
 	}
 
@@ -89,9 +93,7 @@ class SwatUriEntry extends SwatEntry
 	 */
 	protected function validateUri($value)
 	{
-		$flags = FILTER_FLAG_HOST_REQUIRED | FILTER_FLAG_SCHEME_REQUIRED;
-		$valid = (filter_var($value, FILTER_VALIDATE_URL, $flags) !== false);
-		return $valid;
+		return (filter_var($value, FILTER_VALIDATE_URL) !== false);
 	}
 
 	// }}}
