@@ -58,22 +58,17 @@ class SwatUriEntry extends SwatEntry
 		}
 
 		if (!$this->validateUri($this->value)) {
-			if ($this->validateUri($this->default_scheme.$this->value)) {
+			/*if ($this->validateUri($this->default_scheme.$this->value)) {
 				if ($this->scheme_required) {
-					$message = sprintf(Swat::_('The URI you have entered '.
-						'does not include a scheme (e.g. %s).'),
-						$this->default_scheme);
-
-					$this->addMessage(new SwatMessage($message, 'error'));
+					$this->addMessage($this->getValidationMessage(
+						'scheme-required'));
 				} else {
 					$this->value = $this->default_scheme.$this->value;
 				}
-			} else {
-				$message = Swat::_('The URI you have entered is not '.
-					'properly formatted.');
-
-				$this->addMessage(new SwatMessage($message, 'error'));
-			}
+			} else {*/
+				$this->addMessage($this->getValidationMessage(
+					'invalid-uri'));
+			//}
 		}
 	}
 
@@ -94,6 +89,39 @@ class SwatUriEntry extends SwatEntry
 	protected function validateUri($value)
 	{
 		return (filter_var($value, FILTER_VALIDATE_URL) !== false);
+	}
+
+	// }}}
+	// {{{ protected function getValidationMessage()
+
+	/**
+	 * Gets a validation message for this entry
+	 *
+	 * Can be used by sub-classes to change the validation messages.
+	 *
+	 * @param string $id the string identifier of the validation message.
+	 *
+	 * @return SwatMessage the validation message.
+	 */
+	protected function getValidationMessage($id)
+	{
+		switch ($id) {
+		case 'scheme-required':
+			$text = sprintf(Swat::_('“%s” must include a prefix (i.e. %s).'),
+				$this->value,
+				$this->default_scheme);
+			break;
+		case 'invalid-uri':
+			$text = sprintf(
+				Swat::_('“%s” is not a properly formatted address'),
+				$this->value);
+			break;
+		default:
+			return parent::getValidationMessage($id);
+		}
+
+		$message = new SwatMessage($text, 'error');
+		return $message;
 	}
 
 	// }}}
