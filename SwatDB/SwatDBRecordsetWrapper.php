@@ -969,15 +969,14 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		foreach ($recordset as $record) {
 			$record_id = $record->getInternalValue($binding_field);
 
+			// if recordset being attached references records not in
+			// this recordset, ignore them
+			if (!isset($this[$record_id])) {
+				continue;
+			}
+
 			if ($record_id !== $current_record_id) {
 				$current_record_id = $record_id;
-
-				// if recordset being attached references records not in
-				// this recordset, ignore them
-				if (!isset($this[$record_id])) {
-					continue;
-				}
-
 				$current_recordset = $this[$record_id]->$name;
 			}
 
