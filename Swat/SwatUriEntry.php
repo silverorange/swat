@@ -9,6 +9,9 @@ require_once 'Swat/SwatEntry.php';
  *
  * Automatically verifies that the value of the widget is a valid URI.
  *
+ * URI validation based on regexp by Diego Perini.
+ * See {@link https://gist.github.com/dperini/729294}. 
+ *
  * @package   Swat
  * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
@@ -34,6 +37,13 @@ class SwatUriEntry extends SwatEntry
 	 */
 	public $default_scheme = 'http://';
 
+	/**
+	 * Valid schemes
+	 *
+	 * @var array
+	 */
+	public $valid_schemes = array('http', 'https', 'ftp');
+
 	// }}}
 	// {{{ public function process()
 
@@ -58,17 +68,17 @@ class SwatUriEntry extends SwatEntry
 		}
 
 		if (!$this->validateUri($this->value)) {
-			/*if ($this->validateUri($this->default_scheme.$this->value)) {
+			if ($this->validateUri($this->default_scheme.$this->value)) {
 				if ($this->scheme_required) {
 					$this->addMessage($this->getValidationMessage(
 						'scheme-required'));
 				} else {
 					$this->value = $this->default_scheme.$this->value;
 				}
-			} else {*/
+			} else {
 				$this->addMessage($this->getValidationMessage(
 					'invalid-uri'));
-			//}
+			}
 		}
 	}
 
@@ -78,9 +88,6 @@ class SwatUriEntry extends SwatEntry
 	/**
 	 * Validates a URI
 	 *
-	 * This uses the PHP 5.2.x {@link http://php.net/filter_var filter_var()}
-	 * function. The URI must have a URI scheme and a host name.
-	 *
 	 * @param string $value the URI to validate.
 	 *
 	 * @return boolean true if <code>$value</code> is a valid URI and
@@ -88,7 +95,26 @@ class SwatUriEntry extends SwatEntry
 	 */
 	protected function validateUri($value)
 	{
-		return (filter_var($value, FILTER_VALIDATE_URL) !== false);
+		$domain_parts = array();
+		
+		$regexp = '_^'.
+			// scheme 
+			'(?:(?:'.implode('|', $this->valid_schemes).')://)'.
+			// user:pass authentication
+			'(?:\S+(?::\S*)?@)?'.
+			// host name
+			'(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)'.
+			// domain name
+			'(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)'.
+			// TLD identifier
+			'*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,}))'.
+			// port number
+			'(?::\d{2,5})?'.
+			// resource path
+			'(?:/[^\s]*)'.
+			'?$_iuS';
+
+		return preg_match($regexp, $value);
 	}
 
 	// }}}
