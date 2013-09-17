@@ -118,7 +118,7 @@ class SwatUriEntry extends SwatEntry
 			(/[^\s]*)?
 			$_iuSx';
 
-		return (preg_match($regexp, $value) == 1);
+		return (preg_match($regexp, $value) === 1);
 	}
 
 	// }}}
