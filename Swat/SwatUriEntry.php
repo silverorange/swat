@@ -35,7 +35,7 @@ class SwatUriEntry extends SwatEntry
 	 *
 	 * @var string
 	 */
-	public $default_scheme = 'http://';
+	public $default_scheme = 'http';
 
 	/**
 	 * Valid schemes
@@ -68,12 +68,12 @@ class SwatUriEntry extends SwatEntry
 		}
 
 		if (!$this->validateUri($this->value)) {
-			if ($this->validateUri($this->default_scheme.$this->value)) {
+			if ($this->validateUri($this->default_scheme.'://'.$this->value)) {
 				if ($this->scheme_required) {
 					$this->addMessage($this->getValidationMessage(
 						'scheme-required'));
 				} else {
-					$this->value = $this->default_scheme.$this->value;
+					$this->value = $this->default_scheme.'://'.$this->value;
 				}
 			} else {
 				$this->addMessage($this->getValidationMessage(
@@ -95,8 +95,6 @@ class SwatUriEntry extends SwatEntry
 	 */
 	protected function validateUri($value)
 	{
-		$domain_parts = array();
-		
 		$regexp = '_^'.
 			// scheme 
 			'(?:(?:'.implode('|', $this->valid_schemes).')://)'.
@@ -139,7 +137,7 @@ class SwatUriEntry extends SwatEntry
 			break;
 		case 'invalid-uri':
 			$text = sprintf(
-				Swat::_('“%s” is not a properly formatted address'),
+				Swat::_('“%s” is not a properly formatted address.'),
 				$this->value);
 			break;
 		default:
