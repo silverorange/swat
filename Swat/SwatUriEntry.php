@@ -134,11 +134,13 @@ class SwatUriEntry extends SwatEntry
 			$text = sprintf(Swat::_('“%s” must include a prefix (i.e. %s).'),
 				$this->value,
 				$this->default_scheme);
+
 			break;
 		case 'invalid-uri':
 			$text = sprintf(
 				Swat::_('“%s” is not a properly formatted address.'),
 				$this->value);
+
 			break;
 		default:
 			return parent::getValidationMessage($id);
