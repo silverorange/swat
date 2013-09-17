@@ -95,22 +95,30 @@ class SwatUriEntry extends SwatEntry
 	 */
 	protected function validateUri($value)
 	{
-		$regexp = '_^'.
-			// scheme 
-			'(?:(?:'.implode('|', $this->valid_schemes).')://)'.
-			// user:pass authentication
-			'(?:\S+(?::\S*)?@)?'.
-			// host name
-			'(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)'.
-			// domain name
-			'(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)'.
-			// TLD identifier
-			'*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,}))'.
-			// port number
-			'(?::\d{2,5})?'.
-			// resource path
-			'(?:/[^\s]*)'.
-			'?$_iuS';
+		$domain_parts = array();
+
+		$schemes = array();
+		foreach ($this->valid_schemes as $scheme) {
+			$schemes[] = preg_quote($scheme, '_');
+		}
+		$schemes = implode('|', $schemes);
+
+		$regexp = '_^
+			# scheme
+			(('.$schemes.')://)
+			# user:pass authentication
+			(\S+(:\S*)?@)?
+			# domain part
+			(([a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)
+			# zero or more domain parts separated by dots
+			(\.([a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*
+			# top-level domain part separated by dot
+			(\.(?:[a-z\x{00a1}-\x{ffff}]{2,}))
+			# port number
+			(:\d{2,5})?
+			# resource path
+			(/[^\s]*)?
+			$_iuSx';
 
 		return (preg_match($regexp, $value) == 1);
 	}
