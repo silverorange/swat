@@ -10,7 +10,7 @@ require_once 'Swat/SwatEntry.php';
  * Automatically verifies that the value of the widget is a valid URI.
  *
  * URI validation based on regexp by Diego Perini.
- * See {@link https://gist.github.com/dperini/729294}. 
+ * See {@link https://gist.github.com/dperini/729294}.
  *
  * @package   Swat
  * @copyright 2005-2013 silverorange
