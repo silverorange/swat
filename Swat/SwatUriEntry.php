@@ -9,12 +9,42 @@ require_once 'Swat/SwatEntry.php';
  *
  * Automatically verifies that the value of the widget is a valid URI.
  *
+ * URI validation based on regexp by Diego Perini.
+ * See {@link https://gist.github.com/dperini/729294}.
+ *
  * @package   Swat
- * @copyright 2005-2008 silverorange
+ * @copyright 2005-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatUriEntry extends SwatEntry
 {
+	// {{{ public properties
+
+	/**
+	 * Whether or not to require the scheme for the URI
+	 *
+	 * If no scheme is specified, the default scheme will be prepended.
+	 *
+	 * @var boolean
+	 */
+	public $scheme_required = true;
+
+	/**
+	 * Default scheme to use if $scheme_required is false and the URI
+	 * isn't valid.
+	 *
+	 * @var string
+	 */
+	public $default_scheme = 'http';
+
+	/**
+	 * Valid schemes
+	 *
+	 * @var array
+	 */
+	public $valid_schemes = array('http', 'https', 'ftp');
+
+	// }}}
 	// {{{ public function process()
 
 	/**
@@ -38,10 +68,17 @@ class SwatUriEntry extends SwatEntry
 		}
 
 		if (!$this->validateUri($this->value)) {
-			$message = Swat::_('The URI you have entered is not '.
-				'properly formatted.');
-
-			$this->addMessage(new SwatMessage($message, 'error'));
+			if ($this->validateUri($this->default_scheme.'://'.$this->value)) {
+				if ($this->scheme_required) {
+					$this->addMessage($this->getValidationMessage(
+						'scheme-required'));
+				} else {
+					$this->value = $this->default_scheme.'://'.$this->value;
+				}
+			} else {
+				$this->addMessage($this->getValidationMessage(
+					'invalid-uri'));
+			}
 		}
 	}
 
@@ -51,9 +88,6 @@ class SwatUriEntry extends SwatEntry
 	/**
 	 * Validates a URI
 	 *
-	 * This uses the PHP 5.2.x {@link http://php.net/filter_var filter_var()}
-	 * function. The URI must have a URI scheme and a host name.
-	 *
 	 * @param string $value the URI to validate.
 	 *
 	 * @return boolean true if <code>$value</code> is a valid URI and
@@ -61,9 +95,65 @@ class SwatUriEntry extends SwatEntry
 	 */
 	protected function validateUri($value)
 	{
-		$flags = FILTER_FLAG_HOST_REQUIRED | FILTER_FLAG_SCHEME_REQUIRED;
-		$valid = (filter_var($value, FILTER_VALIDATE_URL, $flags) !== false);
-		return $valid;
+		$schemes = array();
+		foreach ($this->valid_schemes as $scheme) {
+			$schemes[] = preg_quote($scheme, '_');
+		}
+		$schemes = implode('|', $schemes);
+
+		$regexp = '_^
+			# scheme
+			(('.$schemes.')://)
+			# user:pass authentication
+			(\S+(:\S*)?@)?
+			# domain part
+			(([a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)
+			# zero or more domain parts separated by dots
+			(\.([a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*
+			# top-level domain part separated by dot
+			(\.(?:[a-z\x{00a1}-\x{ffff}]{2,}))
+			# port number
+			(:\d{2,5})?
+			# resource path
+			(/[^\s]*)?
+			$_iuSx';
+
+		return (preg_match($regexp, $value) === 1);
+	}
+
+	// }}}
+	// {{{ protected function getValidationMessage()
+
+	/**
+	 * Gets a validation message for this entry
+	 *
+	 * Can be used by sub-classes to change the validation messages.
+	 *
+	 * @param string $id the string identifier of the validation message.
+	 *
+	 * @return SwatMessage the validation message.
+	 */
+	protected function getValidationMessage($id)
+	{
+		switch ($id) {
+		case 'scheme-required':
+			$text = sprintf(Swat::_('“%s” must include a prefix (i.e. %s).'),
+				$this->value,
+				$this->default_scheme);
+
+			break;
+		case 'invalid-uri':
+			$text = sprintf(
+				Swat::_('“%s” is not a properly formatted address.'),
+				$this->value);
+
+			break;
+		default:
+			return parent::getValidationMessage($id);
+		}
+
+		$message = new SwatMessage($text, 'error');
+		return $message;
 	}
 
 	// }}}
