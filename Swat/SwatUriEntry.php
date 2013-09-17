@@ -95,8 +95,6 @@ class SwatUriEntry extends SwatEntry
 	 */
 	protected function validateUri($value)
 	{
-		$domain_parts = array();
-
 		$schemes = array();
 		foreach ($this->valid_schemes as $scheme) {
 			$schemes[] = preg_quote($scheme, '_');
