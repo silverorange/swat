@@ -16,7 +16,7 @@ require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
  * displayed.
  *
  * @package   Swat
- * @copyright 2006-2012 silverorange
+ * @copyright 2006-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatUIObject extends SwatObject
@@ -272,7 +272,7 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public function __toString()
 	{
-		// prevent recusrion up the widget tree for UI objects
+		// prevent recursion up the widget tree for UI objects
 		$parent = $this->parent;
 		$this->parent = get_class($parent);
 
