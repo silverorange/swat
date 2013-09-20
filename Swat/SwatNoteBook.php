@@ -14,7 +14,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * Notebook widget for containing {@link SwatNoteBookPage} pages
  *
  * @package   Swat
- * @copyright 2007-2012 silverorange
+ * @copyright 2007-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatNoteBookPage
  */
@@ -273,10 +273,9 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	{
 		echo get_class($this), ' ', $this->id;
 
-		$children = $this->getChildren();
-		if (count($children) > 0) {
+		if (count($this->children) > 0) {
 			echo '<ul>';
-			foreach ($children as $child) {
+			foreach ($this->children as $child) {
 				echo '<li>';
 				$child->printWidgetTree();
 				echo '</li>';
