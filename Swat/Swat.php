@@ -96,7 +96,7 @@ class Swat
 	{
 		$path = '@DATA-DIR@/Swat/locale';
 		if (substr($path, 0, 1) === '@') {
-			$path = dirname(__FILE__).'/../locale';
+			$path = __DIR__.'/../locale';
 		}
 
 		bindtextdomain(Swat::GETTEXT_DOMAIN, $path);
