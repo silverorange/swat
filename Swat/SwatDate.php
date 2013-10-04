@@ -1854,8 +1854,8 @@ class SwatDate extends DateTime implements Serializable
 	 * Serializes this date
 	 *
 	 * Serialization is provided for backwards compatibility with the
-	 * transitional HotDate package. The SwatDate serialize format is not
-	 * compatible with PHP 5.3+ native DateTime serialization.
+	 * transitional and now depreciated HotDate package. The SwatDate serialize
+	 * format is not compatible with PHP 5.3+ native DateTime serialization.
 	 */
 	public function serialize()
 	{
