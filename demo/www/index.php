@@ -16,7 +16,6 @@ if (class_exists('PackageConfig')) {
 	PackageConfig::addPackage('swat');
 	PackageConfig::addPackage('jquery');
 	PackageConfig::addPackage('recaptcha');
-	PackageConfig::addPackage('hot-date');
 	PackageConfig::addPackage('concentrate');
 }
 

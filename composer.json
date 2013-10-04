@@ -32,7 +32,6 @@
 		"ext-iconv": "*",
 		"ext-intl": "*",
 		"ext-mbstring": "*",
-		"silverorange/hotdate": ">=0.1.1",
 		"silverorange/concentrate": ">=0.0.13"
 	},
 	"autoload": {
