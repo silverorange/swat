@@ -20,7 +20,7 @@ if (class_exists('PackageConfig')) {
 }
 
 require_once 'Swat/SwatAutoloader.php';
-SwatAutoloader::loadRules(dirname(__FILE__).'/../autoloader-rules.conf');
+SwatAutoloader::loadRules(__DIR__.'/../autoloader-rules.conf');
 require_once '../include/DemoApplication.php';
 
 SwatException::setupHandler();
