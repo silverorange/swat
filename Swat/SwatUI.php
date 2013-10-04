@@ -267,7 +267,7 @@ class SwatUI extends SwatObject
 			// back to version in svn
 			$schema_file = '@DATA-DIR@/Swat/system/swatml.rng';
 			if (!file_exists($schema_file)) {
-				$schema_file = dirname(__FILE__).'/../system/swatml.rng';
+				$schema_file = __DIR__.'/../system/swatml.rng';
 			}
 			$document->relaxNGValidate($schema_file);
 		}
