@@ -475,11 +475,18 @@ class SwatDBDataObject extends SwatObject
 			$row = get_object_vars($row);
 
 		foreach ($property_array as $name => $value) {
-			if (isset($row[$name])) {
-				if (in_array($name, $this->date_properties) && $row[$name] !== null)
+			// Use array_key_exists() instead of isset(), because isset() will
+			// return false when the value is null. Null values on properties
+			// should not be ignored - otherwise calling initFromRow() on an
+			// existing dataobject can leave out of date values on properties
+			// when those values were updated to null.
+			if (array_key_exists($name, $row)) {
+				if (in_array($name, $this->date_properties) &&
+					$row[$name] !== null) {
 					$this->$name = new SwatDate($row[$name]);
-				else
+				} else {
 					$this->$name = $row[$name];
+				}
 			}
 		}
 
