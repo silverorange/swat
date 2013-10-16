@@ -25,7 +25,7 @@ require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
  * use {@link SwatViewSelector} objects.
  *
  * @package   Swat
- * @copyright 2004-2012 silverorange
+ * @copyright 2004-2013 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableView extends SwatView implements SwatUIParent
@@ -1180,8 +1180,9 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 		$classes = $this->getRowClasses($row, $count);
 
-		if (count($classes))
+		if (count($classes) > 0) {
 			$class_string = implode(' ', $classes);
+		}
 
 		return $class_string;
 	}
