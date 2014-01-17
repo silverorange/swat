@@ -41,6 +41,9 @@ SwatYUI:
     packages/yui/connection/connection.js:
       Depends:
         - packages/yui/event/event.js
+    packages/yui/cookie/cookie.js:
+      Depends:
+        - packages/yui/yahoo/yahoo.js
     packages/yui/datasource/datasource.js:
       Depends:
         - packages/yui/event/event.js
