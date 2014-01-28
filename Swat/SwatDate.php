@@ -13,7 +13,7 @@ require_once 'Swat/Swat.php';
  * - localization
  *
  * @package   Swat
- * @copyright 2005-2013 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDate extends DateTime implements Serializable
@@ -187,6 +187,23 @@ class SwatDate extends DateTime implements Serializable
 	 * @see SwatDate::getISO8601()
 	 */
 	const ISO_TIME_ZONE = 4;
+
+	// }}}
+	// {{{ date interval part constants
+
+	/**
+	 * A set of bitwise contants to control which parts of the interval we want
+	 * when returning a DateInterval.
+	 *
+	 * @see SwatString::getHumanReadableTimePeriodParts()
+	 */
+	const DI_YEARS   = 1;
+	const DI_MONTHS  = 2;
+	const DI_WEEKS   = 4;
+	const DI_DAYS    = 8;
+	const DI_HOURS   = 16;
+	const DI_MINUTES = 32;
+	const DI_SECONDS = 64;
 
 	// }}}
 	// {{{ protected properties
@@ -545,7 +562,7 @@ class SwatDate extends DateTime implements Serializable
 	 * @param SwatDate $compare_date Optional date to compare to. If null, the
 	 *                               the current date/time will be used.
 	 *
-	 * @return string A human-readable date diff
+	 * @return string A human-readable date diff.
 	 */
 	public function getHumanReadableDateDiff(SwatDate $compare_date = null)
 	{
@@ -555,6 +572,64 @@ class SwatDate extends DateTime implements Serializable
 
 		$seconds = $compare_date->getTime() - $this->getTime();
 		return SwatString::toHumanReadableTimePeriod($seconds, true);
+	}
+
+	// }}}
+	// {{{ public function getHumanReadableDateDiffWithWeeks()
+
+	/**
+	 * Get a human-readable string representing the difference between
+	 * two dates
+	 *
+	 * This method formats the date diff as the difference of seconds,
+	 * minutes, hours, or days and weeks between two dates. The closest major
+	 * date part will be used for the return value. For example, a difference of
+	 * 50 seconds returns "50 seconds" while a difference of 90 seconds
+	 * returns "1 minute".
+	 *
+	 * @param SwatDate $compare_date Optional date to compare to. If null, the
+	 *                               the current date/time will be used.
+	 *
+	 * @return string A human-readable date diff.
+	 */
+	public function getHumanReadableDateDiffWithWeeks(
+		SwatDate $compare_date = null)
+	{
+		if ($compare_date === null) {
+			$compare_date = new SwatDate();
+		}
+
+		$seconds = $compare_date->getTime() - $this->getTime();
+		return SwatString::toHumanReadableTimePeriodWithWeeks($seconds, true);
+	}
+
+	// }}}
+	// {{{ public function getHumanReadableDateDiffWithWeeksAndDays()
+
+	/**
+	 * Get a human-readable string representing the difference between
+	 * two dates
+	 *
+	 * This method formats the date diff as the difference of seconds,
+	 * minutes, hours, or days and weeks between two dates. The closest major
+	 * date part will be used for the return value. For example, a difference of
+	 * 50 seconds returns "50 seconds" while a difference of 90 seconds
+	 * returns "1 minute".
+	 *
+	 * @param SwatDate $compare_date Optional date to compare to. If null, the
+	 *                               the current date/time will be used.
+	 *
+	 * @return string A human-readable date diff.
+	 */
+	public function getHumanReadableDateDiffWithWeeksAndDays(
+		SwatDate $compare_date = null)
+	{
+		if ($compare_date === null) {
+			$compare_date = new SwatDate();
+		}
+
+		$seconds = $compare_date->getTime() - $this->getTime();
+		return SwatString::toHumanReadableTimePeriodWithWeeksAndDays($seconds);
 	}
 
 	// }}}
