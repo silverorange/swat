@@ -12,7 +12,7 @@ require_once 'Swat/exceptions/SwatInvalidSerializedDataException.php';
  * String Tools
  *
  * @package   Swat
- * @copyright 2005-2013 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatString extends SwatObject
@@ -1351,6 +1351,150 @@ class SwatString extends SwatObject
 		return $list;
 	}
 	// }}}
+	// {{{ public static function getHumanReadableTimePeriodParts()
+
+	/**
+	 * Gets the parts to construct a human-readable string representing a time
+	 * period.
+	 *
+	 * This method formats seconds as a time period. Given an example value
+	 * of 161740805, the following key=>value array is returned.
+	 * <code>
+	 * <?php
+	 * array(
+	 *    'years'   => '5 years',
+	 *    'months'  => '3 months',
+	 *    'days'    => '2 days',
+	 *    'seconds' => '5 seconds',
+	 * );
+	 * ?>
+	 * </code>
+	 *
+	 * As this method applies on seconds, no time zone considerations are
+	 * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
+	 *
+	 * @param integer $seconds seconds to format.
+	 * @param integer $interval_parts inclusive or bitwise set of parts to
+	 *                                 return.
+	 *
+	 * @return array An array of human-readable time period string parts.
+	 */
+	public static function getHumanReadableTimePeriodParts($seconds,
+		$interval_parts = null)
+	{
+		$interval = SwatDate::getIntervalFromSeconds($seconds);
+
+		if ($interval_parts === null) {
+			$interval_parts =
+				SwatDate::DI_YEARS   |
+				SwatDate::DI_MONTHS  |
+				SwatDate::DI_DAYS    |
+				SwatDate::DI_HOURS   |
+				SwatDate::DI_MINUTES |
+				SwatDate::DI_SECONDS;
+		}
+
+		// DateInterval cannot have overflow values for each part, so store
+		// these in local variables.
+		$years = $interval->y;
+		$months = $interval->m;
+		$days = $interval->d;
+		$hours = $interval->h;
+		$minutes = $interval->i;
+		$seconds = $interval->s;
+
+		$parts = array();
+
+		if ($years > 0) {
+			if ($interval_parts & SwatDate::DI_YEARS) {
+				$parts['years'] = sprintf(
+					Swat::ngettext('%s year', '%s years', $years),
+					$years
+				);
+			} else {
+				// SwatDate::getIntervalFromSeconds() treats years as 365 days,
+				// so convert back to days, not months.
+				$days += $years * 365;
+			}
+		}
+
+		// Since years are converted into days above, when building months,
+		// and there are enough days to make at least one month, convert those
+		// days into months, and leave the remainder in the days variable.
+		if ($months > 0 || $days >= 30) {
+			if ($interval_parts & SwatDate::DI_MONTHS) {
+				$months += floor($days / 30);
+				$days = $days % 30;
+
+				$parts['months'] = sprintf(
+					Swat::ngettext('%s month', '%s months', $months),
+					$months
+				);
+			} else {
+				$days += $months * 30;
+			}
+		}
+
+		if ($days > 0) {
+			if ($interval_parts & SwatDate::DI_WEEKS &&
+				$days >= 7) {
+
+				$weeks = floor($days / 7);
+				$days = $days % 7;
+
+				$parts['weeks'] = sprintf(
+					Swat::ngettext('%s weeks', '%s weeks', $weeks),
+					$weeks
+				);
+			}
+
+			if ($days > 0) {
+				if ($interval_parts & SwatDate::DI_DAYS) {
+					$parts['days'] = sprintf(
+						Swat::ngettext('%s day', '%s days', $days),
+						$days
+					);
+				} else {
+					$hours += $days * 24;
+				}
+			}
+		}
+
+		if ($hours > 0) {
+			if ($interval_parts & SwatDate::DI_HOURS) {
+				$parts['hours'] = sprintf(
+					Swat::ngettext('%s hour', '%s hours', $hours),
+					$hours
+				);
+			} else {
+				$minutes += $hours * 60;
+			}
+		}
+
+		if ($minutes > 0) {
+			if ($interval_parts & SwatDate::DI_MINUTES) {
+				$parts['minutes'] = sprintf(
+					Swat::ngettext('%s minute', '%s minutes', $minutes),
+					$minutes
+				);
+			} else {
+				$seconds += $minutes * 60;
+			}
+		}
+
+		if ($seconds > 0) {
+			if ($interval_parts & SwatDate::DI_SECONDS) {
+				$parts['seconds'] = sprintf(
+					Swat::ngettext('%s second', '%s seconds', $seconds),
+					$seconds
+				);
+			}
+		}
+
+		return $parts;
+	}
+
+	// }}}
 	// {{{ public static function toHumanReadableTimePeriod()
 
 	/**
@@ -1361,70 +1505,109 @@ class SwatString extends SwatObject
 	 * seconds" is returned.
 	 *
 	 * As this method applies on seconds, no time zone considerations are
-	 * made. Years are assumed to be 365 days. Months are assumed to be 30
-	 * 30 days.
+	 * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
 	 *
 	 * @param integer $seconds seconds to format.
 	 * @param boolean $largest_part optional. If true, only the largest
 	 *                               matching date part is returned. For the
 	 *                               above example, "5 years" is returned.
 	 *
-	 * @return string A human-readable time period
+	 * @return string A human-readable time period.
 	 */
 	public static function toHumanReadableTimePeriod($seconds,
 		$largest_part = false)
 	{
-		$interval = SwatDate::getIntervalFromSeconds($seconds);
+		$parts = self::getHumanReadableTimePeriodParts($seconds);
+		return self::toHumanReadableTimePeriodString($parts, $largest_part);
+	}
 
-		$parts = array();
+	// }}}
+	// {{{ public static function toHumanReadableTimePeriodWithWeeks()
 
-		if ($interval->y > 0) {
-			$parts[] = sprintf(
-				Swat::ngettext('%s year', '%s years', $interval->y),
-				$interval->y
+	/**
+	 * Gets a human-readable string representing a time period that includes
+	 * weeks.
+	 *
+	 * This method formats seconds as a time period. Given an example value
+	 * of 161740805, the formatted value "5 years, 12 weeks, 2 days and 5
+	 * seconds" is returned. Months are not returned as combining months and
+	 * weeks in the same string can be confusing for people to parse.
+	 *
+	 * As this method applies on seconds, no time zone considerations are
+	 * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
+	 *
+	 * @param integer $seconds seconds to format.
+	 * @param boolean $largest_part optional. If true, only the largest
+	 *                               matching date part is returned. For the
+	 *                               above example, "5 years" is returned.
+	 *
+	 * @return string A human-readable time period.
+	 */
+	public static function toHumanReadableTimePeriodWithWeeks($seconds,
+		$largest_part = false)
+	{
+		$interval_parts =
+			SwatDate::DI_YEARS   |
+			SwatDate::DI_WEEKS   |
+			SwatDate::DI_DAYS    |
+			SwatDate::DI_HOURS   |
+			SwatDate::DI_MINUTES |
+			SwatDate::DI_SECONDS;
+
+		$parts = self::getHumanReadableTimePeriodParts(
+			$seconds,
+			$interval_parts
+		);
+
+		return self::toHumanReadableTimePeriodString($parts, $largest_part);
+	}
+
+	// }}}
+	// {{{ public static function toHumanReadableTimePeriodWithWeeksAndDays()
+
+	/**
+	 * Gets a human-readable string representing a time period that includes
+	 * weeks and days as one time period part, and always returns the largest
+	 * part only.
+	 *
+	 * This method formats seconds as a time period. Given an example value
+	 * of 7435400, the formatted value "12 weeks, 2 days" is returned.
+	 *
+	 * As this method applies on seconds, no time zone considerations are
+	 * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
+	 *
+	 * @param integer $seconds seconds to format.
+	 *
+	 * @return string A human-readable time period.
+	 */
+	public static function toHumanReadableTimePeriodWithWeeksAndDays($seconds)
+	{
+		$interval_parts =
+			SwatDate::DI_YEARS   |
+			SwatDate::DI_WEEKS   |
+			SwatDate::DI_DAYS    |
+			SwatDate::DI_HOURS   |
+			SwatDate::DI_MINUTES |
+			SwatDate::DI_SECONDS;
+
+		$parts = self::getHumanReadableTimePeriodParts(
+			$seconds,
+			$interval_parts
+		);
+
+		if (isset($parts['weeks']) && isset($parts['days'])) {
+			// reuse the weeks array key, to keep it in the correct position.
+			$parts['weeks'] = self::toList(
+				array(
+					$parts['weeks'],
+					$parts['days'],
+				)
 			);
+
+			unset($parts['days']);
 		}
 
-		if ($interval->m > 0) {
-			$parts[] = sprintf(
-				Swat::ngettext('%s month', '%s months', $interval->m),
-				$interval->m
-			);
-		}
-
-		if ($interval->d > 0) {
-			$parts[] = sprintf(
-				Swat::ngettext('%s day', '%s days', $interval->d),
-				$interval->d
-			);
-		}
-
-		if ($interval->h > 0) {
-			$parts[] = sprintf(
-				Swat::ngettext('%s hour', '%s hours', $interval->h),
-				$interval->h
-			);
-		}
-
-		if ($interval->i > 0) {
-			$parts[] = sprintf(
-				Swat::ngettext('%s minute', '%s minutes', $interval->i),
-				$interval->i
-			);
-		}
-
-		if ($interval->s > 0) {
-			$parts[] = sprintf(
-				Swat::ngettext('%s second', '%s seconds', $interval->s),
-				$interval->s
-			);
-		}
-
-		if ($largest_part && count($parts) > 0) {
-			return current($parts);
-		}
-
-		return self::toList($parts);
+		return self::toHumanReadableTimePeriodString($parts, true);
 	}
 
 	// }}}
@@ -1763,6 +1946,38 @@ class SwatString extends SwatObject
 		}
 
 		return $escaped;
+	}
+
+	// }}}
+	// {{{ protected static function toHumanReadableTimePeriodString()
+
+	/**
+	 * Gets a human-readable string representing a time period from an array of
+	 * human readable date parts.
+	 *
+	 * This method formats seconds as a time period. Given an example value
+	 * of 161740805, the formatted value "5 years, 3 months, 2 days and 5
+	 * seconds" is returned.
+	 *
+	 * As this method applies on seconds, no time zone considerations are
+	 * made. Years are assumed to be 365 days. Months are assumed to be 30 days.
+	 *
+	 * @param array $parts array of date period parts.
+	 *                      @see SwatString::getHumanReadableTimePeriodParts()
+	 * @param boolean $largest_part optional. If true, only the largest
+	 *                               matching date part is returned. For the
+	 *                               above example, "5 years" is returned.
+	 *
+	 * @return string A human-readable time period.
+	 */
+	protected static function toHumanReadableTimePeriodString(array $parts,
+		$largest_part = false)
+	{
+		if ($largest_part && count($parts) > 0) {
+			$parts = array(reset($parts));
+		}
+
+		return self::toList($parts);
 	}
 
 	// }}}
