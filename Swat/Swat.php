@@ -6,7 +6,7 @@
  * Container for package wide static methods
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class Swat
@@ -165,20 +165,6 @@ class Swat
 	public static function printObject($object)
 	{
 		echo '<pre>'.print_r($object, true).'</pre>';
-	}
-
-	// }}}
-	// {{{ public static function getDependencies()
-
-	/**
-	 * Gets the packages this package depends on
-	 *
-	 * @return array an array of package IDs that this package depends on.
-	 */
-	public static function getDependencies()
-	{
-		require_once 'Swat/SwatYUI.php';
-		return array(SwatYUI::PACKAGE_ID);
 	}
 
 	// }}}
