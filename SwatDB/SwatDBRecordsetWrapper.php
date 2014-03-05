@@ -1387,6 +1387,26 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function setFlushableCache()
+
+	/**
+	 * Sets a flushable cache
+	 *
+	 * Using a flushable cache allows clearing the cache when dataobjects
+	 * are modified or deleted.
+	 *
+	 * @param SwatDBCacheNsFlushable $cache The cache to flush
+	 */
+	public function setFlushableCache(SwatDBCacheNsFlushable $cache)
+	{
+		foreach ($this->objects as $object) {
+			if ($object instanceof SwatDBRecordable) {
+				$object->setFlushableCache($cache);
+			}
+		}
+	}
+
+	// }}}
 }
 
 ?>
