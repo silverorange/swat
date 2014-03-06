@@ -11,6 +11,8 @@ require_once 'SwatDB/SwatDBClassMap.php';
 require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/SwatDBRecordable.php';
 require_once 'SwatDB/SwatDBMarshallable.php';
+require_once 'SwatDB/SwatDBCacheNsFlushable.php';
+require_once 'SwatDB/SwatDBFlushable.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
 
@@ -18,11 +20,11 @@ require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
  * All public properties correspond to database fields
  *
  * @package   SwatDB
- * @copyright 2005-2013 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBDataObject extends SwatObject
-	implements Serializable, SwatDBRecordable, SwatDBMarshallable
+	implements Serializable, SwatDBRecordable, SwatDBMarshallable, SwatDBFlushable
 {
 	// {{{ private properties
 
@@ -93,6 +95,12 @@ class SwatDBDataObject extends SwatObject
 	 * @var boolean
 	 */
 	protected $read_only = false;
+
+	/**
+	 * @var SwatDBCacheNsFlushable
+	 * @see SwatDBDataObject::setFlushableCache()
+	 */
+	protected $flushable_cache;
 
 	// }}}
 	// {{{ private properties
@@ -839,9 +847,10 @@ class SwatDBDataObject extends SwatObject
 	 */
 	public function save()
 	{
-		if ($this->read_only)
+		if ($this->read_only) {
 			throw new SwatDBException('This dataobject was loaded read-only '.
 				'and cannot be saved.');
+		}
 
 		$this->checkDB();
 
@@ -854,8 +863,9 @@ class SwatDBDataObject extends SwatObject
 			$this->saveSubDataObjects();
 
 			// Save again in-case values have been changed in saveSubDataObjects()
-			if ($this->id_field !== null)
+			if ($this->id_field !== null) {
 				$this->saveInternal();
+			}
 
 			$transaction->commit();
 		} catch (Exception $e) {
@@ -910,7 +920,6 @@ class SwatDBDataObject extends SwatObject
 		try {
 			$property_hashes = $this->property_hashes;
 			$this->deleteInternal();
-
 			$transaction->commit();
 		} catch (Exception $e) {
 			$this->property_hashes = $property_hashes;
@@ -1079,6 +1088,13 @@ class SwatDBDataObject extends SwatObject
 			SwatDB::updateRow($this->db, $this->table, $fields, $values,
 				$id_field->__toString(), $id);
 		}
+
+		// Note: This flushes any name-spaces with the newly saved
+		// data-object data. In theory you may need to flush name-spaces
+		// that rely on the pre-changed values. You must handle this case
+		// manually in your application's code by cloning the object
+		// before setting the values.
+		$this->flushCache();
 	}
 
 	// }}}
@@ -1144,9 +1160,15 @@ class SwatDBDataObject extends SwatObject
 		$id_ref = $id_field->name;
 		$id = $this->$id_ref;
 
-		if ($id !== null)
+		if ($id !== null) {
+			$ns_array = $this->getCacheNsArray();
+
 			SwatDB::deleteRow($this->db, $this->table,
 				$id_field->__toString(), $id);
+
+			$this->flushCache($ns_array);
+		}
+
 	}
 
 	// }}}
@@ -1175,6 +1197,7 @@ class SwatDBDataObject extends SwatObject
 		}
 
 		SwatDB::insertRow($this->db, $this->table, $fields, $values);
+		$this->flushCache();
 	}
 
 	// }}}
@@ -1195,6 +1218,66 @@ class SwatDBDataObject extends SwatObject
 		case 'string':
 		default:
 			return 'text';
+		}
+	}
+
+	// }}}
+
+	// cache flushing
+	// {{{ public function setFlushableCache()
+
+	/**
+	 * Sets the flushable cache to use for this dataobject
+	 *
+	 * Using a flushable cache allows clearing the cache when the dataobject
+	 * is modified or deleted.
+	 *
+	 * @param SwatDBCacheNsFlushable $cache The flushable cache to use for
+	 *                                      this dataobject.
+	 */
+	public function setFlushableCache(SwatDBCacheNsFlushable $cache)
+	{
+		$this->flushable_cache = $cache;
+	}
+
+	// }}}
+	// {{{ public function getCacheNsArray()
+
+	/**
+	 * Get the name-spaces that should be flushed for this dataobject
+	 *
+	 * @return array An array of name-spaces that should be flushed
+	 */
+	public function getCacheNsArray()
+	{
+		return array();
+	}
+
+	// }}}
+	// {{{ public function flushCache()
+
+	/**
+	 * Flush the cache name-spaces for this object
+	 *
+	 * @param array $ns_array An optional array of name-spaces to flush.
+	 *                        If no name-spaces are specified,
+	 *                        {@link SwatDBDataObject::getCacheNsArray()} is
+	 *                        used to get the array of name-spaces.
+	 *
+	 * @see SwatDBDataObject::setFlushableCache()
+	 * @see SwatDBDataObject::getCacheNsArray
+ 	 */
+	public function flushCache($ns_array = null)
+	{
+		if ($ns_array === null) {
+			$ns_array = $this->getCacheNsArray();
+		}
+
+		if ($this->flushable_cache instanceof SwatDBCacheNsFlushable) {
+			$ns_array = array_unique($ns_array);
+			foreach ($ns_array as $ns) {
+				$this->flushable_cache->flushNs($ns);
+			}
 		}
 	}
 

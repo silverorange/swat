@@ -8,6 +8,7 @@ require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/SwatDBClassMap.php';
 require_once 'SwatDB/SwatDBRecordable.php';
 require_once 'SwatDB/SwatDBMarshallable.php';
+require_once 'SwatDB/SwatDBFlushable.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
@@ -29,12 +30,12 @@ require_once 'Swat/exceptions/SwatInvalidTypeException.php';
  * have an index value.
  *
  * @package   SwatDB
- * @copyright 2005-2013 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatDBRecordsetWrapper extends SwatObject
 	implements Serializable, ArrayAccess, SwatTableModel, SwatDBRecordable,
-	SwatDBMarshallable
+	SwatDBMarshallable, SwatDBFlushable
 {
 	// {{{ protected properties
 
@@ -1384,6 +1385,27 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 				return true;
 
 		return false;
+	}
+
+	// }}}
+	// {{{ public function setFlushableCache()
+
+	/**
+	 * Sets the flushable cache to use for this record-set
+	 *
+	 * Using a flushable cache allows clearing the cache when the records
+	 * are modified or deleted.
+	 *
+	 * @param SwatDBCacheNsFlushable $cache The flushable cache to use for
+	 *                                      this dataobject.
+	 */
+	public function setFlushableCache(SwatDBCacheNsFlushable $cache)
+	{
+		foreach ($this->objects as $object) {
+			if ($object instanceof SwatDBFlushable) {
+				$object->setFlushableCache($cache);
+			}
+		}
 	}
 
 	// }}}
