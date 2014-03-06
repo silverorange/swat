@@ -12,6 +12,7 @@ require_once 'SwatDB/SwatDBTransaction.php';
 require_once 'SwatDB/SwatDBRecordable.php';
 require_once 'SwatDB/SwatDBMarshallable.php';
 require_once 'SwatDB/SwatDBCacheNsFlushable.php';
+require_once 'SwatDB/SwatDBFlushable.php';
 require_once 'SwatDB/exceptions/SwatDBException.php';
 require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
 
@@ -19,11 +20,11 @@ require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
  * All public properties correspond to database fields
  *
  * @package   SwatDB
- * @copyright 2005-2013 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBDataObject extends SwatObject
-	implements Serializable, SwatDBRecordable, SwatDBMarshallable
+	implements Serializable, SwatDBRecordable, SwatDBMarshallable, SwatDBFlushable
 {
 	// {{{ private properties
 
@@ -97,6 +98,7 @@ class SwatDBDataObject extends SwatObject
 
 	/**
 	 * @var SwatDBCacheNsFlushable
+	 * @see SwatDBDataObject::setFlushableCache()
 	 */
 	protected $flushable_cache;
 
@@ -1090,7 +1092,8 @@ class SwatDBDataObject extends SwatObject
 		// note: this flushes any name-spaces with the newly saved
 		// data-object data. In theory you may need to flush name-spaces
 		// that rely on the pre-changed values. You must handle this case
-		// manually by cloning the object before setting the values.
+		// manually in your application's code by cloning the object
+		// before setting the values.
 		$this->flushCache();
 	}
 
@@ -1224,12 +1227,13 @@ class SwatDBDataObject extends SwatObject
 	// {{{ public function setFlushableCache()
 
 	/**
-	 * Sets a flushable cache
+	 * Sets the flushable cache to use for this dataobject
 	 *
 	 * Using a flushable cache allows clearing the cache when the dataobject
 	 * is modified or deleted.
 	 *
-	 * @param SwatDBCacheNsFlushable $cache The cache to flush
+	 * @param SwatDBCacheNsFlushable $cache The flushable cache to use for
+	 *                                      this dataobject.
 	 */
 	public function setFlushableCache(SwatDBCacheNsFlushable $cache)
 	{
@@ -1239,6 +1243,11 @@ class SwatDBDataObject extends SwatObject
 	// }}}
 	// {{{ public function getCacheNsArray()
 
+	/**
+	 * Get the name-spaces that should be flushed for this dataobject
+	 *
+	 * @return array An array of name-spaces that should be flushed
+	 */
 	public function getCacheNsArray()
 	{
 		return array();
@@ -1247,6 +1256,17 @@ class SwatDBDataObject extends SwatObject
 	// }}}
 	// {{{ public function flushCache()
 
+	/**
+	 * Flush the cache name-spaces for this object
+	 *
+	 *
+	 * @param array $ns_array An optional array of name-spaces to flush.
+	 *                        If no name-spaces are specified,
+	 *                        SwatDBDataObject::getCacheNsArray() is used
+	 *                        to get the array of name-spaces.
+	 * @see SwatDBDataObject::setFlushableCache()
+	 * @see SwatDBDataObject::getCacheNsArray
+ 	 */
 	public function flushCache($ns_array = null)
 	{
 		if ($ns_array === null) {
