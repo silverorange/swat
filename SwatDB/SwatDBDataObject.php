@@ -1089,7 +1089,7 @@ class SwatDBDataObject extends SwatObject
 				$id_field->__toString(), $id);
 		}
 
-		// note: this flushes any name-spaces with the newly saved
+		// Note: This flushes any name-spaces with the newly saved
 		// data-object data. In theory you may need to flush name-spaces
 		// that rely on the pre-changed values. You must handle this case
 		// manually in your application's code by cloning the object
@@ -1259,11 +1259,11 @@ class SwatDBDataObject extends SwatObject
 	/**
 	 * Flush the cache name-spaces for this object
 	 *
-	 *
 	 * @param array $ns_array An optional array of name-spaces to flush.
 	 *                        If no name-spaces are specified,
-	 *                        SwatDBDataObject::getCacheNsArray() is used
-	 *                        to get the array of name-spaces.
+	 *                        {@link SwatDBDataObject::getCacheNsArray()} is
+	 *                        used to get the array of name-spaces.
+	 *
 	 * @see SwatDBDataObject::setFlushableCache()
 	 * @see SwatDBDataObject::getCacheNsArray
  	 */
