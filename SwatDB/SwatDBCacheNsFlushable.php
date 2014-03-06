@@ -11,7 +11,7 @@
  */
 interface SwatDBCacheNsFlushable
 {
-	// {{{ public function marshall()
+	// {{{ public function flushNs()
 	/**
 	 * Flushes a cache name-space
 	 *
