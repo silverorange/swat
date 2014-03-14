@@ -354,6 +354,16 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function hasPublicProperty()
+
+	public function hasPublicProperty($name)
+	{
+		$public_properties = $this->getPublicProperties();
+
+		return array_key_exists($name, $public_properties);
+	}
+
+	// }}}
 	// {{{ public function duplicate()
 
 	/**
