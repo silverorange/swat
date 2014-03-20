@@ -1246,11 +1246,31 @@ class SwatDBDataObject extends SwatObject
 	/**
 	 * Get the name-spaces that should be flushed for this dataobject
 	 *
+	 * @param boolean $ignore_checks If true, any logic attempting to smart
+	 *                               about the namespaces returned, for example
+	 *                               logic around only returning visible
+	 *                               namespaces, should be ignored, and all
+	 *                               possible namespaces should be returned.
+	 *
 	 * @return array An array of name-spaces that should be flushed
 	 */
-	public function getCacheNsArray()
+	public function getCacheNsArray($ignore_checks = false)
 	{
 		return array();
+	}
+
+	// }}}
+	// {{{ public function getFullCacheNsArray()
+
+	/**
+	 * Get all available name-spaces that should be flushed for this dataobject
+	 * ignoring any logic attempting to be smart about namespace.
+	 *
+	 * @return array An array of name-spaces that should be flushed
+	 */
+	public function getFullCacheNsArray()
+	{
+		return $this->getCacheNsArray(true);
 	}
 
 	// }}}
@@ -1265,7 +1285,7 @@ class SwatDBDataObject extends SwatObject
 	 *                        used to get the array of name-spaces.
 	 *
 	 * @see SwatDBDataObject::setFlushableCache()
-	 * @see SwatDBDataObject::getCacheNsArray
+	 * @see SwatDBDataObject::getCacheNsArray()
  	 */
 	public function flushCache($ns_array = null)
 	{
@@ -1279,6 +1299,30 @@ class SwatDBDataObject extends SwatObject
 				$this->flushable_cache->flushNs($ns);
 			}
 		}
+	}
+
+	// }}}
+	// {{{ public function forceFlushCache()
+
+	/**
+	 * Flush all possible cache name-spaces for this object
+	 *
+	 * @param array $ns_array An optional array of name-spaces to flush.
+	 *                        If no name-spaces are specified,
+	 *                        {@link SwatDBDataObject::getFullCacheNsArray()} is
+	 *                        used to get the all possible name-spaces.
+	 *
+	 * @see SwatDBDataObject::setFlushableCache()
+	 * @see SwatDBDataObject::getFullCacheNsArray()
+	 * @see SwatDBDataObject::flushCache()
+	 */
+	public function forceFlushCache($ns_array = null)
+	{
+		if ($ns_array === null) {
+			$ns_array = $this->getFullCacheNsArray();
+		}
+
+		$this->flushCache($ns_array);
 	}
 
 	// }}}
