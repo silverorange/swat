@@ -356,6 +356,16 @@ class SwatDBDataObject extends SwatObject
 	// }}}
 	// {{{ public function hasPublicProperty()
 
+	/**
+	 * Whether or not a public property exists for the given property name
+	 *
+	 * @param string $name the property name to check.
+	 *
+	 * @return boolean true if a public property exists and false if it does
+	 *                 not.
+	 *
+	 * @see SwatDBDataObject::getPublicProperties()
+	 */
 	public function hasPublicProperty($name)
 	{
 		$public_properties = $this->getPublicProperties();
@@ -366,6 +376,17 @@ class SwatDBDataObject extends SwatObject
 	// }}}
 	// {{{ public function hasDateProperty()
 
+	/**
+	 * Whether or not a registered date property exists for the given property
+	 * name
+	 *
+	 * @param string $name the property name to check.
+	 *
+	 * @return boolean true if a registered date property exists and false if
+	 *                 it does not.
+	 *
+	 * @see SwatDBDataObject::registerDateProperty()
+	 */
 	public function hasDateProperty($name)
 	{
 		return array_key_exists($name, $this->date_properties);
