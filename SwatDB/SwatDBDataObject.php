@@ -24,7 +24,8 @@ require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBDataObject extends SwatObject
-	implements Serializable, SwatDBRecordable, SwatDBMarshallable, SwatDBFlushable
+	implements Serializable, SwatDBRecordable, SwatDBMarshallable,
+		SwatDBFlushable
 {
 	// {{{ private properties
 
