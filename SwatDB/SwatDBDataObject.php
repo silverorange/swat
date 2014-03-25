@@ -1094,7 +1094,7 @@ class SwatDBDataObject extends SwatObject
 		// that rely on the pre-changed values. You must handle this case
 		// manually in your application's code by cloning the object
 		// before setting the values.
-		$this->flushCache();
+		$this->flushCacheNamespaces();
 	}
 
 	// }}}
@@ -1161,12 +1161,12 @@ class SwatDBDataObject extends SwatObject
 		$id = $this->$id_ref;
 
 		if ($id !== null) {
-			$ns_array = $this->getCacheNsArray();
+			$ns_array = $this->getCacheNamespaces();
 
 			SwatDB::deleteRow($this->db, $this->table,
 				$id_field->__toString(), $id);
 
-			$this->flushCache($ns_array);
+			$this->flushCacheNamespaces($ns_array);
 		}
 
 	}
@@ -1197,7 +1197,7 @@ class SwatDBDataObject extends SwatObject
 		}
 
 		SwatDB::insertRow($this->db, $this->table, $fields, $values);
-		$this->flushCache();
+		$this->flushCacheNamespaces();
 	}
 
 	// }}}
@@ -1241,26 +1241,20 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function getCacheNsArray()
+	// {{{ public function getCacheNamespaces()
 
 	/**
 	 * Get the name-spaces that should be flushed for this dataobject
 	 *
-	 * @param boolean $ignore_checks If true, any logic attempting to smart
-	 *                               about the namespaces returned, for example
-	 *                               logic around only returning visible
-	 *                               namespaces, should be ignored, and all
-	 *                               possible namespaces should be returned.
-	 *
 	 * @return array An array of name-spaces that should be flushed
 	 */
-	public function getCacheNsArray($ignore_checks = false)
+	public function getCacheNamespaces()
 	{
 		return array();
 	}
 
 	// }}}
-	// {{{ public function getFullCacheNsArray()
+	// {{{ public function getAvailableCacheNamespaces()
 
 	/**
 	 * Get all available name-spaces that should be flushed for this dataobject
@@ -1268,29 +1262,29 @@ class SwatDBDataObject extends SwatObject
 	 *
 	 * @return array An array of name-spaces that should be flushed
 	 */
-	public function getFullCacheNsArray()
+	public function getAvailableCacheNamespaces()
 	{
-		return $this->getCacheNsArray(true);
+		return array();
 	}
 
 	// }}}
-	// {{{ public function flushCache()
+	// {{{ public function flushCacheNamespaces()
 
 	/**
 	 * Flush the cache name-spaces for this object
 	 *
 	 * @param array $ns_array An optional array of name-spaces to flush.
 	 *                        If no name-spaces are specified,
-	 *                        {@link SwatDBDataObject::getCacheNsArray()} is
+	 *                        {@link SwatDBDataObject::getCacheNamespaces()} is
 	 *                        used to get the array of name-spaces.
 	 *
 	 * @see SwatDBDataObject::setFlushableCache()
-	 * @see SwatDBDataObject::getCacheNsArray()
+	 * @see SwatDBDataObject::getCacheNamespaces()
  	 */
-	public function flushCache($ns_array = null)
+	public function flushCacheNamespaces($ns_array = null)
 	{
 		if ($ns_array === null) {
-			$ns_array = $this->getCacheNsArray();
+			$ns_array = $this->getCacheNamespaces();
 		}
 
 		if ($this->flushable_cache instanceof SwatDBCacheNsFlushable) {
@@ -1302,27 +1296,20 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function forceFlushCache()
+	// {{{ public function flushAvailableCacheNamespaces()
 
 	/**
 	 * Flush all possible cache name-spaces for this object
 	 *
-	 * @param array $ns_array An optional array of name-spaces to flush.
-	 *                        If no name-spaces are specified,
-	 *                        {@link SwatDBDataObject::getFullCacheNsArray()} is
-	 *                        used to get the all possible name-spaces.
-	 *
 	 * @see SwatDBDataObject::setFlushableCache()
-	 * @see SwatDBDataObject::getFullCacheNsArray()
-	 * @see SwatDBDataObject::flushCache()
+	 * @see SwatDBDataObject::getAvailableCacheNamespaces()
+	 * @see SwatDBDataObject::flushCacheNamespaces()
 	 */
-	public function forceFlushCache($ns_array = null)
+	public function flushAvailableCacheNamespaces()
 	{
-		if ($ns_array === null) {
-			$ns_array = $this->getFullCacheNsArray();
-		}
+		$namespaces = $this->getAvailableCacheNamespaces();
 
-		$this->flushCache($ns_array);
+		$this->flushCacheNamespaces($namespaces);
 	}
 
 	// }}}
