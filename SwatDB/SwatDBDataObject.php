@@ -364,6 +364,14 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function hasDateProperty()
+
+	public function hasDateProperty($name)
+	{
+		return array_key_exists($name, $this->date_properties);
+	}
+
+	// }}}
 	// {{{ public function duplicate()
 
 	/**
