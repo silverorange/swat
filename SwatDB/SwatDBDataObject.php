@@ -1245,9 +1245,9 @@ class SwatDBDataObject extends SwatObject
 	// {{{ public function getCacheNamespaces()
 
 	/**
-	 * Get the name-spaces that should be flushed for this dataobject
+	 * Gets the name-spaces that should be flushed for this dataobject.
 	 *
-	 * @return array An array of name-spaces that should be flushed
+	 * @return array An array of name-spaces that should be flushed.
 	 */
 	public function getCacheNamespaces()
 	{
@@ -1258,10 +1258,10 @@ class SwatDBDataObject extends SwatObject
 	// {{{ public function getAvailableCacheNamespaces()
 
 	/**
-	 * Get all available name-spaces that should be flushed for this dataobject
+	 * Gets all available name-spaces that should be flushed for this dataobject
 	 * ignoring any logic attempting to be smart about namespace.
 	 *
-	 * @return array An array of name-spaces that should be flushed
+	 * @return array An array of name-spaces that should be flushed.
 	 */
 	public function getAvailableCacheNamespaces()
 	{
@@ -1272,7 +1272,7 @@ class SwatDBDataObject extends SwatObject
 	// {{{ public function flushCacheNamespaces()
 
 	/**
-	 * Flush the cache name-spaces for this object
+	 * Flushes the cache name-spaces for this object.
 	 *
 	 * @param array $ns_array An optional array of name-spaces to flush.
 	 *                        If no name-spaces are specified,
@@ -1300,7 +1300,7 @@ class SwatDBDataObject extends SwatObject
 	// {{{ public function flushAvailableCacheNamespaces()
 
 	/**
-	 * Flush all possible cache name-spaces for this object
+	 * Flushes all possible cache name-spaces for this object.
 	 *
 	 * @see SwatDBDataObject::setFlushableCache()
 	 * @see SwatDBDataObject::getAvailableCacheNamespaces()
@@ -1309,7 +1309,6 @@ class SwatDBDataObject extends SwatObject
 	public function flushAvailableCacheNamespaces()
 	{
 		$namespaces = $this->getAvailableCacheNamespaces();
-
 		$this->flushCacheNamespaces($namespaces);
 	}
 
