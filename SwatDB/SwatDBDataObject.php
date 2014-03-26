@@ -24,7 +24,8 @@ require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBDataObject extends SwatObject
-	implements Serializable, SwatDBRecordable, SwatDBMarshallable, SwatDBFlushable
+	implements Serializable, SwatDBRecordable, SwatDBMarshallable,
+		SwatDBFlushable
 {
 	// {{{ private properties
 
@@ -1133,7 +1134,7 @@ class SwatDBDataObject extends SwatObject
 		// that rely on the pre-changed values. You must handle this case
 		// manually in your application's code by cloning the object
 		// before setting the values.
-		$this->flushCache();
+		$this->flushCacheNamespaces();
 	}
 
 	// }}}
@@ -1200,12 +1201,12 @@ class SwatDBDataObject extends SwatObject
 		$id = $this->$id_ref;
 
 		if ($id !== null) {
-			$ns_array = $this->getCacheNsArray();
+			$ns_array = $this->getCacheNamespaces();
 
 			SwatDB::deleteRow($this->db, $this->table,
 				$id_field->__toString(), $id);
 
-			$this->flushCache($ns_array);
+			$this->flushCacheNamespaces($ns_array);
 		}
 
 	}
@@ -1236,7 +1237,7 @@ class SwatDBDataObject extends SwatObject
 		}
 
 		SwatDB::insertRow($this->db, $this->table, $fields, $values);
-		$this->flushCache();
+		$this->flushCacheNamespaces();
 	}
 
 	// }}}
@@ -1280,36 +1281,50 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ public function getCacheNsArray()
+	// {{{ public function getCacheNamespaces()
 
 	/**
-	 * Get the name-spaces that should be flushed for this dataobject
+	 * Gets the name-spaces that should be flushed for this dataobject.
 	 *
-	 * @return array An array of name-spaces that should be flushed
+	 * @return array An array of name-spaces that should be flushed.
 	 */
-	public function getCacheNsArray()
+	public function getCacheNamespaces()
 	{
 		return array();
 	}
 
 	// }}}
-	// {{{ public function flushCache()
+	// {{{ public function getAvailableCacheNamespaces()
 
 	/**
-	 * Flush the cache name-spaces for this object
+	 * Gets all available name-spaces that should be flushed for this dataobject
+	 * ignoring any logic attempting to be smart about namespace.
+	 *
+	 * @return array An array of name-spaces that should be flushed.
+	 */
+	public function getAvailableCacheNamespaces()
+	{
+		return array();
+	}
+
+	// }}}
+	// {{{ public function flushCacheNamespaces()
+
+	/**
+	 * Flushes the cache name-spaces for this object.
 	 *
 	 * @param array $ns_array An optional array of name-spaces to flush.
 	 *                        If no name-spaces are specified,
-	 *                        {@link SwatDBDataObject::getCacheNsArray()} is
+	 *                        {@link SwatDBDataObject::getCacheNamespaces()} is
 	 *                        used to get the array of name-spaces.
 	 *
 	 * @see SwatDBDataObject::setFlushableCache()
-	 * @see SwatDBDataObject::getCacheNsArray
+	 * @see SwatDBDataObject::getCacheNamespaces()
  	 */
-	public function flushCache($ns_array = null)
+	public function flushCacheNamespaces($ns_array = null)
 	{
 		if ($ns_array === null) {
-			$ns_array = $this->getCacheNsArray();
+			$ns_array = $this->getCacheNamespaces();
 		}
 
 		if ($this->flushable_cache instanceof SwatDBCacheNsFlushable) {
@@ -1318,6 +1333,22 @@ class SwatDBDataObject extends SwatObject
 				$this->flushable_cache->flushNs($ns);
 			}
 		}
+	}
+
+	// }}}
+	// {{{ public function flushAvailableCacheNamespaces()
+
+	/**
+	 * Flushes all possible cache name-spaces for this object.
+	 *
+	 * @see SwatDBDataObject::setFlushableCache()
+	 * @see SwatDBDataObject::getAvailableCacheNamespaces()
+	 * @see SwatDBDataObject::flushCacheNamespaces()
+	 */
+	public function flushAvailableCacheNamespaces()
+	{
+		$namespaces = $this->getAvailableCacheNamespaces();
+		$this->flushCacheNamespaces($namespaces);
 	}
 
 	// }}}
