@@ -13,7 +13,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * multiple rows, use {@link SwatCheckboxCellRenderer}.
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatViewSelector
  */
@@ -91,8 +91,8 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 		$yui = new SwatYUI(array('dom'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript(
-			'packages/swat/javascript/swat-radio-button-cell-renderer.js',
-			Swat::PACKAGE_ID);
+			'packages/swat/javascript/swat-radio-button-cell-renderer.js'
+		);
 
 		// auto-generate an id to use if no id is set
 		$this->id = $this->getUniqueId();

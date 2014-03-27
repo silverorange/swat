@@ -10,7 +10,7 @@ require_once 'Swat/SwatString.php';
  * A radio list selection widget
  *
  * @package   Swat
- * @copyright 2005-2013 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRadioList extends SwatFlydown
@@ -48,8 +48,7 @@ class SwatRadioList extends SwatFlydown
 		$this->show_blank  = false;
 		$this->requires_id = true;
 
-		$this->addStyleSheet('packages/swat/styles/swat-radio-list.css',
-			Swat::PACKAGE_ID);
+		$this->addStyleSheet('packages/swat/styles/swat-radio-list.css');
 	}
 
 	// }}}

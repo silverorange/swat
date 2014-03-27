@@ -16,7 +16,7 @@ require_once 'Swat/SwatYUI.php';
  * to be used by itself.
  *
  * @package   Swat
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatYUI
  */
@@ -117,9 +117,7 @@ class SwatYUIComponent extends SwatObject
 
 		foreach ($modes as $mode => $suffix) {
 			$filename = sprintf($filename_template, $suffix);
-			$this->html_head_entry_set[$mode]->addEntry(
-				new SwatJavaScriptHtmlHeadEntry($filename,
-					SwatYUI::PACKAGE_ID));
+			$this->html_head_entry_set[$mode]->addEntry($filename);
 		}
 	}
 
@@ -172,9 +170,7 @@ class SwatYUIComponent extends SwatObject
 
 		foreach ($modes as $mode => $suffix) {
 			$filename = sprintf($filename_template, $suffix);
-			$this->html_head_entry_set[$mode]->addEntry(
-				new SwatStyleSheetHtmlHeadEntry($filename,
-					SwatYUI::PACKAGE_ID));
+			$this->html_head_entry_set[$mode]->addEntry($filename);
 		}
 	}
 

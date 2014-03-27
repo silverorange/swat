@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * another image when the first image is clicked.
  *
  * @package   Swat
- * @copyright 2005-2013 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImagePreviewDisplay extends SwatImageDisplay
@@ -139,7 +139,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	public $show_preview_when_smaller = false;
 
 	/**
-	 * Close text 
+	 * Close text
 	 *
 	 * @var string
 	 */
@@ -165,16 +165,16 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript(
-			'packages/swat/javascript/swat-z-index-manager.js',
-			Swat::PACKAGE_ID);
+			'packages/swat/javascript/swat-z-index-manager.js'
+		);
 
 		$this->addJavaScript(
-			'packages/swat/javascript/swat-image-preview-display.js',
-			Swat::PACKAGE_ID);
+			'packages/swat/javascript/swat-image-preview-display.js'
+		);
 
 		$this->addStyleSheet(
-			'packages/swat/styles/swat-image-preview-display.css',
-			Swat::PACKAGE_ID);
+			'packages/swat/styles/swat-image-preview-display.css'
+		);
 
 		$this->title = Swat::_('View Larger Image');
 	}

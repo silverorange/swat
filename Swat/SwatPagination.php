@@ -12,7 +12,7 @@ require_once 'SwatI18N/SwatI18NLocale.php';
  * SwatPagination pages start at page 1, not page 0.
  *
  * @package   Swat
- * @copyright 2004-2013 silverorange
+ * @copyright 2004-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatPagination extends SwatControl
@@ -172,8 +172,7 @@ class SwatPagination extends SwatControl
 		$this->previous_label = Swat::_('‹ Previous');
 		$this->next_label = Swat::_('Next ›');
 
-		$this->addStyleSheet('packages/swat/styles/swat-pagination.css',
-			Swat::PACKAGE_ID);
+		$this->addStyleSheet('packages/swat/styles/swat-pagination.css');
 	}
 
 	// }}}

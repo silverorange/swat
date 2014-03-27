@@ -17,7 +17,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * Actions widget
  *
  * @package   Swat
- * @copyright 2005-2012 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatActions extends SwatControl implements SwatUIParent
@@ -108,11 +108,8 @@ class SwatActions extends SwatControl implements SwatUIParent
 
 		$yui = new SwatYUI(array('dom', 'event', 'animation'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-actions.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-actions.css',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript('packages/swat/javascript/swat-actions.js');
+		$this->addStyleSheet('packages/swat/styles/swat-actions.css');
 	}
 
 	// }}}

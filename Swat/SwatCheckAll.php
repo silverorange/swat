@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A "check all" JavaScript powered checkbox
  *
  * @package   Swat
- * @copyright 2005-2012 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckAll extends SwatCheckbox
@@ -81,8 +81,7 @@ class SwatCheckAll extends SwatCheckbox
 		$this->title = Swat::_('Select All');
 		$yui = new SwatYUI(array('event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-check-all.js',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript('packages/swat/javascript/swat-check-all.js');
 	}
 
 	// }}}

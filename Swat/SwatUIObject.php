@@ -16,7 +16,7 @@ require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
  * displayed.
  *
  * @package   Swat
- * @copyright 2006-2013 silverorange
+ * @copyright 2006-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatUIObject extends SwatObject
@@ -93,7 +93,8 @@ abstract class SwatUIObject extends SwatObject
 				'by creating a new HTML head entry set.', get_class($this)));
 
 		$this->html_head_entry_set->addEntry(
-			new SwatStyleSheetHtmlHeadEntry($stylesheet, $package_id));
+			new SwatStyleSheetHtmlHeadEntry($stylesheet, $package_id)
+		);
 	}
 
 	// }}}
@@ -116,7 +117,8 @@ abstract class SwatUIObject extends SwatObject
 				'by creating a new HTML head entry set.', get_class($this)));
 
 		$this->html_head_entry_set->addEntry(
-			new SwatJavaScriptHtmlHeadEntry($java_script, $package_id));
+			new SwatJavaScriptHtmlHeadEntry($java_script, $package_id)
+		);
 	}
 
 	// }}}

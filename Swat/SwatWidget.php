@@ -35,7 +35,7 @@ require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
  * extend {@link SwatContainer}.
  *
  * @package   Swat
- * @copyright 2004-2012 silverorange
+ * @copyright 2004-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatWidget extends SwatUIObject
@@ -159,8 +159,7 @@ abstract class SwatWidget extends SwatUIObject
 		parent::__construct();
 
 		$this->id = $id;
-		$this->addStylesheet('packages/swat/styles/swat.css',
-			Swat::PACKAGE_ID);
+		$this->addStylesheet('packages/swat/styles/swat.css');
 	}
 
 	// }}}

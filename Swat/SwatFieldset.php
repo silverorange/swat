@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * An HTML fieldset tag with an optional HTML legend title.
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
@@ -65,8 +65,7 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 		// JavaScript for IE peekaboo hack
 		$yui = new SwatYUI(array('event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-fieldset.js',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript('packages/swat/javascript/swat-fieldset.js');
 	}
 
 	// }}}

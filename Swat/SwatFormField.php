@@ -14,7 +14,7 @@ require_once 'Swat/SwatMessage.php';
  * Adds a label and space to output messages.
  *
  * @package   Swat
- * @copyright 2004-2012 silverorange
+ * @copyright 2004-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
@@ -171,8 +171,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	{
 		parent::__construct($id);
 
-		$this->addStyleSheet('packages/swat/styles/swat-message.css',
-			Swat::PACKAGE_ID);
+		$this->addStyleSheet('packages/swat/styles/swat-message.css');
 	}
 
 	// }}}

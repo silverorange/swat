@@ -20,7 +20,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * SwatAbstractOverlay::getInlineJavaScript() method.
  *
  * @package   Swat
- * @copyright 2010 silverorange
+ * @copyright 2010-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
@@ -63,11 +63,12 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript(
-			'packages/swat/javascript/swat-abstract-overlay.js',
-			Swat::PACKAGE_ID);
+			'packages/swat/javascript/swat-abstract-overlay.js'
+		);
 
-		$this->addJavaScript('packages/swat/javascript/swat-z-index-manager.js',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript(
+			'packages/swat/javascript/swat-z-index-manager.js'
+		);
 	}
 
 	// }}}

@@ -28,7 +28,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * TODO: work out ids. id is required
  *
  * @package   Swat
- * @copyright 2006-2012 silverorange
+ * @copyright 2006-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewInputRow extends SwatTableViewRow
@@ -125,8 +125,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$yui = new SwatYUI(array('animation'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript(
-			'packages/swat/javascript/swat-table-view-input-row.js',
-			Swat::PACKAGE_ID);
+			'packages/swat/javascript/swat-table-view-input-row.js'
+		);
 	}
 
 	// }}}

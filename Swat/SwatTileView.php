@@ -16,7 +16,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * use {@link SwatViewSelector} objects.
  *
  * @package   Swat
- * @copyright 2007-2012 silverorange
+ * @copyright 2007-2014 silverorange
  * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
  * @see       SwatTile
  */
@@ -162,11 +162,8 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		parent::__construct($id);
 
-		$this->addStyleSheet('packages/swat/styles/swat-tile-view.css',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript('packages/swat/javascript/swat-tile-view.js',
-			Swat::PACKAGE_ID);
+		$this->addStyleSheet('packages/swat/styles/swat-tile-view.css');
+		$this->addJavaScript('packages/swat/javascript/swat-tile-view.js');
 	}
 
 	// }}}

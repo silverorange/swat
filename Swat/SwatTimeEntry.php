@@ -13,7 +13,7 @@ require_once 'Swat/SwatYUI.php';
  * A time entry widget
  *
  * @package   Swat
- * @copyright 2004-2013 silverorange
+ * @copyright 2004-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @todo      Should we add a display_time_zone parameter?
  */
@@ -170,8 +170,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		$yui = new SwatYUI(array('event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-time-entry.js',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript('packages/swat/javascript/swat-time-entry.js');
 
 		// guess twelve-hour or twenty-four hour default based on locale
 		$locale_format = nl_langinfo(T_FMT);

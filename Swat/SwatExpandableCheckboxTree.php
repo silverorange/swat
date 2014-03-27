@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * be expanded
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatExpandableCheckboxTree extends SwatCheckboxTree
@@ -96,8 +96,8 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		$yui = new SwatYUI(array('dom', 'event', 'animation'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript(
-			'packages/swat/javascript/swat-expandable-checkbox-tree.js',
-			Swat::PACKAGE_ID);
+			'packages/swat/javascript/swat-expandable-checkbox-tree.js'
+		);
 	}
 
 	// }}}

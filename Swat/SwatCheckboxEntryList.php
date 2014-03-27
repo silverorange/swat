@@ -23,7 +23,7 @@ require_once 'Swat/exceptions/SwatInvalidPropertyException.php';
  * {@link SwatCheckboxEntryList::setEntryValuesByArray()} method.
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckboxEntryList extends SwatCheckboxList
@@ -81,12 +81,12 @@ class SwatCheckboxEntryList extends SwatCheckboxList
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addJavaScript(
-			'packages/swat/javascript/swat-checkbox-entry-list.js',
-			Swat::PACKAGE_ID);
+			'packages/swat/javascript/swat-checkbox-entry-list.js'
+		);
 
 		$this->addStyleSheet(
-			'packages/swat/styles/swat-checkbox-entry-list.css',
-			Swat::PACKAGE_ID);
+			'packages/swat/styles/swat-checkbox-entry-list.css'
+		);
 	}
 
 	// }}}

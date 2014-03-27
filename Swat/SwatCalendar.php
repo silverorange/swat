@@ -14,7 +14,7 @@ require_once 'Swat/SwatDate.php';
  * inside the {@link SwatDateEntry} widget but can be used by itself as well.
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCalendar extends SwatControl
@@ -54,14 +54,11 @@ class SwatCalendar extends SwatControl
 		$yui = new SwatYUI(array('dom', 'container'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
-		$this->addJavaScript('packages/swat/javascript/swat-calendar.js',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript('packages/swat/javascript/swat-z-index-manager.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-calendar.css',
-			Swat::PACKAGE_ID);
+		$this->addStyleSheet('packages/swat/styles/swat-calendar.css');
+		$this->addJavaScript('packages/swat/javascript/swat-calendar.js');
+		$this->addJavaScript(
+			'packages/swat/javascript/swat-z-index-manager.js'
+		);
 	}
 
 	// }}}

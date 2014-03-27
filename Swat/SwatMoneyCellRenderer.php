@@ -9,7 +9,7 @@ require_once 'SwatI18N/SwatI18NLocale.php';
  * A currency cell renderer
  *
  * @package   Swat
- * @copyright 2005-2009 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMoneyCellRenderer extends SwatCellRenderer
@@ -91,8 +91,8 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 		parent::__construct();
 
 		$this->addStyleSheet(
-			'packages/swat/styles/swat-money-cell-renderer.css',
-			Swat::PACKAGE_ID);
+			'packages/swat/styles/swat-money-cell-renderer.css'
+		);
 	}
 
 	// }}}

@@ -11,7 +11,7 @@ require_once 'Swat/SwatString.php';
  * A multi-line text entry widget
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextarea extends SwatInputControl implements SwatState
@@ -123,11 +123,8 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		parent::__construct($id);
 		$yui = new SwatYUI(array('dom', 'event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-textarea.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-textarea.css',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript('packages/swat/javascript/swat-textarea.js');
+		$this->addStyleSheet('packages/swat/styles/swat-textarea.css');
 	}
 
 	// }}}

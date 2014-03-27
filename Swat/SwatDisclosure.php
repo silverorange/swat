@@ -10,7 +10,7 @@ require_once 'Swat/SwatYUI.php';
  * A container to show and hide child widgets
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2004-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDisclosure extends SwatDisplayableContainer
@@ -49,11 +49,8 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$yui = new SwatYUI(array('dom', 'animation'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
-		$this->addJavaScript('packages/swat/javascript/swat-disclosure.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-disclosure.css',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript('packages/swat/javascript/swat-disclosure.js');
+		$this->addStyleSheet('packages/swat/styles/swat-disclosure.css');
 	}
 
 	// }}}

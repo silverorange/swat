@@ -13,7 +13,7 @@ require_once 'Swat/SwatYUI.php';
  * details.
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextareaEditor extends SwatTextarea
@@ -143,13 +143,10 @@ class SwatTextareaEditor extends SwatTextarea
 		$this->requires_id = true;
 		$this->rows = 30;
 
+		$this->addJavaScript('packages/swat/javascript/tiny_mce/tiny_mce.js');
 		$this->addJavaScript(
-			'packages/swat/javascript/swat-z-index-manager.js',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript(
-			'packages/swat/javascript/tiny_mce/tiny_mce.js',
-			Swat::PACKAGE_ID);
+			'packages/swat/javascript/swat-z-index-manager.js'
+		);
 	}
 
 	// }}}

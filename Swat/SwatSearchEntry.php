@@ -8,7 +8,7 @@ require_once 'Swat/SwatEntry.php';
  * A single line search entry widget
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatSearchEntry extends SwatEntry
@@ -37,11 +37,8 @@ class SwatSearchEntry extends SwatEntry
 
 		$yui = new SwatYUI(array('dom', 'event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-search-entry.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-search-entry.css',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript('packages/swat/javascript/swat-search-entry.js');
+		$this->addStyleSheet('packages/swat/styles/swat-search-entry.css');
 	}
 
 	// }}}

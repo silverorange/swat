@@ -13,7 +13,7 @@ require_once 'Swat/SwatYUI.php';
  * an image should be cropped.
  *
  * @package   Swat
- * @copyright 2008 silverorange
+ * @copyright 2008-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImageCropper extends SwatInputControl
@@ -154,8 +154,7 @@ class SwatImageCropper extends SwatInputControl
 		$yui = new SwatYUI(array('imagecropper'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
-		$this->addJavaScript('packages/swat/javascript/swat-image-cropper.js',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript('packages/swat/javascript/swat-image-cropper.js');
 	}
 
 	// }}}

@@ -27,8 +27,7 @@ class SwatToolbar extends SwatDisplayableContainer
 	{
 		parent::__construct($id);
 
-		$this->addStyleSheet('packages/swat/styles/swat-toolbar.css',
-			Swat::PACKAGE_ID);
+		$this->addStyleSheet('packages/swat/styles/swat-toolbar.css');
 	}
 
 	// }}}

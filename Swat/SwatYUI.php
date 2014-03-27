@@ -39,19 +39,11 @@ require_once 'Swat/exceptions/SwatException.php';
  * </code>
  *
  * @package   Swat
- * @copyright 2006-2010 silverorange
+ * @copyright 2006-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatYUI extends SwatObject
 {
-	// {{{ class constants
-
-	/**
-	 * Package ID for YUI component HTML head entries
-	 */
-	const PACKAGE_ID = 'SwatYUI';
-
-	// }}}
 	// {{{ private static properties
 
 	/**
@@ -148,7 +140,7 @@ class SwatYUI extends SwatObject
 		$comment = "Yahoo! UI Library (YUI) is Copyright (c) 2007-2009, ".
 			"Yahoo! Inc.\n\t     http://developer.yahoo.com/yui/license.html";
 
-		return new SwatCommentHtmlHeadEntry($comment, self::PACKAGE_ID);
+		return new SwatCommentHtmlHeadEntry($comment);
 	}
 
 	// }}}

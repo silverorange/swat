@@ -14,7 +14,7 @@ require_once 'Swat/SwatYUI.php';
  * YUI menu documentation} for what this means.
  *
  * @package   Swat
- * @copyright 2007-2013 silverorange
+ * @copyright 2007-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see SwatMenu
@@ -62,10 +62,7 @@ abstract class SwatAbstractMenu extends SwatControl
 
 		$yui = new SwatYUI(array('menu'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addStyleSheet(
-			'packages/swat/styles/swat-menu.css',
-			Swat::PACKAGE_ID
-		);
+		$this->addStyleSheet('packages/swat/styles/swat-menu.css');
 	}
 
 	// }}}
