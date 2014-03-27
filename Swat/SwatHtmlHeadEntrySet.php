@@ -67,7 +67,7 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
 	 *
 	 * @param SwatHtmlHeadEntry|string $entry the entry to add.
 	 */
-	public function addEntry($entry, $package_id = null)
+	public function addEntry($entry)
 	{
 		if (is_string($entry)) {
 			$class = $this->getClassFromType($entry);
@@ -78,7 +78,7 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
 					$entry.'".');
 			}
 
-			$entry = new $class($entry, $package_id);
+			$entry = new $class($entry);
 		}
 
 		if (!($entry instanceof SwatHtmlHeadEntry)) {

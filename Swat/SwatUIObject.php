@@ -84,7 +84,7 @@ abstract class SwatUIObject extends SwatObject
 	 * @param integer $display_order the relative order in which to display
 	 *                                this stylesheet head entry.
 	 */
-	public function addStyleSheet($stylesheet, $package_id = null)
+	public function addStyleSheet($stylesheet)
 	{
 		if ($this->html_head_entry_set === null)
 			throw new SwatException(sprintf("Child class '%s' did not ".
@@ -93,7 +93,7 @@ abstract class SwatUIObject extends SwatObject
 				'by creating a new HTML head entry set.', get_class($this)));
 
 		$this->html_head_entry_set->addEntry(
-			new SwatStyleSheetHtmlHeadEntry($stylesheet, $package_id)
+			new SwatStyleSheetHtmlHeadEntry($stylesheet)
 		);
 	}
 
@@ -108,7 +108,7 @@ abstract class SwatUIObject extends SwatObject
 	 * @param integer $display_order the relative order in which to display
 	 *                                this JavaScript head entry.
 	 */
-	public function addJavaScript($java_script, $package_id = null)
+	public function addJavaScript($java_script)
 	{
 		if ($this->html_head_entry_set === null)
 			throw new SwatException(sprintf("Child class '%s' did not ".
@@ -117,7 +117,7 @@ abstract class SwatUIObject extends SwatObject
 				'by creating a new HTML head entry set.', get_class($this)));
 
 		$this->html_head_entry_set->addEntry(
-			new SwatJavaScriptHtmlHeadEntry($java_script, $package_id)
+			new SwatJavaScriptHtmlHeadEntry($java_script)
 		);
 	}
 
@@ -129,9 +129,8 @@ abstract class SwatUIObject extends SwatObject
 	 * interface element
 	 *
 	 * @param string  $comment the contents of the comment to include.
-	 * @param integer $package_id the package this comment belongs with.
 	 */
-	public function addComment($comment, $package_id = null)
+	public function addComment($comment)
 	{
 		if ($this->html_head_entry_set === null)
 			throw new SwatException(sprintf("Child class '%s' did not ".
@@ -140,26 +139,8 @@ abstract class SwatUIObject extends SwatObject
 				'by creating a new HTML head entry set.', get_class($this)));
 
 		$this->html_head_entry_set->addEntry(
-			new SwatCommentHtmlHeadEntry($comment, $package_id));
-	}
-
-	// }}}
-	// {{{ public function addTangoAttribution()
-
-	/**
-	 * Convenience method to add Tango attribution comment
-	 *
-	 * Note: The Tango icons are now public domain and no attribution is
-	 * needed. This method remains for backwards compatibility.
-	 *
-	 * @param integer $package_id the package the tango attribution belongs
-	 *                             with.
-	 *
-	 * @deprecated The Tango icons are now public domain and no attribution is
-	 *             needed. This method remains for backwards compatibility.
-	 */
-	public function addTangoAttribution($package_id = Swat::PACKAGE_ID)
-	{
+			new SwatCommentHtmlHeadEntry($comment)
+		);
 	}
 
 	// }}}

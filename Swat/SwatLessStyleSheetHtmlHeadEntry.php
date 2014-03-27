@@ -36,7 +36,7 @@ class SwatLessStyleSheetHtmlHeadEntry extends SwatStyleSheetHtmlHeadEntry
 
 	public function getStyleSheetHeadEntry()
 	{
-		return new SwatStyleSheetHtmlHeadEntry($this->uri, $this->package_id);
+		return new SwatStyleSheetHtmlHeadEntry($this->uri);
 	}
 
 	// }}}

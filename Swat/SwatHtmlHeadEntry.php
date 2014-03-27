@@ -11,7 +11,7 @@ require_once 'Swat/SwatObject.php';
  * head section.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatHtmlHeadEntry extends SwatObject
@@ -25,16 +25,6 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	 */
 	protected $uri = '';
 
-	/**
-	 * The package this HTML head entry belongs to.
-	 *
-	 * When HTML head entries are displayed, they are grouped by package and
-	 * groups are order by inter-package dependencies.
-	 *
-	 * @var string
-	 */
-	protected $package_id = null;
-
 	// }}}
 	// {{{ public function __construct()
 
@@ -42,13 +32,10 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	 * Creates a new HTML head entry
 	 *
 	 * @param string  $uri the uri of the entry.
-	 * @param integer $package_id the package id of the package this HTML head
-	 *                             entry belongs to.
 	 */
-	public function __construct($uri, $package_id = null)
+	public function __construct($uri)
 	{
 		$this->uri = $uri;
-		$this->package_id = $package_id;
 	}
 
 	// }}}
@@ -102,19 +89,6 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	public function getType()
 	{
 		return get_class($this);
-	}
-
-	// }}}
-	// {{{ public function getPackageId()
-
-	/**
-	 * Gets the package id of this HTML head entry
-	 *
-	 * @return string the package id of this HTML head entry.
-	 */
-	public function getPackageId()
-	{
-		return $this->package_id;
 	}
 
 	// }}}

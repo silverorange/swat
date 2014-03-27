@@ -8,7 +8,7 @@ require_once 'Swat/SwatHtmlHeadEntry.php';
  * Stores and outputs an HTML head entry for an XML comment
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCommentHtmlHeadEntry extends SwatHtmlHeadEntry
@@ -24,12 +24,10 @@ class SwatCommentHtmlHeadEntry extends SwatHtmlHeadEntry
 	 * Creates a new HTML head entry
 	 *
 	 * @param string  $comment the comment of this entry.
-	 * @param integer $package_id the package id of the package this HTML head
-	 *                             entry belongs to.
 	 */
-	public function __construct($comment, $package_id = null)
+	public function __construct($comment)
 	{
-		parent::__construct(md5($comment), $package_id);
+		parent::__construct(md5($comment));
 		$this->comment = $comment;
 	}
 
