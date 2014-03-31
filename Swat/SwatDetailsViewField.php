@@ -265,6 +265,13 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	// }}}
 	// {{{ protected function getHeaderTitle()
 
+	/**
+	 * Gets the title to use for the header of this details view field.
+	 *
+	 * @return string the title to use for the header.
+	 *
+	 * @see SwatDetailsViewField::displayHeader()
+	 */
 	protected function getHeaderTitle()
 	{
 		if ($this->title == '') {
