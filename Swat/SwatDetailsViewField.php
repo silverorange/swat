@@ -9,7 +9,7 @@ require_once 'Swat/SwatCellRendererContainer.php';
  * A visible field in a SwatDetailsView
  *
  * @package   Swat
- * @copyright 2005-2012 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDetailsViewField extends SwatCellRendererContainer
@@ -161,12 +161,10 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 		if ($this->title == '') {
 			$th_tag->setContent('&nbsp;');
 		} else {
-			if ($this->show_colon) {
-				$th_tag->setContent(sprintf(Swat::_('%s:'), $this->title),
-					$this->title_content_type);
-			} else {
-				$th_tag->setContent($this->title, $this->title_content_type);
-			}
+			$th_tag->setContent(
+				$this->getHeaderTitle(),
+				$this->title_content_type
+			);
 		}
 
 		$th_tag->display();
@@ -262,6 +260,32 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 		}
 
 		return $set;
+	}
+
+	// }}}
+	// {{{ protected function getHeaderTitle()
+
+	/**
+	 * Gets the title to use for the header of this details view field.
+	 *
+	 * @return string the title to use for the header.
+	 *
+	 * @see SwatDetailsViewField::displayHeader()
+	 */
+	protected function getHeaderTitle()
+	{
+		if ($this->title == '') {
+			$header_title = '&nbsp;';
+		} else {
+			$header_title = ($this->show_colon)
+				? sprintf(
+					Swat::_('%s:'),
+					$this->title
+				)
+				: $this->title;
+		}
+
+		return $header_title;
 	}
 
 	// }}}
