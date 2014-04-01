@@ -390,7 +390,7 @@ class SwatDBDataObject extends SwatObject
 	 */
 	public function hasDateProperty($name)
 	{
-		return array_key_exists($name, $this->date_properties);
+		return in_array($name, $this->date_properties);
 	}
 
 	// }}}
