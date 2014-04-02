@@ -25,7 +25,7 @@ require_once 'Swat/SwatObject.php';
  * will automatically be appropriately styled by Swat.
  *
  * @package   Swat
- * @copyright 2005-2008 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMessage extends SwatObject
@@ -121,8 +121,12 @@ class SwatMessage extends SwatObject
 	 * @param string $type optional. The type of message. If not specified,
 	 *                      'notice' is used.
 	 */
-	public function __construct($primary_content, $type = 'notice')
+	public function __construct($primary_content, $type = null)
 	{
+		if ($type == '') {
+			$type = 'notice';
+		}
+
 		$this->primary_content = $primary_content;
 		$this->type = $type;
 	}
