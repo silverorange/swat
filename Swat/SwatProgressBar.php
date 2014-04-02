@@ -25,7 +25,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * percent.
  *
  * @package   Swat
- * @copyright 2007 silverorange
+ * @copyright 2007-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatProgressBar extends SwatControl
@@ -145,11 +145,8 @@ class SwatProgressBar extends SwatControl
 		$yui = new SwatYUI(array('event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
-		$this->addStyleSheet('packages/swat/styles/swat-progress-bar.css',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript('packages/swat/javascript/swat-progress-bar.js',
-			Swat::PACKAGE_ID);
+		$this->addStyleSheet('packages/swat/styles/swat-progress-bar.css');
+		$this->addJavaScript('packages/swat/javascript/swat-progress-bar.js');
 	}
 
 	// }}}

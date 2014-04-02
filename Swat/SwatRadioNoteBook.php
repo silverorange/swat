@@ -17,7 +17,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * {@link SwatInputControl}.
  *
  * @package   Swat
- * @copyright 2012 silverorange
+ * @copyright 2012-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatNoteBookPage
  */
@@ -70,13 +70,11 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
 		$this->addStyleSheet(
-			'packages/swat/styles/swat-radio-note-book.css',
-			Swat::PACKAGE_ID
+			'packages/swat/styles/swat-radio-note-book.css'
 		);
 
 		$this->addJavaScript(
-			'packages/swat/javascript/swat-radio-note-book.js',
-			Swat::PACKAGE_ID
+			'packages/swat/javascript/swat-radio-note-book.js'
 		);
 	}
 

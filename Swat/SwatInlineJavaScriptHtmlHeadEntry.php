@@ -7,7 +7,7 @@ require_once 'Swat/SwatHtmlHeadEntry.php';
 
 /**
  * @package   Swat
- * @copyright 2012 silverorange
+ * @copyright 2012-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatInlineJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
@@ -26,12 +26,10 @@ class SwatInlineJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 	 * Creates a new HTML head entry
 	 *
 	 * @param string  $script the script of this entry.
-	 * @param integer $package_id the package id of the package this HTML head
-	 *                             entry belongs to.
 	 */
-	public function __construct($script, $package_id = null)
+	public function __construct($script)
 	{
-		parent::__construct(md5($script), $package_id);
+		parent::__construct(md5($script));
 		$this->script = $script;
 	}
 

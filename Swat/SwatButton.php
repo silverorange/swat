@@ -14,7 +14,7 @@ require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
  * within {@link SwatForm}.
  *
  * @package   Swat
- * @copyright 2004-2008 silverorange
+ * @copyright 2004-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatButton extends SwatInputControl
@@ -126,9 +126,7 @@ class SwatButton extends SwatInputControl
 
 		$yui = new SwatYUI(array('dom', 'event', 'animation'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-button.js',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript('packages/swat/javascript/swat-button.js');
 
 		$this->requires_id = true;
 	}

@@ -25,7 +25,7 @@ require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
  * use {@link SwatViewSelector} objects.
  *
  * @package   Swat
- * @copyright 2004-2013 silverorange
+ * @copyright 2004-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableView extends SwatView implements SwatUIParent
@@ -222,11 +222,8 @@ class SwatTableView extends SwatView implements SwatUIParent
 		$yui = new SwatYUI(array('dom'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
-		$this->addJavaScript('packages/swat/javascript/swat-table-view.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-table-view.css',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript('packages/swat/javascript/swat-table-view.js');
+		$this->addStyleSheet('packages/swat/styles/swat-table-view.css');
 	}
 
 	// }}}

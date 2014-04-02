@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A control for recording a rating out of a variable number of values
  *
  * @package   Swat
- * @copyright 2007-2013 silverorange
+ * @copyright 2007-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRating extends SwatInputControl
@@ -49,11 +49,8 @@ class SwatRating extends SwatInputControl
 		$yui = new SwatYUI(array('dom', 'animation'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
-		$this->addJavaScript('packages/swat/javascript/swat-rating.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-rating.css',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript('packages/swat/javascript/swat-rating.js');
+		$this->addStyleSheet('packages/swat/styles/swat-rating.css');
 	}
 
 	// }}}

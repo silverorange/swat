@@ -9,7 +9,7 @@ require_once 'Swat/SwatTextCellRenderer.php';
  * null text
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatNullTextCellRenderer extends SwatTextCellRenderer
@@ -44,8 +44,8 @@ class SwatNullTextCellRenderer extends SwatTextCellRenderer
 		parent::__construct();
 
 		$this->addStyleSheet(
-			'packages/swat/styles/swat-null-text-cell-renderer.css',
-			Swat::PACKAGE_ID);
+			'packages/swat/styles/swat-null-text-cell-renderer.css'
+		);
 	}
 
 	// }}}

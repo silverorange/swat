@@ -14,7 +14,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * A checkbox list widget
  *
  * @package   Swat
- * @copyright 2005-2013 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckboxList extends SwatOptionControl implements SwatState
@@ -68,11 +68,8 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		$this->requires_id = true;
 		$yui = new SwatYUI(array('event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-		$this->addJavaScript('packages/swat/javascript/swat-checkbox-list.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat.css',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript('packages/swat/javascript/swat-checkbox-list.js');
+		$this->addStyleSheet('packages/swat/styles/swat.css');
 	}
 
 	// }}}

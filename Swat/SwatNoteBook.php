@@ -14,7 +14,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * Notebook widget for containing {@link SwatNoteBookPage} pages
  *
  * @package   Swat
- * @copyright 2007-2013 silverorange
+ * @copyright 2007-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatNoteBookPage
  */
@@ -96,8 +96,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 		$yui = new SwatYUI(array('tabview'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
-		$this->addStyleSheet('packages/swat/styles/swat-note-book.css',
-			Swat::PACKAGE_ID);
+		$this->addStyleSheet('packages/swat/styles/swat-note-book.css');
 	}
 
 	// }}}

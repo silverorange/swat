@@ -13,7 +13,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * A view selector cell renderer displayed as a checkbox
  *
  * @package   Swat
- * @copyright 2005-2012 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatViewSelector
  */
@@ -102,8 +102,8 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 		$yui = new SwatYUI(array('dom'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 		$this->addJavaScript(
-			'packages/swat/javascript/swat-checkbox-cell-renderer.js',
-			Swat::PACKAGE_ID);
+			'packages/swat/javascript/swat-checkbox-cell-renderer.js'
+		);
 
 		// auto-generate an id to use if no id is set
 		$this->id = $this->getUniqueId();

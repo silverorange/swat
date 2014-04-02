@@ -12,7 +12,7 @@ require_once 'Swat/SwatYUI.php';
  * A control to display {@link SwatMessage} objects
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMessageDisplay extends SwatControl
@@ -90,14 +90,12 @@ class SwatMessageDisplay extends SwatControl
 		$yui = new SwatYUI(array('animation'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
-		$this->addJavaScript('packages/swat/javascript/swat-message-display.js',
-			Swat::PACKAGE_ID);
+		$this->addJavaScript(
+			'packages/swat/javascript/swat-message-display.js'
+		);
 
-		$this->addStyleSheet('packages/swat/styles/swat-message.css',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-message-display.css',
-			Swat::PACKAGE_ID);
+		$this->addStyleSheet('packages/swat/styles/swat-message.css');
+		$this->addStyleSheet('packages/swat/styles/swat-message-display.css');
 	}
 
 	// }}}

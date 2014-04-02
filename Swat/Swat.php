@@ -14,11 +14,6 @@ class Swat
 	// {{{ constants
 
 	/**
-	 * The package identifier
-	 */
-	const PACKAGE_ID = 'Swat';
-
-	/**
 	 * The gettext domain for Swat
 	 *
 	 * This is used to support multiple locales.

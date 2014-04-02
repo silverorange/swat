@@ -12,7 +12,7 @@ require_once 'Swat/SwatNoteBook.php';
  * squeezebox.
  *
  * @package   Swat
- * @copyright 2011 silverorange
+ * @copyright 2011-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatNoteBookPage
  */
@@ -53,11 +53,8 @@ class SwatAccordion extends SwatNoteBook
 		$yui = new SwatYUI(array('yahoo', 'dom', 'event', 'animation'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
-		$this->addStyleSheet('packages/swat/styles/swat-accordion.css',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript('packages/swat/javascript/swat-accordion.js',
-			Swat::PACKAGE_ID);
+		$this->addStyleSheet('packages/swat/styles/swat-accordion.css');
+		$this->addJavaScript('packages/swat/javascript/swat-accordion.js');
 	}
 
 	// }}}

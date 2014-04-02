@@ -17,7 +17,7 @@ require_once 'Swat/SwatYUI.php';
  * order of the two options is arbitrary.
  *
  * @package   Swat
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatChangeOrder extends SwatOptionControl implements SwatState
@@ -66,14 +66,11 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$yui = new SwatYUI(array('dom', 'event'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
-		$this->addJavaScript('packages/swat/javascript/swat-change-order.js',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript('packages/swat/javascript/swat-z-index-manager.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-change-order.css',
-			Swat::PACKAGE_ID);
+		$this->addStyleSheet('packages/swat/styles/swat-change-order.css');
+		$this->addJavaScript('packages/swat/javascript/swat-change-order.js');
+		$this->addJavaScript(
+			'packages/swat/javascript/swat-z-index-manager.js'
+		);
 	}
 
 	// }}}

@@ -13,7 +13,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * hexidecimal values.
  *
  * @package    Swat
- * @copyright  2005-2006 silverorange
+ * @copyright  2005-2014 silverorange
  * @license    http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @deprecated This widget is unmaintained and has known browser-compatibility
  *             issues. At this point, either a suitable replacement is needed
@@ -55,14 +55,11 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 
 		$this->requires_id = true;
 
-		$this->addJavaScript('packages/swat/javascript/swat-color-entry.js',
-			Swat::PACKAGE_ID);
-
-		$this->addJavaScript('packages/swat/javascript/swat-z-index-manager.js',
-			Swat::PACKAGE_ID);
-
-		$this->addStyleSheet('packages/swat/styles/swat-color-entry.css',
-			Swat::PACKAGE_ID);
+		$this->addStyleSheet('packages/swat/styles/swat-color-entry.css');
+		$this->addJavaScript('packages/swat/javascript/swat-color-entry.js');
+		$this->addJavaScript(
+			'packages/swat/javascript/swat-z-index-manager.js'
+		);
 	}
 
 	// }}}

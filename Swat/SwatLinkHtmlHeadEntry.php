@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * Stores and outputs an HTML head entry for an XHTML link element
  *
  * @package   Swat
- * @copyright 2008 silverorange
+ * @copyright 2008-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
@@ -56,15 +56,12 @@ class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
 	 * @param string $type optional. The media type of the content linked to by
 	 *                      this link.
 	 * @param string $title optional. The title of this link.
-	 *
-	 * @param integer $package_id the package id of the package this HTML head
-	 *                             entry belongs to.
 	 */
 	public function __construct($uri, $relationship = null, $type = null,
-		$title = null, $package_id = null)
+		$title = null)
 	{
 		$hash = md5($uri.$relationship.$type.$title);
-		parent::__construct($hash, $package_id);
+		parent::__construct($hash);
 
 		$this->link_uri = $uri;
 		$this->relationship = $relationship;
