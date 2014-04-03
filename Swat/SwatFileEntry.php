@@ -203,7 +203,7 @@ class SwatFileEntry extends SwatInputControl
 	 * Gets a note specifying the mime types this file entry accepts
 	 *
 	 * The file types are only returned if
-	 * {@link SwatFileEntry::$display_mimetypes} is set to true and
+	 * {@link SwatFileEntry::$display_mime_types} is set to true and
 	 * {@link SwatFileEntry::$accept_mime_types} has entries. If
 	 * {@link SwatFileEntry::$human_file_types} is set, the note displays the
 	 * human-readable file types where possible.
