@@ -41,9 +41,9 @@ class SwatFileEntry extends SwatInputControl
 	public $accept_mime_types = null;
 
 	/**
-	 * Associative array of human readable file types indexed by mime type.
+	 * Associative array of human-readable file types indexed by mime type.
 	 *
-	 * If set, when displaying acceptable mime-types, we display the human
+	 * If set, when displaying acceptable mime-types, we display the human-
 	 * readable types in place of the mime-types.
 	 *
 	 * @var array
@@ -201,7 +201,7 @@ class SwatFileEntry extends SwatInputControl
 	 * {@link SwatFileEntry::$display_mimetypes} is set to true and
 	 * {@link SwatFileEntry::$accept_mime_types} has entries. If
 	 * {@link SwatFileEntry::$human_file_types} is set, the note displays the
-	 * human readable file types where possible.
+	 * human-readable file types where possible.
 	 *
 	 * @return SwatMessage a note listing the accepted mime-types for this
 	 *                      file entry widget or null if any mime-type is
