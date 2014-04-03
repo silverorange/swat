@@ -34,7 +34,7 @@ class SwatFileEntry extends SwatInputControl
 	public $size = 40;
 
 	/**
-	 * Array of mime-types to accept as uploads
+	 * Array of mime types to accept as uploads
 	 *
 	 * @var array
 	 */
@@ -43,8 +43,13 @@ class SwatFileEntry extends SwatInputControl
 	/**
 	 * Associative array of human-readable file types indexed by mime type.
 	 *
-	 * If set, when displaying acceptable mime-types, we display the human-
-	 * readable types in place of the mime-types.
+	 * Human-readable file types are not a one-to-one replacement of mime types,
+	 * as certain file types can have multiple acceptable mime types. An example
+	 * would be MP3 files, which can have 'audio/mpeg', 'audio/mp3' as mime
+	 * types, but the human-readbable file type would just be 'MP3'.
+	 *
+	 * If set, when displaying acceptable mime types, we display the human-
+	 * readable file types in place of the mime types.
 	 *
 	 * @var array
 	 */
