@@ -603,7 +603,7 @@ class SwatFileEntry extends SwatInputControl
 	 * display.
 	 *
 	 * If {@link SwatFileEntry::$human_file_types} is set, and the mime type
-	 * exists within it, we display the corrosponding human-readable file type.
+	 * exists within it, we display the corresponding human-readable file type.
 	 * Otherwise we fall back to the mime type.
 	 *
 	 * @return array unique mime and human-readable file types.
