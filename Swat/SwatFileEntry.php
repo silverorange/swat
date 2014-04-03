@@ -468,27 +468,31 @@ class SwatFileEntry extends SwatInputControl
 			break;
 
 		case 'too-large':
-			$text = $this->show_field_title_in_messages
-				? Swat::_(
+			if ($this->show_field_title_in_messages) {
+				$text = Swat::_(
 					'The %s field exceeds the maximum allowable file size.'
-				)
-				: Swat::_(
+				);
+			} else {
+				$text = Swat::_(
 					'This field exceeds the maximum allowable file size.'
 				);
+			}
 
 			$message = new SwatMessage($text, 'error');
 			break;
 
 		case 'upload-error':
-			$text = $this->show_field_title_in_messages
-				? Swat::_(
+			if ($this->show_field_title_in_messages) {
+				$text = Swat::_(
 					'The %s field encounted an error when trying to upload '.
 					'the file. Please try again.'
-				)
-				: Swat::_(
+				);
+			} else {
+				$text = Swat::_(
 					'This field encounted an error when trying to upload the '.
 					'file. Please try again.'
 				);
+			}
 
 			$message = new SwatMessage($text, 'error');
 			break;
