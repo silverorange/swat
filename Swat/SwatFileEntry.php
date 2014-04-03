@@ -18,7 +18,7 @@ require_once 'Swat/SwatFormField.php';
  * 'application/octet-stream'.
  *
  * @package   Swat
- * @copyright 2005-2013 silverorange
+ * @copyright 2005-2014 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFileEntry extends SwatInputControl
@@ -39,6 +39,16 @@ class SwatFileEntry extends SwatInputControl
 	 * @var array
 	 */
 	public $accept_mime_types = null;
+
+	/**
+	 * Associative array of human readable file types indexed by mime type.
+	 *
+	 * If set, when displaying acceptable mime-types, we display the human
+	 * readable types in place of the mime-types.
+	 *
+	 * @var array
+	 */
+	public $human_file_types = array();
 
 	/**
 	 * Display acceptable mime-types as a note in this entry's parent
@@ -189,7 +199,9 @@ class SwatFileEntry extends SwatInputControl
 	 *
 	 * The file types are only returned if
 	 * {@link SwatFileEntry::$display_mimetypes} is set to true and
-	 * {@link SwatFileEntry::$accept_mime_types} has entries.
+	 * {@link SwatFileEntry::$accept_mime_types} has entries. If
+	 * {@link SwatFileEntry::$human_file_types} is set, the note displays the
+	 * human readable file types where possible.
 	 *
 	 * @return SwatMessage a note listing the accepted mime-types for this
 	 *                      file entry widget or null if any mime-type is
@@ -202,11 +214,17 @@ class SwatFileEntry extends SwatInputControl
 		$message = null;
 
 		if ($this->accept_mime_types !== null && $this->display_mime_types) {
-			$message = new SwatMessage(sprintf(Swat::ngettext(
-				'File type must be %s.',
-				'Valid file types are: %s.',
-				count($this->accept_mime_types)),
-				implode(', ', $this->accept_mime_types)));
+			$displayable_types = $this->getDisplayableTypes();
+			$message = new SwatMessage(
+				sprintf(
+					Swat::ngettext(
+						'Valid files are the following type: %s.',
+						'Valid files are the following type(s): %s.',
+						count($displayable_types)
+					),
+					implode(', ', $displayable_types)
+				)
+			);
 		}
 
 		return $message;
@@ -424,30 +442,57 @@ class SwatFileEntry extends SwatInputControl
 	{
 		switch ($id) {
 		case 'mime-type':
-			$text = sprintf($this->show_field_title_in_messages ?
-				Swat::_('The %%s field must be of the following type(s): %s.') :
-				Swat::_('This field must be of the following type(s): %s.'),
-				implode(', ', $this->accept_mime_types));
+			$displayable_types = $this->getDisplayableTypes();
+
+			if ($this->show_field_title_in_messages) {
+				$text = sprintf(
+					Swat::ngettext(
+						'The %%s field must be of the following type: %s.',
+						'The %%s field must be of the following type(s): %s.',
+						count($displayable_types)
+					),
+					implode(', ', $displayable_types)
+				);
+			} else {
+				$text = sprintf(
+					Swat::ngettext(
+						'This field must be of the following type: %s.',
+						'This field must be of the following type(s): %s.',
+						count($displayable_types)
+					),
+					implode(', ', $displayable_types)
+				);
+			}
 
 			$message = new SwatMessage($text, 'error');
 			break;
+
 		case 'too-large':
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('The %s field exceeds the maximum allowable file '.
-					'size.') :
-				Swat::_('This field exceeds the maximum allowable file size.');
+			$text = $this->show_field_title_in_messages
+				? Swat::_(
+					'The %s field exceeds the maximum allowable file size.'
+				)
+				: Swat::_(
+					'This field exceeds the maximum allowable file size.'
+				);
 
 			$message = new SwatMessage($text, 'error');
 			break;
+
 		case 'upload-error':
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('The %s field encounted an error when trying to '.
-					'upload the file. Please try again.') :
-				Swat::_('This field encounted an error when trying to '.
-					'upload the file. Please try again.');
+			$text = $this->show_field_title_in_messages
+				? Swat::_(
+					'The %s field encounted an error when trying to upload '.
+					'the file. Please try again.'
+				)
+				: Swat::_(
+					'This field encounted an error when trying to upload the '.
+					'file. Please try again.'
+				);
 
 			$message = new SwatMessage($text, 'error');
 			break;
+
 		default:
 			$message = parent::getValidationMessage($id);
 			break;
@@ -539,6 +584,25 @@ class SwatFileEntry extends SwatInputControl
 			FILEINFO_MIME_TYPE : FILEINFO_MIME;
 
 		return new finfo($mime_constant);
+	}
+
+	// }}}
+	// {{{ protected function getDisplayableTypes()
+
+	protected function getDisplayableTypes()
+	{
+		$displayable_types = array();
+
+		foreach ($this->accept_mime_types as $mime_type) {
+			$displayable_type = (isset($this->human_file_types[$mime_type]))
+				? $this->human_file_types[$mime_type]
+				: $mime_type;
+
+			// Use the value as the key to de-dupe.
+			$displayable_types[$displayable_type] = $displayable_type;
+		}
+
+		return $displayable_types;
 	}
 
 	// }}}
