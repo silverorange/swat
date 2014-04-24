@@ -127,6 +127,17 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public $display_messages = true;
 
+	/**
+	 * Whether or not to show the title for this form field
+	 *
+	 * Form fields can have a title and opt not to show it on display. This
+	 * can be used to set a title for validation error messages but not
+	 * add a visible title to the user-interface.
+	 *
+	 * @var boolean
+	 */
+	public $show_title = true;
+
 	// }}}
 	// {{{ protected properties
 
@@ -259,8 +270,10 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 	protected function displayTitle()
 	{
-		if ($this->title === null && $this->access_key === null)
+		if (!$this->show_title ||
+			($this->title === null && $this->access_key === null)) {
 			return;
+		}
 
 		$title_tag = $this->getTitleTag();
 		$title_tag->open();
