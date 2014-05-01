@@ -1,0 +1,1943 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.4" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Swat</name>
+ <channel>pear.silverorange.com</channel>
+ <summary>Swat web application toolkit</summary>
+ <description>Swat is a web application toolkit.
+
+* An object oriented API
+* A set of user-interface widgets</description>
+ <lead>
+  <name>Nathan Fredrickson</name>
+  <user>nrf</user>
+  <email>nathan@silverorange.com</email>
+  <active>yes</active>
+ </lead>
+ <lead>
+  <name>Mike Gauthier</name>
+  <user>gauthierm</user>
+  <email>mike@silverorange.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2014-05-01</date>
+ <time>14:32:26</time>
+ <version>
+  <release>2.1.3</release>
+  <api>0.0.1</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
+ <notes>
+No release notes for you!
+ </notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <dir name="demo">
+    <dir name="include">
+     <dir name="demos">
+      <file name="accordion.xml" role="data" />
+      <file name="button.xml" role="data" />
+      <file name="ButtonDemo.php" role="data" />
+      <file name="calendar.xml" role="data" />
+      <file name="CalendarDemo.php" role="data" />
+      <file name="changeorder.xml" role="data" />
+      <file name="ChangeOrderDemo.php" role="data" />
+      <file name="checkbox.xml" role="data" />
+      <file name="CheckboxDemo.php" role="data" />
+      <file name="colorentry.xml" role="data" />
+      <file name="dateentry.xml" role="data" />
+      <file name="Demo.php" role="data" />
+      <file name="detailsview.xml" role="data" />
+      <file name="DetailsViewDemo.php" role="data" />
+      <file name="disclosure.xml" role="data" />
+      <file name="DisclosureDemo.php" role="data" />
+      <file name="entry.xml" role="data" />
+      <file name="fieldset.xml" role="data" />
+      <file name="FieldsetDemo.php" role="data" />
+      <file name="fileentry.xml" role="data" />
+      <file name="flydown.xml" role="data" />
+      <file name="FlydownDemo.php" role="data" />
+      <file name="frame.xml" role="data" />
+      <file name="frontpage.xml" role="data" />
+      <file name="imagecropper.xml" role="data" />
+      <file name="imagedisplay.xml" role="data" />
+      <file name="menu.xml" role="data" />
+      <file name="messagedisplay.xml" role="data" />
+      <file name="MessageDisplayDemo.php" role="data" />
+      <file name="navbar.xml" role="data" />
+      <file name="NavBarDemo.php" role="data" />
+      <file name="notebook.xml" role="data" />
+      <file name="pagination.xml" role="data" />
+      <file name="PaginationDemo.php" role="data" />
+      <file name="passwordentry.xml" role="data" />
+      <file name="PasswordEntryDemo.php" role="data" />
+      <file name="progressbar.xml" role="data" />
+      <file name="ProgressBarDemo.php" role="data" />
+      <file name="radiolist.xml" role="data" />
+      <file name="RadioListDemo.php" role="data" />
+      <file name="rating.xml" role="data" />
+      <file name="recaptcha.xml" role="data" />
+      <file name="replicable.xml" role="data" />
+      <file name="selectlist.xml" role="data" />
+      <file name="SelectListDemo.php" role="data" />
+      <file name="string.xml" role="data" />
+      <file name="StringDemo.php" role="data" />
+      <file name="tableview.xml" role="data" />
+      <file name="TableViewDemo.php" role="data" />
+      <file name="tableviewinputrow.xml" role="data" />
+      <file name="TableViewInputRowDemo.php" role="data" />
+      <file name="textarea.xml" role="data" />
+      <file name="textareaeditor.xml" role="data" />
+      <file name="tileview.xml" role="data" />
+      <file name="TileViewDemo.php" role="data" />
+      <file name="timeentry.xml" role="data" />
+      <file name="timezoneentry.xml" role="data" />
+      <file name="toollink.xml" role="data" />
+      <file name="viewselector.xml" role="data" />
+      <file name="ViewSelectorDemo.php" role="data" />
+      <file name="yesnoflydown.xml" role="data" />
+     </dir> <!-- /demo/include/demos -->
+     <dir name="ui-objects">
+      <file name="DemoDocumentationMenuBar.php" role="data" />
+      <file name="DemoMenuBar.php" role="data" />
+     </dir> <!-- /demo/include/ui-objects -->
+     <file name="DemoApplication.php" role="data" />
+     <file name="layout.php" role="data" />
+     <file name="layout.xml" role="data" />
+    </dir> <!-- /demo/include -->
+    <dir name="www">
+     <dir name="images">
+      <file name="apple.png" role="data" />
+      <file name="crop1.jpg" role="data" />
+      <file name="crop2.jpg" role="data" />
+      <file name="orange.png" role="data" />
+      <file name="strawberry.png" role="data" />
+      <file name="swat-frame-background-topright.png" role="data" />
+      <file name="swat-frame-contents-background.png" role="data" />
+      <file name="swat-frame-title-background.png" role="data" />
+      <file name="swat-logo-large.png" role="data" />
+      <file name="swat-logo.png" role="data" />
+     </dir> <!-- /demo/www/images -->
+     <dir name="packages">
+      <dir name="swat">
+       <dir name="images">
+        <dir name="tango">
+         <dir name="16">
+          <file name="dialog-error-256.png" role="data" />
+          <file name="dialog-error.png" role="data" />
+          <file name="dialog-information-256.png" role="data" />
+          <file name="dialog-information.png" role="data" />
+          <file name="dialog-question.png" role="data" />
+          <file name="dialog-warning-256.png" role="data" />
+          <file name="dialog-warning.png" role="data" />
+         </dir> <!-- /demo/www/packages/swat/images/tango/16 -->
+         <dir name="22">
+          <file name="dialog-error-256.png" role="data" />
+          <file name="dialog-error.png" role="data" />
+          <file name="dialog-information-256.png" role="data" />
+          <file name="dialog-information.png" role="data" />
+          <file name="dialog-question.png" role="data" />
+          <file name="dialog-warning-256.png" role="data" />
+          <file name="dialog-warning.png" role="data" />
+          <file name="office-calendar-256-insensitive.png" role="data" />
+          <file name="office-calendar-256.png" role="data" />
+          <file name="office-calendar.png" role="data" />
+         </dir> <!-- /demo/www/packages/swat/images/tango/22 -->
+         <dir name="48">
+          <file name="dialog-error-256.png" role="data" />
+          <file name="dialog-error.png" role="data" />
+          <file name="dialog-information-256.png" role="data" />
+          <file name="dialog-information.png" role="data" />
+          <file name="dialog-question.png" role="data" />
+          <file name="dialog-warning-256.png" role="data" />
+          <file name="dialog-warning.png" role="data" />
+         </dir> <!-- /demo/www/packages/swat/images/tango/48 -->
+        </dir> <!-- /demo/www/packages/swat/images/tango -->
+        <dir name="textarea-editor">
+         <file name="align-center.png" role="data" />
+         <file name="align-justify.png" role="data" />
+         <file name="align-left.png" role="data" />
+         <file name="align-right.png" role="data" />
+         <file name="bold.png" role="data" />
+         <file name="hilite.png" role="data" />
+         <file name="hr.png" role="data" />
+         <file name="indent.png" role="data" />
+         <file name="italic.png" role="data" />
+         <file name="link.png" role="data" />
+         <file name="ol.png" role="data" />
+         <file name="outdent.png" role="data" />
+         <file name="quote.png" role="data" />
+         <file name="toggle-mode.png" role="data" />
+         <file name="ul.png" role="data" />
+         <file name="underline.png" role="data" />
+        </dir> <!-- /demo/www/packages/swat/images/textarea-editor -->
+        <file name="calendar.png" role="data" />
+        <file name="check.png" role="data" />
+        <file name="color-entry-null.png" role="data" />
+        <file name="color-palette.png" role="data" />
+        <file name="dismiss.png" role="data" />
+        <file name="go-next-insensitive.png" role="data" />
+        <file name="go-next.png" role="data" />
+        <file name="go-previous-insensitive.png" role="data" />
+        <file name="go-previous.png" role="data" />
+        <file name="list-remove.png" role="data" />
+        <file name="swat-accordion-closed.png" role="data" />
+        <file name="swat-accordion-open.png" role="data" />
+        <file name="swat-button-throbber.gif" role="data" />
+        <file name="swat-calendar-header-background.png" role="data" />
+        <file name="swat-change-order-item-grippy.png" role="data" />
+        <file name="swat-change-order-item-selected.png" role="data" />
+        <file name="swat-disclosure-closed-1-bit.png" role="data" />
+        <file name="swat-disclosure-closed.png" role="data" />
+        <file name="swat-disclosure-open-1-bit.png" role="data" />
+        <file name="swat-disclosure-open.png" role="data" />
+        <file name="swat-form-footer.png" role="data" />
+        <file name="swat-form-header.png" role="data" />
+        <file name="swat-frame-background.png" role="data" />
+        <file name="swat-frame-header.png" role="data" />
+        <file name="swat-image-preview-display-zoom.png" role="data" />
+        <file name="swat-link-cell-renderer-background.png" role="data" />
+        <file name="swat-menu-hassubmenu.png" role="data" />
+        <file name="swat-menubar-hassubmenu.png" role="data" />
+        <file name="swat-message-cart.png" role="data" />
+        <file name="swat-notebook-tab-bottom-active.png" role="data" />
+        <file name="swat-notebook-tab-bottom.png" role="data" />
+        <file name="swat-notebook-tab-left-active.png" role="data" />
+        <file name="swat-notebook-tab-right-active.png" role="data" />
+        <file name="swat-notebook-tab-top-active.png" role="data" />
+        <file name="swat-notebook-tab-top.png" role="data" />
+        <file name="swat-progressbar-horizontal-background.png" role="data" />
+        <file name="swat-progressbar-horizontal-full-background.png" role="data" />
+        <file name="swat-progressbar-vertical-background.png" role="data" />
+        <file name="swat-progressbar-vertical-full-background.png" role="data" />
+        <file name="swat-rating-stars-256.png" role="data" />
+        <file name="swat-rating-stars.png" role="data" />
+        <file name="swat-table-view-cell-background.png" role="data" />
+        <file name="swat-table-view-cell-error-background.png" role="data" />
+        <file name="swat-table-view-cell-highlight-background.png" role="data" />
+        <file name="swat-table-view-column-asc.png" role="data" />
+        <file name="swat-table-view-column-desc.png" role="data" />
+        <file name="swat-table-view-orderable-column-256.png" role="data" />
+        <file name="swat-table-view-orderable-column.png" role="data" />
+        <file name="swat-textarea-editor-button.png" role="data" />
+        <file name="swat-textarea-editor-source-edit.gif" role="data" />
+        <file name="swat-textarea-editor-toolbar.png" role="data" />
+        <file name="swat-textarea-resize-handle.png" role="data" />
+        <file name="swat-tool-link-cancel.png" role="data" />
+        <file name="swat-tool-link-create-insensitive.png" role="data" />
+        <file name="swat-tool-link-create.png" role="data" />
+        <file name="swat-tool-link-delete.png" role="data" />
+        <file name="swat-tool-link-edit.png" role="data" />
+        <file name="swat-tool-link-email.png" role="data" />
+        <file name="swat-tool-link-icons.png" role="data" />
+        <file name="swat-tool-link-print.png" role="data" />
+        <file name="swat-toolbar-background.png" role="data" />
+       </dir> <!-- /demo/www/packages/swat/images -->
+       <dir name="javascript">
+        <dir name="tiny_mce">
+         <dir name="langs">
+          <file name="en.js" role="data" />
+         </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/langs -->
+         <dir name="plugins">
+          <dir name="advhr">
+           <dir name="css">
+            <file name="advhr.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advhr/css -->
+           <dir name="js">
+            <file name="rule.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advhr/js -->
+           <dir name="langs">
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advhr/langs -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="rule.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advhr -->
+          <dir name="advimage">
+           <dir name="css">
+            <file name="advimage.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advimage/css -->
+           <dir name="img">
+            <file name="sample.gif" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advimage/img -->
+           <dir name="js">
+            <file name="image.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advimage/js -->
+           <dir name="langs">
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advimage/langs -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="image.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advimage -->
+          <dir name="advimagescale">
+           <file name="editor_plugin.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advimagescale -->
+          <dir name="advlink">
+           <dir name="css">
+            <file name="advlink.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advlink/css -->
+           <dir name="js">
+            <file name="advlink.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advlink/js -->
+           <dir name="langs">
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advlink/langs -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="link.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advlink -->
+          <dir name="advlist">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/advlist -->
+          <dir name="autolink">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/autolink -->
+          <dir name="autoresize">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/autoresize -->
+          <dir name="autosave">
+           <dir name="langs">
+            <file name="en.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/autosave/langs -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/autosave -->
+          <dir name="bbcode">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/bbcode -->
+          <dir name="contextmenu">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/contextmenu -->
+          <dir name="directionality">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/directionality -->
+          <dir name="emotions">
+           <dir name="img">
+            <file name="smiley-cool.gif" role="data" />
+            <file name="smiley-cry.gif" role="data" />
+            <file name="smiley-embarassed.gif" role="data" />
+            <file name="smiley-foot-in-mouth.gif" role="data" />
+            <file name="smiley-frown.gif" role="data" />
+            <file name="smiley-innocent.gif" role="data" />
+            <file name="smiley-kiss.gif" role="data" />
+            <file name="smiley-laughing.gif" role="data" />
+            <file name="smiley-money-mouth.gif" role="data" />
+            <file name="smiley-sealed.gif" role="data" />
+            <file name="smiley-smile.gif" role="data" />
+            <file name="smiley-surprised.gif" role="data" />
+            <file name="smiley-tongue-out.gif" role="data" />
+            <file name="smiley-undecided.gif" role="data" />
+            <file name="smiley-wink.gif" role="data" />
+            <file name="smiley-yell.gif" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/emotions/img -->
+           <dir name="js">
+            <file name="emotions.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/emotions/js -->
+           <dir name="langs">
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/emotions/langs -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="emotions.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/emotions -->
+          <dir name="example">
+           <dir name="img">
+            <file name="example.gif" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/example/img -->
+           <dir name="js">
+            <file name="dialog.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/example/js -->
+           <dir name="langs">
+            <file name="en.js" role="data" />
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/example/langs -->
+           <file name="dialog.htm" role="data" />
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/example -->
+          <dir name="example_dependency">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/example_dependency -->
+          <dir name="fullpage">
+           <dir name="css">
+            <file name="fullpage.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/fullpage/css -->
+           <dir name="js">
+            <file name="fullpage.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/fullpage/js -->
+           <dir name="langs">
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/fullpage/langs -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="fullpage.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/fullpage -->
+          <dir name="fullscreen">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="fullscreen.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/fullscreen -->
+          <dir name="iespell">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/iespell -->
+          <dir name="inlinepopups">
+           <dir name="skins">
+            <dir name="clearlooks2">
+             <dir name="img">
+              <file name="alert.gif" role="data" />
+              <file name="button.gif" role="data" />
+              <file name="buttons.gif" role="data" />
+              <file name="confirm.gif" role="data" />
+              <file name="corners.gif" role="data" />
+              <file name="horizontal.gif" role="data" />
+              <file name="vertical.gif" role="data" />
+             </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/inlinepopups/skins/clearlooks2/img -->
+             <file name="window.css" role="data" />
+            </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/inlinepopups/skins/clearlooks2 -->
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/inlinepopups/skins -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="template.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/inlinepopups -->
+          <dir name="insertdatetime">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/insertdatetime -->
+          <dir name="layer">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/layer -->
+          <dir name="legacyoutput">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/legacyoutput -->
+          <dir name="lists">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/lists -->
+          <dir name="media">
+           <dir name="css">
+            <file name="content.css" role="data" />
+            <file name="media.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/media/css -->
+           <dir name="img">
+            <file name="flash.gif" role="data" />
+            <file name="flv_player.swf" role="data" />
+            <file name="quicktime.gif" role="data" />
+            <file name="realmedia.gif" role="data" />
+            <file name="shockwave.gif" role="data" />
+            <file name="trans.gif" role="data" />
+            <file name="windowsmedia.gif" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/media/img -->
+           <dir name="js">
+            <file name="embed.js" role="data" />
+            <file name="media.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/media/js -->
+           <dir name="langs">
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/media/langs -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="media.htm" role="data" />
+           <file name="moxieplayer.swf" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/media -->
+          <dir name="nonbreaking">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/nonbreaking -->
+          <dir name="noneditable">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/noneditable -->
+          <dir name="pagebreak">
+           <dir name="css">
+            <file name="content.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/pagebreak/css -->
+           <dir name="img">
+            <file name="pagebreak.gif" role="data" />
+            <file name="trans.gif" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/pagebreak/img -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/pagebreak -->
+          <dir name="paste">
+           <dir name="css">
+            <file name="blank.css" role="data" />
+            <file name="pasteword.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/paste/css -->
+           <dir name="js">
+            <file name="pastetext.js" role="data" />
+            <file name="pasteword.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/paste/js -->
+           <dir name="langs">
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/paste/langs -->
+           <file name="blank.htm" role="data" />
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="pastetext.htm" role="data" />
+           <file name="pasteword.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/paste -->
+          <dir name="preview">
+           <dir name="jscripts">
+            <file name="embed.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/preview/jscripts -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="example.html" role="data" />
+           <file name="preview.html" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/preview -->
+          <dir name="print">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/print -->
+          <dir name="safari">
+           <file name="blank.htm" role="data" />
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/safari -->
+          <dir name="save">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/save -->
+          <dir name="searchreplace">
+           <dir name="css">
+            <file name="searchreplace.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/searchreplace/css -->
+           <dir name="js">
+            <file name="searchreplace.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/searchreplace/js -->
+           <dir name="langs">
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/searchreplace/langs -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="searchreplace.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/searchreplace -->
+          <dir name="spellchecker">
+           <dir name="css">
+            <file name="content.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/spellchecker/css -->
+           <dir name="img">
+            <file name="wline.gif" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/spellchecker/img -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/spellchecker -->
+          <dir name="style">
+           <dir name="css">
+            <file name="props.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/style/css -->
+           <dir name="js">
+            <file name="props.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/style/js -->
+           <dir name="langs">
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/style/langs -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="props.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/style -->
+          <dir name="swat">
+           <dir name="css">
+            <file name="swat.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/swat/css -->
+           <dir name="langs">
+            <file name="en.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/swat/langs -->
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/swat -->
+          <dir name="tabfocus">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/tabfocus -->
+          <dir name="table">
+           <dir name="css">
+            <file name="cell.css" role="data" />
+            <file name="row.css" role="data" />
+            <file name="table.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/table/css -->
+           <dir name="js">
+            <file name="cell.js" role="data" />
+            <file name="merge_cells.js" role="data" />
+            <file name="row.js" role="data" />
+            <file name="table.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/table/js -->
+           <dir name="langs">
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/table/langs -->
+           <file name="cell.htm" role="data" />
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="merge_cells.htm" role="data" />
+           <file name="row.htm" role="data" />
+           <file name="table.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/table -->
+          <dir name="template">
+           <dir name="css">
+            <file name="template.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/template/css -->
+           <dir name="js">
+            <file name="template.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/template/js -->
+           <dir name="langs">
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/template/langs -->
+           <file name="blank.htm" role="data" />
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="template.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/template -->
+          <dir name="visualchars">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/visualchars -->
+          <dir name="wordcount">
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/wordcount -->
+          <dir name="xhtmlxtras">
+           <dir name="css">
+            <file name="attributes.css" role="data" />
+            <file name="popup.css" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/xhtmlxtras/css -->
+           <dir name="js">
+            <file name="abbr.js" role="data" />
+            <file name="acronym.js" role="data" />
+            <file name="attributes.js" role="data" />
+            <file name="cite.js" role="data" />
+            <file name="del.js" role="data" />
+            <file name="element_common.js" role="data" />
+            <file name="ins.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/xhtmlxtras/js -->
+           <dir name="langs">
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/xhtmlxtras/langs -->
+           <file name="abbr.htm" role="data" />
+           <file name="acronym.htm" role="data" />
+           <file name="attributes.htm" role="data" />
+           <file name="cite.htm" role="data" />
+           <file name="del.htm" role="data" />
+           <file name="editor_plugin.js" role="data" />
+           <file name="editor_plugin_src.js" role="data" />
+           <file name="ins.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins/xhtmlxtras -->
+         </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/plugins -->
+         <dir name="themes">
+          <dir name="advanced">
+           <dir name="img">
+            <file name="colorpicker.jpg" role="data" />
+            <file name="flash.gif" role="data" />
+            <file name="icons.gif" role="data" />
+            <file name="iframe.gif" role="data" />
+            <file name="pagebreak.gif" role="data" />
+            <file name="quicktime.gif" role="data" />
+            <file name="realmedia.gif" role="data" />
+            <file name="shockwave.gif" role="data" />
+            <file name="trans.gif" role="data" />
+            <file name="video.gif" role="data" />
+            <file name="windowsmedia.gif" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/advanced/img -->
+           <dir name="js">
+            <file name="about.js" role="data" />
+            <file name="anchor.js" role="data" />
+            <file name="charmap.js" role="data" />
+            <file name="color_picker.js" role="data" />
+            <file name="image.js" role="data" />
+            <file name="link.js" role="data" />
+            <file name="source_editor.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/advanced/js -->
+           <dir name="langs">
+            <file name="en.js" role="data" />
+            <file name="en_dlg.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/advanced/langs -->
+           <dir name="skins">
+            <dir name="default">
+             <dir name="img">
+              <file name="buttons.png" role="data" />
+              <file name="items.gif" role="data" />
+              <file name="menu_arrow.gif" role="data" />
+              <file name="menu_check.gif" role="data" />
+              <file name="progress.gif" role="data" />
+              <file name="tabs.gif" role="data" />
+             </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/advanced/skins/default/img -->
+             <file name="content.css" role="data" />
+             <file name="dialog.css" role="data" />
+             <file name="ui.css" role="data" />
+            </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/advanced/skins/default -->
+            <dir name="highcontrast">
+             <file name="content.css" role="data" />
+             <file name="dialog.css" role="data" />
+             <file name="ui.css" role="data" />
+            </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/advanced/skins/highcontrast -->
+            <dir name="o2k7">
+             <dir name="img">
+              <file name="button_bg.png" role="data" />
+              <file name="button_bg_black.png" role="data" />
+              <file name="button_bg_silver.png" role="data" />
+             </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/advanced/skins/o2k7/img -->
+             <file name="content.css" role="data" />
+             <file name="dialog.css" role="data" />
+             <file name="ui.css" role="data" />
+             <file name="ui_black.css" role="data" />
+             <file name="ui_silver.css" role="data" />
+            </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/advanced/skins/o2k7 -->
+            <dir name="swat">
+             <dir name="img">
+              <file name="buttons.png" role="data" />
+              <file name="items.gif" role="data" />
+              <file name="menu_arrow.gif" role="data" />
+              <file name="menu_check.gif" role="data" />
+              <file name="progress.gif" role="data" />
+              <file name="tabs.gif" role="data" />
+             </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/advanced/skins/swat/img -->
+             <file name="content.css" role="data" />
+             <file name="dialog.css" role="data" />
+             <file name="ui.css" role="data" />
+            </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/advanced/skins/swat -->
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/advanced/skins -->
+           <file name="about.htm" role="data" />
+           <file name="anchor.htm" role="data" />
+           <file name="charmap.htm" role="data" />
+           <file name="color_picker.htm" role="data" />
+           <file name="editor_template.js" role="data" />
+           <file name="editor_template_src.js" role="data" />
+           <file name="image.htm" role="data" />
+           <file name="link.htm" role="data" />
+           <file name="shortcuts.htm" role="data" />
+           <file name="source_editor.htm" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/advanced -->
+          <dir name="simple">
+           <dir name="img">
+            <file name="icons.gif" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/simple/img -->
+           <dir name="langs">
+            <file name="en.js" role="data" />
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/simple/langs -->
+           <dir name="skins">
+            <dir name="default">
+             <file name="content.css" role="data" />
+             <file name="ui.css" role="data" />
+            </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/simple/skins/default -->
+            <dir name="o2k7">
+             <dir name="img">
+              <file name="button_bg.png" role="data" />
+             </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/simple/skins/o2k7/img -->
+             <file name="content.css" role="data" />
+             <file name="ui.css" role="data" />
+            </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/simple/skins/o2k7 -->
+           </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/simple/skins -->
+           <file name="editor_template.js" role="data" />
+           <file name="editor_template_src.js" role="data" />
+          </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes/simple -->
+         </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/themes -->
+         <dir name="utils">
+          <file name="editable_selects.js" role="data" />
+          <file name="form_utils.js" role="data" />
+          <file name="mctabs.js" role="data" />
+          <file name="validate.js" role="data" />
+         </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce/utils -->
+         <file name="license.txt" role="data" />
+         <file name="tiny_mce.js" role="data" />
+         <file name="tiny_mce_popup.js" role="data" />
+         <file name="tiny_mce_src.js" role="data" />
+        </dir> <!-- /demo/www/packages/swat/javascript/tiny_mce -->
+        <file name="swat-abstract-overlay.js" role="data" />
+        <file name="swat-accordion.js" role="data" />
+        <file name="swat-actions.js" role="data" />
+        <file name="swat-button.js" role="data" />
+        <file name="swat-calendar.js" role="data" />
+        <file name="swat-cascade.js" role="data" />
+        <file name="swat-change-order.js" role="data" />
+        <file name="swat-check-all.js" role="data" />
+        <file name="swat-checkbox-cell-renderer.js" role="data" />
+        <file name="swat-checkbox-entry-list.js" role="data" />
+        <file name="swat-checkbox-list.js" role="data" />
+        <file name="swat-color-entry.js" role="data" />
+        <file name="swat-date-entry.js" role="data" />
+        <file name="swat-disclosure.js" role="data" />
+        <file name="swat-expandable-checkbox-tree.js" role="data" />
+        <file name="swat-fieldset.js" role="data" />
+        <file name="swat-form.js" role="data" />
+        <file name="swat-image-cropper.js" role="data" />
+        <file name="swat-image-preview-display.js" role="data" />
+        <file name="swat-message-display.js" role="data" />
+        <file name="swat-progress-bar.js" role="data" />
+        <file name="swat-radio-button-cell-renderer.js" role="data" />
+        <file name="swat-radio-note-book.js" role="data" />
+        <file name="swat-rating.js" role="data" />
+        <file name="swat-search-entry.js" role="data" />
+        <file name="swat-simple-color-entry.js" role="data" />
+        <file name="swat-table-view-input-row.js" role="data" />
+        <file name="swat-table-view.js" role="data" />
+        <file name="swat-textarea.js" role="data" />
+        <file name="swat-tile-view.js" role="data" />
+        <file name="swat-time-entry.js" role="data" />
+        <file name="swat-view.js" role="data" />
+        <file name="swat-z-index-manager.js" role="data" />
+       </dir> <!-- /demo/www/packages/swat/javascript -->
+       <dir name="styles">
+        <file name="swat-accordion.css" role="data" />
+        <file name="swat-actions.css" role="data" />
+        <file name="swat-calendar.css" role="data" />
+        <file name="swat-change-order.css" role="data" />
+        <file name="swat-checkbox-entry-list.css" role="data" />
+        <file name="swat-color-entry.css" role="data" />
+        <file name="swat-details-view.css" role="data" />
+        <file name="swat-disclosure.css" role="data" />
+        <file name="swat-frame-disclosure.css" role="data" />
+        <file name="swat-image-preview-display.css" role="data" />
+        <file name="swat-menu.css" role="data" />
+        <file name="swat-message-display.css" role="data" />
+        <file name="swat-message.css" role="data" />
+        <file name="swat-money-cell-renderer.css" role="data" />
+        <file name="swat-note-book.css" role="data" />
+        <file name="swat-null-text-cell-renderer.css" role="data" />
+        <file name="swat-pagination.css" role="data" />
+        <file name="swat-progress-bar.css" role="data" />
+        <file name="swat-radio-list.css" role="data" />
+        <file name="swat-radio-note-book.css" role="data" />
+        <file name="swat-radio-table.css" role="data" />
+        <file name="swat-rating.css" role="data" />
+        <file name="swat-search-entry.css" role="data" />
+        <file name="swat-table-view.css" role="data" />
+        <file name="swat-textarea.css" role="data" />
+        <file name="swat-tile-view.css" role="data" />
+        <file name="swat-title-link-cell-renderer.css" role="data" />
+        <file name="swat-tool-link.css" role="data" />
+        <file name="swat-toolbar.css" role="data" />
+        <file name="swat.css" role="data" />
+       </dir> <!-- /demo/www/packages/swat/styles -->
+       <file name="swatml1.dtd" role="data" />
+      </dir> <!-- /demo/www/packages/swat -->
+     </dir> <!-- /demo/www/packages -->
+     <dir name="styles">
+      <file name="demo.css" role="data" />
+     </dir> <!-- /demo/www/styles -->
+     <file name="index.php" role="data" />
+    </dir> <!-- /demo/www -->
+    <file name="autoloader-rules.conf" role="data" />
+   </dir> <!-- /demo -->
+   <dir name="dependencies">
+    <file name="swat-yui.yaml" role="data" />
+    <file name="swat.yaml" role="data" />
+   </dir> <!-- /dependencies -->
+   <dir name="locale">
+    <dir name="en_CA">
+     <dir name="LC_MESSAGES">
+      <file name="swat.mo" role="data" />
+     </dir> <!-- /locale/en_CA/LC_MESSAGES -->
+    </dir> <!-- /locale/en_CA -->
+    <dir name="en_GB">
+     <dir name="LC_MESSAGES">
+      <file name="swat.mo" role="data" />
+     </dir> <!-- /locale/en_GB/LC_MESSAGES -->
+    </dir> <!-- /locale/en_GB -->
+    <dir name="en_US">
+     <dir name="LC_MESSAGES">
+      <file name="swat.mo" role="data" />
+     </dir> <!-- /locale/en_US/LC_MESSAGES -->
+    </dir> <!-- /locale/en_US -->
+   </dir> <!-- /locale -->
+   <dir name="po">
+    <file name="de_DE.po" role="data" />
+    <file name="en_CA.po" role="data" />
+    <file name="en_GB.po" role="data" />
+    <file name="en_US.po" role="data" />
+    <file name="Makefile" role="data" />
+    <file name="potfiles.in" role="data" />
+    <file name="preprocess.php" role="data" />
+   </dir> <!-- /po -->
+   <dir name="resources">
+    <dir name="assets">
+     <file name="palette.png" role="data" />
+     <file name="swat-logo.svg" role="data" />
+     <file name="Swat diagram.svg" role="data" />
+    </dir> <!-- /resources/assets -->
+    <dir name="icons">
+     <file name="admin-document-with-contents.png" role="data" />
+     <file name="admin-edit.png" role="data" />
+     <file name="admin-person.png" role="data" />
+     <file name="admin-products.png" role="data" />
+     <file name="b_details.png" role="data" />
+     <file name="b_details_folder.png" role="data" />
+     <file name="catalog.png" role="data" />
+     <file name="close-left-menu.xcf" role="data" />
+     <file name="close.svg" role="data" />
+     <file name="customer.png" role="data" />
+     <file name="dialog-information-16.xcf.bz2" role="data" />
+     <file name="dialog-information-22.xcf.bz2" role="data" />
+     <file name="dialog-information.svg" role="data" />
+     <file name="document-open.xcf.bz2" role="data" />
+     <file name="generic-object.png" role="data" />
+     <file name="generic-object.xcf" role="data" />
+     <file name="internet-web-browser.xcf.bz2" role="data" />
+     <file name="item.svg" role="data" />
+     <file name="path3835.png" role="data" />
+     <file name="product-icon.xcf" role="data" />
+     <file name="product-icons.png" role="data" />
+     <file name="shade-icons-proposal.xcf" role="data" />
+     <file name="shopping-cart.svg" role="data" />
+     <file name="swat-folder-16.xcf.bz2" role="data" />
+     <file name="swat-folder.xcf.bz2" role="data" />
+     <file name="swat-rating-stars.svgz" role="data" />
+     <file name="swat-store-item-links.xcf" role="data" />
+     <file name="swat-tool-link-cancel.xcf.gz" role="data" />
+     <file name="swat-tool-link-edit.png" role="data" />
+     <file name="swat-tool-link-icons.xcf" role="data" />
+     <file name="system-users.png" role="data" />
+     <file name="test.png" role="data" />
+     <file name="x.png" role="data" />
+    </dir> <!-- /resources/icons -->
+    <dir name="SwatEditor">
+     <file name="bullet-list.svg" role="data" />
+     <file name="edit-clear.png" role="data" />
+     <file name="edit-clear.svg" role="data" />
+     <file name="edit-redo.png" role="data" />
+     <file name="edit-undo.png" role="data" />
+     <file name="format-indent-less.png" role="data" />
+     <file name="format-indent-more.png" role="data" />
+     <file name="format-list.png" role="data" />
+     <file name="format-menu.png" role="data" />
+     <file name="format-numbered-list.png" role="data" />
+     <file name="format-text-bold.png" role="data" />
+     <file name="format-text-italic.png" role="data" />
+     <file name="frame.png" role="data" />
+     <file name="g6504.png" role="data" />
+     <file name="insert-image.png" role="data" />
+     <file name="insert-image.svg" role="data" />
+     <file name="insert-link.png" role="data" />
+     <file name="insert-text.png" role="data" />
+     <file name="swat-editor-2.svg" role="data" />
+     <file name="swat-editor-3.svg" role="data" />
+     <file name="swat-editor-4.svg" role="data" />
+     <file name="swat-editor.svg" role="data" />
+     <file name="swat-frame-header.png" role="data" />
+     <file name="tinymce-screenshot.psd" role="data" />
+     <file name="use3870.png" role="data" />
+     <file name="view-sort-ascending.svg" role="data" />
+    </dir> <!-- /resources/SwatEditor -->
+   </dir> <!-- /resources -->
+   <dir name="Swat">
+    <dir name="exceptions">
+     <file name="SwatClassNotFoundException.php" role="php" />
+     <file name="SwatCrossSiteRequestForgeryException.php" role="php" />
+     <file name="SwatDoesNotImplementException.php" role="php" />
+     <file name="SwatDuplicateIdException.php" role="php" />
+     <file name="SwatException.php" role="php" />
+     <file name="SwatFileNotFoundException.php" role="php" />
+     <file name="SwatIntegerOverflowException.php" role="php" />
+     <file name="SwatInvalidCallbackException.php" role="php" />
+     <file name="SwatInvalidCharacterEncodingException.php" role="php" />
+     <file name="SwatInvalidClassException.php" role="php" />
+     <file name="SwatInvalidConstantExpressionException.php" role="php" />
+     <file name="SwatInvalidPropertyException.php" role="php" />
+     <file name="SwatInvalidPropertyTypeException.php" role="php" />
+     <file name="SwatInvalidSerializedDataException.php" role="php" />
+     <file name="SwatInvalidSwatMLException.php" role="php" />
+     <file name="SwatInvalidTypeException.php" role="php" />
+     <file name="SwatObjectNotFoundException.php" role="php" />
+     <file name="SwatUndefinedConstantException.php" role="php" />
+     <file name="SwatUndefinedMessageTypeException.php" role="php" />
+     <file name="SwatUndefinedStockTypeException.php" role="php" />
+     <file name="SwatWidgetNotFoundException.php" role="php" />
+    </dir> <!-- /Swat/exceptions -->
+    <file name="Swat.php" role="php">
+     <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+    </file>
+    <file name="SwatAbstractMenu.php" role="php" />
+    <file name="SwatAbstractOverlay.php" role="php" />
+    <file name="SwatAccordion.php" role="php" />
+    <file name="SwatActionItem.php" role="php" />
+    <file name="SwatActionItemDivider.php" role="php" />
+    <file name="SwatActions.php" role="php" />
+    <file name="SwatAutoloader.php" role="php" />
+    <file name="SwatAutoloaderRule.php" role="php" />
+    <file name="SwatBooleanCellRenderer.php" role="php" />
+    <file name="SwatButton.php" role="php" />
+    <file name="SwatByteCellRenderer.php" role="php" />
+    <file name="SwatCalendar.php" role="php" />
+    <file name="SwatCascadeFlydown.php" role="php" />
+    <file name="SwatCellRenderer.php" role="php" />
+    <file name="SwatCellRendererContainer.php" role="php" />
+    <file name="SwatCellRendererMapping.php" role="php" />
+    <file name="SwatCellRendererSet.php" role="php" />
+    <file name="SwatChangeOrder.php" role="php" />
+    <file name="SwatCheckAll.php" role="php" />
+    <file name="SwatCheckbox.php" role="php" />
+    <file name="SwatCheckboxCellRenderer.php" role="php" />
+    <file name="SwatCheckboxEntryList.php" role="php" />
+    <file name="SwatCheckboxList.php" role="php" />
+    <file name="SwatCheckboxTree.php" role="php" />
+    <file name="SwatColorEntry.php" role="php" />
+    <file name="SwatCommentHtmlHeadEntry.php" role="php" />
+    <file name="SwatConfirmationButton.php" role="php" />
+    <file name="SwatConfirmEmailEntry.php" role="php" />
+    <file name="SwatConfirmPasswordEntry.php" role="php" />
+    <file name="SwatContainer.php" role="php" />
+    <file name="SwatContentBlock.php" role="php" />
+    <file name="SwatControl.php" role="php" />
+    <file name="SwatDataTreeNode.php" role="php" />
+    <file name="SwatDate.php" role="php" />
+    <file name="SwatDateCellRenderer.php" role="php" />
+    <file name="SwatDateEntry.php" role="php" />
+    <file name="SwatDetailsStore.php" role="php" />
+    <file name="SwatDetailsView.php" role="php" />
+    <file name="SwatDetailsViewField.php" role="php" />
+    <file name="SwatDetailsViewVerticalField.php" role="php" />
+    <file name="SwatDisclosure.php" role="php" />
+    <file name="SwatDisplayableContainer.php" role="php" />
+    <file name="SwatEmailEntry.php" role="php" />
+    <file name="SwatEntry.php" role="php" />
+    <file name="SwatError.php" role="php" />
+    <file name="SwatErrorDisplayer.php" role="php" />
+    <file name="SwatErrorLogger.php" role="php" />
+    <file name="SwatExceptionDisplayer.php" role="php" />
+    <file name="SwatExceptionLogger.php" role="php" />
+    <file name="SwatExpandableCheckboxTree.php" role="php" />
+    <file name="SwatFieldset.php" role="php" />
+    <file name="SwatFileEntry.php" role="php" />
+    <file name="SwatFloatEntry.php" role="php" />
+    <file name="SwatFlydown.php" role="php" />
+    <file name="SwatFlydownBlankOption.php" role="php" />
+    <file name="SwatFlydownDivider.php" role="php" />
+    <file name="SwatFooterFormField.php" role="php" />
+    <file name="SwatForm.php" role="php" />
+    <file name="SwatFormField.php" role="php" />
+    <file name="SwatFrame.php" role="php" />
+    <file name="SwatFrameDisclosure.php" role="php" />
+    <file name="SwatGroupedFlydown.php" role="php" />
+    <file name="SwatGroupedMenu.php" role="php" />
+    <file name="SwatGroupingFormField.php" role="php" />
+    <file name="SwatHeaderFormField.php" role="php" />
+    <file name="SwatHtmlHeadEntry.php" role="php" />
+    <file name="SwatHtmlHeadEntrySet.php" role="php" />
+    <file name="SwatHtmlHeadEntrySetDisplayer.php" role="php" />
+    <file name="SwatHtmlTag.php" role="php" />
+    <file name="SwatImageButton.php" role="php" />
+    <file name="SwatImageCellRenderer.php" role="php" />
+    <file name="SwatImageCropper.php" role="php" />
+    <file name="SwatImageDisplay.php" role="php" />
+    <file name="SwatImageLinkCellRenderer.php" role="php" />
+    <file name="SwatImagePreviewDisplay.php" role="php" />
+    <file name="SwatInlineJavaScriptHtmlHeadEntry.php" role="php" />
+    <file name="SwatInputCell.php" role="php" />
+    <file name="SwatInputControl.php" role="php" />
+    <file name="SwatIntegerEntry.php" role="php" />
+    <file name="SwatJavaScriptHtmlHeadEntry.php" role="php" />
+    <file name="SwatLessStyleSheetHtmlHeadEntry.php" role="php" />
+    <file name="SwatLinkCellRenderer.php" role="php" />
+    <file name="SwatLinkHtmlHeadEntry.php" role="php" />
+    <file name="SwatListEntry.php" role="php" />
+    <file name="SwatMenu.php" role="php" />
+    <file name="SwatMenuBar.php" role="php" />
+    <file name="SwatMenuGroup.php" role="php" />
+    <file name="SwatMenuItem.php" role="php" />
+    <file name="SwatMessage.php" role="php" />
+    <file name="SwatMessageDisplay.php" role="php" />
+    <file name="SwatMoneyCellRenderer.php" role="php" />
+    <file name="SwatMoneyEntry.php" role="php" />
+    <file name="SwatNavBar.php" role="php" />
+    <file name="SwatNavBarEntry.php" role="php" />
+    <file name="SwatNoteBook.php" role="php" />
+    <file name="SwatNoteBookChild.php" role="php" />
+    <file name="SwatNoteBookPage.php" role="php" />
+    <file name="SwatNullTextCellRenderer.php" role="php" />
+    <file name="SwatNumber.php" role="php" />
+    <file name="SwatNumericCellRenderer.php" role="php" />
+    <file name="SwatNumericEntry.php" role="php" />
+    <file name="SwatObject.php" role="php" />
+    <file name="SwatOption.php" role="php" />
+    <file name="SwatOptionControl.php" role="php" />
+    <file name="SwatPagination.php" role="php" />
+    <file name="SwatPasswordEntry.php" role="php" />
+    <file name="SwatPercentageCellRenderer.php" role="php" />
+    <file name="SwatPercentageEntry.php" role="php" />
+    <file name="SwatPhoneEntry.php" role="php" />
+    <file name="SwatProgressBar.php" role="php" />
+    <file name="SwatRadioButtonCellRenderer.php" role="php" />
+    <file name="SwatRadioList.php" role="php" />
+    <file name="SwatRadioNoteBook.php" role="php" />
+    <file name="SwatRadioTable.php" role="php" />
+    <file name="SwatRating.php" role="php" />
+    <file name="SwatRatingCellRenderer.php" role="php" />
+    <file name="SwatReCaptcha.php" role="php" />
+    <file name="SwatRemoveInputCell.php" role="php" />
+    <file name="SwatReplicable.php" role="php" />
+    <file name="SwatReplicableContainer.php" role="php" />
+    <file name="SwatReplicableDisclosure.php" role="php" />
+    <file name="SwatReplicableFieldset.php" role="php" />
+    <file name="SwatReplicableFormField.php" role="php" />
+    <file name="SwatReplicableFrame.php" role="php" />
+    <file name="SwatReplicableNoteBookChild.php" role="php" />
+    <file name="SwatReplicableNoteBookPage.php" role="php" />
+    <file name="SwatReplicatorFieldset.php" role="php" />
+    <file name="SwatReplicatorFormField.php" role="php" />
+    <file name="SwatSearchEntry.php" role="php" />
+    <file name="SwatSelectList.php" role="php" />
+    <file name="SwatSimpleColorEntry.php" role="php" />
+    <file name="SwatState.php" role="php" />
+    <file name="SwatString.php" role="php" />
+    <file name="SwatStyleSheetHtmlHeadEntry.php" role="php" />
+    <file name="SwatTableModel.php" role="php" />
+    <file name="SwatTableStore.php" role="php" />
+    <file name="SwatTableView.php" role="php" />
+    <file name="SwatTableViewCheckAllRow.php" role="php" />
+    <file name="SwatTableViewCheckboxColumn.php" role="php" />
+    <file name="SwatTableViewColumn.php" role="php" />
+    <file name="SwatTableViewGroup.php" role="php" />
+    <file name="SwatTableViewInputRow.php" role="php" />
+    <file name="SwatTableViewOrderableColumn.php" role="php" />
+    <file name="SwatTableViewRow.php" role="php" />
+    <file name="SwatTableViewSpanningColumn.php" role="php" />
+    <file name="SwatTableViewWidgetRow.php" role="php" />
+    <file name="SwatTextarea.php" role="php" />
+    <file name="SwatTextareaEditor.php" role="php" />
+    <file name="SwatTextCellRenderer.php" role="php" />
+    <file name="SwatTile.php" role="php" />
+    <file name="SwatTileView.php" role="php" />
+    <file name="SwatTileViewGroup.php" role="php" />
+    <file name="SwatTimeEntry.php" role="php" />
+    <file name="SwatTimeZoneEntry.php" role="php" />
+    <file name="SwatTitleable.php" role="php" />
+    <file name="SwatToolbar.php" role="php" />
+    <file name="SwatToolLink.php" role="php" />
+    <file name="SwatTreeFlydown.php" role="php" />
+    <file name="SwatTreeFlydownNode.php" role="php" />
+    <file name="SwatTreeNode.php" role="php" />
+    <file name="SwatUI.php" role="php">
+     <tasks:replace from="@DATA-DIR@" to="data_dir" type="pear-config" />
+    </file>
+    <file name="SwatUIObject.php" role="php" />
+    <file name="SwatUIParent.php" role="php" />
+    <file name="SwatUriEntry.php" role="php" />
+    <file name="SwatView.php" role="php" />
+    <file name="SwatViewSelection.php" role="php" />
+    <file name="SwatViewSelector.php" role="php" />
+    <file name="SwatWidget.php" role="php" />
+    <file name="SwatWidgetCellRenderer.php" role="php" />
+    <file name="SwatXHTMLTextarea.php" role="php" />
+    <file name="SwatYesNoFlydown.php" role="php" />
+    <file name="SwatYesNoRadioList.php" role="php" />
+    <file name="SwatYUI.php" role="php" />
+    <file name="SwatYUIComponent.php" role="php" />
+   </dir> <!-- /Swat -->
+   <dir name="SwatDB">
+    <dir name="exceptions">
+     <file name="SwatDBException.php" role="php" />
+     <file name="SwatDBMarshallException.php" role="php" />
+     <file name="SwatDBNoDatabaseException.php" role="php" />
+    </dir> <!-- /SwatDB/exceptions -->
+    <file name="SwatDB.php" role="php" />
+    <file name="SwatDBCacheNsFlushable.php" role="php" />
+    <file name="SwatDBClassMap.php" role="php" />
+    <file name="SwatDBDataObject.php" role="php" />
+    <file name="SwatDBDefaultRecordsetWrapper.php" role="php" />
+    <file name="SwatDBField.php" role="php" />
+    <file name="SwatDBFlushable.php" role="php" />
+    <file name="SwatDBMarshallable.php" role="php" />
+    <file name="SwatDBRange.php" role="php" />
+    <file name="SwatDBReadaheadIterator.php" role="php" />
+    <file name="SwatDBRecordable.php" role="php" />
+    <file name="SwatDBRecordsetWrapper.php" role="php" />
+    <file name="SwatDBTransaction.php" role="php" />
+   </dir> <!-- /SwatDB -->
+   <dir name="SwatI18N">
+    <file name="SwatI18NCurrencyFormat.php" role="php" />
+    <file name="SwatI18NLocale.php" role="php" />
+    <file name="SwatI18NNumberFormat.php" role="php" />
+   </dir> <!-- /SwatI18N -->
+   <dir name="system">
+    <file name="swatml.rng" role="data" />
+   </dir> <!-- /system -->
+   <dir name="tutorials">
+    <dir name="Swat">
+     <file name="Swat.pkg" role="data" />
+    </dir> <!-- /tutorials/Swat -->
+   </dir> <!-- /tutorials -->
+   <dir name="www">
+    <dir name="images">
+     <dir name="tango">
+      <dir name="16">
+       <file name="dialog-error-256.png" role="data" />
+       <file name="dialog-error.png" role="data" />
+       <file name="dialog-information-256.png" role="data" />
+       <file name="dialog-information.png" role="data" />
+       <file name="dialog-question.png" role="data" />
+       <file name="dialog-warning-256.png" role="data" />
+       <file name="dialog-warning.png" role="data" />
+      </dir> <!-- /www/images/tango/16 -->
+      <dir name="22">
+       <file name="dialog-error-256.png" role="data" />
+       <file name="dialog-error.png" role="data" />
+       <file name="dialog-information-256.png" role="data" />
+       <file name="dialog-information.png" role="data" />
+       <file name="dialog-question.png" role="data" />
+       <file name="dialog-warning-256.png" role="data" />
+       <file name="dialog-warning.png" role="data" />
+       <file name="office-calendar-256-insensitive.png" role="data" />
+       <file name="office-calendar-256.png" role="data" />
+       <file name="office-calendar.png" role="data" />
+      </dir> <!-- /www/images/tango/22 -->
+      <dir name="48">
+       <file name="dialog-error-256.png" role="data" />
+       <file name="dialog-error.png" role="data" />
+       <file name="dialog-information-256.png" role="data" />
+       <file name="dialog-information.png" role="data" />
+       <file name="dialog-question.png" role="data" />
+       <file name="dialog-warning-256.png" role="data" />
+       <file name="dialog-warning.png" role="data" />
+      </dir> <!-- /www/images/tango/48 -->
+     </dir> <!-- /www/images/tango -->
+     <dir name="textarea-editor">
+      <file name="align-center.png" role="data" />
+      <file name="align-justify.png" role="data" />
+      <file name="align-left.png" role="data" />
+      <file name="align-right.png" role="data" />
+      <file name="bold.png" role="data" />
+      <file name="hilite.png" role="data" />
+      <file name="hr.png" role="data" />
+      <file name="indent.png" role="data" />
+      <file name="italic.png" role="data" />
+      <file name="link.png" role="data" />
+      <file name="ol.png" role="data" />
+      <file name="outdent.png" role="data" />
+      <file name="quote.png" role="data" />
+      <file name="toggle-mode.png" role="data" />
+      <file name="ul.png" role="data" />
+      <file name="underline.png" role="data" />
+     </dir> <!-- /www/images/textarea-editor -->
+     <file name="calendar.png" role="data" />
+     <file name="check.png" role="data" />
+     <file name="color-entry-null.png" role="data" />
+     <file name="color-palette.png" role="data" />
+     <file name="dismiss.png" role="data" />
+     <file name="go-next-insensitive.png" role="data" />
+     <file name="go-next.png" role="data" />
+     <file name="go-previous-insensitive.png" role="data" />
+     <file name="go-previous.png" role="data" />
+     <file name="list-remove.png" role="data" />
+     <file name="swat-accordion-closed.png" role="data" />
+     <file name="swat-accordion-open.png" role="data" />
+     <file name="swat-button-throbber.gif" role="data" />
+     <file name="swat-calendar-header-background.png" role="data" />
+     <file name="swat-change-order-item-grippy.png" role="data" />
+     <file name="swat-change-order-item-selected.png" role="data" />
+     <file name="swat-disclosure-closed-1-bit.png" role="data" />
+     <file name="swat-disclosure-closed.png" role="data" />
+     <file name="swat-disclosure-open-1-bit.png" role="data" />
+     <file name="swat-disclosure-open.png" role="data" />
+     <file name="swat-form-footer.png" role="data" />
+     <file name="swat-form-header.png" role="data" />
+     <file name="swat-frame-background.png" role="data" />
+     <file name="swat-frame-header.png" role="data" />
+     <file name="swat-image-preview-display-zoom.png" role="data" />
+     <file name="swat-link-cell-renderer-background.png" role="data" />
+     <file name="swat-menu-hassubmenu.png" role="data" />
+     <file name="swat-menubar-hassubmenu.png" role="data" />
+     <file name="swat-message-cart.png" role="data" />
+     <file name="swat-notebook-tab-bottom-active.png" role="data" />
+     <file name="swat-notebook-tab-bottom.png" role="data" />
+     <file name="swat-notebook-tab-left-active.png" role="data" />
+     <file name="swat-notebook-tab-right-active.png" role="data" />
+     <file name="swat-notebook-tab-top-active.png" role="data" />
+     <file name="swat-notebook-tab-top.png" role="data" />
+     <file name="swat-progressbar-horizontal-background.png" role="data" />
+     <file name="swat-progressbar-horizontal-full-background.png" role="data" />
+     <file name="swat-progressbar-vertical-background.png" role="data" />
+     <file name="swat-progressbar-vertical-full-background.png" role="data" />
+     <file name="swat-rating-stars-256.png" role="data" />
+     <file name="swat-rating-stars.png" role="data" />
+     <file name="swat-table-view-cell-background.png" role="data" />
+     <file name="swat-table-view-cell-error-background.png" role="data" />
+     <file name="swat-table-view-cell-highlight-background.png" role="data" />
+     <file name="swat-table-view-column-asc.png" role="data" />
+     <file name="swat-table-view-column-desc.png" role="data" />
+     <file name="swat-table-view-orderable-column-256.png" role="data" />
+     <file name="swat-table-view-orderable-column.png" role="data" />
+     <file name="swat-textarea-editor-button.png" role="data" />
+     <file name="swat-textarea-editor-source-edit.gif" role="data" />
+     <file name="swat-textarea-editor-toolbar.png" role="data" />
+     <file name="swat-textarea-resize-handle.png" role="data" />
+     <file name="swat-tool-link-cancel.png" role="data" />
+     <file name="swat-tool-link-create-insensitive.png" role="data" />
+     <file name="swat-tool-link-create.png" role="data" />
+     <file name="swat-tool-link-delete.png" role="data" />
+     <file name="swat-tool-link-edit.png" role="data" />
+     <file name="swat-tool-link-email.png" role="data" />
+     <file name="swat-tool-link-icons.png" role="data" />
+     <file name="swat-tool-link-print.png" role="data" />
+     <file name="swat-toolbar-background.png" role="data" />
+    </dir> <!-- /www/images -->
+    <dir name="javascript">
+     <dir name="tiny_mce">
+      <dir name="langs">
+       <file name="en.js" role="data" />
+      </dir> <!-- /www/javascript/tiny_mce/langs -->
+      <dir name="plugins">
+       <dir name="advhr">
+        <dir name="css">
+         <file name="advhr.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/advhr/css -->
+        <dir name="js">
+         <file name="rule.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/advhr/js -->
+        <dir name="langs">
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/advhr/langs -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="rule.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/advhr -->
+       <dir name="advimage">
+        <dir name="css">
+         <file name="advimage.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/advimage/css -->
+        <dir name="img">
+         <file name="sample.gif" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/advimage/img -->
+        <dir name="js">
+         <file name="image.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/advimage/js -->
+        <dir name="langs">
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/advimage/langs -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="image.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/advimage -->
+       <dir name="advimagescale">
+        <file name="editor_plugin.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/advimagescale -->
+       <dir name="advlink">
+        <dir name="css">
+         <file name="advlink.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/advlink/css -->
+        <dir name="js">
+         <file name="advlink.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/advlink/js -->
+        <dir name="langs">
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/advlink/langs -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="link.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/advlink -->
+       <dir name="advlist">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/advlist -->
+       <dir name="autolink">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/autolink -->
+       <dir name="autoresize">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/autoresize -->
+       <dir name="autosave">
+        <dir name="langs">
+         <file name="en.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/autosave/langs -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/autosave -->
+       <dir name="bbcode">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/bbcode -->
+       <dir name="contextmenu">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/contextmenu -->
+       <dir name="directionality">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/directionality -->
+       <dir name="emotions">
+        <dir name="img">
+         <file name="smiley-cool.gif" role="data" />
+         <file name="smiley-cry.gif" role="data" />
+         <file name="smiley-embarassed.gif" role="data" />
+         <file name="smiley-foot-in-mouth.gif" role="data" />
+         <file name="smiley-frown.gif" role="data" />
+         <file name="smiley-innocent.gif" role="data" />
+         <file name="smiley-kiss.gif" role="data" />
+         <file name="smiley-laughing.gif" role="data" />
+         <file name="smiley-money-mouth.gif" role="data" />
+         <file name="smiley-sealed.gif" role="data" />
+         <file name="smiley-smile.gif" role="data" />
+         <file name="smiley-surprised.gif" role="data" />
+         <file name="smiley-tongue-out.gif" role="data" />
+         <file name="smiley-undecided.gif" role="data" />
+         <file name="smiley-wink.gif" role="data" />
+         <file name="smiley-yell.gif" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/emotions/img -->
+        <dir name="js">
+         <file name="emotions.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/emotions/js -->
+        <dir name="langs">
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/emotions/langs -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="emotions.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/emotions -->
+       <dir name="example">
+        <dir name="img">
+         <file name="example.gif" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/example/img -->
+        <dir name="js">
+         <file name="dialog.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/example/js -->
+        <dir name="langs">
+         <file name="en.js" role="data" />
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/example/langs -->
+        <file name="dialog.htm" role="data" />
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/example -->
+       <dir name="example_dependency">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/example_dependency -->
+       <dir name="fullpage">
+        <dir name="css">
+         <file name="fullpage.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/fullpage/css -->
+        <dir name="js">
+         <file name="fullpage.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/fullpage/js -->
+        <dir name="langs">
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/fullpage/langs -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="fullpage.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/fullpage -->
+       <dir name="fullscreen">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="fullscreen.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/fullscreen -->
+       <dir name="iespell">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/iespell -->
+       <dir name="inlinepopups">
+        <dir name="skins">
+         <dir name="clearlooks2">
+          <dir name="img">
+           <file name="alert.gif" role="data" />
+           <file name="button.gif" role="data" />
+           <file name="buttons.gif" role="data" />
+           <file name="confirm.gif" role="data" />
+           <file name="corners.gif" role="data" />
+           <file name="horizontal.gif" role="data" />
+           <file name="vertical.gif" role="data" />
+          </dir> <!-- /www/javascript/tiny_mce/plugins/inlinepopups/skins/clearlooks2/img -->
+          <file name="window.css" role="data" />
+         </dir> <!-- /www/javascript/tiny_mce/plugins/inlinepopups/skins/clearlooks2 -->
+        </dir> <!-- /www/javascript/tiny_mce/plugins/inlinepopups/skins -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="template.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/inlinepopups -->
+       <dir name="insertdatetime">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/insertdatetime -->
+       <dir name="layer">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/layer -->
+       <dir name="legacyoutput">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/legacyoutput -->
+       <dir name="lists">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/lists -->
+       <dir name="media">
+        <dir name="css">
+         <file name="content.css" role="data" />
+         <file name="media.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/media/css -->
+        <dir name="img">
+         <file name="flash.gif" role="data" />
+         <file name="flv_player.swf" role="data" />
+         <file name="quicktime.gif" role="data" />
+         <file name="realmedia.gif" role="data" />
+         <file name="shockwave.gif" role="data" />
+         <file name="trans.gif" role="data" />
+         <file name="windowsmedia.gif" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/media/img -->
+        <dir name="js">
+         <file name="embed.js" role="data" />
+         <file name="media.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/media/js -->
+        <dir name="langs">
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/media/langs -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="media.htm" role="data" />
+        <file name="moxieplayer.swf" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/media -->
+       <dir name="nonbreaking">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/nonbreaking -->
+       <dir name="noneditable">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/noneditable -->
+       <dir name="pagebreak">
+        <dir name="css">
+         <file name="content.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/pagebreak/css -->
+        <dir name="img">
+         <file name="pagebreak.gif" role="data" />
+         <file name="trans.gif" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/pagebreak/img -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/pagebreak -->
+       <dir name="paste">
+        <dir name="css">
+         <file name="blank.css" role="data" />
+         <file name="pasteword.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/paste/css -->
+        <dir name="js">
+         <file name="pastetext.js" role="data" />
+         <file name="pasteword.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/paste/js -->
+        <dir name="langs">
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/paste/langs -->
+        <file name="blank.htm" role="data" />
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="pastetext.htm" role="data" />
+        <file name="pasteword.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/paste -->
+       <dir name="preview">
+        <dir name="jscripts">
+         <file name="embed.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/preview/jscripts -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="example.html" role="data" />
+        <file name="preview.html" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/preview -->
+       <dir name="print">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/print -->
+       <dir name="safari">
+        <file name="blank.htm" role="data" />
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/safari -->
+       <dir name="save">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/save -->
+       <dir name="searchreplace">
+        <dir name="css">
+         <file name="searchreplace.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/searchreplace/css -->
+        <dir name="js">
+         <file name="searchreplace.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/searchreplace/js -->
+        <dir name="langs">
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/searchreplace/langs -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="searchreplace.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/searchreplace -->
+       <dir name="spellchecker">
+        <dir name="css">
+         <file name="content.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/spellchecker/css -->
+        <dir name="img">
+         <file name="wline.gif" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/spellchecker/img -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/spellchecker -->
+       <dir name="style">
+        <dir name="css">
+         <file name="props.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/style/css -->
+        <dir name="js">
+         <file name="props.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/style/js -->
+        <dir name="langs">
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/style/langs -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="props.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/style -->
+       <dir name="swat">
+        <dir name="css">
+         <file name="swat.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/swat/css -->
+        <dir name="langs">
+         <file name="en.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/swat/langs -->
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/swat -->
+       <dir name="tabfocus">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/tabfocus -->
+       <dir name="table">
+        <dir name="css">
+         <file name="cell.css" role="data" />
+         <file name="row.css" role="data" />
+         <file name="table.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/table/css -->
+        <dir name="js">
+         <file name="cell.js" role="data" />
+         <file name="merge_cells.js" role="data" />
+         <file name="row.js" role="data" />
+         <file name="table.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/table/js -->
+        <dir name="langs">
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/table/langs -->
+        <file name="cell.htm" role="data" />
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="merge_cells.htm" role="data" />
+        <file name="row.htm" role="data" />
+        <file name="table.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/table -->
+       <dir name="template">
+        <dir name="css">
+         <file name="template.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/template/css -->
+        <dir name="js">
+         <file name="template.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/template/js -->
+        <dir name="langs">
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/template/langs -->
+        <file name="blank.htm" role="data" />
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="template.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/template -->
+       <dir name="visualchars">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/visualchars -->
+       <dir name="wordcount">
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/wordcount -->
+       <dir name="xhtmlxtras">
+        <dir name="css">
+         <file name="attributes.css" role="data" />
+         <file name="popup.css" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/xhtmlxtras/css -->
+        <dir name="js">
+         <file name="abbr.js" role="data" />
+         <file name="acronym.js" role="data" />
+         <file name="attributes.js" role="data" />
+         <file name="cite.js" role="data" />
+         <file name="del.js" role="data" />
+         <file name="element_common.js" role="data" />
+         <file name="ins.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/xhtmlxtras/js -->
+        <dir name="langs">
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/plugins/xhtmlxtras/langs -->
+        <file name="abbr.htm" role="data" />
+        <file name="acronym.htm" role="data" />
+        <file name="attributes.htm" role="data" />
+        <file name="cite.htm" role="data" />
+        <file name="del.htm" role="data" />
+        <file name="editor_plugin.js" role="data" />
+        <file name="editor_plugin_src.js" role="data" />
+        <file name="ins.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/plugins/xhtmlxtras -->
+      </dir> <!-- /www/javascript/tiny_mce/plugins -->
+      <dir name="themes">
+       <dir name="advanced">
+        <dir name="img">
+         <file name="colorpicker.jpg" role="data" />
+         <file name="flash.gif" role="data" />
+         <file name="icons.gif" role="data" />
+         <file name="iframe.gif" role="data" />
+         <file name="pagebreak.gif" role="data" />
+         <file name="quicktime.gif" role="data" />
+         <file name="realmedia.gif" role="data" />
+         <file name="shockwave.gif" role="data" />
+         <file name="trans.gif" role="data" />
+         <file name="video.gif" role="data" />
+         <file name="windowsmedia.gif" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/themes/advanced/img -->
+        <dir name="js">
+         <file name="about.js" role="data" />
+         <file name="anchor.js" role="data" />
+         <file name="charmap.js" role="data" />
+         <file name="color_picker.js" role="data" />
+         <file name="image.js" role="data" />
+         <file name="link.js" role="data" />
+         <file name="source_editor.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/themes/advanced/js -->
+        <dir name="langs">
+         <file name="en.js" role="data" />
+         <file name="en_dlg.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/themes/advanced/langs -->
+        <dir name="skins">
+         <dir name="default">
+          <dir name="img">
+           <file name="buttons.png" role="data" />
+           <file name="items.gif" role="data" />
+           <file name="menu_arrow.gif" role="data" />
+           <file name="menu_check.gif" role="data" />
+           <file name="progress.gif" role="data" />
+           <file name="tabs.gif" role="data" />
+          </dir> <!-- /www/javascript/tiny_mce/themes/advanced/skins/default/img -->
+          <file name="content.css" role="data" />
+          <file name="dialog.css" role="data" />
+          <file name="ui.css" role="data" />
+         </dir> <!-- /www/javascript/tiny_mce/themes/advanced/skins/default -->
+         <dir name="highcontrast">
+          <file name="content.css" role="data" />
+          <file name="dialog.css" role="data" />
+          <file name="ui.css" role="data" />
+         </dir> <!-- /www/javascript/tiny_mce/themes/advanced/skins/highcontrast -->
+         <dir name="o2k7">
+          <dir name="img">
+           <file name="button_bg.png" role="data" />
+           <file name="button_bg_black.png" role="data" />
+           <file name="button_bg_silver.png" role="data" />
+          </dir> <!-- /www/javascript/tiny_mce/themes/advanced/skins/o2k7/img -->
+          <file name="content.css" role="data" />
+          <file name="dialog.css" role="data" />
+          <file name="ui.css" role="data" />
+          <file name="ui_black.css" role="data" />
+          <file name="ui_silver.css" role="data" />
+         </dir> <!-- /www/javascript/tiny_mce/themes/advanced/skins/o2k7 -->
+         <dir name="swat">
+          <dir name="img">
+           <file name="buttons.png" role="data" />
+           <file name="items.gif" role="data" />
+           <file name="menu_arrow.gif" role="data" />
+           <file name="menu_check.gif" role="data" />
+           <file name="progress.gif" role="data" />
+           <file name="tabs.gif" role="data" />
+          </dir> <!-- /www/javascript/tiny_mce/themes/advanced/skins/swat/img -->
+          <file name="content.css" role="data" />
+          <file name="dialog.css" role="data" />
+          <file name="ui.css" role="data" />
+         </dir> <!-- /www/javascript/tiny_mce/themes/advanced/skins/swat -->
+        </dir> <!-- /www/javascript/tiny_mce/themes/advanced/skins -->
+        <file name="about.htm" role="data" />
+        <file name="anchor.htm" role="data" />
+        <file name="charmap.htm" role="data" />
+        <file name="color_picker.htm" role="data" />
+        <file name="editor_template.js" role="data" />
+        <file name="editor_template_src.js" role="data" />
+        <file name="image.htm" role="data" />
+        <file name="link.htm" role="data" />
+        <file name="shortcuts.htm" role="data" />
+        <file name="source_editor.htm" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/themes/advanced -->
+       <dir name="simple">
+        <dir name="img">
+         <file name="icons.gif" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/themes/simple/img -->
+        <dir name="langs">
+         <file name="en.js" role="data" />
+        </dir> <!-- /www/javascript/tiny_mce/themes/simple/langs -->
+        <dir name="skins">
+         <dir name="default">
+          <file name="content.css" role="data" />
+          <file name="ui.css" role="data" />
+         </dir> <!-- /www/javascript/tiny_mce/themes/simple/skins/default -->
+         <dir name="o2k7">
+          <dir name="img">
+           <file name="button_bg.png" role="data" />
+          </dir> <!-- /www/javascript/tiny_mce/themes/simple/skins/o2k7/img -->
+          <file name="content.css" role="data" />
+          <file name="ui.css" role="data" />
+         </dir> <!-- /www/javascript/tiny_mce/themes/simple/skins/o2k7 -->
+        </dir> <!-- /www/javascript/tiny_mce/themes/simple/skins -->
+        <file name="editor_template.js" role="data" />
+        <file name="editor_template_src.js" role="data" />
+       </dir> <!-- /www/javascript/tiny_mce/themes/simple -->
+      </dir> <!-- /www/javascript/tiny_mce/themes -->
+      <dir name="utils">
+       <file name="editable_selects.js" role="data" />
+       <file name="form_utils.js" role="data" />
+       <file name="mctabs.js" role="data" />
+       <file name="validate.js" role="data" />
+      </dir> <!-- /www/javascript/tiny_mce/utils -->
+      <file name="license.txt" role="data" />
+      <file name="tiny_mce.js" role="data" />
+      <file name="tiny_mce_popup.js" role="data" />
+      <file name="tiny_mce_src.js" role="data" />
+     </dir> <!-- /www/javascript/tiny_mce -->
+     <file name="swat-abstract-overlay.js" role="data" />
+     <file name="swat-accordion.js" role="data" />
+     <file name="swat-actions.js" role="data" />
+     <file name="swat-button.js" role="data" />
+     <file name="swat-calendar.js" role="data" />
+     <file name="swat-cascade.js" role="data" />
+     <file name="swat-change-order.js" role="data" />
+     <file name="swat-check-all.js" role="data" />
+     <file name="swat-checkbox-cell-renderer.js" role="data" />
+     <file name="swat-checkbox-entry-list.js" role="data" />
+     <file name="swat-checkbox-list.js" role="data" />
+     <file name="swat-color-entry.js" role="data" />
+     <file name="swat-date-entry.js" role="data" />
+     <file name="swat-disclosure.js" role="data" />
+     <file name="swat-expandable-checkbox-tree.js" role="data" />
+     <file name="swat-fieldset.js" role="data" />
+     <file name="swat-form.js" role="data" />
+     <file name="swat-image-cropper.js" role="data" />
+     <file name="swat-image-preview-display.js" role="data" />
+     <file name="swat-message-display.js" role="data" />
+     <file name="swat-progress-bar.js" role="data" />
+     <file name="swat-radio-button-cell-renderer.js" role="data" />
+     <file name="swat-radio-note-book.js" role="data" />
+     <file name="swat-rating.js" role="data" />
+     <file name="swat-search-entry.js" role="data" />
+     <file name="swat-simple-color-entry.js" role="data" />
+     <file name="swat-table-view-input-row.js" role="data" />
+     <file name="swat-table-view.js" role="data" />
+     <file name="swat-textarea.js" role="data" />
+     <file name="swat-tile-view.js" role="data" />
+     <file name="swat-time-entry.js" role="data" />
+     <file name="swat-view.js" role="data" />
+     <file name="swat-z-index-manager.js" role="data" />
+    </dir> <!-- /www/javascript -->
+    <dir name="styles">
+     <file name="swat-accordion.css" role="data" />
+     <file name="swat-actions.css" role="data" />
+     <file name="swat-calendar.css" role="data" />
+     <file name="swat-change-order.css" role="data" />
+     <file name="swat-checkbox-entry-list.css" role="data" />
+     <file name="swat-color-entry.css" role="data" />
+     <file name="swat-details-view.css" role="data" />
+     <file name="swat-disclosure.css" role="data" />
+     <file name="swat-frame-disclosure.css" role="data" />
+     <file name="swat-image-preview-display.css" role="data" />
+     <file name="swat-menu.css" role="data" />
+     <file name="swat-message-display.css" role="data" />
+     <file name="swat-message.css" role="data" />
+     <file name="swat-money-cell-renderer.css" role="data" />
+     <file name="swat-note-book.css" role="data" />
+     <file name="swat-null-text-cell-renderer.css" role="data" />
+     <file name="swat-pagination.css" role="data" />
+     <file name="swat-progress-bar.css" role="data" />
+     <file name="swat-radio-list.css" role="data" />
+     <file name="swat-radio-note-book.css" role="data" />
+     <file name="swat-radio-table.css" role="data" />
+     <file name="swat-rating.css" role="data" />
+     <file name="swat-search-entry.css" role="data" />
+     <file name="swat-table-view.css" role="data" />
+     <file name="swat-textarea.css" role="data" />
+     <file name="swat-tile-view.css" role="data" />
+     <file name="swat-title-link-cell-renderer.css" role="data" />
+     <file name="swat-tool-link.css" role="data" />
+     <file name="swat-toolbar.css" role="data" />
+     <file name="swat.css" role="data" />
+    </dir> <!-- /www/styles -->
+    <file name="swatml1.dtd" role="data" />
+   </dir> <!-- /www -->
+   <file name="composer.json" role="data" />
+   <file name="README.md" role="data" />
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.3.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+   <package>
+    <name>Concentrate</name>
+    <channel>pear.silverorange.com</channel>
+    <min>0.0.13</min>
+   </package>
+   <extension>
+    <name>iconv</name>
+   </extension>
+   <extension>
+    <name>mbstring</name>
+   </extension>
+   <extension>
+    <name>intl</name>
+   </extension>
+  </required>
+  <optional>
+   <package>
+    <name>Yui</name>
+    <channel>pear.silverorange.com</channel>
+    <min>1.0.10</min>
+   </package>
+   <package>
+    <name>MDB2</name>
+    <channel>pear.php.net</channel>
+    <min>2.2.2</min>
+   </package>
+   <package>
+    <name>ReCaptcha</name>
+    <channel>pear.silverorange.com</channel>
+    <min>1.0.0</min>
+   </package>
+   <package>
+    <name>Net_IDNA</name>
+    <channel>pear.silverorange.com</channel>
+    <min>0.7.2so1</min>
+   </package>
+  </optional>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>2.1.3</release>
+    <api>0.0.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2014-05-01</date>
+   <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
+   <notes>
+No release notes for you!
+   </notes>
+  </release>
+ </changelog>
+</package>
