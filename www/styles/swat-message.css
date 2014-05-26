@@ -55,7 +55,7 @@
 .swat-message-warning      .swat-message-primary-content { color: #533a15; }
 .swat-message-error        .swat-message-primary-content { color: #e31b0c; }
 .swat-message-system-error .swat-message-primary-content { color: #fff; }
-.store-message-cart        .swat-message-primary-content { color: #7b4b09; }
+.swat-message-cart         .swat-message-primary-content { color: #7b4b09; }
 
 .swat-message-notification .swat-message-secondary-content { color: #947140; }
 .swat-message-warning      .swat-message-secondary-content { color: #947140; }

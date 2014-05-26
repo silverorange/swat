@@ -292,6 +292,7 @@ class SwatMessageDisplay extends SwatControl
 		return array(
 			'notice',
 			'warning',
+			'cart',
 		);
 	}
 
