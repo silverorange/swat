@@ -107,6 +107,13 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	 public $use_current_date = true;
 
+	/**
+	 * Whether or not the displayed parts should show their blank titles.
+	 *
+	 * @var boolean
+	 */
+	public $show_blank_titles = false;
+
 	// }}}
 	// {{{ public function __construct()
 
@@ -619,17 +626,21 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private function createYearFlydown()
+	// {{{ protected function createYearFlydown()
 
 	/**
 	 * Creates the year flydown for this date entry
 	 *
 	 * @return SwatFlydown the year flydown for this date entry.
 	 */
-	private function createYearFlydown()
+	protected function createYearFlydown()
 	{
 		$flydown = new SwatFlydown($this->id.'_year');
 		$flydown->classes = array('swat-date-entry-year');
+
+		if ($this->show_blank_titles) {
+			$flydown->blank_title = $this->getYearBlankValueTitle();
+		}
 
 		$start_year = $this->valid_range_start->getYear();
 
@@ -647,17 +658,34 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private function createMonthFlydown()
+	// {{{ protected function getYearBlankValueTitle()
+
+	/**
+	 * Gets the blank value to use for the year flydown option
+	 *
+	 * @return string the blank value to use for the year flydown.
+	 */
+	protected function getYearBlankValueTitle()
+	{
+		return Swat::_('Year');
+	}
+
+	// }}}
+	// {{{ protected function createMonthFlydown()
 
 	/**
 	 * Creates the month flydown for this date entry
 	 *
 	 * @return SwatFlydown the month flydown for this date entry.
 	 */
-	private function createMonthFlydown()
+	protected function createMonthFlydown()
 	{
 		$flydown = new SwatFlydown($this->id.'_month');
 		$flydown->classes = array('swat-date-entry-month');
+
+		if ($this->show_blank_titles) {
+			$flydown->blank_title = $this->getMonthBlankValueTitle();
+		}
 
 		$range_end = clone $this->valid_range_end;
 		$difference  = $this->valid_range_start->diff($range_end);
@@ -687,7 +715,20 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private function getMonthOptionText()
+	// {{{ protected function getMonthBlankValueTitle()
+
+	/**
+	 * Gets the blank value to use for the month flydown option
+	 *
+	 * @return string the blank value to use for the month flydown.
+	 */
+	protected function getMonthBlankValueTitle()
+	{
+		return Swat::_('Month');
+	}
+
+	// }}}
+	// {{{ protected function getMonthOptionText()
 
 	/**
 	 * Gets the title of a month flydown option
@@ -696,7 +737,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 *
 	 * @return string the option text of the month.
 	 */
-	private function getMonthOptionText($month)
+	protected function getMonthOptionText($month)
 	{
 		$text = '';
 
@@ -711,17 +752,21 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private function createDayFlydown()
+	// {{{ protected function createDayFlydown()
 
 	/**
 	 * Creates the day flydown for this date entry
 	 *
 	 * @return SwatFlydown the day flydown for this date entry.
 	 */
-	private function createDayFlydown()
+	protected function createDayFlydown()
 	{
 		$flydown = new SwatFlydown($this->id.'_day');
 		$flydown->classes = array('swat-date-entry-day');
+
+		if ($this->show_blank_titles) {
+			$flydown->blank_title = $this->getDayBlankValueTitle();
+		}
 
 		// Subtract a second from the end date. This makes comparison correct,
 		// and prevents displaying extra days.
@@ -763,14 +808,27 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private function createTimeEntry()
+	// {{{ protected function getDayBlankValueTitle()
+
+	/**
+	 * Gets the blank value to use for the day flydown option
+	 *
+	 * @return string the blank value to use for the day flydown.
+	 */
+	protected function getDayBlankValueTitle()
+	{
+		return Swat::_('Day');
+	}
+
+	// }}}
+	// {{{ protected function createTimeEntry()
 
 	/**
 	 * Creates the time entry widget for this date entry
 	 *
 	 * @return SwatTimeEntry the time entry widget for this date entry.
 	 */
-	private function createTimeEntry()
+	protected function createTimeEntry()
 	{
 		require_once 'Swat/SwatTimeEntry.php';
 		$time_entry = new SwatTimeEntry($this->id.'_time_entry');
@@ -779,14 +837,14 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	}
 
 	// }}}
-	// {{{ private function createCalendar()
+	// {{{ protected function createCalendar()
 
 	/**
 	 * Creates the calendar widget for this date entry
 	 *
 	 * @return SwatCalendar the calendar widget for this date entry.
 	 */
-	private function createCalendar()
+	protected function createCalendar()
 	{
 		require_once 'Swat/SwatCalendar.php';
 		$calendar = new SwatCalendar($this->id.'_calendar');
