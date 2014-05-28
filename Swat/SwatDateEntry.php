@@ -105,7 +105,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 *
 	 * @var boolean
 	 */
-	 public $use_current_date = true;
+	public $use_current_date = true;
 
 	/**
 	 * Whether or not the displayed parts should show their blank titles.
@@ -604,25 +604,40 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function createCompositeWidgets()
 	{
-		if ($this->display_parts & self::YEAR)
+		if ($this->display_parts & self::YEAR) {
 			$this->addCompositeWidget(
-				$this->createYearFlydown(), 'year_flydown');
+				$this->createYearFlydown(),
+				'year_flydown'
+			);
+		}
 
-		if ($this->display_parts & self::MONTH)
+		if ($this->display_parts & self::MONTH) {
 			$this->addCompositeWidget(
-				$this->createMonthFlydown(), 'month_flydown');
+				$this->createMonthFlydown(),
+				'month_flydown'
+			);
+		}
 
-		if ($this->display_parts & self::DAY)
+		if ($this->display_parts & self::DAY) {
 			$this->addCompositeWidget(
-				$this->createDayFlydown(), 'day_flydown');
+				$this->createDayFlydown(),
+				'day_flydown'
+			);
+		}
 
-		if ($this->display_parts & self::TIME)
+		if ($this->display_parts & self::TIME) {
 			$this->addCompositeWidget(
-				$this->createTimeEntry(), 'time_entry');
+				$this->createTimeEntry(),
+				'time_entry'
+			);
+		}
 
-		if ($this->display_parts & self::CALENDAR)
+		if ($this->display_parts & self::CALENDAR) {
 			$this->addCompositeWidget(
-				$this->createCalendar(), 'calendar');
+				$this->createCalendar(),
+				'calendar'
+			);
+		}
 	}
 
 	// }}}
