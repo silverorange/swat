@@ -296,15 +296,16 @@ class SwatTableView extends SwatView implements SwatUIParent
 			}
 		}
 
-		if ($row_count == 0 && $show_no_records
-			&& $this->no_records_message !== null) {
+		if ($row_count == 0 && $show_no_records) {
+			if ($this->no_records_message !== null) {
+				$div = new SwatHtmlTag('div');
+				$div->class = 'swat-none';
+				$div->setContent($this->no_records_message,
+					$this->no_records_message_type);
 
-			$div = new SwatHtmlTag('div');
-			$div->class = 'swat-none';
-			$div->setContent($this->no_records_message,
-				$this->no_records_message_type);
+				$div->display();
+			}
 
-			$div->display();
 			return;
 		}
 
