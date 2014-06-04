@@ -1528,8 +1528,16 @@ class SwatString extends SwatObject
 			);
 		}
 
+		if (isset($parts['weeks'])) {
+			$weeks = $parts['weeks'];
+			$parts['weeks'] = sprintf(
+				Swat::ngettext('%s week', '%s weeks', $weeks),
+				$weeks
+			);
+		}
+
 		if (isset($parts['days'])) {
-			$weeks = $parts['days'];
+			$days = $parts['days'];
 			$parts['days'] = sprintf(
 				Swat::ngettext('%s day', '%s days', $days),
 				$days
