@@ -1354,18 +1354,18 @@ class SwatString extends SwatObject
 	// {{{ public static function getTimePeriodParts()
 
 	/**
-	 * Gets the parts representing a time period and match a desired interval
+	 * Gets the parts representing a time period matching a desired interval
 	 * format.
 	 *
-	 * This method formats seconds as a time period. Given an example value
-	 * of 161740805, the following key=>value array is returned.
+	 * This method splits an interval in seconds into component parts. Given an
+	 * example value of 161740805, the following key=>value array is returned.
 	 * <code>
 	 * <?php
 	 * array(
-	 *    'years'   => '5',
-	 *    'months'  => '3',
-	 *    'days'    => '2',
-	 *    'seconds' => '5',
+	 *    'years'   => 5,
+	 *    'months'  => 3,
+	 *    'days'    => 2,
+	 *    'seconds' => 5,
 	 * );
 	 * ?>
 	 * </code>
