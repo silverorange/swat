@@ -1420,7 +1420,7 @@ class SwatString extends SwatObject
 		// days into months, and leave the remainder in the days variable.
 		if ($months > 0 || $days >= 30) {
 			if ($interval_parts & SwatDate::DI_MONTHS) {
-				$months += floor($days / 30);
+				$months += (int)floor($days / 30);
 				$days = $days % 30;
 
 				$parts['months'] = $months;
@@ -1433,7 +1433,7 @@ class SwatString extends SwatObject
 			if ($interval_parts & SwatDate::DI_WEEKS &&
 				$days >= 7) {
 
-				$weeks = floor($days / 7);
+				$weeks = (int)floor($days / 7);
 				$days = $days % 7;
 
 				$parts['weeks'] = $weeks;
