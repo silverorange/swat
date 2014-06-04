@@ -112,7 +112,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 *
 	 * @var boolean
 	 */
-	public $show_blank_titles = false;
+	public $show_blank_titles = true;
 
 	// }}}
 	// {{{ public function __construct()
