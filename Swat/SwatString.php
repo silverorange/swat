@@ -1337,7 +1337,9 @@ class SwatString extends SwatObject
 						$list.= ($display_final_delimiter
 							&& count($iterator) > 2) ? $delimiter : ' ';
 
-						$list.= $conjunction.' ';
+						if ($conjunction != '') {
+							$list.= $conjunction.' ';
+						}
 					} else {
 						$list.= $delimiter;
 					}
