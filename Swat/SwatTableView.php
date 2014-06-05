@@ -72,7 +72,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * No records message text
 	 *
 	 * A message to show if the table view has no records to display. If
-	 * null, no message is displayed.
+	 * set to an empty string, no message is displayed.
 	 *
 	 * @var string
 	 */
@@ -296,15 +296,16 @@ class SwatTableView extends SwatView implements SwatUIParent
 			}
 		}
 
-		if ($row_count == 0 && $show_no_records
-			&& $this->no_records_message !== null) {
+		if ($row_count === 0 && $show_no_records) {
+			if ($this->no_records_message != '') {
+				$div = new SwatHtmlTag('div');
+				$div->class = 'swat-none';
+				$div->setContent($this->no_records_message,
+					$this->no_records_message_type);
 
-			$div = new SwatHtmlTag('div');
-			$div->class = 'swat-none';
-			$div->setContent($this->no_records_message,
-				$this->no_records_message_type);
+				$div->display();
+			}
 
-			$div->display();
 			return;
 		}
 
