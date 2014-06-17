@@ -235,11 +235,13 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		if ($this->getFirst() === null)
+		if ($this->getFirst() === null) {
 			return;
+		}
 
 		SwatWidget::display();
 
