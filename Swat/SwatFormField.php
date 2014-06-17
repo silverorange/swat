@@ -118,6 +118,16 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	public $show_notes_first = false;
 
 	/**
+	 * Whether or not to wrap the content and notes of the form field in a div
+	 * for styling purposes.
+	 *
+	 * By default, content and notes are not wrapped.
+	 *
+	 * @var boolean
+	 */
+	public $wrap_content_and_notes = false;
+
+	/**
 	 * Whether or not to display validation messages in this form field
 	 *
 	 * Defaults to true. Set to false to prevent the displaying of messages in
@@ -239,27 +249,76 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 		$container_tag->open();
 
-		if ($this->title_reversed === true) {
-			if ($this->show_notes_first) {
-				$this->displayNotes();
-			}
-
-			$this->displayContent();
-			$this->displayTitle();
-		} else {
-			$this->displayTitle();
-
-			if ($this->show_notes_first) {
-				$this->displayNotes();
-			}
-
-			$this->displayContent();
+		$content_wrapper = null;
+		if ($this->wrap_content_and_notes) {
+			$content_wrapper = new SwatHtmlTag('div');
+			$content_wrapper->class = 'swat-form-field-content-wrapper';
 		}
 
-		$this->displayMessages();
+		if ($this->title_reversed) {
+			if ($this->show_notes_first) {
+				if ($this->wrap_content_and_notes) {
+					$content_wrapper->open();
+					$this->displayNotes();
+					$this->displayContent();
+					$content_wrapper->close();
 
-		if (!$this->show_notes_first) {
-			$this->displayNotes();
+					$this->displayTitle();
+					$this->displayMessages();
+				} else {
+					$this->displayNotes();
+					$this->displayContent();
+					$this->displayTitle();
+					$this->displayMessages();
+				}
+			} else {
+				if ($this->wrap_content_and_notes) {
+					$content_wrapper->open();
+					$this->displayContent();
+					$this->displayNotes();
+					$content_wrapper->close();
+
+					$this->displayTitle();
+					$this->displayMessages();
+				} else {
+					$this->displayContent();
+					$this->displayTitle();
+					$this->displayMessages();
+					$this->displayNotes();
+				}
+			}
+		} else {
+			if ($this->show_notes_first) {
+				if ($this->wrap_content_and_notes) {
+					$content_wrapper->open();
+					$this->displayNotes();
+					$this->displayContent();
+					$content_wrapper->close();
+
+					$this->displayTitle();
+					$this->displayMessages();
+				} else {
+					$this->displayTitle();
+					$this->displayNotes();
+					$this->displayContent();
+					$this->displayMessages();
+				}
+			} else {
+				if ($this->wrap_content_and_notes) {
+					$this->displayTitle();
+					$content_wrapper->open();
+					$this->displayContent();
+					$this->displayNotes();
+					$content_wrapper->close();
+
+					$this->displayMessages();
+				} else {
+					$this->displayTitle();
+					$this->displayContent();
+					$this->displayMessages();
+					$this->displayNotes();
+				}
+			}
 		}
 
 		$container_tag->close();
