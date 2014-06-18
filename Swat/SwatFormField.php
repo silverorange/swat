@@ -292,12 +292,13 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		} else {
 			if ($this->show_notes_first) {
 				if ($this->wrap_content_and_notes) {
+					$this->displayTitle();
+
 					$content_wrapper->open();
 					$this->displayNotes();
 					$this->displayContent();
 					$content_wrapper->close();
 
-					$this->displayTitle();
 					$this->displayMessages();
 				} else {
 					$this->displayTitle();
@@ -308,6 +309,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 			} else {
 				if ($this->wrap_content_and_notes) {
 					$this->displayTitle();
+
 					$content_wrapper->open();
 					$this->displayContent();
 					$this->displayNotes();
