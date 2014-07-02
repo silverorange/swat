@@ -539,7 +539,7 @@ class SwatDate extends DateTime implements Serializable
 	}
 
 	// }}}
-	// {{{ public function __toString(
+	// {{{ public function __toString()
 
 	public function __toString()
 	{
