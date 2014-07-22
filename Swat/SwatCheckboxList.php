@@ -307,9 +307,26 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	// }}}
 	// {{{ protected function getLiTag()
 
-	protected function getLiTag($option)
+	protected function getLiTag(SwatOption $option)
 	{
 		$tag = new SwatHtmlTag('li');
+
+		// add option-specific CSS classes from option metadata
+		$classes = $this->getOptionMetadata($option, 'classes');
+		if (is_array($classes)) {
+			$tag->class = implode(' ', $classes);
+		} elseif ($classes != '') {
+			$tag->class = strval($classes);
+		}
+
+		$sensitive = $this->getOptionMetadata($option, 'sensitive');
+		if ($sensitive === false || !$this->isSensitive()) {
+			if ($tag->class === null) {
+				$tag->class = 'swat-insensitive';
+			} else {
+				$tag->class.= ' swat-insensitive';
+			}
+		}
 
 		return $tag;
 	}
