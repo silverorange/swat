@@ -19,6 +19,16 @@ require_once 'Swat/exceptions/SwatException.php';
  */
 class SwatCheckboxList extends SwatOptionControl implements SwatState
 {
+	// {{{ private properties
+
+	/**
+	 * Used for displaying checkbox labels
+	 *
+	 * @var SwatHtmlTag
+	 */
+	private $label_tag;
+
+	// }}}
 	// {{{ public properties
 
 	/**
@@ -288,11 +298,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		if (!$this->isSensitive())
 			$input_tag->disabled = 'disabled';
 
-		$label_tag = new SwatHtmlTag('label');
-		$label_tag->class = 'swat-control';
-		$label_tag->for = $this->id.'_'.$index;
-		$label_tag->setContent($option->title, $option->content_type);
-
 		$li_tag = $this->getLiTag($option);
 
 		$li_tag->open();
@@ -300,8 +305,30 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		$input_tag->display();
 		echo '<span class="swat-checkbox-shim"></span>';
 		echo '</span>';
-		$label_tag->display();
+		$this->displayOptionLabel($option, $index);
 		$li_tag->close();
+	}
+
+	// }}}
+	// {{{ protected function displayOptionLabel()
+
+	/**
+	 * Displays an option in the checkbox list
+	 *
+	 * @param SwatOption $option the option for which to display the label.
+	 * @param integer $index the numeric index of the option in this list.
+	 *                        Starts at 0.
+	 */
+	protected function displayOptionLabel(SwatOption $option, $index)
+	{
+		if (!$this->label_tag instanceof SwatHtmlTag) {
+			$this->label_tag = new SwatHtmlTag('label');
+			$this->label_tag->class = 'swat-control';
+		}
+
+		$this->label_tag->for = $this->id.'_'.$index;
+		$this->label_tag->setContent($option->title, $option->content_type);
+		$this->label_tag->display();
 	}
 
 	// }}}
