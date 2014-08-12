@@ -321,7 +321,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	 */
 	protected function displayOptionLabel(SwatOption $option, $index)
 	{
-		if ($this->label_tag === null) {
+		if (!$this->label_tag instanceof SwatHtmlTag) {
 			$this->label_tag = new SwatHtmlTag('label');
 			$this->label_tag->class = 'swat-control';
 		}
