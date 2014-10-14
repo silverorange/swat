@@ -160,7 +160,7 @@ SwatRadioNoteBook.prototype.removePageFocusability = function(page)
 				tabindex = elements[i].getAttribute('tabindex');
 			} else {
 				tabindex = elements[i].tabIndex; // for old IE
-				if (tabindex == 0) {
+				if (tabindex === 0) {
 					tabindex = null;
 				}
 			}
@@ -180,9 +180,9 @@ SwatRadioNoteBook.prototype.restorePageFocusability = function(page)
 	);
 
 	for (var i = 0; i < elements.length; i++) {
-		if (elements[i].getAttribute('_' + this.id + '_tabindex') != '') {
+		if (elements[i].getAttribute('_' + this.id + '_tabindex') !== '') {
 			var tabindex = elements[i]['_' + this.id + '_tabindex'];
-			if (tabindex == '' || tabindex === null) {
+			if (tabindex === '' || tabindex === null) {
 				elements[i].removeAttribute('tabindex');
 				elements[i].removeAttribute('tabIndex'); // For old IE
 			} else {

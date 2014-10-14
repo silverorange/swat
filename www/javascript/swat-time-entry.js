@@ -149,16 +149,16 @@ SwatTimeEntry.prototype.setNow = function(set_date)
 		}
 	}
 
-	if (this.hour && this.hour.selectedIndex == 0)
+	if (this.hour && this.hour.selectedIndex === 0)
 		this.hour.selectedIndex = this.lookup('hour', hour);
 
-	if (this.minute && this.minute.selectedIndex == 0)
+	if (this.minute && this.minute.selectedIndex === 0)
 		this.minute.selectedIndex = this.lookup('minute', now.getMinutes());
 
-	if (this.second && this.second.selectedIndex == 0)
+	if (this.second && this.second.selectedIndex === 0)
 		this.second.selectedIndex = this.lookup('second', now.getSeconds());
 
-	if (this.am_pm && this.am_pm.selectedIndex == 0)
+	if (this.am_pm && this.am_pm.selectedIndex === 0)
 		this.am_pm.selectedIndex = am_pm;
 
 	if (this.date_entry && set_date)
@@ -167,20 +167,20 @@ SwatTimeEntry.prototype.setNow = function(set_date)
 
 SwatTimeEntry.prototype.setDefault = function(set_date)
 {
-	if (this.hour && this.hour.selectedIndex == 0) {
+	if (this.hour && this.hour.selectedIndex === 0) {
 		if (this.am_pm)
 			this.hour.selectedIndex = 12;
 		else
 			this.hour.selectedIndex = 1;
 	}
 
-	if (this.minute && this.minute.selectedIndex == 0)
+	if (this.minute && this.minute.selectedIndex === 0)
 		this.minute.selectedIndex = 1;
 
-	if (this.second && this.second.selectedIndex == 0)
+	if (this.second && this.second.selectedIndex === 0)
 		this.second.selectedIndex = 1;
 
-	if (this.am_pm && this.am_pm.selectedIndex == 0)
+	if (this.am_pm && this.am_pm.selectedIndex === 0)
 		this.am_pm.selectedIndex = 1;
 
 	if (this.date_entry && set_date)
@@ -219,7 +219,7 @@ SwatTimeEntry.prototype.update = function(field)
 			if (this_hour > 12)
 				this_hour -= 12;
 
-			if (this_hour == 0)
+			if (this_hour === 0)
 				this_hour = 12;
 		}
 

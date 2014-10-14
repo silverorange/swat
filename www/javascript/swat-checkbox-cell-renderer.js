@@ -64,7 +64,7 @@ SwatCheckboxCellRenderer.prototype.handleClick = function(e)
 
 SwatCheckboxCellRenderer.prototype.updateCheckAll = function()
 {
-	if (this.check_all == null)
+	if (this.check_all === null)
 		return;
 
 	var count = 0;

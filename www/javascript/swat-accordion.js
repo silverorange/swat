@@ -140,7 +140,7 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page)
 	} else {
 		new_page.animation.style.overflow = 'hidden';
 
-		if (new_page.animation.style.height == '' ||
+		if (new_page.animation.style.height === '' ||
 			new_page.animation.style.height == 'auto') {
 			new_page.animation.style.height = '0';
 			new_from_height = 0;

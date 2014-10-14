@@ -41,7 +41,7 @@ SwatCheckboxList.prototype.handleClick = function(event)
 
 SwatCheckboxList.prototype.updateCheckAll = function ()
 {
-	if (this.check_all == null)
+	if (this.check_all === null)
 		return;
 
 	var count = 0;

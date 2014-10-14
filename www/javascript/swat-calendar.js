@@ -281,7 +281,7 @@ SwatCalendar.prototype.drawButton = function()
 SwatCalendar.isLeapYear = function(year)
 {
 	return (
-		((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)
+		((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0)
 	) ? 1 : 0;
 };
 
@@ -582,12 +582,12 @@ SwatCalendar.prototype.draw = function()
 			var m = this.date_entry.getMonth();
 			var y = this.date_entry.getYear();
 
-			var day   = (d == null) ? today.getDate()      : parseInt(d);
-			var month = (m == null) ? today.getMonth() + 1 : parseInt(m);
-			var year  = (y == null) ? today.getYear()      : parseInt(y);
+			var day   = (d === null) ? today.getDate()      : parseInt(d);
+			var month = (m === null) ? today.getMonth() + 1 : parseInt(m);
+			var year  = (y === null) ? today.getYear()      : parseInt(y);
 
 			//TODO: figure out if the last two conditions are ever run
-			if (day != 0 && month != 0 && year != 0) {
+			if (day !== 0 && month !== 0 && year !== 0) {
 				mm = month;
 				dd = day;
 				yyyy = year;
@@ -616,9 +616,9 @@ SwatCalendar.prototype.draw = function()
 			var m = this.date_entry.getMonth();
 			var y = this.date_entry.getYear();
 
-			var day   = (d == null) ? today.getDate()      : parseInt(d);
-			var month = (m == null) ? today.getMonth() + 1 : parseInt(m);
-			var year  = (y == null) ? today.getYear()      : parseInt(y);
+			var day   = (d === null) ? today.getDate()      : parseInt(d);
+			var month = (m === null) ? today.getMonth() + 1 : parseInt(m);
+			var year  = (y === null) ? today.getYear()      : parseInt(y);
 
 			if (mm == month && yyyy == year) {
 				dd = day;

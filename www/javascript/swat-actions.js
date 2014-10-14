@@ -81,7 +81,7 @@ SwatActions.prototype.handleButtonClick = function(e)
 	var is_blank;
 	var value_exp = this.flydown.value.split('|', 2);
 	if (value_exp.length == 1)
-		is_blank = (value_exp[0] == '');
+		is_blank = (value_exp[0] === '');
 	else
 		is_blank = (value_exp[1] == 'N;');
 

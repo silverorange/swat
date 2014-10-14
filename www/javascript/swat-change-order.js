@@ -253,8 +253,8 @@ function SwatChangeOrder_mouseupEventHandler(event)
 	// only allow left click to do things
 	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
-	if ((is_ie && (event.button & 1) != 1) ||
-		(!is_ie && !is_webkit && event.button != 0))
+	if ((is_ie && (event.button & 1) !== 1) ||
+		(!is_ie && !is_webkit && event.button !== 0))
 		return false;
 
 	YAHOO.util.Event.removeListener(document, 'mousemove',
@@ -312,7 +312,7 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
 	if ((is_ie && (event.button & 1) != 1) ||
-		(!is_ie && !is_webkit && event.button != 0))
+		(!is_ie && !is_webkit && event.button !== 0))
 		return false;
 
 	if (!this.controller.sensitive)
@@ -397,7 +397,7 @@ function SwatChangeOrder(id, sensitive)
 
 	// re-populate list with dynamic items if page is refreshed
 	var items_value = document.getElementById(this.id + '_dynamic_items').value;
-	if (items_value != '') {
+	if (items_value !== '') {
 		this.list_div.innerHTML = items_value;
 	}
 
@@ -569,7 +569,7 @@ SwatChangeOrder.prototype.add = function(el, value)
 	// update hidden value
 	var value_array;
 	var hidden_value = document.getElementById(this.id + '_value');
-	if (hidden_value.value == '') {
+	if (hidden_value.value === '') {
 		value_array = [];
 	} else {
 		value_array = hidden_value.value.split(',');
@@ -646,7 +646,7 @@ SwatChangeOrder.prototype.containsValue = function(value)
 {
 	var value_array;
 	var hidden_value = document.getElementById(this.id + '_value');
-	if (hidden_value.value == '') {
+	if (hidden_value.value === '') {
 		value_array = [];
 	} else {
 		value_array = hidden_value.value.split(',');

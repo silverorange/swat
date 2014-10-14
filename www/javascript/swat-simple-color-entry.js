@@ -59,7 +59,7 @@ getBodyContent: function()
 
 	var tbody = document.createElement('tbody');
 
-	if (this.colors.length % this.columns == 0)
+	if (this.colors.length % this.columns === 0)
 		var num_cells = this.colors.length;
 	else
 		var num_cells = this.colors.length +
@@ -92,7 +92,7 @@ getBodyContent: function()
 	}
 
 	for (var i = 0; i < num_cells; i++) {
-		if (i % this.columns == 0)
+		if (i % this.columns === 0)
 			trow = document.createElement('tr');
 
 		tcell = document.createElement('td');
@@ -119,7 +119,7 @@ getBodyContent: function()
 
 		trow.appendChild(tcell);
 
-		if ((i + 1) % this.columns == 0)
+		if ((i + 1) % this.columns === 0)
 			tbody.appendChild(trow);
 	}
 
@@ -178,16 +178,16 @@ SwatSimpleColorEntry.prototype.handleInputChange = function()
 {
 	var color = this.hex_input_tag.value;
 
-	if (color[0] == '#') {
+	if (color[0] === '#') {
 		color = color.slice(1, color.length - 1);
 	}
 
-	if (color.length == 3) {
+	if (color.length === 3) {
 		var hex3 = /^[0-9a-f]{3}$/i;
 		if (!hex3.test(color)) {
 			color = null;
 		}
-	} else if (color.length == 6) {
+	} else if (color.length === 6) {
 		var hex6 = /^[0-9a-f]{6}$/i;
 		if (!hex6.test(color)) {
 			color = null;
@@ -227,7 +227,7 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 		}
 
 		if (color === null) {
-			if (this.hex_input_tag.value != '') {
+			if (this.hex_input_tag.value !== '') {
 				// IE fix, it sets string 'null' otherwise
 				this.hex_input_tag.value = '';
 			}

@@ -96,7 +96,7 @@ SwatTextarea.prototype.handleOnAvailable = function()
 		'swat-textarea-with-resize');
 
 	// if textarea is not currently visible, delay initilization
-	if (this.textarea.offsetWidth == 0) {
+	if (this.textarea.offsetWidth === 0) {
 		SwatTextarea.registerPendingTextarea(this);
 		return;
 	}
@@ -279,7 +279,7 @@ SwatTextarea.mousedownEventHandler = function(e, handle)
 	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
 	if ((is_ie && (e.button & 1) != 1) ||
-		(!is_ie && !is_webkit && e.button != 0))
+		(!is_ie && !is_webkit && e.button !== 0))
 		return false;
 
 	SwatTextarea.dragging_item = handle;
@@ -444,7 +444,7 @@ SwatTextarea.mouseupEventHandler = function(e, handle)
 	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
 	if ((is_ie && (e.button & 1) != 1) ||
-		(!is_ie && !is_webkit && e.button != 0))
+		(!is_ie && !is_webkit && e.button !== 0))
 		return false;
 
 	YAHOO.util.Event.removeListener(document, 'mousemove',

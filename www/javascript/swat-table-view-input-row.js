@@ -191,7 +191,7 @@ SwatTableViewInputRow.prototype.initReplicators = function()
 		if (this.replicators_input === null)
 			return false;
 
-		if (this.replicators_input.value == '')
+		if (this.replicators_input.value === '')
 			this.replicators = [];
 		else
 			this.replicators = this.replicators_input.value.split(',');

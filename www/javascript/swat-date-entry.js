@@ -135,7 +135,7 @@ SwatDateEntry.prototype.setNow = function(set_time)
 {
 	var now = new Date();
 
-	if (this.year && this.year.selectedIndex == 0) {
+	if (this.year && this.year.selectedIndex === 0) {
 		var this_year = this.lookup('year', now.getFullYear());
 
 		if (this_year)
@@ -144,7 +144,7 @@ SwatDateEntry.prototype.setNow = function(set_time)
 			this.year.selectedIndex = 1;
 	}
 
-	if (this.month && this.month.selectedIndex == 0) {
+	if (this.month && this.month.selectedIndex === 0) {
 		var this_month = this.lookup('month', now.getMonth() + 1);
 
 		if (this_month)
@@ -153,7 +153,7 @@ SwatDateEntry.prototype.setNow = function(set_time)
 			this.month.selectedIndex = 1;
 	}
 
-	if (this.day && this.day.selectedIndex == 0) {
+	if (this.day && this.day.selectedIndex === 0) {
 		var this_day = this.lookup('day', now.getDate());
 		if (this_day)
 			this.day.selectedIndex = this_day;
@@ -169,7 +169,7 @@ SwatDateEntry.prototype.setDefault = function(set_time)
 {
 	var now = new Date();
 
-	if (this.year && this.year.selectedIndex == 0) {
+	if (this.year && this.year.selectedIndex === 0) {
 		/*
 		 * Default to this year if it exists in the options. This behaviour
 		 * is somewhat different from the others, but just makes common sense.
@@ -182,10 +182,10 @@ SwatDateEntry.prototype.setDefault = function(set_time)
 			this.year.selectedIndex = 1;
 	}
 
-	if (this.month && this.month.selectedIndex == 0)
+	if (this.month && this.month.selectedIndex === 0)
 		this.month.selectedIndex = 1;
 
-	if (this.day && this.day.selectedIndex == 0)
+	if (this.day && this.day.selectedIndex === 0)
 		this.day.selectedIndex = 1;
 
 	if (this.time_entry && set_time)
@@ -212,7 +212,7 @@ SwatDateEntry.prototype.update = function(field)
 	}
 
 	// don't do anything if we select the blank option
-	if (index != 0) {
+	if (index !== 0) {
 		var now = new Date();
 		var this_month = now.getMonth() + 1;
 
