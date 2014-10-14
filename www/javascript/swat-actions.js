@@ -60,7 +60,7 @@ SwatActions.prototype.setViewSelector = function(view, selector_id)
 		this.view = view;
 		this.selector_id = selector_id;
 	}
-}
+};
 
 SwatActions.prototype.handleChange = function()
 {
@@ -74,7 +74,7 @@ SwatActions.prototype.handleChange = function()
 
 	if (this.selected_element)
 		YAHOO.util.Dom.removeClass(this.selected_element, 'swat-hidden');
-}
+};
 
 SwatActions.prototype.handleButtonClick = function(e)
 {
@@ -105,13 +105,13 @@ SwatActions.prototype.handleButtonClick = function(e)
 		YAHOO.util.Event.preventDefault(e);
 		this.showMessage(message);
 	}
-}
+};
 
 SwatActions.prototype.handleMessageClose = function(e)
 {
 	YAHOO.util.Event.preventDefault(e);
 	this.hideMessage();
-}
+};
 
 SwatActions.prototype.showMessage = function(message_text)
 {
@@ -133,7 +133,7 @@ SwatActions.prototype.showMessage = function(message_text)
 
 		this.message_shown = true;
 	}
-}
+};
 
 SwatActions.prototype.hideMessage = function()
 {
@@ -152,5 +152,4 @@ SwatActions.prototype.hideMessage = function()
 
 		animation.animate();
 	}
-
-}
+};

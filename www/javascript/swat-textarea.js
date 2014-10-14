@@ -53,7 +53,7 @@ SwatTextarea.pollPendingTextareas = function()
 	}
 
 	if (SwatTextarea.pending_textareas.length === 0) {
-		clearInterval(SwatTextarea.pending_interval)
+		clearInterval(SwatTextarea.pending_interval);
 		SwatTextarea.pending_interval = null;
 	}
 };

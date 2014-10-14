@@ -4,7 +4,7 @@ function SwatRadioNoteBook(id)
 	this.current_page = null;
 
 	YAHOO.util.Event.onDOMReady(this.init, this, true);
-};
+}
 
 SwatRadioNoteBook.FADE_DURATION = 0.25;
 SwatRadioNoteBook.SLIDE_DURATION = 0.15;

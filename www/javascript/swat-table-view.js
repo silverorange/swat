@@ -98,7 +98,7 @@ SwatTableView.prototype.selectItem = function(node, selector)
 			spanning_row = spanning_row.nextSibling;
 		}
 	}
-}
+};
 
 /**
  * Deselects an item node in this table-view
@@ -142,4 +142,4 @@ SwatTableView.prototype.deselectItem = function(node, selector)
 			spanning_row = spanning_row.nextSibling;
 		}
 	}
-}
+};

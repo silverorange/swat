@@ -580,7 +580,7 @@ SwatChangeOrder.prototype.add = function(el, value)
 	this.updateDynamicItemsValue();
 
 	return true;
-}
+};
 
 // }}}
 // {{{ remove()
@@ -616,7 +616,7 @@ SwatChangeOrder.prototype.remove = function(el)
 	this.updateDynamicItemsValue();
 
 	return true;
-}
+};
 
 // }}}
 // {{{ count()
@@ -629,7 +629,7 @@ SwatChangeOrder.prototype.remove = function(el)
 SwatChangeOrder.prototype.count = function()
 {
 	return this.list_div.childNodes.length - 1;
-}
+};
 
 // }}}
 // {{{ containsValue()
@@ -659,7 +659,7 @@ SwatChangeOrder.prototype.containsValue = function(value)
 	}
 
 	return false;
-}
+};
 
 // }}}
 // {{{ choose()
@@ -692,7 +692,7 @@ SwatChangeOrder.prototype.choose = function(div)
 			}
 		}
 	}
-}
+};
 
 // }}}
 // {{{ moveToTop()
@@ -713,7 +713,7 @@ SwatChangeOrder.prototype.moveToTop = function()
 
 		this.moveToTopHelper(steps);
 	}
-}
+};
 
 // }}}
 // {{{ moveToTopHelper()
@@ -738,7 +738,7 @@ SwatChangeOrder.prototype.moveToTopHelper = function(steps)
 		this.setButtonsSensitive(true);
 		this.updateDynamicItemsValue();
 	}
-}
+};
 
 // }}}
 // {{{ moveToBottom()
@@ -759,7 +759,7 @@ SwatChangeOrder.prototype.moveToBottom = function()
 
 		this.moveToBottomHelper(steps);
 	}
-}
+};
 
 // }}}
 // {{{ moveToBottomHelper()
@@ -784,7 +784,7 @@ SwatChangeOrder.prototype.moveToBottomHelper = function(steps)
 		this.setButtonsSensitive(true);
 		this.updateDynamicItemsValue();
 	}
-}
+};
 
 // }}}
 // {{{ moveUp()
@@ -800,7 +800,7 @@ SwatChangeOrder.prototype.moveUp = function()
 		this.moveUpHelper(1);
 		this.updateDynamicItemsValue();
 	}
-}
+};
 
 // }}}
 // {{{ moveDown()
@@ -816,7 +816,7 @@ SwatChangeOrder.prototype.moveDown = function()
 		this.moveDownHelper(1);
 		this.updateDynamicItemsValue();
 	}
-}
+};
 
 // }}}
 // {{{ moveUpHelper()
@@ -855,7 +855,7 @@ SwatChangeOrder.prototype.moveUpHelper = function(steps)
 	this.scrollList(this.getScrollPosition(this.active_div));
 
 	return return_val;
-}
+};
 
 // }}}
 // {{{ moveDownHelper()
@@ -897,7 +897,7 @@ SwatChangeOrder.prototype.moveDownHelper = function(steps)
 	this.scrollList(this.getScrollPosition(this.active_div));
 
 	return return_val;
-}
+};
 
 // }}}
 // {{{ setButtonsSensitive()
@@ -911,7 +911,7 @@ SwatChangeOrder.prototype.setButtonsSensitive = function(sensitive)
 {
 	for (var i = 0; i < this.buttons.length; i++)
 		this.buttons[i].disabled = !sensitive;
-}
+};
 
 // }}}
 // {{{ setSensitive()
@@ -933,7 +933,7 @@ SwatChangeOrder.prototype.setSensitive = function(sensitive)
 		document.getElementById(this.id).className =
 			'swat-change-order swat-change-order-insensitive';
 	}
-}
+};
 
 // }}}
 // {{{ updateValue()
@@ -970,7 +970,7 @@ SwatChangeOrder.prototype.updateValue = function()
 
 	// update a hidden field with current order of keys
 	hidden_field.value = temp;
-}
+};
 
 // }}}
 // {{{ updateDynamicItemsValue()
@@ -985,7 +985,7 @@ SwatChangeOrder.prototype.updateDynamicItemsValue = function()
 {
 	var items_value = document.getElementById(this.id + '_dynamic_items');
 	items_value.value = this.list_div.innerHTML;
-}
+};
 
 // }}}
 // {{{ getScrollPosition()
@@ -1004,7 +1004,7 @@ SwatChangeOrder.prototype.getScrollPosition = function(element)
 			(element.offsetHeight / 2);
 
 	return y_position;
-}
+};
 
 // }}}
 // {{{ scrollList()
@@ -1041,7 +1041,7 @@ SwatChangeOrder.prototype.scrollList = function(y_coord)
 
 	this.list_div.scrollTop = Math.floor(
 		(this.list_div.scrollHeight - this.list_div.clientHeight) * factor);
-}
+};
 
 // }}}
 // {{{ isGrid()
@@ -1054,6 +1054,6 @@ SwatChangeOrder.prototype.isGrid = function()
 {
 	var node = this.list_div.childNodes[0];
 	return (YAHOO.util.Dom.getStyle(node, 'float') != 'none');
-}
+};
 
 // }}}

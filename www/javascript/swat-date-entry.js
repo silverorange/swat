@@ -54,22 +54,22 @@ SwatDateEntry.prototype.setSensitivity = function(sensitivity)
 
 	if (this.time_entry)
 		this.time_entry.setSensitivity(sensitivity);
-}
+};
 
 SwatDateEntry.prototype.handleYearChange = function()
 {
 	this.update('year');
-}
+};
 
 SwatDateEntry.prototype.handleMonthChange = function()
 {
 	this.update('month');
-}
+};
 
 SwatDateEntry.prototype.handleDayChange = function()
 {
 	this.update('day');
-}
+};
 
 SwatDateEntry.prototype.addLookupTable = function(table_name, table)
 {
@@ -78,17 +78,17 @@ SwatDateEntry.prototype.addLookupTable = function(table_name, table)
 	for (var key in table) {
 		this.reverse_lookup_table[table_name][table[key]] = key;
 	}
-}
+};
 
 SwatDateEntry.prototype.lookup = function(table_name, key)
 {
 	return this.lookup_table[table_name][key];
-}
+};
 
 SwatDateEntry.prototype.reverseLookup = function(table_name, key)
 {
 	return this.reverse_lookup_table[table_name][key];
-}
+};
 
 SwatDateEntry.prototype.setCalendar = function(calendar)
 {
@@ -97,7 +97,7 @@ SwatDateEntry.prototype.setCalendar = function(calendar)
 		this.calendar = calendar;
 		calendar.date_entry = this;
 	}
-}
+};
 
 SwatDateEntry.prototype.setTimeEntry = function(time_entry)
 {
@@ -106,7 +106,7 @@ SwatDateEntry.prototype.setTimeEntry = function(time_entry)
 		this.time_entry = time_entry;
 		time_entry.date_entry = this;
 	}
-}
+};
 
 /**
  * @deprecated Use setTimeEntry() instead.
@@ -114,7 +114,7 @@ SwatDateEntry.prototype.setTimeEntry = function(time_entry)
 SwatDateEntry.prototype.setSwatTime = function(swat_time)
 {
 	this.setTimeEntry(swat_time);
-}
+};
 
 SwatDateEntry.prototype.reset = function(reset_time)
 {
@@ -129,7 +129,7 @@ SwatDateEntry.prototype.reset = function(reset_time)
 
 	if (this.time_entry && reset_time)
 		this.time_entry.reset(false);
-}
+};
 
 SwatDateEntry.prototype.setNow = function(set_time)
 {
@@ -163,7 +163,7 @@ SwatDateEntry.prototype.setNow = function(set_time)
 
 	if (this.time_entry && set_time)
 		this.time_entry.setNow(false);
-}
+};
 
 SwatDateEntry.prototype.setDefault = function(set_time)
 {
@@ -190,7 +190,7 @@ SwatDateEntry.prototype.setDefault = function(set_time)
 
 	if (this.time_entry && set_time)
 		this.time_entry.setDefault(false);
-}
+};
 
 SwatDateEntry.prototype.update = function(field)
 {
@@ -221,7 +221,7 @@ SwatDateEntry.prototype.update = function(field)
 		else
 			this.setDefault(true);
 	}
-}
+};
 
 SwatDateEntry.prototype.getDay = function()
 {
@@ -231,7 +231,7 @@ SwatDateEntry.prototype.getDay = function()
 		day = this.reverseLookup('day', this.day.selectedIndex);
 
 	return day;
-}
+};
 
 SwatDateEntry.prototype.getMonth = function()
 {
@@ -241,7 +241,7 @@ SwatDateEntry.prototype.getMonth = function()
 		month = this.reverseLookup('month', this.month.selectedIndex);
 
 	return month;
-}
+};
 
 SwatDateEntry.prototype.getYear = function()
 {
@@ -251,7 +251,7 @@ SwatDateEntry.prototype.getYear = function()
 		year = this.reverseLookup('year', this.year.selectedIndex);
 
 	return year;
-}
+};
 
 SwatDateEntry.prototype.setDay = function(day)
 {
@@ -263,7 +263,7 @@ SwatDateEntry.prototype.setDay = function(day)
 		else
 			this.day.selectedIndex = 0;
 	}
-}
+};
 
 SwatDateEntry.prototype.setMonth = function(month)
 {
@@ -275,7 +275,7 @@ SwatDateEntry.prototype.setMonth = function(month)
 		else
 			this.month.selectedIndex = 0;
 	}
-}
+};
 
 SwatDateEntry.prototype.setYear = function(year)
 {
@@ -287,4 +287,4 @@ SwatDateEntry.prototype.setYear = function(year)
 		else
 			this.year.selectedIndex = 0;
 	}
-}
+};

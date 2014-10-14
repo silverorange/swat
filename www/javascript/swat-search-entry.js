@@ -40,7 +40,7 @@ SwatSearchEntry.prototype.init = function()
 	} else {
 		this.hideLabelText();
 	}
-}
+};
 
 SwatSearchEntry.prototype.handleKeyDown = function(e)
 {
@@ -50,7 +50,7 @@ SwatSearchEntry.prototype.handleKeyDown = function(e)
 	}
 
 	YAHOO.util.Event.removeListener(this.input, 'keypress', this.handleKeyDown);
-}
+};
 
 SwatSearchEntry.prototype.handleFocus = function(e)
 {
@@ -59,7 +59,7 @@ SwatSearchEntry.prototype.handleFocus = function(e)
 
 	// hack to enable initialization when focused
 	this.input._focused = true;
-}
+};
 
 SwatSearchEntry.prototype.handleBlur = function(e)
 {
@@ -70,7 +70,7 @@ SwatSearchEntry.prototype.handleBlur = function(e)
 
 	// hack to enable initialization when focused
 	this.input._focused = false;
-}
+};
 
 SwatSearchEntry.prototype.showLabelText = function()
 {
@@ -110,7 +110,7 @@ SwatSearchEntry.prototype.showLabelText = function()
 
 	this.input_value = this.input.value;
 	this.input.value = this.label_text;
-}
+};
 
 SwatSearchEntry.prototype.isLabelTextShown = function()
 {
@@ -121,7 +121,7 @@ SwatSearchEntry.prototype.isLabelTextShown = function()
 	}
 
 	return shown;
-}
+};
 
 SwatSearchEntry.prototype.hideLabelText = function()
 {
@@ -171,4 +171,4 @@ SwatSearchEntry.prototype.hideLabelText = function()
 		YAHOO.util.Event.addListener(this.input, 'keypress',
 			this.handleKeyDown, this, true);
 	}
-}
+};

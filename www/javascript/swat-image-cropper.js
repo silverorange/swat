@@ -18,4 +18,4 @@ SwatImageCropper.prototype.handleChange = function()
 	this.crop_box_height.value = coords.height;
 	this.crop_box_x.value      = coords.left;
 	this.crop_box_y.value      = coords.top;
-}
+};

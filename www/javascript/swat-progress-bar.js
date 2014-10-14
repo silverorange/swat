@@ -89,7 +89,7 @@ SwatProgressBar.prototype.setValue = function(value)
 	}
 
 	this.changeValueEvent.fire(this.value);
-}
+};
 
 SwatProgressBar.prototype.setValueWithAnimation = function(value)
 {
@@ -184,7 +184,7 @@ SwatProgressBar.prototype.setValueWithAnimation = function(value)
 	this.animation.animate();
 
 	this.changeValueEvent.fire(this.value);
-}
+};
 
 SwatProgressBar.prototype.setText = function(text)
 {
@@ -193,12 +193,12 @@ SwatProgressBar.prototype.setText = function(text)
 	} else {
 		this.text.textContent = text;
 	}
-}
+};
 
 SwatProgressBar.prototype.getValue = function()
 {
 	return this.value;
-}
+};
 
 SwatProgressBar.prototype.pulse = function()
 {
@@ -248,11 +248,11 @@ SwatProgressBar.prototype.pulse = function()
 	this.pulse_position =
 		Math.round(this.pulse_position / SwatProgressBar.EPSILON) *
 		SwatProgressBar.EPSILON;
-}
+};
 
 SwatProgressBar.prototype.compare = function(x, y)
 {
 	if (Math.abs(x - y) < SwatProgressBar.EPSILON) return 0;
 	if (x > y) return 1;
 	return -1;
-}
+};

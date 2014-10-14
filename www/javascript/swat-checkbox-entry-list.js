@@ -41,7 +41,7 @@ SwatCheckboxEntryList.prototype.toggleEntry = function(index)
 {
 	if (this.entry_list[index])
 		this.setEntrySensitivity(index, this.entry_list[index].disabled);
-}
+};
 
 SwatCheckboxEntryList.prototype.setEntrySensitivity = function(index,
 	sensitivity)
@@ -56,10 +56,10 @@ SwatCheckboxEntryList.prototype.setEntrySensitivity = function(index,
 			YAHOO.util.Dom.addClass(this.entry_list[index], 'swat-insensitive');
 		}
 	}
-}
+};
 
 SwatCheckboxEntryList.prototype.updateFields = function()
 {
 	for (var i = 0; i < this.check_list.length; i++)
 		this.setEntrySensitivity(i, this.check_list[i].checked);
-}
+};

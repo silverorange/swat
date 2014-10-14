@@ -57,27 +57,27 @@ SwatTimeEntry.prototype.setSensitivity = function(sensitivity)
 			YAHOO.util.Dom.addClass(elements[i], 'swat-insensitive');
 		}
 	}
-}
+};
 
 SwatTimeEntry.prototype.handleHourChange = function()
 {
 	this.update('hour');
-}
+};
 
 SwatTimeEntry.prototype.handleMinuteChange = function()
 {
 	this.update('minute');
-}
+};
 
 SwatTimeEntry.prototype.handleSecondChange = function()
 {
 	this.update('second');
-}
+};
 
 SwatTimeEntry.prototype.handleAmPmChange = function()
 {
 	this.update('am_pm');
-}
+};
 
 SwatTimeEntry.prototype.addLookupTable = function(table_name, table)
 {
@@ -86,17 +86,17 @@ SwatTimeEntry.prototype.addLookupTable = function(table_name, table)
 	for (var key in table) {
 		this.reverse_lookup_table[table_name][table[key]] = key;
 	}
-}
+};
 
 SwatTimeEntry.prototype.lookup = function(table_name, key)
 {
 	return this.lookup_table[table_name][key];
-}
+};
 
 SwatTimeEntry.prototype.reverseLookup = function(table_name, key)
 {
 	return this.reverse_lookup_table[table_name][key];
-}
+};
 
 SwatTimeEntry.prototype.setDateEntry = function(date_entry)
 {
@@ -105,7 +105,7 @@ SwatTimeEntry.prototype.setDateEntry = function(date_entry)
 		this.date_entry = date_entry;
 		date_entry.time_entry = this;
 	}
-}
+};
 
 /**
  * @deprecated Use setDateEntry() instead.
@@ -113,7 +113,7 @@ SwatTimeEntry.prototype.setDateEntry = function(date_entry)
 SwatTimeEntry.prototype.setSwatDate = function(swat_date)
 {
 	this.setDateEntry(swat_date);
-}
+};
 
 SwatTimeEntry.prototype.reset = function(reset_date)
 {
@@ -131,7 +131,7 @@ SwatTimeEntry.prototype.reset = function(reset_date)
 
 	if (this.date_entry && reset_date)
 		this.date_entry.reset(false);
-}
+};
 
 SwatTimeEntry.prototype.setNow = function(set_date)
 {
@@ -163,7 +163,7 @@ SwatTimeEntry.prototype.setNow = function(set_date)
 
 	if (this.date_entry && set_date)
 		this.date_entry.setNow(false);
-}
+};
 
 SwatTimeEntry.prototype.setDefault = function(set_date)
 {
@@ -185,7 +185,7 @@ SwatTimeEntry.prototype.setDefault = function(set_date)
 
 	if (this.date_entry && set_date)
 		this.date_entry.setDefault(false);
-}
+};
 
 SwatTimeEntry.prototype.update = function(field)
 {
@@ -229,4 +229,4 @@ SwatTimeEntry.prototype.update = function(field)
 		else
 			this.setDefault(true);
 	}
-}
+};

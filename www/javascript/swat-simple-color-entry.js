@@ -60,7 +60,7 @@ getBodyContent: function()
 	var tbody = document.createElement('tbody');
 
 	if (this.colors.length % this.columns == 0)
-		var num_cells = this.colors.length
+		var num_cells = this.colors.length;
 	else
 		var num_cells = this.colors.length +
 			(this.columns - (this.colors.length % this.columns));
@@ -140,7 +140,7 @@ getToggleButton: function()
 	this.toggle_button_content = document.createElement('div');
 	this.toggle_button_content.className = 'swat-overlay-toggle-button-content';
 	// the following string is a UTF-8 encoded non breaking space
-	this.toggle_button_content.appendChild(document.createTextNode(' '))
+	this.toggle_button_content.appendChild(document.createTextNode(' '));
 	toggle_button.appendChild(this.toggle_button_content);
 
 	return toggle_button;
@@ -199,7 +199,7 @@ SwatSimpleColorEntry.prototype.handleInputChange = function()
 	if (color) {
 		this.setColor(color);
 	}
-}
+};
 
 // }}}
 // {{{ SwatSimpleColorEntry.prototype.setColor
@@ -251,7 +251,7 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 
 		this.highlightPaletteEntry(color);
 	}
-}
+};
 
 // }}}
 // {{{ SwatSimpleColorEntry.prototype.selectNull
@@ -265,7 +265,7 @@ SwatSimpleColorEntry.prototype.selectNull = function(e)
 {
 	YAHOO.util.Event.preventDefault(e);
 	this.setColor(null);
-}
+};
 
 // }}}
 // {{{ SwatSimpleColorEntry.prototype.selectColor
@@ -282,7 +282,7 @@ SwatSimpleColorEntry.prototype.selectColor = function(event)
 	var color_index = cell.parentNode.id.split('_palette_')[1];
 
 	this.setColor(this.colors[color_index]);
-}
+};
 
 // }}}
 // {{{ SwatSimpleColorEntry.prototype.highlightPaletteEntry
@@ -321,6 +321,6 @@ SwatSimpleColorEntry.prototype.highlightPaletteEntry = function(color)
 				'swat-simple-color-entry-palette-selected');
 		}
 	}
-}
+};
 
 // }}}

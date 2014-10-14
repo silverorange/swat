@@ -29,7 +29,7 @@ function SwatView(id)
 SwatView.prototype.getItemNode = function(node)
 {
 	return node;
-}
+};
 
 /**
  * Gets an identifier for an item in this view
@@ -51,7 +51,7 @@ SwatView.prototype.getItemNodeKey = function(item_node)
 		}
 	}
 	return key;
-}
+};
 
 /**
  * Gets the number of items selected in this view for the specified selector
@@ -66,7 +66,7 @@ SwatView.prototype.getSelectorItemCount = function(selector)
 		return this.selector_item_counts[selector];
 
 	return 0;
-}
+};
 
 /**
  * Selects an item node in this view
@@ -107,7 +107,7 @@ SwatView.prototype.selectItem = function(node, selector)
 
 	// remember that this node is selected by the selector
 	this.item_selectors[key][selector] = true;
-}
+};
 
 /**
  * Deselects an item node in this view
@@ -149,7 +149,7 @@ SwatView.prototype.deselectItem = function(node, selector)
 			}
 		}
 	}
-}
+};
 
 /**
  * Checks whether or not an item node is selected given an arbitrary
@@ -172,4 +172,4 @@ SwatView.prototype.isSelected = function(node)
 		var selected = (this.item_selection_counts[key] > 0);
 
 	return selected;
-}
+};
