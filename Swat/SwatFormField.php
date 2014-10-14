@@ -21,7 +21,29 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 {
 	// {{{ constants
 
+	/**
+	 * Indicates the required status display should highlight no fields.
+	 */
+	const SHOW_NONE = 0;
+
+	/**
+	 * Indicates the required status display should highlight required fields.
+	 */
+	const SHOW_REQUIRED = 1;
+
+	/**
+	 * Indicates the required status display should highlight optional fields.
+	 */
+	const SHOW_OPTIONAL = 2;
+
+	/**
+	 * @deprecated Use {@link SwatFormField::SHOW_REQUIRED} instead.
+	 */
 	const DISPLAY_REQUIRED = 1;
+
+	/**
+	 * @deprecated Use {@link SwatFormField::SHOW_OPTIONAL} instead.
+	 */
 	const DISPLAY_OPTIONAL = 2;
 
 	// }}}
@@ -51,17 +73,19 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	public $required = false;
 
 	/**
-	 * Display the required status of this field
+	 * What should be shown for the required status of this field
 	 *
-	 * Bitwise display options:
-	 * SwatFormField::DISPLAY_REQUIRED = display "required" if this field
-	 *                                   is required
-	 * SwatFormField::DISPLAY_OPTIONAL = display "optional" if this field
-	 *                                   is not required
+	 * This is a bitwise combination of the following options:
+	 *
+	 *  - {@link SwatFormField::SHOW_REQUIRED}
+	 *  - {@link SwatFormField::SHOW_OPTIONAL}
+	 *
+	 * For convenience, {@link SwatFormField::SHOW_NONE} may be used to
+	 * entirely hide required status for this field.
 	 *
 	 * @var integer
 	 */
-	public $required_status_display = self::DISPLAY_REQUIRED;
+	public $required_status_display = self::SHOW_REQUIRED;
 
 	/**
 	 * Optional note of text to display with the field
@@ -348,17 +372,24 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	// }}}
 	// {{{ protected function displayRequiredStatus()
 
+	/**
+	 * Highlights required and/or optional fields according to the required
+	 * status display value
+	 *
+	 * The status value is a bitwise combination so it is possible to
+	 * highlight both field types.
+	 */
 	protected function displayRequiredStatus()
 	{
 		if ($this->required &&
-			$this->required_status_display & self::DISPLAY_REQUIRED) {
+			$this->required_status_display & self::SHOW_REQUIRED) {
 
 			$span_tag = new SwatHtmlTag('span');
 			$span_tag->class = 'swat-required';
 			$span_tag->setContent(sprintf(' (%s)', Swat::_('required')));
 			$span_tag->display();
 		} elseif (!$this->required &&
-			$this->required_status_display & self::DISPLAY_OPTIONAL) {
+			$this->required_status_display & self::SHOW_OPTIONAL) {
 
 			$span_tag = new SwatHtmlTag('span');
 			$span_tag->class = 'swat-optional';
