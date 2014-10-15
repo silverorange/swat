@@ -87,7 +87,11 @@ SwatDateEntry.prototype.lookup = function(table_name, key)
 
 SwatDateEntry.prototype.reverseLookup = function(table_name, key)
 {
-	return this.reverse_lookup_table[table_name][key];
+	var value = this.reverse_lookup_table[table_name][key];
+	if (value === undefined) {
+		value = null;
+	}
+	return value;
 };
 
 SwatDateEntry.prototype.setCalendar = function(calendar)
