@@ -33,10 +33,10 @@ function SwatChangeOrder_mousemoveEventHandler(event)
 		SwatChangeOrder.is_dragging = true;
 		shadow_item.style.display = 'block';
 		shadow_item.scroll_timer =
-			setInterval('SwatChangeOrder_scrollTimerHandler()', 100);
+			setInterval(SwatChangeOrder_scrollTimerHandler(), 100);
 
 		shadow_item.update_timer =
-			setInterval('SwatChangeOrder_updateTimerHandler()', 300);
+			setInterval(SwatChangeOrder_updateTimerHandler(), 300);
 	}
 
 	var left = YAHOO.util.Event.getPageX(event) - shadow_item.mouse_offset_x;
