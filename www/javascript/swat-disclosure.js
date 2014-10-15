@@ -30,7 +30,7 @@ SwatDisclosure.prototype.init = function()
 		this.open();
 	else
 		this.close();
-}
+};
 
 SwatDisclosure.prototype.toggle = function()
 {
@@ -39,17 +39,17 @@ SwatDisclosure.prototype.toggle = function()
 	} else {
 		this.openWithAnimation();
 	}
-}
+};
 
 SwatDisclosure.prototype.getSpan = function()
 {
 	return this.div.firstChild;
-}
+};
 
 SwatDisclosure.prototype.getAnimateDiv = function()
 {
 	return this.div.firstChild.nextSibling.nextSibling.firstChild;
-}
+};
 
 SwatDisclosure.prototype.drawPeekabooFix = function()
 {
@@ -77,7 +77,7 @@ SwatDisclosure.prototype.drawPeekabooFix = function()
 			container.parentNode.appendChild(peekaboo_div);
 		}
 	}
-}
+};
 
 SwatDisclosure.prototype.drawDisclosureLink = function()
 {
@@ -104,7 +104,7 @@ SwatDisclosure.prototype.drawDisclosureLink = function()
 	this.anchor.appendChild(text);
 
 	span.parentNode.replaceChild(this.anchor, span);
-}
+};
 
 SwatDisclosure.prototype.close = function()
 {
@@ -119,7 +119,7 @@ SwatDisclosure.prototype.close = function()
 	this.input.value = 'closed';
 
 	this.opened = false;
-}
+};
 
 SwatDisclosure.prototype.closeWithAnimation = function()
 {
@@ -141,7 +141,7 @@ SwatDisclosure.prototype.closeWithAnimation = function()
 
 	this.input.value = 'closed';
 	this.opened = false;
-}
+};
 
 SwatDisclosure.prototype.open = function()
 {
@@ -155,7 +155,7 @@ SwatDisclosure.prototype.open = function()
 
 	this.input.value = 'opened';
 	this.opened = true;
-}
+};
 
 SwatDisclosure.prototype.openWithAnimation = function()
 {
@@ -191,7 +191,7 @@ SwatDisclosure.prototype.openWithAnimation = function()
 
 	this.input.value = 'opened';
 	this.opened = true;
-}
+};
 
 SwatDisclosure.prototype.handleClose = function()
 {
@@ -199,7 +199,7 @@ SwatDisclosure.prototype.handleClose = function()
 	YAHOO.util.Dom.addClass(this.div, 'swat-disclosure-control-closed');
 
 	this.semaphore = false;
-}
+};
 
 SwatDisclosure.prototype.handleOpen = function()
 {
@@ -210,7 +210,7 @@ SwatDisclosure.prototype.handleOpen = function()
 	this.animate_div.style.overflow = 'visible';
 
 	this.semaphore = false;
-}
+};
 
 function SwatFrameDisclosure(id, open)
 {

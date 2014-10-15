@@ -59,8 +59,8 @@ getBodyContent: function()
 
 	var tbody = document.createElement('tbody');
 
-	if (this.colors.length % this.columns == 0)
-		var num_cells = this.colors.length
+	if (this.colors.length % this.columns === 0)
+		var num_cells = this.colors.length;
 	else
 		var num_cells = this.colors.length +
 			(this.columns - (this.colors.length % this.columns));
@@ -92,7 +92,7 @@ getBodyContent: function()
 	}
 
 	for (var i = 0; i < num_cells; i++) {
-		if (i % this.columns == 0)
+		if (i % this.columns === 0)
 			trow = document.createElement('tr');
 
 		tcell = document.createElement('td');
@@ -119,7 +119,7 @@ getBodyContent: function()
 
 		trow.appendChild(tcell);
 
-		if ((i + 1) % this.columns == 0)
+		if ((i + 1) % this.columns === 0)
 			tbody.appendChild(trow);
 	}
 
@@ -140,7 +140,7 @@ getToggleButton: function()
 	this.toggle_button_content = document.createElement('div');
 	this.toggle_button_content.className = 'swat-overlay-toggle-button-content';
 	// the following string is a UTF-8 encoded non breaking space
-	this.toggle_button_content.appendChild(document.createTextNode(' '))
+	this.toggle_button_content.appendChild(document.createTextNode(' '));
 	toggle_button.appendChild(this.toggle_button_content);
 
 	return toggle_button;
@@ -178,16 +178,16 @@ SwatSimpleColorEntry.prototype.handleInputChange = function()
 {
 	var color = this.hex_input_tag.value;
 
-	if (color[0] == '#') {
-		color = color.slice(1, color.length - 1);
+	if (color.charAt(0) === '#') {
+		color = color.slice(1);
 	}
 
-	if (color.length == 3) {
+	if (color.length === 3) {
 		var hex3 = /^[0-9a-f]{3}$/i;
 		if (!hex3.test(color)) {
 			color = null;
 		}
-	} else if (color.length == 6) {
+	} else if (color.length === 6) {
 		var hex6 = /^[0-9a-f]{6}$/i;
 		if (!hex6.test(color)) {
 			color = null;
@@ -199,7 +199,7 @@ SwatSimpleColorEntry.prototype.handleInputChange = function()
 	if (color) {
 		this.setColor(color);
 	}
-}
+};
 
 // }}}
 // {{{ SwatSimpleColorEntry.prototype.setColor
@@ -227,14 +227,14 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 		}
 
 		if (color === null) {
-			if (this.hex_input_tag.value != '') {
+			if (this.hex_input_tag.value !== '') {
 				// IE fix, it sets string 'null' otherwise
 				this.hex_input_tag.value = '';
 			}
 			YAHOO.util.Dom.setStyle(this.toggle_button_content,
 				'background', 'url(packages/swat/images/color-entry-null.png)');
 		} else {
-			if (this.hex_input_tag.value != color) {
+			if (this.hex_input_tag.value !== color) {
 				this.hex_input_tag.value = color;
 			}
 			YAHOO.util.Dom.setStyle(this.toggle_button_content,
@@ -251,7 +251,7 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 
 		this.highlightPaletteEntry(color);
 	}
-}
+};
 
 // }}}
 // {{{ SwatSimpleColorEntry.prototype.selectNull
@@ -265,7 +265,7 @@ SwatSimpleColorEntry.prototype.selectNull = function(e)
 {
 	YAHOO.util.Event.preventDefault(e);
 	this.setColor(null);
-}
+};
 
 // }}}
 // {{{ SwatSimpleColorEntry.prototype.selectColor
@@ -282,7 +282,7 @@ SwatSimpleColorEntry.prototype.selectColor = function(event)
 	var color_index = cell.parentNode.id.split('_palette_')[1];
 
 	this.setColor(this.colors[color_index]);
-}
+};
 
 // }}}
 // {{{ SwatSimpleColorEntry.prototype.highlightPaletteEntry
@@ -321,6 +321,6 @@ SwatSimpleColorEntry.prototype.highlightPaletteEntry = function(color)
 				'swat-simple-color-entry-palette-selected');
 		}
 	}
-}
+};
 
 // }}}

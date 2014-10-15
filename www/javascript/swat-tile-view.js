@@ -50,7 +50,7 @@ SwatTileView.prototype.init = function()
 			this.items.push(this.view_node.childNodes[i]);
 		}
 	}
-}
+};
 
 /**
  * Selects an item node in this tile view
@@ -71,7 +71,7 @@ SwatTileView.prototype.selectItem = function(node, selector)
 		!YAHOO.util.Dom.hasClass(tile_node, 'highlight')) {
 		YAHOO.util.Dom.addClass(tile_node, 'highlight');
 	}
-}
+};
 
 /**
  * Deselects an item node in this tile view
@@ -92,4 +92,4 @@ SwatTileView.prototype.deselectItem = function(node, selector)
 		YAHOO.util.Dom.hasClass(tile_node, 'highlight')) {
 		YAHOO.util.Dom.removeClass(tile_node, 'highlight');
 	}
-}
+};

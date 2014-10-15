@@ -78,7 +78,7 @@ SwatButton.prototype.setProcessingMessage = function(message)
 			'swat-button-processing-throbber-text');
 	} else {
 		// the following string is a UTF-8 encoded non breaking space
-		this.throbber_container.appendChild(document.createTextNode(' '))
+		this.throbber_container.appendChild(document.createTextNode(' '));
 	}
 };
 

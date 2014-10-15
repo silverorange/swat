@@ -31,4 +31,4 @@ SwatFieldset.prototype.init = function()
 			container.parentNode.appendChild(peekaboo_div);
 		}
 	}
-}
+};

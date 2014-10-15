@@ -33,10 +33,10 @@ function SwatChangeOrder_mousemoveEventHandler(event)
 		SwatChangeOrder.is_dragging = true;
 		shadow_item.style.display = 'block';
 		shadow_item.scroll_timer =
-			setInterval('SwatChangeOrder_scrollTimerHandler()', 100);
+			setInterval(SwatChangeOrder_scrollTimerHandler(), 100);
 
 		shadow_item.update_timer =
-			setInterval('SwatChangeOrder_updateTimerHandler()', 300);
+			setInterval(SwatChangeOrder_updateTimerHandler(), 300);
 	}
 
 	var left = YAHOO.util.Event.getPageX(event) - shadow_item.mouse_offset_x;
@@ -253,8 +253,8 @@ function SwatChangeOrder_mouseupEventHandler(event)
 	// only allow left click to do things
 	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
-	if ((is_ie && (event.button & 1) != 1) ||
-		(!is_ie && !is_webkit && event.button != 0))
+	if ((is_ie && (event.button & 1) !== 1) ||
+		(!is_ie && !is_webkit && event.button !== 0))
 		return false;
 
 	YAHOO.util.Event.removeListener(document, 'mousemove',
@@ -312,7 +312,7 @@ function SwatChangeOrder_mousedownEventHandler(event)
 	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
 	if ((is_ie && (event.button & 1) != 1) ||
-		(!is_ie && !is_webkit && event.button != 0))
+		(!is_ie && !is_webkit && event.button !== 0))
 		return false;
 
 	if (!this.controller.sensitive)
@@ -397,7 +397,7 @@ function SwatChangeOrder(id, sensitive)
 
 	// re-populate list with dynamic items if page is refreshed
 	var items_value = document.getElementById(this.id + '_dynamic_items').value;
-	if (items_value != '') {
+	if (items_value !== '') {
 		this.list_div.innerHTML = items_value;
 	}
 
@@ -457,7 +457,8 @@ function SwatChangeOrder(id, sensitive)
 	// add grippies
 	YAHOO.util.Event.on(window, 'load', function() {
 		var node, grippy, height;
-		for (var i = 0; i < this.list_div.childNodes.length; i++) {
+		// exclude last item because it is the sentinel node
+		for (var i = 0; i < this.list_div.childNodes.length - 1; i++) {
 			node = this.list_div.childNodes[i];
 
 			grippy = document.createElement('span');
@@ -569,7 +570,7 @@ SwatChangeOrder.prototype.add = function(el, value)
 	// update hidden value
 	var value_array;
 	var hidden_value = document.getElementById(this.id + '_value');
-	if (hidden_value.value == '') {
+	if (hidden_value.value === '') {
 		value_array = [];
 	} else {
 		value_array = hidden_value.value.split(',');
@@ -580,7 +581,7 @@ SwatChangeOrder.prototype.add = function(el, value)
 	this.updateDynamicItemsValue();
 
 	return true;
-}
+};
 
 // }}}
 // {{{ remove()
@@ -616,7 +617,7 @@ SwatChangeOrder.prototype.remove = function(el)
 	this.updateDynamicItemsValue();
 
 	return true;
-}
+};
 
 // }}}
 // {{{ count()
@@ -629,7 +630,7 @@ SwatChangeOrder.prototype.remove = function(el)
 SwatChangeOrder.prototype.count = function()
 {
 	return this.list_div.childNodes.length - 1;
-}
+};
 
 // }}}
 // {{{ containsValue()
@@ -646,7 +647,7 @@ SwatChangeOrder.prototype.containsValue = function(value)
 {
 	var value_array;
 	var hidden_value = document.getElementById(this.id + '_value');
-	if (hidden_value.value == '') {
+	if (hidden_value.value === '') {
 		value_array = [];
 	} else {
 		value_array = hidden_value.value.split(',');
@@ -659,7 +660,7 @@ SwatChangeOrder.prototype.containsValue = function(value)
 	}
 
 	return false;
-}
+};
 
 // }}}
 // {{{ choose()
@@ -692,7 +693,7 @@ SwatChangeOrder.prototype.choose = function(div)
 			}
 		}
 	}
-}
+};
 
 // }}}
 // {{{ moveToTop()
@@ -713,7 +714,7 @@ SwatChangeOrder.prototype.moveToTop = function()
 
 		this.moveToTopHelper(steps);
 	}
-}
+};
 
 // }}}
 // {{{ moveToTopHelper()
@@ -738,7 +739,7 @@ SwatChangeOrder.prototype.moveToTopHelper = function(steps)
 		this.setButtonsSensitive(true);
 		this.updateDynamicItemsValue();
 	}
-}
+};
 
 // }}}
 // {{{ moveToBottom()
@@ -759,7 +760,7 @@ SwatChangeOrder.prototype.moveToBottom = function()
 
 		this.moveToBottomHelper(steps);
 	}
-}
+};
 
 // }}}
 // {{{ moveToBottomHelper()
@@ -784,7 +785,7 @@ SwatChangeOrder.prototype.moveToBottomHelper = function(steps)
 		this.setButtonsSensitive(true);
 		this.updateDynamicItemsValue();
 	}
-}
+};
 
 // }}}
 // {{{ moveUp()
@@ -800,7 +801,7 @@ SwatChangeOrder.prototype.moveUp = function()
 		this.moveUpHelper(1);
 		this.updateDynamicItemsValue();
 	}
-}
+};
 
 // }}}
 // {{{ moveDown()
@@ -816,7 +817,7 @@ SwatChangeOrder.prototype.moveDown = function()
 		this.moveDownHelper(1);
 		this.updateDynamicItemsValue();
 	}
-}
+};
 
 // }}}
 // {{{ moveUpHelper()
@@ -855,7 +856,7 @@ SwatChangeOrder.prototype.moveUpHelper = function(steps)
 	this.scrollList(this.getScrollPosition(this.active_div));
 
 	return return_val;
-}
+};
 
 // }}}
 // {{{ moveDownHelper()
@@ -897,7 +898,7 @@ SwatChangeOrder.prototype.moveDownHelper = function(steps)
 	this.scrollList(this.getScrollPosition(this.active_div));
 
 	return return_val;
-}
+};
 
 // }}}
 // {{{ setButtonsSensitive()
@@ -911,7 +912,7 @@ SwatChangeOrder.prototype.setButtonsSensitive = function(sensitive)
 {
 	for (var i = 0; i < this.buttons.length; i++)
 		this.buttons[i].disabled = !sensitive;
-}
+};
 
 // }}}
 // {{{ setSensitive()
@@ -933,7 +934,7 @@ SwatChangeOrder.prototype.setSensitive = function(sensitive)
 		document.getElementById(this.id).className =
 			'swat-change-order swat-change-order-insensitive';
 	}
-}
+};
 
 // }}}
 // {{{ updateValue()
@@ -970,7 +971,7 @@ SwatChangeOrder.prototype.updateValue = function()
 
 	// update a hidden field with current order of keys
 	hidden_field.value = temp;
-}
+};
 
 // }}}
 // {{{ updateDynamicItemsValue()
@@ -985,7 +986,7 @@ SwatChangeOrder.prototype.updateDynamicItemsValue = function()
 {
 	var items_value = document.getElementById(this.id + '_dynamic_items');
 	items_value.value = this.list_div.innerHTML;
-}
+};
 
 // }}}
 // {{{ getScrollPosition()
@@ -1004,7 +1005,7 @@ SwatChangeOrder.prototype.getScrollPosition = function(element)
 			(element.offsetHeight / 2);
 
 	return y_position;
-}
+};
 
 // }}}
 // {{{ scrollList()
@@ -1041,7 +1042,7 @@ SwatChangeOrder.prototype.scrollList = function(y_coord)
 
 	this.list_div.scrollTop = Math.floor(
 		(this.list_div.scrollHeight - this.list_div.clientHeight) * factor);
-}
+};
 
 // }}}
 // {{{ isGrid()
@@ -1054,6 +1055,6 @@ SwatChangeOrder.prototype.isGrid = function()
 {
 	var node = this.list_div.childNodes[0];
 	return (YAHOO.util.Dom.getStyle(node, 'float') != 'none');
-}
+};
 
 // }}}

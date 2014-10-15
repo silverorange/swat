@@ -31,7 +31,7 @@ SwatCheckAll.prototype.setState = function(checked)
 {
 	this.check_all.checked = checked;
 	this.updateExtendedCheckbox();
-}
+};
 
 SwatCheckAll.prototype.updateExtendedCheckbox = function()
 {
@@ -52,7 +52,7 @@ SwatCheckAll.prototype.updateExtendedCheckbox = function()
 		container.style.display = 'none';
 		container.getElementsByTagName('input')[0].checked = false;
 	}
-}
+};
 
 /**
  * Sets the controlling checkbox list
@@ -78,7 +78,7 @@ SwatCheckAll.prototype.setController = function(controller)
 	this.controller = controller;
 	this.controller.check_all = this;
 	this.controller.updateCheckAll();
-}
+};
 
 /**
  * Handles click events for this check-all object
@@ -88,4 +88,4 @@ SwatCheckAll.prototype.clickHandler = function()
 	// check all checkboxes in the controller object
 	this.controller.checkAll(this.check_all.checked);
 	this.updateExtendedCheckbox();
-}
+};

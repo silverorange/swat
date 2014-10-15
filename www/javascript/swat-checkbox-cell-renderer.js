@@ -46,13 +46,13 @@ SwatCheckboxCellRenderer.prototype.init = function()
 				this.handleMouseDown, this, true);
 		}
 	}
-}
+};
 
 SwatCheckboxCellRenderer.prototype.handleMouseDown = function(e)
 {
 	// prevent selecting label text when shify key is held
 	YAHOO.util.Event.preventDefault(e);
-}
+};
 
 SwatCheckboxCellRenderer.prototype.handleClick = function(e)
 {
@@ -60,11 +60,11 @@ SwatCheckboxCellRenderer.prototype.handleClick = function(e)
 	this.updateNode(checkbox_node, e.shiftKey);
 	this.updateCheckAll();
 	this.last_clicked_index = checkbox_node._index;
-}
+};
 
 SwatCheckboxCellRenderer.prototype.updateCheckAll = function()
 {
-	if (this.check_all == null)
+	if (this.check_all === null)
 		return;
 
 	var count = 0;
@@ -75,7 +75,7 @@ SwatCheckboxCellRenderer.prototype.updateCheckAll = function()
 			break; // can't possibly be all checked or none checked
 
 	this.check_all.setState(count > 0 && count == this.check_list.length);
-}
+};
 
 SwatCheckboxCellRenderer.prototype.checkAll = function(checked)
 {
@@ -85,7 +85,7 @@ SwatCheckboxCellRenderer.prototype.checkAll = function(checked)
 		}
 		this.updateNode(this.check_list[i]);
 	}
-}
+};
 
 SwatCheckboxCellRenderer.prototype.checkBetween = function(a, b)
 {
@@ -101,7 +101,7 @@ SwatCheckboxCellRenderer.prototype.checkBetween = function(a, b)
 			this.view.selectItem(this.check_list[i], this.id);
 		}
 	}
-}
+};
 
 SwatCheckboxCellRenderer.prototype.uncheckBetween = function(a, b)
 {
@@ -115,7 +115,7 @@ SwatCheckboxCellRenderer.prototype.uncheckBetween = function(a, b)
 		this.check_list[i].checked = false;
 		this.view.deselectItem(this.check_list[i], this.id);
 	}
-}
+};
 
 SwatCheckboxCellRenderer.prototype.updateNode = function(checkbox_node,
 	shift_key)
@@ -131,4 +131,4 @@ SwatCheckboxCellRenderer.prototype.updateNode = function(checkbox_node,
 			this.uncheckBetween(this.last_clicked_index, checkbox_node._index);
 		}
 	}
-}
+};

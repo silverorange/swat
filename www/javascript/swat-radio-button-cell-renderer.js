@@ -41,7 +41,7 @@ SwatRadioButtonCellRenderer.prototype.handleClick = function(e)
 
 	this.current_node = YAHOO.util.Event.getTarget(e);
 	this.updateNode(this.current_node);
-}
+};
 
 SwatRadioButtonCellRenderer.prototype.updateNode = function(radio_button_node)
 {
@@ -49,4 +49,4 @@ SwatRadioButtonCellRenderer.prototype.updateNode = function(radio_button_node)
 		this.view.selectItem(radio_button_node, this.id);
 	else
 		this.view.deselectItem(radio_button_node, this.id);
-}
+};

@@ -81,14 +81,14 @@ function SwatTableViewInputRow_getXMLParser()
 		 * Internet Explorer's XMLDOM object has a proprietary loadXML()
 		 * method. Our method returns the document.
 		 */
-		parser = function() {}
+		parser = function() {};
 		parser.loadXML = function(document_string)
 		{
 			if (!dom.loadXML(document_string))
 				alert(dom.parseError.reason);
 
 			return dom;
-		}
+		};
 	}
 
 	if (parser === null && typeof DOMParser != 'undefined') {
@@ -100,11 +100,11 @@ function SwatTableViewInputRow_getXMLParser()
 
 		// Cannot add loadXML method to a newly created DOMParser because it
 		// crashes Safari
-		parser = function() {}
+		parser = function() {};
 		parser.loadXML = function(document_string)
 		{
 			return dom_parser.parseFromString(document_string, 'text/xml');
-		}
+		};
 	}
 
 	return parser;
@@ -191,13 +191,13 @@ SwatTableViewInputRow.prototype.initReplicators = function()
 		if (this.replicators_input === null)
 			return false;
 
-		if (this.replicators_input.value == '')
+		if (this.replicators_input.value === '')
 			this.replicators = [];
 		else
 			this.replicators = this.replicators_input.value.split(',');
 	}
 	return true;
-}
+};
 
 /**
  * Adds a new data row to the table
@@ -276,7 +276,7 @@ SwatTableViewInputRow.prototype.addRow = function()
 		if (scripts[0].getAttribute('type') == 'text/javascript' &&
 			scripts[0].childNodes.length > 0)
 				eval(scripts[i].firstChild.nodeValue);
-}
+};
 
 /**
  * Removes a data row from the table
@@ -306,4 +306,4 @@ SwatTableViewInputRow.prototype.removeRow = function(replicator_id)
 		var removed_row = row.parentNode.removeChild(row);
 		delete removed_row;
 	}
-}
+};

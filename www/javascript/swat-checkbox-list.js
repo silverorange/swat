@@ -32,16 +32,16 @@ SwatCheckboxList.prototype.init = function()
 	}
 
 	this.updateCheckAll();
-}
+};
 
 SwatCheckboxList.prototype.handleClick = function(event)
 {
 	this.updateCheckAll();
-}
+};
 
 SwatCheckboxList.prototype.updateCheckAll = function ()
 {
-	if (this.check_all == null)
+	if (this.check_all === null)
 		return;
 
 	var count = 0;
@@ -52,7 +52,7 @@ SwatCheckboxList.prototype.updateCheckAll = function ()
 			break; // can't possibly be all checked or none checked
 
 	this.check_all.setState(count == this.check_list.length);
-}
+};
 
 SwatCheckboxList.prototype.checkAll = function(checked)
 {
@@ -61,4 +61,4 @@ SwatCheckboxList.prototype.checkAll = function(checked)
 			this.check_list[i].checked = checked;
 		}
 	}
-}
+};

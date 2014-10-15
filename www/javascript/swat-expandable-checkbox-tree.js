@@ -55,7 +55,7 @@ SwatExpandableCheckboxTree.prototype.drawExpander = function(expander_node_id)
 	list_item.insertBefore(anchor, list_item.firstChild);
 
 	YAHOO.util.Dom.addClass(list_item, 'swat-expandable-checkbox-tree-expander');
-}
+};
 
 SwatExpandableCheckboxTree.getTreeNode = function(branch_child_node)
 {
@@ -91,7 +91,7 @@ SwatExpandableCheckboxTree.getTreeNode = function(branch_child_node)
 	}
 
 	return returned_node;
-}
+};
 
 SwatExpandableCheckboxTree.prototype.initTree = function()
 {
@@ -111,7 +111,7 @@ SwatExpandableCheckboxTree.prototype.initTree = function()
 				this.initTreeNode(child_node);
 		}
 	}
-}
+};
 
 SwatExpandableCheckboxTree.prototype.initTreeNode = function(node)
 {
@@ -160,7 +160,7 @@ SwatExpandableCheckboxTree.prototype.initTreeNode = function(node)
 
 	return { 'all_children_checked': all_children_checked,
 		'any_children_checked': any_children_checked };
-}
+};
 
 SwatExpandableCheckboxTree.prototype.handleClick = function(e)
 {
@@ -220,7 +220,7 @@ SwatExpandableCheckboxTree.prototype.handleClick = function(e)
 
 		parent_checkbox.checked = all_checked;
 	}
-}
+};
 
 SwatExpandableCheckboxTree.prototype.toggleBranch = function(branch_id)
 {
@@ -233,7 +233,7 @@ SwatExpandableCheckboxTree.prototype.toggleBranch = function(branch_id)
 	} else {
 		this.openBranchWithAnimation(branch_id);
 	}
-}
+};
 
 SwatExpandableCheckboxTree.prototype.openBranch = function(branch_id)
 {
@@ -248,7 +248,7 @@ SwatExpandableCheckboxTree.prototype.openBranch = function(branch_id)
 
 	YAHOO.util.Dom.addClass(anchor,
 		'swat-expandable-checkbox-tree-anchor-opened');
-}
+};
 
 SwatExpandableCheckboxTree.prototype.closeBranch = function(branch_id)
 {
@@ -263,7 +263,7 @@ SwatExpandableCheckboxTree.prototype.closeBranch = function(branch_id)
 
 	YAHOO.util.Dom.removeClass(anchor,
 		'swat-expandable-checkbox-tree-anchor-opened');
-}
+};
 
 SwatExpandableCheckboxTree.prototype.openBranchWithAnimation = function(
 	branch_id)
@@ -301,7 +301,7 @@ SwatExpandableCheckboxTree.prototype.openBranchWithAnimation = function(
 		SwatExpandableCheckboxTree.handleBranchOpen, [this, branch]);
 
 	animation.animate();
-}
+};
 
 SwatExpandableCheckboxTree.prototype.closeBranchWithAnimation = function(
 	branch_id)
@@ -326,7 +326,7 @@ SwatExpandableCheckboxTree.prototype.closeBranchWithAnimation = function(
 		SwatExpandableCheckboxTree.handleBranchClose, [this, branch]);
 
 	animation.animate();
-}
+};
 
 SwatExpandableCheckboxTree.handleBranchOpen = function(type, args, data)
 {
@@ -334,7 +334,7 @@ SwatExpandableCheckboxTree.handleBranchOpen = function(type, args, data)
 	var branch = data[1];
 
 	branch.style.height = '';
-}
+};
 
 SwatExpandableCheckboxTree.handleBranchClose = function(type, args, data)
 {
@@ -343,4 +343,4 @@ SwatExpandableCheckboxTree.handleBranchClose = function(type, args, data)
 
 	YAHOO.util.Dom.addClass(branch, 'swat-expandable-checkbox-tree-closed');
 	YAHOO.util.Dom.removeClass(branch, 'swat-expandable-checkbox-tree-opened');
-}
+};

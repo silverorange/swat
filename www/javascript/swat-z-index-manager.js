@@ -4,7 +4,7 @@ function SwatZIndexNode(element)
 		this.element = element;
 		this.element._swat_z_index_node = this;
 	} else {
-		this.element = null
+		this.element = null;
 	}
 
 	this.parent = null;
@@ -21,7 +21,7 @@ SwatZIndexNode.prototype.add = function(node)
 
 	this.nodes.push(node);
 	node.parent = this;
-}
+};
 
 SwatZIndexNode.prototype.remove = function(node)
 {
@@ -37,7 +37,7 @@ SwatZIndexNode.prototype.remove = function(node)
 	}
 
 	return found;
-}
+};
 
 SwatZIndexManager.reindex = function()
 {
@@ -45,7 +45,7 @@ SwatZIndexManager.reindex = function()
 		SwatZIndexManager.tree,
 		SwatZIndexManager.start
 	);
-}
+};
 
 SwatZIndexManager.reindexNode = function(node, index)
 {
@@ -59,7 +59,7 @@ SwatZIndexManager.reindexNode = function(node, index)
 	}
 
 	return index;
-}
+};
 
 SwatZIndexManager.unindexNode = function(node)
 {
@@ -72,7 +72,7 @@ SwatZIndexManager.unindexNode = function(node)
 	}
 
 	return index;
-}
+};
 
 /**
  * An object to manage element z-indexes for a webpage
@@ -134,7 +134,7 @@ SwatZIndexManager.raiseElement = function(element, group)
 	}
 
 	SwatZIndexManager.reindex();
-}
+};
 
 SwatZIndexManager.raiseGroup = function(group)
 {
@@ -149,7 +149,7 @@ SwatZIndexManager.raiseGroup = function(group)
 	parent.add(group);
 
 	SwatZIndexManager.reindex();
-}
+};
 
 SwatZIndexManager.lowerGroup = function(group)
 {
@@ -160,7 +160,7 @@ SwatZIndexManager.lowerGroup = function(group)
 	var group = SwatZIndexManager.groups[group];
 	SwatZIndexManager.unindexNode(group);
 	SwatZIndexManager.removeGroup(group);
-}
+};
 
 SwatZIndexManager.removeGroup = function(group)
 {
@@ -173,7 +173,7 @@ SwatZIndexManager.removeGroup = function(group)
 	SwatZIndexManager.groups[group] = null;
 
 	SwatZIndexManager.reindex();
-}
+};
 
 /**
  * Lowers an element to the bottom
@@ -194,7 +194,7 @@ SwatZIndexManager.lowerElement = function(element, group)
 	element.style.zIndex = 0;
 
 	return SwatZIndexManager.removeElement(element, group);
-}
+};
 
 /**
  * Removes an element from the list of managed elements
@@ -230,4 +230,4 @@ SwatZIndexManager.removeElement = function(element, group)
 	SwatZIndexManager.reindex();
 
 	return element;
-}
+};

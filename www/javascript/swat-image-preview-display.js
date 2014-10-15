@@ -61,7 +61,7 @@ SwatImagePreviewDisplay.prototype.init = function()
 		if (this.show_title) {
 			var span_tag = document.createElement('span');
 			span_tag.className = 'swat-image-preview-title';
-			span_tag.appendChild(document.createTextNode(image_wrapper.title))
+			span_tag.appendChild(document.createTextNode(image_wrapper.title));
 			image_link.appendChild(span_tag);
 		}
 
@@ -151,7 +151,7 @@ SwatImagePreviewDisplay.prototype.drawOverlay = function()
 
 	var body = document.getElementsByTagName('body')[0];
 	body.appendChild(this.overlay);
-}
+};
 
 SwatImagePreviewDisplay.prototype.draw = function()
 {

@@ -105,7 +105,7 @@ SwatCalendar.preloadImages = function()
 	SwatCalendar.go_next_image.src = 'packages/swat/images/go-next.png';
 
 	SwatCalendar.images_preloaded = true;
-}
+};
 
 // string data
 SwatCalendar.week_names = [
@@ -151,7 +151,7 @@ SwatCalendar.prototype.createOverlay = function()
 	document.getElementById(this.id + '_div').style.display = 'block';
 
 	this.overlay.render(document.body);
-}
+};
 
 /**
  * Associates this calendar control with an existing SwatDateEntry JavaScript
@@ -166,7 +166,7 @@ SwatCalendar.prototype.setDateEntry = function(date_entry)
 		this.date_entry = date_entry;
 		date_entry.calendar = this;
 	}
-}
+};
 
 /**
  * @deprecated Use setDateEntry() instead.
@@ -174,7 +174,7 @@ SwatCalendar.prototype.setDateEntry = function(date_entry)
 SwatCalendar.prototype.setSwatDateEntry = function(entry)
 {
 	this.setDateEntry(entry);
-}
+};
 
 SwatCalendar.prototype.setSensitivity = function(sensitivity)
 {
@@ -209,7 +209,7 @@ SwatCalendar.prototype.setSensitivity = function(sensitivity)
 	}
 
 	this.sensitive = sensitivity;
-}
+};
 
 /**
  * Displays the toggle button for this calendar control
@@ -269,7 +269,7 @@ SwatCalendar.prototype.drawButton = function()
 	this.container.appendChild(calendar_div);
 
 	this.drawn = true;
-}
+};
 
 /**
  * Decides if a given year is a leap year
@@ -281,9 +281,9 @@ SwatCalendar.prototype.drawButton = function()
 SwatCalendar.isLeapYear = function(year)
 {
 	return (
-		((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)
+		((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0)
 	) ? 1 : 0;
-}
+};
 
 /**
  * Parses a date string into a Date object
@@ -301,7 +301,7 @@ SwatCalendar.stringToDate = function(date_string)
 	var yyyy = date_parts[2] * 1;
 
 	return new Date(yyyy, mm - 1, dd);
-}
+};
 
 /**
  * Sets the values of an associated SwatDateEntry widget to the values
@@ -336,7 +336,7 @@ SwatCalendar.prototype.setDateValues = function(year, month, day)
 	}
 
 	this.redraw();
-}
+};
 
 /**
  * Sets the associated date widget to the specified date and updates the
@@ -352,7 +352,7 @@ SwatCalendar.prototype.setDate = function(element, yyyy, mm, dd)
 	element.className = 'swat-calendar-current-cell';
 
 	this.selected_element = element;
-}
+};
 
 /**
  * Closes this calendar
@@ -363,10 +363,11 @@ SwatCalendar.prototype.close = function()
 	this.open = false;
 	YAHOO.util.Event.removeListener(document, 'click',
 		this.handleDocumentClick);
-}
+};
 
 
 // }}}
+
 /**
  * Closes this calendar and sets the associated date widget to the
  * specified date
@@ -375,7 +376,7 @@ SwatCalendar.prototype.closeAndSetDate = function(yyyy, mm, dd)
 {
 	this.setDateValues(yyyy, mm, dd);
 	this.close();
-}
+};
 
 /**
  * Closes this calendar and sets the associated date widget as blank
@@ -384,7 +385,7 @@ SwatCalendar.prototype.closeAndSetBlank = function()
 {
 	this.setBlank();
 	this.close();
-}
+};
 
 /**
  * Sets the associated date widget as blank
@@ -399,7 +400,7 @@ SwatCalendar.prototype.setBlank = function()
 			this.date_entry.time_entry.reset();
 		}
 	}
-}
+};
 
 /**
  * Closes this calendar and sets the associated date widget to today's
@@ -409,7 +410,7 @@ SwatCalendar.prototype.closeAndSetToday = function()
 {
 	this.setToday();
 	this.close();
-}
+};
 
 /**
  * Sets the associated date widget to today's date
@@ -426,7 +427,7 @@ SwatCalendar.prototype.setToday = function()
 	}
 
 	this.setDateValues(yyyy, mm, dd);
-}
+};
 
 /**
  * Redraws this calendar without hiding it first
@@ -467,7 +468,7 @@ SwatCalendar.prototype.redraw = function()
 		yyyy = (start_date.getFullYear() + 1);
 
 	this.draw(yyyy, mm);
-}
+};
 
 SwatCalendar.prototype.buildControls = function()
 {
@@ -547,7 +548,7 @@ SwatCalendar.prototype.buildControls = function()
 	year_array = year_array + '</select>';
 
 	return (month_array + '&nbsp;' + year_array);
-}
+};
 
 SwatCalendar.prototype.toggle = function()
 {
@@ -558,7 +559,7 @@ SwatCalendar.prototype.toggle = function()
 		this.draw();
 		this.toggle_button.title = SwatCalendar.close_toggle_text;
 	}
-}
+};
 
 SwatCalendar.prototype.draw = function()
 {
@@ -581,12 +582,12 @@ SwatCalendar.prototype.draw = function()
 			var m = this.date_entry.getMonth();
 			var y = this.date_entry.getYear();
 
-			var day   = (d == null) ? today.getDate()      : parseInt(d);
-			var month = (m == null) ? today.getMonth() + 1 : parseInt(m);
-			var year  = (y == null) ? today.getYear()      : parseInt(y);
+			var day   = (d === null) ? today.getDate()      : parseInt(d);
+			var month = (m === null) ? today.getMonth() + 1 : parseInt(m);
+			var year  = (y === null) ? today.getYear()      : parseInt(y);
 
 			//TODO: figure out if the last two conditions are ever run
-			if (day != 0 && month != 0 && year != 0) {
+			if (day !== 0 && month !== 0 && year !== 0) {
 				mm = month;
 				dd = day;
 				yyyy = year;
@@ -615,9 +616,9 @@ SwatCalendar.prototype.draw = function()
 			var m = this.date_entry.getMonth();
 			var y = this.date_entry.getYear();
 
-			var day   = (d == null) ? today.getDate()      : parseInt(d);
-			var month = (m == null) ? today.getMonth() + 1 : parseInt(m);
-			var year  = (y == null) ? today.getYear()      : parseInt(y);
+			var day   = (d === null) ? today.getDate()      : parseInt(d);
+			var month = (m === null) ? today.getMonth() + 1 : parseInt(m);
+			var year  = (y === null) ? today.getYear()      : parseInt(y);
 
 			if (mm == month && yyyy == year) {
 				dd = day;
@@ -683,10 +684,10 @@ SwatCalendar.prototype.draw = function()
 	var start_month  = start_date.getMonth();
 
 	var calendar_start =
-		(this_year == start_year && this_month == (start_month + 1))
+		(this_year == start_year && this_month == (start_month + 1));
 
 	var calendar_end =
-		(this_year == end_year && this_month == (end_month + 1))
+		(this_year == end_year && this_month == (end_month + 1));
 
 	if (calendar_start) {
 		var prev_link = 'return false;';

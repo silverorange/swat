@@ -18,7 +18,7 @@ SwatMessageDisplay.prototype.getMessage = function(index)
 		return this.messages[index];
 	else
 		return false;
-}
+};
 
 /**
  * A message in a message display
@@ -55,7 +55,7 @@ SwatMessageDisplayMessage.prototype.drawDismissLink = function()
 
 	var container = this.message_div.firstChild;
 	container.insertBefore(anchor, container.firstChild);
-}
+};
 
 /**
  * Hides this message
@@ -76,7 +76,7 @@ SwatMessageDisplayMessage.prototype.hide = function()
 		fade_animation.onComplete.subscribe(this.shrink, this, true);
 		fade_animation.animate();
 	}
-}
+};
 
 SwatMessageDisplayMessage.prototype.shrink = function()
 {
@@ -133,7 +133,7 @@ SwatMessageDisplayMessage.prototype.shrink = function()
 
 	shrink_animation.onComplete.subscribe(this.remove, this, true);
 	shrink_animation.animate();
-}
+};
 
 SwatMessageDisplayMessage.prototype.remove = function()
 {
@@ -143,4 +143,4 @@ SwatMessageDisplayMessage.prototype.remove = function()
 		this.message_div.parentNode.removeChild(this.message_div);
 
 	delete removed_node;
-}
+};
