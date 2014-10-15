@@ -457,7 +457,8 @@ function SwatChangeOrder(id, sensitive)
 	// add grippies
 	YAHOO.util.Event.on(window, 'load', function() {
 		var node, grippy, height;
-		for (var i = 0; i < this.list_div.childNodes.length; i++) {
+		// exclude last item because it is the sentinel node
+		for (var i = 0; i < this.list_div.childNodes.length - 1; i++) {
 			node = this.list_div.childNodes[i];
 
 			grippy = document.createElement('span');

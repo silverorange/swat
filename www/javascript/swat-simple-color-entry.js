@@ -178,8 +178,8 @@ SwatSimpleColorEntry.prototype.handleInputChange = function()
 {
 	var color = this.hex_input_tag.value;
 
-	if (color[0] === '#') {
-		color = color.slice(1, color.length - 1);
+	if (color.charAt(0) === '#') {
+		color = color.slice(1);
 	}
 
 	if (color.length === 3) {
@@ -234,7 +234,7 @@ SwatSimpleColorEntry.prototype.setColor = function(color)
 			YAHOO.util.Dom.setStyle(this.toggle_button_content,
 				'background', 'url(packages/swat/images/color-entry-null.png)');
 		} else {
-			if (this.hex_input_tag.value != color) {
+			if (this.hex_input_tag.value !== color) {
 				this.hex_input_tag.value = color;
 			}
 			YAHOO.util.Dom.setStyle(this.toggle_button_content,
