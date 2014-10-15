@@ -180,7 +180,7 @@ SwatRadioNoteBook.prototype.restorePageFocusability = function(page)
 	);
 
 	for (var i = 0; i < elements.length; i++) {
-		if (elements[i].getAttribute('_' + this.id + '_tabindex') !== '') {
+		if (elements[i].getAttribute('_' + this.id + '_tabindex') !== null) {
 			var tabindex = elements[i]['_' + this.id + '_tabindex'];
 			if (tabindex === '' || tabindex === null) {
 				elements[i].removeAttribute('tabindex');
