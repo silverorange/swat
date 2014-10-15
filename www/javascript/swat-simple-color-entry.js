@@ -178,8 +178,8 @@ SwatSimpleColorEntry.prototype.handleInputChange = function()
 {
 	var color = this.hex_input_tag.value;
 
-	if (color[0] === '#') {
-		color = color.slice(1, color.length - 1);
+	if (color.charAt(0) === '#') {
+		color = color.slice(1);
 	}
 
 	if (color.length === 3) {
