@@ -36,16 +36,6 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	const SHOW_OPTIONAL = 2;
 
-	/**
-	 * @deprecated Use {@link SwatFormField::SHOW_REQUIRED} instead.
-	 */
-	const DISPLAY_REQUIRED = 1;
-
-	/**
-	 * @deprecated Use {@link SwatFormField::SHOW_OPTIONAL} instead.
-	 */
-	const DISPLAY_OPTIONAL = 2;
-
 	// }}}
 	// {{{ public properties
 
