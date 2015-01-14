@@ -12,7 +12,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * a database or store exception details in a separate file.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatException::setLogger()
  */

@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A frame-like container to show and hide child widgets
  *
  * @package   Swat
- * @copyright 2006-2014 silverorange
+ * @copyright 2006-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFrameDisclosure extends SwatDisclosure

@@ -8,7 +8,7 @@ require_once 'Demo.php';
  * A demo using view selectors
  *
  * @package   SwatDemo
- * @copyright 2009 silverorange
+ * @copyright 2009-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class ViewSelectorDemo extends Demo
@@ -57,7 +57,7 @@ class ViewSelectorDemo extends Demo
  * A demo using view selectors
  *
  * @package   SwatDemo
- * @copyright 2009 silverorange
+ * @copyright 2009-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class FruitObject

@@ -10,7 +10,7 @@ require_once 'Swat/SwatObject.php';
  * Data class to represent a database field, a (name, type) pair.
  *
  * @package   SwatDB
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBField extends SwatObject

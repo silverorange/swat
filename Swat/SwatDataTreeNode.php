@@ -8,7 +8,7 @@ require_once 'Swat/SwatTreeNode.php';
  * A tree node containing a value and a title
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDataTreeNode extends SwatTreeNode

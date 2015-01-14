@@ -6,7 +6,7 @@
  * Interface for data-bound objects that are recordable (saveable and loadable)
  *
  * @package   SwatDB
- * @copyright 2007-2013 silverorange
+ * @copyright 2007-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 interface SwatDBRecordable

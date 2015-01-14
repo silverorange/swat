@@ -8,7 +8,7 @@ require_once 'Swat/SwatEntry.php';
  * An phone number entry widget
  *
  * @package   Swat
- * @copyright 2010 silverorange
+ * @copyright 2010-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatPhoneEntry extends SwatEntry

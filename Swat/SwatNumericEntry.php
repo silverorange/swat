@@ -9,7 +9,7 @@ require_once 'Swat/SwatString.php';
  * Base class for numeric entry widgets
  *
  * @package   Swat
- * @copyright 2004-2009 silverorange
+ * @copyright 2004-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatNumericEntry extends SwatEntry

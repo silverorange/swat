@@ -13,7 +13,7 @@ require_once 'SwatI18N/SwatI18NCurrencyFormat.php';
  * specific rules.
  *
  * @package   SwatI18N
- * @copyright 2007-2013 silverorange
+ * @copyright 2007-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatI18NLocale extends SwatObject

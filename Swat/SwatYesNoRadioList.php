@@ -8,7 +8,7 @@ require_once 'Swat/SwatRadioList.php';
  * A radio list selection widget for a Yes/No option.
  *
  * @package   Swat
- * @copyright 2009 silverorange
+ * @copyright 2009-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatYesNoRadioList extends SwatRadioList

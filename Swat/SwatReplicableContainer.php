@@ -9,7 +9,7 @@ require_once 'Swat/SwatReplicable.php';
  * A container that replicates itself and its children
  *
  * @package   Swat
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatReplicableContainer extends SwatDisplayableContainer

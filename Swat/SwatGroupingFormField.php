@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * XHTML 'fieldset' tag.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatGroupingFormField extends SwatFormField

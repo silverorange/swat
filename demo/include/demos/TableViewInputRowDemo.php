@@ -8,7 +8,7 @@ require_once 'Demo.php';
  * A demo using a table view
  *
  * @package   SwatDemo
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class TableViewInputRowDemo extends Demo
@@ -54,7 +54,7 @@ class TableViewInputRowDemo extends Demo
  * A demo using a table view
  *
  * @package   SwatDemo
- * @copyright 2006 silverorange
+ * @copyright 2006-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class FruitObject

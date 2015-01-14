@@ -9,7 +9,7 @@ require_once 'SwatI18N/SwatI18NLocale.php';
  * An integer entry widget
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2004-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatIntegerEntry extends SwatNumericEntry

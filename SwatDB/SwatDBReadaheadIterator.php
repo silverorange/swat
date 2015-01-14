@@ -23,7 +23,7 @@ require_once 'Swat/SwatObject.php';
  * </code>
  *
  * @package   SwatDB
- * @copyright 2007 silverorange
+ * @copyright 2007-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBReadaheadIterator extends SwatObject

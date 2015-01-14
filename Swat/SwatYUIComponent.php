@@ -16,7 +16,7 @@ require_once 'Swat/SwatYUI.php';
  * to be used by itself.
  *
  * @package   Swat
- * @copyright 2006-2014 silverorange
+ * @copyright 2006-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatYUI
  */

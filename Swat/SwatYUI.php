@@ -39,7 +39,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * </code>
  *
  * @package   Swat
- * @copyright 2006-2014 silverorange
+ * @copyright 2006-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatYUI extends SwatObject

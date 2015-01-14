@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A toolbar container for a group of related {@link SwatToolLink} objects
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatToolbar extends SwatDisplayableContainer

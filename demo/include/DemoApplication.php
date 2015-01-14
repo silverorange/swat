@@ -10,7 +10,7 @@ require_once 'Concentrate/Concentrator.php';
  * This is an application to demonstrate various Swat widgets.
  *
  * @package   SwatDemo
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class DemoApplication

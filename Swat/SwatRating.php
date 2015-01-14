@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A control for recording a rating out of a variable number of values
  *
  * @package   Swat
- * @copyright 2007-2014 silverorange
+ * @copyright 2007-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatRating extends SwatInputControl

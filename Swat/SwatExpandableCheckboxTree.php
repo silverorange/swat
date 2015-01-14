@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * be expanded
  *
  * @package   Swat
- * @copyright 2005-2014 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatExpandableCheckboxTree extends SwatCheckboxTree

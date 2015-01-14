@@ -11,7 +11,7 @@ require_once 'Swat/SwatString.php';
  * A multi-line text entry widget
  *
  * @package   Swat
- * @copyright 2004-2014 silverorange
+ * @copyright 2004-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextarea extends SwatInputControl implements SwatState

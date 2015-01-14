@@ -24,7 +24,7 @@ require_once 'Swat/exceptions/SwatInvalidConstantExpressionException.php';
  * Generates a Swat widget tree from an XML UI file
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatUI extends SwatObject

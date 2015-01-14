@@ -6,7 +6,7 @@
  * Removes PHP string concatenations inside gettext markers given a PHP source
  * file
  *
- * @copyright 2006 silverorange
+ * @copyright 2006-2015 silverorange
  */
 
 $source = file_get_contents($_SERVER['argv'][1]);

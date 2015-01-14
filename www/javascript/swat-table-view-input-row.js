@@ -2,7 +2,7 @@
  * A table view row that can add an arbitrary number of data entry rows
  *
  * @package   Swat
- * @copyright 2004-2007 silverorange
+ * @copyright 2004-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 

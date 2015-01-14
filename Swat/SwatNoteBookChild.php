@@ -4,7 +4,7 @@
  * A child of a {@link SwatNoteBook}
  *
  * @package   Swat
- * @copyright 2008 silverorange
+ * @copyright 2008-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatNoteBook
  * @see       SwatNoteBookPage

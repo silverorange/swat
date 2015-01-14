@@ -8,7 +8,7 @@ require_once 'Demo.php';
  * A demo using password entry widgets
  *
  * @package   SwatDemo
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class PasswordEntryDemo extends Demo

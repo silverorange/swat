@@ -10,7 +10,7 @@ require_once 'Swat/SwatInputControl.php';
  * A widget used to display and validate reCAPTCHA's
  *
  * @package   Swat
- * @copyright 2007-2013 silverorange
+ * @copyright 2007-2015 silverorange
  * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
  */
 class SwatReCaptcha extends SwatInputControl

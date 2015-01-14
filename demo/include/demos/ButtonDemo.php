@@ -11,7 +11,7 @@ require_once 'Demo.php';
  * buttons.
  *
  * @package   SwatDemo
- * @copyright 2007 silverorange
+ * @copyright 2007-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class ButtonDemo extends Demo

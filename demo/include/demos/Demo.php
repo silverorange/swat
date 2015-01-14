@@ -9,7 +9,7 @@
  * which does specialized initialization of the UI for the particular demo.
  *
  * @package   SwatDemo
- * @copyright 2007 silverorange
+ * @copyright 2007-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class Demo

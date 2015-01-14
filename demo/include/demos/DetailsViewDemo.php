@@ -8,7 +8,7 @@ require_once 'Demo.php';
  * A demo using a details view
  *
  * @package   SwatDemo
- * @copyright 2005-2007 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class DetailsViewDemo extends Demo
@@ -49,7 +49,7 @@ class DetailsViewDemo extends Demo
  * An object to display in the Swat details view demo
  *
  * @package   SwatDemo
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class FruitObject

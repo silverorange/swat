@@ -6,7 +6,7 @@
  * Container for package wide static methods
  *
  * @package   Swat
- * @copyright 2005-2014 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class Swat
@@ -209,7 +209,7 @@ if (!function_exists("dngettext")) {
 	 * gettext.
 	 *
 	 * @package   Swat
-	 * @copyright 2005-2006 silverorange
+	 * @copyright 2005-2015 silverorange
 	 * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
 	 *
 	 * @param string $domain the translation domain. Ignored.
@@ -244,7 +244,7 @@ if (!function_exists("dgettext")) {
 	 * gettext.
 	 *
 	 * @package   Swat
-	 * @copyright 2005-2006 silverorange
+	 * @copyright 2005-2015 silverorange
 	 * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
 	 *
 	 * @param string $domain the translation domain. Ignored.

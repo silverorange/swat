@@ -8,7 +8,7 @@ require_once 'Demo.php';
  * A demo using a radiolist
  *
  * @package   SwatDemo
- * @copyright 2005-2010 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class RadioListDemo extends Demo
