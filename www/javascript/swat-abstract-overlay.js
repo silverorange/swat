@@ -1,7 +1,7 @@
 /**
  * Abstract overlay widget
  *
- * @copyright 2005-2015 silverorange Inc.
+ * @copyright 2005-2015 silverorange
  */
 
 // {{{ function SwatAbstractOverlay()
