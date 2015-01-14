@@ -208,10 +208,6 @@ if (!function_exists("dngettext")) {
 	 * This function is for compatibility with PHP installations not using
 	 * gettext.
 	 *
-	 * @package   Swat
-	 * @copyright 2005-2015 silverorange
-	 * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
-	 *
 	 * @param string $domain the translation domain. Ignored.
 	 * @param string $messageid1 the singular form.
 	 * @param string $messageid2 the plural form.
@@ -242,10 +238,6 @@ if (!function_exists("dgettext")) {
 	 *
 	 * This function is for compatibility with PHP installations not using
 	 * gettext.
-	 *
-	 * @package   Swat
-	 * @copyright 2005-2015 silverorange
-	 * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
 	 *
 	 * @param string $domain the translation domain. Ignored.
 	 * @param string $messageid the string to be translated.
