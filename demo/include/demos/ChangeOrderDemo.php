@@ -8,7 +8,7 @@ require_once 'Demo.php';
  * A demo using a change order widget
  *
  * @package   SwatDemo
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class ChangeOrderDemo extends Demo

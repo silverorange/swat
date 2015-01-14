@@ -10,7 +10,7 @@ require_once 'Swat/SwatFormField.php';
  * Adds a label and space to output messages.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFooterFormField extends SwatFormField

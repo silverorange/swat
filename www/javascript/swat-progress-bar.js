@@ -4,7 +4,7 @@
  * The progress bar is accurate to four decimal places. This translates
  * one-hundredth of a percent.
  *
- * @copyright 2007-2008 silverorange
+ * @copyright 2007-2015 silverorange
  */
 function SwatProgressBar(id, orientation, value)
 {

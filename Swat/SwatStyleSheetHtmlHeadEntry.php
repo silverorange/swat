@@ -8,7 +8,7 @@ require_once 'Swat/SwatHtmlHeadEntry.php';
  * Stores and outputs an HTML head entry for a stylesheet include
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry

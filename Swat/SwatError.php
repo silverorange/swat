@@ -17,7 +17,7 @@ require_once 'Swat/SwatErrorLogger.php';
  * details on how this works.
  *
  * @package   Swat
- * @copyright 2006-2007 silverorange
+ * @copyright 2006-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatError

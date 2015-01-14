@@ -12,7 +12,7 @@ require_once 'Swat/SwatError.php';
  * or store error details in a separate file.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatError::setLogger()
  */

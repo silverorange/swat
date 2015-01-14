@@ -12,7 +12,7 @@ require_once 'Swat/SwatError.php';
  * in a separate file or display them using different XHTML markup.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatError::setDisplayer()
  */

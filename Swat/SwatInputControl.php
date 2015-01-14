@@ -9,7 +9,7 @@ require_once 'Swat/SwatFormField.php';
  * Base class for controls that accept user input on forms.
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatInputControl extends SwatControl

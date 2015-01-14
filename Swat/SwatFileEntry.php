@@ -18,7 +18,7 @@ require_once 'Swat/SwatFormField.php';
  * 'application/octet-stream'.
  *
  * @package   Swat
- * @copyright 2005-2014 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFileEntry extends SwatInputControl

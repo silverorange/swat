@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * tabular format
  *
  * @package   Swat
- * @copyright 2006-2013 silverorange
+ * @copyright 2006-2015 silverorange
  */
 class SwatRadioTable extends SwatRadioList
 {

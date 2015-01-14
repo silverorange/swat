@@ -9,7 +9,7 @@ require_once 'Swat/SwatString.php';
  * Stores and outputs an HTML tag
  *
  * @package   Swat
- * @copyright 2004-2006 silverorange
+ * @copyright 2004-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatHtmlTag extends SwatObject

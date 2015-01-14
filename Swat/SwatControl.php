@@ -10,7 +10,7 @@ require_once 'Swat/SwatString.php';
  * Abstract base class for control widgets (non-container)
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatControl extends SwatWidget

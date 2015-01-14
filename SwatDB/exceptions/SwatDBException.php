@@ -9,7 +9,7 @@ require_once 'PEAR.php';
  * A SwatDB Exception.
  *
  * @package   SwatDB
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBException extends SwatException

@@ -16,7 +16,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * use {@link SwatViewSelector} objects.
  *
  * @package   Swat
- * @copyright 2007-2014 silverorange
+ * @copyright 2007-2015 silverorange
  * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
  * @see       SwatTile
  */

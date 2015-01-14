@@ -13,7 +13,7 @@ require_once 'Swat/exceptions/SwatObjectNotFoundException.php';
  * An abstract class from which to derive recordset views
  *
  * @package   Swat
- * @copyright 2004-2014 silverorange
+ * @copyright 2004-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatView extends SwatControl

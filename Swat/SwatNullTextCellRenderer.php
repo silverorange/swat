@@ -9,7 +9,7 @@ require_once 'Swat/SwatTextCellRenderer.php';
  * null text
  *
  * @package   Swat
- * @copyright 2005-2014 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatNullTextCellRenderer extends SwatTextCellRenderer

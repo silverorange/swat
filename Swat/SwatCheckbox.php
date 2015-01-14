@@ -10,7 +10,7 @@ require_once 'Swat/SwatState.php';
  * A checkbox entry widget
  *
  * @package   Swat
- * @copyright 2004-2012 silverorange
+ * @copyright 2004-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckbox extends SwatInputControl implements SwatState

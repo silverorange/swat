@@ -13,7 +13,7 @@ require_once 'Swat/SwatString.php';
  * A flydown (aka combo-box) selection widget
  *
  * @package   Swat
- * @copyright 2004-2012 silverorange
+ * @copyright 2004-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFlydown extends SwatOptionControl implements SwatState

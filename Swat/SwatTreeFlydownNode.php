@@ -12,7 +12,7 @@ require_once 'Swat/SwatOption.php';
  * Contains a flydown option that has a value and a title.
  *
  * @package   Swat
- * @copyright 2006 silverorange
+ * @copyright 2006-2015 silverorange
  * @license
  */
 class SwatTreeFlydownNode extends SwatTreeNode

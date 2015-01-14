@@ -14,7 +14,7 @@ require_once 'Swat/exceptions/SwatInvalidClassException.php';
  * Notebook widget for containing {@link SwatNoteBookPage} pages
  *
  * @package   Swat
- * @copyright 2007-2014 silverorange
+ * @copyright 2007-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatNoteBookPage
  */

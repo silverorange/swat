@@ -12,7 +12,7 @@ require_once 'Swat/SwatYUI.php';
  * A control to display {@link SwatMessage} objects
  *
  * @package   Swat
- * @copyright 2005-2014 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMessageDisplay extends SwatControl

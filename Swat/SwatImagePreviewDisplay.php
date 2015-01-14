@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * another image when the first image is clicked.
  *
  * @package   Swat
- * @copyright 2005-2014 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatImagePreviewDisplay extends SwatImageDisplay

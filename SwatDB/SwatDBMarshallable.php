@@ -15,7 +15,7 @@ require_once 'SwatDB/exceptions/SwatDBMarshallException.php';
  * exactly what tree of objects will be included in the marshalled result.
  *
  * @package   SwatDB
- * @copyright 2013 silverorange
+ * @copyright 2013-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 interface SwatDBMarshallable

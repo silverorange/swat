@@ -10,7 +10,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A container with a decorative frame and optional title
  *
  * @package   Swat
- * @copyright 2004-2010 silverorange
+ * @copyright 2004-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatFrame extends SwatDisplayableContainer implements SwatTitleable

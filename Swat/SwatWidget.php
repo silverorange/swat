@@ -35,7 +35,7 @@ require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
  * extend {@link SwatContainer}.
  *
  * @package   Swat
- * @copyright 2004-2014 silverorange
+ * @copyright 2004-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatWidget extends SwatUIObject

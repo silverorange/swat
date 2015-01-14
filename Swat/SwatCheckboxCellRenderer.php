@@ -13,7 +13,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * A view selector cell renderer displayed as a checkbox
  *
  * @package   Swat
- * @copyright 2005-2014 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatViewSelector
  */

@@ -8,7 +8,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * Thrown when a widget is not found
  *
  * @package   Swat
- * @copyright 2005-2006 silverorange
+ * @copyright 2005-2015 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatWidgetNotFoundException extends SwatException

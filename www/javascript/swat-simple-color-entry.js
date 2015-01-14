@@ -7,7 +7,7 @@
  * @param Array colors
  * @param string none_option_title
  *
- * @copyright 2005-2010 silverorange Inc.
+ * @copyright 2005-2015 silverorange
  */
 function SwatSimpleColorEntry(id, colors, none_option_title)
 {
