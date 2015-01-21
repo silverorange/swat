@@ -22,10 +22,10 @@
   <email>mike@silverorange.com</email>
   <active>yes</active>
  </lead>
- <date>2014-10-30</date>
- <time>15:36:12</time>
+ <date>2015-01-21</date>
+ <time>15:32:21</time>
  <version>
-  <release>2.2.1</release>
+  <release>2.2.2</release>
   <api>0.0.1</api>
  </version>
  <stability>
@@ -1926,14 +1926,14 @@ No release notes for you!
  <changelog>
   <release>
    <version>
-    <release>2.2.1</release>
+    <release>2.2.2</release>
     <api>0.0.1</api>
    </version>
    <stability>
     <release>stable</release>
     <api>stable</api>
    </stability>
-   <date>2014-10-30</date>
+   <date>2015-01-21</date>
    <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
    <notes>
 No release notes for you!
