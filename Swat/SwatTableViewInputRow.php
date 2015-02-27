@@ -652,6 +652,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 			$this->enter_another_link = new SwatToolLink();
 			$this->enter_another_link->parent = $this;
 			$this->enter_another_link->stock_id = 'add';
+			$this->enter_another_link->classes[] = 'swat-table-view-input-row-add';
 
 			$this->widgets_created = true;
 		}
@@ -689,6 +690,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
 		$tr_tag = new SwatHtmlTag('tr');
 		$tr_tag->id = $this->getId().'_enter_row';
+		$tr_tag->class = 'swat-table-view-input-row-add-row';
 		$tr_tag->open();
 
 		if ($position > 0) {
