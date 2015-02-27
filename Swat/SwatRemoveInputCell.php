@@ -55,17 +55,12 @@ class SwatRemoveInputCell extends SwatInputCell
 
 		$anchor_tag = new SwatHtmlTag('a');
 		$anchor_tag->title = Swat::_('remove this row');
+		$anchor_tag->class = 'swat-remove-input-cell-remove';
 		$anchor_tag->href =
 			sprintf("javascript:%s_obj.removeRow('%%s');", $id);
 
 		$anchor_tag->open();
-
-		$image_tag = new SwatHtmlTag('img');
-		$image_tag->src = 'packages/swat/images/list-remove.png';
-		$image_tag->alt = Swat::_('remove graphic');
-
-		$image_tag->display();
-
+		echo '<span class="swat-remove-input-cell-icon"></span>';
 		$anchor_tag->close();
 
 		$content->content  = ob_get_clean();
