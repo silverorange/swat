@@ -362,3 +362,15 @@ blockquote.swat-db-debug {
 .swat-overlay-close-link {
 	font-weight: bold;
 }
+
+/* SwatRemoveInputCell */
+
+.swat-remove-input-cell-remove {
+	width: 22px;
+	height: 22px;
+	display: inline-block;
+	background: transparent url(../images/list-remove.png) no-repeat top left;
+	overflow: hidden;
+	text-indent: 110%;
+	white-space: nowrap;
+}
