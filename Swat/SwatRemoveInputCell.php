@@ -54,14 +54,12 @@ class SwatRemoveInputCell extends SwatInputCell
 		$id = ($view_id === null) ? $row->id : $view_id.'_'.$row->id;
 
 		$anchor_tag = new SwatHtmlTag('a');
-		$anchor_tag->title = Swat::_('remove this row');
 		$anchor_tag->class = 'swat-remove-input-cell-remove';
 		$anchor_tag->href =
 			sprintf("javascript:%s_obj.removeRow('%%s');", $id);
 
-		$anchor_tag->open();
-		echo '<span class="swat-remove-input-cell-icon"></span>';
-		$anchor_tag->close();
+		$anchor_tag->setContent(Swat::_('Remove this row'));
+		$anchor_tag->display();
 
 		$content->content  = ob_get_clean();
 		$content->content_type = 'text/xml';
