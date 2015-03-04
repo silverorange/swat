@@ -371,6 +371,6 @@ blockquote.swat-db-debug {
 	display: inline-block;
 	background: transparent url(../images/list-remove.png) no-repeat top left;
 	overflow: hidden;
-	text-indent: 100%;
+	text-indent: 110%;
 	white-space: nowrap;
 }
