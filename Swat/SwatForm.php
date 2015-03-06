@@ -2,6 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'JQuery/JQuery.php';
 require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/exceptions/SwatInvalidCharacterEncodingException.php';
 require_once 'Swat/exceptions/SwatInvalidTypeException.php';
@@ -9,7 +10,6 @@ require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatMessageDisplay.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatString.php';
-require_once 'Swat/SwatYUI.php';
 
 /**
  * A form widget which can contain other widgets
@@ -268,6 +268,11 @@ class SwatForm extends SwatDisplayableContainer
 
 		$this->requires_id = true;
 
+		$jquery = new JQuery();
+		$this->html_head_entry_set->addEntrySet(
+			$jquery->getHtmlHeadEntrySet()
+		);
+
 		$this->addJavaScript('packages/swat/javascript/swat-form.js');
 	}
 
@@ -333,14 +338,6 @@ class SwatForm extends SwatDisplayableContainer
 		$this->displayChildren();
 		$this->displayHiddenFields();
 		$form_tag->close();
-
-		if ($this->connection_close_uri != '') {
-			$yui = new SwatYUI(array('event'));
-			$this->html_head_entry_set->addEntrySet(
-				$yui->getHtmlHeadEntrySet());
-		}
-
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -991,6 +988,42 @@ class SwatForm extends SwatDisplayableContainer
 		// form validation
 		$form_tag->novalidate = 'novalidate';
 
+		// Set form auto-complete
+		$form_tag->autocomplete = ($this->autocomplete) ? 'on' : 'off';
+
+		// If form is autofocusable and has a focusable child, set the
+		// autocomplete attribute.
+		if ($this->autofocus) {
+			$focusable = true;
+			if ($this->default_focused_control === null) {
+				$control = $this->getFirstDescendant('SwatControl');
+				if ($control === null) {
+					$focusable = false;
+				} else {
+					$focus_id = $control->getFocusableHtmlId();
+					if ($focus_id === null) {
+						$focusable = false;
+					}
+				}
+			} else {
+				$focus_id =
+					$this->default_focused_control->getFocusableHtmlId();
+
+				if ($focus_id === null) {
+					$focusable = false;
+				}
+			}
+
+			if ($focusable) {
+				$form_tag->{'data-autofocus'} = $focus_id;
+			}
+		}
+
+		if ($this->connection_close_uri != '') {
+			$form_tag->{'data-connection-close-uri'} =
+				$this->connection_close_uri;
+		}
+
 		return $form_tag;
 	}
 
@@ -1007,73 +1040,6 @@ class SwatForm extends SwatDisplayableContainer
 		$classes = array('swat-form');
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
-	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScript()
-
-	/**
-	 * Gets inline JavaScript required for this form
-	 *
-	 * Right now, this JavaScript focuses the first SwatControl in the form.
-	 *
-	 * @return string inline JavaScript required for this form.
-	 */
-	protected function getInlineJavaScript()
-	{
-		$javascript = sprintf("var %s_obj = new %s(%s, %s);",
-			$this->id,
-			$this->getJavaScriptClass(),
-			SwatString::quoteJavaScriptString($this->id),
-			SwatString::quoteJavaScriptString($this->connection_close_uri));
-
-		if ($this->autofocus) {
-			$focusable = true;
-			if ($this->default_focused_control === null) {
-				$control = $this->getFirstDescendant('SwatControl');
-				if ($control === null) {
-					$focusable = false;
-				} else {
-					$focus_id = $control->getFocusableHtmlId();
-					if ($focus_id === null)
-						$focusable = false;
-				}
-			} else {
-				$focus_id =
-					$this->default_focused_control->getFocusableHtmlId();
-
-				if ($focus_id === null)
-					$focusable = false;
-			}
-
-			if ($focusable)
-				$javascript.=
-					"\n{$this->id}_obj.setDefaultFocus('{$focus_id}');";
-		}
-
-		if (!$this->autocomplete) {
-			$javascript.=
-				"\n{$this->id}_obj.setAutocomplete(false);";
-		}
-
-		return $javascript;
-	}
-
-	// }}}
-	// {{{ protected function getJavaScriptClass()
-
-	/**
-	 * Gets the name of the JavaScript class to instantiate for this form
-	 *
-	 * Sub-classes of this class may want to return a sub-class of the default
-	 * JavaScript form class.
-	 *
-	 * @return string the name of the JavaScript class to instantiate for this
-	 *                 form . Defaults to 'SwatForm'.
-	 */
-	protected function getJavaScriptClass()
-	{
-		return 'SwatForm';
 	}
 
 	// }}}
