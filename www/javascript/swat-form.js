@@ -5,7 +5,7 @@ $(document).ready(function() {
 		// Handle setting auto-focus
 		if ($form.data('autofocus')) {
 			var $el = $('#' + $form.data('autofocus'));
-			if (!$el.attr('disabled') == !isNaN($el.attr('tabindex')) {
+			if (!$el.attr('disabled') == !isNaN($el.attr('tabindex'))) {
 				$el.focus();
 			}
 		}
