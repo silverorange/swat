@@ -1,88 +1,61 @@
-function SwatButton(id, show_processing_throbber)
-{
-	this.id = id;
+$(document).ready(function() {
+	var PROCESSING_ANIMATION_DURATION = 1000; // milliseconds
+	var PROCESSING_ANIMATION_MAX_OPACITY = 0.5;
 
-	this.button = document.getElementById(this.id);
+	$('.swat-button').each(function() {
+		var $button = $(this);
 
-	// deprecated
-	this.show_processing_throbber = show_processing_throbber;
+		var confirmation_message = $button.data('confirmation-message');
 
-	this.confirmation_message = '';
-	this.throbber_container = null;
-
-	if (show_processing_throbber) {
-		this.initThrobber();
-	}
-
-	YAHOO.util.Event.addListener(this.button, 'click',
-		this.handleClick, this, true);
-}
-
-SwatButton.prototype.handleClick = function(e)
-{
-	var confirmed = (this.confirmation_message) ?
-		confirm(this.confirmation_message) : true;
-
-	if (confirmed) {
-		if (this.throbber_container !== null) {
-			this.button.disabled = true;
-			YAHOO.util.Dom.addClass(this.button, 'swat-insensitive');
-
-			// add button to form data manually since we disabled it above
-			var div = document.createElement('div');
-			var hidden_field = document.createElement('input');
-			hidden_field.type = 'hidden';
-			hidden_field.name = this.id;
-			hidden_field.value = this.button.value;
-			div.appendChild(hidden_field);
-			this.button.form.appendChild(div);
-
-			this.showThrobber();
-			var form = YAHOO.util.Dom.getAncestorByTagName(this.button, 'form');
-			if (form) {
-				form.submit(); // needed for IE and WebKit
+		var processing_message = $button.data('processing-message');
+		if (processing_message || processing_message === '') {
+			if (processing_message === '') {
+				processing_message = ' '; // UTF-8 non-breaking space
 			}
+			var $throbber = $(
+				'<span class="swat-button-processing-throbber"></span>'
+			);
+			$throbber
+				.text(processing_message)
+				.appendTo($button.parent());
 		}
-	} else {
-		YAHOO.util.Event.preventDefault(e);
-	}
-};
 
-SwatButton.prototype.initThrobber = function()
-{
-	this.throbber_container = document.createElement('span');
+		$button.click(function(e) {
+			var confirmed = (confirmation_message)
+				? confirm(confirmation_message)
+				: true;
 
-	YAHOO.util.Dom.addClass(this.throbber_container,
-		'swat-button-processing-throbber');
+			if (confirmed) {
+				if (processing_message) {
+					// Disable button to prevent double submission.
+					$button
+						.attr('disabled', true)
+						.addClass('swat-insensitive');
 
-	this.button.parentNode.appendChild(this.throbber_container);
-};
+					// Add shim to form so button value still gets submitted.
+					var $shim = $('<input type="hidden"/>');
+					$shim
+						.attr({
+							name: $button.attr('name'),
+							value: $button.attr('value')
+						});
 
-SwatButton.prototype.showThrobber = function()
-{
-	var animation = new YAHOO.util.Anim(this.throbber_container,
-		{ opacity: { to: 0.5 }}, 1, YAHOO.util.Easing.easingNone);
+					// Show processing message
+					$throbber.animate(
+						{ opacity: PROCESSING_ANIMATION_MAX_OPACITY },
+						PROCESSING_ANIMATION_DURATION
+					);
 
-	animation.animate();
-};
-
-SwatButton.prototype.setProcessingMessage = function(message)
-{
-	if (this.throbber_container === null) {
-		this.initThrobber();
-	}
-
-	if (message.length > 0) {
-		this.throbber_container.appendChild(document.createTextNode(message));
-		YAHOO.util.Dom.addClass(this.throbber_container,
-			'swat-button-processing-throbber-text');
-	} else {
-		// the following string is a UTF-8 encoded non breaking space
-		this.throbber_container.appendChild(document.createTextNode(' '));
-	}
-};
-
-SwatButton.prototype.setConfirmationMessage = function(message)
-{
-	this.confirmation_message = message;
-};
+					// Submit form
+					var $form = $button.parents('form');
+					if ($form.length) {
+						$shim.appendTo($form);
+						$form.submit(); // Needed for IE and Webkit
+					}
+				}
+			} else {
+				e.preventDefault();
+			}
+		});
+	});
+});
