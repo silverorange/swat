@@ -75,6 +75,15 @@ class SwatAccordion extends SwatNoteBook
 		$ul_tag = new SwatHtmlTag('ul');
 		$ul_tag->id = $this->id;
 		$ul_tag->class = 'swat-accordion';
+
+		if (!$this->animate) {
+			$ul_tag->{'data-no-animate'} = 'no-animate';
+		}
+
+		if (!$this->always_open) {
+			$ul_tag->{'data-not-always-open'} = 'not-always-open';
+		}
+
 		$ul_tag->open();
 
 		foreach ($this->pages as $page) {
@@ -117,41 +126,6 @@ class SwatAccordion extends SwatNoteBook
 		}
 
 		$ul_tag->close();
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
-	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScript()
-
-	/**
-	 * Gets the inline JavaScript used by this accordion view
-	 *
-	 * @return string the inline JavaScript used by this accordion view.
-	 */
-	protected function getInlineJavaScript()
-	{
-		$javascript = sprintf("var %1\$s_obj = new %2\$s('%1\$s', %3\$s);",
-			$this->id,
-			$this->getJavascriptClassName(),
-			$this->animate ? 'true' : 'false');
-
-		$javascript.= sprintf("\n%s_obj.animate = %s;",
-			$this->id,
-			$this->animate ? 'true' : 'false');
-
-		$javascript.= sprintf("\n%s_obj.always_open = %s;",
-			$this->id,
-			$this->always_open ? 'true' : 'false');
-
-		return $javascript;
-	}
-
-	// }}}
-	// {{{ protected function getJavaScriptClassName()
-
-	protected function getJavaScriptClassName()
-	{
-		return 'SwatAccordion';
 	}
 
 	// }}}

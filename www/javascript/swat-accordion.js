@@ -1,228 +1,209 @@
-function SwatAccordion(id)
-{
-	this.id = id;
-	this.current_page = null;
-	this.animate = true;
-	this.always_open = true; // by default, always keep one page open
-	this.semaphore = false;
-	this.pageChangeEvent = new YAHOO.util.CustomEvent('pageChange');
-	this.postInitEvent = new YAHOO.util.CustomEvent('postInit');
+$(function() {
+	var RESIZE_ANIMATION_DURATION = 250; // milliseconds
 
-	YAHOO.util.Event.onDOMReady(this.init, this, true);
-}
+	$('.swat-accordion').each(function() {
+		var $accordion = $(this);
+		var current_page = null;
+		var semaphore = false;
+		var animate = ($accordion.data('no-animate') != 'no-animate');
+		var always_open = (
+			$accordion.data('not-always-open') != 'not-always-open'
+		);
 
-SwatAccordion.resize_period = 0.25; // seconds
+		function setPage(new_page) {
+			if (current_page === new_page) {
+				return;
+			}
 
-SwatAccordion.prototype.init = function()
-{
-	this.container = document.getElementById(this.id);
-	this.pages = [];
+			for (var i = 0; i < pages.length; i++) {
+				var page = pages[i];
+				if (page == new_page) {
+					page.$animation.css('display', 'block');
+					page.$el
+						.removeClass('swat-accordion-page-closed')
+						.addClass('swat-accordion-page-opened');
+				} else {
+					page.$animation.css('display', 'none');
+					page.$el
+						.removeClass('swat-accordion-page-opened')
+						.addClass('swat-accordion-page-closed');
+				}
+			}
 
-	var page;
-	var pages = YAHOO.util.Dom.getChildren(this.container);
+			$accordion.trigger('page-change', [ new_page, current_page ]);
 
-	// check to see if a page is open via a hash-tag
-	var hash_open_page = this.getPageFromHash();
-
-	for (var i = 0; i < pages.length; i++) {
-		page = new SwatAccordionPage(pages[i]);
-
-		var status_icon = document.createElement('span');
-		status_icon.className = 'swat-accordion-toggle-status';
-
-		page.toggle.insertBefore(status_icon, page.toggle.firstChild);
-		this.addLinkHash(page);
-
-		if (hash_open_page === page.element || (hash_open_page === null &&
-			YAHOO.util.Dom.hasClass(page.element, 'selected'))) {
-
-			this.current_page = page;
-			YAHOO.util.Dom.removeClass(page.element, 'selected');
-			YAHOO.util.Dom.addClass(page.element, 'swat-accordion-page-opened');
-		} else {
-			page.animation.style.display = 'none';
-			YAHOO.util.Dom.addClass(page.element, 'swat-accordion-page-closed');
+			current_page = new_page;
 		}
 
-		var that = this;
-		(function() {
-			var the_page = page;
-			YAHOO.util.Event.on(page.toggle, 'click', function (e) {
-				if (!that.always_open && the_page === that.current_page) {
-					var set_page = null;
+		function setPageWithAnimation(new_page) {
+			if (current_page === new_page || semaphore) {
+				return;
+			}
+
+			semaphore = true;
+
+			function animationComplete() {
+				if (new_page !== null) {
+					new_page.$animation.css('height', 'auto');
+				}
+				semaphore = false;
+			}
+
+			var old_page = current_page;
+
+			// old_page === null means we're opening from a completely closed
+			// state
+			if (old_page !== null) {
+				var old_from_height = old_page.$animation.outerHeight();
+				var old_to_height = 0;
+				old_page.$animation.css('overflow', 'hidden');
+			}
+
+			var new_to_height = 0;
+			var new_from_height = 0;
+
+			// new_page === null means we're closing to a completely closed
+			// state
+			if (new_page === null) {
+				old_page.$animation.animate(
+					{ height: 0 },
+					RESIZE_ANIMATION_DURATION,
+					'swing',
+					animationComplete
+				);
+			} else {
+				new_page.$animation.css('overflow', 'hidden');
+
+				if (new_page.$animation.css('display') === 'none') {
+					new_page.$animation.css('height', '0');
+					new_from_height = 0;
 				} else {
-					var set_page = the_page;
+					new_from_height = new_page.$animation.outerHeight();
 				}
 
-				if (that.animate) {
-					that.setPageWithAnimation(set_page);
-				} else {
-					that.setPage(set_page);
+				new_page.$animation.css('display', 'block');
+
+				var new_to_height = new_page.$content.outerHeight();
+
+				function animationProgress(animation, progress, remainingMs) {
+					// Apply animation easing to progress
+					progress = $.easing[animation.tweens[0].easing](progress);
+
+					if (old_page) {
+						var old_delta = old_from_height - old_to_height;
+						var old_height = Math.ceil(
+							old_from_height - old_delta * progress
+						);
+
+						old_page.$animation.css('height', old_height);
+					}
+
+					if (new_page) {
+						var new_delta = new_from_height - new_to_height;
+						var new_height = Math.floor(
+							new_from_height - new_delta * progress
+						);
+
+						new_page.$animation.css('height', new_height);
+					}
 				}
+
+				new_page.$animation.animate(
+					// We manually set the element the heights in our progress
+					// function. Just animate any value here.
+					{ anyProperty: 1 },
+					{
+						duration: RESIZE_ANIMATION_DURATION,
+						easing: 'swing',
+						progress: animationProgress,
+						complete: animationComplete
+					}
+				);
+			}
+
+			if (old_page) {
+				old_page.$el
+					.removeClass('swat-accordion-page-opened')
+					.addClass('swat-accordion-page-closed');
+			}
+
+			if (new_page) {
+				new_page.$el
+					.removeClass('swat-accordion-page-closed')
+					.addClass('swat-accordion-page-opened');
+			}
+
+			$accordion.trigger('page-change', [ new_page, old_page ]);
+
+			current_page = new_page;
+		}
+
+		var hash_open_page = null;
+
+		// Check for selected page based on location hash value
+		$accordion.children('.swat-accordion-page').each(function() {
+			if (location.hash === '#open_' + this.id) {
+				hash_open_page = this;
+			}
+		});
+
+		var pages = [];
+		$accordion.children('.swat-accordion-page').each(function() {
+			// Select page elements
+			var page = { $el: $(this) };
+
+			page.$animation = page.$el
+				.children('.swat-accordion-page-animation')
+				.first();
+
+			page.$content = page.$animation
+				.children('.swat-accordion-page-content')
+				.first();
+
+			var $toggle = page.$el
+				.children('.swat-accordion-page-toggle')
+				.first();
+
+			// Add href hash tag to toggle link
+			$toggle.attr(
+				'href',
+				location.href.split('#')[0] + '#open_' + page.$el.attr('id')
+			);
+
+			var $icon = $('<span class="swat-accordion-toggle-status"></span>');
+			$icon.insertBefore($toggle);
+
+			if (
+				  !hash_open_page && page.$el.hasClass('selected')
+				|| hash_open_page && page.$el.get(0) === hash_open_page
+			) {
+				current_page = page;
+				page.$el
+					.removeClass('selected')
+					.addClass('swat-accordion-page-opened');
+			} else {
+				page.$animation.css('display', 'none');
+				page.$el.addClass('swat-accordion-page-closed');
+			}
+
+			// Set up page toggle link click handler
+			$toggle.click(function(e) {
+				var new_page = (!always_open && page == current_page)
+					? null
+					: page;
+
+				if (animate) {
+					setPageWithAnimation(page);
+				} else {
+					setPage(page);
+				}
+				e.preventDefault();
 			});
-		})();
 
-		this.pages.push(page);
-	}
+			// Add to list of pages
+			pages.push(page);
+		});
 
-	this.postInitEvent.fire();
-
-};
-
-SwatAccordion.prototype.getPageFromHash = function()
-{
-	var pages = YAHOO.util.Dom.getChildren(this.container);
-
-	// check to see if a page is open via a hash-tag
-	var hash_open_page = null;
-	for (var i = 0; i < pages.length; i++) {
-		if (location.hash == '#open_' + pages[i].id) {
-			hash_open_page = pages[i];
-		}
-	}
-
-	return hash_open_page;
-};
-
-SwatAccordion.prototype.addLinkHash = function(page)
-{
-	page.toggle.href = location.href.split('#')[0] + '#' +
-		'open_' + page.element.id;
-};
-
-SwatAccordion.prototype.setPage = function(page)
-{
-	if (this.current_page === page) {
-		return;
-	}
-
-	for (var i = 0; i < this.pages.length; i++) {
-		if (this.pages[i] === page) {
-			this.pages[i].animation.style.display = 'block';
-			this.pages[i].setStatus('opened');
-		} else {
-			this.pages[i].animation.style.display = 'none';
-			this.pages[i].setStatus('closed');
-		}
-	}
-
-	this.pageChangeEvent.fire(page, this.current_page);
-
-	this.current_page = page;
-};
-
-SwatAccordion.prototype.setPageWithAnimation = function(new_page)
-{
-	if (this.current_page === new_page || this.semaphore) {
-		return;
-	}
-
-	this.semaphore = true;
-
-	var old_page = this.current_page;
-
-	// old_page === null means we're opening from a completely closed state
-	if (old_page !== null) {
-		var old_region = YAHOO.util.Dom.getRegion(old_page.animation);
-		var old_from_height = old_region.height;
-		var old_to_height = 0;
-		old_page.animation.style.overflow = 'hidden';
-	}
-
-	// new_page === null means we're closing to a completely closed state
-	if (new_page === null) {
-		var new_to_height = 0;
-
-		var anim = new YAHOO.util.Anim(
-			old_page.animation, { },
-			SwatAccordion.resize_period,
-			YAHOO.util.Easing.easeBoth);
-	} else {
-		new_page.animation.style.overflow = 'hidden';
-
-		if (new_page.animation.style.height === '' ||
-			new_page.animation.style.height == 'auto') {
-			new_page.animation.style.height = '0';
-			new_from_height = 0;
-		} else {
-			new_from_height = parseInt(new_page.animation.style.height);
-		}
-
-		new_page.animation.style.display = 'block';
-
-		var new_region = YAHOO.util.Dom.getRegion(new_page.content);
-		var new_to_height = new_region.height;
-
-		var anim = new YAHOO.util.Anim(
-			new_page.animation, { },
-			SwatAccordion.resize_period,
-			YAHOO.util.Easing.easeBoth);
-	}
-
-	anim.onTween.subscribe(function (name, data) {
-		if (old_page !== null) {
-			var old_height = Math.ceil(
-				anim.doMethod('height', old_from_height, old_to_height));
-
-			old_page.animation.style.height = old_height + 'px';
-		}
-
-		if (new_page !== null) {
-			var new_height = Math.floor(
-				anim.doMethod('height', new_from_height, new_to_height));
-
-			new_page.animation.style.height = new_height + 'px';
-		}
-	}, this, true);
-
-	anim.onComplete.subscribe(function () {
-		if (new_page !== null) {
-			new_page.animation.style.height = 'auto';
-		}
-
-		this.semaphore = false;
-	}, this, true);
-
-	anim.animate();
-
-	if (old_page !== null) {
-		old_page.setStatus('closed');
-	}
-
-	if (new_page !== null) {
-		new_page.setStatus('opened');
-	}
-
-	this.pageChangeEvent.fire(new_page, old_page);
-
-	this.current_page = new_page;
-};
-
-function SwatAccordionPage(el)
-{
-	this.element   = el;
-	this.toggle    = YAHOO.util.Dom.getFirstChild(el);
-	this.animation = YAHOO.util.Dom.getNextSibling(this.toggle);
-	this.content   = YAHOO.util.Dom.getFirstChild(this.animation);
-}
-
-SwatAccordionPage.prototype.setStatus = function(stat)
-{
-	if (stat === 'opened') {
-		YAHOO.util.Dom.removeClass(
-			this.element,
-			'swat-accordion-page-closed');
-
-		YAHOO.util.Dom.addClass(
-			this.element,
-			'swat-accordion-page-opened');
-	} else {
-		YAHOO.util.Dom.removeClass(
-			this.element,
-			'swat-accordion-page-opened');
-
-		YAHOO.util.Dom.addClass(
-			this.element,
-			'swat-accordion-page-closed');
-	}
-};
+		$accordion.trigger('post-init');
+	});
+});
