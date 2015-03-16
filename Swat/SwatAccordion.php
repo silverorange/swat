@@ -2,6 +2,8 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'JQuery/JQuery.php';
+require_once 'JQuery/JQueryUI.php';
 require_once 'Swat/SwatNoteBook.php';
 
 /**
@@ -50,8 +52,14 @@ class SwatAccordion extends SwatNoteBook
 
 		$this->requires_id = true;
 
-		$yui = new SwatYUI(array('yahoo', 'dom', 'event', 'animation'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+		$jquery = new JQuery();
+		$this->html_head_entry_set->addEntrySet(
+			$jquery->getHtmlHeadEntrySet()
+		);
+		$jquery_ui = new JQueryUI();
+		$this->html_head_entry_set->addEntrySet(
+			$jquery_ui->getHtmlHeadEntrySet()
+		);
 
 		$this->addStyleSheet('packages/swat/styles/swat-accordion.css');
 		$this->addJavaScript('packages/swat/javascript/swat-accordion.js');

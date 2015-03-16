@@ -21,6 +21,7 @@ Swat:
   Depends:
     # Package Dependencies
     - SwatYUI
+    - JQuery
 
   Provides:
 
