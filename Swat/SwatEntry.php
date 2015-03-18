@@ -100,6 +100,13 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 */
 	public $placeholder;
 
+	/**
+	 * Whether or not to select the content of this entry on receiving focus
+	 *
+	 * @var boolean
+	 */
+	public $select_on_focus = false;
+
 	// }}}
 	// {{{ protected properties
 
@@ -299,14 +306,16 @@ class SwatEntry extends SwatInputControl implements SwatState
 		$tag->class = $this->getCSSClassString();
 
 		// event handlers to select on focus
-		$tag->onmousedown = 'if(!this._focused){this._focus_click=true;}';
-		$tag->onmouseup = 'if(this._focus_click){'.
-			'this.select();this._focus_click=false;}';
+		if ($this->select_on_focus) {
+			$tag->onmousedown = 'if(!this._focused){this._focus_click=true;}';
+			$tag->onmouseup = 'if(this._focus_click){'.
+				'this.select();this._focus_click=false;}';
 
-		$tag->onfocus = 'this._focused=true;'.
-			'if(!this._focus_click){ this.select();}';
+			$tag->onfocus = 'this._focused=true;'.
+				'if(!this._focus_click){this.select();}';
 
-		$tag->onblur = 'this._focused=false;this._focus_click=false;';
+			$tag->onblur = 'this._focused=false;this._focus_click=false;';
+		}
 
 		if ($this->read_only)
 			$tag->readonly = 'readonly';
