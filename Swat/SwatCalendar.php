@@ -2,8 +2,9 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'JQuery/JQuery.php';
+require_once 'JQuery/JQueryUI.php';
 require_once 'Swat/SwatControl.php';
-require_once 'Swat/SwatYUI.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatDate.php';
 
@@ -51,14 +52,15 @@ class SwatCalendar extends SwatControl
 
 		$this->requires_id = true;
 
-		$yui = new SwatYUI(array('dom', 'container'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+		$jquery = new JQuery();
+		$this->html_head_entry_set->addEntrySet($jquery->getHtmlHeadEntrySet());
+		$jquery_ui = new JQueryUI();
+		$this->html_head_entry_set->addEntrySet(
+			$jquery_ui->getHtmlHeadEntrySet()
+		);
 
 		$this->addStyleSheet('packages/swat/styles/swat-calendar.css');
 		$this->addJavaScript('packages/swat/javascript/swat-calendar.js');
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-z-index-manager.js'
-		);
 	}
 
 	// }}}
@@ -79,25 +81,52 @@ class SwatCalendar extends SwatControl
 		$container_div_tag->class = $this->getCSSClassString();
 		$container_div_tag->open();
 
-		// toggle button content is displayed with JavaScript
+		$now = new SwatDate();
+		$min_date = null;
+		$max_date = null;
 
-		if ($this->valid_range_start === null) {
-			$today = new SwatDate();
-			$value = $today->formatLikeIntl('MM/dd/yyyy');
+		if ($this->valid_range_start instanceof SwatDate) {
+			// value is hidden from the user so don't localize
+			$value = $this->valid_range_start->format('Y-m-d');
+
+			// get signed relative days from today
+			$interval = $now->diff($this->valid_range_start);
+			$min_date = $interval->days * (-2 * $interval->invert + 1);
 		} else {
-			$value = $this->valid_range_start->formatLikeIntl('MM/dd/yyyy');
+			// value is hidden from the user so don't localize
+			$value = $now->format('Y-m-d');
+		}
+
+		if ($this->valid_range_end instanceof SwatDate) {
+			// get signed relative days from today
+			$interval = $now->diff($this->valid_range_end);
+			$max_date = $interval->days * (-2 * $interval->invert + 1);
 		}
 
 		$input_tag = new SwatHtmlTag('input');
+		$input_tag->class = 'swat-calendar';
 		$input_tag->type = 'hidden';
 		$input_tag->id = $this->id.'_value';
 		$input_tag->name = $this->id.'_value';
 		$input_tag->value = $value;
+
+		// This jQuery date format needs to match the PHP date format used
+		// above.
+		$input_tag->{'data-format'} = 'yy-mm-dd';
+
+		if ($min_date !== null) {
+			$input_tag->{'data-min-date'} = $min_date;
+		}
+
+		if ($max_date !== null) {
+			$input_tag->{'data-max-date'} = $max_date;
+		}
+
 		$input_tag->display();
 
 		$container_div_tag->close();
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		//Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -134,6 +163,8 @@ class SwatCalendar extends SwatControl
 		} else {
 			$javascript = '';
 		}
+
+		$now = new SwatDate();
 
 		if (isset($this->valid_range_start))
 			$start_date = $this->valid_range_start->formatLikeIntl('MM/dd/yyyy');
