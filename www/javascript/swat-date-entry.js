@@ -1,99 +1,251 @@
-function SwatDateEntry(id, use_current_date)
-{
-	this.id = id;
-	this.use_current_date = use_current_date;
+(function($) {
 
-	this.year = document.getElementById(id + '_year');
-	this.month = document.getElementById(id + '_month');
-	this.day = document.getElementById(id + '_day');
+$.widget('swat.dateentry', {
+	version: '2.2.3',
+	options: {
+		useCurrentDate: false
+	},
+	_create: function() {
+		this._year = this.element.find('select.swat-date-entry-year');
+		this._month = this.element.find('select.swat-date-entry-month');
+		this._day = this.element.find('select.swat-date-entry-day');
 
-	this.calendar = null;
-	this.time_entry = null;
+		this._calendar = null;
+		this._time = null;
 
-	if (this.year)
-		YAHOO.util.Event.addListener(this.year, 'change',
-			this.handleYearChange, this, true);
+		this._on(this._year, {
+			change: function(event) { this._update('year'); }
+		});
+		this._on(this._month, {
+			change: function(event) { this._update('month'); }
+		});
+		this._on(this._day, {
+			change: function(event) { this._update('day'); }
+		});
 
-	if (this.month)
-		YAHOO.util.Event.addListener(this.month, 'change',
-			this.handleMonthChange, this, true);
+		this._buildIndex();
+	},
+	_buildIndex: function() {
+		var indexTable = {
+			'year': {},
+			'month': {},
+			'day': {}
+		};
 
-	if (this.day)
-		YAHOO.util.Event.addListener(this.day, 'change',
-			this.handleDayChange, this, true);
+		var reverseIndexTable = {
+			'year': {},
+			'month': {},
+			'day': {}
+		};
 
-	this.lookup_table = {};
-	this.reverse_lookup_table = {};
-}
+		this._year.find('option').each(function(index) {
+			var value = $(this).data('value');
+			if (value !== undefined) {
+				indexTable.year[value] = index;
+				reverseIndexTable.year[index] = value;
+			}
+		});
 
-SwatDateEntry.prototype.setSensitivity = function(sensitivity)
-{
-	var elements = [];
+		this._month.find('option').each(function(index) {
+			var value = $(this).data('value');
+			if (value !== undefined) {
+				indexTable.month[value] = index;
+				reverseIndexTable.month[index] = value;
+			}
+		});
 
-	if (this.year)
-		elements.push(this.year);
+		this._day.find('option').each(function(index) {
+			var value = $(this).data('value');
+			if (value !== undefined) {
+				indexTable.day[value] = index;
+				reverseIndexTable.day[index] = value;
+			}
+		});
 
-	if (this.month)
-		elements.push(this.month);
+		this._indexTable = indexTable;
+		this._reverseIndexTable = reverseIndexTable;
+	},
+	_init: function() {
+	},
+	_setOption: function(key, value) {
+		var ret = this._super(key, value);
 
-	if (this.day)
-		elements.push(this.day);
+		if (key === 'disabled') {
+			if (value) {
+				this._year
+					.addClass('swat-insensitive')
+					.prop('disabled', true);
 
-	for (var i = 0; i < elements.length; i++) {
-		if (sensitivity) {
-			elements[i].disabled = false;
-			YAHOO.util.Dom.removeClass(elements[i], 'swat-insensitive');
-		} else {
-			elements[i].disabled = true;
-			YAHOO.util.Dom.addClass(elements[i], 'swat-insensitive');
+				this._month
+					.addClass('swat-insensitive')
+					.prop('disabled', true);
+
+				this._day
+					.addClass('swat-insensitive')
+					.prop('disabled', true);
+			} else {
+				this._year
+					.removeClass('swat-insensitive')
+					.prop('disabled', false);
+
+				this._month
+					.removeClass('swat-insensitive')
+					.prop('disabled', false);
+
+				this._day
+					.removeClass('swat-insensitive')
+					.prop('disabled', false);
+			}
+
+			if (this._calendar) {
+				this._calendar._setOption('disabled', value);
+			}
+
+			if (this._time) {
+				this._time._setOption('disabled', value);
+			}
 		}
+
+		return ret;
+	},
+	_update: function(what) {
+		// month is required for this, so stop if it doesn't exist
+		if (this._month.length === 0) {
+			return;
+		}
+
+		var index = null;
+		switch (what) {
+		case 'day':
+			index = this._day.prop('selectedIndex');
+			break;
+		case 'month':
+			index = this._month.prop('selectedIndex');
+			break;
+		case 'year':
+			index = this._year.prop('selectedIndex');
+			break;
+		}
+
+		// don't do anything if we select the blank option
+		if (index !== 0) {
+			var thisMonth = (new Date()).getMonth() + 1;
+
+			if (this._getMonth() == thisMonth && this.options.useCurrentDate) {
+				this._setNow(true);
+			} else {
+				this._setDefault(true);
+			}
+		}
+	},
+	_setDefault: function(alsoSetTime) {
+		var now = new Date();
+
+		if (this._year.prop('selectedIndex') === 0) {
+			// Default to this year if it exists in the options. This behaviour
+			// is different from the day and month, but makes common sense.
+			var index = this._getIndex('year', now.getFullYear());
+			if (index) {
+				this._year.prop('selectedIndex', index);
+			} else {
+				this._year.prop('selectedIndex', 1);
+			}
+		}
+
+		if (this.month && this.month.selectedIndex === 0)
+			this.month.selectedIndex = 1;
+
+		if (this.day && this.day.selectedIndex === 0)
+			this.day.selectedIndex = 1;
+
+		if (this.time_entry && set_time)
+			this.time_entry.setDefault(false);
+	},
+	_setNow: function(alsoSetTime) {
+		var now = new Date();
+
+		if (this._year.prop('selectedIndex') === 0) {
+			var index = this._getIndex('year', now.getFullYear());
+			if (index) {
+				this._year.prop('selectedIndex', index);
+			} else {
+				this._year.prop('selectedIndex', 1);
+			}
+		}
+
+		if (this._month.prop('selectedIndex') === 0) {
+			var index = this._getIndex('month', now.getMonth() + 1);
+			if (index) {
+				this._month.prop('selectedIndex', index);
+			} else {
+				this._month.prop('selectedIndex', 1);
+			}
+		}
+
+		if (this._day.prop('selectedIndex') === 0) {
+			var index = this._getIndex('day', now.getDate());
+			if (index) {
+				this._day.prop('selectedIndex', index);
+			} else {
+				this._day.prop('selectedIndex', 1);
+			}
+		}
+
+		if (this._time && alsoSetTime) {
+			this._time._setNow(false);
+		}
+	},
+	_getIndex: function(what, value) {
+		var index = this._indexTable[what][value];
+		if (index === undefined) {
+			index = null;
+		}
+		return index;
+	},
+	_getValue: function(what, index) {
+		var value = this._reverseIndexTable[what][index];
+		if (value === undefined) {
+			value = null;
+		}
+		return value;
+	},
+	_reset: function(alsoResetTime) {
+		this._year.prop('selectedIndex', 0);
+		this._month.prop('selectedIndex', 0);
+		this._day.prop('selectedIndex', 0);
+		if (this._time && alsoResetTime) {
+			this._time._reset(false);
+		}
+	},
+	_getYear: function() {
+		var year = null;
+
+		if (this._year.size() > 0) {
+			year = this._getValue('year', this._year.prop('selectedIndex'));
+		}
+
+		return year;
+	},
+	_getMonth: function() {
+		var month = null;
+
+		if (this._month.size() > 0) {
+			month = this._getValue('month', this._month.prop('selectedIndex'));
+		}
+
+		return month;
+	},
+	_getDay: function() {
+		var day = null;
+
+		if (this._day.size() > 0) {
+			day = this._getValue('day', this._day.prop('selectedIndex'));
+		}
+
+		return day;
 	}
 
-	if (this.calendar)
-		this.calendar.setSensitivity(sensitivity);
-
-	if (this.time_entry)
-		this.time_entry.setSensitivity(sensitivity);
-};
-
-SwatDateEntry.prototype.handleYearChange = function()
-{
-	this.update('year');
-};
-
-SwatDateEntry.prototype.handleMonthChange = function()
-{
-	this.update('month');
-};
-
-SwatDateEntry.prototype.handleDayChange = function()
-{
-	this.update('day');
-};
-
-SwatDateEntry.prototype.addLookupTable = function(table_name, table)
-{
-	this.lookup_table[table_name] = table;
-	this.reverse_lookup_table[table_name] = {};
-	for (var key in table) {
-		this.reverse_lookup_table[table_name][table[key]] = key;
-	}
-};
-
-SwatDateEntry.prototype.lookup = function(table_name, key)
-{
-	return this.lookup_table[table_name][key];
-};
-
-SwatDateEntry.prototype.reverseLookup = function(table_name, key)
-{
-	var value = this.reverse_lookup_table[table_name][key];
-	if (value === undefined) {
-		value = null;
-	}
-	return value;
-};
-
+/*
 SwatDateEntry.prototype.setCalendar = function(calendar)
 {
 	if (typeof SwatCalendar != 'undefined' &&
@@ -111,184 +263,12 @@ SwatDateEntry.prototype.setTimeEntry = function(time_entry)
 		time_entry.date_entry = this;
 	}
 };
+*/
+});
 
-/**
- * @deprecated Use setTimeEntry() instead.
- */
-SwatDateEntry.prototype.setSwatTime = function(swat_time)
-{
-	this.setTimeEntry(swat_time);
-};
+})(jQuery);
 
-SwatDateEntry.prototype.reset = function(reset_time)
-{
-	if (this.year)
-		this.year.selectedIndex = 0;
-
-	if (this.month)
-		this.month.selectedIndex = 0;
-
-	if (this.day)
-		this.day.selectedIndex = 0;
-
-	if (this.time_entry && reset_time)
-		this.time_entry.reset(false);
-};
-
-SwatDateEntry.prototype.setNow = function(set_time)
-{
-	var now = new Date();
-
-	if (this.year && this.year.selectedIndex === 0) {
-		var this_year = this.lookup('year', now.getFullYear());
-
-		if (this_year)
-			this.year.selectedIndex = this_year;
-		else
-			this.year.selectedIndex = 1;
-	}
-
-	if (this.month && this.month.selectedIndex === 0) {
-		var this_month = this.lookup('month', now.getMonth() + 1);
-
-		if (this_month)
-			this.month.selectedIndex = this_month;
-		else
-			this.month.selectedIndex = 1;
-	}
-
-	if (this.day && this.day.selectedIndex === 0) {
-		var this_day = this.lookup('day', now.getDate());
-		if (this_day)
-			this.day.selectedIndex = this_day;
-		else
-			this.day.selectedIndex = 1;
-	}
-
-	if (this.time_entry && set_time)
-		this.time_entry.setNow(false);
-};
-
-SwatDateEntry.prototype.setDefault = function(set_time)
-{
-	var now = new Date();
-
-	if (this.year && this.year.selectedIndex === 0) {
-		/*
-		 * Default to this year if it exists in the options. This behaviour
-		 * is somewhat different from the others, but just makes common sense.
-		 */
-		var this_year = this.lookup('year', now.getFullYear());
-
-		if (this_year)
-			this.year.selectedIndex = this_year;
-		else
-			this.year.selectedIndex = 1;
-	}
-
-	if (this.month && this.month.selectedIndex === 0)
-		this.month.selectedIndex = 1;
-
-	if (this.day && this.day.selectedIndex === 0)
-		this.day.selectedIndex = 1;
-
-	if (this.time_entry && set_time)
-		this.time_entry.setDefault(false);
-};
-
-SwatDateEntry.prototype.update = function(field)
-{
-	// month is required for this, so stop if it doesn't exist
-	if (!this.month)
-		return;
-
-	var index = null;
-	switch (field) {
-	case 'day':
-		index = this.day.selectedIndex;
-		break;
-	case 'month':
-		index = this.month.selectedIndex;
-		break;
-	case 'year':
-		index = this.year.selectedIndex;
-		break;
-	}
-
-	// don't do anything if we select the blank option
-	if (index !== 0) {
-		var now = new Date();
-		var this_month = now.getMonth() + 1;
-
-		if (this.getMonth() == this_month && this.use_current_date)
-			this.setNow(true);
-		else
-			this.setDefault(true);
-	}
-};
-
-SwatDateEntry.prototype.getDay = function()
-{
-	var day = null;
-
-	if (this.day)
-		day = this.reverseLookup('day', this.day.selectedIndex);
-
-	return day;
-};
-
-SwatDateEntry.prototype.getMonth = function()
-{
-	var month = null;
-
-	if (this.month)
-		month = this.reverseLookup('month', this.month.selectedIndex);
-
-	return month;
-};
-
-SwatDateEntry.prototype.getYear = function()
-{
-	var year = null;
-
-	if (this.year)
-		year = this.reverseLookup('year', this.year.selectedIndex);
-
-	return year;
-};
-
-SwatDateEntry.prototype.setDay = function(day)
-{
-	if (this.day) {
-		var this_day = this.lookup('day', day);
-
-		if (this_day)
-			this.day.selectedIndex = this_day;
-		else
-			this.day.selectedIndex = 0;
-	}
-};
-
-SwatDateEntry.prototype.setMonth = function(month)
-{
-	if (this.month) {
-		var this_month = this.lookup('month', month);
-
-		if (this_month)
-			this.month.selectedIndex = this_month;
-		else
-			this.month.selectedIndex = 0;
-	}
-};
-
-SwatDateEntry.prototype.setYear = function(year)
-{
-	if (this.year) {
-		var this_year = this.lookup('year', year);
-
-		if (this_year)
-			this.year.selectedIndex = this_year;
-		else
-			this.year.selectedIndex = 0;
-	}
-};
+$(function() {
+	$('.swat-date-entry').dateentry({
+	});
+});
