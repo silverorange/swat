@@ -131,7 +131,7 @@ $.widget('swat.dateentry', {
 		if (index !== 0) {
 			var thisMonth = (new Date()).getMonth() + 1;
 
-			if (this._getMonth() == thisMonth && this.options.useCurrentDate) {
+			if (this._getMonth() === thisMonth && this.options.useCurrentDate) {
 				this._setNow(true);
 			} else {
 				this._setDefault(true);
@@ -152,14 +152,17 @@ $.widget('swat.dateentry', {
 			}
 		}
 
-		if (this.month && this.month.selectedIndex === 0)
-			this.month.selectedIndex = 1;
+		if (this._month.prop('selectedIndex') === 0) {
+			this._month.prop('selectedIndex', 1);
+		}
 
-		if (this.day && this.day.selectedIndex === 0)
-			this.day.selectedIndex = 1;
+		if (this._day.prop('selectedIndex') === 0) {
+			this._day.prop('selectedIndex', 1);
+		}
 
-		if (this.time_entry && set_time)
-			this.time_entry.setDefault(false);
+		if (this._time && alsoSetTime) {
+			this._time._setDefault(false);
+		}
 	},
 	_setNow: function(alsoSetTime) {
 		var now = new Date();
@@ -269,6 +272,13 @@ SwatDateEntry.prototype.setTimeEntry = function(time_entry)
 })(jQuery);
 
 $(function() {
-	$('.swat-date-entry').dateentry({
+	$('.swat-date-entry').each(function() {
+		var $entry = $(this);
+		var useCurrentDate = (
+			$entry.data('use-current-date') === 'use-current-date'
+		);
+		$entry.dateentry({
+			useCurrentDate: useCurrentDate
+		});
 	});
 });
