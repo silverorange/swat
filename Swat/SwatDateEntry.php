@@ -148,6 +148,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			$jquery_ui->getHtmlHeadEntrySet()
 		);
 
+		$this->addJavaScript('packages/swat/javascript/swat-calendar.js');
 		$this->addJavaScript('packages/swat/javascript/swat-date-entry.js');
 	}
 

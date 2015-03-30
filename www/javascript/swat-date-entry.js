@@ -10,7 +10,8 @@ $.widget('swat.dateentry', {
 		this._month = this.element.find('select.swat-date-entry-month');
 		this._day = this.element.find('select.swat-date-entry-day');
 
-		this._calendar = null;
+		this._calendar = this.element.find('input.swat-calendar').datepicker();
+		//null;
 		this._time = null;
 
 		this._on(this._year, {
@@ -98,7 +99,7 @@ $.widget('swat.dateentry', {
 			}
 
 			if (this._calendar) {
-				this._calendar._setOption('disabled', value);
+				this._calendar.datepicker('option', 'disabled', value);
 			}
 
 			if (this._time) {

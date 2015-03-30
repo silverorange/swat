@@ -150,12 +150,13 @@
 	background-image: url(../images/tango/22/office-calendar-256.png);
 }
 
-.swat-insensitive .ui-datepicker-trigger {
+.ui-datepicker-trigger.ui-state-disabled {
+	cursor: default;
 	opacity: 0.6;
 }
 
-.ie6 .swat-insensitive .ui-datepicker-trigger,
-.ie7 .swat-insensitive .ui-datepicker-trigger,
-.ie8 .swat-insensitive .ui-datepicker-trigger {
+.ie6 .ui-datepicker-trigger.ui-state-disabled,
+.ie7 .ui-datepicker-trigger.ui-state-disabled,
+.ie8 .ui-datepicker-trigger.ui-state-disabled {
 	background-image: url(../images/tango/22/office-calendar-256-insensitive.png);
 }

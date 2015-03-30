@@ -35,6 +35,9 @@ Swat:
     packages/swat/javascript/swat-cascade.js:
     packages/swat/javascript/swat-change-order.js:
     packages/swat/javascript/swat-date-entry.js:
+      OptionalDepends:
+        - packages/swat/javascript/swat-calendar.js
+        - packages/swat/javascript/swat-time-entry.js
     packages/swat/javascript/swat-check-all.js:
       OptionalDepends:
         - packages/swat/javascript/swat-checkbox-cell-renderer.js
