@@ -2,6 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'JQuery/JQuery.php';
 require_once 'Swat/SwatDisplayableContainer.php';
 require_once 'Swat/SwatTitleable.php';
 require_once 'Swat/SwatHtmlTag.php';
@@ -63,8 +64,10 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 		$this->requires_id = true;
 
 		// JavaScript for IE peekaboo hack
-		$yui = new SwatYUI(array('event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+		$jquery = new JQuery();
+		$this->html_head_entry_set->addEntrySet(
+			$jquery->getHtmlHeadEntrySet()
+		);
 		$this->addJavaScript('packages/swat/javascript/swat-fieldset.js');
 	}
 
@@ -125,23 +128,7 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 
 		$this->displayChildren();
 
-		Swat::displayInlineJavaScript($this->getInlineJavascript());
-
 		$fieldset_tag->close();
-	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScript()
-
-	/**
-	 * Gets fieldset specific inline JavaScript
-	 *
-	 * @return string fieldset specific inline JavaScript.
-	 */
-	protected function getInlineJavaScript()
-	{
-		return sprintf("var %s_obj = new SwatFieldset('%s');",
-			$this->id, $this->id);
 	}
 
 	// }}}
