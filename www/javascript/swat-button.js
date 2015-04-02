@@ -1,61 +1,93 @@
-$(document).ready(function() {
-	var PROCESSING_ANIMATION_DURATION = 1000; // milliseconds
-	var PROCESSING_ANIMATION_MAX_OPACITY = 0.5;
+(function($) {
 
-	$('.swat-button').each(function() {
-		var $button = $(this);
+$.widget('swat.swatbutton', {
+	version: '2.2.3',
+	options: {
+		animationDuration: 1000, // milliseconds
+		animationOpacity: 0.5,
+		confirmationMessage: null,
+		processingMessage: null
+	},
+	_create: function() {
+		this._shim = $('<input type="hidden"/>');
+		this._throbber = $(
+			'<span class="swat-button-processing-throbber"></span>'
+		);
 
-		var confirmation_message = $button.data('confirmation-message');
+		this._setProcessingMessage(this.options.processingMessage);
 
-		var processing_message = $button.data('processing-message');
-		if (processing_message || processing_message === '') {
-			if (processing_message === '') {
-				processing_message = ' '; // UTF-8 non-breaking space
-			}
-			var $throbber = $(
-				'<span class="swat-button-processing-throbber"></span>'
-			);
-			$throbber
-				.text(processing_message)
-				.appendTo($button.parent());
+		this._on(this.element, {
+			click: function(event) { this._handleClick(event); }
+		});
+	},
+	_setOption: function(key, value) {
+		var ret = this._super(key, value);
+
+		if (key === 'processingMessage') {
+			this._setProcessingMessage(value);
 		}
 
-		$button.click(function(e) {
-			var confirmed = (confirmation_message)
-				? confirm(confirmation_message)
-				: true;
+		return ret;
+	},
+	_handleClick: function(event) {
+		if (this._confirm()) {
+			this._showProcessingMessage();
+		} else {
+			event.preventDefault();
+		}
+	},
+	_confirm: function() {
+		return (this.options.confirmationMessage)
+			? confirm(this.options.confirmationMessage)
+			: true;
+	},
+	_showProcessingMessage: function() {
+		// Disable button to prevent double submission.
+		this.element
+			.prop('disabled', true)
+			.addClass('swat-insensitive');
 
-			if (confirmed) {
-				if (processing_message) {
-					// Disable button to prevent double submission.
-					$button
-						.attr('disabled', true)
-						.addClass('swat-insensitive');
+		// Add shim to form so button value still gets submitted.
+		this._shim.prop({
+			name: this.element.prop('name'),
+			value: this.element.prop('value')
+		});
 
-					// Add shim to form so button value still gets submitted.
-					var $shim = $('<input type="hidden"/>');
-					$shim
-						.attr({
-							name: $button.attr('name'),
-							value: $button.attr('value')
-						});
+		// Show processing message
+		this._throbber.animate(
+			{ opacity: this.options.animationOpacity },
+			this.options.animationDuration
+		);
 
-					// Show processing message
-					$throbber.animate(
-						{ opacity: PROCESSING_ANIMATION_MAX_OPACITY },
-						PROCESSING_ANIMATION_DURATION
-					);
+		// Submit form
+		var form = this.element.parents('form');
+		if (form.length) {
+			this._shim.appendTo(form);
+			form.submit(); // Needed for IE and Webkit
+		}
+	},
+	_setProcessingMessage: function(value) {
+		if (value || value === '') {
+			// If empty string, use non-breaking space instead so element
+			// shows up.
+			value = (value === '') ? ' ' : value;
+			this._throbber
+				.text(value)
+				.appendTo(this.element.parent());
+		} else {
+			this._throbber.remove();
+		}
+	}
+});
 
-					// Submit form
-					var $form = $button.parents('form');
-					if ($form.length) {
-						$shim.appendTo($form);
-						$form.submit(); // Needed for IE and Webkit
-					}
-				}
-			} else {
-				e.preventDefault();
-			}
+})(jQuery);
+
+$(function() {
+	$('.swat-button').each(function() {
+		var $button = $(this);
+		$button.swatbutton({
+			processingMessage: $button.data('processing-message'),
+			confirmationMessage: $button.data('confirmation-message')
 		});
 	});
 });
