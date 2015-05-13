@@ -83,7 +83,7 @@ class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
 	}
 
 	// }}}
-	// {{{ protected function displayInline()
+	// {{{ protected function displayInlineInternal()
 
 	protected function displayInlineInternal($path)
 	{

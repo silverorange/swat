@@ -42,9 +42,9 @@ class SwatInlineJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 	}
 
 	// }}}
-	// {{{ protected function displayInline()
+	// {{{ protected function displayInlineInternal()
 
-	protected function displayInline($path)
+	protected function displayInlineInternal($path)
 	{
 		$this->displayInternal();
 	}
