@@ -34,19 +34,19 @@ class SwatInlineJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 	}
 
 	// }}}
-	// {{{ public function display()
+	// {{{ protected function display()
 
-	public function display($uri_prefix = '', $tag = null)
+	protected function displayInternal($uri_prefix = '', $tag = null)
 	{
 		Swat::displayInlineJavaScript($this->script);
 	}
 
 	// }}}
-	// {{{ public function displayInline()
+	// {{{ protected function displayInline()
 
-	public function displayInline($path)
+	protected function displayInline($path)
 	{
-		$this->display();
+		$this->displayInternal();
 	}
 
 	// }}}

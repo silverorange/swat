@@ -13,9 +13,9 @@ require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
  */
 class SwatLessStyleSheetHtmlHeadEntry extends SwatStyleSheetHtmlHeadEntry
 {
-	// {{{ public function display()
+	// {{{ protected function display()
 
-	public function display($uri_prefix = '', $tag = null)
+	protected function displayInternal($uri_prefix = '', $tag = null)
 	{
 		$uri = $this->uri;
 
