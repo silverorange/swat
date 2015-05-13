@@ -28,9 +28,9 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	/**
 	 * Conditional expression used to limit display for Internet Explorer
 	 *
-	 * For example, 'lte IE 8' would display this JavaScriptHtmlHeadEntry
-	 * only in IE 8 and below. If set to an empty string, no conditional is
-	 * included in this head entry's output.
+	 * For example, 'lte IE 8' would display this head entry only in IE 8 and
+	 * below. If set to an empty string, no conditional is included in this
+	 * head entry's output.
 	 *
 	 * @var string
 	 *
@@ -138,8 +138,9 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	 * Sets the conditional expression used to limit display for Internet
 	 * Explorer
 	 *
-	 * For example, 'lte IE 8' would display this JavaScriptHtmlHeadEntry
-	 * only in IE 8 and below.
+	 * For example, 'lte IE 8' would display this head entry only in IE 8 and
+	 * below. If set to an empty string, no conditional is included in this
+	 * head entry's output.
 	 *
 	 * @param string $condition the conditional expression to use. Use an
 	 *                          empty string for no conditional (display in
