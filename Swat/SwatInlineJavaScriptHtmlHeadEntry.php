@@ -34,7 +34,7 @@ class SwatInlineJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 	}
 
 	// }}}
-	// {{{ protected function display()
+	// {{{ protected function displayInternal()
 
 	protected function displayInternal($uri_prefix = '', $tag = null)
 	{
