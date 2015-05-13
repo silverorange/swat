@@ -13,9 +13,9 @@ require_once 'Swat/SwatHtmlHeadEntry.php';
  */
 class SwatJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 {
-	// {{{ public function display()
+	// {{{ protected function displayInternal()
 
-	public function display($uri_prefix = '', $tag = null)
+	protected function displayInternal($uri_prefix = '', $tag = null)
 	{
 		$uri = $this->uri;
 
@@ -32,9 +32,9 @@ class SwatJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 	}
 
 	// }}}
-	// {{{ public function displayInline()
+	// {{{ protected function displayInlineInternal()
 
-	public function displayInline($path)
+	protected function displayInlineInternal($path)
 	{
 		echo '<script type="text/javascript">';
 		readfile($path.$this->getUri());

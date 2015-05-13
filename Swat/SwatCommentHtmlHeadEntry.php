@@ -32,9 +32,9 @@ class SwatCommentHtmlHeadEntry extends SwatHtmlHeadEntry
 	}
 
 	// }}}
-	// {{{ public function display()
+	// {{{ protected function displayInternal()
 
-	public function display($uri_prefix = '', $tag = null)
+	protected function displayInternal($uri_prefix = '', $tag = null)
 	{
 		// double dashes are not allowed in XML comments
 		$comment = str_replace('--', '—', $this->comment);
@@ -42,11 +42,11 @@ class SwatCommentHtmlHeadEntry extends SwatHtmlHeadEntry
 	}
 
 	// }}}
-	// {{{ public function displayInline()
+	// {{{ protected function displayInlineInternal()
 
-	public function displayInline($path)
+	protected function displayInlineInternal($path)
 	{
-		$this->display();
+		$this->displayInternal();
 	}
 
 	// }}}
