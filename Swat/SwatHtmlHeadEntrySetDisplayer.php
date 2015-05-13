@@ -322,10 +322,11 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 			'SwatStyleSheetHtmlHeadEntry'       => 0,
 			'SwatLessStyleSheetHtmlHeadEntry'   => 1,
 			'SwatLinkHtmlHeadEntry'             => 2,
-			'SwatInlineJavaScriptHtmlHeadEntry' => 3,
-			'SwatJavaScriptHtmlHeadEntry'       => 4,
-			'SwatCommentHtmlHeadEntry'          => 5,
-			'__unknown__'                       => 6,
+			'SwatConditionalJavaScriptHtmlHeadEntry' => 3,
+			'SwatInlineJavaScriptHtmlHeadEntry' => 4,
+			'SwatJavaScriptHtmlHeadEntry'       => 5,
+			'SwatCommentHtmlHeadEntry'          => 6,
+			'__unknown__'                       => 7,
 		);
 	}
 
