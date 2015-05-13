@@ -13,7 +13,7 @@ require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
  */
 class SwatLessStyleSheetHtmlHeadEntry extends SwatStyleSheetHtmlHeadEntry
 {
-	// {{{ protected function display()
+	// {{{ protected function displayInternal()
 
 	protected function displayInternal($uri_prefix = '', $tag = null)
 	{
