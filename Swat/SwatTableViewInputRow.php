@@ -444,7 +444,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		foreach ($this->replicators as $replicator_id) {
 			foreach ($this->input_cells as $cell) {
 				if ($cell->getWidget($replicator_id)->hasMessage()) {
-					$has_messages = true;
+					$has_message = true;
 					break 2;
 				}
 			}
