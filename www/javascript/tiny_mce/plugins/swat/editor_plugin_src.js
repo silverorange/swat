@@ -1654,23 +1654,14 @@
 	// }}}
 	// {{{ tinymce.plugins.SwatPlugin.drawSourceMode()
 
-	drawSourceMode: function(ed)
+	drawSourceMode: function()
 	{
 		var ed = this.editor;
 
 		// get textarea
 		var el = ed.getElement();
 
-		el.className         = 'swat-textarea';
-		el.style.overflowX   = 'hidden';
-		el.style.overflowY   = 'scroll';
-		el.style.borderStyle = 'none';
-		el.style.borderWidth = '0';    // For IE
-		el.style.resize      = 'none'; // For WebKit
-		el.style.outline     = 'none'; // For WebKit
-		el.style.padding     = '1px';
-		el.style.width       = '99.5%';
-		el.style.maxWidth    = '99.5%';
+		el.className = 'swat-textarea swat-textarea-editor-source-mode';
 
 		this.sourceContainer = document.createElement('div');
 
@@ -1683,8 +1674,9 @@
 		el.parentNode.replaceChild(this.sourceContainer, el);
 		this.sourceContainer.appendChild(el);
 
-		// set textarea as block again since it is in a display:none container
-		el.style.display = 'block';
+		// reset style properties set by default plugins
+		el.style.display = null;
+		el.style.width = null;
 
 		this.drawModeSwitcher(ed);
 	},
@@ -1847,7 +1839,7 @@
 
 		// hide textarea
 		if (this.sourceContainer) {
-			this.sourceContainer.style.display  = 'none';
+			this.sourceContainer.style.display = 'none';
 		}
 
 		// set content
@@ -1900,13 +1892,6 @@
 		// get editor iframe for geometry
 		var iframe = ed.getWin().frameElement;
 
-		// get style of iframe to compute bg color
-		var style = (tinymce.isIE) ?
-			iframe.currentStyle :
-			getComputedStyle(iframe, null);
-
-		var bgColor = style.backgroundColor;
-
 		// get width and height
 		var w = iframe.clientWidth;
 		var h = iframe.clientHeight;
@@ -1917,20 +1902,54 @@
 		// get textarea
 		var el = ed.getElement();
 
-		el.value         = this.editor.getContent();
-		el.style.height  = (h - 4) + 'px'; // account for textarea padding
+		// get padding and box sizing for height offset
+		var style = (tinymce.isIE)
+			? el.currentStyle
+			: getComputedStyle(el, null);
+
+		var boxSizing = style.boxSizing;
+		var leftPadding = 0;
+
+		// If using content-box sizing, subtract the vertical padding from
+		// the textarea height and set a fixed height. Otherwise use default
+		// 100% height.
+		if (boxSizing === 'content-box' || !boxSizing) {
+			var verticalPadding = parseInt(style.paddingTop, 10) +
+				parseInt(style.paddingBottom, 10);
+
+			var leftPadding = parseInt(style.paddingLeft, 10);
+			el.style.height  = (h - verticalPadding) + 'px';
+		}
+
+		el.value = this.editor.getContent();
 
 		// position and size textarea container
-		this.sourceContainer.style.width    = w + 'px';
-		this.sourceContainer.style.height   = h + 'px';
-		this.sourceContainer.style.left     = '1px'; // TODO: get correct position
-		this.sourceContainer.style.top      = '30px'; // TODO: get correct position
+		this.sourceContainer.style.width  = w + 'px';
+		this.sourceContainer.style.height = h + 'px';
+		this.sourceContainer.style.left   = leftPadding + 'px';
 
-		// set background color
-		this.sourceContainer.style.backgroundColor = bgColor;
+		// Use YUI if available to get toolbar height
+		 if (YAHOO && YAHOO.util && YAHOO.util.Dom) {
+			var toolbar = YAHOO.util.Dom.getElementsByClassName(
+				'mceToolbar',
+				'td',
+				el.parentNode.parentNode
+			).pop();
+			if (toolbar) {
+				// set container position based on toolbar height
+				var region = YAHOO.util.Dom.getRegion(toolbar);
+				this.sourceContainer.style.top = region.height + 'px';
+			} else {
+				// no toolbar found, use default height
+				this.sourceContainer.style.top = '29px';
+			}
+		 } else {
+			 // if no YUI is available, just use a default height
+			this.sourceContainer.style.top = '29px';
+		 }
 
 		// display textarea
-		this.sourceContainer.style.display  = 'block';
+		this.sourceContainer.style.display = 'block';
 
 		this.mode = Swat.MODE_SOURCE;
 		var modeStateEl = document.getElementById(ed.id + '_mode');

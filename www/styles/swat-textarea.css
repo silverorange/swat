@@ -14,3 +14,15 @@ div.swat-textarea-resize-handle {
 	padding: 0;
 	cursor: s-resize;
 }
+
+.swat-textarea-editor-container .swat-textarea-container textarea.swat-textarea-editor-source-mode {
+	width: 99.5%;
+	max-width: 99.5%;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	border: 0;
+	resize: none;
+	outline: none;
+	padding: 1px;
+}

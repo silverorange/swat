@@ -3,11 +3,9 @@ body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	margin: 8px;
-	background: #fff;
 }
 
 body.mceForceColors {
-	background: #fff;
 	color:#000;
 }
 
