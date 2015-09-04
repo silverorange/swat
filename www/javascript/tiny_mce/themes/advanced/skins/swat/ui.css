@@ -26,6 +26,7 @@
 	padding: 1px;
 }
 .swatSkin .mceIframeContainer {border-top:1px solid #f0eade; border-bottom:1px solid #f0eade}
+.swatSkin .mceIframeContainer iframe {background: #fff;}
 .swatSkin .mceStatusbar {font-family:'MS Sans Serif',sans-serif,Verdana,Arial; font-size:9pt; line-height:16px; overflow:visible; color:#000; display:block; height:20px}
 .swatSkin .mceStatusbar div {float:left; margin:2px}
 .swatSkin .mceStatusbar a.mceResize {display:block; float:right; background:url(../../img/icons.gif) -800px 0; width:20px; height:20px; cursor:se-resize}
