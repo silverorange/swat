@@ -497,6 +497,9 @@ abstract class SwatWidget extends SwatUIObject
 	 */
 	public function copy($id_suffix = '')
 	{
+		// create composite widgets so that they can be copied
+		$this->confirmCompositeWidgets();
+
 		$copy = parent::copy($id_suffix);
 
 		if ($id_suffix != '' && $copy->id !== null)
