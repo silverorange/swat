@@ -502,11 +502,14 @@ abstract class SwatWidget extends SwatUIObject
 		if ($id_suffix != '' && $copy->id !== null)
 			$copy->id = $copy->id.$id_suffix;
 
-		foreach ($this->composite_widgets as $key => $composite_widget) {
-			$composite_copy = $composite_widget->copy($id_suffix);
-			$composite_copy->parent = $copy;
-			$copy->composite_widgets[$key] = $composite_copy;
-		}
+		// We can't copy composite widgets here because the widget id of a
+		// composite widget often uses a specific suffix. Copying and appending
+		// a separate suffix here can break the composite widgets. Instead,
+		// just mark the composite widgets as needing to be created for the
+		// copy. Composite widgets will be instantiated on-demand with the
+		// correct id values.
+		$copy->composite_widgets = array();
+		$copy->composite_widgets_created = false;
 
 		return $copy;
 	}
