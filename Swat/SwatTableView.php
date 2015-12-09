@@ -474,8 +474,13 @@ class SwatTableView extends SwatView implements SwatUIParent
 	public function getXhtmlColspan()
 	{
 		$count = 0;
-		foreach ($this->getVisibleColumns() as $column)
+		foreach ($this->getVisibleColumns() as $column) {
 			$count += $column->getXhtmlColspan();
+		}
+
+		if ($count < 2 && count($this->getSpanningColumns()) > 0) {
+			$count = 2;
+		}
 
 		return $count;
 	}
