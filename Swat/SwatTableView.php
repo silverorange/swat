@@ -412,14 +412,27 @@ class SwatTableView extends SwatView implements SwatUIParent
 		$messages = parent::getMessages();
 
 		if ($this->model !== null) {
-			foreach ($this->model as $row)
-				foreach ($this->columns as $column)
-					$messages =
-						array_merge($messages, $column->getMessages($row));
+			foreach ($this->model as $row) {
+				foreach ($this->columns as $column) {
+					$messages = array_merge(
+						$messages,
+						$column->getMessages($row)
+					);
+				}
 
-			foreach ($this->extra_rows as $row)
-				if ($row instanceof SwatTableViewWidgetRow)
+				foreach ($this->spanning_columns as $column) {
+					$messages = array_merge(
+						$messages,
+						$column->getMessages($row)
+					);
+				}
+			}
+
+			foreach ($this->extra_rows as $row) {
+				if ($row instanceof SwatTableViewWidgetRow) {
 					$messages =	array_merge($messages, $row->getMessages());
+				}
+			}
 		}
 
 		return $messages;
@@ -441,6 +454,13 @@ class SwatTableView extends SwatView implements SwatUIParent
 		if (!$has_message && $this->model !== null) {
 			foreach ($this->model as $row) {
 				foreach ($this->columns as $column) {
+					if ($column->hasMessage($row)) {
+						$has_message = true;
+						break 2;
+					}
+				}
+
+				foreach ($this->spanning_columns as $column) {
 					if ($column->hasMessage($row)) {
 						$has_message = true;
 						break 2;
@@ -1033,8 +1053,14 @@ class SwatTableView extends SwatView implements SwatUIParent
 	protected function displayRowMessages($row)
 	{
 		$messages = array();
-		foreach ($this->columns as $column)
+
+		foreach ($this->columns as $column) {
 			$messages = array_merge($messages, $column->getMessages($row));
+		}
+
+		foreach ($this->spanning_columns as $column) {
+			$messages = array_merge($messages, $column->getMessages($row));
+		}
 
 		if (count($messages) > 0) {
 			$tr_tag = new SwatHtmlTag('tr');
@@ -1112,6 +1138,15 @@ class SwatTableView extends SwatView implements SwatUIParent
 			if ($column->hasMessage($row)) {
 				$has_message = true;
 				break;
+			}
+		}
+
+		if (!$has_message) {
+			foreach ($this->spanning_columns as $column) {
+				if ($column->hasMessage($row)) {
+					$has_message = true;
+					break;
+				}
 			}
 		}
 
