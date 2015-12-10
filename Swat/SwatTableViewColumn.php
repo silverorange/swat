@@ -596,6 +596,35 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	}
 
 	// }}}
+	// {{{ public function hasVisibleRenderer()
+
+	/**
+	 * Whether or not this column has one or more visible cell renderers
+	 *
+	 * @param mixed $row a data object containing the data for a single row
+	 *                    in the table store for this group. This object may
+	 *                    affect the visibility of renderers in this column.
+	 *
+	 * @return boolean true if this column has one or more visible cell
+	 *                  renderers and false if it does not.
+	 */
+	public function hasVisibleRenderer($row)
+	{
+		$this->setupRenderers($row);
+
+		$visible_renderers = false;
+
+		foreach ($this->renderers as $renderer) {
+			if ($renderer->visible) {
+				$visible_renderers = true;
+				break;
+			}
+		}
+
+		return $visible_renderers;
+	}
+
+	// }}}
 	// {{{ public function copy()
 
 	/**
