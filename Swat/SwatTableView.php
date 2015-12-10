@@ -493,16 +493,24 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 */
 	public function getXhtmlColspan()
 	{
-		$count = 0;
+		$colspan = 0;
+
+		// Add all colspans of visible columns to get table colspan.
 		foreach ($this->getVisibleColumns() as $column) {
-			$count += $column->getXhtmlColspan();
+			$colspan += $column->getXhtmlColspan();
 		}
 
-		if ($count < 2 && count($this->getSpanningColumns()) > 0) {
-			$count = 2;
+		// Check each spanning column. If it has more colspan than the colspan
+		// defined by the columns, set the table colspan to the spanning column
+		// colspan.
+		foreach ($this->getVisibleSpanningColumns() as $column) {
+			$spanning_colspan = $column->getXhtmlColspan();
+			if ($spanning_colspan > $colspan) {
+				$colspan = $spanning_colspan;
+			}
 		}
 
-		return $count;
+		return $colspan;
 	}
 
 	// }}}
@@ -1640,6 +1648,27 @@ class SwatTableView extends SwatView implements SwatUIParent
 	public function getSpanningColumns()
 	{
 		return $this->spanning_columns;
+	}
+
+	// }}}
+	// {{{ public function getVisibleSpanningColumns()
+
+	/**
+	 * Gets all visible spanning columns of this table-view as an array
+	 *
+	 * @return array the visible spanning columns of this table-view.
+	 */
+	public function getVisibleSpanningColumns()
+	{
+		$columns = array();
+
+		foreach ($this->spanning_columns as $column) {
+			if ($column->visible) {
+				$columns[] = $column;
+			}
+		}
+
+		return $columns;
 	}
 
 	// }}}

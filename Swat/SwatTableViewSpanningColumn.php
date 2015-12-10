@@ -100,6 +100,28 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 	}
 
 	// }}}
+	// {{{ public function getXhtmlColspan()
+
+	/**
+	 * Gets how many XHTML table columns this column object spans on display
+	 *
+	 * @return integer the number of XHTML table columns this column object
+	 *                  spans on display.
+	 */
+	public function getXhtmlColspan()
+	{
+		// If spanning column has a title or an offset is uses at least 2
+		// columns. Otherwise it uses 1 column.
+		if ($this->offset > 0 || $this->title != '') {
+			$colspan = 2;
+		} else {
+			$colspan = 1;
+		}
+
+		return $colspan;
+	}
+
+	// }}}
 }
 
 ?>
