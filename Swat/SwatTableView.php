@@ -1003,7 +1003,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 	protected function displayRowColumns($row, $next_row, $count)
 	{
 		// Make sure we should display a row for the current data. If there
-		// are no visible columns for the row data, just ship displaying the
+		// are no visible columns for the row data, just skip displaying the
 		// entire row.
 		$should_show_row = false;
 		foreach ($this->getVisibleColumns() as $column) {
