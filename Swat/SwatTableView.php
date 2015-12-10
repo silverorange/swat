@@ -430,7 +430,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 
 			foreach ($this->extra_rows as $row) {
 				if ($row instanceof SwatTableViewWidgetRow) {
-					$messages =	array_merge($messages, $row->getMessages());
+					$messages = array_merge($messages, $row->getMessages());
 				}
 			}
 		}
