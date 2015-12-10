@@ -412,14 +412,27 @@ class SwatTableView extends SwatView implements SwatUIParent
 		$messages = parent::getMessages();
 
 		if ($this->model !== null) {
-			foreach ($this->model as $row)
-				foreach ($this->columns as $column)
-					$messages =
-						array_merge($messages, $column->getMessages($row));
+			foreach ($this->model as $row) {
+				foreach ($this->columns as $column) {
+					$messages = array_merge(
+						$messages,
+						$column->getMessages($row)
+					);
+				}
 
-			foreach ($this->extra_rows as $row)
-				if ($row instanceof SwatTableViewWidgetRow)
-					$messages =	array_merge($messages, $row->getMessages());
+				foreach ($this->spanning_columns as $column) {
+					$messages = array_merge(
+						$messages,
+						$column->getMessages($row)
+					);
+				}
+			}
+
+			foreach ($this->extra_rows as $row) {
+				if ($row instanceof SwatTableViewWidgetRow) {
+					$messages = array_merge($messages, $row->getMessages());
+				}
+			}
 		}
 
 		return $messages;
@@ -441,6 +454,13 @@ class SwatTableView extends SwatView implements SwatUIParent
 		if (!$has_message && $this->model !== null) {
 			foreach ($this->model as $row) {
 				foreach ($this->columns as $column) {
+					if ($column->hasMessage($row)) {
+						$has_message = true;
+						break 2;
+					}
+				}
+
+				foreach ($this->spanning_columns as $column) {
 					if ($column->hasMessage($row)) {
 						$has_message = true;
 						break 2;
@@ -473,11 +493,24 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 */
 	public function getXhtmlColspan()
 	{
-		$count = 0;
-		foreach ($this->getVisibleColumns() as $column)
-			$count += $column->getXhtmlColspan();
+		$colspan = 0;
 
-		return $count;
+		// Add all colspans of visible columns to get table colspan.
+		foreach ($this->getVisibleColumns() as $column) {
+			$colspan += $column->getXhtmlColspan();
+		}
+
+		// Check each spanning column. If it has more colspan than the colspan
+		// defined by the columns, set the table colspan to the spanning column
+		// colspan.
+		foreach ($this->getVisibleSpanningColumns() as $column) {
+			$spanning_colspan = $column->getXhtmlColspan();
+			if ($spanning_colspan > $colspan) {
+				$colspan = $spanning_colspan;
+			}
+		}
+
+		return $colspan;
 	}
 
 	// }}}
@@ -1028,8 +1061,14 @@ class SwatTableView extends SwatView implements SwatUIParent
 	protected function displayRowMessages($row)
 	{
 		$messages = array();
-		foreach ($this->columns as $column)
+
+		foreach ($this->columns as $column) {
 			$messages = array_merge($messages, $column->getMessages($row));
+		}
+
+		foreach ($this->spanning_columns as $column) {
+			$messages = array_merge($messages, $column->getMessages($row));
+		}
 
 		if (count($messages) > 0) {
 			$tr_tag = new SwatHtmlTag('tr');
@@ -1107,6 +1146,15 @@ class SwatTableView extends SwatView implements SwatUIParent
 			if ($column->hasMessage($row)) {
 				$has_message = true;
 				break;
+			}
+		}
+
+		if (!$has_message) {
+			foreach ($this->spanning_columns as $column) {
+				if ($column->hasMessage($row)) {
+					$has_message = true;
+					break;
+				}
 			}
 		}
 
@@ -1600,6 +1648,27 @@ class SwatTableView extends SwatView implements SwatUIParent
 	public function getSpanningColumns()
 	{
 		return $this->spanning_columns;
+	}
+
+	// }}}
+	// {{{ public function getVisibleSpanningColumns()
+
+	/**
+	 * Gets all visible spanning columns of this table-view as an array
+	 *
+	 * @return array the visible spanning columns of this table-view.
+	 */
+	public function getVisibleSpanningColumns()
+	{
+		$columns = array();
+
+		foreach ($this->spanning_columns as $column) {
+			if ($column->visible) {
+				$columns[] = $column;
+			}
+		}
+
+		return $columns;
 	}
 
 	// }}}
