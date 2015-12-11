@@ -1076,7 +1076,7 @@ class SwatTableView extends SwatView implements SwatUIParent
 			$tr_tag->open();
 
 			$td_tag = new SwatHtmlTag('td');
-			$td_tag->colspan = $this->getVisibleColumnCount();
+			$td_tag->colspan = $this->getXhtmlColspan();
 			$td_tag->open();
 
 			$ul_tag = new SwatHtmlTag('ul');
