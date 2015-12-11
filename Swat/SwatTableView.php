@@ -1002,21 +1002,38 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 */
 	protected function displayRowColumns($row, $next_row, $count)
 	{
-		// display a row of data
-		$tr_tag = new SwatHtmlTag('tr');
-		$tr_tag->class = $this->getRowClassString($row, $count);
-		foreach ($this->columns as $column)
-			$tr_tag->addAttributes($column->getTrAttributes($row));
+		// Make sure we should display a row for the current data. If there
+		// are no visible columns for the row data, just skip displaying the
+		// entire row.
+		$should_show_row = false;
+		foreach ($this->getVisibleColumns() as $column) {
+			if ($column->hasVisibleRenderer($row)) {
+				$should_show_row = true;
+				break;
+			}
+		}
 
-		if ($this->rowHasMessage($row))
-			$tr_tag->class.= ' swat-error';
+		// Display a row of data.
+		if ($should_show_row) {
+			$tr_tag = new SwatHtmlTag('tr');
+			$tr_tag->class = $this->getRowClassString($row, $count);
 
-		$tr_tag->open();
+			foreach ($this->columns as $column) {
+				$tr_tag->addAttributes($column->getTrAttributes($row));
+			}
 
-		foreach ($this->columns as $column)
-			$column->display($row);
+			if ($this->rowHasMessage($row)) {
+				$tr_tag->class.= ' swat-error';
+			}
 
-		$tr_tag->close();
+			$tr_tag->open();
+
+			foreach ($this->columns as $column) {
+				$column->display($row);
+			}
+
+			$tr_tag->close();
+		}
 	}
 
 	// }}}
