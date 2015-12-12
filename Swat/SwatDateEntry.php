@@ -2,6 +2,8 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'JQuery/JQuery.php';
+require_once 'JQuery/JQueryUI.php';
 require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatFlydown.php';
@@ -139,8 +141,14 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		$this->requires_id = true;
 
-		$yui = new SwatYUI(array('event'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+		$jquery = new JQuery();
+		$this->html_head_entry_set->addEntrySet($jquery->getHtmlHeadEntrySet());
+		$jquery_ui = new JQueryUI();
+		$this->html_head_entry_set->addEntrySet(
+			$jquery_ui->getHtmlHeadEntrySet()
+		);
+
+		$this->addJavaScript('packages/swat/javascript/swat-calendar.js');
 		$this->addJavaScript('packages/swat/javascript/swat-date-entry.js');
 	}
 
@@ -208,6 +216,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
 		$div_tag->class = $this->getCSSClassString();
+		if ($this->use_current_date) {
+			$div_tag->{'data-use-current-date'} = 'use-current-date';
+		}
 		$div_tag->open();
 
 		echo '<span class="swat-date-entry-span">';
@@ -264,8 +275,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 			$time_entry->display();
 		}
-
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 
 		$div_tag->close();
 	}
@@ -461,50 +470,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
-		$use_current_date = ($this->use_current_date) ? 'true' : 'false';
-
-		$javascript = sprintf("var %s_obj = new SwatDateEntry('%s', %s);",
-			$this->id, $this->id, $use_current_date);
-
-		if ($this->display_parts & self::DAY) {
-			$day_flydown = $this->getCompositeWidget('day_flydown');
-
-			$lookup_days = array();
-			foreach ($day_flydown->options as $key => $option)
-				$lookup_days[] = sprintf('%s: %s',
-					$option->value,
-					($day_flydown->show_blank) ? $key + 1 : $key);
-
-			$javascript.= sprintf("\n%s_obj.addLookupTable('day', {%s});",
-				$this->id, implode(', ', $lookup_days));
-		}
-
-		if ($this->display_parts & self::MONTH) {
-			$month_flydown = $this->getCompositeWidget('month_flydown');
-
-			$lookup_months = array();
-			foreach ($month_flydown->options as $key => $option)
-				$lookup_months[] = sprintf('%s: %s',
-					$option->value,
-					($month_flydown->show_blank) ? $key + 1 : $key);
-
-			$javascript.= sprintf("\n%s_obj.addLookupTable('month', {%s});",
-				$this->id, implode(', ', $lookup_months));
-		}
-
-		if ($this->display_parts & self::YEAR) {
-			$year_flydown = $this->getCompositeWidget('year_flydown');
-
-			$lookup_years = array();
-			foreach ($year_flydown->options as $key => $option)
-				$lookup_years[] = sprintf('%s: %s',
-					$option->value,
-					($year_flydown->show_blank) ? $key + 1 : $key);
-
-			$javascript.= sprintf("\n%s_obj.addLookupTable('year', {%s});",
-				$this->id, implode(', ', $lookup_years));
-		}
-
 		if ($this->display_parts & self::TIME)
 			$javascript.= sprintf("\n%s_obj.setTimeEntry(%s_time_entry_obj);",
 				$this->id, $this->id);

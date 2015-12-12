@@ -3,6 +3,20 @@
 <swatml>
 	<widget class="SwatForm" id="my_form">
 
+		<!-- sensitivity toggle -->
+		<widget class="SwatContentBlock">
+			<property name="content"><![CDATA[
+			<input type="button" id="sensitive" value="toggle sensitivity" style="font-size: 85%;" />
+			<script>
+			var disabled = false;
+			$('#sensitive').click(function(event) {
+				disabled = !disabled;
+				$('.swat-date-entry').dateentry('option', 'disabled', disabled);
+			});
+			</script>]]></property>
+			<property name="content_type">text/xml</property>
+		</widget>
+
 		<widget class="SwatFormField">
 			<property name="title" type="string">Date with a Calendar (default)</property>
 			<widget class="SwatDateEntry" id="default_date">
@@ -13,21 +27,6 @@
 			<property name="title" type="string">Date and Time with a Calendar</property>
 			<widget class="SwatDateEntry" id="time_date">
 				<property name="display_parts" type="constant">YEAR|MONTH|DAY|TIME|CALENDAR</property>
-			</widget>
-
-			<!-- sensitivity toggle -->
-			<widget class="SwatContentBlock">
-				<property name="content"><![CDATA[
-				<input type="button" id="sensitive" value="toggle sensitivity" style="font-size: 85%;" />
-				<script type="text/javascript">
-				sensitive = true;
-				YAHOO.util.Event.on(document.getElementById('sensitive'), 'click',
-					function (e) {
-						sensitive = !sensitive;
-						time_date_obj.setSensitivity(sensitive);
-					});
-				</script>]]></property>
-				<property name="content_type">text/xml</property>
 			</widget>
 		</widget>
 

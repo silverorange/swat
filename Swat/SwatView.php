@@ -2,6 +2,8 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'JQuery/JQuery.php';
+require_once 'JQuery/JQueryUI.php';
 require_once 'Swat/SwatControl.php';
 require_once 'Swat/SwatViewSelection.php';
 require_once 'Swat/SwatViewSelector.php';
@@ -79,8 +81,15 @@ abstract class SwatView extends SwatControl
 	{
 		parent::__construct($id);
 
-		$yui = new SwatYUI(array('dom'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+		$jquery = new JQuery();
+		$this->html_head_entry_set->addEntrySet(
+			$jquery->getHtmlHeadEntrySet()
+		);
+		$jquery_ui = new JQueryUI();
+		$this->html_head_entry_set->addEntrySet(
+			$jquery_ui->getHtmlHeadEntrySet()
+		);
+
 		$this->addJavaScript('packages/swat/javascript/swat-view.js');
 	}
 

@@ -2,6 +2,8 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'JQuery/JQuery.php';
+require_once 'JQuery/JQueryUI.php';
 require_once 'Swat/SwatNoteBook.php';
 
 /**
@@ -50,8 +52,14 @@ class SwatAccordion extends SwatNoteBook
 
 		$this->requires_id = true;
 
-		$yui = new SwatYUI(array('yahoo', 'dom', 'event', 'animation'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+		$jquery = new JQuery();
+		$this->html_head_entry_set->addEntrySet(
+			$jquery->getHtmlHeadEntrySet()
+		);
+		$jquery_ui = new JQueryUI();
+		$this->html_head_entry_set->addEntrySet(
+			$jquery_ui->getHtmlHeadEntrySet()
+		);
 
 		$this->addStyleSheet('packages/swat/styles/swat-accordion.css');
 		$this->addJavaScript('packages/swat/javascript/swat-accordion.js');
@@ -75,6 +83,15 @@ class SwatAccordion extends SwatNoteBook
 		$ul_tag = new SwatHtmlTag('ul');
 		$ul_tag->id = $this->id;
 		$ul_tag->class = 'swat-accordion';
+
+		if (!$this->animate) {
+			$ul_tag->{'data-no-animate'} = 'no-animate';
+		}
+
+		if (!$this->always_open) {
+			$ul_tag->{'data-not-always-open'} = 'not-always-open';
+		}
+
 		$ul_tag->open();
 
 		foreach ($this->pages as $page) {
@@ -117,41 +134,6 @@ class SwatAccordion extends SwatNoteBook
 		}
 
 		$ul_tag->close();
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
-	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScript()
-
-	/**
-	 * Gets the inline JavaScript used by this accordion view
-	 *
-	 * @return string the inline JavaScript used by this accordion view.
-	 */
-	protected function getInlineJavaScript()
-	{
-		$javascript = sprintf("var %1\$s_obj = new %2\$s('%1\$s', %3\$s);",
-			$this->id,
-			$this->getJavascriptClassName(),
-			$this->animate ? 'true' : 'false');
-
-		$javascript.= sprintf("\n%s_obj.animate = %s;",
-			$this->id,
-			$this->animate ? 'true' : 'false');
-
-		$javascript.= sprintf("\n%s_obj.always_open = %s;",
-			$this->id,
-			$this->always_open ? 'true' : 'false');
-
-		return $javascript;
-	}
-
-	// }}}
-	// {{{ protected function getJavaScriptClassName()
-
-	protected function getJavaScriptClassName()
-	{
-		return 'SwatAccordion';
 	}
 
 	// }}}

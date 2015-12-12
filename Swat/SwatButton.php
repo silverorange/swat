@@ -2,6 +2,7 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'JQuery/JQuery.php';
 require_once 'Swat/SwatString.php';
 require_once 'Swat/SwatInputControl.php';
 require_once 'Swat/SwatHtmlTag.php';
@@ -124,8 +125,11 @@ class SwatButton extends SwatInputControl
 	{
 		parent::__construct($id);
 
-		$yui = new SwatYUI(array('dom', 'event', 'animation'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+		$jquery = new JQuery();
+		$this->html_head_entry_set->addEntrySet(
+			$jquery->getHtmlHeadEntrySet()
+		);
+
 		$this->addJavaScript('packages/swat/javascript/swat-button.js');
 
 		$this->requires_id = true;
@@ -169,11 +173,6 @@ class SwatButton extends SwatInputControl
 
 		$input_tag = $this->getInputTag();
 		$input_tag->display();
-
-		if ($this->show_processing_throbber ||
-			$this->confirmation_message !== null) {
-			Swat::displayInlineJavaScript($this->getInlineJavaScript());
-		}
 	}
 
 	// }}}
@@ -306,6 +305,15 @@ class SwatButton extends SwatInputControl
 			$tag->disabled = 'disabled';
 		}
 
+		if ($this->show_processing_throbber) {
+			$tag->{'data-processing-message'} =
+				$this->processing_throbber_message;
+		}
+
+		if ($this->confirmation_message != '') {
+			$tag->{'data-confirmation-message'} = $this->confirmation_message;
+		}
+
 		return $tag;
 	}
 
@@ -334,56 +342,6 @@ class SwatButton extends SwatInputControl
 		$classes = array_merge($classes, parent::getCSSClassNames());
 
 		return $classes;
-	}
-
-	// }}}
-	// {{{ protected function getJavaScriptClass()
-
-	/**
-	 * Gets the name of the JavaScript class to instantiate for this button
-	 *
-	 * Subclasses of this class may want to return a subclass of the default
-	 * JavaScript button class.
-	 *
-	 * @return string the name of the JavaScript class to instantiate for this
-	 *                 button. Defaults to 'SwatButton'.
-	 */
-	protected function getJavaScriptClass()
-	{
-		return 'SwatButton';
-	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScript()
-
-	/**
-	 * Gets the inline JavaScript required for this control
-	 *
-	 * @return stirng the inline JavaScript required for this control.
-	 */
-	protected function getInlineJavaScript()
-	{
-		$show_processing_throbber = ($this->show_processing_throbber) ?
-			'true' : 'false';
-
-		$javascript = sprintf("var %s_obj = new %s('%s', %s);",
-			$this->id,
-			$this->getJavaScriptClass(),
-			$this->id,
-			$show_processing_throbber);
-
-		if ($this->show_processing_throbber) {
-			$javascript.= sprintf("\n%s_obj.setProcessingMessage(%s);",
-				$this->id, SwatString::quoteJavaScriptString(
-					$this->processing_throbber_message));
-		}
-
-		if ($this->confirmation_message !== null)
-			$javascript.= sprintf("\n%s_obj.setConfirmationMessage(%s);",
-				$this->id, SwatString::quoteJavaScriptString(
-					$this->confirmation_message));
-
-		return $javascript;
 	}
 
 	// }}}

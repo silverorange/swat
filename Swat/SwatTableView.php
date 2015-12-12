@@ -2,6 +2,8 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
+require_once 'JQuery/JQuery.php';
+require_once 'JQuery/JQueryUI.php';
 require_once 'Swat/SwatView.php';
 require_once 'Swat/SwatHtmlTag.php';
 require_once 'Swat/SwatTableViewColumn.php';
@@ -11,7 +13,6 @@ require_once 'Swat/SwatTableViewGroup.php';
 require_once 'Swat/SwatTableViewRow.php';
 require_once 'Swat/SwatTableViewInputRow.php';
 require_once 'Swat/SwatUIParent.php';
-require_once 'Swat/SwatYUI.php';
 require_once 'Swat/exceptions/SwatException.php';
 require_once 'Swat/exceptions/SwatDuplicateIdException.php';
 require_once 'Swat/exceptions/SwatInvalidClassException.php';
@@ -219,8 +220,14 @@ class SwatTableView extends SwatView implements SwatUIParent
 	{
 		parent::__construct($id);
 
-		$yui = new SwatYUI(array('dom'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+		$jquery = new JQuery();
+		$this->html_head_entry_set->addEntrySet(
+			$jquery->getHtmlHeadEntrySet()
+		);
+		$jquery_ui = new JQueryUI();
+		$this->html_head_entry_set->addEntrySet(
+			$jquery_ui->getHtmlHeadEntrySet()
+		);
 
 		$this->addJavaScript('packages/swat/javascript/swat-table-view.js');
 		$this->addStyleSheet('packages/swat/styles/swat-table-view.css');
@@ -328,8 +335,6 @@ class SwatTableView extends SwatView implements SwatUIParent
 		}
 
 		$table_tag->close();
-
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
 	// }}}
@@ -1260,6 +1265,8 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * Column JavaSscript is placed before extra row JavaScript.
 	 *
 	 * @return string inline JavaScript needed by this table-view.
+
+	 * @todo: remove this when jQuery conversion is done.
 	 */
 	protected function getInlineJavaScript()
 	{

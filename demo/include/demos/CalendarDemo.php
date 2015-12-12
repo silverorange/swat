@@ -32,6 +32,10 @@ class CalendarDemo extends Demo
 			new SwatOption(7, 'Grapefruit'),
 			new SwatOption(8, 'Strawberry')
 		);
+
+		$calendar = $ui->getWidget('calendar');
+		$calendar->valid_range_start = new SwatDate('2015-01-01');
+		$calendar->valid_range_end = new SwatDate('2015-06-01');
 	}
 
 	// }}}

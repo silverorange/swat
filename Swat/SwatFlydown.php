@@ -108,6 +108,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 					$option_tag->value = (string)$flydown_option->value;
 				}
 
+				$option_tag->{'data-value'} = (string)$flydown_option->value;
+
 				if ($flydown_option instanceof SwatFlydownDivider) {
 					$option_tag->disabled = 'disabled';
 					$option_tag->class = 'swat-flydown-option-divider';

@@ -1,88 +1,93 @@
-function SwatButton(id, show_processing_throbber)
-{
-	this.id = id;
+(function($) {
 
-	this.button = document.getElementById(this.id);
+$.widget('swat.swatbutton', {
+	version: '2.2.3',
+	options: {
+		animationDuration: 1000, // milliseconds
+		animationOpacity: 0.5,
+		confirmationMessage: null,
+		processingMessage: null
+	},
+	_create: function() {
+		this._shim = $('<input type="hidden"/>');
+		this._throbber = $(
+			'<span class="swat-button-processing-throbber"></span>'
+		);
 
-	// deprecated
-	this.show_processing_throbber = show_processing_throbber;
+		this._setProcessingMessage(this.options.processingMessage);
 
-	this.confirmation_message = '';
-	this.throbber_container = null;
+		this._on(this.element, {
+			click: function(event) { this._handleClick(event); }
+		});
+	},
+	_setOption: function(key, value) {
+		var ret = this._super(key, value);
 
-	if (show_processing_throbber) {
-		this.initThrobber();
-	}
-
-	YAHOO.util.Event.addListener(this.button, 'click',
-		this.handleClick, this, true);
-}
-
-SwatButton.prototype.handleClick = function(e)
-{
-	var confirmed = (this.confirmation_message) ?
-		confirm(this.confirmation_message) : true;
-
-	if (confirmed) {
-		if (this.throbber_container !== null) {
-			this.button.disabled = true;
-			YAHOO.util.Dom.addClass(this.button, 'swat-insensitive');
-
-			// add button to form data manually since we disabled it above
-			var div = document.createElement('div');
-			var hidden_field = document.createElement('input');
-			hidden_field.type = 'hidden';
-			hidden_field.name = this.id;
-			hidden_field.value = this.button.value;
-			div.appendChild(hidden_field);
-			this.button.form.appendChild(div);
-
-			this.showThrobber();
-			var form = YAHOO.util.Dom.getAncestorByTagName(this.button, 'form');
-			if (form) {
-				form.submit(); // needed for IE and WebKit
-			}
+		if (key === 'processingMessage') {
+			this._setProcessingMessage(value);
 		}
-	} else {
-		YAHOO.util.Event.preventDefault(e);
+
+		return ret;
+	},
+	_handleClick: function(event) {
+		if (this._confirm()) {
+			this._showProcessingMessage();
+		} else {
+			event.preventDefault();
+		}
+	},
+	_confirm: function() {
+		return (this.options.confirmationMessage)
+			? confirm(this.options.confirmationMessage)
+			: true;
+	},
+	_showProcessingMessage: function() {
+		// Disable button to prevent double submission.
+		this.element
+			.prop('disabled', true)
+			.addClass('swat-insensitive');
+
+		// Add shim to form so button value still gets submitted.
+		this._shim.prop({
+			name: this.element.prop('name'),
+			value: this.element.prop('value')
+		});
+
+		// Show processing message
+		this._throbber.animate(
+			{ opacity: this.options.animationOpacity },
+			this.options.animationDuration
+		);
+
+		// Submit form
+		var form = this.element.parents('form');
+		if (form.length) {
+			this._shim.appendTo(form);
+			form.submit(); // Needed for IE and Webkit
+		}
+	},
+	_setProcessingMessage: function(value) {
+		if (value || value === '') {
+			// If empty string, use non-breaking space instead so element
+			// shows up.
+			value = (value === '') ? ' ' : value;
+			this._throbber
+				.text(value)
+				.appendTo(this.element.parent());
+		} else {
+			this._throbber.remove();
+		}
 	}
-};
+});
 
-SwatButton.prototype.initThrobber = function()
-{
-	this.throbber_container = document.createElement('span');
+})(jQuery);
 
-	YAHOO.util.Dom.addClass(this.throbber_container,
-		'swat-button-processing-throbber');
-
-	this.button.parentNode.appendChild(this.throbber_container);
-};
-
-SwatButton.prototype.showThrobber = function()
-{
-	var animation = new YAHOO.util.Anim(this.throbber_container,
-		{ opacity: { to: 0.5 }}, 1, YAHOO.util.Easing.easingNone);
-
-	animation.animate();
-};
-
-SwatButton.prototype.setProcessingMessage = function(message)
-{
-	if (this.throbber_container === null) {
-		this.initThrobber();
-	}
-
-	if (message.length > 0) {
-		this.throbber_container.appendChild(document.createTextNode(message));
-		YAHOO.util.Dom.addClass(this.throbber_container,
-			'swat-button-processing-throbber-text');
-	} else {
-		// the following string is a UTF-8 encoded non breaking space
-		this.throbber_container.appendChild(document.createTextNode(' '));
-	}
-};
-
-SwatButton.prototype.setConfirmationMessage = function(message)
-{
-	this.confirmation_message = message;
-};
+$(function() {
+	$('.swat-button').each(function() {
+		var $button = $(this);
+		$button.swatbutton({
+			processingMessage: $button.data('processing-message'),
+			confirmationMessage: $button.data('confirmation-message')
+		});
+	});
+});
