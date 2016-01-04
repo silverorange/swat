@@ -32,9 +32,10 @@
 		"ext-iconv": "*",
 		"ext-intl": "*",
 		"ext-mbstring": "*",
-		"silverorange/concentrate": ">=0.0.13"
+		"silverorange/concentrate": ">=0.0.13",
+		"silverorange/silverorange_autoloader": "*"
 	},
 	"autoload": {
-		"classmap": [ "Swat", "SwatI18N", "SwatDB" ]
+		"files": [ "autoload.php" ]
 	}
 }
