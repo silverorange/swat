@@ -27,7 +27,7 @@
 			"email": "steven@silverorange.com"
 		}
 	],
-	"require"     : {
+	"require": {
 		"php": ">=5.1.5",
 		"ext-iconv": "*",
 		"ext-intl": "*",
@@ -37,5 +37,8 @@
 	},
 	"autoload": {
 		"files": [ "autoload.php" ]
-	}
+	},
+	"include-path": [
+		"./"
+	]
 }
