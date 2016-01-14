@@ -3,9 +3,17 @@
 	"description": "Web application toolkit.",
 	"type": "library",
 	"keywords": [ "swat", "toolkit", "widget" ],
-	"homepage": "https://code.silverorange.com/Swat",
+	"homepage": "https://code.silverorange.com/swat",
 	"license": "LGPL-2.1",
 	"authors": [
+		{
+			"name": "Charles Waddell",
+			"email": "charles@silverorange.com"
+		},
+		{
+			"name": "Isaac Grant",
+			"email": "isaac@silverorange.com"
+		},
 		{
 			"name": "Michael Gauthier",
 			"email": "mike@silverorange.com"
@@ -13,10 +21,6 @@
 		{
 			"name": "Nathan Frederikson",
 			"email": "nathan@silverorange.com"
-		},
-		{
-			"name": "Isaac Grant",
-			"email": "isaac@silverorange.com"
 		},
 		{
 			"name": "Nick Burka",
@@ -27,14 +31,21 @@
 			"email": "steven@silverorange.com"
 		}
 	],
-	"require"     : {
+	"require": {
 		"php": ">=5.1.5",
 		"ext-iconv": "*",
 		"ext-intl": "*",
 		"ext-mbstring": "*",
-		"silverorange/concentrate": ">=0.0.13"
+		"pear/pear_exception": "^1.0.0",
+		"silverorange/mdb2": "^2.4.1",
+		"silverorange/concentrate": ">=0.0.13",
+		"silverorange/silverorange_autoloader": "*",
+		"silverorange/yui": "^1.0.11"
 	},
 	"autoload": {
-		"classmap": [ "Swat", "SwatI18N", "SwatDB" ]
-	}
+		"files": [ "autoload.php" ]
+	},
+	"include-path": [
+		"./"
+	]
 }
