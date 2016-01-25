@@ -9,7 +9,7 @@ require_once 'Swat/SwatOption.php';
  * A base class for controls using a set of options
  *
  * @package   Swat
- * @copyright 2004-2015 silverorange
+ * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatOptionControl extends SwatInputControl

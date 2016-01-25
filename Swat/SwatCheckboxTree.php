@@ -12,7 +12,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A checkbox array widget formatted into a tree
  *
  * @package   Swat
- * @copyright 2005-2015 silverorange
+ * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckboxTree extends SwatCheckboxList implements SwatState

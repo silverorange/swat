@@ -10,7 +10,7 @@ require_once 'Swat/SwatObject.php';
  * To create a tree data structure, sub-class this class.
  *
  * @package   Swat
- * @copyright 2005-2015 silverorange
+ * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatTreeNode extends SwatObject implements RecursiveIterator,

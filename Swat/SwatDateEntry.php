@@ -14,7 +14,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A date entry widget
  *
  * @package   Swat
- * @copyright 2004-2015 silverorange
+ * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDateEntry extends SwatInputControl implements SwatState

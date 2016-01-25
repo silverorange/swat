@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * A tile in a {@link SwatTileView}
  *
  * @package   Swat
- * @copyright 2007-2015 silverorange
+ * @copyright 2007-2016 silverorange
  * @lisence   http://www.gnu.org/copyleft/lesser.html LGPL Lisence 2.1
  * @see       SwatTileView
  */

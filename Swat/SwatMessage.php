@@ -25,7 +25,7 @@ require_once 'Swat/SwatObject.php';
  * will automatically be appropriately styled by Swat.
  *
  * @package   Swat
- * @copyright 2005-2015 silverorange
+ * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatMessage extends SwatObject

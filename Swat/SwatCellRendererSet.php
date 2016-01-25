@@ -12,7 +12,7 @@ require_once 'Swat/exceptions/SwatObjectNotFoundException.php';
  * A collection of cell renderers with associated datafield-property mappings
  *
  * @package   Swat
- * @copyright 2005-2015 silverorange
+ * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCellRendererSet extends SwatObject implements Iterator, Countable

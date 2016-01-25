@@ -18,7 +18,7 @@ require_once 'SwatDB/exceptions/SwatDBException.php';
  * Static convenience methods for working with a database.
  *
  * @package   SwatDB
- * @copyright 2005-2015 silverorange
+ * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDB extends SwatObject

@@ -8,7 +8,7 @@ require_once 'Swat/SwatFlydown.php';
  * A flydown (aka combo-box) selection widget for a Yes/No option.
  *
  * @package   Swat
- * @copyright 2005-2015 silverorange
+ * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatYesNoFlydown extends SwatFlydown

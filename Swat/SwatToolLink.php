@@ -10,7 +10,7 @@ require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
  * A a tool link in the widget tree
  *
  * @package   Swat
- * @copyright 2005-2015 silverorange
+ * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatToolLink extends SwatControl
