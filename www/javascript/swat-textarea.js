@@ -2,7 +2,7 @@
  * A resizeable textarea widget
  *
  * @package   Swat
- * @copyright 2007-2015 silverorange
+ * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 

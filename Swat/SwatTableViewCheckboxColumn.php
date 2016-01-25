@@ -19,7 +19,7 @@ require_once 'Swat/SwatTableViewCheckAllRow.php';
  * widget only applies to the first checkbox renderer.
  *
  * @package   Swat
- * @copyright 2005-2015 silverorange
+ * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewCheckboxColumn extends SwatTableViewColumn

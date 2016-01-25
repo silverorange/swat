@@ -12,7 +12,7 @@ require_once 'Swat/SwatWidget.php';
  * A table view row with an optional contained widget
  *
  * @package   Swat
- * @copyright 2006-2015 silverorange
+ * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent

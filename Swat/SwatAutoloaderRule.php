@@ -31,7 +31,7 @@ require_once 'Swat/SwatObject.php';
  * against any other rules once a match is found. Rules are final by default.
  *
  * @package   Swat
- * @copyright 2006-2015 silverorange
+ * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatAutoloader
  */

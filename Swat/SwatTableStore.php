@@ -12,7 +12,7 @@ require_once 'Swat/SwatTableModel.php';
  * {@link SwatTableStore::add()} method to add rows to a table store.
  *
  * @package   Swat
- * @copyright 2004-2015 silverorange
+ * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableStore extends SwatObject implements SwatTableModel

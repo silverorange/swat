@@ -14,7 +14,7 @@ require_once 'Swat/SwatInlineJavaScriptHtmlHeadEntry.php';
  * entries.
  *
  * @package   Swat
- * @copyright 2010-2015 silverorange
+ * @copyright 2010-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatHtmlHeadEntrySetDisplayer extends SwatObject

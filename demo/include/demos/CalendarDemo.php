@@ -11,7 +11,7 @@ require_once 'Demo.php';
  * displaying a pop-up over a select list in IE6.
  *
  * @package   SwatDemo
- * @copyright 2007-2015 silverorange
+ * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class CalendarDemo extends Demo

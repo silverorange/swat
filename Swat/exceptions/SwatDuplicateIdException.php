@@ -8,7 +8,7 @@ require_once 'Swat/exceptions/SwatException.php';
  * Thrown when the ids of two objects collide
  *
  * @package   Swat
- * @copyright 2005-2015 silverorange
+ * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDuplicateIdException extends SwatException

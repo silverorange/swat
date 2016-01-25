@@ -8,7 +8,7 @@ require_once 'Swat/SwatObject.php';
  * Entry for the navbar navigation tool
  *
  * @package   Swat
- * @copyright 2005-2015 silverorange
+ * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  *
  * @see SwatNavBar

@@ -6,7 +6,7 @@
  * Interface that supports setting a flushable cache 
  *
  * @package   SwatDB
- * @copyright 2014-2015 silverorange
+ * @copyright 2014-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 interface SwatDBFlushable

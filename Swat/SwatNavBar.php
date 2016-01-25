@@ -11,7 +11,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * Visible navigation tool (breadcrumb trail)
  *
  * @package   Swat
- * @copyright 2005-2015 silverorange
+ * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatNavBarEntry
  */

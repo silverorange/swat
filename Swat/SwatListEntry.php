@@ -9,7 +9,7 @@ require_once 'SwatI18N/SwatI18NLocale.php';
  * An input control for entering a delimited list of data
  *
  * @package   Swat
- * @copyright 2006-2015 silverorange
+ * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatListEntry extends SwatEntry

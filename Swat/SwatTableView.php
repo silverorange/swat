@@ -25,7 +25,7 @@ require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
  * use {@link SwatViewSelector} objects.
  *
  * @package   Swat
- * @copyright 2004-2015 silverorange
+ * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTableView extends SwatView implements SwatUIParent

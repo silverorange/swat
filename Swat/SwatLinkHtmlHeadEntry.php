@@ -9,7 +9,7 @@ require_once 'Swat/SwatHtmlTag.php';
  * Stores and outputs an HTML head entry for an XHTML link element
  *
  * @package   Swat
- * @copyright 2008-2015 silverorange
+ * @copyright 2008-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry

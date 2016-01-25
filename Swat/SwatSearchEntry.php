@@ -8,7 +8,7 @@ require_once 'Swat/SwatEntry.php';
  * A single line search entry widget
  *
  * @package   Swat
- * @copyright 2007-2015 silverorange
+ * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatSearchEntry extends SwatEntry

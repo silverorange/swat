@@ -6,7 +6,7 @@ require_once 'SwatI18N/SwatI18NNumberFormat.php';
  * Information for formatting currency values
  *
  * @package   SwatI18N
- * @copyright 2007-2015 silverorange
+ * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatLocale::formatCurrency()
  * @see       SwatLocale::getCurrencyFormat()

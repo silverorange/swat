@@ -8,7 +8,7 @@ require_once 'Demo.php';
  * A demo using a tile view
  *
  * @package   SwatDemo
- * @copyright 2007-2015 silverorange
+ * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class TileViewDemo extends Demo
@@ -115,7 +115,7 @@ class TileViewDemo extends Demo
  * A demo using a tile view
  *
  * @package   SwatDemo
- * @copyright 2005-2015 silverorange
+ * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class FruitObject
