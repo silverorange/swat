@@ -1199,6 +1199,38 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function getProperties()
+
+	/**
+	 * Gets the values of a property for each record in this set
+	 *
+	 * @param string $name name of the property to get.
+	 *
+	 * @return array an array of values.
+	 *
+	 * @throws SwatDBException if records in this recordset do not have a
+	 *                          property with the specified <i>$name</i>.
+	 */
+	public function getProperties($name)
+	{
+		$values = array();
+
+		if (count($this) > 0) {
+			if (!isset($this->getFirst()->$name)) {
+				throw new SwatDBException(
+					"Records in this recordset do not contain a property ".
+					"named '{$name}'.");
+			}
+
+			foreach ($this->objects as $object) {
+				$values[] = $object->$name;
+			}
+		}
+
+		return $values;
+	}
+
+	// }}}
 
 	// database loading and saving
 	// {{{ public function setDatabase()
