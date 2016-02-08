@@ -22,10 +22,10 @@
   <email>mike@silverorange.com</email>
   <active>yes</active>
  </lead>
- <date>2015-12-17</date>
- <time>11:18:11</time>
+ <date>2016-02-08</date>
+ <time>12:12:07</time>
  <version>
-  <release>2.2.9</release>
+  <release>2.2.10</release>
   <api>0.0.1</api>
  </version>
  <stability>
@@ -1872,6 +1872,7 @@ No release notes for you!
     </dir> <!-- /www/styles -->
     <file name="swatml1.dtd" role="data" />
    </dir> <!-- /www -->
+   <file name="autoload.php" role="data" />
    <file name="composer.json" role="data" />
    <file name="README.md" role="data" />
   </dir> <!-- / -->
@@ -1926,14 +1927,14 @@ No release notes for you!
  <changelog>
   <release>
    <version>
-    <release>2.2.9</release>
+    <release>2.2.10</release>
     <api>0.0.1</api>
    </version>
    <stability>
     <release>stable</release>
     <api>stable</api>
    </stability>
-   <date>2015-12-17</date>
+   <date>2016-02-08</date>
    <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
    <notes>
 No release notes for you!
