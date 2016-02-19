@@ -33,9 +33,11 @@
 	],
 	"require": {
 		"php": ">=5.1.5",
+		"ext-dom": "*",
 		"ext-iconv": "*",
 		"ext-intl": "*",
 		"ext-mbstring": "*",
+		"ext-pcre": "*",
 		"pear/pear_exception": "^1.0.0",
 		"silverorange/mdb2": "^2.4.1",
 		"silverorange/concentrate": ">=0.0.13",
