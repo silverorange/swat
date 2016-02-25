@@ -1371,14 +1371,14 @@ class SwatDBDataObject extends SwatObject
 		}
 
 		foreach ($this->getSerializablePrivateProperties() as $property) {
-			$data[$property] = &$this->$property;
+			$data[$property] = $this->$property;
 		}
 
 		$reflector = new ReflectionObject($this);
 		foreach ($reflector->getProperties() as $property) {
 			if ($property->isPublic() && !$property->isStatic()) {
 				$name = $property->getName();
-				$data[$name] = &$this->$name;
+				$data[$name] = $this->$name;
 			}
 		}
 

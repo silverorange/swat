@@ -646,8 +646,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 			'options',
 		);
 
-		foreach ($private_properties as $property)
-			$data[$property] = &$this->$property;
+		foreach ($private_properties as $property) {
+			$data[$property] = $this->$property;
+		}
 
 		return serialize($data);
 	}
@@ -659,8 +660,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	{
 		$data = unserialize($data);
 
-		foreach ($data as $property => $value)
+		foreach ($data as $property => $value) {
 			$this->$property = $value;
+		}
 	}
 
 	// }}}
