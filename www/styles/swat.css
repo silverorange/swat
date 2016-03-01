@@ -22,10 +22,6 @@ option.swat-flydown-option-divider {
 	background: #fff url(../images/swat-frame-background.png) top right no-repeat;
 }
 
-.ie6 .swat-frame {
-	position: relative;
-}
-
 .swat-frame .swat-frame-title {
 	margin: 1px 1px 0 1px;
 	padding: 2px 6px;

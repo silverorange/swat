@@ -14,18 +14,11 @@
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 8px;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
 	overflow: hidden;
 }
 .swat-message-display .swat-message .swat-message-container {
 	padding: 16px 12px 12px 64px;
 	min-height: 32px;
-}
-
-/* Hack for min-height in IE  */
-.ie6 .swat-message-display .swat-message .swat-message-container {
-	height: 32px;
 }
 
 .swat-message-display .swat-message-primary-content {
@@ -36,11 +29,6 @@
 .swat-message-display .swat-message-with-secondary .swat-message-container {
 	padding-top: 12px;
 	min-height: 36px;
-}
-
-/* Hack for min-height in IE  */
-.ie6 .swat-message-display .swat-with-secondary .swat-message-container {
-	height: 36px;
 }
 
 .swat-message-with-secondary .swat-message-display-dismiss-link {

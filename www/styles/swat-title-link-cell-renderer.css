@@ -14,23 +14,9 @@ td.admin-title-link-cell-renderer a.admin-title-link-cell-renderer:visited {
 	border: 1px solid transparent;
 }
 
-.ie6 td.admin-title-link-cell-renderer a.admin-title-link-cell-renderer:link,
-.ie6 td.admin-title-link-cell-renderer a.admin-title-link-cell-renderer:visited {
-	border: 0;
-	margin: 1px;
-	width: 99%;
-}
-
 td.admin-title-link-cell-renderer a.admin-title-link-cell-renderer:hover {
 	background: #f6f2ea url(../images/admin-title-link-cell-renderer-background.png) top repeat-x;
 	border: 1px solid #f0eade;
-}
-
-.ie6 td.admin-title-link-cell-renderer a.admin-title-link-cell-renderer:hover {
-	border: 1px solid #f0eade;
-	margin: 0;
-	cursor: hand;
-	width: 99%;
 }
 
 td.admin-title-link-cell-renderer a.admin-title-link-cell-renderer:active {
