@@ -96,10 +96,6 @@ div.swat-table-view-column-renderer {
 	padding-right: 12px;
 }
 
-.ie6 .swat-table-view-orderable-column-title-last {
-	background-image: url(../images/swat-table-view-orderable-column-256.png);
-}
-
 .swat-table-view-orderable-column-ascending .swat-table-view-orderable-column-title-last {
 	background-position: 100% 25%;
 }

@@ -21,7 +21,6 @@
 	cursor: move;
 }
 
-.ie6 .swat-change-order-item .swat-change-order-item-grippy,
 .ie7 .swat-change-order-item .swat-change-order-item-grippy {
 	display: none;
 }

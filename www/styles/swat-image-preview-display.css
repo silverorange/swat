@@ -69,8 +69,6 @@ a.swat-image-preview-display-link-plain:hover img {
 	padding: 8px;
 
 	border-radius: 8px;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
 }
 
 .swat-image-preview-container:focus,

@@ -14,10 +14,6 @@
 	outline: none;
 }
 
-.ie6 .swat-rating-star {
-	background: url(../images/swat-rating-stars-256.png) no-repeat 0 0px;
-}
-
 .swat-rating-selected {
 	background-position: 0 -20px;
 }

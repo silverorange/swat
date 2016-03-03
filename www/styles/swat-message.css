@@ -7,19 +7,11 @@
 	background-image: url(../images/tango/48/dialog-information.png);
 }
 
-.ie6 .swat-message-notification {
-	background-image: url(../images/tango/48/dialog-information-256.png);
-}
-
 .swat-message-warning {
 	zoom: 1; /* IE hack */
 	border-color: #facd00;
 	background-color: #ff9;
 	background-image: url(../images/tango/48/dialog-warning.png);
-}
-
-.ie6 .swat-message-warning {
-	background-image: url(../images/tango/48/dialog-warning-256.png);
 }
 
 .swat-message-error {
@@ -29,19 +21,11 @@
 	background-image: url(../images/tango/48/dialog-error.png);
 }
 
-.ie6 .swat-message-error {
-	background-image: url(../images/tango/48/dialog-error-256.png);
-}
-
 .swat-message-system-error {
 	zoom: 1; /* IE hack */
 	border-color: #dc6e66;
 	background-color: #f33;
 	background-image: url(../images/tango/48/dialog-error.png);
-}
-
-.ie6 .swat-message-system-error {
-	background-image: url(../images/tango/48/dialog-error-256.png);
 }
 
 .swat-message-cart {
@@ -81,11 +65,6 @@
 	margin: 0.5em 0 0 0;
 	list-style-type: none;
 	background: transparent url(../images/tango/16/dialog-error.png) 4px 4px no-repeat;
-}
-
-.ie6 .swat-form-field-messages .swat-message,
-.ie6 .swat-table-view-input-row-messages .swat-message {
-	background: transparent url(../images/tango/16/dialog-error-256.png) 4px 4px no-repeat;
 }
 
 .swat-form-field-with-messages {

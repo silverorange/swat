@@ -146,7 +146,6 @@ td.swat-calendar-close-controls {
 	zoom: 1;
 }
 
-.ie6 .swat-calendar-toggle-button,
 .ie7 .swat-calendar-toggle-button,
 .ie8 .swat-calendar-toggle-button {
 	background-image: url(../images/tango/22/office-calendar-256.png);
@@ -156,7 +155,6 @@ td.swat-calendar-close-controls {
 	opacity: 0.6;
 }
 
-.ie6 .swat-insensitive .swat-calendar-toggle-button,
 .ie7 .swat-insensitive .swat-calendar-toggle-button,
 .ie8 .swat-insensitive .swat-calendar-toggle-button {
 	background-image: url(../images/tango/22/office-calendar-256-insensitive.png);
