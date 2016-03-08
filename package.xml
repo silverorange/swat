@@ -22,10 +22,10 @@
   <email>mike@silverorange.com</email>
   <active>yes</active>
  </lead>
- <date>2016-02-19</date>
- <time>16:07:44</time>
+ <date>2016-03-08</date>
+ <time>13:56:37</time>
  <version>
-  <release>2.2.11</release>
+  <release>2.2.12</release>
   <api>0.0.1</api>
  </version>
  <stability>
@@ -129,33 +129,24 @@ No release notes for you!
        <dir name="images">
         <dir name="tango">
          <dir name="16">
-          <file name="dialog-error-256.png" role="data" />
           <file name="dialog-error.png" role="data" />
-          <file name="dialog-information-256.png" role="data" />
           <file name="dialog-information.png" role="data" />
           <file name="dialog-question.png" role="data" />
-          <file name="dialog-warning-256.png" role="data" />
           <file name="dialog-warning.png" role="data" />
          </dir> <!-- /demo/www/packages/swat/images/tango/16 -->
          <dir name="22">
-          <file name="dialog-error-256.png" role="data" />
           <file name="dialog-error.png" role="data" />
-          <file name="dialog-information-256.png" role="data" />
           <file name="dialog-information.png" role="data" />
           <file name="dialog-question.png" role="data" />
-          <file name="dialog-warning-256.png" role="data" />
           <file name="dialog-warning.png" role="data" />
           <file name="office-calendar-256-insensitive.png" role="data" />
           <file name="office-calendar-256.png" role="data" />
           <file name="office-calendar.png" role="data" />
          </dir> <!-- /demo/www/packages/swat/images/tango/22 -->
          <dir name="48">
-          <file name="dialog-error-256.png" role="data" />
           <file name="dialog-error.png" role="data" />
-          <file name="dialog-information-256.png" role="data" />
           <file name="dialog-information.png" role="data" />
           <file name="dialog-question.png" role="data" />
-          <file name="dialog-warning-256.png" role="data" />
           <file name="dialog-warning.png" role="data" />
          </dir> <!-- /demo/www/packages/swat/images/tango/48 -->
         </dir> <!-- /demo/www/packages/swat/images/tango -->
@@ -193,9 +184,7 @@ No release notes for you!
         <file name="swat-calendar-header-background.png" role="data" />
         <file name="swat-change-order-item-grippy.png" role="data" />
         <file name="swat-change-order-item-selected.png" role="data" />
-        <file name="swat-disclosure-closed-1-bit.png" role="data" />
         <file name="swat-disclosure-closed.png" role="data" />
-        <file name="swat-disclosure-open-1-bit.png" role="data" />
         <file name="swat-disclosure-open.png" role="data" />
         <file name="swat-form-footer.png" role="data" />
         <file name="swat-form-header.png" role="data" />
@@ -216,7 +205,6 @@ No release notes for you!
         <file name="swat-progressbar-horizontal-full-background.png" role="data" />
         <file name="swat-progressbar-vertical-background.png" role="data" />
         <file name="swat-progressbar-vertical-full-background.png" role="data" />
-        <file name="swat-rating-stars-256.png" role="data" />
         <file name="swat-rating-stars.png" role="data" />
         <file name="swat-table-view-cell-background.png" role="data" />
         <file name="swat-table-view-cell-error-background.png" role="data" />
@@ -1175,33 +1163,24 @@ No release notes for you!
     <dir name="images">
      <dir name="tango">
       <dir name="16">
-       <file name="dialog-error-256.png" role="data" />
        <file name="dialog-error.png" role="data" />
-       <file name="dialog-information-256.png" role="data" />
        <file name="dialog-information.png" role="data" />
        <file name="dialog-question.png" role="data" />
-       <file name="dialog-warning-256.png" role="data" />
        <file name="dialog-warning.png" role="data" />
       </dir> <!-- /www/images/tango/16 -->
       <dir name="22">
-       <file name="dialog-error-256.png" role="data" />
        <file name="dialog-error.png" role="data" />
-       <file name="dialog-information-256.png" role="data" />
        <file name="dialog-information.png" role="data" />
        <file name="dialog-question.png" role="data" />
-       <file name="dialog-warning-256.png" role="data" />
        <file name="dialog-warning.png" role="data" />
        <file name="office-calendar-256-insensitive.png" role="data" />
        <file name="office-calendar-256.png" role="data" />
        <file name="office-calendar.png" role="data" />
       </dir> <!-- /www/images/tango/22 -->
       <dir name="48">
-       <file name="dialog-error-256.png" role="data" />
        <file name="dialog-error.png" role="data" />
-       <file name="dialog-information-256.png" role="data" />
        <file name="dialog-information.png" role="data" />
        <file name="dialog-question.png" role="data" />
-       <file name="dialog-warning-256.png" role="data" />
        <file name="dialog-warning.png" role="data" />
       </dir> <!-- /www/images/tango/48 -->
      </dir> <!-- /www/images/tango -->
@@ -1239,9 +1218,7 @@ No release notes for you!
      <file name="swat-calendar-header-background.png" role="data" />
      <file name="swat-change-order-item-grippy.png" role="data" />
      <file name="swat-change-order-item-selected.png" role="data" />
-     <file name="swat-disclosure-closed-1-bit.png" role="data" />
      <file name="swat-disclosure-closed.png" role="data" />
-     <file name="swat-disclosure-open-1-bit.png" role="data" />
      <file name="swat-disclosure-open.png" role="data" />
      <file name="swat-form-footer.png" role="data" />
      <file name="swat-form-header.png" role="data" />
@@ -1262,7 +1239,6 @@ No release notes for you!
      <file name="swat-progressbar-horizontal-full-background.png" role="data" />
      <file name="swat-progressbar-vertical-background.png" role="data" />
      <file name="swat-progressbar-vertical-full-background.png" role="data" />
-     <file name="swat-rating-stars-256.png" role="data" />
      <file name="swat-rating-stars.png" role="data" />
      <file name="swat-table-view-cell-background.png" role="data" />
      <file name="swat-table-view-cell-error-background.png" role="data" />
@@ -1927,14 +1903,14 @@ No release notes for you!
  <changelog>
   <release>
    <version>
-    <release>2.2.11</release>
+    <release>2.2.12</release>
     <api>0.0.1</api>
    </version>
    <stability>
     <release>stable</release>
     <api>stable</api>
    </stability>
-   <date>2016-02-19</date>
+   <date>2016-03-08</date>
    <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
    <notes>
 No release notes for you!
