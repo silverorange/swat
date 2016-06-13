@@ -237,7 +237,7 @@ class SwatUI extends SwatObject
 		// filename of the xml
 		$class_map_reversed = array_reverse(self::$class_map, true);
 		foreach ($class_map_reversed as $prefix => $path) {
-			if (strpos($xml_file, $prefix) !== false &&
+			if (mb_strpos($xml_file, $prefix) !== false &&
 				is_callable(array($prefix, 'gettext'))) {
 
 				$this->translation_callback = array($prefix, 'gettext');
@@ -593,7 +593,8 @@ class SwatUI extends SwatObject
 
 			$class_file = null;
 			foreach (self::$class_map as $package_prefix => $path) {
-				if (strncmp($class, $package_prefix, strlen($package_prefix)) == 0) {
+				$prefix_length = mb_strlen($package_prefix);
+				if (strncmp($class, $package_prefix, $prefix_length)) === 0) {
 					$class_file = "{$path}/{$class}.php";
 					break;
 				}
@@ -912,8 +913,9 @@ class SwatUI extends SwatObject
 				$constant = trim($token);
 
 				// get a default scope for the constant
-				if (strpos($constant, '::') === false)
+				if (mb_strpos($constant, '::') === false) {
 					$constant = get_class($object) . '::' . $constant;
+				}
 
 				// evaluate constant
 				if (defined($constant))

@@ -149,7 +149,7 @@ XHTML;
 			// remove some stuff that only makes sense in document context
 			$error = preg_replace('/\s?line:? [0-9]+\s?/ui', ' ', $error);
 			$error = preg_replace('/in entity[:,.]?/ui', '', $error);
-			$error = strtolower($error);
+			$error = mb_strtolower($error);
 
 			$error = str_replace('xmlparseentityref: no name',
 				Swat::_('unescaped ampersand. Use &amp;amp; instead of &amp;'),

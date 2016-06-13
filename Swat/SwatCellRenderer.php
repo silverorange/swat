@@ -315,11 +315,17 @@ abstract class SwatCellRenderer extends SwatUIObject
 		// get the ancestors that are swat classes
 		while (strcmp($php_class_name, 'SwatCellRenderer') !== 0) {
 			if (strncmp($php_class_name, 'Swat', 4) === 0) {
-				$css_class_name = strtolower(preg_replace('/([A-Z])/u',
-					'-\1', $php_class_name));
+				$css_class_name = mb_strtolower(
+					preg_replace(
+						'/([A-Z])/u',
+						'-\1',
+						$php_class_name
+					)
+				);
 
-				if (substr($css_class_name, 0, 1) === '-')
-					$css_class_name = substr($css_class_name, 1);
+				if (mb_substr($css_class_name, 0, 1) === '-') {
+					$css_class_name = mb_substr($css_class_name, 1);
+				}
 
 				array_unshift($css_class_names, $css_class_name);
 			}

@@ -171,7 +171,7 @@ class SwatListEntry extends SwatEntry
 		$max_length_error_values = array();
 
 		foreach ($this->values as $value) {
-			$len = strlen($value);
+			$len = mb_strlen($value);
 			if ($this->maxlength !== null && $len > $this->maxlength) {
 				$max_length_msg = sprintf(Swat::ngettext(
 					'Entries in the %%s field must be less than %s '.

@@ -21,9 +21,9 @@ class SwatLessStyleSheetHtmlHeadEntry extends SwatStyleSheetHtmlHeadEntry
 
 		// append tag if it is set
 		if ($tag !== null) {
-			$uri = (strpos($uri, '?') === false ) ?
-				$uri.'?'.$tag :
-				$uri.'&'.$tag;
+			$uri = (mb_strpos($uri, '?') === false )
+				? $uri.'?'.$tag
+				: $uri.'&'.$tag;
 		}
 
 		printf('<link rel="stylesheet/less" type="text/css" href="%s%s" />',

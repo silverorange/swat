@@ -183,7 +183,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 				$this->value = null;
 		}
 
-		$len = ($this->value === null) ? 0 : strlen($this->value);
+		$len = ($this->value === null) ? 0 : mb_strlen($this->value);
 
 		if (!$this->required && $this->value === null) {
 			return;
