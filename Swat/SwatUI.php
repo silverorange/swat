@@ -594,7 +594,7 @@ class SwatUI extends SwatObject
 			$class_file = null;
 			foreach (self::$class_map as $package_prefix => $path) {
 				$prefix_length = mb_strlen($package_prefix);
-				if (strncmp($class, $package_prefix, $prefix_length)) === 0) {
+				if (strncmp($class, $package_prefix, $prefix_length) === 0) {
 					$class_file = "{$path}/{$class}.php";
 					break;
 				}

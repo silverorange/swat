@@ -2165,7 +2165,11 @@ class SwatString extends SwatObject
 		case 0:
 			if (mb_strpos($string, '(') !== false) {
 				return '-'.str_replace(
-					array('(', ')'), array(), $string);
+					array('(', ')'),
+					array(),
+					$string
+				);
+			}
 			break;
 
 		// negative sign trails number: 5.00-
