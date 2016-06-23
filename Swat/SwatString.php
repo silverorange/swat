@@ -2118,13 +2118,10 @@ class SwatString extends SwatObject
 			$position = $matches[0][$i][1];
 
 			// offsets are byte offsets, not character offsets
-			if (extension_loaded('mbstring') &&
-				mb_internal_encoding() === 'UTF-8') {
-				$substr = mb_substr($string, 0, $position, 'latin1');
-				$byte_len = mb_strlen($substr, 'latin1');
-				$char_len = mb_strlen($substr);
-				$position -= ($byte_len - $char_len);
-			}
+			$substr = mb_substr($string, 0, $position, '8bit');
+			$byte_len = mb_strlen($substr, '8bit');
+			$char_len = mb_strlen($substr);
+			$position -= ($byte_len - $char_len);
 
 			if ($position < $hole_start) {
 				// this entity falls before the hole
