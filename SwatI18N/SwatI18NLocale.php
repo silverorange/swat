@@ -330,8 +330,9 @@ class SwatI18NLocale extends SwatObject
 
 		// trim spacing character off international currency symbol
 		// TODO: this is not quite the same as money_format().
-		$symbol = ($separate_by_space && $international) ?
-			substr($format->symbol, 0, 3) : $format->symbol;
+		$symbol = ($separate_by_space && $international)
+			? mb_substr($format->symbol, 0, 3)
+			: $format->symbol;
 
 		// now format the sign and symbol
 		switch ($sign_position) {

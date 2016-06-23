@@ -90,7 +90,7 @@ class Swat
 	public static function setupGettext()
 	{
 		$path = '@DATA-DIR@/Swat/locale';
-		if (substr($path, 0, 1) === '@') {
+		if (mb_substr($path, 0, 1) === '@') {
 			$path = __DIR__.'/../locale';
 		}
 

@@ -176,9 +176,9 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 
 		// add combines to set of entries
 		foreach ($info['combines'] as $combine) {
-			if (substr($combine, -4) === '.css') {
+			if (mb_substr($combine, -4) === '.css') {
 				$class_name = 'SwatStyleSheetHtmlHeadEntry';
-			} elseif (substr($combine, -5) === '.less') {
+			} elseif (mb_substr($combine, -5) === '.less') {
 				$class_name = 'SwatLessStyleSheetHtmlHeadEntry';
 			} else {
 				$class_name = 'SwatJavaScriptHtmlHeadEntry';

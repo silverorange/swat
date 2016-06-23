@@ -79,7 +79,7 @@ class SwatAutoloader extends SwatObject
 		$rule_lines = file($filename);
 		foreach ($rule_lines as $rule_line) {
 			$rule_line = trim($rule_line);
-			if (substr($rule_line, 0, 1) === '#')
+			if (mb_substr($rule_line, 0, 1) === '#')
 				continue;
 
 			$last = false;

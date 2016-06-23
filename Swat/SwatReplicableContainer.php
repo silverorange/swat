@@ -108,7 +108,11 @@ class SwatReplicableContainer extends SwatDisplayableContainer
 			if ($widget instanceof SwatUIParent) {
 				foreach ($widget->getDescendants() as $descendant) {
 					if ($descendant->id !== null) {
-						$old_id = substr($descendant->id, 0, -strlen($suffix));
+						$old_id = mb_substr(
+							$descendant->id,
+							0,
+							-mb_strlen($suffix)
+						);
 						$this->widgets[$id][$old_id] = $descendant;
 					}
 				}

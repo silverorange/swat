@@ -397,7 +397,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 */
 	private function setDirectionByString($direction)
 	{
-		$direction = strtolower($direction);
+		$direction = mb_strtolower($direction);
 
 		switch ($direction) {
 		case 'ascending':

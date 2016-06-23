@@ -405,7 +405,7 @@ class SwatString extends SwatObject
 		// most of the time unless the string is composed mostly of spaces
 		// and entities.
 		if ($max_length !== null) {
-			$truncated_text = substr($text, 0, $max_length * 2);
+			$truncated_text = mb_substr($text, 0, $max_length * 2);
 
 			// estimate whether or not the result will be correct after
 			// minimizing and collapsing whitespace
@@ -493,7 +493,7 @@ class SwatString extends SwatObject
 		}
 
 		// remove tags and make lowercase
-		$string = strip_tags(strtolower($string));
+		$string = strip_tags(mb_strtolower($string));
 
 		if (class_exists('Net_IDNA')) {
 			// we have Net_IDNA, convert words to punycode
@@ -528,15 +528,18 @@ class SwatString extends SwatObject
 
 				if ($first) {
 					// first word too long, so forced to chop it
-					if (strlen($encoded_word) >= $max_length)
-						return substr($encoded_word, 0 , $max_length);
+					if (mb_strlen($encoded_word) >= $max_length) {
+						return mb_substr($encoded_word, 0 , $max_length);
+					}
 
 					$first = false;
 				}
 
 				// this word would push us over the limit
-				if (strlen($string_out) + strlen($encoded_word) > $max_length)
+				$new_length = mb_strlen($string_out) + mb_strlen($encoded_word);
+				if ($new_length > $max_length) {
 					return $string_out;
+				}
 
 				$string_out .= $encoded_word;
 			}
@@ -553,16 +556,17 @@ class SwatString extends SwatObject
 			$string_exp = explode(' ', $string);
 
 			// first word too long, so forced to chop it
-			if (strlen($string_exp[0]) >= $max_length)
-				return substr($string_exp[0], 0 , $max_length);
+			if (mb_strlen($string_exp[0]) >= $max_length)
+				return mb_substr($string_exp[0], 0 , $max_length);
 
 			$string_out = '';
 
 			// add words to output until it is too long
 			foreach ($string_exp as $word) {
 				// this word would push us over the limit
-				if (strlen($string_out) + strlen($word) > $max_length)
+				if (mb_strlen($string_out) + mb_strlen($word) > $max_length) {
 					return $string_out;
+				}
 
 				$string_out .= $word;
 			}
@@ -625,27 +629,25 @@ class SwatString extends SwatObject
 		$string = trim($string);
 
 		// don't ellipsize if the string is short enough
-		if (strlen($string) <= $max_length) {
-			self::insertEntities($string, $matches, strlen($string));
+		if (mb_strlen($string) <= $max_length) {
+			self::insertEntities($string, $matches, mb_strlen($string));
 			$flag = false;
 			return $string;
 		}
 
-		// note: if strrpos worked the same using mb_string overloading the
-		// following code would be a lot simpler.
-
 		// chop at max length
-		$string = substr($string, 0, $max_length);
+		$string = mb_substr($string, 0, $max_length);
 
 		// find the last space up to the max_length in the string
-		$chop_pos = strrpos($string, ' ');
+		$chop_pos = mb_strrpos($string, ' ');
 
-		if ($chop_pos !== false)
-			$string = substr($string, 0, $chop_pos);
+		if ($chop_pos !== false) {
+			$string = mb_substr($string, 0, $chop_pos);
+		}
 
 		$string = SwatString::removeTrailingPunctuation($string);
 
-		self::insertEntities($string, $matches, strlen($string));
+		self::insertEntities($string, $matches, mb_strlen($string));
 
 		$string .= $ellipses;
 
@@ -704,22 +706,24 @@ class SwatString extends SwatObject
 		self::stripEntities($string, $matches);
 
 		// don't ellipsize if the string is short enough
-		if (strlen($string) <= $max_length) {
-			self::insertEntities($string, $matches, strlen($string));
+		if (mb_strlen($string) <= $max_length) {
+			self::insertEntities($string, $matches, mb_strlen($string));
 			$flag = false;
 			return $string;
 		}
 
 		// check if the string is all one giant word
-		$has_space = strpos($string, ' ');
+		$has_space = mb_strpos($string, ' ');
 
 		// the entire string is one word
 		if ($has_space === false) {
 
 			// just take a piece of the string from both ends
-			$first_piece = substr($string, 0, $max_length / 2);
-			$last_piece = substr($string,
-					-($max_length - strlen($first_piece)));
+			$first_piece = mb_substr($string, 0, $max_length / 2);
+			$last_piece = mb_substr(
+				$string,
+				-($max_length - mb_strlen($first_piece))
+			);
 
 		} else {
 
@@ -739,7 +743,7 @@ class SwatString extends SwatObject
 			 * Get the last piece as half the max_length starting from
 			 * the right.
 			 */
-			$last_piece = substr($string, -($max_length / 2));
+			$last_piece = mb_substr($string, -($max_length / 2));
 			$last_piece = trim($last_piece);
 
 			/*
@@ -747,23 +751,24 @@ class SwatString extends SwatObject
 			 * TODO: We may want to change this to select more of the end of
 			 *       the string than the last word.
 			 */
-			$last_space = strrpos($last_piece, ' ');
-			if ($last_space !== false)
-				$last_piece = substr($last_piece, $last_space + 1);
+			$last_space = mb_strrpos($last_piece, ' ');
+			if ($last_space !== false) {
+				$last_piece = mb_substr($last_piece, $last_space + 1);
+			}
 
 			/*
 			 * Get the first piece by ellipsizing with a max_length of
 			 * the max_length less the length of the last piece.
 			 */
-			$max_first_length = $max_length - strlen($last_piece);
+			$max_first_length = $max_length - mb_strlen($last_piece);
 
 			$first_piece =
 				self::ellipsizeRight($string, $max_first_length, '');
 		}
 
-		$hole_start = strlen($first_piece);
-		$hole_end = strlen($string) - strlen($last_piece);
-		$hole_length = strlen($ellipses);
+		$hole_start = mb_strlen($first_piece);
+		$hole_end = mb_strlen($string) - mb_strlen($last_piece);
+		$hole_length = mb_strlen($ellipses);
 
 		$string = $first_piece.$ellipses.$last_piece;
 
@@ -945,7 +950,7 @@ class SwatString extends SwatObject
 		}
 
 		// strip C99-defined spacing character
-		$symbol = substr($symbol, 0, 3);
+		$symbol = mb_substr($symbol, 0, 3);
 
 		if ($locale !== null)
 			setlocale(LC_ALL, $old_locale);
@@ -1163,33 +1168,40 @@ class SwatString extends SwatObject
 		$pad_type = STR_PAD_RIGHT)
 	{
 		$output = '';
-		$length = $pad_length - strlen($input);
+		$length = $pad_length - mb_strlen($input);
 
-		if ($pad_string === null || strlen($pad_string) == 0)
+		if ($pad_string === null || mb_strlen($pad_string) == 0)
 			$pad_string = ' ';
 
 		if ($length > 0) {
 			switch ($pad_type) {
 			case STR_PAD_LEFT:
-				$padding = str_repeat($pad_string, ceil($length / strlen($pad_string)));
-				$output = substr($padding, 0, $length) . $input;
+				$padding = str_repeat(
+					$pad_string,
+					ceil($length / mb_strlen($pad_string))
+				);
+				$output = mb_substr($padding, 0, $length) . $input;
 				break;
 
 			case STR_PAD_BOTH:
 				$left_length = floor($length / 2);
 				$right_length = ceil($length / 2);
-				$padding = str_repeat($pad_string,
-					ceil($right_length / strlen($pad_string)));
-
-				$output = substr($padding, 0, $left_length).$input.
-					substr($padding, 0, $right_length);
+				$padding = str_repeat(
+					$pad_string,
+					ceil($right_length / mb_strlen($pad_string))
+				);
+				$output = mb_substr($padding, 0, $left_length).$input.
+					mb_substr($padding, 0, $right_length);
 
 				break;
 
 			case STR_PAD_RIGHT:
 			default:
-				$padding = str_repeat($pad_string, ceil($length / strlen($pad_string)));
-				$output = $input . substr($padding, 0, $length);
+				$padding = str_repeat(
+					$pad_string,
+					ceil($length / mb_strlen($pad_string))
+				);
+				$output = $input . mb_substr($padding, 0, $length);
 			}
 		} else {
 			$output = $input;
@@ -2016,9 +2028,9 @@ class SwatString extends SwatObject
 			} elseif ($ord === 92) {
 				$escaped.= '\\\\';
 			} elseif ($ord < 16) {
-				$escaped.= '\x0'.strtoupper(dechex($ord));
+				$escaped.= '\x0'.mb_strtoupper(dechex($ord));
 			} elseif ($ord < 32 || $ord >= 127) {
-				$escaped.= '\x'.strtoupper(dechex($ord));
+				$escaped.= '\x'.mb_strtoupper(dechex($ord));
 			} else {
 				$escaped.= $char;
 			}
@@ -2106,22 +2118,19 @@ class SwatString extends SwatObject
 			$position = $matches[0][$i][1];
 
 			// offsets are byte offsets, not character offsets
-			if (extension_loaded('mbstring') &&
-				mb_internal_encoding() == 'UTF-8') {
-				$substr = mb_substr($string, 0, $position, 'latin1');
-				$byte_len = mb_strlen($substr, 'latin1');
-				$char_len = mb_strlen($substr);
-				$position -= ($byte_len - $char_len);
-			}
+			$substr = mb_substr($string, 0, $position, '8bit');
+			$byte_len = mb_strlen($substr, '8bit');
+			$char_len = mb_strlen($substr);
+			$position -= ($byte_len - $char_len);
 
 			if ($position < $hole_start) {
 				// this entity falls before the hole
-				$string = substr($string, 0, $position).
+				$string = mb_substr($string, 0, $position).
 					$entity.
-					substr($string, $position + 1);
+					mb_substr($string, $position + 1);
 
-				$hole_start += strlen($entity);
-				$hole_end += strlen($entity);
+				$hole_start += mb_strlen($entity);
+				$hole_end += mb_strlen($entity);
 			} elseif ($hole_end <= $hole_start) {
 				// break here because all remaining entities fall in the hole
 				// extending infinitely to the right
@@ -2129,14 +2138,14 @@ class SwatString extends SwatObject
 			} elseif ($position >= $hole_end) {
 				// this entity falls after the hole
 				$offset = -$hole_end + $hole_length + $hole_start + 1;
-				$string = substr($string, 0, $position + $offset).
+				$string = mb_substr($string, 0, $position + $offset).
 					$entity.
-					substr($string, $position + $offset + 1);
+					mb_substr($string, $position + $offset + 1);
 
 			} else {
 				// this entity falls in the hole but we must account
 				// for its unused size
-				$hole_end += strlen($entity);
+				$hole_end += mb_strlen($entity);
 			}
 		}
 	}
@@ -2151,22 +2160,26 @@ class SwatString extends SwatObject
 		switch ($lc['n_sign_posn']) {
 		// negative sign shown as: (5.00)
 		case 0:
-			if (strpos($string, '(') !== false)
+			if (mb_strpos($string, '(') !== false) {
 				return '-'.str_replace(
-					array('(', ')'), array(), $string);
+					array('(', ')'),
+					array(),
+					$string
+				);
+			}
 			break;
 
 		// negative sign trails number: 5.00-
 		case 2:
 			if ($lc['negative_sign'] != '' &&
-				strpos($string, $lc['negative_sign']) !== false)
+				mb_strpos($string, $lc['negative_sign']) !== false)
 				return '-'.str_replace(
 					$lc['negative_sign'], '', $string);
 			break;
 		// negative sign prefixes number: -5.00
 		default:
 			if ($lc['negative_sign'] != '' &&
-				strpos($string, $lc['negative_sign']) !== false)
+				mb_strpos($string, $lc['negative_sign']) !== false)
 				return str_replace(
 					$lc['negative_sign'], '-', $string);
 		}
@@ -2181,10 +2194,11 @@ class SwatString extends SwatObject
 	{
 		$lc = localeconv();
 
-		$decimal_pos = strpos((string)$value, $lc['decimal_point']);
+		$decimal_pos = mb_strpos((string)$value, $lc['decimal_point']);
 
-		return ($decimal_pos !== false) ?
-				strlen($value) - $decimal_pos - strlen($lc['decimal_point']) : 0;
+		return ($decimal_pos !== false)
+			? mb_strlen($value) - $decimal_pos - mb_strlen($lc['decimal_point'])
+			: 0;
 	}
 
 	// }}}

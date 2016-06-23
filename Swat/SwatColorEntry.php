@@ -136,7 +136,7 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		else
 			$this->value = $data[$this->id.'_value'];
 
-		$len = ($this->value === null) ? 0 : strlen($this->value);
+		$len = ($this->value === null) ? 0 : mb_strlen($this->value);
 
 		if (!$this->required && $this->value === null) {
 			return;

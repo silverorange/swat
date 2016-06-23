@@ -296,9 +296,9 @@ class SwatTextarea extends SwatInputControl implements SwatState
 			$chars = preg_quote($this->maxlength_ignored_characters, '/');
 			$pattern = sprintf('/[%s]/u', $chars);
 			$value = preg_replace($pattern, '', $this->value);
-			$length = strlen($value);
+			$length = mb_strlen($value);
 		} else {
-			$length = strlen($this->value);
+			$length = mb_strlen($this->value);
 		}
 		return $length;
 	}

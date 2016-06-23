@@ -98,12 +98,12 @@ class SwatMoneyEntry extends SwatFloatEntry
 		// value. This checks the raw value instead of the processed value
 		// because the processed value could have been parsed into a float by
 		// this point.
-		$decimal_position = strpos((string)$value, $format->decimal_separator);
+		$decimal_position = mb_strpos((string)$value, $format->decimal_separator);
 		if ($decimal_position === false) {
 			$decimal_places = 0;
 		} else {
-			$fractional_digits = substr(rtrim((string)$value, '0'),
-				$decimal_position + strlen($format->decimal_separator));
+			$fractional_digits = mb_substr(rtrim((string)$value, '0'),
+				$decimal_position + mb_strlen($format->decimal_separator));
 
 			$decimal_places = preg_match_all('/[0-9]/', $fractional_digits,
 				$matches = array());

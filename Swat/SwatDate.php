@@ -834,7 +834,7 @@ class SwatDate extends DateTime implements Serializable
 						$key = ($tz['dst']) ? 'dt' : 'st';
 						if (!isset(self::$tz_abbreviations[$tz_id][$key])) {
 							self::$tz_abbreviations[$tz_id][$key] =
-								strtoupper($abbreviation);
+								mb_strtoupper($abbreviation);
 						}
 					}
 				}

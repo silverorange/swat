@@ -321,7 +321,7 @@ class SwatDBDataObject extends SwatObject
 		foreach ($reflector->getMethods() as $method) {
 			if ($method->isProtected()) {
 				$name = $method->getName();
-				if (substr($name, 0, 4) === 'load')
+				if (mb_substr($name, 0, 4) === 'load')
 					echo $name;
 			}
 		}
