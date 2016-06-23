@@ -21,7 +21,7 @@ class SwatLessStyleSheetHtmlHeadEntry extends SwatStyleSheetHtmlHeadEntry
 
 		// append tag if it is set
 		if ($tag !== null) {
-			$uri = (mb_strpos($uri, '?') === false )
+			$uri = (mb_strpos($uri, '?') === false)
 				? $uri.'?'.$tag
 				: $uri.'&'.$tag;
 		}
