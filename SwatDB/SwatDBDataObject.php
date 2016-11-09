@@ -223,8 +223,9 @@ class SwatDBDataObject extends SwatObject
 
 		$property_list = $this->getProtectedPropertyList();
 		if (in_array($key, array_keys($property_list))) {
-			$set = $property_list[$key]['get'];
-			return $this->$set($value);
+			$set = $property_list[$key]['set'];
+			$this->$set($value);
+			return;
 		}
 
 		if (method_exists($this, $this->getLoaderMethod($key))) {
@@ -738,8 +739,8 @@ class SwatDBDataObject extends SwatObject
 	protected function getProtectedProperties()
 	{
 		$properties = array();
-		foreach ($this->getProtectedPropertyList() as $name => $accessors) {
-			$properties[$name] = $this->$name;
+		foreach ($this->getProtectedPropertyList() as $property => $accessors) {
+			$properties[$property] = $this->$property;
 		}
 
 		return $properties;
@@ -1450,7 +1451,7 @@ class SwatDBDataObject extends SwatObject
 			}
 		}
 
-		foreach ($this->getProtectedPropertyList() as $property) {
+		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
 			if ($reflector->hasProperty($property)) {
 				$data[$property] = $this->$property;
 			}
@@ -1514,7 +1515,6 @@ class SwatDBDataObject extends SwatObject
 			} elseif (!isset($ignored_properties[$property])) {
 				$this->$property = $value;
 			}
-
 		}
 	}
 
@@ -1579,7 +1579,7 @@ class SwatDBDataObject extends SwatObject
 			}
 		}
 
-		foreach ($this->getProtectedPropertyList() as $property) {
+		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
 			if ($reflector->hasProperty($property)) {
 				$data[$property] = $this->$property;
 			}
@@ -1606,7 +1606,7 @@ class SwatDBDataObject extends SwatObject
 			}
 		}
 
-		foreach ($this->getProtectedPropertyList() as $property) {
+		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
 			if (isset($data[$property])) {
 				$this->$property = $data[$property];
 			}
