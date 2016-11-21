@@ -1270,7 +1270,7 @@ class SwatDB extends SwatObject
 	 * @param array $fields a reference to the array of field identifiers to
 	 *                       transform.
 	 */
-	private function initFields(&$fields)
+	private static function initFields(&$fields)
 	{
 		if (count($fields) == 0)
 			// TODO: throw exception instead of returning
@@ -1296,7 +1296,7 @@ class SwatDB extends SwatObject
 	 * @throws SwatDBException if the <i>$array</i> parameter is not an array
 	 *                         or an Iterator.
 	 */
-	private function initArray($array)
+	private static function initArray($array)
 	{
 		if (is_array($array)) {
 			return $array;
