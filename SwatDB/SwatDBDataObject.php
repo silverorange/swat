@@ -186,7 +186,7 @@ class SwatDBDataObject extends SwatObject
 			return $this->getDeprecatedProperty($key);
 
 		$property_list = $this->getProtectedPropertyList();
-		if (in_array($key, array_keys($property_list))) {
+		if (array_key_exists($key, $property_list)) {
 			$get = $property_list[$key]['get'];
 			return $this->$get();
 		}
@@ -222,7 +222,7 @@ class SwatDBDataObject extends SwatObject
 		}
 
 		$property_list = $this->getProtectedPropertyList();
-		if (in_array($key, array_keys($property_list))) {
+		if (array_key_exists($key, $property_list)) {
 			$set = $property_list[$key]['set'];
 			$this->$set($value);
 			return;
@@ -715,9 +715,14 @@ class SwatDBDataObject extends SwatObject
 	/**
 	 * Gets a list of all protected properties of this data-object
 	 *
-	 * Protected properties should correspond directly to database fields.
+	 * The keys of this array should map to protected properties on this
+	 * object. The value of each entry is a second array in the format
+	 * [ 'get' => 'getMethodName', 'set' => 'setMethodName' ]
+	 * where the keys of each array correspond to methods on this object that
+	 * will be called by the magic getter and setter when the protected
+	 * property is accessed.
 	 *
-	 * @return array an array of protected property names.
+	 * @return array an array of protected property keys and method values.
 	 */
 	protected function getProtectedPropertyList()
 	{
