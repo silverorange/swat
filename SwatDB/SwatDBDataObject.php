@@ -734,28 +734,6 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
-	// {{{ protected function getProtectedProperties()
-
-	/**
-	 * Gets the protected properties of this data-object
-	 *
-	 * Protected properties should correspond directly to database fields.
-	 *
-	 * @return array a reference to an associative array of protected properties
-	 *                of this data-object. The array is of the form
-	 *                'property name' => 'property value'.
-	 */
-	protected function getProtectedProperties()
-	{
-		$properties = array();
-		foreach ($this->getProtectedPropertyList() as $property => $accessors) {
-			$properties[$property] = $this->$property;
-		}
-
-		return $properties;
-	}
-
-	// }}}
 	// {{{ private function getPublicProperties()
 
 	/**
@@ -796,13 +774,39 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ private function getProtectedProperties()
+
+	/**
+	 * Gets the protected properties of this data-object
+	 *
+	 * Protected properties should correspond directly to database fields.
+	 *
+	 * @return array a reference to an associative array of protected properties
+	 *                of this data-object. The array is of the form
+	 *                'property name' => 'property value'.
+	 */
+	private function getProtectedProperties()
+	{
+		$properties = array();
+		foreach ($this->getProtectedPropertyList() as $property => $accessors) {
+			// We want to maintain what is internally stored in this object so
+			// we don't want to use the getter. What the getter returns
+			// publically may be different than what we have internally.
+			$properties[$property] = $this->$property;
+		}
+
+		return $properties;
+	}
+
+	// }}}
 	// {{{ private function getProperties()
 
 	/**
 	 * Gets all the modifyable properties of this data-object
 	 *
-	 * This includes the public properties that correspond to database fields
-	 * and the internal values that also correspond to database fields.
+	 * This includes the public and protected properties that correspond to
+	 * database fields and the internal values that also correspond to database
+	 * fields.
 	 *
 	 * @return array a reference to an associative array of properties of this
 	 *                data-object. The array is of the form
@@ -1462,6 +1466,9 @@ class SwatDBDataObject extends SwatObject
 		}
 
 		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
+			// We want to maintain what is internally stored in this object so
+			// we don't want to use the getter. What the getter returns
+			// publically may be different than what we have internally.
 			$data[$property] = $this->$property;
 		}
 
@@ -1588,6 +1595,9 @@ class SwatDBDataObject extends SwatObject
 		}
 
 		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
+			// We want to maintain what is internally stored in this object so
+			// we don't want to use the getter. What the getter returns
+			// publically may be different than what we have internally.
 			$data[$property] = $this->$property;
 		}
 
@@ -1614,6 +1624,9 @@ class SwatDBDataObject extends SwatObject
 
 		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
 			if (isset($data[$property])) {
+				// We want to maintain what is internally stored in this object
+				// so we don't want to use the getter. What the setter sets may
+				// be different than what we have internally.
 				$this->$property = $data[$property];
 			}
 		}
