@@ -1462,9 +1462,7 @@ class SwatDBDataObject extends SwatObject
 		}
 
 		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
-			if ($reflector->hasProperty($property)) {
-				$data[$property] = $this->$property;
-			}
+			$data[$property] = $this->$property;
 		}
 
 		$serialized_data = serialize($data);
@@ -1590,9 +1588,7 @@ class SwatDBDataObject extends SwatObject
 		}
 
 		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
-			if ($reflector->hasProperty($property)) {
-				$data[$property] = $this->$property;
-			}
+			$data[$property] = $this->$property;
 		}
 
 		return $data;
