@@ -1333,7 +1333,7 @@ class SwatDBDataObject extends SwatObject
 	// {{{ protected function rollback()
 
 	protected function rollback(SwatDBTransaction $transaction,
-		$rollback_property_hashes)
+		array $rollback_property_hashes)
 	{
 		$this->property_hashes = $rollback_property_hashes;
 
