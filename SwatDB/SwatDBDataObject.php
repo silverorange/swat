@@ -161,10 +161,8 @@ class SwatDBDataObject extends SwatObject
 		if ($this->read_only)
 			return array();
 
-		$property_array = $this->getProperties();
 		$modified_properties = array();
-
-		foreach ($property_array as $name => $value) {
+		foreach ($this->getProperties() as $name => $value) {
 			$hashed_value = $this->getHashValue($value);
 			if (array_key_exists($name, $this->property_hashes) &&
 				strcmp($hashed_value, $this->property_hashes[$name]) != 0)
@@ -181,6 +179,16 @@ class SwatDBDataObject extends SwatObject
 	{
 		if (in_array($key, $this->deprecated_properties))
 			return $this->getDeprecatedProperty($key);
+
+		$property_list = $this->getProtectedPropertyList();
+		if (array_key_exists($key, $property_list)) {
+			if (array_key_exists('get', $property_list[$key])) {
+				$get = $property_list[$key]['get'];
+				return $this->$get();
+			} else {
+				return $this->$key;
+			}
+		}
 
 		$value = $this->getUsingLoaderMethod($key);
 
@@ -210,6 +218,18 @@ class SwatDBDataObject extends SwatObject
 		if (in_array($key, $this->deprecated_properties)) {
 			$this->setDeprecatedProperty($key, $value);
 			return;
+		}
+
+		$property_list = $this->getProtectedPropertyList();
+		if (array_key_exists($key, $property_list)) {
+			if (array_key_exists('set', $property_list[$key])) {
+				$set = $property_list[$key]['set'];
+				$this->$set($value);
+				return;
+			} else {
+				$this->$key = $value;
+				return;
+			}
 		}
 
 		if (method_exists($this, $this->getLoaderMethod($key))) {
@@ -414,10 +434,16 @@ class SwatDBDataObject extends SwatObject
 		$id_field = new SwatDBField($this->id_field, 'integer');
 
 		// public properties
-		$properties = $this->getPublicProperties();
-		foreach ($properties as $name => $value)
-			if ($name !== $id_field->name)
+		$properties = array_merge(
+			$this->getPublicProperties(),
+			$this->getProtectedProperties()
+		);
+
+		foreach ($properties as $name => $value) {
+			if ($name !== $id_field->name) {
 				$new_object->$name = $this->$name;
+			}
+		}
 
 		// sub-dataobjects
 		foreach ($this->sub_data_objects as $name => $object) {
@@ -517,7 +543,10 @@ class SwatDBDataObject extends SwatObject
 			throw new SwatDBException(
 				'Attempting to initialize dataobject with a null row.');
 
-		$property_array = $this->getPublicProperties();
+		$property_array = array_merge(
+			$this->getPublicProperties(),
+			$this->getProtectedProperties()
+		);
 
 		if (is_object($row))
 			$row = get_object_vars($row);
@@ -560,12 +589,10 @@ class SwatDBDataObject extends SwatObject
 		if ($this->read_only)
 			return;
 
-		$property_array = $this->getProperties();
-
 		// Note: SwatDBDataObject::generatePropertyHash() is not used
 		// here because it would mean calling the expensive getProperties()
 		// method in a loop.
-		foreach ($property_array as $name => $value) {
+		foreach ($this->getProperties() as $name => $value) {
 			$hashed_value = $this->getHashValue($value);
 			$this->property_hashes[$name] = $hashed_value;
 		}
@@ -687,6 +714,26 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ protected function getProtectedPropertyList()
+
+	/**
+	 * Gets a list of all protected properties of this data-object
+	 *
+	 * The keys of this array should map to protected properties on this
+	 * object. The value of each entry is a second array in the format
+	 * [ 'get' => 'getMethodName', 'set' => 'setMethodName' ]
+	 * where the keys of each array correspond to methods on this object that
+	 * will be called by the magic getter and setter when the protected
+	 * property is accessed.
+	 *
+	 * @return array an array of protected property keys and method values.
+	 */
+	protected function getProtectedPropertyList()
+	{
+		return array();
+	}
+
+	// }}}
 	// {{{ private function getPublicProperties()
 
 	/**
@@ -727,13 +774,39 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ private function getProtectedProperties()
+
+	/**
+	 * Gets the protected properties of this data-object
+	 *
+	 * Protected properties should correspond directly to database fields.
+	 *
+	 * @return array a reference to an associative array of protected properties
+	 *                of this data-object. The array is of the form
+	 *                'property name' => 'property value'.
+	 */
+	private function getProtectedProperties()
+	{
+		$properties = array();
+		foreach ($this->getProtectedPropertyList() as $property => $accessors) {
+			// We want to maintain what is internally stored in this object so
+			// we don't want to use the getter. What the getter returns
+			// publicly may be different than what we have internally.
+			$properties[$property] = $this->$property;
+		}
+
+		return $properties;
+	}
+
+	// }}}
 	// {{{ private function getProperties()
 
 	/**
 	 * Gets all the modifyable properties of this data-object
 	 *
-	 * This includes the public properties that correspond to database fields
-	 * and the internal values that also correspond to database fields.
+	 * This includes the public and protected properties that correspond to
+	 * database fields and the internal values that also correspond to database
+	 * fields.
 	 *
 	 * @return array a reference to an associative array of properties of this
 	 *                data-object. The array is of the form
@@ -741,9 +814,11 @@ class SwatDBDataObject extends SwatObject
 	 */
 	private function &getProperties()
 	{
-		$property_array = $this->getPublicProperties();
-		$property_array = array_merge($property_array,
-			$this->internal_properties);
+		$property_array = array_merge(
+			$this->getPublicProperties(),
+			$this->getProtectedProperties(),
+			$this->internal_properties
+		);
 
 		return $property_array;
 	}
@@ -896,7 +971,8 @@ class SwatDBDataObject extends SwatObject
 
 		$transaction = new SwatDBTransaction($this->db);
 		try {
-			$property_hashes = $this->property_hashes;
+			$rollback_property_hashes = $this->property_hashes;
+
 			$this->saveInternalProperties();
 			$this->saveInternal();
 			$this->generatePropertyHashes();
@@ -909,8 +985,7 @@ class SwatDBDataObject extends SwatObject
 
 			$transaction->commit();
 		} catch (Exception $e) {
-			$this->property_hashes = $property_hashes;
-			$transaction->rollback();
+			$this->rollback($transaction, $rollback_property_hashes);
 			throw $e;
 		}
 
@@ -958,12 +1033,11 @@ class SwatDBDataObject extends SwatObject
 
 		$transaction = new SwatDBTransaction($this->db);
 		try {
-			$property_hashes = $this->property_hashes;
+			$rollback_property_hashes = $this->property_hashes;
 			$this->deleteInternal();
 			$transaction->commit();
 		} catch (Exception $e) {
-			$this->property_hashes = $property_hashes;
-			$transaction->rollback();
+			$this->rollback($transaction, $rollback_property_hashes);
 			throw $e;
 		}
 	}
@@ -982,9 +1056,7 @@ class SwatDBDataObject extends SwatObject
 		if ($this->read_only)
 			return false;
 
-		$property_array = $this->getProperties();
-
-		foreach ($property_array as $name => $value) {
+		foreach ($this->getProperties() as $name => $value) {
 			$hashed_value = $this->getHashValue($value);
 			if (isset($this->property_hashes[$name]) &&
 				strcmp($hashed_value, $this->property_hashes[$name]) != 0)
@@ -1262,6 +1334,16 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ protected function rollback()
+
+	protected function rollback(SwatDBTransaction $transaction,
+		array $rollback_property_hashes)
+	{
+		$this->property_hashes = $rollback_property_hashes;
+		$transaction->rollback();
+	}
+
+	// }}}
 
 	// cache flushing
 	// {{{ public function setFlushableCache()
@@ -1382,6 +1464,13 @@ class SwatDBDataObject extends SwatObject
 			}
 		}
 
+		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
+			// We want to maintain what is internally stored in this object so
+			// we don't want to use the getter. What the getter returns
+			// publicly may be different than what we have internally.
+			$data[$property] = $this->$property;
+		}
+
 		$serialized_data = serialize($data);
 
 		// restore unset sub-dataobjects on this object
@@ -1440,7 +1529,6 @@ class SwatDBDataObject extends SwatObject
 			} elseif (!isset($ignored_properties[$property])) {
 				$this->$property = $value;
 			}
-
 		}
 	}
 
@@ -1505,6 +1593,13 @@ class SwatDBDataObject extends SwatObject
 			}
 		}
 
+		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
+			// We want to maintain what is internally stored in this object so
+			// we don't want to use the getter. What the getter returns
+			// publicly may be different than what we have internally.
+			$data[$property] = $this->$property;
+		}
+
 		return $data;
 	}
 
@@ -1523,6 +1618,15 @@ class SwatDBDataObject extends SwatObject
 				} else {
 					$this->$name = null;
 				}
+			}
+		}
+
+		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
+			if (isset($data[$property])) {
+				// We want to maintain what is internally stored in this object
+				// so we don't want to use the getter. What the setter sets may
+				// be different than what we have internally.
+				$this->$property = $data[$property];
 			}
 		}
 
