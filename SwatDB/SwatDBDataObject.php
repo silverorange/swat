@@ -37,11 +37,6 @@ class SwatDBDataObject extends SwatObject
 	/**
 	 * @var array
 	 */
-	private $rollback_property_hashes = array();
-
-	/**
-	 * @var array
-	 */
 	private $sub_data_objects = array();
 
 	/**
@@ -187,8 +182,12 @@ class SwatDBDataObject extends SwatObject
 
 		$property_list = $this->getProtectedPropertyList();
 		if (array_key_exists($key, $property_list)) {
-			$get = $property_list[$key]['get'];
-			return $this->$get();
+			if (array_key_exists('get', $property_list[$key])) {
+				$get = $property_list[$key]['get'];
+				return $this->$get();
+			} else {
+				return $this->$key;
+			}
 		}
 
 		$value = $this->getUsingLoaderMethod($key);
@@ -223,9 +222,14 @@ class SwatDBDataObject extends SwatObject
 
 		$property_list = $this->getProtectedPropertyList();
 		if (array_key_exists($key, $property_list)) {
-			$set = $property_list[$key]['set'];
-			$this->$set($value);
-			return;
+			if (array_key_exists('set', $property_list[$key])) {
+				$set = $property_list[$key]['set'];
+				$this->$set($value);
+				return;
+			} else {
+				$this->$key = $value;
+				return;
+			}
 		}
 
 		if (method_exists($this, $this->getLoaderMethod($key))) {
@@ -963,7 +967,7 @@ class SwatDBDataObject extends SwatObject
 
 		$transaction = new SwatDBTransaction($this->db);
 		try {
-			$this->rollback_property_hashes = $this->property_hashes;
+			$rollback_property_hashes = $this->property_hashes;
 
 			$this->saveInternalProperties();
 			$this->saveInternal();
@@ -977,7 +981,7 @@ class SwatDBDataObject extends SwatObject
 
 			$transaction->commit();
 		} catch (Exception $e) {
-			$this->rollback($transaction);
+			$this->rollback($transaction, $rollback_property_hashes);
 			throw $e;
 		}
 
@@ -1025,11 +1029,11 @@ class SwatDBDataObject extends SwatObject
 
 		$transaction = new SwatDBTransaction($this->db);
 		try {
-			$this->rollback_property_hashes = $this->property_hashes;
+			$rollback_property_hashes = $this->property_hashes;
 			$this->deleteInternal();
 			$transaction->commit();
 		} catch (Exception $e) {
-			$this->rollback($transaction);
+			$this->rollback($transaction, $rollback_property_hashes);
 			throw $e;
 		}
 	}
@@ -1328,9 +1332,10 @@ class SwatDBDataObject extends SwatObject
 	// }}}
 	// {{{ protected function rollback()
 
-	protected function rollback(SwatDBTransaction $transaction)
+	protected function rollback(SwatDBTransaction $transaction,
+		$rollback_property_hashes)
 	{
-		$this->property_hashes = $this->rollback_property_hashes;
+		$this->property_hashes = $rollback_property_hashes;
 
 		$transaction->rollback();
 	}
