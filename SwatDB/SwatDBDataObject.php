@@ -791,7 +791,7 @@ class SwatDBDataObject extends SwatObject
 		foreach ($this->getProtectedPropertyList() as $property => $accessors) {
 			// We want to maintain what is internally stored in this object so
 			// we don't want to use the getter. What the getter returns
-			// publically may be different than what we have internally.
+			// publicly may be different than what we have internally.
 			$properties[$property] = $this->$property;
 		}
 
@@ -1340,7 +1340,6 @@ class SwatDBDataObject extends SwatObject
 		array $rollback_property_hashes)
 	{
 		$this->property_hashes = $rollback_property_hashes;
-
 		$transaction->rollback();
 	}
 
@@ -1468,7 +1467,7 @@ class SwatDBDataObject extends SwatObject
 		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
 			// We want to maintain what is internally stored in this object so
 			// we don't want to use the getter. What the getter returns
-			// publically may be different than what we have internally.
+			// publicly may be different than what we have internally.
 			$data[$property] = $this->$property;
 		}
 
@@ -1597,7 +1596,7 @@ class SwatDBDataObject extends SwatObject
 		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
 			// We want to maintain what is internally stored in this object so
 			// we don't want to use the getter. What the getter returns
-			// publically may be different than what we have internally.
+			// publicly may be different than what we have internally.
 			$data[$property] = $this->$property;
 		}
 
