@@ -488,6 +488,32 @@ class SwatDBDataObject extends SwatObject
 	}
 
 	// }}}
+	// {{{ public function getAttributes()
+
+	/**
+	 * Returns an array of the public and protected properties of this object
+	 *
+	 * This array is useful for places where get_object_vars() is useful but we
+	 * also want to return the protected properties alongside the public onces.
+	 * For example when using getter and setter methods instead of public
+	 * properities on a dataobject.
+	 *
+	 * @return array an array of public and protected properties.
+	 *
+	 * @see SwatDBDataObject::getPublicProperties()
+	 * @see SwatDBDataObject::getProtectedProperties()
+	 */
+	public function getAttributes()
+	{
+		$property_array = array_merge(
+			$this->getPublicProperties(),
+			$this->getProtectedProperties()
+		);
+
+		return $property_array;
+	}
+
+	// }}}
 	// {{{ protected function setInternalValue()
 
 	protected function setInternalValue($name, $value)
