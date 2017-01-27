@@ -496,7 +496,7 @@ class SwatDBDataObject extends SwatObject
 	 * This array is useful for places where get_object_vars() is useful but we
 	 * also want to return the protected properties alongside the public onces.
 	 * For example when using getter and setter methods instead of public
-	 * properities on a dataobject.
+	 * properties on a dataobject.
 	 *
 	 * @return array an array of public and protected properties.
 	 *
