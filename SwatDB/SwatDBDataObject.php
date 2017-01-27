@@ -505,12 +505,10 @@ class SwatDBDataObject extends SwatObject
 	 */
 	public function getAttributes()
 	{
-		$property_array = array_merge(
+		return array_merge(
 			$this->getPublicProperties(),
 			$this->getProtectedProperties()
 		);
-
-		return $property_array;
 	}
 
 	// }}}
