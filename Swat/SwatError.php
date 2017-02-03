@@ -309,7 +309,6 @@ class SwatError
 			$function = array_key_exists('function', $entry) ?
 				$entry['function'] : null;
 
-
 			if (array_key_exists('args', $entry))
 				$arguments = $this->getArguments(
 					$entry['args'], $function, $class);
@@ -369,7 +368,6 @@ class SwatError
 
 			$function = array_key_exists('function', $entry) ?
 				$entry['function'] : null;
-
 
 			if (array_key_exists('args', $entry))
 				$arguments = htmlspecialchars($this->getArguments(

@@ -77,7 +77,6 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 			$set->addEntrySet(Less::getHtmlHeadEntrySet());
 		}
 
-
 		$entries = $set->toArray();
 
 		// combine files
@@ -112,12 +111,12 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 				$this->concentrator->isMinified($entry->getUri()) &&
 				($compile ||
 				$entry->getType() !== 'SwatLessStyleSheetHtmlHeadEntry')) {
-				$prefix = $prefix . 'min/';
+				$prefix = $prefix.'min/';
 			}
 
 			if ($compile &&
 				$entry->getType() === 'SwatLessStyleSheetHtmlHeadEntry') {
-				$prefix = $prefix . 'compiled/';
+				$prefix = $prefix.'compiled/';
 				$entry = $entry->getStyleSheetHeadEntry();
 			}
 

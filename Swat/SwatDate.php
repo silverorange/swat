@@ -208,8 +208,8 @@ class SwatDate extends DateTime implements Serializable
 	// }}}
 	// {{{ protected properties
 
-	static $tz_abbreviations = null;
-	static $valid_tz_abbreviations = array(
+	static protected $tz_abbreviations = null;
+	static protected $valid_tz_abbreviations = array(
 		'acdt'  => true,
 		'acst'  => true,
 		'act'   => true,

@@ -165,7 +165,7 @@ class SwatDBDataObject extends SwatObject
 		foreach ($this->getProperties() as $name => $value) {
 			$hashed_value = $this->getHashValue($value);
 			if (array_key_exists($name, $this->property_hashes) &&
-				strcmp($hashed_value, $this->property_hashes[$name]) != 0)
+				$hashed_value !== $this->property_hashes[$name])
 					$modified_properties[$name] = $value;
 		}
 
@@ -353,7 +353,6 @@ class SwatDBDataObject extends SwatObject
 		}
 		*/
 		$string = ob_get_clean();
-
 
 		// set db back again
 		$this->db = $db;
@@ -1089,7 +1088,7 @@ class SwatDBDataObject extends SwatObject
 		foreach ($this->getProperties() as $name => $value) {
 			$hashed_value = $this->getHashValue($value);
 			if (isset($this->property_hashes[$name]) &&
-				strcmp($hashed_value, $this->property_hashes[$name]) != 0)
+				$hashed_value !== $this->property_hashes[$name])
 					return true;
 		}
 
@@ -1432,7 +1431,7 @@ class SwatDBDataObject extends SwatObject
 	 *
 	 * @see SwatDBDataObject::setFlushableCache()
 	 * @see SwatDBDataObject::getCacheNamespaces()
- 	 */
+	 */
 	public function flushCacheNamespaces($ns_array = null)
 	{
 		if ($ns_array === null) {

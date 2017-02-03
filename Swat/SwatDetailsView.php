@@ -60,6 +60,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 
 	// }}}
 	// {{{ public function __construct()
+
 	/**
 	 * Creates a new details view
 	 *

@@ -3,7 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 /**
- * Interface that supports setting a flushable cache 
+ * Interface that supports setting a flushable cache
  *
  * @package   SwatDB
  * @copyright 2014-2016 silverorange
@@ -18,7 +18,7 @@ interface SwatDBFlushable
 	 *
 	 * @param SwatDBCacheNsFlushable $cache The flushable cache to use for
 	 *                                      this object.
- 	 * @see SwatDBCacheNsFlushable
+	 * @see SwatDBCacheNsFlushable
 	 */
 	public function setFlushableCache(SwatDBCacheNsFlushable $cache);
 

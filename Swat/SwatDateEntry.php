@@ -950,7 +950,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			PREG_OFFSET_CAPTURE) == 1)
 			$year = $matches[0][1];
 
-		if ($day === null  || $month === null || $year === null) {
+		if ($day === null || $month === null || $year === null) {
 			// fallback to d-m-y if the locale format is unknown
 			$order = array('d', 'm', 'y');
 		} else {

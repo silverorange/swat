@@ -304,7 +304,7 @@ class SwatListEntry extends SwatEntry
 				$this->max_entries),
 				$locale->formatNumber($this->max_entries)));
 
-		} elseif (($this->max_entries === null  ||
+		} elseif (($this->max_entries === null ||
 			$this->max_entries == 0) &&
 			$this->min_entries > 1 && $this->required == true) {
 

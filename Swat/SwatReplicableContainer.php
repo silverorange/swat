@@ -25,7 +25,7 @@ class SwatReplicableContainer extends SwatDisplayableContainer
 	 * containers such as fieldsets which surround the replicated widgets.
 	 *
 	 * @var array
- 	 * @deprecated Use a SwatReplicableContainer::$replication_ids instead
+	 * @deprecated Use a SwatReplicableContainer::$replication_ids instead
 	 */
 	public $replicators = null;
 

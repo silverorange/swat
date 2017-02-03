@@ -6,7 +6,7 @@ require_once 'Swat/SwatObject.php';
 
 /**
  * Database field
- * 
+ *
  * Data class to represent a database field, a (name, type) pair.
  *
  * @package   SwatDB

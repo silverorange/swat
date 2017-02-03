@@ -337,7 +337,6 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			}
 		}
 
-
 		return $checked;
 	}
 

@@ -21,6 +21,7 @@ require_once 'SwatDB/exceptions/SwatDBMarshallException.php';
 interface SwatDBMarshallable
 {
 	// {{{ public function marshall()
+
 	/**
 	 * Marshalls this object
 	 *

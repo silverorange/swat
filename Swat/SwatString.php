@@ -529,7 +529,7 @@ class SwatString extends SwatObject
 				if ($first) {
 					// first word too long, so forced to chop it
 					if (mb_strlen($encoded_word) >= $max_length) {
-						return mb_substr($encoded_word, 0 , $max_length);
+						return mb_substr($encoded_word, 0, $max_length);
 					}
 
 					$first = false;
@@ -557,7 +557,7 @@ class SwatString extends SwatObject
 
 			// first word too long, so forced to chop it
 			if (mb_strlen($string_exp[0]) >= $max_length)
-				return mb_substr($string_exp[0], 0 , $max_length);
+				return mb_substr($string_exp[0], 0, $max_length);
 
 			$string_out = '';
 
@@ -1146,7 +1146,7 @@ class SwatString extends SwatObject
 			}
 		}
 
-		return $formatted_value . ' ' . $units[$unit_magnitude];
+		return $formatted_value.' '.$units[$unit_magnitude];
 	}
 
 	// }}}
@@ -1180,7 +1180,7 @@ class SwatString extends SwatObject
 					$pad_string,
 					ceil($length / mb_strlen($pad_string))
 				);
-				$output = mb_substr($padding, 0, $length) . $input;
+				$output = mb_substr($padding, 0, $length).$input;
 				break;
 
 			case STR_PAD_BOTH:
@@ -1201,7 +1201,7 @@ class SwatString extends SwatObject
 					$pad_string,
 					ceil($length / mb_strlen($pad_string))
 				);
-				$output = $input . mb_substr($padding, 0, $length);
+				$output = $input.mb_substr($padding, 0, $length);
 			}
 		} else {
 			$output = $input;
@@ -1303,6 +1303,7 @@ class SwatString extends SwatObject
 
 		return (is_numeric($value)) ? floatval($value) : null;
 	}
+
 	// }}}
 	// {{{ public static function toList()
 
@@ -1364,6 +1365,7 @@ class SwatString extends SwatObject
 
 		return $list;
 	}
+
 	// }}}
 	// {{{ public static function getTimePeriodParts()
 

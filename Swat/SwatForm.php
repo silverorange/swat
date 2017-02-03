@@ -1123,7 +1123,7 @@ class SwatForm extends SwatDisplayableContainer
 		$value = str_replace('\x00', "\x00", $value);
 		$value = str_replace('\x0a', "\x0a", $value);
 		$value = str_replace('\x0d', "\x0d", $value);
-		$value = str_replace('\\\\', '\\',   $value);
+		$value = str_replace('\\\\', '\\', $value);
 
 		$value = SwatString::signedUnserialize($value, $this->salt);
 

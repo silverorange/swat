@@ -370,7 +370,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	 * @param integer $count the number of entries in this row's view's model.
 	 *
 	 * @return boolean $this->visible. Input rows are always shown if they are
-     *                  visible even if there are no entries in the table-view's
+	 *                  visible even if there are no entries in the table-view's
 	 *                  model.
 	 */
 	public function getVisibleByCount($count)

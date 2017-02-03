@@ -627,7 +627,8 @@ class SwatFileEntry extends SwatInputControl
 	// }}}
 	// {{{ private function generateUniqueFileName()
 
-	private function generateUniqueFileName($path, $count = 0) {
+	private function generateUniqueFileName($path, $count = 0)
+	{
 		if (mb_strpos($this->getFileName(), '.') === false) {
 			$extension = '';
 			$base_name = $this->getFileName();
