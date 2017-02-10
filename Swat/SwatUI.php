@@ -893,7 +893,7 @@ class SwatUI extends SwatObject
 						throw $parenthesis_exception;
 				}
 
-				if (strcmp(array_pop($stack), '(') != 0)
+				if (array_pop($stack) != '(')
 					throw $parenthesis_exception;
 
 			} elseif (array_key_exists($token, $operators)) {

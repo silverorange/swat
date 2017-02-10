@@ -201,6 +201,7 @@ class Swat
  * Define a dummy dngettext() for when gettext is not available.
  */
 if (!function_exists("dngettext")) {
+
 	/**
 	 * Dummy translation function performs a passthrough on string to be
 	 * translated
@@ -223,6 +224,7 @@ if (!function_exists("dngettext")) {
 
 		return $messageid2;
 	}
+
 }
 
 // }}}
@@ -232,6 +234,7 @@ if (!function_exists("dngettext")) {
  * Define a dummy dgettext() for when gettext is not available.
  */
 if (!function_exists("dgettext")) {
+
 	/**
 	 * Dummy translation function performs a passthrough on string to be
 	 * translated
@@ -248,6 +251,7 @@ if (!function_exists("dgettext")) {
 	{
 		return $messageid;
 	}
+
 }
 
 // }}}
