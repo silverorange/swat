@@ -103,7 +103,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 *
 	 * @var integer
 	 */
-	protected $direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
+	protected $direction = self::ORDER_BY_DIR_NONE;
 
 	/**
 	 * The default direction of ordering
@@ -119,8 +119,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 *
 	 * @var integer
 	 */
-	protected $default_direction =
-		SwatTableViewOrderableColumn::ORDER_BY_DIR_NONE;
+	protected $default_direction = self::ORDER_BY_DIR_NONE;
 
 	// }}}
 	// {{{ private properties
@@ -459,9 +458,9 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 			if ($first)
 				$first = false;
 			else
-				$link .= '&amp;';
+				$link.= '&amp;';
 
-			$link .= $name.'='.$value;
+			$link.= $name.'='.$value;
 		}
 
 		return $link;

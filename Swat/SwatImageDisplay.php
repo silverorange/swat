@@ -125,7 +125,7 @@ class SwatImageDisplay extends SwatControl
 		if ($this->width !== null)
 			$image_tag->width = $this->width;
 
-		$image_tag->style = SwatImageDisplay::getOccupyMargin(
+		$image_tag->style = self::getOccupyMargin(
 			$this->width, $this->height, $this->occupy_width,
 			$this->occupy_height);
 

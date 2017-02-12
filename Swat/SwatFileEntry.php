@@ -654,7 +654,7 @@ class SwatFileEntry extends SwatInputControl
 	private static function parseFileUploadSize($ini_value)
 	{
 		if (is_numeric($ini_value)) {
-			return $value = $ini_value;
+			$value = $ini_value;
 		} else {
 			$size  = mb_strtoupper(mb_substr($ini_value, -1));
 			$value = (integer)mb_substr($ini_value, 0, -1);

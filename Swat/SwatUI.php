@@ -949,7 +949,7 @@ class SwatUI extends SwatObject
 				if ($a === null || $b === null)
 					throw $syntax_exception;
 
-				switch ($value){
+				switch ($value) {
 				case '|':
 					array_push($eval_stack, $a | $b);
 					break;

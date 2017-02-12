@@ -586,7 +586,7 @@ class SwatDB extends SwatObject
 				$bound_field->name,
 				$value_list);
 
-			$delete_sql .= sprintf(' and %s not in (%s)',
+			$delete_sql.= sprintf(' and %s not in (%s)',
 				$value_field->name,
 				$value_list);
 		}
@@ -835,10 +835,10 @@ class SwatDB extends SwatObject
 		$sql = sprintf($sql, $id_field->name, $title_field->name, $table);
 
 		if ($where_clause != null)
-			$sql .= ' where '.$where_clause;
+			$sql.= ' where '.$where_clause;
 
 		if ($order_by_clause != null)
-			$sql .= ' order by '.$order_by_clause;
+			$sql.= ' order by '.$order_by_clause;
 
 		$rs = self::query($db, $sql, null);
 
@@ -912,9 +912,9 @@ class SwatDB extends SwatObject
 			$cascade_field->name, $table);
 
 		if ($where_clause !== null)
-			$sql .= ' where '.$where_clause;
+			$sql.= ' where '.$where_clause;
 
-		$sql .= ' order by '.$cascade_field->name;
+		$sql.= ' order by '.$cascade_field->name;
 		if ($order_by_clause !== null)
 			$sql.= ', '.$order_by_clause;
 

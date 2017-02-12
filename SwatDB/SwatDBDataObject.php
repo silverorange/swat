@@ -23,9 +23,8 @@ require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDBDataObject extends SwatObject
-	implements Serializable, SwatDBRecordable, SwatDBMarshallable,
-		SwatDBFlushable
+class SwatDBDataObject extends SwatObject implements
+	Serializable, SwatDBRecordable, SwatDBMarshallable, SwatDBFlushable
 {
 	// {{{ private properties
 
@@ -472,10 +471,10 @@ class SwatDBDataObject extends SwatObject
 
 			if ($this->hasSubDataObject($name)) {
 				$object = $this->getSubDataObject($name);
-					if ($autosave)
-						$new_object->$name = $object->duplicate();
-					else
-						$new_object->$name = $object;
+				if ($autosave)
+					$new_object->$name = $object->duplicate();
+				else
+					$new_object->$name = $object;
 			} else {
 				$new_object->$name = $value;
 			}

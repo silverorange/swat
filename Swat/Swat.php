@@ -34,7 +34,7 @@ class Swat
 	 */
 	public static function _($message)
 	{
-		return Swat::gettext($message);
+		return self::gettext($message);
 	}
 
 	// }}}
@@ -52,7 +52,7 @@ class Swat
 	 */
 	public static function gettext($message)
 	{
-		return dgettext(Swat::GETTEXT_DOMAIN, $message);
+		return dgettext(self::GETTEXT_DOMAIN, $message);
 	}
 
 	// }}}
@@ -80,7 +80,7 @@ class Swat
 	 */
 	public static function ngettext($singular_message, $plural_message, $number)
 	{
-		return dngettext(Swat::GETTEXT_DOMAIN,
+		return dngettext(self::GETTEXT_DOMAIN,
 			$singular_message, $plural_message, $number);
 	}
 
@@ -94,8 +94,8 @@ class Swat
 			$path = __DIR__.'/../locale';
 		}
 
-		bindtextdomain(Swat::GETTEXT_DOMAIN, $path);
-		bind_textdomain_codeset(Swat::GETTEXT_DOMAIN, 'UTF-8');
+		bindtextdomain(self::GETTEXT_DOMAIN, $path);
+		bind_textdomain_codeset(self::GETTEXT_DOMAIN, 'UTF-8');
 	}
 
 	// }}}
@@ -110,7 +110,7 @@ class Swat
 	 */
 	public static function displayMethods($object)
 	{
-		echo sprintf(Swat::_('Methods for class %s:'), get_class($object));
+		echo sprintf(self::_('Methods for class %s:'), get_class($object));
 		echo '<ul>';
 
 		foreach (get_class_methods(get_class($object)) as $method_name)
@@ -133,7 +133,7 @@ class Swat
 	{
 		$class = get_class($object);
 
-		echo sprintf(Swat::_('Properties for class %s:'), $class);
+		echo sprintf(self::_('Properties for class %s:'), $class);
 		echo '<ul>';
 
 		foreach (get_class_vars($class) as $property_name => $value) {

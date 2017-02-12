@@ -124,7 +124,7 @@ class SwatActions extends SwatControl implements SwatUIParent
 	{
 		parent::init();
 
-		foreach ($this->action_items as $action_item)
+		foreach($this->action_items as $action_item)
 			$action_item->init();
 	}
 

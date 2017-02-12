@@ -109,7 +109,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 *
 	 * @var boolean
 	 */
-	 public $use_current_time = true;
+	public $use_current_time = true;
 
 	// }}}
 	// {{{ private properties

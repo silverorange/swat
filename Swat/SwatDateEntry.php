@@ -933,7 +933,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		// expand short form format
 		$format = str_replace('%D', '%m/%d/%y', $format);
 
-		$day = $month = $year = null;
+		$day = null;
+		$month = null;
+		$year = null;
 
 		$matches = array();
 		if (preg_match('/(%d|%e)/', $format, $matches,
