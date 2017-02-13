@@ -20,7 +20,7 @@ class SwatInvalidConstantExpressionException extends SwatException
 	 *
 	 * @var string
 	 */
-	protected $expression= null;
+	protected $expression = null;
 
 	// }}}
 	// {{{ public function __construct()

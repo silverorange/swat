@@ -1866,7 +1866,7 @@ class SwatDate extends DateTime implements Serializable
 		$years  = (integer)($months / 12);
 		$months = $months % 12;
 
-		$year  = $this->getYear()  + $years;
+		$year  = $this->getYear() + $years;
 		$month = $this->getMonth() + $months;
 
 		if ($month < 1) {
