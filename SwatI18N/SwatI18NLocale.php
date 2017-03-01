@@ -971,11 +971,11 @@ class SwatI18NLocale extends SwatObject
 			while (count($groupings) > 1 && $grouping_total > 0) {
 				$grouping = array_shift($groupings);
 
-				// a grouping of 0 means use previous grouping
 				if ($grouping === 0) {
+					// a grouping of 0 means use previous grouping
 					$grouping = $grouping_previous;
-				// a grouping of CHAR_MAX means no more grouping
 				} elseif ($grouping === CHAR_MAX) {
+					// a grouping of CHAR_MAX means no more grouping
 					array_push($grouping_values, $grouping_total);
 					break;
 				} else {

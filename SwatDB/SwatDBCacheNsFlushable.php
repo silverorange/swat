@@ -3,7 +3,7 @@
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 /**
- * Interface that supports flushing cache name-spaces 
+ * Interface that supports flushing cache name-spaces
  *
  * @package   SwatDB
  * @copyright 2014-2016 silverorange

@@ -272,7 +272,7 @@ class SwatDBClassMap extends SwatObject
 	public function addMapping($package_class_name, $class_name)
 	{
 		$this->mappings[$package_class_name] = $class_name;
-		SwatDBClassMap::add($package_class_name, $class_name);
+		self::add($package_class_name, $class_name);
 	}
 
 	// }}}
@@ -294,7 +294,7 @@ class SwatDBClassMap extends SwatObject
 	 */
 	public function resolveClass($name)
 	{
-		return SwatDBClassMap::get($name);
+		return self::get($name);
 	}
 
 	// }}}
@@ -311,7 +311,7 @@ class SwatDBClassMap extends SwatObject
 	public function setPath($path)
 	{
 		$this->path = $path;
-		SwatDBClassMap::addPath($path);
+		self::addPath($path);
 	}
 
 	// }}}

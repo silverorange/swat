@@ -42,7 +42,7 @@ class SwatAutoloader extends SwatObject
 	 */
 	public static function addRule($expression, $replacement, $last = true)
 	{
-		SwatAutoloader::$rules[] =
+		self::$rules[] =
 			new SwatAutoloaderRule($expression, $replacement, $last);
 	}
 
@@ -122,7 +122,7 @@ class SwatAutoloader extends SwatObject
 	{
 		$filename = null;
 
-		foreach (SwatAutoloader::$rules as $rule) {
+		foreach (self::$rules as $rule) {
 			$result = $rule->apply($class_name);
 			if ($result !== null) {
 				$filename = $result;
@@ -147,7 +147,7 @@ class SwatAutoloader extends SwatObject
 	 */
 	public static function autoload($class_name)
 	{
-		$filename = SwatAutoloader::getFileFromClass($class_name);
+		$filename = self::getFileFromClass($class_name);
 
 		// We do not throw an exception here because is_callable() will break.
 

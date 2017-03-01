@@ -422,8 +422,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 				'Value should be an instance of %s.',
 				$this->row_wrapper_class));
 
-		// add
 		if ($offset === null) {
+			// add
 			$this->objects[] = $value;
 
 			// if index field is set, index the object
@@ -437,8 +437,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 				$this->objects_by_index[$index] = $value;
 			}
 
-		// replace at offset
 		} else {
+			// replace at offset
 			if (!isset($this[$offset]))
 				throw new OutOfBoundsException(sprintf(
 					'No record to replace exists at offset %s.',

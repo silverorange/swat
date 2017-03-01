@@ -43,10 +43,17 @@
 		"silverorange/concentrate": ">=0.0.13",
 		"silverorange/yui": "^1.0.11"
 	},
+	"require-dev": {
+		"silverorange/coding-standard": "@dev"
+	},
 	"autoload": {
 		"classmap": [ "Swat/", "SwatDB/", "SwatI18N/" ]
 	},
 	"include-path": [
 		"./"
-	]
+	],
+	"scripts": {
+		"lint": "./vendor/bin/phpcs",
+		"post-install-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src"
+	}
 }

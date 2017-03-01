@@ -104,3 +104,5 @@ class SwatReCaptcha extends SwatInputControl
 
 	// }}}
 }
+
+?>

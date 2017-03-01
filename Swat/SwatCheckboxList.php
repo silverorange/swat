@@ -95,7 +95,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 		parent::init();
 
 		// checks to see if there are duplicate values in the options array
-		$options_count =  array();
+		$options_count = array();
 		foreach ($this->getOptions() as $option)
 			$options_count[] = $option->value;
 

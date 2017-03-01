@@ -69,14 +69,14 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 * Note book child objects initally added to this widget
 	 *
 	 * @var array
- 	 */
+	 */
 	protected $children = array();
 
 	/**
 	 * Pages affixed to this widget
 	 *
 	 * @var array
- 	 */
+	 */
 	protected $pages = array();
 
 	// }}}
@@ -228,7 +228,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 		$div_tag->class = 'yui-navset';
 		$div_tag->open();
 
-		echo'<ul class="yui-nav">';
+		echo '<ul class="yui-nav">';
 		foreach ($this->pages as $page) {
 			if (!$page->visible)
 				continue;
@@ -254,7 +254,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 			$anchor_tag->close();
 			$li_tag->close();
 		}
-		echo'</ul>';
+		echo '</ul>';
 
 		echo '<div class="yui-content">';
 		foreach ($this->pages as $page)

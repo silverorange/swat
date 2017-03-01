@@ -16,7 +16,7 @@ class SwatIntegerOverflowException extends OverflowException
 	/**
 	 * Sign
 	 *
-	 * The sign of the integer, either positive or negative 
+	 * The sign of the integer, either positive or negative
 	 *
 	 * @var integer
 	 */
@@ -31,7 +31,7 @@ class SwatIntegerOverflowException extends OverflowException
 	 * @param string $message the message of the exception.
 	 * @param integer $code the code of the exception.
 	 * @param integer $sign the sign of the integer, either positive or
-	 *                negative. 
+	 *                negative.
 	 */
 	public function __construct($message = null, $code = 0, $sign = 1)
 	{
@@ -46,7 +46,7 @@ class SwatIntegerOverflowException extends OverflowException
 	/**
 	 * Gets the sign of the integer
 	 *
-	 * @return integer The sign of the integer, either positive or negative. 
+	 * @return integer The sign of the integer, either positive or negative.
 	 */
 	public function getSign()
 	{

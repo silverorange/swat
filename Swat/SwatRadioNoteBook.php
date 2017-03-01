@@ -42,14 +42,14 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 	 * Note book child objects initally added to this widget
 	 *
 	 * @var array
- 	 */
+	 */
 	protected $children = array();
 
 	/**
 	 * Pages affixed to this widget
 	 *
 	 * @var array
- 	 */
+	 */
 	protected $pages = array();
 
 	// }}}

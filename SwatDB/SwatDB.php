@@ -50,7 +50,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Connects to a database
 	 *
- 	 * Convenience method to connect to a database and get a driver instance
+	 * Convenience method to connect to a database and get a driver instance
 	 * for that database.
 	 *
 	 * @param string $dsn the DSN to which to connect.
@@ -124,7 +124,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Execute a data manipulation SQL statement
 	 *
- 	 * Convenience method for MDB2::exec().
+	 * Convenience method for MDB2::exec().
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 * @param string $sql The SQL to execute.
@@ -144,7 +144,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Update a column
 	 *
- 	 * Convenience method to update a single database field for one or more
+	 * Convenience method to update a single database field for one or more
 	 * rows. One convenient use of this method is for processing {@link
 	 * SwatAction}s
 	 * that change a single database field.
@@ -213,7 +213,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Query a column
 	 *
- 	 * Convenience method to query for values in a single database column.
+	 * Convenience method to query for values in a single database column.
 	 * One convenient use of this method is for loading values from a binding
 	 * table.
 	 *
@@ -292,7 +292,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Query a single row
 	 *
- 	 * Convenience method to query for a single row from a database table.
+	 * Convenience method to query for a single row from a database table.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 * @param string $sql The SQL to execute.
@@ -318,7 +318,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Query a single value from a specified table and column
 	 *
- 	 * Convenience method to query a single value in a single database column.
+	 * Convenience method to query a single value in a single database column.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 *
@@ -368,7 +368,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Query a single row from a specified table and column
 	 *
- 	 * Convenience method to query for a single row from a database table.
+	 * Convenience method to query for a single row from a database table.
 	 * One convenient use of this method is for loading data on an edit page.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
@@ -484,7 +484,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Execute a stored procedure that returns a single value
 	 *
- 	 * Convenience method to execute a stored procedure that returns a single
+	 * Convenience method to execute a stored procedure that returns a single
 	 * value.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
@@ -514,7 +514,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Update a binding table
 	 *
- 	 * Convenience method to update rows in a binding table. It will delete
+	 * Convenience method to update rows in a binding table. It will delete
 	 * and insert rows as necessary.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
@@ -586,7 +586,7 @@ class SwatDB extends SwatObject
 				$bound_field->name,
 				$value_list);
 
-			$delete_sql .= sprintf(' and %s not in (%s)',
+			$delete_sql.= sprintf(' and %s not in (%s)',
 				$value_field->name,
 				$value_list);
 		}
@@ -612,7 +612,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Insert a row
 	 *
- 	 * Convenience method to insert a single database row. One convenient use
+	 * Convenience method to insert a single database row. One convenient use
 	 * of this method is for saving data on an edit page.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
@@ -699,7 +699,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Update a row
 	 *
- 	 * Convenience method to update multiple fields of a single database row.
+	 * Convenience method to update multiple fields of a single database row.
 	 * One convenient use of this method is for save data on an edit page.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
@@ -758,7 +758,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Delete a row
 	 *
- 	 * Convenience method to delete a single database row.
+	 * Convenience method to delete a single database row.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 *
@@ -790,10 +790,10 @@ class SwatDB extends SwatObject
 	// }}}
 	// {{{ public static function getOptionArray()
 
-    /**
+	/**
 	 * Query for an option array
 	 *
- 	 * Convenience method to query for a set of options, each consisting of
+	 * Convenience method to query for a set of options, each consisting of
 	 * an id and a title. The returned option array in the form of
 	 * $id => $title can be passed directly to other classes, such as
 	 * {@link SwatFlydown} for example.
@@ -835,10 +835,10 @@ class SwatDB extends SwatObject
 		$sql = sprintf($sql, $id_field->name, $title_field->name, $table);
 
 		if ($where_clause != null)
-			$sql .= ' where '.$where_clause;
+			$sql.= ' where '.$where_clause;
 
 		if ($order_by_clause != null)
-			$sql .= ' order by '.$order_by_clause;
+			$sql.= ' order by '.$order_by_clause;
 
 		$rs = self::query($db, $sql, null);
 
@@ -862,7 +862,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Query for an option array cascaded by a field
 	 *
- 	 * Convenience method to query for a set of options, each consisting of
+	 * Convenience method to query for a set of options, each consisting of
 	 * an id, title, and a group-by field. The returned option array in the form of
 	 * $cascade => array($id => $title, $id => $title) can be passed directly to
 	 * other classes, such as {@link SwatCascade} for example.
@@ -912,9 +912,9 @@ class SwatDB extends SwatObject
 			$cascade_field->name, $table);
 
 		if ($where_clause !== null)
-			$sql .= ' where '.$where_clause;
+			$sql.= ' where '.$where_clause;
 
-		$sql .= ' order by '.$cascade_field->name;
+		$sql.= ' order by '.$cascade_field->name;
 		if ($order_by_clause !== null)
 			$sql.= ', '.$order_by_clause;
 
@@ -947,7 +947,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Queries for a grouped option array
 	 *
- 	 * Convenience method to query a grouped list of {@link SwatDataTreeNode}
+	 * Convenience method to query a grouped list of {@link SwatDataTreeNode}
 	 * objects used for things like {@link SwatCheckboxList} where checkboxes
 	 * are grouped together under a title.
 	 *
@@ -1064,7 +1064,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Get max field value
 	 *
- 	 * Convenience method to grab the max value from a single field.
+	 * Convenience method to grab the max value from a single field.
 	 *
 	 * @param MDB2_Driver_Common $db The database connection.
 	 *
@@ -1094,8 +1094,8 @@ class SwatDB extends SwatObject
 	/**
 	 * Get proper conditional operator
 	 *
- 	 * Convenience method to return proper operators for database values that
- 	 * may be null.
+	 * Convenience method to return proper operators for database values that
+	 * may be null.
 	 *
 	 * @param mixed $value The value to check for null on
 	 *
@@ -1122,7 +1122,7 @@ class SwatDB extends SwatObject
 	/**
 	 * Get a tree of data nodes
 	 *
- 	 * Convenience method to take a structured query with each row consisting of
+	 * Convenience method to take a structured query with each row consisting of
 	 * an id, levelnum, and a title, and turning it into a tree of
 	 * {@link SwatDataTreeNode} objects. The returned option array in the form
 	 * of a collection of {@link SwatDataTreeNode} objects can be used by other
@@ -1394,7 +1394,7 @@ class SwatDB extends SwatObject
 					printf("<p><strong>%s ms</strong></p>\n",
 						$locale->formatNumber($ms, 3));
 
-					if ($info['depth'] == 0 &&  count(self::$debug_info) > 1) {
+					if ($info['depth'] == 0 && count(self::$debug_info) > 1) {
 						$ms = (microtime(true) * 1000) -
 							self::$debug_info[0]['time'];
 

@@ -148,15 +148,16 @@ class SwatRadioList extends SwatFlydown
 		$data = &$form->getFormData();
 		$salt = $form->getSalt();
 
-		if (isset($data[$this->id]))
+		if (isset($data[$this->id])) {
 			if ($this->serialize_values) {
 				$this->value =
 					SwatString::signedUnserialize($data[$this->id], $salt);
 			} else {
 				$this->value = $data[$this->id];
 			}
-		else
+		} else {
 			$this->value = null;
+		}
 
 		return true;
 	}

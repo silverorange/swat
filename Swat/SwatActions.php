@@ -631,7 +631,6 @@ class SwatActions extends SwatControl implements SwatUIParent
 			implode(', ', $values),
 			$selected_value);
 
-
 		if ($this->view !== null && $this->selector !== null) {
 			$javascript.= sprintf("\n%s_obj.setViewSelector(%s, '%s');",
 				$this->id, $this->view->id, $this->selector->getId());

@@ -252,7 +252,6 @@ class SwatUI extends SwatObject
 			$this->translation_callback = 'gettext';
 		}
 
-
 		if ($xml_file === null)
 			throw new SwatFileNotFoundException(
 				"SwatML file not found: '{$filename}'.",
@@ -467,7 +466,7 @@ class SwatUI extends SwatObject
 			// only parse element nodes. ignore text nodes
 			if ($child_node->nodeType == XML_ELEMENT_NODE) {
 
-				if (strcmp($child_node->nodeName, 'property') == 0) {
+				if ($child_node->nodeName === 'property') {
 					$this->parseProperty($child_node, $parent);
 				} else {
 					$parsed_object = $this->parseObject($child_node);
@@ -479,7 +478,7 @@ class SwatUI extends SwatObject
 					 * No exceptions were thrown and the widget has an id
 					 * so add to widget list to make it look-up-able.
 					 */
-					if (strcmp($child_node->nodeName, 'widget') == 0 &&
+					if ($child_node->nodeName === 'widget' &&
 						$parsed_object->id !== null) {
 						$this->widgets[$parsed_object->id] = $parsed_object;
 					}
@@ -881,10 +880,10 @@ class SwatUI extends SwatObject
 
 		foreach ($tokens as $token) {
 
-			if (strcmp($token, '(') == 0) {
+			if ($token === '(') {
 				array_push($stack, $token);
 
-			} elseif (strcmp($token, ')') == 0) {
+			} elseif ($token === ')') {
 				if (array_key_exists($prev_token, $operators))
 					throw $syntax_exception;
 
@@ -894,11 +893,11 @@ class SwatUI extends SwatObject
 						throw $parenthesis_exception;
 				}
 
-				if (strcmp(array_pop($stack), '(') != 0)
+				if (array_pop($stack) != '(')
 					throw $parenthesis_exception;
 
 			} elseif (array_key_exists($token, $operators)) {
-				if ($prev_token === null || strcmp($prev_token, '(') == 0 ||
+				if ($prev_token === null || $prev_token === '(' ||
 					array_key_exists($prev_token, $operators))
 					throw $syntax_exception;
 
@@ -914,7 +913,7 @@ class SwatUI extends SwatObject
 
 				// get a default scope for the constant
 				if (mb_strpos($constant, '::') === false) {
-					$constant = get_class($object) . '::' . $constant;
+					$constant = get_class($object).'::'.$constant;
 				}
 
 				// evaluate constant
@@ -935,7 +934,7 @@ class SwatUI extends SwatObject
 		// collect left over operators
 		while (count($stack) > 0) {
 			$operator = array_pop($stack);
-			if (strcmp($operator, '(') == 0)
+			if ($operator === '(')
 				throw $parenthesis_exception;
 
 			array_push($queue, $operator);
@@ -950,7 +949,7 @@ class SwatUI extends SwatObject
 				if ($a === null || $b === null)
 					throw $syntax_exception;
 
-				switch ($value){
+				switch ($value) {
 				case '|':
 					array_push($eval_stack, $a | $b);
 					break;

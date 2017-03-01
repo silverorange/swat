@@ -33,7 +33,7 @@ class SwatYesNoRadioList extends SwatRadioList
 	public function __construct($id = null)
 	{
 		parent::__construct($id);
-		$this->addOption(self::NO,  Swat::_('No'));
+		$this->addOption(self::NO, Swat::_('No'));
 		$this->addOption(self::YES, Swat::_('Yes'));
 	}
 

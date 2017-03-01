@@ -135,7 +135,7 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 		else
 			$this->setFromStock($this->stock_id, false);
 
-		if ($this->content_type = null)
+		if ($this->content_type === null)
 			$this->content_type = 'text/plain';
 
 		if ((boolean)$this->value)

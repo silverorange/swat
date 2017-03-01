@@ -169,7 +169,7 @@ class SwatTreeFlydown extends SwatFlydown
 	 * tree flydown
 	 *
 	 * @return SwatFlydowTreeNode Tree of nodes
- 	 */
+	 */
 	public function getTree()
 	{
 		return $this->tree;

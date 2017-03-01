@@ -91,7 +91,7 @@ class SwatTreeFlydownNode extends SwatTreeNode
 	public function addChild($child)
 	{
 		if ($child instanceof SwatDataTreeNode)
-			$child = SwatTreeFlydownNode::convertFromDataTree($child);
+			$child = self::convertFromDataTree($child);
 
 		parent::addChild($child);
 	}

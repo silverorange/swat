@@ -124,7 +124,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	 * tree flydown
 	 *
 	 * @return SwatTreeNode Tree of nodes
- 	 */
+	 */
 	public function getTree()
 	{
 		return $this->tree;

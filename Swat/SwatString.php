@@ -454,7 +454,7 @@ class SwatString extends SwatObject
 		$text    = preg_replace($search, $replace, $text);
 
 		if ($max_length !== null) {
-			$text = SwatString::ellipsizeRight($text, $max_length, $ellipses);
+			$text = self::ellipsizeRight($text, $max_length, $ellipses);
 		}
 
 		return $text;
@@ -529,7 +529,7 @@ class SwatString extends SwatObject
 				if ($first) {
 					// first word too long, so forced to chop it
 					if (mb_strlen($encoded_word) >= $max_length) {
-						return mb_substr($encoded_word, 0 , $max_length);
+						return mb_substr($encoded_word, 0, $max_length);
 					}
 
 					$first = false;
@@ -541,7 +541,7 @@ class SwatString extends SwatObject
 					return $string_out;
 				}
 
-				$string_out .= $encoded_word;
+				$string_out.= $encoded_word;
 			}
 
 		} else {
@@ -557,7 +557,7 @@ class SwatString extends SwatObject
 
 			// first word too long, so forced to chop it
 			if (mb_strlen($string_exp[0]) >= $max_length)
-				return mb_substr($string_exp[0], 0 , $max_length);
+				return mb_substr($string_exp[0], 0, $max_length);
 
 			$string_out = '';
 
@@ -568,7 +568,7 @@ class SwatString extends SwatObject
 					return $string_out;
 				}
 
-				$string_out .= $word;
+				$string_out.= $word;
 			}
 		}
 
@@ -645,11 +645,11 @@ class SwatString extends SwatObject
 			$string = mb_substr($string, 0, $chop_pos);
 		}
 
-		$string = SwatString::removeTrailingPunctuation($string);
+		$string = self::removeTrailingPunctuation($string);
 
 		self::insertEntities($string, $matches, mb_strlen($string));
 
-		$string .= $ellipses;
+		$string.= $ellipses;
 
 		$flag = true;
 		return $string;
@@ -821,8 +821,8 @@ class SwatString extends SwatObject
 	 */
 	public static function removePunctuation($string)
 	{
-		$string = SwatString::removeTrailingPunctuation($string);
-		$string = SwatString::removeLeadingPunctuation($string);
+		$string = self::removeTrailingPunctuation($string);
+		$string = self::removeLeadingPunctuation($string);
 		return $string;
 	}
 
@@ -985,10 +985,10 @@ class SwatString extends SwatObject
 	{
 		// look up decimal precision if none is provided
 		if ($decimals === null)
-			$decimals = SwatString::getDecimalPrecision($value);
+			$decimals = self::getDecimalPrecision($value);
 
 		// number_format can't handle UTF-8 separators, so insert placeholders
-		$output =  number_format($value, $decimals, '.',
+		$output = number_format($value, $decimals, '.',
 			$show_thousands_separator ? ',' : '');
 
 		if ($locale !== null) {
@@ -1146,7 +1146,7 @@ class SwatString extends SwatObject
 			}
 		}
 
-		return $formatted_value . ' ' . $units[$unit_magnitude];
+		return $formatted_value.' '.$units[$unit_magnitude];
 	}
 
 	// }}}
@@ -1180,7 +1180,7 @@ class SwatString extends SwatObject
 					$pad_string,
 					ceil($length / mb_strlen($pad_string))
 				);
-				$output = mb_substr($padding, 0, $length) . $input;
+				$output = mb_substr($padding, 0, $length).$input;
 				break;
 
 			case STR_PAD_BOTH:
@@ -1201,7 +1201,7 @@ class SwatString extends SwatObject
 					$pad_string,
 					ceil($length / mb_strlen($pad_string))
 				);
-				$output = $input . mb_substr($padding, 0, $length);
+				$output = $input.mb_substr($padding, 0, $length);
 			}
 		} else {
 			$output = $input;
@@ -1303,6 +1303,7 @@ class SwatString extends SwatObject
 
 		return (is_numeric($value)) ? floatval($value) : null;
 	}
+
 	// }}}
 	// {{{ public static function toList()
 
@@ -1364,6 +1365,7 @@ class SwatString extends SwatObject
 
 		return $list;
 	}
+
 	// }}}
 	// {{{ public static function getTimePeriodParts()
 
@@ -1400,10 +1402,10 @@ class SwatString extends SwatObject
 
 		if ($interval_parts === null) {
 			$interval_parts =
-				SwatDate::DI_YEARS   |
-				SwatDate::DI_MONTHS  |
-				SwatDate::DI_DAYS    |
-				SwatDate::DI_HOURS   |
+				SwatDate::DI_YEARS |
+				SwatDate::DI_MONTHS |
+				SwatDate::DI_DAYS |
+				SwatDate::DI_HOURS |
 				SwatDate::DI_MINUTES |
 				SwatDate::DI_SECONDS;
 		}
@@ -1638,10 +1640,10 @@ class SwatString extends SwatObject
 		$largest_part = false)
 	{
 		$interval_parts =
-			SwatDate::DI_YEARS   |
-			SwatDate::DI_WEEKS   |
-			SwatDate::DI_DAYS    |
-			SwatDate::DI_HOURS   |
+			SwatDate::DI_YEARS |
+			SwatDate::DI_WEEKS |
+			SwatDate::DI_DAYS |
+			SwatDate::DI_HOURS |
 			SwatDate::DI_MINUTES |
 			SwatDate::DI_SECONDS;
 
@@ -1674,10 +1676,10 @@ class SwatString extends SwatObject
 	public static function toHumanReadableTimePeriodWithWeeksAndDays($seconds)
 	{
 		$interval_parts =
-			SwatDate::DI_YEARS   |
-			SwatDate::DI_WEEKS   |
-			SwatDate::DI_DAYS    |
-			SwatDate::DI_HOURS   |
+			SwatDate::DI_YEARS |
+			SwatDate::DI_WEEKS |
+			SwatDate::DI_DAYS |
+			SwatDate::DI_HOURS |
 			SwatDate::DI_MINUTES |
 			SwatDate::DI_SECONDS;
 

@@ -367,7 +367,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements SwatUIParent,
 	 * If this cell renderer's form is submitted, only cloned widgets that were
 	 * displayed and processed are returned.
 	 *
- 	 * @deprecated Use {@link SwatWidgetCellRenderer::getWidgets()} instead.
+	 * @deprecated Use {@link SwatWidgetCellRenderer::getWidgets()} instead.
 	 *              Pass null to getWidgets() for the same output as this
 	 *              method.
 	 *

@@ -224,7 +224,7 @@ class SwatForm extends SwatDisplayableContainer
 	 *
 	 * @var string
 	 */
-	private $method = SwatForm::METHOD_POST;
+	private $method = self::METHOD_POST;
 
 	/**
 	 * The token value used to prevent cross-site request forgeries
@@ -284,7 +284,7 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public function setMethod($method)
 	{
-		$valid_methods = array(SwatForm::METHOD_POST, SwatForm::METHOD_GET);
+		$valid_methods = array(self::METHOD_POST, self::METHOD_GET);
 
 		if (!in_array($method, $valid_methods))
 			throw new SwatException("‘{$method}’ is not a valid form method.");
@@ -427,14 +427,13 @@ class SwatForm extends SwatDisplayableContainer
 	{
 		$data = null;
 
-		// get value of a hidden field we've already unserialized after
-		// processing this form
 		if (isset($this->hidden_fields[$name])) {
+			// Get value of a hidden field we've already unserialized after
+			// processing this form.
 			$data = $this->hidden_fields[$name];
-
-		// otherwise, make sure this form was processed and get hidden field
-		// from raw form data
 		} elseif (!$this->processed && $this->isSubmitted()) {
+			// Otherwise, make sure this form was processed and get hidden
+			// field from raw form data.
 			$raw_data = $this->getFormData();
 			$serialized_field_name = self::SERIALIZED_PREFIX.$name;
 			if (isset($raw_data[$serialized_field_name])) {
@@ -497,10 +496,10 @@ class SwatForm extends SwatDisplayableContainer
 		$data = null;
 
 		switch ($this->method) {
-		case SwatForm::METHOD_POST:
+		case self::METHOD_POST:
 			$data = &$_POST;
 			break;
-		case SwatForm::METHOD_GET:
+		case self::METHOD_GET:
 			$data = &$_GET;
 			break;
 		}
@@ -1123,7 +1122,7 @@ class SwatForm extends SwatDisplayableContainer
 		$value = str_replace('\x00', "\x00", $value);
 		$value = str_replace('\x0a', "\x0a", $value);
 		$value = str_replace('\x0d', "\x0d", $value);
-		$value = str_replace('\\\\', '\\',   $value);
+		$value = str_replace('\\\\', '\\', $value);
 
 		$value = SwatString::signedUnserialize($value, $this->salt);
 

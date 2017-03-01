@@ -109,7 +109,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 *
 	 * @var boolean
 	 */
-	 public $use_current_time = true;
+	public $use_current_time = true;
 
 	// }}}
 	// {{{ private properties
@@ -664,7 +664,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$flydown->classes = array('swat-time-entry-second');
 
 		for ($i = 0; $i <= 59; $i++)
-			$flydown->addOption($i, str_pad($i, 2 ,'0', STR_PAD_LEFT));
+			$flydown->addOption($i, str_pad($i, 2, '0', STR_PAD_LEFT));
 
 		return $flydown;
 	}

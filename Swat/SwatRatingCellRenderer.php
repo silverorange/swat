@@ -126,3 +126,5 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 
 	// }}}
 }
+
+?>
