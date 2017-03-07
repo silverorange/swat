@@ -1493,10 +1493,15 @@ class SwatDBDataObject extends SwatObject implements
 		}
 
 		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
-			// We want to maintain what is internally stored in this object so
-			// we don't want to use the getter. What the getter returns
-			// publicly may be different than what we have internally.
-			$data[$property] = $this->$property;
+			// Check if the protected property is directly serializable. Some
+			// properties may be backed by other serialized properties and
+			// shouldn't also be serialized here.
+			if (!isset($accessor['serialize']) || $accessor['serialize']) {
+				// We want to maintain what is internally stored in this object so
+				// we don't want to use the getter. What the getter returns
+				// publicly may be different than what we have internally.
+				$data[$property] = $this->$property;
+			}
 		}
 
 		$serialized_data = serialize($data);
