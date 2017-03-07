@@ -754,6 +754,10 @@ class SwatDBDataObject extends SwatObject implements
 	 * will be called by the magic getter and setter when the protected
 	 * property is accessed.
 	 *
+	 * An additional property 'serializable' may be set for the property. If
+	 * set and equal to false, the property will not be included in the flat
+	 * list of serialized data when this object is serialized.
+	 *
 	 * @return array an array of protected property keys and method values.
 	 */
 	protected function getProtectedPropertyList()
