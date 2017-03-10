@@ -440,7 +440,7 @@ class SwatDBDataObject extends SwatObject implements
 		// public properties
 		$properties = array_merge(
 			$this->getPublicProperties(),
-			$this->getProtectedProperties()
+			$this->getSerializableProtectedProperties()
 		);
 
 		foreach ($properties as $name => $value) {
@@ -499,7 +499,7 @@ class SwatDBDataObject extends SwatObject implements
 	 * @return array an array of public and protected properties.
 	 *
 	 * @see SwatDBDataObject::getPublicProperties()
-	 * @see SwatDBDataObject::getProtectedProperties()
+	 * @see SwatDBDataObject::getSerializableProtectedProperties()
 	 */
 	public function getAttributes()
 	{
@@ -573,7 +573,7 @@ class SwatDBDataObject extends SwatObject implements
 
 		$property_array = array_merge(
 			$this->getPublicProperties(),
-			$this->getProtectedProperties()
+			$this->getSerializableProtectedProperties()
 		);
 
 		if (is_object($row))
@@ -802,10 +802,36 @@ class SwatDBDataObject extends SwatObject implements
 	}
 
 	// }}}
+	// {{{ private function getSerializableProtectedProperties()
+
+	/**
+	 * Gets the serializable protected properties of this data-object.
+	 *
+	 * Protected properties should correspond directly to database fields.
+	 *
+	 * @return array a reference to an associative array of protected properties
+	 *                of this data-object. The array is of the form
+	 *                'property name' => 'property value'.
+	 */
+	private function getSerializableProtectedProperties()
+	{
+		$properties = array();
+		foreach ($this->getProtectedPropertyList() as $property => $accessors) {
+			// We want to maintain what is internally stored in this object so
+			// we don't want to use the getter. What the getter returns
+			// publicly may be different than what we have internally.
+			$properties[$property] = $this->$property;
+		}
+
+		return $properties;
+	}
+
+	// }}}
 	// {{{ private function getProtectedProperties()
 
 	/**
-	 * Gets the protected properties of this data-object
+	 * Gets the protected properties of this data-object using the getter
+	 * accessor.
 	 *
 	 * Protected properties should correspond directly to database fields.
 	 *
@@ -817,10 +843,8 @@ class SwatDBDataObject extends SwatObject implements
 	{
 		$properties = array();
 		foreach ($this->getProtectedPropertyList() as $property => $accessors) {
-			// We want to maintain what is internally stored in this object so
-			// we don't want to use the getter. What the getter returns
-			// publicly may be different than what we have internally.
-			$properties[$property] = $this->$property;
+			// Use the getter for the property.
+			$properties[$property] = $this->$accessors['get']();
 		}
 
 		return $properties;
@@ -844,7 +868,7 @@ class SwatDBDataObject extends SwatObject implements
 	{
 		$property_array = array_merge(
 			$this->getPublicProperties(),
-			$this->getProtectedProperties(),
+			$this->getSerializableProtectedProperties(),
 			$this->internal_properties
 		);
 
