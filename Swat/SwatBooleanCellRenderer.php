@@ -46,7 +46,7 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	 *
 	 * @var string
 	 */
-	public $content_type = 'text/plain';
+	public $content_type = null;
 
 	/**
 	 * The stock id of this SwatBooleanCellRenderer
