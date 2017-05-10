@@ -133,7 +133,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 		$this->required_parts = self::YEAR | self::MONTH | self::DAY;
 		$this->display_parts  = self::YEAR | self::MONTH |
-		                        self::DAY | self::CALENDAR;
+								self::DAY | self::CALENDAR;
 
 		$this->setValidRange(-20, 20);
 

@@ -185,7 +185,7 @@ class SwatFileEntry extends SwatInputControl
 				$this->addMessage($this->getValidationMessage('required'));
 			}
 		} else if ($_FILES[$this->id]['error'] === UPLOAD_ERR_INI_SIZE ||
-			       $_FILES[$this->id]['error'] === UPLOAD_ERR_FORM_SIZE) {
+				   $_FILES[$this->id]['error'] === UPLOAD_ERR_FORM_SIZE) {
 
 			$this->addMessage($this->getValidationMessage('too-large'));
 		} else {

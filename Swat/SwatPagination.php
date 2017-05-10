@@ -166,7 +166,7 @@ class SwatPagination extends SwatControl
 		$this->requires_id = true;
 
 		$this->display_parts  = self::POSITION | self::NEXT |
-		                        self::PREV | self::PAGES;
+								self::PREV | self::PAGES;
 
 		/* These strings include a non-breaking space */
 		$this->previous_label = Swat::_('‹ Previous');
