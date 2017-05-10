@@ -2,8 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-
-
 /**
  * Generates a Swat widget tree from an XML UI file
  *

@@ -2,7 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-
 /**
  * Thrown when character data is in an unrecognized or invalid character
  * encoding

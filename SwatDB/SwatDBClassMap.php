@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Maps class names to overridden class names
  *

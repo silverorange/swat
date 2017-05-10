@@ -2,7 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-
 /**
  * A what-you-see-is-what-you-get (WYSIWYG) XHTML textarea editor widget
  *

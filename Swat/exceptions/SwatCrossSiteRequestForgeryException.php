@@ -2,7 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-
 /**
  * Thrown by {@link SwatForm} when a possible cross-site request forgery is
  * detected

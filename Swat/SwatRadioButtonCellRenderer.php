@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * A view selector cell renderer displayed as a radio button
  *

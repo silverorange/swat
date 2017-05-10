@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * A single object to represent a database query range
  *

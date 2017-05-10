@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Information for formatting currency values
  *
