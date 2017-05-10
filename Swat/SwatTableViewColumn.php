@@ -2,12 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/SwatCellRendererContainer.php';
-require_once 'Swat/SwatCellRenderer.php';
-require_once 'Swat/SwatInputCell.php';
-require_once 'Swat/SwatString.php';
-require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A visible column in a SwatTableView

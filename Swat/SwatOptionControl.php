@@ -2,8 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatInputControl.php';
-require_once 'Swat/SwatOption.php';
 
 /**
  * A base class for controls using a set of options

@@ -2,11 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'SwatObject.php';
-require_once 'SwatCellRenderer.php';
-require_once 'SwatCellRendererMapping.php';
-require_once 'Swat/exceptions/SwatException.php';
-require_once 'Swat/exceptions/SwatObjectNotFoundException.php';
 
 /**
  * A collection of cell renderers with associated datafield-property mappings

@@ -2,8 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatControl.php';
-require_once 'Swat/SwatString.php';
 
 /**
  * A block of content in the widget tree

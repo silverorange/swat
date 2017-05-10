@@ -2,8 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatObject.php';
-require_once 'Swat/exceptions/SwatInvalidPropertyException.php';
 
 /**
  * A data structure that can be used with the SwatDetailsView

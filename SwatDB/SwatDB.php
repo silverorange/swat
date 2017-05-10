@@ -2,15 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'MDB2.php';
-require_once 'Swat/SwatObject.php';
-require_once 'Swat/SwatDataTreeNode.php';
-require_once 'Swat/SwatViewSelection.php';
-require_once 'SwatI18N/SwatI18NLocale.php';
-require_once 'SwatDB/SwatDBField.php';
-require_once 'SwatDB/SwatDBTransaction.php';
-require_once 'SwatDB/SwatDBDefaultRecordsetWrapper.php';
-require_once 'SwatDB/exceptions/SwatDBException.php';
 
 /**
  * Database helper class

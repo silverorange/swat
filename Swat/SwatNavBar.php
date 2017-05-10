@@ -2,10 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatControl.php';
-require_once 'Swat/SwatNavBarEntry.php';
-require_once 'Swat/SwatString.php';
-require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * Visible navigation tool (breadcrumb trail)

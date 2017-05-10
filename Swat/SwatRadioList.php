@@ -2,9 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatFlydown.php';
-require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/SwatString.php';
 
 /**
  * A radio list selection widget

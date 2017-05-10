@@ -1,7 +1,5 @@
 <?php
 
-require_once 'Swat/SwatCheckboxList.php';
-require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * List of selectable options

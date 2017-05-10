@@ -2,8 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatHtmlHeadEntry.php';
-require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * Stores and outputs an HTML head entry for an XHTML link element

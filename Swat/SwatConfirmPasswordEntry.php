@@ -2,7 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatPasswordEntry.php';
 
 /**
  * A password confirmation entry widget

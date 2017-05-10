@@ -2,7 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatHtmlHeadEntry.php';
 
 /**
  * Stores and outputs an HTML head entry for a JavaScript include

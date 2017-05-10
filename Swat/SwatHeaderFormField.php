@@ -2,7 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatFormField.php';
 
 /**
  * A container to use around control widgets in a form

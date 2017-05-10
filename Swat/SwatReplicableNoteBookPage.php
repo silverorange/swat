@@ -2,9 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatReplicableContainer.php';
-require_once 'Swat/SwatNoteBookChild.php';
-require_once 'Swat/SwatNoteBookPage.php';
 
 /**
  * A container that replicates itself and its children as pages of a notebook

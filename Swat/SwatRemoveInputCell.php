@@ -2,12 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatInputCell.php';
-require_once 'Swat/SwatControl.php';
-require_once 'Swat/SwatContentBlock.php';
-require_once 'Swat/SwatWidget.php';
-require_once 'Swat/exceptions/SwatException.php';
-require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * An input cell containing a "remove row" link

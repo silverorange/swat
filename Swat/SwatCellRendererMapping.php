@@ -2,7 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'SwatObject.php';
 
 /**
  * A mapping of a data field to property of a cell renderer.

@@ -1,10 +1,5 @@
 <?php
 
-require_once 'Swat/exceptions/SwatException.php';
-require_once 'Swat/SwatObject.php';
-require_once 'Swat/exceptions/SwatIntegerOverflowException.php';
-require_once 'SwatI18N/SwatI18NNumberFormat.php';
-require_once 'SwatI18N/SwatI18NCurrencyFormat.php';
 
 /**
  * A locale object

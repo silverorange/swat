@@ -2,8 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatFrame.php';
-require_once 'Swat/SwatReplicableContainer.php';
 
 /**
  * A frame that replicates its children

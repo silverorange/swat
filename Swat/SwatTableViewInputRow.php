@@ -2,17 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatWidget.php';
-require_once 'Swat/SwatToolLink.php';
-require_once 'Swat/SwatContainer.php';
-require_once 'Swat/SwatString.php';
-require_once 'Swat/SwatTableViewRow.php';
-require_once 'Swat/SwatRemoveInputCell.php';
-require_once 'Swat/SwatYUI.php';
-require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/exceptions/SwatException.php';
-require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
-require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * A table-view row that allows the user to enter data

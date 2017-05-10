@@ -2,8 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatDisplayableContainer.php';
-require_once 'Swat/SwatHtmlTag.php';
 
 /**
  * A toolbar container for a group of related {@link SwatToolLink} objects

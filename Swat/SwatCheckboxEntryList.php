@@ -2,12 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatCheckboxList.php';
-require_once 'Swat/SwatEntry.php';
-require_once 'Swat/SwatFormField.php';
-require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/SwatYUI.php';
-require_once 'Swat/exceptions/SwatInvalidPropertyException.php';
 
 /**
  * A checkbox list widget with entries per option

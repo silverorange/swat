@@ -2,19 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatObject.php';
-require_once 'Swat/SwatDate.php';
-require_once 'Swat/SwatString.php';
-require_once 'Swat/exceptions/SwatClassNotFoundException.php';
-require_once 'SwatDB/SwatDB.php';
-require_once 'SwatDB/SwatDBClassMap.php';
-require_once 'SwatDB/SwatDBTransaction.php';
-require_once 'SwatDB/SwatDBRecordable.php';
-require_once 'SwatDB/SwatDBMarshallable.php';
-require_once 'SwatDB/SwatDBCacheNsFlushable.php';
-require_once 'SwatDB/SwatDBFlushable.php';
-require_once 'SwatDB/exceptions/SwatDBException.php';
-require_once 'SwatDB/exceptions/SwatDBNoDatabaseException.php';
 
 /**
  * All public properties correspond to database fields

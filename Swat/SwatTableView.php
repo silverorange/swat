@@ -2,20 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatView.php';
-require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/SwatTableViewColumn.php';
-require_once 'Swat/SwatTableViewOrderableColumn.php';
-require_once 'Swat/SwatTableViewSpanningColumn.php';
-require_once 'Swat/SwatTableViewGroup.php';
-require_once 'Swat/SwatTableViewRow.php';
-require_once 'Swat/SwatTableViewInputRow.php';
-require_once 'Swat/SwatUIParent.php';
-require_once 'Swat/SwatYUI.php';
-require_once 'Swat/exceptions/SwatException.php';
-require_once 'Swat/exceptions/SwatDuplicateIdException.php';
-require_once 'Swat/exceptions/SwatInvalidClassException.php';
-require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
 
 /**
  * A widget to display data in a tabular form

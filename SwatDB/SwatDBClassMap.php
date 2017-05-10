@@ -1,8 +1,5 @@
 <?php
 
-require_once 'Swat/SwatObject.php';
-require_once 'Swat/exceptions/SwatException.php';
-require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * Maps class names to overridden class names

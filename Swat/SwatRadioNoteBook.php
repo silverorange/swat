@@ -2,13 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatInputControl.php';
-require_once 'Swat/SwatUIParent.php';
-require_once 'Swat/SwatYUI.php';
-require_once 'Swat/SwatNoteBookPage.php';
-require_once 'Swat/SwatNoteBookChild.php';
-require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/exceptions/SwatInvalidClassException.php';
 
 /**
  * Notebook widget for containing {@link SwatNoteBookPage} pages

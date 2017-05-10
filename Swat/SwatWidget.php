@@ -2,10 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatUIObject.php';
-require_once 'Swat/SwatMessage.php';
-require_once 'Swat/exceptions/SwatDuplicateIdException.php';
-require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
 
 /**
  * Base class for all widgets

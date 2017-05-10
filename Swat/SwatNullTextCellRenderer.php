@@ -2,7 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatTextCellRenderer.php';
 
 /**
  * A cell renderer that displays a message if it is asked to display
