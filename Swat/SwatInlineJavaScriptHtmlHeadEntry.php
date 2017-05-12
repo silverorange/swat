@@ -2,9 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/Swat.php';
-require_once 'Swat/SwatHtmlHeadEntry.php';
-
 /**
  * @package   Swat
  * @copyright 2012-2016 silverorange

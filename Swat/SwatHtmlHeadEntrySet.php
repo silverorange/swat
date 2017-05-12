@@ -2,12 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatHtmlHeadEntry.php';
-require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
-require_once 'Swat/SwatLessStyleSheetHtmlHeadEntry.php';
-require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
-require_once 'Swat/SwatInlineJavaScriptHtmlHeadEntry.php';
-
 /**
  * A collection of HTML head entries
  *

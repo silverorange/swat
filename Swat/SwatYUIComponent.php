@@ -2,13 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatObject.php';
-require_once 'Swat/SwatJavaScriptHtmlHeadEntry.php';
-require_once 'Swat/SwatStyleSheetHtmlHeadEntry.php';
-require_once 'Swat/SwatHtmlHeadEntrySet.php';
-require_once 'Swat/SwatHtmlHeadEntry.php';
-require_once 'Swat/SwatYUI.php';
-
 /**
  * A component in the Yahoo UI Library
  *

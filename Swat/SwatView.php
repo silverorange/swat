@@ -2,13 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatControl.php';
-require_once 'Swat/SwatViewSelection.php';
-require_once 'Swat/SwatViewSelector.php';
-require_once 'Swat/exceptions/SwatException.php';
-require_once 'Swat/exceptions/SwatInvalidClassException.php';
-require_once 'Swat/exceptions/SwatObjectNotFoundException.php';
-
 /**
  * An abstract class from which to derive recordset views
  *

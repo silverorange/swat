@@ -2,9 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatEntry.php';
-require_once 'SwatI18N/SwatI18NLocale.php';
-
 /**
  * An input control for entering a delimited list of data
  *

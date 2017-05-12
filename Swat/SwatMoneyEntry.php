@@ -2,10 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatString.php';
-require_once 'Swat/SwatFloatEntry.php';
-require_once 'SwatI18N/SwatI18NLocale.php';
-
 /**
  * A money entry widget
  *

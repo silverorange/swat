@@ -2,10 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatInputControl.php';
-require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/SwatState.php';
-
 /**
  * A single line text entry widget
  *
@@ -127,7 +123,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 * @var boolean
 	 */
 	public $auto_trim = true;
-
 
 	// }}}
 	// {{{ public function display()

@@ -2,12 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatUIParent.php';
-require_once 'Swat/SwatAbstractMenu.php';
-require_once 'Swat/SwatMenuGroup.php';
-require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/exceptions/SwatInvalidClassException.php';
-
 /**
  * A menu control where menu items are grouped together
  *

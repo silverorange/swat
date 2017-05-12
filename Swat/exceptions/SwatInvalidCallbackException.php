@@ -2,8 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/exceptions/SwatException.php';
-
 /**
  * Thrown when a users tries to set a callback to a value that is not a
  * callback

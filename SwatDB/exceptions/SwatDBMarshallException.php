@@ -1,7 +1,5 @@
 <?php
 
-require_once 'SwatDB/exceptions/SwatDBException.php';
-
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
 /**

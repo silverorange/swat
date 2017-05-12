@@ -2,14 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/exceptions/SwatException.php';
-require_once 'Swat/SwatInputControl.php';
-require_once 'Swat/SwatFlydown.php';
-require_once 'Swat/SwatDate.php';
-require_once 'Swat/SwatState.php';
-require_once 'Swat/SwatYUI.php';
-require_once 'Swat/SwatHtmlTag.php';
-
 /**
  * A date entry widget
  *

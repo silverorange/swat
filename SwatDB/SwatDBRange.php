@@ -1,7 +1,5 @@
 <?php
 
-require_once 'Swat/SwatObject.php';
-
 /**
  * A single object to represent a database query range
  *

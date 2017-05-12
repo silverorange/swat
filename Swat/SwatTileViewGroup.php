@@ -2,10 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatDate.php';
-require_once 'Swat/SwatTile.php';
-require_once 'Swat/SwatHtmlTag.php';
-
 /**
  * A visible grouping of tiles in a tile view
  *

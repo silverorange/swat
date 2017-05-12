@@ -2,12 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatDataTreeNode.php';
-require_once 'Swat/SwatCheckboxList.php';
-require_once 'Swat/SwatString.php';
-require_once 'Swat/SwatState.php';
-require_once 'Swat/SwatHtmlTag.php';
-
 /**
  * A checkbox array widget formatted into a tree
  *

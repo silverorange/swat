@@ -2,24 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatObject.php';
-require_once 'Swat/SwatContainer.php';
-require_once 'Swat/SwatCellRendererMapping.php';
-require_once 'Swat/SwatDate.php';
-
-require_once 'Swat/exceptions/SwatFileNotFoundException.php';
-require_once 'Swat/exceptions/SwatInvalidSwatMLException.php';
-require_once 'Swat/exceptions/SwatWidgetNotFoundException.php';
-require_once 'Swat/exceptions/SwatInvalidCallbackException.php';
-require_once 'Swat/exceptions/SwatDuplicateIdException.php';
-require_once 'Swat/exceptions/SwatInvalidClassException.php';
-require_once 'Swat/exceptions/SwatDoesNotImplementException.php';
-require_once 'Swat/exceptions/SwatClassNotFoundException.php';
-require_once 'Swat/exceptions/SwatInvalidPropertyException.php';
-require_once 'Swat/exceptions/SwatInvalidPropertyTypeException.php';
-require_once 'Swat/exceptions/SwatUndefinedConstantException.php';
-require_once 'Swat/exceptions/SwatInvalidConstantExpressionException.php';
-
 /**
  * Generates a Swat widget tree from an XML UI file
  *

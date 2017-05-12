@@ -2,8 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'SwatDB/exceptions/SwatDBMarshallException.php';
-
 /**
  * Interface for marshalling and unmarshalling data-objects
  *

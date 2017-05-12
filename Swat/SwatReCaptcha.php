@@ -2,10 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'ReCaptcha/ReCaptcha.php';
-require_once 'Swat/SwatMessage.php';
-require_once 'Swat/SwatInputControl.php';
-
 /**
  * A widget used to display and validate reCAPTCHA's
  *

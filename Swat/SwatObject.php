@@ -2,10 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/Swat.php';
-require_once 'Swat/SwatError.php';
-require_once 'Swat/exceptions/SwatException.php';
-
 /**
  * The base object type
  *

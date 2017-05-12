@@ -1,7 +1,5 @@
 <?php
 
-require_once 'SwatI18N/SwatI18NNumberFormat.php';
-
 /**
  * Information for formatting currency values
  *

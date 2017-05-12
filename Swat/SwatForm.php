@@ -2,15 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/exceptions/SwatException.php';
-require_once 'Swat/exceptions/SwatInvalidCharacterEncodingException.php';
-require_once 'Swat/exceptions/SwatInvalidTypeException.php';
-require_once 'Swat/SwatDisplayableContainer.php';
-require_once 'Swat/SwatMessageDisplay.php';
-require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/SwatString.php';
-require_once 'Swat/SwatYUI.php';
-
 /**
  * A form widget which can contain other widgets
  *

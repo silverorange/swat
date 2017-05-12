@@ -2,15 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatUIParent.php';
-require_once 'Swat/SwatControl.php';
-require_once 'Swat/SwatHtmlTag.php';
-require_once 'Swat/SwatString.php';
-require_once 'Swat/SwatAbstractMenu.php';
-require_once 'Swat/exceptions/SwatUndefinedStockTypeException.php';
-require_once 'Swat/exceptions/SwatInvalidClassException.php';
-require_once 'Swat/exceptions/SwatException.php';
-
 /**
  * An item in a menu
  *

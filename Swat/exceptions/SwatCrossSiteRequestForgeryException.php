@@ -2,9 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatForm.php';
-require_once 'Swat/exceptions/SwatException.php';
-
 /**
  * Thrown by {@link SwatForm} when a possible cross-site request forgery is
  * detected

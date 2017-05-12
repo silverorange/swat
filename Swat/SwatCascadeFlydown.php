@@ -2,9 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatFlydown.php';
-require_once 'Swat/SwatYUI.php';
-
 /**
  * A cascading flydown (aka combo-box) selection widget
  *

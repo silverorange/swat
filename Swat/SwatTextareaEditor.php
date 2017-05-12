@@ -2,9 +2,6 @@
 
 /* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 
-require_once 'Swat/SwatTextarea.php';
-require_once 'Swat/SwatYUI.php';
-
 /**
  * A what-you-see-is-what-you-get (WYSIWYG) XHTML textarea editor widget
  *
