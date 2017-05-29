@@ -6,7 +6,7 @@
  * Container for package wide static methods
  *
  * @package   Swat
- * @copyright 2005-2016 silverorange
+ * @copyright 2005-2017 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class Swat
@@ -21,12 +21,22 @@ class Swat
 	const GETTEXT_DOMAIN = 'swat';
 
 	// }}}
+	// {{{ private properties
+
+	/**
+	 * Whether or not this package is initialized
+	 *
+	 * @var boolean
+	 */
+	private static $is_initialized = false;
+
+	// }}}
 	// {{{ public static function _()
 
 	/**
 	 * Translates a phrase
 	 *
-	 * This is an alias for {@link Swat::gettext()}.
+	 * This is an alias for {@link self::gettext()}.
 	 *
 	 * @param string $message the phrase to be translated.
 	 *
@@ -181,6 +191,20 @@ class Swat
 	}
 
 	// }}}
+	// {{{ public static function init()
+
+	public static function init()
+	{
+		if (self::$is_initialized) {
+			return;
+		}
+
+		self::setupGettext();
+
+		self::$is_initialized = true;
+	}
+
+	// }}}
 	// {{{ private function __construct()
 
 	/**
@@ -255,7 +279,5 @@ if (!function_exists("dgettext")) {
 }
 
 // }}}
-
-Swat::setupGettext();
 
 ?>
