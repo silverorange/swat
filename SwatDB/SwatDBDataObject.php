@@ -740,6 +740,10 @@ class SwatDBDataObject extends SwatObject implements
 	 * will be called by the magic getter and setter when the protected
 	 * property is accessed.
 	 *
+	 * An additional property 'serializable' may be set for the property. If
+	 * set and equal to false, the property will not be included in the flat
+	 * list of serialized data when this object is serialized.
+	 *
 	 * @return array an array of protected property keys and method values.
 	 */
 	protected function getProtectedPropertyList()
@@ -1503,10 +1507,15 @@ class SwatDBDataObject extends SwatObject implements
 		}
 
 		foreach ($this->getProtectedPropertyList() as $property => $accessor) {
-			// We want to maintain what is internally stored in this object so
-			// we don't want to use the getter. What the getter returns
-			// publicly may be different than what we have internally.
-			$data[$property] = $this->$property;
+			// Check if the protected property is directly serializable. Some
+			// properties may be backed by other serialized properties and
+			// shouldn't also be serialized here.
+			if (!isset($accessor['serialize']) || $accessor['serialize']) {
+				// We want to maintain what is internally stored in this object so
+				// we don't want to use the getter. What the getter returns
+				// publicly may be different than what we have internally.
+				$data[$property] = $this->$property;
+			}
 		}
 
 		$serialized_data = serialize($data);
