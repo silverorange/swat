@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
-
 /**
  * Stores and outputs an HTML head entry
  *

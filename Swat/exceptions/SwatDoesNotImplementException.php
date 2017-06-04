@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
-
 /**
  * Thrown when an object does not implement a required interface
  *

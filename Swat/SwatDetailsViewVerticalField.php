@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
-
 /**
  * A visible field in a SwatDetailsView that has its label displayed above
  * its content

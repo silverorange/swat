@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
-
 /**
  * Interface that supports setting a flushable cache
  *

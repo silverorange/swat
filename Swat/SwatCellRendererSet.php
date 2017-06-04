@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
-
 /**
  * A collection of cell renderers with associated datafield-property mappings
  *

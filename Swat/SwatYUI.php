@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
-
 /**
  * Object for building Swat HTML head entry dependencies for Yahoo UI Library
  * components
