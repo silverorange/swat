@@ -1,45 +1,38 @@
-# Swat
+Swat
+====
+Swat is a web application component toolkit.
 
-Web Application Toolkit. Widgets and more.
+Swat is an open-source
+[LGPL 2.1](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt)
+web-application toolkit built using [PHP](https://www.php.net/). It is primarily
+developed and maintained by [silverorange](https://www.silverorange.com), but
+participation and contributions are welcome.
 
-Swat is an open-source [LGPL]([http://www.gnu.org/licenses/lgpl.html) web-application
-toolkit built using [PHP](http://www.php.net/). It is primarily developed and
-maintained by [silverorange](http://www.silverorange.com), but participation and
-contributions are welcome. Check out what it can do in the
-[http://swat.silverorange.com/demo/](Swat demo).
+Swat is *not* a full-stack web framework. Swat is an interface toolkit
+analogous to [Gtk](https://gtk.org/ Gtk), but for web applications instead of
+native applications. Read about
+[why Swat was created](https://github.com/silverorange/swat/wiki/History).
 
-Swat is *not* a full-stack web framework. Swat is an interface toolkit analogous to
-[Gtk](http://gtk.org/ Gtk), but for web applications instead of native applications.
-Read about [why Swat was created](https://github.com/silverorange/swat/wiki/History).
-
-## Releases
-
-Swat releases are published to the silverorange PEAR channel.
-
-```
-$ pear channel-discover pear.silverorange.com
-$ pear install so/Swat
-```
-
-You can also install Swat using Composer. It's not on packagist yet, but you can add this Git
-repository as a Composer source.
-
-## Documentation
+Documentation
+-------------
 
  * [Simple Example](https://github.com/silverorange/swat/wiki/Simple-Example)
- * [API Documentation](http://docs.silverorange.com/swat/package-summary.html)
- * [Installation tutorial](http://labs.silverorange.com/archive/2007/february/swatdemo)
 
-## Get Involved
-
- * [Mailing List](http://mailman.silverorange.com/mailman/listinfo/swat-devel)
- * [2.0 Roadmap](https://github.com/silverorange/swat/wiki/2.0-Roadmap)
- 
-## Features
+Features
+--------
 
  * object-oriented PHP 5 code
- * simplifies the process of building and maintaining functional user interfaces for
-   web applications
+ * simplifies the process of building and maintaining functional user
+   interfaces for web applications
  * generates standards-compliant XHTML output with flexible CSS hooks
  * relies on CSS for layout and styling
  * provides comprehensive and extensible error checking for forms
+
+Installation
+------------
+Make sure the silverorange composer repository is added to the `composer.json`
+for the project and then run:
+
+```sh
+composer require silverorange/swat
+```
