@@ -569,24 +569,11 @@ class SwatUI extends SwatObject
 		$class = $node->getAttribute('class');
 
 		if (!class_exists($class)) {
-
-			$class_file = null;
-			foreach (self::$class_map as $package_prefix => $path) {
-				$prefix_length = mb_strlen($package_prefix);
-				if (strncmp($class, $package_prefix, $prefix_length) === 0) {
-					$class_file = "{$path}/{$class}.php";
-					break;
-				}
-			}
-
-			if ($class_file === null)
-				throw new SwatClassNotFoundException(
-					"Class '{$class}' is not defined and no suitable filename ".
-					'for the class could be found. You may have forgotten to '.
-					'map the class prefix to a path.',
-					0, $class);
-
-			require_once $class_file;
+			throw new SwatClassNotFoundException(
+				"Class '{$class}' is not defined.",
+				0,
+				$class
+			);
 		}
 
 		// NOTE: this works because SwatUIObject is abstract
