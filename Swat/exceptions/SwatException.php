@@ -51,9 +51,9 @@ class SwatException extends Exception
 	protected static $displayer = null;
 
 	/**
-	 * @var SwatExceptionLogger
+	 * @var array
 	 */
-	protected static $logger = null;
+	protected static $loggers = array();
 
 	// }}}
 	// {{{ private properties
@@ -80,9 +80,25 @@ class SwatException extends Exception
 	 */
 	public static function setLogger(SwatExceptionLogger $logger)
 	{
-		self::$logger = $logger;
+		self::$loggers = array($logger);
 	}
 
+	// }}}
+	// {{{ public static function addLogger()
+
+	/**
+	 * Adds an object to the array of objects that log SwatException objects when they are processed
+	 *
+	 * For example:
+	 * <code>
+	 * SwatException::addLogger(new CustomLogger());
+	 *
+	 * @param SwatExceptionLogger $logger the object to add to the array of objects that log exceptions
+	 */
+	public static function addLogger(SwatExceptionLogger $logger)
+	{
+		self::$loggers[] = $logger;
+	}
 	// }}}
 	// {{{ public static function setDisplayer()
 
@@ -207,11 +223,12 @@ class SwatException extends Exception
 	 */
 	public function log()
 	{
-		if (self::$logger === null) {
+		if (count(self::$loggers) === 0) {
 			error_log($this->getSummary(), 0);
 		} else {
-			$logger = self::$logger;
-			$logger->log($this);
+			foreach (self::$loggers as $logger) {
+				$logger->log($this);
+			}
 		}
 	}
 
