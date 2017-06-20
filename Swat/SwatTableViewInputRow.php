@@ -241,6 +241,21 @@ class SwatTableViewInputRow extends SwatTableViewRow
 	}
 
 	// }}}
+	// {{{ public function addReplication()
+
+	/**
+	 * Add a replicator id
+	 *
+	 * @param integer $id the id of the replicator to add.
+	 * @return integer index of the replicator.
+	 */
+	public function addReplication($id)
+	{
+		$this->replicators[] = $id;
+		return end($this->replicators);
+	}
+
+	// }}}
 	// {{{ public function getReplicators()
 
 	/**
