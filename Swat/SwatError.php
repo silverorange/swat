@@ -238,6 +238,32 @@ class SwatError
 	}
 
 	// }}}
+	// {{{ public function getFile()
+
+	/**
+	 * Gets the file location where the error occurred
+	 *
+	 * @return string file location of error
+	 */
+	public function getFile()
+	{
+		return $this->file;
+	}
+
+	// }}}
+	// {{{ public function getLine()
+
+	/**
+	 * Gets the line number where the error occurred
+	 *
+	 * @return integer line number of error
+	 */
+	public function getLine()
+	{
+		return $this->line;
+	}
+
+	// }}}
 	// {{{ public function log()
 
 	/**
