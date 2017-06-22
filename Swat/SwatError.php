@@ -76,9 +76,9 @@ class SwatError
 	protected static $displayer = null;
 
 	/**
-	 * @var SwatErrorLogger
+	 * @var array
 	 */
-	protected static $logger = null;
+	protected static $loggers = array();
 
 	/**
 	 * @var integer
@@ -100,7 +100,27 @@ class SwatError
 	 */
 	public static function setLogger(SwatErrorLogger $logger)
 	{
-		self::$logger = $logger;
+		self::$loggers = array($logger);
+	}
+
+	// }}}
+	// {{{ public static function addLogger()
+
+	/**
+	 * Adds an object to the array of objects that log SwatError objects
+	 * when they are processed
+	 *
+	 * For example:
+	 * <code>
+	 * SwatError::addLogger(new CustomLogger());
+	 * </code>
+	 *
+	 * @param SwatErrorLogger $logger the object to add to the array of objects
+	 *                                           that log exceptions
+	 */
+	public static function addLogger(SwatErrorLogger $logger)
+	{
+		self::$loggers[] = $logger;
 	}
 
 	// }}}
@@ -220,6 +240,32 @@ class SwatError
 	}
 
 	// }}}
+	// {{{ public function getFile()
+
+	/**
+	 * Gets the file location where the error occurred
+	 *
+	 * @return string file location of error
+	 */
+	public function getFile()
+	{
+		return $this->file;
+	}
+
+	// }}}
+	// {{{ public function getLine()
+
+	/**
+	 * Gets the line number where the error occurred
+	 *
+	 * @return integer line number of error
+	 */
+	public function getLine()
+	{
+		return $this->line;
+	}
+
+	// }}}
 	// {{{ public function log()
 
 	/**
@@ -229,11 +275,12 @@ class SwatError
 	 */
 	public function log()
 	{
-		if (self::$logger === null) {
+		if (count(self::$loggers) === 0) {
 			error_log($this->getSummary(), 0);
 		} else {
-			$logger = self::$logger;
-			$logger->log($this);
+			foreach (self::$loggers as $logger) {
+				$logger->log($this);
+			}
 		}
 	}
 
