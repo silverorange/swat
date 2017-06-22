@@ -1,7 +1,5 @@
 <?php
 
-/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
-
 /**
  * Removes PHP string concatenations inside gettext markers given a PHP source
  * file
@@ -21,7 +19,7 @@ for ($i = 0; $i < count($tokens); $i++) {
 	$token = $tokens[$i];
 	if (is_string($token)) {
 		switch ($token) {
-		// ignore string concatenation inside gettext calls 
+		// ignore string concatenation inside gettext calls
 		case '.':
 			if (!$in_gettext)
 				$output.= $token;

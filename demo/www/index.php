@@ -2,8 +2,6 @@
 
 setlocale(LC_ALL, 'fr_FR.utf8');
 
-/* vim: set noexpandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
-
 /*
  * PackageConfig is a silverorange package used for configuring our internal
  * development environment. It can be installed using the public silverorange
