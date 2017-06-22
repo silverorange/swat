@@ -107,14 +107,16 @@ class SwatError
 	// {{{ public static function addLogger()
 
 	/**
-	 * Adds an object to the array of objects that log SwatError objects when they are processed
+	 * Adds an object to the array of objects that log SwatError objects
+	 * when they are processed
 	 *
 	 * For example:
 	 * <code>
 	 * SwatError::addLogger(new CustomLogger());
 	 * </code>
 	 *
-	 * @param SwatErrorLogger $logger the object to add to the array of objects that log exceptions
+	 * @param SwatErrorLogger $logger the object to add to the array of objects
+	 *                                           that log exceptions
 	 */
 	public static function addLogger(SwatErrorLogger $logger)
 	{

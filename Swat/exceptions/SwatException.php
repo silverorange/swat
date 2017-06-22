@@ -87,13 +87,16 @@ class SwatException extends Exception
 	// {{{ public static function addLogger()
 
 	/**
-	 * Adds an object to the array of objects that log SwatException objects when they are processed
+	 * Adds an object to the array of objects that log SwatException objects
+	 * when they are processed
 	 *
 	 * For example:
 	 * <code>
 	 * SwatException::addLogger(new CustomLogger());
+	 * </code>
 	 *
-	 * @param SwatExceptionLogger $logger the object to add to the array of exception loggers
+	 * @param SwatExceptionLogger $logger the object to add to the array of
+	 *                                           exception loggers
 	 */
 	public static function addLogger(SwatExceptionLogger $logger)
 	{
