@@ -88,10 +88,6 @@ SwatYUI:
       Depends:
         - packages/yui/dom/dom.js
         - packages/yui/event/event.js
-    packages/yui/calendar/calendar.js:
-      Depends:
-        - packages/yui/dom/dom.js
-        - packages/yui/event/event.js
     packages/yui/charts/charts.js:
       Depends:
         - packages/yui/element/element.js
