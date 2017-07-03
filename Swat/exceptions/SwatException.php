@@ -451,11 +451,12 @@ class SwatException extends Exception
 	 *
 	 * @param Exception $e the exception to handle.
 	 */
-	public static function handle(Exception $e)
+	public static function handle(Throwable $e)
 	{
 		// wrap other exceptions in SwatExceptions
-		if (!($e instanceof SwatException))
+		if (!$e instanceof SwatException) {
 			$e = new SwatException($e);
+		}
 
 		$e->process(true, false);
 	}
