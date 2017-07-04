@@ -626,7 +626,8 @@ class SwatFileEntry extends SwatInputControl
 			$extension = '';
 			$base_name = $this->getFileName();
 		} else {
-			$extension = '.'.array_pop(explode('.', $this->getFileName()));
+			$parts = explode('.', $this->getFileName());
+			$extension = '.'.array_pop($parts);
 			$base_name = basename($this->getFileName(), $extension);
 		}
 
