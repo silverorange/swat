@@ -202,15 +202,6 @@ class SwatUI extends SwatObject
 
 		if (file_exists($filename)) {
 			$xml_file = $filename;
-		} else {
-			$paths = explode(':', ini_get('include_path'));
-
-			foreach ($paths as $path) {
-				if (file_exists($path.'/'.$filename)) {
-					$xml_file = $path.'/'.$filename;
-					break;
-				}
-			}
 		}
 
 		// try to guess the translation callback based on the
