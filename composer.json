@@ -55,7 +55,7 @@
 		"pear/pear_exception": "^1.0.0",
 		"silverorange/mdb2": "^3.0.0",
 		"silverorange/concentrate": "^1.0.0",
-		"silverorange/yui": "^2.0.0"
+		"silverorange/yui": "^1.0.11"
 	},
 	"require-dev": {
 		"silverorange/coding-standard": "^0.1.0"
