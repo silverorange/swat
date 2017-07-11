@@ -103,8 +103,6 @@ class SwatDBClassMap extends SwatObject
 	 */
 	public static function get($from_class_name)
 	{
-		$include_paths = explode(':', get_include_path());
-
 		$to_class_name = $from_class_name;
 
 		while (array_key_exists($from_class_name, self::$map)) {
