@@ -442,7 +442,7 @@ class SwatDate extends DateTime implements Serializable
 		}
 
 		$formatter = $formatters[$locale];
-		$formatter->setTimeZoneId($this->getTimezone()->getName());
+		$formatter->setTimeZone($this->getTimezone()->getName());
 		$formatter->setPattern($format);
 
 		$timestamp = $this->getTimestamp();

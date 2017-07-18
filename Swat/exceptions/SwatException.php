@@ -449,13 +449,14 @@ class SwatException extends Exception
 	 * Wraps a generic exception in a SwatException object and process the
 	 * SwatException object.
 	 *
-	 * @param Exception $e the exception to handle.
+	 * @param Throwable $e the exception to handle.
 	 */
-	public static function handle(Exception $e)
+	public static function handle($e)
 	{
 		// wrap other exceptions in SwatExceptions
-		if (!($e instanceof SwatException))
+		if (!$e instanceof SwatException) {
 			$e = new SwatException($e);
+		}
 
 		$e->process(true, false);
 	}
