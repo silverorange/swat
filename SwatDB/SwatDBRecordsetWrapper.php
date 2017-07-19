@@ -434,14 +434,17 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 				$this->removed_objects[] = $this->objects[$offset];
 				$this->objects[$offset] = $value;
 			} else {
+				$index_field = $this->index_field;
+
 				// update object index field value
-				$value->{$this->index_field} = $offset;
+				$value->{$index_field} = $offset;
 
 				// find and replace ordinally indexed objects
-				$keys = array_keys($this->objects, $value, true);
-				foreach ($keys as $key) {
-					$this->removed_objects[] = $this->objects[$key];
-					$this->objects[$key] = $value;
+				foreach ($this->objects as $key => $object) {
+					if ($object->{$index_field} === $value->{$index_field}) {
+						$this->removed_objects[] = $object;
+						$this->objects[$key] = $value;
+					}
 				}
 
 				// add object to indexed array
