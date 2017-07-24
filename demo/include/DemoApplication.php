@@ -1,7 +1,5 @@
 <?php
 
-require_once 'Concentrate/Concentrator.php';
-
 /**
  * A demo application
  *
@@ -114,8 +112,8 @@ class DemoApplication
 		$this->demo_ui->loadFromXML(
 			'../include/demos/'.strtolower($this->demo).'.xml');
 
-		if (file_exists('../include/demos/'.$this->demo.'Demo.php')) {
-			require_once '../include/demos/'.$this->demo.'Demo.php';
+		if (file_exists(__DIR__.'/../include/demos/'.$this->demo.'Demo.php')) {
+			require_once __DIR__.'/../include/demos/'.$this->demo.'Demo.php';
 
 			$class_name = $this->demo.'Demo';
 			if (class_exists($class_name)) {

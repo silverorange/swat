@@ -461,7 +461,6 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public function addWithField(SwatWidget $widget, $title)
 	{
-		require_once 'Swat/SwatFormField.php';
 		$field = new SwatFormField();
 		$field->add($widget);
 		$field->title = $title;

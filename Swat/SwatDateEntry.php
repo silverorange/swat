@@ -835,7 +835,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function createTimeEntry()
 	{
-		require_once 'Swat/SwatTimeEntry.php';
 		$time_entry = new SwatTimeEntry($this->id.'_time_entry');
 		$time_entry->classes = array('swat-date-entry-time');
 		return $time_entry;
@@ -851,7 +850,6 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function createCalendar()
 	{
-		require_once 'Swat/SwatCalendar.php';
 		$calendar = new SwatCalendar($this->id.'_calendar');
 		$calendar->classes = array('swat-date-entry-calendar');
 		$calendar->valid_range_start = $this->valid_range_start;

@@ -103,39 +103,10 @@ class SwatDBClassMap extends SwatObject
 	 */
 	public static function get($from_class_name)
 	{
-		$include_paths = explode(':', get_include_path());
-
 		$to_class_name = $from_class_name;
 
 		while (array_key_exists($from_class_name, self::$map)) {
 			$to_class_name = self::$map[$from_class_name];
-
-			// try to load class definition for $to_class_name
-			if (!class_exists($to_class_name) &&
-				count(self::$search_paths) > 0) {
-				foreach (self::$search_paths as $search_path) {
-					// check if search path is relative
-					if ($search_path[0] == '/') {
-						$filename = sprintf('%s/%s.php',
-							$search_path, $to_class_name);
-
-						if (file_exists($filename)) {
-							require_once $filename;
-							break;
-						}
-					} else {
-						foreach ($include_paths as $include_path) {
-							$filename = sprintf('%s/%s/%s.php',
-								$include_path, $search_path, $to_class_name);
-
-							if (file_exists($filename)) {
-								require_once $filename;
-								break 2;
-							}
-						}
-					}
-				}
-			}
 
 			if (!is_subclass_of($to_class_name, $from_class_name))
 				throw new SwatInvalidClassException(sprintf('Invalid '.
