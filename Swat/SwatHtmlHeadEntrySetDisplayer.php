@@ -51,10 +51,14 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 	 * @param boolean $compile whether or not to use compiled files. Defaults to
 	 *                          false.
 	 */
-	public function display(SwatHtmlHeadEntrySet $set,
-		$uri_prefix = '', $tag = null, $combine = false, $minify = false,
-		$compile = false)
-	{
+	public function display(
+		SwatHtmlHeadEntrySet $set,
+		$uri_prefix = '',
+		$tag = null,
+		$combine = false,
+		$minify = false,
+		$compile = false
+	) {
 		// clone set so displaying doesn't modify it
 		$set = clone $set;
 
@@ -126,9 +130,11 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 	/**
 	 * Displays the contents of the set of HTML head entries inline
 	 */
-	public function displayInline(SwatHtmlHeadEntrySet $set,
-		$path, $type = null)
-	{
+	public function displayInline(
+		SwatHtmlHeadEntrySet $set,
+		$path,
+		$type = null
+	) {
 		$entries = $set->toArray();
 
 		$uris = array_keys($entries);

@@ -83,9 +83,12 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function query($db, $sql,
-		$wrapper = 'SwatDBDefaultRecordsetWrapper', $types = null)
-	{
+	public static function query(
+		$db,
+		$sql,
+		$wrapper = 'SwatDBDefaultRecordsetWrapper',
+		$types = null
+	) {
 		$mdb2_types = $types === null ? true : $types;
 
 		$rs = self::executeQuery(
@@ -164,9 +167,15 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function updateColumn($db, $table, $field, $value, $id_field,
-		$ids, $where = null)
-	{
+	public static function updateColumn(
+		$db,
+		$table,
+		$field,
+		$value,
+		$id_field,
+		$ids,
+		$where = null
+	) {
 		$ids = self::initArray($ids);
 
 		if (count($ids) == 0)
@@ -227,9 +236,13 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function queryColumn($db, $table, $field, $id_field = null,
-		$id = 0)
-	{
+	public static function queryColumn(
+		$db,
+		$table,
+		$field,
+		$id_field = null,
+		$id = 0
+	) {
 		$field = new SwatDBField($field, 'integer');
 
 		if ($id_field == null) {
@@ -330,9 +343,13 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function queryOneFromTable($db, $table, $field, $id_field = null,
-		$id = 0)
-	{
+	public static function queryOneFromTable(
+		$db,
+		$table,
+		$field,
+		$id_field = null,
+		$id = 0
+	) {
 		$field = new SwatDBField($field, 'integer');
 
 		if ($id_field == null) {
@@ -432,9 +449,13 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function executeStoredProc($db, $proc, $params,
-		$wrapper = 'SwatDBDefaultRecordsetWrapper', $types = null)
-	{
+	public static function executeStoredProc(
+		$db,
+		$proc,
+		$params,
+		$wrapper = 'SwatDBDefaultRecordsetWrapper',
+		$types = null
+	) {
 		if (!is_array($params)) {
 			$params = array($params);
 		}
@@ -533,9 +554,16 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function updateBinding($db, $table, $id_field, $id,
-		$value_field, $values, $bound_table, $bound_field)
-	{
+	public static function updateBinding(
+		$db,
+		$table,
+		$id_field,
+		$id,
+		$value_field,
+		$values,
+		$bound_table,
+		$bound_field
+	) {
 		$id_field = new SwatDBField($id_field, 'integer');
 		$value_field = new SwatDBField($value_field, 'integer');
 		$bound_field = new SwatDBField($bound_field, 'integer');
@@ -628,9 +656,13 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function insertRow($db, $table, $fields, $values,
-		$id_field = null)
-	{
+	public static function insertRow(
+		$db,
+		$table,
+		$fields,
+		$values,
+		$id_field = null
+	) {
 		self::initFields($fields);
 
 		$ret = null;
@@ -713,9 +745,14 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function updateRow($db, $table, $fields, $values, $id_field,
-		$id)
-	{
+	public static function updateRow(
+		$db,
+		$table,
+		$fields,
+		$values,
+		$id_field,
+		$id
+	) {
 		self::initFields($fields);
 		$id_field = new SwatDBField($id_field, 'integer');
 		$sql = 'update %s set %s where %s = %s';
@@ -813,9 +850,14 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function getOptionArray($db, $table, $title_field, $id_field,
-		$order_by_clause = null, $where_clause = null)
-	{
+	public static function getOptionArray(
+		$db,
+		$table,
+		$title_field,
+		$id_field,
+		$order_by_clause = null,
+		$where_clause = null
+	) {
 		$title_field = new SwatDBField($title_field, 'text');
 		$id_field = new SwatDBField($id_field, 'integer');
 
@@ -887,10 +929,15 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function getCascadeOptionArray($db, $table, $title_field,
-		$id_field, $cascade_field, $order_by_clause = null,
-		$where_clause = null)
-	{
+	public static function getCascadeOptionArray(
+		$db,
+		$table,
+		$title_field,
+		$id_field,
+		$cascade_field,
+		$order_by_clause = null,
+		$where_clause = null
+	) {
 		$title_field = new SwatDBField($title_field, 'text');
 		$id_field = new SwatDBField($id_field, 'integer');
 		$cascade_field = new SwatDBField($cascade_field, 'integer');
@@ -988,11 +1035,19 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function getGroupedOptionArray($db, $table, $title_field,
-		$id_field, $group_table, $group_title_field, $group_id_field,
-		$group_field, $order_by_clause = null, $where_clause = null,
-		$tree = null)
-	{
+	public static function getGroupedOptionArray(
+		$db,
+		$table,
+		$title_field,
+		$id_field,
+		$group_table,
+		$group_title_field,
+		$group_id_field,
+		$group_field,
+		$order_by_clause = null,
+		$where_clause = null,
+		$tree = null
+	) {
 		$title_field = new SwatDBField($title_field, 'text');
 		$id_field = new SwatDBField($id_field, 'integer');
 		$group_title_field = new SwatDBField($group_title_field, 'text');
@@ -1138,9 +1193,13 @@ class SwatDB extends SwatObject
 	 *
 	 * @throws SwatDBException
 	 */
-	public static function getDataTree($rs, $title_field_name,
-		$id_field_name, $level_field_name, $tree = null)
-	{
+	public static function getDataTree(
+		$rs,
+		$title_field_name,
+		$id_field_name,
+		$level_field_name,
+		$tree = null
+	) {
 		$stack = array();
 		if ($tree !== null && $tree instanceof SwatDataTreeNode)
 			$current_parent = $tree;
@@ -1186,9 +1245,11 @@ class SwatDB extends SwatObject
 	 *
 	 * @return string the imploded view ready for inclusion in an SQL statement.
 	 */
-	public static function implodeSelection(MDB2_Driver_Common $db,
-		SwatViewSelection $selection, $type = 'integer')
-	{
+	public static function implodeSelection(
+		MDB2_Driver_Common $db,
+		SwatViewSelection $selection,
+		$type = 'integer'
+	) {
 		$quoted_ids = array();
 		foreach ($selection as $id)
 			$quoted_ids[] = $db->quote($id, $type);

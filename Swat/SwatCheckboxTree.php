@@ -150,9 +150,11 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	 *
 	 * @return integer the number of checkable nodes in the tree.
 	 */
-	private function displayNode(SwatDataTreeNode $node, $nodes = 0,
-		$parent_index = '')
-	{
+	private function displayNode(
+		SwatDataTreeNode $node,
+		$nodes = 0,
+		$parent_index = ''
+	) {
 		// build a unique id of the indexes of the tree
 		if ($parent_index === '' || $parent_index === null) {
 			// index of the first node is just the node index

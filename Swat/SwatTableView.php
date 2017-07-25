@@ -1330,9 +1330,10 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @throws SwatDuplicateIdException if the column has the same id as a
 	 *                                  column already in this table-view.
 	 */
-	public function insertColumnBefore(SwatTableViewColumn $column,
-		SwatTableViewColumn $reference_column)
-	{
+	public function insertColumnBefore(
+		SwatTableViewColumn $column,
+		SwatTableViewColumn $reference_column
+	) {
 		$this->insertColumn($column, $reference_column, false);
 	}
 
@@ -1351,9 +1352,10 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @throws SwatDuplicateIdException if the column has the same id as a
 	 *                                  column already in this table-view.
 	 */
-	public function insertColumnAfter(SwatTableViewColumn $column,
-		SwatTableViewColumn $reference_column)
-	{
+	public function insertColumnAfter(
+		SwatTableViewColumn $column,
+		SwatTableViewColumn $reference_column
+	) {
 		$this->insertColumn($column, $reference_column, true);
 	}
 
@@ -1470,8 +1472,8 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 */
 	public function setDefaultOrderbyColumn(
 		SwatTableViewOrderableColumn $column,
-		$direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING)
-	{
+		$direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING
+	) {
 		if ($column->view !== $this)
 			throw new SwatException('Can only set the default orderby on '.
 				'orderable columns in this view.');
@@ -1542,9 +1544,11 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @see SwatTableView::insertColumnBefore()
 	 * @see SwatTableView::insertColumnAfter()
 	 */
-	protected function insertColumn(SwatTableViewColumn $column,
-		SwatTableViewColumn $reference_column = null, $after = true)
-	{
+	protected function insertColumn(
+		SwatTableViewColumn $column,
+		SwatTableViewColumn $reference_column = null,
+		$after = true
+	) {
 		$this->validateColumn($column);
 
 		if ($reference_column !== null) {
@@ -1820,9 +1824,10 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @throws SwatException if the row is an input row and this table-view
 	 *                       already contains an input-row.
 	 */
-	public function insertRowBefore(SwatTableViewRow $row,
-		SwatTableViewRow $reference_row)
-	{
+	public function insertRowBefore(
+		SwatTableViewRow $row,
+		SwatTableViewRow $reference_row
+	) {
 		$this->insertRow($row, $reference_row, false);
 	}
 
@@ -1843,9 +1848,10 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @throws SwatException if the row is an input row and this table-view
 	 *                       already contains an input-row.
 	 */
-	public function insertRowAfter(SwatTableViewRow $row,
-		SwatTableViewRow $reference_row)
-	{
+	public function insertRowAfter(
+		SwatTableViewRow $row,
+		SwatTableViewRow $reference_row
+	) {
 		$this->insertRow($row, $reference_row, true);
 	}
 
@@ -2005,9 +2011,11 @@ class SwatTableView extends SwatView implements SwatUIParent
 	 * @see SwatTableView::insertRowBefore()
 	 * @see SwatTableView::insertRowAfter()
 	 */
-	protected function insertRow(SwatTableViewRow $row,
-		SwatTableViewRow $reference_row = null, $after = true)
-	{
+	protected function insertRow(
+		SwatTableViewRow $row,
+		SwatTableViewRow $reference_row = null,
+		$after = true
+	) {
 		$this->validateRow($row);
 
 		if ($reference_row !== null) {

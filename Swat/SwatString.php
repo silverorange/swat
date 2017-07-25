@@ -611,10 +611,12 @@ class SwatString extends SwatObject
 	 *                 appended with ellipses characters if it was longer than
 	 *                 <code>$max_length</code>.
 	 */
-	public static function ellipsizeRight($string, $max_length,
-		// the space is a non-breaking space
-		$ellipses = ' …', &$flag = null)
-	{
+	public static function ellipsizeRight(
+		$string,
+		$max_length,
+		$ellipses = ' …', // the space is a non-breaking space
+		&$flag = null
+	) {
 		$matches = array();
 		self::stripEntities($string, $matches);
 
@@ -688,10 +690,12 @@ class SwatString extends SwatObject
 	 *                 ellipses characters in roughly the middle if it was
 	 *                 longer than <code>$max_length</code>.
 	 */
-	public static function ellipsizeMiddle($string, $max_length,
-		// the spaces are non-breaking spaces
-		$ellipses = ' … ', &$flag = null)
-	{
+	public static function ellipsizeMiddle(
+		$string,
+		$max_length,
+		$ellipses = ' … ', // the spaces are non-breaking spaces
+		&$flag = null
+	) {
 		$string = trim($string);
 
 		$matches = array();
@@ -854,9 +858,12 @@ class SwatString extends SwatObject
 	 * @deprecated Use {@link SwatI18NLocale::formatCurrency()} instead. It is more
 	 *             flexible and works across more platforms.
 	 */
-	public static function moneyFormat($value, $locale = null,
-		$display_currency = false, $decimal_places = null)
-	{
+	public static function moneyFormat(
+		$value,
+		$locale = null,
+		$display_currency = false,
+		$decimal_places = null
+	) {
 		if (!function_exists('money_format')) {
 			throw new SwatException('moneyFormat() method is not available '.
 				'on this operating system. See '.
@@ -972,9 +979,12 @@ class SwatString extends SwatObject
 	 * @throws SwatException if the locale-based output cannot be converted to
 	 *                        UTF-8.
 	 */
-	public static function numberFormat($value, $decimals = null,
-		$locale = null, $show_thousands_separator = true)
-	{
+	public static function numberFormat(
+		$value,
+		$decimals = null,
+		$locale = null,
+		$show_thousands_separator = true
+	) {
 		// look up decimal precision if none is provided
 		if ($decimals === null)
 			$decimals = self::getDecimalPrecision($value);
@@ -1067,9 +1077,12 @@ class SwatString extends SwatObject
 	 *
 	 * @return string the byte value formated according to IEC units.
 	 */
-	public static function byteFormat($value, $magnitude = -1,
-		$iec_units = false, $significant_digits = 3)
-	{
+	public static function byteFormat(
+		$value,
+		$magnitude = -1,
+		$iec_units = false,
+		$significant_digits = 3
+	) {
 		if ($iec_units) {
 			$units = array(
 				60 => 'EiB',
@@ -1156,9 +1169,12 @@ class SwatString extends SwatObject
 	 *
 	 * @return string the padded string.
 	 */
-	public static function pad($input, $pad_length, $pad_string = ' ',
-		$pad_type = STR_PAD_RIGHT)
-	{
+	public static function pad(
+		$input,
+		$pad_length,
+		$pad_string = ' ',
+		$pad_type = STR_PAD_RIGHT
+	) {
 		$output = '';
 		$length = $pad_length - mb_strlen($input);
 
@@ -1320,9 +1336,12 @@ class SwatString extends SwatObject
 	 * @todo Think about using a mask to make this as flexible as possible for
 	 *       different locales.
 	 */
-	public static function toList($iterator, $conjunction = 'and',
-		$delimiter = ', ', $display_final_delimiter = true)
-	{
+	public static function toList(
+		$iterator,
+		$conjunction = 'and',
+		$delimiter = ', ',
+		$display_final_delimiter = true
+	) {
 		if (is_array($iterator))
 			$iterator = new ArrayIterator($iterator);
 
@@ -1387,9 +1406,10 @@ class SwatString extends SwatObject
 	 *
 	 * @return array An array of time period parts.
 	 */
-	public static function getTimePeriodParts($seconds,
-		$interval_parts = null)
-	{
+	public static function getTimePeriodParts(
+		$seconds,
+		$interval_parts = null
+	) {
 		$interval = SwatDate::getIntervalFromSeconds($seconds);
 
 		if ($interval_parts === null) {
@@ -1510,9 +1530,10 @@ class SwatString extends SwatObject
 	 *
 	 * @return array An array of human-readable time period string parts.
 	 */
-	public static function getHumanReadableTimePeriodParts($seconds,
-		$interval_parts = null)
-	{
+	public static function getHumanReadableTimePeriodParts(
+		$seconds,
+		$interval_parts = null
+	) {
 		// Depend on getTimePeriodParts() to return the correct parts requested
 		$parts = static::getTimePeriodParts(
 			$seconds,
@@ -1599,9 +1620,10 @@ class SwatString extends SwatObject
 	 *
 	 * @return string A human-readable time period.
 	 */
-	public static function toHumanReadableTimePeriod($seconds,
-		$largest_part = false)
-	{
+	public static function toHumanReadableTimePeriod(
+		$seconds,
+		$largest_part = false
+	) {
 		$parts = self::getHumanReadableTimePeriodParts($seconds);
 		return self::toHumanReadableTimePeriodString($parts, $largest_part);
 	}
@@ -1628,9 +1650,10 @@ class SwatString extends SwatObject
 	 *
 	 * @return string A human-readable time period.
 	 */
-	public static function toHumanReadableTimePeriodWithWeeks($seconds,
-		$largest_part = false)
-	{
+	public static function toHumanReadableTimePeriodWithWeeks(
+		$seconds,
+		$largest_part = false
+	) {
 		$interval_parts =
 			SwatDate::DI_YEARS |
 			SwatDate::DI_WEEKS |
@@ -2055,9 +2078,10 @@ class SwatString extends SwatObject
 	 *
 	 * @return string A human-readable time period.
 	 */
-	protected static function toHumanReadableTimePeriodString(array $parts,
-		$largest_part = false)
-	{
+	protected static function toHumanReadableTimePeriodString(
+		array $parts,
+		$largest_part = false
+	) {
 		if ($largest_part && count($parts) > 0) {
 			$parts = array(reset($parts));
 		}
@@ -2104,9 +2128,13 @@ class SwatString extends SwatObject
 	 *                             and hole_start.
 	 * @param integer $hole_length the length of the new contents of the hole.
 	 */
-	private static function insertEntities(&$string, &$matches,
-		$hole_start = -1, $hole_end = -1, $hole_length = 0)
-	{
+	private static function insertEntities(
+		&$string,
+		&$matches,
+		$hole_start = -1,
+		$hole_end = -1,
+		$hole_length = 0
+	) {
 		for ($i = 0; $i < count($matches[0]); $i++) {
 			$entity = $matches[0][$i][0];
 			$position = $matches[0][$i][1];

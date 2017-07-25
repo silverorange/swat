@@ -138,9 +138,11 @@ class SwatYUIComponent extends SwatObject
 	 *                                  version in the YUI distribution.
 	 *                                  Defaults to true.
 	 */
-	public function addStyleSheet($component_directory = '', $filename = '',
-		$has_min_version = true)
-	{
+	public function addStyleSheet(
+		$component_directory = '',
+		$filename = '',
+		$has_min_version = true
+	) {
 		if ($component_directory == '')
 			$component_directory = $this->id;
 

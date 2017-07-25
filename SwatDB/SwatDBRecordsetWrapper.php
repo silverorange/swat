@@ -111,9 +111,10 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 * @param array              $options optional. An array of options for
 	 *                                    this recordset.
 	 */
-	public function __construct(MDB2_Result_Common $rs = null,
-		array $options = array())
-	{
+	public function __construct(
+		MDB2_Result_Common $rs = null,
+		array $options = array()
+	) {
 		$this->init();
 		$this->setOptions($options);
 
@@ -778,9 +779,13 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 *
 	 * @return SwatDBRecordsetWrapper an instance of the wrapper, or null.
 	 */
-	public function loadAllSubDataObjects($name, MDB2_Driver_Common $db, $sql,
-		$wrapper, $type = 'integer')
-	{
+	public function loadAllSubDataObjects(
+		$name,
+		MDB2_Driver_Common $db,
+		$sql,
+		$wrapper,
+		$type = 'integer'
+	) {
 		$sub_data_objects = null;
 
 		$values = $this->getInternalValues($name);
@@ -812,9 +817,10 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 * @param string $name name of the property to attach to.
 	 * @param SwatDBRecordsetWrapper $sub_data_objects
 	 */
-	public function attachSubDataObjects($name,
-		SwatDBRecordsetWrapper $sub_data_objects)
-	{
+	public function attachSubDataObjects(
+		$name,
+		SwatDBRecordsetWrapper $sub_data_objects
+	) {
 		if ($sub_data_objects->index_field === null) {
 			throw new SwatDBException(sprintf(
 				'Index field must be specified in the sub-data-object '.
@@ -860,10 +866,15 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 *
 	 * @return SwatDBRecordsetWrapper a wrapper of the sub-recordsets, or null.
 	 */
-	public function loadAllSubRecordsets($name, $wrapper,
-		$table, $binding_field, $where = '', $order_by = '',
-		$fields = '*')
-	{
+	public function loadAllSubRecordsets(
+		$name,
+		$wrapper,
+		$table,
+		$binding_field,
+		$where = '',
+		$order_by = '',
+		$fields = '*'
+	) {
 		$this->checkDB();
 
 		if ($this->index_field === null) {
@@ -940,9 +951,12 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	 *
 	 * @return SwatDBRecordsetWrapper a wrapper of the sub-recordsets, or null.
 	 */
-	public function attachSubRecordset($name, $wrapper, $binding_field,
-		SwatDBRecordsetWrapper $recordset)
-	{
+	public function attachSubRecordset(
+		$name,
+		$wrapper,
+		$binding_field,
+		SwatDBRecordsetWrapper $recordset
+	) {
 		$this->checkDB();
 
 		// assign empty recordsets for all records in this set

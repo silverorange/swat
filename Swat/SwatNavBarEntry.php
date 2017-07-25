@@ -49,9 +49,11 @@ class SwatNavBarEntry extends SwatObject
 	 * @param string $link the web address this entry points to.
 	 * @param string $content_type an optional content type for the entry title.
 	 */
-	public function __construct($title, $link = null,
-		$content_type = 'text/plain')
-	{
+	public function __construct(
+		$title,
+		$link = null,
+		$content_type = 'text/plain'
+	) {
 		$this->title = $title;
 		$this->link = $link;
 		$this->content_type = $content_type;

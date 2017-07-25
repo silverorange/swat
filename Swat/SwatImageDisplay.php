@@ -137,9 +137,12 @@ class SwatImageDisplay extends SwatControl
 	// }}}
 	// {{{ public static function getOccupyMargin()
 
-	public static function getOccupyMargin($width, $height,
-		$occupy_width = null, $occupy_height = null)
-	{
+	public static function getOccupyMargin(
+		$width,
+		$height,
+		$occupy_width = null,
+		$occupy_height = null
+	) {
 		$margin_x = 0;
 		$margin_y = 0;
 

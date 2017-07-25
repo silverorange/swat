@@ -379,9 +379,11 @@ class SwatDate extends DateTime implements Serializable
 	 *
 	 * @return string the formatted date according to the current locale.
 	 */
-	public function formatLikeStrftime($format, $tz_format = null,
-		$locale = null)
-	{
+	public function formatLikeStrftime(
+		$format,
+		$tz_format = null,
+		$locale = null
+	) {
 		if (is_int($format)) {
 			$format = self::getFormatLikeStrftimeById($format);
 		}
@@ -421,9 +423,11 @@ class SwatDate extends DateTime implements Serializable
 	 *
 	 * @return string the formatted date according to the current locale.
 	 */
-	public function formatLikeIntl($format, $tz_format = null,
-		$locale = null)
-	{
+	public function formatLikeIntl(
+		$format,
+		$tz_format = null,
+		$locale = null
+	) {
 		if (is_int($format)) {
 			$format = self::getFormatLikeIntlById($format);
 		}
@@ -589,8 +593,8 @@ class SwatDate extends DateTime implements Serializable
 	 * @return string A human-readable date diff.
 	 */
 	public function getHumanReadableDateDiffWithWeeks(
-		SwatDate $compare_date = null)
-	{
+		SwatDate $compare_date = null
+	) {
 		if ($compare_date === null) {
 			$compare_date = new SwatDate();
 		}
@@ -618,8 +622,8 @@ class SwatDate extends DateTime implements Serializable
 	 * @return string A human-readable date diff.
 	 */
 	public function getHumanReadableDateDiffWithWeeksAndDays(
-		SwatDate $compare_date = null)
-	{
+		SwatDate $compare_date = null
+	) {
 		if ($compare_date === null) {
 			$compare_date = new SwatDate();
 		}

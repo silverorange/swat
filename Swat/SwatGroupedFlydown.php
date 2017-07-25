@@ -113,9 +113,11 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 	 * @param boolean $selected whether or not an element has been selected
 	 *                           yet.
 	 */
-	protected function displayNode(SwatTreeFlydownNode $node, $level = 0,
-		$selected = false)
-	{
+	protected function displayNode(
+		SwatTreeFlydownNode $node,
+		$level = 0,
+		$selected = false
+	) {
 		$children = $node->getChildren();
 		$flydown_option = $node->getOption();
 
@@ -179,9 +181,11 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 	 *                                     display tree nodes to.
 	 * @param array $path the current path of the display tree.
 	 */
-	protected function buildDisplayTree(SwatTreeFlydownNode $tree,
-		SwatTreeFlydownNode $parent, $path = array())
-	{
+	protected function buildDisplayTree(
+		SwatTreeFlydownNode $tree,
+		SwatTreeFlydownNode $parent,
+		$path = array()
+	) {
 		$flydown_option = $tree->getOption();
 		$path[] = $flydown_option->value;
 		$new_node = new SwatTreeFlydownNode($path, $flydown_option->title);

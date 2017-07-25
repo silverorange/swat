@@ -361,9 +361,10 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 * @throws SwatException if the specified renderer is already the child of
 	 *                        another object.
 	 */
-	protected final function addCompositeRenderer(SwatCellRenderer $renderer,
-		$key)
-	{
+	protected final function addCompositeRenderer(
+		SwatCellRenderer $renderer,
+		$key
+	) {
 		if (array_key_exists($key, $this->composite_renderers))
 			throw new SwatDuplicateIdException(sprintf(
 				"A composite renderer with the key '%s' already exists in ".
