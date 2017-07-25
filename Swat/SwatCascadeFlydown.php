@@ -101,9 +101,12 @@ class SwatCascadeFlydown extends SwatFlydown
 	 *                              Ignored if the <i>$value</i> parameter is
 	 *                              a SwatOption object.
 	 */
-	public function addOption($parent, $value, $title = '',
-		$content_type = 'text/plain')
-	{
+	public function addOption(
+		$parent,
+		$value,
+		$title = '',
+		$content_type = 'text/plain'
+	) {
 		if ($value instanceof SwatOption)
 			$option = $value;
 		else
@@ -125,9 +128,10 @@ class SwatCascadeFlydown extends SwatFlydown
 	 *                              titles. If not specified, defaults to
 	 *                              'text/plain'.
 	 */
-	public function addOptionsByArray(array $options,
-		$content_type = 'text/plain')
-	{
+	public function addOptionsByArray(
+		array $options,
+		$content_type = 'text/plain'
+	) {
 		foreach ($options as $parent => $child_options) {
 			foreach ($child_options as $value => $title)
 				$this->addOption($parent, $value, $title, $content_type);

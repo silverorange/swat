@@ -23,9 +23,11 @@ class SwatFlydownDivider extends SwatOption
 	 * @param string $content_type optional. The content type of the divider. If
 	 *                              not specified, defaults to 'text/plain'.
 	 */
-	public function __construct($value = null, $title = null,
-		$content_type = 'text/plain')
-	{
+	public function __construct(
+		$value = null,
+		$title = null,
+		$content_type = 'text/plain'
+	) {
 		if ($title === null)
 			$title = str_repeat('—', 6);
 

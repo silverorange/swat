@@ -472,9 +472,10 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 * @throws SwatException if no selector is specified and the the specified
 	 *                       view does not have a selector.
 	 */
-	public function setViewSelector(SwatView $view,
-		SwatViewSelector $selector = null)
-	{
+	public function setViewSelector(
+		SwatView $view,
+		SwatViewSelector $selector = null
+	) {
 		if ($view === null) {
 			$selector = null;
 		} else {

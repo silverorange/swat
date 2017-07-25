@@ -679,9 +679,10 @@ class SwatError
 	 * @return boolean true if the parameter is sensitive and false if the
 	 *                  method is not sensitive.
 	 */
-	protected function isSensitiveParameter(ReflectionFunctionAbstract $method,
-		$name)
-	{
+	protected function isSensitiveParameter(
+		ReflectionFunctionAbstract $method,
+		$name
+	) {
 		$sensitive = false;
 
 		$exp =

@@ -85,9 +85,10 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 * @see SwatCellRendererSet::addRenderer()
 	 * @see SwatCellRendererSet::addMappingsToRenderer()
 	 */
-	public function addRendererWithMappings(SwatCellRenderer $renderer,
-		array $mappings = array())
-	{
+	public function addRendererWithMappings(
+		SwatCellRenderer $renderer,
+		array $mappings = array()
+	) {
 		$this->addRenderer($renderer);
 		$this->addMappingsToRenderer($renderer, $mappings);
 	}
@@ -106,9 +107,10 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 * @throws SwatException if an attepmt to map a static cell renderer
 	 *                        property is made.
 	 */
-	public function addMappingsToRenderer(SwatCellRenderer $renderer,
-		array $mappings = array())
-	{
+	public function addMappingsToRenderer(
+		SwatCellRenderer $renderer,
+		array $mappings = array()
+	) {
 		$renderer_key = spl_object_hash($renderer);
 
 		foreach ($mappings as $mapping) {
@@ -135,9 +137,10 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 * @throws SwatException if an attepmt to map a static cell renderer
 	 *                        property is made.
 	 */
-	public function addMappingToRenderer(SwatCellRenderer $renderer,
-		SwatCellRendererMapping $mapping)
-	{
+	public function addMappingToRenderer(
+		SwatCellRenderer $renderer,
+		SwatCellRendererMapping $mapping
+	) {
 		if ($renderer->isPropertyStatic($mapping->property))
 			throw new SwatException(sprintf(
 				'The %s property can not be data-mapped', $mapping->property));
@@ -158,9 +161,10 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 * @param mixed $data_object an object containg datafields to be
 	 *                            mapped onto the cell renderer.
 	 */
-	public function applyMappingsToRenderer(SwatCellRenderer $renderer,
-		$data_object)
-	{
+	public function applyMappingsToRenderer(
+		SwatCellRenderer $renderer,
+		$data_object
+	) {
 		// array to track array properties that we've already seen
 		$array_properties = array();
 

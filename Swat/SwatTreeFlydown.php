@@ -117,9 +117,12 @@ class SwatTreeFlydown extends SwatFlydown
 	 * @param array $path the current path represented as an array of tree
 	 *                     node option values.
 	 */
-	private function flattenTree(&$options, SwatTreeFlydownNode $node,
-		$level = 0, $path = array())
-	{
+	private function flattenTree(
+		&$options,
+		SwatTreeFlydownNode $node,
+		$level = 0,
+		$path = array()
+	) {
 		$tree_option = clone $node->getOption();
 
 		$pad = str_repeat('&nbsp;', $level * 3);

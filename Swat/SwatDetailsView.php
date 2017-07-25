@@ -156,9 +156,10 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 * @throws SwatDuplicateIdException if the field has the same id as a field
 	 *                                  already in this details-view.
 	 */
-	public function insertFieldBefore(SwatDetailsViewField $field,
-		SwatDetailsViewField $reference_field)
-	{
+	public function insertFieldBefore(
+		SwatDetailsViewField $field,
+		SwatDetailsViewField $reference_field
+	) {
 		$this->insertField($field, $reference_field, false);
 	}
 
@@ -177,9 +178,10 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 * @throws SwatDuplicateIdException if the field has the same id as a field
 	 *                                  already in this details-view.
 	 */
-	public function insertFieldAfter(SwatDetailsViewField $field,
-		SwatDetailsViewField $reference_field)
-	{
+	public function insertFieldAfter(
+		SwatDetailsViewField $field,
+		SwatDetailsViewField $reference_field
+	) {
 		$this->insertField($field, $reference_field, true);
 	}
 
@@ -528,9 +530,11 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 * @see SwatDetailsView::insertFieldBefore()
 	 * @see SwatDetailsView::insertFieldAfter()
 	 */
-	protected function insertField(SwatDetailsViewField $field,
-		SwatDetailsViewField $reference_field = null, $after = true)
-	{
+	protected function insertField(
+		SwatDetailsViewField $field,
+		SwatDetailsViewField $reference_field = null,
+		$after = true
+	) {
 		$this->validateField($field);
 
 		if ($reference_field !== null) {

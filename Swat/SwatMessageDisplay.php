@@ -229,9 +229,12 @@ class SwatMessageDisplay extends SwatControl
 	 * @param boolean $last optional. Whether or not the message is the last
 	 *                       message in this message display.
 	 */
-	protected function displayMessage($message_id, SwatMessage $message,
-		$first = false, $last = false)
-	{
+	protected function displayMessage(
+		$message_id,
+		SwatMessage $message,
+		$first = false,
+		$last = false
+	) {
 		$message_div = new SwatHtmlTag('div');
 		$container_div = new SwatHtmlTag('div');
 

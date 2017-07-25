@@ -520,9 +520,12 @@ class SwatDBDataObject extends SwatObject implements
 	// }}}
 	// {{{ protected function registerInternalProperty()
 
-	protected function registerInternalProperty($name, $class = null,
-		$autosave = false, $accessible = true)
-	{
+	protected function registerInternalProperty(
+		$name,
+		$class = null,
+		$autosave = false,
+		$accessible = true
+	) {
 		$this->internal_properties[$name] = null;
 		$this->internal_property_autosave[$name] = $autosave;
 		$this->internal_property_accessible[$name] = $accessible;
@@ -1372,9 +1375,10 @@ class SwatDBDataObject extends SwatObject implements
 	// }}}
 	// {{{ protected function rollback()
 
-	protected function rollback(SwatDBTransaction $transaction,
-		array $rollback_property_hashes)
-	{
+	protected function rollback(
+		SwatDBTransaction $transaction,
+		array $rollback_property_hashes
+	) {
 		$this->property_hashes = $rollback_property_hashes;
 		$transaction->rollback();
 	}

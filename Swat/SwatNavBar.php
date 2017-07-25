@@ -63,9 +63,11 @@ class SwatNavBar extends SwatControl implements Countable
 	 * @param string $link an optional entry URI.
 	 * @param string $content_type an optional content type for the entry title.
 	 */
-	public function createEntry($title, $link = null,
-		$content_type = 'text/plain')
-	{
+	public function createEntry(
+		$title,
+		$link = null,
+		$content_type = 'text/plain'
+	) {
 		$this->addEntry(new SwatNavBarEntry($title, $link, $content_type));
 	}
 
@@ -127,9 +129,10 @@ class SwatNavBar extends SwatControl implements Countable
 	 * @thows SwatException
 	 */
 
-	public function replaceEntryByPosition($position,
-		SwatNavBarEntry $new_entry)
-	{
+	public function replaceEntryByPosition(
+		$position,
+		SwatNavBarEntry $new_entry
+	) {
 		if (isset($this->entries[$position])) {
 			$old_entry = $this->entries[$position];
 			$this->entries[$position] = $new_entry;
@@ -345,9 +348,11 @@ class SwatNavBar extends SwatControl implements Countable
 	 * @param boolean $first whether or not this entry should be displayed as
 	 *                        the first entry.
 	 */
-	protected function displayEntry(SwatNavBarEntry $entry, $show_link = true,
-		$first = false)
-	{
+	protected function displayEntry(
+		SwatNavBarEntry $entry,
+		$show_link = true,
+		$first = false
+	) {
 		$title = ($entry->title === null) ? '' : $entry->title;
 		$link  = $this->getLink($entry);
 

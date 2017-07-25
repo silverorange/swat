@@ -202,9 +202,11 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	 *
 	 * @return integer the number of checkable nodes in the tree.
 	 */
-	private function displayNode(SwatDataTreeNode $node, $nodes = 0,
-		$parent_index = '')
-	{
+	private function displayNode(
+		SwatDataTreeNode $node,
+		$nodes = 0,
+		$parent_index = ''
+	) {
 		$child_nodes = $node->getChildren();
 
 		// build a unique id of the indexes of the tree
@@ -346,9 +348,10 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	 *
 	 * @return array an array of expandable node XHTML ids.
 	 */
-	private function getExpandableNodeIds(SwatDataTreeNode $node,
-		$parent_id = '')
-	{
+	private function getExpandableNodeIds(
+		SwatDataTreeNode $node,
+		$parent_id = ''
+	) {
 		$expandable_ids = array();
 
 		$child_nodes = $node->getChildren();

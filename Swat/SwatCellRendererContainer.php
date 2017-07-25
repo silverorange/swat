@@ -54,9 +54,12 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 	 * @return SwatCellRendererMapping a new mapping object that has been
 	 *                                  added to the renderer.
 	 */
-	public function addMappingToRenderer($renderer, $data_field, $property,
-		$object = null)
-	{
+	public function addMappingToRenderer(
+		$renderer,
+		$data_field,
+		$property,
+		$object = null
+	) {
 		if ($object !== null)
 			$property = $renderer->getPropertyNameToMap($object, $property);
 

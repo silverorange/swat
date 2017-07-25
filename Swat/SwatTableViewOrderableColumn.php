@@ -237,9 +237,10 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 	 *
 	 * @return string the direction of ordering.
 	 */
-	public function getDirectionAsString($direction_id = null,
-		$include_nulls_ordering = true)
-	{
+	public function getDirectionAsString(
+		$direction_id = null,
+		$include_nulls_ordering = true
+	) {
 		if ($direction_id === null) {
 			$direction_id = $this->direction;
 		}

@@ -479,9 +479,10 @@ class SwatUI extends SwatObject
 	 *
 	 * @throws SwatDuplicateIdException, SwatInvalidClassException
 	 */
-	private function checkParsedObject(SwatUIObject $parsed_object,
-		$element_name)
-	{
+	private function checkParsedObject(
+		SwatUIObject $parsed_object,
+		$element_name
+	) {
 		if ($element_name == 'widget') {
 			if (class_exists('SwatWidget') &&
 				$parsed_object instanceof SwatWidget &&
@@ -680,9 +681,13 @@ class SwatUI extends SwatObject
 	 *         SwatInvalidConstantExpressionException,
 	 *         SwatUndefinedConstantException
 	 */
-	private function parseValue($name, $value, $type, $translatable,
-		SwatUIObject $object)
-	{
+	private function parseValue(
+		$name,
+		$value,
+		$type,
+		$translatable,
+		SwatUIObject $object
+	) {
 		switch ($type) {
 		case 'string':
 			return $this->translateValue($value, $translatable, $object);

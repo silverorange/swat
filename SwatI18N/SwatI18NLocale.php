@@ -274,9 +274,11 @@ class SwatI18NLocale extends SwatObject
 	 * @throws SwatException if a property name specified in the <i>$format</i>
 	 *                       parameter is invalid.
 	 */
-	public function formatCurrency($value, $international = false,
-		array $format = array())
-	{
+	public function formatCurrency(
+		$value,
+		$international = false,
+		array $format = array()
+	) {
 		$format = ($international) ?
 			$this->getInternationalCurrencyFormat()->override($format) :
 			$this->getNationalCurrencyFormat()->override($format);
@@ -469,9 +471,11 @@ class SwatI18NLocale extends SwatObject
 	 * @throws SwatException if a property name specified in the <i>$format</i>
 	 *                       parameter is invalid.
 	 */
-	public function formatNumber($value, $decimals = null,
-		array $format = array())
-	{
+	public function formatNumber(
+		$value,
+		$decimals = null,
+		array $format = array()
+	) {
 		$value = (float)$value;
 
 		$format = $this->getNumberFormat()->override($format);
@@ -950,9 +954,10 @@ class SwatI18NLocale extends SwatObject
 	 *
 	 * @return string the grouped integer part of the value.
 	 */
-	protected function formatIntegerGroupings($value,
-		SwatI18NNumberFormat $format)
-	{
+	protected function formatIntegerGroupings(
+		$value,
+		SwatI18NNumberFormat $format
+	) {
 		// group integer part with thousands separators
 		$grouping_values = array();
 		$groupings = $format->grouping;
@@ -1048,9 +1053,11 @@ class SwatI18NLocale extends SwatObject
 	 *                 string is prepended with the decimal separator character
 	 *                 of the format object.
 	 */
-	protected function formatFractionalPart($value, $fractional_digits,
-		SwatI18NNumberFormat $format)
-	{
+	protected function formatFractionalPart(
+		$value,
+		$fractional_digits,
+		SwatI18NNumberFormat $format
+	) {
 		if ($fractional_digits === 0) {
 			$formatted_value = '';
 		} else {
@@ -1087,9 +1094,11 @@ class SwatI18NLocale extends SwatObject
 	 *                 and normalized into a form readable by intval() and
 	 *                 floatval().
 	 */
-	protected function parseNegativeNotation($string, $n_sign = null,
-		$n_sign_position = 1)
-	{
+	protected function parseNegativeNotation(
+		$string,
+		$n_sign = null,
+		$n_sign_position = 1
+	) {
 		$lc = $this->getLocaleInfo();
 
 		$negative = false;

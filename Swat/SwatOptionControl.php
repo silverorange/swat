@@ -158,9 +158,11 @@ abstract class SwatOptionControl extends SwatInputControl
 	 * @see SwatOptionControl::addOption()
 	 * @see SwatOptionControl::getOptionMetadata()
 	 */
-	public function addOptionMetadata(SwatOption $option, $metadata,
-		$value = null)
-	{
+	public function addOptionMetadata(
+		SwatOption $option,
+		$metadata,
+		$value = null
+	) {
 		$key = $this->getOptionMetadataKey($option);
 
 		if (is_array($metadata)) {
@@ -290,9 +292,10 @@ abstract class SwatOptionControl extends SwatInputControl
 	 *                              titles. If not specified, defaults to
 	 *                              'text/plain'.
 	 */
-	public function addOptionsByArray(array $options,
-		$content_type = 'text/plain')
-	{
+	public function addOptionsByArray(
+		array $options,
+		$content_type = 'text/plain'
+	) {
 		foreach ($options as $value => $title)
 			$this->addOption($value, $title, $content_type);
 	}
