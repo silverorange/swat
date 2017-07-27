@@ -72,7 +72,8 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 
 		} elseif ($count == 1) {
 			// get first and only element
-			$option = reset($display_tree->getChildren())->getOption();
+			$children = $display_tree->getChildren();
+			$option = reset($children)->getOption();
 			$this->displaySingle($option);
 		}
 	}

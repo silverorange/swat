@@ -333,7 +333,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		if ($time_zone === 'UTC') {
 			$area = 'UTC';
 		} elseif ($time_zone !== null) {
-			$area = reset(explode('/', $time_zone, 2));
+			$parts = explode('/', $time_zone, 2);
+			$area = reset($parts);
 		}
 
 		return $area;
@@ -357,7 +358,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		if ($time_zone === 'UTC') {
 			$region = 'Coordinated_Universal_Time'; // fake region for UTC
 		} elseif ($time_zone !== null) {
-			$region = end(explode('/', $time_zone, 2));
+			$parts = explode('/', $time_zone, 2);
+			$region = end($parts);
 		}
 
 		return $region;
