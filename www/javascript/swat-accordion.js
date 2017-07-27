@@ -229,3 +229,5 @@ SwatAccordionPage.prototype.setStatus = function(stat)
 			'swat-accordion-page-closed');
 	}
 };
+
+module.exports = SwatAccordion;

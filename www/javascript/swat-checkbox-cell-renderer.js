@@ -132,3 +132,5 @@ SwatCheckboxCellRenderer.prototype.updateNode = function(checkbox_node,
 		}
 	}
 };
+
+module.exports = SwatCheckboxCellRenderer;

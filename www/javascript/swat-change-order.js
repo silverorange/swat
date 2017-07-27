@@ -1058,3 +1058,5 @@ SwatChangeOrder.prototype.isGrid = function()
 };
 
 // }}}
+
+module.exports = SwatChangeOrder;

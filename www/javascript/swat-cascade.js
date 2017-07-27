@@ -80,3 +80,5 @@ function SwatCascadeChild(value, title, selected)
 	this.title = title;
 	this.selected = selected;
 }
+
+module.exports = SwatCascade;

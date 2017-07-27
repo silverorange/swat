@@ -89,3 +89,5 @@ SwatCheckAll.prototype.clickHandler = function()
 	this.controller.checkAll(this.check_all.checked);
 	this.updateExtendedCheckbox();
 };
+
+module.exports = SwatCheckAll;

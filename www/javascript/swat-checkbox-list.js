@@ -62,3 +62,5 @@ SwatCheckboxList.prototype.checkAll = function(checked)
 		}
 	}
 };
+
+module.exports = SwatCheckboxList;

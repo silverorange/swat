@@ -1,3 +1,5 @@
+const SwatCheckboxList = require('./swat-checkbox-list');
+
 function SwatCheckboxEntryList(id)
 {
 	this.entry_list = [];
@@ -63,3 +65,5 @@ SwatCheckboxEntryList.prototype.updateFields = function()
 	for (var i = 0; i < this.check_list.length; i++)
 		this.setEntrySensitivity(i, this.check_list[i].checked);
 };
+
+module.exports = SwatCheckboxEntryList;

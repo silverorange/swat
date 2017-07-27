@@ -883,3 +883,5 @@ SwatCalendar.prototype.handleDocumentClick = function(e)
 		this.close();
 	}
 };
+
+module.exports = SwatCalendar;
