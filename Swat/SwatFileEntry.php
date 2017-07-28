@@ -329,9 +329,10 @@ class SwatFileEntry extends SwatInputControl
 				if (extension_loaded('fileinfo')) {
 					// Use the fileinfo extension if available.
 					$finfo = $this->getFinfo();
-					$this->mime_type = reset(explode(';',
-						$finfo->file($temp_file_name)));
-
+					$this->mime_type = explode(
+						';',
+						$finfo->file($temp_file_name)
+					)[0];
 				} elseif (function_exists('mime_content_type')) {
 					// Fall back to mime_content_type() if available.
 					$this->mime_type = mime_content_type($temp_file_name);
