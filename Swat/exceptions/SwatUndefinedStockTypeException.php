@@ -28,9 +28,11 @@ class SwatUndefinedStockTypeException extends SwatException
 	 * @param integer $code the code of the exception.
 	 * @param string $stock_type the name of the stock type that is undefined.
 	 */
-	public function __construct($message = null, $code = 0,
-		$stock_type= null)
-	{
+	public function __construct(
+		$message = null,
+		$code = 0,
+		$stock_type= null
+	) {
 		parent::__construct($message, $code);
 		$this->stock_type = $stock_type;
 	}

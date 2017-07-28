@@ -36,9 +36,12 @@ class SwatInvalidPropertyTypeException extends SwatException
 	 * @param mixed $object the object the property is invalid for.
 	 * @param string $property the name of the property that is invalid
 	 */
-	public function __construct($message = null, $code = 0, $object = null,
-		$type = null)
-	{
+	public function __construct(
+		$message = null,
+		$code = 0,
+		$object = null,
+		$type = null
+	) {
 		parent::__construct($message, $code);
 		$this->object = $object;
 		$this->type = $type;
