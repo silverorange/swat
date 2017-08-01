@@ -614,6 +614,7 @@ class SwatString extends SwatObject
 	public static function ellipsizeRight(
 		$string,
 		$max_length,
+		// @codingStandardsIgnoreLine
 		$ellipses = ' …', // the space is a non-breaking space
 		&$flag = null
 	) {
@@ -693,6 +694,7 @@ class SwatString extends SwatObject
 	public static function ellipsizeMiddle(
 		$string,
 		$max_length,
+		// @codingStandardsIgnoreLine
 		$ellipses = ' … ', // the spaces are non-breaking spaces
 		&$flag = null
 	) {
