@@ -200,6 +200,7 @@ class Swat
 		self::setupGettext();
 
 		self::$is_initialized = true;
+		var_dump('This shows swat is being included');
 	}
 
 	// }}}
