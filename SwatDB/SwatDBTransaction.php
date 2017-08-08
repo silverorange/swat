@@ -22,7 +22,6 @@
  */
 class SwatDBTransaction extends SwatObject
 {
-	// {{{ private properties
 
 	/**
 	 * The database driver object to perform the transaction with
@@ -49,9 +48,6 @@ class SwatDBTransaction extends SwatObject
 	 */
 	private $finished;
 
-	// }}}
-	// {{{ public function __construct()
-
 	/**
 	 * Begins a new database transaction
 	 *
@@ -68,9 +64,6 @@ class SwatDBTransaction extends SwatObject
 		if (!$this->in_another_transaction)
 			$this->db->beginTransaction();
 	}
-
-	// }}}
-	// {{{ public function commit()
 
 	/**
 	 * Commits this database transaction
@@ -93,9 +86,6 @@ class SwatDBTransaction extends SwatObject
 		}
 	}
 
-	// }}}
-	// {{{ public function rollback()
-
 	/**
 	 * Rolls-back this database transaction
 	 *
@@ -117,7 +107,6 @@ class SwatDBTransaction extends SwatObject
 		}
 	}
 
-	// }}}
 }
 
 ?>

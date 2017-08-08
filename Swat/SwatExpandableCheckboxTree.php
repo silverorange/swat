@@ -10,7 +10,6 @@
  */
 class SwatExpandableCheckboxTree extends SwatCheckboxTree
 {
-	// {{{ class constants
 
 	/**
 	 * All branches are open
@@ -26,9 +25,6 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	 * Branches with checked options are open (default)
 	 */
 	const BRANCH_STATE_AUTO   = 3;
-
-	// }}}
-	// {{{ public properties
 
 	/**
 	 * The initial branch state of the tree
@@ -67,13 +63,7 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 	 */
 	public $dependent_boxes = true;
 
-	// }}}
-	// {{{ protected properties
-
 	protected $checked_parents = array();
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new expandable checkbox tree
@@ -92,9 +82,6 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 			'packages/swat/javascript/swat-expandable-checkbox-tree.js'
 		);
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this expandable checkbox tree
@@ -132,9 +119,6 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
 	/**
 	 * Gets the array of CSS classes that are applied to this expandable
 	 * checkbox tree
@@ -148,9 +132,6 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScript()
 
 	/**
 	 * Gets the inline JavaScript for this expandable checkbox tree
@@ -189,9 +170,6 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 
 		return $javascript;
 	}
-
-	// }}}
-	// {{{ private function displayNode()
 
 	/**
 	 * Displays a node in a tree as a checkbox input
@@ -303,9 +281,6 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		return $nodes;
 	}
 
-	// }}}
-	// {{{ private function nodeIsChecked()
-
 	/**
 	 * Check whether the checkbox should be checked
 	 *
@@ -334,9 +309,6 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 
 		return $checked;
 	}
-
-	// }}}
-	// {{{ private function getExpandableNodeIds()
 
 	/**
 	 * Gets the node XHTML ids of all expandable nodes in this expandable
@@ -378,7 +350,6 @@ class SwatExpandableCheckboxTree extends SwatCheckboxTree
 		return $expandable_ids;
 	}
 
-	// }}}
 }
 
 ?>

@@ -11,7 +11,6 @@
  */
 abstract class SwatCellRenderer extends SwatUIObject
 {
-	// {{{ public properties
 
 	/**
 	 * A non-visible unique id for this cell renderer, or null
@@ -31,9 +30,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 * @var boolean
 	 */
 	public $sensitive = true;
-
-	// }}}
-	// {{{ private properties
 
 	/**
 	 * An array containing the static properties of this cell renderer
@@ -69,9 +65,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	private $composite_renderers_created = false;
 
-	// }}}
-	// {{{ public function render()
-
 	/**
 	 * Renders this cell
 	 *
@@ -85,9 +78,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 		$this->render_count++;
 	}
 
-	// }}}
-	// {{{ public function init()
-
 	/**
 	 * Called during the init phase
 	 *
@@ -100,9 +90,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 		}
 	}
 
-	// }}}
-	// {{{ public function process()
-
 	/**
 	 * Called during processing phase
 	 *
@@ -114,9 +101,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 			$renderer->process();
 		}
 	}
-
-	// }}}
-	// {{{ public function getMessages()
 
 	/**
 	 * Gathers all messages from this cell renderer
@@ -131,9 +115,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 		return array();
 	}
 
-	// }}}
-	// {{{ public function hasMessage()
-
 	/**
 	 * Gets whether or not this cell renderer has messages
 	 *
@@ -147,9 +128,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	{
 		return false;
 	}
-
-	// }}}
-	// {{{ public function getPropertyNameToMap()
 
 	/**
 	 * Get a property name to use for mapping
@@ -174,9 +152,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 		return $name;
 	}
 
-	// }}}
-	// {{{ public function getInlineJavaScript()
-
 	/**
 	 * Gets ths inline JavaScript required by this cell renderer
 	 *
@@ -186,9 +161,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	{
 		return '';
 	}
-
-	// }}}
-	// {{{ public function getBaseCSSClassNames()
 
 	/**
 	 * Gets the base CSS class names for this cell renderer
@@ -203,9 +175,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 		return array();
 	}
 
-	// }}}
-	// {{{ public function getDataSpecificCSSClassNames()
-
 	/**
 	 * Gets the data specific CSS class names for this cell renderer
 	 *
@@ -219,9 +188,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	{
 		return array();
 	}
-
-	// }}}
-	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this cell renderer
@@ -243,9 +209,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 		return $set;
 	}
 
-	// }}}
-	// {{{ public function getAvailableHtmlHeadEntrySet()
-
 	/**
 	 * Gets the SwatHtmlHeadEntry objects that may be needed by this cell
 	 * renderer
@@ -257,9 +220,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	{
 		return new SwatHtmlHeadEntrySet($this->html_head_entry_set);
 	}
-
-	// }}}
-	// {{{ public function isPropertyStatic()
 
 	/**
 	 * Checks if a public property is static (can not be data-mapped)
@@ -278,9 +238,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	{
 		return (in_array($property_name, $this->static_properties));
 	}
-
-	// }}}
-	// {{{ public final function getInheritanceCSSClassNames()
 
 	/**
 	 * Gets the CSS class names of this cell renderer based on the inheritance
@@ -331,9 +288,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 		return $css_class_names;
 	}
 
-	// }}}
-	// {{{ protected function createCompositeRenderers()
-
 	/**
 	 * Creates and adds composite renderers of this renderer
 	 *
@@ -343,9 +297,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 	protected function createCompositeRenderers()
 	{
 	}
-
-	// }}}
-	// {{{ protected final function addCompositeRenderer()
 
 	/**
 	 * Adds a composite a renderer to this renderer
@@ -378,9 +329,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 		$renderer->parent = $this;
 	}
 
-	// }}}
-	// {{{ protected final function getCompositeRenderer()
-
 	/**
 	 * Gets a composite renderer of this renderer by the composite renderer's
 	 * key
@@ -409,9 +357,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 
 		return $this->composite_renderers[$key];
 	}
-
-	// }}}
-	// {{{ protected final function getCompositeRenderers()
 
 	/**
 	 * Gets all composite renderers added to this renderer
@@ -445,9 +390,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 		return $out;
 	}
 
-	// }}}
-	// {{{ protected final function confirmCompositeRenderers()
-
 	/**
 	 * Confirms composite renderers have been created
 	 *
@@ -468,9 +410,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 			$this->composite_renderers_created = true;
 		}
 	}
-
-	// }}}
-	// {{{ protected final function makePropertyStatic()
 
 	/**
 	 * Make a public property static
@@ -507,7 +446,6 @@ abstract class SwatCellRenderer extends SwatUIObject
 		}
 	}
 
-	// }}}
 }
 
 ?>

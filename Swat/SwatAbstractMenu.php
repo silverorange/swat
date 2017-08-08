@@ -17,7 +17,6 @@
  */
 abstract class SwatAbstractMenu extends SwatControl
 {
-	// {{{ public properties
 
 	/**
 	 * Whether or not a mouse click outside this menu will hide this menu
@@ -39,9 +38,6 @@ abstract class SwatAbstractMenu extends SwatControl
 	 */
 	public $auto_sub_menu_display = true;
 
-	// }}}
-	// {{{ public function __construct()
-
 	/**
 	 * Creates a new menu object
 	 *
@@ -60,9 +56,6 @@ abstract class SwatAbstractMenu extends SwatControl
 		$this->addStyleSheet('packages/swat/styles/swat-menu.css');
 	}
 
-	// }}}
-	// {{{ public function setMenuItemValues()
-
 	/**
 	 * Sets the value of all {@link SwatMenuItem} objects within this menu
 	 *
@@ -79,9 +72,6 @@ abstract class SwatAbstractMenu extends SwatControl
 		}
 	}
 
-	// }}}
-	// {{{ protected function getJavaScriptClass()
-
 	/**
 	 * Gets the name of the JavaScript class to instantiate for this menu
 	 *
@@ -95,9 +85,6 @@ abstract class SwatAbstractMenu extends SwatControl
 	{
 		return 'YAHOO.widget.Menu';
 	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScript()
 
 	/**
 	 * Gets the inline JavaScript used by this menu control
@@ -135,7 +122,6 @@ abstract class SwatAbstractMenu extends SwatControl
 		);
 	}
 
-	// }}}
 }
 
 ?>

@@ -13,7 +13,6 @@
  */
 class SwatDetailsStore extends SwatObject
 {
-	// {{{ private properties
 
 	/**
 	 * The base object for this details store
@@ -32,9 +31,6 @@ class SwatDetailsStore extends SwatObject
 	 */
 	private $data = array();
 
-	// }}}
-	// {{{ public function __construct()
-
 	/**
 	 * Creates a new details store
 	 *
@@ -49,9 +45,6 @@ class SwatDetailsStore extends SwatObject
 		if ($base_object !== null && is_object($base_object))
 			$this->base_object = $base_object;
 	}
-
-	// }}}
-	// {{{ public function __get()
 
 	/**
 	 * Gets a property of this details store
@@ -94,9 +87,6 @@ class SwatDetailsStore extends SwatObject
 			0, $this, $name);
 	}
 
-	// }}}
-	// {{{ public function __set()
-
 	/**
 	 * Manually sets a property of this details store
 	 *
@@ -111,9 +101,6 @@ class SwatDetailsStore extends SwatObject
 	{
 		$this->data[$name] = $value;
 	}
-
-	// }}}
-	// {{{ public function __isset()
 
 	/**
 	 * Gets whether or not a property is set for this details store
@@ -136,9 +123,6 @@ class SwatDetailsStore extends SwatObject
 		return $is_set;
 	}
 
-	// }}}
-	// {{{ private function parsePath()
-
 	private function parsePath($object, $path)
 	{
 		$pos = mb_strpos($path, '.');
@@ -154,7 +138,6 @@ class SwatDetailsStore extends SwatObject
 			return $this->parsePath($sub_object, $rest);
 	}
 
-	// }}}
 }
 
 ?>

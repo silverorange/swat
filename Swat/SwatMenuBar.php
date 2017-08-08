@@ -15,7 +15,6 @@
  */
 class SwatMenuBar extends SwatMenu
 {
-	// {{{ protected function getJavaScriptClass()
 
 	/**
 	 * Gets the name of the JavaScript class to instantiate for this menu
@@ -29,9 +28,6 @@ class SwatMenuBar extends SwatMenu
 		return 'YAHOO.widget.MenuBar';
 	}
 
-	// }}}
-	// {{{ protected function getMenuItemCSSClass()
-
 	/**
 	 * Gets the CSS class name to use for menu items in this menu
 	 *
@@ -41,9 +37,6 @@ class SwatMenuBar extends SwatMenu
 	{
 		return 'yuimenubaritem';
 	}
-
-	// }}}
-	// {{{ protected function getCSSClassNames()
 
 	/**
 	 * Gets the array of CSS classes that are applied to this menu bar
@@ -57,7 +50,6 @@ class SwatMenuBar extends SwatMenu
 		return $classes;
 	}
 
-	// }}}
 }
 
 ?>

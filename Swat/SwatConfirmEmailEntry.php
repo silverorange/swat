@@ -12,7 +12,6 @@
  */
 class SwatConfirmEmailEntry extends SwatEmailEntry
 {
-	// {{{ public properties
 
 	/**
 	 * A reference to the matching email entry widget
@@ -20,9 +19,6 @@ class SwatConfirmEmailEntry extends SwatEmailEntry
 	 * @var SwatEmailEntry
 	 */
 	public $email_widget = null;
-
-	// }}}
-	// {{{ public function process()
 
 	/**
 	 * Checks to make sure email addresses match
@@ -54,9 +50,6 @@ class SwatConfirmEmailEntry extends SwatEmailEntry
 		}
 	}
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
 	/**
 	 * Gets the array of CSS classes that are applied to this entry
 	 *
@@ -70,7 +63,6 @@ class SwatConfirmEmailEntry extends SwatEmailEntry
 		return $classes;
 	}
 
-	// }}}
 }
 
 ?>

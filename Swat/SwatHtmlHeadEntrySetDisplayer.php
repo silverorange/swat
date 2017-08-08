@@ -12,15 +12,11 @@
  */
 class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 {
-	// {{{ protected properties
 
 	/**
 	 * @var Concentrate_Concentrator
 	 */
 	protected $concentrator;
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new HTML head entry collection
@@ -31,9 +27,6 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 	{
 		$this->concentrator = $concentrator;
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays a set of HTML head entries
@@ -124,9 +117,6 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 		echo "\n";
 	}
 
-	// }}}
-	// {{{ public function displayInline()
-
 	/**
 	 * Displays the contents of the set of HTML head entries inline
 	 */
@@ -157,9 +147,6 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 
 		echo "\n";
 	}
-
-	// }}}
-	// {{{ protected function getCombinedEntries()
 
 	/**
 	 * Gets the entries of this set accounting for combining
@@ -192,9 +179,6 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 			'superset' => $info['superset'],
 		);
 	}
-
-	// }}}
-	// {{{ protected function getSortedEntries()
 
 	/**
 	 * Gets the entries of this set sorted by their correct display order
@@ -231,9 +215,6 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 
 		return $sorted_entries;
 	}
-
-	// }}}
-	// {{{ protected function compareEntries()
 
 	/**
 	 * Compares two {@link SwatHtmlHeadEntry} objects to get their display
@@ -300,9 +281,6 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 		return 0;
 	}
 
-	// }}}
-	// {{{ protected function getTypeOrder()
-
 	/**
 	 * Gets the order in which HTML head entry types should be displayed
 	 *
@@ -326,9 +304,6 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 			'__unknown__'                       => 6,
 		);
 	}
-
-	// }}}
-	// {{{ protected function checkForConflicts()
 
 	/**
 	 * Check for conflicts in a set of HTML head entry URIs
@@ -360,7 +335,6 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 		}
 	}
 
-	// }}}
 }
 
 ?>

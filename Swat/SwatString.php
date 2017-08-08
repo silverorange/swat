@@ -9,7 +9,6 @@
  */
 class SwatString extends SwatObject
 {
-	// {{{ public static properties
 
 	/**
 	 * Block level XHTML elements used when filtering strings
@@ -76,9 +75,6 @@ class SwatString extends SwatObject
 	public static $preformatted_elements = array(
 		'script', 'style', 'pre',
 	);
-
-	// }}}
-	// {{{ public static function toXHTML()
 
 	/**
 	 * Intelligently converts a text block to XHTML
@@ -266,9 +262,6 @@ class SwatString extends SwatObject
 		return $text;
 	}
 
-	// }}}
-	// {{{ public static function minimizeEntities()
-
 	/**
 	 * Converts a UTF-8 text string to have the minimal number of entities
 	 * necessary to output it as valid UTF-8 XHTML without ever double-escaping.
@@ -297,9 +290,6 @@ class SwatString extends SwatObject
 
 		return $text;
 	}
-
-	// }}}
-	// {{{ public static function minimizeEntitiesWithTags()
 
 	/**
 	 * Same as {@link SwatString::minimizeEntities()} but also accepts a list
@@ -332,9 +322,6 @@ class SwatString extends SwatObject
 
 		return $output;
 	}
-
-	// }}}
-	// {{{ public static function condense()
 
 	/**
 	 * Takes a block of text and condenses it into a small fragment of XHTML.
@@ -452,9 +439,6 @@ class SwatString extends SwatObject
 		return $text;
 	}
 
-	// }}}
-	// {{{ public static function condenseToName()
-
 	/**
 	 * Condenses a string to a name
 	 *
@@ -567,9 +551,6 @@ class SwatString extends SwatObject
 		return $string_out;
 	}
 
-	// }}}
-	// {{{ public static function ellipsizeRight()
-
 	/**
 	 * Ellipsizes a string to the right
 	 *
@@ -649,9 +630,6 @@ class SwatString extends SwatObject
 		$flag = true;
 		return $string;
 	}
-
-	// }}}
-	// {{{ public static function ellipsizeMiddle()
 
 	/**
 	 * Ellipsizes a string in the middle
@@ -777,9 +755,6 @@ class SwatString extends SwatObject
 		return $string;
 	}
 
-	// }}}
-	// {{{ public static function removeTrailingPunctuation()
-
 	/**
 	 * Removes trailing punctuation from a string
 	 *
@@ -792,9 +767,6 @@ class SwatString extends SwatObject
 		return preg_replace('/\W+$/su', '', $string);
 	}
 
-	// }}}
-	// {{{ public static function removeLeadingPunctuation()
-
 	/**
 	 * Removes leading punctuation from a string
 	 *
@@ -806,9 +778,6 @@ class SwatString extends SwatObject
 	{
 		return preg_replace('/^\W+/su', '', $string);
 	}
-
-	// }}}
-	// {{{ public static function removePunctuation()
 
 	/**
 	 * Removes both leading and trailing punctuation from a string
@@ -823,9 +792,6 @@ class SwatString extends SwatObject
 		$string = self::removeLeadingPunctuation($string);
 		return $string;
 	}
-
-	// }}}
-	// {{{ public static function moneyFormat()
 
 	/**
 	 * Formats a numeric value as currency
@@ -909,9 +875,6 @@ class SwatString extends SwatObject
 		return $output;
 	}
 
-	// }}}
-	// {{{ public static function getInternationalCurrencySymbol()
-
 	/**
 	 * Gets the international currency symbol of a locale
 	 *
@@ -958,9 +921,6 @@ class SwatString extends SwatObject
 
 		return $symbol;
 	}
-
-	// }}}
-	// {{{ public static function numberFormat()
 
 	/**
 	 * Formats a number using locale-based separators
@@ -1027,9 +987,6 @@ class SwatString extends SwatObject
 		return $output;
 	}
 
-	// }}}
-	// {{{ public static function ordinalNumberFormat()
-
 	/**
 	 * Formats an integer as an ordinal number (1st, 2nd, 3rd)
 	 *
@@ -1043,9 +1000,6 @@ class SwatString extends SwatObject
 	{
 		return SwatNumber::ordinal($value);
 	}
-
-	// }}}
-	// {{{ public static function byteFormat()
 
 	/**
 	 * Format bytes in human readible units
@@ -1156,9 +1110,6 @@ class SwatString extends SwatObject
 		return $formatted_value.' '.$units[$unit_magnitude];
 	}
 
-	// }}}
-	// {{{ public static function pad()
-
 	/**
 	 * Pads a string in a UTF-8 safe way.
 	 *
@@ -1219,9 +1170,6 @@ class SwatString extends SwatObject
 		return $output;
 	}
 
-	// }}}
-	// {{{ public static function toInteger()
-
 	/**
 	 * Convert a locale-formatted number and return it as an integer.
 	 *
@@ -1278,9 +1226,6 @@ class SwatString extends SwatObject
 		return $value;
 	}
 
-	// }}}
-	// {{{ public static function toFloat()
-
 	/**
 	 * Convert a locale-formatted number and return it as an float.
 	 *
@@ -1313,9 +1258,6 @@ class SwatString extends SwatObject
 
 		return (is_numeric($value)) ? floatval($value) : null;
 	}
-
-	// }}}
-	// {{{ public static function toList()
 
 	/**
 	 * Convert an iterable object or array into a human-readable, delimited
@@ -1378,9 +1320,6 @@ class SwatString extends SwatObject
 
 		return $list;
 	}
-
-	// }}}
-	// {{{ public static function getTimePeriodParts()
 
 	/**
 	 * Gets the parts representing a time period matching a desired interval
@@ -1503,9 +1442,6 @@ class SwatString extends SwatObject
 		return $parts;
 	}
 
-	// }}}
-	// {{{ public static function getHumanReadableTimePeriodParts()
-
 	/**
 	 * Gets the parts to construct a human-readable string representing a time
 	 * period.
@@ -1602,9 +1538,6 @@ class SwatString extends SwatObject
 		return $parts;
 	}
 
-	// }}}
-	// {{{ public static function toHumanReadableTimePeriod()
-
 	/**
 	 * Gets a human-readable string representing a time period
 	 *
@@ -1629,9 +1562,6 @@ class SwatString extends SwatObject
 		$parts = self::getHumanReadableTimePeriodParts($seconds);
 		return self::toHumanReadableTimePeriodString($parts, $largest_part);
 	}
-
-	// }}}
-	// {{{ public static function toHumanReadableTimePeriodWithWeeks()
 
 	/**
 	 * Gets a human-readable string representing a time period that includes
@@ -1671,9 +1601,6 @@ class SwatString extends SwatObject
 
 		return self::toHumanReadableTimePeriodString($parts, $largest_part);
 	}
-
-	// }}}
-	// {{{ public static function toHumanReadableTimePeriodWithWeeksAndDays()
 
 	/**
 	 * Gets a human-readable string representing a time period that includes
@@ -1720,9 +1647,6 @@ class SwatString extends SwatObject
 		return self::toHumanReadableTimePeriodString($parts, true);
 	}
 
-	// }}}
-	// {{{ public static function hash()
-
 	/**
 	 * Gets a unique hash of a string
 	 *
@@ -1750,9 +1674,6 @@ class SwatString extends SwatObject
 		return $hash;
 	}
 
-	// }}}
-	// {{{ public static function getSalt()
-
 	/**
 	 * Gets a salt value of the specified length
 	 *
@@ -1775,9 +1696,6 @@ class SwatString extends SwatObject
 
 		return $salt;
 	}
-
-	// }}}
-	// {{{ public static function getCryptSalt()
 
 	/**
 	 * Gets a salt value for crypt(3)
@@ -1811,9 +1729,6 @@ class SwatString extends SwatObject
 		return $salt;
 	}
 
-	// }}}
-	// {{{ public static function stripXHTMLTags()
-
 	/**
 	 * Removes all XHTML tags from a string
 	 *
@@ -1832,9 +1747,6 @@ class SwatString extends SwatObject
 		return preg_replace('/<\/?('.$elements.')[^<>]*?>/siu', '', $string);
 	}
 
-	// }}}
-	// {{{ public static function linkify()
-
 	/**
 	 * Replaces all URI's in a string with anchor markup tags
 	 *
@@ -1852,9 +1764,6 @@ class SwatString extends SwatObject
 		return preg_replace ('@(https?://[^\s"\'\[\]]+\.[^\s"\'.\[\]]+)@iu',
 			'<a href="\1">\1</a>', $string);
 	}
-
-	// }}}
-	// {{{ public static function signedSerialize()
 
 	/**
 	 * Serializes and signs a value using a salt
@@ -1878,9 +1787,6 @@ class SwatString extends SwatObject
 
 		return $signature_data.'|'.$serialized_data;
 	}
-
-	// }}}
-	// {{{ public static function signedUnserialize()
 
 	/**
 	 * Unserializes a signed serialized value
@@ -1913,9 +1819,6 @@ class SwatString extends SwatObject
 
 		return unserialize($serialized_data);
 	}
-
-	// }}}
-	// {{{ public static function quoteJavaScriptString()
 
 	/**
 	 * Safely quotes a PHP string into a JavaScript string
@@ -1975,9 +1878,6 @@ class SwatString extends SwatObject
 		return $string;
 	}
 
-	// }}}
-	// {{{ public static function validateUtf8()
-
 	/**
 	 * Checks whether or not a string is valid UTF-8
 	 *
@@ -1989,9 +1889,6 @@ class SwatString extends SwatObject
 	{
 		return (mb_detect_encoding($string, 'UTF-8', true) === 'UTF-8');
 	}
-
-	// }}}
-	// {{{ public static function validateEmailAddress()
 
 	/**
 	 * Validates an email address
@@ -2016,9 +1913,6 @@ class SwatString extends SwatObject
 
 		return $valid;
 	}
-
-	// }}}
-	// {{{ public static function escapeBinary()
 
 	/**
 	 * Escapes a binary string making it safe to display using ASCII encoding
@@ -2058,9 +1952,6 @@ class SwatString extends SwatObject
 		return $escaped;
 	}
 
-	// }}}
-	// {{{ protected static function toHumanReadableTimePeriodString()
-
 	/**
 	 * Gets a human-readable string representing a time period from an array of
 	 * human readable date parts.
@@ -2091,9 +1982,6 @@ class SwatString extends SwatObject
 		return self::toList($parts);
 	}
 
-	// }}}
-	// {{{ private static function stripEntities()
-
 	/**
 	 * Strips entities from a string remembering their positions
 	 *
@@ -2112,9 +2000,6 @@ class SwatString extends SwatObject
 
 		$string = preg_replace($reg_exp, '*', $string);
 	}
-
-	// }}}
-	// {{{ private static function insertEntities()
 
 	/**
 	 * Re-inserts stripped entities into a string in the correct positions
@@ -2174,7 +2059,6 @@ class SwatString extends SwatObject
 		}
 	}
 
-	// }}}
 	//{{{ private static function parseNegativeNotation()
 
 	private static function parseNegativeNotation($string)
@@ -2211,9 +2095,6 @@ class SwatString extends SwatObject
 		return $string;
 	}
 
-	// }}}
-	// {{{ private static function getDecimalPrecision()
-
 	private static function getDecimalPrecision($value)
 	{
 		$lc = localeconv();
@@ -2225,9 +2106,6 @@ class SwatString extends SwatObject
 			: 0;
 	}
 
-	// }}}
-	// {{{ private function __construct()
-
 	/**
 	 * Don't allow instantiation of the SwatString object
 	 *
@@ -2237,7 +2115,6 @@ class SwatString extends SwatObject
 	{
 	}
 
-	// }}}
 }
 
 ?>

@@ -10,14 +10,10 @@
  */
 class SwatTimeEntry extends SwatInputControl implements SwatState
 {
-	// {{{ constants
 
 	const HOUR   = 1;
 	const MINUTE = 2;
 	const SECOND = 4;
-
-	// }}}
-	// {{{ public properties
 
 	/**
 	 * Time of this time entry widget
@@ -102,9 +98,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 */
 	public $use_current_time = true;
 
-	// }}}
-	// {{{ private properties
-
 	/**
 	 * Default year value used for time value
 	 *
@@ -131,9 +124,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	 * @var integer
 	 */
 	private static $date_day = 1;
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new time entry widget
@@ -169,9 +159,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			(preg_match('/(%T|%R|%k|.*%H.*)/', $locale_format) == 0);
 	}
 
-	// }}}
-	// {{{ public function __clone()
-
 	/**
 	 * Clones the valid time range of this time entry
 	 */
@@ -180,9 +167,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$this->valid_range_start = clone $this->valid_range_start;
 		$this->valid_range_end = clone $this->valid_range_end;
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this time entry
@@ -262,9 +246,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		$div_tag->close();
 	}
-
-	// }}}
-	// {{{ public function process()
 
 	/**
 	 * Processes this time entry
@@ -394,9 +375,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		}
 	}
 
-	// }}}
-	// {{{ public function getState()
-
 	/**
 	 * Gets the current state of this time entry widget
 	 *
@@ -412,9 +390,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			return $this->value->getDate();
 	}
 
-	// }}}
-	// {{{ public function setState()
-
 	/**
 	 * Sets the current state of this time entry widget
 	 *
@@ -426,9 +401,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 	{
 		$this->value = new SwatDate($state);
 	}
-
-	// }}}
-	// {{{ protected function getCSSClassNames()
 
 	/**
 	 * Gets the array of CSS classes that are applied to this time entry widget
@@ -442,9 +414,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScript()
 
 	/**
 	 * Gets the inline JavaScript required for this control
@@ -500,9 +469,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		return $javascript;
 	}
 
-	// }}}
-	// {{{ protected function validateRanges()
-
 	/**
 	 * Makes sure the date the user entered is within the valid range
 	 *
@@ -527,9 +493,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		}
 	}
 
-	// }}}
-	// {{{ protected function isStartTimeValid()
-
 	/**
 	 * Checks if the entered time is valid with respect to the valid start
 	 * time
@@ -549,9 +512,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 			$this->value, $this->valid_range_start, true) >= 0);
 	}
 
-	// }}}
-	// {{{ protected function isEndTimeValid()
-
 	/**
 	 * Checks if the entered time is valid with respect to the valid end time
 	 *
@@ -569,9 +529,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		return (SwatDate::compare(
 			$this->value, $this->valid_range_end, true) <= 0);
 	}
-
-	// }}}
-	// {{{ protected function createCompositeWidgets()
 
 	/**
 	 * Creates the composite widgets used by this time entry
@@ -598,9 +555,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 				$this->createSecondFlydown(), 'second_flydown');
 	}
 
-	// }}}
-	// {{{ private function createHourFlydown()
-
 	/**
 	 * Creates the hour flydown for this time entry
 	 *
@@ -622,9 +576,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		return $flydown;
 	}
 
-	// }}}
-	// {{{ private function createMinuteFlydown()
-
 	/**
 	 * Creates the minute flydown for this time entry
 	 *
@@ -640,9 +591,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		return $flydown;
 	}
-
-	// }}}
-	// {{{ private function createSecondFlydown()
 
 	/**
 	 * Creates the second flydown for this time entry
@@ -660,9 +608,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		return $flydown;
 	}
 
-	// }}}
-	// {{{ private function createAmPmFlydown()
-
 	/**
 	 * Creates the am/pm flydown for this time entry
 	 *
@@ -679,9 +624,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
 		return $flydown;
 	}
-
-	// }}}
-	// {{{ private function getFormattedTime()
 
 	/**
 	 * Formats a time for display in error messages
@@ -717,7 +659,6 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 		return $time->formatLikeIntl($format);
 	}
 
-	// }}}
 }
 
 ?>

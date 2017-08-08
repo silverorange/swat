@@ -12,7 +12,6 @@
  */
 class SwatTableStore extends SwatObject implements SwatTableModel
 {
-	// {{{ private properties
 
 	/**
 	 * The indvidual rows for this data structure
@@ -28,9 +27,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 	 */
 	private $current_index = 0;
 
-	// }}}
-	// {{{ public function count()
-
 	/**
 	 * Gets the number of rows
 	 *
@@ -43,9 +39,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 		return count($this->rows);
 	}
 
-	// }}}
-	// {{{ public function current()
-
 	/**
 	 * Returns the current element
 	 *
@@ -55,9 +48,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 	{
 		return $this->rows[$this->current_index];
 	}
-
-	// }}}
-	// {{{ public function key()
 
 	/**
 	 * Returns the key of the current element
@@ -69,9 +59,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 		return $this->current_index;
 	}
 
-	// }}}
-	// {{{ public function next()
-
 	/**
 	 * Moves forward to the next element
 	 */
@@ -79,9 +66,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 	{
 		$this->current_index++;
 	}
-
-	// }}}
-	// {{{ public function prev()
 
 	/**
 	 * Moves forward to the previous element
@@ -91,9 +75,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 		$this->current_index--;
 	}
 
-	// }}}
-	// {{{ public function rewind()
-
 	/**
 	 * Rewinds this iterator to the first element
 	 */
@@ -101,9 +82,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 	{
 		$this->current_index = 0;
 	}
-
-	// }}}
-	// {{{ public function valid()
 
 	/**
 	 * Checks is there is a current element after calls to rewind() and next()
@@ -116,9 +94,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 		return array_key_exists($this->current_index, $this->rows);
 	}
 
-	// }}}
-	// {{{ public function add()
-
 	/**
 	 * Adds a row to this data structure
 	 *
@@ -129,9 +104,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 	{
 		$this->rows[] = $data;
 	}
-
-	// }}}
-	// {{{ public function addToStart()
 
 	/**
 	 * Adds a row to the beginning of this data structure
@@ -145,9 +117,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 		$this->current_index++;
 	}
 
-	// }}}
-	// {{{ public function getRowCount()
-
 	/**
 	 * Gets the number of rows in this data structure
 	 *
@@ -157,9 +126,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 	{
 		return count($this->rows);
 	}
-
-	// }}}
-	// {{{ public function &getRows()
 
 	/**
 	 * Gets the rows of this data structure as an array
@@ -172,9 +138,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 	{
 		return $this->rows;
 	}
-
-	// }}}
-	// {{{ public function addRow()
 
 	/**
 	 * Adds a row to this data structure
@@ -189,7 +152,6 @@ class SwatTableStore extends SwatObject implements SwatTableModel
 		$this->add($data);
 	}
 
-	// }}}
 }
 
 ?>

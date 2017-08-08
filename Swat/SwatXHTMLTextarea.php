@@ -10,7 +10,6 @@
  */
 class SwatXHTMLTextarea extends SwatTextarea
 {
-	// {{{ public properties
 
 	/**
 	 * Whether or not to allow the user to ignore validation errors
@@ -22,9 +21,6 @@ class SwatXHTMLTextarea extends SwatTextarea
 	 * @var boolean
 	 */
 	public $allow_ignore_validation_errors = false;
-
-	// }}}
-	// {{{ protected properties
 
 	/**
 	 * Whether or not this XHTML entry has validation errors or not
@@ -40,12 +36,8 @@ class SwatXHTMLTextarea extends SwatTextarea
 	 */
 	protected $ignore_errors_checkbox;
 
-	// }}}
-	// {{{ public function process()
-
 	public function process()
 	{
-		// {{{ defines the xhtml template
 
 		static $xhtml_template = '';
 
@@ -70,8 +62,6 @@ class SwatXHTMLTextarea extends SwatTextarea
 XHTML;
 		}
 
-		// }}}
-
 		parent::process();
 
 		$ignore_validation_errors = ($this->allow_ignore_validation_errors &&
@@ -95,9 +85,6 @@ XHTML;
 		}
 	}
 
-	// }}}
-	// {{{ public function display()
-
 	public function display()
 	{
 		if (!$this->visible)
@@ -112,9 +99,6 @@ XHTML;
 			$ignore_field->display();
 		}
 	}
-
-	// }}}
-	// {{{ protected function getValidationErrorMessage()
 
 	/**
 	 * Gets a human readable error message for XHTML validation errors on
@@ -184,9 +168,6 @@ XHTML;
 		return $message;
 	}
 
-	// }}}
-	// {{{ protected function createCompositeWidgets()
-
 	/**
 	 * Creates the composite checkbox used by this XHTML textarea
 	 *
@@ -204,15 +185,11 @@ XHTML;
 		$this->addCompositeWidget($ignore_field, 'ignore_field');
 	}
 
-	// }}}
-	// {{{ protected function getXHTMLContent()
-
 	protected function getXHTMLContent()
 	{
 		return $this->value;
 	}
 
-	// }}}
 }
 
 ?>

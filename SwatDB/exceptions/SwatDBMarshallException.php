@@ -10,15 +10,11 @@
  */
 class SwatDBMarshallException extends SwatDBException
 {
-	// {{{ protected properties
 
 	/**
 	 * @var string
 	 */
 	protected $property = '';
-
-	// }}}
-	// {{{ public function __construct()
 
 	public function __construct($message, $code = 0, $property = '')
 	{
@@ -26,15 +22,11 @@ class SwatDBMarshallException extends SwatDBException
 		$this->property = $property;
 	}
 
-	// }}}
-	// {{{ public function getProperty()
-
 	public function getProperty()
 	{
 		return $this->property;
 	}
 
-	// }}}
 }
 
 ?>

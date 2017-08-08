@@ -14,7 +14,6 @@
  */
 abstract class SwatErrorLogger
 {
-	// {{{ public abstract function log()
 
 	/**
 	 * Logs a SwatError
@@ -23,7 +22,6 @@ abstract class SwatErrorLogger
 	 */
 	public abstract function log(SwatError $e);
 
-	// }}}
 }
 
 ?>

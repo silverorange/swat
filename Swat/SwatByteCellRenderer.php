@@ -12,7 +12,6 @@
  */
 class SwatByteCellRenderer extends SwatCellRenderer
 {
-	// {{{ public properties
 
 	/**
 	 * Value in bytes
@@ -20,9 +19,6 @@ class SwatByteCellRenderer extends SwatCellRenderer
 	 * @var float
 	 */
 	public $value;
-
-	// }}}
-	// {{{ public function render()
 
 	/**
 	 * Renders the contents of this cell
@@ -40,7 +36,6 @@ class SwatByteCellRenderer extends SwatCellRenderer
 			SwatString::byteFormat($this->value));
 	}
 
-	// }}}
 }
 
 ?>

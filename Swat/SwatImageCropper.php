@@ -12,7 +12,6 @@
  */
 class SwatImageCropper extends SwatInputControl
 {
-	// {{{ public properties
 
 	/**
 	 * Image URI
@@ -129,9 +128,6 @@ class SwatImageCropper extends SwatInputControl
 	 */
 	public $crop_box_top;
 
-	// }}}
-	// {{{ public function __construct()
-
 	/**
 	 * Creates a new image cropper
 	 *
@@ -151,9 +147,6 @@ class SwatImageCropper extends SwatInputControl
 		$this->addJavaScript('packages/swat/javascript/swat-image-cropper.js');
 	}
 
-	// }}}
-	// {{{ public function process()
-
 	public function process()
 	{
 		parent::process();
@@ -171,9 +164,6 @@ class SwatImageCropper extends SwatInputControl
 		$this->crop_box_left   = $this->crop_left;
 		$this->crop_box_top    = $this->crop_top;
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this image cropper
@@ -228,9 +218,6 @@ class SwatImageCropper extends SwatInputControl
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
-	// }}}
-	// {{{ protected function getInlineJavaScript()
-
 	/**
 	 * Gets the inline JavaScript required by this image cropper
 	 *
@@ -281,9 +268,6 @@ class SwatImageCropper extends SwatInputControl
 		return sprintf("%1\$s_obj = new SwatImageCropper(".
 			"'%1\$s', {%2\$s});", $this->id, $options_string);
 	}
-
-	// }}}
-	// {{{ protected function autoCropBoxDimensions()
 
 	/**
 	 * Automatically sets crop box dimensions if they are not specified and
@@ -382,7 +366,6 @@ class SwatImageCropper extends SwatInputControl
 		}
 	}
 
-	// }}}
 }
 
 ?>

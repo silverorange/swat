@@ -9,7 +9,6 @@
  */
 class SwatTableViewCheckAllRow extends SwatTableViewRow
 {
-	// {{{ public properties
 
 	/**
 	 * Optional checkbox label title
@@ -68,18 +67,12 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	public $tab_index;
 
-	// }}}
-	// {{{ protected properties
-
 	/**
 	 * The check-all widget for this row
 	 *
 	 * @var SwatCheckAll
 	 */
 	protected $check_all;
-
-	// }}}
-	// {{{ private properties
 
 	/**
 	 * The table-view checkbox column to which this check-all row is bound
@@ -108,9 +101,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	private $widgets_created = false;
 
-	// }}}
-	// {{{ public function __construct()
-
 	/**
 	 * Creates a new table-view check-all row
 	 *
@@ -126,9 +116,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		$this->column = $column;
 		$this->list_id = $list_id;
 	}
-
-	// }}}
-	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this check-all row
@@ -148,9 +135,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		return $set;
 	}
 
-	// }}}
-	// {{{ public function getAvailableHtmlHeadEntrySet()
-
 	/**
 	 * Gets the SwatHtmlHeadEntry objects that may be needed by this
 	 * check-all row
@@ -169,9 +153,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		return $set;
 	}
 
-	// }}}
-	// {{{ public function init()
-
 	/**
 	 * Initializes this check-all row
 	 */
@@ -181,9 +162,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		$this->createEmbeddedWidgets();
 		$this->check_all->init();
 	}
-
-	// }}}
-	// {{{ public function process()
 
 	/**
 	 * Processes this check-all row
@@ -195,9 +173,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		$this->check_all->process();
 	}
 
-	// }}}
-	// {{{ public function isExtendedSelected()
-
 	/**
 	 * Whether or not the extended-checkbox was checked
 	 *
@@ -207,9 +182,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	{
 		return $this->check_all->isExtendedSelected();
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this check-all row
@@ -269,9 +241,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		$tr_tag->close();
 	}
 
-	// }}}
-	// {{{ public function getInlineJavaScript()
-
 	/**
 	 * Gets the inline JavaScript required for this check-all row
 	 *
@@ -289,9 +258,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 			$this->check_all->id, $this->list_id);
 	}
 
-	// }}}
-	// {{{ private function createEmbeddedWidgets()
-
 	/**
 	 * Creates internal widgets required for this check-all row
 	 */
@@ -305,7 +271,6 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		}
 	}
 
-	// }}}
 }
 
 ?>

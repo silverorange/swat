@@ -11,7 +11,6 @@
  */
 class DemoApplication
 {
-	// {{{ private properties
 
 	private $ui;
 	private $demo;
@@ -58,9 +57,6 @@ class DemoApplication
 		'YesNoFlydown'      => 'SwatYesNoFlydown',
 	);
 
-	// }}}
-	// {{{ public function run()
-
 	/**
 	 * test
 	 */
@@ -94,17 +90,11 @@ class DemoApplication
 		$this->buildLayout();
 	}
 
-	// }}}
-	// {{{ private function buildTitle()
-
 	private function buildTitle()
 	{
 		$this->layout_ui->getWidget('main_frame')->title =
 			sprintf(Swat::_('%s Demo'), $this->available_demos[$this->demo]);
 	}
-
-	// }}}
-	// {{{ private function buildDemo()
 
 	private function buildDemo()
 	{
@@ -122,9 +112,6 @@ class DemoApplication
 			}
 		}
 	}
-
-	// }}}
-	// {{{ private function buildXmlSourceView()
 
 	private function buildXmlSourceView()
 	{
@@ -144,9 +131,6 @@ class DemoApplication
 		}
 	}
 
-	// }}}
-	// {{{ private function buildPhpSourceView()
-
 	private function buildPhpSourceView()
 	{
 		$filename = '../include/demos/'.$this->demo.'Demo.php';
@@ -164,17 +148,11 @@ class DemoApplication
 		}
 	}
 
-	// }}}
-	// {{{ private function buildDemoMenuBar()
-
 	private function buildDemoMenuBar()
 	{
 		$this->layout_ui->getWidget('menu')->setEntries($this->available_demos);
 		$this->layout_ui->getWidget('menu')->setSelectedEntry($this->demo);
 	}
-
-	// }}}
-	// {{{ private function buildDemoNavBar()
 
 	private function buildDemoNavBar()
 	{
@@ -187,9 +165,6 @@ class DemoApplication
 			$navbar->addEntry(new SwatNavBarEntry('Swat Demos'));
 		}
 	}
-
-	// }}}
-	// {{{ private function buildDemoDocumentationMenuBar()
 
 	private function buildDemoDocumentationMenuBar()
 	{
@@ -447,9 +422,6 @@ class DemoApplication
 		$documentation_links->setEntries($entries);
 	}
 
-	// }}}
-	// {{{ private function buildFrontPage()
-
 	private function buildFrontPage()
 	{
 		$content_block = new SwatContentBlock();
@@ -462,9 +434,6 @@ class DemoApplication
 		$main_frame->title = 'Swat Demos';
 		$main_frame->add($content_block);
 	}
-
-	// }}}
-	// {{{ private function buildLayout()
 
 	private function buildLayout()
 	{
@@ -489,9 +458,6 @@ class DemoApplication
 		require '../include/layout.php';
 	}
 
-	// }}}
-	// {{{ private function getDemo()
-
 	/**
 	 * Gets the demo page
 	 */
@@ -506,7 +472,6 @@ class DemoApplication
 		return $demo;
 	}
 
-	// }}}
 }
 
 ?>

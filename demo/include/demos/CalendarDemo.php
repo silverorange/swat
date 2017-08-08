@@ -14,7 +14,6 @@ require_once 'Demo.php';
  */
 class CalendarDemo extends Demo
 {
-	// {{{ public function buildDemoUI()
 
 	public function buildDemoUI(SwatUI $ui)
 	{
@@ -32,7 +31,6 @@ class CalendarDemo extends Demo
 		);
 	}
 
-	// }}}
 }
 
 ?>

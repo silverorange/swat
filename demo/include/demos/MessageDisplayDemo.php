@@ -11,7 +11,6 @@ require_once 'Demo.php';
  */
 class MessageDisplayDemo extends Demo
 {
-	// {{{ public function buildDemoUI()
 
 	public function buildDemoUI(SwatUI $ui)
 	{
@@ -58,7 +57,6 @@ class MessageDisplayDemo extends Demo
 		$long_message_display->add($message);
 	}
 
-	// }}}
 }
 
 ?>

@@ -16,7 +16,6 @@
  */
 class SwatTableViewColumn extends SwatCellRendererContainer
 {
-	// {{{ public properties
 
 	/**
 	 * Unique identifier of this column
@@ -86,9 +85,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public $show_renderer_classes = true;
 
-	// }}}
-	// {{{ protected properties
-
 	/**
 	 * An optional {@link SwatInputCell} object for this column
 	 *
@@ -110,9 +106,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	protected $has_auto_id = false;
 
-	// }}}
-	// {{{ public function __construct()
-
 	/**
 	 * Creates a new table-view column
 	 *
@@ -124,9 +117,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		$this->id = $id;
 		parent::__construct();
 	}
-
-	// }}}
-	// {{{ public function init()
 
 	/**
 	 * Initializes this column
@@ -156,17 +146,11 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		}
 	}
 
-	// }}}
-	// {{{ public function process()
-
 	public function process()
 	{
 		foreach ($this->renderers as $renderer)
 			$renderer->process();
 	}
-
-	// }}}
-	// {{{ public function hasHeader()
 
 	/**
 	 * Whether this column has a header to display
@@ -175,9 +159,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	{
 		return ($this->visible && $this->title != '');
 	}
-
-	// }}}
-	// {{{ public function displayHeaderCell()
 
 	/**
 	 * Displays the table-view header cell for this column
@@ -198,9 +179,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		$this->displayHeader();
 		$th_tag->close();
 	}
-
-	// }}}
-	// {{{ public function displayHeader()
 
 	/**
 	 * Displays the contents of the header cell for this column
@@ -232,9 +210,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		}
 	}
 
-	// }}}
-	// {{{ public function display()
-
 	/**
 	 * Displays this column using a data object
 	 *
@@ -252,9 +227,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		$this->setupRenderers($row);
 		$this->displayRenderers($row);
 	}
-
-	// }}}
-	// {{{ public function getMessages()
 
 	/**
 	 * Gathers all messages from this column for the given data object
@@ -275,9 +247,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 		return $messages;
 	}
-
-	// }}}
-	// {{{ public function hasMessage()
 
 	/**
 	 * Gets whether or not this column has any messages for the given data
@@ -305,9 +274,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		return $has_message;
 	}
 
-	// }}}
-	// {{{ public function getInlineJavaScript()
-
 	/**
 	 * Gets the inline JavaScript required by this column
 	 *
@@ -320,9 +286,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	{
 		return '';
 	}
-
-	// }}}
-	// {{{ public function setInputCell()
 
 	/**
 	 * Sets the input cell of this column
@@ -337,9 +300,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		$this->input_cell = $cell;
 		$cell->parent = $this;
 	}
-
-	// }}}
-	// {{{ public function getTrAttributes()
 
 	/**
 	 * Gets TR-tag attributes
@@ -360,9 +320,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		return array();
 	}
 
-	// }}}
-	// {{{ public function getInputCell()
-
 	/**
 	 * Gets the input cell of this column
 	 *
@@ -380,9 +337,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	{
 		return $this->input_cell;
 	}
-
-	// }}}
-	// {{{ public function addChild()
 
 	/**
 	 * Add a child object to this object
@@ -409,9 +363,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 				'nested within SwatTableViewColumn objects.', 0, $child);
 		}
 	}
-
-	// }}}
-	// {{{ public function getDescendants()
 
 	/**
 	 * Gets descendant UI-objects
@@ -464,9 +415,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getFirstDescendant()
-
 	/**
 	 * Gets the first descendant UI-object of a specific class
 	 *
@@ -493,9 +441,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getHtmlHeadEntrySet()
-
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this column
 	 *
@@ -514,9 +459,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 		return $set;
 	}
-
-	// }}}
-	// {{{ public function getAvailableHtmlHeadEntrySet()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects that may be needed by this column
@@ -538,9 +480,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		return $set;
 	}
 
-	// }}}
-	// {{{ public function getTdAttributes()
-
 	/**
 	 * Gets the TD tag attributes for this column
 	 *
@@ -554,9 +493,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 			'class' => $this->getCSSClassString(),
 		);
 	}
-
-	// }}}
-	// {{{ public function getThAttributes()
 
 	/**
 	 * Gets the TH tag attributes for this column
@@ -572,9 +508,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		);
 	}
 
-	// }}}
-	// {{{ public function getXhtmlColspan()
-
 	/**
 	 * Gets how many XHTML table columns this column object spans on display
 	 *
@@ -585,9 +518,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	{
 		return 1;
 	}
-
-	// }}}
-	// {{{ public function hasVisibleRenderer()
 
 	/**
 	 * Whether or not this column has one or more visible cell renderers
@@ -614,9 +544,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 		return $visible_renderers;
 	}
-
-	// }}}
-	// {{{ public function copy()
 
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
@@ -645,9 +572,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		return $copy;
 	}
 
-	// }}}
-	// {{{ protected function displayRenderers()
-
 	/**
 	 * Renders each cell renderer in this column inside a wrapping XHTML
 	 * element
@@ -667,9 +591,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		$this->displayRenderersInternal($data);
 		$td_tag->close();
 	}
-
-	// }}}
-	// {{{ protected function displayRenderersInternal()
 
 	/**
 	 * Renders each cell renderer in this column
@@ -721,9 +642,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		}
 	}
 
-	// }}}
-	// {{{ protected function setupRenderers()
-
 	/**
 	 * Sets properties of renderers using data from current row
 	 *
@@ -744,9 +662,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 			$renderer->sensitive = $renderer->sensitive && $sensitive;
 		}
 	}
-
-	// }}}
-	// {{{ protected function getCSSClassNames()
 
 	/**
 	 * Gets the array of CSS classes that are applied to this table-view column
@@ -814,9 +729,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		return $classes;
 	}
 
-	// }}}
-	// {{{ protected function getBaseCSSClassNames()
-
 	/**
 	 * Gets the base CSS class names of this table-view column
 	 *
@@ -831,7 +743,6 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		return array();
 	}
 
-	// }}}
 }
 
 ?>

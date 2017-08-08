@@ -9,7 +9,6 @@
  */
 class SwatToolLink extends SwatControl
 {
-	// {{{ public properties
 
 	/**
 	 * The href attribute in the XHTML anchor tag
@@ -93,18 +92,12 @@ class SwatToolLink extends SwatControl
 	 */
 	public $target = null;
 
-	// }}}
-	// {{{ protected properties
-
 	/**
 	 * A CSS class set by the stock_id of this tool link
 	 *
 	 * @var string
 	 */
 	protected $stock_class = null;
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new toollink
@@ -120,9 +113,6 @@ class SwatToolLink extends SwatControl
 		$this->addStyleSheet('packages/swat/styles/swat-tool-link.css');
 	}
 
-	// }}}
-	// {{{ public function init()
-
 	/**
 	 * Initializes this widget
 	 *
@@ -137,9 +127,6 @@ class SwatToolLink extends SwatControl
 		if ($this->stock_id !== null)
 			$this->setFromStock($this->stock_id, false);
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this tool link
@@ -177,9 +164,6 @@ class SwatToolLink extends SwatControl
 
 		$tag->close();
 	}
-
-	// }}}
-	// {{{ public function setFromStock()
 
 	/**
 	 * Sets the values of this tool link to a stock type
@@ -273,9 +257,6 @@ class SwatToolLink extends SwatControl
 		$this->stock_class = $class;
 	}
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
 	/**
 	 * Gets the array of CSS classes that are applied to this tool link
 	 *
@@ -296,9 +277,6 @@ class SwatToolLink extends SwatControl
 
 		return $classes;
 	}
-
-	// }}}
-	// {{{ protected function getSensitiveTag()
 
 	/**
 	 * Gets the tag used to display this tool link when it is sensitive
@@ -332,9 +310,6 @@ class SwatToolLink extends SwatControl
 		return $tag;
 	}
 
-	// }}}
-	// {{{ protected function getInsensitiveTag()
-
 	/**
 	 * Gets the tag used to display this tool link when it is not sensitive
 	 *
@@ -354,7 +329,6 @@ class SwatToolLink extends SwatControl
 		return $tag;
 	}
 
-	// }}}
 }
 
 ?>

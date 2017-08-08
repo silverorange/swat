@@ -24,7 +24,6 @@
  */
 class SwatDBReadaheadIterator extends SwatObject
 {
-	// {{{ private properties
 
 	/**
 	 * The iterator object being iterated
@@ -46,9 +45,6 @@ class SwatDBReadaheadIterator extends SwatObject
 	 * @var mixed
 	 */
 	private $key;
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new readahead iterator
@@ -74,9 +70,6 @@ class SwatDBReadaheadIterator extends SwatObject
 		$this->rewind();
 	}
 
-	// }}}
-	// {{{ public function getCurrent()
-
 	/**
 	 * Gets the current item
 	 *
@@ -88,9 +81,6 @@ class SwatDBReadaheadIterator extends SwatObject
 	{
 		return $this->current;
 	}
-
-	// }}}
-	// {{{ public function getKey()
 
 	/**
 	 * Gets the key of the current item
@@ -104,9 +94,6 @@ class SwatDBReadaheadIterator extends SwatObject
 	{
 		return $this->key;
 	}
-
-	// }}}
-	// {{{ public function getNext()
 
 	/**
 	 * Gets the next item
@@ -122,9 +109,6 @@ class SwatDBReadaheadIterator extends SwatObject
 		return ($this->isLast()) ? null : $this->iterator->current();
 	}
 
-	// }}}
-	// {{{ public function getNextKey()
-
 	/**
 	 * Gets the next item key
 	 *
@@ -138,9 +122,6 @@ class SwatDBReadaheadIterator extends SwatObject
 		return ($this->isLast()) ? null : $this->iterator->key();
 	}
 
-	// }}}
-	// {{{ public function isLast()
-
 	/**
 	 * Gets whether the current item is the last item
 	 *
@@ -151,9 +132,6 @@ class SwatDBReadaheadIterator extends SwatObject
 	{
 		return (!$this->iterator->valid());
 	}
-
-	// }}}
-	// {{{ public function iterate()
 
 	/**
 	 * Iterates over this readahead iterator
@@ -174,9 +152,6 @@ class SwatDBReadaheadIterator extends SwatObject
 		return $valid;
 	}
 
-	// }}}
-	// {{{ public function rewind()
-
 	/**
 	 * Rewinds this readahead iterator back to the start
 	 */
@@ -187,7 +162,6 @@ class SwatDBReadaheadIterator extends SwatObject
 		$this->key = null;
 	}
 
-	// }}}
 }
 
 ?>

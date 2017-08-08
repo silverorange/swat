@@ -9,13 +9,9 @@
  */
 class SwatYesNoFlydown extends SwatFlydown
 {
-	// {{{ constants
 
 	const NO  = false;
 	const YES = true;
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new yes/no flydown
@@ -33,7 +29,6 @@ class SwatYesNoFlydown extends SwatFlydown
 		$this->addOption(self::YES, Swat::_('Yes'));
 	}
 
-	// }}}
 }
 
 ?>

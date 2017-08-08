@@ -11,7 +11,6 @@
  */
 class SwatDBField extends SwatObject
 {
-	// {{{ public properties
 
 	/**
 	 * The name of the database field
@@ -28,9 +27,6 @@ class SwatDBField extends SwatObject
 	 * @var string
 	 */
 	public $type;
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * @param string $field A string representation of a database field in the
@@ -54,9 +50,6 @@ class SwatDBField extends SwatObject
 		}
 	}
 
-	// }}}
-	// {{{ public function __toString()
-
 	/**
 	 * Get the field as a string
 	 *
@@ -69,7 +62,6 @@ class SwatDBField extends SwatObject
 		return $this->type.':'.$this->name;
 	}
 
-	// }}}
 }
 
 ?>

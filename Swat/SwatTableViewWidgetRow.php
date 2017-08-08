@@ -9,7 +9,6 @@
  */
 class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 {
-	// {{{ class constants
 
 	/**
 	 * Display the widget in the left cell
@@ -20,9 +19,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	 * Display the widget in the right cell
 	 */
 	const POSITION_RIGHT = 1;
-
-	// }}}
-	// {{{ public properties
 
 	/**
 	 * How far from the end of the row the widget should be displayed measured
@@ -50,9 +46,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	 */
 	public $position = self::POSITION_LEFT;
 
-	// }}}
-	// {{{ protected properties
-
 	/**
 	 * The contained widget
 	 *
@@ -61,9 +54,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	 * @see SwatTableViewWidgetRow::setWidget()
 	 */
 	protected $widget;
-
-	// }}}
-	// {{{ public function addChild()
 
 	/**
 	 * Adds a child object
@@ -94,9 +84,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 
 		$this->setWidget($child);
 	}
-
-	// }}}
-	// {{{ public function getDescendants()
 
 	/**
 	 * Gets descendant UI-objects
@@ -135,9 +122,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getFirstDescendant()
-
 	/**
 	 * Gets the first descendant UI-object of a specific class
 	 *
@@ -164,9 +148,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getDescendantStates()
-
 	/**
 	 * Gets descendant states
 	 *
@@ -186,9 +167,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		return $states;
 	}
 
-	// }}}
-	// {{{ public function setDescendantStates()
-
 	/**
 	 * Sets descendant states
 	 *
@@ -204,9 +182,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 			if (isset($states[$id]))
 				$object->setState($states[$id]);
 	}
-
-	// }}}
-	// {{{ public function setWidget()
 
 	/**
 	 * Sets the widget contained in this row
@@ -226,9 +201,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		$widget->parent = $this;
 	}
 
-	// }}}
-	// {{{ public function getWidget()
-
 	/**
 	 * Gets the widget contained in this row
 	 *
@@ -240,9 +212,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		return $this->widget;
 	}
 
-	// }}}
-	// {{{ public function init()
-
 	public function init()
 	{
 		parent::init();
@@ -251,9 +220,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 			$this->widget->init();
 	}
 
-	// }}}
-	// {{{ public function process()
-
 	public function process()
 	{
 		parent::process();
@@ -261,9 +227,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		if ($this->widget !== null)
 			$this->widget->process();
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	public function display()
 	{
@@ -292,9 +255,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		$tr_tag->close();
 	}
 
-	// }}}
-	// {{{ public function getHtmlHeadEntrySet()
-
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this row
 	 *
@@ -315,9 +275,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		return $set;
 	}
 
-	// }}}
-	// {{{ public function getAvailableHtmlHeadEntrySet()
-
 	/**
 	 * Gets the SwatHtmlHeadEntry objects that may be needed by this row
 	 *
@@ -334,9 +291,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 
 		return $set;
 	}
-
-	// }}}
-	// {{{ public function copy()
 
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
@@ -362,9 +316,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		return $copy;
 	}
 
-	// }}}
-	// {{{ public function getMessages()
-
 	/**
 	 * Gathers all messages from this table-view-row
 	 *
@@ -380,9 +331,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 
 		return $messages;
 	}
-
-	// }}}
-	// {{{ public function hasMessage()
 
 	/**
 	 * Gets whether or not the widgets in this row have any messages
@@ -403,9 +351,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		return $has_message;
 	}
 
-	// }}}
-	// {{{ protected function displayOffsetCell()
-
 	protected function displayOffsetCell($offset)
 	{
 		$td_tag = new SwatHtmlTag('td');
@@ -415,9 +360,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		echo '&nbsp;';
 		$td_tag->close();
 	}
-
-	// }}}
-	// {{{ protected function displayWidgetCell()
 
 	protected function displayWidgetCell()
 	{
@@ -429,9 +371,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 			$this->widget->display();
 			$td_tag->close();
 	}
-
-	// }}}
-	// {{{ protected function getCSSClassNames()
 
 	/**
 	 * Gets the array of CSS classes that are applied to this row
@@ -445,7 +384,6 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 		return $classes;
 	}
 
-	// }}}
 }
 
 ?>

@@ -9,7 +9,6 @@
  */
 class SwatRadioList extends SwatFlydown
 {
-	// {{{ private properties
 
 	/**
 	 * Used for displaying radio buttons
@@ -24,9 +23,6 @@ class SwatRadioList extends SwatFlydown
 	 * @var SwatHtmlTag
 	 */
 	private $label_tag;
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new radiolist
@@ -44,9 +40,6 @@ class SwatRadioList extends SwatFlydown
 
 		$this->addStyleSheet('packages/swat/styles/swat-radio-list.css');
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this radio list
@@ -124,9 +117,6 @@ class SwatRadioList extends SwatFlydown
 		$ul_tag->close();
 	}
 
-	// }}}
-	// {{{ protected function processValue()
-
 	/**
 	 * Processes the value of this radio list from user-submitted form data
 	 *
@@ -156,9 +146,6 @@ class SwatRadioList extends SwatFlydown
 		return true;
 	}
 
-	// }}}
-	// {{{ protected function displayDivider()
-
 	/**
 	 * Displays a divider option in this radio list
 	 *
@@ -176,9 +163,6 @@ class SwatRadioList extends SwatFlydown
 		$span_tag->setContent($option->title, $option->content_type);
 		$span_tag->display();
 	}
-
-	// }}}
-	// {{{ protected function displayOption()
 
 	/**
 	 * Displays an option in the radio list
@@ -230,9 +214,6 @@ class SwatRadioList extends SwatFlydown
 		echo '</span>';
 	}
 
-	// }}}
-	// {{{ protected function displayOptionLabel()
-
 	/**
 	 * Displays an option in the radio list
 	 *
@@ -252,9 +233,6 @@ class SwatRadioList extends SwatFlydown
 		$this->label_tag->display();
 	}
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
 	/**
 	 * Gets the array of CSS classes that are applied to this radio list
 	 *
@@ -268,7 +246,6 @@ class SwatRadioList extends SwatFlydown
 		return $classes;
 	}
 
-	// }}}
 }
 
 ?>

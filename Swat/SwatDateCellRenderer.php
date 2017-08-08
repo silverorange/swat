@@ -9,7 +9,6 @@
  */
 class SwatDateCellRenderer extends SwatCellRenderer
 {
-	// {{{ public properties
 
 	/**
 	 * Date to render
@@ -52,9 +51,6 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	 */
 	public $display_time_zone = null;
 
-	// }}}
-	// {{{ public function render()
-
 	/**
 	 * Renders the contents of this cell
 	 *
@@ -95,7 +91,6 @@ class SwatDateCellRenderer extends SwatCellRenderer
 		}
 	}
 
-	// }}}
 }
 
 ?>

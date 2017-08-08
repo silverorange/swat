@@ -11,7 +11,6 @@
  */
 class SwatContainer extends SwatWidget implements SwatUIParent
 {
-	// {{{ protected properties
 
 	/**
 	 * Children widgets
@@ -32,9 +31,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	protected $children_by_id = array();
 
-	// }}}
-	// {{{ public function init()
-
 	/**
 	 * Initializes this widget
 	 *
@@ -50,9 +46,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 			$child_widget->init();
 	}
 
-	// }}}
-	// {{{ public function add()
-
 	/**
 	 * Adds a widget
 	 *
@@ -66,9 +59,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	{
 		$this->packEnd($widget);
 	}
-
-	// }}}
-	// {{{ public function replace()
 
 	/**
 	 * Replace a widget
@@ -102,9 +92,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		return null;
 	}
 
-	// }}}
-	// {{{ public function remove()
-
 	/**
 	 * Removes a widget
 	 *
@@ -134,9 +121,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		return null;
 	}
 
-	// }}}
-	// {{{ public function packStart()
-
 	/**
 	 * Adds a widget to start
 	 *
@@ -158,9 +142,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
 		$this->sendAddNotifySignal($widget);
 	}
-
-	// }}}
-	// {{{ public function insertBefore()
 
 	/**
 	 * Adds a widget to this container before another widget
@@ -198,9 +179,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		$this->sendAddNotifySignal($widget);
 	}
 
-	// }}}
-	// {{{ public function packEnd()
-
 	/**
 	 * Adds a widget to end
 	 *
@@ -223,9 +201,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		$this->sendAddNotifySignal($widget);
 	}
 
-	// }}}
-	// {{{ public function getChild()
-
 	/**
 	 * Gets a child widget
 	 *
@@ -243,9 +218,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		else
 			return null;
 	}
-
-	// }}}
-	// {{{ public function getFirst()
 
 	/**
 	 * Gets the first child widget
@@ -265,9 +237,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 			return null;
 		}
 	}
-
-	// }}}
-	// {{{ public function getChildren()
 
 	/**
 	 * Gets all child widgets
@@ -293,9 +262,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
 		return $out;
 	}
-
-	// }}}
-	// {{{ public function getDescendants()
 
 	/**
 	 * Gets descendant UI-objects
@@ -334,9 +300,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getFirstDescendant()
-
 	/**
 	 * Gets the first descendant UI-object of a specific class
 	 *
@@ -370,9 +333,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getDescendantStates()
-
 	/**
 	 * Gets descendant states
 	 *
@@ -392,9 +352,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		return $states;
 	}
 
-	// }}}
-	// {{{ public function setDescendantStates()
-
 	/**
 	 * Sets descendant states
 	 *
@@ -411,9 +368,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 				$object->setState($states[$id]);
 	}
 
-	// }}}
-	// {{{ public function process()
-
 	/**
 	 * Processes this container by calling {@link SwatWidget::process()} on all
 	 * children
@@ -428,9 +382,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		}
 	}
 
-	// }}}
-	// {{{ public function display()
-
 	/**
 	 * Displays this container by calling {@link SwatWidget::display()} on all
 	 * children
@@ -444,9 +395,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
 		$this->displayChildren();
 	}
-
-	// }}}
-	// {{{ public function getMessages()
 
 	/**
 	 * Gets all messages
@@ -464,9 +412,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
 		return $messages;
 	}
-
-	// }}}
-	// {{{ public function hasMessage()
 
 	/**
 	 * Checks for the presence of messages
@@ -492,9 +437,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		return $has_message;
 	}
 
-	// }}}
-	// {{{ public function addChild()
-
 	/**
 	 * Adds a child object
 	 *
@@ -519,9 +461,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		}
 	}
 
-	// }}}
-	// {{{ public function getHtmlHeadEntrySet()
-
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this container
 	 *
@@ -541,9 +480,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		return $set;
 	}
 
-	// }}}
-	// {{{ public function getAvailableHtmlHeadEntrySet()
-
 	/**
 	 * Gets the SwatHtmlHeadEntry objects that may be needed by this container
 	 *
@@ -562,9 +498,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
 		return $set;
 	}
-
-	// }}}
-	// {{{ public function getFocusableHtmlId()
 
 	/**
 	 * Gets the id attribute of the XHTML element displayed by this widget
@@ -592,9 +525,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		return $focus_id;
 	}
 
-	// }}}
-	// {{{ public function printWidgetTree()
-
 	public function printWidgetTree()
 	{
 		echo get_class($this), ' ', $this->id;
@@ -610,9 +540,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 			echo '</ul>';
 		}
 	}
-
-	// }}}
-	// {{{ public function copy()
 
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
@@ -642,9 +569,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		return $copy;
 	}
 
-	// }}}
-	// {{{ protected function displayChildren()
-
 	/**
 	 * Displays the child widgets of this container
 	 *
@@ -657,9 +581,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 			$child->display();
 	}
 
-	// }}}
-	// {{{ protected function notifyOfAdd()
-
 	/**
 	 * Notifies this widget that a widget was added
 	 *
@@ -671,9 +592,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	protected function notifyOfAdd($widget)
 	{
 	}
-
-	// }}}
-	// {{{ protected function sendAddNotifySignal()
 
 	/**
 	 * Sends the notification signal up the widget tree
@@ -691,7 +609,6 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 			$this->parent->sendAddNotifySignal($widget);
 	}
 
-	// }}}
 }
 
 ?>

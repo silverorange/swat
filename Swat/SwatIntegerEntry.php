@@ -9,7 +9,6 @@
  */
 class SwatIntegerEntry extends SwatNumericEntry
 {
-	// {{{ public function process()
 
 	/**
 	 * Checks to make sure value is an integer
@@ -44,9 +43,6 @@ class SwatIntegerEntry extends SwatNumericEntry
 		}
 	}
 
-	// }}}
-	// {{{ protected function getDisplayValue()
-
 	/**
 	 * Formats an integer value to display
 	 *
@@ -70,9 +66,6 @@ class SwatIntegerEntry extends SwatNumericEntry
 		return $value;
 	}
 
-	// }}}
-	// {{{  protected function getNumericValue()
-
 	/**
 	 * Gets the numeric value of this widget
 	 *
@@ -89,9 +82,6 @@ class SwatIntegerEntry extends SwatNumericEntry
 		$locale = SwatI18NLocale::get();
 		return $locale->parseInteger($value);
 	}
-
-	// }}}
-	// {{{ protected function getValidationMessage()
 
 	/**
 	 * Gets a validation message for this integer entry
@@ -141,9 +131,6 @@ class SwatIntegerEntry extends SwatNumericEntry
 		return $message;
 	}
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
 	/**
 	 * Gets the array of CSS classes that are applied to this entry
 	 *
@@ -157,7 +144,6 @@ class SwatIntegerEntry extends SwatNumericEntry
 		return $classes;
 	}
 
-	// }}}
 }
 
 ?>

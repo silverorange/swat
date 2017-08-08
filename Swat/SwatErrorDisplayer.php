@@ -14,7 +14,6 @@
  */
 abstract class SwatErrorDisplayer
 {
-	// {{{ public abstract function display()
 
 	/**
 	 * Displays a SwatError
@@ -23,7 +22,6 @@ abstract class SwatErrorDisplayer
 	 */
 	public abstract function display(SwatError $e);
 
-	// }}}
 }
 
 ?>

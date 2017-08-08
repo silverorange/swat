@@ -12,7 +12,6 @@
  */
 class SwatImageButton extends SwatButton
 {
-	// {{{ public properties
 
 	/**
 	 * Image
@@ -46,9 +45,6 @@ class SwatImageButton extends SwatButton
 	 */
 	public $alt = null;
 
-	// }}}
-	// {{{ public function process()
-
 	/**
 	 * Does button processing
 	 *
@@ -68,9 +64,6 @@ class SwatImageButton extends SwatButton
 			$this->getForm()->button = $this;
 		}
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this image button
@@ -119,9 +112,6 @@ class SwatImageButton extends SwatButton
 		}
 	}
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
 	/**
 	 * Gets the array of CSS classes that are applied to this button
 	 *
@@ -134,7 +124,6 @@ class SwatImageButton extends SwatButton
 		return $classes;
 	}
 
-	// }}}
 }
 
 ?>

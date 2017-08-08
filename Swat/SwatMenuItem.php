@@ -15,7 +15,6 @@
  */
 class SwatMenuItem extends SwatControl implements SwatUIParent
 {
-	// {{{ public properties
 
 	/**
 	 * The URI-reference (see RFC2396) linked by this menu item
@@ -67,9 +66,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	 */
 	public $stock_id = null;
 
-	// }}}
-	// {{{ protected properties
-
 	/**
 	 * The sub menu of this menu item
 	 *
@@ -86,9 +82,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 	 */
 	protected $stock_class = null;
 
-	// }}}
-	// {{{ public function setSubMenu()
-
 	/**
 	 * Sets the sub-menu of this menu item
 	 *
@@ -99,9 +92,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 		$this->sub_menu = $menu;
 		$menu->parent = $this;
 	}
-
-	// }}}
-	// {{{ public function addChild()
 
 	/**
 	 * Adds a child object
@@ -134,9 +124,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 		}
 	}
 
-	// }}}
-	// {{{ public function init()
-
 	/**
 	 * Initializes this menu item
 	 */
@@ -150,9 +137,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 		if ($this->sub_menu !== null)
 			$this->sub_menu->init();
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this menu item
@@ -190,9 +174,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 
 		$this->displaySubMenu();
 	}
-
-	// }}}
-	// {{{ public function setFromStock()
 
 	/**
 	 * Sets the values of this menu item to a stock type
@@ -275,9 +256,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 		$this->stock_class = $class;
 	}
 
-	// }}}
-	// {{{ public function getDescendants()
-
 	/**
 	 * Gets descendant UI-objects
 	 *
@@ -316,9 +294,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getFirstDescendant()
-
 	/**
 	 * Gets the first descendant UI-object of a specific class
 	 *
@@ -345,9 +320,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getDescendantStates()
-
 	/**
 	 * Gets descendant states
 	 *
@@ -367,9 +339,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 		return $states;
 	}
 
-	// }}}
-	// {{{ public function setDescendantStates()
-
 	/**
 	 * Sets descendant states
 	 *
@@ -385,9 +354,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 			if (isset($states[$id]))
 				$object->setState($states[$id]);
 	}
-
-	// }}}
-	// {{{ public function copy()
 
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
@@ -413,9 +379,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 		return $copy;
 	}
 
-	// }}}
-	// {{{ protected function displaySubMenu()
-
 	/**
 	 * Displays this menu item's sub-menu
 	 */
@@ -424,9 +387,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 		if ($this->sub_menu !== null)
 			$this->sub_menu->display();
 	}
-
-	// }}}
-	// {{{ protected function getCSSClassNames()
 
 	/**
 	 * Gets the array of CSS classes that are applied to this menu item
@@ -446,7 +406,6 @@ class SwatMenuItem extends SwatControl implements SwatUIParent
 		return $classes;
 	}
 
-	// }}}
 }
 
 ?>
