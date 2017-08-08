@@ -9,7 +9,6 @@
  */
 abstract class SwatControl extends SwatWidget
 {
-	// {{{ public function addMessage()
 
 	/**
 	 * Adds a message to this control
@@ -54,16 +53,10 @@ abstract class SwatControl extends SwatWidget
 		parent::addMessage($message);
 	}
 
-	// }}}
-	// {{{ public function printWidgetTree()
-
 	public function printWidgetTree()
 	{
 		echo get_class($this), ' ', $this->id;
 	}
-
-	// }}}
-	// {{{ public function getNote()
 
 	/**
 	 * Gets an informative note of how to use this control
@@ -78,7 +71,6 @@ abstract class SwatControl extends SwatWidget
 		return null;
 	}
 
-	// }}}
 }
 
 ?>

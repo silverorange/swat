@@ -11,7 +11,6 @@
  */
 class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 {
-	// {{{ protected properties
 
 	/**
 	 * The set of SwatMenuItem objects contained in this menu
@@ -19,9 +18,6 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 	 * @var array
 	 */
 	protected $items = array();
-
-	// }}}
-	// {{{ public function addItem()
 
 	/**
 	 * Adds a menu item to this menu
@@ -33,9 +29,6 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 		$this->items[] = $item;
 		$item->parent = $this;
 	}
-
-	// }}}
-	// {{{ public function addChild()
 
 	/**
 	 * Adds a child object
@@ -61,9 +54,6 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 				'SwatMenu object.', 0, $child);
 	}
 
-	// }}}
-	// {{{ public function init()
-
 	/**
 	 * Initializes this menu
 	 */
@@ -73,9 +63,6 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 		foreach ($this->items as $item)
 			$item->init();
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this menu
@@ -128,9 +115,6 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 			Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
-	// }}}
-	// {{{ public function getDescendants()
-
 	/**
 	 * Gets descendant UI-objects
 	 *
@@ -167,9 +151,6 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getFirstDescendant()
-
 	/**
 	 * Gets the first descendant UI-object of a specific class
 	 *
@@ -203,9 +184,6 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getDescendantStates()
-
 	/**
 	 * Gets descendant states
 	 *
@@ -225,9 +203,6 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 		return $states;
 	}
 
-	// }}}
-	// {{{ public function setDescendantStates()
-
 	/**
 	 * Sets descendant states
 	 *
@@ -243,9 +218,6 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 			if (isset($states[$id]))
 				$object->setState($states[$id]);
 	}
-
-	// }}}
-	// {{{ public function copy()
 
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
@@ -271,9 +243,6 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 		return $copy;
 	}
 
-	// }}}
-	// {{{ protected function getMenuItemCSSClassName()
-
 	/**
 	 * Gets the CSS class name to use for menu items in this menu
 	 *
@@ -283,9 +252,6 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 	{
 		return 'yuimenuitem';
 	}
-
-	// }}}
-	// {{{ protected function getCSSClassNames()
 
 	/**
 	 * Gets the array of CSS classes that are applied to this menu
@@ -299,7 +265,6 @@ class SwatMenu extends SwatAbstractMenu implements SwatUIParent
 		return $classes;
 	}
 
-	// }}}
 }
 
 ?>

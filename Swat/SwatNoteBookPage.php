@@ -10,7 +10,6 @@
  */
 class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 {
-	// {{{ public properties
 
 	/**
 	 * The title of this page
@@ -28,9 +27,6 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 	 */
 	public $title_content_type = 'text/plain';
 
-	// }}}
-	// {{{ public function __construct()
-
 	/**
 	 * Creates a new notebook page
 	 *
@@ -42,9 +38,6 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 
 		$this->requires_id = true;
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this notebook page
@@ -65,9 +58,6 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 		$div_tag->close();
 	}
 
-	// }}}
-	// {{{ public function getPages()
-
 	/**
 	 * Gets the notebook pages of this notebook page
 	 *
@@ -79,9 +69,6 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 	{
 		return array($this);
 	}
-
-	// }}}
-	// {{{ protected function getCSSClassNames()
 
 	/**
 	 * Gets the array of CSS classes that are applied to this page
@@ -96,7 +83,6 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 		return $classes;
 	}
 
-	// }}}
 }
 
 ?>

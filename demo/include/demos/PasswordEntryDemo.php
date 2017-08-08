@@ -11,7 +11,6 @@ require_once 'Demo.php';
  */
 class PasswordEntryDemo extends Demo
 {
-	// {{{ public function buildDemoUI()
 
 	public function buildDemoUI(SwatUI $ui)
 	{
@@ -20,7 +19,6 @@ class PasswordEntryDemo extends Demo
 		$confirm_password->password_widget = $password;
 	}
 
-	// }}}
 }
 
 ?>

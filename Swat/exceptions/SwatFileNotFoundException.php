@@ -9,7 +9,6 @@
  */
 class SwatFileNotFoundException extends SwatException
 {
-	// {{{ protected properties
 
 	/**
 	 * The filename that caused this exception to be thrown.
@@ -17,9 +16,6 @@ class SwatFileNotFoundException extends SwatException
 	 * @var string
 	 */
 	protected $filename = '';
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new file not found exception
@@ -34,9 +30,6 @@ class SwatFileNotFoundException extends SwatException
 		$this->filename = $filename;
 	}
 
-	// }}}
-	// {{{ public function getFilename()
-
 	/**
 	 * Gets the filename of that caused this exception to be thrown
 	 *
@@ -47,7 +40,6 @@ class SwatFileNotFoundException extends SwatException
 		return $this->filename;
 	}
 
-	// }}}
 }
 
 ?>

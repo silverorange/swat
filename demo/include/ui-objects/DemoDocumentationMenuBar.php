@@ -14,7 +14,6 @@ require_once 'DemoMenuBar.php';
  */
 class DemoDocumentationMenuBar extends DemoMenuBar
 {
-	// {{{ public function display()
 
 	public function display()
 	{
@@ -42,7 +41,6 @@ class DemoDocumentationMenuBar extends DemoMenuBar
 		}
 	}
 
-	// }}}
 }
 
 ?>

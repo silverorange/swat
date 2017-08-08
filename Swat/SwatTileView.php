@@ -14,7 +14,6 @@
  */
 class SwatTileView extends SwatView implements SwatUIParent
 {
-	// {{{ public properties
 
 	/**
 	 * Whether to show a "check all" widget
@@ -105,9 +104,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public $no_records_message_type = 'text/plain';
 
-	// }}}
-	// {{{ protected properties
-
 	/**
 	 * The groups of this tile-view indexed by their unique identifier
 	 *
@@ -130,18 +126,12 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	protected $groups = array();
 
-	// }}}
-	// {{{ private properties
-
 	/**
 	 * The tile of this tile view
 	 *
 	 * @var SwatTile
 	 */
 	private $tile = null;
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new tile view
@@ -157,9 +147,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		$this->addStyleSheet('packages/swat/styles/swat-tile-view.css');
 		$this->addJavaScript('packages/swat/javascript/swat-tile-view.js');
 	}
-
-	// }}}
-	// {{{ public function init()
 
 	/**
 	 * Initializes this tile view
@@ -183,9 +170,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		}
 	}
 
-	// }}}
-	// {{{ public function process()
-
 	/**
 	 * Processes this tile view
 	 *
@@ -208,9 +192,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 			$this->tile->process();
 	}
 
-	// }}}
-	// {{{ public function isExtendedCheckAllSelected()
-
 	/**
 	 * Whether or not the extended-check-all check-box was checked
 	 *
@@ -221,9 +202,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		$check_all = $this->getCompositeWidget('check_all');
 		return $check_all->isExtendedSelected();
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this tile view
@@ -280,9 +258,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
-
-	// }}}
-	// {{{ public function displayTiles()
 
 	/**
 	 * Displays the tiles of this tile view
@@ -343,9 +318,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		}
 	}
 
-	// }}}
-	// {{{ public function displayTile()
-
 	/**
 	 * Displays a simgle tile of this tile view
 	 *
@@ -357,9 +329,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		$this->tile->display($record);
 	}
-
-	// }}}
-	// {{{ public function displayTileGroupHeaders()
 
 	/**
 	 * Displays tile group headers
@@ -374,9 +343,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 			$group->display($record);
 	}
 
-	// }}}
-	// {{{ public function displayTileGroupFooters()
-
 	/**
 	 * Displays tile group footers
 	 *
@@ -389,9 +355,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		foreach ($this->groups as $group)
 			$group->displayFooter($record, $next_record);
 	}
-
-	// }}}
-	// {{{ public function addChild()
 
 	/**
 	 * Adds a child object
@@ -429,9 +392,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 				0, $child);
 		}
 	}
-
-	// }}}
-	// {{{ public function getDescendants()
 
 	/**
 	 * Gets descendant UI-objects
@@ -482,9 +442,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getFirstDescendant()
-
 	/**
 	 * Gets the first descendant UI-object of a specific class
 	 *
@@ -511,9 +468,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getDescendantStates()
-
 	/**
 	 * Gets descendant states
 	 *
@@ -533,9 +487,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		return $states;
 	}
 
-	// }}}
-	// {{{ public function setDescendantStates()
-
 	/**
 	 * Sets descendant states
 	 *
@@ -552,9 +503,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 				$object->setState($states[$id]);
 	}
 
-	// }}}
-	// {{{ public function getMessages()
-
 	/**
 	 * Gathers all messages from this tile view
 	 *
@@ -568,9 +516,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 		return $messages;
 	}
-
-	// }}}
-	// {{{ public function hasMessage()
 
 	/**
 	 * Gets whether or not this tile view has any messages
@@ -586,9 +531,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 		return $has_message;
 	}
-
-	// }}}
-	// {{{ public function getHtmlHeadEntrySet()
 
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this tile view
@@ -613,9 +555,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		return $set;
 	}
 
-	// }}}
-	// {{{ public function getAvailableHtmlHeadEntrySet()
-
 	/**
 	 * Gets the SwatHtmlHeadEntry objects that may be needed by this tile view
 	 *
@@ -638,9 +577,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 		return $set;
 	}
-
-	// }}}
-	// {{{ public function copy()
 
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
@@ -679,9 +615,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		return $copy;
 	}
 
-	// }}}
-	// {{{ protected function getInlineJavaScript()
-
 	/**
 	 * Gets the inline JavaScript required for this tile view
 	 *
@@ -718,9 +651,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		return $javascript;
 	}
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
 	/**
 	 * Gets the array of CSS classes that are applied to this tile view
 	 *
@@ -733,9 +663,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
-
-	// }}}
-	// {{{ protected function showCheckAll()
 
 	/**
 	 * Whether or not a check-all widget is to be displayed for the tiles
@@ -765,9 +692,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		return $show;
 	}
 
-	// }}}
-	// {{{ protected function getCheckboxCellRenderer()
-
 	/**
 	 * Gets the first checkbox cell renderer in this tile view's tile
 	 *
@@ -789,9 +713,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		return $checkbox_cell_renderer;
 	}
 
-	// }}}
-	// {{{ protected function createCompositeWidgets()
-
 	/**
 	 * Creates the composite check-all widget used by this tile view
 	 */
@@ -803,10 +724,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 		}
 	}
 
-	// }}}
-
 	// tile methods
-	// {{{ public function getTile()
 
 	/**
 	 * Gets a reference to a tile contained in the view.
@@ -817,9 +735,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		return $this->tile;
 	}
-
-	// }}}
-	// {{{ public function setTile()
 
 	/**
 	 * Sets a tile of this tile view
@@ -836,10 +751,7 @@ class SwatTileView extends SwatView implements SwatUIParent
 		$tile->parent = $this;
 	}
 
-	// }}}
-
 	// grouping methods
-	// {{{ public function appendGroup()
 
 	/**
 	 * Appends a grouping object to this tile-view
@@ -871,9 +783,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		$group->parent = $this;
 	}
 
-	// }}}
-	// {{{ public function hasGroup()
-
 	/**
 	 * Returns true if a group with the given id exists within this tile-view
 	 *
@@ -887,9 +796,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		return array_key_exists($id, $this->groups_by_id);
 	}
-
-	// }}}
-	// {{{ public function getGroup()
 
 	/**
 	 * Gets a group in this tile-view by the group's id
@@ -910,9 +816,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		return $this->groups_by_id[$id];
 	}
 
-	// }}}
-	// {{{ public function getGroups()
-
 	/**
 	 * Gets all groups of this tile-view as an array
 	 *
@@ -922,9 +825,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		return $this->groups;
 	}
-
-	// }}}
-	// {{{ protected function validateGroup()
 
 	/**
 	 * Ensures a group added to this tile-view is valid for this tile-view
@@ -947,7 +847,6 @@ class SwatTileView extends SwatView implements SwatUIParent
 		}
 	}
 
-	// }}}
 }
 
 ?>

@@ -9,7 +9,6 @@
  */
 class SwatReCaptcha extends SwatInputControl
 {
-	// {{{ public properties
 
 	/**
 	 * Public Key
@@ -39,9 +38,6 @@ class SwatReCaptcha extends SwatInputControl
 	 */
 	public $secure = false;
 
-	// }}}
-	// {{{ public function display()
-
 	/**
 	 * Displays this ReCaptcha widget
 	 */
@@ -58,9 +54,6 @@ class SwatReCaptcha extends SwatInputControl
 		 */
 		ReCaptcha::display($this->public_key, null, $this->secure);
 	}
-
-	// }}}
-	// {{{ public function process()
 
 	/**
 	 * Processes this ReCaptcha Widget
@@ -96,7 +89,6 @@ class SwatReCaptcha extends SwatInputControl
 		}
 	}
 
-	// }}}
 }
 
 ?>

@@ -9,7 +9,6 @@
  */
 class SwatInvalidClassException extends SwatException
 {
-	// {{{ protected properties
 
 	/**
 	 * The object that is of the wrong class
@@ -17,9 +16,6 @@ class SwatInvalidClassException extends SwatException
 	 * @var mixed
 	 */
 	protected $object = null;
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new invalid class exception
@@ -34,9 +30,6 @@ class SwatInvalidClassException extends SwatException
 		$this->object = $object;
 	}
 
-	// }}}
-	// {{{ public function getObject()
-
 	/**
 	 * Gets the object that is of the wrong class
 	 *
@@ -47,7 +40,6 @@ class SwatInvalidClassException extends SwatException
 		return $this->object;
 	}
 
-	// }}}
 }
 
 ?>

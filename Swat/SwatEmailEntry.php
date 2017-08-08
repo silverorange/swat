@@ -12,7 +12,6 @@
  */
 class SwatEmailEntry extends SwatEntry
 {
-	// {{{ public function process()
 
 	/**
 	 * Processes this email entry
@@ -37,9 +36,6 @@ class SwatEmailEntry extends SwatEntry
 		}
 	}
 
-	// }}}
-	// {{{ protected function validateEmailAddress()
-
 	/**
 	 * Validates the email address value of this entry
 	 *
@@ -50,9 +46,6 @@ class SwatEmailEntry extends SwatEntry
 	{
 		return SwatString::validateEmailAddress($this->value);
 	}
-
-	// }}}
-	// {{{ protected function getValidationMessage()
 
 	/**
 	 * Gets a validation message for this email entry
@@ -80,9 +73,6 @@ class SwatEmailEntry extends SwatEntry
 		return $message;
 	}
 
-	// }}}
-	// {{{ protected function getInputTag()
-
 	/**
 	 * Get the input tag to display
 	 *
@@ -94,9 +84,6 @@ class SwatEmailEntry extends SwatEntry
 		$tag->type = 'email';
 		return $tag;
 	}
-
-	// }}}
-	// {{{ protected function getCSSClassNames()
 
 	/**
 	 * Gets the array of CSS classes that are applied to this entry
@@ -111,7 +98,6 @@ class SwatEmailEntry extends SwatEntry
 		return $classes;
 	}
 
-	// }}}
 }
 
 ?>

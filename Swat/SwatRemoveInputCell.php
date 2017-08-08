@@ -19,7 +19,6 @@
  */
 class SwatRemoveInputCell extends SwatInputCell
 {
-	// {{{ public function init()
 
 	/**
 	 * Sets the remove widget for this input cell
@@ -62,9 +61,6 @@ class SwatRemoveInputCell extends SwatInputCell
 		$content->parent = $this;
 	}
 
-	// }}}
-	// {{{ public function display()
-
 	/**
 	 * Displays this remove input cell given a numeric row identifier
 	 *
@@ -81,9 +77,6 @@ class SwatRemoveInputCell extends SwatInputCell
 		$widget->display();
 	}
 
-	// }}}
-	// {{{ public function setWidget()
-
 	/**
 	 * Sets the widget of this input cell
 	 *
@@ -99,7 +92,6 @@ class SwatRemoveInputCell extends SwatInputCell
 		throw new SwatException('Remove input cells must be empty');
 	}
 
-	// }}}
 }
 
 ?>

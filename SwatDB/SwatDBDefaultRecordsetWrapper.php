@@ -11,7 +11,6 @@
  */
 class SwatDBDefaultRecordsetWrapper extends SwatDBRecordsetWrapper
 {
-	// {{{ public function __construct()
 
 	public function __construct($rs = null)
 	{
@@ -19,7 +18,6 @@ class SwatDBDefaultRecordsetWrapper extends SwatDBRecordsetWrapper
 		parent::__construct($rs);
 	}
 
-	// }}}
 }
 
 ?>

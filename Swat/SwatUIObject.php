@@ -12,7 +12,6 @@
  */
 abstract class SwatUIObject extends SwatObject
 {
-	// {{{ public properties
 
 	/**
 	 * The object which contains this object
@@ -43,9 +42,6 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public $classes = array();
 
-	// }}}
-	// {{{ protected properties
-
 	/**
 	 * A set of HTML head entries needed by this user-interface element
 	 *
@@ -56,16 +52,10 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	protected $html_head_entry_set;
 
-	// }}}
-	// {{{ public function __construct()
-
 	public function __construct()
 	{
 		$this->html_head_entry_set = new SwatHtmlHeadEntrySet();
 	}
-
-	// }}}
-	// {{{ public function addStyleSheet()
 
 	/**
 	 * Adds a stylesheet to the list of stylesheets needed by this
@@ -88,9 +78,6 @@ abstract class SwatUIObject extends SwatObject
 		);
 	}
 
-	// }}}
-	// {{{ public function addJavaScript()
-
 	/**
 	 * Adds a JavaScript include to the list of JavaScript includes needed
 	 * by this user-interface element
@@ -112,9 +99,6 @@ abstract class SwatUIObject extends SwatObject
 		);
 	}
 
-	// }}}
-	// {{{ public function addComment()
-
 	/**
 	 * Adds a comment to the list of HTML head entries needed by this user-
 	 * interface element
@@ -134,16 +118,10 @@ abstract class SwatUIObject extends SwatObject
 		);
 	}
 
-	// }}}
-	// {{{ public function addInlineScript()
-
 	public function addInlineScript($script)
 	{
 		$this->inline_scripts->add($script);
 	}
-
-	// }}}
-	// {{{ public function getFirstAncestor()
 
 	/**
 	 * Gets the first ancestor object of a specific class
@@ -174,9 +152,6 @@ abstract class SwatUIObject extends SwatObject
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getHtmlHeadEntrySet()
-
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this UI object
 	 *
@@ -197,9 +172,6 @@ abstract class SwatUIObject extends SwatObject
 		return $set;
 	}
 
-	// }}}
-	// {{{ public function getAvailableHtmlHeadEntrySet()
-
 	/**
 	 * Gets the SwatHtmlHeadEntry objects that MAY needed by this UI object
 	 *
@@ -213,9 +185,6 @@ abstract class SwatUIObject extends SwatObject
 	{
 		return new SwatHtmlHeadEntrySet($this->html_head_entry_set);
 	}
-
-	// }}}
-	// {{{ public function isVisible()
 
 	/**
 	 * Gets whether or not this UI object is visible
@@ -235,9 +204,6 @@ abstract class SwatUIObject extends SwatObject
 			return $this->visible;
 	}
 
-	// }}}
-	// {{{ public function __toString()
-
 	/**
 	 * Gets this object as a string
 	 *
@@ -255,9 +221,6 @@ abstract class SwatUIObject extends SwatObject
 		// set parent back again
 		$this->parent = $parent;
 	}
-
-	// }}}
-	// {{{ public function copy()
 
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
@@ -284,9 +247,6 @@ abstract class SwatUIObject extends SwatObject
 		return $copy;
 	}
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
 	/**
 	 * Gets the array of CSS classes that are applied to this user-interface
 	 * object
@@ -304,9 +264,6 @@ abstract class SwatUIObject extends SwatObject
 		return $this->classes;
 	}
 
-	// }}}
-	// {{{ protected function getInlineJavaScript()
-
 	/**
 	 * Gets inline JavaScript used by this user-interface object
 	 *
@@ -316,9 +273,6 @@ abstract class SwatUIObject extends SwatObject
 	{
 		return '';
 	}
-
-	// }}}
-	// {{{ protected final function getCSSClassString()
 
 	/**
 	 * Gets the string representation of this user-interface object's list of
@@ -342,9 +296,6 @@ abstract class SwatUIObject extends SwatObject
 		return $class_string;
 	}
 
-	// }}}
-	// {{{ protected final function getUniqueId()
-
 	/**
 	 * Generates a unique id for this UI object
 	 *
@@ -366,7 +317,6 @@ abstract class SwatUIObject extends SwatObject
 		return get_class($this).$counter;
 	}
 
-	// }}}
 }
 
 ?>

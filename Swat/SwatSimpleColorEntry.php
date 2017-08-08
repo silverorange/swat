@@ -12,7 +12,6 @@
  */
 class SwatSimpleColorEntry extends SwatAbstractOverlay
 {
-	// {{{ public properties
 
 	/**
 	 * Show "none" option
@@ -50,9 +49,6 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 		'ad7fa8', '75507b', '5c3566', 'ef2929', 'cc0000', 'a40000',
 		);
 
-	// }}}
-	// {{{ public function __construct()
-
 	/**
 	 * Creates a new simple color selection widget
 	 *
@@ -78,9 +74,6 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 
 		$this->addStyleSheet('packages/swat/styles/swat-color-entry.css');
 	}
-
-	// }}}
-	// {{{ public function process()
 
 	/**
 	 * Processes this color entry
@@ -116,9 +109,6 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 		}
 	}
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
 	/**
 	 * Gets the array of CSS classes that are applied to this simple color
 	 * entry widget
@@ -132,9 +122,6 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScript()
 
 	/**
 	 * Gets simple color selector inline JavaScript
@@ -163,9 +150,6 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 
 		return $javascript;
 	}
-
-	// }}}
-	// {{{ protected function validateColor()
 
 	/**
 	 * Validates a color
@@ -197,9 +181,6 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 		return $valid;
 	}
 
-	// }}}
-	// {{{ protected function getJavaScriptClassName()
-
 	/**
 	 * Get the name of the JavaScript class for this widget
 	 *
@@ -210,7 +191,6 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 		return 'SwatSimpleColorEntry';
 	}
 
-	// }}}
 }
 
 ?>

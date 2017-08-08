@@ -16,7 +16,6 @@
  */
 class SwatFileEntry extends SwatInputControl
 {
-	// {{{ public properties
 
 	/**
 	 * The size in characters of the XHTML form input, or null if no width is
@@ -83,9 +82,6 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public $display_maximum_upload_size = false;
 
-	// }}}
-	// {{{ private properties
-
 	/**
 	 * Stores the relevant part of the $_FILES array for this widget after
 	 * the widget's parent is processed
@@ -105,9 +101,6 @@ class SwatFileEntry extends SwatInputControl
 	 * @var string
 	 */
 	private $mime_type;
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this entry widget
@@ -148,9 +141,6 @@ class SwatFileEntry extends SwatInputControl
 		}
 	}
 
-	// }}}
-	// {{{ public function process()
-
 	/**
 	 * Processes this file entry widget
 	 *
@@ -189,9 +179,6 @@ class SwatFileEntry extends SwatInputControl
 		}
 	}
 
-	// }}}
-	// {{{ public function getNote()
-
 	/**
 	 * Gets a note specifying the mime types this file entry accepts
 	 *
@@ -228,9 +215,6 @@ class SwatFileEntry extends SwatInputControl
 		return $message;
 	}
 
-	// }}}
-	// {{{ public function isUploaded()
-
 	/**
 	 * Is file uploaded
 	 *
@@ -240,9 +224,6 @@ class SwatFileEntry extends SwatInputControl
 	{
 		return ($this->file !== null);
 	}
-
-	// }}}
-	// {{{ public function getFileName()
 
 	/**
 	 * Gets the original file name of the uploaded file
@@ -256,9 +237,6 @@ class SwatFileEntry extends SwatInputControl
 	{
 		return ($this->isUploaded()) ? $this->file['name'] : null;
 	}
-
-	// }}}
-	// {{{ public function getUniqueFileName()
 
 	/**
 	 * Gets a unique file name for the uploaded file for the given path.
@@ -281,9 +259,6 @@ class SwatFileEntry extends SwatInputControl
 				'directory or does not exist.');
 	}
 
-	// }}}
-	// {{{ public function getTempFileName()
-
 	/**
 	 * Gets the temporary name of the uploaded file
 	 *
@@ -297,9 +272,6 @@ class SwatFileEntry extends SwatInputControl
 		return ($this->isUploaded()) ? $this->file['tmp_name'] : null;
 	}
 
-	// }}}
-	// {{{ public function getSize()
-
 	/**
 	 * Gets the size of the uploaded file in bytes
 	 *
@@ -310,9 +282,6 @@ class SwatFileEntry extends SwatInputControl
 	{
 		return ($this->isUploaded()) ? $this->file['size'] : null;
 	}
-
-	// }}}
-	// {{{ public function getMimeType()
 
 	/**
 	 * Gets the mime type of the uploaded file
@@ -354,9 +323,6 @@ class SwatFileEntry extends SwatInputControl
 		return $this->mime_type;
 	}
 
-	// }}}
-	// {{{ public function saveFile()
-
 	/**
 	 * Saves the uploaded file to the server
 	 *
@@ -387,9 +353,6 @@ class SwatFileEntry extends SwatInputControl
 				'directory or does not exist.');
 	}
 
-	// }}}
-	// {{{ public function getFocusableHtmlId()
-
 	/**
 	 * Gets the id attribute of the XHTML element displayed by this widget
 	 * that should receive focus
@@ -404,9 +367,6 @@ class SwatFileEntry extends SwatInputControl
 	{
 		return ($this->visible) ? $this->id : null;
 	}
-
-	// }}}
-	// {{{ public static function getMaximumFileUploadSize()
 
 	/**
 	 * Returns the size (in bytes) of the upload size limit of the PHP
@@ -424,9 +384,6 @@ class SwatFileEntry extends SwatInputControl
 		return min(self::parseFileUploadSize(ini_get('post_max_size')),
 			self::parseFileUploadSize(ini_get('upload_max_filesize')));
 	}
-
-	// }}}
-	// {{{ protected function getValidationMessage()
 
 	/**
 	 * Gets a validation message for this file entry
@@ -504,9 +461,6 @@ class SwatFileEntry extends SwatInputControl
 		return $message;
 	}
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
 	/**
 	 * Gets the array of CSS classes that are applied to this file entry widget
 	 *
@@ -519,9 +473,6 @@ class SwatFileEntry extends SwatInputControl
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
-
-	// }}}
-	// {{{ protected function hasValidMimeType()
 
 	/**
 	 * Whether or not the uploaded file's mime type is valid
@@ -560,17 +511,11 @@ class SwatFileEntry extends SwatInputControl
 		return $valid;
 	}
 
-	// }}}
-	// {{{ protected function getMaximumUploadSizeText()
-
 	protected function getMaximumUploadSizeText()
 	{
 		return sprintf(Swat::_('Maximum file size %s.'),
 			SwatString::byteFormat(self::getMaximumFileUploadSize()));
 	}
-
-	// }}}
-	// {{{ protected function getFinfo()
 
 	/**
 	 * Gets a new finfo resource
@@ -588,9 +533,6 @@ class SwatFileEntry extends SwatInputControl
 
 		return new finfo($mime_constant);
 	}
-
-	// }}}
-	// {{{ protected function getDisplayableTypes()
 
 	/**
 	 * Gets a unique array of acceptable human-readable file and mime types for
@@ -618,9 +560,6 @@ class SwatFileEntry extends SwatInputControl
 		return $displayable_types;
 	}
 
-	// }}}
-	// {{{ private function generateUniqueFileName()
-
 	private function generateUniqueFileName($path, $count = 0)
 	{
 		if (mb_strpos($this->getFileName(), '.') === false) {
@@ -642,9 +581,6 @@ class SwatFileEntry extends SwatInputControl
 		else
 			return $file_name;
 	}
-
-	// }}}
-	// {{{ private static function parseFileUploadSize()
 
 	private static function parseFileUploadSize($ini_value)
 	{
@@ -671,7 +607,6 @@ class SwatFileEntry extends SwatInputControl
 		return $value;
 	}
 
-	// }}}
 }
 
 ?>

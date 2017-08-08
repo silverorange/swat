@@ -9,7 +9,6 @@
  */
 class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 {
-	// {{{ protected properties
 
 	/**
 	 * Checkbox tree structure
@@ -39,9 +38,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	 */
 	protected $input_tag = null;
 
-	// }}}
-	// {{{ public function __construct()
-
 	/**
 	 * Creates a new checkbox list
 	 *
@@ -54,9 +50,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		parent::__construct($id);
 		$this->setTree(new SwatDataTreeNode(null, 'root'));
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	public function display()
 	{
@@ -95,9 +88,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
-	// }}}
-	// {{{ public function setTree()
-
 	/**
 	 * Sets the tree to use for display
 	 *
@@ -107,9 +97,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	{
 		$this->tree = $tree;
 	}
-
-	// }}}
-	// {{{ public function getTree()
 
 	/**
 	 * Gets the tree collection of {@link SwatTreeNode} objects for this
@@ -121,9 +108,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 	{
 		return $this->tree;
 	}
-
-	// }}}
-	// {{{ protected function getCSSClassNames()
 
 	/**
 	 * Gets the array of CSS classes that are applied to this checkbox tree
@@ -137,9 +121,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
-
-	// }}}
-	// {{{ private function displayNode()
 
 	/**
 	 * Displays a node in a tree as a checkbox input
@@ -211,7 +192,6 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		return $nodes;
 	}
 
-	// }}}
 }
 
 ?>

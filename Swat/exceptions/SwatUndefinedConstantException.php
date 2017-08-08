@@ -9,7 +9,6 @@
  */
 class SwatUndefinedConstantException extends SwatException
 {
-	// {{{ protected properties
 
 	/**
 	 * The name of the constant that is undefined
@@ -17,9 +16,6 @@ class SwatUndefinedConstantException extends SwatException
 	 * @var string
 	 */
 	protected $constant_name = null;
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new undefined constant exception
@@ -37,9 +33,6 @@ class SwatUndefinedConstantException extends SwatException
 		$this->constant_name = $constant_name;
 	}
 
-	// }}}
-	// {{{ public function getConstantName()
-
 	/**
 	 * Gets the name of the constant that is undefined
 	 *
@@ -50,7 +43,6 @@ class SwatUndefinedConstantException extends SwatException
 		return $this->constant_name;
 	}
 
-	// }}}
 }
 
 ?>

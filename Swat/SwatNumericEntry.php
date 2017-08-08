@@ -9,7 +9,6 @@
  */
 abstract class SwatNumericEntry extends SwatEntry
 {
-	// {{{ public properties
 
 	/**
 	 * Show Thousands Seperator
@@ -39,9 +38,6 @@ abstract class SwatNumericEntry extends SwatEntry
 	 */
 	public $maximum_value = null;
 
-	// }}}
-	// {{{ public function __construct()
-
 	/**
 	 * Creates a new numeric entry widget
 	 *
@@ -57,9 +53,6 @@ abstract class SwatNumericEntry extends SwatEntry
 
 		$this->size = 10;
 	}
-
-	// }}}
-	// {{{ public function process()
 
 	/**
 	 * Checks the minimum and maximum values of this numeric entry widget
@@ -100,9 +93,6 @@ abstract class SwatNumericEntry extends SwatEntry
 		}
 	}
 
-	// }}}
-	// {{{ protected function getValidationMessage()
-
 	/**
 	 * Gets a validation message for this numeric entry
 	 *
@@ -138,9 +128,6 @@ abstract class SwatNumericEntry extends SwatEntry
 		return $message;
 	}
 
-	// }}}
-	// {{{ abstract protected function getNumericValue()
-
 	/**
 	 * Gets the numeric value of this widget
 	 *
@@ -153,9 +140,6 @@ abstract class SwatNumericEntry extends SwatEntry
 	 *                numeric value is available.
 	 */
 	abstract protected function getNumericValue($value);
-
-	// }}}
-	// {{{ protected function getCSSClassNames()
 
 	/**
 	 * Gets the array of CSS classes that are applied to this entry
@@ -170,7 +154,6 @@ abstract class SwatNumericEntry extends SwatEntry
 		return $classes;
 	}
 
-	// }}}
 }
 
 ?>

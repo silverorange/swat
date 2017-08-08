@@ -9,7 +9,6 @@
  */
 class SwatDataTreeNode extends SwatTreeNode
 {
-	// {{{ public properties
 
 	/**
 	 * The value of this node
@@ -29,9 +28,6 @@ class SwatDataTreeNode extends SwatTreeNode
 	 */
 	public $title;
 
-	// }}}
-	// {{{ public function __construct()
-
 	/**
 	 * Creates a new data node
 	 *
@@ -45,7 +41,6 @@ class SwatDataTreeNode extends SwatTreeNode
 		$this->title = $title;
 	}
 
-	// }}}
 }
 
 ?>

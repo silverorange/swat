@@ -11,7 +11,6 @@ require_once 'Demo.php';
  */
 class TileViewDemo extends Demo
 {
-	// {{{ public function buildDemoUI();
 
 	public function buildDemoUI(SwatUI $ui)
 	{
@@ -106,7 +105,6 @@ class TileViewDemo extends Demo
 		$tile_view->model = $table_store;
 	}
 
-	// }}}
 }
 
 /**
@@ -118,7 +116,6 @@ class TileViewDemo extends Demo
  */
 class FruitObject
 {
-	// {{{ public properties
 
 	public $image = '';
 	public $image_width = 0;
@@ -130,7 +127,6 @@ class FruitObject
 	public $harvest_date = null;
 	public $cost = 0;
 
-	// }}}
 }
 
 ?>

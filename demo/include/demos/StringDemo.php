@@ -14,7 +14,6 @@ require_once 'Demo.php';
  */
 class StringDemo extends Demo
 {
-	// {{{ private properties
 
 	private $strings = array(
 		'Suspendisse potenti. Cras varius diam. Fusce mollis pharetra sapien. Curabitur vel tellus vel nisi luctus tempus.',
@@ -32,9 +31,6 @@ class StringDemo extends Demo
 	private $text_blocks = array();
 
 	private $unformatted_text_blocks = array();
-
-	// }}}
-	// {{{ public function buildDemoUI()
 
 	public function buildDemoUI(SwatUI $ui)
 	{
@@ -83,17 +79,11 @@ class StringDemo extends Demo
 		$to_xhtml->content = ob_get_clean();
 	}
 
-	// }}}
-	// {{{ protected function createLayout()
-
 	protected function createLayout()
 	{
 		return new SiteLayout($this->app,
 			'../include/layouts/xhtml/no-source.php');
 	}
-
-	// }}}
-	// {{{ private function testEllipsizeRight()
 
 	private function testEllipsizeRight($length = 20)
 	{
@@ -107,9 +97,6 @@ class StringDemo extends Demo
 		echo '</ol>';
 	}
 
-	// }}}
-	// {{{ private function testEllipsizeMIddle()
-
 	private function testEllipsizeMiddle($length = 20)
 	{
 		echo '<ol class="string-demo">';
@@ -121,9 +108,6 @@ class StringDemo extends Demo
 		}
 		echo '</ol>';
 	}
-
-	// }}}
-	// {{{ private function testCondense()
 
 	private function testCondense()
 	{
@@ -138,9 +122,6 @@ class StringDemo extends Demo
 		}
 	}
 
-	// }}}
-	// {{{ private function testCondenseToName()
-
 	private function testCondenseToName()
 	{
 		echo '<p>Condense to name can be used to condense a title into a name identifier.</p>';
@@ -154,9 +135,6 @@ class StringDemo extends Demo
 		}
 		echo '</ol>';
 	}
-
-	// }}}
-	// {{{ private function testToXHTML()
 
 	private function testToXHTML()
 	{
@@ -173,7 +151,6 @@ class StringDemo extends Demo
 		}
 	}
 
-	// }}}
 }
 
 ?>

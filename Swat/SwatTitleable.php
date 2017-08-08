@@ -10,7 +10,6 @@
  */
 interface SwatTitleable
 {
-	// {{{ public function getTitle()
 
 	/**
 	 * Gets the title of this object
@@ -18,9 +17,6 @@ interface SwatTitleable
 	 * @return string the title of this object.
 	 */
 	public function getTitle();
-
-	// }}}
-	// {{{ public function getTitleContentType()
 
 	/**
 	 * Gets the content-type of the title of this object
@@ -31,7 +27,6 @@ interface SwatTitleable
 	 */
 	public function getTitleContentType();
 
-	// }}}
 }
 
 ?>

@@ -11,7 +11,6 @@
  */
 class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 {
-	// {{{ protected properties
 
 	/**
 	 * The set of SwatMenuGroup objects contained in this grouped menu
@@ -19,9 +18,6 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 	 * @var array
 	 */
 	protected $groups = array();
-
-	// }}}
-	// {{{ public function addGroup()
 
 	/**
 	 * Adds a group to this grouped menu
@@ -33,9 +29,6 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 		$this->groups[] = $group;
 		$group->parent = $this;
 	}
-
-	// }}}
-	// {{{ public function addChild()
 
 	/**
 	 * Adds a child object
@@ -62,9 +55,6 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 				'SwatGroupedMenu object.', 0, $child);
 	}
 
-	// }}}
-	// {{{ public function init()
-
 	/**
 	 * Initializes this grouped menu
 	 */
@@ -74,9 +64,6 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 		foreach ($this->groups as $group)
 			$group->init();
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this grouped menu
@@ -115,9 +102,6 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 			Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
-	// }}}
-	// {{{ public function getDescendants()
-
 	/**
 	 * Gets descendant UI-objects
 	 *
@@ -154,9 +138,6 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getFirstDescendant()
-
 	/**
 	 * Gets the first descendant UI-object of a specific class
 	 *
@@ -190,9 +171,6 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getDescendantStates()
-
 	/**
 	 * Gets descendant states
 	 *
@@ -212,9 +190,6 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 		return $states;
 	}
 
-	// }}}
-	// {{{ public function setDescendantStates()
-
 	/**
 	 * Sets descendant states
 	 *
@@ -230,9 +205,6 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 			if (isset($states[$id]))
 				$object->setState($states[$id]);
 	}
-
-	// }}}
-	// {{{ public function copy()
 
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
@@ -258,7 +230,6 @@ class SwatGroupedMenu extends SwatAbstractMenu implements SwatUIParent
 		return $copy;
 	}
 
-	// }}}
 }
 
 ?>

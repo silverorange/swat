@@ -9,7 +9,6 @@
  */
 class SwatMoneyEntry extends SwatFloatEntry
 {
-	// {{{ public properties
 
 	/**
 	 * Optional locale for currency format
@@ -42,9 +41,6 @@ class SwatMoneyEntry extends SwatFloatEntry
 	 */
 	public $decimal_places = null;
 
-	// }}}
-	// {{{ public function display()
-
 	/**
 	 * Displays this money entry widget
 	 *
@@ -63,9 +59,6 @@ class SwatMoneyEntry extends SwatFloatEntry
 				$locale->getInternationalCurrencySymbol());
 		}
 	}
-
-	// }}}
-	// {{{ public function process()
 
 	/**
 	 * Processes this money entry widget
@@ -147,9 +140,6 @@ class SwatMoneyEntry extends SwatFloatEntry
 		}
 	}
 
-	// }}}
-	// {{{ protected function getDisplayValue()
-
 	/**
 	 * Formats a monetary value to display
 	 *
@@ -168,9 +158,6 @@ class SwatMoneyEntry extends SwatFloatEntry
 		return $value;
 	}
 
-	// }}}
-	// {{{ protected function getNumericValue()
-
 	/**
 	 * Gets the numeric value of this money entry
 	 *
@@ -183,9 +170,6 @@ class SwatMoneyEntry extends SwatFloatEntry
 	{
 		return SwatI18NLocale::get($this->locale)->parseCurrency($value);
 	}
-
-	// }}}
-	// {{{ protected function getValidationMessage()
 
 	/**
 	 * Gets a validation message for this money entry widget
@@ -238,9 +222,6 @@ class SwatMoneyEntry extends SwatFloatEntry
 		return $message;
 	}
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
 	/**
 	 * Gets the array of CSS classes that are applied to this entry
 	 *
@@ -254,7 +235,6 @@ class SwatMoneyEntry extends SwatFloatEntry
 		return $classes;
 	}
 
-	// }}}
 }
 
 ?>

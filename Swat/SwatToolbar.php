@@ -9,7 +9,6 @@
  */
 class SwatToolbar extends SwatDisplayableContainer
 {
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new toolbar
@@ -24,9 +23,6 @@ class SwatToolbar extends SwatDisplayableContainer
 
 		$this->addStyleSheet('packages/swat/styles/swat-toolbar.css');
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this toolbar as an unordered list with each sub-item
@@ -48,9 +44,6 @@ class SwatToolbar extends SwatDisplayableContainer
 		$toolbar_ul->close();
 	}
 
-	// }}}
-	// {{{ public function setToolLinkValues()
-
 	/**
 	 * Sets the value of all {@link SwatToolLink} objects within this toolbar
 	 *
@@ -64,9 +57,6 @@ class SwatToolbar extends SwatDisplayableContainer
 		foreach ($this->getToolLinks() as $tool)
 			$tool->value = $value;
 	}
-
-	// }}}
-	// {{{ public function getToolLinks()
 
 	/**
 	 * Gets the tool links of this toolbar
@@ -86,9 +76,6 @@ class SwatToolbar extends SwatDisplayableContainer
 		return $tools;
 	}
 
-	// }}}
-	// {{{ protected function displayChildren()
-
 	/**
 	 * Displays the child widgets of this container
 	 */
@@ -102,9 +89,6 @@ class SwatToolbar extends SwatDisplayableContainer
 				echo '<li>', $content, '</li>';
 		}
 	}
-
-	// }}}
-	// {{{ protected function getCSSClassNames()
 
 	/**
 	 * Gets the array of CSS classes that are applied to this tool bar
@@ -126,7 +110,6 @@ class SwatToolbar extends SwatDisplayableContainer
 		return $classes;
 	}
 
-	// }}}
 }
 
 ?>

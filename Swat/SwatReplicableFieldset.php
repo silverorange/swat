@@ -15,7 +15,6 @@
  */
 class SwatReplicableFieldset extends SwatReplicableContainer
 {
-	// {{{ public function init()
 
 	/**
 	 * Initilizes this replicable fieldset
@@ -43,7 +42,6 @@ class SwatReplicableFieldset extends SwatReplicableContainer
 		}
 	}
 
-	// }}}
 }
 
 ?>

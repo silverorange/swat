@@ -14,7 +14,6 @@
  */
 class SwatConfirmationButton extends SwatButton
 {
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new confirmation button widget
@@ -29,7 +28,6 @@ class SwatConfirmationButton extends SwatButton
 			Swat::_('Are you sure you wish to continue?');
 	}
 
-	// }}}
 }
 
 ?>

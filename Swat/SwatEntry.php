@@ -9,7 +9,6 @@
  */
 class SwatEntry extends SwatInputControl implements SwatState
 {
-	// {{{ public properties
 
 	/**
 	 * Entry value
@@ -101,9 +100,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 */
 	public $select_on_focus = false;
 
-	// }}}
-	// {{{ protected properties
-
 	/**
 	 * If autocomplete is turned off, this nonce is used to obfuscate the
 	 * name of the XHTML input tag.
@@ -121,9 +117,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 * @var boolean
 	 */
 	public $auto_trim = true;
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this entry widget
@@ -148,9 +141,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 			$nonce_tag->display();
 		}
 	}
-
-	// }}}
-	// {{{ public function process()
 
 	/**
 	 * Processes this entry widget
@@ -200,9 +190,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 		}
 	}
 
-	// }}}
-	// {{{ public function getState()
-
 	/**
 	 * Gets the current state of this entry widget
 	 *
@@ -215,9 +202,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 		return $this->value;
 	}
 
-	// }}}
-	// {{{ public function setState()
-
 	/**
 	 * Sets the current state of this entry widget
 	 *
@@ -229,9 +213,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 	{
 		$this->value = $state;
 	}
-
-	// }}}
-	// {{{ public function getFocusableHtmlId()
 
 	/**
 	 * Gets the id attribute of the XHTML element displayed by this widget
@@ -250,9 +231,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 		else
 			return null;
 	}
-
-	// }}}
-	// {{{ protected function getValidationMessage()
 
 	/**
 	 * Gets a validation message for this entry
@@ -279,9 +257,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 		$message = new SwatMessage($text, 'error');
 		return $message;
 	}
-
-	// }}}
-	// {{{ protected function getInputTag()
 
 	/**
 	 * Get the input tag to display
@@ -335,9 +310,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 		return $tag;
 	}
 
-	// }}}
-	// {{{ protected function getDisplayValue()
-
 	/**
 	 * Formats a value to display
 	 *
@@ -352,9 +324,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 		return $value;
 	}
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
 	/**
 	 * Gets the array of CSS classes that are applied to this entry widget
 	 *
@@ -368,9 +337,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 		return $classes;
 	}
 
-	// }}}
-	// {{{ protected function getNonce()
-
 	protected function getNonce()
 	{
 		if ($this->nonce === null)
@@ -378,9 +344,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 
 		return $this->nonce;
 	}
-
-	// }}}
-	// {{{ protected function getRawValue()
 
 	/**
 	 * Gets the raw value entered by the user before processing
@@ -412,9 +375,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 
 		return $value;
 	}
-
-	// }}}
-	// {{{ protected function hasRawValue()
 
 	/**
 	 * Gets whether or not a value was submitted by the user for this entry
@@ -450,7 +410,6 @@ class SwatEntry extends SwatInputControl implements SwatState
 		return $has_value;
 	}
 
-	// }}}
 }
 
 ?>

@@ -9,7 +9,6 @@
  */
 class SwatBooleanCellRenderer extends SwatCellRenderer
 {
-	// {{{ public properties
 
 	/**
 	 * Value of this cell
@@ -54,9 +53,6 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	 * @see SwatBooleanCellRenderer::setFromStock()
 	 */
 	public $stock_id = null;
-
-	// }}}
-	// {{{ public function setFromStock()
 
 	/**
 	 * Sets the values of this boolean cell renderer to a stock type
@@ -110,9 +106,6 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 			$this->content_type = $content_type;
 	}
 
-	// }}}
-	// {{{ public function render()
-
 	/**
 	 * Renders the contents of this cell
 	 *
@@ -139,9 +132,6 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 			$this->renderFalse();
 	}
 
-	// }}}
-	// {{{ public function getDataSpecificCSSClassNames()
-
 	/**
 	 * Gets the data specific CSS class names for this cell renderer
 	 *
@@ -159,9 +149,6 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 			return array();
 	}
 
-	// }}}
-	// {{{ protected function renderTrue()
-
 	/**
 	 * Renders a true value for this boolean cell renderer
 	 */
@@ -173,9 +160,6 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 			echo $this->true_content;
 	}
 
-	// }}}
-	// {{{ protected function renderFalse()
-
 	/**
 	 * Renders a false value for this boolean cell renderer
 	 */
@@ -186,9 +170,6 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 		else
 			echo $this->false_content;
 	}
-
-	// }}}
-	// {{{ protected function displayCheck()
 
 	/**
 	 * Renders a checkmark image for this boolean cell renderer
@@ -206,7 +187,6 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 		$image_tag->display();
 	}
 
-	// }}}
 }
 
 ?>

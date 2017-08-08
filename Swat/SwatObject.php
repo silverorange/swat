@@ -9,7 +9,6 @@
  */
 class SwatObject
 {
-	// {{{ public function __toString()
 
 	/**
 	 * Gets this object as a string
@@ -31,7 +30,6 @@ class SwatObject
 		return ob_get_clean();
 	}
 
-	// }}}
 }
 
 ?>

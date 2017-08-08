@@ -9,7 +9,6 @@
  */
 class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
 {
-	// {{{ protected function displayInternal()
 
 	protected function displayInternal($uri_prefix = '', $tag = null)
 	{
@@ -27,9 +26,6 @@ class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
 			$uri);
 	}
 
-	// }}}
-	// {{{ protected function displayInlineInternal()
-
 	protected function displayInlineInternal($path)
 	{
 		echo '<style type="text/css" media="all">';
@@ -37,7 +33,6 @@ class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
 		echo '</style>';
 	}
 
-	// }}}
 }
 
 ?>

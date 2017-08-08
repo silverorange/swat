@@ -15,7 +15,6 @@
  */
 class SwatColorEntry extends SwatInputControl implements SwatState
 {
-	// {{{ public properties
 
 	/**
 	 * Selected color of this widget in hexidecimal representation
@@ -32,9 +31,6 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 	 * @var string
 	 */
 	public $access_key = null;
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new color entry widget
@@ -55,9 +51,6 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 			'packages/swat/javascript/swat-z-index-manager.js'
 		);
 	}
-
-	// }}}
-	// {{{ public function display()
 
 	/**
 	 * Displays this color selection widget
@@ -108,9 +101,6 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
 	}
 
-	// }}}
-	// {{{ public function process()
-
 	/**
 	 * Processes this color entry widget
 	 *
@@ -141,9 +131,6 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		}
 	}
 
-	// }}}
-	// {{{ public function getState()
-
 	/**
 	 * Gets the current state of this color selector
 	 *
@@ -159,9 +146,6 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 			return $this->value;
 	}
 
-	// }}}
-	// {{{ public function setState()
-
 	/**
 	 * Sets the current state of this color selector
 	 *
@@ -175,9 +159,6 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		if (preg_match($hex_color, $state) === 1)
 			$this->value = $state;
 	}
-
-	// }}}
-	// {{{ protected function getInlineJavaScript()
 
 	/**
 	 * Gets the inline JavaScript required for this control to function
@@ -193,9 +174,6 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		return "var {$this->id}_obj = new SwatColorEntry('{$this->id}');";
 	}
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
-
 	/**
 	 * Gets the array of CSS classes that are applied to this color entry
 	 * widget
@@ -209,9 +187,6 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
 	}
-
-	// }}}
-	// {{{ private function displayPalette()
 
 	/**
 	 * Displays the color palette XHTML
@@ -304,7 +279,6 @@ class SwatColorEntry extends SwatInputControl implements SwatState
 		$wrapper_div->close();
 	}
 
-	// }}}
 }
 
 ?>

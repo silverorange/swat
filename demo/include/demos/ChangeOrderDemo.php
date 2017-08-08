@@ -11,7 +11,6 @@ require_once 'Demo.php';
  */
 class ChangeOrderDemo extends Demo
 {
-	// {{{ public function buildDemoUI()
 
 	public function buildDemoUI(SwatUI $ui)
 	{
@@ -28,7 +27,6 @@ class ChangeOrderDemo extends Demo
 			8 => 'Strawberry'));
 	}
 
-	// }}}
 }
 
 ?>

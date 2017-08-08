@@ -15,7 +15,6 @@
  */
 class SwatReplicableFrame extends SwatReplicableContainer
 {
-	// {{{ public function init()
 
 	/**
 	 * Initilizes this replicable frame
@@ -45,7 +44,6 @@ class SwatReplicableFrame extends SwatReplicableContainer
 		}
 	}
 
-	// }}}
 }
 
 ?>

@@ -9,7 +9,6 @@
  */
 class SwatDoesNotImplementException extends SwatException
 {
-	// {{{ protected properties
 
 	/**
 	 * The object that does not implement a required interface
@@ -17,9 +16,6 @@ class SwatDoesNotImplementException extends SwatException
 	 * @var mixed
 	 */
 	protected $object = null;
-
-	// }}}
-	// {{{ public function __construct()
 
 	/**
 	 * Creates a new does not implement exception
@@ -35,9 +31,6 @@ class SwatDoesNotImplementException extends SwatException
 		$this->object = $object;
 	}
 
-	// }}}
-	// {{{ public function getObject()
-
 	/**
 	 * Gets the object that does not implement a required interface
 	 *
@@ -48,7 +41,6 @@ class SwatDoesNotImplementException extends SwatException
 		return $this->object;
 	}
 
-	// }}}
 }
 
 ?>

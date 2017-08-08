@@ -16,7 +16,6 @@
  */
 class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 {
-	// {{{ private properties
 
 	/**
 	 * A lookup array for widgets contained in this cell
@@ -53,18 +52,12 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 */
 	private $clones = array();
 
-	// }}}
-	// {{{ protected properties
-
 	/**
 	 * The prototype widget displayed in this cell
 	 *
 	 * @var SwatWidget
 	 */
 	protected $widget = null;
-
-	// }}}
-	// {{{ public function addChild()
 
 	/**
 	 * Adds a child object
@@ -92,9 +85,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 				'multiple widgets.');
 	}
 
-	// }}}
-	// {{{ public function init()
-
 	/**
 	 * Initializes this input cell
 	 *
@@ -109,9 +99,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		if ($this->widget->id === null)
 			$this->widget->id = $this->widget->getUniqueId();
 	}
-
-	// }}}
-	// {{{ public function process()
 
 	/**
 	 * Processes this input cell given a numeric row identifier
@@ -128,9 +115,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		$widget->process();
 	}
 
-	// }}}
-	// {{{ public function display()
-
 	/**
 	 * Displays this input cell given a numeric row identifier
 	 *
@@ -145,9 +129,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		$widget = $this->getClonedWidget($row_identifier);
 		$widget->display();
 	}
-
-	// }}}
-	// {{{ public function getTitle()
 
 	/**
 	 * Gets the title of this input cell
@@ -164,9 +145,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 			return $this->parent->title;
 	}
 
-	// }}}
-	// {{{ public function getTitleContentType()
-
 	/**
 	 * Gets the title content-type of this input cell
 	 *
@@ -179,9 +157,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		return 'text/plain';
 	}
 
-	// }}}
-	// {{{ public function setWidget()
-
 	/**
 	 * Sets the prototype widget of this input cell
 	 *
@@ -192,9 +167,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		$this->widget = $widget;
 		$widget->parent = $this;
 	}
-
-	// }}}
-	// {{{ public function getPrototypeWidget()
 
 	/**
 	 * Gets the widget of this input cell
@@ -213,9 +185,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	{
 		return $this->widget;
 	}
-
-	// }}}
-	// {{{ public function getWidget()
 
 	/**
 	 * Gets a particular widget in this input cell
@@ -248,9 +217,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 			'specified row identifier.');
 	}
 
-	// }}}
-	// {{{ public function unsetWidget()
-
 	/**
 	 * Unsets a cloned widget within this cell
 	 *
@@ -270,9 +236,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 			unset($this->clones[$replicator_id]);
 	}
 
-	// }}}
-	// {{{ public function getHtmlHeadEntrySet()
-
 	/**
 	 * Gets the SwatHtmlHeadEntry objects needed by this input cell
 	 *
@@ -288,9 +251,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		return $set;
 	}
 
-	// }}}
-	// {{{ public function getAvailableHtmlHeadEntrySet()
-
 	/**
 	 * Gets the SwatHtmlHeadEntry objects that may be needed by this input cell
 	 *
@@ -305,9 +265,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		$set->addEntrySet($this->widget->getAvailableHtmlHeadEntrySet());
 		return $set;
 	}
-
-	// }}}
-	// {{{ public function getDescendants()
 
 	/**
 	 * Gets descendant UI-objects
@@ -349,9 +306,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getFirstDescendant()
-
 	/**
 	 * Gets the first descendant UI-object of a specific class
 	 *
@@ -388,9 +342,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		return $out;
 	}
 
-	// }}}
-	// {{{ public function getDescendantStates()
-
 	/**
 	 * Gets descendant states
 	 *
@@ -410,9 +361,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		return $states;
 	}
 
-	// }}}
-	// {{{ public function setDescendantStates()
-
 	/**
 	 * Sets descendant states
 	 *
@@ -428,9 +376,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 			if (isset($states[$id]))
 				$object->setState($states[$id]);
 	}
-
-	// }}}
-	// {{{ public function copy()
 
 	/**
 	 * Performs a deep copy of the UI tree starting with this UI object
@@ -476,9 +421,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		return $copy;
 	}
 
-	// }}}
-	// {{{ protected function getInputRow()
-
 	/**
 	 * Gets the input row this cell belongs to
 	 *
@@ -497,9 +439,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 
 		return $row;
 	}
-
-	// }}}
-	// {{{ protected function getClonedWidget()
 
 	/**
 	 * Gets a cloned widget given a unique identifier
@@ -563,7 +502,6 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 		return $new_widget;
 	}
 
-	// }}}
 }
 
 ?>
