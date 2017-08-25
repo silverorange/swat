@@ -12,13 +12,9 @@ function SwatImagePreviewDisplay(id, preview_src, preview_width, preview_height,
 	this.onOpen = new YAHOO.util.CustomEvent('open');
 	this.onClose = new YAHOO.util.CustomEvent('close');
 
-	// list of select elements to hide for IE6
-	this.select_elements = [];
-
 	YAHOO.util.Event.onDOMReady(this.init, this, true);
 }
 
-SwatImagePreviewDisplay.ie6 = false /*@cc_on || @_jscript_version < 5.7 @*/;
 SwatImagePreviewDisplay.close_text = 'Close';
 
 /**
@@ -257,15 +253,6 @@ SwatImagePreviewDisplay.prototype.drawCloseButton = function()
 
 SwatImagePreviewDisplay.prototype.showOverlay = function()
 {
-	if (SwatImagePreviewDisplay.ie6) {
-		this.select_elements = document.getElementsByTagName('select');
-		for (var i = 0; i < this.select_elements.length; i++) {
-			this.select_elements[i].style._visibility =
-				this.select_elements[i].style.visibility;
-
-			this.select_elements[i].style.visibility = 'hidden';
-		}
-	}
 	this.overlay.style.height = YAHOO.util.Dom.getDocumentHeight() + 'px';
 	this.overlay.style.display = 'block';
 };
@@ -273,12 +260,6 @@ SwatImagePreviewDisplay.prototype.showOverlay = function()
 SwatImagePreviewDisplay.prototype.hideOverlay = function()
 {
 	this.overlay.style.display = 'none';
-	if (SwatImagePreviewDisplay.ie6) {
-		for (var i = 0; i < this.select_elements.length; i++) {
-			this.select_elements[i].style.visibility =
-				this.select_elements[i].style._visibility;
-		}
-	}
 };
 
 SwatImagePreviewDisplay.prototype.close = function()
