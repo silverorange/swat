@@ -103,7 +103,7 @@ class SwatCascadeFlydown extends SwatFlydown
 	 */
 	public function addOption(
 		$parent,
-		$value,
+		$value = '',
 		$title = '',
 		$content_type = 'text/plain'
 	) {
