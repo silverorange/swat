@@ -831,7 +831,7 @@ class SwatDBDataObject extends SwatObject implements
 		$properties = array();
 		foreach ($this->getProtectedPropertyList() as $property => $accessors) {
 			// Use the getter for the property.
-			$properties[$property] = $this->$accessors['get']();
+			$properties[$property] = $this->{$accessors['get']}();
 		}
 
 		return $properties;
