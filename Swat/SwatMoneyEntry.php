@@ -99,8 +99,7 @@ class SwatMoneyEntry extends SwatFloatEntry
 			$fractional_digits = mb_substr(rtrim((string)$value, '0'),
 				$decimal_position + mb_strlen($format->decimal_separator));
 
-			$decimal_places = preg_match_all('/[0-9]/', $fractional_digits,
-				$matches = array());
+			$decimal_places = preg_match_all('/[0-9]/', $fractional_digits);
 		}
 
 		// check if length of the given fractional part is more than the
