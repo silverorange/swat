@@ -93,13 +93,20 @@ class SwatAccordion extends SwatNoteBook
 
 			// toggle link
 			$title = ($page->title === null) ? '' : $page->title;
-			$wrapper_tag = new SwatHtmlTag('span');
-			$wrapper_tag->class = 'swat-accordion-page-toggle';
+			$wrapper_span = new SwatHtmlTag('span');
+			$wrapper_span->class = 'swat-accordion-page-toggle';
+			$wrapper_span->open();
+
+			$anchor_tag = new SwatHtmlTag('a');
+			$anchor_tag->href = '#'.$page->id;
 			$em_tag = new SwatHtmlTag('em');
 			$em_tag->setContent($title, $page->title_content_type);
-			$wrapper_tag->open();
+
+			$anchor_tag->open();
 			$em_tag->display();
-			$wrapper_tag->close();
+			$anchor_tag->close();
+
+			$wrapper_span->close();
 
 			// content
 			echo '<div class="swat-accordion-page-animation">';
