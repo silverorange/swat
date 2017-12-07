@@ -53,7 +53,7 @@
 		"ext-mbstring": "*",
 		"ext-pcre": "*",
 		"pear/pear_exception": "^1.0.0",
-		"silverorange/mdb2": "^3.0.0",
+		"silverorange/mdb2": "^3.1.1",
 		"silverorange/concentrate": "^1.0.0",
 		"silverorange/yui": "^1.0.11"
 	},
