@@ -86,7 +86,7 @@ SwatAccordion.prototype.getPageFromHash = function()
 
 SwatAccordion.prototype.addLinkHash = function(page)
 {
-	page.toggle.href = location.href.split('#')[0] + '#' +
+	page.toggleLink.href = location.href.split('#')[0] + '#' +
 		'open_' + page.element.id;
 };
 
@@ -200,10 +200,12 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page)
 
 function SwatAccordionPage(el)
 {
-	this.element   = el;
-	this.toggle    = YAHOO.util.Dom.getFirstChild(el);
-	this.animation = YAHOO.util.Dom.getNextSibling(this.toggle);
-	this.content   = YAHOO.util.Dom.getFirstChild(this.animation);
+	this.element    = el;
+	this.toggle     = YAHOO.util.Dom.getFirstChild(el);
+	this.toggleLink = YAHOO.util.Dom.getElementsByClassName(
+		'swat-accordion-page-link', 'a', this.toggle)[0];
+	this.animation  = YAHOO.util.Dom.getNextSibling(this.toggle);
+	this.content    = YAHOO.util.Dom.getFirstChild(this.animation);
 }
 
 SwatAccordionPage.prototype.setStatus = function(stat)
