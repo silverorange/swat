@@ -720,7 +720,7 @@ class SwatI18NLocale extends SwatObject
 		$lc = $this->getLocaleInfo();
 
 		// strip C99-defined spacing character
-		$symbol = substr($lc['int_curr_symbol'], 0, 3);
+		$symbol = mb_substr($lc['int_curr_symbol'], 0, 3);
 
 		return $symbol;
 	}
@@ -1122,24 +1122,20 @@ class SwatI18NLocale extends SwatObject
 		$filtered = preg_replace($exp, '', $string);
 
 		if ($filtered != '') {
-
 			if ($filtered[0] === '-' ||
-				$filtered[strlen($filtered) - 1] === '-') {
-
+				mb_substr($filtered, -1) === '-'
+			) {
 				// always allow parsing by negative sign
 				$negative = true;
 				$string = str_replace($negative_sign, '', $string);
-
 			} elseif ($n_sign_position === 0 &&
 				$filtered[0] === '(' &&
-				$filtered[strlen($filtered) - 1] === ')') {
-
+				mb_substr($filtered, -1) === ')'
+			) {
 				// parse parenthetical negative shown as: (5.00)
 				$negative = true;
 				$string = str_replace(array('(', ')'), '', $string);
-
 			}
-
 		}
 
 		if ($negative) {
@@ -1180,16 +1176,16 @@ class SwatI18NLocale extends SwatObject
 		$lc = $locale->getLocaleInfo();
 		$str_value = (string)$value;
 
-		$e_pos = stripos($str_value, 'E-');
+		$e_pos = mb_stripos($str_value, 'E-');
 		if ($e_pos !== false) {
-			$precision += (integer)substr($str_value, $e_pos + 2);
-			$str_value = substr($str_value, 0, $e_pos);
+			$precision += (integer)mb_substr($str_value, $e_pos + 2);
+			$str_value = mb_substr($str_value, 0, $e_pos);
 		}
 
-		$decimal_pos = strpos($str_value, $lc['decimal_point']);
+		$decimal_pos = mb_strpos($str_value, $lc['decimal_point']);
 		if ($decimal_pos !== false) {
-			$precision += strlen($str_value) - $decimal_pos -
-				strlen($lc['decimal_point']);
+			$precision += mb_strlen($str_value) - $decimal_pos -
+				mb_strlen($lc['decimal_point']);
 		}
 
 		return $precision;
