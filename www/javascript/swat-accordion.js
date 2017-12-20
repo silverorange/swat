@@ -47,7 +47,7 @@ SwatAccordion.prototype.init = function()
 		var that = this;
 		(function() {
 			var the_page = page;
-			YAHOO.util.Event.on(page.toggle, 'click', function (e) {
+			YAHOO.util.Event.on(page.toggleLink, 'click', function (e) {
 				if (!that.always_open && the_page === that.current_page) {
 					var set_page = null;
 				} else {
