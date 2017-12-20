@@ -204,6 +204,7 @@ function SwatAccordionPage(el)
 	this.toggle     = YAHOO.util.Dom.getFirstChild(el);
 	this.toggleLink = YAHOO.util.Dom.getElementsByClassName(
 		'swat-accordion-page-link', 'a', this.toggle)[0];
+
 	this.animation  = YAHOO.util.Dom.getNextSibling(this.toggle);
 	this.content    = YAHOO.util.Dom.getFirstChild(this.animation);
 }
