@@ -5,46 +5,191 @@
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-
-/**
- * A table view row that can add an arbitrary number of data entry rows
- *
- * @param String id the identifier of this row.
- * @param String row_string the XML string to use when inserting a new row. The
- *                           XML string can contain '%s' placeholders. Before
- *                           a new row is added, the placeholders are replaced
- *                           with the new row index.
- */
-function SwatTableViewInputRow(id, row_string)
-{
-	this.id = id;
-
-	// decode string
-	row_string = row_string.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-	row_string = row_string.replace(/&quot;/g, '"').replace(/&amp;/g, '&');
-
-	/*
-	 * Pack row string in an XHTML document
+class SwatTableViewInputRow {
+	/**
+	 * A table view row that can add an arbitrary number of data entry rows
 	 *
-	 * We purposly do not specify a DTD here as Internet Explorer is too slow
-	 * when given a DTD. The XML string is encoded in UTF-8 with no special
-	 * entities at this point.
+	 * @param String id the identifier of this row.
+	 * @param String row_string the XML string to use when inserting a new row. The
+	 *                           XML string can contain '%s' placeholders. Before
+	 *                           a new row is added, the placeholders are replaced
+	 *                           with the new row index.
 	 */
-	this.row_string = "<?xml version='1.0' encoding='UTF-8'?>\n" +
-		'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">' +
-		'<head><title>row</title></head><body><table>' +
-		row_string +
-		'</table></body></html>';
+	constructor(id, row_string) {
+		this.id = id;
 
-	this.enter_row = document.getElementById(this.id + '_enter_row');
+		// decode string
+		row_string = row_string.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+		row_string = row_string.replace(/&quot;/g, '"').replace(/&amp;/g, '&');
 
-	// get table node belonging to the enter row
-	this.table = this.enter_row;
-	while (this.table.nodeName.toLowerCase() != 'table')
-		this.table = this.table.parentNode;
+		/*
+		 * Pack row string in an XHTML document
+		 *
+		 * We purposly do not specify a DTD here as Internet Explorer is too slow
+		 * when given a DTD. The XML string is encoded in UTF-8 with no special
+		 * entities at this point.
+		 */
+		this.row_string = "<?xml version='1.0' encoding='UTF-8'?>\n" +
+			'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" ' +
+			'lang="en">' +
+			'<head><title>row</title></head><body><table>' +
+			row_string +
+			'</table></body></html>';
 
-	this.replicators = null;
-	this.replicators_input = null;
+		this.enter_row = document.getElementById(this.id + '_enter_row');
+
+		// get table node belonging to the enter row
+		this.table = this.enter_row;
+		while (this.table.nodeName.toLowerCase() !== 'table') {
+			this.table = this.table.parentNode;
+		}
+
+		this.replicators = null;
+		this.replicators_input = null;
+	}
+
+	/**
+	 * Initializes the replicator array
+	 *
+	 * @return boolean true if the replicators were successfully initialized and
+	 *          false if they were not.
+	 */
+	initReplicators() {
+		if (this.replicators === null) {
+			this.replicators_input = document.getElementsByName(
+				this.id + '_replicators'
+			)[0];
+
+			if (this.replicators_input === null) {
+				return false;
+			}
+
+			if (this.replicators_input.value === '') {
+				this.replicators = [];
+			} else {
+				this.replicators = this.replicators_input.value.split(',');
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Adds a new data row to the table
+	 */
+	addRow() {
+		if (!this.initReplicators()) {
+			return;
+		}
+
+		var replicator_id;
+		if (this.replicators.length > 0) {
+			replicator_id = (parseInt(
+				this.replicators[this.replicators.length - 1],
+				10
+			) + 1).toString();
+		} else {
+			replicator_id = '0';
+		}
+
+		this.replicators.push(replicator_id);
+		this.replicators_input.value = this.replicators.join(',');
+
+		var document_string = this.row_string.replace(/%s/g, replicator_id);
+		var dom = SwatTableViewInputRow.parser.loadXML(document_string);
+		var source_tr = dom.documentElement.getElementsByTagName('tr')[0];
+
+		if (document.importNode && !SwatTableViewInputRow.is_webkit) {
+			try {
+				var dest_tr = document.importNode(source_tr, true);
+				this.enter_row.parentNode.insertBefore(dest_tr, this.enter_row);
+			} catch (ex) {
+				/*
+				 * IE9 specific code. IE9 claims to support importNode, but fails
+				 * when it is called.
+				 */
+				var dest_tr = this.table.insertRow(this.enter_row.rowIndex);
+				SwatTableViewInputRow_parseTableRow(source_tr, dest_tr);
+			}
+		} else {
+			/*
+			 * Internet Explorer and Safari specific code
+			 *
+			 * Uses the table object model instead of the DOM. IE does not
+			 * implement importNode() and Safari's importNode() implementation is
+			 * broken.
+			 */
+			var dest_tr = this.table.insertRow(this.enter_row.rowIndex);
+			SwatTableViewInputRow_parseTableRow(source_tr, dest_tr);
+		}
+
+		dest_tr.className = 'swat-table-view-input-row';
+		dest_tr.id = this.id + '_row_' + replicator_id;
+
+		var node = dest_tr;
+		var dest_color = 'transparent';
+		while (dest_color == 'transparent' && node) {
+			dest_color = YAHOO.util.Dom.getStyle(node, 'background-color');
+			node = node.parentNode;
+		}
+		if (dest_color == 'transparent') {
+			dest_color = '#ffffff';
+		}
+
+		var animation = new YAHOO.util.ColorAnim(
+			dest_tr,
+			{ backgroundColor: { from: '#fffbc9', to: dest_color } },
+			1,
+			YAHOO.util.Easing.easeOut
+		);
+
+		animation.animate();
+
+		/*
+		 * Run scripts
+		 *
+		 * A better way to do this might be to remove the script nodes from the
+		 * document and then run the scripts. This way we can ensure the scripts
+		 * are only run once.
+		 */
+		var scripts = dom.documentElement.getElementsByTagName('script');
+		for (var i = 0; i < scripts.length; i++) {
+			if (scripts[0].getAttribute('type') === 'text/javascript' &&
+				scripts[0].childNodes.length > 0
+			) {
+				eval(scripts[i].firstChild.nodeValue);
+			}
+		}
+	}
+
+	/**
+	 * Removes a data row from the table
+	 */
+	removeRow(replicator_id) {
+		if (!this.initReplicators()) {
+			return;
+		}
+
+		// remove replicator_id from replicators array
+		var replicator_index = -1;
+		for (var i = 0; i < this.replicators.length; i++) {
+			if (this.replicators[i] == replicator_id) {
+				replicator_index = i;
+				break;
+			}
+		}
+		if (replicator_index != -1) {
+			this.replicators.splice(replicator_index, 1);
+			this.replicators_input.value = this.replicators.join(',');
+		}
+
+		// remove row from document
+		var row_id = this.id + '_row_' + replicator_id;
+		var row = document.getElementById(row_id);
+		if (row && row.parentNode !== null) {
+			var removed_row = row.parentNode.removeChild(row);
+			delete removed_row;
+		}
+	}
 }
 
 /**
@@ -91,7 +236,7 @@ function SwatTableViewInputRow_getXMLParser()
 		};
 	}
 
-	if (parser === null && typeof DOMParser != 'undefined') {
+	if (parser === null && typeof DOMParser !== 'undefined') {
 		/*
 		 * Mozilla, Safari and Opera have a proprietary DOMParser()
 		 * class.
@@ -176,134 +321,4 @@ if (!document.importNode || SwatTableViewInputRow.is_webkit) {
 	}
 }
 
-/**
- * Initializes the replicator array
- *
- * @return boolean true if the replicators were successfully initialized and
- *          false if they were not.
- */
-SwatTableViewInputRow.prototype.initReplicators = function()
-{
-	if (this.replicators === null) {
-		this.replicators_input = document.getElementsByName(this.id +
-			'_replicators')[0];
-
-		if (this.replicators_input === null)
-			return false;
-
-		if (this.replicators_input.value === '')
-			this.replicators = [];
-		else
-			this.replicators = this.replicators_input.value.split(',');
-	}
-	return true;
-};
-
-/**
- * Adds a new data row to the table
- */
-SwatTableViewInputRow.prototype.addRow = function()
-{
-	if (!this.initReplicators())
-		return;
-
-	var replicator_id;
-	if (this.replicators.length > 0)
-		replicator_id = (parseInt(
-			this.replicators[this.replicators.length - 1]) + 1).toString();
-	else
-		replicator_id = '0';
-
-	this.replicators.push(replicator_id);
-	this.replicators_input.value = this.replicators.join(',');
-
-	var document_string = this.row_string.replace(/%s/g, replicator_id);
-	var dom = SwatTableViewInputRow.parser.loadXML(document_string);
-	var source_tr = dom.documentElement.getElementsByTagName('tr')[0];
-
-	if (document.importNode && !SwatTableViewInputRow.is_webkit) {
-		try {
-			var dest_tr = document.importNode(source_tr, true);
-			this.enter_row.parentNode.insertBefore(dest_tr, this.enter_row);
-		} catch (ex) {
-			/*
-			 * IE9 specific code. IE9 claims to support importNode, but fails
-			 * when it is called.
-			 */
-			var dest_tr = this.table.insertRow(this.enter_row.rowIndex);
-			SwatTableViewInputRow_parseTableRow(source_tr, dest_tr);
-		}
-	} else {
-		/*
-		 * Internet Explorer and Safari specific code
-		 *
-		 * Uses the table object model instead of the DOM. IE does not
-		 * implement importNode() and Safari's importNode() implementation is
-		 * broken.
-		 */
-		var dest_tr = this.table.insertRow(this.enter_row.rowIndex);
-		SwatTableViewInputRow_parseTableRow(source_tr, dest_tr);
-	}
-
-	dest_tr.className = 'swat-table-view-input-row';
-	dest_tr.id = this.id + '_row_' + replicator_id;
-
-	var node = dest_tr;
-	var dest_color = 'transparent';
-	while (dest_color == 'transparent' && node) {
-		dest_color = YAHOO.util.Dom.getStyle(node, 'background-color');
-		node = node.parentNode;
-	}
-	if (dest_color == 'transparent') {
-		dest_color = '#ffffff';
-	}
-
-	var animation = new YAHOO.util.ColorAnim(dest_tr,
-		{ backgroundColor: { from: '#fffbc9', to: dest_color } }, 1,
-		YAHOO.util.Easing.easeOut);
-
-	animation.animate();
-
-	/*
-	 * Run scripts
-	 *
-	 * A better way to do this might be to remove the script nodes from the
-	 * document and then run the scripts. This way we can ensure the scripts
-	 * are only run once.
-	 */
-	var scripts = dom.documentElement.getElementsByTagName('script');
-	for (var i = 0; i < scripts.length; i++)
-		if (scripts[0].getAttribute('type') == 'text/javascript' &&
-			scripts[0].childNodes.length > 0)
-				eval(scripts[i].firstChild.nodeValue);
-};
-
-/**
- * Removes a data row from the table
- */
-SwatTableViewInputRow.prototype.removeRow = function(replicator_id)
-{
-	if (!this.initReplicators())
-		return;
-
-	// remove replicator_id from replicators array
-	var replicator_index = -1;
-	for (var i = 0; i < this.replicators.length; i++) {
-		if (this.replicators[i] == replicator_id) {
-			replicator_index = i;
-			break;
-		}
-	}
-	if (replicator_index != -1) {
-		this.replicators.splice(replicator_index, 1);
-		this.replicators_input.value = this.replicators.join(',');
-	}
-
-	// remove row from document
-	var row_id = this.id + '_row_' + replicator_id;
-	var row = document.getElementById(row_id);
-	if (row && row.parentNode !== null) {
-		var removed_row = row.parentNode.removeChild(row);
-		delete removed_row;
-	}
-};
+module.exports = SwatTableViewInputRow;

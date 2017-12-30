@@ -1,3 +1,5 @@
+const SwatZIndexManager = require('./swat-z-index-manager');
+
 /**
  * Abstract overlay widget
  *
@@ -32,7 +34,7 @@ class SwatAbstractOverlay {
 		this.draw();
 		this.drawCloseDiv();
 		this.createOverlay();
-	},
+	}
 
 	// }}}
 	// {{{ draw()
@@ -51,7 +53,7 @@ class SwatAbstractOverlay {
 		this.toggle_button.appendChild(this.overlay_content);
 
 		this.container.appendChild(this.toggle_button);
-	},
+	}
 
 	// }}}
 	// {{{ getToggleButton()
@@ -66,7 +68,7 @@ class SwatAbstractOverlay {
 		YAHOO.util.Event.on(toggle_button, 'click', this.toggle, this, true);
 
 		return toggle_button;
-	},
+	}
 
 	// }}}
 	// {{{ getHeader()
@@ -76,7 +78,7 @@ class SwatAbstractOverlay {
 		YAHOO.util.Dom.addClass(header, 'hd');
 		header.appendChild(this.getCloseLink());
 		return header;
-	},
+	}
 
 	// }}}
 	// {{{ getBody()
@@ -85,7 +87,7 @@ class SwatAbstractOverlay {
 		var body = document.createElement('div');
 		YAHOO.util.Dom.addClass(body, 'bd');
 		return body;
-	},
+	}
 
 	// }}}
 	// {{{ getFooter()
@@ -94,22 +96,31 @@ class SwatAbstractOverlay {
 		var footer = document.createElement('div');
 		YAHOO.util.Dom.addClass(footer, 'ft');
 		return footer;
-	},
+	}
 
 	// }}}
 	// {{{ getCloseLink()
 
 	getCloseLink() {
 		var close_link = document.createElement('a');
+
 		close_link.className = 'swat-overlay-close-link';
 		close_link.href = '#close';
-		close_link.appendChild(document.createTextNode(
-			SwatAbstractOverlay.close_text));
-
-		YAHOO.util.Event.on(close_link, 'click', this.handleCloseLink, this, true);
+		close_link.appendChild(
+			document.createTextNode(
+				SwatAbstractOverlay.close_text
+			)
+		);
+		YAHOO.util.Event.on(
+			close_link,
+			'click',
+			this.handleCloseLink,
+			this,
+			true
+		);
 
 		return close_link;
-	},
+	}
 
 	// }}}
 	// {{{ createOverlay()
@@ -118,15 +129,17 @@ class SwatAbstractOverlay {
 	 * Creates overlay widget when toggle button has been drawn
 	 */
 	createOverlay(event) {
-		this.overlay = new YAHOO.widget.Overlay(this.id + '_overlay',
-			{ visible: false, constraintoviewport: true });
+		this.overlay = new YAHOO.widget.Overlay(
+			this.id + '_overlay',
+			{ visible: false, constraintoviewport: true }
+		);
 
 		this.overlay.body.appendChild(this.getBodyContent());
 
 		this.overlay.render(this.container);
 		this.overlay_content.style.display = 'block';
 		this.is_drawn = true;
-	},
+	}
 
 	// }}}
 	// {{{ close()
@@ -142,7 +155,7 @@ class SwatAbstractOverlay {
 		this.is_open = false;
 
 		this.removeKeyPressHandler();
-	},
+	}
 
 	// }}}
 	// {{{ open()
@@ -161,7 +174,7 @@ class SwatAbstractOverlay {
 		SwatZIndexManager.raiseElement(this.overlay_content);
 
 		this.addKeyPressHandler();
-	},
+	}
 
 	// }}}
 	// {{{ getOverlayContext()
@@ -171,7 +184,7 @@ class SwatAbstractOverlay {
 	 */
 	getOverlayContext() {
 		return [this.toggle_button, 'tl', 'bl'];
-	},
+	}
 
 	// }}}
 	// {{{ getBodyContent
@@ -179,20 +192,20 @@ class SwatAbstractOverlay {
 	/**
 	 * Draws this overlay
 	 */
-	getBodyContent()
-	{
+	getBodyContent() {
 		return document.createElement('div');
-	},
+	}
 
 	// }}}
 	// {{{ toggle()
 
 	toggle() {
-		if (this.is_open)
+		if (this.is_open) {
 			this.close();
-		else
+		} else {
 			this.open();
-	},
+		}
+	}
 
 	// }}}
 	// {{{ drawCloseDiv()
@@ -206,7 +219,7 @@ class SwatAbstractOverlay {
 		YAHOO.util.Event.on(this.close_div, 'click', this.close, this, true);
 
 		this.container.appendChild(this.close_div);
-	},
+	}
 
 	// }}}
 	// {{{ showCloseDiv()
@@ -225,7 +238,7 @@ class SwatAbstractOverlay {
 		this.close_div.style.height = YAHOO.util.Dom.getDocumentHeight() + 'px';
 		this.close_div.style.display = 'block';
 		SwatZIndexManager.raiseElement(this.close_div);
-	},
+	}
 
 	// }}}
 	// {{{ hideCloseDiv()
@@ -239,7 +252,7 @@ class SwatAbstractOverlay {
 					this.select_elements[i].style._visibility;
 			}
 		}
-	},
+	}
 
 	// }}}
 	// {{{ handleKeyPress()
@@ -248,36 +261,47 @@ class SwatAbstractOverlay {
 		YAHOO.util.Event.preventDefault(e);
 
 		// close preview on backspace or escape
-		if (e.keyCode == 8 || e.keyCode == 27)
+		if (e.keyCode === 8 || e.keyCode === 27) {
 			this.close();
-	},
+		}
+	}
 
 	// }}}
 	// {{{ handleKeyPress()
 
 	handleKeyPress(e) {
 		// close preview on escape or enter key
-		if (e.keyCode == 27 || e.keyCode == 13) {
+		if (e.keyCode === 27 || e.keyCode === 13) {
 			YAHOO.util.Event.preventDefault(e);
 			this.close();
 		}
-	},
+	}
 
 	// }}}
 	// {{{ addKeyPressHandler()
 
 	addKeyPressHandler() {
-		YAHOO.util.Event.on(document, 'keypress',
-			this.handleKeyPress, this, true);
-	},
+		YAHOO.util.Event.on(
+			document,
+			'keypress',
+			this.handleKeyPress,
+			this,
+			true
+		);
+	}
 
 	// }}}
 	// {{{ removeKeyPressHandler()
 
 	removeKeyPressHandler() {
-		YAHOO.util.Event.removeListener(document, 'keypress',
-			this.handleKeyPress, this, true);
-	},
+		YAHOO.util.Event.removeListener(
+			document,
+			'keypress',
+			this.handleKeyPress,
+			this,
+			true
+		);
+	}
 
 	// }}}
 	// {{{ handleCloseLink()
@@ -285,7 +309,7 @@ class SwatAbstractOverlay {
 	handleCloseLink(e) {
 		YAHOO.util.Event.preventDefault(e);
 		this.close();
-	},
+	}
 
 	// }}}
 }

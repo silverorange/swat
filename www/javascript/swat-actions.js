@@ -23,10 +23,16 @@ class SwatActions {
 			'swat-actions-message-dismiss-link');
 
 		message_dismiss.appendChild(
-			document.createTextNode(SwatActions.dismiss_text));
+			document.createTextNode(SwatActions.dismiss_text)
+		);
 
-		YAHOO.util.Event.addListener(message_dismiss, 'click',
-			this.handleMessageClose, this, true);
+		YAHOO.util.Event.addListener(
+			message_dismiss,
+			'click',
+			this.handleMessageClose,
+			this,
+			true
+		);
 
 		// create message span and add content area and dismiss link
 		this.message_span = document.createElement('span');
@@ -53,28 +59,31 @@ class SwatActions {
 			this.view = view;
 			this.selector_id = selector_id;
 		}
-	},
+	}
 
 	handleChange() {
-		if (this.selected_element)
+		if (this.selected_element) {
 			YAHOO.util.Dom.addClass(this.selected_element, 'swat-hidden');
+		}
 
 		var id = this.id + '_' +
 			this.values[this.flydown.selectedIndex];
 
 		this.selected_element = document.getElementById(id);
 
-		if (this.selected_element)
+		if (this.selected_element) {
 			YAHOO.util.Dom.removeClass(this.selected_element, 'swat-hidden');
-	},
+		}
+	}
 
 	handleButtonClick(e) {
 		var is_blank;
 		var value_exp = this.flydown.value.split('|', 2);
-		if (value_exp.length == 1)
+		if (value_exp.length === 1) {
 			is_blank = (value_exp[0] === '');
-		else
+		} else {
 			is_blank = (value_exp[1] == 'N;');
+		}
 
 		if (this.view) {
 			var items_selected =
@@ -96,51 +105,60 @@ class SwatActions {
 			YAHOO.util.Event.preventDefault(e);
 			this.showMessage(message);
 		}
-	},
+	}
 
 	handleMessageClose(e) {
 		YAHOO.util.Event.preventDefault(e);
 		this.hideMessage();
-	},
+	}
 
 	showMessage(message_text) {
-		if (this.message_content.firstChild)
+		if (this.message_content.firstChild) {
 			this.message_content.removeChild(this.message_content.firstChild);
+		}
 
 		this.message_content.appendChild(
-			document.createTextNode(message_text + ' '));
+			document.createTextNode(message_text + ' ')
+		);
 
 		if (!this.message_shown) {
 			this.message_span.style.opacity = 0;
 			this.message_span.style.visibility = 'visible';
 
-			var animation = new YAHOO.util.Anim(this.message_span,
+			var animation = new YAHOO.util.Anim(
+				this.message_span,
 				{ opacity: { from: 0, to: 1} },
-				0.3, YAHOO.util.Easing.easeInStrong);
+				0.3,
+				YAHOO.util.Easing.easeInStrong
+			);
 
 			animation.animate();
 
 			this.message_shown = true;
 		}
-	},
+	}
 
 	hideMessage() {
 		if (this.message_shown) {
-			var animation = new YAHOO.util.Anim(this.message_span,
+			var animation = new YAHOO.util.Anim(
+				this.message_span,
 				{ opacity: { from: 1, to: 0} },
-				0.3, YAHOO.util.Easing.easeOutStrong);
+				0.3,
+				YAHOO.util.Easing.easeOutStrong
+			);
 
 			animation.onComplete.subscribe(
-				function()
-				{
+				function() {
 					this.message_span.style.visibility = 'hidden';
 					this.message_shown = false;
 				},
-				this, true);
+				this,
+				true
+			);
 
 			animation.animate();
 		}
-	},
+	}
 }
 
 SwatActions.dismiss_text = 'Dismiss message.';

@@ -14,13 +14,19 @@ class SwatButton {
 			this.initThrobber();
 		}
 
-		YAHOO.util.Event.addListener(this.button, 'click',
-			this.handleClick, this, true);
-	},
+		YAHOO.util.Event.addListener(
+			this.button,
+			'click',
+			this.handleClick,
+			this,
+			true
+		);
+	}
 
 	handleClick(e) {
-		var confirmed = (this.confirmation_message) ?
-			confirm(this.confirmation_message) : true;
+		var confirmed = (this.confirmation_message)
+			? confirm(this.confirmation_message)
+			: true;
 
 		if (confirmed) {
 			if (this.throbber_container !== null) {
@@ -37,7 +43,10 @@ class SwatButton {
 				this.button.form.appendChild(div);
 
 				this.showThrobber();
-				var form = YAHOO.util.Dom.getAncestorByTagName(this.button, 'form');
+				var form = YAHOO.util.Dom.getAncestorByTagName(
+					this.button,
+					'form'
+				);
 				if (form) {
 					form.submit(); // needed for IE and WebKit
 				}
@@ -45,23 +54,29 @@ class SwatButton {
 		} else {
 			YAHOO.util.Event.preventDefault(e);
 		}
-	},
+	}
 
 	initThrobber() {
 		this.throbber_container = document.createElement('span');
 
-		YAHOO.util.Dom.addClass(this.throbber_container,
-			'swat-button-processing-throbber');
+		YAHOO.util.Dom.addClass(
+			this.throbber_container,
+			'swat-button-processing-throbber'
+		);
 
 		this.button.parentNode.appendChild(this.throbber_container);
-	},
+	}
 
 	showThrobber() {
-		var animation = new YAHOO.util.Anim(this.throbber_container,
-			{ opacity: { to: 0.5 }}, 1, YAHOO.util.Easing.easingNone);
+		var animation = new YAHOO.util.Anim(
+			this.throbber_container,
+			{ opacity: { to: 0.5 }},
+			1,
+			YAHOO.util.Easing.easingNone
+		);
 
 		animation.animate();
-	},
+	}
 
 	setProcessingMessage(message) {
 		if (this.throbber_container === null) {
@@ -69,18 +84,22 @@ class SwatButton {
 		}
 
 		if (message.length > 0) {
-			this.throbber_container.appendChild(document.createTextNode(message));
-			YAHOO.util.Dom.addClass(this.throbber_container,
-				'swat-button-processing-throbber-text');
+			this.throbber_container.appendChild(
+				document.createTextNode(message)
+			);
+			YAHOO.util.Dom.addClass(
+				this.throbber_container,
+				'swat-button-processing-throbber-text'
+			);
 		} else {
 			// the following string is a UTF-8 encoded non breaking space
 			this.throbber_container.appendChild(document.createTextNode(' '));
 		}
-	},
+	}
 
 	setConfirmationMessage(message) {
 		this.confirmation_message = message;
-	},
+	}
 }
 
 module.exports = SwatButton;

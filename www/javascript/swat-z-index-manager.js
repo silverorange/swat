@@ -1,84 +1,9 @@
-function SwatZIndexNode(element)
-{
-	if (element) {
-		this.element = element;
-		this.element._swat_z_index_node = this;
-	} else {
-		this.element = null;
-	}
-
-	this.parent = null;
-	this.nodes = [];
-}
-
-SwatZIndexNode.prototype.add = function(node)
-{
-	for (var i = 0; i < this.nodes.length; i++) {
-		if (this.nodes[i] === node || this.nodes[i].id === node) {
-			return;
-		}
-	}
-
-	this.nodes.push(node);
-	node.parent = this;
-};
-
-SwatZIndexNode.prototype.remove = function(node)
-{
-	var found = false;
-
-	for (var i = 0; i < this.nodes.length; i++) {
-		if (this.nodes[i] === node) {
-			found = this.nodes[i];
-			found.parent = null;
-			this.nodes.splice(i, 1);
-			break;
-		}
-	}
-
-	return found;
-};
-
-SwatZIndexManager.reindex = function()
-{
-	SwatZIndexManager.reindexNode(
-		SwatZIndexManager.tree,
-		SwatZIndexManager.start
-	);
-};
-
-SwatZIndexManager.reindexNode = function(node, index)
-{
-	if (node.element) {
-		node.element.style.zIndex = index;
-		index++;
-	}
-
-	for (var i = 0; i < node.nodes.length; i++) {
-		index = SwatZIndexManager.reindexNode(node.nodes[i], index);
-	}
-
-	return index;
-};
-
-SwatZIndexManager.unindexNode = function(node)
-{
-	if (node.element) {
-		node.element.style.zIndex = 0;
-	}
-
-	for (var i = 0; i < node.nodes.length; i++) {
-		index = SwatZIndexManager.unindexNode(node.nodes[i]);
-	}
-
-	return index;
-};
+const SwatZIndexNode = require('./swat-z-index-node');
 
 /**
  * An object to manage element z-indexes for a webpage
  */
-function SwatZIndexManager()
-{
+class SwatZIndexManager {
 }
 
 SwatZIndexManager.tree = new SwatZIndexNode();
@@ -92,6 +17,38 @@ SwatZIndexManager.groups = {};
  */
 SwatZIndexManager.start = 10;
 
+SwatZIndexManager.reindex = function() {
+	SwatZIndexManager.reindexNode(
+		SwatZIndexManager.tree,
+		SwatZIndexManager.start
+	);
+};
+
+SwatZIndexManager.reindexNode = function(node, index) {
+	if (node.element) {
+		node.element.style.zIndex = index;
+		index++;
+	}
+
+	for (var i = 0; i < node.nodes.length; i++) {
+		index = SwatZIndexManager.reindexNode(node.nodes[i], index);
+	}
+
+	return index;
+};
+
+SwatZIndexManager.unindexNode = function(node) {
+	if (node.element) {
+		node.element.style.zIndex = 0;
+	}
+
+	for (var i = 0; i < node.nodes.length; i++) {
+		index = SwatZIndexManager.unindexNode(node.nodes[i]);
+	}
+
+	return index;
+};
+
 /**
  * Raises an element to the top
  *
@@ -100,8 +57,7 @@ SwatZIndexManager.start = 10;
  *
  * @param DOMElement element the element to raise.
  */
-SwatZIndexManager.raiseElement = function(element, group)
-{
+SwatZIndexManager.raiseElement = function(element, group) {
 	var node;
 
 	// create node if it does not exist
@@ -136,8 +92,7 @@ SwatZIndexManager.raiseElement = function(element, group)
 	SwatZIndexManager.reindex();
 };
 
-SwatZIndexManager.raiseGroup = function(group)
-{
+SwatZIndexManager.raiseGroup = function(group) {
 	if (!SwatZIndexManager.groups[group]) {
 		return;
 	}
@@ -151,8 +106,7 @@ SwatZIndexManager.raiseGroup = function(group)
 	SwatZIndexManager.reindex();
 };
 
-SwatZIndexManager.lowerGroup = function(group)
-{
+SwatZIndexManager.lowerGroup = function(group) {
 	if (!SwatZIndexManager.groups[group]) {
 		return;
 	}
@@ -162,8 +116,7 @@ SwatZIndexManager.lowerGroup = function(group)
 	SwatZIndexManager.removeGroup(group);
 };
 
-SwatZIndexManager.removeGroup = function(group)
-{
+SwatZIndexManager.removeGroup = function(group) {
 	if (!SwatZIndexManager.groups[group]) {
 		return;
 	}
@@ -189,10 +142,8 @@ SwatZIndexManager.removeGroup = function(group)
  * @return mixed the element that was lowered or null if the element was not
  *                found.
  */
-SwatZIndexManager.lowerElement = function(element, group)
-{
+SwatZIndexManager.lowerElement = function(element, group) {
 	element.style.zIndex = 0;
-
 	return SwatZIndexManager.removeElement(element, group);
 };
 
@@ -205,8 +156,7 @@ SwatZIndexManager.lowerElement = function(element, group)
  * @return mixed the element that was removed or null if the element was not
  *                found.
  */
-SwatZIndexManager.removeElement = function(element, group)
-{
+SwatZIndexManager.removeElement = function(element, group) {
 	if (!element._swat_z_index_node) {
 		return null;
 	}
@@ -231,3 +181,5 @@ SwatZIndexManager.removeElement = function(element, group)
 
 	return element;
 };
+
+module.exports = SwatZIndexManager;

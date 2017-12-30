@@ -5,179 +5,148 @@
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
+class SwatTextarea {
+	// {{{ constructor()
 
-// {{{ function SwatTextarea()
+	/**
+	 * Creates a new textarea object
+	 *
+	 * @param string id the unique identifier of this textarea object.
+	 * @param boolean resizeable whether or not this textarea is resizeable.
+	 */
+	constructor(id, resizeable) {
+		this.id = id;
 
-/**
- * Creates a new textarea object
- *
- * @param string id the unique identifier of this textarea object.
- * @param boolean resizeable whether or not this textarea is resizeable.
- */
-function SwatTextarea(id, resizeable)
-{
-	this.id = id;
-
-	if (resizeable) {
-		YAHOO.util.Event.onContentReady(
-			this.id, this.handleOnAvailable, this, true);
-	}
-}
-
-// }}}
-// {{{ SwatTextarea.registerPendingTextarea()
-
-SwatTextarea.registerPendingTextarea = function(textarea)
-{
-	SwatTextarea.pending_textareas.push(textarea);
-
-	if (SwatTextarea.pending_interval === null) {
-		SwatTextarea.pending_interval = setInterval(
-			SwatTextarea.pollPendingTextareas,
-			SwatTextarea.pending_poll_interval * 1000
-		);
-	}
-};
-
-// }}}
-// {{{ SwatTextarea.pollPendingTextareas()
-
-SwatTextarea.pollPendingTextareas = function()
-{
-	for (var i = 0; i < SwatTextarea.pending_textareas.length; i++) {
-		if (SwatTextarea.pending_textareas[i].textarea.offsetWidth > 0) {
-			SwatTextarea.pending_textareas[i].initialize();
-			SwatTextarea.pending_textareas.splice(i, 1);
-			i--;
+		if (resizeable) {
+			YAHOO.util.Event.onContentReady(
+				this.id,
+				this.handleOnAvailable,
+				this,
+				true
+			);
 		}
 	}
 
-	if (SwatTextarea.pending_textareas.length === 0) {
-		clearInterval(SwatTextarea.pending_interval);
-		SwatTextarea.pending_interval = null;
-	}
-};
+	// }}}
+	// {{{ handleOnAvailable()
 
-// }}}
-// {{{ handleOnAvailable()
+	/**
+	 * Sets up the resize handle when the textarea is available and loaded in
+	 * the DOM tree
+	 */
+	handleOnAvailable() {
+		this.textarea = document.getElementById(this.id);
 
-/**
- * Sets up the resize handle when the textarea is available and loaded in the
- * DOM tree
- */
-SwatTextarea.prototype.handleOnAvailable = function()
-{
-	this.textarea = document.getElementById(this.id);
+		// check if textarea already is resizable, and if so, don't add resize
+		// handle.
+		if (SwatTextarea.supports_resize) {
+			var resize = YAHOO.util.Dom.getStyle(this.textarea, 'resize');
+			if (resize == 'both' || resize == 'vertical') {
+				return;
+			}
+		}
 
-	// check if textarea already is resizable, and if so, don't add resize
-	// handle.
-	if (SwatTextarea.supports_resize) {
-		var resize = YAHOO.util.Dom.getStyle(this.textarea, 'resize');
-		if (resize == 'both' || resize == 'vertical') {
+		this.handle_div = document.createElement('div');
+		this.handle_div.className = 'swat-textarea-resize-handle';
+		this.handle_div._textarea = this.textarea;
+
+		this.textarea._resize = this;
+
+		YAHOO.util.Event.addListener(this.handle_div, 'touchstart',
+			SwatTextarea.touchstartEventHandler, this.handle_div);
+
+		YAHOO.util.Event.addListener(this.handle_div, 'mousedown',
+			SwatTextarea.mousedownEventHandler, this.handle_div);
+
+		this.textarea.parentNode.appendChild(this.handle_div);
+		YAHOO.util.Dom.addClass(
+			this.textarea.parentNode,
+			'swat-textarea-with-resize');
+
+		// if textarea is not currently visible, delay initilization
+		if (this.textarea.offsetWidth === 0) {
+			SwatTextarea.registerPendingTextarea(this);
 			return;
 		}
+
+		this.initialize();
 	}
 
-	this.handle_div = document.createElement('div');
-	this.handle_div.className = 'swat-textarea-resize-handle';
-	this.handle_div._textarea = this.textarea;
+	// }}}
+	// {{{ initialize()
 
-	this.textarea._resize = this;
+	initialize() {
+		var style_width = YAHOO.util.Dom.getStyle(this.textarea, 'width');
+		var left_border, right_border;
 
-	YAHOO.util.Event.addListener(this.handle_div, 'touchstart',
-		SwatTextarea.touchstartEventHandler, this.handle_div);
+		if (style_width.indexOf('%') != -1) {
+			left_border = parseInt(
+				YAHOO.util.Dom.getComputedStyle(
+					this.textarea,
+					'borderLeftWidth'
+				),
+				10
+			) - parseInt(
+				YAHOO.util.Dom.getComputedStyle(
+					this.handle_div,
+					'borderLeftWidth'
+				),
+				10
+			);
 
-	YAHOO.util.Event.addListener(this.handle_div, 'mousedown',
-		SwatTextarea.mousedownEventHandler, this.handle_div);
+			right_border = parseInt(
+				YAHOO.util.Dom.getComputedStyle(
+					this.textarea,
+					'borderRightWidth'
+				),
+				10
+			) - parseInt(
+				YAHOO.util.Dom.getComputedStyle(
+					this.handle_div,
+					'borderRightWidth'
+				),
+				10
+			);
 
-	this.textarea.parentNode.appendChild(this.handle_div);
-	YAHOO.util.Dom.addClass(
-		this.textarea.parentNode,
-		'swat-textarea-with-resize');
+			this.handle_div.style.width = style_width;
+			this.handle_div.style.paddingLeft = left_border;
+			this.handle_div.style.paddingRight = right_border;
+		} else {
+			var width = this.textarea.offsetWidth;
 
-	// if textarea is not currently visible, delay initilization
-	if (this.textarea.offsetWidth === 0) {
-		SwatTextarea.registerPendingTextarea(this);
-		return;
+			left_border = parseInt(
+				YAHOO.util.Dom.getComputedStyle(
+					this.handle_div,
+					'borderLeftWidth'
+				),
+				10
+			);
+
+			right_border = parseInt(
+				YAHOO.util.Dom.getComputedStyle(
+					this.handle_div,
+					'borderRightWidth'
+				),
+				10
+			);
+
+			this.handle_div.style.width =
+				(width - left_border - right_border) + 'px';
+		}
+
+		this.handle_div.style.height = SwatTextarea.resize_handle_height + 'px';
+		this.handle_div.style.fontSize = '0'; // for IE6 height
+
+		if ('ontouchstart' in window) {
+			// make it taller for fingers
+			this.handle_div.style.height =
+				(SwatTextarea.resize_handle_height + 16) + 'px';
+		}
 	}
 
-	this.initialize();
-};
+	// }}}
+}
 
-// }}}
-// {{{ initialize()
-
-SwatTextarea.prototype.initialize = function()
-{
-	var style_width = YAHOO.util.Dom.getStyle(this.textarea, 'width');
-	var left_border, right_border;
-
-	if (style_width.indexOf('%') != -1) {
-		left_border = parseInt(
-			YAHOO.util.Dom.getComputedStyle(
-				this.textarea,
-				'borderLeftWidth'
-			),
-			10
-		) - parseInt(
-			YAHOO.util.Dom.getComputedStyle(
-				this.handle_div,
-				'borderLeftWidth'
-			),
-			10
-		);
-
-		right_border = parseInt(
-			YAHOO.util.Dom.getComputedStyle(
-				this.textarea,
-				'borderRightWidth'
-			),
-			10
-		) - parseInt(
-			YAHOO.util.Dom.getComputedStyle(
-				this.handle_div,
-				'borderRightWidth'
-			),
-			10
-		);
-
-		this.handle_div.style.width = style_width;
-		this.handle_div.style.paddingLeft = left_border;
-		this.handle_div.style.paddingRight = right_border;
-	} else {
-		var width = this.textarea.offsetWidth;
-
-		left_border = parseInt(
-			YAHOO.util.Dom.getComputedStyle(
-				this.handle_div,
-				'borderLeftWidth'
-			),
-			10
-		);
-
-		right_border = parseInt(
-			YAHOO.util.Dom.getComputedStyle(
-				this.handle_div,
-				'borderRightWidth'
-			),
-			10
-		);
-
-		this.handle_div.style.width =
-			(width - left_border - right_border) + 'px';
-	}
-
-	this.handle_div.style.height = SwatTextarea.resize_handle_height + 'px';
-	this.handle_div.style.fontSize = '0'; // for IE6 height
-
-	if ('ontouchstart' in window) {
-		// make it taller for fingers
-		this.handle_div.style.height =
-			(SwatTextarea.resize_handle_height + 16) + 'px';
-	}
-};
-
-// }}}
 // {{{ static properties
 
 /**
@@ -258,6 +227,39 @@ SwatTextarea.supports_resize = (function() {
 		(resize === '' || resize === 'none'));
 })();
 
+// }}}
+// {{{ SwatTextarea.registerPendingTextarea()
+
+SwatTextarea.registerPendingTextarea = function(textarea)
+{
+	SwatTextarea.pending_textareas.push(textarea);
+
+	if (SwatTextarea.pending_interval === null) {
+		SwatTextarea.pending_interval = setInterval(
+			SwatTextarea.pollPendingTextareas,
+			SwatTextarea.pending_poll_interval * 1000
+		);
+	}
+};
+
+// }}}
+// {{{ SwatTextarea.pollPendingTextareas()
+
+SwatTextarea.pollPendingTextareas = function()
+{
+	for (var i = 0; i < SwatTextarea.pending_textareas.length; i++) {
+		if (SwatTextarea.pending_textareas[i].textarea.offsetWidth > 0) {
+			SwatTextarea.pending_textareas[i].initialize();
+			SwatTextarea.pending_textareas.splice(i, 1);
+			i--;
+		}
+	}
+
+	if (SwatTextarea.pending_textareas.length === 0) {
+		clearInterval(SwatTextarea.pending_interval);
+		SwatTextarea.pending_interval = null;
+	}
+};
 
 // }}}
 // {{{ SwatTextarea.mousedownEventHandler()
@@ -493,3 +495,5 @@ SwatTextarea.touchendEventHandler = function(e, handle)
 };
 
 // }}}
+
+module.exports = SwatTextarea;
