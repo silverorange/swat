@@ -34,7 +34,7 @@ class TableViewInputRowDemo extends Demo
 		$table_store = new SwatTableStore();
 
 		foreach ($data as $datum) {
-			$fruit = new FruitObject();
+			$fruit = new InputFruitObject();
 			$fruit->title = $datum[0];
 			$fruit->makes_jam = $datum[1];
 			$fruit->makes_pie = $datum[2];
@@ -55,7 +55,7 @@ class TableViewInputRowDemo extends Demo
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class FruitObject
+class InputFruitObject
 {
 	// {{{ public properties
 
