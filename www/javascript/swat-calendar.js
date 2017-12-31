@@ -20,7 +20,6 @@
  * @author    Michael Gauthier <mike@silverorange.com>
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-
 class SwatCalendar {
 	/**
 	 * Creates a SwatCalendar JavaScript object
@@ -904,4 +903,4 @@ SwatCalendar.stopEventPropagation = function(e) {
 
 };
 
-module.exports = SwatCalendar;
+export default SwatCalendar;

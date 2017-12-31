@@ -1,4 +1,4 @@
-class SwatSearchEntry {
+export default class SwatSearchEntry {
 	constructor(id) {
 		this.id = id;
 		this.input = document.getElementById(this.id);
@@ -211,5 +211,3 @@ class SwatSearchEntry {
 		}
 	}
 }
-
-module.exports = SwatSearchEntry;

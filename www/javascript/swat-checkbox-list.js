@@ -1,4 +1,4 @@
-class SwatCheckboxList {
+export default class SwatCheckboxList {
 	/**
 	 * JavaScript SwatCheckboxList component
 	 *
@@ -71,5 +71,3 @@ class SwatCheckboxList {
 		}
 	}
 }
-
-module.exports = SwatCheckboxList;

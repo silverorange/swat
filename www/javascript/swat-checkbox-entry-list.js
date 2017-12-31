@@ -1,6 +1,6 @@
-const SwatCheckboxList = require('./swat-checkbox-list');
+import SwatCheckboxList  from './swat-checkbox-list';
 
-class SwatCheckboxEntryList extends SwatCheckboxList {
+export default class SwatCheckboxEntryList extends SwatCheckboxList {
 	constructor(id) {
 		super(id);
 		this.entry_list = [];
@@ -63,5 +63,3 @@ class SwatCheckboxEntryList extends SwatCheckboxList {
 		}
 	}
 }
-
-module.exports = SwatCheckboxEntryList;

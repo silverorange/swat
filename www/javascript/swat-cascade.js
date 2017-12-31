@@ -1,6 +1,6 @@
-const SwatCascadeChild = require('./swat-cascade-child');
+import SwatCascadeChild from './swat-cascade-child';
 
-class SwatCascade {
+export default class SwatCascade {
 	constructor(from_flydown_id, to_flydown_id) {
 		this.from_flydown = document.getElementById(from_flydown_id);
 		this.to_flydown = document.getElementById(to_flydown_id);
@@ -82,5 +82,3 @@ class SwatCascade {
 		}
 	}
 }
-
-module.exports = SwatCascade;

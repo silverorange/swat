@@ -230,8 +230,7 @@ SwatTextarea.supports_resize = (function() {
 // }}}
 // {{{ SwatTextarea.registerPendingTextarea()
 
-SwatTextarea.registerPendingTextarea = function(textarea)
-{
+SwatTextarea.registerPendingTextarea = function(textarea) {
 	SwatTextarea.pending_textareas.push(textarea);
 
 	if (SwatTextarea.pending_interval === null) {
@@ -245,8 +244,7 @@ SwatTextarea.registerPendingTextarea = function(textarea)
 // }}}
 // {{{ SwatTextarea.pollPendingTextareas()
 
-SwatTextarea.pollPendingTextareas = function()
-{
+SwatTextarea.pollPendingTextareas = function() {
 	for (var i = 0; i < SwatTextarea.pending_textareas.length; i++) {
 		if (SwatTextarea.pending_textareas[i].textarea.offsetWidth > 0) {
 			SwatTextarea.pending_textareas[i].initialize();
@@ -272,8 +270,7 @@ SwatTextarea.pollPendingTextareas = function()
  *
  * @return boolean false
  */
-SwatTextarea.mousedownEventHandler = function(e, handle)
-{
+SwatTextarea.mousedownEventHandler = function(e, handle) {
 	// prevent text selection
 	YAHOO.util.Event.preventDefault(e);
 
@@ -324,8 +321,7 @@ SwatTextarea.mousedownEventHandler = function(e, handle)
  *
  * @return boolean false
  */
-SwatTextarea.touchstartEventHandler = function(e, handle)
-{
+SwatTextarea.touchstartEventHandler = function(e, handle) {
 	// prevent text selection
 	YAHOO.util.Event.preventDefault(e);
 
@@ -375,8 +371,7 @@ SwatTextarea.touchstartEventHandler = function(e, handle)
  *
  * @return boolean false.
  */
-SwatTextarea.mousemoveEventHandler = function(e, handle)
-{
+SwatTextarea.mousemoveEventHandler = function(e, handle) {
 	var resize_handle = SwatTextarea.dragging_item;
 	var textarea = resize_handle._textarea;
 
@@ -384,8 +379,9 @@ SwatTextarea.mousemoveEventHandler = function(e, handle)
 		SwatTextarea.dragging_mouse_origin_y;
 
 	var height = SwatTextarea.dragging_origin_height + delta;
-	if (height >= SwatTextarea.min_height)
+	if (height >= SwatTextarea.min_height) {
 		textarea.style.height = height + 'px';
+	}
 
 	return false;
 };
@@ -402,8 +398,7 @@ SwatTextarea.mousemoveEventHandler = function(e, handle)
  *
  * @return boolean false.
  */
-SwatTextarea.touchmoveEventHandler = function(e, handle)
-{
+SwatTextarea.touchmoveEventHandler = function(e, handle) {
 	var resize_handle = SwatTextarea.dragging_item;
 	var textarea = resize_handle._textarea;
 
@@ -440,8 +435,7 @@ SwatTextarea.touchmoveEventHandler = function(e, handle)
  *
  * @return boolean false.
  */
-SwatTextarea.mouseupEventHandler = function(e, handle)
-{
+SwatTextarea.mouseupEventHandler = function(e, handle) {
 	// only allow left click to do things
 	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
@@ -489,11 +483,10 @@ SwatTextarea.mouseupEventHandler = function(e, handle)
  *
  * @return boolean false.
  */
-SwatTextarea.touchendEventHandler = function(e, handle)
-{
+SwatTextarea.touchendEventHandler = function(e, handle) {
 	return SwatTextarea.mouseupEventHandler(e, handle);
 };
 
 // }}}
 
-module.exports = SwatTextarea;
+export default SwatTextarea;

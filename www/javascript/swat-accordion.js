@@ -1,4 +1,4 @@
-const SwatAccordionPage = require('./swat-accordion-page');
+import SwatAccordionPage from './swat-accordion-page';
 
 class SwatAccordion {
 	constructor(id) {
@@ -201,4 +201,4 @@ class SwatAccordion {
 
 SwatAccordion.resize_period = 0.25; // seconds
 
-module.exports = SwatAccordion;
+export default SwatAccordion;

@@ -1,4 +1,4 @@
-class SwatForm {
+export default class SwatForm {
 	constructor(id, connection_close_url) {
 		this.id = id;
 		this.form_element = document.getElementById(id);
@@ -47,5 +47,3 @@ class SwatForm {
 		}
 	}
 }
-
-module.exports = SwatForm;

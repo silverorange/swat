@@ -1,4 +1,4 @@
-class SwatTimeEntry {
+export default class SwatTimeEntry {
 	constructor(id, use_current_time) {
 		this.id = id;
 		this.use_current_time = use_current_time;
@@ -274,5 +274,3 @@ class SwatTimeEntry {
 		}
 	}
 }
-
-module.exports = SwatTimeEntry;

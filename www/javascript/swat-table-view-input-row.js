@@ -321,4 +321,4 @@ if (!document.importNode || SwatTableViewInputRow.is_webkit) {
 	}
 }
 
-module.exports = SwatTableViewInputRow;
+export default SwatTableViewInputRow;

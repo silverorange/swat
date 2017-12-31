@@ -1,4 +1,4 @@
-class SwatAccordionPage {
+export default class SwatAccordionPage {
 	constructor(el) {
 		this.element = el;
 		this.toggle = YAHOO.util.Dom.getFirstChild(el);
@@ -33,5 +33,3 @@ class SwatAccordionPage {
 		}
 	}
 }
-
-module.exports = SwatAccordionPage;

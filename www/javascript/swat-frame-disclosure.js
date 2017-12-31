@@ -1,6 +1,6 @@
-const SwatDisclosure = require('./swat-disclosure');
+import SwatDisclosure from './swat-disclosure';
 
-class SwatFrameDisclosure extends SwatDisclosure {
+export default class SwatFrameDisclosure extends SwatDisclosure {
 	getSpan() {
 		return this.div.firstChild.firstChild;
 	}
@@ -61,5 +61,3 @@ class SwatFrameDisclosure extends SwatDisclosure {
 		);
 	}
 }
-
-module.exports = SwatFrameDisclosure;

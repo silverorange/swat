@@ -1,4 +1,4 @@
-const SwatZIndexManager = require('./swat-z-index-manager');
+import SwatZIndexManager from './swat-z-index-manager';
 
 class SwatImagePreviewDisplay {
 	constructor(id, preview_src, preview_width, preview_height, show_title, preview_title) {
@@ -290,4 +290,4 @@ SwatImagePreviewDisplay.close_text = 'Close';
  */
 SwatImagePreviewDisplay.padding = 16;
 
-module.exports = SwatImagePreviewDisplay;
+export default SwatImagePreviewDisplay;

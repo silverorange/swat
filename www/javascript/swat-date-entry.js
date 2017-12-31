@@ -1,4 +1,4 @@
-class SwatDateEntry {
+export default class SwatDateEntry {
 	constructor(id, use_current_date) {
 		this.id = id;
 		this.use_current_date = use_current_date;
@@ -318,5 +318,3 @@ class SwatDateEntry {
 		}
 	}
 }
-
-module.exports = SwatDateEntry;

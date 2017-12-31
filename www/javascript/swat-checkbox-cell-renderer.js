@@ -1,4 +1,4 @@
-class SwatCheckboxCellRenderer {
+export default class SwatCheckboxCellRenderer {
 	/**
 	 * Checkbox cell renderer controller
 	 *
@@ -41,8 +41,13 @@ class SwatCheckboxCellRenderer {
 					this.handleClick, this, true);
 
 				// prevent selecting label text when shify key is held
-				YAHOO.util.Event.addListener(input_nodes[i].parentNode, 'mousedown',
-					this.handleMouseDown, this, true);
+				YAHOO.util.Event.addListener(
+					input_nodes[i].parentNode,
+					'mousedown',
+					this.handleMouseDown,
+					this,
+					true
+				);
 			}
 		}
 	}
@@ -117,15 +122,19 @@ class SwatCheckboxCellRenderer {
 		if (checkbox_node.checked) {
 			this.view.selectItem(checkbox_node, this.id);
 			if (shift_key && this.last_clicked_index !== null) {
-				this.checkBetween(this.last_clicked_index, checkbox_node._index);
+				this.checkBetween(
+					this.last_clicked_index,
+					checkbox_node._index
+				);
 			}
 		} else {
 			this.view.deselectItem(checkbox_node, this.id);
 			if (shift_key && this.last_clicked_index !== null) {
-				this.uncheckBetween(this.last_clicked_index, checkbox_node._index);
+				this.uncheckBetween(
+					this.last_clicked_index,
+					checkbox_node._index
+				);
 			}
 		}
 	}
 }
-
-module.exports = SwatCheckboxCellRenderer;

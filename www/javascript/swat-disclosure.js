@@ -1,4 +1,4 @@
-class SwatDisclosure {
+export defaukt class SwatDisclosure {
 	constructor(id, open) {
 		this.id = id;
 		this.div = document.getElementById(id);
@@ -234,5 +234,3 @@ class SwatDisclosure {
 		this.semaphore = false;
 	}
 }
-
-module.exports = SwatDisclosure;

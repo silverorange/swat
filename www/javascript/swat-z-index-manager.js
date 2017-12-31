@@ -1,4 +1,4 @@
-const SwatZIndexNode = require('./swat-z-index-node');
+import SwatZIndexNode from './swat-z-index-node';
 
 /**
  * An object to manage element z-indexes for a webpage
@@ -182,4 +182,4 @@ SwatZIndexManager.removeElement = function(element, group) {
 	return element;
 };
 
-module.exports = SwatZIndexManager;
+export default SwatZIndexManager;

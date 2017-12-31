@@ -48,7 +48,7 @@
  *    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  *    OTHER DEALINGS IN THE SOFTWARE.
  */
-class SwatRating {
+export default class SwatRating {
 	constructor(id, max_value) {
 		this.id = id;
 		this.max_value = max_value;
@@ -217,5 +217,3 @@ class SwatRating {
 		}
 	}
 }
-
-module.exports = SwatRating;

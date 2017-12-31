@@ -8,7 +8,6 @@
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-
 class SwatChangeOrder {
 	// {{{ function SwatChangeOrder()
 
@@ -1070,4 +1069,4 @@ function SwatChangeOrder_staticMoveToBottom(change_order, steps)
 
 // }}}
 
-module.exports = SwatChangeOrder;
+export default SwatChangeOrder;

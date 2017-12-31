@@ -1,4 +1,4 @@
-class SwatZIndexNode {
+export default class SwatZIndexNode {
 	constructor(element) {
 		if (element) {
 			this.element = element;
@@ -37,5 +37,3 @@ class SwatZIndexNode {
 		return found;
 	}
 }
-
-module.exports = SwatZIndexNode;

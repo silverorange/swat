@@ -1,4 +1,4 @@
-class SwatCheckAll {
+export default class SwatCheckAll {
 	/**
 	 * Creates a new check-all object
 	 *
@@ -101,5 +101,3 @@ class SwatCheckAll {
 		this.updateExtendedCheckbox();
 	}
 }
-
-module.exports = SwatCheckAll;

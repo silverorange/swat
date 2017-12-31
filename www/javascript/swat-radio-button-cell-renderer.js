@@ -1,4 +1,4 @@
-class SwatRadioButtonCellRenderer {
+export default class SwatRadioButtonCellRenderer {
 	/**
 	 * Radio button cell renderer controller
 	 *
@@ -51,5 +51,3 @@ class SwatRadioButtonCellRenderer {
 		}
 	}
 }
-
-module.exports = SwatRadioButtonCellRenderer;

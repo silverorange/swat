@@ -1,4 +1,4 @@
-class SwatView {
+export default class SwatView {
 	/**
 	 * Creates a new recordset view
 	 *
@@ -176,5 +176,3 @@ class SwatView {
 		return selected;
 	}
 }
-
-module.exports = SwatView;

@@ -19,11 +19,15 @@ class SwatMessageDisplayMessage {
 		anchor.href = '#';
 		anchor.title = SwatMessageDisplayMessage.close_text;
 		YAHOO.util.Dom.addClass(anchor, 'swat-message-display-dismiss-link');
-		YAHOO.util.Event.addListener(anchor, 'click',
+		YAHOO.util.Event.addListener(
+			anchor,
+			'click',
 			function(e, message) {
 				YAHOO.util.Event.preventDefault(e);
 				message.hide();
-			}, this);
+			},
+			this
+		);
 
 		anchor.appendChild(text);
 
@@ -134,4 +138,4 @@ SwatMessageDisplayMessage.close_text = 'Dismiss message';
 SwatMessageDisplayMessage.fade_duration = 0.3;
 SwatMessageDisplayMessage.shrink_duration = 0.3;
 
-module.exports = SwatMessageDisplayMessage;
+export default SwatMessageDisplayMessage;

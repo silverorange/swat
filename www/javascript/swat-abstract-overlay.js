@@ -1,4 +1,4 @@
-const SwatZIndexManager = require('./swat-z-index-manager');
+import SwatZIndexManager from './swat-z-index-manager';
 
 /**
  * Abstract overlay widget
@@ -316,4 +316,4 @@ class SwatAbstractOverlay {
 
 SwatAbstractOverlay.close_text = 'Close';
 
-module.exports = SwatAbstractOverlay;
+export default SwatAbstractOverlay;

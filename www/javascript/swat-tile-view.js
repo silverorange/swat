@@ -1,6 +1,6 @@
-const SwatView = require('./swat-view');
+import SwatView from './swat-view';
 
-class SwatTileView extends SwatView {
+export default class SwatTileView extends SwatView {
 	/**
 	 * JavaScript for the SwatTileView widget
 	 *
@@ -94,5 +94,3 @@ class SwatTileView extends SwatView {
 		}
 	}
 }
-
-module.exports = SwatTileView;

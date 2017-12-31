@@ -6,7 +6,6 @@ class SwatRadioNoteBook {
 		YAHOO.util.Event.onDOMReady(this.init, this, true);
 	}
 
-
 	init() {
 		var table = document.getElementById(this.id);
 
@@ -190,4 +189,4 @@ class SwatRadioNoteBook {
 SwatRadioNoteBook.FADE_DURATION = 0.25;
 SwatRadioNoteBook.SLIDE_DURATION = 0.15;
 
-module.exports = SwatRadioNoteBook;
+export default SwatRadioNoteBook;

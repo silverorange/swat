@@ -1,6 +1,6 @@
-const SwatMessageDisplayMessage = require('./swat-message-display-message');
+import SwatMessageDisplayMessage from './swat-message-display-message';
 
-class SwatMessageDisplay {
+export default class SwatMessageDisplay {
 	constructor(id, hideable_messages) {
 		this.id = id;
 		this.messages = [];
@@ -22,5 +22,3 @@ class SwatMessageDisplay {
 		return false;
 	}
 }
-
-module.exports = SwatMessageDisplay;

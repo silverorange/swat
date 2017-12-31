@@ -1,6 +1,6 @@
-const SwatAbstractOverlay = require('./swat-abstract-overlay');
+import SwatAbstractOverlay from './swat-abstract-overlay';
 
-class SwatSimpleColorEntry extends SwatAbstractOverlay {
+export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 	/**
 	 * Simple color entry widget
 	 *
@@ -309,5 +309,3 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay {
 		}
 	}
 }
-
-module.exports = SwatSimpleColorEntry;

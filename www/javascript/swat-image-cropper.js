@@ -1,4 +1,4 @@
-class SwatImageCropper {
+export default class SwatImageCropper {
 	constructor(id, config) {
 		this.id = id;
 
@@ -23,5 +23,3 @@ class SwatImageCropper {
 		this.crop_box_y.value = coords.top;
 	}
 }
-
-module.exports = SwatImageCropper;

@@ -1,4 +1,4 @@
-class SwatButton {
+export default class SwatButton {
 	constructor(id, show_processing_throbber) {
 		this.id = id;
 
@@ -101,5 +101,3 @@ class SwatButton {
 		this.confirmation_message = message;
 	}
 }
-
-module.exports = SwatButton;

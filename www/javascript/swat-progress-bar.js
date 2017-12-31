@@ -272,4 +272,4 @@ SwatProgressBar.EPSILON = 0.0001;
 
 SwatProgressBar.ANIMATION_DURATION = 0.5;
 
-module.exports = SwatProgressBar;
+export default SwatProgressBar;

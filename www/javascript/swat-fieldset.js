@@ -1,4 +1,4 @@
-class SwatFieldset {
+export default class SwatFieldset {
 	constructor(id) {
 		this.id = id;
 		YAHOO.util.Event.onAvailable(this.id, this.init, this, true);
@@ -35,5 +35,3 @@ class SwatFieldset {
 		}
 	}
 }
-
-module.exports = SwatFieldset;
