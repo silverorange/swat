@@ -186,8 +186,7 @@ class SwatTableViewInputRow {
 		var row_id = this.id + '_row_' + replicator_id;
 		var row = document.getElementById(row_id);
 		if (row && row.parentNode !== null) {
-			var removed_row = row.parentNode.removeChild(row);
-			delete removed_row;
+			row.parentNode.removeChild(row);
 		}
 	}
 }
@@ -241,7 +240,7 @@ function SwatTableViewInputRow_getXMLParser()
 		 * Mozilla, Safari and Opera have a proprietary DOMParser()
 		 * class.
 		 */
-		dom_parser = new DOMParser();
+		var dom_parser = new DOMParser();
 
 		// Cannot add loadXML method to a newly created DOMParser because it
 		// crashes Safari

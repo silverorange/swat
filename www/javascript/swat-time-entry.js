@@ -12,7 +12,7 @@ export default class SwatTimeEntry {
 
 		this.date_entry = null;
 
-		if (this.hour)
+		if (this.hour) {
 			YAHOO.util.Event.addListener(
 				this.hour,
 				'change',

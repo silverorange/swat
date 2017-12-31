@@ -57,7 +57,7 @@ export default class SwatCheckboxEntryList extends SwatCheckboxList {
 		}
 	}
 
-	updateFields = function() {
+	updateFields() {
 		for (var i = 0; i < this.check_list.length; i++) {
 			this.setEntrySensitivity(i, this.check_list[i].checked);
 		}

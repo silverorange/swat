@@ -1,4 +1,4 @@
-export defaukt class SwatDisclosure {
+export default class SwatDisclosure {
 	constructor(id, open) {
 		this.id = id;
 		this.div = document.getElementById(id);

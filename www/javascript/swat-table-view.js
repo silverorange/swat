@@ -67,7 +67,7 @@ export default class SwatTableView extends SwatView {
 	 * @param String selector an identifier of the object that selected the
 	 *                        item node.
 	 */
-	selectItem = function(node, selector) {
+	selectItem(node, selector) {
 		super.selectItem(node, selector);
 
 		var row_node = this.getItemNode(node);

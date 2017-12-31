@@ -167,4 +167,4 @@ SwatActions.select_an_item_text = 'Please select one or more items.';
 SwatActions.select_an_item_and_an_action_text =
 	'Please select an action, and one or more items.';
 
-export defalult SwatActions;
+export default SwatActions;

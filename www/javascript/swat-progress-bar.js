@@ -192,7 +192,7 @@ class SwatProgressBar {
 		}
 	}
 
-	getValue = function() {
+	getValue() {
 		return this.value;
 	}
 

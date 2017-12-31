@@ -126,11 +126,9 @@ class SwatMessageDisplayMessage {
 	remove() {
 		YAHOO.util.Event.purgeElement(this.message_div, true);
 
-		var removed_node = this.message_div.parentNode.removeChild(
+		this.message_div.parentNode.removeChild(
 			this.message_div
 		);
-
-		delete removed_node;
 	};
 }
 
