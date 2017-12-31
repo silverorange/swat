@@ -1,3 +1,5 @@
+import '../styles/swat-calendar.css';
+
 /**
  * Calendar Widget Version 1.0
  *

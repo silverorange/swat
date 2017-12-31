@@ -1,3 +1,5 @@
+import '../styles/swat-progress-bar.css';
+
 /**
  * Progress bar
  *

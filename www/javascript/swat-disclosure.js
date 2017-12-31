@@ -1,3 +1,5 @@
+import '../styles/swat-disclosure.css';
+
 export default class SwatDisclosure {
 	constructor(id, open) {
 		this.id = id;

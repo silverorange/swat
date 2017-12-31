@@ -1,4 +1,5 @@
 import SwatCheckboxList  from './swat-checkbox-list';
+import '../styles/swat-checkbox-entry-list.css';
 
 export default class SwatCheckboxEntryList extends SwatCheckboxList {
 	constructor(id) {

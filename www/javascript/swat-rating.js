@@ -1,3 +1,5 @@
+import '../styles/swat-rating.css';
+
 /**
  * Rating control for Swat
  *

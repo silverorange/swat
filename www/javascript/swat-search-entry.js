@@ -1,3 +1,5 @@
+import '../styles/swat-search-entry.css';
+
 export default class SwatSearchEntry {
 	constructor(id) {
 		this.id = id;

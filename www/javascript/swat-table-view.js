@@ -1,4 +1,5 @@
 import SwatView from './swat-view';
+import '../styles/swat-table-view.css';
 
 export default class SwatTableView extends SwatView {
 	/**

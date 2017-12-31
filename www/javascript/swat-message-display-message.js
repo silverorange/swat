@@ -1,3 +1,5 @@
+import '../styles/swat-message.css';
+
 class SwatMessageDisplayMessage {
 	/**
 	 * A message in a message display

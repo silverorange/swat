@@ -1,4 +1,5 @@
 import SwatDisclosure from './swat-disclosure';
+import '../styles/swat-frame-disclosure.css';
 
 export default class SwatFrameDisclosure extends SwatDisclosure {
 	getSpan() {

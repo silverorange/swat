@@ -1,4 +1,5 @@
 import SwatZIndexManager from './swat-z-index-manager';
+import '../styles/swat-image-preview-display.css';
 
 class SwatImagePreviewDisplay {
 	constructor(id, preview_src, preview_width, preview_height, show_title, preview_title) {

@@ -1,3 +1,5 @@
+import '../styles/swat-change-order.css';
+
 /**
  * An orderable list control widget
  *

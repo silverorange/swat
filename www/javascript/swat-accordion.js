@@ -1,4 +1,5 @@
 import SwatAccordionPage from './swat-accordion-page';
+import '../styles/swat-accordion.css';
 
 class SwatAccordion {
 	constructor(id) {

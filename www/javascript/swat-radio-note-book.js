@@ -1,3 +1,5 @@
+import '../styles/swat-radio-note-book.css';
+
 class SwatRadioNoteBook {
 	constructor(id) {
 		this.id = id;

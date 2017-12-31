@@ -1,3 +1,5 @@
+import '../styles/swat-textarea.css';
+
 /**
  * A resizeable textarea widget
  *

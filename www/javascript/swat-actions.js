@@ -1,3 +1,5 @@
+import '../styles/swat-actions.css';
+
 class SwatActions {
 	constructor(id, values, selected) {
 		this.id = id;

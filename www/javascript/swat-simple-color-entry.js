@@ -1,4 +1,5 @@
 import SwatAbstractOverlay from './swat-abstract-overlay';
+import '../styles/swat-color-entry.css';
 
 export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 	/**
