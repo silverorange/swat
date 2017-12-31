@@ -9,6 +9,675 @@
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 
+class SwatChangeOrder {
+	// {{{ function SwatChangeOrder()
+
+	/**
+	 * An orderable list control widget
+	 *
+	 * @param string id the unique identifier of this object.
+	 * @param boolean sensitive the initial sensitive of this object.
+	 */
+	constructor(id, sensitive) {
+		this.is_webkit =
+			(/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
+
+		this.id = id;
+
+		this.list_div = document.getElementById(this.id + '_list');
+		this.buttons = document.getElementsByName(this.id + '_buttons');
+
+		// the following two lines must be split on two lines to
+		// handle a Firefox bug.
+		var hidden_value = document.getElementById(this.id + '_value');
+		var value_array = hidden_value.value.split(',');
+		var count = 0;
+		var node = null;
+
+		// re-populate list with dynamic items if page is refreshed
+		var items_value = document.getElementById(this.id + '_dynamic_items').value;
+		if (items_value !== '') {
+			this.list_div.innerHTML = items_value;
+		}
+
+		// remove text nodes and set value on nodes
+		for (var i = 0; i < this.list_div.childNodes.length; i++) {
+			node = this.list_div.childNodes[i];
+			if (node.nodeType === 3) {
+				this.list_div.removeChild(node);
+				i--;
+			} else if (node.nodeType === 1) {
+
+				// remove sentinel node and drop-shadow
+				if (node.id == this.id + '_sentinel' || node.id == 'drop') {
+					this.list_div.removeChild(node);
+					i--;
+					continue;
+				}
+
+				node.order_value = value_array[count];
+				node.order_index = count;
+				// assign a back reference for event handlers
+				node.controller = this;
+
+				// add click handlers to the list items
+				YAHOO.util.Event.addListener(
+					node,
+					'mousedown',
+					SwatChangeOrder_mousedownEventHandler
+				);
+
+				YAHOO.util.Dom.removeClass(
+					node,
+					'swat-change-order-item-active'
+				);
+
+				count++;
+			}
+		}
+
+		// since the DOM only has an insertBefore() method we use a sentinel
+		// node to make moving nodes down easier.
+		var sentinel_node = document.createElement('div');
+		sentinel_node.id = this.id + '_sentinel';
+		sentinel_node.style.display = 'block';
+		this.list_div.appendChild(sentinel_node);
+
+		// while not a real semaphore, this does prevent the user from breaking
+		// things by clicking buttons or items while an animation is occuring.
+		this.semaphore = true;
+
+		this.active_div = null;
+
+		// this is hard coded to true so we can chose the first element
+		if (this.list_div.firstChild !== sentinel_node) {
+			this.sensitive = true;
+
+			this.choose(this.list_div.firstChild);
+			this.scrollList(this.getScrollPosition(this.list_div.firstChild));
+		}
+
+		this.sensitive = sensitive;
+		this.orderChangeEvent = new YAHOO.util.CustomEvent('orderChange');
+
+		// add grippies
+		YAHOO.util.Event.on(window, 'load', function() {
+			var node, grippy, height;
+			// exclude last item because it is the sentinel node
+			for (var i = 0; i < this.list_div.childNodes.length - 1; i++) {
+				node = this.list_div.childNodes[i];
+
+				grippy = document.createElement('span');
+				grippy.className = 'swat-change-order-item-grippy';
+				height = YAHOO.util.Dom.getRegion(node).height - 4;
+				grippy.style.height = height + 'px';
+				node.insertBefore(grippy, node.firstChild);
+
+			}
+		}, this, true);
+	}
+
+	// }}}
+	// {{{ add()
+
+	/**
+	 * Dynamically adds an item to this change-order
+	 *
+	 * @param DOMElement el    the element to add to the select list.
+	 * @param String     value the value to save for the order of the element.
+	 *
+	 * @return Boolean true if the element was added, otherwise false.
+	 */
+	add(el, value) {
+		if (!this.semaphore) {
+			// TODO queue elements and add when semaphore is available
+			return false;
+		}
+
+		YAHOO.util.Dom.addClass(el, 'swat-change-order-item');
+
+		YAHOO.util.Event.addListener(
+			el,
+			'mousedown',
+			SwatChangeOrder_mousedownEventHandler
+		);
+
+		var order_index = this.count();
+
+		el.controller  = this;
+		el.order_index = order_index;
+		el.order_value = value;
+
+		this.list_div.insertBefore(el, this.list_div.childNodes[order_index]);
+
+		// update hidden value
+		var value_array;
+		var hidden_value = document.getElementById(this.id + '_value');
+		if (hidden_value.value === '') {
+			value_array = [];
+		} else {
+			value_array = hidden_value.value.split(',');
+		}
+		value_array.push(value);
+		hidden_value.value = value_array.join(',');
+
+		this.updateDynamicItemsValue();
+
+		return true;
+	}
+
+	// }}}
+	// {{{ remove()
+
+	/**
+	 * Dynamically removes an item from this change-order
+	 *
+	 * @param DOMElement el the element to remove.
+	 *
+	 * @return Boolean true if the element was removed, otherwise false.
+	 */
+	remove(el) {
+		if (!this.semaphore) {
+			// TODO queue elements and remove when semaphore is available
+			return false;
+		}
+
+		YAHOO.util.Event.purgeElement(el);
+
+		// remove from hidden value
+		var hidden_value = document.getElementById(this.id + '_value');
+		var value_array = hidden_value.value.split(',');
+		value_array.splice(el.order_index, 1);
+		hidden_value.value = value_array.join(',');
+
+		if (this.active_div === el) {
+			this.active_div = null;
+		}
+
+		this.list_div.removeChild(el);
+
+		this.updateDynamicItemsValue();
+
+		return true;
+	}
+
+	// }}}
+	// {{{ count()
+
+	/**
+	 * Gets the number of items in this change-order
+	 *
+	 * @return Number the number of items in this change-order.
+	 */
+	count() {
+		return this.list_div.childNodes.length - 1;
+	}
+
+	// }}}
+	// {{{ containsValue()
+
+	/**
+	 * Gets whether or not this change-order contains an item with the given
+	 * value
+	 *
+	 * @param String value the value to check for.
+	 *
+	 * @return Boolean true if there is an item with the given value in this
+	 *                 change-order, otherwise false.
+	 */
+	containsValue(value) {
+		var value_array;
+		var hidden_value = document.getElementById(this.id + '_value');
+		if (hidden_value.value === '') {
+			value_array = [];
+		} else {
+			value_array = hidden_value.value.split(',');
+		}
+
+		for (var i = 0; i < value_array.length; i++) {
+			if (value_array[i] === value) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	// }}}
+	// {{{ choose()
+
+	/**
+	 * Choses an element in this change order as the active div
+	 *
+	 * Only allows chosing if the semaphore is not set.
+	 *
+	 * @param DOMNode div the element to chose.
+	 */
+	choose(div) {
+		if (this.semaphore && this.sensitive && div !== this.active_div &&
+			!SwatChangeOrder.is_dragging
+		) {
+			if (this.active_div !== null) {
+				this.active_div.className = 'swat-change-order-item';
+			}
+
+			div.className = 'swat-change-order-item ' +
+				'swat-change-order-item-active';
+
+			this.active_div = div;
+
+			// update the index value of this element
+			for (var i = 0; i < this.list_div.childNodes.length; i++) {
+				if (this.list_div.childNodes[i] === this.active_div) {
+					this.active_div.order_index = i;
+					break;
+				}
+			}
+		}
+	}
+
+	// }}}
+	// {{{ moveToTop()
+
+	/**
+	 * Moves the active element to the top of the list
+	 *
+	 * Only functions if the semaphore is not set. Sets the semaphore.
+	 */
+	moveToTop() {
+		if (this.semaphore && this.sensitive) {
+			this.semaphore = false;
+			this.setButtonsSensitive(false);
+
+			var steps = Math.ceil(
+				this.active_div.order_index / SwatChangeOrder.animation_frames
+			);
+
+			this.moveToTopHelper(steps);
+		}
+	}
+
+	// }}}
+	// {{{ moveToTopHelper()
+
+	/**
+	 * A helper method that moves the active element up and sets a timeout callback
+	 * to move it up again until it reaches the top
+	 *
+	 * Unsets the semaphore after the active element is at the top.
+	 *
+	 * @param number steps the number of steps to skip when moving the active
+	 *                      element.
+	 */
+	moveToTopHelper(steps) {
+		if (this.moveUpHelper(steps)) {
+			setTimeout(
+				'SwatChangeOrder_staticMoveToTop(' +
+				this.id + '_obj, ' + steps + ');',
+				SwatChangeOrder.animation_delay
+			);
+		} else {
+			this.semaphore = true;
+			this.setButtonsSensitive(true);
+			this.updateDynamicItemsValue();
+		}
+	}
+
+	// }}}
+	// {{{ moveToBottom()
+
+	/**
+	 * Moves the active element to the bottom of the list
+	 *
+	 * Only functions if the semaphore is not set. Sets the semaphore.
+	 */
+	moveToBottom() {
+		if (this.semaphore && this.sensitive) {
+			this.semaphore = false;
+			this.setButtonsSensitive(false);
+
+			var steps = Math.ceil((
+					this.list_div.childNodes.length -
+					this.active_div.order_index - 1
+				) / SwatChangeOrder.animation_frames
+			);
+
+			this.moveToBottomHelper(steps);
+		}
+	}
+
+	// }}}
+	// {{{ moveToBottomHelper()
+
+	/**
+	 * A helper method that moves the active element down and sets a timeout
+	 * callback to move it down again until it reaches the bottom
+	 *
+	 * Unsets the semaphore after the active element is at the bottom.
+	 *
+	 * @param number steps the number of steps to skip when moving the active
+	 *                      element.
+	 */
+	moveToBottomHelper(steps) {
+		if (this.moveDownHelper(steps)) {
+			setTimeout(
+				'SwatChangeOrder_staticMoveToBottom(' +
+				this.id + '_obj, ' + steps + ');',
+				SwatChangeOrder.animation_delay
+			);
+		} else {
+			this.semaphore = true;
+			this.setButtonsSensitive(true);
+			this.updateDynamicItemsValue();
+		}
+	}
+
+	// }}}
+	// {{{ moveUp()
+
+	/**
+	 * Moves the active element up one space
+	 *
+	 * Only functions if the semaphore is not set.
+	 */
+	moveUp() {
+		if (this.semaphore && this.sensitive) {
+			this.moveUpHelper(1);
+			this.updateDynamicItemsValue();
+		}
+	}
+
+	// }}}
+	// {{{ moveDown()
+
+	/**
+	 * Moves the active element down one space
+	 *
+	 * Only functions if the semaphore is not set.
+	 */
+	moveDown() {
+		if (this.semaphore && this.sensitive) {
+			this.moveDownHelper(1);
+			this.updateDynamicItemsValue();
+		}
+	}
+
+	// }}}
+	// {{{ moveUpHelper()
+
+	/**
+	 * Moves the active element up a number of steps
+	 *
+	 * @param number steps the number of steps to move the active element up by.
+	 *
+	 * @return boolean true if the element is not hitting the top of the list,
+	 *                  false otherwise.
+	 */
+	moveUpHelper(steps) {
+		// can't move the top of the list up
+		if (this.list_div.firstChild === this.active_div) {
+			return false;
+		}
+
+		var return_val = true;
+
+		var prev_div = this.active_div;
+		for (var i = 0; i < steps; i++) {
+			prev_div = prev_div.previousSibling;
+			if (prev_div === this.list_div.firstChild) {
+				return_val = false;
+				break;
+			}
+		}
+
+		this.list_div.insertBefore(this.active_div, prev_div);
+
+		this.active_div.order_index = Math.max(
+			this.active_div.order_index - steps,
+			0
+		);
+
+		this.updateValue();
+		this.scrollList(this.getScrollPosition(this.active_div));
+
+		return return_val;
+	}
+
+	// }}}
+	// {{{ moveDownHelper()
+
+	/**
+	 * Moves the active element down a number of steps
+	 *
+	 * @param number steps the number of steps to move the active element down
+	 *                     by.
+	 *
+	 * @return boolean true if the element is not hitting the bottom of the
+	 *                 list, false otherwise.
+	 */
+	moveDownHelper(steps) {
+		// can't move the bottom of the list down
+		if (this.list_div.lastChild.previousSibling === this.active_div) {
+			return false;
+		}
+
+		var return_val = true;
+
+		var prev_div = this.active_div;
+		for (var i = 0; i < steps + 1; i++) {
+			prev_div = prev_div.nextSibling;
+			if (prev_div === this.list_div.lastChild) {
+				return_val = false;
+				break;
+			}
+		}
+
+		this.list_div.insertBefore(this.active_div, prev_div);
+
+		// we take the minimum of the list length - 1 to get the highest index
+		// and then - 1 again for the sentinel.
+		this.active_div.order_index = Math.min(
+			this.active_div.order_index + steps,
+			this.list_div.childNodes.length - 2
+		);
+
+		this.updateValue();
+		this.scrollList(this.getScrollPosition(this.active_div));
+
+		return return_val;
+	}
+
+	// }}}
+	// {{{ setButtonsSensitive()
+
+	/**
+	 * Sets the sensitivity on buttons for this control
+	 *
+	 * @param boolean sensitive whether the buttons are sensitive.
+	 */
+	setButtonsSensitive(sensitive) {
+		for (var i = 0; i < this.buttons.length; i++) {
+			this.buttons[i].disabled = !sensitive;
+		}
+	}
+
+	// }}}
+	// {{{ setSensitive()
+
+	/**
+	 * Sets whether this control is sensitive
+	 *
+	 * @param boolean sensitive whether this control is sensitive.
+	 */
+	setSensitive(sensitive) {
+		this.setButtonsSensitive(sensitive);
+		this.sensitive = sensitive;
+
+		if (sensitive) {
+			document.getElementById(this.id).className =
+				'swat-change-order';
+		} else {
+			document.getElementById(this.id).className =
+				'swat-change-order swat-change-order-insensitive';
+		}
+	}
+
+	// }}}
+	// {{{ updateValue()
+
+	/**
+	 * Updates the value of the hidden field containing the ordering of elements
+	 */
+	updateValue() {
+		var temp = '';
+		var index = 0;
+		var drop_marker = SwatChangeOrder.dragging_drop_marker;
+
+		// one less than list length so we don't count the sentinal node
+		for (var i = 0; i < this.list_div.childNodes.length - 1; i++) {
+			// ignore drop marker node
+			if (this.list_div.childNodes[i] != drop_marker) {
+				if (index > 0) {
+					temp += ',';
+				}
+
+				temp += this.list_div.childNodes[i].order_value;
+
+				// update node indexes
+				this.list_div.childNodes[i].order_index = index;
+				index++;
+			}
+		}
+
+		var hidden_field = document.getElementById(this.id + '_value');
+
+		// fire order-changed event
+		if (temp != hidden_field.value) {
+			this.orderChangeEvent.fire(temp);
+		}
+
+		// update a hidden field with current order of keys
+		hidden_field.value = temp;
+	}
+
+	// }}}
+	// {{{ updateDynamicItemsValue()
+
+	/**
+	 * Updates the value of the hidden field containing the dynamic item nodes
+	 *
+	 * This allows the changeorder state to stay consistent when the page is
+	 * soft-refreshed after adding or removing items.
+	 */
+	updateDynamicItemsValue() {
+		var items_value = document.getElementById(this.id + '_dynamic_items');
+		items_value.value = this.list_div.innerHTML;
+	}
+
+	// }}}
+	// {{{ getScrollPosition()
+
+	/**
+	 * Gets the y-position of the active element in the scrolling section
+	 */
+	getScrollPosition(element) {
+		// this conditional is to fix behaviour in IE
+		if (this.list_div.firstChild.offsetTop > this.list_div.offsetTop) {
+			var y_position = (element.offsetTop - this.list_div.offsetTop) +
+				(element.offsetHeight / 2);
+		} else {
+			var y_position = element.offsetTop + (element.offsetHeight / 2);
+		}
+
+		return y_position;
+	}
+
+	// }}}
+	// {{{ scrollList()
+
+	/**
+	 * Scrolls the list to a y-position
+	 *
+	 * This method acts the same as scrollTo() but it acts on a div instead of
+	 * the window.
+	 *
+	 * @param number y_coord the y value to scroll the list to in pixels.
+	 */
+	scrollList(y_coord) {
+		// clientHeight is the height of the visible scroll area
+		var half_list_height = parseInt(this.list_div.clientHeight / 2);
+
+		if (y_coord < half_list_height) {
+			this.list_div.scrollTop = 0;
+			return;
+		}
+
+		// scrollHeight is the height of the contents inside the scroll area
+		if (this.list_div.scrollHeight - y_coord < half_list_height) {
+			this.list_div.scrollTop = this.list_div.scrollHeight -
+				this.list_div.clientHeight;
+
+			return;
+		}
+
+		// offsetHeight is clientHeight + padding
+		var factor = (y_coord - half_list_height) /
+			(this.list_div.scrollHeight - this.list_div.offsetHeight);
+
+		this.list_div.scrollTop = Math.floor(
+			(this.list_div.scrollHeight - this.list_div.clientHeight) * factor
+		);
+	}
+
+	// }}}
+	// {{{ isGrid()
+
+	/**
+	 * Whether this SwatChangeOrder widget represents a vertical list (default)
+	 * or a grid of items.
+	 */
+	isGrid() {
+		var node = this.list_div.childNodes[0];
+		return (YAHOO.util.Dom.getStyle(node, 'float') !== 'none');
+	}
+
+	// }}}
+}
+// {{{ static properties
+
+/**
+ * Height in pixels of auto-scroll hotspots
+ *
+ * @var number
+ */
+SwatChangeOrder.hotspot_height = 40;
+
+/**
+ * Exponential value to use to auto-scroll hotspots
+ *
+ * @var number
+ */
+SwatChangeOrder.hotspot_exponent = 1.15;
+
+/**
+ * Delay in milliseconds to use for animations
+ *
+ * @var number
+ */
+SwatChangeOrder.animation_delay = 10;
+
+/**
+ * The number of frames of animation to use
+ *
+ * @var number
+ */
+SwatChangeOrder.animation_frames = 5;
+
+SwatChangeOrder.shadow_item_padding = 0;
+SwatChangeOrder.dragging_item = null;
+SwatChangeOrder.is_dragging = false;
+
+// }}}
 // {{{ function SwatChangeOrder_mousemoveEventHandler()
 
 /**
@@ -29,7 +698,7 @@ function SwatChangeOrder_mousemoveEventHandler(event)
 	var drop_marker = SwatChangeOrder.dragging_drop_marker;
 	var list_div = shadow_item.original_item.parentNode;
 
-	if (shadow_item.style.display == 'none') {
+	if (shadow_item.style.display === 'none') {
 		SwatChangeOrder.is_dragging = true;
 		shadow_item.style.display = 'block';
 		shadow_item.scroll_timer =
@@ -370,143 +1039,6 @@ function SwatChangeOrder_mousedownEventHandler(event)
 }
 
 // }}}
-// {{{ function SwatChangeOrder()
-
-/**
- * An orderable list control widget
- *
- * @param string id the unique identifier of this object.
- * @param boolean sensitive the initial sensitive of this object.
- */
-function SwatChangeOrder(id, sensitive)
-{
-	this.is_webkit =
-		(/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
-
-	this.id = id;
-
-	this.list_div = document.getElementById(this.id + '_list');
-	this.buttons = document.getElementsByName(this.id + '_buttons');
-
-	// the following two lines must be split on two lines to
-	// handle a Firefox bug.
-	var hidden_value = document.getElementById(this.id + '_value');
-	var value_array = hidden_value.value.split(',');
-	var count = 0;
-	var node = null;
-
-	// re-populate list with dynamic items if page is refreshed
-	var items_value = document.getElementById(this.id + '_dynamic_items').value;
-	if (items_value !== '') {
-		this.list_div.innerHTML = items_value;
-	}
-
-	// remove text nodes and set value on nodes
-	for (var i = 0; i < this.list_div.childNodes.length; i++) {
-		node = this.list_div.childNodes[i];
-		if (node.nodeType == 3) {
-			this.list_div.removeChild(node);
-			i--;
-		} else if (node.nodeType == 1) {
-
-			// remove sentinel node and drop-shadow
-			if (node.id == this.id + '_sentinel' || node.id == 'drop') {
-				this.list_div.removeChild(node);
-				i--;
-				continue;
-			}
-
-			node.order_value = value_array[count];
-			node.order_index = count;
-			// assign a back reference for event handlers
-			node.controller = this;
-			// add click handlers to the list items
-			YAHOO.util.Event.addListener(node, 'mousedown',
-				SwatChangeOrder_mousedownEventHandler);
-
-			YAHOO.util.Dom.removeClass(node, 'swat-change-order-item-active');
-
-			count++;
-		}
-	}
-
-	// since the DOM only has an insertBefore() method we use a sentinel node
-	// to make moving nodes down easier.
-	var sentinel_node = document.createElement('div');
-	sentinel_node.id = this.id + '_sentinel';
-	sentinel_node.style.display = 'block';
-	this.list_div.appendChild(sentinel_node);
-
-	// while not a real semaphore, this does prevent the user from breaking
-	// things by clicking buttons or items while an animation is occuring.
-	this.semaphore = true;
-
-	this.active_div = null;
-
-	// this is hard coded to true so we can chose the first element
-	if (this.list_div.firstChild !== sentinel_node) {
-		this.sensitive = true;
-
-		this.choose(this.list_div.firstChild);
-		this.scrollList(this.getScrollPosition(this.list_div.firstChild));
-	}
-
-	this.sensitive = sensitive;
-	this.orderChangeEvent = new YAHOO.util.CustomEvent('orderChange');
-
-	// add grippies
-	YAHOO.util.Event.on(window, 'load', function() {
-		var node, grippy, height;
-		// exclude last item because it is the sentinel node
-		for (var i = 0; i < this.list_div.childNodes.length - 1; i++) {
-			node = this.list_div.childNodes[i];
-
-			grippy = document.createElement('span');
-			grippy.className = 'swat-change-order-item-grippy';
-			height = YAHOO.util.Dom.getRegion(node).height - 4;
-			grippy.style.height = height + 'px';
-			node.insertBefore(grippy, node.firstChild);
-
-		}
-	}, this, true);
-}
-
-// }}}
-// {{{ static properties
-
-/**
- * Height in pixels of auto-scroll hotspots
- *
- * @var number
- */
-SwatChangeOrder.hotspot_height = 40;
-
-/**
- * Exponential value to use to auto-scroll hotspots
- *
- * @var number
- */
-SwatChangeOrder.hotspot_exponent = 1.15;
-
-/**
- * Delay in milliseconds to use for animations
- *
- * @var number
- */
-SwatChangeOrder.animation_delay = 10;
-
-/**
- * The number of frames of animation to use
- *
- * @var number
- */
-SwatChangeOrder.animation_frames = 5;
-
-SwatChangeOrder.shadow_item_padding = 0;
-SwatChangeOrder.dragging_item = null;
-SwatChangeOrder.is_dragging = false;
-
-// }}}
 // {{{ function SwatChangeOrder_staticMoveToTop()
 
 /**
@@ -535,527 +1067,6 @@ function SwatChangeOrder_staticMoveToBottom(change_order, steps)
 {
 	change_order.moveToBottomHelper(steps);
 }
-
-// }}}
-// {{{ add()
-
-/**
- * Dynamically adds an item to this change-order
- *
- * @param DOMElement el    the element to add to the select list.
- * @param String     value the value to save for the order of the element.
- *
- * @return Boolean true if the element was added, otherwise false.
- */
-SwatChangeOrder.prototype.add = function(el, value)
-{
-	if (!this.semaphore) {
-		// TODO queue elements and add when semaphore is available
-		return false;
-	}
-
-	YAHOO.util.Dom.addClass(el, 'swat-change-order-item');
-
-	YAHOO.util.Event.addListener(el, 'mousedown',
-		SwatChangeOrder_mousedownEventHandler);
-
-	var order_index = this.count();
-
-	el.controller  = this;
-	el.order_index = order_index;
-	el.order_value = value;
-
-	this.list_div.insertBefore(el, this.list_div.childNodes[order_index]);
-
-	// update hidden value
-	var value_array;
-	var hidden_value = document.getElementById(this.id + '_value');
-	if (hidden_value.value === '') {
-		value_array = [];
-	} else {
-		value_array = hidden_value.value.split(',');
-	}
-	value_array.push(value);
-	hidden_value.value = value_array.join(',');
-
-	this.updateDynamicItemsValue();
-
-	return true;
-};
-
-// }}}
-// {{{ remove()
-
-/**
- * Dynamically removes an item from this change-order
- *
- * @param DOMElement el the element to remove.
- *
- * @return Boolean true if the element was removed, otherwise false.
- */
-SwatChangeOrder.prototype.remove = function(el)
-{
-	if (!this.semaphore) {
-		// TODO queue elements and remove when semaphore is available
-		return false;
-	}
-
-	YAHOO.util.Event.purgeElement(el);
-
-	// remove from hidden value
-	var hidden_value = document.getElementById(this.id + '_value');
-	var value_array = hidden_value.value.split(',');
-	value_array.splice(el.order_index, 1);
-	hidden_value.value = value_array.join(',');
-
-	if (this.active_div === el) {
-		this.active_div = null;
-	}
-
-	this.list_div.removeChild(el);
-
-	this.updateDynamicItemsValue();
-
-	return true;
-};
-
-// }}}
-// {{{ count()
-
-/**
- * Gets the number of items in this change-order
- *
- * @return Number the number of items in this change-order.
- */
-SwatChangeOrder.prototype.count = function()
-{
-	return this.list_div.childNodes.length - 1;
-};
-
-// }}}
-// {{{ containsValue()
-
-/**
- * Gets whether or not this change-order contains an item with the given value
- *
- * @param String value the value to check for.
- *
- * @return Boolean true if there is an item with the given value in this
- *                 change-order, otherwise false.
- */
-SwatChangeOrder.prototype.containsValue = function(value)
-{
-	var value_array;
-	var hidden_value = document.getElementById(this.id + '_value');
-	if (hidden_value.value === '') {
-		value_array = [];
-	} else {
-		value_array = hidden_value.value.split(',');
-	}
-
-	for (var i = 0; i < value_array.length; i++) {
-		if (value_array[i] === value) {
-			return true;
-		}
-	}
-
-	return false;
-};
-
-// }}}
-// {{{ choose()
-
-/**
- * Choses an element in this change order as the active div
- *
- * Only allows chosing if the semaphore is not set.
- *
- * @param DOMNode div the element to chose.
- */
-SwatChangeOrder.prototype.choose = function(div)
-{
-	if (this.semaphore && this.sensitive && div !== this.active_div &&
-		!SwatChangeOrder.is_dragging) {
-
-		if (this.active_div !== null) {
-			this.active_div.className = 'swat-change-order-item';
-		}
-
-		div.className = 'swat-change-order-item swat-change-order-item-active';
-
-		this.active_div = div;
-
-		// update the index value of this element
-		for (var i = 0; i < this.list_div.childNodes.length; i++) {
-			if (this.list_div.childNodes[i] === this.active_div) {
-				this.active_div.order_index = i;
-				break;
-			}
-		}
-	}
-};
-
-// }}}
-// {{{ moveToTop()
-
-/**
- * Moves the active element to the top of the list
- *
- * Only functions if the semaphore is not set. Sets the semaphore.
- */
-SwatChangeOrder.prototype.moveToTop = function()
-{
-	if (this.semaphore && this.sensitive) {
-		this.semaphore = false;
-		this.setButtonsSensitive(false);
-
-		var steps = Math.ceil(this.active_div.order_index /
-			SwatChangeOrder.animation_frames);
-
-		this.moveToTopHelper(steps);
-	}
-};
-
-// }}}
-// {{{ moveToTopHelper()
-
-/**
- * A helper method that moves the active element up and sets a timeout callback
- * to move it up again until it reaches the top
- *
- * Unsets the semaphore after the active element is at the top.
- *
- * @param number steps the number of steps to skip when moving the active
- *                      element.
- */
-SwatChangeOrder.prototype.moveToTopHelper = function(steps)
-{
-	if (this.moveUpHelper(steps)) {
-		setTimeout('SwatChangeOrder_staticMoveToTop(' +
-			this.id + '_obj, ' + steps + ');',
-			SwatChangeOrder.animation_delay);
-	} else {
-		this.semaphore = true;
-		this.setButtonsSensitive(true);
-		this.updateDynamicItemsValue();
-	}
-};
-
-// }}}
-// {{{ moveToBottom()
-
-/**
- * Moves the active element to the bottom of the list
- *
- * Only functions if the semaphore is not set. Sets the semaphore.
- */
-SwatChangeOrder.prototype.moveToBottom = function()
-{
-	if (this.semaphore && this.sensitive) {
-		this.semaphore = false;
-		this.setButtonsSensitive(false);
-
-		var steps = Math.ceil((this.list_div.childNodes.length - this.active_div.order_index - 1) /
-			SwatChangeOrder.animation_frames);
-
-		this.moveToBottomHelper(steps);
-	}
-};
-
-// }}}
-// {{{ moveToBottomHelper()
-
-/**
- * A helper method that moves the active element down and sets a timeout
- * callback to move it down again until it reaches the bottom
- *
- * Unsets the semaphore after the active element is at the bottom.
- *
- * @param number steps the number of steps to skip when moving the active
- *                      element.
- */
-SwatChangeOrder.prototype.moveToBottomHelper = function(steps)
-{
-	if (this.moveDownHelper(steps)) {
-		setTimeout('SwatChangeOrder_staticMoveToBottom(' +
-			this.id + '_obj, ' + steps + ');',
-			SwatChangeOrder.animation_delay);
-	} else {
-		this.semaphore = true;
-		this.setButtonsSensitive(true);
-		this.updateDynamicItemsValue();
-	}
-};
-
-// }}}
-// {{{ moveUp()
-
-/**
- * Moves the active element up one space
- *
- * Only functions if the semaphore is not set.
- */
-SwatChangeOrder.prototype.moveUp = function()
-{
-	if (this.semaphore && this.sensitive) {
-		this.moveUpHelper(1);
-		this.updateDynamicItemsValue();
-	}
-};
-
-// }}}
-// {{{ moveDown()
-
-/**
- * Moves the active element down one space
- *
- * Only functions if the semaphore is not set.
- */
-SwatChangeOrder.prototype.moveDown = function()
-{
-	if (this.semaphore && this.sensitive) {
-		this.moveDownHelper(1);
-		this.updateDynamicItemsValue();
-	}
-};
-
-// }}}
-// {{{ moveUpHelper()
-
-/**
- * Moves the active element up a number of steps
- *
- * @param number steps the number of steps to move the active element up by.
- *
- * @return boolean true if the element is not hitting the top of the list,
- *                  false otherwise.
- */
-SwatChangeOrder.prototype.moveUpHelper = function(steps)
-{
-	// can't move the top of the list up
-	if (this.list_div.firstChild === this.active_div)
-		return false;
-
-	var return_val = true;
-
-	var prev_div = this.active_div;
-	for (var i = 0; i < steps; i++) {
-		prev_div = prev_div.previousSibling;
-		if (prev_div === this.list_div.firstChild) {
-			return_val = false;
-			break;
-		}
-	}
-
-	this.list_div.insertBefore(this.active_div, prev_div);
-
-	this.active_div.order_index =
-		Math.max(this.active_div.order_index - steps, 0);
-
-	this.updateValue();
-	this.scrollList(this.getScrollPosition(this.active_div));
-
-	return return_val;
-};
-
-// }}}
-// {{{ moveDownHelper()
-
-/**
- * Moves the active element down a number of steps
- *
- * @param number steps the number of steps to move the active element down by.
- *
- * @return boolean true if the element is not hitting the bottom of the list,
- *                  false otherwise.
- */
-SwatChangeOrder.prototype.moveDownHelper = function(steps)
-{
-	// can't move the bottom of the list down
-	if (this.list_div.lastChild.previousSibling === this.active_div)
-		return false;
-
-	var return_val = true;
-
-	var prev_div = this.active_div;
-	for (var i = 0; i < steps + 1; i++) {
-		prev_div = prev_div.nextSibling;
-		if (prev_div === this.list_div.lastChild) {
-			return_val = false;
-			break;
-		}
-	}
-
-	this.list_div.insertBefore(this.active_div, prev_div);
-
-	// we take the minimum of the list length - 1 to get the highest index
-	// and then - 1 again for the sentinel.
-	this.active_div.order_index =
-		Math.min(this.active_div.order_index + steps,
-			this.list_div.childNodes.length - 2);
-
-	this.updateValue();
-	this.scrollList(this.getScrollPosition(this.active_div));
-
-	return return_val;
-};
-
-// }}}
-// {{{ setButtonsSensitive()
-
-/**
- * Sets the sensitivity on buttons for this control
- *
- * @param boolean sensitive whether the buttons are sensitive.
- */
-SwatChangeOrder.prototype.setButtonsSensitive = function(sensitive)
-{
-	for (var i = 0; i < this.buttons.length; i++)
-		this.buttons[i].disabled = !sensitive;
-};
-
-// }}}
-// {{{ setSensitive()
-
-/**
- * Sets whether this control is sensitive
- *
- * @param boolean sensitive whether this control is sensitive.
- */
-SwatChangeOrder.prototype.setSensitive = function(sensitive)
-{
-	this.setButtonsSensitive(sensitive);
-	this.sensitive = sensitive;
-
-	if (sensitive) {
-		document.getElementById(this.id).className =
-			'swat-change-order';
-	} else {
-		document.getElementById(this.id).className =
-			'swat-change-order swat-change-order-insensitive';
-	}
-};
-
-// }}}
-// {{{ updateValue()
-
-/**
- * Updates the value of the hidden field containing the ordering of elements
- */
-SwatChangeOrder.prototype.updateValue = function()
-{
-	var temp = '';
-	var index = 0;
-	var drop_marker = SwatChangeOrder.dragging_drop_marker;
-
-	// one less than list length so we don't count the sentinal node
-	for (var i = 0; i < this.list_div.childNodes.length - 1; i++) {
-		// ignore drop marker node
-		if (this.list_div.childNodes[i] != drop_marker) {
-			if (index > 0)
-				temp += ',';
-
-			temp += this.list_div.childNodes[i].order_value;
-
-			// update node indexes
-			this.list_div.childNodes[i].order_index = index;
-			index++;
-		}
-	}
-
-	var hidden_field = document.getElementById(this.id + '_value');
-
-	// fire order-changed event
-	if (temp != hidden_field.value)
-		this.orderChangeEvent.fire(temp);
-
-	// update a hidden field with current order of keys
-	hidden_field.value = temp;
-};
-
-// }}}
-// {{{ updateDynamicItemsValue()
-
-/**
- * Updates the value of the hidden field containing the dynamic item nodes
- *
- * This allows the changeorder state to stay consistent when the page is
- * soft-refreshed after adding or removing items.
- */
-SwatChangeOrder.prototype.updateDynamicItemsValue = function()
-{
-	var items_value = document.getElementById(this.id + '_dynamic_items');
-	items_value.value = this.list_div.innerHTML;
-};
-
-// }}}
-// {{{ getScrollPosition()
-
-/**
- * Gets the y-position of the active element in the scrolling section
- */
-SwatChangeOrder.prototype.getScrollPosition = function(element)
-{
-	// this conditional is to fix behaviour in IE
-	if (this.list_div.firstChild.offsetTop > this.list_div.offsetTop)
-		var y_position = (element.offsetTop - this.list_div.offsetTop) +
-			(element.offsetHeight / 2);
-	else
-		var y_position = element.offsetTop +
-			(element.offsetHeight / 2);
-
-	return y_position;
-};
-
-// }}}
-// {{{ scrollList()
-
-/**
- * Scrolls the list to a y-position
- *
- * This method acts the same as scrollTo() but it acts on a div instead of the
- * window.
- *
- * @param number y_coord the y value to scroll the list to in pixels.
- */
-SwatChangeOrder.prototype.scrollList = function(y_coord)
-{
-	// clientHeight is the height of the visible scroll area
-	var half_list_height = parseInt(this.list_div.clientHeight / 2);
-
-	if (y_coord < half_list_height) {
-		this.list_div.scrollTop = 0;
-		return;
-	}
-
-	// scrollHeight is the height of the contents inside the scroll area
-	if (this.list_div.scrollHeight - y_coord < half_list_height) {
-		this.list_div.scrollTop = this.list_div.scrollHeight -
-			this.list_div.clientHeight;
-
-		return;
-	}
-
-	// offsetHeight is clientHeight + padding
-	var factor = (y_coord - half_list_height) /
-		(this.list_div.scrollHeight - this.list_div.offsetHeight);
-
-	this.list_div.scrollTop = Math.floor(
-		(this.list_div.scrollHeight - this.list_div.clientHeight) * factor);
-};
-
-// }}}
-// {{{ isGrid()
-
-/**
- * Whether this SwatChangeOrder widget represents a vertical list (default) or
- * a grid of items.
- */
-SwatChangeOrder.prototype.isGrid = function()
-{
-	var node = this.list_div.childNodes[0];
-	return (YAHOO.util.Dom.getStyle(node, 'float') != 'none');
-};
 
 // }}}
 
