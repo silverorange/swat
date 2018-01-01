@@ -42,23 +42,53 @@ module.exports = {
 			},
 			{
 				test: /yahoo\/yahoo.js$/,
-				use: 'exports-loader?YAHOO'
+				use: {
+					loader: 'exports-loader?YAHOO',
+				}
 			},
 			{
 				test: /dom\/dom.js$/,
-				use: 'exports-loader?Dom=YAHOO.util.Dom'
+				use: {
+					loader: 'exports-loader',
+					options: {
+						Dom: 'YAHOO.util.Dom',
+					},
+				},
 			},
 			{
 				test: /event\/event.js$/,
-				use: 'exports-loader?Event=YAHOO.util.Event,CustomEvent=YAHOO.util.CustomEvent,Subscriber=YAHOO.util.Subscriber'
+				use: {
+					loader: 'exports-loader',
+					options: {
+						Event: 'YAHOO.util.Event',
+						CustomEvent: 'YAHOO.util.CustomEvent',
+						Subscriber: 'YAHOO.util.Subscriber',
+					},
+				},
 			},
 			{
 				test: /animation\/animation.js$/,
-				use: 'exports-loader?Anim=YAHOO.util.Anim,AnimMgr=YAHOO.util.AnimMgr,Easing=YAHOO.util.Easing'
+				use: {
+					loader: 'exports-loader',
+					options: {
+						Anim: 'YAHOO.util.Anim',
+						AnimMgr: 'YAHOO.util.AnimMgr',
+						Easing: 'YAHOO.util.Easing',
+					},
+				},
 			},
 			{
 				test: /container\/container_core.js$/,
-				use: 'exports-loader?Config=YAHOO.util.Config,Module=YAHOO.widget.Module,Overlay=YAHOO.widget.Overlay,OverlayManager=YAHOO.widget.OverlayManager,ContainerEffect=YAHOO.widget.ContainerEffect'
+				use: {
+					loader: 'exports-loader',
+					options: {
+						Config: 'YAHOO.util.Config',
+						Module: 'YAHOO.widget.Module',
+						Overlay: 'YAHOO.widget.Overlay',
+						OverlayManager: 'YAHOO.widget.OverlayManager',
+						ContainerEffect: 'YAHOO.widget.ContainerEffect',
+					},
+				},
 			},
 		],
 	},
