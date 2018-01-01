@@ -1,4 +1,9 @@
+import { Dom } from '../../../yui/www/dom/dom';
+import { CustomEvent } from '../../../yui/www/event/event';
+import { Anim, Easing } from '../../../yui/www/animation/animation';
+
 import SwatAccordionPage from './swat-accordion-page';
+
 import '../styles/swat-accordion.css';
 
 class SwatAccordion {
@@ -8,10 +13,12 @@ class SwatAccordion {
 		this.animate = true;
 		this.always_open = true; // by default, always keep one page open
 		this.semaphore = false;
-		this.pageChangeEvent = new YAHOO.util.CustomEvent('pageChange');
-		this.postInitEvent = new YAHOO.util.CustomEvent('postInit');
+		this.pageChangeEvent = new CustomEvent('pageChange');
+		this.postInitEvent = new CustomEvent('postInit');
 
-		YAHOO.util.Event.onDOMReady(this.init, this, true);
+		this.init = this.init.bind(this);
+
+		document.addEventListener('DOMContentLoaded', this.init);
 	}
 
 	init() {
@@ -19,7 +26,7 @@ class SwatAccordion {
 		this.pages = [];
 
 		var page;
-		var pages = YAHOO.util.Dom.getChildren(this.container);
+		var pages = Dom.getChildren(this.container);
 
 		// check to see if a page is open via a hash-tag
 		var hash_open_page = this.getPageFromHash();
@@ -34,30 +41,25 @@ class SwatAccordion {
 			this.addLinkHash(page);
 
 			if (hash_open_page === page.element || (hash_open_page === null &&
-				YAHOO.util.Dom.hasClass(page.element, 'selected'))
+				page.element.classList.contains('selected'))
 			) {
 				this.current_page = page;
-				YAHOO.util.Dom.removeClass(page.element, 'selected');
-				YAHOO.util.Dom.addClass(
-					page.element,
-					'swat-accordion-page-opened'
-				);
+				page.element.classList.remove('selected');
+				page.element.classList.add('swat-accordion-page-opened');
 			} else {
 				page.animation.style.display = 'none';
-				YAHOO.util.Dom.addClass(
-					page.element,
-					'swat-accordion-page-closed'
-				);
+				page.element.classList.add('swat-accordion-page-closed');
 			}
 
 			var that = this;
 			(function() {
 				var the_page = page;
-				YAHOO.util.Event.on(page.toggleLink, 'click', function (e) {
+				page.toggleLink.addEventListener('click', function (e) {
+					var set_page;
 					if (!that.always_open && the_page === that.current_page) {
-						var set_page = null;
+						set_page = null;
 					} else {
-						var set_page = the_page;
+						set_page = the_page;
 					}
 
 					if (that.animate) {
@@ -75,7 +77,7 @@ class SwatAccordion {
 	}
 
 	getPageFromHash() {
-		var pages = YAHOO.util.Dom.getChildren(this.container);
+		var pages = Dom.getChildren(this.container);
 
 		// check to see if a page is open via a hash-tag
 		var hash_open_page = null;
@@ -121,10 +123,11 @@ class SwatAccordion {
 		this.semaphore = true;
 
 		var old_page = this.current_page;
+		var new_from_height = 0;
 
 		// old_page === null means we're opening from a completely closed state
 		if (old_page !== null) {
-			var old_region = YAHOO.util.Dom.getRegion(old_page.animation);
+			var old_region = Dom.getRegion(old_page.animation);
 			var old_from_height = old_region.height;
 			var old_to_height = 0;
 			old_page.animation.style.overflow = 'hidden';
@@ -134,30 +137,32 @@ class SwatAccordion {
 		if (new_page === null) {
 			var new_to_height = 0;
 
-			var anim = new YAHOO.util.Anim(
+			var anim = new Anim(
 				old_page.animation, { },
 				SwatAccordion.resize_period,
-				YAHOO.util.Easing.easeBoth);
+				Easing.easeBoth
+			);
 		} else {
 			new_page.animation.style.overflow = 'hidden';
 
 			if (new_page.animation.style.height === '' ||
-				new_page.animation.style.height == 'auto') {
+				new_page.animation.style.height === 'auto'
+			) {
 				new_page.animation.style.height = '0';
-				new_from_height = 0;
 			} else {
 				new_from_height = parseInt(new_page.animation.style.height);
 			}
 
 			new_page.animation.style.display = 'block';
 
-			var new_region = YAHOO.util.Dom.getRegion(new_page.content);
+			var new_region = Dom.getRegion(new_page.content);
 			var new_to_height = new_region.height;
 
-			var anim = new YAHOO.util.Anim(
+			var anim = new Anim(
 				new_page.animation, { },
 				SwatAccordion.resize_period,
-				YAHOO.util.Easing.easeBoth);
+				Easing.easeBoth
+			);
 		}
 
 		anim.onTween.subscribe(function (name, data) {

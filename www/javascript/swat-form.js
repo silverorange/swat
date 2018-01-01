@@ -1,3 +1,5 @@
+import { Event } from '../../../yui/www/event/event';
+
 export default class SwatForm {
 	constructor(id, connection_close_url) {
 		this.id = id;
@@ -5,7 +7,7 @@ export default class SwatForm {
 		this.connection_close_url = connection_close_url;
 
 		if (this.connection_close_url) {
-			YAHOO.util.Event.on(
+			Event.on(
 				this.form_element,
 				'submit',
 				this.handleSubmit,

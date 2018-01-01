@@ -1,35 +1,25 @@
+import { Dom } from '../../../yui/www/dom/dom';
+
 export default class SwatAccordionPage {
 	constructor(el) {
 		this.element = el;
-		this.toggle = YAHOO.util.Dom.getFirstChild(el);
-		this.toggleLink = YAHOO.util.Dom.getElementsByClassName(
+		this.toggle = Dom.getFirstChild(el);
+		this.toggleLink = Dom.getElementsByClassName(
 			'swat-accordion-page-link',
 			'a',
 			this.toggle
 		)[0];
-		this.animation = YAHOO.util.Dom.getNextSibling(this.toggle);
-		this.content = YAHOO.util.Dom.getFirstChild(this.animation);
+		this.animation = Dom.getNextSibling(this.toggle);
+		this.content = Dom.getFirstChild(this.animation);
 	}
 
 	setStatus(status) {
 		if (status === 'opened') {
-			YAHOO.util.Dom.removeClass(
-				this.element,
-				'swat-accordion-page-closed'
-			);
-			YAHOO.util.Dom.addClass(
-				this.element,
-				'swat-accordion-page-opened'
-			);
+			this.element.classList.remove('swat-accordion-page-closed');
+			this.element.classList.add('swat-accordion-page-opened');
 		} else {
-			YAHOO.util.Dom.removeClass(
-				this.element,
-				'swat-accordion-page-opened'
-			);
-			YAHOO.util.Dom.addClass(
-				this.element,
-				'swat-accordion-page-closed'
-			);
+			this.element.classList.remove('swat-accordion-page-opened');
+			this.element.classList.add('swat-accordion-page-closed');
 		}
 	}
 }

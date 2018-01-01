@@ -1,3 +1,7 @@
+import { Dom } from '../../../yui/www/dom/dom';
+import { Event } from '../../../yui/www/event/event';
+import { Anim, Easing } from '../../../yui/www/animation/animation';
+
 import '../styles/swat-message.css';
 
 class SwatMessageDisplayMessage {
@@ -20,12 +24,12 @@ class SwatMessageDisplayMessage {
 		var anchor = document.createElement('a');
 		anchor.href = '#';
 		anchor.title = SwatMessageDisplayMessage.close_text;
-		YAHOO.util.Dom.addClass(anchor, 'swat-message-display-dismiss-link');
-		YAHOO.util.Event.addListener(
+		Dom.addClass(anchor, 'swat-message-display-dismiss-link');
+		Event.addListener(
 			anchor,
 			'click',
 			function(e, message) {
-				YAHOO.util.Event.preventDefault(e);
+				Event.preventDefault(e);
 				message.hide();
 			},
 			this
@@ -46,11 +50,11 @@ class SwatMessageDisplayMessage {
 	hide() {
 		if (this.message_div !== null) {
 			// fade out message
-			var fade_animation = new YAHOO.util.Anim(
+			var fade_animation = new Anim(
 				this.message_div,
 				{ opacity: { to: 0 } },
 				SwatMessageDisplayMessage.fade_duration,
-				YAHOO.util.Easing.easingOut
+				Easing.easingOut
 			);
 
 			// after fading out, shrink the empty space away
@@ -61,7 +65,7 @@ class SwatMessageDisplayMessage {
 
 	shrink() {
 		var duration = SwatMessageDisplayMessage.shrink_duration;
-		var easing = YAHOO.util.Easing.easeInStrong;
+		var easing = Easing.easeInStrong;
 
 		var attributes = {
 			height: { to: 0 },
@@ -71,7 +75,7 @@ class SwatMessageDisplayMessage {
 		// collapse margins
 		if (this.message_div.nextSibling) {
 			// shrink top margin of next message in message display
-			var next_message_animation = new YAHOO.util.Anim(
+			var next_message_animation = new Anim(
 				this.message_div.nextSibling,
 				{ marginTop: { to: 0 } },
 				duration,
@@ -88,7 +92,7 @@ class SwatMessageDisplayMessage {
 				node = node.nextSibling;
 
 			if (node) {
-				var previous_message_animation = new YAHOO.util.Anim(
+				var previous_message_animation = new Anim(
 					node,
 					{ marginTop: { to: 0 } },
 					duration,
@@ -105,7 +109,7 @@ class SwatMessageDisplayMessage {
 			// collapse top margin of last message
 			attributes.marginTop = { to: 0 };
 
-			var message_display_animation = new YAHOO.util.Anim(
+			var message_display_animation = new Anim(
 				this.message_div.parentNode,
 				{ marginTop: { to: 0 } },
 				duration,
@@ -115,7 +119,7 @@ class SwatMessageDisplayMessage {
 		}
 
 		// disappear this message
-		var shrink_animation = new YAHOO.util.Anim(
+		var shrink_animation = new Anim(
 			this.message_div,
 			attributes,
 			duration,
@@ -126,7 +130,7 @@ class SwatMessageDisplayMessage {
 	}
 
 	remove() {
-		YAHOO.util.Event.purgeElement(this.message_div, true);
+		Event.purgeElement(this.message_div, true);
 
 		this.message_div.parentNode.removeChild(
 			this.message_div

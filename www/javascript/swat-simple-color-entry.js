@@ -1,4 +1,8 @@
+import { Dom } from '../../../yui/www/dom/dom';
+import { CustomEvent, Event } from '../../../yui/www/event/event';
+
 import SwatAbstractOverlay from './swat-abstract-overlay';
+
 import '../styles/swat-color-entry.css';
 
 export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
@@ -21,7 +25,7 @@ export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 		this.columns = Math.ceil(Math.sqrt(this.colors.length));
 
 		this.current_color = null;
-		this.colorChangeEvent = new YAHOO.util.CustomEvent('colorChange');
+		this.colorChangeEvent = new CustomEvent('colorChange');
 	}
 
 	init() {
@@ -30,13 +34,13 @@ export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 		this.hex_input_tag.id = this.id + '_hex_color';
 		this.hex_input_tag.size = 6;
 
-		YAHOO.util.Event.on(this.hex_input_tag, 'change',
+		Event.on(this.hex_input_tag, 'change',
 			this.handleInputChange, this, true);
 
-		YAHOO.util.Event.on(this.hex_input_tag, 'keyup',
+		Event.on(this.hex_input_tag, 'keyup',
 			this.handleInputChange, this, true);
 
-		SwatSimpleColorEntry.superclass.init.call(this);
+		super.init();
 
 		this.input_tag = document.getElementById(this.id + '_value');
 		this.setColor(this.input_tag.value);
@@ -66,7 +70,7 @@ export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 			tcell = document.createElement('td');
 			tcell.id = this.id + '_palette_null';
 			tcell.colSpan = this.columns;
-			YAHOO.util.Dom.addClass(
+			Dom.addClass(
 				tcell,
 				'swat-simple-color-entry-palette-blank'
 			);
@@ -80,7 +84,7 @@ export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 			trow.appendChild(tcell);
 			tbody.appendChild(trow);
 
-			YAHOO.util.Event.addListener(
+			Event.addListener(
 				anchor,
 				'click',
 				this.selectNull,
@@ -105,7 +109,7 @@ export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 				anchor.href = '#';
 				anchor.appendChild(text);
 
-				YAHOO.util.Event.addListener(
+				Event.addListener(
 					anchor,
 					'click',
 					this.selectColor,
@@ -115,7 +119,7 @@ export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 
 				tcell.appendChild(anchor);
 			} else {
-				YAHOO.util.Dom.addClass(
+				Dom.addClass(
 					tcell,
 					'swat-simple-color-entry-palette-blank'
 				);
@@ -219,7 +223,7 @@ export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 					// IE fix, it sets string 'null' otherwise
 					this.hex_input_tag.value = '';
 				}
-				YAHOO.util.Dom.setStyle(
+				Dom.setStyle(
 					this.toggle_button_content,
 					'background',
 					'url(packages/swat/images/color-entry-null.png)'
@@ -228,7 +232,7 @@ export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 				if (this.hex_input_tag.value !== color) {
 					this.hex_input_tag.value = color;
 				}
-				YAHOO.util.Dom.setStyle(this.toggle_button_content,
+				Dom.setStyle(this.toggle_button_content,
 					'background', '#' + color);
 			}
 
@@ -250,7 +254,7 @@ export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 	 * @param Event the event that triggered this select.
 	 */
 	selectNull(e) {
-		YAHOO.util.Event.preventDefault(e);
+		Event.preventDefault(e);
 		this.setColor(null);
 	}
 
@@ -260,8 +264,8 @@ export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 	 * @param Event the event that triggered this select.
 	 */
 	selectColor(event) {
-		YAHOO.util.Event.preventDefault(event);
-		var cell = YAHOO.util.Event.getTarget(event);
+		Event.preventDefault(event);
+		var cell = Event.getTarget(event);
 		var color_index = cell.parentNode.id.split('_palette_')[1];
 
 		this.setColor(this.colors[color_index]);
@@ -277,12 +281,12 @@ export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 			var null_entry = document.getElementById(this.id + '_palette_null');
 
 			if (color === null) {
-				YAHOO.util.Dom.addClass(
+				Dom.addClass(
 					null_entry,
 					'swat-simple-color-entry-palette-selected'
 				);
 			} else {
-				YAHOO.util.Dom.removeClass(
+				Dom.removeClass(
 					null_entry,
 					'swat-simple-color-entry-palette-selected'
 				);
@@ -297,12 +301,12 @@ export default class SwatSimpleColorEntry extends SwatAbstractOverlay {
 				this.colors[i].toLowerCase() ===
 				this.current_color.toLowerCase()
 			) {
-				YAHOO.util.Dom.addClass(
+				Dom.addClass(
 					palette_entry,
 					'swat-simple-color-entry-palette-selected'
 				);
 			} else {
-				YAHOO.util.Dom.removeClass(
+				Dom.removeClass(
 					palette_entry,
 					'swat-simple-color-entry-palette-selected'
 				);

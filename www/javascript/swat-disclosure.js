@@ -1,3 +1,7 @@
+import { Dom } from '../../../yui/www/dom/dom';
+import { Event } from '../../../yui/www/event/event';
+import { Anim, Easing } from '../../../yui/www/animation/animation';
+
 import '../styles/swat-disclosure.css';
 
 export default class SwatDisclosure {
@@ -19,7 +23,7 @@ export default class SwatDisclosure {
 		// prevent closing during opening animation and vice versa
 		this.semaphore = false;
 
-		YAHOO.util.Event.onDOMReady(this.init, this, true);
+		Event.onDOMReady(this.init, this, true);
 	}
 
 	init() {
@@ -92,18 +96,18 @@ export default class SwatDisclosure {
 		this.anchor = document.createElement('a');
 		this.anchor.href = '#';
 		if (this.opened) {
-			YAHOO.util.Dom.addClass(
+			Dom.addClass(
 				this.anchor,
 				'swat-disclosure-anchor-opened'
 			);
 		} else {
-			YAHOO.util.Dom.addClass(
+			Dom.addClass(
 				this.anchor,
 				'swat-disclosure-anchor-closed'
 			);
 		}
 
-		YAHOO.util.Event.addListener(this.anchor, 'click',
+		Event.addListener(this.anchor, 'click',
 			function(e) {
 				YAHOO.util.Event.preventDefault(e);
 				this.toggle();
@@ -136,20 +140,20 @@ export default class SwatDisclosure {
 			return;
 		}
 
-		YAHOO.util.Dom.removeClass(
+		Dom.removeClass(
 			this.anchor,
 			'swat-disclosure-anchor-opened'
 		);
-		YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-closed');
+		Dom.addClass(this.anchor, 'swat-disclosure-anchor-closed');
 
 		this.animate_div.style.overflow = 'hidden';
 		this.animate_div.style.height = 'auto';
 		var attributes = { height: { to: 0 } };
-		var animation = new YAHOO.util.Anim(
+		var animation = new Anim(
 			this.animate_div,
 			attributes,
 			0.25,
-			YAHOO.util.Easing.easeOut
+			Easing.easeOut
 		);
 
 		this.semaphore = true;
@@ -161,14 +165,14 @@ export default class SwatDisclosure {
 	}
 
 	open() {
-		YAHOO.util.Dom.removeClass(this.div, 'swat-disclosure-control-closed');
-		YAHOO.util.Dom.addClass(this.div, 'swat-disclosure-control-opened');
+		Dom.removeClass(this.div, 'swat-disclosure-control-closed');
+		Dom.addClass(this.div, 'swat-disclosure-control-opened');
 
-		YAHOO.util.Dom.removeClass(
+		Dom.removeClass(
 			this.anchor,
 			'swat-disclosure-anchor-closed'
 		);
-		YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-opened');
+		Dom.addClass(this.anchor, 'swat-disclosure-anchor-opened');
 
 		this.semaphore = false;
 
@@ -181,14 +185,14 @@ export default class SwatDisclosure {
 			return;
 		}
 
-		YAHOO.util.Dom.removeClass(this.div, 'swat-disclosure-control-closed');
-		YAHOO.util.Dom.addClass(this.div, 'swat-disclosure-control-opened');
+		Dom.removeClass(this.div, 'swat-disclosure-control-closed');
+		Dom.addClass(this.div, 'swat-disclosure-control-opened');
 
-		YAHOO.util.Dom.removeClass(
+		Dom.removeClass(
 			this.anchor,
 			'swat-disclosure-anchor-closed'
 		);
-		YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-opened');
+		Dom.addClass(this.anchor, 'swat-disclosure-anchor-opened');
 
 		// get display height
 		this.animate_div.parentNode.style.overflow = 'hidden';
@@ -204,11 +208,11 @@ export default class SwatDisclosure {
 		this.animate_div.parentNode.style.overflow = 'visible';
 
 		var attributes = { height: { to: height, from: 0 } };
-		var animation = new YAHOO.util.Anim(
+		var animation = new Anim(
 			this.animate_div,
 			attributes,
 			0.5,
-			YAHOO.util.Easing.easeOut
+			Easing.easeOut
 		);
 
 		this.semaphore = true;
@@ -220,8 +224,8 @@ export default class SwatDisclosure {
 	}
 
 	handleClose() {
-		YAHOO.util.Dom.removeClass(this.div, 'swat-disclosure-control-opened');
-		YAHOO.util.Dom.addClass(this.div, 'swat-disclosure-control-closed');
+		Dom.removeClass(this.div, 'swat-disclosure-control-opened');
+		Dom.addClass(this.div, 'swat-disclosure-control-closed');
 
 		this.semaphore = false;
 	}

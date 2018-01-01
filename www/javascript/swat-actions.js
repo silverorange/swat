@@ -1,18 +1,31 @@
+import { Anim, Easing } from '../../../yui/www/animation/animation';
+
 import '../styles/swat-actions.css';
 
 class SwatActions {
 	constructor(id, values, selected) {
 		this.id = id;
-		this.flydown = document.getElementById(id + '_action_flydown');
-		this.selected_element = (selected) ?
-			document.getElementById(id + '_' + selected) : null;
-
-		var button = document.getElementById(id + '_apply_button');
 
 		this.values = values;
 		this.message_shown = false;
 		this.view = null;
 		this.selector_id = null;
+
+		this.handleMessageClose = this.handleMessageClose.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+
+		document.addEventListener('DOMContentLoaded', () => {
+			this.init(selected);
+		});
+	}
+
+	init(selected) {
+		this.flydown = document.getElementById(this.id + '_action_flydown');
+		this.selected_element = (selected)
+			? document.getElementById(this.id + '_' + selected)
+			: null;
+
+		var button = document.getElementById(this.id + '_apply_button');
 
 		// create message content area
 		this.message_content = document.createElement('span');
@@ -21,24 +34,16 @@ class SwatActions {
 		var message_dismiss = document.createElement('a');
 		message_dismiss.href = '#';
 		message_dismiss.title = SwatActions.dismiss_text;
-		YAHOO.util.Dom.addClass(message_dismiss,
-			'swat-actions-message-dismiss-link');
-
+		message_dismiss.classList.add('swat-actions-message-dismiss-link');
 		message_dismiss.appendChild(
 			document.createTextNode(SwatActions.dismiss_text)
 		);
 
-		YAHOO.util.Event.addListener(
-			message_dismiss,
-			'click',
-			this.handleMessageClose,
-			this,
-			true
-		);
+		message_dismiss.addEventListener('click', this.handleMessageClose);
 
 		// create message span and add content area and dismiss link
 		this.message_span = document.createElement('span');
-		YAHOO.util.Dom.addClass(this.message_span, 'swat-actions-message');
+		this.message_span.classList.add('swat-actions-message')
 		this.message_span.style.visibility = 'hidden';
 		this.message_span.appendChild(this.message_content);
 		this.message_span.appendChild(message_dismiss);
@@ -46,14 +51,10 @@ class SwatActions {
 		// add message span to document
 		button.parentNode.appendChild(this.message_span);
 
-		YAHOO.util.Event.addListener(this.flydown, 'change',
-			this.handleChange, this, true);
+		this.flydown.addEventListener('change', this.handleChange);
+		this.flydown.addEventListener('keyup', this.handleChange);
 
-		YAHOO.util.Event.addListener(this.flydown, 'keyup',
-			this.handleChange, this, true);
-
-		YAHOO.util.Event.addListener(button, 'click',
-			this.handleButtonClick, this, true);
+		button.addEventListener('click', this.handleButtonClick);
 	}
 
 	setViewSelector(view, selector_id) {
@@ -65,7 +66,7 @@ class SwatActions {
 
 	handleChange() {
 		if (this.selected_element) {
-			YAHOO.util.Dom.addClass(this.selected_element, 'swat-hidden');
+			this.selected_element.classList.add('swat-hidden');
 		}
 
 		var id = this.id + '_' +
@@ -74,7 +75,7 @@ class SwatActions {
 		this.selected_element = document.getElementById(id);
 
 		if (this.selected_element) {
-			YAHOO.util.Dom.removeClass(this.selected_element, 'swat-hidden');
+			this.selected_element.classList.remove('swat-hidden');
 		}
 	}
 
@@ -104,13 +105,13 @@ class SwatActions {
 		}
 
 		if (message) {
-			YAHOO.util.Event.preventDefault(e);
+			e.preventDefault();
 			this.showMessage(message);
 		}
 	}
 
 	handleMessageClose(e) {
-		YAHOO.util.Event.preventDefault(e);
+		e.preventDefault();
 		this.hideMessage();
 	}
 
@@ -127,11 +128,11 @@ class SwatActions {
 			this.message_span.style.opacity = 0;
 			this.message_span.style.visibility = 'visible';
 
-			var animation = new YAHOO.util.Anim(
+			var animation = new Anim(
 				this.message_span,
 				{ opacity: { from: 0, to: 1} },
 				0.3,
-				YAHOO.util.Easing.easeInStrong
+				Easing.easeInStrong
 			);
 
 			animation.animate();
@@ -142,11 +143,11 @@ class SwatActions {
 
 	hideMessage() {
 		if (this.message_shown) {
-			var animation = new YAHOO.util.Anim(
+			var animation = new Anim(
 				this.message_span,
 				{ opacity: { from: 1, to: 0} },
 				0.3,
-				YAHOO.util.Easing.easeOutStrong
+				Easing.easeOutStrong
 			);
 
 			animation.onComplete.subscribe(
