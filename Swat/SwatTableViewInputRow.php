@@ -107,12 +107,6 @@ class SwatTableViewInputRow extends SwatTableViewRow
     {
         parent::__construct();
         $this->enter_text = Swat::_('enter&nbsp;another');
-
-        $yui = new SwatYUI(array('animation'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-        $this->addJavaScript(
-            'packages/swat/javascript/swat-table-view-input-row.js'
-        );
     }
 
     // }}}

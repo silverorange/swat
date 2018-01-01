@@ -73,9 +73,6 @@ class SwatCheckAll extends SwatCheckbox
     {
         parent::__construct($id);
         $this->title = Swat::_('Select All');
-        $yui = new SwatYUI(array('event'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-        $this->addJavaScript('packages/swat/javascript/swat-check-all.js');
     }
 
     // }}}

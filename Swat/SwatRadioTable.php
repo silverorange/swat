@@ -9,23 +9,6 @@
  */
 class SwatRadioTable extends SwatRadioList
 {
-    // {{{ public function __construct()
-
-    /**
-     * Creates a new radio table
-     *
-     * @param string $id a non-visible unique id for this widget.
-     *
-     * @see SwatWidget::__construct()
-     */
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-
-        $this->addStyleSheet('packages/swat/styles/swat-radio-table.css');
-    }
-
-    // }}}
     // {{{ public function display()
 
     public function display()

@@ -49,19 +49,7 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
     public function __construct($id = null)
     {
         parent::__construct($id);
-
         $this->requires_id = true;
-
-        $yui = new SwatYUI(array('dom', 'event', 'container'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-        $this->addJavaScript(
-            'packages/swat/javascript/swat-abstract-overlay.js'
-        );
-
-        $this->addJavaScript(
-            'packages/swat/javascript/swat-z-index-manager.js'
-        );
     }
 
     // }}}

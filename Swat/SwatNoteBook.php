@@ -80,13 +80,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
     public function __construct($id = null)
     {
         parent::__construct($id);
-
         $this->requires_id = true;
-
-        $yui = new SwatYUI(array('tabview'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-        $this->addStyleSheet('packages/swat/styles/swat-note-book.css');
     }
 
     // }}}

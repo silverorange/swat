@@ -82,12 +82,6 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
 
         $this->makePropertyStatic('id');
 
-        $yui = new SwatYUI(array('dom'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-        $this->addJavaScript(
-            'packages/swat/javascript/swat-radio-button-cell-renderer.js'
-        );
-
         // auto-generate an id to use if no id is set
         $this->id = $this->getUniqueId();
     }

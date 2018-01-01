@@ -153,24 +153,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
     public function __construct($id = null)
     {
         parent::__construct($id);
-
         $this->requires_id = true;
-
-        $yui = new SwatYUI(array('dom', 'event'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-        $this->addJavaScript(
-            'packages/swat/javascript/swat-z-index-manager.js'
-        );
-
-        $this->addJavaScript(
-            'packages/swat/javascript/swat-image-preview-display.js'
-        );
-
-        $this->addStyleSheet(
-            'packages/swat/styles/swat-image-preview-display.css'
-        );
-
         $this->title = Swat::_('View Larger Image');
     }
 

@@ -55,32 +55,6 @@ class SwatCheckboxEntryList extends SwatCheckboxList
     protected $entry_widgets = array();
 
     // }}}
-    // {{{ public function __construct()
-
-    /**
-     * Creates a new checkbox entry list
-     *
-     * @param string $id a non-visible unique id for this widget.
-     *
-     * @see SwatCheckboxList::__construct()
-     */
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-
-        $yui = new SwatYUI(array('dom', 'event'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-        $this->addJavaScript(
-            'packages/swat/javascript/swat-checkbox-entry-list.js'
-        );
-
-        $this->addStyleSheet(
-            'packages/swat/styles/swat-checkbox-entry-list.css'
-        );
-    }
-
-    // }}}
     // {{{ public function display()
 
     /**

@@ -141,24 +141,6 @@ class SwatTileView extends SwatView implements SwatUIParent
     private $tile = null;
 
     // }}}
-    // {{{ public function __construct()
-
-    /**
-     * Creates a new tile view
-     *
-     * @param string $id a non-visable unique id for this widget.
-     *
-     * @see SwatWidget:__construct()
-     */
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-
-        $this->addStyleSheet('packages/swat/styles/swat-tile-view.css');
-        $this->addJavaScript('packages/swat/javascript/swat-tile-view.js');
-    }
-
-    // }}}
     // {{{ public function init()
 
     /**

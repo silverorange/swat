@@ -80,26 +80,6 @@ class SwatActions extends SwatControl implements SwatUIParent
     private $selector;
 
     // }}}
-    // {{{ public function __construct()
-
-    /**
-     * Creates a new actions list
-     *
-     * @param string $id a non-visible unique id for this widget.
-     *
-     * @see SwatWidget::__construct()
-     */
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-
-        $yui = new SwatYUI(array('dom', 'event', 'animation'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-        $this->addJavaScript('packages/swat/javascript/swat-actions.js');
-        $this->addStyleSheet('packages/swat/styles/swat-actions.css');
-    }
-
-    // }}}
     // {{{ public function init()
 
     /**

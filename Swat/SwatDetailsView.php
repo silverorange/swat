@@ -49,23 +49,6 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
     private $fields_by_id = array();
 
     // }}}
-    // {{{ public function __construct()
-
-    /**
-     * Creates a new details view
-     *
-     * @param string $id a non-visible unique id for this widget.
-     *
-     * @see SwatWidget::__construct()
-     */
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-
-        $this->addStyleSheet('packages/swat/styles/swat-details-view.css');
-    }
-
-    // }}}
     // {{{ public function init()
 
     /**

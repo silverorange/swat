@@ -189,27 +189,6 @@ class SwatTableView extends SwatView implements SwatUIParent
     // }}}
 
     // general methods
-    // {{{ public function __construct()
-
-    /**
-     * Creates a new table view
-     *
-     * @param string $id a non-visible unique id for this widget.
-     *
-     * @see SwatWidget::__construct()
-     */
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-
-        $yui = new SwatYUI(array('dom'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-        $this->addJavaScript('packages/swat/javascript/swat-table-view.js');
-        $this->addStyleSheet('packages/swat/styles/swat-table-view.css');
-    }
-
-    // }}}
     // {{{ public function init()
 
     /**
