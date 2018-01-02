@@ -1,4 +1,5 @@
 import SwatDisclosure from './swat-disclosure';
+
 import '../styles/swat-frame-disclosure.css';
 
 export default class SwatFrameDisclosure extends SwatDisclosure {
@@ -9,40 +10,22 @@ export default class SwatFrameDisclosure extends SwatDisclosure {
 	close() {
 		super.close();
 
-		YAHOO.util.Dom.removeClass(
-			this.div,
-			'swat-frame-disclosure-control-opened'
-		);
-		YAHOO.util.Dom.addClass(
-			this.div,
-			'swat-frame-disclosure-control-closed'
-		);
+		this.div.classList.remove('swat-frame-disclosure-control-opened');
+		this.div.classList.add('swat-frame-disclosure-control-closed');
 	}
 
 	handleClose() {
 		super.handleClose();
 
-		YAHOO.util.Dom.removeClass(
-			this.div,
-			'swat-frame-disclosure-control-opened'
-		);
-		YAHOO.util.Dom.addClass(
-			this.div,
-			'swat-frame-disclosure-control-closed'
-		);
+		this.div.classList.remove('swat-frame-disclosure-control-opened');
+		this.div.classList.add('swat-frame-disclosure-control-closed');
 	}
 
 	open() {
 		super.open();
 
-		YAHOO.util.Dom.removeClass(
-			this.div,
-			'swat-frame-disclosure-control-closed'
-		);
-		YAHOO.util.Dom.addClass(
-			this.div,
-			'swat-frame-disclosure-control-opened'
-		);
+		this.div.classList.remove('swat-frame-disclosure-control-closed');
+		this.div.classList.add('swat-frame-disclosure-control-opened');
 	}
 
 	openWithAnimation() {
@@ -52,13 +35,7 @@ export default class SwatFrameDisclosure extends SwatDisclosure {
 
 		super.openWithAnimation();
 
-		YAHOO.util.Dom.removeClass(
-			this.div,
-			'swat-frame-disclosure-control-closed'
-		);
-		YAHOO.util.Dom.addClass(
-			this.div,
-			'swat-frame-disclosure-control-opened'
-		);
+		this.div.classList.remove('swat-frame-disclosure-control-closed');
+		this.div.classList.add('swat-frame-disclosure-control-opened');
 	}
 }
