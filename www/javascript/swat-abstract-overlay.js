@@ -2,6 +2,8 @@ import { Overlay } from '../../../yui/www/container/container_core';
 
 import SwatZIndexManager from './swat-z-index-manager';
 
+import '../styles/swat-abstract-overlay.css';
+
 /**
  * Abstract overlay widget
  *
