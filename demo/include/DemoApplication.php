@@ -39,6 +39,7 @@ class DemoApplication
 		'PasswordEntry'     => 'SwatPasswordEntry',
 		'ProgressBar'       => 'SwatProgressBar',
 		'RadioList'         => 'SwatRadioList',
+		'RadioNoteBook'     => 'SwatRadioNoteBook',
 		'Rating'            => 'SwatRating',
 		'Replicable'        => 'SwatReplicable',
 		'SelectList'        => 'SwatSelectList',

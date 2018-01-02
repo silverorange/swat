@@ -21,11 +21,13 @@
 				<input type="button" id="sensitive" value="toggle sensitivity" style="font-size: 85%;" />
 				<script type="text/javascript">
 				sensitive = true;
-				YAHOO.util.Event.on(document.getElementById('sensitive'), 'click',
+				document.getElementById('sensitive').addEventListener(
+					'click',
 					function (e) {
 						sensitive = !sensitive;
 						time_date_obj.setSensitivity(sensitive);
-					});
+					}
+				);
 				</script>]]></property>
 				<property name="content_type">text/xml</property>
 			</widget>

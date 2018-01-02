@@ -64,19 +64,19 @@
 			}
 
 			// increase value on mouse movement
-			function handleMouseMove(event, progress_bar)
-			{
-				var value = progress_bar.getValue();
-				if (value > 1) {
-					progress_bar.pulse();
-				} else {
-					var value = progress_bar.getValue() + 0.01;
-					progress_bar.setValue(value);
-				}
-			}
 
-			YAHOO.util.Event.addListener('download_progress', 'mousemove',
-				handleMouseMove, download_progress_obj);
+			download_progress.addEventListener(
+				'mousemove',
+				function handleMouseMove() {
+					var value = download_progress_obj.getValue();
+					if (value > 1) {
+						download_progress_obj.pulse();
+					} else {
+						var value = download_progress_obj.getValue() + 0.01;
+						download_progress_obj.setValue(value);
+					}
+				}
+			);
 
 			download_progress_obj.changeValueEvent.subscribe(
 				handleDownloadValueChange);
@@ -91,14 +91,15 @@
 			}
 
 			// set random value on mouse click
-			function handleClick(event, progress_bar)
-			{
-				var value = Math.round(Math.random() * 100) / 100;
-				progress_bar.setValueWithAnimation(value);
-			}
 
-			YAHOO.util.Event.addListener('upload_progress', 'click',
-				handleClick, upload_progress_obj);
+
+			upload_progress.addEventListener(
+				'click',
+				function handleClick() {
+					var value = Math.round(Math.random() * 100) / 100;
+					upload_progress_obj.setValueWithAnimation(value);
+				}
+			);
 
 			upload_progress_obj.changeValueEvent.subscribe(
 				handleUploadValueChange);

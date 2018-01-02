@@ -1,0 +1,51 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE swatml SYSTEM "http://swat.silverorange.com/swatml1.dtd">
+<swatml>
+	<widget class="SwatForm" id="form">
+
+		<widget class="SwatRadioNoteBook">
+			<widget class="SwatNoteBookPage">
+				<property name="title">Lorum Ipsum</property>
+				<widget class="SwatContentBlock">
+					<property name="content">
+					Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed massa.
+					Proin aliquam lacus sed felis. Proin sit amet odio luctus ipsum
+					tristique gravida. Sed pharetra. Duis tortor lorem, porta in,
+					lacinia nec, molestie sed, dolor. Nulla tortor. Phasellus
+					scelerisque. Pellentesque orci nisl, aliquam eget, dictum quis,
+					imperdiet egestas, nibh. Ut ut ante. Proin metus urna, ornare at,
+					auctor eu, pretium vitae, nibh.
+					</property>
+				</widget>
+			</widget>
+			<widget class="SwatNoteBookPage">
+				<property name="title">Praesent Justo</property>
+				<widget class="SwatContentBlock">
+					<property name="content">
+					Praesent justo sem, sollicitudin vitae, eleifend quis, bibendum non,
+					diam. Vivamus sed leo. Proin molestie velit. Vestibulum sodales
+					lobortis augue. Phasellus tempor. Donec vulputate malesuada dolor.
+					In gravida. Ut placerat ipsum sit amet ligula ultricies posuere.
+					Vestibulum blandit fringilla elit. Maecenas et mi non sapien congue
+					pretium. Maecenas euismod lorem ac nisl. Morbi rhoncus tristique.
+					</property>
+				</widget>
+			</widget>
+			<widget class="SwatNoteBookPage">
+				<property name="title">Phasellus Tincidunt</property>
+				<widget class="SwatContentBlock">
+					<property name="content">
+					Phasellus tincidunt, purus et vehicula ultricies, felis sapien
+					cursus diam, quis ultrices dui metus sed ipsum. Donec sit amet odio.
+					Cras facilisis mattis libero. Morbi rhoncus tristique magna.
+					Cras urna enim, viverra gravida, fringilla quis, semper vitae, dui.
+					Pellentesque habitant morbi tristique senectus et netus et
+					malesuada fames ac turpis egestas. In consectetuer justo et dolor
+					eleifend tincidunt.
+					</property>
+				</widget>
+			</widget>
+		</widget>
+
+	</widget>
+</swatml>
