@@ -52,6 +52,8 @@ module.exports = {
 					loader: 'exports-loader',
 					options: {
 						Dom: 'YAHOO.util.Dom',
+						Region: 'YAHOO.util.Region',
+						Point: 'YAHOO.util.Point',
 					},
 				},
 			},
@@ -61,6 +63,7 @@ module.exports = {
 					loader: 'exports-loader',
 					options: {
 						Event: 'YAHOO.util.Event',
+						EventProvider: 'YAHOO.util.EventProvider',
 						CustomEvent: 'YAHOO.util.CustomEvent',
 						Subscriber: 'YAHOO.util.Subscriber',
 					},
@@ -90,6 +93,44 @@ module.exports = {
 					},
 				},
 			},
+			{
+				test: /element\/element.js$/,
+				use: {
+					loader: 'exports-loader',
+					options: {
+						Attribute: 'YAHOO.util.Attribute',
+						AttributeProvider: 'YAHOO.util.AttributeProvider',
+						Element: 'YAHOO.util.Element',
+					},
+				},
+			},
+			{
+				test: /imagecropper\/imagecropper.js$/,
+				use: {
+					loader: 'exports-loader',
+					options: {
+						ImageCropper: 'YAHOO.widget.ImageCropper',
+					},
+				},
+			},
+			{
+				test: /selector\/selector.js$/,
+				use: {
+					loader: 'exports-loader',
+					options: {
+						Selector: 'YAHOO.util.Selector',
+					},
+				},
+			},
+			{
+				test: /tabview\/tabview.js$/,
+				use: {
+					loader: 'exports-loader',
+					options: {
+						TabView: 'YAHOO.widget.TabView',
+					},
+				},
+			},
 		],
 	},
 	resolve: {
@@ -100,17 +141,26 @@ module.exports = {
 		new ProvidePlugin({
 			YAHOO: '../../../yui/www/yahoo/yahoo',
 			'YAHOO.util.Dom': ['../../../yui/www/dom/dom', 'Dom'],
+			'YAHOO.util.Region': ['../../../yui/www/dom/dom', 'Region'],
+			'YAHOO.util.Point': ['../../../yui/www/dom/dom', 'Point'],
 			'YAHOO.util.Event': ['../../../yui/www/event/event', 'Event'],
+			'YAHOO.util.EventProvider': ['../../../yui/www/event/event', 'EventProvider'],
 			'YAHOO.util.CustomEvent': ['../../../yui/www/event/event', 'CustomEvent'],
 			'YAHOO.util.Subscriber': ['../../../yui/www/event/event', 'Subscriber'],
 			'YAHOO.util.Anim': ['../../../yui/www/animation/animation', 'Anim'],
 			'YAHOO.util.AnimMgr': ['../../../yui/www/animation/animation', 'AnimMgr'],
 			'YAHOO.util.Easing': ['../../../yui/www/animation/animation', 'Easing'],
+			'YAHOO.util.Selector': ['../../../yui/www/selector/selector', 'Selector'],
+			'YAHOO.util.Attribute': ['../../../yui/www/element/element', 'Attribute'],
+			'YAHOO.util.AttributeProvider': ['../../../yui/www/element/element', 'AttributeProvider'],
+			'YAHOO.util.Element': ['../../../yui/www/element/element', 'Element'],
 			'YAHOO.util.Config': ['../../../yui/www/container/container_core', 'Config'],
 			'YAHOO.widget.Module': ['../../../yui/www/container/container_core', 'Module'],
 			'YAHOO.widget.Overlay': ['../../../yui/www/container/container_core', 'Overlay'],
 			'YAHOO.widget.OverlayManager': ['../../../yui/www/container/container_core', 'OverlayManager'],
 			'YAHOO.widget.ContainerEffect': ['../../../yui/www/container/container_core', 'ContainerEffect'],
+			'YAHOO.widget.ImageCropper': ['../../../yui/www/imagecropper/imagecropper', 'ImageCropper'],
+			'YAHOO.widget.TabView': ['../../../yui/www/tabview/tabview', 'TabView'],
 		}),
 	],
 };
