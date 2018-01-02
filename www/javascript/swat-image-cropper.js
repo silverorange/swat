@@ -1,5 +1,8 @@
 import { ImageCropper } from '../../../yui/www/imagecropper/imagecropper';
 
+import '../../../yui/www/resize/assets/skins/sam/resize.css';
+import '../../../yui/www/imagecropper/assets/skins/sam/imagecropper.css';
+
 export default class SwatImageCropper {
 	constructor(id, config) {
 		this.id = id;

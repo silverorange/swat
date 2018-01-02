@@ -1,5 +1,6 @@
 import { Dom } from '../../../yui/www/dom/dom';
 import { Event, CustomEvent } from '../../../yui/www/event/event';
+import { Easing } from '../../../yui/www/animation/animation';
 import { Overlay, ContainerEffect } from '../../../yui/www/container/container_core';
 
 import '../../../yui/www/container/assets/container-core.css';
