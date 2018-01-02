@@ -64,9 +64,9 @@ class SwatTextarea {
 			SwatTextarea.mousedownEventHandler, this.handle_div);
 
 		this.textarea.parentNode.appendChild(this.handle_div);
-		Dom.addClass(
-			this.textarea.parentNode,
-			'swat-textarea-with-resize');
+		this.textarea.parentNode.classList.add(
+			'swat-textarea-with-resize'
+		);
 
 		// if textarea is not currently visible, delay initilization
 		if (this.textarea.offsetWidth === 0) {
@@ -294,7 +294,7 @@ SwatTextarea.mousedownEventHandler = function(e, handle) {
 
 	Dom.setStyle(textarea, 'opacity', 0.25);
 
-	var height = parseInt(Dom.getStyle(textarea, 'height'));
+	var height = parseInt(Dom.getStyle(textarea, 'height'), 10);
 	if (height) {
 		SwatTextarea.dragging_origin_height = height;
 	} else {
