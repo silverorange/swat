@@ -9,9 +9,6 @@ import SwatCheckAll from './swat-check-all';
 import SwatCheckboxCellRenderer from './swat-checkbox-cell-renderer';
 import SwatCheckboxEntryList from './swat-checkbox-entry-list';
 import SwatCheckboxList from './swat-checkbox-list';
-/*
-import SwatColorEntry from './swat-color-entry';
-*/
 import SwatDateEntry from './swat-date-entry';
 import SwatDisclosure from './swat-disclosure';
 import SwatExpandableCheckboxTree from './swat-expandable-checkbox-tree';
@@ -61,9 +58,6 @@ window.SwatCheckAll = SwatCheckAll;
 window.SwatCheckboxCellRenderer = SwatCheckboxCellRenderer;
 window.SwatCheckboxEntryList = SwatCheckboxEntryList;
 window.SwatCheckboxList = SwatCheckboxList;
-/*
-window.SwatColorEntry = SwatColorEntry;
-*/
 window.SwatDateEntry = SwatDateEntry;
 window.SwatDisclosure = SwatDisclosure;
 window.SwatExpandableCheckboxTree = SwatExpandableCheckboxTree;
