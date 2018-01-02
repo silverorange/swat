@@ -1,6 +1,8 @@
 import { Dom } from '../../../yui/www/dom/dom';
 import { Event } from '../../../yui/www/event/event';
 
+import '../styles/swat-date-entry.css';
+
 export default class SwatDateEntry {
 	constructor(id, use_current_date) {
 		this.id = id;
