@@ -2,6 +2,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ProvidePlugin = require('webpack').ProvidePlugin;
 
 module.exports = {
+//	devtool: 'source-map',
 	entry: {
 		swat: './vendor/silverorange/swat/www/javascript/index.js',
 	},
@@ -15,7 +16,12 @@ module.exports = {
 				exclude: /(node_modules)/,
 				use: ExtractTextPlugin.extract({
 					fallback: 'style-loader',
-					use: [ 'css-loader' ]
+					use: [ {
+						loader: 'css-loader',
+						options: {
+//							sourceMap: true,
+						},
+					} ],
 				})
 			},
 			{
@@ -48,14 +54,19 @@ module.exports = {
 			},
 			{
 				test: /dom\/dom.js$/,
-				use: {
-					loader: 'exports-loader',
-					options: {
-						Dom: 'YAHOO.util.Dom',
-						Region: 'YAHOO.util.Region',
-						Point: 'YAHOO.util.Point',
+				use: [
+					{
+						loader: 'exports-loader',
+						options: {
+							Dom: 'YAHOO.util.Dom',
+							Region: 'YAHOO.util.Region',
+							Point: 'YAHOO.util.Point',
+						},
 					},
-				},
+					{
+						loader: './dom-loader',
+					},
+				],
 			},
 			{
 				test: /event\/event.js$/,
@@ -95,14 +106,19 @@ module.exports = {
 			},
 			{
 				test: /element\/element.js$/,
-				use: {
-					loader: 'exports-loader',
-					options: {
-						Attribute: 'YAHOO.util.Attribute',
-						AttributeProvider: 'YAHOO.util.AttributeProvider',
-						Element: 'YAHOO.util.Element',
+				use: [
+					{
+						loader: 'exports-loader',
+						options: {
+							Attribute: 'YAHOO.util.Attribute',
+							AttributeProvider: 'YAHOO.util.AttributeProvider',
+							Element: 'YAHOO.util.Element',
+						},
 					},
-				},
+					{
+						loader: './element-loader',
+					},
+				],
 			},
 			{
 				test: /imagecropper\/imagecropper.js$/,
@@ -131,6 +147,24 @@ module.exports = {
 					},
 				},
 			},
+			{
+				test: /resize\/resize.js$/,
+				use: {
+					loader: 'exports-loader',
+					options: {
+						Resize: 'YAHOO.util.Resize',
+					},
+				},
+			},
+			{
+				test: /dragdrop\/dragdrop.js$/,
+				use: {
+					loader: 'exports-loader',
+					options: {
+						DD: 'YAHOO.util.DD',
+					},
+				},
+			},
 		],
 	},
 	resolve: {
@@ -154,6 +188,8 @@ module.exports = {
 			'YAHOO.util.Attribute': ['../../../yui/www/element/element', 'Attribute'],
 			'YAHOO.util.AttributeProvider': ['../../../yui/www/element/element', 'AttributeProvider'],
 			'YAHOO.util.Element': ['../../../yui/www/element/element', 'Element'],
+			'YAHOO.util.Resize': ['../../../yui/www/resize/resize', 'Resize'],
+			'YAHOO.util.DD': ['../../../yui/www/dragdrop/dragdrop', 'DD'],
 			'YAHOO.util.Config': ['../../../yui/www/container/container_core', 'Config'],
 			'YAHOO.widget.Module': ['../../../yui/www/container/container_core', 'Module'],
 			'YAHOO.widget.Overlay': ['../../../yui/www/container/container_core', 'Overlay'],
