@@ -1,3 +1,8 @@
+import { Dom } from '../../../yui/www/dom/dom';
+import { Selector } from '../../../yui/www/selector/selector';
+import { Event } from '../../../yui/www/event/event';
+import { Anim, Easing } from '../../../yui/www/animation/animation';
+
 import '../styles/swat-radio-note-book.css';
 
 class SwatRadioNoteBook {
@@ -5,7 +10,7 @@ class SwatRadioNoteBook {
 		this.id = id;
 		this.current_page = null;
 
-		YAHOO.util.Event.onDOMReady(this.init, this, true);
+		Event.onDOMReady(this.init, this, true);
 	}
 
 	init() {
@@ -21,7 +26,7 @@ class SwatRadioNoteBook {
 				(function() {
 					var option = unfiltered_options[i];
 					var index = count;
-					YAHOO.util.Event.on(option, 'click', function(e) {
+					Event.on(option, 'click', function(e) {
 						this.setPageWithAnimation(this.pages[index]);
 					}, this, true);
 				}).call(this);
@@ -30,9 +35,9 @@ class SwatRadioNoteBook {
 		}
 
 		// get pages
-		var tbody = YAHOO.util.Dom.getFirstChild(table);
-		var rows = YAHOO.util.Dom.getChildrenBy(tbody, function(n) {
-			return (YAHOO.util.Dom.hasClass(
+		var tbody = Dom.getFirstChild(table);
+		var rows = Dom.getChildrenBy(tbody, function(n) {
+			return (Dom.hasClass(
 				n,
 				'swat-radio-note-book-page-row'
 			));
@@ -41,13 +46,13 @@ class SwatRadioNoteBook {
 		this.pages = [];
 		var page;
 		for (var i = 0; i < rows.length; i++) {
-			page = YAHOO.util.Dom.getFirstChild(
-				YAHOO.util.Dom.getNextSibling(
-					YAHOO.util.Dom.getFirstChild(rows[i])
+			page = Dom.getFirstChild(
+				Dom.getNextSibling(
+					Dom.getFirstChild(rows[i])
 				)
 			);
 
-			if (YAHOO.util.Dom.hasClass(page, 'selected')) {
+			if (Dom.hasClass(page, 'selected')) {
 				this.current_page = page;
 			}
 
@@ -81,25 +86,25 @@ class SwatRadioNoteBook {
 		page.firstChild.style.visibility = 'visible';
 		page.firstChild.style.height = 'auto';
 
-		var region = YAHOO.util.Dom.getRegion(page.firstChild);
+		var region = Dom.getRegion(page.firstChild);
 		var height = region.height;
 
-		var anim = new YAHOO.util.Anim(
+		var anim = new Anim(
 			page,
 			{ 'height': { to: height } },
 			SwatRadioNoteBook.SLIDE_DURATION,
-			YAHOO.util.Easing.easeIn
+			Easing.easeIn
 		);
 
 		anim.onComplete.subscribe(function() {
 			page.style.height = 'auto';
 			this.restorePageFocusability(page);
 
-			var anim = new YAHOO.util.Anim(
+			var anim = new Anim(
 				page,
 				{ opacity: { to: 1 } },
 				SwatRadioNoteBook.FADE_DURATION,
-				YAHOO.util.Easing.easeIn
+				Easing.easeIn
 			);
 
 			anim.animate();
@@ -109,29 +114,29 @@ class SwatRadioNoteBook {
 	}
 
 	closePage(page) {
-		YAHOO.util.Dom.setStyle(page, 'opacity', '0');
+		Dom.setStyle(page, 'opacity', '0');
 		page.style.overflow = 'hidden';
 		page.style.height = '0';
 		this.removePageFocusability(page);
 	};
 
 	closePageWithAnimation(page) {
-		var anim = new YAHOO.util.Anim(
+		var anim = new Anim(
 			page,
 			{ opacity: { to: 0 } },
 			SwatRadioNoteBook.FADE_DURATION,
-			YAHOO.util.Easing.easeOut
+			Easing.easeOut
 		);
 
 		anim.onComplete.subscribe(function() {
 			page.style.overflow = 'hidden';
 			this.removePageFocusability(page);
 
-			var anim = new YAHOO.util.Anim(
+			var anim = new Anim(
 				page,
 				{ height: { to: 0 } },
 				SwatRadioNoteBook.SLIDE_DURATION,
-				YAHOO.util.Easing.easeOut
+				Easing.easeOut
 			);
 
 			anim.animate();
@@ -141,7 +146,7 @@ class SwatRadioNoteBook {
 	}
 
 	removePageFocusability(page) {
-		var elements = YAHOO.util.Selector.query(
+		var elements = Selector.query(
 			'input, select, textarea, button, a, *[tabindex]',
 			page
 		);
@@ -167,7 +172,7 @@ class SwatRadioNoteBook {
 	}
 
 	restorePageFocusability(page) {
-		var elements = YAHOO.util.Selector.query(
+		var elements = Selector.query(
 			'input, select, textarea, button, a, *[tabindex]',
 			page
 		);

@@ -1,0 +1,20 @@
+.swat-frame {
+	margin: 1em 0;
+	border: 1px solid #dcceb2;
+	background: #fff url(../images/swat-frame-background.png) top right no-repeat;
+}
+
+.swat-frame .swat-frame-title {
+	margin: 1px 1px 0 1px;
+	padding: 2px 6px;
+	color: #6b5d40;
+	background: #f8f6f0 url(../images/swat-frame-header.png) bottom left repeat-x;
+}
+
+.swat-frame-contents {
+	padding: 16px;
+}
+
+.swat-frame .swat-frame-subtitle {
+	font-weight: normal;
+}

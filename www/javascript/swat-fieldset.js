@@ -1,7 +1,11 @@
+import { Event } from '../../../yui/www/event/event';
+
+import '../styles/swat-fieldset.css';
+
 export default class SwatFieldset {
 	constructor(id) {
 		this.id = id;
-		YAHOO.util.Event.onAvailable(this.id, this.init, this, true);
+		Event.onAvailable(this.id, this.init, this, true);
 	}
 
 	init() {

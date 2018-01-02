@@ -1,3 +1,6 @@
+import { Dom } from '../../../yui/www/dom/dom';
+import { Event } from '../../../yui/www/event/event';
+
 export default class SwatTimeEntry {
 	constructor(id, use_current_time) {
 		this.id = id;
@@ -13,7 +16,7 @@ export default class SwatTimeEntry {
 		this.date_entry = null;
 
 		if (this.hour) {
-			YAHOO.util.Event.addListener(
+			Event.addListener(
 				this.hour,
 				'change',
 				this.handleHourChange,
@@ -23,7 +26,7 @@ export default class SwatTimeEntry {
 		}
 
 		if (this.minute) {
-			YAHOO.util.Event.addListener(
+			Event.addListener(
 				this.minute,
 				'change',
 				this.handleMinuteChange,
@@ -33,7 +36,7 @@ export default class SwatTimeEntry {
 		}
 
 		if (this.second) {
-			YAHOO.util.Event.addListener(
+			Event.addListener(
 				this.second,
 				'change',
 				this.handleSecondChange,
@@ -43,7 +46,7 @@ export default class SwatTimeEntry {
 		}
 
 		if (this.am_pm) {
-			YAHOO.util.Event.addListener(
+			Event.addListener(
 				this.am_pm,
 				'change',
 				this.handleAmPmChange,
@@ -78,10 +81,10 @@ export default class SwatTimeEntry {
 		for (var i = 0; i < elements.length; i++) {
 			if (sensitivity) {
 				elements[i].disabled = false;
-				YAHOO.util.Dom.removeClass(elements[i], 'swat-insensitive');
+				Dom.removeClass(elements[i], 'swat-insensitive');
 			} else {
 				elements[i].disabled = true;
-				YAHOO.util.Dom.addClass(elements[i], 'swat-insensitive');
+				Dom.addClass(elements[i], 'swat-insensitive');
 			}
 		}
 	}

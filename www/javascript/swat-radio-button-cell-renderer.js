@@ -1,3 +1,5 @@
+import { Event } from '../../../yui/www/event/event';
+
 export default class SwatRadioButtonCellRenderer {
 	/**
 	 * Radio button cell renderer controller
@@ -25,11 +27,21 @@ export default class SwatRadioButtonCellRenderer {
 
 				this.radio_list.push(input_nodes[i]);
 				this.updateNode(input_nodes[i]);
-				YAHOO.util.Event.addListener(input_nodes[i], 'click',
-					this.handleClick, this, true);
+				Event.addListener(
+					input_nodes[i],
+					'click',
+					this.handleClick,
+					this,
+					true
+				);
 
-				YAHOO.util.Event.addListener(input_nodes[i], 'dblclick',
-					this.handleClick, this, true);
+				Event.addListener(
+					input_nodes[i],
+					'dblclick',
+					this.handleClick,
+					this,
+					true
+				);
 			}
 		}
 	}
@@ -39,7 +51,7 @@ export default class SwatRadioButtonCellRenderer {
 			this.updateNode(this.current_node);
 		}
 
-		this.current_node = YAHOO.util.Event.getTarget(e);
+		this.current_node = Event.getTarget(e);
 		this.updateNode(this.current_node);
 	}
 

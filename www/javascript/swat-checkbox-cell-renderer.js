@@ -1,3 +1,5 @@
+import { Event } from '../../../yui/www/event/event';
+
 export default class SwatCheckboxCellRenderer {
 	/**
 	 * Checkbox cell renderer controller
@@ -34,14 +36,24 @@ export default class SwatCheckboxCellRenderer {
 				input_nodes[i]._index = this.check_list.length;
 				this.check_list.push(input_nodes[i]);
 				this.updateNode(input_nodes[i]);
-				YAHOO.util.Event.addListener(input_nodes[i], 'click',
-					this.handleClick, this, true);
+				Event.addListener(
+					input_nodes[i],
+					'click',
+					this.handleClick,
+					this,
+					true
+				);
 
-				YAHOO.util.Event.addListener(input_nodes[i], 'dblclick',
-					this.handleClick, this, true);
+				Event.addListener(
+					input_nodes[i],
+					'dblclick',
+					this.handleClick,
+					this,
+					true
+				);
 
 				// prevent selecting label text when shify key is held
-				YAHOO.util.Event.addListener(
+				Event.addListener(
 					input_nodes[i].parentNode,
 					'mousedown',
 					this.handleMouseDown,
@@ -54,11 +66,11 @@ export default class SwatCheckboxCellRenderer {
 
 	handleMouseDown(e) {
 		// prevent selecting label text when shify key is held
-		YAHOO.util.Event.preventDefault(e);
+		Event.preventDefault(e);
 	}
 
 	handleClick(e) {
-		var checkbox_node = YAHOO.util.Event.getTarget(e);
+		var checkbox_node = Event.getTarget(e);
 		this.updateNode(checkbox_node, e.shiftKey);
 		this.updateCheckAll();
 		this.last_clicked_index = checkbox_node._index;

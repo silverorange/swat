@@ -1,3 +1,6 @@
+import { Dom } from '../../../yui/www/dom/dom';
+import { Event } from '../../../yui/www/event/event';
+
 import '../styles/swat-search-entry.css';
 
 export default class SwatSearchEntry {
@@ -26,14 +29,14 @@ export default class SwatSearchEntry {
 
 			label.style.display = 'none';
 
-			YAHOO.util.Event.addListener(
+			Event.addListener(
 				this.input,
 				'focus',
 				this.handleFocus,
 				this,
 				true
 			);
-			YAHOO.util.Event.addListener(
+			Event.addListener(
 				this.input,
 				'blur',
 				this.handleBlur,
@@ -41,7 +44,7 @@ export default class SwatSearchEntry {
 				true
 			);
 
-			YAHOO.util.Event.onDOMReady(this.init, this, true);
+			Event.onDOMReady(this.init, this, true);
 		}
 	}
 
@@ -59,7 +62,7 @@ export default class SwatSearchEntry {
 			this.input.value = '';
 		}
 
-		YAHOO.util.Event.removeListener(this.input, 'keypress', this.handleKeyDown);
+		Event.removeListener(this.input, 'keypress', this.handleKeyDown);
 	}
 
 	handleFocus(e) {
@@ -75,7 +78,7 @@ export default class SwatSearchEntry {
 			this.showLabelText();
 		}
 
-		YAHOO.util.Event.removeListener(
+		Event.removeListener(
 			this.input,
 			'keypress',
 			this.handleKeyDown
@@ -90,7 +93,7 @@ export default class SwatSearchEntry {
 			return;
 		}
 
-		YAHOO.util.Dom.addClass(this.input, 'swat-search-entry-empty');
+		Dom.addClass(this.input, 'swat-search-entry-empty');
 
 		if (this.input.hasAttribute) {
 			this.input.removeAttribute('name');
@@ -111,18 +114,18 @@ export default class SwatSearchEntry {
 				old_input.parentNode.insertBefore(this.input, old_input);
 
 				// prevent IE memory leaks
-				YAHOO.util.Event.purgeElement(old_input);
+				Event.purgeElement(old_input);
 				old_input.parentNode.removeChild(old_input);
 
 				// add event handlers back
-				YAHOO.util.Event.addListener(
+				Event.addListener(
 					this.input,
 					'focus',
 					this.handleFocus,
 					this,
 					true
 				);
-				YAHOO.util.Event.addListener(
+				Event.addListener(
 					this.input,
 					'blur',
 					this.handleBlur,
@@ -174,14 +177,14 @@ export default class SwatSearchEntry {
 				this.input = document.createElement(outer_html);
 
 				// add event handlers back
-				YAHOO.util.Event.addListener(
+				Event.addListener(
 					this.input,
 					'focus',
 					this.handleFocus,
 					this,
 					true
 				);
-				YAHOO.util.Event.addListener(
+				Event.addListener(
 					this.input,
 					'blur',
 					this.handleBlur,
@@ -193,7 +196,7 @@ export default class SwatSearchEntry {
 				old_input.parentNode.insertBefore(this.input, old_input);
 
 				// prevent IE memory leaks
-				YAHOO.util.Event.purgeElement(old_input);
+				Event.purgeElement(old_input);
 				old_input.parentNode.removeChild(old_input);
 
 				hide = true;
@@ -202,8 +205,8 @@ export default class SwatSearchEntry {
 
 		if (hide) {
 			this.input.value = this.input_value;
-			YAHOO.util.Dom.removeClass(this.input, 'swat-search-entry-empty');
-			YAHOO.util.Event.addListener(
+			Dom.removeClass(this.input, 'swat-search-entry-empty');
+			Event.addListener(
 				this.input,
 				'keypress',
 				this.handleKeyDown,

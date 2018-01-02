@@ -1,8 +1,10 @@
+import { ImageCropper } from '../../../yui/www/imagecropper/imagecropper';
+
 export default class SwatImageCropper {
 	constructor(id, config) {
 		this.id = id;
 
-		this.cropper = new YAHOO.widget.ImageCropper(
+		this.cropper = new ImageCropper(
 			this.id + '_image',
 			config
 		);

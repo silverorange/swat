@@ -75,25 +75,28 @@ export default class SwatTableView extends SwatView {
 
 		// highlight table row of selected item in this view
 		if (this.isSelected(row_node)) {
-			var odd = (YAHOO.util.Dom.hasClass(row_node, 'odd') ||
-				YAHOO.util.Dom.hasClass(row_node, 'highlight-odd'));
+			var odd = (
+				row_node.classList.contains('odd') ||
+				row_node.classList.contains('highlight-odd')
+			);
 
 			if (odd) {
-				YAHOO.util.Dom.removeClass(row_node, 'odd');
-				YAHOO.util.Dom.addClass(row_node, 'highlight-odd');
+				row_node.classList.remove('odd');
+				row_node.classList.add('highlight-odd');
 			} else {
-				YAHOO.util.Dom.addClass(row_node, 'highlight');
+				row_node.classList.add('highlight');
 			}
 
 			var spanning_row = row_node.nextSibling;
-			while (spanning_row && YAHOO.util.Dom.hasClass(
-				spanning_row, 'swat-table-view-spanning-column')
-			) {
+			while (spanning_row && spanning_row.classList.contains(
+				'swat-table-view-spanning-column'
+			)) {
 				if (odd) {
-					YAHOO.util.Dom.removeClass(spanning_row, 'odd');
-					YAHOO.util.Dom.addClass(spanning_row, 'highlight-odd');
+					spanning_row.classList.remove('odd');
+					spanning_row.classList.add('highlight-odd');
+
 				} else {
-					YAHOO.util.Dom.addClass(spanning_row, 'highlight');
+					spanning_row.classList.add('highlight');
 				}
 
 				spanning_row = spanning_row.nextSibling;
@@ -118,25 +121,27 @@ export default class SwatTableView extends SwatView {
 
 		// unhighlight table row of item in this view
 		if (!this.isSelected(row_node)) {
-			var odd = (YAHOO.util.Dom.hasClass(row_node, 'odd') ||
-				YAHOO.util.Dom.hasClass(row_node, 'highlight-odd'));
+			var odd = (
+				row_node.classList.contains('odd') ||
+				row_node.classList.contains('highlight-odd')
+			);
 
 			if (odd) {
-				YAHOO.util.Dom.removeClass(row_node, 'highlight-odd');
-				YAHOO.util.Dom.addClass(row_node, 'odd');
+				row_node.classList.remove('highlight-odd');
+				row_node.classList.add('odd');
 			} else {
-				YAHOO.util.Dom.removeClass(row_node, 'highlight');
+				row_node.classList.remove('highlight');
 			}
 
 			var spanning_row = row_node.nextSibling;
-			while (spanning_row && YAHOO.util.Dom.hasClass(
-				spanning_row, 'swat-table-view-spanning-column')
-			) {
+			while (spanning_row && spanning_row.classList.contains(
+				'swat-table-view-spanning-column'
+			)) {
 				if (odd) {
-					YAHOO.util.Dom.removeClass(spanning_row, 'highlight-odd');
-					YAHOO.util.Dom.addClass(spanning_row, 'odd');
+					spanning_row.classList.remove('highlight-odd');
+					spanning_row.classList.add('odd');
 				} else {
-					YAHOO.util.Dom.removeClass(spanning_row, 'highlight');
+					spanning_row.classList.remove('highlight');
 				}
 
 				spanning_row = spanning_row.nextSibling;

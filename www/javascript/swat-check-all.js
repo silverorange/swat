@@ -1,3 +1,7 @@
+import { Dom } from '../../../yui/www/dom/dom';
+import { Event } from '../../../yui/www/event/event';
+import { Anim, Easing } from '../../../yui/www/animation/animation';
+
 export default class SwatCheckAll {
 	/**
 	 * Creates a new check-all object
@@ -42,11 +46,11 @@ export default class SwatCheckAll {
 
 		if (this.check_all.checked) {
 			var in_attributes = { opacity: { from: 0, to: 1 } };
-			var in_animation = new YAHOO.util.Anim(
+			var in_animation = new Anim(
 				container,
 				in_attributes,
 				0.5,
-				YAHOO.util.Easing.easeIn
+				Easing.easeIn
 			);
 
 			container.style.opacity = 0;
@@ -71,14 +75,14 @@ export default class SwatCheckAll {
 	setController(controller) {
 		// only add the event handler the first time
 		if (this.controller === null) {
-			YAHOO.util.Event.addListener(
+			Event.addListener(
 				this.check_all,
 				'click',
 				this.clickHandler,
 				this,
 				true
 			);
-			YAHOO.util.Event.addListener(
+			Event.addListener(
 				this.check_all,
 				'dblclick',
 				this.clickHandler,

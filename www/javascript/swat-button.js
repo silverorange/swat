@@ -1,6 +1,8 @@
 import { Dom } from '../../../yui/www/dom/dom';
 import { Anim, Easing } from '../../../yui/www/animation/animation';
 
+import '../styles/swat-button.css';
+
 export default class SwatButton {
 	constructor(id, options) {
 		this.id = id;

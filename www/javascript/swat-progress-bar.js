@@ -1,3 +1,7 @@
+import { Dom } from '../../../yui/www/dom/dom';
+import { Event, CustomEvent } from '../../../yui/www/event/event';
+import { Anim } from '../../../yui/www/animation/animation';
+
 import '../styles/swat-progress-bar.css';
 
 /**
@@ -24,12 +28,12 @@ class SwatProgressBar {
 		this.text = document.getElementById(this.id + '_text');
 		this.container = document.getElementById(this.id);
 
-		this.changeValueEvent = new YAHOO.util.CustomEvent('changeValue');
-		this.pulseEvent = new YAHOO.util.CustomEvent('pulse');
+		this.changeValueEvent = new CustomEvent('changeValue');
+		this.pulseEvent = new CustomEvent('pulse');
 
 		this.animation = null;
 
-		YAHOO.util.Event.onDOMReady(function() {
+		Event.onDOMReady(function() {
 			// Hack for Gecko and WebKit to load background images for full
 			// part of progress bar. If the bar starts at zero, these browsers
 			// don't load the background image, even when the bar's value
@@ -147,7 +151,7 @@ class SwatProgressBar {
 			this.animation.stop();
 		}
 
-		this.animation = new YAHOO.util.Anim(
+		this.animation = new Anim(
 			this.full,
 			full_attributes,
 			SwatProgressBar.ANIMATION_DURATION

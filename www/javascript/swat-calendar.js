@@ -1,3 +1,8 @@
+import { Dom } from '../../../yui/www/dom/dom';
+import { Event, CustomEvent } from '../../../yui/www/event/event';
+import { Overlay, ContainerEffect } from '../../../yui/www/container/container_core';
+
+import '../../../yui/www/container/assets/container-core.css';
 import '../styles/swat-calendar.css';
 
 /**
@@ -58,7 +63,7 @@ class SwatCalendar {
 
 		// Draw the calendar on window load to prevent "Operation Aborted"
 		// errors in MSIE 6 and 7.
-		YAHOO.util.Event.on(window, 'load', this.createOverlay, this, true);
+		Event.on(window, 'load', this.createOverlay, this, true);
 
 		this.open = false;
 		this.positioned = false;
@@ -73,7 +78,7 @@ class SwatCalendar {
 		this.container = document.getElementById(this.id);
 
 		this.drawButton();
-		this.overlay = new YAHOO.widget.Overlay(
+		this.overlay = new Overlay(
 			this.id + '_div', {
 				visible: false,
 				constraintoviewport: true,
@@ -117,7 +122,7 @@ class SwatCalendar {
 		}
 
 		if (sensitivity) {
-			YAHOO.util.Dom.removeClass(this.container, 'swat-insensitive');
+			Dom.removeClass(this.container, 'swat-insensitive');
 
 			if (this.drawn) {
 				if (this.toggle_button_insensitive.parentNode) {
@@ -133,7 +138,7 @@ class SwatCalendar {
 			}
 
 		} else {
-			YAHOO.util.Dom.addClass(this.container, 'swat-insensitive');
+			Dom.addClass(this.container, 'swat-insensitive');
 
 			if (this.drawn) {
 				if (this.toggle_button.parentNode) {
@@ -157,7 +162,7 @@ class SwatCalendar {
 	 */
 	drawButton() {
 		this.toggle_button_insensitive = document.createElement('span');
-		YAHOO.util.Dom.addClass(
+		Dom.addClass(
 			this.toggle_button_insensitive,
 			'swat-calendar-toggle-button'
 		);
@@ -166,13 +171,13 @@ class SwatCalendar {
 		this.toggle_button.id = this.id + '_toggle';
 		this.toggle_button.href = '#';
 		this.toggle_button.title = SwatCalendar.open_toggle_text;
-		YAHOO.util.Dom.addClass(
+		Dom.addClass(
 			this.toggle_button,
 			'swat-calendar-toggle-button'
 		);
-		YAHOO.util.Event.on(this.toggle_button, 'click',
+		Event.on(this.toggle_button, 'click',
 			function(e) {
-				YAHOO.util.Event.preventDefault(e);
+				Event.preventDefault(e);
 				this.toggle();
 			},
 			this,
@@ -191,16 +196,16 @@ class SwatCalendar {
 		var calendar_div = document.createElement('div');
 		calendar_div.id = this.id + '_div';
 		calendar_div.style.display = 'none';
-		YAHOO.util.Dom.addClass(calendar_div, 'swat-calendar-div');
+		Dom.addClass(calendar_div, 'swat-calendar-div');
 
 		var overlay_header = document.createElement('div');
-		YAHOO.util.Dom.addClass(overlay_header, 'hd');
+		Dom.addClass(overlay_header, 'hd');
 
 		var overlay_body = document.createElement('div');
-		YAHOO.util.Dom.addClass(overlay_body, 'bd');
+		Dom.addClass(overlay_body, 'bd');
 
 		var overlay_footer = document.createElement('div');
-		YAHOO.util.Dom.addClass(overlay_footer, 'ft');
+		Dom.addClass(overlay_footer, 'ft');
 
 		calendar_div.appendChild(overlay_header);
 		calendar_div.appendChild(overlay_body);
@@ -271,7 +276,7 @@ class SwatCalendar {
 	close() {
 		this.overlay.hide();
 		this.open = false;
-		YAHOO.util.Event.removeListener(
+		Event.removeListener(
 			document,
 			'click',
 			this.handleDocumentClick
@@ -768,7 +773,7 @@ class SwatCalendar {
 			this.overlay.show();
 			this.open = true;
 
-			YAHOO.util.Event.on(
+			Event.on(
 				document,
 				'click',
 				this.handleDocumentClick,
@@ -781,7 +786,7 @@ class SwatCalendar {
 	handleDocumentClick(e) {
 		var close = true;
 
-		var target = YAHOO.util.Event.getTarget(e);
+		var target = Event.getTarget(e);
 
 		if (target === this.toggle_button || target === this.overlay.element) {
 			close = false;
@@ -789,7 +794,7 @@ class SwatCalendar {
 			while (target.parentNode) {
 				target = target.parentNode;
 				if (target === this.overlay.element ||
-					YAHOO.util.Dom.hasClass(target, 'swat-calendar-frame')) {
+					Dom.hasClass(target, 'swat-calendar-frame')) {
 					close = false;
 					break;
 				}
@@ -808,11 +813,11 @@ class SwatCalendar {
  * Shows instantly and hides with configurable fade duration.
  */
 SwatCalendar.Effect = function(overlay, duration) {
-	var effect = YAHOO.widget.ContainerEffect.FADE(overlay, duration);
+	var effect = ContainerEffect.FADE(overlay, duration);
 	effect.attrIn = {
 		attributes: { opacity: { from: 0, to: 1 } },
 		duration: 0,
-		method: YAHOO.util.Easing.easeIn
+		method: Easing.easeIn
 	};
 	effect.init();
 	return effect;

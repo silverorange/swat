@@ -1,3 +1,6 @@
+import { Dom } from '../../../yui/www/dom/dom';
+import { Event } from '../../../yui/www/event/event';
+
 export default class SwatDateEntry {
 	constructor(id, use_current_date) {
 		this.id = id;
@@ -11,7 +14,7 @@ export default class SwatDateEntry {
 		this.time_entry = null;
 
 		if (this.year) {
-			YAHOO.util.Event.addListener(
+			Event.addListener(
 				this.year,
 				'change',
 				this.handleYearChange,
@@ -21,7 +24,7 @@ export default class SwatDateEntry {
 		}
 
 		if (this.month) {
-			YAHOO.util.Event.addListener(
+			Event.addListener(
 				this.month,
 				'change',
 				this.handleMonthChange,
@@ -31,7 +34,7 @@ export default class SwatDateEntry {
 		}
 
 		if (this.day) {
-			YAHOO.util.Event.addListener(
+			Event.addListener(
 				this.day,
 				'change',
 				this.handleDayChange,
@@ -62,10 +65,10 @@ export default class SwatDateEntry {
 		for (var i = 0; i < elements.length; i++) {
 			if (sensitivity) {
 				elements[i].disabled = false;
-				YAHOO.util.Dom.removeClass(elements[i], 'swat-insensitive');
+				Dom.removeClass(elements[i], 'swat-insensitive');
 			} else {
 				elements[i].disabled = true;
-				YAHOO.util.Dom.addClass(elements[i], 'swat-insensitive');
+				Dom.addClass(elements[i], 'swat-insensitive');
 			}
 		}
 

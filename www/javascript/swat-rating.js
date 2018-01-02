@@ -1,3 +1,6 @@
+import { Dom } from '../../../yui/www/dom/dom';
+import { Event } from '../../../yui/www/event/event';
+
 import '../styles/swat-rating.css';
 
 /**
@@ -57,20 +60,17 @@ export default class SwatRating {
 		this.stars = [];
 		this.sensitive = true;
 
-		YAHOO.util.Event.onDOMReady(this.init, this, true);
+		Event.onDOMReady(this.init, this, true);
 	}
 
 	init() {
-		var Dom = YAHOO.util.Dom;
-		var Event = YAHOO.util.Event;
-
 		this.flydown = document.getElementById(this.id + '_flydown');
 		this.rating_div = document.getElementById(this.id);
 		this.sensitive = (!Dom.hasClass(this.rating_div, 'swat-insensitive'));
 
 		Dom.setStyle(this.flydown, 'display', 'none');
 
-		var star_div  = document.createElement('div');
+		var star_div = document.createElement('div');
 		star_div.className = 'swat-rating-star-container';
 
 		for (var i = 1; i <= this.max_value; i++) {
@@ -110,8 +110,6 @@ export default class SwatRating {
 	}
 
 	setSensitivity(sensitivity) {
-		var Dom = YAHOO.util.Dom;
-
 		if (sensitivity) {
 			Dom.removeClass(this.rating_div, 'swat-insensitive');
 			this.sensitive = true;
@@ -126,16 +124,12 @@ export default class SwatRating {
 			return;
 		}
 
-		var Dom = YAHOO.util.Dom;
-
 		for (var i = 0; i < focus_star; i++) {
 			Dom.addClass(this.stars[i], 'swat-rating-hover');
 		}
 	};
 
 	handleBlur(event) {
-		var Dom = YAHOO.util.Dom;
-
 		// code to handle movement away from the star
 		for (var i = 0; i < this.max_value; i++) {
 			Dom.removeClass(this.stars[i], 'swat-rating-hover');
@@ -146,8 +140,6 @@ export default class SwatRating {
 		if (!this.sensitive) {
 			return;
 		}
-
-		var Dom = YAHOO.util.Dom;
 
 		// reset 'on' style for each star
 		for (var i = 0; i < this.max_value; i++) {
@@ -190,8 +182,6 @@ export default class SwatRating {
 	}
 
 	setValue(rating) {
-		var Dom = YAHOO.util.Dom;
-
 		// clear 'on' style for each star
 		for (var i = 0; i < this.max_value; i++) {
 			Dom.removeClass(this.stars[i], 'swat-rating-selected');

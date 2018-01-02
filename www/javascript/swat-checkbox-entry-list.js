@@ -1,4 +1,7 @@
+import { Dom } from '../../../yui/www/dom/dom';
+
 import SwatCheckboxList  from './swat-checkbox-list';
+
 import '../styles/swat-checkbox-entry-list.css';
 
 export default class SwatCheckboxEntryList extends SwatCheckboxList {
@@ -44,13 +47,13 @@ export default class SwatCheckboxEntryList extends SwatCheckboxList {
 		if (this.entry_list[index]) {
 			if (sensitivity) {
 				this.entry_list[index].disabled = false;
-				YAHOO.util.Dom.removeClass(
+				Dom.removeClass(
 					this.entry_list[index],
 					'swat-insensitive'
 				);
 			} else {
 				this.entry_list[index].disabled = true;
-				YAHOO.util.Dom.addClass(
+				Dom.addClass(
 					this.entry_list[index],
 					'swat-insensitive'
 				);

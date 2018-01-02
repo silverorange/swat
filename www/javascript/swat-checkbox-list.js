@@ -1,3 +1,5 @@
+import { Event } from '../../../yui/www/event/event';
+
 export default class SwatCheckboxList {
 	/**
 	 * JavaScript SwatCheckboxList component
@@ -8,7 +10,7 @@ export default class SwatCheckboxList {
 		this.id = id;
 		this.check_list = [];
 		this.check_all = null; // a reference to a check-all js object
-		YAHOO.util.Event.onDOMReady(this.init, this, true);
+		Event.onDOMReady(this.init, this, true);
 	}
 
 	init() {
@@ -23,14 +25,14 @@ export default class SwatCheckboxList {
 		}
 
 		for (var i = 0; i < this.check_list.length; i++) {
-			YAHOO.util.Event.on(
+			Event.on(
 				this.check_list[i],
 				'click',
 				this.handleClick,
 				this,
 				true
 			);
-			YAHOO.util.Event.on(
+			Event.on(
 				this.check_list[i],
 				'dblclick',
 				this.handleClick,

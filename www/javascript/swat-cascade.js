@@ -1,3 +1,5 @@
+import { Event } from '../../../yui/www/event/event';
+
 import SwatCascadeChild from './swat-cascade-child';
 
 export default class SwatCascade {
@@ -6,7 +8,7 @@ export default class SwatCascade {
 		this.to_flydown = document.getElementById(to_flydown_id);
 		this.children = [];
 
-		YAHOO.util.Event.addListener(
+		Event.addListener(
 			this.from_flydown,
 			'change',
 			this.handleChange,

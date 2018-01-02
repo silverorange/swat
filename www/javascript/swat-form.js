@@ -1,5 +1,7 @@
 import { Event } from '../../../yui/www/event/event';
 
+import '../styles/swat-form.css';
+
 export default class SwatForm {
 	constructor(id, connection_close_url) {
 		this.id = id;
