@@ -1,4 +1,5 @@
 import SwatView from './swat-view';
+
 import '../styles/swat-tile-view.css';
 
 export default class SwatTileView extends SwatView {

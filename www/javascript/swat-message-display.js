@@ -1,4 +1,5 @@
 import SwatMessageDisplayMessage from './swat-message-display-message';
+
 import '../styles/swat-message-display.css';
 
 export default class SwatMessageDisplay {
