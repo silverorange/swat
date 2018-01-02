@@ -10,6 +10,7 @@
  */
 class SwatNoteBook extends SwatWidget implements SwatUIParent
 {
+<<<<<<< HEAD
     // {{{ constants
 
     /**
@@ -552,12 +553,15 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
                 break;
         }
 
+        $options = [
+            'orientation' => $position,
+        ];
+
         return sprintf(
-            "var %s_obj = new YAHOO.widget.TabView(" .
-                "'%s', {orientation: '%s'});",
+            'var %s_obj = new SwatNoteBook(%s, %s);',
             $this->id,
-            $this->id,
-            $position
+            SwatString::quoteJavaScriptString($this->id),
+            json_encode($options)
         );
     }
 
