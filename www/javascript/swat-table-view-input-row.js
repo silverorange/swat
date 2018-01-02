@@ -1,3 +1,110 @@
+import { Dom } from '../../../yui/www/dom/dom';
+import { ColorAnim, Easing } from '../../../yui/www/animation/animation';
+
+/**
+ * Gets an XML parser with a loadXML() method
+ */
+function SwatTableViewInputRow_getXMLParser() {
+	var parser = null;
+	var is_ie = true;
+
+	try {
+		var dom = new ActiveXObject('Msxml2.XMLDOM');
+	} catch (err1) {
+		try {
+			var dom = new ActiveXObject('Microsoft.XMLDOM');
+		} catch (err2) {
+			is_ie = false;
+		}
+	}
+
+	if (is_ie) {
+		/*
+		 * Internet Explorer's XMLDOM object has a proprietary loadXML()
+		 * method. Our method returns the document.
+		 */
+		parser = function() {};
+		parser.loadXML = function(document_string) {
+			if (!dom.loadXML(document_string))
+				alert(dom.parseError.reason);
+
+			return dom;
+		};
+	}
+
+	if (parser === null && typeof DOMParser !== 'undefined') {
+		/*
+		 * Mozilla, Safari and Opera have a proprietary DOMParser()
+		 * class.
+		 */
+		var dom_parser = new DOMParser();
+
+		// Cannot add loadXML method to a newly created DOMParser because it
+		// crashes Safari
+		parser = function() {};
+		parser.loadXML = function(document_string) {
+			return dom_parser.parseFromString(document_string, 'text/xml');
+		};
+	}
+
+	return parser;
+};
+
+/*
+ * If the browser does not support the importNode() method then we need to
+ * manually copy nodes from one document to the current document. These methods
+ * parse a HTMLTableRowNode in one document into a table row in this document.
+ */
+
+/**
+ * Parses a table row from one document into another
+ *
+ * Internet Explorer does not allow writing to the innerHTML property for
+ * table row nodes so the table cells are individually inserted and cloned.
+ *
+ * @param HTMLTableRowNode source_tr the table row from the source document.
+ * @param HTMLTableRowNode dest_tr the table row in the destination
+ *                                  document.
+ */
+function SwatTableViewInputRow_parseTableRow(source_tr, dest_tr) {
+	var child_node;
+	var dest_td;
+	var source_attributes;
+	for (var i = 0; i < source_tr.childNodes.length; i++) {
+		child_node = source_tr.childNodes[i];
+		if (child_node.nodeType == 1 && child_node.nodeName == 'td') {
+			dest_td = dest_tr.insertCell(-1);
+			source_attributes = child_node.attributes;
+			for (var j = 0; j < source_attributes.length; j++) {
+				if (source_attributes[j].name == 'class') {
+					dest_td.className = source_attributes[j].value;
+				} else {
+					dest_td.setAttribute(source_attributes[j].name,
+						source_attributes[j].value);
+				}
+			}
+			SwatTableViewInputRow_parseTableCell(child_node, dest_td);
+		}
+	}
+}
+
+/**
+ * Parses a table cell from one document into another
+ *
+ * @param HTMLTableRowNode source_td the table cell from the source
+ *                                    document.
+ * @param HTMLTableRowNode dest_td the table cell in the destination
+ *                                  document.
+ */
+function SwatTableViewInputRow_parseTableCell(source_td, dest_td) {
+	// Internet Explorer does not have an innerHTML property set on
+	// imported DOM nodes even if the imported document is XHTML.
+	if (source_td.innerHTML)
+		dest_td.innerHTML = source_td.innerHTML;
+	else
+		dest_td.innerHTML = source_td.xml;
+}
+
 /**
  * A table view row that can add an arbitrary number of data entry rows
  *
@@ -128,18 +235,18 @@ class SwatTableViewInputRow {
 		var node = dest_tr;
 		var dest_color = 'transparent';
 		while (dest_color == 'transparent' && node) {
-			dest_color = YAHOO.util.Dom.getStyle(node, 'background-color');
+			dest_color = Dom.getStyle(node, 'background-color');
 			node = node.parentNode;
 		}
 		if (dest_color == 'transparent') {
 			dest_color = '#ffffff';
 		}
 
-		var animation = new YAHOO.util.ColorAnim(
+		var animation = new ColorAnim(
 			dest_tr,
 			{ backgroundColor: { from: '#fffbc9', to: dest_color } },
 			1,
-			YAHOO.util.Easing.easeOut
+			Easing.easeOut
 		);
 
 		animation.animate();
@@ -203,121 +310,10 @@ SwatTableViewInputRow.is_webkit =
 	(/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
 
 /**
- * Gets an XML parser with a loadXML() method
- */
-function SwatTableViewInputRow_getXMLParser()
-{
-	var parser = null;
-	var is_ie = true;
-
-	try {
-		var dom = new ActiveXObject('Msxml2.XMLDOM');
-	} catch (err1) {
-		try {
-			var dom = new ActiveXObject('Microsoft.XMLDOM');
-		} catch (err2) {
-			is_ie = false;
-		}
-	}
-
-	if (is_ie) {
-		/*
-		 * Internet Explorer's XMLDOM object has a proprietary loadXML()
-		 * method. Our method returns the document.
-		 */
-		parser = function() {};
-		parser.loadXML = function(document_string)
-		{
-			if (!dom.loadXML(document_string))
-				alert(dom.parseError.reason);
-
-			return dom;
-		};
-	}
-
-	if (parser === null && typeof DOMParser !== 'undefined') {
-		/*
-		 * Mozilla, Safari and Opera have a proprietary DOMParser()
-		 * class.
-		 */
-		var dom_parser = new DOMParser();
-
-		// Cannot add loadXML method to a newly created DOMParser because it
-		// crashes Safari
-		parser = function() {};
-		parser.loadXML = function(document_string)
-		{
-			return dom_parser.parseFromString(document_string, 'text/xml');
-		};
-	}
-
-	return parser;
-}
-
-/**
  * The XML parser used by this widget
  *
  * @var Object
  */
 SwatTableViewInputRow.parser = SwatTableViewInputRow_getXMLParser();
-
-/*
- * If the browser does not support the importNode() method then we need to
- * manually copy nodes from one document to the current document. These methods
- * parse a HTMLTableRowNode in one document into a table row in this document.
- */
-if (!document.importNode || SwatTableViewInputRow.is_webkit) {
-
-	/**
-	 * Parses a table row from one document into another
-	 *
-	 * Internet Explorer does not allow writing to the innerHTML property for
-	 * table row nodes so the table cells are individually inserted and cloned.
-	 *
-	 * @param HTMLTableRowNode source_tr the table row from the source document.
-	 * @param HTMLTableRowNode dest_tr the table row in the destination
-	 *                                  document.
-	 */
-	function SwatTableViewInputRow_parseTableRow(source_tr, dest_tr)
-	{
-		var child_node;
-		var dest_td;
-		var source_attributes;
-		for (var i = 0; i < source_tr.childNodes.length; i++) {
-			child_node = source_tr.childNodes[i];
-			if (child_node.nodeType == 1 && child_node.nodeName == 'td') {
-				dest_td = dest_tr.insertCell(-1);
-				source_attributes = child_node.attributes;
-				for (var j = 0; j < source_attributes.length; j++) {
-					if (source_attributes[j].name == 'class') {
-						dest_td.className = source_attributes[j].value;
-					} else {
-						dest_td.setAttribute(source_attributes[j].name,
-							source_attributes[j].value);
-					}
-				}
-				SwatTableViewInputRow_parseTableCell(child_node, dest_td);
-			}
-		}
-	}
-
-	/**
-	 * Parses a table cell from one document into another
-	 *
-	 * @param HTMLTableRowNode source_td the table cell from the source
-	 *                                    document.
-	 * @param HTMLTableRowNode dest_td the table cell in the destination
-	 *                                  document.
-	 */
-	function SwatTableViewInputRow_parseTableCell(source_td, dest_td)
-	{
-		// Internet Explorer does not have an innerHTML property set on
-		// imported DOM nodes even if the imported document is XHTML.
-		if (source_td.innerHTML)
-			dest_td.innerHTML = source_td.innerHTML;
-		else
-			dest_td.innerHTML = source_td.xml;
-	}
-}
 
 export default SwatTableViewInputRow;

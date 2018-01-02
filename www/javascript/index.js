@@ -26,9 +26,7 @@ import SwatRadioNoteBook from './swat-radio-note-book';
 import SwatRating from './swat-rating';
 import SwatSearchEntry from './swat-search-entry';
 import SwatSimpleColorEntry from './swat-simple-color-entry';
-/*
 import SwatTableViewInputRow from './swat-table-view-input-row';
-*/
 import SwatTableView from './swat-table-view';
 import SwatTextarea from './swat-textarea';
 import SwatTileView from './swat-tile-view';
@@ -75,9 +73,7 @@ window.SwatRadioNoteBook = SwatRadioNoteBook;
 window.SwatRating = SwatRating;
 window.SwatSearchEntry = SwatSearchEntry;
 window.SwatSimpleColorEntry = SwatSimpleColorEntry;
-/*
 window.SwatTableViewInputRow = SwatTableViewInputRow;
-*/
 window.SwatTableView = SwatTableView;
 window.SwatTextarea = SwatTextarea;
 window.SwatTileView = SwatTileView;
