@@ -42,6 +42,7 @@ import '../styles/swat-null-text-cell-renderer.css';
 import '../styles/swat-pagination.css';
 import '../styles/swat-radio-list.css';
 import '../styles/swat-radio-table.css';
+import '../styles/swat-textarea-editor.css';
 import '../styles/swat-tool-link.css';
 import '../styles/swat-toolbar.css';
 

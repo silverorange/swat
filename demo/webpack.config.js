@@ -5,6 +5,7 @@ module.exports = {
 //	devtool: 'source-map',
 	entry: {
 		swat: './vendor/silverorange/swat/www/javascript/index.js',
+		editor: './vendor/silverorange/swat/www/javascript/swat-textarea-editor.js',
 	},
 	output: {
 		filename: 'www/[name].js'
@@ -166,6 +167,15 @@ module.exports = {
 					},
 				},
 			},
+			/*{
+				test: /tiny_mce_src.js$/,
+				use: {
+					loader: 'exports-loader',
+					options: {
+						tinyMCE: 'tinyMCE',
+					},
+				},
+			},*/
 		],
 	},
 	resolve: {

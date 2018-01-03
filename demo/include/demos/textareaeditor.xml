@@ -6,7 +6,6 @@
 		<widget class="SwatFormField">
 			<property name="title">Visual Editor Text Area</property>
 			<widget class="SwatTextareaEditor" id="textarea_editor">
-				<property name="mode" type="constant">MODE_VISUAL</property>
 				<property name="value"><![CDATA[
 <p><strong>We&#8217;ve been using free and
 <a href="http://labs.silverorange.com/archives/2005/june/freeandopen">open-source
