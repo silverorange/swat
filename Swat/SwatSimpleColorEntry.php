@@ -37,8 +37,8 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 	 * codes.
 	 *
 	 * The default palette is the
-	 * @codingStandardsIgnoreLine
-	 * {@link http://tango.freedesktop.org/Tango_Icon_Theme_Guidelines#Color_Palette Tango Project color palette}.
+	 * {@link http://tango.freedesktop.org/Tango_Icon_Theme_Guidelines#Color_Palette
+	 * Tango Project color palette}.
 	 *
 	 * @var array
 	 */
