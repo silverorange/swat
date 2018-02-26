@@ -197,8 +197,7 @@ class SwatCalendar extends SwatControl
 		$open_toggle_text  = Swat::_('open calendar');
 		$close_toggle_text = Swat::_('close calendar');
 
-		return
-			"SwatCalendar.week_names = {$week_names};\n".
+		return "SwatCalendar.week_names = {$week_names};\n".
 			"SwatCalendar.month_names = {$month_names};\n".
 			"SwatCalendar.prev_alt_text = '{$prev_alt_text}';\n".
 			"SwatCalendar.next_alt_text = '{$next_alt_text}';\n".
