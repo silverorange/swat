@@ -42,7 +42,6 @@ class DemoApplication
 		'ProgressBar'       => 'SwatProgressBar',
 		'RadioList'         => 'SwatRadioList',
 		'Rating'            => 'SwatRating',
-		'Recaptcha'         => 'SwatReCaptcha',
 		'Replicable'        => 'SwatReplicable',
 		'SelectList'        => 'SwatSelectList',
 		'String'            => 'SwatString',
