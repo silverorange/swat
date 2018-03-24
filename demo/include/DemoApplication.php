@@ -226,7 +226,6 @@ class DemoApplication
 
 		case 'ColorEntry':
 			$entries = array(
-				'SwatColorEntry',
 				'SwatSimpleColorEntry'
 				);
 			break;

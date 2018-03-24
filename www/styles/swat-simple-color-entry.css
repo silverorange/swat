@@ -1,0 +1,76 @@
+/* SwatSimpleColorEntry */
+
+.swat-simple-color-entry-palette-hex-color {
+	text-align: center;
+	margin: 6px;
+}
+
+.swat-simple-color-entry-table a,
+.swat-simple-color-entry-table a:link,
+.swat-simple-color-entry-table a:visited,
+.swat-simple-color-entry-table a:hover,
+.swat-simple-color-entry-table a:active {
+	text-decoration: none;
+}
+
+.swat-simple-color-entry-table {
+	border-collapse: separate;
+	border-spacing: 1px;
+}
+
+.swat-simple-color-entry-table td {
+	width: 25px;
+	padding: 0;
+}
+
+.swat-simple-color-entry-table td a {
+	display: block;
+	width: 100%;
+	height: 25px;
+	min-height: 25px;
+	line-height: 25px;
+	outline: none;
+}
+
+.swat-simple-color-entry-table td.swat-simple-color-entry-palette-selected a {
+	height: 21px;
+	line-height: 21px;
+	min-height: 21px;
+}
+
+.swat-simple-color-entry-table td.swat-simple-color-entry-palette-selected {
+	border: 2px solid #000;
+	width: 21px;
+}
+
+.swat-simple-color-entry .swat-overlay-toggle-button {
+	width: 8.2em;
+	padding: 4px 0;
+}
+
+.swat-simple-color-entry .swat-overlay-toggle-button-content {
+	width: 6.2em;
+	border: 1px #ccc solid;
+	border-bottom-color: #eee;
+	border-right-color: #eee;
+	background: url(../images/color-entry-null.png);
+	margin: 0px auto;
+	vertical-align: middle;
+	position: relative; /* IE floating div hack */
+}
+
+td.swat-simple-color-entry-palette-blank {
+	background: url(../images/color-entry-null.png);
+	text-align: center;
+}
+
+td.swat-simple-color-entry-palette-blank a {
+	color: #666;
+	font-weight: bold;
+}
+
+.swat-simple-color-entry-toggle {
+	display: inline;
+	vertical-align: middle;
+	border: none;
+}
