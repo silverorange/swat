@@ -33,7 +33,6 @@ class DemoApplication
 		'Frame'             => 'SwatFrame',
 		'ImageCropper'      => 'SwatImageCropper',
 		'ImageDisplay'      => 'SwatImageDisplay',
-		'Menu'              => 'SwatMenu',
 		'MessageDisplay'    => 'SwatMessageDisplay',
 		'NavBar'            => 'SwatNavBar',
 		'NoteBook'          => 'SwatNoteBook',

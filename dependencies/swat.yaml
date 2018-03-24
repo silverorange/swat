@@ -101,7 +101,6 @@ Swat:
       Depends:
         - packages/swat/styles/swat-disclosure.css
     packages/swat/styles/swat-image-preview-display.css:
-    packages/swat/styles/swat-menu.css:
     packages/swat/styles/swat-message.css:
       Depends:
         - packages/swat/styles/swat.css
