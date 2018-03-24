@@ -34,7 +34,7 @@ class CheckboxDemo extends Demo
 		$blood_oranges->addChild(new SwatDataTreeNode(8, 'Sanguinelli'));
 		$oranges->addChild($blood_oranges);
 
-		$oranges->addChild(new SwatDataTreeNode(9,  'Florida'));
+		$oranges->addChild(new SwatDataTreeNode(9, 'Florida'));
 		$oranges->addChild(new SwatDataTreeNode(10, 'California'));
 		$oranges->addChild(new SwatDataTreeNode(11, 'Mandarin'));
 
