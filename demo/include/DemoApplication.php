@@ -22,7 +22,6 @@ class DemoApplication
 		'Calendar'          => 'SwatCalendar',
 		'ChangeOrder'       => 'SwatChangeOrder',
 		'Checkbox'          => 'SwatCheckbox',
-		'ColorEntry'        => 'SwatColorEntry',
 		'DateEntry'         => 'SwatDateEntry',
 		'DetailsView'       => 'SwatDetailsView',
 		'Disclosure'        => 'SwatDisclosure',
@@ -43,6 +42,7 @@ class DemoApplication
 		'Rating'            => 'SwatRating',
 		'Replicable'        => 'SwatReplicable',
 		'SelectList'        => 'SwatSelectList',
+		'SimpleColorEntry'  => 'SwatSimpleColorEntry',
 		'String'            => 'SwatString',
 		'TableView'         => 'SwatTableView',
 		'TableViewInputRow' => 'SwatTableViewInputRow',
@@ -224,12 +224,6 @@ class DemoApplication
 				);
 			break;
 
-		case 'ColorEntry':
-			$entries = array(
-				'SwatSimpleColorEntry'
-				);
-			break;
-
 		case 'DateEntry':
 			$entries = array('SwatDateEntry');
 			break;
@@ -353,6 +347,12 @@ class DemoApplication
 
 		case 'SelectListDemo':
 			$entries = array('SwatSelectList');
+			break;
+
+		case 'SimpleColorEntry':
+			$entries = array(
+				'SwatSimpleColorEntry'
+				);
 			break;
 
 		case 'StringDemo':
