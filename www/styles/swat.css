@@ -121,56 +121,6 @@ ul.swat-radio-list li {
 	margin-left: 1em;
 }
 
-a.swat-expandable-checkbox-tree-anchor-opened {
-	background: url(../images/swat-disclosure-open.png) top left no-repeat;
-	padding: 0 0 0 16px;
-	zoom: 1; /* IE hack */
-}
-
-a.swat-expandable-checkbox-tree-anchor-closed {
-	background: url(../images/swat-disclosure-closed.png) top left no-repeat;
-	padding: 0 0 0 16px;
-	zoom: 1; /* IE hack */
-}
-
-.swat-expandable-checkbox-tree input {
-	vertical-align: middle;
-}
-
-.swat-expandable-checkbox-tree ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-
-.swat-expandable-checkbox-tree ul li {
-	margin-left: 16px;
-}
-
-.swat-expandable-checkbox-tree ul li.swat-expandable-checkbox-tree-expander {
-	margin-left: 0;
-}
-
-.swat-expandable-checkbox-tree ul li ul li {
-	margin-left: 36px;
-}
-
-.swat-expandable-checkbox-tree ul li ul li.swat-expandable-checkbox-tree-expander {
-	margin-left: 20px;
-}
-
-.swat-expandable-checkbox-tree-opened {
-	display: block;
-}
-
-.swat-expandable-checkbox-tree-closed {
-	display: none;
-}
-
-.swat-expandable-checkbox-tree-image {
-	vertical-align: text-top;
-}
-
 .swat-check-all input {
 	vertical-align: middle;
 }

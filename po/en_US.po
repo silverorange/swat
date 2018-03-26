@@ -44,13 +44,11 @@ msgstr ""
 msgid "required"
 msgstr ""
 
-#: ../Swat/SwatExpandableCheckboxTree.php.gettext:175
 #: ../Swat/SwatDisclosure.php.gettext:142
 #: ../Swat/SwatDisclosure.php.gettext:216
 msgid "close"
 msgstr ""
 
-#: ../Swat/SwatExpandableCheckboxTree.php.gettext:178
 #: ../Swat/SwatDisclosure.php.gettext:215
 msgid "open"
 msgstr ""

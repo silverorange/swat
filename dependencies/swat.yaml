@@ -50,7 +50,6 @@ Swat:
         - packages/swat/javascript/swat-calendar.js
         - packages/swat/javascript/swat-time-entry.js
     packages/swat/javascript/swat-disclosure.js:
-    packages/swat/javascript/swat-expandable-checkbox-tree.js:
     packages/swat/javascript/swat-fieldset.js:
     packages/swat/javascript/swat-form.js:
     packages/swat/javascript/swat-image-cropper.js:
