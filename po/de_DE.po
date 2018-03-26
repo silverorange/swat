@@ -179,11 +179,6 @@ msgstr ""
 msgid "%s: "
 msgstr ""
 
-#: ../Swat/SwatReCaptcha.php.gettext:90
-msgid ""
-"The words you entered did not match the words displayed. Please try again."
-msgstr ""
-
 #: ../Swat/SwatColorEntry.php.gettext:106
 msgid "Color entry toggle graphic."
 msgstr ""
