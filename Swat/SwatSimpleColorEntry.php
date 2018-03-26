@@ -76,7 +76,9 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 			'packages/swat/javascript/swat-abstract-overlay.js'
 		);
 
-		$this->addStyleSheet('packages/swat/styles/swat-color-entry.css');
+		$this->addStyleSheet(
+			'packages/swat/styles/swat-simple-color-entry.css'
+		);
 	}
 
 	// }}}

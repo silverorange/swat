@@ -45,9 +45,6 @@ Swat:
       Depends:
         - packages/swat/javascript/swat-checkbox-list.js
     packages/swat/javascript/swat-checkbox-list.js:
-    packages/swat/javascript/swat-color-entry.js:
-      Depends:
-        - packages/swat/javascript/swat-z-index-manager.js
     packages/swat/javascript/swat-date-entry.js:
       OptionalDepends:
         - packages/swat/javascript/swat-calendar.js
@@ -93,7 +90,7 @@ Swat:
     packages/swat/styles/swat-checkbox-entry-list.css:
       Depends:
         - packages/swat/styles/swat.css
-    packages/swat/styles/swat-color-entry.css:
+    packages/swat/styles/swat-simple-color-entry.css:
     packages/swat/styles/swat.css:
     packages/swat/styles/swat-details-view.css:
     packages/swat/styles/swat-disclosure.css:
