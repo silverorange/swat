@@ -33,7 +33,6 @@ class DemoApplication
 		'Frame'             => 'SwatFrame',
 		'ImageCropper'      => 'SwatImageCropper',
 		'ImageDisplay'      => 'SwatImageDisplay',
-		'Menu'              => 'SwatMenu',
 		'MessageDisplay'    => 'SwatMessageDisplay',
 		'NavBar'            => 'SwatNavBar',
 		'NoteBook'          => 'SwatNoteBook',
@@ -110,7 +109,7 @@ class DemoApplication
 	{
 		$this->demo_ui = new SwatUI($this->layout_ui->getWidget('main_frame'));
 		$this->demo_ui->loadFromXML(
-			'../include/demos/'.strtolower($this->demo).'.xml');
+			'../include/demos/'.mb_strtolower($this->demo).'.xml');
 
 		if (file_exists(__DIR__.'/../include/demos/'.$this->demo.'Demo.php')) {
 			require_once __DIR__.'/../include/demos/'.$this->demo.'Demo.php';
@@ -128,7 +127,7 @@ class DemoApplication
 
 	private function buildXmlSourceView()
 	{
-		$filename = '../include/demos/'.strtolower($this->demo).'.xml';
+		$filename = '../include/demos/'.mb_strtolower($this->demo).'.xml';
 		if (file_exists($filename)) {
 			$this->layout_ui->getWidget('xml_source_container')->visible = true;
 
