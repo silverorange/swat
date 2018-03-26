@@ -17,21 +17,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ../Swat/SwatToolLink.php.gettext:189 ../Swat/SwatMenuItem.php.gettext:233
+#: ../Swat/SwatToolLink.php.gettext:189
 #: ../Swat/SwatButton.php.gettext:259
 msgid "Create"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:194 ../Swat/SwatMenuItem.php.gettext:238
+#: ../Swat/SwatToolLink.php.gettext:194
 #: ../Swat/SwatButton.php.gettext:264
 msgid "Add"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:199 ../Swat/SwatMenuItem.php.gettext:243
+#: ../Swat/SwatToolLink.php.gettext:199
 msgid "Edit"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:204 ../Swat/SwatMenuItem.php.gettext:248
+#: ../Swat/SwatToolLink.php.gettext:204
 #: ../Swat/SwatButton.php.gettext:274
 msgid "Delete"
 msgstr ""
@@ -41,23 +41,23 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:214 ../Swat/SwatMenuItem.php.gettext:253
+#: ../Swat/SwatToolLink.php.gettext:214
 msgid "Preview"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:219 ../Swat/SwatMenuItem.php.gettext:258
+#: ../Swat/SwatToolLink.php.gettext:219
 msgid "Change Order"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:224 ../Swat/SwatMenuItem.php.gettext:263
+#: ../Swat/SwatToolLink.php.gettext:224
 msgid "Help"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:229 ../Swat/SwatMenuItem.php.gettext:268
+#: ../Swat/SwatToolLink.php.gettext:229
 msgid "Print"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:234 ../Swat/SwatMenuItem.php.gettext:273
+#: ../Swat/SwatToolLink.php.gettext:234
 msgid "Email"
 msgstr ""
 
