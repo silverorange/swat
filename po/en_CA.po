@@ -27,7 +27,6 @@ msgstr ""
 msgid "Properties for class %s:"
 msgstr ""
 
-#: ../Swat/SwatColorEntry.php.gettext:141
 #: ../Swat/SwatFileEntry.php.gettext:337 ../Swat/SwatEntry.php.gettext:250
 #: ../Swat/SwatTextarea.php.gettext:125 ../Swat/SwatFlydown.php.gettext:141
 #: ../Swat/SwatTimeZoneEntry.php.gettext:165
@@ -35,15 +34,8 @@ msgstr ""
 msgid "The %s field is required."
 msgstr ""
 
-#: ../Swat/SwatColorEntry.php.gettext:292
-msgid "Set Color"
-msgstr "Set Colour"
 
-#: ../Swat/SwatColorEntry.php.gettext:297
-msgid "Set None"
-msgstr ""
-
-#: ../Swat/SwatColorEntry.php.gettext:301 ../Swat/SwatButton.php.gettext:238
+#: ../Swat/SwatButton.php.gettext:238
 #: ../Swat/SwatTextareaEditor.php.gettext:196
 msgid "Cancel"
 msgstr ""

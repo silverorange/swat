@@ -36,7 +36,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: ../Swat/SwatToolLink.php.gettext:209 ../Swat/SwatColorEntry.php.gettext:308
+#: ../Swat/SwatToolLink.php.gettext:209
 #: ../Swat/SwatButton.php.gettext:279
 msgid "Cancel"
 msgstr ""
@@ -82,7 +82,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: ../Swat/SwatTextarea.php.gettext:166 ../Swat/SwatColorEntry.php.gettext:148
+#: ../Swat/SwatTextarea.php.gettext:166
 #: ../Swat/SwatDateEntry.php.gettext:358 ../Swat/SwatEntry.php.gettext:260
 #: ../Swat/SwatFileEntry.php.gettext:405
 #: ../Swat/SwatCheckboxList.php.gettext:206
@@ -177,18 +177,6 @@ msgstr ""
 #: ../Swat/SwatFormField.php.gettext:367
 #, php-format
 msgid "%s: "
-msgstr ""
-
-#: ../Swat/SwatColorEntry.php.gettext:106
-msgid "Color entry toggle graphic."
-msgstr ""
-
-#: ../Swat/SwatColorEntry.php.gettext:299
-msgid "Set Color"
-msgstr ""
-
-#: ../Swat/SwatColorEntry.php.gettext:304
-msgid "Set None"
 msgstr ""
 
 #: ../Swat/SwatIntegerEntry.php.gettext:115
