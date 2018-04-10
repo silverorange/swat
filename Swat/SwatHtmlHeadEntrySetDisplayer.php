@@ -306,18 +306,6 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 		// compare entry type order
 		$type_order = $this->getTypeOrder();
 
-		// Consider LESS and CSS on the same type level. This lets LESS
-		// depend on CSS or CSS depend on LESS.
-		if ($a === 'SwatLessStyleSheetHtmlHeadEntry') {
-			$a = 'SwatStyleSheetHtmlHeadEntry';
-		}
-
-		// Consider LESS and CSS on the same type level. This lets LESS
-		// depend on CSS or CSS depend on LESS.
-		if ($b === 'SwatLessStyleSheetHtmlHeadEntry') {
-			$b = 'SwatStyleSheetHtmlHeadEntry';
-		}
-
 		if (!array_key_exists($a, $type_order)) {
 			$a = '__unknown__';
 		}
@@ -355,12 +343,12 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 	{
 		return array(
 			'SwatStyleSheetHtmlHeadEntry'       => 0,
-			'SwatLessStyleSheetHtmlHeadEntry'   => 1,
-			'SwatLinkHtmlHeadEntry'             => 2,
-			'SwatInlineJavaScriptHtmlHeadEntry' => 3,
-			'SwatJavaScriptHtmlHeadEntry'       => 4,
-			'SwatCommentHtmlHeadEntry'          => 5,
-			'__unknown__'                       => 6,
+			'SwatLessStyleSheetHtmlHeadEntry'   => 0, // Consider same as CSS
+			'SwatLinkHtmlHeadEntry'             => 1,
+			'SwatInlineJavaScriptHtmlHeadEntry' => 2,
+			'SwatJavaScriptHtmlHeadEntry'       => 3,
+			'SwatCommentHtmlHeadEntry'          => 4,
+			'__unknown__'                       => 5,
 		);
 	}
 
