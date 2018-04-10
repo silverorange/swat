@@ -94,8 +94,7 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 		// display entries
 		$current_type = null;
 		foreach ($entries as $entry) {
-
-			if ($current_type !== $entry->getType()) {
+			if ($this->compareTypes($current_type, $entry->getType()) !== 0) {
 				$current_type = $entry->getType();
 				echo "\n";
 			}
@@ -243,7 +242,7 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 	 *                  the keys 'order' and 'object'. The 'order' key contains
 	 *                  the native ordering of the entry and the 'object' key
 	 *                  contains the entry object.
-	 * @param array $b left side of comparison. A two element array containing
+	 * @param array $b right side of comparison. A two element array containing
 	 *                  the keys 'order' and 'object'. The 'order' key contains
 	 *                  the native ordering of the entry and the 'object' key
 	 *                  contains the entry object.
@@ -259,25 +258,13 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 		$b_object = $b['object'];
 
 		// compare entry type order
-		$type_order = $this->getTypeOrder();
+		$type_comparison = $this->compareTypes(
+			$a_object->getType(),
+			$b_object->getType()
+		);
 
-		$a_type = $a_object->getType();
-		$b_type = $b_object->getType();
-
-		if (!array_key_exists($a_type, $type_order)) {
-			$a_type = '__unknown__';
-		}
-
-		if (!array_key_exists($b_type, $type_order)) {
-			$b_type = '__unknown__';
-		}
-
-		if ($type_order[$a_type] > $type_order[$b_type]) {
-			return 1;
-		}
-
-		if ($type_order[$a_type] < $type_order[$b_type]) {
-			return -1;
+		if ($type_comparison !== 0) {
+			return $type_comparison;
 		}
 
 		// compare dependency order from concentrate data
@@ -294,6 +281,56 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 		}
 
 		if ($a['order'] < $b['order']) {
+			return -1;
+		}
+
+		return 0;
+	}
+
+	// }}}
+	// {{{ protected function compareTypes()
+
+	/**
+	 * Compares two HTML head entry types
+	 *
+	 * @param string $a left side of comparison.
+	 * @param string $b right side of comparison.
+	 *
+	 * @return integer a tri-value where -1 means the left side is less than
+	 *                  the right side, 1 means the left side is greater than
+	 *                  the right side and 0 means the left side and right
+	 *                  side are equivalent.
+	 */
+	protected function compareTypes($a, $b)
+	{
+		// compare entry type order
+		$type_order = $this->getTypeOrder();
+
+		// Consider LESS and CSS on the same type level. This lets LESS
+		// depend on CSS or CSS depend on LESS.
+		if ($a === 'SwatLessStyleSheetHtmlHeadEntry') {
+			$a = 'SwatStyleSheetHtmlHeadEntry';
+		}
+
+		// Consider LESS and CSS on the same type level. This lets LESS
+		// depend on CSS or CSS depend on LESS.
+		if ($b === 'SwatLessStyleSheetHtmlHeadEntry') {
+			$b = 'SwatStyleSheetHtmlHeadEntry';
+		}
+
+		if (!array_key_exists($a, $type_order)) {
+			$a = '__unknown__';
+		}
+
+		if (!array_key_exists($b, $type_order)) {
+			$b = '__unknown__';
+		}
+
+		if ($type_order[$a] > $type_order[$b]) {
+			return 1;
+		}
+
+		if ($type_order[$a] < $type_order[$b]) {
 			return -1;
 		}
 
