@@ -62,18 +62,6 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 		// clone set so displaying doesn't modify it
 		$set = clone $set;
 
-		// if not compiled and we have LESS entries, include the LESS client-
-		// side JavaScript.
-		if (count($set->getByType('SwatLessStyleSheetHtmlHeadEntry')) > 0 &&
-			!$compile && class_exists('Less')) {
-			$set->addEntry(
-				new SwatInlineJavaScriptHtmlHeadEntry(
-					'var less = { env: "development" };'
-				)
-			);
-			$set->addEntrySet(Less::getHtmlHeadEntrySet());
-		}
-
 		$entries = $set->toArray();
 
 		// combine files
