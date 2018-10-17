@@ -48,16 +48,13 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 	 *                          false.
 	 * @param boolean $minify whether or not to minify files. Defaults to
 	 *                         false.
-	 * @param boolean $compile whether or not to use compiled files. Defaults to
-	 *                          false.
 	 */
 	public function display(
 		SwatHtmlHeadEntrySet $set,
 		$uri_prefix = '',
 		$tag = null,
 		$combine = false,
-		$minify = false,
-		$compile = false
+		$minify = false
 	) {
 		// clone set so displaying doesn't modify it
 		$set = clone $set;
@@ -91,15 +88,11 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 
 			$prefix = $uri_prefix;
 
-			if ($minify &&
-				$this->concentrator->isMinified($entry->getUri()) &&
-				($compile ||
-				$entry->getType() !== 'SwatLessStyleSheetHtmlHeadEntry')) {
+			if ($minify && $this->concentrator->isMinified($entry->getUri())) {
 				$prefix = $prefix.'min/';
 			}
 
-			if ($compile &&
-				$entry->getType() === 'SwatLessStyleSheetHtmlHeadEntry') {
+			if ($entry->getType() === 'SwatLessStyleSheetHtmlHeadEntry') {
 				$prefix = $prefix.'compiled/';
 				$entry = $entry->getStyleSheetHeadEntry();
 			}
