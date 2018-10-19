@@ -786,7 +786,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		$wrapper,
 		$type = 'integer'
 	) {
-		$sub_data_objects = null;
+		$sub_data_objects = new $wrapper();
 
 		$values = $this->getInternalValues($name);
 		$values = array_filter($values,
