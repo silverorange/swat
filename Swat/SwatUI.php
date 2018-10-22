@@ -87,13 +87,15 @@ class SwatUI extends SwatObject
 	 */
 	public function __construct($container = null)
 	{
-		if (!extension_loaded('dom'))
+		if (!extension_loaded('dom')) {
 			throw new SwatException('SwatUI requires the DOM php extension.');
+		}
 
-		if ($container !== null && $container instanceof SwatContainer)
+		if ($container !== null && $container instanceof SwatContainer) {
 			$this->root = $container;
-		else
+		} else {
 			$this->root = new SwatContainer();
+		}
 	}
 
 	// }}}
@@ -645,15 +647,17 @@ class SwatUI extends SwatObject
 				$parsed_value->is_array = true;
 				$parsed_value->array_key = $array_key;
 			} else {
-				if (!is_array($object->$name))
+				if (!is_array($object->$name)) {
 					$object->$name = array();
+				}
 
 				$array_ref = &$object->$name;
 
-				if ($array_key === null)
+				if ($array_key === null) {
 					$array_ref[] = $parsed_value;
-				else
+				} else {
 					$array_ref[$array_key] = $parsed_value;
+				}
 			}
 		} else {
 			$object->$name = $parsed_value;

@@ -583,57 +583,67 @@ class SwatTableView extends SwatView implements SwatUIParent
 	public function getDescendants($class_name = null)
 	{
 		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name)))
+			class_exists($class_name) || interface_exists($class_name))
+		) {
 			return array();
+		}
 
 		$out = array();
 
 		foreach ($this->columns as $column) {
 			if ($class_name === null || $column instanceof $class_name) {
-				if ($column->id === null)
+				if ($column->id === null) {
 					$out[] = $column;
-				else
+				} else {
 					$out[$column->id] = $column;
+				}
 			}
 
-			if ($column instanceof SwatUIParent)
+			if ($column instanceof SwatUIParent) {
 				$out = array_merge($out, $column->getDescendants($class_name));
+			}
 		}
 
 		foreach ($this->spanning_columns as $column) {
 			if ($class_name === null || $column instanceof $class_name) {
-				if ($column->id === null)
+				if ($column->id === null) {
 					$out[] = $column;
-				else
+				} else {
 					$out[$column->id] = $column;
+				}
 			}
 
-			if ($column instanceof SwatUIParent)
+			if ($column instanceof SwatUIParent) {
 				$out = array_merge($out, $column->getDescendants($class_name));
+			}
 		}
 
 		foreach ($this->groups as $group) {
 			if ($class_name === null || $group instanceof $class_name) {
-				if ($group->id === null)
+				if ($group->id === null) {
 					$out[] = $group;
-				else
+				} else {
 					$out[$group->id] = $group;
+				}
 			}
 
-			if ($group instanceof SwatUIParent)
+			if ($group instanceof SwatUIParent) {
 				$out = array_merge($out, $group->getDescendants($class_name));
+			}
 		}
 
 		foreach ($this->extra_rows as $row) {
 			if ($class_name === null || $row instanceof $class_name) {
-				if ($row->id === null)
+				if ($row->id === null) {
 					$out[] = $row;
-				else
+				} else {
 					$out[$row->id] = $row;
+				}
 			}
 
-			if ($row instanceof SwatUIParent)
+			if ($row instanceof SwatUIParent) {
 				$out = array_merge($out, $row->getDescendants($class_name));
+			}
 		}
 
 		return $out;

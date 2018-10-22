@@ -43,10 +43,11 @@ abstract class SwatControl extends SwatWidget
 			$field_title = '';
 		}
 
-		if ($message->content_type === 'text/plain')
+		if ($message->content_type === 'text/plain') {
 			$content = SwatString::minimizeEntities($message->primary_content);
-		else
+		} else {
 			$content = $message->primary_content;
+		}
 
 		$message->primary_content = sprintf($content, $field_title);
 		$message->content_type = 'text/xml';

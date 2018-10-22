@@ -180,20 +180,22 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 					// already have an array
 					$array_ref = &$renderer->$property;
 
-					if ($mapping->array_key === null)
+					if ($mapping->array_key === null) {
 						$array_ref[] = $data_object->$field;
-					else
+					} else {
 						$array_ref[$mapping->array_key] = $data_object->$field;
+					}
 
 				} else {
 					// starting a new array
 					$array_properties[] = $mapping->property;
 
-					if ($mapping->array_key === null)
+					if ($mapping->array_key === null) {
 						$renderer->$property = array($data_object->$field);
-					else
+					} else {
 						$renderer->$property =
 							array($mapping->array_key => $data_object->$field);
+					}
 				}
 			} else {
 				// look for leading '!' and inverse value if found

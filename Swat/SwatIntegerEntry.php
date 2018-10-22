@@ -21,24 +21,27 @@ class SwatIntegerEntry extends SwatNumericEntry
 	{
 		parent::process();
 
-		if ($this->value === null)
+		if ($this->value === null) {
 			return;
+		}
 
 		try {
 			$integer_value = $this->getNumericValue($this->value);
 
-			if ($integer_value === null)
+			if ($integer_value === null) {
 				$this->addMessage($this->getValidationMessage('integer'));
-			else
+			} else {
 				$this->value = $integer_value;
+			}
 
 		} catch (SwatIntegerOverflowException $e) {
-			if ($e->getSign() > 0)
+			if ($e->getSign() > 0) {
 				$this->addMessage($this->getValidationMessage(
 					'integer-maximum'));
-			else
+			} else {
 				$this->addMessage($this->getValidationMessage(
 					'integer-minimum'));
+			}
 
 			$integer_value = null;
 		}

@@ -385,22 +385,26 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	public function getDescendants($class_name = null)
 	{
 		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name)))
+			class_exists($class_name) || interface_exists($class_name))
+		) {
 			return array();
+		}
 
 		$out = array();
 
 		foreach ($this->pages as $page) {
 			if ($class_name === null || $page instanceof $class_name) {
-				if ($page->id === null)
+				if ($page->id === null) {
 					$out[] = $page;
-				else
+				} else {
 					$out[$page->id] = $page;
+				}
 			}
 
-			if ($page instanceof SwatUIParent)
+			if ($page instanceof SwatUIParent) {
 				$out = array_merge($out,
 					$page->getDescendants($class_name));
+			}
 		}
 
 		return $out;

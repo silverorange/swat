@@ -127,18 +127,20 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
 		$flydown = $this->getCompositeWidget('action_flydown');
 		foreach ($this->action_items as $item) {
 			if ($item->visible) {
-				if ($item instanceof SwatActionItemDivider)
+				if ($item instanceof SwatActionItemDivider) {
 					$flydown->addDivider();
-				else
+				} else {
 					$flydown->addOption($item->id, $item->title);
+				}
 			}
 		}
 
@@ -147,15 +149,17 @@ class SwatActions extends SwatControl implements SwatUIParent
 		// items has a widget with one or more messages.
 		if ($this->auto_reset &&
 			($this->selected === null || $this->selected->widget === null ||
-			!$this->selected->widget->hasMessage())) {
+			!$this->selected->widget->hasMessage())
+		) {
 			$flydown->reset();
 		}
 
 		// select the current action item based upon the flydown value
-		if (isset($this->action_items_by_id[$flydown->value]))
+		if (isset($this->action_items_by_id[$flydown->value])) {
 			$this->selected = $this->action_items_by_id[$flydown->value];
-		else
+		} else {
 			$this->selected = null;
+		}
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
@@ -354,22 +358,26 @@ class SwatActions extends SwatControl implements SwatUIParent
 	public function getDescendants($class_name = null)
 	{
 		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name)))
+			class_exists($class_name) || interface_exists($class_name))
+		) {
 			return array();
+		}
 
 		$out = array();
 
 		foreach ($this->action_items as $action_item) {
 			if ($class_name === null || $action_item instanceof $class_name) {
-				if ($action_item->id === null)
+				if ($action_item->id === null) {
 					$out[] = $action_item;
-				else
+				} else {
 					$out[$action_item->id] = $action_item;
+				}
 			}
 
-			if ($action_item instanceof SwatUIParent)
+			if ($action_item instanceof SwatUIParent) {
 				$out = array_merge($out,
 					$action_item->getDescendants($class_name));
+			}
 		}
 
 		return $out;

@@ -542,10 +542,12 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	public function key()
 	{
 		if ($this->index_field !== null &&
-			isset($this->current()->{$this->index_field}))
+			isset($this->current()->{$this->index_field})
+		) {
 			$key = $this->current()->{$this->index_field};
-		else
+		} else {
 			$key = $this->current_index;
+		}
 
 		return $key;
 	}

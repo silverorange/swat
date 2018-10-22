@@ -155,12 +155,13 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 
 	protected function getText()
 	{
-		if ($this->value === null)
+		if ($this->value === null) {
 			$text = $this->text;
-		elseif (is_array($this->value))
+		} elseif (is_array($this->value)) {
 			$text = vsprintf($this->text, $this->value);
-		else
+		} else {
 			$text = sprintf($this->text, $this->value);
+		}
 
 		return $text;
 	}

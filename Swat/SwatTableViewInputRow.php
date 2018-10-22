@@ -137,8 +137,9 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$this->enter_another_link->init();
 
 		// init input cells
-		foreach ($this->input_cells as $cell)
+		foreach ($this->input_cells as $cell) {
 			$cell->init();
+		}
 
 		/*
 		 * Initialize replicators
@@ -151,13 +152,15 @@ class SwatTableViewInputRow extends SwatTableViewRow
 		$replicator_field = isset($data[$this->getId().'_replicators']) ?
 			$data[$this->getId().'_replicators'] : null;
 
-		if ($replicator_field === null || $replicator_field == '')
+		if ($replicator_field === null || $replicator_field == '') {
 			// use generated ids
-			for ($i = 0; $i < $this->number; $i++)
+			for ($i = 0; $i < $this->number; $i++) {
 				$this->replicators[] = $i;
-		else
+			}
+		} else {
 			// retrieve ids from form
 			$this->replicators = explode(',', $replicator_field);
+		}
 	}
 
 	// }}}

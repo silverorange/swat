@@ -632,15 +632,17 @@ class SwatFileEntry extends SwatInputControl
 			$base_name = basename($this->getFileName(), $extension);
 		}
 
-		if ($count > 0)
+		if ($count > 0) {
 			$file_name = $base_name.$count.$extension;
-		else
+		} else {
 			$file_name = $base_name.$extension;
+		}
 
-		if (file_exists($path.'/'.$file_name))
+		if (file_exists($path.'/'.$file_name)) {
 			return $this->generateUniqueFileName($path, $count + 1);
-		else
-			return $file_name;
+		}
+
+		return $file_name;
 	}
 
 	// }}}

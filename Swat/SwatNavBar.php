@@ -417,10 +417,11 @@ class SwatNavBar extends SwatControl implements Countable
 	 */
 	protected function getContainerTag()
 	{
-		if ($this->container_tag === null)
+		if ($this->container_tag === null) {
 			$tag = new SwatHtmlTag('div');
-		else
+		} else {
 			$tag = $this->container_tag;
+		}
 
 		$tag->id = $this->id;
 		$tag->class = $this->getCSSClassString();

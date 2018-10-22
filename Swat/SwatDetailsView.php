@@ -340,21 +340,25 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	public function getDescendants($class_name = null)
 	{
 		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name)))
+			class_exists($class_name) || interface_exists($class_name))
+		) {
 			return array();
+		}
 
 		$out = array();
 
 		foreach ($this->fields as $field) {
 			if ($class_name === null || $field instanceof $class_name) {
-				if ($field->id === null)
+				if ($field->id === null) {
 					$out[] = $field;
-				else
+				} else {
 					$out[$field->id] = $field;
+				}
 			}
 
-			if ($field instanceof SwatUIParent)
+			if ($field instanceof SwatUIParent) {
 				$out = array_merge($out, $field->getDescendants($class_name));
+			}
 		}
 
 		return $out;
