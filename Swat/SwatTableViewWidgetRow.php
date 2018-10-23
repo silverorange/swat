@@ -114,22 +114,26 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	public function getDescendants($class_name = null)
 	{
 		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name)))
+			class_exists($class_name) || interface_exists($class_name))
+		) {
 			return array();
+		}
 
 		$out = array();
 
 		if ($this->widget !== null) {
 			if ($class_name === null || $this->widget instanceof $class_name) {
-				if ($this->widget->id === null)
+				if ($this->widget->id === null) {
 					$out[] = $this->widget;
-				else
+				} else {
 					$out[$this->widget->id] = $this->widget;
+				}
 			}
 
-			if ($this->widget instanceof SwatUIParent)
+			if ($this->widget instanceof SwatUIParent) {
 				$out = array_merge($out,
 					$this->widget->getDescendants($class_name));
+			}
 		}
 
 		return $out;

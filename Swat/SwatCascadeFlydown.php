@@ -107,10 +107,11 @@ class SwatCascadeFlydown extends SwatFlydown
 		$title = '',
 		$content_type = 'text/plain'
 	) {
-		if ($value instanceof SwatOption)
+		if ($value instanceof SwatOption) {
 			$option = $value;
-		else
+		} else {
 			$option = new SwatOption($value, $title, $content_type);
+		}
 
 		$this->options[$parent][] = $option;
 	}
@@ -263,14 +264,16 @@ class SwatCascadeFlydown extends SwatFlydown
 			$this->value : (string)$this->value;
 
 		foreach ($this->options as $parent => $options) {
-			if ($this->cascade_from->serialize_values)
+			if ($this->cascade_from->serialize_values) {
 				$parent = SwatString::signedSerialize($parent, $salt);
+			}
 
 			if ($this->show_blank && count($options) > 0) {
-				if ($this->serialize_values)
+				if ($this->serialize_values) {
 					$value = SwatString::signedSerialize(null, $salt);
-				else
+				} else {
 					$value = '';
+				}
 
 				$blank_title = ($this->blank_title === null) ?
 					Swat::_('choose one ...') : $this->blank_title;

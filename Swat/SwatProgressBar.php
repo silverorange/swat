@@ -262,12 +262,13 @@ class SwatProgressBar extends SwatControl
 			// progress bar
 			$text = '';
 		} else {
-			if ($this->text_value === null)
+			if ($this->text_value === null) {
 				$text = $this->text;
-			elseif (is_array($this->text_value))
+			} elseif (is_array($this->text_value)) {
 				$text = vsprintf($this->text, $this->text_value);
-			else
+			} else {
 				$text = sprintf($this->text, $this->text_value);
+			}
 		}
 
 		$span_tag = new SwatHtmlTag('span');

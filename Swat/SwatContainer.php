@@ -313,22 +313,26 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	public function getDescendants($class_name = null)
 	{
 		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name)))
+			class_exists($class_name) || interface_exists($class_name))
+		) {
 			return array();
+		}
 
 		$out = array();
 
 		foreach ($this->children as $child_widget) {
 			if ($class_name === null || $child_widget instanceof $class_name) {
-				if ($child_widget->id === null)
+				if ($child_widget->id === null) {
 					$out[] = $child_widget;
-				else
+				} else {
 					$out[$child_widget->id] = $child_widget;
+				}
 			}
 
-			if ($child_widget instanceof SwatUIParent)
+			if ($child_widget instanceof SwatUIParent) {
 				$out = array_merge($out,
 					$child_widget->getDescendants($class_name));
+			}
 		}
 
 		return $out;

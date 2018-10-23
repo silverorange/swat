@@ -542,10 +542,12 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 	public function key()
 	{
 		if ($this->index_field !== null &&
-			isset($this->current()->{$this->index_field}))
+			isset($this->current()->{$this->index_field})
+		) {
 			$key = $this->current()->{$this->index_field};
-		else
+		} else {
 			$key = $this->current_index;
+		}
 
 		return $key;
 	}
@@ -789,8 +791,12 @@ abstract class SwatDBRecordsetWrapper extends SwatObject
 		$sub_data_objects = null;
 
 		$values = $this->getInternalValues($name);
-		$values = array_filter($values,
-			create_function('$value', 'return $value !== null;'));
+		$values = array_filter(
+			$values,
+			function ($value) {
+				return $value !== null;
+			}
+		);
 
 		$values = array_unique($values);
 

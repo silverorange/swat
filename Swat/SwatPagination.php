@@ -455,15 +455,18 @@ class SwatPagination extends SwatControl
 		$this->total_pages = ceil($this->total_records / $this->page_size);
 
 		if (($this->total_pages <= 1) ||
-			($this->total_pages == $this->current_page))
+			($this->total_pages == $this->current_page)
+		) {
 			$this->next_page = 0;
-		else
+		} else {
 			$this->next_page = $this->current_page + 1;
+		}
 
-		if ($this->current_page > 0)
+		if ($this->current_page > 0) {
 			$this->prev_page = $this->current_page - 1;
-		else
+		} else {
 			$this->prev_page = 0;
+		}
 	}
 
 	// }}}

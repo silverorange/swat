@@ -58,22 +58,25 @@ class SwatTextCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::render();
 
-		if ($this->value === null)
+		if ($this->value === null) {
 			$text = $this->text;
-		elseif (is_array($this->value))
+		} elseif (is_array($this->value)) {
 			$text = vsprintf($this->text, $this->value);
-		else
+		} else {
 			$text = sprintf($this->text, $this->value);
+		}
 
-		if ($this->content_type === 'text/plain')
+		if ($this->content_type === 'text/plain') {
 			echo SwatString::minimizeEntities($text);
-		else
+		} else {
 			echo $text;
+		}
 	}
 
 	// }}}

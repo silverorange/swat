@@ -50,13 +50,14 @@ class SwatTreeFlydownNode extends SwatTreeNode
 	 */
 	public function __construct($param1, $param2 = null)
 	{
-		if ($param2 === null && $param1 instanceof SwatOption)
+		if ($param2 === null && $param1 instanceof SwatOption) {
 			$this->flydown_option = $param1;
-		elseif ($param2 === null)
+		} elseif ($param2 === null) {
 			throw new SwatException('First parameter must be a '.
 				'SwatOption or second parameter must be specified.');
-		else
+		} else {
 			$this->flydown_option = new SwatOption($param1, $param2);
+		}
 	}
 
 	// }}}

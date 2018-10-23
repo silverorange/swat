@@ -1070,20 +1070,23 @@ class SwatDB extends SwatObject
 			"{$group_table}.{$group_id_field->name}",
 			"{$table}.{$group_field->name}");
 
-		if ($where_clause != null)
+		if ($where_clause != null) {
 			$sql.= ' where '.$where_clause;
+		}
 
-		if ($order_by_clause != null)
+		if ($order_by_clause != null) {
 			$sql.= ' order by '.$order_by_clause;
+		}
 
 		$rs = self::query($db, $sql, null);
 
 		$options = array();
 
-		if ($tree !== null && $tree instanceof SwatDataTreeNode)
+		if ($tree !== null && $tree instanceof SwatDataTreeNode) {
 			$base_parent = $tree;
-		else
+		} else {
 			$base_parent = new SwatDataTreeNode(null, Swat::_('Root'));
+		}
 
 		$current_group = null;
 
@@ -1201,10 +1204,11 @@ class SwatDB extends SwatObject
 		$tree = null
 	) {
 		$stack = array();
-		if ($tree !== null && $tree instanceof SwatDataTreeNode)
+		if ($tree !== null && $tree instanceof SwatDataTreeNode) {
 			$current_parent = $tree;
-		else
+		} else {
 			$current_parent = new SwatDataTreeNode('', Swat::_('Root'));
+		}
 
 		$base_parent = $current_parent;
 		array_push($stack, $current_parent);

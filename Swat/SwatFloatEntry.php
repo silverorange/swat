@@ -21,15 +21,17 @@ class SwatFloatEntry extends SwatNumericEntry
 	{
 		parent::process();
 
-		if ($this->value === null)
+		if ($this->value === null) {
 			return;
+		}
 
 		$float_value = $this->getNumericValue($this->value);
 
-		if ($float_value === null)
+		if ($float_value === null) {
 			$this->addMessage($this->getValidationMessage('float'));
-		else
+		} else {
 			$this->value = $float_value;
+		}
 	}
 
 	// }}}

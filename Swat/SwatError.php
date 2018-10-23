@@ -351,11 +351,12 @@ class SwatError
 			$function = array_key_exists('function', $entry) ?
 				$entry['function'] : null;
 
-			if (array_key_exists('args', $entry))
+			if (array_key_exists('args', $entry)) {
 				$arguments = $this->getArguments(
 					$entry['args'], $function, $class);
-			else
+			} else {
 				$arguments = '';
+			}
 
 			printf("%s. In file '%s' on line %s.\n%sMethod: %s%s%s(%s)\n",
 				str_pad(--$count, 6, ' ', STR_PAD_LEFT),
@@ -411,12 +412,13 @@ class SwatError
 			$function = array_key_exists('function', $entry) ?
 				$entry['function'] : null;
 
-			if (array_key_exists('args', $entry))
+			if (array_key_exists('args', $entry)) {
 				$arguments = htmlspecialchars($this->getArguments(
 					$entry['args'], $function, $class),
 					null, 'UTF-8');
-			else
+			} else {
 				$arguments = '';
+			}
 
 			printf('<dt>%s.</dt><dd>In file <strong>%s</strong> '.
 				'line&nbsp;<strong>%s</strong>.<br />Method: '.

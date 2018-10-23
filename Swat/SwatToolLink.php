@@ -317,15 +317,17 @@ class SwatToolLink extends SwatControl
 			$tag->target = $this->target;
 		}
 
-		if ($this->value === null)
+		if ($this->value === null) {
 			$tag->href = $this->link;
-		elseif (is_array($this->value))
+		} elseif (is_array($this->value)) {
 			$tag->href = vsprintf($this->link, $this->value);
-		else
+		} else {
 			$tag->href = sprintf($this->link, $this->value);
+		}
 
-		if ($this->tooltip !== null)
+		if ($this->tooltip !== null) {
 			$tag->title = $this->tooltip;
+		}
 
 		$tag->accesskey = $this->access_key;
 

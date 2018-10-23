@@ -449,34 +449,40 @@ class SwatTileView extends SwatView implements SwatUIParent
 	public function getDescendants($class_name = null)
 	{
 		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name)))
+			class_exists($class_name) || interface_exists($class_name))
+		) {
 			return array();
+		}
 
 		$out = array();
 
 		if ($this->tile !== null) {
 			if ($class_name === null || $this->tile instanceof $class_name) {
-				if ($this->tile->id === null)
+				if ($this->tile->id === null) {
 					$out[] = $this->tile;
-				else
+				} else {
 					$out[$this->tile->id] = $this->tile;
+				}
 			}
 
-			if ($this->tile instanceof SwatUIParent)
+			if ($this->tile instanceof SwatUIParent) {
 				$out = array_merge($out,
 					$this->tile->getDescendants($class_name));
+			}
 		}
 
 		foreach ($this->groups as $group) {
 			if ($class_name === null || $group instanceof $class_name) {
-				if ($group->id === null)
+				if ($group->id === null) {
 					$out[] = $group;
-				else
+				} else {
 					$out[$group->id] = $group;
+				}
 			}
 
-			if ($group instanceof SwatUIParent)
+			if ($group instanceof SwatUIParent) {
 				$out = array_merge($out, $group->getDescendants($class_name));
+			}
 		}
 
 		return $out;

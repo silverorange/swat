@@ -328,22 +328,26 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	public function getDescendants($class_name = null)
 	{
 		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name)))
+			class_exists($class_name) || interface_exists($class_name))
+		) {
 			return array();
+		}
 
 		$out = array();
 
 		foreach ($this->clones as $cloned_widget) {
 			if ($class_name === null || $cloned_widget instanceof $class_name) {
-				if ($cloned_widget->id === null)
+				if ($cloned_widget->id === null) {
 					$out[] = $cloned_widget;
-				else
+				} else {
 					$out[$cloned_widget->id] = $cloned_widget;
+				}
 			}
 
-			if ($cloned_widget instanceof SwatUIParent)
+			if ($cloned_widget instanceof SwatUIParent) {
 				$out = array_merge($out,
 					$cloned_widget->getDescendants($class_name));
+			}
 		}
 
 		return $out;
