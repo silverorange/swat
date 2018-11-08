@@ -1,8 +1,6 @@
 <?php
 
 /**
- * A database transaction that is safe to use with database drivers that do
- * not support nested transactions
  *
  * Example use:
  * <code>
@@ -31,32 +29,11 @@ class SwatDBTransaction extends SwatObject
 	 */
 	private $db;
 
-	/**
-	 * Whether or not this database transaction exists inside another database
-	 * transaction (nested)
-	 *
-	 * @var boolean
-	 */
-	private $in_another_transaction;
-
-	/**
-	 * Whether or not this transaction is finished
-	 *
-	 * A transaction is finished after either it is either successfully
-	 * committed or it is successfully rolled-back.
-	 *
-	 * @var boolean
-	 */
-	private $finished;
-
 	// }}}
 	// {{{ public function __construct()
 
 	/**
 	 * Begins a new database transaction
-	 *
-	 * For databases that do not support nested transactions, this method
-	 * prevents opening a new transaction if we are already in a transaction.
 	 *
 	 * @param MDB2_Driver_Common the database connection to perform the
 	 *                            transaction with.
@@ -64,9 +41,7 @@ class SwatDBTransaction extends SwatObject
 	public function __construct(MDB2_Driver_Common $db)
 	{
 		$this->db = $db;
-		$this->in_another_transaction = ($this->db->in_transaction);
-		if (!$this->in_another_transaction)
-			$this->db->beginTransaction();
+		$this->db->beginNestedTransaction();
 	}
 
 	// }}}
@@ -74,23 +49,10 @@ class SwatDBTransaction extends SwatObject
 
 	/**
 	 * Commits this database transaction
-	 *
-	 * For databases that do not support nested transactions, this method
-	 * prevents comitting a transaction if we are already inside another
-	 * transaction.
 	 */
 	public function commit()
 	{
-		if ($this->finished) {
-			throw new SwatDBException('Transaction objects cannot be reused. '.
-				'Create a new SwatDBTransaction object to begin a new '.
-				'transaction.');
-		} else {
-			if (!$this->in_another_transaction)
-				$this->db->commit();
-
-			$this->finished = true;
-		}
+		$this->db->completeNestedTransaction();
 	}
 
 	// }}}
@@ -98,23 +60,10 @@ class SwatDBTransaction extends SwatObject
 
 	/**
 	 * Rolls-back this database transaction
-	 *
-	 * For databases that do not support nested transactions, this method
-	 * prevents rolling-back a transaction if we are already inside another
-	 * transaction.
 	 */
 	public function rollback()
 	{
-		if ($this->finished) {
-			throw new SwatDBException('Transaction objects cannot be reused. '.
-				'Create a new SwatDBTransaction object to begin a new '.
-				'transaction.');
-		} else {
-			if (!$this->in_another_transaction)
-				$this->db->rollback();
-
-			$this->finished = true;
-		}
+		$this->db->failNestedTransaction();
 	}
 
 	// }}}
