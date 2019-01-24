@@ -64,6 +64,10 @@ class SwatDBTransaction extends SwatObject
 	public function rollback()
 	{
 		$this->db->failNestedTransaction();
+		// this is required to actually rollback the transaction
+		// since failNestedTransaction just sets a flag indicating
+		// there is an error unless you pass the immediately param
+		$this->db->completeNestedTransaction();
 	}
 
 	// }}}
