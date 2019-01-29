@@ -8,6 +8,15 @@ pipeline {
             }
         }
 
+        stage('Install Yarn Dependencies') {
+            environment {
+                YARN_CACHE_FOLDER = "${env.WORKSPACE}/yarn-cache/${env.BUILD_NUMBER}"
+            }
+            steps {
+                sh 'yarn install'
+            }
+        }
+
         stage('Lint Modified Files') {
             when {
                 not {
@@ -35,6 +44,12 @@ pipeline {
             }
             steps {
                 sh './vendor/bin/phpcs'
+            }
+        }
+
+        stage('Check if Pretty') {
+            steps {
+                sh 'yarn -check-if-pretty'
             }
         }
     }
