@@ -59,9 +59,7 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 		$yui = new SwatYUI(array('dom', 'event', 'animation', 'selector'));
 		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
-		$this->addStyleSheet(
-			'packages/swat/styles/swat-radio-note-book.css'
-		);
+		$this->addStyleSheet('packages/swat/styles/swat-radio-note-book.css');
 
 		$this->addJavaScript(
 			'packages/swat/javascript/swat-radio-note-book.js'
@@ -96,8 +94,11 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 			$child->parent = $this;
 		} else {
 			throw new SwatInvalidClassException(
-				'Only SwatNoteBookChild objects may be nested within a '.
-				'SwatRadioNoteBook object.', 0, $child);
+				'Only SwatNoteBookChild objects may be nested within a ' .
+					'SwatRadioNoteBook object.',
+				0,
+				$child
+			);
 		}
 	}
 
@@ -178,8 +179,11 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 			return;
 		}
 
-		if ($this->required && $this->isSensitive() &&
-			$this->selected_page == '') {
+		if (
+			$this->required &&
+			$this->isSensitive() &&
+			$this->selected_page == ''
+		) {
 			$this->addMessage($this->getValidationMessage('required'));
 		}
 
@@ -206,12 +210,11 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 
 		// add a hidden field so we can check if this list was submitted on
 		// the process step
-		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
+		$this->getForm()->addHiddenField($this->id . '_submitted', 1);
 
 		if (count($this->pages) === 1) {
 			$this->displaySinglePage(reset($this->pages));
 		} else {
-
 			$table = new SwatHtmlTag('table');
 			$table->id = $this->id;
 			$table->class = 'swat-radio-note-book';
@@ -235,7 +238,6 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 			$table->close();
 
 			Swat::displayInlineJavaScript($this->getInlineJavaScript());
-
 		}
 	}
 
@@ -275,8 +277,9 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 	{
 		$messages = parent::getMessages();
 
-		foreach ($this->pages as $page)
+		foreach ($this->pages as $page) {
 			$messages = array_merge($messages, $page->getMessages());
+		}
 
 		return $messages;
 	}
@@ -369,8 +372,12 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 	 */
 	public function getDescendants($class_name = null)
 	{
-		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name))
+		if (
+			!(
+				$class_name === null ||
+				class_exists($class_name) ||
+				interface_exists($class_name)
+			)
 		) {
 			return array();
 		}
@@ -387,8 +394,7 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 			}
 
 			if ($page instanceof SwatUIParent) {
-				$out = array_merge($out,
-					$page->getDescendants($class_name));
+				$out = array_merge($out, $page->getDescendants($class_name));
 			}
 		}
 
@@ -410,8 +416,9 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 	 */
 	public function getFirstDescendant($class_name)
 	{
-		if (!class_exists($class_name) && !interface_exists($class_name))
+		if (!class_exists($class_name) && !interface_exists($class_name)) {
 			return null;
+		}
 
 		$out = null;
 
@@ -423,8 +430,9 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 
 			if ($page instanceof SwatUIParent) {
 				$out = $page->getFirstDescendant($class_name);
-				if ($out !== null)
+				if ($out !== null) {
 					break;
+				}
 			}
 		}
 
@@ -447,8 +455,9 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 	{
 		$states = array();
 
-		foreach ($this->getDescendants('SwatState') as $id => $object)
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
 			$states[$id] = $object->getState();
+		}
 
 		return $states;
 	}
@@ -467,9 +476,11 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 	 */
 	public function setDescendantStates(array $states)
 	{
-		foreach ($this->getDescendants('SwatState') as $id => $object)
-			if (isset($states[$id]))
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
+			if (isset($states[$id])) {
 				$object->setState($states[$id]);
+			}
+		}
 	}
 
 	// }}}
@@ -514,7 +525,7 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 	{
 		$form = $this->getForm();
 
-		if ($form->getHiddenField($this->id.'_submitted') === null) {
+		if ($form->getHiddenField($this->id . '_submitted') === null) {
 			return false;
 		}
 
@@ -551,8 +562,8 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 		$radio = new SwatHtmlTag('input');
 		$radio->type = 'radio';
 		$radio->name = $this->id;
-		$radio->id = $this->id.'_'.$page->id;
-		$radio->value = $this->id.'_'.$page->id;
+		$radio->id = $this->id . '_' . $page->id;
+		$radio->value = $this->id . '_' . $page->id;
 
 		if ($page->id == $this->selected_page) {
 			$radio->checked = 'checked';
@@ -567,7 +578,7 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 		echo '<td>';
 
 		$label = new SwatHtmlTag('label');
-		$label->for = $this->id.'_'.$page->id;
+		$label->for = $this->id . '_' . $page->id;
 		$label->setContent($page->title, $page->title_content_type);
 		$label->display();
 
@@ -581,7 +592,7 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 		$td->class = 'swat-radio-note-book-page';
 
 		if ($page->id == $this->selected_page) {
-			$td->class.= ' selected';
+			$td->class .= ' selected';
 		}
 
 		$td->open();
@@ -618,8 +629,8 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 		$input = new SwatHtmlTag('input');
 		$input->type = 'hidden';
 		$input->name = $this->id;
-		$input->id = $this->id.'_'.$page->id;
-		$input->value = $this->id.'_'.$page->id;
+		$input->id = $this->id . '_' . $page->id;
+		$input->value = $this->id . '_' . $page->id;
 		$input->display();
 
 		$container->close();
@@ -644,5 +655,3 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 
 	// }}}
 }
-
-?>

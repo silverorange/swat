@@ -77,11 +77,17 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public function addStyleSheet($stylesheet)
 	{
-		if ($this->html_head_entry_set === null)
-			throw new SwatException(sprintf("Child class '%s' did not ".
-				'instantiate a HTML head entry set. This should be done in  '.
-				'the constructor either by calling parent::__construct() or '.
-				'by creating a new HTML head entry set.', get_class($this)));
+		if ($this->html_head_entry_set === null) {
+			throw new SwatException(
+				sprintf(
+					"Child class '%s' did not " .
+						'instantiate a HTML head entry set. This should be done in  ' .
+						'the constructor either by calling parent::__construct() or ' .
+						'by creating a new HTML head entry set.',
+					get_class($this)
+				)
+			);
+		}
 
 		$this->html_head_entry_set->addEntry(
 			new SwatStyleSheetHtmlHeadEntry($stylesheet)
@@ -101,11 +107,17 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public function addJavaScript($java_script)
 	{
-		if ($this->html_head_entry_set === null)
-			throw new SwatException(sprintf("Child class '%s' did not ".
-				'instantiate a HTML head entry set. This should be done in  '.
-				'the constructor either by calling parent::__construct() or '.
-				'by creating a new HTML head entry set.', get_class($this)));
+		if ($this->html_head_entry_set === null) {
+			throw new SwatException(
+				sprintf(
+					"Child class '%s' did not " .
+						'instantiate a HTML head entry set. This should be done in  ' .
+						'the constructor either by calling parent::__construct() or ' .
+						'by creating a new HTML head entry set.',
+					get_class($this)
+				)
+			);
+		}
 
 		$this->html_head_entry_set->addEntry(
 			new SwatJavaScriptHtmlHeadEntry($java_script)
@@ -123,11 +135,17 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public function addComment($comment)
 	{
-		if ($this->html_head_entry_set === null)
-			throw new SwatException(sprintf("Child class '%s' did not ".
-				'instantiate a HTML head entry set. This should be done in  '.
-				'the constructor either by calling parent::__construct() or '.
-				'by creating a new HTML head entry set.', get_class($this)));
+		if ($this->html_head_entry_set === null) {
+			throw new SwatException(
+				sprintf(
+					"Child class '%s' did not " .
+						'instantiate a HTML head entry set. This should be done in  ' .
+						'the constructor either by calling parent::__construct() or ' .
+						'by creating a new HTML head entry set.',
+					get_class($this)
+				)
+			);
+		}
 
 		$this->html_head_entry_set->addEntry(
 			new SwatCommentHtmlHeadEntry($comment)
@@ -160,8 +178,9 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public function getFirstAncestor($class_name)
 	{
-		if (!class_exists($class_name))
+		if (!class_exists($class_name)) {
 			return null;
+		}
 
 		if ($this->parent === null) {
 			$out = null;
@@ -229,10 +248,11 @@ abstract class SwatUIObject extends SwatObject
 	 */
 	public function isVisible()
 	{
-		if ($this->parent instanceof SwatUIObject)
-			return ($this->parent->isVisible() && $this->visible);
-		else
+		if ($this->parent instanceof SwatUIObject) {
+			return $this->parent->isVisible() && $this->visible;
+		} else {
 			return $this->visible;
+		}
 	}
 
 	// }}}
@@ -331,13 +351,14 @@ abstract class SwatUIObject extends SwatObject
 	 *
 	 * @see SwatUIObject::getCSSClassNames()
 	 */
-	protected final function getCSSClassString()
+	final protected function getCSSClassString()
 	{
 		$class_string = null;
 
 		$class_names = $this->getCSSClassNames();
-		if (count($class_names) > 0)
+		if (count($class_names) > 0) {
 			$class_string = implode(' ', $class_names);
+		}
 
 		return $class_string;
 	}
@@ -355,7 +376,7 @@ abstract class SwatUIObject extends SwatObject
 	 *
 	 * @return string a unique identifier for this UI object.
 	 */
-	protected final function getUniqueId()
+	final protected function getUniqueId()
 	{
 		// Because this method is not static, this counter will start at zero
 		// for each class.
@@ -363,10 +384,8 @@ abstract class SwatUIObject extends SwatObject
 
 		$counter++;
 
-		return get_class($this).$counter;
+		return get_class($this) . $counter;
 	}
 
 	// }}}
 }
-
-?>

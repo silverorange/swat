@@ -67,7 +67,8 @@ class SwatDBReadaheadIterator extends SwatObject
 
 		if (!($iterator instanceof Iterator)) {
 			throw new InvalidArgumentException(
-				'$iterator must be either an array or an Iterator.');
+				'$iterator must be either an array or an Iterator.'
+			);
 		}
 
 		$this->iterator = $iterator;
@@ -119,7 +120,7 @@ class SwatDBReadaheadIterator extends SwatObject
 	 */
 	public function getNext()
 	{
-		return ($this->isLast()) ? null : $this->iterator->current();
+		return $this->isLast() ? null : $this->iterator->current();
 	}
 
 	// }}}
@@ -135,7 +136,7 @@ class SwatDBReadaheadIterator extends SwatObject
 	 */
 	public function getNextKey()
 	{
-		return ($this->isLast()) ? null : $this->iterator->key();
+		return $this->isLast() ? null : $this->iterator->key();
 	}
 
 	// }}}
@@ -149,7 +150,7 @@ class SwatDBReadaheadIterator extends SwatObject
 	 */
 	public function isLast()
 	{
-		return (!$this->iterator->valid());
+		return !$this->iterator->valid();
 	}
 
 	// }}}
@@ -165,7 +166,7 @@ class SwatDBReadaheadIterator extends SwatObject
 		$this->current = $this->getNext();
 		$this->key = $this->getNextKey();
 
-		$valid = ($this->current !== null);
+		$valid = $this->current !== null;
 
 		if ($valid) {
 			$this->iterator->next();
@@ -189,5 +190,3 @@ class SwatDBReadaheadIterator extends SwatObject
 
 	// }}}
 }
-
-?>

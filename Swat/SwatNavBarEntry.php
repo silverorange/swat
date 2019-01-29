@@ -61,5 +61,3 @@ class SwatNavBarEntry extends SwatObject
 
 	// }}}
 }
-
-?>

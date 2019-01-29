@@ -75,5 +75,3 @@ class SwatInvalidPropertyException extends SwatException
 
 	// }}}
 }
-
-?>

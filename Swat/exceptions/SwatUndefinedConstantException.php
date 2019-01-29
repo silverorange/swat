@@ -52,5 +52,3 @@ class SwatUndefinedConstantException extends SwatException
 
 	// }}}
 }
-
-?>

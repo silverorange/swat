@@ -130,8 +130,9 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -162,23 +163,26 @@ class SwatTextarea extends SwatInputControl implements SwatState
 
 		$data = &$this->getForm()->getFormData();
 
-		if (!isset($data[$this->id]))
+		if (!isset($data[$this->id])) {
 			return;
+		}
 
 		$this->value = $data[$this->id];
 		$length = $this->getValueLength();
 
-		if ($length == 0)
+		if ($length == 0) {
 			$this->value = null;
+		}
 
 		if ($this->required && $length == 0) {
 			$message = $this->getValidationMessage('required');
 			$this->addMessage($message);
-
 		} elseif ($this->maxlength !== null && $length > $this->maxlength) {
 			$message = $this->getValidationMessage('too-long');
-			$message->primary_content = sprintf($message->primary_content,
-				$this->maxlength);
+			$message->primary_content = sprintf(
+				$message->primary_content,
+				$this->maxlength
+			);
 
 			$this->addMessage($message);
 		}
@@ -229,7 +233,7 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 */
 	public function getFocusableHtmlId()
 	{
-		return ($this->visible) ? $this->id : null;
+		return $this->visible ? $this->id : null;
 	}
 
 	// }}}
@@ -244,7 +248,7 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	protected function getTextareaTag()
 	{
 		// textarea tags cannot be self-closing when using HTML parser on XHTML
-		$value = ($this->value === null) ? '' : $this->value;
+		$value = $this->value === null ? '' : $this->value;
 
 		// escape value for display because we actually want to show entities
 		// for editing
@@ -262,11 +266,13 @@ class SwatTextarea extends SwatInputControl implements SwatState
 		$textarea_tag->accesskey = $this->access_key;
 		$textarea_tag->tabindex = $this->tab_index;
 
-		if ($this->read_only)
+		if ($this->read_only) {
 			$textarea_tag->readonly = 'readonly';
+		}
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$textarea_tag->disabled = 'disabled';
+		}
 
 		if ($this->placeholder != '') {
 			$textarea_tag->placeholder = $this->placeholder;
@@ -321,12 +327,14 @@ class SwatTextarea extends SwatInputControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
-		$resizeable = ($this->resizeable) ? 'true' : 'false';
-		return sprintf("var %s_obj = new SwatTextarea('%s', %s);",
-			$this->id, $this->id, $resizeable);
+		$resizeable = $this->resizeable ? 'true' : 'false';
+		return sprintf(
+			"var %s_obj = new SwatTextarea('%s', %s);",
+			$this->id,
+			$this->id,
+			$resizeable
+		);
 	}
 
 	// }}}
 }
-
-?>

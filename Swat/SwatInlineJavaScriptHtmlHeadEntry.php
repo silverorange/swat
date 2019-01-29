@@ -46,5 +46,3 @@ class SwatInlineJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 
 	// }}}
 }
-
-?>

@@ -76,5 +76,3 @@ class SwatImageLinkCellRenderer extends SwatImageCellRenderer
 
 	// }}}
 }
-
-?>

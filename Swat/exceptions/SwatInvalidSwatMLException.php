@@ -54,5 +54,3 @@ class SwatInvalidSwatMLException extends SwatException
 
 	// }}}
 }
-
-?>

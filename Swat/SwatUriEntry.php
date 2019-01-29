@@ -53,8 +53,9 @@ class SwatUriEntry extends SwatEntry
 	{
 		parent::process();
 
-		if ($this->value === null)
+		if ($this->value === null) {
 			return;
+		}
 
 		$this->value = trim($this->value);
 
@@ -64,16 +65,18 @@ class SwatUriEntry extends SwatEntry
 		}
 
 		if (!$this->validateUri($this->value)) {
-			if ($this->validateUri($this->default_scheme.'://'.$this->value)) {
+			if (
+				$this->validateUri($this->default_scheme . '://' . $this->value)
+			) {
 				if ($this->scheme_required) {
-					$this->addMessage($this->getValidationMessage(
-						'scheme-required'));
+					$this->addMessage(
+						$this->getValidationMessage('scheme-required')
+					);
 				} else {
-					$this->value = $this->default_scheme.'://'.$this->value;
+					$this->value = $this->default_scheme . '://' . $this->value;
 				}
 			} else {
-				$this->addMessage($this->getValidationMessage(
-					'invalid-uri'));
+				$this->addMessage($this->getValidationMessage('invalid-uri'));
 			}
 		}
 	}
@@ -97,9 +100,12 @@ class SwatUriEntry extends SwatEntry
 		}
 		$schemes = implode('|', $schemes);
 
-		$regexp = '_^
+		$regexp =
+			'_^
 			# scheme
-			(('.$schemes.')://)
+			((' .
+			$schemes .
+			')://)
 			# user:pass authentication
 			(\S+(:\S*)?@)?
 			# domain part
@@ -114,7 +120,7 @@ class SwatUriEntry extends SwatEntry
 			(/[^\s]*)?
 			$_iuSx';
 
-		return (preg_match($regexp, $value) === 1);
+		return preg_match($regexp, $value) === 1;
 	}
 
 	// }}}
@@ -132,20 +138,23 @@ class SwatUriEntry extends SwatEntry
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
-		case 'scheme-required':
-			$text = sprintf(Swat::_('“%s” must include a prefix (i.e. %s).'),
-				$this->value,
-				$this->default_scheme);
+			case 'scheme-required':
+				$text = sprintf(
+					Swat::_('“%s” must include a prefix (i.e. %s).'),
+					$this->value,
+					$this->default_scheme
+				);
 
-			break;
-		case 'invalid-uri':
-			$text = sprintf(
-				Swat::_('“%s” is not a properly formatted address.'),
-				$this->value);
+				break;
+			case 'invalid-uri':
+				$text = sprintf(
+					Swat::_('“%s” is not a properly formatted address.'),
+					$this->value
+				);
 
-			break;
-		default:
-			return parent::getValidationMessage($id);
+				break;
+			default:
+				return parent::getValidationMessage($id);
 		}
 
 		$message = new SwatMessage($text, 'error');
@@ -170,5 +179,3 @@ class SwatUriEntry extends SwatEntry
 
 	// }}}
 }
-
-?>

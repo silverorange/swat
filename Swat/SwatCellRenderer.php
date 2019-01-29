@@ -276,7 +276,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 */
 	public function isPropertyStatic($property_name)
 	{
-		return (in_array($property_name, $this->static_properties));
+		return in_array($property_name, $this->static_properties);
 	}
 
 	// }}}
@@ -303,7 +303,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 * @return array the array of CSS class names based on an inheritance tree
 	 *                for this cell renderer.
 	 */
-	public final function getInheritanceCSSClassNames()
+	final public function getInheritanceCSSClassNames()
 	{
 		$php_class_name = get_class($this);
 		$css_class_names = array();
@@ -312,11 +312,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 		while ($php_class_name !== 'SwatCellRenderer') {
 			if (strncmp($php_class_name, 'Swat', 4) === 0) {
 				$css_class_name = mb_strtolower(
-					preg_replace(
-						'/([A-Z])/u',
-						'-\1',
-						$php_class_name
-					)
+					preg_replace('/([A-Z])/u', '-\1', $php_class_name)
 				);
 
 				if (mb_substr($css_class_name, 0, 1) === '-') {
@@ -361,18 +357,28 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 * @throws SwatException if the specified renderer is already the child of
 	 *                        another object.
 	 */
-	protected final function addCompositeRenderer(
+	final protected function addCompositeRenderer(
 		SwatCellRenderer $renderer,
 		$key
 	) {
-		if (array_key_exists($key, $this->composite_renderers))
-			throw new SwatDuplicateIdException(sprintf(
-				"A composite renderer with the key '%s' already exists in ".
-				"this renderer.", $key), 0, $key);
+		if (array_key_exists($key, $this->composite_renderers)) {
+			throw new SwatDuplicateIdException(
+				sprintf(
+					"A composite renderer with the key '%s' already exists in " .
+						"this renderer.",
+					$key
+				),
+				0,
+				$key
+			);
+		}
 
-		if ($renderer->parent !== null)
-			throw new SwatException('Cannot add a composite renderer that '.
-				'already has a parent.');
+		if ($renderer->parent !== null) {
+			throw new SwatException(
+				'Cannot add a composite renderer that ' .
+					'already has a parent.'
+			);
+		}
 
 		$this->composite_renderers[$key] = $renderer;
 		$renderer->parent = $this;
@@ -397,15 +403,23 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 *                                     specified key exists in this
 	 *                                     renderer.
 	 */
-	protected final function getCompositeRenderer($key)
+	final protected function getCompositeRenderer($key)
 	{
 		$this->confirmCompositeRenderers();
 
-		if (!array_key_exists($key, $this->composite_renderers))
-			throw new SwatWidgetNotFoundException(sprintf(
-				"Composite renderer with key of '%s' not found in %s. Make ".
-				"sure the composite renderer was created and added to this ".
-				"renderer.", $key, get_class($this)), 0, $key);
+		if (!array_key_exists($key, $this->composite_renderers)) {
+			throw new SwatWidgetNotFoundException(
+				sprintf(
+					"Composite renderer with key of '%s' not found in %s. Make " .
+						"sure the composite renderer was created and added to this " .
+						"renderer.",
+					$key,
+					get_class($this)
+				),
+				0,
+				$key
+			);
+		}
 
 		return $this->composite_renderers[$key];
 	}
@@ -428,19 +442,27 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 *
 	 * @see SwatCellRenderer::addCompositeRenderer()
 	 */
-	protected final function getCompositeRenderers($class_name = null)
+	final protected function getCompositeRenderers($class_name = null)
 	{
 		$this->confirmCompositeRenderers();
 
-		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name)))
+		if (
+			!(
+				$class_name === null ||
+				class_exists($class_name) ||
+				interface_exists($class_name)
+			)
+		) {
 			return array();
+		}
 
 		$out = array();
 
-		foreach ($this->composite_renderers as $key => $renderer)
-			if ($class_name === null || $renderer instanceof $class_name)
+		foreach ($this->composite_renderers as $key => $renderer) {
+			if ($class_name === null || $renderer instanceof $class_name) {
 				$out[$key] = $renderer;
+			}
+		}
 
 		return $out;
 	}
@@ -461,7 +483,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 * {@link SwatCellRenderer::getCompositeRenderer()} is called so it rarely
 	 * needs to be called manually.
 	 */
-	protected final function confirmCompositeRenderers()
+	final protected function confirmCompositeRenderers()
 	{
 		if (!$this->composite_renderers_created) {
 			$this->createCompositeRenderers();
@@ -487,7 +509,7 @@ abstract class SwatCellRenderer extends SwatUIObject
 	 *                                       non-static public property of
 	 *                                       this class.
 	 */
-	protected final function makePropertyStatic($property_name)
+	final protected function makePropertyStatic($property_name)
 	{
 		$reflector = new ReflectionObject($this);
 		if ($reflector->hasProperty($property_name)) {
@@ -496,18 +518,22 @@ abstract class SwatCellRenderer extends SwatUIObject
 				$this->static_properties[] = $property_name;
 			} else {
 				throw new SwatInvalidPropertyException(
-					"Property {$property_name} is not a non-static public ".
-					"property and cannot be made static.",
-					0, $this, $property_name);
+					"Property {$property_name} is not a non-static public " .
+						"property and cannot be made static.",
+					0,
+					$this,
+					$property_name
+				);
 			}
 		} else {
 			throw new SwatInvalidPropertyException(
 				"Can not make non-existant property {$property_name} static.",
-				0, $this, $property_name);
+				0,
+				$this,
+				$property_name
+			);
 		}
 	}
 
 	// }}}
 }
-
-?>

@@ -134,8 +134,9 @@ class SwatToolLink extends SwatControl
 	{
 		parent::init();
 
-		if ($this->stock_id !== null)
+		if ($this->stock_id !== null) {
 			$this->setFromStock($this->stock_id, false);
+		}
 	}
 
 	// }}}
@@ -146,12 +147,13 @@ class SwatToolLink extends SwatControl
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
-		$tag = ($this->isSensitive())
+		$tag = $this->isSensitive()
 			? $this->getSensitiveTag()
 			: $this->getInsensitiveTag();
 
@@ -206,69 +208,72 @@ class SwatToolLink extends SwatControl
 	public function setFromStock($stock_id, $overwrite_properties = true)
 	{
 		switch ($stock_id) {
-		case 'create':
-			$title = Swat::_('Create');
-			$class = 'swat-tool-link-create';
-			break;
+			case 'create':
+				$title = Swat::_('Create');
+				$class = 'swat-tool-link-create';
+				break;
 
-		case 'add':
-			$title = Swat::_('Add');
-			$class = 'swat-tool-link-add';
-			break;
+			case 'add':
+				$title = Swat::_('Add');
+				$class = 'swat-tool-link-add';
+				break;
 
-		case 'edit':
-			$title = Swat::_('Edit');
-			$class = 'swat-tool-link-edit';
-			break;
+			case 'edit':
+				$title = Swat::_('Edit');
+				$class = 'swat-tool-link-edit';
+				break;
 
-		case 'download':
-			$title = Swat::_('Download');
-			$class = 'swat-tool-link-download';
-			break;
+			case 'download':
+				$title = Swat::_('Download');
+				$class = 'swat-tool-link-download';
+				break;
 
-		case 'delete':
-			$title = Swat::_('Delete');
-			$class = 'swat-tool-link-delete';
-			break;
+			case 'delete':
+				$title = Swat::_('Delete');
+				$class = 'swat-tool-link-delete';
+				break;
 
-		case 'cancel':
-			$title = Swat::_('Cancel');
-			$class = 'swat-tool-link-cancel';
-			break;
+			case 'cancel':
+				$title = Swat::_('Cancel');
+				$class = 'swat-tool-link-cancel';
+				break;
 
-		case 'preview':
-			$title = Swat::_('Preview');
-			$class = 'swat-tool-link-preview';
-			break;
+			case 'preview':
+				$title = Swat::_('Preview');
+				$class = 'swat-tool-link-preview';
+				break;
 
-		case 'change-order':
-			$title = Swat::_('Change Order');
-			$class = 'swat-tool-link-change-order';
-			break;
+			case 'change-order':
+				$title = Swat::_('Change Order');
+				$class = 'swat-tool-link-change-order';
+				break;
 
-		case 'help':
-			$title = Swat::_('Help');
-			$class = 'swat-tool-link-help';
-			break;
+			case 'help':
+				$title = Swat::_('Help');
+				$class = 'swat-tool-link-help';
+				break;
 
-		case 'print':
-			$title = Swat::_('Print');
-			$class = 'swat-tool-link-print';
-			break;
+			case 'print':
+				$title = Swat::_('Print');
+				$class = 'swat-tool-link-print';
+				break;
 
-		case 'email':
-			$title = Swat::_('Email');
-			$class = 'swat-tool-link-email';
-			break;
+			case 'email':
+				$title = Swat::_('Email');
+				$class = 'swat-tool-link-email';
+				break;
 
-		default:
-			throw new SwatUndefinedStockTypeException(
-				"Stock type with id of '{$stock_id}' not found.",
-				0, $stock_id);
+			default:
+				throw new SwatUndefinedStockTypeException(
+					"Stock type with id of '{$stock_id}' not found.",
+					0,
+					$stock_id
+				);
 		}
 
-		if ($overwrite_properties || ($this->title === null))
+		if ($overwrite_properties || $this->title === null) {
 			$this->title = $title;
+		}
 
 		$this->stock_class = $class;
 	}
@@ -286,11 +291,13 @@ class SwatToolLink extends SwatControl
 	{
 		$classes = array('swat-tool-link');
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$classes[] = 'swat-tool-link-insensitive';
+		}
 
-		if ($this->stock_class !== null)
+		if ($this->stock_class !== null) {
 			$classes[] = $this->stock_class;
+		}
 
 		$classes = array_merge($classes, $this->classes);
 
@@ -350,13 +357,12 @@ class SwatToolLink extends SwatControl
 		$tag->id = $this->id;
 		$tag->class = $this->getCSSClassString();
 
-		if ($this->tooltip !== null)
+		if ($this->tooltip !== null) {
 			$tag->title = $this->tooltip;
+		}
 
 		return $tag;
 	}
 
 	// }}}
 }
-
-?>

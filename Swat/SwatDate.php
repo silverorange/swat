@@ -19,48 +19,48 @@ class SwatDate extends DateTime implements Serializable
 	/**
 	 * America/Halifax
 	 */
-	const TZ_ID                     = 1;
+	const TZ_ID = 1;
 
 	/**
 	 * AST
 	 */
-	const TZ_SHORT                  = 2;
+	const TZ_SHORT = 2;
 
 	/**
 	 * Alias for {@link SwatDate::TZ_SHORT}
 	 *
 	 * @deprecated
 	 */
-	const TZ_LONG                   = 3;
+	const TZ_LONG = 3;
 
 	/**
 	 * ADT
 	 */
-	const TZ_DST_SHORT              = 4;
+	const TZ_DST_SHORT = 4;
 
 	/**
 	 * Alias for {@link SwatDate::TZ_DST_SHORT}
 	 *
 	 * @deprecated
 	 */
-	const TZ_DST_LONG               = 5;
+	const TZ_DST_LONG = 5;
 
 	/**
 	 * AST/ADT
 	 */
-	const TZ_COMBINED               = 6;
+	const TZ_COMBINED = 6;
 
 	/**
 	 * AST or ADT, depending on whether or not the date is in daylight time
 	 */
-	const TZ_CURRENT_SHORT          = 7;
+	const TZ_CURRENT_SHORT = 7;
 
 	/**
 	 * Alias for {@link SwatDate::TZ_CURRENT_SHORT}
 	 *
 	 * @deprecated
 	 */
-	const TZ_CURRENT_LONG           = 8;
+	const TZ_CURRENT_LONG = 8;
 
 	// }}}
 	// {{{ date format constants
@@ -68,52 +68,52 @@ class SwatDate extends DateTime implements Serializable
 	/**
 	 * 07/02/02
 	 */
-	const DF_MDY                    = 1;
+	const DF_MDY = 1;
 
 	/**
 	 * 070202
 	 */
-	const DF_MDY_SHORT              = 2;
+	const DF_MDY_SHORT = 2;
 
 	/**
 	 * July 2, 2002
 	 */
-	const DF_DATE                   = 3;
+	const DF_DATE = 3;
 
 	/**
 	 * Tuesday, July 2, 2002
 	 */
-	const DF_DATE_LONG              = 4;
+	const DF_DATE_LONG = 4;
 
 	/**
 	 * July 2, 2002 10:09 am
 	 */
-	const DF_DATE_TIME              = 5;
+	const DF_DATE_TIME = 5;
 
 	/**
 	 * Tuesday, July 2, 2002 10:09 am
 	 */
-	const DF_DATE_TIME_LONG         = 6;
+	const DF_DATE_TIME_LONG = 6;
 
 	/**
 	 * 10:09 am
 	 */
-	const DF_TIME                   = 7;
+	const DF_TIME = 7;
 
 	/**
 	 * Aug 5, 2002
 	 */
-	const DF_DATE_SHORT             = 8;
+	const DF_DATE_SHORT = 8;
 
 	/**
 	 * Aug 5
 	 */
-	const DF_DATE_SHORT_NOYEAR      = 9;
+	const DF_DATE_SHORT_NOYEAR = 9;
 
 	/**
 	 * Aug 5, 2002 10:09 am
 	 */
-	const DF_DATE_TIME_SHORT        = 10;
+	const DF_DATE_TIME_SHORT = 10;
 
 	/**
 	 * Aug 5, 10:09 am
@@ -123,32 +123,32 @@ class SwatDate extends DateTime implements Serializable
 	/**
 	 * August 2002
 	 */
-	const DF_MY                     = 12;
+	const DF_MY = 12;
 
 	/**
 	 * 08 / 2002
 	 */
-	const DF_CC_MY                  = 13;
+	const DF_CC_MY = 13;
 
 	/**
 	 * 2002
 	 */
-	const DF_Y                      = 14;
+	const DF_Y = 14;
 
 	/**
 	 * 20020822T180526Z
 	 */
-	const DF_ISO_8601_BASIC         = 15;
+	const DF_ISO_8601_BASIC = 15;
 
 	/**
 	 * 2002-08-22T18:05:26Z
 	 */
-	const DF_ISO_8601_EXTENDED      = 16;
+	const DF_ISO_8601_EXTENDED = 16;
 
 	/**
 	 * Thu, 22 Aug 2002 18:05:26 Z
 	 */
-	const DF_RFC_2822               = 17;
+	const DF_RFC_2822 = 17;
 
 	// }}}
 	// {{{ ISO 8601 option constants
@@ -158,14 +158,14 @@ class SwatDate extends DateTime implements Serializable
 	 *
 	 * @see SwatDate::getISO8601()
 	 */
-	const ISO_BASIC     = 0;
+	const ISO_BASIC = 0;
 
 	/**
 	 * Include '-' and ':' separator characters.
 	 *
 	 * @see SwatDate::getISO8601()
 	 */
-	const ISO_EXTENDED  = 1;
+	const ISO_EXTENDED = 1;
 
 	/**
 	 * Include microseconds.
@@ -193,144 +193,144 @@ class SwatDate extends DateTime implements Serializable
 	 *
 	 * @see SwatString::getHumanReadableTimePeriodParts()
 	 */
-	const DI_YEARS   = 1;
-	const DI_MONTHS  = 2;
-	const DI_WEEKS   = 4;
-	const DI_DAYS    = 8;
-	const DI_HOURS   = 16;
+	const DI_YEARS = 1;
+	const DI_MONTHS = 2;
+	const DI_WEEKS = 4;
+	const DI_DAYS = 8;
+	const DI_HOURS = 16;
 	const DI_MINUTES = 32;
 	const DI_SECONDS = 64;
 
 	// }}}
 	// {{{ protected properties
 
-	static protected $tz_abbreviations = null;
-	static protected $valid_tz_abbreviations = array(
-		'acdt'  => true,
-		'acst'  => true,
-		'act'   => true,
-		'adt'   => true,
-		'aedt'  => true,
-		'aest'  => true,
-		'aft'   => true,
-		'akdt'  => true,
-		'akst'  => true,
-		'amst'  => true,
-		'amt'   => true,
-		'art'   => true,
-		'ast'   => true,
-		'ast'   => true,
-		'ast'   => true,
-		'ast'   => true,
-		'awdt'  => true,
-		'awst'  => true,
+	protected static $tz_abbreviations = null;
+	protected static $valid_tz_abbreviations = array(
+		'acdt' => true,
+		'acst' => true,
+		'act' => true,
+		'adt' => true,
+		'aedt' => true,
+		'aest' => true,
+		'aft' => true,
+		'akdt' => true,
+		'akst' => true,
+		'amst' => true,
+		'amt' => true,
+		'art' => true,
+		'ast' => true,
+		'ast' => true,
+		'ast' => true,
+		'ast' => true,
+		'awdt' => true,
+		'awst' => true,
 		'azost' => true,
-		'azt'   => true,
-		'bdt'   => true,
-		'biot'  => true,
-		'bit'   => true,
-		'bot'   => true,
-		'brt'   => true,
-		'bst'   => true,
-		'bst'   => true,
-		'btt'   => true,
-		'cat'   => true,
-		'cct'   => true,
-		'cdt'   => true,
-		'cedt'  => true,
-		'cest'  => true,
-		'cet'   => true,
+		'azt' => true,
+		'bdt' => true,
+		'biot' => true,
+		'bit' => true,
+		'bot' => true,
+		'brt' => true,
+		'bst' => true,
+		'bst' => true,
+		'btt' => true,
+		'cat' => true,
+		'cct' => true,
+		'cdt' => true,
+		'cedt' => true,
+		'cest' => true,
+		'cet' => true,
 		'chast' => true,
-		'cist'  => true,
-		'ckt'   => true,
-		'clst'  => true,
-		'clt'   => true,
-		'cost'  => true,
-		'cot'   => true,
-		'cst'   => true,
-		'cst'   => true,
-		'cvt'   => true,
-		'cxt'   => true,
-		'chst'  => true,
-		'dst'   => true,
-		'dft'   => true,
-		'east'  => true,
-		'eat'   => true,
-		'ect'   => true,
-		'ect'   => true,
-		'edt'   => true,
-		'eedt'  => true,
-		'eest'  => true,
-		'eet'   => true,
-		'est'   => true,
-		'fjt'   => true,
-		'fkst'  => true,
-		'fkt'   => true,
-		'galt'  => true,
-		'get'   => true,
-		'gft'   => true,
-		'gilt'  => true,
-		'git'   => true,
-		'gmt'   => true,
-		'gst'   => true,
-		'gyt'   => true,
-		'hadt'  => true,
-		'hast'  => true,
-		'hkt'   => true,
-		'hmt'   => true,
-		'hst'   => true,
-		'irkt'  => true,
-		'irst'  => true,
-		'ist'   => true,
-		'ist'   => true,
-		'ist'   => true,
-		'jst'   => true,
-		'krat'  => true,
-		'kst'   => true,
-		'lhst'  => true,
-		'lint'  => true,
-		'magt'  => true,
-		'mdt'   => true,
-		'mit'   => true,
-		'msd'   => true,
-		'msk'   => true,
-		'mst'   => true,
-		'mst'   => true,
-		'mst'   => true,
-		'mut'   => true,
-		'ndt'   => true,
-		'nft'   => true,
-		'npt'   => true,
-		'nst'   => true,
-		'nt'    => true,
-		'omst'  => true,
-		'pdt'   => true,
-		'pett'  => true,
-		'phot'  => true,
-		'pkt'   => true,
-		'pst'   => true,
-		'pst'   => true,
-		'ret'   => true,
-		'samt'  => true,
-		'sast'  => true,
-		'sbt'   => true,
-		'sct'   => true,
-		'slt'   => true,
-		'sst'   => true,
-		'sst'   => true,
-		'taht'  => true,
-		'tha'   => true,
-		'utc'   => true,
-		'uyst'  => true,
-		'uyt'   => true,
-		'vet'   => true,
-		'vlat'  => true,
-		'wat'   => true,
-		'wedt'  => true,
-		'west'  => true,
-		'wet'   => true,
-		'yakt'  => true,
-		'yekt'  => true,
+		'cist' => true,
+		'ckt' => true,
+		'clst' => true,
+		'clt' => true,
+		'cost' => true,
+		'cot' => true,
+		'cst' => true,
+		'cst' => true,
+		'cvt' => true,
+		'cxt' => true,
+		'chst' => true,
+		'dst' => true,
+		'dft' => true,
+		'east' => true,
+		'eat' => true,
+		'ect' => true,
+		'ect' => true,
+		'edt' => true,
+		'eedt' => true,
+		'eest' => true,
+		'eet' => true,
+		'est' => true,
+		'fjt' => true,
+		'fkst' => true,
+		'fkt' => true,
+		'galt' => true,
+		'get' => true,
+		'gft' => true,
+		'gilt' => true,
+		'git' => true,
+		'gmt' => true,
+		'gst' => true,
+		'gyt' => true,
+		'hadt' => true,
+		'hast' => true,
+		'hkt' => true,
+		'hmt' => true,
+		'hst' => true,
+		'irkt' => true,
+		'irst' => true,
+		'ist' => true,
+		'ist' => true,
+		'ist' => true,
+		'jst' => true,
+		'krat' => true,
+		'kst' => true,
+		'lhst' => true,
+		'lint' => true,
+		'magt' => true,
+		'mdt' => true,
+		'mit' => true,
+		'msd' => true,
+		'msk' => true,
+		'mst' => true,
+		'mst' => true,
+		'mst' => true,
+		'mut' => true,
+		'ndt' => true,
+		'nft' => true,
+		'npt' => true,
+		'nst' => true,
+		'nt' => true,
+		'omst' => true,
+		'pdt' => true,
+		'pett' => true,
+		'phot' => true,
+		'pkt' => true,
+		'pst' => true,
+		'pst' => true,
+		'ret' => true,
+		'samt' => true,
+		'sast' => true,
+		'sbt' => true,
+		'sct' => true,
+		'slt' => true,
+		'sst' => true,
+		'sst' => true,
+		'taht' => true,
+		'tha' => true,
+		'utc' => true,
+		'uyst' => true,
+		'uyt' => true,
+		'vet' => true,
+		'vlat' => true,
+		'wat' => true,
+		'wedt' => true,
+		'west' => true,
+		'wet' => true,
+		'yakt' => true,
+		'yekt' => true
 	);
 
 	// }}}
@@ -357,7 +357,7 @@ class SwatDate extends DateTime implements Serializable
 		$out = parent::format($format);
 
 		if ($tz_format !== null) {
-			$out.= ' '.$this->formatTZ($tz_format);
+			$out .= ' ' . $this->formatTZ($tz_format);
 		}
 
 		return $out;
@@ -397,7 +397,7 @@ class SwatDate extends DateTime implements Serializable
 		$out = strftime($format, $timestamp);
 
 		if ($tz_format !== null) {
-			$out.= ' '.$this->formatTZ($tz_format);
+			$out .= ' ' . $this->formatTZ($tz_format);
 		}
 
 		if ($locale != '') {
@@ -423,11 +423,8 @@ class SwatDate extends DateTime implements Serializable
 	 *
 	 * @return string the formatted date according to the current locale.
 	 */
-	public function formatLikeIntl(
-		$format,
-		$tz_format = null,
-		$locale = null
-	) {
+	public function formatLikeIntl($format, $tz_format = null, $locale = null)
+	{
 		if (is_int($format)) {
 			$format = self::getFormatLikeIntlById($format);
 		}
@@ -442,7 +439,8 @@ class SwatDate extends DateTime implements Serializable
 			$formatters[$locale] = new IntlDateFormatter(
 				$locale,
 				IntlDateFormatter::FULL,
-				IntlDateFormatter::FULL);
+				IntlDateFormatter::FULL
+			);
 		}
 
 		$formatter = $formatters[$locale];
@@ -453,7 +451,7 @@ class SwatDate extends DateTime implements Serializable
 		$out = $formatter->format($timestamp);
 
 		if ($tz_format !== null) {
-			$out.= ' '.$this->formatTZ($tz_format);
+			$out .= ' ' . $this->formatTZ($tz_format);
 		}
 
 		return $out;
@@ -474,52 +472,54 @@ class SwatDate extends DateTime implements Serializable
 		$out = '';
 
 		switch ($format) {
-		case self::TZ_ID:
-			$out = $this->format('e');
-			break;
+			case self::TZ_ID:
+				$out = $this->format('e');
+				break;
 
-		case self::TZ_SHORT:
-		case self::TZ_LONG:
-			$id = $this->format('e');
-			$abbreviations = self::getTimeZoneAbbreviations();
-			if (isset($abbreviations[$id]) &&
-				isset($abbreviations[$id]['st'])) {
-				$out = $abbreviations[$id]['st'];
-			}
-			break;
-
-		case self::TZ_DST_SHORT:
-		case self::TZ_DST_LONG:
-			$id = $this->format('e');
-			$abbreviations = self::getTimeZoneAbbreviations();
-			if (isset($abbreviations[$id])) {
-				if (isset($abbreviations[$id]['dt'])) {
-					$out = $abbreviations[$id]['dt'];
-				} else {
+			case self::TZ_SHORT:
+			case self::TZ_LONG:
+				$id = $this->format('e');
+				$abbreviations = self::getTimeZoneAbbreviations();
+				if (
+					isset($abbreviations[$id]) &&
+					isset($abbreviations[$id]['st'])
+				) {
 					$out = $abbreviations[$id]['st'];
 				}
-			}
-			break;
+				break;
 
-		case self::TZ_CURRENT_SHORT:
-		case self::TZ_CURRENT_LONG:
-			$out = $this->format('T');
-			break;
+			case self::TZ_DST_SHORT:
+			case self::TZ_DST_LONG:
+				$id = $this->format('e');
+				$abbreviations = self::getTimeZoneAbbreviations();
+				if (isset($abbreviations[$id])) {
+					if (isset($abbreviations[$id]['dt'])) {
+						$out = $abbreviations[$id]['dt'];
+					} else {
+						$out = $abbreviations[$id]['st'];
+					}
+				}
+				break;
 
-		case self::TZ_COMBINED:
-			$out = array();
-			$id = $this->format('e');
-			$abbreviations = self::getTimeZoneAbbreviations();
-			if (isset($abbreviations[$id])) {
-				if (isset($abbreviations[$id]['st'])) {
-					$out[] = $abbreviations[$id]['st'];
+			case self::TZ_CURRENT_SHORT:
+			case self::TZ_CURRENT_LONG:
+				$out = $this->format('T');
+				break;
+
+			case self::TZ_COMBINED:
+				$out = array();
+				$id = $this->format('e');
+				$abbreviations = self::getTimeZoneAbbreviations();
+				if (isset($abbreviations[$id])) {
+					if (isset($abbreviations[$id]['st'])) {
+						$out[] = $abbreviations[$id]['st'];
+					}
+					if (isset($abbreviations[$id]['dt'])) {
+						$out[] = $abbreviations[$id]['dt'];
+					}
 				}
-				if (isset($abbreviations[$id]['dt'])) {
-					$out[] = $abbreviations[$id]['dt'];
-				}
-			}
-			$out = implode('/', $out);
-			break;
+				$out = implode('/', $out);
+				break;
 		}
 
 		return $out;
@@ -650,42 +650,42 @@ class SwatDate extends DateTime implements Serializable
 		// format codes are _not_ wrapped in gettext calls.
 
 		switch ($id) {
-		case self::DF_MDY:
-			return 'm/d/y';
-		case self::DF_MDY_SHORT:
-			return 'mdy';
-		case self::DF_DATE:
-			return 'F j, Y';
-		case self::DF_DATE_LONG:
-			return 'l, F j, Y';
-		case self::DF_DATE_TIME:
-			return 'F j, Y g:i a';
-		case self::DF_DATE_TIME_LONG:
-			return 'l, F j, Y g:i a';
-		case self::DF_TIME:
-			return 'g:i a';
-		case self::DF_DATE_SHORT:
-			return 'M j, Y';
-		case self::DF_DATE_SHORT_NOYEAR:
-			return 'M j';
-		case self::DF_DATE_TIME_SHORT:
-			return 'M j, Y g:i a';
-		case self::DF_DATE_TIME_SHORT_NOYEAR:
-			return 'M j, g:i a';
-		case self::DF_MY:
-			return 'F Y';
-		case self::DF_CC_MY:
-			return 'm / Y';
-		case self::DF_Y:
-			return 'Y';
-		case self::DF_ISO_8601_BASIC:
-			return 'Ymd\THis';
-		case self::DF_ISO_8601_EXTENDED:
-			return 'Y-m-d\TH:i:s';
-		case self::DF_RFC_2822:
-			return 'r';
-		default:
-			throw new Exception("Unknown date format id '$id'.");
+			case self::DF_MDY:
+				return 'm/d/y';
+			case self::DF_MDY_SHORT:
+				return 'mdy';
+			case self::DF_DATE:
+				return 'F j, Y';
+			case self::DF_DATE_LONG:
+				return 'l, F j, Y';
+			case self::DF_DATE_TIME:
+				return 'F j, Y g:i a';
+			case self::DF_DATE_TIME_LONG:
+				return 'l, F j, Y g:i a';
+			case self::DF_TIME:
+				return 'g:i a';
+			case self::DF_DATE_SHORT:
+				return 'M j, Y';
+			case self::DF_DATE_SHORT_NOYEAR:
+				return 'M j';
+			case self::DF_DATE_TIME_SHORT:
+				return 'M j, Y g:i a';
+			case self::DF_DATE_TIME_SHORT_NOYEAR:
+				return 'M j, g:i a';
+			case self::DF_MY:
+				return 'F Y';
+			case self::DF_CC_MY:
+				return 'm / Y';
+			case self::DF_Y:
+				return 'Y';
+			case self::DF_ISO_8601_BASIC:
+				return 'Ymd\THis';
+			case self::DF_ISO_8601_EXTENDED:
+				return 'Y-m-d\TH:i:s';
+			case self::DF_RFC_2822:
+				return 'r';
+			default:
+				throw new Exception("Unknown date format id '$id'.");
 		}
 	}
 
@@ -704,42 +704,42 @@ class SwatDate extends DateTime implements Serializable
 	public static function getFormatLikeStrftimeById($id)
 	{
 		switch ($id) {
-		case self::DF_MDY:
-			return Swat::_('%m/%d/%y');
-		case self::DF_MDY_SHORT:
-			return Swat::_('%m%d%y');
-		case self::DF_DATE:
-			return Swat::_('%B %e, %Y');
-		case self::DF_DATE_LONG:
-			return Swat::_('%A, %B %e, %Y');
-		case self::DF_DATE_TIME:
-			return Swat::_('%B %e, %Y %i:%M %p');
-		case self::DF_DATE_TIME_LONG:
-			return Swat::_('%A, %B %e, %Y %i:%M %p');
-		case self::DF_TIME:
-			return Swat::_('%i:%M %p');
-		case self::DF_DATE_SHORT:
-			return Swat::_('%b %e %Y');
-		case self::DF_DATE_SHORT_NOYEAR:
-			return Swat::_('%b %e');
-		case self::DF_DATE_TIME_SHORT:
-			return Swat::_('%b %e, %Y %i:%M %p');
-		case self::DF_DATE_TIME_SHORT_NOYEAR:
-			return Swat::_('%b %e, %i:%M %p');
-		case self::DF_MY:
-			return Swat::_('%B %Y');
-		case self::DF_CC_MY:
-			return Swat::_('%m / %Y');
-		case self::DF_Y:
-			return Swat::_('%Y');
-		case self::DF_ISO_8601_BASIC:
-			return Swat::_('%Y%m%dT%H%M%S');
-		case self::DF_ISO_8601_EXTENDED:
-			return Swat::_('%Y-%m-%dT%H:%M:%S');
-		case self::DF_RFC_2822:
-			return Swat::_('%a, %d %b %Y %T');
-		default:
-			throw new Exception("Unknown date format id '$id'.");
+			case self::DF_MDY:
+				return Swat::_('%m/%d/%y');
+			case self::DF_MDY_SHORT:
+				return Swat::_('%m%d%y');
+			case self::DF_DATE:
+				return Swat::_('%B %e, %Y');
+			case self::DF_DATE_LONG:
+				return Swat::_('%A, %B %e, %Y');
+			case self::DF_DATE_TIME:
+				return Swat::_('%B %e, %Y %i:%M %p');
+			case self::DF_DATE_TIME_LONG:
+				return Swat::_('%A, %B %e, %Y %i:%M %p');
+			case self::DF_TIME:
+				return Swat::_('%i:%M %p');
+			case self::DF_DATE_SHORT:
+				return Swat::_('%b %e %Y');
+			case self::DF_DATE_SHORT_NOYEAR:
+				return Swat::_('%b %e');
+			case self::DF_DATE_TIME_SHORT:
+				return Swat::_('%b %e, %Y %i:%M %p');
+			case self::DF_DATE_TIME_SHORT_NOYEAR:
+				return Swat::_('%b %e, %i:%M %p');
+			case self::DF_MY:
+				return Swat::_('%B %Y');
+			case self::DF_CC_MY:
+				return Swat::_('%m / %Y');
+			case self::DF_Y:
+				return Swat::_('%Y');
+			case self::DF_ISO_8601_BASIC:
+				return Swat::_('%Y%m%dT%H%M%S');
+			case self::DF_ISO_8601_EXTENDED:
+				return Swat::_('%Y-%m-%dT%H:%M:%S');
+			case self::DF_RFC_2822:
+				return Swat::_('%a, %d %b %Y %T');
+			default:
+				throw new Exception("Unknown date format id '$id'.");
 		}
 	}
 
@@ -758,42 +758,42 @@ class SwatDate extends DateTime implements Serializable
 	public static function getFormatLikeIntlById($id)
 	{
 		switch ($id) {
-		case self::DF_MDY:
-			return Swat::_('MM/dd/yy');
-		case self::DF_MDY_SHORT:
-			return Swat::_('MMddyy');
-		case self::DF_DATE:
-			return Swat::_('MMMM d, yyyy');
-		case self::DF_DATE_LONG:
-			return Swat::_('EEEE, MMMM d, yyyy');
-		case self::DF_DATE_TIME:
-			return Swat::_('MMMM d, yyyy h:mm a');
-		case self::DF_DATE_TIME_LONG:
-			return Swat::_('EEEE, MMMM d, yyyy h:mm a');
-		case self::DF_TIME:
-			return Swat::_('h:mm a');
-		case self::DF_DATE_SHORT:
-			return Swat::_('MMM d yyyy');
-		case self::DF_DATE_SHORT_NOYEAR:
-			return Swat::_('MMM d');
-		case self::DF_DATE_TIME_SHORT:
-			return Swat::_('MMM d, yyyy h:mm a');
-		case self::DF_DATE_TIME_SHORT_NOYEAR:
-			return Swat::_('MMM d, h:mm a');
-		case self::DF_MY:
-			return Swat::_('MMMM yyyy');
-		case self::DF_CC_MY:
-			return Swat::_('MM / yyyy');
-		case self::DF_Y:
-			return Swat::_('yyyy');
-		case self::DF_ISO_8601_BASIC:
-			return Swat::_('yyyyMMdd\'T\'HHmmss');
-		case self::DF_ISO_8601_EXTENDED:
-			return Swat::_('yyyy-MM-dd\'T\'HH:mm:ss');
-		case self::DF_RFC_2822:
-			return Swat::_('EEE, dd MMM yyyy HH:mm:ss');
-		default:
-			throw new Exception("Unknown date format id '$id'.");
+			case self::DF_MDY:
+				return Swat::_('MM/dd/yy');
+			case self::DF_MDY_SHORT:
+				return Swat::_('MMddyy');
+			case self::DF_DATE:
+				return Swat::_('MMMM d, yyyy');
+			case self::DF_DATE_LONG:
+				return Swat::_('EEEE, MMMM d, yyyy');
+			case self::DF_DATE_TIME:
+				return Swat::_('MMMM d, yyyy h:mm a');
+			case self::DF_DATE_TIME_LONG:
+				return Swat::_('EEEE, MMMM d, yyyy h:mm a');
+			case self::DF_TIME:
+				return Swat::_('h:mm a');
+			case self::DF_DATE_SHORT:
+				return Swat::_('MMM d yyyy');
+			case self::DF_DATE_SHORT_NOYEAR:
+				return Swat::_('MMM d');
+			case self::DF_DATE_TIME_SHORT:
+				return Swat::_('MMM d, yyyy h:mm a');
+			case self::DF_DATE_TIME_SHORT_NOYEAR:
+				return Swat::_('MMM d, h:mm a');
+			case self::DF_MY:
+				return Swat::_('MMMM yyyy');
+			case self::DF_CC_MY:
+				return Swat::_('MM / yyyy');
+			case self::DF_Y:
+				return Swat::_('yyyy');
+			case self::DF_ISO_8601_BASIC:
+				return Swat::_('yyyyMMdd\'T\'HHmmss');
+			case self::DF_ISO_8601_EXTENDED:
+				return Swat::_('yyyy-MM-dd\'T\'HH:mm:ss');
+			case self::DF_RFC_2822:
+				return Swat::_('EEE, dd MMM yyyy HH:mm:ss');
+			default:
+				throw new Exception("Unknown date format id '$id'.");
 		}
 	}
 
@@ -817,12 +817,10 @@ class SwatDate extends DateTime implements Serializable
 		static $shortnames = null;
 
 		if (self::$tz_abbreviations === null) {
-
 			self::$tz_abbreviations = array();
 
 			$abbreviations = DateTimeZone::listAbbreviations();
 			foreach ($abbreviations as $abbreviation => $time_zones) {
-
 				if (isset(self::$valid_tz_abbreviations[$abbreviation])) {
 					foreach ($time_zones as $tz) {
 						$tz_id = $tz['timezone_id'];
@@ -831,14 +829,14 @@ class SwatDate extends DateTime implements Serializable
 						}
 
 						// daylight-time or standard-time
-						$key = ($tz['dst']) ? 'dt' : 'st';
+						$key = $tz['dst'] ? 'dt' : 'st';
 						if (!isset(self::$tz_abbreviations[$tz_id][$key])) {
-							self::$tz_abbreviations[$tz_id][$key] =
-								mb_strtoupper($abbreviation);
+							self::$tz_abbreviations[$tz_id][
+								$key
+							] = mb_strtoupper($abbreviation);
 						}
 					}
 				}
-
 			}
 		}
 
@@ -890,8 +888,8 @@ class SwatDate extends DateTime implements Serializable
 		// signed integer range. Float compaison should be safe here as the
 		// number are within the double-precision offered by floats and can
 		// be represented exactly.
-		$seconds1 = (float)$date1->format('U');
-		$seconds2 = (float)$date2->format('U');
+		$seconds1 = (float) $date1->format('U');
+		$seconds2 = (float) $date2->format('U');
 
 		if ($seconds1 > $seconds2) {
 			return 1;
@@ -936,37 +934,37 @@ class SwatDate extends DateTime implements Serializable
 		if ($seconds > $year) {
 			$years = floor($seconds / $year);
 			$seconds -= $year * $years;
-			$interval_spec.= $years.'Y';
+			$interval_spec .= $years . 'Y';
 		}
 
 		if ($seconds > $month) {
 			$months = floor($seconds / $month);
 			$seconds -= $month * $months;
-			$interval_spec.= $months.'M';
+			$interval_spec .= $months . 'M';
 		}
 
 		if ($seconds > $day) {
 			$days = floor($seconds / $day);
 			$seconds -= $day * $days;
-			$interval_spec.= $days.'D';
+			$interval_spec .= $days . 'D';
 		}
 
 		if ($seconds > 0 || $interval_spec === 'P') {
-			$interval_spec.= 'T';
+			$interval_spec .= 'T';
 
 			if ($seconds > $hour) {
 				$hours = floor($seconds / $hour);
 				$seconds -= $hour * $hours;
-				$interval_spec.= $hours.'H';
+				$interval_spec .= $hours . 'H';
 			}
 
 			if ($seconds > $minute) {
 				$minutes = floor($seconds / $minute);
 				$seconds -= $minute * $minutes;
-				$interval_spec.= $minutes.'M';
+				$interval_spec .= $minutes . 'M';
 			}
 
-			$interval_spec.= $seconds.'S';
+			$interval_spec .= $seconds . 'S';
 		}
 
 		return new DateInterval($interval_spec);
@@ -984,7 +982,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function getYear()
 	{
-		return (integer)$this->format('Y');
+		return (int) $this->format('Y');
 	}
 
 	// }}}
@@ -999,7 +997,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function getMonth()
 	{
-		return (integer)$this->format('n');
+		return (int) $this->format('n');
 	}
 
 	// }}}
@@ -1014,7 +1012,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function getDay()
 	{
-		return (integer)$this->format('j');
+		return (int) $this->format('j');
 	}
 
 	// }}}
@@ -1029,7 +1027,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function getHour()
 	{
-		return (integer)ltrim($this->format('H'), '0');
+		return (int) ltrim($this->format('H'), '0');
 	}
 
 	// }}}
@@ -1044,7 +1042,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function getMinute()
 	{
-		return (integer)ltrim($this->format('i'), '0');
+		return (int) ltrim($this->format('i'), '0');
 	}
 
 	// }}}
@@ -1059,7 +1057,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function getSecond()
 	{
-		return (integer)ltrim($this->format('s'), '0');
+		return (int) ltrim($this->format('s'), '0');
 	}
 
 	// }}}
@@ -1091,13 +1089,13 @@ class SwatDate extends DateTime implements Serializable
 		}
 
 		if (($options & self::ISO_MICROTIME) === self::ISO_MICROTIME) {
-			$format.= '.SSSS';
+			$format .= '.SSSS';
 		}
 
 		$date = $this->format($format);
 
 		if (($options & self::ISO_TIME_ZONE) === self::ISO_TIME_ZONE) {
-			$date.= $this->getFormattedOffsetById($format);
+			$date .= $this->getFormattedOffsetById($format);
 		}
 
 		return $date;
@@ -1131,28 +1129,28 @@ class SwatDate extends DateTime implements Serializable
 	public function getFormattedOffsetById($id)
 	{
 		switch ($id) {
-		case self::DF_ISO_8601_BASIC:
-		case self::DF_ISO_8601_EXTENDED:
-		case self::DF_RFC_2822:
-			$offset = $this->getOffset();
-			$offset = floor($offset / 60); // minutes
+			case self::DF_ISO_8601_BASIC:
+			case self::DF_ISO_8601_EXTENDED:
+			case self::DF_RFC_2822:
+				$offset = $this->getOffset();
+				$offset = floor($offset / 60); // minutes
 
-			if ($offset == 0) {
-				$offset = 'Z';
-			} else {
-				$offset_hours   = floor($offset / 60);
-				$offset_minutes = abs($offset % 60);
+				if ($offset == 0) {
+					$offset = 'Z';
+				} else {
+					$offset_hours = floor($offset / 60);
+					$offset_minutes = abs($offset % 60);
 
-				$offset = sprintf(
-					'%+03.0d:%02.0d',
-					$offset_hours,
-					$offset_minutes
-				);
-			}
+					$offset = sprintf(
+						'%+03.0d:%02.0d',
+						$offset_hours,
+						$offset_minutes
+					);
+				}
 
-			return $offset;
-		default:
-			throw new Exception("Unknown offset format for id '$id'.");
+				return $offset;
+			default:
+				throw new Exception("Unknown offset format for id '$id'.");
 		}
 	}
 
@@ -1168,7 +1166,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function getDaysInMonth()
 	{
-		return (integer)$this->format('t');
+		return (int) $this->format('t');
 	}
 
 	// }}}
@@ -1184,7 +1182,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function getDayOfWeek()
 	{
-		return (integer)$this->format('w');
+		return (int) $this->format('w');
 	}
 
 	// }}}
@@ -1199,7 +1197,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function getDayOfYear()
 	{
-		$day = (integer)$this->format('z');
+		$day = (int) $this->format('z');
 		return $day + 1; // the "z" format starts at 0
 	}
 
@@ -1395,8 +1393,8 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function addYears($years)
 	{
-		$years = (integer)$years;
-		$interval = new DateInterval('P'.abs($years).'Y');
+		$years = (int) $years;
+		$interval = new DateInterval('P' . abs($years) . 'Y');
 
 		if ($years < 0) {
 			$interval->invert = 1;
@@ -1417,7 +1415,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function subtractYears($years)
 	{
-		$years = (integer)$years;
+		$years = (int) $years;
 		$years = -$years;
 		return $this->addYears($years);
 	}
@@ -1434,8 +1432,8 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function addMonths($months)
 	{
-		$months = (integer)$months;
-		$interval = new DateInterval('P'.abs($months).'M');
+		$months = (int) $months;
+		$interval = new DateInterval('P' . abs($months) . 'M');
 
 		if ($months < 0) {
 			$interval->invert = 1;
@@ -1456,7 +1454,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function subtractMonths($months)
 	{
-		$months = (integer)$months;
+		$months = (int) $months;
 		$months = -$months;
 		return $this->addMonths($months);
 	}
@@ -1473,8 +1471,8 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function addDays($days)
 	{
-		$days = (integer)$days;
-		$interval = new DateInterval('P'.abs($days).'D');
+		$days = (int) $days;
+		$interval = new DateInterval('P' . abs($days) . 'D');
 
 		if ($days < 0) {
 			$interval->invert = 1;
@@ -1495,7 +1493,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function subtractDays($days)
 	{
-		$days = (integer)$days;
+		$days = (int) $days;
 		$days = -$days;
 		return $this->addDays($days);
 	}
@@ -1512,8 +1510,8 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function addHours($hours)
 	{
-		$hours = (integer)$hours;
-		$interval = new DateInterval('PT'.abs($hours).'H');
+		$hours = (int) $hours;
+		$interval = new DateInterval('PT' . abs($hours) . 'H');
 
 		if ($hours < 0) {
 			$interval->invert = 1;
@@ -1534,7 +1532,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function subtractHours($hours)
 	{
-		$hours = (integer)$hours;
+		$hours = (int) $hours;
 		$hours = -$hours;
 		return $this->addHours($hours);
 	}
@@ -1551,8 +1549,8 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function addMinutes($minutes)
 	{
-		$minutes = (integer)$minutes;
-		$interval = new DateInterval('PT'.abs($minutes).'M');
+		$minutes = (int) $minutes;
+		$interval = new DateInterval('PT' . abs($minutes) . 'M');
 
 		if ($minutes < 0) {
 			$interval->invert = 1;
@@ -1573,7 +1571,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function subtractMinutes($minutes)
 	{
-		$minutes = (integer)$minutes;
+		$minutes = (int) $minutes;
 		$minutes = -$minutes;
 		return $this->addMinutes($minutes);
 	}
@@ -1590,8 +1588,8 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function addSeconds($seconds)
 	{
-		$seconds = (float)$seconds;
-		$interval = new DateInterval('PT'.abs($seconds).'S');
+		$seconds = (float) $seconds;
+		$interval = new DateInterval('PT' . abs($seconds) . 'S');
 
 		if ($seconds < 0) {
 			$interval->invert = 1;
@@ -1612,7 +1610,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function subtractSeconds($seconds)
 	{
-		$seconds = (float)$seconds;
+		$seconds = (float) $seconds;
 		$seconds = -$seconds;
 		return $this->addSeconds($seconds);
 	}
@@ -1659,11 +1657,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function setYear($year)
 	{
-		return $this->setDate(
-			$year,
-			$this->getMonth(),
-			$this->getDay()
-		);
+		return $this->setDate($year, $this->getMonth(), $this->getDay());
 	}
 
 	// }}}
@@ -1683,11 +1677,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function setMonth($month)
 	{
-		return $this->setDate(
-			$this->getYear(),
-			$month,
-			$this->getDay()
-		);
+		return $this->setDate($this->getYear(), $month, $this->getDay());
 	}
 
 	// }}}
@@ -1706,11 +1696,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function setDay($day)
 	{
-		return $this->setDate(
-			$this->getYear(),
-			$this->getMonth(),
-			$day
-		);
+		return $this->setDate($this->getYear(), $this->getMonth(), $day);
 	}
 
 	// }}}
@@ -1729,11 +1715,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function setHour($hour)
 	{
-		return $this->setTime(
-			$hour,
-			$this->getMinute(),
-			$this->getSecond()
-		);
+		return $this->setTime($hour, $this->getMinute(), $this->getSecond());
 	}
 
 	// }}}
@@ -1753,11 +1735,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function setMinute($minute)
 	{
-		return $this->setTime(
-			$this->getHour(),
-			$minute,
-			$this->getSecond()
-		);
+		return $this->setTime($this->getHour(), $minute, $this->getSecond());
 	}
 
 	// }}}
@@ -1777,11 +1755,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function setSecond($second)
 	{
-		return $this->setTime(
-			$this->getHour(),
-			$this->getMinute(),
-			$second
-		);
+		return $this->setTime($this->getHour(), $this->getMinute(), $second);
 	}
 
 	// }}}
@@ -1799,7 +1773,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function before(DateTime $when)
 	{
-		return (self::compare($this, $when) == -1);
+		return self::compare($this, $when) == -1;
 	}
 
 	// }}}
@@ -1817,7 +1791,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function after(DateTime $when)
 	{
-		return (self::compare($this, $when) == 1);
+		return self::compare($this, $when) == 1;
 	}
 
 	// }}}
@@ -1835,7 +1809,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function equals(DateTime $when)
 	{
-		return (self::compare($this, $when) == 0);
+		return self::compare($this, $when) == 0;
 	}
 
 	// }}}
@@ -1861,27 +1835,23 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function addStrictMonths($months)
 	{
-		$months = (integer)$months;
+		$months = (int) $months;
 
-		$years  = (integer)($months / 12);
+		$years = (int) ($months / 12);
 		$months = $months % 12;
 
-		$year  = $this->getYear() + $years;
+		$year = $this->getYear() + $years;
 		$month = $this->getMonth() + $months;
 
 		if ($month < 1) {
-			$year  -= 1;
+			$year -= 1;
 			$month += 12;
 		} elseif ($month > 12) {
-			$year  += 1;
+			$year += 1;
 			$month -= 12;
 		}
 
-		$success = $this->setDate(
-			$year,
-			$month,
-			$this->getDay()
-		);
+		$success = $this->setDate($year, $month, $this->getDay());
 
 		if (!$success) {
 			throw new Exception(
@@ -1934,10 +1904,7 @@ class SwatDate extends DateTime implements Serializable
 	 */
 	public function serialize()
 	{
-		$data = array(
-			$this->getTimestamp(),
-			$this->getTimeZone()->getName()
-		);
+		$data = array($this->getTimestamp(), $this->getTimeZone()->getName());
 
 		return serialize($data);
 	}
@@ -1958,7 +1925,7 @@ class SwatDate extends DateTime implements Serializable
 		// PHP bug #65151. DateTime objects that are created through
 		// unserialization are not properly initialized until __construct() is
 		// called.
-		$this->__construct('@'.$data[0]);
+		$this->__construct('@' . $data[0]);
 
 		// DateTime constructor with timestamp is always UTC so set time zone
 		$this->setTimezone(new DateTimeZone($data[1]));
@@ -1966,5 +1933,3 @@ class SwatDate extends DateTime implements Serializable
 
 	// }}}
 }
-
-?>

@@ -30,9 +30,9 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
 	 * @see SwatHtmlHeadEntrySet::addTypeMapping()
 	 */
 	protected $type_map = array(
-		'/\.js$/'  => 'SwatJavaScriptHtmlHeadEntry',
+		'/\.js$/' => 'SwatJavaScriptHtmlHeadEntry',
 		'/\.css$/' => 'SwatStyleSheetHtmlHeadEntry',
-		'/\.less$/' => 'SwatLessStyleSheetHtmlHeadEntry',
+		'/\.less$/' => 'SwatLessStyleSheetHtmlHeadEntry'
 	);
 
 	// }}}
@@ -66,8 +66,10 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
 
 			if ($class === null) {
 				throw new SwatClassNotFoundException(
-					'SwatHtmlHeadEntry class not found for entry string of "'.
-					$entry.'".');
+					'SwatHtmlHeadEntry class not found for entry string of "' .
+						$entry .
+						'".'
+				);
 			}
 
 			$entry = new $class($entry);
@@ -75,8 +77,11 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
 
 		if (!($entry instanceof SwatHtmlHeadEntry)) {
 			throw new SwatInvalidTypeException(
-				'Added entry must be either a string or an instance of a'.
-				'SwatHtmlHeadEntry.', 0, $entry);
+				'Added entry must be either a string or an instance of a' .
+					'SwatHtmlHeadEntry.',
+				0,
+				$entry
+			);
 		}
 
 		$uri = $entry->getUri();
@@ -146,20 +151,23 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
 		if (is_string($type)) {
 			if ($class === null) {
 				throw new InvalidArgumentException(
-					'If $type is specified, $class is required');
+					'If $type is specified, $class is required'
+				);
 			}
-			$type = array($type => (string)$class);
+			$type = array($type => (string) $class);
 			$class = null;
 		}
 
 		if (!is_array($type)) {
 			throw new InvalidArgumentException(
-				'Type must either be an array or a string.');
+				'Type must either be an array or a string.'
+			);
 		}
 
 		if ($class !== null) {
 			throw new InvalidArgumentException(
-				'If $type is an array, $class must not be specified.');
+				'If $type is an array, $class must not be specified.'
+			);
 		}
 
 		$this->type_map = array_merge($this->type_map, $type);
@@ -209,5 +217,3 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
 
 	// }}}
 }
-
-?>

@@ -23,15 +23,17 @@ class SwatReplicableFieldset extends SwatReplicableContainer
 	public function init()
 	{
 		$children = array();
-		foreach ($this->children as $child_widget)
+		foreach ($this->children as $child_widget) {
 			$children[] = $this->remove($child_widget);
+		}
 
 		$fieldset = new SwatFieldset();
 		$fieldset->id = $fieldset->getUniqueId();
 		$prototype_id = $fieldset->id;
 
-		foreach ($children as $child_widget)
+		foreach ($children as $child_widget) {
 			$fieldset->add($child_widget);
+		}
 
 		$this->add($fieldset);
 
@@ -45,5 +47,3 @@ class SwatReplicableFieldset extends SwatReplicableContainer
 
 	// }}}
 }
-
-?>

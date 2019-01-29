@@ -116,8 +116,9 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -132,11 +133,13 @@ class SwatFileEntry extends SwatInputControl
 
 		// note: the 'accept' attribute is part of the w3c standard, but
 		//       is ignored by most browsers
-		if ($this->accept_mime_types !== null)
+		if ($this->accept_mime_types !== null) {
 			$input_tag->accept = implode(',', $this->accept_mime_types);
+		}
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$input_tag->disabled = 'disabled';
+		}
 
 		$input_tag->display();
 
@@ -173,13 +176,14 @@ class SwatFileEntry extends SwatInputControl
 			if (!$this->hasValidMimeType()) {
 				$this->addMessage($this->getValidationMessage('mime-type'));
 			}
-		} else if ($_FILES[$this->id]['error'] === UPLOAD_ERR_NO_FILE) {
+		} elseif ($_FILES[$this->id]['error'] === UPLOAD_ERR_NO_FILE) {
 			if ($this->required) {
 				$this->addMessage($this->getValidationMessage('required'));
 			}
-		} else if ($_FILES[$this->id]['error'] === UPLOAD_ERR_INI_SIZE ||
-				   $_FILES[$this->id]['error'] === UPLOAD_ERR_FORM_SIZE) {
-
+		} elseif (
+			$_FILES[$this->id]['error'] === UPLOAD_ERR_INI_SIZE ||
+			$_FILES[$this->id]['error'] === UPLOAD_ERR_FORM_SIZE
+		) {
 			$this->addMessage($this->getValidationMessage('too-large'));
 		} else {
 			// There are other status codes we may want to check for in the
@@ -238,7 +242,7 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public function isUploaded()
 	{
-		return ($this->file !== null);
+		return $this->file !== null;
 	}
 
 	// }}}
@@ -254,7 +258,7 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public function getFileName()
 	{
-		return ($this->isUploaded()) ? $this->file['name'] : null;
+		return $this->isUploaded() ? $this->file['name'] : null;
 	}
 
 	// }}}
@@ -274,11 +278,13 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public function getUniqueFileName($path)
 	{
-		if (is_dir($path))
+		if (is_dir($path)) {
 			return $this->generateUniqueFileName($path);
-		else
-			throw new SwatException("Path '{$path}' is not a ".
-				'directory or does not exist.');
+		} else {
+			throw new SwatException(
+				"Path '{$path}' is not a " . 'directory or does not exist.'
+			);
+		}
 	}
 
 	// }}}
@@ -294,7 +300,7 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public function getTempFileName()
 	{
-		return ($this->isUploaded()) ? $this->file['tmp_name'] : null;
+		return $this->isUploaded() ? $this->file['tmp_name'] : null;
 	}
 
 	// }}}
@@ -308,7 +314,7 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public function getSize()
 	{
-		return ($this->isUploaded()) ? $this->file['size'] : null;
+		return $this->isUploaded() ? $this->file['size'] : null;
 	}
 
 	// }}}
@@ -325,7 +331,6 @@ class SwatFileEntry extends SwatInputControl
 		if ($this->isUploaded() && $this->mime_type === null) {
 			$temp_file_name = $this->getTempFileName();
 			if (file_exists($temp_file_name)) {
-
 				if (extension_loaded('fileinfo')) {
 					// Use the fileinfo extension if available.
 					$finfo = $this->getFinfo();
@@ -345,7 +350,6 @@ class SwatFileEntry extends SwatInputControl
 				if ($this->mime_type == '') {
 					$this->mime_type = 'application/octet-stream';
 				}
-
 			} else {
 				$this->mime_type = $this->file['type'];
 			}
@@ -373,18 +377,25 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public function saveFile($dst_dir, $dst_filename = null)
 	{
-		if (!$this->isUploaded())
+		if (!$this->isUploaded()) {
 			return false;
+		}
 
-		if ($dst_filename === null)
+		if ($dst_filename === null) {
 			$dst_filename = $this->getUniqueFileName($dst_dir);
+		}
 
-		if (is_dir($dst_dir))
-			return move_uploaded_file($this->file['tmp_name'],
-				$dst_dir.'/'.$dst_filename);
-		else
-			throw new SwatException("Destination of '{$dst_dir}' is not a ".
-				'directory or does not exist.');
+		if (is_dir($dst_dir)) {
+			return move_uploaded_file(
+				$this->file['tmp_name'],
+				$dst_dir . '/' . $dst_filename
+			);
+		} else {
+			throw new SwatException(
+				"Destination of '{$dst_dir}' is not a " .
+					'directory or does not exist.'
+			);
+		}
 	}
 
 	// }}}
@@ -402,7 +413,7 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public function getFocusableHtmlId()
 	{
-		return ($this->visible) ? $this->id : null;
+		return $this->visible ? $this->id : null;
 	}
 
 	// }}}
@@ -421,8 +432,10 @@ class SwatFileEntry extends SwatInputControl
 	 */
 	public static function getMaximumFileUploadSize()
 	{
-		return min(self::parseFileUploadSize(ini_get('post_max_size')),
-			self::parseFileUploadSize(ini_get('upload_max_filesize')));
+		return min(
+			self::parseFileUploadSize(ini_get('post_max_size')),
+			self::parseFileUploadSize(ini_get('upload_max_filesize'))
+		);
 	}
 
 	// }}}
@@ -440,65 +453,65 @@ class SwatFileEntry extends SwatInputControl
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
-		case 'mime-type':
-			$displayable_types = $this->getDisplayableTypes();
+			case 'mime-type':
+				$displayable_types = $this->getDisplayableTypes();
 
-			if ($this->show_field_title_in_messages) {
-				$text = sprintf(
-					Swat::ngettext(
-						'The %%s field must be of the following type: %s.',
-						'The %%s field must be of the following type(s): %s.',
-						count($displayable_types)
-					),
-					implode(', ', $displayable_types)
-				);
-			} else {
-				$text = sprintf(
-					Swat::ngettext(
-						'This field must be of the following type: %s.',
-						'This field must be of the following type(s): %s.',
-						count($displayable_types)
-					),
-					implode(', ', $displayable_types)
-				);
-			}
+				if ($this->show_field_title_in_messages) {
+					$text = sprintf(
+						Swat::ngettext(
+							'The %%s field must be of the following type: %s.',
+							'The %%s field must be of the following type(s): %s.',
+							count($displayable_types)
+						),
+						implode(', ', $displayable_types)
+					);
+				} else {
+					$text = sprintf(
+						Swat::ngettext(
+							'This field must be of the following type: %s.',
+							'This field must be of the following type(s): %s.',
+							count($displayable_types)
+						),
+						implode(', ', $displayable_types)
+					);
+				}
 
-			$message = new SwatMessage($text, 'error');
-			break;
+				$message = new SwatMessage($text, 'error');
+				break;
 
-		case 'too-large':
-			if ($this->show_field_title_in_messages) {
-				$text = Swat::_(
-					'The %s field exceeds the maximum allowable file size.'
-				);
-			} else {
-				$text = Swat::_(
-					'This field exceeds the maximum allowable file size.'
-				);
-			}
+			case 'too-large':
+				if ($this->show_field_title_in_messages) {
+					$text = Swat::_(
+						'The %s field exceeds the maximum allowable file size.'
+					);
+				} else {
+					$text = Swat::_(
+						'This field exceeds the maximum allowable file size.'
+					);
+				}
 
-			$message = new SwatMessage($text, 'error');
-			break;
+				$message = new SwatMessage($text, 'error');
+				break;
 
-		case 'upload-error':
-			if ($this->show_field_title_in_messages) {
-				$text = Swat::_(
-					'The %s field encounted an error when trying to upload '.
-					'the file. Please try again.'
-				);
-			} else {
-				$text = Swat::_(
-					'This field encounted an error when trying to upload the '.
-					'file. Please try again.'
-				);
-			}
+			case 'upload-error':
+				if ($this->show_field_title_in_messages) {
+					$text = Swat::_(
+						'The %s field encounted an error when trying to upload ' .
+							'the file. Please try again.'
+					);
+				} else {
+					$text = Swat::_(
+						'This field encounted an error when trying to upload the ' .
+							'file. Please try again.'
+					);
+				}
 
-			$message = new SwatMessage($text, 'error');
-			break;
+				$message = new SwatMessage($text, 'error');
+				break;
 
-		default:
-			$message = parent::getValidationMessage($id);
-			break;
+			default:
+				$message = parent::getValidationMessage($id);
+				break;
 		}
 
 		return $message;
@@ -546,12 +559,12 @@ class SwatFileEntry extends SwatInputControl
 			// If any of the contained types are valid, we consider the file
 			// valid.
 			$mime_types = explode(' ', $this->getMimeType());
-			if (is_array($this->accept_mime_types) &&
-				count($this->accept_mime_types) > 0) {
-
+			if (
+				is_array($this->accept_mime_types) &&
+				count($this->accept_mime_types) > 0
+			) {
 				$types = array_intersect($mime_types, $this->accept_mime_types);
-				$valid = (count($types) > 0);
-
+				$valid = count($types) > 0;
 			} else {
 				$valid = true;
 			}
@@ -565,8 +578,10 @@ class SwatFileEntry extends SwatInputControl
 
 	protected function getMaximumUploadSizeText()
 	{
-		return sprintf(Swat::_('Maximum file size %s.'),
-			SwatString::byteFormat(self::getMaximumFileUploadSize()));
+		return sprintf(
+			Swat::_('Maximum file size %s.'),
+			SwatString::byteFormat(self::getMaximumFileUploadSize())
+		);
 	}
 
 	// }}}
@@ -583,8 +598,9 @@ class SwatFileEntry extends SwatInputControl
 		// without returning the encoding. See
 		// http://us3.php.net/manual/en/fileinfo.constants.php for
 		// details.
-		$mime_constant = (defined('FILEINFO_MIME_TYPE')) ?
-			FILEINFO_MIME_TYPE : FILEINFO_MIME;
+		$mime_constant = defined('FILEINFO_MIME_TYPE')
+			? FILEINFO_MIME_TYPE
+			: FILEINFO_MIME;
 
 		return new finfo($mime_constant);
 	}
@@ -607,7 +623,7 @@ class SwatFileEntry extends SwatInputControl
 		$displayable_types = array();
 
 		foreach ($this->accept_mime_types as $mime_type) {
-			$displayable_type = (isset($this->human_file_types[$mime_type]))
+			$displayable_type = isset($this->human_file_types[$mime_type])
 				? $this->human_file_types[$mime_type]
 				: $mime_type;
 
@@ -628,17 +644,17 @@ class SwatFileEntry extends SwatInputControl
 			$base_name = $this->getFileName();
 		} else {
 			$parts = explode('.', $this->getFileName());
-			$extension = '.'.array_pop($parts);
+			$extension = '.' . array_pop($parts);
 			$base_name = basename($this->getFileName(), $extension);
 		}
 
 		if ($count > 0) {
-			$file_name = $base_name.$count.$extension;
+			$file_name = $base_name . $count . $extension;
 		} else {
-			$file_name = $base_name.$extension;
+			$file_name = $base_name . $extension;
 		}
 
-		if (file_exists($path.'/'.$file_name)) {
+		if (file_exists($path . '/' . $file_name)) {
 			return $this->generateUniqueFileName($path, $count + 1);
 		}
 
@@ -653,20 +669,20 @@ class SwatFileEntry extends SwatInputControl
 		if (is_numeric($ini_value)) {
 			$value = $ini_value;
 		} else {
-			$size  = mb_strtoupper(mb_substr($ini_value, -1));
-			$value = (integer)mb_substr($ini_value, 0, -1);
+			$size = mb_strtoupper(mb_substr($ini_value, -1));
+			$value = (int) mb_substr($ini_value, 0, -1);
 
-			switch($size) {
-			case 'P':
-				$value *= 1024;
-			case 'T':
-				$value *= 1024;
-			case 'G':
-				$value *= 1024;
-			case 'M':
-				$value *= 1024;
-			case 'K':
-				$value *= 1024;
+			switch ($size) {
+				case 'P':
+					$value *= 1024;
+				case 'T':
+					$value *= 1024;
+				case 'G':
+					$value *= 1024;
+				case 'M':
+					$value *= 1024;
+				case 'K':
+					$value *= 1024;
 			}
 		}
 
@@ -675,5 +691,3 @@ class SwatFileEntry extends SwatInputControl
 
 	// }}}
 }
-
-?>

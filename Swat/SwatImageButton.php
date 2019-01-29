@@ -63,7 +63,7 @@ class SwatImageButton extends SwatButton
 		$data = &$this->getForm()->getFormData();
 
 		// images submit id_x, and id_y post vars
-		if (isset($data[$this->id.'_x'])) {
+		if (isset($data[$this->id . '_x'])) {
 			$this->clicked = true;
 			$this->getForm()->button = $this;
 		}
@@ -87,9 +87,9 @@ class SwatImageButton extends SwatButton
 
 		if ($this->alt == '') {
 			throw new SwatException(
-				'The $alt property of SwatImageButton must be set to an '.
-				'appropriate value. The "alt" attribute is required in '.
-				'HTML5 and can not be an empty string.'
+				'The $alt property of SwatImageButton must be set to an ' .
+					'appropriate value. The "alt" attribute is required in ' .
+					'HTML5 and can not be an empty string.'
 			);
 		}
 
@@ -116,7 +116,8 @@ class SwatImageButton extends SwatButton
 
 		$input_tag->display();
 
-		if ($this->show_processing_throbber ||
+		if (
+			$this->show_processing_throbber ||
 			$this->confirmation_message !== null
 		) {
 			Swat::displayInlineJavaScript($this->getInlineJavaScript());
@@ -140,5 +141,3 @@ class SwatImageButton extends SwatButton
 
 	// }}}
 }
-
-?>

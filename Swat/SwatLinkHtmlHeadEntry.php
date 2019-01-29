@@ -58,7 +58,7 @@ class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
 		$type = null,
 		$title = null
 	) {
-		$hash = md5($uri.$relationship.$type.$title);
+		$hash = md5($uri . $relationship . $type . $title);
 		parent::__construct($hash);
 
 		$this->link_uri = $uri;
@@ -90,5 +90,3 @@ class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
 
 	// }}}
 }
-
-?>

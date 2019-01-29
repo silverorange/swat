@@ -36,5 +36,3 @@ class SwatDBMarshallException extends SwatDBException
 
 	// }}}
 }
-
-?>

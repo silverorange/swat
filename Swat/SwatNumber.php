@@ -51,7 +51,7 @@ class SwatNumber extends SwatObject
 	{
 		$power = pow(10, $fractional_digits);
 		$fractional_part = abs(fmod($value, 1)) * $power;
-		$ends_in_five = (intval($fractional_part * 10) % 10 === 5);
+		$ends_in_five = intval($fractional_part * 10) % 10 === 5;
 		if ($ends_in_five) {
 			// check if fractional part is odd
 			if ((intval($fractional_part) & 0x01) === 0x01) {
@@ -93,14 +93,15 @@ class SwatNumber extends SwatObject
 		$value = intval($value);
 
 		if (extension_loaded('intl')) {
-
 			// get current locale
 			$locale = setlocale(LC_ALL, 0);
 
 			static $formatters = array();
 			if (!isset($formatter[$locale])) {
-				$formatter[$locale] =
-					new NumberFormatter($locale, NumberFormatter::ORDINAL);
+				$formatter[$locale] = new NumberFormatter(
+					$locale,
+					NumberFormatter::ORDINAL
+				);
 			}
 
 			// format ordinal
@@ -109,40 +110,50 @@ class SwatNumber extends SwatObject
 			// decompose to latin-1 characters (removes superscripts)
 			$ordinal_value = Normalizer::normalize(
 				$ordinal_value,
-				Normalizer::FORM_KC);
-
+				Normalizer::FORM_KC
+			);
 		} else {
-
 			// fallback implementation if icu is not available
 			$ordinal_value = abs($value);
 
 			switch ($ordinal_value % 100) {
-			case 11:
-			case 12:
-			case 13:
-				$ordinal_value = sprintf(Swat::_('%sth'), $ordinal_value);
-				break;
-
-			default:
-				// Handle 1st, 2nd, 3rd
-				switch($value % 10) {
-				case 1:
-					$ordinal_value = sprintf(Swat::_('%sst'), $ordinal_value);
-					break;
-
-				case 2:
-					$ordinal_value = sprintf(Swat::_('%snd'), $ordinal_value);
-					break;
-
-				case 3:
-					$ordinal_value = sprintf(Swat::_('%srd'), $ordinal_value);
+				case 11:
+				case 12:
+				case 13:
+					$ordinal_value = sprintf(Swat::_('%sth'), $ordinal_value);
 					break;
 
 				default:
-					$ordinal_value = sprintf(Swat::_('%sth'), $ordinal_value);
-				}
-			}
+					// Handle 1st, 2nd, 3rd
+					switch ($value % 10) {
+						case 1:
+							$ordinal_value = sprintf(
+								Swat::_('%sst'),
+								$ordinal_value
+							);
+							break;
 
+						case 2:
+							$ordinal_value = sprintf(
+								Swat::_('%snd'),
+								$ordinal_value
+							);
+							break;
+
+						case 3:
+							$ordinal_value = sprintf(
+								Swat::_('%srd'),
+								$ordinal_value
+							);
+							break;
+
+						default:
+							$ordinal_value = sprintf(
+								Swat::_('%sth'),
+								$ordinal_value
+							);
+					}
+			}
 		}
 
 		return $ordinal_value;
@@ -162,5 +173,3 @@ class SwatNumber extends SwatObject
 
 	// }}}
 }
-
-?>

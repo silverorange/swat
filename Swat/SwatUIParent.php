@@ -91,5 +91,3 @@ interface SwatUIParent
 
 	// }}}
 }
-
-?>

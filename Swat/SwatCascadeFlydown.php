@@ -74,8 +74,9 @@ class SwatCascadeFlydown extends SwatFlydown
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
@@ -134,8 +135,9 @@ class SwatCascadeFlydown extends SwatFlydown
 		$content_type = 'text/plain'
 	) {
 		foreach ($options as $parent => $child_options) {
-			foreach ($child_options as $value => $title)
+			foreach ($child_options as $value => $title) {
 				$this->addOption($parent, $value, $title, $content_type);
+			}
 		}
 	}
 
@@ -160,8 +162,7 @@ class SwatCascadeFlydown extends SwatFlydown
 
 		// If the parent flydown is empty, set parent_value to a blank string.
 		// This will then return any options that exist for a blank parent.
-		$parent_value = ($this->hasEmptyParent()) ?
-			'' : $this->getParentValue();
+		$parent_value = $this->hasEmptyParent() ? '' : $this->getParentValue();
 
 		// parent_value is null when the parent has multiple options
 		if ($parent_value === null) {
@@ -169,7 +170,7 @@ class SwatCascadeFlydown extends SwatFlydown
 				// select the blank option on the cascade from
 				$options = array(
 					new SwatOption('', '&nbsp;'),
-					new SwatOption('', '&nbsp;'),
+					new SwatOption('', '&nbsp;')
 				);
 			} else {
 				// select the first option on the cascade from
@@ -194,8 +195,9 @@ class SwatCascadeFlydown extends SwatFlydown
 
 	protected function getParentValue()
 	{
-		return ($this->cascade_from instanceof SwatFlydown) ?
-			$this->cascade_from->value : null;
+		return $this->cascade_from instanceof SwatFlydown
+			? $this->cascade_from->value
+			: null;
 	}
 
 	// }}}
@@ -203,8 +205,9 @@ class SwatCascadeFlydown extends SwatFlydown
 
 	protected function getParentOptions()
 	{
-		return ($this->cascade_from instanceof SwatFlydown) ?
-			$this->cascade_from->getOptions() : array();
+		return $this->cascade_from instanceof SwatFlydown
+			? $this->cascade_from->getOptions()
+			: array();
 	}
 
 	// }}}
@@ -212,7 +215,7 @@ class SwatCascadeFlydown extends SwatFlydown
 
 	protected function hasEmptyParent()
 	{
-		return (count($this->getParentOptions()) === 0);
+		return count($this->getParentOptions()) === 0;
 	}
 
 	// }}}
@@ -220,8 +223,8 @@ class SwatCascadeFlydown extends SwatFlydown
 
 	protected function hasSingleParent()
 	{
-		return ((count($this->getParentOptions()) === 1) &&
-			$this->cascade_from->show_blank == false);
+		return count($this->getParentOptions()) === 1 &&
+			$this->cascade_from->show_blank == false;
 	}
 
 	// }}}
@@ -229,8 +232,10 @@ class SwatCascadeFlydown extends SwatFlydown
 
 	protected function getBlankOption()
 	{
-		$blank_title = ($this->blank_title === null) ?
-			Swat::_('choose one ...') : $this->blank_title;
+		$blank_title =
+			$this->blank_title === null
+				? Swat::_('choose one ...')
+				: $this->blank_title;
 
 		return new SwatFlydownBlankOption(null, $blank_title);
 	}
@@ -248,20 +253,22 @@ class SwatCascadeFlydown extends SwatFlydown
 		// Javascript is unnecessary when the parent flydown is empty, or when
 		// it has a single value as in both cases the parent value never
 		// changes.
-		if ($this->hasEmptyParent() ||
-			$this->hasSingleParent()) {
+		if ($this->hasEmptyParent() || $this->hasSingleParent()) {
 			return;
 		}
 
-		$javascript = sprintf("var %s_cascade = new SwatCascade('%s', '%s');",
+		$javascript = sprintf(
+			"var %s_cascade = new SwatCascade('%s', '%s');",
 			$this->id,
 			$this->cascade_from->id,
-			$this->id);
+			$this->id
+		);
 
 		$salt = $this->getForm()->getSalt();
 
-		$flydown_value = ($this->serialize_values) ?
-			$this->value : (string)$this->value;
+		$flydown_value = $this->serialize_values
+			? $this->value
+			: (string) $this->value;
 
 		foreach ($this->options as $parent => $options) {
 			if ($this->cascade_from->serialize_values) {
@@ -275,51 +282,51 @@ class SwatCascadeFlydown extends SwatFlydown
 					$value = '';
 				}
 
-				$blank_title = ($this->blank_title === null) ?
-					Swat::_('choose one ...') : $this->blank_title;
+				$blank_title =
+					$this->blank_title === null
+						? Swat::_('choose one ...')
+						: $this->blank_title;
 
-				$javascript.= sprintf(
+				$javascript .= sprintf(
 					"\n%s_cascade.addChild(%s, %s, %s);",
 					$this->id,
 					SwatString::quoteJavaScriptString($parent),
 					SwatString::quoteJavaScriptString($value),
-					SwatString::quoteJavaScriptString($blank_title));
+					SwatString::quoteJavaScriptString($blank_title)
+				);
 			}
 
 			foreach ($options as $option) {
 				if ($this->serialize_values) {
 					// if they are serialized, we want to compare the actual
 					// values
-					$selected = ($flydown_value === $option->value) ?
-						'true' : 'false';
+					$selected =
+						$flydown_value === $option->value ? 'true' : 'false';
 
 					$value = SwatString::signedSerialize($option->value, $salt);
 				} else {
 					// if they are not serialized, we want to compare the string
 					// value
-					$value = (string)$option->value;
+					$value = (string) $option->value;
 
-					$selected = ($flydown_value === $value) ?
-						'true' : 'false';
+					$selected = $flydown_value === $value ? 'true' : 'false';
 				}
 
-				$javascript.= sprintf(
+				$javascript .= sprintf(
 					"\n%s_cascade.addChild(%s, %s, %s, %s);",
 					$this->id,
 					SwatString::quoteJavaScriptString($parent),
 					SwatString::quoteJavaScriptString($value),
 					SwatString::quoteJavaScriptString($option->title),
-					$selected);
+					$selected
+				);
 			}
 		}
 
-		$javascript.= sprintf("\n%s_cascade.init();",
-			$this->id);
+		$javascript .= sprintf("\n%s_cascade.init();", $this->id);
 
 		return $javascript;
 	}
 
 	// }}}
 }
-
-?>

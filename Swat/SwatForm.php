@@ -18,17 +18,17 @@ class SwatForm extends SwatDisplayableContainer
 	// {{{ constants
 
 	const METHOD_POST = 'post';
-	const METHOD_GET  = 'get';
+	const METHOD_GET = 'get';
 
 	const PROCESS_FIELD = '_swat_form_process';
 	const HIDDEN_FIELD = '_swat_form_hidden_fields';
 	const AUTHENTICATION_TOKEN_FIELD = '_swat_form_authentication_token';
 	const SERIALIZED_PREFIX = '_swat_form_serialized_';
 
-	const ENCODING_FIELD        = '_swat_form_character_encoding';
+	const ENCODING_FIELD = '_swat_form_character_encoding';
 	const ENCODING_ENTITY_VALUE = '&auml;&trade;&reg;';
-	const ENCODING_UTF8_VALUE   = "\xc3\xa4\xe2\x84\xa2\xc2\xae";
-	const ENCODING_8BIT_VALUE   = "\xe4\x99\xae";
+	const ENCODING_UTF8_VALUE = "\xc3\xa4\xe2\x84\xa2\xc2\xae";
+	const ENCODING_8BIT_VALUE = "\xe4\x99\xae";
 
 	// }}}
 	// {{{ public properties
@@ -275,8 +275,9 @@ class SwatForm extends SwatDisplayableContainer
 	{
 		$valid_methods = array(self::METHOD_POST, self::METHOD_GET);
 
-		if (!in_array($method, $valid_methods))
+		if (!in_array($method, $valid_methods)) {
 			throw new SwatException("‘{$method}’ is not a valid form method.");
+		}
 
 		$this->method = $method;
 	}
@@ -309,8 +310,9 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		SwatWidget::display();
 
@@ -326,7 +328,8 @@ class SwatForm extends SwatDisplayableContainer
 		if ($this->connection_close_uri != '') {
 			$yui = new SwatYUI(array('event'));
 			$this->html_head_entry_set->addEntrySet(
-				$yui->getHtmlHeadEntrySet());
+				$yui->getHtmlHeadEntrySet()
+			);
 		}
 
 		Swat::displayInlineJavaScript($this->getInlineJavaScript());
@@ -355,9 +358,11 @@ class SwatForm extends SwatDisplayableContainer
 			$this->processEncoding();
 			$this->processHiddenFields();
 
-			foreach ($this->children as $child)
-				if ($child !== null && !$child->isProcessed())
+			foreach ($this->children as $child) {
+				if ($child !== null && !$child->isProcessed()) {
 					$child->process();
+				}
+			}
 		}
 	}
 
@@ -386,10 +391,13 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public function addHiddenField($name, $value)
 	{
-		if (is_resource($value))
+		if (is_resource($value)) {
 			throw new SwatInvalidTypeException(
 				'Cannot add a hidden field of type ‘resource’ to a SwatForm.',
-				0, $value);
+				0,
+				$value
+			);
+		}
 
 		$this->hidden_fields[$name] = $value;
 	}
@@ -424,10 +432,11 @@ class SwatForm extends SwatDisplayableContainer
 			// Otherwise, make sure this form was processed and get hidden
 			// field from raw form data.
 			$raw_data = $this->getFormData();
-			$serialized_field_name = self::SERIALIZED_PREFIX.$name;
+			$serialized_field_name = self::SERIALIZED_PREFIX . $name;
 			if (isset($raw_data[$serialized_field_name])) {
 				$data = $this->unserializeHiddenField(
-					$raw_data[$serialized_field_name]);
+					$raw_data[$serialized_field_name]
+				);
 			}
 		}
 
@@ -484,12 +493,12 @@ class SwatForm extends SwatDisplayableContainer
 		$data = null;
 
 		switch ($this->method) {
-		case self::METHOD_POST:
-			$data = &$_POST;
-			break;
-		case self::METHOD_GET:
-			$data = &$_GET;
-			break;
+			case self::METHOD_POST:
+				$data = &$_POST;
+				break;
+			case self::METHOD_GET:
+				$data = &$_GET;
+				break;
 		}
 
 		return $data;
@@ -512,8 +521,8 @@ class SwatForm extends SwatDisplayableContainer
 	{
 		$raw_data = $this->getFormData();
 
-		return (isset($raw_data[self::PROCESS_FIELD]) &&
-			$raw_data[self::PROCESS_FIELD] == $this->id);
+		return isset($raw_data[self::PROCESS_FIELD]) &&
+			$raw_data[self::PROCESS_FIELD] == $this->id;
 	}
 
 	// }}}
@@ -539,22 +548,26 @@ class SwatForm extends SwatDisplayableContainer
 		 * If this form was not submitted, consider it authenticated. Processing
 		 * should be safe on forms that were not submitted.
 		 */
-		if (!$this->isSubmitted())
+		if (!$this->isSubmitted()) {
 			return true;
+		}
 
 		$raw_data = $this->getFormData();
 
 		$token = null;
-		if (isset($raw_data[self::AUTHENTICATION_TOKEN_FIELD]))
+		if (isset($raw_data[self::AUTHENTICATION_TOKEN_FIELD])) {
 			$token = SwatString::signedUnserialize(
-				$raw_data[self::AUTHENTICATION_TOKEN_FIELD], $this->salt);
+				$raw_data[self::AUTHENTICATION_TOKEN_FIELD],
+				$this->salt
+			);
+		}
 
 		/*
 		 * If this form's authentication token is set, the token in submitted
 		 * data must match.
 		 */
-		return (self::$authentication_token === null ||
-			self::$authentication_token === $token);
+		return self::$authentication_token === null ||
+			self::$authentication_token === $token;
 	}
 
 	// }}}
@@ -567,7 +580,7 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public function setSalt($salt)
 	{
-		$this->salt = (string)$salt;
+		$this->salt = (string) $salt;
 	}
 
 	// }}}
@@ -691,7 +704,7 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	public static function setAuthenticationToken($token)
 	{
-		self::$authentication_token = (string)$token;
+		self::$authentication_token = (string) $token;
 	}
 
 	// }}}
@@ -730,16 +743,19 @@ class SwatForm extends SwatDisplayableContainer
 		$serialized_field_name = self::HIDDEN_FIELD;
 		if (isset($raw_data[$serialized_field_name])) {
 			$fields = SwatString::signedUnserialize(
-				$raw_data[$serialized_field_name], $this->salt);
+				$raw_data[$serialized_field_name],
+				$this->salt
+			);
 		} else {
 			return;
 		}
 
 		foreach ($fields as $name) {
-			$serialized_field_name = self::SERIALIZED_PREFIX.$name;
+			$serialized_field_name = self::SERIALIZED_PREFIX . $name;
 			if (isset($raw_data[$serialized_field_name])) {
 				$this->hidden_fields[$name] = $this->unserializeHiddenField(
-					$raw_data[$serialized_field_name]);
+					$raw_data[$serialized_field_name]
+				);
 			}
 		}
 	}
@@ -764,13 +780,13 @@ class SwatForm extends SwatDisplayableContainer
 	{
 		$raw_data = &$this->getFormData();
 
-		if ($this->_8bit_encoding !== null &&
-			isset($raw_data[self::ENCODING_FIELD])) {
-
+		if (
+			$this->_8bit_encoding !== null &&
+			isset($raw_data[self::ENCODING_FIELD])
+		) {
 			$value = $raw_data[self::ENCODING_FIELD];
 
 			if ($value === self::ENCODING_8BIT_VALUE) {
-
 				// convert from our 8-bit encoding to utf-8
 				foreach ($raw_data as $key => &$value) {
 					if (!mb_check_encoding($value, $this->_8bit_encoding)) {
@@ -780,12 +796,12 @@ class SwatForm extends SwatDisplayableContainer
 						// UTF-8 encoded values.
 						throw new SwatInvalidCharacterEncodingException(
 							sprintf(
-								"Form submitted with 8-bit encoding but form ".
-								"data is not valid %s. If this form data is ".
-								"expected, use the ".
-								"SwatForm::set8BitEncoding() method to set an ".
-								"appropriate 8-bit encoding value.\n\nForm ".
-								"data: \n%s",
+								"Form submitted with 8-bit encoding but form " .
+									"data is not valid %s. If this form data is " .
+									"expected, use the " .
+									"SwatForm::set8BitEncoding() method to set an " .
+									"appropriate 8-bit encoding value.\n\nForm " .
+									"data: \n%s",
 								$this->_8bit_encoding,
 								file_get_contents('php://input')
 							)
@@ -804,12 +820,12 @@ class SwatForm extends SwatDisplayableContainer
 						// UTF-8 encoded values.
 						throw new SwatInvalidCharacterEncodingException(
 							sprintf(
-								"Form submitted with 8-bit encoding but form ".
-								"data is not valid %s. If this form data is ".
-								"expected, use the ".
-								"SwatForm::set8BitEncoding() method to set an ".
-								"appropriate 8-bit encoding value.\n\nForm ".
-								"data: \n%s",
+								"Form submitted with 8-bit encoding but form " .
+									"data is not valid %s. If this form data is " .
+									"expected, use the " .
+									"SwatForm::set8BitEncoding() method to set an " .
+									"appropriate 8-bit encoding value.\n\nForm " .
+									"data: \n%s",
 								$this->_8bit_encoding,
 								file_get_contents('php://input')
 							)
@@ -821,12 +837,12 @@ class SwatForm extends SwatDisplayableContainer
 						$filename
 					);
 				}
-
 			} elseif ($value !== self::ENCODING_UTF8_VALUE) {
 				// it's not 8-bit or UTF-8. Time to panic!
 				throw new SwatInvalidCharacterEncodingException(
-					"Unknown form data character encoding. Form data: \n".
-					file_get_contents('php://input'));
+					"Unknown form data character encoding. Form data: \n" .
+						file_get_contents('php://input')
+				);
 			}
 		}
 	}
@@ -847,7 +863,6 @@ class SwatForm extends SwatDisplayableContainer
 	protected function notifyOfAdd($widget)
 	{
 		if (class_exists('SwatFileEntry')) {
-
 			if ($widget instanceof SwatFileEntry) {
 				$this->encoding_type = 'multipart/form-data';
 			} elseif ($widget instanceof SwatUIParent) {
@@ -889,14 +904,17 @@ class SwatForm extends SwatDisplayableContainer
 			// The character encoding detection field is intentionally not using
 			// SwatHtmlTag to avoid minimizing entities.
 			echo '<input type="hidden" ',
-				'name="', self::ENCODING_FIELD, '" ',
-				'value="', self::ENCODING_ENTITY_VALUE, '" />';
+				'name="',
+				self::ENCODING_FIELD,
+				'" ',
+				'value="',
+				self::ENCODING_ENTITY_VALUE,
+				'" />';
 		}
 
 		foreach ($this->hidden_fields as $name => $value) {
 			// display unserialized value for primative types
 			if ($value !== null && !is_array($value) && !is_object($value)) {
-
 				// SwatHtmlTag uses SwatString::minimizeEntities(), which
 				// prevents double-escaping entities. For hidden form-fields,
 				// we want data to be returned exactly as it was specified. This
@@ -917,10 +935,13 @@ class SwatForm extends SwatDisplayableContainer
 			// to be returned exactly as it was specified. This  necessitates
 			// double-escaping to ensure any entities that were specified in
 			// the hidden field value are returned correctly.
-			$escaped_serialized_data = htmlspecialchars($serialized_data,
-				ENT_COMPAT, 'UTF-8');
+			$escaped_serialized_data = htmlspecialchars(
+				$serialized_data,
+				ENT_COMPAT,
+				'UTF-8'
+			);
 
-			$input_tag->name = self::SERIALIZED_PREFIX.$name;
+			$input_tag->name = self::SERIALIZED_PREFIX . $name;
 			$input_tag->value = $escaped_serialized_data;
 			$input_tag->display();
 		}
@@ -929,7 +950,9 @@ class SwatForm extends SwatDisplayableContainer
 		if (count($this->hidden_fields) > 0) {
 			// array of field names
 			$serialized_data = SwatString::signedSerialize(
-				array_keys($this->hidden_fields), $this->salt);
+				array_keys($this->hidden_fields),
+				$this->salt
+			);
 
 			$input_tag->name = self::HIDDEN_FIELD;
 			$input_tag->value = $serialized_data;
@@ -939,7 +962,9 @@ class SwatForm extends SwatDisplayableContainer
 		// display authentication token
 		if (self::$authentication_token !== null) {
 			$serialized_data = SwatString::signedSerialize(
-				self::$authentication_token, $this->salt);
+				self::$authentication_token,
+				$this->salt
+			);
 
 			$input_tag = new SwatHtmlTag('input');
 			$input_tag->type = 'hidden';
@@ -963,16 +988,14 @@ class SwatForm extends SwatDisplayableContainer
 	{
 		$form_tag = new SwatHtmlTag('form');
 
-		$form_tag->addAttributes(
-			array(
-				'id'             => $this->id,
-				'method'         => $this->method,
-				'enctype'        => $this->encoding_type,
-				'accept-charset' => $this->accept_charset,
-				'action'         => $this->action,
-				'class'          => $this->getCSSClassString(),
-			)
-		);
+		$form_tag->addAttributes(array(
+			'id' => $this->id,
+			'method' => $this->method,
+			'enctype' => $this->encoding_type,
+			'accept-charset' => $this->accept_charset,
+			'action' => $this->action,
+			'class' => $this->getCSSClassString()
+		));
 
 		// we're going to validate data on the server, so turn off HTML5
 		// form validation
@@ -1008,11 +1031,13 @@ class SwatForm extends SwatDisplayableContainer
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf("var %s_obj = new %s(%s, %s);",
+		$javascript = sprintf(
+			"var %s_obj = new %s(%s, %s);",
 			$this->id,
 			$this->getJavaScriptClass(),
 			SwatString::quoteJavaScriptString($this->id),
-			SwatString::quoteJavaScriptString($this->connection_close_uri));
+			SwatString::quoteJavaScriptString($this->connection_close_uri)
+		);
 
 		if ($this->autofocus) {
 			$focusable = true;
@@ -1022,25 +1047,25 @@ class SwatForm extends SwatDisplayableContainer
 					$focusable = false;
 				} else {
 					$focus_id = $control->getFocusableHtmlId();
-					if ($focus_id === null)
+					if ($focus_id === null) {
 						$focusable = false;
+					}
 				}
 			} else {
-				$focus_id =
-					$this->default_focused_control->getFocusableHtmlId();
+				$focus_id = $this->default_focused_control->getFocusableHtmlId();
 
-				if ($focus_id === null)
+				if ($focus_id === null) {
 					$focusable = false;
+				}
 			}
 
-			if ($focusable)
-				$javascript.=
-					"\n{$this->id}_obj.setDefaultFocus('{$focus_id}');";
+			if ($focusable) {
+				$javascript .= "\n{$this->id}_obj.setDefaultFocus('{$focus_id}');";
+			}
 		}
 
 		if (!$this->autocomplete) {
-			$javascript.=
-				"\n{$this->id}_obj.setAutocomplete(false);";
+			$javascript .= "\n{$this->id}_obj.setAutocomplete(false);";
 		}
 
 		return $javascript;
@@ -1119,5 +1144,3 @@ class SwatForm extends SwatDisplayableContainer
 
 	// }}}
 }
-
-?>

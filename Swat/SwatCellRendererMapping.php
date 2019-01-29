@@ -56,5 +56,3 @@ class SwatCellRendererMapping extends SwatObject
 
 	// }}}
 }
-
-?>

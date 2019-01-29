@@ -55,5 +55,3 @@ class SwatOption extends SwatObject
 
 	// }}}
 }
-
-?>

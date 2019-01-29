@@ -70,13 +70,16 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	 */
 	public function displayFooter($row, $next_row)
 	{
-		if ($this->group_by === null)
+		if ($this->group_by === null) {
 			throw new SwatException("Attribute 'group_by' must be set.");
+		}
 
 		$group_by = $this->group_by;
 
-		if ($next_row === null ||
-			!$this->isEqual($row->$group_by, $next_row->$group_by)) {
+		if (
+			$next_row === null ||
+			!$this->isEqual($row->$group_by, $next_row->$group_by)
+		) {
 			$this->displayGroupFooter($row);
 		}
 	}
@@ -141,8 +144,9 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	 */
 	protected function displayRenderers($row)
 	{
-		if ($this->group_by === null)
+		if ($this->group_by === null) {
 			throw new SwatException("Attribute 'group_by' must be set.");
+		}
 
 		$group_by = $this->group_by;
 
@@ -170,12 +174,14 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	 */
 	protected function isEqual($group_value, $row_value)
 	{
-		if ($group_value instanceof SwatDate &&
-			$row_value instanceof SwatDate) {
-			return (SwatDate::compare($group_value, $row_value) === 0);
+		if (
+			$group_value instanceof SwatDate &&
+			$row_value instanceof SwatDate
+		) {
+			return SwatDate::compare($group_value, $row_value) === 0;
 		}
 
-		return ($group_value === $row_value);
+		return $group_value === $row_value;
 	}
 
 	// }}}
@@ -192,11 +198,13 @@ class SwatTableViewGroup extends SwatTableViewColumn
 	{
 		$reset = false;
 		foreach ($this->parent->getGroups() as $group) {
-			if ($reset)
+			if ($reset) {
 				$group->reset();
+			}
 
-			if ($group === $this)
+			if ($group === $this) {
 				$reset = true;
+			}
 		}
 	}
 
@@ -233,5 +241,3 @@ class SwatTableViewGroup extends SwatTableViewColumn
 
 	// }}}
 }
-
-?>

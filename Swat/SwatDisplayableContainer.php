@@ -16,8 +16,9 @@ class SwatDisplayableContainer extends SwatContainer
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		SwatWidget::display();
 
@@ -49,5 +50,3 @@ class SwatDisplayableContainer extends SwatContainer
 
 	// }}}
 }
-
-?>

@@ -12,10 +12,10 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 	// {{{ constants
 
 	const ROUND_FLOOR = 1;
-	const ROUND_CEIL  = 2;
-	const ROUND_UP    = 3;
-	const ROUND_NONE  = 4;
-	const ROUND_HALF  = 5;
+	const ROUND_CEIL = 2;
+	const ROUND_UP = 3;
+	const ROUND_NONE = 4;
+	const ROUND_HALF = 5;
 
 	// }}}
 	// {{{ public properties
@@ -48,8 +48,9 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 	 */
 	public function render()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		SwatCellRenderer::render();
 
@@ -58,19 +59,19 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 		} elseif ($this->value !== null) {
 			$locale = SwatI18NLocale::get();
 
-			$value      = $this->getDisplayValue();
+			$value = $this->getDisplayValue();
 			$difference = $this->maximum_value - $value;
 
 			$rating_class = floor(10 * min($value, $this->maximum_value));
-			$rating_class = 'rating-'.$rating_class;
+			$rating_class = 'rating-' . $rating_class;
 
 			$outer_span = new SwatHtmlTag('span');
-			$outer_span->class = 'rating '.$rating_class;
+			$outer_span->class = 'rating ' . $rating_class;
 			$outer_span->open();
 
 			$content = str_repeat('★', ceil($value));
 			if ($difference > 0) {
-				$content.= str_repeat('☆', floor($difference));
+				$content .= str_repeat('☆', floor($difference));
 			}
 
 			$value_tag = new SwatHtmlTag('span');
@@ -95,25 +96,25 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 	public function getDisplayValue()
 	{
 		switch ($this->round_mode) {
-		case self::ROUND_FLOOR:
-			$value = floor($this->value);
-			break;
+			case self::ROUND_FLOOR:
+				$value = floor($this->value);
+				break;
 
-		case self::ROUND_CEIL:
-			$value = ceil($this->value);
-			break;
+			case self::ROUND_CEIL:
+				$value = ceil($this->value);
+				break;
 
-		case self::ROUND_UP:
-			$value = round($this->value, $this->precision);
-			break;
+			case self::ROUND_UP:
+				$value = round($this->value, $this->precision);
+				break;
 
-		case self::ROUND_NONE:
-			$value = $this->value;
-			break;
+			case self::ROUND_NONE:
+				$value = $this->value;
+				break;
 
-		case self::ROUND_HALF:
-			$value = round($this->value * 2) / 2;
-			break;
+			case self::ROUND_HALF:
+				$value = round($this->value * 2) / 2;
+				break;
 		}
 
 		return $value;
@@ -121,5 +122,3 @@ class SwatRatingCellRenderer extends SwatNumericCellRenderer
 
 	// }}}
 }
-
-?>

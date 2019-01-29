@@ -152,8 +152,9 @@ class SwatProgressBar extends SwatControl
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -184,9 +185,15 @@ class SwatProgressBar extends SwatControl
 	{
 		// ensure length is in cascading style-sheet units
 		$dimension_pattern = '/([0-9]+(%|p[xtc]|e[mx]|in|[cm]m|)|auto)/';
-		if (preg_match($dimension_pattern, $this->length) == 0)
-			throw new SwatException(sprintf('$length must be specified in '.
-				'cascading style-sheet units. Value was: %s', $this->length));
+		if (preg_match($dimension_pattern, $this->length) == 0) {
+			throw new SwatException(
+				sprintf(
+					'$length must be specified in ' .
+						'cascading style-sheet units. Value was: %s',
+					$this->length
+				)
+			);
+		}
 
 		$bar_div_tag = new SwatHtmlTag('div');
 		$bar_div_tag->id = "{$this->id}_bar";
@@ -209,38 +216,44 @@ class SwatProgressBar extends SwatControl
 		$empty_length = sprintf('%s%%', $empty_length);
 
 		switch ($this->orientation) {
-		case self::ORIENTATION_LEFT_TO_RIGHT:
-		default:
-			$bar_div_tag->class.= ' swat-progress-bar-left-to-right';
-			$bar_div_tag->style = sprintf('width: %s;', $this->length);
-			$full_div_tag->style = sprintf('width: %s;', $full_length);
-			$empty_div_tag->style = sprintf('width: %s;', $empty_length);
-			break;
+			case self::ORIENTATION_LEFT_TO_RIGHT:
+			default:
+				$bar_div_tag->class .= ' swat-progress-bar-left-to-right';
+				$bar_div_tag->style = sprintf('width: %s;', $this->length);
+				$full_div_tag->style = sprintf('width: %s;', $full_length);
+				$empty_div_tag->style = sprintf('width: %s;', $empty_length);
+				break;
 
-		case self::ORIENTATION_RIGHT_TO_LEFT:
-			$bar_div_tag->class.= ' swat-progress-bar-right-to-left';
-			$bar_div_tag->style = sprintf('width: %s;', $this->length);
-			$full_div_tag->style = sprintf('width: %s;', $full_length);
-			$empty_div_tag->style = sprintf('width: %s;', $empty_length);
-			break;
+			case self::ORIENTATION_RIGHT_TO_LEFT:
+				$bar_div_tag->class .= ' swat-progress-bar-right-to-left';
+				$bar_div_tag->style = sprintf('width: %s;', $this->length);
+				$full_div_tag->style = sprintf('width: %s;', $full_length);
+				$empty_div_tag->style = sprintf('width: %s;', $empty_length);
+				break;
 
-		case self::ORIENTATION_BOTTOM_TO_TOP:
-			$bar_div_tag->class.= ' swat-progress-bar-bottom-to-top';
-			$bar_div_tag->style = sprintf('height: %s;', $this->length);
-			$full_div_tag->style = sprintf('height: %s; top: %s;',
-				$full_length, $empty_length);
+			case self::ORIENTATION_BOTTOM_TO_TOP:
+				$bar_div_tag->class .= ' swat-progress-bar-bottom-to-top';
+				$bar_div_tag->style = sprintf('height: %s;', $this->length);
+				$full_div_tag->style = sprintf(
+					'height: %s; top: %s;',
+					$full_length,
+					$empty_length
+				);
 
-			$empty_div_tag->style = sprintf('height: %s; top: -%s;',
-				$empty_length, $full_length);
+				$empty_div_tag->style = sprintf(
+					'height: %s; top: -%s;',
+					$empty_length,
+					$full_length
+				);
 
-			break;
+				break;
 
-		case self::ORIENTATION_TOP_TO_BOTTOM:
-			$bar_div_tag->class.= ' swat-progress-bar-top-to-bottom';
-			$bar_div_tag->style = sprintf('height: %s;', $this->length);
-			$full_div_tag->style = sprintf('height: %s;', $full_length);
-			$empty_div_tag->style = sprintf('height: %s;', $empty_length);
-			break;
+			case self::ORIENTATION_TOP_TO_BOTTOM:
+				$bar_div_tag->class .= ' swat-progress-bar-top-to-bottom';
+				$bar_div_tag->style = sprintf('height: %s;', $this->length);
+				$full_div_tag->style = sprintf('height: %s;', $full_length);
+				$empty_div_tag->style = sprintf('height: %s;', $empty_length);
+				break;
 		}
 
 		$bar_div_tag->open();
@@ -272,7 +285,7 @@ class SwatProgressBar extends SwatControl
 		}
 
 		$span_tag = new SwatHtmlTag('span');
-		$span_tag->id = $this->id.'_text';
+		$span_tag->id = $this->id . '_text';
 		$span_tag->class = 'swat-progress-bar-text';
 		$span_tag->setContent($text, $this->content_type);
 		$span_tag->display();
@@ -288,8 +301,13 @@ class SwatProgressBar extends SwatControl
 	 */
 	protected function getInlineJavaScript()
 	{
-		return sprintf("var %s_obj = new SwatProgressBar('%s', %s, %s);",
-			$this->id, $this->id, $this->orientation, $this->value);
+		return sprintf(
+			"var %s_obj = new SwatProgressBar('%s', %s, %s);",
+			$this->id,
+			$this->id,
+			$this->orientation,
+			$this->value
+		);
 	}
 
 	// }}}
@@ -310,5 +328,3 @@ class SwatProgressBar extends SwatControl
 
 	// }}}
 }
-
-?>

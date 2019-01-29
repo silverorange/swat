@@ -10,5 +10,3 @@
 class SwatDBNoDatabaseException extends SwatDBException
 {
 }
-
-?>

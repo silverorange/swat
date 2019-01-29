@@ -148,8 +148,9 @@ abstract class SwatTableViewRow extends SwatUIObject
 	 */
 	public function getVisibleByCount($count)
 	{
-		if ($count == 0)
+		if ($count == 0) {
 			return false;
+		}
 
 		return true;
 	}
@@ -236,13 +237,12 @@ abstract class SwatTableViewRow extends SwatUIObject
 	{
 		$copy = parent::copy($id_suffix);
 
-		if ($id_suffix != '' && $copy->id !== null)
-			$copy->id = $copy->id.$id_suffix;
+		if ($id_suffix != '' && $copy->id !== null) {
+			$copy->id = $copy->id . $id_suffix;
+		}
 
 		return $copy;
 	}
 
 	// }}}
 }
-
-?>

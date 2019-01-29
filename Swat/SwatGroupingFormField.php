@@ -39,11 +39,13 @@ class SwatGroupingFormField extends SwatFormField
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		if ($this->getFirst() === null)
+		if ($this->getFirst() === null) {
 			return;
+		}
 
 		SwatWidget::display();
 
@@ -82,5 +84,3 @@ class SwatGroupingFormField extends SwatFormField
 
 	// }}}
 }
-
-?>

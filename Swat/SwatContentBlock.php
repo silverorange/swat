@@ -37,18 +37,18 @@ class SwatContentBlock extends SwatControl
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
-		if ($this->content_type === 'text/plain')
+		if ($this->content_type === 'text/plain') {
 			echo SwatString::minimizeEntities($this->content);
-		else
+		} else {
 			echo $this->content;
+		}
 	}
 
 	// }}}
 }
-
-?>

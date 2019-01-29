@@ -33,14 +33,15 @@ class SwatIntegerEntry extends SwatNumericEntry
 			} else {
 				$this->value = $integer_value;
 			}
-
 		} catch (SwatIntegerOverflowException $e) {
 			if ($e->getSign() > 0) {
-				$this->addMessage($this->getValidationMessage(
-					'integer-maximum'));
+				$this->addMessage(
+					$this->getValidationMessage('integer-maximum')
+				);
 			} else {
-				$this->addMessage($this->getValidationMessage(
-					'integer-minimum'));
+				$this->addMessage(
+					$this->getValidationMessage('integer-minimum')
+				);
 			}
 
 			$integer_value = null;
@@ -61,11 +62,11 @@ class SwatIntegerEntry extends SwatNumericEntry
 	{
 		if (is_int($value)) {
 			$locale = SwatI18NLocale::get();
-			$thousands_separator =
-				($this->show_thousands_separator) ? null : '';
+			$thousands_separator = $this->show_thousands_separator ? null : '';
 
-			$value = $locale->formatNumber($value, 0,
-				array('thousands_separator' => $thousands_separator));
+			$value = $locale->formatNumber($value, 0, array(
+				'thousands_separator' => $thousands_separator
+			));
 		} else {
 			$value = parent::getDisplayValue($value);
 		}
@@ -107,38 +108,38 @@ class SwatIntegerEntry extends SwatNumericEntry
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
-		case 'integer':
-			if ($this->minimum_value < 0) {
-				$text = $this->show_field_title_in_messages ?
-					Swat::_('The %s field must be an integer.') :
-					Swat::_('This field must be an integer.');
-			} else {
-				$text = $this->show_field_title_in_messages ?
-					Swat::_('The %s field must be a whole number.') :
-					Swat::_('This field must be a whole number.');
-			}
-			$message = new SwatMessage($text, 'error');
-			break;
+			case 'integer':
+				if ($this->minimum_value < 0) {
+					$text = $this->show_field_title_in_messages
+						? Swat::_('The %s field must be an integer.')
+						: Swat::_('This field must be an integer.');
+				} else {
+					$text = $this->show_field_title_in_messages
+						? Swat::_('The %s field must be a whole number.')
+						: Swat::_('This field must be a whole number.');
+				}
+				$message = new SwatMessage($text, 'error');
+				break;
 
-		case 'integer-maximum':
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('The %s field is too big.') :
-				Swat::_('This field is too big.');
+			case 'integer-maximum':
+				$text = $this->show_field_title_in_messages
+					? Swat::_('The %s field is too big.')
+					: Swat::_('This field is too big.');
 
-			$message = new SwatMessage($text, 'error');
-			break;
+				$message = new SwatMessage($text, 'error');
+				break;
 
-		case 'integer-minimum':
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('The %s field is too small.') :
-				Swat::_('The this field is too small.');
+			case 'integer-minimum':
+				$text = $this->show_field_title_in_messages
+					? Swat::_('The %s field is too small.')
+					: Swat::_('The this field is too small.');
 
-			$message = new SwatMessage($text, 'error');
-			break;
+				$message = new SwatMessage($text, 'error');
+				break;
 
-		default:
-			$message = parent::getValidationMessage($id);
-			break;
+			default:
+				$message = parent::getValidationMessage($id);
+				break;
 		}
 
 		return $message;
@@ -162,5 +163,3 @@ class SwatIntegerEntry extends SwatNumericEntry
 
 	// }}}
 }
-
-?>

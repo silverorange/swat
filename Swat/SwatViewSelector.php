@@ -22,5 +22,3 @@ interface SwatViewSelector
 
 	// }}}
 }
-
-?>

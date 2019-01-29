@@ -79,8 +79,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	{
 		parent::init();
 
-		foreach ($this->fields as $field)
+		foreach ($this->fields as $field) {
 			$field->init();
+		}
 	}
 
 	// }}}
@@ -93,8 +94,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	{
 		parent::process();
 
-		foreach ($this->fields as $field)
+		foreach ($this->fields as $field) {
 			$field->process();
+		}
 	}
 
 	// }}}
@@ -107,8 +109,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -227,9 +230,11 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 */
 	public function getField($id)
 	{
-		if (!array_key_exists($id, $this->fields_by_id))
+		if (!array_key_exists($id, $this->fields_by_id)) {
 			throw new SwatWidgetNotFoundException(
-				"Field with an id of '{$id}' not found.");
+				"Field with an id of '{$id}' not found."
+			);
+		}
 
 		return $this->fields_by_id[$id];
 	}
@@ -270,9 +275,12 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 			$class_name = get_class($child);
 
 			throw new SwatInvalidClassException(
-				"Unable to add '{$class_name}' object to SwatDetailsView. ".
-				'Only SwatDetailsViewField objects may be nested within '.
-				'SwatDetailsView objects.', 0, $child);
+				"Unable to add '{$class_name}' object to SwatDetailsView. " .
+					'Only SwatDetailsViewField objects may be nested within ' .
+					'SwatDetailsView objects.',
+				0,
+				$child
+			);
 		}
 	}
 
@@ -339,8 +347,12 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 */
 	public function getDescendants($class_name = null)
 	{
-		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name))
+		if (
+			!(
+				$class_name === null ||
+				class_exists($class_name) ||
+				interface_exists($class_name)
+			)
 		) {
 			return array();
 		}
@@ -379,8 +391,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 */
 	public function getFirstDescendant($class_name)
 	{
-		if (!class_exists($class_name) && !interface_exists($class_name))
+		if (!class_exists($class_name) && !interface_exists($class_name)) {
 			return null;
+		}
 
 		$out = null;
 
@@ -392,8 +405,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 
 			if ($field instanceof SwatUIParent) {
 				$out = $field->getFirstDescendant($class_name);
-				if ($out !== null)
+				if ($out !== null) {
 					break;
+				}
 			}
 		}
 
@@ -416,8 +430,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	{
 		$states = array();
 
-		foreach ($this->getDescendants('SwatState') as $id => $object)
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
 			$states[$id] = $object->getState();
+		}
 
 		return $states;
 	}
@@ -436,9 +451,11 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 	 */
 	public function setDescendantStates(array $states)
 	{
-		foreach ($this->getDescendants('SwatState') as $id => $object)
-			if (isset($states[$id]))
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
+			if (isset($states[$id])) {
 				$object->setState($states[$id]);
+			}
+		}
 	}
 
 	// }}}
@@ -489,11 +506,14 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 		// note: This works because the id property is set before children are
 		// added to parents in SwatUI.
 		if ($field->id !== null) {
-			if (array_key_exists($field->id, $this->fields_by_id))
+			if (array_key_exists($field->id, $this->fields_by_id)) {
 				throw new SwatDuplicateIdException(
-					"A field with the id '{$field->id}' already exists ".
-					'in this details-view.',
-					0, $field->id);
+					"A field with the id '{$field->id}' already exists " .
+						'in this details-view.',
+					0,
+					$field->id
+				);
+			}
 		}
 	}
 
@@ -545,18 +565,24 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 			$key = array_search($reference_field, $this->fields, true);
 
 			if ($key === false) {
-				throw new SwatWidgetNotFoundException('The reference field '.
-					'could not be found in this details-view.');
+				throw new SwatWidgetNotFoundException(
+					'The reference field ' .
+						'could not be found in this details-view.'
+				);
 			}
 
 			if ($after) {
 				// insert after reference field
-				array_splice($this->fields, $key, 1,
-					array($reference_field, $field));
+				array_splice($this->fields, $key, 1, array(
+					$reference_field,
+					$field
+				));
 			} else {
 				// insert before reference field
-				array_splice($this->fields, $key, 1,
-					array($field, $reference_field));
+				array_splice($this->fields, $key, 1, array(
+					$field,
+					$reference_field
+				));
 			}
 		} else {
 			if ($after) {
@@ -568,8 +594,9 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 			}
 		}
 
-		if ($field->id !== null)
+		if ($field->id !== null) {
 			$this->fields_by_id[$field->id] = $field;
+		}
 
 		$field->view = $this; // deprecated reference
 		$field->parent = $this;
@@ -606,14 +633,16 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 
 		foreach ($this->fields as $field) {
 			$field_javascript = $field->getRendererInlineJavaScript();
-			if ($field_javascript != '')
-				$javascript.= "\n".$field_javascript;
+			if ($field_javascript != '') {
+				$javascript .= "\n" . $field_javascript;
+			}
 		}
 
 		foreach ($this->fields as $field) {
 			$field_javascript = $field->getInlineJavaScript();
-			if ($field_javascript != '')
-				$javascript.= "\n".$field_javascript;
+			if ($field_javascript != '') {
+				$javascript .= "\n" . $field_javascript;
+			}
 		}
 
 		return $javascript;
@@ -632,7 +661,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 		$count = 1;
 
 		foreach ($this->fields as $field) {
-			$odd = ($count % 2 == 1);
+			$odd = $count % 2 == 1;
 
 			ob_start();
 			$field->display($this->data, $odd);
@@ -647,5 +676,3 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
 
 	// }}}
 }
-
-?>

@@ -7,8 +7,8 @@
  * @copyright 2007-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatReplicableNoteBookChild extends SwatReplicableContainer
-	implements SwatNoteBookChild
+class SwatReplicableNoteBookChild extends SwatReplicableContainer implements
+	SwatNoteBookChild
 {
 	// {{{ public function getPages()
 
@@ -50,15 +50,17 @@ class SwatReplicableNoteBookChild extends SwatReplicableContainer
 	 */
 	public function addChild(SwatObject $child)
 	{
-		if (!($child instanceof SwatNoteBookChild))
+		if (!($child instanceof SwatNoteBookChild)) {
 			throw new SwatInvalidClassException(
-				'Only SwatNoteBookChild objects may be nested within a '.
-				'SwatReplicableNoteBookChild object.', 0, $child);
+				'Only SwatNoteBookChild objects may be nested within a ' .
+					'SwatReplicableNoteBookChild object.',
+				0,
+				$child
+			);
+		}
 
 		parent::addChild($child);
 	}
 
 	// }}}
 }
-
-?>

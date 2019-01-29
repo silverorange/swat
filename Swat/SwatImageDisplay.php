@@ -125,8 +125,11 @@ class SwatImageDisplay extends SwatControl
 		}
 
 		$image_tag->style = self::getOccupyMargin(
-			$this->width, $this->height, $this->occupy_width,
-			$this->occupy_height);
+			$this->width,
+			$this->height,
+			$this->occupy_width,
+			$this->occupy_height
+		);
 
 		if ($this->title !== null) {
 			$image_tag->title = $this->title;
@@ -134,7 +137,7 @@ class SwatImageDisplay extends SwatControl
 
 		// alt is a required XHTML attribute. We should always display it even
 		// if it is not specified.
-		$image_tag->alt = ($this->alt === null) ? '' : $this->alt;
+		$image_tag->alt = $this->alt === null ? '' : $this->alt;
 
 		$image_tag->display();
 	}
@@ -151,21 +154,23 @@ class SwatImageDisplay extends SwatControl
 		$margin_x = 0;
 		$margin_y = 0;
 
-		if ($occupy_width !== null && $occupy_width > $width)
+		if ($occupy_width !== null && $occupy_width > $width) {
 			$margin_x = $occupy_width - $width;
+		}
 
-		if ($occupy_height !== null && $occupy_height > $height)
+		if ($occupy_height !== null && $occupy_height > $height) {
 			$margin_y = $occupy_height - $height;
+		}
 
 		if ($margin_x > 0 || $margin_y > 0) {
 			$style = sprintf(
-				($margin_x % 2 == 0 && $margin_y % 2 == 0) ?
-					'margin: %dpx %dpx' :
-					'margin: %dpx %dpx %dpx %dpx;',
-				floor(((float)$margin_y) / 2),
-				ceil(((float)$margin_x) / 2),
-				ceil(((float)$margin_y) / 2),
-				floor(((float)$margin_x) / 2)
+				$margin_x % 2 == 0 && $margin_y % 2 == 0
+					? 'margin: %dpx %dpx'
+					: 'margin: %dpx %dpx %dpx %dpx;',
+				floor(((float) $margin_y) / 2),
+				ceil(((float) $margin_x) / 2),
+				ceil(((float) $margin_y) / 2),
+				floor(((float) $margin_x) / 2)
 			);
 		} else {
 			$style = null;
@@ -192,5 +197,3 @@ class SwatImageDisplay extends SwatControl
 
 	// }}}
 }
-
-?>

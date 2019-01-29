@@ -46,8 +46,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	{
 		parent::init();
 
-		foreach($this->children as $child_widget)
+		foreach ($this->children as $child_widget) {
 			$child_widget->init();
+		}
 	}
 
 	// }}}
@@ -90,11 +91,13 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 				$new_widget->parent = $this;
 				$widget->parent = null;
 
-				if ($widget->id !== null)
+				if ($widget->id !== null) {
 					unset($this->children_by_id[$widget->id]);
+				}
 
-				if ($new_widget->id !== null)
+				if ($new_widget->id !== null) {
 					$this->children_by_id[$new_widget->id] = $new_widget;
+				}
 
 				return $widget;
 			}
@@ -125,8 +128,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 				array_splice($this->children, $key, 1);
 				$widget->parent = null;
 
-				if ($widget->id !== null)
+				if ($widget->id !== null) {
 					unset($this->children_by_id[$widget->id]);
+				}
 
 				return $widget;
 			}
@@ -146,15 +150,18 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	public function packStart(SwatWidget $widget)
 	{
-		if ($widget->parent !== null)
-			throw new SwatException('Attempting to add a widget that already '.
-				'has a parent.');
+		if ($widget->parent !== null) {
+			throw new SwatException(
+				'Attempting to add a widget that already ' . 'has a parent.'
+			);
+		}
 
 		array_unshift($this->children, $widget);
 		$widget->parent = $this;
 
-		if ($widget->id !== null)
-				$this->children_by_id[$widget->id] = $widget;
+		if ($widget->id !== null) {
+			$this->children_by_id[$widget->id] = $widget;
+		}
 
 		$this->sendAddNotifySignal($widget);
 	}
@@ -171,13 +178,16 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	public function insertBefore(SwatWidget $widget, SwatWidget $child)
 	{
 		if ($widget->parent !== null) {
-			throw new SwatException('Attempting to add a widget that already '.
-				'has a parent.');
+			throw new SwatException(
+				'Attempting to add a widget that already ' . 'has a parent.'
+			);
 		}
 
 		if ($child->parent !== $this) {
-			throw new SwatException('Attempting to insert before a child '.
-				'that is not in this container.');
+			throw new SwatException(
+				'Attempting to insert before a child ' .
+					'that is not in this container.'
+			);
 		}
 
 		$index = 0;
@@ -210,15 +220,18 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	public function packEnd(SwatWidget $widget)
 	{
-		if ($widget->parent !== null)
-			throw new SwatException('Attempting to add a widget that already '.
-				'has a parent.');
+		if ($widget->parent !== null) {
+			throw new SwatException(
+				'Attempting to add a widget that already ' . 'has a parent.'
+			);
+		}
 
 		$this->children[] = $widget;
 		$widget->parent = $this;
 
-		if ($widget->id !== null)
+		if ($widget->id !== null) {
 			$this->children_by_id[$widget->id] = $widget;
+		}
 
 		$this->sendAddNotifySignal($widget);
 	}
@@ -238,10 +251,11 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	public function getChild($id)
 	{
-		if (array_key_exists($id, $this->children_by_id))
+		if (array_key_exists($id, $this->children_by_id)) {
 			return $this->children_by_id[$id];
-		else
+		} else {
 			return null;
+		}
 	}
 
 	// }}}
@@ -282,14 +296,17 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	public function getChildren($class_name = null)
 	{
-		if ($class_name === null)
+		if ($class_name === null) {
 			return $this->children;
+		}
 
 		$out = array();
 
-		foreach($this->children as $child_widget)
-			if ($child_widget instanceof $class_name)
+		foreach ($this->children as $child_widget) {
+			if ($child_widget instanceof $class_name) {
 				$out[] = $child_widget;
+			}
+		}
 
 		return $out;
 	}
@@ -312,8 +329,12 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	public function getDescendants($class_name = null)
 	{
-		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name))
+		if (
+			!(
+				$class_name === null ||
+				class_exists($class_name) ||
+				interface_exists($class_name)
+			)
 		) {
 			return array();
 		}
@@ -330,8 +351,10 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 			}
 
 			if ($child_widget instanceof SwatUIParent) {
-				$out = array_merge($out,
-					$child_widget->getDescendants($class_name));
+				$out = array_merge(
+					$out,
+					$child_widget->getDescendants($class_name)
+				);
 			}
 		}
 
@@ -353,8 +376,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	public function getFirstDescendant($class_name)
 	{
-		if (!class_exists($class_name) && !interface_exists($class_name))
+		if (!class_exists($class_name) && !interface_exists($class_name)) {
 			return null;
+		}
 
 		$out = null;
 
@@ -366,8 +390,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
 			if ($child_widget instanceof SwatUIParent) {
 				$out = $child_widget->getFirstDescendant($class_name);
-				if ($out !== null)
+				if ($out !== null) {
 					break;
+				}
 			}
 		}
 
@@ -390,8 +415,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	{
 		$states = array();
 
-		foreach ($this->getDescendants('SwatState') as $id => $object)
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
 			$states[$id] = $object->getState();
+		}
 
 		return $states;
 	}
@@ -410,9 +436,11 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	public function setDescendantStates(array $states)
 	{
-		foreach ($this->getDescendants('SwatState') as $id => $object)
-			if (isset($states[$id]))
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
+			if (isset($states[$id])) {
 				$object->setState($states[$id]);
+			}
+		}
 	}
 
 	// }}}
@@ -427,8 +455,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		parent::process();
 
 		foreach ($this->children as $child) {
-			if ($child !== null && !$child->isProcessed())
+			if ($child !== null && !$child->isProcessed()) {
 				$child->process();
+			}
 		}
 	}
 
@@ -441,8 +470,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -463,8 +493,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	{
 		$messages = parent::getMessages();
 
-		foreach ($this->children as $child)
+		foreach ($this->children as $child) {
 			$messages = array_merge($messages, $child->getMessages());
+		}
 
 		return $messages;
 	}
@@ -518,8 +549,11 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 		} else {
 			$class_name = get_class($child);
 			throw new SwatInvalidClassException(
-				'Only SwatWidget objects may be nested within SwatContainer. '.
-				"Attempting to add '{$class_name}'.", 0, $child);
+				'Only SwatWidget objects may be nested within SwatContainer. ' .
+					"Attempting to add '{$class_name}'.",
+				0,
+				$child
+			);
 		}
 	}
 
@@ -657,8 +691,9 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	 */
 	protected function displayChildren()
 	{
-		foreach ($this->children as &$child)
+		foreach ($this->children as &$child) {
 			$child->display();
+		}
 	}
 
 	// }}}
@@ -691,11 +726,10 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 	{
 		$this->notifyOfAdd($widget);
 
-		if ($this->parent !== null && $this->parent instanceof SwatContainer)
+		if ($this->parent !== null && $this->parent instanceof SwatContainer) {
 			$this->parent->sendAddNotifySignal($widget);
+		}
 	}
 
 	// }}}
 }
-
-?>

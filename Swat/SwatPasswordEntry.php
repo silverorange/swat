@@ -52,5 +52,3 @@ class SwatPasswordEntry extends SwatEntry
 
 	// }}}
 }
-
-?>

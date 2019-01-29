@@ -182,8 +182,9 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		if (!$this->isPreviewDisplayable()) {
 			parent::display();
@@ -201,7 +202,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 				$tag = new SwatHtmlTag('span');
 			}
 
-			$tag->id = $this->id.'_wrapper';
+			$tag->id = $this->id . '_wrapper';
 			$tag->title = $this->title;
 
 			if ($this->show_icon) {
@@ -234,13 +235,8 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 
 		$difference = ($preview_area - $image_area) / $image_area;
 
-		return (
-			$this->preview_image != '' &&
-			(
-				$this->show_preview_when_smaller ||
-				$difference >= 0.2
-			)
-		);
+		return $this->preview_image != '' &&
+			($this->show_preview_when_smaller || $difference >= 0.2);
 	}
 
 	// }}}
@@ -281,26 +277,32 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 			$javascript = '';
 		}
 
-		$javascript.= sprintf(
-			"var %s = new %s(\n".
-				"%s, %s, %s, %s, %s, %s);\n",
+		$javascript .= sprintf(
+			"var %s = new %s(\n" . "%s, %s, %s, %s, %s, %s);\n",
 			$this->id,
 			$this->getJavaScriptClass(),
 			SwatString::quoteJavaScriptString($this->id),
 			SwatString::quoteJavaScriptString($this->preview_image),
 			intval($this->preview_width),
 			intval($this->preview_height),
-			(($this->show_title) ? 'true' : 'false'),
-			SwatString::quoteJavaScriptString($this->preview_title));
+			$this->show_title ? 'true' : 'false',
+			SwatString::quoteJavaScriptString($this->preview_title)
+		);
 
 		if ($this->container_width !== null) {
-			$javascript.= sprintf("%s.width = %s;",
-				$this->id, (integer)$this->container_width);
+			$javascript .= sprintf(
+				"%s.width = %s;",
+				$this->id,
+				(int) $this->container_width
+			);
 		}
 
 		if ($this->container_height !== null) {
-			$javascript.= sprintf("%s.height = %s;",
-				$this->id, (integer)$this->container_height);
+			$javascript .= sprintf(
+				"%s.height = %s;",
+				$this->id,
+				(int) $this->container_height
+			);
 		}
 
 		return $javascript;
@@ -317,12 +319,13 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 	 */
 	protected function getInlineJavaScriptTranslations()
 	{
-		$close_text = ($this->close_text === null) ?
-			Swat::_('Close') : $this->close_text;
+		$close_text =
+			$this->close_text === null ? Swat::_('Close') : $this->close_text;
 
 		return sprintf(
 			"SwatImagePreviewDisplay.close_text = '%s';\n",
-			$close_text);
+			$close_text
+		);
 	}
 
 	// }}}
@@ -343,5 +346,3 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 
 	// }}}
 }
-
-?>

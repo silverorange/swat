@@ -167,7 +167,9 @@ abstract class SwatOptionControl extends SwatInputControl
 
 		if (is_array($metadata)) {
 			$this->option_metadata[$key] = array_merge(
-				$this->option_metadata[$key], $metadata);
+				$this->option_metadata[$key],
+				$metadata
+			);
 		} else {
 			$this->option_metadata[$key][$metadata] = $value;
 		}
@@ -208,8 +210,10 @@ abstract class SwatOptionControl extends SwatInputControl
 				$metadata = array();
 			}
 		} else {
-			if (isset($this->option_metadata[$key]) &&
-				isset($this->option_metadata[$key][$metadata])) {
+			if (
+				isset($this->option_metadata[$key]) &&
+				isset($this->option_metadata[$key][$metadata])
+			) {
 				$metadata = $this->option_metadata[$key][$metadata];
 			} else {
 				$metadata = null;
@@ -296,8 +300,9 @@ abstract class SwatOptionControl extends SwatInputControl
 		array $options,
 		$content_type = 'text/plain'
 	) {
-		foreach ($options as $value => $title)
+		foreach ($options as $value => $title) {
 			$this->addOption($value, $title, $content_type);
+		}
 	}
 
 	// }}}
@@ -316,9 +321,11 @@ abstract class SwatOptionControl extends SwatInputControl
 	{
 		$options = array();
 
-		foreach ($this->options as $option)
-			if ($option->value === $value)
+		foreach ($this->options as $option) {
+			if ($option->value === $value) {
 				$options[] = $option;
+			}
+		}
 
 		return $options;
 	}
@@ -354,8 +361,9 @@ abstract class SwatOptionControl extends SwatInputControl
 	{
 		$option = null;
 
-		if (array_key_exists($index, $this->options))
+		if (array_key_exists($index, $this->options)) {
 			$option = $this->options[$index];
+		}
 
 		return $option;
 	}
@@ -378,5 +386,3 @@ abstract class SwatOptionControl extends SwatInputControl
 
 	// }}}
 }
-
-?>

@@ -10,5 +10,3 @@
 interface SwatTableModel extends Countable, Iterator
 {
 }
-
-?>

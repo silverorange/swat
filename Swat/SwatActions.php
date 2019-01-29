@@ -111,8 +111,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 	{
 		parent::init();
 
-		foreach ($this->action_items as $action_item)
+		foreach ($this->action_items as $action_item) {
 			$action_item->init();
+		}
 	}
 
 	// }}}
@@ -147,9 +148,11 @@ class SwatActions extends SwatControl implements SwatUIParent
 		// set the flydown back to its initial state (no persistence). The
 		// flydown is never reset if there is a selected item and the selected
 		// items has a widget with one or more messages.
-		if ($this->auto_reset &&
-			($this->selected === null || $this->selected->widget === null ||
-			!$this->selected->widget->hasMessage())
+		if (
+			$this->auto_reset &&
+			($this->selected === null ||
+				$this->selected->widget === null ||
+				!$this->selected->widget->hasMessage())
 		) {
 			$flydown->reset();
 		}
@@ -183,10 +186,10 @@ class SwatActions extends SwatControl implements SwatUIParent
 			if ($item->widget !== null) {
 				$div = new SwatHtmlTag('div');
 
-				$div->class = ($item == $this->selected) ?
-					'swat-visible' : 'swat-hidden';
+				$div->class =
+					$item == $this->selected ? 'swat-visible' : 'swat-hidden';
 
-				$div->id = $this->id.'_'.$item->id;
+				$div->id = $this->id . '_' . $item->id;
 
 				$div->open();
 				$item->display();
@@ -223,9 +226,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 		if (isset($this->action_items_by_id[$selected_id])) {
 			$this->selected = $this->action_items_by_id[$selected_id];
 
-			if ($this->selected->widget !== null)
+			if ($this->selected->widget !== null) {
 				$this->selected->widget->process();
-
+			}
 		} else {
 			$this->selected = null;
 		}
@@ -248,8 +251,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 		$this->action_items[] = $item;
 		$item->parent = $this;
 
-		if ($item->id !== null)
+		if ($item->id !== null) {
 			$this->action_items_by_id[$item->id] = $item;
+		}
 	}
 
 	// }}}
@@ -272,12 +276,16 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	public function addChild(SwatObject $child)
 	{
-		if ($child instanceof SwatActionItem)
+		if ($child instanceof SwatActionItem) {
 			$this->addActionItem($child);
-		else
+		} else {
 			throw new SwatInvalidClassException(
-				'Only SwatActionItem objects may be nested within a '.
-				'SwatAction object.', 0, $child);
+				'Only SwatActionItem objects may be nested within a ' .
+					'SwatAction object.',
+				0,
+				$child
+			);
+		}
 	}
 
 	// }}}
@@ -295,8 +303,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 	{
 		$set = parent::getHtmlHeadEntrySet();
 
-		foreach ($this->action_items as $child_widget)
+		foreach ($this->action_items as $child_widget) {
 			$set->addEntrySet($child_widget->getHtmlHeadEntrySet());
+		}
 
 		return $set;
 	}
@@ -357,8 +366,12 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	public function getDescendants($class_name = null)
 	{
-		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name))
+		if (
+			!(
+				$class_name === null ||
+				class_exists($class_name) ||
+				interface_exists($class_name)
+			)
 		) {
 			return array();
 		}
@@ -375,8 +388,10 @@ class SwatActions extends SwatControl implements SwatUIParent
 			}
 
 			if ($action_item instanceof SwatUIParent) {
-				$out = array_merge($out,
-					$action_item->getDescendants($class_name));
+				$out = array_merge(
+					$out,
+					$action_item->getDescendants($class_name)
+				);
 			}
 		}
 
@@ -398,8 +413,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	public function getFirstDescendant($class_name)
 	{
-		if (!class_exists($class_name) && !interface_exists($class_name))
+		if (!class_exists($class_name) && !interface_exists($class_name)) {
 			return null;
+		}
 
 		$out = null;
 
@@ -411,8 +427,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 
 			if ($action_item instanceof SwatUIParent) {
 				$out = $action_item->getFirstDescendant($class_name);
-				if ($out !== null)
+				if ($out !== null) {
 					break;
+				}
 			}
 		}
 
@@ -435,8 +452,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 	{
 		$states = array();
 
-		foreach ($this->getDescendants('SwatState') as $id => $object)
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
 			$states[$id] = $object->getState();
+		}
 
 		return $states;
 	}
@@ -455,9 +473,11 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	public function setDescendantStates(array $states)
 	{
-		foreach ($this->getDescendants('SwatState') as $id => $object)
-			if (isset($states[$id]))
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
+			if (isset($states[$id])) {
 				$object->setState($states[$id]);
+			}
+		}
 	}
 
 	// }}}
@@ -487,13 +507,16 @@ class SwatActions extends SwatControl implements SwatUIParent
 		if ($view === null) {
 			$selector = null;
 		} else {
-			if ($selector === null)
+			if ($selector === null) {
 				$selector = $view->getFirstDescendant('SwatViewSelector');
+			}
 
-			if ($selector === null)
+			if ($selector === null) {
 				throw new SwatException(
-					'No selector was specified and view does not have a '.
-					'selector');
+					'No selector was specified and view does not have a ' .
+						'selector'
+				);
+			}
 		}
 
 		$this->view = $view;
@@ -524,8 +547,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 			$copy_action_item->parent = $copy;
 			$copy->action_items[$key] = $copy_action_item;
 			if ($copy_action_item->id !== null) {
-				$copy->action_items_by_id[$copy_action_item->id] =
-					$copy_action_item;
+				$copy->action_items_by_id[
+					$copy_action_item->id
+				] = $copy_action_item;
 			}
 		}
 
@@ -547,8 +571,11 @@ class SwatActions extends SwatControl implements SwatUIParent
 	{
 		$has_message = parent::hasMessage();
 
-		if ($this->selected !== null && $this->selected->widget !== null &&
-			$this->selected->widget->hasMessage()) {
+		if (
+			$this->selected !== null &&
+			$this->selected->widget !== null &&
+			$this->selected->widget->hasMessage()
+		) {
 			$has_message = true;
 		}
 
@@ -579,12 +606,12 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	protected function createCompositeWidgets()
 	{
-		$flydown = new SwatFlydown($this->id.'_action_flydown');
+		$flydown = new SwatFlydown($this->id . '_action_flydown');
 		$flydown->show_blank = $this->show_blank;
 
 		$this->addCompositeWidget($flydown, 'action_flydown');
 
-		$button = new SwatButton($this->id.'_apply_button');
+		$button = new SwatButton($this->id . '_apply_button');
 		$this->addCompositeWidget($button, 'apply_button');
 	}
 
@@ -609,8 +636,9 @@ class SwatActions extends SwatControl implements SwatUIParent
 		}
 
 		$values = array();
-		if ($this->show_blank)
+		if ($this->show_blank) {
 			$values[] = "''";
+		}
 
 		foreach ($this->action_items as $item) {
 			if ($item->visible) {
@@ -618,18 +646,26 @@ class SwatActions extends SwatControl implements SwatUIParent
 			}
 		}
 
-		$selected_value = ($this->selected === null) ?
-			'null' : SwatString::quoteJavaScriptString($this->selected->id);
+		$selected_value =
+			$this->selected === null
+				? 'null'
+				: SwatString::quoteJavaScriptString($this->selected->id);
 
-		$javascript.= sprintf("var %s_obj = new SwatActions(%s, [%s], %s);",
+		$javascript .= sprintf(
+			"var %s_obj = new SwatActions(%s, [%s], %s);",
 			$this->id,
 			SwatString::quoteJavaScriptString($this->id),
 			implode(', ', $values),
-			$selected_value);
+			$selected_value
+		);
 
 		if ($this->view !== null && $this->selector !== null) {
-			$javascript.= sprintf("\n%s_obj.setViewSelector(%s, '%s');",
-				$this->id, $this->view->id, $this->selector->getId());
+			$javascript .= sprintf(
+				"\n%s_obj.setViewSelector(%s, '%s');",
+				$this->id,
+				$this->view->id,
+				$this->selector->getId()
+			);
 		}
 
 		return $javascript;
@@ -646,21 +682,23 @@ class SwatActions extends SwatControl implements SwatUIParent
 	 */
 	protected function getInlineJavaScriptTranslations()
 	{
-		$dismiss_text  = Swat::_('Dismiss message.');
+		$dismiss_text = Swat::_('Dismiss message.');
 		$select_an_action_text = Swat::_('Please select an action.');
 		$select_an_item_text = Swat::_('Please select one or more items.');
-		$select_an_item_and_an_action_text =
-			Swat::_('Please select an action, and one or more items.');
+		$select_an_item_and_an_action_text = Swat::_(
+			'Please select an action, and one or more items.'
+		);
 
 		return sprintf(
-			"SwatActions.dismiss_text = '%s';\n".
-			"SwatActions.select_an_action_text = '%s';\n".
-			"SwatActions.select_an_item_text = '%s';\n".
-			"SwatActions.select_an_item_and_an_action_text = '%s';\n",
+			"SwatActions.dismiss_text = '%s';\n" .
+				"SwatActions.select_an_action_text = '%s';\n" .
+				"SwatActions.select_an_item_text = '%s';\n" .
+				"SwatActions.select_an_item_and_an_action_text = '%s';\n",
 			$dismiss_text,
 			$select_an_action_text,
 			$select_an_item_text,
-			$select_an_item_and_an_action_text);
+			$select_an_item_and_an_action_text
+		);
 	}
 
 	// }}}
@@ -681,5 +719,3 @@ class SwatActions extends SwatControl implements SwatUIParent
 
 	// }}}
 }
-
-?>

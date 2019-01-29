@@ -34,7 +34,7 @@ class SwatUI extends SwatObject
 	 * @see SwatUI::mapClassPrefixToPath()
 	 */
 	private static $class_map = array(
-		'Swat' => 'Swat',
+		'Swat' => 'Swat'
 	);
 
 	/**
@@ -144,7 +144,7 @@ class SwatUI extends SwatObject
 	 */
 	public static function setValidateMode($mode)
 	{
-		self::$validate_mode = (boolean)$mode;
+		self::$validate_mode = (bool) $mode;
 	}
 
 	// }}}
@@ -190,15 +190,17 @@ class SwatUI extends SwatObject
 			}
 			if (!$found) {
 				throw new SwatException(
-					'Cannot load a UI tree into a container that is not part '.
-					'of this SwatUI. If you need to load a UI tree into '.
-					'another SwatUI you should specify the root container '.
-					'when constructing this SwatUI.');
+					'Cannot load a UI tree into a container that is not part ' .
+						'of this SwatUI. If you need to load a UI tree into ' .
+						'another SwatUI you should specify the root container ' .
+						'when constructing this SwatUI.'
+				);
 			}
 		}
 
-		if ($validate === null)
+		if ($validate === null) {
 			$validate = self::$validate_mode;
+		}
 
 		$xml_file = null;
 
@@ -210,25 +212,30 @@ class SwatUI extends SwatObject
 		// filename of the xml
 		$class_map_reversed = array_reverse(self::$class_map, true);
 		foreach ($class_map_reversed as $prefix => $path) {
-			if (mb_strpos($xml_file, $prefix) !== false &&
-				is_callable(array($prefix, 'gettext'))) {
-
+			if (
+				mb_strpos($xml_file, $prefix) !== false &&
+				is_callable(array($prefix, 'gettext'))
+			) {
 				$this->translation_callback = array($prefix, 'gettext');
 			}
 		}
 
 		// fall back to the global gettext function if no package-specific
 		// one was found
-		if ($this->translation_callback === null &&
-			extension_loaded('gettext')) {
-
+		if (
+			$this->translation_callback === null &&
+			extension_loaded('gettext')
+		) {
 			$this->translation_callback = 'gettext';
 		}
 
-		if ($xml_file === null)
+		if ($xml_file === null) {
 			throw new SwatFileNotFoundException(
 				"SwatML file not found: '{$filename}'.",
-				0, $xml_file);
+				0,
+				$xml_file
+			);
+		}
 
 		// External entity loader is disabled for loading the SwatUI file to
 		// prevent local and remote file inclusion attacks. See
@@ -253,7 +260,7 @@ class SwatUI extends SwatObject
 			// back to version in svn
 			$schema_file = '@DATA-DIR@/Swat/system/swatml.rng';
 			if (!file_exists($schema_file)) {
-				$schema_file = __DIR__.'/../system/swatml.rng';
+				$schema_file = __DIR__ . '/../system/swatml.rng';
 			}
 
 			libxml_disable_entity_loader(false);
@@ -267,15 +274,20 @@ class SwatUI extends SwatObject
 
 		if (count($xml_errors) > 0) {
 			$message = '';
-			foreach ($xml_errors as $error)
-				$message.= sprintf("%s in %s, line %d\n",
+			foreach ($xml_errors as $error) {
+				$message .= sprintf(
+					"%s in %s, line %d\n",
 					trim($error->message),
 					$error->file,
-					$error->line);
+					$error->line
+				);
+			}
 
 			throw new SwatInvalidSwatMLException(
-				"Invalid SwatML:\n".$message,
-				0, $xml_file);
+				"Invalid SwatML:\n" . $message,
+				0,
+				$xml_file
+			);
 		}
 
 		$this->parseUI($document->documentElement, $container);
@@ -294,7 +306,7 @@ class SwatUI extends SwatObject
 	 */
 	public function hasWidget($id)
 	{
-		return (array_key_exists($id, $this->widgets));
+		return array_key_exists($id, $this->widgets);
 	}
 
 	// }}}
@@ -313,12 +325,15 @@ class SwatUI extends SwatObject
 	 */
 	public function getWidget($id)
 	{
-		if (array_key_exists($id, $this->widgets))
+		if (array_key_exists($id, $this->widgets)) {
 			return $this->widgets[$id];
-		else
+		} else {
 			throw new SwatWidgetNotFoundException(
 				"Widget with an id of '{$id}' not found.",
-				0, $id);
+				0,
+				$id
+			);
+		}
 	}
 
 	// }}}
@@ -390,8 +405,7 @@ class SwatUI extends SwatObject
 	 */
 	public function displayTidy()
 	{
-		$breaking_tags =
-			'@</?(div|p|table|tr|td|ul|li|ol|dl|option)[^<>]*>@ui';
+		$breaking_tags = '@</?(div|p|table|tr|td|ul|li|ol|dl|option)[^<>]*>@ui';
 
 		ob_start();
 		$this->display();
@@ -421,12 +435,15 @@ class SwatUI extends SwatObject
 	 */
 	public function setTranslationCallback($callback)
 	{
-		if (is_callable($callback))
+		if (is_callable($callback)) {
 			$this->translation_callback = $callback;
-		else
+		} else {
 			throw new SwatInvalidCallbackException(
 				'Cannot set translation callback to an uncallable callback.',
-				0, $callback);
+				0,
+				$callback
+			);
+		}
 	}
 
 	// }}}
@@ -452,24 +469,26 @@ class SwatUI extends SwatObject
 		array_push($this->stack, $parent);
 
 		foreach ($node->childNodes as $child_node) {
-
 			// only parse element nodes. ignore text nodes
 			if ($child_node->nodeType == XML_ELEMENT_NODE) {
-
 				if ($child_node->nodeName === 'property') {
 					$this->parseProperty($child_node, $parent);
 				} else {
 					$parsed_object = $this->parseObject($child_node);
 
-					$this->checkParsedObject($parsed_object,
-						$child_node->nodeName);
+					$this->checkParsedObject(
+						$parsed_object,
+						$child_node->nodeName
+					);
 
 					/*
 					 * No exceptions were thrown and the widget has an id
 					 * so add to widget list to make it look-up-able.
 					 */
-					if ($child_node->nodeName === 'widget' &&
-						$parsed_object->id !== null) {
+					if (
+						$child_node->nodeName === 'widget' &&
+						$parsed_object->id !== null
+					) {
 						$this->widgets[$parsed_object->id] = $parsed_object;
 					}
 
@@ -503,38 +522,47 @@ class SwatUI extends SwatObject
 		$element_name
 	) {
 		if ($element_name == 'widget') {
-			if (class_exists('SwatWidget') &&
+			if (
+				class_exists('SwatWidget') &&
 				$parsed_object instanceof SwatWidget &&
-				$parsed_object->id !== null) {
-
+				$parsed_object->id !== null
+			) {
 				// make sure id is unique
-				if (isset($this->widgets[$parsed_object->id]))
+				if (isset($this->widgets[$parsed_object->id])) {
 					throw new SwatDuplicateIdException(
-						"A widget with an id of '{$parsed_object->id}' ".
-						'already exists.',
-						0, $parsed_object->id);
-
-			} elseif (!class_exists('SwatWidget') ||
-				!$parsed_object instanceof SwatWidget) {
-
+						"A widget with an id of '{$parsed_object->id}' " .
+							'already exists.',
+						0,
+						$parsed_object->id
+					);
+				}
+			} elseif (
+				!class_exists('SwatWidget') ||
+				!$parsed_object instanceof SwatWidget
+			) {
 				$class_name = get_class($parsed_object);
 
 				throw new SwatInvalidClassException(
-					"'{$class_name}' is defined in a widget element but is ".
-					'not an instance of SwatWidget.',
-					0, $parsed_object);
+					"'{$class_name}' is defined in a widget element but is " .
+						'not an instance of SwatWidget.',
+					0,
+					$parsed_object
+				);
 			}
 		} elseif ($element_name == 'object') {
-			if (class_exists('SwatWidget') &&
-				$parsed_object instanceof SwatWidget) {
-
+			if (
+				class_exists('SwatWidget') &&
+				$parsed_object instanceof SwatWidget
+			) {
 				$class_name = get_class($parsed_object);
 
 				throw new SwatInvalidClassException(
-					"'{$class_name}' is defined in an object element but is ".
-					'and instance of SwatWidget and should be defined in a '.
-					'widget element.',
-					0, $parsed_object);
+					"'{$class_name}' is defined in an object element but is " .
+						'and instance of SwatWidget and should be defined in a ' .
+						'widget element.',
+					0,
+					$parsed_object
+				);
 			}
 		}
 	}
@@ -557,8 +585,11 @@ class SwatUI extends SwatObject
 		} else {
 			$class_name = get_class($parent);
 			throw new SwatDoesNotImplementException(
-				"Can not add object to parent. '{$class_name}' does not ".
-				'implement SwatUIParent.', 0, $parent);
+				"Can not add object to parent. '{$class_name}' does not " .
+					'implement SwatUIParent.',
+				0,
+				$parent
+			);
 		}
 	}
 
@@ -588,16 +619,19 @@ class SwatUI extends SwatObject
 		}
 
 		// NOTE: this works because SwatUIObject is abstract
-		if (!is_subclass_of($class, 'SwatUIObject'))
+		if (!is_subclass_of($class, 'SwatUIObject')) {
 			throw new SwatInvalidClassException(
-				"Class '{$class}' is not a a descendant of SwatUIObject and ".
-				'cannot be added to the widget tree.');
+				"Class '{$class}' is not a a descendant of SwatUIObject and " .
+					'cannot be added to the widget tree.'
+			);
+		}
 
 		$object = new $class();
 
 		// id is optional in the schema
-		if ($node->hasAttribute('id'))
+		if ($node->hasAttribute('id')) {
 			$object->id = $node->getAttribute('id');
+		}
 
 		return $object;
 	}
@@ -628,15 +662,18 @@ class SwatUI extends SwatObject
 		if (preg_match('/^(.*)\[(.*)\]$/u', $name, $regs)) {
 			$array_property = true;
 			$name = $regs[1];
-			$array_key = ($regs[2] == '') ? null : $regs[2];
+			$array_key = $regs[2] == '' ? null : $regs[2];
 		}
 
 		if (!array_key_exists($name, $class_properties)) {
 			$class_name = get_class($object);
 			throw new SwatInvalidPropertyException(
-				"Property '{$name}' does not exist in class '{$class_name}' ".
-				'but is used in SwatML.',
-				0, $object, $name);
+				"Property '{$name}' does not exist in class '{$class_name}' " .
+					'but is used in SwatML.',
+				0,
+				$object,
+				$name
+			);
 		}
 
 		// translatable is optional in the schema
@@ -654,8 +691,13 @@ class SwatUI extends SwatObject
 			$type = 'implicit-string';
 		}
 
-		$parsed_value =
-			$this->parseValue($name, $value, $type, $translatable, $object);
+		$parsed_value = $this->parseValue(
+			$name,
+			$value,
+			$type,
+			$translatable,
+			$object
+		);
 
 		if ($array_property) {
 			if ($parsed_value instanceof SwatCellRendererMapping) {
@@ -710,36 +752,48 @@ class SwatUI extends SwatObject
 		SwatUIObject $object
 	) {
 		switch ($type) {
-		case 'string':
-			return $this->translateValue($value, $translatable, $object);
-		case 'boolean':
-			return ($value == 'true') ? true : false;
-		case 'integer':
-			return intval($value);
-		case 'float':
-			return floatval($value);
-		case 'constant':
-			return $this->parseConstantExpression($value, $object);
-		case 'data':
-			return $this->parseMapping($name, $value, $object);
-		case 'date':
-			return new SwatDate($value);
-		case 'implicit-string':
-			if ($value == 'false' || $value == 'true' )
-				trigger_error(__CLASS__.': Possible missing type="boolean" '.
-					'attribute on property element', E_USER_NOTICE);
+			case 'string':
+				return $this->translateValue($value, $translatable, $object);
+			case 'boolean':
+				return $value == 'true' ? true : false;
+			case 'integer':
+				return intval($value);
+			case 'float':
+				return floatval($value);
+			case 'constant':
+				return $this->parseConstantExpression($value, $object);
+			case 'data':
+				return $this->parseMapping($name, $value, $object);
+			case 'date':
+				return new SwatDate($value);
+			case 'implicit-string':
+				if ($value == 'false' || $value == 'true') {
+					trigger_error(
+						__CLASS__ .
+							': Possible missing type="boolean" ' .
+							'attribute on property element',
+						E_USER_NOTICE
+					);
+				}
 
-			if (is_numeric($value))
-				trigger_error(__CLASS__.': Possible missing type="integer" '.
-					' or type="float" attribute on property element',
-					E_USER_NOTICE);
+				if (is_numeric($value)) {
+					trigger_error(
+						__CLASS__ .
+							': Possible missing type="integer" ' .
+							' or type="float" attribute on property element',
+						E_USER_NOTICE
+					);
+				}
 
-			return $this->translateValue($value, $translatable, $object);
-		default:
-			throw new SwatInvalidPropertyTypeException(
-				"Property type '{$type}' is not a recognized type ".
-				'but is used in SwatML.',
-				0, $object, $type);
+				return $this->translateValue($value, $translatable, $object);
+			default:
+				throw new SwatInvalidPropertyTypeException(
+					"Property type '{$type}' is not a recognized type " .
+						'but is used in SwatML.',
+					0,
+					$object,
+					$type
+				);
 		}
 	}
 
@@ -765,20 +819,28 @@ class SwatUI extends SwatObject
 		foreach (array_reverse($this->stack) as $ancestor) {
 			if ($renderer === null && $ancestor instanceof SwatCellRenderer) {
 				$renderer = $ancestor;
-			} else if ($ancestor instanceof SwatCellRendererContainer) {
+			} elseif ($ancestor instanceof SwatCellRendererContainer) {
 				$renderer_container = $ancestor;
 				break;
 			}
 		}
 
-		if ($renderer === null || $renderer_container === null)
+		if ($renderer === null || $renderer_container === null) {
 			throw new SwatInvalidPropertyTypeException(
-				"Property type 'data' is only allowed on a SwatCellRenderer ".
-				'or on a widget within a SwatWidgetCellRenderer.',
-				0, $object, 'data');
+				"Property type 'data' is only allowed on a SwatCellRenderer " .
+					'or on a widget within a SwatWidgetCellRenderer.',
+				0,
+				$object,
+				'data'
+			);
+		}
 
-		$mapping = $renderer_container->addMappingToRenderer($renderer,
-			$value, $name, $object);
+		$mapping = $renderer_container->addMappingToRenderer(
+			$renderer,
+			$value,
+			$name,
+			$object
+		);
 
 		return $mapping;
 	}
@@ -798,11 +860,13 @@ class SwatUI extends SwatObject
 	 */
 	private function translateValue($value, $translatable, SwatUIObject $object)
 	{
-		if (!$translatable)
+		if (!$translatable) {
 			return $value;
+		}
 
-		if ($this->translation_callback !== null)
+		if ($this->translation_callback !== null) {
 			return call_user_func($this->translation_callback, $value);
+		}
 
 		return $value;
 	}
@@ -841,12 +905,17 @@ class SwatUI extends SwatObject
 			'-' => 2,
 			'+' => 2,
 			'/' => 3,
-			'*' => 3);
+			'*' => 3
+		);
 
 		// this includes parentheses
-		$reg_exp  = '/([\|&\+\/\*\(\)-])/u';
-		$tokens = preg_split($reg_exp, $expression, -1,
-			PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+		$reg_exp = '/([\|&\+\/\*\(\)-])/u';
+		$tokens = preg_split(
+			$reg_exp,
+			$expression,
+			-1,
+			PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+		);
 
 		$stack = array();
 		$queue = array();
@@ -854,60 +923,73 @@ class SwatUI extends SwatObject
 		$prev_token = null;
 
 		$parenthesis_exception = new SwatInvalidConstantExpressionException(
-			"Mismatched parentheses in constant expression '{$expression}' ".
-			'in SwatML.',
-			0, $expression);
+			"Mismatched parentheses in constant expression '{$expression}' " .
+				'in SwatML.',
+			0,
+			$expression
+		);
 
 		$syntax_exception = new SwatInvalidConstantExpressionException(
 			"Invalid syntax in constant expression '{$expression}' in SwatML.",
-			0, $expression);
+			0,
+			$expression
+		);
 
 		foreach ($tokens as $token) {
-
 			if ($token === '(') {
 				array_push($stack, $token);
-
 			} elseif ($token === ')') {
-				if (array_key_exists($prev_token, $operators))
+				if (array_key_exists($prev_token, $operators)) {
 					throw $syntax_exception;
+				}
 
 				while (array_key_exists(end($stack), $operators)) {
 					array_push($queue, array_pop($stack));
-					if (count($stack) == 0)
+					if (count($stack) == 0) {
 						throw $parenthesis_exception;
+					}
 				}
 
-				if (array_pop($stack) != '(')
+				if (array_pop($stack) != '(') {
 					throw $parenthesis_exception;
-
+				}
 			} elseif (array_key_exists($token, $operators)) {
-				if ($prev_token === null || $prev_token === '(' ||
-					array_key_exists($prev_token, $operators))
+				if (
+					$prev_token === null ||
+					$prev_token === '(' ||
+					array_key_exists($prev_token, $operators)
+				) {
 					throw $syntax_exception;
+				}
 
-				while (count($stack) > 0 &&
+				while (
+					count($stack) > 0 &&
 					array_key_exists(end($stack), $operators) &&
-					$operators[$token] <= $operators[end($stack)])
+					$operators[$token] <= $operators[end($stack)]
+				) {
 					array_push($queue, array_pop($stack));
+				}
 
 				array_push($stack, $token);
-
 			} else {
 				$constant = trim($token);
 
 				// get a default scope for the constant
 				if (mb_strpos($constant, '::') === false) {
-					$constant = get_class($object).'::'.$constant;
+					$constant = get_class($object) . '::' . $constant;
 				}
 
 				// evaluate constant
-				if (defined($constant))
+				if (defined($constant)) {
 					$constant = constant($constant);
-				else
+				} else {
 					throw new SwatUndefinedConstantException(
-						"Undefined constant '{$constant}' in constant ".
-						"expression '{$expression}' in SwatML.",
-						0, $constant);
+						"Undefined constant '{$constant}' in constant " .
+							"expression '{$expression}' in SwatML.",
+						0,
+						$constant
+					);
+				}
 
 				array_push($queue, $constant);
 			}
@@ -918,8 +1000,9 @@ class SwatUI extends SwatObject
 		// collect left over operators
 		while (count($stack) > 0) {
 			$operator = array_pop($stack);
-			if ($operator === '(')
+			if ($operator === '(') {
 				throw $parenthesis_exception;
+			}
 
 			array_push($queue, $operator);
 		}
@@ -930,28 +1013,29 @@ class SwatUI extends SwatObject
 				$b = array_pop($eval_stack);
 				$a = array_pop($eval_stack);
 
-				if ($a === null || $b === null)
+				if ($a === null || $b === null) {
 					throw $syntax_exception;
+				}
 
 				switch ($value) {
-				case '|':
-					array_push($eval_stack, $a | $b);
-					break;
-				case '&':
-					array_push($eval_stack, $a & $b);
-					break;
-				case '-':
-					array_push($eval_stack, $a - $b);
-					break;
-				case '+':
-					array_push($eval_stack, $a + $b);
-					break;
-				case '/':
-					array_push($eval_stack, $a / $b);
-					break;
-				case '*':
-					array_push($eval_stack, $a * $b);
-					break;
+					case '|':
+						array_push($eval_stack, $a | $b);
+						break;
+					case '&':
+						array_push($eval_stack, $a & $b);
+						break;
+					case '-':
+						array_push($eval_stack, $a - $b);
+						break;
+					case '+':
+						array_push($eval_stack, $a + $b);
+						break;
+					case '/':
+						array_push($eval_stack, $a / $b);
+						break;
+					case '*':
+						array_push($eval_stack, $a * $b);
+						break;
 				}
 			} else {
 				array_push($eval_stack, $value);
@@ -963,5 +1047,3 @@ class SwatUI extends SwatObject
 
 	// }}}
 }
-
-?>

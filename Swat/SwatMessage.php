@@ -146,7 +146,7 @@ class SwatMessage extends SwatObject
 
 		// type-specific style
 		if ($this->type != '') {
-			$classes[] = 'swat-message-'.$this->type;
+			$classes[] = 'swat-message-' . $this->type;
 		}
 
 		if ($this->secondary_content !== null) {
@@ -173,5 +173,3 @@ class SwatMessage extends SwatObject
 
 	// }}}
 }
-
-?>

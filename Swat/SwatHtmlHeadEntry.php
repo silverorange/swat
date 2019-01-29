@@ -144,7 +144,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	 */
 	public function setIECondition($condition)
 	{
-		$this->ie_condition = (string)$condition;
+		$this->ie_condition = (string) $condition;
 	}
 
 	// }}}
@@ -160,7 +160,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	 *                     suffixed as a HTTP get var and can be used to
 	 *                     explicitly refresh the browser cache.
 	 */
-	protected abstract function displayInternal($uri_prefix = '', $tag = null);
+	abstract protected function displayInternal($uri_prefix = '', $tag = null);
 
 	// }}}
 	// {{{ protected abstract function displayInlineInternal()
@@ -172,7 +172,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 	 *
 	 * @param string $path the path containing the resource files.
 	 */
-	protected abstract function displayInlineInternal($path);
+	abstract protected function displayInlineInternal($path);
 
 	// }}}
 	// {{{ protected function openIECondition()
@@ -189,10 +189,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 		if ($this->ie_condition != '') {
 			// Double dashes are invalid inside comments.
 			$ie_condition = str_replace('--', '—', $this->ie_condition);
-			printf(
-				'<!--[if %s]>',
-				SwatString::minimizeEntities($ie_condition)
-			);
+			printf('<!--[if %s]>', SwatString::minimizeEntities($ie_condition));
 		}
 	}
 
@@ -215,5 +212,3 @@ abstract class SwatHtmlHeadEntry extends SwatObject
 
 	// }}}
 }
-
-?>

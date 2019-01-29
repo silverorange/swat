@@ -339,8 +339,10 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 	protected function displayTitle()
 	{
-		if (!$this->show_title ||
-			($this->title === null && $this->access_key === null)) {
+		if (
+			!$this->show_title ||
+			($this->title === null && $this->access_key === null)
+		) {
 			return;
 		}
 
@@ -363,16 +365,18 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	protected function displayRequiredStatus()
 	{
-		if ($this->required &&
-			$this->required_status_display & self::SHOW_REQUIRED) {
-
+		if (
+			$this->required &&
+			$this->required_status_display & self::SHOW_REQUIRED
+		) {
 			$span_tag = new SwatHtmlTag('span');
 			$span_tag->class = 'swat-required';
 			$span_tag->setContent(sprintf(' (%s)', Swat::_('required')));
 			$span_tag->display();
-		} elseif (!$this->required &&
-			$this->required_status_display & self::SHOW_OPTIONAL) {
-
+		} elseif (
+			!$this->required &&
+			$this->required_status_display & self::SHOW_OPTIONAL
+		) {
 			$span_tag = new SwatHtmlTag('span');
 			$span_tag->class = 'swat-optional';
 			$span_tag->setContent(sprintf(' (%s)', Swat::_('optional')));
@@ -398,8 +402,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 	protected function displayMessages()
 	{
-		if (!$this->display_messages || !$this->hasMessage())
+		if (!$this->display_messages || !$this->hasMessage()) {
 			return;
+		}
 
 		$messages = $this->getMessages();
 
@@ -411,13 +416,17 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 		foreach ($messages as $message) {
 			$message_li->class = $message->getCSSClassString();
-			$message_li->setContent($message->primary_content,
-				$message->content_type);
+			$message_li->setContent(
+				$message->primary_content,
+				$message->content_type
+			);
 
 			if ($message->secondary_content !== null) {
 				$secondary_span = new SwatHtmlTag('span');
-				$secondary_span->setContent($message->secondary_content,
-					$message->content_type);
+				$secondary_span->setContent(
+					$message->secondary_content,
+					$message->content_type
+				);
 
 				$message_li->open();
 				$message_li->displayContent();
@@ -448,8 +457,9 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		$control = $this->getFirstDescendant('SwatControl');
 		if ($control !== null) {
 			$note = $control->getNote();
-			if ($note !== null)
+			if ($note !== null) {
 				$notes[] = $note;
+			}
 		}
 
 		if (count($notes) == 1) {
@@ -465,8 +475,10 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 			$li_tag = new SwatHtmlTag('li');
 			foreach ($notes as $note) {
-				$li_tag->setContent($note->primary_content,
-					$note->content_type);
+				$li_tag->setContent(
+					$note->primary_content,
+					$note->content_type
+				);
 
 				$li_tag->display();
 			}
@@ -488,14 +500,17 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 	{
 		$classes = array('swat-form-field');
 
-		if ($this->widget_class !== null)
+		if ($this->widget_class !== null) {
 			$classes[] = $this->widget_class;
+		}
 
-		if ($this->display_messages && $this->hasMessage())
+		if ($this->display_messages && $this->hasMessage()) {
 			$classes[] = 'swat-form-field-with-messages';
+		}
 
-		if ($this->required)
+		if ($this->required) {
 			$classes[] = 'swat-required';
+		}
 
 		$classes = array_merge($classes, parent::getCSSClassNames());
 		return $classes;
@@ -516,11 +531,14 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 		$label_tag = new SwatHtmlTag('label');
 
 		if ($this->title !== null) {
-			if ($this->show_colon)
-				$label_tag->setContent(sprintf(Swat::_('%s: '), $this->title),
-					$this->title_content_type);
-			else
+			if ($this->show_colon) {
+				$label_tag->setContent(
+					sprintf(Swat::_('%s: '), $this->title),
+					$this->title_content_type
+				);
+			} else {
 				$label_tag->setContent($this->title, $this->title_content_type);
+			}
 		}
 
 		$label_tag->for = $this->getFocusableHtmlId();
@@ -553,8 +571,10 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 				$this->title_reversed = true;
 				$this->show_colon = false;
 			}
-		} elseif (class_exists('SwatSearchEntry') &&
-			$widget instanceof SwatSearchEntry) {
+		} elseif (
+			class_exists('SwatSearchEntry') &&
+			$widget instanceof SwatSearchEntry
+		) {
 			$this->show_colon = false;
 		}
 	}
@@ -579,5 +599,3 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
 	// }}}
 }
-
-?>

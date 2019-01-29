@@ -7,8 +7,8 @@
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatReplicableContainer extends SwatDisplayableContainer
-	implements SwatReplicable
+class SwatReplicableContainer extends SwatDisplayableContainer implements
+	SwatReplicable
 {
 	// {{{ public properties
 
@@ -68,18 +68,22 @@ class SwatReplicableContainer extends SwatDisplayableContainer
 	public function init()
 	{
 		// TODO: remove this when deprecated $replicators property is removed
-		if ($this->replication_ids === null && $this->replicators !== null)
+		if ($this->replication_ids === null && $this->replicators !== null) {
 			$this->replication_ids = array_keys($this->replicators);
+		}
 
-		if ($this->replication_ids === null)
+		if ($this->replication_ids === null) {
 			$this->replication_ids = array(0);
+		}
 
 		// Remove children, these are now the prototype widgets
-		foreach ($this->children as $child_widget)
+		foreach ($this->children as $child_widget) {
 			$this->prototype_widgets[] = $this->remove($child_widget);
+		}
 
-		foreach ($this->replication_ids as $id)
+		foreach ($this->replication_ids as $id) {
 			$this->addReplication($id);
+		}
 
 		parent::init();
 	}
@@ -89,16 +93,18 @@ class SwatReplicableContainer extends SwatDisplayableContainer
 
 	public function addReplication($id)
 	{
-		if (!in_array($id, $this->replication_ids))
+		if (!in_array($id, $this->replication_ids)) {
 			$this->replication_ids[] = $id;
+		}
 
-		$suffix = '_'.$id;
+		$suffix = '_' . $id;
 
 		foreach ($this->prototype_widgets as $prototype_widget) {
 			$widget = $prototype_widget->copy($suffix);
 
-			if ($widget->id !== null)
+			if ($widget->id !== null) {
 				$this->widgets[$id][$prototype_widget->id] = $widget;
+			}
 
 			if ($widget instanceof SwatUIParent) {
 				foreach ($widget->getDescendants() as $descendant) {
@@ -133,13 +139,12 @@ class SwatReplicableContainer extends SwatDisplayableContainer
 	{
 		$widget = null;
 
-		if (isset($this->widgets[$replicator_id][$widget_id]))
+		if (isset($this->widgets[$replicator_id][$widget_id])) {
 			$widget = $this->widgets[$replicator_id][$widget_id];
+		}
 
 		return $widget;
 	}
 
 	// }}}
 }
-
-?>

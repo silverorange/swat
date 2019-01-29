@@ -23,15 +23,17 @@ class SwatReplicableFormField extends SwatReplicableContainer
 	public function init()
 	{
 		$children = array();
-		foreach ($this->children as $child_widget)
+		foreach ($this->children as $child_widget) {
 			$children[] = $this->remove($child_widget);
+		}
 
 		$field = new SwatFormField();
 		$field->id = $field->getUniqueId();
 		$prototype_id = $field->id;
 
-		foreach ($children as $child_widget)
+		foreach ($children as $child_widget) {
 			$field->add($child_widget);
+		}
 
 		$this->add($field);
 
@@ -45,5 +47,3 @@ class SwatReplicableFormField extends SwatReplicableContainer
 
 	// }}}
 }
-
-?>

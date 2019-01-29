@@ -28,5 +28,3 @@ class SwatFooterFormField extends SwatFormField
 
 	// }}}
 }
-
-?>

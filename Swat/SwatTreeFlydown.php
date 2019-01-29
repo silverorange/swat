@@ -61,8 +61,9 @@ class SwatTreeFlydown extends SwatFlydown
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		$actual_value = $this->value;
 		if (count($this->path) == 0 && $this->value !== null) {
@@ -94,8 +95,9 @@ class SwatTreeFlydown extends SwatFlydown
 	{
 		$options = array();
 
-		foreach ($this->tree->getChildren() as $child_node)
+		foreach ($this->tree->getChildren() as $child_node) {
 			$this->flattenTree($options, $child_node);
+		}
 
 		return $options;
 	}
@@ -128,13 +130,14 @@ class SwatTreeFlydown extends SwatFlydown
 		$pad = str_repeat('&nbsp;', $level * 3);
 		$path[] = $tree_option->value;
 
-		$tree_option->title = $pad.$tree_option->title;
+		$tree_option->title = $pad . $tree_option->title;
 		$tree_option->value = $path;
 
 		$options[] = $tree_option;
 
-		foreach($node->getChildren() as $child_node)
+		foreach ($node->getChildren() as $child_node) {
 			$this->flattenTree($options, $child_node, $level + 1, $path);
+		}
 	}
 
 	// }}}
@@ -151,8 +154,12 @@ class SwatTreeFlydown extends SwatFlydown
 		if ($tree instanceof SwatDataTreeNode) {
 			$tree = SwatTreeFlydownNode::convertFromDataTree($tree);
 		} elseif (!($tree instanceof SwatTreeFlydownNode)) {
-			throw new SwatInvalidClassException('Tree must be an intance of '.
-				'either SwatDataTreeNode or SwatTreeFlydownNode.', 0, $tree);
+			throw new SwatInvalidClassException(
+				'Tree must be an intance of ' .
+					'either SwatDataTreeNode or SwatTreeFlydownNode.',
+				0,
+				$tree
+			);
 		}
 
 		$this->tree = $tree;
@@ -196,5 +203,3 @@ class SwatTreeFlydown extends SwatFlydown
 
 	// }}}
 }
-
-?>

@@ -66,12 +66,13 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
-		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
+		$this->getForm()->addHiddenField($this->id . '_submitted', 1);
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
@@ -82,11 +83,13 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 		$input_tag->accesskey = $this->access_key;
 		$input_tag->tabindex = $this->tab_index;
 
-		if ($this->value)
+		if ($this->value) {
 			$input_tag->checked = 'checked';
+		}
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$input_tag->disabled = 'disabled';
+		}
 
 		echo '<span class="swat-checkbox-wrapper">';
 		$input_tag->display();
@@ -106,8 +109,11 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 	{
 		parent::process();
 
-		if ($this->getForm()->getHiddenField($this->id.'_submitted') === null)
+		if (
+			$this->getForm()->getHiddenField($this->id . '_submitted') === null
+		) {
 			return;
+		}
 
 		$data = &$this->getForm()->getFormData();
 		$this->value = array_key_exists($this->id, $data);
@@ -158,7 +164,7 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 	 */
 	public function getFocusableHtmlId()
 	{
-		return ($this->visible) ? $this->id : null;
+		return $this->visible ? $this->id : null;
 	}
 
 	// }}}
@@ -179,5 +185,3 @@ class SwatCheckbox extends SwatInputControl implements SwatState
 
 	// }}}
 }
-
-?>

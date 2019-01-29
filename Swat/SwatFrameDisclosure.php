@@ -39,8 +39,9 @@ class SwatFrameDisclosure extends SwatDisclosure
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		SwatWidget::display();
 
@@ -50,20 +51,21 @@ class SwatFrameDisclosure extends SwatDisclosure
 
 		// get appropriate header level, limit to h6
 		while ($ancestor !== null && $level < 6) {
-			if ($ancestor instanceof SwatFrame)
+			if ($ancestor instanceof SwatFrame) {
 				$level++;
+			}
 
 			$ancestor = $ancestor->parent;
 		}
 
-		$header_tag = new SwatHtmlTag('h'.$level);
+		$header_tag = new SwatHtmlTag('h' . $level);
 		$header_tag->class = 'swat-frame-title';
 
 		$control_div = $this->getControlDivTag();
 		$span_tag = $this->getSpanTag();
 		$input_tag = $this->getInputTag();
 		$container_div = $this->getContainerDivTag();
-		$container_div->class.= ' swat-frame-contents';
+		$container_div->class .= ' swat-frame-contents';
 		$animate_div = $this->getAnimateDivTag();
 
 		$control_div->open();
@@ -93,8 +95,8 @@ class SwatFrameDisclosure extends SwatDisclosure
 	protected function getContainerDivTag()
 	{
 		$div = new SwatHtmlTag('div');
-		$div->class = 'swat-disclosure-container '.
-			'swat-frame-disclosure-container';
+		$div->class =
+			'swat-disclosure-container ' . 'swat-frame-disclosure-container';
 
 		return $div;
 	}
@@ -148,5 +150,3 @@ class SwatFrameDisclosure extends SwatDisclosure
 
 	// }}}
 }
-
-?>

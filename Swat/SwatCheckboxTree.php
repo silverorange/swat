@@ -60,12 +60,13 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		SwatWidget::display();
 
-		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
+		$this->getForm()->addHiddenField($this->id . '_submitted', 1);
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
@@ -77,7 +78,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 
 		$this->input_tag = new SwatHtmlTag('input');
 		$this->input_tag->type = 'checkbox';
-		$this->input_tag->name = $this->id.'[]';
+		$this->input_tag->name = $this->id . '[]';
 
 		if ($this->tree !== null) {
 			$num_nodes = $this->displayNode($this->tree);
@@ -88,7 +89,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 		// Only display the check-all widget if more than one checkable item is
 		// displayed.
 		$check_all = $this->getCompositeWidget('check_all');
-		$check_all->visible = ($num_nodes > 1 && $this->show_check_all);
+		$check_all->visible = $num_nodes > 1 && $this->show_check_all;
 		$check_all->display();
 
 		$div_tag->close();
@@ -162,12 +163,12 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 			$index = $node->getIndex();
 		} else {
 			// index of other nodes is a combination of parent indexes
-			$index = $parent_index.'.'.$node->getIndex();
+			$index = $parent_index . '.' . $node->getIndex();
 
 			echo '<li>';
 
 			if (isset($node->value)) {
-				$this->input_tag->id = $this->id.'_'.$index;
+				$this->input_tag->id = $this->id . '_' . $index;
 				$this->input_tag->value = $node->value;
 
 				if (in_array($node->value, $this->values)) {
@@ -180,7 +181,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 					$this->input_tag->disabled = 'disabled';
 				}
 
-				$this->label_tag->for = $this->id.'_'.$index;
+				$this->label_tag->for = $this->id . '_' . $index;
 				$this->label_tag->setContent($node->title);
 
 				echo '<span class="swat-checkbox-wrapper">';
@@ -217,5 +218,3 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 
 	// }}}
 }
-
-?>

@@ -43,12 +43,37 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 	 * @var array
 	 */
 	public $colors = array(
-		'ffffff', 'eeeeec', 'd3d7cf', 'babdb6', '888a85', '666666',
-		'555753', '2e3436', '000000', 'fce94f', 'edd400', 'c4a000',
-		'fcaf3e', 'f57900', 'ce5c00', 'e9b96e', 'c17d11', '8f5902',
-		'8ae234', '73d216', '4e9a06', '729fcf', '3465a4', '204a87',
-		'ad7fa8', '75507b', '5c3566', 'ef2929', 'cc0000', 'a40000',
-		);
+		'ffffff',
+		'eeeeec',
+		'd3d7cf',
+		'babdb6',
+		'888a85',
+		'666666',
+		'555753',
+		'2e3436',
+		'000000',
+		'fce94f',
+		'edd400',
+		'c4a000',
+		'fcaf3e',
+		'f57900',
+		'ce5c00',
+		'e9b96e',
+		'c17d11',
+		'8f5902',
+		'8ae234',
+		'73d216',
+		'4e9a06',
+		'729fcf',
+		'3465a4',
+		'204a87',
+		'ad7fa8',
+		'75507b',
+		'5c3566',
+		'ef2929',
+		'cc0000',
+		'a40000'
+	);
 
 	// }}}
 	// {{{ public function __construct()
@@ -108,11 +133,14 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 
 		if ($this->required && $this->value === null) {
 			$this->addMessage($this->getValidationMessage('required'));
-
-		} elseif ($this->value !== null &&
-			!$this->validateColor($this->value)) {
-			$message = sprintf(Swat::_('“%s” is not a valid color.'),
-				$this->value);
+		} elseif (
+			$this->value !== null &&
+			!$this->validateColor($this->value)
+		) {
+			$message = sprintf(
+				Swat::_('“%s” is not a valid color.'),
+				$this->value
+			);
 
 			$this->addMessage(new SwatMessage($message, 'error'));
 		}
@@ -149,18 +177,23 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 	{
 		$javascript = parent::getInlineJavaScript();
 
-		$colors = "'".implode("', '", $this->colors)."'";
+		$colors = "'" . implode("', '", $this->colors) . "'";
 
 		if ($this->none_option) {
-			$none_option = ($this->none_option_title === null) ? 'null' :
-				SwatString::quoteJavaScriptString($this->none_option_title);
+			$none_option =
+				$this->none_option_title === null
+					? 'null'
+					: SwatString::quoteJavaScriptString(
+						$this->none_option_title
+					);
 		} else {
 			$none_option = 'null';
 		}
 
 		$js_class_name = $this->getJavaScriptClassName();
 
-		$javascript.= "\nvar {$this->id}_obj = new {$js_class_name}(".
+		$javascript .=
+			"\nvar {$this->id}_obj = new {$js_class_name}(" .
 			"'{$this->id}', [{$colors}], {$none_option});\n";
 
 		return $javascript;
@@ -193,7 +226,7 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 		}
 
 		if ($regexp !== false) {
-			$valid = (preg_match($regexp, $this->value) === 1);
+			$valid = preg_match($regexp, $this->value) === 1;
 		}
 
 		return $valid;
@@ -214,5 +247,3 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
 
 	// }}}
 }
-
-?>

@@ -32,28 +32,30 @@ class SwatRemoveInputCell extends SwatInputCell
 	public function init()
 	{
 		$row = $this->getInputRow();
-		if ($row === null)
-			throw new SwatException('Remove input-cells can only be used '.
-				'inside table-views with an input-row.');
+		if ($row === null) {
+			throw new SwatException(
+				'Remove input-cells can only be used ' .
+					'inside table-views with an input-row.'
+			);
+		}
 
 		$content = new SwatContentBlock();
 
 		ob_start();
 
 		$view = $this->getFirstAncestor('SwatTableView');
-		$view_id = ($view === null) ? null : $view->id;
-		$id = ($view_id === null) ? $row->id : $view_id.'_'.$row->id;
+		$view_id = $view === null ? null : $view->id;
+		$id = $view_id === null ? $row->id : $view_id . '_' . $row->id;
 
 		$anchor_tag = new SwatHtmlTag('a');
 		$anchor_tag->title = Swat::_('Remove this row');
 		$anchor_tag->class = 'swat-remove-input-cell-remove';
-		$anchor_tag->href =
-			sprintf("javascript:%s_obj.removeRow('%%s');", $id);
+		$anchor_tag->href = sprintf("javascript:%s_obj.removeRow('%%s');", $id);
 
 		$anchor_tag->setContent(Swat::_('Remove this row'));
 		$anchor_tag->display();
 
-		$content->content  = ob_get_clean();
+		$content->content = ob_get_clean();
 		$content->content_type = 'text/xml';
 
 		// manually set the widget since setWidget() is over-ridden to throw
@@ -101,5 +103,3 @@ class SwatRemoveInputCell extends SwatInputCell
 
 	// }}}
 }
-
-?>

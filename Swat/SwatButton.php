@@ -139,10 +139,11 @@ class SwatButton extends SwatInputControl
 	{
 		parent::init();
 
-		if ($this->stock_id === null)
+		if ($this->stock_id === null) {
 			$this->setFromStock('submit', false);
-		else
+		} else {
 			$this->setFromStock($this->stock_id, false);
+		}
 	}
 
 	// }}}
@@ -155,16 +156,19 @@ class SwatButton extends SwatInputControl
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
 		$input_tag = $this->getInputTag();
 		$input_tag->display();
 
-		if ($this->show_processing_throbber ||
-			$this->confirmation_message !== null) {
+		if (
+			$this->show_processing_throbber ||
+			$this->confirmation_message !== null
+		) {
 			Swat::displayInlineJavaScript($this->getInlineJavaScript());
 		}
 	}
@@ -228,44 +232,47 @@ class SwatButton extends SwatInputControl
 	public function setFromStock($stock_id, $overwrite_properties = true)
 	{
 		switch ($stock_id) {
-		case 'submit':
-			$title = Swat::_('Submit');
-			$class = 'swat-button-submit';
-			break;
+			case 'submit':
+				$title = Swat::_('Submit');
+				$class = 'swat-button-submit';
+				break;
 
-		case 'create':
-			$title = Swat::_('Create');
-			$class = 'swat-button-create';
-			break;
+			case 'create':
+				$title = Swat::_('Create');
+				$class = 'swat-button-create';
+				break;
 
-		case 'add':
-			$title = Swat::_('Add');
-			$class = 'swat-button-add';
-			break;
+			case 'add':
+				$title = Swat::_('Add');
+				$class = 'swat-button-add';
+				break;
 
-		case 'apply':
-			$title = Swat::_('Apply');
-			$class = 'swat-button-apply';
-			break;
+			case 'apply':
+				$title = Swat::_('Apply');
+				$class = 'swat-button-apply';
+				break;
 
-		case 'delete':
-			$title = Swat::_('Delete');
-			$class = 'swat-button-delete';
-			break;
+			case 'delete':
+				$title = Swat::_('Delete');
+				$class = 'swat-button-delete';
+				break;
 
-		case 'cancel':
-			$title = Swat::_('Cancel');
-			$class = 'swat-button-cancel';
-			break;
+			case 'cancel':
+				$title = Swat::_('Cancel');
+				$class = 'swat-button-cancel';
+				break;
 
-		default:
-			throw new SwatUndefinedStockTypeException(
-				"Stock type with id of '{$stock_id}' not found.",
-				0, $stock_id);
+			default:
+				throw new SwatUndefinedStockTypeException(
+					"Stock type with id of '{$stock_id}' not found.",
+					0,
+					$stock_id
+				);
 		}
 
-		if ($overwrite_properties || ($this->title === null))
+		if ($overwrite_properties || $this->title === null) {
 			$this->title = $title;
+		}
 
 		$this->stock_class = $class;
 	}
@@ -315,14 +322,16 @@ class SwatButton extends SwatInputControl
 		$classes = array('swat-button');
 
 		$form = $this->getFirstAncestor('SwatForm');
-		$primary = ($form !== null &&
-			$form->getFirstDescendant('SwatButton') === $this);
+		$primary =
+			$form !== null && $form->getFirstDescendant('SwatButton') === $this;
 
-		if ($primary)
+		if ($primary) {
 			$classes[] = 'swat-primary';
+		}
 
-		if ($this->stock_class !== null)
+		if ($this->stock_class !== null) {
 			$classes[] = $this->stock_class;
+		}
 
 		$classes = array_merge($classes, parent::getCSSClassNames());
 
@@ -356,30 +365,38 @@ class SwatButton extends SwatInputControl
 	 */
 	protected function getInlineJavaScript()
 	{
-		$show_processing_throbber = ($this->show_processing_throbber) ?
-			'true' : 'false';
+		$show_processing_throbber = $this->show_processing_throbber
+			? 'true'
+			: 'false';
 
-		$javascript = sprintf("var %s_obj = new %s('%s', %s);",
+		$javascript = sprintf(
+			"var %s_obj = new %s('%s', %s);",
 			$this->id,
 			$this->getJavaScriptClass(),
 			$this->id,
-			$show_processing_throbber);
+			$show_processing_throbber
+		);
 
 		if ($this->show_processing_throbber) {
-			$javascript.= sprintf("\n%s_obj.setProcessingMessage(%s);",
-				$this->id, SwatString::quoteJavaScriptString(
-					$this->processing_throbber_message));
+			$javascript .= sprintf(
+				"\n%s_obj.setProcessingMessage(%s);",
+				$this->id,
+				SwatString::quoteJavaScriptString(
+					$this->processing_throbber_message
+				)
+			);
 		}
 
-		if ($this->confirmation_message !== null)
-			$javascript.= sprintf("\n%s_obj.setConfirmationMessage(%s);",
-				$this->id, SwatString::quoteJavaScriptString(
-					$this->confirmation_message));
+		if ($this->confirmation_message !== null) {
+			$javascript .= sprintf(
+				"\n%s_obj.setConfirmationMessage(%s);",
+				$this->id,
+				SwatString::quoteJavaScriptString($this->confirmation_message)
+			);
+		}
 
 		return $javascript;
 	}
 
 	// }}}
 }
-
-?>

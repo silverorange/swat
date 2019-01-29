@@ -68,8 +68,9 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 		$renderer_key = spl_object_hash($renderer);
 		$this->mappings[$renderer_key] = array();
 
-		if ($renderer->id !== null)
+		if ($renderer->id !== null) {
 			$this->renderers_by_id[$renderer->id] = $renderer;
+		}
 	}
 
 	// }}}
@@ -114,10 +115,14 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 		$renderer_key = spl_object_hash($renderer);
 
 		foreach ($mappings as $mapping) {
-			if ($renderer->isPropertyStatic($mapping->property))
-				throw new SwatException(sprintf(
-					'The %s property can not be data-mapped',
-					$mapping->property));
+			if ($renderer->isPropertyStatic($mapping->property)) {
+				throw new SwatException(
+					sprintf(
+						'The %s property can not be data-mapped',
+						$mapping->property
+					)
+				);
+			}
 
 			$this->mappings[$renderer_key][] = $mapping;
 		}
@@ -141,9 +146,14 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 		SwatCellRenderer $renderer,
 		SwatCellRendererMapping $mapping
 	) {
-		if ($renderer->isPropertyStatic($mapping->property))
-			throw new SwatException(sprintf(
-				'The %s property can not be data-mapped', $mapping->property));
+		if ($renderer->isPropertyStatic($mapping->property)) {
+			throw new SwatException(
+				sprintf(
+					'The %s property can not be data-mapped',
+					$mapping->property
+				)
+			);
+		}
 
 		$renderer_key = spl_object_hash($renderer);
 		$this->mappings[$renderer_key][] = $mapping;
@@ -170,7 +180,6 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 
 		$renderer_hash = spl_object_hash($renderer);
 		foreach ($this->mappings[$renderer_hash] as $mapping) {
-
 			// set local variables
 			$property = $mapping->property;
 			$field = $mapping->field;
@@ -185,7 +194,6 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 					} else {
 						$array_ref[$mapping->array_key] = $data_object->$field;
 					}
-
 				} else {
 					// starting a new array
 					$array_properties[] = $mapping->property;
@@ -193,15 +201,16 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 					if ($mapping->array_key === null) {
 						$renderer->$property = array($data_object->$field);
 					} else {
-						$renderer->$property =
-							array($mapping->array_key => $data_object->$field);
+						$renderer->$property = array(
+							$mapping->array_key => $data_object->$field
+						);
 					}
 				}
 			} else {
 				// look for leading '!' and inverse value if found
 				if (strncmp($field, '!', 1) === 0) {
 					$field = mb_substr($field, 1);
-					$renderer->$property = !($data_object->$field);
+					$renderer->$property = !$data_object->$field;
 				} else {
 					$renderer->$property = $data_object->$field;
 				}
@@ -227,12 +236,15 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 */
 	public function getRendererByPosition($position = 0)
 	{
-		if ($position < count($this->renderers))
+		if ($position < count($this->renderers)) {
 			return $this->renderers[$position];
+		}
 
 		throw new SwatObjectNotFoundException(
 			'Set does not contain that many renderers.',
-			0, $position);
+			0,
+			$position
+		);
 	}
 
 	// }}}
@@ -252,12 +264,15 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	 */
 	public function getRenderer($renderer_id)
 	{
-		if (array_key_exists($renderer_id, $this->renderers_by_id))
+		if (array_key_exists($renderer_id, $this->renderers_by_id)) {
 			return $this->renderers_by_id[$renderer_id];
+		}
 
 		throw new SwatObjectNotFoundException(
 			"Cell renderer with an id of '{$renderer_id}' not found.",
-			0, $renderer_id);
+			0,
+			$renderer_id
+		);
 	}
 
 	// }}}
@@ -370,8 +385,9 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 	{
 		$first = null;
 
-		if (count($this->renderers) > 0)
+		if (count($this->renderers) > 0) {
 			$first = reset($this->renderers);
+		}
 
 		return $first;
 	}
@@ -409,5 +425,3 @@ class SwatCellRendererSet extends SwatObject implements Iterator, Countable
 
 	// }}}
 }
-
-?>

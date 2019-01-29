@@ -137,8 +137,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function init()
 	{
-		foreach ($this->renderers as $renderer)
+		foreach ($this->renderers as $renderer) {
 			$renderer->init();
+		}
 
 		if ($this->id === null) {
 			$this->id = $this->getUniqueId();
@@ -147,10 +148,14 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 		// add the input cell to this column's view's input row
 		if ($this->input_cell !== null) {
-			$input_row = $this->parent->getFirstRowByClass('SwatTableViewInputRow');
-			if ($input_row === null)
-				throw new SwatException('Table-view does not have an input '.
-					'row.');
+			$input_row = $this->parent->getFirstRowByClass(
+				'SwatTableViewInputRow'
+			);
+			if ($input_row === null) {
+				throw new SwatException(
+					'Table-view does not have an input ' . 'row.'
+				);
+			}
 
 			$input_row->addInputCell($this->input_cell, $this->id);
 		}
@@ -161,8 +166,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 	public function process()
 	{
-		foreach ($this->renderers as $renderer)
+		foreach ($this->renderers as $renderer) {
 			$renderer->process();
+		}
 	}
 
 	// }}}
@@ -173,7 +179,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function hasHeader()
 	{
-		return ($this->visible && $this->title != '');
+		return $this->visible && $this->title != '';
 	}
 
 	// }}}
@@ -184,15 +190,17 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function displayHeaderCell()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		$th_tag = new SwatHtmlTag('th', $this->getThAttributes());
 		$th_tag->scope = 'col';
 
 		$colspan = $this->getXhtmlColspan();
-		if ($colspan > 1)
+		if ($colspan > 1) {
 			$th_tag->colspan = $colspan;
+		}
 
 		$th_tag->open();
 		$this->displayHeader();
@@ -225,8 +233,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 			// Note: This always minimizes entities in titles regardless of
 			// $this->title_content_type, as its a html tag attribute.
 			$abbr_tag->title = SwatString::minimizeEntities($title);
-			$abbr_tag->setContent($this->abbreviated_title,
-				$this->abbreviated_title_content_type);
+			$abbr_tag->setContent(
+				$this->abbreviated_title,
+				$this->abbreviated_title_content_type
+			);
 
 			$abbr_tag->display();
 		}
@@ -246,8 +256,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function display($row)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		$this->setupRenderers($row);
 		$this->displayRenderers($row);
@@ -266,12 +277,14 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function getMessages($data)
 	{
-		foreach ($this->renderers as $renderer)
+		foreach ($this->renderers as $renderer) {
 			$this->renderers->applyMappingsToRenderer($renderer, $data);
+		}
 
 		$messages = array();
-		foreach ($this->renderers as $renderer)
+		foreach ($this->renderers as $renderer) {
 			$messages = array_merge($messages, $renderer->getMessages());
+		}
 
 		return $messages;
 	}
@@ -291,8 +304,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function hasMessage($data)
 	{
-		foreach ($this->renderers as $renderer)
+		foreach ($this->renderers as $renderer) {
 			$this->renderers->applyMappingsToRenderer($renderer, $data);
+		}
 
 		$has_message = false;
 		foreach ($this->renderers as $renderer) {
@@ -398,15 +412,21 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		if ($child instanceof SwatCellRenderer) {
 			$this->addRenderer($child);
 		} elseif ($child instanceof SwatInputCell) {
-			if ($this->input_cell === null)
+			if ($this->input_cell === null) {
 				$this->setInputCell($child);
-			else
-				throw new SwatException('Only one input cell may be added to '.
-					'a table-view column.');
+			} else {
+				throw new SwatException(
+					'Only one input cell may be added to ' .
+						'a table-view column.'
+				);
+			}
 		} else {
 			throw new SwatInvalidClassException(
-				'Only SwatCellRenderer and SwatInputCell objects may be '.
-				'nested within SwatTableViewColumn objects.', 0, $child);
+				'Only SwatCellRenderer and SwatInputCell objects may be ' .
+					'nested within SwatTableViewColumn objects.',
+				0,
+				$child
+			);
 		}
 	}
 
@@ -428,8 +448,12 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function getDescendants($class_name = null)
 	{
-		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name))
+		if (
+			!(
+				$class_name === null ||
+				class_exists($class_name) ||
+				interface_exists($class_name)
+			)
 		) {
 			return array();
 		}
@@ -446,14 +470,18 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 			}
 
 			if ($renderer instanceof SwatUIParent) {
-				$out = array_merge($out,
-					$renderer->getDescendants($class_name));
+				$out = array_merge(
+					$out,
+					$renderer->getDescendants($class_name)
+				);
 			}
 		}
 
 		if ($this->input_cell !== null) {
-			if ($class_name === null ||
-				$this->input_cell instanceof $class_name) {
+			if (
+				$class_name === null ||
+				$this->input_cell instanceof $class_name
+			) {
 				if ($this->input_cell->id === null) {
 					$out[] = $this->input_cell;
 				} else {
@@ -462,8 +490,10 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 			}
 
 			if ($this->input_cell instanceof SwatUIParent) {
-				$out = array_merge($out,
-					$this->input_cell->getDescendants($class_name));
+				$out = array_merge(
+					$out,
+					$this->input_cell->getDescendants($class_name)
+				);
 			}
 		}
 
@@ -485,16 +515,19 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	public function getFirstDescendant($class_name)
 	{
-		if (!class_exists($class_name) && !interface_exists($class_name))
+		if (!class_exists($class_name) && !interface_exists($class_name)) {
 			return null;
+		}
 
 		$out = parent::getFirstDescendant($class_name);
 
-		if ($out === null && $this->input_cell instanceof $class_name)
+		if ($out === null && $this->input_cell instanceof $class_name) {
 			$out = $this->input_cell;
+		}
 
-		if ($out === null && $this->input_cell instanceof SwatUIParent)
+		if ($out === null && $this->input_cell instanceof SwatUIParent) {
 			$out = $this->input_cell->getFirstDescendant($class_name);
+		}
 
 		return $out;
 	}
@@ -538,7 +571,8 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 		if ($this->input_cell !== null) {
 			$set->addEntrySet(
-				$this->input_cell->getAvailableHtmlHeadEntrySet());
+				$this->input_cell->getAvailableHtmlHeadEntrySet()
+			);
 		}
 
 		return $set;
@@ -557,7 +591,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	public function getTdAttributes()
 	{
 		return array(
-			'class' => $this->getCSSClassString(),
+			'class' => $this->getCSSClassString()
 		);
 	}
 
@@ -574,7 +608,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	public function getThAttributes()
 	{
 		return array(
-			'class' => $this->getCSSClassString(),
+			'class' => $this->getCSSClassString()
 		);
 	}
 
@@ -639,8 +673,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	{
 		$copy = parent::copy($id_suffix);
 
-		if ($id_suffix != '' && $copy->id !== null)
-			$copy->id = $copy->id.$id_suffix;
+		if ($id_suffix != '' && $copy->id !== null) {
+			$copy->id = $copy->id . $id_suffix;
+		}
 
 		if ($this->input_cell !== null) {
 			$copy_input_cell = $this->input_cell->copy($id_suffix);
@@ -666,8 +701,9 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
 
 		$colspan = $this->getXhtmlColspan();
-		if ($colspan > 1)
+		if ($colspan > 1) {
 			$td_tag->colspan = $colspan;
+		}
 
 		$td_tag->open();
 		$this->displayRenderersInternal($data);
@@ -698,24 +734,32 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 			$first = true;
 			foreach ($this->renderers as $renderer) {
-				if (!$renderer->visible)
+				if (!$renderer->visible) {
 					continue;
+				}
 
-				if ($first)
+				if ($first) {
 					$first = false;
-				else
+				} else {
 					echo ' ';
+				}
 
 				// get renderer class names
 				$classes = array('swat-table-view-column-renderer');
-				$classes = array_merge($classes,
-					$renderer->getInheritanceCSSClassNames());
+				$classes = array_merge(
+					$classes,
+					$renderer->getInheritanceCSSClassNames()
+				);
 
-				$classes = array_merge($classes,
-					$renderer->getBaseCSSClassNames());
+				$classes = array_merge(
+					$classes,
+					$renderer->getBaseCSSClassNames()
+				);
 
-				$classes = array_merge($classes,
-					$renderer->getDataSpecificCSSClassNames());
+				$classes = array_merge(
+					$classes,
+					$renderer->getDataSpecificCSSClassNames()
+				);
 
 				$classes = array_merge($classes, $renderer->classes);
 
@@ -738,9 +782,11 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 	 */
 	protected function setupRenderers($data)
 	{
-		if (count($this->renderers) == 0)
-			throw new SwatException('No renderer has been provided for this '.
-				'column.');
+		if (count($this->renderers) == 0) {
+			throw new SwatException(
+				'No renderer has been provided for this ' . 'column.'
+			);
+		}
 
 		$sensitive = $this->view->isSensitive();
 
@@ -797,21 +843,29 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 		$classes = array_merge($classes, $this->classes);
 
 		$first_renderer = $this->renderers->getFirst();
-		if ($this->show_renderer_classes &&
-			$first_renderer instanceof SwatCellRenderer) {
-
+		if (
+			$this->show_renderer_classes &&
+			$first_renderer instanceof SwatCellRenderer
+		) {
 			// renderer inheritance classes
-			$classes = array_merge($classes,
-				$first_renderer->getInheritanceCSSClassNames());
+			$classes = array_merge(
+				$classes,
+				$first_renderer->getInheritanceCSSClassNames()
+			);
 
 			// renderer base classes
-			$classes = array_merge($classes,
-				$first_renderer->getBaseCSSClassNames());
+			$classes = array_merge(
+				$classes,
+				$first_renderer->getBaseCSSClassNames()
+			);
 
 			// renderer data specific classes
-			if ($this->renderers->mappingsApplied())
-				$classes = array_merge($classes,
-					$first_renderer->getDataSpecificCSSClassNames());
+			if ($this->renderers->mappingsApplied()) {
+				$classes = array_merge(
+					$classes,
+					$first_renderer->getDataSpecificCSSClassNames()
+				);
+			}
 
 			// renderer user-specified classes
 			$classes = array_merge($classes, $first_renderer->classes);
@@ -839,5 +893,3 @@ class SwatTableViewColumn extends SwatCellRendererContainer
 
 	// }}}
 }
-
-?>

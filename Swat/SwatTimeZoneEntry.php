@@ -66,7 +66,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 			DateTimeZone::EUROPE,
 			DateTimeZone::INDIAN,
 			DateTimeZone::PACIFIC,
-			DateTimeZone::UTC,
+			DateTimeZone::UTC
 		);
 
 		$time_zone_list = $this->parseAreaWhitelist($area_whitelist);
@@ -83,8 +83,9 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -119,16 +120,19 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	{
 		parent::process();
 
-		$areas_flydown   = $this->getCompositeWidget('areas_flydown');
+		$areas_flydown = $this->getCompositeWidget('areas_flydown');
 		$regions_flydown = $this->getCompositeWidget('regions_flydown');
 
 		if ($areas_flydown->value === 'UTC') {
 			$this->value = 'UTC';
-		} elseif ($areas_flydown->value === null ||
-			$regions_flydown->value === null) {
+		} elseif (
+			$areas_flydown->value === null ||
+			$regions_flydown->value === null
+		) {
 			$this->value = null;
 		} else {
-			$this->value = $areas_flydown->value.'/'.$regions_flydown->value;
+			$this->value =
+				$areas_flydown->value . '/' . $regions_flydown->value;
 		}
 
 		if (!$this->required && $this->value === null && $this->isSensitive()) {
@@ -201,13 +205,13 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 	 */
 	protected function createCompositeWidgets()
 	{
-		$areas_flydown = new SwatFlydown($this->id.'_areas');
+		$areas_flydown = new SwatFlydown($this->id . '_areas');
 		$areas_flydown->addOptionsByArray($this->areas);
 		$areas_flydown->show_blank = true;
 		$areas_flydown->blank_title = Swat::_('choose region …');
 		$this->addCompositeWidget($areas_flydown, 'areas_flydown');
 
-		$regions_flydown = new SwatCascadeFlydown($this->id.'_regions');
+		$regions_flydown = new SwatCascadeFlydown($this->id . '_regions');
 		$regions_flydown->show_blank = true;
 		$regions_flydown->blank_value = null;
 		$regions_flydown->cascade_from = $areas_flydown;
@@ -269,7 +273,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		ksort($time_zone_list);
 
 		foreach ($time_zone_list as $area => $regions) {
-			$this->areas[$area]   = $area;
+			$this->areas[$area] = $area;
 			$this->regions[$area] = array();
 
 			// special case for UTC area
@@ -300,13 +304,13 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		foreach ($regions as $region) {
 			$title = $this->getRegionTitle($region);
 
-			if (isset($abbreviations[$area.'/'.$region])) {
-				$data = $abbreviations[$area.'/'.$region];
+			if (isset($abbreviations[$area . '/' . $region])) {
+				$data = $abbreviations[$area . '/' . $region];
 
 				if (!empty($data['dt']) && !empty($data['st'])) {
-					$title.= sprintf(' (%s/%s)', $data['st'], $data['dt']);
+					$title .= sprintf(' (%s/%s)', $data['st'], $data['dt']);
 				} elseif (!empty($data['st'])) {
-					$title.= sprintf(' (%s)', $data['st']);
+					$title .= sprintf(' (%s)', $data['st']);
 				}
 			}
 
@@ -383,7 +387,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 		$region = explode('/', $region);
 		$title = array_shift($region);
 		foreach ($region as $part) {
-			$title.= ' ('.$part.')';
+			$title .= ' (' . $part . ')';
 		}
 
 		return $title;
@@ -391,5 +395,3 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
 	// }}}
 }
-
-?>

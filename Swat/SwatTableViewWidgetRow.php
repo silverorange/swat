@@ -82,15 +82,23 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	 */
 	public function addChild(SwatObject $child)
 	{
-		if (!($child instanceof SwatWidget))
-			throw new SwatInvalidClassException(sprintf(
-				'Only SwatWidget objects may be nested within '.
-				'SwatTableViewWidgetRow. Attempting to add "%s".',
-				get_class($child)), 0, $child);
+		if (!($child instanceof SwatWidget)) {
+			throw new SwatInvalidClassException(
+				sprintf(
+					'Only SwatWidget objects may be nested within ' .
+						'SwatTableViewWidgetRow. Attempting to add "%s".',
+					get_class($child)
+				),
+				0,
+				$child
+			);
+		}
 
-		if ($this->widget !== null)
+		if ($this->widget !== null) {
 			throw new SwatException(
-				'Can only set one widget for a widget row.');
+				'Can only set one widget for a widget row.'
+			);
+		}
 
 		$this->setWidget($child);
 	}
@@ -113,8 +121,12 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	 */
 	public function getDescendants($class_name = null)
 	{
-		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name))
+		if (
+			!(
+				$class_name === null ||
+				class_exists($class_name) ||
+				interface_exists($class_name)
+			)
 		) {
 			return array();
 		}
@@ -131,8 +143,10 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 			}
 
 			if ($this->widget instanceof SwatUIParent) {
-				$out = array_merge($out,
-					$this->widget->getDescendants($class_name));
+				$out = array_merge(
+					$out,
+					$this->widget->getDescendants($class_name)
+				);
 			}
 		}
 
@@ -154,16 +168,19 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	 */
 	public function getFirstDescendant($class_name)
 	{
-		if (!class_exists($class_name) && !interface_exists($class_name))
+		if (!class_exists($class_name) && !interface_exists($class_name)) {
 			return null;
+		}
 
 		$out = null;
 
-		if ($this->widget instanceof $class_name)
+		if ($this->widget instanceof $class_name) {
 			$out = $this->widget;
+		}
 
-		if ($out === null && $this->widget instanceof SwatUIParent)
+		if ($out === null && $this->widget instanceof SwatUIParent) {
 			$out = $this->widget->getFirstDescendant($class_name);
+		}
 
 		return $out;
 	}
@@ -184,8 +201,9 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	{
 		$states = array();
 
-		foreach ($this->getDescendants('SwatState') as $id => $object)
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
 			$states[$id] = $object->getState();
+		}
 
 		return $states;
 	}
@@ -204,9 +222,11 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	 */
 	public function setDescendantStates(array $states)
 	{
-		foreach ($this->getDescendants('SwatState') as $id => $object)
-			if (isset($states[$id]))
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
+			if (isset($states[$id])) {
 				$object->setState($states[$id]);
+			}
+		}
 	}
 
 	// }}}
@@ -222,9 +242,11 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	 */
 	public function setWidget(SwatWidget $widget)
 	{
-		if ($widget->parent !== null)
-			throw new SwatException('Attempting to add a widget that already '.
-				'has a parent.');
+		if ($widget->parent !== null) {
+			throw new SwatException(
+				'Attempting to add a widget that already ' . 'has a parent.'
+			);
+		}
 
 		$this->widget = $widget;
 		$widget->parent = $this;
@@ -251,8 +273,9 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	{
 		parent::init();
 
-		if ($this->widget !== null)
+		if ($this->widget !== null) {
 			$this->widget->init();
+		}
 	}
 
 	// }}}
@@ -262,8 +285,9 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 	{
 		parent::process();
 
-		if ($this->widget !== null)
+		if ($this->widget !== null) {
 			$this->widget->process();
+		}
 	}
 
 	// }}}
@@ -271,8 +295,9 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -285,13 +310,15 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 
 		$tr_tag->open();
 
-		if ($this->offset > 0 && $this->position === self::POSITION_LEFT)
+		if ($this->offset > 0 && $this->position === self::POSITION_LEFT) {
 			$this->displayOffsetCell($this->offset);
+		}
 
 		$this->displayWidgetCell();
 
-		if ($this->offset > 0 && $this->position === self::POSITION_RIGHT)
+		if ($this->offset > 0 && $this->position === self::POSITION_RIGHT) {
 			$this->displayOffsetCell($this->offset);
+		}
 
 		$tr_tag->close();
 	}
@@ -425,13 +452,13 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 
 	protected function displayWidgetCell()
 	{
-			$td_tag = new SwatHtmlTag('td');
-			$colspan = $this->view->getXhtmlColspan();
-			$td_tag->colspan = $colspan - $this->offset;
-			$td_tag->class = 'widget-cell';
-			$td_tag->open();
-			$this->widget->display();
-			$td_tag->close();
+		$td_tag = new SwatHtmlTag('td');
+		$colspan = $this->view->getXhtmlColspan();
+		$td_tag->colspan = $colspan - $this->offset;
+		$td_tag->class = 'widget-cell';
+		$td_tag->open();
+		$this->widget->display();
+		$td_tag->close();
 	}
 
 	// }}}
@@ -451,5 +478,3 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
 
 	// }}}
 }
-
-?>

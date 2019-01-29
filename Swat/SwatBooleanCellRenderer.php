@@ -80,34 +80,39 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 		$content_type = 'text/plain';
 
 		switch ($stock_id) {
-		case 'yes-no':
-			$false_content = Swat::_('No');
-			$true_content = Swat::_('Yes');
-			break;
+			case 'yes-no':
+				$false_content = Swat::_('No');
+				$true_content = Swat::_('Yes');
+				break;
 
-		case 'check-only':
-			$content_type = 'text/xml';
-			$false_content = ' '; // non-breaking space
+			case 'check-only':
+				$content_type = 'text/xml';
+				$false_content = ' '; // non-breaking space
 
-			ob_start();
-			$this->displayCheck();
-			$true_content = ob_get_clean();
-			break;
+				ob_start();
+				$this->displayCheck();
+				$true_content = ob_get_clean();
+				break;
 
-		default:
-			throw new SwatUndefinedStockTypeException(
-				"Stock type with id of '{$stock_id}' not found.",
-				0, $stock_id);
+			default:
+				throw new SwatUndefinedStockTypeException(
+					"Stock type with id of '{$stock_id}' not found.",
+					0,
+					$stock_id
+				);
 		}
 
-		if ($overwrite_properties || ($this->false_content === null))
+		if ($overwrite_properties || $this->false_content === null) {
 			$this->false_content = $false_content;
+		}
 
-		if ($overwrite_properties || ($this->true_content === null))
+		if ($overwrite_properties || $this->true_content === null) {
 			$this->true_content = $true_content;
+		}
 
-		if ($overwrite_properties || ($this->content_type === null))
+		if ($overwrite_properties || $this->content_type === null) {
 			$this->content_type = $content_type;
+		}
 	}
 
 	// }}}
@@ -120,23 +125,27 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::render();
 
-		if ($this->stock_id === null)
+		if ($this->stock_id === null) {
 			$this->setFromStock('check-only', false);
-		else
+		} else {
 			$this->setFromStock($this->stock_id, false);
+		}
 
-		if ($this->content_type === null)
+		if ($this->content_type === null) {
 			$this->content_type = 'text/plain';
+		}
 
-		if ((boolean)$this->value)
+		if ((bool) $this->value) {
 			$this->renderTrue();
-		else
+		} else {
 			$this->renderFalse();
+		}
 	}
 
 	// }}}
@@ -153,10 +162,11 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	 */
 	public function getDataSpecificCSSClassNames()
 	{
-		if ((boolean)$this->value)
+		if ((bool) $this->value) {
 			return array('swat-boolean-cell-renderer-checked');
-		else
+		} else {
 			return array();
+		}
 	}
 
 	// }}}
@@ -167,10 +177,11 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	 */
 	protected function renderTrue()
 	{
-		if ($this->content_type === 'text/plain')
+		if ($this->content_type === 'text/plain') {
 			echo SwatString::minimizeEntities($this->true_content);
-		else
+		} else {
 			echo $this->true_content;
+		}
 	}
 
 	// }}}
@@ -181,10 +192,11 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 	 */
 	protected function renderFalse()
 	{
-		if ($this->content_type === 'text/plain')
+		if ($this->content_type === 'text/plain') {
 			echo SwatString::minimizeEntities($this->false_content);
-		else
+		} else {
 			echo $this->false_content;
+		}
 	}
 
 	// }}}
@@ -208,5 +220,3 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
 
 	// }}}
 }
-
-?>

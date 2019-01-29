@@ -75,7 +75,7 @@ class SwatRating extends SwatInputControl
 		if ($flydown->value == '') {
 			$this->value = null;
 		} else {
-			$this->value = (integer)$flydown->value;
+			$this->value = (int) $flydown->value;
 		}
 	}
 
@@ -89,17 +89,18 @@ class SwatRating extends SwatInputControl
 	{
 		parent::display();
 
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		$flydown = $this->getCompositeWidget('flydown');
-		$flydown->value = (string)$this->value;
+		$flydown->value = (string) $this->value;
 
 		$div = new SwatHtmlTag('div');
 		$div->id = $this->id;
 		$div->class = $this->getCSSClassString();
 		if (!$this->isSensitive()) {
-			$div->class.= ' swat-insensitive';
+			$div->class .= ' swat-insensitive';
 		}
 		$div->open();
 		$flydown->display();
@@ -149,8 +150,12 @@ class SwatRating extends SwatInputControl
 	protected function getInlineJavaScript()
 	{
 		$quoted_string = SwatString::quoteJavaScriptString($this->id);
-		return sprintf('var %s_obj = new SwatRating(%s, %s);',
-			$this->id, $quoted_string, intval($this->maximum_value));
+		return sprintf(
+			'var %s_obj = new SwatRating(%s, %s);',
+			$this->id,
+			$quoted_string,
+			intval($this->maximum_value)
+		);
 	}
 
 	// }}}
@@ -164,12 +169,10 @@ class SwatRating extends SwatInputControl
 	protected function createCompositeWidgets()
 	{
 		$flydown = new SwatFlydown();
-		$flydown->id = $this->id.'_flydown';
+		$flydown->id = $this->id . '_flydown';
 		$flydown->serialize_values = false;
 		$this->addCompositeWidget($flydown, 'flydown');
 	}
 
 	// }}}
 }
-
-?>

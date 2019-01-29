@@ -22,9 +22,7 @@ abstract class SwatExceptionDisplayer
 	 *
 	 * This is called by SwatException::process().
 	 */
-	public abstract function display(SwatException $e);
+	abstract public function display(SwatException $e);
 
 	// }}}
 }
-
-?>

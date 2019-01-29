@@ -88,8 +88,12 @@ class Swat
 	 */
 	public static function ngettext($singular_message, $plural_message, $number)
 	{
-		return dngettext(self::GETTEXT_DOMAIN,
-			$singular_message, $plural_message, $number);
+		return dngettext(
+			self::GETTEXT_DOMAIN,
+			$singular_message,
+			$plural_message,
+			$number
+		);
 	}
 
 	// }}}
@@ -99,7 +103,7 @@ class Swat
 	{
 		$path = '@DATA-DIR@/Swat/locale';
 		if (mb_substr($path, 0, 1) === '@') {
-			$path = __DIR__.'/../locale';
+			$path = __DIR__ . '/../locale';
 		}
 
 		bindtextdomain(self::GETTEXT_DOMAIN, $path);
@@ -121,8 +125,9 @@ class Swat
 		echo sprintf(self::_('Methods for class %s:'), get_class($object));
 		echo '<ul>';
 
-		foreach (get_class_methods(get_class($object)) as $method_name)
+		foreach (get_class_methods(get_class($object)) as $method_name) {
 			echo '<li>', $method_name, '</li>';
+		}
 
 		echo '</ul>';
 	}
@@ -167,7 +172,7 @@ class Swat
 	 */
 	public static function printObject($object)
 	{
-		echo '<pre>'.print_r($object, true).'</pre>';
+		echo '<pre>' . print_r($object, true) . '</pre>';
 	}
 
 	// }}}
@@ -182,7 +187,8 @@ class Swat
 	public static function displayInlineJavaScript($javascript)
 	{
 		if ($javascript != '') {
-			echo '<script type="text/javascript">', "\n//<![CDATA[\n",
+			echo '<script type="text/javascript">',
+				"\n//<![CDATA[\n",
 				rtrim($javascript),
 				"\n//]]>\n</script>";
 		}
@@ -223,7 +229,6 @@ class Swat
  * Define a dummy dngettext() for when gettext is not available.
  */
 if (!function_exists("dngettext")) {
-
 	/**
 	 * Dummy translation function performs a passthrough on string to be
 	 * translated
@@ -241,12 +246,12 @@ if (!function_exists("dngettext")) {
 	 */
 	function dngettext($domain, $messageid1, $messageid2, $n)
 	{
-		if ($n == 1)
+		if ($n == 1) {
 			return $messageid1;
+		}
 
 		return $messageid2;
 	}
-
 }
 
 // }}}
@@ -256,7 +261,6 @@ if (!function_exists("dngettext")) {
  * Define a dummy dgettext() for when gettext is not available.
  */
 if (!function_exists("dgettext")) {
-
 	/**
 	 * Dummy translation function performs a passthrough on string to be
 	 * translated
@@ -273,9 +277,6 @@ if (!function_exists("dgettext")) {
 	{
 		return $messageid;
 	}
-
 }
 
 // }}}
-
-?>

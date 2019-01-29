@@ -61,8 +61,9 @@ class SwatDisclosure extends SwatDisplayableContainer
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		SwatWidget::display();
 
@@ -144,7 +145,7 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$input->type = 'hidden';
 		// initial value is blank, value is set by JavaScript
 		$input->value = '';
-		$input->id = $this->id.'_input';
+		$input->id = $this->id . '_input';
 
 		return $input;
 	}
@@ -190,9 +191,14 @@ class SwatDisclosure extends SwatDisplayableContainer
 	 */
 	protected function getInlineJavaScript()
 	{
-		$open = ($this->open) ? 'true' : 'false';
-		return sprintf("var %s_obj = new %s('%s', %s);",
-			$this->id, $this->getJavaScriptClass(), $this->id, $open);
+		$open = $this->open ? 'true' : 'false';
+		return sprintf(
+			"var %s_obj = new %s('%s', %s);",
+			$this->id,
+			$this->getJavaScriptClass(),
+			$this->id,
+			$open
+		);
 	}
 
 	// }}}
@@ -209,7 +215,7 @@ class SwatDisclosure extends SwatDisplayableContainer
 		$classes = array(
 			'swat-disclosure',
 			// always display open in case JavaScript is turned off
-			'swat-disclosure-control-opened',
+			'swat-disclosure-control-opened'
 		);
 
 		$classes = array_merge($classes, parent::getCSSClassNames());
@@ -218,5 +224,3 @@ class SwatDisclosure extends SwatDisplayableContainer
 
 	// }}}
 }
-
-?>

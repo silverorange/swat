@@ -144,13 +144,15 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 	{
 		parent::process();
 
-		if ($this->show_check_all)
+		if ($this->show_check_all) {
 			$this->check_all->process();
+		}
 
 		// this is part of the old selection API
 		$item_name = $this->getCheckboxRendererId();
-		if (isset($_POST[$item_name]) && is_array($_POST[$item_name]))
+		if (isset($_POST[$item_name]) && is_array($_POST[$item_name])) {
 			$this->items = $_POST[$item_name];
+		}
 	}
 
 	// }}}
@@ -223,12 +225,16 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 
 	private function getCheckboxRenderer()
 	{
-		foreach ($this->getRenderers() as $renderer)
-			if ($renderer instanceof SwatCheckboxCellRenderer)
+		foreach ($this->getRenderers() as $renderer) {
+			if ($renderer instanceof SwatCheckboxCellRenderer) {
 				return $renderer;
+			}
+		}
 
-		throw new SwatException("The checkbox column ‘{$this->id}’ must ".
-			'contain a checkbox cell renderer.');
+		throw new SwatException(
+			"The checkbox column ‘{$this->id}’ must " .
+				'contain a checkbox cell renderer.'
+		);
 	}
 
 	// }}}
@@ -255,5 +261,3 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 
 	// }}}
 }
-
-?>

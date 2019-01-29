@@ -28,13 +28,12 @@ class SwatFlydownDivider extends SwatOption
 		$title = null,
 		$content_type = 'text/plain'
 	) {
-		if ($title === null)
+		if ($title === null) {
 			$title = str_repeat('—', 6);
+		}
 
 		parent::__construct($value, $title, $content_type);
 	}
 
 	// }}}
 }
-
-?>

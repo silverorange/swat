@@ -201,14 +201,17 @@ class SwatError
 	 */
 	public function process()
 	{
-		if (ini_get('display_errors'))
+		if (ini_get('display_errors')) {
 			$this->display();
+		}
 
-		if (ini_get('log_errors'))
+		if (ini_get('log_errors')) {
 			$this->log();
+		}
 
-		if ($this->severity & self::$fatal_severity)
+		if ($this->severity & self::$fatal_severity) {
 			exit(1);
+		}
 	}
 
 	// }}}
@@ -288,10 +291,11 @@ class SwatError
 	public function display()
 	{
 		if (self::$displayer === null) {
-			if (isset($_SERVER['REQUEST_URI']))
+			if (isset($_SERVER['REQUEST_URI'])) {
 				echo $this->toXHTML();
-			else
+			} else {
 				echo $this->toString();
+			}
 		} else {
 			$displayer = self::$displayer;
 			$displayer->display($this);
@@ -312,10 +316,12 @@ class SwatError
 	{
 		ob_start();
 
-		printf("%s error in file '%s' line %s",
+		printf(
+			"%s error in file '%s' line %s",
 			$this->getSeverityString(),
 			$this->file,
-			$this->line);
+			$this->line
+		);
 
 		return ob_get_clean();
 	}
@@ -334,39 +340,45 @@ class SwatError
 	{
 		ob_start();
 
-		printf("%s:\n\nMessage:\n\t%s\n\n".
-			"In file '%s' on line %s.\n\n",
+		printf(
+			"%s:\n\nMessage:\n\t%s\n\n" . "In file '%s' on line %s.\n\n",
 			$this->getSeverityString(),
 			$this->message,
 			$this->file,
-			$this->line);
+			$this->line
+		);
 
 		echo "Stack Trace:\n";
 		$count = count($this->backtrace);
 
 		foreach ($this->backtrace as $entry) {
-			$class = array_key_exists('class', $entry) ?
-				$entry['class'] : null;
+			$class = array_key_exists('class', $entry) ? $entry['class'] : null;
 
-			$function = array_key_exists('function', $entry) ?
-				$entry['function'] : null;
+			$function = array_key_exists('function', $entry)
+				? $entry['function']
+				: null;
 
 			if (array_key_exists('args', $entry)) {
 				$arguments = $this->getArguments(
-					$entry['args'], $function, $class);
+					$entry['args'],
+					$function,
+					$class
+				);
 			} else {
 				$arguments = '';
 			}
 
-			printf("%s. In file '%s' on line %s.\n%sMethod: %s%s%s(%s)\n",
+			printf(
+				"%s. In file '%s' on line %s.\n%sMethod: %s%s%s(%s)\n",
 				str_pad(--$count, 6, ' ', STR_PAD_LEFT),
 				array_key_exists('file', $entry) ? $entry['file'] : 'unknown',
 				array_key_exists('line', $entry) ? $entry['line'] : 'unknown',
 				str_repeat(' ', 8),
-				($class === null) ? '' : $class,
+				$class === null ? '' : $class,
 				array_key_exists('type', $entry) ? $entry['type'] : '',
-				($function === null) ? '' : $function,
-				$arguments);
+				$function === null ? '' : $function,
+				$arguments
+			);
 		}
 
 		echo "\n";
@@ -392,44 +404,50 @@ class SwatError
 
 		echo '<div class="swat-exception">';
 
-		printf('<h3>%s</h3>'.
-				'<div class="swat-exception-body">'.
-				'Message:<div class="swat-exception-message">%s</div>'.
-				'Occurred in file <strong>%s</strong> '.
+		printf(
+			'<h3>%s</h3>' .
+				'<div class="swat-exception-body">' .
+				'Message:<div class="swat-exception-message">%s</div>' .
+				'Occurred in file <strong>%s</strong> ' .
 				'on line <strong>%s</strong>.<br /><br />',
-				$this->getSeverityString(),
-				nl2br(htmlspecialchars($this->message)),
-				$this->file,
-				$this->line);
+			$this->getSeverityString(),
+			nl2br(htmlspecialchars($this->message)),
+			$this->file,
+			$this->line
+		);
 
 		echo 'Stack Trace:<br /><dl>';
 		$count = count($this->backtrace);
 
 		foreach ($this->backtrace as $entry) {
-			$class = array_key_exists('class', $entry) ?
-				$entry['class'] : null;
+			$class = array_key_exists('class', $entry) ? $entry['class'] : null;
 
-			$function = array_key_exists('function', $entry) ?
-				$entry['function'] : null;
+			$function = array_key_exists('function', $entry)
+				? $entry['function']
+				: null;
 
 			if (array_key_exists('args', $entry)) {
-				$arguments = htmlspecialchars($this->getArguments(
-					$entry['args'], $function, $class),
-					null, 'UTF-8');
+				$arguments = htmlspecialchars(
+					$this->getArguments($entry['args'], $function, $class),
+					null,
+					'UTF-8'
+				);
 			} else {
 				$arguments = '';
 			}
 
-			printf('<dt>%s.</dt><dd>In file <strong>%s</strong> '.
-				'line&nbsp;<strong>%s</strong>.<br />Method: '.
-				'<strong>%s%s%s(</strong>%s<strong>)</strong></dd>',
+			printf(
+				'<dt>%s.</dt><dd>In file <strong>%s</strong> ' .
+					'line&nbsp;<strong>%s</strong>.<br />Method: ' .
+					'<strong>%s%s%s(</strong>%s<strong>)</strong></dd>',
 				--$count,
 				array_key_exists('file', $entry) ? $entry['file'] : 'unknown',
 				array_key_exists('line', $entry) ? $entry['line'] : 'unknown',
-				($class === null) ? '' : $class,
+				$class === null ? '' : $class,
 				array_key_exists('type', $entry) ? $entry['type'] : '',
-				($function === null) ? '' : $function,
-				$arguments);
+				$function === null ? '' : $function,
+				$arguments
+			);
 		}
 
 		echo '</dl></div></div>';
@@ -505,8 +523,10 @@ class SwatError
 			}
 
 			if ($name !== null && $sensitive) {
-				$formatted_values[] =
-					$this->formatSensitiveParam($name, $value);
+				$formatted_values[] = $this->formatSensitiveParam(
+					$name,
+					$value
+				);
 			} else {
 				$formatted_values[] = $this->formatValue($value);
 			}
@@ -535,7 +555,7 @@ class SwatError
 	 */
 	protected function formatSensitiveParam($name, $value)
 	{
-		return '[$'.$name.' FILTERED]';
+		return '[$' . $name . ' FILTERED]';
 	}
 
 	// }}}
@@ -553,15 +573,15 @@ class SwatError
 		$formatted_value = '<unknown parameter type>';
 
 		if (is_object($value)) {
-			$formatted_value = '<'.get_class($value).' object>';
+			$formatted_value = '<' . get_class($value) . ' object>';
 		} elseif ($value === null) {
 			$formatted_value = '<null>';
 		} elseif (is_string($value)) {
-			$formatted_value = "'".$value."'";
+			$formatted_value = "'" . $value . "'";
 		} elseif (is_int($value) || is_float($value)) {
 			$formatted_value = strval($value);
 		} elseif (is_bool($value)) {
-			$formatted_value = ($value) ? 'true' : 'false';
+			$formatted_value = $value ? 'true' : 'false';
 		} elseif (is_resource($value)) {
 			$formatted_value = '<resource>';
 		} elseif (is_array($value)) {
@@ -582,17 +602,17 @@ class SwatError
 			$count = 0;
 			foreach ($value as $key => $the_value) {
 				if ($count > 0) {
-					$formatted_value.= ', ';
+					$formatted_value .= ', ';
 				}
 
 				if ($associative) {
-					$formatted_value.= $this->formatValue($key);
-					$formatted_value.= ' => ';
+					$formatted_value .= $this->formatValue($key);
+					$formatted_value .= ' => ';
 				}
-				$formatted_value.= $this->formatValue($the_value);
+				$formatted_value .= $this->formatValue($the_value);
 				$count++;
 			}
-			$formatted_value.= ')';
+			$formatted_value .= ')';
 		}
 
 		return $formatted_value;
@@ -612,17 +632,17 @@ class SwatError
 		static $style_sheet_displayed = false;
 
 		if (!$style_sheet_displayed) {
-			echo "<style>".
-				".swat-exception { border: 1px solid #d43; margin: 1em; ".
-				"font-family: sans-serif; background: #fff !important; ".
-				"z-index: 9999 !important; color: #000; text-align: left; ".
+			echo "<style>" .
+				".swat-exception { border: 1px solid #d43; margin: 1em; " .
+				"font-family: sans-serif; background: #fff !important; " .
+				"z-index: 9999 !important; color: #000; text-align: left; " .
 				"min-width: 400px; }\n";
 
-			echo ".swat-exception h3 { background: #e65; margin: 0; padding: ".
+			echo ".swat-exception h3 { background: #e65; margin: 0; padding: " .
 				"border-bottom: 1px solid #d43; color: #fff; }\n";
 
 			echo ".swat-exception-body { padding: 0.8em; }\n";
-			echo ".swat-exception-message { margin-left: 2em; padding: 1em; ".
+			echo ".swat-exception-message { margin-left: 2em; padding: 1em; " .
 				"}\n";
 
 			echo ".swat-exception dt { float: left; margin-left: 1em; }\n";
@@ -643,17 +663,18 @@ class SwatError
 	protected function getSeverityString()
 	{
 		static $error_types = array(
-			E_WARNING         => 'Warning',
-			E_NOTICE          => 'Notice',
-			E_USER_ERROR      => 'User Fatal Error',
-			E_USER_WARNING    => 'User Warning',
-			E_USER_NOTICE     => 'User Notice',
-			E_STRICT          => 'Forward Compatibility Notice'
+			E_WARNING => 'Warning',
+			E_NOTICE => 'Notice',
+			E_USER_ERROR => 'User Fatal Error',
+			E_USER_WARNING => 'User Warning',
+			E_USER_NOTICE => 'User Notice',
+			E_STRICT => 'Forward Compatibility Notice'
 		);
 
 		$out = null;
-		if (isset($error_types[$this->severity]))
+		if (isset($error_types[$this->severity])) {
 			$out = $error_types[$this->severity];
+		}
 
 		return $out;
 	}
@@ -695,8 +716,10 @@ class SwatError
 		$documentation_exp = explode("\n", $documentation);
 		foreach ($documentation_exp as $documentation_line) {
 			$matches = array();
-			if (preg_match($exp, $documentation_line, $matches) == 1 &&
-				$matches[1] == $name) {
+			if (
+				preg_match($exp, $documentation_line, $matches) == 1 &&
+				$matches[1] == $name
+			) {
 				$sensitive = true;
 				break;
 			}
@@ -722,5 +745,3 @@ class SwatError
 
 	// }}}
 }
-
-?>

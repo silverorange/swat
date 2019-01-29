@@ -47,5 +47,3 @@ class SwatCommentHtmlHeadEntry extends SwatHtmlHeadEntry
 
 	// }}}
 }
-
-?>

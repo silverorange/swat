@@ -49,5 +49,3 @@ class SwatInvalidSerializedDataException extends SwatException
 
 	// }}}
 }
-
-?>

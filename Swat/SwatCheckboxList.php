@@ -86,13 +86,19 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		// checks to see if there are duplicate values in the options array
 		$options_count = array();
-		foreach ($this->getOptions() as $option)
+		foreach ($this->getOptions() as $option) {
 			$options_count[] = $option->value;
+		}
 
-		foreach ((array_count_values($options_count)) as $count) {
-			if ($count > 1)
-				throw new SwatException(sprintf('Duplicate option values '.
-					'found in %s', $this->id));
+		foreach (array_count_values($options_count) as $count) {
+			if ($count > 1) {
+				throw new SwatException(
+					sprintf(
+						'Duplicate option values ' . 'found in %s',
+						$this->id
+					)
+				);
+			}
 		}
 	}
 
@@ -109,8 +115,9 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	{
 		$options = $this->getOptions();
 
-		if (!$this->visible || count($options) == 0)
+		if (!$this->visible || count($options) == 0) {
 			return;
+		}
 
 		parent::display();
 
@@ -123,11 +130,16 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		$current_column = 1;
 		$current_option = 0;
-		$columns = (is_array($this->columns)) ? $this->columns : array(ceil(
-			count($options) / (($this->columns > 0) ? $this->columns : 1)));
+		$columns = is_array($this->columns)
+			? $this->columns
+			: array(
+				ceil(
+					count($options) / ($this->columns > 0 ? $this->columns : 1)
+				)
+			);
 
-		$multiple_columns = (count($options) > $columns[0]);
-		$maximum_options  = array_shift($columns);
+		$multiple_columns = count($options) > $columns[0];
+		$maximum_options = array_shift($columns);
 
 		$ul_tag = new SwatHtmlTag('ul');
 		if ($multiple_columns) {
@@ -141,12 +153,17 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 				$ul_tag->close();
 
 				$current_column++;
-				$current_option  = 0;
-				$maximum_options = (count($columns) > 0) ?
-					array_shift($columns) : $maximum_options;
+				$current_option = 0;
+				$maximum_options =
+					count($columns) > 0
+						? array_shift($columns)
+						: $maximum_options;
 
-				$ul_tag->id = sprintf('%s_column_%s', $this->id,
-					$current_column);
+				$ul_tag->id = sprintf(
+					'%s_column_%s',
+					$this->id,
+					$current_column
+				);
 
 				$ul_tag->class = 'swat-checkbox-list-column';
 
@@ -166,7 +183,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 		// Show the check all if more than one checkable item is displayed.
 		$check_all = $this->getCompositeWidget('check_all');
-		$check_all->visible = $this->show_check_all && (count($options) > 1);
+		$check_all->visible = $this->show_check_all && count($options) > 1;
 		$check_all->display();
 
 		$div_tag->close();
@@ -182,15 +199,19 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	 */
 	public function process()
 	{
-		if (!$this->getForm()->isSubmitted())
+		if (!$this->getForm()->isSubmitted()) {
 			return;
+		}
 
 		parent::process();
 
 		$this->processValues();
 
-		if ($this->required && count($this->values) == 0
-			&& $this->isSensitive()) {
+		if (
+			$this->required &&
+			count($this->values) == 0 &&
+			$this->isSensitive()
+		) {
 			$this->addMessage($this->getValidationMessage('required'));
 		}
 	}
@@ -277,16 +298,18 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 	{
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'checkbox';
-		$input_tag->name = $this->id.'['.$index.']';
-		$input_tag->value = (string)$option->value;
-		$input_tag->id = $this->id.'_'.$index;
+		$input_tag->name = $this->id . '[' . $index . ']';
+		$input_tag->value = (string) $option->value;
+		$input_tag->id = $this->id . '_' . $index;
 		$input_tag->removeAttribute('checked');
 
-		if (in_array($option->value, $this->values))
+		if (in_array($option->value, $this->values)) {
 			$input_tag->checked = 'checked';
+		}
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$input_tag->disabled = 'disabled';
+		}
 
 		$li_tag = $this->getLiTag($option);
 
@@ -316,7 +339,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 			$this->label_tag->class = 'swat-control';
 		}
 
-		$this->label_tag->for = $this->id.'_'.$index;
+		$this->label_tag->for = $this->id . '_' . $index;
 		$this->label_tag->setContent($option->title, $option->content_type);
 		$this->label_tag->display();
 	}
@@ -341,7 +364,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 			if ($tag->class == '') {
 				$tag->class = 'swat-insensitive';
 			} else {
-				$tag->class.= ' swat-insensitive';
+				$tag->class .= ' swat-insensitive';
 			}
 		}
 
@@ -362,15 +385,17 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 			'var %s_obj = new %s(%s);',
 			$this->id,
 			$this->getJavaScriptClassName(),
-			SwatString::quoteJavaScriptString($this->id));
+			SwatString::quoteJavaScriptString($this->id)
+		);
 
 		// set check-all controller if it is visible
 		$check_all = $this->getCompositeWidget('check_all');
 		if ($check_all->visible) {
-			$javascript.= sprintf(
+			$javascript .= sprintf(
 				"\n%s_obj.setController(%s_obj);",
 				$check_all->id,
-				$this->id);
+				$this->id
+			);
 		}
 
 		return $javascript;
@@ -421,5 +446,3 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
 
 	// }}}
 }
-
-?>

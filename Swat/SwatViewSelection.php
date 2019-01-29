@@ -169,5 +169,3 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
 
 	// }}}
 }
-
-?>

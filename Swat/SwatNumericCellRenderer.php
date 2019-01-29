@@ -90,5 +90,3 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 
 	// }}}
 }
-
-?>

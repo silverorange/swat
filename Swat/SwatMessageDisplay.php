@@ -14,12 +14,12 @@ class SwatMessageDisplay extends SwatControl
 	/**
 	 * Dismiss link for message is on.
 	 */
-	const DISMISS_ON   = 1;
+	const DISMISS_ON = 1;
 
 	/**
 	 * Dismiss link for message is off.
 	 */
-	const DISMISS_OFF  = 2;
+	const DISMISS_OFF = 2;
 
 	/**
 	 * Dismiss link for message is automatically displayed for certain message
@@ -118,20 +118,27 @@ class SwatMessageDisplay extends SwatControl
 			$message = new SwatMessage($message);
 		} elseif (!($message instanceof SwatMessage)) {
 			throw new SwatInvalidClassException(
-				'Cannot add message. $message must be either a string or a '.
-				'SwatMessage.', 0, $message);
+				'Cannot add message. $message must be either a string or a ' .
+					'SwatMessage.',
+				0,
+				$message
+			);
 		}
 
 		$this->display_messages[] = $message;
 
 		if ($dismissable == self::DISMISS_AUTO) {
-			$dismissable = (in_array($message->type,
-				$this->getDismissableMessageTypes())) ?
-				self::DISMISS_ON : self::DISMISS_OFF;
+			$dismissable = in_array(
+				$message->type,
+				$this->getDismissableMessageTypes()
+			)
+				? self::DISMISS_ON
+				: self::DISMISS_OFF;
 		}
 
-		if ($dismissable == self::DISMISS_ON)
+		if ($dismissable == self::DISMISS_ON) {
 			$this->dismissable_messages[] = count($this->display_messages) - 1;
+		}
 	}
 
 	// }}}
@@ -145,11 +152,13 @@ class SwatMessageDisplay extends SwatControl
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		if ($this->getMessageCount() == 0)
+		if ($this->getMessageCount() == 0) {
 			return;
+		}
 
 		parent::display();
 
@@ -168,8 +177,8 @@ class SwatMessageDisplay extends SwatControl
 				$has_dismiss_link = true;
 			}
 
-			$first = ($count === 1);
-			$last  = ($count === $message_count);
+			$first = $count === 1;
+			$last = $count === $message_count;
 
 			$this->displayMessage($key, $message, $first, $last);
 
@@ -178,8 +187,9 @@ class SwatMessageDisplay extends SwatControl
 
 		$wrapper_div->close();
 
-		if ($has_dismiss_link)
+		if ($has_dismiss_link) {
 			Swat::displayInlineJavaScript($this->getInlineJavaScript());
+		}
 	}
 
 	// }}}
@@ -199,7 +209,7 @@ class SwatMessageDisplay extends SwatControl
 	 */
 	public function isVisible()
 	{
-		return (($this->getMessageCount() > 0) && parent::isVisible());
+		return $this->getMessageCount() > 0 && parent::isVisible();
 	}
 
 	// }}}
@@ -238,15 +248,15 @@ class SwatMessageDisplay extends SwatControl
 		$message_div = new SwatHtmlTag('div');
 		$container_div = new SwatHtmlTag('div');
 
-		$message_div->id = $this->id.'_'.$message_id;
+		$message_div->id = $this->id . '_' . $message_id;
 		$message_div->class = $message->getCSSClassString();
 
 		if ($first) {
-			$message_div->class.= ' swat-message-first';
+			$message_div->class .= ' swat-message-first';
 		}
 
 		if ($last) {
-			$message_div->class.= ' swat-message-last';
+			$message_div->class .= ' swat-message-last';
 		}
 
 		$message_div->open();
@@ -257,7 +267,9 @@ class SwatMessageDisplay extends SwatControl
 		$primary_content = new SwatHtmlTag('h3');
 		$primary_content->class = 'swat-message-primary-content';
 		$primary_content->setContent(
-			$message->primary_content, $message->content_type);
+			$message->primary_content,
+			$message->content_type
+		);
 
 		$primary_content->display();
 
@@ -265,7 +277,9 @@ class SwatMessageDisplay extends SwatControl
 			$secondary_div = new SwatHtmlTag('div');
 			$secondary_div->class = 'swat-message-secondary-content';
 			$secondary_div->setContent(
-				$message->secondary_content, $message->content_type);
+				$message->secondary_content,
+				$message->content_type
+			);
 
 			$secondary_div->display();
 		}
@@ -284,11 +298,7 @@ class SwatMessageDisplay extends SwatControl
 	 */
 	protected function getDismissableMessageTypes()
 	{
-		return array(
-			'notice',
-			'warning',
-			'cart',
-		);
+		return array('notice', 'warning', 'cart');
 	}
 
 	// }}}
@@ -325,11 +335,15 @@ class SwatMessageDisplay extends SwatControl
 		}
 
 		$dismissable_messages =
-			'['.implode(', ', $this->dismissable_messages).']';
+			'[' . implode(', ', $this->dismissable_messages) . ']';
 
-		$javascript.= sprintf("var %s_obj = new %s('%s', %s);",
-			$this->id, $this->getJavaScriptClass(), $this->id,
-			$dismissable_messages);
+		$javascript .= sprintf(
+			"var %s_obj = new %s('%s', %s);",
+			$this->id,
+			$this->getJavaScriptClass(),
+			$this->id,
+			$dismissable_messages
+		);
 
 		return $javascript;
 	}
@@ -363,13 +377,13 @@ class SwatMessageDisplay extends SwatControl
 	 */
 	protected function getInlineJavaScriptTranslations()
 	{
-		$close_text = ($this->close_text === null) ?
-			Swat::_('Dismiss message.') : $this->close_text;
+		$close_text =
+			$this->close_text === null
+				? Swat::_('Dismiss message.')
+				: $this->close_text;
 
 		return "SwatMessageDisplayMessage.close_text = '{$close_text}';\n";
 	}
 
 	// }}}
 }
-
-?>

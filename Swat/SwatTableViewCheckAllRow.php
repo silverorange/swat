@@ -216,8 +216,9 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	public function display()
 	{
-		if (!$this->visible || count($this->view->model) < 2)
+		if (!$this->visible || count($this->view->model) < 2) {
 			return;
+		}
 
 		parent::display();
 
@@ -233,24 +234,27 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 		// find checkbox column position
 		$position = 0;
 		foreach ($columns as $column) {
-			if ($column === $this->column)
+			if ($column === $this->column) {
 				break;
-			else
+			} else {
 				$position++;
+			}
 		}
 
 		if ($position > 0) {
 			$td_before_tag = new SwatHtmlTag('td');
 			$td_before_tag->setContent('&nbsp;', 'text/xml');
-			if ($position > 1)
+			if ($position > 1) {
 				$td_before_tag->colspan = $position;
+			}
 
 			$td_before_tag->display();
 		}
 
 		$td_tag = new SwatHtmlTag('td');
-		if (count($columns) - $position > 1)
+		if (count($columns) - $position > 1) {
 			$td_tag->colspan = count($columns) - $position;
+		}
 
 		$td_tag->open();
 		if ($this->title !== null) {
@@ -281,12 +285,16 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 	 */
 	public function getInlineJavaScript()
 	{
-		if (count($this->view->model) < 2)
+		if (count($this->view->model) < 2) {
 			return '';
+		}
 
 		// set the controller of the check-all widget
-		return sprintf("%s_obj.setController(%s);",
-			$this->check_all->id, $this->list_id);
+		return sprintf(
+			"%s_obj.setController(%s);",
+			$this->check_all->id,
+			$this->list_id
+		);
 	}
 
 	// }}}
@@ -307,5 +315,3 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 
 	// }}}
 }
-
-?>

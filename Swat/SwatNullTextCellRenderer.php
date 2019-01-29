@@ -52,11 +52,11 @@ class SwatNullTextCellRenderer extends SwatTextCellRenderer
 	 */
 	public function render()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		$is_null = ($this->strict) ?
-			($this->text === null) : ($this->text == null);
+		$is_null = $this->strict ? $this->text === null : $this->text == null;
 
 		if ($is_null) {
 			$this->text = $this->null_text;
@@ -74,5 +74,3 @@ class SwatNullTextCellRenderer extends SwatTextCellRenderer
 
 	// }}}
 }
-
-?>

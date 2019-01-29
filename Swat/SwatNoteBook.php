@@ -15,12 +15,12 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	/**
 	 * Positions notebook tabs on the top of notebook pages.
 	 */
-	const POSITION_TOP    = 1;
+	const POSITION_TOP = 1;
 
 	/**
 	 * Positions notebook tabs on the right of notebook pages.
 	 */
-	const POSITION_RIGHT  = 2;
+	const POSITION_RIGHT = 2;
 
 	/**
 	 * Positions notebook tabs on the bottom of notebook pages.
@@ -30,7 +30,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	/**
 	 * Positions notebook tabs on the left of notebook pages.
 	 */
-	const POSITION_LEFT   = 4;
+	const POSITION_LEFT = 4;
 
 	// }}}
 	// {{{ public properties
@@ -117,8 +117,11 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 			$child->parent = $this;
 		} else {
 			throw new SwatInvalidClassException(
-				'Only SwatNoteBookChild objects may be nested within a '.
-				'SwatNoteBook object.', 0, $child);
+				'Only SwatNoteBookChild objects may be nested within a ' .
+					'SwatNoteBook object.',
+				0,
+				$child
+			);
 		}
 	}
 
@@ -207,8 +210,9 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -220,20 +224,24 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 
 		echo '<ul class="yui-nav">';
 		foreach ($this->pages as $page) {
-			if (!$page->visible)
+			if (!$page->visible) {
 				continue;
+			}
 
 			$li_counter++;
 			$li_tag = new SwatHtmlTag('li');
 
-			$li_tag->class = 'tab'.$li_counter;
+			$li_tag->class = 'tab' . $li_counter;
 
-			if (($this->selected_page === null && $li_counter == 1) ||
-				($page->id == $this->selected_page))
-				$li_tag->class.= ' selected';
+			if (
+				($this->selected_page === null && $li_counter == 1) ||
+				$page->id == $this->selected_page
+			) {
+				$li_tag->class .= ' selected';
+			}
 
 			$anchor_tag = new SwatHtmlTag('a');
-			$anchor_tag->href = '#'.$page->id;
+			$anchor_tag->href = '#' . $page->id;
 
 			$em_tag = new SwatHtmlTag('em');
 			$em_tag->setContent($page->title, $page->title_content_type);
@@ -247,8 +255,9 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 		echo '</ul>';
 
 		echo '<div class="yui-content">';
-		foreach ($this->pages as $page)
+		foreach ($this->pages as $page) {
 			$page->display();
+		}
 
 		echo '</div>';
 		$div_tag->close();
@@ -290,8 +299,9 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	{
 		$messages = parent::getMessages();
 
-		foreach ($this->pages as $page)
+		foreach ($this->pages as $page) {
 			$messages = array_merge($messages, $page->getMessages());
+		}
 
 		return $messages;
 	}
@@ -384,8 +394,12 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 */
 	public function getDescendants($class_name = null)
 	{
-		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name))
+		if (
+			!(
+				$class_name === null ||
+				class_exists($class_name) ||
+				interface_exists($class_name)
+			)
 		) {
 			return array();
 		}
@@ -402,8 +416,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 			}
 
 			if ($page instanceof SwatUIParent) {
-				$out = array_merge($out,
-					$page->getDescendants($class_name));
+				$out = array_merge($out, $page->getDescendants($class_name));
 			}
 		}
 
@@ -425,8 +438,9 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 */
 	public function getFirstDescendant($class_name)
 	{
-		if (!class_exists($class_name) && !interface_exists($class_name))
+		if (!class_exists($class_name) && !interface_exists($class_name)) {
 			return null;
+		}
 
 		$out = null;
 
@@ -438,8 +452,9 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 
 			if ($page instanceof SwatUIParent) {
 				$out = $page->getFirstDescendant($class_name);
-				if ($out !== null)
+				if ($out !== null) {
 					break;
+				}
 			}
 		}
 
@@ -462,8 +477,9 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	{
 		$states = array();
 
-		foreach ($this->getDescendants('SwatState') as $id => $object)
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
 			$states[$id] = $object->getState();
+		}
 
 		return $states;
 	}
@@ -482,9 +498,11 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	 */
 	public function setDescendantStates(array $states)
 	{
-		foreach ($this->getDescendants('SwatState') as $id => $object)
-			if (isset($states[$id]))
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
+			if (isset($states[$id])) {
 				$object->setState($states[$id]);
+			}
+		}
 	}
 
 	// }}}
@@ -525,27 +543,29 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 	protected function getInlineJavaScript()
 	{
 		switch ($this->tab_position) {
-		case self::POSITION_RIGHT:
-			$position = 'right';
-			break;
-		case self::POSITION_LEFT:
-			$position = 'left';
-			break;
-		case self::POSITION_BOTTOM:
-			$position = 'bottom';
-			break;
-		case self::POSITION_TOP:
-		default:
-			$position = 'top';
-			break;
+			case self::POSITION_RIGHT:
+				$position = 'right';
+				break;
+			case self::POSITION_LEFT:
+				$position = 'left';
+				break;
+			case self::POSITION_BOTTOM:
+				$position = 'bottom';
+				break;
+			case self::POSITION_TOP:
+			default:
+				$position = 'top';
+				break;
 		}
 
-		return sprintf("var %s_obj = new YAHOO.widget.TabView(".
+		return sprintf(
+			"var %s_obj = new YAHOO.widget.TabView(" .
 				"'%s', {orientation: '%s'});",
-				$this->id, $this->id, $position);
+			$this->id,
+			$this->id,
+			$position
+		);
 	}
 
 	// }}}
 }
-
-?>

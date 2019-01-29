@@ -74,8 +74,9 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -96,7 +97,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		$option_div->class = 'swat-change-order-item';
 
 		foreach ($ordered_options as $option) {
-			$title = ($option->title === null) ? '' : $option->title;
+			$title = $option->title === null ? '' : $option->title;
 			$option_div->setContent($title, $option->content_type);
 			$option_div->display();
 		}
@@ -109,20 +110,22 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
 		$values = array();
 		foreach ($ordered_options as $option) {
-			$values[] = SwatString::signedSerialize($option->value,
-				$this->getForm()->getSalt());
+			$values[] = SwatString::signedSerialize(
+				$option->value,
+				$this->getForm()->getSalt()
+			);
 		}
 
 		$hidden_tag = new SwatHtmlTag('input');
 		$hidden_tag->type = 'hidden';
-		$hidden_tag->id = $this->id.'_value';
+		$hidden_tag->id = $this->id . '_value';
 		$hidden_tag->name = $this->id;
 		$hidden_tag->value = implode(',', $values);
 		$hidden_tag->display();
 
 		$hidden_items_tag = new SwatHtmlTag('input');
 		$hidden_items_tag->type = 'hidden';
-		$hidden_items_tag->id = $this->id.'_dynamic_items';
+		$hidden_items_tag->id = $this->id . '_dynamic_items';
 		$hidden_items_tag->value = '';
 		$hidden_items_tag->display();
 
@@ -144,8 +147,10 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 		if ($data[$this->id] !== '') {
 			$values = explode(',', $data[$this->id]);
 			foreach ($values as $value) {
-				$value = SwatString::signedUnserialize($value,
-					$form->getSalt());
+				$value = SwatString::signedUnserialize(
+					$value,
+					$form->getSalt()
+				);
 
 				$this->values[] = $value;
 			}
@@ -166,8 +171,9 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	 */
 	public function getNote()
 	{
-		$message = Swat::_('Items can be ordered by dragging-and-dropping '.
-			'with the mouse.');
+		$message = Swat::_(
+			'Items can be ordered by dragging-and-dropping ' . 'with the mouse.'
+		);
 
 		return new SwatMessage($message);
 	}
@@ -177,10 +183,11 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
 	public function getState()
 	{
-		if ($this->values === null)
+		if ($this->values === null) {
 			return array_keys($this->options);
-		else
+		} else {
 			return $this->values;
+		}
 	}
 
 	// }}}
@@ -223,8 +230,9 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 			}
 
 			// add leftover options
-			foreach ($options as $option)
+			foreach ($options as $option) {
 				$ordered_options[] = $option;
+			}
 		}
 
 		return $ordered_options;
@@ -259,10 +267,12 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
-		return sprintf("var %s_obj = new SwatChangeOrder('%s', %s);",
+		return sprintf(
+			"var %s_obj = new SwatChangeOrder('%s', %s);",
 			$this->id,
 			$this->id,
-			$this->isSensitive() ? 'true' : 'false');
+			$this->isSensitive() ? 'true' : 'false'
+		);
 	}
 
 	// }}}
@@ -276,8 +286,9 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
 		$btn_tag = new SwatHtmlTag('input');
 		$btn_tag->type = 'button';
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$btn_tag->disabled = 'disabled';
+		}
 
 		$btn_tag->value = Swat::_('Move to Top');
 		$btn_tag->onclick = "{$this->id}_obj.moveToTop();";
@@ -314,5 +325,3 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
 	// }}}
 }
-
-?>

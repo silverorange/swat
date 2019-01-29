@@ -133,13 +133,15 @@ class SwatImageCellRenderer extends SwatCellRenderer
 		$margin_x = 0;
 		$margin_y = 0;
 
-		if ($this->occupy_width !== null &&
+		if (
+			$this->occupy_width !== null &&
 			$this->occupy_width > $this->width
 		) {
 			$margin_x = $this->occupy_width - $this->width;
 		}
 
-		if ($this->occupy_height !== null &&
+		if (
+			$this->occupy_height !== null &&
 			$this->occupy_height > $this->height
 		) {
 			$margin_y = $this->occupy_height - $this->height;
@@ -147,19 +149,19 @@ class SwatImageCellRenderer extends SwatCellRenderer
 
 		if ($margin_x > 0 || $margin_y > 0) {
 			$image_tag->style = sprintf(
-				($margin_x % 2 == 0 && $margin_y % 2 == 0) ?
-					'margin: %dpx %dpx' :
-					'margin: %dpx %dpx %dpx %dpx;',
-				floor(((float)$margin_y) / 2),
-				ceil(((float)$margin_x) / 2),
-				ceil(((float)$margin_y) / 2),
-				floor(((float)$margin_x) / 2)
+				$margin_x % 2 == 0 && $margin_y % 2 == 0
+					? 'margin: %dpx %dpx'
+					: 'margin: %dpx %dpx %dpx %dpx;',
+				floor(((float) $margin_y) / 2),
+				ceil(((float) $margin_x) / 2),
+				ceil(((float) $margin_y) / 2),
+				floor(((float) $margin_x) / 2)
 			);
 		}
 
 		// alt is a required XHTML attribute. We should always display it even
 		// if it is not specified.
-		$image_tag->alt = ($this->alt === null) ? '' : $this->alt;
+		$image_tag->alt = $this->alt === null ? '' : $this->alt;
 
 		$image_tag->class = $this->getCSSClassString();
 
@@ -183,5 +185,3 @@ class SwatImageCellRenderer extends SwatCellRenderer
 
 	// }}}
 }
-
-?>

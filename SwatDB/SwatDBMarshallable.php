@@ -62,5 +62,3 @@ interface SwatDBMarshallable
 
 	// }}}
 }
-
-?>

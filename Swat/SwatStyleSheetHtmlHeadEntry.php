@@ -17,14 +17,17 @@ class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
 
 		// append tag if it is set
 		if ($tag !== null) {
-			$uri = (mb_strpos($uri, '?') === false)
-				? $uri.'?'.$tag
-				: $uri.'&'.$tag;
+			$uri =
+				mb_strpos($uri, '?') === false
+					? $uri . '?' . $tag
+					: $uri . '&' . $tag;
 		}
 
-		printf('<link rel="stylesheet" type="text/css" href="%s%s" />',
+		printf(
+			'<link rel="stylesheet" type="text/css" href="%s%s" />',
 			$uri_prefix,
-			$uri);
+			$uri
+		);
 	}
 
 	// }}}
@@ -33,11 +36,9 @@ class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
 	protected function displayInlineInternal($path)
 	{
 		echo '<style type="text/css" media="all">';
-		readfile($path.$this->getUri());
+		readfile($path . $this->getUri());
 		echo '</style>';
 	}
 
 	// }}}
 }
-
-?>

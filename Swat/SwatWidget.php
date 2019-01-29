@@ -176,14 +176,17 @@ abstract class SwatWidget extends SwatUIObject
 	 */
 	public function init()
 	{
-		if ($this->requires_id && $this->id === null)
+		if ($this->requires_id && $this->id === null) {
 			$this->id = $this->getUniqueId();
+		}
 
-		if ($this->stylesheet !== null)
+		if ($this->stylesheet !== null) {
 			$this->addStyleSheet($this->stylesheet);
+		}
 
-		foreach ($this->getCompositeWidgets() as $widget)
+		foreach ($this->getCompositeWidgets() as $widget) {
 			$widget->init();
+		}
 
 		$this->initialized = true;
 	}
@@ -204,11 +207,13 @@ abstract class SwatWidget extends SwatUIObject
 	 */
 	public function process()
 	{
-		if (!$this->isInitialized())
+		if (!$this->isInitialized()) {
 			$this->init();
+		}
 
-		foreach ($this->getCompositeWidgets() as $widget)
+		foreach ($this->getCompositeWidgets() as $widget) {
 			$widget->process();
+		}
 
 		$this->processed = true;
 	}
@@ -227,8 +232,9 @@ abstract class SwatWidget extends SwatUIObject
 	 */
 	public function display()
 	{
-		if (!$this->isInitialized())
+		if (!$this->isInitialized()) {
 			$this->init();
+		}
 
 		$this->displayed = true;
 	}
@@ -327,8 +333,9 @@ abstract class SwatWidget extends SwatUIObject
 	public function getMessages()
 	{
 		$messages = $this->messages;
-		foreach ($this->getCompositeWidgets() as $widget)
+		foreach ($this->getCompositeWidgets() as $widget) {
 			$messages = array_merge($messages, $widget->getMessages());
+		}
 
 		return $messages;
 	}
@@ -344,7 +351,7 @@ abstract class SwatWidget extends SwatUIObject
 	 */
 	public function hasMessage()
 	{
-		$has_message = (count($this->messages) > 0);
+		$has_message = count($this->messages) > 0;
 
 		if (!$has_message) {
 			foreach ($this->getCompositeWidgets() as $widget) {
@@ -373,10 +380,11 @@ abstract class SwatWidget extends SwatUIObject
 	 */
 	public function isSensitive()
 	{
-		if ($this->parent !== null && $this->parent instanceof SwatWidget)
-			return ($this->parent->isSensitive() && $this->sensitive);
-		else
+		if ($this->parent !== null && $this->parent instanceof SwatWidget) {
+			return $this->parent->isSensitive() && $this->sensitive;
+		} else {
 			return $this->sensitive;
+		}
 	}
 
 	// }}}
@@ -460,12 +468,16 @@ abstract class SwatWidget extends SwatUIObject
 	 */
 	public function replaceWithContainer(SwatContainer $container = null)
 	{
-		if ($this->parent === null)
-			throw new SwatException('Widget does not have a parent, unable '.
-				'to replace this widget with a container.');
+		if ($this->parent === null) {
+			throw new SwatException(
+				'Widget does not have a parent, unable ' .
+					'to replace this widget with a container.'
+			);
+		}
 
-		if ($container === null)
+		if ($container === null) {
 			$container = new SwatContainer();
+		}
 
 		$parent = $this->parent;
 		$parent->replace($this, $container);
@@ -492,8 +504,9 @@ abstract class SwatWidget extends SwatUIObject
 	{
 		$copy = parent::copy($id_suffix);
 
-		if ($id_suffix != '' && $copy->id !== null)
-			$copy->id = $copy->id.$id_suffix;
+		if ($id_suffix != '' && $copy->id !== null) {
+			$copy->id = $copy->id . $id_suffix;
+		}
 
 		// We can't copy composite widgets here because the widget id of a
 		// composite widget often uses a specific suffix. Copying and appending
@@ -527,8 +540,9 @@ abstract class SwatWidget extends SwatUIObject
 	{
 		$classes = array();
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$classes[] = 'swat-insensitive';
+		}
 
 		$classes = array_merge($classes, parent::getCSSClassNames());
 
@@ -567,16 +581,25 @@ abstract class SwatWidget extends SwatUIObject
 	 * @throws SwatException if the specified widget is already the child of
 	 *                        another object.
 	 */
-	protected final function addCompositeWidget(SwatWidget $widget, $key)
+	final protected function addCompositeWidget(SwatWidget $widget, $key)
 	{
-		if (array_key_exists($key, $this->composite_widgets))
-			throw new SwatDuplicateIdException(sprintf(
-				"A composite widget with the key '%s' already exists in this ".
-				"widget.", $key), 0, $key);
+		if (array_key_exists($key, $this->composite_widgets)) {
+			throw new SwatDuplicateIdException(
+				sprintf(
+					"A composite widget with the key '%s' already exists in this " .
+						"widget.",
+					$key
+				),
+				0,
+				$key
+			);
+		}
 
-		if ($widget->parent !== null)
-			throw new SwatException('Cannot add a composite widget that '.
-				'already has a parent.');
+		if ($widget->parent !== null) {
+			throw new SwatException(
+				'Cannot add a composite widget that ' . 'already has a parent.'
+			);
+		}
 
 		$this->composite_widgets[$key] = $widget;
 		$widget->parent = $this;
@@ -599,15 +622,22 @@ abstract class SwatWidget extends SwatUIObject
 	 * @throws SwatWidgetNotFoundException if no composite widget with the
 	 *                                     specified key exists in this widget.
 	 */
-	protected final function getCompositeWidget($key)
+	final protected function getCompositeWidget($key)
 	{
 		$this->confirmCompositeWidgets();
 
-		if (!array_key_exists($key, $this->composite_widgets))
-			throw new SwatWidgetNotFoundException(sprintf(
-				"Composite widget with key of '%s' not found in %s. Make sure ".
-				"the composite widget was created and added to this widget.",
-				$key, get_class($this)), 0, $key);
+		if (!array_key_exists($key, $this->composite_widgets)) {
+			throw new SwatWidgetNotFoundException(
+				sprintf(
+					"Composite widget with key of '%s' not found in %s. Make sure " .
+						"the composite widget was created and added to this widget.",
+					$key,
+					get_class($this)
+				),
+				0,
+				$key
+			);
+		}
 
 		return $this->composite_widgets[$key];
 	}
@@ -630,19 +660,27 @@ abstract class SwatWidget extends SwatUIObject
 	 *
 	 * @see SwatWidget::addCompositeWidget()
 	 */
-	protected final function getCompositeWidgets($class_name = null)
+	final protected function getCompositeWidgets($class_name = null)
 	{
 		$this->confirmCompositeWidgets();
 
-		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name)))
+		if (
+			!(
+				$class_name === null ||
+				class_exists($class_name) ||
+				interface_exists($class_name)
+			)
+		) {
 			return array();
+		}
 
 		$out = array();
 
-		foreach ($this->composite_widgets as $key => $widget)
-			if ($class_name === null || $widget instanceof $class_name)
+		foreach ($this->composite_widgets as $key => $widget) {
+			if ($class_name === null || $widget instanceof $class_name) {
 				$out[$key] = $widget;
+			}
+		}
 
 		return $out;
 	}
@@ -662,7 +700,7 @@ abstract class SwatWidget extends SwatUIObject
 	 * process() and is called any time {@link SwatWidget::getCompositeWidget()}
 	 * is called so it rarely needs to be called manually.
 	 */
-	protected final function confirmCompositeWidgets()
+	final protected function confirmCompositeWidgets()
 	{
 		if (!$this->composite_widgets_created) {
 			$this->createCompositeWidgets();
@@ -672,5 +710,3 @@ abstract class SwatWidget extends SwatUIObject
 
 	// }}}
 }
-
-?>

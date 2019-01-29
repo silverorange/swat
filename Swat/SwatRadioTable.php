@@ -32,19 +32,22 @@ class SwatRadioTable extends SwatRadioList
 	{
 		$options = $this->getOptions();
 
-		if (!$this->visible || $options === null)
+		if (!$this->visible || $options === null) {
 			return;
+		}
 
 		SwatWidget::display();
 
 		// add a hidden field so we can check if this list was submitted on
 		// the process step
-		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
+		$this->getForm()->addHiddenField($this->id . '_submitted', 1);
 
-		if ($this->show_blank)
+		if ($this->show_blank) {
 			$options = array_merge(
 				array(new SwatOption(null, $this->blank_title)),
-				$options);
+				$options
+			);
+		}
 
 		$table_tag = new SwatHtmlTag('table');
 		$table_tag->id = $this->id;
@@ -91,8 +94,10 @@ class SwatRadioTable extends SwatRadioList
 		} else {
 			echo '<td class="swat-radio-table-input">';
 			$this->displayOption($option, $index);
-			printf('</td><td id="%s" class="swat-radio-table-label">',
-				$this->id.'_'.(string)$option->value.'_label');
+			printf(
+				'</td><td id="%s" class="swat-radio-table-label">',
+				$this->id . '_' . (string) $option->value . '_label'
+			);
 
 			$this->displayOptionLabel($option, $index);
 			echo '</td>';
@@ -133,5 +138,3 @@ class SwatRadioTable extends SwatRadioList
 
 	// }}}
 }
-
-?>

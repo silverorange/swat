@@ -94,8 +94,9 @@ class SwatNavBar extends SwatControl implements Countable
 	 */
 	public function addEntries($entries)
 	{
-		foreach ($entries as $entry)
+		foreach ($entries as $entry) {
 			$this->entries[] = $entry;
+		}
 	}
 
 	// }}}
@@ -140,10 +141,14 @@ class SwatNavBar extends SwatControl implements Countable
 			return $old_entry;
 		}
 
-		throw new SwatException(sprintf('Cannot replace element at position '.
-			'%s because NavBar does not contain an entry at position %s.',
-			$position,
-			$position));
+		throw new SwatException(
+			sprintf(
+				'Cannot replace element at position ' .
+					'%s because NavBar does not contain an entry at position %s.',
+				$position,
+				$position
+			)
+		);
 	}
 
 	// }}}
@@ -167,15 +172,20 @@ class SwatNavBar extends SwatControl implements Countable
 	 */
 	public function getEntryByPosition($position)
 	{
-		if ($position < 0)
+		if ($position < 0) {
 			$position = count($this) + $position - 1;
+		}
 
-		if (isset($this->entries[$position]))
+		if (isset($this->entries[$position])) {
 			return $this->entries[$position];
-		else
-			throw new SwatException(sprintf('Navbar does not contain an '.
-				'entry at position %s.',
-				$position));
+		} else {
+			throw new SwatException(
+				sprintf(
+					'Navbar does not contain an ' . 'entry at position %s.',
+					$position
+				)
+			);
+		}
 	}
 
 	// }}}
@@ -192,8 +202,9 @@ class SwatNavBar extends SwatControl implements Countable
 	 */
 	public function getLastEntry()
 	{
-		if (count($this->entries) == 0)
+		if (count($this->entries) == 0) {
 			throw new SwatException('Navbar is empty.');
+		}
 
 		return end($this->entries);
 	}
@@ -243,11 +254,13 @@ class SwatNavBar extends SwatControl implements Countable
 	 */
 	public function popEntry()
 	{
-		if (count($this) < 1)
-			throw new SwatException('Cannot pop entry. NavBar does not '.
-				'contain any entries.');
-		else
+		if (count($this) < 1) {
+			throw new SwatException(
+				'Cannot pop entry. NavBar does not ' . 'contain any entries.'
+			);
+		} else {
 			return array_pop($this->entries);
+		}
 	}
 
 	// }}}
@@ -272,11 +285,14 @@ class SwatNavBar extends SwatControl implements Countable
 		if (count($this) < $number) {
 			$count = count($this);
 
-			throw new SwatException(printf('Unable to pop %s entries. NavBar '.
-				'only contains %s entries.',
-				$number,
-				$count));
-
+			throw new SwatException(
+				printf(
+					'Unable to pop %s entries. NavBar ' .
+						'only contains %s entries.',
+					$number,
+					$count
+				)
+			);
 		} else {
 			return array_splice($this->entries, -$number);
 		}
@@ -309,8 +325,9 @@ class SwatNavBar extends SwatControl implements Countable
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -322,13 +339,14 @@ class SwatNavBar extends SwatControl implements Countable
 
 		foreach ($this->entries as $entry) {
 			// display separator
-			if ($i > 1)
+			if ($i > 1) {
 				echo SwatString::minimizeEntities($this->separator);
+			}
 
 			// link all entries or link all but the last entry
-			$link = ($this->link_last_entry || $i < $count);
+			$link = $this->link_last_entry || $i < $count;
 
-			$this->displayEntry($entry, $link, ($i == 1));
+			$this->displayEntry($entry, $link, $i == 1);
 
 			$i++;
 		}
@@ -353,21 +371,23 @@ class SwatNavBar extends SwatControl implements Countable
 		$show_link = true,
 		$first = false
 	) {
-		$title = ($entry->title === null) ? '' : $entry->title;
-		$link  = $this->getLink($entry);
+		$title = $entry->title === null ? '' : $entry->title;
+		$link = $this->getLink($entry);
 
 		if ($link !== null && $show_link) {
 			$a_tag = new SwatHtmlTag('a');
 			$a_tag->href = $link;
-			if ($first)
+			if ($first) {
 				$a_tag->class = 'swat-navbar-first';
+			}
 
 			$a_tag->setContent($title, $entry->content_type);
 			$a_tag->display();
 		} else {
 			$span_tag = new SwatHtmlTag('span');
-			if ($first)
+			if ($first) {
 				$span_tag->class = 'swat-navbar-first';
+			}
 
 			$span_tag->setContent($title, $entry->content_type);
 			$span_tag->display();
@@ -430,5 +450,3 @@ class SwatNavBar extends SwatControl implements Countable
 
 	// }}}
 }
-
-?>

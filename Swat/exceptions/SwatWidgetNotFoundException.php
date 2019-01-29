@@ -49,5 +49,3 @@ class SwatWidgetNotFoundException extends SwatException
 
 	// }}}
 }
-
-?>

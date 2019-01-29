@@ -12,4 +12,41 @@
 	<file>./SwatI18N</file>
 
 	<rule ref="SilverorangeLegacy"/>
+
+	<rule ref="Generic.Formatting.NoSpaceAfterCast">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Generic.Formatting.SpaceAfterCast" />
+	<rule ref="Generic.PHP.ClosingPHPTag.NotFound">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="indent" type="integer" value="4"/>
+			<property name="tabIndent" type="boolean" value="true"/>
+		</properties>
+	</rule>
+
+	<rule ref="PEAR.WhiteSpace.ScopeIndent">
+		<severity>0</severity>
+	</rule>
+
+	<rule ref="PSR2.Files.ClosingTag" />
+	<rule ref="PSR2.Files.EndFileNewline" />
+
+	<rule ref="SilverorangeLegacy.WhiteSpace.OperatorSpacing">
+		<severity>0</severity>
+	</rule>
+
+	<rule ref="Squiz.Classes.ClassDeclaration.NewlinesAfterCloseBrace">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Squiz.Strings.ConcatenationSpacing">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Squiz.WhiteSpace.OperatorSpacing">
+		<properties>
+			<property name="ignoreNewlines" type="boolean" value="true" />
+		</properties>
+	</rule>
 </ruleset>

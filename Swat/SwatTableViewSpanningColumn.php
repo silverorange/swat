@@ -35,16 +35,14 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 		$offset = $this->offset;
 
 		if ($this->title != '') {
-			if ($offset == 0)
+			if ($offset == 0) {
 				$offset = 1;
+			}
 
 			$th_tag = new SwatHtmlTag('th', $this->getThAttributes());
 			$th_tag->colspan = $offset;
 			$th_tag->setContent(
-				sprintf(
-					Swat::_('%s:'),
-					$this->title
-				),
+				sprintf(Swat::_('%s:'), $this->title),
 				$this->title_content_type
 			);
 			$th_tag->display();
@@ -56,8 +54,7 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 		}
 
 		$td_tag = new SwatHtmlTag('td', $this->getTdAttributes());
-		$td_tag->colspan =
-			$this->view->getXhtmlColspan() - $offset;
+		$td_tag->colspan = $this->view->getXhtmlColspan() - $offset;
 
 		$td_tag->open();
 		$this->displayRenderersInternal($row);
@@ -88,5 +85,3 @@ class SwatTableViewSpanningColumn extends SwatTableViewColumn
 
 	// }}}
 }
-
-?>

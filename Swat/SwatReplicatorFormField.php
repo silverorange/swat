@@ -14,5 +14,3 @@
 class SwatReplicatorFormField extends SwatReplicableFormField
 {
 }
-
-?>

@@ -9,7 +9,8 @@
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-abstract class SwatTreeNode extends SwatObject implements RecursiveIterator,
+abstract class SwatTreeNode extends SwatObject implements
+	RecursiveIterator,
 	Countable
 {
 	// {{{ protected properties
@@ -73,8 +74,9 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator,
 	 */
 	public function addTree($tree)
 	{
-		foreach ($tree->getChildren() as $child)
+		foreach ($tree->getChildren() as $child) {
 			$this->addChild($child);
+		}
 	}
 
 	// }}}
@@ -146,7 +148,7 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator,
 	 */
 	public function hasChildren()
 	{
-		return (count($this->children) > 0);
+		return count($this->children) > 0;
 	}
 
 	// }}}
@@ -243,7 +245,7 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator,
 	 */
 	public function valid()
 	{
-		return ($this->current() !== false);
+		return $this->current() !== false;
 	}
 
 	// }}}
@@ -259,13 +261,12 @@ abstract class SwatTreeNode extends SwatObject implements RecursiveIterator,
 	public function count()
 	{
 		$count = 1;
-		foreach ($this->children as $child)
+		foreach ($this->children as $child) {
 			$count += count($child);
+		}
 
 		return $count;
 	}
 
 	// }}}
 }
-
-?>

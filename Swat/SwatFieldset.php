@@ -97,8 +97,9 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		SwatWidget::display();
 
@@ -110,8 +111,9 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 		if ($this->title !== null) {
 			$legend_tag = new SwatHtmlTag('legend');
 
-			if ($this->access_key != '')
+			if ($this->access_key != '') {
 				$legend_tag->accesskey = $this->access_key;
+			}
 
 			$legend_tag->setContent($this->title, $this->title_content_type);
 			$legend_tag->display();
@@ -134,8 +136,11 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	protected function getInlineJavaScript()
 	{
-		return sprintf("var %s_obj = new SwatFieldset('%s');",
-			$this->id, $this->id);
+		return sprintf(
+			"var %s_obj = new SwatFieldset('%s');",
+			$this->id,
+			$this->id
+		);
 	}
 
 	// }}}
@@ -155,5 +160,3 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
 
 	// }}}
 }
-
-?>

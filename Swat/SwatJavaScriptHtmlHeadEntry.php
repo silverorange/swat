@@ -17,14 +17,17 @@ class SwatJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 
 		// append tag if it is set
 		if ($tag !== null) {
-			$uri = (mb_strpos($uri, '?') === false)
-				? $uri.'?'.$tag
-				: $uri.'&'.$tag;
+			$uri =
+				mb_strpos($uri, '?') === false
+					? $uri . '?' . $tag
+					: $uri . '&' . $tag;
 		}
 
-		printf('<script type="text/javascript" src="%s%s"></script>',
+		printf(
+			'<script type="text/javascript" src="%s%s"></script>',
 			$uri_prefix,
-			$uri);
+			$uri
+		);
 	}
 
 	// }}}
@@ -33,11 +36,9 @@ class SwatJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 	protected function displayInlineInternal($path)
 	{
 		echo '<script type="text/javascript">';
-		readfile($path.$this->getUri());
+		readfile($path . $this->getUri());
 		echo '</script>';
 	}
 
 	// }}}
 }
-
-?>

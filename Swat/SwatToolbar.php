@@ -34,8 +34,9 @@ class SwatToolbar extends SwatDisplayableContainer
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		SwatWidget::display();
 
@@ -61,8 +62,9 @@ class SwatToolbar extends SwatDisplayableContainer
 	 */
 	public function setToolLinkValues($value)
 	{
-		foreach ($this->getToolLinks() as $tool)
+		foreach ($this->getToolLinks() as $tool) {
 			$tool->value = $value;
+		}
 	}
 
 	// }}}
@@ -79,9 +81,11 @@ class SwatToolbar extends SwatDisplayableContainer
 	public function getToolLinks()
 	{
 		$tools = array();
-		foreach ($this->getDescendants('SwatToolLink') as $tool)
-			if ($tool->getFirstAncestor('SwatToolbar') === $this)
+		foreach ($this->getDescendants('SwatToolLink') as $tool) {
+			if ($tool->getFirstAncestor('SwatToolbar') === $this) {
 				$tools[] = $tool;
+			}
+		}
 
 		return $tools;
 	}
@@ -98,8 +102,9 @@ class SwatToolbar extends SwatDisplayableContainer
 			ob_start();
 			$child->display();
 			$content = ob_get_clean();
-			if ($content != '')
+			if ($content != '') {
 				echo '<li>', $content, '</li>';
+			}
 		}
 	}
 
@@ -128,5 +133,3 @@ class SwatToolbar extends SwatDisplayableContainer
 
 	// }}}
 }
-
-?>

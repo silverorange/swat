@@ -24,8 +24,9 @@ class SwatEmailEntry extends SwatEntry
 	{
 		parent::process();
 
-		if ($this->value === null)
+		if ($this->value === null) {
 			return;
+		}
 
 		if ($this->value == '') {
 			$this->value = null;
@@ -65,16 +66,18 @@ class SwatEmailEntry extends SwatEntry
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
-		case 'email':
-			$text = Swat::_('The email address you have entered is not '.
-				'properly formatted.');
+			case 'email':
+				$text = Swat::_(
+					'The email address you have entered is not ' .
+						'properly formatted.'
+				);
 
-			$message = new SwatMessage($text, 'error');
-			break;
+				$message = new SwatMessage($text, 'error');
+				break;
 
-		default:
-			$message = parent::getValidationMessage($id);
-			break;
+			default:
+				$message = parent::getValidationMessage($id);
+				break;
 		}
 
 		return $message;
@@ -113,5 +116,3 @@ class SwatEmailEntry extends SwatEntry
 
 	// }}}
 }
-
-?>

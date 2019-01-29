@@ -75,25 +75,39 @@ abstract class SwatNumericEntry extends SwatEntry
 		}
 
 		if ($value !== null) {
-			if ($this->minimum_value !== null &&
-				$value < $this->minimum_value) {
+			if (
+				$this->minimum_value !== null &&
+				$value < $this->minimum_value
+			) {
 				$message = $this->getValidationMessage('below-minimum');
-				$minimum_value = str_replace('%', '%%',
-					$this->getDisplayValue($this->minimum_value));
+				$minimum_value = str_replace(
+					'%',
+					'%%',
+					$this->getDisplayValue($this->minimum_value)
+				);
 
-				$message->primary_content = sprintf($message->primary_content,
-					$minimum_value);
+				$message->primary_content = sprintf(
+					$message->primary_content,
+					$minimum_value
+				);
 
 				$this->addMessage($message);
 			}
-			if ($this->maximum_value !== null &&
-				$value > $this->maximum_value) {
+			if (
+				$this->maximum_value !== null &&
+				$value > $this->maximum_value
+			) {
 				$message = $this->getValidationMessage('above-maximum');
-				$maximum_value = str_replace('%', '%%',
-					$this->getDisplayValue($this->maximum_value));
+				$maximum_value = str_replace(
+					'%',
+					'%%',
+					$this->getDisplayValue($this->maximum_value)
+				);
 
-				$message->primary_content = sprintf($message->primary_content,
-					$maximum_value);
+				$message->primary_content = sprintf(
+					$message->primary_content,
+					$maximum_value
+				);
 
 				$this->addMessage($message);
 			}
@@ -114,25 +128,25 @@ abstract class SwatNumericEntry extends SwatEntry
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
-		case 'below-minimum':
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('The %%s field must not be less than %s.') :
-				Swat::_('This field must not be less than %s.');
+			case 'below-minimum':
+				$text = $this->show_field_title_in_messages
+					? Swat::_('The %%s field must not be less than %s.')
+					: Swat::_('This field must not be less than %s.');
 
-			$message = new SwatMessage($text, 'error');
-			break;
+				$message = new SwatMessage($text, 'error');
+				break;
 
-		case 'above-maximum':
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('The %%s field must not be more than %s.') :
-				Swat::_('This field must not be more than %s.');
+			case 'above-maximum':
+				$text = $this->show_field_title_in_messages
+					? Swat::_('The %%s field must not be more than %s.')
+					: Swat::_('This field must not be more than %s.');
 
-			$message = new SwatMessage($text, 'error');
-			break;
+				$message = new SwatMessage($text, 'error');
+				break;
 
-		default:
-			$message = parent::getValidationMessage($id);
-			break;
+			default:
+				$message = parent::getValidationMessage($id);
+				break;
 		}
 
 		return $message;
@@ -172,5 +186,3 @@ abstract class SwatNumericEntry extends SwatEntry
 
 	// }}}
 }
-
-?>

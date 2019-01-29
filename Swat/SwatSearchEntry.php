@@ -47,8 +47,9 @@ class SwatSearchEntry extends SwatEntry
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -79,8 +80,9 @@ class SwatSearchEntry extends SwatEntry
 	{
 		$tag = parent::getInputTag();
 
-		if ($this->name !== null)
+		if ($this->name !== null) {
 			$tag->name = $this->name;
+		}
 
 		return $tag;
 	}
@@ -158,5 +160,3 @@ class SwatSearchEntry extends SwatEntry
 
 	// }}}
 }
-
-?>

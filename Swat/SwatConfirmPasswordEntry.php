@@ -37,14 +37,18 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry
 	{
 		parent::process();
 
-		if ($this->password_widget === null)
-			throw new SwatException("Property 'password_widget' is null. ".
-				'Expected a reference to a SwatPasswordEntry.');
+		if ($this->password_widget === null) {
+			throw new SwatException(
+				"Property 'password_widget' is null. " .
+					'Expected a reference to a SwatPasswordEntry.'
+			);
+		}
 
 		if ($this->password_widget->value !== null) {
 			if ($this->password_widget->value !== $this->value) {
-				$message = Swat::_('Password and confirmation password do not '.
-					'match.');
+				$message = Swat::_(
+					'Password and confirmation password do not ' . 'match.'
+				);
 
 				$this->addMessage(new SwatMessage($message, 'error'));
 			}
@@ -69,5 +73,3 @@ class SwatConfirmPasswordEntry extends SwatPasswordEntry
 
 	// }}}
 }
-
-?>

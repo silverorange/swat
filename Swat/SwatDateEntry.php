@@ -11,10 +11,10 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 {
 	// {{{ class constants
 
-	const YEAR     = 1;
-	const MONTH    = 2;
-	const DAY      = 4;
-	const TIME     = 8;
+	const YEAR = 1;
+	const MONTH = 2;
+	const DAY = 4;
+	const TIME = 8;
 	const CALENDAR = 16;
 
 	// }}}
@@ -122,8 +122,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		parent::__construct($id);
 
 		$this->required_parts = self::YEAR | self::MONTH | self::DAY;
-		$this->display_parts  = self::YEAR | self::MONTH |
-								self::DAY | self::CALENDAR;
+		$this->display_parts =
+			self::YEAR | self::MONTH | self::DAY | self::CALENDAR;
 
 		$this->setValidRange(-20, 20);
 
@@ -190,8 +190,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -206,8 +207,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			if ($datepart == 'd' && $this->display_parts & self::DAY) {
 				$day_flydown = $this->getCompositeWidget('day_flydown');
 
-				if ($day_flydown->value === null &&
-					$this->value !== null) {
+				if ($day_flydown->value === null && $this->value !== null) {
 					$day_flydown->value = $this->value->getDay();
 				}
 
@@ -215,8 +215,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			} elseif ($datepart == 'm' && $this->display_parts & self::MONTH) {
 				$month_flydown = $this->getCompositeWidget('month_flydown');
 
-				if ($month_flydown->value === null &&
-					$this->value !== null) {
+				if ($month_flydown->value === null && $this->value !== null) {
 					$month_flydown->value = $this->value->getMonth();
 				}
 
@@ -224,8 +223,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 			} elseif ($datepart == 'y' && $this->display_parts & self::YEAR) {
 				$year_flydown = $this->getCompositeWidget('year_flydown');
 
-				if ($year_flydown->value === null &&
-					$this->value !== null) {
+				if ($year_flydown->value === null && $this->value !== null) {
 					$year_flydown->value = $this->value->getYear();
 				}
 
@@ -245,12 +243,14 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 			// if we aren't using the current date then we won't use the
 			// current time
-			if (!$this->use_current_date)
+			if (!$this->use_current_date) {
 				$time_entry->use_current_time = false;
+			}
 
 			echo ' ';
-			if ($time_entry->value === null && $this->value !== null)
+			if ($time_entry->value === null && $this->value !== null) {
 				$time_entry->value = $this->value;
+			}
 
 			$time_entry->display();
 		}
@@ -274,8 +274,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		parent::process();
 
-		if (!$this->isVisible())
+		if (!$this->isVisible()) {
 			return;
+		}
 
 		$year = 0;
 		$month = 1;
@@ -406,10 +407,11 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	public function getState()
 	{
-		if ($this->value === null)
+		if ($this->value === null) {
 			return null;
-		else
+		} else {
 			return $this->value->getDate();
+		}
 	}
 
 	// }}}
@@ -438,7 +440,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	public function isValid()
 	{
-		return ($this->isStartDateValid() && $this->isEndDateValid());
+		return $this->isStartDateValid() && $this->isEndDateValid();
 	}
 
 	// }}}
@@ -451,57 +453,87 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
-		$use_current_date = ($this->use_current_date) ? 'true' : 'false';
+		$use_current_date = $this->use_current_date ? 'true' : 'false';
 
-		$javascript = sprintf("var %s_obj = new SwatDateEntry('%s', %s);",
-			$this->id, $this->id, $use_current_date);
+		$javascript = sprintf(
+			"var %s_obj = new SwatDateEntry('%s', %s);",
+			$this->id,
+			$this->id,
+			$use_current_date
+		);
 
 		if ($this->display_parts & self::DAY) {
 			$day_flydown = $this->getCompositeWidget('day_flydown');
 
 			$lookup_days = array();
-			foreach ($day_flydown->options as $key => $option)
-				$lookup_days[] = sprintf('%s: %s',
+			foreach ($day_flydown->options as $key => $option) {
+				$lookup_days[] = sprintf(
+					'%s: %s',
 					$option->value,
-					($day_flydown->show_blank) ? $key + 1 : $key);
+					$day_flydown->show_blank ? $key + 1 : $key
+				);
+			}
 
-			$javascript.= sprintf("\n%s_obj.addLookupTable('day', {%s});",
-				$this->id, implode(', ', $lookup_days));
+			$javascript .= sprintf(
+				"\n%s_obj.addLookupTable('day', {%s});",
+				$this->id,
+				implode(', ', $lookup_days)
+			);
 		}
 
 		if ($this->display_parts & self::MONTH) {
 			$month_flydown = $this->getCompositeWidget('month_flydown');
 
 			$lookup_months = array();
-			foreach ($month_flydown->options as $key => $option)
-				$lookup_months[] = sprintf('%s: %s',
+			foreach ($month_flydown->options as $key => $option) {
+				$lookup_months[] = sprintf(
+					'%s: %s',
 					$option->value,
-					($month_flydown->show_blank) ? $key + 1 : $key);
+					$month_flydown->show_blank ? $key + 1 : $key
+				);
+			}
 
-			$javascript.= sprintf("\n%s_obj.addLookupTable('month', {%s});",
-				$this->id, implode(', ', $lookup_months));
+			$javascript .= sprintf(
+				"\n%s_obj.addLookupTable('month', {%s});",
+				$this->id,
+				implode(', ', $lookup_months)
+			);
 		}
 
 		if ($this->display_parts & self::YEAR) {
 			$year_flydown = $this->getCompositeWidget('year_flydown');
 
 			$lookup_years = array();
-			foreach ($year_flydown->options as $key => $option)
-				$lookup_years[] = sprintf('%s: %s',
+			foreach ($year_flydown->options as $key => $option) {
+				$lookup_years[] = sprintf(
+					'%s: %s',
 					$option->value,
-					($year_flydown->show_blank) ? $key + 1 : $key);
+					$year_flydown->show_blank ? $key + 1 : $key
+				);
+			}
 
-			$javascript.= sprintf("\n%s_obj.addLookupTable('year', {%s});",
-				$this->id, implode(', ', $lookup_years));
+			$javascript .= sprintf(
+				"\n%s_obj.addLookupTable('year', {%s});",
+				$this->id,
+				implode(', ', $lookup_years)
+			);
 		}
 
-		if ($this->display_parts & self::TIME)
-			$javascript.= sprintf("\n%s_obj.setTimeEntry(%s_time_entry_obj);",
-				$this->id, $this->id);
+		if ($this->display_parts & self::TIME) {
+			$javascript .= sprintf(
+				"\n%s_obj.setTimeEntry(%s_time_entry_obj);",
+				$this->id,
+				$this->id
+			);
+		}
 
-		if ($this->display_parts & self::CALENDAR)
-			$javascript.= sprintf("\n%s_obj.setCalendar(%s_calendar_obj);",
-				$this->id, $this->id);
+		if ($this->display_parts & self::CALENDAR) {
+			$javascript .= sprintf(
+				"\n%s_obj.setCalendar(%s_calendar_obj);",
+				$this->id,
+				$this->id
+			);
+		}
 
 		return $javascript;
 	}
@@ -536,8 +568,11 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	protected function isStartDateValid()
 	{
 		$this->valid_range_start->setTZById('UTC');
-		return (SwatDate::compare(
-			$this->value, $this->valid_range_start, true) >= 0);
+		return SwatDate::compare(
+			$this->value,
+			$this->valid_range_start,
+			true
+		) >= 0;
 	}
 
 	// }}}
@@ -553,8 +588,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	protected function isEndDateValid()
 	{
 		$this->valid_range_end->setTZById('UTC');
-		return (SwatDate::compare(
-			$this->value, $this->valid_range_end, true) < 0);
+		return SwatDate::compare($this->value, $this->valid_range_end, true) <
+			0;
 	}
 
 	// }}}
@@ -569,16 +604,23 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	protected function validateRanges()
 	{
 		if (!$this->isStartDateValid()) {
-			$message = sprintf(Swat::_('The date you have entered is invalid. '.
-				'It must be on or after %s.'),
-				$this->getFormattedDate($this->valid_range_start));
+			$message = sprintf(
+				Swat::_(
+					'The date you have entered is invalid. ' .
+						'It must be on or after %s.'
+				),
+				$this->getFormattedDate($this->valid_range_start)
+			);
 
 			$this->addMessage(new SwatMessage($message, 'error'));
-
 		} elseif (!$this->isEndDateValid()) {
-			$message = sprintf(Swat::_('The date you have entered is invalid. '.
-				'It must be before %s.'),
-				$this->getFormattedDate($this->valid_range_end));
+			$message = sprintf(
+				Swat::_(
+					'The date you have entered is invalid. ' .
+						'It must be before %s.'
+				),
+				$this->getFormattedDate($this->valid_range_end)
+			);
 
 			$this->addMessage(new SwatMessage($message, 'error'));
 		}
@@ -609,24 +651,15 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		}
 
 		if ($this->display_parts & self::DAY) {
-			$this->addCompositeWidget(
-				$this->createDayFlydown(),
-				'day_flydown'
-			);
+			$this->addCompositeWidget($this->createDayFlydown(), 'day_flydown');
 		}
 
 		if ($this->display_parts & self::TIME) {
-			$this->addCompositeWidget(
-				$this->createTimeEntry(),
-				'time_entry'
-			);
+			$this->addCompositeWidget($this->createTimeEntry(), 'time_entry');
 		}
 
 		if ($this->display_parts & self::CALENDAR) {
-			$this->addCompositeWidget(
-				$this->createCalendar(),
-				'calendar'
-			);
+			$this->addCompositeWidget($this->createCalendar(), 'calendar');
 		}
 	}
 
@@ -640,7 +673,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function createYearFlydown()
 	{
-		$flydown = new SwatFlydown($this->id.'_year');
+		$flydown = new SwatFlydown($this->id . '_year');
 		$flydown->classes = array('swat-date-entry-year');
 
 		if ($this->show_blank_titles) {
@@ -656,8 +689,9 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$range_end->subtractSeconds(1);
 		$end_year = $range_end->getYear();
 
-		for ($i = $start_year; $i <= $end_year; $i++)
+		for ($i = $start_year; $i <= $end_year; $i++) {
 			$flydown->addOption($i, $i);
+		}
 
 		return $flydown;
 	}
@@ -685,7 +719,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function createMonthFlydown()
 	{
-		$flydown = new SwatFlydown($this->id.'_month');
+		$flydown = new SwatFlydown($this->id . '_month');
 		$flydown->classes = array('swat-date-entry-month');
 
 		if ($this->show_blank_titles) {
@@ -693,17 +727,17 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		}
 
 		$range_end = clone $this->valid_range_end;
-		$difference  = $this->valid_range_start->diff($range_end);
+		$difference = $this->valid_range_start->diff($range_end);
 
 		// Subtract a second from the end date. This makes comparison correct,
 		// and prevents displaying extra months. The difference needs to happen
 		// before this to prevent December specific bugs.
 		$range_end->subtractSeconds(1);
 
-		$start_year  = $this->valid_range_start->getYear();
-		$end_year    = $range_end->getYear();
+		$start_year = $this->valid_range_start->getYear();
+		$end_year = $range_end->getYear();
 		$start_month = $this->valid_range_start->getMonth();
-		$end_month   = $range_end->getMonth();
+		$end_month = $range_end->getMonth();
 
 		if ($end_year == $start_year) {
 			// if the years match, only display the valid months.
@@ -746,12 +780,13 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	{
 		$text = '';
 
-		if ($this->show_month_number)
-			$text.= str_pad($month, 2, '0', STR_PAD_LEFT).' - ';
+		if ($this->show_month_number) {
+			$text .= str_pad($month, 2, '0', STR_PAD_LEFT) . ' - ';
+		}
 
-		$date = new SwatDate('2010-'.$month.'-01');
+		$date = new SwatDate('2010-' . $month . '-01');
 
-		$text.= $date->formatLikeIntl('MMMM');
+		$text .= $date->formatLikeIntl('MMMM');
 
 		return $text;
 	}
@@ -766,7 +801,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function createDayFlydown()
 	{
-		$flydown = new SwatFlydown($this->id.'_day');
+		$flydown = new SwatFlydown($this->id . '_day');
 		$flydown->classes = array('swat-date-entry-day');
 
 		if ($this->show_blank_titles) {
@@ -778,35 +813,37 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$range_end = clone $this->valid_range_end;
 		$range_end->subtractSeconds(1);
 
-		$start_year  = $this->valid_range_start->getYear();
-		$end_year    = $range_end->getYear();
+		$start_year = $this->valid_range_start->getYear();
+		$end_year = $range_end->getYear();
 		$start_month = $this->valid_range_start->getMonth();
-		$end_month   = $range_end->getMonth();
-		$start_day   = $this->valid_range_start->getDay();
-		$end_day     = $range_end->getDay();
+		$end_month = $range_end->getMonth();
+		$start_day = $this->valid_range_start->getDay();
+		$end_day = $range_end->getDay();
 
 		$end_check = clone $this->valid_range_start;
 		$end_check->addSeconds(2678400); // add 31 days
 
 		if ($start_year == $end_year && $start_month == $end_month) {
 			// Only days left in the month
-			for ($i = $start_day; $i <= $end_day; $i++)
+			for ($i = $start_day; $i <= $end_day; $i++) {
 				$flydown->addOption($i, $i);
-
+			}
 		} elseif (SwatDate::compare($end_check, $range_end, true) != -1) {
 			// extra days at the beginning of the next month allowed
 			$days_in_month = $this->valid_range_start->getDaysInMonth();
 
-			for ($i = $start_day; $i <= $days_in_month; $i++)
+			for ($i = $start_day; $i <= $days_in_month; $i++) {
 				$flydown->addOption($i, $i);
+			}
 
-			for ($i = 1; $i <= $end_day; $i++)
+			for ($i = 1; $i <= $end_day; $i++) {
 				$flydown->addOption($i, $i);
-
+			}
 		} else {
 			// all days are valid
-			for ($i = 1; $i <= 31; $i++)
+			for ($i = 1; $i <= 31; $i++) {
 				$flydown->addOption($i, $i);
+			}
 		}
 
 		return $flydown;
@@ -835,7 +872,7 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function createTimeEntry()
 	{
-		$time_entry = new SwatTimeEntry($this->id.'_time_entry');
+		$time_entry = new SwatTimeEntry($this->id . '_time_entry');
 		$time_entry->classes = array('swat-date-entry-time');
 		return $time_entry;
 	}
@@ -850,10 +887,10 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 	 */
 	protected function createCalendar()
 	{
-		$calendar = new SwatCalendar($this->id.'_calendar');
+		$calendar = new SwatCalendar($this->id . '_calendar');
 		$calendar->classes = array('swat-date-entry-calendar');
 		$calendar->valid_range_start = $this->valid_range_start;
-		$calendar->valid_range_end   = $this->valid_range_end;
+		$calendar->valid_range_end = $this->valid_range_end;
 		return $calendar;
 	}
 
@@ -880,19 +917,19 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$format = '';
 
 		if ($this->display_parts & self::MONTH) {
-			$format.= ' MMMM';
+			$format .= ' MMMM';
 		}
 
 		if ($this->display_parts & self::DAY) {
-			$format.= ' d,';
+			$format .= ' d,';
 		}
 
 		if ($this->display_parts & self::YEAR) {
-			$format.= ' yyyy';
+			$format .= ' yyyy';
 		}
 
 		if ($this->display_parts & self::TIME) {
-			$format.= ' h:mm a';
+			$format .= ' h:mm a';
 		}
 
 		$format = trim($format, ', ');
@@ -926,19 +963,30 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 		$year = null;
 
 		$matches = array();
-		if (preg_match('/(%d|%e)/', $format, $matches,
-			PREG_OFFSET_CAPTURE) == 1)
+		if (
+			preg_match('/(%d|%e)/', $format, $matches, PREG_OFFSET_CAPTURE) == 1
+		) {
 			$day = $matches[0][1];
+		}
 
 		$matches = array();
-		if (preg_match('/(%[bB]|%m)/', $format, $matches,
-			PREG_OFFSET_CAPTURE) == 1)
+		if (
+			preg_match(
+				'/(%[bB]|%m)/',
+				$format,
+				$matches,
+				PREG_OFFSET_CAPTURE
+			) == 1
+		) {
 			$month = $matches[0][1];
+		}
 
 		$matches = array();
-		if (preg_match('/(%[Yy])/', $format, $matches,
-			PREG_OFFSET_CAPTURE) == 1)
+		if (
+			preg_match('/(%[Yy])/', $format, $matches, PREG_OFFSET_CAPTURE) == 1
+		) {
 			$year = $matches[0][1];
+		}
 
 		if ($day === null || $month === null || $year === null) {
 			// fallback to d-m-y if the locale format is unknown
@@ -956,5 +1004,3 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
 	// }}}
 }
-
-?>

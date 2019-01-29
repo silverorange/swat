@@ -38,14 +38,11 @@ class SwatYUIComponent extends SwatObject
 		$this->id = $id;
 		$this->beta = $beta;
 
-		$this->html_head_entry_set['normal'] =
-			new SwatHtmlHeadEntrySet();
+		$this->html_head_entry_set['normal'] = new SwatHtmlHeadEntrySet();
 
-		$this->html_head_entry_set['debug'] =
-			new SwatHtmlHeadEntrySet();
+		$this->html_head_entry_set['debug'] = new SwatHtmlHeadEntrySet();
 
-		$this->html_head_entry_set['min'] =
-			new SwatHtmlHeadEntrySet();
+		$this->html_head_entry_set['min'] = new SwatHtmlHeadEntrySet();
 	}
 
 	// }}}
@@ -86,24 +83,34 @@ class SwatYUIComponent extends SwatObject
 	 */
 	public function addJavaScript($component_directory = '', $filename = '')
 	{
-		if ($component_directory == '')
+		if ($component_directory == '') {
 			$component_directory = $this->id;
+		}
 
-		if ($filename == '')
+		if ($filename == '') {
 			$filename = $this->id;
+		}
 
 		$modes = array(
-			'min'    => '-min',
-			'debug'  => '-debug',
-			'normal' => '',
+			'min' => '-min',
+			'debug' => '-debug',
+			'normal' => ''
 		);
 
 		if ($this->beta) {
 			$filename_template =
-				'packages/yui/'.$component_directory.'/'.$filename.'-beta%s.js';
+				'packages/yui/' .
+				$component_directory .
+				'/' .
+				$filename .
+				'-beta%s.js';
 		} else {
 			$filename_template =
-				'packages/yui/'.$component_directory.'/'.$filename.'%s.js';
+				'packages/yui/' .
+				$component_directory .
+				'/' .
+				$filename .
+				'%s.js';
 		}
 
 		foreach ($modes as $mode => $suffix) {
@@ -143,23 +150,26 @@ class SwatYUIComponent extends SwatObject
 		$filename = '',
 		$has_min_version = true
 	) {
-		if ($component_directory == '')
+		if ($component_directory == '') {
 			$component_directory = $this->id;
+		}
 
-		if ($filename == '')
+		if ($filename == '') {
 			$filename = $this->id;
+		}
 
 		$modes = array(
-			'min'    => '-min',
-			'debug'  => '',
-			'normal' => '',
+			'min' => '-min',
+			'debug' => '',
+			'normal' => ''
 		);
 
-		if (!$has_min_version)
+		if (!$has_min_version) {
 			$modes['min'] = '';
+		}
 
 		$filename_template =
-			'packages/yui/'.$component_directory.'/'.$filename.'%s.css';
+			'packages/yui/' . $component_directory . '/' . $filename . '%s.css';
 
 		foreach ($modes as $mode => $suffix) {
 			$filename = sprintf($filename_template, $suffix);
@@ -192,5 +202,3 @@ class SwatYUIComponent extends SwatObject
 
 	// }}}
 }
-
-?>

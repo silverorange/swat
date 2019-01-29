@@ -53,8 +53,10 @@ class SwatTreeFlydownNode extends SwatTreeNode
 		if ($param2 === null && $param1 instanceof SwatOption) {
 			$this->flydown_option = $param1;
 		} elseif ($param2 === null) {
-			throw new SwatException('First parameter must be a '.
-				'SwatOption or second parameter must be specified.');
+			throw new SwatException(
+				'First parameter must be a ' .
+					'SwatOption or second parameter must be specified.'
+			);
 		} else {
 			$this->flydown_option = new SwatOption($param1, $param2);
 		}
@@ -85,8 +87,9 @@ class SwatTreeFlydownNode extends SwatTreeNode
 	 */
 	public function addChild($child)
 	{
-		if ($child instanceof SwatDataTreeNode)
+		if ($child instanceof SwatDataTreeNode) {
 			$child = self::convertFromDataTree($child);
+		}
 
 		parent::addChild($child);
 	}
@@ -98,13 +101,12 @@ class SwatTreeFlydownNode extends SwatTreeNode
 	{
 		$new_tree = new SwatTreeFlydownNode($tree->value, $tree->title);
 
-		foreach ($tree->getChildren() as $child_node)
+		foreach ($tree->getChildren() as $child_node) {
 			$new_tree->addChild(self::convertFromDataTree($child_node));
+		}
 
 		return $new_tree;
 	}
 
 	// }}}
 }
-
-?>

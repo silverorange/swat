@@ -41,8 +41,9 @@ abstract class SwatInputControl extends SwatControl
 	{
 		parent::init();
 
-		if ($this->required && $this->parent instanceof SwatFormField)
+		if ($this->required && $this->parent instanceof SwatFormField) {
 			$this->parent->required = true;
+		}
 	}
 
 	// }}}
@@ -66,11 +67,14 @@ abstract class SwatInputControl extends SwatControl
 			$path = get_class($this);
 			$object = $this->parent;
 			while ($object !== null) {
-				$path = get_class($object).'/'.$path;
+				$path = get_class($object) . '/' . $path;
 				$object = $object->parent;
 			}
-			throw new SwatException("Input controls must reside inside a ".
-				"SwatForm widget. UI-Object path:\n".$path);
+			throw new SwatException(
+				"Input controls must reside inside a " .
+					"SwatForm widget. UI-Object path:\n" .
+					$path
+			);
 		}
 
 		return $form;
@@ -91,24 +95,26 @@ abstract class SwatInputControl extends SwatControl
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
-		case 'required':
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('%s is required.') :
-				Swat::_('This field is required.');
+			case 'required':
+				$text = $this->show_field_title_in_messages
+					? Swat::_('%s is required.')
+					: Swat::_('This field is required.');
 
-			break;
-		case 'too-long':
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('The %%s field can be at most %s characters long.') :
-				Swat::_('This field can be at most %s characters long.');
+				break;
+			case 'too-long':
+				$text = $this->show_field_title_in_messages
+					? Swat::_(
+						'The %%s field can be at most %s characters long.'
+					)
+					: Swat::_('This field can be at most %s characters long.');
 
-			break;
-		default:
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('There is a problem with the %s field.') :
-				Swat::_('There is a problem with this field.');
+				break;
+			default:
+				$text = $this->show_field_title_in_messages
+					? Swat::_('There is a problem with the %s field.')
+					: Swat::_('There is a problem with this field.');
 
-			break;
+				break;
 		}
 
 		$message = new SwatMessage($text, 'error');
@@ -117,5 +123,3 @@ abstract class SwatInputControl extends SwatControl
 
 	// }}}
 }
-
-?>

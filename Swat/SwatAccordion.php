@@ -61,8 +61,9 @@ class SwatAccordion extends SwatNoteBook
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		SwatWidget::display();
 
@@ -74,8 +75,9 @@ class SwatAccordion extends SwatNoteBook
 		$ul_tag->open();
 
 		foreach ($this->pages as $page) {
-			if (!$page->visible)
+			if (!$page->visible) {
 				continue;
+			}
 
 			$li_counter++;
 			$li_tag = new SwatHtmlTag('li');
@@ -87,12 +89,12 @@ class SwatAccordion extends SwatNoteBook
 				$li_tag->class = 'swat-accordion-page';
 			}
 
-			$li_tag->class.= ' '.implode(' ', $page->classes);
+			$li_tag->class .= ' ' . implode(' ', $page->classes);
 
 			$li_tag->open();
 
 			// toggle link
-			$title = ($page->title === null) ? '' : $page->title;
+			$title = $page->title === null ? '' : $page->title;
 			$wrapper_span = new SwatHtmlTag('span');
 			$wrapper_span->tabindex = '0';
 			$wrapper_span->{'aria-role'} = 'tab';
@@ -101,7 +103,7 @@ class SwatAccordion extends SwatNoteBook
 
 			$anchor_tag = new SwatHtmlTag('a');
 			$anchor_tag->class = 'swat-accordion-page-link';
-			$anchor_tag->href = '#'.$page->id;
+			$anchor_tag->href = '#' . $page->id;
 			$em_tag = new SwatHtmlTag('em');
 			$em_tag->setContent($title, $page->title_content_type);
 
@@ -135,18 +137,24 @@ class SwatAccordion extends SwatNoteBook
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf("var %1\$s_obj = new %2\$s('%1\$s', %3\$s);",
+		$javascript = sprintf(
+			"var %1\$s_obj = new %2\$s('%1\$s', %3\$s);",
 			$this->id,
 			$this->getJavascriptClassName(),
-			$this->animate ? 'true' : 'false');
+			$this->animate ? 'true' : 'false'
+		);
 
-		$javascript.= sprintf("\n%s_obj.animate = %s;",
+		$javascript .= sprintf(
+			"\n%s_obj.animate = %s;",
 			$this->id,
-			$this->animate ? 'true' : 'false');
+			$this->animate ? 'true' : 'false'
+		);
 
-		$javascript.= sprintf("\n%s_obj.always_open = %s;",
+		$javascript .= sprintf(
+			"\n%s_obj.always_open = %s;",
 			$this->id,
-			$this->always_open ? 'true' : 'false');
+			$this->always_open ? 'true' : 'false'
+		);
 
 		return $javascript;
 	}
@@ -161,5 +169,3 @@ class SwatAccordion extends SwatNoteBook
 
 	// }}}
 }
-
-?>

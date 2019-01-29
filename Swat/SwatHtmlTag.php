@@ -58,8 +58,9 @@ class SwatHtmlTag extends SwatObject
 	{
 		$this->tag_name = $tag_name;
 
-		if (is_array($attributes))
+		if (is_array($attributes)) {
 			$this->attributes = $attributes;
+		}
 	}
 
 	// }}}
@@ -101,8 +102,9 @@ class SwatHtmlTag extends SwatObject
 	 */
 	public function addAttributes($attributes)
 	{
-		if (is_array($attributes))
+		if (is_array($attributes)) {
 			$this->attributes = array_merge($this->attributes, $attributes);
+		}
 	}
 
 	// }}}
@@ -160,10 +162,11 @@ class SwatHtmlTag extends SwatObject
 	public function displayContent()
 	{
 		if ($this->content !== null) {
-			if ($this->content_type === 'text/plain')
+			if ($this->content_type === 'text/plain') {
 				echo SwatString::minimizeEntities($this->content);
-			else
+			} else {
 				echo $this->content;
+			}
 		}
 	}
 
@@ -238,10 +241,11 @@ class SwatHtmlTag extends SwatObject
 	 */
 	public function __get($attribute)
 	{
-		if (isset($this->attributes[$attribute]))
+		if (isset($this->attributes[$attribute])) {
 			return $this->attributes[$attribute];
-		else
+		} else {
 			return null;
+		}
 	}
 
 	// }}}
@@ -259,7 +263,7 @@ class SwatHtmlTag extends SwatObject
 	public function __set($attribute, $value)
 	{
 		$this->attributes[$attribute] =
-			($value === null) ? null : (string)$value;
+			$value === null ? null : (string) $value;
 	}
 
 	// }}}
@@ -308,18 +312,20 @@ class SwatHtmlTag extends SwatObject
 
 		foreach ($this->attributes as $attribute => $value) {
 			if ($value !== null) {
-				echo ' ', $attribute, '="',
-					SwatString::minimizeEntities($value), '"';
+				echo ' ',
+					$attribute,
+					'="',
+					SwatString::minimizeEntities($value),
+					'"';
 			}
 		}
 
-		if ($self_closing)
+		if ($self_closing) {
 			echo ' />';
-		else
+		} else {
 			echo '>';
+		}
 	}
 
 	// }}}
 }
-
-?>

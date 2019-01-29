@@ -21,9 +21,7 @@ abstract class SwatExceptionLogger
 	 *
 	 * This is called by SwatException::process().
 	 */
-	public abstract function log(SwatException $e);
+	abstract public function log(SwatException $e);
 
 	// }}}
 }
-
-?>

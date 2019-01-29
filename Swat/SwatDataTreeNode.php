@@ -47,5 +47,3 @@ class SwatDataTreeNode extends SwatTreeNode
 
 	// }}}
 }
-
-?>

@@ -13,8 +13,8 @@
  *             title-setting functionality of SwatReplicableNoteBookPage is
  *             not available using this approach.
  */
-class SwatReplicableNoteBookPage extends SwatReplicableContainer
-	implements SwatNoteBookChild
+class SwatReplicableNoteBookPage extends SwatReplicableContainer implements
+	SwatNoteBookChild
 {
 	// {{{ public function init()
 
@@ -24,15 +24,17 @@ class SwatReplicableNoteBookPage extends SwatReplicableContainer
 	public function init()
 	{
 		$children = array();
-		foreach ($this->children as $child_widget)
+		foreach ($this->children as $child_widget) {
 			$children[] = $this->remove($child_widget);
+		}
 
 		$page = new SwatNoteBookPage();
 		$page->id = $page->getUniqueId();
 		$page_prototype_id = $page->id;
 
-		foreach ($children as $child_widget)
+		foreach ($children as $child_widget) {
 			$page->add($child_widget);
+		}
 
 		$this->add($page);
 
@@ -43,7 +45,7 @@ class SwatReplicableNoteBookPage extends SwatReplicableContainer
 			$page->title = $title;
 		}
 
-		$note_book = new SwatNoteBook($this->id.'_notebook');
+		$note_book = new SwatNoteBook($this->id . '_notebook');
 
 		foreach ($this->children as $child_widget) {
 			$page = $this->remove($child_widget);
@@ -71,5 +73,3 @@ class SwatReplicableNoteBookPage extends SwatReplicableContainer
 
 	// }}}
 }
-
-?>

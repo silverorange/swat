@@ -72,8 +72,9 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -84,7 +85,7 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
-		$input_tag->id = $this->id.'_value';
+		$input_tag->id = $this->id . '_value';
 		$input_tag->name = $this->id;
 		$input_tag->value = $this->value;
 		$input_tag->accesskey = $this->access_key;
@@ -136,11 +137,11 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
 	 */
 	protected function getInlineJavaScript()
 	{
-		return sprintf("SwatAbstractOverlay.close_text = %s;\n",
-			SwatString::quoteJavaScriptString(Swat::_('Close')));
+		return sprintf(
+			"SwatAbstractOverlay.close_text = %s;\n",
+			SwatString::quoteJavaScriptString(Swat::_('Close'))
+		);
 	}
 
 	// }}}
 }
-
-?>

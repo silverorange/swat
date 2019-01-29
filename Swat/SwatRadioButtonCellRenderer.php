@@ -11,8 +11,8 @@
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatViewSelector
  */
-class SwatRadioButtonCellRenderer extends SwatCellRenderer
-	implements SwatViewSelector
+class SwatRadioButtonCellRenderer extends SwatCellRenderer implements
+	SwatViewSelector
 {
 	// {{{ public properties
 
@@ -108,8 +108,9 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 
 				$view = $this->getFirstAncestor('SwatView');
 				if ($view !== null) {
-					$selection = new SwatViewSelection(
-						array($this->selected_value));
+					$selection = new SwatViewSelection(array(
+						$this->selected_value
+					));
 
 					$view->setSelection($selection, $this);
 				}
@@ -125,14 +126,15 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::render();
 
 		if ($this->title !== null) {
 			$label_tag = new SwatHtmlTag('label');
-			$label_tag->for = $this->id.'_radio_button_'.$this->value;
+			$label_tag->for = $this->id . '_radio_button_' . $this->value;
 			$label_tag->setContent($this->title, $this->content_type);
 			$label_tag->open();
 		}
@@ -140,16 +142,18 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 		$radio_button_tag = new SwatHtmlTag('input');
 		$radio_button_tag->type = 'radio';
 		$radio_button_tag->name = $this->id;
-		$radio_button_tag->id = $this->id.'_radio_button_'.$this->value;
+		$radio_button_tag->id = $this->id . '_radio_button_' . $this->value;
 		$radio_button_tag->value = $this->value;
-		if (!$this->sensitive)
+		if (!$this->sensitive) {
 			$radio_button_tag->disabled = 'disabled';
+		}
 
 		$view = $this->getFirstAncestor('SwatView');
 		if ($view !== null) {
 			$selection = $view->getSelection($this);
-			if ($selection->contains($this->value))
+			if ($selection->contains($this->value)) {
 				$radio_button_tag->checked = 'checked';
+			}
 		}
 
 		echo '<span class="swat-radio-wrapper">';
@@ -193,7 +197,10 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 		if ($view !== null) {
 			$javascript = sprintf(
 				"var %s = new SwatRadioButtonCellRenderer('%s', %s);",
-				$this->id, $this->id, $view->id);
+				$this->id,
+				$this->id,
+				$view->id
+			);
 		} else {
 			$javascript = '';
 		}
@@ -219,8 +226,9 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 	{
 		$copy = parent::copy($id_suffix);
 
-		if ($id_suffix != '')
-			$copy->id = $copy->id.$id_suffix;
+		if ($id_suffix != '') {
+			$copy->id = $copy->id . $id_suffix;
+		}
 
 		return $copy;
 	}
@@ -241,14 +249,15 @@ class SwatRadioButtonCellRenderer extends SwatCellRenderer
 	{
 		$form = $this->getFirstAncestor('SwatForm');
 
-		if ($form === null)
-			throw new SwatException('SwatRadioButtonCellRenderer must have '.
-				'a SwatForm ancestor in the UI tree.');
+		if ($form === null) {
+			throw new SwatException(
+				'SwatRadioButtonCellRenderer must have ' .
+					'a SwatForm ancestor in the UI tree.'
+			);
+		}
 
 		return $form;
 	}
 
 	// }}}
 }
-
-?>

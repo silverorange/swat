@@ -21,9 +21,7 @@ abstract class SwatErrorDisplayer
 	 *
 	 * This is called by SwatError::process().
 	 */
-	public abstract function display(SwatError $e);
+	abstract public function display(SwatError $e);
 
 	// }}}
 }
-
-?>

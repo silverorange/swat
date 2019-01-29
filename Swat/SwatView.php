@@ -87,9 +87,11 @@ abstract class SwatView extends SwatControl
 
 		// add selectors of this view but not selectors of sub-views
 		$selectors = $this->getDescendants('SwatViewSelector');
-		foreach ($selectors as $selector)
-			if ($selector->getFirstAncestor('SwatView') === $this)
+		foreach ($selectors as $selector) {
+			if ($selector->getFirstAncestor('SwatView') === $this) {
 				$this->addSelector($selector);
+			}
+		}
 	}
 
 	// }}}
@@ -129,24 +131,34 @@ abstract class SwatView extends SwatControl
 	public function getSelection($selector = null)
 	{
 		if ($selector === null) {
-			if (count($this->selectors) > 0)
+			if (count($this->selectors) > 0) {
 				$selector = reset($this->selectors);
-			else
+			} else {
 				throw new SwatException(
-					'This view does not have any selectors.');
+					'This view does not have any selectors.'
+				);
+			}
 		} elseif (is_string($selector)) {
-			if (isset($this->selectors[$selector]))
+			if (isset($this->selectors[$selector])) {
 				$selector = $this->selectors[$selector];
-			else
-				throw new SwatObjectNotFoundException('Selector with an id '.
-					"of {$selector} does not exist in this view.", 0,
-					$selector);
+			} else {
+				throw new SwatObjectNotFoundException(
+					'Selector with an id ' .
+						"of {$selector} does not exist in this view.",
+					0,
+					$selector
+				);
+			}
 		} elseif (!($selector instanceof SwatViewSelector)) {
-			throw new SwatInvalidClassException('Specified object is not '.
-				'a SwatViewSelector object.', 0, $selector);
+			throw new SwatInvalidClassException(
+				'Specified object is not ' . 'a SwatViewSelector object.',
+				0,
+				$selector
+			);
 		} elseif (!isset($this->selections[$selector->getId()])) {
 			throw new SwatException(
-				'Specified SwatViewSelector is not a selector of this view.');
+				'Specified SwatViewSelector is not a selector of this view.'
+			);
 		}
 
 		return $this->selections[$selector->getId()];
@@ -190,24 +202,34 @@ abstract class SwatView extends SwatControl
 	public function setSelection(SwatViewSelection $selection, $selector = null)
 	{
 		if ($selector === null) {
-			if (count($this->selectors) > 0)
+			if (count($this->selectors) > 0) {
 				$selector = reset($this->selectors);
-			else
+			} else {
 				throw new SwatException(
-					'This view does not have any selectors.');
+					'This view does not have any selectors.'
+				);
+			}
 		} elseif (is_string($selector)) {
-			if (isset($this->selectors[$selector]))
+			if (isset($this->selectors[$selector])) {
 				$selector = $this->selectors[$selector];
-			else
-				throw new SwatObjectNotFoundException('Selector with an id '.
-					"of {$selector} does not exist in this view.", 0,
-					$selector);
+			} else {
+				throw new SwatObjectNotFoundException(
+					'Selector with an id ' .
+						"of {$selector} does not exist in this view.",
+					0,
+					$selector
+				);
+			}
 		} elseif (!($selector instanceof SwatViewSelector)) {
-			throw new SwatInvalidClassException('Specified object is not '.
-				'a SwatViewSelector object.', 0, $selector);
+			throw new SwatInvalidClassException(
+				'Specified object is not ' . 'a SwatViewSelector object.',
+				0,
+				$selector
+			);
 		} elseif (!isset($this->selections[$selector->getId()])) {
 			throw new SwatException(
-				'Specified SwatViewSelector is not a selector of this view.');
+				'Specified SwatViewSelector is not a selector of this view.'
+			);
 		}
 
 		$this->selections[$selector->getId()] = $selection;
@@ -221,7 +243,7 @@ abstract class SwatView extends SwatControl
 	 * {@link SwatView::init() method on all descendant UI-objects that are
 	 * SwatViewSelector objects.
 	 */
-	protected final function addSelector(SwatViewSelector $selector)
+	final protected function addSelector(SwatViewSelector $selector)
 	{
 		$this->selections[$selector->getId()] = new SwatViewSelection(array());
 		$this->selectors[$selector->getId()] = $selector;
@@ -229,5 +251,3 @@ abstract class SwatView extends SwatControl
 
 	// }}}
 }
-
-?>

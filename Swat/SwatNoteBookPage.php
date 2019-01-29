@@ -54,8 +54,9 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
@@ -98,5 +99,3 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
 
 	// }}}
 }
-
-?>

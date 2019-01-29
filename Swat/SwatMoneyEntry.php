@@ -52,15 +52,17 @@ class SwatMoneyEntry extends SwatFloatEntry
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
 		if ($this->display_currency) {
 			$locale = SwatI18NLocale::get($this->locale);
-			echo SwatString::minimizeEntities(' '.
-				$locale->getInternationalCurrencySymbol());
+			echo SwatString::minimizeEntities(
+				' ' . $locale->getInternationalCurrencySymbol()
+			);
 		}
 	}
 
@@ -78,13 +80,16 @@ class SwatMoneyEntry extends SwatFloatEntry
 	{
 		parent::process();
 
-		if ($this->value === null)
+		if ($this->value === null) {
 			return;
+		}
 
 		$locale = SwatI18NLocale::get($this->locale);
 		$format = $locale->getNationalCurrencyFormat();
-		$max_decimal_places = ($this->decimal_places === null) ?
-			$format->fractional_digits : $this->decimal_places;
+		$max_decimal_places =
+			$this->decimal_places === null
+				? $format->fractional_digits
+				: $this->decimal_places;
 
 		$value = $this->getRawValue();
 
@@ -92,12 +97,17 @@ class SwatMoneyEntry extends SwatFloatEntry
 		// value. This checks the raw value instead of the processed value
 		// because the processed value could have been parsed into a float by
 		// this point.
-		$decimal_position = mb_strpos((string)$value, $format->decimal_separator);
+		$decimal_position = mb_strpos(
+			(string) $value,
+			$format->decimal_separator
+		);
 		if ($decimal_position === false) {
 			$decimal_places = 0;
 		} else {
-			$fractional_digits = mb_substr(rtrim((string)$value, '0'),
-				$decimal_position + mb_strlen($format->decimal_separator));
+			$fractional_digits = mb_substr(
+				rtrim((string) $value, '0'),
+				$decimal_position + mb_strlen($format->decimal_separator)
+			);
 
 			$decimal_places = preg_match_all('/[0-9]/', $fractional_digits);
 		}
@@ -105,40 +115,57 @@ class SwatMoneyEntry extends SwatFloatEntry
 		// check if length of the given fractional part is more than the
 		// allowed length
 		if ($decimal_places > $max_decimal_places) {
-
 			// validation failed so reset value to the raw value
 			$this->value = $value;
 
 			if ($this->decimal_places === null) {
-				$message =
-					$this->getValidationMessage('currency-decimal-places');
+				$message = $this->getValidationMessage(
+					'currency-decimal-places'
+				);
 
-				$max_decimal_places_formatted = str_replace('%', '%%',
-					$locale->formatNumber($max_decimal_places));
+				$max_decimal_places_formatted = str_replace(
+					'%',
+					'%%',
+					$locale->formatNumber($max_decimal_places)
+				);
 
 				// C99 specification includes spacing character, remove it
-				$currency_formatted = str_replace('%', '%%',
-					$locale->getInternationalCurrencySymbol());
+				$currency_formatted = str_replace(
+					'%',
+					'%%',
+					$locale->getInternationalCurrencySymbol()
+				);
 
-				$message->primary_content = sprintf($message->primary_content,
+				$message->primary_content = sprintf(
+					$message->primary_content,
 					$currency_formatted,
-					$max_decimal_places_formatted);
+					$max_decimal_places_formatted
+				);
 			} else {
 				if ($max_decimal_places === 0) {
 					$message = $this->getValidationMessage('no-decimal-places');
 				} else {
-					$max_decimal_places_formatted = str_replace('%', '%%',
-						$locale->formatNumber($max_decimal_places));
+					$max_decimal_places_formatted = str_replace(
+						'%',
+						'%%',
+						$locale->formatNumber($max_decimal_places)
+					);
 
 					// note: not using getValidationMessage() because of
 					// ngettext. We may want to add this ability to that method
-					$message = new SwatMessage(sprintf(Swat::ngettext(
-						'The %%s field has too many decimal places. There '.
-						'can be at most one decimal place.',
-						'The %%s field has too many decimal places. There '.
-						'can be at most %s decimal places.',
-						$max_decimal_places), $max_decimal_places_formatted),
-						'error');
+					$message = new SwatMessage(
+						sprintf(
+							Swat::ngettext(
+								'The %%s field has too many decimal places. There ' .
+									'can be at most one decimal place.',
+								'The %%s field has too many decimal places. There ' .
+									'can be at most %s decimal places.',
+								$max_decimal_places
+							),
+							$max_decimal_places_formatted
+						),
+						'error'
+					);
 				}
 			}
 
@@ -160,8 +187,11 @@ class SwatMoneyEntry extends SwatFloatEntry
 	{
 		// if the value is valid, format accordingly
 		if (!$this->hasMessage() && is_numeric($value)) {
-			$value = SwatI18NLocale::get($this->locale)->formatCurrency($value,
-				false, array('fractional_digits' => $this->decimal_places));
+			$value = SwatI18NLocale::get($this->locale)->formatCurrency(
+				$value,
+				false,
+				array('fractional_digits' => $this->decimal_places)
+			);
 		}
 
 		return $value;
@@ -197,41 +227,52 @@ class SwatMoneyEntry extends SwatFloatEntry
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
-		case 'float':
-			$locale = SwatI18NLocale::get($this->locale);
-			$currency = $locale->getInternationalCurrencySymbol();
-			$example = $locale->formatCurrency(1036.95, false,
-				array('fractional_digits' => $this->decimal_places));
+			case 'float':
+				$locale = SwatI18NLocale::get($this->locale);
+				$currency = $locale->getInternationalCurrencySymbol();
+				$example = $locale->formatCurrency(1036.95, false, array(
+					'fractional_digits' => $this->decimal_places
+				));
 
-			$text = sprintf($this->show_field_title_in_messages ?
-				Swat::_('The %%s field must be a monetary value '.
-					'formatted for %s (i.e. %s).') :
-				Swat::_('This field must be a monetary value '.
-					'formatted for %s (i.e. %s).'),
-				str_replace('%', '%%', $currency),
-				str_replace('%', '%%', $example));
+				$text = sprintf(
+					$this->show_field_title_in_messages
+						? Swat::_(
+							'The %%s field must be a monetary value ' .
+								'formatted for %s (i.e. %s).'
+						)
+						: Swat::_(
+							'This field must be a monetary value ' .
+								'formatted for %s (i.e. %s).'
+						),
+					str_replace('%', '%%', $currency),
+					str_replace('%', '%%', $example)
+				);
 
-			$message = new SwatMessage($text, 'error');
-			break;
-		case 'currency-decimal-places':
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('The %%s field has too many decimal places. The '.
-					'currency %s only allows %s.') :
-				Swat::_('This field has too many decimal places. The '.
-					'currency %s only allows %s.');
+				$message = new SwatMessage($text, 'error');
+				break;
+			case 'currency-decimal-places':
+				$text = $this->show_field_title_in_messages
+					? Swat::_(
+						'The %%s field has too many decimal places. The ' .
+							'currency %s only allows %s.'
+					)
+					: Swat::_(
+						'This field has too many decimal places. The ' .
+							'currency %s only allows %s.'
+					);
 
-			$message = new SwatMessage($text, 'error');
-			break;
-		case 'no-decimal-places':
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('The %s field must not have any decimal places.') :
-				Swat::_('This field must not have any decimal places.');
+				$message = new SwatMessage($text, 'error');
+				break;
+			case 'no-decimal-places':
+				$text = $this->show_field_title_in_messages
+					? Swat::_('The %s field must not have any decimal places.')
+					: Swat::_('This field must not have any decimal places.');
 
-			$message = new SwatMessage($text, 'error');
-			break;
-		default:
-			$message = parent::getValidationMessage($id);
-			break;
+				$message = new SwatMessage($text, 'error');
+				break;
+			default:
+				$message = parent::getValidationMessage($id);
+				break;
 		}
 
 		return $message;
@@ -255,5 +296,3 @@ class SwatMoneyEntry extends SwatFloatEntry
 
 	// }}}
 }
-
-?>

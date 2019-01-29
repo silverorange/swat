@@ -11,7 +11,7 @@ class SwatYesNoFlydown extends SwatFlydown
 {
 	// {{{ constants
 
-	const NO  = false;
+	const NO = false;
 	const YES = true;
 
 	// }}}
@@ -35,5 +35,3 @@ class SwatYesNoFlydown extends SwatFlydown
 
 	// }}}
 }
-
-?>

@@ -160,16 +160,16 @@ class SwatImageCropper extends SwatInputControl
 
 		$data = $this->getForm()->getFormData();
 
-		$this->crop_width  = $data[$this->id.'_width'];
-		$this->crop_height = $data[$this->id.'_height'];
-		$this->crop_left   = $data[$this->id.'_x'];
-		$this->crop_top    = $data[$this->id.'_y'];
+		$this->crop_width = $data[$this->id . '_width'];
+		$this->crop_height = $data[$this->id . '_height'];
+		$this->crop_left = $data[$this->id . '_x'];
+		$this->crop_top = $data[$this->id . '_y'];
 
 		// deprecated aliases
-		$this->crop_box_width  = $this->crop_width;
+		$this->crop_box_width = $this->crop_width;
 		$this->crop_box_height = $this->crop_height;
-		$this->crop_box_left   = $this->crop_left;
-		$this->crop_box_top    = $this->crop_top;
+		$this->crop_box_left = $this->crop_left;
+		$this->crop_box_top = $this->crop_top;
 	}
 
 	// }}}
@@ -180,8 +180,9 @@ class SwatImageCropper extends SwatInputControl
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -193,7 +194,7 @@ class SwatImageCropper extends SwatInputControl
 		$div_tag->open();
 
 		$image_tag = new SwatHtmlTag('img');
-		$image_tag->id = $this->id.'_image';
+		$image_tag->id = $this->id . '_image';
 		$image_tag->src = $this->image_uri;
 		$image_tag->width = $this->image_width;
 		$image_tag->height = $this->image_height;
@@ -203,23 +204,23 @@ class SwatImageCropper extends SwatInputControl
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
 
-		$input_tag->id = $this->id.'_width';
-		$input_tag->name = $this->id.'_width';
+		$input_tag->id = $this->id . '_width';
+		$input_tag->name = $this->id . '_width';
 		$input_tag->value = $this->crop_width;
 		$input_tag->display();
 
-		$input_tag->id = $this->id.'_height';
-		$input_tag->name = $this->id.'_height';
+		$input_tag->id = $this->id . '_height';
+		$input_tag->name = $this->id . '_height';
 		$input_tag->value = $this->crop_height;
 		$input_tag->display();
 
-		$input_tag->id = $this->id.'_x';
-		$input_tag->name = $this->id.'_x';
+		$input_tag->id = $this->id . '_x';
+		$input_tag->name = $this->id . '_x';
 		$input_tag->value = $this->crop_left;
 		$input_tag->display();
 
-		$input_tag->id = $this->id.'_y';
-		$input_tag->name = $this->id.'_y';
+		$input_tag->id = $this->id . '_y';
+		$input_tag->name = $this->id . '_y';
 		$input_tag->value = $this->crop_top;
 		$input_tag->display();
 
@@ -248,7 +249,7 @@ class SwatImageCropper extends SwatInputControl
 			$options['initHeight'] = $this->crop_height;
 		}
 
-		$options['minWidth']  = intval($this->min_width);
+		$options['minWidth'] = intval($this->min_width);
 		$options['minHeight'] = intval($this->min_height);
 
 		if ($this->crop_height !== null) {
@@ -257,7 +258,7 @@ class SwatImageCropper extends SwatInputControl
 
 		if ($this->crop_left !== null && $this->crop_top !== null) {
 			$options['initialXY'] =
-				'['.$this->crop_left.', '.$this->crop_top.']';
+				'[' . $this->crop_left . ', ' . $this->crop_top . ']';
 		}
 
 		if ($this->crop_ratio !== null) {
@@ -270,16 +271,20 @@ class SwatImageCropper extends SwatInputControl
 		$first = true;
 
 		foreach ($options as $key => $value) {
-			if ($first)
+			if ($first) {
 				$first = false;
-			else
-				$options_string.= ', ';
+			} else {
+				$options_string .= ', ';
+			}
 
-			$options_string.= sprintf("%s: %s", $key, $value);
+			$options_string .= sprintf("%s: %s", $key, $value);
 		}
 
-		return sprintf("%1\$s_obj = new SwatImageCropper(".
-			"'%1\$s', {%2\$s});", $this->id, $options_string);
+		return sprintf(
+			"%1\$s_obj = new SwatImageCropper(" . "'%1\$s', {%2\$s});",
+			$this->id,
+			$options_string
+		);
 	}
 
 	// }}}
@@ -319,8 +324,9 @@ class SwatImageCropper extends SwatInputControl
 		}
 
 		// fix bad ratio
-		if ($this->crop_box_ratio == 0)
+		if ($this->crop_box_ratio == 0) {
 			$this->crop_box_ratio = null;
+		}
 
 		// autoset width
 		if ($this->crop_width === null) {
@@ -329,8 +335,9 @@ class SwatImageCropper extends SwatInputControl
 			} elseif ($this->crop_ratio > 1) {
 				$this->crop_width = $this->image_width;
 			} else {
-				$this->crop_width =
-					round($this->image_height * $this->crop_ratio);
+				$this->crop_width = round(
+					$this->image_height * $this->crop_ratio
+				);
 			}
 		}
 
@@ -341,16 +348,18 @@ class SwatImageCropper extends SwatInputControl
 			} elseif ($this->crop_ratio <= 1) {
 				$this->crop_height = $this->image_height;
 			} else {
-				$this->crop_height =
-					round($this->image_width / $this->crop_ratio);
+				$this->crop_height = round(
+					$this->image_width / $this->crop_ratio
+				);
 			}
 		}
 
 		// autoset left
 		if ($this->crop_left === null) {
 			if ($this->crop_width < $this->image_width) {
-				$this->crop_left =
-					round(($this->image_width - $this->crop_width) / 2);
+				$this->crop_left = round(
+					($this->image_width - $this->crop_width) / 2
+				);
 			} else {
 				$this->crop_left = 0;
 			}
@@ -359,8 +368,9 @@ class SwatImageCropper extends SwatInputControl
 		// autoset top
 		if ($this->crop_top === null) {
 			if ($this->crop_height < $this->image_height) {
-				$this->crop_top =
-					round(($this->image_height - $this->crop_height) / 2);
+				$this->crop_top = round(
+					($this->image_height - $this->crop_height) / 2
+				);
 			} else {
 				$this->crop_top = 0;
 			}
@@ -384,5 +394,3 @@ class SwatImageCropper extends SwatInputControl
 
 	// }}}
 }
-
-?>

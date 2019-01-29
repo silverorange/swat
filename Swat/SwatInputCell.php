@@ -84,12 +84,15 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 */
 	public function addChild(SwatObject $child)
 	{
-		if ($this->widget === null)
+		if ($this->widget === null) {
 			$this->setWidget($child);
-		else
-			throw new SwatException('Can only add one widget to an input '.
-				'cell. Add a SwatContainer instance if you need to add '.
-				'multiple widgets.');
+		} else {
+			throw new SwatException(
+				'Can only add one widget to an input ' .
+					'cell. Add a SwatContainer instance if you need to add ' .
+					'multiple widgets.'
+			);
+		}
 	}
 
 	// }}}
@@ -102,12 +105,14 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 */
 	public function init()
 	{
-		if ($this->widget !== null)
+		if ($this->widget !== null) {
 			$this->widget->init();
+		}
 
 		// ensure the widget has an id
-		if ($this->widget->id === null)
+		if ($this->widget->id === null) {
 			$this->widget->id = $this->widget->getUniqueId();
+		}
 	}
 
 	// }}}
@@ -158,10 +163,11 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 */
 	public function getTitle()
 	{
-		if ($this->parent === null)
+		if ($this->parent === null) {
 			return '';
-		else
+		} else {
 			return $this->parent->title;
+		}
 	}
 
 	// }}}
@@ -237,15 +243,17 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 
 		if ($widget_id === null && isset($this->clones[$row_identifier])) {
 			return $this->clones[$row_identifier];
-
-		} elseif ($widget_id !== null &&
-			isset($this->widgets[$row_identifier][$widget_id])) {
-
+		} elseif (
+			$widget_id !== null &&
+			isset($this->widgets[$row_identifier][$widget_id])
+		) {
 			return $this->widgets[$row_identifier][$widget_id];
 		}
 
-		throw new SwatException('The specified widget was not found with the '.
-			'specified row identifier.');
+		throw new SwatException(
+			'The specified widget was not found with the ' .
+				'specified row identifier.'
+		);
 	}
 
 	// }}}
@@ -263,11 +271,13 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 */
 	public function unsetWidget($replicator_id)
 	{
-		if (isset($this->widgets[$replicator_id]))
+		if (isset($this->widgets[$replicator_id])) {
 			unset($this->widgets[$replicator_id]);
+		}
 
-		if (isset($this->clones[$replicator_id]))
+		if (isset($this->clones[$replicator_id])) {
 			unset($this->clones[$replicator_id]);
+		}
 	}
 
 	// }}}
@@ -327,8 +337,12 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 */
 	public function getDescendants($class_name = null)
 	{
-		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name))
+		if (
+			!(
+				$class_name === null ||
+				class_exists($class_name) ||
+				interface_exists($class_name)
+			)
 		) {
 			return array();
 		}
@@ -345,8 +359,10 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 			}
 
 			if ($cloned_widget instanceof SwatUIParent) {
-				$out = array_merge($out,
-					$cloned_widget->getDescendants($class_name));
+				$out = array_merge(
+					$out,
+					$cloned_widget->getDescendants($class_name)
+				);
 			}
 		}
 
@@ -371,8 +387,9 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 */
 	public function getFirstDescendant($class_name)
 	{
-		if (!class_exists($class_name) && !interface_exists($class_name))
+		if (!class_exists($class_name) && !interface_exists($class_name)) {
 			return null;
+		}
 
 		$out = null;
 
@@ -384,8 +401,9 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 
 			if ($cloned_widget instanceof SwatUIParent) {
 				$out = $cloned_widget->getFirstDescendant($class_name);
-				if ($out !== null)
+				if ($out !== null) {
 					break;
+				}
 			}
 		}
 
@@ -408,8 +426,9 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	{
 		$states = array();
 
-		foreach ($this->getDescendants('SwatState') as $id => $object)
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
 			$states[$id] = $object->getState();
+		}
 
 		return $states;
 	}
@@ -428,9 +447,11 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 */
 	public function setDescendantStates(array $states)
 	{
-		foreach ($this->getDescendants('SwatState') as $id => $object)
-			if (isset($states[$id]))
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
+			if (isset($states[$id])) {
 				$object->setState($states[$id]);
+			}
+		}
 	}
 
 	// }}}
@@ -470,8 +491,9 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 			if ($copy_clone instanceof SwatUIParent) {
 				foreach ($copy_clone->getDescendants() as $descendant) {
 					if ($descendant->id !== null) {
-						$copy->widgets[$replicator_id][$descendant->id] =
-							$descendant;
+						$copy->widgets[$replicator_id][
+							$descendant->id
+						] = $descendant;
 					}
 				}
 			}
@@ -494,8 +516,9 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	protected function getInputRow()
 	{
 		$view = $this->getFirstAncestor('SwatTableView');
-		if ($view === null)
+		if ($view === null) {
 			return null;
+		}
 
 		$row = $view->getFirstRowByClass('SwatTableViewInputRow');
 
@@ -522,22 +545,29 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 	 */
 	protected function getClonedWidget($replicator_id)
 	{
-		if (isset($this->clones[$replicator_id]))
+		if (isset($this->clones[$replicator_id])) {
 			return $this->clones[$replicator_id];
+		}
 
-		if ($this->widget === null)
+		if ($this->widget === null) {
 			return null;
+		}
 
 		$row = $this->getInputRow();
-		if ($row === null)
-			throw new SwatException('Cannot clone widgets until cell is '.
-				'added to a table-view and an input-row is added to the '.
-				'table-view.');
+		if ($row === null) {
+			throw new SwatException(
+				'Cannot clone widgets until cell is ' .
+					'added to a table-view and an input-row is added to the ' .
+					'table-view.'
+			);
+		}
 
 		$view = $this->getFirstAncestor('SwatTableView');
-		$view_id = ($view === null) ? null : $view->id;
-		$suffix = ($view_id === null) ? '_'.$row->id.'_'.$replicator_id :
-			'_'.$view_id.'_'.$row->id.'_'.$replicator_id;
+		$view_id = $view === null ? null : $view->id;
+		$suffix =
+			$view_id === null
+				? '_' . $row->id . '_' . $replicator_id
+				: '_' . $view_id . '_' . $row->id . '_' . $replicator_id;
 
 		$new_widget = $this->widget->copy($suffix);
 		$new_widget->parent = $this;
@@ -569,5 +599,3 @@ class SwatInputCell extends SwatUIObject implements SwatUIParent, SwatTitleable
 
 	// }}}
 }
-
-?>

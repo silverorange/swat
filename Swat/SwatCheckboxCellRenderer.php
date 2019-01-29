@@ -8,8 +8,8 @@
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatViewSelector
  */
-class SwatCheckboxCellRenderer extends SwatCellRenderer
-	implements SwatViewSelector
+class SwatCheckboxCellRenderer extends SwatCellRenderer implements
+	SwatViewSelector
 {
 	// {{{ public properties
 
@@ -131,33 +131,36 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::render();
 
 		if ($this->title !== null) {
 			$label_tag = new SwatHtmlTag('label');
-			$label_tag->for = $this->id.'_checkbox_'.$this->value;
+			$label_tag->for = $this->id . '_checkbox_' . $this->value;
 			$label_tag->setContent($this->title, $this->content_type);
 			$label_tag->open();
 		}
 
 		$checkbox_tag = new SwatHtmlTag('input');
 		$checkbox_tag->type = 'checkbox';
-		$checkbox_tag->name = $this->id.'[]';
-		$checkbox_tag->id = $this->id.'_checkbox_'.$this->value;
+		$checkbox_tag->name = $this->id . '[]';
+		$checkbox_tag->id = $this->id . '_checkbox_' . $this->value;
 		$checkbox_tag->value = $this->value;
 		$checkbox_tag->tabindex = $this->tab_index;
 
-		if (!$this->sensitive)
+		if (!$this->sensitive) {
 			$checkbox_tag->disabled = 'disabled';
+		}
 
 		$view = $this->getFirstAncestor('SwatView');
 		if ($view !== null) {
 			$selection = $view->getSelection($this);
-			if ($selection->contains($this->value))
+			if ($selection->contains($this->value)) {
 				$checkbox_tag->checked = 'checked';
+			}
 		}
 
 		echo '<span class="swat-checkbox-wrapper">';
@@ -201,7 +204,10 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 		if ($view !== null) {
 			$javascript = sprintf(
 				"var %s = new SwatCheckboxCellRenderer('%s', %s);",
-				$this->id, $this->id, $view->id);
+				$this->id,
+				$this->id,
+				$view->id
+			);
 		} else {
 			$javascript = '';
 		}
@@ -227,8 +233,9 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 	{
 		$copy = parent::copy($id_suffix);
 
-		if ($id_suffix != '')
-			$copy->id = $copy->id.$id_suffix;
+		if ($id_suffix != '') {
+			$copy->id = $copy->id . $id_suffix;
+		}
 
 		return $copy;
 	}
@@ -248,14 +255,15 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer
 	{
 		$form = $this->getFirstAncestor('SwatForm');
 
-		if ($form === null)
-			throw new SwatException('SwatCheckboxCellRenderer must have '.
-				'a SwatForm ancestor in the UI tree.');
+		if ($form === null) {
+			throw new SwatException(
+				'SwatCheckboxCellRenderer must have ' .
+					'a SwatForm ancestor in the UI tree.'
+			);
+		}
 
 		return $form;
 	}
 
 	// }}}
 }
-
-?>

@@ -149,13 +149,14 @@ class SwatTextareaEditor extends SwatTextarea
 
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		SwatWidget::display();
 
 		// textarea tags cannot be self-closing when using HTML parser on XHTML
-		$value = ($this->value === null) ? '' : $this->value;
+		$value = $this->value === null ? '' : $this->value;
 
 		// escape value for display because we actually want to show entities
 		// for editing
@@ -179,26 +180,28 @@ class SwatTextareaEditor extends SwatTextarea
 		// set element styles if width and/or height are specified
 		if ($this->width !== null || $this->height !== null) {
 			if ($this->width !== null && $this->height !== null) {
-				$textarea_tag->style = sprintf('width: %s; height: %s;',
-					$this->width, $this->height);
+				$textarea_tag->style = sprintf(
+					'width: %s; height: %s;',
+					$this->width,
+					$this->height
+				);
 			} elseif ($this->width !== null) {
-				$textarea_tag->style = sprintf('width: %s;',
-					$this->width);
+				$textarea_tag->style = sprintf('width: %s;', $this->width);
 			} else {
-				$textarea_tag->style = sprintf('height: %s;',
-					$this->height);
+				$textarea_tag->style = sprintf('height: %s;', $this->height);
 			}
 		}
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$textarea_tag->disabled = 'disabled';
+		}
 
 		$textarea_tag->display();
 
 		// hidden field to preserve editing mode in form data
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
-		$input_tag->id = $this->id.'_mode';
+		$input_tag->id = $this->id . '_mode';
 		$input_tag->value = $this->mode;
 		$input_tag->display();
 
@@ -241,30 +244,30 @@ class SwatTextareaEditor extends SwatTextarea
 			'h3',
 			'h4',
 			'h5',
-			'h6',
+			'h6'
 		);
 
 		$blockformats = implode(',', $blockformats);
 
-		$modes = ($this->modes_enabled) ? 'yes' : 'no';
-		$image_server = ($this->image_server) ? $this->image_server : '';
+		$modes = $this->modes_enabled ? 'yes' : 'no';
+		$image_server = $this->image_server ? $this->image_server : '';
 
 		$config = array(
-			'mode'                              => 'exact',
-			'elements'                          => $this->id,
-			'theme'                             => 'advanced',
-			'theme_advanced_buttons1'           => $buttons,
-			'theme_advanced_buttons2'           => '',
-			'theme_advanced_buttons3'           => '',
-			'theme_advanced_toolbar_location'   => 'top',
-			'theme_advanced_toolbar_align'      => 'left',
-			'theme_advanced_blockformats'       => $blockformats,
-			'skin'                              => 'swat',
-			'plugins'                           => 'swat,media,paste',
-			'swat_modes_enabled'                => $modes,
-			'swat_image_server'                 => $image_server,
-			'paste_remove_spans'                => true,
-			'paste_remove_styles'               => true,
+			'mode' => 'exact',
+			'elements' => $this->id,
+			'theme' => 'advanced',
+			'theme_advanced_buttons1' => $buttons,
+			'theme_advanced_buttons2' => '',
+			'theme_advanced_buttons3' => '',
+			'theme_advanced_toolbar_location' => 'top',
+			'theme_advanced_toolbar_align' => 'left',
+			'theme_advanced_blockformats' => $blockformats,
+			'skin' => 'swat',
+			'plugins' => 'swat,media,paste',
+			'swat_modes_enabled' => $modes,
+			'swat_image_server' => $image_server,
+			'paste_remove_spans' => true,
+			'paste_remove_styles' => true
 		);
 
 		return $config;
@@ -294,7 +297,7 @@ class SwatTextareaEditor extends SwatTextarea
 			'|',
 			'link',
 			'image',
-			'snippet',
+			'snippet'
 		);
 	}
 
@@ -303,11 +306,11 @@ class SwatTextareaEditor extends SwatTextarea
 
 	protected function getInlineJavaScript()
 	{
-		$base_href = 'editor_base_'.$this->id;
+		$base_href = 'editor_base_' . $this->id;
 		ob_start();
 
 		if ($this->base_href === null) {
-			echo "var {$base_href} = ".
+			echo "var {$base_href} = " .
 				"document.getElementsByTagName('base');\n";
 
 			echo "if ({$base_href}.length) {\n";
@@ -320,8 +323,9 @@ class SwatTextareaEditor extends SwatTextarea
 			echo "\t\t0, {$base_href}.lastIndexOf('/') + 1);\n";
 			echo "}\n";
 		} else {
-			echo "var {$base_href} = ".
-				SwatString::quoteJavaScriptString($this->base_href).";\n";
+			echo "var {$base_href} = " .
+				SwatString::quoteJavaScriptString($this->base_href) .
+				";\n";
 		}
 
 		echo "tinyMCE.init({\n";
@@ -331,9 +335,9 @@ class SwatTextareaEditor extends SwatTextarea
 			if (is_string($value)) {
 				$value = SwatString::quoteJavaScriptString($value);
 			} elseif (is_bool($value)) {
-				$value = ($value) ? 'true' : 'false';
+				$value = $value ? 'true' : 'false';
 			}
-			$lines[] = "\t".$name.": ".$value;
+			$lines[] = "\t" . $name . ": " . $value;
 		}
 
 		$lines[] = "\tdocument_base_url: {$base_href}";
@@ -342,45 +346,45 @@ class SwatTextareaEditor extends SwatTextarea
 
 		// Make removeformat button also clear inline alignments, styles,
 		// colors and classes.
-		echo ",\n".
-			"\tformats: {\n".
-			"\t\tremoveformat : [\n".
-			"\t\t\t{\n".
-			"\t\t\t\tselector     : 'b,strong,em,i,font,u,strike',\n".
-			"\t\t\t\tremove       : 'all',\n".
-			"\t\t\t\tsplit        : true,\n".
-			"\t\t\t\texpand       : false,\n".
-			"\t\t\t\tblock_expand : true,\n".
-			"\t\t\t\tdeep         : true\n".
-			"\t\t\t},\n".
-			"\t\t\t{\n".
-			"\t\t\t\tselector     : 'span',\n".
-			"\t\t\t\tattributes   : [\n".
-			"\t\t\t\t\t'style',\n".
-			"\t\t\t\t\t'class',\n".
-			"\t\t\t\t\t'align',\n".
-			"\t\t\t\t\t'color',\n".
-			"\t\t\t\t\t'background'\n".
-			"\t\t\t\t],\n".
-			"\t\t\t\tremove       : 'empty',\n".
-			"\t\t\t\tsplit        : true,\n".
-			"\t\t\t\texpand       : false,\n".
-			"\t\t\t\tdeep         : true\n".
-			"\t\t\t},\n".
-			"\t\t\t{\n".
-			"\t\t\t\tselector     : '*',\n".
-			"\t\t\t\tattributes   : [\n".
-			"\t\t\t\t\t'style',\n".
-			"\t\t\t\t\t'class',\n".
-			"\t\t\t\t\t'align',\n".
-			"\t\t\t\t\t'color',\n".
-			"\t\t\t\t\t'background'\n".
-			"\t\t\t\t],\n".
-			"\t\t\t\tsplit        : false,\n".
-			"\t\t\t\texpand       : false,\n".
-			"\t\t\t\tdeep         : true\n".
-			"\t\t\t}\n".
-			"\t\t]\n".
+		echo ",\n" .
+			"\tformats: {\n" .
+			"\t\tremoveformat : [\n" .
+			"\t\t\t{\n" .
+			"\t\t\t\tselector     : 'b,strong,em,i,font,u,strike',\n" .
+			"\t\t\t\tremove       : 'all',\n" .
+			"\t\t\t\tsplit        : true,\n" .
+			"\t\t\t\texpand       : false,\n" .
+			"\t\t\t\tblock_expand : true,\n" .
+			"\t\t\t\tdeep         : true\n" .
+			"\t\t\t},\n" .
+			"\t\t\t{\n" .
+			"\t\t\t\tselector     : 'span',\n" .
+			"\t\t\t\tattributes   : [\n" .
+			"\t\t\t\t\t'style',\n" .
+			"\t\t\t\t\t'class',\n" .
+			"\t\t\t\t\t'align',\n" .
+			"\t\t\t\t\t'color',\n" .
+			"\t\t\t\t\t'background'\n" .
+			"\t\t\t\t],\n" .
+			"\t\t\t\tremove       : 'empty',\n" .
+			"\t\t\t\tsplit        : true,\n" .
+			"\t\t\t\texpand       : false,\n" .
+			"\t\t\t\tdeep         : true\n" .
+			"\t\t\t},\n" .
+			"\t\t\t{\n" .
+			"\t\t\t\tselector     : '*',\n" .
+			"\t\t\t\tattributes   : [\n" .
+			"\t\t\t\t\t'style',\n" .
+			"\t\t\t\t\t'class',\n" .
+			"\t\t\t\t\t'align',\n" .
+			"\t\t\t\t\t'color',\n" .
+			"\t\t\t\t\t'background'\n" .
+			"\t\t\t\t],\n" .
+			"\t\t\t\tsplit        : false,\n" .
+			"\t\t\t\texpand       : false,\n" .
+			"\t\t\t\tdeep         : true\n" .
+			"\t\t\t}\n" .
+			"\t\t]\n" .
 			"\t}";
 
 		echo "\n});";
@@ -405,5 +409,3 @@ class SwatTextareaEditor extends SwatTextarea
 
 	// }}}
 }
-
-?>

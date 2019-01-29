@@ -14,5 +14,3 @@
 class SwatReplicatorFieldset extends SwatReplicableFieldset
 {
 }
-
-?>

@@ -28,5 +28,3 @@ class SwatHeaderFormField extends SwatFormField
 
 	// }}}
 }
-
-?>

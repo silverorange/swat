@@ -33,5 +33,3 @@ interface SwatTitleable
 
 	// }}}
 }
-
-?>

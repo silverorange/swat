@@ -31,11 +31,13 @@ abstract class SwatControl extends SwatWidget
 			} else {
 				if ($this->parent->getTitleContentType() === 'text/xml') {
 					$field_title =
-						'<strong>'.$this->parent->getTitle().'</strong>';
+						'<strong>' . $this->parent->getTitle() . '</strong>';
 				} else {
 					$field_title =
-						'<strong>'.
-						SwatString::minimizeEntities($this->parent->getTitle()).
+						'<strong>' .
+						SwatString::minimizeEntities(
+							$this->parent->getTitle()
+						) .
 						'</strong>';
 				}
 			}
@@ -81,5 +83,3 @@ abstract class SwatControl extends SwatWidget
 
 	// }}}
 }
-
-?>

@@ -83,15 +83,17 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::render();
 
-		if ($this->isSensitive())
+		if ($this->isSensitive()) {
 			$this->renderSensitive();
-		else
+		} else {
 			$this->renderInsensitive();
+		}
 	}
 
 	// }}}
@@ -108,7 +110,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	 */
 	protected function isSensitive()
 	{
-		return ($this->sensitive && ($this->link !== null));
+		return $this->sensitive && $this->link !== null;
 	}
 
 	// }}}
@@ -176,8 +178,9 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 		} elseif (is_array($this->link_value)) {
 			$link_values = array();
 
-			foreach ($this->link_value as $value)
+			foreach ($this->link_value as $value) {
 				$link_values[] = urlencode($value);
+			}
 
 			$link = vsprintf($this->link, $link_values);
 		} else {
@@ -200,13 +203,12 @@ class SwatLinkCellRenderer extends SwatCellRenderer
 	{
 		$classes = array();
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$classes[] = 'swat-link-cell-renderer-insensitive';
+		}
 
 		return $classes;
 	}
 
 	// }}}
 }
-
-?>

@@ -21,5 +21,3 @@ class SwatDBDefaultRecordsetWrapper extends SwatDBRecordsetWrapper
 
 	// }}}
 }
-
-?>

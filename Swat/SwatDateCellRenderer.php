@@ -62,13 +62,13 @@ class SwatDateCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::render();
 
 		if ($this->date !== null) {
-
 			if (is_string($this->date)) {
 				$date = new SwatDate($this->date);
 			} elseif ($this->date instanceof SwatDate) {
@@ -77,7 +77,8 @@ class SwatDateCellRenderer extends SwatCellRenderer
 				$date = clone $this->date;
 			} else {
 				throw new InvalidArgumentException(
-					'The $date must be either a string or a SwatDate object.');
+					'The $date must be either a string or a SwatDate object.'
+				);
 			}
 
 			if ($this->display_time_zone instanceof DateTimeZone) {
@@ -86,16 +87,16 @@ class SwatDateCellRenderer extends SwatCellRenderer
 				$date->convertTZById($this->display_time_zone);
 			} elseif ($this->display_time_zone !== null) {
 				throw new InvalidArgumentException(
-					'The $display_time_zone must be either a string or a '.
-					'DateTimeZone object.');
+					'The $display_time_zone must be either a string or a ' .
+						'DateTimeZone object.'
+				);
 			}
 
 			echo SwatString::minimizeEntities(
-				$date->formatLikeIntl($this->format, $this->time_zone_format));
+				$date->formatLikeIntl($this->format, $this->time_zone_format)
+			);
 		}
 	}
 
 	// }}}
 }
-
-?>

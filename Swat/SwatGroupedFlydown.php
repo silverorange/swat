@@ -42,8 +42,9 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		SwatWidget::display();
 
@@ -54,22 +55,22 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 
 		// only show a select if there is more than one option
 		if ($count > 1) {
-
 			$select_tag = new SwatHtmlTag('select');
 			$select_tag->name = $this->id;
 			$select_tag->id = $this->id;
 			$select_tag->class = $this->getCSSClassString();
 
-			if (!$this->isSensitive())
+			if (!$this->isSensitive()) {
 				$select_tag->disabled = 'disabled';
+			}
 
 			$select_tag->open();
 
-			foreach ($display_tree->getChildren() as $child)
+			foreach ($display_tree->getChildren() as $child) {
 				$this->displayNode($child, 1);
+			}
 
 			$select_tag->close();
-
 		} elseif ($count == 1) {
 			// get first and only element
 			$children = $display_tree->getChildren();
@@ -90,12 +91,16 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 	 */
 	protected function checkTree(SwatTreeFlydownNode $tree, $level = 0)
 	{
-		if ($level > 2)
-			throw new SwatException('SwatGroupedFlydown tree must not be '.
-				'more than 3 levels including the root node.');
+		if ($level > 2) {
+			throw new SwatException(
+				'SwatGroupedFlydown tree must not be ' .
+					'more than 3 levels including the root node.'
+			);
+		}
 
-		foreach ($tree->getChildren() as $child)
+		foreach ($tree->getChildren() as $child) {
 			$this->checkTree($child, $level + 1);
+		}
 	}
 
 	// }}}
@@ -122,15 +127,18 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 		$children = $node->getChildren();
 		$flydown_option = $node->getOption();
 
-		if ($level == 1 && count($children) > 0 &&
+		if (
+			$level == 1 &&
+			count($children) > 0 &&
 			end($flydown_option->value) === null &&
-			!($flydown_option instanceof SwatFlydownDivider)) {
-
+			!($flydown_option instanceof SwatFlydownDivider)
+		) {
 			$optgroup_tag = new SwatHtmlTag('optgroup');
 			$optgroup_tag->label = $flydown_option->title;
 			$optgroup_tag->open();
-			foreach($node->getChildren() as $child_node)
+			foreach ($node->getChildren() as $child_node) {
 				$this->displayNode($child_node, $level + 1, $selected);
+			}
 
 			$optgroup_tag->close();
 		} else {
@@ -139,9 +147,11 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 			if ($this->serialize_values) {
 				$salt = $this->getForm()->getSalt();
 				$option_tag->value = SwatString::signedSerialize(
-					$flydown_option->value, $salt);
+					$flydown_option->value,
+					$salt
+				);
 			} else {
-				$option_tag->value = (string)$flydown_option->values;
+				$option_tag->value = (string) $flydown_option->values;
 			}
 
 			if ($flydown_option instanceof SwatFlydownDivider) {
@@ -152,10 +162,11 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 				$option_tag->removeAttribute('class');
 			}
 
-			if ($this->path === $flydown_option->value &&
+			if (
+				$this->path === $flydown_option->value &&
 				$selected === false &&
-				!($flydown_option instanceof SwatFlydownDivider)) {
-
+				!($flydown_option instanceof SwatFlydownDivider)
+			) {
 				$option_tag->selected = 'selected';
 				$selected = true;
 			} else {
@@ -165,8 +176,9 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 			$option_tag->setContent($flydown_option->title);
 			$option_tag->display();
 
-			foreach($children as $child_node)
+			foreach ($children as $child_node) {
 				$this->displayNode($child_node, $level + 1, $selected);
+			}
 		}
 	}
 
@@ -192,8 +204,9 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 		$new_node = new SwatTreeFlydownNode($path, $flydown_option->title);
 
 		$parent->addChild($new_node);
-		foreach ($tree->getChildren() as $child)
+		foreach ($tree->getChildren() as $child) {
 			$this->buildDisplayTree($child, $new_node, $path);
+		}
 	}
 
 	// }}}
@@ -214,17 +227,18 @@ class SwatGroupedFlydown extends SwatTreeFlydown
 	protected function getDisplayTree()
 	{
 		$display_tree = new SwatTreeFlydownNode(null, 'root');
-		if ($this->show_blank)
+		if ($this->show_blank) {
 			$display_tree->addChild(
-				new SwatTreeFlydownNode(null, $this->blank_title));
+				new SwatTreeFlydownNode(null, $this->blank_title)
+			);
+		}
 
-		foreach ($this->tree->getChildren() as $child)
+		foreach ($this->tree->getChildren() as $child) {
 			$this->buildDisplayTree($child, $display_tree);
+		}
 
 		return $display_tree;
 	}
 
 	// }}}
 }
-
-?>

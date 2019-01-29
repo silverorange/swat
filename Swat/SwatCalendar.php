@@ -62,8 +62,9 @@ class SwatCalendar extends SwatControl
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -83,8 +84,8 @@ class SwatCalendar extends SwatControl
 
 		$input_tag = new SwatHtmlTag('input');
 		$input_tag->type = 'hidden';
-		$input_tag->id = $this->id.'_value';
-		$input_tag->name = $this->id.'_value';
+		$input_tag->id = $this->id . '_value';
+		$input_tag->name = $this->id . '_value';
 		$input_tag->value = $value;
 		$input_tag->display();
 
@@ -129,7 +130,9 @@ class SwatCalendar extends SwatControl
 		}
 
 		if (isset($this->valid_range_start)) {
-			$start_date = $this->valid_range_start->formatLikeIntl('MM/dd/yyyy');
+			$start_date = $this->valid_range_start->formatLikeIntl(
+				'MM/dd/yyyy'
+			);
 		} else {
 			$start_date = '';
 		}
@@ -143,12 +146,13 @@ class SwatCalendar extends SwatControl
 			$end_date = '';
 		}
 
-		$javascript.=
-			sprintf("var %s_obj = new SwatCalendar('%s', '%s', '%s');",
+		$javascript .= sprintf(
+			"var %s_obj = new SwatCalendar('%s', '%s', '%s');",
 			$this->id,
 			$this->id,
 			$start_date,
-			$end_date);
+			$end_date
+		);
 
 		return $javascript;
 	}
@@ -179,7 +183,7 @@ class SwatCalendar extends SwatControl
 			$week_names[] = $date->formatLikeIntl('EEE');
 			$date->setDay($i + 1);
 		}
-		$week_names = "['".implode("', '", $week_names)."']";
+		$week_names = "['" . implode("', '", $week_names) . "']";
 
 		// Get the names of months (locale-specific)
 		$month_names = array();
@@ -187,29 +191,27 @@ class SwatCalendar extends SwatControl
 			$month_names[] = $date->formatLikeIntl('MMM');
 			$date->setMonth($i + 1);
 		}
-		$month_names = "['".implode("', '", $month_names)."']";
+		$month_names = "['" . implode("', '", $month_names) . "']";
 
-		$prev_alt_text     = Swat::_('Previous Month');
-		$next_alt_text     = Swat::_('Next Month');
-		$close_text        = Swat::_('Close');
-		$nodate_text       = Swat::_('No Date');
-		$today_text        = Swat::_('Today');
+		$prev_alt_text = Swat::_('Previous Month');
+		$next_alt_text = Swat::_('Next Month');
+		$close_text = Swat::_('Close');
+		$nodate_text = Swat::_('No Date');
+		$today_text = Swat::_('Today');
 
-		$open_toggle_text  = Swat::_('open calendar');
+		$open_toggle_text = Swat::_('open calendar');
 		$close_toggle_text = Swat::_('close calendar');
 
-		return "SwatCalendar.week_names = {$week_names};\n".
-			"SwatCalendar.month_names = {$month_names};\n".
-			"SwatCalendar.prev_alt_text = '{$prev_alt_text}';\n".
-			"SwatCalendar.next_alt_text = '{$next_alt_text}';\n".
-			"SwatCalendar.close_text = '{$close_text}';\n".
-			"SwatCalendar.nodate_text = '{$nodate_text}';\n".
-			"SwatCalendar.today_text = '{$today_text}';\n".
-			"SwatCalendar.open_toggle_text = '{$open_toggle_text}';\n".
+		return "SwatCalendar.week_names = {$week_names};\n" .
+			"SwatCalendar.month_names = {$month_names};\n" .
+			"SwatCalendar.prev_alt_text = '{$prev_alt_text}';\n" .
+			"SwatCalendar.next_alt_text = '{$next_alt_text}';\n" .
+			"SwatCalendar.close_text = '{$close_text}';\n" .
+			"SwatCalendar.nodate_text = '{$nodate_text}';\n" .
+			"SwatCalendar.today_text = '{$today_text}';\n" .
+			"SwatCalendar.open_toggle_text = '{$open_toggle_text}';\n" .
 			"SwatCalendar.close_toggle_text = '{$close_toggle_text}';\n";
 	}
 
 	// }}}
 }
-
-?>

@@ -77,9 +77,13 @@ class SwatDBClassMap extends SwatObject
 			}
 
 			if (in_array($from_class_name, $child_class_names)) {
-				throw new SwatException(sprintf(
-					'Circular class dependency detected: %s => %s',
-					$from_class_name, implode(' => ', $child_class_names)));
+				throw new SwatException(
+					sprintf(
+						'Circular class dependency detected: %s => %s',
+						$from_class_name,
+						implode(' => ', $child_class_names)
+					)
+				);
 			}
 		}
 
@@ -108,10 +112,16 @@ class SwatDBClassMap extends SwatObject
 		while (array_key_exists($from_class_name, self::$map)) {
 			$to_class_name = self::$map[$from_class_name];
 
-			if (!is_subclass_of($to_class_name, $from_class_name))
-				throw new SwatInvalidClassException(sprintf('Invalid '.
-					'class-mapping detected. %s is not a subclass of %s.',
-					$to_class_name, $from_class_name));
+			if (!is_subclass_of($to_class_name, $from_class_name)) {
+				throw new SwatInvalidClassException(
+					sprintf(
+						'Invalid ' .
+							'class-mapping detected. %s is not a subclass of %s.',
+						$to_class_name,
+						$from_class_name
+					)
+				);
+			}
 
 			$from_class_name = $to_class_name;
 		}
@@ -157,8 +167,9 @@ class SwatDBClassMap extends SwatObject
 	public static function removePath($search_path)
 	{
 		$index = array_search($search_path, self::$search_paths);
-		if ($index !== false)
+		if ($index !== false) {
 			array_splice(self::$search_paths, $index, 1);
+		}
 	}
 
 	// }}}
@@ -218,8 +229,9 @@ class SwatDBClassMap extends SwatObject
 	 */
 	public static function instance()
 	{
-		if (self::$instance === null)
+		if (self::$instance === null) {
 			self::$instance = new self();
+		}
 
 		return self::$instance;
 	}
@@ -283,5 +295,3 @@ class SwatDBClassMap extends SwatObject
 
 	// }}}
 }
-
-?>

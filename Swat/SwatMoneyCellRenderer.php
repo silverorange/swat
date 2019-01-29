@@ -100,8 +100,9 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 	 */
 	public function render()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		if ($this->value === null && $this->null_display_value !== null) {
 			$span_tag = new SwatHtmlTag('span');
@@ -116,11 +117,17 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 
 			echo SwatString::minimizeEntities(
 				$locale->formatCurrency(
-					$this->value, $this->international, $format));
+					$this->value,
+					$this->international,
+					$format
+				)
+			);
 
 			if (!$this->international && $this->display_currency) {
-				echo '&nbsp;', SwatString::minimizeEntities(
-				$locale->getInternationalCurrencySymbol());
+				echo '&nbsp;',
+					SwatString::minimizeEntities(
+						$locale->getInternationalCurrencySymbol()
+					);
 			}
 		}
 	}
@@ -142,5 +149,3 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
 
 	// }}}
 }
-
-?>

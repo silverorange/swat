@@ -50,11 +50,15 @@ class SwatXHTMLTextarea extends SwatTextarea
 		static $xhtml_template = '';
 
 		if ($xhtml_template == '') {
-			$doctype = '<!DOCTYPE html PUBLIC '.
-				'"-//W3C//DTD XHTML 1.0 Strict//EN" '.
-				'"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'."\n";
+			$doctype =
+				'<!DOCTYPE html PUBLIC ' .
+				'"-//W3C//DTD XHTML 1.0 Strict//EN" ' .
+				'"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">' .
+				"\n";
 
-			$xhtml_template = $doctype.<<<XHTML
+			$xhtml_template =
+				$doctype .
+				<<<XHTML
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -74,16 +78,19 @@ XHTML;
 
 		parent::process();
 
-		$ignore_validation_errors = ($this->allow_ignore_validation_errors &&
-			$this->ignore_errors_checkbox->value);
+		$ignore_validation_errors =
+			$this->allow_ignore_validation_errors &&
+			$this->ignore_errors_checkbox->value;
 
 		$xhtml_content = sprintf($xhtml_template, $this->getXHTMLContent());
 
 		$errors = libxml_use_internal_errors(true);
 
 		$document = new DOMDocument();
-		$document->loadXML($xhtml_content,
-			LIBXML_DTDLOAD | LIBXML_DTDATTR | LIBXML_DTDVALID);
+		$document->loadXML(
+			$xhtml_content,
+			LIBXML_DTDLOAD | LIBXML_DTDATTR | LIBXML_DTDVALID
+		);
 
 		$xml_errors = libxml_get_errors();
 		libxml_clear_errors();
@@ -100,14 +107,17 @@ XHTML;
 
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
-		if ($this->allow_ignore_validation_errors &&
+		if (
+			$this->allow_ignore_validation_errors &&
 			($this->has_validation_errors ||
-			$this->ignore_errors_checkbox->value)) {
+				$this->ignore_errors_checkbox->value)
+		) {
 			$ignore_field = $this->getCompositeWidget('ignore_field');
 			$ignore_field->display();
 		}
@@ -131,7 +141,7 @@ XHTML;
 			'extra content at the end of the document',
 			'premature end of data in tag html',
 			'opening and ending tag mismatch between html and body',
-			'opening and ending tag mismatch between body and html',
+			'opening and ending tag mismatch between body and html'
 		);
 
 		$errors = array();
@@ -139,45 +149,59 @@ XHTML;
 			$error = $error_object->message;
 
 			// further humanize
-			$error = str_replace('tag mismatch:',
+			$error = str_replace(
+				'tag mismatch:',
 				Swat::_('tag mismatch between'),
-				$error);
+				$error
+			);
 
 			// remove some stuff that only makes sense in document context
 			$error = preg_replace('/\s?line:? [0-9]+\s?/ui', ' ', $error);
 			$error = preg_replace('/in entity[:,.]?/ui', '', $error);
 			$error = mb_strtolower($error);
 
-			$error = str_replace('xmlparseentityref: no name',
+			$error = str_replace(
+				'xmlparseentityref: no name',
 				Swat::_('unescaped ampersand. Use &amp;amp; instead of &amp;'),
-				$error);
+				$error
+			);
 
-			$error = str_replace('starttag: invalid element name',
+			$error = str_replace(
+				'starttag: invalid element name',
 				Swat::_('unescaped less-than. Use &amp;lt; instead of &lt;'),
-				$error);
+				$error
+			);
 
-			$error = str_replace('specification mandate value for attribute',
+			$error = str_replace(
+				'specification mandate value for attribute',
 				Swat::_('a value is required for the attribute'),
-				$error);
+				$error
+			);
 
 			$error = preg_replace(
 				'/^no declaration for attribute (.*?) of element (.*?)$/',
 				Swat::_('the attribute \1 is not valid for the element \2'),
-				$error);
+				$error
+			);
 
-			$error = str_replace('attvalue: " or \' expected',
-				Swat::_('attribute values must be contained within quotation '.
-					'marks'),
-				$error);
+			$error = str_replace(
+				'attvalue: " or \' expected',
+				Swat::_(
+					'attribute values must be contained within quotation ' .
+						'marks'
+				),
+				$error
+			);
 
 			$error = trim($error);
 
-			if (!in_array($error, $ignored_errors))
+			if (!in_array($error, $ignored_errors)) {
 				$errors[] = $error;
+			}
 		}
 
 		$content = Swat::_('%s must be valid XHTML markup: ');
-		$content.= '<ul><li>'.implode(',</li><li>', $errors).'.</li></ul>';
+		$content .= '<ul><li>' . implode(',</li><li>', $errors) . '.</li></ul>';
 		$message = new SwatMessage($content, 'error');
 		$message->content_type = 'text/xml';
 
@@ -194,10 +218,11 @@ XHTML;
 	 */
 	protected function createCompositeWidgets()
 	{
-		$this->ignore_errors_checkbox =
-			new SwatCheckbox($this->id.'_ignore_checkbox');
+		$this->ignore_errors_checkbox = new SwatCheckbox(
+			$this->id . '_ignore_checkbox'
+		);
 
-		$ignore_field = new SwatFormField($this->id.'_ignore_field');
+		$ignore_field = new SwatFormField($this->id . '_ignore_field');
 		$ignore_field->title = Swat::_('Ignore XHTML validation errors');
 		$ignore_field->add($this->ignore_errors_checkbox);
 
@@ -214,5 +239,3 @@ XHTML;
 
 	// }}}
 }
-
-?>

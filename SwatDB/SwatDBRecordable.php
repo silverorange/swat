@@ -65,5 +65,3 @@ interface SwatDBRecordable
 
 	// }}}
 }
-
-?>

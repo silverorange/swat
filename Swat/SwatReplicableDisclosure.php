@@ -23,15 +23,17 @@ class SwatReplicableDisclosure extends SwatReplicableContainer
 	public function init()
 	{
 		$children = array();
-		foreach ($this->children as $child_widget)
+		foreach ($this->children as $child_widget) {
 			$children[] = $this->remove($child_widget);
+		}
 
 		$disclosure = new SwatDisclosure();
 		$disclosure->id = $disclosure->getUniqueId();
 		$prototype_id = $disclosure->id;
 
-		foreach ($children as $child_widget)
+		foreach ($children as $child_widget) {
 			$disclosure->add($child_widget);
+		}
 
 		$this->add($disclosure);
 
@@ -45,5 +47,3 @@ class SwatReplicableDisclosure extends SwatReplicableContainer
 
 	// }}}
 }
-
-?>

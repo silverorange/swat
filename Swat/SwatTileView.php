@@ -172,14 +172,16 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		parent::init();
 
-		if ($this->tile !== null)
+		if ($this->tile !== null) {
 			$this->tile->init();
+		}
 
 		foreach ($this->groups as $group) {
 			$group->init();
 			// index the group by id if it is not already indexed
-			if (!array_key_exists($group->id, $this->groups_by_id))
+			if (!array_key_exists($group->id, $this->groups_by_id)) {
 				$this->groups_by_id[$group->id] = $group;
+			}
 		}
 	}
 
@@ -196,16 +198,19 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function process()
 	{
-		if (!$this->isInitialized())
+		if (!$this->isInitialized()) {
 			$this->init();
+		}
 
-		if ($this->getFirstAncestor('SwatForm') !== null)
+		if ($this->getFirstAncestor('SwatForm') !== null) {
 			$this->getCompositeWidget('check_all')->process();
+		}
 
 		$this->processed = true;
 
-		if ($this->tile !== null)
+		if ($this->tile !== null) {
 			$this->tile->process();
+		}
 	}
 
 	// }}}
@@ -230,21 +235,27 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
-		if ($this->model === null)
+		if ($this->model === null) {
 			return;
+		}
 
 		parent::display();
 
-		if (count($this->model) == 0 && $this->no_records_message !== null &&
-			$this->show_check_all !== true) {
-
+		if (
+			count($this->model) == 0 &&
+			$this->no_records_message !== null &&
+			$this->show_check_all !== true
+		) {
 			$div = new SwatHtmlTag('div');
 			$div->class = 'swat-none';
-			$div->setContent($this->no_records_message,
-				$this->no_records_message_type);
+			$div->setContent(
+				$this->no_records_message,
+				$this->no_records_message_type
+			);
 
 			$div->display();
 			return;
@@ -292,16 +303,15 @@ class SwatTileView extends SwatView implements SwatUIParent
 		// this uses read-ahead iteration
 
 		$this->model->rewind();
-		$record = ($this->model->valid()) ? $this->model->current() : null;
+		$record = $this->model->valid() ? $this->model->current() : null;
 
 		$this->model->next();
-		$next_record = ($this->model->valid()) ? $this->model->current() : null;
+		$next_record = $this->model->valid() ? $this->model->current() : null;
 
 		// tile count used for tiles-per-row option
 		$count = 1;
 
 		while ($record !== null) {
-
 			ob_start();
 			$this->displayTileGroupHeaders($record, $next_record);
 			$group_headers = ob_get_clean();
@@ -316,8 +326,10 @@ class SwatTileView extends SwatView implements SwatUIParent
 			$this->displayTile($record, $next_record);
 
 			// clear tiles-per-row
-			if ($this->tiles_per_row !== null &&
-				($count % $this->tiles_per_row === 0)) {
+			if (
+				$this->tiles_per_row !== null &&
+				$count % $this->tiles_per_row === 0
+			) {
 				echo '<div class="swat-tile-view-clear"></div>';
 			}
 
@@ -338,8 +350,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 			// get next record
 			$record = $next_record;
 			$this->model->next();
-			$next_record = ($this->model->valid()) ?
-				$this->model->current() : null;
+			$next_record = $this->model->valid()
+				? $this->model->current()
+				: null;
 		}
 	}
 
@@ -370,8 +383,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function displayTileGroupHeaders($record, $next_record)
 	{
-		foreach ($this->groups as $group)
+		foreach ($this->groups as $group) {
 			$group->display($record);
+		}
 	}
 
 	// }}}
@@ -386,8 +400,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function displayTileGroupFooters($record, $next_record)
 	{
-		foreach ($this->groups as $group)
+		foreach ($this->groups as $group) {
 			$group->displayFooter($record, $next_record);
+		}
 	}
 
 	// }}}
@@ -415,18 +430,22 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function addChild(SwatObject $child)
 	{
-		if ($child instanceof SwatTileViewGroup)
+		if ($child instanceof SwatTileViewGroup) {
 			$this->appendGroup($child);
-		elseif ($child instanceof SwatTile) {
-			if ($this->tile !== null)
+		} elseif ($child instanceof SwatTile) {
+			if ($this->tile !== null) {
 				throw new SwatException(
-					'Only one tile may be added to a tile view.');
+					'Only one tile may be added to a tile view.'
+				);
+			}
 
 			$this->setTile($child);
 		} else {
 			throw new SwatInvalidClassException(
 				'Only SwatTile objects can be added to a SwatTileView.',
-				0, $child);
+				0,
+				$child
+			);
 		}
 	}
 
@@ -448,8 +467,12 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function getDescendants($class_name = null)
 	{
-		if (!($class_name === null ||
-			class_exists($class_name) || interface_exists($class_name))
+		if (
+			!(
+				$class_name === null ||
+				class_exists($class_name) ||
+				interface_exists($class_name)
+			)
 		) {
 			return array();
 		}
@@ -466,8 +489,10 @@ class SwatTileView extends SwatView implements SwatUIParent
 			}
 
 			if ($this->tile instanceof SwatUIParent) {
-				$out = array_merge($out,
-					$this->tile->getDescendants($class_name));
+				$out = array_merge(
+					$out,
+					$this->tile->getDescendants($class_name)
+				);
 			}
 		}
 
@@ -503,16 +528,19 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function getFirstDescendant($class_name)
 	{
-		if (!class_exists($class_name) && !interface_exists($class_name))
+		if (!class_exists($class_name) && !interface_exists($class_name)) {
 			return null;
+		}
 
 		$out = null;
 
-		if ($this->tile instanceof $class_name)
+		if ($this->tile instanceof $class_name) {
 			$out = $this->tile;
+		}
 
-		if ($out === null && $this->tile instanceof SwatUIParent)
+		if ($out === null && $this->tile instanceof SwatUIParent) {
 			$out = $this->tile->getFirstDescendant($class_name);
+		}
 
 		return $out;
 	}
@@ -533,8 +561,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 	{
 		$states = array();
 
-		foreach ($this->getDescendants('SwatState') as $id => $object)
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
 			$states[$id] = $object->getState();
+		}
 
 		return $states;
 	}
@@ -553,9 +582,11 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function setDescendantStates(array $states)
 	{
-		foreach ($this->getDescendants('SwatState') as $id => $object)
-			if (isset($states[$id]))
+		foreach ($this->getDescendants('SwatState') as $id => $object) {
+			if (isset($states[$id])) {
 				$object->setState($states[$id]);
+			}
+		}
 	}
 
 	// }}}
@@ -569,8 +600,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 	public function getMessages()
 	{
 		$messages = parent::getMessages();
-		if ($this->tile !== null)
+		if ($this->tile !== null) {
 			$messages = array_merge($messages, $this->tile->getMessages());
+		}
 
 		return $messages;
 	}
@@ -587,8 +619,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 	public function hasMessage()
 	{
 		$has_message = parent::hasMessage();
-		if (!$has_message && $this->tile !== null)
+		if (!$has_message && $this->tile !== null) {
 			$has_message = $this->tile->hasMessage();
+		}
 
 		return $has_message;
 	}
@@ -697,28 +730,36 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	protected function getInlineJavaScript()
 	{
-		$javascript = sprintf("var %s = new SwatTileView('%s');",
-			$this->id, $this->id);
+		$javascript = sprintf(
+			"var %s = new SwatTileView('%s');",
+			$this->id,
+			$this->id
+		);
 
 		if ($this->tile !== null) {
 			$tile_javascript = $this->tile->getRendererInlineJavaScript();
-			if ($tile_javascript != '')
-				$javascript.= $tile_javascript;
+			if ($tile_javascript != '') {
+				$javascript .= $tile_javascript;
+			}
 
 			$tile_javascript = $this->tile->getInlineJavaScript();
-			if ($tile_javascript != '')
-				$javascript.= "\n".$tile_javascript;
+			if ($tile_javascript != '') {
+				$javascript .= "\n" . $tile_javascript;
+			}
 		}
 
 		if ($this->showCheckAll()) {
 			$check_all = $this->getCompositeWidget('check_all');
 
 			$renderer = $this->getCheckboxCellRenderer();
-			$javascript.= "\n".$check_all->getInlineJavascript();
+			$javascript .= "\n" . $check_all->getInlineJavascript();
 
 			// set the controller of the check-all widget
-			$javascript.= sprintf("\n%s_obj.setController(%s);",
-				$check_all->id, $renderer->id);
+			$javascript .= sprintf(
+				"\n%s_obj.setController(%s);",
+				$check_all->id,
+				$renderer->id
+			);
 		}
 
 		return $javascript;
@@ -757,8 +798,10 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	protected function showCheckAll()
 	{
-		if ($this->getCheckboxCellRenderer() === null ||
-			$this->getFirstAncestor('SwatForm') === null) {
+		if (
+			$this->getCheckboxCellRenderer() === null ||
+			$this->getFirstAncestor('SwatForm') === null
+		) {
 			$show = false;
 		} elseif ($this->show_check_all === null && count($this->model) > 1) {
 			$show = true;
@@ -835,8 +878,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 	public function setTile(SwatTile $tile)
 	{
 		// if we're overwriting an existing tile, remove it's parent link
-		if ($this->tile !== null)
+		if ($this->tile !== null) {
 			$this->tile->parent = null;
+		}
 
 		$this->tile = $tile;
 		$tile->parent = $this;
@@ -870,8 +914,9 @@ class SwatTileView extends SwatView implements SwatUIParent
 
 		$this->groups[] = $group;
 
-		if ($group->id !== null)
+		if ($group->id !== null) {
 			$this->groups_by_id[$group->id] = $group;
+		}
 
 		$group->view = $this;
 		$group->parent = $this;
@@ -909,9 +954,11 @@ class SwatTileView extends SwatView implements SwatUIParent
 	 */
 	public function getGroup($id)
 	{
-		if (!array_key_exists($id, $this->groups_by_id))
+		if (!array_key_exists($id, $this->groups_by_id)) {
 			throw new SwatWidgetNotFoundException(
-				"Group with an id of '{$id}' not found.");
+				"Group with an id of '{$id}' not found."
+			);
+		}
 
 		return $this->groups_by_id[$id];
 	}
@@ -945,15 +992,16 @@ class SwatTileView extends SwatView implements SwatUIParent
 		// note: This works because the id property is set before children are
 		// added to parents in SwatUI.
 		if ($group->id !== null) {
-			if (array_key_exists($group->id, $this->groups_by_id))
+			if (array_key_exists($group->id, $this->groups_by_id)) {
 				throw new SwatDuplicateIdException(
-					"A group with the id '{$group->id}' already exists ".
-					'in this tile view.',
-					0, $group->id);
+					"A group with the id '{$group->id}' already exists " .
+						'in this tile view.',
+					0,
+					$group->id
+				);
+			}
 		}
 	}
 
 	// }}}
 }
-
-?>

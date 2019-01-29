@@ -89,11 +89,11 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 			$prefix = $uri_prefix;
 
 			if ($minify && $this->concentrator->isMinified($entry->getUri())) {
-				$prefix = $prefix.'min/';
+				$prefix = $prefix . 'min/';
 			}
 
 			if ($entry->getType() === 'SwatLessStyleSheetHtmlHeadEntry') {
-				$prefix = $prefix.'compiled/';
+				$prefix = $prefix . 'compiled/';
 				$entry = $entry->getStyleSheetHeadEntry();
 			}
 
@@ -129,7 +129,7 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 		// TODO: Use Concentrate_Inliner to display CSS inline
 		foreach ($entries as $entry) {
 			if ($type === null || $entry->getType() === $type) {
-				echo "\t", '<!-- ', $entry->getUri() , ' -->', "\n";
+				echo "\t", '<!-- ', $entry->getUri(), ' -->', "\n";
 				$entry->displayInline($path);
 				echo "\n\t";
 			}
@@ -168,8 +168,8 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 		$entries = array_intersect_key($entries, array_flip($info['files']));
 
 		return array(
-			'entries'  => $entries,
-			'superset' => $info['superset'],
+			'entries' => $entries,
+			'superset' => $info['superset']
 		);
 	}
 
@@ -193,9 +193,9 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 		$count = 0;
 		foreach ($original_entries as $uri => $entry) {
 			$entries[] = array(
-				'order'  => $count,
-				'uri'    => $uri,
-				'object' => $entry,
+				'order' => $count,
+				'uri' => $uri,
+				'object' => $entry
 			);
 			$count++;
 		}
@@ -323,13 +323,13 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 	protected function getTypeOrder()
 	{
 		return array(
-			'SwatStyleSheetHtmlHeadEntry'       => 0,
-			'SwatLessStyleSheetHtmlHeadEntry'   => 0, // Consider same as CSS
-			'SwatLinkHtmlHeadEntry'             => 1,
+			'SwatStyleSheetHtmlHeadEntry' => 0,
+			'SwatLessStyleSheetHtmlHeadEntry' => 0, // Consider same as CSS
+			'SwatLinkHtmlHeadEntry' => 1,
 			'SwatInlineJavaScriptHtmlHeadEntry' => 2,
-			'SwatJavaScriptHtmlHeadEntry'       => 3,
-			'SwatCommentHtmlHeadEntry'          => 4,
-			'__unknown__'                       => 5,
+			'SwatJavaScriptHtmlHeadEntry' => 3,
+			'SwatCommentHtmlHeadEntry' => 4,
+			'__unknown__' => 5
 		);
 	}
 
@@ -353,20 +353,21 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
 			$conflict_list = '';
 			$count = 0;
 			foreach ($conflicts as $file => $conflict) {
-				$conflict_list.= sprintf(
+				$conflict_list .= sprintf(
 					"\n- %s conflicts with %s",
 					$file,
-					implode(', ', $conflict));
+					implode(', ', $conflict)
+				);
 
 				$count++;
 			}
 			throw new SwatException(
-				'Could not display head entries because the following '.
-				'conflicts were detected: '.$conflict_list);
+				'Could not display head entries because the following ' .
+					'conflicts were detected: ' .
+					$conflict_list
+			);
 		}
 	}
 
 	// }}}
 }
-
-?>

@@ -102,8 +102,9 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	 */
 	public function init()
 	{
-		foreach ($this->renderers as $renderer)
+		foreach ($this->renderers as $renderer) {
 			$renderer->init();
+		}
 	}
 
 	// }}}
@@ -111,8 +112,9 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 
 	public function process()
 	{
-		foreach ($this->renderers as $renderer)
+		foreach ($this->renderers as $renderer) {
 			$renderer->process();
+		}
 	}
 
 	// }}}
@@ -128,8 +130,9 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	 */
 	public function display($data, $odd)
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		$this->odd = $odd;
 
@@ -178,9 +181,11 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	 */
 	public function displayValue($data)
 	{
-		if (count($this->renderers) == 0)
-			throw new SwatException('No renderer has been provided for this '.
-				'field.');
+		if (count($this->renderers) == 0) {
+			throw new SwatException(
+				'No renderer has been provided for this ' . 'field.'
+			);
+		}
 
 		$sensitive = $this->view->isSensitive();
 
@@ -206,7 +211,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 	public function getTdAttributes()
 	{
 		return array(
-			'class' => $this->getCSSClassString(),
+			'class' => $this->getCSSClassString()
 		);
 	}
 
@@ -272,11 +277,8 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 		if ($this->title == '') {
 			$header_title = '&nbsp;';
 		} else {
-			$header_title = ($this->show_colon)
-				? sprintf(
-					Swat::_('%s:'),
-					$this->title
-				)
+			$header_title = $this->show_colon
+				? sprintf(Swat::_('%s:'), $this->title)
 				: $this->title;
 		}
 
@@ -299,10 +301,11 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 
 		$first = true;
 		foreach ($this->renderers as $renderer) {
-			if ($first)
+			if ($first) {
 				$first = false;
-			else
+			} else {
 				echo ' ';
+			}
 
 			$renderer->render();
 		}
@@ -353,21 +356,29 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 		$classes = array_merge($classes, $this->classes);
 
 		$first_renderer = $this->renderers->getFirst();
-		if ($this->show_renderer_classes &&
-			$first_renderer instanceof SwatCellRenderer) {
-
+		if (
+			$this->show_renderer_classes &&
+			$first_renderer instanceof SwatCellRenderer
+		) {
 			// renderer inheritance classes
-			$classes = array_merge($classes,
-				$first_renderer->getInheritanceCSSClassNames());
+			$classes = array_merge(
+				$classes,
+				$first_renderer->getInheritanceCSSClassNames()
+			);
 
 			// renderer base classes
-			$classes = array_merge($classes,
-				$first_renderer->getBaseCSSClassNames());
+			$classes = array_merge(
+				$classes,
+				$first_renderer->getBaseCSSClassNames()
+			);
 
 			// renderer data specific classes
-			if ($this->renderers->mappingsApplied())
-				$classes = array_merge($classes,
-					$first_renderer->getDataSpecificCSSClassNames());
+			if ($this->renderers->mappingsApplied()) {
+				$classes = array_merge(
+					$classes,
+					$first_renderer->getDataSpecificCSSClassNames()
+				);
+			}
 
 			// renderer user-specified classes
 			$classes = array_merge($classes, $first_renderer->classes);
@@ -395,5 +406,3 @@ class SwatDetailsViewField extends SwatCellRendererContainer
 
 	// }}}
 }
-
-?>

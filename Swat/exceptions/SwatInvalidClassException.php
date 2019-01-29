@@ -49,5 +49,3 @@ class SwatInvalidClassException extends SwatException
 
 	// }}}
 }
-
-?>

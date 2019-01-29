@@ -132,8 +132,9 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
@@ -143,7 +144,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 		if (!$this->autocomplete) {
 			$nonce_tag = new SwatHtmlTag('input');
 			$nonce_tag->type = 'hidden';
-			$nonce_tag->name = $this->id.'_nonce';
+			$nonce_tag->name = $this->id . '_nonce';
 			$nonce_tag->value = $this->getNonce();
 			$nonce_tag->display();
 		}
@@ -172,29 +173,31 @@ class SwatEntry extends SwatInputControl implements SwatState
 
 		if ($this->auto_trim) {
 			$this->value = trim($this->value);
-			if ($this->value === '')
+			if ($this->value === '') {
 				$this->value = null;
+			}
 		}
 
-		$len = ($this->value === null) ? 0 : mb_strlen($this->value);
+		$len = $this->value === null ? 0 : mb_strlen($this->value);
 
 		if (!$this->required && $this->value === null) {
 			return;
-
 		} elseif ($this->value === null) {
 			$this->addMessage($this->getValidationMessage('required'));
-
 		} elseif ($this->maxlength !== null && $len > $this->maxlength) {
 			$message = $this->getValidationMessage('too-long');
-			$message->primary_content =
-				sprintf($message->primary_content, $this->maxlength);
+			$message->primary_content = sprintf(
+				$message->primary_content,
+				$this->maxlength
+			);
 
 			$this->addMessage($message);
-
 		} elseif ($this->minlength !== null && $len < $this->minlength) {
 			$message = $this->getValidationMessage('too-short');
-			$message->primary_content =
-				sprintf($message->primary_content, $this->minlength);
+			$message->primary_content = sprintf(
+				$message->primary_content,
+				$this->minlength
+			);
 
 			$this->addMessage($message);
 		}
@@ -245,10 +248,11 @@ class SwatEntry extends SwatInputControl implements SwatState
 	 */
 	public function getFocusableHtmlId()
 	{
-		if ($this->visible)
-			return ($this->autocomplete) ? $this->id : $this->getNonce();
-		else
+		if ($this->visible) {
+			return $this->autocomplete ? $this->id : $this->getNonce();
+		} else {
 			return null;
+		}
 	}
 
 	// }}}
@@ -266,14 +270,16 @@ class SwatEntry extends SwatInputControl implements SwatState
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
-		case 'too-short':
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('The %%s must be at least %s characters long.') :
-				Swat::_('This field must be at least %s characters long.');
+			case 'too-short':
+				$text = $this->show_field_title_in_messages
+					? Swat::_('The %%s must be at least %s characters long.')
+					: Swat::_(
+						'This field must be at least %s characters long.'
+					);
 
-			break;
-		default:
-			return parent::getValidationMessage($id);
+				break;
+			default:
+				return parent::getValidationMessage($id);
 		}
 
 		$message = new SwatMessage($text, 'error');
@@ -294,27 +300,31 @@ class SwatEntry extends SwatInputControl implements SwatState
 	{
 		$tag = new SwatHtmlTag('input');
 		$tag->type = 'text';
-		$tag->name = ($this->autocomplete) ? $this->id : $this->getNonce();
-		$tag->id = ($this->autocomplete) ? $this->id : $this->getNonce();
+		$tag->name = $this->autocomplete ? $this->id : $this->getNonce();
+		$tag->id = $this->autocomplete ? $this->id : $this->getNonce();
 		$tag->class = $this->getCSSClassString();
 
 		// event handlers to select on focus
 		if ($this->select_on_focus) {
 			$tag->onmousedown = 'if(!this._focused){this._focus_click=true;}';
-			$tag->onmouseup = 'if(this._focus_click){'.
+			$tag->onmouseup =
+				'if(this._focus_click){' .
 				'this.select();this._focus_click=false;}';
 
-			$tag->onfocus = 'this._focused=true;'.
+			$tag->onfocus =
+				'this._focused=true;' .
 				'if(!this._focus_click){this.select();}';
 
 			$tag->onblur = 'this._focused=false;this._focus_click=false;';
 		}
 
-		if ($this->read_only)
+		if ($this->read_only) {
 			$tag->readonly = 'readonly';
+		}
 
-		if (!$this->isSensitive())
+		if (!$this->isSensitive()) {
 			$tag->disabled = 'disabled';
+		}
 
 		$value = $this->getDisplayValue($this->value);
 
@@ -373,8 +383,9 @@ class SwatEntry extends SwatInputControl implements SwatState
 
 	protected function getNonce()
 	{
-		if ($this->nonce === null)
-			$this->nonce = 'n'.md5(rand());
+		if ($this->nonce === null) {
+			$this->nonce = 'n' . md5(rand());
+		}
 
 		return $this->nonce;
 	}
@@ -402,8 +413,8 @@ class SwatEntry extends SwatInputControl implements SwatState
 				$value = $data[$id];
 			}
 		} else {
-			if (isset($data[$this->id.'_nonce'])) {
-				$id = $data[$this->id.'_nonce'];
+			if (isset($data[$this->id . '_nonce'])) {
+				$id = $data[$this->id . '_nonce'];
 				if (isset($data[$id]) && $data[$id] != '') {
 					$value = $data[$id];
 				}
@@ -439,8 +450,8 @@ class SwatEntry extends SwatInputControl implements SwatState
 				$has_value = true;
 			}
 		} else {
-			if (isset($data[$this->id.'_nonce'])) {
-				$id = $data[$this->id.'_nonce'];
+			if (isset($data[$this->id . '_nonce'])) {
+				$id = $data[$this->id . '_nonce'];
 				if (isset($data[$id])) {
 					$has_value = true;
 				}
@@ -452,5 +463,3 @@ class SwatEntry extends SwatInputControl implements SwatState
 
 	// }}}
 }
-
-?>

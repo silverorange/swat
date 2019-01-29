@@ -48,11 +48,11 @@ class SwatFloatEntry extends SwatNumericEntry
 	{
 		if (is_numeric($value)) {
 			$locale = SwatI18NLocale::get();
-			$thousands_separator =
-				($this->show_thousands_separator) ? null : '';
+			$thousands_separator = $this->show_thousands_separator ? null : '';
 
-			$value = $locale->formatNumber($value, null,
-				array('thousands_separator' => $thousands_separator));
+			$value = $locale->formatNumber($value, null, array(
+				'thousands_separator' => $thousands_separator
+			));
 		} else {
 			$value = parent::getDisplayValue($value);
 		}
@@ -94,18 +94,18 @@ class SwatFloatEntry extends SwatNumericEntry
 	protected function getValidationMessage($id)
 	{
 		switch ($id) {
-		case 'float':
-			$text = $this->show_field_title_in_messages ?
-				Swat::_('The %s field must be a number.') :
-				Swat::_('This field must be a number.');
+			case 'float':
+				$text = $this->show_field_title_in_messages
+					? Swat::_('The %s field must be a number.')
+					: Swat::_('This field must be a number.');
 
-			$message = new SwatMessage($text, 'error');
+				$message = new SwatMessage($text, 'error');
 
-			break;
+				break;
 
-		default:
-			$message = parent::getValidationMessage($id);
-			break;
+			default:
+				$message = parent::getValidationMessage($id);
+				break;
 		}
 
 		return $message;
@@ -129,5 +129,3 @@ class SwatFloatEntry extends SwatNumericEntry
 
 	// }}}
 }
-
-?>

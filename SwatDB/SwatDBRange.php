@@ -133,5 +133,3 @@ class SwatDBRange extends SwatObject
 
 	// }}}
 }
-
-?>

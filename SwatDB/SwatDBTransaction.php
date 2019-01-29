@@ -72,5 +72,3 @@ class SwatDBTransaction extends SwatObject
 
 	// }}}
 }
-
-?>

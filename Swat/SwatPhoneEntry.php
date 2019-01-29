@@ -41,5 +41,3 @@ class SwatPhoneEntry extends SwatEntry
 
 	// }}}
 }
-
-?>

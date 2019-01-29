@@ -13,10 +13,10 @@ class SwatDBException extends SwatException
 
 	public function __construct($message = null, $code = 0)
 	{
-		if (is_object($message) && ($message instanceof PEAR_Error)) {
+		if (is_object($message) && $message instanceof PEAR_Error) {
 			$error = $message;
 			$message = $error->getMessage();
-			$message.= "\n".$error->getUserInfo();
+			$message .= "\n" . $error->getUserInfo();
 			$code = $error->getCode();
 		}
 
@@ -25,5 +25,3 @@ class SwatDBException extends SwatException
 
 	// }}}
 }
-
-?>

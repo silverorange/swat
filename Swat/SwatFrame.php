@@ -63,13 +63,15 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public function getTitle()
 	{
-		if ($this->subtitle === null)
+		if ($this->subtitle === null) {
 			return $this->title;
+		}
 
-		if ($this->title === null)
+		if ($this->title === null) {
 			return $this->subtitle;
+		}
 
-		return $this->title.': '.$this->subtitle;
+		return $this->title . ': ' . $this->subtitle;
 	}
 
 	// }}}
@@ -95,8 +97,9 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		SwatWidget::display();
 
@@ -119,8 +122,7 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 	protected function displayTitle()
 	{
 		if ($this->title !== null) {
-
-			$header_tag = new SwatHtmlTag('h'.$this->getHeaderLevel());
+			$header_tag = new SwatHtmlTag('h' . $this->getHeaderLevel());
 			$header_tag->class = 'swat-frame-title';
 			$header_tag->setContent($this->title, $this->title_content_type);
 
@@ -129,8 +131,10 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 			} else {
 				$span_tag = new SwatHtmlTag('span');
 				$span_tag->class = 'swat-frame-subtitle';
-				$span_tag->setContent($this->subtitle,
-					$this->title_content_type);
+				$span_tag->setContent(
+					$this->subtitle,
+					$this->title_content_type
+				);
 
 				$header_tag->open();
 				$header_tag->displayContent();
@@ -201,5 +205,3 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
 
 	// }}}
 }
-
-?>

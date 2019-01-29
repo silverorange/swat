@@ -168,29 +168,30 @@ class SwatI18NLocale extends SwatObject
 		$return = false;
 
 		static $categories = array(
-			'LC_COLLATE'  => LC_COLLATE,
-			'LC_CTYPE'    => LC_CTYPE,
+			'LC_COLLATE' => LC_COLLATE,
+			'LC_CTYPE' => LC_CTYPE,
 			'LC_MONETARY' => LC_MONETARY,
-			'LC_NUMERIC'  => LC_NUMERIC,
-			'LC_TIME'     => LC_TIME,
-			'LC_MESSAGES' => LC_MESSAGES,
+			'LC_NUMERIC' => LC_NUMERIC,
+			'LC_TIME' => LC_TIME,
+			'LC_MESSAGES' => LC_MESSAGES
 		);
 
 		$parts = explode(';', $locale);
 		if ($category === LC_ALL && count($parts) > 1) {
-
 			// Handle case when LC_ALL is undefined and we're passing a giant
 			// string with all the separate lc-type values.
 			foreach ($parts as $part) {
 				$part_exp = explode('=', $part, 2);
-				if (count($part_exp) === 2 &&
-					array_key_exists($part_exp[0], $categories)) {
-
+				if (
+					count($part_exp) === 2 &&
+					array_key_exists($part_exp[0], $categories)
+				) {
 					$return = setlocale(
-						$categories[$part_exp[0]], $part_exp[1]);
+						$categories[$part_exp[0]],
+						$part_exp[1]
+					);
 				}
 			}
-
 		} else {
 			$return = setlocale($category, $locale);
 		}
@@ -211,8 +212,10 @@ class SwatI18NLocale extends SwatObject
 	 */
 	public function set($category = LC_ALL)
 	{
-		$this->old_locale_by_category[$category] =
-			self::setlocale($category, '0');
+		$this->old_locale_by_category[$category] = self::setlocale(
+			$category,
+			'0'
+		);
 
 		self::setlocale($category, $this->locale);
 	}
@@ -279,22 +282,27 @@ class SwatI18NLocale extends SwatObject
 		$international = false,
 		array $format = array()
 	) {
-		$format = ($international) ?
-			$this->getInternationalCurrencyFormat()->override($format) :
-			$this->getNationalCurrencyFormat()->override($format);
+		$format = $international
+			? $this->getInternationalCurrencyFormat()->override($format)
+			: $this->getNationalCurrencyFormat()->override($format);
 
 		// default fractional digits to 2 if locale is missing value
-		$fractional_digits = ($format->fractional_digits === CHAR_MAX) ?
-			2 : $format->fractional_digits;
+		$fractional_digits =
+			$format->fractional_digits === CHAR_MAX
+				? 2
+				: $format->fractional_digits;
 
 		$value = $this->roundToEven($value, $fractional_digits);
 
 		$integer_part = $this->formatIntegerGroupings($value, $format);
 
-		$fractional_part =
-			$this->formatFractionalPart($value, $fractional_digits, $format);
+		$fractional_part = $this->formatFractionalPart(
+			$value,
+			$fractional_digits,
+			$format
+		);
 
-		$formatted_value = $integer_part.$fractional_part;
+		$formatted_value = $integer_part . $fractional_part;
 
 		if ($value >= 0) {
 			$sign = $format->p_sign;
@@ -308,135 +316,215 @@ class SwatI18NLocale extends SwatObject
 			$separate_by_space = $format->n_separate_by_space;
 
 			// default negative sign if locale is missing value
-			if ($sign == '')
+			if ($sign == '') {
 				$sign = '-';
+			}
 		}
 
 		// default sign position if locale is missing value
-		if ($sign_position === CHAR_MAX)
+		if ($sign_position === CHAR_MAX) {
 			$sign_position = 1;
+		}
 
 		// default currency symbol position if locale is missing value
-		if ($cs_precedes === CHAR_MAX)
+		if ($cs_precedes === CHAR_MAX) {
 			$sign_position = true;
+		}
 
 		// default separate by space if locale is missing value
-		if ($separate_by_space === CHAR_MAX)
+		if ($separate_by_space === CHAR_MAX) {
 			$separate_by_space = false;
+		}
 
 		// trim spacing character off international currency symbol
 		// TODO: this is not quite the same as money_format().
-		$symbol = ($separate_by_space && $international)
-			? mb_substr($format->symbol, 0, 3)
-			: $format->symbol;
+		$symbol =
+			$separate_by_space && $international
+				? mb_substr($format->symbol, 0, 3)
+				: $format->symbol;
 
 		// now format the sign and symbol
 		switch ($sign_position) {
-		case 0:
-			// parentheses surround the quantity and currency symbol
-			if ($cs_precedes) {
-				if ($separate_by_space) {
-					$formatted_value = sprintf('(%s %s)',
-						$symbol, $formatted_value);
+			case 0:
+				// parentheses surround the quantity and currency symbol
+				if ($cs_precedes) {
+					if ($separate_by_space) {
+						$formatted_value = sprintf(
+							'(%s %s)',
+							$symbol,
+							$formatted_value
+						);
+					} else {
+						$formatted_value = sprintf(
+							'(%s%s)',
+							$symbol,
+							$formatted_value
+						);
+					}
 				} else {
-					$formatted_value = sprintf('(%s%s)',
-						$symbol, $formatted_value);
+					if ($separate_by_space) {
+						$formatted_value = sprintf(
+							'(%s %s)',
+							$formatted_value,
+							$symbol
+						);
+					} else {
+						$formatted_value = sprintf(
+							'(%s%s)',
+							$formatted_value,
+							$symbol
+						);
+					}
 				}
-			} else {
-				if ($separate_by_space) {
-					$formatted_value = sprintf('(%s %s)',
-						$formatted_value, $symbol);
-				} else {
-					$formatted_value = sprintf('(%s%s)',
-						$formatted_value, $symbol);
-				}
-			}
-			break;
+				break;
 
-		case 1:
-			// the sign string precedes the quantity and currency symbol
-			if ($cs_precedes) {
-				if ($separate_by_space) {
-					$formatted_value = sprintf('%s%s %s',
-						$sign, $symbol, $formatted_value);
+			case 1:
+				// the sign string precedes the quantity and currency symbol
+				if ($cs_precedes) {
+					if ($separate_by_space) {
+						$formatted_value = sprintf(
+							'%s%s %s',
+							$sign,
+							$symbol,
+							$formatted_value
+						);
+					} else {
+						$formatted_value = sprintf(
+							'%s%s%s',
+							$sign,
+							$symbol,
+							$formatted_value
+						);
+					}
 				} else {
-					$formatted_value = sprintf('%s%s%s',
-						$sign, $symbol, $formatted_value);
+					if ($separate_by_space) {
+						$formatted_value = sprintf(
+							'%s%s %s',
+							$sign,
+							$formatted_value,
+							$symbol
+						);
+					} else {
+						$formatted_value = sprintf(
+							'%s%s%s',
+							$sign,
+							$formatted_value,
+							$symbol
+						);
+					}
 				}
-			} else {
-				if ($separate_by_space) {
-					$formatted_value = sprintf('%s%s %s',
-						$sign, $formatted_value, $symbol);
-				} else {
-					$formatted_value = sprintf('%s%s%s',
-						$sign, $formatted_value, $symbol);
-				}
-			}
-			break;
+				break;
 
-		case 2:
-			// the sign string succeeds the quantity and currency symbol
-			if ($cs_precedes) {
-				if ($separate_by_space) {
-					$formatted_value = sprintf('%s %s%s',
-						$symbol, $formatted_value, $sign);
+			case 2:
+				// the sign string succeeds the quantity and currency symbol
+				if ($cs_precedes) {
+					if ($separate_by_space) {
+						$formatted_value = sprintf(
+							'%s %s%s',
+							$symbol,
+							$formatted_value,
+							$sign
+						);
+					} else {
+						$formatted_value = sprintf(
+							'%s%s%s',
+							$symbol,
+							$formatted_value,
+							$sign
+						);
+					}
 				} else {
-					$formatted_value = sprintf('%s%s%s',
-						$symbol, $formatted_value, $sign);
+					if ($separate_by_space) {
+						$formatted_value = sprintf(
+							'%s %s%s',
+							$formatted_value,
+							$symbol,
+							$sign
+						);
+					} else {
+						$formatted_value = sprintf(
+							'%s%s%s',
+							$sign,
+							$formatted_value,
+							$symbol
+						);
+					}
 				}
-			} else {
-				if ($separate_by_space) {
-					$formatted_value = sprintf('%s %s%s',
-						$formatted_value, $symbol, $sign);
-				} else {
-					$formatted_value = sprintf('%s%s%s',
-						$sign, $formatted_value, $symbol);
-				}
-			}
-			break;
+				break;
 
-		case 3:
-			// the sign string immediately precedes the currency symbol
-			if ($cs_precedes) {
-				if ($separate_by_space) {
-					$formatted_value = sprintf('%s%s %s',
-						$sign, $symbol, $formatted_value);
+			case 3:
+				// the sign string immediately precedes the currency symbol
+				if ($cs_precedes) {
+					if ($separate_by_space) {
+						$formatted_value = sprintf(
+							'%s%s %s',
+							$sign,
+							$symbol,
+							$formatted_value
+						);
+					} else {
+						$formatted_value = sprintf(
+							'%s%s%s',
+							$sign,
+							$symbol,
+							$formatted_value
+						);
+					}
 				} else {
-					$formatted_value = sprintf('%s%s%s',
-						$sign, $symbol, $formatted_value);
+					if ($separate_by_space) {
+						$formatted_value = sprintf(
+							'%s %s%s',
+							$formatted_value,
+							$sign,
+							$symbol
+						);
+					} else {
+						$formatted_value = sprintf(
+							'%s%s%s',
+							$formatted_value,
+							$sign,
+							$symbol
+						);
+					}
 				}
-			} else {
-				if ($separate_by_space) {
-					$formatted_value = sprintf('%s %s%s',
-						$formatted_value, $sign, $symbol);
-				} else {
-					$formatted_value = sprintf('%s%s%s',
-						$formatted_value, $sign, $symbol);
-				}
-			}
-			break;
+				break;
 
-		case 4:
-			// the sign string immediately succeeds the currency symbol
-			if ($cs_precedes) {
-				if ($separate_by_space) {
-					$formatted_value = sprintf('%s%s %s',
-						$symbol, $sign, $formatted_value);
+			case 4:
+				// the sign string immediately succeeds the currency symbol
+				if ($cs_precedes) {
+					if ($separate_by_space) {
+						$formatted_value = sprintf(
+							'%s%s %s',
+							$symbol,
+							$sign,
+							$formatted_value
+						);
+					} else {
+						$formatted_value = sprintf(
+							'%s%s%s',
+							$symbol,
+							$sign,
+							$formatted_value
+						);
+					}
 				} else {
-					$formatted_value = sprintf('%s%s%s',
-						$symbol, $sign, $formatted_value);
+					if ($separate_by_space) {
+						$formatted_value = sprintf(
+							'%s %s%s',
+							$formatted_value,
+							$symbol,
+							$sign
+						);
+					} else {
+						$formatted_value = sprintf(
+							'%s%s%s',
+							$formatted_value,
+							$symbol,
+							$sign
+						);
+					}
 				}
-			} else {
-				if ($separate_by_space) {
-					$formatted_value = sprintf('%s %s%s',
-						$formatted_value, $symbol, $sign);
-				} else {
-					$formatted_value = sprintf('%s%s%s',
-						$formatted_value, $symbol, $sign);
-				}
-			}
-			break;
-
+				break;
 		}
 
 		return $formatted_value;
@@ -476,22 +564,26 @@ class SwatI18NLocale extends SwatObject
 		$decimals = null,
 		array $format = array()
 	) {
-		$value = (float)$value;
+		$value = (float) $value;
 
 		$format = $this->getNumberFormat()->override($format);
 
-		if ($decimals === null)
+		if ($decimals === null) {
 			$decimals = $this->getFractionalPrecision($value);
+		}
 
 		$value = round($value, $decimals);
 
 		$integer_part = $this->formatIntegerGroupings($value, $format);
-		$fractional_part =
-			$this->formatFractionalPart($value, $decimals, $format);
+		$fractional_part = $this->formatFractionalPart(
+			$value,
+			$decimals,
+			$format
+		);
 
-		$sign = ($value < 0) ? '-' : '';
+		$sign = $value < 0 ? '-' : '';
 
-		$formatted_value = $sign.$integer_part.$fractional_part;
+		$formatted_value = $sign . $integer_part . $fractional_part;
 
 		return $formatted_value;
 	}
@@ -514,11 +606,16 @@ class SwatI18NLocale extends SwatObject
 
 		$lc = $this->getLocaleInfo();
 
-		$decimal_point = ($lc['mon_decimal_point'] == '') ?
-			$lc['decimal_point'] : $lc['mon_decimal_point'];
+		$decimal_point =
+			$lc['mon_decimal_point'] == ''
+				? $lc['decimal_point']
+				: $lc['mon_decimal_point'];
 
 		$string = $this->parseNegativeNotation(
-			$string, $lc['negative_sign'], $lc['n_sign_posn']);
+			$string,
+			$lc['negative_sign'],
+			$lc['n_sign_posn']
+		);
 
 		$search = array(
 			$lc['currency_symbol'],
@@ -526,22 +623,16 @@ class SwatI18NLocale extends SwatObject
 			$lc['mon_thousands_sep'],
 			$decimal_point,
 			$lc['positive_sign'],
-			' ',
+			' '
 		);
 
-		$replace = array(
-			'',
-			'',
-			'',
-			'.',
-			'',
-			'',
-		);
+		$replace = array('', '', '', '.', '', '');
 
 		$string = str_replace($search, $replace, $string);
 
-		if (is_numeric($string))
+		if (is_numeric($string)) {
 			$value = floatval($string);
+		}
 
 		return $value;
 	}
@@ -575,20 +666,16 @@ class SwatI18NLocale extends SwatObject
 			$lc['thousands_sep'],
 			$lc['decimal_point'],
 			$lc['positive_sign'],
-			' ',
+			' '
 		);
 
-		$replace = array(
-			'',
-			'.',
-			'',
-			'',
-		);
+		$replace = array('', '.', '', '');
 
 		$string = str_replace($search, $replace, $string);
 
-		if (is_numeric($string))
+		if (is_numeric($string)) {
 			$value = floatval($string);
+		}
 
 		return $value;
 	}
@@ -628,30 +715,27 @@ class SwatI18NLocale extends SwatObject
 
 		$string = $this->parseNegativeNotation($string);
 
-		$search = array(
-			$lc['thousands_sep'],
-			$lc['positive_sign'],
-			' ',
-		);
+		$search = array($lc['thousands_sep'], $lc['positive_sign'], ' ');
 
-		$replace = array(
-			'',
-			'',
-			'',
-		);
+		$replace = array('', '', '');
 
 		$string = str_replace($search, $replace, $string);
 
 		if (is_numeric($string)) {
-			if ($string > (float)PHP_INT_MAX)
+			if ($string > (float) PHP_INT_MAX) {
 				throw new SwatIntegerOverflowException(
 					'Floating point value is too big to be an integer',
-					null, 1);
+					null,
+					1
+				);
+			}
 
-			if ($string < (float)(-PHP_INT_MAX - 1)) {
+			if ($string < (float) (-PHP_INT_MAX - 1)) {
 				throw new SwatIntegerOverflowException(
 					'Floating point value is too small to be an integer',
-					null, -1);
+					null,
+					-1
+				);
 			}
 
 			$value = intval($string);
@@ -772,11 +856,8 @@ class SwatI18NLocale extends SwatObject
 		$encoding = null;
 
 		if (function_exists('nl_langinfo') && is_callable('nl_langinfo')) {
-
 			$encoding = nl_langinfo(CODESET);
-
 		} else {
-
 			// try to detect encoding from locale identifier
 			$lc_ctype = null;
 			$lc_all = self::setlocale(LC_ALL, '0');
@@ -798,12 +879,11 @@ class SwatI18NLocale extends SwatObject
 					$encoding = $lc_ctype_exp[1];
 				}
 			}
-
 		}
 
 		// assume encoding is a code-page if encoding is numeric
 		if ($encoding !== null && ctype_digit($encoding)) {
-			$encoding = 'CP'.$encoding;
+			$encoding = 'CP' . $encoding;
 		}
 
 		return $encoding;
@@ -822,26 +902,29 @@ class SwatI18NLocale extends SwatObject
 		// convert locale info to UTF-8
 		$character_encoding = $this->detectCharacterEncoding();
 		if ($character_encoding !== null && $character_encoding !== 'UTF-8') {
-			$this->locale_info = $this->iconvArray($character_encoding,
-				'UTF-8', $this->locale_info);
+			$this->locale_info = $this->iconvArray(
+				$character_encoding,
+				'UTF-8',
+				$this->locale_info
+			);
 		}
 
 		// special-cases and workarounds
 		switch ($this->preferred_locale) {
-		// Hebrew-Israeli
-		case 'he_IL':
-		case 'he_IL.utf8':
-			$this->locale_info['currency_symbol'] = '₪';
-			break;
+			// Hebrew-Israeli
+			case 'he_IL':
+			case 'he_IL.utf8':
+				$this->locale_info['currency_symbol'] = '₪';
+				break;
 
-		// Japanese and Chinese
-		case 'ja_JP':
-		case 'ja_JP.utf8':
-		case 'zh_CN':
-		case 'zh_CN.utf8':
-			// use single-width Yen character, renders by default in Windows
-			$this->locale_info['currency_symbol'] = '¥';
-			break;
+			// Japanese and Chinese
+			case 'ja_JP':
+			case 'ja_JP.utf8':
+			case 'zh_CN':
+			case 'zh_CN.utf8':
+				// use single-width Yen character, renders by default in Windows
+				$this->locale_info['currency_symbol'] = '¥';
+				break;
 		}
 	}
 
@@ -857,9 +940,9 @@ class SwatI18NLocale extends SwatObject
 
 		$format = new SwatI18NNumberFormat();
 
-		$format->decimal_separator     = $lc['decimal_point'];
-		$format->thousands_separator   = $lc['thousands_sep'];
-		$format->grouping              = $lc['grouping'];
+		$format->decimal_separator = $lc['decimal_point'];
+		$format->thousands_separator = $lc['thousands_sep'];
+		$format->grouping = $lc['grouping'];
 
 		$this->number_format = $format;
 	}
@@ -876,32 +959,34 @@ class SwatI18NLocale extends SwatObject
 
 		$format = new SwatI18NCurrencyFormat();
 
-		$format->fractional_digits     = $lc['frac_digits'];
-		$format->p_cs_precedes         = $lc['p_cs_precedes'];
-		$format->n_cs_precedes         = $lc['n_cs_precedes'];
-		$format->p_separate_by_space   = $lc['p_sep_by_space'];
-		$format->n_separate_by_space   = $lc['n_sep_by_space'];
-		$format->p_sign_position       = $lc['p_sign_posn'];
-		$format->n_sign_position       = $lc['n_sign_posn'];
-		$format->decimal_separator     = ($lc['mon_decimal_point'] == '') ?
-			$lc['decimal_point'] : $lc['mon_decimal_point'];
+		$format->fractional_digits = $lc['frac_digits'];
+		$format->p_cs_precedes = $lc['p_cs_precedes'];
+		$format->n_cs_precedes = $lc['n_cs_precedes'];
+		$format->p_separate_by_space = $lc['p_sep_by_space'];
+		$format->n_separate_by_space = $lc['n_sep_by_space'];
+		$format->p_sign_position = $lc['p_sign_posn'];
+		$format->n_sign_position = $lc['n_sign_posn'];
+		$format->decimal_separator =
+			$lc['mon_decimal_point'] == ''
+				? $lc['decimal_point']
+				: $lc['mon_decimal_point'];
 
-		$format->thousands_separator   = $lc['mon_thousands_sep'];
-		$format->symbol                = $lc['currency_symbol'];
-		$format->grouping              = $lc['mon_grouping'];
-		$format->p_sign                = $lc['positive_sign'];
-		$format->n_sign                = $lc['negative_sign'];
+		$format->thousands_separator = $lc['mon_thousands_sep'];
+		$format->symbol = $lc['currency_symbol'];
+		$format->grouping = $lc['mon_grouping'];
+		$format->p_sign = $lc['positive_sign'];
+		$format->n_sign = $lc['negative_sign'];
 
 		// special-cases and workarounds
 		switch ($this->preferred_locale) {
-		// Hebrew-Israeli
-		case 'he_IL':
-		case 'he_IL.utf8':
-			$format->p_sign_position = 1;
-			$format->n_sign_position = 1;
-			$format->p_cs_precedes = false;
-			$format->n_cs_precedes = false;
-			break;
+			// Hebrew-Israeli
+			case 'he_IL':
+			case 'he_IL.utf8':
+				$format->p_sign_position = 1;
+				$format->n_sign_position = 1;
+				$format->p_cs_precedes = false;
+				$format->n_cs_precedes = false;
+				break;
 		}
 
 		$this->national_currency_format = $format;
@@ -919,21 +1004,23 @@ class SwatI18NLocale extends SwatObject
 
 		$format = new SwatI18NCurrencyFormat();
 
-		$format->fractional_digits     = $lc['int_frac_digits'];
-		$format->p_cs_precedes         = $lc['p_cs_precedes'];
-		$format->n_cs_precedes         = $lc['n_cs_precedes'];
-		$format->p_separate_by_space   = $lc['p_sep_by_space'];
-		$format->n_separate_by_space   = $lc['n_sep_by_space'];
-		$format->p_sign_position       = $lc['p_sign_posn'];
-		$format->n_sign_position       = $lc['n_sign_posn'];
-		$format->decimal_separator     = ($lc['mon_decimal_point'] == '') ?
-			$lc['decimal_point'] : $lc['mon_decimal_point'];
+		$format->fractional_digits = $lc['int_frac_digits'];
+		$format->p_cs_precedes = $lc['p_cs_precedes'];
+		$format->n_cs_precedes = $lc['n_cs_precedes'];
+		$format->p_separate_by_space = $lc['p_sep_by_space'];
+		$format->n_separate_by_space = $lc['n_sep_by_space'];
+		$format->p_sign_position = $lc['p_sign_posn'];
+		$format->n_sign_position = $lc['n_sign_posn'];
+		$format->decimal_separator =
+			$lc['mon_decimal_point'] == ''
+				? $lc['decimal_point']
+				: $lc['mon_decimal_point'];
 
-		$format->thousands_separator   = $lc['mon_thousands_sep'];
-		$format->symbol                = $lc['int_curr_symbol'];
-		$format->grouping              = $lc['mon_grouping'];
-		$format->p_sign                = $lc['positive_sign'];
-		$format->n_sign                = $lc['negative_sign'];
+		$format->thousands_separator = $lc['mon_thousands_sep'];
+		$format->symbol = $lc['int_curr_symbol'];
+		$format->grouping = $lc['mon_grouping'];
+		$format->p_sign = $lc['positive_sign'];
+		$format->n_sign = $lc['negative_sign'];
 
 		$this->international_currency_format = $format;
 	}
@@ -962,8 +1049,11 @@ class SwatI18NLocale extends SwatObject
 		$grouping_values = array();
 		$groupings = $format->grouping;
 		$grouping_total = floor(abs($value));
-		if (count($groupings) === 0 || $grouping_total == 0 ||
-			$format->thousands_separator == '') {
+		if (
+			count($groupings) === 0 ||
+			$grouping_total == 0 ||
+			$format->thousands_separator == ''
+		) {
 			array_push($grouping_values, $grouping_total);
 		} else {
 			$grouping_previous = 0;
@@ -981,13 +1071,18 @@ class SwatI18NLocale extends SwatObject
 					$grouping_previous = $grouping;
 				}
 
-				$grouping_value =
-					floor(fmod($grouping_total, pow(10, $grouping)));
+				$grouping_value = floor(
+					fmod($grouping_total, pow(10, $grouping))
+				);
 
 				$grouping_total = floor($grouping_total / pow(10, $grouping));
 				if ($grouping_total > 0) {
-					$grouping_value = str_pad($grouping_value, $grouping, '0',
-						STR_PAD_LEFT);
+					$grouping_value = str_pad(
+						$grouping_value,
+						$grouping,
+						'0',
+						STR_PAD_LEFT
+					);
 				}
 
 				array_push($grouping_values, $grouping_value);
@@ -1010,15 +1105,21 @@ class SwatI18NLocale extends SwatObject
 					array_push($grouping_values, $grouping_total);
 				} else {
 					while ($grouping_total > 0) {
-						$grouping_value =
-							floor(fmod($grouping_total, pow(10, $grouping)));
+						$grouping_value = floor(
+							fmod($grouping_total, pow(10, $grouping))
+						);
 
-						$grouping_total =
-							floor($grouping_total / pow(10, $grouping));
+						$grouping_total = floor(
+							$grouping_total / pow(10, $grouping)
+						);
 
 						if ($grouping_total > 0) {
-							$grouping_value = str_pad($grouping_value,
-								$grouping, '0', STR_PAD_LEFT);
+							$grouping_value = str_pad(
+								$grouping_value,
+								$grouping,
+								'0',
+								STR_PAD_LEFT
+							);
 						}
 
 						array_push($grouping_values, $grouping_value);
@@ -1030,8 +1131,10 @@ class SwatI18NLocale extends SwatObject
 		$grouping_values = array_reverse($grouping_values);
 
 		// join groupings using thousands separator
-		$formatted_value =
-			implode($format->thousands_separator, $grouping_values);
+		$formatted_value = implode(
+			$format->thousands_separator,
+			$grouping_values
+		);
 
 		return $formatted_value;
 	}
@@ -1063,10 +1166,14 @@ class SwatI18NLocale extends SwatObject
 		} else {
 			$frac_part = abs(fmod($value, 1));
 			$frac_part = round($frac_part * pow(10, $fractional_digits));
-			$frac_part = str_pad($frac_part, $fractional_digits, '0',
-				STR_PAD_LEFT);
+			$frac_part = str_pad(
+				$frac_part,
+				$fractional_digits,
+				'0',
+				STR_PAD_LEFT
+			);
 
-			$formatted_value = $format->decimal_separator.$frac_part;
+			$formatted_value = $format->decimal_separator . $frac_part;
 		}
 
 		return $formatted_value;
@@ -1114,21 +1221,20 @@ class SwatI18NLocale extends SwatObject
 		}
 
 		// filter out all chars except for digits and negative formatting chars
-		$char_class = '0-9'.preg_quote($negative_sign, '/');
+		$char_class = '0-9' . preg_quote($negative_sign, '/');
 		if ($n_sign_position === 0) {
-			$char_class = '()'.$char_class;
+			$char_class = '()' . $char_class;
 		}
-		$exp = '/[^'.$char_class.']/u';
+		$exp = '/[^' . $char_class . ']/u';
 		$filtered = preg_replace($exp, '', $string);
 
 		if ($filtered != '') {
-			if ($filtered[0] === '-' ||
-				mb_substr($filtered, -1) === '-'
-			) {
+			if ($filtered[0] === '-' || mb_substr($filtered, -1) === '-') {
 				// always allow parsing by negative sign
 				$negative = true;
 				$string = str_replace($negative_sign, '', $string);
-			} elseif ($n_sign_position === 0 &&
+			} elseif (
+				$n_sign_position === 0 &&
 				$filtered[0] === '(' &&
 				mb_substr($filtered, -1) === ')'
 			) {
@@ -1139,7 +1245,7 @@ class SwatI18NLocale extends SwatObject
 		}
 
 		if ($negative) {
-			$string = '-'.$string;
+			$string = '-' . $string;
 		}
 
 		return $string;
@@ -1167,24 +1273,26 @@ class SwatI18NLocale extends SwatObject
 		 * not been profiled against the equivalent IEEE-754 code.
 		 */
 
-		$value = (float)$value;
+		$value = (float) $value;
 
 		// get current locale
 		$locale = self::get();
 
 		$precision = 0;
 		$lc = $locale->getLocaleInfo();
-		$str_value = (string)$value;
+		$str_value = (string) $value;
 
 		$e_pos = mb_stripos($str_value, 'E-');
 		if ($e_pos !== false) {
-			$precision += (integer)mb_substr($str_value, $e_pos + 2);
+			$precision += (int) mb_substr($str_value, $e_pos + 2);
 			$str_value = mb_substr($str_value, 0, $e_pos);
 		}
 
 		$decimal_pos = mb_strpos($str_value, $lc['decimal_point']);
 		if ($decimal_pos !== false) {
-			$precision += mb_strlen($str_value) - $decimal_pos -
+			$precision +=
+				mb_strlen($str_value) -
+				$decimal_pos -
 				mb_strlen($lc['decimal_point']);
 		}
 
@@ -1211,7 +1319,7 @@ class SwatI18NLocale extends SwatObject
 	{
 		$exp = pow(10, $fractional_digits);
 		$frac_part = abs(fmod($value, 1)) * $exp;
-		$ends_in_five = (intval($frac_part * 10) % 10 === 5);
+		$ends_in_five = intval($frac_part * 10) % 10 === 5;
 		if ($ends_in_five) {
 			// check if fractional part is odd
 			if ((intval($frac_part) & 0x01) === 0x01) {
@@ -1261,8 +1369,10 @@ class SwatI18NLocale extends SwatObject
 			$old_locale = self::setlocale(LC_ALL, '0');
 			$this->preferred_locale = self::setlocale(LC_ALL, $this->locale);
 			if ($this->preferred_locale === false) {
-				throw new SwatException("The locale {$this->locale} is not ".
-					"valid for this operating system.");
+				throw new SwatException(
+					"The locale {$this->locale} is not " .
+						"valid for this operating system."
+				);
 			}
 		}
 
@@ -1301,9 +1411,15 @@ class SwatI18NLocale extends SwatObject
 					$array[$key] = $this->iconvArray($from, $to, $value);
 				} elseif (is_string($value)) {
 					$output = iconv($from, $to, $value);
-					if ($output === false)
-						throw new SwatException(sprintf('Could not convert '.
-							'%s output to %s', $from, $to));
+					if ($output === false) {
+						throw new SwatException(
+							sprintf(
+								'Could not convert ' . '%s output to %s',
+								$from,
+								$to
+							)
+						);
+					}
 
 					$array[$key] = $output;
 				}
@@ -1315,5 +1431,3 @@ class SwatI18NLocale extends SwatObject
 
 	// }}}
 }
-
-?>

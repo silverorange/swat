@@ -39,7 +39,7 @@ class SwatRadioList extends SwatFlydown
 	{
 		parent::__construct($id);
 
-		$this->show_blank  = false;
+		$this->show_blank = false;
 		$this->requires_id = true;
 
 		$this->addStyleSheet('packages/swat/styles/swat-radio-list.css');
@@ -55,14 +55,15 @@ class SwatRadioList extends SwatFlydown
 	{
 		$options = $this->getOptions();
 
-		if (!$this->visible || $options === null)
+		if (!$this->visible || $options === null) {
 			return;
+		}
 
 		SwatWidget::display();
 
 		// add a hidden field so we can check if this list was submitted on
 		// the process step
-		$this->getForm()->addHiddenField($this->id.'_submitted', 1);
+		$this->getForm()->addHiddenField($this->id . '_submitted', 1);
 
 		if (count($options) == 1) {
 			// get first and only element
@@ -79,7 +80,6 @@ class SwatRadioList extends SwatFlydown
 		$index = 0;
 
 		foreach ($options as $option) {
-
 			// add option-specific CSS classes from option metadata
 			$classes = $this->getOptionMetadata($option, 'classes');
 			if (is_array($classes)) {
@@ -95,7 +95,7 @@ class SwatRadioList extends SwatFlydown
 				if ($li_tag->class === null) {
 					$li_tag->class = 'swat-insensitive';
 				} else {
-					$li_tag->class.= ' swat-insensitive';
+					$li_tag->class .= ' swat-insensitive';
 				}
 			}
 
@@ -103,11 +103,11 @@ class SwatRadioList extends SwatFlydown
 				if ($li_tag->class === null) {
 					$li_tag->class = 'swat-radio-list-divider-li';
 				} else {
-					$li_tag->class.= ' swat-radio-list-divider-li';
+					$li_tag->class .= ' swat-radio-list-divider-li';
 				}
 			}
 
-			$li_tag->id = $this->id.'_li_'.(string)$index;
+			$li_tag->id = $this->id . '_li_' . (string) $index;
 			$li_tag->open();
 
 			if ($option instanceof SwatFlydownDivider) {
@@ -136,16 +136,19 @@ class SwatRadioList extends SwatFlydown
 	{
 		$form = $this->getForm();
 
-		if ($form->getHiddenField($this->id.'_submitted') === null)
+		if ($form->getHiddenField($this->id . '_submitted') === null) {
 			return false;
+		}
 
 		$data = &$form->getFormData();
 		$salt = $form->getSalt();
 
 		if (isset($data[$this->id])) {
 			if ($this->serialize_values) {
-				$this->value =
-					SwatString::signedUnserialize($data[$this->id], $salt);
+				$this->value = SwatString::signedUnserialize(
+					$data[$this->id],
+					$salt
+				);
 			} else {
 				$this->value = $data[$this->id];
 			}
@@ -170,8 +173,9 @@ class SwatRadioList extends SwatFlydown
 	{
 		$span_tag = new SwatHtmlTag('span');
 		$span_tag->class = 'swat-radio-list-divider';
-		if ($option->value !== null)
-			$span_tag->id = $this->id.'_'.(string)$option->value;
+		if ($option->value !== null) {
+			$span_tag->id = $this->id . '_' . (string) $option->value;
+		}
 
 		$span_tag->setContent($option->title, $option->content_type);
 		$span_tag->display();
@@ -204,24 +208,28 @@ class SwatRadioList extends SwatFlydown
 
 		if ($this->serialize_values) {
 			$salt = $this->getForm()->getSalt();
-			$this->input_tag->value =
-				SwatString::signedSerialize($option->value, $salt);
+			$this->input_tag->value = SwatString::signedSerialize(
+				$option->value,
+				$salt
+			);
 		} else {
-			$this->input_tag->value = (string)$option->value;
+			$this->input_tag->value = (string) $option->value;
 		}
 
 		$this->input_tag->removeAttribute('checked');
 
 		// TODO: come up with a better system to set ids. This may  not be
 		// unique and may also not be valid XHTML
-		$this->input_tag->id = $this->id.'_'.(string)$option->value;
+		$this->input_tag->id = $this->id . '_' . (string) $option->value;
 
 		if ($this->serialize_values) {
-			if ($option->value === $this->value)
+			if ($option->value === $this->value) {
 				$this->input_tag->checked = 'checked';
+			}
 		} else {
-			if ((string)$option->value === (string)$this->value)
+			if ((string) $option->value === (string) $this->value) {
 				$this->input_tag->checked = 'checked';
+			}
 		}
 
 		echo '<span class="swat-radio-wrapper">';
@@ -247,7 +255,7 @@ class SwatRadioList extends SwatFlydown
 			$this->label_tag->class = 'swat-control';
 		}
 
-		$this->label_tag->for = $this->id.'_'.(string)$option->value;
+		$this->label_tag->for = $this->id . '_' . (string) $option->value;
 		$this->label_tag->setContent($option->title, $option->content_type);
 		$this->label_tag->display();
 	}
@@ -270,5 +278,3 @@ class SwatRadioList extends SwatFlydown
 
 	// }}}
 }
-
-?>

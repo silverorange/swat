@@ -18,8 +18,9 @@ class SwatPercentageCellRenderer extends SwatNumericCellRenderer
 	 */
 	public function render()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		SwatCellRenderer::render();
 
@@ -35,5 +36,3 @@ class SwatPercentageCellRenderer extends SwatNumericCellRenderer
 
 	// }}}
 }
-
-?>

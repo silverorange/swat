@@ -49,5 +49,3 @@ class SwatDuplicateIdException extends SwatException
 
 	// }}}
 }
-
-?>

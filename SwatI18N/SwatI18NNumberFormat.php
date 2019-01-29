@@ -68,17 +68,21 @@ class SwatI18NNumberFormat extends SwatObject
 
 		foreach ($format as $key => $value) {
 			if (!array_key_exists($key, $vars)) {
-				throw new SwatException("Number formatting information ".
-					"contains invalid property {$key} and cannot override ".
-					"this number format.");
+				throw new SwatException(
+					"Number formatting information " .
+						"contains invalid property {$key} and cannot override " .
+						"this number format."
+				);
 			}
 		}
 
 		$new_format = clone $this;
 
-		foreach ($format as $key => $value)
-			if ($value !== null)
+		foreach ($format as $key => $value) {
+			if ($value !== null) {
 				$new_format->$key = $value;
+			}
+		}
 
 		return $new_format;
 	}
@@ -95,20 +99,20 @@ class SwatI18NNumberFormat extends SwatObject
 	{
 		$string = '';
 
-		$string.= 'decimal_separator => '.$this->decimal_separator."\n";
+		$string .= 'decimal_separator => ' . $this->decimal_separator . "\n";
 
-		$string.= 'thousands_separator => '.$this->thousands_separator."\n";
+		$string .=
+			'thousands_separator => ' . $this->thousands_separator . "\n";
 
-		$string.= 'grouping => ';
-		$string.= (is_array($this->grouping)) ?
-			implode(', ', $this->grouping) : $this->grouping;
+		$string .= 'grouping => ';
+		$string .= is_array($this->grouping)
+			? implode(', ', $this->grouping)
+			: $this->grouping;
 
-		$string.= "\n";
+		$string .= "\n";
 
 		return $string;
 	}
 
 	// }}}
 }
-
-?>

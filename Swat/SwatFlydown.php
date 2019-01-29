@@ -49,16 +49,14 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		parent::display();
 
 		$wrapper_classes = array_merge(
-			array_diff(
-				$this->getCSSClassNames(),
-				array('swat-flydown')
-			),
+			array_diff($this->getCSSClassNames(), array('swat-flydown')),
 			array('swat-flydown-wrapper')
 		);
 		$wrapper = new SwatHtmlTag('span');
@@ -68,24 +66,28 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 		$options = $this->getOptions();
 		$selected = false;
 
-		if ($this->show_blank)
+		if ($this->show_blank) {
 			$options = array_merge(array($this->getBlankOption()), $options);
+		}
 
 		// only show a select if there is more than one option
 		if (count($options) > 1) {
-			$flydown_value = ($this->serialize_values) ?
-				$this->value : (string)$this->value;
+			$flydown_value = $this->serialize_values
+				? $this->value
+				: (string) $this->value;
 
-			if ($this->serialize_values)
+			if ($this->serialize_values) {
 				$salt = $this->getForm()->getSalt();
+			}
 
 			$select_tag = new SwatHtmlTag('select');
 			$select_tag->name = $this->id;
 			$select_tag->id = $this->id;
 			$select_tag->class = $this->getCSSClassString();
 
-			if (!$this->isSensitive())
+			if (!$this->isSensitive()) {
 				$select_tag->disabled = 'disabled';
+			}
 
 			$option_tag = new SwatHtmlTag('option');
 
@@ -94,9 +96,11 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 			foreach ($options as $flydown_option) {
 				if ($this->serialize_values) {
 					$option_tag->value = SwatString::signedSerialize(
-						$flydown_option->value, $salt);
+						$flydown_option->value,
+						$salt
+					);
 				} else {
-					$option_tag->value = (string)$flydown_option->value;
+					$option_tag->value = (string) $flydown_option->value;
 				}
 
 				if ($flydown_option instanceof SwatFlydownDivider) {
@@ -111,7 +115,9 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
 					// add option-specific CSS classes from option metadata
 					$classes = $this->getOptionMetadata(
-						$flydown_option, 'classes');
+						$flydown_option,
+						'classes'
+					);
 
 					if (is_array($classes)) {
 						$option_tag->class = implode(' ', $classes);
@@ -120,26 +126,30 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 					}
 				}
 
-				$value = ($this->serialize_values) ?
-					$flydown_option->value : (string)$flydown_option->value;
+				$value = $this->serialize_values
+					? $flydown_option->value
+					: (string) $flydown_option->value;
 
-				if ($flydown_value === $value && !$selected &&
-					!($flydown_option instanceof SwatFlydownDivider)) {
-
+				if (
+					$flydown_value === $value &&
+					!$selected &&
+					!($flydown_option instanceof SwatFlydownDivider)
+				) {
 					$option_tag->selected = 'selected';
 					$selected = true;
 				} else {
 					$option_tag->removeAttribute('selected');
 				}
 
-				$option_tag->setContent($flydown_option->title,
-					$flydown_option->content_type);
+				$option_tag->setContent(
+					$flydown_option->title,
+					$flydown_option->content_type
+				);
 
 				$option_tag->display();
 			}
 
 			$select_tag->close();
-
 		} elseif (count($options) == 1) {
 			// get first and only element
 			$this->displaySingle(current($options));
@@ -162,16 +172,19 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 	{
 		parent::process();
 
-		if (!$this->processValue())
+		if (!$this->processValue()) {
 			return;
+		}
 
 		if ($this->required && $this->isSensitive()) {
 			// When values are not serialized, an empty string is treated as
 			// null. As a result, you should not use a null value and an empty
 			// string value in the same flydown except when using serialized
 			// values.
-			if (($this->serialize_values && $this->value === null) ||
-				(!$this->serialize_values && $this->value == '')) {
+			if (
+				($this->serialize_values && $this->value === null) ||
+				(!$this->serialize_values && $this->value == '')
+			) {
 				$this->addMessage($this->getValidationMessage('required'));
 			}
 		}
@@ -259,11 +272,13 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
 		if ($this->visible) {
 			$count = count($this->getOptions());
-			if ($this->show_blank)
+			if ($this->show_blank) {
 				$count++;
+			}
 
-			if ($count > 1)
+			if ($count > 1) {
 				$focusable_id = $this->id;
+			}
 		}
 
 		return $focusable_id;
@@ -282,15 +297,18 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 		$form = $this->getForm();
 
 		$data = &$form->getFormData();
-		if (!isset($data[$this->id]))
+		if (!isset($data[$this->id])) {
 			return false;
+		}
 
 		if ($this->serialize_values) {
 			$salt = $form->getSalt();
 			$this->value = SwatString::signedUnserialize(
-				$data[$this->id], $salt);
+				$data[$this->id],
+				$salt
+			);
 		} else {
-			$this->value = (string)$data[$this->id];
+			$this->value = (string) $data[$this->id];
 		}
 
 		return true;
@@ -315,7 +333,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 			$salt = $this->getForm()->getSalt();
 			$hidden_tag->value = SwatString::signedSerialize($value, $salt);
 		} else {
-			$hidden_tag->value = (string)$value;
+			$hidden_tag->value = (string) $value;
 		}
 
 		$hidden_tag->display();
@@ -356,5 +374,3 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
 	// }}}
 }
-
-?>

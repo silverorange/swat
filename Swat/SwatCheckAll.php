@@ -99,8 +99,9 @@ class SwatCheckAll extends SwatCheckbox
 	 */
 	public function display()
 	{
-		if (!$this->visible)
+		if (!$this->visible) {
 			return;
+		}
 
 		$div_tag = new SwatHtmlTag('div');
 		$div_tag->id = $this->id;
@@ -108,11 +109,11 @@ class SwatCheckAll extends SwatCheckbox
 		$div_tag->open();
 
 		$label_tag = new SwatHtmlTag('label');
-		$label_tag->for = $this->id.'_value';
+		$label_tag->for = $this->id . '_value';
 		$label_tag->open();
 
 		$old_id = $this->id;
-		$this->id.= '_value';
+		$this->id .= '_value';
 		parent::display();
 		$this->id = $old_id;
 
@@ -125,7 +126,7 @@ class SwatCheckAll extends SwatCheckbox
 
 		if ($this->extended_count > $this->visible_count) {
 			$div_tag = new SwatHtmlTag('div');
-			$div_tag->id = $this->id.'_extended';
+			$div_tag->id = $this->id . '_extended';
 			$div_tag->class = 'swat-hidden swat-extended-check-all';
 			$div_tag->open();
 			echo $this->getExtendedTitle();
@@ -143,7 +144,7 @@ class SwatCheckAll extends SwatCheckbox
 	protected function getExtendedTitle()
 	{
 		$locale = SwatI18NLocale::get();
-		$entity = ($this->unit === null) ? Swat::_('items') : $this->unit;
+		$entity = $this->unit === null ? Swat::_('items') : $this->unit;
 
 		$checkbox = $this->getCompositeWidget('extended_checkbox');
 		$checkbox->tabindex = $this->tab_index;
@@ -151,8 +152,13 @@ class SwatCheckAll extends SwatCheckbox
 		ob_start();
 		$label_tag = new SwatHtmlTag('label');
 		$label_tag->for = $checkbox->id;
-		$label_tag->setContent(sprintf(Swat::_('select all %s %s'),
-			$locale->formatNumber($this->extended_count), $entity));
+		$label_tag->setContent(
+			sprintf(
+				Swat::_('select all %s %s'),
+				$locale->formatNumber($this->extended_count),
+				$entity
+			)
+		);
 
 		$label_tag->open();
 		$checkbox->display();
@@ -162,10 +168,12 @@ class SwatCheckAll extends SwatCheckbox
 
 		$title = Swat::_('All %s %s on this page are selected. (%s)');
 
-		return sprintf($title,
+		return sprintf(
+			$title,
 			$locale->formatNumber($this->visible_count),
 			$entity,
-			$checkbox_display);
+			$checkbox_display
+		);
 	}
 
 	// }}}
@@ -194,9 +202,11 @@ class SwatCheckAll extends SwatCheckbox
 	 */
 	protected function getInlineJavaScript()
 	{
-		return sprintf("var %s_obj = new SwatCheckAll('%s');",
-			$this->id, $this->id);
-
+		return sprintf(
+			"var %s_obj = new SwatCheckAll('%s');",
+			$this->id,
+			$this->id
+		);
 	}
 
 	// }}}
@@ -210,5 +220,3 @@ class SwatCheckAll extends SwatCheckbox
 
 	// }}}
 }
-
-?>
