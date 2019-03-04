@@ -233,7 +233,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
         if (count($this->replicators) < $this->number) {
             $diff = $this->number - count($this->replicators);
             $next_replicator =
-                count($this->replicators) == 0
+                count($this->replicators) === 0
                     ? 0
                     : end($this->replicators) + 1;
 

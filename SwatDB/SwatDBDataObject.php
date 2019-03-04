@@ -1247,7 +1247,7 @@ class SwatDBDataObject extends SwatObject implements
     {
         $modified_properties = $this->getModifiedProperties();
 
-        if (count($modified_properties) == 0) {
+        if (count($modified_properties) === 0) {
             return;
         }
 
@@ -1430,7 +1430,7 @@ class SwatDBDataObject extends SwatObject implements
     {
         $modified_properties = $this->getModifiedProperties();
 
-        if (count($modified_properties) == 0) {
+        if (count($modified_properties) === 0) {
             return;
         }
 

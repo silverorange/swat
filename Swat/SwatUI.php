@@ -945,7 +945,7 @@ class SwatUI extends SwatObject
 
                 while (array_key_exists(end($stack), $operators)) {
                     array_push($queue, array_pop($stack));
-                    if (count($stack) == 0) {
+                    if (count($stack) === 0) {
                         throw $parenthesis_exception;
                     }
                 }

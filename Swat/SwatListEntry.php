@@ -135,7 +135,7 @@ class SwatListEntry extends SwatEntry
         $this->values = $this->splitValues($this->value);
         $locale = SwatI18NLocale::get();
 
-        if (!$this->required && count($this->values) == 0) {
+        if (!$this->required && count($this->values) === 0) {
             return;
         } elseif (
             $this->max_entries > 0 &&
@@ -324,7 +324,7 @@ class SwatListEntry extends SwatEntry
                 )
             );
         } elseif (
-            ($this->max_entries === null || $this->max_entries == 0) &&
+            ($this->max_entries === null || $this->max_entries === 0) &&
             $this->min_entries > 1 &&
             $this->required == true
         ) {

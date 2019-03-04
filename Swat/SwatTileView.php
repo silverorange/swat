@@ -246,7 +246,7 @@ class SwatTileView extends SwatView implements SwatUIParent
         parent::display();
 
         if (
-            count($this->model) == 0 &&
+            count($this->model) === 0 &&
             $this->no_records_message !== null &&
             $this->show_check_all !== true
         ) {

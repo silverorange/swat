@@ -324,7 +324,7 @@ class SwatImageCropper extends SwatInputControl
         }
 
         // fix bad ratio
-        if ($this->crop_box_ratio == 0) {
+        if ($this->crop_box_ratio === 0) {
             $this->crop_box_ratio = null;
         }
 

@@ -180,7 +180,7 @@ class SwatDB extends SwatObject
     ) {
         $ids = self::initArray($ids);
 
-        if (count($ids) == 0) {
+        if (count($ids) === 0) {
             return;
         }
 
@@ -1344,7 +1344,7 @@ class SwatDB extends SwatObject
 
     private static function getFieldNameArray($fields)
     {
-        if (count($fields) == 0) {
+        if (count($fields) === 0) {
             return;
         }
 
@@ -1362,7 +1362,7 @@ class SwatDB extends SwatObject
 
     private static function getFieldTypeArray($fields)
     {
-        if (count($fields) == 0) {
+        if (count($fields) === 0) {
             return;
         }
 
@@ -1390,7 +1390,7 @@ class SwatDB extends SwatObject
      */
     private static function initFields(&$fields)
     {
-        if (count($fields) == 0) {
+        if (count($fields) === 0) {
             // TODO: throw exception instead of returning
             return;
         }
@@ -1488,7 +1488,7 @@ class SwatDB extends SwatObject
         if (defined('SWATDB_DEBUG') || self::$debug) {
             self::$debug_wrapper_depth--;
 
-            if (self::$debug_wrapper_depth == 0) {
+            if (self::$debug_wrapper_depth === 0) {
                 $count = 0;
                 $depth = 0;
 
@@ -1500,7 +1500,7 @@ class SwatDB extends SwatObject
                         );
                     } elseif ($info['depth'] > $depth) {
                         echo '<blockquote class="swat-db-debug">';
-                    } elseif ($info['depth'] == 0) {
+                    } elseif ($info['depth'] === 0) {
                         echo '<hr />';
                     }
 
@@ -1525,7 +1525,7 @@ class SwatDB extends SwatObject
                         $locale->formatNumber($ms, 3)
                     );
 
-                    if ($info['depth'] == 0 && count(self::$debug_info) > 1) {
+                    if ($info['depth'] === 0 && count(self::$debug_info) > 1) {
                         $ms =
                             microtime(true) * 1000 -
                             self::$debug_info[0]['time'];

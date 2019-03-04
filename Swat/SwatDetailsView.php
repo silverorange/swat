@@ -661,7 +661,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         $count = 1;
 
         foreach ($this->fields as $field) {
-            $odd = $count % 2 == 1;
+            $odd = $count % 2 === 1;
 
             ob_start();
             $field->display($this->data, $odd);

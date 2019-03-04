@@ -170,11 +170,11 @@ class SwatTextarea extends SwatInputControl implements SwatState
         $this->value = $data[$this->id];
         $length = $this->getValueLength();
 
-        if ($length == 0) {
+        if ($length === 0) {
             $this->value = null;
         }
 
-        if ($this->required && $length == 0) {
+        if ($this->required && $length === 0) {
             $message = $this->getValidationMessage('required');
             $this->addMessage($message);
         } elseif ($this->maxlength !== null && $length > $this->maxlength) {

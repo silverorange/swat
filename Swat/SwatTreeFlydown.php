@@ -66,7 +66,7 @@ class SwatTreeFlydown extends SwatFlydown
         }
 
         $actual_value = $this->value;
-        if (count($this->path) == 0 && $this->value !== null) {
+        if (count($this->path) === 0 && $this->value !== null) {
             // If there is a value but not a path, assume the value is the
             // first element in the path.
             $this->value = array($this->value);

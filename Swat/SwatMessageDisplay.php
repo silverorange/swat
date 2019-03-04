@@ -156,7 +156,7 @@ class SwatMessageDisplay extends SwatControl
             return;
         }
 
-        if ($this->getMessageCount() == 0) {
+        if ($this->getMessageCount() === 0) {
             return;
         }
 

@@ -181,7 +181,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
      */
     public function displayValue($data)
     {
-        if (count($this->renderers) == 0) {
+        if (count($this->renderers) === 0) {
             throw new SwatException(
                 'No renderer has been provided for this field.'
             );

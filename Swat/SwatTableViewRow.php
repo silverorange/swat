@@ -148,11 +148,7 @@ abstract class SwatTableViewRow extends SwatUIObject
      */
     public function getVisibleByCount($count)
     {
-        if ($count == 0) {
-            return false;
-        }
-
-        return true;
+        return $count > 0;
     }
 
     // }}}

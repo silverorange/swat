@@ -202,7 +202,7 @@ class SwatNavBar extends SwatControl implements Countable
      */
     public function getLastEntry()
     {
-        if (count($this->entries) == 0) {
+        if (count($this->entries) === 0) {
             throw new SwatException('Navbar is empty.');
         }
 
@@ -346,7 +346,7 @@ class SwatNavBar extends SwatControl implements Countable
             // link all entries or link all but the last entry
             $link = $this->link_last_entry || $i < $count;
 
-            $this->displayEntry($entry, $link, $i == 1);
+            $this->displayEntry($entry, $link, $i === 1);
 
             $i++;
         }

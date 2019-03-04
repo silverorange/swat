@@ -155,16 +155,16 @@ class SwatImageDisplay extends SwatControl
         $margin_y = 0;
 
         if ($occupy_width !== null && $occupy_width > $width) {
-            $margin_x = $occupy_width - $width;
+            $margin_x = intval($occupy_width - $width);
         }
 
         if ($occupy_height !== null && $occupy_height > $height) {
-            $margin_y = $occupy_height - $height;
+            $margin_y = intval($occupy_height - $height);
         }
 
         if ($margin_x > 0 || $margin_y > 0) {
             $style = sprintf(
-                $margin_x % 2 == 0 && $margin_y % 2 == 0
+                $margin_x % 2 === 0 && $margin_y % 2 === 0
                     ? 'margin: %dpx %dpx'
                     : 'margin: %dpx %dpx %dpx %dpx;',
                 floor(((float) $margin_y) / 2),

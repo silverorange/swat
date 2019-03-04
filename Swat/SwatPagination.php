@@ -197,9 +197,9 @@ class SwatPagination extends SwatControl
 
         $message = '';
 
-        if ($this->total_records == 0) {
+        if ($this->total_records === 0) {
             $message = sprintf(Swat::_('No %s.'), $unit_plural);
-        } elseif ($this->total_records == 1) {
+        } elseif ($this->total_records === 1) {
             $message = sprintf(Swat::_('One %s.'), $unit);
         } else {
             $locale = SwatI18NLocale::get();

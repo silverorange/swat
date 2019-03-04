@@ -137,19 +137,19 @@ class SwatImageCellRenderer extends SwatCellRenderer
             $this->occupy_width !== null &&
             $this->occupy_width > $this->width
         ) {
-            $margin_x = $this->occupy_width - $this->width;
+            $margin_x = intval($this->occupy_width - $this->width);
         }
 
         if (
             $this->occupy_height !== null &&
             $this->occupy_height > $this->height
         ) {
-            $margin_y = $this->occupy_height - $this->height;
+            $margin_y = intval($this->occupy_height - $this->height);
         }
 
         if ($margin_x > 0 || $margin_y > 0) {
             $image_tag->style = sprintf(
-                $margin_x % 2 == 0 && $margin_y % 2 == 0
+                $margin_x % 2 === 0 && $margin_y % 2 === 0
                     ? 'margin: %dpx %dpx'
                     : 'margin: %dpx %dpx %dpx %dpx;',
                 floor(((float) $margin_y) / 2),

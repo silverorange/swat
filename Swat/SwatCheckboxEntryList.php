@@ -92,7 +92,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
     {
         $options = $this->getOptions();
 
-        if (!$this->visible || count($options) == 0) {
+        if (!$this->visible || count($options) === 0) {
             return;
         }
 

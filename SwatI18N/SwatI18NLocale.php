@@ -1048,10 +1048,10 @@ class SwatI18NLocale extends SwatObject
         // group integer part with thousands separators
         $grouping_values = array();
         $groupings = $format->grouping;
-        $grouping_total = floor(abs($value));
+        $grouping_total = intval(floor(abs($value)));
         if (
             count($groupings) === 0 ||
-            $grouping_total == 0 ||
+            $grouping_total === 0 ||
             $format->thousands_separator == ''
         ) {
             array_push($grouping_values, $grouping_total);

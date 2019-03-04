@@ -166,7 +166,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
         // guess twelve-hour or twenty-four hour default based on locale
         $locale_format = nl_langinfo(T_FMT);
         $this->twelve_hour =
-            preg_match('/(%T|%R|%k|.*%H.*)/', $locale_format) == 0;
+            preg_match('/(%T|%R|%k|.*%H.*)/', $locale_format) === 0;
     }
 
     // }}}
@@ -214,7 +214,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
                         $hour -= 12;
                     }
 
-                    if ($hour == 0) {
+                    if ($hour === 0) {
                         $hour = 12;
                     }
                 }

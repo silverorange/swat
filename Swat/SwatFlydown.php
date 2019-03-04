@@ -150,7 +150,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
             }
 
             $select_tag->close();
-        } elseif (count($options) == 1) {
+        } elseif (count($options) === 1) {
             // get first and only element
             $this->displaySingle(current($options));
         }

@@ -234,7 +234,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
             $li_tag->class = 'tab' . $li_counter;
 
             if (
-                ($this->selected_page === null && $li_counter == 1) ||
+                ($this->selected_page === null && $li_counter === 1) ||
                 $page->id == $this->selected_page
             ) {
                 $li_tag->class .= ' selected';

@@ -462,7 +462,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
             }
         }
 
-        if (count($notes) == 1) {
+        if (count($notes) === 1) {
             $note = reset($notes);
             $note_div = new SwatHtmlTag('div');
             $note_div->class = 'swat-note';

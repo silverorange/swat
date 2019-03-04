@@ -296,15 +296,16 @@ class SwatString extends SwatObject
             }
 
             $blocklevel_started =
-                preg_match($starting_blocklevel, $paragraph) == 1;
+                preg_match($starting_blocklevel, $paragraph) === 1;
 
-            $blocklevel_ended = preg_match($ending_blocklevel, $paragraph) == 1;
+            $blocklevel_ended =
+                preg_match($ending_blocklevel, $paragraph) === 1;
 
             if ($blocklevel_started) {
                 $in_blocklevel = true;
             }
 
-            $is_preformatted = preg_match($preformat, $paragraph) == 1;
+            $is_preformatted = preg_match($preformat, $paragraph) === 1;
 
             // don't format wrap this paragraph if it is a preformatted
             // element.
@@ -1341,7 +1342,7 @@ class SwatString extends SwatObject
         $output = '';
         $length = $pad_length - mb_strlen($input);
 
-        if ($pad_string === null || mb_strlen($pad_string) == 0) {
+        if ($pad_string === null || mb_strlen($pad_string) === 0) {
             $pad_string = ' ';
         }
 
@@ -1526,7 +1527,7 @@ class SwatString extends SwatObject
             throw new SwatException('Value is not an Iterator or array');
         }
 
-        if (count($iterator) == 1) {
+        if (count($iterator) === 1) {
             $iterator->rewind();
             $list = $iterator->current();
         } else {

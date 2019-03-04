@@ -1133,9 +1133,9 @@ class SwatDate extends DateTime implements Serializable
             case self::DF_ISO_8601_EXTENDED:
             case self::DF_RFC_2822:
                 $offset = $this->getOffset();
-                $offset = floor($offset / 60); // minutes
+                $offset = intval(floor($offset / 60)); // minutes
 
-                if ($offset == 0) {
+                if ($offset === 0) {
                     $offset = 'Z';
                 } else {
                     $offset_hours = floor($offset / 60);
@@ -1791,7 +1791,7 @@ class SwatDate extends DateTime implements Serializable
      */
     public function after(DateTime $when)
     {
-        return self::compare($this, $when) == 1;
+        return self::compare($this, $when) === 1;
     }
 
     // }}}
@@ -1809,7 +1809,7 @@ class SwatDate extends DateTime implements Serializable
      */
     public function equals(DateTime $when)
     {
-        return self::compare($this, $when) == 0;
+        return self::compare($this, $when) === 0;
     }
 
     // }}}

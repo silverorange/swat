@@ -147,7 +147,7 @@ class SwatTile extends SwatCellRendererContainer
      */
     protected function setupRenderers($data)
     {
-        if (count($this->renderers) == 0) {
+        if (count($this->renderers) === 0) {
             throw new SwatException(
                 'No renderer has been provided for this tile.'
             );
@@ -196,7 +196,7 @@ class SwatTile extends SwatCellRendererContainer
      */
     protected function displayRenderersInternal($data)
     {
-        if (count($this->renderers) == 1) {
+        if (count($this->renderers) === 1) {
             $this->renderers->getFirst()->render();
         } else {
             $div_tag = new SwatHtmlTag('div');

@@ -707,7 +707,7 @@ class SwatException extends Exception
         foreach ($documentation_exp as $documentation_line) {
             $matches = array();
             if (
-                preg_match($exp, $documentation_line, $matches) == 1 &&
+                preg_match($exp, $documentation_line, $matches) === 1 &&
                 $matches[1] == $name
             ) {
                 $sensitive = true;

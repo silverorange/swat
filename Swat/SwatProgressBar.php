@@ -185,7 +185,7 @@ class SwatProgressBar extends SwatControl
     {
         // ensure length is in cascading style-sheet units
         $dimension_pattern = '/([0-9]+(%|p[xtc]|e[mx]|in|[cm]m|)|auto)/';
-        if (preg_match($dimension_pattern, $this->length) == 0) {
+        if (preg_match($dimension_pattern, $this->length) === 0) {
             throw new SwatException(
                 sprintf(
                     '$length must be specified in ' .

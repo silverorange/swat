@@ -964,7 +964,8 @@ class SwatDateEntry extends SwatInputControl implements SwatState
 
         $matches = array();
         if (
-            preg_match('/(%d|%e)/', $format, $matches, PREG_OFFSET_CAPTURE) == 1
+            preg_match('/(%d|%e)/', $format, $matches, PREG_OFFSET_CAPTURE) ===
+            1
         ) {
             $day = $matches[0][1];
         }
@@ -976,14 +977,15 @@ class SwatDateEntry extends SwatInputControl implements SwatState
                 $format,
                 $matches,
                 PREG_OFFSET_CAPTURE
-            ) == 1
+            ) === 1
         ) {
             $month = $matches[0][1];
         }
 
         $matches = array();
         if (
-            preg_match('/(%[Yy])/', $format, $matches, PREG_OFFSET_CAPTURE) == 1
+            preg_match('/(%[Yy])/', $format, $matches, PREG_OFFSET_CAPTURE) ===
+            1
         ) {
             $year = $matches[0][1];
         }
