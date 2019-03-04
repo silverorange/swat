@@ -11,16 +11,16 @@
  */
 interface SwatNoteBookChild
 {
-	// {{{ public function getPages()
+    // {{{ public function getPages()
 
-	/**
-	 * Gets the notebook pages of this child
-	 *
-	 * @return array an array of {@link SwatNoteBookPage} objects.
-	 *
-	 * @see SwatNoteBookPage
-	 */
-	public function getPages();
+    /**
+     * Gets the notebook pages of this child
+     *
+     * @return array an array of {@link SwatNoteBookPage} objects.
+     *
+     * @see SwatNoteBookPage
+     */
+    public function getPages();
 
-	// }}}
+    // }}}
 }

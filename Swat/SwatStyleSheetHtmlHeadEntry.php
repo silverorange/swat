@@ -9,36 +9,36 @@
  */
 class SwatStyleSheetHtmlHeadEntry extends SwatHtmlHeadEntry
 {
-	// {{{ protected function displayInternal()
+    // {{{ protected function displayInternal()
 
-	protected function displayInternal($uri_prefix = '', $tag = null)
-	{
-		$uri = $this->uri;
+    protected function displayInternal($uri_prefix = '', $tag = null)
+    {
+        $uri = $this->uri;
 
-		// append tag if it is set
-		if ($tag !== null) {
-			$uri =
-				mb_strpos($uri, '?') === false
-					? $uri . '?' . $tag
-					: $uri . '&' . $tag;
-		}
+        // append tag if it is set
+        if ($tag !== null) {
+            $uri =
+                mb_strpos($uri, '?') === false
+                    ? $uri . '?' . $tag
+                    : $uri . '&' . $tag;
+        }
 
-		printf(
-			'<link rel="stylesheet" type="text/css" href="%s%s" />',
-			$uri_prefix,
-			$uri
-		);
-	}
+        printf(
+            '<link rel="stylesheet" type="text/css" href="%s%s" />',
+            $uri_prefix,
+            $uri
+        );
+    }
 
-	// }}}
-	// {{{ protected function displayInlineInternal()
+    // }}}
+    // {{{ protected function displayInlineInternal()
 
-	protected function displayInlineInternal($path)
-	{
-		echo '<style type="text/css" media="all">';
-		readfile($path . $this->getUri());
-		echo '</style>';
-	}
+    protected function displayInlineInternal($path)
+    {
+        echo '<style type="text/css" media="all">';
+        readfile($path . $this->getUri());
+        echo '</style>';
+    }
 
-	// }}}
+    // }}}
 }

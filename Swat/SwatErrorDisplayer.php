@@ -14,14 +14,14 @@
  */
 abstract class SwatErrorDisplayer
 {
-	// {{{ public abstract function display()
+    // {{{ public abstract function display()
 
-	/**
-	 * Displays a SwatError
-	 *
-	 * This is called by SwatError::process().
-	 */
-	abstract public function display(SwatError $e);
+    /**
+     * Displays a SwatError
+     *
+     * This is called by SwatError::process().
+     */
+    abstract public function display(SwatError $e);
 
-	// }}}
+    // }}}
 }

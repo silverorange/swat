@@ -9,43 +9,43 @@
  */
 class SwatInvalidClassException extends SwatException
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	/**
-	 * The object that is of the wrong class
-	 *
-	 * @var mixed
-	 */
-	protected $object = null;
+    /**
+     * The object that is of the wrong class
+     *
+     * @var mixed
+     */
+    protected $object = null;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new invalid class exception
-	 *
-	 * @param string $message the message of the exception.
-	 * @param integer $code the code of the exception.
-	 * @param mixed $object the object that is of the wrong class.
-	 */
-	public function __construct($message = null, $code = 0, $object = null)
-	{
-		parent::__construct($message, $code);
-		$this->object = $object;
-	}
+    /**
+     * Creates a new invalid class exception
+     *
+     * @param string $message the message of the exception.
+     * @param integer $code the code of the exception.
+     * @param mixed $object the object that is of the wrong class.
+     */
+    public function __construct($message = null, $code = 0, $object = null)
+    {
+        parent::__construct($message, $code);
+        $this->object = $object;
+    }
 
-	// }}}
-	// {{{ public function getObject()
+    // }}}
+    // {{{ public function getObject()
 
-	/**
-	 * Gets the object that is of the wrong class
-	 *
-	 * @return mixed the object that is of the wrong class.
-	 */
-	public function getObject()
-	{
-		return $this->object;
-	}
+    /**
+     * Gets the object that is of the wrong class
+     *
+     * @return mixed the object that is of the wrong class.
+     */
+    public function getObject()
+    {
+        return $this->object;
+    }
 
-	// }}}
+    // }}}
 }

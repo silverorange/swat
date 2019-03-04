@@ -9,29 +9,29 @@
  */
 class SwatYesNoRadioList extends SwatRadioList
 {
-	// {{{ constants
+    // {{{ constants
 
-	const NO = false;
-	const YES = true;
+    const NO = false;
+    const YES = true;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new yes/no radio list
-	 *
-	 * Sets the options of this radio list to be yes and no.
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
-		$this->addOption(self::NO, Swat::_('No'));
-		$this->addOption(self::YES, Swat::_('Yes'));
-	}
+    /**
+     * Creates a new yes/no radio list
+     *
+     * Sets the options of this radio list to be yes and no.
+     *
+     * @param string $id a non-visible unique id for this widget.
+     *
+     * @see SwatWidget::__construct()
+     */
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
+        $this->addOption(self::NO, Swat::_('No'));
+        $this->addOption(self::YES, Swat::_('Yes'));
+    }
 
-	// }}}
+    // }}}
 }

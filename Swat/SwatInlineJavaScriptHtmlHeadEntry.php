@@ -7,42 +7,42 @@
  */
 class SwatInlineJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	/**
-	 * @var string
-	 */
-	protected $script;
+    /**
+     * @var string
+     */
+    protected $script;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new HTML head entry
-	 *
-	 * @param string  $script the script of this entry.
-	 */
-	public function __construct($script)
-	{
-		parent::__construct(md5($script));
-		$this->script = $script;
-	}
+    /**
+     * Creates a new HTML head entry
+     *
+     * @param string  $script the script of this entry.
+     */
+    public function __construct($script)
+    {
+        parent::__construct(md5($script));
+        $this->script = $script;
+    }
 
-	// }}}
-	// {{{ protected function displayInternal()
+    // }}}
+    // {{{ protected function displayInternal()
 
-	protected function displayInternal($uri_prefix = '', $tag = null)
-	{
-		Swat::displayInlineJavaScript($this->script);
-	}
+    protected function displayInternal($uri_prefix = '', $tag = null)
+    {
+        Swat::displayInlineJavaScript($this->script);
+    }
 
-	// }}}
-	// {{{ protected function displayInlineInternal()
+    // }}}
+    // {{{ protected function displayInlineInternal()
 
-	protected function displayInlineInternal($path)
-	{
-		$this->displayInternal();
-	}
+    protected function displayInlineInternal($path)
+    {
+        $this->displayInternal();
+    }
 
-	// }}}
+    // }}}
 }

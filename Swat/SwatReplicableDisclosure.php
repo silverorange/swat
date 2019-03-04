@@ -15,35 +15,35 @@
  */
 class SwatReplicableDisclosure extends SwatReplicableContainer
 {
-	// {{{ public function init()
+    // {{{ public function init()
 
-	/**
-	 * Initilizes this replicable disclosure
-	 */
-	public function init()
-	{
-		$children = array();
-		foreach ($this->children as $child_widget) {
-			$children[] = $this->remove($child_widget);
-		}
+    /**
+     * Initilizes this replicable disclosure
+     */
+    public function init()
+    {
+        $children = array();
+        foreach ($this->children as $child_widget) {
+            $children[] = $this->remove($child_widget);
+        }
 
-		$disclosure = new SwatDisclosure();
-		$disclosure->id = $disclosure->getUniqueId();
-		$prototype_id = $disclosure->id;
+        $disclosure = new SwatDisclosure();
+        $disclosure->id = $disclosure->getUniqueId();
+        $prototype_id = $disclosure->id;
 
-		foreach ($children as $child_widget) {
-			$disclosure->add($child_widget);
-		}
+        foreach ($children as $child_widget) {
+            $disclosure->add($child_widget);
+        }
 
-		$this->add($disclosure);
+        $this->add($disclosure);
 
-		parent::init();
+        parent::init();
 
-		foreach ($this->replicators as $id => $title) {
-			$disclosure = $this->getWidget($prototype_id, $id);
-			$disclosure->title = $title;
-		}
-	}
+        foreach ($this->replicators as $id => $title) {
+            $disclosure = $this->getWidget($prototype_id, $id);
+            $disclosure->title = $title;
+        }
+    }
 
-	// }}}
+    // }}}
 }

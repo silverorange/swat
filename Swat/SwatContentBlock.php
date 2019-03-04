@@ -9,46 +9,46 @@
  */
 class SwatContentBlock extends SwatControl
 {
-	// {{{ public properties
+    // {{{ public properties
 
-	/**
-	 * User visible textual content of this widget
-	 *
-	 * @var string
-	 */
-	public $content = '';
+    /**
+     * User visible textual content of this widget
+     *
+     * @var string
+     */
+    public $content = '';
 
-	/**
-	 * Optional content type
-	 *
-	 * Default text/plain, use text/xml for XHTML fragments.
-	 *
-	 * @var string
-	 */
-	public $content_type = 'text/plain';
+    /**
+     * Optional content type
+     *
+     * Default text/plain, use text/xml for XHTML fragments.
+     *
+     * @var string
+     */
+    public $content_type = 'text/plain';
 
-	// }}}
-	// {{{ public function display()
+    // }}}
+    // {{{ public function display()
 
-	/**
-	 * Displays this content
-	 *
-	 * Merely performs an echo of the content.
-	 */
-	public function display()
-	{
-		if (!$this->visible) {
-			return;
-		}
+    /**
+     * Displays this content
+     *
+     * Merely performs an echo of the content.
+     */
+    public function display()
+    {
+        if (!$this->visible) {
+            return;
+        }
 
-		parent::display();
+        parent::display();
 
-		if ($this->content_type === 'text/plain') {
-			echo SwatString::minimizeEntities($this->content);
-		} else {
-			echo $this->content;
-		}
-	}
+        if ($this->content_type === 'text/plain') {
+            echo SwatString::minimizeEntities($this->content);
+        } else {
+            echo $this->content;
+        }
+    }
 
-	// }}}
+    // }}}
 }

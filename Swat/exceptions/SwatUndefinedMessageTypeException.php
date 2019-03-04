@@ -9,47 +9,47 @@
  */
 class SwatUndefinedMessageTypeException extends SwatException
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	/**
-	 * The name of the message type that is undefined
-	 *
-	 * @var string
-	 */
-	protected $message_type = null;
+    /**
+     * The name of the message type that is undefined
+     *
+     * @var string
+     */
+    protected $message_type = null;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new undefined message type exception
-	 *
-	 * @param string $message the message of the exception.
-	 * @param integer $code the code of the exception.
-	 * @param string $constant_name the name of the message type that is
-	 *                               undefined.
-	 */
-	public function __construct(
-		$message = null,
-		$code = 0,
-		$message_type = null
-	) {
-		parent::__construct($message, $code);
-		$this->message_type = $message_type;
-	}
+    /**
+     * Creates a new undefined message type exception
+     *
+     * @param string $message the message of the exception.
+     * @param integer $code the code of the exception.
+     * @param string $constant_name the name of the message type that is
+     *                               undefined.
+     */
+    public function __construct(
+        $message = null,
+        $code = 0,
+        $message_type = null
+    ) {
+        parent::__construct($message, $code);
+        $this->message_type = $message_type;
+    }
 
-	// }}}
-	// {{{ public function getMessageType()
+    // }}}
+    // {{{ public function getMessageType()
 
-	/**
-	 * Gets the name of the message type that is undefined
-	 *
-	 * @return string the name of the message type that is undefined.
-	 */
-	public function getMessageType()
-	{
-		return $this->message_type;
-	}
+    /**
+     * Gets the name of the message type that is undefined
+     *
+     * @return string the name of the message type that is undefined.
+     */
+    public function getMessageType()
+    {
+        return $this->message_type;
+    }
 
-	// }}}
+    // }}}
 }

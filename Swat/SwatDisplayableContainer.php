@@ -9,44 +9,44 @@
  */
 class SwatDisplayableContainer extends SwatContainer
 {
-	// {{{ public function display()
+    // {{{ public function display()
 
-	/**
-	 * Displays this container
-	 */
-	public function display()
-	{
-		if (!$this->visible) {
-			return;
-		}
+    /**
+     * Displays this container
+     */
+    public function display()
+    {
+        if (!$this->visible) {
+            return;
+        }
 
-		SwatWidget::display();
+        SwatWidget::display();
 
-		$div = new SwatHtmlTag('div');
-		$div->id = $this->id;
-		$div->class = $this->getCSSClassString();
+        $div = new SwatHtmlTag('div');
+        $div->id = $this->id;
+        $div->class = $this->getCSSClassString();
 
-		$div->open();
-		$this->displayChildren();
-		$div->close();
-	}
+        $div->open();
+        $this->displayChildren();
+        $div->close();
+    }
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
+    // }}}
+    // {{{ protected function getCSSClassNames()
 
-	/**
-	 * Gets the array of CSS classes that are applied to this displayable
-	 * container
-	 *
-	 * @return array the array of CSS classes that are applied to this
-	 *                displayable container.
-	 */
-	protected function getCSSClassNames()
-	{
-		$classes = array('swat-displayable-container');
-		$classes = array_merge($classes, parent::getCSSClassNames());
-		return $classes;
-	}
+    /**
+     * Gets the array of CSS classes that are applied to this displayable
+     * container
+     *
+     * @return array the array of CSS classes that are applied to this
+     *                displayable container.
+     */
+    protected function getCSSClassNames()
+    {
+        $classes = array('swat-displayable-container');
+        $classes = array_merge($classes, parent::getCSSClassNames());
+        return $classes;
+    }
 
-	// }}}
+    // }}}
 }

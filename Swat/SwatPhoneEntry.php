@@ -9,35 +9,35 @@
  */
 class SwatPhoneEntry extends SwatEntry
 {
-	// {{{ protected function getInputTag()
+    // {{{ protected function getInputTag()
 
-	/**
-	 * Get the input tag to display
-	 *
-	 * @return SwatHtmlTag the input tag to display.
-	 */
-	protected function getInputTag()
-	{
-		$tag = parent::getInputTag();
-		$tag->type = 'tel';
-		return $tag;
-	}
+    /**
+     * Get the input tag to display
+     *
+     * @return SwatHtmlTag the input tag to display.
+     */
+    protected function getInputTag()
+    {
+        $tag = parent::getInputTag();
+        $tag->type = 'tel';
+        return $tag;
+    }
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
+    // }}}
+    // {{{ protected function getCSSClassNames()
 
-	/**
-	 * Gets the array of CSS classes that are applied to this entry
-	 *
-	 * @return array the array of CSS classes that are applied to this
-	 *                entry.
-	 */
-	protected function getCSSClassNames()
-	{
-		$classes = array('swat-phone-entry');
-		$classes = array_merge($classes, parent::getCSSClassNames());
-		return $classes;
-	}
+    /**
+     * Gets the array of CSS classes that are applied to this entry
+     *
+     * @return array the array of CSS classes that are applied to this
+     *                entry.
+     */
+    protected function getCSSClassNames()
+    {
+        $classes = array('swat-phone-entry');
+        $classes = array_merge($classes, parent::getCSSClassNames());
+        return $classes;
+    }
 
-	// }}}
+    // }}}
 }

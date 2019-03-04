@@ -15,35 +15,35 @@
  */
 class SwatReplicableFieldset extends SwatReplicableContainer
 {
-	// {{{ public function init()
+    // {{{ public function init()
 
-	/**
-	 * Initilizes this replicable fieldset
-	 */
-	public function init()
-	{
-		$children = array();
-		foreach ($this->children as $child_widget) {
-			$children[] = $this->remove($child_widget);
-		}
+    /**
+     * Initilizes this replicable fieldset
+     */
+    public function init()
+    {
+        $children = array();
+        foreach ($this->children as $child_widget) {
+            $children[] = $this->remove($child_widget);
+        }
 
-		$fieldset = new SwatFieldset();
-		$fieldset->id = $fieldset->getUniqueId();
-		$prototype_id = $fieldset->id;
+        $fieldset = new SwatFieldset();
+        $fieldset->id = $fieldset->getUniqueId();
+        $prototype_id = $fieldset->id;
 
-		foreach ($children as $child_widget) {
-			$fieldset->add($child_widget);
-		}
+        foreach ($children as $child_widget) {
+            $fieldset->add($child_widget);
+        }
 
-		$this->add($fieldset);
+        $this->add($fieldset);
 
-		parent::init();
+        parent::init();
 
-		foreach ($this->replicators as $id => $title) {
-			$fieldset = $this->getWidget($prototype_id, $id);
-			$fieldset->title = $title;
-		}
-	}
+        foreach ($this->replicators as $id => $title) {
+            $fieldset = $this->getWidget($prototype_id, $id);
+            $fieldset->title = $title;
+        }
+    }
 
-	// }}}
+    // }}}
 }

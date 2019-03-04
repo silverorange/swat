@@ -10,43 +10,43 @@
  */
 class SwatInvalidCallbackException extends SwatException
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	/**
-	 * The value the user tried to set the callback to
-	 *
-	 * @var mixed
-	 */
-	protected $callback = null;
+    /**
+     * The value the user tried to set the callback to
+     *
+     * @var mixed
+     */
+    protected $callback = null;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new invalid callback exception
-	 *
-	 * @param string $message the message of the exception.
-	 * @param integer $code the code of the exception.
-	 * @param mixed $callback the value the user tried to set the callback to.
-	 */
-	public function __construct($message = null, $code = 0, $callback = null)
-	{
-		parent::__construct($message, $code);
-		$this->callback = $callback;
-	}
+    /**
+     * Creates a new invalid callback exception
+     *
+     * @param string $message the message of the exception.
+     * @param integer $code the code of the exception.
+     * @param mixed $callback the value the user tried to set the callback to.
+     */
+    public function __construct($message = null, $code = 0, $callback = null)
+    {
+        parent::__construct($message, $code);
+        $this->callback = $callback;
+    }
 
-	// }}}
-	// {{{ public function getCallback()
+    // }}}
+    // {{{ public function getCallback()
 
-	/**
-	 * Gets the value the user tried to set the callback to
-	 *
-	 * @return mixed the value the user tried to set the callback to.
-	 */
-	public function getCallback()
-	{
-		return $this->callback;
-	}
+    /**
+     * Gets the value the user tried to set the callback to
+     *
+     * @return mixed the value the user tried to set the callback to.
+     */
+    public function getCallback()
+    {
+        return $this->callback;
+    }
 
-	// }}}
+    // }}}
 }

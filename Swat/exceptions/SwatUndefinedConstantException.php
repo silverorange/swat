@@ -9,46 +9,46 @@
  */
 class SwatUndefinedConstantException extends SwatException
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	/**
-	 * The name of the constant that is undefined
-	 *
-	 * @var string
-	 */
-	protected $constant_name = null;
+    /**
+     * The name of the constant that is undefined
+     *
+     * @var string
+     */
+    protected $constant_name = null;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new undefined constant exception
-	 *
-	 * @param string $message the message of the exception.
-	 * @param integer $code the code of the exception.
-	 * @param string $constant_name the name of the constant that is undefined.
-	 */
-	public function __construct(
-		$message = null,
-		$code = 0,
-		$constant_name = null
-	) {
-		parent::__construct($message, $code);
-		$this->constant_name = $constant_name;
-	}
+    /**
+     * Creates a new undefined constant exception
+     *
+     * @param string $message the message of the exception.
+     * @param integer $code the code of the exception.
+     * @param string $constant_name the name of the constant that is undefined.
+     */
+    public function __construct(
+        $message = null,
+        $code = 0,
+        $constant_name = null
+    ) {
+        parent::__construct($message, $code);
+        $this->constant_name = $constant_name;
+    }
 
-	// }}}
-	// {{{ public function getConstantName()
+    // }}}
+    // {{{ public function getConstantName()
 
-	/**
-	 * Gets the name of the constant that is undefined
-	 *
-	 * @return string the name of the constant that is undefined.
-	 */
-	public function getConstantName()
-	{
-		return $this->constant_name;
-	}
+    /**
+     * Gets the name of the constant that is undefined
+     *
+     * @return string the name of the constant that is undefined.
+     */
+    public function getConstantName()
+    {
+        return $this->constant_name;
+    }
 
-	// }}}
+    // }}}
 }

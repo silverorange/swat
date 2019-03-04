@@ -9,43 +9,43 @@
  */
 class SwatUndefinedStockTypeException extends SwatException
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	/**
-	 * The name of the stock type that is undefined
-	 *
-	 * @var string
-	 */
-	protected $stock_type = null;
+    /**
+     * The name of the stock type that is undefined
+     *
+     * @var string
+     */
+    protected $stock_type = null;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new undefined stock type exception
-	 *
-	 * @param string $message the message of the exception.
-	 * @param integer $code the code of the exception.
-	 * @param string $stock_type the name of the stock type that is undefined.
-	 */
-	public function __construct($message = null, $code = 0, $stock_type = null)
-	{
-		parent::__construct($message, $code);
-		$this->stock_type = $stock_type;
-	}
+    /**
+     * Creates a new undefined stock type exception
+     *
+     * @param string $message the message of the exception.
+     * @param integer $code the code of the exception.
+     * @param string $stock_type the name of the stock type that is undefined.
+     */
+    public function __construct($message = null, $code = 0, $stock_type = null)
+    {
+        parent::__construct($message, $code);
+        $this->stock_type = $stock_type;
+    }
 
-	// }}}
-	// {{{ public function getStockType()
+    // }}}
+    // {{{ public function getStockType()
 
-	/**
-	 * Gets the name of the stock type that is undefined
-	 *
-	 * @return string the name of the stock type that is undefined.
-	 */
-	public function getStockType()
-	{
-		return $this->stock_type;
-	}
+    /**
+     * Gets the name of the stock type that is undefined
+     *
+     * @return string the name of the stock type that is undefined.
+     */
+    public function getStockType()
+    {
+        return $this->stock_type;
+    }
 
-	// }}}
+    // }}}
 }

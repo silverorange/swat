@@ -11,20 +11,20 @@
  */
 class SwatHeaderFormField extends SwatFormField
 {
-	// {{{ protected function getCSSClassNames()
+    // {{{ protected function getCSSClassNames()
 
-	/**
-	 * Gets the array of CSS classes that are applied to this header form field
-	 *
-	 * @return array the array of CSS classes that are applied to this header
-	 *                form field.
-	 */
-	protected function getCSSClassNames()
-	{
-		$classes = parent::getCSSClassNames();
-		array_unshift($classes, 'swat-header-form-field');
-		return $classes;
-	}
+    /**
+     * Gets the array of CSS classes that are applied to this header form field
+     *
+     * @return array the array of CSS classes that are applied to this header
+     *                form field.
+     */
+    protected function getCSSClassNames()
+    {
+        $classes = parent::getCSSClassNames();
+        array_unshift($classes, 'swat-header-form-field');
+        return $classes;
+    }
 
-	// }}}
+    // }}}
 }

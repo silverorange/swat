@@ -29,143 +29,143 @@
  */
 class SwatViewSelection extends SwatObject implements Countable, Iterator
 {
-	// {{{ private properties
+    // {{{ private properties
 
-	/**
-	 * The selected items of this selection
-	 *
-	 * @var array
-	 */
-	private $selected_items = array();
+    /**
+     * The selected items of this selection
+     *
+     * @var array
+     */
+    private $selected_items = array();
 
-	/**
-	 * Current array index of the selected items of this selection
-	 *
-	 * Used for implementing the Iterator interface.
-	 *
-	 * @var integer
-	 */
-	private $current_index = 0;
+    /**
+     * Current array index of the selected items of this selection
+     *
+     * Used for implementing the Iterator interface.
+     *
+     * @var integer
+     */
+    private $current_index = 0;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new selection object
-	 *
-	 * @param array $selected_items the selected items of this selection. This
-	 *                               is usually an array of item identifiers,
-	 *                               not an array of item objects.
-	 */
-	public function __construct(array $selected_items)
-	{
-		$this->selected_items = array_values($selected_items);
-	}
+    /**
+     * Creates a new selection object
+     *
+     * @param array $selected_items the selected items of this selection. This
+     *                               is usually an array of item identifiers,
+     *                               not an array of item objects.
+     */
+    public function __construct(array $selected_items)
+    {
+        $this->selected_items = array_values($selected_items);
+    }
 
-	// }}}
-	// {{{ public function current()
+    // }}}
+    // {{{ public function current()
 
-	/**
-	 * Returns the current selected item
-	 *
-	 * @return mixed the current selected item.
-	 */
-	public function current()
-	{
-		return $this->selected_items[$this->current_index];
-	}
+    /**
+     * Returns the current selected item
+     *
+     * @return mixed the current selected item.
+     */
+    public function current()
+    {
+        return $this->selected_items[$this->current_index];
+    }
 
-	// }}}
-	// {{{ public function key()
+    // }}}
+    // {{{ public function key()
 
-	/**
-	 * Returns the key of the current selected item
-	 *
-	 * @return integer the key of the current selected item
-	 */
-	public function key()
-	{
-		return $this->current_index;
-	}
+    /**
+     * Returns the key of the current selected item
+     *
+     * @return integer the key of the current selected item
+     */
+    public function key()
+    {
+        return $this->current_index;
+    }
 
-	// }}}
-	// {{{ public function next()
+    // }}}
+    // {{{ public function next()
 
-	/**
-	 * Moves forward to the next selected item
-	 */
-	public function next()
-	{
-		$this->current_index++;
-	}
+    /**
+     * Moves forward to the next selected item
+     */
+    public function next()
+    {
+        $this->current_index++;
+    }
 
-	// }}}
-	// {{{ public function prev()
+    // }}}
+    // {{{ public function prev()
 
-	/**
-	 * Moves forward to the previous selected item
-	 */
-	public function prev()
-	{
-		$this->current_index--;
-	}
+    /**
+     * Moves forward to the previous selected item
+     */
+    public function prev()
+    {
+        $this->current_index--;
+    }
 
-	// }}}
-	// {{{ public function rewind()
+    // }}}
+    // {{{ public function rewind()
 
-	/**
-	 * Rewinds this iterator to the first selected item
-	 */
-	public function rewind()
-	{
-		$this->current_index = 0;
-	}
+    /**
+     * Rewinds this iterator to the first selected item
+     */
+    public function rewind()
+    {
+        $this->current_index = 0;
+    }
 
-	// }}}
-	// {{{ public function valid()
+    // }}}
+    // {{{ public function valid()
 
-	/**
-	 * Checks is there is a current selected item after calls to rewind() and
-	 * next()
-	 *
-	 * @return boolean true if there is a current selected item and false if
-	 *                  there is not.
-	 */
-	public function valid()
-	{
-		return isset($this->selected_items[$this->current_index]);
-	}
+    /**
+     * Checks is there is a current selected item after calls to rewind() and
+     * next()
+     *
+     * @return boolean true if there is a current selected item and false if
+     *                  there is not.
+     */
+    public function valid()
+    {
+        return isset($this->selected_items[$this->current_index]);
+    }
 
-	// }}}
-	// {{{ public funciton count()
+    // }}}
+    // {{{ public funciton count()
 
-	/**
-	 * Gets the number of items in this selection
-	 *
-	 * This satisfies the Countable interface.
-	 *
-	 * @return integer the number of items in this selection.
-	 */
-	public function count()
-	{
-		return count($this->selected_items);
-	}
+    /**
+     * Gets the number of items in this selection
+     *
+     * This satisfies the Countable interface.
+     *
+     * @return integer the number of items in this selection.
+     */
+    public function count()
+    {
+        return count($this->selected_items);
+    }
 
-	// }}}
-	// {{{ public function contains()
+    // }}}
+    // {{{ public function contains()
 
-	/**
-	 * Checks whether or not this selection contains an item
-	 *
-	 * @param mixed $item the item to check.
-	 *
-	 * @return boolean true if this selection contains the specified item and
-	 *                  false if it does not.
-	 */
-	public function contains($item)
-	{
-		return in_array($item, $this->selected_items);
-	}
+    /**
+     * Checks whether or not this selection contains an item
+     *
+     * @param mixed $item the item to check.
+     *
+     * @return boolean true if this selection contains the specified item and
+     *                  false if it does not.
+     */
+    public function contains($item)
+    {
+        return in_array($item, $this->selected_items);
+    }
 
-	// }}}
+    // }}}
 }

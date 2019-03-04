@@ -14,21 +14,21 @@
  */
 class SwatConfirmationButton extends SwatButton
 {
-	// {{{ public function __construct()
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new confirmation button widget
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
+    /**
+     * Creates a new confirmation button widget
+     *
+     * @see SwatWidget::__construct()
+     */
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
 
-		$this->confirmation_message = Swat::_(
-			'Are you sure you wish to continue?'
-		);
-	}
+        $this->confirmation_message = Swat::_(
+            'Are you sure you wish to continue?'
+        );
+    }
 
-	// }}}
+    // }}}
 }

@@ -14,62 +14,62 @@
  *             not available using this approach.
  */
 class SwatReplicableNoteBookPage extends SwatReplicableContainer implements
-	SwatNoteBookChild
+    SwatNoteBookChild
 {
-	// {{{ public function init()
+    // {{{ public function init()
 
-	/**
-	 * Initilizes this replicable notebook page
-	 */
-	public function init()
-	{
-		$children = array();
-		foreach ($this->children as $child_widget) {
-			$children[] = $this->remove($child_widget);
-		}
+    /**
+     * Initilizes this replicable notebook page
+     */
+    public function init()
+    {
+        $children = array();
+        foreach ($this->children as $child_widget) {
+            $children[] = $this->remove($child_widget);
+        }
 
-		$page = new SwatNoteBookPage();
-		$page->id = $page->getUniqueId();
-		$page_prototype_id = $page->id;
+        $page = new SwatNoteBookPage();
+        $page->id = $page->getUniqueId();
+        $page_prototype_id = $page->id;
 
-		foreach ($children as $child_widget) {
-			$page->add($child_widget);
-		}
+        foreach ($children as $child_widget) {
+            $page->add($child_widget);
+        }
 
-		$this->add($page);
+        $this->add($page);
 
-		parent::init();
+        parent::init();
 
-		foreach ($this->replicators as $id => $title) {
-			$page = $this->getWidget($page_prototype_id, $id);
-			$page->title = $title;
-		}
+        foreach ($this->replicators as $id => $title) {
+            $page = $this->getWidget($page_prototype_id, $id);
+            $page->title = $title;
+        }
 
-		$note_book = new SwatNoteBook($this->id . '_notebook');
+        $note_book = new SwatNoteBook($this->id . '_notebook');
 
-		foreach ($this->children as $child_widget) {
-			$page = $this->remove($child_widget);
-			$note_book->addPage($page);
-		}
+        foreach ($this->children as $child_widget) {
+            $page = $this->remove($child_widget);
+            $note_book->addPage($page);
+        }
 
-		$this->add($note_book);
-	}
+        $this->add($note_book);
+    }
 
-	// }}}
-	// {{{ public function getPages()
+    // }}}
+    // {{{ public function getPages()
 
-	/**
-	 * Gets the notebook pages of this replicable notebook page
-	 *
-	 * Implements the {@link SwatNoteBookChild::getPages()} interface.
-	 *
-	 * @return array an array containing all the replicated pages of this
-	 *                container.
-	 */
-	public function getPages()
-	{
-		return $this->children;
-	}
+    /**
+     * Gets the notebook pages of this replicable notebook page
+     *
+     * Implements the {@link SwatNoteBookChild::getPages()} interface.
+     *
+     * @return array an array containing all the replicated pages of this
+     *                container.
+     */
+    public function getPages()
+    {
+        return $this->children;
+    }
 
-	// }}}
+    // }}}
 }

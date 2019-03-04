@@ -9,14 +9,14 @@
  */
 interface SwatDBCacheNsFlushable
 {
-	// {{{ public function flushNs()
+    // {{{ public function flushNs()
 
-	/**
-	 * Flushes a cache name-space
-	 *
-	 * @param string $ns The name-space to flush
-	 */
-	public function flushNs($ns);
+    /**
+     * Flushes a cache name-space
+     *
+     * @param string $ns The name-space to flush
+     */
+    public function flushNs($ns);
 
-	// }}}
+    // }}}
 }

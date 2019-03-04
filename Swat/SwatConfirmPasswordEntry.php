@@ -12,64 +12,64 @@
  */
 class SwatConfirmPasswordEntry extends SwatPasswordEntry
 {
-	// {{{ public properties
+    // {{{ public properties
 
-	/**
-	 * A reference to the matching password widget
-	 *
-	 * @var SwatPasswordEntry
-	 */
-	public $password_widget = null;
+    /**
+     * A reference to the matching password widget
+     *
+     * @var SwatPasswordEntry
+     */
+    public $password_widget = null;
 
-	// }}}
-	// {{{ public function process()
+    // }}}
+    // {{{ public function process()
 
-	/**
-	 * Checks to make sure passwords match
-	 *
-	 * Checks to make sure the values of the two password fields are the same.
-	 * If an associated password widget is not set, an exception is thrown. If
-	 * the passwords do not match, an error is added to this widget.
-	 *
-	 * @throws SwatException
-	 */
-	public function process()
-	{
-		parent::process();
+    /**
+     * Checks to make sure passwords match
+     *
+     * Checks to make sure the values of the two password fields are the same.
+     * If an associated password widget is not set, an exception is thrown. If
+     * the passwords do not match, an error is added to this widget.
+     *
+     * @throws SwatException
+     */
+    public function process()
+    {
+        parent::process();
 
-		if ($this->password_widget === null) {
-			throw new SwatException(
-				"Property 'password_widget' is null. " .
-					'Expected a reference to a SwatPasswordEntry.'
-			);
-		}
+        if ($this->password_widget === null) {
+            throw new SwatException(
+                "Property 'password_widget' is null. " .
+                    'Expected a reference to a SwatPasswordEntry.'
+            );
+        }
 
-		if ($this->password_widget->value !== null) {
-			if ($this->password_widget->value !== $this->value) {
-				$message = Swat::_(
-					'Password and confirmation password do not ' . 'match.'
-				);
+        if ($this->password_widget->value !== null) {
+            if ($this->password_widget->value !== $this->value) {
+                $message = Swat::_(
+                    'Password and confirmation password do not ' . 'match.'
+                );
 
-				$this->addMessage(new SwatMessage($message, 'error'));
-			}
-		}
-	}
+                $this->addMessage(new SwatMessage($message, 'error'));
+            }
+        }
+    }
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
+    // }}}
+    // {{{ protected function getCSSClassNames()
 
-	/**
-	 * Gets the array of CSS classes that are applied to this entry
-	 *
-	 * @return array the array of CSS classes that are applied to this
-	 *                entry.
-	 */
-	protected function getCSSClassNames()
-	{
-		$classes = array('swat-password-entry');
-		$classes = array_merge($classes, parent::getCSSClassNames());
-		return $classes;
-	}
+    /**
+     * Gets the array of CSS classes that are applied to this entry
+     *
+     * @return array the array of CSS classes that are applied to this
+     *                entry.
+     */
+    protected function getCSSClassNames()
+    {
+        $classes = array('swat-password-entry');
+        $classes = array_merge($classes, parent::getCSSClassNames());
+        return $classes;
+    }
 
-	// }}}
+    // }}}
 }

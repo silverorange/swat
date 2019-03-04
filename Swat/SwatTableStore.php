@@ -12,182 +12,182 @@
  */
 class SwatTableStore extends SwatObject implements SwatTableModel
 {
-	// {{{ private properties
+    // {{{ private properties
 
-	/**
-	 * The indvidual rows for this data structure
-	 *
-	 * @var array
-	 */
-	private $rows = array();
+    /**
+     * The indvidual rows for this data structure
+     *
+     * @var array
+     */
+    private $rows = array();
 
-	/**
-	 * The current index of the iterator interface
-	 *
-	 * @var integer
-	 */
-	private $current_index = 0;
+    /**
+     * The current index of the iterator interface
+     *
+     * @var integer
+     */
+    private $current_index = 0;
 
-	// }}}
-	// {{{ public function count()
+    // }}}
+    // {{{ public function count()
 
-	/**
-	 * Gets the number of rows
-	 *
-	 * This satisfies the Countable interface.
-	 *
-	 * @return integer the number of rows in this data structure.
-	 */
-	public function count()
-	{
-		return count($this->rows);
-	}
+    /**
+     * Gets the number of rows
+     *
+     * This satisfies the Countable interface.
+     *
+     * @return integer the number of rows in this data structure.
+     */
+    public function count()
+    {
+        return count($this->rows);
+    }
 
-	// }}}
-	// {{{ public function current()
+    // }}}
+    // {{{ public function current()
 
-	/**
-	 * Returns the current element
-	 *
-	 * @return mixed the current element.
-	 */
-	public function current()
-	{
-		return $this->rows[$this->current_index];
-	}
+    /**
+     * Returns the current element
+     *
+     * @return mixed the current element.
+     */
+    public function current()
+    {
+        return $this->rows[$this->current_index];
+    }
 
-	// }}}
-	// {{{ public function key()
+    // }}}
+    // {{{ public function key()
 
-	/**
-	 * Returns the key of the current element
-	 *
-	 * @return integer the key of the current element
-	 */
-	public function key()
-	{
-		return $this->current_index;
-	}
+    /**
+     * Returns the key of the current element
+     *
+     * @return integer the key of the current element
+     */
+    public function key()
+    {
+        return $this->current_index;
+    }
 
-	// }}}
-	// {{{ public function next()
+    // }}}
+    // {{{ public function next()
 
-	/**
-	 * Moves forward to the next element
-	 */
-	public function next()
-	{
-		$this->current_index++;
-	}
+    /**
+     * Moves forward to the next element
+     */
+    public function next()
+    {
+        $this->current_index++;
+    }
 
-	// }}}
-	// {{{ public function prev()
+    // }}}
+    // {{{ public function prev()
 
-	/**
-	 * Moves forward to the previous element
-	 */
-	public function prev()
-	{
-		$this->current_index--;
-	}
+    /**
+     * Moves forward to the previous element
+     */
+    public function prev()
+    {
+        $this->current_index--;
+    }
 
-	// }}}
-	// {{{ public function rewind()
+    // }}}
+    // {{{ public function rewind()
 
-	/**
-	 * Rewinds this iterator to the first element
-	 */
-	public function rewind()
-	{
-		$this->current_index = 0;
-	}
+    /**
+     * Rewinds this iterator to the first element
+     */
+    public function rewind()
+    {
+        $this->current_index = 0;
+    }
 
-	// }}}
-	// {{{ public function valid()
+    // }}}
+    // {{{ public function valid()
 
-	/**
-	 * Checks is there is a current element after calls to rewind() and next()
-	 *
-	 * @return boolean true if there is a current element and false if there
-	 *                  is not.
-	 */
-	public function valid()
-	{
-		return array_key_exists($this->current_index, $this->rows);
-	}
+    /**
+     * Checks is there is a current element after calls to rewind() and next()
+     *
+     * @return boolean true if there is a current element and false if there
+     *                  is not.
+     */
+    public function valid()
+    {
+        return array_key_exists($this->current_index, $this->rows);
+    }
 
-	// }}}
-	// {{{ public function add()
+    // }}}
+    // {{{ public function add()
 
-	/**
-	 * Adds a row to this data structure
-	 *
-	 * @param $data the data of the row to add.
-	 *
-	 */
-	public function add($data)
-	{
-		$this->rows[] = $data;
-	}
+    /**
+     * Adds a row to this data structure
+     *
+     * @param $data the data of the row to add.
+     *
+     */
+    public function add($data)
+    {
+        $this->rows[] = $data;
+    }
 
-	// }}}
-	// {{{ public function addToStart()
+    // }}}
+    // {{{ public function addToStart()
 
-	/**
-	 * Adds a row to the beginning of this data structure
-	 *
-	 * @param $data the data of the row to add.
-	 *
-	 */
-	public function addToStart($data)
-	{
-		array_unshift($this->rows, $data);
-		$this->current_index++;
-	}
+    /**
+     * Adds a row to the beginning of this data structure
+     *
+     * @param $data the data of the row to add.
+     *
+     */
+    public function addToStart($data)
+    {
+        array_unshift($this->rows, $data);
+        $this->current_index++;
+    }
 
-	// }}}
-	// {{{ public function getRowCount()
+    // }}}
+    // {{{ public function getRowCount()
 
-	/**
-	 * Gets the number of rows in this data structure
-	 *
-	 * @deprecated Use Countable::count()
-	 */
-	public function getRowCount()
-	{
-		return count($this->rows);
-	}
+    /**
+     * Gets the number of rows in this data structure
+     *
+     * @deprecated Use Countable::count()
+     */
+    public function getRowCount()
+    {
+        return count($this->rows);
+    }
 
-	// }}}
-	// {{{ public function &getRows()
+    // }}}
+    // {{{ public function &getRows()
 
-	/**
-	 * Gets the rows of this data structure as an array
-	 *
-	 * @return array the rows of this data structure
-	 *
-	 * @deprecated Use as an Iterator
-	 */
-	public function &getRows()
-	{
-		return $this->rows;
-	}
+    /**
+     * Gets the rows of this data structure as an array
+     *
+     * @return array the rows of this data structure
+     *
+     * @deprecated Use as an Iterator
+     */
+    public function &getRows()
+    {
+        return $this->rows;
+    }
 
-	// }}}
-	// {{{ public function addRow()
+    // }}}
+    // {{{ public function addRow()
 
-	/**
-	 * Adds a row to this data structure
-	 *
-	 * @param $data the data of the row to add.
-	 * @param $id an optional uniqueid of the row to add.
-	 *
-	 * @deprecated Use SwatTableStore::add()
-	 */
-	public function addRow($data, $id = null)
-	{
-		$this->add($data);
-	}
+    /**
+     * Adds a row to this data structure
+     *
+     * @param $data the data of the row to add.
+     * @param $id an optional uniqueid of the row to add.
+     *
+     * @deprecated Use SwatTableStore::add()
+     */
+    public function addRow($data, $id = null)
+    {
+        $this->add($data);
+    }
 
-	// }}}
+    // }}}
 }

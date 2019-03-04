@@ -15,14 +15,14 @@
  */
 abstract class SwatExceptionDisplayer
 {
-	// {{{ public abstract function display()
+    // {{{ public abstract function display()
 
-	/**
-	 * Displays a SwatException
-	 *
-	 * This is called by SwatException::process().
-	 */
-	abstract public function display(SwatException $e);
+    /**
+     * Displays a SwatException
+     *
+     * This is called by SwatException::process().
+     */
+    abstract public function display(SwatException $e);
 
-	// }}}
+    // }}}
 }

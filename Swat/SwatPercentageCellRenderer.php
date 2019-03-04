@@ -9,30 +9,30 @@
  */
 class SwatPercentageCellRenderer extends SwatNumericCellRenderer
 {
-	// {{{ public function render()
+    // {{{ public function render()
 
-	/**
-	 * Renders the contents of this cell
-	 *
-	 * @see SwatCellRenderer::render()
-	 */
-	public function render()
-	{
-		if (!$this->visible) {
-			return;
-		}
+    /**
+     * Renders the contents of this cell
+     *
+     * @see SwatCellRenderer::render()
+     */
+    public function render()
+    {
+        if (!$this->visible) {
+            return;
+        }
 
-		SwatCellRenderer::render();
+        SwatCellRenderer::render();
 
-		if ($this->value === null && $this->null_display_value !== null) {
-			$this->renderNullValue();
-		} else {
-			$old_value = $this->value;
-			$this->value = $this->value * 100;
-			printf('%s%%', $this->getDisplayValue());
-			$this->value = $old_value;
-		}
-	}
+        if ($this->value === null && $this->null_display_value !== null) {
+            $this->renderNullValue();
+        } else {
+            $old_value = $this->value;
+            $this->value = $this->value * 100;
+            printf('%s%%', $this->getDisplayValue());
+            $this->value = $old_value;
+        }
+    }
 
-	// }}}
+    // }}}
 }

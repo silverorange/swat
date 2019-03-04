@@ -20,55 +20,55 @@
  */
 class SwatDBTransaction extends SwatObject
 {
-	// {{{ private properties
+    // {{{ private properties
 
-	/**
-	 * The database driver object to perform the transaction with
-	 *
-	 * @var MDB2_Driver_Common
-	 */
-	private $db;
+    /**
+     * The database driver object to perform the transaction with
+     *
+     * @var MDB2_Driver_Common
+     */
+    private $db;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Begins a new database transaction
-	 *
-	 * @param MDB2_Driver_Common the database connection to perform the
-	 *                            transaction with.
-	 */
-	public function __construct(MDB2_Driver_Common $db)
-	{
-		$this->db = $db;
-		$this->db->beginNestedTransaction();
-	}
+    /**
+     * Begins a new database transaction
+     *
+     * @param MDB2_Driver_Common the database connection to perform the
+     *                            transaction with.
+     */
+    public function __construct(MDB2_Driver_Common $db)
+    {
+        $this->db = $db;
+        $this->db->beginNestedTransaction();
+    }
 
-	// }}}
-	// {{{ public function commit()
+    // }}}
+    // {{{ public function commit()
 
-	/**
-	 * Commits this database transaction
-	 */
-	public function commit()
-	{
-		$this->db->completeNestedTransaction();
-	}
+    /**
+     * Commits this database transaction
+     */
+    public function commit()
+    {
+        $this->db->completeNestedTransaction();
+    }
 
-	// }}}
-	// {{{ public function rollback()
+    // }}}
+    // {{{ public function rollback()
 
-	/**
-	 * Rolls-back this database transaction
-	 */
-	public function rollback()
-	{
-		$this->db->failNestedTransaction();
-		// this is required to actually rollback the transaction
-		// since failNestedTransaction just sets a flag indicating
-		// there is an error unless you pass the immediately param
-		$this->db->completeNestedTransaction();
-	}
+    /**
+     * Rolls-back this database transaction
+     */
+    public function rollback()
+    {
+        $this->db->failNestedTransaction();
+        // this is required to actually rollback the transaction
+        // since failNestedTransaction just sets a flag indicating
+        // there is an error unless you pass the immediately param
+        $this->db->completeNestedTransaction();
+    }
 
-	// }}}
+    // }}}
 }

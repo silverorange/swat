@@ -12,107 +12,107 @@
  */
 class SwatEmailEntry extends SwatEntry
 {
-	// {{{ public function process()
+    // {{{ public function process()
 
-	/**
-	 * Processes this email entry
-	 *
-	 * Ensures this email address is formatted correctly. If the email address
-	 * is not formatted correctly, adds an error message to this entry widget.
-	 */
-	public function process()
-	{
-		parent::process();
+    /**
+     * Processes this email entry
+     *
+     * Ensures this email address is formatted correctly. If the email address
+     * is not formatted correctly, adds an error message to this entry widget.
+     */
+    public function process()
+    {
+        parent::process();
 
-		if ($this->value === null) {
-			return;
-		}
+        if ($this->value === null) {
+            return;
+        }
 
-		if ($this->value == '') {
-			$this->value = null;
-			return;
-		}
+        if ($this->value == '') {
+            $this->value = null;
+            return;
+        }
 
-		if (!$this->validateEmailAddress()) {
-			$this->addMessage($this->getValidationMessage('email'));
-		}
-	}
+        if (!$this->validateEmailAddress()) {
+            $this->addMessage($this->getValidationMessage('email'));
+        }
+    }
 
-	// }}}
-	// {{{ protected function validateEmailAddress()
+    // }}}
+    // {{{ protected function validateEmailAddress()
 
-	/**
-	 * Validates the email address value of this entry
-	 *
-	 * @return boolean true if this entry's value is a valid email address and
-	 *                  false if it is not.
-	 */
-	protected function validateEmailAddress()
-	{
-		return SwatString::validateEmailAddress($this->value);
-	}
+    /**
+     * Validates the email address value of this entry
+     *
+     * @return boolean true if this entry's value is a valid email address and
+     *                  false if it is not.
+     */
+    protected function validateEmailAddress()
+    {
+        return SwatString::validateEmailAddress($this->value);
+    }
 
-	// }}}
-	// {{{ protected function getValidationMessage()
+    // }}}
+    // {{{ protected function getValidationMessage()
 
-	/**
-	 * Gets a validation message for this email entry
-	 *
-	 * @see SwatEntry::getValidationMessage()
-	 * @param string $id the string identifier of the validation message.
-	 *
-	 * @return SwatMessage the validation message.
-	 */
-	protected function getValidationMessage($id)
-	{
-		switch ($id) {
-			case 'email':
-				$text = Swat::_(
-					'The email address you have entered is not ' .
-						'properly formatted.'
-				);
+    /**
+     * Gets a validation message for this email entry
+     *
+     * @see SwatEntry::getValidationMessage()
+     * @param string $id the string identifier of the validation message.
+     *
+     * @return SwatMessage the validation message.
+     */
+    protected function getValidationMessage($id)
+    {
+        switch ($id) {
+            case 'email':
+                $text = Swat::_(
+                    'The email address you have entered is not ' .
+                        'properly formatted.'
+                );
 
-				$message = new SwatMessage($text, 'error');
-				break;
+                $message = new SwatMessage($text, 'error');
+                break;
 
-			default:
-				$message = parent::getValidationMessage($id);
-				break;
-		}
+            default:
+                $message = parent::getValidationMessage($id);
+                break;
+        }
 
-		return $message;
-	}
+        return $message;
+    }
 
-	// }}}
-	// {{{ protected function getInputTag()
+    // }}}
+    // {{{ protected function getInputTag()
 
-	/**
-	 * Get the input tag to display
-	 *
-	 * @return SwatHtmlTag the input tag to display.
-	 */
-	protected function getInputTag()
-	{
-		$tag = parent::getInputTag();
-		$tag->type = 'email';
-		return $tag;
-	}
+    /**
+     * Get the input tag to display
+     *
+     * @return SwatHtmlTag the input tag to display.
+     */
+    protected function getInputTag()
+    {
+        $tag = parent::getInputTag();
+        $tag->type = 'email';
+        return $tag;
+    }
 
-	// }}}
-	// {{{ protected function getCSSClassNames()
+    // }}}
+    // {{{ protected function getCSSClassNames()
 
-	/**
-	 * Gets the array of CSS classes that are applied to this entry
-	 *
-	 * @return array the array of CSS classes that are applied to this
-	 *                entry.
-	 */
-	protected function getCSSClassNames()
-	{
-		$classes = array('swat-email-entry');
-		$classes = array_merge($classes, parent::getCSSClassNames());
-		return $classes;
-	}
+    /**
+     * Gets the array of CSS classes that are applied to this entry
+     *
+     * @return array the array of CSS classes that are applied to this
+     *                entry.
+     */
+    protected function getCSSClassNames()
+    {
+        $classes = array('swat-email-entry');
+        $classes = array_merge($classes, parent::getCSSClassNames());
+        return $classes;
+    }
 
-	// }}}
+    // }}}
 }

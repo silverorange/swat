@@ -15,35 +15,35 @@
  */
 class SwatReplicableFormField extends SwatReplicableContainer
 {
-	// {{{ public function init()
+    // {{{ public function init()
 
-	/**
-	 * Initilizes this replicable form field
-	 */
-	public function init()
-	{
-		$children = array();
-		foreach ($this->children as $child_widget) {
-			$children[] = $this->remove($child_widget);
-		}
+    /**
+     * Initilizes this replicable form field
+     */
+    public function init()
+    {
+        $children = array();
+        foreach ($this->children as $child_widget) {
+            $children[] = $this->remove($child_widget);
+        }
 
-		$field = new SwatFormField();
-		$field->id = $field->getUniqueId();
-		$prototype_id = $field->id;
+        $field = new SwatFormField();
+        $field->id = $field->getUniqueId();
+        $prototype_id = $field->id;
 
-		foreach ($children as $child_widget) {
-			$field->add($child_widget);
-		}
+        foreach ($children as $child_widget) {
+            $field->add($child_widget);
+        }
 
-		$this->add($field);
+        $this->add($field);
 
-		parent::init();
+        parent::init();
 
-		foreach ($this->replicators as $id => $title) {
-			$field = $this->getWidget($prototype_id, $id);
-			$field->title = $title;
-		}
-	}
+        foreach ($this->replicators as $id => $title) {
+            $field = $this->getWidget($prototype_id, $id);
+            $field->title = $title;
+        }
+    }
 
-	// }}}
+    // }}}
 }

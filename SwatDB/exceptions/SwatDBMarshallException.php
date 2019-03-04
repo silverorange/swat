@@ -10,29 +10,29 @@
  */
 class SwatDBMarshallException extends SwatDBException
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	/**
-	 * @var string
-	 */
-	protected $property = '';
+    /**
+     * @var string
+     */
+    protected $property = '';
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	public function __construct($message, $code = 0, $property = '')
-	{
-		parent::__construct($message, $code);
-		$this->property = $property;
-	}
+    public function __construct($message, $code = 0, $property = '')
+    {
+        parent::__construct($message, $code);
+        $this->property = $property;
+    }
 
-	// }}}
-	// {{{ public function getProperty()
+    // }}}
+    // {{{ public function getProperty()
 
-	public function getProperty()
-	{
-		return $this->property;
-	}
+    public function getProperty()
+    {
+        return $this->property;
+    }
 
-	// }}}
+    // }}}
 }
