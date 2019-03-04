@@ -2045,7 +2045,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         if ($row instanceof SwatTableViewInputRow) {
             if ($this->has_input_row) {
                 throw new SwatException(
-                    'Only one input row may be added to ' . 'a table-view.'
+                    'Only one input row may be added to a table-view.'
                 );
             } else {
                 $this->has_input_row = true;

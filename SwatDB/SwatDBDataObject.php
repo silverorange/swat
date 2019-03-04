@@ -1050,7 +1050,7 @@ class SwatDBDataObject extends SwatObject implements
     {
         if ($this->read_only) {
             throw new SwatDBException(
-                'This dataobject was loaded read-only ' . 'and cannot be saved.'
+                'This dataobject was loaded read-only and cannot be saved.'
             );
         }
 

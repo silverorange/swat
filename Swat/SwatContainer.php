@@ -152,7 +152,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
     {
         if ($widget->parent !== null) {
             throw new SwatException(
-                'Attempting to add a widget that already ' . 'has a parent.'
+                'Attempting to add a widget that already has a parent.'
             );
         }
 
@@ -179,7 +179,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
     {
         if ($widget->parent !== null) {
             throw new SwatException(
-                'Attempting to add a widget that already ' . 'has a parent.'
+                'Attempting to add a widget that already has a parent.'
             );
         }
 
@@ -222,7 +222,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
     {
         if ($widget->parent !== null) {
             throw new SwatException(
-                'Attempting to add a widget that already ' . 'has a parent.'
+                'Attempting to add a widget that already has a parent.'
             );
         }
 

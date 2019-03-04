@@ -96,7 +96,7 @@ class SwatFrameDisclosure extends SwatDisclosure
     {
         $div = new SwatHtmlTag('div');
         $div->class =
-            'swat-disclosure-container ' . 'swat-frame-disclosure-container';
+            'swat-disclosure-container swat-frame-disclosure-container';
 
         return $div;
     }

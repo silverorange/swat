@@ -149,7 +149,7 @@ class SwatTile extends SwatCellRendererContainer
     {
         if (count($this->renderers) == 0) {
             throw new SwatException(
-                'No renderer has been provided for this ' . 'tile.'
+                'No renderer has been provided for this tile.'
             );
         }
 

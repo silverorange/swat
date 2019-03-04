@@ -151,7 +151,7 @@ abstract class SwatView extends SwatControl
             }
         } elseif (!($selector instanceof SwatViewSelector)) {
             throw new SwatInvalidClassException(
-                'Specified object is not ' . 'a SwatViewSelector object.',
+                'Specified object is not a SwatViewSelector object.',
                 0,
                 $selector
             );
@@ -222,7 +222,7 @@ abstract class SwatView extends SwatControl
             }
         } elseif (!($selector instanceof SwatViewSelector)) {
             throw new SwatInvalidClassException(
-                'Specified object is not ' . 'a SwatViewSelector object.',
+                'Specified object is not a SwatViewSelector object.',
                 0,
                 $selector
             );

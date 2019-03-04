@@ -597,7 +597,7 @@ abstract class SwatWidget extends SwatUIObject
 
         if ($widget->parent !== null) {
             throw new SwatException(
-                'Cannot add a composite widget that ' . 'already has a parent.'
+                'Cannot add a composite widget that already has a parent.'
             );
         }
 

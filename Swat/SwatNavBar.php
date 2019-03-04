@@ -181,7 +181,7 @@ class SwatNavBar extends SwatControl implements Countable
         } else {
             throw new SwatException(
                 sprintf(
-                    'Navbar does not contain an ' . 'entry at position %s.',
+                    'Navbar does not contain an entry at position %s.',
                     $position
                 )
             );
@@ -256,7 +256,7 @@ class SwatNavBar extends SwatControl implements Countable
     {
         if (count($this) < 1) {
             throw new SwatException(
-                'Cannot pop entry. NavBar does not ' . 'contain any entries.'
+                'Cannot pop entry. NavBar does not contain any entries.'
             );
         } else {
             return array_pop($this->entries);

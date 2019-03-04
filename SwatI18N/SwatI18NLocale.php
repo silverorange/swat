@@ -1414,7 +1414,7 @@ class SwatI18NLocale extends SwatObject
                     if ($output === false) {
                         throw new SwatException(
                             sprintf(
-                                'Could not convert ' . '%s output to %s',
+                                'Could not convert %s output to %s',
                                 $from,
                                 $to
                             )

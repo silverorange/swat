@@ -153,7 +153,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
             );
             if ($input_row === null) {
                 throw new SwatException(
-                    'Table-view does not have an input ' . 'row.'
+                    'Table-view does not have an input row.'
                 );
             }
 
@@ -784,7 +784,7 @@ class SwatTableViewColumn extends SwatCellRendererContainer
     {
         if (count($this->renderers) == 0) {
             throw new SwatException(
-                'No renderer has been provided for this ' . 'column.'
+                'No renderer has been provided for this column.'
             );
         }
 

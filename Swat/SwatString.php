@@ -1025,7 +1025,7 @@ class SwatString extends SwatObject
             if ($output === false) {
                 throw new SwatException(
                     sprintf(
-                        'Could not convert %s output ' . 'to UTF-8',
+                        'Could not convert %s output to UTF-8',
                         $character_set
                     )
                 );
@@ -1083,7 +1083,7 @@ class SwatString extends SwatObject
             if ($symbol === false) {
                 throw new SwatException(
                     sprintf(
-                        'Could not convert %s output ' . 'to UTF-8',
+                        'Could not convert %s output to UTF-8',
                         $character_set
                     )
                 );
@@ -1170,7 +1170,7 @@ class SwatString extends SwatObject
             if ($output === false) {
                 throw new SwatException(
                     sprintf(
-                        'Could not convert %s output ' . 'to UTF-8',
+                        'Could not convert %s output to UTF-8',
                         $character_set
                     )
                 );

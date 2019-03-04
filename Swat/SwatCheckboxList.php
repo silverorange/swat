@@ -94,7 +94,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
             if ($count > 1) {
                 throw new SwatException(
                     sprintf(
-                        'Duplicate option values ' . 'found in %s',
+                        'Duplicate option values found in %s',
                         $this->id
                     )
                 );
