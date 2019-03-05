@@ -49,7 +49,7 @@ pipeline {
 
         stage('Check if Pretty') {
             steps {
-                sh 'yarn -check-if-pretty'
+                sh 'yarn check-if-pretty'
             }
         }
     }
