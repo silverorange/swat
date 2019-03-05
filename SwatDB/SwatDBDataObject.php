@@ -343,15 +343,15 @@ class SwatDBDataObject extends SwatObject implements
             );
         }
         /*
-		$reflector = new ReflectionClass(get_class($this));
-		foreach ($reflector->getMethods() as $method) {
-			if ($method->isProtected()) {
-				$name = $method->getName();
-				if (mb_substr($name, 0, 4) === 'load')
-					echo $name;
-			}
-		}
-		*/
+        $reflector = new ReflectionClass(get_class($this));
+        foreach ($reflector->getMethods() as $method) {
+            if ($method->isProtected()) {
+                $name = $method->getName();
+                if (mb_substr($name, 0, 4) === 'load')
+                    echo $name;
+            }
+        }
+        */
         $string = ob_get_clean();
 
         // set db back again
