@@ -230,6 +230,10 @@ class SwatUI extends SwatObject
 				"SwatML file not found: '{$filename}'.",
 				0, $xml_file);
 
+		// External entity loader is disabled for loading the SwatUI file to
+		// prevent local and remote file inclusion attacks. See
+		// https://phpsecurity.readthedocs.io/en/latest/Injection-Attacks.html
+		$external_entity_loader = libxml_disable_entity_loader(true);
 		$errors = libxml_use_internal_errors(true);
 
 		$document = new DOMDocument();
@@ -241,12 +245,17 @@ class SwatUI extends SwatObject
 			if (!file_exists($schema_file)) {
 				$schema_file = __DIR__.'/../system/swatml.rng';
 			}
+
+			// External entity loader is enabled for RelaxNG validation because
+			// of PHP bug 69910 https://bugs.php.net/bug.php?id=69910
+			libxml_disable_entity_loader(false);
 			$document->relaxNGValidate($schema_file);
 		}
 
 		$xml_errors = libxml_get_errors();
 		libxml_clear_errors();
 		libxml_use_internal_errors($errors);
+		libxml_disable_entity_loader($external_entity_loader);
 
 		if (count($xml_errors) > 0) {
 			$message = '';
