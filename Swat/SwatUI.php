@@ -230,10 +230,24 @@ class SwatUI extends SwatObject
 				"SwatML file not found: '{$filename}'.",
 				0, $xml_file);
 
+		// External entity loader is disabled for loading the SwatUI file to
+		// prevent local and remote file inclusion attacks. See
+		// https://phpsecurity.readthedocs.io/en/latest/Injection-Attacks.html
+		$external_entity_loader = libxml_disable_entity_loader(false);
 		$errors = libxml_use_internal_errors(true);
 
+		// Use PHP's file loader rather than libxml so it will work with
+		// the entity loader disabled.
+		$xml = file_get_contents($xml_file);
+		if ($xml === false) {
+			throw new SwatException(
+				"Unable to load SwatML file: '{$filename}'.",
+				0
+			);
+		}
+
 		$document = new DOMDocument();
-		$document->load($xml_file);
+		$document->loadXML($xml);
 		if ($validate) {
 			// check for pear installed version first and if not found, fall
 			// back to version in svn
@@ -241,12 +255,15 @@ class SwatUI extends SwatObject
 			if (!file_exists($schema_file)) {
 				$schema_file = __DIR__.'/../system/swatml.rng';
 			}
+
+			libxml_disable_entity_loader(false);
 			$document->relaxNGValidate($schema_file);
 		}
 
 		$xml_errors = libxml_get_errors();
 		libxml_clear_errors();
 		libxml_use_internal_errors($errors);
+		libxml_disable_entity_loader($external_entity_loader);
 
 		if (count($xml_errors) > 0) {
 			$message = '';
