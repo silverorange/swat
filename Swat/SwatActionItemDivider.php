@@ -13,5 +13,3 @@
 class SwatActionItemDivider extends SwatActionItem
 {
 }
-
-?>

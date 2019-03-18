@@ -10,28 +10,26 @@
  */
 interface SwatTitleable
 {
-	// {{{ public function getTitle()
+    // {{{ public function getTitle()
 
-	/**
-	 * Gets the title of this object
-	 *
-	 * @return string the title of this object.
-	 */
-	public function getTitle();
+    /**
+     * Gets the title of this object
+     *
+     * @return string the title of this object.
+     */
+    public function getTitle();
 
-	// }}}
-	// {{{ public function getTitleContentType()
+    // }}}
+    // {{{ public function getTitleContentType()
 
-	/**
-	 * Gets the content-type of the title of this object
-	 *
-	 * @return string the content-type of the title of this object. Returns
-	 *                 'text/xml' for XHTML fragments and 'text/plain' for
-	 *                 plain text.
-	 */
-	public function getTitleContentType();
+    /**
+     * Gets the content-type of the title of this object
+     *
+     * @return string the content-type of the title of this object. Returns
+     *                 'text/xml' for XHTML fragments and 'text/plain' for
+     *                 plain text.
+     */
+    public function getTitleContentType();
 
-	// }}}
+    // }}}
 }
-
-?>

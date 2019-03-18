@@ -12,47 +12,45 @@
  */
 class SwatInvalidSwatMLException extends SwatException
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	/**
-	 * The filename of the SwatML file that caused this exception to be thrown.
-	 *
-	 * @var string
-	 */
-	protected $filename = '';
+    /**
+     * The filename of the SwatML file that caused this exception to be thrown.
+     *
+     * @var string
+     */
+    protected $filename = '';
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new invalid SwatML exception
-	 *
-	 * @param string $message the message of the exception.
-	 * @param integer $code the code of the exception.
-	 * @param string $filename the filename of the SwatML file that is invalid.
-	 */
-	public function __construct($message = null, $code = 0, $filename = '')
-	{
-		parent::__construct($message, $code);
-		$this->filename = $filename;
-	}
+    /**
+     * Creates a new invalid SwatML exception
+     *
+     * @param string $message the message of the exception.
+     * @param integer $code the code of the exception.
+     * @param string $filename the filename of the SwatML file that is invalid.
+     */
+    public function __construct($message = null, $code = 0, $filename = '')
+    {
+        parent::__construct($message, $code);
+        $this->filename = $filename;
+    }
 
-	// }}}
-	// {{{ public function getFilename()
+    // }}}
+    // {{{ public function getFilename()
 
-	/**
-	 * Gets the filename of the SwatML file that caused this exception to be
-	 * thrown
-	 *
-	 * @return string the filename of the SwatML file that caused this
-	 *                 exception to be thrown.
-	 */
-	public function getFilename()
-	{
-		return $this->filename;
-	}
+    /**
+     * Gets the filename of the SwatML file that caused this exception to be
+     * thrown
+     *
+     * @return string the filename of the SwatML file that caused this
+     *                 exception to be thrown.
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
 
-	// }}}
+    // }}}
 }
-
-?>

@@ -1,0 +1,13 @@
+{
+	"name": "@silverorange/swat",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"check-if-pretty": "prettier --list-different '{Swat,SwatDB,SwatI18N}/**/*.php'",
+		"make-pretty": "prettier --write '{Swat,SwatDB,SwatI18N}/**/*.php'"
+	},
+	"devDependencies": {
+		"@prettier/plugin-php": "^0.9.0",
+		"prettier": "1.15.3"
+	}
+}

@@ -8,6 +8,15 @@ pipeline {
             }
         }
 
+        stage('Install Yarn Dependencies') {
+            environment {
+                YARN_CACHE_FOLDER = "${env.WORKSPACE}/yarn-cache/${env.BUILD_NUMBER}"
+            }
+            steps {
+                sh 'yarn install'
+            }
+        }
+
         stage('Lint Modified Files') {
             when {
                 not {
@@ -19,7 +28,7 @@ pipeline {
                     master_sha=$(git rev-parse origin/master)
                     newest_sha=$(git rev-parse HEAD)
                     ./vendor/bin/phpcs \
-                    --standard=SilverorangeTransitional \
+                    --standard=SilverorangeTransitionalPrettier \
                     --tab-width=4 \
                     --encoding=utf-8 \
                     --warning-severity=0 \
@@ -35,6 +44,12 @@ pipeline {
             }
             steps {
                 sh './vendor/bin/phpcs'
+            }
+        }
+
+        stage('Check if Pretty') {
+            steps {
+                sh 'yarn check-if-pretty'
             }
         }
     }

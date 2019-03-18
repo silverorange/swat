@@ -13,5 +13,3 @@
 class SwatFlydownBlankOption extends SwatOption
 {
 }
-
-?>

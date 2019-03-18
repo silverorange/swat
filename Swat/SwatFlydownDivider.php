@@ -12,29 +12,28 @@
  */
 class SwatFlydownDivider extends SwatOption
 {
-	// {{{ public function __construct()
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a flydown option
-	 *
-	 * @param mixed $value value of the option. This defaults to null.
-	 * @param string $title displayed title of the divider. This defaults to
-	 *                       two em dashes.
-	 * @param string $content_type optional. The content type of the divider. If
-	 *                              not specified, defaults to 'text/plain'.
-	 */
-	public function __construct(
-		$value = null,
-		$title = null,
-		$content_type = 'text/plain'
-	) {
-		if ($title === null)
-			$title = str_repeat('—', 6);
+    /**
+     * Creates a flydown option
+     *
+     * @param mixed $value value of the option. This defaults to null.
+     * @param string $title displayed title of the divider. This defaults to
+     *                       two em dashes.
+     * @param string $content_type optional. The content type of the divider. If
+     *                              not specified, defaults to 'text/plain'.
+     */
+    public function __construct(
+        $value = null,
+        $title = null,
+        $content_type = 'text/plain'
+    ) {
+        if ($title === null) {
+            $title = str_repeat('—', 6);
+        }
 
-		parent::__construct($value, $title, $content_type);
-	}
+        parent::__construct($value, $title, $content_type);
+    }
 
-	// }}}
+    // }}}
 }
-
-?>

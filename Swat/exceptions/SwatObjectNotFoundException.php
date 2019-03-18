@@ -9,45 +9,43 @@
  */
 class SwatObjectNotFoundException extends SwatException
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	/**
-	 * The object id that was searched for
-	 *
-	 * @var string
-	 */
-	protected $object_id = null;
+    /**
+     * The object id that was searched for
+     *
+     * @var string
+     */
+    protected $object_id = null;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new object not found exception
-	 *
-	 * @param string $message the message of the exception.
-	 * @param integer $code the code of the exception.
-	 * @param string $object_id the object id that was searched for.
-	 */
-	public function __construct($message = null, $code = 0, $object_id = null)
-	{
-		parent::__construct($message, $code);
-		$this->object_id = $object_id;
-	}
+    /**
+     * Creates a new object not found exception
+     *
+     * @param string $message the message of the exception.
+     * @param integer $code the code of the exception.
+     * @param string $object_id the object id that was searched for.
+     */
+    public function __construct($message = null, $code = 0, $object_id = null)
+    {
+        parent::__construct($message, $code);
+        $this->object_id = $object_id;
+    }
 
-	// }}}
-	// {{{ public function getObjectId()
+    // }}}
+    // {{{ public function getObjectId()
 
-	/**
-	 * Gets the object id that was searched for
-	 *
-	 * @return string the object id that was searched for.
-	 */
-	public function getObjectId()
-	{
-		return $this->object_id;
-	}
+    /**
+     * Gets the object id that was searched for
+     *
+     * @return string the object id that was searched for.
+     */
+    public function getObjectId()
+    {
+        return $this->object_id;
+    }
 
-	// }}}
+    // }}}
 }
-
-?>

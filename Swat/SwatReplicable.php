@@ -9,21 +9,19 @@
  */
 interface SwatReplicable
 {
-	// {{{ public function getWidget()
+    // {{{ public function getWidget()
 
-	/**
-	 * Retrives a reference to a replicated widget
-	 *
-	 * @param string $widget_id the unique id of the original widget.
-	 * @param string $replicator_id the replicator id of the replicated widget.
-	 *
-	 * @returns SwatWidget a reference to the replicated widget
-	 *
-	 * @throws SwatWidgetNotFoundException
-	 */
-	public function getWidget($widget_id, $replicator_id);
+    /**
+     * Retrives a reference to a replicated widget
+     *
+     * @param string $widget_id the unique id of the original widget.
+     * @param string $replicator_id the replicator id of the replicated widget.
+     *
+     * @returns SwatWidget a reference to the replicated widget
+     *
+     * @throws SwatWidgetNotFoundException
+     */
+    public function getWidget($widget_id, $replicator_id);
 
-	// }}}
+    // }}}
 }
-
-?>

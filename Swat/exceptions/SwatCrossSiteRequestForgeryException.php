@@ -15,45 +15,43 @@
  */
 class SwatCrossSiteRequestForgeryException extends SwatException
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	/**
-	 * The form that did not authenticate
-	 *
-	 * @var SwatForm
-	 */
-	protected $form = null;
+    /**
+     * The form that did not authenticate
+     *
+     * @var SwatForm
+     */
+    protected $form = null;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new cross-site request forgery exception
-	 *
-	 * @param string $message the message of the exception.
-	 * @param integer $code the code of the exception.
-	 * @param SwatForm $form the form that did not authenticate.
-	 */
-	public function __construct($message = null, $code = 0, SwatForm $form)
-	{
-		parent::__construct($message, $code);
-		$this->form = $form;
-	}
+    /**
+     * Creates a new cross-site request forgery exception
+     *
+     * @param string $message the message of the exception.
+     * @param integer $code the code of the exception.
+     * @param SwatForm $form the form that did not authenticate.
+     */
+    public function __construct($message, $code, SwatForm $form)
+    {
+        parent::__construct($message, $code);
+        $this->form = $form;
+    }
 
-	// }}}
-	// {{{ public function getForm()
+    // }}}
+    // {{{ public function getForm()
 
-	/**
-	 * Gets the form that did not authenticate
-	 *
-	 * @return SwatForm the form that did not authenticate.
-	 */
-	public function getForm()
-	{
-		return $this->form;
-	}
+    /**
+     * Gets the form that did not authenticate
+     *
+     * @return SwatForm the form that did not authenticate.
+     */
+    public function getForm()
+    {
+        return $this->form;
+    }
 
-	// }}}
+    // }}}
 }
-
-?>

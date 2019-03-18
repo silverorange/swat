@@ -19,87 +19,87 @@
  */
 class SwatRemoveInputCell extends SwatInputCell
 {
-	// {{{ public function init()
+    // {{{ public function init()
 
-	/**
-	 * Sets the remove widget for this input cell
-	 *
-	 * In SwatRemoveInputCell objects the remove widget is automatically set to
-	 * a SwatContentBlock with predefined content for the remove link.
-	 *
-	 * @throws SwatException
-	 */
-	public function init()
-	{
-		$row = $this->getInputRow();
-		if ($row === null)
-			throw new SwatException('Remove input-cells can only be used '.
-				'inside table-views with an input-row.');
+    /**
+     * Sets the remove widget for this input cell
+     *
+     * In SwatRemoveInputCell objects the remove widget is automatically set to
+     * a SwatContentBlock with predefined content for the remove link.
+     *
+     * @throws SwatException
+     */
+    public function init()
+    {
+        $row = $this->getInputRow();
+        if ($row === null) {
+            throw new SwatException(
+                'Remove input-cells can only be used ' .
+                    'inside table-views with an input-row.'
+            );
+        }
 
-		$content = new SwatContentBlock();
+        $content = new SwatContentBlock();
 
-		ob_start();
+        ob_start();
 
-		$view = $this->getFirstAncestor('SwatTableView');
-		$view_id = ($view === null) ? null : $view->id;
-		$id = ($view_id === null) ? $row->id : $view_id.'_'.$row->id;
+        $view = $this->getFirstAncestor('SwatTableView');
+        $view_id = $view === null ? null : $view->id;
+        $id = $view_id === null ? $row->id : $view_id . '_' . $row->id;
 
-		$anchor_tag = new SwatHtmlTag('a');
-		$anchor_tag->title = Swat::_('Remove this row');
-		$anchor_tag->class = 'swat-remove-input-cell-remove';
-		$anchor_tag->href =
-			sprintf("javascript:%s_obj.removeRow('%%s');", $id);
+        $anchor_tag = new SwatHtmlTag('a');
+        $anchor_tag->title = Swat::_('Remove this row');
+        $anchor_tag->class = 'swat-remove-input-cell-remove';
+        $anchor_tag->href = sprintf("javascript:%s_obj.removeRow('%%s');", $id);
 
-		$anchor_tag->setContent(Swat::_('Remove this row'));
-		$anchor_tag->display();
+        $anchor_tag->setContent(Swat::_('Remove this row'));
+        $anchor_tag->display();
 
-		$content->content  = ob_get_clean();
-		$content->content_type = 'text/xml';
+        $content->content = ob_get_clean();
+        $content->content_type = 'text/xml';
 
-		// manually set the widget since setWidget() is over-ridden to throw
-		// an exception.
-		$this->widget = $content;
-		$content->parent = $this;
-	}
+        // manually set the widget since setWidget() is over-ridden to throw
+        // an exception.
+        $this->widget = $content;
+        $content->parent = $this;
+    }
 
-	// }}}
-	// {{{ public function display()
+    // }}}
+    // {{{ public function display()
 
-	/**
-	 * Displays this remove input cell given a numeric row identifier
-	 *
-	 * @param integer $replicator_id the numeric identifier of the input row
-	 *                                that is being displayed.
-	 *
-	 * @see SwatInputCell::display()
-	 */
-	public function display($replicator_id)
-	{
-		$widget = $this->getClonedWidget($replicator_id);
-		// substitute the replicator_id into the content block's contents
-		$widget->content = str_replace('%s', $replicator_id, $widget->content);
-		$widget->display();
-	}
+    /**
+     * Displays this remove input cell given a numeric row identifier
+     *
+     * @param integer $replicator_id the numeric identifier of the input row
+     *                                that is being displayed.
+     *
+     * @see SwatInputCell::display()
+     */
+    public function display($replicator_id)
+    {
+        $widget = $this->getClonedWidget($replicator_id);
+        // substitute the replicator_id into the content block's contents
+        $widget->content = str_replace('%s', $replicator_id, $widget->content);
+        $widget->display();
+    }
 
-	// }}}
-	// {{{ public function setWidget()
+    // }}}
+    // {{{ public function setWidget()
 
-	/**
-	 * Sets the widget of this input cell
-	 *
-	 * SwatRemoveInputCell objects cannot have their widget set manually so
-	 * this method is over-ridden to always throw an exception.
-	 *
-	 * @param SwatWidget $widget the new widget of this input cell.
-	 *
-	 * @throws SwatException
-	 */
-	public function setWidget(SwatWidget $child)
-	{
-		throw new SwatException('Remove input cells must be empty');
-	}
+    /**
+     * Sets the widget of this input cell
+     *
+     * SwatRemoveInputCell objects cannot have their widget set manually so
+     * this method is over-ridden to always throw an exception.
+     *
+     * @param SwatWidget $widget the new widget of this input cell.
+     *
+     * @throws SwatException
+     */
+    public function setWidget(SwatWidget $child)
+    {
+        throw new SwatException('Remove input cells must be empty');
+    }
 
-	// }}}
+    // }}}
 }
-
-?>

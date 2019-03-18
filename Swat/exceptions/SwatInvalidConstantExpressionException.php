@@ -9,45 +9,43 @@
  */
 class SwatInvalidConstantExpressionException extends SwatException
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	/**
-	 * The constant expression that is invalid
-	 *
-	 * @var string
-	 */
-	protected $expression = null;
+    /**
+     * The constant expression that is invalid
+     *
+     * @var string
+     */
+    protected $expression = null;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new class not found exception
-	 *
-	 * @param string $message the message of the exception.
-	 * @param integer $code the code of the exception.
-	 * @param string $expression the constant expression that is invalid.
-	 */
-	public function __construct($message = null, $code = 0, $expression = null)
-	{
-		parent::__construct($message, $code);
-		$this->expression = $expression;
-	}
+    /**
+     * Creates a new class not found exception
+     *
+     * @param string $message the message of the exception.
+     * @param integer $code the code of the exception.
+     * @param string $expression the constant expression that is invalid.
+     */
+    public function __construct($message = null, $code = 0, $expression = null)
+    {
+        parent::__construct($message, $code);
+        $this->expression = $expression;
+    }
 
-	// }}}
-	// {{{ public function getExpression()
+    // }}}
+    // {{{ public function getExpression()
 
-	/**
-	 * Gets the constant expression that is invalid
-	 *
-	 * @return string the constant expression that is invalid.
-	 */
-	public function getExpression()
-	{
-		return $this->expression;
-	}
+    /**
+     * Gets the constant expression that is invalid
+     *
+     * @return string the constant expression that is invalid.
+     */
+    public function getExpression()
+    {
+        return $this->expression;
+    }
 
-	// }}}
+    // }}}
 }
-
-?>

@@ -9,71 +9,69 @@
  */
 class SwatInvalidPropertyException extends SwatException
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	/**
-	 * The name of the property that is invalid
-	 *
-	 * @var string
-	 */
-	protected $property = null;
+    /**
+     * The name of the property that is invalid
+     *
+     * @var string
+     */
+    protected $property = null;
 
-	/**
-	 * The object the property is invalid for
-	 *
-	 * @var mixed
-	 */
-	protected $object = null;
+    /**
+     * The object the property is invalid for
+     *
+     * @var mixed
+     */
+    protected $object = null;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new invalid class exception
-	 *
-	 * @param string $message the message of the exception.
-	 * @param integer $code the code of the exception.
-	 * @param mixed $object the object the property is invalid for.
-	 * @param string $property the name of the property that is invalid
-	 */
-	public function __construct(
-		$message = null,
-		$code = 0,
-		$object = null,
-		$property = null
-	) {
-		parent::__construct($message, $code);
-		$this->object = $object;
-		$this->property = $property;
-	}
+    /**
+     * Creates a new invalid class exception
+     *
+     * @param string $message the message of the exception.
+     * @param integer $code the code of the exception.
+     * @param mixed $object the object the property is invalid for.
+     * @param string $property the name of the property that is invalid
+     */
+    public function __construct(
+        $message = null,
+        $code = 0,
+        $object = null,
+        $property = null
+    ) {
+        parent::__construct($message, $code);
+        $this->object = $object;
+        $this->property = $property;
+    }
 
-	// }}}
-	// {{{ public function getObject()
+    // }}}
+    // {{{ public function getObject()
 
-	/**
-	 * Gets the object the property is invalid for
-	 *
-	 * @return mixed the object the property is invalid for.
-	 */
-	public function getObject()
-	{
-		return $this->object;
-	}
+    /**
+     * Gets the object the property is invalid for
+     *
+     * @return mixed the object the property is invalid for.
+     */
+    public function getObject()
+    {
+        return $this->object;
+    }
 
-	// }}}
-	// {{{ public function getProperty()
+    // }}}
+    // {{{ public function getProperty()
 
-	/**
-	 * Gets the name of the property that is invalid
-	 *
-	 * @return string the name of the property that is invalid.
-	 */
-	public function getProperty()
-	{
-		return $this->property;
-	}
+    /**
+     * Gets the name of the property that is invalid
+     *
+     * @return string the name of the property that is invalid.
+     */
+    public function getProperty()
+    {
+        return $this->property;
+    }
 
-	// }}}
+    // }}}
 }
-
-?>

@@ -9,49 +9,47 @@
  */
 class SwatIntegerOverflowException extends OverflowException
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	/**
-	 * Sign
-	 *
-	 * The sign of the integer, either positive or negative
-	 *
-	 * @var integer
-	 */
-	protected $sign = null;
+    /**
+     * Sign
+     *
+     * The sign of the integer, either positive or negative
+     *
+     * @var integer
+     */
+    protected $sign = null;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new invalid type exception
-	 *
-	 * @param string $message the message of the exception.
-	 * @param integer $code the code of the exception.
-	 * @param integer $sign the sign of the integer, either positive or
-	 *                negative.
-	 */
-	public function __construct($message = null, $code = 0, $sign = 1)
-	{
-		parent::__construct($message, $code);
+    /**
+     * Creates a new invalid type exception
+     *
+     * @param string $message the message of the exception.
+     * @param integer $code the code of the exception.
+     * @param integer $sign the sign of the integer, either positive or
+     *                negative.
+     */
+    public function __construct($message = null, $code = 0, $sign = 1)
+    {
+        parent::__construct($message, $code);
 
-		$this->sign = $sign;
-	}
+        $this->sign = $sign;
+    }
 
-	// }}}
-	// {{{ public function getSign()
+    // }}}
+    // {{{ public function getSign()
 
-	/**
-	 * Gets the sign of the integer
-	 *
-	 * @return integer The sign of the integer, either positive or negative.
-	 */
-	public function getSign()
-	{
-		return $this->sign;
-	}
+    /**
+     * Gets the sign of the integer
+     *
+     * @return integer The sign of the integer, either positive or negative.
+     */
+    public function getSign()
+    {
+        return $this->sign;
+    }
 
-	// }}}
+    // }}}
 }
-
-?>

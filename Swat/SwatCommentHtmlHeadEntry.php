@@ -9,43 +9,41 @@
  */
 class SwatCommentHtmlHeadEntry extends SwatHtmlHeadEntry
 {
-	// {{{ protected properties
+    // {{{ protected properties
 
-	protected $comment;
+    protected $comment;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new HTML head entry
-	 *
-	 * @param string  $comment the comment of this entry.
-	 */
-	public function __construct($comment)
-	{
-		parent::__construct(md5($comment));
-		$this->comment = $comment;
-	}
+    /**
+     * Creates a new HTML head entry
+     *
+     * @param string  $comment the comment of this entry.
+     */
+    public function __construct($comment)
+    {
+        parent::__construct(md5($comment));
+        $this->comment = $comment;
+    }
 
-	// }}}
-	// {{{ protected function displayInternal()
+    // }}}
+    // {{{ protected function displayInternal()
 
-	protected function displayInternal($uri_prefix = '', $tag = null)
-	{
-		// double dashes are not allowed in XML comments
-		$comment = str_replace('--', '—', $this->comment);
-		printf('<!-- %s -->', $comment);
-	}
+    protected function displayInternal($uri_prefix = '', $tag = null)
+    {
+        // double dashes are not allowed in XML comments
+        $comment = str_replace('--', '—', $this->comment);
+        printf('<!-- %s -->', $comment);
+    }
 
-	// }}}
-	// {{{ protected function displayInlineInternal()
+    // }}}
+    // {{{ protected function displayInlineInternal()
 
-	protected function displayInlineInternal($path)
-	{
-		$this->displayInternal();
-	}
+    protected function displayInlineInternal($path)
+    {
+        $this->displayInternal();
+    }
 
-	// }}}
+    // }}}
 }
-
-?>

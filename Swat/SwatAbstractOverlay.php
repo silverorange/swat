@@ -18,129 +18,130 @@
  */
 abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
 {
-	// {{{ public properties
+    // {{{ public properties
 
-	/**
-	 * Access key
-	 *
-	 * Access key for this overlay control, for keyboard nagivation.
-	 *
-	 * @var string
-	 */
-	public $access_key = null;
+    /**
+     * Access key
+     *
+     * Access key for this overlay control, for keyboard nagivation.
+     *
+     * @var string
+     */
+    public $access_key = null;
 
-	/**
-	 * Widget value
-	 *
-	 * @var string
-	 */
-	public $value = null;
+    /**
+     * Widget value
+     *
+     * @var string
+     */
+    public $value = null;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a new overlay widget
-	 *
-	 * @param string $id a non-visible unique id for this widget.
-	 *
-	 * @see SwatWidget::__construct()
-	 */
-	public function __construct($id = null)
-	{
-		parent::__construct($id);
+    /**
+     * Creates a new overlay widget
+     *
+     * @param string $id a non-visible unique id for this widget.
+     *
+     * @see SwatWidget::__construct()
+     */
+    public function __construct($id = null)
+    {
+        parent::__construct($id);
 
-		$this->requires_id = true;
+        $this->requires_id = true;
 
-		$yui = new SwatYUI(array('dom', 'event', 'container'));
-		$this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
+        $yui = new SwatYUI(array('dom', 'event', 'container'));
+        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-abstract-overlay.js'
-		);
+        $this->addJavaScript(
+            'packages/swat/javascript/swat-abstract-overlay.js'
+        );
 
-		$this->addJavaScript(
-			'packages/swat/javascript/swat-z-index-manager.js'
-		);
-	}
+        $this->addJavaScript(
+            'packages/swat/javascript/swat-z-index-manager.js'
+        );
+    }
 
-	// }}}
-	// {{{ public function display()
+    // }}}
+    // {{{ public function display()
 
-	/**
-	 * Displays this overlay widget
-	 */
-	public function display()
-	{
-		if (!$this->visible)
-			return;
+    /**
+     * Displays this overlay widget
+     */
+    public function display()
+    {
+        if (!$this->visible) {
+            return;
+        }
 
-		parent::display();
+        parent::display();
 
-		$container_div_tag = new SwatHtmlTag('div');
-		$container_div_tag->id = $this->id;
-		$container_div_tag->class = $this->getCSSClassString();
-		$container_div_tag->open();
+        $container_div_tag = new SwatHtmlTag('div');
+        $container_div_tag->id = $this->id;
+        $container_div_tag->class = $this->getCSSClassString();
+        $container_div_tag->open();
 
-		$input_tag = new SwatHtmlTag('input');
-		$input_tag->type = 'hidden';
-		$input_tag->id = $this->id.'_value';
-		$input_tag->name = $this->id;
-		$input_tag->value = $this->value;
-		$input_tag->accesskey = $this->access_key;
+        $input_tag = new SwatHtmlTag('input');
+        $input_tag->type = 'hidden';
+        $input_tag->id = $this->id . '_value';
+        $input_tag->name = $this->id;
+        $input_tag->value = $this->value;
+        $input_tag->accesskey = $this->access_key;
 
-		$input_tag->display();
+        $input_tag->display();
 
-		$container_div_tag->close();
+        $container_div_tag->close();
 
-		Swat::displayInlineJavaScript($this->getInlineJavaScript());
-	}
+        Swat::displayInlineJavaScript($this->getInlineJavaScript());
+    }
 
-	// }}}
-	// {{{ public function getState()
+    // }}}
+    // {{{ public function getState()
 
-	/**
-	 * Gets the current state of this simple color selector widget
-	 *
-	 * @return string the current state of this simple color selector widget.
-	 *
-	 * @see SwatState::getState()
-	 */
-	public function getState()
-	{
-		return $this->value;
-	}
+    /**
+     * Gets the current state of this simple color selector widget
+     *
+     * @return string the current state of this simple color selector widget.
+     *
+     * @see SwatState::getState()
+     */
+    public function getState()
+    {
+        return $this->value;
+    }
 
-	// }}}
-	// {{{ public function setState()
+    // }}}
+    // {{{ public function setState()
 
-	/**
-	 * Sets the current state of this simple color selector widget
-	 *
-	 * @param string $state the new state of this simple color selector widget.
-	 *
-	 * @see SwatState::setState()
-	 */
-	public function setState($state)
-	{
-		$this->value = $state;
-	}
+    /**
+     * Sets the current state of this simple color selector widget
+     *
+     * @param string $state the new state of this simple color selector widget.
+     *
+     * @see SwatState::setState()
+     */
+    public function setState($state)
+    {
+        $this->value = $state;
+    }
 
-	// }}}
-	// {{{ abstract protected function getInlineJavaScript()
+    // }}}
+    // {{{ abstract protected function getInlineJavaScript()
 
-	/**
-	 * Gets inline JavaScript
-	 *
-	 * @return string overlay inline JavaScript.
-	 */
-	protected function getInlineJavaScript()
-	{
-		return sprintf("SwatAbstractOverlay.close_text = %s;\n",
-			SwatString::quoteJavaScriptString(Swat::_('Close')));
-	}
+    /**
+     * Gets inline JavaScript
+     *
+     * @return string overlay inline JavaScript.
+     */
+    protected function getInlineJavaScript()
+    {
+        return sprintf(
+            "SwatAbstractOverlay.close_text = %s;\n",
+            SwatString::quoteJavaScriptString(Swat::_('Close'))
+        );
+    }
 
-	// }}}
+    // }}}
 }
-
-?>

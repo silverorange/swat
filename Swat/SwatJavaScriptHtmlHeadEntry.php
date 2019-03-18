@@ -9,35 +9,36 @@
  */
 class SwatJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 {
-	// {{{ protected function displayInternal()
+    // {{{ protected function displayInternal()
 
-	protected function displayInternal($uri_prefix = '', $tag = null)
-	{
-		$uri = $this->uri;
+    protected function displayInternal($uri_prefix = '', $tag = null)
+    {
+        $uri = $this->uri;
 
-		// append tag if it is set
-		if ($tag !== null) {
-			$uri = (mb_strpos($uri, '?') === false)
-				? $uri.'?'.$tag
-				: $uri.'&'.$tag;
-		}
+        // append tag if it is set
+        if ($tag !== null) {
+            $uri =
+                mb_strpos($uri, '?') === false
+                    ? $uri . '?' . $tag
+                    : $uri . '&' . $tag;
+        }
 
-		printf('<script type="text/javascript" src="%s%s"></script>',
-			$uri_prefix,
-			$uri);
-	}
+        printf(
+            '<script type="text/javascript" src="%s%s"></script>',
+            $uri_prefix,
+            $uri
+        );
+    }
 
-	// }}}
-	// {{{ protected function displayInlineInternal()
+    // }}}
+    // {{{ protected function displayInlineInternal()
 
-	protected function displayInlineInternal($path)
-	{
-		echo '<script type="text/javascript">';
-		readfile($path.$this->getUri());
-		echo '</script>';
-	}
+    protected function displayInlineInternal($path)
+    {
+        echo '<script type="text/javascript">';
+        readfile($path . $this->getUri());
+        echo '</script>';
+    }
 
-	// }}}
+    // }}}
 }
-
-?>

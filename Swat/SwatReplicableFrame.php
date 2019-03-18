@@ -15,37 +15,37 @@
  */
 class SwatReplicableFrame extends SwatReplicableContainer
 {
-	// {{{ public function init()
+    // {{{ public function init()
 
-	/**
-	 * Initilizes this replicable frame
-	 */
-	public function init()
-	{
-		$children = array();
-		foreach ($this->children as $child_widget)
-			$children[] = $this->remove($child_widget);
+    /**
+     * Initilizes this replicable frame
+     */
+    public function init()
+    {
+        $children = array();
+        foreach ($this->children as $child_widget) {
+            $children[] = $this->remove($child_widget);
+        }
 
-		$frame = new SwatFrame();
-		$frame->id = $frame->getUniqueId();
-		$prototype_id = $frame->id;
+        $frame = new SwatFrame();
+        $frame->id = $frame->getUniqueId();
+        $prototype_id = $frame->id;
 
-		foreach ($children as $child_widget)
-			$frame->add($child_widget);
+        foreach ($children as $child_widget) {
+            $frame->add($child_widget);
+        }
 
-		$this->add($frame);
+        $this->add($frame);
 
-		parent::init();
+        parent::init();
 
-		if ($this->replication_ids === null && is_array($this->replicators)) {
-			foreach ($this->replicators as $id => $title) {
-				$frame = $this->getWidget($prototype_id, $id);
-				$frame->title = $title;
-			}
-		}
-	}
+        if ($this->replication_ids === null && is_array($this->replicators)) {
+            foreach ($this->replicators as $id => $title) {
+                $frame = $this->getWidget($prototype_id, $id);
+                $frame->title = $title;
+            }
+        }
+    }
 
-	// }}}
+    // }}}
 }
-
-?>

@@ -10,69 +10,67 @@
  */
 class SwatNullTextCellRenderer extends SwatTextCellRenderer
 {
-	// {{{ public properties
+    // {{{ public properties
 
-	/**
-	 * The text to display in this cell if the
-	 * {@link SwatTextCellRenderer::$text} proeprty is null when the render()
-	 * method is called
-	 *
-	 * @var string
-	 */
-	public $null_text = '&lt;none&gt;';
+    /**
+     * The text to display in this cell if the
+     * {@link SwatTextCellRenderer::$text} proeprty is null when the render()
+     * method is called
+     *
+     * @var string
+     */
+    public $null_text = '&lt;none&gt;';
 
-	/**
-	 * Whether to test the {@link SwatTextCellRenderer::$text} property for
-	 * null using strict equality.
-	 *
-	 * @var boolean
-	 */
-	public $strict = false;
+    /**
+     * Whether to test the {@link SwatTextCellRenderer::$text} property for
+     * null using strict equality.
+     *
+     * @var boolean
+     */
+    public $strict = false;
 
-	// }}}
-	// {{{ public function __construct()
+    // }}}
+    // {{{ public function __construct()
 
-	/**
-	 * Creates a null text cell renderer
-	 */
-	public function __construct()
-	{
-		parent::__construct();
+    /**
+     * Creates a null text cell renderer
+     */
+    public function __construct()
+    {
+        parent::__construct();
 
-		$this->addStyleSheet(
-			'packages/swat/styles/swat-null-text-cell-renderer.css'
-		);
-	}
+        $this->addStyleSheet(
+            'packages/swat/styles/swat-null-text-cell-renderer.css'
+        );
+    }
 
-	// }}}
-	// {{{ public function render()
+    // }}}
+    // {{{ public function render()
 
-	/**
-	 * Renders this cell renderer
-	 */
-	public function render()
-	{
-		if (!$this->visible)
-			return;
+    /**
+     * Renders this cell renderer
+     */
+    public function render()
+    {
+        if (!$this->visible) {
+            return;
+        }
 
-		$is_null = ($this->strict) ?
-			($this->text === null) : ($this->text == null);
+        $is_null = $this->strict ? $this->text === null : $this->text == null;
 
-		if ($is_null) {
-			$this->text = $this->null_text;
+        if ($is_null) {
+            $this->text = $this->null_text;
 
-			echo '<span class="swat-null-text-cell-renderer">';
-			parent::render();
-			echo '</span>';
+            echo '<span class="swat-null-text-cell-renderer">';
+            parent::render();
+            echo '</span>';
 
-			// Reset the text so that subsequent $is_null checks pass.
-			$this->text = null;
-		} else {
-			parent::render();
-		}
-	}
+            // Reset the text so that subsequent $is_null checks pass.
+            $this->text = null;
+        } else {
+            parent::render();
+        }
+    }
 
-	// }}}
+    // }}}
 }
-
-?>
