@@ -139,18 +139,27 @@ class SwatUriEntry extends SwatEntry
     {
         switch ($id) {
             case 'scheme-required':
-                $text = sprintf(
-                    Swat::_('“%s” must include a prefix (i.e. %s).'),
-                    $this->value,
-                    $this->default_scheme
-                );
+                $text = $this->show_field_title_in_messages
+                    ? sprintf(
+                        Swat::_(
+                            'The %%s field must include a prefix (e.g. %s).'
+                        ),
+                        $this->default_scheme
+                    )
+                    : sprintf(
+                        Swat::_('This field must include a prefix (e.g. %s).'),
+                        $this->default_scheme
+                    );
 
                 break;
             case 'invalid-uri':
-                $text = sprintf(
-                    Swat::_('“%s” is not a properly formatted address.'),
-                    $this->value
-                );
+                $text = $this->show_field_title_in_messages
+                    ? Swat::_(
+                        'The %s field is not a properly formatted address.'
+                    )
+                    : Swat::_(
+                        'This field is not a properly formatted address.'
+                    );
 
                 break;
             default:
