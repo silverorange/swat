@@ -1,0 +1,9 @@
+/* prevent moving popup dialogs */
+
+.mce-window-head .mce-dragh {
+	display: none;
+}
+
+.mce-window-head .mce-close {
+	display: none;
+}

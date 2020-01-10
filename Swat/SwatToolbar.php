@@ -9,23 +9,6 @@
  */
 class SwatToolbar extends SwatDisplayableContainer
 {
-    // {{{ public function __construct()
-
-    /**
-     * Creates a new toolbar
-     *
-     * @param string $id a non-visible unique id for this widget.
-     *
-     * @see SwatWidget::__construct()
-     */
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-
-        $this->addStyleSheet('packages/swat/styles/swat-toolbar.css');
-    }
-
-    // }}}
     // {{{ public function display()
 
     /**

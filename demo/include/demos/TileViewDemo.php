@@ -88,7 +88,7 @@ class TileViewDemo extends Demo
 		$table_store = new SwatTableStore();
 
 		foreach ($data as $datum) {
-			$fruit = new FruitObject();
+			$fruit = new TileFruitObject();
 
 			$fruit->image        = $datum[0];
 			$fruit->image_width  = $datum[1];
@@ -116,7 +116,7 @@ class TileViewDemo extends Demo
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class FruitObject
+class TileFruitObject
 {
 	// {{{ public properties
 

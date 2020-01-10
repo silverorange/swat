@@ -92,18 +92,6 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
         if ($this->none_option_title === null) {
             $this->none_option_title = Swat::_('None');
         }
-
-        $this->addJavaScript(
-            'packages/swat/javascript/swat-simple-color-entry.js'
-        );
-
-        $this->addJavaScript(
-            'packages/swat/javascript/swat-abstract-overlay.js'
-        );
-
-        $this->addStyleSheet(
-            'packages/swat/styles/swat-simple-color-entry.css'
-        );
     }
 
     // }}}

@@ -1,0 +1,22 @@
+.swat-overlay {
+	background: #fff;
+	border: 1px solid #ccc;
+	padding: 0;
+	margin: 0;
+}
+
+.swat-overlay-close-div {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+.swat-overlay .hd {
+	text-align: right;
+	padding: 2px;
+}
+
+.swat-overlay-close-link {
+	font-weight: bold;
+}

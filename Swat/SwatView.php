@@ -57,25 +57,6 @@ abstract class SwatView extends SwatControl
     protected $selectors = array();
 
     // }}}
-    // {{{ public function __construct()
-
-    /**
-     * Creates a new recordset view
-     *
-     * @param string $id a non-visible unique id for this recordset view.
-     *
-     * @see SwatWidget::__construct()
-     */
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-
-        $yui = new SwatYUI(array('dom'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-        $this->addJavaScript('packages/swat/javascript/swat-view.js');
-    }
-
-    // }}}
     // {{{ public function init()
 
     /**

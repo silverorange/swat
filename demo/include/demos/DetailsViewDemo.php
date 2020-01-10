@@ -17,7 +17,7 @@ class DetailsViewDemo extends Demo
 	{
 		$details_view = $ui->getWidget('details_view');
 
-		$fruit = new FruitObject();
+		$fruit = new DetailsFruitObject();
 
 		$fruit->align        = 'middle';
 		$fruit->title        = 'Apple';
@@ -50,7 +50,7 @@ class DetailsViewDemo extends Demo
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class FruitObject
+class DetailsFruitObject
 {
 	// {{{ public properties
 

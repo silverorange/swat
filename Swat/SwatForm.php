@@ -256,8 +256,6 @@ class SwatForm extends SwatDisplayableContainer
         }
 
         $this->requires_id = true;
-
-        $this->addJavaScript('packages/swat/javascript/swat-form.js');
     }
 
     // }}}
@@ -324,13 +322,6 @@ class SwatForm extends SwatDisplayableContainer
         $this->displayChildren();
         $this->displayHiddenFields();
         $form_tag->close();
-
-        if ($this->connection_close_uri != '') {
-            $yui = new SwatYUI(array('event'));
-            $this->html_head_entry_set->addEntrySet(
-                $yui->getHtmlHeadEntrySet()
-            );
-        }
 
         Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }

@@ -116,11 +116,6 @@ class SwatButton extends SwatInputControl
     public function __construct($id = null)
     {
         parent::__construct($id);
-
-        $yui = new SwatYUI(array('dom', 'event', 'animation'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-        $this->addJavaScript('packages/swat/javascript/swat-button.js');
-
         $this->requires_id = true;
     }
 
@@ -365,35 +360,18 @@ class SwatButton extends SwatInputControl
      */
     protected function getInlineJavaScript()
     {
-        $show_processing_throbber = $this->show_processing_throbber
-            ? 'true'
-            : 'false';
+        $options = [
+            'show_processing_throbber' => $this->show_processing_throbber,
+            'processing_message' => $this->processing_throbber_message,
+            'confirmation_message' => $this->confirmation_message,
+        ];
 
-        $javascript = sprintf(
-            "var %s_obj = new %s('%s', %s);",
+        $javascript = sprintf("var %s_obj = new %s(%s, %s);",
             $this->id,
             $this->getJavaScriptClass(),
-            $this->id,
-            $show_processing_throbber
+            SwatString::quoteJavaScriptString($this->id),
+            json_encode($options)
         );
-
-        if ($this->show_processing_throbber) {
-            $javascript .= sprintf(
-                "\n%s_obj.setProcessingMessage(%s);",
-                $this->id,
-                SwatString::quoteJavaScriptString(
-                    $this->processing_throbber_message
-                )
-            );
-        }
-
-        if ($this->confirmation_message !== null) {
-            $javascript .= sprintf(
-                "\n%s_obj.setConfirmationMessage(%s);",
-                $this->id,
-                SwatString::quoteJavaScriptString($this->confirmation_message)
-            );
-        }
 
         return $javascript;
     }

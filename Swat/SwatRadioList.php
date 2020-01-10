@@ -41,8 +41,6 @@ class SwatRadioList extends SwatFlydown
 
         $this->show_blank = false;
         $this->requires_id = true;
-
-        $this->addStyleSheet('packages/swat/styles/swat-radio-list.css');
     }
 
     // }}}

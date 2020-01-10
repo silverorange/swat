@@ -43,14 +43,7 @@ class SwatAccordion extends SwatNoteBook
     public function __construct($id = null)
     {
         parent::__construct($id);
-
         $this->requires_id = true;
-
-        $yui = new SwatYUI(array('yahoo', 'dom', 'event', 'animation'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-        $this->addStyleSheet('packages/swat/styles/swat-accordion.css');
-        $this->addJavaScript('packages/swat/javascript/swat-accordion.js');
     }
 
     // }}}

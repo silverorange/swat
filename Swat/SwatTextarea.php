@@ -100,27 +100,6 @@ class SwatTextarea extends SwatInputControl implements SwatState
     public $placeholder;
 
     // }}}
-    // {{{ public function __construct()
-
-    /**
-     * Creates a new textarea widget
-     *
-     * Sets the widget title to a default value.
-     *
-     * @param string $id a non-visible unique id for this widget.
-     *
-     * @see SwatWidget::__construct()
-     */
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-        $yui = new SwatYUI(array('dom', 'event'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-        $this->addJavaScript('packages/swat/javascript/swat-textarea.js');
-        $this->addStyleSheet('packages/swat/styles/swat-textarea.css');
-    }
-
-    // }}}
     // {{{ public function display()
 
     /**

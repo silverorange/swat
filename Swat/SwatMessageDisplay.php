@@ -76,18 +76,7 @@ class SwatMessageDisplay extends SwatControl
     public function __construct($id = null)
     {
         parent::__construct($id);
-
         $this->requires_id = true;
-
-        $yui = new SwatYUI(array('animation'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-        $this->addJavaScript(
-            'packages/swat/javascript/swat-message-display.js'
-        );
-
-        $this->addStyleSheet('packages/swat/styles/swat-message.css');
-        $this->addStyleSheet('packages/swat/styles/swat-message-display.css');
     }
 
     // }}}

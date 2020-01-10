@@ -8,35 +8,18 @@ img.swat-image-cell-renderer { vertical-align: middle; }
 	color: #888;
 }
 
+.swat-nowrap {
+	white-space: nowrap;
+}
+
+input.swat-insensitive {
+	cursor: default;
+}
+
 option.swat-blank-option,
 option.swat-flydown-option-divider {
 	color: #888;
 }
-
-
-/* SwatFrame */
-
-.swat-frame {
-	margin: 1em 0;
-	border: 1px solid #dcceb2;
-	background: #fff url(../images/swat-frame-background.png) top right no-repeat;
-}
-
-.swat-frame .swat-frame-title {
-	margin: 1px 1px 0 1px;
-	padding: 2px 6px;
-	color: #6b5d40;
-	background: #f8f6f0 url(../images/swat-frame-header.png) bottom left repeat-x;
-}
-
-.swat-frame-contents {
-	padding: 16px;
-}
-
-.swat-frame .swat-frame-subtitle {
-	font-weight: normal;
-}
-
 
 /* SwatForm */
 
@@ -144,135 +127,6 @@ ul.swat-radio-list li {
 	margin: 0 5px 0 0;
 }
 
-/* SwatFieldset */
-
-.swat-fieldset,
-.swat-grouping-form-field-fieldset {
-	border: 1px solid #ccc;
-	margin-bottom: 1em;
-	padding: 0 1em 1em 1em;
-	position: relative;
-}
-
-.swat-fieldset legend,
-.swat-grouping-form-field legend {
-	font-weight: bold;
-	color: #666;
-	padding: 0 0.3em;
-	line-height: 2;
-}
-
-.swat-grouping-form-field .swat-form-field {
-	padding-top: 1em;
-}
-
-.swat-grouping-form-field .swat-form-field label {
-	color: #666;
-	font-weight: normal;
-}
-
-
-/* Swat Date Entry and SwatTimeEntry*/
-
-.swat-date-entry,
-.swat-time-entry {
-	white-space: nowrap;
-}
-
-
-/* Swat Actions */
-
-.swat-actions {
-	text-align: left;
-}
-
-.swat-actions-controls {
-	margin-bottom: 0.5em;
-}
-
-.swat-actions,
-.swat-header-form-field,
-.swat-footer-form-field {
-	padding: 1em 0;
-}
-
-.swat-frame .swat-actions,
-.swat-frame .swat-header-form-field,
-.swat-frame .swat-footer-form-field {
-	background: #f1ebdf url(../images/swat-form-footer.png) top left repeat-x;
-	padding: 1em;
-	margin: 15px -15px -15px -15px;
-	position: relative;
-}
-
-.swat-frame .swat-header-form-field {
-	background: #f7f5f3 url(../images/swat-form-header.png) top left repeat-x;
-	margin: -15px -15px 15px -15px;
-	background-position: bottom left;
-}
-
-.swat-actions label {
-	display: inline;
-}
-
-.swat-actions-note {
-	color: #666;
-	font-size: 85%;
-	padding-top: 0.3em;
-}
-
-.swat-actions .swat-button-apply {
-	font-weight: bold;
-	color: #333;
-}
-
-/* Swat Buttons */
-
-.swat-header-form-field input.swat-primary,
-.swat-footer-form-field input.swat-primary {
-	font-weight: bold;
-}
-
-.swat-header-form-field .swat-button,
-.swat-footer-form-field .swat-button,
-.swat-header-form-field .swat-reset-button,
-.swat-footer-form-field .swat-reset-button {
-	margin-right: 0.5em;
-}
-
-.swat-button-compact {
-	font-size: 80%;
-	padding: 0;
-	border-width: 1px;
-}
-
-.swat-nowrap {
-	white-space: nowrap;
-}
-
-.swat-button,
-.swat-reset-button {
-	vertical-align: middle;
-}
-
-.swat-button-processing-throbber {
-	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-	filter: alpha(opacity=0);
-	opacity: 0;
-	padding-left: 20px;
-	margin-left: 0.5em;
-	background: url(../images/swat-button-throbber.gif) no-repeat 0 0;
-	display: inline-block; /* This is needed for IE8 opacity to work */
-}
-
-.swat-image-button {
-	cursor: pointer;
-	cursor: hand;
-}
-
-input.swat-insensitive {
-	cursor: default;
-}
 
 /* SwatFormField */
 
@@ -284,30 +138,6 @@ blockquote.swat-db-debug {
 	border: 1px solid #666;
 }
 
-/* SwatAbstractOverlay */
-
-.swat-overlay {
-	background: #fff;
-	border: 1px solid #ccc;
-	padding: 0;
-	margin: 0;
-}
-
-.swat-overlay-close-div {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-}
-
-.swat-overlay .hd {
-	text-align: right;
-	padding: 2px;
-}
-
-.swat-overlay-close-link {
-	font-weight: bold;
-}
 
 /* SwatRemoveInputCell */
 

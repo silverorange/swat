@@ -53,17 +53,7 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
     public function __construct($id = null)
     {
         parent::__construct($id);
-
         $this->requires_id = true;
-
-        $yui = new SwatYUI(array('dom', 'event', 'animation', 'selector'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-        $this->addStyleSheet('packages/swat/styles/swat-radio-note-book.css');
-
-        $this->addJavaScript(
-            'packages/swat/javascript/swat-radio-note-book.js'
-        );
     }
 
     // }}}

@@ -66,10 +66,6 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     {
         parent::__construct($id);
         $this->requires_id = true;
-        $yui = new SwatYUI(array('event'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-        $this->addJavaScript('packages/swat/javascript/swat-checkbox-list.js');
-        $this->addStyleSheet('packages/swat/styles/swat.css');
     }
 
     // }}}

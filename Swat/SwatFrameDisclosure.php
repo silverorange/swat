@@ -9,23 +9,6 @@
  */
 class SwatFrameDisclosure extends SwatDisclosure
 {
-    // {{{ public function __construct()
-
-    /**
-     * Creates a new frame disclosure container
-     *
-     * @param string $id a non-visible unique id for this widget.
-     *
-     * @see SwatWidget::__construct()
-     */
-    public function __construct($id = null)
-    {
-        parent::__construct($id);
-
-        $this->addStyleSheet('packages/swat/styles/swat-frame-disclosure.css');
-    }
-
-    // }}}
     // {{{ public function display()
 
     /**

@@ -13,12 +13,6 @@
  */
 class SwatTextareaEditor extends SwatTextarea
 {
-    // {{{ class constants
-
-    const MODE_VISUAL = 1;
-    const MODE_SOURCE = 2;
-
-    // }}}
     // {{{ public properties
 
     /**
@@ -52,29 +46,6 @@ class SwatTextareaEditor extends SwatTextarea
      * @var string
      */
     public $base_href = null;
-
-    /**
-     * Editing mode to use
-     *
-     * Must be one of either {@link SwatTextareaEditor::MODE_VISUAL} or
-     * {@link SwatTextareaEditor::MODE_SOURCE}.
-     *
-     * Defaults to <kbd>SwatTextareaEditor::MODE_VISUAL</kbd>.
-     *
-     * @var integer
-     */
-    public $mode = self::MODE_VISUAL;
-
-    /**
-     * Whether or not the mode switching behavior is enabled
-     *
-     * If set to false, only {@link SwatTextAreaEditor::$mode} will be ignored
-     * and only {@link SwatTextAreaEditor::MODE_VISUAL} will be available for
-     * the editor.
-     *
-     * @var boolean
-     */
-    public $modes_enabled = true;
 
     /**
      * An optional JSON server used to provide uploaded image data to the
@@ -138,11 +109,6 @@ class SwatTextareaEditor extends SwatTextarea
 
         $this->requires_id = true;
         $this->rows = 30;
-
-        $this->addJavaScript('packages/swat/javascript/tiny_mce/tiny_mce.js');
-        $this->addJavaScript(
-            'packages/swat/javascript/swat-z-index-manager.js'
-        );
     }
 
     // }}}
@@ -199,16 +165,7 @@ class SwatTextareaEditor extends SwatTextarea
 
         $textarea_tag->display();
 
-        // hidden field to preserve editing mode in form data
-        $input_tag = new SwatHtmlTag('input');
-        $input_tag->type = 'hidden';
-        $input_tag->id = $this->id . '_mode';
-        $input_tag->value = $this->mode;
-        $input_tag->display();
-
         $div_tag->close();
-
-        Swat::displayInlineJavaScript($this->getInlineJavaScript());
     }
 
     // }}}
@@ -227,170 +184,6 @@ class SwatTextareaEditor extends SwatTextarea
     public function getFocusableHtmlId()
     {
         return null;
-    }
-
-    // }}}
-    // {{{ protected function getConfig()
-
-    protected function getConfig()
-    {
-        $buttons = implode(',', $this->getConfigButtons());
-
-        $blockformats = array(
-            'p',
-            'blockquote',
-            'pre',
-            'h1',
-            'h2',
-            'h3',
-            'h4',
-            'h5',
-            'h6'
-        );
-
-        $blockformats = implode(',', $blockformats);
-
-        $modes = $this->modes_enabled ? 'yes' : 'no';
-        $image_server = $this->image_server ? $this->image_server : '';
-
-        $config = array(
-            'mode' => 'exact',
-            'elements' => $this->id,
-            'theme' => 'advanced',
-            'theme_advanced_buttons1' => $buttons,
-            'theme_advanced_buttons2' => '',
-            'theme_advanced_buttons3' => '',
-            'theme_advanced_toolbar_location' => 'top',
-            'theme_advanced_toolbar_align' => 'left',
-            'theme_advanced_blockformats' => $blockformats,
-            'skin' => 'swat',
-            'plugins' => 'swat,media,paste',
-            'swat_modes_enabled' => $modes,
-            'swat_image_server' => $image_server,
-            'paste_remove_spans' => true,
-            'paste_remove_styles' => true
-        );
-
-        return $config;
-    }
-
-    // }}}
-    // {{{ protected function getConfigButtons()
-
-    protected function getConfigButtons()
-    {
-        return array(
-            'bold',
-            'italic',
-            '|',
-            'formatselect',
-            '|',
-            'removeformat',
-            '|',
-            'undo',
-            'redo',
-            '|',
-            'outdent',
-            'indent',
-            '|',
-            'bullist',
-            'numlist',
-            '|',
-            'link',
-            'image',
-            'snippet'
-        );
-    }
-
-    // }}}
-    // {{{ protected function getInlineJavaScript()
-
-    protected function getInlineJavaScript()
-    {
-        $base_href = 'editor_base_' . $this->id;
-        ob_start();
-
-        if ($this->base_href === null) {
-            echo "var {$base_href} = " .
-                "document.getElementsByTagName('base');\n";
-
-            echo "if ({$base_href}.length) {\n";
-            echo "\t{$base_href} = {$base_href}[0];\n";
-            echo "\t{$base_href} = {$base_href}.href;\n";
-            echo "} else {\n";
-            echo "\t{$base_href} = location.href.split('#', 2)[0];\n";
-            echo "\t{$base_href} = {$base_href}.split('?', 2)[0];\n";
-            echo "\t{$base_href} = {$base_href}.substring(\n";
-            echo "\t\t0, {$base_href}.lastIndexOf('/') + 1);\n";
-            echo "}\n";
-        } else {
-            echo "var {$base_href} = " .
-                SwatString::quoteJavaScriptString($this->base_href) .
-                ";\n";
-        }
-
-        echo "tinyMCE.init({\n";
-
-        $lines = array();
-        foreach ($this->getConfig() as $name => $value) {
-            if (is_string($value)) {
-                $value = SwatString::quoteJavaScriptString($value);
-            } elseif (is_bool($value)) {
-                $value = $value ? 'true' : 'false';
-            }
-            $lines[] = "\t" . $name . ": " . $value;
-        }
-
-        $lines[] = "\tdocument_base_url: {$base_href}";
-
-        echo implode(",\n", $lines);
-
-        // Make removeformat button also clear inline alignments, styles,
-        // colors and classes.
-        echo ",\n" .
-            "\tformats: {\n" .
-            "\t\tremoveformat : [\n" .
-            "\t\t\t{\n" .
-            "\t\t\t\tselector     : 'b,strong,em,i,font,u,strike',\n" .
-            "\t\t\t\tremove       : 'all',\n" .
-            "\t\t\t\tsplit        : true,\n" .
-            "\t\t\t\texpand       : false,\n" .
-            "\t\t\t\tblock_expand : true,\n" .
-            "\t\t\t\tdeep         : true\n" .
-            "\t\t\t},\n" .
-            "\t\t\t{\n" .
-            "\t\t\t\tselector     : 'span',\n" .
-            "\t\t\t\tattributes   : [\n" .
-            "\t\t\t\t\t'style',\n" .
-            "\t\t\t\t\t'class',\n" .
-            "\t\t\t\t\t'align',\n" .
-            "\t\t\t\t\t'color',\n" .
-            "\t\t\t\t\t'background'\n" .
-            "\t\t\t\t],\n" .
-            "\t\t\t\tremove       : 'empty',\n" .
-            "\t\t\t\tsplit        : true,\n" .
-            "\t\t\t\texpand       : false,\n" .
-            "\t\t\t\tdeep         : true\n" .
-            "\t\t\t},\n" .
-            "\t\t\t{\n" .
-            "\t\t\t\tselector     : '*',\n" .
-            "\t\t\t\tattributes   : [\n" .
-            "\t\t\t\t\t'style',\n" .
-            "\t\t\t\t\t'class',\n" .
-            "\t\t\t\t\t'align',\n" .
-            "\t\t\t\t\t'color',\n" .
-            "\t\t\t\t\t'background'\n" .
-            "\t\t\t\t],\n" .
-            "\t\t\t\tsplit        : false,\n" .
-            "\t\t\t\texpand       : false,\n" .
-            "\t\t\t\tdeep         : true\n" .
-            "\t\t\t}\n" .
-            "\t\t]\n" .
-            "\t}";
-
-        echo "\n});";
-
-        return ob_get_clean();
     }
 
     // }}}

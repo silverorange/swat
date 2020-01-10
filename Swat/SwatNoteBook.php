@@ -10,6 +10,7 @@
  */
 class SwatNoteBook extends SwatWidget implements SwatUIParent
 {
+<<<<<<< HEAD
     // {{{ constants
 
     /**
@@ -80,13 +81,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
     public function __construct($id = null)
     {
         parent::__construct($id);
-
         $this->requires_id = true;
-
-        $yui = new SwatYUI(array('tabview'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-        $this->addStyleSheet('packages/swat/styles/swat-note-book.css');
     }
 
     // }}}
@@ -558,12 +553,15 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
                 break;
         }
 
+        $options = [
+            'orientation' => $position,
+        ];
+
         return sprintf(
-            "var %s_obj = new YAHOO.widget.TabView(" .
-                "'%s', {orientation: '%s'});",
+            'var %s_obj = new SwatNoteBook(%s, %s);',
             $this->id,
-            $this->id,
-            $position
+            SwatString::quoteJavaScriptString($this->id),
+            json_encode($options)
         );
     }
 

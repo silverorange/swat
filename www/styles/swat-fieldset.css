@@ -1,0 +1,24 @@
+.swat-fieldset,
+.swat-grouping-form-field-fieldset {
+	border: 1px solid #ccc;
+	margin-bottom: 1em;
+	padding: 0 1em 1em 1em;
+	position: relative;
+}
+
+.swat-fieldset legend,
+.swat-grouping-form-field legend {
+	font-weight: bold;
+	color: #666;
+	padding: 0 0.3em;
+	line-height: 2;
+}
+
+.swat-grouping-form-field .swat-form-field {
+	padding-top: 1em;
+}
+
+.swat-grouping-form-field .swat-form-field label {
+	color: #666;
+	font-weight: normal;
+}

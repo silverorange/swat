@@ -142,13 +142,7 @@ class SwatImageCropper extends SwatInputControl
     public function __construct($id = null)
     {
         parent::__construct($id);
-
         $this->requires_id = true;
-
-        $yui = new SwatYUI(array('imagecropper'));
-        $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
-
-        $this->addJavaScript('packages/swat/javascript/swat-image-cropper.js');
     }
 
     // }}}

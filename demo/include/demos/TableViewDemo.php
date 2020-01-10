@@ -37,7 +37,7 @@ class TableViewDemo extends Demo
 		$table_store = new SwatTableStore();
 
 		foreach ($data as $datum) {
-			$fruit = new FruitObject();
+			$fruit = new TableFruitObject();
 			$fruit->image = $datum[0];
 			$fruit->image_width = $datum[1];
 			$fruit->image_height = $datum[2];
@@ -64,7 +64,7 @@ class TableViewDemo extends Demo
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class FruitObject
+class TableFruitObject
 {
 	// {{{ public properties
 

@@ -1,0 +1,85 @@
+{
+	"name": "silverorange/swat-demo",
+	"description": "Demo of Swat",
+	"type": "library",
+	"keywords": [ "swat", "toolkit", "widget", "demo" ],
+	"homepage": "https://code.silverorange.com/swat",
+	"license": "LGPL-2.1",
+	"authors": [
+		{
+			"name": "Charles Waddell",
+			"email": "charles@silverorange.com"
+		},
+		{
+			"name": "Isaac Grant",
+			"email": "isaac@silverorange.com"
+		},
+		{
+			"name": "Michael Gauthier",
+			"email": "mike@silverorange.com"
+		},
+		{
+			"name": "Nathan Frederikson",
+			"email": "nathan@silverorange.com"
+		},
+		{
+			"name": "Nick Burka",
+			"email": "nick@silverorange.com"
+		},
+		{
+			"name": "Steven Garrity",
+			"email": "steven@silverorange.com"
+		}
+	],
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://composer",
+			"options": {
+				"ssl": {
+					"cafile": "/Users/gauthierm/composer.crt"
+				}
+			}
+		},
+		{
+			"packagist": false
+		}
+	],
+	"require": {
+		"php": ">=5.6.0",
+		"ext-dom": "*",
+		"ext-iconv": "*",
+		"ext-intl": "*",
+		"ext-mbstring": "*",
+		"ext-pcre": "*",
+		"pear/pear_exception": "^1.0.0",
+		"silverorange/mdb2": "^3.1.1",
+		"silverorange/concentrate": "^1.0.0",
+		"silverorange/yui": "^1.0.11"
+	},
+	"require-dev": {
+		"silverorange/coding-standard": "^0.6.0"
+	},
+	"autoload": {
+		"classmap": [
+			"include/",
+			"vendor/silverorange/swat/Swat",
+			"vendor/silverorange/swat/SwatDB",
+			"vendor/silverorange/swat/SwatI18N"
+		]
+	},
+	"scripts": {
+		"lint": "./vendor/bin/phpcs",
+		"pre-autoload-dump": [
+			"rm -rf ./vendor/silverorange/swat && ln -s ../../../ ./vendor/silverorange/swat"
+		],
+		"post-install-cmd": [
+			"rm -rf ./vendor/silverorange/swat && ln -s ../../../ ./vendor/silverorange/swat",
+			"./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src"
+		],
+		"post-update-cmd": [
+			"rm -rf ./vendor/silverorange/swat && ln -s ../../../ ./vendor/silverorange/swat",
+			"./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src"
+		]
+	}
+}
