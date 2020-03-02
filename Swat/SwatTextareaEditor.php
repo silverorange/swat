@@ -268,7 +268,8 @@ class SwatTextareaEditor extends SwatTextarea
             'swat_modes_enabled' => $modes,
             'swat_image_server' => $image_server,
             'paste_remove_spans' => true,
-            'paste_remove_styles' => true
+            'paste_remove_styles' => true,
+            'convert_urls' => false
         );
 
         return $config;
