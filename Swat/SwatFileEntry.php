@@ -94,6 +94,9 @@ class SwatFileEntry extends SwatInputControl
      */
     protected $file = null;
 
+    // }}}
+    // {{{ private properties
+
     /**
      * The mime type of the uploaded file
      *
@@ -104,7 +107,7 @@ class SwatFileEntry extends SwatInputControl
      *
      * @var string
      */
-    protected $mime_type;
+    private $mime_type;
 
     // }}}
     // {{{ public function display()
