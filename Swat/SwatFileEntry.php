@@ -84,7 +84,7 @@ class SwatFileEntry extends SwatInputControl
     public $display_maximum_upload_size = false;
 
     // }}}
-    // {{{ private properties
+    // {{{ protected properties
 
     /**
      * Stores the relevant part of the $_FILES array for this widget after
@@ -92,7 +92,7 @@ class SwatFileEntry extends SwatInputControl
      *
      * @var array
      */
-    private $file = null;
+    protected $file = null;
 
     /**
      * The mime type of the uploaded file
@@ -104,7 +104,7 @@ class SwatFileEntry extends SwatInputControl
      *
      * @var string
      */
-    private $mime_type;
+    protected $mime_type;
 
     // }}}
     // {{{ public function display()
