@@ -677,17 +677,13 @@ class SwatFileEntry extends SwatInputControl
 
             switch ($size) {
                 case 'P':
-                    $value *= pow(1024, 5);
-                    break;
+                    $value *= 1024;
                 case 'T':
-                    $value *= pow(1024, 4);
-                    break;
+                    $value *= 1024;
                 case 'G':
-                    $value *= pow(1024, 3);
-                    break;
+                    $value *= 1024;
                 case 'M':
-                    $value *= pow(1024, 2);
-                    break;
+                    $value *= 1024;
                 case 'K':
                     $value *= 1024;
                     break;
