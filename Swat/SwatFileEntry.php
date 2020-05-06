@@ -676,15 +676,20 @@ class SwatFileEntry extends SwatInputControl
             $value = (int) mb_substr($ini_value, 0, -1);
 
             // No breaks on purpose. We want the values to fall through.
+            // "no break" comments below are for PSR coding style
             switch ($size) {
                 case 'P':
                     $value *= 1024;
+                    // no break
                 case 'T':
                     $value *= 1024;
+                    // no break
                 case 'G':
                     $value *= 1024;
+                    // no break
                 case 'M':
                     $value *= 1024;
+                    // no break
                 case 'K':
                     $value *= 1024;
                     break;
