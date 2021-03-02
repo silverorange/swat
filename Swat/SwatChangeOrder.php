@@ -32,14 +32,14 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
      *
      * @var string
      */
-    public $width = '300px';
+    public $width = '600px';
 
     /**
      * Height of the order box (in stylesheet units)
      *
      * @var string
      */
-    public $height = '180px';
+    public $height = '300px';
 
     // }}}
     // {{{ public function __construct()
