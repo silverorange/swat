@@ -4,7 +4,7 @@
  * A numeric cell renderer
  *
  * @package   Swat
- * @copyright 2006-2016 silverorange
+ * @copyright 2006-2021 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatNumericCellRenderer extends SwatCellRenderer
@@ -38,6 +38,16 @@ class SwatNumericCellRenderer extends SwatCellRenderer
      * @var string
      */
     public $null_display_value = null;
+
+    /**
+     * Show Thousands Seperator
+     *
+     * Whether or not to show a thousands separator (shown depending on
+     * locale).
+     *
+     * @var boolean
+     */
+    public $show_thousands_separator = true;
 
     // }}}
     // {{{ public function render()
@@ -82,7 +92,10 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 
         if (is_numeric($this->value)) {
             $locale = SwatI18NLocale::get();
-            $value = $locale->formatNumber($this->value, $this->precision);
+            $thousands_separator = $this->show_thousands_separator ? null : '';
+            $value = $locale->formatNumber($this->value, $this->precision, [
+                'thousands_separator' => $thousands_separator
+            ]);
         }
 
         return $value;

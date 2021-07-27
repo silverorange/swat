@@ -32,13 +32,11 @@
 		}
 	],
 	"repositories": [
-		{
-			"type": "composer",
-			"url": "https://composer.silverorange.com"
-		},
-		{
-			"packagist": false
-		}
+        {
+            "type": "composer",
+            "url": "https://composer.silverorange.com",
+            "only": ["silverorange/*"]
+        }
 	],
 	"require": {
 		"php": ">=5.6.0",
