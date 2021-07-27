@@ -39,6 +39,16 @@ class SwatNumericCellRenderer extends SwatCellRenderer
      */
     public $null_display_value = null;
 
+    /**
+     * Show Thousands Seperator
+     *
+     * Whether or not to show a thousands separator (shown depending on
+     * locale).
+     *
+     * @var boolean
+     */
+    public $show_thousands_separator = true;
+
     // }}}
     // {{{ public function render()
 
@@ -82,7 +92,10 @@ class SwatNumericCellRenderer extends SwatCellRenderer
 
         if (is_numeric($this->value)) {
             $locale = SwatI18NLocale::get();
-            $value = $locale->formatNumber($this->value, $this->precision);
+            $thousands_separator = $this->show_thousands_separator ? null : '';
+            $value = $locale->formatNumber($this->value, $this->precision, [
+                'thousands_separator' => $thousands_separator
+            ]);
         }
 
         return $value;
