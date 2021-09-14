@@ -305,7 +305,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
         }
 
         $sensitive = $this->getOptionMetadata($option, 'sensitive');
-        if (!$this->isSensitive() || !$sensitive) {
+        if (!$this->isSensitive() || $sensitive === false) {
             $input_tag->disabled = 'disabled';
         }
 
