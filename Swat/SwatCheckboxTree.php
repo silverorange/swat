@@ -52,6 +52,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
     public function __construct($id = null)
     {
         parent::__construct($id);
+        $this->addJavaScript('packages/swat/javascript/swat-checkbox-tree.js');
         $this->setTree(new SwatDataTreeNode(null, 'root'));
     }
 
@@ -122,6 +123,19 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
     public function getTree()
     {
         return $this->tree;
+    }
+
+    // }}}
+    // {{{ protected function getJavaScriptClassName()
+
+    /**
+     * Get the name of the JavaScript class for this widget
+     *
+     * @return string JavaScript class name.
+     */
+    protected function getJavaScriptClassName()
+    {
+        return 'SwatCheckboxTree';
     }
 
     // }}}
