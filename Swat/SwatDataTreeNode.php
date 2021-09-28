@@ -4,7 +4,7 @@
  * A tree node containing a value and a title
  *
  * @package   Swat
- * @copyright 2005-2016 silverorange
+ * @copyright 2005-2021 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDataTreeNode extends SwatTreeNode
@@ -29,6 +29,15 @@ class SwatDataTreeNode extends SwatTreeNode
      */
     public $title;
 
+    /**
+     * The sensitivity of this node
+     *
+     * Used to mark this node as unselectable
+     *
+     * @var boolean
+     */
+    public $sensitive;
+
     // }}}
     // {{{ public function __construct()
 
@@ -38,11 +47,13 @@ class SwatDataTreeNode extends SwatTreeNode
      * @param mixed $value the value of the node. It is either a string or an
      *                      integer.
      * @param string $title the title of the node.
+     * @param boolean $sesitive optional, the sensitivity of this node.
      */
-    public function __construct($value, $title)
+    public function __construct($value, $title, $sensitive = true)
     {
         $this->value = $value;
         $this->title = $title;
+        $this->sensitive = $sensitive;
     }
 
     // }}}

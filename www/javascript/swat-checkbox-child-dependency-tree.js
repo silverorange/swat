@@ -8,14 +8,23 @@ function SwatCheckboxChildDependencyTree(id) {
      * When an option is checked we check all children.
      * When an option is unchecked we uncheck all parents.
      */
-    return new SwatCheckboxTree(
-        id,
-        function(input, parents, children) {
+    return new SwatCheckboxTree(id, function(input, parents, children) {
+        const onChange = function() {
             if (input.checked) {
-                children(true);
+                children({ checked: true });
             } else {
-                parents(false);
+                parents({ checked: false });
             }
+        };
+
+        if (input.disabled) {
+            parents({ disabled: true });
         }
-    );
+
+        if (input.checked) {
+            children({ checked: true });
+        }
+
+        YAHOO.util.Event.on(input, 'change', onChange);
+    });
 }

@@ -3,7 +3,7 @@
  *
  * @param id string Id of the matching {@link SwatCheckboxTree} object.
  */
-function SwatCheckboxTree(id, maybeAction) {
+function SwatCheckboxTree(id, maybeEffect) {
     function compose(second, first) {
         return function(x) {
             return second(first(x));
@@ -21,10 +21,10 @@ function SwatCheckboxTree(id, maybeAction) {
     /*
      * This function walks all nodes of the check box tree and returns
      * a function that allows for operations on all check boexes in the
-     * tree. You may also provide a side effect and action that will be
-     * executed for each node in the tree.
+     * tree. You may also provide a side effect that will be executed
+     * for each node in the tree.
      */
-    function walk(container, parents, chain, effect, action) {
+    function walk(container, parents, chain, effect) {
         return Array.from(container.querySelectorAll(':scope > ul > li'))
             .map(function(item) {
                 return {
@@ -48,11 +48,10 @@ function SwatCheckboxTree(id, maybeAction) {
                         chain(input)
                     ),
                     chain,
-                    effect,
-                    action
+                    effect
                 );
 
-                effect(input, action(input, parents, children));
+                effect(input, parents, children);
 
                 return compose(
                     chain(input),
@@ -64,7 +63,7 @@ function SwatCheckboxTree(id, maybeAction) {
 
     function init() {
         const container = document.getElementById(id);
-        const action = maybeAction ? maybeAction : nothing;
+        const effect = maybeEffect ? maybeEffect : nothing;
 
         /*
          * This call to walk makes us a nice little function of the form
@@ -77,10 +76,9 @@ function SwatCheckboxTree(id, maybeAction) {
             identity,
             function(input) {
                 return function(checked) {
-                    return input.checked && checked;
+                    return (input.disabled || input.checked) && checked;
                 };
             },
-            nothing,
             nothing
         );
 
@@ -106,31 +104,38 @@ function SwatCheckboxTree(id, maybeAction) {
          * on each check box in the tree. In this case the side effect
          * is setting up a event listener on each check box in the tree
          * that will preform the desired behavior when the input is changed.
-         *
-         * The this.checkAll property is required by SwatCheckAll.
          */
-        this.checkAll = walk(
+        const checkAll = walk(
             container,
             identity,
             function(input) {
-                return function(checked) {
-                    return (input.checked = checked);
+                return function(state) {
+                    if (state.disabled !== undefined) {
+                        input.disabled = state.disabled;
+                        input.checked = false;
+                    }
+
+                    if (state.checked !== undefined) {
+                        input.checked = input.disabled ? false : state.checked;
+                    }
+
+                    return state;
                 };
             },
-            function(input, action) {
-                YAHOO.util.Event.on(input, 'change', action);
-            },
-            // After we call the action we update the state of the check all
+            // After we call the side effect we also update the state of the check all
             function(input, parents, children) {
-                return function() {
-                    action(input, parents, children);
-                    updateCheckAll();
-                };
+                effect(input, parents, children);
+                YAHOO.util.Event.on(input, 'change', updateCheckAll);
             }
         );
 
         // The this.updateCheckAll property is also required by SwatCheckAll.
         this.updateCheckAll = updateCheckAll;
+
+        // The this.checkAll property is required by SwatCheckAll.
+        this.checkAll = function(checked) {
+            checkAll({ checked: checked });
+        };
     }
 
     YAHOO.util.Event.onDOMReady(init, this, true);
