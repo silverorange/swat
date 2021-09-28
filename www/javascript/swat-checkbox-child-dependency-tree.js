@@ -18,6 +18,7 @@ function SwatCheckboxChildDependencyTree(id) {
         };
 
         if (input.disabled) {
+            input.checked = false;
             parents({ disabled: true });
         }
 
