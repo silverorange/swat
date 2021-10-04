@@ -29,6 +29,15 @@ class SwatDataTreeNode extends SwatTreeNode
      */
     public $title;
 
+    /**
+     * Optional content type
+     *
+     * Default text/plain, use text/xml for XHTML fragments.
+     *
+     * @var string
+     */
+    public $content_type = 'text/plain';
+
     // }}}
     // {{{ public function __construct()
 
@@ -38,11 +47,13 @@ class SwatDataTreeNode extends SwatTreeNode
      * @param mixed $value the value of the node. It is either a string or an
      *                      integer.
      * @param string $title the title of the node.
+     * @param string $content_type optional content-type
      */
-    public function __construct($value, $title)
+    public function __construct($value, $title, $content_type = 'text/plain')
     {
         $this->value = $value;
         $this->title = $title;
+        $this->content_type = $content_type;
     }
 
     // }}}

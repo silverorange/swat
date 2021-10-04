@@ -182,7 +182,10 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
                 }
 
                 $this->label_tag->for = $this->id . '_' . $index;
-                $this->label_tag->setContent($node->title);
+                $this->label_tag->setContent(
+                    $node->title,
+                    $node->content_type
+                );
 
                 echo '<span class="swat-checkbox-wrapper">';
                 $this->input_tag->display();
@@ -190,7 +193,11 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
                 echo '</span>';
                 $this->label_tag->display();
             } else {
-                echo SwatString::minimizeEntities($node->title);
+                if ($node->content_type === 'text/xml') {
+                    echo $node->title;
+                } else {
+                    echo SwatString::minimizeEntities($node->title);
+                }
             }
         }
 
