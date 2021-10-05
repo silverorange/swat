@@ -9,6 +9,18 @@
  */
 class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 {
+    // {{{ constants
+
+    const DEPENDENT_NONE = 'none';
+    const DEPENDENT_PARENT = 'parent';
+    const DEPENDENT_CHILD = 'child';
+
+    // }}}
+    // {{{ public properties
+
+    public $dependency_type = self::DEPENDENT_NONE;
+
+    // }}}
     // {{{ protected properties
 
     /**
@@ -54,6 +66,29 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
         parent::__construct($id);
         $this->addJavaScript('packages/swat/javascript/swat-checkbox-tree.js');
         $this->setTree(new SwatDataTreeNode(null, 'root'));
+    }
+
+    // }}}
+    // {{{ public function process()
+
+    /**
+     * Processes this checkbox list widget
+     */
+    public function process()
+    {
+        parent::process();
+
+        if (
+            $this->dependency_type === self::DEPENDENT_CHILD ||
+            $this->dependency_type === self::DEPENDENT_PARENT
+        ) {
+            // This is just used to ensure that users can't fake invalid
+            // selections by using the browers inspector or other such things
+            $initial = $this->dependency_type === self::DEPENDENT_PARENT;
+            if (!$this->validate($this->tree, $initial)) {
+                $this->addMessage($this->getValidationMessage('invalid'));
+            }
+        }
     }
 
     // }}}
@@ -126,6 +161,26 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
     }
 
     // }}}
+    // {{{ protected function validate()
+
+    protected function validate(SwatDataTreeNode $node, $is_parent_selected)
+    {
+        $is_selected = $node->value === null ?
+            $is_parent_selected :
+            in_array($node->value, $this->values);
+
+        $condition = $this->dependency_type === self::DEPENDENT_CHILD ?
+            (!$is_parent_selected && $is_selected) :
+            ($is_parent_selected && !$is_selected);
+
+        return array_reduce(
+            $node->getChildren(),
+            fn($carry, $child) => $carry && $this->validate($child, $is_selected),
+            ($is_parent_selected === $is_selected) || $condition
+        );
+    }
+
+    // }}}
     // {{{ protected function getJavaScriptClassName()
 
     /**
@@ -135,7 +190,14 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
      */
     protected function getJavaScriptClassName()
     {
-        return 'SwatCheckboxTree';
+        switch ($this->dependency_type) {
+            case self::DEPENDENT_CHILD:
+                return 'SwatCheckboxChildDependencyTree';
+            case self::DEPENDENT_PARENT:
+                return 'SwatCheckboxParentDependencyTree';
+            default:
+                return 'SwatCheckboxTree';
+        }
     }
 
     // }}}
