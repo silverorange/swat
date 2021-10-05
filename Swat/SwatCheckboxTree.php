@@ -11,13 +11,34 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 {
     // {{{ constants
 
+    /**
+     * A regular checkbox tree. Nothing speical is tracked.
+     */
     const DEPENDENT_NONE = 'none';
+
+    /**
+     * A checkbox tree widget with which tracks option dependency
+     *
+     * Any time a checkbox is checked all dependant parent options,
+     * all the way to the root, will also be checked.
+     */
     const DEPENDENT_PARENT = 'parent';
+
+    /**
+     * A checkbox tree widget with which tracks option dependency
+     *
+     * Any time a checkbox is checked all child options will also be checked.
+     */
     const DEPENDENT_CHILD = 'child';
 
     // }}}
     // {{{ public properties
 
+    /**
+     * Used to determine the type of dependency tracking
+     *
+     * @var string
+     */
     public $dependency_type = self::DEPENDENT_NONE;
 
     // }}}

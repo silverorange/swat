@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
+		"make-pretty-js": "prettier --write www/javascript/swat-checkbox*-tree.js",
 		"check-if-pretty": "prettier --list-different '{Swat,SwatDB,SwatI18N}/**/*.php'",
 		"make-pretty": "prettier --write '{Swat,SwatDB,SwatI18N}/**/*.php'"
 	},
