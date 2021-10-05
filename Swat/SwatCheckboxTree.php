@@ -177,7 +177,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 
         return array_reduce(
             $node->getChildren(),
-            function ($carry, $child) {
+            function ($carry, $child) use ($is_selected) {
                 return $carry && $this->validate($child, $is_selected);
             },
             $is_parent_selected === $is_selected || $condition
