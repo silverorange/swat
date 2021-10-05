@@ -165,18 +165,22 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
 
     protected function validate(SwatDataTreeNode $node, $is_parent_selected)
     {
-        $is_selected = $node->value === null ?
-            $is_parent_selected :
-            in_array($node->value, $this->values);
+        $is_selected =
+            $node->value === null
+                ? $is_parent_selected
+                : in_array($node->value, $this->values);
 
-        $condition = $this->dependency_type === self::DEPENDENT_CHILD ?
-            (!$is_parent_selected && $is_selected) :
-            ($is_parent_selected && !$is_selected);
+        $condition =
+            $this->dependency_type === self::DEPENDENT_CHILD
+                ? !$is_parent_selected && $is_selected
+                : $is_parent_selected && !$is_selected;
 
         return array_reduce(
             $node->getChildren(),
-            fn($carry, $child) => $carry && $this->validate($child, $is_selected),
-            ($is_parent_selected === $is_selected) || $condition
+            function ($carry, $child) {
+                return $carry && $this->validate($child, $is_selected);
+            },
+            $is_parent_selected === $is_selected || $condition
         );
     }
 
