@@ -4,7 +4,7 @@
  * A checkbox list widget
  *
  * @package   Swat
- * @copyright 2005-2016 silverorange
+ * @copyright 2005-2021 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatCheckboxList extends SwatOptionControl implements SwatState
@@ -304,7 +304,8 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
             $input_tag->checked = 'checked';
         }
 
-        if (!$this->isSensitive()) {
+        $sensitive = $this->getOptionMetadata($option, 'sensitive');
+        if (!$this->isSensitive() || $sensitive === false) {
             $input_tag->disabled = 'disabled';
         }
 
