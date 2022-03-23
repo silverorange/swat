@@ -237,38 +237,31 @@ class SwatTextareaEditor extends SwatTextarea
         $buttons = implode(',', $this->getConfigButtons());
 
         $blockformats = array(
-            'p',
-            'blockquote',
-            'pre',
-            'h1',
-            'h2',
-            'h3',
-            'h4',
-            'h5',
-            'h6'
+            'Paragraph=p',
+            'Blockquote=blockquote',
+            'Preformatted=pre',
+            'Header 1=h1',
+            'Header 2=h2',
+            'Header 3=h3',
+            'Header 4=h4',
+            'Header 5=h5',
+            'Header 6=h6'
         );
 
-        $blockformats = implode(',', $blockformats);
+        $blockformats = implode('; ', $blockformats);
 
         $modes = $this->modes_enabled ? 'yes' : 'no';
         $image_server = $this->image_server ? $this->image_server : '';
 
         $config = array(
             'mode' => 'exact',
-            'elements' => $this->id,
-            'theme' => 'advanced',
-            'theme_advanced_buttons1' => $buttons,
-            'theme_advanced_buttons2' => '',
-            'theme_advanced_buttons3' => '',
-            'theme_advanced_toolbar_location' => 'top',
-            'theme_advanced_toolbar_align' => 'left',
-            'theme_advanced_blockformats' => $blockformats,
+            'selector' => $this->id,
+            'toolbar' => $buttons,
+            'block_formats' => $blockformats, // https://www.tiny.cloud/docs/configure/editor-appearance/#block_formats
             'skin' => 'swat',
-            'plugins' => 'swat,media,paste',
+            'plugins' => 'swat media paste',
             'swat_modes_enabled' => $modes,
             'swat_image_server' => $image_server,
-            'paste_remove_spans' => true,
-            'paste_remove_styles' => true,
             'convert_urls' => false
         );
 
