@@ -254,7 +254,6 @@ class SwatTextareaEditor extends SwatTextarea
         $image_server = $this->image_server ? $this->image_server : '';
 
         $config = array(
-            'mode' => 'exact',
             'selector' => '#'.$this->id,
             'toolbar' => $buttons,
             'block_formats' => $blockformats, // https://www.tiny.cloud/docs/configure/editor-appearance/#block_formats
