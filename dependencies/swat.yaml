@@ -75,6 +75,7 @@ Swat:
     packages/swat/javascript/swat-view.js:
     packages/swat/javascript/swat-z-index-manager.js:
     packages/swat/javascript/tiny_mce/tiny_mce.js:
+    packages/swat/javascript/tinymce/tinymce.min.js:
       Minify: No
 
     # Style-sheet resources

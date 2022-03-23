@@ -139,7 +139,7 @@ class SwatTextareaEditor extends SwatTextarea
         $this->requires_id = true;
         $this->rows = 30;
 
-        $this->addJavaScript('packages/swat/javascript/tiny_mce/tiny_mce.js');
+        $this->addJavaScript('packages/swat/javascript/tinymce/tinymce.min.js');
         $this->addJavaScript(
             'packages/swat/javascript/swat-z-index-manager.js'
         );
