@@ -255,7 +255,7 @@ class SwatTextareaEditor extends SwatTextarea
 
         $config = array(
             'mode' => 'exact',
-            'selector' => $this->id,
+            'selector' => '#'.$this->id,
             'toolbar' => $buttons,
             'block_formats' => $blockformats, // https://www.tiny.cloud/docs/configure/editor-appearance/#block_formats
             'skin' => 'swat',
