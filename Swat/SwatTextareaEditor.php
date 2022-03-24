@@ -257,8 +257,8 @@ class SwatTextareaEditor extends SwatTextarea
             'selector' => '#'.$this->id,
             'toolbar' => $buttons,
             'block_formats' => $blockformats, // https://www.tiny.cloud/docs/configure/editor-appearance/#block_formats
-            //'skin' => 'swat',
-            'plugins' => 'code table lists media image link template',//'media paste',
+            'skin' => 'swat',
+            'plugins' => 'code table lists media image link template',//'paste',
             //'swat_modes_enabled' => $modes,
             //'swat_image_server' => $image_server,
             'convert_urls' => false
