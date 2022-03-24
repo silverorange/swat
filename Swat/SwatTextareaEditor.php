@@ -258,7 +258,7 @@ class SwatTextareaEditor extends SwatTextarea
             'toolbar' => $buttons,
             'block_formats' => $blockformats, // https://www.tiny.cloud/docs/configure/editor-appearance/#block_formats
             //'skin' => 'swat',
-            'plugins' => 'code table lists media',//'media paste',
+            'plugins' => 'code table lists media link ',//'media paste',
             //'swat_modes_enabled' => $modes,
             //'swat_image_server' => $image_server,
             'convert_urls' => false
@@ -290,8 +290,7 @@ class SwatTextareaEditor extends SwatTextarea
             'numlist',
             '|',
             'link',
-            'image',
-            'snippet'
+            'image'
         );
     }
 
