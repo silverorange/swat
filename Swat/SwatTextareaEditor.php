@@ -326,9 +326,7 @@ class SwatTextareaEditor extends SwatTextarea
 
         $lines = array();
         foreach ($this->getConfig() as $name => $value) {
-            if (is_string($value)) {
-                $value = SwatString::quoteJavaScriptString($value);
-            } elseif (is_bool($value)) {
+            if (is_bool($value)) {
                 $value = $value ? 'true' : 'false';
             }
             $lines[] = "\t" . $name . ": " . $value;
