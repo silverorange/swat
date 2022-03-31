@@ -953,7 +953,10 @@ class SwatDateEntry extends SwatInputControl implements SwatState
      */
     private function getDatePartOrder()
     {
-        $format = nl_langinfo(D_FMT);
+        // D_FMT is often for numeric-only dates and can use a different order
+        // than long date formats. Use the D_T_FMT instead as it usually uses
+        // textual month names.
+        $format = nl_langinfo(D_T_FMT);
 
         // expand short form format
         $format = str_replace('%D', '%m/%d/%y', $format);
