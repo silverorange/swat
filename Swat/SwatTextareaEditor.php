@@ -262,8 +262,8 @@ class SwatTextareaEditor extends SwatTextarea
             'convert_urls' => false,
             'paste_retain_style_properties' => 'background-color',
             'branding' => false,
-            'powerpaste_word_import' => 'merge',
-            'powerpaste_googledocs_import' => 'merge'
+            'powerpaste_word_import' => 'clean',
+            'powerpaste_googledocs_import' => 'clean'
         );
 
         return $config;
