@@ -260,7 +260,7 @@ class SwatTextareaEditor extends SwatTextarea
             'skin' => 'outside',
             'plugins' => 'code table lists media image link powerpaste',
             'convert_urls' => false,
-            'paste_retain_style_properties' => 'all',
+            'paste_retain_style_properties' => 'background-color',
             'branding' => false
         );
 
