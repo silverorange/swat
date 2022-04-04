@@ -11,7 +11,7 @@ class SwatExternalJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 {
     // {{{ protected function displayInternal()
 
-    protected function displayInternal()
+    protected function displayInternal($uri_prefix = '', $tag = null)
     {
         $uri = $this->uri;
 
