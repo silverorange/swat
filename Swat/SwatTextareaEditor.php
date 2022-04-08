@@ -262,10 +262,10 @@ class SwatTextareaEditor extends SwatTextarea
             'convert_urls' => false,
             'paste_retain_style_properties' => 'background-color',
             'branding' => false,
-            'powerpaste_word_import' => 'clean',
-            'powerpaste_googledocs_import' => 'clean',
-            'powerpaste_html_import' => 'clean',
-            'powerpaste_clean_filtered_inline_elements' => 'font'
+            'powerpaste_word_import' => 'merge',
+            'powerpaste_googledocs_import' => 'merge',
+            'powerpaste_html_import' => 'merge',
+            'paste_postprocess' => 'function(pluginApi, data) { console.log(data.node, data.mode, data.source); }'
 
         );
 
