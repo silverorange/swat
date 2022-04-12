@@ -264,8 +264,7 @@ class SwatTextareaEditor extends SwatTextarea
             'branding' => false,
             'powerpaste_word_import' => 'merge',
             'powerpaste_googledocs_import' => 'merge',
-            'powerpaste_html_import' => 'merge',
-            'paste_postprocess' => 'function(pluginApi, data) { console.log(data.node, data.mode, data.source); }'
+            'powerpaste_html_import' => 'merge'
 
         );
 
@@ -347,6 +346,7 @@ class SwatTextareaEditor extends SwatTextarea
         // Make removeformat button also clear inline alignments, styles,
         // colors and classes.
         echo ",\n" .
+            "\tpaste_postprocess: function(pluginApi, data) { console.log(data.node, data.mode, data.source); },\n" .
             "\tformats: {\n" .
             "\t\tremoveformat : [\n" .
             "\t\t\t{\n" .
