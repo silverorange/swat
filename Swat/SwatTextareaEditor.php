@@ -346,7 +346,53 @@ class SwatTextareaEditor extends SwatTextarea
         // Make removeformat button also clear inline alignments, styles,
         // colors and classes.
         echo ",\n" .
-            "\tpaste_postprocess: function(pluginApi, data) { console.log(data.node, data.mode, data.source); },\n" .
+            "\tpaste_postprocess: function(pluginApi, data) {
+				const toRemove = [];
+				function execOnChildren(elem, fn) {
+					fn(elem);
+					for (let i = 0; i < elem.children.length; i++) {
+						execOnChildren(elem.children[i], fn);
+					}
+				}
+				function removeStyle(elem) {
+					if (!elem || !elem.hasAttribute('style')) return;
+					const match = elem.getAttribute('style').match(/background-color:.*;/g);
+					if (match) {
+						elem.setAttribute('style', match[0]);
+					} else {
+						elem.removeAttribute('style');
+					}
+				}
+				function removeNestedP(elem) {
+					if (!elem || !elem.children[0]) return;
+					console.log(elem.nodeName, elem.children[0].nodeName);
+					if (elem.nodeName === 'LI' && elem.children[0].nodeName === 'P') {
+						const p = elem.removeChild(elem.children[0]);
+						const children = [];
+						for (let i = 0; i < p.children.length; i++) {
+							children.push(p.children[i]);
+						}
+						for (let i = 0; i < elem.children.length; i++) {
+							children.push(elem.children[i]);
+						}
+						elem.replaceChildren(...children);
+					}
+				}
+				function clean(elem) {
+					removeStyle(elem);
+					removeNestedP(elem);
+				}
+				for (let i = 0; i < data.node.children.length; i++) {
+					const child = data.node.children[i];
+					if (child.nodeName === 'BR') {
+						toRemove.push(child);
+					} else {
+						execOnChildren(child, clean);
+					}
+				}
+				toRemove.forEach(r => data.node.removeChild(r));
+				console.log(data.node);
+			},\n" .
             "\tformats: {\n" .
             "\t\tremoveformat : [\n" .
             "\t\t\t{\n" .
