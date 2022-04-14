@@ -365,7 +365,6 @@ class SwatTextareaEditor extends SwatTextarea
 				}
 				function removeNestedP(elem) {
 					if (!elem || !elem.children[0]) return;
-					console.log(elem.nodeName, elem.children[0].nodeName);
 					if (elem.nodeName === 'LI' && elem.children[0].nodeName === 'P') {
 						const p = elem.removeChild(elem.children[0]);
 						const children = [];
@@ -391,7 +390,6 @@ class SwatTextareaEditor extends SwatTextarea
 					}
 				}
 				toRemove.forEach(r => data.node.removeChild(r));
-				console.log(data.node);
 			},\n" .
             "\tformats: {\n" .
             "\t\tremoveformat : [\n" .
