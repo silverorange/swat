@@ -21,6 +21,8 @@ class SwatTextareaEditor extends SwatTextarea
     // }}}
     // {{{ public properties
 
+    public static TINY_MCE_API_KEY = '';
+
     /**
      * Width of the editor
      *
@@ -139,7 +141,7 @@ class SwatTextareaEditor extends SwatTextarea
         $this->requires_id = true;
         $this->rows = 30;
 
-        $this->addExternalJavaScript('https://cdn.tiny.cloud/1/mr7jywshgpa7hj8gp3njmyobnx8qz4ll5c7p115n3ls0knq4/tinymce/5/tinymce.min.js');
+        $this->addExternalJavaScript("https://cdn.tiny.cloud/1/{$this->TINY_MCE_API_KEY}/tinymce/5/tinymce.min.js");
         $this->addJavaScript(
             'packages/swat/javascript/swat-z-index-manager.js'
         );
