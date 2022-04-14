@@ -141,6 +141,12 @@ class SwatTextareaEditor extends SwatTextarea
         $this->requires_id = true;
         $this->rows = 30;
 
+        if (!$this->TINY_MCE_API_KEY) {
+            throw new SwatException(
+                'TinyMCE API key is not set'
+            );
+        }
+
         $this->addExternalJavaScript("https://cdn.tiny.cloud/1/{$this->TINY_MCE_API_KEY}/tinymce/5/tinymce.min.js");
         $this->addJavaScript(
             'packages/swat/javascript/swat-z-index-manager.js'
