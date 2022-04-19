@@ -21,7 +21,7 @@ class SwatTextareaEditor extends SwatTextarea
     // }}}
     // {{{ public properties
 
-    public static TINY_MCE_API_KEY = '';
+    public static $tiny_mce_api_key = '';
 
     /**
      * Width of the editor
