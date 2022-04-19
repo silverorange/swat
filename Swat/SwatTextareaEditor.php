@@ -141,7 +141,7 @@ class SwatTextareaEditor extends SwatTextarea
         $this->requires_id = true;
         $this->rows = 30;
 
-        if (!self::$tiny_mce_api_key) {
+        if (self::$tiny_mce_api_key === null) {
             throw new SwatException(
                 'TinyMCE API key is not set'
             );
