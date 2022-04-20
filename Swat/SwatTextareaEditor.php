@@ -8,7 +8,7 @@
  * details.
  *
  * @package   Swat
- * @copyright 2004-2016 silverorange
+ * @copyright 2022 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextareaEditor extends SwatTextarea
@@ -141,7 +141,7 @@ class SwatTextareaEditor extends SwatTextarea
         $this->requires_id = true;
         $this->rows = 30;
 
-        if (self::$tiny_mce_api_key !== null) {
+        if (self::$tiny_mce_api_key !== null && self::$tiny_m) {
             $tinyc_mce_url = "https://cdn.tiny.cloud/1/".self::$tiny_mce_api_key."/tinymce/5/tinymce.min.js";
         } else {
             $tiny_mce_url = "https://cdn.tiny.cloud/1/no-api-key/tinymce/4/tinymce.min.js";
@@ -351,8 +351,8 @@ class SwatTextareaEditor extends SwatTextarea
 
         echo implode(",\n", $lines);
 
-        // Make removeformat button also clear inline alignments, styles,
-        // colors and classes.
+        // Post process the pasted nodes to remove extra styling while preserving
+        // highlighted text. Also removes extra br tags
         echo ",\n" .
             "\tpaste_postprocess: function(pluginApi, data) {
 				const toRemove = [];

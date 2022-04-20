@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Stores and outputs an HTML head entry for a JavaScript include
+ * Stores and outputs an HTML head entry for an external JavaScript resource
  *
  * @package   Swat
  * @copyright 2006-2016 silverorange
@@ -26,9 +26,7 @@ class SwatExternalJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
 
     protected function displayInlineInternal($path)
     {
-        echo '<script type="text/javascript">';
-        readfile($path . $this->getUri());
-        echo '</script>';
+        // Can't inline external JavaScript resources
     }
 
     // }}}
