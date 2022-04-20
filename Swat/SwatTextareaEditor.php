@@ -375,7 +375,7 @@ class SwatTextareaEditor extends SwatTextarea
 				}
 				function removeStyle(elem) {
 					if (!elem || !elem.hasAttribute('style')) return;
-					const match = elem.getAttribute('style').match(/background-color:.*;/g);
+					const match = elem.getAttribute('style').match(/background(-color)?:[^\"]*;/g);
 					if (match) {
 						elem.setAttribute('style', match[0]);
 					} else {
