@@ -261,12 +261,14 @@ class SwatTextareaEditor extends SwatTextarea
         $modes = $this->modes_enabled ? 'yes' : 'no';
         $image_server = $this->image_server ? $this->image_server : '';
 
+        $has_api_key = (self::$tiny_mce_api_key !== null && !empty(self::$tiny_mce_api_key));
+
         $config = array(
             'selector' => '#'.$this->id,
             'toolbar' => $buttons,
             'block_formats' => $blockformats, // https://www.tiny.cloud/docs/configure/editor-appearance/#block_formats
             'skin' => 'outside',
-            'plugins' => 'code table lists media image link powerpaste',
+            'plugins' => 'code table lists media image link' . $has_api_key ? ' powerpaste' : ' paste',
             'convert_urls' => false,
             'paste_retain_style_properties' => 'background-color',
             'branding' => false,
