@@ -15,10 +15,7 @@ class SwatExternalJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
     {
         $uri = $this->uri;
 
-        printf(
-            '<script type="text/javascript" src="%s"></script>',
-            $uri
-        );
+        printf('<script type="text/javascript" src="%s"></script>', $uri);
     }
 
     // }}}

@@ -141,11 +141,17 @@ class SwatTextareaEditor extends SwatTextarea
         $this->requires_id = true;
         $this->rows = 30;
 
-        if (self::$tiny_mce_api_key !== null && !empty(self::$tiny_mce_api_key)) {
-            $tiny_mce_url = "https://cdn.tiny.cloud/1/".
-                self::$tiny_mce_api_key."/tinymce/5/tinymce.min.js";
+        if (
+            self::$tiny_mce_api_key !== null &&
+            !empty(self::$tiny_mce_api_key)
+        ) {
+            $tiny_mce_url =
+                "https://cdn.tiny.cloud/1/" .
+                self::$tiny_mce_api_key .
+                "/tinymce/5/tinymce.min.js";
         } else {
-            $tiny_mce_url = "https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js";
+            $tiny_mce_url =
+                "https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js";
         }
 
         $this->addExternalJavaScript($tiny_mce_url);
@@ -262,11 +268,12 @@ class SwatTextareaEditor extends SwatTextarea
         $modes = $this->modes_enabled ? 'yes' : 'no';
         $image_server = $this->image_server ? $this->image_server : '';
 
-        $has_api_key = (self::$tiny_mce_api_key !== null && !empty(self::$tiny_mce_api_key));
+        $has_api_key =
+            self::$tiny_mce_api_key !== null && !empty(self::$tiny_mce_api_key);
         $paste_plugin = $has_api_key ? ' powerpaste' : ' paste';
 
         $config = array(
-            'selector' => '#'.$this->id,
+            'selector' => '#' . $this->id,
             'toolbar' => $buttons,
             // https://www.tiny.cloud/docs/configure/editor-appearance/#block_formats
             'block_formats' => $blockformats,
@@ -278,7 +285,6 @@ class SwatTextareaEditor extends SwatTextarea
             'powerpaste_word_import' => 'merge',
             'powerpaste_googledocs_import' => 'merge',
             'powerpaste_html_import' => 'merge'
-
         );
 
         return $config;
