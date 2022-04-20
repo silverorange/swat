@@ -404,6 +404,9 @@ class SwatTextareaEditor extends SwatTextarea
 				}
 				toRemove.forEach(r => data.node.removeChild(r));
 			},\n" .
+            "\tmenu: {\n" .
+            "\t\ttools: {title: 'Tools', items: 'code'}\n" .
+            "\t},\n" .
             "\tformats: {\n" .
             "\t\tremoveformat : [\n" .
             "\t\t\t{\n" .
