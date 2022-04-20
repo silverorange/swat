@@ -263,6 +263,7 @@ class SwatTextareaEditor extends SwatTextarea
         $image_server = $this->image_server ? $this->image_server : '';
 
         $has_api_key = (self::$tiny_mce_api_key !== null && !empty(self::$tiny_mce_api_key));
+        $paste_plugin = $has_api_key ? ' powerpaste' : ' paste';
 
         $config = array(
             'selector' => '#'.$this->id,
@@ -270,8 +271,7 @@ class SwatTextareaEditor extends SwatTextarea
             // https://www.tiny.cloud/docs/configure/editor-appearance/#block_formats
             'block_formats' => $blockformats,
             'skin' => 'outside',
-            'plugins' => 'code table lists media image link' .
-                $has_api_key ? ' powerpaste' : ' paste',
+            'plugins' => 'code table lists media image link' . $paste_plugin,
             'convert_urls' => false,
             'paste_retain_style_properties' => 'background-color',
             'branding' => false,
