@@ -309,7 +309,7 @@ class SwatTextareaEditor extends SwatTextarea
             'link',
             'image',
             'backcolor',
-            'fontsizeselect'
+            'code'
         );
     }
 
