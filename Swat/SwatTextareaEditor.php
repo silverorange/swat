@@ -404,7 +404,7 @@ class SwatTextareaEditor extends SwatTextarea
 				}
 				toRemove.forEach(r => data.node.removeChild(r));
 			},\n" .
-            "\tmenubar: 'file edit view insert format tools'\n" .
+            "\tmenubar: 'file edit view insert format tools',\n" .
             "\tformats: {\n" .
             "\t\tremoveformat : [\n" .
             "\t\t\t{\n" .
