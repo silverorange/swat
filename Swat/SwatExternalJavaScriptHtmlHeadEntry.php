@@ -4,7 +4,7 @@
  * Stores and outputs an HTML head entry for an external JavaScript resource
  *
  * @package   Swat
- * @copyright 2006-2016 silverorange
+ * @copyright 2022 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatExternalJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
