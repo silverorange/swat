@@ -141,7 +141,7 @@ class SwatTextareaEditor extends SwatTextarea
         $this->requires_id = true;
         $this->rows = 30;
 
-        if (self::$tiny_mce_api_key !== null && self::$tiny_m) {
+        if (self::$tiny_mce_api_key !== null) {
             $tinyc_mce_url = "https://cdn.tiny.cloud/1/".self::$tiny_mce_api_key."/tinymce/5/tinymce.min.js";
         } else {
             $tiny_mce_url = "https://cdn.tiny.cloud/1/no-api-key/tinymce/4/tinymce.min.js";
