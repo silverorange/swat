@@ -8,7 +8,7 @@
  * details.
  *
  * @package   Swat
- * @copyright 2004-2016 silverorange
+ * @copyright 2022 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextareaEditor extends SwatTextarea
@@ -20,6 +20,8 @@ class SwatTextareaEditor extends SwatTextarea
 
     // }}}
     // {{{ public properties
+
+    public static $tiny_mce_api_key = null;
 
     /**
      * Width of the editor
@@ -139,7 +141,17 @@ class SwatTextareaEditor extends SwatTextarea
         $this->requires_id = true;
         $this->rows = 30;
 
-        $this->addJavaScript('packages/swat/javascript/tiny_mce/tiny_mce.js');
+        if (self::$tiny_mce_api_key !== null) {
+            $tiny_mce_url =
+                "https://cdn.tiny.cloud/1/" .
+                self::$tiny_mce_api_key .
+                "/tinymce/5/tinymce.min.js";
+        } else {
+            $tiny_mce_url =
+                "https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js";
+        }
+
+        $this->addExternalJavaScript($tiny_mce_url);
         $this->addJavaScript(
             'packages/swat/javascript/swat-z-index-manager.js'
         );
@@ -234,42 +246,42 @@ class SwatTextareaEditor extends SwatTextarea
 
     protected function getConfig()
     {
-        $buttons = implode(',', $this->getConfigButtons());
+        $buttons = implode(' ', $this->getConfigButtons());
 
         $blockformats = array(
-            'p',
-            'blockquote',
-            'pre',
-            'h1',
-            'h2',
-            'h3',
-            'h4',
-            'h5',
-            'h6'
+            'Paragraph=p',
+            'Blockquote=blockquote',
+            'Preformatted=pre',
+            'Header 1=h1',
+            'Header 2=h2',
+            'Header 3=h3',
+            'Header 4=h4',
+            'Header 5=h5',
+            'Header 6=h6'
         );
 
-        $blockformats = implode(',', $blockformats);
+        $blockformats = implode('; ', $blockformats);
 
         $modes = $this->modes_enabled ? 'yes' : 'no';
         $image_server = $this->image_server ? $this->image_server : '';
 
+        $has_api_key =
+            self::$tiny_mce_api_key !== null && !empty(self::$tiny_mce_api_key);
+        $paste_plugin = $has_api_key ? ' powerpaste' : ' paste';
+
         $config = array(
-            'mode' => 'exact',
-            'elements' => $this->id,
-            'theme' => 'advanced',
-            'theme_advanced_buttons1' => $buttons,
-            'theme_advanced_buttons2' => '',
-            'theme_advanced_buttons3' => '',
-            'theme_advanced_toolbar_location' => 'top',
-            'theme_advanced_toolbar_align' => 'left',
-            'theme_advanced_blockformats' => $blockformats,
-            'skin' => 'swat',
-            'plugins' => 'swat,media,paste',
-            'swat_modes_enabled' => $modes,
-            'swat_image_server' => $image_server,
-            'paste_remove_spans' => true,
-            'paste_remove_styles' => true,
-            'convert_urls' => false
+            'selector' => '#' . $this->id,
+            'toolbar' => $buttons,
+            // https://www.tiny.cloud/docs/configure/editor-appearance/#block_formats
+            'block_formats' => $blockformats,
+            'skin' => 'outside',
+            'plugins' => 'code table lists media image link' . $paste_plugin,
+            'convert_urls' => false,
+            'paste_retain_style_properties' => 'background-color',
+            'branding' => false,
+            'powerpaste_word_import' => 'merge',
+            'powerpaste_googledocs_import' => 'merge',
+            'powerpaste_html_import' => 'merge'
         );
 
         return $config;
@@ -299,7 +311,8 @@ class SwatTextareaEditor extends SwatTextarea
             '|',
             'link',
             'image',
-            'snippet'
+            'backcolor',
+            'code'
         );
     }
 
@@ -346,9 +359,55 @@ class SwatTextareaEditor extends SwatTextarea
 
         echo implode(",\n", $lines);
 
-        // Make removeformat button also clear inline alignments, styles,
-        // colors and classes.
+        // Post process the pasted nodes to remove extra styling while preserving
+        // highlighted text. Also removes extra br tags
         echo ",\n" .
+            "\tpaste_postprocess: function(pluginApi, data) {
+				const toRemove = [];
+				function execOnChildren(elem, fn) {
+					fn(elem);
+					for (let i = 0; i < elem.children.length; i++) {
+						execOnChildren(elem.children[i], fn);
+					}
+				}
+				function removeStyle(elem) {
+					if (!elem || !elem.hasAttribute('style')) return;
+					const match = elem.getAttribute('style').match(/background(-color)?:[^\"]*;/g);
+					if (match) {
+						elem.setAttribute('style', match[0]);
+					} else {
+						elem.removeAttribute('style');
+					}
+				}
+				function removeNestedP(elem) {
+					if (!elem || !elem.children[0]) return;
+					if (elem.nodeName === 'LI' && elem.children[0].nodeName === 'P') {
+						const p = elem.removeChild(elem.children[0]);
+						const children = [];
+						for (let i = 0; i < p.children.length; i++) {
+							children.push(p.children[i]);
+						}
+						for (let i = 0; i < elem.children.length; i++) {
+							children.push(elem.children[i]);
+						}
+						elem.replaceChildren(...children);
+					}
+				}
+				function clean(elem) {
+					removeStyle(elem);
+					removeNestedP(elem);
+				}
+				for (let i = 0; i < data.node.children.length; i++) {
+					const child = data.node.children[i];
+					if (child.nodeName === 'BR') {
+						toRemove.push(child);
+					} else {
+						execOnChildren(child, clean);
+					}
+				}
+				toRemove.forEach(r => data.node.removeChild(r));
+			},\n" .
+            "\tmenubar: false,\n" .
             "\tformats: {\n" .
             "\t\tremoveformat : [\n" .
             "\t\t\t{\n" .

@@ -125,6 +125,28 @@ abstract class SwatUIObject extends SwatObject
     }
 
     // }}}
+    // {{{ public function addExternalJavaScript()
+
+    public function addExternalJavaScript($url)
+    {
+        if ($this->html_head_entry_set === null) {
+            throw new SwatException(
+                sprintf(
+                    "Child class '%s' did not " .
+                        'instantiate a HTML head entry set. This should be done in  ' .
+                        'the constructor either by calling parent::__construct() or ' .
+                        'by creating a new HTML head entry set.',
+                    get_class($this)
+                )
+            );
+        }
+
+        $this->html_head_entry_set->addEntry(
+            new SwatExternalJavaScriptHtmlHeadEntry($url)
+        );
+    }
+
+    // }}}
     // {{{ public function addComment()
 
     /**
