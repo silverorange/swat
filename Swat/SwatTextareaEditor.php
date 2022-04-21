@@ -21,7 +21,7 @@ class SwatTextareaEditor extends SwatTextarea
     // }}}
     // {{{ public properties
 
-    public static $tiny_mce_api_key = '';
+    public static $tiny_mce_api_key = null;
 
     /**
      * Width of the editor
@@ -142,8 +142,7 @@ class SwatTextareaEditor extends SwatTextarea
         $this->rows = 30;
 
         if (
-            self::$tiny_mce_api_key !== null &&
-            !empty(self::$tiny_mce_api_key)
+            self::$tiny_mce_api_key !== null
         ) {
             $tiny_mce_url =
                 "https://cdn.tiny.cloud/1/" .
