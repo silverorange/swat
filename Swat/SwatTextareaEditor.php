@@ -275,15 +275,15 @@ class SwatTextareaEditor extends SwatTextarea
             // https://www.tiny.cloud/docs/configure/editor-appearance/#block_formats
             'block_formats' => $blockformats,
             'skin' => 'outside',
-            'plugins' => 'code table lists media image link textcolor' . $paste_plugin,
+            'plugins' => 'code table lists media image link ' . $paste_plugin,
             'convert_urls' => false,
             'paste_retain_style_properties' => 'background-color',
             'branding' => false,
             'powerpaste_word_import' => 'merge',
             'powerpaste_googledocs_import' => 'merge',
             'powerpaste_html_import' => 'merge',
-            'textcolor_cols' => 1,
-            'textcolor_rows' => 4
+            'color_cols' => 1,
+            'color_rows' => 4
         );
 
         return $config;
@@ -410,7 +410,7 @@ class SwatTextareaEditor extends SwatTextarea
 				toRemove.forEach(r => data.node.removeChild(r));
 			},\n" .
             "\tmenubar: false,\n" .
-            "\ttextcolor_map: [\n" .
+            "\tcolor_map: [\n" .
             "\t\t'ffefee', 'Pitfall',\n" .
             "\t\t'e6f9f6', 'Pearl',\n" .
             "\t\t'fff0e2', 'Perspective',\n" .
