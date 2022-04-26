@@ -282,8 +282,8 @@ class SwatTextareaEditor extends SwatTextarea
             'powerpaste_word_import' => 'merge',
             'powerpaste_googledocs_import' => 'merge',
             'powerpaste_html_import' => 'merge',
-            'color_cols' => 1,
-            'color_rows' => 4
+            'color_cols' => 4,
+            'color_rows' => 1
         );
 
         return $config;
