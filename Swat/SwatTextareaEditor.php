@@ -408,7 +408,7 @@ class SwatTextareaEditor extends SwatTextarea
 				toRemove.forEach(r => data.node.removeChild(r));
 			},\n" .
             "\tmenubar: false,\n" .
-            "\tbackcolor_map: [\n" .
+            "\ttextcolor_map: [\n" .
             "\t\t'ffefee', 'Pitfall',\n" .
             "\t\t'e6f9f6', 'Pearl',\n" .
             "\t\t'fff0e2', 'Perspective',\n" .
