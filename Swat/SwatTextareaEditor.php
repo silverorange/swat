@@ -24,6 +24,11 @@ class SwatTextareaEditor extends SwatTextarea
     public static $tiny_mce_api_key = null;
 
     /**
+     * The text highlight colors, null will show the defaults
+     */
+    public static $color_map = null;
+
+    /**
      * Width of the editor
      *
      * Specified in CSS units (percent, pixels, ems, etc). If not specified,
@@ -275,7 +280,7 @@ class SwatTextareaEditor extends SwatTextarea
             // https://www.tiny.cloud/docs/configure/editor-appearance/#block_formats
             'block_formats' => $blockformats,
             'skin' => 'outside',
-            'plugins' => 'code table lists media image link' . $paste_plugin,
+            'plugins' => 'code table lists media image link ' . $paste_plugin,
             'convert_urls' => false,
             'paste_retain_style_properties' => 'background-color',
             'branding' => false,
@@ -317,6 +322,20 @@ class SwatTextareaEditor extends SwatTextarea
     }
 
     // }}}
+    // {{{ protected function displayColorMap()
+
+    protected function displayColorMap()
+    {
+        if (self::$color_map !== null) {
+            echo "\tcolor_map: [\n";
+            foreach (self::$color_map as $elem) {
+                echo "\t\t" . SwatString::quoteJavaScriptString($elem) . ",\n";
+            }
+            echo "\t],\n";
+        }
+    }
+
+    // }}}
     // {{{ protected function getInlineJavaScript()
 
     protected function getInlineJavaScript()
@@ -355,14 +374,15 @@ class SwatTextareaEditor extends SwatTextarea
             $lines[] = "\t" . $name . ": " . $value;
         }
 
-        $lines[] = "\tdocument_base_url: {$base_href}";
+        $lines[] = "\tdocument_base_url: {$base_href},\n";
 
         echo implode(",\n", $lines);
 
+        $this->displayColorMap();
+
         // Post process the pasted nodes to remove extra styling while preserving
         // highlighted text. Also removes extra br tags
-        echo ",\n" .
-            "\tpaste_postprocess: function(pluginApi, data) {
+        "\tpaste_postprocess: function(pluginApi, data) {
 				const toRemove = [];
 				function execOnChildren(elem, fn) {
 					fn(elem);
