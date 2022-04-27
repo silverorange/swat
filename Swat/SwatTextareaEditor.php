@@ -383,7 +383,7 @@ class SwatTextareaEditor extends SwatTextarea
         // Post process the pasted nodes to remove extra styling while preserving
         // highlighted text. Also removes extra br tags
         echo ",\n" .
-        "\tpaste_postprocess: function(pluginApi, data) {
+            "\tpaste_postprocess: function(pluginApi, data) {
 				const toRemove = [];
 				function execOnChildren(elem, fn) {
 					fn(elem);
