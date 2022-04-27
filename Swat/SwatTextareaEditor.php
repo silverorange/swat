@@ -286,7 +286,7 @@ class SwatTextareaEditor extends SwatTextarea
             'branding' => false,
             'powerpaste_word_import' => 'merge',
             'powerpaste_googledocs_import' => 'merge',
-            'powerpaste_html_import' => 'merge',
+            'powerpaste_html_import' => 'merge'
         );
 
         return $config;
@@ -382,6 +382,7 @@ class SwatTextareaEditor extends SwatTextarea
 
         // Post process the pasted nodes to remove extra styling while preserving
         // highlighted text. Also removes extra br tags
+        echo ",\n" .
         "\tpaste_postprocess: function(pluginApi, data) {
 				const toRemove = [];
 				function execOnChildren(elem, fn) {
@@ -427,46 +428,46 @@ class SwatTextareaEditor extends SwatTextarea
 				}
 				toRemove.forEach(r => data.node.removeChild(r));
 			},\n" .
-        "\tmenubar: false,\n" .
+            "\tmenubar: false,\n" .
             "\tformats: {\n" .
-                "\t\tremoveformat : [\n" .
-                "\t\t\t{\n" .
-                "\t\t\t\tselector     : 'b,strong,em,i,font,u,strike',\n" .
-                "\t\t\t\tremove       : 'all',\n" .
-                "\t\t\t\tsplit        : true,\n" .
-                "\t\t\t\texpand       : false,\n" .
-                "\t\t\t\tblock_expand : true,\n" .
-                "\t\t\t\tdeep         : true\n" .
-                "\t\t\t},\n" .
-                "\t\t\t{\n" .
-                "\t\t\t\tselector     : 'span',\n" .
-                "\t\t\t\tattributes   : [\n" .
-                "\t\t\t\t\t'style',\n" .
-                "\t\t\t\t\t'class',\n" .
-                "\t\t\t\t\t'align',\n" .
-                "\t\t\t\t\t'color',\n" .
-                "\t\t\t\t\t'background'\n" .
-                "\t\t\t\t],\n" .
-                "\t\t\t\tremove       : 'empty',\n" .
-                "\t\t\t\tsplit        : true,\n" .
-                "\t\t\t\texpand       : false,\n" .
-                "\t\t\t\tdeep         : true\n" .
-                "\t\t\t},\n" .
-                "\t\t\t{\n" .
-                "\t\t\t\tselector     : '*',\n" .
-                "\t\t\t\tattributes   : [\n" .
-                "\t\t\t\t\t'style',\n" .
-                "\t\t\t\t\t'class',\n" .
-                "\t\t\t\t\t'align',\n" .
-                "\t\t\t\t\t'color',\n" .
-                "\t\t\t\t\t'background'\n" .
-                "\t\t\t\t],\n" .
-                "\t\t\t\tsplit        : false,\n" .
-                "\t\t\t\texpand       : false,\n" .
-                "\t\t\t\tdeep         : true\n" .
-                "\t\t\t}\n" .
-                "\t\t]\n" .
-                "\t}";
+            "\t\tremoveformat : [\n" .
+            "\t\t\t{\n" .
+            "\t\t\t\tselector     : 'b,strong,em,i,font,u,strike',\n" .
+            "\t\t\t\tremove       : 'all',\n" .
+            "\t\t\t\tsplit        : true,\n" .
+            "\t\t\t\texpand       : false,\n" .
+            "\t\t\t\tblock_expand : true,\n" .
+            "\t\t\t\tdeep         : true\n" .
+            "\t\t\t},\n" .
+            "\t\t\t{\n" .
+            "\t\t\t\tselector     : 'span',\n" .
+            "\t\t\t\tattributes   : [\n" .
+            "\t\t\t\t\t'style',\n" .
+            "\t\t\t\t\t'class',\n" .
+            "\t\t\t\t\t'align',\n" .
+            "\t\t\t\t\t'color',\n" .
+            "\t\t\t\t\t'background'\n" .
+            "\t\t\t\t],\n" .
+            "\t\t\t\tremove       : 'empty',\n" .
+            "\t\t\t\tsplit        : true,\n" .
+            "\t\t\t\texpand       : false,\n" .
+            "\t\t\t\tdeep         : true\n" .
+            "\t\t\t},\n" .
+            "\t\t\t{\n" .
+            "\t\t\t\tselector     : '*',\n" .
+            "\t\t\t\tattributes   : [\n" .
+            "\t\t\t\t\t'style',\n" .
+            "\t\t\t\t\t'class',\n" .
+            "\t\t\t\t\t'align',\n" .
+            "\t\t\t\t\t'color',\n" .
+            "\t\t\t\t\t'background'\n" .
+            "\t\t\t\t],\n" .
+            "\t\t\t\tsplit        : false,\n" .
+            "\t\t\t\texpand       : false,\n" .
+            "\t\t\t\tdeep         : true\n" .
+            "\t\t\t}\n" .
+            "\t\t]\n" .
+            "\t}";
 
         echo "\n});";
 
