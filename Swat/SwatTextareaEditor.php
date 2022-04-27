@@ -24,6 +24,11 @@ class SwatTextareaEditor extends SwatTextarea
     public static $tiny_mce_api_key = null;
 
     /**
+     * The text highlight colors, null will show the defaults
+     */
+    public static $color_map = null;
+
+    /**
      * Width of the editor
      *
      * Specified in CSS units (percent, pixels, ems, etc). If not specified,
@@ -319,6 +324,20 @@ class SwatTextareaEditor extends SwatTextarea
     }
 
     // }}}
+    // {{{ protected function displayColorMap()
+
+    protected function displayColorMap()
+    {
+        if (self::$color_map !== null) {
+            echo "\tcolor_map: [\n";
+            foreach (self::$color_map as $elem) {
+                echo "\t\t" . SwatString::quoteJavaScriptString($elem) . ",\n";
+            }
+            echo "\t],\n";
+        }
+    }
+
+    // }}}
     // {{{ protected function getInlineJavaScript()
 
     protected function getInlineJavaScript()
@@ -360,6 +379,8 @@ class SwatTextareaEditor extends SwatTextarea
         $lines[] = "\tdocument_base_url: {$base_href}";
 
         echo implode(",\n", $lines);
+
+        $this->displayColorMap();
 
         // Post process the pasted nodes to remove extra styling while preserving
         // highlighted text. Also removes extra br tags
@@ -410,12 +431,6 @@ class SwatTextareaEditor extends SwatTextarea
 				toRemove.forEach(r => data.node.removeChild(r));
 			},\n" .
         "\tmenubar: false,\n" .
-        "\tcolor_map: [\n" .
-        "\t\t'ffefee', 'Pitfall',\n" .
-        "\t\t'e6f9f6', 'Pearl',\n" .
-        "\t\t'fff0e2', 'Perspective',\n" .
-        "\t\t'fff7ea', 'Caution',\n" .
-        "\t],\n",
             "\tformats: {\n" .
                 "\t\tremoveformat : [\n" .
                 "\t\t\t{\n" .
