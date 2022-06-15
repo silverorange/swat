@@ -471,7 +471,7 @@ class SwatError
     public static function handle($errno, $errstr, $errfile, $errline)
     {
         // only handle error if error reporting is not suppressed
-        if (error_reporting() & $errno) {
+        if ((error_reporting() & $errno) === $errno) {
             $error = new SwatError($errno, $errstr, $errfile, $errline);
             $error->process();
         }
