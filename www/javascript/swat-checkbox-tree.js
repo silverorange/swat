@@ -25,7 +25,7 @@ function SwatCheckboxTree(id, maybeEffect) {
      * for each node in the tree.
      */
     function walk(container, parents, chain, effect) {
-        return Array.from(container.querySelectorAll(':scope > ul > li'))
+        return Array.from(container.querySelectorAll(':scope > ul li'))
             .map(function(item) {
                 return {
                     item,
