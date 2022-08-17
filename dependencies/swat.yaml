@@ -74,6 +74,8 @@ Swat:
     packages/swat/javascript/swat-time-entry.js:
     packages/swat/javascript/swat-view.js:
     packages/swat/javascript/swat-z-index-manager.js:
+    packages/swat/javascript/tiny_mce/tinmce.min.js:
+      Minify: No
 
     # Style-sheet resources
     packages/swat/styles/swat-accordion.css:
