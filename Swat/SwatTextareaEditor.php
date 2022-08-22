@@ -153,9 +153,7 @@ class SwatTextareaEditor extends SwatTextarea
                     '/tinymce/5/tinymce.min.js'
             );
         } else {
-            $this->addJavaScript(
-                'packages/swat/javascript/tiny_mce/tinymce.min.js'
-            );
+            $this->addJavaScript('vendor/tinymce/tinymce.min.js');
         }
 
         $this->addJavaScript(
