@@ -92,9 +92,9 @@ function SwatChangeOrder_keydownEventHandler(event) {
     clearInterval(shadow_item.update_timer);
 
     shadow_item.parentNode.removeChild(shadow_item);
-    if (drop_marker.parentNode !== null)
+    if (drop_marker.parentNode !== null) {
       drop_marker.parentNode.removeChild(drop_marker);
-
+    }
     SwatChangeOrder.dragging_item = null;
     SwatChangeOrder.dragging_drop_marker = null;
     SwatChangeOrder.is_dragging = false;
@@ -222,16 +222,16 @@ function SwatChangeOrder_updateDropPosition() {
           drop_marker.style.height = node.offsetHeight - 4 + 'px';
         }
 
-        // dragging-object is on the left side of the grid item
-        if (x_middle < node_middle)
+        if (x_middle < node_middle) {
+          // dragging-object is on the left side of the grid item
           node.parentNode.insertBefore(drop_marker, node);
-        // dragging-object is on the right side of the last grid item
-        else if (list_div.childNodes.length == i + 1)
+        } else if (list_div.childNodes.length == i + 1) {
+          // dragging-object is on the right side of the last grid item
           node.parentNode.appendChild(drop_marker);
-        // dragging-object is on the right side of the grid item
-        else
+        } else {
+          // dragging-object is on the right side of the grid item
           node.parentNode.insertBefore(drop_marker, list_div.childNodes[i + 1]);
-
+        }
         break;
       }
     } else {
@@ -279,9 +279,9 @@ function SwatChangeOrder_mouseupEventHandler(event) {
   if (
     (is_ie && (event.button & 1) !== 1) ||
     (!is_ie && !is_webkit && event.button !== 0)
-  )
+  ) {
     return false;
-
+  }
   YAHOO.util.Event.removeListener(
     document,
     'mousemove',
@@ -314,9 +314,9 @@ function SwatChangeOrder_mouseupEventHandler(event) {
 
   shadow_item.parentNode.removeChild(shadow_item);
 
-  if (drop_marker.parentNode !== null)
+  if (drop_marker.parentNode !== null) {
     drop_marker.parentNode.removeChild(drop_marker);
-
+  }
   SwatChangeOrder.dragging_item = null;
   SwatChangeOrder.dragging_drop_marker = null;
   SwatChangeOrder.is_dragging = false;
@@ -344,10 +344,13 @@ function SwatChangeOrder_mousedownEventHandler(event) {
   if (
     (is_ie && (event.button & 1) != 1) ||
     (!is_ie && !is_webkit && event.button !== 0)
-  )
+  ) {
     return false;
+  }
 
-  if (!this.controller.sensitive) return false;
+  if (!this.controller.sensitive) {
+    return false;
+  }
 
   // select the node
   this.controller.choose(this);
@@ -875,7 +878,9 @@ SwatChangeOrder.prototype.moveDown = function() {
  */
 SwatChangeOrder.prototype.moveUpHelper = function(steps) {
   // can't move the top of the list up
-  if (this.list_div.firstChild === this.active_div) return false;
+  if (this.list_div.firstChild === this.active_div) {
+    return false;
+  }
 
   var return_val = true;
 
@@ -914,7 +919,9 @@ SwatChangeOrder.prototype.moveUpHelper = function(steps) {
  */
 SwatChangeOrder.prototype.moveDownHelper = function(steps) {
   // can't move the bottom of the list down
-  if (this.list_div.lastChild.previousSibling === this.active_div) return false;
+  if (this.list_div.lastChild.previousSibling === this.active_div) {
+    return false;
+  }
 
   var return_val = true;
 
@@ -951,8 +958,9 @@ SwatChangeOrder.prototype.moveDownHelper = function(steps) {
  * @param boolean sensitive whether the buttons are sensitive.
  */
 SwatChangeOrder.prototype.setButtonsSensitive = function(sensitive) {
-  for (var i = 0; i < this.buttons.length; i++)
+  for (var i = 0; i < this.buttons.length; i++) {
     this.buttons[i].disabled = !sensitive;
+  }
 };
 
 // }}}
@@ -990,7 +998,9 @@ SwatChangeOrder.prototype.updateValue = function() {
   for (var i = 0; i < this.list_div.childNodes.length - 1; i++) {
     // ignore drop marker node
     if (this.list_div.childNodes[i] != drop_marker) {
-      if (index > 0) temp += ',';
+      if (index > 0) {
+        temp += ',';
+      }
 
       temp += this.list_div.childNodes[i].order_value;
 
@@ -1003,7 +1013,9 @@ SwatChangeOrder.prototype.updateValue = function() {
   var hidden_field = document.getElementById(this.id + '_value');
 
   // fire order-changed event
-  if (temp != hidden_field.value) this.orderChangeEvent.fire(temp);
+  if (temp != hidden_field.value) {
+    this.orderChangeEvent.fire(temp);
+  }
 
   // update a hidden field with current order of keys
   hidden_field.value = temp;
@@ -1031,10 +1043,12 @@ SwatChangeOrder.prototype.updateDynamicItemsValue = function() {
  */
 SwatChangeOrder.prototype.getScrollPosition = function(element) {
   // this conditional is to fix behaviour in IE
-  if (this.list_div.firstChild.offsetTop > this.list_div.offsetTop)
+  if (this.list_div.firstChild.offsetTop > this.list_div.offsetTop) {
     var y_position =
       element.offsetTop - this.list_div.offsetTop + element.offsetHeight / 2;
-  else var y_position = element.offsetTop + element.offsetHeight / 2;
+  } else {
+    var y_position = element.offsetTop + element.offsetHeight / 2;
+  }
 
   return y_position;
 };

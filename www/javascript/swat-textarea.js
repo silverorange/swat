@@ -462,8 +462,9 @@ SwatTextarea.mouseupEventHandler = function(e, handle) {
   if (
     (is_ie && (e.button & 1) != 1) ||
     (!is_ie && !is_webkit && e.button !== 0)
-  )
+  ) {
     return false;
+  }
 
   YAHOO.util.Event.removeListener(
     document,

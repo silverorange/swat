@@ -82,22 +82,27 @@ SwatActions.prototype.setViewSelector = function(view, selector_id) {
 };
 
 SwatActions.prototype.handleChange = function() {
-  if (this.selected_element)
+  if (this.selected_element) {
     YAHOO.util.Dom.addClass(this.selected_element, 'swat-hidden');
+  }
 
   var id = this.id + '_' + this.values[this.flydown.selectedIndex];
 
   this.selected_element = document.getElementById(id);
 
-  if (this.selected_element)
+  if (this.selected_element) {
     YAHOO.util.Dom.removeClass(this.selected_element, 'swat-hidden');
+  }
 };
 
 SwatActions.prototype.handleButtonClick = function(e) {
   var is_blank;
   var value_exp = this.flydown.value.split('|', 2);
-  if (value_exp.length == 1) is_blank = value_exp[0] === '';
-  else is_blank = value_exp[1] == 'N;';
+  if (value_exp.length == 1) {
+    is_blank = value_exp[0] === '';
+  } else {
+    is_blank = value_exp[1] == 'N;';
+  }
 
   if (this.view) {
     var items_selected = this.view.getSelectorItemCount(this.selector_id) > 0;
@@ -126,8 +131,9 @@ SwatActions.prototype.handleMessageClose = function(e) {
 };
 
 SwatActions.prototype.showMessage = function(message_text) {
-  if (this.message_content.firstChild)
+  if (this.message_content.firstChild) {
     this.message_content.removeChild(this.message_content.firstChild);
+  }
 
   this.message_content.appendChild(document.createTextNode(message_text + ' '));
 

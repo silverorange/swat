@@ -18,11 +18,14 @@ function SwatTableView(id) {
   }
 
   // no tbody node, so item rows are directly in table node
-  if (tbody_node === null) tbody_node = this.table_node;
+  if (tbody_node === null) {
+    tbody_node = this.table_node;
+  }
 
   for (var i = 0; i < tbody_node.childNodes.length; i++) {
-    if (tbody_node.childNodes[i].nodeName == 'TR')
+    if (tbody_node.childNodes[i].nodeName == 'TR') {
       this.items.push(tbody_node.childNodes[i]);
+    }
   }
 }
 
@@ -40,12 +43,14 @@ YAHOO.lang.extend(SwatTableView, SwatView, {
     var row_node = node;
 
     // search for containing table row element
-    while (row_node.nodeName != 'TR' && row_node.nodeName != 'BODY')
+    while (row_node.nodeName != 'TR' && row_node.nodeName != 'BODY') {
       row_node = row_node.parentNode;
+    }
 
     // we reached the body element without finding the row node
-    if (row_node.nodeName == 'BODY') row_node = node;
-
+    if (row_node.nodeName == 'BODY') {
+      row_node = node;
+    }
     return row_node;
   }
 });

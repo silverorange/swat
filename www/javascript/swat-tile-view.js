@@ -26,11 +26,13 @@ YAHOO.lang.extend(SwatTileView, SwatView, {
     while (
       tile_node.parentNode !== this.view_node &&
       tile_node.nodeName != 'BODY'
-    )
+    ) {
       tile_node = tile_node.parentNode;
-
+    }
     // we reached the body element without finding the tile node
-    if (tile_node.nodeName == 'BODY') tile_node = node;
+    if (tile_node.nodeName == 'BODY') {
+      tile_node = node;
+    }
 
     return tile_node;
   }

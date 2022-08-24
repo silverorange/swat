@@ -192,8 +192,11 @@ SwatAbstractOverlay.prototype.getBodyContent = function() {
 // {{{ SwatAbstractOverlay.prototype.toggle
 
 SwatAbstractOverlay.prototype.toggle = function() {
-  if (this.is_open) this.close();
-  else this.open();
+  if (this.is_open) {
+    this.close();
+  } else {
+    this.open();
+  }
 };
 
 // }}}
@@ -252,7 +255,9 @@ SwatAbstractOverlay.prototype.handleKeyPress = function(e) {
   YAHOO.util.Event.preventDefault(e);
 
   // close preview on backspace or escape
-  if (e.keyCode == 8 || e.keyCode == 27) this.close();
+  if (e.keyCode == 8 || e.keyCode == 27) {
+    this.close();
+  }
 };
 
 // }}}

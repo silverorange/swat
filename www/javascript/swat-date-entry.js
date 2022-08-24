@@ -9,7 +9,7 @@ function SwatDateEntry(id, use_current_date) {
   this.calendar = null;
   this.time_entry = null;
 
-  if (this.year)
+  if (this.year) {
     YAHOO.util.Event.addListener(
       this.year,
       'change',
@@ -17,8 +17,9 @@ function SwatDateEntry(id, use_current_date) {
       this,
       true
     );
+  }
 
-  if (this.month)
+  if (this.month) {
     YAHOO.util.Event.addListener(
       this.month,
       'change',
@@ -26,8 +27,9 @@ function SwatDateEntry(id, use_current_date) {
       this,
       true
     );
+  }
 
-  if (this.day)
+  if (this.day) {
     YAHOO.util.Event.addListener(
       this.day,
       'change',
@@ -35,6 +37,7 @@ function SwatDateEntry(id, use_current_date) {
       this,
       true
     );
+  }
 
   this.lookup_table = {};
   this.reverse_lookup_table = {};
@@ -43,11 +46,15 @@ function SwatDateEntry(id, use_current_date) {
 SwatDateEntry.prototype.setSensitivity = function(sensitivity) {
   var elements = [];
 
-  if (this.year) elements.push(this.year);
-
-  if (this.month) elements.push(this.month);
-
-  if (this.day) elements.push(this.day);
+  if (this.year) {
+    elements.push(this.year);
+  }
+  if (this.month) {
+    elements.push(this.month);
+  }
+  if (this.day) {
+    elements.push(this.day);
+  }
 
   for (var i = 0; i < elements.length; i++) {
     if (sensitivity) {
@@ -59,9 +66,12 @@ SwatDateEntry.prototype.setSensitivity = function(sensitivity) {
     }
   }
 
-  if (this.calendar) this.calendar.setSensitivity(sensitivity);
-
-  if (this.time_entry) this.time_entry.setSensitivity(sensitivity);
+  if (this.calendar) {
+    this.calendar.setSensitivity(sensitivity);
+  }
+  if (this.time_entry) {
+    this.time_entry.setSensitivity(sensitivity);
+  }
 };
 
 SwatDateEntry.prototype.handleYearChange = function() {
@@ -121,13 +131,18 @@ SwatDateEntry.prototype.setSwatTime = function(swat_time) {
 };
 
 SwatDateEntry.prototype.reset = function(reset_time) {
-  if (this.year) this.year.selectedIndex = 0;
-
-  if (this.month) this.month.selectedIndex = 0;
-
-  if (this.day) this.day.selectedIndex = 0;
-
-  if (this.time_entry && reset_time) this.time_entry.reset(false);
+  if (this.year) {
+    this.year.selectedIndex = 0;
+  }
+  if (this.month) {
+    this.month.selectedIndex = 0;
+  }
+  if (this.day) {
+    this.day.selectedIndex = 0;
+  }
+  if (this.time_entry && reset_time) {
+    this.time_entry.reset(false);
+  }
 };
 
 SwatDateEntry.prototype.setNow = function(set_time) {
@@ -136,24 +151,35 @@ SwatDateEntry.prototype.setNow = function(set_time) {
   if (this.year && this.year.selectedIndex === 0) {
     var this_year = this.lookup('year', now.getFullYear());
 
-    if (this_year) this.year.selectedIndex = this_year;
-    else this.year.selectedIndex = 1;
+    if (this_year) {
+      this.year.selectedIndex = this_year;
+    } else {
+      this.year.selectedIndex = 1;
+    }
   }
 
   if (this.month && this.month.selectedIndex === 0) {
     var this_month = this.lookup('month', now.getMonth() + 1);
 
-    if (this_month) this.month.selectedIndex = this_month;
-    else this.month.selectedIndex = 1;
+    if (this_month) {
+      this.month.selectedIndex = this_month;
+    } else {
+      this.month.selectedIndex = 1;
+    }
   }
 
   if (this.day && this.day.selectedIndex === 0) {
     var this_day = this.lookup('day', now.getDate());
-    if (this_day) this.day.selectedIndex = this_day;
-    else this.day.selectedIndex = 1;
+    if (this_day) {
+      this.day.selectedIndex = this_day;
+    } else {
+      this.day.selectedIndex = 1;
+    }
   }
 
-  if (this.time_entry && set_time) this.time_entry.setNow(false);
+  if (this.time_entry && set_time) {
+    this.time_entry.setNow(false);
+  }
 };
 
 SwatDateEntry.prototype.setDefault = function(set_time) {
@@ -166,21 +192,29 @@ SwatDateEntry.prototype.setDefault = function(set_time) {
      */
     var this_year = this.lookup('year', now.getFullYear());
 
-    if (this_year) this.year.selectedIndex = this_year;
-    else this.year.selectedIndex = 1;
+    if (this_year) {
+      this.year.selectedIndex = this_year;
+    } else {
+      this.year.selectedIndex = 1;
+    }
   }
 
-  if (this.month && this.month.selectedIndex === 0)
+  if (this.month && this.month.selectedIndex === 0) {
     this.month.selectedIndex = 1;
-
-  if (this.day && this.day.selectedIndex === 0) this.day.selectedIndex = 1;
-
-  if (this.time_entry && set_time) this.time_entry.setDefault(false);
+  }
+  if (this.day && this.day.selectedIndex === 0) {
+    this.day.selectedIndex = 1;
+  }
+  if (this.time_entry && set_time) {
+    this.time_entry.setDefault(false);
+  }
 };
 
 SwatDateEntry.prototype.update = function(field) {
   // month is required for this, so stop if it doesn't exist
-  if (!this.month) return;
+  if (!this.month) {
+    return;
+  }
 
   var index = null;
   switch (field) {
@@ -200,16 +234,20 @@ SwatDateEntry.prototype.update = function(field) {
     var now = new Date();
     var this_month = now.getMonth() + 1;
 
-    if (this.getMonth() == this_month && this.use_current_date)
+    if (this.getMonth() == this_month && this.use_current_date) {
       this.setNow(true);
-    else this.setDefault(true);
+    } else {
+      this.setDefault(true);
+    }
   }
 };
 
 SwatDateEntry.prototype.getDay = function() {
   var day = null;
 
-  if (this.day) day = this.reverseLookup('day', this.day.selectedIndex);
+  if (this.day) {
+    day = this.reverseLookup('day', this.day.selectedIndex);
+  }
 
   return day;
 };
@@ -217,7 +255,9 @@ SwatDateEntry.prototype.getDay = function() {
 SwatDateEntry.prototype.getMonth = function() {
   var month = null;
 
-  if (this.month) month = this.reverseLookup('month', this.month.selectedIndex);
+  if (this.month) {
+    month = this.reverseLookup('month', this.month.selectedIndex);
+  }
 
   return month;
 };
@@ -225,7 +265,9 @@ SwatDateEntry.prototype.getMonth = function() {
 SwatDateEntry.prototype.getYear = function() {
   var year = null;
 
-  if (this.year) year = this.reverseLookup('year', this.year.selectedIndex);
+  if (this.year) {
+    year = this.reverseLookup('year', this.year.selectedIndex);
+  }
 
   return year;
 };
@@ -234,8 +276,11 @@ SwatDateEntry.prototype.setDay = function(day) {
   if (this.day) {
     var this_day = this.lookup('day', day);
 
-    if (this_day) this.day.selectedIndex = this_day;
-    else this.day.selectedIndex = 0;
+    if (this_day) {
+      this.day.selectedIndex = this_day;
+    } else {
+      this.day.selectedIndex = 0;
+    }
   }
 };
 
@@ -243,8 +288,11 @@ SwatDateEntry.prototype.setMonth = function(month) {
   if (this.month) {
     var this_month = this.lookup('month', month);
 
-    if (this_month) this.month.selectedIndex = this_month;
-    else this.month.selectedIndex = 0;
+    if (this_month) {
+      this.month.selectedIndex = this_month;
+    } else {
+      this.month.selectedIndex = 0;
+    }
   }
 };
 
@@ -252,7 +300,10 @@ SwatDateEntry.prototype.setYear = function(year) {
   if (this.year) {
     var this_year = this.lookup('year', year);
 
-    if (this_year) this.year.selectedIndex = this_year;
-    else this.year.selectedIndex = 0;
+    if (this_year) {
+      this.year.selectedIndex = this_year;
+    } else {
+      this.year.selectedIndex = 0;
+    }
   }
 };

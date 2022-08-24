@@ -43,14 +43,18 @@ function SwatRadioButtonCellRenderer(id, view) {
 }
 
 SwatRadioButtonCellRenderer.prototype.handleClick = function(e) {
-  if (this.current_node) this.updateNode(this.current_node);
+  if (this.current_node) {
+    this.updateNode(this.current_node);
+  }
 
   this.current_node = YAHOO.util.Event.getTarget(e);
   this.updateNode(this.current_node);
 };
 
 SwatRadioButtonCellRenderer.prototype.updateNode = function(radio_button_node) {
-  if (radio_button_node.checked)
+  if (radio_button_node.checked) {
     this.view.selectItem(radio_button_node, this.id);
-  else this.view.deselectItem(radio_button_node, this.id);
+  } else {
+    this.view.deselectItem(radio_button_node, this.id);
+  }
 };

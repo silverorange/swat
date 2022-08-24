@@ -28,8 +28,9 @@ SwatCascade.prototype.addChild = function(
   title,
   selected
 ) {
-  if (!this.children[from_flydown_value])
+  if (!this.children[from_flydown_value]) {
     this.children[from_flydown_value] = [];
+  }
 
   this.children[from_flydown_value].push(
     new SwatCascadeChild(value, title, selected)

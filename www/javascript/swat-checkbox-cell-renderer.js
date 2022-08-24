@@ -74,12 +74,19 @@ SwatCheckboxCellRenderer.prototype.handleClick = function(e) {
 };
 
 SwatCheckboxCellRenderer.prototype.updateCheckAll = function() {
-  if (this.check_all === null) return;
+  if (this.check_all === null) {
+    return;
+  }
 
   var count = 0;
-  for (var i = 0; i < this.check_list.length; i++)
-    if (this.check_list[i].checked || this.check_list[i].disabled) count++;
-    else if (count > 0) break; // can't possibly be all checked or none checked
+  for (var i = 0; i < this.check_list.length; i++) {
+    if (this.check_list[i].checked || this.check_list[i].disabled) {
+      count++;
+    } else if (count > 0) {
+      // can't possibly be all checked or none checked
+      break;
+    }
+  }
 
   this.check_all.setState(count > 0 && count == this.check_list.length);
 };

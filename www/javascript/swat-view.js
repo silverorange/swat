@@ -58,9 +58,9 @@ SwatView.prototype.getItemNodeKey = function(item_node) {
  * @return Number the number of selected items for the given selector.
  */
 SwatView.prototype.getSelectorItemCount = function(selector) {
-  if (this.selector_item_counts[selector])
+  if (this.selector_item_counts[selector]) {
     return this.selector_item_counts[selector];
-
+  }
   return 0;
 };
 
@@ -79,7 +79,9 @@ SwatView.prototype.selectItem = function(node, selector) {
   // get main selectable item node key
   var key = this.getItemNodeKey(this.getItemNode(node));
 
-  if (!this.item_selectors[key]) this.item_selectors[key] = [];
+  if (!this.item_selectors[key]) {
+    this.item_selectors[key] = [];
+  }
 
   // if this item node is already not selected by the selector, increment
   // the selection count
@@ -162,9 +164,11 @@ SwatView.prototype.deselectItem = function(node, selector) {
  */
 SwatView.prototype.isSelected = function(node) {
   var key = this.getItemNodeKey(this.getItemNode(node));
-  if (typeof this.item_selection_counts[key] == 'undefined')
+  if (typeof this.item_selection_counts[key] == 'undefined') {
     var selected = false;
-  else var selected = this.item_selection_counts[key] > 0;
+  } else {
+    var selected = this.item_selection_counts[key] > 0;
+  }
 
   return selected;
 };

@@ -40,9 +40,9 @@ function SwatTableViewInputRow(id, row_string) {
 
   // get table node belonging to the enter row
   this.table = this.enter_row;
-  while (this.table.nodeName.toLowerCase() != 'table')
+  while (this.table.nodeName.toLowerCase() != 'table') {
     this.table = this.table.parentNode;
-
+  }
   this.replicators = null;
   this.replicators_input = null;
 }
@@ -83,7 +83,9 @@ function SwatTableViewInputRow_getXMLParser() {
      */
     parser = function() {};
     parser.loadXML = function(document_string) {
-      if (!dom.loadXML(document_string)) alert(dom.parseError.reason);
+      if (!dom.loadXML(document_string)) {
+        alert(dom.parseError.reason);
+      }
 
       return dom;
     };
@@ -165,8 +167,11 @@ if (!document.importNode || SwatTableViewInputRow.is_webkit) {
   function SwatTableViewInputRow_parseTableCell(source_td, dest_td) {
     // Internet Explorer does not have an innerHTML property set on
     // imported DOM nodes even if the imported document is XHTML.
-    if (source_td.innerHTML) dest_td.innerHTML = source_td.innerHTML;
-    else dest_td.innerHTML = source_td.xml;
+    if (source_td.innerHTML) {
+      dest_td.innerHTML = source_td.innerHTML;
+    } else {
+      dest_td.innerHTML = source_td.xml;
+    }
   }
 }
 
@@ -182,10 +187,15 @@ SwatTableViewInputRow.prototype.initReplicators = function() {
       this.id + '_replicators'
     )[0];
 
-    if (this.replicators_input === null) return false;
+    if (this.replicators_input === null) {
+      return false;
+    }
 
-    if (this.replicators_input.value === '') this.replicators = [];
-    else this.replicators = this.replicators_input.value.split(',');
+    if (this.replicators_input.value === '') {
+      this.replicators = [];
+    } else {
+      this.replicators = this.replicators_input.value.split(',');
+    }
   }
   return true;
 };
@@ -194,15 +204,18 @@ SwatTableViewInputRow.prototype.initReplicators = function() {
  * Adds a new data row to the table
  */
 SwatTableViewInputRow.prototype.addRow = function() {
-  if (!this.initReplicators()) return;
+  if (!this.initReplicators()) {
+    return;
+  }
 
   var replicator_id;
-  if (this.replicators.length > 0)
+  if (this.replicators.length > 0) {
     replicator_id = (
       parseInt(this.replicators[this.replicators.length - 1]) + 1
     ).toString();
-  else replicator_id = '0';
-
+  } else {
+    replicator_id = '0';
+  }
   this.replicators.push(replicator_id);
   this.replicators_input.value = this.replicators.join(',');
 
@@ -264,19 +277,23 @@ SwatTableViewInputRow.prototype.addRow = function() {
    * are only run once.
    */
   var scripts = dom.documentElement.getElementsByTagName('script');
-  for (var i = 0; i < scripts.length; i++)
+  for (var i = 0; i < scripts.length; i++) {
     if (
       scripts[0].getAttribute('type') == 'text/javascript' &&
       scripts[0].childNodes.length > 0
-    )
+    ) {
       eval(scripts[i].firstChild.nodeValue);
+    }
+  }
 };
 
 /**
  * Removes a data row from the table
  */
 SwatTableViewInputRow.prototype.removeRow = function(replicator_id) {
-  if (!this.initReplicators()) return;
+  if (!this.initReplicators()) {
+    return;
+  }
 
   // remove replicator_id from replicators array
   var replicator_index = -1;

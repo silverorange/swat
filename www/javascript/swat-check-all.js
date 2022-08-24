@@ -34,7 +34,9 @@ SwatCheckAll.prototype.setState = function(checked) {
 SwatCheckAll.prototype.updateExtendedCheckbox = function() {
   var container = document.getElementById(this.id + '_extended');
 
-  if (!container) return;
+  if (!container) {
+    return;
+  }
 
   if (this.check_all.checked) {
     var in_attributes = { opacity: { from: 0, to: 1 } };

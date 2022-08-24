@@ -27,14 +27,16 @@ YAHOO.lang.extend(SwatCheckboxEntryList, SwatCheckboxList, {
 
   checkAll: function(checked) {
     SwatCheckboxEntryList.superclass.checkAll.call(this, checked);
-    for (var i = 0; i < this.check_list.length; i++)
+    for (var i = 0; i < this.check_list.length; i++) {
       this.setEntrySensitivity(i, checked);
+    }
   }
 });
 
 SwatCheckboxEntryList.prototype.toggleEntry = function(index) {
-  if (this.entry_list[index])
+  if (this.entry_list[index]) {
     this.setEntrySensitivity(index, this.entry_list[index].disabled);
+  }
 };
 
 SwatCheckboxEntryList.prototype.setEntrySensitivity = function(
@@ -53,6 +55,7 @@ SwatCheckboxEntryList.prototype.setEntrySensitivity = function(
 };
 
 SwatCheckboxEntryList.prototype.updateFields = function() {
-  for (var i = 0; i < this.check_list.length; i++)
+  for (var i = 0; i < this.check_list.length; i++) {
     this.setEntrySensitivity(i, this.check_list[i].checked);
+  }
 };

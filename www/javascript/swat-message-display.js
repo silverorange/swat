@@ -11,8 +11,11 @@ function SwatMessageDisplay(id, hideable_messages) {
 }
 
 SwatMessageDisplay.prototype.getMessage = function(index) {
-  if (this.messages[index]) return this.messages[index];
-  else return false;
+  if (this.messages[index]) {
+    return this.messages[index];
+  } else {
+    return false;
+  }
 };
 
 /**
@@ -101,7 +104,9 @@ SwatMessageDisplayMessage.prototype.shrink = function() {
     // find first element node
     var script_node = this.message_div.parentNode.nextSibling;
     var node = script_node.nextSibling;
-    while (node && node.nodeType != 1) node = node.nextSibling;
+    while (node && node.nodeType != 1) {
+      node = node.nextSibling;
+    }
 
     if (node) {
       var previous_message_animation = new YAHOO.util.Anim(

@@ -66,12 +66,13 @@ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
 
     var tbody = document.createElement('tbody');
 
-    if (this.colors.length % this.columns === 0)
+    if (this.colors.length % this.columns === 0) {
       var num_cells = this.colors.length;
-    else
+    } else {
       var num_cells =
         this.colors.length +
         (this.columns - (this.colors.length % this.columns));
+    }
 
     var trow;
     var tcell;
@@ -104,7 +105,9 @@ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
     }
 
     for (var i = 0; i < num_cells; i++) {
-      if (i % this.columns === 0) trow = document.createElement('tr');
+      if (i % this.columns === 0) {
+        trow = document.createElement('tr');
+      }
 
       tcell = document.createElement('td');
       text = document.createTextNode(' '); // non-breaking UTF-8 space
@@ -134,7 +137,9 @@ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
 
       trow.appendChild(tcell);
 
-      if ((i + 1) % this.columns === 0) tbody.appendChild(trow);
+      if ((i + 1) % this.columns === 0) {
+        tbody.appendChild(trow);
+      }
     }
 
     table.appendChild(tbody);

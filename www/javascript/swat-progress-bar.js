@@ -54,7 +54,9 @@ SwatProgressBar.EPSILON = 0.0001;
 SwatProgressBar.ANIMATION_DURATION = 0.5;
 
 SwatProgressBar.prototype.setValue = function(value) {
-  if (this.value == value) return;
+  if (this.value == value) {
+    return;
+  }
 
   this.value = value;
 
@@ -64,9 +66,9 @@ SwatProgressBar.prototype.setValue = function(value) {
   empty_width = empty_width < 0 ? 0 : empty_width;
 
   // reset position if bar was set to pulse-mode
-  if (this.orientation !== SwatProgressBar.ORIENTATION_BOTTOM_TO_TOP)
+  if (this.orientation !== SwatProgressBar.ORIENTATION_BOTTOM_TO_TOP) {
     this.full.style.position = 'static';
-
+  }
   // reset empty div if bar was set to pulse mode
   this.empty.style.display = 'block';
 
@@ -93,7 +95,9 @@ SwatProgressBar.prototype.setValue = function(value) {
 };
 
 SwatProgressBar.prototype.setValueWithAnimation = function(value) {
-  if (this.value == value) return;
+  if (this.value == value) {
+    return;
+  }
 
   var old_full_width = 100 * this.value;
   var old_empty_width = 100 - 100 * this.value;
@@ -109,8 +113,9 @@ SwatProgressBar.prototype.setValueWithAnimation = function(value) {
   new_empty_width = new_empty_width < 0 ? 0 : new_empty_width;
 
   // reset position if bar was set to pulse-mode
-  if (this.orientation !== SwatProgressBar.ORIENTATION_BOTTOM_TO_TOP)
+  if (this.orientation !== SwatProgressBar.ORIENTATION_BOTTOM_TO_TOP) {
     this.full.style.position = 'static';
+  }
 
   // reset empty div if bar was set to pulse mode
   this.empty.style.display = 'block';
@@ -239,11 +244,13 @@ SwatProgressBar.prototype.pulse = function() {
   if (
     this.pulse_direction == 1 &&
     this.compare(new_pulse_position + this.pulse_width, 1) > 0
-  )
+  ) {
     this.pulse_direction = -1;
+  }
 
-  if (this.pulse_direction == -1 && this.compare(new_pulse_position, 0) < 0)
+  if (this.pulse_direction == -1 && this.compare(new_pulse_position, 0) < 0) {
     this.pulse_direction = 1;
+  }
 
   this.pulse_position += this.pulse_step * this.pulse_direction;
 
@@ -256,7 +263,11 @@ SwatProgressBar.prototype.pulse = function() {
 };
 
 SwatProgressBar.prototype.compare = function(x, y) {
-  if (Math.abs(x - y) < SwatProgressBar.EPSILON) return 0;
-  if (x > y) return 1;
+  if (Math.abs(x - y) < SwatProgressBar.EPSILON) {
+    return 0;
+  }
+  if (x > y) {
+    return 1;
+  }
   return -1;
 };

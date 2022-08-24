@@ -67,7 +67,9 @@ SwatSearchEntry.prototype.handleFocus = function(e) {
 };
 
 SwatSearchEntry.prototype.handleBlur = function(e) {
-  if (this.input.value === '') this.showLabelText();
+  if (this.input.value === '') {
+    this.showLabelText();
+  }
 
   YAHOO.util.Event.removeListener(this.input, 'keypress', this.handleKeyDown);
 
@@ -76,7 +78,9 @@ SwatSearchEntry.prototype.handleBlur = function(e) {
 };
 
 SwatSearchEntry.prototype.showLabelText = function() {
-  if (this.isLabelTextShown()) return;
+  if (this.isLabelTextShown()) {
+    return;
+  }
 
   YAHOO.util.Dom.addClass(this.input, 'swat-search-entry-empty');
 
@@ -136,7 +140,9 @@ SwatSearchEntry.prototype.isLabelTextShown = function() {
 };
 
 SwatSearchEntry.prototype.hideLabelText = function() {
-  if (!this.isLabelTextShown()) return;
+  if (!this.isLabelTextShown()) {
+    return;
+  }
 
   var hide = false;
 

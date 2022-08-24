@@ -22,8 +22,9 @@ SwatForm.prototype.setDefaultFocus = function(element_id) {
   }
 
   var element = document.getElementById(element_id);
-  if (element && !element.disabled && isFunction(element.focus))
+  if (element && !element.disabled && isFunction(element.focus)) {
     element.focus();
+  }
 };
 
 SwatForm.prototype.setAutocomplete = function(state) {

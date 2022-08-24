@@ -450,11 +450,13 @@ SwatCalendar.prototype.redraw = function() {
   mm = mm * 1;
   yyyy = yyyy * 1;
 
-  if (yyyy == end_date.getFullYear() && mm > end_date.getMonth())
+  if (yyyy == end_date.getFullYear() && mm > end_date.getMonth()) {
     yyyy = end_date.getFullYear() - 1;
+  }
 
-  if (yyyy == start_date.getFullYear() && mm < start_date.getMonth())
+  if (yyyy == start_date.getFullYear() && mm < start_date.getMonth()) {
     yyyy = start_date.getFullYear() + 1;
+  }
 
   this.draw(yyyy, mm);
 };
@@ -487,7 +489,7 @@ SwatCalendar.prototype.buildControls = function() {
 
   if (start_date.getYear() == end_date.getYear()) {
     for (var i = start_date.getMonth(); i <= end_date.getMonth(); i++) {
-      if (i == mm - 1)
+      if (i == mm - 1) {
         month_array =
           month_array +
           '<option value="' +
@@ -496,7 +498,7 @@ SwatCalendar.prototype.buildControls = function() {
           'selected="selected">' +
           SwatCalendar.month_names[i] +
           '</option>';
-      else
+      } else {
         month_array =
           month_array +
           '<option value="' +
@@ -504,10 +506,11 @@ SwatCalendar.prototype.buildControls = function() {
           '">' +
           SwatCalendar.month_names[i] +
           '</option>';
+      }
     }
   } else if (end_date.getYear() - start_date.getYear() == 1) {
     for (var i = start_date.getMonth(); i <= 11; i++) {
-      if (i == mm - 1)
+      if (i == mm - 1) {
         month_array =
           month_array +
           '<option value="' +
@@ -516,7 +519,7 @@ SwatCalendar.prototype.buildControls = function() {
           'selected="selected">' +
           SwatCalendar.month_names[i] +
           '</option>';
-      else
+      } else {
         month_array =
           month_array +
           '<option value="' +
@@ -524,10 +527,11 @@ SwatCalendar.prototype.buildControls = function() {
           '">' +
           SwatCalendar.month_names[i] +
           '</option>';
+      }
     }
 
     for (var i = 0; i <= end_date.getMonth(); i++) {
-      if (i == mm - 1)
+      if (i == mm - 1) {
         month_array =
           month_array +
           '<option value="' +
@@ -536,7 +540,7 @@ SwatCalendar.prototype.buildControls = function() {
           'selected="selected">' +
           SwatCalendar.month_names[i] +
           '</option>';
-      else
+      } else {
         month_array =
           month_array +
           '<option value="' +
@@ -544,10 +548,11 @@ SwatCalendar.prototype.buildControls = function() {
           '">' +
           SwatCalendar.month_names[i] +
           '</option>';
+      }
     }
   } else {
     for (var i = 0; i < 12; i++) {
-      if (i == mm - 1)
+      if (i == mm - 1) {
         month_array =
           month_array +
           '<option value="' +
@@ -556,7 +561,7 @@ SwatCalendar.prototype.buildControls = function() {
           'selected="selected">' +
           SwatCalendar.month_names[i] +
           '</option>';
-      else
+      } else {
         month_array =
           month_array +
           '<option value="' +
@@ -564,6 +569,7 @@ SwatCalendar.prototype.buildControls = function() {
           '">' +
           SwatCalendar.month_names[i] +
           '</option>';
+      }
     }
   }
 
@@ -577,7 +583,7 @@ SwatCalendar.prototype.buildControls = function() {
     '_obj.redraw();">';
 
   for (var i = start_date.getFullYear(); i <= end_date.getFullYear(); i++) {
-    if (i == yyyy)
+    if (i == yyyy) {
       year_array =
         year_array +
         '<option value="' +
@@ -586,8 +592,9 @@ SwatCalendar.prototype.buildControls = function() {
         'selected="selected">' +
         i +
         '</option>';
-    else
+    } else {
       year_array = year_array + '<option value="' + i + '">' + i + '</option>';
+    }
   }
 
   year_array = year_array + '</select>';

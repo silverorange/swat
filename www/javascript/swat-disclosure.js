@@ -24,8 +24,11 @@ SwatDisclosure.prototype.init = function() {
   this.drawPeekabooFix();
 
   // set initial display state
-  if (this.opened) this.open();
-  else this.close();
+  if (this.opened) {
+    this.open();
+  } else {
+    this.close();
+  }
 };
 
 SwatDisclosure.prototype.toggle = function() {
@@ -74,15 +77,20 @@ SwatDisclosure.prototype.drawPeekabooFix = function() {
 
 SwatDisclosure.prototype.drawDisclosureLink = function() {
   var span = this.getSpan();
-  if (span.firstChild && span.firstChild.nodeType == 3)
+  if (span.firstChild && span.firstChild.nodeType == 3) {
     var text = document.createTextNode(span.firstChild.nodeValue);
-  else var text = document.createTextNode('');
+  } else {
+    var text = document.createTextNode('');
+  }
 
   this.anchor = document.createElement('a');
   this.anchor.href = '#';
-  if (this.opened)
+
+  if (this.opened) {
     YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-opened');
-  else YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-closed');
+  } else {
+    YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-closed');
+  }
 
   YAHOO.util.Event.addListener(
     this.anchor,
@@ -115,7 +123,9 @@ SwatDisclosure.prototype.close = function() {
 };
 
 SwatDisclosure.prototype.closeWithAnimation = function() {
-  if (this.semaphore) return;
+  if (this.semaphore) {
+    return;
+  }
 
   YAHOO.util.Dom.removeClass(this.anchor, 'swat-disclosure-anchor-opened');
   YAHOO.util.Dom.addClass(this.anchor, 'swat-disclosure-anchor-closed');
@@ -152,7 +162,9 @@ SwatDisclosure.prototype.open = function() {
 };
 
 SwatDisclosure.prototype.openWithAnimation = function() {
-  if (this.semaphore) return;
+  if (this.semaphore) {
+    return;
+  }
 
   YAHOO.util.Dom.removeClass(this.div, 'swat-disclosure-control-closed');
   YAHOO.util.Dom.addClass(this.div, 'swat-disclosure-control-opened');
@@ -243,7 +255,9 @@ YAHOO.lang.extend(SwatFrameDisclosure, SwatDisclosure, {
   },
 
   openWithAnimation: function() {
-    if (this.semaphore) return;
+    if (this.semaphore) {
+      return;
+    }
 
     SwatFrameDisclosure.superclass.openWithAnimation.call(this);
 
