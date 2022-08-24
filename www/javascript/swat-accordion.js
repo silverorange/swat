@@ -19,7 +19,7 @@ SwatAccordion.prototype.init = function() {
   this.pages = [];
 
   var page;
-  var pages = YAHOO.util.Dom.getChildren(this.container);
+  var pages = this.container.children;
 
   // check to see if a page is open via a hash-tag
   var hash_open_page = this.getPageFromHash();
@@ -70,7 +70,7 @@ SwatAccordion.prototype.init = function() {
 };
 
 SwatAccordion.prototype.getPageFromHash = function() {
-  var pages = YAHOO.util.Dom.getChildren(this.container);
+  var pages = this.container.children;
 
   // check to see if a page is open via a hash-tag
   var hash_open_page = null;
@@ -143,9 +143,9 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page) {
       new_page.animation.style.height == 'auto'
     ) {
       new_page.animation.style.height = '0';
-      new_from_height = 0;
+      var new_from_height = 0;
     } else {
-      new_from_height = parseInt(new_page.animation.style.height);
+      var new_from_height = parseInt(new_page.animation.style.height);
     }
 
     new_page.animation.style.display = 'block';
@@ -212,25 +212,18 @@ SwatAccordion.prototype.setPageWithAnimation = function(new_page) {
 
 function SwatAccordionPage(el) {
   this.element = el;
-  this.toggle = YAHOO.util.Dom.getFirstChild(el);
-  this.toggleLink = YAHOO.util.Dom.getElementsByClassName(
-    'swat-accordion-page-link',
-    'a',
-    this.toggle
-  )[0];
-
-  this.animation = YAHOO.util.Dom.getNextSibling(this.toggle);
-  this.content = YAHOO.util.Dom.getFirstChild(this.animation);
+  this.toggle = el.firstElementChild;
+  this.toggleLink = this.toggle.querySelector('a.swat-accordion-page-link');
+  this.animation = this.toggle.nextElementSibling;
+  this.content = this.animation.firstElementChild;
 }
 
 SwatAccordionPage.prototype.setStatus = function(stat) {
   if (stat === 'opened') {
     this.element.classList.remove('swat-accordion-page-closed');
-
     this.element.classList.add('swat-accordion-page-opened');
   } else {
     this.element.classList.remove('swat-accordion-page-opened');
-
     this.element.classList.add('swat-accordion-page-closed');
   }
 };

@@ -42,7 +42,10 @@ SwatButton.prototype.handleClick = function(e) {
       this.button.form.appendChild(div);
 
       this.showThrobber();
-      var form = YAHOO.util.Dom.getAncestorByTagName(this.button, 'form');
+      var form = this.button;
+      while (form !== null && form.tagName !== 'form') {
+        form = form.parentElement;
+      }
       if (form) {
         form.submit(); // needed for IE and WebKit
       }

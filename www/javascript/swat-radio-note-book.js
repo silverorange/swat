@@ -38,17 +38,13 @@ SwatRadioNoteBook.prototype.init = function() {
   }
 
   // get pages
-  var tbody = YAHOO.util.Dom.getFirstChild(table);
-  var rows = YAHOO.util.Dom.getChildrenBy(tbody, function(n) {
-    return n.classList.contains('swat-radio-note-book-page-row');
-  });
+  var tbody = table.firstElementChild;
+  var rows = tbody.querySelectorAll('.swat-radio-note-book-page-row');
 
   this.pages = [];
   var page;
   for (var i = 0; i < rows.length; i++) {
-    page = YAHOO.util.Dom.getFirstChild(
-      YAHOO.util.Dom.getNextSibling(YAHOO.util.Dom.getFirstChild(rows[i]))
-    );
+    page = rows[i].firstElementChild.nextElementSibling.firstElementChild;
 
     if (page.classList.contains('selected')) {
       this.current_page = page;
@@ -151,9 +147,8 @@ SwatRadioNoteBook.prototype.closePageWithAnimation = function(page) {
 };
 
 SwatRadioNoteBook.prototype.removePageFocusability = function(page) {
-  var elements = YAHOO.util.Selector.query(
-    'input, select, textarea, button, a, *[tabindex]',
-    page
+  var elements = page.querySelectorAll(
+    'input, select, textarea, button, a, *[tabindex]'
   );
 
   for (var i = 0; i < elements.length; i++) {
@@ -177,9 +172,8 @@ SwatRadioNoteBook.prototype.removePageFocusability = function(page) {
 };
 
 SwatRadioNoteBook.prototype.restorePageFocusability = function(page) {
-  var elements = YAHOO.util.Selector.query(
-    'input, select, textarea, button, a, *[tabindex]',
-    page
+  var elements = page.querySelectorAll(
+    'input, select, textarea, button, a, *[tabindex]'
   );
 
   for (var i = 0; i < elements.length; i++) {
