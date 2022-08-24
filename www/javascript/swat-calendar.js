@@ -970,11 +970,12 @@ SwatCalendar.prototype.handleDocumentClick = function(e) {
   if (target === this.toggle_button || target === this.overlay.element) {
     close = false;
   } else {
-    while (target.parentNode) {
-      target = target.parentNode;
+    while (target.parentElement) {
+      target = target.parentElement;
       if (
-        target === this.overlay.element ||
-        target.classList.contains('swat-calendar-frame')
+        target !== null &&
+        (target === this.overlay.element ||
+          target.classList.contains('swat-calendar-frame'))
       ) {
         close = false;
         break;
