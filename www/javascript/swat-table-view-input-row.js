@@ -253,7 +253,7 @@ SwatTableViewInputRow.prototype.addRow = function() {
   var node = dest_tr;
   var dest_color = 'transparent';
   while (dest_color == 'transparent' && node) {
-    dest_color = YAHOO.util.Dom.getStyle(node, 'background-color');
+    dest_color = getComputedStyle(node).backgroundColor;
     node = node.parentNode;
   }
   if (dest_color == 'transparent') {

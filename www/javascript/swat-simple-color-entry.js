@@ -247,20 +247,14 @@ SwatSimpleColorEntry.prototype.setColor = function(color) {
         // IE fix, it sets string 'null' otherwise
         this.hex_input_tag.value = '';
       }
-      YAHOO.util.Dom.setStyle(
-        this.toggle_button_content,
-        'background',
-        'url(packages/swat/images/color-entry-null.png)'
-      );
+
+      this.toggle_button_content.style.background =
+        'url(packages/swat/images/color-entry-null.png)';
     } else {
       if (this.hex_input_tag.value !== color) {
         this.hex_input_tag.value = color;
       }
-      YAHOO.util.Dom.setStyle(
-        this.toggle_button_content,
-        'background',
-        '#' + color
-      );
+      this.toggle_button_content.style.background = '#' + color;
     }
 
     this.current_color = color;

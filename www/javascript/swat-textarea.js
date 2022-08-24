@@ -69,7 +69,7 @@ SwatTextarea.prototype.init = function() {
   // check if textarea already is resizable, and if so, don't add resize
   // handle.
   if (SwatTextarea.supports_resize) {
-    var resize = YAHOO.util.Dom.getStyle(this.textarea, 'resize');
+    var resize = getComputedStyle(this.textarea).resize;
     if (resize == 'both' || resize == 'vertical') {
       return;
     }
@@ -111,29 +111,17 @@ SwatTextarea.prototype.init = function() {
 // {{{ initialize()
 
 SwatTextarea.prototype.initialize = function() {
-  var style_width = YAHOO.util.Dom.getStyle(this.textarea, 'width');
+  var style_width = getComputedStyle(this.textarea).width;
   var left_border, right_border;
 
   if (style_width.indexOf('%') != -1) {
     left_border =
-      parseInt(
-        YAHOO.util.Dom.getComputedStyle(this.textarea, 'borderLeftWidth'),
-        10
-      ) -
-      parseInt(
-        YAHOO.util.Dom.getComputedStyle(this.handle_div, 'borderLeftWidth'),
-        10
-      );
+      parseInt(getComputedStyle(this.textarea).borderLeftWidth, 10) -
+      parseInt(getComputedStyle(this.handle_div).borderLeftWidth, 10);
 
     right_border =
-      parseInt(
-        YAHOO.util.Dom.getComputedStyle(this.textarea, 'borderRightWidth'),
-        10
-      ) -
-      parseInt(
-        YAHOO.util.Dom.getComputedStyle(this.handle_div, 'borderRightWidth'),
-        10
-      );
+      parseInt(getComputedStyle(this.textarea).borderRightWidth, 10) -
+      parseInt(getComputedStyle(this.handle_div).borderRightWidth, 10);
 
     this.handle_div.style.width = style_width;
     this.handle_div.style.paddingLeft = left_border;
@@ -142,12 +130,12 @@ SwatTextarea.prototype.initialize = function() {
     var width = this.textarea.offsetWidth;
 
     left_border = parseInt(
-      YAHOO.util.Dom.getComputedStyle(this.handle_div, 'borderLeftWidth'),
+      getComputedStyle(this.handle_div).borderLeftWidth,
       10
     );
 
     right_border = parseInt(
-      YAHOO.util.Dom.getComputedStyle(this.handle_div, 'borderRightWidth'),
+      getComputedStyle(this.handle_div).borderRightWidth,
       10
     );
 
@@ -237,7 +225,7 @@ SwatTextarea.pending_poll_interval = 0.1; // in seconds
  */
 SwatTextarea.supports_resize = (function() {
   var div = document.createElement('div');
-  var resize = YAHOO.util.Dom.getStyle(div, 'resize');
+  var resize = getComputedStyle(div).resize;
 
   // Both iOS and Android feature detection say they support resize, but
   // they do not. Fall back to checking the UA here.
@@ -277,9 +265,9 @@ SwatTextarea.mousedownEventHandler = function(e, handle) {
 
   var textarea = handle._textarea;
 
-  YAHOO.util.Dom.setStyle(textarea, 'opacity', 0.25);
+  textarea.style.opacity = 0.25;
 
-  var height = parseInt(YAHOO.util.Dom.getStyle(textarea, 'height'));
+  var height = parseInt(getComputedStyle(textarea).height);
   if (height) {
     SwatTextarea.dragging_origin_height = height;
   } else {
@@ -338,10 +326,9 @@ SwatTextarea.touchstartEventHandler = function(e, handle) {
     }
 
     var textarea = handle._textarea;
+    textarea.style.opacity = 0.25;
 
-    YAHOO.util.Dom.setStyle(textarea, 'opacity', 0.25);
-
-    var height = parseInt(YAHOO.util.Dom.getStyle(textarea, 'height'));
+    var height = parseInt(getComputedStyle(textarea).height);
     if (height) {
       SwatTextarea.dragging_origin_height = height;
     } else {
@@ -502,7 +489,7 @@ SwatTextarea.mouseupEventHandler = function(e, handle) {
   SwatTextarea.dragging_mouse_origin_y = null;
   SwatTextarea.dragging_origin_height = null;
 
-  YAHOO.util.Dom.setStyle(handle._textarea, 'opacity', 1);
+  handle._textarea.style.opacity = 1;
 
   return false;
 };

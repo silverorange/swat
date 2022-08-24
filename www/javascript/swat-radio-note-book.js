@@ -111,7 +111,7 @@ SwatRadioNoteBook.prototype.openPageWithAnimation = function(page) {
 };
 
 SwatRadioNoteBook.prototype.closePage = function(page) {
-  YAHOO.util.Dom.setStyle(page, 'opacity', '0');
+  page.style.opacity = 0;
   page.style.overflow = 'hidden';
   page.style.height = '0';
   this.removePageFocusability(page);

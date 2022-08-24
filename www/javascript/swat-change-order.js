@@ -1099,8 +1099,8 @@ SwatChangeOrder.prototype.scrollList = function(y_coord) {
  * a grid of items.
  */
 SwatChangeOrder.prototype.isGrid = function() {
-  var node = this.list_div.childNodes[0];
-  return YAHOO.util.Dom.getStyle(node, 'float') != 'none';
+  var node = this.list_div.firstElementChild;
+  return getComputedStyle(node).cssFloat != 'none';
 };
 
 // }}}

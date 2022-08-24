@@ -67,8 +67,7 @@ SwatRating.prototype.init = function() {
   this.flydown = document.getElementById(this.id + '_flydown');
   this.rating_div = document.getElementById(this.id);
   this.sensitive = !this.rating_div.classList.contains('swat-insensitive');
-
-  Dom.setStyle(this.flydown, 'display', 'none');
+  this.flydown.style.display = 'none';
 
   var star_div = document.createElement('div');
   star_div.className = 'swat-rating-star-container';
