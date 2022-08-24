@@ -147,16 +147,15 @@ class SwatTextareaEditor extends SwatTextarea
         $this->rows = 30;
 
         if (self::$tiny_mce_api_key !== null) {
-            $tiny_mce_url =
-                "https://cdn.tiny.cloud/1/" .
-                self::$tiny_mce_api_key .
-                "/tinymce/5/tinymce.min.js";
+            $this->addExternalJavaScript(
+                'https://cdn.tiny.cloud/1/' .
+                    self::$tiny_mce_api_key .
+                    '/tinymce/5/tinymce.min.js'
+            );
         } else {
-            $tiny_mce_url =
-                "https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js";
+            $this->addJavaScript('vendor/tinymce/tinymce.min.js');
         }
 
-        $this->addExternalJavaScript($tiny_mce_url);
         $this->addJavaScript(
             'packages/swat/javascript/swat-z-index-manager.js'
         );
@@ -279,7 +278,7 @@ class SwatTextareaEditor extends SwatTextarea
             'toolbar' => $buttons,
             // https://www.tiny.cloud/docs/configure/editor-appearance/#block_formats
             'block_formats' => $blockformats,
-            'skin' => 'outside',
+            'skin' => $has_api_key ? 'outside' : 'oxide',
             'plugins' => 'code table lists media image link ' . $paste_plugin,
             'convert_urls' => false,
             'paste_retain_style_properties' => 'background-color',
