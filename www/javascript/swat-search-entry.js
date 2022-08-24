@@ -37,7 +37,9 @@ function SwatSearchEntry(id) {
       true
     );
 
-    YAHOO.util.Event.onDOMReady(this.init, this, true);
+    window.addEventListener('DOMContentLoaded', () => {
+      this.init();
+    });
   }
 }
 

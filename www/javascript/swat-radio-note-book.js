@@ -2,7 +2,9 @@ function SwatRadioNoteBook(id) {
   this.id = id;
   this.current_page = null;
 
-  YAHOO.util.Event.onDOMReady(this.init, this, true);
+  window.addEventListener('DOMContentLoaded', () => {
+    this.init();
+  });
 }
 
 SwatRadioNoteBook.FADE_DURATION = 0.25;

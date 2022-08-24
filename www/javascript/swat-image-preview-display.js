@@ -17,7 +17,9 @@ function SwatImagePreviewDisplay(
   this.onOpen = new YAHOO.util.CustomEvent('open');
   this.onClose = new YAHOO.util.CustomEvent('close');
 
-  YAHOO.util.Event.onDOMReady(this.init, this, true);
+  window.addEventListener('DOMContentLoaded', () => {
+    this.init();
+  });
 }
 
 SwatImagePreviewDisplay.close_text = 'Close';

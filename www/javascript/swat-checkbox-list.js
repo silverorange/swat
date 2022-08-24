@@ -7,7 +7,10 @@ function SwatCheckboxList(id) {
   this.id = id;
   this.check_list = [];
   this.check_all = null; // a reference to a check-all js object
-  YAHOO.util.Event.onDOMReady(this.init, this, true);
+
+  window.addEventListener('DOMContentLoaded', () => {
+    this.init();
+  });
 }
 
 SwatCheckboxList.prototype.init = function() {

@@ -1,6 +1,9 @@
 function SwatFieldset(id) {
   this.id = id;
-  YAHOO.util.Event.onAvailable(this.id, this.init, this, true);
+
+  window.addEventListener('DOMContentLoaded', () => {
+    this.init();
+  });
 }
 
 SwatFieldset.prototype.init = function() {

@@ -26,22 +26,18 @@ function SwatProgressBar(id, orientation, value) {
 
   this.animation = null;
 
-  YAHOO.util.Event.onDOMReady(
-    function() {
-      // Hack for Gecko and WebKit to load background images for full part of
-      // progress bar. If the bar starts at zero, these browsers don't load
-      // the background image, even when the bar's value changes.
-      this.full_stubb = document.createElement('div');
-      this.full_stubb.className = this.full.className;
-      this.full_stubb.style.width = '100px';
-      this.full_stubb.style.height = '100px';
-      this.full_stubb.style.position = 'absolute';
-      this.full_stubb.style.top = '-10000px';
-      document.body.appendChild(this.full_stubb);
-    },
-    this,
-    true
-  );
+  window.addEventListener('DOMContentLoaded', () => {
+    // Hack for Gecko and WebKit to load background images for full part of
+    // progress bar. If the bar starts at zero, these browsers don't load
+    // the background image, even when the bar's value changes.
+    this.full_stubb = document.createElement('div');
+    this.full_stubb.className = this.full.className;
+    this.full_stubb.style.width = '100px';
+    this.full_stubb.style.height = '100px';
+    this.full_stubb.style.position = 'absolute';
+    this.full_stubb.style.top = '-10000px';
+    document.body.appendChild(this.full_stubb);
+  });
 }
 
 SwatProgressBar.ORIENTATION_LEFT_TO_RIGHT = 1;

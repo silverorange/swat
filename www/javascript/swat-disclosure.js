@@ -16,7 +16,9 @@ function SwatDisclosure(id, open) {
   // prevent closing during opening animation and vice versa
   this.semaphore = false;
 
-  YAHOO.util.Event.onDOMReady(this.init, this, true);
+  window.addEventListener('DOMContentLoaded', () => {
+    this.init();
+  });
 }
 
 SwatDisclosure.prototype.init = function() {

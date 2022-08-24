@@ -18,12 +18,9 @@ function SwatTextarea(id, resizeable) {
   this.id = id;
 
   if (resizeable) {
-    YAHOO.util.Event.onContentReady(
-      this.id,
-      this.handleOnAvailable,
-      this,
-      true
-    );
+    window.addEventListener('DOMContentLoaded', () => {
+      this.init();
+    });
   }
 }
 
@@ -60,13 +57,13 @@ SwatTextarea.pollPendingTextareas = function() {
 };
 
 // }}}
-// {{{ handleOnAvailable()
+// {{{ init()
 
 /**
  * Sets up the resize handle when the textarea is available and loaded in the
  * DOM tree
  */
-SwatTextarea.prototype.handleOnAvailable = function() {
+SwatTextarea.prototype.init = function() {
   this.textarea = document.getElementById(this.id);
 
   // check if textarea already is resizable, and if so, don't add resize

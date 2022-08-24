@@ -136,7 +136,9 @@ function SwatCheckboxTree(id, maybeEffect) {
     };
   }
 
-  YAHOO.util.Event.onDOMReady(init, this, true);
+  window.addEventListener('DOMContentLoaded', () => {
+    init.call(this);
+  });
 
   /*
    * This property needs to be set to something callable right away.

@@ -55,7 +55,9 @@ function SwatRating(id, max_value) {
   this.stars = [];
   this.sensitive = true;
 
-  YAHOO.util.Event.onDOMReady(this.init, this, true);
+  window.addEventListener('DOMContentLoaded', () => {
+    this.init();
+  });
 }
 
 SwatRating.prototype.init = function() {

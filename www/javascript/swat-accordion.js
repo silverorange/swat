@@ -7,7 +7,9 @@ function SwatAccordion(id) {
   this.pageChangeEvent = new YAHOO.util.CustomEvent('pageChange');
   this.postInitEvent = new YAHOO.util.CustomEvent('postInit');
 
-  YAHOO.util.Event.onDOMReady(this.init, this, true);
+  window.addEventListener('DOMContentLoaded', () => {
+    this.init();
+  });
 }
 
 SwatAccordion.resize_period = 0.25; // seconds
