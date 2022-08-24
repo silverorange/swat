@@ -84,7 +84,7 @@ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
       tcell = document.createElement('td');
       tcell.id = this.id + '_palette_null';
       tcell.colSpan = this.columns;
-      YAHOO.util.Dom.addClass(tcell, 'swat-simple-color-entry-palette-blank');
+      tcell.classList.add('swat-simple-color-entry-palette-blank');
 
       text = document.createTextNode(this.none_option_title);
 
@@ -130,7 +130,7 @@ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
 
         tcell.appendChild(anchor);
       } else {
-        YAHOO.util.Dom.addClass(tcell, 'swat-simple-color-entry-palette-blank');
+        tcell.classList.add('swat-simple-color-entry-palette-blank');
 
         tcell.appendChild(text);
       }
@@ -317,15 +317,9 @@ SwatSimpleColorEntry.prototype.highlightPaletteEntry = function(color) {
     var null_entry = document.getElementById(this.id + '_palette_null');
 
     if (color === null) {
-      YAHOO.util.Dom.addClass(
-        null_entry,
-        'swat-simple-color-entry-palette-selected'
-      );
+      null_entry.classList.add('swat-simple-color-entry-palette-selected');
     } else {
-      YAHOO.util.Dom.removeClass(
-        null_entry,
-        'swat-simple-color-entry-palette-selected'
-      );
+      null_entry.classList.remove('swat-simple-color-entry-palette-selected');
     }
   }
 
@@ -336,13 +330,9 @@ SwatSimpleColorEntry.prototype.highlightPaletteEntry = function(color) {
       this.current_color !== null &&
       this.colors[i].toLowerCase() == this.current_color.toLowerCase()
     ) {
-      YAHOO.util.Dom.addClass(
-        palette_entry,
-        'swat-simple-color-entry-palette-selected'
-      );
+      palette_entry.classList.add('swat-simple-color-entry-palette-selected');
     } else {
-      YAHOO.util.Dom.removeClass(
-        palette_entry,
+      palette_entry.classList.remove(
         'swat-simple-color-entry-palette-selected'
       );
     }

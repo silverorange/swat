@@ -46,10 +46,10 @@ SwatCheckboxEntryList.prototype.setEntrySensitivity = function(
   if (this.entry_list[index]) {
     if (sensitivity) {
       this.entry_list[index].disabled = false;
-      YAHOO.util.Dom.removeClass(this.entry_list[index], 'swat-insensitive');
+      this.entry_list[index].classList.remove('swat-insensitive');
     } else {
       this.entry_list[index].disabled = true;
-      YAHOO.util.Dom.addClass(this.entry_list[index], 'swat-insensitive');
+      this.entry_list[index].classList.add('swat-insensitive');
     }
   }
 };

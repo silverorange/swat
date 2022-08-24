@@ -42,7 +42,7 @@ SwatAbstractOverlay.prototype.init = function() {
 SwatAbstractOverlay.prototype.draw = function() {
   this.overlay_content = document.createElement('div');
   this.overlay_content.id = this.id + '_overlay';
-  YAHOO.util.Dom.addClass(this.overlay_content, 'swat-overlay');
+  this.overlay_content.classList.add('swat-overlay');
   this.overlay_content.style.display = 'none';
 
   this.overlay_content.appendChild(this.getHeader());
@@ -60,7 +60,7 @@ SwatAbstractOverlay.prototype.draw = function() {
 
 SwatAbstractOverlay.prototype.getToggleButton = function() {
   var toggle_button = document.createElement('button');
-  YAHOO.util.Dom.addClass(toggle_button, 'swat-overlay-toggle-button');
+  toggle_button.classList.add('swat-overlay-toggle-button');
 
   // the type property is readonly in IE so use setAttribute() here
   toggle_button.setAttribute('type', 'button');
@@ -75,7 +75,7 @@ SwatAbstractOverlay.prototype.getToggleButton = function() {
 
 SwatAbstractOverlay.prototype.getHeader = function() {
   var header = document.createElement('div');
-  YAHOO.util.Dom.addClass(header, 'hd');
+  header.classList.add('hd');
   header.appendChild(this.getCloseLink());
   return header;
 };
@@ -85,7 +85,7 @@ SwatAbstractOverlay.prototype.getHeader = function() {
 
 SwatAbstractOverlay.prototype.getBody = function() {
   var body = document.createElement('div');
-  YAHOO.util.Dom.addClass(body, 'bd');
+  body.classList.add('bd');
   return body;
 };
 
@@ -94,7 +94,7 @@ SwatAbstractOverlay.prototype.getBody = function() {
 
 SwatAbstractOverlay.prototype.getFooter = function() {
   var footer = document.createElement('div');
-  YAHOO.util.Dom.addClass(footer, 'ft');
+  footer.classList.add('ft');
   return footer;
 };
 

@@ -82,7 +82,7 @@ SwatSearchEntry.prototype.showLabelText = function() {
     return;
   }
 
-  YAHOO.util.Dom.addClass(this.input, 'swat-search-entry-empty');
+  this.input.classList.add('swat-search-entry-empty');
 
   if (this.input.hasAttribute) {
     this.input.removeAttribute('name');
@@ -193,7 +193,7 @@ SwatSearchEntry.prototype.hideLabelText = function() {
 
   if (hide) {
     this.input.value = this.input_value;
-    YAHOO.util.Dom.removeClass(this.input, 'swat-search-entry-empty');
+    this.input.classList.remove('swat-search-entry-empty');
     YAHOO.util.Event.addListener(
       this.input,
       'keypress',

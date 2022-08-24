@@ -467,7 +467,7 @@ function SwatChangeOrder(id, sensitive) {
         SwatChangeOrder_mousedownEventHandler
       );
 
-      YAHOO.util.Dom.removeClass(node, 'swat-change-order-item-active');
+      node.classList.remove('swat-change-order-item-active');
 
       count++;
     }
@@ -599,7 +599,7 @@ SwatChangeOrder.prototype.add = function(el, value) {
     return false;
   }
 
-  YAHOO.util.Dom.addClass(el, 'swat-change-order-item');
+  el.classList.add('swat-change-order-item');
 
   YAHOO.util.Event.addListener(
     el,

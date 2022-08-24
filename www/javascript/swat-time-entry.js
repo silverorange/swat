@@ -74,10 +74,10 @@ SwatTimeEntry.prototype.setSensitivity = function(sensitivity) {
   for (var i = 0; i < elements.length; i++) {
     if (sensitivity) {
       elements[i].disabled = false;
-      YAHOO.util.Dom.removeClass(elements[i], 'swat-insensitive');
+      elements[i].classList.remove('swat-insensitive');
     } else {
       elements[i].disabled = true;
-      YAHOO.util.Dom.addClass(elements[i], 'swat-insensitive');
+      elements[i].classList.add('swat-insensitive');
     }
   }
 };

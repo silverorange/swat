@@ -33,15 +33,14 @@ SwatAccordion.prototype.init = function() {
 
     if (
       hash_open_page === page.element ||
-      (hash_open_page === null &&
-        YAHOO.util.Dom.hasClass(page.element, 'selected'))
+      (hash_open_page === null && page.element.classList.contains('selected'))
     ) {
       this.current_page = page;
-      YAHOO.util.Dom.removeClass(page.element, 'selected');
-      YAHOO.util.Dom.addClass(page.element, 'swat-accordion-page-opened');
+      page.element.classList.remove('selected');
+      page.element.classList.add('swat-accordion-page-opened');
     } else {
       page.animation.style.display = 'none';
-      YAHOO.util.Dom.addClass(page.element, 'swat-accordion-page-closed');
+      page.element.classList.add('swat-accordion-page-closed');
     }
 
     var that = this;
@@ -224,12 +223,12 @@ function SwatAccordionPage(el) {
 
 SwatAccordionPage.prototype.setStatus = function(stat) {
   if (stat === 'opened') {
-    YAHOO.util.Dom.removeClass(this.element, 'swat-accordion-page-closed');
+    this.element.classList.remove('swat-accordion-page-closed');
 
-    YAHOO.util.Dom.addClass(this.element, 'swat-accordion-page-opened');
+    this.element.classList.add('swat-accordion-page-opened');
   } else {
-    YAHOO.util.Dom.removeClass(this.element, 'swat-accordion-page-opened');
+    this.element.classList.remove('swat-accordion-page-opened');
 
-    YAHOO.util.Dom.addClass(this.element, 'swat-accordion-page-closed');
+    this.element.classList.add('swat-accordion-page-closed');
   }
 };

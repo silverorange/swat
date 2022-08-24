@@ -187,10 +187,7 @@ SwatImagePreviewDisplay.prototype.draw = function() {
     this.preview_mask,
     'mouseover',
     function(e) {
-      YAHOO.util.Dom.addClass(
-        this.preview_close_button,
-        'swat-image-preview-close-hover'
-      );
+      this.preview_close_button.classList.add('swat-image-preview-close-hover');
     },
     this,
     true
@@ -200,8 +197,7 @@ SwatImagePreviewDisplay.prototype.draw = function() {
     this.preview_mask,
     'mouseout',
     function(e) {
-      YAHOO.util.Dom.removeClass(
-        this.preview_close_button,
+      this.preview_close_button.classList.remove(
         'swat-image-preview-close-hover'
       );
     },
@@ -269,10 +265,7 @@ SwatImagePreviewDisplay.prototype.draw = function() {
     this.preview_container,
     'mouseover',
     function(e) {
-      YAHOO.util.Dom.addClass(
-        this.preview_close_button,
-        'swat-image-preview-close-hover'
-      );
+      this.preview_close_button.classList.add('swat-image-preview-close-hover');
     },
     this,
     true
@@ -282,8 +275,7 @@ SwatImagePreviewDisplay.prototype.draw = function() {
     this.preview_container,
     'mouseout',
     function(e) {
-      YAHOO.util.Dom.removeClass(
-        this.preview_close_button,
+      this.preview_close_button.classList.remove(
         'swat-image-preview-close-hover'
       );
     },

@@ -66,9 +66,9 @@ SwatTileView.prototype.selectItem = function(node, selector) {
   var tile_node = this.getItemNode(node);
   if (
     this.isSelected(tile_node) &&
-    !YAHOO.util.Dom.hasClass(tile_node, 'highlight')
+    !tile_node.classList.contains('highlight')
   ) {
-    YAHOO.util.Dom.addClass(tile_node, 'highlight');
+    tile_node.classList.add('highlight');
   }
 };
 
@@ -88,8 +88,8 @@ SwatTileView.prototype.deselectItem = function(node, selector) {
   var tile_node = this.getItemNode(node);
   if (
     !this.isSelected(tile_node) &&
-    YAHOO.util.Dom.hasClass(tile_node, 'highlight')
+    tile_node.classList.contains('highlight')
   ) {
-    YAHOO.util.Dom.removeClass(tile_node, 'highlight');
+    tile_node.classList.remove('highlight');
   }
 };

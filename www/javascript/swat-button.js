@@ -30,7 +30,7 @@ SwatButton.prototype.handleClick = function(e) {
   if (confirmed) {
     if (this.throbber_container !== null) {
       this.button.disabled = true;
-      YAHOO.util.Dom.addClass(this.button, 'swat-insensitive');
+      this.button.classList.add('swat-insensitive');
 
       // add button to form data manually since we disabled it above
       var div = document.createElement('div');
@@ -54,12 +54,7 @@ SwatButton.prototype.handleClick = function(e) {
 
 SwatButton.prototype.initThrobber = function() {
   this.throbber_container = document.createElement('span');
-
-  YAHOO.util.Dom.addClass(
-    this.throbber_container,
-    'swat-button-processing-throbber'
-  );
-
+  this.throbber_container.classList.add('swat-button-processing-throbber');
   this.button.parentNode.appendChild(this.throbber_container);
 };
 
@@ -81,8 +76,7 @@ SwatButton.prototype.setProcessingMessage = function(message) {
 
   if (message.length > 0) {
     this.throbber_container.appendChild(document.createTextNode(message));
-    YAHOO.util.Dom.addClass(
-      this.throbber_container,
+    this.throbber_container.classList.add(
       'swat-button-processing-throbber-text'
     );
   } else {

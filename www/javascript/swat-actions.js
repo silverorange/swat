@@ -19,7 +19,7 @@ function SwatActions(id, values, selected) {
   var message_dismiss = document.createElement('a');
   message_dismiss.href = '#';
   message_dismiss.title = SwatActions.dismiss_text;
-  YAHOO.util.Dom.addClass(message_dismiss, 'swat-actions-message-dismiss-link');
+  message_dismiss.classList.add('swat-actions-message-dismiss-link');
 
   message_dismiss.appendChild(
     document.createTextNode(SwatActions.dismiss_text)
@@ -35,7 +35,7 @@ function SwatActions(id, values, selected) {
 
   // create message span and add content area and dismiss link
   this.message_span = document.createElement('span');
-  YAHOO.util.Dom.addClass(this.message_span, 'swat-actions-message');
+  this.message_span.classList.add('swat-actions-message');
   this.message_span.style.visibility = 'hidden';
   this.message_span.appendChild(this.message_content);
   this.message_span.appendChild(message_dismiss);
@@ -83,7 +83,7 @@ SwatActions.prototype.setViewSelector = function(view, selector_id) {
 
 SwatActions.prototype.handleChange = function() {
   if (this.selected_element) {
-    YAHOO.util.Dom.addClass(this.selected_element, 'swat-hidden');
+    this.selected_element.classList.add('swat-hidden');
   }
 
   var id = this.id + '_' + this.values[this.flydown.selectedIndex];
@@ -91,7 +91,7 @@ SwatActions.prototype.handleChange = function() {
   this.selected_element = document.getElementById(id);
 
   if (this.selected_element) {
-    YAHOO.util.Dom.removeClass(this.selected_element, 'swat-hidden');
+    this.selected_element.classList.remove('swat-hidden');
   }
 };
 

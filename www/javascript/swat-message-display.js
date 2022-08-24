@@ -39,7 +39,7 @@ SwatMessageDisplayMessage.prototype.drawDismissLink = function() {
   var anchor = document.createElement('a');
   anchor.href = '#';
   anchor.title = SwatMessageDisplayMessage.close_text;
-  YAHOO.util.Dom.addClass(anchor, 'swat-message-display-dismiss-link');
+  anchor.classList.add('swat-message-display-dismiss-link');
   YAHOO.util.Event.addListener(
     anchor,
     'click',

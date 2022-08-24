@@ -38,7 +38,7 @@ SwatRadioNoteBook.prototype.init = function() {
   // get pages
   var tbody = YAHOO.util.Dom.getFirstChild(table);
   var rows = YAHOO.util.Dom.getChildrenBy(tbody, function(n) {
-    return YAHOO.util.Dom.hasClass(n, 'swat-radio-note-book-page-row');
+    return n.classList.contains('swat-radio-note-book-page-row');
   });
 
   this.pages = [];
@@ -48,7 +48,7 @@ SwatRadioNoteBook.prototype.init = function() {
       YAHOO.util.Dom.getNextSibling(YAHOO.util.Dom.getFirstChild(rows[i]))
     );
 
-    if (YAHOO.util.Dom.hasClass(page, 'selected')) {
+    if (page.classList.contains('selected')) {
       this.current_page = page;
     }
 

@@ -180,7 +180,7 @@ SwatCalendar.prototype.setSensitivity = function(sensitivity) {
   }
 
   if (sensitivity) {
-    YAHOO.util.Dom.removeClass(this.container, 'swat-insensitive');
+    this.container.classList.remove('swat-insensitive');
 
     if (this.drawn) {
       if (this.toggle_button_insensitive.parentNode) {
@@ -195,7 +195,7 @@ SwatCalendar.prototype.setSensitivity = function(sensitivity) {
       );
     }
   } else {
-    YAHOO.util.Dom.addClass(this.container, 'swat-insensitive');
+    this.container.classList.add('swat-insensitive');
 
     if (this.drawn) {
       if (this.toggle_button.parentNode) {
@@ -217,16 +217,13 @@ SwatCalendar.prototype.setSensitivity = function(sensitivity) {
  */
 SwatCalendar.prototype.drawButton = function() {
   this.toggle_button_insensitive = document.createElement('span');
-  YAHOO.util.Dom.addClass(
-    this.toggle_button_insensitive,
-    'swat-calendar-toggle-button'
-  );
+  this.toggle_button_insensitive.classList.add('swat-calendar-toggle-button');
 
   this.toggle_button = document.createElement('a');
   this.toggle_button.id = this.id + '_toggle';
   this.toggle_button.href = '#';
   this.toggle_button.title = SwatCalendar.open_toggle_text;
-  YAHOO.util.Dom.addClass(this.toggle_button, 'swat-calendar-toggle-button');
+  this.toggle_button.classList.add('swat-calendar-toggle-button');
   YAHOO.util.Event.on(
     this.toggle_button,
     'click',
@@ -250,16 +247,16 @@ SwatCalendar.prototype.drawButton = function() {
   var calendar_div = document.createElement('div');
   calendar_div.id = this.id + '_div';
   calendar_div.style.display = 'none';
-  YAHOO.util.Dom.addClass(calendar_div, 'swat-calendar-div');
+  calendar_div.classList.add('swat-calendar-div');
 
   var overlay_header = document.createElement('div');
-  YAHOO.util.Dom.addClass(overlay_header, 'hd');
+  overlay_header.classList.add('hd');
 
   var overlay_body = document.createElement('div');
-  YAHOO.util.Dom.addClass(overlay_body, 'bd');
+  overlay_body.classList.add('bd');
 
   var overlay_footer = document.createElement('div');
-  YAHOO.util.Dom.addClass(overlay_footer, 'ft');
+  overlay_footer.classList.add('ft');
 
   calendar_div.appendChild(overlay_header);
   calendar_div.appendChild(overlay_body);
@@ -977,7 +974,7 @@ SwatCalendar.prototype.handleDocumentClick = function(e) {
       target = target.parentNode;
       if (
         target === this.overlay.element ||
-        YAHOO.util.Dom.hasClass(target, 'swat-calendar-frame')
+        target.classList.contains('swat-calendar-frame')
       ) {
         close = false;
         break;
