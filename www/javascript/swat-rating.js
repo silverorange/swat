@@ -49,180 +49,178 @@
  *    OTHER DEALINGS IN THE SOFTWARE.
  */
 
-function SwatRating(id, max_value)
-{
-	this.id        = id;
-	this.max_value = max_value;
-	this.stars     = [];
-	this.sensitive = true;
+function SwatRating(id, max_value) {
+  this.id = id;
+  this.max_value = max_value;
+  this.stars = [];
+  this.sensitive = true;
 
-	YAHOO.util.Event.onDOMReady(this.init, this, true);
+  YAHOO.util.Event.onDOMReady(this.init, this, true);
 }
 
-SwatRating.prototype.init = function()
-{
-	var Dom   = YAHOO.util.Dom;
-	var Event = YAHOO.util.Event;
+SwatRating.prototype.init = function() {
+  var Dom = YAHOO.util.Dom;
+  var Event = YAHOO.util.Event;
 
-	this.flydown    = document.getElementById(this.id + '_flydown');
-	this.rating_div = document.getElementById(this.id);
-	this.sensitive  = (!Dom.hasClass(this.rating_div, 'swat-insensitive'));
+  this.flydown = document.getElementById(this.id + '_flydown');
+  this.rating_div = document.getElementById(this.id);
+  this.sensitive = !Dom.hasClass(this.rating_div, 'swat-insensitive');
 
-	Dom.setStyle(this.flydown, 'display', 'none');
+  Dom.setStyle(this.flydown, 'display', 'none');
 
-	var star_div  = document.createElement('div');
-	star_div.className = 'swat-rating-star-container';
+  var star_div = document.createElement('div');
+  star_div.className = 'swat-rating-star-container';
 
-	for (var i = 1; i <= this.max_value; i++) {
-		var star = document.createElement('span');
-		star.id  = this.id + '_star' + i;
-		star.tabIndex = '0';
+  for (var i = 1; i <= this.max_value; i++) {
+    var star = document.createElement('span');
+    star.id = this.id + '_star' + i;
+    star.tabIndex = '0';
 
-		Dom.addClass(star, 'swat-rating-star');
-		if (i <= parseInt(this.flydown.value, 10)) {
-			Dom.addClass(star, 'swat-rating-selected');
-		}
+    Dom.addClass(star, 'swat-rating-star');
+    if (i <= parseInt(this.flydown.value, 10)) {
+      Dom.addClass(star, 'swat-rating-selected');
+    }
 
-		star_div.appendChild(star);
+    star_div.appendChild(star);
 
-		Event.on(star, 'focus', this.handleFocus, i, this);
-		Event.on(star, 'blur', this.handleBlur, i, this);
-		Event.on(star, 'mouseover', this.handleFocus, i, this);
-		Event.on(star, 'mouseout', this.handleBlur, this, true);
-		Event.on(star, 'click', this.handleClick, i, this);
-		Event.on(star, 'keypress', function(e, focus_star) {
-			if (Event.getCharCode(e) == 13 || Event.getCharCode(e) == 32) {
-				Event.preventDefault(e);
-				this.handleClick(e, focus_star);
-			}
-		}, i, this);
+    Event.on(star, 'focus', this.handleFocus, i, this);
+    Event.on(star, 'blur', this.handleBlur, i, this);
+    Event.on(star, 'mouseover', this.handleFocus, i, this);
+    Event.on(star, 'mouseout', this.handleBlur, this, true);
+    Event.on(star, 'click', this.handleClick, i, this);
+    Event.on(
+      star,
+      'keypress',
+      function(e, focus_star) {
+        if (Event.getCharCode(e) == 13 || Event.getCharCode(e) == 32) {
+          Event.preventDefault(e);
+          this.handleClick(e, focus_star);
+        }
+      },
+      i,
+      this
+    );
 
-		this.stars.push(star);
-	}
+    this.stars.push(star);
+  }
 
-	var clear = document.createElement('div');
-	clear.className = 'swat-rating-clear';
+  var clear = document.createElement('div');
+  clear.className = 'swat-rating-clear';
 
-	this.rating_div.appendChild(star_div);
-	this.rating_div.appendChild(clear);
+  this.rating_div.appendChild(star_div);
+  this.rating_div.appendChild(clear);
 };
 
-SwatRating.prototype.setSensitivity = function(sensitivity)
-{
-	var Dom = YAHOO.util.Dom;
+SwatRating.prototype.setSensitivity = function(sensitivity) {
+  var Dom = YAHOO.util.Dom;
 
-	if (sensitivity) {
-		Dom.removeClass(this.rating_div, 'swat-insensitive');
-		this.sensitive = true;
-	} else {
-		Dom.addClass(this.rating_div, 'swat-insensitive');
-		this.sensitive = false;
-	}
+  if (sensitivity) {
+    Dom.removeClass(this.rating_div, 'swat-insensitive');
+    this.sensitive = true;
+  } else {
+    Dom.addClass(this.rating_div, 'swat-insensitive');
+    this.sensitive = false;
+  }
 };
 
-SwatRating.prototype.handleFocus = function(event, focus_star)
-{
-	if (!this.sensitive) {
-		return;
-	}
+SwatRating.prototype.handleFocus = function(event, focus_star) {
+  if (!this.sensitive) {
+    return;
+  }
 
-	var Dom   = YAHOO.util.Dom;
-	var Event = YAHOO.util.Event;
+  var Dom = YAHOO.util.Dom;
+  var Event = YAHOO.util.Event;
 
-	for (var i = 0; i < focus_star; i++) {
-		Dom.addClass(this.stars[i], 'swat-rating-hover');
-	}
+  for (var i = 0; i < focus_star; i++) {
+    Dom.addClass(this.stars[i], 'swat-rating-hover');
+  }
 };
 
-SwatRating.prototype.handleBlur = function(event)
-{
-	var Dom   = YAHOO.util.Dom;
-	var Event = YAHOO.util.Event;
+SwatRating.prototype.handleBlur = function(event) {
+  var Dom = YAHOO.util.Dom;
+  var Event = YAHOO.util.Event;
 
-	// code to handle movement away from the star
-	for (var i = 0; i < this.max_value; i++) {
-		Dom.removeClass(this.stars[i], 'swat-rating-hover');
-	}
+  // code to handle movement away from the star
+  for (var i = 0; i < this.max_value; i++) {
+    Dom.removeClass(this.stars[i], 'swat-rating-hover');
+  }
 };
 
-SwatRating.prototype.handleClick = function(event, clicked_star)
-{
-	if (!this.sensitive) {
-		return;
-	}
+SwatRating.prototype.handleClick = function(event, clicked_star) {
+  if (!this.sensitive) {
+    return;
+  }
 
-	var Dom   = YAHOO.util.Dom;
-	var Event = YAHOO.util.Event;
+  var Dom = YAHOO.util.Dom;
+  var Event = YAHOO.util.Event;
 
-	// reset 'on' style for each star
-	for (var i = 0; i < this.max_value; i++) {
-		Dom.removeClass(this.stars[i], 'swat-rating-selected');
-	}
+  // reset 'on' style for each star
+  for (var i = 0; i < this.max_value; i++) {
+    Dom.removeClass(this.stars[i], 'swat-rating-selected');
+  }
 
-	// if you click on the current rating, it sets the rating to empty
-	if (this.flydown.value === clicked_star.toString()) {
-		this.flydown.value = '';
-		for (var i = 0; i < this.max_value; i++) {
-			Dom.removeClass(this.stars[i], 'swat-rating-hover');
-		}
-		return;
-	}
+  // if you click on the current rating, it sets the rating to empty
+  if (this.flydown.value === clicked_star.toString()) {
+    this.flydown.value = '';
+    for (var i = 0; i < this.max_value; i++) {
+      Dom.removeClass(this.stars[i], 'swat-rating-hover');
+    }
+    return;
+  }
 
-	// this will set the current value of the flydown
-	for (var i = 0; i < this.flydown.childNodes.length; i++) {
-		var option = this.flydown.childNodes[i];
-		if (option.value == clicked_star.toString()) {
-			this.flydown.value = clicked_star;
-			break;
-		}
-	}
+  // this will set the current value of the flydown
+  for (var i = 0; i < this.flydown.childNodes.length; i++) {
+    var option = this.flydown.childNodes[i];
+    if (option.value == clicked_star.toString()) {
+      this.flydown.value = clicked_star;
+      break;
+    }
+  }
 
-	// cycle through stars
-	for (var i = 0; i < clicked_star; i++) {
-		Dom.addClass(this.stars[i], 'swat-rating-selected');
-	}
+  // cycle through stars
+  for (var i = 0; i < clicked_star; i++) {
+    Dom.addClass(this.stars[i], 'swat-rating-selected');
+  }
 };
 
-SwatRating.prototype.getValue = function()
-{
-	var value = null;
+SwatRating.prototype.getValue = function() {
+  var value = null;
 
-	var index = this.flydown.value;
-	if (index !== null && index !== '') {
-		value = this.flydown.options[index].value;
-	}
+  var index = this.flydown.value;
+  if (index !== null && index !== '') {
+    value = this.flydown.options[index].value;
+  }
 
-	return value;
+  return value;
 };
 
-SwatRating.prototype.setValue = function(rating)
-{
-	var Dom   = YAHOO.util.Dom;
-	var Event = YAHOO.util.Event;
+SwatRating.prototype.setValue = function(rating) {
+  var Dom = YAHOO.util.Dom;
+  var Event = YAHOO.util.Event;
 
-	// clear 'on' style for each star
-	for (var i = 0; i < this.max_value; i++) {
-		Dom.removeClass(this.stars[i], 'swat-rating-selected');
-	}
+  // clear 'on' style for each star
+  for (var i = 0; i < this.max_value; i++) {
+    Dom.removeClass(this.stars[i], 'swat-rating-selected');
+  }
 
-	if (rating === '' || rating === null) {
-		this.flydown.value = '';
-		for (var i = 0; i < this.max_value; i++) {
-			Dom.removeClass(this.stars[i], 'swat-rating-hover');
-		}
-	} else {
-		// set the current value of the flydown
-		for (var i = 0; i < this.flydown.options.length; i++) {
-			var option = this.flydown.options[i];
-			if (option.value == rating) {
-				this.flydown.value = i;
-				break;
-			}
-		}
+  if (rating === '' || rating === null) {
+    this.flydown.value = '';
+    for (var i = 0; i < this.max_value; i++) {
+      Dom.removeClass(this.stars[i], 'swat-rating-hover');
+    }
+  } else {
+    // set the current value of the flydown
+    for (var i = 0; i < this.flydown.options.length; i++) {
+      var option = this.flydown.options[i];
+      if (option.value == rating) {
+        this.flydown.value = i;
+        break;
+      }
+    }
 
-		// set 'on' style for each star
-		for (var i = 0; i < rating; i++) {
-			Dom.addClass(this.stars[i], 'swat-rating-selected');
-		}
-	}
+    // set 'on' style for each star
+    for (var i = 0; i < rating; i++) {
+      Dom.addClass(this.stars[i], 'swat-rating-selected');
+    }
+  }
 };

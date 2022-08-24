@@ -1,85 +1,77 @@
-function SwatZIndexNode(element)
-{
-	if (element) {
-		this.element = element;
-		this.element._swat_z_index_node = this;
-	} else {
-		this.element = null;
-	}
+function SwatZIndexNode(element) {
+  if (element) {
+    this.element = element;
+    this.element._swat_z_index_node = this;
+  } else {
+    this.element = null;
+  }
 
-	this.parent = null;
-	this.nodes = [];
+  this.parent = null;
+  this.nodes = [];
 }
 
-SwatZIndexNode.prototype.add = function(node)
-{
-	for (var i = 0; i < this.nodes.length; i++) {
-		if (this.nodes[i] === node || this.nodes[i].id === node) {
-			return;
-		}
-	}
+SwatZIndexNode.prototype.add = function(node) {
+  for (var i = 0; i < this.nodes.length; i++) {
+    if (this.nodes[i] === node || this.nodes[i].id === node) {
+      return;
+    }
+  }
 
-	this.nodes.push(node);
-	node.parent = this;
+  this.nodes.push(node);
+  node.parent = this;
 };
 
-SwatZIndexNode.prototype.remove = function(node)
-{
-	var found = false;
+SwatZIndexNode.prototype.remove = function(node) {
+  var found = false;
 
-	for (var i = 0; i < this.nodes.length; i++) {
-		if (this.nodes[i] === node) {
-			found = this.nodes[i];
-			found.parent = null;
-			this.nodes.splice(i, 1);
-			break;
-		}
-	}
+  for (var i = 0; i < this.nodes.length; i++) {
+    if (this.nodes[i] === node) {
+      found = this.nodes[i];
+      found.parent = null;
+      this.nodes.splice(i, 1);
+      break;
+    }
+  }
 
-	return found;
+  return found;
 };
 
-SwatZIndexManager.reindex = function()
-{
-	SwatZIndexManager.reindexNode(
-		SwatZIndexManager.tree,
-		SwatZIndexManager.start
-	);
+SwatZIndexManager.reindex = function() {
+  SwatZIndexManager.reindexNode(
+    SwatZIndexManager.tree,
+    SwatZIndexManager.start
+  );
 };
 
-SwatZIndexManager.reindexNode = function(node, index)
-{
-	if (node.element) {
-		node.element.style.zIndex = index;
-		index++;
-	}
+SwatZIndexManager.reindexNode = function(node, index) {
+  if (node.element) {
+    node.element.style.zIndex = index;
+    index++;
+  }
 
-	for (var i = 0; i < node.nodes.length; i++) {
-		index = SwatZIndexManager.reindexNode(node.nodes[i], index);
-	}
+  for (var i = 0; i < node.nodes.length; i++) {
+    index = SwatZIndexManager.reindexNode(node.nodes[i], index);
+  }
 
-	return index;
+  return index;
 };
 
-SwatZIndexManager.unindexNode = function(node)
-{
-	if (node.element) {
-		node.element.style.zIndex = 0;
-	}
+SwatZIndexManager.unindexNode = function(node) {
+  if (node.element) {
+    node.element.style.zIndex = 0;
+  }
 
-	for (var i = 0; i < node.nodes.length; i++) {
-		index = SwatZIndexManager.unindexNode(node.nodes[i]);
-	}
+  for (var i = 0; i < node.nodes.length; i++) {
+    index = SwatZIndexManager.unindexNode(node.nodes[i]);
+  }
 
-	return index;
+  return index;
 };
 
 /**
  * An object to manage element z-indexes for a webpage
  */
-function SwatZIndexManager()
-{
-}
+function SwatZIndexManager() {}
 
 SwatZIndexManager.tree = new SwatZIndexNode();
 
@@ -100,79 +92,75 @@ SwatZIndexManager.start = 10;
  *
  * @param DOMElement element the element to raise.
  */
-SwatZIndexManager.raiseElement = function(element, group)
-{
-	var node;
+SwatZIndexManager.raiseElement = function(element, group) {
+  var node;
 
-	// create node if it does not exist
-	if (element._swat_z_index_node) {
-		node = element._swat_z_index_node;
-	} else {
-		node = new SwatZIndexNode(element);
-	}
+  // create node if it does not exist
+  if (element._swat_z_index_node) {
+    node = element._swat_z_index_node;
+  } else {
+    node = new SwatZIndexNode(element);
+  }
 
-	// create group node if it does not exist
-	if (group) {
-		var group_node;
+  // create group node if it does not exist
+  if (group) {
+    var group_node;
 
-		if (SwatZIndexManager.groups[group]) {
-			group_node = SwatZIndexManager.groups[group];
-		} else {
-			group_node = new SwatZIndexNode();
-			SwatZIndexManager.groups[group] = group_node;
-			// add group to root
-			SwatZIndexManager.tree.add(group_node);
-		}
+    if (SwatZIndexManager.groups[group]) {
+      group_node = SwatZIndexManager.groups[group];
+    } else {
+      group_node = new SwatZIndexNode();
+      SwatZIndexManager.groups[group] = group_node;
+      // add group to root
+      SwatZIndexManager.tree.add(group_node);
+    }
 
-		// add element node to end of group node
-		group_node.remove(node);
-		group_node.add(node);
-	} else {
-		// add element node to end of root
-		SwatZIndexManager.tree.remove(node);
-		SwatZIndexManager.tree.add(node);
-	}
+    // add element node to end of group node
+    group_node.remove(node);
+    group_node.add(node);
+  } else {
+    // add element node to end of root
+    SwatZIndexManager.tree.remove(node);
+    SwatZIndexManager.tree.add(node);
+  }
 
-	SwatZIndexManager.reindex();
+  SwatZIndexManager.reindex();
 };
 
-SwatZIndexManager.raiseGroup = function(group)
-{
-	if (!SwatZIndexManager.groups[group]) {
-		return;
-	}
+SwatZIndexManager.raiseGroup = function(group) {
+  if (!SwatZIndexManager.groups[group]) {
+    return;
+  }
 
-	var group = SwatZIndexManager.groups[group];
+  var group = SwatZIndexManager.groups[group];
 
-	var parent = group.parent;
-	parent.remove(group);
-	parent.add(group);
+  var parent = group.parent;
+  parent.remove(group);
+  parent.add(group);
 
-	SwatZIndexManager.reindex();
+  SwatZIndexManager.reindex();
 };
 
-SwatZIndexManager.lowerGroup = function(group)
-{
-	if (!SwatZIndexManager.groups[group]) {
-		return;
-	}
+SwatZIndexManager.lowerGroup = function(group) {
+  if (!SwatZIndexManager.groups[group]) {
+    return;
+  }
 
-	var group = SwatZIndexManager.groups[group];
-	SwatZIndexManager.unindexNode(group);
-	SwatZIndexManager.removeGroup(group);
+  var group = SwatZIndexManager.groups[group];
+  SwatZIndexManager.unindexNode(group);
+  SwatZIndexManager.removeGroup(group);
 };
 
-SwatZIndexManager.removeGroup = function(group)
-{
-	if (!SwatZIndexManager.groups[group]) {
-		return;
-	}
+SwatZIndexManager.removeGroup = function(group) {
+  if (!SwatZIndexManager.groups[group]) {
+    return;
+  }
 
-	var group = SwatZIndexManager.groups[group];
-	group.parent.remove(group);
-	SwatZIndexManager.groups[group] = null;
+  var group = SwatZIndexManager.groups[group];
+  group.parent.remove(group);
+  SwatZIndexManager.groups[group] = null;
 
-	SwatZIndexManager.reindex();
+  SwatZIndexManager.reindex();
 };
 
 /**
@@ -189,11 +177,10 @@ SwatZIndexManager.removeGroup = function(group)
  * @return mixed the element that was lowered or null if the element was not
  *                found.
  */
-SwatZIndexManager.lowerElement = function(element, group)
-{
-	element.style.zIndex = 0;
+SwatZIndexManager.lowerElement = function(element, group) {
+  element.style.zIndex = 0;
 
-	return SwatZIndexManager.removeElement(element, group);
+  return SwatZIndexManager.removeElement(element, group);
 };
 
 /**
@@ -205,29 +192,28 @@ SwatZIndexManager.lowerElement = function(element, group)
  * @return mixed the element that was removed or null if the element was not
  *                found.
  */
-SwatZIndexManager.removeElement = function(element, group)
-{
-	if (!element._swat_z_index_node) {
-		return null;
-	}
+SwatZIndexManager.removeElement = function(element, group) {
+  if (!element._swat_z_index_node) {
+    return null;
+  }
 
-	var node = element._swat_z_index_node;
-	if (node.parent) {
-		node.parent.remove(node);
-	}
+  var node = element._swat_z_index_node;
+  if (node.parent) {
+    node.parent.remove(node);
+  }
 
-	if (group) {
-		// if group is empty, remove it
-		if (SwatZIndexManager.groups[group]) {
-			var group_node = new SwatZIndexNode();
-			if (group_node.nodes.length === 0) {
-				group_node.parent.remove(group_node);
-				SwatZIndexManager.groups[group] = null;
-			}
-		}
-	}
+  if (group) {
+    // if group is empty, remove it
+    if (SwatZIndexManager.groups[group]) {
+      var group_node = new SwatZIndexNode();
+      if (group_node.nodes.length === 0) {
+        group_node.parent.remove(group_node);
+        SwatZIndexManager.groups[group] = null;
+      }
+    }
+  }
 
-	SwatZIndexManager.reindex();
+  SwatZIndexManager.reindex();
 
-	return element;
+  return element;
 };

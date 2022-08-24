@@ -14,48 +14,49 @@
  * @param string id the unique identifier of this textarea object.
  * @param boolean resizeable whether or not this textarea is resizeable.
  */
-function SwatTextarea(id, resizeable)
-{
-	this.id = id;
+function SwatTextarea(id, resizeable) {
+  this.id = id;
 
-	if (resizeable) {
-		YAHOO.util.Event.onContentReady(
-			this.id, this.handleOnAvailable, this, true);
-	}
+  if (resizeable) {
+    YAHOO.util.Event.onContentReady(
+      this.id,
+      this.handleOnAvailable,
+      this,
+      true
+    );
+  }
 }
 
 // }}}
 // {{{ SwatTextarea.registerPendingTextarea()
 
-SwatTextarea.registerPendingTextarea = function(textarea)
-{
-	SwatTextarea.pending_textareas.push(textarea);
+SwatTextarea.registerPendingTextarea = function(textarea) {
+  SwatTextarea.pending_textareas.push(textarea);
 
-	if (SwatTextarea.pending_interval === null) {
-		SwatTextarea.pending_interval = setInterval(
-			SwatTextarea.pollPendingTextareas,
-			SwatTextarea.pending_poll_interval * 1000
-		);
-	}
+  if (SwatTextarea.pending_interval === null) {
+    SwatTextarea.pending_interval = setInterval(
+      SwatTextarea.pollPendingTextareas,
+      SwatTextarea.pending_poll_interval * 1000
+    );
+  }
 };
 
 // }}}
 // {{{ SwatTextarea.pollPendingTextareas()
 
-SwatTextarea.pollPendingTextareas = function()
-{
-	for (var i = 0; i < SwatTextarea.pending_textareas.length; i++) {
-		if (SwatTextarea.pending_textareas[i].textarea.offsetWidth > 0) {
-			SwatTextarea.pending_textareas[i].initialize();
-			SwatTextarea.pending_textareas.splice(i, 1);
-			i--;
-		}
-	}
+SwatTextarea.pollPendingTextareas = function() {
+  for (var i = 0; i < SwatTextarea.pending_textareas.length; i++) {
+    if (SwatTextarea.pending_textareas[i].textarea.offsetWidth > 0) {
+      SwatTextarea.pending_textareas[i].initialize();
+      SwatTextarea.pending_textareas.splice(i, 1);
+      i--;
+    }
+  }
 
-	if (SwatTextarea.pending_textareas.length === 0) {
-		clearInterval(SwatTextarea.pending_interval);
-		SwatTextarea.pending_interval = null;
-	}
+  if (SwatTextarea.pending_textareas.length === 0) {
+    clearInterval(SwatTextarea.pending_interval);
+    SwatTextarea.pending_interval = null;
+  }
 };
 
 // }}}
@@ -65,116 +66,108 @@ SwatTextarea.pollPendingTextareas = function()
  * Sets up the resize handle when the textarea is available and loaded in the
  * DOM tree
  */
-SwatTextarea.prototype.handleOnAvailable = function()
-{
-	this.textarea = document.getElementById(this.id);
+SwatTextarea.prototype.handleOnAvailable = function() {
+  this.textarea = document.getElementById(this.id);
 
-	// check if textarea already is resizable, and if so, don't add resize
-	// handle.
-	if (SwatTextarea.supports_resize) {
-		var resize = YAHOO.util.Dom.getStyle(this.textarea, 'resize');
-		if (resize == 'both' || resize == 'vertical') {
-			return;
-		}
-	}
+  // check if textarea already is resizable, and if so, don't add resize
+  // handle.
+  if (SwatTextarea.supports_resize) {
+    var resize = YAHOO.util.Dom.getStyle(this.textarea, 'resize');
+    if (resize == 'both' || resize == 'vertical') {
+      return;
+    }
+  }
 
-	this.handle_div = document.createElement('div');
-	this.handle_div.className = 'swat-textarea-resize-handle';
-	this.handle_div._textarea = this.textarea;
+  this.handle_div = document.createElement('div');
+  this.handle_div.className = 'swat-textarea-resize-handle';
+  this.handle_div._textarea = this.textarea;
 
-	this.textarea._resize = this;
+  this.textarea._resize = this;
 
-	YAHOO.util.Event.addListener(this.handle_div, 'touchstart',
-		SwatTextarea.touchstartEventHandler, this.handle_div);
+  YAHOO.util.Event.addListener(
+    this.handle_div,
+    'touchstart',
+    SwatTextarea.touchstartEventHandler,
+    this.handle_div
+  );
 
-	YAHOO.util.Event.addListener(this.handle_div, 'mousedown',
-		SwatTextarea.mousedownEventHandler, this.handle_div);
+  YAHOO.util.Event.addListener(
+    this.handle_div,
+    'mousedown',
+    SwatTextarea.mousedownEventHandler,
+    this.handle_div
+  );
 
-	this.textarea.parentNode.appendChild(this.handle_div);
-	YAHOO.util.Dom.addClass(
-		this.textarea.parentNode,
-		'swat-textarea-with-resize');
+  this.textarea.parentNode.appendChild(this.handle_div);
+  YAHOO.util.Dom.addClass(
+    this.textarea.parentNode,
+    'swat-textarea-with-resize'
+  );
 
-	// if textarea is not currently visible, delay initilization
-	if (this.textarea.offsetWidth === 0) {
-		SwatTextarea.registerPendingTextarea(this);
-		return;
-	}
+  // if textarea is not currently visible, delay initilization
+  if (this.textarea.offsetWidth === 0) {
+    SwatTextarea.registerPendingTextarea(this);
+    return;
+  }
 
-	this.initialize();
+  this.initialize();
 };
 
 // }}}
 // {{{ initialize()
 
-SwatTextarea.prototype.initialize = function()
-{
-	var style_width = YAHOO.util.Dom.getStyle(this.textarea, 'width');
-	var left_border, right_border;
+SwatTextarea.prototype.initialize = function() {
+  var style_width = YAHOO.util.Dom.getStyle(this.textarea, 'width');
+  var left_border, right_border;
 
-	if (style_width.indexOf('%') != -1) {
-		left_border = parseInt(
-			YAHOO.util.Dom.getComputedStyle(
-				this.textarea,
-				'borderLeftWidth'
-			),
-			10
-		) - parseInt(
-			YAHOO.util.Dom.getComputedStyle(
-				this.handle_div,
-				'borderLeftWidth'
-			),
-			10
-		);
+  if (style_width.indexOf('%') != -1) {
+    left_border =
+      parseInt(
+        YAHOO.util.Dom.getComputedStyle(this.textarea, 'borderLeftWidth'),
+        10
+      ) -
+      parseInt(
+        YAHOO.util.Dom.getComputedStyle(this.handle_div, 'borderLeftWidth'),
+        10
+      );
 
-		right_border = parseInt(
-			YAHOO.util.Dom.getComputedStyle(
-				this.textarea,
-				'borderRightWidth'
-			),
-			10
-		) - parseInt(
-			YAHOO.util.Dom.getComputedStyle(
-				this.handle_div,
-				'borderRightWidth'
-			),
-			10
-		);
+    right_border =
+      parseInt(
+        YAHOO.util.Dom.getComputedStyle(this.textarea, 'borderRightWidth'),
+        10
+      ) -
+      parseInt(
+        YAHOO.util.Dom.getComputedStyle(this.handle_div, 'borderRightWidth'),
+        10
+      );
 
-		this.handle_div.style.width = style_width;
-		this.handle_div.style.paddingLeft = left_border;
-		this.handle_div.style.paddingRight = right_border;
-	} else {
-		var width = this.textarea.offsetWidth;
+    this.handle_div.style.width = style_width;
+    this.handle_div.style.paddingLeft = left_border;
+    this.handle_div.style.paddingRight = right_border;
+  } else {
+    var width = this.textarea.offsetWidth;
 
-		left_border = parseInt(
-			YAHOO.util.Dom.getComputedStyle(
-				this.handle_div,
-				'borderLeftWidth'
-			),
-			10
-		);
+    left_border = parseInt(
+      YAHOO.util.Dom.getComputedStyle(this.handle_div, 'borderLeftWidth'),
+      10
+    );
 
-		right_border = parseInt(
-			YAHOO.util.Dom.getComputedStyle(
-				this.handle_div,
-				'borderRightWidth'
-			),
-			10
-		);
+    right_border = parseInt(
+      YAHOO.util.Dom.getComputedStyle(this.handle_div, 'borderRightWidth'),
+      10
+    );
 
-		this.handle_div.style.width =
-			(width - left_border - right_border) + 'px';
-	}
+    this.handle_div.style.width = width - left_border - right_border + 'px';
+  }
 
-	this.handle_div.style.height = SwatTextarea.resize_handle_height + 'px';
-	this.handle_div.style.fontSize = '0'; // for IE6 height
+  this.handle_div.style.height = SwatTextarea.resize_handle_height + 'px';
+  this.handle_div.style.fontSize = '0'; // for IE6 height
 
-	if ('ontouchstart' in window) {
-		// make it taller for fingers
-		this.handle_div.style.height =
-			(SwatTextarea.resize_handle_height + 16) + 'px';
-	}
+  if ('ontouchstart' in window) {
+    // make it taller for fingers
+    this.handle_div.style.height =
+      SwatTextarea.resize_handle_height + 16 + 'px';
+  }
 };
 
 // }}}
@@ -249,15 +242,17 @@ SwatTextarea.pending_poll_interval = 0.1; // in seconds
  * @var Boolean
  */
 SwatTextarea.supports_resize = (function() {
-	var div = document.createElement('div');
-	var resize = YAHOO.util.Dom.getStyle(div, 'resize');
+  var div = document.createElement('div');
+  var resize = YAHOO.util.Dom.getStyle(div, 'resize');
 
-	// Both iOS and Android feature detection say they support resize, but
-	// they do not. Fall back to checking the UA here.
-	return (!YAHOO.env.ua.ios && !YAHOO.env.ua.android &&
-		(resize === '' || resize === 'none'));
+  // Both iOS and Android feature detection say they support resize, but
+  // they do not. Fall back to checking the UA here.
+  return (
+    !YAHOO.env.ua.ios &&
+    !YAHOO.env.ua.android &&
+    (resize === '' || resize === 'none')
+  );
 })();
-
 
 // }}}
 // {{{ SwatTextarea.mousedownEventHandler()
@@ -270,45 +265,59 @@ SwatTextarea.supports_resize = (function() {
  *
  * @return boolean false
  */
-SwatTextarea.mousedownEventHandler = function(e, handle)
-{
-	// prevent text selection
-	YAHOO.util.Event.preventDefault(e);
+SwatTextarea.mousedownEventHandler = function(e, handle) {
+  // prevent text selection
+  YAHOO.util.Event.preventDefault(e);
 
-	// only allow left click to do things
-	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
-	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
-	if ((is_ie && (e.button & 1) != 1) ||
-		(!is_ie && !is_webkit && e.button !== 0))
-		return false;
+  // only allow left click to do things
+  var is_webkit = /AppleWebKit|Konqueror|KHTML/gi.test(navigator.userAgent);
+  var is_ie = navigator.userAgent.indexOf('MSIE') != -1;
+  if (
+    (is_ie && (e.button & 1) != 1) ||
+    (!is_ie && !is_webkit && e.button !== 0)
+  )
+    return false;
 
-	SwatTextarea.dragging_item = handle;
-	SwatTextarea.dragging_mouse_origin_y =
-		YAHOO.util.Event.getPageY(e);
+  SwatTextarea.dragging_item = handle;
+  SwatTextarea.dragging_mouse_origin_y = YAHOO.util.Event.getPageY(e);
 
-	var textarea = handle._textarea;
+  var textarea = handle._textarea;
 
-	YAHOO.util.Dom.setStyle(textarea, 'opacity', 0.25);
+  YAHOO.util.Dom.setStyle(textarea, 'opacity', 0.25);
 
-	var height = parseInt(YAHOO.util.Dom.getStyle(textarea, 'height'));
-	if (height) {
-		SwatTextarea.dragging_origin_height = height;
-	} else {
-		// get original height for IE6
-		SwatTextarea.dragging_origin_height = textarea.clientHeight;
-	}
+  var height = parseInt(YAHOO.util.Dom.getStyle(textarea, 'height'));
+  if (height) {
+    SwatTextarea.dragging_origin_height = height;
+  } else {
+    // get original height for IE6
+    SwatTextarea.dragging_origin_height = textarea.clientHeight;
+  }
 
-	YAHOO.util.Event.removeListener(handle, 'mousedown',
-		SwatTextarea.mousedownEventHandler);
+  YAHOO.util.Event.removeListener(
+    handle,
+    'mousedown',
+    SwatTextarea.mousedownEventHandler
+  );
 
-	YAHOO.util.Event.removeListener(handle, 'touchstart',
-		SwatTextarea.touchstartEventHandler);
+  YAHOO.util.Event.removeListener(
+    handle,
+    'touchstart',
+    SwatTextarea.touchstartEventHandler
+  );
 
-	YAHOO.util.Event.addListener(document, 'mousemove',
-		SwatTextarea.mousemoveEventHandler, handle);
+  YAHOO.util.Event.addListener(
+    document,
+    'mousemove',
+    SwatTextarea.mousemoveEventHandler,
+    handle
+  );
 
-	YAHOO.util.Event.addListener(document, 'mouseup',
-		SwatTextarea.mouseupEventHandler, handle);
+  YAHOO.util.Event.addListener(
+    document,
+    'mouseup',
+    SwatTextarea.mouseupEventHandler,
+    handle
+  );
 };
 
 // }}}
@@ -322,43 +331,56 @@ SwatTextarea.mousedownEventHandler = function(e, handle)
  *
  * @return boolean false
  */
-SwatTextarea.touchstartEventHandler = function(e, handle)
-{
-	// prevent text selection
-	YAHOO.util.Event.preventDefault(e);
+SwatTextarea.touchstartEventHandler = function(e, handle) {
+  // prevent text selection
+  YAHOO.util.Event.preventDefault(e);
 
-	SwatTextarea.dragging_item = handle;
+  SwatTextarea.dragging_item = handle;
 
-	if ('touches' in e) {
-		for (var i = 0; i < e.touches.length; i++) {
-			SwatTextarea.dragging_mouse_origin_y = e.touches[i].pageY;
-			break;
-		}
+  if ('touches' in e) {
+    for (var i = 0; i < e.touches.length; i++) {
+      SwatTextarea.dragging_mouse_origin_y = e.touches[i].pageY;
+      break;
+    }
 
-		var textarea = handle._textarea;
+    var textarea = handle._textarea;
 
-		YAHOO.util.Dom.setStyle(textarea, 'opacity', 0.25);
+    YAHOO.util.Dom.setStyle(textarea, 'opacity', 0.25);
 
-		var height = parseInt(YAHOO.util.Dom.getStyle(textarea, 'height'));
-		if (height) {
-			SwatTextarea.dragging_origin_height = height;
-		} else {
-			// get original height for IE6
-			SwatTextarea.dragging_origin_height = textarea.clientHeight;
-		}
+    var height = parseInt(YAHOO.util.Dom.getStyle(textarea, 'height'));
+    if (height) {
+      SwatTextarea.dragging_origin_height = height;
+    } else {
+      // get original height for IE6
+      SwatTextarea.dragging_origin_height = textarea.clientHeight;
+    }
 
-		YAHOO.util.Event.removeListener(handle, 'mousedown',
-			SwatTextarea.mousedownEventHandler);
+    YAHOO.util.Event.removeListener(
+      handle,
+      'mousedown',
+      SwatTextarea.mousedownEventHandler
+    );
 
-		YAHOO.util.Event.removeListener(handle, 'touchstart',
-			SwatTextarea.touchstartEventHandler);
+    YAHOO.util.Event.removeListener(
+      handle,
+      'touchstart',
+      SwatTextarea.touchstartEventHandler
+    );
 
-		YAHOO.util.Event.addListener(document, 'touchmove',
-			SwatTextarea.touchmoveEventHandler, handle);
+    YAHOO.util.Event.addListener(
+      document,
+      'touchmove',
+      SwatTextarea.touchmoveEventHandler,
+      handle
+    );
 
-		YAHOO.util.Event.addListener(document, 'touchend',
-			SwatTextarea.touchendEventHandler, handle);
-	}
+    YAHOO.util.Event.addListener(
+      document,
+      'touchend',
+      SwatTextarea.touchendEventHandler,
+      handle
+    );
+  }
 };
 
 // }}}
@@ -373,19 +395,17 @@ SwatTextarea.touchstartEventHandler = function(e, handle)
  *
  * @return boolean false.
  */
-SwatTextarea.mousemoveEventHandler = function(e, handle)
-{
-	var resize_handle = SwatTextarea.dragging_item;
-	var textarea = resize_handle._textarea;
+SwatTextarea.mousemoveEventHandler = function(e, handle) {
+  var resize_handle = SwatTextarea.dragging_item;
+  var textarea = resize_handle._textarea;
 
-	var delta = YAHOO.util.Event.getPageY(e) -
-		SwatTextarea.dragging_mouse_origin_y;
+  var delta =
+    YAHOO.util.Event.getPageY(e) - SwatTextarea.dragging_mouse_origin_y;
 
-	var height = SwatTextarea.dragging_origin_height + delta;
-	if (height >= SwatTextarea.min_height)
-		textarea.style.height = height + 'px';
+  var height = SwatTextarea.dragging_origin_height + delta;
+  if (height >= SwatTextarea.min_height) textarea.style.height = height + 'px';
 
-	return false;
+  return false;
 };
 
 // }}}
@@ -400,29 +420,26 @@ SwatTextarea.mousemoveEventHandler = function(e, handle)
  *
  * @return boolean false.
  */
-SwatTextarea.touchmoveEventHandler = function(e, handle)
-{
-	var resize_handle = SwatTextarea.dragging_item;
-	var textarea = resize_handle._textarea;
+SwatTextarea.touchmoveEventHandler = function(e, handle) {
+  var resize_handle = SwatTextarea.dragging_item;
+  var textarea = resize_handle._textarea;
 
-	if ('touches' in e) {
-		for (var i = 0; i < e.touches.length; i++) {
+  if ('touches' in e) {
+    for (var i = 0; i < e.touches.length; i++) {
+      var delta = e.touches[i].pageY - SwatTextarea.dragging_mouse_origin_y;
 
-			var delta = e.touches[i].pageY
-				- SwatTextarea.dragging_mouse_origin_y;
+      var height = SwatTextarea.dragging_origin_height + delta;
+      if (height >= SwatTextarea.min_height) {
+        textarea.style.height = height + 'px';
+      }
 
-			var height = SwatTextarea.dragging_origin_height + delta;
-			if (height >= SwatTextarea.min_height) {
-				textarea.style.height = height + 'px';
-			}
+      break;
+    }
 
-			break;
-		}
+    e.preventDefault();
+  }
 
-		e.preventDefault();
-	}
-
-	return false;
+  return false;
 };
 
 // }}}
@@ -438,40 +455,61 @@ SwatTextarea.touchmoveEventHandler = function(e, handle)
  *
  * @return boolean false.
  */
-SwatTextarea.mouseupEventHandler = function(e, handle)
-{
-	// only allow left click to do things
-	var is_webkit = (/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
-	var is_ie = (navigator.userAgent.indexOf('MSIE') != -1);
-	if ((is_ie && (e.button & 1) != 1) ||
-		(!is_ie && !is_webkit && e.button !== 0))
-		return false;
+SwatTextarea.mouseupEventHandler = function(e, handle) {
+  // only allow left click to do things
+  var is_webkit = /AppleWebKit|Konqueror|KHTML/gi.test(navigator.userAgent);
+  var is_ie = navigator.userAgent.indexOf('MSIE') != -1;
+  if (
+    (is_ie && (e.button & 1) != 1) ||
+    (!is_ie && !is_webkit && e.button !== 0)
+  )
+    return false;
 
-	YAHOO.util.Event.removeListener(document, 'mousemove',
-		SwatTextarea.mousemoveEventHandler);
+  YAHOO.util.Event.removeListener(
+    document,
+    'mousemove',
+    SwatTextarea.mousemoveEventHandler
+  );
 
-	YAHOO.util.Event.removeListener(document, 'touchmove',
-		SwatTextarea.touchmoveEventHandler);
+  YAHOO.util.Event.removeListener(
+    document,
+    'touchmove',
+    SwatTextarea.touchmoveEventHandler
+  );
 
-	YAHOO.util.Event.removeListener(document, 'mouseup',
-		SwatTextarea.mouseupEventHandler);
+  YAHOO.util.Event.removeListener(
+    document,
+    'mouseup',
+    SwatTextarea.mouseupEventHandler
+  );
 
-	YAHOO.util.Event.removeListener(document, 'touchend',
-		SwatTextarea.touchendEventHandler);
+  YAHOO.util.Event.removeListener(
+    document,
+    'touchend',
+    SwatTextarea.touchendEventHandler
+  );
 
-	YAHOO.util.Event.addListener(handle, 'mousedown',
-		SwatTextarea.mousedownEventHandler, handle);
+  YAHOO.util.Event.addListener(
+    handle,
+    'mousedown',
+    SwatTextarea.mousedownEventHandler,
+    handle
+  );
 
-	YAHOO.util.Event.addListener(handle, 'touchstart',
-		SwatTextarea.touchstartEventHandler, handle);
+  YAHOO.util.Event.addListener(
+    handle,
+    'touchstart',
+    SwatTextarea.touchstartEventHandler,
+    handle
+  );
 
-	SwatTextarea.dragging_item = null;
-	SwatTextarea.dragging_mouse_origin_y = null;
-	SwatTextarea.dragging_origin_height = null;
+  SwatTextarea.dragging_item = null;
+  SwatTextarea.dragging_mouse_origin_y = null;
+  SwatTextarea.dragging_origin_height = null;
 
-	YAHOO.util.Dom.setStyle(handle._textarea, 'opacity', 1);
+  YAHOO.util.Dom.setStyle(handle._textarea, 'opacity', 1);
 
-	return false;
+  return false;
 };
 
 // }}}
@@ -487,9 +525,8 @@ SwatTextarea.mouseupEventHandler = function(e, handle)
  *
  * @return boolean false.
  */
-SwatTextarea.touchendEventHandler = function(e, handle)
-{
-	return SwatTextarea.mouseupEventHandler(e, handle);
+SwatTextarea.touchendEventHandler = function(e, handle) {
+  return SwatTextarea.mouseupEventHandler(e, handle);
 };
 
 // }}}

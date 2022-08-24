@@ -15,36 +15,36 @@
  *                           a new row is added, the placeholders are replaced
  *                           with the new row index.
  */
-function SwatTableViewInputRow(id, row_string)
-{
-	this.id = id;
+function SwatTableViewInputRow(id, row_string) {
+  this.id = id;
 
-	// decode string
-	row_string = row_string.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-	row_string = row_string.replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+  // decode string
+  row_string = row_string.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  row_string = row_string.replace(/&quot;/g, '"').replace(/&amp;/g, '&');
 
-	/*
-	 * Pack row string in an XHTML document
-	 *
-	 * We purposly do not specify a DTD here as Internet Explorer is too slow
-	 * when given a DTD. The XML string is encoded in UTF-8 with no special
-	 * entities at this point.
-	 */
-	this.row_string = "<?xml version='1.0' encoding='UTF-8'?>\n" +
-		'<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">' +
-		'<head><title>row</title></head><body><table>' +
-		row_string +
-		'</table></body></html>';
+  /*
+   * Pack row string in an XHTML document
+   *
+   * We purposly do not specify a DTD here as Internet Explorer is too slow
+   * when given a DTD. The XML string is encoded in UTF-8 with no special
+   * entities at this point.
+   */
+  this.row_string =
+    "<?xml version='1.0' encoding='UTF-8'?>\n" +
+    '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">' +
+    '<head><title>row</title></head><body><table>' +
+    row_string +
+    '</table></body></html>';
 
-	this.enter_row = document.getElementById(this.id + '_enter_row');
+  this.enter_row = document.getElementById(this.id + '_enter_row');
 
-	// get table node belonging to the enter row
-	this.table = this.enter_row;
-	while (this.table.nodeName.toLowerCase() != 'table')
-		this.table = this.table.parentNode;
+  // get table node belonging to the enter row
+  this.table = this.enter_row;
+  while (this.table.nodeName.toLowerCase() != 'table')
+    this.table = this.table.parentNode;
 
-	this.replicators = null;
-	this.replicators_input = null;
+  this.replicators = null;
+  this.replicators_input = null;
 }
 
 /**
@@ -55,59 +55,56 @@ function SwatTableViewInputRow(id, row_string)
  *
  * @var boolean
  */
-SwatTableViewInputRow.is_webkit =
-	(/AppleWebKit|Konqueror|KHTML/gi).test(navigator.userAgent);
+SwatTableViewInputRow.is_webkit = /AppleWebKit|Konqueror|KHTML/gi.test(
+  navigator.userAgent
+);
 
 /**
  * Gets an XML parser with a loadXML() method
  */
-function SwatTableViewInputRow_getXMLParser()
-{
-	var parser = null;
-	var is_ie = true;
+function SwatTableViewInputRow_getXMLParser() {
+  var parser = null;
+  var is_ie = true;
 
-	try {
-		var dom = new ActiveXObject('Msxml2.XMLDOM');
-	} catch (err1) {
-		try {
-			var dom = new ActiveXObject('Microsoft.XMLDOM');
-		} catch (err2) {
-			is_ie = false;
-		}
-	}
+  try {
+    var dom = new ActiveXObject('Msxml2.XMLDOM');
+  } catch (err1) {
+    try {
+      var dom = new ActiveXObject('Microsoft.XMLDOM');
+    } catch (err2) {
+      is_ie = false;
+    }
+  }
 
-	if (is_ie) {
-		/*
-		 * Internet Explorer's XMLDOM object has a proprietary loadXML()
-		 * method. Our method returns the document.
-		 */
-		parser = function() {};
-		parser.loadXML = function(document_string)
-		{
-			if (!dom.loadXML(document_string))
-				alert(dom.parseError.reason);
+  if (is_ie) {
+    /*
+     * Internet Explorer's XMLDOM object has a proprietary loadXML()
+     * method. Our method returns the document.
+     */
+    parser = function() {};
+    parser.loadXML = function(document_string) {
+      if (!dom.loadXML(document_string)) alert(dom.parseError.reason);
 
-			return dom;
-		};
-	}
+      return dom;
+    };
+  }
 
-	if (parser === null && typeof DOMParser != 'undefined') {
-		/*
-		 * Mozilla, Safari and Opera have a proprietary DOMParser()
-		 * class.
-		 */
-		dom_parser = new DOMParser();
+  if (parser === null && typeof DOMParser != 'undefined') {
+    /*
+     * Mozilla, Safari and Opera have a proprietary DOMParser()
+     * class.
+     */
+    dom_parser = new DOMParser();
 
-		// Cannot add loadXML method to a newly created DOMParser because it
-		// crashes Safari
-		parser = function() {};
-		parser.loadXML = function(document_string)
-		{
-			return dom_parser.parseFromString(document_string, 'text/xml');
-		};
-	}
+    // Cannot add loadXML method to a newly created DOMParser because it
+    // crashes Safari
+    parser = function() {};
+    parser.loadXML = function(document_string) {
+      return dom_parser.parseFromString(document_string, 'text/xml');
+    };
+  }
 
-	return parser;
+  return parser;
 }
 
 /**
@@ -123,57 +120,54 @@ SwatTableViewInputRow.parser = SwatTableViewInputRow_getXMLParser();
  * parse a HTMLTableRowNode in one document into a table row in this document.
  */
 if (!document.importNode || SwatTableViewInputRow.is_webkit) {
+  /**
+   * Parses a table row from one document into another
+   *
+   * Internet Explorer does not allow writing to the innerHTML property for
+   * table row nodes so the table cells are individually inserted and cloned.
+   *
+   * @param HTMLTableRowNode source_tr the table row from the source document.
+   * @param HTMLTableRowNode dest_tr the table row in the destination
+   *                                  document.
+   */
+  function SwatTableViewInputRow_parseTableRow(source_tr, dest_tr) {
+    var child_node;
+    var dest_td;
+    var source_attributes;
+    for (var i = 0; i < source_tr.childNodes.length; i++) {
+      child_node = source_tr.childNodes[i];
+      if (child_node.nodeType == 1 && child_node.nodeName == 'td') {
+        dest_td = dest_tr.insertCell(-1);
+        source_attributes = child_node.attributes;
+        for (var j = 0; j < source_attributes.length; j++) {
+          if (source_attributes[j].name == 'class') {
+            dest_td.className = source_attributes[j].value;
+          } else {
+            dest_td.setAttribute(
+              source_attributes[j].name,
+              source_attributes[j].value
+            );
+          }
+        }
+        SwatTableViewInputRow_parseTableCell(child_node, dest_td);
+      }
+    }
+  }
 
-	/**
-	 * Parses a table row from one document into another
-	 *
-	 * Internet Explorer does not allow writing to the innerHTML property for
-	 * table row nodes so the table cells are individually inserted and cloned.
-	 *
-	 * @param HTMLTableRowNode source_tr the table row from the source document.
-	 * @param HTMLTableRowNode dest_tr the table row in the destination
-	 *                                  document.
-	 */
-	function SwatTableViewInputRow_parseTableRow(source_tr, dest_tr)
-	{
-		var child_node;
-		var dest_td;
-		var source_attributes;
-		for (var i = 0; i < source_tr.childNodes.length; i++) {
-			child_node = source_tr.childNodes[i];
-			if (child_node.nodeType == 1 && child_node.nodeName == 'td') {
-				dest_td = dest_tr.insertCell(-1);
-				source_attributes = child_node.attributes;
-				for (var j = 0; j < source_attributes.length; j++) {
-					if (source_attributes[j].name == 'class') {
-						dest_td.className = source_attributes[j].value;
-					} else {
-						dest_td.setAttribute(source_attributes[j].name,
-							source_attributes[j].value);
-					}
-				}
-				SwatTableViewInputRow_parseTableCell(child_node, dest_td);
-			}
-		}
-	}
-
-	/**
-	 * Parses a table cell from one document into another
-	 *
-	 * @param HTMLTableRowNode source_td the table cell from the source
-	 *                                    document.
-	 * @param HTMLTableRowNode dest_td the table cell in the destination
-	 *                                  document.
-	 */
-	function SwatTableViewInputRow_parseTableCell(source_td, dest_td)
-	{
-		// Internet Explorer does not have an innerHTML property set on
-		// imported DOM nodes even if the imported document is XHTML.
-		if (source_td.innerHTML)
-			dest_td.innerHTML = source_td.innerHTML;
-		else
-			dest_td.innerHTML = source_td.xml;
-	}
+  /**
+   * Parses a table cell from one document into another
+   *
+   * @param HTMLTableRowNode source_td the table cell from the source
+   *                                    document.
+   * @param HTMLTableRowNode dest_td the table cell in the destination
+   *                                  document.
+   */
+  function SwatTableViewInputRow_parseTableCell(source_td, dest_td) {
+    // Internet Explorer does not have an innerHTML property set on
+    // imported DOM nodes even if the imported document is XHTML.
+    if (source_td.innerHTML) dest_td.innerHTML = source_td.innerHTML;
+    else dest_td.innerHTML = source_td.xml;
+  }
 }
 
 /**
@@ -182,128 +176,126 @@ if (!document.importNode || SwatTableViewInputRow.is_webkit) {
  * @return boolean true if the replicators were successfully initialized and
  *          false if they were not.
  */
-SwatTableViewInputRow.prototype.initReplicators = function()
-{
-	if (this.replicators === null) {
-		this.replicators_input = document.getElementsByName(this.id +
-			'_replicators')[0];
+SwatTableViewInputRow.prototype.initReplicators = function() {
+  if (this.replicators === null) {
+    this.replicators_input = document.getElementsByName(
+      this.id + '_replicators'
+    )[0];
 
-		if (this.replicators_input === null)
-			return false;
+    if (this.replicators_input === null) return false;
 
-		if (this.replicators_input.value === '')
-			this.replicators = [];
-		else
-			this.replicators = this.replicators_input.value.split(',');
-	}
-	return true;
+    if (this.replicators_input.value === '') this.replicators = [];
+    else this.replicators = this.replicators_input.value.split(',');
+  }
+  return true;
 };
 
 /**
  * Adds a new data row to the table
  */
-SwatTableViewInputRow.prototype.addRow = function()
-{
-	if (!this.initReplicators())
-		return;
+SwatTableViewInputRow.prototype.addRow = function() {
+  if (!this.initReplicators()) return;
 
-	var replicator_id;
-	if (this.replicators.length > 0)
-		replicator_id = (parseInt(
-			this.replicators[this.replicators.length - 1]) + 1).toString();
-	else
-		replicator_id = '0';
+  var replicator_id;
+  if (this.replicators.length > 0)
+    replicator_id = (
+      parseInt(this.replicators[this.replicators.length - 1]) + 1
+    ).toString();
+  else replicator_id = '0';
 
-	this.replicators.push(replicator_id);
-	this.replicators_input.value = this.replicators.join(',');
+  this.replicators.push(replicator_id);
+  this.replicators_input.value = this.replicators.join(',');
 
-	var document_string = this.row_string.replace(/%s/g, replicator_id);
-	var dom = SwatTableViewInputRow.parser.loadXML(document_string);
-	var source_tr = dom.documentElement.getElementsByTagName('tr')[0];
+  var document_string = this.row_string.replace(/%s/g, replicator_id);
+  var dom = SwatTableViewInputRow.parser.loadXML(document_string);
+  var source_tr = dom.documentElement.getElementsByTagName('tr')[0];
 
-	if (document.importNode && !SwatTableViewInputRow.is_webkit) {
-		try {
-			var dest_tr = document.importNode(source_tr, true);
-			this.enter_row.parentNode.insertBefore(dest_tr, this.enter_row);
-		} catch (ex) {
-			/*
-			 * IE9 specific code. IE9 claims to support importNode, but fails
-			 * when it is called.
-			 */
-			var dest_tr = this.table.insertRow(this.enter_row.rowIndex);
-			SwatTableViewInputRow_parseTableRow(source_tr, dest_tr);
-		}
-	} else {
-		/*
-		 * Internet Explorer and Safari specific code
-		 *
-		 * Uses the table object model instead of the DOM. IE does not
-		 * implement importNode() and Safari's importNode() implementation is
-		 * broken.
-		 */
-		var dest_tr = this.table.insertRow(this.enter_row.rowIndex);
-		SwatTableViewInputRow_parseTableRow(source_tr, dest_tr);
-	}
+  if (document.importNode && !SwatTableViewInputRow.is_webkit) {
+    try {
+      var dest_tr = document.importNode(source_tr, true);
+      this.enter_row.parentNode.insertBefore(dest_tr, this.enter_row);
+    } catch (ex) {
+      /*
+       * IE9 specific code. IE9 claims to support importNode, but fails
+       * when it is called.
+       */
+      var dest_tr = this.table.insertRow(this.enter_row.rowIndex);
+      SwatTableViewInputRow_parseTableRow(source_tr, dest_tr);
+    }
+  } else {
+    /*
+     * Internet Explorer and Safari specific code
+     *
+     * Uses the table object model instead of the DOM. IE does not
+     * implement importNode() and Safari's importNode() implementation is
+     * broken.
+     */
+    var dest_tr = this.table.insertRow(this.enter_row.rowIndex);
+    SwatTableViewInputRow_parseTableRow(source_tr, dest_tr);
+  }
 
-	dest_tr.className = 'swat-table-view-input-row';
-	dest_tr.id = this.id + '_row_' + replicator_id;
+  dest_tr.className = 'swat-table-view-input-row';
+  dest_tr.id = this.id + '_row_' + replicator_id;
 
-	var node = dest_tr;
-	var dest_color = 'transparent';
-	while (dest_color == 'transparent' && node) {
-		dest_color = YAHOO.util.Dom.getStyle(node, 'background-color');
-		node = node.parentNode;
-	}
-	if (dest_color == 'transparent') {
-		dest_color = '#ffffff';
-	}
+  var node = dest_tr;
+  var dest_color = 'transparent';
+  while (dest_color == 'transparent' && node) {
+    dest_color = YAHOO.util.Dom.getStyle(node, 'background-color');
+    node = node.parentNode;
+  }
+  if (dest_color == 'transparent') {
+    dest_color = '#ffffff';
+  }
 
-	var animation = new YAHOO.util.ColorAnim(dest_tr,
-		{ backgroundColor: { from: '#fffbc9', to: dest_color } }, 1,
-		YAHOO.util.Easing.easeOut);
+  var animation = new YAHOO.util.ColorAnim(
+    dest_tr,
+    { backgroundColor: { from: '#fffbc9', to: dest_color } },
+    1,
+    YAHOO.util.Easing.easeOut
+  );
 
-	animation.animate();
+  animation.animate();
 
-	/*
-	 * Run scripts
-	 *
-	 * A better way to do this might be to remove the script nodes from the
-	 * document and then run the scripts. This way we can ensure the scripts
-	 * are only run once.
-	 */
-	var scripts = dom.documentElement.getElementsByTagName('script');
-	for (var i = 0; i < scripts.length; i++)
-		if (scripts[0].getAttribute('type') == 'text/javascript' &&
-			scripts[0].childNodes.length > 0)
-				eval(scripts[i].firstChild.nodeValue);
+  /*
+   * Run scripts
+   *
+   * A better way to do this might be to remove the script nodes from the
+   * document and then run the scripts. This way we can ensure the scripts
+   * are only run once.
+   */
+  var scripts = dom.documentElement.getElementsByTagName('script');
+  for (var i = 0; i < scripts.length; i++)
+    if (
+      scripts[0].getAttribute('type') == 'text/javascript' &&
+      scripts[0].childNodes.length > 0
+    )
+      eval(scripts[i].firstChild.nodeValue);
 };
 
 /**
  * Removes a data row from the table
  */
-SwatTableViewInputRow.prototype.removeRow = function(replicator_id)
-{
-	if (!this.initReplicators())
-		return;
+SwatTableViewInputRow.prototype.removeRow = function(replicator_id) {
+  if (!this.initReplicators()) return;
 
-	// remove replicator_id from replicators array
-	var replicator_index = -1;
-	for (var i = 0; i < this.replicators.length; i++) {
-		if (this.replicators[i] == replicator_id) {
-			replicator_index = i;
-			break;
-		}
-	}
-	if (replicator_index != -1) {
-		this.replicators.splice(replicator_index, 1);
-		this.replicators_input.value = this.replicators.join(',');
-	}
+  // remove replicator_id from replicators array
+  var replicator_index = -1;
+  for (var i = 0; i < this.replicators.length; i++) {
+    if (this.replicators[i] == replicator_id) {
+      replicator_index = i;
+      break;
+    }
+  }
+  if (replicator_index != -1) {
+    this.replicators.splice(replicator_index, 1);
+    this.replicators_input.value = this.replicators.join(',');
+  }
 
-	// remove row from document
-	var row_id = this.id + '_row_' + replicator_id;
-	var row = document.getElementById(row_id);
-	if (row && row.parentNode !== null) {
-		var removed_row = row.parentNode.removeChild(row);
-		delete removed_row;
-	}
+  // remove row from document
+  var row_id = this.id + '_row_' + replicator_id;
+  var row = document.getElementById(row_id);
+  if (row && row.parentNode !== null) {
+    var removed_row = row.parentNode.removeChild(row);
+    delete removed_row;
+  }
 };
