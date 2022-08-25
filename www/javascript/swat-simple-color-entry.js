@@ -34,21 +34,12 @@ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
     this.hex_input_tag.id = this.id + '_hex_color';
     this.hex_input_tag.size = 6;
 
-    YAHOO.util.Event.on(
-      this.hex_input_tag,
-      'change',
-      this.handleInputChange,
-      this,
-      true
-    );
-
-    YAHOO.util.Event.on(
-      this.hex_input_tag,
-      'keyup',
-      this.handleInputChange,
-      this,
-      true
-    );
+    this.hex_input_tag.addEventListener('change', () => {
+      this.handleInputChange();
+    });
+    this.hex_input_tag.addEventListener('keyup', () => {
+      this.handleInputChange();
+    });
 
     SwatSimpleColorEntry.superclass.init.call(this);
 
@@ -95,13 +86,9 @@ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
       trow.appendChild(tcell);
       tbody.appendChild(trow);
 
-      YAHOO.util.Event.addListener(
-        anchor,
-        'click',
-        this.selectNull,
-        this,
-        true
-      );
+      anchor.addEventListener('click', () => {
+        this.selectNull();
+      });
     }
 
     for (var i = 0; i < num_cells; i++) {
@@ -120,13 +107,9 @@ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
         anchor.href = '#';
         anchor.appendChild(text);
 
-        YAHOO.util.Event.addListener(
-          anchor,
-          'click',
-          this.selectColor,
-          this,
-          true
-        );
+        anchor.addEventListener('click', e => {
+          this.selectColor(e);
+        });
 
         tcell.appendChild(anchor);
       } else {
@@ -278,7 +261,7 @@ SwatSimpleColorEntry.prototype.setColor = function(color) {
  * @param Event the event that triggered this select.
  */
 SwatSimpleColorEntry.prototype.selectNull = function(e) {
-  YAHOO.util.Event.preventDefault(e);
+  e.preventDefault();
   this.setColor(null);
 };
 
@@ -291,10 +274,8 @@ SwatSimpleColorEntry.prototype.selectNull = function(e) {
  * @param Event the event that triggered this select.
  */
 SwatSimpleColorEntry.prototype.selectColor = function(event) {
-  YAHOO.util.Event.preventDefault(event);
-  var cell = YAHOO.util.Event.getTarget(event);
-  var color_index = cell.parentNode.id.split('_palette_')[1];
-
+  event.preventDefault();
+  var color_index = event.target.parentNode.id.split('_palette_')[1];
   this.setColor(this.colors[color_index]);
 };
 

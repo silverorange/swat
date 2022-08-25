@@ -25,13 +25,9 @@ function SwatActions(id, values, selected) {
     document.createTextNode(SwatActions.dismiss_text)
   );
 
-  YAHOO.util.Event.addListener(
-    message_dismiss,
-    'click',
-    this.handleMessageClose,
-    this,
-    true
-  );
+  message_dismiss.addEventListener('click', () => {
+    this.handleMessageClose();
+  });
 
   // create message span and add content area and dismiss link
   this.message_span = document.createElement('span');
@@ -43,29 +39,17 @@ function SwatActions(id, values, selected) {
   // add message span to document
   button.parentNode.appendChild(this.message_span);
 
-  YAHOO.util.Event.addListener(
-    this.flydown,
-    'change',
-    this.handleChange,
-    this,
-    true
-  );
+  this.flydown.addEventListener('change', () => {
+    this.handleChange();
+  });
 
-  YAHOO.util.Event.addListener(
-    this.flydown,
-    'keyup',
-    this.handleChange,
-    this,
-    true
-  );
+  this.flydown.addEventListener('keyup', () => {
+    this.handleChange();
+  });
 
-  YAHOO.util.Event.addListener(
-    button,
-    'click',
-    this.handleButtonClick,
-    this,
-    true
-  );
+  button.addEventListener('click', e => {
+    this.handleButtonClick(e);
+  });
 }
 
 SwatActions.dismiss_text = 'Dismiss message.';
@@ -120,13 +104,13 @@ SwatActions.prototype.handleButtonClick = function(e) {
   }
 
   if (message) {
-    YAHOO.util.Event.preventDefault(e);
+    e.preventDefault();
     this.showMessage(message);
   }
 };
 
 SwatActions.prototype.handleMessageClose = function(e) {
-  YAHOO.util.Event.preventDefault(e);
+  e.preventDefault();
   this.hideMessage();
 };
 

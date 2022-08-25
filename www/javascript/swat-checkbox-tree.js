@@ -123,7 +123,7 @@ function SwatCheckboxTree(id, maybeEffect) {
       // After we call the side effect we also update the state of the check all
       function(input, parents, children) {
         effect(input, parents, children);
-        YAHOO.util.Event.on(input, 'change', updateCheckAll);
+        input.addEventListener('change', updateCheckAll);
       }
     );
 
@@ -176,7 +176,7 @@ function SwatCheckboxChildDependencyTree(id) {
       children({ checked: true });
     }
 
-    YAHOO.util.Event.on(input, 'change', onChange);
+    input.addEventListener('change', onChange);
   });
 }
 
@@ -208,6 +208,6 @@ function SwatCheckboxParentDependencyTree(id) {
       parents({ checked: true });
     }
 
-    YAHOO.util.Event.on(input, 'change', onChange);
+    input.addEventListener('change', onChange);
   });
 }

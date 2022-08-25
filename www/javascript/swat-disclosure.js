@@ -94,16 +94,10 @@ SwatDisclosure.prototype.drawDisclosureLink = function() {
     this.anchor.classList.add('swat-disclosure-anchor-closed');
   }
 
-  YAHOO.util.Event.addListener(
-    this.anchor,
-    'click',
-    function(e) {
-      YAHOO.util.Event.preventDefault(e);
-      this.toggle();
-    },
-    this,
-    true
-  );
+  this.anchor.addEventListener('click', e => {
+    e.preventDefault();
+    this.toggle();
+  });
 
   this.anchor.appendChild(text);
 

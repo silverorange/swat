@@ -33,41 +33,29 @@ SwatCheckboxCellRenderer.prototype.init = function() {
       input_nodes[i]._index = this.check_list.length;
       this.check_list.push(input_nodes[i]);
       this.updateNode(input_nodes[i]);
-      YAHOO.util.Event.addListener(
-        input_nodes[i],
-        'click',
-        this.handleClick,
-        this,
-        true
-      );
 
-      YAHOO.util.Event.addListener(
-        input_nodes[i],
-        'dblclick',
-        this.handleClick,
-        this,
-        true
-      );
+      input_nodes[i].addEventListener('click', e => {
+        this.handleClick(e);
+      });
+      input_nodes[i].addEventListener('dblclick', e => {
+        this.handleClick(e);
+      });
 
-      // prevent selecting label text when shify key is held
-      YAHOO.util.Event.addListener(
-        input_nodes[i].parentNode,
-        'mousedown',
-        this.handleMouseDown,
-        this,
-        true
-      );
+      // prevent selecting label text when shift key is held
+      input_nodes[i].parentElement.addEventListener('mousedown', e => {
+        this.handleMouseDown(e);
+      });
     }
   }
 };
 
 SwatCheckboxCellRenderer.prototype.handleMouseDown = function(e) {
-  // prevent selecting label text when shify key is held
-  YAHOO.util.Event.preventDefault(e);
+  // prevent selecting label text when shift key is held
+  e.preventDefault();
 };
 
 SwatCheckboxCellRenderer.prototype.handleClick = function(e) {
-  var checkbox_node = YAHOO.util.Event.getTarget(e);
+  var checkbox_node = e.target;
   this.updateNode(checkbox_node, e.shiftKey);
   this.updateCheckAll();
   this.last_clicked_index = checkbox_node._index;

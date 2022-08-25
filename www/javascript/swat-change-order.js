@@ -64,21 +64,16 @@ function SwatChangeOrder_mousemoveEventHandler(event) {
  */
 function SwatChangeOrder_keydownEventHandler(event) {
   // user pressed escape
-  if (event.keyCode == 27) {
-    YAHOO.util.Event.removeListener(
-      document,
+  if (event.key === 'Escape') {
+    document.removeEventListener(
       'mousemove',
       SwatChangeOrder_mousemoveEventHandler
     );
-
-    YAHOO.util.Event.removeListener(
-      document,
+    document.removeEventListener(
       'mouseup',
       SwatChangeOrder_mouseupEventHandler
     );
-
-    YAHOO.util.Event.removeListener(
-      document,
+    document.removeEventListener(
       'keydown',
       SwatChangeOrder_keydownEventHandler
     );
@@ -282,20 +277,13 @@ function SwatChangeOrder_mouseupEventHandler(event) {
   ) {
     return false;
   }
-  YAHOO.util.Event.removeListener(
-    document,
+  document.removeEventListener(
     'mousemove',
     SwatChangeOrder_mousemoveEventHandler
   );
+  document.removeEventListener('mouseup', SwatChangeOrder_mouseupEventHandler);
 
-  YAHOO.util.Event.removeListener(
-    document,
-    'mouseup',
-    SwatChangeOrder_mouseupEventHandler
-  );
-
-  //	YAHOO.util.Event.removeListener(document, 'keydown',
-  //		SwatChangeOrder_keydownEventHandler);
+  // document.removeEventListener('keydown', SwatChangeOrder_keydownEventHandler);
 
   var shadow_item = SwatChangeOrder.dragging_item;
   var drop_marker = SwatChangeOrder.dragging_drop_marker;
@@ -336,7 +324,7 @@ function SwatChangeOrder_mouseupEventHandler(event) {
  */
 function SwatChangeOrder_mousedownEventHandler(event) {
   // prevent text selection
-  YAHOO.util.Event.preventDefault(event);
+  event.preventDefault();
 
   // only allow left click to do things
   var is_webkit = /AppleWebKit|Konqueror|KHTML/gi.test(navigator.userAgent);
@@ -391,23 +379,9 @@ function SwatChangeOrder_mousedownEventHandler(event) {
   SwatChangeOrder.dragging_item = shadow_item;
   SwatChangeOrder.dragging_drop_marker = drop_marker;
 
-  YAHOO.util.Event.addListener(
-    document,
-    'mousemove',
-    SwatChangeOrder_mousemoveEventHandler
-  );
-
-  YAHOO.util.Event.addListener(
-    document,
-    'mouseup',
-    SwatChangeOrder_mouseupEventHandler
-  );
-
-  YAHOO.util.Event.addListener(
-    document,
-    'keydown',
-    SwatChangeOrder_keydownEventHandler
-  );
+  document.addEventListener('mousemove', SwatChangeOrder_mousemoveEventHandler);
+  document.addEventListener('mouseup', SwatChangeOrder_mouseupEventHandler);
+  document.addEventListener('keydown', SwatChangeOrder_keydownEventHandler);
 
   return false;
 }
@@ -461,12 +435,7 @@ function SwatChangeOrder(id, sensitive) {
       // assign a back reference for event handlers
       node.controller = this;
       // add click handlers to the list items
-      YAHOO.util.Event.addListener(
-        node,
-        'mousedown',
-        SwatChangeOrder_mousedownEventHandler
-      );
-
+      node.addEventListener('mousedown', SwatChangeOrder_mousedownEventHandler);
       node.classList.remove('swat-change-order-item-active');
 
       count++;
@@ -498,25 +467,19 @@ function SwatChangeOrder(id, sensitive) {
   this.orderChangeEvent = new YAHOO.util.CustomEvent('orderChange');
 
   // add grippies
-  YAHOO.util.Event.on(
-    window,
-    'load',
-    function() {
-      var node, grippy, height;
-      // exclude last item because it is the sentinel node
-      for (var i = 0; i < this.list_div.childNodes.length - 1; i++) {
-        node = this.list_div.childNodes[i];
+  window.addEventListener('DOMContentLoaded', () => {
+    var node, grippy, height;
+    // exclude last item because it is the sentinel node
+    for (var i = 0; i < this.list_div.childNodes.length - 1; i++) {
+      node = this.list_div.childNodes[i];
 
-        grippy = document.createElement('span');
-        grippy.className = 'swat-change-order-item-grippy';
-        height = YAHOO.util.Dom.getRegion(node).height - 4;
-        grippy.style.height = height + 'px';
-        node.insertBefore(grippy, node.firstChild);
-      }
-    },
-    this,
-    true
-  );
+      grippy = document.createElement('span');
+      grippy.className = 'swat-change-order-item-grippy';
+      height = YAHOO.util.Dom.getRegion(node).height - 4;
+      grippy.style.height = height + 'px';
+      node.insertBefore(grippy, node.firstChild);
+    }
+  });
 }
 
 // }}}
@@ -600,12 +563,7 @@ SwatChangeOrder.prototype.add = function(el, value) {
   }
 
   el.classList.add('swat-change-order-item');
-
-  YAHOO.util.Event.addListener(
-    el,
-    'mousedown',
-    SwatChangeOrder_mousedownEventHandler
-  );
+  el.addEventListener('mousedown', SwatChangeOrder_mousedownEventHandler);
 
   var order_index = this.count();
 

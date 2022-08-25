@@ -4,13 +4,9 @@ function SwatForm(id, connection_close_url) {
   this.connection_close_url = connection_close_url;
 
   if (this.connection_close_url) {
-    YAHOO.util.Event.on(
-      this.form_element,
-      'submit',
-      this.handleSubmit,
-      this,
-      true
-    );
+    this.form_element.addEventListener('submit', () => {
+      this.handleSubmit();
+    });
   }
 }
 

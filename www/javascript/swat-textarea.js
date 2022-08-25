@@ -17,6 +17,14 @@
 function SwatTextarea(id, resizeable) {
   this.id = id;
 
+  this.mousedownEventHandler = this.mousedownEventHandler.bind(this);
+  this.mouseupEventHandler = this.mouseupEventHandler.bind(this);
+  this.mousemoveEventHandler = this.mousemoveEventHandler.bind(this);
+
+  this.touchstartEventHandler = this.touchstartEventHandler.bind(this);
+  this.touchendEventHandler = this.touchendEventHandler.bind(this);
+  this.touchmoveEventHandler = this.touchmoveEventHandler.bind(this);
+
   if (resizeable) {
     window.addEventListener('DOMContentLoaded', () => {
       this.init();
@@ -81,19 +89,8 @@ SwatTextarea.prototype.init = function() {
 
   this.textarea._resize = this;
 
-  YAHOO.util.Event.addListener(
-    this.handle_div,
-    'touchstart',
-    SwatTextarea.touchstartEventHandler,
-    this.handle_div
-  );
-
-  YAHOO.util.Event.addListener(
-    this.handle_div,
-    'mousedown',
-    SwatTextarea.mousedownEventHandler,
-    this.handle_div
-  );
+  this.handle_div.addEventListener('touchstart', this.touchstartEventHandler);
+  this.handle_div.addEventListener('mousedown', this.mousedownEventHandler);
 
   this.textarea.parentNode.appendChild(this.handle_div);
   this.textarea.parentNode.classList.add('swat-textarea-with-resize');
@@ -237,19 +234,18 @@ SwatTextarea.supports_resize = (function() {
 })();
 
 // }}}
-// {{{ SwatTextarea.mousedownEventHandler()
+// {{{ SwatTextarea.prototype.mousedownEventHandler()
 
 /**
  * Handles mousedown events for resize handles
  *
- * @param DOMEvent   event the event to handle.
- * @param DOMElement the drag handle being grabbed.
+ * @param DOMEvent event the event to handle.
  *
  * @return boolean false
  */
-SwatTextarea.mousedownEventHandler = function(e, handle) {
+SwatTextarea.prototype.mousedownEventHandler = function(e) {
   // prevent text selection
-  YAHOO.util.Event.preventDefault(e);
+  e.preventDefault();
 
   // only allow left click to do things
   var is_webkit = /AppleWebKit|Konqueror|KHTML/gi.test(navigator.userAgent);
@@ -257,10 +253,11 @@ SwatTextarea.mousedownEventHandler = function(e, handle) {
   if (
     (is_ie && (e.button & 1) != 1) ||
     (!is_ie && !is_webkit && e.button !== 0)
-  )
+  ) {
     return false;
+  }
 
-  SwatTextarea.dragging_item = handle;
+  SwatTextarea.dragging_item = this.handle_div;
   SwatTextarea.dragging_mouse_origin_y = YAHOO.util.Event.getPageY(e);
 
   var textarea = handle._textarea;
@@ -275,49 +272,31 @@ SwatTextarea.mousedownEventHandler = function(e, handle) {
     SwatTextarea.dragging_origin_height = textarea.clientHeight;
   }
 
-  YAHOO.util.Event.removeListener(
-    handle,
-    'mousedown',
-    SwatTextarea.mousedownEventHandler
-  );
-
-  YAHOO.util.Event.removeListener(
-    handle,
+  this.handle_div.removeEventListener('mousedown', this.mousedownEventHandler);
+  this.handle_div.removeEventListener(
     'touchstart',
-    SwatTextarea.touchstartEventHandler
+    this.touchstartEventHandler
   );
 
-  YAHOO.util.Event.addListener(
-    document,
-    'mousemove',
-    SwatTextarea.mousemoveEventHandler,
-    handle
-  );
-
-  YAHOO.util.Event.addListener(
-    document,
-    'mouseup',
-    SwatTextarea.mouseupEventHandler,
-    handle
-  );
+  document.addEventListener('mousemove', this.mousemoveEventHandler);
+  document.addEventListener('mouseup', this.mouseupEventHandler);
 };
 
 // }}}
-// {{{ SwatTextarea.touchstartEventHandler()
+// {{{ SwatTextarea.prototype.touchstartEventHandler()
 
 /**
  * Handles touchstart events for resize handles
  *
- * @param DOMEvent   event the event to handle.
- * @param DOMElement the drag handle being grabbed.
+ * @param DOMEvent event the event to handle.
  *
  * @return boolean false
  */
-SwatTextarea.touchstartEventHandler = function(e, handle) {
+SwatTextarea.prototype.touchstartEventHandler = function(e) {
   // prevent text selection
-  YAHOO.util.Event.preventDefault(e);
+  e.preventDefault();
 
-  SwatTextarea.dragging_item = handle;
+  SwatTextarea.dragging_item = this.handle_div;
 
   if ('touches' in e) {
     for (var i = 0; i < e.touches.length; i++) {
@@ -325,7 +304,7 @@ SwatTextarea.touchstartEventHandler = function(e, handle) {
       break;
     }
 
-    var textarea = handle._textarea;
+    var textarea = this.handle_div._textarea;
     textarea.style.opacity = 0.25;
 
     var height = parseInt(getComputedStyle(textarea).height);
@@ -336,36 +315,22 @@ SwatTextarea.touchstartEventHandler = function(e, handle) {
       SwatTextarea.dragging_origin_height = textarea.clientHeight;
     }
 
-    YAHOO.util.Event.removeListener(
-      handle,
+    this.handle_div.removeEventListener(
       'mousedown',
-      SwatTextarea.mousedownEventHandler
+      this.mousedownEventHandler
     );
-
-    YAHOO.util.Event.removeListener(
-      handle,
+    this.handle_div.removeEventListener(
       'touchstart',
-      SwatTextarea.touchstartEventHandler
+      this.touchstartEventHandler
     );
 
-    YAHOO.util.Event.addListener(
-      document,
-      'touchmove',
-      SwatTextarea.touchmoveEventHandler,
-      handle
-    );
-
-    YAHOO.util.Event.addListener(
-      document,
-      'touchend',
-      SwatTextarea.touchendEventHandler,
-      handle
-    );
+    document.addEventListener('touchmove', this.touchmoveEventHandler);
+    document.addEventListener('touchend', this.touchendEventHandler);
   }
 };
 
 // }}}
-// {{{ SwatTextarea.mousemoveEventHandler()
+// {{{ SwatTextarea.prototype.mousemoveEventHandler()
 
 /**
  * Handles mouse movement when dragging a resize bar
@@ -376,7 +341,7 @@ SwatTextarea.touchstartEventHandler = function(e, handle) {
  *
  * @return boolean false.
  */
-SwatTextarea.mousemoveEventHandler = function(e, handle) {
+SwatTextarea.prototype.mousemoveEventHandler = function(e) {
   var resize_handle = SwatTextarea.dragging_item;
   var textarea = resize_handle._textarea;
 
@@ -390,7 +355,7 @@ SwatTextarea.mousemoveEventHandler = function(e, handle) {
 };
 
 // }}}
-// {{{ SwatTextarea.touchmoveEventHandler()
+// {{{ SwatTextarea.prototype.touchmoveEventHandler()
 
 /**
  * Handles touch movement when dragging a resize bar
@@ -401,7 +366,7 @@ SwatTextarea.mousemoveEventHandler = function(e, handle) {
  *
  * @return boolean false.
  */
-SwatTextarea.touchmoveEventHandler = function(e, handle) {
+SwatTextarea.prototype.touchmoveEventHandler = function(e) {
   var resize_handle = SwatTextarea.dragging_item;
   var textarea = resize_handle._textarea;
 
@@ -424,19 +389,18 @@ SwatTextarea.touchmoveEventHandler = function(e, handle) {
 };
 
 // }}}
-// {{{ SwatTextarea.mouseupEventHandler()
+// {{{ SwatTextarea.prototype.mouseupEventHandler()
 
 /**
  * Handles mouseup events when dragging a resize bar
  *
  * Stops dragging.
  *
- * @param DOMEvent   event the event that triggered this function.
- * @param DOMElement the drag handle being released.
+ * @param DOMEvent event the event that triggered this function.
  *
  * @return boolean false.
  */
-SwatTextarea.mouseupEventHandler = function(e, handle) {
+SwatTextarea.prototype.mouseupEventHandler = function(e) {
   // only allow left click to do things
   var is_webkit = /AppleWebKit|Konqueror|KHTML/gi.test(navigator.userAgent);
   var is_ie = navigator.userAgent.indexOf('MSIE') != -1;
@@ -447,68 +411,37 @@ SwatTextarea.mouseupEventHandler = function(e, handle) {
     return false;
   }
 
-  YAHOO.util.Event.removeListener(
-    document,
-    'mousemove',
-    SwatTextarea.mousemoveEventHandler
-  );
+  document.removeEventListener('mousemove', this.mousemoveEventHandler);
+  document.removeEventListener('touchmove', this.touchmoveEventHandler);
+  document.removeEventListener('mouseup', this.mouseupEventHandler);
+  document.removeEventListener('touchend', this.touchendEventHandler);
 
-  YAHOO.util.Event.removeListener(
-    document,
-    'touchmove',
-    SwatTextarea.touchmoveEventHandler
-  );
-
-  YAHOO.util.Event.removeListener(
-    document,
-    'mouseup',
-    SwatTextarea.mouseupEventHandler
-  );
-
-  YAHOO.util.Event.removeListener(
-    document,
-    'touchend',
-    SwatTextarea.touchendEventHandler
-  );
-
-  YAHOO.util.Event.addListener(
-    handle,
-    'mousedown',
-    SwatTextarea.mousedownEventHandler,
-    handle
-  );
-
-  YAHOO.util.Event.addListener(
-    handle,
-    'touchstart',
-    SwatTextarea.touchstartEventHandler,
-    handle
-  );
+  this.handle_div.addEventListener('mousedown', this.mousedownEventHandler);
+  this.handle_div.addEventListener('touchstart', this.touchstartEventHandler);
 
   SwatTextarea.dragging_item = null;
   SwatTextarea.dragging_mouse_origin_y = null;
   SwatTextarea.dragging_origin_height = null;
 
-  handle._textarea.style.opacity = 1;
+  this.handle_div._textarea.style.opacity = 1;
 
   return false;
 };
 
 // }}}
-// {{{ SwatTextarea.touchendEventHandler()
+// {{{ SwatTextarea.prototype.touchendEventHandler()
 
 /**
  * Handles touchend events when dragging a resize bar
  *
  * Stops dragging.
  *
- * @param DOMEvent   event the event that triggered this function.
- * @param DOMElement the drag handle being released.
+ * @param DOMEvent event the event that triggered this function.
  *
  * @return boolean false.
  */
-SwatTextarea.touchendEventHandler = function(e, handle) {
-  return SwatTextarea.mouseupEventHandler(e, handle);
+SwatTextarea.prototype.touchendEventHandler = function(e) {
+  return this.mouseupEventHandler(e);
 };
 
 // }}}

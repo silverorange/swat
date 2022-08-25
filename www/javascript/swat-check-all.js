@@ -69,21 +69,12 @@ SwatCheckAll.prototype.updateExtendedCheckbox = function() {
 SwatCheckAll.prototype.setController = function(controller) {
   // only add the event handler the first time
   if (this.controller === null) {
-    YAHOO.util.Event.addListener(
-      this.check_all,
-      'click',
-      this.clickHandler,
-      this,
-      true
-    );
-
-    YAHOO.util.Event.addListener(
-      this.check_all,
-      'dblclick',
-      this.clickHandler,
-      this,
-      true
-    );
+    this.check_all.addEventListener('click', () => {
+      this.clickHandler();
+    });
+    this.check_all.addEventListener('dblclick', () => {
+      this.clickHandler();
+    });
   }
 
   this.controller = controller;

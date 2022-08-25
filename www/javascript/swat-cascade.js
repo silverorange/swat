@@ -3,13 +3,9 @@ function SwatCascade(from_flydown_id, to_flydown_id) {
   this.to_flydown = document.getElementById(to_flydown_id);
   this.children = [];
 
-  YAHOO.util.Event.addListener(
-    this.from_flydown,
-    'change',
-    this.handleChange,
-    this,
-    true
-  );
+  this.from_flydown.addEventListener('change', () => {
+    this.handleChange();
+  });
 
   this.from_flydown._cascade = this;
 }

@@ -23,15 +23,9 @@ SwatRadioNoteBook.prototype.init = function() {
       (function() {
         var option = unfiltered_options[i];
         var index = count;
-        YAHOO.util.Event.on(
-          option,
-          'click',
-          function(e) {
-            this.setPageWithAnimation(this.pages[index]);
-          },
-          this,
-          true
-        );
+        option.addEventListener('click', () => {
+          this.setPageWithAnimation(this.pages[index]);
+        });
       }.call(this));
       count++;
     }

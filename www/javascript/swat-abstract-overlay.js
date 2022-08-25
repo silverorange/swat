@@ -22,6 +22,9 @@ function SwatAbstractOverlay(id) {
   // list of select elements to hide for IE6
   this.select_elements = [];
 
+  this.handleKeyPress = this.handleKeyPress.bind(this);
+  this.handleCloseLink = this.handleCloseLink.bind(this);
+
   window.addEventListener('DOMContentLoaded', () => {
     this.init();
   });
@@ -66,8 +69,9 @@ SwatAbstractOverlay.prototype.getToggleButton = function() {
 
   // the type property is readonly in IE so use setAttribute() here
   toggle_button.setAttribute('type', 'button');
-
-  YAHOO.util.Event.on(toggle_button, 'click', this.toggle, this, true);
+  toggle_button.addEventListener('click', () => {
+    this.toggle();
+  });
 
   return toggle_button;
 };
@@ -111,7 +115,7 @@ SwatAbstractOverlay.prototype.getCloseLink = function() {
     document.createTextNode(SwatAbstractOverlay.close_text)
   );
 
-  YAHOO.util.Event.on(close_link, 'click', this.handleCloseLink, this, true);
+  close_link.addEventListener('click', this.handleCloseLink);
 
   return close_link;
 };
@@ -209,8 +213,9 @@ SwatAbstractOverlay.prototype.drawCloseDiv = function() {
 
   this.close_div.className = 'swat-overlay-close-div';
   this.close_div.style.display = 'none';
-
-  YAHOO.util.Event.on(this.close_div, 'click', this.close, this, true);
+  this.close_div.addEventListener('click', () => {
+    this.close();
+  });
 
   this.container.appendChild(this.close_div);
 };
@@ -254,10 +259,10 @@ SwatAbstractOverlay.prototype.hideCloseDiv = function() {
 // {{{ SwatAbstractOverlay.prototype.handleKeyPress
 
 SwatAbstractOverlay.prototype.handleKeyPress = function(e) {
-  YAHOO.util.Event.preventDefault(e);
+  e.preventDefault();
 
   // close preview on backspace or escape
-  if (e.keyCode == 8 || e.keyCode == 27) {
+  if (e.key === 'Backspace' || e.key === 'Escape') {
     this.close();
   }
 };
@@ -267,8 +272,8 @@ SwatAbstractOverlay.prototype.handleKeyPress = function(e) {
 
 SwatAbstractOverlay.prototype.handleKeyPress = function(e) {
   // close preview on escape or enter key
-  if (e.keyCode == 27 || e.keyCode == 13) {
-    YAHOO.util.Event.preventDefault(e);
+  if (e.key === 'Escape' || e.key === 'Enter') {
+    e.preventDefault();
     this.close();
   }
 };
@@ -277,27 +282,21 @@ SwatAbstractOverlay.prototype.handleKeyPress = function(e) {
 // {{{ SwatAbstractOverlay.prototype.addKeyPressHandler
 
 SwatAbstractOverlay.prototype.addKeyPressHandler = function() {
-  YAHOO.util.Event.on(document, 'keypress', this.handleKeyPress, this, true);
+  document.addEventListener('keypress', this.handleKeyPress);
 };
 
 // }}}
 // {{{ SwatAbstractOverlay.prototype.removeKeyPressHandler
 
 SwatAbstractOverlay.prototype.removeKeyPressHandler = function() {
-  YAHOO.util.Event.removeListener(
-    document,
-    'keypress',
-    this.handleKeyPress,
-    this,
-    true
-  );
+  document.removeEventListener('keypress', this.handleKeyPress);
 };
 
 // }}}
 // {{{ SwatAbstractOverlay.prototype.handleCloseLink
 
 SwatAbstractOverlay.prototype.handleCloseLink = function(e) {
-  YAHOO.util.Event.preventDefault(e);
+  e.preventDefault();
   this.close();
 };
 

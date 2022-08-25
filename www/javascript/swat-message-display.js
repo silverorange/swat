@@ -26,6 +26,7 @@ SwatMessageDisplay.prototype.getMessage = function(index) {
 function SwatMessageDisplayMessage(message_display_id, message_index) {
   this.id = message_display_id + '_' + message_index;
   this.message_div = document.getElementById(this.id);
+  this.handleClick = this.handleClick.bind(this);
   this.drawDismissLink();
 }
 
@@ -33,27 +34,23 @@ SwatMessageDisplayMessage.close_text = 'Dismiss message';
 SwatMessageDisplayMessage.fade_duration = 0.3;
 SwatMessageDisplayMessage.shrink_duration = 0.3;
 
+SwatMessageDisplayMessage.prototype.handleClick = function(e) {
+  e.preventDefault();
+  this.hide();
+};
+
 SwatMessageDisplayMessage.prototype.drawDismissLink = function() {
   var text = document.createTextNode(SwatMessageDisplayMessage.close_text);
 
-  var anchor = document.createElement('a');
-  anchor.href = '#';
-  anchor.title = SwatMessageDisplayMessage.close_text;
-  anchor.classList.add('swat-message-display-dismiss-link');
-  YAHOO.util.Event.addListener(
-    anchor,
-    'click',
-    function(e, message) {
-      YAHOO.util.Event.preventDefault(e);
-      message.hide();
-    },
-    this
-  );
-
-  anchor.appendChild(text);
+  this.dismiss_link = document.createElement('a');
+  this.dismiss_link.href = '#';
+  this.dismiss_link.title = SwatMessageDisplayMessage.close_text;
+  this.dismiss_link.classList.add('swat-message-display-dismiss-link');
+  this.dismiss_link.addEventListener('click', this.handleClick);
+  this.dismiss_link.appendChild(text);
 
   var container = this.message_div.firstChild;
-  container.insertBefore(anchor, container.firstChild);
+  container.insertBefore(this.dismiss_link, container.firstChild);
 };
 
 /**
@@ -149,7 +146,7 @@ SwatMessageDisplayMessage.prototype.shrink = function() {
 };
 
 SwatMessageDisplayMessage.prototype.remove = function() {
-  YAHOO.util.Event.purgeElement(this.message_div, true);
+  this.dismiss_link.removeEventListener('click', this.handleClick);
 
   var removed_node = this.message_div.parentNode.removeChild(this.message_div);
 

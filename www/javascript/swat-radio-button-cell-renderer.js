@@ -23,21 +23,13 @@ function SwatRadioButtonCellRenderer(id, view) {
 
       this.radio_list.push(input_nodes[i]);
       this.updateNode(input_nodes[i]);
-      YAHOO.util.Event.addListener(
-        input_nodes[i],
-        'click',
-        this.handleClick,
-        this,
-        true
-      );
 
-      YAHOO.util.Event.addListener(
-        input_nodes[i],
-        'dblclick',
-        this.handleClick,
-        this,
-        true
-      );
+      input_nodes[i].addEventListener('click', e => {
+        this.handleClick(e);
+      });
+      input_nodes[i].addEventListener('dblclick', e => {
+        this.handleClick(e);
+      });
     }
   }
 }
@@ -47,7 +39,7 @@ SwatRadioButtonCellRenderer.prototype.handleClick = function(e) {
     this.updateNode(this.current_node);
   }
 
-  this.current_node = YAHOO.util.Event.getTarget(e);
+  this.current_node = e.target;
   this.updateNode(this.current_node);
 };
 

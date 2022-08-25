@@ -13,13 +13,9 @@ function SwatButton(id, show_processing_throbber) {
     this.initThrobber();
   }
 
-  YAHOO.util.Event.addListener(
-    this.button,
-    'click',
-    this.handleClick,
-    this,
-    true
-  );
+  this.button.addEventListener('click', e => {
+    this.handleClick(e);
+  });
 }
 
 SwatButton.prototype.handleClick = function(e) {
@@ -51,7 +47,7 @@ SwatButton.prototype.handleClick = function(e) {
       }
     }
   } else {
-    YAHOO.util.Event.preventDefault(e);
+    e.preventDefault();
   }
 };
 

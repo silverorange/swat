@@ -53,9 +53,13 @@ function SwatCalendar(id, start_date, end_date) {
 
   this.value = document.getElementById(this.id + '_value');
 
+  this.handleDocumentClick = this.handleDocumentClick.bind(this);
+
   // Draw the calendar on window load to prevent "Operation Aborted" errors
   // in MSIE 6 and 7.
-  YAHOO.util.Event.on(window, 'load', this.createOverlay, this, true);
+  window.addEventListener('DOMContentLoaded', () => {
+    this.createOverlay();
+  });
 
   this.open = false;
   this.positioned = false;
@@ -224,16 +228,10 @@ SwatCalendar.prototype.drawButton = function() {
   this.toggle_button.href = '#';
   this.toggle_button.title = SwatCalendar.open_toggle_text;
   this.toggle_button.classList.add('swat-calendar-toggle-button');
-  YAHOO.util.Event.on(
-    this.toggle_button,
-    'click',
-    function(e) {
-      YAHOO.util.Event.preventDefault(e);
-      this.toggle();
-    },
-    this,
-    true
-  );
+  this.toggle_button.addEventListener('click', e => {
+    e.preventDefault();
+    this.toggle();
+  });
 
   if (this.is_webkit) {
     // Zero-width-space holds the link open in WebKit browsers. Only apply
@@ -355,7 +353,7 @@ SwatCalendar.prototype.setDate = function(element, yyyy, mm, dd) {
 SwatCalendar.prototype.close = function() {
   this.overlay.hide();
   this.open = false;
-  YAHOO.util.Event.removeListener(document, 'click', this.handleDocumentClick);
+  document.removeEventListener('click', this.handleDocumentClick);
 };
 
 // }}}
@@ -944,13 +942,7 @@ SwatCalendar.prototype.draw = function() {
     this.overlay.show();
     this.open = true;
 
-    YAHOO.util.Event.on(
-      document,
-      'click',
-      this.handleDocumentClick,
-      this,
-      true
-    );
+    document.addEventListener('click', this.handleDocumentClick);
   }
 };
 
@@ -965,7 +957,7 @@ SwatCalendar.stopEventPropagation = function(e) {
 SwatCalendar.prototype.handleDocumentClick = function(e) {
   var close = true;
 
-  var target = YAHOO.util.Event.getTarget(e);
+  var target = e.target;
 
   if (target === this.toggle_button || target === this.overlay.element) {
     close = false;

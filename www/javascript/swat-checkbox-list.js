@@ -27,21 +27,12 @@ SwatCheckboxList.prototype.init = function() {
   }
 
   for (var i = 0; i < this.check_list.length; i++) {
-    YAHOO.util.Event.on(
-      this.check_list[i],
-      'click',
-      this.handleClick,
-      this,
-      true
-    );
-
-    YAHOO.util.Event.on(
-      this.check_list[i],
-      'dblclick',
-      this.handleClick,
-      this,
-      true
-    );
+    this.check_list[i].addEventListener('click', e => {
+      this.handleClick(e);
+    });
+    this.check_list[i].addEventListener('dblclick', e => {
+      this.handleClick(e);
+    });
   }
 
   this.updateCheckAll();

@@ -21,8 +21,7 @@ YAHOO.lang.extend(SwatCheckboxEntryList, SwatCheckboxList, {
 
   handleClick: function(e) {
     SwatCheckboxEntryList.superclass.handleClick.call(this, e);
-    var target = YAHOO.util.Event.getTarget(e);
-    this.toggleEntry(target._index);
+    this.toggleEntry(e.target._index);
   },
 
   checkAll: function(checked) {

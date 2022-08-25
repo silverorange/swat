@@ -10,33 +10,21 @@ function SwatDateEntry(id, use_current_date) {
   this.time_entry = null;
 
   if (this.year) {
-    YAHOO.util.Event.addListener(
-      this.year,
-      'change',
-      this.handleYearChange,
-      this,
-      true
-    );
+    this.year.addEventListener('change', () => {
+      this.handleYearChange();
+    });
   }
 
   if (this.month) {
-    YAHOO.util.Event.addListener(
-      this.month,
-      'change',
-      this.handleMonthChange,
-      this,
-      true
-    );
+    this.month.addEventListener('change', () => {
+      this.handleMonthChange();
+    });
   }
 
   if (this.day) {
-    YAHOO.util.Event.addListener(
-      this.day,
-      'change',
-      this.handleDayChange,
-      this,
-      true
-    );
+    this.day.addEventListener('change', () => {
+      this.handleDayChange();
+    });
   }
 
   this.lookup_table = {};

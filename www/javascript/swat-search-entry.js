@@ -13,6 +13,10 @@ function SwatSearchEntry(id) {
     }
   }
 
+  this.handleKeyDown = this.handleKeyDown.bind(this);
+  this.handleFocus = this.handleFocus.bind(this);
+  this.handleBlur = this.handleBlur.bind(this);
+
   if (label !== null) {
     this.label_text = label.innerText ? label.innerText : label.textContent;
 
@@ -21,21 +25,12 @@ function SwatSearchEntry(id) {
 
     label.style.display = 'none';
 
-    YAHOO.util.Event.addListener(
-      this.input,
-      'focus',
-      this.handleFocus,
-      this,
-      true
-    );
-
-    YAHOO.util.Event.addListener(
-      this.input,
-      'blur',
-      this.handleBlur,
-      this,
-      true
-    );
+    this.input.addEventListener('focus', () => {
+      this.handleFocus();
+    });
+    this.input.addEventListener('blur', () => {
+      this.handleBlur();
+    });
 
     window.addEventListener('DOMContentLoaded', () => {
       this.init();
@@ -53,11 +48,11 @@ SwatSearchEntry.prototype.init = function() {
 
 SwatSearchEntry.prototype.handleKeyDown = function(e) {
   // prevent esc from undoing the clearing of label text in Firefox
-  if (e.keyCode == 27) {
+  if (e.key === 'Escape') {
     this.input.value = '';
   }
 
-  YAHOO.util.Event.removeListener(this.input, 'keypress', this.handleKeyDown);
+  this.input.removeEventListener('keypress', this.handleKeyDown);
 };
 
 SwatSearchEntry.prototype.handleFocus = function(e) {
@@ -73,7 +68,7 @@ SwatSearchEntry.prototype.handleBlur = function(e) {
     this.showLabelText();
   }
 
-  YAHOO.util.Event.removeListener(this.input, 'keypress', this.handleKeyDown);
+  this.input.removeEventListener('keypress', this.handleKeyDown);
 
   // hack to enable initialization when focused
   this.input._focused = false;
@@ -105,25 +100,14 @@ SwatSearchEntry.prototype.showLabelText = function() {
       old_input.parentNode.insertBefore(this.input, old_input);
 
       // prevent IE memory leaks
-      YAHOO.util.Event.purgeElement(old_input);
+      old_input.removeEventListener('focus', this.handleFocus);
+      old_input.removeEventListener('blur', this.handleBlur);
+      old_input.removeEventListener('keypress', this.handleKeyDown);
       old_input.parentNode.removeChild(old_input);
 
       // add event handlers back
-      YAHOO.util.Event.addListener(
-        this.input,
-        'focus',
-        this.handleFocus,
-        this,
-        true
-      );
-
-      YAHOO.util.Event.addListener(
-        this.input,
-        'blur',
-        this.handleBlur,
-        this,
-        true
-      );
+      this.input.addEventListener('focus', this.handleFocus);
+      this.input.addEventListener('blur', this.handleBlur);
     }
   }
 
@@ -166,27 +150,16 @@ SwatSearchEntry.prototype.hideLabelText = function() {
       this.input = document.createElement(outer_html);
 
       // add event handlers back
-      YAHOO.util.Event.addListener(
-        this.input,
-        'focus',
-        this.handleFocus,
-        this,
-        true
-      );
-
-      YAHOO.util.Event.addListener(
-        this.input,
-        'blur',
-        this.handleBlur,
-        this,
-        true
-      );
+      this.input.addEventListener('focus', this.handleFocus);
+      this.input.addEventListener('blur', this.handleBlur);
 
       // replace old input with new one
       old_input.parentNode.insertBefore(this.input, old_input);
 
       // prevent IE memory leaks
-      YAHOO.util.Event.purgeElement(old_input);
+      old_input.removeEventListener('focus', this.handleFocus);
+      old_input.removeEventListener('blur', this.handleBlur);
+      old_input.removeEventListener('keypress', this.handleKeyDown);
       old_input.parentNode.removeChild(old_input);
 
       hide = true;
@@ -196,12 +169,6 @@ SwatSearchEntry.prototype.hideLabelText = function() {
   if (hide) {
     this.input.value = this.input_value;
     this.input.classList.remove('swat-search-entry-empty');
-    YAHOO.util.Event.addListener(
-      this.input,
-      'keypress',
-      this.handleKeyDown,
-      this,
-      true
-    );
+    this.input.addEventListener('keypress', this.handleKeyDown);
   }
 };

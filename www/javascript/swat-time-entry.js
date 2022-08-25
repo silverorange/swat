@@ -12,43 +12,27 @@ function SwatTimeEntry(id, use_current_time) {
   this.date_entry = null;
 
   if (this.hour) {
-    YAHOO.util.Event.addListener(
-      this.hour,
-      'change',
-      this.handleHourChange,
-      this,
-      true
-    );
+    this.hour.addEventListener('change', () => {
+      this.handleHourChange();
+    });
   }
 
   if (this.minute) {
-    YAHOO.util.Event.addListener(
-      this.minute,
-      'change',
-      this.handleMinuteChange,
-      this,
-      true
-    );
+    this.minute.addEventListener('change', () => {
+      this.handleMinuteChange();
+    });
   }
 
   if (this.second) {
-    YAHOO.util.Event.addListener(
-      this.second,
-      'change',
-      this.handleSecondChange,
-      this,
-      true
-    );
+    this.second.addEventListener('change', () => {
+      this.handleSecondChange();
+    });
   }
 
   if (this.am_pm) {
-    YAHOO.util.Event.addListener(
-      this.am_pm,
-      'change',
-      this.handleAmPmChange,
-      this,
-      true
-    );
+    this.am_pm.addEventListener('change', () => {
+      this.handleAmPmChange();
+    });
   }
 
   this.lookup_table = {};
