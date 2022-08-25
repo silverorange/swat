@@ -1,11 +1,11 @@
-function SwatCheckboxEntryList(id) {
-  this.entry_list = [];
-  SwatCheckboxEntryList.superclass.constructor.call(this, id);
-}
+class SwatCheckboxEntryList extends SwatCheckboxList {
+  constructor(id) {
+    super(id);
+    this.entry_list = [];
+  }
 
-YAHOO.lang.extend(SwatCheckboxEntryList, SwatCheckboxList, {
-  init: function() {
-    SwatCheckboxEntryList.superclass.init.call(this);
+  init() {
+    super.init();
 
     for (var i = 0; i < this.check_list.length; i++) {
       var option = this.check_list[i];
@@ -17,44 +17,41 @@ YAHOO.lang.extend(SwatCheckboxEntryList, SwatCheckboxList, {
     }
 
     this.updateFields();
-  },
+  }
 
-  handleClick: function(e) {
-    SwatCheckboxEntryList.superclass.handleClick.call(this, e);
+  handleClick(e) {
+    super.handleClick(e);
     this.toggleEntry(e.target._index);
-  },
+  }
 
-  checkAll: function(checked) {
-    SwatCheckboxEntryList.superclass.checkAll.call(this, checked);
+  checkAll(checked) {
+    super.checkAll(checked);
     for (var i = 0; i < this.check_list.length; i++) {
       this.setEntrySensitivity(i, checked);
     }
   }
-});
 
-SwatCheckboxEntryList.prototype.toggleEntry = function(index) {
-  if (this.entry_list[index]) {
-    this.setEntrySensitivity(index, this.entry_list[index].disabled);
-  }
-};
-
-SwatCheckboxEntryList.prototype.setEntrySensitivity = function(
-  index,
-  sensitivity
-) {
-  if (this.entry_list[index]) {
-    if (sensitivity) {
-      this.entry_list[index].disabled = false;
-      this.entry_list[index].classList.remove('swat-insensitive');
-    } else {
-      this.entry_list[index].disabled = true;
-      this.entry_list[index].classList.add('swat-insensitive');
+  toggleEntry(index) {
+    if (this.entry_list[index]) {
+      this.setEntrySensitivity(index, this.entry_list[index].disabled);
     }
   }
-};
 
-SwatCheckboxEntryList.prototype.updateFields = function() {
-  for (var i = 0; i < this.check_list.length; i++) {
-    this.setEntrySensitivity(i, this.check_list[i].checked);
+  setEntrySensitivity(index, sensitivity) {
+    if (this.entry_list[index]) {
+      if (sensitivity) {
+        this.entry_list[index].disabled = false;
+        this.entry_list[index].classList.remove('swat-insensitive');
+      } else {
+        this.entry_list[index].disabled = true;
+        this.entry_list[index].classList.add('swat-insensitive');
+      }
+    }
   }
-};
+
+  updateFields() {
+    for (var i = 0; i < this.check_list.length; i++) {
+      this.setEntrySensitivity(i, this.check_list[i].checked);
+    }
+  }
+}

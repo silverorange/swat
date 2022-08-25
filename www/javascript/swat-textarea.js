@@ -6,8 +6,6 @@
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 
-// {{{ function SwatTextarea()
-
 /**
  * Creates a new textarea object
  *
@@ -32,9 +30,6 @@ function SwatTextarea(id, resizeable) {
   }
 }
 
-// }}}
-// {{{ SwatTextarea.registerPendingTextarea()
-
 SwatTextarea.registerPendingTextarea = function(textarea) {
   SwatTextarea.pending_textareas.push(textarea);
 
@@ -45,9 +40,6 @@ SwatTextarea.registerPendingTextarea = function(textarea) {
     );
   }
 };
-
-// }}}
-// {{{ SwatTextarea.pollPendingTextareas()
 
 SwatTextarea.pollPendingTextareas = function() {
   for (var i = 0; i < SwatTextarea.pending_textareas.length; i++) {
@@ -63,9 +55,6 @@ SwatTextarea.pollPendingTextareas = function() {
     SwatTextarea.pending_interval = null;
   }
 };
-
-// }}}
-// {{{ init()
 
 /**
  * Sets up the resize handle when the textarea is available and loaded in the
@@ -103,9 +92,6 @@ SwatTextarea.prototype.init = function() {
 
   this.initialize();
 };
-
-// }}}
-// {{{ initialize()
 
 SwatTextarea.prototype.initialize = function() {
   var style_width = getComputedStyle(this.textarea).width;
@@ -148,9 +134,6 @@ SwatTextarea.prototype.initialize = function() {
       SwatTextarea.resize_handle_height + 16 + 'px';
   }
 };
-
-// }}}
-// {{{ static properties
 
 /**
  * Current resize handle that is being dragged.
@@ -232,9 +215,6 @@ SwatTextarea.supports_resize = (function() {
     (resize === '' || resize === 'none')
   );
 })();
-
-// }}}
-// {{{ SwatTextarea.prototype.mousedownEventHandler()
 
 /**
  * Handles mousedown events for resize handles
@@ -329,9 +309,6 @@ SwatTextarea.prototype.touchstartEventHandler = function(e) {
   }
 };
 
-// }}}
-// {{{ SwatTextarea.prototype.mousemoveEventHandler()
-
 /**
  * Handles mouse movement when dragging a resize bar
  *
@@ -353,9 +330,6 @@ SwatTextarea.prototype.mousemoveEventHandler = function(e) {
 
   return false;
 };
-
-// }}}
-// {{{ SwatTextarea.prototype.touchmoveEventHandler()
 
 /**
  * Handles touch movement when dragging a resize bar
@@ -387,9 +361,6 @@ SwatTextarea.prototype.touchmoveEventHandler = function(e) {
 
   return false;
 };
-
-// }}}
-// {{{ SwatTextarea.prototype.mouseupEventHandler()
 
 /**
  * Handles mouseup events when dragging a resize bar
@@ -428,9 +399,6 @@ SwatTextarea.prototype.mouseupEventHandler = function(e) {
   return false;
 };
 
-// }}}
-// {{{ SwatTextarea.prototype.touchendEventHandler()
-
 /**
  * Handles touchend events when dragging a resize bar
  *
@@ -443,5 +411,3 @@ SwatTextarea.prototype.mouseupEventHandler = function(e) {
 SwatTextarea.prototype.touchendEventHandler = function(e) {
   return this.mouseupEventHandler(e);
 };
-
-// }}}

@@ -3,301 +3,226 @@
  *
  * @copyright 2005-2016 silverorange
  */
+class SwatAbstractOverlay {
+  /**
+   * Creates an abstract overlay widget
+   *
+   * @param {string} id
+   */
+  constructor(id) {
+    this.id = id;
+    this.container = document.getElementById(this.id);
+    this.value_field = document.getElementById(this.id + '_value');
 
-// {{{ function SwatAbstractOverlay()
+    this.is_open = false;
+    this.is_drawn = false;
 
-/**
- * Creates an abstract overlay widget
- *
- * @param string id
- */
-function SwatAbstractOverlay(id) {
-  this.id = id;
-  this.container = document.getElementById(this.id);
-  this.value_field = document.getElementById(this.id + '_value');
+    // list of select elements to hide for IE6
+    this.select_elements = [];
 
-  this.is_open = false;
-  this.is_drawn = false;
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleCloseLink = this.handleCloseLink.bind(this);
 
-  // list of select elements to hide for IE6
-  this.select_elements = [];
-
-  this.handleKeyPress = this.handleKeyPress.bind(this);
-  this.handleCloseLink = this.handleCloseLink.bind(this);
-
-  window.addEventListener('DOMContentLoaded', () => {
-    this.init();
-  });
-}
-
-SwatAbstractOverlay.close_text = 'Close';
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.init
-
-SwatAbstractOverlay.prototype.init = function() {
-  this.draw();
-  this.drawCloseDiv();
-  this.createOverlay();
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.draw
-
-SwatAbstractOverlay.prototype.draw = function() {
-  this.overlay_content = document.createElement('div');
-  this.overlay_content.id = this.id + '_overlay';
-  this.overlay_content.classList.add('swat-overlay');
-  this.overlay_content.style.display = 'none';
-
-  this.overlay_content.appendChild(this.getHeader());
-  this.overlay_content.appendChild(this.getBody());
-  this.overlay_content.appendChild(this.getFooter());
-
-  this.toggle_button = this.getToggleButton();
-  this.toggle_button.appendChild(this.overlay_content);
-
-  this.container.appendChild(this.toggle_button);
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.getToggleButton
-
-SwatAbstractOverlay.prototype.getToggleButton = function() {
-  var toggle_button = document.createElement('button');
-  toggle_button.classList.add('swat-overlay-toggle-button');
-
-  // the type property is readonly in IE so use setAttribute() here
-  toggle_button.setAttribute('type', 'button');
-  toggle_button.addEventListener('click', () => {
-    this.toggle();
-  });
-
-  return toggle_button;
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.getHeader
-
-SwatAbstractOverlay.prototype.getHeader = function() {
-  var header = document.createElement('div');
-  header.classList.add('hd');
-  header.appendChild(this.getCloseLink());
-  return header;
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.getBody
-
-SwatAbstractOverlay.prototype.getBody = function() {
-  var body = document.createElement('div');
-  body.classList.add('bd');
-  return body;
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.getFooter
-
-SwatAbstractOverlay.prototype.getFooter = function() {
-  var footer = document.createElement('div');
-  footer.classList.add('ft');
-  return footer;
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.getCloseLink
-
-SwatAbstractOverlay.prototype.getCloseLink = function() {
-  var close_link = document.createElement('a');
-  close_link.className = 'swat-overlay-close-link';
-  close_link.href = '#close';
-  close_link.appendChild(
-    document.createTextNode(SwatAbstractOverlay.close_text)
-  );
-
-  close_link.addEventListener('click', this.handleCloseLink);
-
-  return close_link;
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.createOverlay
-
-/**
- * Creates overlay widget when toggle button has been drawn
- */
-SwatAbstractOverlay.prototype.createOverlay = function(event) {
-  this.overlay = new YAHOO.widget.Overlay(this.id + '_overlay', {
-    visible: false,
-    constraintoviewport: true
-  });
-
-  this.overlay.body.appendChild(this.getBodyContent());
-
-  this.overlay.render(this.container);
-  this.overlay_content.style.display = 'block';
-  this.is_drawn = true;
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.close
-
-/**
- * Closes this overlay
- */
-SwatAbstractOverlay.prototype.close = function() {
-  this.hideCloseDiv();
-
-  this.overlay.hide();
-  SwatZIndexManager.lowerElement(this.overlay_content);
-  this.is_open = false;
-
-  this.removeKeyPressHandler();
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.open
-
-/**
- * Opens this overlay
- */
-SwatAbstractOverlay.prototype.open = function() {
-  this.showCloseDiv();
-
-  this.overlay.cfg.setProperty('context', this.getOverlayContext());
-
-  this.overlay.show();
-  this.is_open = true;
-
-  SwatZIndexManager.raiseElement(this.overlay_content);
-
-  this.addKeyPressHandler();
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.getOverlayContext
-
-/**
- * Get the context for positioning the overlay
- */
-SwatAbstractOverlay.prototype.getOverlayContext = function() {
-  return [this.toggle_button, 'tl', 'bl'];
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.getBodyContent
-
-/**
- * Draws this overlay
- */
-SwatAbstractOverlay.prototype.getBodyContent = function() {
-  return document.createElement('div');
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.toggle
-
-SwatAbstractOverlay.prototype.toggle = function() {
-  if (this.is_open) {
-    this.close();
-  } else {
-    this.open();
+    window.addEventListener('DOMContentLoaded', () => {
+      this.init();
+    });
   }
-};
 
-// }}}
-// {{{ SwatAbstractOverlay.prototype.drawCloseDiv
+  static close_text = 'Close';
 
-SwatAbstractOverlay.prototype.drawCloseDiv = function() {
-  this.close_div = document.createElement('div');
+  init() {
+    this.draw();
+    this.drawCloseDiv();
+    this.createOverlay();
+  }
 
-  this.close_div.className = 'swat-overlay-close-div';
-  this.close_div.style.display = 'none';
-  this.close_div.addEventListener('click', () => {
-    this.close();
-  });
+  draw() {
+    this.overlay_content = document.createElement('div');
+    this.overlay_content.id = this.id + '_overlay';
+    this.overlay_content.classList.add('swat-overlay');
+    this.overlay_content.style.display = 'none';
 
-  this.container.appendChild(this.close_div);
-};
+    this.overlay_content.appendChild(this.getHeader());
+    this.overlay_content.appendChild(this.getBody());
+    this.overlay_content.appendChild(this.getFooter());
 
-// }}}
-// {{{ SwatAbstractOverlay.prototype.showCloseDiv
+    this.toggle_button = this.getToggleButton();
+    this.toggle_button.appendChild(this.overlay_content);
 
-SwatAbstractOverlay.prototype.showCloseDiv = function() {
-  if (YAHOO.env.ua.ie == 6) {
-    this.select_elements = document.getElementsByTagName('select');
-    for (var i = 0; i < this.select_elements.length; i++) {
-      this.select_elements[i].style._visibility = this.select_elements[
-        i
-      ].style.visibility;
+    this.container.appendChild(this.toggle_button);
+  }
 
-      this.select_elements[i].style.visibility = 'hidden';
+  getToggleButton() {
+    var toggle_button = document.createElement('button');
+    toggle_button.classList.add('swat-overlay-toggle-button');
+
+    // the type property is readonly in IE so use setAttribute() here
+    toggle_button.setAttribute('type', 'button');
+    toggle_button.addEventListener('click', () => {
+      this.toggle();
+    });
+
+    return toggle_button;
+  }
+
+  getHeader() {
+    var header = document.createElement('div');
+    header.classList.add('hd');
+    header.appendChild(this.getCloseLink());
+    return header;
+  }
+
+  getBody() {
+    var body = document.createElement('div');
+    body.classList.add('bd');
+    return body;
+  }
+
+  getFooter() {
+    var footer = document.createElement('div');
+    footer.classList.add('ft');
+    return footer;
+  }
+
+  getCloseLink() {
+    var close_link = document.createElement('a');
+    close_link.className = 'swat-overlay-close-link';
+    close_link.href = '#close';
+    close_link.appendChild(
+      document.createTextNode(SwatAbstractOverlay.close_text)
+    );
+
+    close_link.addEventListener('click', this.handleCloseLink);
+
+    return close_link;
+  }
+
+  /**
+   * Creates overlay widget when toggle button has been drawn
+   */
+  createOverlay(event) {
+    this.overlay = new YAHOO.widget.Overlay(this.id + '_overlay', {
+      visible: false,
+      constraintoviewport: true
+    });
+
+    this.overlay.body.appendChild(this.getBodyContent());
+
+    this.overlay.render(this.container);
+    this.overlay_content.style.display = 'block';
+    this.is_drawn = true;
+  }
+
+  /**
+   * Closes this overlay
+   */
+  close() {
+    this.hideCloseDiv();
+
+    this.overlay.hide();
+    SwatZIndexManager.lowerElement(this.overlay_content);
+    this.is_open = false;
+
+    this.removeKeyPressHandler();
+  }
+
+  /**
+   * Opens this overlay
+   */
+  open() {
+    this.showCloseDiv();
+
+    this.overlay.cfg.setProperty('context', this.getOverlayContext());
+
+    this.overlay.show();
+    this.is_open = true;
+
+    SwatZIndexManager.raiseElement(this.overlay_content);
+
+    this.addKeyPressHandler();
+  }
+
+  /**
+   * Get the context for positioning the overlay
+   */
+  getOverlayContext() {
+    return [this.toggle_button, 'tl', 'bl'];
+  }
+
+  /**
+   * Draws this overlay
+   */
+  getBodyContent() {
+    return document.createElement('div');
+  }
+
+  toggle() {
+    if (this.is_open) {
+      this.close();
+    } else {
+      this.open();
     }
   }
 
-  this.close_div.style.height = YAHOO.util.Dom.getDocumentHeight() + 'px';
-  this.close_div.style.display = 'block';
-  SwatZIndexManager.raiseElement(this.close_div);
-};
+  drawCloseDiv() {
+    this.close_div = document.createElement('div');
 
-// }}}
-// {{{ SwatAbstractOverlay.prototype.hideCloseDiv
+    this.close_div.className = 'swat-overlay-close-div';
+    this.close_div.style.display = 'none';
+    this.close_div.addEventListener('click', () => {
+      this.close();
+    });
 
-SwatAbstractOverlay.prototype.hideCloseDiv = function() {
-  SwatZIndexManager.lowerElement(this.close_div);
-  this.close_div.style.display = 'none';
-  if (YAHOO.env.ua.ie == 6) {
-    for (var i = 0; i < this.select_elements.length; i++) {
-      this.select_elements[i].style.visibility = this.select_elements[
-        i
-      ].style._visibility;
+    this.container.appendChild(this.close_div);
+  }
+
+  showCloseDiv() {
+    if (YAHOO.env.ua.ie == 6) {
+      this.select_elements = document.getElementsByTagName('select');
+      for (var i = 0; i < this.select_elements.length; i++) {
+        this.select_elements[i].style._visibility = this.select_elements[
+          i
+        ].style.visibility;
+
+        this.select_elements[i].style.visibility = 'hidden';
+      }
+    }
+
+    this.close_div.style.height = YAHOO.util.Dom.getDocumentHeight() + 'px';
+    this.close_div.style.display = 'block';
+    SwatZIndexManager.raiseElement(this.close_div);
+  }
+
+  hideCloseDiv() {
+    SwatZIndexManager.lowerElement(this.close_div);
+    this.close_div.style.display = 'none';
+    if (YAHOO.env.ua.ie == 6) {
+      for (var i = 0; i < this.select_elements.length; i++) {
+        this.select_elements[i].style.visibility = this.select_elements[
+          i
+        ].style._visibility;
+      }
     }
   }
-};
 
-// }}}
-// {{{ SwatAbstractOverlay.prototype.handleKeyPress
-
-SwatAbstractOverlay.prototype.handleKeyPress = function(e) {
-  e.preventDefault();
-
-  // close preview on backspace or escape
-  if (e.key === 'Backspace' || e.key === 'Escape') {
-    this.close();
+  addKeyPressHandler() {
+    document.addEventListener('keypress', this.handleKeyPress);
   }
-};
 
-// }}}
-// {{{ SwatAbstractOverlay.prototype.handleKeyPress
+  removeKeyPressHandler() {
+    document.removeEventListener('keypress', this.handleKeyPress);
+  }
 
-SwatAbstractOverlay.prototype.handleKeyPress = function(e) {
-  // close preview on escape or enter key
-  if (e.key === 'Escape' || e.key === 'Enter') {
+  handleKeyPress(e) {
+    // close preview on escape or enter key
+    if (e.key === 'Escape' || e.key === 'Enter') {
+      e.preventDefault();
+      this.close();
+    }
+  }
+
+  handleCloseLink(e) {
     e.preventDefault();
     this.close();
   }
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.addKeyPressHandler
-
-SwatAbstractOverlay.prototype.addKeyPressHandler = function() {
-  document.addEventListener('keypress', this.handleKeyPress);
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.removeKeyPressHandler
-
-SwatAbstractOverlay.prototype.removeKeyPressHandler = function() {
-  document.removeEventListener('keypress', this.handleKeyPress);
-};
-
-// }}}
-// {{{ SwatAbstractOverlay.prototype.handleCloseLink
-
-SwatAbstractOverlay.prototype.handleCloseLink = function(e) {
-  e.preventDefault();
-  this.close();
-};
-
-// }}}
+}

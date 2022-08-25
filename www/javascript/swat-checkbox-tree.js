@@ -1,20 +1,36 @@
-/**
- * JavaScript SwatCheckboxTree component
- *
- * @param id string Id of the matching {@link SwatCheckboxTree} object.
- */
-function SwatCheckboxTree(id, maybeEffect) {
-  function compose(second, first) {
+class SwatCheckboxTree {
+  /**
+   * JavaScript SwatCheckboxTree component
+   *
+   * @param {string} Id of the matching {@link SwatCheckboxTree} object.
+   */
+  constructor(id, maybe_effect) {
+    this.id = id;
+    this.maybe_effect = maybe_effect;
+
+    /*
+     * This property needs to be set to something callable right away.
+     * The SwatCheckAll code calls this before the widget can be
+     * initialized. Just set it to something harmless to begin with.
+     */
+    this.updateCheckAll = SwatCheckboxTree.nothing;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      this.init();
+    });
+  }
+
+  static compose(second, first) {
     return function(x) {
       return second(first(x));
     };
   }
 
-  function identity(x) {
+  static identity(x) {
     return x;
   }
 
-  function nothing() {
+  static nothing() {
     // We pass this empty function when we make the isChecked function
   }
 
@@ -24,7 +40,7 @@ function SwatCheckboxTree(id, maybeEffect) {
    * tree. You may also provide a side effect that will be executed
    * for each node in the tree.
    */
-  function walk(container, parents, chain, effect) {
+  static walk(container, parents, chain, effect) {
     return Array.from(container.querySelectorAll(':scope > ul > li'))
       .map(function(item) {
         return {
@@ -32,14 +48,14 @@ function SwatCheckboxTree(id, maybeEffect) {
           input: item.querySelector(':scope > span > input[type="checkbox"]')
         };
       })
-      .map(function(obj) {
+      .map(obj => {
         const item = obj.item;
         const input = obj.input;
-        const link = input !== null ? chain(input) : identity;
+        const link = input !== null ? chain(input) : SwatCheckboxTree.identity;
 
-        const children = walk(
+        const children = SwatCheckboxTree.walk(
           item,
-          compose(
+          SwatCheckboxTree.compose(
             parents,
             link
           ),
@@ -51,17 +67,17 @@ function SwatCheckboxTree(id, maybeEffect) {
           effect(input, parents, children);
         }
 
-        return compose(
+        return SwatCheckboxTree.compose(
           link,
           children
         );
       })
-      .reduce(compose, identity);
+      .reduce(SwatCheckboxTree.compose, SwatCheckboxTree.identity);
   }
 
-  function init() {
-    const container = document.getElementById(id);
-    const effect = maybeEffect ? maybeEffect : nothing;
+  init() {
+    const container = document.getElementById(this.id);
+    const effect = this.maybe_effect ?? SwatCheckboxTree.nothing;
 
     /*
      * This call to walk makes us a nice little function of the form
@@ -69,15 +85,15 @@ function SwatCheckboxTree(id, maybeEffect) {
      * a boolean indicating whether or not all check boxes in the tree
      * are selected.
      */
-    const isChecked = walk(
+    const isChecked = SwatCheckboxTree.walk(
       container,
-      identity,
+      SwatCheckboxTree.identity,
       function(input) {
         return function(checked) {
           return (input.disabled || input.checked) && checked;
         };
       },
-      nothing
+      SwatCheckboxTree.nothing
     );
 
     /*
@@ -85,10 +101,9 @@ function SwatCheckboxTree(id, maybeEffect) {
      * all function. If we have a check all we update its state with
      * whatever our isChecked function returns.
      */
-    const that = this;
-    const updateCheckAll = function() {
-      if (that.check_all) {
-        that.check_all.setState(isChecked(true));
+    const updateCheckAll = () => {
+      if (this.check_all) {
+        this.check_all.setState(isChecked(true));
       }
     };
 
@@ -103,9 +118,9 @@ function SwatCheckboxTree(id, maybeEffect) {
      * is setting up a event listener on each check box in the tree
      * that will preform the desired behavior when the input is changed.
      */
-    const checkAll = walk(
+    const checkAll = SwatCheckboxTree.walk(
       container,
-      identity,
+      SwatCheckboxTree.identity,
       function(input) {
         return function(state) {
           if (state.disabled !== undefined) {
@@ -131,27 +146,16 @@ function SwatCheckboxTree(id, maybeEffect) {
     this.updateCheckAll = updateCheckAll;
 
     // The this.checkAll property is required by SwatCheckAll.
-    this.checkAll = function(checked) {
+    this.checkAll = checked => {
       checkAll({ checked: checked });
     };
   }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    init.call(this);
-  });
-
-  /*
-   * This property needs to be set to something callable right away.
-   * The SwatCheckAll code calls this before the widget can be
-   * initialized. Just set it to something harmless to begin with.
-   */
-  this.updateCheckAll = nothing;
 }
 
 /**
  * JavaScript SwatCheckboxChildDependencyTree component
  *
- * @param id string Id of the matching {@link SwatCheckboxChildDependencyTree} object.
+ * @param {string} Id of the matching {@link SwatCheckboxChildDependencyTree} object.
  */
 function SwatCheckboxChildDependencyTree(id) {
   /*
@@ -183,7 +187,7 @@ function SwatCheckboxChildDependencyTree(id) {
 /**
  * JavaScript SwatCheckboxParentDependencyTree component
  *
- * @param id string Id of the matching {@link SwatCheckboxParentDependencyTree} object.
+ * @param {string} Id of the matching {@link SwatCheckboxParentDependencyTree} object.
  */
 function SwatCheckboxParentDependencyTree(id) {
   /*

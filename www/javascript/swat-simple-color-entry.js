@@ -1,34 +1,27 @@
-// {{{ function SwatSimpleColorEntry
+class SwatSimpleColorEntry extends SwatAbstractOverlay {
+  /**
+   * Simple color entry widget
+   *
+   * @param {string} id
+   * @param {string[]} colors
+   * @param {string} none_option_title
+   *
+   * @copyright 2005-2016 silverorange
+   */
+  constructor(id, colors, none_option_title) {
+    super(id);
 
-/**
- * Simple color entry widget
- *
- * @param string id
- * @param Array colors
- * @param string none_option_title
- *
- * @copyright 2005-2016 silverorange
- */
-function SwatSimpleColorEntry(id, colors, none_option_title) {
-  SwatSimpleColorEntry.superclass.constructor.call(this, id);
+    this.colors = colors;
+    this.none_option_title = none_option_title;
 
-  this.colors = colors;
-  this.none_option_title = none_option_title;
+    // this tries to make a square palette
+    this.columns = Math.ceil(Math.sqrt(this.colors.length));
 
-  // this tries to make a square palette
-  this.columns = Math.ceil(Math.sqrt(this.colors.length));
+    this.current_color = null;
+    this.colorChangeEvent = new YAHOO.util.CustomEvent('colorChange');
+  }
 
-  this.current_color = null;
-  this.colorChangeEvent = new YAHOO.util.CustomEvent('colorChange');
-}
-
-// }}}
-// {{{ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay)
-
-YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
-  // {{{ init
-
-  init: function() {
+  init() {
     this.hex_input_tag = document.createElement('input');
     this.hex_input_tag.type = 'text';
     this.hex_input_tag.id = this.id + '_hex_color';
@@ -41,16 +34,13 @@ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
       this.handleInputChange();
     });
 
-    SwatSimpleColorEntry.superclass.init.call(this);
+    super.init();
 
     this.input_tag = document.getElementById(this.id + '_value');
     this.setColor(this.input_tag.value);
-  },
+  }
 
-  // }}}
-  // {{{ getBodyContent
-
-  getBodyContent: function() {
+  getBodyContent() {
     var table = document.createElement('table');
     table.className = 'swat-simple-color-entry-table';
     table.cellSpacing = '1';
@@ -130,15 +120,10 @@ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
     var div_tag = document.createElement('div');
     div_tag.appendChild(table);
     return div_tag;
-  },
+  }
 
-  // }}}
-  // {{{ getToggleButton
-
-  getToggleButton: function() {
-    var toggle_button = SwatSimpleColorEntry.superclass.getToggleButton.call(
-      this
-    );
+  getToggleButton() {
+    var toggle_button = super.getToggleButton();
 
     this.toggle_button_content = document.createElement('div');
     this.toggle_button_content.className = 'swat-overlay-toggle-button-content';
@@ -147,12 +132,9 @@ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
     toggle_button.appendChild(this.toggle_button_content);
 
     return toggle_button;
-  },
+  }
 
-  // }}}
-  // {{{ getFooter
-
-  getFooter: function() {
+  getFooter() {
     var title = document.createTextNode('#');
 
     var label_tag = document.createElement('label');
@@ -164,154 +146,135 @@ YAHOO.lang.extend(SwatSimpleColorEntry, SwatAbstractOverlay, {
     hex_div.appendChild(label_tag);
     hex_div.appendChild(this.hex_input_tag);
 
-    var footer = SwatSimpleColorEntry.superclass.getFooter.call(this);
+    var footer = super.getFooter();
     footer.appendChild(hex_div);
     return footer;
   }
 
-  // }}}
-});
+  handleInputChange() {
+    var color = this.hex_input_tag.value;
 
-// }}}
-// {{{ SwatSimpleColorEntry.prototype.handleInputChange
-
-SwatSimpleColorEntry.prototype.handleInputChange = function() {
-  var color = this.hex_input_tag.value;
-
-  if (color.charAt(0) === '#') {
-    color = color.slice(1);
-  }
-
-  if (color.length === 3) {
-    var hex3 = /^[0-9a-f]{3}$/i;
-    if (!hex3.test(color)) {
-      color = null;
+    if (color.charAt(0) === '#') {
+      color = color.slice(1);
     }
-  } else if (color.length === 6) {
-    var hex6 = /^[0-9a-f]{6}$/i;
-    if (!hex6.test(color)) {
-      color = null;
-    }
-  } else {
-    color = null;
-  }
 
-  if (color) {
-    this.setColor(color);
-  }
-};
-
-// }}}
-// {{{ SwatSimpleColorEntry.prototype.setColor
-
-/**
- * Sets the value of the color entry input tag to the selected color and
- * highlights the selected color
- *
- * @param number color the hex value of the color
- */
-SwatSimpleColorEntry.prototype.setColor = function(color) {
-  if (!/^([0-9a-f]{3}){1,2}$/i.test(color)) {
-    color = null;
-  }
-
-  var changed = this.current_color != color;
-
-  if (changed) {
-    if (color === null) {
-      // IE fix, it sets string 'null' otherwise
-      this.input_tag.value = '';
+    if (color.length === 3) {
+      var hex3 = /^[0-9a-f]{3}$/i;
+      if (!hex3.test(color)) {
+        color = null;
+      }
+    } else if (color.length === 6) {
+      var hex6 = /^[0-9a-f]{6}$/i;
+      if (!hex6.test(color)) {
+        color = null;
+      }
     } else {
-      this.input_tag.value = color;
+      color = null;
     }
 
-    if (color === null) {
-      if (this.hex_input_tag.value !== '') {
+    if (color) {
+      this.setColor(color);
+    }
+  }
+
+  /**
+   * Sets the value of the color entry input tag to the selected color and
+   * highlights the selected color
+   *
+   * @param {string} color the hex value of the color
+   */
+  setColor(color) {
+    if (!/^([0-9a-f]{3}){1,2}$/i.test(color)) {
+      color = null;
+    }
+
+    var changed = this.current_color != color;
+
+    if (changed) {
+      if (color === null) {
         // IE fix, it sets string 'null' otherwise
-        this.hex_input_tag.value = '';
+        this.input_tag.value = '';
+      } else {
+        this.input_tag.value = color;
       }
 
-      this.toggle_button_content.style.background =
-        'url(packages/swat/images/color-entry-null.png)';
-    } else {
-      if (this.hex_input_tag.value !== color) {
-        this.hex_input_tag.value = color;
+      if (color === null) {
+        if (this.hex_input_tag.value !== '') {
+          // IE fix, it sets string 'null' otherwise
+          this.hex_input_tag.value = '';
+        }
+
+        this.toggle_button_content.style.background =
+          'url(packages/swat/images/color-entry-null.png)';
+      } else {
+        if (this.hex_input_tag.value !== color) {
+          this.hex_input_tag.value = color;
+        }
+        this.toggle_button_content.style.background = '#' + color;
       }
-      this.toggle_button_content.style.background = '#' + color;
-    }
 
-    this.current_color = color;
+      this.current_color = color;
 
-    if (color === null) {
-      this.colorChangeEvent.fire(null);
-    } else {
-      this.colorChangeEvent.fire('#' + color);
-    }
+      if (color === null) {
+        this.colorChangeEvent.fire(null);
+      } else {
+        this.colorChangeEvent.fire('#' + color);
+      }
 
-    this.highlightPaletteEntry(color);
-  }
-};
-
-// }}}
-// {{{ SwatSimpleColorEntry.prototype.selectNull
-
-/**
- * Event handler that sets the color to null
- *
- * @param Event the event that triggered this select.
- */
-SwatSimpleColorEntry.prototype.selectNull = function(e) {
-  e.preventDefault();
-  this.setColor(null);
-};
-
-// }}}
-// {{{ SwatSimpleColorEntry.prototype.selectColor
-
-/**
- * Event handler that sets the color to the selected color
- *
- * @param Event the event that triggered this select.
- */
-SwatSimpleColorEntry.prototype.selectColor = function(event) {
-  event.preventDefault();
-  var color_index = event.target.parentNode.id.split('_palette_')[1];
-  this.setColor(this.colors[color_index]);
-};
-
-// }}}
-// {{{ SwatSimpleColorEntry.prototype.highlightPaletteEntry
-
-/**
- * Highlights a pallete entry
- *
- * @param number color the hex value of the color
- */
-SwatSimpleColorEntry.prototype.highlightPaletteEntry = function(color) {
-  if (this.none_option_title !== null) {
-    var null_entry = document.getElementById(this.id + '_palette_null');
-
-    if (color === null) {
-      null_entry.classList.add('swat-simple-color-entry-palette-selected');
-    } else {
-      null_entry.classList.remove('swat-simple-color-entry-palette-selected');
+      this.highlightPaletteEntry(color);
     }
   }
 
-  for (var i = 0; i < this.colors.length; i++) {
-    var palette_entry = document.getElementById(this.id + '_palette_' + i);
+  /**
+   * Event handler that sets the color to null
+   *
+   * @param {Event} the event that triggered this select.
+   */
+  selectNull(e) {
+    e.preventDefault();
+    this.setColor(null);
+  }
 
-    if (
-      this.current_color !== null &&
-      this.colors[i].toLowerCase() == this.current_color.toLowerCase()
-    ) {
-      palette_entry.classList.add('swat-simple-color-entry-palette-selected');
-    } else {
-      palette_entry.classList.remove(
-        'swat-simple-color-entry-palette-selected'
-      );
+  /**
+   * Event handler that sets the color to the selected color
+   *
+   * @param {Event} the event that triggered this select.
+   */
+  selectColor(event) {
+    event.preventDefault();
+    var color_index = event.target.parentNode.id.split('_palette_')[1];
+    this.setColor(this.colors[color_index]);
+  }
+
+  /**
+   * Highlights a palette entry
+   *
+   * @param {string} color the hex value of the color
+   */
+  highlightPaletteEntry(color) {
+    if (this.none_option_title !== null) {
+      var null_entry = document.getElementById(this.id + '_palette_null');
+
+      if (color === null) {
+        null_entry.classList.add('swat-simple-color-entry-palette-selected');
+      } else {
+        null_entry.classList.remove('swat-simple-color-entry-palette-selected');
+      }
+    }
+
+    for (var i = 0; i < this.colors.length; i++) {
+      var palette_entry = document.getElementById(this.id + '_palette_' + i);
+
+      if (
+        this.current_color !== null &&
+        this.colors[i].toLowerCase() == this.current_color.toLowerCase()
+      ) {
+        palette_entry.classList.add('swat-simple-color-entry-palette-selected');
+      } else {
+        palette_entry.classList.remove(
+          'swat-simple-color-entry-palette-selected'
+        );
+      }
     }
   }
-};
-
-// }}}
+}
