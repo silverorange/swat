@@ -385,12 +385,7 @@ class SwatChangeOrder {
    */
   static mouseupEventHandler(event) {
     // only allow left click to do things
-    var is_webkit = /AppleWebKit|Konqueror|KHTML/gi.test(navigator.userAgent);
-    var is_ie = navigator.userAgent.indexOf('MSIE') != -1;
-    if (
-      (is_ie && (event.button & 1) !== 1) ||
-      (!is_ie && !is_webkit && event.button !== 0)
-    ) {
+    if (event.button !== 0) {
       return false;
     }
     document.removeEventListener(
@@ -443,12 +438,7 @@ class SwatChangeOrder {
     event.preventDefault();
 
     // only allow left click to do things
-    var is_webkit = /AppleWebKit|Konqueror|KHTML/gi.test(navigator.userAgent);
-    var is_ie = navigator.userAgent.indexOf('MSIE') != -1;
-    if (
-      (is_ie && (event.button & 1) != 1) ||
-      (!is_ie && !is_webkit && event.button !== 0)
-    ) {
+    if (event.button !== 0) {
       return false;
     }
 

@@ -211,48 +211,14 @@ class SwatTableViewInputRow {
  * Gets an XML parser with a loadXML() method
  */
 function SwatTableViewInputRow_getXMLParser() {
-  var parser = null;
-  var is_ie = true;
+  var dom_parser = new DOMParser();
 
-  try {
-    var dom = new ActiveXObject('Msxml2.XMLDOM');
-  } catch (err1) {
-    try {
-      var dom = new ActiveXObject('Microsoft.XMLDOM');
-    } catch (err2) {
-      is_ie = false;
-    }
-  }
-
-  if (is_ie) {
-    /*
-     * Internet Explorer's XMLDOM object has a proprietary loadXML()
-     * method. Our method returns the document.
-     */
-    parser = function() {};
-    parser.loadXML = function(document_string) {
-      if (!dom.loadXML(document_string)) {
-        alert(dom.parseError.reason);
-      }
-
-      return dom;
-    };
-  }
-
-  if (parser === null && typeof DOMParser != 'undefined') {
-    /*
-     * Mozilla, Safari and Opera have a proprietary DOMParser()
-     * class.
-     */
-    dom_parser = new DOMParser();
-
-    // Cannot add loadXML method to a newly created DOMParser because it
-    // crashes Safari
-    parser = function() {};
-    parser.loadXML = function(document_string) {
-      return dom_parser.parseFromString(document_string, 'text/xml');
-    };
-  }
+  // Cannot add loadXML method to a newly created DOMParser because it
+  // crashes Safari
+  var parser = function() {};
+  parser.loadXML = function(document_string) {
+    return dom_parser.parseFromString(document_string, 'text/xml');
+  };
 
   return parser;
 }

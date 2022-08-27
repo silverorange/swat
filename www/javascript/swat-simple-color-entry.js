@@ -191,26 +191,17 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay {
     var changed = this.current_color != color;
 
     if (changed) {
-      if (color === null) {
-        // IE fix, it sets string 'null' otherwise
-        this.input_tag.value = '';
-      } else {
-        this.input_tag.value = color;
-      }
+      this.input_tag.value = color;
 
       if (color === null) {
-        if (this.hex_input_tag.value !== '') {
-          // IE fix, it sets string 'null' otherwise
-          this.hex_input_tag.value = '';
-        }
-
         this.toggle_button_content.style.background =
           'url(packages/swat/images/color-entry-null.png)';
       } else {
-        if (this.hex_input_tag.value !== color) {
-          this.hex_input_tag.value = color;
-        }
         this.toggle_button_content.style.background = '#' + color;
+      }
+
+      if (this.hex_input_tag.value !== color) {
+        this.hex_input_tag.value = color;
       }
 
       this.current_color = color;

@@ -32,7 +32,6 @@ class SwatCalendar {
     SwatCalendar.preloadImages();
 
     this.id = id;
-    this.is_webkit = /AppleWebKit|Konqueror|KHTML/gi.test(navigator.userAgent);
 
     var date = new Date();
     if (start_date.length == 10) {
@@ -269,14 +268,11 @@ class SwatCalendar {
       this.toggle();
     });
 
-    if (this.is_webkit) {
-      // Zero-width-space holds the link open in WebKit browsers. Only apply
-      // to WebKit because IE can't display the character correctly.
-      this.toggle_button.appendChild(document.createTextNode('\u200b'));
-      this.toggle_button_insensitive.appendChild(
-        document.createTextNode('\u200b')
-      );
-    }
+    // Zero-width-space holds the link open.
+    this.toggle_button.appendChild(document.createTextNode('\u200b'));
+    this.toggle_button_insensitive.appendChild(
+      document.createTextNode('\u200b')
+    );
 
     var calendar_div = document.createElement('div');
     calendar_div.id = this.id + '_div';

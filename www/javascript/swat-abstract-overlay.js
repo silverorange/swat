@@ -17,9 +17,6 @@ class SwatAbstractOverlay {
     this.is_open = false;
     this.is_drawn = false;
 
-    // list of select elements to hide for IE6
-    this.select_elements = [];
-
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleCloseLink = this.handleCloseLink.bind(this);
 
@@ -55,9 +52,7 @@ class SwatAbstractOverlay {
   getToggleButton() {
     var toggle_button = document.createElement('button');
     toggle_button.classList.add('swat-overlay-toggle-button');
-
-    // the type property is readonly in IE so use setAttribute() here
-    toggle_button.setAttribute('type', 'button');
+    toggle_button.type = 'button';
     toggle_button.addEventListener('click', () => {
       this.toggle();
     });
@@ -177,17 +172,6 @@ class SwatAbstractOverlay {
   }
 
   showCloseDiv() {
-    if (YAHOO.env.ua.ie == 6) {
-      this.select_elements = document.getElementsByTagName('select');
-      for (var i = 0; i < this.select_elements.length; i++) {
-        this.select_elements[i].style._visibility = this.select_elements[
-          i
-        ].style.visibility;
-
-        this.select_elements[i].style.visibility = 'hidden';
-      }
-    }
-
     this.close_div.style.height = YAHOO.util.Dom.getDocumentHeight() + 'px';
     this.close_div.style.display = 'block';
     SwatZIndexManager.raiseElement(this.close_div);
@@ -196,13 +180,6 @@ class SwatAbstractOverlay {
   hideCloseDiv() {
     SwatZIndexManager.lowerElement(this.close_div);
     this.close_div.style.display = 'none';
-    if (YAHOO.env.ua.ie == 6) {
-      for (var i = 0; i < this.select_elements.length; i++) {
-        this.select_elements[i].style.visibility = this.select_elements[
-          i
-        ].style._visibility;
-      }
-    }
   }
 
   addKeyPressHandler() {
