@@ -74,7 +74,6 @@ class SwatImagePreviewDisplay {
   open() {
     document.addEventListener('keydown', this.handleKeyDown);
     this.showOverlay();
-    this.preview_container.style.display = 'flex';
     this.opened = true;
   }
 
