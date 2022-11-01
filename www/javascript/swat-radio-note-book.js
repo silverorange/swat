@@ -76,7 +76,7 @@ class SwatRadioNoteBook {
     page.firstChild.style.visibility = 'visible';
     page.firstChild.style.height = 'auto';
 
-    var region = YAHOO.util.Dom.getRegion(page.firstChild);
+    var region = page.firstChild.getBoundingClientRect();
     var height = region.height;
 
     var anim = new YAHOO.util.Anim(

@@ -99,7 +99,7 @@ class SwatChangeOrder {
 
         grippy = document.createElement('span');
         grippy.className = 'swat-change-order-item-grippy';
-        height = YAHOO.util.Dom.getRegion(node).height - 4;
+        height = node.getBoundingClientRect().height - 4;
         grippy.style.height = height + 'px';
         node.insertBefore(grippy, node.firstChild);
       }

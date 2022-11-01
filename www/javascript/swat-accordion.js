@@ -120,7 +120,7 @@ class SwatAccordion {
 
     // old_page === null means we're opening from a completely closed state
     if (old_page !== null) {
-      var old_region = YAHOO.util.Dom.getRegion(old_page.animation);
+      var old_region = old_page.animation.getBoundingClientRect();
       var old_from_height = old_region.height;
       var old_to_height = 0;
       old_page.animation.style.overflow = 'hidden';
@@ -151,7 +151,7 @@ class SwatAccordion {
 
       new_page.animation.style.display = 'block';
 
-      var new_region = YAHOO.util.Dom.getRegion(new_page.content);
+      var new_region = new_page.content.getBoundingClientRect();
       var new_to_height = new_region.height;
 
       var anim = new YAHOO.util.Anim(
