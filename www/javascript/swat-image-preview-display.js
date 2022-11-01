@@ -27,13 +27,6 @@ class SwatImagePreviewDisplay {
 
   static close_text = 'Close';
 
-  /**
-   * Padding of preview image
-   *
-   * @var {number}
-   */
-  static padding = 16;
-
   init() {
     this.drawOverlay();
 
@@ -80,61 +73,9 @@ class SwatImagePreviewDisplay {
 
   open() {
     document.addEventListener('keydown', this.handleKeyDown);
-
-    // get approximate max height and width excluding close text
-    var padding = SwatImagePreviewDisplay.padding;
-    var max_width = YAHOO.util.Dom.getViewportWidth() - padding * 2;
-    var max_height = YAHOO.util.Dom.getViewportHeight() - padding * 2;
-
     this.showOverlay();
-
-    this.scaleImage(max_width, max_height);
-
-    this.preview_container.style.visibility = 'hidden';
-    this.preview_container.style.display = 'block';
-
-    // now that is it displayed, adjust height for the close text
-    var region = YAHOO.util.Dom.getRegion(this.preview_header);
-    max_height -= region.bottom - region.top;
-    this.scaleImage(max_width, max_height);
-
-    this.preview_container.style.visibility = 'visible';
-
-    // x is relative to center of page
-    var scroll_top = YAHOO.util.Dom.getDocumentScrollTop();
-    var x = -Math.round((this.preview_image.width + padding) / 2);
-    var y =
-      Math.round((max_height - this.preview_image.height + padding) / 2) +
-      scroll_top;
-
-    this.preview_container.style.top = y + 'px';
-
-    // set x
-    this.preview_container.style.left = '50%';
-    this.preview_container.style.marginLeft = x + 'px';
-
+    this.preview_container.style.display = 'flex';
     this.opened = true;
-  }
-
-  scaleImage(max_width, max_height) {
-    // if preview image is larger than viewport width, scale down
-    if (this.preview_image.width > max_width) {
-      this.preview_image.height =
-        this.preview_image.height * (max_width / this.preview_image.width);
-
-      this.preview_image.width = max_width;
-    }
-
-    // if preview image is larger than viewport height, scale down
-    if (this.preview_image.height > max_height) {
-      this.preview_image.width =
-        this.preview_image.width * (max_height / this.preview_image.height);
-
-      this.preview_image.height = max_height;
-    }
-
-    // For IE 6 & 7
-    this.preview_container.style.width = this.preview_image.width + 'px';
   }
 
   drawOverlay() {
@@ -213,12 +154,8 @@ class SwatImagePreviewDisplay {
     this.preview_container = document.createElement('a');
     this.preview_container.href = '#close';
     this.preview_container.className = 'swat-image-preview-container';
-    this.preview_container.style.display = 'none';
     this.preview_container.appendChild(this.preview_header);
     this.preview_container.appendChild(this.preview_image);
-
-    // For IE6 & 7
-    this.preview_container.style.width = this.preview_width + 'px';
 
     SwatZIndexManager.raiseElement(this.preview_container);
 
@@ -253,8 +190,7 @@ class SwatImagePreviewDisplay {
   }
 
   showOverlay() {
-    this.overlay.style.height = YAHOO.util.Dom.getDocumentHeight() + 'px';
-    this.overlay.style.display = 'block';
+    this.overlay.style.display = 'flex';
   }
 
   hideOverlay() {
@@ -264,7 +200,6 @@ class SwatImagePreviewDisplay {
   close() {
     document.removeEventListener('keydown', this.handleKeyDown);
     this.hideOverlay();
-    this.preview_container.style.display = 'none';
     this.opened = false;
   }
 

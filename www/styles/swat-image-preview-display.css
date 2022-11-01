@@ -21,21 +21,25 @@ a.swat-image-preview-display-link-plain:hover img {
 }
 
 .swat-image-preview-overlay {
-	position: absolute;
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	top: 0;
 	left: 0;
 	width: 100%;
+	height: 100vh;
 }
 
 .swat-image-preview-mask {
-	position: relative;
+	position: fixed;
 	cursor: default;
 	display: block;
 	background: #000;
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: 100%;
-	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
-	filter:alpha(opacity = 75);
 	opacity: 0.75;
 }
 .swat-image-preview-mask:focus,
@@ -57,18 +61,17 @@ a.swat-image-preview-display-link-plain:hover img {
 	float: right;
 	display: block;
 	outline: none;
-	cursor: pointer; /* For IE6 & 7 */
 }
 
 .swat-image-preview-container {
+	flex: 0 1 auto;
 	text-decoration: none;
-	position: absolute;
 	text-align: left;
 	border: 1px solid #dcceb2;
 	background: #fff;
 	padding: 8px;
-
 	border-radius: 8px;
+	max-width: calc(100% - 32px);
 }
 
 .swat-image-preview-container:focus,
@@ -78,4 +81,6 @@ a.swat-image-preview-display-link-plain:hover img {
 
 .swat-image-preview-container img {
 	display: block;
+	width: 100%;
+	height: 100%;
 }
