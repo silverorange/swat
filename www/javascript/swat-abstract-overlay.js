@@ -172,7 +172,6 @@ class SwatAbstractOverlay {
   }
 
   showCloseDiv() {
-    this.close_div.style.height = YAHOO.util.Dom.getDocumentHeight() + 'px';
     this.close_div.style.display = 'block';
     SwatZIndexManager.raiseElement(this.close_div);
   }
