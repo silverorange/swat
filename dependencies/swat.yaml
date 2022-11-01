@@ -67,7 +67,6 @@ Swat:
     packages/swat/javascript/swat-table-view.js:
       Depends:
         - packages/swat/javascript/swat-view.js
-    packages/swat/javascript/swat-textarea.js:
     packages/swat/javascript/swat-tile-view.js:
       Depends:
         - packages/swat/javascript/swat-view.js
