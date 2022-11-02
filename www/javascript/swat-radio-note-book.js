@@ -76,35 +76,26 @@ class SwatRadioNoteBook {
     page.firstChild.style.visibility = 'visible';
     page.firstChild.style.height = 'auto';
 
-    var region = YAHOO.util.Dom.getRegion(page.firstChild);
+    var region = page.firstChild.getBoundingClientRect();
     var height = region.height;
 
-    var anim = new YAHOO.util.Anim(
-      page,
-      { height: { to: height } },
-      SwatRadioNoteBook.SLIDE_DURATION,
-      YAHOO.util.Easing.easeIn
-    );
-
-    anim.onComplete.subscribe(
-      function() {
+    page
+      .animate([{ height: 0 }, { height: height + 'px' }], {
+        duration: SwatRadioNoteBook.SLIDE_DURATION * 1000,
+        easing: 'ease-in'
+      })
+      .finished.then(() => {
         page.style.height = 'auto';
         this.restorePageFocusability(page);
-
-        var anim = new YAHOO.util.Anim(
-          page,
-          { opacity: { to: 1 } },
-          SwatRadioNoteBook.FADE_DURATION,
-          YAHOO.util.Easing.easeIn
-        );
-
-        anim.animate();
-      },
-      this,
-      true
-    );
-
-    anim.animate();
+        page
+          .animate([{ opacity: 0 }, { opacity: 1 }], {
+            duration: SwatRadioNoteBook.FADE_DURATION * 1000,
+            easing: 'ease-in'
+          })
+          .finished.then(() => {
+            page.style.opacity = 1;
+          });
+      });
   }
 
   closePage(page) {
@@ -115,32 +106,31 @@ class SwatRadioNoteBook {
   }
 
   closePageWithAnimation(page) {
-    var anim = new YAHOO.util.Anim(
-      page,
-      { opacity: { to: 0 } },
-      SwatRadioNoteBook.FADE_DURATION,
-      YAHOO.util.Easing.easeOut
-    );
+    if (page === null) {
+      return;
+    }
 
-    anim.onComplete.subscribe(
-      function() {
+    var region = page.firstChild.getBoundingClientRect();
+    var height = region.height;
+
+    page
+      .animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: SwatRadioNoteBook.FADE_DURATION * 1000,
+        easing: 'ease-out'
+      })
+      .finished.then(() => {
+        page.style.opacity = 0;
         page.style.overflow = 'hidden';
         this.removePageFocusability(page);
-
-        var anim = new YAHOO.util.Anim(
-          page,
-          { height: { to: 0 } },
-          SwatRadioNoteBook.SLIDE_DURATION,
-          YAHOO.util.Easing.easeOut
-        );
-
-        anim.animate();
-      },
-      this,
-      true
-    );
-
-    anim.animate();
+        page
+          .animate([{ height: height + 'px' }, { height: 0 }], {
+            duration: SwatRadioNoteBook.SLIDE_DURATION * 1000,
+            easing: 'ease-out'
+          })
+          .finished.then(() => {
+            page.style.height = 0;
+          });
+      });
   }
 
   removePageFocusability(page) {

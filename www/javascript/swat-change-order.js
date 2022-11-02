@@ -99,7 +99,7 @@ class SwatChangeOrder {
 
         grippy = document.createElement('span');
         grippy.className = 'swat-change-order-item-grippy';
-        height = YAHOO.util.Dom.getRegion(node).height - 4;
+        height = node.getBoundingClientRect().height - 4;
         grippy.style.height = height + 'px';
         node.insertBefore(grippy, node.firstChild);
       }
@@ -137,6 +137,14 @@ class SwatChangeOrder {
   static shadow_item_padding = 0;
   static dragging_item = null;
   static is_dragging = false;
+
+  static getPageX(rect) {
+    return Math.floor(rect.left + window.scrollX);
+  }
+
+  static getPageY(rect) {
+    return Math.floor(rect.top + window.scrollY);
+  }
 
   /**
    * Handles moving a dragged item
@@ -231,10 +239,12 @@ class SwatChangeOrder {
     var shadow_item = SwatChangeOrder.dragging_item;
     var list_div = shadow_item.original_item.parentNode;
 
-    var list_div_top = YAHOO.util.Dom.getY(list_div);
-    var middle =
-      YAHOO.util.Dom.getY(shadow_item) +
-      Math.floor(shadow_item.offsetHeight / 2);
+    var list_rect = list_div.getBoundingClientRect();
+    var shadow_rect = shadow_item.getBoundingClientRect();
+
+    var list_div_top = SwatChangeOrder.getPageY(list_rect);
+    var shadow_div_top = SwatChangeOrder.getPageY(shadow_rect);
+    var middle = shadow_div_top + Math.floor(shadow_rect.height / 2);
 
     // top hot spot scrolls list up
     if (
@@ -288,16 +298,19 @@ class SwatChangeOrder {
     var drop_marker = SwatChangeOrder.dragging_drop_marker;
     var list_div = shadow_item.original_item.parentNode;
 
+    var list_rect = list_div.getBoundingClientRect();
+    var shadow_rect = shadow_item.getBoundingClientRect();
+
     var y_middle =
-      YAHOO.util.Dom.getY(shadow_item) +
-      Math.floor(shadow_item.offsetHeight / 2) -
-      YAHOO.util.Dom.getY(list_div) +
+      SwatChangeOrder.getPageY(shadow_rect) +
+      Math.floor(shadow_rect.height / 2) -
+      SwatChangeOrder.getPageY(list_rect) +
       list_div.scrollTop;
 
     var x_middle =
-      YAHOO.util.Dom.getX(shadow_item) +
-      Math.floor(shadow_item.offsetWidth / 2) -
-      YAHOO.util.Dom.getX(list_div) +
+      SwatChangeOrder.getPageX(shadow_rect) +
+      Math.floor(shadow_rect.width / 2) -
+      SwatChangeOrder.getPageX(list_rect) +
       list_div.scrollLeft;
 
     var is_grid = shadow_item.original_item.controller.isGrid();
@@ -460,11 +473,13 @@ class SwatChangeOrder {
     shadow_item.className += ' swat-change-order-item-shadow';
     shadow_item.style.width = this.offsetWidth - 4 + 'px';
 
+    var item_rect = this.getBoundingClientRect();
+
     shadow_item.mouse_offset_x =
-      YAHOO.util.Event.getPageX(event) - YAHOO.util.Dom.getX(this);
+      YAHOO.util.Event.getPageX(event) - SwatChangeOrder.getPageX(item_rect);
 
     shadow_item.mouse_offset_y =
-      YAHOO.util.Event.getPageY(event) - YAHOO.util.Dom.getY(this);
+      YAHOO.util.Event.getPageY(event) - SwatChangeOrder.getPageY(item_rect);
 
     var drop_marker = document.createElement('div');
 

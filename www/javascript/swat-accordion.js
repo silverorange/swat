@@ -120,23 +120,33 @@ class SwatAccordion {
 
     // old_page === null means we're opening from a completely closed state
     if (old_page !== null) {
-      var old_region = YAHOO.util.Dom.getRegion(old_page.animation);
+      var old_region = old_page.animation.getBoundingClientRect();
       var old_from_height = old_region.height;
       var old_to_height = 0;
       old_page.animation.style.overflow = 'hidden';
+
+      old_page.animation
+        .animate(
+          [
+            { height: old_from_height + 'px' },
+            { height: old_to_height + 'px' }
+          ],
+          {
+            duration: SwatAccordion.resize_period * 1000,
+            easing: 'ease-in-out'
+          }
+        )
+        .finished.then(() => {
+          this.semaphore = false;
+          old_page.animation.style.height = old_to_height;
+        });
+
+      old_page.setStatus('closed');
     }
 
     // new_page === null means we're closing to a completely closed state
-    if (new_page === null) {
-      var new_to_height = 0;
-
-      var anim = new YAHOO.util.Anim(
-        old_page.animation,
-        {},
-        SwatAccordion.resize_period,
-        YAHOO.util.Easing.easeBoth
-      );
-    } else {
+    if (new_page !== null) {
+      var new_from_height;
       new_page.animation.style.overflow = 'hidden';
 
       if (
@@ -144,65 +154,32 @@ class SwatAccordion {
         new_page.animation.style.height == 'auto'
       ) {
         new_page.animation.style.height = '0';
-        var new_from_height = 0;
+        new_from_height = 0;
       } else {
-        var new_from_height = parseInt(new_page.animation.style.height);
+        new_from_height = parseInt(new_page.animation.style.height);
       }
 
       new_page.animation.style.display = 'block';
 
-      var new_region = YAHOO.util.Dom.getRegion(new_page.content);
+      var new_region = new_page.content.getBoundingClientRect();
       var new_to_height = new_region.height;
 
-      var anim = new YAHOO.util.Anim(
-        new_page.animation,
-        {},
-        SwatAccordion.resize_period,
-        YAHOO.util.Easing.easeBoth
-      );
-    }
-
-    anim.onTween.subscribe(
-      function(name, data) {
-        if (old_page !== null) {
-          var old_height = Math.ceil(
-            anim.doMethod('height', old_from_height, old_to_height)
-          );
-
-          old_page.animation.style.height = old_height + 'px';
-        }
-
-        if (new_page !== null) {
-          var new_height = Math.floor(
-            anim.doMethod('height', new_from_height, new_to_height)
-          );
-
-          new_page.animation.style.height = new_height + 'px';
-        }
-      },
-      this,
-      true
-    );
-
-    anim.onComplete.subscribe(
-      function() {
-        if (new_page !== null) {
+      new_page.animation
+        .animate(
+          [
+            { height: new_from_height + 'px' },
+            { height: new_to_height + 'px' }
+          ],
+          {
+            duration: SwatAccordion.resize_period * 1000,
+            easing: 'ease-in-out'
+          }
+        )
+        .finished.then(() => {
+          this.semaphore = false;
           new_page.animation.style.height = 'auto';
-        }
+        });
 
-        this.semaphore = false;
-      },
-      this,
-      true
-    );
-
-    anim.animate();
-
-    if (old_page !== null) {
-      old_page.setStatus('closed');
-    }
-
-    if (new_page !== null) {
       new_page.setStatus('opened');
     }
 

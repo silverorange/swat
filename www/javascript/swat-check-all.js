@@ -40,17 +40,15 @@ class SwatCheckAll {
     }
 
     if (this.check_all.checked) {
-      var in_attributes = { opacity: { from: 0, to: 1 } };
-      var in_animation = new YAHOO.util.Anim(
-        container,
-        in_attributes,
-        0.5,
-        YAHOO.util.Easing.easeIn
-      );
-
-      container.style.opacity = 0;
+      container
+        .animate([{ opacity: 0 }, { opacity: 1 }], {
+          duration: 500,
+          easing: 'ease-in'
+        })
+        .finished.then(() => {
+          container.style.opacity = 1;
+        });
       container.style.display = 'block';
-      in_animation.animate();
     } else {
       container.style.display = 'none';
       container.getElementsByTagName('input')[0].checked = false;

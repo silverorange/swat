@@ -25,7 +25,8 @@ class SwatProgressBar {
     this.changeValueEvent = new YAHOO.util.CustomEvent('changeValue');
     this.pulseEvent = new YAHOO.util.CustomEvent('pulse');
 
-    this.animation = null;
+    this.full_animation = null;
+    this.empty_animation = null;
 
     window.addEventListener('DOMContentLoaded', () => {
       // Hack for Gecko and WebKit to load background images for full part of
@@ -126,77 +127,79 @@ class SwatProgressBar {
     // reset empty div if bar was set to pulse mode
     this.empty.style.display = 'block';
 
-    var full_attributes = {};
+    var full_keyframes = [];
+    var empty_keyframes = [];
 
     switch (this.orientation) {
       case SwatProgressBar.ORIENTATION_LEFT_TO_RIGHT:
       case SwatProgressBar.ORIENTATION_RIGHT_TO_LEFT:
       default:
-        full_attributes['width'] = {
-          from: old_full_width,
-          to: new_full_width,
-          unit: '%'
-        };
+        full_keyframes = [
+          { width: old_full_width + '%' },
+          { width: new_full_width + '%' }
+        ];
+        empty_keyframes = [
+          { width: old_empty_width + '%' },
+          { width: new_empty_width + '%' }
+        ];
         break;
 
       case SwatProgressBar.ORIENTATION_BOTTOM_TO_TOP:
-        full_attributes['top'] = {
-          from: old_empty_width,
-          to: new_empty_width,
-          unit: '%'
-        };
-      // fall through
+        full_keyframes = [
+          { top: old_empty_width + '%', height: old_full_width + '%' },
+          { top: new_empty_width + '%', height: new_full_width + '%' }
+        ];
+        empty_keyframes = [
+          { top: -old_full_width + '%', height: old_empty_width + '%' },
+          { top: -new_full_width + '%', height: new_empty_width + '%' }
+        ];
+        break;
+
       case SwatProgressBar.ORIENTATION_TOP_TO_BOTTOM:
-        full_attributes['height'] = {
-          from: old_full_width,
-          to: new_full_width,
-          unit: '%'
-        };
+        full_keyframes = [
+          { height: old_full_width + '%' },
+          { height: new_full_width + '%' }
+        ];
+        empty_keyframes = [
+          { height: old_empty_width + '%' },
+          { height: new_empty_width + '%' }
+        ];
         break;
     }
 
-    // stop existing animation
-    if (this.animation !== null && this.animation.isAnimated()) {
-      this.animation.stop();
+    if (
+      this.full_animation !== null &&
+      this.full_animation.playState === 'running'
+    ) {
+      this.full_animation.cancel();
     }
 
-    this.animation = new YAHOO.util.Anim(
-      this.full,
-      full_attributes,
-      SwatProgressBar.ANIMATION_DURATION
-    );
+    if (
+      this.empty_animation !== null &&
+      this.empty_animation.playState === 'running'
+    ) {
+      this.empty_animation.cancel();
+    }
 
-    // Synchronize empty div resizing with full div animation. Don't do
-    // this with a separate animation.
-    this.animation.onTween.subscribe(
-      function() {
-        var percent = this.animation.currentFrame / this.animation.totalFrames;
+    this.full_animation = this.full
+      .animate(full_keyframes, {
+        duration: SwatProgressBar.ANIMATION_DURATION * 1000
+      })
+      .finished.then(() => {
+        Object.entries(full_keyframes[1]).forEach(([key, value]) => {
+          this.full.style[key] = value;
+        });
+      });
 
-        var full_percent =
-          old_full_width + (new_full_width - old_full_width) * percent;
-
-        var empty_percent = 100.0 - full_percent;
-
-        switch (this.orientation) {
-          case SwatProgressBar.ORIENTATION_LEFT_TO_RIGHT:
-          case SwatProgressBar.ORIENTATION_RIGHT_TO_LEFT:
-          default:
-            this.empty.style.width = empty_percent + '%';
-            break;
-
-          case SwatProgressBar.ORIENTATION_BOTTOM_TO_TOP:
-            this.empty.style.top = -full_percent + '%';
-          // fall through
-          case SwatProgressBar.ORIENTATION_TOP_TO_BOTTOM:
-            this.empty.style.height = empty_percent + '%';
-            break;
-        }
-      },
-      this,
-      true
-    );
-
-    this.animation.animate();
+    this.empty_animation = this.empty
+      .animate(empty_keyframes, {
+        duration: SwatProgressBar.ANIMATION_DURATION * 1000
+      })
+      .finished.then(() => {
+        Object.entries(empty_keyframes[1]).forEach(([key, value]) => {
+          this.empty.style[key] = value;
+        });
+      });
 
     this.changeValueEvent.fire(this.value);
   }

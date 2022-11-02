@@ -59,14 +59,13 @@ class SwatButton {
   }
 
   showThrobber() {
-    var animation = new YAHOO.util.Anim(
-      this.throbber_container,
-      { opacity: { to: 0.5 } },
-      1,
-      YAHOO.util.Easing.easingNone
-    );
-
-    animation.animate();
+    this.throbber_container
+      .animate([{ opacity: 0.5 }], {
+        duration: 1000
+      })
+      .finished.then(() => {
+        this.throbber_container.style.opacity = 0.5;
+      });
   }
 
   setProcessingMessage(message) {

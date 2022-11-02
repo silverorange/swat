@@ -63,40 +63,41 @@ class SwatMessageDisplayMessage {
    */
   hide() {
     if (this.message_div !== null) {
-      // fade out message
-      var fade_animation = new YAHOO.util.Anim(
-        this.message_div,
-        { opacity: { to: 0 } },
-        SwatMessageDisplayMessage.fade_duration,
-        YAHOO.util.Easing.easingOut
-      );
-
-      // after fading out, shrink the empty space away
-      fade_animation.onComplete.subscribe(this.shrink, this, true);
-      fade_animation.animate();
+      this.message_div
+        .animate([{ opacity: 1 }, { opacity: 0 }], {
+          duration: SwatMessageDisplayMessage.fade_duration * 1000,
+          easing: 'ease-out'
+        })
+        .finished.then(() => {
+          this.message_div.style.opacity = 0;
+          this.shrink();
+        });
     }
   }
 
   shrink() {
-    var duration = SwatMessageDisplayMessage.shrink_duration;
-    var easing = YAHOO.util.Easing.easeInStrong;
+    var duration = SwatMessageDisplayMessage.shrink_duration * 1000;
+    var easing = 'ease-in';
 
-    var attributes = {
-      height: { to: 0 },
-      marginBottom: { to: 0 }
+    var endKeyframeAttributes = {
+      height: 0,
+      marginBottom: 0
     };
+
+    var height = this.message_div.firstElementChild.getBoundingClientRect()
+      .height;
 
     // collapse margins
     if (this.message_div.nextSibling) {
       // shrink top margin of next message in message display
-      var next_message_animation = new YAHOO.util.Anim(
-        this.message_div.nextSibling,
-        { marginTop: { to: 0 } },
-        duration,
-        easing
-      );
-
-      next_message_animation.animate();
+      this.message_div.nextSibling
+        .animate([{ marginTop: 0 }], {
+          duration,
+          easing
+        })
+        .finished.then(() => {
+          this.message_div.nextSibling.style.marginTop = 0;
+        });
     } else {
       // shrink top margin of element directly below message display
       // find first element node
@@ -107,43 +108,45 @@ class SwatMessageDisplayMessage {
       }
 
       if (node) {
-        var previous_message_animation = new YAHOO.util.Anim(
-          node,
-          { marginTop: { to: 0 } },
-          duration,
-          easing
-        );
-
-        previous_message_animation.animate();
+        node
+          .animate([{ marginTop: 0 }], {
+            duration,
+            easing
+          })
+          .finished.then(() => {
+            node.style.marginTop = 0;
+          });
       }
     }
 
     // if this is the last message in the display, shrink the message display
     // top margin to zero.
-    if (this.message_div.parentNode.childNodes.length == 1) {
+    if (this.message_div.parentNode.childNodes.length === 1) {
       // collapse top margin of last message
-      attributes.marginTop = { to: 0 };
+      endKeyframeAttributes.marginTop = 0;
 
-      var message_display_animation = new YAHOO.util.Anim(
-        this.message_div.parentNode,
-        { marginTop: { to: 0 } },
-        duration,
-        easing
-      );
-
-      message_display_animation.animate();
+      this.message_div.parentNode
+        .animate([{ marginTop: 0 }], {
+          duration,
+          easing
+        })
+        .finished.then(() => {
+          this.message_div.parentNode.style.marginTop = 0;
+        });
     }
 
     // disappear this message
-    var shrink_animation = new YAHOO.util.Anim(
-      this.message_div,
-      attributes,
-      duration,
-      easing
-    );
-
-    shrink_animation.onComplete.subscribe(this.remove, this, true);
-    shrink_animation.animate();
+    this.message_div
+      .animate([{ height: height + 'px' }, endKeyframeAttributes], {
+        duration,
+        easing
+      })
+      .finished.then(() => {
+        Object.entries(endKeyframeAttributes).forEach(([key, value]) => {
+          this.message_div.style[key] = value;
+        });
+        this.remove();
+      });
   }
 
   remove() {
