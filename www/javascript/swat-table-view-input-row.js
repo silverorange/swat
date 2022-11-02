@@ -140,24 +140,13 @@ class SwatTableViewInputRow {
     dest_tr.className = 'swat-table-view-input-row';
     dest_tr.id = this.id + '_row_' + replicator_id;
 
-    var node = dest_tr;
-    var dest_color = 'transparent';
-    while (dest_color == 'transparent' && node) {
-      dest_color = getComputedStyle(node).backgroundColor;
-      node = node.parentNode;
-    }
-    if (dest_color == 'transparent') {
-      dest_color = '#ffffff';
-    }
-
-    var animation = new YAHOO.util.ColorAnim(
-      dest_tr,
-      { backgroundColor: { from: '#fffbc9', to: dest_color } },
-      1,
-      YAHOO.util.Easing.easeOut
+    dest_tr.animate(
+      [
+        { backgroundColor: 'rgba(255,251,201,1)' },
+        { backgroundColor: 'rgba(255,251,201,0)' }
+      ],
+      { duration: 1000, easing: 'ease-out' }
     );
-
-    animation.animate();
 
     /*
      * Run scripts
