@@ -128,18 +128,19 @@ class SwatDisclosure {
 
     this.animate_div.style.overflow = 'hidden';
     this.animate_div.style.height = 'auto';
-    var attributes = { height: { to: 0 } };
-    var animation = new YAHOO.util.Anim(
-      this.animate_div,
-      attributes,
-      0.25,
-      YAHOO.util.Easing.easeOut
-    );
+    this.animate_div
+      .animate(
+        [{ height: this.animate_div.offsetHeight + 'px' }, { height: 0 }],
+        {
+          duration: 250,
+          easing: 'ease-out'
+        }
+      )
+      .finished.then(() => {
+        this.handleClose();
+      });
 
     this.semaphore = true;
-    animation.onComplete.subscribe(this.handleClose, this, true);
-    animation.animate();
-
     this.input.value = 'closed';
     this.opened = false;
   }
@@ -180,24 +181,23 @@ class SwatDisclosure {
     this.animate_div.style.visibility = 'visible';
     this.animate_div.parentNode.style.height = '';
     this.animate_div.parentNode.style.overflow = 'visible';
-
-    var attributes = { height: { to: height, from: 0 } };
-    var animation = new YAHOO.util.Anim(
-      this.animate_div,
-      attributes,
-      0.5,
-      YAHOO.util.Easing.easeOut
-    );
+    this.animate_div
+      .animate([{ height: 0 }, { height: height + 'px' }], {
+        duration: 500,
+        easing: 'ease-out'
+      })
+      .finished.then(() => {
+        this.handleOpen();
+      });
 
     this.semaphore = true;
-    animation.onComplete.subscribe(this.handleOpen, this, true);
-    animation.animate();
-
     this.input.value = 'opened';
     this.opened = true;
   }
 
   handleClose() {
+    this.animate_div.style.height = 0;
+
     this.div.classList.remove('swat-disclosure-control-opened');
     this.div.classList.add('swat-disclosure-control-closed');
 

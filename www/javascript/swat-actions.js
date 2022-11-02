@@ -128,14 +128,14 @@ class SwatActions {
       this.message_span.style.opacity = 0;
       this.message_span.style.visibility = 'visible';
 
-      var animation = new YAHOO.util.Anim(
-        this.message_span,
-        { opacity: { from: 0, to: 1 } },
-        0.3,
-        YAHOO.util.Easing.easeInStrong
-      );
-
-      animation.animate();
+      this.message_span
+        .animate([{ opacity: 0 }, { opacity: 1 }], {
+          duration: 300,
+          easing: 'ease-in'
+        })
+        .finished.then(() => {
+          this.message_span.style.opacity = 1;
+        });
 
       this.message_shown = true;
     }
@@ -143,23 +143,16 @@ class SwatActions {
 
   hideMessage() {
     if (this.message_shown) {
-      var animation = new YAHOO.util.Anim(
-        this.message_span,
-        { opacity: { from: 1, to: 0 } },
-        0.3,
-        YAHOO.util.Easing.easeOutStrong
-      );
-
-      animation.onComplete.subscribe(
-        function() {
+      this.message_span
+        .animate([{ opacity: 1 }, { opacity: 0 }], {
+          duration: 300,
+          easing: 'ease-out'
+        })
+        .finished.then(() => {
+          this.message_span.style.opacity = 0;
           this.message_span.style.visibility = 'hidden';
           this.message_shown = false;
-        },
-        this,
-        true
-      );
-
-      animation.animate();
+        });
     }
   }
 }
