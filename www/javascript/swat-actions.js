@@ -26,7 +26,8 @@ class SwatActions {
       document.createTextNode(SwatActions.dismiss_text)
     );
 
-    message_dismiss.addEventListener('click', () => {
+    message_dismiss.addEventListener('click', e => {
+      e.preventDefault();
       this.handleMessageClose();
     });
 
@@ -110,8 +111,7 @@ class SwatActions {
     }
   }
 
-  handleMessageClose(e) {
-    e.preventDefault();
+  handleMessageClose() {
     this.hideMessage();
   }
 
