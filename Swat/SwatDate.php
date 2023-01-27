@@ -340,8 +340,7 @@ class SwatDate extends DateTime implements Serializable
      * Formats this date given either a format string or a format id
      *
      * Note: The results of this method are not localized. For a localized
-     * formatted date, use {@link SwatDate::formatLikeIntl()} or
-     * {@link SwatDate::formatLikeStrftime()}.
+     * formatted date, use {@link SwatDate::formatLikeIntl()}.
      *
      * @param mixed $format either a format string or an integer format id.
      * @param integer $tz_format optional time zone format id.
@@ -358,50 +357,6 @@ class SwatDate extends DateTime implements Serializable
 
         if ($tz_format !== null) {
             $out .= ' ' . $this->formatTZ($tz_format);
-        }
-
-        return $out;
-    }
-
-    // }}}
-    // {{{ public function formatLikeStrftime()
-
-    /**
-     * Formats this date like strftime() given either a format string or a
-     * format id
-     *
-     * This method returns localized results.
-     *
-     * @param mixed $format either a format string or an integer format id.
-     * @param integer $tz_format optional. A time zone format id.
-     * @param string $locale optional. The locale to use to format the date.
-     *                        If not specified, the current locale is used.
-     *
-     * @return string the formatted date according to the current locale.
-     */
-    public function formatLikeStrftime(
-        $format,
-        $tz_format = null,
-        $locale = null,
-    ): string {
-        if (is_int($format)) {
-            $format = self::getFormatLikeStrftimeById($format);
-        }
-
-        if ($locale != '') {
-            $old_locale = setlocale(LC_ALL, 0);
-            setlocale(LC_ALL, $locale);
-        }
-
-        $timestamp = $this->getTimestamp();
-        $out = strftime($format, $timestamp);
-
-        if ($tz_format !== null) {
-            $out .= ' ' . $this->formatTZ($tz_format);
-        }
-
-        if ($locale != '') {
-            setlocale(LC_ALL, $old_locale);
         }
 
         return $out;
@@ -694,64 +649,10 @@ class SwatDate extends DateTime implements Serializable
     }
 
     // }}}
-    // {{{ public static function getFormatLikeStrftimeById()
-
-    /**
-     * Gets a strftime() date format string by id
-     *
-     * @param integer $id the id of the format string to retrieve.
-     *
-     * @return string the formatting string that was requested.
-     *
-     * @throws SwatException
-     */
-    public static function getFormatLikeStrftimeById($id): string
-    {
-        switch ($id) {
-            case self::DF_MDY:
-                return Swat::_('%m/%d/%y');
-            case self::DF_MDY_SHORT:
-                return Swat::_('%m%d%y');
-            case self::DF_DATE:
-                return Swat::_('%B %e, %Y');
-            case self::DF_DATE_LONG:
-                return Swat::_('%A, %B %e, %Y');
-            case self::DF_DATE_TIME:
-                return Swat::_('%B %e, %Y %i:%M %p');
-            case self::DF_DATE_TIME_LONG:
-                return Swat::_('%A, %B %e, %Y %i:%M %p');
-            case self::DF_TIME:
-                return Swat::_('%i:%M %p');
-            case self::DF_DATE_SHORT:
-                return Swat::_('%b %e %Y');
-            case self::DF_DATE_SHORT_NOYEAR:
-                return Swat::_('%b %e');
-            case self::DF_DATE_TIME_SHORT:
-                return Swat::_('%b %e, %Y %i:%M %p');
-            case self::DF_DATE_TIME_SHORT_NOYEAR:
-                return Swat::_('%b %e, %i:%M %p');
-            case self::DF_MY:
-                return Swat::_('%B %Y');
-            case self::DF_CC_MY:
-                return Swat::_('%m / %Y');
-            case self::DF_Y:
-                return Swat::_('%Y');
-            case self::DF_ISO_8601_BASIC:
-                return Swat::_('%Y%m%dT%H%M%S');
-            case self::DF_ISO_8601_EXTENDED:
-                return Swat::_('%Y-%m-%dT%H:%M:%S');
-            case self::DF_RFC_2822:
-                return Swat::_('%a, %d %b %Y %T');
-            default:
-                throw new Exception("Unknown date format id '$id'.");
-        }
-    }
-
-    // }}}
     // {{{ public static function getFormatLikeIntlById()
 
     /**
-     * Gets a strftime() date format string by id
+     * Gets a IntlDateFormatter date format string by id
      *
      * @param integer $id the id of the format string to retrieve.
      *
