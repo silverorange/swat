@@ -18,7 +18,7 @@ abstract class SwatOptionControl extends SwatInputControl
      *
      * @var array
      */
-    public $options = array();
+    public $options = [];
 
     /**
      * Metadata for the options of this control
@@ -50,7 +50,7 @@ abstract class SwatOptionControl extends SwatInputControl
      * @see SwatOptionControl::addOptionMetadata()
      * @see SwatOptionControl::getOptionMetadata()
      */
-    protected $option_metadata = array();
+    protected $option_metadata = [];
 
     /**
      * Whether or not to serialize option values
@@ -126,13 +126,13 @@ abstract class SwatOptionControl extends SwatInputControl
         if (!isset($this->option_metadata[$key])) {
             // use isset so we don't erase the metadata if an option is added
             // twice
-            $this->option_metadata[$key] = array();
+            $this->option_metadata[$key] = [];
         }
 
         if ($value instanceof SwatOption && is_array($title)) {
             $this->addOptionMetadata($option, $title);
         } else {
-            $this->addOptionMetadata($option, array());
+            $this->addOptionMetadata($option, []);
         }
     }
 
@@ -161,14 +161,14 @@ abstract class SwatOptionControl extends SwatInputControl
     public function addOptionMetadata(
         SwatOption $option,
         $metadata,
-        $value = null
+        $value = null,
     ) {
         $key = $this->getOptionMetadataKey($option);
 
         if (is_array($metadata)) {
             $this->option_metadata[$key] = array_merge(
                 $this->option_metadata[$key],
-                $metadata
+                $metadata,
             );
         } else {
             $this->option_metadata[$key][$metadata] = $value;
@@ -207,7 +207,7 @@ abstract class SwatOptionControl extends SwatInputControl
             if (isset($this->option_metadata[$key])) {
                 $metadata = $this->option_metadata[$key];
             } else {
-                $metadata = array();
+                $metadata = [];
             }
         } else {
             if (
@@ -266,7 +266,7 @@ abstract class SwatOptionControl extends SwatInputControl
      */
     public function removeOptionsByValue($value)
     {
-        $removed_options = array();
+        $removed_options = [];
 
         foreach ($this->options as $key => $control_option) {
             if ($control_option->value === $value) {
@@ -298,7 +298,7 @@ abstract class SwatOptionControl extends SwatInputControl
      */
     public function addOptionsByArray(
         array $options,
-        $content_type = 'text/plain'
+        $content_type = 'text/plain',
     ) {
         foreach ($options as $value => $title) {
             $this->addOption($value, $title, $content_type);
@@ -319,7 +319,7 @@ abstract class SwatOptionControl extends SwatInputControl
      */
     public function getOptionsByValue($value)
     {
-        $options = array();
+        $options = [];
 
         foreach ($this->options as $option) {
             if ($option->value === $value) {

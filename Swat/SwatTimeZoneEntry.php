@@ -30,7 +30,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
      *
      * @var array
      */
-    private $areas = array();
+    private $areas = [];
 
     /**
      * Time zone regions available for this time zone entry widget
@@ -39,7 +39,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
      *
      * @var array
      */
-    private $regions = array();
+    private $regions = [];
 
     // }}}
     // {{{ public function __construct()
@@ -55,7 +55,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
     {
         parent::__construct($id);
 
-        static $area_whitelist = array(
+        static $area_whitelist = [
             DateTimeZone::AFRICA,
             DateTimeZone::AMERICA,
             DateTimeZone::ANTARCTICA,
@@ -66,8 +66,8 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
             DateTimeZone::EUROPE,
             DateTimeZone::INDIAN,
             DateTimeZone::PACIFIC,
-            DateTimeZone::UTC
-        );
+            DateTimeZone::UTC,
+        ];
 
         $time_zone_list = $this->parseAreaWhitelist($area_whitelist);
         $this->setAreas($time_zone_list);
@@ -192,7 +192,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-time zone-entry');
+        $classes = ['swat-time zone-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }
@@ -235,7 +235,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
      */
     private function parseAreaWhitelist($area_whitelist)
     {
-        $areas = array();
+        $areas = [];
 
         $whitelist = 0;
         foreach ($area_whitelist as $area) {
@@ -249,7 +249,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
             $region = $this->getRegion($id);
 
             if (!array_key_exists($area, $areas)) {
-                $areas[$area] = array();
+                $areas[$area] = [];
             }
             $areas[$area][] = $region;
         }
@@ -274,11 +274,11 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
 
         foreach ($time_zone_list as $area => $regions) {
             $this->areas[$area] = $area;
-            $this->regions[$area] = array();
+            $this->regions[$area] = [];
 
             // special case for UTC area
             if ($area === 'UTC') {
-                $regions = array($this->getRegion('UTC'));
+                $regions = [$this->getRegion('UTC')];
             }
 
             $this->setRegions($regions, $area);

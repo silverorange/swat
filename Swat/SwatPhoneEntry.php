@@ -34,7 +34,7 @@ class SwatPhoneEntry extends SwatEntry
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-phone-entry');
+        $classes = ['swat-phone-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

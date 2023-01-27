@@ -78,7 +78,7 @@ abstract class SwatWidget extends SwatUIObject
      *
      * @var array
      */
-    private $composite_widgets = array();
+    private $composite_widgets = [];
 
     /**
      * Whether or not composite widgets have been created
@@ -98,7 +98,7 @@ abstract class SwatWidget extends SwatUIObject
      *
      * @var array
      */
-    protected $messages = array();
+    protected $messages = [];
 
     /**
      * Specifies that this widget requires an id
@@ -471,7 +471,7 @@ abstract class SwatWidget extends SwatUIObject
         if ($this->parent === null) {
             throw new SwatException(
                 'Widget does not have a parent, unable ' .
-                    'to replace this widget with a container.'
+                    'to replace this widget with a container.',
             );
         }
 
@@ -514,7 +514,7 @@ abstract class SwatWidget extends SwatUIObject
         // just mark the composite widgets as needing to be created for the
         // copy. Composite widgets will be instantiated on-demand with the
         // correct id values.
-        $copy->composite_widgets = array();
+        $copy->composite_widgets = [];
         $copy->composite_widgets_created = false;
 
         return $copy;
@@ -538,7 +538,7 @@ abstract class SwatWidget extends SwatUIObject
      */
     protected function getCSSClassNames()
     {
-        $classes = array();
+        $classes = [];
 
         if (!$this->isSensitive()) {
             $classes[] = 'swat-insensitive';
@@ -587,17 +587,17 @@ abstract class SwatWidget extends SwatUIObject
             throw new SwatDuplicateIdException(
                 sprintf(
                     "A composite widget with the key '%s' already exists in this " .
-                        "widget.",
-                    $key
+                        'widget.',
+                    $key,
                 ),
                 0,
-                $key
+                $key,
             );
         }
 
         if ($widget->parent !== null) {
             throw new SwatException(
-                'Cannot add a composite widget that already has a parent.'
+                'Cannot add a composite widget that already has a parent.',
             );
         }
 
@@ -630,12 +630,12 @@ abstract class SwatWidget extends SwatUIObject
             throw new SwatWidgetNotFoundException(
                 sprintf(
                     "Composite widget with key of '%s' not found in %s. Make sure " .
-                        "the composite widget was created and added to this widget.",
+                        'the composite widget was created and added to this widget.',
                     $key,
-                    get_class($this)
+                    get_class($this),
                 ),
                 0,
-                $key
+                $key,
             );
         }
 
@@ -671,10 +671,10 @@ abstract class SwatWidget extends SwatUIObject
                 interface_exists($class_name)
             )
         ) {
-            return array();
+            return [];
         }
 
-        $out = array();
+        $out = [];
 
         foreach ($this->composite_widgets as $key => $widget) {
             if ($class_name === null || $widget instanceof $class_name) {

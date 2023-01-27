@@ -94,7 +94,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         if ($level > 2) {
             throw new SwatException(
                 'SwatGroupedFlydown tree must not be ' .
-                    'more than 3 levels including the root node.'
+                    'more than 3 levels including the root node.',
             );
         }
 
@@ -122,7 +122,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
     protected function displayNode(
         SwatTreeFlydownNode $node,
         $level = 0,
-        $selected = false
+        $selected = false,
     ) {
         $children = $node->getChildren();
         $flydown_option = $node->getOption();
@@ -148,7 +148,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
                 $salt = $this->getForm()->getSalt();
                 $option_tag->value = SwatString::signedSerialize(
                     $flydown_option->value,
-                    $salt
+                    $salt,
                 );
             } else {
                 $option_tag->value = (string) $flydown_option->values;
@@ -197,7 +197,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
     protected function buildDisplayTree(
         SwatTreeFlydownNode $tree,
         SwatTreeFlydownNode $parent,
-        $path = array()
+        $path = [],
     ) {
         $flydown_option = $tree->getOption();
         $path[] = $flydown_option->value;
@@ -229,7 +229,7 @@ class SwatGroupedFlydown extends SwatTreeFlydown
         $display_tree = new SwatTreeFlydownNode(null, 'root');
         if ($this->show_blank) {
             $display_tree->addChild(
-                new SwatTreeFlydownNode(null, $this->blank_title)
+                new SwatTreeFlydownNode(null, $this->blank_title),
             );
         }
 

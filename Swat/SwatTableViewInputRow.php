@@ -84,7 +84,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
      *
      * @var array
      */
-    private $input_cells = array();
+    private $input_cells = [];
 
     /**
      * An array of replicator ids for the individual rows displayed and entered
@@ -95,7 +95,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
      * @var array
      * @see SwatTableViewInputRow::getReplicators()
      */
-    private $replicators = array();
+    private $replicators = [];
 
     // }}}
     // {{{ public function __construct()
@@ -108,10 +108,10 @@ class SwatTableViewInputRow extends SwatTableViewRow
         parent::__construct();
         $this->enter_text = Swat::_('enter&nbsp;another');
 
-        $yui = new SwatYUI(array('animation'));
+        $yui = new SwatYUI(['animation']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript(
-            'packages/swat/javascript/swat-table-view-input-row.js'
+            'packages/swat/javascript/swat-table-view-input-row.js',
         );
     }
 
@@ -132,8 +132,8 @@ class SwatTableViewInputRow extends SwatTableViewRow
         $this->createEmbeddedWidgets();
         $this->enter_another_link->title = $this->enter_text;
         $this->enter_another_link->link = sprintf(
-            "javascript:%s_obj.addRow();",
-            $this->getId()
+            'javascript:%s_obj.addRow();',
+            $this->getId(),
         );
 
         $this->enter_another_link->init();
@@ -245,7 +245,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
         // add replicator ids to the form as a hidden field
         $this->getForm()->addHiddenField(
             $this->getId() . '_replicators',
-            implode(',', $this->replicators)
+            implode(',', $this->replicators),
         );
 
         $this->displayInputRows();
@@ -316,13 +316,13 @@ class SwatTableViewInputRow extends SwatTableViewRow
         if (isset($this->input_cells[$column_id])) {
             return $this->input_cells[$column_id]->getWidget(
                 $row_identifier,
-                $widget_id
+                $widget_id,
             );
         }
 
         throw new SwatException(
             'No input cell for this row exists for the ' .
-                'given column identifier.'
+                'given column identifier.',
         );
     }
 
@@ -358,7 +358,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
         throw new SwatException(
             'The specified column does not have an input ' .
-                'cell bound to this row or the column does not exist.'
+                'cell bound to this row or the column does not exist.',
         );
     }
 
@@ -374,9 +374,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
      */
     public function removeReplicatedRow($replicator_id)
     {
-        $this->replicators = array_diff($this->replicators, array(
-            $replicator_id
-        ));
+        $this->replicators = array_diff($this->replicators, [$replicator_id]);
 
         foreach ($this->input_cells as $cell) {
             $cell->unsetWidget($replicator_id);
@@ -439,13 +437,13 @@ class SwatTableViewInputRow extends SwatTableViewRow
      */
     public function getMessages()
     {
-        $messages = array();
+        $messages = [];
 
         foreach ($this->replicators as $replicator_id) {
             foreach ($this->input_cells as $cell) {
                 $messages = array_merge(
                     $messages,
-                    $cell->getWidget($replicator_id)->getMessages()
+                    $cell->getWidget($replicator_id)->getMessages(),
                 );
             }
         }
@@ -513,7 +511,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
             "var %s_obj = new SwatTableViewInputRow('%s', '%s');",
             $this->getId(),
             $this->getId(),
-            trim($row_string)
+            trim($row_string),
         );
     }
 
@@ -555,7 +553,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
         $this->createEmbeddedWidgets();
         $set->addEntrySet(
-            $this->enter_another_link->getAvailableHtmlHeadEntrySet()
+            $this->enter_another_link->getAvailableHtmlHeadEntrySet(),
         );
 
         return $set;
@@ -591,7 +589,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
         $columns = $this->parent->getVisibleColumns();
 
         foreach ($this->replicators as $replicator_id) {
-            $messages = array();
+            $messages = [];
 
             $row_has_messages = false;
             foreach ($this->input_cells as $cell) {
@@ -618,7 +616,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
 
                 if (isset($this->input_cells[$column->id])) {
                     $widget = $this->input_cells[$column->id]->getWidget(
-                        $replicator_id
+                        $replicator_id,
                     );
 
                     if (
@@ -627,7 +625,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
                     ) {
                         $messages = array_merge(
                             $messages,
-                            $widget->getMessages()
+                            $widget->getMessages(),
                         );
 
                         $td_tag->class .= ' swat-error';
@@ -663,7 +661,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
                 foreach ($messages as &$message) {
                     $li_tag->setContent(
                         $message->primary_content,
-                        $message->content_type
+                        $message->content_type,
                     );
 
                     $li_tag->class = $message->getCSSClassString();
@@ -828,7 +826,7 @@ class SwatTableViewInputRow extends SwatTableViewRow
         if ($form === null) {
             throw new SwatException(
                 'SwatTableView must be inside a SwatForm ' .
-                    'for SwatTableViewInputRow to work.'
+                    'for SwatTableViewInputRow to work.',
             );
         }
 

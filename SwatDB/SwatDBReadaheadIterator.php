@@ -67,7 +67,7 @@ class SwatDBReadaheadIterator extends SwatObject
 
         if (!($iterator instanceof Iterator)) {
             throw new InvalidArgumentException(
-                '$iterator must be either an array or an Iterator.'
+                '$iterator must be either an array or an Iterator.',
             );
         }
 

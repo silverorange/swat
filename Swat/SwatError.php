@@ -76,7 +76,7 @@ class SwatError
     /**
      * @var array
      */
-    protected static $loggers = array();
+    protected static $loggers = [];
 
     /**
      * @var integer
@@ -98,7 +98,7 @@ class SwatError
      */
     public static function setLogger(SwatErrorLogger $logger)
     {
-        self::$loggers = array($logger);
+        self::$loggers = [$logger];
     }
 
     // }}}
@@ -320,7 +320,7 @@ class SwatError
             "%s error in file '%s' line %s",
             $this->getSeverityString(),
             $this->file,
-            $this->line
+            $this->line,
         );
 
         return ob_get_clean();
@@ -345,7 +345,7 @@ class SwatError
             $this->getSeverityString(),
             $this->message,
             $this->file,
-            $this->line
+            $this->line,
         );
 
         echo "Stack Trace:\n";
@@ -362,7 +362,7 @@ class SwatError
                 $arguments = $this->getArguments(
                     $entry['args'],
                     $function,
-                    $class
+                    $class,
                 );
             } else {
                 $arguments = '';
@@ -377,7 +377,7 @@ class SwatError
                 $class === null ? '' : $class,
                 array_key_exists('type', $entry) ? $entry['type'] : '',
                 $function === null ? '' : $function,
-                $arguments
+                $arguments,
             );
         }
 
@@ -413,7 +413,7 @@ class SwatError
             $this->getSeverityString(),
             nl2br(htmlspecialchars($this->message)),
             $this->file,
-            $this->line
+            $this->line,
         );
 
         echo 'Stack Trace:<br /><dl>';
@@ -429,8 +429,8 @@ class SwatError
             if (array_key_exists('args', $entry)) {
                 $arguments = htmlspecialchars(
                     $this->getArguments($entry['args'], $function, $class),
-                    ENT_COMPAT,
-                    'UTF-8'
+                    null,
+                    'UTF-8',
                 );
             } else {
                 $arguments = '';
@@ -446,7 +446,7 @@ class SwatError
                 $class === null ? '' : $class,
                 array_key_exists('type', $entry) ? $entry['type'] : '',
                 $function === null ? '' : $function,
-                $arguments
+                $arguments,
             );
         }
 
@@ -494,7 +494,7 @@ class SwatError
      */
     protected function getArguments($args, $function = null, $class = null)
     {
-        $params = array();
+        $params = [];
         $method = null;
 
         // try to get function or method parameter list using reflection
@@ -510,7 +510,7 @@ class SwatError
         }
 
         // display each parameter
-        $formatted_values = array();
+        $formatted_values = [];
         for ($i = 0; $i < count($args); $i++) {
             $value = $args[$i];
 
@@ -525,7 +525,7 @@ class SwatError
             if ($name !== null && $sensitive) {
                 $formatted_values[] = $this->formatSensitiveParam(
                     $name,
-                    $value
+                    $value,
                 );
             } else {
                 $formatted_values[] = $this->formatValue($value);
@@ -632,17 +632,17 @@ class SwatError
         static $style_sheet_displayed = false;
 
         if (!$style_sheet_displayed) {
-            echo "<style>" .
-                ".swat-exception { border: 1px solid #d43; margin: 1em; " .
-                "font-family: sans-serif; background: #fff !important; " .
-                "z-index: 9999 !important; color: #000; text-align: left; " .
+            echo '<style>' .
+                '.swat-exception { border: 1px solid #d43; margin: 1em; ' .
+                'font-family: sans-serif; background: #fff !important; ' .
+                'z-index: 9999 !important; color: #000; text-align: left; ' .
                 "min-width: 400px; }\n";
 
-            echo ".swat-exception h3 { background: #e65; margin: 0; padding: " .
+            echo '.swat-exception h3 { background: #e65; margin: 0; padding: ' .
                 "border-bottom: 1px solid #d43; color: #fff; }\n";
 
             echo ".swat-exception-body { padding: 0.8em; }\n";
-            echo ".swat-exception-message { margin-left: 2em; padding: 1em; " .
+            echo '.swat-exception-message { margin-left: 2em; padding: 1em; ' .
                 "}\n";
 
             echo ".swat-exception dt { float: left; margin-left: 1em; }\n";
@@ -662,14 +662,14 @@ class SwatError
      */
     protected function getSeverityString()
     {
-        static $error_types = array(
+        static $error_types = [
             E_WARNING => 'Warning',
             E_NOTICE => 'Notice',
             E_USER_ERROR => 'User Fatal Error',
             E_USER_WARNING => 'User Warning',
             E_USER_NOTICE => 'User Notice',
-            E_STRICT => 'Forward Compatibility Notice'
-        );
+            E_STRICT => 'Forward Compatibility Notice',
+        ];
 
         $out = null;
         if (isset($error_types[$this->severity])) {
@@ -704,7 +704,7 @@ class SwatError
      */
     protected function isSensitiveParameter(
         ReflectionFunctionAbstract $method,
-        $name
+        $name,
     ) {
         $sensitive = false;
 
@@ -715,7 +715,7 @@ class SwatError
         $documentation = str_replace("\r", "\n", $documentation);
         $documentation_exp = explode("\n", $documentation);
         foreach ($documentation_exp as $documentation_line) {
-            $matches = array();
+            $matches = [];
             if (
                 preg_match($exp, $documentation_line, $matches) === 1 &&
                 $matches[1] == $name
@@ -740,7 +740,7 @@ class SwatError
          * All run-time errors as specified in the error_reporting directive
          * are handled.
          */
-        set_error_handler(array('SwatError', 'handle'), error_reporting());
+        set_error_handler(['SwatError', 'handle'], error_reporting());
     }
 
     // }}}

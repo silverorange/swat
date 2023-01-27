@@ -150,14 +150,14 @@ class SwatTextareaEditor extends SwatTextarea
             $this->addExternalJavaScript(
                 'https://cdn.tiny.cloud/1/' .
                     self::$tiny_mce_api_key .
-                    '/tinymce/5/tinymce.min.js'
+                    '/tinymce/5/tinymce.min.js',
             );
         } else {
             $this->addJavaScript('vendor/tinymce/tinymce.min.js');
         }
 
         $this->addJavaScript(
-            'packages/swat/javascript/swat-z-index-manager.js'
+            'packages/swat/javascript/swat-z-index-manager.js',
         );
     }
 
@@ -200,7 +200,7 @@ class SwatTextareaEditor extends SwatTextarea
                 $textarea_tag->style = sprintf(
                     'width: %s; height: %s;',
                     $this->width,
-                    $this->height
+                    $this->height,
                 );
             } elseif ($this->width !== null) {
                 $textarea_tag->style = sprintf('width: %s;', $this->width);
@@ -252,7 +252,7 @@ class SwatTextareaEditor extends SwatTextarea
     {
         $buttons = implode(' ', $this->getConfigButtons());
 
-        $blockformats = array(
+        $blockformats = [
             'Paragraph=p',
             'Blockquote=blockquote',
             'Preformatted=pre',
@@ -261,8 +261,8 @@ class SwatTextareaEditor extends SwatTextarea
             'Header 3=h3',
             'Header 4=h4',
             'Header 5=h5',
-            'Header 6=h6'
-        );
+            'Header 6=h6',
+        ];
 
         $blockformats = implode('; ', $blockformats);
 
@@ -273,7 +273,7 @@ class SwatTextareaEditor extends SwatTextarea
             self::$tiny_mce_api_key !== null && !empty(self::$tiny_mce_api_key);
         $paste_plugin = $has_api_key ? ' powerpaste' : ' paste';
 
-        $config = array(
+        $config = [
             'selector' => '#' . $this->id,
             'toolbar' => $buttons,
             // https://www.tiny.cloud/docs/configure/editor-appearance/#block_formats
@@ -285,8 +285,8 @@ class SwatTextareaEditor extends SwatTextarea
             'branding' => false,
             'powerpaste_word_import' => 'merge',
             'powerpaste_googledocs_import' => 'merge',
-            'powerpaste_html_import' => 'merge'
-        );
+            'powerpaste_html_import' => 'merge',
+        ];
 
         return $config;
     }
@@ -296,7 +296,7 @@ class SwatTextareaEditor extends SwatTextarea
 
     protected function getConfigButtons()
     {
-        return array(
+        return [
             'bold',
             'italic',
             '|',
@@ -316,8 +316,8 @@ class SwatTextareaEditor extends SwatTextarea
             'link',
             'image',
             'backcolor',
-            'code'
-        );
+            'code',
+        ];
     }
 
     // }}}
@@ -363,14 +363,14 @@ class SwatTextareaEditor extends SwatTextarea
 
         echo "tinyMCE.init({\n";
 
-        $lines = array();
+        $lines = [];
         foreach ($this->getConfig() as $name => $value) {
             if (is_string($value)) {
                 $value = SwatString::quoteJavaScriptString($value);
             } elseif (is_bool($value)) {
                 $value = $value ? 'true' : 'false';
             }
-            $lines[] = "\t" . $name . ": " . $value;
+            $lines[] = "\t" . $name . ': ' . $value;
         }
 
         $lines[] = "\tdocument_base_url: {$base_href},\n";
@@ -482,7 +482,7 @@ class SwatTextareaEditor extends SwatTextarea
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-textarea-editor');
+        $classes = ['swat-textarea-editor'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

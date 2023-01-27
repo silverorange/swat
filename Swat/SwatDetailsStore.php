@@ -30,7 +30,7 @@ class SwatDetailsStore extends SwatObject
      *
      * @var array
      */
-    private $data = array();
+    private $data = [];
 
     // }}}
     // {{{ public function __construct()
@@ -98,7 +98,7 @@ class SwatDetailsStore extends SwatObject
             "Property '{$name}' does not exist in details store.",
             0,
             $this,
-            $name
+            $name,
         );
     }
 

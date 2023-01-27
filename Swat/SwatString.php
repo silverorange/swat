@@ -16,7 +16,7 @@ class SwatString extends SwatObject
      *
      * @var array
      */
-    public static $blocklevel_elements = array(
+    public static $blocklevel_elements = [
         'p',
         'pre',
         'dl',
@@ -28,8 +28,8 @@ class SwatString extends SwatObject
         'fieldset',
         'address',
         'ul',
-        'ol'
-    );
+        'ol',
+    ];
 
     /**
      * These XHTML elements are not block-level but people often write
@@ -37,14 +37,14 @@ class SwatString extends SwatObject
      *
      * @var array
      */
-    public static $breaking_elements = array('li', 'dd', 'dt');
+    public static $breaking_elements = ['li', 'dd', 'dt'];
 
     /**
      * These XHTML elements are used for tables
      *
      * @var array
      */
-    public static $table_elements = array(
+    public static $table_elements = [
         'thead',
         'tfoot',
         'tbody',
@@ -52,8 +52,8 @@ class SwatString extends SwatObject
         'th',
         'td',
         'col',
-        'colgroup'
-    );
+        'colgroup',
+    ];
 
     /**
      * All XHTML elements
@@ -62,7 +62,7 @@ class SwatString extends SwatObject
      *
      * @var array
      */
-    public static $xhtml_elements = array(
+    public static $xhtml_elements = [
         'a',
         'abbr',
         'acronym',
@@ -148,8 +148,8 @@ class SwatString extends SwatObject
         'tt',
         'u',
         'ul',
-        'var'
-    );
+        'var',
+    ];
 
     /**
      * XHTML elements where the content is pre-formatted and should not be
@@ -157,7 +157,7 @@ class SwatString extends SwatObject
      *
      * @var array
      */
-    public static $preformatted_elements = array('script', 'style', 'pre');
+    public static $preformatted_elements = ['script', 'style', 'pre'];
 
     // }}}
     // {{{ public static function toXHTML()
@@ -202,14 +202,14 @@ class SwatString extends SwatObject
         $text = preg_replace(
             '/\s+(<\/?(?:' . $table_elements . ')[^<>]*?>)/usi',
             '\1',
-            $text
+            $text,
         );
 
         // remove whitespace after table elements
         $text = preg_replace(
             '/(<\/?(?:' . $table_elements . ')[^<>]*?>)\s+/usi',
             '\1',
-            $text
+            $text,
         );
 
         // replace continuous strings of whitespace containing a
@@ -253,7 +253,7 @@ class SwatString extends SwatObject
             $preformatted_elements .
             ')>/usi';
 
-        $preformatted_content = array();
+        $preformatted_content = [];
         preg_match_all($preformatted_search, $text, $preformatted_content);
 
         // save preformatted content
@@ -313,12 +313,12 @@ class SwatString extends SwatObject
                 $paragraph = $paragraph . "\n\n";
             } else {
                 // split paragraph into tags and text
-                $tags = array();
+                $tags = [];
                 preg_match_all(
                     $all_tags,
                     $paragraph,
                     $tags,
-                    PREG_OFFSET_CAPTURE
+                    PREG_OFFSET_CAPTURE,
                 );
 
                 $tags = $tags[0];
@@ -326,7 +326,7 @@ class SwatString extends SwatObject
                     $all_tags,
                     $paragraph,
                     -1,
-                    PREG_SPLIT_OFFSET_CAPTURE
+                    PREG_SPLIT_OFFSET_CAPTURE,
                 );
 
                 $paragraph = '';
@@ -347,7 +347,7 @@ class SwatString extends SwatObject
                     } elseif (isset($text[$text_index])) {
                         // minimize entities for text
                         $paragraph .= self::minimizeEntities(
-                            $text[$text_index][0]
+                            $text[$text_index][0],
                         );
 
                         $text_index++;
@@ -485,9 +485,9 @@ class SwatString extends SwatObject
 
         // replace blocklevel tags with line breaks, but exclude blockquotes
         // because they are handled in a special case
-        $blocklevel_elements = array_diff(self::$blocklevel_elements, array(
-            'blockquote'
-        ));
+        $blocklevel_elements = array_diff(self::$blocklevel_elements, [
+            'blockquote',
+        ]);
         $blocklevel_elements = implode('|', $blocklevel_elements);
         $blocklevel_tags = '/<\/?(?:' . $blocklevel_elements . ')[^<>]*?\>/siu';
         $text = preg_replace($blocklevel_tags, "\n", $text);
@@ -497,12 +497,12 @@ class SwatString extends SwatObject
         $text = preg_replace($br_hr_tags, "\n", $text);
 
         // replace blockquote tags with curly quotation marks
-        $search = array(
+        $search = [
             '/<blockquote[^<>]*?\>\s*/siu',
-            '/\s*<\/blockquote[^<>]*?\>/siu'
-        );
+            '/\s*<\/blockquote[^<>]*?\>/siu',
+        ];
 
-        $replace = array("\n“", "”\n");
+        $replace = ["\n“", "”\n"];
         $text = preg_replace($search, $replace, $text);
 
         // remove inline tags
@@ -525,7 +525,7 @@ class SwatString extends SwatObject
             // check for whitespace that could be condensed.
             // 0xa0 is a guestimate for 0xc2 0xa0 (non-breaking space) because
             // count_chars() does not consider utf-8 encoding.
-            $chars = array(0x20, 0x07, 0xa0);
+            $chars = [0x20, 0x07, 0xa0];
             foreach ($chars as $char) {
                 if (isset($counts[$char])) {
                     $count += $counts[$char];
@@ -613,11 +613,11 @@ class SwatString extends SwatObject
 
             // convert non-alpha-numeric ascii characters to spaces and
             // condense whitespace
-            $search = array(
+            $search = [
                 '/[\x00-\x1f\x21-\x2f\x3a-\x40\x5b-\x60\x7b-\x7e]/u',
-                '/\s+/u'
-            );
-            $replace = array(' ', ' ');
+                '/\s+/u',
+            ];
+            $replace = [' ', ' '];
             $string = preg_replace($search, $replace, $string);
 
             // remove leading and tailing whitespace that may have been added
@@ -655,8 +655,8 @@ class SwatString extends SwatObject
         } else {
             // remove html entities, convert non-alpha-numeric characters to
             // spaces and condense whitespace
-            $search = array('/&#?\w+;/u', '/[^a-z0-9 ]/u', '/\s+/u');
-            $replace = array('', ' ', ' ');
+            $search = ['/&#?\w+;/u', '/[^a-z0-9 ]/u', '/\s+/u'];
+            $replace = ['', ' ', ' '];
 
             $string = preg_replace($search, $replace, $string);
 
@@ -732,9 +732,9 @@ class SwatString extends SwatObject
         $string,
         $max_length,
         $ellipses = ' …',
-        &$flag = null
+        &$flag = null,
     ) {
-        $matches = array();
+        $matches = [];
         self::stripEntities($string, $matches);
 
         $string = trim($string);
@@ -811,11 +811,11 @@ class SwatString extends SwatObject
         $string,
         $max_length,
         $ellipses = ' … ',
-        &$flag = null
+        &$flag = null,
     ) {
         $string = trim($string);
 
-        $matches = array();
+        $matches = [];
         self::stripEntities($string, $matches);
 
         // don't ellipsize if the string is short enough
@@ -834,7 +834,7 @@ class SwatString extends SwatObject
             $first_piece = mb_substr($string, 0, $max_length / 2);
             $last_piece = mb_substr(
                 $string,
-                -($max_length - mb_strlen($first_piece))
+                -($max_length - mb_strlen($first_piece)),
             );
         } else {
             /*
@@ -886,7 +886,7 @@ class SwatString extends SwatObject
             $matches,
             $hole_start,
             $hole_end,
-            $hole_length
+            $hole_length,
         );
 
         $flag = true;
@@ -980,14 +980,14 @@ class SwatString extends SwatObject
         $value,
         $locale = null,
         $display_currency = false,
-        $decimal_places = null
+        $decimal_places = null,
     ) {
         if (!function_exists('money_format')) {
             throw new SwatException(
                 'moneyFormat() method is not available ' .
                     'on this operating system. See ' .
                     'http://php.net/manual/en/function.money-format.php for ' .
-                    'details.'
+                    'details.',
             );
         }
 
@@ -999,8 +999,8 @@ class SwatString extends SwatObject
                         'Locale %s passed to the ' .
                             'moneyFormat() method is not valid for this operating ' .
                             'system.',
-                        $locale
-                    )
+                        $locale,
+                    ),
                 );
             }
         }
@@ -1027,8 +1027,8 @@ class SwatString extends SwatObject
                 throw new SwatException(
                     sprintf(
                         'Could not convert %s output to UTF-8',
-                        $character_set
-                    )
+                        $character_set,
+                    ),
                 );
             }
         }
@@ -1066,8 +1066,8 @@ class SwatString extends SwatObject
                         'Locale %s passed to the ' .
                             'getInternationalCurrencySymbol() method is not valid ' .
                             'for this operating system.',
-                        $locale
-                    )
+                        $locale,
+                    ),
                 );
             }
         }
@@ -1085,8 +1085,8 @@ class SwatString extends SwatObject
                 throw new SwatException(
                     sprintf(
                         'Could not convert %s output to UTF-8',
-                        $character_set
-                    )
+                        $character_set,
+                    ),
                 );
             }
         }
@@ -1127,7 +1127,7 @@ class SwatString extends SwatObject
         $value,
         $decimals = null,
         $locale = null,
-        $show_thousands_separator = true
+        $show_thousands_separator = true,
     ) {
         // look up decimal precision if none is provided
         if ($decimals === null) {
@@ -1139,7 +1139,7 @@ class SwatString extends SwatObject
             $value,
             $decimals,
             '.',
-            $show_thousands_separator ? ',' : ''
+            $show_thousands_separator ? ',' : '',
         );
 
         if ($locale !== null) {
@@ -1150,8 +1150,8 @@ class SwatString extends SwatObject
                         'Locale %s passed to the ' .
                             'numberFormat() method is not valid for this operating ' .
                             'system.',
-                        $locale
-                    )
+                        $locale,
+                    ),
                 );
             }
         }
@@ -1172,8 +1172,8 @@ class SwatString extends SwatObject
                 throw new SwatException(
                     sprintf(
                         'Could not convert %s output to UTF-8',
-                        $character_set
-                    )
+                        $character_set,
+                    ),
                 );
             }
         }
@@ -1241,28 +1241,28 @@ class SwatString extends SwatObject
         $value,
         $magnitude = -1,
         $iec_units = false,
-        $significant_digits = 3
+        $significant_digits = 3,
     ) {
         if ($iec_units) {
-            $units = array(
+            $units = [
                 60 => 'EiB',
                 50 => 'PiB',
                 40 => 'TiB',
                 30 => 'GiB',
                 20 => 'MiB',
                 10 => 'KiB',
-                0 => 'bytes'
-            );
+                0 => 'bytes',
+            ];
         } else {
-            $units = array(
+            $units = [
                 60 => 'EB',
                 50 => 'PB',
                 40 => 'TB',
                 30 => 'GB',
                 20 => 'MB',
                 10 => 'KB',
-                0 => 'bytes'
-            );
+                0 => 'bytes',
+            ];
         }
 
         $unit_magnitude = null;
@@ -1302,12 +1302,12 @@ class SwatString extends SwatObject
 
                 $fractional_digits = max(
                     $significant_digits - $integer_digits,
-                    0
+                    0,
                 );
 
                 $formatted_value = self::numberFormat(
                     $value,
-                    $fractional_digits
+                    $fractional_digits,
                 );
             } else {
                 // just round to one fractional digit
@@ -1337,7 +1337,7 @@ class SwatString extends SwatObject
         $input,
         $pad_length,
         $pad_string = ' ',
-        $pad_type = STR_PAD_RIGHT
+        $pad_type = STR_PAD_RIGHT,
     ) {
         $output = '';
         $length = $pad_length - mb_strlen($input);
@@ -1351,7 +1351,7 @@ class SwatString extends SwatObject
                 case STR_PAD_LEFT:
                     $padding = str_repeat(
                         $pad_string,
-                        ceil($length / mb_strlen($pad_string))
+                        ceil($length / mb_strlen($pad_string)),
                     );
                     $output = mb_substr($padding, 0, $length) . $input;
                     break;
@@ -1361,7 +1361,7 @@ class SwatString extends SwatObject
                     $right_length = ceil($length / 2);
                     $padding = str_repeat(
                         $pad_string,
-                        ceil($right_length / mb_strlen($pad_string))
+                        ceil($right_length / mb_strlen($pad_string)),
                     );
                     $output =
                         mb_substr($padding, 0, $left_length) .
@@ -1374,7 +1374,7 @@ class SwatString extends SwatObject
                 default:
                     $padding = str_repeat(
                         $pad_string,
-                        ceil($length / mb_strlen($pad_string))
+                        ceil($length / mb_strlen($pad_string)),
                     );
                     $output = $input . mb_substr($padding, 0, $length);
             }
@@ -1413,15 +1413,15 @@ class SwatString extends SwatObject
         $string = self::parseNegativeNotation($string);
 
         // change all locale formatting to numeric formatting
-        $remove_parts = array(
+        $remove_parts = [
             $lc['positive_sign'] => '',
-            $lc['thousands_sep'] => ''
-        );
+            $lc['thousands_sep'] => '',
+        ];
 
         $value = str_replace(
             array_keys($remove_parts),
             array_values($remove_parts),
-            $string
+            $string,
         );
 
         // note: This might be done better with a regexp, though
@@ -1432,13 +1432,13 @@ class SwatString extends SwatObject
         if (is_numeric($value)) {
             if ($value > (float) PHP_INT_MAX) {
                 throw new SwatException(
-                    'Floating point value is too big to be an integer'
+                    'Floating point value is too big to be an integer',
                 );
             }
 
             if ($value < (float) (-PHP_INT_MAX - 1)) {
                 throw new SwatException(
-                    'Floating point value is too small to be an integer'
+                    'Floating point value is too small to be an integer',
                 );
             }
 
@@ -1469,16 +1469,16 @@ class SwatString extends SwatObject
         $string = self::parseNegativeNotation($string);
 
         // change all locale formatting to numeric formatting
-        $remove_parts = array(
+        $remove_parts = [
             $lc['decimal_point'] => '.',
             $lc['positive_sign'] => '',
-            $lc['thousands_sep'] => ''
-        );
+            $lc['thousands_sep'] => '',
+        ];
 
         $value = str_replace(
             array_keys($remove_parts),
             array_values($remove_parts),
-            $string
+            $string,
         );
 
         // note: This might be done better with a regexp, though
@@ -1517,7 +1517,7 @@ class SwatString extends SwatObject
         $iterator,
         $conjunction = 'and',
         $delimiter = ', ',
-        $display_final_delimiter = true
+        $display_final_delimiter = true,
     ) {
         if (is_array($iterator)) {
             $iterator = new ArrayIterator($iterator);
@@ -1610,7 +1610,7 @@ class SwatString extends SwatObject
         $minutes = $interval->i;
         $seconds = $interval->s;
 
-        $parts = array();
+        $parts = [];
 
         if ($years > 0) {
             if ($interval_parts & SwatDate::DI_YEARS) {
@@ -1709,7 +1709,7 @@ class SwatString extends SwatObject
      */
     public static function getHumanReadableTimePeriodParts(
         $seconds,
-        $interval_parts = null
+        $interval_parts = null,
     ) {
         // Depend on getTimePeriodParts() to return the correct parts requested
         $parts = static::getTimePeriodParts($seconds, $interval_parts);
@@ -1719,7 +1719,7 @@ class SwatString extends SwatObject
             $years = $parts['years'];
             $parts['years'] = sprintf(
                 Swat::ngettext('%s year', '%s years', $years),
-                $years
+                $years,
             );
         }
 
@@ -1727,7 +1727,7 @@ class SwatString extends SwatObject
             $months = $parts['months'];
             $parts['months'] = sprintf(
                 Swat::ngettext('%s month', '%s months', $months),
-                $months
+                $months,
             );
         }
 
@@ -1735,7 +1735,7 @@ class SwatString extends SwatObject
             $weeks = $parts['weeks'];
             $parts['weeks'] = sprintf(
                 Swat::ngettext('%s week', '%s weeks', $weeks),
-                $weeks
+                $weeks,
             );
         }
 
@@ -1743,7 +1743,7 @@ class SwatString extends SwatObject
             $days = $parts['days'];
             $parts['days'] = sprintf(
                 Swat::ngettext('%s day', '%s days', $days),
-                $days
+                $days,
             );
         }
 
@@ -1751,7 +1751,7 @@ class SwatString extends SwatObject
             $hours = $parts['hours'];
             $parts['hours'] = sprintf(
                 Swat::ngettext('%s hour', '%s hours', $hours),
-                $hours
+                $hours,
             );
         }
 
@@ -1759,7 +1759,7 @@ class SwatString extends SwatObject
             $minutes = $parts['minutes'];
             $parts['minutes'] = sprintf(
                 Swat::ngettext('%s minute', '%s minutes', $minutes),
-                $minutes
+                $minutes,
             );
         }
 
@@ -1767,7 +1767,7 @@ class SwatString extends SwatObject
             $seconds = $parts['seconds'];
             $parts['seconds'] = sprintf(
                 Swat::ngettext('%s second', '%s seconds', $seconds),
-                $seconds
+                $seconds,
             );
         }
 
@@ -1796,7 +1796,7 @@ class SwatString extends SwatObject
      */
     public static function toHumanReadableTimePeriod(
         $seconds,
-        $largest_part = false
+        $largest_part = false,
     ) {
         $parts = self::getHumanReadableTimePeriodParts($seconds);
         return self::toHumanReadableTimePeriodString($parts, $largest_part);
@@ -1826,7 +1826,7 @@ class SwatString extends SwatObject
      */
     public static function toHumanReadableTimePeriodWithWeeks(
         $seconds,
-        $largest_part = false
+        $largest_part = false,
     ) {
         $interval_parts =
             SwatDate::DI_YEARS |
@@ -1838,7 +1838,7 @@ class SwatString extends SwatObject
 
         $parts = self::getHumanReadableTimePeriodParts(
             $seconds,
-            $interval_parts
+            $interval_parts,
         );
 
         return self::toHumanReadableTimePeriodString($parts, $largest_part);
@@ -1874,15 +1874,12 @@ class SwatString extends SwatObject
 
         $parts = self::getHumanReadableTimePeriodParts(
             $seconds,
-            $interval_parts
+            $interval_parts,
         );
 
         if (isset($parts['weeks']) && isset($parts['days'])) {
             // reuse the weeks array key, to keep it in the correct position.
-            $parts['weeks'] = self::toList(array(
-                $parts['weeks'],
-                $parts['days']
-            ));
+            $parts['weeks'] = self::toList([$parts['weeks'], $parts['days']]);
 
             unset($parts['days']);
         }
@@ -2003,7 +2000,7 @@ class SwatString extends SwatObject
         return preg_replace(
             '/<\/?(' . $elements . ')[^<>]*?>/siu',
             '',
-            $string
+            $string,
         );
     }
 
@@ -2027,7 +2024,7 @@ class SwatString extends SwatObject
         return preg_replace(
             '@(https?://[^\s"\'\[\]]+\.[^\s"\'.\[\]]+)@iu',
             '<a href="\1">\1</a>',
-            $string
+            $string,
         );
     }
 
@@ -2082,7 +2079,7 @@ class SwatString extends SwatObject
             throw new SwatInvalidSerializedDataException(
                 "Invalid signed serialized data '{$data}'.",
                 0,
-                $data
+                $data,
             );
         }
 
@@ -2093,7 +2090,7 @@ class SwatString extends SwatObject
             throw new SwatInvalidSerializedDataException(
                 "Invalid signed serialized data '{$data}'.",
                 0,
-                $data
+                $data,
             );
         }
 
@@ -2118,7 +2115,7 @@ class SwatString extends SwatObject
      */
     public static function quoteJavaScriptString($string)
     {
-        $search = array(
+        $search = [
             '\\', // backslash quote
             '&', // ampersand
             '<', // less than
@@ -2132,10 +2129,10 @@ class SwatString extends SwatObject
             "\n", // line feed
             "\xc2\x85", // next line
             "\xe2\x80\xa8", // line separator
-            "\xe2\x80\xa9" // paragraph separator
-        );
+            "\xe2\x80\xa9", // paragraph separator
+        ];
 
-        $replace = array(
+        $replace = [
             '\\\\', // backslash quote
             '\x26', // ampersand
             '\x3c', // less than
@@ -2149,8 +2146,8 @@ class SwatString extends SwatObject
             '\n', // line feed
             '\u0085', // next line
             '\u2028', // line separator
-            '\u2029' // paragraph separator
-        );
+            '\u2029', // paragraph separator
+        ];
 
         // escape XSS vectors
         $string = str_replace($search, $replace, $string);
@@ -2274,10 +2271,10 @@ class SwatString extends SwatObject
      */
     protected static function toHumanReadableTimePeriodString(
         array $parts,
-        $largest_part = false
+        $largest_part = false,
     ) {
         if ($largest_part && count($parts) > 0) {
-            $parts = array(reset($parts));
+            $parts = [reset($parts)];
         }
 
         return self::toList($parts);
@@ -2327,7 +2324,7 @@ class SwatString extends SwatObject
         &$matches,
         $hole_start = -1,
         $hole_end = -1,
-        $hole_length = 0
+        $hole_length = 0,
     ) {
         for ($i = 0; $i < count($matches[0]); $i++) {
             $entity = $matches[0][$i][0];
@@ -2378,7 +2375,7 @@ class SwatString extends SwatObject
             // negative sign shown as: (5.00)
             case 0:
                 if (mb_strpos($string, '(') !== false) {
-                    return '-' . str_replace(array('(', ')'), array(), $string);
+                    return '-' . str_replace(['(', ')'], [], $string);
                 }
                 break;
 

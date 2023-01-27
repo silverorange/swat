@@ -48,7 +48,7 @@ class SwatYUI extends SwatObject
      * @var array
      * @see SwatYUI::buildComponents()
      */
-    private static $components = array();
+    private static $components = [];
 
     // }}}
     // {{{ private properties
@@ -77,12 +77,12 @@ class SwatYUI extends SwatObject
         self::buildComponents();
 
         if (!is_array($component_ids)) {
-            $component_ids = array($component_ids);
+            $component_ids = [$component_ids];
         }
 
         $this->html_head_entry_set = $this->buildHtmlHeadEntrySet(
             $component_ids,
-            $mode
+            $mode,
         );
     }
 
@@ -120,7 +120,7 @@ class SwatYUI extends SwatObject
 
         foreach ($component_ids as $component_id) {
             $set->addEntrySet(
-                self::$components[$component_id]->getHtmlHeadEntrySet($mode)
+                self::$components[$component_id]->getHtmlHeadEntrySet($mode),
             );
         }
 
@@ -135,7 +135,7 @@ class SwatYUI extends SwatObject
     private function getAttributionHtmlHeadEntry()
     {
         $comment =
-            "Yahoo! UI Library (YUI) is Copyright (c) 2007-2009, " .
+            'Yahoo! UI Library (YUI) is Copyright (c) 2007-2009, ' .
             "Yahoo! Inc.\n\t     http://developer.yahoo.com/yui/license.html";
 
         return new SwatCommentHtmlHeadEntry($comment);
@@ -153,7 +153,7 @@ class SwatYUI extends SwatObject
     private static function buildComponents()
     {
         static $components_built = false;
-        static $components = array();
+        static $components = [];
 
         if ($components_built) {
             return;
@@ -173,7 +173,7 @@ class SwatYUI extends SwatObject
         $components['button']->addStyleSheet(
             'button/assets/skins/sam',
             '',
-            false
+            false,
         );
 
         $components['calendar'] = new SwatYUIComponent('calendar');
@@ -197,7 +197,7 @@ class SwatYUI extends SwatObject
         $components['container_core']->addStyleSheet(
             'container/assets',
             'container-core',
-            false
+            false,
         );
 
         $components['datasource'] = new SwatYUIComponent('datasource');
@@ -208,7 +208,7 @@ class SwatYUI extends SwatObject
         $components['datatable']->addStyleSheet(
             'datatable/assets/skins/sam',
             '',
-            false
+            false,
         );
 
         $components['dom'] = new SwatYUIComponent('dom');
@@ -222,7 +222,7 @@ class SwatYUI extends SwatObject
         $components['editor']->addStyleSheet(
             'editor/assets/skins/sam',
             '',
-            false
+            false,
         );
 
         $components['simpleeditor'] = new SwatYUIComponent('simpleeditor');
@@ -230,7 +230,7 @@ class SwatYUI extends SwatObject
         $components['simpleeditor']->addStyleSheet(
             'editor/assets/skins/sam',
             '',
-            false
+            false,
         );
 
         $components['element'] = new SwatYUIComponent('element');
@@ -243,7 +243,7 @@ class SwatYUI extends SwatObject
         $components['event-delegate']->addJavaScript();
 
         $components['event-mouseenter'] = new SwatYUIComponent(
-            'event-mouseenter'
+            'event-mouseenter',
         );
 
         $components['event-mouseenter']->addJavaScript();
@@ -259,7 +259,7 @@ class SwatYUI extends SwatObject
         $components['imagecropper']->addStyleSheet(
             'imagecropper/assets/skins/sam',
             '',
-            false
+            false,
         );
 
         $components['json'] = new SwatYUIComponent('json');
@@ -277,11 +277,11 @@ class SwatYUI extends SwatObject
         $components['paginator']->addStyleSheet(
             'paginator/assets/skins/sam',
             '',
-            false
+            false,
         );
 
         $components['reset-fonts-grids'] = new SwatYUIComponent(
-            'reset-fonts-grids'
+            'reset-fonts-grids',
         );
         $components['reset-fonts-grids']->addStyleSheet('', '', false);
 
@@ -293,7 +293,7 @@ class SwatYUI extends SwatObject
         $components['resize']->addStyleSheet(
             'resize/assets/skins/sam',
             '',
-            false
+            false,
         );
 
         $components['selector'] = new SwatYUIComponent('selector');
@@ -313,7 +313,7 @@ class SwatYUI extends SwatObject
         $components['tabview']->addStyleSheet(
             'tabview/assets/skins/sam',
             '',
-            false
+            false,
         );
 
         $components['treeview'] = new SwatYUIComponent('treeview');

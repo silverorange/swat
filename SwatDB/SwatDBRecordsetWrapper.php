@@ -60,7 +60,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *
      * @see SwatDBRecordsetWrapper::setOptions()
      */
-    protected $options = array();
+    protected $options = [];
 
     // }}}
     // {{{ private properties
@@ -72,7 +72,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *
      * @var array
      */
-    private $objects = array();
+    private $objects = [];
 
     /**
      * Records contained in this recordset indexed by this recordset's
@@ -83,7 +83,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *
      * @var array
      */
-    private $objects_by_index = array();
+    private $objects_by_index = [];
 
     /**
      * Records removed from this recordset
@@ -95,7 +95,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *
      * @var array
      */
-    private $removed_objects = array();
+    private $removed_objects = [];
 
     /**
      * The current index of the iterator interface
@@ -117,7 +117,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      */
     public function __construct(
         MDB2_Result_Common $rs = null,
-        array $options = array()
+        array $options = [],
     ) {
         $this->init();
         $this->setOptions($options);
@@ -136,8 +136,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
             throw new SwatDBException($rs->getMessage());
         }
 
-        $this->objects = array();
-        $this->objects_by_index = array();
+        $this->objects = [];
+        $this->objects_by_index = [];
 
         $this->setDatabase($rs->db);
 
@@ -214,13 +214,13 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     {
         // if options passed as string then second param is option value
         if (is_string($options)) {
-            $options = array($options => $value);
+            $options = [$options => $value];
         }
 
         if (!is_array($options)) {
             throw new InvalidArgumentException(
                 'The $options parameter must either be an array or a string ' .
-                    'containing the option name.'
+                    'containing the option name.',
             );
         }
 
@@ -293,7 +293,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         } else {
             $object = new $this->row_wrapper_class(
                 $row,
-                $this->getOption('read_only')
+                $this->getOption('read_only'),
             );
         }
 
@@ -331,8 +331,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
                 sprintf(
                     'No database available to this wrapper (%s). ' .
                         'Call the setDatabase method.',
-                    get_class($this)
-                )
+                    get_class($this),
+                ),
             );
         }
     }
@@ -381,7 +381,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     {
         if (!isset($this[$offset])) {
             throw new OutOfBoundsException(
-                sprintf('Index %s is out of bounds.', $offset)
+                sprintf('Index %s is out of bounds.', $offset),
             );
         }
 
@@ -424,8 +424,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
             throw new UnexpectedValueException(
                 sprintf(
                     'Value should be an instance of %s.',
-                    $this->row_wrapper_class
-                )
+                    $this->row_wrapper_class,
+                ),
             );
         }
 
@@ -451,8 +451,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
                 throw new OutOfBoundsException(
                     sprintf(
                         'No record to replace exists at offset %s.',
-                        $offset
-                    )
+                        $offset,
+                    ),
                 );
             }
 
@@ -662,15 +662,15 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
 
     public function serialize()
     {
-        $data = array();
+        $data = [];
 
-        $private_properties = array(
+        $private_properties = [
             'row_wrapper_class',
             'index_field',
             'objects',
             'objects_by_index',
-            'options'
-        );
+            'options',
+        ];
 
         foreach ($private_properties as $property) {
             $data[$property] = $this->$property;
@@ -694,21 +694,17 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     // }}}
     // {{{ public function marshall()
 
-    public function marshall(array $tree = array())
+    public function marshall(array $tree = [])
     {
-        $data = array();
+        $data = [];
 
-        $private_properties = array(
-            'row_wrapper_class',
-            'index_field',
-            'options'
-        );
+        $private_properties = ['row_wrapper_class', 'index_field', 'options'];
 
         foreach ($private_properties as $property) {
             $data[$property] = $this->$property;
         }
 
-        $data['objects'] = array();
+        $data['objects'] = [];
 
         foreach ($this->objects as $object) {
             if ($object instanceof SwatDBMarshallable) {
@@ -723,13 +719,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     // }}}
     // {{{ public function unmarshall()
 
-    public function unmarshall(array $data = array())
+    public function unmarshall(array $data = [])
     {
-        $private_properties = array(
-            'row_wrapper_class',
-            'index_field',
-            'options'
-        );
+        $private_properties = ['row_wrapper_class', 'index_field', 'options'];
 
         foreach ($private_properties as $property) {
             if (isset($data[$property])) {
@@ -739,8 +731,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
             }
         }
 
-        $this->objects = array();
-        $this->objects_by_index = array();
+        $this->objects = [];
+        $this->objects_by_index = [];
         if (is_subclass_of($this->row_wrapper_class, 'SwatDBMarshallable')) {
             if (isset($data['objects'])) {
                 foreach ($data['objects'] as $object_data) {
@@ -774,13 +766,13 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      */
     public function getInternalValues($name)
     {
-        $values = array();
+        $values = [];
 
         if (count($this) > 0) {
             if (!$this->getFirst()->hasInternalValue($name)) {
                 throw new SwatDBException(
-                    "Records in this recordset do not contain an internal " .
-                        "field named '{$name}'."
+                    'Records in this recordset do not contain an internal ' .
+                        "field named '{$name}'.",
                 );
             }
 
@@ -821,7 +813,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         MDB2_Driver_Common $db,
         $sql,
         $wrapper,
-        $type = 'integer'
+        $type = 'integer',
     ) {
         $sub_data_objects = null;
 
@@ -857,7 +849,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      */
     public function attachSubDataObjects(
         $name,
-        SwatDBRecordsetWrapper $sub_data_objects
+        SwatDBRecordsetWrapper $sub_data_objects,
     ) {
         if ($sub_data_objects->index_field === null) {
             throw new SwatDBException(
@@ -865,8 +857,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
                     'Index field must be specified in the sub-data-object ' .
                         'recordset wrapper class (%s::init()) ' .
                         'in order to attach recordset as sub-dataobjects.',
-                    get_class($sub_data_objects)
-                )
+                    get_class($sub_data_objects),
+                ),
             );
         }
 
@@ -914,7 +906,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         $binding_field,
         $where = '',
         $order_by = '',
-        $fields = '*'
+        $fields = '*',
     ) {
         $this->checkDB();
 
@@ -923,8 +915,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
                 sprintf(
                     'Index field must be specified in the recordset wrapper ' .
                         'class (%s::init()) in order to attach sub-recordsets.',
-                    get_class($this)
-                )
+                    get_class($this),
+                ),
             );
         }
 
@@ -939,14 +931,14 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         }
 
         // get record ids
-        $record_ids = array();
+        $record_ids = [];
         foreach ($this as $record) {
             $record_ids[] = $record->{$this->index_field};
         }
 
         $record_ids = $this->db->implodeArray(
             $record_ids,
-            $binding_field->type
+            $binding_field->type,
         );
 
         // build SQL to select all records
@@ -956,7 +948,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
             $fields,
             $table,
             $binding_field->name,
-            $record_ids
+            $record_ids,
         );
 
         if ($where != '') {
@@ -975,7 +967,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
             $name,
             $wrapper,
             $binding_field->name,
-            $recordset
+            $recordset,
         );
     }
 
@@ -1003,7 +995,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         $name,
         $wrapper,
         $binding_field,
-        SwatDBRecordsetWrapper $recordset
+        SwatDBRecordsetWrapper $recordset,
     ) {
         $this->checkDB();
 
@@ -1057,8 +1049,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
                 sprintf(
                     'Index field must be specified in the recordset wrapper ' .
                         'class (%s::init()) in order to get the record indexes.',
-                    get_class($this)
-                )
+                    get_class($this),
+                ),
             );
         }
 
@@ -1230,8 +1222,8 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     public function removeAll()
     {
         $this->removed_objects = array_values($this->objects);
-        $this->objects = array();
-        $this->objects_by_index = array();
+        $this->objects = [];
+        $this->objects_by_index = [];
         $this->current_index = 0;
     }
 
@@ -1248,7 +1240,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     public function reindex()
     {
         if ($this->index_field !== null) {
-            $this->objects_by_index = array();
+            $this->objects_by_index = [];
             $index_field = $this->index_field;
             foreach ($this->objects as $object) {
                 if (isset($object->$index_field)) {
@@ -1273,13 +1265,13 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      */
     public function getPropertyValues($name)
     {
-        $values = array();
+        $values = [];
 
         if (count($this) > 0) {
             if (!isset($this->getFirst()->$name)) {
                 throw new SwatDBException(
-                    "Records in this recordset do not contain a property " .
-                        "named '{$name}'."
+                    'Records in this recordset do not contain a property ' .
+                        "named '{$name}'.",
                 );
             }
 
@@ -1309,7 +1301,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *                                have been set already. Prevents infinite
      *                                recursion.
      */
-    public function setDatabase(MDB2_Driver_Common $db, array $set = array())
+    public function setDatabase(MDB2_Driver_Common $db, array $set = [])
     {
         $key = spl_object_hash($this);
 
@@ -1364,7 +1356,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
             throw $e;
         }
 
-        $this->removed_objects = array();
+        $this->removed_objects = [];
         $this->reindex();
     }
 
@@ -1399,7 +1391,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
             throw new SwatInvalidTypeException(
                 'The $object_indexes property must be an array.',
                 0,
-                $object_indexes
+                $object_indexes,
             );
         }
 
@@ -1409,14 +1401,14 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
                 'The recordset must define a row wrapper class that is an ' .
                     'instance of SwatDBRecordable for recordset loading to work.',
                 0,
-                $this->row_wrapper_class
+                $this->row_wrapper_class,
             );
         }
 
         $success = true;
 
         // try to load all records
-        $records = array();
+        $records = [];
         $class_name = $this->row_wrapper_class;
         foreach ($object_indexes as $index) {
             $record = new $class_name();
@@ -1432,9 +1424,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
         // successfully loaded all records, set this set's records to the
         // loaded records
         if ($success) {
-            $this->objects = array();
-            $this->objects_by_index = array();
-            $this->removed_objects = array();
+            $this->objects = [];
+            $this->objects_by_index = [];
+            $this->removed_objects = [];
 
             foreach ($records as $record) {
                 $this[] = $record;

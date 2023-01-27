@@ -291,9 +291,9 @@ class SwatTableViewCheckAllRow extends SwatTableViewRow
 
         // set the controller of the check-all widget
         return sprintf(
-            "%s_obj.setController(%s);",
+            '%s_obj.setController(%s);',
             $this->check_all->id,
-            $this->list_id
+            $this->list_id,
         );
     }
 

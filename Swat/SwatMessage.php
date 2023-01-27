@@ -137,7 +137,7 @@ class SwatMessage extends SwatObject
      */
     public function getCSSClassString()
     {
-        $classes = array('swat-message');
+        $classes = ['swat-message'];
 
         // legacy style for backwards compatibility
         if ($this->type === 'notice') {

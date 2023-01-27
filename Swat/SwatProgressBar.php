@@ -134,7 +134,7 @@ class SwatProgressBar extends SwatControl
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('event'));
+        $yui = new SwatYUI(['event']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addStyleSheet('packages/swat/styles/swat-progress-bar.css');
@@ -190,8 +190,8 @@ class SwatProgressBar extends SwatControl
                 sprintf(
                     '$length must be specified in ' .
                         'cascading style-sheet units. Value was: %s',
-                    $this->length
-                )
+                    $this->length,
+                ),
             );
         }
 
@@ -237,13 +237,13 @@ class SwatProgressBar extends SwatControl
                 $full_div_tag->style = sprintf(
                     'height: %s; top: %s;',
                     $full_length,
-                    $empty_length
+                    $empty_length,
                 );
 
                 $empty_div_tag->style = sprintf(
                     'height: %s; top: -%s;',
                     $empty_length,
-                    $full_length
+                    $full_length,
                 );
 
                 break;
@@ -306,7 +306,7 @@ class SwatProgressBar extends SwatControl
             $this->id,
             $this->id,
             $this->orientation,
-            $this->value
+            $this->value,
         );
     }
 
@@ -321,7 +321,7 @@ class SwatProgressBar extends SwatControl
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-progress-bar');
+        $classes = ['swat-progress-bar'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

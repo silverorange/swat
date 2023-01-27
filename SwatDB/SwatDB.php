@@ -15,7 +15,7 @@ class SwatDB extends SwatObject
 
     protected static $query_count = 0;
     protected static $debug = false;
-    protected static $debug_info = array();
+    protected static $debug_info = [];
     protected static $debug_wrapper_depth = 0;
 
     // }}}
@@ -88,16 +88,16 @@ class SwatDB extends SwatObject
         $db,
         $sql,
         $wrapper = 'SwatDBDefaultRecordsetWrapper',
-        $types = null
+        $types = null,
     ) {
         $mdb2_types = $types === null ? true : $types;
 
-        $rs = self::executeQuery($db, 'query', array(
+        $rs = self::executeQuery($db, 'query', [
             $sql,
             $mdb2_types,
             true,
-            false
-        ));
+            false,
+        ]);
 
         // Wrap results. Do it here instead of in MDB2 so we can wrap using
         // an existing object instance.
@@ -128,7 +128,7 @@ class SwatDB extends SwatObject
      */
     public static function exec($db, $sql)
     {
-        return self::executeQuery($db, 'exec', array($sql));
+        return self::executeQuery($db, 'exec', [$sql]);
     }
 
     // }}}
@@ -176,7 +176,7 @@ class SwatDB extends SwatObject
         $value,
         $id_field,
         $ids,
-        $where = null
+        $where = null,
     ) {
         $ids = self::initArray($ids);
 
@@ -204,7 +204,7 @@ class SwatDB extends SwatObject
             $db->quote($value, $field->type),
             $id_field->name,
             $id_list,
-            $where
+            $where,
         );
 
         return self::exec($db, $sql);
@@ -247,7 +247,7 @@ class SwatDB extends SwatObject
         $table,
         $field,
         $id_field = null,
-        $id = 0
+        $id = 0,
     ) {
         $field = new SwatDBField($field, 'integer');
 
@@ -262,14 +262,11 @@ class SwatDB extends SwatObject
                 $field->name,
                 $table,
                 $id_field->name,
-                $db->quote($id, $id_field->type)
+                $db->quote($id, $id_field->type),
             );
         }
 
-        $values = self::executeQuery($db, 'queryCol', array(
-            $sql,
-            $field->type
-        ));
+        $values = self::executeQuery($db, 'queryCol', [$sql, $field->type]);
 
         return $values;
     }
@@ -294,7 +291,7 @@ class SwatDB extends SwatObject
     public static function queryOne($db, $sql, $type = null)
     {
         $mdb2_type = $type === null ? true : $type;
-        return self::executeQuery($db, 'queryOne', array($sql, $mdb2_type));
+        return self::executeQuery($db, 'queryOne', [$sql, $mdb2_type]);
     }
 
     // }}}
@@ -317,11 +314,11 @@ class SwatDB extends SwatObject
     {
         $mdb2_types = $types === null ? true : $types;
 
-        $row = self::executeQuery($db, 'queryRow', array(
+        $row = self::executeQuery($db, 'queryRow', [
             $sql,
             $mdb2_types,
-            MDB2_FETCHMODE_OBJECT
-        ));
+            MDB2_FETCHMODE_OBJECT,
+        ]);
 
         return $row;
     }
@@ -361,7 +358,7 @@ class SwatDB extends SwatObject
         $table,
         $field,
         $id_field = null,
-        $id = 0
+        $id = 0,
     ) {
         $field = new SwatDBField($field, 'integer');
 
@@ -376,7 +373,7 @@ class SwatDB extends SwatObject
                 $field->name,
                 $table,
                 $id_field->name,
-                $db->quote($id, $id_field->type)
+                $db->quote($id, $id_field->type),
             );
         }
 
@@ -419,7 +416,7 @@ class SwatDB extends SwatObject
         $table,
         $fields,
         $id_field,
-        $id
+        $id,
     ) {
         self::initFields($fields);
         $id_field = new SwatDBField($id_field, 'integer');
@@ -431,7 +428,7 @@ class SwatDB extends SwatObject
             $field_list,
             $table,
             $id_field->name,
-            $db->quote($id, $id_field->type)
+            $db->quote($id, $id_field->type),
         );
 
         $rs = self::query($db, $sql, null);
@@ -480,10 +477,10 @@ class SwatDB extends SwatObject
         $proc,
         $params,
         $wrapper = 'SwatDBDefaultRecordsetWrapper',
-        $types = null
+        $types = null,
     ) {
         if (!is_array($params)) {
-            $params = array($params);
+            $params = [$params];
         }
 
         $mdb2_types = $types === null ? true : $types;
@@ -494,7 +491,7 @@ class SwatDB extends SwatObject
             $params,
             $mdb2_types,
             true,
-            false
+            false,
         );
 
         if (MDB2::isError($rs)) {
@@ -536,7 +533,7 @@ class SwatDB extends SwatObject
     public static function executeStoredProcOne($db, $proc, $params)
     {
         if (!is_array($params)) {
-            $params = array($params);
+            $params = [$params];
         }
 
         $rs = self::executeStoredProc($db, $proc, $params);
@@ -589,7 +586,7 @@ class SwatDB extends SwatObject
         $value_field,
         $values,
         $bound_table,
-        $bound_field
+        $bound_field,
     ) {
         $id_field = new SwatDBField($id_field, 'integer');
         $value_field = new SwatDBField($value_field, 'integer');
@@ -603,7 +600,7 @@ class SwatDB extends SwatObject
             $delete_sql,
             $table,
             $id_field->name,
-            $db->quote($id, $id_field->type)
+            $db->quote($id, $id_field->type),
         );
 
         if (count($values)) {
@@ -631,13 +628,13 @@ class SwatDB extends SwatObject
                 $id_field->name,
                 $db->quote($id, $id_field->type),
                 $bound_field->name,
-                $value_list
+                $value_list,
             );
 
             $delete_sql .= sprintf(
                 ' and %s not in (%s)',
                 $value_field->name,
-                $value_list
+                $value_list,
             );
         }
 
@@ -694,7 +691,7 @@ class SwatDB extends SwatObject
         $table,
         $fields,
         $values,
-        $id_field = null
+        $id_field = null,
     ) {
         self::initFields($fields);
 
@@ -707,7 +704,7 @@ class SwatDB extends SwatObject
             } else {
                 $field_list = implode(',', self::getFieldNameArray($fields));
 
-                $values_in_order = array();
+                $values_in_order = [];
 
                 foreach ($fields as &$field) {
                     $value = isset($values[$field->name])
@@ -723,7 +720,7 @@ class SwatDB extends SwatObject
                     'insert into %s (%s) values (%s)',
                     $table,
                     $field_list,
-                    $value_list
+                    $value_list,
                 );
             }
 
@@ -779,12 +776,12 @@ class SwatDB extends SwatObject
         $fields,
         $values,
         $id_field,
-        $id
+        $id,
     ) {
         self::initFields($fields);
         $id_field = new SwatDBField($id_field, 'integer');
         $sql = 'update %s set %s where %s = %s';
-        $updates = array();
+        $updates = [];
 
         foreach ($fields as &$field) {
             $value = isset($values[$field->name])
@@ -794,7 +791,7 @@ class SwatDB extends SwatObject
             $updates[] = sprintf(
                 '%s = %s',
                 $field->name,
-                $db->quote($value, $field->type)
+                $db->quote($value, $field->type),
             );
         }
 
@@ -805,7 +802,7 @@ class SwatDB extends SwatObject
             $table,
             $update_list,
             $id_field->name,
-            $db->quote($id, $id_field->type)
+            $db->quote($id, $id_field->type),
         );
 
         self::exec($db, $sql);
@@ -842,7 +839,7 @@ class SwatDB extends SwatObject
             $sql,
             $table,
             $id_field->name,
-            $db->quote($id, $id_field->type)
+            $db->quote($id, $id_field->type),
         );
 
         self::exec($db, $sql);
@@ -892,7 +889,7 @@ class SwatDB extends SwatObject
         $title_field,
         $id_field,
         $order_by_clause = null,
-        $where_clause = null
+        $where_clause = null,
     ) {
         $title_field = new SwatDBField($title_field, 'text');
         $id_field = new SwatDBField($id_field, 'integer');
@@ -910,7 +907,7 @@ class SwatDB extends SwatObject
 
         $rs = self::query($db, $sql, null);
 
-        $options = array();
+        $options = [];
 
         $row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
         while ($row) {
@@ -977,7 +974,7 @@ class SwatDB extends SwatObject
         $id_field,
         $cascade_field,
         $order_by_clause = null,
-        $where_clause = null
+        $where_clause = null,
     ) {
         $title_field = new SwatDBField($title_field, 'text');
         $id_field = new SwatDBField($id_field, 'integer');
@@ -989,7 +986,7 @@ class SwatDB extends SwatObject
             $id_field->name,
             $title_field->name,
             $cascade_field->name,
-            $table
+            $table,
         );
 
         if ($where_clause !== null) {
@@ -1003,7 +1000,7 @@ class SwatDB extends SwatObject
 
         $rs = self::query($db, $sql, null);
 
-        $options = array();
+        $options = [];
         $current = null;
         $title_field_name = $title_field->name;
         $id_field_name = $id_field->name;
@@ -1017,7 +1014,7 @@ class SwatDB extends SwatObject
 
             if ($row->$cascade_field_name != $current) {
                 $current = $row->$cascade_field_name;
-                $options[$current] = array();
+                $options[$current] = [];
             }
 
             $options[$current][$row->$id_field_name] = $row->$title_field_name;
@@ -1097,7 +1094,7 @@ class SwatDB extends SwatObject
         $group_field,
         $order_by_clause = null,
         $where_clause = null,
-        $tree = null
+        $tree = null,
     ) {
         $title_field = new SwatDBField($title_field, 'text');
         $id_field = new SwatDBField($id_field, 'integer');
@@ -1114,7 +1111,7 @@ class SwatDB extends SwatObject
             "{$table}.{$title_field->name}",
             "{$group_table}.{$group_title_field->name}",
             "{$group_table}.{$group_id_field->name}",
-            $table
+            $table,
         );
 
         $sql .= ' inner join %s on %s = %s';
@@ -1122,7 +1119,7 @@ class SwatDB extends SwatObject
             $sql,
             $group_table,
             "{$group_table}.{$group_id_field->name}",
-            "{$table}.{$group_field->name}"
+            "{$table}.{$group_field->name}",
         );
 
         if ($where_clause != null) {
@@ -1135,7 +1132,7 @@ class SwatDB extends SwatObject
 
         $rs = self::query($db, $sql, null);
 
-        $options = array();
+        $options = [];
 
         if ($tree !== null && $tree instanceof SwatDataTreeNode) {
             $base_parent = $tree;
@@ -1154,7 +1151,7 @@ class SwatDB extends SwatObject
             }
 
             $current_parent->addChild(
-                new SwatDataTreeNode($row->id, $row->title)
+                new SwatDataTreeNode($row->id, $row->title),
             );
 
             $row = $rs->fetchRow(MDB2_FETCHMODE_OBJECT);
@@ -1191,7 +1188,7 @@ class SwatDB extends SwatObject
             'select max(%s) as %s from %s',
             $field->name,
             $field->name,
-            $table
+            $table,
         );
 
         return self::queryOne($db, $sql);
@@ -1261,9 +1258,9 @@ class SwatDB extends SwatObject
         $title_field_name,
         $id_field_name,
         $level_field_name,
-        $tree = null
+        $tree = null,
     ) {
-        $stack = array();
+        $stack = [];
         if ($tree !== null && $tree instanceof SwatDataTreeNode) {
             $current_parent = $tree;
         } else {
@@ -1312,9 +1309,9 @@ class SwatDB extends SwatObject
     public static function implodeSelection(
         MDB2_Driver_Common $db,
         SwatViewSelection $selection,
-        $type = 'integer'
+        $type = 'integer',
     ) {
-        $quoted_ids = array();
+        $quoted_ids = [];
         foreach ($selection as $id) {
             $quoted_ids[] = $db->quote($id, $type);
         }
@@ -1329,7 +1326,7 @@ class SwatDB extends SwatObject
     {
         self::$query_count++;
         self::debugStart(current($args)); // sql is always the first arg
-        $ret = call_user_func_array(array($db, $method), $args);
+        $ret = call_user_func_array([$db, $method], $args);
         self::debugEnd();
 
         if (MDB2::isError($ret)) {
@@ -1348,7 +1345,7 @@ class SwatDB extends SwatObject
             return;
         }
 
-        $names = array();
+        $names = [];
 
         foreach ($fields as &$field) {
             $names[] = $field->name;
@@ -1366,7 +1363,7 @@ class SwatDB extends SwatObject
             return;
         }
 
-        $types = array();
+        $types = [];
 
         foreach ($fields as &$field) {
             $types[] = $field->type;
@@ -1421,7 +1418,7 @@ class SwatDB extends SwatObject
         if (is_array($array)) {
             return $array;
         } elseif ($array instanceof Iterator) {
-            $return = array();
+            $return = [];
             foreach ($array as $value) {
                 $return[] = $value;
             }
@@ -1462,13 +1459,13 @@ class SwatDB extends SwatObject
                 "<strong>%s%s%s()</strong><br />\n",
                 $class === null ? '' : $class,
                 array_key_exists('type', $entry) ? $entry['type'] : '',
-                $function === null ? '' : $function
+                $function === null ? '' : $function,
             );
 
             echo $message;
             $debug_message = ob_get_clean();
 
-            $debug_info = array();
+            $debug_info = [];
             $debug_info['message'] = $debug_message;
             $debug_info['time'] = microtime(true) * 1000;
             $debug_info['depth'] = self::$debug_wrapper_depth;
@@ -1496,7 +1493,7 @@ class SwatDB extends SwatObject
                     if ($info['depth'] < $depth) {
                         echo str_repeat(
                             '</blockquote>',
-                            $depth - $info['depth']
+                            $depth - $info['depth'],
                         );
                     } elseif ($info['depth'] > $depth) {
                         echo '<blockquote class="swat-db-debug">';
@@ -1509,7 +1506,7 @@ class SwatDB extends SwatObject
                     $locale = SwatI18NLocale::get();
                     printf(
                         "<p>Query #%s</p>\n",
-                        $locale->formatNumber($info['count'])
+                        $locale->formatNumber($info['count']),
                     );
 
                     if (count(self::$debug_info) > $count + 1) {
@@ -1522,7 +1519,7 @@ class SwatDB extends SwatObject
 
                     printf(
                         "<p><strong>%s ms</strong></p>\n",
-                        $locale->formatNumber($ms, 3)
+                        $locale->formatNumber($ms, 3),
                     );
 
                     if ($info['depth'] === 0 && count(self::$debug_info) > 1) {
@@ -1535,9 +1532,9 @@ class SwatDB extends SwatObject
                         printf(
                             Swat::_(
                                 'Total time: %s ms (includes ' .
-                                    'queries within the wrapper)'
+                                    'queries within the wrapper)',
                             ),
-                            $locale->formatNumber($ms, 3)
+                            $locale->formatNumber($ms, 3),
                         );
 
                         echo '</strong></p>';
@@ -1552,7 +1549,7 @@ class SwatDB extends SwatObject
                 }
 
                 // reset debug info for the next query
-                self::$debug_info = array();
+                self::$debug_info = [];
             }
         }
     }

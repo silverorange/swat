@@ -55,7 +55,7 @@ class SwatTreeFlydownNode extends SwatTreeNode
         } elseif ($param2 === null) {
             throw new SwatException(
                 'First parameter must be a ' .
-                    'SwatOption or second parameter must be specified.'
+                    'SwatOption or second parameter must be specified.',
             );
         } else {
             $this->flydown_option = new SwatOption($param1, $param2);

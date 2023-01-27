@@ -44,13 +44,13 @@ class SwatCalendar extends SwatControl
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('dom', 'container'));
+        $yui = new SwatYUI(['dom', 'container']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addStyleSheet('packages/swat/styles/swat-calendar.css');
         $this->addJavaScript('packages/swat/javascript/swat-calendar.js');
         $this->addJavaScript(
-            'packages/swat/javascript/swat-z-index-manager.js'
+            'packages/swat/javascript/swat-z-index-manager.js',
         );
     }
 
@@ -105,7 +105,7 @@ class SwatCalendar extends SwatControl
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-calendar');
+        $classes = ['swat-calendar'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }
@@ -131,7 +131,7 @@ class SwatCalendar extends SwatControl
 
         if (isset($this->valid_range_start)) {
             $start_date = $this->valid_range_start->formatLikeIntl(
-                'MM/dd/yyyy'
+                'MM/dd/yyyy',
             );
         } else {
             $start_date = '';
@@ -151,7 +151,7 @@ class SwatCalendar extends SwatControl
             $this->id,
             $this->id,
             $start_date,
-            $end_date
+            $end_date,
         );
 
         return $javascript;
@@ -178,7 +178,7 @@ class SwatCalendar extends SwatControl
         $date->setYear(1995);
 
         // Get the names of weeks (locale-specific)
-        $week_names = array();
+        $week_names = [];
         for ($i = 1; $i < 8; $i++) {
             $week_names[] = $date->formatLikeIntl('EEE');
             $date->setDay($i + 1);
@@ -186,7 +186,7 @@ class SwatCalendar extends SwatControl
         $week_names = "['" . implode("', '", $week_names) . "']";
 
         // Get the names of months (locale-specific)
-        $month_names = array();
+        $month_names = [];
         for ($i = 1; $i < 13; $i++) {
             $month_names[] = $date->formatLikeIntl('MMM');
             $date->setMonth($i + 1);

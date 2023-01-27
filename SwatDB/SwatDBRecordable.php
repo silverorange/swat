@@ -21,7 +21,7 @@ interface SwatDBRecordable
      *                                have been set already. Prevents infinite
      *                                recursion.
      */
-    public function setDatabase(MDB2_Driver_Common $db, array $set = array());
+    public function setDatabase(MDB2_Driver_Common $db, array $set = []);
 
     // }}}
     // {{{ public function save()

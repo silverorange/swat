@@ -56,8 +56,8 @@ class SwatFlydown extends SwatOptionControl implements SwatState
         parent::display();
 
         $wrapper_classes = array_merge(
-            array_diff($this->getCSSClassNames(), array('swat-flydown')),
-            array('swat-flydown-wrapper')
+            array_diff($this->getCSSClassNames(), ['swat-flydown']),
+            ['swat-flydown-wrapper'],
         );
         $wrapper = new SwatHtmlTag('span');
         $wrapper->class = implode(' ', $wrapper_classes);
@@ -67,7 +67,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
         $selected = false;
 
         if ($this->show_blank) {
-            $options = array_merge(array($this->getBlankOption()), $options);
+            $options = array_merge([$this->getBlankOption()], $options);
         }
 
         // only show a select if there is more than one option
@@ -97,7 +97,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
                 if ($this->serialize_values) {
                     $option_tag->value = SwatString::signedSerialize(
                         $flydown_option->value,
-                        $salt
+                        $salt,
                     );
                 } else {
                     $option_tag->value = (string) $flydown_option->value;
@@ -116,7 +116,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
                     // add option-specific CSS classes from option metadata
                     $classes = $this->getOptionMetadata(
                         $flydown_option,
-                        'classes'
+                        'classes',
                     );
 
                     if (is_array($classes)) {
@@ -143,7 +143,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
 
                 $option_tag->setContent(
                     $flydown_option->title,
-                    $flydown_option->content_type
+                    $flydown_option->content_type,
                 );
 
                 $option_tag->display();
@@ -305,7 +305,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
             $salt = $form->getSalt();
             $this->value = SwatString::signedUnserialize(
                 $data[$this->id],
-                $salt
+                $salt,
             );
         } else {
             $this->value = (string) $data[$this->id];
@@ -367,7 +367,7 @@ class SwatFlydown extends SwatOptionControl implements SwatState
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-flydown');
+        $classes = ['swat-flydown'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

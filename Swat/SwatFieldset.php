@@ -57,7 +57,7 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
         $this->requires_id = true;
 
         // JavaScript for IE peekaboo hack
-        $yui = new SwatYUI(array('event'));
+        $yui = new SwatYUI(['event']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-fieldset.js');
     }
@@ -139,7 +139,7 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
         return sprintf(
             "var %s_obj = new SwatFieldset('%s');",
             $this->id,
-            $this->id
+            $this->id,
         );
     }
 
@@ -153,7 +153,7 @@ class SwatFieldset extends SwatDisplayableContainer implements SwatTitleable
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-fieldset');
+        $classes = ['swat-fieldset'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

@@ -46,7 +46,7 @@ class SwatAccordion extends SwatNoteBook
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('yahoo', 'dom', 'event', 'animation'));
+        $yui = new SwatYUI(['yahoo', 'dom', 'event', 'animation']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addStyleSheet('packages/swat/styles/swat-accordion.css');
@@ -141,19 +141,19 @@ class SwatAccordion extends SwatNoteBook
             "var %1\$s_obj = new %2\$s('%1\$s', %3\$s);",
             $this->id,
             $this->getJavascriptClassName(),
-            $this->animate ? 'true' : 'false'
+            $this->animate ? 'true' : 'false',
         );
 
         $javascript .= sprintf(
             "\n%s_obj.animate = %s;",
             $this->id,
-            $this->animate ? 'true' : 'false'
+            $this->animate ? 'true' : 'false',
         );
 
         $javascript .= sprintf(
             "\n%s_obj.always_open = %s;",
             $this->id,
-            $this->always_open ? 'true' : 'false'
+            $this->always_open ? 'true' : 'false',
         );
 
         return $javascript;

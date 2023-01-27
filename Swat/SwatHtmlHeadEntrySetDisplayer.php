@@ -54,7 +54,7 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
         $uri_prefix = '',
         $tag = null,
         $combine = false,
-        $minify = false
+        $minify = false,
     ) {
         // clone set so displaying doesn't modify it
         $set = clone $set;
@@ -113,7 +113,7 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
     public function displayInline(
         SwatHtmlHeadEntrySet $set,
         $path,
-        $type = null
+        $type = null,
     ) {
         $entries = $set->toArray();
 
@@ -167,10 +167,10 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
         // remove files included in combines
         $entries = array_intersect_key($entries, array_flip($info['files']));
 
-        return array(
+        return [
             'entries' => $entries,
-            'superset' => $info['superset']
-        );
+            'superset' => $info['superset'],
+        ];
     }
 
     // }}}
@@ -186,25 +186,25 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
      */
     protected function getSortedEntries(array $original_entries)
     {
-        $entries = array();
+        $entries = [];
 
         // get array of entries with native ordering so we can do a
         // stable, user-defined sort
         $count = 0;
         foreach ($original_entries as $uri => $entry) {
-            $entries[] = array(
+            $entries[] = [
                 'order' => $count,
                 'uri' => $uri,
-                'object' => $entry
-            );
+                'object' => $entry,
+            ];
             $count++;
         }
 
         // stable-sort entries
-        usort($entries, array($this, 'compareEntries'));
+        usort($entries, [$this, 'compareEntries']);
 
         // put back in a flat array
-        $sorted_entries = array();
+        $sorted_entries = [];
         foreach ($entries as $uri => $entry) {
             $sorted_entries[$uri] = $entry['object'];
         }
@@ -241,7 +241,7 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
         // compare entry type order
         $type_comparison = $this->compareTypes(
             $a_object->getType(),
-            $b_object->getType()
+            $b_object->getType(),
         );
 
         if ($type_comparison !== 0) {
@@ -322,15 +322,15 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
      */
     protected function getTypeOrder()
     {
-        return array(
+        return [
             'SwatStyleSheetHtmlHeadEntry' => 0,
             'SwatLessStyleSheetHtmlHeadEntry' => 0, // Consider same as CSS
             'SwatLinkHtmlHeadEntry' => 1,
             'SwatInlineJavaScriptHtmlHeadEntry' => 2,
             'SwatJavaScriptHtmlHeadEntry' => 3,
             'SwatCommentHtmlHeadEntry' => 4,
-            '__unknown__' => 5
-        );
+            '__unknown__' => 5,
+        ];
     }
 
     // }}}
@@ -356,7 +356,7 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
                 $conflict_list .= sprintf(
                     "\n- %s conflicts with %s",
                     $file,
-                    implode(', ', $conflict)
+                    implode(', ', $conflict),
                 );
 
                 $count++;
@@ -364,7 +364,7 @@ class SwatHtmlHeadEntrySetDisplayer extends SwatObject
             throw new SwatException(
                 'Could not display head entries because the following ' .
                     'conflicts were detected: ' .
-                    $conflict_list
+                    $conflict_list,
             );
         }
     }

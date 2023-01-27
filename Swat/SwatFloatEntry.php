@@ -50,9 +50,9 @@ class SwatFloatEntry extends SwatNumericEntry
             $locale = SwatI18NLocale::get();
             $thousands_separator = $this->show_thousands_separator ? null : '';
 
-            $value = $locale->formatNumber($value, null, array(
-                'thousands_separator' => $thousands_separator
-            ));
+            $value = $locale->formatNumber($value, null, [
+                'thousands_separator' => $thousands_separator,
+            ]);
         } else {
             $value = parent::getDisplayValue($value);
         }
@@ -122,7 +122,7 @@ class SwatFloatEntry extends SwatNumericEntry
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-float-entry');
+        $classes = ['swat-float-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

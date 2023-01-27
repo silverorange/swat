@@ -7,7 +7,7 @@
 		"make-pretty": "prettier --write '{Swat,SwatDB,SwatI18N}/**/*.php'"
 	},
 	"devDependencies": {
-		"@prettier/plugin-php": "^0.9.0",
-		"prettier": "1.15.3"
+		"@prettier/plugin-php": "^0.19.0",
+		"prettier": "^2.8.3"
 	}
 }

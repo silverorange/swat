@@ -92,7 +92,7 @@ class Swat
             self::GETTEXT_DOMAIN,
             $singular_message,
             $plural_message,
-            $number
+            $number,
         );
     }
 
@@ -228,7 +228,7 @@ class Swat
 /*
  * Define a dummy dngettext() for when gettext is not available.
  */
-if (!function_exists("dngettext")) {
+if (!function_exists('dngettext')) {
     /**
      * Dummy translation function performs a passthrough on string to be
      * translated
@@ -260,7 +260,7 @@ if (!function_exists("dngettext")) {
 /*
  * Define a dummy dgettext() for when gettext is not available.
  */
-if (!function_exists("dgettext")) {
+if (!function_exists('dgettext')) {
     /**
      * Dummy translation function performs a passthrough on string to be
      * translated

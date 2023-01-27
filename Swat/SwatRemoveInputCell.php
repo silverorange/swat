@@ -35,7 +35,7 @@ class SwatRemoveInputCell extends SwatInputCell
         if ($row === null) {
             throw new SwatException(
                 'Remove input-cells can only be used ' .
-                    'inside table-views with an input-row.'
+                    'inside table-views with an input-row.',
             );
         }
 

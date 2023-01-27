@@ -159,7 +159,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('event'));
+        $yui = new SwatYUI(['event']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-time-entry.js');
 
@@ -383,7 +383,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
                     $date->setDate(
                         self::$date_year,
                         self::$date_month,
-                        self::$date_day
+                        self::$date_day,
                     ) === false
                 ) {
                     throw new SwatException('Invalid date.');
@@ -454,7 +454,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-time-entry');
+        $classes = ['swat-time-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }
@@ -475,63 +475,63 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
             "var %s_obj = new SwatTimeEntry('%s', %s);\n",
             $this->id,
             $this->id,
-            $use_current_time
+            $use_current_time,
         );
 
         if ($this->display_parts & self::HOUR) {
             $hour_flydown = $this->getCompositeWidget('hour_flydown');
 
-            $lookup_hours = array();
+            $lookup_hours = [];
             foreach ($hour_flydown->options as $key => $option) {
                 $lookup_hours[] = sprintf(
                     '%s: %s',
                     $option->value,
-                    $hour_flydown->show_blank ? $key + 1 : $key
+                    $hour_flydown->show_blank ? $key + 1 : $key,
                 );
             }
 
             $javascript .= sprintf(
                 "\n%s_obj.addLookupTable('hour', {%s});",
                 $this->id,
-                implode(', ', $lookup_hours)
+                implode(', ', $lookup_hours),
             );
         }
 
         if ($this->display_parts & self::MINUTE) {
             $minute_flydown = $this->getCompositeWidget('minute_flydown');
 
-            $lookup_minutes = array();
+            $lookup_minutes = [];
             foreach ($minute_flydown->options as $key => $option) {
                 $lookup_minutes[] = sprintf(
                     '%s: %s',
                     $option->value,
-                    $minute_flydown->show_blank ? $key + 1 : $key
+                    $minute_flydown->show_blank ? $key + 1 : $key,
                 );
             }
 
             $javascript .= sprintf(
                 "\n%s_obj.addLookupTable('minute', {%s});",
                 $this->id,
-                implode(', ', $lookup_minutes)
+                implode(', ', $lookup_minutes),
             );
         }
 
         if ($this->display_parts & self::SECOND) {
             $second_flydown = $this->getCompositeWidget('second_flydown');
 
-            $lookup_seconds = array();
+            $lookup_seconds = [];
             foreach ($second_flydown->options as $key => $option) {
                 $lookup_seconds[] = sprintf(
                     '%s: %s',
                     $option->value,
-                    $second_flydown->show_blank ? $key + 1 : $key
+                    $second_flydown->show_blank ? $key + 1 : $key,
                 );
             }
 
             $javascript .= sprintf(
                 "\n%s_obj.addLookupTable('second', {%s});",
                 $this->id,
-                implode(', ', $lookup_seconds)
+                implode(', ', $lookup_seconds),
             );
         }
 
@@ -553,9 +553,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
             $message = sprintf(
                 Swat::_(
                     'The time you have entered is invalid. ' .
-                        'It must be on or after %s.'
+                        'It must be on or after %s.',
                 ),
-                $this->getFormattedTime($this->valid_range_start)
+                $this->getFormattedTime($this->valid_range_start),
             );
 
             $this->addMessage(new SwatMessage($message, 'error'));
@@ -563,9 +563,9 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
             $message = sprintf(
                 Swat::_(
                     'The time you have entered is invalid. ' .
-                        'It must be on or before %s.'
+                        'It must be on or before %s.',
                 ),
-                $this->getFormattedTime($this->valid_range_end)
+                $this->getFormattedTime($this->valid_range_end),
             );
 
             $this->addMessage(new SwatMessage($message, 'error'));
@@ -593,7 +593,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
         return SwatDate::compare(
             $this->value,
             $this->valid_range_start,
-            true
+            true,
         ) >= 0;
     }
 
@@ -631,13 +631,13 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
         if ($this->display_parts & self::HOUR) {
             $this->addCompositeWidget(
                 $this->createHourFlydown(),
-                'hour_flydown'
+                'hour_flydown',
             );
 
             if ($this->twelve_hour) {
                 $this->addCompositeWidget(
                     $this->createAmPmFlydown(),
-                    'am_pm_flydown'
+                    'am_pm_flydown',
                 );
             }
         }
@@ -645,14 +645,14 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
         if ($this->display_parts & self::MINUTE) {
             $this->addCompositeWidget(
                 $this->createMinuteFlydown(),
-                'minute_flydown'
+                'minute_flydown',
             );
         }
 
         if ($this->display_parts & self::SECOND) {
             $this->addCompositeWidget(
                 $this->createSecondFlydown(),
-                'second_flydown'
+                'second_flydown',
             );
         }
     }
@@ -668,7 +668,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
     private function createHourFlydown()
     {
         $flydown = new SwatFlydown($this->id . '_hour');
-        $flydown->classes = array('swat-time-entry-hour');
+        $flydown->classes = ['swat-time-entry-hour'];
 
         if ($this->twelve_hour) {
             for ($i = 1; $i <= 12; $i++) {
@@ -694,7 +694,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
     private function createMinuteFlydown()
     {
         $flydown = new SwatFlydown($this->id . '_minute');
-        $flydown->classes = array('swat-time-entry-minute');
+        $flydown->classes = ['swat-time-entry-minute'];
 
         for ($i = 0; $i <= 59; $i++) {
             $flydown->addOption($i, str_pad($i, 2, '0', STR_PAD_LEFT));
@@ -714,7 +714,7 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
     private function createSecondFlydown()
     {
         $flydown = new SwatFlydown($this->id . '_second');
-        $flydown->classes = array('swat-time-entry-second');
+        $flydown->classes = ['swat-time-entry-second'];
 
         for ($i = 0; $i <= 59; $i++) {
             $flydown->addOption($i, str_pad($i, 2, '0', STR_PAD_LEFT));
@@ -734,11 +734,11 @@ class SwatTimeEntry extends SwatInputControl implements SwatState
     private function createAmPmFlydown()
     {
         $flydown = new SwatFlydown($this->id . '_am_pm');
-        $flydown->classes = array('swat-time-entry-ampm');
-        $flydown->addOptionsByArray(array(
+        $flydown->classes = ['swat-time-entry-ampm'];
+        $flydown->addOptionsByArray([
             'am' => Swat::_('am'),
-            'pm' => Swat::_('pm')
-        ));
+            'pm' => Swat::_('pm'),
+        ]);
 
         return $flydown;
     }

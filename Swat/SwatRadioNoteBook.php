@@ -33,14 +33,14 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
      *
      * @var array
      */
-    protected $children = array();
+    protected $children = [];
 
     /**
      * Pages affixed to this widget
      *
      * @var array
      */
-    protected $pages = array();
+    protected $pages = [];
 
     // }}}
     // {{{ public function __construct()
@@ -56,13 +56,13 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('dom', 'event', 'animation', 'selector'));
+        $yui = new SwatYUI(['dom', 'event', 'animation', 'selector']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addStyleSheet('packages/swat/styles/swat-radio-note-book.css');
 
         $this->addJavaScript(
-            'packages/swat/javascript/swat-radio-note-book.js'
+            'packages/swat/javascript/swat-radio-note-book.js',
         );
     }
 
@@ -97,7 +97,7 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
                 'Only SwatNoteBookChild objects may be nested within a ' .
                     'SwatRadioNoteBook object.',
                 0,
-                $child
+                $child,
             );
         }
     }
@@ -379,10 +379,10 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
                 interface_exists($class_name)
             )
         ) {
-            return array();
+            return [];
         }
 
-        $out = array();
+        $out = [];
 
         foreach ($this->pages as $page) {
             if ($class_name === null || $page instanceof $class_name) {
@@ -453,7 +453,7 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
      */
     public function getDescendantStates()
     {
-        $states = array();
+        $states = [];
 
         foreach ($this->getDescendants('SwatState') as $id => $object) {
             $states[$id] = $object->getState();
@@ -535,7 +535,7 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
             // get selected page id, strip off this id prefix
             $this->selected_page = mb_substr(
                 $data[$this->id],
-                mb_strlen($this->id) + 1
+                mb_strlen($this->id) + 1,
             );
         } else {
             $this->selected_page = null;
@@ -649,7 +649,7 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
         return sprintf(
             'var %s_obj = new SwatRadioNoteBook(%s);',
             $this->id,
-            SwatString::quoteJavaScriptString($this->id)
+            SwatString::quoteJavaScriptString($this->id),
         );
     }
 

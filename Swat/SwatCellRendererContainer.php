@@ -58,7 +58,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
         $renderer,
         $data_field,
         $property,
-        $object = null
+        $object = null,
     ) {
         if ($object !== null) {
             $property = $renderer->getPropertyNameToMap($object, $property);
@@ -98,7 +98,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
      */
     public function getRenderers()
     {
-        $out = array();
+        $out = [];
         $renderers = clone $this->renderers;
         foreach ($renderers as $renderer) {
             $out[] = $renderer;
@@ -185,7 +185,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
                     get_class($this) .
                     ' objects.',
                 0,
-                $child
+                $child,
             );
         }
     }
@@ -215,10 +215,10 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
                 interface_exists($class_name)
             )
         ) {
-            return array();
+            return [];
         }
 
-        $out = array();
+        $out = [];
 
         foreach ($this->getRenderers() as $renderer) {
             if ($class_name === null || $renderer instanceof $class_name) {
@@ -232,7 +232,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
             if ($renderer instanceof SwatUIParent) {
                 $out = array_merge(
                     $out,
-                    $renderer->getDescendants($class_name)
+                    $renderer->getDescendants($class_name),
                 );
             }
         }
@@ -292,7 +292,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
      */
     public function getDescendantStates()
     {
-        $states = array();
+        $states = [];
 
         foreach ($this->getDescendants('SwatState') as $id => $object) {
             $states[$id] = $object->getState();
@@ -417,7 +417,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
             $copy_renderer->parent = $copy;
             $copy->renderers->addRenderer($copy_renderer);
 
-            $copy_mappings = array();
+            $copy_mappings = [];
             $mappings = $this->renderers->getMappingsByRenderer($renderer);
             foreach ($mappings as $mapping) {
                 $copy_mappings[] = clone $mapping;
@@ -425,7 +425,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
 
             $copy->renderers->addMappingsToRenderer(
                 $copy_renderer,
-                $copy_mappings
+                $copy_mappings,
             );
         }
 

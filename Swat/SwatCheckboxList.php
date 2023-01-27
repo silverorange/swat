@@ -28,7 +28,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
      *
      * @var array
      */
-    public $values = array();
+    public $values = [];
 
     /**
      * Whether to show the check all box
@@ -66,7 +66,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
     {
         parent::__construct($id);
         $this->requires_id = true;
-        $yui = new SwatYUI(array('event'));
+        $yui = new SwatYUI(['event']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-checkbox-list.js');
         $this->addStyleSheet('packages/swat/styles/swat.css');
@@ -85,7 +85,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
         parent::init();
 
         // checks to see if there are duplicate values in the options array
-        $options_count = array();
+        $options_count = [];
         foreach ($this->getOptions() as $option) {
             $options_count[] = $option->value;
         }
@@ -93,7 +93,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
         foreach (array_count_values($options_count) as $count) {
             if ($count > 1) {
                 throw new SwatException(
-                    sprintf('Duplicate option values found in %s', $this->id)
+                    sprintf('Duplicate option values found in %s', $this->id),
                 );
             }
         }
@@ -129,11 +129,11 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
         $current_option = 0;
         $columns = is_array($this->columns)
             ? $this->columns
-            : array(
+            : [
                 ceil(
-                    count($options) / ($this->columns > 0 ? $this->columns : 1)
-                )
-            );
+                    count($options) / ($this->columns > 0 ? $this->columns : 1),
+                ),
+            ];
 
         $multiple_columns = count($options) > $columns[0];
         $maximum_options = array_shift($columns);
@@ -159,7 +159,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
                 $ul_tag->id = sprintf(
                     '%s_column_%s',
                     $this->id,
-                    $current_column
+                    $current_column,
                 );
 
                 $ul_tag->class = 'swat-checkbox-list-column';
@@ -224,7 +224,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
      */
     public function reset()
     {
-        $this->values = array();
+        $this->values = [];
     }
 
     // }}}
@@ -272,12 +272,12 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
             if (is_array($data[$this->id])) {
                 $this->values = $data[$this->id];
             } elseif ($data[$this->id] != '') {
-                $this->values = array($data[$this->id]);
+                $this->values = [$data[$this->id]];
             } else {
-                $this->values = array();
+                $this->values = [];
             }
         } else {
-            $this->values = array();
+            $this->values = [];
         }
     }
 
@@ -383,7 +383,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
             'var %s_obj = new %s(%s);',
             $this->id,
             $this->getJavaScriptClassName(),
-            SwatString::quoteJavaScriptString($this->id)
+            SwatString::quoteJavaScriptString($this->id),
         );
 
         // set check-all controller if it is visible
@@ -392,7 +392,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
             $javascript .= sprintf(
                 "\n%s_obj.setController(%s_obj);",
                 $check_all->id,
-                $this->id
+                $this->id,
             );
         }
 
@@ -423,7 +423,7 @@ class SwatCheckboxList extends SwatOptionControl implements SwatState
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-checkbox-list');
+        $classes = ['swat-checkbox-list'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

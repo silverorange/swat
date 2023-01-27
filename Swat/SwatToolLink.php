@@ -267,7 +267,7 @@ class SwatToolLink extends SwatControl
                 throw new SwatUndefinedStockTypeException(
                     "Stock type with id of '{$stock_id}' not found.",
                     0,
-                    $stock_id
+                    $stock_id,
                 );
         }
 
@@ -289,7 +289,7 @@ class SwatToolLink extends SwatControl
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-tool-link');
+        $classes = ['swat-tool-link'];
 
         if (!$this->isSensitive()) {
             $classes[] = 'swat-tool-link-insensitive';

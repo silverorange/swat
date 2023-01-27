@@ -188,7 +188,7 @@ class SwatEntry extends SwatInputControl implements SwatState
             $message = $this->getValidationMessage('too-long');
             $message->primary_content = sprintf(
                 $message->primary_content,
-                $this->maxlength
+                $this->maxlength,
             );
 
             $this->addMessage($message);
@@ -196,7 +196,7 @@ class SwatEntry extends SwatInputControl implements SwatState
             $message = $this->getValidationMessage('too-short');
             $message->primary_content = sprintf(
                 $message->primary_content,
-                $this->minlength
+                $this->minlength,
             );
 
             $this->addMessage($message);
@@ -274,7 +274,7 @@ class SwatEntry extends SwatInputControl implements SwatState
                 $text = $this->show_field_title_in_messages
                     ? Swat::_('The %%s must be at least %s characters long.')
                     : Swat::_(
-                        'This field must be at least %s characters long.'
+                        'This field must be at least %s characters long.',
                     );
 
                 break;
@@ -373,7 +373,7 @@ class SwatEntry extends SwatInputControl implements SwatState
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-entry');
+        $classes = ['swat-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

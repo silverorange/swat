@@ -87,16 +87,16 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
                 sprintf(
                     'Only SwatWidget objects may be nested within ' .
                         'SwatTableViewWidgetRow. Attempting to add "%s".',
-                    get_class($child)
+                    get_class($child),
                 ),
                 0,
-                $child
+                $child,
             );
         }
 
         if ($this->widget !== null) {
             throw new SwatException(
-                'Can only set one widget for a widget row.'
+                'Can only set one widget for a widget row.',
             );
         }
 
@@ -128,10 +128,10 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
                 interface_exists($class_name)
             )
         ) {
-            return array();
+            return [];
         }
 
-        $out = array();
+        $out = [];
 
         if ($this->widget !== null) {
             if ($class_name === null || $this->widget instanceof $class_name) {
@@ -145,7 +145,7 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
             if ($this->widget instanceof SwatUIParent) {
                 $out = array_merge(
                     $out,
-                    $this->widget->getDescendants($class_name)
+                    $this->widget->getDescendants($class_name),
                 );
             }
         }
@@ -199,7 +199,7 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
      */
     public function getDescendantStates()
     {
-        $states = array();
+        $states = [];
 
         foreach ($this->getDescendants('SwatState') as $id => $object) {
             $states[$id] = $object->getState();
@@ -244,7 +244,7 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
     {
         if ($widget->parent !== null) {
             throw new SwatException(
-                'Attempting to add a widget that already has a parent.'
+                'Attempting to add a widget that already has a parent.',
             );
         }
 
@@ -403,7 +403,7 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
      */
     public function getMessages()
     {
-        $messages = array();
+        $messages = [];
 
         foreach ($this->getDescendants() as $widget) {
             $messages = array_merge($messages, $widget->getMessages());
@@ -471,7 +471,7 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-table-view-widget-row');
+        $classes = ['swat-table-view-widget-row'];
         $classes = array_merge($classes, $this->classes);
         return $classes;
     }

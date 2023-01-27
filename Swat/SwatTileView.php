@@ -119,7 +119,7 @@ class SwatTileView extends SwatView implements SwatUIParent
      *
      * @var array
      */
-    protected $groups_by_id = array();
+    protected $groups_by_id = [];
 
     /**
      * Grouping objects for this tile-view
@@ -128,7 +128,7 @@ class SwatTileView extends SwatView implements SwatUIParent
      *
      * @see SwatTileView::addGroup()
      */
-    protected $groups = array();
+    protected $groups = [];
 
     // }}}
     // {{{ private properties
@@ -254,7 +254,7 @@ class SwatTileView extends SwatView implements SwatUIParent
             $div->class = 'swat-none';
             $div->setContent(
                 $this->no_records_message,
-                $this->no_records_message_type
+                $this->no_records_message_type,
             );
 
             $div->display();
@@ -435,7 +435,7 @@ class SwatTileView extends SwatView implements SwatUIParent
         } elseif ($child instanceof SwatTile) {
             if ($this->tile !== null) {
                 throw new SwatException(
-                    'Only one tile may be added to a tile view.'
+                    'Only one tile may be added to a tile view.',
                 );
             }
 
@@ -444,7 +444,7 @@ class SwatTileView extends SwatView implements SwatUIParent
             throw new SwatInvalidClassException(
                 'Only SwatTile objects can be added to a SwatTileView.',
                 0,
-                $child
+                $child,
             );
         }
     }
@@ -474,10 +474,10 @@ class SwatTileView extends SwatView implements SwatUIParent
                 interface_exists($class_name)
             )
         ) {
-            return array();
+            return [];
         }
 
-        $out = array();
+        $out = [];
 
         if ($this->tile !== null) {
             if ($class_name === null || $this->tile instanceof $class_name) {
@@ -491,7 +491,7 @@ class SwatTileView extends SwatView implements SwatUIParent
             if ($this->tile instanceof SwatUIParent) {
                 $out = array_merge(
                     $out,
-                    $this->tile->getDescendants($class_name)
+                    $this->tile->getDescendants($class_name),
                 );
             }
         }
@@ -559,7 +559,7 @@ class SwatTileView extends SwatView implements SwatUIParent
      */
     public function getDescendantStates()
     {
-        $states = array();
+        $states = [];
 
         foreach ($this->getDescendants('SwatState') as $id => $object) {
             $states[$id] = $object->getState();
@@ -695,7 +695,7 @@ class SwatTileView extends SwatView implements SwatUIParent
     public function copy($id_suffix = '')
     {
         $copy = parent::copy($id_suffix);
-        $copy->children_by_id = array();
+        $copy->children_by_id = [];
 
         if ($this->tile !== null) {
             $copy_tile = $this->tile->copy($id_suffix);
@@ -703,7 +703,7 @@ class SwatTileView extends SwatView implements SwatUIParent
             $copy->tile = $copy_tile;
         }
 
-        $copy->groups_by_id = array();
+        $copy->groups_by_id = [];
         foreach ($this->groups as $key => $group) {
             $copy_group = $group->copy($id_suffix);
             $copy_group->parent = $copy;
@@ -733,7 +733,7 @@ class SwatTileView extends SwatView implements SwatUIParent
         $javascript = sprintf(
             "var %s = new SwatTileView('%s');",
             $this->id,
-            $this->id
+            $this->id,
         );
 
         if ($this->tile !== null) {
@@ -758,7 +758,7 @@ class SwatTileView extends SwatView implements SwatUIParent
             $javascript .= sprintf(
                 "\n%s_obj.setController(%s);",
                 $check_all->id,
-                $renderer->id
+                $renderer->id,
             );
         }
 
@@ -776,7 +776,7 @@ class SwatTileView extends SwatView implements SwatUIParent
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-tile-view');
+        $classes = ['swat-tile-view'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }
@@ -956,7 +956,7 @@ class SwatTileView extends SwatView implements SwatUIParent
     {
         if (!array_key_exists($id, $this->groups_by_id)) {
             throw new SwatWidgetNotFoundException(
-                "Group with an id of '{$id}' not found."
+                "Group with an id of '{$id}' not found.",
             );
         }
 
@@ -997,7 +997,7 @@ class SwatTileView extends SwatView implements SwatUIParent
                     "A group with the id '{$group->id}' already exists " .
                         'in this tile view.',
                     0,
-                    $group->id
+                    $group->id,
                 );
             }
         }

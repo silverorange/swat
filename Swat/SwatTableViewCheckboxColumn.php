@@ -101,7 +101,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
      *
      * @deprecated this is part of the old selection API.
      */
-    private $items = array();
+    private $items = [];
 
     /**
      * Check-all row added by this column to the parent table-view
@@ -233,7 +233,7 @@ class SwatTableViewCheckboxColumn extends SwatTableViewColumn
 
         throw new SwatException(
             "The checkbox column ‘{$this->id}’ must " .
-                'contain a checkbox cell renderer.'
+                'contain a checkbox cell renderer.',
         );
     }
 

@@ -205,7 +205,7 @@ class SwatDate extends DateTime implements Serializable
     // {{{ protected properties
 
     protected static $tz_abbreviations = null;
-    protected static $valid_tz_abbreviations = array(
+    protected static $valid_tz_abbreviations = [
         'acdt' => true,
         'acst' => true,
         'act' => true,
@@ -330,8 +330,8 @@ class SwatDate extends DateTime implements Serializable
         'west' => true,
         'wet' => true,
         'yakt' => true,
-        'yekt' => true
-    );
+        'yekt' => true,
+    ];
 
     // }}}
     // {{{ public function format()
@@ -382,7 +382,7 @@ class SwatDate extends DateTime implements Serializable
     public function formatLikeStrftime(
         $format,
         $tz_format = null,
-        $locale = null
+        $locale = null,
     ) {
         if (is_int($format)) {
             $format = self::getFormatLikeStrftimeById($format);
@@ -433,13 +433,13 @@ class SwatDate extends DateTime implements Serializable
             $locale = setlocale(LC_TIME, 0);
         }
 
-        static $formatters = array();
+        static $formatters = [];
 
         if (!isset($formatters[$locale])) {
             $formatters[$locale] = new IntlDateFormatter(
                 $locale,
                 IntlDateFormatter::FULL,
-                IntlDateFormatter::FULL
+                IntlDateFormatter::FULL,
             );
         }
 
@@ -507,7 +507,7 @@ class SwatDate extends DateTime implements Serializable
                 break;
 
             case self::TZ_COMBINED:
-                $out = array();
+                $out = [];
                 $id = $this->format('e');
                 $abbreviations = self::getTimeZoneAbbreviations();
                 if (isset($abbreviations[$id])) {
@@ -593,7 +593,7 @@ class SwatDate extends DateTime implements Serializable
      * @return string A human-readable date diff.
      */
     public function getHumanReadableDateDiffWithWeeks(
-        SwatDate $compare_date = null
+        SwatDate $compare_date = null,
     ) {
         if ($compare_date === null) {
             $compare_date = new SwatDate();
@@ -622,7 +622,7 @@ class SwatDate extends DateTime implements Serializable
      * @return string A human-readable date diff.
      */
     public function getHumanReadableDateDiffWithWeeksAndDays(
-        SwatDate $compare_date = null
+        SwatDate $compare_date = null,
     ) {
         if ($compare_date === null) {
             $compare_date = new SwatDate();
@@ -817,7 +817,7 @@ class SwatDate extends DateTime implements Serializable
         static $shortnames = null;
 
         if (self::$tz_abbreviations === null) {
-            self::$tz_abbreviations = array();
+            self::$tz_abbreviations = [];
 
             $abbreviations = DateTimeZone::listAbbreviations();
             foreach ($abbreviations as $abbreviation => $time_zones) {
@@ -825,7 +825,7 @@ class SwatDate extends DateTime implements Serializable
                     foreach ($time_zones as $tz) {
                         $tz_id = $tz['timezone_id'];
                         if (!isset(self::$tz_abbreviations[$tz_id])) {
-                            self::$tz_abbreviations[$tz_id] = array();
+                            self::$tz_abbreviations[$tz_id] = [];
                         }
 
                         // daylight-time or standard-time
@@ -1144,7 +1144,7 @@ class SwatDate extends DateTime implements Serializable
                     $offset = sprintf(
                         '%+03.0d:%02.0d',
                         $offset_hours,
-                        $offset_minutes
+                        $offset_minutes,
                     );
                 }
 
@@ -1858,8 +1858,8 @@ class SwatDate extends DateTime implements Serializable
                 sprintf(
                     'Can not add %d whole months to %s.',
                     $months,
-                    $this->format('c')
-                )
+                    $this->format('c'),
+                ),
             );
         }
 
@@ -1904,7 +1904,7 @@ class SwatDate extends DateTime implements Serializable
      */
     public function serialize()
     {
-        $data = array($this->getTimestamp(), $this->getTimeZone()->getName());
+        $data = [$this->getTimestamp(), $this->getTimeZone()->getName()];
 
         return serialize($data);
     }

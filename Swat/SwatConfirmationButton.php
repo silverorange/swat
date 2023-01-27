@@ -26,7 +26,7 @@ class SwatConfirmationButton extends SwatButton
         parent::__construct($id);
 
         $this->confirmation_message = Swat::_(
-            'Are you sure you wish to continue?'
+            'Are you sure you wish to continue?',
         );
     }
 

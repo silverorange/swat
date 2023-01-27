@@ -16,7 +16,7 @@ class SwatListEntry extends SwatEntry
      *
      * @var array
      */
-    public $values = array();
+    public $values = [];
 
     /**
      * The delimiter for entries in this list entry
@@ -143,7 +143,7 @@ class SwatListEntry extends SwatEntry
         ) {
             $message = sprintf(
                 Swat::_('The %%s field cannot have more than %s entries.'),
-                $locale->formatNumber($this->max_entries)
+                $locale->formatNumber($this->max_entries),
             );
 
             $this->addMessage(new SwatMessage($message, 'error'));
@@ -155,9 +155,9 @@ class SwatListEntry extends SwatEntry
                 Swat::ngettext(
                     'The %%s field must have at least %s entry.',
                     'The %%s field must have at least %s entries.',
-                    $this->min_entries
+                    $this->min_entries,
                 ),
-                $locale->formatNumber($this->min_entries)
+                $locale->formatNumber($this->min_entries),
             );
 
             $this->addMessage(new SwatMessage($message, 'error'));
@@ -167,8 +167,8 @@ class SwatListEntry extends SwatEntry
 
         $min_length_msg = null;
         $max_length_msg = null;
-        $min_length_error_values = array();
-        $max_length_error_values = array();
+        $min_length_error_values = [];
+        $max_length_error_values = [];
 
         foreach ($this->values as $value) {
             $len = mb_strlen($value);
@@ -180,9 +180,9 @@ class SwatListEntry extends SwatEntry
                                 'character long.',
                             'Entries in the %%s field must be less than %s ' .
                                 'characters long.',
-                            $this->maxlength
+                            $this->maxlength,
                         ),
-                        $locale->formatNumber($this->maxlength)
+                        $locale->formatNumber($this->maxlength),
                     ) . ' ';
 
                 $max_length_error_values[] = $value;
@@ -194,9 +194,9 @@ class SwatListEntry extends SwatEntry
                                 'character long.',
                             'Entries in the %%s field must be at least %s ' .
                                 'characters long.',
-                            $this->minlength
+                            $this->minlength,
                         ),
-                        $locale->formatNumber($this->minlength)
+                        $locale->formatNumber($this->minlength),
                     ) . ' ';
 
                 $min_length_error_values[] = $value;
@@ -208,10 +208,10 @@ class SwatListEntry extends SwatEntry
                 Swat::ngettext(
                     'The following entry is too short: %s.',
                     'The following entries are too short: %s.',
-                    count($min_length_error_values)
+                    count($min_length_error_values),
                 ),
                 implode(', ', $min_length_error_values),
-                $locale->formatNumber(count($min_length_error_values))
+                $locale->formatNumber(count($min_length_error_values)),
             );
 
             $this->addMessage(new SwatMessage($min_length_msg, 'error'));
@@ -222,10 +222,10 @@ class SwatListEntry extends SwatEntry
                 Swat::ngettext(
                     'The following entry is too long: %s.',
                     'The following entries are too long: %s.',
-                    count($max_length_error_values)
+                    count($max_length_error_values),
                 ),
                 implode(', ', $max_length_error_values),
-                $locale->formatNumber(count($max_length_error_values))
+                $locale->formatNumber(count($max_length_error_values)),
             );
 
             $this->addMessage(new SwatMessage($max_length_msg, 'error'));
@@ -318,10 +318,10 @@ class SwatListEntry extends SwatEntry
                     Swat::ngettext(
                         'List can contain at most %s entry',
                         'List can contain at most %s entries',
-                        $this->max_entries
+                        $this->max_entries,
                     ),
-                    $locale->formatNumber($this->max_entries)
-                )
+                    $locale->formatNumber($this->max_entries),
+                ),
             );
         } elseif (
             ($this->max_entries === null || $this->max_entries === 0) &&
@@ -333,10 +333,10 @@ class SwatListEntry extends SwatEntry
                     Swat::ngettext(
                         'List must contain at least %s entry',
                         'List must contain at least %s entries',
-                        $this->min_entries
+                        $this->min_entries,
                     ),
-                    $locale->formatNumber($this->min_entries)
-                )
+                    $locale->formatNumber($this->min_entries),
+                ),
             );
         } elseif (
             $this->max_entries !== null &&
@@ -348,8 +348,8 @@ class SwatListEntry extends SwatEntry
                 sprintf(
                     'List must contain between %s and %s entries.',
                     $locale->formatNumber($this->min_entries),
-                    $locale->formatNumber($this->max_entries)
-                )
+                    $locale->formatNumber($this->max_entries),
+                ),
             );
         }
 
@@ -395,7 +395,7 @@ class SwatListEntry extends SwatEntry
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-list-entry');
+        $classes = ['swat-list-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

@@ -77,7 +77,7 @@ class SwatDateCellRenderer extends SwatCellRenderer
                 $date = clone $this->date;
             } else {
                 throw new InvalidArgumentException(
-                    'The $date must be either a string or a SwatDate object.'
+                    'The $date must be either a string or a SwatDate object.',
                 );
             }
 
@@ -88,12 +88,12 @@ class SwatDateCellRenderer extends SwatCellRenderer
             } elseif ($this->display_time_zone !== null) {
                 throw new InvalidArgumentException(
                     'The $display_time_zone must be either a string or a ' .
-                        'DateTimeZone object.'
+                        'DateTimeZone object.',
                 );
             }
 
             echo SwatString::minimizeEntities(
-                $date->formatLikeIntl($this->format, $this->time_zone_format)
+                $date->formatLikeIntl($this->format, $this->time_zone_format),
             );
         }
     }

@@ -98,7 +98,7 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
                 throw new SwatUndefinedStockTypeException(
                     "Stock type with id of '{$stock_id}' not found.",
                     0,
-                    $stock_id
+                    $stock_id,
                 );
         }
 
@@ -163,9 +163,9 @@ class SwatBooleanCellRenderer extends SwatCellRenderer
     public function getDataSpecificCSSClassNames()
     {
         if ((bool) $this->value) {
-            return array('swat-boolean-cell-renderer-checked');
+            return ['swat-boolean-cell-renderer-checked'];
         } else {
-            return array();
+            return [];
         }
     }
 

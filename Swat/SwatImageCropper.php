@@ -145,7 +145,7 @@ class SwatImageCropper extends SwatInputControl
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('imagecropper'));
+        $yui = new SwatYUI(['imagecropper']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addJavaScript('packages/swat/javascript/swat-image-cropper.js');
@@ -239,7 +239,7 @@ class SwatImageCropper extends SwatInputControl
      */
     protected function getInlineJavaScript()
     {
-        $options = array();
+        $options = [];
 
         if ($this->crop_width !== null) {
             $options['initWidth'] = $this->crop_width;
@@ -277,13 +277,13 @@ class SwatImageCropper extends SwatInputControl
                 $options_string .= ', ';
             }
 
-            $options_string .= sprintf("%s: %s", $key, $value);
+            $options_string .= sprintf('%s: %s', $key, $value);
         }
 
         return sprintf(
             "%1\$s_obj = new SwatImageCropper(" . "'%1\$s', {%2\$s});",
             $this->id,
-            $options_string
+            $options_string,
         );
     }
 
@@ -336,7 +336,7 @@ class SwatImageCropper extends SwatInputControl
                 $this->crop_width = $this->image_width;
             } else {
                 $this->crop_width = round(
-                    $this->image_height * $this->crop_ratio
+                    $this->image_height * $this->crop_ratio,
                 );
             }
         }
@@ -349,7 +349,7 @@ class SwatImageCropper extends SwatInputControl
                 $this->crop_height = $this->image_height;
             } else {
                 $this->crop_height = round(
-                    $this->image_width / $this->crop_ratio
+                    $this->image_width / $this->crop_ratio,
                 );
             }
         }
@@ -358,7 +358,7 @@ class SwatImageCropper extends SwatInputControl
         if ($this->crop_left === null) {
             if ($this->crop_width < $this->image_width) {
                 $this->crop_left = round(
-                    ($this->image_width - $this->crop_width) / 2
+                    ($this->image_width - $this->crop_width) / 2,
                 );
             } else {
                 $this->crop_left = 0;
@@ -369,7 +369,7 @@ class SwatImageCropper extends SwatInputControl
         if ($this->crop_top === null) {
             if ($this->crop_height < $this->image_height) {
                 $this->crop_top = round(
-                    ($this->image_height - $this->crop_height) / 2
+                    ($this->image_height - $this->crop_height) / 2,
                 );
             } else {
                 $this->crop_top = 0;

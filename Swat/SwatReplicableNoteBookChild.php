@@ -22,7 +22,7 @@ class SwatReplicableNoteBookChild extends SwatReplicableContainer implements
      */
     public function getPages()
     {
-        $pages = array();
+        $pages = [];
 
         foreach ($this->children as $child) {
             if ($child instanceof SwatNoteBookChild) {
@@ -55,7 +55,7 @@ class SwatReplicableNoteBookChild extends SwatReplicableContainer implements
                 'Only SwatNoteBookChild objects may be nested within a ' .
                     'SwatReplicableNoteBookChild object.',
                 0,
-                $child
+                $child,
             );
         }
 

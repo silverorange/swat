@@ -418,14 +418,14 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
             $message_li->class = $message->getCSSClassString();
             $message_li->setContent(
                 $message->primary_content,
-                $message->content_type
+                $message->content_type,
             );
 
             if ($message->secondary_content !== null) {
                 $secondary_span = new SwatHtmlTag('span');
                 $secondary_span->setContent(
                     $message->secondary_content,
-                    $message->content_type
+                    $message->content_type,
                 );
 
                 $message_li->open();
@@ -446,7 +446,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
 
     protected function displayNotes()
     {
-        $notes = array();
+        $notes = [];
 
         if ($this->note !== null) {
             $note = new SwatMessage($this->note);
@@ -477,7 +477,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
             foreach ($notes as $note) {
                 $li_tag->setContent(
                     $note->primary_content,
-                    $note->content_type
+                    $note->content_type,
                 );
 
                 $li_tag->display();
@@ -498,7 +498,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-form-field');
+        $classes = ['swat-form-field'];
 
         if ($this->widget_class !== null) {
             $classes[] = $this->widget_class;
@@ -534,7 +534,7 @@ class SwatFormField extends SwatDisplayableContainer implements SwatTitleable
             if ($this->show_colon) {
                 $label_tag->setContent(
                     sprintf(Swat::_('%s: '), $this->title),
-                    $this->title_content_type
+                    $this->title_content_type,
                 );
             } else {
                 $label_tag->setContent($this->title, $this->title_content_type);

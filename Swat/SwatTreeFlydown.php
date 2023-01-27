@@ -20,7 +20,7 @@ class SwatTreeFlydown extends SwatFlydown
      *
      * @var array
      */
-    public $path = array();
+    public $path = [];
 
     // }}}
     // {{{ protected properties
@@ -69,7 +69,7 @@ class SwatTreeFlydown extends SwatFlydown
         if (count($this->path) === 0 && $this->value !== null) {
             // If there is a value but not a path, assume the value is the
             // first element in the path.
-            $this->value = array($this->value);
+            $this->value = [$this->value];
         } else {
             // temporarily set the value to the path for parent::display()
             $this->value = $this->path;
@@ -93,7 +93,7 @@ class SwatTreeFlydown extends SwatFlydown
      */
     protected function &getOptions()
     {
-        $options = array();
+        $options = [];
 
         foreach ($this->tree->getChildren() as $child_node) {
             $this->flattenTree($options, $child_node);
@@ -123,7 +123,7 @@ class SwatTreeFlydown extends SwatFlydown
         &$options,
         SwatTreeFlydownNode $node,
         $level = 0,
-        $path = array()
+        $path = [],
     ) {
         $tree_option = clone $node->getOption();
 
@@ -158,7 +158,7 @@ class SwatTreeFlydown extends SwatFlydown
                 'Tree must be an intance of ' .
                     'either SwatDataTreeNode or SwatTreeFlydownNode.',
                 0,
-                $tree
+                $tree,
             );
         }
 
@@ -194,7 +194,7 @@ class SwatTreeFlydown extends SwatFlydown
         parent::process();
 
         if ($this->value === null) {
-            $this->path = array();
+            $this->path = [];
         } else {
             $this->path = $this->value;
             $this->value = end($this->path);

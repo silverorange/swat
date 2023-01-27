@@ -40,7 +40,7 @@ class SwatDisclosure extends SwatDisplayableContainer
         parent::__construct($id);
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('dom', 'animation'));
+        $yui = new SwatYUI(['dom', 'animation']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addJavaScript('packages/swat/javascript/swat-disclosure.js');
@@ -197,7 +197,7 @@ class SwatDisclosure extends SwatDisplayableContainer
             $this->id,
             $this->getJavaScriptClass(),
             $this->id,
-            $open
+            $open,
         );
     }
 
@@ -212,11 +212,11 @@ class SwatDisclosure extends SwatDisplayableContainer
      */
     protected function getCSSClassNames()
     {
-        $classes = array(
+        $classes = [
             'swat-disclosure',
             // always display open in case JavaScript is turned off
-            'swat-disclosure-control-opened'
-        );
+            'swat-disclosure-control-opened',
+        ];
 
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;

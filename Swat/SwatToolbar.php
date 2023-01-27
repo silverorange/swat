@@ -80,7 +80,7 @@ class SwatToolbar extends SwatDisplayableContainer
      */
     public function getToolLinks()
     {
-        $tools = array();
+        $tools = [];
         foreach ($this->getDescendants('SwatToolLink') as $tool) {
             if ($tool->getFirstAncestor('SwatToolbar') === $this) {
                 $tools[] = $tool;
@@ -118,7 +118,7 @@ class SwatToolbar extends SwatDisplayableContainer
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-toolbar');
+        $classes = ['swat-toolbar'];
 
         if ($this->parent instanceof SwatContainer) {
             $children = $this->parent->getChildren();

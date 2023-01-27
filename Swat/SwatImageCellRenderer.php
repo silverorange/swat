@@ -155,7 +155,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
                 floor(((float) $margin_y) / 2),
                 ceil(((float) $margin_x) / 2),
                 ceil(((float) $margin_y) / 2),
-                floor(((float) $margin_x) / 2)
+                floor(((float) $margin_x) / 2),
             );
         }
 
@@ -178,7 +178,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-image-cell-renderer');
+        $classes = ['swat-image-cell-renderer'];
         $classes = array_merge($classes, $this->classes);
         return $classes;
     }

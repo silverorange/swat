@@ -61,7 +61,7 @@ class SwatMoneyEntry extends SwatFloatEntry
         if ($this->display_currency) {
             $locale = SwatI18NLocale::get($this->locale);
             echo SwatString::minimizeEntities(
-                ' ' . $locale->getInternationalCurrencySymbol()
+                ' ' . $locale->getInternationalCurrencySymbol(),
             );
         }
     }
@@ -99,14 +99,14 @@ class SwatMoneyEntry extends SwatFloatEntry
         // this point.
         $decimal_position = mb_strpos(
             (string) $value,
-            $format->decimal_separator
+            $format->decimal_separator,
         );
         if ($decimal_position === false) {
             $decimal_places = 0;
         } else {
             $fractional_digits = mb_substr(
                 rtrim((string) $value, '0'),
-                $decimal_position + mb_strlen($format->decimal_separator)
+                $decimal_position + mb_strlen($format->decimal_separator),
             );
 
             $decimal_places = preg_match_all('/[0-9]/', $fractional_digits);
@@ -120,26 +120,26 @@ class SwatMoneyEntry extends SwatFloatEntry
 
             if ($this->decimal_places === null) {
                 $message = $this->getValidationMessage(
-                    'currency-decimal-places'
+                    'currency-decimal-places',
                 );
 
                 $max_decimal_places_formatted = str_replace(
                     '%',
                     '%%',
-                    $locale->formatNumber($max_decimal_places)
+                    $locale->formatNumber($max_decimal_places),
                 );
 
                 // C99 specification includes spacing character, remove it
                 $currency_formatted = str_replace(
                     '%',
                     '%%',
-                    $locale->getInternationalCurrencySymbol()
+                    $locale->getInternationalCurrencySymbol(),
                 );
 
                 $message->primary_content = sprintf(
                     $message->primary_content,
                     $currency_formatted,
-                    $max_decimal_places_formatted
+                    $max_decimal_places_formatted,
                 );
             } else {
                 if ($max_decimal_places === 0) {
@@ -148,7 +148,7 @@ class SwatMoneyEntry extends SwatFloatEntry
                     $max_decimal_places_formatted = str_replace(
                         '%',
                         '%%',
-                        $locale->formatNumber($max_decimal_places)
+                        $locale->formatNumber($max_decimal_places),
                     );
 
                     // note: not using getValidationMessage() because of
@@ -160,11 +160,11 @@ class SwatMoneyEntry extends SwatFloatEntry
                                     'can be at most one decimal place.',
                                 'The %%s field has too many decimal places. There ' .
                                     'can be at most %s decimal places.',
-                                $max_decimal_places
+                                $max_decimal_places,
                             ),
-                            $max_decimal_places_formatted
+                            $max_decimal_places_formatted,
                         ),
-                        'error'
+                        'error',
                     );
                 }
             }
@@ -190,7 +190,7 @@ class SwatMoneyEntry extends SwatFloatEntry
             $value = SwatI18NLocale::get($this->locale)->formatCurrency(
                 $value,
                 false,
-                array('fractional_digits' => $this->decimal_places)
+                ['fractional_digits' => $this->decimal_places],
             );
         }
 
@@ -230,22 +230,22 @@ class SwatMoneyEntry extends SwatFloatEntry
             case 'float':
                 $locale = SwatI18NLocale::get($this->locale);
                 $currency = $locale->getInternationalCurrencySymbol();
-                $example = $locale->formatCurrency(1036.95, false, array(
-                    'fractional_digits' => $this->decimal_places
-                ));
+                $example = $locale->formatCurrency(1036.95, false, [
+                    'fractional_digits' => $this->decimal_places,
+                ]);
 
                 $text = sprintf(
                     $this->show_field_title_in_messages
                         ? Swat::_(
                             'The %%s field must be a monetary value ' .
-                                'formatted for %s (i.e. %s).'
+                                'formatted for %s (i.e. %s).',
                         )
                         : Swat::_(
                             'This field must be a monetary value ' .
-                                'formatted for %s (i.e. %s).'
+                                'formatted for %s (i.e. %s).',
                         ),
                     str_replace('%', '%%', $currency),
-                    str_replace('%', '%%', $example)
+                    str_replace('%', '%%', $example),
                 );
 
                 $message = new SwatMessage($text, 'error');
@@ -254,11 +254,11 @@ class SwatMoneyEntry extends SwatFloatEntry
                 $text = $this->show_field_title_in_messages
                     ? Swat::_(
                         'The %%s field has too many decimal places. The ' .
-                            'currency %s only allows %s.'
+                            'currency %s only allows %s.',
                     )
                     : Swat::_(
                         'This field has too many decimal places. The ' .
-                            'currency %s only allows %s.'
+                            'currency %s only allows %s.',
                     );
 
                 $message = new SwatMessage($text, 'error');
@@ -289,7 +289,7 @@ class SwatMoneyEntry extends SwatFloatEntry
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-money-entry');
+        $classes = ['swat-money-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

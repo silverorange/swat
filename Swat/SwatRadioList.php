@@ -147,7 +147,7 @@ class SwatRadioList extends SwatFlydown
             if ($this->serialize_values) {
                 $this->value = SwatString::signedUnserialize(
                     $data[$this->id],
-                    $salt
+                    $salt,
                 );
             } else {
                 $this->value = $data[$this->id];
@@ -210,7 +210,7 @@ class SwatRadioList extends SwatFlydown
             $salt = $this->getForm()->getSalt();
             $this->input_tag->value = SwatString::signedSerialize(
                 $option->value,
-                $salt
+                $salt,
             );
         } else {
             $this->input_tag->value = (string) $option->value;
@@ -271,7 +271,7 @@ class SwatRadioList extends SwatFlydown
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-radio-list');
+        $classes = ['swat-radio-list'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

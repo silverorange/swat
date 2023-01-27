@@ -201,7 +201,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
             function ($carry, $child) use ($is_selected) {
                 return $carry && $this->validate($child, $is_selected);
             },
-            $is_parent_selected === $is_selected || $condition
+            $is_parent_selected === $is_selected || $condition,
         );
     }
 
@@ -236,7 +236,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-checkbox-tree');
+        $classes = ['swat-checkbox-tree'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }
@@ -256,7 +256,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
     private function displayNode(
         SwatDataTreeNode $node,
         $nodes = 0,
-        $parent_index = ''
+        $parent_index = '',
     ) {
         // build a unique id of the indexes of the tree
         if ($parent_index === '' || $parent_index === null) {

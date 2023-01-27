@@ -40,7 +40,7 @@ abstract class SwatCellRenderer extends SwatUIObject
      *
      * @var array
      */
-    private $static_properties = array();
+    private $static_properties = [];
 
     /**
      * How many times this cell renderer was rendered
@@ -56,7 +56,7 @@ abstract class SwatCellRenderer extends SwatUIObject
      *
      * @var array
      */
-    private $composite_renderers = array();
+    private $composite_renderers = [];
 
     /**
      * Whether or not composite renderers have been created
@@ -128,7 +128,7 @@ abstract class SwatCellRenderer extends SwatUIObject
      */
     public function getMessages()
     {
-        return array();
+        return [];
     }
 
     // }}}
@@ -200,7 +200,7 @@ abstract class SwatCellRenderer extends SwatUIObject
      */
     public function getBaseCSSClassNames()
     {
-        return array();
+        return [];
     }
 
     // }}}
@@ -217,7 +217,7 @@ abstract class SwatCellRenderer extends SwatUIObject
      */
     public function getDataSpecificCSSClassNames()
     {
-        return array();
+        return [];
     }
 
     // }}}
@@ -306,13 +306,13 @@ abstract class SwatCellRenderer extends SwatUIObject
     final public function getInheritanceCSSClassNames()
     {
         $php_class_name = get_class($this);
-        $css_class_names = array();
+        $css_class_names = [];
 
         // get the ancestors that are swat classes
         while ($php_class_name !== 'SwatCellRenderer') {
             if (strncmp($php_class_name, 'Swat', 4) === 0) {
                 $css_class_name = mb_strtolower(
-                    preg_replace('/([A-Z])/u', '-\1', $php_class_name)
+                    preg_replace('/([A-Z])/u', '-\1', $php_class_name),
                 );
 
                 if (mb_substr($css_class_name, 0, 1) === '-') {
@@ -359,24 +359,24 @@ abstract class SwatCellRenderer extends SwatUIObject
      */
     final protected function addCompositeRenderer(
         SwatCellRenderer $renderer,
-        $key
+        $key,
     ) {
         if (array_key_exists($key, $this->composite_renderers)) {
             throw new SwatDuplicateIdException(
                 sprintf(
                     "A composite renderer with the key '%s' already exists in " .
-                        "this renderer.",
-                    $key
+                        'this renderer.',
+                    $key,
                 ),
                 0,
-                $key
+                $key,
             );
         }
 
         if ($renderer->parent !== null) {
             throw new SwatException(
                 'Cannot add a composite renderer that ' .
-                    'already has a parent.'
+                    'already has a parent.',
             );
         }
 
@@ -411,13 +411,13 @@ abstract class SwatCellRenderer extends SwatUIObject
             throw new SwatWidgetNotFoundException(
                 sprintf(
                     "Composite renderer with key of '%s' not found in %s. Make " .
-                        "sure the composite renderer was created and added to this " .
-                        "renderer.",
+                        'sure the composite renderer was created and added to this ' .
+                        'renderer.',
                     $key,
-                    get_class($this)
+                    get_class($this),
                 ),
                 0,
-                $key
+                $key,
             );
         }
 
@@ -453,10 +453,10 @@ abstract class SwatCellRenderer extends SwatUIObject
                 interface_exists($class_name)
             )
         ) {
-            return array();
+            return [];
         }
 
-        $out = array();
+        $out = [];
 
         foreach ($this->composite_renderers as $key => $renderer) {
             if ($class_name === null || $renderer instanceof $class_name) {
@@ -519,10 +519,10 @@ abstract class SwatCellRenderer extends SwatUIObject
             } else {
                 throw new SwatInvalidPropertyException(
                     "Property {$property_name} is not a non-static public " .
-                        "property and cannot be made static.",
+                        'property and cannot be made static.',
                     0,
                     $this,
-                    $property_name
+                    $property_name,
                 );
             }
         } else {
@@ -530,7 +530,7 @@ abstract class SwatCellRenderer extends SwatUIObject
                 "Can not make non-existant property {$property_name} static.",
                 0,
                 $this,
-                $property_name
+                $property_name,
             );
         }
     }

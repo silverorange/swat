@@ -71,9 +71,9 @@ abstract class SwatInputControl extends SwatControl
                 $object = $object->parent;
             }
             throw new SwatException(
-                "Input controls must reside inside a " .
+                'Input controls must reside inside a ' .
                     "SwatForm widget. UI-Object path:\n" .
-                    $path
+                    $path,
             );
         }
 
@@ -104,7 +104,7 @@ abstract class SwatInputControl extends SwatControl
             case 'too-long':
                 $text = $this->show_field_title_in_messages
                     ? Swat::_(
-                        'The %%s field can be at most %s characters long.'
+                        'The %%s field can be at most %s characters long.',
                     )
                     : Swat::_('This field can be at most %s characters long.');
 

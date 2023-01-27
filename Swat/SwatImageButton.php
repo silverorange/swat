@@ -35,7 +35,7 @@ class SwatImageButton extends SwatButton
      *
      * @var array
      */
-    public $values = array();
+    public $values = [];
 
     /**
      * Image alt text
@@ -89,7 +89,7 @@ class SwatImageButton extends SwatButton
             throw new SwatException(
                 'The $alt property of SwatImageButton must be set to an ' .
                     'appropriate value. The "alt" attribute is required in ' .
-                    'HTML5 and can not be an empty string.'
+                    'HTML5 and can not be an empty string.',
             );
         }
 
@@ -134,7 +134,7 @@ class SwatImageButton extends SwatButton
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-image-button');
+        $classes = ['swat-image-button'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

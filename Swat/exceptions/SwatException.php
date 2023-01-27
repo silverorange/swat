@@ -51,7 +51,7 @@ class SwatException extends Exception
     /**
      * @var array
      */
-    protected static $loggers = array();
+    protected static $loggers = [];
 
     // }}}
     // {{{ private properties
@@ -78,7 +78,7 @@ class SwatException extends Exception
      */
     public static function setLogger(SwatExceptionLogger $logger)
     {
-        self::$loggers = array($logger);
+        self::$loggers = [$logger];
     }
 
     // }}}
@@ -132,7 +132,7 @@ class SwatException extends Exception
      */
     public static function setupHandler($class = 'SwatException')
     {
-        set_exception_handler(array($class, 'handle'));
+        set_exception_handler([$class, 'handle']);
     }
 
     // }}}
@@ -281,7 +281,7 @@ class SwatException extends Exception
             "%s in file '%s' line %s",
             $this->class,
             $this->getFile(),
-            $this->getLine()
+            $this->getLine(),
         );
 
         if ($this->wasHandled()) {
@@ -313,7 +313,7 @@ class SwatException extends Exception
             $this->getMessage(),
             $this->getCode(),
             $this->getFile(),
-            $this->getLine()
+            $this->getLine(),
         );
 
         echo "Stack Trace:\n";
@@ -330,7 +330,7 @@ class SwatException extends Exception
                 $arguments = $this->getArguments(
                     $entry['args'],
                     $function,
-                    $class
+                    $class,
                 );
             } else {
                 $arguments = '';
@@ -345,7 +345,7 @@ class SwatException extends Exception
                 $class === null ? '' : $class,
                 array_key_exists('type', $entry) ? $entry['type'] : '',
                 $function === null ? '' : $function,
-                $arguments
+                $arguments,
             );
         }
 
@@ -384,7 +384,7 @@ class SwatException extends Exception
             $this->getMessageAsHtml(),
             $this->getCode(),
             $this->getFile(),
-            $this->getLine()
+            $this->getLine(),
         );
 
         echo 'Stack Trace:<br /><dl>';
@@ -401,7 +401,7 @@ class SwatException extends Exception
                 $arguments = htmlspecialchars(
                     $this->getArguments($entry['args'], $function, $class),
                     null,
-                    'UTF-8'
+                    'UTF-8',
                 );
             } else {
                 $arguments = '';
@@ -417,7 +417,7 @@ class SwatException extends Exception
                 $class === null ? '' : $class,
                 array_key_exists('type', $entry) ? $entry['type'] : '',
                 $function === null ? '' : $function,
-                $arguments
+                $arguments,
             );
         }
 
@@ -507,7 +507,7 @@ class SwatException extends Exception
      */
     protected function getArguments($args, $function = null, $class = null)
     {
-        $params = array();
+        $params = [];
         $method = null;
 
         // try to get function or method parameter list using reflection
@@ -523,7 +523,7 @@ class SwatException extends Exception
         }
 
         // display each parameter
-        $formatted_values = array();
+        $formatted_values = [];
         for ($i = 0; $i < count($args); $i++) {
             $value = $args[$i];
 
@@ -538,7 +538,7 @@ class SwatException extends Exception
             if ($name !== null && $sensitive) {
                 $formatted_values[] = $this->formatSensitiveParam(
                     $name,
-                    $value
+                    $value,
                 );
             } else {
                 $formatted_values[] = $this->formatValue($value);
@@ -650,21 +650,21 @@ class SwatException extends Exception
         static $displayed = false;
         if (!$displayed) {
             echo "<style>\n";
-            echo ".swat-exception { border: 1px solid #d43; margin: 1em; " .
-                "font-family: sans-serif; background: #fff !important; " .
-                "z-index: 9999 !important; color: #000; text-align: left; " .
+            echo '.swat-exception { border: 1px solid #d43; margin: 1em; ' .
+                'font-family: sans-serif; background: #fff !important; ' .
+                'z-index: 9999 !important; color: #000; text-align: left; ' .
                 "min-width: 400px; }\n";
 
-            echo ".swat-exception h3 { background: #e65; margin: 0; padding: " .
+            echo '.swat-exception h3 { background: #e65; margin: 0; padding: ' .
                 "5px; border-bottom: 1px solid #d43; color: #fff; }\n";
 
             echo ".swat-exception-body { padding: 0.8em; }\n";
-            echo ".swat-exception-message { margin-left: 2em; " .
+            echo '.swat-exception-message { margin-left: 2em; ' .
                 "padding: 1em; }\n";
 
             echo ".swat-exception dt { float: left; margin-left: 1em; }\n";
             echo ".swat-exception dd { margin-bottom: 1em; }\n";
-            echo "</style>";
+            echo '</style>';
             $displayed = true;
         }
     }
@@ -694,7 +694,7 @@ class SwatException extends Exception
      */
     protected function isSensitiveParameter(
         ReflectionFunctionAbstract $method,
-        $name
+        $name,
     ) {
         $sensitive = false;
 
@@ -705,7 +705,7 @@ class SwatException extends Exception
         $documentation = str_replace("\r", "\n", $documentation);
         $documentation_exp = explode("\n", $documentation);
         foreach ($documentation_exp as $documentation_line) {
-            $matches = array();
+            $matches = [];
             if (
                 preg_match($exp, $documentation_line, $matches) === 1 &&
                 $matches[1] == $name

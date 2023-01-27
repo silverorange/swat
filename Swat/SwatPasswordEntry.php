@@ -45,7 +45,7 @@ class SwatPasswordEntry extends SwatEntry
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-password-entry');
+        $classes = ['swat-password-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

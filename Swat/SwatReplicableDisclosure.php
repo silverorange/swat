@@ -22,7 +22,7 @@ class SwatReplicableDisclosure extends SwatReplicableContainer
      */
     public function init()
     {
-        $children = array();
+        $children = [];
         foreach ($this->children as $child_widget) {
             $children[] = $this->remove($child_widget);
         }

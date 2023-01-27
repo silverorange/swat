@@ -36,11 +36,11 @@ class SwatIntegerEntry extends SwatNumericEntry
         } catch (SwatIntegerOverflowException $e) {
             if ($e->getSign() > 0) {
                 $this->addMessage(
-                    $this->getValidationMessage('integer-maximum')
+                    $this->getValidationMessage('integer-maximum'),
                 );
             } else {
                 $this->addMessage(
-                    $this->getValidationMessage('integer-minimum')
+                    $this->getValidationMessage('integer-minimum'),
                 );
             }
 
@@ -64,9 +64,9 @@ class SwatIntegerEntry extends SwatNumericEntry
             $locale = SwatI18NLocale::get();
             $thousands_separator = $this->show_thousands_separator ? null : '';
 
-            $value = $locale->formatNumber($value, 0, array(
-                'thousands_separator' => $thousands_separator
-            ));
+            $value = $locale->formatNumber($value, 0, [
+                'thousands_separator' => $thousands_separator,
+            ]);
         } else {
             $value = parent::getDisplayValue($value);
         }
@@ -156,7 +156,7 @@ class SwatIntegerEntry extends SwatNumericEntry
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-integer-entry');
+        $classes = ['swat-integer-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

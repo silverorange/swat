@@ -42,7 +42,7 @@ interface SwatDBMarshallable
      * @throws SwatDBMarshallException if one of the sub-tree properties
      *         cannot be marshalled.
      */
-    public function marshall(array $tree = array());
+    public function marshall(array $tree = []);
 
     // }}}
     // {{{ public function unmarshall()
@@ -58,7 +58,7 @@ interface SwatDBMarshallable
      *
      * @param array $data optional. The marshalled object data.
      */
-    public function unmarshall(array $data = array());
+    public function unmarshall(array $data = []);
 
     // }}}
 }

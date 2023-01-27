@@ -22,7 +22,7 @@ abstract class SwatTreeNode extends SwatObject implements
      *
      * @var array
      */
-    protected $children = array();
+    protected $children = [];
 
     // }}}
     // {{{ private properties
@@ -93,7 +93,7 @@ abstract class SwatTreeNode extends SwatObject implements
      */
     public function &getPath()
     {
-        $path = array($this->index);
+        $path = [$this->index];
 
         $parent = $this->parent;
         while ($parent !== null) {

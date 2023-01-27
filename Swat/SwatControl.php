@@ -36,7 +36,7 @@ abstract class SwatControl extends SwatWidget
                     $field_title =
                         '<strong>' .
                         SwatString::minimizeEntities(
-                            $this->parent->getTitle()
+                            $this->parent->getTitle(),
                         ) .
                         '</strong>';
                 }

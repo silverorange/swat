@@ -28,7 +28,7 @@ class SwatTile extends SwatCellRendererContainer
      *
      * @var array
      */
-    protected $messages = array();
+    protected $messages = [];
 
     // }}}
     // {{{ public function display()
@@ -149,7 +149,7 @@ class SwatTile extends SwatCellRendererContainer
     {
         if (count($this->renderers) === 0) {
             throw new SwatException(
-                'No renderer has been provided for this tile.'
+                'No renderer has been provided for this tile.',
             );
         }
 
@@ -202,20 +202,20 @@ class SwatTile extends SwatCellRendererContainer
             $div_tag = new SwatHtmlTag('div');
             foreach ($this->renderers as $renderer) {
                 // get renderer class names
-                $classes = array('swat-tile-view-tile-renderer');
+                $classes = ['swat-tile-view-tile-renderer'];
                 $classes = array_merge(
                     $classes,
-                    $renderer->getInheritanceCSSClassNames()
+                    $renderer->getInheritanceCSSClassNames(),
                 );
 
                 $classes = array_merge(
                     $classes,
-                    $renderer->getBaseCSSClassNames()
+                    $renderer->getBaseCSSClassNames(),
                 );
 
                 $classes = array_merge(
                     $classes,
-                    $renderer->getDataSpecificCSSClassNames()
+                    $renderer->getDataSpecificCSSClassNames(),
                 );
 
                 $classes = array_merge($classes, $renderer->classes);
@@ -270,20 +270,20 @@ class SwatTile extends SwatCellRendererContainer
             // renderer inheritance classes
             $classes = array_merge(
                 $classes,
-                $first_renderer->getInheritanceCSSClassNames()
+                $first_renderer->getInheritanceCSSClassNames(),
             );
 
             // renderer base classes
             $classes = array_merge(
                 $classes,
-                $first_renderer->getBaseCSSClassNames()
+                $first_renderer->getBaseCSSClassNames(),
             );
 
             // renderer data specific classes
             if ($this->renderers->mappingsApplied()) {
                 $classes = array_merge(
                     $classes,
-                    $first_renderer->getDataSpecificCSSClassNames()
+                    $first_renderer->getDataSpecificCSSClassNames(),
                 );
             }
 
@@ -307,7 +307,7 @@ class SwatTile extends SwatCellRendererContainer
      */
     protected function getBaseCSSClassNames()
     {
-        return array('swat-tile');
+        return ['swat-tile'];
     }
 
     // }}}

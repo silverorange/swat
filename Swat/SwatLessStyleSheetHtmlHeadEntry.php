@@ -26,7 +26,7 @@ class SwatLessStyleSheetHtmlHeadEntry extends SwatStyleSheetHtmlHeadEntry
         printf(
             '<link rel="stylesheet/less" type="text/css" href="%s%s" />',
             $uri_prefix,
-            $uri
+            $uri,
         );
     }
 
