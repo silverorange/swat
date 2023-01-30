@@ -12,12 +12,25 @@
   <file>./SwatI18N</file>
 
   <rule ref="PSR2"/>
+
   <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
     <severity>0</severity>
   </rule>
+
+  <!-- Required for prettier formatting. Allows breaking default argument
+       assignment across multiple lines. -->
+  <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpaceAfterEquals">
+    <severity>0</severity>
+  </rule>
+  <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.Indent">
+    <severity>0</severity>
+  </rule>
+
+  <!-- Required for prettier formatting. -->
   <rule ref="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace">
     <severity>0</severity>
   </rule>
+
   <rule ref="Generic.Classes.DuplicateClassName"/>
 
   <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
@@ -28,7 +41,8 @@
   <rule ref="Generic.Commenting.Fixme"/>
   <rule ref="Generic.Commenting.Todo"/>
 
-
+  <!-- PSR-2 allows line length of 120, we keep 80 and let the auto-formatter
+       figure out how to wrap long lines -->
   <rule ref="Generic.Files.LineLength">
     <properties>
       <property name="lineLimit" value="80"/>
