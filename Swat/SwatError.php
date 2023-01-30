@@ -429,7 +429,7 @@ class SwatError
             if (array_key_exists('args', $entry)) {
                 $arguments = htmlspecialchars(
                     $this->getArguments($entry['args'], $function, $class),
-                    null,
+                    ENT_COMPAT,
                     'UTF-8'
                 );
             } else {
