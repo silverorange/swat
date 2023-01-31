@@ -38,7 +38,7 @@ class SwatUriEntry extends SwatEntry
      *
      * @var array
      */
-    public $valid_schemes = array('http', 'https', 'ftp');
+    public $valid_schemes = ['http', 'https', 'ftp'];
 
     // }}}
     // {{{ public function process()
@@ -70,7 +70,7 @@ class SwatUriEntry extends SwatEntry
             ) {
                 if ($this->scheme_required) {
                     $this->addMessage(
-                        $this->getValidationMessage('scheme-required')
+                        $this->getValidationMessage('scheme-required'),
                     );
                 } else {
                     $this->value = $this->default_scheme . '://' . $this->value;
@@ -94,7 +94,7 @@ class SwatUriEntry extends SwatEntry
      */
     protected function validateUri($value)
     {
-        $schemes = array();
+        $schemes = [];
         foreach ($this->valid_schemes as $scheme) {
             $schemes[] = preg_quote($scheme, '_');
         }
@@ -142,23 +142,23 @@ class SwatUriEntry extends SwatEntry
                 $text = $this->show_field_title_in_messages
                     ? sprintf(
                         Swat::_(
-                            'The %%s field must include a prefix (e.g. %s).'
+                            'The %%s field must include a prefix (e.g. %s).',
                         ),
-                        $this->default_scheme
+                        $this->default_scheme,
                     )
                     : sprintf(
                         Swat::_('This field must include a prefix (e.g. %s).'),
-                        $this->default_scheme
+                        $this->default_scheme,
                     );
 
                 break;
             case 'invalid-uri':
                 $text = $this->show_field_title_in_messages
                     ? Swat::_(
-                        'The %s field is not a properly formatted address.'
+                        'The %s field is not a properly formatted address.',
                     )
                     : Swat::_(
-                        'This field is not a properly formatted address.'
+                        'This field is not a properly formatted address.',
                     );
 
                 break;
@@ -181,7 +181,7 @@ class SwatUriEntry extends SwatEntry
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-uri-entry');
+        $classes = ['swat-uri-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

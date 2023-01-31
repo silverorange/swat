@@ -33,9 +33,9 @@ class SwatUI extends SwatObject
      *
      * @see SwatUI::mapClassPrefixToPath()
      */
-    private static $class_map = array(
-        'Swat' => 'Swat'
-    );
+    private static $class_map = [
+        'Swat' => 'Swat',
+    ];
 
     /**
      * An array of widgets populated when a UI file is parsed
@@ -46,7 +46,7 @@ class SwatUI extends SwatObject
      *
      * @var array
      */
-    private $widgets = array();
+    private $widgets = [];
 
     /**
      * The root container of the widget tree created by this UI
@@ -60,7 +60,7 @@ class SwatUI extends SwatObject
      *
      * @var array
      */
-    private $stack = array();
+    private $stack = [];
 
     private $translation_callback;
 
@@ -193,7 +193,7 @@ class SwatUI extends SwatObject
                     'Cannot load a UI tree into a container that is not part ' .
                         'of this SwatUI. If you need to load a UI tree into ' .
                         'another SwatUI you should specify the root container ' .
-                        'when constructing this SwatUI.'
+                        'when constructing this SwatUI.',
                 );
             }
         }
@@ -214,9 +214,9 @@ class SwatUI extends SwatObject
         foreach ($class_map_reversed as $prefix => $path) {
             if (
                 mb_strpos($xml_file, $prefix) !== false &&
-                is_callable(array($prefix, 'gettext'))
+                is_callable([$prefix, 'gettext'])
             ) {
-                $this->translation_callback = array($prefix, 'gettext');
+                $this->translation_callback = [$prefix, 'gettext'];
             }
         }
 
@@ -233,14 +233,10 @@ class SwatUI extends SwatObject
             throw new SwatFileNotFoundException(
                 "SwatML file not found: '{$filename}'.",
                 0,
-                $xml_file
+                $xml_file,
             );
         }
 
-        // External entity loader is disabled for loading the SwatUI file to
-        // prevent local and remote file inclusion attacks. See
-        // https://phpsecurity.readthedocs.io/en/latest/Injection-Attacks.html
-        $external_entity_loader = libxml_disable_entity_loader(false);
         $errors = libxml_use_internal_errors(true);
 
         // Use PHP's file loader rather than libxml so it will work with
@@ -249,28 +245,26 @@ class SwatUI extends SwatObject
         if ($xml === false) {
             throw new SwatException(
                 "Unable to load SwatML file: '{$filename}'.",
-                0
+                0,
             );
         }
 
         $document = new DOMDocument();
         $document->loadXML($xml);
         if ($validate) {
-            // check for pear installed version first and if not found, fall
-            // back to version in svn
-            $schema_file = '@DATA-DIR@/Swat/system/swatml.rng';
-            if (!file_exists($schema_file)) {
-                $schema_file = __DIR__ . '/../system/swatml.rng';
+            $schema = file_get_contents(__DIR__ . '/../system/swatml.rng');
+            if ($schema === false) {
+                throw new SwatException(
+                    'Unable to load RelaxNG schema for validation.',
+                    0,
+                );
             }
-
-            libxml_disable_entity_loader(false);
-            $document->relaxNGValidate($schema_file);
+            $document->relaxNGValidateSource($schema);
         }
 
         $xml_errors = libxml_get_errors();
         libxml_clear_errors();
         libxml_use_internal_errors($errors);
-        libxml_disable_entity_loader($external_entity_loader);
 
         if (count($xml_errors) > 0) {
             $message = '';
@@ -279,14 +273,14 @@ class SwatUI extends SwatObject
                     "%s in %s, line %d\n",
                     trim($error->message),
                     $error->file,
-                    $error->line
+                    $error->line,
                 );
             }
 
             throw new SwatInvalidSwatMLException(
                 "Invalid SwatML:\n" . $message,
                 0,
-                $xml_file
+                $xml_file,
             );
         }
 
@@ -331,7 +325,7 @@ class SwatUI extends SwatObject
             throw new SwatWidgetNotFoundException(
                 "Widget with an id of '{$id}' not found.",
                 0,
-                $id
+                $id,
             );
         }
     }
@@ -441,7 +435,7 @@ class SwatUI extends SwatObject
             throw new SwatInvalidCallbackException(
                 'Cannot set translation callback to an uncallable callback.',
                 0,
-                $callback
+                $callback,
             );
         }
     }
@@ -478,7 +472,7 @@ class SwatUI extends SwatObject
 
                     $this->checkParsedObject(
                         $parsed_object,
-                        $child_node->nodeName
+                        $child_node->nodeName,
                     );
 
                     /*
@@ -519,7 +513,7 @@ class SwatUI extends SwatObject
      */
     private function checkParsedObject(
         SwatUIObject $parsed_object,
-        $element_name
+        $element_name,
     ) {
         if ($element_name == 'widget') {
             if (
@@ -533,7 +527,7 @@ class SwatUI extends SwatObject
                         "A widget with an id of '{$parsed_object->id}' " .
                             'already exists.',
                         0,
-                        $parsed_object->id
+                        $parsed_object->id,
                     );
                 }
             } elseif (
@@ -546,7 +540,7 @@ class SwatUI extends SwatObject
                     "'{$class_name}' is defined in a widget element but is " .
                         'not an instance of SwatWidget.',
                     0,
-                    $parsed_object
+                    $parsed_object,
                 );
             }
         } elseif ($element_name == 'object') {
@@ -561,7 +555,7 @@ class SwatUI extends SwatObject
                         'and instance of SwatWidget and should be defined in a ' .
                         'widget element.',
                     0,
-                    $parsed_object
+                    $parsed_object,
                 );
             }
         }
@@ -588,7 +582,7 @@ class SwatUI extends SwatObject
                 "Can not add object to parent. '{$class_name}' does not " .
                     'implement SwatUIParent.',
                 0,
-                $parent
+                $parent,
             );
         }
     }
@@ -614,7 +608,7 @@ class SwatUI extends SwatObject
             throw new SwatClassNotFoundException(
                 "Class '{$class}' is not defined.",
                 0,
-                $class
+                $class,
             );
         }
 
@@ -622,7 +616,7 @@ class SwatUI extends SwatObject
         if (!is_subclass_of($class, 'SwatUIObject')) {
             throw new SwatInvalidClassException(
                 "Class '{$class}' is not a a descendant of SwatUIObject and " .
-                    'cannot be added to the widget tree.'
+                    'cannot be added to the widget tree.',
             );
         }
 
@@ -672,7 +666,7 @@ class SwatUI extends SwatObject
                     'but is used in SwatML.',
                 0,
                 $object,
-                $name
+                $name,
             );
         }
 
@@ -696,7 +690,7 @@ class SwatUI extends SwatObject
             $value,
             $type,
             $translatable,
-            $object
+            $object,
         );
 
         if ($array_property) {
@@ -707,7 +701,7 @@ class SwatUI extends SwatObject
                 $parsed_value->array_key = $array_key;
             } else {
                 if (!is_array($object->$name)) {
-                    $object->$name = array();
+                    $object->$name = [];
                 }
 
                 $array_ref = &$object->$name;
@@ -749,7 +743,7 @@ class SwatUI extends SwatObject
         $value,
         $type,
         $translatable,
-        SwatUIObject $object
+        SwatUIObject $object,
     ) {
         switch ($type) {
             case 'string':
@@ -772,7 +766,7 @@ class SwatUI extends SwatObject
                         __CLASS__ .
                             ': Possible missing type="boolean" ' .
                             'attribute on property element',
-                        E_USER_NOTICE
+                        E_USER_NOTICE,
                     );
                 }
 
@@ -781,7 +775,7 @@ class SwatUI extends SwatObject
                         __CLASS__ .
                             ': Possible missing type="integer" ' .
                             ' or type="float" attribute on property element',
-                        E_USER_NOTICE
+                        E_USER_NOTICE,
                     );
                 }
 
@@ -792,7 +786,7 @@ class SwatUI extends SwatObject
                         'but is used in SwatML.',
                     0,
                     $object,
-                    $type
+                    $type,
                 );
         }
     }
@@ -831,7 +825,7 @@ class SwatUI extends SwatObject
                     'or on a widget within a SwatWidgetCellRenderer.',
                 0,
                 $object,
-                'data'
+                'data',
             );
         }
 
@@ -839,7 +833,7 @@ class SwatUI extends SwatObject
             $renderer,
             $value,
             $name,
-            $object
+            $object,
         );
 
         return $mapping;
@@ -899,14 +893,14 @@ class SwatUI extends SwatObject
          */
 
         // operator => precedence
-        $operators = array(
+        $operators = [
             '|' => 0,
             '&' => 1,
             '-' => 2,
             '+' => 2,
             '/' => 3,
-            '*' => 3
-        );
+            '*' => 3,
+        ];
 
         // this includes parentheses
         $reg_exp = '/([\|&\+\/\*\(\)-])/u';
@@ -914,25 +908,25 @@ class SwatUI extends SwatObject
             $reg_exp,
             $expression,
             -1,
-            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
+            PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
         );
 
-        $stack = array();
-        $queue = array();
-        $eval_stack = array();
+        $stack = [];
+        $queue = [];
+        $eval_stack = [];
         $prev_token = null;
 
         $parenthesis_exception = new SwatInvalidConstantExpressionException(
             "Mismatched parentheses in constant expression '{$expression}' " .
                 'in SwatML.',
             0,
-            $expression
+            $expression,
         );
 
         $syntax_exception = new SwatInvalidConstantExpressionException(
             "Invalid syntax in constant expression '{$expression}' in SwatML.",
             0,
-            $expression
+            $expression,
         );
 
         foreach ($tokens as $token) {
@@ -987,7 +981,7 @@ class SwatUI extends SwatObject
                         "Undefined constant '{$constant}' in constant " .
                             "expression '{$expression}' in SwatML.",
                         0,
-                        $constant
+                        $constant,
                     );
                 }
 
@@ -1007,7 +1001,7 @@ class SwatUI extends SwatObject
             array_push($queue, $operator);
         }
 
-        $eval_stack = array();
+        $eval_stack = [];
         foreach ($queue as $value) {
             if (is_string($value) && array_key_exists($value, $operators)) {
                 $b = array_pop($eval_stack);

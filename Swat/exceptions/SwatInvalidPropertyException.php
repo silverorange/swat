@@ -40,7 +40,7 @@ class SwatInvalidPropertyException extends SwatException
         $message = null,
         $code = 0,
         $object = null,
-        $property = null
+        $property = null,
     ) {
         parent::__construct($message, $code);
         $this->object = $object;

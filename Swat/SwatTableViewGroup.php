@@ -236,7 +236,7 @@ class SwatTableViewGroup extends SwatTableViewColumn
      */
     protected function getBaseCSSClassNames()
     {
-        return array('swat-table-view-group');
+        return ['swat-table-view-group'];
     }
 
     // }}}

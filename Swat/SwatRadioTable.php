@@ -44,8 +44,8 @@ class SwatRadioTable extends SwatRadioList
 
         if ($this->show_blank) {
             $options = array_merge(
-                array(new SwatOption(null, $this->blank_title)),
-                $options
+                [new SwatOption(null, $this->blank_title)],
+                $options,
             );
         }
 
@@ -96,7 +96,7 @@ class SwatRadioTable extends SwatRadioList
             $this->displayOption($option, $index);
             printf(
                 '</td><td id="%s" class="swat-radio-table-label">',
-                $this->id . '_' . (string) $option->value . '_label'
+                $this->id . '_' . (string) $option->value . '_label',
             );
 
             $this->displayOptionLabel($option, $index);
@@ -131,7 +131,7 @@ class SwatRadioTable extends SwatRadioList
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-radio-table');
+        $classes = ['swat-radio-table'];
         $classes = array_merge($classes, $this->classes);
         return $classes;
     }

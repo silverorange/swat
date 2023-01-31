@@ -52,7 +52,7 @@ class SwatNavBarEntry extends SwatObject
     public function __construct(
         $title,
         $link = null,
-        $content_type = 'text/plain'
+        $content_type = 'text/plain',
     ) {
         $this->title = $title;
         $this->link = $link;

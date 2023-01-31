@@ -92,7 +92,7 @@ class Swat
             self::GETTEXT_DOMAIN,
             $singular_message,
             $plural_message,
-            $number
+            $number,
         );
     }
 
@@ -101,12 +101,7 @@ class Swat
 
     public static function setupGettext()
     {
-        $path = '@DATA-DIR@/Swat/locale';
-        if (mb_substr($path, 0, 1) === '@') {
-            $path = __DIR__ . '/../locale';
-        }
-
-        bindtextdomain(self::GETTEXT_DOMAIN, $path);
+        bindtextdomain(self::GETTEXT_DOMAIN, __DIR__ . '/../locale');
         bind_textdomain_codeset(self::GETTEXT_DOMAIN, 'UTF-8');
     }
 
@@ -228,7 +223,7 @@ class Swat
 /*
  * Define a dummy dngettext() for when gettext is not available.
  */
-if (!function_exists("dngettext")) {
+if (!function_exists('dngettext')) {
     /**
      * Dummy translation function performs a passthrough on string to be
      * translated
@@ -260,7 +255,7 @@ if (!function_exists("dngettext")) {
 /*
  * Define a dummy dgettext() for when gettext is not available.
  */
-if (!function_exists("dgettext")) {
+if (!function_exists('dgettext')) {
     /**
      * Dummy translation function performs a passthrough on string to be
      * translated

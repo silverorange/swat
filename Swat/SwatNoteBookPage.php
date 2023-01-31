@@ -78,7 +78,7 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
      */
     public function getPages()
     {
-        return array($this);
+        return [$this];
     }
 
     // }}}
@@ -92,7 +92,7 @@ class SwatNoteBookPage extends SwatContainer implements SwatNoteBookChild
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-note-book-page');
+        $classes = ['swat-note-book-page'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

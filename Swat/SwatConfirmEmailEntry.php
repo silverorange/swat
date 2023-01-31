@@ -44,7 +44,7 @@ class SwatConfirmEmailEntry extends SwatEmailEntry
         if ($this->email_widget === null) {
             throw new SwatException(
                 "Property 'email_widget' is null. " .
-                    'Expected a reference to a SwatEmailEntry.'
+                    'Expected a reference to a SwatEmailEntry.',
             );
         }
 
@@ -52,7 +52,7 @@ class SwatConfirmEmailEntry extends SwatEmailEntry
             if ($this->email_widget->value !== $this->value) {
                 $message = Swat::_(
                     'Email address and confirmation email ' .
-                        'address do not match.'
+                        'address do not match.',
                 );
 
                 $this->addMessage(new SwatMessage($message, 'error'));
@@ -71,7 +71,7 @@ class SwatConfirmEmailEntry extends SwatEmailEntry
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-confirm-email-entry');
+        $classes = ['swat-confirm-email-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

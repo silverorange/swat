@@ -176,7 +176,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
         if ($this->link_value === null) {
             $link = $this->link;
         } elseif (is_array($this->link_value)) {
-            $link_values = array();
+            $link_values = [];
 
             foreach ($this->link_value as $value) {
                 $link_values[] = urlencode($value);
@@ -201,7 +201,7 @@ class SwatLinkCellRenderer extends SwatCellRenderer
      */
     public function getDataSpecificCSSClassNames()
     {
-        $classes = array();
+        $classes = [];
 
         if (!$this->isSensitive()) {
             $classes[] = 'swat-link-cell-renderer-insensitive';

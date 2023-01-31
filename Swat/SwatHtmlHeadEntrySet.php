@@ -21,7 +21,7 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
      *
      * @var array
      */
-    protected $entries = array();
+    protected $entries = [];
 
     /**
      * Maps HTML head entry URIs to {@link SwatHtmlHeadEntry} class names
@@ -29,11 +29,11 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
      * @see SwatHtmlHeadEntrySet::addEntry()
      * @see SwatHtmlHeadEntrySet::addTypeMapping()
      */
-    protected $type_map = array(
+    protected $type_map = [
         '/\.js$/' => 'SwatJavaScriptHtmlHeadEntry',
         '/\.css$/' => 'SwatStyleSheetHtmlHeadEntry',
-        '/\.less$/' => 'SwatLessStyleSheetHtmlHeadEntry'
-    );
+        '/\.less$/' => 'SwatLessStyleSheetHtmlHeadEntry',
+    ];
 
     // }}}
     // {{{ public function __construct()
@@ -68,7 +68,7 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
                 throw new SwatClassNotFoundException(
                     'SwatHtmlHeadEntry class not found for entry string of "' .
                         $entry .
-                        '".'
+                        '".',
                 );
             }
 
@@ -80,7 +80,7 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
                 'Added entry must be either a string or an instance of a' .
                     'SwatHtmlHeadEntry.',
                 0,
-                $entry
+                $entry,
             );
         }
 
@@ -151,22 +151,22 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
         if (is_string($type)) {
             if ($class === null) {
                 throw new InvalidArgumentException(
-                    'If $type is specified, $class is required'
+                    'If $type is specified, $class is required',
                 );
             }
-            $type = array($type => (string) $class);
+            $type = [$type => (string) $class];
             $class = null;
         }
 
         if (!is_array($type)) {
             throw new InvalidArgumentException(
-                'Type must either be an array or a string.'
+                'Type must either be an array or a string.',
             );
         }
 
         if ($class !== null) {
             throw new InvalidArgumentException(
-                'If $type is an array, $class must not be specified.'
+                'If $type is an array, $class must not be specified.',
             );
         }
 

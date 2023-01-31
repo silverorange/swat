@@ -1,4 +1,5 @@
 module.exports = {
   singleQuote: true,
-  useTabs: false
+  useTabs: false,
+  phpVersion: '8.1'
 };

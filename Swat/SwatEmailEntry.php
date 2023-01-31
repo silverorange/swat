@@ -69,7 +69,7 @@ class SwatEmailEntry extends SwatEntry
             case 'email':
                 $text = Swat::_(
                     'The email address you have entered is not ' .
-                        'properly formatted.'
+                        'properly formatted.',
                 );
 
                 $message = new SwatMessage($text, 'error');
@@ -109,7 +109,7 @@ class SwatEmailEntry extends SwatEntry
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-email-entry');
+        $classes = ['swat-email-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

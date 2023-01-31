@@ -60,7 +60,7 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
             $div_tag->class = 'swat-details-view-field-header';
             $div_tag->setContent(
                 $this->getHeaderTitle(),
-                $this->title_content_type
+                $this->title_content_type,
             );
 
             $div_tag->display();
@@ -102,7 +102,7 @@ class SwatDetailsViewVerticalField extends SwatDetailsViewField
      */
     protected function getBaseCSSClassNames()
     {
-        return array('swat-details-view-vertical-field');
+        return ['swat-details-view-vertical-field'];
     }
 
     // }}}

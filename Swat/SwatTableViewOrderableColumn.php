@@ -81,7 +81,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
      *
      * @var array
      */
-    public $unset_get_vars = array();
+    public $unset_get_vars = [];
 
     // }}}
     // {{{ protected properties
@@ -206,7 +206,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
             $this->displayTitle(
                 $this->abbreviated_title,
-                $this->abbreviated_title_content_type
+                $this->abbreviated_title_content_type,
             );
 
             $abbr_tag->close();
@@ -236,7 +236,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
      */
     public function getDirectionAsString(
         $direction_id = null,
-        $include_nulls_ordering = true
+        $include_nulls_ordering = true,
     ) {
         if ($direction_id === null) {
             $direction_id = $this->direction;
@@ -257,7 +257,10 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
 
             default:
                 throw new SwatException(
-                    sprintf("Ordering direction '%s' not found.", $direction_id)
+                    sprintf(
+                        "Ordering direction '%s' not found.",
+                        $direction_id,
+                    ),
                 );
         }
 
@@ -275,8 +278,8 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
                     throw new SwatException(
                         sprintf(
                             "Nulls ordering '%s' not found.",
-                            $this->nulls_ordering
-                        )
+                            $this->nulls_ordering,
+                        ),
                     );
             }
         }
@@ -323,7 +326,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
      */
     protected function getBaseCSSClassNames()
     {
-        $classes = array();
+        $classes = [];
 
         if ($this->view->orderby_column === $this) {
             $classes[] = 'swat-table-view-orderable-column-selected';
@@ -445,7 +448,7 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
             $vars[$key_orderby] = $this->id;
             $vars[$key_orderbydir] = $this->getDirectionAsString(
                 $next_dir,
-                false
+                false,
             );
         }
 

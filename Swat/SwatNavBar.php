@@ -51,7 +51,7 @@ class SwatNavBar extends SwatControl implements Countable
      *
      * @see SwatNavBarEntry
      */
-    private $entries = array();
+    private $entries = [];
 
     // }}}
     // {{{ public function createEntry()
@@ -66,7 +66,7 @@ class SwatNavBar extends SwatControl implements Countable
     public function createEntry(
         $title,
         $link = null,
-        $content_type = 'text/plain'
+        $content_type = 'text/plain',
     ) {
         $this->addEntry(new SwatNavBarEntry($title, $link, $content_type));
     }
@@ -132,7 +132,7 @@ class SwatNavBar extends SwatControl implements Countable
 
     public function replaceEntryByPosition(
         $position,
-        SwatNavBarEntry $new_entry
+        SwatNavBarEntry $new_entry,
     ) {
         if (isset($this->entries[$position])) {
             $old_entry = $this->entries[$position];
@@ -146,8 +146,8 @@ class SwatNavBar extends SwatControl implements Countable
                 'Cannot replace element at position ' .
                     '%s because NavBar does not contain an entry at position %s.',
                 $position,
-                $position
-            )
+                $position,
+            ),
         );
     }
 
@@ -182,8 +182,8 @@ class SwatNavBar extends SwatControl implements Countable
             throw new SwatException(
                 sprintf(
                     'Navbar does not contain an entry at position %s.',
-                    $position
-                )
+                    $position,
+                ),
             );
         }
     }
@@ -256,7 +256,7 @@ class SwatNavBar extends SwatControl implements Countable
     {
         if (count($this) < 1) {
             throw new SwatException(
-                'Cannot pop entry. NavBar does not contain any entries.'
+                'Cannot pop entry. NavBar does not contain any entries.',
             );
         } else {
             return array_pop($this->entries);
@@ -290,8 +290,8 @@ class SwatNavBar extends SwatControl implements Countable
                     'Unable to pop %s entries. NavBar ' .
                         'only contains %s entries.',
                     $number,
-                    $count
-                )
+                    $count,
+                ),
             );
         } else {
             return array_splice($this->entries, -$number);
@@ -310,7 +310,7 @@ class SwatNavBar extends SwatControl implements Countable
     public function clear()
     {
         $entries = $this->entries;
-        $this->entries = array();
+        $this->entries = [];
         return $entries;
     }
 
@@ -369,7 +369,7 @@ class SwatNavBar extends SwatControl implements Countable
     protected function displayEntry(
         SwatNavBarEntry $entry,
         $show_link = true,
-        $first = false
+        $first = false,
     ) {
         $title = $entry->title === null ? '' : $entry->title;
         $link = $this->getLink($entry);
@@ -420,7 +420,7 @@ class SwatNavBar extends SwatControl implements Countable
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-nav-bar');
+        $classes = ['swat-nav-bar'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

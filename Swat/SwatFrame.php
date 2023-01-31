@@ -133,7 +133,7 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
                 $span_tag->class = 'swat-frame-subtitle';
                 $span_tag->setContent(
                     $this->subtitle,
-                    $this->title_content_type
+                    $this->title_content_type,
                 );
 
                 $header_tag->open();
@@ -170,7 +170,7 @@ class SwatFrame extends SwatDisplayableContainer implements SwatTitleable
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-frame');
+        $classes = ['swat-frame'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

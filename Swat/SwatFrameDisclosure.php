@@ -139,7 +139,7 @@ class SwatFrameDisclosure extends SwatDisclosure
      */
     protected function getCSSClassNames()
     {
-        $classes = array();
+        $classes = [];
         $classes[] = 'swat-frame';
         $classes[] = 'swat-disclosure-control-opened';
         $classes[] = 'swat-frame-disclosure-control-opened';

@@ -31,7 +31,7 @@ abstract class SwatView extends SwatControl
      *
      * @deprecated use {@link SwatView::getSelection()} instead.
      */
-    public $checked_items = array();
+    public $checked_items = [];
 
     // }}}
     // {{{ protected properties
@@ -44,7 +44,7 @@ abstract class SwatView extends SwatControl
      *
      * @var array
      */
-    protected $selections = array();
+    protected $selections = [];
 
     /**
      * The selectors of this view
@@ -54,7 +54,7 @@ abstract class SwatView extends SwatControl
      *
      * @var array
      */
-    protected $selectors = array();
+    protected $selectors = [];
 
     // }}}
     // {{{ public function __construct()
@@ -70,7 +70,7 @@ abstract class SwatView extends SwatControl
     {
         parent::__construct($id);
 
-        $yui = new SwatYUI(array('dom'));
+        $yui = new SwatYUI(['dom']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-view.js');
     }
@@ -135,7 +135,7 @@ abstract class SwatView extends SwatControl
                 $selector = reset($this->selectors);
             } else {
                 throw new SwatException(
-                    'This view does not have any selectors.'
+                    'This view does not have any selectors.',
                 );
             }
         } elseif (is_string($selector)) {
@@ -146,18 +146,18 @@ abstract class SwatView extends SwatControl
                     'Selector with an id ' .
                         "of {$selector} does not exist in this view.",
                     0,
-                    $selector
+                    $selector,
                 );
             }
         } elseif (!($selector instanceof SwatViewSelector)) {
             throw new SwatInvalidClassException(
                 'Specified object is not a SwatViewSelector object.',
                 0,
-                $selector
+                $selector,
             );
         } elseif (!isset($this->selections[$selector->getId()])) {
             throw new SwatException(
-                'Specified SwatViewSelector is not a selector of this view.'
+                'Specified SwatViewSelector is not a selector of this view.',
             );
         }
 
@@ -206,7 +206,7 @@ abstract class SwatView extends SwatControl
                 $selector = reset($this->selectors);
             } else {
                 throw new SwatException(
-                    'This view does not have any selectors.'
+                    'This view does not have any selectors.',
                 );
             }
         } elseif (is_string($selector)) {
@@ -217,18 +217,18 @@ abstract class SwatView extends SwatControl
                     'Selector with an id ' .
                         "of {$selector} does not exist in this view.",
                     0,
-                    $selector
+                    $selector,
                 );
             }
         } elseif (!($selector instanceof SwatViewSelector)) {
             throw new SwatInvalidClassException(
                 'Specified object is not a SwatViewSelector object.',
                 0,
-                $selector
+                $selector,
             );
         } elseif (!isset($this->selections[$selector->getId()])) {
             throw new SwatException(
-                'Specified SwatViewSelector is not a selector of this view.'
+                'Specified SwatViewSelector is not a selector of this view.',
             );
         }
 
@@ -245,7 +245,7 @@ abstract class SwatView extends SwatControl
      */
     final protected function addSelector(SwatViewSelector $selector)
     {
-        $this->selections[$selector->getId()] = new SwatViewSelection(array());
+        $this->selections[$selector->getId()] = new SwatViewSelection([]);
         $this->selectors[$selector->getId()] = $selector;
     }
 

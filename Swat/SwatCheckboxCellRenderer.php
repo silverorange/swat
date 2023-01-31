@@ -76,7 +76,7 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
      *
      * @var array
      */
-    private $selected_values = array();
+    private $selected_values = [];
 
     // }}}
     // {{{ public function __construct()
@@ -90,10 +90,10 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
 
         $this->makePropertyStatic('id');
 
-        $yui = new SwatYUI(array('dom'));
+        $yui = new SwatYUI(['dom']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript(
-            'packages/swat/javascript/swat-checkbox-cell-renderer.js'
+            'packages/swat/javascript/swat-checkbox-cell-renderer.js',
         );
 
         // auto-generate an id to use if no id is set
@@ -206,7 +206,7 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
                 "var %s = new SwatCheckboxCellRenderer('%s', %s);",
                 $this->id,
                 $this->id,
-                $view->id
+                $view->id,
             );
         } else {
             $javascript = '';
@@ -258,7 +258,7 @@ class SwatCheckboxCellRenderer extends SwatCellRenderer implements
         if ($form === null) {
             throw new SwatException(
                 'SwatCheckboxCellRenderer must have ' .
-                    'a SwatForm ancestor in the UI tree.'
+                    'a SwatForm ancestor in the UI tree.',
             );
         }
 

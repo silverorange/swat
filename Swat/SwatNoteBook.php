@@ -60,14 +60,14 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
      *
      * @var array
      */
-    protected $children = array();
+    protected $children = [];
 
     /**
      * Pages affixed to this widget
      *
      * @var array
      */
-    protected $pages = array();
+    protected $pages = [];
 
     // }}}
     // {{{ public function __construct()
@@ -83,7 +83,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('tabview'));
+        $yui = new SwatYUI(['tabview']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addStyleSheet('packages/swat/styles/swat-note-book.css');
@@ -120,7 +120,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
                 'Only SwatNoteBookChild objects may be nested within a ' .
                     'SwatNoteBook object.',
                 0,
-                $child
+                $child,
             );
         }
     }
@@ -401,10 +401,10 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
                 interface_exists($class_name)
             )
         ) {
-            return array();
+            return [];
         }
 
-        $out = array();
+        $out = [];
 
         foreach ($this->pages as $page) {
             if ($class_name === null || $page instanceof $class_name) {
@@ -475,7 +475,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
      */
     public function getDescendantStates()
     {
-        $states = array();
+        $states = [];
 
         foreach ($this->getDescendants('SwatState') as $id => $object) {
             $states[$id] = $object->getState();
@@ -559,11 +559,11 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
         }
 
         return sprintf(
-            "var %s_obj = new YAHOO.widget.TabView(" .
+            'var %s_obj = new YAHOO.widget.TabView(' .
                 "'%s', {orientation: '%s'});",
             $this->id,
             $this->id,
-            $position
+            $position,
         );
     }
 

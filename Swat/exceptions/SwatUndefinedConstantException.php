@@ -31,7 +31,7 @@ class SwatUndefinedConstantException extends SwatException
     public function __construct(
         $message = null,
         $code = 0,
-        $constant_name = null
+        $constant_name = null,
     ) {
         parent::__construct($message, $code);
         $this->constant_name = $constant_name;

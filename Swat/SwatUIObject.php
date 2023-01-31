@@ -41,7 +41,7 @@ abstract class SwatUIObject extends SwatObject
      *
      * @var array
      */
-    public $classes = array();
+    public $classes = [];
 
     // }}}
     // {{{ protected properties
@@ -84,13 +84,13 @@ abstract class SwatUIObject extends SwatObject
                         'instantiate a HTML head entry set. This should be done in  ' .
                         'the constructor either by calling parent::__construct() or ' .
                         'by creating a new HTML head entry set.',
-                    get_class($this)
-                )
+                    get_class($this),
+                ),
             );
         }
 
         $this->html_head_entry_set->addEntry(
-            new SwatStyleSheetHtmlHeadEntry($stylesheet)
+            new SwatStyleSheetHtmlHeadEntry($stylesheet),
         );
     }
 
@@ -114,13 +114,13 @@ abstract class SwatUIObject extends SwatObject
                         'instantiate a HTML head entry set. This should be done in  ' .
                         'the constructor either by calling parent::__construct() or ' .
                         'by creating a new HTML head entry set.',
-                    get_class($this)
-                )
+                    get_class($this),
+                ),
             );
         }
 
         $this->html_head_entry_set->addEntry(
-            new SwatJavaScriptHtmlHeadEntry($java_script)
+            new SwatJavaScriptHtmlHeadEntry($java_script),
         );
     }
 
@@ -136,13 +136,13 @@ abstract class SwatUIObject extends SwatObject
                         'instantiate a HTML head entry set. This should be done in  ' .
                         'the constructor either by calling parent::__construct() or ' .
                         'by creating a new HTML head entry set.',
-                    get_class($this)
-                )
+                    get_class($this),
+                ),
             );
         }
 
         $this->html_head_entry_set->addEntry(
-            new SwatExternalJavaScriptHtmlHeadEntry($url)
+            new SwatExternalJavaScriptHtmlHeadEntry($url),
         );
     }
 
@@ -164,13 +164,13 @@ abstract class SwatUIObject extends SwatObject
                         'instantiate a HTML head entry set. This should be done in  ' .
                         'the constructor either by calling parent::__construct() or ' .
                         'by creating a new HTML head entry set.',
-                    get_class($this)
-                )
+                    get_class($this),
+                ),
             );
         }
 
         $this->html_head_entry_set->addEntry(
-            new SwatCommentHtmlHeadEntry($comment)
+            new SwatCommentHtmlHeadEntry($comment),
         );
     }
 

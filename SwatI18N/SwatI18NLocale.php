@@ -67,7 +67,7 @@ class SwatI18NLocale extends SwatObject
      *
      * @var array
      */
-    protected $old_locale_by_category = array();
+    protected $old_locale_by_category = [];
 
     // }}}
     // {{{ private properties
@@ -82,7 +82,7 @@ class SwatI18NLocale extends SwatObject
      *
      * @see SwatI18NLocale::get()
      */
-    private static $locales = array();
+    private static $locales = [];
 
     // }}}
     // {{{ public static function get()
@@ -167,14 +167,14 @@ class SwatI18NLocale extends SwatObject
     {
         $return = false;
 
-        static $categories = array(
+        static $categories = [
             'LC_COLLATE' => LC_COLLATE,
             'LC_CTYPE' => LC_CTYPE,
             'LC_MONETARY' => LC_MONETARY,
             'LC_NUMERIC' => LC_NUMERIC,
             'LC_TIME' => LC_TIME,
-            'LC_MESSAGES' => LC_MESSAGES
-        );
+            'LC_MESSAGES' => LC_MESSAGES,
+        ];
 
         $parts = explode(';', $locale);
         if ($category === LC_ALL && count($parts) > 1) {
@@ -188,7 +188,7 @@ class SwatI18NLocale extends SwatObject
                 ) {
                     $return = setlocale(
                         $categories[$part_exp[0]],
-                        $part_exp[1]
+                        $part_exp[1],
                     );
                 }
             }
@@ -214,7 +214,7 @@ class SwatI18NLocale extends SwatObject
     {
         $this->old_locale_by_category[$category] = self::setlocale(
             $category,
-            '0'
+            '0',
         );
 
         self::setlocale($category, $this->locale);
@@ -280,7 +280,7 @@ class SwatI18NLocale extends SwatObject
     public function formatCurrency(
         $value,
         $international = false,
-        array $format = array()
+        array $format = [],
     ) {
         $format = $international
             ? $this->getInternationalCurrencyFormat()->override($format)
@@ -299,7 +299,7 @@ class SwatI18NLocale extends SwatObject
         $fractional_part = $this->formatFractionalPart(
             $value,
             $fractional_digits,
-            $format
+            $format,
         );
 
         $formatted_value = $integer_part . $fractional_part;
@@ -352,13 +352,13 @@ class SwatI18NLocale extends SwatObject
                         $formatted_value = sprintf(
                             '(%s %s)',
                             $symbol,
-                            $formatted_value
+                            $formatted_value,
                         );
                     } else {
                         $formatted_value = sprintf(
                             '(%s%s)',
                             $symbol,
-                            $formatted_value
+                            $formatted_value,
                         );
                     }
                 } else {
@@ -366,13 +366,13 @@ class SwatI18NLocale extends SwatObject
                         $formatted_value = sprintf(
                             '(%s %s)',
                             $formatted_value,
-                            $symbol
+                            $symbol,
                         );
                     } else {
                         $formatted_value = sprintf(
                             '(%s%s)',
                             $formatted_value,
-                            $symbol
+                            $symbol,
                         );
                     }
                 }
@@ -386,14 +386,14 @@ class SwatI18NLocale extends SwatObject
                             '%s%s %s',
                             $sign,
                             $symbol,
-                            $formatted_value
+                            $formatted_value,
                         );
                     } else {
                         $formatted_value = sprintf(
                             '%s%s%s',
                             $sign,
                             $symbol,
-                            $formatted_value
+                            $formatted_value,
                         );
                     }
                 } else {
@@ -402,14 +402,14 @@ class SwatI18NLocale extends SwatObject
                             '%s%s %s',
                             $sign,
                             $formatted_value,
-                            $symbol
+                            $symbol,
                         );
                     } else {
                         $formatted_value = sprintf(
                             '%s%s%s',
                             $sign,
                             $formatted_value,
-                            $symbol
+                            $symbol,
                         );
                     }
                 }
@@ -423,14 +423,14 @@ class SwatI18NLocale extends SwatObject
                             '%s %s%s',
                             $symbol,
                             $formatted_value,
-                            $sign
+                            $sign,
                         );
                     } else {
                         $formatted_value = sprintf(
                             '%s%s%s',
                             $symbol,
                             $formatted_value,
-                            $sign
+                            $sign,
                         );
                     }
                 } else {
@@ -439,14 +439,14 @@ class SwatI18NLocale extends SwatObject
                             '%s %s%s',
                             $formatted_value,
                             $symbol,
-                            $sign
+                            $sign,
                         );
                     } else {
                         $formatted_value = sprintf(
                             '%s%s%s',
                             $sign,
                             $formatted_value,
-                            $symbol
+                            $symbol,
                         );
                     }
                 }
@@ -460,14 +460,14 @@ class SwatI18NLocale extends SwatObject
                             '%s%s %s',
                             $sign,
                             $symbol,
-                            $formatted_value
+                            $formatted_value,
                         );
                     } else {
                         $formatted_value = sprintf(
                             '%s%s%s',
                             $sign,
                             $symbol,
-                            $formatted_value
+                            $formatted_value,
                         );
                     }
                 } else {
@@ -476,14 +476,14 @@ class SwatI18NLocale extends SwatObject
                             '%s %s%s',
                             $formatted_value,
                             $sign,
-                            $symbol
+                            $symbol,
                         );
                     } else {
                         $formatted_value = sprintf(
                             '%s%s%s',
                             $formatted_value,
                             $sign,
-                            $symbol
+                            $symbol,
                         );
                     }
                 }
@@ -497,14 +497,14 @@ class SwatI18NLocale extends SwatObject
                             '%s%s %s',
                             $symbol,
                             $sign,
-                            $formatted_value
+                            $formatted_value,
                         );
                     } else {
                         $formatted_value = sprintf(
                             '%s%s%s',
                             $symbol,
                             $sign,
-                            $formatted_value
+                            $formatted_value,
                         );
                     }
                 } else {
@@ -513,14 +513,14 @@ class SwatI18NLocale extends SwatObject
                             '%s %s%s',
                             $formatted_value,
                             $symbol,
-                            $sign
+                            $sign,
                         );
                     } else {
                         $formatted_value = sprintf(
                             '%s%s%s',
                             $formatted_value,
                             $symbol,
-                            $sign
+                            $sign,
                         );
                     }
                 }
@@ -559,11 +559,8 @@ class SwatI18NLocale extends SwatObject
      * @throws SwatException if a property name specified in the <i>$format</i>
      *                       parameter is invalid.
      */
-    public function formatNumber(
-        $value,
-        $decimals = null,
-        array $format = array()
-    ) {
+    public function formatNumber($value, $decimals = null, array $format = [])
+    {
         $value = (float) $value;
 
         $format = $this->getNumberFormat()->override($format);
@@ -578,7 +575,7 @@ class SwatI18NLocale extends SwatObject
         $fractional_part = $this->formatFractionalPart(
             $value,
             $decimals,
-            $format
+            $format,
         );
 
         $sign = $value < 0 ? '-' : '';
@@ -614,19 +611,19 @@ class SwatI18NLocale extends SwatObject
         $string = $this->parseNegativeNotation(
             $string,
             $lc['negative_sign'],
-            $lc['n_sign_posn']
+            $lc['n_sign_posn'],
         );
 
-        $search = array(
+        $search = [
             $lc['currency_symbol'],
             $lc['int_curr_symbol'],
             $lc['mon_thousands_sep'],
             $decimal_point,
             $lc['positive_sign'],
-            ' '
-        );
+            ' ',
+        ];
 
-        $replace = array('', '', '', '.', '', '');
+        $replace = ['', '', '', '.', '', ''];
 
         $string = str_replace($search, $replace, $string);
 
@@ -662,14 +659,14 @@ class SwatI18NLocale extends SwatObject
 
         $string = $this->parseNegativeNotation($string);
 
-        $search = array(
+        $search = [
             $lc['thousands_sep'],
             $lc['decimal_point'],
             $lc['positive_sign'],
-            ' '
-        );
+            ' ',
+        ];
 
-        $replace = array('', '.', '', '');
+        $replace = ['', '.', '', ''];
 
         $string = str_replace($search, $replace, $string);
 
@@ -715,9 +712,9 @@ class SwatI18NLocale extends SwatObject
 
         $string = $this->parseNegativeNotation($string);
 
-        $search = array($lc['thousands_sep'], $lc['positive_sign'], ' ');
+        $search = [$lc['thousands_sep'], $lc['positive_sign'], ' '];
 
-        $replace = array('', '', '');
+        $replace = ['', '', ''];
 
         $string = str_replace($search, $replace, $string);
 
@@ -726,7 +723,7 @@ class SwatI18NLocale extends SwatObject
                 throw new SwatIntegerOverflowException(
                     'Floating point value is too big to be an integer',
                     null,
-                    1
+                    1,
                 );
             }
 
@@ -734,7 +731,7 @@ class SwatI18NLocale extends SwatObject
                 throw new SwatIntegerOverflowException(
                     'Floating point value is too small to be an integer',
                     null,
-                    -1
+                    -1,
                 );
             }
 
@@ -905,7 +902,7 @@ class SwatI18NLocale extends SwatObject
             $this->locale_info = $this->iconvArray(
                 $character_encoding,
                 'UTF-8',
-                $this->locale_info
+                $this->locale_info,
             );
         }
 
@@ -1043,10 +1040,10 @@ class SwatI18NLocale extends SwatObject
      */
     protected function formatIntegerGroupings(
         $value,
-        SwatI18NNumberFormat $format
+        SwatI18NNumberFormat $format,
     ) {
         // group integer part with thousands separators
-        $grouping_values = array();
+        $grouping_values = [];
         $groupings = $format->grouping;
         $grouping_total = intval(floor(abs($value)));
         if (
@@ -1072,7 +1069,7 @@ class SwatI18NLocale extends SwatObject
                 }
 
                 $grouping_value = floor(
-                    fmod($grouping_total, pow(10, $grouping))
+                    fmod($grouping_total, pow(10, $grouping)),
                 );
 
                 $grouping_total = floor($grouping_total / pow(10, $grouping));
@@ -1081,7 +1078,7 @@ class SwatI18NLocale extends SwatObject
                         $grouping_value,
                         $grouping,
                         '0',
-                        STR_PAD_LEFT
+                        STR_PAD_LEFT,
                     );
                 }
 
@@ -1106,11 +1103,11 @@ class SwatI18NLocale extends SwatObject
                 } else {
                     while ($grouping_total > 0) {
                         $grouping_value = floor(
-                            fmod($grouping_total, pow(10, $grouping))
+                            fmod($grouping_total, pow(10, $grouping)),
                         );
 
                         $grouping_total = floor(
-                            $grouping_total / pow(10, $grouping)
+                            $grouping_total / pow(10, $grouping),
                         );
 
                         if ($grouping_total > 0) {
@@ -1118,7 +1115,7 @@ class SwatI18NLocale extends SwatObject
                                 $grouping_value,
                                 $grouping,
                                 '0',
-                                STR_PAD_LEFT
+                                STR_PAD_LEFT,
                             );
                         }
 
@@ -1133,7 +1130,7 @@ class SwatI18NLocale extends SwatObject
         // join groupings using thousands separator
         $formatted_value = implode(
             $format->thousands_separator,
-            $grouping_values
+            $grouping_values,
         );
 
         return $formatted_value;
@@ -1159,7 +1156,7 @@ class SwatI18NLocale extends SwatObject
     protected function formatFractionalPart(
         $value,
         $fractional_digits,
-        SwatI18NNumberFormat $format
+        SwatI18NNumberFormat $format,
     ) {
         if ($fractional_digits === 0) {
             $formatted_value = '';
@@ -1170,7 +1167,7 @@ class SwatI18NLocale extends SwatObject
                 $frac_part,
                 $fractional_digits,
                 '0',
-                STR_PAD_LEFT
+                STR_PAD_LEFT,
             );
 
             $formatted_value = $format->decimal_separator . $frac_part;
@@ -1204,7 +1201,7 @@ class SwatI18NLocale extends SwatObject
     protected function parseNegativeNotation(
         $string,
         $n_sign = null,
-        $n_sign_position = 1
+        $n_sign_position = 1,
     ) {
         $lc = $this->getLocaleInfo();
 
@@ -1240,7 +1237,7 @@ class SwatI18NLocale extends SwatObject
             ) {
                 // parse parenthetical negative shown as: (5.00)
                 $negative = true;
-                $string = str_replace(array('(', ')'), '', $string);
+                $string = str_replace(['(', ')'], '', $string);
             }
         }
 
@@ -1371,7 +1368,7 @@ class SwatI18NLocale extends SwatObject
             if ($this->preferred_locale === false) {
                 throw new SwatException(
                     "The locale {$this->locale} is not " .
-                        "valid for this operating system."
+                        'valid for this operating system.',
                 );
             }
         }
@@ -1416,8 +1413,8 @@ class SwatI18NLocale extends SwatObject
                             sprintf(
                                 'Could not convert %s output to %s',
                                 $from,
-                                $to
-                            )
+                                $to,
+                            ),
                         );
                     }
 

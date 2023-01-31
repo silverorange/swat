@@ -32,7 +32,7 @@ class SwatUndefinedMessageTypeException extends SwatException
     public function __construct(
         $message = null,
         $code = 0,
-        $message_type = null
+        $message_type = null,
     ) {
         parent::__construct($message, $code);
         $this->message_type = $message_type;

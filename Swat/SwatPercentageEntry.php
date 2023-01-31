@@ -67,7 +67,7 @@ class SwatPercentageEntry extends SwatFloatEntry
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-percentage-entry');
+        $classes = ['swat-percentage-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

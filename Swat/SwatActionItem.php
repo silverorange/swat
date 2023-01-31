@@ -89,7 +89,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
         if ($this->widget !== null) {
             throw new SwatException(
                 'SwatUI: Only one widget can be nested ' .
-                    'within a SwatActionItem'
+                    'within a SwatActionItem',
             );
         }
 
@@ -124,7 +124,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
                 'Only SwatWidget objects may be nested within a ' .
                     'SwatActionItem object.',
                 0,
-                $child
+                $child,
             );
         }
     }
@@ -198,10 +198,10 @@ class SwatActionItem extends SwatControl implements SwatUIParent
                 interface_exists($class_name)
             )
         ) {
-            return array();
+            return [];
         }
 
-        $out = array();
+        $out = [];
 
         if ($this->widget !== null) {
             if ($class_name === null || $this->widget instanceof $class_name) {
@@ -215,7 +215,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
             if ($this->widget instanceof SwatUIParent) {
                 $out = array_merge(
                     $out,
-                    $this->widget->getDescendants($class_name)
+                    $this->widget->getDescendants($class_name),
                 );
             }
         }
@@ -269,7 +269,7 @@ class SwatActionItem extends SwatControl implements SwatUIParent
      */
     public function getDescendantStates()
     {
-        $states = array();
+        $states = [];
 
         foreach ($this->getDescendants('SwatState') as $id => $object) {
             $states[$id] = $object->getState();

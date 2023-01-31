@@ -35,7 +35,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
      *
      * @var array
      */
-    public $preview_image_values = array();
+    public $preview_image_values = [];
 
     /**
      * Preview Image height
@@ -156,19 +156,19 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('dom', 'event'));
+        $yui = new SwatYUI(['dom', 'event']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addJavaScript(
-            'packages/swat/javascript/swat-z-index-manager.js'
+            'packages/swat/javascript/swat-z-index-manager.js',
         );
 
         $this->addJavaScript(
-            'packages/swat/javascript/swat-image-preview-display.js'
+            'packages/swat/javascript/swat-image-preview-display.js',
         );
 
         $this->addStyleSheet(
-            'packages/swat/styles/swat-image-preview-display.css'
+            'packages/swat/styles/swat-image-preview-display.css',
         );
 
         $this->title = Swat::_('View Larger Image');
@@ -286,22 +286,22 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
             intval($this->preview_width),
             intval($this->preview_height),
             $this->show_title ? 'true' : 'false',
-            SwatString::quoteJavaScriptString($this->preview_title)
+            SwatString::quoteJavaScriptString($this->preview_title),
         );
 
         if ($this->container_width !== null) {
             $javascript .= sprintf(
-                "%s.width = %s;",
+                '%s.width = %s;',
                 $this->id,
-                (int) $this->container_width
+                (int) $this->container_width,
             );
         }
 
         if ($this->container_height !== null) {
             $javascript .= sprintf(
-                "%s.height = %s;",
+                '%s.height = %s;',
                 $this->id,
-                (int) $this->container_height
+                (int) $this->container_height,
             );
         }
 
@@ -324,7 +324,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
 
         return sprintf(
             "SwatImagePreviewDisplay.close_text = '%s';\n",
-            $close_text
+            $close_text,
         );
     }
 
@@ -339,7 +339,7 @@ class SwatImagePreviewDisplay extends SwatImageDisplay
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-image-preview-display');
+        $classes = ['swat-image-preview-display'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

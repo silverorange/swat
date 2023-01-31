@@ -36,7 +36,7 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
      *
      * @var array
      */
-    private $selected_items = array();
+    private $selected_items = [];
 
     /**
      * Current array index of the selected items of this selection

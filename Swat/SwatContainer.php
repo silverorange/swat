@@ -20,7 +20,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
      *
      * @var array
      */
-    protected $children = array();
+    protected $children = [];
 
     /**
      * Children widgets indexed by id
@@ -30,7 +30,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
      *
      * @var array
      */
-    protected $children_by_id = array();
+    protected $children_by_id = [];
 
     // }}}
     // {{{ public function init()
@@ -152,7 +152,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
     {
         if ($widget->parent !== null) {
             throw new SwatException(
-                'Attempting to add a widget that already has a parent.'
+                'Attempting to add a widget that already has a parent.',
             );
         }
 
@@ -179,14 +179,14 @@ class SwatContainer extends SwatWidget implements SwatUIParent
     {
         if ($widget->parent !== null) {
             throw new SwatException(
-                'Attempting to add a widget that already has a parent.'
+                'Attempting to add a widget that already has a parent.',
             );
         }
 
         if ($child->parent !== $this) {
             throw new SwatException(
                 'Attempting to insert before a child ' .
-                    'that is not in this container.'
+                    'that is not in this container.',
             );
         }
 
@@ -197,7 +197,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
                 break;
             }
         }
-        array_splice($this->children, $index, 0, array($widget));
+        array_splice($this->children, $index, 0, [$widget]);
 
         $widget->parent = $this;
 
@@ -222,7 +222,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
     {
         if ($widget->parent !== null) {
             throw new SwatException(
-                'Attempting to add a widget that already has a parent.'
+                'Attempting to add a widget that already has a parent.',
             );
         }
 
@@ -300,7 +300,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
             return $this->children;
         }
 
-        $out = array();
+        $out = [];
 
         foreach ($this->children as $child_widget) {
             if ($child_widget instanceof $class_name) {
@@ -336,10 +336,10 @@ class SwatContainer extends SwatWidget implements SwatUIParent
                 interface_exists($class_name)
             )
         ) {
-            return array();
+            return [];
         }
 
-        $out = array();
+        $out = [];
 
         foreach ($this->children as $child_widget) {
             if ($class_name === null || $child_widget instanceof $class_name) {
@@ -353,7 +353,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
             if ($child_widget instanceof SwatUIParent) {
                 $out = array_merge(
                     $out,
-                    $child_widget->getDescendants($class_name)
+                    $child_widget->getDescendants($class_name),
                 );
             }
         }
@@ -413,7 +413,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
      */
     public function getDescendantStates()
     {
-        $states = array();
+        $states = [];
 
         foreach ($this->getDescendants('SwatState') as $id => $object) {
             $states[$id] = $object->getState();
@@ -552,7 +552,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
                 'Only SwatWidget objects may be nested within SwatContainer. ' .
                     "Attempting to add '{$class_name}'.",
                 0,
-                $child
+                $child,
             );
         }
     }
@@ -666,7 +666,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
     public function copy($id_suffix = '')
     {
         $copy = parent::copy($id_suffix);
-        $copy->children_by_id = array();
+        $copy->children_by_id = [];
 
         foreach ($this->children as $key => $child_widget) {
             $copy_child = $child_widget->copy($id_suffix);

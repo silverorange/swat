@@ -26,7 +26,7 @@ class SwatHtmlTag extends SwatObject
      *
      * @var array
      */
-    private $attributes = array();
+    private $attributes = [];
 
     /**
      * Optional content for the body of the XHTML tag

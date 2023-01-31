@@ -31,7 +31,7 @@ class SwatCascadeFlydown extends SwatFlydown
      *
      * @var array
      */
-    public $options = array();
+    public $options = [];
 
     /**
      * Cascade from
@@ -58,7 +58,7 @@ class SwatCascadeFlydown extends SwatFlydown
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('event'));
+        $yui = new SwatYUI(['event']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addJavaScript('packages/swat/javascript/swat-cascade.js');
@@ -106,7 +106,7 @@ class SwatCascadeFlydown extends SwatFlydown
         $parent,
         $value = '',
         $title = '',
-        $content_type = 'text/plain'
+        $content_type = 'text/plain',
     ) {
         if ($value instanceof SwatOption) {
             $option = $value;
@@ -132,7 +132,7 @@ class SwatCascadeFlydown extends SwatFlydown
      */
     public function addOptionsByArray(
         array $options,
-        $content_type = 'text/plain'
+        $content_type = 'text/plain',
     ) {
         foreach ($options as $parent => $child_options) {
             foreach ($child_options as $value => $title) {
@@ -158,7 +158,7 @@ class SwatCascadeFlydown extends SwatFlydown
      */
     protected function &getOptions()
     {
-        $options = array();
+        $options = [];
 
         // If the parent flydown is empty, set parent_value to a blank string.
         // This will then return any options that exist for a blank parent.
@@ -168,10 +168,10 @@ class SwatCascadeFlydown extends SwatFlydown
         if ($parent_value === null) {
             if ($this->cascade_from->show_blank) {
                 // select the blank option on the cascade from
-                $options = array(
+                $options = [
                     new SwatOption('', '&nbsp;'),
-                    new SwatOption('', '&nbsp;')
-                );
+                    new SwatOption('', '&nbsp;'),
+                ];
             } else {
                 // select the first option on the cascade from
                 $from_options = $this->cascade_from->getOptions();
@@ -184,7 +184,7 @@ class SwatCascadeFlydown extends SwatFlydown
             // if the options array doesn't exist for this parent_value, then
             // assume that means we don't want any values in this flydown for
             // that option.
-            $options = array(new SwatOption(null, null));
+            $options = [new SwatOption(null, null)];
         }
 
         return $options;
@@ -207,7 +207,7 @@ class SwatCascadeFlydown extends SwatFlydown
     {
         return $this->cascade_from instanceof SwatFlydown
             ? $this->cascade_from->getOptions()
-            : array();
+            : [];
     }
 
     // }}}
@@ -261,7 +261,7 @@ class SwatCascadeFlydown extends SwatFlydown
             "var %s_cascade = new SwatCascade('%s', '%s');",
             $this->id,
             $this->cascade_from->id,
-            $this->id
+            $this->id,
         );
 
         $salt = $this->getForm()->getSalt();
@@ -292,7 +292,7 @@ class SwatCascadeFlydown extends SwatFlydown
                     $this->id,
                     SwatString::quoteJavaScriptString($parent),
                     SwatString::quoteJavaScriptString($value),
-                    SwatString::quoteJavaScriptString($blank_title)
+                    SwatString::quoteJavaScriptString($blank_title),
                 );
             }
 
@@ -318,7 +318,7 @@ class SwatCascadeFlydown extends SwatFlydown
                     SwatString::quoteJavaScriptString($parent),
                     SwatString::quoteJavaScriptString($value),
                     SwatString::quoteJavaScriptString($option->title),
-                    $selected
+                    $selected,
                 );
             }
         }

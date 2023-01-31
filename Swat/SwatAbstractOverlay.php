@@ -52,15 +52,15 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('dom', 'event', 'container'));
+        $yui = new SwatYUI(['dom', 'event', 'container']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addJavaScript(
-            'packages/swat/javascript/swat-abstract-overlay.js'
+            'packages/swat/javascript/swat-abstract-overlay.js',
         );
 
         $this->addJavaScript(
-            'packages/swat/javascript/swat-z-index-manager.js'
+            'packages/swat/javascript/swat-z-index-manager.js',
         );
     }
 
@@ -139,7 +139,7 @@ abstract class SwatAbstractOverlay extends SwatInputControl implements SwatState
     {
         return sprintf(
             "SwatAbstractOverlay.close_text = %s;\n",
-            SwatString::quoteJavaScriptString(Swat::_('Close'))
+            SwatString::quoteJavaScriptString(Swat::_('Close')),
         );
     }
 

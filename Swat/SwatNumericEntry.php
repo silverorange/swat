@@ -83,12 +83,12 @@ abstract class SwatNumericEntry extends SwatEntry
                 $minimum_value = str_replace(
                     '%',
                     '%%',
-                    $this->getDisplayValue($this->minimum_value)
+                    $this->getDisplayValue($this->minimum_value),
                 );
 
                 $message->primary_content = sprintf(
                     $message->primary_content,
-                    $minimum_value
+                    $minimum_value,
                 );
 
                 $this->addMessage($message);
@@ -101,12 +101,12 @@ abstract class SwatNumericEntry extends SwatEntry
                 $maximum_value = str_replace(
                     '%',
                     '%%',
-                    $this->getDisplayValue($this->maximum_value)
+                    $this->getDisplayValue($this->maximum_value),
                 );
 
                 $message->primary_content = sprintf(
                     $message->primary_content,
-                    $maximum_value
+                    $maximum_value,
                 );
 
                 $this->addMessage($message);
@@ -179,7 +179,7 @@ abstract class SwatNumericEntry extends SwatEntry
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-numeric-entry');
+        $classes = ['swat-numeric-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

@@ -26,14 +26,14 @@ class SwatDBClassMap extends SwatObject
      *
      * @var array
      */
-    private static $map = array();
+    private static $map = [];
 
     /**
      * Paths to search for class-definition files
      *
      * @var array
      */
-    private static $search_paths = array('.');
+    private static $search_paths = ['.'];
 
     // }}}
     // {{{ public static function add()
@@ -70,7 +70,7 @@ class SwatDBClassMap extends SwatObject
         // check for circular dependency
         if (array_key_exists($to_class_name, self::$map)) {
             $class_name = $to_class_name;
-            $child_class_names = array($class_name);
+            $child_class_names = [$class_name];
             while (array_key_exists($class_name, self::$map)) {
                 $class_name = self::$map[$class_name];
                 $child_class_names[] = $class_name;
@@ -81,8 +81,8 @@ class SwatDBClassMap extends SwatObject
                     sprintf(
                         'Circular class dependency detected: %s => %s',
                         $from_class_name,
-                        implode(' => ', $child_class_names)
-                    )
+                        implode(' => ', $child_class_names),
+                    ),
                 );
             }
         }
@@ -118,8 +118,8 @@ class SwatDBClassMap extends SwatObject
                         'Invalid ' .
                             'class-mapping detected. %s is not a subclass of %s.',
                         $to_class_name,
-                        $from_class_name
-                    )
+                        $from_class_name,
+                    ),
                 );
             }
 
@@ -205,7 +205,7 @@ class SwatDBClassMap extends SwatObject
      *
      * @deprecated Use static methods instead of instantiating this class.
      */
-    private $mappings = array();
+    private $mappings = [];
 
     /**
      * The path to search for site-specific class files

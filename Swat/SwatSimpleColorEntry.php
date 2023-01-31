@@ -42,7 +42,7 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
      *
      * @var array
      */
-    public $colors = array(
+    public $colors = [
         'ffffff',
         'eeeeec',
         'd3d7cf',
@@ -72,8 +72,8 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
         '5c3566',
         'ef2929',
         'cc0000',
-        'a40000'
-    );
+        'a40000',
+    ];
 
     // }}}
     // {{{ public function __construct()
@@ -94,15 +94,15 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
         }
 
         $this->addJavaScript(
-            'packages/swat/javascript/swat-simple-color-entry.js'
+            'packages/swat/javascript/swat-simple-color-entry.js',
         );
 
         $this->addJavaScript(
-            'packages/swat/javascript/swat-abstract-overlay.js'
+            'packages/swat/javascript/swat-abstract-overlay.js',
         );
 
         $this->addStyleSheet(
-            'packages/swat/styles/swat-simple-color-entry.css'
+            'packages/swat/styles/swat-simple-color-entry.css',
         );
     }
 
@@ -139,7 +139,7 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
         ) {
             $message = sprintf(
                 Swat::_('“%s” is not a valid color.'),
-                $this->value
+                $this->value,
             );
 
             $this->addMessage(new SwatMessage($message, 'error'));
@@ -158,7 +158,7 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-simple-color-entry');
+        $classes = ['swat-simple-color-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }
@@ -184,7 +184,7 @@ class SwatSimpleColorEntry extends SwatAbstractOverlay
                 $this->none_option_title === null
                     ? 'null'
                     : SwatString::quoteJavaScriptString(
-                        $this->none_option_title
+                        $this->none_option_title,
                     );
         } else {
             $none_option = 'null';

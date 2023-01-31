@@ -31,7 +31,7 @@ class SwatSearchEntry extends SwatEntry
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('dom', 'event'));
+        $yui = new SwatYUI(['dom', 'event']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-search-entry.js');
         $this->addStyleSheet('packages/swat/styles/swat-search-entry.css');
@@ -98,7 +98,7 @@ class SwatSearchEntry extends SwatEntry
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-search-entry');
+        $classes = ['swat-search-entry'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

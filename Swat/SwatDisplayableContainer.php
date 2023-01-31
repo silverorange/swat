@@ -43,7 +43,7 @@ class SwatDisplayableContainer extends SwatContainer
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-displayable-container');
+        $classes = ['swat-displayable-container'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

@@ -198,7 +198,7 @@ abstract class SwatTableViewRow extends SwatUIObject
      */
     public function getMessages()
     {
-        return array();
+        return [];
     }
 
     // }}}

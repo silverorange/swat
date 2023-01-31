@@ -69,9 +69,9 @@ class SwatI18NNumberFormat extends SwatObject
         foreach ($format as $key => $value) {
             if (!array_key_exists($key, $vars)) {
                 throw new SwatException(
-                    "Number formatting information " .
+                    'Number formatting information ' .
                         "contains invalid property {$key} and cannot override " .
-                        "this number format."
+                        'this number format.',
                 );
             }
         }

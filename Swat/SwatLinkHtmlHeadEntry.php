@@ -56,7 +56,7 @@ class SwatLinkHtmlHeadEntry extends SwatHtmlHeadEntry
         $uri,
         $relationship = null,
         $type = null,
-        $title = null
+        $title = null,
     ) {
         $hash = md5($uri . $relationship . $type . $title);
         parent::__construct($hash);

@@ -86,7 +86,7 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
         parent::__construct();
 
         $this->addStyleSheet(
-            'packages/swat/styles/swat-money-cell-renderer.css'
+            'packages/swat/styles/swat-money-cell-renderer.css',
         );
     }
 
@@ -119,14 +119,14 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
                 $locale->formatCurrency(
                     $this->value,
                     $this->international,
-                    $format
-                )
+                    $format,
+                ),
             );
 
             if (!$this->international && $this->display_currency) {
                 echo '&nbsp;',
                     SwatString::minimizeEntities(
-                        $locale->getInternationalCurrencySymbol()
+                        $locale->getInternationalCurrencySymbol(),
                     );
             }
         }
@@ -142,7 +142,7 @@ class SwatMoneyCellRenderer extends SwatCellRenderer
      */
     protected function getCurrencyFormat()
     {
-        $format = array('fractional_digits' => $this->decimal_places);
+        $format = ['fractional_digits' => $this->decimal_places];
 
         return $format;
     }

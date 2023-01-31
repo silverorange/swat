@@ -211,9 +211,9 @@ class SwatPagination extends SwatControl
                 $locale->formatNumber(
                     min(
                         $this->current_record + $this->page_size,
-                        $this->total_records
-                    )
-                )
+                        $this->total_records,
+                    ),
+                ),
             );
         }
 
@@ -334,8 +334,8 @@ class SwatPagination extends SwatControl
             sprintf(
                 Swat::_('Page %d of %d'),
                 $this->current_page,
-                $this->total_pages
-            )
+                $this->total_pages,
+            ),
         );
 
         $div->display();
@@ -453,7 +453,7 @@ class SwatPagination extends SwatControl
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-pagination');
+        $classes = ['swat-pagination'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

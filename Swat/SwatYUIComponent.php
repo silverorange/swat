@@ -16,8 +16,8 @@ class SwatYUIComponent extends SwatObject
     // {{{ private properties
 
     private $id;
-    private $dependencies = array();
-    private $html_head_entries = array();
+    private $dependencies = [];
+    private $html_head_entries = [];
     private $beta = false;
 
     // }}}
@@ -91,11 +91,11 @@ class SwatYUIComponent extends SwatObject
             $filename = $this->id;
         }
 
-        $modes = array(
+        $modes = [
             'min' => '-min',
             'debug' => '-debug',
-            'normal' => ''
-        );
+            'normal' => '',
+        ];
 
         if ($this->beta) {
             $filename_template =
@@ -148,7 +148,7 @@ class SwatYUIComponent extends SwatObject
     public function addStyleSheet(
         $component_directory = '',
         $filename = '',
-        $has_min_version = true
+        $has_min_version = true,
     ) {
         if ($component_directory == '') {
             $component_directory = $this->id;
@@ -158,11 +158,11 @@ class SwatYUIComponent extends SwatObject
             $filename = $this->id;
         }
 
-        $modes = array(
+        $modes = [
             'min' => '-min',
             'debug' => '',
-            'normal' => ''
-        );
+            'normal' => '',
+        ];
 
         if (!$has_min_version) {
             $modes['min'] = '';

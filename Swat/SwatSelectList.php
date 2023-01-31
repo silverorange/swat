@@ -75,7 +75,7 @@ class SwatSelectList extends SwatCheckboxList
     public function getNote()
     {
         $message = Swat::_(
-            'Multiple items can be selected by holding down the Ctrl key.'
+            'Multiple items can be selected by holding down the Ctrl key.',
         );
 
         return new SwatMessage($message);

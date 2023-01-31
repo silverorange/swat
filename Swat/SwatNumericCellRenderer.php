@@ -94,7 +94,7 @@ class SwatNumericCellRenderer extends SwatCellRenderer
             $locale = SwatI18NLocale::get();
             $thousands_separator = $this->show_thousands_separator ? null : '';
             $value = $locale->formatNumber($this->value, $this->precision, [
-                'thousands_separator' => $thousands_separator
+                'thousands_separator' => $thousands_separator,
             ]);
         }
 

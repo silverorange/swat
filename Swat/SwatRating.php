@@ -40,7 +40,7 @@ class SwatRating extends SwatInputControl
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('dom', 'animation'));
+        $yui = new SwatYUI(['dom', 'animation']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addJavaScript('packages/swat/javascript/swat-rating.js');
@@ -114,7 +114,7 @@ class SwatRating extends SwatInputControl
 
     protected function getRatings()
     {
-        $ratings = array();
+        $ratings = [];
 
         for ($i = 1; $i <= $this->maximum_value; $i++) {
             $ratings[$i] = sprintf('%s/%s', $i, $this->maximum_value);
@@ -134,7 +134,7 @@ class SwatRating extends SwatInputControl
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-rating');
+        $classes = ['swat-rating'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }
@@ -154,7 +154,7 @@ class SwatRating extends SwatInputControl
             'var %s_obj = new SwatRating(%s, %s);',
             $this->id,
             $quoted_string,
-            intval($this->maximum_value)
+            intval($this->maximum_value),
         );
     }
 

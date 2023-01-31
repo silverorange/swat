@@ -51,7 +51,7 @@ class SwatMessageDisplay extends SwatControl
      *
      * @var array
      */
-    protected $display_messages = array();
+    protected $display_messages = [];
 
     /**
      * Messages in this display that are dismissable
@@ -61,7 +61,7 @@ class SwatMessageDisplay extends SwatControl
      *
      * @var array
      */
-    protected $dismissable_messages = array();
+    protected $dismissable_messages = [];
 
     // }}}
     // {{{ public function __construct()
@@ -79,11 +79,11 @@ class SwatMessageDisplay extends SwatControl
 
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('animation'));
+        $yui = new SwatYUI(['animation']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addJavaScript(
-            'packages/swat/javascript/swat-message-display.js'
+            'packages/swat/javascript/swat-message-display.js',
         );
 
         $this->addStyleSheet('packages/swat/styles/swat-message.css');
@@ -121,7 +121,7 @@ class SwatMessageDisplay extends SwatControl
                 'Cannot add message. $message must be either a string or a ' .
                     'SwatMessage.',
                 0,
-                $message
+                $message,
             );
         }
 
@@ -130,7 +130,7 @@ class SwatMessageDisplay extends SwatControl
         if ($dismissable == self::DISMISS_AUTO) {
             $dismissable = in_array(
                 $message->type,
-                $this->getDismissableMessageTypes()
+                $this->getDismissableMessageTypes(),
             )
                 ? self::DISMISS_ON
                 : self::DISMISS_OFF;
@@ -243,7 +243,7 @@ class SwatMessageDisplay extends SwatControl
         $message_id,
         SwatMessage $message,
         $first = false,
-        $last = false
+        $last = false,
     ) {
         $message_div = new SwatHtmlTag('div');
         $container_div = new SwatHtmlTag('div');
@@ -268,7 +268,7 @@ class SwatMessageDisplay extends SwatControl
         $primary_content->class = 'swat-message-primary-content';
         $primary_content->setContent(
             $message->primary_content,
-            $message->content_type
+            $message->content_type,
         );
 
         $primary_content->display();
@@ -278,7 +278,7 @@ class SwatMessageDisplay extends SwatControl
             $secondary_div->class = 'swat-message-secondary-content';
             $secondary_div->setContent(
                 $message->secondary_content,
-                $message->content_type
+                $message->content_type,
             );
 
             $secondary_div->display();
@@ -298,7 +298,7 @@ class SwatMessageDisplay extends SwatControl
      */
     protected function getDismissableMessageTypes()
     {
-        return array('notice', 'warning', 'cart');
+        return ['notice', 'warning', 'cart'];
     }
 
     // }}}
@@ -312,7 +312,7 @@ class SwatMessageDisplay extends SwatControl
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-message-display');
+        $classes = ['swat-message-display'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }
@@ -342,7 +342,7 @@ class SwatMessageDisplay extends SwatControl
             $this->id,
             $this->getJavaScriptClass(),
             $this->id,
-            $dismissable_messages
+            $dismissable_messages,
         );
 
         return $javascript;

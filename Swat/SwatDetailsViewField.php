@@ -161,7 +161,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
         } else {
             $th_tag->setContent(
                 $this->getHeaderTitle(),
-                $this->title_content_type
+                $this->title_content_type,
             );
         }
 
@@ -183,7 +183,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
     {
         if (count($this->renderers) === 0) {
             throw new SwatException(
-                'No renderer has been provided for this field.'
+                'No renderer has been provided for this field.',
             );
         }
 
@@ -210,9 +210,9 @@ class SwatDetailsViewField extends SwatCellRendererContainer
      */
     public function getTdAttributes()
     {
-        return array(
-            'class' => $this->getCSSClassString()
-        );
+        return [
+            'class' => $this->getCSSClassString(),
+        ];
     }
 
     // }}}
@@ -363,20 +363,20 @@ class SwatDetailsViewField extends SwatCellRendererContainer
             // renderer inheritance classes
             $classes = array_merge(
                 $classes,
-                $first_renderer->getInheritanceCSSClassNames()
+                $first_renderer->getInheritanceCSSClassNames(),
             );
 
             // renderer base classes
             $classes = array_merge(
                 $classes,
-                $first_renderer->getBaseCSSClassNames()
+                $first_renderer->getBaseCSSClassNames(),
             );
 
             // renderer data specific classes
             if ($this->renderers->mappingsApplied()) {
                 $classes = array_merge(
                     $classes,
-                    $first_renderer->getDataSpecificCSSClassNames()
+                    $first_renderer->getDataSpecificCSSClassNames(),
                 );
             }
 
@@ -401,7 +401,7 @@ class SwatDetailsViewField extends SwatCellRendererContainer
      */
     protected function getBaseCSSClassNames()
     {
-        return array('swat-details-view-field');
+        return ['swat-details-view-field'];
     }
 
     // }}}

@@ -96,11 +96,11 @@ class SwatNumber extends SwatObject
             // get current locale
             $locale = setlocale(LC_ALL, 0);
 
-            static $formatters = array();
+            static $formatters = [];
             if (!isset($formatter[$locale])) {
                 $formatter[$locale] = new NumberFormatter(
                     $locale,
-                    NumberFormatter::ORDINAL
+                    NumberFormatter::ORDINAL,
                 );
             }
 
@@ -110,7 +110,7 @@ class SwatNumber extends SwatObject
             // decompose to latin-1 characters (removes superscripts)
             $ordinal_value = Normalizer::normalize(
                 $ordinal_value,
-                Normalizer::FORM_KC
+                Normalizer::FORM_KC,
             );
         } else {
             // fallback implementation if icu is not available
@@ -129,28 +129,28 @@ class SwatNumber extends SwatObject
                         case 1:
                             $ordinal_value = sprintf(
                                 Swat::_('%sst'),
-                                $ordinal_value
+                                $ordinal_value,
                             );
                             break;
 
                         case 2:
                             $ordinal_value = sprintf(
                                 Swat::_('%snd'),
-                                $ordinal_value
+                                $ordinal_value,
                             );
                             break;
 
                         case 3:
                             $ordinal_value = sprintf(
                                 Swat::_('%srd'),
-                                $ordinal_value
+                                $ordinal_value,
                             );
                             break;
 
                         default:
                             $ordinal_value = sprintf(
                                 Swat::_('%sth'),
-                                $ordinal_value
+                                $ordinal_value,
                             );
                     }
             }

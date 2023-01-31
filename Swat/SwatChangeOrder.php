@@ -56,13 +56,13 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
         parent::__construct($id);
         $this->requires_id = true;
 
-        $yui = new SwatYUI(array('dom', 'event'));
+        $yui = new SwatYUI(['dom', 'event']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addStyleSheet('packages/swat/styles/swat-change-order.css');
         $this->addJavaScript('packages/swat/javascript/swat-change-order.js');
         $this->addJavaScript(
-            'packages/swat/javascript/swat-z-index-manager.js'
+            'packages/swat/javascript/swat-z-index-manager.js',
         );
     }
 
@@ -108,11 +108,11 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
         echo '<div class="swat-clear"></div>';
 
-        $values = array();
+        $values = [];
         foreach ($ordered_options as $option) {
             $values[] = SwatString::signedSerialize(
                 $option->value,
-                $this->getForm()->getSalt()
+                $this->getForm()->getSalt(),
             );
         }
 
@@ -143,13 +143,13 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
 
         $form = $this->getForm();
         $data = &$form->getFormData();
-        $this->values = array();
+        $this->values = [];
         if ($data[$this->id] !== '') {
             $values = explode(',', $data[$this->id]);
             foreach ($values as $value) {
                 $value = SwatString::signedUnserialize(
                     $value,
-                    $form->getSalt()
+                    $form->getSalt(),
                 );
 
                 $this->values[] = $value;
@@ -172,7 +172,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
     public function getNote()
     {
         $message = Swat::_(
-            'Items can be ordered by dragging-and-dropping with the mouse.'
+            'Items can be ordered by dragging-and-dropping with the mouse.',
         );
 
         return new SwatMessage($message);
@@ -218,7 +218,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
         } else {
             // copy options array so we don't modify the original
             $options = $this->options;
-            $ordered_options = array();
+            $ordered_options = [];
             foreach ($this->values as $value) {
                 foreach ($options as $key => $option) {
                     if ($option->value === $value) {
@@ -250,7 +250,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-change-order');
+        $classes = ['swat-change-order'];
 
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
@@ -271,7 +271,7 @@ class SwatChangeOrder extends SwatOptionControl implements SwatState
             "var %s_obj = new SwatChangeOrder('%s', %s);",
             $this->id,
             $this->id,
-            $this->isSensitive() ? 'true' : 'false'
+            $this->isSensitive() ? 'true' : 'false',
         );
     }
 

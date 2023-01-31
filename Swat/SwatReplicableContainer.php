@@ -37,8 +37,8 @@ class SwatReplicableContainer extends SwatDisplayableContainer implements
     // }}}
     // {{{ private properties
 
-    private $widgets = array();
-    private $prototype_widgets = array();
+    private $widgets = [];
+    private $prototype_widgets = [];
 
     // }}}
     // {{{ public function __construct()
@@ -73,7 +73,7 @@ class SwatReplicableContainer extends SwatDisplayableContainer implements
         }
 
         if ($this->replication_ids === null) {
-            $this->replication_ids = array(0);
+            $this->replication_ids = [0];
         }
 
         // Remove children, these are now the prototype widgets
@@ -112,7 +112,7 @@ class SwatReplicableContainer extends SwatDisplayableContainer implements
                         $old_id = mb_substr(
                             $descendant->id,
                             0,
-                            -mb_strlen($suffix)
+                            -mb_strlen($suffix),
                         );
                         $this->widgets[$id][$old_id] = $descendant;
                     }

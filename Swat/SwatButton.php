@@ -117,7 +117,7 @@ class SwatButton extends SwatInputControl
     {
         parent::__construct($id);
 
-        $yui = new SwatYUI(array('dom', 'event', 'animation'));
+        $yui = new SwatYUI(['dom', 'event', 'animation']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-button.js');
 
@@ -266,7 +266,7 @@ class SwatButton extends SwatInputControl
                 throw new SwatUndefinedStockTypeException(
                     "Stock type with id of '{$stock_id}' not found.",
                     0,
-                    $stock_id
+                    $stock_id,
                 );
         }
 
@@ -319,7 +319,7 @@ class SwatButton extends SwatInputControl
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-button');
+        $classes = ['swat-button'];
 
         $form = $this->getFirstAncestor('SwatForm');
         $primary =
@@ -374,7 +374,7 @@ class SwatButton extends SwatInputControl
             $this->id,
             $this->getJavaScriptClass(),
             $this->id,
-            $show_processing_throbber
+            $show_processing_throbber,
         );
 
         if ($this->show_processing_throbber) {
@@ -382,8 +382,8 @@ class SwatButton extends SwatInputControl
                 "\n%s_obj.setProcessingMessage(%s);",
                 $this->id,
                 SwatString::quoteJavaScriptString(
-                    $this->processing_throbber_message
-                )
+                    $this->processing_throbber_message,
+                ),
             );
         }
 
@@ -391,7 +391,7 @@ class SwatButton extends SwatInputControl
             $javascript .= sprintf(
                 "\n%s_obj.setConfirmationMessage(%s);",
                 $this->id,
-                SwatString::quoteJavaScriptString($this->confirmation_message)
+                SwatString::quoteJavaScriptString($this->confirmation_message),
             );
         }
 

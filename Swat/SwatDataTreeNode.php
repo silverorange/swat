@@ -63,7 +63,7 @@ class SwatDataTreeNode extends SwatTreeNode
         $value,
         $title,
         $content_type = 'text/plain',
-        $sensitive = true
+        $sensitive = true,
     ) {
         $this->value = $value;
         $this->title = $title;

@@ -73,7 +73,7 @@ class SwatCheckAll extends SwatCheckbox
     {
         parent::__construct($id);
         $this->title = Swat::_('Select All');
-        $yui = new SwatYUI(array('event'));
+        $yui = new SwatYUI(['event']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
         $this->addJavaScript('packages/swat/javascript/swat-check-all.js');
     }
@@ -156,8 +156,8 @@ class SwatCheckAll extends SwatCheckbox
             sprintf(
                 Swat::_('select all %s %s'),
                 $locale->formatNumber($this->extended_count),
-                $entity
-            )
+                $entity,
+            ),
         );
 
         $label_tag->open();
@@ -172,7 +172,7 @@ class SwatCheckAll extends SwatCheckbox
             $title,
             $locale->formatNumber($this->visible_count),
             $entity,
-            $checkbox_display
+            $checkbox_display,
         );
     }
 
@@ -187,7 +187,7 @@ class SwatCheckAll extends SwatCheckbox
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-check-all');
+        $classes = ['swat-check-all'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }
@@ -205,7 +205,7 @@ class SwatCheckAll extends SwatCheckbox
         return sprintf(
             "var %s_obj = new SwatCheckAll('%s');",
             $this->id,
-            $this->id
+            $this->id,
         );
     }
 

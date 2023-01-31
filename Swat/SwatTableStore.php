@@ -19,7 +19,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
      *
      * @var array
      */
-    private $rows = array();
+    private $rows = [];
 
     /**
      * The current index of the iterator interface

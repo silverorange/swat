@@ -52,7 +52,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
      *
      * @var array
      */
-    protected $entry_widgets = array();
+    protected $entry_widgets = [];
 
     // }}}
     // {{{ public function __construct()
@@ -68,15 +68,15 @@ class SwatCheckboxEntryList extends SwatCheckboxList
     {
         parent::__construct($id);
 
-        $yui = new SwatYUI(array('dom', 'event'));
+        $yui = new SwatYUI(['dom', 'event']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addJavaScript(
-            'packages/swat/javascript/swat-checkbox-entry-list.js'
+            'packages/swat/javascript/swat-checkbox-entry-list.js',
         );
 
         $this->addStyleSheet(
-            'packages/swat/styles/swat-checkbox-entry-list.css'
+            'packages/swat/styles/swat-checkbox-entry-list.css',
         );
     }
 
@@ -283,7 +283,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
     public function setEntryValue($option_value, $entry_value)
     {
         $options = $this->getOptions();
-        $option_values = array();
+        $option_values = [];
         foreach ($options as $option) {
             $option_values[] = $option->value;
         }
@@ -293,8 +293,8 @@ class SwatCheckboxEntryList extends SwatCheckboxList
                 sprintf(
                     'No option with a value of "%s" exists in this checkbox ' .
                         'entry list',
-                    $option_value
-                )
+                    $option_value,
+                ),
             );
         }
 
@@ -340,7 +340,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
         $javascript = sprintf(
             "var %s_obj = new SwatCheckboxEntryList('%s');",
             $this->id,
-            $this->id
+            $this->id,
         );
 
         // set check-all controller if it is visible
@@ -348,7 +348,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
             $javascript .= sprintf(
                 "\n%s_obj.setController(%s_obj);",
                 $this->getCompositeWidget('check_all')->id,
-                $this->id
+                $this->id,
             );
         }
 
@@ -367,7 +367,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-checkbox-entry-list');
+        $classes = ['swat-checkbox-entry-list'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }
@@ -409,7 +409,7 @@ class SwatCheckboxEntryList extends SwatCheckboxList
     {
         if (!$this->hasEntryWidget($option_value)) {
             $container = new SwatFormField(
-                $this->id . '_field_' . $option_value
+                $this->id . '_field_' . $option_value,
             );
             $container->add($this->createEntryWidget($option_value));
             $container->parent = $this;

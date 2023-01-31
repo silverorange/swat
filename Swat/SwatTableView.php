@@ -99,7 +99,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      *
      * @var array
      */
-    protected $columns_by_id = array();
+    protected $columns_by_id = [];
 
     /**
      * The row columns of this table-view indexed by their unique identifier
@@ -112,7 +112,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      *
      * @var array
      */
-    protected $spanning_columns_by_id = array();
+    protected $spanning_columns_by_id = [];
 
     /**
      * The groups of this table-view indexed by their unique identifier
@@ -125,7 +125,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      *
      * @var array
      */
-    protected $groups_by_id = array();
+    protected $groups_by_id = [];
 
     /**
      * The extra rows of this table-view indexed by their unique identifier
@@ -138,14 +138,14 @@ class SwatTableView extends SwatView implements SwatUIParent
      *
      * @var array
      */
-    protected $rows_by_id = array();
+    protected $rows_by_id = [];
 
     /**
      * The columns of this table-view
      *
      * @var array
      */
-    protected $columns = array();
+    protected $columns = [];
 
     /**
      * Row column objects for this table view
@@ -154,7 +154,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      *
      * @see SwatTableView::addSpanningColumn()
      */
-    protected $spanning_columns = array();
+    protected $spanning_columns = [];
 
     /**
      * Grouping objects for this table view
@@ -163,7 +163,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      *
      * @see SwatTableView::addGroup()
      */
-    protected $groups = array();
+    protected $groups = [];
 
     /**
      * Any extra rows that were appended to this view
@@ -173,7 +173,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      *
      * @var array
      */
-    protected $extra_rows = array();
+    protected $extra_rows = [];
 
     /**
      * Whether or not this table view has an input row
@@ -202,7 +202,7 @@ class SwatTableView extends SwatView implements SwatUIParent
     {
         parent::__construct($id);
 
-        $yui = new SwatYUI(array('dom'));
+        $yui = new SwatYUI(['dom']);
         $this->html_head_entry_set->addEntrySet($yui->getHtmlHeadEntrySet());
 
         $this->addJavaScript('packages/swat/javascript/swat-table-view.js');
@@ -291,7 +291,7 @@ class SwatTableView extends SwatView implements SwatUIParent
                 $div->class = 'swat-none';
                 $div->setContent(
                     $this->no_records_message,
-                    $this->no_records_message_type
+                    $this->no_records_message_type,
                 );
 
                 $div->display();
@@ -393,7 +393,7 @@ class SwatTableView extends SwatView implements SwatUIParent
                     'SwatTableViewRow objects may be nested within SwatTableView ' .
                     'objects.',
                 0,
-                $child
+                $child,
             );
         }
     }
@@ -415,14 +415,14 @@ class SwatTableView extends SwatView implements SwatUIParent
                 foreach ($this->columns as $column) {
                     $messages = array_merge(
                         $messages,
-                        $column->getMessages($row)
+                        $column->getMessages($row),
                     );
                 }
 
                 foreach ($this->spanning_columns as $column) {
                     $messages = array_merge(
                         $messages,
-                        $column->getMessages($row)
+                        $column->getMessages($row),
                     );
                 }
             }
@@ -605,10 +605,10 @@ class SwatTableView extends SwatView implements SwatUIParent
                 interface_exists($class_name)
             )
         ) {
-            return array();
+            return [];
         }
 
-        $out = array();
+        $out = [];
 
         foreach ($this->columns as $column) {
             if ($class_name === null || $column instanceof $class_name) {
@@ -769,7 +769,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     public function getDescendantStates()
     {
-        $states = array();
+        $states = [];
 
         foreach ($this->getDescendants('SwatState') as $id => $object) {
             $states[$id] = $object->getState();
@@ -817,7 +817,7 @@ class SwatTableView extends SwatView implements SwatUIParent
     {
         $copy = parent::copy($id_suffix);
 
-        $copy->columns_by_id = array();
+        $copy->columns_by_id = [];
         foreach ($this->columns as $key => $column) {
             $copy_column = $column->copy($id_suffix);
             $copy_column->parent = $copy;
@@ -827,7 +827,7 @@ class SwatTableView extends SwatView implements SwatUIParent
             }
         }
 
-        $copy->spanning_columns_by_id = array();
+        $copy->spanning_columns_by_id = [];
         foreach ($this->spanning_columns as $key => $column) {
             $copy_column = $column->copy($id_suffix);
             $copy_column->parent = $copy;
@@ -837,7 +837,7 @@ class SwatTableView extends SwatView implements SwatUIParent
             }
         }
 
-        $copy->groups_by_id = array();
+        $copy->groups_by_id = [];
         foreach ($this->groups as $key => $group) {
             $copy_group = $group->copy($id_suffix);
             $copy_group->parent = $copy;
@@ -847,7 +847,7 @@ class SwatTableView extends SwatView implements SwatUIParent
             }
         }
 
-        $copy->rows_by_id = array();
+        $copy->rows_by_id = [];
         foreach ($this->extra_rows as $key => $row) {
             $copy_row = $row->copy($id_suffix);
             $copy_row->parent = $copy;
@@ -1103,7 +1103,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     protected function displayRowMessages($row)
     {
-        $messages = array();
+        $messages = [];
 
         foreach ($this->columns as $column) {
             $messages = array_merge($messages, $column->getMessages($row));
@@ -1130,7 +1130,7 @@ class SwatTableView extends SwatView implements SwatUIParent
             foreach ($messages as &$message) {
                 $li_tag->setContent(
                     $message->primary_content,
-                    $message->content_type
+                    $message->content_type,
                 );
 
                 $li_tag->class = $message->getCssClass();
@@ -1219,7 +1219,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-table-view');
+        $classes = ['swat-table-view'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }
@@ -1238,7 +1238,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     protected function getRowClasses($row, $count)
     {
-        $classes = array();
+        $classes = [];
 
         if ($count % 2 === 1) {
             $classes[] = 'odd';
@@ -1296,7 +1296,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         $javascript = sprintf(
             "var %s = new SwatTableView('%s');",
             $this->id,
-            $this->id
+            $this->id,
         );
 
         $has_rows =
@@ -1387,7 +1387,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     public function insertColumnBefore(
         SwatTableViewColumn $column,
-        SwatTableViewColumn $reference_column
+        SwatTableViewColumn $reference_column,
     ) {
         $this->insertColumn($column, $reference_column, false);
     }
@@ -1409,7 +1409,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     public function insertColumnAfter(
         SwatTableViewColumn $column,
-        SwatTableViewColumn $reference_column
+        SwatTableViewColumn $reference_column,
     ) {
         $this->insertColumn($column, $reference_column, true);
     }
@@ -1449,7 +1449,7 @@ class SwatTableView extends SwatView implements SwatUIParent
     {
         if (!array_key_exists($id, $this->columns_by_id)) {
             throw new SwatWidgetNotFoundException(
-                "Column with an id of '{$id}' not found."
+                "Column with an id of '{$id}' not found.",
             );
         }
 
@@ -1492,7 +1492,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     public function getVisibleColumns()
     {
-        $columns = array();
+        $columns = [];
         foreach ($this->columns as $column) {
             if ($column->visible) {
                 $columns[] = $column;
@@ -1531,12 +1531,12 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     public function setDefaultOrderbyColumn(
         SwatTableViewOrderableColumn $column,
-        $direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING
+        $direction = SwatTableViewOrderableColumn::ORDER_BY_DIR_DESCENDING,
     ) {
         if ($column->view !== $this) {
             throw new SwatException(
                 'Can only set the default orderby on ' .
-                    'orderable columns in this view.'
+                    'orderable columns in this view.',
             );
         }
 
@@ -1565,7 +1565,7 @@ class SwatTableView extends SwatView implements SwatUIParent
                     "A column with the id '{$column->id}' already exists " .
                         'in this table view.',
                     0,
-                    $column->id
+                    $column->id,
                 );
             }
         }
@@ -1611,7 +1611,7 @@ class SwatTableView extends SwatView implements SwatUIParent
     protected function insertColumn(
         SwatTableViewColumn $column,
         SwatTableViewColumn $reference_column = null,
-        $after = true
+        $after = true,
     ) {
         $this->validateColumn($column);
 
@@ -1621,22 +1621,22 @@ class SwatTableView extends SwatView implements SwatUIParent
             if ($key === false) {
                 throw new SwatWidgetNotFoundException(
                     'The reference column ' .
-                        'could not be found in this table-view.'
+                        'could not be found in this table-view.',
                 );
             }
 
             if ($after) {
                 // insert after reference column
-                array_splice($this->columns, $key, 1, array(
+                array_splice($this->columns, $key, 1, [
                     $reference_column,
-                    $column
-                ));
+                    $column,
+                ]);
             } else {
                 // insert before reference column
-                array_splice($this->columns, $key, 1, array(
+                array_splice($this->columns, $key, 1, [
                     $column,
-                    $reference_column
-                ));
+                    $reference_column,
+                ]);
             }
         } else {
             if ($after) {
@@ -1707,7 +1707,7 @@ class SwatTableView extends SwatView implements SwatUIParent
     {
         if (!array_key_exists($id, $this->spanning_columns_by_id)) {
             throw new SwatWidgetNotFoundException(
-                "Spanning column with an id of '{$id}' not found."
+                "Spanning column with an id of '{$id}' not found.",
             );
         }
 
@@ -1737,7 +1737,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     public function getVisibleSpanningColumns()
     {
-        $columns = array();
+        $columns = [];
 
         foreach ($this->spanning_columns as $column) {
             if ($column->visible) {
@@ -1818,7 +1818,7 @@ class SwatTableView extends SwatView implements SwatUIParent
     {
         if (!array_key_exists($id, $this->groups_by_id)) {
             throw new SwatWidgetNotFoundException(
-                "Group with an id of '{$id}' not found."
+                "Group with an id of '{$id}' not found.",
             );
         }
 
@@ -1859,7 +1859,7 @@ class SwatTableView extends SwatView implements SwatUIParent
                     "A group with the id '{$group->id}' already exists " .
                         'in this table view.',
                     0,
-                    $group->id
+                    $group->id,
                 );
             }
         }
@@ -1905,7 +1905,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     public function insertRowBefore(
         SwatTableViewRow $row,
-        SwatTableViewRow $reference_row
+        SwatTableViewRow $reference_row,
     ) {
         $this->insertRow($row, $reference_row, false);
     }
@@ -1929,7 +1929,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     public function insertRowAfter(
         SwatTableViewRow $row,
-        SwatTableViewRow $reference_row
+        SwatTableViewRow $reference_row,
     ) {
         $this->insertRow($row, $reference_row, true);
     }
@@ -1968,7 +1968,7 @@ class SwatTableView extends SwatView implements SwatUIParent
     {
         if (!array_key_exists($id, $this->rows_by_id)) {
             throw new SwatWidgetNotFoundException(
-                "Row with an id of '{$id}' not found."
+                "Row with an id of '{$id}' not found.",
             );
         }
 
@@ -1987,7 +1987,7 @@ class SwatTableView extends SwatView implements SwatUIParent
      */
     public function getRowsByClass($class_name)
     {
-        $rows = array();
+        $rows = [];
         foreach ($this->extra_rows as $row) {
             if ($row instanceof $class_name) {
                 $rows[] = $row;
@@ -2045,7 +2045,7 @@ class SwatTableView extends SwatView implements SwatUIParent
         if ($row instanceof SwatTableViewInputRow) {
             if ($this->has_input_row) {
                 throw new SwatException(
-                    'Only one input row may be added to a table-view.'
+                    'Only one input row may be added to a table-view.',
                 );
             } else {
                 $this->has_input_row = true;
@@ -2058,7 +2058,7 @@ class SwatTableView extends SwatView implements SwatUIParent
                     "A row with the id '{$row->id}' already exists " .
                         'in this table-view.',
                     0,
-                    $row->id
+                    $row->id,
                 );
             }
         }
@@ -2101,7 +2101,7 @@ class SwatTableView extends SwatView implements SwatUIParent
     protected function insertRow(
         SwatTableViewRow $row,
         SwatTableViewRow $reference_row = null,
-        $after = true
+        $after = true,
     ) {
         $this->validateRow($row);
 
@@ -2111,22 +2111,22 @@ class SwatTableView extends SwatView implements SwatUIParent
             if ($key === false) {
                 throw new SwatWidgetNotFoundException(
                     'The reference row ' .
-                        'could not be found in this table-view.'
+                        'could not be found in this table-view.',
                 );
             }
 
             if ($after) {
                 // insert after reference row
-                array_splice($this->extra_rows, $key, 1, array(
+                array_splice($this->extra_rows, $key, 1, [
                     $reference_row,
-                    $row
-                ));
+                    $row,
+                ]);
             } else {
                 // insert before reference row
-                array_splice($this->extra_rows, $key, 1, array(
+                array_splice($this->extra_rows, $key, 1, [
                     $row,
-                    $reference_row
-                ));
+                    $reference_row,
+                ]);
             }
         } else {
             if ($after) {

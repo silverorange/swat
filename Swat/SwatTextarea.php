@@ -176,7 +176,7 @@ class SwatTextarea extends SwatInputControl implements SwatState
             $message = $this->getValidationMessage('too-long');
             $message->primary_content = sprintf(
                 $message->primary_content,
-                $this->maxlength
+                $this->maxlength,
             );
 
             $this->addMessage($message);

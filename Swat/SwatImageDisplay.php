@@ -34,7 +34,7 @@ class SwatImageDisplay extends SwatControl
      *
      * @var array
      */
-    public $values = array();
+    public $values = [];
 
     /**
      * Image height
@@ -128,7 +128,7 @@ class SwatImageDisplay extends SwatControl
             $this->width,
             $this->height,
             $this->occupy_width,
-            $this->occupy_height
+            $this->occupy_height,
         );
 
         if ($this->title !== null) {
@@ -149,7 +149,7 @@ class SwatImageDisplay extends SwatControl
         $width,
         $height,
         $occupy_width = null,
-        $occupy_height = null
+        $occupy_height = null,
     ) {
         $margin_x = 0;
         $margin_y = 0;
@@ -170,7 +170,7 @@ class SwatImageDisplay extends SwatControl
                 floor(((float) $margin_y) / 2),
                 ceil(((float) $margin_x) / 2),
                 ceil(((float) $margin_y) / 2),
-                floor(((float) $margin_x) / 2)
+                floor(((float) $margin_x) / 2),
             );
         } else {
             $style = null;
@@ -190,7 +190,7 @@ class SwatImageDisplay extends SwatControl
      */
     protected function getCSSClassNames()
     {
-        $classes = array('swat-image-display');
+        $classes = ['swat-image-display'];
         $classes = array_merge($classes, parent::getCSSClassNames());
         return $classes;
     }

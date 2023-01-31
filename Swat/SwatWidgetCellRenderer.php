@@ -38,10 +38,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
      */
     private $prototype_widget = null;
 
-    private $mappings = array();
-    private $clones = array();
-    private $widgets = array();
-    private $property_values = array();
+    private $mappings = [];
+    private $clones = [];
+    private $widgets = [];
+    private $property_values = [];
 
     /**
      * Whether or not renderings of this cell renderer are using a dynamic
@@ -94,7 +94,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
             $this->setPrototypeWidget($child);
         } else {
             throw new SwatException(
-                'Can only add one widget to a widget cell renderer'
+                'Can only add one widget to a widget cell renderer',
             );
         }
     }
@@ -121,10 +121,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
             $suffix++;
         }
 
-        $this->mappings[$mangled_name] = array(
+        $this->mappings[$mangled_name] = [
             'object' => $object,
-            'property' => $name
-        );
+            'property' => $name,
+        ];
 
         return $mangled_name;
     }
@@ -144,7 +144,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         $form = $this->getForm();
         if ($form !== null && $form->isSubmitted()) {
             $replicators = $form->getHiddenField(
-                $this->getReplicatorFieldName()
+                $this->getReplicatorFieldName(),
             );
 
             if ($replicators !== null) {
@@ -172,7 +172,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
             $replicators = null;
         } else {
             $replicators = $form->getHiddenField(
-                $this->getReplicatorFieldName()
+                $this->getReplicatorFieldName(),
             );
         }
 
@@ -215,7 +215,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
                     'Cannot mix null replicator_id values ' .
                         'with non-null replicator_id values. Make sure this ' .
                         'widget cell renderer\'s replicator_id is set before ' .
-                        'rendering this renderer.'
+                        'rendering this renderer.',
                 );
             }
 
@@ -231,13 +231,13 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
                     'Cannot mix non-null replicator_id ' .
                         'values with null replicator_id values. All prior ' .
                         'renderings of this widget cell renderer have had a null ' .
-                        'value for the replicator_id.'
+                        'value for the replicator_id.',
                 );
             }
 
             if ($this->prototype_widget->id === null) {
                 throw new SwatException(
-                    'Prototype widget must have a non-null id.'
+                    'Prototype widget must have a non-null id.',
                 );
             }
 
@@ -250,13 +250,13 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
             if ($form === null) {
                 throw new SwatException(
                     'Cell renderer container must be ' .
-                        'inside a SwatForm for SwatWidgetCellRenderer to work.'
+                        'inside a SwatForm for SwatWidgetCellRenderer to work.',
                 );
             }
 
             $form->addHiddenField(
                 $this->getReplicatorFieldName(),
-                array_keys($this->clones)
+                array_keys($this->clones),
             );
 
             $this->applyPropertyValuesToClonedWidget($widget);
@@ -344,10 +344,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         $form = $this->getForm();
         if ($form !== null && $form->isSubmitted()) {
             $replicators = $form->getHiddenField(
-                $this->getReplicatorFieldName()
+                $this->getReplicatorFieldName(),
             );
 
-            $widgets = array();
+            $widgets = [];
             if (is_array($replicators)) {
                 foreach ($this->clones as $replicator_id => $clone) {
                     if (in_array($replicator_id, $replicators)) {
@@ -360,16 +360,16 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
                                     'No widget with the id "%s" exists in the ' .
                                         'cloned widget sub-tree of this ' .
                                         'SwatWidgetCellRenderer.',
-                                    $widget_id
+                                    $widget_id,
                                 ),
                                 0,
-                                $widget_id
+                                $widget_id,
                             );
                         }
 
                         $widgets[$replicator_id] = $this->getWidget(
                             $replicator_id,
-                            $widget_id
+                            $widget_id,
                         );
                     }
                 }
@@ -401,10 +401,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         $form = $this->getForm();
         if ($form !== null && $form->isSubmitted()) {
             $replicators = $form->getHiddenField(
-                $this->getReplicatorFieldName()
+                $this->getReplicatorFieldName(),
             );
 
-            $clones = array();
+            $clones = [];
             foreach ($this->clones as $replicator_id => $clone) {
                 if (
                     is_array($replicators) &&
@@ -434,7 +434,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
      */
     public function getDataSpecificCSSClassNames()
     {
-        $classes = array();
+        $classes = [];
 
         if (
             $this->replicator_id !== null &&
@@ -462,13 +462,13 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
      */
     public function getMessages($replicator_id = null)
     {
-        $messages = array();
+        $messages = [];
 
         if ($replicator_id !== null) {
             $messages = $this->getClonedWidget($replicator_id)->getMessages();
         } elseif ($this->replicator_id !== null) {
             $messages = $this->getClonedWidget(
-                $this->replicator_id
+                $this->replicator_id,
             )->getMessages();
         }
 
@@ -498,7 +498,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
             $has_message = $this->getClonedWidget($replicator_id)->hasMessage();
         } elseif ($this->replicator_id !== null) {
             $has_message = $this->getClonedWidget(
-                $this->replicator_id
+                $this->replicator_id,
             )->hasMessage();
         }
 
@@ -565,7 +565,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
 
         if ($this->using_null_replication) {
             $set->addEntrySet(
-                $this->getPrototypeWidget()->getHtmlHeadEntrySet()
+                $this->getPrototypeWidget()->getHtmlHeadEntrySet(),
             );
         } else {
             $widgets = $this->getWidgets();
@@ -595,7 +595,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
 
         if ($this->using_null_replication) {
             $set->addEntrySet(
-                $this->getPrototypeWidget()->getAvailableHtmlHeadEntrySet()
+                $this->getPrototypeWidget()->getAvailableHtmlHeadEntrySet(),
             );
         } else {
             $widgets = $this->getWidgets();
@@ -635,10 +635,10 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
                 interface_exists($class_name)
             )
         ) {
-            return array();
+            return [];
         }
 
-        $out = array();
+        $out = [];
 
         foreach ($this->getWidgets() as $cloned_widget) {
             if ($class_name === null || $cloned_widget instanceof $class_name) {
@@ -652,7 +652,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
             if ($cloned_widget instanceof SwatUIParent) {
                 $out = array_merge(
                     $out,
-                    $cloned_widget->getDescendants($class_name)
+                    $cloned_widget->getDescendants($class_name),
                 );
             }
         }
@@ -715,7 +715,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
      */
     public function getDescendantStates()
     {
-        $states = array();
+        $states = [];
 
         foreach ($this->getDescendants('SwatState') as $id => $object) {
             $states[$id] = $object->getState();
@@ -825,18 +825,18 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
             $object = $this->mappings[$name]['object'];
             $property = $this->mappings[$name]['property'];
 
-            $prototype_descendants = array($this->prototype_widget);
-            $cloned_descendants = array($cloned_widget);
+            $prototype_descendants = [$this->prototype_widget];
+            $cloned_descendants = [$cloned_widget];
 
             if ($this->prototype_widget instanceof SwatUIParent) {
                 $prototype_descendants = array_merge(
                     $prototype_descendants,
-                    $this->prototype_widget->getDescendants()
+                    $this->prototype_widget->getDescendants(),
                 );
 
                 $cloned_descendants = array_merge(
                     $cloned_descendants,
-                    $cloned_widget->getDescendants()
+                    $cloned_widget->getDescendants(),
                 );
             }
 
@@ -853,7 +853,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
             if ($cloned_object === null) {
                 throw new SwatException(
                     'Cloned widget tree does not match ' .
-                        'prototype widget tree.'
+                        'prototype widget tree.',
                 );
             }
 
@@ -875,7 +875,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
         $suffix = '_' . $this->id . '_' . $replicator;
         $new_widget = $this->prototype_widget->copy($suffix);
         $new_widget->parent = $this;
-        $this->widgets[$replicator] = array();
+        $this->widgets[$replicator] = [];
 
         if ($new_widget->id !== null) {
             // lookup array uses original ids
@@ -890,7 +890,7 @@ class SwatWidgetCellRenderer extends SwatCellRenderer implements
                     $old_id = mb_substr(
                         $descendant->id,
                         0,
-                        -mb_strlen($suffix)
+                        -mb_strlen($suffix),
                     );
                     $this->widgets[$replicator][$old_id] = $descendant;
                 }

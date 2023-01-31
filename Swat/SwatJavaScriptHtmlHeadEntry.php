@@ -26,7 +26,7 @@ class SwatJavaScriptHtmlHeadEntry extends SwatHtmlHeadEntry
         printf(
             '<script type="text/javascript" src="%s%s"></script>',
             $uri_prefix,
-            $uri
+            $uri,
         );
     }
 
