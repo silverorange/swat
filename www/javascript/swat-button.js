@@ -39,10 +39,7 @@ class SwatButton {
         this.button.form.appendChild(div);
 
         this.showThrobber();
-        var form = this.button;
-        while (form !== null && form.tagName !== 'form') {
-          form = form.parentElement;
-        }
+        var form = this.button.closest('form');
         if (form) {
           form.submit(); // needed for IE and WebKit
         }
