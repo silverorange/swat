@@ -987,8 +987,7 @@ class SwatDate extends DateTime implements Serializable
      * @return string this date formatted as an ISO 8601 timestamp.
      */
     public function getISO8601(
-        $options =
-            self::ISO_EXTENDED | self::ISO_MICROTIME | self::ISO_TIME_ZONE,
+        $options = self::ISO_EXTENDED | self::ISO_TIME_ZONE,
     ): string {
         if (($options & self::ISO_EXTENDED) === self::ISO_EXTENDED) {
             $format = self::DF_ISO_8601_EXTENDED;
