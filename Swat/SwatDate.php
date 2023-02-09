@@ -342,8 +342,9 @@ class SwatDate extends DateTime implements Serializable
      * Note: The results of this method are not localized. For a localized
      * formatted date, use {@link SwatDate::formatLikeIntl()}.
      *
-     * @param mixed $format either a format string or an integer format id.
-     * @param integer $tz_format optional time zone format id.
+     * @param int|string $format    either a format string or an integer format
+     *                              id.
+     * @param int        $tz_format optional time zone format id.
      *
      * @return string the formatted date.
      */
@@ -996,7 +997,7 @@ class SwatDate extends DateTime implements Serializable
         }
 
         if (($options & self::ISO_MICROTIME) === self::ISO_MICROTIME) {
-            $format .= '.SSSS';
+            $format = self::getFormatById($format) . '.u';
         }
 
         $date = $this->format($format);
