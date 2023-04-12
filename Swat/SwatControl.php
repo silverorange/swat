@@ -14,44 +14,18 @@ abstract class SwatControl extends SwatWidget
     /**
      * Adds a message to this control
      *
-     * Before the message is added, the content is updated with the name of
-     * this controls's parent title field if the parent implements the
-     * {@link SwatTitleable} interface.
-     *
      * @param SwatMessage $message the message to add.
      *
      * @see SwatWidget::addMessage()
      */
     public function addMessage(SwatMessage $message)
     {
-        if ($this->parent instanceof SwatTitleable) {
-            $title = $this->parent->getTitle();
-            if ($title === null) {
-                $field_title = '';
-            } else {
-                if ($this->parent->getTitleContentType() === 'text/xml') {
-                    $field_title =
-                        '<strong>' . $this->parent->getTitle() . '</strong>';
-                } else {
-                    $field_title =
-                        '<strong>' .
-                        SwatString::minimizeEntities(
-                            $this->parent->getTitle(),
-                        ) .
-                        '</strong>';
-                }
-            }
-        } else {
-            $field_title = '';
-        }
-
         if ($message->content_type === 'text/plain') {
-            $content = SwatString::minimizeEntities($message->primary_content);
-        } else {
-            $content = $message->primary_content;
+            $message->primary_content = SwatString::minimizeEntities(
+                $message->primary_content,
+            );
         }
 
-        $message->primary_content = sprintf($content, $field_title);
         $message->content_type = 'text/xml';
 
         parent::addMessage($message);
