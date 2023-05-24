@@ -177,7 +177,7 @@ class SwatTextareaEditor extends SwatTextarea
 
         // escape value for display because we actually want to show entities
         // for editing
-        $value = htmlspecialchars($value);
+        $value = htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
 
         $div_tag = new SwatHtmlTag('div');
         $div_tag->class = 'swat-textarea-editor-container';

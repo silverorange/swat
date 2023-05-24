@@ -247,7 +247,7 @@ class SwatTextarea extends SwatInputControl implements SwatState
 
         // escape value for display because we actually want to show entities
         // for editing
-        $value = htmlspecialchars($value);
+        $value = htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
 
         $textarea_tag = new SwatHtmlTag('textarea');
         $textarea_tag->name = $this->id;
