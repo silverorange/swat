@@ -4,7 +4,7 @@
  * A single line text entry widget
  *
  * @package   Swat
- * @copyright 2004-2016 silverorange
+ * @copyright 2004-2023 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatEntry extends SwatInputControl implements SwatState
@@ -330,7 +330,7 @@ class SwatEntry extends SwatInputControl implements SwatState
 
         // escape value for display because we actually want to show entities
         // for editing
-        $value = htmlspecialchars($value);
+        $value = htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
         $tag->value = $value;
 
         $tag->size = $this->size;
