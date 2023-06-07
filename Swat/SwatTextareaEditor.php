@@ -8,7 +8,7 @@
  * details.
  *
  * @package   Swat
- * @copyright 2022 silverorange
+ * @copyright 2022-2023 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextareaEditor extends SwatTextarea
@@ -118,6 +118,13 @@ class SwatTextareaEditor extends SwatTextarea
      * @var string
      */
     public $image_server;
+
+    /**
+     * Remove white backgrounds?
+     *
+     * @var boolean
+     */
+    public $remove_white_background = true;
 
     /**
      * Base-Href
@@ -361,6 +368,12 @@ class SwatTextareaEditor extends SwatTextarea
                 ";\n";
         }
 
+        printf(
+            "\tconst %s_remove_white_background = %s;\n",
+            $this->id,
+            $this->remove_white_background ? 'true' : 'false'
+        );
+
         echo "tinyMCE.init({\n";
 
         $lines = [];
@@ -393,7 +406,13 @@ class SwatTextareaEditor extends SwatTextarea
 					if (!elem || !elem.hasAttribute('style')) return;
 					const match = elem.getAttribute('style').match(/background(-color)?:[^\"]*;/g);
 					if (match) {
-						elem.setAttribute('style', match[0]);
+                        // check if the color is 255, 255, 255, and if so, remove it
+                        const is_white = match[0].match(/255/g).length === 3;
+                        if ({$this->id}_remove_white_background && is_white) {
+						    elem.removeAttribute('style');
+                        } else {
+    						elem.setAttribute('style', match[0]);
+                        }
 					} else {
 						elem.removeAttribute('style');
 					}
