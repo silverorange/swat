@@ -368,12 +368,6 @@ class SwatTextareaEditor extends SwatTextarea
                 ";\n";
         }
 
-        printf(
-            "\tconst %s_remove_white_background = %s;\n",
-            $this->id,
-            $this->remove_white_background ? 'true' : 'false',
-        );
-
         echo "tinyMCE.init({\n";
 
         $lines = [];
