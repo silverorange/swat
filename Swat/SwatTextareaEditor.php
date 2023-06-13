@@ -392,6 +392,9 @@ class SwatTextareaEditor extends SwatTextarea
 
         $this->displayColorMap();
 
+        $remove_white_background =
+            $this->remove_white_background ? 'true' : 'false';
+
         // Post process the pasted nodes to remove extra styling while preserving
         // highlighted text. Also removes extra br tags
         echo "\tpaste_postprocess: function(pluginApi, data) {
@@ -408,7 +411,7 @@ class SwatTextareaEditor extends SwatTextarea
 					if (match) {
                         // check if the color is 255, 255, 255, and if so, remove it
                         const is_white = match[0].match(/255/g).length === 3;
-                        if ({$this->id}_remove_white_background && is_white) {
+                        if ({$remove_white_background} && is_white) {
 						    elem.removeAttribute('style');
                         } else {
     						elem.setAttribute('style', match[0]);
