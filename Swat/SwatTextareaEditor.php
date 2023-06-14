@@ -404,7 +404,8 @@ class SwatTextareaEditor extends SwatTextarea
 					const match = elem.getAttribute('style').match(/background(-color)?:[^\"]*;/g);
 					if (match) {
                         // check if the color is 255, 255, 255, and if so, remove it
-                        const color = window.getComputedStyle(elem, null).getPropertyValue('background-color');
+                        const color = window.getComputedStyle(elem, null)
+                                            .getPropertyValue('background-color');
                         const is_white = (color === 'rgb(255, 255, 255)');
                         if ({$remove_white_background} && is_white) {
 						    elem.removeAttribute('style');
