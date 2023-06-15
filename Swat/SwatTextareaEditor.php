@@ -386,64 +386,65 @@ class SwatTextareaEditor extends SwatTextarea
 
         $this->displayColorMap();
 
-        $remove_white_background =
-            $this->remove_white_background ? 'true' : 'false';
+        $remove_white_background = $this->remove_white_background
+            ? 'true'
+            : 'false';
 
         // Post process the pasted nodes to remove extra styling while preserving
         // highlighted text. Also removes extra br tags
         echo "\tpaste_postprocess: function(pluginApi, data) {
-				const toRemove = [];
-				function execOnChildren(elem, fn) {
-					fn(elem);
-					for (let i = 0; i < elem.children.length; i++) {
-						execOnChildren(elem.children[i], fn);
-					}
-				}
-				function removeStyle(elem) {
-					if (!elem || !elem.hasAttribute('style')) return;
-					const match = elem.getAttribute('style').match(/background(-color)?:[^\"]*;/g);
-					if (match) {
+                const toRemove = [];
+                function execOnChildren(elem, fn) {
+                    fn(elem);
+                    for (let i = 0; i < elem.children.length; i++) {
+                        execOnChildren(elem.children[i], fn);
+                    }
+                }
+                function removeStyle(elem) {
+                    if (!elem || !elem.hasAttribute('style')) return;
+                    const match = elem.getAttribute('style').match(/background(-color)?:[^\"]*;/g);
+                    if (match) {
                         // check if the color is 255, 255, 255, and if so, remove it
                         const color = window.getComputedStyle(elem, null)
                                             .getPropertyValue('background-color');
                         const is_white = (color === 'rgb(255, 255, 255)');
                         if ({$remove_white_background} && is_white) {
-						    elem.removeAttribute('style');
+                            elem.removeAttribute('style');
                         } else {
-    						elem.setAttribute('style', match[0]);
+                            elem.setAttribute('style', match[0]);
                         }
-					} else {
-						elem.removeAttribute('style');
-					}
-				}
-				function removeNestedP(elem) {
-					if (!elem || !elem.children[0]) return;
-					if (elem.nodeName === 'LI' && elem.children[0].nodeName === 'P') {
-						const p = elem.removeChild(elem.children[0]);
-						const children = [];
-						for (let i = 0; i < p.children.length; i++) {
-							children.push(p.children[i]);
-						}
-						for (let i = 0; i < elem.children.length; i++) {
-							children.push(elem.children[i]);
-						}
-						elem.replaceChildren(...children);
-					}
-				}
-				function clean(elem) {
-					removeStyle(elem);
-					removeNestedP(elem);
-				}
-				for (let i = 0; i < data.node.children.length; i++) {
-					const child = data.node.children[i];
-					if (child.nodeName === 'BR') {
-						toRemove.push(child);
-					} else {
-						execOnChildren(child, clean);
-					}
-				}
-				toRemove.forEach(r => data.node.removeChild(r));
-			},\n" .
+                    } else {
+                        elem.removeAttribute('style');
+                    }
+                }
+                function removeNestedP(elem) {
+                    if (!elem || !elem.children[0]) return;
+                    if (elem.nodeName === 'LI' && elem.children[0].nodeName === 'P') {
+                        const p = elem.removeChild(elem.children[0]);
+                        const children = [];
+                        for (let i = 0; i < p.children.length; i++) {
+                            children.push(p.children[i]);
+                        }
+                        for (let i = 0; i < elem.children.length; i++) {
+                            children.push(elem.children[i]);
+                        }
+                        elem.replaceChildren(...children);
+                    }
+                }
+                function clean(elem) {
+                    removeStyle(elem);
+                    removeNestedP(elem);
+                }
+                for (let i = 0; i < data.node.children.length; i++) {
+                    const child = data.node.children[i];
+                    if (child.nodeName === 'BR') {
+                        toRemove.push(child);
+                    } else {
+                        execOnChildren(child, clean);
+                    }
+                }
+                toRemove.forEach(r => data.node.removeChild(r));
+            },\n" .
             "\tmenubar: false,\n" .
             "\tformats: {\n" .
             "\t\tremoveformat : [\n" .
