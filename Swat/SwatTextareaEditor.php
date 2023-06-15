@@ -409,7 +409,7 @@ class SwatTextareaEditor extends SwatTextarea
                         if (!elem || !elem.hasAttribute('style')) {
                             return;
                         }
-                        const match = elem.getAttribute('style').match(/background(-color)?:[^\"]*;/g);
+                        const match = elem.getAttribute('style').match(/background(-color)?:[^;]+;/g);
                         if (match !== null) {
                             // check if the color is 255, 255, 255, and if so, remove it
                             const color = window.getComputedStyle(elem, null)
