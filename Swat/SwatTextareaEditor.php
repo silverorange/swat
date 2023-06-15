@@ -8,7 +8,7 @@
  * details.
  *
  * @package   Swat
- * @copyright 2022 silverorange
+ * @copyright 2022-2023 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatTextareaEditor extends SwatTextarea
@@ -118,6 +118,13 @@ class SwatTextareaEditor extends SwatTextarea
      * @var string
      */
     public $image_server;
+
+    /**
+     * Remove white backgrounds?
+     *
+     * @var boolean
+     */
+    public $remove_white_background = true;
 
     /**
      * Base-Href
@@ -326,11 +333,13 @@ class SwatTextareaEditor extends SwatTextarea
     protected function displayColorMap()
     {
         if (self::$color_map !== null) {
-            echo "\tcolor_map: [\n";
+            echo "    color_map: [\n";
             foreach (self::$color_map as $elem) {
-                echo "\t\t" . SwatString::quoteJavaScriptString($elem) . ",\n";
+                echo '        ' .
+                    SwatString::quoteJavaScriptString($elem) .
+                    ",\n";
             }
-            echo "\t],\n";
+            echo "    ],\n";
         }
     }
 
@@ -361,8 +370,6 @@ class SwatTextareaEditor extends SwatTextarea
                 ";\n";
         }
 
-        echo "tinyMCE.init({\n";
-
         $lines = [];
         foreach ($this->getConfig() as $name => $value) {
             if (is_string($value)) {
@@ -370,104 +377,126 @@ class SwatTextareaEditor extends SwatTextarea
             } elseif (is_bool($value)) {
                 $value = $value ? 'true' : 'false';
             }
-            $lines[] = "\t" . $name . ': ' . $value;
+            $lines[] = '    ' . $name . ': ' . $value;
         }
 
-        $lines[] = "\tdocument_base_url: {$base_href},\n";
+        $lines[] = "    document_base_url: {$base_href},\n";
 
-        echo implode(",\n", $lines);
+        $config = implode(",\n", $lines);
 
+        ob_start();
         $this->displayColorMap();
+        $color_map = ob_get_clean();
+
+        $remove_white_background = $this->remove_white_background
+            ? 'true'
+            : 'false';
 
         // Post process the pasted nodes to remove extra styling while preserving
         // highlighted text. Also removes extra br tags
-        echo "\tpaste_postprocess: function(pluginApi, data) {
-				const toRemove = [];
-				function execOnChildren(elem, fn) {
-					fn(elem);
-					for (let i = 0; i < elem.children.length; i++) {
-						execOnChildren(elem.children[i], fn);
-					}
-				}
-				function removeStyle(elem) {
-					if (!elem || !elem.hasAttribute('style')) return;
-					const match = elem.getAttribute('style').match(/background(-color)?:[^\"]*;/g);
-					if (match) {
-						elem.setAttribute('style', match[0]);
-					} else {
-						elem.removeAttribute('style');
-					}
-				}
-				function removeNestedP(elem) {
-					if (!elem || !elem.children[0]) return;
-					if (elem.nodeName === 'LI' && elem.children[0].nodeName === 'P') {
-						const p = elem.removeChild(elem.children[0]);
-						const children = [];
-						for (let i = 0; i < p.children.length; i++) {
-							children.push(p.children[i]);
-						}
-						for (let i = 0; i < elem.children.length; i++) {
-							children.push(elem.children[i]);
-						}
-						elem.replaceChildren(...children);
-					}
-				}
-				function clean(elem) {
-					removeStyle(elem);
-					removeNestedP(elem);
-				}
-				for (let i = 0; i < data.node.children.length; i++) {
-					const child = data.node.children[i];
-					if (child.nodeName === 'BR') {
-						toRemove.push(child);
-					} else {
-						execOnChildren(child, clean);
-					}
-				}
-				toRemove.forEach(r => data.node.removeChild(r));
-			},\n" .
-            "\tmenubar: false,\n" .
-            "\tformats: {\n" .
-            "\t\tremoveformat : [\n" .
-            "\t\t\t{\n" .
-            "\t\t\t\tselector     : 'b,strong,em,i,font,u,strike',\n" .
-            "\t\t\t\tremove       : 'all',\n" .
-            "\t\t\t\tsplit        : true,\n" .
-            "\t\t\t\texpand       : false,\n" .
-            "\t\t\t\tblock_expand : true,\n" .
-            "\t\t\t\tdeep         : true\n" .
-            "\t\t\t},\n" .
-            "\t\t\t{\n" .
-            "\t\t\t\tselector     : 'span',\n" .
-            "\t\t\t\tattributes   : [\n" .
-            "\t\t\t\t\t'style',\n" .
-            "\t\t\t\t\t'class',\n" .
-            "\t\t\t\t\t'align',\n" .
-            "\t\t\t\t\t'color',\n" .
-            "\t\t\t\t\t'background'\n" .
-            "\t\t\t\t],\n" .
-            "\t\t\t\tremove       : 'empty',\n" .
-            "\t\t\t\tsplit        : true,\n" .
-            "\t\t\t\texpand       : false,\n" .
-            "\t\t\t\tdeep         : true\n" .
-            "\t\t\t},\n" .
-            "\t\t\t{\n" .
-            "\t\t\t\tselector     : '*',\n" .
-            "\t\t\t\tattributes   : [\n" .
-            "\t\t\t\t\t'style',\n" .
-            "\t\t\t\t\t'class',\n" .
-            "\t\t\t\t\t'align',\n" .
-            "\t\t\t\t\t'color',\n" .
-            "\t\t\t\t\t'background'\n" .
-            "\t\t\t\t],\n" .
-            "\t\t\t\tsplit        : false,\n" .
-            "\t\t\t\texpand       : false,\n" .
-            "\t\t\t\tdeep         : true\n" .
-            "\t\t\t}\n" .
-            "\t\t]\n" .
-            "\t}";
-
-        echo "\n});";
+        echo <<<JAVASCRIPT
+        tinyMCE.init({
+        {$config}
+        {$color_map}
+            paste_postprocess: function(pluginApi, data) {
+                const toRemove = [];
+                function execOnChildren(elem, fn) {
+                    fn(elem);
+                    for (let i = 0; i < elem.children.length; i++) {
+                        execOnChildren(elem.children[i], fn);
+                    }
+                }
+                function removeStyle(elem) {
+                    if (!elem || !elem.hasAttribute('style')) {
+                        return;
+                    }
+                    const match = elem.getAttribute('style').match(/background(-color)?:[^;]+;/g);
+                    if (match !== null) {
+                        // check if the color is 255, 255, 255, and if so, remove it
+                        const color = window.getComputedStyle(elem, null)
+                                            .getPropertyValue('background-color');
+                        const is_white = (color === 'rgb(255, 255, 255)');
+                        if ({$remove_white_background} && is_white) {
+                            elem.removeAttribute('style');
+                        } else {
+                            elem.setAttribute('style', match[0]);
+                        }
+                    } else {
+                        elem.removeAttribute('style');
+                    }
+                }
+                function removeNestedP(elem) {
+                    if (!elem || !elem.children[0]) {
+                        return;
+                    }
+                    if (elem.nodeName === 'LI' && elem.children[0].nodeName === 'P') {
+                        const p = elem.removeChild(elem.children[0]);
+                        const children = [];
+                        for (let i = 0; i < p.children.length; i++) {
+                            children.push(p.children[i]);
+                        }
+                        for (let i = 0; i < elem.children.length; i++) {
+                            children.push(elem.children[i]);
+                        }
+                        elem.replaceChildren(...children);
+                    }
+                }
+                function clean(elem) {
+                    removeStyle(elem);
+                    removeNestedP(elem);
+                }
+                for (let i = 0; i < data.node.children.length; i++) {
+                    const child = data.node.children[i];
+                    if (child.nodeName === 'BR') {
+                        toRemove.push(child);
+                    } else {
+                        execOnChildren(child, clean);
+                    }
+                }
+                toRemove.forEach(r => data.node.removeChild(r));
+            },
+            menubar: false,
+            formats: {
+                removeformat : [
+                    {
+                        selector     : 'b,strong,em,i,font,u,strike',
+                        remove       : 'all',
+                        split        : true,
+                        expand       : false,
+                        block_expand : true,
+                        deep         : true
+                    },
+                    {
+                        selector     : 'span',
+                        attributes   : [
+                            'style',
+                            'class',
+                            'align',
+                            'color',
+                            'background'
+                        ],
+                        remove       : 'empty',
+                        split        : true,
+                        expand       : false,
+                        deep         : true
+                    },
+                    {
+                        selector     : '*',
+                        attributes   : [
+                            'style',
+                            'class',
+                            'align',
+                            'color',
+                            'background'
+                        ],
+                        split        : false,
+                        expand       : false,
+                        deep         : true
+                    }
+                ]
+            }
+        });
+        JAVASCRIPT;
 
         return ob_get_clean();
     }
