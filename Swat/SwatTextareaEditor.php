@@ -335,7 +335,8 @@ class SwatTextareaEditor extends SwatTextarea
         if (self::$color_map !== null) {
             echo "    color_map: [\n";
             foreach (self::$color_map as $elem) {
-                echo "        " . SwatString::quoteJavaScriptString($elem) .
+                echo '        ' .
+                    SwatString::quoteJavaScriptString($elem) .
                     ",\n";
             }
             echo "    ],\n";
@@ -376,7 +377,7 @@ class SwatTextareaEditor extends SwatTextarea
             } elseif (is_bool($value)) {
                 $value = $value ? 'true' : 'false';
             }
-            $lines[] = "    " . $name . ': ' . $value;
+            $lines[] = '    ' . $name . ': ' . $value;
         }
 
         $lines[] = "    document_base_url: {$base_href},\n";
@@ -394,108 +395,108 @@ class SwatTextareaEditor extends SwatTextarea
         // Post process the pasted nodes to remove extra styling while preserving
         // highlighted text. Also removes extra br tags
         echo <<<JAVASCRIPT
-            tinyMCE.init({
-            {$config}
-            {$color_map}
-                paste_postprocess: function(pluginApi, data) {
-                    const toRemove = [];
-                    function execOnChildren(elem, fn) {
-                        fn(elem);
-                        for (let i = 0; i < elem.children.length; i++) {
-                            execOnChildren(elem.children[i], fn);
-                        }
+        tinyMCE.init({
+        {$config}
+        {$color_map}
+            paste_postprocess: function(pluginApi, data) {
+                const toRemove = [];
+                function execOnChildren(elem, fn) {
+                    fn(elem);
+                    for (let i = 0; i < elem.children.length; i++) {
+                        execOnChildren(elem.children[i], fn);
                     }
-                    function removeStyle(elem) {
-                        if (!elem || !elem.hasAttribute('style')) {
-                            return;
-                        }
-                        const match = elem.getAttribute('style').match(/background(-color)?:[^;]+;/g);
-                        if (match !== null) {
-                            // check if the color is 255, 255, 255, and if so, remove it
-                            const color = window.getComputedStyle(elem, null)
-                                                .getPropertyValue('background-color');
-                            const is_white = (color === 'rgb(255, 255, 255)');
-                            if ({$remove_white_background} && is_white) {
-                                elem.removeAttribute('style');
-                            } else {
-                                elem.setAttribute('style', match[0]);
-                            }
-                        } else {
-                            elem.removeAttribute('style');
-                        }
-                    }
-                    function removeNestedP(elem) {
-                        if (!elem || !elem.children[0]) {
-                            return;
-                        }
-                        if (elem.nodeName === 'LI' && elem.children[0].nodeName === 'P') {
-                            const p = elem.removeChild(elem.children[0]);
-                            const children = [];
-                            for (let i = 0; i < p.children.length; i++) {
-                                children.push(p.children[i]);
-                            }
-                            for (let i = 0; i < elem.children.length; i++) {
-                                children.push(elem.children[i]);
-                            }
-                            elem.replaceChildren(...children);
-                        }
-                    }
-                    function clean(elem) {
-                        removeStyle(elem);
-                        removeNestedP(elem);
-                    }
-                    for (let i = 0; i < data.node.children.length; i++) {
-                        const child = data.node.children[i];
-                        if (child.nodeName === 'BR') {
-                            toRemove.push(child);
-                        } else {
-                            execOnChildren(child, clean);
-                        }
-                    }
-                    toRemove.forEach(r => data.node.removeChild(r));
-                },
-                menubar: false,
-                formats: {
-                    removeformat : [
-                        {
-                            selector     : 'b,strong,em,i,font,u,strike',
-                            remove       : 'all',
-                            split        : true,
-                            expand       : false,
-                            block_expand : true,
-                            deep         : true
-                        },
-                        {
-                            selector     : 'span',
-                            attributes   : [
-                                'style',
-                                'class',
-                                'align',
-                                'color',
-                                'background'
-                            ],
-                            remove       : 'empty',
-                            split        : true,
-                            expand       : false,
-                            deep         : true
-                        },
-                        {
-                            selector     : '*',
-                            attributes   : [
-                                'style',
-                                'class',
-                                'align',
-                                'color',
-                                'background'
-                            ],
-                            split        : false,
-                            expand       : false,
-                            deep         : true
-                        }
-                    ]
                 }
-            });
-            JAVASCRIPT;
+                function removeStyle(elem) {
+                    if (!elem || !elem.hasAttribute('style')) {
+                        return;
+                    }
+                    const match = elem.getAttribute('style').match(/background(-color)?:[^;]+;/g);
+                    if (match !== null) {
+                        // check if the color is 255, 255, 255, and if so, remove it
+                        const color = window.getComputedStyle(elem, null)
+                                            .getPropertyValue('background-color');
+                        const is_white = (color === 'rgb(255, 255, 255)');
+                        if ({$remove_white_background} && is_white) {
+                            elem.removeAttribute('style');
+                        } else {
+                            elem.setAttribute('style', match[0]);
+                        }
+                    } else {
+                        elem.removeAttribute('style');
+                    }
+                }
+                function removeNestedP(elem) {
+                    if (!elem || !elem.children[0]) {
+                        return;
+                    }
+                    if (elem.nodeName === 'LI' && elem.children[0].nodeName === 'P') {
+                        const p = elem.removeChild(elem.children[0]);
+                        const children = [];
+                        for (let i = 0; i < p.children.length; i++) {
+                            children.push(p.children[i]);
+                        }
+                        for (let i = 0; i < elem.children.length; i++) {
+                            children.push(elem.children[i]);
+                        }
+                        elem.replaceChildren(...children);
+                    }
+                }
+                function clean(elem) {
+                    removeStyle(elem);
+                    removeNestedP(elem);
+                }
+                for (let i = 0; i < data.node.children.length; i++) {
+                    const child = data.node.children[i];
+                    if (child.nodeName === 'BR') {
+                        toRemove.push(child);
+                    } else {
+                        execOnChildren(child, clean);
+                    }
+                }
+                toRemove.forEach(r => data.node.removeChild(r));
+            },
+            menubar: false,
+            formats: {
+                removeformat : [
+                    {
+                        selector     : 'b,strong,em,i,font,u,strike',
+                        remove       : 'all',
+                        split        : true,
+                        expand       : false,
+                        block_expand : true,
+                        deep         : true
+                    },
+                    {
+                        selector     : 'span',
+                        attributes   : [
+                            'style',
+                            'class',
+                            'align',
+                            'color',
+                            'background'
+                        ],
+                        remove       : 'empty',
+                        split        : true,
+                        expand       : false,
+                        deep         : true
+                    },
+                    {
+                        selector     : '*',
+                        attributes   : [
+                            'style',
+                            'class',
+                            'align',
+                            'color',
+                            'background'
+                        ],
+                        split        : false,
+                        expand       : false,
+                        deep         : true
+                    }
+                ]
+            }
+        });
+        JAVASCRIPT;
 
         return ob_get_clean();
     }
