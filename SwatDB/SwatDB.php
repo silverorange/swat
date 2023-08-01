@@ -645,7 +645,7 @@ class SwatDB extends SwatObject
             }
 
             self::exec($db, $delete_sql);
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $transaction->rollback();
             throw $e;
         }
@@ -729,7 +729,7 @@ class SwatDB extends SwatObject
             if ($id_field !== null) {
                 $ret = self::getFieldMax($db, $table, $id_field);
             }
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $transaction->rollback();
             throw $e;
         }
