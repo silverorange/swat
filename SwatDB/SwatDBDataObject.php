@@ -1071,7 +1071,7 @@ class SwatDBDataObject extends SwatObject implements
             }
 
             $transaction->commit();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $this->rollback($transaction, $rollback_property_hashes);
             throw $e;
         }
@@ -1126,7 +1126,7 @@ class SwatDBDataObject extends SwatObject implements
             $rollback_property_hashes = $this->property_hashes;
             $this->deleteInternal();
             $transaction->commit();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $this->rollback($transaction, $rollback_property_hashes);
             throw $e;
         }

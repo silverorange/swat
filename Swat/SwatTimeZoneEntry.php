@@ -143,7 +143,7 @@ class SwatTimeZoneEntry extends SwatInputControl implements SwatState
         } else {
             try {
                 $time_zone = new DateTimeZone($this->value);
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 $message = Swat::_('The %s field is an invalid time zone.');
                 $this->addMessage(new SwatMessage($message, 'error'));
             }

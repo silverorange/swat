@@ -1351,7 +1351,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
             }
 
             $transaction->commit();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $transaction->rollback();
             throw $e;
         }

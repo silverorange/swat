@@ -140,7 +140,7 @@ class SwatException extends Exception
 
     public function __construct($message = null, $code = 0)
     {
-        if (is_object($message) && $message instanceof Exception) {
+        if (is_object($message) && $message instanceof Throwable) {
             $e = $message;
             $message = $e->getMessage();
             $code = $e->getCode();
