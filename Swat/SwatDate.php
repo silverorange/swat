@@ -388,10 +388,6 @@ class SwatDate extends DateTime implements Serializable
             $format = self::getFormatLikeIntlById($format);
         }
 
-        if ($locale == '') {
-            $locale = setlocale(LC_TIME, 0);
-        }
-
         static $formatters = [];
 
         if (!isset($formatters[$locale])) {
