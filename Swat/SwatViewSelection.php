@@ -27,9 +27,7 @@
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatView::getSelection()
  */
-class SwatViewSelection extends SwatObject implements
-    Countable,
-    Iterator
+class SwatViewSelection extends SwatObject implements Countable, Iterator
 {
     // {{{ private properties
 
