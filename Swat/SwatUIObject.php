@@ -286,7 +286,7 @@ abstract class SwatUIObject extends SwatObject
      * @see SwatObject::__toString()
      * @return string this object represented as a string.
      */
-    public function __toString()
+    public function __toString(): string
     {
         // prevent recursion up the widget tree for UI objects
         $parent = $this->parent;

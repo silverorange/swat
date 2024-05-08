@@ -7,7 +7,8 @@
  * @copyright 2004-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatObject
+class SwatObject implements
+    Stringable
 {
     // {{{ public function __toString()
 
@@ -24,7 +25,7 @@ class SwatObject
      *
      * @return string this object represented as a string.
      */
-    public function __toString()
+    public function __toString(): string
     {
         ob_start();
         Swat::printObject($this);

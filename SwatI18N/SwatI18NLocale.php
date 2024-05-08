@@ -834,7 +834,7 @@ class SwatI18NLocale extends SwatObject
      *
      * @return string a string representation of this locale.
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->preferred_locale;
     }

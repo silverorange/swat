@@ -95,7 +95,7 @@ class SwatI18NNumberFormat extends SwatObject
      *
      * @return string a string representation of this format.
      */
-    public function __toString()
+    public function __toString(): string
     {
         $string = '';
 

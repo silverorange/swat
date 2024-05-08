@@ -27,7 +27,9 @@
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  * @see       SwatView::getSelection()
  */
-class SwatViewSelection extends SwatObject implements Countable, Iterator
+class SwatViewSelection extends SwatObject implements
+    Countable,
+    Iterator
 {
     // {{{ private properties
 
@@ -94,7 +96,7 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     /**
      * Moves forward to the next selected item
      */
-    public function next()
+    public function next(): void
     {
         $this->current_index++;
     }
@@ -105,7 +107,7 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     /**
      * Moves forward to the previous selected item
      */
-    public function prev()
+    public function prev(): void
     {
         $this->current_index--;
     }
@@ -116,7 +118,7 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
     /**
      * Rewinds this iterator to the first selected item
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->current_index = 0;
     }
@@ -131,7 +133,7 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
      * @return boolean true if there is a current selected item and false if
      *                  there is not.
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->selected_items[$this->current_index]);
     }
@@ -146,7 +148,7 @@ class SwatViewSelection extends SwatObject implements Countable, Iterator
      *
      * @return integer the number of items in this selection.
      */
-    public function count()
+    public function count(): int
     {
         return count($this->selected_items);
     }

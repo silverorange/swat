@@ -119,7 +119,7 @@ class SwatI18NCurrencyFormat extends SwatI18NNumberFormat
      *
      * @return string a string representation of this format.
      */
-    public function __toString()
+    public function __toString(): string
     {
         $string = parent::__toString();
 

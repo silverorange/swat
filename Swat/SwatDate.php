@@ -12,7 +12,9 @@
  * @copyright 2005-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDate extends DateTime implements Serializable
+class SwatDate extends DateTime implements
+    Serializable,
+    Stringable
 {
     // {{{ time zone format constants
 
