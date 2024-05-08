@@ -218,7 +218,7 @@ class SwatHtmlTag extends SwatObject
      *
      * @return string this tag as a string.
      */
-    public function toString()
+    public function toString(): string
     {
         ob_start();
         $this->display();
@@ -289,7 +289,7 @@ class SwatHtmlTag extends SwatObject
      *
      * @see SwatHtmlTag::toString()
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }

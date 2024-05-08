@@ -64,7 +64,7 @@ class SwatDBField extends SwatObject
      *        form <type>:<name> where <name> is the name of the database
      *        field and <type> is a standard MDB2 datatype.
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->type . ':' . $this->name;
     }

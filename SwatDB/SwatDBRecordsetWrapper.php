@@ -352,7 +352,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * @return boolean true if this recordset has a value for the given offset
      *                  and false if it does not.
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         if ($this->index_field === null) {
             return isset($this->objects[$offset]);
@@ -377,7 +377,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * @throws OutOfBoundsException if no record exists at the specified offset
      *                               in this recordset.
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         if (!isset($this[$offset])) {
             throw new OutOfBoundsException(
@@ -415,7 +415,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *                              to the end of the recordset or replace
      *                              existing records in this recordset.
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (
             $this->row_wrapper_class !== null &&
@@ -507,7 +507,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *                       an index value. Otherwise, the offset is an
      *                       ordinal value.
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         if (isset($this[$offset])) {
             if ($this->index_field === null) {
@@ -592,7 +592,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Moves forward to the next element
      */
-    public function next()
+    public function next(): void
     {
         $this->current_index++;
     }
@@ -603,7 +603,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     /**
      * Rewinds this iterator to the first element
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->current_index = 0;
     }
@@ -617,7 +617,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * @return boolean true if there is a current element and false if there
      *                  is not.
      */
-    public function valid()
+    public function valid(): bool
     {
         return array_key_exists($this->current_index, $this->objects);
     }
@@ -650,7 +650,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *
      * @return integer the number of records in this recordset.
      */
-    public function count()
+    public function count(): int
     {
         return count($this->objects);
     }
@@ -660,7 +660,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     // serialization
     // {{{ public function serialize()
 
-    public function serialize()
+    public function serialize(): string
     {
         $data = [];
 
@@ -682,7 +682,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
     // }}}
     // {{{ public function unserialize()
 
-    public function unserialize($data)
+    public function unserialize(string $data): void
     {
         $data = unserialize($data);
 

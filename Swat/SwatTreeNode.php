@@ -258,7 +258,7 @@ abstract class SwatTreeNode extends SwatObject implements
      *
      * @return integer the number of nodes in this tree or subtree.
      */
-    public function count()
+    public function count(): int
     {
         $count = 1;
         foreach ($this->children as $child) {

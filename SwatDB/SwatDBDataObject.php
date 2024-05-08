@@ -292,7 +292,7 @@ class SwatDBDataObject extends SwatObject implements
      *
      * @see SwatObject::__toString()
      */
-    public function __toString()
+    public function __toString(): string
     {
         // prevent printing of MDB2 object for dataobjects
         $db = $this->db;
@@ -1576,7 +1576,7 @@ class SwatDBDataObject extends SwatObject implements
     // serialization
     // {{{ public function serialize()
 
-    public function serialize()
+    public function serialize(): string
     {
         $data = [];
 
@@ -1622,7 +1622,7 @@ class SwatDBDataObject extends SwatObject implements
     // }}}
     // {{{ public function unserialize()
 
-    public function unserialize($data)
+    public function unserialize(string $data): void
     {
         $this->wakeup();
         $this->init();
