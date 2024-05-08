@@ -146,7 +146,7 @@ abstract class SwatTreeNode extends SwatObject implements
      * @return boolean true if this node has children or false if this node
      *                  does not have children.
      */
-    public function hasChildren(): bool
+    public function hasChildren()
     {
         return count($this->children) > 0;
     }
@@ -209,7 +209,7 @@ abstract class SwatTreeNode extends SwatObject implements
      *                {@link SwatTreeNode} object. If the next child node is
      *                invalid, false is returned.
      */
-    public function next(): void
+    public function next()
     {
         return next($this->children);
     }
@@ -227,7 +227,7 @@ abstract class SwatTreeNode extends SwatObject implements
      *                {@link SwatTreeNode} object. If there are no child nodes,
      *                false is returned.
      */
-    public function rewind(): void
+    public function rewind()
     {
         return reset($this->children);
     }
@@ -243,7 +243,7 @@ abstract class SwatTreeNode extends SwatObject implements
      * @return boolean true if the current child node is valid and false if it
      *                  is not.
      */
-    public function valid(): bool
+    public function valid()
     {
         return $this->current() !== false;
     }
