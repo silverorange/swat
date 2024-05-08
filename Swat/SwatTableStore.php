@@ -38,7 +38,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
      *
      * @return integer the number of rows in this data structure.
      */
-    public function count()
+    public function count(): int
     {
         return count($this->rows);
     }
@@ -75,7 +75,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     /**
      * Moves forward to the next element
      */
-    public function next()
+    public function next(): void
     {
         $this->current_index++;
     }
@@ -97,7 +97,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
     /**
      * Rewinds this iterator to the first element
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->current_index = 0;
     }
@@ -111,7 +111,7 @@ class SwatTableStore extends SwatObject implements SwatTableModel
      * @return boolean true if there is a current element and false if there
      *                  is not.
      */
-    public function valid()
+    public function valid(): bool
     {
         return array_key_exists($this->current_index, $this->rows);
     }
