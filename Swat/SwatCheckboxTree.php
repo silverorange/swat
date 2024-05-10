@@ -266,7 +266,7 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
             // index of other nodes is a combination of parent indexes
             $index = $parent_index . '.' . $node->getIndex();
 
-            echo '<li>';
+            echo '<li class="swat-checkbox-tree-node">';
 
             if (isset($node->value)) {
                 $this->input_tag->id = $this->id . '_' . $index;
