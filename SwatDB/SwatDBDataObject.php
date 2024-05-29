@@ -4,7 +4,7 @@
  * All public properties correspond to database fields
  *
  * @package   SwatDB
- * @copyright 2005-2016 silverorange
+ * @copyright 2005-2024 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 class SwatDBDataObject extends SwatObject implements
@@ -1578,6 +1578,23 @@ class SwatDBDataObject extends SwatObject implements
 
     public function serialize(): string
     {
+        return serialize($this->__serialize());
+    }
+
+    // }}}
+    // {{{ public function unserialize()
+
+    public function unserialize(string $data): void
+    {
+        $data = unserialize($data);
+        $this->__unserialize($data);
+    }
+
+    // }}}
+    // {{{ public function __serialize()
+
+    public function __serialize(): array
+    {
         $data = [];
 
         // unset subdataobjects that are not to be serialized
@@ -1609,25 +1626,21 @@ class SwatDBDataObject extends SwatObject implements
             $data[$property] = $this->$property;
         }
 
-        $serialized_data = serialize($data);
-
         // restore unset sub-dataobjects on this object
         foreach ($unset_objects as $name => $object) {
             $this->setSubDataObject($name, $object);
         }
 
-        return $serialized_data;
+        return $data;
     }
 
     // }}}
-    // {{{ public function unserialize()
+    // {{{ public function __unserialize()
 
-    public function unserialize(string $data): void
+    public function __unserialize(array $data): void
     {
         $this->wakeup();
         $this->init();
-
-        $data = unserialize($data);
 
         // Ignore properties that shouldn't have been serialized. These
         // can be removed in the future.
@@ -1639,24 +1652,6 @@ class SwatDBDataObject extends SwatObject implements
         ];
 
         foreach ($data as $property => $value) {
-            if ($value instanceof SwatDate && isset($value->year)) {
-                // convert old dates to new dates
-                $date_string = sprintf(
-                    '%04d-%02d-%02dT%02d:%02d:%02d',
-                    $value->year,
-                    $value->month,
-                    $value->day,
-                    $value->hour,
-                    $value->minute,
-                    $value->second,
-                );
-
-                $tz_id = $value->tz->id;
-
-                $value = new SwatDate($date_string);
-                $value->setTZById($tz_id);
-            }
-
             if ($property === 'internal_properties') {
                 // merge with null properties from init() so that newly
                 // defined properties work on old serialized data.
