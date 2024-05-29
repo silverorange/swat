@@ -16,7 +16,7 @@
  * have an index value.
  *
  * @package   SwatDB
- * @copyright 2005-2016 silverorange
+ * @copyright 2005-2024 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
 abstract class SwatDBRecordsetWrapper extends SwatObject implements
@@ -555,7 +555,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *
      * @return mixed the current element.
      */
-    public function current()
+    public function current(): mixed
     {
         return $this->objects[$this->current_index];
     }
@@ -570,9 +570,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * an index value, this gets the index value. Otherwise this gets the
      * ordinal position of the record in this recordset.
      *
-     * @return integer the key of the current record.
+     * @return int the key of the current record.
      */
-    public function key()
+    public function key(): int
     {
         if (
             $this->index_field !== null &&
@@ -662,6 +662,22 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
 
     public function serialize(): string
     {
+        return serialize($this->__serialize());
+    }
+
+    // }}}
+    // {{{ public function unserialize()
+
+    public function unserialize(string $data): void
+    {
+        $this->__unserialize(unserialize($data));
+    }
+
+    // }}}
+    // {{{ public function __serialize()
+
+    public function __serialize(): array
+    {
         $data = [];
 
         $private_properties = [
@@ -676,16 +692,14 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
             $data[$property] = $this->$property;
         }
 
-        return serialize($data);
+        return $data;
     }
 
     // }}}
-    // {{{ public function unserialize()
+    // {{{ public function __unserialize()
 
-    public function unserialize(string $data): void
+    public function __unserialize(array $data): void
     {
-        $data = unserialize($data);
-
         foreach ($data as $property => $value) {
             $this->$property = $value;
         }

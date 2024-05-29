@@ -9,10 +9,10 @@
  * - localization
  *
  * @package   Swat
- * @copyright 2005-2016 silverorange
+ * @copyright 2005-2024 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDate extends DateTime implements Serializable, Stringable
+class SwatDate extends DateTime implements Stringable
 {
     // {{{ time zone format constants
 
@@ -219,9 +219,6 @@ class SwatDate extends DateTime implements Serializable, Stringable
         'amt' => true,
         'art' => true,
         'ast' => true,
-        'ast' => true,
-        'ast' => true,
-        'ast' => true,
         'awdt' => true,
         'awst' => true,
         'azost' => true,
@@ -231,7 +228,6 @@ class SwatDate extends DateTime implements Serializable, Stringable
         'bit' => true,
         'bot' => true,
         'brt' => true,
-        'bst' => true,
         'bst' => true,
         'btt' => true,
         'cat' => true,
@@ -248,7 +244,6 @@ class SwatDate extends DateTime implements Serializable, Stringable
         'cost' => true,
         'cot' => true,
         'cst' => true,
-        'cst' => true,
         'cvt' => true,
         'cxt' => true,
         'chst' => true,
@@ -256,7 +251,6 @@ class SwatDate extends DateTime implements Serializable, Stringable
         'dft' => true,
         'east' => true,
         'eat' => true,
-        'ect' => true,
         'ect' => true,
         'edt' => true,
         'eedt' => true,
@@ -282,8 +276,6 @@ class SwatDate extends DateTime implements Serializable, Stringable
         'irkt' => true,
         'irst' => true,
         'ist' => true,
-        'ist' => true,
-        'ist' => true,
         'jst' => true,
         'krat' => true,
         'kst' => true,
@@ -294,8 +286,6 @@ class SwatDate extends DateTime implements Serializable, Stringable
         'mit' => true,
         'msd' => true,
         'msk' => true,
-        'mst' => true,
-        'mst' => true,
         'mst' => true,
         'mut' => true,
         'ndt' => true,
@@ -309,14 +299,12 @@ class SwatDate extends DateTime implements Serializable, Stringable
         'phot' => true,
         'pkt' => true,
         'pst' => true,
-        'pst' => true,
         'ret' => true,
         'samt' => true,
         'sast' => true,
         'sbt' => true,
         'sct' => true,
         'slt' => true,
-        'sst' => true,
         'sst' => true,
         'taht' => true,
         'tha' => true,
@@ -1247,7 +1235,7 @@ class SwatDate extends DateTime implements Serializable, Stringable
      */
     public function setTZById($time_zone_name)
     {
-        $this->setTZ(new DateTimeZone($time_zone_name));
+        return $this->setTZ(new DateTimeZone($time_zone_name));
     }
 
     // }}}
@@ -1760,45 +1748,6 @@ class SwatDate extends DateTime implements Serializable, Stringable
     public function subtractStrictMonths($months)
     {
         return $this->addStrictMonths(-$months);
-    }
-
-    // }}}
-    // {{{ public function serialize()
-
-    /**
-     * Serializes this date
-     *
-     * Serialization is provided for backwards compatibility with the
-     * transitional and now depreciated HotDate package. The SwatDate serialize
-     * format is not compatible with PHP 5.3+ native DateTime serialization.
-     */
-    public function serialize()
-    {
-        $data = [$this->getTimestamp(), $this->getTimeZone()->getName()];
-
-        return serialize($data);
-    }
-
-    // }}}
-    // {{{ public function unserialize()
-
-    /**
-     * Unserializes this date
-     *
-     * @param string $serialized the serialized date data.
-     */
-    public function unserialize($serialized)
-    {
-        $data = unserialize($serialized);
-
-        // Calling __construct here is required to avoid PHP warnings. See
-        // PHP bug #65151. DateTime objects that are created through
-        // unserialization are not properly initialized until __construct() is
-        // called.
-        $this->__construct('@' . $data[0]);
-
-        // DateTime constructor with timestamp is always UTC so set time zone
-        $this->setTimezone(new DateTimeZone($data[1]));
     }
 
     // }}}
