@@ -12,7 +12,7 @@
  * @copyright 2005-2024 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDate extends DateTime implements Serializable, Stringable
+class SwatDate extends DateTime implements Stringable
 {
     // {{{ time zone format constants
 
@@ -1748,72 +1748,6 @@ class SwatDate extends DateTime implements Serializable, Stringable
     public function subtractStrictMonths($months)
     {
         return $this->addStrictMonths(-$months);
-    }
-
-    // }}}
-    // {{{ public function serialize()
-
-    /**
-     * Serializes this date
-     *
-     * Serialization is provided for backwards compatibility with the
-     * transitional and now depreciated HotDate package. The SwatDate serialize
-     * format is not compatible with PHP 5.3+ native DateTime serialization.
-     */
-    public function serialize(): string
-    {
-        return serialize($this->__serialize());
-    }
-
-    // }}}
-    // {{{ public function unserialize()
-
-    /**
-     * Unserializes this date
-     *
-     * @param string $serialized the serialized date data.
-     */
-    public function unserialize(string $serialized): void
-    {
-        $data = unserialize($serialized);
-        $this->__unserialize($data);
-    }
-
-    // }}}
-    // {{{ public function __serialize()
-
-    /**
-     * Serializes this date
-     *
-     * Serialization is provided for backwards compatibility with the
-     * transitional and now depreciated HotDate package. The SwatDate serialize
-     * format is not compatible with PHP 5.3+ native DateTime serialization.
-     *
-     * @return array
-     */
-    public function __serialize(): array
-    {
-        return [$this->getTimestamp(), $this->getTimeZone()->getName()];
-    }
-
-    // }}}
-    // {{{ public function __unserialize()
-
-    /**
-     * Unserializes this date
-     *
-     * @param array $data the serialized date data.
-     */
-    public function __unserialize(array $data): void
-    {
-        // Calling __construct here is required to avoid PHP warnings. See
-        // PHP bug #65151. DateTime objects that are created through
-        // unserialization are not properly initialized until __construct() is
-        // called.
-        $this->__construct('@' . $data[0]);
-
-        // DateTime constructor with timestamp is always UTC so set time zone
-        $this->setTimezone(new DateTimeZone($data[1]));
     }
 
     // }}}
