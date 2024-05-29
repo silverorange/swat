@@ -555,7 +555,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      *
      * @return mixed the current element.
      */
-    public function current()
+    public function current(): mixed
     {
         return $this->objects[$this->current_index];
     }
@@ -570,9 +570,9 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      * an index value, this gets the index value. Otherwise this gets the
      * ordinal position of the record in this recordset.
      *
-     * @return integer the key of the current record.
+     * @return int the key of the current record.
      */
-    public function key()
+    public function key(): int
     {
         if (
             $this->index_field !== null &&

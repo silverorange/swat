@@ -1235,7 +1235,7 @@ class SwatDate extends DateTime implements Serializable, Stringable
      */
     public function setTZById($time_zone_name)
     {
-        $this->setTZ(new DateTimeZone($time_zone_name));
+        return $this->setTZ(new DateTimeZone($time_zone_name));
     }
 
     // }}}
