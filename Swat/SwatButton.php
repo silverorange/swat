@@ -301,6 +301,7 @@ class SwatButton extends SwatInputControl
         $tag->class = $this->getCSSClassString();
         $tag->tabindex = $this->tab_index;
         $tag->accesskey = $this->access_key;
+        $tag->addAttributes($this->getDataAttributes());
 
         if (!$this->isSensitive()) {
             $tag->disabled = 'disabled';

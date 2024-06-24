@@ -43,6 +43,14 @@ abstract class SwatUIObject extends SwatObject
      */
     public $classes = [];
 
+    /**
+     * A user-specified key-value array of data attributes that are applied 
+     * to this user-interface object.
+     * 
+     * @var array
+     */
+    public $data = [];
+
     // }}}
     // {{{ protected properties
 
@@ -344,6 +352,17 @@ abstract class SwatUIObject extends SwatObject
     protected function getCSSClassNames()
     {
         return $this->classes;
+    }
+
+    protected function getDataAttributes()
+    {
+        $data_attributes = [];
+        
+        foreach ($this->data as $key => $value) {
+            $data_attributes["data-{$key}"] = $value;
+        }
+
+        return $data_attributes;
     }
 
     // }}}
