@@ -44,9 +44,17 @@ abstract class SwatUIObject extends SwatObject
     public $classes = [];
 
     /**
-     * A user-specified key-value array of data attributes that are applied 
+     * Whether to clear out any Swat-defined classes (and only use those
+     * supplied via the <property name="classes[]">...</property> tag).
+     *
+     * @var bool
+     */
+    public bool $clear_default_classes = false;
+
+    /**
+     * A user-specified key-value array of data attributes that are applied
      * to this user-interface object.
-     * 
+     *
      * @var array
      */
     public $data = [];
@@ -357,7 +365,7 @@ abstract class SwatUIObject extends SwatObject
     protected function getDataAttributes()
     {
         $data_attributes = [];
-        
+
         foreach ($this->data as $key => $value) {
             $data_attributes["data-{$key}"] = $value;
         }
