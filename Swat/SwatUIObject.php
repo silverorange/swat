@@ -342,23 +342,19 @@ abstract class SwatUIObject extends SwatObject
      * object
      *
      * User-interface objects aggregate the list of user-specified classes and
-     * may add static CSS classes of their own in this method.  Child classes
-     * pass their values up and, unless `clear_default_classes` is true, they
-     * are merged together and returned.
+     * may add static CSS classes of their own in this method.
      *
      * @return array the array of CSS classes that are applied to this
      *                user-interface object.
      *
      * @see SwatUIObject::getCSSClassString()
      */
-    protected function getCSSClassNames(array $child_classes = []): array
+    protected function getCSSClassNames()
     {
-        return $this->clear_default_classes
-            ? $this->classes
-            : array_merge($child_classes, $this->classes);
+        return $this->classes;
     }
 
-    protected function getDataAttributes()
+    protected function getDataAttributes(): array
     {
         $data = [];
 
