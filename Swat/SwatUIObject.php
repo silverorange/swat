@@ -57,7 +57,7 @@ abstract class SwatUIObject extends SwatObject
      *
      * @var array
      */
-    public $data = [];
+    public $data_attributes = [];
 
     // }}}
     // {{{ protected properties
@@ -350,27 +350,31 @@ abstract class SwatUIObject extends SwatObject
      * object
      *
      * User-interface objects aggregate the list of user-specified classes and
-     * may add static CSS classes of their own in this method.
+     * may add static CSS classes of their own in this method.  Child classes
+     * pass their values up and, unless `clear_default_classes` is true, they
+     * are merged together and returned.
      *
      * @return array the array of CSS classes that are applied to this
      *                user-interface object.
      *
      * @see SwatUIObject::getCSSClassString()
      */
-    protected function getCSSClassNames()
+    protected function getCSSClassNames(array $child_classes = []): array
     {
-        return $this->classes;
+        return $this->clear_default_classes
+            ? $this->classes
+            : array_merge($child_classes, $this->classes);
     }
 
     protected function getDataAttributes()
     {
-        $data_attributes = [];
+        $data = [];
 
-        foreach ($this->data as $key => $value) {
-            $data_attributes["data-{$key}"] = $value;
+        foreach ($this->data_attributes as $key => $value) {
+            $data["data-{$key}"] = $value;
         }
 
-        return $data_attributes;
+        return $data;
     }
 
     // }}}
