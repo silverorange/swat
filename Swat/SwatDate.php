@@ -12,7 +12,7 @@
  * @copyright 2005-2024 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDate extends DateTime implements Stringable
+class SwatDate extends DateTime implements Serializable, Stringable
 {
     // {{{ time zone format constants
 
@@ -320,6 +320,38 @@ class SwatDate extends DateTime implements Stringable
         'yakt' => true,
         'yekt' => true,
     ];
+
+    // {{{ public function __serialize()
+
+    public function __serialize(): array
+    {
+        return [$this->getTimestamp(), $this->getTimeZone()->getName()];
+    }
+
+    // }}}
+    // {{{ public function serialize()
+
+    public function serialize(): ?string
+    {
+        return serialize($this->__serialize());
+    }
+
+    // }}}
+    // {{{ public function __unserialize()
+
+    public function __unserialize(array $data): void
+    {
+        $this->__construct('@' . $data[0]);
+        $this->setTimezone(new DateTimeZone($data[1]));
+    }
+
+    // }}}
+    // {{{ public function unserialize()
+
+    public function unserialize(string $data): void
+    {
+        $this->__unserialize(unserialize($data));
+    }
 
     // }}}
     // {{{ public function format()
