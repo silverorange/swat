@@ -3,8 +3,8 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"check-if-pretty": "prettier --list-different '{Swat,SwatDB,SwatI18N}/**/*.php'",
-		"make-pretty": "prettier --write '{Swat,SwatDB,SwatI18N}/**/*.php'"
+		"check-if-pretty": "prettier --list-different '{Swat,SwatDB,SwatI18N,tests}/**/*.php'",
+		"make-pretty": "prettier --write '{Swat,SwatDB,SwatI18N,tests}/**/*.php'"
 	},
 	"devDependencies": {
 		"@prettier/plugin-php": "^0.19.0",

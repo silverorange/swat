@@ -328,7 +328,7 @@ class SwatDate extends DateTime implements Serializable, Stringable
         return [
             'date' => $this->format('Y-m-d H:i:s.u'),
             'timezone_type' => 3,
-            'timezone' => $this->getTimeZone()->getName()
+            'timezone' => $this->getTimeZone()->getName(),
         ];
     }
 
@@ -345,10 +345,7 @@ class SwatDate extends DateTime implements Serializable, Stringable
 
     public function __unserialize(array $data): void
     {
-        $this->__construct(
-            $data['date'],
-            new DateTimeZone($data['timezone'])
-        );
+        $this->__construct($data['date'], new DateTimeZone($data['timezone']));
     }
 
     // }}}
