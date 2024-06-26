@@ -12,7 +12,10 @@ final class SwatDateTest extends TestCase
         $date = new SwatDate('2024-07-25 12:34:56', new DateTimeZone('UTC'));
         $serialized = serialize($date);
 
-        $this->assertSame('O:8:"SwatDate":3:{s:4:"date";s:26:"2024-07-25 12:34:56.000000";s:13:"timezone_type";i:3;s:8:"timezone";s:3:"UTC";}', $serialized);
+        $expected = 'O:8:"SwatDate":3:{s:4:"date";s:26:"2024-07-25 12:34:56.000000";' .
+            's:13:"timezone_type";i:3;s:8:"timezone";s:3:"UTC";}';
+
+        $this->assertSame($expected, $serialized);
     }
 
     #[Test]
