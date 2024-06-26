@@ -51,7 +51,8 @@
 		"silverorange/yui": "^1.0.11"
 	},
 	"require-dev": {
-		"silverorange/coding-standard": "^1.0.0"
+		"silverorange/coding-standard": "^1.0.0",
+		"phpunit/phpunit": "^10.5"
 	},
 	"autoload": {
 		"classmap": [ "Swat/", "SwatDB/", "SwatI18N/" ]
@@ -59,6 +60,7 @@
 	"scripts": {
 		"lint": "./vendor/bin/phpcs",
 		"post-install-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src",
-		"post-update-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src"
+		"post-update-cmd": "./vendor/bin/phpcs --config-set installed_paths vendor/silverorange/coding-standard/src",
+		"tests": "./vendor/bin/phpunit"
 	}
 }

@@ -325,7 +325,11 @@ class SwatDate extends DateTime implements Serializable, Stringable
 
     public function __serialize(): array
     {
-        return [$this->getTimestamp(), $this->getTimeZone()->getName()];
+        return [
+            'date' => $this->format('Y-m-d H:i:s.u'),
+            'timezone_type' => 3,
+            'timezone' => $this->getTimeZone()->getName()
+        ];
     }
 
     // }}}
@@ -341,8 +345,10 @@ class SwatDate extends DateTime implements Serializable, Stringable
 
     public function __unserialize(array $data): void
     {
-        $this->__construct('@' . $data[0]);
-        $this->setTimezone(new DateTimeZone($data[1]));
+        $this->__construct(
+            $data['date'],
+            new DateTimeZone($data['timezone'])
+        );
     }
 
     // }}}
@@ -1694,10 +1700,10 @@ class SwatDate extends DateTime implements Serializable, Stringable
      *
      * @param DateTime $when the date to check.
      *
-     * @return boolean true if this date is equivalent to the specified date,
+     * @return bool true if this date is equivalent to the specified date,
      *                 otherwise false.
      */
-    public function equals(DateTime $when)
+    public function equals(DateTime $when): bool
     {
         return self::compare($this, $when) === 0;
     }
