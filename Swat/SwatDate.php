@@ -12,7 +12,7 @@
  * @copyright 2005-2024 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
  */
-class SwatDate extends DateTime implements Stringable
+class SwatDate extends DateTime implements Serializable, Stringable
 {
     // {{{ time zone format constants
 
@@ -320,6 +320,41 @@ class SwatDate extends DateTime implements Stringable
         'yakt' => true,
         'yekt' => true,
     ];
+
+    // {{{ public function __serialize()
+
+    public function __serialize(): array
+    {
+        return [
+            'date' => $this->format('Y-m-d H:i:s.u'),
+            'timezone_type' => 3,
+            'timezone' => $this->getTimeZone()->getName(),
+        ];
+    }
+
+    // }}}
+    // {{{ public function serialize()
+
+    public function serialize(): ?string
+    {
+        return serialize($this->__serialize());
+    }
+
+    // }}}
+    // {{{ public function __unserialize()
+
+    public function __unserialize(array $data): void
+    {
+        $this->__construct($data['date'], new DateTimeZone($data['timezone']));
+    }
+
+    // }}}
+    // {{{ public function unserialize()
+
+    public function unserialize(string $data): void
+    {
+        $this->__unserialize(unserialize($data));
+    }
 
     // }}}
     // {{{ public function format()
@@ -1662,10 +1697,10 @@ class SwatDate extends DateTime implements Stringable
      *
      * @param DateTime $when the date to check.
      *
-     * @return boolean true if this date is equivalent to the specified date,
+     * @return bool true if this date is equivalent to the specified date,
      *                 otherwise false.
      */
-    public function equals(DateTime $when)
+    public function equals(DateTime $when): bool
     {
         return self::compare($this, $when) === 0;
     }

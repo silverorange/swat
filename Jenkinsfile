@@ -52,5 +52,11 @@ pipeline {
                 sh 'yarn check-if-pretty'
             }
         }
+
+        stage('Run Tests') {
+            steps {
+                sh 'composer run tests'
+            }
+        }
     }
 }
