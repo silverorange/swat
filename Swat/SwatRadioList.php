@@ -65,7 +65,7 @@ class SwatRadioList extends SwatFlydown
         // the process step
         $this->getForm()->addHiddenField($this->id . '_submitted', 1);
 
-        if (count($options) === 1) {
+        if (count($options) === 1 && $this->collapse_single) {
             // get first and only element
             $this->displaySingle(current($options));
             return;
