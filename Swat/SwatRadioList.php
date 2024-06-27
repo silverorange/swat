@@ -9,18 +9,6 @@
  */
 class SwatRadioList extends SwatFlydown
 {
-    // {{{ public properties
-
-    /**
-     * Whether to collapse a list with only one option down to a hidden field (default),
-     * or display it as a list with just one option.
-     *
-     * @var bool
-     */
-    public bool $collapse_single = true;
-
-    // }}}
-
     // {{{ private properties
 
     /**

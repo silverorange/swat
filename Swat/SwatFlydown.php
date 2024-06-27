@@ -39,6 +39,16 @@ class SwatFlydown extends SwatOptionControl implements SwatState
      */
     public $blank_title = '';
 
+    /**
+     * Collapse single
+     *
+     * Whether to collapse a list/flydown with only one option down to a hidden field (default),
+     * or display it as a list/flydown with just one option.
+     *
+     * @var bool
+     */
+    public bool $collapse_single = true;
+
     // }}}
     // {{{ public function display()
 
@@ -70,8 +80,11 @@ class SwatFlydown extends SwatOptionControl implements SwatState
             $options = array_merge([$this->getBlankOption()], $options);
         }
 
-        // only show a select if there is more than one option
-        if (count($options) > 1) {
+        // if there is only one element and it should be collapsed
+        if (count($options) === 1 && $this->collapse_single) {
+            // get first and only element
+            $this->displaySingle(current($options));
+        } elseif (count($options) !== 0) {
             $flydown_value = $this->serialize_values
                 ? $this->value
                 : (string) $this->value;
@@ -150,9 +163,6 @@ class SwatFlydown extends SwatOptionControl implements SwatState
             }
 
             $select_tag->close();
-        } elseif (count($options) === 1) {
-            // get first and only element
-            $this->displaySingle(current($options));
         }
 
         $wrapper->close();
