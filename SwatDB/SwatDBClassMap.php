@@ -5,11 +5,6 @@
  *
  * This is a static class and should not be instantiated.
  *
- * This class also attempts to require class-definition files for mapped
- * class names. You can modify the behaviour of automatic class-definition
- * file requiring using the {@link SwatDBClassMap::addPath()} and
- * {@link SwatDBClassMap::removePath()} methods.
- *
  * @package   SwatDB
  * @copyright 2006-2016 silverorange
  * @license   http://www.gnu.org/copyleft/lesser.html LGPL License 2.1
@@ -26,14 +21,7 @@ class SwatDBClassMap extends SwatObject
      *
      * @var array
      */
-    private static $map = [];
-
-    /**
-     * Paths to search for class-definition files
-     *
-     * @var array
-     */
-    private static $search_paths = ['.'];
+    private static array $map = [];
 
     // }}}
     // {{{ public static function add()
@@ -65,8 +53,10 @@ class SwatDBClassMap extends SwatObject
      *
      * @throws SwatException if the added mapping creates a circular dependency.
      */
-    public static function add($from_class_name, $to_class_name)
-    {
+    public static function add(
+        string $from_class_name,
+        string $to_class_name,
+    ): void {
         // check for circular dependency
         if (array_key_exists($to_class_name, self::$map)) {
             $class_name = $to_class_name;
@@ -105,7 +95,7 @@ class SwatDBClassMap extends SwatObject
      * @throws SwatInvalidClassException if a mapped class is not a subclass of
      *                                    its original class.
      */
-    public static function get($from_class_name)
+    public static function get(string $from_class_name): string
     {
         $to_class_name = $from_class_name;
 
@@ -130,49 +120,6 @@ class SwatDBClassMap extends SwatObject
     }
 
     // }}}
-    // {{{ public static function addPath()
-
-    /**
-     * Adds a search path for class-definition files
-     *
-     * When an undefined class is resolved, the class map attempts to find
-     * and require a class-definition file for the class.
-     *
-     * All search paths are relative to the PHP include path. The empty search
-     * path ('.') is included by default.
-     *
-     * @param string $search_path the path to search for class-definition files.
-     *
-     * @see SwatDBClassMap::removePath()
-     */
-    public static function addPath($search_path)
-    {
-        if (!in_array($search_path, self::$search_paths, true)) {
-            // add path to front of array since it is more likely we will find
-            // class-definitions in manually added search paths
-            array_unshift(self::$search_paths, $search_path);
-        }
-    }
-
-    // }}}
-    // {{{ public static function removePath()
-
-    /**
-     * Removes a search path for class-definition files
-     *
-     * @param string $search_path the path to remove.
-     *
-     * @see SwatDBClassMap::addPath()
-     */
-    public static function removePath($search_path)
-    {
-        $index = array_search($search_path, self::$search_paths);
-        if ($index !== false) {
-            array_splice(self::$search_paths, $index, 1);
-        }
-    }
-
-    // }}}
     // {{{ private function __construct()
 
     /**
@@ -180,117 +127,6 @@ class SwatDBClassMap extends SwatObject
      */
     private function __construct()
     {
-    }
-
-    // }}}
-
-    // deprecated API
-    // {{{ private properties
-
-    /**
-     * Singleton instance
-     *
-     * @var SwatDBClassMap
-     *
-     * @deprecated Use static methods instead of instantiating this class.
-     */
-    private static $instance = null;
-
-    /**
-     * An associative array of class-mappings
-     *
-     * The array is of the form 'PackageClassName' => 'SiteSpecificOverrideClassName'.
-     *
-     * @var array
-     *
-     * @deprecated Use static methods instead of instantiating this class.
-     */
-    private $mappings = [];
-
-    /**
-     * The path to search for site-specific class files
-     *
-     * @var string
-     *
-     * @deprecated Use static methods instead of instantiating this class.
-     */
-    private $path = null;
-
-    // }}}
-    // {{{ public static function instance()
-
-    /**
-     * Gets the singleton instance of the class-mapping object
-     *
-     * @return SwatDBClassMap the singleton instance of the class-
-     *                                  mapping object.
-     *
-     * @deprecated Use static methods instead of instantiating this class.
-     */
-    public static function instance()
-    {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
-
-    // }}}
-    // {{{ public function addMapping()
-
-    /**
-     * Adds a class-mapping to the class-mapping object
-     *
-     * @param string $package_class_name the name of the package class to
-     *                                    override.
-     * @param string $class_name the name of the site-specific class.
-     *
-     * @deprecated Use the static method {@link SwatDBClassMap::add()}.
-     */
-    public function addMapping($package_class_name, $class_name)
-    {
-        $this->mappings[$package_class_name] = $class_name;
-        self::add($package_class_name, $class_name);
-    }
-
-    // }}}
-    // {{{ public function resolveClass()
-
-    /**
-     * Gets the appropriate class name for a given package class name
-     *
-     * @param string $name the name of the package class to get the
-     *                      mapped name of.
-     *
-     * @return string the appropriate class name for site-specific code. If
-     *                 the site-specific code has overridden a package
-     *                 class, the site-specific overridden value is
-     *                 returned. Otherwise, the package default class
-     *                 name is returned.
-     *
-     * @deprecated Use the static method {@link SwatDBClassMap::get()}.
-     */
-    public function resolveClass($name)
-    {
-        return self::get($name);
-    }
-
-    // }}}
-    // {{{ public function setPath()
-
-    /**
-     * Sets the path to search for site-specific class files
-     *
-     * @param string $path the path to search for site-specific class files.
-     *
-     * @deprecated Use the static methods {@link SwatDBClassMap::addPath()} and
-     *             {@link SwatDBClassMap::removePath()}.
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-        self::addPath($path);
     }
 
     // }}}
