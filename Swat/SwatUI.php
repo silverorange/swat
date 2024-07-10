@@ -544,7 +544,7 @@ class SwatUI extends SwatObject
                 // for JS variables and CSS identifiers
                 if (
                     !preg_match(
-                        '/^[a-zA-Z]+[a-zA-Z0-9-]*$/',
+                        '/^[a-zA-Z]+[a-zA-Z0-9_]*$/',
                         $parsed_object->id,
                     )
                 ) {
