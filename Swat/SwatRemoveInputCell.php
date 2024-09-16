@@ -94,7 +94,7 @@ class SwatRemoveInputCell extends SwatInputCell
      *
      * @throws SwatException
      */
-    public function setWidget(SwatWidget $child)
+    public function setWidget(SwatWidget $widget): never
     {
         throw new SwatException('Remove input cells must be empty');
     }
