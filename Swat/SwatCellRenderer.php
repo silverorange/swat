@@ -291,7 +291,7 @@ abstract class SwatCellRenderer extends SwatUIObject
      */
     final public function getInheritanceCSSClassNames()
     {
-        $php_class_name = get_class($this);
+        $php_class_name = static::class;
         $css_class_names = [];
 
         // get the ancestors that are swat classes
@@ -397,7 +397,7 @@ abstract class SwatCellRenderer extends SwatUIObject
                         'sure the composite renderer was created and added to this ' .
                         'renderer.',
                     $key,
-                    get_class($this),
+                    static::class,
                 ),
                 0,
                 $key,

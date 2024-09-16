@@ -89,7 +89,7 @@ abstract class SwatUIObject extends SwatObject
                         'instantiate a HTML head entry set. This should be done in  ' .
                         'the constructor either by calling parent::__construct() or ' .
                         'by creating a new HTML head entry set.',
-                    get_class($this),
+                    static::class,
                 ),
             );
         }
@@ -118,7 +118,7 @@ abstract class SwatUIObject extends SwatObject
                         'instantiate a HTML head entry set. This should be done in  ' .
                         'the constructor either by calling parent::__construct() or ' .
                         'by creating a new HTML head entry set.',
-                    get_class($this),
+                    static::class,
                 ),
             );
         }
@@ -139,7 +139,7 @@ abstract class SwatUIObject extends SwatObject
                         'instantiate a HTML head entry set. This should be done in  ' .
                         'the constructor either by calling parent::__construct() or ' .
                         'by creating a new HTML head entry set.',
-                    get_class($this),
+                    static::class,
                 ),
             );
         }
@@ -166,7 +166,7 @@ abstract class SwatUIObject extends SwatObject
                         'instantiate a HTML head entry set. This should be done in  ' .
                         'the constructor either by calling parent::__construct() or ' .
                         'by creating a new HTML head entry set.',
-                    get_class($this),
+                    static::class,
                 ),
             );
         }
@@ -286,7 +286,7 @@ abstract class SwatUIObject extends SwatObject
     {
         // prevent recursion up the widget tree for UI objects
         $parent = $this->parent;
-        $this->parent = get_class($parent);
+        $this->parent = $parent::class;
 
         return parent::__toString();
 
@@ -408,7 +408,7 @@ abstract class SwatUIObject extends SwatObject
 
         $counter++;
 
-        return get_class($this) . $counter;
+        return static::class . $counter;
     }
 
 }

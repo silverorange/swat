@@ -194,7 +194,7 @@ class SwatDBDataObject extends SwatObject implements
                         "the internal property named '%s' or define a custom loader " .
                         "method named '%s()'.",
                     $key,
-                    get_class($this),
+                    static::class,
                     $key,
                     $loader_method,
                 ),
@@ -299,7 +299,7 @@ class SwatDBDataObject extends SwatObject implements
         }
 
         ob_start();
-        printf('<h3>%s</h3>', get_class($this));
+        printf('<h3>%s</h3>', static::class);
         echo $this->isModified() ? '(modified)' : '(not modified)', '<br />';
         foreach ($properties as $name => $value) {
             if ($this->hasSubDataObject($name)) {
@@ -309,7 +309,7 @@ class SwatDBDataObject extends SwatObject implements
             $modified = isset($modified_properties[$name]);
 
             if ($value instanceof SwatDBRecordable) {
-                $value = get_class($value);
+                $value = $value::class;
             }
 
             if (is_bool($value)) {
@@ -421,7 +421,7 @@ class SwatDBDataObject extends SwatObject implements
      */
     public function duplicate()
     {
-        $class = get_class($this);
+        $class = static::class;
         $new_object = new $class();
         $id_field = new SwatDBField($this->id_field, 'integer');
 
@@ -672,7 +672,7 @@ class SwatDBDataObject extends SwatObject implements
             throw new SwatDBException(
                 sprintf(
                     'Property $id_field is not set for class %s.',
-                    get_class($this),
+                    static::class,
                 ),
             );
         }
@@ -768,7 +768,7 @@ class SwatDBDataObject extends SwatObject implements
      */
     private function getPublicProperties()
     {
-        $class = get_class($this);
+        $class = static::class;
 
         // cache class public property names since reflection is expensive
         if (!array_key_exists($class, self::$public_properties_cache)) {
@@ -1152,7 +1152,7 @@ class SwatDBDataObject extends SwatObject implements
                 sprintf(
                     'No database available to this dataobject (%s). ' .
                         'Call the setDatabase method.',
-                    get_class($this),
+                    static::class,
                 ),
             );
         }
@@ -1206,7 +1206,7 @@ class SwatDBDataObject extends SwatObject implements
 
         if ($this->table === null) {
             trigger_error(
-                sprintf('No table defined for %s', get_class($this)),
+                sprintf('No table defined for %s', static::class),
                 E_USER_NOTICE,
             );
 
@@ -1220,7 +1220,7 @@ class SwatDBDataObject extends SwatObject implements
             }
 
             trigger_error(
-                sprintf('No id_field defined for %s', get_class($this)),
+                sprintf('No id_field defined for %s', static::class),
                 E_USER_NOTICE,
             );
 
@@ -1234,7 +1234,7 @@ class SwatDBDataObject extends SwatObject implements
                 sprintf(
                     "The id_field '%s' is not defined for %s",
                     $id_field->name,
-                    get_class($this),
+                    static::class,
                 ),
                 E_USER_NOTICE,
             );
@@ -1621,7 +1621,7 @@ class SwatDBDataObject extends SwatObject implements
                     // need to save class name here because magic loaders
                     // have completely dynamic return classes.
                     $data['sub_data_objects'][$key] = [
-                        get_class($sub_data_object),
+                        $sub_data_object::class,
                         $sub_data_object->marshall($tree),
                     ];
                 } elseif (is_scalar($sub_data_object)) {
@@ -1632,7 +1632,7 @@ class SwatDBDataObject extends SwatObject implements
                             'Unable to marshall requested property "%s" ' .
                                 'for object of class %s.',
                             $key,
-                            get_class($this),
+                            static::class,
                         ),
                     );
                 }

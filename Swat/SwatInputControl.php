@@ -62,10 +62,10 @@ abstract class SwatInputControl extends SwatControl
     {
         $form = $this->getFirstAncestor('SwatForm');
         if ($form === null) {
-            $path = get_class($this);
+            $path = static::class;
             $object = $this->parent;
             while ($object !== null) {
-                $path = get_class($object) . '/' . $path;
+                $path = $object::class . '/' . $path;
                 $object = $object->parent;
             }
             throw new SwatException(

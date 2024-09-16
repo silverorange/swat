@@ -237,7 +237,7 @@ class SwatRadioNoteBook extends SwatInputControl implements SwatUIParent
 
     public function printWidgetTree()
     {
-        echo get_class($this), ' ', $this->id;
+        echo static::class, ' ', $this->id;
 
         $children = $this->getChildren();
         if (count($children) > 0) {

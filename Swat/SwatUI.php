@@ -520,7 +520,7 @@ class SwatUI extends SwatObject
                 !class_exists('SwatWidget') ||
                 !$parsed_object instanceof SwatWidget
             ) {
-                $class_name = get_class($parsed_object);
+                $class_name = $parsed_object::class;
 
                 throw new SwatInvalidClassException(
                     "'{$class_name}' is defined in a widget element but is " .
@@ -534,7 +534,7 @@ class SwatUI extends SwatObject
                 class_exists('SwatWidget') &&
                 $parsed_object instanceof SwatWidget
             ) {
-                $class_name = get_class($parsed_object);
+                $class_name = $parsed_object::class;
 
                 throw new SwatInvalidClassException(
                     "'{$class_name}' is defined in an object element but is " .
@@ -562,7 +562,7 @@ class SwatUI extends SwatObject
         if ($parent instanceof SwatUIParent) {
             $parent->addChild($object);
         } else {
-            $class_name = get_class($parent);
+            $class_name = $parent::class;
             throw new SwatDoesNotImplementException(
                 "Can not add object to parent. '{$class_name}' does not " .
                     'implement SwatUIParent.',
@@ -628,7 +628,7 @@ class SwatUI extends SwatObject
      */
     private function parseProperty($property_node, SwatUIObject $object)
     {
-        $class_properties = get_class_vars(get_class($object));
+        $class_properties = get_class_vars($object::class);
 
         // name is required in the schema
         $name = trim($property_node->getAttribute('name'));
@@ -647,7 +647,7 @@ class SwatUI extends SwatObject
         }
 
         if (!array_key_exists($name, $class_properties)) {
-            $class_name = get_class($object);
+            $class_name = $object::class;
             throw new SwatInvalidPropertyException(
                 "Property '{$name}' does not exist in class '{$class_name}' " .
                     'but is used in SwatML.',
@@ -749,7 +749,7 @@ class SwatUI extends SwatObject
             case 'implicit-string':
                 if ($value == 'false' || $value == 'true') {
                     trigger_error(
-                        __CLASS__ .
+                        self::class .
                             ': Possible missing type="boolean" ' .
                             'attribute on property element',
                         E_USER_NOTICE,
@@ -758,7 +758,7 @@ class SwatUI extends SwatObject
 
                 if (is_numeric($value)) {
                     trigger_error(
-                        __CLASS__ .
+                        self::class .
                             ': Possible missing type="integer" ' .
                             ' or type="float" attribute on property element',
                         E_USER_NOTICE,
@@ -953,7 +953,7 @@ class SwatUI extends SwatObject
 
                 // get a default scope for the constant
                 if (mb_strpos($constant, '::') === false) {
-                    $constant = get_class($object) . '::' . $constant;
+                    $constant = $object::class . '::' . $constant;
                 }
 
                 // evaluate constant

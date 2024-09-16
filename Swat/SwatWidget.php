@@ -608,7 +608,7 @@ abstract class SwatWidget extends SwatUIObject
                     "Composite widget with key of '%s' not found in %s. Make sure " .
                         'the composite widget was created and added to this widget.',
                     $key,
-                    get_class($this),
+                    static::class,
                 ),
                 0,
                 $key,

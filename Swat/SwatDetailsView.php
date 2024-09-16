@@ -259,7 +259,7 @@ class SwatDetailsView extends SwatControl implements SwatUIParent
         if ($child instanceof SwatDetailsViewField) {
             $this->appendField($child);
         } else {
-            $class_name = get_class($child);
+            $class_name = $child::class;
 
             throw new SwatInvalidClassException(
                 "Unable to add '{$class_name}' object to SwatDetailsView. " .

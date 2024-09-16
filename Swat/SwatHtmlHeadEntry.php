@@ -103,7 +103,7 @@ abstract class SwatHtmlHeadEntry extends SwatObject
      */
     public function getType()
     {
-        return get_class($this);
+        return static::class;
     }
 
 

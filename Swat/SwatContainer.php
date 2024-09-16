@@ -528,7 +528,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
         if ($child instanceof SwatWidget) {
             $this->add($child);
         } else {
-            $class_name = get_class($child);
+            $class_name = $child::class;
             throw new SwatInvalidClassException(
                 'Only SwatWidget objects may be nested within SwatContainer. ' .
                     "Attempting to add '{$class_name}'.",
@@ -612,7 +612,7 @@ class SwatContainer extends SwatWidget implements SwatUIParent
 
     public function printWidgetTree()
     {
-        echo get_class($this), ' ', $this->id;
+        echo static::class, ' ', $this->id;
 
         $children = $this->getChildren();
         if (count($children) > 0) {

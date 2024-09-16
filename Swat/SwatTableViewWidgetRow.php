@@ -84,7 +84,7 @@ class SwatTableViewWidgetRow extends SwatTableViewRow implements SwatUIParent
                 sprintf(
                     'Only SwatWidget objects may be nested within ' .
                         'SwatTableViewWidgetRow. Attempting to add "%s".',
-                    get_class($child),
+                    $child::class,
                 ),
                 0,
                 $child,

@@ -61,7 +61,7 @@ abstract class SwatControl extends SwatWidget
 
     public function printWidgetTree()
     {
-        echo get_class($this), ' ', $this->id;
+        echo static::class, ' ', $this->id;
     }
 
 

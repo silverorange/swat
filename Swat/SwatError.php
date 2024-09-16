@@ -554,7 +554,7 @@ class SwatError
         $formatted_value = '<unknown parameter type>';
 
         if (is_object($value)) {
-            $formatted_value = '<' . get_class($value) . ' object>';
+            $formatted_value = '<' . $value::class . ' object>';
         } elseif ($value === null) {
             $formatted_value = '<null>';
         } elseif (is_string($value)) {

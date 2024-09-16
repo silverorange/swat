@@ -172,7 +172,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      */
     public function duplicate()
     {
-        $class = get_class($this);
+        $class = static::class;
         $new_wrapper = new $class();
 
         foreach ($this->getArray() as $object) {
@@ -257,7 +257,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      */
     public function copyEmpty()
     {
-        $class_name = get_class($this);
+        $class_name = static::class;
         $wrapper = new $class_name();
 
         $wrapper->row_wrapper_class = $this->row_wrapper_class;
@@ -321,7 +321,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
                 sprintf(
                     'No database available to this wrapper (%s). ' .
                         'Call the setDatabase method.',
-                    get_class($this),
+                    static::class,
                 ),
             );
         }
@@ -841,7 +841,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
                     'Index field must be specified in the sub-data-object ' .
                         'recordset wrapper class (%s::init()) ' .
                         'in order to attach recordset as sub-dataobjects.',
-                    get_class($sub_data_objects),
+                    $sub_data_objects::class,
                 ),
             );
         }
@@ -898,7 +898,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
                 sprintf(
                     'Index field must be specified in the recordset wrapper ' .
                         'class (%s::init()) in order to attach sub-recordsets.',
-                    get_class($this),
+                    static::class,
                 ),
             );
         }
@@ -1030,7 +1030,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
                 sprintf(
                     'Index field must be specified in the recordset wrapper ' .
                         'class (%s::init()) in order to get the record indexes.',
-                    get_class($this),
+                    static::class,
                 ),
             );
         }

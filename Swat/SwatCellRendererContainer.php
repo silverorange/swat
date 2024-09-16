@@ -174,7 +174,7 @@ abstract class SwatCellRendererContainer extends SwatUIObject implements
         } else {
             throw new SwatInvalidClassException(
                 'Only SwatCellRender objects may be nested within ' .
-                    get_class($this) .
+                    static::class .
                     ' objects.',
                 0,
                 $child,

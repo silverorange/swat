@@ -111,10 +111,10 @@ class Swat
      */
     public static function displayMethods($object)
     {
-        echo sprintf(self::_('Methods for class %s:'), get_class($object));
+        echo sprintf(self::_('Methods for class %s:'), $object::class);
         echo '<ul>';
 
-        foreach (get_class_methods(get_class($object)) as $method_name) {
+        foreach (get_class_methods($object::class) as $method_name) {
             echo '<li>', $method_name, '</li>';
         }
 
@@ -132,7 +132,7 @@ class Swat
      */
     public static function displayProperties($object)
     {
-        $class = get_class($object);
+        $class = $object::class;
 
         echo sprintf(self::_('Properties for class %s:'), $class);
         echo '<ul>';

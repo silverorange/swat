@@ -259,7 +259,7 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
 
     public function printWidgetTree()
     {
-        echo get_class($this), ' ', $this->id;
+        echo static::class, ' ', $this->id;
 
         if (count($this->children) > 0) {
             echo '<ul>';

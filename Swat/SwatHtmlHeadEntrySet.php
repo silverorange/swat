@@ -180,7 +180,7 @@ class SwatHtmlHeadEntrySet implements Countable, IteratorAggregate
      */
     public function getByType($type)
     {
-        $class = __CLASS__;
+        $class = self::class;
         $set = new $class();
         foreach ($this->entries as $entry) {
             if ($entry->getType() === $type) {
