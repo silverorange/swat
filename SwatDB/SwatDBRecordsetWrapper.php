@@ -1111,7 +1111,7 @@ abstract class SwatDBRecordsetWrapper extends SwatObject implements
      */
     public function getByIndex($index)
     {
-        return isset($this[$index]) ? $this[$index] : null;
+        return $this[$index] ?? null;
     }
 
 

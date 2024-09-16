@@ -160,7 +160,7 @@ class SwatImageCellRenderer extends SwatCellRenderer
 
         // alt is a required XHTML attribute. We should always display it even
         // if it is not specified.
-        $image_tag->alt = $this->alt === null ? '' : $this->alt;
+        $image_tag->alt = $this->alt ?? '';
 
         $image_tag->class = $this->getCSSClassString();
 

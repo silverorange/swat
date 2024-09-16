@@ -606,9 +606,7 @@ class SwatFileEntry extends SwatInputControl
         $displayable_types = [];
 
         foreach ($this->accept_mime_types as $mime_type) {
-            $displayable_type = isset($this->human_file_types[$mime_type])
-                ? $this->human_file_types[$mime_type]
-                : $mime_type;
+            $displayable_type = $this->human_file_types[$mime_type] ?? $mime_type;
 
             // Use the value as the key to de-dupe.
             $displayable_types[$displayable_type] = $displayable_type;

@@ -478,7 +478,7 @@ class DemoApplication
 	 */
 	private function getDemo()
 	{
-		$demo = isset($_GET['demo']) ? $_GET['demo'] : null;
+		$demo = $_GET['demo'] ?? null;
 
 		// simple security
 		if (!array_key_exists($demo, $this->available_demos))

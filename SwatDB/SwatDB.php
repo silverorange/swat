@@ -87,7 +87,7 @@ class SwatDB extends SwatObject
         $wrapper = 'SwatDBDefaultRecordsetWrapper',
         $types = null,
     ) {
-        $mdb2_types = $types === null ? true : $types;
+        $mdb2_types = $types ?? true;
 
         $rs = self::executeQuery($db, 'query', [
             $sql,
@@ -283,7 +283,7 @@ class SwatDB extends SwatObject
      */
     public static function queryOne($db, $sql, $type = null)
     {
-        $mdb2_type = $type === null ? true : $type;
+        $mdb2_type = $type ?? true;
         return self::executeQuery($db, 'queryOne', [$sql, $mdb2_type]);
     }
 
@@ -304,7 +304,7 @@ class SwatDB extends SwatObject
      */
     public static function queryRow($db, $sql, $types = null)
     {
-        $mdb2_types = $types === null ? true : $types;
+        $mdb2_types = $types ?? true;
 
         $row = self::executeQuery($db, 'queryRow', [
             $sql,
@@ -472,7 +472,7 @@ class SwatDB extends SwatObject
             $params = [$params];
         }
 
-        $mdb2_types = $types === null ? true : $types;
+        $mdb2_types = $types ?? true;
 
         $db->loadModule('Function');
         $rs = $db->function->executeStoredProc(
@@ -693,9 +693,7 @@ class SwatDB extends SwatObject
                 $values_in_order = [];
 
                 foreach ($fields as &$field) {
-                    $value = isset($values[$field->name])
-                        ? $values[$field->name]
-                        : null;
+                    $value = $values[$field->name] ?? null;
 
                     $values_in_order[] = $db->quote($value, $field->type);
                 }
@@ -769,9 +767,7 @@ class SwatDB extends SwatObject
         $updates = [];
 
         foreach ($fields as &$field) {
-            $value = isset($values[$field->name])
-                ? $values[$field->name]
-                : null;
+            $value = $values[$field->name] ?? null;
 
             $updates[] = sprintf(
                 '%s = %s',
@@ -1428,9 +1424,9 @@ class SwatDB extends SwatObject
             ob_start();
             printf(
                 "<strong>%s%s%s()</strong><br />\n",
-                $class === null ? '' : $class,
+                $class ?? '',
                 array_key_exists('type', $entry) ? $entry['type'] : '',
-                $function === null ? '' : $function,
+                $function ?? '',
             );
 
             echo $message;

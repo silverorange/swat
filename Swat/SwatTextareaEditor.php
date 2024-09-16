@@ -177,7 +177,7 @@ class SwatTextareaEditor extends SwatTextarea
         SwatWidget::display();
 
         // textarea tags cannot be self-closing when using HTML parser on XHTML
-        $value = $this->value === null ? '' : $this->value;
+        $value = $this->value ?? '';
 
         // escape value for display because we actually want to show entities
         // for editing

@@ -356,7 +356,7 @@ class SwatNavBar extends SwatControl implements Countable
         $show_link = true,
         $first = false,
     ) {
-        $title = $entry->title === null ? '' : $entry->title;
+        $title = $entry->title ?? '';
         $link = $this->getLink($entry);
 
         if ($link !== null && $show_link) {

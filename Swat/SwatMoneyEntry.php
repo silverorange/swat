@@ -85,9 +85,7 @@ class SwatMoneyEntry extends SwatFloatEntry
         $locale = SwatI18NLocale::get($this->locale);
         $format = $locale->getNationalCurrencyFormat();
         $max_decimal_places =
-            $this->decimal_places === null
-                ? $format->fractional_digits
-                : $this->decimal_places;
+            $this->decimal_places ?? $format->fractional_digits;
 
         $value = $this->getRawValue();
 

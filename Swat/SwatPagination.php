@@ -426,7 +426,7 @@ class SwatPagination extends SwatControl
      */
     protected function getLink()
     {
-        return $this->link === null ? '%s' : $this->link;
+        return $this->link ?? '%s';
     }
 
 

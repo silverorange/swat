@@ -223,9 +223,7 @@ class SwatCascadeFlydown extends SwatFlydown
     protected function getBlankOption()
     {
         $blank_title =
-            $this->blank_title === null
-                ? Swat::_('choose one ...')
-                : $this->blank_title;
+            $this->blank_title ?? Swat::_('choose one ...');
 
         return new SwatFlydownBlankOption(null, $blank_title);
     }
@@ -272,9 +270,7 @@ class SwatCascadeFlydown extends SwatFlydown
                 }
 
                 $blank_title =
-                    $this->blank_title === null
-                        ? Swat::_('choose one ...')
-                        : $this->blank_title;
+                    $this->blank_title ?? Swat::_('choose one ...');
 
                 $javascript .= sprintf(
                     "\n%s_cascade.addChild(%s, %s, %s);",

@@ -360,9 +360,9 @@ class SwatError
                 array_key_exists('file', $entry) ? $entry['file'] : 'unknown',
                 array_key_exists('line', $entry) ? $entry['line'] : 'unknown',
                 str_repeat(' ', 8),
-                $class === null ? '' : $class,
+                $class ?? '',
                 array_key_exists('type', $entry) ? $entry['type'] : '',
-                $function === null ? '' : $function,
+                $function ?? '',
                 $arguments,
             );
         }
@@ -428,9 +428,9 @@ class SwatError
                 --$count,
                 array_key_exists('file', $entry) ? $entry['file'] : 'unknown',
                 array_key_exists('line', $entry) ? $entry['line'] : 'unknown',
-                $class === null ? '' : $class,
+                $class ?? '',
                 array_key_exists('type', $entry) ? $entry['type'] : '',
-                $function === null ? '' : $function,
+                $function ?? '',
                 $arguments,
             );
         }

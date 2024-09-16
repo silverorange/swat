@@ -61,7 +61,7 @@ for ($i = 0; $i < count($tokens); $i++) {
 		// most whitespace in gettext is from concatenation, ignore it
 		case T_WHITESPACE:
 			if ($in_gettext) {
-				if (strpos($text, "\n") !== false) {
+				if (str_contains($text, "\n")) {
 					$gettext_blank_lines++;
 				}
 			} else {

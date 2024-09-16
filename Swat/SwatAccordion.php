@@ -92,7 +92,7 @@ class SwatAccordion extends SwatNoteBook
             $li_tag->open();
 
             // toggle link
-            $title = $page->title === null ? '' : $page->title;
+            $title = $page->title ?? '';
             $wrapper_span = new SwatHtmlTag('span');
             $wrapper_span->tabindex = '0';
             $wrapper_span->{'aria-role'} = 'tab';

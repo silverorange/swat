@@ -140,7 +140,7 @@ class SwatCheckAll extends SwatCheckbox
     protected function getExtendedTitle()
     {
         $locale = SwatI18NLocale::get();
-        $entity = $this->unit === null ? Swat::_('items') : $this->unit;
+        $entity = $this->unit ?? Swat::_('items');
 
         $checkbox = $this->getCompositeWidget('extended_checkbox');
         $checkbox->tabindex = $this->tab_index;
