@@ -114,47 +114,18 @@ class SwatNumber extends SwatObject
             // fallback implementation if icu is not available
             $ordinal_value = abs($value);
 
-            switch ($ordinal_value % 100) {
-                case 11:
-                case 12:
-                case 13:
-                    $ordinal_value = sprintf(Swat::_('%sth'), $ordinal_value);
-                    break;
-
-                default:
-                    // Handle 1st, 2nd, 3rd
-                    switch ($value % 10) {
-                        case 1:
-                            $ordinal_value = sprintf(
-                                Swat::_('%sst'),
-                                $ordinal_value,
-                            );
-                            break;
-
-                        case 2:
-                            $ordinal_value = sprintf(
-                                Swat::_('%snd'),
-                                $ordinal_value,
-                            );
-                            break;
-
-                        case 3:
-                            $ordinal_value = sprintf(
-                                Swat::_('%srd'),
-                                $ordinal_value,
-                            );
-                            break;
-
-                        default:
-                            $ordinal_value = sprintf(
-                                Swat::_('%sth'),
-                                $ordinal_value,
-                            );
-                    }
-            }
+            $ordinal_format = match ($ordinal_value % 100) {
+                11, 12, 13 => Swat::_('%sth'),
+                default    => match ($value % 10) {
+                    1 =>       Swat::_('%sst'),
+                    2 =>       Swat::_('%snd'),
+                    3 =>       Swat::_('%srd'),
+                    default => Swat::_('%sth'),
+                },
+            };
         }
 
-        return $ordinal_value;
+        return sprintf($ordinal_format, $ordinal_value);
     }
 
 

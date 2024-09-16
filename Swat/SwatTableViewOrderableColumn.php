@@ -227,54 +227,35 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
      *
      * @return string the direction of ordering.
      */
-    public function getDirectionAsString(
-        $direction_id = null,
-        $include_nulls_ordering = true,
-    ) {
+    public function getDirectionAsString($direction_id = null, $include_nulls_ordering = true)
+    {
         if ($direction_id === null) {
             $direction_id = $this->direction;
         }
 
-        switch ($direction_id) {
-            case self::ORDER_BY_DIR_NONE:
-                $direction = '';
-                break;
-
-            case self::ORDER_BY_DIR_ASCENDING:
-                $direction = 'asc';
-                break;
-
-            case self::ORDER_BY_DIR_DESCENDING:
-                $direction = 'desc';
-                break;
-
-            default:
-                throw new SwatException(
-                    sprintf(
-                        "Ordering direction '%s' not found.",
-                        $direction_id,
-                    ),
-                );
-        }
+        $direction = match ($direction_id) {
+            self::ORDER_BY_DIR_NONE => '',
+            self::ORDER_BY_DIR_ASCENDING => 'asc',
+            self::ORDER_BY_DIR_DESCENDING => 'desc',
+            default => throw new SwatException(
+                sprintf(
+                    "Ordering direction '%s' not found.",
+                    $direction_id,
+                ),
+            ),
+        };
 
         if ($include_nulls_ordering && $this->nulls_ordering !== null) {
-            switch ($this->nulls_ordering) {
-                case self::NULLS_FIRST:
-                    $direction .= ' nulls first';
-                    break;
-
-                case self::NULLS_LAST:
-                    $direction .= ' nulls last';
-                    break;
-
-                default:
-                    throw new SwatException(
-                        sprintf(
-                            "Nulls ordering '%s' not found.",
-                            $this->nulls_ordering,
-                        ),
-                    );
-            }
+            $direction .= match ($this->nulls_ordering) {
+                self::NULLS_FIRST => ' nulls first',
+                self::NULLS_LAST => ' nulls last',
+                default => throw new SwatException(
+                    sprintf(
+                        "Nulls ordering '%s' not found.",
+                        $this->nulls_ordering,
+                    ),
+                ),
+            };
         }
 
         return $direction;
@@ -386,20 +367,11 @@ class SwatTableViewOrderableColumn extends SwatTableViewColumn
     {
         $direction = mb_strtolower($direction);
 
-        switch ($direction) {
-            case 'ascending':
-            case 'asc':
-                $this->direction = self::ORDER_BY_DIR_ASCENDING;
-                break;
-
-            case 'descending':
-            case 'desc':
-                $this->direction = self::ORDER_BY_DIR_DESCENDING;
-                break;
-
-            default:
-                $this->direction = self::ORDER_BY_DIR_NONE;
-        }
+        $this->direction = match ($direction) {
+            'ascending', 'asc' => self::ORDER_BY_DIR_ASCENDING,
+            'descending', 'desc' => self::ORDER_BY_DIR_DESCENDING,
+            default => self::ORDER_BY_DIR_NONE,
+        };
     }
 
 

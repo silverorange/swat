@@ -204,14 +204,11 @@ class SwatCheckboxTree extends SwatCheckboxList implements SwatState
      */
     protected function getJavaScriptClassName()
     {
-        switch ($this->dependency_type) {
-            case self::DEPENDENT_CHILD:
-                return 'SwatCheckboxChildDependencyTree';
-            case self::DEPENDENT_PARENT:
-                return 'SwatCheckboxParentDependencyTree';
-            default:
-                return 'SwatCheckboxTree';
-        }
+        return match ($this->dependency_type) {
+            self::DEPENDENT_CHILD => 'SwatCheckboxChildDependencyTree',
+            self::DEPENDENT_PARENT => 'SwatCheckboxParentDependencyTree',
+            default => 'SwatCheckboxTree',
+        };
     }
 
 

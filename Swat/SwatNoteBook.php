@@ -522,21 +522,12 @@ class SwatNoteBook extends SwatWidget implements SwatUIParent
      */
     protected function getInlineJavaScript()
     {
-        switch ($this->tab_position) {
-            case self::POSITION_RIGHT:
-                $position = 'right';
-                break;
-            case self::POSITION_LEFT:
-                $position = 'left';
-                break;
-            case self::POSITION_BOTTOM:
-                $position = 'bottom';
-                break;
-            case self::POSITION_TOP:
-            default:
-                $position = 'top';
-                break;
-        }
+        $position = match ($this->tab_position) {
+            self::POSITION_RIGHT => 'right',
+            self::POSITION_LEFT => 'left',
+            self::POSITION_BOTTOM => 'bottom',
+            default => 'top',
+        };
 
         return sprintf(
             'var %s_obj = new YAHOO.widget.TabView(' .

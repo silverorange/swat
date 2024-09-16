@@ -91,28 +91,19 @@ abstract class SwatInputControl extends SwatControl
      */
     protected function getValidationMessage($id)
     {
-        switch ($id) {
-            case 'required':
-                $text = $this->show_field_title_in_messages
-                    ? Swat::_('%s is required.')
-                    : Swat::_('This field is required.');
-
-                break;
-            case 'too-long':
-                $text = $this->show_field_title_in_messages
-                    ? Swat::_(
-                        'The %%s field can be at most %s characters long.',
-                    )
-                    : Swat::_('This field can be at most %s characters long.');
-
-                break;
-            default:
-                $text = $this->show_field_title_in_messages
-                    ? Swat::_('There is a problem with the %s field.')
-                    : Swat::_('There is a problem with this field.');
-
-                break;
-        }
+        $text = match ($id) {
+            'required' => $this->show_field_title_in_messages
+                ? Swat::_('%s is required.')
+                : Swat::_('This field is required.'),
+            'too-long' => $this->show_field_title_in_messages
+                ? Swat::_(
+                    'The %%s field can be at most %s characters long.',
+                )
+                : Swat::_('This field can be at most %s characters long.'),
+            default => $this->show_field_title_in_messages
+                ? Swat::_('There is a problem with the %s field.')
+                : Swat::_('There is a problem with this field.'),
+        };
 
         $message = new SwatMessage($text, 'error');
         return $message;

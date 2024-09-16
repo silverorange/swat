@@ -477,16 +477,11 @@ class SwatForm extends SwatDisplayableContainer
      */
     public function &getFormData()
     {
-        $data = null;
-
-        switch ($this->method) {
-            case self::METHOD_POST:
-                $data = &$_POST;
-                break;
-            case self::METHOD_GET:
-                $data = &$_GET;
-                break;
-        }
+        match ($this->method) {
+            self::METHOD_POST => $data = &$_POST,
+            self::METHOD_GET  => $data = &$_GET,
+            default           => $data = null,
+        };
 
         return $data;
     }

@@ -580,44 +580,26 @@ class SwatDate extends DateTime implements Stringable
         // Note: The format() method does not localize results, so these
         // format codes are _not_ wrapped in gettext calls.
 
-        switch ($id) {
-            case self::DF_MDY:
-                return 'm/d/y';
-            case self::DF_MDY_SHORT:
-                return 'mdy';
-            case self::DF_DATE:
-                return 'F j, Y';
-            case self::DF_DATE_LONG:
-                return 'l, F j, Y';
-            case self::DF_DATE_TIME:
-                return 'F j, Y g:i a';
-            case self::DF_DATE_TIME_LONG:
-                return 'l, F j, Y g:i a';
-            case self::DF_TIME:
-                return 'g:i a';
-            case self::DF_DATE_SHORT:
-                return 'M j, Y';
-            case self::DF_DATE_SHORT_NOYEAR:
-                return 'M j';
-            case self::DF_DATE_TIME_SHORT:
-                return 'M j, Y g:i a';
-            case self::DF_DATE_TIME_SHORT_NOYEAR:
-                return 'M j, g:i a';
-            case self::DF_MY:
-                return 'F Y';
-            case self::DF_CC_MY:
-                return 'm / Y';
-            case self::DF_Y:
-                return 'Y';
-            case self::DF_ISO_8601_BASIC:
-                return 'Ymd\THis';
-            case self::DF_ISO_8601_EXTENDED:
-                return 'Y-m-d\TH:i:s';
-            case self::DF_RFC_2822:
-                return 'r';
-            default:
-                throw new Exception("Unknown date format id '$id'.");
-        }
+        return match ($id) {
+            self::DF_MDY => 'm/d/y',
+            self::DF_MDY_SHORT => 'mdy',
+            self::DF_DATE => 'F j, Y',
+            self::DF_DATE_LONG => 'l, F j, Y',
+            self::DF_DATE_TIME => 'F j, Y g:i a',
+            self::DF_DATE_TIME_LONG => 'l, F j, Y g:i a',
+            self::DF_TIME => 'g:i a',
+            self::DF_DATE_SHORT => 'M j, Y',
+            self::DF_DATE_SHORT_NOYEAR => 'M j',
+            self::DF_DATE_TIME_SHORT => 'M j, Y g:i a',
+            self::DF_DATE_TIME_SHORT_NOYEAR => 'M j, g:i a',
+            self::DF_MY => 'F Y',
+            self::DF_CC_MY => 'm / Y',
+            self::DF_Y => 'Y',
+            self::DF_ISO_8601_BASIC => 'Ymd\THis',
+            self::DF_ISO_8601_EXTENDED => 'Y-m-d\TH:i:s',
+            self::DF_RFC_2822 => 'r',
+            default => throw new Exception("Unknown date format id '$id'."),
+        };
     }
 
 
@@ -633,44 +615,26 @@ class SwatDate extends DateTime implements Stringable
      */
     public static function getFormatLikeIntlById($id): string
     {
-        switch ($id) {
-            case self::DF_MDY:
-                return Swat::_('MM/dd/yy');
-            case self::DF_MDY_SHORT:
-                return Swat::_('MMddyy');
-            case self::DF_DATE:
-                return Swat::_('MMMM d, yyyy');
-            case self::DF_DATE_LONG:
-                return Swat::_('EEEE, MMMM d, yyyy');
-            case self::DF_DATE_TIME:
-                return Swat::_('MMMM d, yyyy h:mm a');
-            case self::DF_DATE_TIME_LONG:
-                return Swat::_('EEEE, MMMM d, yyyy h:mm a');
-            case self::DF_TIME:
-                return Swat::_('h:mm a');
-            case self::DF_DATE_SHORT:
-                return Swat::_('MMM d yyyy');
-            case self::DF_DATE_SHORT_NOYEAR:
-                return Swat::_('MMM d');
-            case self::DF_DATE_TIME_SHORT:
-                return Swat::_('MMM d, yyyy h:mm a');
-            case self::DF_DATE_TIME_SHORT_NOYEAR:
-                return Swat::_('MMM d, h:mm a');
-            case self::DF_MY:
-                return Swat::_('MMMM yyyy');
-            case self::DF_CC_MY:
-                return Swat::_('MM / yyyy');
-            case self::DF_Y:
-                return Swat::_('yyyy');
-            case self::DF_ISO_8601_BASIC:
-                return Swat::_('yyyyMMdd\'T\'HHmmss');
-            case self::DF_ISO_8601_EXTENDED:
-                return Swat::_('yyyy-MM-dd\'T\'HH:mm:ss');
-            case self::DF_RFC_2822:
-                return Swat::_('EEE, dd MMM yyyy HH:mm:ss');
-            default:
-                throw new Exception("Unknown date format id '$id'.");
-        }
+        return match ($id) {
+            self::DF_MDY => Swat::_('MM/dd/yy'),
+            self::DF_MDY_SHORT => Swat::_('MMddyy'),
+            self::DF_DATE => Swat::_('MMMM d, yyyy'),
+            self::DF_DATE_LONG => Swat::_('EEEE, MMMM d, yyyy'),
+            self::DF_DATE_TIME => Swat::_('MMMM d, yyyy h:mm a'),
+            self::DF_DATE_TIME_LONG => Swat::_('EEEE, MMMM d, yyyy h:mm a'),
+            self::DF_TIME => Swat::_('h:mm a'),
+            self::DF_DATE_SHORT => Swat::_('MMM d yyyy'),
+            self::DF_DATE_SHORT_NOYEAR => Swat::_('MMM d'),
+            self::DF_DATE_TIME_SHORT => Swat::_('MMM d, yyyy h:mm a'),
+            self::DF_DATE_TIME_SHORT_NOYEAR => Swat::_('MMM d, h:mm a'),
+            self::DF_MY => Swat::_('MMMM yyyy'),
+            self::DF_CC_MY => Swat::_('MM / yyyy'),
+            self::DF_Y => Swat::_('yyyy'),
+            self::DF_ISO_8601_BASIC => Swat::_('yyyyMMdd\'T\'HHmmss'),
+            self::DF_ISO_8601_EXTENDED => Swat::_('yyyy-MM-dd\'T\'HH:mm:ss'),
+            self::DF_RFC_2822 => Swat::_('EEE, dd MMM yyyy HH:mm:ss'),
+            default => throw new Exception("Unknown date format id '$id'."),
+        };
     }
 
 
